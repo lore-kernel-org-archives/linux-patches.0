@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320AE3E2777;
-	Wed, 30 Sep 2026 19:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECA13BD22C;
+	Wed, 30 Sep 2026 19:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796540; cv=none; b=hU7xlXH0YV+1LZVYeHmAhCXgXT6MeJb+6+FANxIUC7FTMro4RRWAXFvleKzMrwo8q1lDut7NY6W9QulqTF2N0eE/5khzKuFk5S9TuRomTYf7HsRvWxhA1jGETzTxgc6VPZ+nRC7LtC3z4DYuUWlh09LENp74jI0u6bs+yPlr2yk=
+	t=1790796543; cv=none; b=S1P0p17NlZYebf3gBIw43oAZfDxuHuamk1Ah5bJ6Xjzh5Zq2AqioWSDRlT6qOgUpA972Y7akexCh+f1g5WHF/7/ujT34ZLdxUz1949XujDMbYL3dtM+CI2fEaS+i1+mmyzARjlkKzYLYExfqZdEDcp04zf5/2VF31Wpy/m5HOE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796540; c=relaxed/simple;
-	bh=4MqyCiVnHeroGcoZ85M/jdZETZyo3lUY+Rhgyba/UuE=;
+	s=arc-20240116; t=1790796543; c=relaxed/simple;
+	bh=TqYY3LMRZywPAapK9oW76KU8FGTJ1e8IDYKv78v8WCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfHVQyk9MaPdMcrPYMwPrWCszvGf/Iz1VBIwa74lBOUFb+5Lf1iam6EhE5trouJvzNv5gnYEkCy0b5AGtIEM6+pVt0/LbZwt3tyI4smuUHuJlNbryMu4HJQdb2ZAhUWpvKpopOjDort1BlvZRMi5Z6fA50gFjjbX9tBwuh+qZ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sedXQDnC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ujr3ICpYR1TjwmHzwR9rOOnDLs4syBVKURMf357jNrAUjRXNf9b7RiFskbnvbhGPPc0RFctGnmWPaLjscR/aSLOHMC61BCabstNaV5rvWEVgIjjqGN76dbkjYVGVmXXgEtmzk21DI3zAICg9xehaOA/7WimeBpKNd3g2k70BO0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QIK4y3c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sedXQDnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8508F1F000FF;
-	Wed, 30 Sep 2026 19:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QIK4y3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553F31F00898;
+	Wed, 30 Sep 2026 19:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796539;
-	bh=w7Ob4oLL8RQ6Uk3SrU4AJDBvCsPPaUy8KaoK8fPPpyA=;
+	s=korg; t=1790796541;
+	bh=DbA0SmJuEW2M/Xsraol1Cg+cPrHY8iaRHCvFCwKO1H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sedXQDnCS7/yUrVWAb4PXoYAL7a9BeLlgWaNyuKWjOjzFCOIcOmN8+oYdTxXFkNN9
-	 00C2hDLplpr7YW6yyDgjJusl6zTNCabNwQqy28wTsbrs6KJ93+vUD9CmnQ5fLXMgBk
-	 +7WCcdKzahwHK8zuv5iO420ibH2rAOtuT7v0JqXU=
+	b=0QIK4y3cajcCNHmdPYrkGFY2J+cSajIEooBSqTg0b5j+UiZ04XNXDmoIu92aihHLo
+	 lvCMlMZcdTt8oKGYk8b3RmiZf/QVJJgOXIwU/xaIGFsiGiSggEqocPXjGWxs6+sIyf
+	 8NaaKorSKb8vxGq8qagDfHUmk4D71bdLiRBOCOL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0947/1193] ipv6: mcast: fix RCU list diversion in ip6_mc_del1_src()
-Date: Wed, 30 Sep 2026 17:27:11 +0200
-Message-ID: <20260930152455.280003441@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 0905/1193] hwmon: (pmbus/core) increase number of phases and add new mask
+Date: Wed, 30 Sep 2026 17:26:29 +0200
+Message-ID: <20260930152454.350805107@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -47,72 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 93b49239840b91313adbd77b8b52993eff2d08c1 ]
+commit 06bd6794b5fd2163880ac3bfe973d4cc61f359f3 upstream.
 
-When removing a source filter whose count reaches zero, ip6_mc_del1_src()
-unlinks psf from pmc->mca_sources. If the filter was previously active,
-the code moved psf directly into pmc->mca_tomb by updating psf->sf_next.
+Increase the number of phases to 16 as a new upcoming device supports
+such a number.
 
-Because pmc->mca_sources is traversed locklessly under RCU (e.g. by
-ipv6_chk_mcast_addr()), mutating psf->sf_next before a grace period
-elapses diverts concurrent readers to the tombstone list. Consequently,
-readers miss remaining active sources in pmc->mca_sources and improperly
-examine deleted tombstone entries.
+While at it, add a new mask for controlling the source of the output
+voltage.
 
-Fix this by allocating a new tombstone node for pmc->mca_tomb (as done
-in sf_setstate()) and retiring the original psf via kfree_rcu().
+Note (groeck):
 
-Fixes: 4b200e398953 ("mld: convert ip6_sf_list to RCU")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260828084531.1826790-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch was meant to prepare for support of MAX20826 and compatible
+devices, which support more than 10 phases per page. However, Sashiko
+reports that the mp2975 driver already supports up to 14 phases, and the
+mp2856 driver supports up to 12 phases. This already has the potential for
+out-of-bounds writes when probing the affected chips, making this patch a
+bug fix.
+
+Fixes: 2c6fcbb21149 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2975 controller")
+Fixes: f9e5f289b686 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2856/mp2857 controller")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260911-hwmon-max20826-support-v2-1-5e30cbd97d84@analog.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/mcast.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/hwmon/pmbus/pmbus.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 30c8af655db1b..9d8908c7cfa74 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -2367,14 +2367,18 @@ static int ip6_mc_del1_src(struct ifmcaddr6 *pmc, int sfmode,
+--- a/drivers/hwmon/pmbus/pmbus.h
++++ b/drivers/hwmon/pmbus/pmbus.h
+@@ -241,6 +241,7 @@ enum pmbus_regs {
+ /*
+  * OPERATION
+  */
++#define PB_OPERATION_CONTROL_V_SRC	GENMASK(5, 4)
+ #define PB_OPERATION_CONTROL_ON		BIT(7)
  
- 		if (psf->sf_oldin && !(pmc->mca_flags & MAF_NOREPORT) &&
- 		    !mld_in_v1_mode(idev)) {
--			psf->sf_crcount = idev->mc_qrv;
--			rcu_assign_pointer(psf->sf_next,
--					   mc_dereference(pmc->mca_tomb, idev));
--			rcu_assign_pointer(pmc->mca_tomb, psf);
--			rv = 1;
--		} else {
--			kfree_rcu(psf, rcu);
-+			struct ip6_sf_list *dpsf = kmalloc(sizeof(*dpsf), GFP_KERNEL);
-+
-+			if (dpsf) {
-+				*dpsf = *psf;
-+				dpsf->sf_crcount = idev->mc_qrv;
-+				rcu_assign_pointer(dpsf->sf_next,
-+						   mc_dereference(pmc->mca_tomb, idev));
-+				rcu_assign_pointer(pmc->mca_tomb, dpsf);
-+				rv = 1;
-+			}
- 		}
-+		kfree_rcu(psf, rcu);
- 	}
- 	return rv;
- }
--- 
-2.53.0
-
+ /*
+@@ -376,7 +377,7 @@ enum pmbus_sensor_classes {
+ };
+ 
+ #define PMBUS_PAGES	32	/* Per PMBus specification */
+-#define PMBUS_PHASES	10	/* Maximum number of phases per page */
++#define PMBUS_PHASES	16	/* Maximum number of phases per page */
+ 
+ /* Functionality bit mask */
+ #define PMBUS_HAVE_VIN		BIT(0)
 
 
