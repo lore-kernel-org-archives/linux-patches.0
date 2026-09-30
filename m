@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA33CAE8D;
-	Wed, 30 Sep 2026 19:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696873C09F5;
+	Wed, 30 Sep 2026 19:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794902; cv=none; b=SyM+C8YBKxyMo8HudEYI4+d2E8t7dzER5M1i+8f97lgNSLg5HRKGxruvy8YPEhY6TfnFsU8CoYCdJFxYGo4xh+VJ52kSeKxShPBvfuUi/QYyIoDKIje6gspmARMiwoOQk1CVbeVdhH6x4GeiEJ9TbO+02WCbMDZhyl3V1jUqIrY=
+	t=1790794905; cv=none; b=T4XgO3NfRt25d0OXx89XkclMVg9TawckrIf5Y/Qmg9sDLuPmAY1bWMwOhM931rAjq6rJKrHgLAW5H329YrhbfjQ8Z2x2CuOMiOlxTUEORzbcEP6RYh12hheawNIc0uqlKMw+ZUtT4n7J1k8+FW3ueyhlpKexuRs4Wr0DnA2EcxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794902; c=relaxed/simple;
-	bh=dIObZoJ5NnSRoQsrJhlaA5fqz4Bm6ENPEYEy09vWz/s=;
+	s=arc-20240116; t=1790794905; c=relaxed/simple;
+	bh=ZTxNW0KmfJHS2PTjLm08QQPAfdlC5TkfWpr7jLD+JY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KP4sKYToMc7ZajJeoCaVdOydcQ0nTTpMhb7rga0Txoaizf2Mw7lK05Lfh3gKmXsMZNZVn1ZdLTmoGt4UCJv+gnG3zCFuMsMMxM7Oku0D7q/IreUhNH76ux6hwm/mCd/AemKkoL17myVRRASO9zvhpSsVTHJIQcG0X9UtMVrquTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16p6CvZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MikSkKiwG56Oo/8cTryiFsyyDzIW8Mz2klJJlpw4jx/1I+EVZ3omqstP5EtbbH+1I6LRjMnpwZFpdZ2ZtFuwDCCdDYNDfyrOwWiU3MZqvug9/Jj2AF2dnjnd/CgEEFkiCcdowEHpdEw2uHODU/sg7pGP05JCHzPeL+MIQtZgNZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctdDI5A/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16p6CvZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95AB1F00898;
-	Wed, 30 Sep 2026 19:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctdDI5A/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851721F000FF;
+	Wed, 30 Sep 2026 19:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794901;
-	bh=t6cjBy27lhH/6ZwD1/eUTOJ4gTazo/BdcnoMq0Up9BA=;
+	s=korg; t=1790794904;
+	bh=APX6u3IHBV4rE+/VXiowiLiQEiP74EWubJ8gXoo4j2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=16p6CvZIsBN72Wvo+TjittZoL2mE++DrIC7G2LMIDBfTeijwI+YY0ahnFcCB8yiYO
-	 PTyjjVhrb+iSbsJBCGfMkWbKIq039NC/btNtsxvWpqfaAW8bE4IN0i1747qnIOqecc
-	 20PAwWORPTObAkmA7m0z++oSUCWYDfqePvP5SnLY=
+	b=ctdDI5A/ejb3Y2IUmy/MOptxYAFBbIWOT2yzxMvAPYxGywV+Vx2B91WLOBDvMg8k1
+	 qbqO0vxxM7RWxkoMuoj/NUjtYLxltntKoisIpHc+VOHgLIyWOo+QiRcOOGzOdF2TO0
+	 JOXtiJyhQvqWs9/XprI23ZTfJPTmkfL6G3DV9PeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Markus Lindner <lindner.markus@outlook.at>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0328/1193] phonet: check register_netdevice_notifier() error in phonet_device_init()
-Date: Wed, 30 Sep 2026 17:16:52 +0200
-Message-ID: <20260930152441.429089111@linuxfoundation.org>
+Subject: [PATCH 6.6 0329/1193] ALSA: usb-audio: Add dB map quirk for Razer Barracuda X 2.4
+Date: Wed, 30 Sep 2026 17:16:53 +0200
+Message-ID: <20260930152441.450881582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,85 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Markus Lindner <lindner.markus@outlook.at>
 
-[ Upstream commit d1ff66b66151c14b084e88040512a064b1c1e493 ]
+[ Upstream commit acd8aa3c4b91a38c8521000790890bc9d1083f1d ]
 
-phonet_device_init() registers a netdevice notifier before calling
-phonet_netlink_register(), but does not check whether notifier
-registration succeeded. On failure, netlink setup still proceeds and
-init may return success without the notifier in place.
+The Razer Barracuda X 2.4 GHz USB headset dongle (0x1532:0x0552)
+reports a minimum volume register value of cval->min = -16800.
 
-Also, the existing phonet_netlink_register() failure path called
-phonet_device_exit(), which runs rtnl_unregister_all() even though
-rtnl_register_many() already unwound any partial registration. Calling
-the full exit helper on a partial init is not correct.
+In UAC 1/256 dB units, -16800 corresponds to -65.625 dB. However,
+stock ALSA misinterprets this raw integer as 1/100 dB units
+(-168.00 dB), causing user-space audio servers (PipeWire /
+PulseAudio) to map their volume curves against an incorrectly wide
+range.
 
-Check each registration error, including proc_create_net(), and unwind
-only the steps that have succeeded so far, in reverse order.
+Add an explicit usbmix_dB_map entry overriding Unit 2 to -6562
+(-65.62 dB) to accurately report the physical hardware
+attenuation bounds.
 
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Link: https://patch.msgid.link/20260721093956.162617-1-heminhong@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Markus Lindner <lindner.markus@outlook.at>
+Link: https://patch.msgid.link/AS8P195MB2142F4EFF83980BD02BA6566E1C12@AS8P195MB2142.EURP195.PROD.OUTLOOK.COM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/pn_dev.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ sound/usb/mixer_maps.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/phonet/pn_dev.c b/net/phonet/pn_dev.c
-index 3f020c362d6cd..260131669ed73 100644
---- a/net/phonet/pn_dev.c
-+++ b/net/phonet/pn_dev.c
-@@ -336,16 +336,34 @@ static struct pernet_operations phonet_net_ops = {
- /* Initialize Phonet devices list */
- int __init phonet_device_init(void)
- {
--	int err = register_pernet_subsys(&phonet_net_ops);
-+	int err;
-+
-+	err = register_pernet_subsys(&phonet_net_ops);
- 	if (err)
- 		return err;
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index faac7df1fbcf0..4d8dca04f87d0 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -344,6 +344,16 @@ static const struct usbmix_name_map bose_soundlink_map[] = {
+ 	{ 0 }	/* terminator */
+ };
  
--	proc_create_net("pnresource", 0, init_net.proc_net, &pn_res_seq_ops,
--			sizeof(struct seq_net_private));
--	register_netdevice_notifier(&phonet_device_notifier);
-+	if (!proc_create_net("pnresource", 0, init_net.proc_net,
-+			     &pn_res_seq_ops, sizeof(struct seq_net_private))) {
-+		err = -ENOMEM;
-+		goto err_pernet;
-+	}
++/*
++ * Razer Barracuda X 2.4: Firmware reports cval->min = -16800 in 1/256 dB units
++ * (-65.62 dB), which stock ALSA misinterprets as a -168 dB floor
++ */
++static const struct usbmix_dB_map razer_barracuda_x_2_4_dB = {-6562, 0};
++static const struct usbmix_name_map razer_barracuda_x_2_4_map[] = {
++	{ 2, NULL, .dB = &razer_barracuda_x_2_4_dB },
++	{ 0 }   /* terminator */
++};
 +
-+	err = register_netdevice_notifier(&phonet_device_notifier);
-+	if (err)
-+		goto err_proc;
-+
- 	err = phonet_netlink_register();
- 	if (err)
--		phonet_device_exit();
-+		goto err_notifier;
-+
-+	return 0;
-+
-+err_notifier:
-+	unregister_netdevice_notifier(&phonet_device_notifier);
-+err_proc:
-+	remove_proc_entry("pnresource", init_net.proc_net);
-+err_pernet:
-+	unregister_pernet_subsys(&phonet_net_ops);
- 	return err;
- }
- 
-@@ -353,8 +371,8 @@ void phonet_device_exit(void)
- {
- 	rtnl_unregister_all(PF_PHONET);
- 	unregister_netdevice_notifier(&phonet_device_notifier);
--	unregister_pernet_subsys(&phonet_net_ops);
- 	remove_proc_entry("pnresource", init_net.proc_net);
-+	unregister_pernet_subsys(&phonet_net_ops);
- }
- 
- int phonet_route_add(struct net_device *dev, u8 daddr)
+ /* Sennheiser Communications Headset [PC 8], the dB value is reported as -6 negative maximum  */
+ static const struct usbmix_dB_map sennheiser_pc8_dB = {-9500, 0};
+ static const struct usbmix_name_map sennheiser_pc8_map[] = {
+@@ -689,6 +699,11 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.id = USB_ID(0x17aa, 0x1046),
+ 		.map = lenovo_p620_rear_map,
+ 	},
++	{
++		/* Razer Barracuda X 2.4 */
++		.id = USB_ID(0x1532, 0x0552),
++		.map = razer_barracuda_x_2_4_map,
++	},
+ 	{
+ 		/* Sennheiser Communications Headset [PC 8] */
+ 		.id = USB_ID(0x1395, 0x0025),
 -- 
 2.53.0
 
