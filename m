@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157874F68C3;
-	Wed, 30 Sep 2026 15:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63A24F96D8;
+	Wed, 30 Sep 2026 15:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783055; cv=none; b=ozzwd2zYO9rwSWJkf/kZE1mJtUMOvBXp7zy5MPgSQ7RXbLw/+A11ikOU7UeXRoN6Iu9xwOV+BIKQnrrsMulxSPy0aHwbVGrxGUMPJCvec5CRopzluVE07WGLEo8EFbQIQC73kK6l+GvIAdVlOoJWAJ0YW2v0wiqxA+jF/sZSIk4=
+	t=1790783060; cv=none; b=bYNe9BWozdFMIgJryT8tfGAqq7FoCma8e+m2ye9NJ4WFAbJ7bafLcSYvOybUxnobIMIGDwoVEuec583YOoe5fLh5Yi7LzpwKFYRyu4riG9Rw2fKUN5vCNlGT5l0cF8L/hMtRqljQOL7Fgp7Z5cHaYOFRh4UFiIljpgMneVjzF0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783055; c=relaxed/simple;
-	bh=5ROrPfK3afVyVPOjDmoTDCKuX61GqO8TWkd3VffvV+o=;
+	s=arc-20240116; t=1790783060; c=relaxed/simple;
+	bh=lIBWVJLKcMOvMuo1WKKIbfHpx/otzDh2aPHsDrFUFX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLaLq+fnqDDdimogr1iNomEbWIeEvAUDs4uEoHquCZEjxE+olsbEwCIj7SVSkpVvyL1YABPRWBslWwq/yG0B+brWZP13nQsk/Zjt4GLdfjosn80SVhzMSWgI2iSrigdkhfQqkeNFRKvYYJ492zKEe8j7WGv44Y/Tii6paksD/h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqQSaDWx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BuZyB22dVxw3spspEiBcHpjA8RuBkzemuDQvLJg8K+9bGwaO8tNYIOwVzJOqCsAZOvRmKijdTm+0jZk2c2BxwL3mt11j/i6gpG8nGKMzLmnQCLGuYqbdAHITP5l1Y0+9jE9NczqkfOQfxjuTNMYipBIIbnmqMzV0zPwW9YWJR90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sL+5IUPM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqQSaDWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E395C1F000FF;
-	Wed, 30 Sep 2026 15:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sL+5IUPM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00491F00899;
+	Wed, 30 Sep 2026 15:44:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783049;
-	bh=QgVwRzjWlWFv2qyino0F9gfZkwbzGslbC+Lz2sgVuck=;
+	s=korg; t=1790783052;
+	bh=jXEdcn+AJcZikooJCmaW/BUyDFVfuNgJUINVFdDE2wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pqQSaDWxZbT/fPx6i+/9pUfukKy62w1sPjIq/xcucHEC0w7k2kjRIxvF+VgInNRlI
-	 xEGs1swXBvPH+DnQde7uBesDLOM6zq6vxHpWMYpJPSKotuaGQsH1UGzcIZSknFF2Rf
-	 Asx47AC9kCoW3MfrG8MLAIqqclGWpTNeX4WaqarQ=
+	b=sL+5IUPMJ3HcGVg5VA9JqYe1qivW9d/2oWwmJ/on4iBLxARMk0kRZpaIfbFVoQ9OZ
+	 UUerPEU/AoPCaaFSFGcZpZaKNoXRwtqYmrpsAgDrLP9xx2z/d88zbkdVhoZN62X23g
+	 dbb+hZpUTyVYp4HtSdNzbZEsYf8OQNispofGV4JA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Wolfgang Grandegger <wg@grandegger.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Jiri Slaby <jslaby@suse.cz>,
+	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@sina.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/595] tty: make tty_ldisc_ops::hangup return void
-Date: Wed, 30 Sep 2026 17:21:40 +0200
-Message-ID: <20260930152352.187356687@linuxfoundation.org>
+Subject: [PATCH 5.10 256/595] ALSA: caiaq: Decoupling ep1_in_urb in caiaq dev
+Date: Wed, 30 Sep 2026 17:22:29 +0200
+Message-ID: <20260930152353.216919953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -61,188 +52,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Edward Adam Davis <eadavis@sina.com>
 
-[ Upstream commit 28f194da4a2c4d431552025a4386edaffab181bd ]
+[ Upstream commit 402a9d6aab7ac787ab075adeb562c3db8b8f564b ]
 
-The documentation says that the return value of tty_ldisc_ops::hangup
-hook is ignored. And it really is, so there is no point for its return
-type to be int. Switch it to void and all the hooks too.
+The epq_in_urb object belonging to the caiaq device is coupled within
+the struct snd_usb_caiaqdev. After usb_submit_urb(epq_in_urb, GFP_KERNEL)
+executes successfully, epq_in_urb is successfully added to the urbp_list
+queue of the dummy HCD driver (userspace specifies dummy_hcd as the HCD
+layer driver for the caiaq USB device).
 
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Wolfgang Grandegger <wg@grandegger.com>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20210914091134.17426-4-jslaby@suse.cz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 9feb069e5ed0 ("ppp: ppp_async: simplify tty disc_data access")
+When init_card() calls snd_usb_caiaq_send_command() which subsequently
+fails due to a timeout, and proceeds to call snd_card_free() to release
+the card, the embedded ep1_in_urb object is also freed. When the dummy
+HCD driver detects that the URB has been unlinked, it returns the URB
+(by usb_hcd_giveback_urb()), which triggers [1].
+
+Decouple the ep1_in_urb object from the struct snd_usb_caiaqdev and switch
+to using a pointer instead. Separately allocate and manage the memory for
+ep1_in_urb to prevent the release of the snd_card memory object from
+interfering with it.
+
+midi_out_urb has the same issue as ep1_in_urb and is handled in the same
+way.
+
+[1]
+BUG: KASAN: slab-use-after-free in usb_free_urb+0x24/0x120 drivers/usb/core/urb.c:96
+Write of size 4 at addr ffff88803cee1050 by task ktimers/1/29
+Call Trace:
+ usb_free_urb+0x24/0x120 drivers/usb/core/urb.c:96
+ dummy_timer+0xaac/0x4d50 drivers/usb/gadget/udc/dummy_hcd.c:2019
+ __run_hrtimer kernel/time/hrtimer.c:2067 [inline]
+ __hrtimer_run_queues+0x3eb/0xaf0 kernel/time/hrtimer.c:2124
+ hrtimer_run_softirq+0x1e1/0x2e0 kernel/time/hrtimer.c:2141
+
+Allocated by task 36:
+ snd_card_new+0x7b/0x110 sound/core/init.c:184
+ create_card sound/usb/caiaq/device.c:429 [inline]
+ snd_probe+0x236/0x1af0 sound/usb/caiaq/device.c:544
+
+Freed by task 36:
+ snd_card_free_when_closed sound/core/init.c:630 [inline]
+ snd_card_free+0x138/0x1d0 sound/core/init.c:662
+ snd_probe+0x162b/0x1af0 sound/usb/caiaq/device.c:553
+
+Fixes: 523f1dce3743 ("[ALSA] Add Native Instrument usb audio device support")
+Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
+Tested-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@sina.com>
+Link: https://patch.msgid.link/20260903130521.554840-1-eadavis@sina.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/serial/tty.rst | 2 +-
- drivers/input/serio/serport.c           | 3 +--
- drivers/net/can/slcan.c                 | 3 +--
- drivers/net/ppp/ppp_async.c             | 3 +--
- drivers/net/ppp/ppp_synctty.c           | 3 +--
- drivers/net/slip/slip.c                 | 3 +--
- include/linux/tty_ldisc.h               | 2 +-
- sound/soc/codecs/cx20442.c              | 3 +--
- sound/soc/ti/ams-delta.c                | 3 +--
- 9 files changed, 9 insertions(+), 16 deletions(-)
+ sound/usb/caiaq/device.c | 36 ++++++++++++++++++++++++------------
+ sound/usb/caiaq/device.h |  4 ++--
+ sound/usb/caiaq/midi.c   |  6 +++---
+ 3 files changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/driver-api/serial/tty.rst b/Documentation/driver-api/serial/tty.rst
-index dd972caacf3ee..4b709f392713d 100644
---- a/Documentation/driver-api/serial/tty.rst
-+++ b/Documentation/driver-api/serial/tty.rst
-@@ -58,7 +58,7 @@ close()			This is called on a terminal when the line
- hangup()		Called when the tty line is hung up.
- 			The line discipline should cease I/O to the tty.
- 			No further calls into the ldisc code will occur.
--			The return value is ignored. Can sleep.
-+			Can sleep.
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index 8594cefdeba2c..bb7672d76b7a7 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -206,8 +206,8 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 		break;
+ 	}
  
- read()			(optional) A process requests reading data from
- 			the line. Multiple read calls may occur in parallel
-diff --git a/drivers/input/serio/serport.c b/drivers/input/serio/serport.c
-index 33e9d9bfd036f..1016cc95fffd1 100644
---- a/drivers/input/serio/serport.c
-+++ b/drivers/input/serio/serport.c
-@@ -243,7 +243,7 @@ static int serport_ldisc_compat_ioctl(struct tty_struct *tty,
+-	cdev->ep1_in_urb.actual_length = 0;
+-	ret = usb_submit_urb(&cdev->ep1_in_urb, GFP_ATOMIC);
++	cdev->ep1_in_urb->actual_length = 0;
++	ret = usb_submit_urb(cdev->ep1_in_urb, GFP_ATOMIC);
+ 	if (ret < 0)
+ 		dev_err(dev, "unable to submit urb. OOM!?\n");
  }
+@@ -422,6 +422,10 @@ static void card_free(struct snd_card *card)
  #endif
+ 	snd_usb_caiaq_audio_free(cdev);
+ 	usb_put_dev(cdev->chip.dev);
++	usb_free_urb(cdev->ep1_in_urb);
++	cdev->ep1_in_urb = NULL;
++	usb_free_urb(cdev->midi_out_urb);
++	cdev->midi_out_urb = NULL;
+ }
  
--static int serport_ldisc_hangup(struct tty_struct *tty)
-+static void serport_ldisc_hangup(struct tty_struct *tty)
+ static int create_card(struct usb_device *usb_dev,
+@@ -471,22 +475,30 @@ static int init_card(struct snd_usb_caiaqdev *cdev)
+ 		return -EIO;
+ 	}
+ 
+-	usb_init_urb(&cdev->ep1_in_urb);
+-	usb_init_urb(&cdev->midi_out_urb);
++	cdev->ep1_in_urb = usb_alloc_urb(0, GFP_KERNEL);
++	if (!cdev->ep1_in_urb)
++		return -ENOMEM;
+ 
+-	usb_fill_bulk_urb(&cdev->ep1_in_urb, usb_dev,
++	cdev->midi_out_urb = usb_alloc_urb(0, GFP_KERNEL);
++	if (!cdev->midi_out_urb) {
++		usb_free_urb(cdev->ep1_in_urb);
++		cdev->ep1_in_urb = NULL;
++		return -ENOMEM;
++	}
++
++	usb_fill_bulk_urb(cdev->ep1_in_urb, usb_dev,
+ 			  usb_rcvbulkpipe(usb_dev, 0x1),
+ 			  cdev->ep1_in_buf, EP1_BUFSIZE,
+ 			  usb_ep1_command_reply_dispatch, cdev);
+ 
+-	usb_fill_bulk_urb(&cdev->midi_out_urb, usb_dev,
++	usb_fill_bulk_urb(cdev->midi_out_urb, usb_dev,
+ 			  usb_sndbulkpipe(usb_dev, 0x1),
+ 			  cdev->midi_out_buf, EP1_BUFSIZE,
+ 			  snd_usb_caiaq_midi_output_done, cdev);
+ 
+ 	/* sanity checks of EPs before actually submitting */
+-	if (usb_urb_ep_type_check(&cdev->ep1_in_urb) ||
+-	    usb_urb_ep_type_check(&cdev->midi_out_urb)) {
++	if (usb_urb_ep_type_check(cdev->ep1_in_urb) ||
++	    usb_urb_ep_type_check(cdev->midi_out_urb)) {
+ 		dev_err(dev, "invalid EPs\n");
+ 		return -EINVAL;
+ 	}
+@@ -494,7 +506,7 @@ static int init_card(struct snd_usb_caiaqdev *cdev)
+ 	init_waitqueue_head(&cdev->ep1_wait_queue);
+ 	init_waitqueue_head(&cdev->prepare_wait_queue);
+ 
+-	if (usb_submit_urb(&cdev->ep1_in_urb, GFP_KERNEL) != 0)
++	if (usb_submit_urb(cdev->ep1_in_urb, GFP_KERNEL) != 0)
+ 		return -EIO;
+ 
+ 	err = snd_usb_caiaq_send_command(cdev, EP1_CMD_GET_DEVICE_INFO, NULL, 0);
+@@ -544,7 +556,7 @@ static int init_card(struct snd_usb_caiaqdev *cdev)
+ 	return 0;
+ 
+  err_kill_urb:
+-	usb_kill_urb(&cdev->ep1_in_urb);
++	usb_kill_urb(cdev->ep1_in_urb);
+ 	return err;
+ }
+ 
+@@ -590,8 +602,8 @@ static void snd_disconnect(struct usb_interface *intf)
+ #endif
+ 	snd_usb_caiaq_audio_disconnect(cdev);
+ 
+-	usb_kill_urb(&cdev->ep1_in_urb);
+-	usb_kill_urb(&cdev->midi_out_urb);
++	usb_kill_urb(cdev->ep1_in_urb);
++	usb_kill_urb(cdev->midi_out_urb);
+ 
+ 	snd_card_free_when_closed(card);
+ }
+diff --git a/sound/usb/caiaq/device.h b/sound/usb/caiaq/device.h
+index 50fea085765b2..5ad6cebd639c0 100644
+--- a/sound/usb/caiaq/device.h
++++ b/sound/usb/caiaq/device.h
+@@ -60,8 +60,8 @@ struct snd_usb_caiaq_cb_info;
+ struct snd_usb_caiaqdev {
+ 	struct snd_usb_audio chip;
+ 
+-	struct urb ep1_in_urb;
+-	struct urb midi_out_urb;
++	struct urb *ep1_in_urb;
++	struct urb *midi_out_urb;
+ 	struct urb **data_urbs_in;
+ 	struct urb **data_urbs_out;
+ 	struct snd_usb_caiaq_cb_info *data_cb_info;
+diff --git a/sound/usb/caiaq/midi.c b/sound/usb/caiaq/midi.c
+index 512fbb3ee6049..025fda784f758 100644
+--- a/sound/usb/caiaq/midi.c
++++ b/sound/usb/caiaq/midi.c
+@@ -43,7 +43,7 @@ static int snd_usb_caiaq_midi_output_close(struct snd_rawmidi_substream *substre
  {
- 	struct serport *serport = (struct serport *) tty->disc_data;
- 	unsigned long flags;
-@@ -253,7 +253,6 @@ static int serport_ldisc_hangup(struct tty_struct *tty)
- 	spin_unlock_irqrestore(&serport->lock, flags);
+ 	struct snd_usb_caiaqdev *cdev = substream->rmidi->private_data;
+ 	if (cdev->midi_out_active) {
+-		usb_kill_urb(&cdev->midi_out_urb);
++		usb_kill_urb(cdev->midi_out_urb);
+ 		cdev->midi_out_active = 0;
+ 	}
+ 	return 0;
+@@ -64,9 +64,9 @@ static void snd_usb_caiaq_midi_send(struct snd_usb_caiaqdev *cdev,
+ 		return;
  
- 	wake_up_interruptible(&serport->wait);
--	return 0;
- }
+ 	cdev->midi_out_buf[2] = len;
+-	cdev->midi_out_urb.transfer_buffer_length = len+3;
++	cdev->midi_out_urb->transfer_buffer_length = len+3;
  
- static void serport_ldisc_write_wakeup(struct tty_struct * tty)
-diff --git a/drivers/net/can/slcan.c b/drivers/net/can/slcan.c
-index 972827db819a5..d1833aafc40cd 100644
---- a/drivers/net/can/slcan.c
-+++ b/drivers/net/can/slcan.c
-@@ -662,10 +662,9 @@ static void slcan_close(struct tty_struct *tty)
- 	/* This will complete via sl_free_netdev */
- }
- 
--static int slcan_hangup(struct tty_struct *tty)
-+static void slcan_hangup(struct tty_struct *tty)
- {
- 	slcan_close(tty);
--	return 0;
- }
- 
- /* Perform I/O control on an active SLCAN channel. */
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index 86bd14220aa0a..ffc74744a7fe7 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -247,10 +247,9 @@ ppp_asynctty_close(struct tty_struct *tty)
-  * Wait for I/O to driver to complete and unregister PPP channel.
-  * This is already done by the close routine, so just call that.
-  */
--static int ppp_asynctty_hangup(struct tty_struct *tty)
-+static void ppp_asynctty_hangup(struct tty_struct *tty)
- {
- 	ppp_asynctty_close(tty);
--	return 0;
- }
- 
- /*
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 11725cab4912b..85b0ac03a1c39 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -245,10 +245,9 @@ ppp_sync_close(struct tty_struct *tty)
-  * Wait for I/O to driver to complete and unregister PPP channel.
-  * This is already done by the close routine, so just call that.
-  */
--static int ppp_sync_hangup(struct tty_struct *tty)
-+static void ppp_sync_hangup(struct tty_struct *tty)
- {
- 	ppp_sync_close(tty);
--	return 0;
- }
- 
- /*
-diff --git a/drivers/net/slip/slip.c b/drivers/net/slip/slip.c
-index 0373e3253e583..9c04e327c26af 100644
---- a/drivers/net/slip/slip.c
-+++ b/drivers/net/slip/slip.c
-@@ -915,10 +915,9 @@ static void slip_close(struct tty_struct *tty)
- 	/* sl_uninit() has dropped the slip_devs[] entry by now */
- }
- 
--static int slip_hangup(struct tty_struct *tty)
-+static void slip_hangup(struct tty_struct *tty)
- {
- 	slip_close(tty);
--	return 0;
- }
-  /************************************************************************
-   *			STANDARD SLIP ENCAPSULATION		  	 *
-diff --git a/include/linux/tty_ldisc.h b/include/linux/tty_ldisc.h
-index 572a079761165..18a2c0c8ac4d7 100644
---- a/include/linux/tty_ldisc.h
-+++ b/include/linux/tty_ldisc.h
-@@ -196,7 +196,7 @@ struct tty_ldisc_ops {
- 	void	(*set_termios)(struct tty_struct *tty, struct ktermios *old);
- 	__poll_t (*poll)(struct tty_struct *, struct file *,
- 			     struct poll_table_struct *);
--	int	(*hangup)(struct tty_struct *tty);
-+	void	(*hangup)(struct tty_struct *tty);
- 
- 	/*
- 	 * The following routines are called from below.
-diff --git a/sound/soc/codecs/cx20442.c b/sound/soc/codecs/cx20442.c
-index 161be8b7d1317..3a23d4a0ee0c6 100644
---- a/sound/soc/codecs/cx20442.c
-+++ b/sound/soc/codecs/cx20442.c
-@@ -252,10 +252,9 @@ static void v253_close(struct tty_struct *tty)
- }
- 
- /* Line discipline .hangup() */
--static int v253_hangup(struct tty_struct *tty)
-+static void v253_hangup(struct tty_struct *tty)
- {
- 	v253_close(tty);
--	return 0;
- }
- 
- /* Line discipline .receive_buf() */
-diff --git a/sound/soc/ti/ams-delta.c b/sound/soc/ti/ams-delta.c
-index fbd75732a68b3..b83e36db6367f 100644
---- a/sound/soc/ti/ams-delta.c
-+++ b/sound/soc/ti/ams-delta.c
-@@ -332,10 +332,9 @@ static void cx81801_close(struct tty_struct *tty)
- }
- 
- /* Line discipline .hangup() */
--static int cx81801_hangup(struct tty_struct *tty)
-+static void cx81801_hangup(struct tty_struct *tty)
- {
- 	cx81801_close(tty);
--	return 0;
- }
- 
- /* Line discipline .receive_buf() */
+-	ret = usb_submit_urb(&cdev->midi_out_urb, GFP_ATOMIC);
++	ret = usb_submit_urb(cdev->midi_out_urb, GFP_ATOMIC);
+ 	if (ret < 0)
+ 		dev_err(dev,
+ 			"snd_usb_caiaq_midi_send(%p): usb_submit_urb() failed,"
 -- 
 2.53.0
 
