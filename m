@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC84361675;
-	Wed, 30 Sep 2026 16:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B1E4F0526;
+	Wed, 30 Sep 2026 16:30:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785811; cv=none; b=Ye38WAxUMrZDdIq9s2NNDpGFraY4SYPJvSKPsXbp6I/bhYUs5pOO0P6EGomfLVpL2bTXhttYhGKr23EECXN62MInyncIeqI/D9QgCelF/4SwuzE7/qCtiWbYhoHXaHAh04V9LBnMTYaq+X8eIPRkSjF6JbA8IMJlXira+0fg/yw=
+	t=1790785814; cv=none; b=ezHJTbpJRn4/gaHWjqg3ZwN3a+2X75CHqTobuDWMWIfRIOISCqwq/L85CfVujOu18eA5i9qL3xDCZR78iISAig+VKejlzQmmAYUxUxgePY7RNXnTngCXSCkm7u7S3kmtq5TivHftcdGcbjQgjswyN6yT+lA2aoDMIvETsm6wB0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785811; c=relaxed/simple;
-	bh=HP9jK/O1Glic/jlBLXH2MVHWDAswpb//IiiL/rkXrUY=;
+	s=arc-20240116; t=1790785814; c=relaxed/simple;
+	bh=6mk4cYuKnss8J0J9A7P6Rwa1NV8pwQ5XwLpSWYmo7v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M3jRFBlrvWomNj2VBH8mmzlAHOCJioyyFWYJphjIeGaTMbY7P8mFg6LLLYO4Ur/c+6sH/01YFbkf1jOeKD/4rxM7V2uRf/O281IHrMfUeN+8V5r1QvJRqHy/OukW1AR6eQbowlk1lpHnT9FXEA/0f+N+1Ys4BvMoEcmYIPdzkoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXoJ2LHh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kj6EmDTI559+IbP/wFa/xiy+WSwPXYajc2NMPe16tg+dWTOZp+BmT/bgSFalIb9iNBfaLoUIZmB31hcAeL0wnDIszmnb8SocX3vEhoNoBvhgbkIe27WWwxC+C5NbgU1KW8BMqtvLnW0bMCc5K5l8DbfoXN/rMrPTXj0NoDkucAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbKEwJjO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXoJ2LHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C890D1F000FF;
-	Wed, 30 Sep 2026 16:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbKEwJjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A914F1F000FF;
+	Wed, 30 Sep 2026 16:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785810;
-	bh=rN9fw1qzVcnq62fQRDvkwTnp2NaTihxEss5LrErYSnA=;
+	s=korg; t=1790785813;
+	bh=JwxZVhmERjnlSxyDYrj2axutUSCxB2gxj3fVEZQr19c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eXoJ2LHhRWxHHxverdOAZoBipolYBrJusE70RlJSCdji3DGg6BW5xPPD9QGIe4hBS
-	 WthbyZKp0HM86Po1Wm7YkQCGD5ISGQQ34tLpgOJ9ffbvMq6v2Ly4Et1ZfC0fp4ITgY
-	 ZJcs4l8Fn08km4y6EyH3nKceQ0BFV45Cubq1vApY=
+	b=dbKEwJjO1ctrJ17Eol+zevKwtEO+DyD3C0MXBK39nXC3CygAkORLTtNorOVvA3kfV
+	 i8WLdHDRYz3+QJqomC/M/RxoB/4TQbetmOlT1+JRh86AVbMn0pbORPPKkpucqFnr2V
+	 4UlGgqCL0bsMe8N9Y5/WpZqWN23fzsTDmubpCVq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Metzler <bmt@zurich.ibm.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 595/982] RDMA/siw: Cleanup siw_accept
-Date: Wed, 30 Sep 2026 17:22:11 +0200
-Message-ID: <20260930152429.564137117@linuxfoundation.org>
+Subject: [PATCH 6.1 596/982] RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept
+Date: Wed, 30 Sep 2026 17:22:12 +0200
+Message-ID: <20260930152429.585115286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,136 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 77b59bd932a026b64303d313d966decb0e9225fa ]
+[ Upstream commit 32cd87f54dd1070020e664ccb0312a9f0fea79b4 ]
 
-With the initialization of rv and the two added label, we can
-simplifiy code a bit.
+We need to clear cep before release state_lock as siw_qp_llp_close and
+siw_qp_modify->siw_qp_llp_close did.
 
-Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Otherwise if siw_qp_modify() fails in siw_accept(), the QP's state_lock
+is released before the error path cleanup. A concurrent ibv_modify_qp()
+transitioning the QP to ERROR can race in this window:
+
+  siw_accept()                       ibv_modify_qp(ERROR)
+  ----------------------             ----------------------
+  siw_qp_modify() fails
+  up_write(&qp->state_lock)
+                                     down_write(&qp->state_lock)
+                                     nextstate_from_idle():
+				     if (qp->cep)
+                                       siw_cep_put(qp->cep) <- frees cep
+                                       qp->cep = NULL
+  goto error
+    cep->qp = NULL                   <- UAF
+
+Clear qp->cep and drop the association reference taken by siw_cep_get(),
+all under the write lock held from the initial down_write(&qp->state_lock).
+Thread B therefore sees qp->cep == NULL, skips its own put, and cannot free
+the cep before siw_accept() is done with it.
+
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://lore.kernel.org/linux-rdma/d6fbe475-a5c2-f975-99b0-a0bd6b6d10e8@linux.dev/T/#m5876c1ff2de8686a9a1173b8f1aa0ff5363a785c
 Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://lore.kernel.org/r/20231113115726.12762-13-guoqing.jiang@linux.dev
+Link: https://patch.msgid.link/20260827125553.12831-1-guoqing.jiang@linux.dev
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 32cd87f54dd1 ("RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 41 ++++++++++--------------------
- 1 file changed, 14 insertions(+), 27 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index bc2ad13f9c6b6..629ed5e58473d 100644
+index 629ed5e58473d..19932fc8856d7 100644
 --- a/drivers/infiniband/sw/siw/siw_cm.c
 +++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -1554,7 +1554,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	struct siw_cep *cep = (struct siw_cep *)id->provider_data;
- 	struct siw_qp *qp;
- 	struct siw_qp_attrs qp_attrs;
--	int rv, max_priv_data = MPA_MAX_PRIVDATA;
-+	int rv = -EINVAL, max_priv_data = MPA_MAX_PRIVDATA;
- 	bool wait_for_peer_rts = false;
- 
- 	siw_cep_set_inuse(cep);
-@@ -1570,24 +1570,17 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 
- 	if (cep->state != SIW_EPSTATE_RECVD_MPAREQ) {
- 		siw_dbg_cep(cep, "out of state\n");
--
--		siw_cep_set_free_and_put(cep);
--
--		return -ECONNRESET;
-+		rv = -ECONNRESET;
-+		goto free_cep;
- 	}
- 	qp = siw_qp_id2obj(sdev, params->qpn);
- 	if (!qp) {
- 		WARN(1, "[QP %d] does not exist\n", params->qpn);
--		siw_cep_set_free_and_put(cep);
--
--		return -EINVAL;
-+		goto free_cep;
- 	}
- 	down_write(&qp->state_lock);
--	if (qp->attrs.state > SIW_QP_STATE_RTR) {
--		rv = -EINVAL;
--		up_write(&qp->state_lock);
--		goto error;
--	}
-+	if (qp->attrs.state > SIW_QP_STATE_RTR)
-+		goto error_unlock;
- 	siw_dbg_cep(cep, "[QP %d]\n", params->qpn);
- 
- 	if (try_gso && cep->mpa.hdr.params.bits & MPA_RR_FLAG_GSO_EXP) {
-@@ -1601,9 +1594,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 			"[QP %u]: ord %d (max %d), ird %d (max %d)\n",
- 			qp_id(qp), params->ord, sdev->attrs.max_ord,
- 			params->ird, sdev->attrs.max_ird);
--		rv = -EINVAL;
--		up_write(&qp->state_lock);
--		goto error;
-+		goto error_unlock;
- 	}
- 	if (cep->enhanced_rdma_conn_est)
- 		max_priv_data -= sizeof(struct mpa_v2_data);
-@@ -1613,9 +1604,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 			cep,
- 			"[QP %u]: private data length: %d (max %d)\n",
- 			qp_id(qp), params->private_data_len, max_priv_data);
--		rv = -EINVAL;
--		up_write(&qp->state_lock);
--		goto error;
-+		goto error_unlock;
- 	}
- 	if (cep->enhanced_rdma_conn_est) {
- 		if (params->ord > cep->ord) {
-@@ -1624,9 +1613,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 			} else {
- 				cep->ird = params->ird;
- 				cep->ord = params->ord;
--				rv = -EINVAL;
--				up_write(&qp->state_lock);
--				goto error;
-+				goto error_unlock;
- 			}
- 		}
- 		if (params->ird < cep->ird) {
-@@ -1635,8 +1622,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 				params->ird = cep->ird;
- 			else {
- 				rv = -ENOMEM;
--				up_write(&qp->state_lock);
--				goto error;
-+				goto error_unlock;
- 			}
- 		}
- 		if (cep->mpa.v2_ctrl.ord &
-@@ -1683,7 +1669,6 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+@@ -1668,9 +1668,12 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 			   SIW_QP_ATTR_STATE | SIW_QP_ATTR_LLP_HANDLE |
  				   SIW_QP_ATTR_ORD | SIW_QP_ATTR_IRD |
  				   SIW_QP_ATTR_MPA);
++	if (rv) {
++		qp->cep = NULL;
++		siw_cep_put(cep);
++		goto error_unlock;
++	}
  	up_write(&qp->state_lock);
--
- 	if (rv)
- 		goto error;
+-	if (rv)
+-		goto error;
  
-@@ -1706,6 +1691,9 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	siw_cep_set_free(cep);
- 
- 	return 0;
-+
-+error_unlock:
-+	up_write(&qp->state_lock);
- error:
- 	siw_socket_disassoc(cep->sock);
- 	sock_release(cep->sock);
-@@ -1720,9 +1708,8 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	}
- 	cep->qp = NULL;
- 	siw_qp_put(qp);
--
-+free_cep:
- 	siw_cep_set_free_and_put(cep);
--
- 	return rv;
- }
- 
+ 	siw_dbg_cep(cep, "[QP %u]: send mpa reply, %d byte pdata\n",
+ 		    qp_id(qp), params->private_data_len);
 -- 
 2.53.0
 
