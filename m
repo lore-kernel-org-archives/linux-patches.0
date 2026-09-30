@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCD34594E;
-	Wed, 30 Sep 2026 18:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF3B4594E;
+	Wed, 30 Sep 2026 18:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793162; cv=none; b=cggbjeXZQhUjvyya1sLg2gHkmx17XOxxNARDHWApFgv7WLUFX2BpmyP+G8CRT7r63ASIGHQD+68JKoYhGB2Jb1T+V/O6nG+QYSzL7qBuHaA9W0g8cNsqjMOGi7ZWpDOL/k+8UJsY9No5D5RaFRFn88VL8liYkvR/PcCaYbBJ2Pw=
+	t=1790793165; cv=none; b=Rtq3TPJRPRuKB+LOLecfrepilMezbZP3DIKXP+fC1paA8+ArvYqz61Jxzr+lnahLa9HsMZ3Lwmvk0Z4hvBrWSyZk4MsoyiAQ8G3isHYw1lDFznhpzfdrv/KZUS9ftPWIeD6u+1xawWBYhyUPVQdySDcjJmcHtgnVSlWERJb1ygM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793162; c=relaxed/simple;
-	bh=jj+E+Z9PIcyPXP6wMtClRbAac2lAxMexB+AQNusHuFw=;
+	s=arc-20240116; t=1790793165; c=relaxed/simple;
+	bh=xQhpDRhuISC+B4KysjlDn6/0w8tm+o48cNsIr2AX56w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWs9YbMvMrQhCPSF0wxhtEI8b+JrT2qhrVBH6RRfSlo7+zL4GhF9/l18xT4urkdTV/CVQ8LatLeh+C1Uo6c05bKtAWTZrpvXFX7Nx7zcrcV2tN2BEVaoswtfNqMAqJg11vu+jD0J+PoqN9/dIdU3ofMqQdHAqBJUXJ2KxHkLaGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wje0542g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ctjv7SBPuQXPsTWpna+w6k5QOd1rDRDhOKIe3GfvKSiqWTmq8J6GvPVVSUI16gnSNwCRAiEuUPdyEpxNIoGV7PZNe1Dto78LCnAuCpOAfF9F5gl/Vey00SveSYSmKJIDTvdLV6AEYbs4QIJxZXwDJFajqzSfHLaxeGBWoyyqNA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGlG9Eqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wje0542g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91051F000FF;
-	Wed, 30 Sep 2026 18:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGlG9Eqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1FF1F000FF;
+	Wed, 30 Sep 2026 18:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793161;
-	bh=hqEDw8GOzxPbpjV6Gx2SvxrTe8b9Ygk0YEGlcMTWhk4=;
+	s=korg; t=1790793164;
+	bh=FmTgyDwG6ELquPLRSEm8GEplzwXgyolgl/Ic8zCS074=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wje0542gEnMzH6mBUcs1VdOjE9aMaTvUq/T4mM5F7zIyBL4vEDif3q6Ar9GDfbNfl
-	 GqQPK+tGLWMFcCK38vB2rSa8Y/FuyyXVcCdoDu2Esfivj/Tzgpg6XZriPtIGT9nhkK
-	 TmunHBrlVHq1ScsecjcmfoOecxCjPwWDWfe8taK8=
+	b=mGlG9EqdOJlvYerXVKr2G3c/6AQ2mTvoNJfxen5xZ9OUvscZrv6ZAgsKmhugLyUpS
+	 XvvCohTXwgdzgw0RYuU96u2wHRQ59qZK1WiIxsQ2Jg1I7wIJzOMP86ug6l0Bur3jDi
+	 Q/DvDQ/1gYDaKrNegbfMeHl70LD0Fu5OStsMOhII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jason Xing <kerneljasonxing@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 156/395] net: bcmgenet: stop Tx NAPI before disabling the queues
-Date: Wed, 30 Sep 2026 17:26:58 +0200
-Message-ID: <20260930152344.029694218@linuxfoundation.org>
+Subject: [PATCH 6.18 157/395] veth: manage XDP program pointers during channel resize
+Date: Wed, 30 Sep 2026 17:26:59 +0200
+Message-ID: <20260930152344.050958045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,77 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7e87508b5c4d81210d0a736ed01962e52f5c4c56 ]
+[ Upstream commit 7104a370714346b667712913dc16abf14bbc97ed ]
 
-bcmgenet_netif_stop() and the Wake-on-LAN branch of bcmgenet_suspend()
-both disable the Tx queues first and stop Tx NAPI several steps later. A
-completion in flight calls netif_tx_wake_queue() in between, and nothing
-stops the queue again, so a transmit can reach the rings after they have
-been freed.
+veth_set_channels() tears down XDP resources for removed RX queues
+without clearing rq->xdp_prog.  If the program is then detached or
+replaced, those queues keep the old pointer after bpf_prog_put().
+A later channel increase can re-enable NAPI and run the freed program.
 
-Close is safe because dev_deactivate_many() stops the qdisc first.
-bcmgenet_suspend() does not, so stop Tx NAPI before the queues on both
-paths.
+  BUG: unable to handle page fault for address: ffffc90000256048
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: veth_xdp_rcv_skb (include/linux/filter.h:779
+                         include/net/xdp.h:696 drivers/net/veth.c:820)
+  Call Trace:
+   veth_xdp_rcv (drivers/net/veth.c:941)
+   veth_poll (drivers/net/veth.c:986)
+   __napi_poll (net/core/dev.c:7787)
+   net_rx_action (net/core/dev.c:7850 net/core/dev.c:8007)
+   handle_softirqs (kernel/softirq.c:645)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-KASAN on a Raspberry Pi CM4, driven from an MTU change because suspend
-freezes user space before the callback runs:
-
-  BUG: KASAN: use-after-free in bcmgenet_xmit+0x17f8/0x2258
-  Write of size 8 at addr ffffff8055844a68 by task ksoftirqd/0/14
-   bcmgenet_xmit+0x17f8/0x2258
-   dev_hard_start_xmit+0x13c/0x588
-   sch_direct_xmit+0x108/0x340
-   __dev_queue_xmit+0x1190/0x3848
-
-Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260922130639.1660797-1-nb@tipi-net.de
+Fixes: 4752eeb3d891 ("veth: implement support for set_channel ethtool op")
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20260921231856.1798630-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/veth.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 41539f9f8061c..c9a8018148483 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3439,6 +3439,8 @@ static void bcmgenet_netif_stop(struct net_device *dev, bool stop_phy)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 56519b646cacd..fea031d491b34 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1053,6 +1053,7 @@ static int __veth_napi_enable_range(struct net_device *dev, int start, int end)
+ 	for (i = start; i < end; i++) {
+ 		struct veth_rq *rq = &priv->rq[i];
  
-+	/* Stop completion polling before it can wake a stopped queue */
-+	bcmgenet_disable_tx_napi(priv);
- 	netif_tx_disable(dev);
++		rcu_assign_pointer(rq->xdp_prog, priv->_xdp_prog);
+ 		napi_enable(&rq->xdp_napi);
+ 		rcu_assign_pointer(priv->rq[i].napi, &priv->rq[i].xdp_napi);
+ 	}
+@@ -1087,6 +1088,7 @@ static void veth_napi_del_range(struct net_device *dev, int start, int end)
  
- 	/* Disable MAC receive */
-@@ -3453,7 +3455,6 @@ static void bcmgenet_netif_stop(struct net_device *dev, bool stop_phy)
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
- 
--	bcmgenet_disable_tx_napi(priv);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
- 
-@@ -4325,6 +4326,8 @@ static int bcmgenet_suspend(struct device *d)
- 	netif_device_detach(dev);
- 
- 	if (device_may_wakeup(d) && priv->wolopts) {
-+		/* Stop completion polling before it can wake a stopped queue */
-+		bcmgenet_disable_tx_napi(priv);
- 		netif_tx_disable(dev);
- 
- 		/* Suspend non-wake Rx data flows */
-@@ -4353,7 +4356,6 @@ static int bcmgenet_suspend(struct device *d)
- 			netdev_warn(priv->dev,
- 				    "Timed out while disabling TX DMA\n");
- 
--		bcmgenet_disable_tx_napi(priv);
- 		bcmgenet_disable_rx_napi(priv);
- 		disable_irq(priv->irq1);
- 		bcmgenet_tx_reclaim_all(dev);
+ 		rcu_assign_pointer(priv->rq[i].napi, NULL);
+ 		napi_disable(&rq->xdp_napi);
++		rcu_assign_pointer(rq->xdp_prog, NULL);
+ 		__netif_napi_del(&rq->xdp_napi);
+ 	}
+ 	synchronize_net();
 -- 
 2.53.0
 
