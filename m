@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C3F4E73B2;
-	Wed, 30 Sep 2026 17:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D6A4E73B2;
+	Wed, 30 Sep 2026 17:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788607; cv=none; b=m7NfT04QNJ+WVVAWtwj4oJIcxWsE8bdd3KDzyB6KM7Gpiqt+Mi90oM0czgS8j0ZHAr5O4WUPOJH5Lr5DcpykNEjDdBleOCQE9RUrXs1XdVj18BksMCPQAEXyYRA5/1qCi1JmKjDXpQd34a2iooCpxGKWvigGGsUr8iamZb9Qb9Q=
+	t=1790788609; cv=none; b=JiTq9QNEATlaN5mzb2b2BFc8jg+9kCV7SNzKkVd7S4WKRU0apYa5b8XtlzkvT5YO91psNdMW47G86nTMqj++GgtzR5+gGyeuB8komsqmZfVNLZQg5Pc28JColwDPGGenq2KeleJjGDvZfEdVblF2WW5H77PZRR+KSuNOPjBX1VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788607; c=relaxed/simple;
-	bh=F69FIX1eKoXqVD7Wl2UjJ9vy2M/ES2U5+TdQbbtKMXU=;
+	s=arc-20240116; t=1790788609; c=relaxed/simple;
+	bh=ngAuUczOlu9dpjly4iYeRWX9dAbcNtnhbBfg7usXZJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYITsyE33h925ndN1DDF6Z+4QcKmGSK4D9dkOyZkS4lUBEE3xD8s96ebkct6mbiDIFcakgnhtpxXJMXwzn67MMGk83NrC6eolwNP5MK0dH79Jm6YMV0qyViKq1cA9L3cMkoP+9kDSTcEEpEKXUU0EhEkPn9Hy5QL3+Hy7Kb7Qdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgqpOmPB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWRMRWt+d8DpMj/xjcOg7tJDIQ2eg3ukTvtS1zrcgj80faHfdmLAD4nqpkN3tAkFdq9Ag1d+eHFdcfWO0YabgqcRVP6iAu6UNmueax572nKlpgBYXRW966x4vo4L2KhrLSMZpCcPk5s9WNuryOdJy5Ifyb+J+LU1yW3KyHzP5uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCtbPnAH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgqpOmPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB951F000FF;
-	Wed, 30 Sep 2026 17:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCtbPnAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8AC1F000FF;
+	Wed, 30 Sep 2026 17:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788605;
-	bh=Dl7b6QE70BzeFTli1/w+zWhb1HjhNX6qzs99qwmPBuk=;
+	s=korg; t=1790788608;
+	bh=PopZ5XH0UuV+h3TSRhgCdvgNzmfVGKTESQv/Hq/xCk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgqpOmPBGBWQVXJ/Am1k24nKuvTqv2h8GGySPeSjXpmwwIyIXIsh5pkiFnPtwZGVo
-	 6gAufSg1VtTOcV4UyHHvGewyDHZDZG860Z4eLfzP9w6GpU3GTYzsWujU08ExsQ4hMC
-	 X8fGaolWvjGbzGegvuPuh+grBlBdeZhmJ+kieomw=
+	b=cCtbPnAHf4bG+HGfmghKLusuHlMffRtQlS43DMdwyBGbaVR+9qQlnqElXCCRKHKma
+	 XMNpXE66JBOf8OZ5EzFazGz3lTvzeso4EIPeHZ88aztfpKA0Zd1ostkEqnNz4IXuy+
+	 tSLF3wYT6yb5weAI5+5qFH816eackRlwXwSsNrYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Thibert <nithibert@gmail.com>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 184/877] Bluetooth: btusb: fix NXP IW610 composite device handling
-Date: Wed, 30 Sep 2026 17:18:15 +0200
-Message-ID: <20260930152418.698936154@linuxfoundation.org>
+Subject: [PATCH 6.12 185/877] Bluetooth: eir: validate service data length before reading UUID
+Date: Wed, 30 Sep 2026 17:18:16 +0200
+Message-ID: <20260930152418.720758289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,75 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Thibert <nithibert@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-commit 2b50adefed9808a56d84d1de803cad882cc787fa upstream.
+commit e8241766794cf551d787fa3a77c0d54bbea6f6aa upstream.
 
-The NXP IW610 module exposes itself as a composite USB device
-(0471:0215) with three interfaces: two real Bluetooth HCI interfaces
-(class 0xe0) and one vendor-specific WiFi interface (class 0xff) used
-by mwifiex-nxp.
+eir_get_service_data() reads a 16-bit UUID from the service data using
+get_unaligned_le16() without first checking that the data is long enough
+to hold a UUID16 (2 bytes). If a malformed EIR entry has a service data
+field with only 1 byte of payload (field_len=2), eir_get_data() returns
+dlen=1. The subsequent get_unaligned_le16() then reads 1 byte past the
+field boundary.
 
-The composite device's whole USB descriptor reports class 0xe0/01/01
-(Bluetooth), so btusb_table's generic USB_DEVICE_INFO(0xe0, 0x01, 0x01)
-entry matches every interface, not just the two real HCI ones -- btusb
-ends up binding the WiFi interface too, and mwifiex-nxp never gets it.
+Additionally, if the corrupted UUID happens to match, the length
+calculation "dlen - 2" underflows to SIZE_MAX since dlen is size_t.
+Current callers either pass NULL for the length parameter or bounds-check
+the returned length, but future callers may not.
 
-Fix:
-1. In btusb_table (the table the USB core actually matches against),
-   explicitly ignore the WiFi interface via BTUSB_IGNORE, ahead of the
-   generic entry.
-2. In quirks_table, scope the existing BTUSB_MARVELL entry to the BT
-   interface class instead of matching the whole device by VID/PID
-   (harmless either way since quirks_table isn't consulted for initial
-   binding, but keep it correct).
+Add a check that dlen >= sizeof(u16) and skip fields that are too short
+to contain a valid UUID16.
 
-Not upstream anywhere: checked NXP's own i.MX kernel fork
-(nxp-imx/linux-imx), no IW610 references in btusb.c on any branch --
-their reference designs wire this chip differently (WiFi over SDIO
-per their release notes), so they never hit this.
-
-Signed-off-by: Nicolas Thibert <nithibert@gmail.com>
+Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM (Claude Sonnet 5, Anthropic)
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/bluetooth/eir.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -68,6 +68,15 @@ static struct usb_driver btusb_driver;
- #define BTUSB_BARROT			BIT(28)
+--- a/net/bluetooth/eir.c
++++ b/net/bluetooth/eir.c
+@@ -373,7 +373,15 @@ void *eir_get_service_data(u8 *eir, size
+ 	size_t dlen;
  
- static const struct usb_device_id btusb_table[] = {
-+	/*
-+	 * NXP IW610 (0471:0215): the composite device reports Bluetooth
-+	 * class at the whole-device level, so the generic entry below
-+	 * would also match this WiFi vendor interface. Ignore it here
-+	 * first so mwifiex-nxp can bind it instead.
-+	 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0471, 0x0215, 0xff, 0xff, 0xff),
-+	  .driver_info = BTUSB_IGNORE },
+ 	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
+-		u16 value = get_unaligned_le16(eir);
++		u16 value;
 +
- 	/* Generic Bluetooth USB device */
- 	{ USB_DEVICE_INFO(0xe0, 0x01, 0x01) },
- 
-@@ -470,6 +479,14 @@ static const struct usb_device_id quirks
- 	{ USB_DEVICE(0x1286, 0x2046), .driver_info = BTUSB_MARVELL },
- 	{ USB_DEVICE(0x1286, 0x204e), .driver_info = BTUSB_MARVELL },
- 
-+	/*
-+	 * NXP IW610 BT interfaces (Marvell-lineage silicon, same quirk as
-+	 * the 0x1286 entries above). Scoped to the BT interface class,
-+	 * not just VID/PID -- see the btusb_table entry above.
-+	 */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0471, 0x0215, 0xe0, 0x01, 0x01),
-+	  .driver_info = BTUSB_MARVELL },
++		if (dlen < sizeof(value)) {
++			eir += dlen;
++			eir_len = eir_end - eir;
++			continue;
++		}
 +
- 	/* Intel Bluetooth devices */
- 	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_COMBINED },
- 	{ USB_DEVICE(0x8087, 0x0026), .driver_info = BTUSB_INTEL_COMBINED },
++		value = get_unaligned_le16(eir);
+ 
+ 		if (uuid == value) {
+ 			if (len)
 
 
