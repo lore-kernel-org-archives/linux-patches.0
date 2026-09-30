@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F43513567;
-	Wed, 30 Sep 2026 16:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CEB51CF46;
+	Wed, 30 Sep 2026 16:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785032; cv=none; b=lBjSAFnKmElRWgta7ZEm0FwFWGby/FZ91DXtq0GExnDAdhMX3L29cCQWtjrCjIprvFZey3bvR5rtfMXar46LUj67bMhiB3pQ4EwwFRS6VzGnvmPPkTmuBv5diobcQSCKdmJaaaTCIZXMsgp/d+RwuxbeHCHmvV6pTY+uGBdwUn4=
+	t=1790785033; cv=none; b=SXezlZn6QRIEkFoQfoqqRRgIgkxlvQv6FeEj24R/3SiFhVTMfMOCjvnhusYky4rvR12BfNYVAYpwFzHWh49ohirKlwnZgdD2iSVmWV1vGe8c67Cxr2RyfKkry6Ymw1u1gKB9Hbb8JIkOhdsHPzlZUJsGXrBGa83z+t76BRU2aPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785032; c=relaxed/simple;
-	bh=H1yy3PxsGzBMZiB4Dn5XsVMCzcIrotK6iAsD/Y+GT/Y=;
+	s=arc-20240116; t=1790785033; c=relaxed/simple;
+	bh=1zqOdp/ICy63ATucMtiY+LYJwheq3FgRTIlEDDQgcoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpezTQOsEt4z8NdDIz83LqDQ2OnzfiqbxfL5JketbsN7M08ZwAIBUGwTimr25A8MnSGqL1UEJ8fd3+dU71+4igX7QrZ80oYYHQIqVNBJ3tX4kbJOLW65J5zWMbkfD8ZUZjo3KGjkaIgrI7w2K4UuWS4uu0ucOTgqwCJ8SyEONws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/KmyEPe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZfZXhhYekxGOSFC5S55tpLbneozGI89UMg9p4g9dXM/z5E65vXedPFTqeNcd1nhsi1oCiuvd7x3ifR2YspHx+ZptqW2dcZ7XQAklxeYxEegw3PQaz5+4WO0Unw0rvK13cTCHQf4G12C6AqSAZGYO/iikTPZPv1oATFg2Psy+lng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyNfEGFu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/KmyEPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D926B1F00893;
-	Wed, 30 Sep 2026 16:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyNfEGFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27BA1F0089A;
+	Wed, 30 Sep 2026 16:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785025;
-	bh=ekGAaL64+gt7m8+2qgrVKL14zXcLr+Q+Y/zYXkaKT3A=;
+	s=korg; t=1790785028;
+	bh=JkLzaQJ6lpB5GGYLVzA925zqQMGQSKQIWWI/Xw3pBao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/KmyEPer8/3/0T1GGt30bPHczr2ki4lkaEELXVa+k803g5vFKmBsszBuCjG6KZ2c
-	 MH6nB3eNACsKMQB1abzqTP4nLZH/bGs/hb/6Z9GkDFbFyGrzm5bxn0Q35zXcTh1bEN
-	 ODHgLmr4gU9hRTfxFjcZHw2PD76AowsYzueIZMr4=
+	b=ZyNfEGFuBbsPOc8EgFzvRquSkMpRXn8GYJGrp9khArOcOoRULYBB4IHHqYejaJ1RZ
+	 mNPozBmsLTQ8bSD7A3jMj9auSMdkdfYFCuIeC2LBAb+wnOft7Ud08oRfawcr4rDa43
+	 I7/pauM7EBDexxxqNxYJ/fRQL7tzO8y5kWRot9TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Joe Damato <joe@dama.to>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 364/982] btrfs: restore active device pointers after failed sprout
-Date: Wed, 30 Sep 2026 17:18:20 +0200
-Message-ID: <20260930152424.631196858@linuxfoundation.org>
+Subject: [PATCH 6.1 365/982] bonding: alb: fix uninitialized transport header access in alb_determine_nd()
+Date: Wed, 30 Sep 2026 17:18:21 +0200
+Message-ID: <20260930152424.652195838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,45 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e0b54613aabeb8e9da597f23b90c6a03d0981986 ]
+[ Upstream commit 70f3995830d3f1e79faa14eb0605914f778feca9 ]
 
-btrfs_init_new_device() switches latest_dev and possibly s_bdev from the
-seed device to the new sprout device before creating the first writable
-chunks.
+alb_determine_nd() uses icmp6_hdr(skb) to inspect ICMPv6 headers.
+However, in xmit paths (e.g. packets sent via AF_PACKET / raw sockets
+or forwarded packets), skb->transport_header is not guaranteed to be
+initialized. While pskb_network_may_pull() ensures the packet data is
+linear starting from the network header, it does not set or adjust the
+transport header offset.
 
-If chunk creation or the subsequent sprout setup fails, the error path
-releases the new device without switching those pointers back.
-btrfs_show_devname() can then dereference the freed latest_dev and crash.
+Dereferencing icmp6_hdr(skb) can therefore access out-of-bounds memory.
 
-Restore the active device pointers to the latest seed device before
-removing and releasing the failed sprout device.
+Fetch the icmp6hdr directly after ipv6hdr following pskb_network_may_pull(),
+and reload ipv6hdr in case pskb_may_pull() reallocated skb->head.
+Also remove the unused bond argument from alb_determine_nd().
 
-Fixes: b7cb29e666fe ("btrfs: update latest_dev when we create a sprout device")
-Assisted-by: Codex:gpt-5
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 0da8aa00bfcf ("net: bonding: Add support for IPV6 ns/na to balance-alb/balance-tlb mode")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260831194626.119371-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/bonding/bond_alb.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index cddc3d7908a4d..f44a3fc149711 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2893,6 +2893,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- error_sysfs:
- 	btrfs_sysfs_remove_device(device);
- 	mutex_lock(&fs_info->fs_devices->device_list_mutex);
-+	if (seeding_dev)
-+		btrfs_assign_next_active_device(device, seed_devices->latest_dev);
- 	mutex_lock(&fs_info->chunk_mutex);
- 	if (!list_empty(&device->post_commit_list))
- 		list_del_init(&device->post_commit_list);
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index c44a9358f8b27..8930652efe321 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -1282,10 +1282,10 @@ static int alb_set_mac_address(struct bonding *bond, void *addr)
+ }
+ 
+ /* determine if the packet is NA or NS */
+-static bool alb_determine_nd(struct sk_buff *skb, struct bonding *bond)
++static bool alb_determine_nd(struct sk_buff *skb)
+ {
+-	struct ipv6hdr *ip6hdr;
+-	struct icmp6hdr *hdr;
++	const struct ipv6hdr *ip6hdr;
++	const struct icmp6hdr *hdr;
+ 
+ 	if (!pskb_network_may_pull(skb, sizeof(*ip6hdr)))
+ 		return true;
+@@ -1297,7 +1297,8 @@ static bool alb_determine_nd(struct sk_buff *skb, struct bonding *bond)
+ 	if (!pskb_network_may_pull(skb, sizeof(*ip6hdr) + sizeof(*hdr)))
+ 		return true;
+ 
+-	hdr = icmp6_hdr(skb);
++	ip6hdr = ipv6_hdr(skb);
++	hdr = (const struct icmp6hdr *)(ip6hdr + 1);
+ 	return hdr->icmp6_type == NDISC_NEIGHBOUR_ADVERTISEMENT ||
+ 		hdr->icmp6_type == NDISC_NEIGHBOUR_SOLICITATION;
+ }
+@@ -1382,7 +1383,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
+ 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
+ 		switch (skb->protocol) {
+ 		case htons(ETH_P_IPV6):
+-			if (alb_determine_nd(skb, bond))
++			if (alb_determine_nd(skb))
+ 				break;
+ 			fallthrough;
+ 		case htons(ETH_P_IP):
+@@ -1468,7 +1469,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
+ 			break;
+ 		}
+ 
+-		if (alb_determine_nd(skb, bond)) {
++		if (alb_determine_nd(skb)) {
+ 			do_tx_balance = false;
+ 			break;
+ 		}
 -- 
 2.53.0
 
