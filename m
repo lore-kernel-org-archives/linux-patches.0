@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DC43BE642;
-	Wed, 30 Sep 2026 18:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3F93BE642;
+	Wed, 30 Sep 2026 18:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792980; cv=none; b=UTQwJaapz7yfLBfd1mQ3RM00E0AVvf0j2dft9L0WAwz5F+Up7Mut4dfxikfX9vg0TNwhip50UVJha5zhU8lgg1vX+F5M1oRdm9QIqrBGhSFgz2GEH0hvMorg5Gf8EZcUCRYIGR/e/ujROzLVDHdLEej6jnWz8i9AiHikh6jtpMY=
+	t=1790792983; cv=none; b=CKFRqWTyFZ2dt13wVlK+zIZRF54PzGkGbe1FYsk1iF/45MiaTBmuvjOqgvUGN9u3O4ooAeq7JmKshIshjYVzSJWANYnY0tj7CWDCWUzSIEa1aF+UcTQQecq6NcrDucqeM+St5Nz0sis6JEkycdEvbukhsIfmEVLHr2sB/cKJ6DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792980; c=relaxed/simple;
-	bh=2aBYUbQtU17sD2RRckrxSlPaCMCvvNotIQhkPws9u90=;
+	s=arc-20240116; t=1790792983; c=relaxed/simple;
+	bh=rZzKdb6MJZnK3Uib3Tz22fqjYpx0kTACz9xh+N+ESBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jmp8XWsWRmzIicP0blsbVI+QfSffpSQ3m1A/gEWUXyXWMtHa8SbfnLNXHbhRV/LfHOAMmYX6oBbmpr24xW3fWfmCpLP9Pox0vycBtDnAfB4m17lxuXsiELN+Jd62xFXCnwYNoRL3eRLUJrRzFIw6DzOKIXgGraPbMmvjYRPdl+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAh7GKHC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uekOQq/kErEGB5zqEvSU9dZZSDXTeZAczXxX8OHIf3Je/W1FXX7nyvZNHXvuRRs7qoKRqqV5m6+ohNOQRF5LxOEZb72eNkjsTga7nypE/CaE1XAaEkWAXOBSLkXAaixW16GjWRRAloT2eSUU7tV9/JhJaQBlwAQHBz24QCmsyL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dj2KbF0s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAh7GKHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8741F000FF;
-	Wed, 30 Sep 2026 18:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dj2KbF0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5770F1F000FF;
+	Wed, 30 Sep 2026 18:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792979;
-	bh=t1lh0Ebrpw7FPvmEsV7TYoCwrh5PQRAYHgBZg9xhjNk=;
+	s=korg; t=1790792981;
+	bh=p9EXgK12OW8nC1XpItizcCl/mkueEwzMjkJtovsbWX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAh7GKHCdgd1LvIViHboDIJoZYZN39YU7/o89cZ69syVOLcehNVbxHtMDW6PwU9kv
-	 7mZyq1jVy0Ei6fwnnExcplxVVEPTTLUaaGd/Yc0yoWgBXNyh4VH05CIHwr9DIN5BSH
-	 Mupu+RS8kQfqqG1j+b2QVqsIMBbgXlaTNjGoSnMs=
+	b=dj2KbF0sd4IWtYGOn6Qhst99usrO08vQNe/BhiAGD/Li4hvM3TORv5X1cTh2qrWBU
+	 lxgK0VMaoyI+mJSR1OC0mg11Xuza6PuipARYie0vG78rP2n4ljpHZzZyagR4UPlkY+
+	 5KabqJcz+WJHEN3Hr13KNeSRAU+FF2Pstu3sAe+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/395] net/sched: act_ct: dont WARN on benign flow_offload_alloc() failure
-Date: Wed, 30 Sep 2026 17:25:38 +0200
-Message-ID: <20260930152342.287517583@linuxfoundation.org>
+Subject: [PATCH 6.18 094/395] drm/virtio: release the GEM object on virtio_gpu_vram_create() errors
+Date: Wed, 30 Sep 2026 17:25:56 +0200
+Message-ID: <20260930152342.674174830@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,56 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 47abe7a5c4eb53269aca3506446f851572a059a3 ]
+[ Upstream commit 036d28db1818af2f9d80db771f5405da84d7732d ]
 
-flow_offload_alloc() returns NULL when the conntrack entry is dying
-(e.g. raced with a conntrack flush) or when the GFP_ATOMIC allocation
-fails; both are expected under load and neither is a kernel bug. This
-path runs from softirq on every committed packet, so with
-panic_on_warn=1 an unprivileged user can panic the box just by racing
-a conntrack flush against a `tc ... action ct commit` classifier.
+virtio_gpu_vram_create() frees the object with a bare kfree(vram) on
+both error paths after drm_gem_private_object_init() has run, and on the
+second one after drm_gem_create_mmap_offset() has linked obj->vma_node
+into the device's VMA offset manager. The freed object stays in that
+interval tree, so a later lookup or insertion walks freed memory, and
+the dma_resv and gpuva lock are never destroyed.
 
-Reproduced with a custom repro under QEMU: a small, fixed set of UDP
-flows through `tc filter ... action ct commit` on lo, raced against
-threads flooding bare ctnetlink CT_DELETE (flush) requests. Hits
-WARNING: net/sched/act_ct.c:437 (tcf_ct_flow_table_add(), inlined
-into tcf_ct_act() in this build) within ~15s on the unpatched kernel;
-same setup is clean on the patched kernel. The fix itself is
-behavior-preserving: both branches already did `goto err_alloc`
-before and after, only the WARN is removed.
+Call drm_gem_object_release() before kfree() on both paths.
 
-Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
-Reported-by: syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6cc37aba98dac721c415
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915150816.36487-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 16845c5d5409 ("drm/virtio: implement blob resources: implement vram object")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260915-fixes-v2-4-a0d799e4db66@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_vram.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index cbac27ba76afc..14d16956451dc 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -430,11 +430,10 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
- 	if (test_and_set_bit(IPS_OFFLOAD_BIT, &ct->status))
- 		return;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vram.c b/drivers/gpu/drm/virtio/virtgpu_vram.c
+index 5ad3b7c6f73c3..f955779d5ea0e 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vram.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vram.c
+@@ -205,16 +205,12 @@ int virtio_gpu_vram_create(struct virtio_gpu_device *vgdev,
  
-+	/* NULL if ct is dying (raced flush) or the atomic alloc failed. */
- 	entry = flow_offload_alloc(ct);
--	if (!entry) {
--		WARN_ON_ONCE(1);
-+	if (!entry)
- 		goto err_alloc;
+ 	/* Create fake offset */
+ 	ret = drm_gem_create_mmap_offset(obj);
+-	if (ret) {
+-		kfree(vram);
+-		return ret;
 -	}
++	if (ret)
++		goto err_release_obj;
  
- 	if (tcp) {
- 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+ 	ret = virtio_gpu_resource_id_get(vgdev, &vram->base.hw_res_handle);
+-	if (ret) {
+-		kfree(vram);
+-		return ret;
+-	}
++	if (ret)
++		goto err_release_obj;
+ 
+ 	virtio_gpu_cmd_resource_create_blob(vgdev, &vram->base, params, NULL,
+ 					    0);
+@@ -228,4 +224,9 @@ int virtio_gpu_vram_create(struct virtio_gpu_device *vgdev,
+ 
+ 	*bo_ptr = &vram->base;
+ 	return 0;
++
++err_release_obj:
++	drm_gem_object_release(obj);
++	kfree(vram);
++	return ret;
+ }
 -- 
 2.53.0
 
