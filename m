@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2883A30D401;
-	Wed, 30 Sep 2026 19:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDD2371049;
+	Wed, 30 Sep 2026 19:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796322; cv=none; b=nWO10bWrmSK6Kb8x2Tv1SLLpts1I7n0LassnFCTaLJvLPoOqJYOvQLsetWBdX3bfYyglPJ9I2Vr5JWg+dcH37NjOMUjExAJLO1bhPvDyephEbKlRGtnTnr6+wX06JwJk2yj0TPM4sjuNtbejYpX2WbCXlqWnKGV4SyQXqwbO7KM=
+	t=1790796325; cv=none; b=Xyv+i0jlD+aFUpkPPUnmlxmLV2R1VKhUzz2SDheM59p1c9XPemsxd2izV46HmlTcMtpSVIhuc+4CBJr7DSmW1SfM5AmFk6T1Zb2wWVvohYtKLpJ6aNU6bk8BxK9w8QJOh/Itr70GMAlnq40NRclQuXIeiX652y2EnfTmNPAc+yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796322; c=relaxed/simple;
-	bh=jOMDXyZg+imSUcasPd0vsuIWvMFdlQjAUt4x25pUny8=;
+	s=arc-20240116; t=1790796325; c=relaxed/simple;
+	bh=faBheOUSR4OO7I1iotpZoTZ2uR9lVcnakGToShzvjvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8LQsgZ5m+wcDZ09xHhQTHJrDViHTlE87LiAsnxiFyrO2CE6C7CN4q2L5j6lJeY1h6PeO6NdIKzDcvXyztZaEXx4dteh9FXfPmG3DAyNpkkg/tukRVWptny3Zh8dUXc3QOPaXtFe/LREvE5/OLR8JubfdRFkKo4Hm1XqZ0i+iW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meRQCG6c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NLY1xheZiLs4o1QR1fFvrwhFGfPfh65ybuETANl2BUsu5VFQUwM0NaWsuwZQVcSsW+fMSdE1KvL0AVFHgw8ZZFHeq6mBkXTD6vhtD/ONKLr3d81Rs7Z518K7FIxuXL3b7z9TU97excke8qY7WA1MySdUyjDi+EMe0rARi9WS9tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7WYpOm7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meRQCG6c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814391F000FF;
-	Wed, 30 Sep 2026 19:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7WYpOm7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA581F000FF;
+	Wed, 30 Sep 2026 19:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796321;
-	bh=4EJYUpLfYDGA9Zc0aiFyb2PJi/UnBpVHR1zodPAswUU=;
+	s=korg; t=1790796323;
+	bh=Hb8NSLSQ2O8SCZVCmxGwDTWIEn4DsX0hHpQNkBEXJtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=meRQCG6cy0iFyQQlTLdRTb3QWBrwQ5lDdRqMOgRd/6r1e8YYqEZNUDu0bp9xxSUMo
-	 Egx0lZ4tx+WWKCm3YI9rt8mB7A/Ys4UDLSsSKypSt/Yh5HHIYR/Uqc1dvnmJL1Op6A
-	 29rd7Vx0q/H6gO3KQcsCXrnwXajVes51p1LlJ6hU=
+	b=f7WYpOm7HV5jwe1+mE1jmbEcucfq3CoWVRS/zaWds8CvIQG6vsN+/P4g3xApPRihF
+	 llSIecLbBsgH74UVdcBQup99+W8Dgk6jzjEomnpbT6BXLyrKcWQ/HNXC8sQe6SwwCL
+	 WkhnGZMdHLVmIAcrKD0y25f0c+RRijOUYlCNRmWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+6a581c4284f721d4@bugs.sh,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 0872/1193] KEYS: trusted: Fix tpm2_load_cmd() boundary check
-Date: Wed, 30 Sep 2026 17:25:56 +0200
-Message-ID: <20260930152453.611932936@linuxfoundation.org>
+	Shengzhuo Wei <me@cherr.cc>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.6 0873/1193] i2c: at91: release DMA channels on remove and probe error
+Date: Wed, 30 Sep 2026 17:25:57 +0200
+Message-ID: <20260930152453.634650875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,79 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Shengzhuo Wei <me@cherr.cc>
 
-commit 114f00d738f15dd8c7318369edcdc53dd6d08763 upstream.
+commit f7eeb1af8537b05953fb1c88ab8b59d94059a381 upstream.
 
-tpm2_load_cmd() does boundary checks against the ASN.1 size i.e.,
-payload->blob_len. Address this by passing the decoded blob size to
-tpm2_load_cmd(), and use it for the boundary checks.
+at91_twi_configure_dma() requests exclusive tx/rx DMA channels, but
+nothing ever releases them on driver detach, and the probe error path
+after the channels are acquired (i2c_add_numbered_adapter() failure)
+returns without releasing them either, because the remove callback is
+not invoked after a failed probe.
 
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
-Reported-by: co+6a581c4284f721d4@bugs.sh
-Closes: https://bugs.sh/b/6a581c4284f721d4/
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Tested-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260901205809.2028454-1-jarkko@kernel.org
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Move the release into a helper, call it from the existing
+configure-failure path, the adapter-registration failure path, and
+at91_twi_remove().
+
+Fixes: 60937b2cdbf9 ("i2c: at91: add dma support")
+Assisted-by: GLM:5.3
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Cc: <stable@vger.kernel.org> # v3.8+
+Acked-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260827-i2c-dma-channel-leak-v1-1-271d4adc03a0@cherr.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-at91-core.c   |    3 +++
+ drivers/i2c/busses/i2c-at91-master.c |   12 +++++++++++-
+ drivers/i2c/busses/i2c-at91.h        |    1 +
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -108,7 +108,7 @@ struct tpm2_key_context {
+--- a/drivers/i2c/busses/i2c-at91-core.c
++++ b/drivers/i2c/busses/i2c-at91-core.c
+@@ -258,6 +258,7 @@ static int at91_twi_probe(struct platfor
  
- static int tpm2_key_decode(struct trusted_key_payload *payload,
- 			   struct trusted_key_options *options,
--			   u8 **buf)
-+			   u8 **buf, unsigned int *blob_len)
- {
- 	int ret;
- 	struct tpm2_key_context ctx;
-@@ -129,6 +129,7 @@ static int tpm2_key_decode(struct truste
- 		return -ENOMEM;
+ 		pm_runtime_disable(dev->dev);
+ 		pm_runtime_set_suspended(dev->dev);
++		at91_twi_dma_release(dev);
  
- 	*buf = blob;
-+	*blob_len = ctx.priv_len + ctx.pub_len;
- 	options->keyhandle = ctx.parent;
+ 		return rc;
+ 	}
+@@ -274,6 +275,8 @@ static void at91_twi_remove(struct platf
+ 	i2c_del_adapter(&dev->adapter);
+ 	clk_disable_unprepare(dev->clk);
  
- 	memcpy(blob, ctx.priv, ctx.priv_len);
-@@ -384,10 +385,11 @@ static int tpm2_load_cmd(struct tpm_chip
- 	int rc;
- 	u32 attrs;
++	at91_twi_dma_release(dev);
++
+ 	pm_runtime_disable(dev->dev);
+ 	pm_runtime_set_suspended(dev->dev);
+ }
+--- a/drivers/i2c/busses/i2c-at91-master.c
++++ b/drivers/i2c/busses/i2c-at91-master.c
+@@ -818,11 +818,21 @@ static int at91_twi_configure_dma(struct
+ error:
+ 	if (ret != -EPROBE_DEFER)
+ 		dev_info(dev->dev, "can't get DMA channel, continue without DMA support\n");
++	at91_twi_dma_release(dev);
++	return ret;
++}
++
++void at91_twi_dma_release(struct at91_twi_dev *dev)
++{
++	struct at91_twi_dma *dma = &dev->dma;
++
+ 	if (dma->chan_rx)
+ 		dma_release_channel(dma->chan_rx);
+ 	if (dma->chan_tx)
+ 		dma_release_channel(dma->chan_tx);
+-	return ret;
++	dma->chan_rx = NULL;
++	dma->chan_tx = NULL;
++	dev->use_dma = false;
+ }
  
--	rc = tpm2_key_decode(payload, options, &blob);
-+	rc = tpm2_key_decode(payload, options, &blob, &blob_len);
- 	if (rc) {
- 		/* old form */
- 		blob = payload->blob;
-+		blob_len = payload->blob_len;
- 		payload->old_format = 1;
- 	} else {
- 		/* Bind for cleanup: */
-@@ -399,17 +401,17 @@ static int tpm2_load_cmd(struct tpm_chip
- 		return -EINVAL;
+ static int at91_init_twi_recovery_gpio(struct platform_device *pdev,
+--- a/drivers/i2c/busses/i2c-at91.h
++++ b/drivers/i2c/busses/i2c-at91.h
+@@ -172,6 +172,7 @@ void at91_twi_irq_restore(struct at91_tw
+ void at91_init_twi_bus(struct at91_twi_dev *dev);
  
- 	/* must be big enough for at least the two be16 size counts */
--	if (payload->blob_len < 4)
-+	if (blob_len < 4)
- 		return -EINVAL;
+ void at91_init_twi_bus_master(struct at91_twi_dev *dev);
++void at91_twi_dma_release(struct at91_twi_dev *dev);
+ int at91_twi_probe_master(struct platform_device *pdev, u32 phy_addr,
+ 			  struct at91_twi_dev *dev);
  
- 	private_len = get_unaligned_be16(blob);
- 
- 	/* must be big enough for following public_len */
--	if (private_len + 2 + 2 > (payload->blob_len))
-+	if (private_len + 2 + 2 > blob_len)
- 		return -E2BIG;
- 
- 	public_len = get_unaligned_be16(blob + 2 + private_len);
--	if (private_len + 2 + public_len + 2 > payload->blob_len)
-+	if (private_len + 2 + public_len + 2 > blob_len)
- 		return -E2BIG;
- 
- 	pub = blob + 2 + private_len + 2;
 
 
