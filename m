@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60328359A6C;
-	Wed, 30 Sep 2026 19:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52756359A6C;
+	Wed, 30 Sep 2026 19:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795627; cv=none; b=SfHdje+pli4QlSu0MSU6zRWWd28Phs7AY5DppqzkRoi/e1wc6/ZPkcdHTtuAbI/xZfG+Zlm+D5YDdPHNmDLvS+62WNMSV64nPdnl5NKcpeuz+vVXbXHmNNpw1smV5T+WUxOJtqbIe0GrLKTO/zzJCXUQCeAR0lUzd8u5GbQTPXc=
+	t=1790795630; cv=none; b=jBCs7NhZamTzwY+ynTDMSQu9h7QnSStZF/HfARMu3F+g6TkRSYdeZDh+npufpfzOH6J+V5x/HW4ZjuLIAgrBYhOpYceF0AoGu+folxUzT5tJocTY/tbsspZeBdVFCv1crtqI5MQAlDqfIN2E8U9IE42N50WxbOwxdfohJVDE+Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795627; c=relaxed/simple;
-	bh=FVM76/GGvaoz7fE6LAbSr7Lx/H8gkiq8UvUC/bO0DZk=;
+	s=arc-20240116; t=1790795630; c=relaxed/simple;
+	bh=+hvK2qeNMy9Qo5OO7THgxCzN9DHmST5KqIgZ4mkqJac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PUuc9yAe3BX32myPTtf8qk09E6WVr6YXP0ZFly5dB9ZHFkAyRFwWrBfwhyXS4sNz+BrbifTGWmis3C4QCa1JjreNjc7nY5BFw2a+Zoyv5Ugjaf5xznfYjkTwt19bXpxgUXoWZ7GYB/QUQvcbt6k2iCY/5tLx48Oe0LMSIu44LP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmFcp9f2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eUW3tu39z8NuVWu1DTS8MNi31Qe7BEO/Vab31zEaNQbxGb+jErgP3ACrmwlTZrJ4RhLLkPCCi4hMFuZPGj4ZdJHFuoS8jO4FcITkghmSlcNckH/pNE/LaGupa40m4eKOpAiTYMYYkw2TYu9OqQik/SPkWbavZeEhqnk8kMIeCuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyBDPEfF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmFcp9f2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4AC1F000FF;
-	Wed, 30 Sep 2026 19:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyBDPEfF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982E61F000FF;
+	Wed, 30 Sep 2026 19:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795626;
-	bh=iYVU2BvEcIDXr+krObbHdvmPEm1IHTWC2wti6g9oZCY=;
+	s=korg; t=1790795629;
+	bh=Eo/hZ40HmLRBisMIyiIfD8pNpla1xmU7G1SRI72NeCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmFcp9f2YjWA64boPP1j+EWYil/lJVJwfDIMnyIGuEaw6mtEIurRUsFEw0N7tS/q/
-	 rW9IVxiO3jXUr9xBkFsQMb3hFdUf8x2x4YMdISob5lN5Piq976xN/rIle9aDI9iguU
-	 QxNhBBJ6JJ4GKqVPJ0Y//AzXsHgHQYTp0ajuQ9s0=
+	b=tyBDPEfFb4WlqT9Y0VhwdbSvnvwDW9+/2lAhCF2qPJhl9IDauKWGh7gTDsh0Yy841
+	 aekl+LMUDKGQhrN6ZjGTnrGW0z3nwuzylwKwJ5GWuywREm0E+gexAt+e7yhew+0n/a
+	 xJoX4/0iDk+ygBSmuxuaxawJEzSKpXauTRQkT70E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Jiri Benc <jbenc@redhat.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0628/1193] net: mpls: clear inner_protocol when the last label is popped
-Date: Wed, 30 Sep 2026 17:21:52 +0200
-Message-ID: <20260930152448.196529570@linuxfoundation.org>
+Subject: [PATCH 6.6 0629/1193] net: openvswitch: fix use-after-free of the flow table mask array
+Date: Wed, 30 Sep 2026 17:21:53 +0200
+Message-ID: <20260930152448.218179697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,82 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <littleddfu@gmail.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 78a86d75a70e1e227711c72865c59b1422d0a5ae upstream.
+commit ba4ba11ed6eb8972c69070417fc27b48deb002e8 upstream.
 
-skb_mpls_push() records the pre-encapsulation network header once, gated
-on !skb->inner_protocol. skb_mpls_pop() never clears that record, so it
-outlives the encapsulation it describes.
+tbl_mask_array_realloc() retires the old mask_array before it stops being
+reachable:
 
-Open vSwitch can then re-push MPLS onto a packet whose
-inner_network_header still points at the older, deeper offset: push a
-label, pop every label, recirculate (ovs_flow_key_update() re-derives
-key->eth.type and resets network_header, but leaves inner_*), then push
-again. ovs_fragment() trusts the record:
+	old = ovsl_dereference(tbl->mask_array);
+	if (old) {
+		...
+		call_rcu(&old->rcu, mask_array_rcu_cb);
+	}
 
-	skb->network_header = skb->inner_network_header;
+	rcu_assign_pointer(tbl->mask_array, new);
 
-so skb_network_offset() goes negative. The bound check is signed:
+call_rcu() only waits for read-side critical sections already in flight.
+tbl->mask_array still points at old between the call_rcu() and the
+rcu_assign_pointer(), so a reader entering ovs_flow_tbl_lookup_stats() in
+that window picks up old in a fresh critical section that the pending
+grace period does not cover.
 
-	if (skb_network_offset(skb) > MAX_L2_LEN)
+tbl_mask_array_realloc() runs in process context under ovs_mutex, so the
+window is preemptible and can outlast the grace period. Then
+mask_array_rcu_cb() frees old before the swap runs:
 
-a negative offset passes it, and prepare_frag() widens the value:
+  BUG: KASAN: slab-use-after-free in flow_lookup.constprop.0+0x2bf/0x2f0
+  Read of size 8 at addr ffff888020b3e018 by task poc/741
+   flow_lookup.constprop.0+0x2bf/0x2f0
+   ovs_flow_tbl_lookup_stats+0x4a3/0x5c0
+   ovs_dp_process_packet+0x19c/0x710
+   ovs_vport_receive+0x243/0x390
+   internal_dev_xmit+0x81/0x170
+  Freed by task 728:
+   kfree+0x16a/0x4e0
+   rcu_core+0x853/0x1030
 
-	unsigned int hlen = skb_network_offset(skb);
-	memcpy(&data->l2_data, skb->data, hlen);
+Publish the new array before retiring the old one. The kfree_rcu() that
+call_rcu() replaced ran after the swap.
 
-which is a ~4GiB memcpy out of a 30-byte per-CPU buffer.
-
-Reproduced on v7.3-rc1. RDX is the truncated length, (unsigned int)(-8):
-
-  BUG: unable to handle page fault for address: ffffe8ffffc16000
-  #PF: supervisor write access in kernel mode
-  Oops: 0002 [#1] SMP KASAN NOPTI
-  RIP: 0010:memcpy+0x8/0x20
-  RDX: 00000000fffffff8 RSI: ffff888105d732db RDI: ffffe8ffffc16000
-   prepare_frag+0x3df/0x4e0
-   ovs_fragment+0x589/0x7e0
-   do_output+0x4ce/0x5e0
-   do_execute_actions+0x55d2/0x7b30
-   ovs_execute_actions+0xea/0x450
-
-Same root-cause shape as commit 975b5b067f52 ("ipv6: sr: restore network
-header before routing and forwarding"): a stale network header offset
-reaching a consumer that widens it. Here it originates in the MPLS
-push/pop path.
-
-Clear inner_protocol once the packet is no longer MPLS, so a later push
-re-records the current header. net/sched/act_mpls.c is the only other
-skb_mpls_pop() caller and gets the same fix; sch_frag.c saves and
-restores inner_protocol around fragmentation in the same way OVS does.
-
-Fixes: 48d2ab609b6b ("net: mpls: Fixups for GSO")
+Fixes: eac87c413bf9 ("net: openvswitch: reorder masks array based on usage")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Acked-by: Jiri Benc <jbenc@redhat.com>
-Link: https://patch.msgid.link/20260902092719.2874481-1-fouriezhang@tencent.com
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron echaudro@redhat.com
+Link: https://patch.msgid.link/DE115F9C-2545-423E-A702-986FC952FD62@doyensec.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/openvswitch/flow_table.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -6256,6 +6256,13 @@ int skb_mpls_pop(struct sk_buff *skb, __
+--- a/net/openvswitch/flow_table.c
++++ b/net/openvswitch/flow_table.c
+@@ -262,11 +262,13 @@ static int tbl_mask_array_realloc(struct
+ 			if (ovsl_dereference(old->masks[i]))
+ 				new->masks[new->count++] = old->masks[i];
+ 		}
+-		call_rcu(&old->rcu, mask_array_rcu_cb);
  	}
- 	skb->protocol = next_proto;
  
-+	/* The last label is gone, so the inner header recorded by
-+	 * skb_mpls_push() no longer describes this packet. Drop it, or a
-+	 * later push keeps the stale offset.
-+	 */
-+	if (!eth_p_mpls(next_proto))
-+		skb->inner_protocol = 0;
+ 	rcu_assign_pointer(tbl->mask_array, new);
+ 
++	if (old)
++		call_rcu(&old->rcu, mask_array_rcu_cb);
 +
  	return 0;
  }
- EXPORT_SYMBOL_GPL(skb_mpls_pop);
+ 
 
 
