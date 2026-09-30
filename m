@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F412552FE2D;
-	Wed, 30 Sep 2026 18:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8398552FE39;
+	Wed, 30 Sep 2026 18:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793783; cv=none; b=hD6uH9D/TO5A5/zD/w0lgtft6boG7qA4v1w8l7e9mqkyWqp0dc+4Ez8IApndny07WQ3K4sxQtc2bTOnjJPpiqdRV2qyFGJYMF53W7U6QInqB6q9SaHmUbk3G7fwhD7teuBxOSKOUVqfY36xVukKUZSpxZ/xIsAfIiZRIXvtzf+k=
+	t=1790793785; cv=none; b=pBqG4mgZrbFlnuahFxRejGuzZJiXUrrwIv8zeFKViZ8bJj+9IHuKiutBDZF08l3J2zm3sYVXpU5RIhBdxtd3rAaIaP8fvUELxkf136wfm5uvfd8RdUVR6oLIqTMWizuFdHESJxx8+A13qu+1xcGKRKdAfkhvTFfNW0I//7ytDXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793783; c=relaxed/simple;
-	bh=zLEqKG+cvOhWseqgoj3Sa1+rnTX0c7sxok0WHRLe+c4=;
+	s=arc-20240116; t=1790793785; c=relaxed/simple;
+	bh=olWBMWIpg778x28YxILsIpsdes9r4K2hOYmMbP1tcuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBmB1wnhbEdiXPLWXodOahdyn0Ysr8iUm6aJw4fVXLd7jzyNifgif/nceBVJq+NElWaHaoH8vwknM8GYMhaBB8ocLC2DeyHmHmfSe9z0RIgTZIK+xoFFUNX9qMI/WARi5ENj0GArRqPUk2tx+lEK1y3OSHxGOJWSIPqz0uaDs6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNQML1Fz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kqtQbgJ1xDEqxbrQ7IqAgd0eiL80TrjNTr8FioDiP8Ox25EWzEcgZ8fUt3uYUKl2sEcp6zeOs+ce3XwZz7cGyNxjsnGX+reAbU4DuK5lJmx09HASkruedBbk4ngKXhgkAwDz5t/UjQz1ZchbVAfCnYechyvsXh89UwsNIwkRdoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxU+Apjp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNQML1Fz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0EB1F000FF;
-	Wed, 30 Sep 2026 18:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxU+Apjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0BA1F000FF;
+	Wed, 30 Sep 2026 18:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793781;
-	bh=1+ZIFtHK9ZOglUUDnUD4Jee3iELMFdLWrrDvDHSr8iQ=;
+	s=korg; t=1790793784;
+	bh=r7ui+4l7S3vRbpwH5Yh77jNBy5timjDlgLYCKBsSxaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PNQML1Fz5cZLCCylNBvR3DVq+kdYvWRDzltg9ZOYEZ5ti35wUz6j5o6XZ43912xU4
-	 l2hNANjNYI8eNX9oNhPSHqGiCMXRzrRyvlYZHX7IP6Dg8Tf1wkOpctcte/CuZKsBFW
-	 5YCKpfRiJRUqPqyRdAduXB9LV+bgqvkjaEpcuvEo=
+	b=ZxU+Apjp3OG0PYhTC15l+TfU3y4P3cUpSE6vVbnTXieMAKoFPzmBaVWXJCxusGo0d
+	 BAoU10t4NYrtmSfh65KCLPc+S99N5FAyHakSJcbOrhGoDz9TzBeQOqyHZ5teiPXoj+
+	 924n5fdOizvyv8WmP3+YSZnTyDVHuO7edFDnEqWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 377/395] x86/sev: Move the internal header
-Date: Wed, 30 Sep 2026 17:30:39 +0200
-Message-ID: <20260930152348.875054198@linuxfoundation.org>
+Subject: [PATCH 6.18 378/395] x86/sev: Add internal header guards
+Date: Wed, 30 Sep 2026 17:30:40 +0200
+Message-ID: <20260930152348.897397265@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,283 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit c1e8980fabf5d0106992a430284fac28bba053a6 ]
+[ Upstream commit f01c6489ad6ceb8d06eae0c5123fc6cf39276ff1 ]
 
-Move the internal header out of the usual include/asm/ include path
-because having an "internal" header there doesn't really make it
-internal - quite the opposite - that's the normal arch include path.
-
-So move where it belongs and make it really internal.
-
-No functional changes.
+All headers need guards ifdeffery.
 
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20251204145716.GDaTGhTEHNOtSdTkEe@fat_crate.local
+Link: https://patch.msgid.link/20251204124809.31783-3-bp@kernel.org
 Stable-dep-of: 6c43c72748ff ("x86/sev: Make vTPM SVSM calls preemption-safe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/startup/sev-startup.c                          | 3 ++-
- arch/x86/coco/sev/core.c                                     | 3 ++-
- arch/x86/{include/asm/sev-internal.h => coco/sev/internal.h} | 0
- arch/x86/boot/startup/sev-startup.c |    3 -
- arch/x86/coco/sev/core.c            |    3 -
- arch/x86/coco/sev/internal.h        |   87 ++++++++++++++++++++++++++++++++++++
- arch/x86/coco/sev/noinstr.c         |    3 -
- arch/x86/coco/sev/vc-handle.c       |    3 -
- arch/x86/include/asm/sev-internal.h |   87 ------------------------------------
- 6 files changed, 95 insertions(+), 91 deletions(-)
- rename arch/x86/{include/asm/sev-internal.h => coco/sev/internal.h} (100%)
+ arch/x86/coco/sev/internal.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/x86/boot/startup/sev-startup.c
-+++ b/arch/x86/boot/startup/sev-startup.c
-@@ -27,7 +27,6 @@
- #include <asm/cpu_entry_area.h>
- #include <asm/stacktrace.h>
- #include <asm/sev.h>
--#include <asm/sev-internal.h>
- #include <asm/insn-eval.h>
- #include <asm/fpu/xcr.h>
- #include <asm/processor.h>
-@@ -41,6 +40,8 @@
- #include <asm/cpuid/api.h>
- #include <asm/cmdline.h>
- 
-+#include "../../coco/sev/internal.h"
-+
- /* Include code shared with pre-decompression boot stage */
- #include "sev-shared.c"
- 
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -31,7 +31,6 @@
- #include <asm/cpu_entry_area.h>
- #include <asm/stacktrace.h>
- #include <asm/sev.h>
--#include <asm/sev-internal.h>
- #include <asm/insn-eval.h>
- #include <asm/fpu/xcr.h>
- #include <asm/processor.h>
-@@ -46,6 +45,8 @@
- #include <asm/cmdline.h>
- #include <asm/msr.h>
- 
-+#include "internal.h"
-+
- /* Bitmap of SEV features supported by the hypervisor */
- u64 sev_hv_features __ro_after_init;
- SYM_PIC_ALIAS(sev_hv_features);
---- /dev/null
+--- a/arch/x86/coco/sev/internal.h
 +++ b/arch/x86/coco/sev/internal.h
-@@ -0,0 +1,87 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#define DR7_RESET_VALUE        0x400
-+
-+extern u64 sev_hv_features;
-+extern u64 sev_secrets_pa;
-+
-+/* #VC handler runtime per-CPU data */
-+struct sev_es_runtime_data {
-+	struct ghcb ghcb_page;
-+
-+	/*
-+	 * Reserve one page per CPU as backup storage for the unencrypted GHCB.
-+	 * It is needed when an NMI happens while the #VC handler uses the real
-+	 * GHCB, and the NMI handler itself is causing another #VC exception. In
-+	 * that case the GHCB content of the first handler needs to be backed up
-+	 * and restored.
-+	 */
-+	struct ghcb backup_ghcb;
-+
-+	/*
-+	 * Mark the per-cpu GHCBs as in-use to detect nested #VC exceptions.
-+	 * There is no need for it to be atomic, because nothing is written to
-+	 * the GHCB between the read and the write of ghcb_active. So it is safe
-+	 * to use it when a nested #VC exception happens before the write.
-+	 *
-+	 * This is necessary for example in the #VC->NMI->#VC case when the NMI
-+	 * happens while the first #VC handler uses the GHCB. When the NMI code
-+	 * raises a second #VC handler it might overwrite the contents of the
-+	 * GHCB written by the first handler. To avoid this the content of the
-+	 * GHCB is saved and restored when the GHCB is detected to be in use
-+	 * already.
-+	 */
-+	bool ghcb_active;
-+	bool backup_ghcb_active;
-+
-+	/*
-+	 * Cached DR7 value - write it on DR7 writes and return it on reads.
-+	 * That value will never make it to the real hardware DR7 as debugging
-+	 * is currently unsupported in SEV-ES guests.
-+	 */
-+	unsigned long dr7;
-+};
-+
-+struct ghcb_state {
-+	struct ghcb *ghcb;
-+};
-+
-+extern struct svsm_ca boot_svsm_ca_page;
-+
-+struct ghcb *__sev_get_ghcb(struct ghcb_state *state);
-+void __sev_put_ghcb(struct ghcb_state *state);
-+
-+DECLARE_PER_CPU(struct sev_es_runtime_data*, runtime_data);
-+DECLARE_PER_CPU(struct sev_es_save_area *, sev_vmsa);
-+
-+void early_set_pages_state(unsigned long vaddr, unsigned long paddr,
-+			   unsigned long npages, const struct psc_desc *desc);
-+
-+DECLARE_PER_CPU(struct svsm_ca *, svsm_caa);
-+DECLARE_PER_CPU(u64, svsm_caa_pa);
-+
-+extern u64 boot_svsm_caa_pa;
-+
-+enum es_result verify_exception_info(struct ghcb *ghcb, struct es_em_ctxt *ctxt);
-+void vc_forward_exception(struct es_em_ctxt *ctxt);
-+
-+static inline u64 sev_es_rd_ghcb_msr(void)
-+{
-+	return native_rdmsrq(MSR_AMD64_SEV_ES_GHCB);
-+}
-+
-+static __always_inline void sev_es_wr_ghcb_msr(u64 val)
-+{
-+	u32 low, high;
-+
-+	low  = (u32)(val);
-+	high = (u32)(val >> 32);
-+
-+	native_wrmsr(MSR_AMD64_SEV_ES_GHCB, low, high);
-+}
-+
-+enum es_result sev_es_ghcb_handle_msr(struct ghcb *ghcb, struct es_em_ctxt *ctxt, bool write);
-+
-+u64 get_hv_features(void);
-+
-+const struct snp_cpuid_table *snp_cpuid_get_table(void);
---- a/arch/x86/coco/sev/noinstr.c
-+++ b/arch/x86/coco/sev/noinstr.c
-@@ -16,7 +16,8 @@
- #include <asm/msr.h>
- #include <asm/ptrace.h>
- #include <asm/sev.h>
--#include <asm/sev-internal.h>
-+
-+#include "internal.h"
+@@ -1,4 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __X86_COCO_SEV_INTERNAL_H__
++#define __X86_COCO_SEV_INTERNAL_H__
  
- static __always_inline bool on_vc_stack(struct pt_regs *regs)
- {
---- a/arch/x86/coco/sev/vc-handle.c
-+++ b/arch/x86/coco/sev/vc-handle.c
-@@ -23,7 +23,6 @@
- #include <asm/init.h>
- #include <asm/stacktrace.h>
- #include <asm/sev.h>
--#include <asm/sev-internal.h>
- #include <asm/insn-eval.h>
- #include <asm/fpu/xcr.h>
- #include <asm/processor.h>
-@@ -35,6 +34,8 @@
- #include <asm/apic.h>
- #include <asm/cpuid/api.h>
+ #define DR7_RESET_VALUE        0x400
  
-+#include "internal.h"
-+
- static enum es_result vc_slow_virt_to_phys(struct ghcb *ghcb, struct es_em_ctxt *ctxt,
- 					   unsigned long vaddr, phys_addr_t *paddr)
- {
---- a/arch/x86/include/asm/sev-internal.h
-+++ /dev/null
-@@ -1,87 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--
--#define DR7_RESET_VALUE        0x400
--
--extern u64 sev_hv_features;
--extern u64 sev_secrets_pa;
--
--/* #VC handler runtime per-CPU data */
--struct sev_es_runtime_data {
--	struct ghcb ghcb_page;
--
--	/*
--	 * Reserve one page per CPU as backup storage for the unencrypted GHCB.
--	 * It is needed when an NMI happens while the #VC handler uses the real
--	 * GHCB, and the NMI handler itself is causing another #VC exception. In
--	 * that case the GHCB content of the first handler needs to be backed up
--	 * and restored.
--	 */
--	struct ghcb backup_ghcb;
--
--	/*
--	 * Mark the per-cpu GHCBs as in-use to detect nested #VC exceptions.
--	 * There is no need for it to be atomic, because nothing is written to
--	 * the GHCB between the read and the write of ghcb_active. So it is safe
--	 * to use it when a nested #VC exception happens before the write.
--	 *
--	 * This is necessary for example in the #VC->NMI->#VC case when the NMI
--	 * happens while the first #VC handler uses the GHCB. When the NMI code
--	 * raises a second #VC handler it might overwrite the contents of the
--	 * GHCB written by the first handler. To avoid this the content of the
--	 * GHCB is saved and restored when the GHCB is detected to be in use
--	 * already.
--	 */
--	bool ghcb_active;
--	bool backup_ghcb_active;
--
--	/*
--	 * Cached DR7 value - write it on DR7 writes and return it on reads.
--	 * That value will never make it to the real hardware DR7 as debugging
--	 * is currently unsupported in SEV-ES guests.
--	 */
--	unsigned long dr7;
--};
--
--struct ghcb_state {
--	struct ghcb *ghcb;
--};
--
--extern struct svsm_ca boot_svsm_ca_page;
--
--struct ghcb *__sev_get_ghcb(struct ghcb_state *state);
--void __sev_put_ghcb(struct ghcb_state *state);
--
--DECLARE_PER_CPU(struct sev_es_runtime_data*, runtime_data);
--DECLARE_PER_CPU(struct sev_es_save_area *, sev_vmsa);
--
--void early_set_pages_state(unsigned long vaddr, unsigned long paddr,
--			   unsigned long npages, const struct psc_desc *desc);
--
--DECLARE_PER_CPU(struct svsm_ca *, svsm_caa);
--DECLARE_PER_CPU(u64, svsm_caa_pa);
--
--extern u64 boot_svsm_caa_pa;
--
--enum es_result verify_exception_info(struct ghcb *ghcb, struct es_em_ctxt *ctxt);
--void vc_forward_exception(struct es_em_ctxt *ctxt);
--
--static inline u64 sev_es_rd_ghcb_msr(void)
--{
--	return native_rdmsrq(MSR_AMD64_SEV_ES_GHCB);
--}
--
--static __always_inline void sev_es_wr_ghcb_msr(u64 val)
--{
--	u32 low, high;
--
--	low  = (u32)(val);
--	high = (u32)(val >> 32);
--
--	native_wrmsr(MSR_AMD64_SEV_ES_GHCB, low, high);
--}
--
--enum es_result sev_es_ghcb_handle_msr(struct ghcb *ghcb, struct es_em_ctxt *ctxt, bool write);
--
--u64 get_hv_features(void);
--
--const struct snp_cpuid_table *snp_cpuid_get_table(void);
+@@ -85,3 +87,4 @@ enum es_result sev_es_ghcb_handle_msr(st
+ u64 get_hv_features(void);
+ 
+ const struct snp_cpuid_table *snp_cpuid_get_table(void);
++#endif /* __X86_COCO_SEV_INTERNAL_H__ */
 
 
