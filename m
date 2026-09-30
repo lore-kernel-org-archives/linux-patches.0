@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A144218C332;
-	Wed, 30 Sep 2026 16:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8403F503918;
+	Wed, 30 Sep 2026 16:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787554; cv=none; b=SORw4OLF0QSYyzSfJkj7f7gmYL+XGGgujJlBe9Dp+2dUhPAo6nDvBh7FAQMiSyE/hy+gDvaLKdKQRC82qMxbpjxoSgPRoi0tFfDOvUbdnF5TLbRUp1WeCSWgDEHE748PuCgtkm+TYL1TcHKc2TSJubOcrX+VOy0oQFeGwTPU2pM=
+	t=1790787557; cv=none; b=OkVEUQe4P0ophJ4zBGVTEITAwkCnUoSJaHmwwbqg/lJG800+rOjb90T0KanzBk9n4yOn8t6VMx7069NVCYpxj73P3QgfbC29IpQfhuJsisN5xqOew89u2IddHDr4WaDV5R0nwf/qSZm52RWWzBnUL/z1VMHBMzvsyHTRDFMJkgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787554; c=relaxed/simple;
-	bh=VH8Y1EW/lVV4MYJYRG+W5SXYmiX8zJclNgWFXqsOvvo=;
+	s=arc-20240116; t=1790787557; c=relaxed/simple;
+	bh=QZbZOaZ27PdqNQti1RwqA31FJT72JKIA2cTMOyMEoBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYTEDan/xqMJTxp0iAZ8aTipz/lYjpq/9jPQw+CWuBZu2XDJipSMoUXiTJYo+J0UH1fJac/5BEf8IqTwIRfgTqFHjRMZY661Iq5tGMdi5JQJYc3T5VdE2Lr1GQE8wplcUNzOrqPV6tZIMQnLZlaWlCpyp5btcT/vle7S0RaHbQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iERbi+N9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OA0E0y3qnkLiNB3XJbCAEXwc2ItkJVHBGjpCO0twfetHSvwOi5Bu3Gb9ccd2UEYOk2SmhA0PYb24k6acL+KuFDqauA54npNrT4dOEFnnv/m2UIo1k1vXRRjzSPppspCjgwwy27OwNNEkRWhJBwFxndWaAyQIw7jBpUM3++b62jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9Mc0b7c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iERbi+N9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEE71F000FF;
-	Wed, 30 Sep 2026 16:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9Mc0b7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4661F000FF;
+	Wed, 30 Sep 2026 16:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787553;
-	bh=QYoAiLHaOXs4N4wH/bDPQKXwM/8hpx1Vxzr1xa4ZvN0=;
+	s=korg; t=1790787556;
+	bh=HrCdr8VvW4pkdxz3lz1uQTKCqRVcdZK4N3a/3SiJ0D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iERbi+N9f7vEPcemGWnXiWEfS3LClMfhk+XbpAXrotGT2dHRCkKFqBHPyZmUURjV1
-	 RpB/4OzkOzun0gt4HMfoBwgq1oT5A7M4L4FOr3EyhzFluKU5/nIooD78RnYwsJEFnk
-	 iZGaXTylSHFd83DELqUcVbsxaN6g6TdW2hOUeDrg=
+	b=q9Mc0b7c27AvUmF9mAF4Bft6uWveZrRWjaElyy/ylhjKUs6Mp5B6TieEAGGB/MC/A
+	 dq+IY2+gBAVu/WthMI2Vfg0NO2Jvmmf2EhtkPjwfG1sBm9pGpVYbi5z/uMrpoIpGnm
+	 OoRPUwPJ4991eALd4lTR+YTH4iJm0QQ+0WgfdQ1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.2 271/457] gpio: zynq: fix runtime PM leak on request error path
-Date: Wed, 30 Sep 2026 17:26:16 +0200
-Message-ID: <20260930152351.889781973@linuxfoundation.org>
+	VEGA <vega@nebusec.ai>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 272/457] llc: reserve device headroom for allocated frames
+Date: Wed, 30 Sep 2026 17:26:17 +0200
+Message-ID: <20260930152351.910225429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,49 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Zixuan Chai <petalzu987@gmail.com>
 
-commit e9438ab5328a177c9c0e5df87eb92a7162841e98 upstream.
+commit 72b5b9a28b996e09b8b5b944370c79851bb68f52 upstream.
 
-pm_runtime_get_sync() leaves the usage counter incremented even when it
-fails, and zynq_gpio_request() returns the error without dropping it.
+llc_alloc_frame() reserves link-layer headroom using the device type.
+This is insufficient for stacked Ethernet devices such as VLAN devices,
+where vlan_dev_hard_header() pushes a VLAN header before the lower
+device's Ethernet header. An LLC response on such a device can
+therefore underflow skb headroom in eth_header().
 
-gpiolib does not call ->free() when ->request() fails, so zynq_gpio_free(),
-which holds the only matching pm_runtime_put(), never runs. The reference
-is leaked and the controller can no longer runtime-suspend, so its clock
-stays enabled.
+Use LL_RESERVED_SPACE() to account for the device's actual required
+headroom while preserving the existing LLC device-type check.
 
-Switch to pm_runtime_resume_and_get(), which only increments the usage
-counter on success.
-
-Fixes: 3242ba117e9b ("gpio: Add driver for Zynq GPIO controller")
+Fixes: bf9ae5386bca ("llc: use dev_hard_header")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260922092102.1053513-1-khurana.ridham222@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260924012613.2533934-1-weir@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-zynq.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ net/llc/llc_sap.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpio/gpio-zynq.c
-+++ b/drivers/gpio/gpio-zynq.c
-@@ -798,15 +798,7 @@ static int zynq_gpio_runtime_resume(stru
+--- a/net/llc/llc_sap.c
++++ b/net/llc/llc_sap.c
+@@ -19,12 +19,12 @@
+ #include <linux/llc.h>
+ #include <linux/slab.h>
  
- static int zynq_gpio_request(struct gpio_chip *chip, unsigned int offset)
+-static int llc_mac_header_len(unsigned short devtype)
++static int llc_mac_header_len(struct net_device *dev)
  {
--	int ret;
--
--	ret = pm_runtime_get_sync(chip->parent);
--
--	/*
--	 * If the device is already active pm_runtime_get() will return 1 on
--	 * success, but gpio_request still needs to return 0.
--	 */
--	return ret < 0 ? ret : 0;
-+	return pm_runtime_resume_and_get(chip->parent);
+-	switch (devtype) {
++	switch (dev->type) {
+ 	case ARPHRD_ETHER:
+ 	case ARPHRD_LOOPBACK:
+-		return sizeof(struct ethhdr);
++		return LL_RESERVED_SPACE(dev);
+ 	}
+ 	return 0;
  }
+@@ -45,7 +45,7 @@ struct sk_buff *llc_alloc_frame(struct s
+ 	int hlen = type == LLC_PDU_TYPE_U ? 3 : 4;
+ 	struct sk_buff *skb;
  
- static void zynq_gpio_free(struct gpio_chip *chip, unsigned int offset)
+-	hlen += llc_mac_header_len(dev->type);
++	hlen += llc_mac_header_len(dev);
+ 	skb = alloc_skb(hlen + data_size, GFP_ATOMIC);
+ 
+ 	if (skb) {
 
 
