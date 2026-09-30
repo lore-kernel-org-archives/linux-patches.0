@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A59D3CAE8F;
-	Wed, 30 Sep 2026 19:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A573D8900;
+	Wed, 30 Sep 2026 19:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795098; cv=none; b=rTmwf6/JaoASBzL4JJabn4XEGnAvtR6NRUaRgh+Vdk6HFactoYtnNsXpjWxO8hQ3mye9hyXOcjjHcSyBhA9dln7TT8UtJv5gs8byxw33sbx+XplP9yDCTCqNA1OO/x8BG8hySf/+NflMQUhTM7PVo+Vn+vFO9N+xb6eHp81fr6A=
+	t=1790795101; cv=none; b=eXh54uv7kKqNyRmOF1wbsUM04IqAPMjrO55aat6TH+VphX702BlbwFkFEz6+8UxxQ6Ruw0fSUJQw05YDtYZjx9Wj9jTUhaH06ag16YSp2A1aRXUOvYaP+yNnGH7K8Oq2jFBe4zTQ79BUtrzoVUdMGnvUfgCwLG2IL6HIFHPVQeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795098; c=relaxed/simple;
-	bh=8JoX7NrnafDiA+M1nlauPC+nhq0ZtAVG9WfveuylVCk=;
+	s=arc-20240116; t=1790795101; c=relaxed/simple;
+	bh=p+qPuZ56g5JOcGuar++O8QF3OZIo5bRpONHDFFV5xTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5uWfetcpd1G8k1axpkjQwpVa1I4nzvPtkID19cz390WIU6R9u+1fOw1P4rXeDkn2TWuEDQBgSWxqJm0yMiPefCMch3EYn00dopeDMKQhVQzGQSUarRZaX6Idn6OdsWnNPs1oz2d8qJbo+ifOg/jo9hFhGhARYDHOREx54SQi/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QS/XVP3k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V4qNsX23fuHEBUAp51m3loUh6UxQmUxyoESyMdbBg0lbpBBmhao8WWJeA+AJHO1ifbdnKvlTFyPD2hPDpLa41AZlQf50rOP/uh36TkcuW6U4e80BUgSkLnXSV4P41ne1I7Z3okYfAdKYbvXkZdLJHwOsWck0GwEal7ceRMIEwmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+BIwpD8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QS/XVP3k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643DB1F000FF;
-	Wed, 30 Sep 2026 19:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+BIwpD8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306D21F000FF;
+	Wed, 30 Sep 2026 19:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795096;
-	bh=nCgBtmgv1L7LBxY1vvBnJj/yi/rmUk4eWXHJ24HaoUI=;
+	s=korg; t=1790795099;
+	bh=fH1WLIjOYpMtDLiLmpS13BEauF2baOG3FkTmcNiO7jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QS/XVP3kbsKaXqOSC5oILZubDMMlhESA1xwUA0/MCuvAfQPDtrTjgSgBmgTQUoKW0
-	 I5WMljc/4hfaVhJXzFxHwFT0Y5MW7My1eJeCEJOFSrbr0dGykWgE8AE4Irv3QJdqCO
-	 ZQpejoIWWmcirHvjB0Stl5KcbteRFIqtKqLiZYOw=
+	b=p+BIwpD8iH3Pcx9SDpiRxAnuR0HfHFDWhuuO1XCrriDkP+kNzDQRat3ozPgwlPXE7
+	 5YK3ycNgTrer+pEk0rt1TvG4CGOeJA0YxcVVY8cZ/3wWyNz/CdnQ0caOaosHc56svs
+	 dkavcdF60Kld37q4Z7vv5xte7VocGHSIOnlnIIpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2d770620059281e225a4@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0442/1193] locking/lockdep: Invalidate stale class_cache entries for zapped classes
-Date: Wed, 30 Sep 2026 17:18:46 +0200
-Message-ID: <20260930152444.003567381@linuxfoundation.org>
+Subject: [PATCH 6.6 0443/1193] ALSA: rawmidi: Expose the tied device number in info ioctl
+Date: Wed, 30 Sep 2026 17:18:47 +0200
+Message-ID: <20260930152444.024654023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,166 +50,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 02c6be7d675b21d81f0ba3a524346850a8c0e3bf ]
+[ Upstream commit bdf46443f350dd5d226fd528a5a5954ff762f591 ]
 
-syzbot reported a lockdep splat hitting DEBUG_LOCKS_WARN_ON(1) in
-hlock_class() due to an invalid class_idx:
+The UMP legacy rawmidi is derived from the UMP rawmidi, but currently
+there is no way to know which device is involved in other side.
 
-  WARNING: kernel/locking/lockdep.c:238 at __lock_acquire+0x382/0x2cf0 kernel/locking/lockdep.c:5203
-  Workqueue: wg-crypt-wg0 wg_packet_tx_worker
-  RIP: 0010:hlock_class kernel/locking/lockdep.c:238 [inline]
-  RIP: 0010:check_wait_context kernel/locking/lockdep.c:4870 [inline]
-  RIP: 0010:__lock_acquire+0x389/0x2cf0 kernel/locking/lockdep.c:5203
-  Call Trace:
-   <IRQ>
-   lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5886
-   _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:173
-   tcp_tsq_handler+0x29/0x200 net/ipv4/tcp_output.c:1291
-   tcp_tsq_workfn+0x384/0x410 net/ipv4/tcp_output.c:1325
-   ...
+This patch extends the rawmidi info ioctl to show the tied device
+number.  As default it stores -1, indicating that no tied device.
 
-When a lock class is zapped (e.g. during module unload or key
-unregistration), zap_class() clears the class's bit in
-lock_classes_in_use and removes it from the class hash table.
-However, existing lockdep_map instances embedded in data structures
-may still retain a pointer to the zapped class in their class_cache[]
-array.
-
-When __lock_acquire() subsequently runs on such a lock, it finds
-lock->class_cache[subclass] != NULL, skipping register_lock_class()
-and assigning hlock->class_idx to the index of the zapped class. When
-check_wait_context() or hlock_class() inspects the held_lock, it finds
-!test_bit(class_idx, lock_classes_in_use) and warns. Furthermore, if
-the zapped slot is subsequently re-allocated to an unrelated lock key,
-the stale class_cache entry would erroneously match the unrelated
-class (ABA issue).
-
-Add lock_class_cache_is_valid() to validate that the cached class is
-within lock_classes bounds, still allocated in lock_classes_in_use
-(using uninstrumented arch_test_bit() in __always_inline context so it
-is safe in noinstr contexts like match_held_lock()), and that
-class->key matches the expected subkey (taking lockdep_set_subclass()
-overrides into account). Also use READ_ONCE()/WRITE_ONCE() when
-accessing class_cache[].  If the entry is invalid or stale, fall back
-to register_lock_class() / look_up_lock_class().
-
-Fixes: a0b0fd53e1e6 ("locking/lockdep: Free lock classes that are no longer in use")
-Closes: https://lore.kernel.org/netdev/6a8c66dc.4d75e56a.c9a88.0050.GAE@google.com/T/#u
-Reported-by: syzbot+2d770620059281e225a4@syzkaller.appspotmail.com
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260824155129.676096-1-edumazet@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250110155943.31578-2-tiwai@suse.de
+Stable-dep-of: adeee7187694 ("ALSA: ump: do not touch legacy_rmidi before it exists")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 50 +++++++++++++++++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 8 deletions(-)
+ Documentation/sound/designs/midi-2.0.rst | 5 +++++
+ include/sound/rawmidi.h                  | 1 +
+ include/uapi/sound/asound.h              | 5 ++++-
+ sound/core/rawmidi.c                     | 2 ++
+ sound/core/ump.c                         | 3 +++
+ 5 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index b16e699cee9fe..dcc768d47649a 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -940,6 +940,34 @@ look_up_lock_class(const struct lockdep_map *lock, unsigned int subclass)
- 	return NULL;
+diff --git a/Documentation/sound/designs/midi-2.0.rst b/Documentation/sound/designs/midi-2.0.rst
+index 086487ca7ab11..d525bc2805f72 100644
+--- a/Documentation/sound/designs/midi-2.0.rst
++++ b/Documentation/sound/designs/midi-2.0.rst
+@@ -293,6 +293,11 @@ Rawmidi API Extensions
+   status 0x05).  When UMP core receives such a message, it updates the
+   UMP EP info and the corresponding sequencer clients as well.
+ 
++* The legacy rawmidi device number is found in the new `tied_device`
++  field of the rawmidi info.
++  On the other hand, the UMP rawmidi device number is found in
++  `tied_device` field of the legacy rawmidi info, too.
++
+ 
+ Control API Extensions
+ ======================
+diff --git a/include/sound/rawmidi.h b/include/sound/rawmidi.h
+index f31cabf0158c9..7f1fec786b72f 100644
+--- a/include/sound/rawmidi.h
++++ b/include/sound/rawmidi.h
+@@ -118,6 +118,7 @@ struct snd_rawmidi {
+ 	struct list_head list;
+ 	unsigned int device;		/* device number */
+ 	unsigned int info_flags;	/* SNDRV_RAWMIDI_INFO_XXXX */
++	unsigned int tied_device;
+ 	char id[64];
+ 	char name[80];
+ 
+diff --git a/include/uapi/sound/asound.h b/include/uapi/sound/asound.h
+index 10966a9250cd9..16f6837ddc985 100644
+--- a/include/uapi/sound/asound.h
++++ b/include/uapi/sound/asound.h
+@@ -725,6 +725,8 @@ enum {
+ #define SNDRV_RAWMIDI_INFO_DUPLEX		0x00000004
+ #define SNDRV_RAWMIDI_INFO_UMP			0x00000008
+ 
++#define SNDRV_RAWMIDI_DEVICE_UNKNOWN		-1
++
+ struct snd_rawmidi_info {
+ 	unsigned int device;		/* RO/WR (control): device number */
+ 	unsigned int subdevice;		/* RO/WR (control): subdevice number */
+@@ -736,7 +738,8 @@ struct snd_rawmidi_info {
+ 	unsigned char subname[32];	/* name of active or selected subdevice */
+ 	unsigned int subdevices_count;
+ 	unsigned int subdevices_avail;
+-	unsigned char reserved[64];	/* reserved for future use */
++	int tied_device;		/* R: tied rawmidi device (UMP/legacy) */
++	unsigned char reserved[60];	/* reserved for future use */
+ };
+ 
+ #define SNDRV_RAWMIDI_MODE_FRAMING_MASK		(7<<0)
+diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
+index 1431cb997808d..78cf0823ef258 100644
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -651,6 +651,7 @@ static int snd_rawmidi_info(struct snd_rawmidi_substream *substream,
+ 	info->subdevices_count = substream->pstr->substream_count;
+ 	info->subdevices_avail = (substream->pstr->substream_count -
+ 				  substream->pstr->substream_opened);
++	info->tied_device = rmidi->tied_device;
+ 	return 0;
  }
  
-+static __always_inline bool lock_class_cache_is_valid(const struct lockdep_map *lock,
-+						      const struct lock_class *class,
-+						      unsigned int subclass)
-+{
-+	unsigned int class_subclass;
+@@ -1897,6 +1898,7 @@ int snd_rawmidi_init(struct snd_rawmidi *rmidi,
+ 	INIT_LIST_HEAD(&rmidi->streams[SNDRV_RAWMIDI_STREAM_INPUT].substreams);
+ 	INIT_LIST_HEAD(&rmidi->streams[SNDRV_RAWMIDI_STREAM_OUTPUT].substreams);
+ 	rmidi->info_flags = info_flags;
++	rmidi->tied_device = SNDRV_RAWMIDI_DEVICE_UNKNOWN;
+ 
+ 	if (id != NULL)
+ 		strscpy(rmidi->id, id, sizeof(rmidi->id));
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index 650cbe7b3a977..ff8869e3626a7 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -1304,6 +1304,9 @@ int snd_ump_attach_legacy_rawmidi(struct snd_ump_endpoint *ump,
+ 	ump->legacy_rmidi = rmidi;
+ 	update_legacy_names(ump);
+ 
++	rmidi->tied_device = ump->core.device;
++	ump->core.tied_device = rmidi->device;
 +
-+	if (!class)
-+		return false;
-+
-+	if (unlikely(class < lock_classes || class >= lock_classes + MAX_LOCKDEP_KEYS))
-+		return false;
-+
-+	if (unlikely(!arch_test_bit(class - lock_classes, lock_classes_in_use)))
-+		return false;
-+
-+	if (unlikely(!lock->key))
-+		return false;
-+
-+	class_subclass = subclass ? subclass : class->subclass;
-+	if (unlikely(class_subclass >= MAX_LOCKDEP_SUBCLASSES))
-+		return false;
-+
-+	if (unlikely(READ_ONCE(class->key) != lock->key->subkeys + class_subclass))
-+		return false;
-+
-+	return true;
-+}
-+
- /*
-  * Static locks do not have their class-keys yet - for them the key is
-  * the lock object itself. If the lock is in the per cpu area, the
-@@ -1365,9 +1393,9 @@ register_lock_class(struct lockdep_map *lock, unsigned int subclass, int force)
- 
- out_set_class_cache:
- 	if (!subclass || force)
--		lock->class_cache[0] = class;
-+		WRITE_ONCE(lock->class_cache[0], class);
- 	else if (subclass < NR_LOCKDEP_CACHING_CLASSES)
--		lock->class_cache[subclass] = class;
-+		WRITE_ONCE(lock->class_cache[subclass], class);
- 
- 	/*
- 	 * Hash collision, did we smoke some? We found a class with a matching
-@@ -4860,7 +4888,7 @@ void lockdep_init_map_type(struct lockdep_map *lock, const char *name,
- 	int i;
- 
- 	for (i = 0; i < NR_LOCKDEP_CACHING_CLASSES; i++)
--		lock->class_cache[i] = NULL;
-+		WRITE_ONCE(lock->class_cache[i], NULL);
- 
- #ifdef CONFIG_LOCK_STAT
- 	lock->cpu = raw_smp_processor_id();
-@@ -4922,12 +4950,15 @@ EXPORT_SYMBOL_GPL(__lockdep_no_validate__);
- void lockdep_set_lock_cmp_fn(struct lockdep_map *lock, lock_cmp_fn cmp_fn,
- 			     lock_print_fn print_fn)
- {
--	struct lock_class *class = lock->class_cache[0];
-+	struct lock_class *class = READ_ONCE(lock->class_cache[0]);
- 	unsigned long flags;
- 
- 	raw_local_irq_save(flags);
- 	lockdep_recursion_inc();
- 
-+	if (!lock_class_cache_is_valid(lock, class, 0))
-+		class = NULL;
-+
- 	if (!class)
- 		class = register_lock_class(lock, 0, 0);
- 
-@@ -5005,8 +5036,11 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 	if (!prove_locking || lock->key == &__lockdep_no_validate__)
- 		check = 0;
- 
--	if (subclass < NR_LOCKDEP_CACHING_CLASSES)
--		class = lock->class_cache[subclass];
-+	if (subclass < NR_LOCKDEP_CACHING_CLASSES) {
-+		class = READ_ONCE(lock->class_cache[subclass]);
-+		if (!lock_class_cache_is_valid(lock, class, subclass))
-+			class = NULL;
-+	}
- 	/*
- 	 * Not cached?
- 	 */
-@@ -5201,9 +5235,9 @@ static noinstr int match_held_lock(const struct held_lock *hlock,
- 		return 1;
- 
- 	if (hlock->references) {
--		const struct lock_class *class = lock->class_cache[0];
-+		const struct lock_class *class = READ_ONCE(lock->class_cache[0]);
- 
--		if (!class)
-+		if (!lock_class_cache_is_valid(lock, class, 0))
- 			class = look_up_lock_class(lock, 0);
- 
- 		/*
+ 	ump_dbg(ump, "Created a legacy rawmidi #%d (%s)\n", device, id);
+ 	return 0;
+ }
 -- 
 2.53.0
 
