@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8023E3156;
-	Wed, 30 Sep 2026 19:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FA53E1681;
+	Wed, 30 Sep 2026 19:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796514; cv=none; b=aaseg9xVlfeyDGCdpUx+pGyBs482a6wgxr7k5NFPMA5hud6KoAtEwGUEMwiiZYEAEgBNaNWLZTiZBOzp9MzGJCFepManXrC3mmMi7A8apL8ZvfUDVH7CPKkHPx8HuXX+RawNFb/odwTkNLKG5UzmTr9L+UZuaaxX/UDkoKfZ1vc=
+	t=1790796517; cv=none; b=SZ7EdfxvjsTIFW1bpnLdMMM6H+BAHCISavlWaVeLoeiikbuLOxvwGw3gpfOSARvLtYyxKivupCDzR/og0y5qFVRFStOSR3gchGe0FCwX6fSoinAstwQqyyWvGd7Qvx8i0TcR0YBlMvrMC2yhZzvLq9Qjy8vWPG8w8Ov4s5wtDKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796514; c=relaxed/simple;
-	bh=6hUxgZ0ksHWv2oUhnpn0nzcNPJSbZoqEigQpKvYSgYI=;
+	s=arc-20240116; t=1790796517; c=relaxed/simple;
+	bh=1+SM/v6FlackVNZHgKmETpTDkxvO2Cv97px0mrVFQ3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXZGcp5zfAFIEWYZZrIONSvZ/mYEQHnTU7HAv8OOMYvWMdpSY1AJEHPn5IvUnk+11wKZHulOkhihDo0fLatRRh5TafLNqLO/TCnXq/N0yvuxTyo9u+j/7v8gtiW08ShjPhT0cfiWL0wbdZHcDA6E/7iGMNfH2/zbl/kZ7i7oDkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWzho3W5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IrhbMUckS0KBqP68dKC8VvR4ztWqPFpzIAdAgR2bRXPhV/JwoQF3hhp+Q0MrrkbRk53arR7HUhid3du99nlOcChMLhaKUZsT1uTNplWpHfTGQboMyjUzkHXArYJ+vCxlqKIJkktVMawBIZ3ekmSgiGwDFRT4dBZ7LTN9gIJut44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yV22lup2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWzho3W5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61581F000FF;
-	Wed, 30 Sep 2026 19:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yV22lup2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2B41F000FF;
+	Wed, 30 Sep 2026 19:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796513;
-	bh=MQJ2GSI9LfLCwfYQuXuLazx7o6koSiDuM3JiExpsExg=;
+	s=korg; t=1790796516;
+	bh=smf1HV8MS7sY4BHlv4NQvBZkUJRKvYYet4a5M+k828g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWzho3W51PWq2z3X/marNPoyy+sULfiO/pvVRuXffBb0UEoounssAxGPfOtKv+PSp
-	 JhQoUadmc99VAHAcT4U27R/c/pC9vtxfREYu/9EGBEgLrYCY58rzDCyqyEVwJSmLvM
-	 kD2UIHuPOrW9CbE4vxhQHwNP0GuwgtdFKZQLEfNM=
+	b=yV22lup2dj+GSakZ2k5JJsTKVEn+SxaM4pJMjrJwO3MTFuUUVD79oHJSbSYUq7q+m
+	 +SSZv2Ui/fg6MGSrogGI76LBbe/bGMvZHc8G8bNj/SeZiEQUQU8LvcP3CFfHkSXe1S
+	 ZeLlrfpZFMMsvkEWWtvXlsvR03W4AQVP9a8At8QA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0939/1193] smb: client: fix server->total_read for compound encrypted PDUs
-Date: Wed, 30 Sep 2026 17:27:03 +0200
-Message-ID: <20260930152455.101991876@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	James Seo <james@equiv.tech>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 0904/1193] hwmon: (hp-wmi-sensors) Fix use-after-free in fungible_show()
+Date: Wed, 30 Sep 2026 17:26:28 +0200
+Message-ID: <20260930152454.327957934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,42 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit f73726b83e4756fdaa099e1bc1143293bd57ad79 upstream.
+commit e6cb0b4d4ecb8e71fd2200d907ab2e9663356f69 upstream.
 
-In receive_encrypted_standard(), server->total_read is left at the
-full decrypted frame size when walking sub-PDUs of a compound encrypted
-frame. As a result, cifs_handle_standard() passes this full size
-to smb2_check_message(), causing the PDU length guards to incorrectly
-validate the entire compound frame instead of the current sub-PDU.
+nsensor->current_state is dynamically replaced as the sensor's state
+changes. update_numeric_sensor_from_wobj() does this by freeing the
+old string and installing a new one:
 
-This allows truncated non-last sub-PDUs to bypass length validation,
-leading to out-of-bounds reads in smb2_get_data_area_len().
+	if (strcmp(trimmed, nsensor->current_state)) {
+		new_string = hp_wmi_strdup(dev, trimmed);
+		if (new_string) {
+			devm_kfree(dev, nsensor->current_state);
+			nsensor->current_state = new_string;
+		}
+	}
 
-Fix this by setting server->total_read to the true length of the
-current sub-PDU: next_cmd for non-last sub-PDUs, and the remaining
-pdu_length for the last one.
+This function is only ever called from hp_wmi_update_info() while
+state->lock is held, so the free-and-replace itself is properly
+serialized against concurrent updates.
 
-Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
+fungible_show(), however, reads the same pointer after the lock has
+already been dropped:
+
+	err = hp_wmi_update_info(state, info);
+	if (err)
+		return err;
+
+	switch (prop) {
+	...
+	case HP_WMI_PROPERTY_CURRENT_STATE:
+		seq_printf(seqf, "%s\n", nsensor->current_state);
+		break;
+
+hp_wmi_update_info() takes state->lock internally and releases it
+before returning, so by the time fungible_show() dereferences
+nsensor->current_state in seq_printf(), no lock is held. Two
+processes reading a sensor's current_state debugfs entry at
+overlapping times (or one reading it while another read of the same
+sensor triggers a refresh) can race: one thread's seq_printf() can
+be part-way through printing the string at the moment another
+thread's call into update_numeric_sensor_from_wobj() frees it with
+devm_kfree() and installs a new pointer, causing a use-after-free
+read.
+
+Take state->lock around the read in fungible_show() as well, so it
+can never run concurrently with the free-and-replace in
+update_numeric_sensor_from_wobj().
+
+Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Acked-by: James Seo <james@equiv.tech>
+Link: https://patch.msgid.link/20260916002926.161595-1-meatuni001@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/hp-wmi-sensors.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4975,6 +4975,7 @@ receive_encrypted_standard(struct TCP_Se
- one_more:
- 	shdr = (struct smb2_hdr *)buf;
- 	next_cmd = le32_to_cpu(shdr->NextCommand);
-+	server->total_read = next_cmd ? next_cmd : pdu_length;
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -1247,7 +1247,9 @@ static int fungible_show(struct seq_file
+ 		break;
  
- 	if (*num_mids >= MAX_COMPOUND) {
- 		cifs_server_dbg(VFS, "too many PDUs in compound\n");
+ 	case HP_WMI_PROPERTY_CURRENT_STATE:
++		mutex_lock(&state->lock);
+ 		seq_printf(seqf, "%s\n", nsensor->current_state);
++		mutex_unlock(&state->lock);
+ 		break;
+ 
+ 	case HP_WMI_PROPERTY_UNIT_MODIFIER:
 
 
