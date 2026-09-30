@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9335616AC;
-	Wed, 30 Sep 2026 17:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253AB5616CB;
+	Wed, 30 Sep 2026 17:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790417; cv=none; b=Dt6RYQ/YuH9HNi9pcZTfFd+Kg4jd4dcwbGHkX7i/jF9uFUWQ6l2ocP2L+0MfcmPYxLuqkGt4dy+aYjTVzS6/z/K26DANsiGMb9kd4RczBal7oQHk8zVehelYiiyMMiQKKKDnYo/V4PSwkhbxwEUIihxnO2qRaZ49g6MfOc5Rs2A=
+	t=1790790419; cv=none; b=AYAlG5LrAn1E1M1DAJyuPySeC7Z84Tc5wJjwlC/jx3IBG7p3GtnbTW/1z2ISlp+E/MIXp3xTuwfZaw5jVCdHHdIB+d1Yq25QcAYGxvWfKwY9QjlLn8Q4/QUZj4Wy0nvVYUU/dDpACa19i4vhD1yQKy+ELIbXbxxoWxSoEohwfCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790417; c=relaxed/simple;
-	bh=3AFklLwYwuMGctkRPMW3PUse8U1N6qdKb1fJKZ3fTVo=;
+	s=arc-20240116; t=1790790419; c=relaxed/simple;
+	bh=WNvyzw9XKajodiFYiE5pX6cTCGAvf9fGaWWlcuVSgOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0wgLlTKGJ+f3RBh4QBFxF8Qc7o8AVc5qvGtZ6Hn3NCCxd/0Ll+qjvKupO5RMEOQtNvkrc2ILZohmLpRSn0ZSLAOBgUkyW/hLmUtl85VOyKzpyq3/NmkzYJaDIb7ow8c2xw3ix6d0SOzATbkE6XsRe2Sls1WCrVJ4b6xYzj0y+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8N/9wmA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9FGqaMf76mExQsxWHHpV5K1C3lN35o/adF+VXQPM9g6EYFR/OSpAXS5zs2SdvJrHB/mVUEAOKkQ7Xz6snJ0vaf6Yn7xoFzqHVEzTUzhUVOTwfwvMojqXck3s7SI3/FhglErAZZMz1oDcuAVK9GgDDF9gtAkZoTwT5+DgXctlMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CW6p0ipw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8N/9wmA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF6C1F00898;
-	Wed, 30 Sep 2026 17:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CW6p0ipw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3391B1F000FF;
+	Wed, 30 Sep 2026 17:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790414;
-	bh=vRMu3mZotXpFGuNv/qJON8ZZjBt0+qb/5Td1kpHnHPk=;
+	s=korg; t=1790790417;
+	bh=L5azczJS5BZp0La/fpG9Dt80cbaCGDlk8+HpEP2HGyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8N/9wmAGfwBMun/rKLwd48b3VXbVdHFekXdqqaBjQY2qPmA0G4bZ2Ci8Cmf/qH+2
-	 r99Ayg7cJldLgnvyspkdhJmd1ZbUrgVhk20ok6u/hK9kBXyYE4f1/wZ6N44kHgXx3Q
-	 tlW4z/8OWwNTwKBzK9ucirdl8BMmgte0YF5FWdW8=
+	b=CW6p0ipwHb1fArJKiUqCE0ATs0RTrZCu+PuUUFyPWgDIJe0GHJyochwrEdRTphaXi
+	 4x2rHLz/fYxUeLjWmc2f1C3+Km1EiOPKsQBFCwAKNWvMfgLB/8KFmlb/Bx1tz4q2hv
+	 GksaoJVxcn8px+TLtojAKVRP8xkLKYyqmDW9a5TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Mulqueen <mike@method-b.uk>,
-	David Howells <dhowells@redhat.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 784/877] 9p: Fix v9fs_issue_write() to update i_size and remote_i_size
-Date: Wed, 30 Sep 2026 17:28:15 +0200
-Message-ID: <20260930152431.632832608@linuxfoundation.org>
+Subject: [PATCH 6.12 820/877] bna: prevent IOC timer rearm during teardown
+Date: Wed, 30 Sep 2026 17:28:51 +0200
+Message-ID: <20260930152432.423354742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,54 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit c60ae98c5aa64021751b38ab1313b19d620bf640 ]
+[ Upstream commit 77b1718e39e5c9f6956fb60807326af20baf889d ]
 
-Fix v9fs_issue_write() to update i_size and remote_i_size to the new size
-of the server file if we made it larger, using the start fpos and the count
-returned by p9_client_write() to calculate the new minimum file size.
+bna: prevent IOC timer rearm during teardown
 
-This assumes that if the 9P server makes a short write (say it hits
-ENOSPC), a reduced count is returned.
+bnad_pci_remove() and the probe disable_ioceth path call
+timer_delete_sync() for ioc_timer, sem_timer and hb_timer, but not for
+iocpf_timer.  bnad_iocpf_timeout() then takes bnad->bna_lock after
+free_netdev() has freed the struct bnad.
 
-Fixes: 5fb70e7275a6 ("netfs, 9p: Implement helpers for new write code")
-Reported-by: Michael Mulqueen <mike@method-b.uk>
-Closes: https://lore.kernel.org/r/fbb9e395-1e07-4212-8f70-23f3cd498074@method-b.uk/
+Deleting iocpf_timer last does not fix this.  sem_timer and
+iocpf_timer rearm each other: bnad_iocpf_sem_timeout() can arm
+iocpf_timer, and bnad_iocpf_timeout() arms sem_timer from
+bfa_ioc_hw_sem_get() when the semaphore is busy.
+timer_delete_sync() only waits out its own callback.
+bnad_ioceth_disable() can time out and leave that callback live.
+
+Shut all four IOC timers down with timer_shutdown_sync() on both
+paths, so a later mod_timer() is ignored.
+
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: 1d32f7696286 ("bna: IOC failure auto recovery fix")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Howells <dhowells@redhat.com>
-Message-ID: <2226525.1789118704@warthog.procyon.org.uk>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-[ replaced unavailable netfs_write_sizes() with i_size_write() and direct remote_i_size updates under inode->i_lock. ]
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260922014605.588040-1-mhun512@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ inlined bnad_ioc_timers_shutdown() into the existing teardown functions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_addr.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ethernet/brocade/bna/bnad.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/fs/9p/vfs_addr.c
-+++ b/fs/9p/vfs_addr.c
-@@ -54,9 +54,21 @@ static void v9fs_begin_writeback(struct
- static void v9fs_issue_write(struct netfs_io_subrequest *subreq)
- {
- 	struct p9_fid *fid = subreq->rreq->netfs_priv;
-+	struct inode *inode = subreq->rreq->inode;
-+	struct netfs_inode *ictx = netfs_inode(inode);
- 	int err, len;
+--- a/drivers/net/ethernet/brocade/bna/bnad.c
++++ b/drivers/net/ethernet/brocade/bna/bnad.c
+@@ -3725,9 +3725,11 @@ probe_uninit:
+ 	bnad_res_free(bnad, &bnad->mod_res_info[0], BNA_MOD_RES_T_MAX);
+ disable_ioceth:
+ 	bnad_ioceth_disable(bnad);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	/* The IOC timers rearm one another.  Shut down all of them. */
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
+ 	spin_lock_irqsave(&bnad->bna_lock, flags);
+ 	bna_uninit(bna);
+ 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
+@@ -3768,9 +3770,11 @@ bnad_pci_remove(struct pci_dev *pdev)
  
- 	len = p9_client_write(fid, subreq->start, &subreq->io_iter, &err);
-+	if (len > 0) {
-+		unsigned long long end = subreq->start + len;
-+
-+		spin_lock(&inode->i_lock);
-+		if (end > i_size_read(inode))
-+			i_size_write(inode, end);
-+		if (end > ictx->remote_i_size)
-+			ictx->remote_i_size = end;
-+		spin_unlock(&inode->i_lock);
-+	}
- 	netfs_write_subrequest_terminated(subreq, len ?: err, false);
- }
- 
+ 	mutex_lock(&bnad->conf_mutex);
+ 	bnad_ioceth_disable(bnad);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
+-	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	/* The IOC timers rearm one another.  Shut down all of them. */
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
+ 	spin_lock_irqsave(&bnad->bna_lock, flags);
+ 	bna_uninit(bna);
+ 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
 
 
