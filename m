@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209693B2FDC;
-	Wed, 30 Sep 2026 17:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31364415B66;
+	Wed, 30 Sep 2026 17:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791109; cv=none; b=Ds9RnPn89i4GqxVxie6uBYQU3QXjOPKBQq1vmgEF+qFDXbkCyRLgo0I8V9qXUJApwmX5t3RFudWc+tL4Kpoo9zwkXo40BuW53q7ydZ7sxx9jebSoze/2IyWcUPduFAgp0n/eEyQ1fz83M4ob1bliUP4GfxjL7FUZ/OyMfvIEUGM=
+	t=1790791112; cv=none; b=jX5dzfRhfrGBY4B8fZPB9gkcOo+rrK2eLBaIAghOjKOeeUaTibFOUMNYZa3OeQt9eaBaTwOZ92OSHQ0H/ZHLFnsE/xxJBrxcNZxtf4fWu6YiakkbP9H3oQ0Lrg36afTxw0G+EWBI62uIPosnUYHUK+P5XhSXIBo3XI421K0IM7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791109; c=relaxed/simple;
-	bh=LudNcacUUr7qxiQCJiXhLYVkfJtYl0RbLRkTPA+O574=;
+	s=arc-20240116; t=1790791112; c=relaxed/simple;
+	bh=ZB1QK8Ilp6VeCH2CFAEgJejHPEloXlLl8mGVz0yS/04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DV+RxsuRgmVSfA2fkJGYFl2zuuECTW4s1N10L+0cTGVUqTlXYVDmUU+89dEHy0lO9Ro2y8+K80GUcB+fX7T/IW7n+M2EF9oFS7KnkjqxXv3KW4w1/fDZpXJjngTWix3p8RlwE11e8lRV66u7T2mEWwp5Ioxg6vLtMl6FRZjN+es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0ZjU4Wd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AiU4WFXbKUWA4uvIz5FU9iEKiFAgsvugLfYPKtVaIHoTbkYha19jew5JQrLmxG2txYme8U2ihDw3IgA52vlmuyTUux5O+FUTZ3sRC5zfpcujYNDw5YYfpT9XE8egr/BOu3EEHbHVJh/GargOI9OnowSU6DcywavKsTLEnP1EDko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWH2g+R/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0ZjU4Wd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D12B1F00898;
-	Wed, 30 Sep 2026 17:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWH2g+R/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540C21F000FF;
+	Wed, 30 Sep 2026 17:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791108;
-	bh=uV9KJx/KsPhkymTGZX0PA/uE+P/tAKk5gzGejkPnEOE=;
+	s=korg; t=1790791110;
+	bh=hGJEpoK0hjdP9j8mirSyQROiOvp/mb+slBjTbuM+tbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L0ZjU4WdpvpxI2LfzrkT2wQmQJ8DzaiTmtPnGFf+1DktN0J8yyk1W/Hur8CJxvhpg
-	 kK7Y6R5MvjpxxP0SHhojGr1Gtp+WJXqtz1QK6NmFMiUyFIGI8ZzZcXEKLa9yZpi1P4
-	 DIpqpZX5WGgfOvNuOWou1KvW1PB/mH8sdqirEUak=
+	b=ZWH2g+R/HbsxTI9wFkLKdCBCqYqk0q1qTxioHS7+DV1dPcVK9ep8N4fv3SGxJp2Qr
+	 M040fXZ6qq5l9CbQAgztecOo+uS/czmsUEzjiof+B34kZG8bG3dXd1YCFR7fQZaA32
+	 08OqYWL/eS/iiBQJpGGL/eLlf0SyE2Qgg4JO6seA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 188/752] xen/gntalloc: validate grant count before allocation
-Date: Wed, 30 Sep 2026 17:20:58 +0200
-Message-ID: <20260930152402.278604909@linuxfoundation.org>
+Subject: [PATCH 5.15 189/752] ksmbd: fix credit charge calculation for SMB2 QUERY_INFO
+Date: Wed, 30 Sep 2026 17:20:59 +0200
+Message-ID: <20260930152402.302688938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,73 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2299822f3f466b5dcad2377bf63986199f881a6b ]
+[ Upstream commit 284dc80ff529a0b454f11b6c2fea0d5daf6f315f ]
 
-gntalloc_ioctl_alloc() allocates the grant-id array before checking
-whether the requested count fits within the global grant limit. Counts
-above that limit cannot succeed, so reject them before the
-user-controlled allocation reaches kcalloc().
+smb2_validate_credit_charge() computes the credit charge a request is
+allowed to consume from the payload size:
 
-Use a subtraction-based check while holding gref_mutex so adding the
-requested count cannot wrap. Also cast the count before advancing the
-per-file index so the page-size multiplication is performed in 64-bit
-arithmetic.
+  CreditCharge = (max(SendPayloadSize, ResponsePayloadSize) - 1)/65536 + 1
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>
+For SMB2 QUERY_INFO, the server must validate CreditCharge based on the
+*maximum* of InputBufferLength and OutputBufferLength. ksmbd instead
+summed the two lengths, which overestimates the required charge.
+
+As a result a single-credit QUERY_INFO whose InputBufferLength and
+OutputBufferLength each fit in 64KB but whose sum exceeds 64KB is
+rejected with STATUS_INVALID_PARAMETER, even though it is a valid
+request. IOCTL already uses max() of the request and response sizes;
+make QUERY_INFO consistent by feeding InputBufferLength as the request
+length and OutputBufferLength as the expected response length so that
+smb2_validate_credit_charge() takes their maximum.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntalloc.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2misc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/gntalloc.c b/drivers/xen/gntalloc.c
-index edb0acd0b8323..e95dd0b9b6ba9 100644
---- a/drivers/xen/gntalloc.c
-+++ b/drivers/xen/gntalloc.c
-@@ -275,6 +275,7 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	int rc = 0;
- 	struct ioctl_gntalloc_alloc_gref op;
- 	uint32_t *gref_ids;
-+	unsigned int limit_snapshot;
+diff --git a/fs/ksmbd/smb2misc.c b/fs/ksmbd/smb2misc.c
+index 8d7368ccda85d..49a9237f7a5c0 100644
+--- a/fs/ksmbd/smb2misc.c
++++ b/fs/ksmbd/smb2misc.c
+@@ -261,8 +261,12 @@ static int smb2_calc_size(void *buf, unsigned int *len)
  
- 	pr_debug("%s: priv %p\n", __func__, priv);
- 
-@@ -283,6 +284,12 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 		goto out;
- 	}
- 
-+	limit_snapshot = READ_ONCE(limit);
-+	if (op.count > limit_snapshot) {
-+		rc = -ENOSPC;
-+		goto out;
-+	}
+ static inline int smb2_query_info_req_len(struct smb2_query_info_req *h)
+ {
+-	return le32_to_cpu(h->InputBufferLength) +
+-		le32_to_cpu(h->OutputBufferLength);
++	return le32_to_cpu(h->InputBufferLength);
++}
 +
- 	gref_ids = kcalloc(op.count, sizeof(gref_ids[0]), GFP_KERNEL);
- 	if (!gref_ids) {
- 		rc = -ENOMEM;
-@@ -295,14 +302,16 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	 * are about to enforce, removing them here is a good idea.
- 	 */
- 	do_cleanup();
--	if (gref_size + op.count > limit) {
-+	limit_snapshot = READ_ONCE(limit);
-+	if (gref_size > limit_snapshot ||
-+	    op.count > limit_snapshot - gref_size) {
- 		mutex_unlock(&gref_mutex);
- 		rc = -ENOSPC;
- 		goto out_free;
- 	}
- 	gref_size += op.count;
- 	op.index = priv->index;
--	priv->index += op.count * PAGE_SIZE;
-+	priv->index += (uint64_t)op.count * PAGE_SIZE;
- 	mutex_unlock(&gref_mutex);
++static inline int smb2_query_info_resp_len(struct smb2_query_info_req *h)
++{
++	return le32_to_cpu(h->OutputBufferLength);
+ }
  
- 	rc = add_grefs(&op, gref_ids, priv);
+ static inline int smb2_set_info_req_len(struct smb2_set_info_req *h)
+@@ -308,6 +312,7 @@ static int smb2_validate_credit_charge(struct ksmbd_conn *conn,
+ 	switch (hdr->Command) {
+ 	case SMB2_QUERY_INFO:
+ 		req_len = smb2_query_info_req_len(__hdr);
++		expect_resp_len = smb2_query_info_resp_len(__hdr);
+ 		break;
+ 	case SMB2_SET_INFO:
+ 		req_len = smb2_set_info_req_len(__hdr);
 -- 
 2.53.0
 
