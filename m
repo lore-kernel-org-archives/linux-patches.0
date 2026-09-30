@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271DA50EC11;
-	Wed, 30 Sep 2026 17:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103C44F3EAA;
+	Wed, 30 Sep 2026 17:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787629; cv=none; b=Oh+d7IK9A4ZFiJmfkKXwBbaiQslZZNjpDVFDrGlZJf0lZJBziPJMuobPyObUtEddd/S1z8jpjoJYAcr072JNgElA7i1zm2oVhz8idUH0yUZ/t0bpZrUOfBGHZ3EYJY9FykTfL6ng9knk45OLaUyg/aTZ/cMXkM9FMmUgZQ3mKOY=
+	t=1790787632; cv=none; b=AQcsEHKaVVQi/3Q3rxiflWc+3r+B1HCQ+KgcS+z1hu7vhMwwB6SmQAmq497y+4aqOWIULrKwt9VOIFw3/b1rMsW/EOS6/O1d5c6uIEXJncs/xAkxDp7SWVhTQM7XpOPw6fUUTa1CuxvptdtzvfnkyT5Wgrp24QNCqizSIA0PJxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787629; c=relaxed/simple;
-	bh=CO95x8UFT8MlrO9mH3YospsKG4Oodszc7joM64So12M=;
+	s=arc-20240116; t=1790787632; c=relaxed/simple;
+	bh=OlZzKjch8jxebyWygMFLQwcRkGddOJu1pCfoNoU+sjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4HN+sGgfFkVsYUUWbv3+g1Ykjxi91LspBBNX8iUo/skSr4EMMvEHCzdzKK3cj+jTpmJfgHWlUgAXe5UPJj64SUnOMbHOOV0uE2i7X0Gkny7hWlKiyXcdcf0AeBZGsa+A5HYx/Ko9npKpY/P3xGf0BZm5/WYHu+x/OzFFrFjBkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IymOiszv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NY3ur/Z1wIz8btK3sLHUfSeIppOjtOaPWFwNsMcK6KZ3VlVilh8klUQOi4O3OdZH+wYwDvgjEZ17Lr+MUkUyqL+s58xSpK/o+Cb3yWx4HnT75fzfGO8BnhxwZ0IFbtJOKUAZYQKw11wIym54VHoCr3SZRCO8BJVkAj4X2b0xI80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BqbXN2b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IymOiszv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFE01F000FF;
-	Wed, 30 Sep 2026 17:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BqbXN2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB5F1F000FF;
+	Wed, 30 Sep 2026 17:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787628;
-	bh=3O64tn1nurd5Uxa+gva5vULCk+9ZWKVNc07khWke88s=;
+	s=korg; t=1790787630;
+	bh=/tZxokQFqK0uRID7PqstND9D/6rQ3/2pdQW2kic+tAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IymOiszvXP+w1ChufdgFSnRUUAxgcqm/LP8NExxrBfzxRsN1KFml/L7XG5ZtZuUEH
-	 GN+hgolPcZUBH22Dv5WX7+94okpWrcScCYxiYH6OmRrjKldQTxOpW/7LjPW58zBQ2i
-	 N56T3QzTeJUaSm0VTzKPMyW+zDowuxClG30AYfhU=
+	b=0BqbXN2bElT+UagT7NQ+L136Om8WmogwH6NkmvpnLhv5brDrimjQ6oQrgeIyvkmEp
+	 8WU1Iznsf7FOJBXA7PhXt90CkkQhIZtTWQkgik6UtXo+6lSYTjv4xb5p639hILqEzu
+	 +aBncOnqWYj/TainNYTKLtab5rZvmmLpLMBb30NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.2 295/457] drm/nouveau: fix autosuspend cleanup during teardown
-Date: Wed, 30 Sep 2026 17:26:40 +0200
-Message-ID: <20260930152352.399496062@linuxfoundation.org>
+Subject: [PATCH 7.2 296/457] drm/nouveau: Fix bridge reference leak in nv1a_ram_new()
+Date: Wed, 30 Sep 2026 17:26:41 +0200
+Message-ID: <20260930152352.420196884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,50 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit fefd9480ec361969f1a836df46326a1801062c26 upstream.
+commit 67b4411538c8341692548429d43256f25be99f7a upstream.
 
-nouveau_drm_device_init() calls pm_runtime_use_autosuspend(), but
-nouveau_drm_device_fini() does not call the matching
-pm_runtime_dont_use_autosuspend().
+pci_get_domain_bus_and_slot() takes a reference to the PCI device,
+which is never released once the memory size has been read from its
+config space.  Drop the reference before returning.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
-
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
-
-Add the missing pm_runtime_dont_use_autosuspend() call to the common
-device teardown path.
-
-This issue was found by manual code inspection.
-
-Fixes: 5addcf0a5f0f ("nouveau: add runtime PM support (v0.9)")
+Fixes: 2fa6d6cdaf283c05 ("drm/nouveau: deprecate pci_get_bus_and_slot()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260808134137.2864847-1-lgs201920130244@gmail.com
+Link: https://patch.msgid.link/20260916180036.2090118-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramnv1a.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -585,6 +585,7 @@ nouveau_drm_device_fini(struct nouveau_d
- 	if (nouveau_pmops_runtime()) {
- 		pm_runtime_get_sync(dev->dev);
- 		pm_runtime_forbid(dev->dev);
-+		pm_runtime_dont_use_autosuspend(dev->dev);
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramnv1a.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramnv1a.c
+@@ -51,6 +51,8 @@ nv1a_ram_new(struct nvkm_fb *fb, struct
+ 		mib = ((mem >> 4) & 127) + 1;
  	}
  
- 	nouveau_led_fini(dev);
++	pci_dev_put(bridge);
++
+ 	return nvkm_ram_new_(&nv04_ram_func, fb, NVKM_RAM_TYPE_STOLEN,
+ 			     mib * 1024 * 1024, pram);
+ }
 
 
