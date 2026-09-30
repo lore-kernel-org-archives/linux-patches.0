@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8AB50EC15;
-	Wed, 30 Sep 2026 18:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F53385D97;
+	Wed, 30 Sep 2026 18:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791293; cv=none; b=fimTeIWxePOTOnA/AZiVm/3uyo/r28YcMjO9tGWa8UiAxdLKe4jehcGKDqYxBn2eKP6El+5d/PxLD5GFfobLn+DZHYD9WktyBvNYzpYGYDCD/nM6CIt2cduVPDbfjhK6uaJGl5KxCk87IpWLD82yxD3oJRrRrLMi6MgJ1apFURs=
+	t=1790791296; cv=none; b=WpUGGUhDzLZp0QX8rQPOmPm0OKkgnNg9O63fU1BYwFp2VATfz5Cv1Gtn/En8A+dTiPAz4KVCx995QjZEf85l9oIC4sXu0DOmukDt3L9J9FR+HrsA1ihXL49XRd9vVNVxh6WnYjMs/YRnckXnE57wthTruGpBXw5g96MEFvLu/iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791293; c=relaxed/simple;
-	bh=1ucMqCNG7m+Fh/ldo7ph2ByA49S5MGE98rscqiF1i/E=;
+	s=arc-20240116; t=1790791296; c=relaxed/simple;
+	bh=6lunNFRUc6j+ujpqq6Vof2HY48Ah0HEdmcQyop+eWQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKY+aYhnIn2WQSOrTCvUmJfeMJJPxNpXUPbmQ0P9OR2xfR5ESx7pCr+NPmGODac4x2VFOOEksM+0b8Ua6fMCso/5y5kohvxDTTUaCfXztB0fo7IlWdVy5jyEmq/FE5MnIL/dpFuhbeyfJupD5ifdJb54QQgzYTS1yLMKmctYW9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsumf5rq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J4Qm995LXBy1paJqLkJQ52xgI8CgyE1+eUTy5Rz+oEo3kiYUFHhhoahdLefaKrjOzNy7E84doaWp4fmuygZgyyMMmUWqW/Jd/DTCs7HE+u/MvmwklNkyeJrhrX0FLbVkTIHsy17bWcxDgcJpcHPtX0xSeUtvdYKUVhqRhmKPEPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVj3Xdf/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsumf5rq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E3B1F00898;
-	Wed, 30 Sep 2026 18:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVj3Xdf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3CE1F000FF;
+	Wed, 30 Sep 2026 18:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791292;
-	bh=b/Y2er3/J4CaTrMxalNOKxU4BhKOTUAIRzRjnBp3lHg=;
+	s=korg; t=1790791295;
+	bh=w1SsFeTd55bKKO1LivZOPKMCozCl8n7Um/wxEbm93mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bsumf5rqhaZnog7JVJ7TM2ECJwVX77b1A9xGShhscxTpYESVS7W9oNjh4gxJz9Vy7
-	 MW2Co5qUi0TSrZzQTL4QaoG5wRUeZaOA/F0cVCsxnED41F6zxYRzHrLyer+mCu8Ty4
-	 cgF7JmxUjBy1oG9OcO3Vp8nTrH6KN47Ys1A6eGps=
+	b=GVj3Xdf/uO9xjevx5ND6SnlCXVDbjqEyUwyt/uECxxDqKy4SY0x0q0uaEIWxvWQZc
+	 3ygaECcmTyrBv/ILbqHMeyt7UZfG0ILFwNHeX7DVP3G3wEA5FCd719Na17W2xFkPx+
+	 yZq/4mdUBg3uK+wl6Qle9aHCwfzl36onqqdGtjRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Cheryl Babcock <cheryl@renat.io>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 224/752] Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame
-Date: Wed, 30 Sep 2026 17:21:34 +0200
-Message-ID: <20260930152403.102566661@linuxfoundation.org>
+Subject: [PATCH 5.15 251/752] ksmbd: rate limit unmapped SID errors
+Date: Wed, 30 Sep 2026 17:22:01 +0200
+Message-ID: <20260930152403.710377628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,53 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b230e5bf501c5edaf2eb0991cb862ac142031d4b ]
+[ Upstream commit feca5e70fc963b088377b20879e8cd8237c2fd7d ]
 
-rfcomm_recv_frame() casts skb->data to struct rfcomm_hdr and dereferences
-hdr->addr and hdr->ctrl without validating skb->len first. A truncated
-frame with skb->len less than the minimum header size causes an
-out-of-bounds read of uninitialized memory. Additionally, a zero-length
-frame causes skb->len-- to underflow to UINT_MAX, making
-skb_tail_pointer() read far past the buffer.
+A client can include many structurally valid but unmapped SIDs in a DACL.
+Logging every mapping failure lets one request generate hundreds of kernel
+error messages.
 
-Commit 23882b828c3c ("Bluetooth: RFCOMM: validate skb length in MCC
-handlers") fixed the same class of missing-length-check bugs in the MCC
-sub-handlers, but the top-level rfcomm_recv_frame() was left unfixed.
-KMSAN reports:
+Rate limit the message to prevent an authenticated client from flooding
+the kernel log.
 
-  BUG: KMSAN: uninit-value in rfcomm_run
-  ...
-  Uninit was created at:
-    __alloc_skb+0x474/0xb60
-    vhci_write+0xe9/0x870
-
-Fix this by rejecting frames smaller than sizeof(struct rfcomm_hdr) + 1
-(the minimum frame must have a 3-byte header and a 1-byte FCS).
-
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Cheryl Babcock <cheryl@renat.io>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ksmbd/smbacl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 2914ac1c50024..104d75908dbc9 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1813,6 +1813,11 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
- 		return s;
- 	}
- 
-+	if (skb->len < sizeof(*hdr) + 1) {
-+		kfree_skb(skb);
-+		return s;
-+	}
-+
- 	dlci = __get_dlci(hdr->addr);
- 	type = __get_type(hdr->ctrl);
+diff --git a/fs/ksmbd/smbacl.c b/fs/ksmbd/smbacl.c
+index a41964531c3ca..05c7682257571 100644
+--- a/fs/ksmbd/smbacl.c
++++ b/fs/ksmbd/smbacl.c
+@@ -509,8 +509,8 @@ static void parse_dacl(struct user_namespace *user_ns,
+ 			temp_fattr.cf_uid = INVALID_UID;
+ 			ret = sid_to_id(user_ns, &ppace[i]->sid, SIDOWNER, &temp_fattr);
+ 			if (ret || uid_eq(temp_fattr.cf_uid, INVALID_UID)) {
+-				pr_err("%s: Error %d mapping Owner SID to uid\n",
+-				       __func__, ret);
++				pr_err_ratelimited("%s: Error %d mapping Owner SID to uid\n",
++						   __func__, ret);
+ 				continue;
+ 			}
  
 -- 
 2.53.0
