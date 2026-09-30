@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15250355819;
-	Wed, 30 Sep 2026 17:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA2B51A73A;
+	Wed, 30 Sep 2026 17:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789776; cv=none; b=gq0T6f2L3k4GwTQnVdE/Ps2vHoG/SxViaCXr+KYxTqoZVulDpqI1AzVeSSkU34vP2an4ZIg5Yk4+lEeXOiOiJC1u2CydTw5gqgIC3JKcxde7kTeeZsM9mOLTYURfDio7P94TqVCnssEkoVDOTZTzpI9i41qPpomkXCjprn8p24Q=
+	t=1790789779; cv=none; b=fZPNL+aG5oIHvwFbdBeUF2OUdQR14aRAZHwaw/QuwD+qaofe0NwhTgVHMOSfnUB1jYAmhOmtx1HmqSXfdyin79cdI9eR5dC+K+fpsCpsXx7uZ9/pwuLG//eR9vgmBSNX3YgdudH5mKQYnss+ISn38sBuOtqKUyQ02dZ73Aw8vl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789776; c=relaxed/simple;
-	bh=GmMTVgZmnTbgHlSZfiaNqwp2+YfRrflrMEsnUOxSU+Q=;
+	s=arc-20240116; t=1790789779; c=relaxed/simple;
+	bh=ja9raiBMN11NC+2mXDgxZnKrVTr0cJQ75yVzFVmK69w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sb2/Mx1jTmlzysfzf5lHK0psqRG3/ylFWzLA02cXtsXOztP6q/kfq1fxwjLJW2uQ186Oae+o27z4ZtzJo6++AoUxJbO5z6jCYw+Cy+aPvNPznpas/zS5zBn6qZbofMiQmyXsYh4lakAWdrElWSRUi2ymR+Q/zgImp7jUUzoianE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbfnZn7H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vAfVraH0witgzck4+JR2YXkdLyb4uCpaPFbcRbBlbP48OVaVPDH5ZdOVRB+doeq51rQulaC1Sx5PmMnLNcbya75zrD5U1lRgySD8kWpSHBPkSYDqGgNp2e7yJ54I/rA7yYdmHnFUuSsHRiSkoo/oUogpqMauaoIe4fxLDiZtmIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHPf5Q4l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbfnZn7H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9771F000FF;
-	Wed, 30 Sep 2026 17:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHPf5Q4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450AB1F000FF;
+	Wed, 30 Sep 2026 17:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789775;
-	bh=QbTcPpUMx/08aIHPB6kmffUxyhmEjP4qgWqao+k145g=;
+	s=korg; t=1790789777;
+	bh=j8xHquKYm0tnxJ+QRzjb6y4KzoJ9Hnbtn0yqDQ2o3SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XbfnZn7HQffhDrJLTebMifplqTs19JQsq/n90m8ADC+iUecql7lYBWqp/deDC7GUw
-	 oY6r0mymd5rwxylfrTkut2gs0yGcjO0XxBOVlF0yd0l9AwBqMVtfc9GBW76DQQgmro
-	 N+EbhOpjjlAx0aNiFKzCXO1n1MZpofgtsT6vY194=
+	b=zHPf5Q4lpGTp6w2m6OX5fkOyKedCfkDu1tb1tXJcNxNyear891p4HlZBTtBA2G3Je
+	 wBP8H9nFxY7lMa5NBH74Xhxi+a5pRIHkJIAtwiN+w/YO+UPWE/w4sdKC3JW6xR+U0L
+	 aI4+ZWAvHm8cgJCS17w+tQGYbraKJ605u0Sy40Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 551/877] xfs: check padding field in xfs_ioc_commit_range
-Date: Wed, 30 Sep 2026 17:24:22 +0200
-Message-ID: <20260930152426.531430424@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 542/877] Bluetooth: mgmt: fix race in read_unconf_index_list()
+Date: Wed, 30 Sep 2026 17:24:13 +0200
+Message-ID: <20260930152426.337421896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,36 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 3083ba8dde765a9ab2337f3db68d00724a6b1202 upstream.
+commit b5dbb41b212c50c095a4dbee3017a84fe94f033b upstream.
 
-LOLLM points out that we don't check the ioctl padding field here, so
-let's do that.  I don't think there are many users yet since exchrange
-requires a new feature flag, so it's a good time to try to plug this
-hole.
+read_unconf_index_list() counts unconfigured controllers before allocating
+its response, then checks the device flags again while filling it.
 
-Cc: stable@vger.kernel.org # v6.12
-Fixes: 398597c3ef7fb1 ("xfs: introduce new file range commit ioctls")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+hci_dev_list_lock stabilizes list membership, but it does not serialize the
+per-device flags. During asynchronous controller setup, the worker can set
+HCI_UNCONFIGURED and clear HCI_SETUP between the two passes. A controller
+omitted from the allocation count can then become eligible for the fill
+pass, causing an out-of-bounds write to rp->index[].
+
+Allocate space for every device on hci_dev_list. Since list membership
+cannot change while hci_dev_list_lock is held, the response remains large
+enough regardless of flag transitions. The reported count and response
+length still include only eligible unconfigured controllers.
+
+Fixes: 73d1df2a7a10 ("Bluetooth: Add support for Read Unconfigured Index List command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_exchrange.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/mgmt.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/xfs_exchrange.c
-+++ b/fs/xfs/xfs_exchrange.c
-@@ -905,7 +905,7 @@ xfs_ioc_commit_range(
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -498,13 +498,9 @@ static int read_unconf_index_list(struct
  
- 	if (copy_from_user(&args, argp, sizeof(args)))
- 		return -EFAULT;
--	if (args.flags & ~XFS_EXCHANGE_RANGE_ALL_FLAGS)
-+	if (args.pad || (args.flags & ~XFS_EXCHANGE_RANGE_ALL_FLAGS))
- 		return -EINVAL;
- 	if (kern_f->magic != XCR_FRESH_MAGIC)
- 		return -EBUSY;
+ 	read_lock(&hci_dev_list_lock);
+ 
+-	count = 0;
+-	list_for_each_entry(d, &hci_dev_list, list) {
+-		if (hci_dev_test_flag(d, HCI_UNCONFIGURED))
+-			count++;
+-	}
++	count = list_count_nodes(&hci_dev_list);
+ 
+-	rp_len = sizeof(*rp) + (2 * count);
++	rp_len = sizeof(*rp) + (sizeof(__le16) * count);
+ 	rp = kmalloc(rp_len, GFP_ATOMIC);
+ 	if (!rp) {
+ 		read_unlock(&hci_dev_list_lock);
 
 
