@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942865172E3;
-	Wed, 30 Sep 2026 16:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9764EA39C;
+	Wed, 30 Sep 2026 16:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784846; cv=none; b=LqkgbozDOLdM2UMAHcedyWwNVz+h/zLbUdlnWYXBKOmQlYxK6cpUM4J/CWjC1kSihGxvnHR8Ho1BEHAgwCyJiG0mkoa9HQ4b7q9VKJEojEnqmsCFAPPT8YlNa9JBYh+6cTh/vX7fyxCE6BwloZ0aekX4WWaS+TXJmMZPTHF3fLU=
+	t=1790784848; cv=none; b=m4DsL1WklI8XtJKGaSNsE5b0VgJu2xTlO1ADFmyeF3pW1E2MfH5EvbGHHS4v70oVAecCLi1xEkB9pQajjjNOsP29SDWCXi+SMqtoPt5AQ04TRWKLpoK27IqiII8kBiAvGrKjNyKehFq49O9C1Rj5fbM/RlnKsqUAMlO/yyDiCUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784846; c=relaxed/simple;
-	bh=Yp+FseEHpvvQmgCSK0O0JikXj5531af8YYLeHumGglQ=;
+	s=arc-20240116; t=1790784848; c=relaxed/simple;
+	bh=qfhEE56J3Czb2GSy9fIwN+FsrhgsrUh+85l40AEd/AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUvBy0mthiA/OTcjUDoWnpCDMTqaTRhf3axAOGAIc1uCyeUB+s87+Sav+8muqTX0TBBZ71JEnIceFkQxpCs3dA0xoDiBMSB5hEo7QSQI8I131T8wqDues3qPSGfBw4u1mwEX2uNWbbc92Tk1JLm1xY6ySBaahvWUQ8m05B7N9dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPaAt2RX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tV5vmQiMjKIEzUldIR/hlEV1Ud13MGixH35rJOf3FfjagCVbJjZdapUtSWNO0hFOxBMtmh8Ma/u1up/pJP1mSy62ZLVTUOgKFF2xTo42J1KHNqNhfV9wTCw5nU/1sSyGovItrKv2HMrY3pBguBUI/2tVIDrylHpMpBj3WGg3ZVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kg8HrxDU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPaAt2RX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB16B1F000FF;
-	Wed, 30 Sep 2026 16:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kg8HrxDU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED421F00893;
+	Wed, 30 Sep 2026 16:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784844;
-	bh=C5o6oS9RWFeFo8dMENUP7miIdILEEGKS3YyiVpwUJtA=;
+	s=korg; t=1790784841;
+	bh=tBweYJ2V59XKhRCSyJ/Pu2tHbPnIr4oH5SVFc5VlfYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KPaAt2RXk4HOYx9m8kY4HFzuzDFkjVJ2SSj/neXMp1/1CjT56z01aK451Qnah5AmV
-	 x0E27ycc2eJS35KJ4a916C41Tdb1FXFDEPq0Dx5cMn4lI0lsEs4Df6gCzc7V9lnkyr
-	 8c6s7eDxcQCRnfBE+QrxS+pOPmyxkk65p1kvHxqg=
+	b=Kg8HrxDU4pgCA+gxjafKFa6orO0MQyQcLkmo+y7LUFQfXWc5Cr2ISJxu7gPi5hHnR
+	 5aG2pEekeZuPMgA5A2NuNH+5IyP9hVALCVzs0htIx66RfiyCP7ubt6bb+XSkT+8gDu
+	 cp9Gaibm1jkI8Vt/kfcSXjm3QP0IoVDfcfgaR2Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Norov <yury.norov@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mukesh ojha <quic_mojha@quicinc.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 297/982] clk: at91: pmc: #undef field_{get,prep}() before definition
-Date: Wed, 30 Sep 2026 17:17:13 +0200
-Message-ID: <20260930152423.185484262@linuxfoundation.org>
+Subject: [PATCH 6.1 296/982] tracing/histograms: Simplify last_cmd_set()
+Date: Wed, 30 Sep 2026 17:17:12 +0200
+Message-ID: <20260930152423.163545582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,40 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit dbfe51513aae6bace00cc390e11cb486a64a63d2 ]
+[ Upstream commit 545db7e21e64766e6b7cb987fbfd3e79419726ce ]
 
-Prepare for the advent of globally available common field_get() and
-field_prep() macros by undefining the symbols before defining local
-variants.  This prevents redefinition warnings from the C preprocessor
-when introducing the common macros later.
+Turn a kzalloc()+strcpy()+strncat() into an equivalent and less verbose
+kasprintf().
 
-Suggested-by: Yury Norov <yury.norov@gmail.com>
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Acked-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Link: https://lore.kernel.org/linux-trace-kernel/30b6fb04dadc10a03cc1ad08f5d8a93ef623a167.1697899346.git.christophe.jaillet@wanadoo.fr
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Mukesh ojha <quic_mojha@quicinc.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/pmc.h | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace_events_hist.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/at91/pmc.h b/drivers/clk/at91/pmc.h
-index efe4975bddc3b..7509fd83b7bac 100644
---- a/drivers/clk/at91/pmc.h
-+++ b/drivers/clk/at91/pmc.h
-@@ -114,7 +114,9 @@ struct at91_clk_pms {
- 	unsigned int parent;
- };
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 4e131895d6a9c..25c2334bab2d7 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -771,23 +771,16 @@ static void last_cmd_set(struct trace_event_file *file, char *str)
+ {
+ 	const char *system = NULL, *name = NULL;
+ 	struct trace_event_call *call;
+-	int len;
  
-+#undef field_get
- #define field_get(_mask, _reg) (((_reg) & (_mask)) >> (ffs(_mask) - 1))
-+#undef field_prep
- #define field_prep(_mask, _val) (((_val) << (ffs(_mask) - 1)) & (_mask))
+ 	if (!str)
+ 		return;
  
- #define ndck(a, s) (a[s - 1].id + 1)
+-	/* sizeof() contains the nul byte */
+-	len = sizeof(HIST_PREFIX) + strlen(str);
+ 	kfree(last_cmd);
+-	last_cmd = kzalloc(len, GFP_KERNEL);
++
++	last_cmd = kasprintf(GFP_KERNEL, HIST_PREFIX "%s", str);
+ 	if (!last_cmd)
+ 		return;
+ 
+-	strcpy(last_cmd, HIST_PREFIX);
+-	/* Again, sizeof() contains the nul byte */
+-	len -= sizeof(HIST_PREFIX);
+-	strncat(last_cmd, str, len);
+-
+ 	if (file) {
+ 		call = file->event_call;
+ 		system = call->class->system;
 -- 
 2.53.0
 
