@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CFA51C34D;
-	Wed, 30 Sep 2026 19:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4083E315C;
+	Wed, 30 Sep 2026 19:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797030; cv=none; b=LIBNocyz3xeY0lrw2xf6OrGI/tqroFAJyhTh/FC8hYUvEdBp59QZeAPE6eyPDK/U3/ByL8LwSqxf8ojRnEq8GeiD7hmyv4Rc2ubfEubKz10/yK/r3nW9tKp9tbKARwgt+ZmZvNil0lHWviJI42L8v4gJzgJLpIVLx9ewWXKiesE=
+	t=1790797033; cv=none; b=pjF98K0jKsFssK05qM3oEWhXCvUCWYL+fIaynRYd/KJA+iKy0QKV4f8k6A0l9uLI08YFPMxrANmG+ME83sFSi5kTueO7e+QzYTPjfC4i/9OcmNKmiTTQDMjJG78j0OAIMqcRgz3tYHYQzo/HKeYsoqUnhzLbsCd+4XLx3YU+dNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797030; c=relaxed/simple;
-	bh=ezwJQc9IyFjsh0UYfZzZNsvZU3fS0gXe3mQWWSfkx/s=;
+	s=arc-20240116; t=1790797033; c=relaxed/simple;
+	bh=5k1xufQ+NJ2Oe4793JNXpKyxZx7mVQwNwCFi3xvW7ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUyiJ6BEChgwspSZ6t/6DDBJTRLv5f2ACd+miIbJwXY1AOjibWT8umzjLTBqAxIe2Vy8TVT4IfGsN8idxRSPbrGmz/B05I4F5+lYiMVcSff8V5lbDIfpbPqspctaawBia8Ko+v4vkpvWvgEg07aQK+a5VE5/BqjnGbkcEQZa+f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BONG66+F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DR6kqsIat7z0WN6pBsvcYk84tARuhj9TSZPHPXjq3KrggaoSyzrVQz306pqeZXeidV4pSR2tkFtUclzzlhR3IjVNN9mksbqU2a5nG/PHkGZZDdSN1i9cAZQ18XWNw+qau+kj8iZNQGlgXFw6OXsa+rT3gnN/TZWAoGCPUUTzwSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIfNOnCv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BONG66+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627011F000FF;
-	Wed, 30 Sep 2026 19:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIfNOnCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E9F1F00898;
+	Wed, 30 Sep 2026 19:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797028;
-	bh=HyEXhqLCJjsCDGmPvs9qN0uyH9tVsCbFlv6vsqqgpYU=;
+	s=korg; t=1790797031;
+	bh=M2c63Rng3MO9jbbnIFdm7Nc3mPkKElwfDOzRVeErpU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BONG66+FUAeQ1vUGFXwvc6smZP4GRCJ4qjOgOZlV/inRSeZX1AJMt9M1YZscCpkOT
-	 MNie+RavxQBRJCPJEzqDtvC5wRAd8bPAFyPWCz8V2jxja9/iiITEo6Dp2qQx+rkOM7
-	 pOJKWSXg1TjQqiLvE1d0McqF1vq4mJkPaqmEnsMI=
+	b=ZIfNOnCvPfyha/w9F3PWQS2q8nBZ1b0R6zOvJ8st7rzArNwRmG2VfuK03oQ4wDZmZ
+	 pvgp66+b9qEPmw2rB0Dzf5+1+Sqq383TSYBww4n6j10I5K5sgLH4SQSnUIITsplClO
+	 cSJbgJm4LORq2IrF0QBatxGs784DRQZDHAQKt1nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Carvalho <marcocarvalho.web@gmail.com>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.6 1122/1193] HID: quirks: add ALWAYS_POLL quirk for SDINNOVATION gaming keyboard
-Date: Wed, 30 Sep 2026 17:30:06 +0200
-Message-ID: <20260930152459.162662736@linuxfoundation.org>
+	Hui Peng <benquike@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 1096/1193] fou: reject omitted FOU_ATTR_IPPROTO on FOU_ENCAP_DIRECT
+Date: Wed, 30 Sep 2026 17:29:40 +0200
+Message-ID: <20260930152458.584275970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,50 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit cdb669a3b8f844aca71fc3224990157d61562165 upstream.
+commit d22609f3d13fc5baacd92c222731b03c593401db upstream.
 
-The SDINNOVATION gaming keyboard (USB ID 36ae:feab) stops reporting
-input events after its RGB lighting mode is switched about twice.
-Disabling USB autosuspend and unbinding the other HID interfaces make
-no difference; the issue does not occur on Windows.
+Commit 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.") added
+NLA_POLICY_MIN(NLA_U8, 1) to fou_nl_policy[FOU_ATTR_IPPROTO], which
+rejects an explicitly supplied FOU_ATTR_IPPROTO == 0 attribute with
+-ERANGE.
 
-HID_QUIRK_ALWAYS_POLL alone resolves it, verified on 7.1.8 via
-usbhid.quirks=0x36ae:0xfeab:0x400.
+However, FOU_ATTR_IPPROTO is an optional netlink attribute. When a user
+sends FOU_CMD_ADD with FOU_ATTR_TYPE set to FOU_ENCAP_DIRECT and omits
+FOU_ATTR_IPPROTO entirely, nla_policy validation succeeds and
+parse_nl_config() leaves cfg->protocol as 0 (from memset(cfg, 0,
+sizeof(*cfg))). fou_create() then creates a FOU_ENCAP_DIRECT socket with
+fou->protocol == 0.
 
-Reported-by: Marco Carvalho <marcocarvalho.web@gmail.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2514627
+In fou_udp_recv(), returning -fou->protocol to udp_queue_rcv_one_skb()
+triggers IP protocol resubmission when fou->protocol > 0, whereas
+returning 0 tells the UDP tunnel layer that the skb was consumed without
+freeing it. When fou->protocol == 0, every packet received on the socket
+returns 0 from fou_udp_recv() and leaks the sk_buff.
+
+Reject FOU_ENCAP_DIRECT when !cfg->protocol in fou_create() so that
+creating a direct encapsulation port without FOU_ATTR_IPPROTO fails with
+-EINVAL while leaving FOU_CMD_DEL and FOU_CMD_GET (which share
+parse_nl_config()) unaffected.
+
+Tested in QEMU against Linux 7.3.0-rc3 by sending a FOU_CMD_ADD Generic
+Netlink request with FOU_ATTR_PORT = 5555 and FOU_ATTR_TYPE =
+FOU_ENCAP_DIRECT while omitting FOU_ATTR_IPPROTO. On the unfixed kernel,
+FOU_CMD_ADD succeeds (err = 0), FOU_CMD_GET reports fou->type = 1 and
+fou->protocol = 0, and sending 4000 UDP packets to 127.0.0.1:5555 leaks
+all 4000 sk_buffs (SUnreclaim in /proc/meminfo grows from 41456 kB to
+59008 kB, +17552 kB); with this patch applied, FOU_CMD_ADD is rejected
+with -EINVAL (-22).
+
+Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
+Fixes: 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260921045920.1613098-1-benquike@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    3 +++
- drivers/hid/hid-quirks.c |    1 +
- 2 files changed, 4 insertions(+)
+ net/ipv4/fou_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1200,6 +1200,9 @@
- #define USB_DEVICE_ID_SAMSUNG_IR_REMOTE	0x0001
- #define USB_DEVICE_ID_SAMSUNG_WIRELESS_KBD_MOUSE	0x0600
- 
-+#define USB_VENDOR_ID_SDINNOVATION		0x36ae
-+#define USB_DEVICE_ID_SDINNOVATION_GAMING_KBD	0xfeab
-+
- #define USB_VENDOR_ID_SEMICO			0x1a2c
- #define USB_DEVICE_ID_SEMICO_USB_KEYKOARD	0x0023
- #define USB_DEVICE_ID_SEMICO_USB_KEYKOARD2	0x0027
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -182,6 +182,7 @@ static const struct hid_device_id hid_qu
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X52_2), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X52_PRO), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X65), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_SDINNOVATION, USB_DEVICE_ID_SDINNOVATION_GAMING_KBD), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD2), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SENNHEISER, USB_DEVICE_ID_SENNHEISER_BTD500USB), HID_QUIRK_NOGET },
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -607,6 +607,10 @@ static int fou_create(struct net *net, s
+ 	/* Initial for fou type */
+ 	switch (cfg->type) {
+ 	case FOU_ENCAP_DIRECT:
++		if (!cfg->protocol) {
++			err = -EINVAL;
++			goto error;
++		}
+ 		tunnel_cfg.encap_rcv = fou_udp_recv;
+ 		tunnel_cfg.gro_receive = fou_gro_receive;
+ 		tunnel_cfg.gro_complete = fou_gro_complete;
 
 
