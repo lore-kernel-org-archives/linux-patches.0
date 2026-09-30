@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767454E5322;
-	Wed, 30 Sep 2026 15:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA5F50E5B3;
+	Wed, 30 Sep 2026 15:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782764; cv=none; b=QzEGT5oIbseIrOWT0V1D3eu1y7iZMFgkm7z11L2em1orULUmyCFdeO9uCTHlhVRre3furHqW6ua93nNI0VYH1o8NgyFAL6w3wWgld7D1auDMtqQdAwzJIaU/8oqEPfDQc5pcvfC31TTPpiE07/KPz8dadVS8fxepvR6dR13WILw=
+	t=1790782771; cv=none; b=qLPLMKzTvL3BCUaybGDLFOXnYl9Btpaz74WcrPoI52VnCtYxyhP9vXfCIiZf0Q5z5dYc9keG0Imgek27EjvzGBb17DYcVARlpHie0ioh9jU6bOyH/SeOS/rwwn1e75k0l3VLiKuRLeASehGo6T/rIHKk9s90DeE4aqzdpIIW4K0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782764; c=relaxed/simple;
-	bh=uldaRW2ZzNX9rUEJD7bSzdWHR/1/nBz8ukGu/KR53Gk=;
+	s=arc-20240116; t=1790782771; c=relaxed/simple;
+	bh=k7WawpBoyPNONN32gvN64HkNJUskTvaRNiaaSC4sgrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n62WT3L4svOPKY32Yi/hds3HpmC8Xp/nbQsCO3UbIFyTPaFmlBRoutBfiIOiMVPg6Ff9NnwmijApPCkmxlwELBkMoOB11QfeFm1BTN/6i/rMLP/t4rukJXavwF5m/1MAt9HhE21Nq7m/yEY1OPNZXOtlo67YqZqwp0otVD52NSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4h2RsZN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pIuR54O04YtrzmB9c5TKyB4RECUkWIZCcvZlrSxKU1REO6u90BT2IxpOa/xrA5ULQgX9I9HMK8aCWaWSKqDYz+arza6HV/7F1iMIVjCA40I1NKgNzj6gZErn6zkpgWjj60ysHNxVbuKvfHGo2TKWBfE7iY3vyA1kXqMTGWfuqCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BOrqOKt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4h2RsZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2355D1F000FF;
-	Wed, 30 Sep 2026 15:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BOrqOKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1161F00893;
+	Wed, 30 Sep 2026 15:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782760;
-	bh=+RkI+ZXxEyTKvC8a5r+Doc3+T9KZKNC0b0SHjnU7Ljs=;
+	s=korg; t=1790782763;
+	bh=Lh7BRpcIFHs2S0/KVJTBqjHXSQOWJdSHXYBf69ALR3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4h2RsZNDaIlPilezCi2eNREJ8dZrvXvtk5nGOjkYv7ybIKwtpgV+NooWrOZDG2bL
-	 ITrVatF9ay8Se9sDyc6CaR4GyQmaHHJIjV8a8nUcuk30oZM/OUxQoxUKFxcvB2YpZR
-	 VX8dXmbMAO+m4QQkmyhbAiihaGYL2Ba6AXSHMec0=
+	b=1BOrqOKt2xFmE8GYgppATjECwRNyr3JR+Ud15IZ9agr+WFE91mot5mgLGcT5Hnnay
+	 kAij7ucEVvFW7epbtJakWqMEV1mbaU8gmemchyQChRdO+kJctLxrlHDfJRecyJfGkA
+	 rXKgxhDLDq6XH5casyfAI7K1u2j9bt/zqe1/fgp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nikolay Metchev <nikolaymetchev@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/595] wifi: libertas: reject short monitor TX frames
-Date: Wed, 30 Sep 2026 17:20:51 +0200
-Message-ID: <20260930152351.134293529@linuxfoundation.org>
+Subject: [PATCH 5.10 116/595] platform/x86: intel-hid: Add HP ProBook x360 440 G1 to button_array_table
+Date: Wed, 30 Sep 2026 17:20:09 +0200
+Message-ID: <20260930152350.232680147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,50 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Nikolay Metchev <nikolaymetchev@gmail.com>
 
-[ Upstream commit 13ff543e0b2c713aedeaadadde686686e949dc78 ]
+[ Upstream commit c39023ca9a447f09c072080efc84d6874c2275c9 ]
 
-In monitor mode, lbs_hard_start_xmit() casts skb->data to a
-radiotap TX header, skips that header, and then copies the 802.11
-destination address from offset 4 in the remaining frame.  The
-generic length check only rejects zero-length and oversized skbs, so
-a short monitor frame can be read past the end of the skb data.
+The volume rocker buttons on the HP ProBook x360 440 G1 convertible emit
+events 0xc4-0xc7 via the intel-hid ACPI device (INT33D5). These codes are
+only present in intel_array_keymap, which is used when the "5 button
+array" input device exists. On this machine button_array_present()
+returns false because the firmware does not advertise the array through
+the HEBC method, so notify_handler() routes the events to a NULL
+priv->array and they are dropped as "unknown event 0xc4". As a result
+the side volume keys do nothing.
 
-Require enough bytes for the radiotap TX header and the destination
-address field before using the monitor-mode header layout.
+Add the machine to button_array_table so the array device is created and
+the volume rocker emits KEY_VOLUMEUP / KEY_VOLUMEDOWN. This is equivalent
+to booting with the enable_5_button_array=1 module parameter, which was
+used to confirm the fix on the affected hardware.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704011140.37639-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Nikolay Metchev <nikolaymetchev@gmail.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260609213309.445019-1-nikolaymetchev@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/tx.c | 7 +++++++
+ drivers/platform/x86/intel-hid.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/libertas/tx.c b/drivers/net/wireless/marvell/libertas/tx.c
-index aeb481740df67..d56969920506d 100644
---- a/drivers/net/wireless/marvell/libertas/tx.c
-+++ b/drivers/net/wireless/marvell/libertas/tx.c
-@@ -116,6 +116,13 @@ netdev_tx_t lbs_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
- 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
- 
-+		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
-+			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
-+			dev->stats.tx_dropped++;
-+			dev->stats.tx_errors++;
-+			goto free;
-+		}
-+
- 		/* set txpd fields from the radiotap header */
- 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
+diff --git a/drivers/platform/x86/intel-hid.c b/drivers/platform/x86/intel-hid.c
+index f52367363d530..ccb4b7233e798 100644
+--- a/drivers/platform/x86/intel-hid.c
++++ b/drivers/platform/x86/intel-hid.c
+@@ -114,6 +114,13 @@ static const struct dmi_system_id button_array_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go 4"),
+ 		},
+ 	},
++	{
++		.ident = "HP ProBook x360 440 G1",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "HP ProBook x360 440 G1"),
++		},
++	},
+ 	{ }
+ };
  
 -- 
 2.53.0
