@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114815304BF;
-	Wed, 30 Sep 2026 17:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1669F5383D8;
+	Wed, 30 Sep 2026 17:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790746; cv=none; b=YkVQ7v83EKQij2V8S/Ema/4S4rBkWEVunE4wUkIZUoZNPu/AKpxOyUViORKUt4hd8BNcvjh8JBMKoSWuKl443/aEzYWmVSHqbaSXJPXrN3umrGaHm9dX7AT8eAN3gSSW+McRjasE3H5G/NRTkbR0fuOLjRvl5r+Xy//DxGXwA9I=
+	t=1790790749; cv=none; b=Hujkce56dJzhTeEuevNNGSY4vfzSE72enQky0sAJW6P+YetCNIBWNu3o4kbFSaJh1MYO5uz+EqGNURpxbUSnYXPld5Ik0Iz5VCof9GEz6S4FvYFzb5mvQGcaWUd031MifURWgXmCaD7j8e6o8aG214td4zHDdne1qnr/rmIZCxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790746; c=relaxed/simple;
-	bh=uPQcvhk18uU/m1vhDiQtO3XGoNkgyauCh3X2ulaX96o=;
+	s=arc-20240116; t=1790790749; c=relaxed/simple;
+	bh=yuINZAg/DdMEhO/cm2MV6n89JvBIjA2BRSsiTP9UYLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Laj7NRLqvFQQlz2P/NvdA96PQnaiSAHwvnwAiPFLrhCHGZsYZdvOIftLXAseP+aMDjbxGjnydf3L9pM37zAtummapvaNTmEZU9fjlHSUodXRnG1jemPaJmdqxF1rRp2Y8JWJjEpdAvwR4izUgrm0DkmSNfMfCWYw8Ih/gMUzdig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dc/68ztJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cVkGvMuv3oFAbk0+zDZ1vhgq66riBYpqDYvCGewj0+ax+AXufpDbhKG8TiIO5LM8dR4wkaP9/u+NsYYusQMCPIyBf0EYhT7Iqp4uigVverqLZDYn9+COgncOZ6Ge9Eb6mC9/pVJjeNeZ5hj+zheTsVaqjTF8m0CVNYkrBcFHpy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggCKLe3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dc/68ztJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8CF1F000FF;
-	Wed, 30 Sep 2026 17:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggCKLe3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B1E1F000FF;
+	Wed, 30 Sep 2026 17:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790745;
-	bh=+GM4dLvD2WlnLhi5U4mzYzHZPX4gyEPPCr51nG0StM4=;
+	s=korg; t=1790790747;
+	bh=/C+JmLsOpcKGQ3bC6dY4yywVnGEnHzR+hjJMYQuy+zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dc/68ztJ1dqSEYBJ5W9mYjzAp8Aa0K8kswQmp3WVaknN/+u7l3nmVbjFVPHckcYwm
-	 uai7TWhUvGQia0VFCoJ4nNVlOcQA5MsXO4S41c4fDNqUYurGOcERIi/zWyOdqxyZwo
-	 s4aujOtBlT8xK17dL3m30tBaiqtYbZ6/o7qEgu10=
+	b=ggCKLe3Xo3yJhC/+YQbHMxZ1JsJushTiUha7ZUYrTNuEyaeMHZaFRlO8vsBvf5OLX
+	 orVKYkqLfKwDWpif8yo6nLPaNg09n1DawdwaxR//4ebWlYCFFVgr7zlh/jWmgVuy16
+	 fJ/l5JbmaCTWEW0WmQHCL3bkR/bq0a6+8cRKvOUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/752] usb: core: hcd: fix possible deadlock in rh control transfers
-Date: Wed, 30 Sep 2026 17:18:48 +0200
-Message-ID: <20260930152359.414446450@linuxfoundation.org>
+Subject: [PATCH 5.15 059/752] usb: gadget: goku_udc: avoid NULL deref of dev->driver in INT_USBRESET log
+Date: Wed, 30 Sep 2026 17:18:49 +0200
+Message-ID: <20260930152359.435956627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,79 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit d5559f43d76b398392b26a15cbc16d731969cd1c ]
+[ Upstream commit 5bf5e3fba9bc7dfd69701521dbe9809f8ccbdb02 ]
 
->From within the SCSI error handler memory allocations must not
-trigger IO. Handling errors in UAS and the storage driver may
-involve resetting a device. The thread doing the reset itself
-relies on VM magic. However, that is insufficient, as resetting
-a device involves resuming it. Resumption as well as resetting
-involves conrol transfers to the parent of the device to be reset.
-That may be a root hub. Hence usbcore must heed the flags passed
-to usb_submit_urb() processing control transfers to root hubs.
+goku_irq() handles a number of bus events under a single ep0 path.
+It already guards the gadget driver suspend/resume callbacks against a
+NULL ->driver:
 
-The problem exist since the storage driver has been merged.
+	if (dev->gadget.speed != USB_SPEED_UNKNOWN
+			&& dev->driver
+			&& dev->driver->resume) {
+		spin_unlock(&dev->lock);
+		dev->driver->resume(&dev->gadget);
+		...
+	}
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260429094413.181038-1-oneukum@suse.com
+but the very next branch unconditionally dereferences dev->driver
+when an INT_USBRESET arrives:
+
+	if (stat & INT_USBRESET) {
+		ACK(INT_USBRESET);
+		INFO(dev, "USB reset done, gadget %s\n",
+			dev->driver->driver.name);
+	}
+
+If the controller raises INT_USBRESET before any gadget driver has
+been bound (or after one has been unbound), dev->driver is NULL and
+the printk dereferences NULL.
+
+smatch flags the inconsistency:
+
+  drivers/usb/gadget/udc/goku_udc.c:1618 goku_irq() error:
+  we previously assumed 'dev->driver' could be null (see line 1607)
+
+Fall back to a placeholder when the gadget driver is not bound.
+
+No functional change while a gadget driver is bound.
+
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260509110636.19762-1-sozdayvek@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hcd.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/udc/goku_udc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 60b35e3322727..0578371444075 100644
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -473,7 +473,8 @@ rh_string(int id, struct usb_hcd const *hcd, u8 *data, unsigned len)
- 
- 
- /* Root hub control transfers execute synchronously */
--static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
-+static int rh_call_control(struct usb_hcd *hcd,
-+		struct urb *urb, gfp_t mem_flags)
- {
- 	struct usb_ctrlrequest *cmd;
- 	u16		typeReq, wValue, wIndex, wLength;
-@@ -508,8 +509,8 @@ static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
- 	 * tbuf should be at least as big as the
- 	 * USB hub descriptor.
- 	 */
--	tbuf_size =  max_t(u16, sizeof(struct usb_hub_descriptor), wLength);
--	tbuf = kzalloc(tbuf_size, GFP_KERNEL);
-+	tbuf_size = max_t(u16, sizeof(struct usb_hub_descriptor), wLength);
-+	tbuf = kzalloc(tbuf_size, mem_flags);
- 	if (!tbuf) {
- 		status = -ENOMEM;
- 		goto err_alloc;
-@@ -838,12 +839,13 @@ static int rh_queue_status (struct usb_hcd *hcd, struct urb *urb)
- 	return retval;
- }
- 
--static int rh_urb_enqueue (struct usb_hcd *hcd, struct urb *urb)
-+static int rh_urb_enqueue(struct usb_hcd *hcd,
-+		struct urb *urb, gfp_t mem_flags)
- {
- 	if (usb_endpoint_xfer_int(&urb->ep->desc))
- 		return rh_queue_status (hcd, urb);
- 	if (usb_endpoint_xfer_control(&urb->ep->desc))
--		return rh_call_control (hcd, urb);
-+		return rh_call_control(hcd, urb, mem_flags);
- 	return -EINVAL;
- }
- 
-@@ -1550,7 +1552,7 @@ int usb_hcd_submit_urb (struct urb *urb, gfp_t mem_flags)
- 	 */
- 
- 	if (is_root_hub(urb->dev)) {
--		status = rh_urb_enqueue(hcd, urb);
-+		status = rh_urb_enqueue(hcd, urb, mem_flags);
- 	} else {
- 		status = map_urb_for_dma(hcd, urb, mem_flags);
- 		if (likely(status == 0)) {
+diff --git a/drivers/usb/gadget/udc/goku_udc.c b/drivers/usb/gadget/udc/goku_udc.c
+index 3e1267d38774f..b9c4adb767efa 100644
+--- a/drivers/usb/gadget/udc/goku_udc.c
++++ b/drivers/usb/gadget/udc/goku_udc.c
+@@ -1615,7 +1615,8 @@ static irqreturn_t goku_irq(int irq, void *_dev)
+ 		if (stat & INT_USBRESET) {		/* hub reset done */
+ 			ACK(INT_USBRESET);
+ 			INFO(dev, "USB reset done, gadget %s\n",
+-				dev->driver->driver.name);
++				dev->driver ? dev->driver->driver.name :
++					      "<not bound>");
+ 		}
+ 		// and INT_ERR on some endpoint's crc/bitstuff/... problem
+ 	}
 -- 
 2.53.0
 
