@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385CC383C86;
-	Wed, 30 Sep 2026 18:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8D83438A6;
+	Wed, 30 Sep 2026 18:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791722; cv=none; b=HKzlo+LLErBNITMhWBrYJVw7VerFpWHPfhFq9exllsOmkUmDAdcXITWyssOmcZ6SWNo/+iaORufgC5fHCgZ+vcBtVLwD2eR7J0sc4sba1wavjbUnI9apnP71fPNC7qoXSo15yY++Xye7vEDmgjpWCTDjnAEevQ8g2p0SOJEnOkM=
+	t=1790791725; cv=none; b=nyaNYZWildM6VyKRgVZ3VfUMMsgit9ucsVMk+6460y8rGJz+6YTka/7C53l4mg12rSChdXiU5+1Jz03Gv/3F86S5YOJM1i6mhye+jRh4AFVTDDuLFRT8Kb97gLhr23O+OWsBxuhgohC/Sr8LWYzi+P053+/1I9rDDd9Mi+wjmTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791722; c=relaxed/simple;
-	bh=egl0XuipYuN6K4rKhqcae3jhJ1L4j52hp0yOwkIJbhU=;
+	s=arc-20240116; t=1790791725; c=relaxed/simple;
+	bh=Sbt1kY166w6Ta5jbP3q+rrH6vsASyK1h4QmxR8mE2wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dc0zu6DAVpDmrKcBMsrNCSqyfaBdAAYgIrr3fFKA4uPGjLIVf0OaFB3LtlTNvtioNmwkzZjn4ISaWcrwtOe11lpPah17Knx2r/kHvXV8Pja9iuERLpx2+2un8dNUESSCyMgee3qyflDiclYXqvHadYJC4QaYErUO1P5vMtV4YoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqTjoxgS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E278RWnNcK++OqY/mVuHBf+rVl1UiVqSyZK0lo3LIcDk0iNBjk4QFaMViNRK8QRTR+nADf+5/VHtHgmXRdYsY8kXVEnU41fQ+MiQ/x2jMDIoLwBnvZhR6cMv8IGURwX/g0t/0A0oPM39TG7iCYm8SXE3ABbyMGt1KW50g6Ud6HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJpT4mVY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqTjoxgS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936B11F000FF;
-	Wed, 30 Sep 2026 18:08:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJpT4mVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F62A1F000FF;
+	Wed, 30 Sep 2026 18:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791721;
-	bh=DpSvec+sK0e3OSMturGAMOagak9uHZGBuaJMTlKR88c=;
+	s=korg; t=1790791723;
+	bh=/DF3nju9D7RgmehzuWHKWFxquzch5jlfmv5yljiSVN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lqTjoxgSHCLf3a+jm4QxWQxzdad3DtJKlZ4Fx/EEGUQibC4M/hxITpFkIq1lJAnMm
-	 s4MnbQybOQbxge+l1afs5UekQK1hzUL3jBZbHCIXgWJ6SriLSDdJYxBh8wxEwq0wi2
-	 8jwoMmUY8d9r8kyahI1vanYIZkheLF79fJuM9QC8=
+	b=rJpT4mVYI4Hbi/PQAJrakUg0YM9/PEgKQYL0WdXrmH03Nax2UzusbCEI0Py6RWxI5
+	 LfzjNWBgzWfPK+Ew46Z5LH+f7X0DHbE+NAVTxrBhR1sTVW3MFh4pYeehbiP5VnlmTu
+	 Md2Xs9fHvh8Vj+3bDOHFIl9B5YH7jWNzf/mGXaGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas@ndufresne.ca>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 401/752] media: hevc: add bounded tile-count helpers
-Date: Wed, 30 Sep 2026 17:24:31 +0200
-Message-ID: <20260930152406.959906653@linuxfoundation.org>
+Subject: [PATCH 5.15 402/752] media: v4l2-h264: Fix memcmp() size in B1 reference list comparison
+Date: Wed, 30 Sep 2026 17:24:32 +0200
+Message-ID: <20260930152406.980821136@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,71 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 592dd4f8442a13bed6e946d73d3164ba38b33bbd upstream.
+commit 10e59fbdef13597836bd6459095caa02c80af3d7 upstream.
 
-The stateless HEVC decoders compute the number of tile columns and rows
-from num_tile_columns_minus1 / num_tile_rows_minus1 and clamp it to the
-column_width_minus1[] / row_height_minus1[] capacity before using it as a
-loop bound. Add shared helpers in a new <media/v4l2-hevc.h> so the rkvdec
-and hantro drivers do not each open-code the min_t() clamp.
+In v4l2_h264_build_b_ref_lists(), the B0/B1 list equality
+check passes the entry count builder->num_valid to memcmp()
+instead of a byte size. Since struct v4l2_h264_reference is
+two bytes (fields and index), only half of each list is
+compared, so distinct lists can be wrongly treated as equal
+and trigger an incorrect swap(b1_reflist[0], b1_reflist[1]).
 
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Fixes: 256fa3920874 ("media: v4l: Add definitions for HEVC stateless decoding")
+Change the memcmp() size argument to sizeof(b1_reflist[0]) *
+builder->num_valid so that the full byte length of both
+reference lists is compared.
+
+Fixes: 624922a2739b ("media: v4l2-core: Add helpers to build the H264 P/B0/B1 reflists")
+Suggested-by: Nicolas Dufresne <nicolas@ndufresne.ca>
 Cc: stable@vger.kernel.org
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/media/v4l2-hevc.h |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 include/media/v4l2-hevc.h
+ drivers/media/v4l2-core/v4l2-h264.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- /dev/null
-+++ b/include/media/v4l2-hevc.h
-@@ -0,0 +1,41 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Helper functions for HEVC stateless codecs.
-+ */
-+
-+#ifndef _MEDIA_V4L2_HEVC_H
-+#define _MEDIA_V4L2_HEVC_H
-+
-+#include <linux/minmax.h>
-+#include <media/v4l2-ctrls.h>
-+
-+/**
-+ * v4l2_hevc_pps_num_tile_columns - number of HEVC tile columns, bounded
-+ * @pps: the V4L2 HEVC PPS control
-+ *
-+ * Return the number of tile columns (num_tile_columns_minus1 + 1) clamped to
-+ * the capacity of column_width_minus1[]. The control validation already
-+ * rejects out-of-range counts; this keeps the consuming drivers bounded too.
-+ */
-+static inline unsigned int
-+v4l2_hevc_pps_num_tile_columns(const struct v4l2_ctrl_hevc_pps *pps)
-+{
-+	return min_t(unsigned int, pps->num_tile_columns_minus1 + 1,
-+		     ARRAY_SIZE(pps->column_width_minus1));
-+}
-+
-+/**
-+ * v4l2_hevc_pps_num_tile_rows - number of HEVC tile rows, bounded
-+ * @pps: the V4L2 HEVC PPS control
-+ *
-+ * Return the number of tile rows (num_tile_rows_minus1 + 1) clamped to the
-+ * capacity of row_height_minus1[].
-+ */
-+static inline unsigned int
-+v4l2_hevc_pps_num_tile_rows(const struct v4l2_ctrl_hevc_pps *pps)
-+{
-+	return min_t(unsigned int, pps->num_tile_rows_minus1 + 1,
-+		     ARRAY_SIZE(pps->row_height_minus1));
-+}
-+
-+#endif /* _MEDIA_V4L2_HEVC_H */
+--- a/drivers/media/v4l2-core/v4l2-h264.c
++++ b/drivers/media/v4l2-core/v4l2-h264.c
+@@ -258,7 +258,8 @@ v4l2_h264_build_b_ref_lists(const struct
+ 	       v4l2_h264_b1_ref_list_cmp, NULL, builder);
+ 
+ 	if (builder->num_valid > 1 &&
+-	    !memcmp(b1_reflist, b0_reflist, builder->num_valid))
++	    !memcmp(b1_reflist, b0_reflist,
++			sizeof(b1_reflist[0]) * builder->num_valid))
+ 		swap(b1_reflist[0], b1_reflist[1]);
+ }
+ EXPORT_SYMBOL_GPL(v4l2_h264_build_b_ref_lists);
 
 
