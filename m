@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8642165EA;
-	Wed, 30 Sep 2026 16:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BD650B8DA;
+	Wed, 30 Sep 2026 16:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785134; cv=none; b=CN272QHcA44eibmaBdoXG1QHEh4Bg3SQgSrAAKbOBrf+hg6/oGJw2CxlDmtUQQBqytJBdPHT2RMJlP9OSsSeVFUSjUQG14wwDdNLWy0mc0/NnvQznwVyffl4O2HhJ0Fyd4dKHvOU+U35WU6bh3UufdtUlkxN1L0SDQEOKy+ye6I=
+	t=1790785136; cv=none; b=bRI1LVt1PAz7uNjl1a0diUBwAWYhdthSSYeagV2u6+C6KsmrFgACX+RHMMgHiCYL2K0izs9i+DbZ2wzNcxW9zJZuuhB9qnaWkV3DAP0ZyAeYjADXuftNgys1o0Qy9c+aMTnJ7NU5zGULAzB04MUjr5w+BZTYWvd017tSyl5/+1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785134; c=relaxed/simple;
-	bh=f0mIPdI3tlw9cmraI+dZ3KZjgnnAAUTlErpo5n2gwUI=;
+	s=arc-20240116; t=1790785136; c=relaxed/simple;
+	bh=klXkJ7jXQp4U5ugizOqMqM+EQlBfGTNggv43nhrft5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMCHGA7vtN0bDDCkS3oVpuFVri2VvxJ27w6okuVU2+QE9pOFA1b05WNa9pn/B13fE5IJu/EfCiNMufwq4FdDM7+VbvCuVfJIsYv6CttoAhpOlYq3jV+EbBXXRDcUJ4stwpB/Ifjlds8zJne3IzOvlQPGINUHMuyyMbaZ1k7WGLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ab3jRMO7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwRQGGKQwbNqmSj/ixsV6NgUd0MD1wk82K9CP42aIphAjayOpi0aJVXDYOs+pCMWhF6cqA9T2y2MnSDLcV0yDyyuiOjSvE7U3yjglpfVXVnkYqYxT9UJE3O4viZl/vmyjW1u8cjVwJd+d/dKPA87IBYxzrP4YLLwInAa518MfLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qn2M3OkD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ab3jRMO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D23E1F000FF;
-	Wed, 30 Sep 2026 16:18:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qn2M3OkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531BC1F00893;
+	Wed, 30 Sep 2026 16:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785130;
-	bh=zXRkwd0u+l2gC85gylnngtsrnfvYwUIefefb+Un6ziU=;
+	s=korg; t=1790785132;
+	bh=lo1GR9HR5wc1kqAddCDMWHpvJedu/Sv/w3ToCoVu/UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ab3jRMO798CYjGBy0sHZdKswAQ+kq8Pe9VoAxXR++ivw7W4TrCIovY5rHY2qu2hN2
-	 +4oKo0EBNcmAtShMOo9tffbeHxjJFefVowXxVOKfV4B6eRBaLsbsEmDmPWwEtHqj1w
-	 lEen/gX5cx02vv2jMw4QUm5MYWF6PaDxYgcEMDbs=
+	b=Qn2M3OkDKIKfHPzQ4SMUy5qjxXqxcY9AY1orGUO53YbJstPqOWHoqFkNGChn4NuRm
+	 Bi6Rdf1f5T4EdioLy/Des+qmE/Fk2BOcyzT62M/YNi0WFFutD/f09l3bWd8dVPhekL
+	 9B9i+9IEimdLPYCjEmN6Wcu7TbQQU7m1dhuREKMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Davide Caratti <dcaratti@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/982] ipv6: tunnels: use DEV_STATS_INC()
-Date: Wed, 30 Sep 2026 17:18:11 +0200
-Message-ID: <20260930152424.439933910@linuxfoundation.org>
+Subject: [PATCH 6.1 356/982] ip6_gre: check tunnel info before xmit in ip6gre_tunnel_xmit
+Date: Wed, 30 Sep 2026 17:18:12 +0200
+Message-ID: <20260930152424.460021672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,264 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2fad1ba354d4a82b1b635a78f25d9682d4febb5e ]
+[ Upstream commit 97cc84dad1d7f68a36b71b69b361d88482707673 ]
 
-Most of code paths in tunnels are lockless (eg NETIF_F_LLTX in tx).
+Shuangpeng Bai reported a KASAN slab-use-after-free in
+ip6gre_tunnel_xmit().
 
-Adopt SMP safe DEV_STATS_{INC|ADD}() to update dev->stats fields.
+The precise KASAN bug was caused by ip6_tnl_xmit() consuming the
+skb during headroom expansion and returning an error, while
+ip6gre_tunnel_xmit() still held the stale pointer and called
+skb_tunnel_info_txcheck(skb) at tx_err. That specific bug was fixed by
+commit 87f21b59ddc6 ("ip6_tunnel: use skb_cow_head() in ip6_tnl_xmit()").
 
+However, calling skb_tunnel_info_txcheck(skb) at the tx_err label
+after the transmission attempt remains problematic:
+
+Downstream helpers like ip6_tnl_xmit() call skb_scrub_packet(),
+which drops the skb's metadata_dst before transmission. If an error
+occurs later during transmit, inspecting skb at tx_err sees a scrubbed
+dst and misclassifies tx_errors vs tx_dropped.
+
+Commit e5f7e211b6aa ("ip6gre: avoid tx_error when sending MLD/DAD on
+external tunnels") already handled this correctly in
+ip6erspan_tunnel_xmit() by checking and caching tun_info before
+transmit.
+
+Align ip6gre_tunnel_xmit() with ip6erspan_tunnel_xmit() by caching
+tun_info before xmit and checking it at tx_err.
+
+Fixes: e5f7e211b6aa ("ip6gre: avoid tx_error when sending MLD/DAD on external tunnels")
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260819062224.3197349-1-shuangpeng.kernel@gmail.com/
+Cc: Davide Caratti <dcaratti@redhat.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 97cc84dad1d7 ("ip6_gre: check tunnel info before xmit in ip6gre_tunnel_xmit")
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828103731.1951815-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c    | 11 ++++-------
- net/ipv6/ip6_tunnel.c | 26 ++++++++++++--------------
- net/ipv6/ip6_vti.c    | 16 +++++++---------
- net/ipv6/ip6mr.c      | 10 +++++-----
- 4 files changed, 28 insertions(+), 35 deletions(-)
+ net/ipv6/ip6_gre.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index e298981be75f6..a2c4287d3c753 100644
+index a2c4287d3c753..86d2fbed0a363 100644
 --- a/net/ipv6/ip6_gre.c
 +++ b/net/ipv6/ip6_gre.c
-@@ -918,7 +918,6 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
+@@ -917,6 +917,7 @@ static int ip6gre_xmit_other(struct sk_buff *skb, struct net_device *dev)
+ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
  	struct net_device *dev)
  {
++	struct ip_tunnel_info *tun_info = NULL;
  	struct ip6_tnl *t = netdev_priv(dev);
--	struct net_device_stats *stats = &t->dev->stats;
  	__be16 payload_protocol;
  	int ret;
- 
-@@ -948,8 +947,8 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
- 
- tx_err:
- 	if (!t->parms.collect_md || !IS_ERR(skb_tunnel_info_txcheck(skb)))
--		stats->tx_errors++;
--	stats->tx_dropped++;
-+		DEV_STATS_INC(dev, tx_errors);
-+	DEV_STATS_INC(dev, tx_dropped);
- 	kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
-@@ -960,7 +959,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	struct ip_tunnel_info *tun_info = NULL;
- 	struct ip6_tnl *t = netdev_priv(dev);
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net_device_stats *stats;
- 	bool truncate = false;
- 	int encap_limit = -1;
- 	__u8 dsfield = false;
-@@ -1113,10 +1111,9 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 	return NETDEV_TX_OK;
- 
- tx_err:
--	stats = &t->dev->stats;
- 	if (!IS_ERR(tun_info))
--		stats->tx_errors++;
--	stats->tx_dropped++;
-+		DEV_STATS_INC(dev, tx_errors);
-+	DEV_STATS_INC(dev, tx_dropped);
- 	kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 8519579be257c..0deea48700574 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -811,8 +811,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 	     (tunnel->parms.i_flags & TUNNEL_CSUM)) ||
- 	    ((tpi->flags & TUNNEL_CSUM) &&
- 	     !(tunnel->parms.i_flags & TUNNEL_CSUM))) {
--		tunnel->dev->stats.rx_crc_errors++;
--		tunnel->dev->stats.rx_errors++;
-+		DEV_STATS_INC(tunnel->dev, rx_crc_errors);
-+		DEV_STATS_INC(tunnel->dev, rx_errors);
- 		goto drop;
- 	}
- 
-@@ -820,8 +820,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 		if (!(tpi->flags & TUNNEL_SEQ) ||
- 		    (tunnel->i_seqno &&
- 		     (s32)(ntohl(tpi->seq) - tunnel->i_seqno) < 0)) {
--			tunnel->dev->stats.rx_fifo_errors++;
--			tunnel->dev->stats.rx_errors++;
-+			DEV_STATS_INC(tunnel->dev, rx_fifo_errors);
-+			DEV_STATS_INC(tunnel->dev, rx_errors);
- 			goto drop;
- 		}
- 		tunnel->i_seqno = ntohl(tpi->seq) + 1;
-@@ -832,8 +832,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 	/* Warning: All skb pointers will be invalidated! */
- 	if (tunnel->dev->type == ARPHRD_ETHER) {
- 		if (!pskb_may_pull(skb, ETH_HLEN)) {
--			tunnel->dev->stats.rx_length_errors++;
--			tunnel->dev->stats.rx_errors++;
-+			DEV_STATS_INC(tunnel->dev, rx_length_errors);
-+			DEV_STATS_INC(tunnel->dev, rx_errors);
- 			goto drop;
- 		}
- 
-@@ -872,8 +872,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 					     &ipv6h->saddr,
- 					     ipv6_get_dsfield(ipv6h));
- 		if (err > 1) {
--			++tunnel->dev->stats.rx_frame_errors;
--			++tunnel->dev->stats.rx_errors;
-+			DEV_STATS_INC(tunnel->dev, rx_frame_errors);
-+			DEV_STATS_INC(tunnel->dev, rx_errors);
- 			goto drop;
- 		}
- 	}
-@@ -1094,7 +1094,6 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
- {
- 	struct ip6_tnl *t = netdev_priv(dev);
- 	struct net *net = t->net;
--	struct net_device_stats *stats = &t->dev->stats;
- 	struct ipv6hdr *ipv6h;
- 	struct ipv6_tel_txoption opt;
- 	struct dst_entry *dst = NULL, *ndst = NULL;
-@@ -1189,7 +1188,7 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
- 	tdev = dst->dev;
- 
- 	if (tdev == dev) {
--		stats->collisions++;
-+		DEV_STATS_INC(dev, collisions);
- 		net_warn_ratelimited("%s: Local routing loop detected!\n",
- 				     t->parms.name);
- 		goto tx_err_dst_release;
-@@ -1276,7 +1275,7 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
- 	ip6tunnel_xmit(NULL, skb, dev);
- 	return 0;
- tx_err_link_failure:
--	stats->tx_carrier_errors++;
-+	DEV_STATS_INC(dev, tx_carrier_errors);
- 	dst_link_failure(skb);
- tx_err_dst_release:
- 	dst_release(dst);
-@@ -1419,7 +1418,6 @@ static netdev_tx_t
- ip6_tnl_start_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct ip6_tnl *t = netdev_priv(dev);
--	struct net_device_stats *stats = &t->dev->stats;
- 	u8 ipproto;
- 	int ret;
- 
-@@ -1449,8 +1447,8 @@ ip6_tnl_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	return NETDEV_TX_OK;
- 
- tx_err:
--	stats->tx_errors++;
--	stats->tx_dropped++;
-+	DEV_STATS_INC(dev, tx_errors);
-+	DEV_STATS_INC(dev, tx_dropped);
- 	kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 856ceb9551e61..1bdd5e50c9b85 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -319,7 +319,7 @@ static int vti6_input_proto(struct sk_buff *skb, int nexthdr, __be32 spi,
- 
- 		ipv6h = ipv6_hdr(skb);
- 		if (!ip6_tnl_rcv_ctl(t, &ipv6h->daddr, &ipv6h->saddr)) {
--			t->dev->stats.rx_dropped++;
-+			DEV_STATS_INC(t->dev, rx_dropped);
- 			rcu_read_unlock();
- 			goto discard;
- 		}
-@@ -361,8 +361,8 @@ static int vti6_rcv_cb(struct sk_buff *skb, int err)
- 	dev = t->dev;
- 
- 	if (err) {
--		dev->stats.rx_errors++;
--		dev->stats.rx_dropped++;
-+		DEV_STATS_INC(dev, rx_errors);
-+		DEV_STATS_INC(dev, rx_dropped);
- 
- 		return 0;
- 	}
-@@ -448,7 +448,6 @@ static int
- vti6_xmit(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
- {
- 	struct ip6_tnl *t = netdev_priv(dev);
--	struct net_device_stats *stats = &t->dev->stats;
- 	struct dst_entry *dst = skb_dst(skb);
- 	struct net_device *tdev;
- 	struct xfrm_state *x;
-@@ -508,7 +507,7 @@ vti6_xmit(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
- 	tdev = dst->dev;
- 
- 	if (tdev == dev) {
--		stats->collisions++;
-+		DEV_STATS_INC(dev, collisions);
- 		net_warn_ratelimited("%s: Local routing loop detected!\n",
- 				     t->parms.name);
- 		goto tx_err_dst_release;
-@@ -546,7 +545,7 @@ vti6_xmit(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
- 
- 	return 0;
- tx_err_link_failure:
--	stats->tx_carrier_errors++;
-+	DEV_STATS_INC(dev, tx_carrier_errors);
- 	dst_link_failure(skb);
- tx_err_dst_release:
- 	dst_release(dst);
-@@ -557,7 +556,6 @@ static netdev_tx_t
- vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct ip6_tnl *t = netdev_priv(dev);
--	struct net_device_stats *stats = &t->dev->stats;
- 	struct flowi fl;
- 	int ret;
- 
-@@ -593,8 +591,8 @@ vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
- 	return NETDEV_TX_OK;
- 
- tx_err:
--	stats->tx_errors++;
--	stats->tx_dropped++;
-+	DEV_STATS_INC(dev, tx_errors);
-+	DEV_STATS_INC(dev, tx_dropped);
- 	kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 00774cfa011af..3c60a63c9f31f 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -622,8 +622,8 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
- 	if (ip6mr_fib_lookup(net, &fl6, &mrt) < 0)
+@@ -927,6 +928,9 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
+ 	if (!ip6_tnl_xmit_ctl(t, &t->parms.laddr, &t->parms.raddr))
  		goto tx_err;
  
--	dev->stats.tx_bytes += skb->len;
--	dev->stats.tx_packets++;
-+	DEV_STATS_ADD(dev, tx_bytes, skb->len);
-+	DEV_STATS_INC(dev, tx_packets);
- 	rcu_read_lock();
- 	ip6mr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
- 			   MRT6MSG_WHOLEPKT);
-@@ -632,7 +632,7 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
++	if (t->parms.collect_md)
++		tun_info = skb_tunnel_info_txcheck(skb);
++
+ 	payload_protocol = skb_protocol(skb, true);
+ 	switch (payload_protocol) {
+ 	case htons(ETH_P_IP):
+@@ -946,7 +950,7 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
  	return NETDEV_TX_OK;
  
  tx_err:
--	dev->stats.tx_errors++;
-+	DEV_STATS_INC(dev, tx_errors);
+-	if (!t->parms.collect_md || !IS_ERR(skb_tunnel_info_txcheck(skb)))
++	if (!IS_ERR(tun_info))
+ 		DEV_STATS_INC(dev, tx_errors);
+ 	DEV_STATS_INC(dev, tx_dropped);
  	kfree_skb(skb);
- 	return NETDEV_TX_OK;
- }
-@@ -2059,8 +2059,8 @@ static int ip6mr_forward2(struct net *net, struct mr_table *mrt,
- 	if (vif->flags & MIFF_REGISTER) {
- 		WRITE_ONCE(vif->pkt_out, vif->pkt_out + 1);
- 		WRITE_ONCE(vif->bytes_out, vif->bytes_out + skb->len);
--		vif_dev->stats.tx_bytes += skb->len;
--		vif_dev->stats.tx_packets++;
-+		DEV_STATS_ADD(vif_dev, tx_bytes, skb->len);
-+		DEV_STATS_INC(vif_dev, tx_packets);
- 		ip6mr_cache_report(mrt, skb, vifi, MRT6MSG_WHOLEPKT);
- 		goto out_free;
- 	}
 -- 
 2.53.0
 
