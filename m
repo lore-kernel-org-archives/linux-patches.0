@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7B25111A7;
-	Wed, 30 Sep 2026 17:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC744FB9C3;
+	Wed, 30 Sep 2026 17:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788916; cv=none; b=EnC8/WlMvE/EbacbAUpMDH3pxX8NCYDs9mzB/+IQBI1Vzq53FfXJhPLKWfI3lcFyhOzqwOdZ33DwrLfUohWMVjO6rPry4mh99dh92plHBEASF00O8ze+Eh9tZ8cUQvDRgzJu0s/ylX0xgsRc2/XpoI3cE98X73cOA0vtRV7QLX8=
+	t=1790788918; cv=none; b=ootCm3QvqJL/61rvraK8eZqzZa8PqjQyYFNEMMq4sdAgO205ingaxSq/NNt66inKcHvbjWKxcWnQWYdnHG0n7Eu8ZM96X8iZxgYhOvGeX6u5IaXSXMIHQHPiTqqtc1AEfB+8JM++U6GI2hTJ8h2lNVTdADt/9YBVNOoST8vy/Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788916; c=relaxed/simple;
-	bh=dCVF4ZpRXtYNo8HpOXxz0SvXjw6p46k2NjZa5gWvl8k=;
+	s=arc-20240116; t=1790788918; c=relaxed/simple;
+	bh=GWTPx6hM2D1HthSQASbM9p/2U58aPz5Ph1rgG8Doo18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELriAfuG1Y9FzpT5pTncAbhHE4jWco7C87BcJ/+P2sSKr1NmmIAjHD09dmIqiIScPR297sJVSrZTvXwgYJ3K2FImNdZYypzBcHoRhYO3NCCiuziNQ0xiWuKsSJPePAMaKGY+thyvwFTFNLCNg4vTIR1LNRGK5sPyIP86F1Y5EAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf1GItdg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gecsRfPYoq1ipCYNlSEyL0jQZmm7QQLOVdYH7lpBGlJ2d/C98wgc+gf/HeQkOsJVLBzNLF1K3FiUZD6m2Wshani6lH3X90Lx3NOLepP6Qj0vG/8p8TE5hKjvQOnKFL2JU5I+jjFOAnpn1MsafnCLRuDRRwikSyzyp5gS+ClGMvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppNPgphG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf1GItdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409711F000FF;
-	Wed, 30 Sep 2026 17:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppNPgphG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155761F000FF;
+	Wed, 30 Sep 2026 17:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788914;
-	bh=zPcmYvQilzfB/fyWj+zRXrFXLSKPZX04pvWcn5IdWIk=;
+	s=korg; t=1790788917;
+	bh=t/Sjl1/LtPTEqJ4pL/duSoZjs+t7p0NqbUKCPGrbatk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bf1GItdg2jnOeUNlMhhf+EN/xWGRk179CAkHseQDOzAun5nAJdg1mWlEs9Bhbb9f3
-	 1PgFBajRGEUpXfA2TjdPGUV+oB/V3m9Iz5s6mifyVGAmSD6zUk4WY2suxsHkfbM0Us
-	 hqIV0x8XQYsAyICuOgWb8bsIN76rFWHvDGSAWM8Y=
+	b=ppNPgphGrrfTQ/OesJ8R8fFFsBV82lHZcHHFKmicSPi2fZMuI5ZFnYgkB9LHyqKVy
+	 lpiz8PSBYt63Cgm4UBOMFjV8yTIT2u1Qv1qASK8k0jGR0JA1EGaFWy4hJQSk5PNMbd
+	 IKy1gEaBHdsFv/nmBCmjBlS7xzLJ0iMHQJAMsGXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Rhodes <sean@starlabs.systems>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 292/877] ALSA: hda/realtek: Limit Star Labs internal mic boost
-Date: Wed, 30 Sep 2026 17:20:03 +0200
-Message-ID: <20260930152421.010124176@linuxfoundation.org>
+Subject: [PATCH 6.12 293/877] ALSA: hda/realtek: Add StarFighter HDA SSID
+Date: Wed, 30 Sep 2026 17:20:04 +0200
+Message-ID: <20260930152421.031737327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,49 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Rhodes <sean@starlabs.systems>
 
-[ Upstream commit 186d4adbb40138e7cb7cffc87a81e95630ced123 ]
+[ Upstream commit cd401c70df472d3eddd0b6b055726a03c212181a ]
 
-The 30 dB internal mic boost is too high for laptops, especially with fans. Limit Star Labs internal mic boost to 10 dB.
+Support the new StarFighter HDA SSID while keeping the existing SSID chained to the same quirk until the new match reaches backports.
 
 Signed-off-by: Sean Rhodes <sean@starlabs.systems>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/be87292613b24150d6321adac102b4b25d00e9e6.1785532385.git.sean@starlabs.systems
+Link: https://patch.msgid.link/06865eaedf3de8dff199e9aa7e86cd135572f20f.1785532385.git.sean@starlabs.systems
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/hda/patch_realtek.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 4b0ccb3b48b2b..e9913767b0b84 100644
+index e9913767b0b84..72d540182f8d0 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -8243,6 +8243,7 @@ enum {
- 	ALC245_FIXUP_CLEVO_NOISY_MIC,
- 	ALC269_FIXUP_VAIO_VJFH52_MIC_NO_PRESENCE,
- 	ALC233_FIXUP_MEDION_MTL_SPK,
-+	ALC269_FIXUP_STARLABS_LIMIT_INT_MIC_BOOST,
- 	ALC233_FIXUP_STARLABS_STARFIGHTER,
- 	ALC294_FIXUP_BASS_SPEAKER_15,
- 	ALC283_FIXUP_DELL_HP_RESUME,
-@@ -10652,6 +10653,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 			{ }
- 		},
- 	},
-+	[ALC269_FIXUP_STARLABS_LIMIT_INT_MIC_BOOST] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc269_fixup_limit_int_mic_boost,
-+	},
+@@ -10660,6 +10660,8 @@ static const struct hda_fixup alc269_fixups[] = {
  	[ALC233_FIXUP_STARLABS_STARFIGHTER] = {
  		.type = HDA_FIXUP_FUNC,
  		.v.func = alc233_fixup_starlabs_starfighter,
-@@ -11770,6 +11775,7 @@ static const struct hda_quirk alc269_fixup_vendor_tbl[] = {
- 	SND_PCI_QUIRK_VENDOR(0x104d, "Sony VAIO", ALC269_FIXUP_SONY_VAIO),
- 	SND_PCI_QUIRK_VENDOR(0x17aa, "Thinkpad", ALC269_FIXUP_THINKPAD_ACPI),
- 	SND_PCI_QUIRK_VENDOR(0x19e5, "Huawei Matebook", ALC255_FIXUP_MIC_MUTE_LED),
-+	SND_PCI_QUIRK_VENDOR(0x2145, "Star Labs", ALC269_FIXUP_STARLABS_LIMIT_INT_MIC_BOOST),
- 	{}
- };
- 
++		.chained = true,
++		.chain_id = ALC269_FIXUP_STARLABS_LIMIT_INT_MIC_BOOST,
+ 	},
+ 	[ALC294_FIXUP_BASS_SPEAKER_15] = {
+ 		.type = HDA_FIXUP_FUNC,
+@@ -11698,6 +11700,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1", ALC295_FIXUP_CHROME_BOOK),
++	SND_PCI_QUIRK(0x2145, 0x0001, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
+ 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
 -- 
 2.53.0
 
