@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DF84E324D;
-	Wed, 30 Sep 2026 16:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2DE4E0B66;
+	Wed, 30 Sep 2026 16:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784207; cv=none; b=qM7SkcvmUbaoKgKhzUcvx6kCg7BdnvqdKA/u3NUn9n2c7I3/ntjWxCIJvyQ0hRNiABBYkEsshwUr+mFA8z68G3KnMrMHLcikgzJ5F7bSpbaZqWlT+6Whr+YJCgrcsGBIxAZQcc4T10qNr9wdTKh9PuEIxhUDrmejZVxy2Idw690=
+	t=1790784206; cv=none; b=P/umllzxEBZOUKjvpwY34Pc3PhXmPEgEIA2cIpd7c3kpYTa4UYMpbL+Vccxo1YrN8bRTjYp4Fp3MZHpUHp1z/qQXTIp+rzh5wrAJqXgSx+nZzA9/mCchTq6FpSF4JwTrMT2/GMXztMZSnUqs8eEu5pPwweo0FkUFh7d5saqe1EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784207; c=relaxed/simple;
-	bh=8LPqhwJzKhEeXeyfvM2m0g8H2rskHlNyE+AgCa04Byo=;
+	s=arc-20240116; t=1790784206; c=relaxed/simple;
+	bh=sejGuCW6NX0NQixCXfy+PKA/9dC/lXA5p9ApaVtt6lM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J7hHAugsgxVkr+QqnABJqpt/XR6TFNQXIvzMziI38xvLheWV/teO7ync3GeMA9wzjGACSBzuHaH39fpFGdwEmUPzAtz9CK7p91CoIwbwdUk06PBB5ePjgdtRwC4vweZiXQECa6ilRBH/NGSVPCSxVNafrSRls4ACkVBPKrTAKkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rI7CUY1f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CCHHx2BZCnDzL/oN3dx4t4QemSnDhSo76s7XQl1Aguk58iMES+MoRBUMofgghspE97v5guZxW9yquiqArZmAzd5t+/2bqazm79QnjEV+sNle3NAJ4ijNvMPMIzFDQqQ4wboRDagYImi3hQc86siXj9kXVpJq4+YAHjsodCyybCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsCRUqgw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rI7CUY1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9D21F000FF;
-	Wed, 30 Sep 2026 16:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsCRUqgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354391F00898;
+	Wed, 30 Sep 2026 16:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784204;
-	bh=NmgFHmToqxA6cFpWiJrloYzf7OtzgC6kT/nIYnGE3tE=;
+	s=korg; t=1790784201;
+	bh=30m9h/LJmSLO5HVQSgOR/EU5tGWr0+xvze7PKf/8bAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rI7CUY1fDiIA6yrUFaQ+nL0ldDGpke8dYQXCKi3FHWb6PD2Tgd2nJNC9iFir/Bqqk
-	 sAAzVTgUx03DpUBzKx+53Askg+24+wTvJX+DO/pjYV0zCN8zAxyu3UgDolzzuHu6TB
-	 uS0SRbsnRVMbj/kldXbkF2nGqpYwzboKyuslMzS4=
+	b=JsCRUqgwjjlB5GrpqFfY7dEb/b64UFzgiJGtKsA+K2E0VMNaffHDAY8Ma7NUaDu0m
+	 QDSQASA/Puhl5oSSZ1/em7liJqhFKjd1xeFnkQ6N21o6DJjfoVLw4x9PJ9/ZxDI3O4
+	 EihdkxOJYYIqxSHj2AtuQmETfC+dWUzI3rb8aUIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/982] net: dsa: mv88e6xxx: enable .rmu_disable() for 6320 family
-Date: Wed, 30 Sep 2026 17:12:43 +0200
-Message-ID: <20260930152417.380399501@linuxfoundation.org>
+Subject: [PATCH 6.1 026/982] net: dsa: mv88e6xxx: define .pot_clear() for 6321
+Date: Wed, 30 Sep 2026 17:12:42 +0200
+Message-ID: <20260930152417.359954682@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,39 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit e0fdb4157a85056bd256a7aebac4a3a2f580b201 ]
+[ Upstream commit 17826d9708a57d27011d0a6efdebb628d6f8299a ]
 
-Commit 9e5baf9b3636 ("net: dsa: mv88e6xxx: add RMU disable op") did not
-add the .rmu_disable() method for the 6320 family. Add it now.
+Commit 9e907d739cc3 ("net: dsa: mv88e6xxx: add POT operation") did not
+add the .pot_clear() method to the 6321 switch operations structure.
+Add them now.
 
 Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://patch.msgid.link/20260504153227.1390546-5-kabel@kernel.org
+Link: https://patch.msgid.link/20260504153227.1390546-4-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index ac325b3abcae9..17390a004c0e9 100644
+index 783d7035f065e..ac325b3abcae9 100644
 --- a/drivers/net/dsa/mv88e6xxx/chip.c
 +++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5198,6 +5198,7 @@ static const struct mv88e6xxx_ops mv88e6320_ops = {
+@@ -5245,6 +5245,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.set_egress_port = mv88e6095_g1_set_egress_port,
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
+ 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
++	.pot_clear = mv88e6xxx_g2_pot_clear,
  	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
  	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
  	.reset = mv88e6352_g1_reset,
-+	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.stu_getnext = mv88e6352_g1_stu_getnext,
-@@ -5249,6 +5250,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
-+	.rmu_disable = mv88e6352_g1_rmu_disable,
- 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
- 	.stu_getnext = mv88e6352_g1_stu_getnext,
 -- 
 2.53.0
 
