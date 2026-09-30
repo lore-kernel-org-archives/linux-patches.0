@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1BD3B6377;
-	Wed, 30 Sep 2026 18:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4E32DEA95;
+	Wed, 30 Sep 2026 18:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794306; cv=none; b=F32TP4HFg5r945GWfX0MrbSFpIUHUO54ykOpmM6U/uCgfR5Ao7buRCrTZ+RmEOlETDwtRlSbcn0jmoi1x8v/Zm2UHFm8s/QqiJr93Ge8k5lZlXdMtk/W1a62qE9/5vYYY+WeLpTUBL2cE3qrUD7m0shQqRLySBt9RdYlVuSAG0I=
+	t=1790794309; cv=none; b=KVJoCUhcINC0s3TNSTJmW/Jm4/fZWkP4JAiYub5/bp9o5kPWol8D5l/+cPkD4kNN84vQnhFYEp9adVrw9xKO+FARR25zTrKRWNCER9t7LgyjXUk/qIK3cV1xPBH/vllbBIWUIUbTJAUIIZ93De2h/pBrlbgxdTAVnp3N2Pp3hoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794306; c=relaxed/simple;
-	bh=goP8ax1sjif3veGKGwrfC3W8nZiIP+dPS5440FYotTs=;
+	s=arc-20240116; t=1790794309; c=relaxed/simple;
+	bh=1JgAcqVq4HAdnhCvvq3S4R5IbBXUTRNtKrgQi0muhEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keMZ7ve8QVa04HSsN0Y113/4PzkSbZvJFZXXziNfxXQV7J9e5VQJ5RoQGBHmB2gBs130+fCXv7ZJuyai68btmHILpqK6cdT/N4AoNRg0ThdZ7QVi2r8wRXvXaVsXv+9hQ2Q3C07fJX72kYbHZDZJ7bjRMwV8bUWqm0Vj2DRHXjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=km9dTCWt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtnkpboJyHPc9wG6OJRu2TqfGbAlFCArWOeaFj29OhxDkhqq0X8FZ8JK6KVB6lxoBMR2ZgW9rIru/L7gvKBmgZgXUX4vjiVwH/3vgqLhIe8O/tvDK1WHbO8R2Ww8mGaw6J9EVAezMrwhLCdiYcgus7l6K7uoTShz0eF1B92PsJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXJuNVnr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="km9dTCWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766FE1F000FF;
-	Wed, 30 Sep 2026 18:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXJuNVnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A9A1F000FF;
+	Wed, 30 Sep 2026 18:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794305;
-	bh=OmiIbfPzVdCYkG00E7l9UJkGSRcyuYDDoUFhqMk6KZ4=;
+	s=korg; t=1790794307;
+	bh=4MkkkqasPGIy2jvHd39A9npFKaHsvECwYcVcAQOhX6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=km9dTCWtdJjV5OoySCZggwYWxtWrfWQRNbl2vDqapdMEaTTJYQ7w6hNoeUZ5XMh0q
-	 JdlhBw4QcCplc39HDc9BWJBJi35T8TrlEoGUkssypp+tzBcKwJ89kh0ms3zA+311pA
-	 YFv1xMOrgcpmTUiOLrKqvJG417jBQzVt40wAUH0U=
+	b=KXJuNVnrolvX0n1RoY5COUahGBVY2nHrnULOGiHPqVJuNNHr4S44XfEt0Fl8Q5sWk
+	 LvY5FmtWMxqUlbs6W03BcdNodwsNWVPng0eDXLzWKqRHUtcvgvzRoL6sJs+hac+lo3
+	 519boMzgAcq7nP/8tsEBJZPkKHw1iKlzAC0z6NjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0165/1193] net: dsa: sja1105: flower: reject cross-chip redirect
-Date: Wed, 30 Sep 2026 17:14:09 +0200
-Message-ID: <20260930152437.861627294@linuxfoundation.org>
+Subject: [PATCH 6.6 0166/1193] dpaa2-switch: fix handling of NAPI on the remove path
+Date: Wed, 30 Sep 2026 17:14:10 +0200
+Message-ID: <20260930152437.882574937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,45 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit cfa5274a5dc2a23b957da5dc806d2ac0c7a66af0 ]
+[ Upstream commit e23d7c8c1d4ba435c457d7ffb2669175ec819b07 ]
 
-dsa_port_from_netdev() may return a valid port from a different switch
-chip. Programming another chip's port index into the local hardware
-causes redirection to the wrong port, or an out-of-bounds access if the
-index exceeds the local chip's port count.
+All the NAPI instances for a DPSW device are attached to the first
+switch port's net_device but shared by all ports. The NAPI instances get
+disabled only once the last port goes down.
 
-Apply a minimal fix that adds a check to catch this case and adjusts the
-extack message. When cls->common.skip_sw is not set, the operation could
-instead redirect to the upstream port and let the software or upstream
-switch(es) handle the forward, but that is not addressed here.
+This causes an issue on the .remove() path where each port is
+unregistered and freed one at a time, causing the NAPI instances to be
+deleted even though they are not disabled.
 
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20260530003940.2000994-1-mmyangfl@gmail.com
+In order to avoid this, split up the unregister_netdev() calls from the
+free_netdev() so that we make sure all ports go down before we attempt
+a deletion of NAPI instances. Also, make the netif_napi_del() explicit
+as it is on the .probe() path.
+
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260528173452.1953102-6-ioana.ciornei@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_flower.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/freescale/dpaa2/dpaa2-switch.c   | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/dsa/sja1105/sja1105_flower.c b/drivers/net/dsa/sja1105/sja1105_flower.c
-index 9e8ca182c722b..de12bb6a16354 100644
---- a/drivers/net/dsa/sja1105/sja1105_flower.c
-+++ b/drivers/net/dsa/sja1105/sja1105_flower.c
-@@ -388,9 +388,9 @@ int sja1105_cls_flower_add(struct dsa_switch *ds, int port,
- 			struct dsa_port *to_dp;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index b0eb279e822eb..cd482d66a930c 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -3263,7 +3263,6 @@ static void dpaa2_switch_teardown(struct fsl_mc_device *sw_dev)
  
- 			to_dp = dsa_port_from_netdev(act->dev);
--			if (IS_ERR(to_dp)) {
-+			if (IS_ERR(to_dp) || to_dp->ds != ds) {
- 				NL_SET_ERR_MSG_MOD(extack,
--						   "Destination not a switch port");
-+						   "Destination not a local switch port");
- 				return -EOPNOTSUPP;
- 			}
+ static void dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
+ {
+-	struct ethsw_port_priv *port_priv;
+ 	struct ethsw_core *ethsw;
+ 	struct device *dev;
+ 	int i;
+@@ -3275,11 +3274,17 @@ static void dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
  
+ 	dpsw_disable(ethsw->mc_io, 0, ethsw->dpsw_handle);
+ 
+-	for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
+-		port_priv = ethsw->ports[i];
+-		unregister_netdev(port_priv->netdev);
++	/* Unregister all the netdevs so that they are brought down and the
++	 * shared NAPI instances gets disabled.
++	 */
++	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
++		unregister_netdev(ethsw->ports[i]->netdev);
++
++	for (i = 0; i < DPAA2_SWITCH_RX_NUM_FQS; i++)
++		netif_napi_del(&ethsw->fq[i].napi);
++
++	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
+ 		dpaa2_switch_remove_port(ethsw, i);
+-	}
+ 
+ 	kfree(ethsw->fdbs);
+ 	kfree(ethsw->filter_blocks);
 -- 
 2.53.0
 
