@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4031E3BE642;
-	Wed, 30 Sep 2026 18:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226D34DEC26;
+	Wed, 30 Sep 2026 18:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792416; cv=none; b=YEOhTsXvH31n0JpRk7x6iOLjLXBPTP91ryoGsgk/IOE5acUoa7nryiNkxtTqUJOCT4Tt30CgvRlR0/qclpJjY1EWRhtmwq/xfFseAGxb5akSp8CRZAacZXcc6ZJaP35BIc/poM2ozo/54Qtly7CYKFf5TzDEzVX6uWMEABbhOXU=
+	t=1790792419; cv=none; b=RSxtTYbpIX0fUT2+T/sDmW/CiFfjX78+E5ZRTFK0EkuHMQ8ZOoC4CeP+Xp6wCn/1Xx7WohQSIP9yFczpOu+ktgoIDG95D+Y1EEni8ukphqCKBdmt1FGn/YheeHWyF99PE03R/Lqpd2ZyQzXly8x1PVsL52moHHCs/41Ak7XKpXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792416; c=relaxed/simple;
-	bh=6WPzfQNhvIRiOOlmZHRRwqrzHrfnWR0LdnFrRDH5y0M=;
+	s=arc-20240116; t=1790792419; c=relaxed/simple;
+	bh=FX1wUJDm3Su9WU/0Y8hwyos4paBNB/YEojNHfStgKOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfGxPrZ+ryNJ9FLNQd99eu/B+VmqRNXnNnS43j2YtoWaZYufCTtrJRTC6FVFkJX3jMjHrjdXKqUS1JESTg1kgDzjahn0g+OAyHRdlpijU7lGa/TP+8gSaWMVAt4qeetnwjJWAHaqmNLjsS/0tA0vO5gbK9Tvs0Ed/XiiOQB/Tds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVcxt6cX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AUrmY74423DYviKFjS3Zh4IvXVZk01U73QbML8Hw4jIIQqfoEmAA8tXzvDvspTTkzRFFFu7dsPx33wpuxkLKiU2qzn9fcbA1kqsUtZuBjdaX9DfO+1woSXAlrdeSIMU78vEZotP0OHS2t8my0ONA4F3mjtGM6SilAwKuBSArVbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACgD148y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVcxt6cX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECA81F000FF;
-	Wed, 30 Sep 2026 18:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACgD148y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C4F1F000FF;
+	Wed, 30 Sep 2026 18:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792415;
-	bh=b6SduS7oTaQXeOqXAFtQ+/MHiKtDhHRgJG7YjMf1U28=;
+	s=korg; t=1790792418;
+	bh=DgtkINXHpIy6OTY1fuL8jtW+g+2fCrA2MR+Ej+KQPkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SVcxt6cXfk18/Al3+0XBU/VwqkgJHXorAP8HYGAEt74e3ASUOiUG4OGI6gMy8IQuB
-	 lULzYV1xvyA6Wuxi4TtjRQBYn4dGVFmXRVN1DCe+WFChwQzNDNYDiR4yXhG9jbvpBZ
-	 +or4xSDUwWEznB9QkQ+1Jg9IbjxeHLyO98uaLZEw=
+	b=ACgD148yr3gNC3esZTXk3RDfJ5VZnR/FpN9DmLduExShsLldx/s2SltecbjqevyyN
+	 xUfG/YSGLeUILaCBkeGo74Fir1w2CUij7mG8ZWvrdtf46EGx3MDC/vjBJxvTS8e50g
+	 nZH3VkiI6DRO99LZXcR+/+mm8YwieQHzPs7Jn4/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 645/752] net: stmmac: selftests: Capture all packets for vlan checks
-Date: Wed, 30 Sep 2026 17:28:35 +0200
-Message-ID: <20260930152412.222305018@linuxfoundation.org>
+Subject: [PATCH 5.15 646/752] net: stmmac: Remove some unnecessary void pointers
+Date: Wed, 30 Sep 2026 17:28:36 +0200
+Message-ID: <20260930152412.242961424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,110 +54,322 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 960db6f65788c21249ea04a947d5c01e38d19294 ]
+[ Upstream commit 0c3f3c4f4b15a2c105e1ca882d100048074a2865 ]
 
-While we use vlan_vid_add to trigger the tag filtering machinery
-in the driver, there's no netdev associated to the VLAN. This causes the
-skb to arrive with empty skb->vlan_tci fields, as the packet is marked
-OTHERHOST in __netif_receive_skb_core(), and we fail our validation.
+There's a few spots in the hardware interface where a void pointer is
+used, but what's passed in and later cast out is always the same type.
 
-Let's use the proxy mechanism introduced for DSA, that registers a
-ETH_P_ALL packet handler that runs earlier, before the vlan netdev
-lookup, then filters for the correct ethertype before passing an skb
-clone to our validation function.
+Just use the proper type directly.
 
-As we may receive external frames with the right tag from the outside,
-let's move the address check in the vlan validation function earlier.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260917215339.2022523-5-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Tested-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: b42e7012773a ("net: stmmac: dwmac4: Use the correct bufzise when the len is exactly 8K")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ .../net/ethernet/stmicro/stmmac/chain_mode.c  | 10 +++----
+ .../ethernet/stmicro/stmmac/dwmac100_dma.c    |  4 +--
+ .../ethernet/stmicro/stmmac/dwmac4_descs.c    |  8 ++---
+ .../ethernet/stmicro/stmmac/dwxgmac2_descs.c  |  6 ++--
+ .../net/ethernet/stmicro/stmmac/enh_desc.c    | 11 +++----
+ drivers/net/ethernet/stmicro/stmmac/hwif.h    | 30 ++++++++++++-------
+ .../net/ethernet/stmicro/stmmac/norm_desc.c   |  8 ++---
+ .../net/ethernet/stmicro/stmmac/ring_mode.c   | 10 +++----
+ 8 files changed, 47 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index dd6ef393b1966..5b1610e427e02 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -242,6 +242,7 @@ struct stmmac_test_priv {
- 	__be16 packet_type;
- 	int (*func)(struct sk_buff *skb, struct net_device *ndev,
- 		    struct packet_type *pt, struct net_device *orig_ndev);
-+	bool capture_all;
- 	int double_vlan;
- 	int vlan_id;
- 	int ok;
-@@ -344,13 +345,15 @@ static void stmmac_sft_add_pack(struct packet_type *pt)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+index f2e5c4021a674..ba24be6e863e1 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+@@ -14,9 +14,9 @@
+ 
+ #include "stmmac.h"
+ 
+-static int jumbo_frm(void *p, struct sk_buff *skb, int csum)
++static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
++		     int csum)
  {
- 	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
- 
--	if (netdev_uses_dsa(tpriv->pt.dev)) {
-+	if (netdev_uses_dsa(tpriv->pt.dev) || tpriv->capture_all) {
- 		tpriv->packet_type = tpriv->pt.type;
- 		tpriv->func = tpriv->pt.func;
- 
- 		/* DSA conduit will report ETH_P_XDSA, so our packet handler
- 		 * won't match. Let's register a ETH_P_ALL match and filter
--		 * manually in stmmac_sft_filter.
-+		 * manually in stmmac_sft_filter. This is also useful for
-+		 * VLAN tests, to capture packets otherwise marked as
-+		 * OTHERHOST.
- 		 */
- 		tpriv->pt.type = htons(ETH_P_ALL);
- 		tpriv->pt.func = stmmac_sft_filter;
-@@ -923,6 +926,11 @@ static int stmmac_test_vlan_validate(struct sk_buff *skb,
- 		goto out;
- 	if (skb_headlen(skb) < (STMMAC_TEST_PKT_SIZE - ETH_HLEN))
- 		goto out;
-+
-+	ehdr = (struct ethhdr *)skb_mac_header(skb);
-+	if (!ether_addr_equal_unaligned(ehdr->h_dest, tpriv->packet->dst))
-+		goto out;
-+
- 	if (tpriv->vlan_id) {
- 		if (skb->vlan_proto != htons(proto))
- 			goto out;
-@@ -934,10 +942,6 @@ static int stmmac_test_vlan_validate(struct sk_buff *skb,
- 		}
+-	struct stmmac_tx_queue *tx_q = (struct stmmac_tx_queue *)p;
+ 	unsigned int nopaged_len = skb_headlen(skb);
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->cur_tx;
+@@ -126,9 +126,8 @@ static void init_dma_chain(void *des, dma_addr_t phy_addr,
  	}
+ }
  
--	ehdr = (struct ethhdr *)skb_mac_header(skb);
--	if (!ether_addr_equal_unaligned(ehdr->h_dest, tpriv->packet->dst))
--		goto out;
--
- 	ihdr = ip_hdr(skb);
- 	if (tpriv->double_vlan)
- 		ihdr = (struct iphdr *)(skb_network_header(skb) + 4);
-@@ -979,6 +983,7 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
-+	tpriv->capture_all = true;
+-static void refill_desc3(void *priv_ptr, struct dma_desc *p)
++static void refill_desc3(struct stmmac_rx_queue *rx_q, struct dma_desc *p)
+ {
+-	struct stmmac_rx_queue *rx_q = (struct stmmac_rx_queue *)priv_ptr;
+ 	struct stmmac_priv *priv = rx_q->priv_data;
  
- 	/*
- 	 * As we use HASH filtering, false positives may appear. This is a
-@@ -1075,6 +1080,7 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
-+	tpriv->capture_all = true;
+ 	if (priv->hwts_rx_en && !priv->extend_desc)
+@@ -142,9 +141,8 @@ static void refill_desc3(void *priv_ptr, struct dma_desc *p)
+ 				      sizeof(struct dma_desc)));
+ }
  
- 	/*
- 	 * As we use HASH filtering, false positives may appear. This is a
-@@ -1355,6 +1361,7 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
- 	tpriv->vlan_id = 0x123;
-+	tpriv->capture_all = true;
+-static void clean_desc3(void *priv_ptr, struct dma_desc *p)
++static void clean_desc3(struct stmmac_tx_queue *tx_q, struct dma_desc *p)
+ {
+-	struct stmmac_tx_queue *tx_q = (struct stmmac_tx_queue *)priv_ptr;
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->dirty_tx;
  
- 	ret = vlan_vid_add(priv->dev, htons(proto), tpriv->vlan_id);
- 	if (ret)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c b/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c
+index 8f0d9bc7cab54..f6abc7bfd29d4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac100_dma.c
+@@ -80,10 +80,10 @@ static void dwmac100_dump_dma_regs(void __iomem *ioaddr, u32 *reg_space)
+ }
+ 
+ /* DMA controller has two counters to track the number of the missed frames. */
+-static void dwmac100_dma_diagnostic_fr(void *data, struct stmmac_extra_stats *x,
++static void dwmac100_dma_diagnostic_fr(struct net_device_stats *stats,
++				       struct stmmac_extra_stats *x,
+ 				       void __iomem *ioaddr)
+ {
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 	u32 csr8 = readl(ioaddr + DMA_MISSED_FRAME_CTR);
+ 
+ 	if (unlikely(csr8)) {
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+index cbf4429fb1d23..90917445000fd 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+@@ -13,11 +13,11 @@
+ #include "dwmac4.h"
+ #include "dwmac4_descs.h"
+ 
+-static int dwmac4_wrback_get_tx_status(void *data, struct stmmac_extra_stats *x,
++static int dwmac4_wrback_get_tx_status(struct net_device_stats *stats,
++				       struct stmmac_extra_stats *x,
+ 				       struct dma_desc *p,
+ 				       void __iomem *ioaddr)
+ {
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 	unsigned int tdes3;
+ 	int ret = tx_done;
+ 
+@@ -71,10 +71,10 @@ static int dwmac4_wrback_get_tx_status(void *data, struct stmmac_extra_stats *x,
+ 	return ret;
+ }
+ 
+-static int dwmac4_wrback_get_rx_status(void *data, struct stmmac_extra_stats *x,
++static int dwmac4_wrback_get_rx_status(struct net_device_stats *stats,
++				       struct stmmac_extra_stats *x,
+ 				       struct dma_desc *p)
+ {
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 	unsigned int rdes1 = le32_to_cpu(p->des1);
+ 	unsigned int rdes2 = le32_to_cpu(p->des2);
+ 	unsigned int rdes3 = le32_to_cpu(p->des3);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c
+index ccfb0102dde49..4dbb06acb2989 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_descs.c
+@@ -8,7 +8,8 @@
+ #include "common.h"
+ #include "dwxgmac2.h"
+ 
+-static int dwxgmac2_get_tx_status(void *data, struct stmmac_extra_stats *x,
++static int dwxgmac2_get_tx_status(struct net_device_stats *stats,
++				  struct stmmac_extra_stats *x,
+ 				  struct dma_desc *p, void __iomem *ioaddr)
+ {
+ 	unsigned int tdes3 = le32_to_cpu(p->des3);
+@@ -22,7 +23,8 @@ static int dwxgmac2_get_tx_status(void *data, struct stmmac_extra_stats *x,
+ 	return ret;
+ }
+ 
+-static int dwxgmac2_get_rx_status(void *data, struct stmmac_extra_stats *x,
++static int dwxgmac2_get_rx_status(struct net_device_stats *stats,
++				  struct stmmac_extra_stats *x,
+ 				  struct dma_desc *p)
+ {
+ 	unsigned int rdes3 = le32_to_cpu(p->des3);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+index 6650edfab5bc4..f46fe7c392e6e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/enh_desc.c
+@@ -12,10 +12,10 @@
+ #include "common.h"
+ #include "descs_com.h"
+ 
+-static int enh_desc_get_tx_status(void *data, struct stmmac_extra_stats *x,
++static int enh_desc_get_tx_status(struct net_device_stats *stats,
++				  struct stmmac_extra_stats *x,
+ 				  struct dma_desc *p, void __iomem *ioaddr)
+ {
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 	unsigned int tdes0 = le32_to_cpu(p->des0);
+ 	int ret = tx_done;
+ 
+@@ -117,7 +117,8 @@ static int enh_desc_coe_rdes0(int ipc_err, int type, int payload_err)
+ 	return ret;
+ }
+ 
+-static void enh_desc_get_ext_status(void *data, struct stmmac_extra_stats *x,
++static void enh_desc_get_ext_status(struct net_device_stats *stats,
++				    struct stmmac_extra_stats *x,
+ 				    struct dma_extended_desc *p)
+ {
+ 	unsigned int rdes0 = le32_to_cpu(p->basic.des0);
+@@ -181,10 +182,10 @@ static void enh_desc_get_ext_status(void *data, struct stmmac_extra_stats *x,
+ 	}
+ }
+ 
+-static int enh_desc_get_rx_status(void *data, struct stmmac_extra_stats *x,
++static int enh_desc_get_rx_status(struct net_device_stats *stats,
++				  struct stmmac_extra_stats *x,
+ 				  struct dma_desc *p)
+ {
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 	unsigned int rdes0 = le32_to_cpu(p->des0);
+ 	int ret = good_frame;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index 414b63d5b9ebe..3c9d7c3d36d0f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -56,8 +56,9 @@ struct stmmac_desc_ops {
+ 	/* Last tx segment reports the transmit status */
+ 	int (*get_tx_ls)(struct dma_desc *p);
+ 	/* Return the transmit status looking at the TDES1 */
+-	int (*tx_status)(void *data, struct stmmac_extra_stats *x,
+-			struct dma_desc *p, void __iomem *ioaddr);
++	int (*tx_status)(struct net_device_stats *stats,
++			 struct stmmac_extra_stats *x,
++			 struct dma_desc *p, void __iomem *ioaddr);
+ 	/* Get the buffer size from the descriptor */
+ 	int (*get_tx_len)(struct dma_desc *p);
+ 	/* Handle extra events on specific interrupts hw dependent */
+@@ -65,10 +66,12 @@ struct stmmac_desc_ops {
+ 	/* Get the receive frame size */
+ 	int (*get_rx_frame_len)(struct dma_desc *p, int rx_coe_type);
+ 	/* Return the reception status looking at the RDES1 */
+-	int (*rx_status)(void *data, struct stmmac_extra_stats *x,
+-			struct dma_desc *p);
+-	void (*rx_extended_status)(void *data, struct stmmac_extra_stats *x,
+-			struct dma_extended_desc *p);
++	int (*rx_status)(struct net_device_stats *stats,
++			 struct stmmac_extra_stats *x,
++			 struct dma_desc *p);
++	void (*rx_extended_status)(struct net_device_stats *stats,
++				   struct stmmac_extra_stats *x,
++				   struct dma_extended_desc *p);
+ 	/* Set tx timestamp enable bit */
+ 	void (*enable_tx_timestamp) (struct dma_desc *p);
+ 	/* get tx timestamp status */
+@@ -189,8 +192,9 @@ struct stmmac_dma_ops {
+ 	void (*dma_tx_mode)(void __iomem *ioaddr, int mode, u32 channel,
+ 			    int fifosz, u8 qmode);
+ 	/* To track extra statistic (if supported) */
+-	void (*dma_diagnostic_fr) (void *data, struct stmmac_extra_stats *x,
+-				   void __iomem *ioaddr);
++	void (*dma_diagnostic_fr)(struct net_device_stats *stats,
++				  struct stmmac_extra_stats *x,
++				  void __iomem *ioaddr);
+ 	void (*enable_dma_transmission) (void __iomem *ioaddr);
+ 	void (*enable_dma_irq)(void __iomem *ioaddr, u32 chan,
+ 			       bool rx, bool tx);
+@@ -541,16 +545,20 @@ struct stmmac_hwtimestamp {
+ #define stmmac_timestamp_interrupt(__priv, __args...) \
+ 	stmmac_do_void_callback(__priv, ptp, timestamp_interrupt, __args)
+ 
++struct stmmac_tx_queue;
++struct stmmac_rx_queue;
++
+ /* Helpers to manage the descriptors for chain and ring modes */
+ struct stmmac_mode_ops {
+ 	void (*init) (void *des, dma_addr_t phy_addr, unsigned int size,
+ 		      unsigned int extend_desc);
+ 	unsigned int (*is_jumbo_frm) (int len, int ehn_desc);
+-	int (*jumbo_frm)(void *priv, struct sk_buff *skb, int csum);
++	int (*jumbo_frm)(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
++			 int csum);
+ 	int (*set_16kib_bfsize)(int mtu);
+ 	void (*init_desc3)(struct dma_desc *p);
+-	void (*refill_desc3) (void *priv, struct dma_desc *p);
+-	void (*clean_desc3) (void *priv, struct dma_desc *p);
++	void (*refill_desc3)(struct stmmac_rx_queue *rx_q, struct dma_desc *p);
++	void (*clean_desc3)(struct stmmac_tx_queue *tx_q, struct dma_desc *p);
+ };
+ 
+ #define stmmac_mode_init(__priv, __args...) \
+diff --git a/drivers/net/ethernet/stmicro/stmmac/norm_desc.c b/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
+index 98ef43f35802a..a42a622240866 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/norm_desc.c
+@@ -12,10 +12,10 @@
+ #include "common.h"
+ #include "descs_com.h"
+ 
+-static int ndesc_get_tx_status(void *data, struct stmmac_extra_stats *x,
++static int ndesc_get_tx_status(struct net_device_stats *stats,
++			       struct stmmac_extra_stats *x,
+ 			       struct dma_desc *p, void __iomem *ioaddr)
+ {
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 	unsigned int tdes0 = le32_to_cpu(p->des0);
+ 	unsigned int tdes1 = le32_to_cpu(p->des1);
+ 	int ret = tx_done;
+@@ -70,12 +70,12 @@ static int ndesc_get_tx_len(struct dma_desc *p)
+  * and, if required, updates the multicast statistics.
+  * In case of success, it returns good_frame because the GMAC device
+  * is supposed to be able to compute the csum in HW. */
+-static int ndesc_get_rx_status(void *data, struct stmmac_extra_stats *x,
++static int ndesc_get_rx_status(struct net_device_stats *stats,
++			       struct stmmac_extra_stats *x,
+ 			       struct dma_desc *p)
+ {
+ 	int ret = good_frame;
+ 	unsigned int rdes0 = le32_to_cpu(p->des0);
+-	struct net_device_stats *stats = (struct net_device_stats *)data;
+ 
+ 	if (unlikely(rdes0 & RDES0_OWN))
+ 		return dma_own;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+index 8ad900949dc8b..c6c0e4a5e467c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+@@ -14,9 +14,9 @@
+ 
+ #include "stmmac.h"
+ 
+-static int jumbo_frm(void *p, struct sk_buff *skb, int csum)
++static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
++		     int csum)
+ {
+-	struct stmmac_tx_queue *tx_q = (struct stmmac_tx_queue *)p;
+ 	unsigned int nopaged_len = skb_headlen(skb);
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->cur_tx;
+@@ -101,9 +101,8 @@ static unsigned int is_jumbo_frm(int len, int enh_desc)
+ 	return ret;
+ }
+ 
+-static void refill_desc3(void *priv_ptr, struct dma_desc *p)
++static void refill_desc3(struct stmmac_rx_queue *rx_q, struct dma_desc *p)
+ {
+-	struct stmmac_rx_queue *rx_q = priv_ptr;
+ 	struct stmmac_priv *priv = rx_q->priv_data;
+ 
+ 	/* Fill DES3 in case of RING mode */
+@@ -117,9 +116,8 @@ static void init_desc3(struct dma_desc *p)
+ 	p->des3 = cpu_to_le32(le32_to_cpu(p->des2) + BUF_SIZE_8KiB);
+ }
+ 
+-static void clean_desc3(void *priv_ptr, struct dma_desc *p)
++static void clean_desc3(struct stmmac_tx_queue *tx_q, struct dma_desc *p)
+ {
+-	struct stmmac_tx_queue *tx_q = (struct stmmac_tx_queue *)priv_ptr;
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->dirty_tx;
+ 
 -- 
 2.53.0
 
