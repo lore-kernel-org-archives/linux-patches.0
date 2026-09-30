@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF8B513555;
-	Wed, 30 Sep 2026 16:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7683C4C33D1;
+	Wed, 30 Sep 2026 16:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786366; cv=none; b=KILSa3Lg6BU9hMLvQ9CRuVcxI/tym7EmD/kMyH4iRiiOvrDQwV/JLehOPJkGX0ml3EvhhgInXP751Y+jw9C1SHNl1k8pnDyyZz8x+APojkE8MLsW13+ZjR1tnDS7xMADS6iL6muzGMUpdGwuVMnXXdjYX75NY0XLIVuLOj4B7tc=
+	t=1790786368; cv=none; b=ql3oOWDna9n3aSVViiw73a2rylTQlcU3RegP4ZFkDpmQ66mLDYzD7zD9LAQNj/dc7BdwvB00MunQZghbkiPmW8DOVdzVliyGXBwnJJWr0EuHPVCLq8f9RMQdODtP0GpGUOzjOwl3Q+Qc+2wTnhIDxZE6b8mbYFnUzd4aKWx/x+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786366; c=relaxed/simple;
-	bh=8At4qoAiXic950lPCVJYpch553yGIyTFDQGxhjubNPM=;
+	s=arc-20240116; t=1790786368; c=relaxed/simple;
+	bh=xOM7wQ5P3zIBXWtUCEONfikhe/C0VbG89iBXda0t4eE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/OphBDKfHCHr+NMhzgYbNUoAkg6zNrr+ov6pVXPQv9ZL9YvhvCOcO7c2AJW5HuMiHrEygqP8KFyPYh6D2OY18N76LtpOz132ZH44kuIFnhvCeglFTYK5nLLYTRXSis/H+VyBTAZuzeiFnGxtz6BVCXV8X4T48FGDDbJTsNV34M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cl4TAooG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M2GJjsRBA/YkPHg5nkob/5YDQPzcQxzvsq7P/8g28Fibm/G/vcggo5gv1iOdkyqhaUBsYfoz+y4md+W+vlqQtTvTJzMW6MsJ/G6ecH91oDAgdFM72LKQza9+HqC1MA6pIMZ6Rjfdbbf/B5Xc2jmacfuOWh0sPkBMkaoq2YGwGq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TklJW0RJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cl4TAooG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17B61F000FF;
-	Wed, 30 Sep 2026 16:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TklJW0RJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF72A1F000FF;
+	Wed, 30 Sep 2026 16:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786364;
-	bh=yVlLAeP9esjPyOPUGrAeiR5Po53YIvEPuzsS3LPmrvE=;
+	s=korg; t=1790786367;
+	bh=684Kk59t9TlmwxDJQYtpqphOpid1bw/a+8APDbceWic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cl4TAooGuW+Y/HYWjiLke2Wyxll5ky39sx+9MV2h3ktxZcOyNSRqW49odpf2vUlFc
-	 CPKdQlE4dxqT7AFZR1J83zdedp/ra+gdP4EBWQBQKRt2QRuUdmk+jaSOuu3VmNBZnC
-	 bjKZBxGY9rwVgAL2uAKm/qFp9bYhTVKhfmAtd3sg=
+	b=TklJW0RJuaQM6XakmEliu3D0obOh2m8WIAsRSnqmCquqkKDNf/nDmIdsUmh+wuliX
+	 sZ/j8CrwYW+0F1XVAIdxDA2V2duscpXMRL3RJ7AkTxNS0BrG5GaYHtTu9Btsl9hss9
+	 opaIpys5YLxbunPIinpRUcJ8BNsW9pWXxMMW1KbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Dan Carpenter <error27@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 791/982] bpf: bpf_sk_storage: Fix invalid wait context lockdep report
-Date: Wed, 30 Sep 2026 17:25:27 +0200
-Message-ID: <20260930152433.745443736@linuxfoundation.org>
+Subject: [PATCH 6.1 782/982] ASoC: SOF: ipc4-topology: Clarify bind failure caused by missing fw_module
+Date: Wed, 30 Sep 2026 17:25:18 +0200
+Message-ID: <20260930152433.553270721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,201 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit a96a44aba556c42b432929d37d60158aca21ad4c ]
+[ Upstream commit de6aa72b265b72bca2b1897d5000c8f0147d3157 ]
 
-'./test_progs -t test_local_storage' reported a splat:
+The original patch uses a feature in lib/vsprintf.c to handle the invalid
+address when tring to print *_fw_module->man4_module_entry.name when the
+*rc_fw_module is NULL.
+This case is handled by check_pointer_msg() internally and turns the
+invalid pointer to '(efault)' for printing but it is hiding useful
+information about the circumstances. Change the print to emmit the name
+of the widget and a note on which side's fw_module is missing.
 
-[   27.137569] =============================
-[   27.138122] [ BUG: Invalid wait context ]
-[   27.138650] 6.5.0-03980-gd11ae1b16b0a #247 Tainted: G           O
-[   27.139542] -----------------------------
-[   27.140106] test_progs/1729 is trying to lock:
-[   27.140713] ffff8883ef047b88 (stock_lock){-.-.}-{3:3}, at: local_lock_acquire+0x9/0x130
-[   27.141834] other info that might help us debug this:
-[   27.142437] context-{5:5}
-[   27.142856] 2 locks held by test_progs/1729:
-[   27.143352]  #0: ffffffff84bcd9c0 (rcu_read_lock){....}-{1:3}, at: rcu_lock_acquire+0x4/0x40
-[   27.144492]  #1: ffff888107deb2c0 (&storage->lock){..-.}-{2:2}, at: bpf_local_storage_update+0x39e/0x8e0
-[   27.145855] stack backtrace:
-[   27.146274] CPU: 0 PID: 1729 Comm: test_progs Tainted: G           O       6.5.0-03980-gd11ae1b16b0a #247
-[   27.147550] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-[   27.149127] Call Trace:
-[   27.149490]  <TASK>
-[   27.149867]  dump_stack_lvl+0x130/0x1d0
-[   27.152609]  dump_stack+0x14/0x20
-[   27.153131]  __lock_acquire+0x1657/0x2220
-[   27.153677]  lock_acquire+0x1b8/0x510
-[   27.157908]  local_lock_acquire+0x29/0x130
-[   27.159048]  obj_cgroup_charge+0xf4/0x3c0
-[   27.160794]  slab_pre_alloc_hook+0x28e/0x2b0
-[   27.161931]  __kmem_cache_alloc_node+0x51/0x210
-[   27.163557]  __kmalloc+0xaa/0x210
-[   27.164593]  bpf_map_kzalloc+0xbc/0x170
-[   27.165147]  bpf_selem_alloc+0x130/0x510
-[   27.166295]  bpf_local_storage_update+0x5aa/0x8e0
-[   27.167042]  bpf_fd_sk_storage_update_elem+0xdb/0x1a0
-[   27.169199]  bpf_map_update_value+0x415/0x4f0
-[   27.169871]  map_update_elem+0x413/0x550
-[   27.170330]  __sys_bpf+0x5e9/0x640
-[   27.174065]  __x64_sys_bpf+0x80/0x90
-[   27.174568]  do_syscall_64+0x48/0xa0
-[   27.175201]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-[   27.175932] RIP: 0033:0x7effb40e41ad
-[   27.176357] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d8
-[   27.179028] RSP: 002b:00007ffe64c21fc8 EFLAGS: 00000202 ORIG_RAX: 0000000000000141
-[   27.180088] RAX: ffffffffffffffda RBX: 00007ffe64c22768 RCX: 00007effb40e41ad
-[   27.181082] RDX: 0000000000000020 RSI: 00007ffe64c22008 RDI: 0000000000000002
-[   27.182030] RBP: 00007ffe64c21ff0 R08: 0000000000000000 R09: 00007ffe64c22788
-[   27.183038] R10: 0000000000000064 R11: 0000000000000202 R12: 0000000000000000
-[   27.184006] R13: 00007ffe64c22788 R14: 00007effb42a1000 R15: 0000000000000000
-[   27.184958]  </TASK>
+Fixes: e3720f92e023 ("ASoC: SOF: avoid a NULL dereference with unsupported widgets")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/alsa-devel/4826f662-42f0-4a82-ba32-8bf5f8a03256@kili.mountain/
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Rule: 'Cc: stable@vger.kernel.org' or 'commit <sha1> upstream.'
+Link: https://lore.kernel.org/r/20230403090909.18233-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 
-It complains about acquiring a local_lock while holding a raw_spin_lock.
-It means it should not allocate memory while holding a raw_spin_lock
-since it is not safe for RT.
-
-raw_spin_lock is needed because bpf_local_storage supports tracing
-context. In particular for task local storage, it is easy to
-get a "current" task PTR_TO_BTF_ID in tracing bpf prog.
-However, task (and cgroup) local storage has already been moved to
-bpf mem allocator which can be used after raw_spin_lock.
-
-The splat is for the sk storage. For sk (and inode) storage,
-it has not been moved to bpf mem allocator. Using raw_spin_lock or not,
-kzalloc(GFP_ATOMIC) could theoretically be unsafe in tracing context.
-However, the local storage helper requires a verifier accepted
-sk pointer (PTR_TO_BTF_ID), it is hypothetical if that (mean running
-a bpf prog in a kzalloc unsafe context and also able to hold a verifier
-accepted sk pointer) could happen.
-
-This patch avoids kzalloc after raw_spin_lock to silent the splat.
-There is an existing kzalloc before the raw_spin_lock. At that point,
-a kzalloc is very likely required because a lookup has just been done
-before. Thus, this patch always does the kzalloc before acquiring
-the raw_spin_lock and remove the later kzalloc usage after the
-raw_spin_lock. After this change, it will have a charge and then
-uncharge during the syscall bpf_map_update_elem() code path.
-This patch opts for simplicity and not continue the old
-optimization to save one charge and uncharge.
-
-This issue is dated back to the very first commit of bpf_sk_storage
-which had been refactored multiple times to create task, inode, and
-cgroup storage. This patch uses a Fixes tag with a more recent
-commit that should be easier to do backport.
-
-Fixes: b00fa38a9c1c ("bpf: Enable non-atomic allocations in local storage")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230901231129.578493-2-martin.lau@linux.dev
-
-[ Backport to 6.1.y: retain the pre-reuse_now unlink/free API while
-  moving the charged element allocation outside local_storage->lock. ]
+[ Backport to 6.1.y follow-up to e3720f92e023: replace its (efault)
+  pointer formatting with source/sink diagnostics; only hunk locations
+  differ. ]
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 47 ++++++++++------------------------
- 1 file changed, 14 insertions(+), 33 deletions(-)
+ sound/soc/sof/ipc4-topology.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index 51a9f024c1829..23cbd7b1b810d 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -373,7 +373,7 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 			 void *value, u64 map_flags, gfp_t gfp_flags)
- {
- 	struct bpf_local_storage_data *old_sdata = NULL;
--	struct bpf_local_storage_elem *selem = NULL;
-+	struct bpf_local_storage_elem *alloc_selem, *selem = NULL;
- 	struct bpf_local_storage *local_storage;
- 	unsigned long flags;
- 	int err;
-@@ -427,11 +427,12 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 		}
+diff --git a/sound/soc/sof/ipc4-topology.c b/sound/soc/sof/ipc4-topology.c
+index 9540ba6ef659e..ee6f6edec970c 100644
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -1601,10 +1601,12 @@ static int sof_ipc4_route_setup(struct snd_sof_dev *sdev, struct snd_sof_route *
+ 	int ret;
+ 
+ 	if (!src_fw_module || !sink_fw_module) {
+-		/* The NULL module will print as "(efault)" */
+-		dev_err(sdev->dev, "source %s or sink %s widget weren't set up properly\n",
+-			src_fw_module->man4_module_entry.name,
+-			sink_fw_module->man4_module_entry.name);
++		dev_err(sdev->dev,
++			"cannot bind %s -> %s, no firmware module for: %s%s\n",
++			src_widget->widget->name, sink_widget->widget->name,
++			src_fw_module ? "" : " source",
++			sink_fw_module ? "" : " sink");
++
+ 		return -ENODEV;
  	}
  
--	if (gfp_flags == GFP_KERNEL) {
--		selem = bpf_selem_alloc(smap, owner, value, true, gfp_flags);
--		if (!selem)
--			return ERR_PTR(-ENOMEM);
--	}
-+	/* A lookup has just been done before and concluded a new selem is
-+	 * needed. The chance of an unnecessary alloc is unlikely.
-+	 */
-+	alloc_selem = selem = bpf_selem_alloc(smap, owner, value, true, gfp_flags);
-+	if (!alloc_selem)
-+		return ERR_PTR(-ENOMEM);
- 
- 	raw_spin_lock_irqsave(&local_storage->lock, flags);
- 
-@@ -443,13 +444,13 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 		 * simple.
- 		 */
- 		err = -EAGAIN;
--		goto unlock_err;
-+		goto unlock;
- 	}
- 
- 	old_sdata = bpf_local_storage_lookup(local_storage, smap, false);
- 	err = check_flags(old_sdata, map_flags);
- 	if (err)
--		goto unlock_err;
-+		goto unlock;
- 
- 	if (old_sdata && (map_flags & BPF_F_LOCK)) {
- 		copy_map_value_locked(&smap->map, old_sdata->data, value,
-@@ -458,23 +459,7 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 		goto unlock;
- 	}
- 
--	if (gfp_flags != GFP_KERNEL) {
--		/* local_storage->lock is held.  Hence, we are sure
--		 * we can unlink and uncharge the old_sdata successfully
--		 * later.  Hence, instead of charging the new selem now
--		 * and then uncharge the old selem later (which may cause
--		 * a potential but unnecessary charge failure),  avoid taking
--		 * a charge at all here (the "!old_sdata" check) and the
--		 * old_sdata will not be uncharged later during
--		 * bpf_selem_unlink_storage_nolock().
--		 */
--		selem = bpf_selem_alloc(smap, owner, value, !old_sdata, gfp_flags);
--		if (!selem) {
--			err = -ENOMEM;
--			goto unlock_err;
--		}
--	}
--
-+	alloc_selem = NULL;
- 	/* First, link the new selem to the map */
- 	bpf_selem_link_map(smap, selem);
- 
-@@ -485,20 +470,16 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
- 	if (old_sdata) {
- 		bpf_selem_unlink_map(SELEM(old_sdata));
- 		bpf_selem_unlink_storage_nolock(local_storage, SELEM(old_sdata),
--						false, true);
-+						true, true);
- 	}
- 
- unlock:
- 	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
--	return SDATA(selem);
--
--unlock_err:
--	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
--	if (selem) {
-+	if (alloc_selem) {
- 		mem_uncharge(smap, owner, smap->elem_size);
--		kfree(selem);
-+		kfree(alloc_selem);
- 	}
--	return ERR_PTR(err);
-+	return err ? ERR_PTR(err) : SDATA(selem);
- }
- 
- static u16 bpf_local_storage_cache_idx_get(struct bpf_local_storage_cache *cache)
 -- 
 2.53.0
 
