@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F1E50257E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2274FDA77;
 	Wed, 30 Sep 2026 15:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782675; cv=none; b=QSfwIhyuClK/+L74B6JiQ9BIUzBOMQCA2eaD1ELPQBfBr8xYQ6YdfPuvs3c44+vOi7QAdS2IMlDWeVS1sKDe4ijr3P2kN6Y9mKAJfYURRKY5dvSMfHYD3wxwmWe+wPiYIZ1K005YAuXnCPGuGWFPc6L8xMElBIPoBsbFRgdVyjg=
+	t=1790782675; cv=none; b=ODn/4qSIAPEk0CdDFNdXRkeynb7FFs0acREUOIG6EEW4mB+XTfb/QrHGCldAaUrMZq2p9vNrT0MBBdAaJZwCofBW4Yta/pX7GGGIM4I/ttf8m5+96JizmPQ/1XlKBosSUaLLFK211CeJNIl/O9AbdV8dZrt0xqWQkyWP+vqY4IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782675; c=relaxed/simple;
-	bh=yzYSpI064NLod9HmvEve2N5NRKv7Chhyic2/4COKiLA=;
+	bh=AcJDtc5bDQ81L5ZiuUM2u4h84nTsQFfTqMMRa1NZlhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/dufH5IJ198FCMvofyRxEjjKvb+ODevjSLJGpNSf03pDHc2rR+BqHPiAJ9ok2JUpHHDyf6awgWOdAoNHEo7itMq+8H21WiMimXKXgt+kERS7A4OI/zdfQFZDom+k7G7DznpyH/OQt6AHdhKTlutWmYtQ4uOWBpmz3NFXNk2gss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzCsis3z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N4YAJCfj2PhPorSr3Rk2mLlNWic3o8z7K5x/5lTQlSqVq1tejntcyN99xbnQ2LDagMmbzy42cQAEb6+9fdyVOQsRIeTl+KGDfLVgPVl6bqc8+d5P1ChceKyPTiVbDUMI9rDvkCqWQThqNCfeMpkIAUFYvqvKu3UU7a+dswXHJj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMzRjh/K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzCsis3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B181F000FF;
-	Wed, 30 Sep 2026 15:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMzRjh/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5951F0089A;
+	Wed, 30 Sep 2026 15:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782666;
-	bh=f/l32nSlUFpu8jFjB/SjTrUkThOY355y2h/ijT+jtKw=;
+	s=korg; t=1790782669;
+	bh=XsgqgkEL33Fk6OpG+K6Lh2pbMVurR5QwPyGeIkkxVwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzCsis3zoqZOtvdNQyR4fbXloaWSr3NpegITz4lAlu/ZYflU+5njZ4wIg8iVp7gwK
-	 L6clKKa0oxdTFZajDi3lmI5qVX0wWI/AnEENfhpGNCWUGH+bL93r5susOjQYSe76mQ
-	 BkacodQF8tVek/db9Zs/9tFCaLlWbAI4eOAUzM8Q=
+	b=XMzRjh/K/OSBj9k2J8oPW9eFT9Ol/EsTmmJ8ggPWQ5X3CFxBPkc3BFtiVjK17Tl1p
+	 q3teevbSu4mRb0uRYZ9hes9C84bRWBfJS/FtdKEEr3yH2z9kHOyqA84RuI/OS2m+qE
+	 KRth3I2qGngaF/7BOYcDMH8K5fCSfaH11zpkGBZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Mikityanska <alice@isovalent.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 128/595] net/sched: act_csum: dont mangle UDP tunnel GSO packets
-Date: Wed, 30 Sep 2026 17:20:21 +0200
-Message-ID: <20260930152350.492363604@linuxfoundation.org>
+Subject: [PATCH 5.10 129/595] sparc: Disable compat support with LLD
+Date: Wed, 30 Sep 2026 17:20:22 +0200
+Message-ID: <20260930152350.513277306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,57 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Mikityanska <alice@isovalent.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 9bcb30b389ec5888590cb6ec58c7a3b80fe49a11 ]
+[ Upstream commit 852fed2e8bfe195351fb0078ba7245d41154e7a5 ]
 
-Similar to commit add641e7dee3 ("sched: act_csum: don't mangle TCP and
-UDP GSO packets"), UDP tunnel GSO packets going through act_csum
-shouldn't have their checksum calculated at this point, because it will
-be done after segmentation. Setting the checksum in act_csum modifies
-skb->ip_summed and prevents inner IP csum offload from kicking in,
-resulting in a packet with a bad checksum.
+An LLVM=1 sparc64 allmodconfig enables COMPAT and then tries to
+build the 32-bit vDSO. That path cannot be linked with ld.lld:
 
-Add UDP tunnel GSO packets to the exceptions, and also add UDP GSO
-(SKB_GSO_UDP_L4), as the same logic as in the commit mentioned above
-applies to UDP GSO too.
+  ld.lld: error: unknown emulation: elf32_sparc
 
-Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260611192955.604661-2-alice.kernel@fastmail.im
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ld.lld does not support the 32-bit SPARC ELF emulation used for
+the compat vDSO, so keep COMPAT disabled when LLD is the linker.
+This avoids selecting an unsupported build path while leaving the
+existing GNU ld configuration unchanged.
+
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_csum.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/sparc/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
-index 107dc690de051..39836a30867fa 100644
---- a/net/sched/act_csum.c
-+++ b/net/sched/act_csum.c
-@@ -257,7 +257,9 @@ static int tcf_csum_ipv4_udp(struct sk_buff *skb, unsigned int ihl,
- 	const struct iphdr *iph;
- 	u16 ul;
- 
--	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
-+	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
-+	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
-+	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
- 		return 1;
- 
- 	/*
-@@ -313,7 +315,9 @@ static int tcf_csum_ipv6_udp(struct sk_buff *skb, unsigned int ihl,
- 	const struct ipv6hdr *ip6h;
- 	u16 ul;
- 
--	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
-+	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
-+	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
-+	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
- 		return 1;
- 
- 	/*
+diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
+index 7e2ce4c8d6571..7d0d1726a0898 100644
+--- a/arch/sparc/Kconfig
++++ b/arch/sparc/Kconfig
+@@ -496,6 +496,7 @@ endmenu
+ config COMPAT
+ 	bool
+ 	depends on SPARC64
++	depends on !LD_IS_LLD
+ 	default y
+ 	select COMPAT_BINFMT_ELF if BINFMT_ELF
+ 	select HAVE_UID16
 -- 
 2.53.0
 
