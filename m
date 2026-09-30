@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE29522F03;
-	Wed, 30 Sep 2026 17:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A0A52188D;
+	Wed, 30 Sep 2026 17:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789895; cv=none; b=MDPiktYM3qLUP0phvdqx85Gu1IrfnVU70UP8tb3xF2jRmA/Tt7BJY54PizazmFk3f5iKr48hokbUZCjk5m3A5zJF0zlsjzsZgzWM8NQ7E02U75e9hnXv36AxSVyKsImj8R9Ml6AT0555V+xEnolCyoePuk4EysXfI+1unbjlhxo=
+	t=1790789898; cv=none; b=sMvl/kLx5TjAbaY6iQNtOcnyyvQdt6q5W7lynbCvTYS/IYH3XPYukYaeE5SwbqqJcO99ibBhwARLsbumbVy4e78ZVZnfdcl7QCuSvgDPlUCz5McuMDxhfEg50sMqYHhOFpUvuADmBVdzmCkPX7arlxM4SInPCsY01ezBTpVPDH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789895; c=relaxed/simple;
-	bh=NyjA9oCxd1BIummopQG32qUcP6bIammuiwpURcebsBU=;
+	s=arc-20240116; t=1790789898; c=relaxed/simple;
+	bh=fEdWXexBeOtDsqPF8F+h0i8Y8WnG1XVhQOfJt5exPLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMu/2LmyW9zPb2hPovjvoItv6d8i44g1IplSxFAJa/PFBFWgj0k8d9ei15mYfTyUjWEe98Dswhxy/ogKdQYNZqRHVSK+z+1mJT8iPmxgQNOoV9I/KUq4wnsyT85ycihCe/ynY09iBA32LiNSRYHI7ftNPasyN6zcu1y9NycbcdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=My7V1NVc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W9pFGIGthVppjQRr4f14csriSUzJecxDZzrLFqGThbNhiRT626aOEqGoHw6fsor8UsI4FXJnpcxTlkaPDNhxV3FZ83P+uoCbLJNTWrYyUebPA0/CfKFLgji/CwXij2ZZ+YuGaubdgYQZS+Va2KS+S70vPtXkg2a6cNoL7pljYf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F82ga8vL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="My7V1NVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7561F00898;
-	Wed, 30 Sep 2026 17:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F82ga8vL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C2F1F000FF;
+	Wed, 30 Sep 2026 17:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789894;
-	bh=d6TXd2MEOyUQMBPG4WWlBEbtenCeObI0UF1R7cKJLEo=;
+	s=korg; t=1790789896;
+	bh=SFcFFO4sI2yQrd6p76qiAvPcdoo8M6G/iqIWtRDOPhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=My7V1NVcaBhC9ruOxYKlq1/yd6+3RBe6zXGDPMMl5V3LgqsUJe6vgySsxYQrVsJBd
-	 jGEPam+gxKphQv9ztKRvpkHVr3xepM1yROJjDB0KpHmfvQm8AvEZFWgQnEB5csVbKP
-	 PbJcXR+qopgawYoNesxO/N9A57fFhhREqf3vBFk0=
+	b=F82ga8vL7YdyKGxSPyN+p5Y1MV4H8Jvz6t5eSkWdpQT3LcxqcDume2aa0NLF+Psos
+	 EoeuP2iX0EJlaF+VRgws32h5zQq3FCnkBjDknxC3lesWWEfdGSQc4UF8CBsF67I+LT
+	 EUgDCPu6sBZCMHvTKYEujWLHsGkdtmRuO9k14AlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Hui Su <sh_def@163.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 636/877] rtc: rzn1: Handle unset alarm weekday in rzn1_rtc_read_alarm
-Date: Wed, 30 Sep 2026 17:25:47 +0200
-Message-ID: <20260930152428.377927556@linuxfoundation.org>
+Subject: [PATCH 6.12 595/877] io_uring/waitid: avoid siginfo copy during ring teardown
+Date: Wed, 30 Sep 2026 17:25:06 +0200
+Message-ID: <20260930152427.491729446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,75 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 457b5dbce31209e65e1184716ed3af59cb1c0372 ]
+[ Upstream commit 2cf20c4e0f72d523b8673053e7120d092ff1f074 ]
 
-RZN1_RTC_ALW is a weekday bitmask where bit N represents weekday N.
-When no alarm has been configured, the register has its power-on-reset
-value of zero.
+During ring teardown, io_ring_exit_work() cancels outstanding requests
+from a kworker with a NULL tctx. The waitid cancellation path eventually
+reaches io_waitid_finish(), which copies the stored siginfo to the
+userspace pointer supplied with the request.
 
-rzn1_rtc_read_alarm() uses fls() to convert the weekday bitmask into a
-weekday number. When RZN1_RTC_ALW is zero, fls(0) returns zero and
-fls(wday) - 1 evaluates to -1. This invalid weekday is then used to
-calculate the alarm date and can either leave tm_wday set to -1 or
-produce a fabricated alarm date.
+Ring-wide teardown does not run in the task context that submitted the
+request, so it must not access that task's userspace pointer. Depending
+on the address and mm state, the copy may fail with -EFAULT, but the
+uaccess itself is inappropriate from the teardown kworker.
 
-Treat a zero RZN1_RTC_ALW value as an unset alarm weekday and return
-without calculating the alarm date. Move reading RZN1_RTC_CTL1 before
-this check so that alrm->enabled is updated for both configured and
-unconfigured alarms.
+Use a no-copy cancellation callback when io_waitid_remove_all() is
+called without an owning task context. Complete the request with
+-ECANCELED while releasing the waitid state without touching siginfo.
 
-Fixes: b5ad1bf00d2c4 ("rtc: rzn1: Add alarm support")
+Keep the existing siginfo handling for explicit async cancellation and
+task-scoped cancellation.
+
+Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://patch.msgid.link/20260821211032.13554-5-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[ retained the ALME-only enable check because RZN1_RTC_CTL1_1SE is absent. ]
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://patch.msgid.link/20260818103336.1922818-3-sh_def@163.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ adapted copy_si handling to older direct cancellation helpers using task instead of tctx. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-rzn1.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ io_uring/waitid.c |   18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
---- a/drivers/rtc/rtc-rzn1.c
-+++ b/drivers/rtc/rtc-rzn1.c
-@@ -193,13 +193,24 @@ static int rzn1_rtc_read_alarm(struct de
- 	if (ret)
- 		return ret;
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -131,7 +131,7 @@ static void io_waitid_remove_wq(struct i
+ 	}
+ }
  
-+	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
-+	alrm->enabled = !!(ctl1 & RZN1_RTC_CTL1_ALME);
-+
- 	min = readl(rtc->base + RZN1_RTC_ALM);
- 	hour = readl(rtc->base + RZN1_RTC_ALH);
--	wday = readl(rtc->base + RZN1_RTC_ALW);
+-static void io_waitid_complete(struct io_kiocb *req, int ret)
++static void io_waitid_complete(struct io_kiocb *req, int ret, bool copy_si)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
  
- 	tm->tm_sec = 0;
- 	tm->tm_min = bcd2bin(min);
- 	tm->tm_hour = bcd2bin(hour);
-+
-+	/*
-+	 * If wday is zero, no bit is set in RZN1_RTC_ALW. This is the
-+	 * register's power-on reset value.
-+	 */
-+	wday = readl(rtc->base + RZN1_RTC_ALW);
-+	if (!wday)
-+		return 0;
-+
- 	delta_days = ((fls(wday) - 1) - tm->tm_wday + 7) % 7;
- 	tm->tm_wday = fls(wday) - 1;
+@@ -143,13 +143,17 @@ static void io_waitid_complete(struct io
+ 	hlist_del_init(&req->hash_node);
+ 	io_waitid_remove_wq(req);
  
-@@ -208,9 +219,6 @@ static int rzn1_rtc_read_alarm(struct de
- 		rtc_time64_to_tm(alarm, tm);
+-	ret = io_waitid_finish(req, ret);
++	if (copy_si)
++		ret = io_waitid_finish(req, ret);
++	else
++		io_waitid_free(req);
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+ }
+ 
+-static bool __io_waitid_cancel(struct io_ring_ctx *ctx, struct io_kiocb *req)
++static bool __io_waitid_cancel(struct io_ring_ctx *ctx, struct io_kiocb *req,
++			       bool copy_si)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+ 
+@@ -165,7 +169,7 @@ static bool __io_waitid_cancel(struct io
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return false;
+ 
+-	io_waitid_complete(req, -ECANCELED);
++	io_waitid_complete(req, -ECANCELED, copy_si);
+ 	io_req_queue_tw_complete(req, -ECANCELED);
+ 	return true;
+ }
+@@ -185,7 +189,7 @@ int io_waitid_cancel(struct io_ring_ctx
+ 		if (req->cqe.user_data != cd->data &&
+ 		    !(cd->flags & IORING_ASYNC_CANCEL_ANY))
+ 			continue;
+-		if (__io_waitid_cancel(ctx, req))
++		if (__io_waitid_cancel(ctx, req, true))
+ 			nr++;
+ 		if (!(cd->flags & IORING_ASYNC_CANCEL_ALL))
+ 			break;
+@@ -211,7 +215,7 @@ bool io_waitid_remove_all(struct io_ring
+ 		if (!io_match_task_safe(req, task, cancel_all))
+ 			continue;
+ 		hlist_del_init(&req->hash_node);
+-		__io_waitid_cancel(ctx, req);
++		__io_waitid_cancel(ctx, req, task != NULL);
+ 		found = true;
  	}
  
--	ctl1 = readl(rtc->base + RZN1_RTC_CTL1);
--	alrm->enabled = !!(ctl1 & RZN1_RTC_CTL1_ALME);
--
- 	return 0;
+@@ -270,7 +274,7 @@ static void io_waitid_cb(struct io_kiocb
+ 		}
+ 	}
+ 
+-	io_waitid_complete(req, ret);
++	io_waitid_complete(req, ret, true);
+ 	io_req_task_complete(req, ts);
  }
  
 
