@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A3B3DC4D8;
-	Wed, 30 Sep 2026 19:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB0D3BA244;
+	Wed, 30 Sep 2026 19:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796101; cv=none; b=VfMRPdGG2oeVlq6+SoaomBC8XWzhqDhnbCOjiQAMIBj/3nfKWG66Ri7FxDmcXqdFsOFIs+KCmqYZ55W7kbVjmYjXPDR9zH3UzTOFuSCPhv59ND0ph9jAv20R/U9DKypyF23/FpC4/hJUxIEBSlq4coIMUlHAmEleemY7tOSoJH0=
+	t=1790796104; cv=none; b=MG6Y9Yd4gE49AkhAq3mCbhksTPDizTXL0UPJOIpuo5yar9UkBtjicJvj6gvua9OJWW1a1DYNzF9bEe1Ks9gT/BnN9RFhXaMohD7YvRAL5TNOoXV7cdkt4epqSUUyEY7tEEMLPsol9CYtiIguFSJI8FDrFamRO1pJq+6X1u6NM4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796101; c=relaxed/simple;
-	bh=76NEkG9H8A+fz+Lb6WeXdlMSic4V0B4LlfxztwUOkg8=;
+	s=arc-20240116; t=1790796104; c=relaxed/simple;
+	bh=ne1T4YHkevb+XKCA1ZHInybZ7ZyyApUcdhbfFyVjkQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=glHs67OXPJSmdyqfkdx2FkB0oy1zAhytprfN3FDPBsPbVXkOZfQQnp7ehz8agy5NXkZYMVXsGIrcgQn1ZrZL0LuKFVnTei5tw4N7LvxBy8QgfH/KBpZP/Jm2J9n8K0sDFo7lQyGy93S2eWzAgarsQ6JJaXeelezJgh1i/yYADYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5ALfk+N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Km7QOkVcxb32dxHH4rFbYvHcHKc6QsJUiRsu3WuGPicJ+T3JmOMcEWJJv6sHfNXZg+9waG0W/8337wP1xMOK7iddO+nOJ9yj9y2olrjwLkCPF9dNVoLiRloDuXqc/CXCMBr+rLJSoVqi86FpjiYeswyZ12s7W1D4OiryYmoGDQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hplHpiSi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5ALfk+N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9997B1F000FF;
-	Wed, 30 Sep 2026 19:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hplHpiSi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733181F000FF;
+	Wed, 30 Sep 2026 19:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796100;
-	bh=f52ANVSAh5SlZyqA9yU9k72o2BL+DSdwwz2Fkea1iyk=;
+	s=korg; t=1790796103;
+	bh=m0XLllLLgdCzR80iXF+DX0DBYMdzKyjAYH0RV8FYI+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g5ALfk+N42+pKpqLyCdnAXlWCfT63KleJCP8LHr/qDebnOlmtcAClZCnnmO8cbcpa
-	 6Ytj57g66IDv4j2ieOcR/1UKGxNvCNmxIOYcz54nefOgpxziXid3N+uZ9oN4xTo3xk
-	 HL7700qNaTO1qn88gLsDng4k2BthMMp7V4CkQW6k=
+	b=hplHpiSineEAkYTzuEtezzE0ElcUpkLfaBwNMDf62/f6Cg0XDPfbw+6Xqi+6uyn6p
+	 ojmArKy6bJMTa7XkEkbjq4ErMbVUw2rAuvXwlBAxa/1JIpe2yd4GAAhezHiyWpmcPb
+	 8hSCHWu2lHFweEJvz8CsixA/fGVROma4AzexmzgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0793/1193] btrfs: tree-checker: print dev extent offset in error message
-Date: Wed, 30 Sep 2026 17:24:37 +0200
-Message-ID: <20260930152451.863907846@linuxfoundation.org>
+Subject: [PATCH 6.6 0794/1193] drm/msm/dsi: round the byte clock rate after reparenting to the PHY PLL
+Date: Wed, 30 Sep 2026 17:24:38 +0200
+Message-ID: <20260930152451.885806406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,37 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit a1167d9420474ab9ed9efca99d86aeb6217c0265 ]
+[ Upstream commit 2028280686f4fa78e2f1f6dede4b6c1fd782b9e3 ]
 
-If a dev extent's offset is not sector size aligned, the error message is
-printing the dev extent's objectid instead of the offset. This is a copy
-paste error, as before this check we check the objectid field.
+DSI 6G v2.9 hosts (SM8650, SM8750, Kaanapali, etc.) reparent the byte and
+pixel RCGs to the DSI PHY PLL at runtime from
+dsi_link_clk_set_rate_6g_v2_9(), after the PHY has been enabled. However
+dsi_calc_clk_rate_6g() runs earlier, in order to compute the bit clock
+request for the PHY. At that point the byte RCG still has its reset
+parent (XO), so clk_round_rate() returns a bogus rate, which then ends up
+in the PHY bit clock request and the PLL gets programmed to a wrong
+frequency, breaking the panel.
 
-Fixes: 008e2512dc56 ("btrfs: tree-checker: add dev extent item checks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Move the rounding to dsi_link_clk_set_rate_6g(), which is called after
+the RCGs have been reparented to the PLL. Storing the rounded rate at
+this point still makes later link_clk_set_rate() calls no-ops in the
+CCF. Derive the byte interface clock rate from the rounded byte clock
+rate, otherwise it would keep requesting the idealized rate and
+retrigger the PLL on every transfer.
+
+Reported-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Fixes: 6cd33b6f4155 ("drm/msm/dsi: round 6G byte clock rate to the PLL-achievable value")
+Assisted-by: LLM
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SM6115P J606F
+Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/750496/
+Link: https://lore.kernel.org/r/20260903-fix-eliza-dsi-v1-1-3474a6c9f2e0@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 36 ++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index f9b9fb0b21d5a..d3c14dc3b0a66 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1834,7 +1834,7 @@ static int check_dev_extent_item(const struct extent_buffer *leaf,
- 				 sectorsize))) {
- 		generic_err(leaf, slot,
- 			    "invalid dev extent chunk offset, has %llu not aligned to %u",
--			    btrfs_dev_extent_chunk_objectid(leaf, de),
-+			    btrfs_dev_extent_chunk_offset(leaf, de),
- 			    sectorsize);
- 		return -EUCLEAN;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index be61f265fad94..cdc964aaf405f 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -121,7 +121,7 @@ struct msm_dsi_host {
+ 	struct clk *byte_intf_clk;
+ 
+ 	unsigned long byte_clk_rate;
+-	unsigned long byte_intf_clk_rate;
++	bool byte_intf_clk_div_2;
+ 	unsigned long pixel_clk_rate;
+ 	unsigned long esc_clk_rate;
+ 
+@@ -364,8 +364,20 @@ int msm_dsi_runtime_resume(struct device *dev)
+ 
+ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+ {
++	unsigned long byte_intf_clk_rate;
++	long rounded_byte_clk_rate;
+ 	int ret;
+ 
++	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
++					       msm_host->byte_clk_rate);
++	if (rounded_byte_clk_rate < 0) {
++		pr_err("%s: failed to round byte clock rate, %ld\n",
++		       __func__, rounded_byte_clk_rate);
++		return rounded_byte_clk_rate;
++	}
++
++	msm_host->byte_clk_rate = rounded_byte_clk_rate;
++
+ 	DBG("Set clk rates: pclk=%lu, byteclk=%lu",
+ 	    msm_host->pixel_clk_rate, msm_host->byte_clk_rate);
+ 
+@@ -383,7 +395,11 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
  	}
+ 
+ 	if (msm_host->byte_intf_clk) {
+-		ret = clk_set_rate(msm_host->byte_intf_clk, msm_host->byte_intf_clk_rate);
++		byte_intf_clk_rate = msm_host->byte_clk_rate;
++		if (msm_host->byte_intf_clk_div_2)
++			byte_intf_clk_rate /= 2;
++
++		ret = clk_set_rate(msm_host->byte_intf_clk, byte_intf_clk_rate);
+ 		if (ret) {
+ 			pr_err("%s: Failed to set rate byte intf clk, %d\n",
+ 			       __func__, ret);
+@@ -633,24 +649,12 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 
+ int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ {
+-	long rounded_byte_clk_rate;
+-
+ 	if (!msm_host->mode) {
+ 		pr_err("%s: mode not set\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 
+ 	dsi_calc_pclk(msm_host, is_bonded_dsi);
+-
+-	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
+-					       msm_host->byte_clk_rate);
+-	if (rounded_byte_clk_rate < 0) {
+-		pr_err("%s: failed to round byte clock rate, %ld\n",
+-		       __func__, rounded_byte_clk_rate);
+-		return rounded_byte_clk_rate;
+-	}
+-
+-	msm_host->byte_clk_rate = rounded_byte_clk_rate;
+ 	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
+ 	return 0;
+ }
+@@ -2406,9 +2410,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+ 		goto unlock_ret;
+ 	}
+ 
+-	msm_host->byte_intf_clk_rate = msm_host->byte_clk_rate;
+-	if (phy_shared_timings->byte_intf_clk_div_2)
+-		msm_host->byte_intf_clk_rate /= 2;
++	msm_host->byte_intf_clk_div_2 = phy_shared_timings->byte_intf_clk_div_2;
+ 
+ 	msm_dsi_sfpb_config(msm_host, true);
+ 
 -- 
 2.53.0
 
