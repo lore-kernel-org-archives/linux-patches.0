@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE0F501F30;
-	Wed, 30 Sep 2026 15:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6E23769FB;
+	Wed, 30 Sep 2026 15:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783684; cv=none; b=DnUIH3EO1bx6+9PUKVPjt1NnJqIXULe1NQgzXOz2CJOpEszlsZ57HX/hOeaFle1sVw0i9iDunn2AL3bXSt8IrhrFwZlCwOOOnCFi8M8M8GmquWon74Mg/uWopV+4d41mQNm8nsnLcDPf8h7T37zh/CRb7FqmQZ1JuCtJOGSmv5k=
+	t=1790783685; cv=none; b=IfY6XN0aa+PnebWPj+VhAlRE2DBYgDLgPtfePNZVNLnS8AJ/jYVbJiBmzuQGNyzMySs40QT1PgOeLXXE7sYY2mDd0jS3kRoVGbivTrzw1gkO3SACjBYmRsIdgsNuaDudqZr3O+nKnGmj53mKuJM2KzQtgrBVmaGFPDMgzp+KyJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783684; c=relaxed/simple;
-	bh=XnR0ps6oF5sLf0SMjzhBILgheohXUVTpHOMpGDUkU2A=;
+	s=arc-20240116; t=1790783685; c=relaxed/simple;
+	bh=bp1KEFeLayAd1YCaXZcOPaE3v/685bx7zkGCL3VdENo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fu3+z5tGB7B4gdBzENt5TZ9JARglgccf1HtL+jLdsRmmJTzjq9IxGThkbw9EP7ewPdFxq0elWh4njhx8vvv06pcmf9WmpogucWZHsxt5ytPUOBGJu9tBGJpSvD/GwZqK6wphcG0g8bXgo4tsc6I9V/kVE7hyBW5weX2ZqaHB/FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MClHawKZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3ww5ZTSerzL2gAy6IXh/QqZ6/ODbhCyUi1zJkGgRg0u+9ZvebrbXCKRh1IoNK2NxGmiY2GDIVOQsAdnytDJXjvGDhxrlq0gQJlNci+cmJKkZs8AXn0+PjmW0WfXydz9qBgnjhtsOmaoRx0TuBYVPn3M8bbvW7EaaWH1bFJUuTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VoC64Iv6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MClHawKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B971F00898;
-	Wed, 30 Sep 2026 15:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoC64Iv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808A51F000FF;
+	Wed, 30 Sep 2026 15:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783679;
-	bh=nlZQzb6nm3qk/2/CCbtqoRCwqPBk4MkRrnhwLdW9KBU=;
+	s=korg; t=1790783682;
+	bh=S8SCofJpZa1SFlo3ajtR11d5uo26wJYF0YS8lpnqF2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MClHawKZ0XHYL6sKCMFFirFKVzp/g43EFHTUwyaAom7GHxSKDZVgyGh4/V2hAuG1+
-	 xpkROqRMFyZI+534dJ1JU59L7XZuD6rBk8TK/C5ijETr6PhoY6cqzdTkkTl8afoNi2
-	 5SwjxzNWldP095HIynju0e50CvT7YpAe4E1vgazw=
+	b=VoC64Iv6jQHaJq9uFrJcwxlQzYRliESDUYkZ5un0/b9ZwOnatIaic0cLiGyeJ4kvd
+	 ncLIDvYccsm33ZFLlorLhphZJeSbiPRjNTrWg/f+VGjU/w4SgQRkq0bKzchx2OMwWn
+	 zf4y36hpTvL0BRrbGvjbKli/hY+Zo/WMessQABzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 483/595] selftests/ftrace: Fix unique symbol check in kprobe_non_uniq_symbol.tc
-Date: Wed, 30 Sep 2026 17:26:16 +0200
-Message-ID: <20260930152358.072904947@linuxfoundation.org>
+Subject: [PATCH 5.10 484/595] bpf: Fix out-of-bounds read of rtt_min in sock_ops
+Date: Wed, 30 Sep 2026 17:26:17 +0200
+Message-ID: <20260930152358.093928904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,45 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit d22c3e0088e85be8131f7a9283f759cdbb20726d ]
+[ Upstream commit 75f8cf22463d82bb1fb0239a3d485fc8f4c8ef03 ]
 
-The current regex also matches symbols in modules, which makes the
-test fail on s390 where name_show is present only once in the kernel,
-but also multiple times in modules:
+A sockops prog reading skops->rtt_min never checks the sk type: on the
+tcp_conn_request() path sock_ops->sk is a request_sock (non-full), and the
+ctx rewrite casts it to a tcp_sock (full) and reads rtt_min past the end of
+the request_sock, returning dirty adjacent memory.
 
-000001b1401cdc20 t name_show
-000001b0c05e6c40 t name_show    [mdev]
-000001b0c0495f30 t name_show    [i2c_core]
+	SEC("sockops")
+	int prog(struct bpf_sock_ops *skops)
+	{
+		switch (skops->op) {
+		case BPF_SOCK_OPS_RWND_INIT:
+			leak = skops->rtt_min;   /* reads the request_sock OOB */
+		...
+		}
+	}
 
-Fix this by changing the regular expression to only match the function
-name.
+For instance one such read returned rtt_min=0xffff8881, the high half of a
+leaked kernel pointer.
 
-Link: https://lore.kernel.org/all/20260909092954.2200558-1-svens@linux.ibm.com/
+Guarding that cast is exactly what SOCK_OPS_GET_FIELD() does -- it checks
+is_locked_tcp_sock and returns 0 when sock_ops->sk is not a locked full
+socket. Every other tcp_sock field in sock_ops goes through it; rtt_min is
+the only one open-coded, so it skips the check.
 
-Fixes: 03b80ff8023a ("selftests/ftrace: Add new test case which checks non unique symbol")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Read rtt_min through SOCK_OPS_GET_FIELD() too. rtt_min is a bit special:
+it is a struct minmax and we only want the current min, so pass
+rtt_min.s[0].v. That is equivalent to the old hand-computed offset
+
+	offsetof(struct tcp_sock, rtt_min) + sizeof_field(struct minmax_sample, t)
+
+(s[0] sits at rtt_min + 0 and .v at + sizeof(.t), i.e. what minmax_get()
+returns), so the loaded field is unchanged and only the full-sock guard is
+added. The two BUILD_BUG_ON()s that protected the hand-computed offset
+are no longer needed.
+
+Before patch:
+
+	0: r1 = *(u64 *)(r1 +0)      ; r1 = skops->sk
+	1: r1 = *(u32 *)(r1 +2324)   ; ((tcp_sock *)sk)->rtt_min.s[0].v
+
+After patch:
+
+	0: *(u64 *)(r1 +56) = r9
+	1: r9 = *(u8 *)(r1 +50)      ; is_locked_tcp_sock
+	2: if r9 == 0 goto pc+4      ; not a locked full sock -> 0
+	3: r9 = *(u64 *)(r1 +56)
+	4: r1 = *(u64 *)(r1 +0)      ; r1 = skops->sk
+	5: r1 = *(u32 *)(r1 +2324)   ; rtt_min.s[0].v
+	6: goto pc+2
+	7: r9 = *(u64 *)(r1 +56)
+	8: r1 = 0
+
+Fixes: 44f0e43037d3 ("bpf: Add support for reading sk_state and more")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/r/20260903100921.113374-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc    | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/filter.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-index bc9514428dbaf..07b1177c16344 100644
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-@@ -6,7 +6,7 @@
- SYMBOL='name_show'
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 25f80c26f2e92..0e0e46fa7a618 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -9517,18 +9517,7 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 		break;
  
- # We skip this test on kernel where SYMBOL is unique or does not exist.
--if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}" /proc/kallsyms)" -le '1' ]; then
-+if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
- 	exit_unsupported
- fi
+ 	case offsetof(struct bpf_sock_ops, rtt_min):
+-		BUILD_BUG_ON(sizeof_field(struct tcp_sock, rtt_min) !=
+-			     sizeof(struct minmax));
+-		BUILD_BUG_ON(sizeof(struct minmax) <
+-			     sizeof(struct minmax_sample));
+-
+-		*insn++ = BPF_LDX_MEM(BPF_FIELD_SIZEOF(
+-						struct bpf_sock_ops_kern, sk),
+-				      si->dst_reg, si->src_reg,
+-				      offsetof(struct bpf_sock_ops_kern, sk));
+-		*insn++ = BPF_LDX_MEM(BPF_W, si->dst_reg, si->dst_reg,
+-				      offsetof(struct tcp_sock, rtt_min) +
+-				      sizeof_field(struct minmax_sample, t));
++		SOCK_OPS_GET_FIELD(rtt_min, rtt_min.s[0].v, struct tcp_sock);
+ 		break;
  
+ 	case offsetof(struct bpf_sock_ops, bpf_sock_ops_cb_flags):
 -- 
 2.53.0
 
