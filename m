@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A4A51C058;
-	Wed, 30 Sep 2026 18:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAD151CF5D;
+	Wed, 30 Sep 2026 18:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792742; cv=none; b=Y/QCkd2ByscBGJ4tKyYijKaKiYJtiS7Te2LQg1Dwq+A6FPMlRU9PoyCQrdfuurq1ZLlwzFLtyPz8PIiQ3Lox8twxXkFzFiQwCmpAsgzK7FSBpyoNE51eBQ/9f5HA1c5p+Ay+yEi4f2ltyinDiLLsM2+0yLAAyDMImOg1qjrTVsY=
+	t=1790792744; cv=none; b=kYx6IKapEqJW/m4YqbpMCctDn9MeUANzE33WqFO1JPFt+fjIdH510mwBgFTtArS8JS06jEFRsktw+IBJRmAnknev6q+YS5vx+jioS5V8h8KI2kt2Q9Ujhd1ivhyZ3LqKaKJJspdniclU0Lxddf92hcTB9NUPTk6FmfRu84Cw7XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792742; c=relaxed/simple;
-	bh=r4nKeukdMq2aismpCwDtuVmmdtGeIMzTwQI8jcinKjo=;
+	s=arc-20240116; t=1790792744; c=relaxed/simple;
+	bh=n6rDUN5i9pXjLPBMXENArj6XM7R9bl0oNTJj3qzO3Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMvuBgoIlrdRMhLk4xk72hNaFyZAEUk04l5cS8MJKqDVrLoP8120qvOJn7xsAu6nvR2EPa7U7mSFx1U+oC+8Bcdt4e2umPn7BhEnvNn3xMYFbYjV+eKwIXk/EIt3fWcGH43xAO50CH+LhSrvqktqB+BAluYhl7rQh2B3GBfw+Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo8x/2N+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=riGzutCGAGvl5yUEf1u0OBhTMAEb2iN5yTBXPaFrrA9m7WsZkhHnDNyQ9iKS59nugn9Q7XFsmiGMNs2Ep4tm9IdvBCKYXGPMlnHIiYXTtw8U/CCWczDbqbW3k1Syf5x2x7VDl1BwkhFbrhHRId9JtYU6MKCgajgkxqdmCIfoc+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0sFrFwm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo8x/2N+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606001F000FF;
-	Wed, 30 Sep 2026 18:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0sFrFwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8D61F000FF;
+	Wed, 30 Sep 2026 18:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792740;
-	bh=KPXYbuY52Jj/QZOOGogfzItIZGVtgEjvy9HW/vvCMdE=;
+	s=korg; t=1790792743;
+	bh=U+2rKLsyOI8LKPArd3Q4tZT+x4Zp3Wivx0L1NDzmUPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bo8x/2N+JAwAB1BHzXLFnwYrcGlmKSWCFuYR9udplYz92oCfhraMh39XlaCSkVK7x
-	 bjnxfzlNYsXrjoQ+PACm4WAOVTN1dNEDZZqjDbASXIREEol++Yb45WnCd+NAwDy0YB
-	 P4LbCLQGh2kgLktmt6DWKrtLYRvNLhuDbThNh6yg=
+	b=X0sFrFwmPg4qQ9LHA+fchJ7Ln9+4a+bCiOpAQMJ0GCAAmf5djRf7B6M1WS5fUp74O
+	 HpohBr4Bw9sDNH4cfwrRBW+FsLIMBWrlkR59OGF0y88VsBbCL7VOCK7vmCcOmIDDjq
+	 o+Hq8zN+CJiqCQlFv5eVvHDJDCE8t0tlZWIA7sDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Hadlaw <tom.hadlaw@isovalent.com>,
-	Yusuke Suzuki <yusuke.suzuki@isovalent.com>,
+	co+adfca3e91be95776@bugs.sh,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 010/395] bpf: Fix bpf_skb_change_tail wrt csum partial skbs
-Date: Wed, 30 Sep 2026 17:24:32 +0200
-Message-ID: <20260930152340.838461169@linuxfoundation.org>
+Subject: [PATCH 6.18 011/395] bpf: Disallow bpf_skb_pull_data() for LWT_SEG6LOCAL
+Date: Wed, 30 Sep 2026 17:24:33 +0200
+Message-ID: <20260930152340.859033899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,67 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 3b55f350c68a0aceff108f47f9d31f47ebffaf7b ]
+[ Upstream commit e4a62833adff6ef0fe7c0b90393204fe3c26b5c5 ]
 
-Cilium generates ICMP "frag needed" replies from BPF when a LB DSR
-packet exceeds the egress MTU. The reply is built by first trimming the
-packet down to target size via bpf_skb_change_tail(), and then pushing
-the ICMP error headers in front of it.
+An LWT_SEG6LOCAL program can invalidate its cached SRH with
+bpf_lwt_seg6_adjust_srh() and then call bpf_skb_pull_data(). The latter
+may reallocate skb->head, leaving the per-CPU SRH pointer dangling.
+Post-program SRH validation then writes through that pointer.
 
-The trim is rejected for skbs which carry a checksum offload, e.g. TCP
-packets aggregated by GRO on ingress where tcp_gro_complete() leaves
-the skb as CHECKSUM_PARTIAL. __bpf_skb_min_len() raises the minimum
-length to the end of the L4 checksum field, so a trim to 42 bytes bails
-out with -EINVAL given a min_len of 52 in this case, and due to that
-the ICMP generator fails. This is not the case if GRO is turned off.
+Disallow bpf_skb_pull_data() for LWT_SEG6LOCAL programs so the verifier
+rejects this unsafe helper combination. Other LWT program types continue
+to expose the helper through lwt_out_func_proto().
 
-Fix this bpf_skb_change_tail() restriction and drop the checksum offload
-when the new length no longer covers the checksum field. The BPF program
-rewrites the skb into an ICMP error and computes the checksum itself
-anyway.
-
-Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
-Reported-by: Tom Hadlaw <tom.hadlaw@isovalent.com>
-Reported-by: Yusuke Suzuki <yusuke.suzuki@isovalent.com>
+Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
+Reported-by: co+adfca3e91be95776@bugs.sh
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260907121025.1923656-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Closes: https://lore.kernel.org/all/GCy0KRM2IcQGoJQTjJEU9D0maBxXzEDHuQpq@bugs.sh/
+Link: https://lore.kernel.org/bpf/DL9COXZQXX4V.1FN45QO2Q77ZH@gmail.com/
+Link: https://lore.kernel.org/bpf/20260909040807.3885815-2-bestswngs@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/core/filter.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 35427793ddb7e..42f5688dc1fab 100644
+index 42f5688dc1fab..0b849567afe9f 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -3825,12 +3825,6 @@ static u32 __bpf_skb_min_len(const struct sk_buff *skb)
- 		if (offset > 0)
- 			min_len = offset;
- 	}
--	if (skb->ip_summed == CHECKSUM_PARTIAL) {
--		offset = skb_checksum_start_offset(skb) +
--			 skb->csum_offset + sizeof(__sum16);
--		if (offset > 0)
--			min_len = offset;
--	}
- 	return min_len;
- }
- 
-@@ -3847,6 +3841,11 @@ static int bpf_skb_grow_rcsum(struct sk_buff *skb, unsigned int new_len)
- 
- static int bpf_skb_trim_rcsum(struct sk_buff *skb, unsigned int new_len)
+@@ -8725,6 +8725,8 @@ static const struct bpf_func_proto *
+ lwt_seg6local_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
  {
-+	if (skb->ip_summed == CHECKSUM_PARTIAL &&
-+	    new_len < skb_checksum_start_offset(skb) + skb->csum_offset +
-+		      sizeof(__sum16))
-+		skb->ip_summed = CHECKSUM_NONE;
-+
- 	return __skb_trim_rcsum(skb, new_len);
- }
- 
+ 	switch (func_id) {
++	case BPF_FUNC_skb_pull_data:
++		return NULL;
+ #if IS_ENABLED(CONFIG_IPV6_SEG6_BPF)
+ 	case BPF_FUNC_lwt_seg6_store_bytes:
+ 		return &bpf_lwt_seg6_store_bytes_proto;
 -- 
 2.53.0
 
