@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C785013A9;
-	Wed, 30 Sep 2026 15:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D324FD293;
+	Wed, 30 Sep 2026 15:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783530; cv=none; b=tYu7hmJFDYNqHqLmMhaFUFRcpWbvj5dTFWMYuf9Un8M6bnMfLg3sD4A52GA2rR02fU2jm16uk+Jlq1l0DNI74qKuHR917X/4IiwXNlddeDVZi1AfIyPyvFrny6mCM95Vhd05Qnder/6FADoA85BNNzgXpmYL7p8UsIFX5fq7/eI=
+	t=1790783533; cv=none; b=twRAlv425OR8So/voVe/yBIa2QuakUk9QEaSz3ax1vjF/pAv6QtHVFkzkuu5+5/gVv4JgMwb6sYBHvFgjkkLYvRjKVgPIiQmVzwJylE1xoUnvz+ST12W4F4WsCHUm9GJdx4sEp/NwEFPiHWhKCMFt6to4KXXkDccvDZIfuT4gKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783530; c=relaxed/simple;
-	bh=odrP/sKX7wvSAf9Zt7Q8UpiRIdgWtFjcs9HrZoYUkPg=;
+	s=arc-20240116; t=1790783533; c=relaxed/simple;
+	bh=A4/8ZQGPmoJIn6kw+8dkvWeACM0D2KJXNZwx5fLo/yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hy9VgkhlYJQrvE2Pa5HJL5KMcp/qtaQzVLW2B6hUGz20VPzo88/vWtSyqPGokgxjkk8FQVQ7JbasswKM4hdXoPrc+ZYyKwhQqmlnqTc7mDy+2xy2deo0280OlHeW4WAhNz6YBwK2IB+1JWGt+8MeVlzaSWha3fa8QAPdWZ//fa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzNnOU8f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fHiVu1vDU7ljYPyTYCW1xhLLeuN1DTbn8OY9g6srsYrmsbSTSQlrmCltq94rGgDCQNHxhcY78X7rKZfQSVKCv+ikZx9hZaqssQdvNOJdQGyzsl7iTI9gNYxnASZHwQ+HH9NIwEkzYDzUPLf2++eVnxnMD77e2WffomG5Pc15N7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEOU4gns; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzNnOU8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79B81F00893;
-	Wed, 30 Sep 2026 15:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEOU4gns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED151F000FF;
+	Wed, 30 Sep 2026 15:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783526;
-	bh=fzn/E1KTS9h0GQq/uKhD2ZbB/lsv5xUPkDX3v0lSbqY=;
+	s=korg; t=1790783529;
+	bh=OyGUC2bcTQiUtqNvd1U4HAUODAcGzS8Qh/hgNL4hFhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BzNnOU8fJXckre3v3//zqSVO6MkC9C/LFJkFR4oK1NKESnKeMy5AUdb3UkP8lp8jN
-	 n38Nn1b3lM4C6RhyONt+fyS808cdCaFRfwLuQ9qAzrGMifIM9YHdiXhvK/VnvNUv0e
-	 lnpfYjeoidq3OA0lRW2shpzWgN5eEahYedNIaYpI=
+	b=EEOU4gnsrndlIjw8yRQXIQoiwjftWAPIb0yiNEwt/wtypLhVMRnmAJFSuyoegANzu
+	 d6gx4uz46LENmvgzn3Wcr/jcypefu/x7KAorLN5tJa2KVu6hikHpKrDOj2HLqJFeK6
+	 21M5PbmWu0rcto7+49jNGrlfLxONNL0268xWrYww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 429/595] dmaengine: sun6i: fix non-atomic read of DMA position registers
-Date: Wed, 30 Sep 2026 17:25:22 +0200
-Message-ID: <20260930152356.908650541@linuxfoundation.org>
+Subject: [PATCH 5.10 430/595] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
+Date: Wed, 30 Sep 2026 17:25:23 +0200
+Message-ID: <20260930152356.929766817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,56 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 
-commit c90b6973daa37f4c283342dff881ae001dea4fe6 upstream.
+commit 9096bdc8d930147f7c39a493a859acbd3a8485d8 upstream.
 
-sun6i_get_chan_size() reads DMA_CHAN_LLI_ADDR and DMA_CHAN_CUR_CNT in two
-separate readl() calls with no synchronisation between them:
+sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
+descriptor for a given cookie, before checking whether the pointer
+vd is NULL:
 
-    pos   = readl(pchan->base + DMA_CHAN_LLI_ADDR);
-    bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
 
-DMA_CHAN_LLI_ADDR holds the physical address of the *next* descriptor the
-engine will load once the current one completes. DMA_CHAN_CUR_CNT holds the
-remaining byte count for the *current* descriptor. If the DMA engine
-advances to the next LLI entry between the two reads, pos becomes stale: it
-still points to what was the next descriptor at the time of the first read,
-but that descriptor is now the current one and CUR_CNT reflects its initial
-(full) byte count. The subsequent virtual-chain walk starts one entry too
-early and accumulates an extra full period's worth of bytes into the
-residue estimate.
+    if (vd) {
+        for (lli = txd->v_lli; ...)
 
-Fix this by re-reading DMA_CHAN_LLI_ADDR after DMA_CHAN_CUR_CNT and
-retrying if the value changed. This double-read pattern guarantees that
-both registers were sampled during the same descriptor interval. The cost
-is at most one extra readl() pair per call in the racy case, which occurs
-only at descriptor boundaries (~every 2 ms) and is negligible.
+vchan_find_desc() returns NULL when the descriptor has already been
+completed or is in-flight on a physical channel and no longer present
+in the virtual channel's descriptor list. When vd is NULL,
+to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
+check, which is undefined behaviour. Move the call inside the if (vd)
+guard to ensure it is only reached with a valid pointer.
 
-Fixes: a90e173f3faf ("dmaengine: sun6i: Add cyclic capability")
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    if (vd) {
+        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+        for (lli = txd->v_lli; ...)
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-sonnet-4-6
 Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260817135723.12807-2-christian.lugnberg@soundtrack.io
+Link: https://patch.msgid.link/20260817135723.12807-3-christian.lugnberg@soundtrack.io
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/sun6i-dma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/sun6i-dma.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/drivers/dma/sun6i-dma.c
 +++ b/drivers/dma/sun6i-dma.c
-@@ -345,8 +345,10 @@ static size_t sun6i_get_chan_size(struct
- 	size_t bytes;
- 	dma_addr_t pos;
+@@ -931,7 +931,6 @@ static enum dma_status sun6i_dma_tx_stat
+ 	struct sun6i_pchan *pchan = vchan->phy;
+ 	struct sun6i_dma_lli *lli;
+ 	struct virt_dma_desc *vd;
+-	struct sun6i_desc *txd;
+ 	enum dma_status ret;
+ 	unsigned long flags;
+ 	size_t bytes = 0;
+@@ -943,9 +942,9 @@ static enum dma_status sun6i_dma_tx_stat
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
  
--	pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
--	bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
-+	do {
-+		pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
-+		bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
-+	} while (pos != readl(pchan->base + DMA_CHAN_LLI_ADDR));
+ 	vd = vchan_find_desc(&vchan->vc, cookie);
+-	txd = to_sun6i_desc(&vd->tx);
  
- 	if (pos == LLI_LAST_ITEM)
- 		return bytes;
+ 	if (vd) {
++		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+ 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
+ 			bytes += lli->len;
+ 	} else if (!pchan || !pchan->desc) {
 
 
