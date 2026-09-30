@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D8E2D594F;
-	Wed, 30 Sep 2026 17:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFEA3264C2;
+	Wed, 30 Sep 2026 17:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789759; cv=none; b=DOe0IT7OOMI1G9xAIpPTNooWznASSUA+/j/Hb6CHOcQfQP0jJvmqHS9o2zgLkTMtonbaa8xw74c6aa528WbcI2QeBv93xeUjYHUVviZziGVPALT4oIVnPzQ6BjFo4QOiTeK5YhoY5xAtfi2cBv2X/PPi5kHkxqrMyhZ56p2xdow=
+	t=1790789761; cv=none; b=QPW5WlCv5uBG/mAIfDekTP0c214y7IJPUXq8fyBdPrFkHRmwB1sKinWLKbjg/99JsSslWvQSlZQIygKhqLGo6fU7g//2o1BthDDzPX/bn7YwbxAcAkI9UHrJZy2dt6UnAx/07uOVQWwJjkCJkOG9EGIDBGyvdnwCpBmmLZXaXkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789759; c=relaxed/simple;
-	bh=GVpZvM2BvZFfjOTN95u8V0Id9LCbcO+9FW5Fv426hKk=;
+	s=arc-20240116; t=1790789761; c=relaxed/simple;
+	bh=SO/7g0/hcVcM2G04aX/rGU8GVTBohak0cOT3WixwPak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i/7auYEw2VvOa55W8iBgFEwGwFvLTVC8zP0VtZcDwYsyj8vyBcy0Tx104mt/CpAN6/Aq1bPFXGtJeab551jRgMIC2C1bPS2yCUhQv+bybylOMONtpx+fbvhhdFGjVNaKCKvkw5s2lftXcTXdfqGTQRZKIviVdP4Un1RLKfuuONE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej2EZiQt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gNaJY/5/fZZgqpL/6fPsBXdRODEQXeV3Yq4AKDmvwZtCiccwxxaC5lq3MmccwEES33l1VRqKh1D3lxvBF8saHYn80jzuAgjL56aZk8g4oZO2LaRms9ZeXUIxMwZLSstIHi8Y82s+YgGKa03lw2yQgDwOE/9QGR4HsxdmkV22hbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4Sys73s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej2EZiQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3784D1F00898;
-	Wed, 30 Sep 2026 17:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4Sys73s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD981F000FF;
+	Wed, 30 Sep 2026 17:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789757;
-	bh=3C5uxnNIL1dKSTbiG6cPN0Atjqf5mnJwdzRJH76Yvtc=;
+	s=korg; t=1790789760;
+	bh=GihbTkRlLR7b3l6E5LVzM5UmUvxcDC8fwE6jMpb//xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ej2EZiQt4fMvExNfqj0cm73gL1DM4+I3MGNUzN7HCUQdHLagXu10Ox82qM0iSW8pw
-	 mjwcP8ZYKJBWZ+n5uwGCig1azPSbSopCFW+yvRU0NuiutFAKTri0VdPs6nNqFEvITG
-	 L/WosWKtn08Ftt9OorvDFf42u9tW15tYof/q4F20=
+	b=j4Sys73s5AgmZyvrBHqQUR50kw/wlMYGLOM+xbCaBvDV6PCDONx7Ncv2ItlTb1ddH
+	 9HXZV10ftfMqrIdrhYlZZtIl1F0PnvHhG9GsBJuUzumY4LJKU1lOwgvYxN6gTu28LL
+	 6/UdRz0PepOYvXQpeZzpPEtjjjGDPLjpMJ+8vFLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sanket Goswami <Sanket.Goswami@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 588/877] platform/x86: int1092: Fix potential memory leak in sar_probe()
-Date: Wed, 30 Sep 2026 17:24:59 +0200
-Message-ID: <20260930152427.338389022@linuxfoundation.org>
+Subject: [PATCH 6.12 589/877] platform/x86/amd/pmc: Move STB block into amd_pmc_s2d_init()
+Date: Wed, 30 Sep 2026 17:25:00 +0200
+Message-ID: <20260930152427.359883896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,106 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-[ Upstream commit 30c906cff490c3601ee9ff110fe8115fabe75fd4 ]
+[ Upstream commit 83ad6974dd3bf34c080b3c08d36d02ebc3bd6da8 ]
 
-The memory allocated for device_mode_info in parse_package() called by
-sar_get_data() is not freed in some of the error paths in sar_probe().
-Fix that by converting to use device managed allocations.
+Transfer the support for STB-related file operations to the
+amd_pmc_s2d_init() function, thereby consolidating the STB and S2D
+(Spill to DRAM) functionality in one location. Also, relocate the
+call to amd_pmc_s2d_init() to occur after the creation of the
+"amd_pmc" debugfs directory. This ensures that the driver's root debugfs
+directory is established beforehand.
 
-Fixes: dcfbd31ef4bc ("platform/x86: BIOS SAR driver for Intel M.2 Modem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260723-platx86-v4-1-93b4a178b595@cse.iitm.ac.in
+For older platforms that supported S2D, exit immediately after creating
+debugfs. These platforms may not support the PMFW messages available on
+newer platforms. This adjustment is necessary due to the relocation of
+debugfs creation into amd_pmc_s2d_init().
+
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20241108070822.3912689-2-Shyam-sundar.S-k@amd.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 9cef693bce96 ("platform/x86/amd/pmc: Restore msg_port on amd_stb_s2d_init() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/int1092/intel_sar.c |   32 +++++++------------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c |   31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---- a/drivers/platform/x86/intel/int1092/intel_sar.c
-+++ b/drivers/platform/x86/intel/int1092/intel_sar.c
-@@ -91,8 +91,10 @@ static acpi_status parse_package(struct
- 	    item->package.count <= data->total_dev_mode)
- 		return AE_ERROR;
- 
--	data->device_mode_info = kmalloc_objs(struct wwan_device_mode_info,
--					      data->total_dev_mode);
-+	data->device_mode_info = devm_kmalloc_array(&context->sar_device->dev,
-+						    data->total_dev_mode,
-+						    sizeof(*data->device_mode_info),
-+						    GFP_KERNEL);
- 	if (!data->device_mode_info)
- 		return AE_ERROR;
- 
-@@ -253,7 +255,7 @@ static int sar_probe(struct platform_dev
- 	if (!handle)
- 		return -ENODEV;
- 
--	context = kzalloc_obj(*context);
-+	context = devm_kzalloc(&device->dev, sizeof(*context), GFP_KERNEL);
- 	if (!context)
- 		return -ENOMEM;
- 
-@@ -264,7 +266,7 @@ static int sar_probe(struct platform_dev
- 	result = guid_parse(SAR_DSM_UUID, &context->guid);
- 	if (result) {
- 		dev_err(&device->dev, "SAR UUID parse error: %d\n", result);
--		goto r_free;
-+		return result;
- 	}
- 
- 	for (reg = 0; reg < MAX_REGULATORY; reg++)
-@@ -272,43 +274,29 @@ static int sar_probe(struct platform_dev
- 
- 	if (sar_get_device_mode(device) != AE_OK) {
- 		dev_err(&device->dev, "Failed to get device mode\n");
--		result = -EIO;
--		goto r_free;
-+		return -EIO;
- 	}
- 
- 	result = sysfs_create_group(&device->dev.kobj, &intcsar_group);
- 	if (result) {
- 		dev_err(&device->dev, "sysfs creation failed\n");
--		goto r_free;
-+		return result;
- 	}
- 
- 	if (acpi_install_notify_handler(ACPI_HANDLE(&device->dev), ACPI_DEVICE_NOTIFY,
- 					sar_notify, (void *)device) != AE_OK) {
- 		dev_err(&device->dev, "Failed acpi_install_notify_handler\n");
--		result = -EIO;
--		goto r_sys;
-+		sysfs_remove_group(&device->dev.kobj, &intcsar_group);
-+		return -EIO;
- 	}
- 	return 0;
--
--r_sys:
--	sysfs_remove_group(&device->dev.kobj, &intcsar_group);
--r_free:
--	kfree(context);
--	return result;
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -657,15 +657,6 @@ static void amd_pmc_dbgfs_register(struc
+ 			    &s0ix_stats_fops);
+ 	debugfs_create_file("amd_pmc_idlemask", 0644, dev->dbgfs_dir, dev,
+ 			    &amd_pmc_idlemask_fops);
+-	/* Enable STB only when the module_param is set */
+-	if (enable_stb) {
+-		if (amd_pmc_is_stb_supported(dev))
+-			debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
+-					    &amd_pmc_stb_debugfs_fops_v2);
+-		else
+-			debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
+-					    &amd_pmc_stb_debugfs_fops);
+-	}
  }
  
- static void sar_remove(struct platform_device *device)
- {
--	struct wwan_sar_context *context = dev_get_drvdata(&device->dev);
--	int reg;
--
- 	acpi_remove_notify_handler(ACPI_HANDLE(&device->dev),
- 				   ACPI_DEVICE_NOTIFY, sar_notify);
- 	sysfs_remove_group(&device->dev.kobj, &intcsar_group);
--	for (reg = 0; reg < MAX_REGULATORY; reg++)
--		kfree(context->config_data[reg].device_mode_info);
--
--	kfree(context);
- }
+ static void amd_pmc_dump_registers(struct amd_pmc_dev *dev)
+@@ -1069,6 +1060,18 @@ static int amd_pmc_s2d_init(struct amd_p
+ 	u32 size = 0;
+ 	int ret;
  
- static struct platform_driver sar_driver = {
++	if (!enable_stb)
++		return 0;
++
++	if (amd_pmc_is_stb_supported(dev)) {
++		debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
++				    &amd_pmc_stb_debugfs_fops_v2);
++	} else {
++		debugfs_create_file("stb_read", 0644, dev->dbgfs_dir, dev,
++				    &amd_pmc_stb_debugfs_fops);
++		return 0;
++	}
++
+ 	/* Spill to DRAM feature uses separate SMU message port */
+ 	dev->msg_port = 1;
+ 
+@@ -1187,12 +1190,6 @@ static int amd_pmc_probe(struct platform
+ 	/* Get num of IP blocks within the SoC */
+ 	amd_pmc_get_ip_info(dev);
+ 
+-	if (enable_stb && amd_pmc_is_stb_supported(dev)) {
+-		err = amd_pmc_s2d_init(dev);
+-		if (err)
+-			goto err_pci_dev_put;
+-	}
+-
+ 	platform_set_drvdata(pdev, dev);
+ 	if (IS_ENABLED(CONFIG_SUSPEND)) {
+ 		err = acpi_register_lps0_dev(&amd_pmc_s2idle_dev_ops);
+@@ -1203,6 +1200,10 @@ static int amd_pmc_probe(struct platform
+ 	}
+ 
+ 	amd_pmc_dbgfs_register(dev);
++	err = amd_pmc_s2d_init(dev);
++	if (err)
++		goto err_pci_dev_put;
++
+ 	if (IS_ENABLED(CONFIG_AMD_MP2_STB))
+ 		amd_mp2_stb_init(dev);
+ 	pm_report_max_hw_sleep(U64_MAX);
 
 
