@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB714B95CC;
-	Wed, 30 Sep 2026 15:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939974BA1E9;
+	Wed, 30 Sep 2026 15:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783726; cv=none; b=t/epZwRy0vIOF6xG/9WJ0blGRulNfeHP93cKUz7G3AFUHcWh2XGTCqjR340bjObDt91MrJ1jtnsJZQfOTYLZeyLCW9V6T8jELCnGYFASlpGrGnh2Cvch8Abb1mHJgIqamW8g6Wj0u+eKbgiaa1cyaZP0+4zDcMNp53fZQYqAotM=
+	t=1790783730; cv=none; b=Ann3BOrCZrolwMtoKBldGokytuFmF2prS4tMKQneqMvhFFp1rmN6z2RmikD8m9ah2qVBRSh5EzXJO3uKDRn93rxq9c9EI6faa8CxTP269Q9Lhbo0r5tX+lMEVQtmGYQc1uGf4pm8OKLyrvtkVZCxnPvelxI7PKmcCnJrERapQOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783726; c=relaxed/simple;
-	bh=TtSsXHHID/MXYSvQecd4zlztJEDGlWwjCE4fukDaSYo=;
+	s=arc-20240116; t=1790783730; c=relaxed/simple;
+	bh=/f1e7wPHBBE0eT/34i5pkQJx1BetKBi9gqcl0G/ZWx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YPcXg/pfMprmKMLELy7VKcfpHdFLgExMqazDKY2UiwVpMheDPaa+yBIUsvYBxNboHwDrs8yF1YBKRay6R4m0xBHdYsDVHn51kkx36Jdq+ekOJryu2mNAMYg7qxN6kkhSdyx2655NkhhAG4OFlEVBw26zRBpNNex55zvbN6KakD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEZVt7gk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oqjZJVrf5bittthYMkR9JgBUeeI/S7VFDS1MKN37YnMcUWlNrcgGjlLKitMlXiC/fh0l3sxJ4KS+IndtD9RTZmF+RTArEiQ6lEPjaUWTPR5S0YL4G6uhp1qWK/aNwOz526uOa34ZdMdiTvXnQs82/OLpiFvUhy+Y/+fWw5K08oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DobLjXq5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEZVt7gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462CB1F00898;
-	Wed, 30 Sep 2026 15:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DobLjXq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE081F00893;
+	Wed, 30 Sep 2026 15:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783721;
-	bh=ftid8vYA+uvU6qeZFKGiNQ1ztWLMHmnSbRBn1hMqEK0=;
+	s=korg; t=1790783724;
+	bh=qARH8NZIqQgXxC3hub4zVEztc2bKyRWpIBVKo6CBdbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GEZVt7gk0OTdteeIMYWGRYwQe9/ieSvJbeMTO1agx3bUtoyvcS5J8vIcG1g9Xo41l
-	 SOxjW9ozJVGR9N4YgT4tijW/S6RHQ6/mjT3dIMRnALbPcGOMGqOZiNuKx+k3A9eBbJ
-	 Bs079XBOB1vFihiqoWEtnl8KYYcmeMgZqSqz5ZdE=
+	b=DobLjXq5lACTi0sDr/7m7lUHcLAf/Dw4BMmZNNolNVqq/vC30GhstCpzFp5k1+Jsp
+	 Alp1Bhfcv4ubHobJFvIEmQ+UCL6NSeJqjwo3q0CH4LAVUMTmEMTJ442HB4hSSag1DX
+	 FcGY8P0tkRNrb/jSBXeX0ftA4ZJ7f22NWjSdi/As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rapha=C3=ABl=20Larocque?= <rlarocque@disroot.org>,
+	syzbot+09103639e39c989e3ed3@syzkaller.appspotmail.com,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 454/595] Input: synaptics - disable InterTouch on ThinkPad T440p (board id 2722)
-Date: Wed, 30 Sep 2026 17:25:47 +0200
-Message-ID: <20260930152357.447896063@linuxfoundation.org>
+Subject: [PATCH 5.10 455/595] Input: synaptics-rmi4 - fix GPF in suspend and resume when unbound
+Date: Wed, 30 Sep 2026 17:25:48 +0200
+Message-ID: <20260930152357.468183355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -44,60 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphaël Larocque <rlarocque@disroot.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 26eb3d92c7a4d7adb1ae1740ca6e8e100b11d1ec upstream.
+commit fe10579b6dc3f0dac61e51e1797cacbba5039ac2 upstream.
 
-The Lenovo ThinkPad T440p (PNP ID LEN0036, board id 2722) has a
-Synaptics touchpad whose SMBus companion is not ready at boot and
-takes roughly 200 seconds to appear. During this window the touchpad
-and TrackPoint are completely unresponsive on approximately 50% of
-boots, making the machine unusable until the companion finally
-registers.
+Transport drivers (such as rmi_i2c and rmi_spi) invoke
+rmi_driver_suspend() and rmi_driver_resume() on their child rmi_dev
+device during system power management events. However, transport drivers
+are fully registered and operational even if the physical RMI driver
+failed to bind or probe the rmi_dev device.
 
-The device is in the topbuttonpad_pnp_ids[] SMBus allowlist, so the
-kernel attempts to use SMBus/RMI4 mode by default. When the companion
-is not ready, psmouse_smbus_init() leaves breadcrumbs and returns
--EAGAIN, the PS/2 fallback path is taken, but the device does not
-function properly until the companion appears and RMI4 takes over.
+When rmi_driver_suspend() or rmi_driver_resume() is called on an unbound
+rmi_dev, dev_get_drvdata() returns NULL. Calling rmi_disable_irq() or
+rmi_enable_irq() without driver data attached causes a NULL pointer
+dereference and General Protection Fault when attempting to lock
+data->enabled_mutex.
 
-Disable SMBus InterTouch for board id 2722 so the touchpad and
-TrackPoint work immediately via PS/2 from boot. Users can still force
-SMBus with psmouse.synaptics_intertouch=1 if needed.
+Fix this by checking if driver data is attached to rmi_dev in
+rmi_driver_suspend() and rmi_driver_resume(), exiting early if
+no driver data is present.
 
-Tested-by: Raphaël Larocque <rlarocque@disroot.org>
-Signed-off-by: Raphaël Larocque <rlarocque@disroot.org>
-Link: https://patch.msgid.link/20260910164425.12832-1-rlarocque@disroot.org
+Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
+Reported-by: syzbot+09103639e39c989e3ed3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=09103639e39c989e3ed3
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Link: https://patch.msgid.link/anQe8UiyUR4x0flD@google.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/rmi4/rmi_driver.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -1804,6 +1804,14 @@ static int synaptics_setup_intertouch(st
+--- a/drivers/input/rmi4/rmi_driver.c
++++ b/drivers/input/rmi4/rmi_driver.c
+@@ -946,6 +946,15 @@ int rmi_driver_suspend(struct rmi_device
+ {
+ 	int retval;
  
- 			return -ENXIO;
- 		}
++	/*
++	 * Transport driver will try to suspend RMI device even if physical
++	 * driver did not bind to the RMI device, because transport device
++	 * (I2C, SPI) is fully registered and operational. Exit early if
++	 * there is no driver data attached to the RMI device.
++	 */
++	if (!dev_get_drvdata(&rmi_dev->dev))
++		return 0;
 +
-+		/* Disable intertouch on known-broken board revisions */
-+		if (info->board_id == 2722) {
-+			psmouse_info(psmouse,
-+				     "Disabling intertouch for board id %u\n",
-+				     info->board_id);
-+			return -ENXIO;
-+		}
- 	}
+ 	retval = rmi_suspend_functions(rmi_dev);
+ 	if (retval)
+ 		dev_warn(&rmi_dev->dev, "Failed to suspend functions: %d\n",
+@@ -960,6 +969,10 @@ int rmi_driver_resume(struct rmi_device
+ {
+ 	int retval;
  
- 	psmouse_info(psmouse, "Trying to set up SMBus access\n");
++	/* Skip if not fully bound to RMI driver */
++	if (!dev_get_drvdata(&rmi_dev->dev))
++		return 0;
++
+ 	rmi_enable_irq(rmi_dev, clear_wake);
+ 
+ 	retval = rmi_resume_functions(rmi_dev);
 
 
