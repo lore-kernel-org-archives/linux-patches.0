@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA29383C86;
-	Wed, 30 Sep 2026 16:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4B8383C86;
+	Wed, 30 Sep 2026 16:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785917; cv=none; b=M4vE/xD1LvZmSlmX8nmlxXxw4oqkuz01xVqNiZDKUldR9z+x15hHwX47TaJKs4sMCbtYiobwUe+3XeCebEaldv5NotT97azK7vufE2ahdw0R1yt96MDHk+r6eq1U6iQBbGAuh+MsBtvwZ/4sBbxLNFrDeMEBB5vlAV5SjQ4e6U8=
+	t=1790785920; cv=none; b=Ls2SwGmImTSwQi4K+5/XVMd/H/n5oq6Yw3NXAGvLid2hT8nHRV0uQofLNBc2rBPKTHR2JEpdve8OXQUQnnHVecAFxsD3j3oIGSa0yZTa0jZ8b3QFiRlZJq6zguZg5sQM3r7+BdCsVCgvR1POUy2MG33DLVYicBXzkXPGxt1dPK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785917; c=relaxed/simple;
-	bh=0vKsrLJR1+X9RunmFMiIjPfoe7xCwHgL03c6bobcHLg=;
+	s=arc-20240116; t=1790785920; c=relaxed/simple;
+	bh=c2MOvdzkCz6EdRrhDIWtoHxk1SFL3lSfvwp36JpCDhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrUgsG8mU0zcK1Zgqpgqs/zJWIlvWsettliIlWq++9JvU/v+NhmaloDHeUrhIaMkyVdzJK9GMcGL44Q9sXcvGSa8+H+VVCTTrBB/H2Ep4/Z98GEyMGS6uIKrmx3Ygla55Fe7AbJPNAek+Zks3fBUyhDtdQ3eGprQC/3QaL1Yb44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCCv6PVF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ixaQOuJcBPeijfhK0lOPZ1ePc627E4iLaoXVk1mGr80AHCxAhJ9DOnhQPUyUxGyAlHgEnZ5qVp7hR4OynGU6aqqPQMICt61H+bV9+MC7Y/gpuqWfsnJgSUHsflPbi2jep6uQ6xSE7hIItJWKx2RgxSUrJ00P8Ljc06KC1UcnXUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osnFH7Tu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCCv6PVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE5B1F000FF;
-	Wed, 30 Sep 2026 16:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osnFH7Tu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06231F00893;
+	Wed, 30 Sep 2026 16:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785915;
-	bh=XQ2vclDDjIkArwLvJZLMFMQ+xDxKVvnI40dnicDjvxY=;
+	s=korg; t=1790785918;
+	bh=yu0Z9h6nr/7P0AZIui3ZGBjzIGqLrcNbPtaIBmdXRXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iCCv6PVFLd68MKWBzValmYMKWjdBK1FV+Pd/Xccwp4ydG4nFwr+xDUqEKf/h57OTJ
-	 D2IPYCPQVwQBE5A+vh0LSAsCVPBVXABqBlJUkxd+t+jF3cNunMXoEFbHWBSMB9Qht6
-	 4IRSCi36scBYnCmFFuu5QAP/JwI12IjDeIogcHAE=
+	b=osnFH7TuxkHiRrTxYsDNurvqgEGZ4pCVz36J2PwCfUgke40eeGDeGJtUb9cXB58EV
+	 4Fy5JNPLHoT0FFtfHi48YuwOoLZOzI57m2IeGRGf4FnmtG27PJZDdRCTLvHswI6+GJ
+	 xd5KjCgc+evH6aRt1AbbEZPQMCxHIsXxAzobpssg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com,
-	Juan Perdomo <jcperdomo100@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 676/982] Bluetooth: RFCOMM: avoid socket lock inversion in listener cleanup
-Date: Wed, 30 Sep 2026 17:23:32 +0200
-Message-ID: <20260930152431.281052856@linuxfoundation.org>
+Subject: [PATCH 6.1 641/982] wifi: mac80211: set up the TX info early to fix failure paths
+Date: Wed, 30 Sep 2026 17:22:57 +0200
+Message-ID: <20260930152430.535551728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,77 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juan Perdomo <jcperdomo100@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 801fb950cae7048eb7d83b18857d1ca37b8cd5a4 ]
+[ Upstream commit 50d3d79dc0743b616afb00d01a626c76758721f7 ]
 
-rfcomm_sock_cleanup_listen() closes unaccepted child sockets through
-rfcomm_sock_close(), which takes the child socket lock before
-rfcomm_dlc_close() acquires rfcomm_mutex. The RFCOMM worker takes these
-locks in reverse order while handling connections and DLC state changes,
-so lockdep reports a possible deadlock.
+The previous commit 2c51457d930f ("wifi: mac80211: free ack status
+frame on TX header build failure") cleaned up the leak, but still
+left the code a bit messy and the failed SKB didn't get reported
+to userspace.
 
-Close dequeued children without taking their socket lock. The accept queue
-owns a reference to each child, and bt_accept_dequeue() locks the child
-while unlinking it and clearing its parent pointer.
+Fix this up by initialising skb->cb[] earlier, which allows using
+ieee80211_free_txskb() and therefore reports it for the failure
+in ieee80211_build_hdr(), and unifies the ieee80211_skb_resize()
+failure path with it.
 
-Dropping the child lock makes it important to prevent a concurrent
-rfcomm_connect_ind() from enqueueing a new child after cleanup observes an
-empty queue. Set a listening socket to BT_CLOSED while its lock is still
-held, before dropping the lock and draining the queue. The state check in
-rfcomm_connect_ind() then rejects new children once cleanup starts.
-
-Reported-by: syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0cece8fa7d83523f47a3
-Fixes: b7ce436a5d79 ("Bluetooth: switch to lock_sock in RFCOMM")
-Signed-off-by: Juan Perdomo <jcperdomo100@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: LLM
+Fixes: c3e7724b6bc2 ("mac80211: use ieee80211_free_txskb to fix possible skb leaks")
+Link: https://patch.msgid.link/20260908122838.201719-22-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/mac80211/tx.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index d72cdcd2e2bb1..729c70c992cfa 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -243,9 +243,7 @@ static void __rfcomm_sock_close(struct sock *sk)
-  */
- static void rfcomm_sock_close(struct sock *sk)
- {
--	lock_sock(sk);
- 	__rfcomm_sock_close(sk);
--	release_sock(sk);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index d1e0510d1086f..00e8eda67f130 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2906,10 +2906,23 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 	 */
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	if (unlikely(!skb)) {
+-		ret = -ENOMEM;
+-		goto free;
++		/* skb_share_check() already freed the skb */
++		if (info_id)
++			ieee80211_remove_ack_skb(local, info_id);
++		return ERR_PTR(-ENOMEM);
+ 	}
+ 
++	/* set this up so failure paths can clean up ack skb */
++	info = IEEE80211_SKB_CB(skb);
++	memset(info, 0, sizeof(*info));
++
++	info->flags = info_flags;
++	if (info_id) {
++		info->status_data = info_id;
++		info->status_data_idr = 1;
++	}
++	info->band = band;
++
+ 	hdr.frame_control = fc;
+ 	hdr.duration_id = 0;
+ 	hdr.seq_ctrl = 0;
+@@ -2948,10 +2961,8 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 		head_need += local->tx_headroom;
+ 		head_need = max_t(int, 0, head_need);
+ 		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
+-			ieee80211_free_txskb(&local->hw, skb);
+-			skb = NULL;
+ 			ret = -ENOMEM;
+-			goto free;
++			goto free_txskb;
+ 		}
+ 	}
+ 
+@@ -2978,16 +2989,6 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 
+ 	skb_reset_mac_header(skb);
+ 
+-	info = IEEE80211_SKB_CB(skb);
+-	memset(info, 0, sizeof(*info));
+-
+-	info->flags = info_flags;
+-	if (info_id) {
+-		info->status_data = info_id;
+-		info->status_data_idr = 1;
+-	}
+-	info->band = band;
+-
+ 	if (likely(!cookie)) {
+ 		ctrl_flags |= u32_encode_bits(link_id,
+ 					      IEEE80211_TX_CTRL_MLO_LINK);
+@@ -3011,16 +3012,17 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 					     pre_conf_link_id, link_id);
+ #endif
+ 			ret = -EINVAL;
+-			goto free;
++			goto free_txskb;
+ 		}
+ 	}
+ 
+ 	info->control.flags = ctrl_flags;
+ 
+ 	return skb;
++ free_txskb:
++	ieee80211_free_txskb(&local->hw, skb);
++	return ERR_PTR(ret);
+  free:
+-	if (info_id)
+-		ieee80211_remove_ack_skb(local, info_id);
+ 	kfree_skb(skb);
+ 	return ERR_PTR(ret);
  }
- 
- static void rfcomm_sock_init(struct sock *sk, struct sock *parent)
-@@ -903,6 +901,7 @@ static int rfcomm_sock_compat_ioctl(struct socket *sock, unsigned int cmd, unsig
- static int rfcomm_sock_shutdown(struct socket *sock, int how)
- {
- 	struct sock *sk = sock->sk;
-+	bool cleanup_listen = false;
- 	int err = 0;
- 
- 	BT_DBG("sock %p, sk %p", sock, sk);
-@@ -913,9 +912,17 @@ static int rfcomm_sock_shutdown(struct socket *sock, int how)
- 	lock_sock(sk);
- 	if (!sk->sk_shutdown) {
- 		sk->sk_shutdown = SHUTDOWN_MASK;
-+		if (sk->sk_state == BT_LISTEN) {
-+			/* Block new children before cleaning up without sk lock. */
-+			sk->sk_state = BT_CLOSED;
-+			cleanup_listen = true;
-+		}
- 
- 		release_sock(sk);
--		__rfcomm_sock_close(sk);
-+		if (cleanup_listen)
-+			rfcomm_sock_cleanup_listen(sk);
-+		else
-+			__rfcomm_sock_close(sk);
- 		lock_sock(sk);
- 
- 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
 -- 
 2.53.0
 
