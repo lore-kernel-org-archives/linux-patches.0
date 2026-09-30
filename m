@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E0737E5DB;
-	Wed, 30 Sep 2026 15:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F4A4F55DB;
+	Wed, 30 Sep 2026 15:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782901; cv=none; b=Id3iNeMT+E0oTI9aNryDxXgKce7zuvrQLyDKb5Ie3pb6eTs0cnI21k+aykLbKfFv3F40NR40alZdr2c/W2t4oV0x8MhZlY7P8dpk32Z3KIow0YQ3XfqSIpAEm+b47u6VQilss7XLrq15OTQMqwnqH0mKUSwJ9ZEKExTXR91+KJQ=
+	t=1790782905; cv=none; b=HOBWG8Z4ScL401C5yzhjVERTsudAvb9/oa+vtOGj7lUxSjrftmzkBI1kd/1+BiPBs/9Ov5t3GhmYfhAgMZkbspbSxLV/6knLrw+k81oV22Impoig3G/mgagkjEYBWrRDClTdGdXlz+SFjrZ9KOq5tjPjBZZJOsCQRGvlAdGNhbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782901; c=relaxed/simple;
-	bh=xAAgukUsHcSEtrnJF2NcEVGTS9HqbJVI2sUG4dFSapk=;
+	s=arc-20240116; t=1790782905; c=relaxed/simple;
+	bh=IXwshge6qLATqAVdjt7rjiYLvCdeFWiS9vj+RsZRD0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuUgv80RKuzYaIHPYVOZcxQZOGmEwXql3dUot9mfaVgB4G85rxp3ypKAzDh4k94nyphqDgltQkJhsg+NkCKNsKYlgBlRLlV+tVFh5thHo8OUU+JhtE+HGD5scLef3/18wqoocUb2TV05E/3Pmb+zeTTq4o1zevMWcDc5kYDorrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwBizAjc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dNEkkhC0Ygn0giVvYYlC1O8oypJjp+PRu1fcJZ3IhpfZse1f3MFMWF+NdBICC0CwfQX52ar3wvRv0OB1RD3upDGu1qblLXavm332CW9huD+OUBvsIkFhCYma7Dpe/XUxrI1upyNCx7G+QzhhJR6urEJNiFZoZSAXfi2sNc28WVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLJIGNB1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwBizAjc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273AB1F00893;
-	Wed, 30 Sep 2026 15:41:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLJIGNB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089C11F000FF;
+	Wed, 30 Sep 2026 15:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782896;
-	bh=IG8IopCkEnqd83zW/gQQKaFGM17xWJOX/bESht3uHWk=;
+	s=korg; t=1790782899;
+	bh=2otzwxi7vU2djeOq1vPDZXcY+GMR1oSIr1uaPlg77Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xwBizAjcyST8XWp2tZgOpurW6yeP9crlCpAWnNtwU+5mQ/u5k9pvXF74/OkpA2fVM
-	 2zIh4/hg6UbJsnVNFTWHT/ig+BZSUT74AFRP6FoHKrzI5qsCLsGpq7Eh1Js2q+Jjz1
-	 m1gQf/AVQtoZJBN83oDd3udlJ2EImX8wKmNaPjK8=
+	b=lLJIGNB14vbm2IRNRifZxay9tr+1NmhnSRRDOAUkXyb11GVgQaR87yWODkXXWQb65
+	 qoTVj1WPuhJFgTzyOh6CTTdbSzbIGa87sJUX/GEvYBjb97UvM3LEG3gmlbSBXYbhab
+	 7w3ZMaZZL8YmYrsUfgtikoLkz5tS7H4/EvQNmj2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 206/595] ASoC: ab8500: Validate and program TDM slots correctly
-Date: Wed, 30 Sep 2026 17:21:39 +0200
-Message-ID: <20260930152352.164806049@linuxfoundation.org>
+Subject: [PATCH 5.10 164/595] btrfs: fix reloc root cleanup in merge_reloc_roots()
+Date: Wed, 30 Sep 2026 17:20:57 +0200
+Message-ID: <20260930152351.265205618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,301 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 85cef7e2004ef5c1a715feaddb55d3f3d27bac0a ]
+[ Upstream commit b78fe9563e2d5ae47805f1e5dc722c91fd30e1f8 ]
 
-The interface clock ratio is selected from the slot count alone, ffs()
-and fls() produce one-based hardware slot numbers, eight-channel mode
-does not program any mappings, and all register errors are ignored.
-Invalid masks can also leave a partially programmed interface.
+If the root we got has zero root refs in its root item, we are resetting
+the root's ->reloc_root without using barriers like we do everywhere else.
+Sashiko complained about this while reviewing another patch, and it's
+correct (see the Link tag below).
 
-Validate the complete configuration first, derive the supported BCLK
-ratio from slots times slot width, use zero-based slot indices, program
-deterministic eight-channel maps, and propagate register failures.
+Also, we should not clear BTRFS_ROOT_DEAD_RELOC_TREE from the root unless
+the root points to the reloc root we have.
 
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-4-f85024e717e3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by using clear_reloc_root(), which issues the memory barrier
+after setting the root's ->reloc_root to NULL and before clearing the bit
+BTRFS_ROOT_DEAD_RELOC_TREE from the root.
+
+Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 216 ++++++++++++++++++--------------
- 1 file changed, 123 insertions(+), 93 deletions(-)
+ fs/btrfs/relocation.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 40a1010875c19..ac7a2e3607152 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -2168,23 +2168,27 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 		int slots, int slot_width)
- {
- 	struct snd_soc_component *component = dai->component;
--	unsigned int val, mask, slot, slots_active;
-+	unsigned int active_mask, clock_ratio, slot, value, ad_out, reg;
-+	unsigned int tx_active, rx_active;
-+	unsigned int conf1_val, conf2_val;
-+	unsigned int mask;
-+	int channel, ret;
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index db8a2a3e99f2d..34be7160cc9ce 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -1974,11 +1974,10 @@ void merge_reloc_roots(struct reloc_control *rc)
+ 		} else {
+ 			if (!IS_ERR(root)) {
+ 				if (root->reloc_root == reloc_root) {
+-					root->reloc_root = NULL;
++					clear_reloc_root(root);
++					/* Drop the ref for root->reloc_root. */
+ 					btrfs_put_root(reloc_root);
+ 				}
+-				clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE,
+-					  &root->state);
+ 				btrfs_put_root(root);
+ 			}
  
- 	mask = BIT(AB8500_DIGIFCONF2_IF0WL0) |
- 		BIT(AB8500_DIGIFCONF2_IF0WL1);
--	val = 0;
-+	conf2_val = 0;
- 
- 	switch (slot_width) {
- 	case 16:
- 		break;
- 	case 20:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
- 		break;
- 	case 24:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
- 		break;
- 	case 32:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
- 			BIT(AB8500_DIGIFCONF2_IF0WL0);
- 		break;
- 	default:
-@@ -2193,27 +2197,11 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 		return -EINVAL;
- 	}
- 
--	dev_dbg(dai->component->dev, "%s: IF0 slot-width: %d bits.\n",
--		__func__, slot_width);
--	snd_soc_component_update_bits(component, AB8500_DIGIFCONF2, mask, val);
--
--	/* Setup TDM clocking according to slot count */
--	dev_dbg(dai->component->dev, "%s: Slots, total: %d\n", __func__, slots);
--	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
--			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 	switch (slots) {
- 	case 2:
--		val = AB8500_MASK_NONE;
--		break;
- 	case 4:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
--		break;
- 	case 8:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
--		break;
- 	case 16:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
--			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
- 	default:
- 		dev_err(dai->component->dev,
-@@ -2221,92 +2209,134 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 			__func__, slots);
- 		return -EINVAL;
- 	}
--	snd_soc_component_update_bits(component, AB8500_DIGIFCONF1, mask, val);
--
--	/* Setup TDM DA according to active tx slots */
- 
--	if (tx_mask & ~0xff)
--		return -EINVAL;
--
--	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
--	tx_mask = tx_mask << AB8500_DA_DATA0_OFFSET;
--	slots_active = hweight32(tx_mask);
--
--	dev_dbg(dai->component->dev, "%s: Slots, active, TX: %d\n", __func__,
--		slots_active);
--
--	switch (slots_active) {
--	case 0:
-+	clock_ratio = slots * slot_width;
-+	switch (clock_ratio) {
-+	case 32:
-+		conf1_val = 0;
- 		break;
--	case 1:
--		slot = ffs(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
-+	case 64:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
- 		break;
--	case 2:
--		slot = ffs(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
--		slot = fls(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
-+	case 128:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
--	case 8:
--		dev_dbg(dai->component->dev,
--			"%s: In 8-channel mode DA-from-slot mapping is set manually.",
--			__func__);
-+	case 256:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
-+			    BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
- 	default:
--		dev_err(dai->component->dev,
--			"%s: Unsupported number of active TX-slots (%d)!\n",
--			__func__, slots_active);
-+		dev_err(component->dev, "%s: Unsupported BCLK ratio (%u)!\n",
-+			__func__, clock_ratio);
- 		return -EINVAL;
- 	}
- 
--	/* Setup TDM AD according to active RX-slots */
-+	active_mask = GENMASK(min(slots, 8) - 1, 0);
-+	if ((tx_mask | rx_mask) & ~active_mask) {
-+		dev_err(component->dev, "%s: Slot mask exceeds slot count\n",
-+			__func__);
-+		return -EINVAL;
-+	}
- 
--	if (rx_mask & ~0xff)
-+	tx_active = hweight32(tx_mask);
-+	rx_active = hweight32(rx_mask);
-+	if (tx_active != 0 && tx_active != 1 && tx_active != 2 &&
-+	    tx_active != 8) {
-+		dev_err(component->dev, "%s: Unsupported active TX slots (%u)!\n",
-+			__func__, tx_active);
-+		return -EINVAL;
-+	}
-+	if (rx_active != 0 && rx_active != 1 && rx_active != 2 &&
-+	    rx_active != 8) {
-+		dev_err(component->dev, "%s: Unsupported active RX slots (%u)!\n",
-+			__func__, rx_active);
- 		return -EINVAL;
-+	}
-+
-+	dev_dbg(component->dev,
-+		"%s: %d slots of %d bits, TX active: %u, RX active: %u\n",
-+		__func__, slots, slot_width, tx_active, rx_active);
- 
--	rx_mask = rx_mask << AB8500_AD_DATA0_OFFSET;
--	slots_active = hweight32(rx_mask);
-+	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF2,
-+					    mask, conf2_val);
-+	if (ret < 0)
-+		return ret;
- 
--	dev_dbg(dai->component->dev, "%s: Slots, active, RX: %d\n", __func__,
--		slots_active);
-+	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
-+	       BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
-+	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF1,
-+					    mask, conf1_val);
-+	if (ret < 0)
-+		return ret;
- 
--	switch (slots_active) {
--	case 0:
--		break;
--	case 1:
--		slot = ffs(rx_mask);
--		snd_soc_component_update_bits(component, AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
--		break;
--	case 2:
--		slot = ffs(rx_mask);
--		snd_soc_component_update_bits(component,
--				AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
--		slot = fls(rx_mask);
--		snd_soc_component_update_bits(component,
--				AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2, slot));
--		break;
--	case 8:
--		dev_dbg(dai->component->dev,
--			"%s: In 8-channel mode AD-to-slot mapping is set manually.",
--			__func__);
--		break;
--	default:
--		dev_err(dai->component->dev,
--			"%s: Unsupported number of active RX-slots (%d)!\n",
--			__func__, slots_active);
--		return -EINVAL;
-+	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
-+	if (tx_active == 1 || tx_active == 2) {
-+		slot = __ffs(tx_mask) + AB8500_DA_DATA0_OFFSET;
-+		reg = AB8500_DASLOTCONF1;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+		reg = AB8500_DASLOTCONF3;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (tx_active == 2)
-+			slot = __fls(tx_mask) + AB8500_DA_DATA0_OFFSET;
-+		reg = AB8500_DASLOTCONF2;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+		reg = AB8500_DASLOTCONF4;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+	} else if (tx_active == 8) {
-+		channel = 0;
-+		for (slot = 0; slot < 8; slot++) {
-+			if (!(tx_mask & BIT(slot)))
-+				continue;
-+			reg = AB8500_DASLOTCONF1 + channel++;
-+			value = slot + AB8500_DA_DATA0_OFFSET;
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
-+	}
-+
-+	if (rx_active == 1 || rx_active == 2) {
-+		slot = __ffs(rx_mask) + AB8500_AD_DATA0_OFFSET;
-+		value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3,
-+							 slot);
-+		reg = AB8500_ADSLOTSEL(slot);
-+		mask = AB8500_MASK_SLOT(slot);
-+		ret = snd_soc_component_update_bits(component, reg, mask, value);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (rx_active == 2) {
-+			slot = __fls(rx_mask) + AB8500_AD_DATA0_OFFSET;
-+			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2,
-+								 slot);
-+			reg = AB8500_ADSLOTSEL(slot);
-+			mask = AB8500_MASK_SLOT(slot);
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
-+	} else if (rx_active == 8) {
-+		channel = 0;
-+		for (slot = 0; slot < 8; slot++) {
-+			if (!(rx_mask & BIT(slot)))
-+				continue;
-+			ad_out = AB8500_AD_OUT1 + channel++;
-+			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(ad_out, slot);
-+			reg = AB8500_ADSLOTSEL(slot);
-+			mask = AB8500_MASK_SLOT(slot);
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
- 
- 	return 0;
 -- 
 2.53.0
 
