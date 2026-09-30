@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5392502568;
-	Wed, 30 Sep 2026 15:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAB350B42C;
+	Wed, 30 Sep 2026 15:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782737; cv=none; b=ile21fp433CtU5/fyRffiAmm/m2jqt9HzAmlSwUCmDmMlq8vibiE2cYeG4Og8dD88wvXir7488qBYr45WyFeMGfym+pWaHQJt9jLywzKCFnTIEj88MUpRrEAAZLHRRqBHK4XbHyJN8l2tBii2Fzx4rpdE/9ZXC7dI+WtLWVpCFA=
+	t=1790782739; cv=none; b=XczlwMWx+TsEEq/+wct/op9f01Ib5NflU05WrfVsWsrP251AOQHRgSuh80eCXzcO3ywFg2/mWMdKeXnkQyXlO123dv/noHR7C5XUXZco+uAV3RwhFafakr3APEvRsMpv5PG2CRE2Dnk0Ku1Q6am66xHE38tS+ONgO+r9w67CdHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782737; c=relaxed/simple;
-	bh=anhpjOEmyAuz1Wtfmb/uboPq9cfoptc6zBF5Iq/6fG8=;
+	s=arc-20240116; t=1790782739; c=relaxed/simple;
+	bh=VaN6qvT+yi4eqNnpRrw+eYXZhFQxJQeJA1ND3JdgOtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btcXCI7Y6W3+x9vDDnNUYYCA5lSZ6kxAswROnMyuho6yeCTxSJUhNpzDzfjAg9+x9FMBmSfcPrg1E1UzZbuMwa8/FHZxnaCizKCm6Ix3jmELTOXaDLt08jB+PfMyso0zo5ZyOTLhkFHrv+NisqaiIGL0aqfaD8IzfhVeETNm5dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/mXqiWD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rcgHiJlU1hcptGpmW1Y8Mi+fGapVeBYDXrB+RbjKJ+KUW77f2LVH4PKHSyPriplk83l6ezP9VyIX9ApB+7GsbjlVw5zF0yIXWSu36nZFhBZJmtOcYD1kdmKUH/TkYqI91vj+o281DSrYje1ZgwliXiWqqlB2DKJLQSxQCTyIJ44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wNh5e74r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/mXqiWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FF11F000FF;
-	Wed, 30 Sep 2026 15:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wNh5e74r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5377B1F00893;
+	Wed, 30 Sep 2026 15:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782732;
-	bh=pd3kcSQl9Fzw0HQ2EY6JgcOvp7dDRFME2NBCx1YVVEw=;
+	s=korg; t=1790782734;
+	bh=nxQwN6/rjDjPRIBNNAQ/yViOczxFDNawCxaZZSpBhe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q/mXqiWD2ByFKGi1nfdi5UGohclUPo4XoJnbgcZ+tLdIUUf7QdAoNFdH0CpnljE9v
-	 cJJk/ekG1CKbkP70XojoiPSeiYAv640N+Mr9lq87yS8QoKAKHeTSKmlUgNdLdygSCu
-	 MgB2vFpCcAfADqm27KFe8S1XgGnUVZzS7szR40AM=
+	b=wNh5e74rM3jpNIe0QWMox0z8dx1KRI/soUCkShF4Sf7kTn1GGCX2qqh06zsaNdE6C
+	 XDs976ydsIHZKV3OA+Csy2RpoyCwJrcTNxGwVBX0Mn/kPvHkGNiVh+T0ZpUQ8N5TkN
+	 6HimsUSWZR83IwMepm5ZX9qLmjakyr/Ws18hXJFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/595] netfilter: nf_conntrack_expect: zero at allocation time
-Date: Wed, 30 Sep 2026 17:20:42 +0200
-Message-ID: <20260930152350.939517048@linuxfoundation.org>
+Subject: [PATCH 5.10 150/595] drm/arm/komeda: fix error handling for clk_prepare_enable() and callers
+Date: Wed, 30 Sep 2026 17:20:43 +0200
+Message-ID: <20260930152350.960480945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -44,87 +45,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 241ccd2fed9051db443aadce248fc0ab30f55e97 ]
+[ Upstream commit 6502eb8cfcd6f7bc5f1f8b73ee524112bd93319d ]
 
-There are occasional LLM hints wrt. leaking uninitialized data to
-userspace via ctnetlink.  Just zero at allocation time,
-expectations are not frequently used these days.
+komeda_dev_resume() calls clk_prepare_enable() without checking the
+return value. If the clock fails to enable, the function returns 0
+(success) while IRQs are enabled and IOMMU is connected on potentially
+unclocked hardware, causing undefined behavior on resume.
 
-Intentionally keeps _init as-is because we could theoretically
-support re-init, so add the missing exp->dir there.
+Propagate the error from clk_prepare_enable() and fix all call sites
+in komeda_drv.c that previously ignored the return value of
+komeda_dev_resume():
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
+- komeda_platform_probe(): if resume fails, jump to err_destroy_mdev
+  (skipping the suspend call, since the clock was never enabled)
+- komeda_pm_resume(): propagate the error and skip
+  drm_mode_config_helper_resume() on failure
+
+This issue was found by code review without access to Komeda hardware.
+
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_expect.c  |  3 ++-
- net/netfilter/nf_conntrack_netlink.c | 11 +----------
- 2 files changed, 3 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/arm/display/komeda/komeda_dev.c |  6 +++++-
+ drivers/gpu/drm/arm/display/komeda/komeda_drv.c | 14 +++++++++-----
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index 516a9f05a87a7..3ea601a090e5d 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -283,7 +283,7 @@ struct nf_conntrack_expect *nf_ct_expect_alloc(struct nf_conn *me)
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+index 1d767473ba8a0..e5eead1505385 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
+@@ -334,7 +334,11 @@ void komeda_dev_destroy(struct komeda_dev *mdev)
+ 
+ int komeda_dev_resume(struct komeda_dev *mdev)
  {
- 	struct nf_conntrack_expect *new;
+-	clk_prepare_enable(mdev->aclk);
++	int err;
++
++	err = clk_prepare_enable(mdev->aclk);
++	if (err)
++		return err;
  
--	new = kmem_cache_alloc(nf_ct_expect_cachep, GFP_ATOMIC);
-+	new = kmem_cache_zalloc(nf_ct_expect_cachep, GFP_ATOMIC);
- 	if (!new)
- 		return NULL;
+ 	mdev->funcs->enable_irq(mdev);
  
-@@ -347,6 +347,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
- #if IS_ENABLED(CONFIG_NF_NAT)
- 	memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
- 	memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
-+	exp->dir = 0;
- #endif
- }
- EXPORT_SYMBOL_GPL(nf_ct_expect_init);
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 46bdc38081164..2acfdf019bf0b 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3540,8 +3540,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 	if (cda[CTA_EXPECT_FLAGS]) {
- 		exp->flags = ntohl(nla_get_be32(cda[CTA_EXPECT_FLAGS]));
- 		exp->flags &= ~NF_CT_EXPECT_USERSPACE;
--	} else {
--		exp->flags = 0;
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+index e7933930a6577..b7848e4f03faa 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
+@@ -61,8 +61,11 @@ static int komeda_bind(struct device *dev)
  	}
- 	if (cda[CTA_EXPECT_FN]) {
- 		const char *name = nla_data(cda[CTA_EXPECT_FN]);
-@@ -3553,8 +3551,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 			goto err_out;
- 		}
- 		exp->expectfn = expfn->expectfn;
--	} else
--		exp->expectfn = NULL;
+ 
+ 	pm_runtime_enable(dev);
+-	if (!pm_runtime_enabled(dev))
+-		komeda_dev_resume(mdrv->mdev);
++	if (!pm_runtime_enabled(dev)) {
++		err = komeda_dev_resume(mdrv->mdev);
++		if (err)
++			goto err_destroy_mdev;
 +	}
  
- 	exp->class = class;
- 	exp->master = ct;
-@@ -3568,12 +3565,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 						 exp, nf_ct_l3num(ct));
- 		if (err < 0)
- 			goto err_out;
--#if IS_ENABLED(CONFIG_NF_NAT)
--	} else {
--		memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
--		memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
--		exp->dir = 0;
--#endif
- 	}
- 	return exp;
- err_out:
+ 	mdrv->kms = komeda_kms_attach(mdrv->mdev);
+ 	if (IS_ERR(mdrv->kms)) {
+@@ -79,7 +82,7 @@ static int komeda_bind(struct device *dev)
+ 		pm_runtime_disable(dev);
+ 	else
+ 		komeda_dev_suspend(mdrv->mdev);
+-
++err_destroy_mdev:
+ 	komeda_dev_destroy(mdrv->mdev);
+ 
+ free_mdrv:
+@@ -176,11 +179,12 @@ static int __maybe_unused komeda_pm_suspend(struct device *dev)
+ static int __maybe_unused komeda_pm_resume(struct device *dev)
+ {
+ 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
++	int err = 0;
+ 
+ 	if (!pm_runtime_status_suspended(dev))
+-		komeda_dev_resume(mdrv->mdev);
++		err = komeda_dev_resume(mdrv->mdev);
+ 
+-	return drm_mode_config_helper_resume(&mdrv->kms->base);
++	return err ? err : drm_mode_config_helper_resume(&mdrv->kms->base);
+ }
+ 
+ static const struct dev_pm_ops komeda_pm_ops = {
 -- 
 2.53.0
 
