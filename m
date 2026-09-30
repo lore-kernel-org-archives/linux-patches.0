@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115EF3D9526;
-	Wed, 30 Sep 2026 19:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5DB3E9C1A;
+	Wed, 30 Sep 2026 19:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796691; cv=none; b=RkcAp99tBZ+epkn37Mn3v9b9lQDGAoMuQn7kQ2zz9SXhVpr5J8wTzfsYVb5T1Buvc2LGmUf+plOavJUBuWV7LFq4a0hiK65ugW1BSkbYorTTbN6RTvdJbmrsAgJ9WlKZxAcZ7AY6hdsfRxNFrgRVq8oF6Yad8q4F5yX2asMDils=
+	t=1790796694; cv=none; b=IO22d1FqWnADW5/wRdRcZ88RGEBIWOJDot93IB52XLDSwRYC9lqFibTHXIxRoO91shRm8XFHrS6P4Bi3CTAcz+JRXZJsXlGTvwFjp085eO+KWbKVTyqU/j4wZ8mEANBbraFFk2Vi+jw1ao9Rb9i/qEjG+9TfBA8ob1UAALpscLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796691; c=relaxed/simple;
-	bh=4C15DZFu835J2pQLJiSRbhMOXXz4yu80FDWO6s5VCso=;
+	s=arc-20240116; t=1790796694; c=relaxed/simple;
+	bh=9G7voCu0NWf7WVMvDAhWg1XemL2aoa4vX/4VKxQ/aAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKd6qz8Dn3fE2ZZHoz4kj/OWGdzJ812cxHyoqdx8aPCd2FqGADGK13Q3aI2/3vzfppJeCETQdFgrWuvlMzgohLoVBscj2+I3+z++AqUCPKrIRxUO/kMIhThDVesuifFE0l5gazU5Q2KNT9ZESTZ04T86BwXyeZt1H+97gLjRz+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBsxke1f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XI94h3jUNObm1lq8PPrcnOTmtcIQgvQ1ERZWGjKzFEJ+2+KmCLnp4Sl6NMeRtFgq47NYta11fRehe1OJ8HYYraNKQQiZC5usLBFCwxvOoxh2UMQWhjy3wK0Zh9Rd4g8ZzQriqKb6UXB3KWOHb74gSl9bhhpA6T7k1g3mqakc7k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WEyuJIx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBsxke1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1521F000FF;
-	Wed, 30 Sep 2026 19:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WEyuJIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A6A1F00898;
+	Wed, 30 Sep 2026 19:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796689;
-	bh=IrUjvwm/UFGcnTzyvWbbzkKxEGkm9awsbgUkwONa4/k=;
+	s=korg; t=1790796692;
+	bh=A+CfAY+FY9kfY8SKeerJGnq0DD54VltpXuoQM2H8Af4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KBsxke1fGUUzpLC6GkpRqFnJBRJtZWuJLQNV6hQTgPoffRIALRvUI3skQuK/Rtpli
-	 WqJ1OyWagapqa2wPKHSwFGIZtTOd7eWfvdphKdvK5XJAQp2Jck0aMX2ccaxN9LKoA2
-	 tLzXJXu+LZgRX7hR9mv/3pBqMYmIIHkO83JqZfMo=
+	b=0WEyuJIxJbm7dxviXvbKSReQH3MRhoz9/7qBGmhgtvotAoCEQMX1txZkP0igj9Io8
+	 pRxIJBpEhAsFwiHa9fgjkWdgGSHPOY9oYPiXmjgU5wBqzltPbAfCRUlaVioFtGIxWf
+	 CFoLP1rJN9jXi46/rjlLHYnefMYm2YgzQgb+RkxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0957/1193] netfilter: nf_tables: Simplify chain netdev notifier
-Date: Wed, 30 Sep 2026 17:27:21 +0200
-Message-ID: <20260930152455.506417325@linuxfoundation.org>
+	Mobin Aydinfar <mobin@mobintestserver.ir>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.6 0948/1193] ksmbd: fix partial normalized name responses
+Date: Wed, 30 Sep 2026 17:27:12 +0200
+Message-ID: <20260930152455.303034450@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,90 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 375f222800bc001bb9cbd2baa1daec006430aeba upstream.
+commit f4fafaf02174c32bce2f9bb4196fadf13f1fd96e upstream.
 
-With conditional chain deletion gone, callback code simplifies: Instead
-of filling an nft_ctx object, just pass basechain to the per-chain
-function. Also plain list_for_each_entry() is safe now.
+Windows may request FILE_NORMALIZED_NAME_INFORMATION with an output
+buffer that only fits the fixed portion of the variable-length response.
+Treat the fixed portion as FILE_NORMALIZED_NAME_INFORMATION_SIZE so ksmbd
+returns STATUS_BUFFER_OVERFLOW instead of STATUS_INFO_LENGTH_MISMATCH.
 
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This avoids rejecting valid partial normalized-name responses.
+
+Fixes: 6b8b79226bc3 ("ksmbd: fix partial file information responses")
+Reported-by: Mobin Aydinfar <mobin@mobintestserver.ir>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_chain_filter.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ fs/smb/server/smb2pdu.c |    3 +++
+ fs/smb/server/smb2pdu.h |    1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
-index e48de5a2bcbca..867ff860c208c 100644
---- a/net/netfilter/nft_chain_filter.c
-+++ b/net/netfilter/nft_chain_filter.c
-@@ -319,9 +319,8 @@ static const struct nft_chain_type nft_chain_filter_netdev = {
- };
- 
- static void nft_netdev_event(unsigned long event, struct net_device *dev,
--			     struct nft_ctx *ctx)
-+			     struct nft_base_chain *basechain)
- {
--	struct nft_base_chain *basechain = nft_base_chain(ctx->chain);
- 	struct nft_hook *hook;
- 
- 	if (event != NETDEV_UNREGISTER)
-@@ -331,8 +330,8 @@ static void nft_netdev_event(unsigned long event, struct net_device *dev,
- 		if (hook->ops.dev != dev)
- 			continue;
- 
--		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
--			nf_unregister_net_hook(ctx->net, &hook->ops);
-+		if (!(basechain->chain.table->flags & NFT_TABLE_F_DORMANT))
-+			nf_unregister_net_hook(dev_net(dev), &hook->ops);
- 
- 		list_del_rcu(&hook->list);
- 		kfree_rcu(hook, rcu);
-@@ -346,26 +345,21 @@ static int nf_tables_netdev_event(struct notifier_block *this,
- 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
- 	struct nft_base_chain *basechain;
- 	struct nftables_pernet *nft_net;
--	struct nft_chain *chain, *nr;
-+	struct nft_chain *chain;
- 	struct nft_table *table;
--	struct nft_ctx ctx = {
--		.net	= dev_net(dev),
--	};
- 
- 	if (event != NETDEV_UNREGISTER &&
- 	    event != NETDEV_CHANGENAME)
- 		return NOTIFY_DONE;
- 
--	nft_net = nft_pernet(ctx.net);
-+	nft_net = nft_pernet(dev_net(dev));
- 	mutex_lock(&nft_net->commit_mutex);
- 	list_for_each_entry(table, &nft_net->tables, list) {
- 		if (table->family != NFPROTO_NETDEV &&
- 		    table->family != NFPROTO_INET)
- 			continue;
- 
--		ctx.family = table->family;
--		ctx.table = table;
--		list_for_each_entry_safe(chain, nr, &table->chains, list) {
-+		list_for_each_entry(chain, &table->chains, list) {
- 			if (!nft_is_base_chain(chain))
- 				continue;
- 
-@@ -374,8 +368,7 @@ static int nf_tables_netdev_event(struct notifier_block *this,
- 			    basechain->ops.hooknum != NF_INET_INGRESS)
- 				continue;
- 
--			ctx.chain = chain;
--			nft_netdev_event(event, dev, &ctx);
-+			nft_netdev_event(event, dev, basechain);
- 		}
- 	}
- 	mutex_unlock(&nft_net->commit_mutex);
--- 
-2.53.0
-
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5508,6 +5508,9 @@ static int smb2_get_info_file(struct ksm
+ 		case FILE_ALTERNATE_NAME_INFORMATION:
+ 			fixed_len = FILE_ALTERNATE_NAME_INFORMATION_SIZE;
+ 			break;
++		case FILE_NORMALIZED_NAME_INFORMATION:
++			fixed_len = FILE_NORMALIZED_NAME_INFORMATION_SIZE;
++			break;
+ 		case FILE_STREAM_INFORMATION:
+ 			fixed_len = FILE_STREAM_INFORMATION_SIZE;
+ 			break;
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -239,6 +239,7 @@ struct file_sparse {
+ #define FILE_ALLOCATION_INFORMATION_SIZE      19
+ #define FILE_END_OF_FILE_INFORMATION_SIZE     20
+ #define FILE_ALTERNATE_NAME_INFORMATION_SIZE  8
++#define FILE_NORMALIZED_NAME_INFORMATION_SIZE 8
+ #define FILE_STREAM_INFORMATION_SIZE          32
+ #define FILE_PIPE_INFORMATION_SIZE            23
+ #define FILE_PIPE_LOCAL_INFORMATION_SIZE      24
 
 
