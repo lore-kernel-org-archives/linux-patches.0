@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25005511E66;
-	Wed, 30 Sep 2026 16:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED812511180;
+	Wed, 30 Sep 2026 16:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786139; cv=none; b=T5vk/I6sfrNGdf5Fx9vIJnHEzf1JpqlOOQkf48DWGI7qkXYif/yERYAbf1QJuW8jwdaUMnRMNctj1ZRJoW0AHXzKFRTsdIKVh0Ngx4QitQJQk0l1WofK1xKKcB69A45IDtyOn1w5q1KpanzeEpNtoCYCwVE8Ldy9uQLASGNudbs=
+	t=1790786142; cv=none; b=opZc0NT8ygZsrBoC1/Gs531YqW6xSJ1iZrWzsKyAbfxdNV3m03ANK90lY9teF/4tf3sOlbVEuz3rE9LzHaa0HVlDwSpn78q6l75RTuCJE59+1WmKHwrj5gVPqcfZnDfH+IsRApJo4fu3X+bODigfORv0/1ywmRkb0sQ/2VFmdCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786139; c=relaxed/simple;
-	bh=8e+yuWyOgYRqks74cHnKijxwSm/0Iido+fKHXdo4SYE=;
+	s=arc-20240116; t=1790786142; c=relaxed/simple;
+	bh=KR7GTir4fzyNZ0F9lZ9zxKr2oAmR47xtvzCQYpe7EoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggI5nyivphlMfXMcORAG+DnrRevHOQfIMWz6Ctix1DBjmanZCjPXbauhZGzGPV7IZDjC9FsTIwSitaarAW0uQ3HXQInPEzM+cgdKk5J3euf8WNSPdC0pOmzEznFzUSsbPmOHcipQ9nEP9tuI2AQ8AblEK7w4KLA5zC6QyfK6BFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Z88lVJg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fv8y8qQ2PmLZboACgzV4VF3gsgIdQXwk4/vEMSLHaBrwU0m6gP5bu8gGp09TTdo7NfId2KsHApwBl6FpljoO5Nj4IIF6kiDvSVgKH62ecZ42FYy1mLxir5r2i5nubhbR4y1PkEuit6Py3YbTP1AmWDrlntBtV6C3zx8ldAw6nC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ahb5ixY9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Z88lVJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CE81F000FF;
-	Wed, 30 Sep 2026 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ahb5ixY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555391F000FF;
+	Wed, 30 Sep 2026 16:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786138;
-	bh=7PgdxKMv9GWn+nGd6ncWNn3ttZSAuCvMl4hbykJXHK8=;
+	s=korg; t=1790786140;
+	bh=EO5keBegqm7qiA7MuqhBZWokWhh4pP+O6J7H6mmtMnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Z88lVJgpvQ8fS+YeNJLNCPVoXC2GGnUWOX2PR3xpraYp+2k2HAtmNlC3GCSwj6kL
-	 /jAXOU0O/S4myvauoQ4FyfW+o671JhE58BFq+ahz5Q7KtFqLgawzSGJX7T2fmmX376
-	 ig3tiUfQUv2BGxdXh6Tw7bmqygsPPnci1MaivuoE=
+	b=Ahb5ixY9RuGCtU9T+0yz60tjzB/AimOEcY3TEU/B7meWRlssb+MA6YIdVlDizo4Xn
+	 i6nQLl/jiXOv7t5Wm+OQWlBlxyrWoiXpmhAfUY5R446AiG2pT3PQ3yVXEUn/Qb0udy
+	 56IDf2TbRm8jNYMHMwwbY5tuFO0wzWIF+3xnp2pE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 756/982] watchdog: msc313e: Fix premature reset during timeout update
-Date: Wed, 30 Sep 2026 17:24:52 +0200
-Message-ID: <20260930152432.992545017@linuxfoundation.org>
+Subject: [PATCH 6.1 757/982] watchdog: msc313e: Propagate error code in resume()
+Date: Wed, 30 Sep 2026 17:24:53 +0200
+Message-ID: <20260930152433.014480643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,46 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 22737cfced627ffcb4b5c36d63bb3d4476f63213 upstream.
+commit 1d9763f34a85680db1e8233d654fdb85e5f897cc upstream.
 
-Updating the 32-bit hardware timeout requires writing to two 16-bit
-registers sequentially.  If the watchdog is actively running, this
-non-atomic update might trigger a premature system reset.
+If msc313e_wdt_start() fails during system resume, the error is
+currently ignored.  Consequently, the watchdog isn't running without the
+user's knowledge.
 
-Clear the watchdog counter before updating the registers to prevent the
-timer from timing out prematurely against an intermediate threshold.
+Propagate the error code and print a message if msc313e_wdt_start()
+fails.
 
-Fixes: e9800b799464 ("watchdog: Add Mstar MSC313e WDT driver")
-Cc: stable@vger.kernel.org
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260913065126.8350-1-tzungbi@kernel.org
+Fixes: e9800b7994642 ("watchdog: Add Mstar MSC313e WDT driver")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260912163334.28636-1-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/msc313e_wdt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/watchdog/msc313e_wdt.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 --- a/drivers/watchdog/msc313e_wdt.c
 +++ b/drivers/watchdog/msc313e_wdt.c
-@@ -47,6 +47,9 @@ static void msc313e_wdt_set_hw_timeout(s
+@@ -198,11 +198,15 @@ static int __maybe_unused msc313e_wdt_su
+ static int __maybe_unused msc313e_wdt_resume(struct device *dev)
  {
- 	u32 t = timeout * clk_get_rate(priv->clk);
+ 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
++	int ret = 0;
  
-+	/* Clear before to prevent premature reset during non-atomic updates. */
-+	writew(1, priv->base + REG_WDT_CLR);
-+
- 	writew(t & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
- 	writew((t >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
- 	writew(1, priv->base + REG_WDT_CLR);
-@@ -77,6 +80,9 @@ static int msc313e_wdt_stop(struct watch
- {
- 	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
+-	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
+-		msc313e_wdt_start(&priv->wdev);
++	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev)) {
++		ret = msc313e_wdt_start(&priv->wdev);
++		if (ret)
++			dev_err(dev, "Failed to restart watchdog (err=%d)\n", ret);
++	}
  
-+	/* Clear before to prevent premature reset during non-atomic updates. */
-+	writew(1, priv->base + REG_WDT_CLR);
-+
- 	writew(0, priv->base + REG_WDT_MAX_PRD_L);
- 	writew(0, priv->base + REG_WDT_MAX_PRD_H);
- 	writew(0, priv->base + REG_WDT_CLR);
+-	return 0;
++	return ret;
+ }
+ 
+ static SIMPLE_DEV_PM_OPS(msc313e_wdt_pm_ops, msc313e_wdt_suspend, msc313e_wdt_resume);
 
 
