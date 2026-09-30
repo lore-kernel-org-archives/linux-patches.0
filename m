@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101365221EA;
-	Wed, 30 Sep 2026 18:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D910251AEF3;
+	Wed, 30 Sep 2026 18:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792759; cv=none; b=tjrPKSROEXgWJ95NE6/8xpzI8CNsaRAt49U23OsV4c/V8jCVoVmHnOOfxQBJ7+KXKM3MqMWWxanPfOpa0qUmvm+yiIyYOSqJ8cM6wo/xJptd7jXBBcTdU+f3QxzL4dDcnfjATSuquG2UxJZpg6EJLkOYhO6BV/yicUELFThxkIs=
+	t=1790792762; cv=none; b=J186KWnRjrEZl/W2gF6ght9A27tJMNUrUVzZ5gnqBKpODXDElapcY58HaF5E/nKUK0k7X9M666ny7fes+VwWVR2lam1pS9yN+w/XYh0ppjZkwNkHbDKBdVuxXLByx0OF5/w0lkHhJe5UrT8vRSnMpU6T5Je0DoAyrLtlmcCLQQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792759; c=relaxed/simple;
-	bh=C10CCan3HYlpp6mmcWTGYDeFCBdmTAnmpse1AZQNklI=;
+	s=arc-20240116; t=1790792762; c=relaxed/simple;
+	bh=kErrUKSlSj/EfCQ57WFQZ7xVrCdLnILhV7Ps62L3jgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E90pOI/rC/evBMlWfyD3VM+C6V+Le0IbqqhFFDtzCF6JczBViJjvPvmie3YqmYkP8E8Oih234AwAChUkdMw+vLqNB9/pul2KuxP52hBKYAmNr+7q6zJMDOv2eTN97k8WU9WNFnlmwNxBCiMnEYCBu0J/DfSsfJjBctw5O1hJE1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pliS5BPT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EIZkNGTLma1j9noHOYDDLOkQRZqycODMIxHVxsppOyti3Vg9mu2j5Y1kUHKJmoDUDBcGvJs2CjH+dxYsehCWeWo8sjKePmrxHtz2cVHTQF1BRxsiBL8V+oJWn+ORTZtECE76JwCsLX/S6wWfgtaRdya8P/hzh/Ya/XDVG9i0gj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXWU3M0N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pliS5BPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3401F000FF;
-	Wed, 30 Sep 2026 18:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXWU3M0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419F81F000FF;
+	Wed, 30 Sep 2026 18:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792758;
-	bh=Awfp71Pw+Aiky6Sjl4aZo+IKfUaO5I6T9pVEUmdnlis=;
+	s=korg; t=1790792760;
+	bh=w+T591DVaRtsiqeoR3ZLfjl99ICgGdcw23ZqjM6DAq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pliS5BPTUYCaEwAUXZiwBcmDheSotT9LjEzysczCn3w8GSB3up3ORtXdwJNNs3fvL
-	 fpIbO43AvqEC5qUjd6KPolx/tee6IZgfOdq37TTvcm+CIGx2clcFKl2VOgT13Bs2Vk
-	 9npz3aAsyUVIF/ynHi380hUnHAgYbQvqEhl3h5j0=
+	b=kXWU3M0Naqxx2QgWLhrj93kHvjSBCwp7HJN/I6ikSBrOaORaLuIy8aLl3pT5AUhj/
+	 sg0NV6s99DZXbSiIYGZKY5YLEMYhxGEdgg9S2EECDBNKV3SxdsS0DWPjWH/ho1r5WJ
+	 O3w1gIRPaRPKWDFvA95pCqqb6g3MFuSgEExh9GR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
-	mayhemandcoffee <mayhemandcoffee@gmail.com>,
+	Oscar Priego Verdugo <oscar.priegov@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/395] HID: multitouch: Add report ID mismatch quirk for ASUS ROG Z13 Folio
-Date: Wed, 30 Sep 2026 17:24:38 +0200
-Message-ID: <20260930152340.968757915@linuxfoundation.org>
+Subject: [PATCH 6.18 017/395] HID: elecom: fix bus type for M-XGL20DLBK
+Date: Wed, 30 Sep 2026 17:24:39 +0200
+Message-ID: <20260930152340.989264226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,124 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: Oscar Priego Verdugo <oscar.priegov@gmail.com>
 
-[ Upstream commit aaaea79efba5a27cb9e0a5a628046d829d3f2cbb ]
+[ Upstream commit 8e2a4b458ad25e13422bb059758c30a6562aa9cf ]
 
-Commit e716edafedad ("HID: multitouch: Check to ensure report
-responses match the request") introduced validating GET_FEATURE
-responses return the requested report ID.
+The M-XGL20DLBK is matched as a USB device by hid-elecom, but
+its entry in hid_have_special_driver[] uses HID_BLUETOOTH_DEVICE.
 
-ASUS ROG Z13 Flow (2025) GZ302EA touchpad (USB 0b05:1a30) returns
-a different report ID for Win8 feature request. Before this check,
-the response was still processed and allowed device to switch into
-its full Touchpad Precision mode.
+This prevents the special-driver quirk entry from matching the USB
+device handled by hid-elecom. Use HID_USB_DEVICE there as well.
 
-After the validation, the response is discarded before
-hid_report_raw_event() processes it and device remains in fallback
-mode and no longer exposes ABS_MT_SLOT, ABS_MT_TOOL_TYPE or the
-multi-finger BTN_TOOL_* capabilities for palm rejection.
-
-Add a device quirk to allow the known firmware behavior for
-this device while preserving report ID validation for all other
-devices.
-
-The device previously matched the generic MT_CLS_WIN_8 entry, so
-base the new class on MT_CLS_WIN_8 to keep it on the same quirk set
-as before the regression.  MT_QUIRK_CONFIDENCE must be set
-explicitly: it is normally enabled by the class name check in
-mt_touch_input_mapping(), which only matches the MT_CLS_WIN_8*
-names, and it is what makes ABS_MT_TOOL_TYPE available for
-touchpads.
-
-Fixes: e716edafedad ("HID: multitouch: Check to ensure report responses match the request")
-
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Reported-by: mayhemandcoffee <mayhemandcoffee@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221774
-Tested-by: mayhemandcoffee <mayhemandcoffee@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221774
+Fixes: 55633e681afb ("HID: elecom: add support for EX-G M-XGL20DLBK wireless mouse")
+Signed-off-by: Oscar Priego Verdugo <oscar.priegov@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ drivers/hid/hid-quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 35f9f4f76a550..4b736cd012db9 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -79,6 +79,7 @@ MODULE_LICENSE("GPL");
- #define MT_QUIRK_APPLE_TOUCHBAR		BIT(23)
- #define MT_QUIRK_YOGABOOK9I		BIT(24)
- #define MT_QUIRK_KEEP_LATENCY_ON_CLOSE	BIT(25)
-+#define MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH	BIT(26)
- 
- #define MT_INPUTMODE_TOUCHSCREEN	0x02
- #define MT_INPUTMODE_TOUCHPAD		0x03
-@@ -233,6 +234,7 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app);
- #define MT_CLS_APPLE_TOUCHBAR			0x0114
- #define MT_CLS_YOGABOOK9I			0x0115
- #define MT_CLS_EGALAX_P80H84			0x0116
-+#define MT_CLS_ASUS_ROG_Z13_FOLIO		0x0117
- #define MT_CLS_SIS				0x0457
- 
- #define MT_DEFAULT_MAXCONTACT	10
-@@ -403,6 +405,16 @@ static const struct mt_class mt_classes[] = {
- 		.quirks = MT_QUIRK_ALWAYS_VALID |
- 			MT_QUIRK_CONTACT_CNT_ACCURATE |
- 			MT_QUIRK_ASUS_CUSTOM_UP },
-+	{ .name = MT_CLS_ASUS_ROG_Z13_FOLIO,
-+		.quirks = MT_QUIRK_ALWAYS_VALID |
-+			MT_QUIRK_IGNORE_DUPLICATES |
-+			MT_QUIRK_HOVERING |
-+			MT_QUIRK_CONTACT_CNT_ACCURATE |
-+			MT_QUIRK_STICKY_FINGERS |
-+			MT_QUIRK_WIN8_PTP_BUTTONS |
-+			MT_QUIRK_CONFIDENCE |
-+			MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH,
-+		.export_all_inputs = true },
- 	{ .name = MT_CLS_VTL,
- 		.quirks = MT_QUIRK_ALWAYS_VALID |
- 			MT_QUIRK_CONTACT_CNT_ACCURATE |
-@@ -505,6 +517,7 @@ static const struct attribute_group mt_attribute_group = {
- 
- static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- {
-+	struct mt_device *td = hid_get_drvdata(hdev);
- 	int ret;
- 	u32 size = hid_report_len(report);
- 	u8 *buf;
-@@ -526,8 +539,14 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
- 			 report->id);
- 	} else {
--		/* The report ID in the request and the response should match */
--		if (report->id != buf[0]) {
-+		/*
-+		 * The report ID in the request and the response should match.
-+		 * Some firmware (e.g. the ASUS ROG Z13 Folio
-+		 * touchpad) returns a mismatched ID on this specific fetch;
-+		 * tolerate it only for devices explicitly flagged as such.
-+		 */
-+		if (report->id != buf[0] &&
-+		    !(td->mtclass.quirks & MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH)) {
- 			hid_err(hdev, "Returned feature report did not match the request\n");
- 			goto free;
- 		}
-@@ -2716,6 +2735,12 @@ static const struct hid_device_id mt_devices[] = {
- 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
- 			   I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288) },
- 
-+	/* Asus ROG Flow Z13 (2025) GZ302EA keyboard-cover touchpad */
-+	{ .driver_data = MT_CLS_ASUS_ROG_Z13_FOLIO,
-+		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_ASUSTEK,
-+			USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO) },
-+
- 	/* Generic MT device */
- 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_MULTITOUCH, HID_ANY_ID, HID_ANY_ID) },
- 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index ebf865c2dbb38..92aea01e1d644 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -421,7 +421,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
+ #endif
+ #if IS_ENABLED(CONFIG_HID_ELECOM)
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
+-	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1MRBK_01AC) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
 -- 
 2.53.0
 
