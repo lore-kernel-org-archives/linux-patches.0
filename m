@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A50B175A89;
-	Wed, 30 Sep 2026 18:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D98B4CC63A;
+	Wed, 30 Sep 2026 18:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793241; cv=none; b=Q4jVP+a1b21raCoeZVxukS9kEKwC9oEOyJq275SNkj4n3F6GUaJNOBlA+IYDadH4dcfDH1Rze44BxGjCwfbkbz1LKmXntLSQUnMs9Yd7LOjE9eW+jUL01tI7rNV4HbRAkZ/podwkBhc3j4eQe4S3fSeL4ol6zSJnYUUP+mWNpT4=
+	t=1790793244; cv=none; b=ipjikcHJG8qOs2LoC97UM6WPcnE+Tc0wqrdS1nWciA9VJw6hzbqbCgrkmao2n11P0X4mmnQV2VyD9PTG+kVX1Tw3JuTSGKHbQY1mTZMEtkZNG67UTLyp5sLlebeOap7Xh5f6ar00HgksxokoqdPjsrV8dblKrtG6qJTsJpDJwtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793241; c=relaxed/simple;
-	bh=P08Z9hvZik3SpdUhemrr3Zrrk4lBOBBbcs4LyCVpyQg=;
+	s=arc-20240116; t=1790793244; c=relaxed/simple;
+	bh=vFIYRU2c+R0Ezv4s77YibEuwxY2BmVR68fQt6y+dN+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZdU2PW+tgw/D+schzUrhX5OfH2RIHZRduGMvpg1qYhWQHC9S1Z9Lr1mzoRo2QwdIY9BPph20NnlSX9AwCezBou5R4MrXvp60bLepxooUQvobwlid6WczKYdX9l1nY2ilBSIkbFTO0jezE1A8hiIANo/+FCHeMhXSC2WzAoXteY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo3PczcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PM89lOb484LJWl1EgIvNPLdhZXB+Mg3bAY9U0HA4TZb/oHDaeeBkJKclNS8WF92l3YHUAZSjpSqiai05K2a6HNQ+zm/+eNunn2VrKy2mQc7mZ86pAqHQUfHWvFd5/D9z3l/Dc548604pusdOeAQIOZw4L8swmIcF92hZrRtt6xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNHFa1je; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo3PczcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DD41F000FF;
-	Wed, 30 Sep 2026 18:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNHFa1je"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39B61F000FF;
+	Wed, 30 Sep 2026 18:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793240;
-	bh=jv+bW7GBUglXa9zdYIDvQ9A9FtvAznOXyhkxyKzGg34=;
+	s=korg; t=1790793243;
+	bh=cMKtxyT/vOnlHzKZ9TFJcoJW+/BKgY/2DzryYTzowfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qo3PczcHE1GolTAl0HW52xtpKzwZmdu4eKlMkUInzdyYxzudPSbunX8fn6H1emKEB
-	 miE+lKk5cE7ILdX8CIILlj+rUsH6gd/GcUpOAYUTRRuCMMxkxIEOUbtj34vUUXJu9N
-	 oRAg1ZiN/stxWNwSCoZItQ1pET0rlQIHJ4bS3cp0=
+	b=aNHFa1jexdtf5qrIb3niW8g74UTrejRLuXln82r4clBCbo92CryX/BAqklcXusfvW
+	 2Q/GsgceRMtOAlEkp8E2nDnH1nk/dlmEpB4iS+hCkV0Y8puflmlMJAypqYmm0U2/O1
+	 +GLwQR/WVd1a3/oMgGEYNvyxxWOtHGxtJAv6eUI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joshua Washington <joshwash@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 186/395] gve: Advertise NETIF_F_GRO_HW instead of NETIF_F_LRO
-Date: Wed, 30 Sep 2026 17:27:28 +0200
-Message-ID: <20260930152344.685952473@linuxfoundation.org>
+Subject: [PATCH 6.18 187/395] gve: Enable hw-gro by default if device supported
+Date: Wed, 30 Sep 2026 17:27:29 +0200
+Message-ID: <20260930152344.706683000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -56,86 +56,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Ankit Garg <nktgrg@google.com>
 
-[ Upstream commit e637c244b954426b84340cbc551ca0e2a32058ce ]
+[ Upstream commit 3c398063ef01b02d7efd31662154fe70fd28ace6 ]
 
-The device behind DQO format has always coalesced packets per stricter
-hardware GRO spec even though it was being advertised as LRO.
+Change the driver's default behavior to enable hw-gro whenever supported
+for device.
 
-Update advertised capability to match device behavior.
+Performance observations:
+- We observed ~10% improvement in RX single stream throughput across
+  various MTU sizes.
+- No change in TCP_RR/TCP_CRR latencies
 
 Signed-off-by: Ankit Garg <nktgrg@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
 Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20260303195549.2679070-2-joshwash@google.com
+Link: https://patch.msgid.link/20260303195549.2679070-5-joshwash@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 3b430ea62340 ("gve: fix TX drop when GSO MSS is too small for hw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_adminq.c |  6 +++---
- drivers/net/ethernet/google/gve/gve_main.c   | 15 ++++++++-------
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/google/gve/gve_adminq.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/google/gve/gve_adminq.c b/drivers/net/ethernet/google/gve/gve_adminq.c
-index 4f33d094a2ef4..7f8212c20ed2d 100644
+index 7f8212c20ed2d..926833b2424fa 100644
 --- a/drivers/net/ethernet/google/gve/gve_adminq.c
 +++ b/drivers/net/ethernet/google/gve/gve_adminq.c
-@@ -791,7 +791,7 @@ static void gve_adminq_get_create_rx_queue_cmd(struct gve_priv *priv,
- 		cmd->create_rx_queue.rx_buff_ring_size =
- 			cpu_to_be16(priv->rx_desc_cnt);
- 		cmd->create_rx_queue.enable_rsc =
--			!!(priv->dev->features & NETIF_F_LRO);
-+			!!(priv->dev->features & NETIF_F_GRO_HW);
- 		if (priv->header_split_enabled)
- 			cmd->create_rx_queue.header_buffer_size =
- 				cpu_to_be16(priv->header_buf_size);
-@@ -1123,9 +1123,9 @@ int gve_adminq_describe_device(struct gve_priv *priv)
- 
+@@ -1124,8 +1124,10 @@ int gve_adminq_describe_device(struct gve_priv *priv)
  	gve_set_default_rss_sizes(priv);
  
--	/* DQO supports LRO. */
-+	/* DQO supports HW-GRO. */
- 	if (!gve_is_gqi(priv))
--		priv->dev->hw_features |= NETIF_F_LRO;
-+		priv->dev->hw_features |= NETIF_F_GRO_HW;
+ 	/* DQO supports HW-GRO. */
+-	if (!gve_is_gqi(priv))
++	if (gve_is_dqo(priv)) {
+ 		priv->dev->hw_features |= NETIF_F_GRO_HW;
++		priv->dev->features |= NETIF_F_GRO_HW;
++	}
  
  	priv->max_registered_pages =
  				be64_to_cpu(descriptor->max_registered_pages);
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index c94f1615a4127..5fbb02d14dc38 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1713,9 +1713,9 @@ static int gve_verify_xdp_configuration(struct net_device *dev,
- 	struct gve_priv *priv = netdev_priv(dev);
- 	u16 max_xdp_mtu;
- 
--	if (dev->features & NETIF_F_LRO) {
-+	if (dev->features & NETIF_F_GRO_HW) {
- 		NL_SET_ERR_MSG_MOD(extack,
--				   "XDP is not supported when LRO is on.");
-+				   "XDP is not supported when HW-GRO is on.");
- 		return -EOPNOTSUPP;
- 	}
- 
-@@ -2142,12 +2142,13 @@ static int gve_set_features(struct net_device *netdev,
- 
- 	gve_get_curr_alloc_cfgs(priv, &tx_alloc_cfg, &rx_alloc_cfg);
- 
--	if ((netdev->features & NETIF_F_LRO) != (features & NETIF_F_LRO)) {
--		netdev->features ^= NETIF_F_LRO;
--		if (priv->xdp_prog && (netdev->features & NETIF_F_LRO)) {
-+	if ((netdev->features & NETIF_F_GRO_HW) !=
-+	    (features & NETIF_F_GRO_HW)) {
-+		netdev->features ^= NETIF_F_GRO_HW;
-+		if (priv->xdp_prog && (netdev->features & NETIF_F_GRO_HW)) {
- 			netdev_warn(netdev,
--				    "XDP is not supported when LRO is on.\n");
--			err =  -EOPNOTSUPP;
-+				    "HW-GRO is not supported when XDP is on.");
-+			err = -EOPNOTSUPP;
- 			goto revert_features;
- 		}
- 		if (netif_running(netdev)) {
 -- 
 2.53.0
 
