@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EA451812B;
-	Wed, 30 Sep 2026 16:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3014C5172EC;
+	Wed, 30 Sep 2026 16:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784875; cv=none; b=u0Gl7YsM5prJwUXIlk/hKvuzWKi0iTPa7PszyUOE5GDAor4UmGX4ulhxTBpAjXgs51utmGPEI7vB93R/f1cA91+ZJEIelpHZQQwgV74AMz1TTEd0rmQoFCnTiQpw9qPoMCf7ZLdVRYmKz4lfeIvF+4T/qUrYRhb4YrGhEvwA6eU=
+	t=1790784876; cv=none; b=QVuw4Ho4cLmqbqmrq3y4gDBJiTDeUiGXyJC/8R3hfnT8m2qhJCorgOq9+2Y7w2nxrs6dkm+KH+5CpshMEfwx+md8b86Obr6uxNyNC9hN18dxTzsJTNnwXjRWxrOq0xmqMPZj+E9V/1DLONkIBefBgvJ19zd70oLacXNRCtZYrYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784875; c=relaxed/simple;
-	bh=0+Q4TNMR7rLqmDWbIt+3JQxXUOZb2N9IFJ/Zyi6fhb0=;
+	s=arc-20240116; t=1790784876; c=relaxed/simple;
+	bh=TwfAWgfMjTmb4JVw1E7DqIUW0ZvkaLYtXI0KXPYBrZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcwIZ4S+XQBwIMxgpxBYYXeTQ623C5/9LRXSP+l0Le5A64cUyTo5bxA4JZ/kYG13I4+s4PUFj00WaboENxmfxidVYoDaGvt7ziGtbW2NOJP2PxSTlba8v9mWLlG3x16y1rMsJ1rIDbPVJOQt4KiA81/G4MCm705d2p4CMvHCfck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMGgFxkm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UCQ/FBmUgu24/LSPmaordKRLwuyTl1bgtWLhNnh/Uc98pHsKOAN4MRsVCOM4+PL2M1Sg6+YSRkvVWMHNLISb/qeB0stSXekGAOTzxCHTWoBNdBLJdD5FyPZJFuLNU4Z8FuoNf1F5p0vsIT8gC8Ol9XpUp3VW7g2xBU1P2bQ0EPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNkZY2b1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMGgFxkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458921F00898;
-	Wed, 30 Sep 2026 16:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNkZY2b1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692231F000FF;
+	Wed, 30 Sep 2026 16:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784872;
-	bh=vOfToFY+SkfClirkw4WwCihUYySfWuyC4IMs3CpHtGY=;
+	s=korg; t=1790784870;
+	bh=PEbE8wyidsbWb/izKqAPEQ4Naz7TXQm7m/Ml3it6sDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMGgFxkmIuwSE7aOV0a4XXEU6VUvki01/vSNyFgzw55dwPzmWokFe3pUTEsgeoYOp
-	 ZGlFAoJTmKVBc7hOb8oojzB5CwgQTLe2XXL48TNfWJcJPbGk+SJIutjmRMRPLukLDW
-	 uRUN9FXe2Zv39doMfIIPewQdhg+NsQ+4uuQjZAkM=
+	b=VNkZY2b1gpIz/ijy64DFRQgw8K2o6Z4eiVtrmSIjYDhi2IZgo35tjHSMPpZPmBwkt
+	 CYR/csWaDSpHT/nYFWhn4zG14i0+zdI5N5o1I4+e7TLtndYHgPfOeSn3cduXt5BulT
+	 yQRHzODQfnSram2pdxXaRkUHA+rRxmxlW25DOTg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	LocalHost <localhost.detect@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 310/982] sctp: fix err_chunk memory leaks in INIT handling
-Date: Wed, 30 Sep 2026 17:17:26 +0200
-Message-ID: <20260930152423.478887466@linuxfoundation.org>
+Subject: [PATCH 6.1 301/982] ksmbd: validate ACE size against SID sub-authorities
+Date: Wed, 30 Sep 2026 17:17:17 +0200
+Message-ID: <20260930152423.273736278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,72 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9f58a0a4d6c2ed5d341bba64f058f15d1b0c36f2 ]
+[ Upstream commit 5152c6d49e3fd4e9f2e857c57527aead752f1f87 ]
 
-When sctp_verify_init() encounters unrecognized parameters, it allocates an
-err_chunk to report them. However, this chunk is leaked in several code
-paths:
+set_ntacl_dacl() validates sid.num_subauth before copying an ACE, but
+does not verify that the declared ACE size contains all sub-authorities
+described by that field. An undersized ACE can therefore be copied
+and later make the POSIX ACL deduplication walk inspect data beyond
+the copied ACE boundary.
 
-1. In sctp_sf_do_5_1B_init(), if security_sctp_assoc_request() fails after
-   sctp_verify_init() has populated err_chunk, the function returns
-   immediately without freeing it.
+The existing initial bound check is also too small. It only ensures
+that the ACE size field is accessible before set_ntacl_dacl() reads
+sid.num_subauth farther into the input buffer.
 
-2. In sctp_sf_do_unexpected_init(), the same leak occurs on the
-   security_sctp_assoc_request() failure path.
+Require enough input for the fixed SID header before accessing
+num_subauth, reject ACEs smaller than that header, and skip ACEs
+whose declared size cannot contain the complete SID. This makes the
+validation consistent with the other ACE walk paths.
 
-3. In sctp_sf_do_unexpected_init(), on the success path after copying
-   unrecognized parameters to the INIT-ACK, the function returns without
-   freeing err_chunk, unlike sctp_sf_do_5_1B_init() which properly frees
-   it.
-
-Fix all three leaks by adding sctp_chunk_free(err_chunk) calls before
-returning in the error paths and on the success path in
-sctp_sf_do_unexpected_init().
-
-Fixes: c081d53f97a1 ("security: pass asoc to sctp_assoc_request and sctp_sk_clone")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0656704f1b0158287c98aec09ba36c83e4a537ab.1781970534.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: LocalHost <localhost.detect@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/server/smbacl.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 4a029098a7f17..f06a563dc3988 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -415,6 +415,8 @@ enum sctp_disposition sctp_sf_do_5_1B_init(struct net *net,
- 	/* Update socket peer label if first association. */
- 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
- 		sctp_association_free(new_asoc);
-+		if (err_chunk)
-+			sctp_chunk_free(err_chunk);
- 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
- 	}
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 051df6536f7a3..7a0396db6f1d2 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -749,15 +749,22 @@ static void set_ntacl_dacl(struct user_namespace *user_ns,
+ 		for (i = 0; i < nt_num_aces; i++) {
+ 			unsigned short nt_ace_size;
  
-@@ -1607,6 +1609,8 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 	/* Update socket peer label if first association. */
- 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
- 		sctp_association_free(new_asoc);
-+		if (err_chunk)
-+			sctp_chunk_free(err_chunk);
- 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
- 	}
+-			if (offsetof(struct smb_ace, access_req) > aces_size)
++			if (aces_size < offsetof(struct smb_ace, sid) +
++					CIFS_SID_BASE_SIZE)
+ 				break;
  
-@@ -1672,6 +1676,7 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 		 * parameter type.
- 		 */
- 		sctp_addto_chunk(repl, len, unk_param);
-+		sctp_chunk_free(err_chunk);
- 	}
+ 			nt_ace_size = le16_to_cpu(ntace->size);
+-			if (nt_ace_size > aces_size)
++			if (nt_ace_size > aces_size ||
++			    nt_ace_size < offsetof(struct smb_ace, sid) +
++					  CIFS_SID_BASE_SIZE)
+ 				break;
  
- 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_ASOC, SCTP_ASOC(new_asoc));
+ 			if (ntace->sid.num_subauth == 0 ||
+-			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
++			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
++			    nt_ace_size < offsetof(struct smb_ace, sid) +
++					  CIFS_SID_BASE_SIZE +
++					  sizeof(__le32) *
++					  ntace->sid.num_subauth)
+ 				goto next_ace;
+ 
+ 			memcpy((char *)pndace + size, ntace, nt_ace_size);
 -- 
 2.53.0
 
