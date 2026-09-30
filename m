@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6883C455C;
-	Wed, 30 Sep 2026 19:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8363F7AA8;
+	Wed, 30 Sep 2026 19:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796614; cv=none; b=qVvYYL2/ZUnPlC40zMUOYjbSlwf0F0MNcpnkVAV3nF7OY2gSU9arB/65AlOBCEjmDkOMkN+WfMghHHqw1/Yt7HtesK97Pl6bg7BcTI22CeUG3KOC551tXTzkZZs1JHq7oD6Y3CTfj5zvYq+gV+t41tDIjnyT3SWRB5+OArExRCI=
+	t=1790796617; cv=none; b=mt2EC4uymU092QhidSOpoJTU+uUpsQlVfCpXIqExez2wF3ZlEhGUZQJajozku+LhWcB85tZgU47rculbKNh+vauUev4IpfCA2ZALoR5q/s2c51ad50ENwZugU5cFPsQEnCh7Qn7vkKjVx9nutybznYqlRgkW1nqr4QnWOdsnQiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796614; c=relaxed/simple;
-	bh=Srglqiy1pblGz7oyEx8wBlA3K6cN2N2aGYz2W9mhm/Y=;
+	s=arc-20240116; t=1790796617; c=relaxed/simple;
+	bh=habVdSTScULt85akmi1temRRDCg7pzkTDR5weGr2Ync=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4Xy4g/j3uwJpNAdlKpf6B+6uHxvSDLpClik9mV0i355b3Jet+s08aDKXjzvNb/8/OyMkemuYsdpxMLEA9ELLCEZBFy48LSgmQ7WZu9pq4kXaTDSb7vIyU5f+jEBE5QuTBirE9E9C+ra5+/04FPapHhm5Btv8TLvHc7bN/WeY5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DQO7BNr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sd9jXJ49EVy7suj5ubeLwy6bxE3t6ncCXNwTTyWIi0QxHv9pRyYYGW2QMXKqZQGU++BCQ/Nvaha1qJKAh4MXL3v0qk1sl4wir/FeytLRsLBRflyZSml4z81NnUNWwH7woy1HLJCPP3q298VSFiU7VBePzoT2Pi1ZcwdvziRnnx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6KB1Bk3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DQO7BNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72D361F000FF;
-	Wed, 30 Sep 2026 19:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6KB1Bk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DD21F000FF;
+	Wed, 30 Sep 2026 19:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796613;
-	bh=qtW8YpEz2GAsHC+knTo1HNvllGzji538d4+XJCdVw8g=;
+	s=korg; t=1790796615;
+	bh=GqZa56WUs52cvdoSgz3CwCrXj6mUeK3NZ+q55S0K8tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2DQO7BNrPu5Ny3B+QrLZ0fti0MG7Fvg3qLkSUQLHiqlOf3HBIbh2WvkyLVZurT4GA
-	 XXZixPTGZglI7ZVYFAtal1vkbMyqMYlazwVM0kl0YT7+ebBUKkdZjlvYSQgti2pgtd
-	 tVp9PqhzAGSsW9k5xubBiIS4CqLwGa8Lw9EaMzk4=
+	b=l6KB1Bk3KK8nSESGYVw0ALxxq5I+rqFwqaf3mgWy+qlzkc236Cftj43Oj8VTZZF57
+	 wgSIi26GW0sK/D2wto99ZVzFKBZbx6kVHN934/mIPB8o9kgqjIkM5X2IXvVlUgQeqa
+	 zObftnytP4ShYjdlw+izUl9Y54UkQ63R0thTU3ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ran Hongyun <ranhongyun1@huawei.com>,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Christiano Amora <christiano.amora@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0975/1193] squashfs: Add dictionary size range check to prevent shift-out-of-bounds
-Date: Wed, 30 Sep 2026 17:27:39 +0200
-Message-ID: <20260930152455.906011113@linuxfoundation.org>
+Subject: [PATCH 6.6 0976/1193] Bluetooth: SMP: reject Security Request over BR/EDR
+Date: Wed, 30 Sep 2026 17:27:40 +0200
+Message-ID: <20260930152455.928218837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,53 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ran Hongyun <ranhongyun1@huawei.com>
+From: Christiano Amora <christiano.amora@gmail.com>
 
-[ Upstream commit 1f7745fb3580152ca902ef181b605f33cabfb1d0 ]
+[ Upstream commit f033482d76a9f18080c7a40c5f9c678bd7adc8f3 ]
 
-When an abnormal SquashFS image (COMP_OPTS flag is 1 but dictionary size
-is 0) is mounted, and performs shift operations using dictionarysize, the
-shift exponent is -1, causing a shift-out-of-bounds.
+Bose QC Ultra Headphones (dual-mode, same public address on both
+transports) occasionally send an SMP Security Request on the BR/EDR
+SMP fixed channel right after the ACL link is encrypted. The kernel
+handles it as if it were an LE link: smp_cmd_security_req() has no
+transport check, smp_ltk_encrypt() looks up an LTK with the ACL
+connection's dst_type, and hci_find_ltk() matches the peer's LE LTK
+because the LE public address type is stored as ADDR_LE_DEV_PUBLIC (0),
+the same value as BDADDR_BREDR. HCI_OP_LE_START_ENC is then issued on
+the ACL handle, the controller rejects it with Invalid HCI Command
+Parameters, and hci_cs_le_start_enc() disconnects the link with
+HCI_ERROR_AUTH_FAILURE. The headphones drop within a second of
+connecting, before any profile is up; a manual reconnect works.
 
-Detail as below:
-squashfs_comp_opts(msblk, buffer, length)
-  squashfs_xz_comp_opts()
-    if (comp_opts)
-      n = ffs(opts->dict_size) - 1;<----opts->dict_size=0, n=-1
-      if (opts->dict_size != (1 << n) && opts->dict_size !=
-	  	(1 << n) + (1 << (n + 1))) <----shift-out-of-bounds
+btmon (MediaTek MT7922, kernel 7.0.12):
 
-Fix it by adding a dictionary size range check before the shift operation.
+  > HCI Event: Encryption Change (0x08) plen 4
+        Status: Success (0x00)
+        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
+        Encryption: Enabled with AES-CCM (0x02)
+  > ACL Data RX: Handle 50 flags 0x02 dlen 6
+        BR/EDR SMP: Security Request (0x0b) len 1
+        Authentication requirement: No bonding, No MITM, SC (0x08)
+  < HCI Command: LE Start Encryption (0x08|0x0019) plen 28
+        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
+  > HCI Event: Command Status (0x0f) plen 4
+        LE Start Encryption (0x08|0x0019) ncmd 1
+        Status: Invalid HCI Command Parameters (0x12)
+  < HCI Command: Disconnect (0x01|0x0006) plen 3
+        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
+        Reason: Authentication Failure (0x05)
 
-Fixes: ff750311d30a ("Squashfs: add compression options support to xz decompressor")
-Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
-Link: https://patch.msgid.link/20260713115525.2661734-1-ranhongyun1@huawei.com
-Reviewed-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+SMP over BR/EDR is limited to cross-transport key derivation; the
+Security Request procedure (Core Specification Vol 3, Part H, Section
+2.4.6, PDU in Section 3.6.7) has no BR/EDR counterpart. Reply with
+Pairing Failed / Command Not Supported on a non-LE link, before the PDU
+is parsed, and keep the connection. The reply is sent directly rather
+than through smp_failure(): rejecting a command on the wrong transport
+is not an authentication failure, and MGMT_EV_AUTH_FAILED would make
+bluetoothd disconnect the device.
+
+Tested on the affected host (kernel 7.0.12, MediaTek MT7922, Bose QC
+Ultra) with the patched module built out of tree: 7 days and 49
+reconnects without a drop, against 2 drops in the 3 days before the
+patch. Every disconnect in that week had a userspace or remote reason.
+
+Fixes: b5ae344d4c0f ("Bluetooth: Add full SMP BR/EDR support")
+Assisted-by: LLM
+Signed-off-by: Christiano Amora <christiano.amora@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/xz_wrapper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/smp.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/fs/squashfs/xz_wrapper.c b/fs/squashfs/xz_wrapper.c
-index 6c49481a2f8c4..7d54cd524d6d9 100644
---- a/fs/squashfs/xz_wrapper.c
-+++ b/fs/squashfs/xz_wrapper.c
-@@ -57,10 +57,10 @@ static void *squashfs_xz_comp_opts(struct squashfs_sb_info *msblk,
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 49e0e412c6c5b..c87b39380de29 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2302,6 +2302,23 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
  
- 		opts->dict_size = le32_to_cpu(comp_opts->dictionary_size);
+ 	bt_dev_dbg(hdev, "conn %p", conn);
  
--		/* the dictionary size should be 2^n or 2^n+2^(n+1) */
-+		/* the dictionary size should be positive and 2^n or 2^n+2^(n+1) */
- 		n = ffs(opts->dict_size) - 1;
--		if (opts->dict_size != (1 << n) && opts->dict_size != (1 << n) +
--						(1 << (n + 1))) {
-+		if (opts->dict_size <= 0 || (opts->dict_size != (1 << n) &&
-+			opts->dict_size != (1 << n) + (1 << (n + 1)))) {
- 			err = -EIO;
- 			goto out;
- 		}
++	/* SMP over BR/EDR only covers cross-transport key derivation; the
++	 * Security Request procedure has no BR/EDR counterpart. Reject it
++	 * here, otherwise smp_ltk_encrypt() finds the peer's LE LTK
++	 * (ADDR_LE_DEV_PUBLIC and BDADDR_BREDR are both 0) and issues
++	 * HCI_OP_LE_START_ENC on the ACL handle, which the controller
++	 * rejects and hci_cs_le_start_enc() turns into a disconnect. Reply
++	 * without smp_failure(): this is not an authentication failure, and
++	 * MGMT_EV_AUTH_FAILED would make bluetoothd drop the device.
++	 */
++	if (hcon->type != LE_LINK) {
++		u8 reason = SMP_CMD_NOTSUPP;
++
++		smp_send_cmd(conn, SMP_CMD_PAIRING_FAIL, sizeof(reason),
++			     &reason);
++		return 0;
++	}
++
+ 	if (skb->len < sizeof(*rp))
+ 		return SMP_INVALID_PARAMS;
+ 
 -- 
 2.53.0
 
