@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4011636A033;
-	Wed, 30 Sep 2026 18:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA552D594F;
+	Wed, 30 Sep 2026 18:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793439; cv=none; b=rrIIbqTBnhucXimQ0C6TfJg/7yFfSgqACsh4ZhRRkfOnfhK2+ufExj3mJ2+q4F62sps1fxZtP3ubaRDRmy9NopJegmK4IzlEd98PItegs41c75XQMm3fDCuK3ah7xmPwvevGiCqsZnj8JqVydHbSj1PP4RCRKDhJI+rzkrIIQ5k=
+	t=1790793442; cv=none; b=tV+DvI4pnVlrMbCV1UnliuipWsbLN5Q68LmBgDzuuC/HELqTgUkdXYz/rfv/I+8HpqBKe6B536wqFOJgA9jRLKuwV2GG+cOOFaSLugxW+a9jqdkXbo4fJlNHSsKCl2IMb/3Q1oWnsDjKJBMKNxC2LgVSuuDAKfWbgkNVNoyv7Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793439; c=relaxed/simple;
-	bh=3KMvFTiHvQHi0E6+mZtNr/VcMNyMbnyGUT8T2O3SZms=;
+	s=arc-20240116; t=1790793442; c=relaxed/simple;
+	bh=c5nRsJUtWywxNBsQ5DYifsbvn+vqoTeeTi41N7HMliU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qN3dh3qeEQdoh2HdRRs36EaKFIBo+tMMjenfVzlkKkQkehliFKrJVqYbI0oNViTpc2fYKfn9gBQ2o/mUqwtGb4cFecGqpP3tq8F+ChRVKgZTW9aOjmVKurlMSvk9XvlyLgwf2Kj6SPHTbZuMNsyGOpzjH+SMRaHqqYrMwwHFdpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5MfDTJg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NuXdNYPm255es0HvSxKJcJpkEbPOWCh2hIzutie7ueIWiDfEjIaqNRhDurjtcGcC3paf5+sAHVwpFDLa99W00Rktn63c4KQ32smxo/rMrZgYAXis4tFY/pQF63MsS1V78WRZ9nbJnwEOBf71vRxEhnxhQETqIDXA/HQBMYP+lLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCwigkdD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5MfDTJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971FA1F000FF;
-	Wed, 30 Sep 2026 18:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCwigkdD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D03C1F000FF;
+	Wed, 30 Sep 2026 18:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793438;
-	bh=8xia0+/yQNMa5b3NlgM6g2v7GmTwL1PgKtn1GpzyOYY=;
+	s=korg; t=1790793441;
+	bh=UgNvR23kX54ROiHWZsfTbYOv0Ckxgr7jTPB0oalWHB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5MfDTJgrxe88rvqupOZVvV4iF3q0sWotrd7M0O3IOGyqKxpNaqHXjcauvFrC4Q1i
-	 HH6jlKioIbhjCr/DJN58q5hn36lAmy/OKO5/TwE+nPatjBa/d4tT3qRb0wOz+xp9JJ
-	 25oCipnm+Cm+c2m0dHUKxdd7/Io/n3JXydPInayQ=
+	b=oCwigkdDTSWgaOUIY66I0QhtLYo3TT5F20eN1iesofGP7oIkCo9rgsciFmTSEVEAP
+	 b9eNLHsSxumWUX25n954BR0O2B4FQv2mJP0ju93sNlPw52i9OzDfqiuYOqLkU1ICfZ
+	 6VdPwez8RY0SQ16czv7U0tV9y4Ol8q/fvfWpBBwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 254/395] drm/xe/vm: nuke PTs only after unlinking contested VMAs
-Date: Wed, 30 Sep 2026 17:28:36 +0200
-Message-ID: <20260930152346.161696533@linuxfoundation.org>
+Subject: [PATCH 6.18 255/395] drm/xe: harden adjust_idledly() against divide-by-zero and overflow
+Date: Wed, 30 Sep 2026 17:28:37 +0200
+Message-ID: <20260930152346.185016346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -46,91 +46,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
 
-commit 24a22fb3c731474b68e986af6804db450fb88617 upstream.
+commit 90f467577ebc28c5bc4ba2f0f1b83a4419fb0740 upstream.
 
-In xe_vm_close_and_put(), external-BO VMAs are queued on the contested
-list for deferred destruction via xe_vma_destroy_unlocked(). However,
-xe_vm_pt_destroy() was previously invoked before processing contested
-VMAs, destroying vm->pt_root while those VMAs were still linked to their
-respective buffer objects (vm_bo->list.gpuva).
+adjust_idledly() has several corner-case issues flagged during review:
 
-If a concurrent thread evicts one of those shared buffer objects,
-xe_bo_trigger_rebind() holding only bo->resv walks the BO's VMAs and, in
-fault mode, calls xe_vm_invalidate_vma() -> xe_pt_zap_ptes(). Because
-vm->pt_root[tile->id] is already NULL, dereferencing pt->level causes a
-NULL ptr deref.
+  1. If xe_gt_clock_init() failed to recognise the crystal clock,
+     gt->info.timestamp_base is 0, which makes idledly_units_ps also 0.
+     The subsequent DIV_ROUND_CLOSEST(..., idledly_units_ps) is then a
+     divide-by-zero and panics the kernel.
 
-Fix this by deferring xe_vm_free_scratch() and xe_vm_pt_destroy() until
-after all contested VMAs have been unlinked and destroyed.
+  2. The tick-to-ns conversions are done in u32:
+        idledly * idledly_units_ps, (maxcnt - 1) * 1000
+     Both overflow u32 before DIV_ROUND_CLOSEST() sees them.
 
-User is reporting hitting a NULL ptr deref in xe_pt_zap_ptes(), which
-could be explained by this race.
+  3. If IDLE_WAIT_TIME reads back as 0, maxcnt evaluates to 0 and
+     the maxcnt - 1 clamp wraps to 0xFFFFFFFF in u32.
 
-Assisted-by: LLM
-Fixes: b06d47be7c83 ("drm/xe: Port Xe to GPUVA")
-Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/9290
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.12+
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260918131034.598078-2-matthew.auld@intel.com
-(cherry picked from commit c2863648959489767f08892fd6e90577d2ea0b6a)
+  4. The register only stores whole ticks, so the clamped ns value has
+     to be converted to ticks and back. DIV_ROUND_CLOSEST() can round
+     that conversion up past maxcnt:
+
+       maxcnt = 640 ns, one tick = 666664 ps
+
+       clamp:        maxcnt - 1        = 639 ns
+       ns -> ticks:  639000 / 666664   = 0.958 -> rounds to 1 tick
+       tick -> ns:    1 * 666664 / 1000 = 667 ns
+
+     667 ns is programmed into RING_IDLEDLY, but 667 >= maxcnt (640),
+     so xe_gt_WARN_ON() fires again on every subsequent init.
+
+Return early if timestamp_base is 0 (the unknown-crystal path).
+Do the conversions in u64 via the *_ULL() helpers so they cannot wrap.
+Clamp with a floor (DIV_ROUND_DOWN_ULL) so the programmed delay stays
+strictly below maxcnt, and guard the maxcnt == 0 case with a zero delay
+while still writing RING_IDLEDLY so INHIBIT_SWITCH_UNTIL_PREEMPTED is
+cleared.
+
+v2: Drop the redundant warn on the timestamp_base == 0 path;
+    xe_gt_clock_init() already warns on an unrecognised crystal clock.
+    Keep the early return to avoid the divide-by-zero. - Vinay
+
+v3: Field-mask the RING_IDLEDLY write with REG_FIELD_PREP(IDLE_DELAY, ...)
+    instead of writing the raw tick count, which could clobber
+    INHIBIT_SWITCH_UNTIL_PREEMPTED and reserved bits. Split the
+    inhibit-switch clear from the maxcnt clamp so a set inhibit bit no
+    longer forces a needless delay overwrite when the delay itself is
+    already valid. Use gt_to_xe(gt) instead of gt_to_xe(hwe->gt).
+
+Fixes: d2de4410a88f ("drm/xe: Apply Wa_16023105232")
+Cc: stable@vger.kernel.org
+Assisted-by: GitHub_Copilot:claude-opus-4.8
+Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+Reviewed-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Link: https://patch.msgid.link/20260916100545.779894-2-tilak.tirumalesh.tangudu@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit d864065ea25e9d12897c175de9176ce46677e176)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c |   21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/xe/xe_hw_engine.c |   27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -1744,21 +1744,13 @@ void xe_vm_close_and_put(struct xe_vm *v
- 		vma->gpuva.flags |= XE_VMA_DESTROYED;
- 	}
- 
--	/*
--	 * All vm operations will add shared fences to resv.
--	 * The only exception is eviction for a shared object,
--	 * but even so, the unbind when evicted would still
--	 * install a fence to resv. Hence it's safe to
--	 * destroy the pagetables immediately.
--	 */
--	xe_vm_free_scratch(vm);
--	xe_vm_pt_destroy(vm);
- 	xe_vm_unlock(vm);
- 
- 	/*
--	 * VM is now dead, cannot re-add nodes to vm->vmas if it's NULL
--	 * Since we hold a refcount to the bo, we can remove and free
--	 * the members safely without locking.
-+	 * Unlink and destroy all contested external-BO VMAs before destroying
-+	 * the page tables. Otherwise, concurrent eviction holding only bo->resv
-+	 * can walk the BO's VMAs and attempt to invalidate/zap page tables that
-+	 * have already been freed.
- 	 */
- 	list_for_each_entry_safe(vma, next_vma, &contested,
- 				 combined_links.destroy) {
-@@ -1766,6 +1758,11 @@ void xe_vm_close_and_put(struct xe_vm *v
- 		xe_vma_destroy_unlocked(vma);
- 	}
- 
-+	xe_vm_lock(vm, false);
-+	xe_vm_free_scratch(vm);
-+	xe_vm_pt_destroy(vm);
-+	xe_vm_unlock(vm);
+--- a/drivers/gpu/drm/xe/xe_hw_engine.c
++++ b/drivers/gpu/drm/xe/xe_hw_engine.c
+@@ -577,22 +577,37 @@ static void adjust_idledly(struct xe_hw_
+ 	u32 idledly_units_ps = 8 * gt->info.timestamp_base;
+ 	u32 maxcnt_units_ns = 640;
+ 	bool inhibit_switch = 0;
++	bool wa_applied = false;
 +
- 	xe_svm_fini(vm);
++	if (!IS_SRIOV_VF(gt_to_xe(gt)) && XE_GT_WA(gt, 16023105232)) {
++		/* xe_gt_clock_init() warns and zeroes timestamp_base on unknown crystal clock. */
++		if (!idledly_units_ps)
++			return;
  
- 	up_write(&vm->lock);
+-	if (!IS_SRIOV_VF(gt_to_xe(hwe->gt)) && XE_GT_WA(gt, 16023105232)) {
+ 		idledly = xe_mmio_read32(&gt->mmio, RING_IDLEDLY(hwe->mmio_base));
+ 		maxcnt = xe_mmio_read32(&gt->mmio, RING_PWRCTX_MAXCNT(hwe->mmio_base));
+ 
+ 		inhibit_switch = idledly & INHIBIT_SWITCH_UNTIL_PREEMPTED;
+ 		idledly = REG_FIELD_GET(IDLE_DELAY, idledly);
+-		idledly = DIV_ROUND_CLOSEST(idledly * idledly_units_ps, 1000);
++		idledly = DIV_ROUND_CLOSEST_ULL((u64)idledly * idledly_units_ps, 1000);
+ 		maxcnt = REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt);
+ 		maxcnt *= maxcnt_units_ns;
+ 
+-		if (xe_gt_WARN_ON(gt, idledly >= maxcnt || inhibit_switch)) {
+-			idledly = DIV_ROUND_CLOSEST(((maxcnt - 1) * 1000),
+-						    idledly_units_ps);
+-			xe_mmio_write32(&gt->mmio, RING_IDLEDLY(hwe->mmio_base), idledly);
++		/* Clear the inhibit switch without disturbing a valid delay. */
++		if (inhibit_switch)
++			wa_applied = true;
++
++		if (xe_gt_WARN_ON(gt, idledly >= maxcnt)) {
++			/* Floor below maxcnt; write 0 to still clear the inhibit bit. */
++			idledly = maxcnt ?
++				DIV_ROUND_DOWN_ULL((u64)(maxcnt - 1) * 1000,
++						   idledly_units_ps) : 0;
++			wa_applied = true;
+ 		}
++
++		if (wa_applied)
++			xe_mmio_write32(&gt->mmio, RING_IDLEDLY(hwe->mmio_base),
++					REG_FIELD_PREP(IDLE_DELAY, idledly));
+ 	}
+ }
+ 
 
 
