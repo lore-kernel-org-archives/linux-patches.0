@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E8F4ED1A1;
-	Wed, 30 Sep 2026 17:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD5A4ED1A1;
+	Wed, 30 Sep 2026 17:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789675; cv=none; b=LvdkaxmCwDFj0WuIF9dEfGkSSsBunjLDB/MUmhAANSD+s8JoIoAcdLTFcfGwJzylntB5LVVowXKdJyPUOz/6QNK44soa/GbEauQqAKpZ2M7a1R/tZ/OvUtaat06fGU33tlZgfeKbdWRnx7+XmPosi+pN7zv0DzkGEqJTVN21RYQ=
+	t=1790789676; cv=none; b=UJMwzocsqwd/2khFA0Bgp8cmHHWAOoZbwCdl0PD9a/qjrwLPkqTM9ohEKaD7S+cIGrqqwu3SqeMc73I25R4QzV7cNZk3fgLxXPqcZxIQB53ejYgXwYX96NLLNtRCCRlI8lZNnCnlt4+Mk2qMBErn1ebSIKbGLt+rcNJ5tZQVn+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789675; c=relaxed/simple;
-	bh=I5ZJb4KKXYxee11FK/ReKfQLzFFo0JvC01GHpAtc26Y=;
+	s=arc-20240116; t=1790789676; c=relaxed/simple;
+	bh=k0yF4zkl+Ch+oLpkcIjHv0Ps3Z+nKctTNqXRi4N15rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bzj/RZUa3DhRo0XlpfuoBytKC5XI8apPgc4AsbbnF052w2DBS0ZOM1+fuBFnWpvsYnyG1YrGpn2HUL+nKAKdj/KpNjhNX4c6iJDuQkwIVLzONtBI3g2wrFUJcM03dBwQXa3qlohimp8h1OMYR6ZrusYnbj1QEv1Nq+rN9sSowuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DChKxkUU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bz2s7T5FgNINUM8KKX+kLYoegsNKfcHqKuaoCzfDXkD5EPaSEpn2wFfyDChui7ne+rxO6hh8DP7z+BzqqRU5QhFbByQPcR51B1/s+Bx4l3AYJAAL+TAktTco3lqSHLfiZOIM2Hi4U1uVyGp2jYsJrybzZ030CShpp4hJV7u/dPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EvCraeM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DChKxkUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DAF1F000FF;
-	Wed, 30 Sep 2026 17:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EvCraeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA131F00898;
+	Wed, 30 Sep 2026 17:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789672;
-	bh=JkaA6oClvt8GrVfNIV1hN2JJX+s2zNO7RDOHiMjgSNg=;
+	s=korg; t=1790789675;
+	bh=3XQWKrI1rsTjTsJt2SXla0wPCDpqrsYhBqSdKHe3ihg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DChKxkUUGC6ljToQcLsuuP+rhUbZtbw6/dADKwOYCuxcHqwyWkytcNmWnuRCu5Xuo
-	 0S1NL46D3kEM3Jo0YX3ABRT5WQcElITVV0uewkpNBzoWwT2xliPW1zh/5OuIBmireV
-	 SLkeEGuaUW3zPeblW3KRxNE3YlSoIsT3k5KRipow=
+	b=2EvCraeMlmpt7/1Z8htVHN1uOufAAt2JNrzN6mprm5Hroy9avJfep4gv/nSfonDn8
+	 6xMCcLyuV3Ij2nE147nNNbzWdDd3zfSOwAzXj69ZY8hF8C0GZXE7djpliFpZqc6Dfj
+	 k31i8E+2MFgjHjiVA9F6exFiEAfT3WqZF4aUPPsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 561/877] sched/core: Make core-sched flips wait for in-flight selections
-Date: Wed, 30 Sep 2026 17:24:32 +0200
-Message-ID: <20260930152426.749028159@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.12 544/877] smb: client: fix create context out-of-bounds reads
+Date: Wed, 30 Sep 2026 17:24:15 +0200
+Message-ID: <20260930152426.380272926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,108 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit f3629c63a4af3e491381780bc6c123cb498c4c40 ]
+commit 67f4c1c6a1b51e203d986779299824d1c2c590a6 upstream.
 
-Core scheduling's pick_next_task() operates on all sibling rqs under one
-acquisition of the shared core-wide lock. A ->pick_task() that releases the
-rq lock leaves every sibling __lock momentarily free, letting
-__sched_core_flip(false) complete mid-selection and rebind rq_lockp() under
-it. The selection resumes on the split locks, touching sibling state it no
-longer protects, and __schedule() finally releases a lock that was never
-taken while leaking the one that was.
+smb2_parse_contexts() validates the complete create-context area but
+does not limit each record to its Next field before dispatching it.  A
+malformed chain can therefore expose bytes beyond the current context to
+a handler.  The QFid handler also used a full response-structure cast
+although it only reads DiskFileId.
 
-Count in-flight core-wide selections in the leader's rq->core_pick_in_flight
-and make __sched_core_flip() wait for the count to drain. The count only
-changes under the shared lock, which the flip holds while sampling, so no
-other ordering is needed. The wait can repeat while selections overlap, but
-the flip backs off between samples and flips are rare cookie-lifetime
-events.
+The SMB2/SMB3 lease parsers made the same layout assumption: they read
+LeaseState and LeaseFlags at canonical offsets rather than at
+DataOffset.  A valid non-canonical DataOffset could therefore yield
+unrelated in-bounds data, while a short DataLength was still accepted.
 
-sched_core_cpu_deactivate() moves the count to the new leader - a stale copy
-left behind would bias it forever if that CPU later returns as its own
-leader.
+Limit each context to its Next value, reject offsets before the context
+header, and reject malformed chains.  Bound the name range by the current
+context and do not dispatch a known handler when DataLength is zero.  Read
+the QFid DiskFileId only when the context data covers that field.  Parse the
+lease context from DataOffset and require DataLength to match the v1 or v2
+lease_context size used by ksmbd.  A size mismatch skips lease parsing
+without failing the open.
 
-Fixes: 539f65125d20 ("sched: Add core wide task selection and scheduling")
-Cc: stable@vger.kernel.org # v5.14+
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b8c32dbb0deb ("CIFS: Request SMB2.1 leases")
+Fixes: f047390a097e ("CIFS: Add create lease v2 context for SMB3")
+Fixes: 89a5bfa350fa ("smb3: optimize open to not send query file internal info")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Tested-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c  |   22 ++++++++++++++++++++++
- kernel/sched/sched.h |    1 +
- 2 files changed, 23 insertions(+)
+ fs/smb/client/smb2ops.c |   28 ++++++++++++++++++++--------
+ fs/smb/client/smb2pdu.c |   44 ++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 54 insertions(+), 18 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -401,6 +401,17 @@ static void __sched_core_flip(bool enabl
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4405,25 +4405,37 @@ smb3_create_lease_buf(u8 *lease_key, u8
+ static __u8
+ smb2_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
+ {
+-	struct create_lease *lc = (struct create_lease *)buf;
++	struct create_context *cc = buf;
++	struct lease_context lc;
  
- 		sched_core_lock(cpu, &flags);
+ 	*epoch = 0; /* not used */
+-	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
++	if (le32_to_cpu(cc->DataLength) != sizeof(lc))
++		return 0;
++
++	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
++	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
+ 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
+-	return le32_to_cpu(lc->lcontext.LeaseState);
++	return le32_to_cpu(lc.LeaseState);
+ }
  
-+		/*
-+		 * A core-wide selection may have the shared rq lock temporarily
-+		 * released by a lock-dropping ->pick_task(). Flipping would
-+		 * rebind rq_lockp() under it. Wait it out.
-+		 */
-+		while (cpu_rq(cpu)->core->core_pick_in_flight) {
-+			sched_core_unlock(cpu, &flags);
-+			cpu_relax();
-+			sched_core_lock(cpu, &flags);
+ static __u8
+ smb3_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
+ {
+-	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
++	struct create_context *cc = buf;
++	struct lease_context_v2 lc;
++
++	if (le32_to_cpu(cc->DataLength) != sizeof(lc)) {
++		*epoch = 0;
++		return 0;
++	}
+ 
+-	*epoch = le16_to_cpu(lc->lcontext.Epoch);
+-	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
++	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
++	*epoch = le16_to_cpu(lc.Epoch);
++	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
+ 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
+ 	if (lease_key)
+-		memcpy(lease_key, &lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+-	return le32_to_cpu(lc->lcontext.LeaseState);
++		memcpy(lease_key, lc.LeaseKey, SMB2_LEASE_KEY_SIZE);
++	return le32_to_cpu(lc.LeaseState);
+ }
+ 
+ static unsigned int
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2296,11 +2296,17 @@ create_reconnect_durable_buf(struct cifs
+ static void
+ parse_query_id_ctxt(struct create_context *cc, struct smb2_file_all_info *buf)
+ {
+-	struct create_disk_id_rsp *pdisk_id = (struct create_disk_id_rsp *)cc;
++	u16 doff = le16_to_cpu(cc->DataOffset);
++	u32 dlen = le32_to_cpu(cc->DataLength);
++	u8 *beg;
+ 
+-	cifs_dbg(FYI, "parse query id context 0x%llx 0x%llx\n",
+-		pdisk_id->DiskFileId, pdisk_id->VolumeId);
+-	buf->IndexNumber = pdisk_id->DiskFileId;
++	if (dlen < sizeof(__le64))
++		return;
++
++	beg = (u8 *)cc + doff;
++	memcpy(&buf->IndexNumber, beg, sizeof(__le64));
++	cifs_dbg(FYI, "parse query id context 0x%llx\n",
++		 le64_to_cpu(buf->IndexNumber));
+ }
+ 
+ static void
+@@ -2348,6 +2354,7 @@ int smb2_parse_contexts(struct TCP_Serve
+ 	struct smb2_create_rsp *rsp = rsp_iov->iov_base;
+ 	struct create_context *cc;
+ 	size_t rem, off, len;
++	size_t cc_len;
+ 	size_t doff, dlen;
+ 	size_t noff, nlen;
+ 	char *name;
+@@ -2370,29 +2377,41 @@ int smb2_parse_contexts(struct TCP_Serve
+ 		buf->IndexNumber = 0;
+ 
+ 	while (rem >= sizeof(*cc)) {
++		off = le32_to_cpu(cc->Next);
++		if (off) {
++			if ((off & 0x7) || off >= rem || off < sizeof(*cc))
++				return -EINVAL;
++			cc_len = off;
++		} else {
++			cc_len = rem;
 +		}
 +
- 		for_each_cpu(t, smt_mask)
- 			cpu_rq(t)->core_enabled = enabled;
+ 		doff = le16_to_cpu(cc->DataOffset);
+ 		dlen = le32_to_cpu(cc->DataLength);
+-		if (check_add_overflow(doff, dlen, &len) || len > rem)
++		if (doff < sizeof(*cc) ||
++		    check_add_overflow(doff, dlen, &len) || len > cc_len)
+ 			return -EINVAL;
  
-@@ -6092,6 +6103,8 @@ pick_next_task(struct rq *rq, struct rq_
- 		return __pick_next_task(rq, rf);
+ 		noff = le16_to_cpu(cc->NameOffset);
+ 		nlen = le16_to_cpu(cc->NameLength);
+-		if (noff + nlen > doff)
++		if (noff < sizeof(*cc) ||
++		    check_add_overflow(noff, nlen, &len) || len > cc_len ||
++		    (dlen && len > doff))
+ 			return -EINVAL;
+ 
+ 		name = (char *)cc + noff;
+ 		switch (nlen) {
+ 		case 4:
+-			if (!strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
++			if (dlen && !strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
+ 				*oplock = server->ops->parse_lease_buf(cc, epoch,
+ 								       lease_key);
+-			} else if (buf &&
++			} else if (dlen && buf &&
+ 				   !strncmp(name, SMB2_CREATE_QUERY_ON_DISK_ID, 4)) {
+ 				parse_query_id_ctxt(cc, buf);
+ 			}
+ 			break;
+ 		case 16:
+-			if (posix && !memcmp(name, smb3_create_tag_posix, 16))
++			if (dlen && posix && !memcmp(name, smb3_create_tag_posix, 16))
+ 				parse_posix_ctxt(cc, buf, posix);
+ 			break;
+ 		default:
+@@ -2404,13 +2423,18 @@ int smb2_parse_contexts(struct TCP_Serve
+ 		}
+ 
+ 		off = le32_to_cpu(cc->Next);
+-		if (!off)
++		if (!off) {
++			rem = 0;
+ 			break;
++		}
+ 		if (check_sub_overflow(rem, off, &rem))
+ 			return -EINVAL;
+ 		cc = (struct create_context *)((u8 *)cc + off);
  	}
  
-+	rq->core->core_pick_in_flight++;
++	if (rem)
++		return -EINVAL;
 +
- 	/*
- 	 * If there were no {en,de}queues since we picked (IOW, the task
- 	 * pointers are all still valid), and we haven't scheduled the last
-@@ -6286,6 +6299,7 @@ pick_next_task(struct rq *rq, struct rq_
- 	}
+ 	if (rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
+ 		*oplock = rsp->OplockLevel;
  
- out_set_next:
-+	rq->core->core_pick_in_flight--;
- 	put_prev_set_next_task(rq, rq->donor, next);
- 	if (rq->core->core_forceidle_count && next == rq->idle)
- 		queue_core_balance(rq);
-@@ -6483,6 +6497,13 @@ static void sched_core_cpu_deactivate(un
- 	core_rq->core_forceidle_occupation = rq->core_forceidle_occupation;
- 
- 	/*
-+	 * A stale leftover would bias the count forever if this CPU later
-+	 * returns as its own leader. Move, don't copy.
-+	 */
-+	core_rq->core_pick_in_flight       = rq->core_pick_in_flight;
-+	rq->core_pick_in_flight            = 0;
-+
-+	/*
- 	 * Accounting edge for forced idle is handled in pick_next_task().
- 	 * Don't need another one here, since the hotplug thread shouldn't
- 	 * have a cookie.
-@@ -8553,6 +8574,7 @@ void __init sched_init(void)
- 		rq->core_forceidle_count = 0;
- 		rq->core_forceidle_occupation = 0;
- 		rq->core_forceidle_start = 0;
-+		rq->core_pick_in_flight = 0;
- 
- 		rq->core_cookie = 0UL;
- #endif
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1330,6 +1330,7 @@ struct rq {
- 	unsigned int		core_forceidle_seq;
- 	unsigned int		core_forceidle_occupation;
- 	u64			core_forceidle_start;
-+	unsigned int		core_pick_in_flight;
- #endif /* CONFIG_SCHED_CORE */
- 
- 	/* Scratch cpumask to be temporarily used under rq_lock */
 
 
