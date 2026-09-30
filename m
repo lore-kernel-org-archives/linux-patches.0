@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE2234E66AD;
-	Wed, 30 Sep 2026 15:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A803A4D9575;
+	Wed, 30 Sep 2026 15:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783632; cv=none; b=Z6jEdsxQi9TiGDqOKYBFqcp8+3TFO6wWK0b+7mRwfCAdqqIMw4iomMIEd0zsi1vA/jJqJprpwIKEeF7mHZmFvnccZ99sXPWWvFjcrdUZto+6zOrWNLto5iYFWcww7ejOfkBSDCleNSdyVIKXfe9fPIgBw7Pu4CO2+LUr0uVCLh0=
+	t=1790783635; cv=none; b=TtAvoVqlRC7I9m/1lV40/AVSUunTyksx4FFXD+kyBd23+R/NL4QZlCxPRCyTytFUThP4IC+liUOaQthvJ8OOFGya6S/aVemP2xkgtcDdQ7AAWYM2qv9rxUIEL1FXu/lpIP+zDM4xMB7h8hGWW9U4Pxu1tIrSNOww9kCbm/Biux8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783632; c=relaxed/simple;
-	bh=mMr5fWY5AKRy5hJZixVc1TCu2wI/FvYlalm9x4WjT0Y=;
+	s=arc-20240116; t=1790783635; c=relaxed/simple;
+	bh=F4KheF05c7iDyLpoI/EY6c3oj25REX3pzpPNaVXT7JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ov6YBZZdwSnNGkCgfBpn8BIEDI/mEjHX3b+pMGHj22ORRwQbqAS1DKTcxQ8xubb7S7gKXUevVKFkYhBBtqh7GvpEiFYBxmCIVU3DY8c7Fk0sOBDUtaQ4B+++ZPCZZDckm0GFGx7Mwbh3a9+WzppF4zHYPLpq/1lu2azSeIa+jHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppuMEfur; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dyU+vNZesosVnuLVGoXuRzoTh9338isYe2TaU3Q2fXJH6ugT+hZWZxdMlLKJj97zvbNjNJ0AXHMZFrujyt2gZ95lMbCA9bnQOmTryEkeFqp19y9WGHhYI9+BDgoJslxp1zcw37ktwswgkNF8bX6SlyqDsrtupUSZFbO/bdUW+Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/yF6hbY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppuMEfur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5911F00893;
-	Wed, 30 Sep 2026 15:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/yF6hbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF361F000FF;
+	Wed, 30 Sep 2026 15:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783628;
-	bh=CYp+820xH/EITlT8ft91uycWfwN/H9p0vXM7hNyQ3fg=;
+	s=korg; t=1790783631;
+	bh=2gIU1Tj6Lz7yDTFUmWnDInHHOmoiowkb+VOr2IUPdQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ppuMEfurqfdalJuUJhEYRQW/vfCI7KPgmGEjal8nrkqGbfxYD7fmkKKPO2EJfi5rv
-	 tUCizgvuRLxPOZXcSsheNpZvVk5LVHcP1YA3THoX+fns+AMn2gs2+gvqWXC+0ZfP+k
-	 2oUvjPF8AKdq0YoTyERe/zQbeEGfS2sy94dIiGBc=
+	b=l/yF6hbY+/XM8X/X13HhMzbnrxuMH7+rKdq4ZGscsCkSu7lTl73kms6xaxkHIj6ED
+	 bYJEeLveBlIUeY/yO8B5aeJYBmJGPWHJ/VnI8pZBlNTq9MpcsXKv68Ihqxt0m/LWF/
+	 +sptH0B3Iu+QpXUg5bX9sGg2xKQn1JApNI9HK6sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 449/595] Input: evdev - zero absinfo before partial copy in EVIOCSABS
-Date: Wed, 30 Sep 2026 17:25:42 +0200
-Message-ID: <20260930152357.337897565@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 467/595] wifi: wilc1000: fix RX buffer OOB-write in wilc_wlan_handle_isr_ext()
+Date: Wed, 30 Sep 2026 17:26:00 +0200
+Message-ID: <20260930152357.725705198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -44,58 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 8b852965b8eaf910c314dc346967ed82c8d4f235 upstream.
+commit c1ba7f7f18465e259cf1b4d9c73fc73853d7f790 upstream.
 
-The EVIOCSABS handler copies at most the user supplied ioctl size into
-an uninitialized on-stack struct input_absinfo:
+wilc_wlan_handle_isr_ext() takes the RX transfer size from the
+device-reported interrupt status register (a 15-bit field shifted left by 2,
+up to 131068 bytes) and reads that many bytes from the device into
+rx_buffer, which is only WILC_RX_BUFF_SIZE (96K) large. The wrap
+check only handles the current offset; the size itself is never
+compared against the buffer, so a bogus SDIO device can make the driver
+OOB-write rx_buffer by up to ~32K with data it controls.
 
-	if (copy_from_user(&abs, p, min_t(size_t,
-			size, sizeof(struct input_absinfo))))
+The oversized transfer also leaves rx_buffer_offset past the end of
+the buffer, after which the unsigned wrap check stops working and
+the overflow can repeat.
 
-The size comes from _IOC_SIZE() of the ioctl command and is therefore
-fully controlled by userspace. A short size leaves the trailing part of
-the structure holding whatever was on the kernel stack, and the whole
-structure is then stored into the device:
+Drop any transfer whose size exceeds the RX buffer, acknowledging
+the data interrupt and re-arming the RX engine so the bogus frame is
+discarded and reception can continue. This also restores the
+rx_buffer_offset <= WILC_RX_BUFF_SIZE invariant the wrap check
+relies on.
 
-	dev->absinfo[t] = abs;
+This is not expected to change driver behavior in most cases:
+without this check, an oversized transfer would most likely
+corrupt neighboring kernel memory instead of completing anyway, and
+the drop path performs the same interrupt acknowledgment and RX
+engine re-arming as the normal path, so subsequent transfers are
+received unaffected.
 
-EVIOCGABS hands that back to userspace, disclosing the stale stack
-bytes. Only the resolution field is currently cleared, which covers the
-legacy struct layout but not an arbitrarily short size.
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-Zero the structure before the copy so any part not supplied by the
-caller reads back as zero. The existing resolution fixup is kept, since
-it also handles a size that partially overlaps that field.
-
-Fixes: 448cd1664a57 ("Input: evdev - rearrange ioctl handling")
+Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
-Link: https://patch.msgid.link/20260901130629.24078-2-ivanrwcm25@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/7c971924c6bdccf6c2f75704a5a746e9303aaf64@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/evdev.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/microchip/wilc1000/wlan.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/input/evdev.c
-+++ b/drivers/input/evdev.c
-@@ -1231,6 +1231,8 @@ static long evdev_do_ioctl(struct file *
+--- a/drivers/net/wireless/microchip/wilc1000/wlan.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
+@@ -771,6 +771,15 @@ static void wilc_wlan_handle_isr_ext(str
+ 	if (size <= 0)
+ 		return;
  
- 			t = _IOC_NR(cmd) & ABS_MAX;
- 
-+			memset(&abs, 0, sizeof(abs));
++	/* A size exceeding the RX buffer is bogus; drop the transfer
++	 * instead of overflowing the buffer.
++	 */
++	if (size > WILC_RX_BUFF_SIZE) {
++		wilc->hif_func->hif_clear_int_ext(wilc,
++						  DATA_INT_CLR | ENABLE_RX_VMM);
++		return;
++	}
 +
- 			if (copy_from_user(&abs, p, min_t(size_t,
- 					size, sizeof(struct input_absinfo))))
- 				return -EFAULT;
+ 	if (WILC_RX_BUFF_SIZE - offset < size)
+ 		offset = 0;
+ 
 
 
