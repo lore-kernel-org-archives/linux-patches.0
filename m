@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE2C4BFE95;
-	Wed, 30 Sep 2026 17:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FAE4F4CF1;
+	Wed, 30 Sep 2026 17:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788230; cv=none; b=N28l3n2RI/8TvJD/tyUtFWWzpw2G/cdgTxZHgTogY1n2aM7fhQMiz0Q0DwgsB6DEPZ+ipdKLJEb2zuwRvDJZG43wGzlX1dpYEpJ4Fc+udQZeYCOFWjTBqhionMCQxhcGwEq34cfI5GP9C6GP2JsmfCkHIaMDL4nPt2stw2lPGC4=
+	t=1790788233; cv=none; b=K/WP7VnNoWulzjCb3SrodTqimW7nXIjfea9l5bqdRbLS7ARRQr9WJF/BxTngNcgMRJK7HS6mVJerSVuuPtkPy3pgRNvqb6zmVtnLIpBVXzgy7rGH+VjihtihbNUrvdJ1RKxW3HZi1BMMdIRk8rw5GQe8uc7uxt5fFim+dYEltsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788230; c=relaxed/simple;
-	bh=/m8pl5GUN3xIux1bp6Iuzb/IdJsDw+JLwnKHS30ypHY=;
+	s=arc-20240116; t=1790788233; c=relaxed/simple;
+	bh=pldeimZ/ecWWmIQBQtVKUHQvflKXAOsnKLJVeH0wyes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kn+5qjS8okXXM4hlKbRnnqGttyofJScpojMvM8gCouD1DcsUkRYqBqT/9g/oiRAF9WoL2HXKlzbhuqXaINWYndHkbpK+r7AZq49b1z1o/jVA72UBQuDP9MF/gsN72rcCY/M8oQ9AAPM7n6UL943ZKSAaOJ54/D+Kq68HFPoUzLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA9iTCq5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IRqqSkn0sfEGupEPM2NmCbwERp05pczslRr9Qj4w+T9TL44iS33hLghW1zyrybV0aDQx67bhw0yv+zxOS08vILNsibrkP5v1p33YNOrmq2302WN5m8Zx7N/n4VlYV753W248ThsZOwaPAXMvVJ3Cb6yZBWM2X9K8fDZijMR9vzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVMYN8xn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA9iTCq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57741F000FF;
-	Wed, 30 Sep 2026 17:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVMYN8xn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D3C1F000FF;
+	Wed, 30 Sep 2026 17:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788229;
-	bh=VbLfVQdWXKXt+1wXFDYTIk16kJRiu2Spq9uW4JrVlTo=;
+	s=korg; t=1790788232;
+	bh=K9bGTOU7xOMlrhUALPgqBBs3bQ+40XDY98MC8It/rYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RA9iTCq5DIZ5M306Neb1WzQjYZtbDbGr0yZhckUmqCKFdeN4+O+XqzuXHrT1SH1Eh
-	 vnlVMgAnfqkQrJ+d918znwBLDuFwCbJ+IJ8lh5b4XPwYbvA5Kamvmr3rr8qjz7C5b4
-	 UTz1S9QDUJTYvCi3Av8mD+CPeLgD5C57MR6+S8wg=
+	b=iVMYN8xnjSu4+MlmMD07vV4jzEqnjq/tn92Dm7W8veWDE+lgwlZdSPoQ3FM1r+kt1
+	 6YenO77Hk7vyOPq4hbEUs3DL6ItnEI27J1uJr1phJOmkjiu19aFj4U5xr1g4SfrkDy
+	 LB7ZvC18d6POwAK16CC4d85fTXrHXN8fO8YhvS/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/877] dma-coherent: Warn if OF reserved memory is beyond current coherent DMA mask
-Date: Wed, 30 Sep 2026 17:16:01 +0200
-Message-ID: <20260930152415.826979414@linuxfoundation.org>
+Subject: [PATCH 6.12 051/877] dma-coherent: report a failed reserved memory assignment
+Date: Wed, 30 Sep 2026 17:16:02 +0200
+Message-ID: <20260930152415.849025806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,67 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 89461db349cc00816c01d55507d511466b3b7151 ]
+[ Upstream commit 504981db4f69bdd28054fb98c96a3a67f7248dde ]
 
-When a reserved memory region described in the device tree is attached
-to a device, it is expected that the device's limitations are correctly
-included in that description.
+rmem_dma_device_init() drops the return value of
+dma_assign_coherent_memory() and always reports success. That call fails
+with -EBUSY when the device already has a coherent pool, and the file
+allows only "*one* such region of memory" per device.
 
-However, if the device driver failed to implement DMA address masking
-or addressing beyond the default 32 bits (on arm64), then bad things
-could happen because the DMA address was truncated, such as playing
-back audio with no actual audio coming out, or DMA overwriting random
-blocks of kernel memory.
+of_reserved_mem_device_init_by_idx() reads the zero as success. It logs
+"assigned reserved memory node" for a region that was not assigned and
+records the pairing, so of_reserved_mem_device_release() later runs
+rmem_dma_device_release() for it. That clears dev->dma_mem without
+looking at which region it was called for, dropping the pool the device
+did get and leaving it on ordinary memory.
 
-Check against the coherent DMA mask when the memory regions are attached
-to the device. Give a warning when the memory region can not be covered
-by the mask.
+dma_declare_coherent_memory() checks the same call and releases the
+memory on failure, and rmem_swiotlb_device_init() propagates its own
+errors. Return the error here as well, so a device tree that assigns two
+pools to one device fails the probe instead of half working.
 
-A warning instead of a hard error was chosen, because it is possible
-that existing drivers could be working fine even if they forgot to
-extend the coherent DMA mask.
-
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Fixes: 7bfa5ab6fa1b ("drivers: dma-coherent: add initialization from device tree")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20260905074727.108029-1-donggeunyoo.kernel@gmail.com
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20250421083930.374173-1-wenst@chromium.org
-Stable-dep-of: 504981db4f69 ("dma-coherent: report a failed reserved memory assignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/coherent.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ kernel/dma/coherent.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
-index 3b2bdca9f1d4b..77c8d9487a9ab 100644
+index 77c8d9487a9ab..87f2f02e921a6 100644
 --- a/kernel/dma/coherent.c
 +++ b/kernel/dma/coherent.c
-@@ -336,16 +336,22 @@ static phys_addr_t dma_reserved_default_memory_size __initdata;
+@@ -351,8 +351,7 @@ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
+ 	    min_not_zero(dev->coherent_dma_mask, dev->bus_dma_limit))
+ 		dev_warn(dev, "reserved memory is beyond device's set DMA address range\n");
  
- static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
- {
--	if (!rmem->priv) {
--		struct dma_coherent_mem *mem;
-+	struct dma_coherent_mem *mem = rmem->priv;
- 
-+	if (!mem) {
- 		mem = dma_init_coherent_memory(rmem->base, rmem->base,
- 					       rmem->size, true);
- 		if (IS_ERR(mem))
- 			return PTR_ERR(mem);
- 		rmem->priv = mem;
- 	}
--	dma_assign_coherent_memory(dev, rmem->priv);
-+
-+	/* Warn if the device potentially can't use the reserved memory */
-+	if (mem->device_base + rmem->size - 1 >
-+	    min_not_zero(dev->coherent_dma_mask, dev->bus_dma_limit))
-+		dev_warn(dev, "reserved memory is beyond device's set DMA address range\n");
-+
-+	dma_assign_coherent_memory(dev, mem);
- 	return 0;
+-	dma_assign_coherent_memory(dev, mem);
+-	return 0;
++	return dma_assign_coherent_memory(dev, mem);
  }
  
+ static void rmem_dma_device_release(struct reserved_mem *rmem,
 -- 
 2.53.0
 
