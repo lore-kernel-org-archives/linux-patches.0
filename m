@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651131E5B9A;
-	Wed, 30 Sep 2026 16:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B474511E66;
+	Wed, 30 Sep 2026 16:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786911; cv=none; b=eDbNfbSb5hhot94lHpq+OWIxK7cvA4xYdf3C3x8O3QGgW3PD8IIIar8u1792oLx32Jwpl7KcA9FqUR0w4w5dc3iXXTwPMc7kyEQI2/FK/mCotJSaqx6UWopxRtmaOZY/p6NNF8u0YKs1SAfnPqptYeb45J+arTh9flNNxiDuqzY=
+	t=1790786914; cv=none; b=CFuGfkieSXiQokrIY7b/uddCfZRFdeOfQfHLPjFIWv78QpIu45Zez6DxyPEaPBNy8A7vcTVOqzGx5jXuK76LqiUZi0IXH/x+0GKaaeXc8zZpEE2WBlt4ND3YtIVToh3IxVJoqK/xlrq031y5lfhNxNi/3i+G4DoapjXpdrvfaLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786911; c=relaxed/simple;
-	bh=w8eSfT1GiLl71oWkUrk6uq93jch9JACh+Tl0nZLX9lw=;
+	s=arc-20240116; t=1790786914; c=relaxed/simple;
+	bh=d+h449J1SkzyBp5wwztOj0iSdx9VEzooaeCqSbIaDRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ax747C4FBirHXJtVCbi1tjQeVzBfEmv6wx/50kJllb/O5VmdQ5jeogOKhNUihQi3VgIT4MXKHTC20EVpZUBzCuuQV4g4jQnQJK6XCfEBTHu/0YmYVFUInC+RmNoOPFNPXZL+aaFVdsz8MqAdi8U04pkb1Xrh99DC/ZxTRizfiE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7QTBJR9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m0bG0CCju0477IFH/6fKzy9lxaf5SU/RlSbeCbrDxwqAWGFvnmOitIPmJIok0l0wwL5TLpbDymMThqFHiGecn1x9IFH72rcdHkmsY7FXHCK9RVeNZPGL7Z/sltDRhLbbVQZXouTY/9DyyzaoZJ5BL/virZZY3JFVcCPtrdmmxsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oMKGT+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7QTBJR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D651F000FF;
-	Wed, 30 Sep 2026 16:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oMKGT+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954D61F000FF;
+	Wed, 30 Sep 2026 16:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786910;
-	bh=cc0pQ9fnFgR2r3ZYvedNpfrokFsgIqs+xXuhDH4Haqc=;
+	s=korg; t=1790786913;
+	bh=S78R3gr+Qp3DoJegFiyRHgiyLMEWOXkyoamPFd2Ulow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i7QTBJR9WSuBSFDYpehpEDKRVE/eFSDlbHysfUmC1FIhosQ6JX5lTYmILvk7okYLR
-	 eII5OKrZzDiNi+TF0nN98Vhqb2hAKdQRbkLsp9XqrM2J1GQK+stpj/1QJB+Xo+8VaQ
-	 2nkVkgHx6tlTcvCyLlxzXdm/OPZXJ3Zy1SrD7ZAo=
+	b=1oMKGT+IVYHa01JfCiPvGVDYI/fYKaTa6ulIOh9Bq89ozD5/NxEY1xANVzl+Mpoxt
+	 WJZU4zuBSI3H+83O7dkHqFIRDSUX+6rob2s84zV10+LKN3YnQOQ1TZt8A4j7Vupg7l
+	 yMpN5tDEL222C8lc8jxl3lKwqGqIU6u6LwMqxwd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fuad Tabba <fuad.tabba@linux.dev>,
 	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 044/457] KVM: arm64: Do not clear VM-wide SVE feature on vCPU init failure
-Date: Wed, 30 Sep 2026 17:22:29 +0200
-Message-ID: <20260930152346.988654831@linuxfoundation.org>
+Subject: [PATCH 7.2 045/457] KVM: arm64: Derive GUEST_HAS_SVE from the SVE feature bit at EL2
+Date: Wed, 30 Sep 2026 17:22:30 +0200
+Message-ID: <20260930152347.008672258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,66 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit a1b3c788ad31837e348075e93dbba3f447492776 ]
+[ Upstream commit 4f16c5fc8dc4c5596e3777ab9f449a54e3f85fd5 ]
 
-pkvm_vcpu_init_sve() clears KVM_ARM_VCPU_SVE in kvm->arch.vcpu_features
-when it fails, but vcpu_has_sve() tests KVM_ARCH_FLAG_GUEST_HAS_SVE,
-which is left set. Later vCPUs on that VM then skip the SVE setup and
-register with a NULL sve_state, which the guest's first FP access hands
-to sve_load_state().
+pkvm_init_features_from_host() takes KVM_ARCH_FLAG_GUEST_HAS_SVE and
+KVM_ARM_VCPU_SVE from the host separately, but pkvm_vcpu_init_sve()
+tests the bit while vcpu_has_sve() reads the flag. A host that sets the
+flag without the bit gets a vCPU with a NULL sve_state that the world
+switch loads the guest's SVE state from.
 
-Return the error without touching vcpu_features.
+Derive the flag from the bit, and drop the protected path's copy of the
+host's flag, which is dead code since protected VMs are not allowed SVE.
 
-Fixes: 5db1bef93342 ("KVM: arm64: Track SVE state in the hypervisor vcpu structure")
+Fixes: 41d6028e28bd ("KVM: arm64: Convert the SVE guest vcpu flag to a vm flag")
 Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260825085948.1674721-3-fuad.tabba@linux.dev
+Link: https://patch.msgid.link/20260825085948.1674721-5-fuad.tabba@linux.dev
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/pkvm.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/pkvm.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index 095ebfce91b08..73e6ee059eebb 100644
+index 73e6ee059eebb..53532f0c41628 100644
 --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
 +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -451,7 +451,7 @@ static int pkvm_vcpu_init_sve(struct pkvm_hyp_vcpu *hyp_vcpu, struct kvm_vcpu *h
- 	unsigned int sve_max_vl;
- 	size_t sve_state_size;
- 	void *sve_state;
--	int ret = 0;
-+	int ret;
+@@ -360,7 +360,7 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
+ 		if (test_bit(KVM_ARCH_FLAG_WRITABLE_IMP_ID_REGS, &host_arch_flags))
+ 			hyp_vm->kvm.arch.midr_el1 = host_kvm->arch.midr_el1;
  
- 	if (!vcpu_has_feature(vcpu, KVM_ARM_VCPU_SVE)) {
- 		vcpu_clear_flag(vcpu, VCPU_SVE_FINALIZED);
-@@ -462,24 +462,19 @@ static int pkvm_vcpu_init_sve(struct pkvm_hyp_vcpu *hyp_vcpu, struct kvm_vcpu *h
- 	sve_max_vl = min(READ_ONCE(host_vcpu->arch.sve_max_vl), kvm_host_sve_max_vl);
- 	sve_state = kern_hyp_va(READ_ONCE(host_vcpu->arch.sve_state));
+-		return;
++		goto out;
+ 	}
  
--	if (!sve_vl_valid(sve_max_vl) || !sve_state) {
--		ret = -EINVAL;
--		goto err;
+ 	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_MTE))
+@@ -379,13 +379,14 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
+ 	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_PTRAUTH_GENERIC))
+ 		set_bit(KVM_ARM_VCPU_PTRAUTH_GENERIC, allowed_features);
+ 
+-	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_SVE)) {
++	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_SVE))
+ 		set_bit(KVM_ARM_VCPU_SVE, allowed_features);
+-		kvm->arch.flags |= host_arch_flags & BIT(KVM_ARCH_FLAG_GUEST_HAS_SVE);
 -	}
-+	if (!sve_vl_valid(sve_max_vl) || !sve_state)
-+		return -EINVAL;
  
- 	sve_state_size = sve_state_size_from_vl(sve_max_vl);
- 
- 	ret = hyp_pin_shared_mem(sve_state, sve_state + sve_state_size);
- 	if (ret)
--		goto err;
-+		return ret;
- 
- 	vcpu->arch.sve_state = sve_state;
- 	vcpu->arch.sve_max_vl = sve_max_vl;
- 
- 	return 0;
--err:
--	clear_bit(KVM_ARM_VCPU_SVE, vcpu->kvm->arch.vcpu_features);
--	return ret;
+ 	bitmap_and(kvm->arch.vcpu_features, host_kvm->arch.vcpu_features,
+ 		   allowed_features, KVM_VCPU_MAX_FEATURES);
++out:
++	__assign_bit(KVM_ARCH_FLAG_GUEST_HAS_SVE, &kvm->arch.flags,
++		     kvm_vcpu_has_feature(kvm, KVM_ARM_VCPU_SVE));
  }
  
- static int vm_copy_id_regs(struct pkvm_hyp_vcpu *hyp_vcpu)
+ static void unpin_host_vcpu(struct kvm_vcpu *host_vcpu)
 -- 
 2.53.0
 
