@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F615172E7;
-	Wed, 30 Sep 2026 17:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51488389104;
+	Wed, 30 Sep 2026 17:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787668; cv=none; b=MGxksj0tjM0zbF3dtaT1D2pTek39pfCPivcVkDRfMmmRMkTNtXjqdqy/KGx/DpVze7KtsT/SsQdVsr0IO8nyCQITqGbwKRYUoouRa2BCSRbzbMximz/BDjfHWnCLQG2a+pnCa12x5Zhy0FFTFaZQhrBq7fn2RjtHfHxwAUwcuEA=
+	t=1790787671; cv=none; b=Cm392R3ygoioPl9WSTwgY8xG4iJ+6Ar4/lSWyfiYFb+UZMhfWHsM0xZzNfxYIENR0akih3CUB86NBsdx/t29dRqhkUOmyrb+3mQHORHqwkqIUGkZJ5Gt22rM6ph3T9zERmhPrAI4EklkIw+pdylySknUXoQt5J1Sqi8ZtrQktmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787668; c=relaxed/simple;
-	bh=Lw3yTRzC7oPwDrRe+uTsIb9VvBbXuwioZzl5Jqu8k50=;
+	s=arc-20240116; t=1790787671; c=relaxed/simple;
+	bh=WUNhV7CbV7R0l2rs6hJG3cErX2ZT58vVjMb8wG/XUBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Riu2DfBYUzqH8SLmaqKNZ9etEPzyxHeBKb5dmPO9sKdeHA1zjff1ZokmMPGOZtsVt9k709NiWtcTfLowWNisNcj+hVs8jCCUY8x2NiC3ZP8IwJGzUWIwd5ItwzugzDRtC4VJTdX6JPLwAqzo18oqvze1bEjHgCIOmSzJ/U+RQ58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mttKjZAz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HkXLoRk6pE2d0256gnwaS4aWUygG+DDMEdJ8sGGlv9hSvT7bMuHNe0EQ/K/13gGf+KpxQVb99++dF6ViLLmvagHh4G4nfMqveKgLeEBjlW0w64bXCu3TvsxM18sadEW3Kg7KqrcxyaLhO/YXDQbBW1sBxUCml+TLW4QeRL6PbO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kia4NXk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mttKjZAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8EBF1F000FF;
-	Wed, 30 Sep 2026 17:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kia4NXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06701F000FF;
+	Wed, 30 Sep 2026 17:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787667;
-	bh=/EHowp+7D/8skemuZRlERGOll+49JtqEfFvN9K9QC1I=;
+	s=korg; t=1790787670;
+	bh=ndU7jVExNEOllHRMwdD1NUyCPk7nshdLuvFvTI7zTZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mttKjZAzbMI8w/SY7E4QlSrN9yvfm0fZDobuSC0+jdJa64HPX0O8y1yQ0v9VY3Scu
-	 RI4OjCsWkcIMjfBNFcbNoUGHFx73cd3e1VBVPwq1ybpcBuvNUP4paoG/2dWrafoQQM
-	 UskJ46c8dibxMbHfCF4/P6zCw0vRPJngy55R84GI=
+	b=2kia4NXkzQzzY4C0LfBkBWPIG+eqWfpNiYHG8PTk/CGwn3FrpmhHC37M4A2wBGtEL
+	 fYDxTGHYSlCb7dJEq7dT2bIehGM4oEY6sHJ0kg6MLdDL/NQxO0YB9sOo2Hn39WO72M
+	 4uKbSPtLoRX/UQBfeM7aOu83KYnNOmrybUeg+JQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
+	Jaewook You <jaewook376@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
 	Oscar Salvador <osalvador@suse.de>
-Subject: [PATCH 7.2 312/457] mm/hugetlb: do not dissolve gigantic pages without runtime support
-Date: Wed, 30 Sep 2026 17:26:57 +0200
-Message-ID: <20260930152352.759209999@linuxfoundation.org>
+Subject: [PATCH 7.2 313/457] mm/hugetlb: preserve mremap address delta when skipping page tables
+Date: Wed, 30 Sep 2026 17:26:58 +0200
+Message-ID: <20260930152352.780428358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -55,49 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Jaewook You <jaewook376@gmail.com>
 
-commit a363c62a653cc8b3e21da9545fa4e028ef50f9c3 upstream.
+commit 9bdad082d44bdcf93716973dcba6be77e8a06e7b upstream.
 
-dissolve_free_hugetlb_folio() doesn't check
-hstate_is_gigantic_no_runtime(h) though remove_hugetlb_folio()/
-update_and_free_hugetlb_folio() silently bail for such folios, so it frees
-a still-listed folio and, on vmemmap restore failure, the
-add_hugetlb_folio() rollback corrupts the free list.
+move_hugetlb_page_tables() optimizes mremap() by advancing to the last
+entry in the page table when the source page table does not exist, either
+initially or after unsharing a PMD table.  The common loop increment then
+steps to the first entry in the next page table.
 
-Link: https://lore.kernel.org/20260823044118.1097121-2-xialonglong2025@163.com
-Fixes: 6eb4e88a6d27 ("hugetlb: create remove_hugetlb_page() to separate functionality")
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+However, the code advances both the source and destination addresses to
+the last entries in their respective page tables, which is wrong.  The
+destination address must be advanced only by the same amount as the source
+address.
+
+If the source and destination offsets within their page tables differ, the
+destination address can be advanced too far, causing follow-up issues.
+Fix this by advancing the destination address by the source advance
+distance.
+
+With a reproducer, we were able to trigger a kernel panic on x86-64.  With
+this fix in place, we can no longer reproduce the issue.
+
+Link: https://lore.kernel.org/20260914132352.472-1-jaewook376@gmail.com
+Fixes: e95a9851787b ("hugetlb: skip to end of PT page mapping when pte not present")
+Fixes: 4ddb4d91b82f ("hugetlb: do not update address in huge_pmd_unshare")
+Signed-off-by: Jaewook You <jaewook376@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: Codex:gpt-5.6-sol
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
 Cc: Oscar Salvador <osalvador@suse.de>
 Cc: <stable@vger.kernel.org>
+Assisted-by: LLM
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/hugetlb.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -1977,6 +1977,15 @@ retry:
- 		struct hstate *h = folio_hstate(folio);
- 		bool adjust_surplus = false;
- 
-+		/*
-+		 * remove_hugetlb_folio()/update_and_free_hugetlb_folio() bail
-+		 * for gigantic hstates without runtime support, so dissolving one
-+		 * here would leave it on the free list and, on vmemmap restore
-+		 * failure, the add_hugetlb_folio() rollback corrupts that list.
-+		 */
-+		if (hstate_is_gigantic_no_runtime(h))
-+			goto out;
+@@ -5143,18 +5143,21 @@ int move_hugetlb_page_tables(struct vm_a
+ 	hugetlb_vma_lock_write(vma);
+ 	i_mmap_lock_write(mapping);
+ 	for (; old_addr < old_end; old_addr += sz, new_addr += sz) {
++		const unsigned long offset_to_last_entry =
++			(old_addr | last_addr_mask) - old_addr;
 +
- 		if (!available_huge_pages(h))
- 			goto out;
+ 		src_pte = hugetlb_walk(vma, old_addr, sz);
+ 		if (!src_pte) {
+-			old_addr |= last_addr_mask;
+-			new_addr |= last_addr_mask;
++			old_addr += offset_to_last_entry;
++			new_addr += offset_to_last_entry;
+ 			continue;
+ 		}
+ 		if (huge_pte_none(huge_ptep_get(mm, old_addr, src_pte)))
+ 			continue;
+ 
+ 		if (huge_pmd_unshare(&tlb, vma, old_addr, src_pte)) {
+-			old_addr |= last_addr_mask;
+-			new_addr |= last_addr_mask;
++			old_addr += offset_to_last_entry;
++			new_addr += offset_to_last_entry;
+ 			continue;
+ 		}
  
 
 
