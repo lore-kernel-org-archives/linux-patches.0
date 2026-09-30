@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB70502D5A;
-	Wed, 30 Sep 2026 18:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF903509F06;
+	Wed, 30 Sep 2026 18:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792346; cv=none; b=AA4k6KxvfLwl9OcWbqpEmbBtSczKvUzdeqCwXq3OAoC9zFub8U0Uzg2SG092dhV03Cwt1/II4ibJojd6h++aDy6onlQpEGfVYMz1C41qyNdkRM09vrDEo2UvCPO0MlFXKWiB4S9ihbaDn9KB9af/ROpCcGSWOKN2WIDgxs/4uhE=
+	t=1790792349; cv=none; b=BD42G5QjyT0w6GRm/Pwx9A2raBMFk0IZlSDjxJbCVgWFGdkXktTEs+IBtOfU6T/epnlomLjgCtVHvn+F8KYHB23F5huNvD1X8REntHZJubcgzTP2JOiO9N3USTosDFebFv03UMZGjDYvTCtPtjqFh7Gi+YvSlKeqzMXqmifYQPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792346; c=relaxed/simple;
-	bh=HlzF8hsepzs4gWWZe/hsTv+3J/EJQCxhVcqPIbF12tc=;
+	s=arc-20240116; t=1790792349; c=relaxed/simple;
+	bh=Hox0ftCFlHAPIa+HgJR9xdPEQG03AAc8ODQvHnZ8ODk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIj0v3YmQtoJ1Jnd9GXBXZMwASon/8nIeVtNaGIxImXmpTNwYVXrRnli89FFJIlqMNOFva6WsFddbVxpyKTNsX3pdi/alEM/Szxz+unXlJekehMQhUiJwT8W/BHYcNvA4+uDak6YZO1eLPnawaf3Q8Zk8Kn4lEGdwy5r+wWljag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpDJd0pO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qase0ahIzs7yV0Jj0qYOPGA6/tDgGNzVUBIN6CLePs4usHaKyv8KEEggnHbxrurQHiknp8qrncloHe/UJUix3V9efxZIFtAkzwIxmajDDDO9Zy+gHt4bohRle+3/WDBpTYT/GQb8IswBy87clFycvPPVzAgjCEF9kcfaUavSjo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHrsVnuO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpDJd0pO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541AE1F000FF;
-	Wed, 30 Sep 2026 18:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHrsVnuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9B91F000FF;
+	Wed, 30 Sep 2026 18:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792344;
-	bh=5Fu2ojObzL7FEAUxMCl/BgrErFRQ3qhl5yNdmkwQ4nY=;
+	s=korg; t=1790792347;
+	bh=tR2pYeKxHwoZfuwiCU70dl1UF/VeIGp9Z2BXtjbyEaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LpDJd0pOhu68qgSHuSAJWA8OSIYMsP75uObN70KU0Un3pZimNVjCkTu+w+/L8S8+M
-	 6p3qwUQbkz5KPNIzjOb122EuWorv3xd+AMyohoUFz1KJEkrJe4lOj2NA81us7JGy8U
-	 9h/Wrd3MAP7oallrUdHSPSY1XpUymWvBC1Iu2u50=
+	b=aHrsVnuOMCLfSqqBYTpI6j0rY5iJJWr5uAFJL26LPcuSt+np/Gm3YE/rJEvgPMxja
+	 Hg3X8dME4jlAS3ZxwOWYzNBUqawqbkCLg0Hxd8jwsUoW2ga5rmU4DkDLQXP2VisvwH
+	 5B/3ftfU6lPSoufXzpPqQHt6DtW/qJT5YVtD4Wlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 623/752] net/sched: act_ct: dont WARN on benign flow_offload_alloc() failure
-Date: Wed, 30 Sep 2026 17:28:13 +0200
-Message-ID: <20260930152411.758238015@linuxfoundation.org>
+Subject: [PATCH 5.15 606/752] docs: s390/pci: Improve and update PCI documentation
+Date: Wed, 30 Sep 2026 17:27:56 +0200
+Message-ID: <20260930152411.395912419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,56 +55,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 47abe7a5c4eb53269aca3506446f851572a059a3 ]
+[ Upstream commit 737c4f4a241ca85c597ca2ef1a6f8446bf681ab5 ]
 
-flow_offload_alloc() returns NULL when the conntrack entry is dying
-(e.g. raced with a conntrack flush) or when the GFP_ATOMIC allocation
-fails; both are expected under load and neither is a kernel bug. This
-path runs from softirq on every committed packet, so with
-panic_on_warn=1 an unprivileged user can panic the box just by racing
-a conntrack flush against a `tc ... action ct commit` classifier.
+Update the s390 specific PCI documentation to better reflect current
+behavior and terms such as the handling of Isolated VFs via commit
+25f39d3dcb48 ("s390/pci: Ignore RID for isolated VFs").
 
-Reproduced with a custom repro under QEMU: a small, fixed set of UDP
-flows through `tc filter ... action ct commit` on lo, raced against
-threads flooding bare ctnetlink CT_DELETE (flush) requests. Hits
-WARNING: net/sched/act_ct.c:437 (tcf_ct_flow_table_add(), inlined
-into tcf_ct_act() in this build) within ~15s on the unpatched kernel;
-same setup is clean on the patched kernel. The fix itself is
-behavior-preserving: both branches already did `goto err_alloc`
-before and after, only the WARN is removed.
+Add a descriptions for /sys/firmware/clp/uid_checking which was added
+in commit b043a81ce3ee ("s390/pci: Expose firmware provided UID Checking
+state in sysfs") but missed documentation.
 
-Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
-Reported-by: syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6cc37aba98dac721c415
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915150816.36487-1-ngocthang2710.1999@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Similarly add documentation for the fidparm attribute added by commit
+99ad39306a62 ("s390/pci: Expose FIDPARM attribute in sysfs") and
+add a list of pft values and their names.
+
+Finally improve formatting of the different attribute descriptions by
+adding a separating colon.
+
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260407-uid_slot-v8-1-15ae4409d2ce@linux.ibm.com
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: 4525a9110495 ("s390/pci/docs: Fix sriov_numvfs attribute name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ Documentation/s390/pci.rst | 152 ++++++++++++++++++++++++-------------
+ 1 file changed, 101 insertions(+), 51 deletions(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index df31fa7b5064c..25342f03153fb 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -377,11 +377,10 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
- 	if (test_and_set_bit(IPS_OFFLOAD_BIT, &ct->status))
- 		return;
+diff --git a/Documentation/s390/pci.rst b/Documentation/s390/pci.rst
+index a1a72a47dc960..d4cafd92529f0 100644
+--- a/Documentation/s390/pci.rst
++++ b/Documentation/s390/pci.rst
+@@ -6,6 +6,7 @@ S/390 PCI
  
-+	/* NULL if ct is dying (raced flush) or the atomic alloc failed. */
- 	entry = flow_offload_alloc(ct);
--	if (!entry) {
--		WARN_ON_ONCE(1);
-+	if (!entry)
- 		goto err_alloc;
--	}
+ Authors:
+         - Pierre Morel
++        - Niklas Schnelle
  
- 	if (tcp) {
- 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+ Copyright, IBM Corp. 2020
+ 
+@@ -27,14 +28,16 @@ Command line parameters
+ debugfs entries
+ ---------------
+ 
+-The S/390 debug feature (s390dbf) generates views to hold various debug results in sysfs directories of the form:
++The S/390 debug feature (s390dbf) generates views to hold various debug results
++in sysfs directories of the form:
+ 
+  * /sys/kernel/debug/s390dbf/pci_*/
+ 
+ For example:
+ 
+   - /sys/kernel/debug/s390dbf/pci_msg/sprintf
+-    Holds messages from the processing of PCI events, like machine check handling
++
++    holds messages from the processing of PCI events, like machine check handling
+     and setting of global functionality, like UID checking.
+ 
+   Change the level of logging to be more or less verbose by piping
+@@ -47,87 +50,134 @@ Sysfs entries
+ 
+ Entries specific to zPCI functions and entries that hold zPCI information.
+ 
+-* /sys/bus/pci/slots/XXXXXXXX
++* /sys/bus/pci/slots/XXXXXXXX:
+ 
+-  The slot entries are set up using the function identifier (FID) of the
+-  PCI function. The format depicted as XXXXXXXX above is 8 hexadecimal digits
+-  with 0 padding and lower case hexadecimal digits.
++  The slot entries are set up using the function identifier (FID) of the PCI
++  function as slot name. The format depicted as XXXXXXXX above is 8 hexadecimal
++  digits with 0 padding and lower case hexadecimal digits.
+ 
+   - /sys/bus/pci/slots/XXXXXXXX/power
+ 
+   A physical function that currently supports a virtual function cannot be
+   powered off until all virtual functions are removed with:
+-  echo 0 > /sys/bus/pci/devices/XXXX:XX:XX.X/sriov_numvf
++  echo 0 > /sys/bus/pci/devices/DDDD:BB:dd.f/sriov_numvf
+ 
+-* /sys/bus/pci/devices/XXXX:XX:XX.X/
++* /sys/bus/pci/devices/DDDD:BB:dd.f/:
+ 
+-  - function_id
+-    A zPCI function identifier that uniquely identifies the function in the Z server.
++  - function_id:
++    The zPCI function identifier (FID) is a 32-bit hexadecimal value that
++    uniquely identifies the PCI function. Unless the hypervisor provides
++    a virtual FID e.g. on KVM this identifier is unique across the machine even
++    between different partitions.
+ 
+-  - function_handle
+-    Low-level identifier used for a configured PCI function.
+-    It might be useful for debugging.
++  - function_handle:
++    This 32-bit hexadecimal value is a low-level identifier used for a PCI
++    function. Note that the function handle may be changed and become invalid
++    on PCI events and when enabling/disabling the PCI function.
+ 
+-  - pchid
+-    Model-dependent location of the I/O adapter.
++  - pchid:
++    This 16-bit hexadecimal value encodes a model-dependent location for
++    the PCI function.
+ 
+-  - pfgid
+-    PCI function group ID, functions that share identical functionality
++  - pfgid:
++    PCI function group ID; functions that share identical functionality
+     use a common identifier.
+     A PCI group defines interrupts, IOMMU, IOTLB, and DMA specifics.
+ 
+-  - vfn
++  - vfn:
+     The virtual function number, from 1 to N for virtual functions,
+     0 for physical functions.
+ 
+-  - pft
+-    The PCI function type
+-
+-  - port
+-    The port corresponds to the physical port the function is attached to.
+-    It also gives an indication of the physical function a virtual function
+-    is attached to.
+-
+-  - uid
+-    The user identifier (UID) may be defined as part of the machine
+-    configuration or the z/VM or KVM guest configuration. If the accompanying
+-    uid_is_unique attribute is 1 the platform guarantees that the UID is unique
+-    within that instance and no devices with the same UID can be attached
+-    during the lifetime of the system.
+-
+-  - uid_is_unique
+-    Indicates whether the user identifier (UID) is guaranteed to be and remain
+-    unique within this Linux instance.
+-
+-  - pfip/segmentX
++  - pft:
++    The PCI function type is an s390-specific type attribute. It indicates
++    a more general, usage oriented, type than PCI Specification
++    class/vendor/device identifiers. That is PCI functions with the same pft
++    value may be backed by different hardware implementations. At the same time
++    apart from unclassified functions (pft is 0x00) the same pft value
++    generally implies a similar usage model. At the same time the same
++    PCI hardware device may appear with different pft values when in a
++    different usage model. For example NETD and NETH VFs may be implemented
++    by the same PCI hardware device but in NETD the parent Physical Function
++    is user managed while with NETH it is platform managed.
++
++    Currently the following PFT values are defined:
++
++    - 0x00 (UNC): Unclassified
++    - 0x02 (ROCE): RoCE Express
++    - 0x05 (ISM): Internal Shared Memory
++    - 0x0a (ROC2): RoCE Express 2
++    - 0x0b (NVMe): NVMe
++    - 0x0c (NETH): Network Express hybrid
++    - 0x0d (CNW): Cloud Network Adapter
++    - 0x0f (NETD): Network Express direct
++
++  - port:
++    The port is a decimal value corresponding to the physical port the function
++    is attached to. Virtual Functions (VFs) share the port with their parent
++    Physical Function (PF). A value of 0 indicates that the port attribute is
++    not applicable for that PCI function type.
++
++  - uid:
++    The user-defined identifier (UID) for a PCI function is a 32-bit
++    hexadecimal value. It is defined on a per instance basis as part of the
++    partition, KVM guest, or z/VM guest configuration. If UID Checking is
++    enabled the platform ensures that the UID is unique within that instance
++    and no two PCI functions with the same UID will be visible to the instance.
++
++    Independent of this guarantee and unlike the function ID (FID) the UID may
++    be the same in different partitions within the same machine. This allows to
++    create PCI configurations in multiple partitions to be identical in the
++    UID-namespace.
++
++  - uid_is_unique:
++    A 0 or 1 flag indicating whether the user-defined identifier (UID) is
++    guaranteed to be and remain unique within this Linux instance. This
++    platform feature is called UID Checking.
++
++  - pfip/segmentX:
+     The segments determine the isolation of a function.
+     They correspond to the physical path to the function.
+     The more the segments are different, the more the functions are isolated.
+ 
++  - fidparm:
++    Contains an 8-bit-per-PCI function parameter field in hexadecimal provided
++    by the platform. The meaning of this field is PCI function type specific.
++    For NETH VFs a value of 0x01 indicates that the function supports
++    promiscuous mode.
++
++* /sys/firmware/clp/uid_checking:
++
++  In addition to the per-device uid_is_unique attribute this presents a
++  global indication of whether UID Checking is enabled. This allows users
++  to check for UID Checking even when no PCI functions are configured.
++
+ Enumeration and hotplug
+ =======================
+ 
+ The PCI address consists of four parts: domain, bus, device and function,
+-and is of this form: DDDD:BB:dd.f
++and is of this form: DDDD:BB:dd.f.
+ 
+-* When not using multi-functions (norid is set, or the firmware does not
+-  support multi-functions):
++* For a PCI function for which the platform does not expose the RID, the
++  pci=norid kernel parameter is used, or a so-called isolated Virtual Function
++  which does have RID information but is used without its parent Physical
++  Function being part of the same PCI configuration:
+ 
+   - There is only one function per domain.
+ 
+-  - The domain is set from the zPCI function's UID as defined during the
+-    LPAR creation.
++  - The domain is set from the zPCI function's UID if UID Checking is on;
++    otherwise the domain ID is generated dynamically and is not stable
++    across reboots or hot plug.
+ 
+-* When using multi-functions (norid parameter is not set),
+-  zPCI functions are addressed differently:
++* For a PCI function for which the platform exposes the RID and which
++  is not an Isolated Virtual Function:
+ 
+   - There is still only one bus per domain.
+ 
+-  - There can be up to 256 functions per bus.
++  - There can be up to 256 PCI functions per bus.
+ 
+-  - The domain part of the address of all functions for
+-    a multi-Function device is set from the zPCI function's UID as defined
+-    in the LPAR creation for the function zero.
++  - The domain part of the address of all functions within the same topology is
++    that of the configured PCI function with the lowest devfn within that
++    topology.
+ 
+-  - New functions will only be ready for use after the function zero
+-    (the function with devfn 0) has been enumerated.
++  - Virtual Functions generated by an SR-IOV capable Physical Function only
++    become visible once SR-IOV is enabled.
 -- 
 2.53.0
 
