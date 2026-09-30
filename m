@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DDC519E1E;
-	Wed, 30 Sep 2026 17:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C8E51AEF3;
+	Wed, 30 Sep 2026 17:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789083; cv=none; b=iVt36UTVyOiuam4cCzliSyXsFd/609YymZeaHwP8aku1mBDnroftbBnQCFOYedqmR3rjR8rvQRPMdpBh+q5lVWCfezKIkXGB4nY/6hAxobrg9iAkBQEmaqd3P7IOT6cYkU8gVbSUl0snL07UQRsJ8lRf+u2cfZD6R4a7HZLJDho=
+	t=1790789086; cv=none; b=rgBDtgPcQkAlBqjXNcQIatfIPtFwBrr9gNdKudaWoHS83E5ttHyLxDmEm3OZp/NacYkqu/K2IGtumqyqrpOiac+XrtvELov2D/5nLUidWfeYQ+lzN/IFwiRIvTZoXzr5lfWaDbMGrhKmInsWm3fODh02bj92GkYpxgUPkZpaVPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789083; c=relaxed/simple;
-	bh=t9rQy1eWlK+ZUXT0gT2sOJvupaXxnQ/1EhuYN+b4yCE=;
+	s=arc-20240116; t=1790789086; c=relaxed/simple;
+	bh=haeOeW8i4bxHSlHs3pSY64GDkdGtAqyQqDjHmixpbjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDSxh8NZs3dIhPbFFu+zqGooqLklMRUjWlMnHUANbxNoiWY4d7Jd9xkEV0X4iZ989lvg4NcapqNpWtsloow3BYog5Sk85ErIK3gr+8pXBcLu9gfnBjP6J6WJXnIhdM2ESlac6AbkJpwk45fFKhBN3v3VCAoJH8MEC7p9llZN3vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qj0x2c/W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwibc1pPU9mYkDkH341DbL8Jah3FjVHyMp/vGNx/nHgjWVny5A3dO735ClZKR71spcT0fGIpMkn7w3QZVsW43byzHMptT3clg0heNF91j9PGEg15sotZgB+P6h2y+6A04cOJGl0JwtwG/U4MjPulG00dpsGSl2EUrKLSVmtA+J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWWsukMq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qj0x2c/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572B21F000FF;
-	Wed, 30 Sep 2026 17:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWWsukMq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337F21F00898;
+	Wed, 30 Sep 2026 17:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789081;
-	bh=xK92rSSjlrdJaKBtX7YvvlJR77TKthWsP8Gi9vbEUUo=;
+	s=korg; t=1790789084;
+	bh=nNSexQgTfDd7OPXCquI55aDL38zfMIfDaKifszzG1aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qj0x2c/WzAtncZ9uJfBD0DAlpLhkxus4DSRR7vUhFcAPpnOV6zWzDvy/87OE6YgjS
-	 iu4qrkcCHa/eEVJ7GjKbNF+neMsV79fu8J2i6z9+sNX+O5btPRUACvrrxvd8ox8+R9
-	 CqXn9Q2WzZoaWXaBtejsjPybDfcfvxtu05GVgtEk=
+	b=EWWsukMqytTXvyhX0TVa5xZw8IpANjIzTpUC8i98wXv0HbcABXhSxib6wHUdhAyXh
+	 B1B2QYFUoIeOE/Us3q+rjVBS6LczgXn5CCfnsXA9slMzEpPuWMhKQrweOulNgNO8Ci
+	 FR9faG2RpSjBxFbu8U4T8kCAVN3P6tl0e9Id2k/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Like Xu <likexu@tencent.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/877] KVM: x86/pmu: Move Intel PMU global MSRs to intel_is_valid_msr()
-Date: Wed, 30 Sep 2026 17:20:19 +0200
-Message-ID: <20260930152421.342699140@linuxfoundation.org>
+Subject: [PATCH 6.12 309/877] bpf: Avoid soft lockup in __htab_map_lookup_and_delete_batch()
+Date: Wed, 30 Sep 2026 17:20:20 +0200
+Message-ID: <20260930152421.362951509@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,78 +54,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
 
-[ Upstream commit 79a71cc2568f4b5d42284da2aa26f3b4f47ce01b ]
+[ Upstream commit 85136bf22404474a815fc0ed26ec0d1cbc1bc3f9 ]
 
-Commit c85cdc1cc1ea ("KVM: x86/pmu: Move handling PERF_GLOBAL_CTRL and
-friends to common x86") moved the existence check for the following Intel
-PMU MSRs to kvm_pmu_is_valid_msr():
- - MSR_CORE_PERF_GLOBAL_STATUS
- - MSR_CORE_PERF_GLOBAL_CTRL
- - MSR_CORE_PERF_GLOBAL_OVF_CTRL
+__htab_map_lookup_and_delete_batch() has no rescheduling point. The
+batch count bounds how many entries are copied out, not how many
+buckets are visited, so one BPF_MAP_LOOKUP_BATCH call can walk the
+map end to end. The empty-bucket fast path is worse: it stays inside
+a single rcu_read_lock() / bpf_disable_instrumentation() section for
+any run of consecutive empty buckets.
 
-That commit deemed these MSRs valid whenever pmu->version > 1. It intended
-to share the check with AMD PerfMonV2 because both vendor implementations
-require version 2 or greater for global PMU controls.  However, as noted in
-the commit message, AMD uses different MSR indices for its global PMU
-registers.
+That holds up on small maps, but it falls apart at scale. On a
+144-CPU arm64 host running a CONFIG_PREEMPT_NONE kernel, periodic
+BPF_MAP_LOOKUP_BATCH calls against an LRU hash map with 16,777,216
+buckets held a CPU inside the batch op for 77+ seconds and triggered
+the soft lockup watchdog.
 
-Commit 4a2771895ca6 ("KVM: x86/svm/pmu: Add AMD PerfMonV2 support")
-subsequently added AMD PerfMonV2 support and set pmu->version = 2.  Because
-kvm_pmu_is_valid_msr() validated the Intel MSRs whenever pmu->version > 1,
-KVM incorrectly permitted AMD guests with PerfMonV2 to access these Intel
-MSRs without a #GP.
+Commit 75134f16e7dd ("bpf: Add schedule points in batch ops") fixed this
+same problem in the generic batch ops, but not in this htab-native path,
+which every htab-based hash map variant uses for its lookup[_and_delete]
+batch ops.
 
-Move the validation of these Intel MSRs to intel_is_valid_msr() and remove
-the common switch statement from kvm_pmu_is_valid_msr(). AMD already
-validates its own global PMU MSRs in amd_is_valid_msr().
+Complete that fix here. Leave the critical section after 64 consecutive
+empty buckets, call cond_resched_tasks_rcu_qs(), and resume at the saved
+bucket cursor. No locks are held at that point, and resuming from the
+cursor is already the function's behavior for non-empty buckets. Add the
+same call to the per-bucket loop after copy_to_user(), where every lock
+has been dropped. cond_resched_rcu() is not enough here: sleeping with
+bpf_prog_active elevated makes tracing programs on that CPU silently
+skip their invocations.
 
-Fixes: 4a2771895ca6 ("KVM: x86/svm/pmu: Add AMD PerfMonV2 support")
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Like Xu <likexu@tencent.com>
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
-Link: https://patch.msgid.link/20260902184711.138538-1-jmattson@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Plain cond_resched() is not enough either. It is a no-op under PREEMPT
+and PREEMPT_LAZY, the only models arm64 and x86 have offered since
+commit 7dadeaa6e851 ("sched: Further restrict the preemption modes").
+It is also never a Tasks RCU quiescent state, in any model: the
+reschedule counts as a preemption. The walking task stays a holdout and
+stalls every synchronize_rcu_tasks() caller, ftrace and BPF trampoline
+teardown included, until the syscall returns [1].
+cond_resched_tasks_rcu_qs() is the usual tool for that [2]. It reports
+the quiescent state at each yield and still reschedules as
+cond_resched() does on PREEMPT_NONE and PREEMPT_VOLUNTARY kernels.
+
+Fixes: 057996380a42 ("bpf: Add batch ops to all htab bpf map")
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Link: https://lore.kernel.org/bpf/20260715215314.44423f47@fangorn/ [1]
+Link: https://lore.kernel.org/bpf/9d444098-7c03-4163-af12-bd0a79a51443@paulmck-laptop/ [2]
+Assisted-by: LLM
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Link: https://lore.kernel.org/r/20260909-b4-htab-batch-resched-v2-1-0cb529d8f95a@toxicpanda.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/pmu.c           | 8 --------
- arch/x86/kvm/vmx/pmu_intel.c | 3 +++
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ kernel/bpf/hashtab.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
-index a26e8f5ad7901..a0efe59aa0794 100644
---- a/arch/x86/kvm/pmu.c
-+++ b/arch/x86/kvm/pmu.c
-@@ -614,14 +614,6 @@ void kvm_pmu_deliver_pmi(struct kvm_vcpu *vcpu)
- 
- bool kvm_pmu_is_valid_msr(struct kvm_vcpu *vcpu, u32 msr)
- {
--	switch (msr) {
--	case MSR_CORE_PERF_GLOBAL_STATUS:
--	case MSR_CORE_PERF_GLOBAL_CTRL:
--	case MSR_CORE_PERF_GLOBAL_OVF_CTRL:
--		return kvm_pmu_has_perf_global_ctrl(vcpu_to_pmu(vcpu));
--	default:
--		break;
--	}
- 	return kvm_pmu_call(msr_idx_to_pmc)(vcpu, msr) ||
- 	       kvm_pmu_call(is_valid_msr)(vcpu, msr);
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 66eaf95f9dbea..49db2d0e32157 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1706,6 +1706,12 @@ static int htab_lru_percpu_map_lookup_and_delete_elem(struct bpf_map *map,
+ 						 flags);
  }
-diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
-index a5edc623166ac..4f6fa564028f8 100644
---- a/arch/x86/kvm/vmx/pmu_intel.c
-+++ b/arch/x86/kvm/vmx/pmu_intel.c
-@@ -154,6 +154,9 @@ static bool intel_is_valid_msr(struct kvm_vcpu *vcpu, u32 msr)
- 	int ret;
  
- 	switch (msr) {
-+	case MSR_CORE_PERF_GLOBAL_STATUS:
-+	case MSR_CORE_PERF_GLOBAL_CTRL:
-+	case MSR_CORE_PERF_GLOBAL_OVF_CTRL:
- 	case MSR_CORE_PERF_FIXED_CTR_CTRL:
- 		return kvm_pmu_has_perf_global_ctrl(pmu);
- 	case MSR_IA32_PEBS_ENABLE:
++/*
++ * Max consecutive empty buckets to walk in one RCU +
++ * instrumentation-disabled section before rescheduling.
++ */
++#define HTAB_BATCH_EMPTY_RESCHED 64
++
+ static int
+ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 				   const union bpf_attr *attr,
+@@ -1727,6 +1733,7 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 	unsigned long flags = 0;
+ 	bool locked = false;
+ 	struct htab_elem *l;
++	u32 empty_cnt = 0;
+ 	struct bucket *b;
+ 	int ret = 0;
+ 
+@@ -1896,12 +1903,21 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 	}
+ 
+ next_batch:
+-	/* If we are not copying data, we can go to next bucket and avoid
+-	 * unlocking the rcu.
++	/*
++	 * If we are not copying data, we can go to next bucket and avoid
++	 * unlocking the rcu. Bound the walk though: after
++	 * HTAB_BATCH_EMPTY_RESCHED consecutive empty buckets, fully exit
++	 * the critical section (no locks are held here) and reschedule.
+ 	 */
+ 	if (!bucket_cnt && (batch + 1 < htab->n_buckets)) {
+ 		batch++;
+-		goto again_nocopy;
++		if (++empty_cnt < HTAB_BATCH_EMPTY_RESCHED)
++			goto again_nocopy;
++		empty_cnt = 0;
++		rcu_read_unlock();
++		bpf_enable_instrumentation();
++		cond_resched_tasks_rcu_qs();
++		goto again;
+ 	}
+ 
+ 	rcu_read_unlock();
+@@ -1915,11 +1931,13 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 	}
+ 
+ 	total += bucket_cnt;
++	empty_cnt = 0;
+ 	batch++;
+ 	if (batch >= htab->n_buckets) {
+ 		ret = -ENOENT;
+ 		goto after_loop;
+ 	}
++	cond_resched_tasks_rcu_qs();
+ 	goto again;
+ 
+ after_loop:
 -- 
 2.53.0
 
