@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98AF44F574;
-	Wed, 30 Sep 2026 17:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9483C42882B;
+	Wed, 30 Sep 2026 17:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787693; cv=none; b=UphSODKvuDXV0/AoYFkMKz8/qb8GWjbe7HrZFq8zvE4k5+SyJMlStcIZOZvkxV87B0CFTVGgeK7JzQgXT9pN/3WDroAM0B+5NBKAffeGdVQ/fNfqear0/5MVuIr+xbwQpLlhMYN8If7Gvkg2DbaG4fEdbOvElconMPBO3CZpuVY=
+	t=1790787697; cv=none; b=rkZgjB48DfnsmJiAGPuY2witf37IURl6GPt4emrlIN2Ls2OHC4JlmxdeXgtcXKIOkWky16pvU2N4pY0cMaP4yW8kCexxGRdDt4e4/qYV4CRtOFfQZ08uZvj5zyvkekaSio3to5Nc9FSwXr/9FDJMVMKDuvqVlKsr6a8o+BFgamE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787693; c=relaxed/simple;
-	bh=JHJzLLqzNYZGSSwMCfwbhuXrwgaYplWe3sX7j6Eoeks=;
+	s=arc-20240116; t=1790787697; c=relaxed/simple;
+	bh=J2c6UpD+MHEDr9Kkw1mWFnv9N5u0qDEwIXxirWsXkig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8OK0dliLDB6sUBBfkpgdOMbmldMvQ+JkpS40vVXYPs3xEQB2e9iHyb09ZSnCVY+l2sTwLIiJj3hAzd1uy582+50roWKYMhDMVD7WjFo1Ul8P8D4Ep8RQFeUxHK2WZXfedELb9c7s9xLXCwpWGUap7iVrkhm9EuyO+U/rPXhlhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8AzllRM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IhHNMnusjOnXTs6EstW1mwiBBO3rbL1KlUTFwu5mFeQ5mU9ZaZNjFj6u/ayohA32zChaL9Wx+tm6BYRLmdeIl2IXnmPY3rnAL0FZpZyIkUs/gUxPWFZ9LWh+jIia06VExMuvOqcgYmJO57d1yJb0DrKpgx1TA+oVFlLKjarwR1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqK30rHU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8AzllRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDAE1F000FF;
-	Wed, 30 Sep 2026 17:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqK30rHU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8DF1F000FF;
+	Wed, 30 Sep 2026 17:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787692;
-	bh=Z04HmraAMGl7Dt1PZoyBz0Lcv13ew2yLNQgxkAUT3X0=;
+	s=korg; t=1790787695;
+	bh=RQ970N12MMFihRnc9Rr2BXn1D/0QZssaBvm7gQj7J4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8AzllRMNKtLnJUlS4OHvoFsTPuAtZNWGAuO8zQzZGpTUWa85H8v5VvO8Uf+rje5q
-	 yZPbF/zHKIjqDVFhfyrVH0aF5G4WZpRX+LuMDlCpsdDin2/f8t9+7uH2w7jzQSQz1+
-	 qoWcnqVROzb25JvJ4OkGGpB6bpY3X/FGgJcYVZDY=
+	b=uqK30rHUMPJpFrXs2cWehyxbqQS6e0Yzlclf59FwR05VHK94ZeZCjszUDLjUOIwMk
+	 Ke4g7VeRcSvXF1eqhp1nGulGOf8zz0yyXlcBgsqrIDSkWRjOkQ1MOM4CuIEeECn8Q8
+	 O/2vvwX0U/m6lZjRMd3XbvUkXBSJCwG9ZtTLTFBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angel J <iamanaws@httpd.dev>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 7.2 320/457] PCI: of_property: Omit bus properties without a subordinate bus
-Date: Wed, 30 Sep 2026 17:27:05 +0200
-Message-ID: <20260930152352.930679276@linuxfoundation.org>
+	Katherine Leaver <kleaver@janestreet.com>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 321/457] packet: use ubuf_info completion for TX_RING packets
+Date: Wed, 30 Sep 2026 17:27:06 +0200
+Message-ID: <20260930152352.951716503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,67 +52,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angel J <iamanaws@httpd.dev>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 8805840aad73df7146778be243a196d48b4f6430 upstream.
+commit 9518405613863d0bf0700927a21367f5942cf058 upstream.
 
-A bridge (a device with a Type 1 header) may not have a secondary bus
-allocated (pdev->subordinate), e.g., if there are no available bus numbers
-or the bridge secondary/subordinate bus numbers are not writable.
+tpacket_snd sends skbs with frags pointing into its ring slots. Slots
+are released when skb->destructor is called.
 
-The dynamic OF helpers of_pci_prop_bus_range() and of_pci_prop_intr_map()
-dereference pdev->subordinate without checking it.  When
-CONFIG_PCI_DYNAMIC_OF_NODES is enabled, this can cause a NULL pointer
-dereference and early boot hang.
+A call to skb_orphan calls skb->destructor before the skb is freed.
+This can cause the slot to be reused while still linked into the skb.
 
-Generate 'bus-range' and 'interrupt-map' properties only when a subordinate
-bus exists.  Keep the node and its remaining properties for bridges without
-one.
+Switch to standard zerocopy completion (ubuf_info) so the slot is only
+released once all references to the payload are freed or copied.
+Restore skb->destructor to standard sock_wfree.
 
-The problem was latent since 407d1a51921e ("PCI: Create device tree node
-for bridge"), but wasn't reachable until 1f340724419e ("PCI: of: Create
-device tree PCI host bridge node"), which appeared in v6.15.  Before
-1f340724419e, of_pci_make_dev_node() returned early because the parent OF
-node was missing.
+The ubuf_info completion callback can be called with a NULL skb, but
+only from net_zcopy_put and related API, used by zerocopy implementations
+that hold their own reference on the uarg, such as MSG_ZEROCOPY. This
+uarg is only ever completed from skb_zcopy_clear, so skb is always set.
 
-Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
-Signed-off-by: Angel J <iamanaws@httpd.dev>
-[bhelgaas: move pdev->subordinate test to callees, commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org	# v6.6+
-Link: https://patch.msgid.link/20260918195540.GA1187209@bhelgaas
+To prevent userspace from aliasing in-flight state on shared ring
+slots, allocate tpacket_uarg per packet, rather than per slot. This
+adds a small allocation to the transmit path. Use standard kmalloc to
+allow backporting to stable kernels.
+
+The uarg holds an sk_wmem_alloc reference, rather than an sk_refcnt
+reference. packet_free_tx_ring waits on sk_wmem_alloc before freeing
+the ring pages. Always allocate vec->deferred for tx_ring so page-backed
+rings also wait on sk_wmem_alloc when skb_copy_ubufs drops page refs
+before calling tpacket_ubuf_complete.
+
+Drop the tx_ring.pg_vec test that tpacket_destruct_skb performed before
+accessing the slot. The sk_wmem_alloc reference now guarantees that the
+slot is valid. The test is also not sufficient by itself, as it reads
+pg_vec without pg_vec_lock, so it can race with packet_set_ring.
+
+As a result a slot is released when its payload is copied, which can
+be before transmission (e.g., in skb_orphan_frags_rx). If copied
+before skb_tx_timestamp() is called, no slot timestamp is recorded,
+similar to when skb_orphan() was called early in the datapath before
+this patch.
+
+Revert the now unused previous skb_zcopy_.._nouarg infra.
+
+Depends on commit 992cc9f94ca9 ("net/packet: defer vmalloc TX_RING
+free until skbs finish").
+
+Reported-by: Katherine Leaver <kleaver@janestreet.com>
+Reported-by: Bjoern Doebel <doebel@amazon.de>
+Closes: https://lore.kernel.org/netdev/20260909085542.3370986-1-doebel@amazon.de/
+Fixes: 5cd8d46ea156 ("packet: copy user buffers before orphan or clone")
+Cc: stable@vger.kernel.org
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260919004748.1463985-3-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/of_property.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/linux/skbuff.h |   19 ---------
+ net/packet/af_packet.c |  102 ++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 65 insertions(+), 56 deletions(-)
 
---- a/drivers/pci/of_property.c
-+++ b/drivers/pci/of_property.c
-@@ -95,9 +95,13 @@ static int of_pci_prop_bus_range(struct
- 				 struct of_changeset *ocs,
- 				 struct device_node *np)
- {
--	u32 bus_range[] = { pdev->subordinate->busn_res.start,
--			    pdev->subordinate->busn_res.end };
-+	u32 bus_range[2];
- 
-+	if (!pdev->subordinate)
-+		return 0;
-+
-+	bus_range[0] = pdev->subordinate->busn_res.start;
-+	bus_range[1] = pdev->subordinate->busn_res.end;
- 	return of_changeset_add_prop_u32_array(ocs, np, "bus-range", bus_range,
- 					       ARRAY_SIZE(bus_range));
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -1834,22 +1834,6 @@ static inline void skb_zcopy_set(struct
+ 	}
  }
-@@ -220,6 +224,9 @@ static int of_pci_prop_intr_map(struct p
- 	int ret;
- 	u8 pin;
  
-+	if (!pdev->subordinate)
-+		return 0;
+-static inline void skb_zcopy_set_nouarg(struct sk_buff *skb, void *val)
+-{
+-	skb_shinfo(skb)->destructor_arg = (void *)((uintptr_t) val | 0x1UL);
+-	skb_shinfo(skb)->flags |= SKBFL_ZEROCOPY_FRAG;
+-}
+-
+-static inline bool skb_zcopy_is_nouarg(struct sk_buff *skb)
+-{
+-	return (uintptr_t) skb_shinfo(skb)->destructor_arg & 0x1UL;
+-}
+-
+-static inline void *skb_zcopy_get_nouarg(struct sk_buff *skb)
+-{
+-	return (void *)((uintptr_t) skb_shinfo(skb)->destructor_arg & ~0x1UL);
+-}
+-
+ static inline void net_zcopy_put(struct ubuf_info *uarg)
+ {
+ 	if (uarg)
+@@ -1872,8 +1856,7 @@ static inline void skb_zcopy_clear(struc
+ 	struct ubuf_info *uarg = skb_zcopy(skb);
+ 
+ 	if (uarg) {
+-		if (!skb_zcopy_is_nouarg(skb))
+-			uarg->ops->complete(skb, uarg, zerocopy_success);
++		uarg->ops->complete(skb, uarg, zerocopy_success);
+ 
+ 		skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY;
+ 	}
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2530,26 +2530,6 @@ drop_n_account:
+ 	goto drop_n_restore;
+ }
+ 
+-static void tpacket_destruct_skb(struct sk_buff *skb)
+-{
+-	struct packet_sock *po = pkt_sk(skb->sk);
+-
+-	if (likely(po->tx_ring.pg_vec)) {
+-		void *ph;
+-		__u32 ts;
+-
+-		ph = skb_zcopy_get_nouarg(skb);
+-
+-		ts = __packet_set_timestamp(po, ph, skb);
+-		__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
+-
+-		packet_dec_pending(&po->tx_ring);
+-		complete(&po->skb_completion);
+-	}
+-
+-	sock_wfree(skb);
+-}
+-
+ static int __packet_snd_vnet_parse(struct virtio_net_hdr *vnet_hdr, size_t len)
+ {
+ 	if ((vnet_hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
+@@ -2589,27 +2569,56 @@ static int packet_snd_vnet_parse(struct
+ 	return 0;
+ }
+ 
++struct tpacket_uarg {
++	struct ubuf_info	ubuf;
++	struct packet_sock	*po;
++	void			*ph;
++};
 +
- 	pnode = pci_device_to_OF_node(pdev->bus->self);
- 	if (!pnode)
- 		pnode = pci_bus_to_OF_node(pdev->bus);
++static void tpacket_ubuf_complete(struct sk_buff *skb, struct ubuf_info *uarg,
++				  bool success)
++{
++	struct tpacket_uarg *tu = container_of(uarg, struct tpacket_uarg, ubuf);
++	struct packet_sock *po = tu->po;
++	void *ph = tu->ph;
++	__u32 ts;
++
++	DEBUG_NET_WARN_ON_ONCE(!skb);
++
++	if (!refcount_dec_and_test(&uarg->refcnt))
++		return;
++
++	ts = __packet_set_timestamp(po, ph, skb);
++	__packet_set_status(po, ph, TP_STATUS_AVAILABLE | ts);
++
++	packet_dec_pending(&po->tx_ring);
++	complete(&po->skb_completion);
++
++	kfree(tu);
++	sk_free(&po->sk);
++}
++
++static const struct ubuf_info_ops tpacket_ubuf_ops = {
++	.complete = tpacket_ubuf_complete,
++};
++
+ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+-		void *frame, struct net_device *dev, void *data, int tp_len,
++		struct net_device *dev, void *data, int tp_len,
+ 		__be16 proto, unsigned char *addr, int hlen, int copylen,
+ 		int hard_header_len,
+ 		const struct sockcm_cookie *sockc)
+ {
+-	union tpacket_uhdr ph;
+ 	int to_write, offset, len, nr_frags, len_max;
+ 	struct socket *sock = po->sk.sk_socket;
+ 	struct page *page;
+ 	int err;
+ 
+-	ph.raw = frame;
+-
+ 	skb->protocol = proto;
+ 	skb->dev = dev;
+ 	skb->priority = sockc->priority;
+ 	skb->mark = sockc->mark;
+ 	skb_set_delivery_type_by_clockid(skb, sockc->transmit_time, po->sk.sk_clockid);
+ 	skb_setup_tx_timestamp(skb, sockc);
+-	skb_zcopy_set_nouarg(skb, ph.raw);
+ 
+ 	skb_reserve(skb, hlen);
+ 	skb_reset_network_header(skb);
+@@ -2749,6 +2758,7 @@ static int tpacket_snd(struct packet_soc
+ 	struct virtio_net_hdr vnet_hdr;
+ 	bool has_vnet_hdr = false;
+ 	struct sockcm_cookie sockc;
++	struct tpacket_uarg *uarg;
+ 	__be16 proto;
+ 	int err, reserve = 0;
+ 	void *ph;
+@@ -2876,7 +2886,7 @@ static int tpacket_snd(struct packet_soc
+ 				err = len_sum;
+ 			goto out_status;
+ 		}
+-		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
++		tp_len = tpacket_fill_skb(po, skb, dev, data, tp_len, proto,
+ 					  addr, hlen, copylen, hard_header_len,
+ 					  &sockc);
+ 		if (likely(tp_len >= 0) &&
+@@ -2908,7 +2918,24 @@ tpacket_error:
+ 			virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 		}
+ 
+-		skb->destructor = tpacket_destruct_skb;
++		uarg = kmalloc(sizeof(*uarg), GFP_KERNEL);
++		if (unlikely(!uarg)) {
++			if (likely(len_sum > 0))
++				err = len_sum;
++			else
++				err = -ENOMEM;
++			goto out_status;
++		}
++		uarg->po = po;
++		uarg->ph = ph;
++		uarg->ubuf.ops = &tpacket_ubuf_ops;
++		uarg->ubuf.flags = SKBFL_ZEROCOPY_FRAG;
++		refcount_set(&uarg->ubuf.refcnt, 1);
++
++		/* Hold a sk_wmem_alloc reference until completion */
++		refcount_inc(&po->sk.sk_wmem_alloc);
++		skb_zcopy_init(skb, &uarg->ubuf);
++
+ 		__packet_set_status(po, ph, TP_STATUS_SENDING);
+ 		packet_inc_pending(&po->tx_ring);
+ 
+@@ -4486,21 +4513,20 @@ static struct pgv *alloc_pg_vec(struct t
+ 	vec->len = block_nr;
+ 	pg_vec = vec->pg_vec;
+ 
++	if (tx_ring) {
++		vec->deferred = kzalloc_obj(*vec->deferred,
++					    GFP_KERNEL | __GFP_NOWARN);
++		if (!vec->deferred)
++			goto out_free_pgvec;
++		vec->deferred->vec = vec;
++		INIT_DELAYED_WORK(&vec->deferred->work,
++				  packet_free_pg_vec_work);
++	}
++
+ 	for (i = 0; i < block_nr; i++) {
+ 		pg_vec[i].buffer = alloc_one_pg_vec_page(order);
+ 		if (unlikely(!pg_vec[i].buffer))
+ 			goto out_free_pgvec;
+-
+-		if (tx_ring && !vec->deferred &&
+-		    is_vmalloc_addr(pg_vec[i].buffer)) {
+-			vec->deferred = kzalloc_obj(*vec->deferred,
+-						    GFP_KERNEL | __GFP_NOWARN);
+-			if (!vec->deferred)
+-				goto out_free_pgvec;
+-			vec->deferred->vec = vec;
+-			INIT_DELAYED_WORK(&vec->deferred->work,
+-					  packet_free_pg_vec_work);
+-		}
+ 	}
+ 
+ out:
 
 
