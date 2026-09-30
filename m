@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D42A31D366;
-	Wed, 30 Sep 2026 15:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3CA4EDCA2;
+	Wed, 30 Sep 2026 15:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782752; cv=none; b=Fyy9WG7kUItd00ibfKS6DBp/3C/qxs/qY6GZI9oQbmXQAX+pNugirrVbFwO5ki2zqFZ9GylBZYB2WhKYvMyWTDYJREeW00WXYZibFNdj5H38Fq8JfTNWz2nGINBH+a3uAshxVhIG4xpUeqi4l0kgVn4ZiVG1ftzn8+5xJDkfygo=
+	t=1790782755; cv=none; b=GRk5G34jv5bS695bYomDkQQth89UDFmw3ob0F8YfHuSYEGhRB72HS9EZ42S90MKeqbbwGdLPvEPfdxRL+QrCX9udnXFVWC3MQMaceBUG/345eQBAvYKiTwXpewwl9CLBICx20+4eEbiYQXHqIfmiRkWlnOUt7SvaF3fUT3ZVGb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782752; c=relaxed/simple;
-	bh=wBdkLOujItxWKeREStz18P5IHwbEQd3kffM0reIBxx0=;
+	s=arc-20240116; t=1790782755; c=relaxed/simple;
+	bh=SwoKgjmG3yGuIMiev/zeUouRP6IvUQlGPoStQ07e9DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Awtjq11ltBqHvtg7q0dbMaHQWHeT9jtp6Bws+RlksgIUvceSfWpeV3dLy/o0HHi6SYAf1Hw2gWnvRf3wNN5vofUFh/8GW2nhcNRT5d1sMXi9Dsyv6SLnoY5jpBhgYKpCMzS2c3mprmzo5O6QKpb9kyDZj8Uook4u+aX6p4lHe/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZgAU6UZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hGQ6KTHEWyTpOQ2geq4J2ZwHF7/4K6CV6W0yHsC2oW9XmBUKg7LFUFoaYLf4sfrEDqbbneR6GS3a/B4+2xuM34DQFVF38XrVIh1gqovjKlaN4P06c4CELyeomwaHKm3GdfnUID4BHiPdfTYItYV7dtr0T6vAABuVmeZA2mJttVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=powHj/P7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZgAU6UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3351F000FF;
-	Wed, 30 Sep 2026 15:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="powHj/P7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC371F00898;
+	Wed, 30 Sep 2026 15:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782746;
-	bh=j50hhx2UZEyyhZCH5/kQ0i2i25OZ6D/57iRMzXpW6cI=;
+	s=korg; t=1790782749;
+	bh=arqTP0iogtEYpufnZ83Gj0NVW//KOgqjSqahXeZn8hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qZgAU6UZ1IbaLDQIfVFkuuDGwVT7tgW4Zuj7kHV99emCfj0zQNFk5kW7SjkyZh3vD
-	 ACGmFQKLFacdldWmqPgFOfT0pVfogK5arEEMOeLCHcQ6xp/heWlccJRdnb4nDVvGX4
-	 Yu1Iet5mSJKQm6KJW/k3a/KOWxQLXl5eIt+Cirqo=
+	b=powHj/P7HAy8+A/7niSV98gniKzmqNZpB5dlObebETHBcl9WlB5z5hMGcRdZWNLNH
+	 FZ/8tFmE0/+5m4CzEy4DwxU6nGwlFxrE/gCuh6tbHkQxlhpo4WbsiopzMJUAs3jeFn
+	 r36bSTCWPYYKNXa2fxAMJgTwQeqKRE4+6qRLkXFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 153/595] xen/gntalloc: validate grant count before allocation
-Date: Wed, 30 Sep 2026 17:20:46 +0200
-Message-ID: <20260930152351.025539148@linuxfoundation.org>
+Subject: [PATCH 5.10 154/595] ALSA: usb-audio: caiaq: validate EP1 reply lengths
+Date: Wed, 30 Sep 2026 17:20:47 +0200
+Message-ID: <20260930152351.046754602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,73 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 2299822f3f466b5dcad2377bf63986199f881a6b ]
+[ Upstream commit aba30af07d4fe499b50209801eba9da8a815522f ]
 
-gntalloc_ioctl_alloc() allocates the grant-id array before checking
-whether the requested count fits within the global grant limit. Counts
-above that limit cannot succeed, so reject them before the
-user-controlled allocation reaches kcalloc().
+usb_ep1_command_reply_dispatch() uses buf[0] as a command byte and then
+reads command-specific fixed items from the same URB buffer. Several
+paths use buf + 1, buf[1], buf[2], or buf + 3 without first proving that
+urb->actual_length contains those bytes.
 
-Use a subtraction-based check while holding gref_mutex so adding the
-requested count cannot wrap. Also cast the count before advancing the
-per-file index so the page-size multiplication is performed in 64-bit
-arithmetic.
+Add per-command length checks, use a payload length derived from the
+bytes after the command byte for the control-state copy, and reject short
+analog input payloads before the input helper reads fixed offsets from
+the EP1 reply.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260705084601.56400-1-pengpeng@iscas.ac.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntalloc.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ sound/usb/caiaq/device.c | 17 ++++++++++++++---
+ sound/usb/caiaq/input.c  |  6 ++++++
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/xen/gntalloc.c b/drivers/xen/gntalloc.c
-index edb0acd0b8323..e95dd0b9b6ba9 100644
---- a/drivers/xen/gntalloc.c
-+++ b/drivers/xen/gntalloc.c
-@@ -275,6 +275,7 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	int rc = 0;
- 	struct ioctl_gntalloc_alloc_gref op;
- 	uint32_t *gref_ids;
-+	unsigned int limit_snapshot;
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index ba1029f8eeb7e..8594cefdeba2c 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -148,14 +148,22 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 	struct device *dev = &urb->dev->dev;
+ 	struct snd_usb_caiaqdev *cdev = urb->context;
+ 	unsigned char *buf = urb->transfer_buffer;
++	unsigned int payload_len;
++	unsigned int copy_len;
  
- 	pr_debug("%s: priv %p\n", __func__, priv);
- 
-@@ -283,6 +284,12 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 		goto out;
+ 	if (urb->status || !cdev) {
+ 		dev_warn(dev, "received EP1 urb->status = %i\n", urb->status);
+ 		return;
  	}
- 
-+	limit_snapshot = READ_ONCE(limit);
-+	if (op.count > limit_snapshot) {
-+		rc = -ENOSPC;
-+		goto out;
-+	}
++	if (urb->actual_length < 1)
++		return;
 +
- 	gref_ids = kcalloc(op.count, sizeof(gref_ids[0]), GFP_KERNEL);
- 	if (!gref_ids) {
- 		rc = -ENOMEM;
-@@ -295,14 +302,16 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	 * are about to enforce, removing them here is a good idea.
- 	 */
- 	do_cleanup();
--	if (gref_size + op.count > limit) {
-+	limit_snapshot = READ_ONCE(limit);
-+	if (gref_size > limit_snapshot ||
-+	    op.count > limit_snapshot - gref_size) {
- 		mutex_unlock(&gref_mutex);
- 		rc = -ENOSPC;
- 		goto out_free;
- 	}
- 	gref_size += op.count;
- 	op.index = priv->index;
--	priv->index += op.count * PAGE_SIZE;
-+	priv->index += (uint64_t)op.count * PAGE_SIZE;
- 	mutex_unlock(&gref_mutex);
++	payload_len = urb->actual_length - 1;
  
- 	rc = add_grefs(&op, gref_ids, priv);
+ 	switch(buf[0]) {
+ 	case EP1_CMD_GET_DEVICE_INFO:
++		if (payload_len < sizeof(struct caiaq_device_spec))
++			break;
+ 	 	memcpy(&cdev->spec, buf+1, sizeof(struct caiaq_device_spec));
+ 		cdev->spec.fw_version = le16_to_cpu(cdev->spec.fw_version);
+ 		dev_dbg(dev, "device spec (firmware %d): audio: %d in, %d out, "
+@@ -171,18 +179,21 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
+ 		wake_up(&cdev->ep1_wait_queue);
+ 		break;
+ 	case EP1_CMD_AUDIO_PARAMS:
++		if (payload_len < 1)
++			break;
+ 		cdev->audio_parm_answer = buf[1];
+ 		wake_up(&cdev->ep1_wait_queue);
+ 		break;
+ 	case EP1_CMD_MIDI_READ:
++		if (urb->actual_length < 3 || urb->actual_length - 3 < buf[2])
++			break;
+ 		snd_usb_caiaq_midi_handle_input(cdev, buf[1], buf + 3, buf[2]);
+ 		break;
+ 	case EP1_CMD_READ_IO:
+ 		if (cdev->chip.usb_id ==
+ 			USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_AUDIO8DJ)) {
+-			if (urb->actual_length > sizeof(cdev->control_state))
+-				urb->actual_length = sizeof(cdev->control_state);
+-			memcpy(cdev->control_state, buf + 1, urb->actual_length);
++			copy_len = min_t(unsigned int, payload_len, sizeof(cdev->control_state));
++			memcpy(cdev->control_state, buf + 1, copy_len);
+ 			wake_up(&cdev->ep1_wait_queue);
+ 			break;
+ 		}
+diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
+index 2db4d1332df1c..c12eeb9710002 100644
+--- a/sound/usb/caiaq/input.c
++++ b/sound/usb/caiaq/input.c
+@@ -203,6 +203,8 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
+ 
+ 	switch (cdev->chip.usb_id) {
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL2):
++		if (len < 6)
++			return;
+ 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 2);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 0);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 1);
+@@ -210,11 +212,15 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL3):
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER):
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER2):
++		if (len < 6)
++			return;
+ 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 0);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 1);
+ 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 2);
+ 		break;
+ 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_TRAKTORKONTROLX1):
++		if (len < 16)
++			return;
+ 		snd_caiaq_input_report_abs(cdev, ABS_HAT0X, buf, 4);
+ 		snd_caiaq_input_report_abs(cdev, ABS_HAT0Y, buf, 2);
+ 		snd_caiaq_input_report_abs(cdev, ABS_HAT1X, buf, 6);
 -- 
 2.53.0
 
