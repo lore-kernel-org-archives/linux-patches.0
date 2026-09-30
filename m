@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6359B5187C2;
-	Wed, 30 Sep 2026 17:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8B550B437;
+	Wed, 30 Sep 2026 17:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788955; cv=none; b=lsRhzL8g7xFmQg4qTAn+zXKjjPGJSkgG5TIYwLeY+zlp2KNSKUn9w9hkMZIG/b8KVDusRjYnAfRAVgxNBFuawNmJrhtwJd6URVkkU7NT/vrA35ztoOJ8Q97PRoUbBjRJM9Zte3iEzGlKoycBHfzxoxUkFMim+Bd3Augo5TVHWm8=
+	t=1790788958; cv=none; b=bGngyuu/WcH6xfmCIdrsfaSdvXDm+qVY8fviCXUDiMzPopRpPe5e6rsjFSHc5tTbyL4VjuybGWn7mZo5KKstJGh+cUlG9Rk72SsUqUZS4Z2YLETjFt24gslaajN3L/Fw8DyzEkBEBd6+YIudIkOkKmx7wE0vNpz54xtSTB47P+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788955; c=relaxed/simple;
-	bh=jYg6IGODlgVYcGSx6cA6qMbiiUEAH4GdQNA1M40CWNE=;
+	s=arc-20240116; t=1790788958; c=relaxed/simple;
+	bh=rg/wDW3t7JNY0s9sVgpQvGR6406cKqBZ6V+bYnuqXps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmE9IcjMmXUxTtG8nnb67/sYmZOmxczaxxOfW371heM6Fwe5HkaPgvfbap3o7C9gYyJBRRSV4Q2Z03+OP80E04ax/32gngr6Tm9D3n+VFOflDuYFxGJyBWVtb41/+aRdZi1+t6q3c8zq1POAnEjXwrdYbT9DBxTNRrNoB2qn+CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+jBhbii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PUUhVQmiTtWtDpZ9LN1Y3kXO+GqesJiM1224B0+KyhD39sBFPROiTJj3bwRjFyKwM92GQRza2lv3ieDUkiTHSJiDLN4cgV2nYAgXlEjzVpeUBEzbure2zQuS2YwpjM8Wuu7/XWtgZhtpXl4WU18ih/jc1GQ15wMxnxAYXbVLLoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIXaOnoR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+jBhbii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF881F000FF;
-	Wed, 30 Sep 2026 17:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIXaOnoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DEF1F000FF;
+	Wed, 30 Sep 2026 17:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788954;
-	bh=BN5an/PA5np1ZQ8c6Pn3hBvusam5qKeWr0VWMGz5wj0=;
+	s=korg; t=1790788957;
+	bh=DJkvGx4zncmFSDKNIy2KiTZGLHgcxIC8lWP8ifJkeqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z+jBhbiiOQn7JxcLpxaj020FqvZOtrX3FYmVN5K4h1cwq1I2f6bJvEeyNZ1wge3bZ
-	 FPMfHfSX2ieyEi/OG5F7JXUxj2vzFw/w0pRayqFXTC3ehsoFkgcjphUbMoXraFNRFy
-	 169imQtw2QAILBDpU8IS1sYNRbZFh1b8kNrrV1sw=
+	b=aIXaOnoRocu6PxBTH7GVhlIU3Mq6aEQaNQAdTcLMba/BT8xzvXGfMJVYovE8gY7gY
+	 wDNd3ITwjHvepKDJSbYs1xc0gLa3weiBwxuSZ7nENhFPoMaiT5CChZZ0a9PvgHAknT
+	 PpOTqDpQX3Csju25u+ekOMgVpcH/UL0oZ2uCvMfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 262/877] wifi: rsi: fix heap OOB write on key removal
-Date: Wed, 30 Sep 2026 17:19:33 +0200
-Message-ID: <20260930152420.376543460@linuxfoundation.org>
+Subject: [PATCH 6.12 263/877] wifi: wlcore: release runtime PM ref on regdomain config failure
+Date: Wed, 30 Sep 2026 17:19:34 +0200
+Message-ID: <20260930152420.398773286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,51 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit e6c5ed7a98d7bc8b0f7918246f1c90ddb3f79dfa upstream.
+commit 8a1f3cf89ddcc700e25afe42cfad333059adcc94 upstream.
 
-When a key is removed (data == NULL), rsi_hal_load_key() runs:
+wlcore_regdomain_config() gets a runtime PM reference before sending
+the regulatory-domain command. When
+wlcore_cmd_regdomain_config_locked() fails, the function queues recovery
+and returns without dropping that reference.
 
-	memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
+Release the reference after handling the command result so both success
+and failure paths balance the preceding
+pm_runtime_resume_and_get(). The recovery worker takes a separate
+runtime PM reference and cannot release the reference held here.
 
-set_key is a struct rsi_set_key *, so the subscript is scaled by
-sizeof(struct rsi_set_key) (160 bytes): &set_key[FRAME_DESC_SZ] is
-skb->data + 2560, and the memset writes 144 zero bytes starting
-2.4KB past the end of the 160-byte skb data buffer, corrupting
-unrelated heap objects. The intended byte offset would have been
-(u8 *)set_key + FRAME_DESC_SZ.
-
-The write fires on every DISABLE_KEY callback, so plain disconnects,
-roams and interface teardowns trigger it on real networks.
-
-The memset is redundant: the whole buffer is zeroed right after
-allocation, so the frame sent to the device is byte-identical
-without it. Drop the else branch; normal operation is unaffected.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
+Fixes: fa2648a34e73 ("wlcore: Add support for runtime PM")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/90bb2b07007942064c04aa3729cedd9eb1e930b1@linux.dev
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260820125126.12757-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mgmt.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ti/wlcore/main.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-@@ -852,8 +852,6 @@ int rsi_hal_load_key(struct rsi_common *
- 			memcpy(set_key->tx_mic_key, &data[16], 8);
- 			memcpy(set_key->rx_mic_key, &data[24], 8);
- 		}
--	} else {
--		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
- 	}
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -3718,10 +3718,8 @@ void wlcore_regdomain_config(struct wl12
+ 		goto out;
  
- 	skb_put(skb, frame_len);
+ 	ret = wlcore_cmd_regdomain_config_locked(wl);
+-	if (ret < 0) {
++	if (ret < 0)
+ 		wl12xx_queue_recovery_work(wl);
+-		goto out;
+-	}
+ 
+ 	pm_runtime_mark_last_busy(wl->dev);
+ 	pm_runtime_put_autosuspend(wl->dev);
 
 
