@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774813B42C0;
-	Wed, 30 Sep 2026 18:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0063B42C0;
+	Wed, 30 Sep 2026 18:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794380; cv=none; b=n5RkN35RwHTkCs8GKuSH18F28lHEhPXSXxMGOOUYGK95ypSDeTF6WGJKToEauo0ZA8WLDMYg+ElvlQNkUPYugHCQ0GHnJg1G4Ke5B52dgjVXNEi0D/cnZpXpBZP/krAtbFC3zmi1OEItT2zYbi8dKWHNZ2lWHXpfM4QNDWejsD4=
+	t=1790794383; cv=none; b=K39mlqG+wu40mYZMPneoke/I+OS4fwEKnsQ9ZwGx4IFglz54B+UT73U+ehzHNHhWbJy0frL5/4XzdWXTo+UUl12hjBiJ8BNzWb+nwtAWCSUB+gtmIaHaY5nhi4hrEeMCfoHhEo87Fy48N4DQnhsNjxcJkOmz7vSV1G5tVDZn5lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794380; c=relaxed/simple;
-	bh=kWmK3rq3+yTItz1HdS7sJOO59MfBd3YSbwh0YnlwcAQ=;
+	s=arc-20240116; t=1790794383; c=relaxed/simple;
+	bh=OKYMVUnmsh3JJNQUvw3ATQ2bWE+eyJtPHCST0+td9+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siHqACstBZCT15kBvXZwH11URj3OeW/VQXiggrsKe0eh+ey16LGl/xAC8qdLb9sU8d/0CluIa5H8Ll6Z3yiHjSEPBoHmIZklehmZdeDncJc1GjtcOGsGSUTSaADj4h+SNV5I3vjQff2Lq5ubg+gzukVt5o4jxIvH57H4gRViPPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+P3Uq/K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hW15sDmTYPluthYVQMwFyNz3+6Yw8jyNPo0yJkRqP3kyz8Bd9Pke2ZHy+0JWqx6uxJgSh7FcQeC5oQp1BxlKMKYUB+nZlb5/htYSsBnfxRdaX1rBiQL0j6h+MWO9jZNba9QOGRR1Ic6YvJSp44phVs03+IB40v4+IhBYDc0FOqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgk/lj+l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+P3Uq/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABAF1F000FF;
-	Wed, 30 Sep 2026 18:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgk/lj+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542E91F000FF;
+	Wed, 30 Sep 2026 18:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794379;
-	bh=gKzPlvXeMG/jhrO/n4todmMOb5NEh9wSer+eV9AkOLQ=;
+	s=korg; t=1790794381;
+	bh=6SQ+OFjbLcS2N9Kbewvq4zP3IGu6rbZzkMwqgNVVI8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+P3Uq/K4RPs8LiA/9Pz+McAzzshDehZjLYKXq8GLgONeoZihrMzvqERr5rLsEOz3
-	 NPDoZWgB+5+qHmtspKtMGniYm9b5AxadVLMud3qtgVNJtvM3N7MYRehOGEH7v/MGnp
-	 I99MlTPce1cEtYzeLoQfgUcM3sQt87MjkJ6L9E2g=
+	b=vgk/lj+lFYZJwpiSH7fs63g55IVctjgvddIpLNG0VRBOIuC0uL503gjm0NloQJgO0
+	 HreXfWzMVlM+L6LAme7RoD2as6yCzOMeGONSx9NIm/b0P7PashI48JPtBuEggJxZhJ
+	 HQsTK1nWGtrIrzvyA36FxxHAK1sKa1yN3Z9gqB3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0153/1193] ata: ahci: fail probe if BAR too small for claimed ports
-Date: Wed, 30 Sep 2026 17:13:57 +0200
-Message-ID: <20260930152437.606924431@linuxfoundation.org>
+Subject: [PATCH 6.6 0189/1193] NFS: fix eof updates after NFSv4.2 fallocate/zero-range
+Date: Wed, 30 Sep 2026 17:14:33 +0200
+Message-ID: <20260930152438.395695457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,80 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liyouhong <liyouhong@kylinos.cn>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit c4086c6e1af757e1ff26fa2d2926b3ec0195de79 ]
+[ Upstream commit 35168eb947f230aaa35fd8416a30563ef89f5421 ]
 
-When an AHCI controller is disabled in BIOS, its HOST_CAP register may
-contain a bogus value, e.g. 0xFFFFFFFF.
+Generic/075 reliably exposes a regression when the client holds an
+NFSv4 write delegation: ZERO_RANGE/ALLOCATE extends the file on the
+server, but the local inode keeps the old i_size. The test then fails
+with 'Size error' because the post-op attribute refresh refuses to
+touch i_size while a delegation is outstanding, and the cached EOF
+was never marked stale.
 
-Since CAP.NP (Number of Ports) is a zeroes based 5-bit register field,
-a value of 0x1f means 32 ports. If CAP.NP claims more ports than can
-physically fit within the mapped BAR region, accessing port registers
-beyond the BAR boundary causes a kernel panic.
+Update _nfs42_proc_fallocate() so that on success it:
 
-Add validation in ahci_init_one() to check that the BAR size is
-sufficient for the number of ports claimed in CAP.NP. The check
-calculates the required MMIO size as:
+- bumps i_size when the operation extends the file, and
+- marks NFS_INO_INVALID_BLOCKS since the block count can also change
 
-  required_size = 0x100 (global registers) + max_ports * 0x80
+Tested with xfstests generic/075 over NFSv4.2.
 
-If required_size exceeds the actual BAR size, the probe fails with
--ENODEV, preventing the panic and providing a clear error message.
-
-Reported-by: liyouhong <liyouhong@kylinos.cn>
-Closes: https://lore.kernel.org/all/20260422080322.1006592-1-dayou5941@163.com/
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-[cassel: commit log]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/nfs/nfs42proc.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 2d43307eddf95..1a4468a2d02e3 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -1852,6 +1852,24 @@ static ssize_t remapped_nvme_show(struct device *dev,
- 
- static DEVICE_ATTR_RO(remapped_nvme);
- 
-+static int ahci_validate_bar_size(struct pci_dev *pdev, int bar,
-+				  struct ahci_host_priv *hpriv)
-+{
-+	u32 cap = readl(hpriv->mmio + HOST_CAP);
-+	unsigned int max_ports = ahci_nr_ports(cap);
-+	u32 last_port_end = 0x100 + (max_ports * 0x80);
-+	resource_size_t bar_size = pci_resource_len(pdev, bar);
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index 582cf8a469560..fa68c85e6160c 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -79,12 +79,17 @@ static int _nfs42_proc_fallocate(struct rpc_message *msg, struct file *filep,
+ 	status = nfs4_call_sync(server->client, server, msg,
+ 				&args.seq_args, &res.seq_res, 0);
+ 	if (status == 0) {
+-		if (nfs_should_remove_suid(inode)) {
+-			spin_lock(&inode->i_lock);
++		loff_t newsize = offset + len;
 +
-+	if (last_port_end > bar_size) {
-+		dev_warn(&pdev->dev,
-+			 "BAR%d too small for %u ports (last port ends at %#x, BAR %pa)\n",
-+			 bar, max_ports, last_port_end, &bar_size);
-+		return -ENODEV;
-+	}
-+
-+	return 0;
-+}
-+
- static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	unsigned int board_id = ent->driver_data;
-@@ -1954,6 +1972,10 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	hpriv->mmio = pcim_iomap_table(pdev)[ahci_pci_bar];
- 
-+	rc = ahci_validate_bar_size(pdev, ahci_pci_bar, hpriv);
-+	if (rc)
-+		return rc;
-+
- 	/* detect remapped nvme devices */
- 	ahci_remap_check(pdev, ahci_pci_bar, hpriv);
- 
++		spin_lock(&inode->i_lock);
++		if (newsize > i_size_read(inode))
++			i_size_write(inode, newsize);
++		nfs_set_cache_invalid(inode, NFS_INO_INVALID_BLOCKS);
++		if (nfs_should_remove_suid(inode))
+ 			nfs_set_cache_invalid(inode,
+-				NFS_INO_REVAL_FORCED | NFS_INO_INVALID_MODE);
+-			spin_unlock(&inode->i_lock);
+-		}
++					      NFS_INO_REVAL_FORCED |
++					      NFS_INO_INVALID_MODE);
++		spin_unlock(&inode->i_lock);
+ 		status = nfs_post_op_update_inode_force_wcc(inode,
+ 							    res.falloc_fattr);
+ 	}
 -- 
 2.53.0
 
