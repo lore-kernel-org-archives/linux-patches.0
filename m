@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5FE515989;
-	Wed, 30 Sep 2026 16:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADFB51588E;
+	Wed, 30 Sep 2026 16:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786749; cv=none; b=NW9OXLGukxSxg2ON3BJduU/1ONNcN4FmAbiN85h3+eODOcGCmOVoBupuJ1NyjZlWa2KCcZxeQPnAX1N0xN5E3yVHl6hbtHFt+uOPRW3N5witcpn27XLoctHFXq89muQ4sEQ0OMVeHUDTVom/mPOGuRp952jXfiFUr0nME+4XgWQ=
+	t=1790786752; cv=none; b=NlPotm6O2Gy0b/R8Q2eX9MZqKSk1XHPrJqMZxkHU1y8Kj3g0QzdxiqgEoUtYKaemKeHRWC0wLiBxDudxeVbQYaO4JvcT8ZPw1lUs40pjyRxcX6PwKqYWm1bF5XbbNo2epZipUMp/2Gcmavk/ulof2fhYTmab5/T95znjlKWOsDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786749; c=relaxed/simple;
-	bh=0pWPS9WnLhXNt7mCL5DBPvWeH3tF8odpEw8UmwZtab0=;
+	s=arc-20240116; t=1790786752; c=relaxed/simple;
+	bh=s3qBAeQtyoJnrgLcdGrNGA8/tfN5UNzgVQvxZQzdFn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhKeFAXCashdBzfSLyINVqQ8ob4PnaFIWgQpMuc1UVHlVnPX9cghw9cNph1dHJ3QZMhAAAWcgphb+VnPKCw3/6QN8X9bHEajKUJFuVos0wDOo4fBONrQtOuHIZg3VW+aekvKPA7RQVtxzZZW4i/aeTDxBuQsD1ZL6OwsVk5AaZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGI2a6Df; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hv6fiUVlU2r7pDz6pYcnZLbAe4O/ig+ZFNR35eOA3610Vm3FlZrqsmQzX9RMj0zEsNY5U+i6pVBKDy4f9sSf97K28VbJvnOUuW7GqAOkXeOhWCB0lEXs3PFE4voE1u4q9zBicYR2bBtPJS+OZbIdCokp/In9HxhGKqBKqkS/C7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7YrEs++; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGI2a6Df"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AE31F000FF;
-	Wed, 30 Sep 2026 16:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7YrEs++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27041F000FF;
+	Wed, 30 Sep 2026 16:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786747;
-	bh=G5xUVoqbqEeWx9wdYrBDqaMomRDwTg1LL52tw+0SPDU=;
+	s=korg; t=1790786750;
+	bh=gOeUUR+Ag+eavPlYRoTCMrn12WgisZ2QzBJsSelVuZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sGI2a6DfXboQqOFvbSHuz5/E50YYLqs1cZ7ua1X7/xPpByotoFmvzDmEw48wlCx4e
-	 W6AKhi5GM2zCyIjXV61nNRCiKBqrC6XW6KwS2B1iy900vBsVzFdCZEb4mSYoPVJmrG
-	 9aSwa1GVX2pokJDMirVM8cmK9DNyZeCaNuutv3q0=
+	b=c7YrEs++gy7kxIyBKtEby4ELXbv37D1DqOnGf8S7eU91FfQOkchLAc8cFAx4By4Ig
+	 unx+yYRCh27TxwGNH7Y1bRAVUYljLl5Np1Yga8Gh4XsmOuavpToL6p53SGAc4FOlGq
+	 tFu7ceY5/iLDr2JFQfBe32CTESmPTKn9SsvXe7N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 6.1 969/982] RISC-V: KVM: Synchronize hrtimer callback during teardown
-Date: Wed, 30 Sep 2026 17:28:25 +0200
-Message-ID: <20260930152437.558275521@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 970/982] Bluetooth: hci_sock: validate event length before filtering
+Date: Wed, 30 Sep 2026 17:28:26 +0200
+Message-ID: <20260930152437.580640681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,81 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit aaad136d56d91252517272b68cd533e5714698d5 upstream.
+commit b0a6cf99afd57a39598b1beca0e86ef5004980de upstream.
 
-The non-Sstc hrtimer callback clears next_set before its final uses of
-the enclosing vCPU.  If teardown observes next_set as false while the
-callback is still running, kvm_riscv_vcpu_timer_cancel() skips
-hrtimer_cancel() and kvm_destroy_vcpus() can free the vCPU before the
-callback enters kvm_riscv_vcpu_set_interrupt().
+is_filtered_packet() reads the event code from skb->data[0] without first
+checking that the skb is nonempty. When an opcode filter is configured,
+it also reads the command opcode at offsets 3 or 4 without checking that
+a Command Complete or Command Status event is long enough.
 
-A guest can arm the timer with SBI TIME and request shutdown with SBI
-legacy shutdown or SRST.  A VMM that honors KVM_EXIT_SYSTEM_EVENT and
-destroys the VM supplies the teardown side of the race; no post-launch
-host ioctl is needed to arm or request teardown.
+hci_send_to_sock() invokes the filter before hci_event_packet() validates
+the event header. A malformed event supplied by a controller or a vhci
+device can therefore cause an out-of-bounds read.
 
-On upstream master 62cc90241548, generic KASAN reported:
+Keep the unmasked event code for the opcode checks. The masked value is
+needed for the 64-bit event bitmap, but using it to identify command events
+aliases event codes above 0x3f. In particular, Synchronous Train Complete
+(0x4f) was treated as Command Status (0x0f) even though its payload has no
+opcode.
 
-  BUG: KASAN: slab-use-after-free in do_raw_spin_lock
-  Write of size 4 at addr ff60000005e58898
+Reject actual command events that are too short for the field being
+inspected. A truncated command event cannot match a configured opcode.
 
-  kvm_riscv_vcpu_set_interrupt
-  kvm_riscv_vcpu_hrtimer_expired
-  __hrtimer_run_queues
-  hrtimer_interrupt
-
-The object was allocated by KVM_CREATE_VCPU and freed concurrently by:
-
-  kvm_destroy_vcpus
-  kvm_arch_destroy_vm
-  kvm_destroy_vm
-  __fput
-
-For deterministic validation, I added mdelay(1000) immediately after
-the existing next_set = false assignment.  This only widens the
-existing post-clear callback window.  A no-delay trace build naturally
-reached the callback-after-teardown-start/before-deinit ordering in 12
-of 200 runs, but 1,500 stock-kernel stress iterations did not produce a
-KASAN report, so natural reproduction is timing-sensitive.
-
-Always invoke hrtimer_cancel() for an initialized timer.  Preserve the
-existing -EINVAL result when the timer is no longer set, but only after
-synchronizing with a running callback.
-
-With this patch, hrtimer_cancel() blocked for the full widened callback
-window before vCPU destruction.  KASAN reported no error in 100
-fixed-and-widened runs or 200 fix-only timing-sweep runs.
-
-Fixes: 3a9f66cb25e1 ("RISC-V: KVM: Add timer functionality")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI:GPT-5.6
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260731163550.46991-1-mhun512@gmail.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/vcpu_timer.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sock.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/arch/riscv/kvm/vcpu_timer.c
-+++ b/arch/riscv/kvm/vcpu_timer.c
-@@ -60,10 +60,13 @@ static enum hrtimer_restart kvm_riscv_vc
- 
- static int kvm_riscv_vcpu_timer_cancel(struct kvm_vcpu_timer *t)
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -166,6 +166,7 @@ static bool is_filtered_packet(struct so
  {
--	if (!t->init_done || !t->next_set)
-+	if (!t->init_done)
- 		return -EINVAL;
+ 	struct hci_filter *flt;
+ 	int flt_type, flt_event;
++	u8 event;
  
- 	hrtimer_cancel(&t->hrt);
+ 	/* Apply filter */
+ 	flt = &hci_pi(sk)->filter;
+@@ -179,7 +180,11 @@ static bool is_filtered_packet(struct so
+ 	if (hci_skb_pkt_type(skb) != HCI_EVENT_PKT)
+ 		return false;
+ 
+-	flt_event = (*(__u8 *)skb->data & HCI_FLT_EVENT_BITS);
++	if (skb->len < 1)
++		return true;
 +
-+	if (!t->next_set)
-+		return -EINVAL;
- 	t->next_set = false;
++	event = *(__u8 *)skb->data;
++	flt_event = event & HCI_FLT_EVENT_BITS;
  
- 	return 0;
+ 	if (!hci_test_bit(flt_event, &flt->event_mask))
+ 		return true;
+@@ -188,11 +193,17 @@ static bool is_filtered_packet(struct so
+ 	if (!flt->opcode)
+ 		return false;
+ 
+-	if (flt_event == HCI_EV_CMD_COMPLETE &&
++	if (event == HCI_EV_CMD_COMPLETE && skb->len < 5)
++		return true;
++
++	if (event == HCI_EV_CMD_COMPLETE &&
+ 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 3)))
+ 		return true;
+ 
+-	if (flt_event == HCI_EV_CMD_STATUS &&
++	if (event == HCI_EV_CMD_STATUS && skb->len < 6)
++		return true;
++
++	if (event == HCI_EV_CMD_STATUS &&
+ 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 4)))
+ 		return true;
+ 
 
 
