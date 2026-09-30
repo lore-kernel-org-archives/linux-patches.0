@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8013DBD48;
-	Wed, 30 Sep 2026 19:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC6E4119FA;
+	Wed, 30 Sep 2026 19:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797041; cv=none; b=Y03pvQETGC5D4lH0KMkhBS1GARm734y2QlEvKrCQcYNYp0Zw60EgQgfqAZmFcGXc6u/+BUeUl5GbCtra5uQU33DhKdsWQeifzjOJj9TP0mIrnOhU3SluDhmhuEUpa9fv7ZCFgXMbAoemcBBI0Tr1sGPz5yGM4vUf72Ldr41w8bU=
+	t=1790797044; cv=none; b=n2heVPEkBLK7bvK8i+rdC+/1nDYAkPipGpH3QHJa72OZyGGzMQ04wnQ7qCB07PpMBUhi5zRMZP504osSfLQBC+w+LY2e8XMBPGrDY7F9zYfaGDTJyRdebGqIFKfyHWjRU0EJUl8SpbwtJC1E0N1TCjRwbvD91L8rn/acnZLe+NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797041; c=relaxed/simple;
-	bh=QRJ+RfHTzGGB353G/PJ9holS9vi8YIpdwQOpeRuIceY=;
+	s=arc-20240116; t=1790797044; c=relaxed/simple;
+	bh=Bwjhjv+r4OahIURieiusK0Vu4hCSa1KZcAHY1tW2ReM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFdA1auBxXRHGqabF1K17VXU0Xqqiat/2YjXTqwy7RhPNK5q+cZzj2tGPqmVa4lnME4frdCkeNIexY8Xf0w6bln7hZgzKVP4nd/3S2+zaTecBEOADPXgOWa22I6AmijaJRa2YFbKuBnkRDLeCQNiLiV9ePonLh+XaE01mUFO19A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeIHzBPV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E+Ad08kb3qF4q2bga+5Ig68mxJytQZ3FdDdhyToShOwbW5F/RhQ+nJinpm2vC+nrxWeORqP2RoaqUwy4Tnhc8Ee/Q8IhMJnpWQq+MZOb2LAvY3mKCF8C/FYqi2IFkYGwnuPIlkTuqLv0N3iSPdUf1oGHRfcMgHw+GyH52WdM/qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ekqyx2Pm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeIHzBPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0031F000FF;
-	Wed, 30 Sep 2026 19:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ekqyx2Pm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831381F000FF;
+	Wed, 30 Sep 2026 19:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797040;
-	bh=cNYgJOJcIaTRS30owdc2Tb7U7tlfQfqNbVG6PaKpkFI=;
+	s=korg; t=1790797043;
+	bh=WdMmDrPzSWMX4XpmWuFmz5mpdGaoFLlNhMsrSKnaTQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aeIHzBPVippA92rY+vIyrbYpkqDt2K7LS+FYmKaCaW3vWFEx+sVoIWERdS/p5YEo1
-	 WMWlhkpJulJEy/AMKGBsdlgXStZQYbxZz9nXIYxFm5xsdZ9VpkuCU1wBO3Bf0BeTZ6
-	 wXXf0LmN4uBGjqd3axVPusjbvnGf+omCSFlBbvxE=
+	b=Ekqyx2Pm28WiDP5gzVx3zYRjy6weK7e0A+pMyFOhc45SFutsUInjnJVxyR97L7QzU
+	 B8tVRizt/u1PkrG4FXGnDqg/pMxAD4RQY6fm/SaJMjczYKkFhY3kJK33z0nvNR0kTr
+	 NeMO6kCaYSU3aMozIRvv3IU5AlpkIfQcjLS/Y6Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Ralf Lici <ralf@mandelbit.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 1125/1193] net/mlx5e: advertise MACsec offload only when supported
-Date: Wed, 30 Sep 2026 17:30:09 +0200
-Message-ID: <20260930152459.233417326@linuxfoundation.org>
+Subject: [PATCH 6.6 1126/1193] net/sched: reject IDR error pointers when deleting actions
+Date: Wed, 30 Sep 2026 17:30:10 +0200
+Message-ID: <20260930152459.254819361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,56 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 4581c3d2adc3c73a019bc38db64ca11f28bbd7fd upstream.
+commit c82b797abe668d0b668601a93ba2c0b071a63574 upstream.
 
-Commit 339ccec8d43d ("net/mlx5: Enable MACsec offload feature for VLAN
-interface") added NETIF_F_HW_MACSEC unconditionally to vlan_features so
-that VLAN devices could inherit MACsec offload support.
+tcf_action_delete() drops the reference held by its lookup before calling
+tcf_idr_delete_index() with the saved action index.  An unlocked
+classifier can remove that action and reserve the same IDR slot with
+ERR_PTR(-EBUSY) in between.
 
-mlx5e_build_nic_netdev subsequently copies vlan_features into
-hw_features and features. As a result, all mlx5e NIC netdevices
-advertise MACsec hardware offload, even when the firmware does not
-support it and the driver does not install macsec_ops.
+tcf_idr_delete_index() only checks the lookup result for NULL.  It
+therefore treats the reservation as a tc_action and dereferences
+tcfa_bindcnt.  A hardware execution breakpoint was used to schedule the
+interleaving without changing the kernel source.  KASAN reported this
+decoded trace:
 
-Set the MACsec feature bits in mlx5e_macsec_build_netdev, after device
-capabilities have been validated. This preserves MACsec-over-VLAN
-support and the ethtool feature control on capable devices, without
-advertising either on unsupported hardware.
+  BUG: KASAN: null-ptr-deref in tca_action_gd+0x5b9/0x1010
+  Read of size 4 at addr 0000000000000010 by task poc/150
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002
+  RIP: tca_action_gd+0x5c0/0x1010:
+    arch_atomic_read at arch/x86/include/asm/atomic.h:23
+    raw_atomic_read at include/linux/atomic/atomic-arch-fallback.h:457
+    atomic_read at include/linux/atomic/atomic-instrumented.h:33
+    tcf_idr_delete_index at net/sched/act_api.c:766
+    tcf_action_delete at net/sched/act_api.c:1859
+    tcf_del_notify at net/sched/act_api.c:2014
+    tca_action_gd at net/sched/act_api.c:2064
+  R13: 0000000000000010 R15: fffffffffffffff0
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: 339ccec8d43d ("net/mlx5: Enable MACsec offload feature for VLAN interface")
+R15 contains ERR_PTR(-EBUSY), and adding the tcfa_bindcnt offset produces
+the address in R13.  With the guard applied, the same reproducer returned
+-ENOENT without a KASAN report or panic.  Treat error pointers as absent
+and return -ENOENT.
+
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
 Cc: stable@vger.kernel.org
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Link: https://patch.msgid.link/20260917122724.654639-1-ralf@mandelbit.com
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260914065123.4109709-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c |    2 ++
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c         |    1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/sched/act_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-@@ -1727,6 +1727,8 @@ void mlx5e_macsec_build_netdev(struct ml
- 	mlx5_core_dbg(priv->mdev, "mlx5e: MACsec acceleration enabled\n");
- 	netdev->macsec_ops = &macsec_offload_ops;
- 	netdev->features |= NETIF_F_HW_MACSEC;
-+	netdev->hw_features |= NETIF_F_HW_MACSEC;
-+	netdev->vlan_features |= NETIF_F_HW_MACSEC;
- 	netif_keep_dst(netdev);
- }
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -711,7 +711,7 @@ static int tcf_idr_delete_index(struct t
  
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5135,7 +5135,6 @@ static void mlx5e_build_nic_netdev(struc
- 
- 	netdev->vlan_features    |= NETIF_F_SG;
- 	netdev->vlan_features    |= NETIF_F_HW_CSUM;
--	netdev->vlan_features    |= NETIF_F_HW_MACSEC;
- 	netdev->vlan_features    |= NETIF_F_GRO;
- 	netdev->vlan_features    |= NETIF_F_TSO;
- 	netdev->vlan_features    |= NETIF_F_TSO6;
+ 	mutex_lock(&idrinfo->lock);
+ 	p = idr_find(&idrinfo->action_idr, index);
+-	if (!p) {
++	if (IS_ERR_OR_NULL(p)) {
+ 		mutex_unlock(&idrinfo->lock);
+ 		return -ENOENT;
+ 	}
 
 
