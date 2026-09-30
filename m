@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C439E3B1029;
-	Wed, 30 Sep 2026 18:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D4731D366;
+	Wed, 30 Sep 2026 18:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791558; cv=none; b=efEaaOiEFBAuQ0BJYKnlYpT64ByCdZTekxDTddx726xBxta/BqHgUFkrbXnPnuF83Y371igeYMNNRGmZfDSH7dWPo3hiG85HkH7f0EunPINT9QmMdHQY22q7MU2Uq9xLBtTWewdahV8h1PdPGMzaNUgNsOzOqycFXVBRG+A4HYQ=
+	t=1790791560; cv=none; b=dmrJ5qonuUZnLH74fZ9VfVaqVrqOVj7TVWq5f0fbmxAyjvatCvyeVlBMtS2OGWwaVsu8FZYJrxq/E6YYkyvwTSmr9ZaBrD5EVZIYS3XtR6ckJnSxp/TtOQkG2zbCZQh74PJ7QlZ+FA9+Cj4cj9nEZw1LzTMohqkxAhrSRM+Zz0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791558; c=relaxed/simple;
-	bh=4VkmdlJOgbj3iKVmmejvIVXZ++VM2Lz019siBisUgb0=;
+	s=arc-20240116; t=1790791560; c=relaxed/simple;
+	bh=zB4cyJrYAGjmuDRReMHT8Tb3YjQEi6tx5OwN+/L++Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lg9xTGltLXaLffMTSfGn8vgpC5xIvVnolao7WeQjJmNtY8Xsyfq5e3dNVRXF1kOfiGOsdZu8zbBgUMM63gy+EUqf0uLcFCw6XfJjqeDugYIsaoLvMaRlhV8Yb7sEnchI/dFBrm4m0vrN+JwXco6w7mfVuYViYSAIRfas5eP8tok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rph+hgsn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z/CpasIH6qXxSzzSpzpP1u3dPbfcTMWovDKqUlfh/3ku9JAQLrSsFPYWGiz9DZ4lkRPWtNKRVAmf8Fe78TAx78MyR4oH7c0qCI18PUvD20wsP4mZWAmqKnHdnKnsdZMdgtWfeKkbIUUOk8l1O0svnfFdwUZTEh3GM8o5ct/Hh/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8ZkmPuU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rph+hgsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298E71F000FF;
-	Wed, 30 Sep 2026 18:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8ZkmPuU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002531F00898;
+	Wed, 30 Sep 2026 18:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791556;
-	bh=JcKJG6K42wpCKHmwVEjaaFV8ex08JSj3TevEhL+5Nto=;
+	s=korg; t=1790791559;
+	bh=5l0eUlld8HbK1avQBVQ5+FtViZA8YSzs6JJFz/tnWYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rph+hgsn2usfosiaGgdwHNkjHyu4k0Wfv+DPt6htWSN8Y7Y1DLIfdrnMkZZzBMwLm
-	 9l/jos+qfzLBOJ6upbfY6DoMjjVGx5y8l7aLJZ52z4VpS9z5CroOFWUbadctToYFJ6
-	 euTmTzMn/CVW+dS5dY/w+zpjOzMVHhTLnwWwyA8M=
+	b=b8ZkmPuUl5XzwI3w2GKtKwOTlswxYhaEL+RyfDynY0TalmfkroWrHLAyqtrKGEJ5s
+	 4J9GGXGRm7jwbiQEyTbr9SKjwQfKjzSHvxEeZvChnT6Lo0FBHuUeeFNn93PF/638Xq
+	 5N9FnMpujMQkG0pFwUoVZ1LhEUh0nmNN47rztvIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Cong Nguyen <congnt264@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 344/752] watchdog: msc313e: Fix clock leak and spurious timer in settimeout()
-Date: Wed, 30 Sep 2026 17:23:34 +0200
-Message-ID: <20260930152405.735449400@linuxfoundation.org>
+Subject: [PATCH 5.15 345/752] hwmon: (gpio-fan) take fan_data->lock in gpio_fan_shutdown()
+Date: Wed, 30 Sep 2026 17:23:35 +0200
+Message-ID: <20260930152405.757145085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,83 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 3db30f315935c2fb0d95f46b7a593b5b4d3ec3d0 ]
+[ Upstream commit bb2424c3502cc72292eedade46960c331d5f28fb ]
 
-msc313e_wdt_settimeout() unconditionally calls msc313e_wdt_start() which
-introduces two severe bugs:
+set_fan_speed() writes the control GPIOs one bit at a time. Every
+other caller locks around it; gpio_fan_shutdown() doesn't. If it races
+a locked caller, the GPIO writes can interleave and leave the fan at a
+speed neither caller asked for.
 
-1. If the watchdog is already active, calling start() again will
-   increase the reference count of the clock again.  However stop() is
-   only called once, the reference count is unbalance.
-2. If the watchdog is stopped, calling settimeout() will start
-   the hardware timer accidentally.
-
-Factor out the register-writing logic into a helper function.  Only call
-it in settimeout() if the watchdog is running.  Otherwise, simply update
-`wdev->timeout`.
-
-Fixes: e9800b799464 ("watchdog: Add Mstar MSC313e WDT driver")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-4-tzungbi@kernel.org
+Fixes: b95579cd8795 ("hwmon: (gpio-fan) Add a shutdown handler to poweroff the fans")
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260830152150.27F5F1F000E9@smtp.kernel.org
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://patch.msgid.link/20260901155404.1532092-1-congnt264@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/hwmon/gpio-fan.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 5dcf3f85ba842..82c4c32090c1b 100644
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -32,20 +32,26 @@ struct msc313e_wdt_priv {
- 	struct clk *clk;
- };
- 
-+static void msc313e_wdt_set_hw_timeout(struct msc313e_wdt_priv *priv,
-+				       unsigned int timeout)
-+{
-+	u32 t = timeout * clk_get_rate(priv->clk);
-+
-+	writew(t & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
-+	writew((t >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
-+	writew(1, priv->base + REG_WDT_CLR);
-+}
-+
- static int msc313e_wdt_start(struct watchdog_device *wdev)
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index 6d518c10723a0..2039e2b9d3c44 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -562,8 +562,11 @@ static void gpio_fan_shutdown(struct platform_device *pdev)
  {
- 	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
--	u32 timeout;
- 	int err;
+ 	struct gpio_fan_data *fan_data = platform_get_drvdata(pdev);
  
- 	err = clk_prepare_enable(priv->clk);
- 	if (err)
- 		return err;
- 
--	timeout = wdev->timeout * clk_get_rate(priv->clk);
--	writew(timeout & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
--	writew((timeout >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
--	writew(1, priv->base + REG_WDT_CLR);
-+	msc313e_wdt_set_hw_timeout(priv, wdev->timeout);
- 	return 0;
+-	if (fan_data->gpios)
++	if (fan_data->gpios) {
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, 0);
++		mutex_unlock(&fan_data->lock);
++	}
  }
  
-@@ -70,9 +76,13 @@ static int msc313e_wdt_stop(struct watchdog_device *wdev)
- 
- static int msc313e_wdt_settimeout(struct watchdog_device *wdev, unsigned int new_time)
- {
-+	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
-+
- 	wdev->timeout = new_time;
- 
--	return msc313e_wdt_start(wdev);
-+	if (watchdog_hw_running(wdev) || watchdog_active(wdev))
-+		msc313e_wdt_set_hw_timeout(priv, wdev->timeout);
-+	return 0;
- }
- 
- static const struct watchdog_info msc313e_wdt_ident = {
+ #ifdef CONFIG_PM_SLEEP
 -- 
 2.53.0
 
