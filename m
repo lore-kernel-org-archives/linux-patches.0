@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA3536D4E1;
-	Wed, 30 Sep 2026 18:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC89A59;
+	Wed, 30 Sep 2026 18:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791773; cv=none; b=MjrAXWg2zRq9NOd+Bb8+H8vPey4mlnuprd2+Nv9f0fvKWqUP9jCvNMu6BTO/pz26m6wzo0sLFV16euL8tVs+ZelnHSaVkK8CL2yllcwb09BxXXTdqx5CLYnT27LixLseib4tvHq50jA528Tw9KH0WoXGmsg/QbPnehxN/y6uCws=
+	t=1790791776; cv=none; b=FS3BTNtU4Yy2ltAPOzxgvAQWsm71K3NYWQf0HdlWMhiEK5NDJ/87gpyllHofkdBCphY0FgfZiESU5aNezo/S0hG6UcyZn8swwfolR9MUrEUq1TegzEULeoem2leq+lsjeUcv2iqfFQWzG6woKLim2DHCAVzRNHsgSBVcHgap2GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791773; c=relaxed/simple;
-	bh=dtmhzlU/Mv8zUvTPeUVGvx/aD6TEbKgtaw77P0nAaQ8=;
+	s=arc-20240116; t=1790791776; c=relaxed/simple;
+	bh=gp4YgiENxc3lc+hFYJtHkBBh7uQ2Xwd17eqF8LtG6Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxIG6iGB7L/2NxNs5RWfCPnCVCyQgr6Y3VSorfwKPDRBVuXYqM2LkuH/vj33SMZGW+Ul5kdwpHq5gB+Mo4Ivz44ThFJnfCDII0FRMP4qf+BUHP5cHo+p2Ztl7/8VumWTQyiQbzE/FqA7a19nnpZ5pOkBlFfahKCjzyoHAP4eGtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZ0nZ2TH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FE5/nJ4m5hWd33XXIAoABW2tYFjF2Bhj8A7qC/I0oYH/SjRAzm8MNwd9W+8x6eFTCeuT64DVflVt7A/JYaL5rSwh8xa7jp4W5q/gMWTM86o/hkF5UCnsxhafNFeHt13Rlt6SyVLx7gcUCpk+lPi0crBBxnM39hG/u+44HTK22CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOkumKy6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZ0nZ2TH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACF91F000FF;
-	Wed, 30 Sep 2026 18:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOkumKy6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEF91F000FF;
+	Wed, 30 Sep 2026 18:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791772;
-	bh=jZK0/kTwGKfql6Twkbi67dqwmmI0orghRIQIJZ7zUKo=;
+	s=korg; t=1790791774;
+	bh=U6tWXBr28C9Hstv4K2Uk8Xkx5rUkv9F/HE2sLHSre7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZ0nZ2THuaeMsN4AuQiGRAfU+MQoe5SHdxGXYoVvfJktsPiz1TOtzRyTHw8L1RYs5
-	 KMlPHRDj8+PlD7LzykrOMkLIfbSY6MQ/LyRw6G4rAR8lVpAxnb/LE00Q3PJynrKf6V
-	 VPBmzTHGSvhfc/ua7bmaYfbmx6nCL+KdskStBDpw=
+	b=aOkumKy6wNt86uLbcNs8COo7Ruwc5kwjNLxKruG3MPLoMm/vNxx6bq65ucvDoeylU
+	 OSQ8FEqVESiH8M4VF0nTEnseJpG2Y6Glsyy0eMg7hPy2jL9tmmHuqY4O7cLsoz7kFS
+	 C/OmtTr21eeGOPdaloUbWKibltaAKCnnyLhc9B+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/752] Revert "scsi: smartpqi: Stop using the SCSI pointer"
-Date: Wed, 30 Sep 2026 17:23:55 +0200
-Message-ID: <20260930152406.178557253@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Subject: [PATCH 5.15 414/752] fou: Fix use-after-free in fou_create()
+Date: Wed, 30 Sep 2026 17:24:44 +0200
+Message-ID: <20260930152407.235480864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -49,61 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 3285f3a01085e815a2e2a6b72dcffbb037a62553.
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit b14361aca6350ff7907b0e9903c7b94dc7d5d4a0 upstream.
+
+fou_create() publishes struct fou through sk_user_data before adding the
+new FOU port to the per-netns list.  If fou_add_to_port_list() fails,
+the error path frees fou while it is still reachable through
+sk_user_data.  A concurrent receive can then dereference the freed
+object in fou_from_sock().
+
+This ordering issue was previously noted in the linked discussion.
+
+The failure is reachable when local port 0 is requested.  Each socket
+binds to a different ephemeral port, but fou_cfg_cmp() compares the
+requested port 0 and reports -EALREADY once an entry already exists.
+
+Release the tunnel socket before freeing fou so sk_user_data is cleared
+first, and defer reclamation with kfree_rcu() to protect concurrent RCU
+readers.  This matches the lifetime handling in fou_release().
+
+Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://lore.kernel.org/netdev/20260502031401.3557229-12-kuniyu@google.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260722083858.182506-1-xuanqiang.luo@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ net/ipv4/fou_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 7ecc62fc572aa..1df17ef2ec93a 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -54,15 +54,6 @@ MODULE_DESCRIPTION("Driver for Microchip Smart Family Controller version "
- MODULE_VERSION(DRIVER_VERSION);
- MODULE_LICENSE("GPL");
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -639,9 +639,9 @@ static int fou_create(struct net *net, s
+ 	return 0;
  
--struct pqi_cmd_priv {
--	int this_residual;
--};
--
--static struct pqi_cmd_priv *pqi_cmd_priv(struct scsi_cmnd *cmd)
--{
--	return scsi_cmd_priv(cmd);
--}
--
- static void pqi_verify_structures(void);
- static void pqi_take_ctrl_offline(struct pqi_ctrl_info *ctrl_info,
- 	enum pqi_ctrl_shutdown_reason ctrl_shutdown_reason);
-@@ -5399,7 +5390,7 @@ static void pqi_aio_io_complete(struct pqi_io_request *io_request,
- 	scsi_dma_unmap(scmd);
- 	if (io_request->status == -EAGAIN || pqi_raid_bypass_retry_needed(io_request)) {
- 		set_host_byte(scmd, DID_IMM_RETRY);
--		pqi_cmd_priv(scmd)->this_residual++;
-+		scmd->SCp.this_residual++;
- 	}
+ error:
+-	kfree(fou);
+ 	if (sock)
+ 		udp_tunnel_sock_release(sock);
++	kfree_rcu(fou, rcu);
  
- 	pqi_free_io_request(io_request);
-@@ -5623,7 +5614,7 @@ static inline bool pqi_is_bypass_eligible_request(struct scsi_cmnd *scmd)
- 	if (blk_rq_is_passthrough(scsi_cmd_to_rq(scmd)))
- 		return false;
- 
--	return pqi_cmd_priv(scmd)->this_residual == 0;
-+	return scmd->SCp.this_residual == 0;
+ 	return err;
  }
- 
- /*
-@@ -6989,7 +6980,6 @@ static struct scsi_host_template pqi_driver_template = {
- 	.map_queues = pqi_map_queues,
- 	.sdev_groups = pqi_sdev_groups,
- 	.shost_groups = pqi_shost_groups,
--	.cmd_size = sizeof(struct pqi_cmd_priv),
- };
- 
- static int pqi_register_scsi(struct pqi_ctrl_info *ctrl_info)
--- 
-2.53.0
-
 
 
