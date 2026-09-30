@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1B64EA39A;
-	Wed, 30 Sep 2026 15:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DA3511E66;
+	Wed, 30 Sep 2026 15:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783567; cv=none; b=pgEWrNeBg5YM6pa9kNXU5qJCRBQoW9u0brmJCmOxWdfNGBR8rbceO0VuT5ENmPrFEftYMHu4aX5zGSH6pRKTixxeq2F5RsV57gEcvVHrvd2ZGhGTuSa0qntok9LSCPkAJW/ngBFB4zsTWyZQBmFjaJ9zSa0LMwkOwOVmkNvNeyE=
+	t=1790783569; cv=none; b=CZpKZs6oH4NNwiqURT3oJRmSA7+jqOB+/YxbnRHmGBg5xxborPU2TtASNvigO3He9NM03ztM8OqmP6a2n7Xn1Or4Rb6Cfv859rimL8XVjh1Rvmjse86qWAbNfprPJv6SRuOm2ukDRH1Hj7WW6BPpLtAr5pXrazS1+1Rx2RBuF50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783567; c=relaxed/simple;
-	bh=bXh1FdQmfljKeYvMqjSC9D3DGlL8kIQWipUP0TTplA4=;
+	s=arc-20240116; t=1790783569; c=relaxed/simple;
+	bh=BAN5Peees2Ecesjs6o7LNxQg3Dzp/nQssKendOJyWLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SRXuSoLl9XrcXa4NpqkLltpG1IRzTe+HiufnPoWewmmqv3un7VRIhlU122HkY/RV38cPdJfPs94mQOd5Ii5a9Zu2b8WurJ4i54XG9sGMDmgo6pfELrEmbe9RcW/eqLRXkdxv54cDL6lrcrq/E0yzaPCqzJdhgXa0CpKQ5LPHg7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrIRiL+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lkiO0BJ3FdK2uhWHsryJ2L4QjAuPCdygnLWhQIKsPqw6q4l+xpROV1hbr0cz355YoTDJllHIGyO/Qvh9vP9FJ1lRFHLgewzQDVtx6JexFuEHoFvokUGBnH6AiVAlwkUHH2pBSzYWheTOUt6UbM39sohSvwlFOCtvh7Pa9X5ma28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/5JsyRT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrIRiL+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7891F00898;
-	Wed, 30 Sep 2026 15:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/5JsyRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773901F000FF;
+	Wed, 30 Sep 2026 15:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783560;
-	bh=mopD9kwHJ40NxDmzMkSRIr9bkZq+s3pn1AwxWnf41TI=;
+	s=korg; t=1790783563;
+	bh=MuBYkejqEyr1R5Q3lOd2rCoNxZRAHRdq7ZOIHoQLlgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GrIRiL+zK7YO0w5EFoCCvMFeda1xZpgBQSY3/Sc6yZHweehj+csXOS/zQPOB5wYYA
-	 gC3HNexqD1UTEuEIDfFsrXHe9XazcbFZa3cwcmsCbATT8vKpZRpXmlhgpD0cMcFx+T
-	 lIdZBYRXisZwMtFZUvd9NFqpx7KkhXZlj/Dp8Dho=
+	b=T/5JsyRThnw71d/TtsrKRZGQUEAxQHNmY/gh0uHxVKv4Ir8FbEpAtFG9k4XtpwOkn
+	 w7JnqOSMZY0dEYPk/unjSjreGv+eL96ScN83IhQloPyG54wnPX79xL8GM0oGu4XX1p
+	 KZMaVUTpJq7Dn/HEVMPcUYUPsk2aDyFDfRas7AP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.10 440/595] selinux: always fill AVC decision in avc_has_perm_noaudit()
-Date: Wed, 30 Sep 2026 17:25:33 +0200
-Message-ID: <20260930152357.145008667@linuxfoundation.org>
+	Zhu Ling <zhuling0805@qq.com>,
+	Shawn Lin <shawn.lin@linux.dev>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.10 441/595] mmc: core: Fix OF node reference leak on card add failure
+Date: Wed, 30 Sep 2026 17:25:34 +0200
+Message-ID: <20260930152357.166501308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,50 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Zhu Ling <zhuling0805@qq.com>
 
-commit 8861db305103107199b1426f25fde1fb6d465583 upstream.
+commit 08b54e16d547d5c1aa61bf7a3595bb1620975eeb upstream.
 
-avc_has_perm_noaudit() is documented to return a copy of the access
-decision in @avd, but its early return for an empty requested permission
-set leaves the buffer untouched.  All callers pass an uninitialized
-stack variable and afterwards feed it to avc_audit(), and the inode hook
-even stores it in the per-task decision cache.
+mmc_of_find_child_device() returns a device node with its reference count
+incremented. mmc_add_card() stores the reference before calling
+device_add(), while the card is marked present only after device_add()
+succeeds.
 
-Fill in a deny-all, audit-all decision, similar to avd_init(), so every
-caller receives a defined value at no cost on the hot path.
+If device_add() fails, the callers release the card through
+mmc_remove_card(). However, mmc_remove_card() only drops the OF node
+reference for a present card, leaking the reference on this error path.
 
+Move of_node_put() outside the present-card conditional so the reference
+is released for both registered cards and card-add failures.
+
+Fixes: 25185f3f31c9 ("mmc: Add SDIO function devicetree subnode parsing")
 Cc: stable@vger.kernel.org
-Fixes: e6f2f381e4015386 ("selinux: replace BUG_ONs with WARN_ONs in avc.c")
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Zhu Ling <zhuling0805@qq.com>
+Reviewed-by: Shawn Lin <shawn.lin@linux.dev>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/avc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/core/bus.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/selinux/avc.c
-+++ b/security/selinux/avc.c
-@@ -1145,8 +1145,11 @@ inline int avc_has_perm_noaudit(struct s
- 	int rc = 0;
- 	u32 denied;
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -410,8 +410,8 @@ void mmc_remove_card(struct mmc_card *ca
+ 				mmc_hostname(card->host), card->rca);
+ 		}
+ 		device_del(&card->dev);
+-		of_node_put(card->dev.of_node);
+ 	}
++	of_node_put(card->dev.of_node);
  
--	if (WARN_ON(!requested))
-+	if (WARN_ON(!requested)) {
-+		/* Provide a deny-all, audit-all decision to the caller. */
-+		*avd = (struct av_decision){ .auditdeny = 0xffffffff };
- 		return -EACCES;
-+	}
- 
- 	rcu_read_lock();
- 
+ 	if (host->cqe_enabled) {
+ 		host->cqe_ops->cqe_disable(host);
 
 
