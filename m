@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5DB5335B1;
-	Wed, 30 Sep 2026 17:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FD1533588;
+	Wed, 30 Sep 2026 17:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790686; cv=none; b=IjPMYi+eG0imrToIhaV4QHaLQWJqrX6flqkx2GIcSeeDy3n8h2cWDanjbcYUyzneFralPBVL6JnjcEdzWiTB1nQfawTPXRL7csiv1iVEebXwXukR21fMvYQllw5XooIWqORU4i24Ce8/+3doyq5+C8uNTV3+pn81bSexePFViNg=
+	t=1790790689; cv=none; b=cnK32FDm9gkSELG8hvI/M25V3GZfKEiqnzZx4S/9T8G/k3IqKx0UXHM+I9iBVTz/pqtqyG9pdWl98DCW4w5d4ktud0CK7bKbMabgqFzWQQ4CFDavx6avouiNnwVskIVXN0vuIPWOT5B+3Kig2yum7rSPHHKD1fMKnQCVwbkWcbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790686; c=relaxed/simple;
-	bh=qg8iyq26JxXUVvPAXqfReLUwwrTIfHGnIstljENmisI=;
+	s=arc-20240116; t=1790790689; c=relaxed/simple;
+	bh=8vEauiBGaOKVjQSKc8fVnhV204hFqmlb5UbBhJQss/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frM4DgTMJGAwKOW1gG0+zfQHT3JvK+WLe83U30oR1SGKyD9NAa36lJZVDepApcoeIRWFgwnXPzm4kyz/KSGb4+S28A+1V6uvcb8OrgRFFVl8Pkkpxqa5iiMS/bl/oJLrcdL2P73J5mWS0ukXM9VL0BE9uGNfrBg8W8xodc5qTIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJbOGI0J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QxP1pDY/+8cTd6ZPC3vPAnMZPMwe/ppg7KyPgvReJbtVmNkRfRNaY2UowjRWp7wlozYoElRILwoxLMdTnt96+lTNFhdbtkuA0705OI4X4XRT4ff0hnWO0mBWUH9PleePRC6hD1xsMiu+CzDuCqnZ6wlt1twyXqGwkOOJyHuNcmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuTPFqcb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJbOGI0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9621F1F000FF;
-	Wed, 30 Sep 2026 17:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuTPFqcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DA91F000FF;
+	Wed, 30 Sep 2026 17:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790685;
-	bh=wR1mpGt4D9LbBqQOGQcgZqyv2hdaD3besX1uwGNV/G0=;
+	s=korg; t=1790790688;
+	bh=4fbroLN4V9Bi4q5oSTOygB5kfaKD155Ft6OY5MIBSpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJbOGI0JPIOMeGAT/6BMtHoLjNth/DrlRfzzxa/BgPgww+j4G5E8g/B2Xlc1eaCBD
-	 pkcyA8Gwin/gzg9AfddzHiGHvwYVLIb/X1Y6zVstG51CwMzbogQmv2ipAfyg1lbLce
-	 Vx7EC4Pz6ImZvTCB4goRppy/JwTXkqn0DP6yGWNE=
+	b=ZuTPFqcbUiwRshMM1ufQXum50LiPiE5spKDypgnk5jHMbVfwVb/XZtcuUHKajicma
+	 JFXSPHFlWF0RASDAd59qH7898SrJKcDpADQXnMrDiby0pff7Bpa4SI4wT10nVz7EGf
+	 961RUhz4YLIVru4HeAKFqkXKXfQVAc9ZT9m+KT+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Leonardo Bras <leo.bras@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 039/752] arm64/daifflags: Make local_daif_*() helpers __always_inline
-Date: Wed, 30 Sep 2026 17:18:29 +0200
-Message-ID: <20260930152359.000499615@linuxfoundation.org>
+Subject: [PATCH 5.15 040/752] firmware: arm_scmi: Validate SENSOR_UPDATE payload size
+Date: Wed, 30 Sep 2026 17:18:30 +0200
+Message-ID: <20260930152359.021076221@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,69 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonardo Bras <leo.bras@arm.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 827ce94e0897a70241abf810b1d3d7d083053a39 ]
+[ Upstream commit 32bc5496b48174dbca1f187f710955ee4d9527a1 ]
 
-Make sure those helpers are always inlined and instrumentation safe.
+SENSOR_UPDATE carries one or more sensor readings after the fixed
+notification header. The parser derives the expected reading count
+from the sensor description, but it did not verify that the received
+payload contains those entries before parsing them.
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Leonardo Bras <leo.bras@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reject truncated update notifications before reading the variable
+array.
+
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-3-d86daec4defd@kernel.org
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/daifflags.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/firmware/arm_scmi/sensors.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/daifflags.h b/arch/arm64/include/asm/daifflags.h
-index 55f57dfa8e2fe..e2ad84c2f32bc 100644
---- a/arch/arm64/include/asm/daifflags.h
-+++ b/arch/arm64/include/asm/daifflags.h
-@@ -19,7 +19,7 @@
+diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
+index 3ce1f8349e3ef..c65c3411442d1 100644
+--- a/drivers/firmware/arm_scmi/sensors.c
++++ b/drivers/firmware/arm_scmi/sensors.c
+@@ -906,12 +906,15 @@ scmi_sensor_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 	case SCMI_EVENT_SENSOR_UPDATE:
+ 	{
+ 		int i;
++		size_t expected_sz;
+ 		struct scmi_sensor_info *s;
+ 		const struct scmi_sensor_update_notify_payld *p = payld;
+ 		struct scmi_sensor_update_report *r = report;
+ 		struct sensors_info *sinfo = ph->get_priv(ph);
  
- 
- /* mask/save/unmask/restore all exceptions, including interrupts. */
--static inline void local_daif_mask(void)
-+static __always_inline void local_daif_mask(void)
- {
- 	WARN_ON(system_has_prio_mask_debugging() &&
- 		(read_sysreg_s(SYS_ICC_PMR_EL1) == (GIC_PRIO_IRQOFF |
-@@ -38,7 +38,7 @@ static inline void local_daif_mask(void)
- 	trace_hardirqs_off();
- }
- 
--static inline unsigned long local_daif_save_flags(void)
-+static __always_inline unsigned long local_daif_save_flags(void)
- {
- 	unsigned long flags;
- 
-@@ -53,7 +53,7 @@ static inline unsigned long local_daif_save_flags(void)
- 	return flags;
- }
- 
--static inline unsigned long local_daif_save(void)
-+static __always_inline unsigned long local_daif_save(void)
- {
- 	unsigned long flags;
- 
-@@ -64,7 +64,7 @@ static inline unsigned long local_daif_save(void)
- 	return flags;
- }
- 
--static inline void local_daif_restore(unsigned long flags)
-+static __always_inline void local_daif_restore(unsigned long flags)
- {
- 	bool irq_disabled = flags & PSR_I_BIT;
- 
-@@ -124,7 +124,7 @@ static inline void local_daif_restore(unsigned long flags)
-  * Called by synchronous exception handlers to restore the DAIF bits that were
-  * modified by taking an exception.
-  */
--static inline void local_daif_inherit(struct pt_regs *regs)
-+static __always_inline void local_daif_inherit(struct pt_regs *regs)
- {
- 	unsigned long flags = regs->pstate & DAIF_MASK;
- 
+-		/* payld_sz is variable for this event */
++		if (payld_sz < sizeof(*p))
++			break;
++
+ 		r->sensor_id = le32_to_cpu(p->sensor_id);
+ 		if (r->sensor_id >= sinfo->num_sensors)
+ 			break;
+@@ -925,6 +928,11 @@ scmi_sensor_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 		 * readings defined for this sensor or 1 for scalar sensors.
+ 		 */
+ 		r->readings_count = s->num_axis ?: 1;
++		expected_sz = sizeof(*p) + r->readings_count *
++			      sizeof(p->readings[0]);
++		if (payld_sz < expected_sz)
++			break;
++
+ 		for (i = 0; i < r->readings_count; i++)
+ 			scmi_parse_sensor_readings(&r->readings[i],
+ 						   &p->readings[i]);
 -- 
 2.53.0
 
