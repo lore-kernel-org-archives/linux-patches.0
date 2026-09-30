@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D873C1986;
-	Wed, 30 Sep 2026 19:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26D03C3C0C;
+	Wed, 30 Sep 2026 19:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794880; cv=none; b=A/OiFuMr6orXiUSjJ+0vwg4x0iFlFJAtE0xSr/8GOndI20ow6JYKLmn/VsgJN1W79iSE6kmAm2AoPOxjkyi5Ov83v7EGRPoE7QJZawwDrdzqYUNdrlLQnRPWU/AT7z2kA3d3fe3t66bkATtjFDS/2c/bV25K9pE8WxvVVAkfKYo=
+	t=1790794881; cv=none; b=Yz8MGxxClEdRsFlTE2mMdoIhj7DVmbzQlhlGwPNN5WiOanhO332sh213+b/DWU+Lkgs2t+W3vMBZjeHSxnK4c+FZ6N1L/g09t2fNS95sFJXa0dskB2wfCzZ0CvWzJnTDhkhLbAqj1hHtiQqiJY3zTwXA/iM4E+hUNAcWwDVSDnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794880; c=relaxed/simple;
-	bh=uR8otVK42GuNM2FkGrKRADYF4OInn1qwm4Drlq7XSXA=;
+	s=arc-20240116; t=1790794881; c=relaxed/simple;
+	bh=b86QAcDmF8YzztrTTpMzbbN0BIKbjGScBJrHNgRkGAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdcmVqXLZrIZLjcaoggVBfbM1TPSQa/eG3PcqD3aEor/BzQy/LfGnoMSQHQCR8v5DNSDwLSW70XvHehzWxbzbgZYItWLsbf4eraUx4zzEBaAEWXgGlFqA6Ms6e3qh+SsPGe6CcLAFMlJ3x4yjn094x6noHgZiuRHCcbOKFCWvhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gb/9QNzB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1k5pONUKDTHsWpTHRN2OFf1ONgk8K871fJVPfMFG3RuXwHQZyWvs6Fb8sRDhY5H1H6+tvKIaE8eTT2iyBFji8hscpE4VO4eghw12BBsTW0qM0d5wGj7PyMZqwXZr8FH5L7AAAaUQylH/ezYEMVeYqIQEhutZznjJxfuEqmExhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03brtLED; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gb/9QNzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B151F00899;
-	Wed, 30 Sep 2026 19:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03brtLED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BBC1F0089A;
+	Wed, 30 Sep 2026 19:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794855;
-	bh=ECdg2b0Xll1k071PQfq4S18xwo/cjVKHGu7Kp2UsjTA=;
+	s=korg; t=1790794861;
+	bh=nXO4WwtVSzU8V+Bts8zjg0EieYbsMBJhqD1iIv6X3n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gb/9QNzBtvN4bwamykLjuAFlkXPZ4dK1R9EygzHZ02QRphZMpwUR+jC3RwLwTo8Op
-	 D4dlbDeMAtmutV0v9Mk+OOYhn3KcoIwFSvCzZAhhVbh3HleLLRuvdChfQgeAU423U3
-	 4AdfA+Q3Fwlr+hNOjAbtK5tz9o3PEIMVC6PdAcwU=
+	b=03brtLEDdXAMtJxWh+ZN4Ubyx36bmSBF+oJcSaIk2hiu7dRrGee0U6+58GYKi5Vsy
+	 iCh44QvsQcFDcrcyRn/QO8zhdBahv22KUaSOf1So0MoIAFgQe/Fc++qJa2SN7XzZwk
+	 n3Auk4+/o4VdgwSFPNbnH9ftv7Caxip3SRLvH/7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0356/1193] Bluetooth: ISO: fix malformed ISO_END/CONT handling
-Date: Wed, 30 Sep 2026 17:17:20 +0200
-Message-ID: <20260930152442.078102845@linuxfoundation.org>
+Subject: [PATCH 6.6 0358/1193] sctp: fix err_chunk memory leaks in INIT handling
+Date: Wed, 30 Sep 2026 17:17:22 +0200
+Message-ID: <20260930152442.125223362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,101 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit e054c1a6ae7310d2815778fddb87da616e11c255 ]
+[ Upstream commit 9f58a0a4d6c2ed5d341bba64f058f15d1b0c36f2 ]
 
-Core specification (Part C vol 4 sec 5.4.5) does not exclude empty
-ISO_CONT, ISO_END packets.  We currently reject them if they are last.
+When sctp_verify_init() encounters unrecognized parameters, it allocates an
+err_chunk to report them. However, this chunk is leaked in several code
+paths:
 
-If controller sends malformed sequence
+1. In sctp_sf_do_5_1B_init(), if security_sctp_assoc_request() fails after
+   sctp_verify_init() has populated err_chunk, the function returns
+   immediately without freeing it.
 
-    ISO_START -> rx_len = 4, ISO_CONT skb->len 4, ISO_START
+2. In sctp_sf_do_unexpected_init(), the same leak occurs on the
+   security_sctp_assoc_request() failure path.
 
-that ends payload in ISO_CONT, we leak conn->rx_skb. If controller sends
-too long ISO_END, we panic on skb_put. If controller sends too short
-ISO_END we accept it.
+3. In sctp_sf_do_unexpected_init(), on the success path after copying
+   unrecognized parameters to the INIT-ACK, the function returns without
+   freeing err_chunk, unlike sctp_sf_do_5_1B_init() which properly frees
+   it.
 
-Fix by marking unfinished ISO_START via conn->rx_skb != NULL.  Check
-skb->len properly before skb_put.  Combine the ISO_CONT/END code paths
-as they require the same initial checks. Reject too short ISO_END
-packets.
+Fix all three leaks by adding sctp_chunk_free(err_chunk) calls before
+returning in the error paths and on the success path in
+sctp_sf_do_unexpected_init().
 
-Fixes: 84c24fb151fc ("Bluetooth: ISO: drop ISO_END frames received without prior ISO_START")
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: c081d53f97a1 ("security: pass asoc to sctp_assoc_request and sctp_sk_clone")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0656704f1b0158287c98aec09ba36c83e4a537ab.1781970534.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ net/sctp/sm_statefuns.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index ea5d8171fde73..23776ffbc60a3 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2037,7 +2037,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 	switch (pb) {
- 	case ISO_START:
- 	case ISO_SINGLE:
--		if (conn->rx_len) {
-+		if (conn->rx_skb || conn->rx_len) {
- 			BT_ERR("Unexpected start frame (len %d)", skb->len);
- 			kfree_skb(conn->rx_skb);
- 			conn->rx_skb = NULL;
-@@ -2104,12 +2104,14 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		break;
- 
- 	case ISO_CONT:
--		BT_DBG("Cont: frag len %d (expecting %d)", skb->len,
-+	case ISO_END:
-+		BT_DBG("%s: frag len %d (expecting %d)",
-+		       (pb == ISO_END) ? "End" : "Cont", skb->len,
- 		       conn->rx_len);
- 
--		if (!conn->rx_len) {
--			BT_ERR("Unexpected continuation frame (len %d)",
--			       skb->len);
-+		if (!conn->rx_skb) {
-+			BT_ERR("Unexpected ISO %s frame (len %d)",
-+			       (pb == ISO_END) ? "End" : "Cont", skb->len);
- 			goto drop;
- 		}
- 
-@@ -2125,17 +2127,9 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
- 					  skb->len);
- 		conn->rx_len -= skb->len;
--		break;
- 
--	case ISO_END:
--		if (!conn->rx_len) {
--			BT_ERR("Unexpected end frame (len %d)", skb->len);
--			goto drop;
--		}
--
--		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
--					  skb->len);
--		conn->rx_len -= skb->len;
-+		if (pb == ISO_CONT)
-+			break;
- 
- 		if (!conn->rx_len) {
- 			struct sk_buff *rx_skb = conn->rx_skb;
-@@ -2146,6 +2140,13 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 			 */
- 			conn->rx_skb = NULL;
- 			iso_recv_frame(conn, rx_skb);
-+		} else {
-+			BT_ERR("ISO fragment incomplete (len %d, expected %d)",
-+			       skb->len, conn->rx_len);
-+			kfree_skb(conn->rx_skb);
-+			conn->rx_skb = NULL;
-+			conn->rx_len = 0;
-+			goto drop;
- 		}
- 		break;
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 0a44a581900a0..3b67c503e5b99 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -415,6 +415,8 @@ enum sctp_disposition sctp_sf_do_5_1B_init(struct net *net,
+ 	/* Update socket peer label if first association. */
+ 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
+ 		sctp_association_free(new_asoc);
++		if (err_chunk)
++			sctp_chunk_free(err_chunk);
+ 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
  	}
+ 
+@@ -1606,6 +1608,8 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
+ 	/* Update socket peer label if first association. */
+ 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
+ 		sctp_association_free(new_asoc);
++		if (err_chunk)
++			sctp_chunk_free(err_chunk);
+ 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
+ 	}
+ 
+@@ -1671,6 +1675,7 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
+ 		 * parameter type.
+ 		 */
+ 		sctp_addto_chunk(repl, len, unk_param);
++		sctp_chunk_free(err_chunk);
+ 	}
+ 
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_ASOC, SCTP_ASOC(new_asoc));
 -- 
 2.53.0
 
