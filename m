@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D143CB56A;
-	Wed, 30 Sep 2026 19:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2456E3C3F56;
+	Wed, 30 Sep 2026 19:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795803; cv=none; b=Yhw23fuqqttqsMjG4PntltDgDMWRIUWnmUi+7+oXMfcdyY3fz53otzhYSO9rUt8rzLN+MHb8wPEcKTY7LAe9Hdd2hl5iGDw8eme4hOUTL0Dpt5PDEJavHp3xp6JACDRKvgttPWkxaBWdhQtpinLSB3A4B6HL1YKfySaOfgj/thk=
+	t=1790795806; cv=none; b=R7jDc3GakUQqpebyt7rCODvGZ5Cmwe24l5ilned1djBqf4T6qaMlcdGQEgGzMO11lBNBS+3QOjekxoGkW7MHqzbjNbiA1bAp1Cu3L86zVXJYRe9DNdGWh/9kKKi55gbkTHuOF0MMhmdlieWkL8xh9FaLgvg42MjjZqFVSGstgTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795803; c=relaxed/simple;
-	bh=XDW1P/WSSK1l8yVwKnFf4mpRBKeZCzBtlPGUZvyf3vw=;
+	s=arc-20240116; t=1790795806; c=relaxed/simple;
+	bh=xSgE8QhzfxTsOUTaXULk1cGfdYx6vCbvxnoESgk0Res=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI7YKgAJv+9Df5nXJn2XB4zKKDMQ1MYKOb5j9dFZdxEjfXYjjiA/xln9/+cUDU0TgzvITzAwMP1NBSsO7fypbrSCQyyssRZvddfQ1g3P6jsvjLlq/550va7J8DWUSZfnknWbXdcfDqlP7dkjtjA4wNgP8idUY1A5+xzRGI4FNgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obnA7H46; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h0EkGXmIu5hZE7hz08wZiAHSftFIFSR6ZC0nksC11DUFNGU86Vc1wghjOjcrCmYUx+ayhkNkkmdpHr3FvoRH0DxzyQE5//gI/UnvunmFO2lGd9xbpZtUyFMEkSCsJ+FnGlZVTkEJbqf4OCXPhchibSl2JtoQNW2KWQ6hQGzTuV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=li8m+ZFR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obnA7H46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E071F000FF;
-	Wed, 30 Sep 2026 19:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="li8m+ZFR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789A61F000FF;
+	Wed, 30 Sep 2026 19:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795802;
-	bh=EHb5td2LFLa0L5MFEB9w1hamgqE72t/87BqyMojSfik=;
+	s=korg; t=1790795805;
+	bh=s8DsR01ElrClg+EMkyDtL2/yI+BAOYAdAm8bOYnknZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obnA7H46LVlBOEmATRQ3oY9Jbw/XDJRL0fUEWZcGXqwlpTO/f1kr7YXBU8ZQf5UN2
-	 EfRqCx8JOu/5bLY/QKx+wkdQXYYKkbQlx5Kfe2/WDpdsfvlvMqYGggwajHQZWnf5fO
-	 bQM/tX5eJ96M+PhFI68BFLyq3ncS1Wsd1o2pOyRI=
+	b=li8m+ZFRhfNgZIm99B3lRl7JV1v9vKJ0ZBtdKs9ynnFN30hcH94mJ9LYnq0DJvr9H
+	 zHgi72doQ8azCCd/s/twvE6WH9OkKNBsWyOpgat/7Z/SLz7XOUzdZxbZDCbQ+Jh0fC
+	 tEkXYuf2h1YimMB5ODc0u2uAsaGHE9atn8bF0gR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0689/1193] Revert "perf tests: Fix flakiness in BPF counters test on hybrid systems"
-Date: Wed, 30 Sep 2026 17:22:53 +0200
-Message-ID: <20260930152449.555190602@linuxfoundation.org>
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 0663/1193] smb: client: reject userspace cifs.idmap descriptions
+Date: Wed, 30 Sep 2026 17:22:27 +0200
+Message-ID: <20260930152448.967734497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -49,79 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 1f27602b20119ae9261eb5c608bd1374af630f00.
+From: Aohan Mei <henrymei@tencent.com>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit d9d7eeb0cea5b55b82888f443622fd8d4ee064f3 upstream.
+
+cifs.idmap key descriptions carry authority-bearing fields (owner and
+group SIDs and uid/gid values in "os:"/"gs:"/"oi:"/"gi:" form) that the
+cifs.idmap upcall helper treats as kernel-originating inputs.  Unlike
+its sibling cifs.spnego, the cifs.idmap key type has no vet_description
+hook, so userspace can create keys of this type through
+request_key(2)/add_key(2) and supply those fields without CIFS origin.
+A request_key(2) call with a non-NULL callout then drives a root
+usermodehelper upcall (/sbin/request-key -> cifs.idmap) that consumes
+the unvetted description in root context.
+
+Only accept cifs.idmap descriptions while CIFS is using its private
+root_cred to request the key.  id_to_sid()/sid_to_id() already run
+under override_creds(root_cred), so the kernel-originated path is
+unaffected.
+
+This mirrors commit 3da1fdf4efbc ("smb: client: reject userspace
+cifs.spnego descriptions"), which applied the same restriction to
+cifs.spnego.
+
+Fixes: 4d79dba0e007 ("cifs: Add idmap key and related data structures and functions (try #17 repost)")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Cc: stable@vger.kernel.org
+Assisted-by: CodeBuddy:Kimi-K3
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 28 ++++++++-------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ fs/smb/client/cifsacl.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 76d4a7f15a43d..b776ee2e445a6 100755
---- a/tools/perf/tests/shell/stat_bpf_counters.sh
-+++ b/tools/perf/tests/shell/stat_bpf_counters.sh
-@@ -4,26 +4,21 @@
- 
- set -e
- 
--# Get the first allowed CPU
--CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
--if [ -z "$CPU" ]; then
--	CPU=0
--fi
--workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
-+workload="perf test -w sqrtloop"
- 
--# check whether $2 is within +/- 15% of $1
-+# check whether $2 is within +/- 20% of $1
- compare_number()
- {
- 	first_num=$1
- 	second_num=$2
- 
--	# upper bound is first_num * 115%
--	upper=$(expr $first_num + $first_num / 20 \* 3 )
--	# lower bound is first_num * 85%
--	lower=$(expr $first_num - $first_num / 20 \* 3 )
-+	# upper bound is first_num * 120%
-+	upper=$(expr $first_num + $first_num / 5 )
-+	# lower bound is first_num * 80%
-+	lower=$(expr $first_num - $first_num / 5 )
- 
- 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
--		echo "The difference between $first_num and $second_num are greater than 15%."
-+		echo "The difference between $first_num and $second_num are greater than 20%."
- 		exit 1
- 	fi
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -101,8 +101,23 @@ cifs_idmap_key_destroy(struct key *key)
+ 		kfree(key->payload.data[0]);
  }
-@@ -46,12 +41,11 @@ check_counts()
- test_bpf_counters()
- {
- 	printf "Testing --bpf-counters "
--	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
-+	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
- 				awk -v i=0 -v c=0 '/instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
- 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
--	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
--				-- "${workload[@]}"  2>&1 | \
-+	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
- 				awk -v i=0 -v c=0 '/instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
- 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
-@@ -63,9 +57,7 @@ test_bpf_counters()
- test_bpf_modifier()
- {
- 	printf "Testing bpf event modifier "
--	stat_output=$(perf stat --no-big-num \
--		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
--		-- "${workload[@]}" 2>&1)
-+	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
- 	base_instructions=$(echo "$stat_output"| \
- 				awk -v i=0 -v c=0 '/base_instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
--- 
-2.53.0
-
+ 
++static int
++cifs_idmap_key_vet_description(const char *description)
++{
++	/*
++	 * cifs.idmap descriptions are authority-bearing inputs to the
++	 * cifs.idmap upcall helper.  Only allow the kernel to create this
++	 * type of key using the private root_cred installed in
++	 * init_cifs_idmap; reject userspace request_key(2)/add_key(2).
++	 */
++	if (current_cred() != root_cred)
++		return -EPERM;
++	return 0;
++}
++
+ static struct key_type cifs_idmap_key_type = {
+ 	.name        = "cifs.idmap",
++	.vet_description = cifs_idmap_key_vet_description,
+ 	.instantiate = cifs_idmap_key_instantiate,
+ 	.destroy     = cifs_idmap_key_destroy,
+ 	.describe    = user_describe,
 
 
