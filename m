@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ABE4E1C7E;
-	Wed, 30 Sep 2026 15:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4752D4F4059;
+	Wed, 30 Sep 2026 15:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783432; cv=none; b=Iyq6QQUJ+sLkk8gxryN+l3CRx7chbRX6fRMCrozIXEUw1q/9hIi6RRcV8MjjwNIgr4J8982+de7ld/UnzRkpwJgOaQX3fOQzAAbWWm4CBivceNHkbcrjUu6Jhs4w4oa9FDa228tK6iPJVBmM0C35vl9HOb+Kz9gRCgqBlSamUTg=
+	t=1790783436; cv=none; b=SZ+tN3YZkUyoFobhbyAUh7ARJKIpxUOR/+jurmXWf+jJbylOtalJ0BfJFcAbW+hBD25k6sfxG8BFREjn4HrZFMza7ahzyPVycc4FOOvz0QzddhU3BaPx+AcZ8EGI324NuvpY5GXrIfzdSdPJqubM4ShPCvbVsiNSrSGW2KzYDQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783432; c=relaxed/simple;
-	bh=PbxtwgYUQq/SbJW8/uOn0vYCRgGD01Il5eNvwXPy13c=;
+	s=arc-20240116; t=1790783436; c=relaxed/simple;
+	bh=67FAM1rcVHyduL0rcEqw25FP6LRzzX8nbpg1JUdkHWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+AFDVa/nbIoM2yVKtP3VXGl0qDj26t2X6vOqMxvwCBlJyRNaR2YXD9RY/DPJIPz3GKhE7tloRS55A2ADcjid1JtpIo1LSWVBfjcu8R/cxI3YECru6k8uEUVXz5lPuPHt2mYdBwuc4qBBjt/JZQhRGPcQp497Kg/HI7XnS2pK8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vj9N2LGl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tUXHDeJ+jZw3nK7dJYySGyd2ecQnntZZTZMwyGA3PO6QT6GoRUEKXCWOyJaFBVDtonejPHv0uCg+SAohdjKkwCVkXgkdM+Lz+fgGWzB0kD7zSbTbM8SNpFK4y9v6eqvRzOInkD/Bp8pNCqum9QD8LhA25rfBdI+mA01I9/alkGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kM2zzEE/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vj9N2LGl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C895E1F00893;
-	Wed, 30 Sep 2026 15:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kM2zzEE/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574B61F000FF;
+	Wed, 30 Sep 2026 15:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783424;
-	bh=EQNb/37nyIWGl9DRGbJJd3HTdPCyK65gD701bP/E71Q=;
+	s=korg; t=1790783432;
+	bh=GO+bj40oQkqbrqxP94R326vK/HBLYzRGGPoV4W7DYwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vj9N2LGlXlZ12PlxbD1Ka/cpRm7ddyg6rpMgW2hxbhkgErChdx2KAdYV1YCkzHczj
-	 LyChMRTcG2l2RYar2IefxqnhQlY4oPMwAaezQkmjZr4kFLjeYG+7D7fYBL7ck1dKT+
-	 OI/Yxk5gEVV1IeNzKbSUp7Wgo6GBxUP9UkpXxAyc=
+	b=kM2zzEE/fJs40k3QJQQn5+ThliY97irhPv7Miiphy0YxsWqhsz0u1QstWEyp/qNEZ
+	 6k1MEyvPsJY1fntoKz1R3HE3EJhKvFETpp0kCyMftfW7iIUE936MCfxW9wP5B2ibDE
+	 Xz+16vKLWv7ALkAGPshYOKKh5F9/Wi0+80EYqwvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Melissa Wen <mwen@igalia.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 392/595] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
-Date: Wed, 30 Sep 2026 17:24:45 +0200
-Message-ID: <20260930152356.105572466@linuxfoundation.org>
+Subject: [PATCH 5.10 395/595] Input: trackpoint - fix the inertia attribute name in the ABI document
+Date: Wed, 30 Sep 2026 17:24:48 +0200
+Message-ID: <20260930152356.171425081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,80 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 9eb1a393c89a79c4210230d23e7d88d239c61d7b ]
+[ Upstream commit 45b0037899704caf9078be2be4de69361ca7d933 ]
 
-When an out_fence_ptr is provided but DRM_MODE_PAGE_FLIP_EVENT is not
-set, a drm_pending_vblank_event will be allocated. If later, there is an
-allocation failure or another failure at setup_out_fence(), that event
-will not have base.fence set and it will not be released at
-complete_signaling().
+The attribute is created as "inertia" (TRACKPOINT_INT_ATTR(inertia, ...)
+in drivers/input/mouse/trackpoint.c); the ABI file spells the path
+"intertia". The description below it already says inertia.
 
-Release the event and set crtc_state->event to NULL just like in the
-DRM_MODE_PAGE_FLIP_EVENT case when there is a failure at
-drm_event_reserve_init(). That is, prepare_signaling() releases the
-event and there is nothing to be done at complete_signaling(). Use
-drm_event_cancel_free() as that will also undo drm_event_reserve_init()
-in case it has been called.
+Fix the spelling.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com?part=1
-Fixes: 92c715fca907 ("drm/atomic: Fix double free in drm_atomic_state_default_clear")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260826-drm_pending_vblank_event_leak-v4-1-f8de8b996b9d@igalia.com
+Fixes: aebb47d4e7a9 ("Input: trackpoint: document sysfs interface")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905102038.42882-1-kmehltretter@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ Documentation/ABI/testing/sysfs-devices-platform-trackpoint | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-index 5873b37f0d26e..f6e3ba4091218 100644
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -1163,10 +1163,12 @@ static int prepare_signaling(struct drm_device *dev,
- 			struct dma_fence *fence;
- 			struct drm_out_fence_state *f;
+diff --git a/Documentation/ABI/testing/sysfs-devices-platform-trackpoint b/Documentation/ABI/testing/sysfs-devices-platform-trackpoint
+index df11901a6b3df..7954434b0434a 100644
+--- a/Documentation/ABI/testing/sysfs-devices-platform-trackpoint
++++ b/Documentation/ABI/testing/sysfs-devices-platform-trackpoint
+@@ -5,7 +5,7 @@ Contact:	linux-input@vger.kernel.org
+ Description:
+ 		(RW) Trackpoint sensitivity.
  
-+			ret = -ENOMEM;
-+
- 			f = krealloc(*fence_state, sizeof(**fence_state) *
- 				     (*num_fences + 1), GFP_KERNEL);
- 			if (!f)
--				return -ENOMEM;
-+				goto err_free_event;
- 
- 			memset(&f[*num_fences], 0, sizeof(*f));
- 
-@@ -1175,12 +1177,12 @@ static int prepare_signaling(struct drm_device *dev,
- 
- 			fence = drm_crtc_create_fence(crtc);
- 			if (!fence)
--				return -ENOMEM;
-+				goto err_free_event;
- 
- 			ret = setup_out_fence(&f[(*num_fences)++], fence);
- 			if (ret) {
- 				dma_fence_put(fence);
--				return ret;
-+				goto err_free_event;
- 			}
- 
- 			crtc_state->event->base.fence = fence;
-@@ -1234,6 +1236,11 @@ static int prepare_signaling(struct drm_device *dev,
- 		return -EINVAL;
- 
- 	return 0;
-+
-+err_free_event:
-+	drm_event_cancel_free(dev, &crtc_state->event->base);
-+	crtc_state->event = NULL;
-+	return ret;
- }
- 
- static void complete_signaling(struct drm_device *dev,
+-What:		/sys/devices/platform/i8042/.../intertia
++What:		/sys/devices/platform/i8042/.../inertia
+ Date:		Aug, 2005
+ KernelVersion:	2.6.14
+ Contact:	linux-input@vger.kernel.org
 -- 
 2.53.0
 
