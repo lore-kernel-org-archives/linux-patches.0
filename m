@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AC8357D11;
-	Wed, 30 Sep 2026 16:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A74E4E0B66;
+	Wed, 30 Sep 2026 16:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786266; cv=none; b=Y3ZJYo7StVvVzL1edwWxUSJoa6o81NWOVphtXngeq07m92U5In+SJdc+lq+IN/FUcLEQxKIFfhLfmBDrP1klzxawQ86aYeAH0TpSbbesnT2Jjs7blGzkCDI19bThckti18FZ3XNgqMWhulPOl7RuWspWYBlhXZiI5taxy0MVg/U=
+	t=1790786270; cv=none; b=E9EI5Zpi2Eix1lUV9w5/PKTlszZlZnhFa9dioMbnR6aJECGGi1+O/KEOZFJIeCuaBnV0R0WRZKbQt3PrGoh42Ki6+ORmZHnAXSbML/kXVxmoRJYaZ/MY6Qk0ZEHWXUVlkwbzBELSwCdBX/F9Wz0TsZGIHYzUuPO4OA62wyY7Oq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786266; c=relaxed/simple;
-	bh=PUWT4RCHVdDbfKzB/8b3STzlZSrY3H5FL4dvbEq0u74=;
+	s=arc-20240116; t=1790786270; c=relaxed/simple;
+	bh=sLZGxVU9HWdEpEmI2fTfXaBXXEdsDmKxDu5cSkrwI2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPFoZIxIqnf1Ayaiix9hSQh2owAfr8nJrbtj8Dor2FN3d4O7EljfIdGYCX9bKhME4HC0RS5M1E4i5+c3qvbkptGcA+9NEA458XoZlhsAjJlLmhnqwJj8/wS4aQRQv2hwSWtdxZ32BbKBONWRSZmKyHCcKclCPCNpQQ/La8WDs0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4Ov/7E+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZcL273ysAPlytZALuFRdeuhgl+bJSfUXveIf6+sNoazoIkf1Z7nOG+2B9DNOLHcpJoJT+RmzISULRBm1YvzYQ8Ab9QhpJpkNUeUoAUiiYRe4SyfU2O8CjhNFHxKGiqDZ04jL1kB7w9rkCPWZ/6r3VgYJ0ELrL5IEw3M09F+dTVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOHKW3To; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4Ov/7E+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA501F000FF;
-	Wed, 30 Sep 2026 16:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOHKW3To"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1591F000FF;
+	Wed, 30 Sep 2026 16:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786265;
-	bh=RSR17rlKER8h6nTfbaP4iPn8Hz3dpCmNLjCNIEN5ZYc=;
+	s=korg; t=1790786268;
+	bh=9MBN6U408W9o5TDoXOXfLs7RAegrYyJAOEy3R+eNC7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V4Ov/7E+OQhpXYe//g+k0CvfoDNWXXi78Y79V3MoA0CgNUuRp5J8871uLSpN0Pqon
-	 tDw2gNoJgLLYXn3EXDP5xRRt0j/nZqsAOXvzoI5jlpEb9e6EohIUtmLMiqI9Cy8s6H
-	 V2OojQz+UeURgTY7gFOWp28aYlCFfCHOqR2HT59Q=
+	b=SOHKW3Ton6eNvVP+EECTCecsoElOxkMRsBcnxA+PMgF+AjO9u3aLv/v+7r3ywQWMh
+	 mB5zVXFQBro+ixjE5ngjmNz9r0XkGHBqcyZdKUBVd0MpTPvCyAKGhyxRGTyAVq87zZ
+	 g6h3ofhFO/1eLn8ySxRJogep7T9XPEk1Q8ZtJlis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 784/982] blk-mq: fix tags leak when shrink nr_hw_queues
-Date: Wed, 30 Sep 2026 17:25:20 +0200
-Message-ID: <20260930152433.595107770@linuxfoundation.org>
+Subject: [PATCH 6.1 802/982] sh: push-switch: Reorder cleanup operations to avoid use-after-free bug
+Date: Wed, 30 Sep 2026 17:25:38 +0200
+Message-ID: <20260930152433.982276644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,58 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit e1dd7bc93029024af5688253b0c05181d6e01f8e ]
+[ Upstream commit 246f80a0b17f8f582b2c0996db02998239057c65 ]
 
-Although we don't need to realloc set->tags[] when shrink nr_hw_queues,
-we need to free them. Or these tags will be leaked.
+The original code puts flush_work() before timer_shutdown_sync()
+in switch_drv_remove(). Although we use flush_work() to stop
+the worker, it could be rescheduled in switch_timer(). As a result,
+a use-after-free bug can occur. The details are shown below:
 
-How to reproduce:
-1. mount -t configfs configfs /mnt
-2. modprobe null_blk nr_devices=0 submit_queues=8
-3. mkdir /mnt/nullb/nullb0
-4. echo 1 > /mnt/nullb/nullb0/power
-5. echo 4 > /mnt/nullb/nullb0/submit_queues
-6. rmdir /mnt/nullb/nullb0
+      (cpu 0)                    |      (cpu 1)
+switch_drv_remove()              |
+ flush_work()                    |
+  ...                            |  switch_timer // timer
+                                 |   schedule_work(&psw->work)
+ timer_shutdown_sync()           |
+ ...                             |  switch_work_handler // worker
+ kfree(psw) // free              |
+                                 |   psw->state = 0 // use
 
-In step 4, will alloc 9 tags (8 submit queues and 1 poll queue), then
-in step 5, new_nr_hw_queues = 5 (4 submit queues and 1 poll queue).
-At last in step 6, only these 5 tags are freed, the other 4 tags leaked.
+This patch puts timer_shutdown_sync() before flush_work() to
+mitigate the bugs. As a result, the worker and timer will be
+stopped safely before the deallocate operations.
 
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230821095602.70742-1-chengming.zhou@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9f5e8eee5cfe ("sh: generic push-switch framework.")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230802033737.9738-1-duoming@zju.edu.cn
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Backport to 6.1.y: use this tree's cur_nr_hw_queues snapshot when
-  freeing excess tag sets. ]
+[ Backport to 6.1.y: use timer_shutdown_sync(), already available here,
+  so the timer cannot rearm before the queued work is flushed. ]
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/sh/drivers/push-switch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 8a9d9e3db1668..b6215bee3d3c4 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4509,9 +4509,13 @@ static int blk_mq_realloc_tag_set_tags(struct blk_mq_tag_set *set,
- 				  int cur_nr_hw_queues, int new_nr_hw_queues)
- {
- 	struct blk_mq_tags **new_tags;
-+	int i;
+diff --git a/arch/sh/drivers/push-switch.c b/arch/sh/drivers/push-switch.c
+index 2813140fd92bb..6ecba5f521eb6 100644
+--- a/arch/sh/drivers/push-switch.c
++++ b/arch/sh/drivers/push-switch.c
+@@ -101,8 +101,8 @@ static int switch_drv_remove(struct platform_device *pdev)
+ 		device_remove_file(&pdev->dev, &dev_attr_switch);
  
--	if (cur_nr_hw_queues >= new_nr_hw_queues)
-+	if (cur_nr_hw_queues >= new_nr_hw_queues) {
-+		for (i = new_nr_hw_queues; i < cur_nr_hw_queues; i++)
-+			__blk_mq_free_map_and_rqs(set, i);
- 		return 0;
-+	}
+ 	platform_set_drvdata(pdev, NULL);
++	timer_shutdown_sync(&psw->debounce);
+ 	flush_work(&psw->work);
+-	del_timer_sync(&psw->debounce);
+ 	free_irq(irq, pdev);
  
- 	new_tags = kcalloc_node(new_nr_hw_queues, sizeof(struct blk_mq_tags *),
- 				GFP_KERNEL, set->numa_node);
+ 	kfree(psw);
 -- 
 2.53.0
 
