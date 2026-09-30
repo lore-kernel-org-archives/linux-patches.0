@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4D94D9540;
-	Wed, 30 Sep 2026 16:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24035013A9;
+	Wed, 30 Sep 2026 16:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784158; cv=none; b=JI5r3YB7k4AUcfk8+GMbM6SbfrICqAP21H0P6UV5SAeY7dgYEJF34wpgbhZx7pz6c8ZhC8Qz/xtnj5pv8OnHxXyHt56y0+EyqTjm6Rn1i6GRFu+fUUKX+8ADnxGTa2f1T9ACf7ByMEcsVuaZSPxdFl7iMVZ98s2rX6JiXlVLy9g=
+	t=1790784161; cv=none; b=jdu8qw/6rJ6UFX5BdbhxF/u36CEyRFQTPllfLTUhK7yDq2wW3CNJlc6JQbQDJq80EBBcjEUoCeNoI/rdyOpiGJjlwN2vOKJs4xXeUNUBtObkd5jTT+gysa+5nqkkivM7/0MX4Rnp4qjEIsB9Za6sTWMy2gJMuJ82WAPxJe+ZAeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784158; c=relaxed/simple;
-	bh=JPNNXpe5oxwVWSaq9Tw0c96+eXcsinWAD+RJJjG/y3I=;
+	s=arc-20240116; t=1790784161; c=relaxed/simple;
+	bh=loUhV+ShbVCBEEj3R7SCmhdkIYBes8Rl37zfbGr36Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BezmF2ZXOIxKYwGGO/LLuYwIpPckmQoqIffQHEAxh5Gib1USgMoTREcpSc1u/f8zvodQTdKzWpQa9SpQKTgKTCrnCwtQYOUbP53llQMHWIuqeFV2s6Wb8E87F160XYQzkwDSIH8rKvzS4bH8Nigreqh7er9O2NJ4iji9BMFG8Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=verahupb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XLk58llplhLWeekRLJj1j6KbtgNPADEmL3wx9724hIN1nqeQ5dZIH9eUq4RJ31i7/R18s8Cb9XfELungwFuIWT0V1g7kPumY13Lnx4eaPK0G3abO8n9700abdZorpQHC++Kz6jyZqfLdfHzr2mGunRlKMdFn8kjmpTSr+8s+ST0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPenczV/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="verahupb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B161F00893;
-	Wed, 30 Sep 2026 16:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPenczV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8C91F00898;
+	Wed, 30 Sep 2026 16:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784153;
-	bh=Y8yj91OTx24B736eLGhCGpWJVgu+futlopCq5ytWB5U=;
+	s=korg; t=1790784156;
+	bh=gntYyzF8vDgpvuBAxmMGxYAfNGKAL05ak/Rm4kFunrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=verahupbIIjaRy1SDq26Jh1Wg7YUyhi8XpPjdo/SbaOwpowLH5ybCoszyhoK7ID4M
-	 NvbxPNWW0fRIvK8c8k0XJGNBoYiJGmYZmcbZRXcoSThHVsncVx7iGXQyB7t4dvivuI
-	 qg3aLVfxn9ugUJrvfYvscaW0RKhH53Oz+H5U/8Fc=
+	b=WPenczV//YAUsjTSFFqhRHtlgn/NfvSkRCi1yDSTWPHir4+7+sL7Vw0lu0h28/3oe
+	 6tVHSVxFCGP7awWGpv495k9OwnR/CYVYYHO9dHi2lWAldi7Uh55AhuDIn+LQa694Px
+	 EXz16FaPPOxI2hTwd4yGdGvFYYNjqOs9C6jwv4I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Barre <pierre@barre.sh>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Leonardo Bras <leo.bras@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/982] 9p: invalidate readdir buffer on seek
-Date: Wed, 30 Sep 2026 17:13:10 +0200
-Message-ID: <20260930152417.953502387@linuxfoundation.org>
+Subject: [PATCH 6.1 055/982] arm64/daifflags: Make local_daif_*() helpers __always_inline
+Date: Wed, 30 Sep 2026 17:13:11 +0200
+Message-ID: <20260930152417.975086555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,106 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Barre <pierre@barre.sh>
+From: Leonardo Bras <leo.bras@arm.com>
 
-[ Upstream commit e661e17ddbed524b5fbda789a091b48b6b677067 ]
+[ Upstream commit 827ce94e0897a70241abf810b1d3d7d083053a39 ]
 
-The per-fid readdir buffer (fid->rdir) is populated lazily and only
-refilled when fully drained (rdir->head == rdir->tail). userspace
-lseek() on a directory fd updates file->f_pos via generic_file_llseek()
-but does not touch the cached buffer, so the next getdents() iterates
-the stale cache and emits entries from the previous position instead
-of the one the caller asked for.
+Make sure those helpers are always inlined and instrumentation safe.
 
-Track the file position the cached data corresponds to in
-struct p9_rdir, and drop the cache on entry to iterate_shared when it
-no longer matches ctx->pos. The 9p protocol's Tread/Treaddir already
-take an arbitrary offset on every request, so a refill at the new
-position is always legal; no .llseek override or seek restriction is
-needed.
-
-Reported-by: Pierre Barre <pierre@barre.sh>
-Link: https://lore.kernel.org/v9fs/496d10b9-40fe-4f81-8014-37497c37ff63@app.fastmail.com/
-Signed-off-by: Pierre Barre <pierre@barre.sh>
-Message-ID: <20260512132032.369281-2-pierre@barre.sh>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Leonardo Bras <leo.bras@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_dir.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/include/asm/daifflags.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
-index 3bb95adc9619d..dd36dce582839 100644
---- a/fs/9p/vfs_dir.c
-+++ b/fs/9p/vfs_dir.c
-@@ -29,6 +29,7 @@
-  * struct p9_rdir - readdir accounting
-  * @head: start offset of current dirread buffer
-  * @tail: end offset of current dirread buffer
-+ * @offset: file position the data at @head corresponds to
-  * @buf: dirread buffer
-  *
-  * private structure for keeping track of readdir
-@@ -38,6 +39,7 @@
- struct p9_rdir {
- 	int head;
- 	int tail;
-+	loff_t offset;
- 	uint8_t buf[];
- };
+diff --git a/arch/arm64/include/asm/daifflags.h b/arch/arm64/include/asm/daifflags.h
+index 55f57dfa8e2fe..e2ad84c2f32bc 100644
+--- a/arch/arm64/include/asm/daifflags.h
++++ b/arch/arm64/include/asm/daifflags.h
+@@ -19,7 +19,7 @@
  
-@@ -104,6 +106,9 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
- 	kvec.iov_base = rdir->buf;
- 	kvec.iov_len = buflen;
  
-+	if (rdir->head < rdir->tail && rdir->offset != ctx->pos)
-+		rdir->head = rdir->tail = 0;
-+
- 	while (1) {
- 		if (rdir->tail == rdir->head) {
- 			struct iov_iter to;
-@@ -119,6 +124,7 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
- 
- 			rdir->head = 0;
- 			rdir->tail = n;
-+			rdir->offset = ctx->pos;
- 		}
- 		while (rdir->head < rdir->tail) {
- 			err = p9stat_read(fid->clnt, rdir->buf + rdir->head,
-@@ -136,6 +142,7 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
- 
- 			rdir->head += err;
- 			ctx->pos += err;
-+			rdir->offset = ctx->pos;
- 		}
- 	}
+ /* mask/save/unmask/restore all exceptions, including interrupts. */
+-static inline void local_daif_mask(void)
++static __always_inline void local_daif_mask(void)
+ {
+ 	WARN_ON(system_has_prio_mask_debugging() &&
+ 		(read_sysreg_s(SYS_ICC_PMR_EL1) == (GIC_PRIO_IRQOFF |
+@@ -38,7 +38,7 @@ static inline void local_daif_mask(void)
+ 	trace_hardirqs_off();
  }
-@@ -163,6 +170,9 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
- 	if (!rdir)
- 		return -ENOMEM;
  
-+	if (rdir->head < rdir->tail && rdir->offset != ctx->pos)
-+		rdir->head = rdir->tail = 0;
-+
- 	while (1) {
- 		if (rdir->tail == rdir->head) {
- 			err = p9_client_readdir(fid, rdir->buf, buflen,
-@@ -172,6 +182,7 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+-static inline unsigned long local_daif_save_flags(void)
++static __always_inline unsigned long local_daif_save_flags(void)
+ {
+ 	unsigned long flags;
  
- 			rdir->head = 0;
- 			rdir->tail = err;
-+			rdir->offset = ctx->pos;
- 		}
- 
- 		while (rdir->head < rdir->tail) {
-@@ -192,6 +203,7 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
- 
- 			ctx->pos = curdirent.d_off;
- 			rdir->head += err;
-+			rdir->offset = ctx->pos;
- 		}
- 	}
+@@ -53,7 +53,7 @@ static inline unsigned long local_daif_save_flags(void)
+ 	return flags;
  }
+ 
+-static inline unsigned long local_daif_save(void)
++static __always_inline unsigned long local_daif_save(void)
+ {
+ 	unsigned long flags;
+ 
+@@ -64,7 +64,7 @@ static inline unsigned long local_daif_save(void)
+ 	return flags;
+ }
+ 
+-static inline void local_daif_restore(unsigned long flags)
++static __always_inline void local_daif_restore(unsigned long flags)
+ {
+ 	bool irq_disabled = flags & PSR_I_BIT;
+ 
+@@ -124,7 +124,7 @@ static inline void local_daif_restore(unsigned long flags)
+  * Called by synchronous exception handlers to restore the DAIF bits that were
+  * modified by taking an exception.
+  */
+-static inline void local_daif_inherit(struct pt_regs *regs)
++static __always_inline void local_daif_inherit(struct pt_regs *regs)
+ {
+ 	unsigned long flags = regs->pstate & DAIF_MASK;
+ 
 -- 
 2.53.0
 
