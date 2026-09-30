@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649AD4FE2F2;
-	Wed, 30 Sep 2026 15:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6814FD290;
+	Wed, 30 Sep 2026 15:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782829; cv=none; b=i7TXYzFvGbN4n+fMNT84OmyhkNFjAcGWqDHiYs2XF403czng87jbkFwOevg9xXfvI46Saz+95B+kNiu/07Qxbzv4FwEszPCnbRLDOynD2LSDW10DRm8G3cNZmiFxLYkVzY/GIxpP53t/zu5ebHZxtxi/aNLwUSB7zh8A+jnhwho=
+	t=1790782831; cv=none; b=GzcQOhnw9Q0k6HMxlABSnbZ1HyIjXTBl67y9AzVcxJFoGgFM6c3rYKnTmv+1qzZwf92sQyr0Us/HV8nRNXu8ZnvNF5JuaHYZAIIRz/jKlV8pFKKP//dMwMwRnB/XJW9L/pDpiAR4sTZ2jQ79RpW2IvslswIoDj+qemDNWtEl9A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782829; c=relaxed/simple;
-	bh=r5s37eta114hRQopElvf10guZnUwNBhLCzKMWUkwEbo=;
+	s=arc-20240116; t=1790782831; c=relaxed/simple;
+	bh=XLuBAbVgS/CKikWUBJm551JRoOXR6Ok/NI9IQVyJOQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPU3C/2xhAqYw+VQugOO8qAeGFEd8S1cBvcV+LIBfO8zYcaCI3gwai7jnEvLHMduzqnhUMUIijeCGMLxe+Z4h45mu8G4ADq+MJYS5+V3TpMfBz82RAdGAtf/SDxeF3TS6Q5PC81XWicBEF5WmPYG64Ndlwdk945cjpC4T0iPXQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X94YnfCe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GzhUewki4S+ZXo89Ty/bBkOsnh9EegM/OcsPvGcn2eHjE+lsIjTTfHYAgxnOjzaDi4ExzEaRP679Qyon9z6KPfuOrQ8ztgynPEzLkLAqBqKL8/teFlcp8/ExmSreu28N/EGfn+g0tTSXsjvl8VKx96GI0N6OrgRNfoljoslgd1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eK2qkYIs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X94YnfCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5011F00893;
-	Wed, 30 Sep 2026 15:40:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eK2qkYIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B84E1F00898;
+	Wed, 30 Sep 2026 15:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782823;
-	bh=ybprl5qjBDMkTxhpvam3FXyzXLvw2he18Mslz4KsNNo=;
+	s=korg; t=1790782826;
+	bh=TcrprTM5r0Uo8DUBkWarYMVFbMFQtJfxAJLBtnDfUxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X94YnfCeBZDf7aolvw+l9LVzimwapDwOitIBtUpy/2orjP6Qxf70D3NiNnK7GY67z
-	 wFIS6uXc2ztlzKLUePCtMpOk3cg0HW6YW9ypRyYMA7ATsDRhHg03fh78L4y/vWf4Xw
-	 BGsayF7CqBuQDL+/mg2b4ExIQlIMYDstE0wrD7Vw=
+	b=eK2qkYIsBmGiRWuYLfm2nAZgTZU4plG7ctNj68VOwsvY5TCHfnimTVcGJJ+eLxqQu
+	 bBfKjW8jhBZfz0P1zcfYBSruJfYzgYCzw+X/boKdijpwPiiKkNEPbAXpbIgGd7mSE9
+	 S/lOJFQn3+WBpJz10LIIqClq2D/ZukaeQQ8E4E40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Rudi Heitbaum <rudi@heitbaum.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 182/595] vhost-scsi: flush backend after device ioctls
-Date: Wed, 30 Sep 2026 17:21:15 +0200
-Message-ID: <20260930152351.655442646@linuxfoundation.org>
+Subject: [PATCH 5.10 183/595] ASoC: rt5645: Perform the initial jack detect at probe
+Date: Wed, 30 Sep 2026 17:21:16 +0200
+Message-ID: <20260930152351.677758332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,47 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Rudi Heitbaum <rudi@heitbaum.com>
 
-[ Upstream commit 22598f55a4c2b510b3df5e69e563387a963222ae ]
+[ Upstream commit 54b279699279411c77c8afbc73b83c70740a7303 ]
 
-vhost-scsi translates guest response descriptors into userspace iovecs
-when commands are submitted.  Target-core completes those commands
-asynchronously, so VHOST_SET_MEM_TABLE can replace the memory table while
-an in-flight command still retains response iovecs translated through the
-old table.
+The only initial jack detect is the rt5645_irq(0, rt5645) at the end of
+rt5645_set_jack_detect(). A card described with simple-audio-card has no
+machine driver to call that, so jack state is only ever sampled from an
+edge on hp-detect-gpios.
 
-If the old mapping is reused after VHOST_SET_MEM_TABLE returns, command
-completion can write the response to an unrelated userspace object.
+A headphone already in the socket at boot is therefore never noticed, and
+the card is silent with every mixer control set correctly.
+rt5645_jack_detect() is what force enables the "LDO2" and "Mic Det Power"
+supplies that the "HP amp" widget depends on, and what programs
+RT5645_CHARGE_PUMP away from its reset value, so without it "HP amp"
+cannot power up. Unplugging and replugging the jack is the only way to
+recover.
 
-Flush the vhost-scsi backend after vhost_dev_ioctl() handles a device
-ioctl.  This waits for in-flight commands that can still use the old
-response iovecs before the ioctl returns.
+Do the detect at the end of the component probe when the driver owns a
+hp-detect GPIO and the codec's own jack detect is unused, which is the
+case that has no other trigger. A machine driver calling
+rt5645_set_jack_detect() later just repeats it.
 
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724060919.1569170-1-physicalmtea@gmail.com>
+Signed-off-by: Rudi Heitbaum <rudi@heitbaum.com>
+Link: https://patch.msgid.link/anNU3tOUR7rOReSB@5e001e58230e
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt5645.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-index ec9691f6594d1..3b15955751fa2 100644
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -1937,9 +1937,10 @@ vhost_scsi_ioctl(struct file *f,
- 	default:
- 		mutex_lock(&vs->dev.mutex);
- 		r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
--		/* TODO: flush backend after dev ioctl. */
- 		if (r == -ENOIOCTLCMD)
- 			r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
-+		else
-+			vhost_scsi_flush(vs);
- 		mutex_unlock(&vs->dev.mutex);
- 		return r;
- 	}
+diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
+index ac403827a2290..c7cacde516412 100644
+--- a/sound/soc/codecs/rt5645.c
++++ b/sound/soc/codecs/rt5645.c
+@@ -3441,6 +3441,10 @@ static int rt5645_probe(struct snd_soc_component *component)
+ 	if (!rt5645->eq_param)
+ 		return -ENOMEM;
+ 
++	/* no machine driver to call rt5645_set_jack_detect(), so detect here */
++	if (!rt5645->pdata.jd_mode && rt5645->gpiod_hp_det)
++		rt5645_irq(0, rt5645);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
