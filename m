@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAD93B42E7;
-	Wed, 30 Sep 2026 18:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A50B175A89;
+	Wed, 30 Sep 2026 18:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793239; cv=none; b=bFkTOqn1hjaaodY4jtdF9FZsyVD4ctc0ugpEj71ENllDkOBZolqw1kD/d5JsF6Fsy393dcJJ5DLnZllvfekomqV8YxQTfIAUjACFW8hcO+/EFS9E6tCO6nlPvlX/cNS70HkdzywkwC4x+fWdTOEq0WhjyWJ/R1cfkTwEfZdwj84=
+	t=1790793241; cv=none; b=Q4jVP+a1b21raCoeZVxukS9kEKwC9oEOyJq275SNkj4n3F6GUaJNOBlA+IYDadH4dcfDH1Rze44BxGjCwfbkbz1LKmXntLSQUnMs9Yd7LOjE9eW+jUL01tI7rNV4HbRAkZ/podwkBhc3j4eQe4S3fSeL4ol6zSJnYUUP+mWNpT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793239; c=relaxed/simple;
-	bh=0OC7GY9YRKD6/p7TpnCx6ipcdDHUHQahvgADwt4Cad0=;
+	s=arc-20240116; t=1790793241; c=relaxed/simple;
+	bh=P08Z9hvZik3SpdUhemrr3Zrrk4lBOBBbcs4LyCVpyQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3BOFfUt+TQXM7tdgVJWfIxrIVp7RT9yoJjyZltSmhuNdVq/7Y3rrRv7rpk2gEBmOJX0BxbLFbWM1cF0VXb++ZA2tKUPSThv5kUux2sCbo/TCsYcwY4FuVc4CzB23VXYQ95qVfZJ4YOnzogBfdRJGt3voZgYZxKz8MPMETCFN7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB7hMuk/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZdU2PW+tgw/D+schzUrhX5OfH2RIHZRduGMvpg1qYhWQHC9S1Z9Lr1mzoRo2QwdIY9BPph20NnlSX9AwCezBou5R4MrXvp60bLepxooUQvobwlid6WczKYdX9l1nY2ilBSIkbFTO0jezE1A8hiIANo/+FCHeMhXSC2WzAoXteY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo3PczcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB7hMuk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297941F00898;
-	Wed, 30 Sep 2026 18:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo3PczcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DD41F000FF;
+	Wed, 30 Sep 2026 18:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793237;
-	bh=ZaZnLjQiFqlWir2Oxb0OEo9BfzY8ByEQcf4fQML59ro=;
+	s=korg; t=1790793240;
+	bh=jv+bW7GBUglXa9zdYIDvQ9A9FtvAznOXyhkxyKzGg34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QB7hMuk/aa42SbSqY6ozpLPaqwqDWF2MOdr1snRXx4e2TMpzqj1lR704Rwi1FVVhK
-	 5nD6X+xB9aTK1sF3SXsqHFBcxvazRq0EKxrPYeR62xcnTTTQ1dHJIMDp14j4qFAYk6
-	 SqDtA5NVPyxMGZj3kJXPIAcV53SKQDDwm6yl0UGw=
+	b=Qo3PczcHE1GolTAl0HW52xtpKzwZmdu4eKlMkUInzdyYxzudPSbunX8fn6H1emKEB
+	 miE+lKk5cE7ILdX8CIILlj+rUsH6gd/GcUpOAYUTRRuCMMxkxIEOUbtj34vUUXJu9N
+	 oRAg1ZiN/stxWNwSCoZItQ1pET0rlQIHJ4bS3cp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ankit Garg <nktgrg@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
 	Willem de Bruijn <willemb@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
 	Joshua Washington <joshwash@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 185/395] gve: Allow ethtool to configure rx_buf_len
-Date: Wed, 30 Sep 2026 17:27:27 +0200
-Message-ID: <20260930152344.664786322@linuxfoundation.org>
+Subject: [PATCH 6.18 186/395] gve: Advertise NETIF_F_GRO_HW instead of NETIF_F_LRO
+Date: Wed, 30 Sep 2026 17:27:28 +0200
+Message-ID: <20260930152344.685952473@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -57,164 +56,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Ankit Garg <nktgrg@google.com>
 
-[ Upstream commit d235bb213f411ace8317bcca3740a1008628ea9c ]
+[ Upstream commit e637c244b954426b84340cbc551ca0e2a32058ce ]
 
-Add support for getting and setting the RX buffer length via the
-ethtool ring parameters (`ethtool -g`/`-G`). The driver restricts the
-allowed buffer length to 2048 (SZ_2K) by default and allows 4096 (SZ_4K)
-based on device options.
+The device behind DQO format has always coalesced packets per stricter
+hardware GRO spec even though it was being advertised as LRO.
 
-As XDP is only supported when the `rx_buf_len` is 2048, the driver now
-enforces this in two places:
-1.  In `gve_xdp_set`, rejecting XDP programs if the current buffer
-    length is not 2048.
-2.  In `gve_set_rx_buf_len_config`, rejecting buffer length changes if XDP
-    is loaded and the new length is not 2048.
+Update advertised capability to match device behavior.
 
 Signed-off-by: Ankit Garg <nktgrg@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
 Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20251106192746.243525-4-joshwash@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260303195549.2679070-2-joshwash@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 3b430ea62340 ("gve: fix TX drop when GSO MSS is too small for hw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve.h         |  9 +++++
- drivers/net/ethernet/google/gve/gve_ethtool.c | 13 ++++++-
- drivers/net/ethernet/google/gve/gve_main.c    | 39 +++++++++++++++++++
- 3 files changed, 60 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_adminq.c |  6 +++---
+ drivers/net/ethernet/google/gve/gve_main.c   | 15 ++++++++-------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
-index 64075bdc6789b..f0bc910dd6d44 100644
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -1172,6 +1172,12 @@ static inline bool gve_is_gqi(struct gve_priv *priv)
- 		priv->queue_format == GVE_GQI_QPL_FORMAT;
- }
+diff --git a/drivers/net/ethernet/google/gve/gve_adminq.c b/drivers/net/ethernet/google/gve/gve_adminq.c
+index 4f33d094a2ef4..7f8212c20ed2d 100644
+--- a/drivers/net/ethernet/google/gve/gve_adminq.c
++++ b/drivers/net/ethernet/google/gve/gve_adminq.c
+@@ -791,7 +791,7 @@ static void gve_adminq_get_create_rx_queue_cmd(struct gve_priv *priv,
+ 		cmd->create_rx_queue.rx_buff_ring_size =
+ 			cpu_to_be16(priv->rx_desc_cnt);
+ 		cmd->create_rx_queue.enable_rsc =
+-			!!(priv->dev->features & NETIF_F_LRO);
++			!!(priv->dev->features & NETIF_F_GRO_HW);
+ 		if (priv->header_split_enabled)
+ 			cmd->create_rx_queue.header_buffer_size =
+ 				cpu_to_be16(priv->header_buf_size);
+@@ -1123,9 +1123,9 @@ int gve_adminq_describe_device(struct gve_priv *priv)
  
-+static inline bool gve_is_dqo(struct gve_priv *priv)
-+{
-+	return priv->queue_format == GVE_DQO_RDA_FORMAT ||
-+	       priv->queue_format == GVE_DQO_QPL_FORMAT;
-+}
-+
- static inline u32 gve_num_tx_queues(struct gve_priv *priv)
- {
- 	return priv->tx_cfg.num_queues + priv->tx_cfg.num_xdp_queues;
-@@ -1254,6 +1260,9 @@ void gve_rx_start_ring_gqi(struct gve_priv *priv, int idx);
- void gve_rx_stop_ring_gqi(struct gve_priv *priv, int idx);
- u16 gve_get_pkt_buf_size(const struct gve_priv *priv, bool enable_hplit);
- bool gve_header_split_supported(const struct gve_priv *priv);
-+int gve_set_rx_buf_len_config(struct gve_priv *priv, u32 rx_buf_len,
-+			      struct netlink_ext_ack *extack,
-+			      struct gve_rx_alloc_rings_cfg *rx_alloc_cfg);
- int gve_set_hsplit_config(struct gve_priv *priv, u8 tcp_data_split,
- 			  struct gve_rx_alloc_rings_cfg *rx_alloc_cfg);
- /* rx buffer handling */
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index c34319bfd32b4..7135112eb870c 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -554,6 +554,8 @@ static void gve_get_ringparam(struct net_device *netdev,
- 	cmd->rx_pending = priv->rx_desc_cnt;
- 	cmd->tx_pending = priv->tx_desc_cnt;
+ 	gve_set_default_rss_sizes(priv);
  
-+	kernel_cmd->rx_buf_len = priv->rx_cfg.packet_buffer_size;
-+
- 	if (!gve_header_split_supported(priv))
- 		kernel_cmd->tcp_data_split = ETHTOOL_TCP_DATA_SPLIT_UNKNOWN;
- 	else if (priv->header_split_enabled)
-@@ -614,6 +616,12 @@ static int gve_set_ringparam(struct net_device *netdev,
- 	int err;
+-	/* DQO supports LRO. */
++	/* DQO supports HW-GRO. */
+ 	if (!gve_is_gqi(priv))
+-		priv->dev->hw_features |= NETIF_F_LRO;
++		priv->dev->hw_features |= NETIF_F_GRO_HW;
  
- 	gve_get_curr_alloc_cfgs(priv, &tx_alloc_cfg, &rx_alloc_cfg);
-+
-+	err = gve_set_rx_buf_len_config(priv, kernel_cmd->rx_buf_len, extack,
-+					&rx_alloc_cfg);
-+	if (err)
-+		return err;
-+
- 	err = gve_set_hsplit_config(priv, kernel_cmd->tcp_data_split,
- 				    &rx_alloc_cfg);
- 	if (err)
-@@ -630,6 +638,8 @@ static int gve_set_ringparam(struct net_device *netdev,
- 			return err;
- 	} else {
- 		/* Set ring params for the next up */
-+		priv->rx_cfg.packet_buffer_size =
-+			rx_alloc_cfg.packet_buffer_size;
- 		priv->header_split_enabled = rx_alloc_cfg.enable_header_split;
- 		priv->rx_cfg.packet_buffer_size =
- 			rx_alloc_cfg.packet_buffer_size;
-@@ -971,7 +981,8 @@ static int gve_get_ts_info(struct net_device *netdev,
- 
- const struct ethtool_ops gve_ethtool_ops = {
- 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS,
--	.supported_ring_params = ETHTOOL_RING_USE_TCP_DATA_SPLIT,
-+	.supported_ring_params = ETHTOOL_RING_USE_TCP_DATA_SPLIT |
-+				 ETHTOOL_RING_USE_RX_BUF_LEN,
- 	.get_drvinfo = gve_get_drvinfo,
- 	.get_strings = gve_get_strings,
- 	.get_sset_count = gve_get_sset_count,
+ 	priv->max_registered_pages =
+ 				be64_to_cpu(descriptor->max_registered_pages);
 diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index 2f7d6fa82b374..c94f1615a4127 100644
+index c94f1615a4127..5fbb02d14dc38 100644
 --- a/drivers/net/ethernet/google/gve/gve_main.c
 +++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1725,6 +1725,13 @@ static int gve_verify_xdp_configuration(struct net_device *dev,
+@@ -1713,9 +1713,9 @@ static int gve_verify_xdp_configuration(struct net_device *dev,
+ 	struct gve_priv *priv = netdev_priv(dev);
+ 	u16 max_xdp_mtu;
+ 
+-	if (dev->features & NETIF_F_LRO) {
++	if (dev->features & NETIF_F_GRO_HW) {
+ 		NL_SET_ERR_MSG_MOD(extack,
+-				   "XDP is not supported when LRO is on.");
++				   "XDP is not supported when HW-GRO is on.");
  		return -EOPNOTSUPP;
  	}
  
-+	if (priv->rx_cfg.packet_buffer_size != SZ_2K) {
-+		NL_SET_ERR_MSG_FMT_MOD(extack,
-+				       "XDP is not supported for Rx buf len %d, only %d supported.",
-+				       priv->rx_cfg.packet_buffer_size, SZ_2K);
-+		return -EOPNOTSUPP;
-+	}
-+
- 	max_xdp_mtu = priv->rx_cfg.packet_buffer_size - sizeof(struct ethhdr);
- 	if (priv->queue_format == GVE_GQI_QPL_FORMAT)
- 		max_xdp_mtu -= GVE_RX_PAD;
-@@ -2064,6 +2071,38 @@ bool gve_header_split_supported(const struct gve_priv *priv)
- 		priv->queue_format == GVE_DQO_RDA_FORMAT && !priv->xdp_prog;
- }
+@@ -2142,12 +2142,13 @@ static int gve_set_features(struct net_device *netdev,
  
-+int gve_set_rx_buf_len_config(struct gve_priv *priv, u32 rx_buf_len,
-+			      struct netlink_ext_ack *extack,
-+			      struct gve_rx_alloc_rings_cfg *rx_alloc_cfg)
-+{
-+	u32 old_rx_buf_len = rx_alloc_cfg->packet_buffer_size;
-+
-+	if (rx_buf_len == old_rx_buf_len)
-+		return 0;
-+
-+	/* device options may not always contain support for 4K buffers */
-+	if (!gve_is_dqo(priv) || priv->max_rx_buffer_size < SZ_4K) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Modifying Rx buf len is not supported");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	if (priv->xdp_prog && rx_buf_len != SZ_2K) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Rx buf len can only be 2048 when XDP is on");
-+		return -EINVAL;
-+	}
-+
-+	if (rx_buf_len != SZ_2K && rx_buf_len != SZ_4K) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Rx buf len can only be 2048 or 4096");
-+		return -EINVAL;
-+	}
-+	rx_alloc_cfg->packet_buffer_size = rx_buf_len;
-+
-+	return 0;
-+}
-+
- int gve_set_hsplit_config(struct gve_priv *priv, u8 tcp_data_split,
- 			  struct gve_rx_alloc_rings_cfg *rx_alloc_cfg)
- {
+ 	gve_get_curr_alloc_cfgs(priv, &tx_alloc_cfg, &rx_alloc_cfg);
+ 
+-	if ((netdev->features & NETIF_F_LRO) != (features & NETIF_F_LRO)) {
+-		netdev->features ^= NETIF_F_LRO;
+-		if (priv->xdp_prog && (netdev->features & NETIF_F_LRO)) {
++	if ((netdev->features & NETIF_F_GRO_HW) !=
++	    (features & NETIF_F_GRO_HW)) {
++		netdev->features ^= NETIF_F_GRO_HW;
++		if (priv->xdp_prog && (netdev->features & NETIF_F_GRO_HW)) {
+ 			netdev_warn(netdev,
+-				    "XDP is not supported when LRO is on.\n");
+-			err =  -EOPNOTSUPP;
++				    "HW-GRO is not supported when XDP is on.");
++			err = -EOPNOTSUPP;
+ 			goto revert_features;
+ 		}
+ 		if (netif_running(netdev)) {
 -- 
 2.53.0
 
