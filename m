@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60F64F93DB;
-	Wed, 30 Sep 2026 16:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773EE4D2EFE;
+	Wed, 30 Sep 2026 16:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785410; cv=none; b=rmvvaxn8gjZsz0p0kVRFkgKsgyeM7T4Oz96EYdMdaNXuAiM2l+YI0me2dyASHoWzgWgXw63UVQtmDSCCsG2DbcwmB9M/ecaO2nfq9J07CYggb7VOkUsv1WP7Xk1xSd1bAT1T1K+8mlcnJZJPaY/vk0+EmDTkT5Ghnag+lR6Uln4=
+	t=1790785414; cv=none; b=SMkdJ55bld1FbENcU7yjVkwxo9l3lIjJgW3Qn6dA8WKwSe+Y3LGmljsEm8F+mgkJ9UuG1wacwJZK0vaqR3j4rk//jpZ0kDff4fpfjfb5TxQgqx/yk1qgemuW6KhFu9Bn8PPVys0vF1rAyHv/4YkePn/UcbBeISnEDnyu7XEgA2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785410; c=relaxed/simple;
-	bh=8ge06IBQbxP6SOEqMffKZ62c2nYQxPlfEWaNbxtqbeE=;
+	s=arc-20240116; t=1790785414; c=relaxed/simple;
+	bh=tfuCpeiAlb2DVWEKZyWgcywQRzZl6EvlewG8xJrGUgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOvTb2U3w7ATmeQo8q07/HiTEcJ+dGqCPsE8G/6t2MAtp9zOK/eueXbksiMQxskeiqtf4VmybqdZmMoNQ5DWiDfhAi6uDu4H1GnMnlc/jPJ+7m/cUhY4XN09iJ+HiDBO8bxnpYSwklQ0psUgEPuYOeRBOqPv1oSWP9FDE09PNuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWedBqv5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uKBRC5OwTOpnNNmxski+WDSxVg7SIygA2pEz63qCg+QR3klRoUFYDrJL0T/xgWHdFxsUNiLRyb76HPrmvLDlISID0lDlrVM9VXP86P5BhBjxczNsFqQQwv0pvMqZq8E4B7Wo40miQJm3DdZwggoHFwEeE9DbA9TdOnhR8b8felk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKiTTqUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWedBqv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD5E1F000FF;
-	Wed, 30 Sep 2026 16:23:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKiTTqUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7941F00893;
+	Wed, 30 Sep 2026 16:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785401;
-	bh=XO4ci60xRRzc7JxqErZcwP0f2m5DqPMjNusOiu2b0ME=;
+	s=korg; t=1790785404;
+	bh=4GhMKTG8WpB5DAHYv/T6qt0fxboL9PytAy/ihD4Y94E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWedBqv5vwtXPinKmYP14jyYdFLnx4ODWjtYRbqe9lH7vAuFcPdciapMOdkrQdLki
-	 z9i7JRHMo5dsI6q7KRd/G7OQRdtMYQM0hPqNLk8NB0pEBZ2pTI/aFJYxLANvVT4Dyb
-	 FDqukaKMgGLZjkgEgoelzH4nPPCbsMWNvku5DAXY=
+	b=zKiTTqUAvp8DLXn/s32d0bWTKmaZ6WOoHfeF4QHFdiR+aU5hMhu4K7B7l0RJaIgbn
+	 /KXKLsYjMveEvGq+N5JhfqNN7dqV8mkabn2mM9Z6xF7l2gMQzsemYRNnZwzZZsAFA/
+	 4zWTfJCTJHVvJ0qKswogsxg4StuGTXDTkE5+LygY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 451/982] net: ethernet: cortina: Count RX drops once per frame
-Date: Wed, 30 Sep 2026 17:19:47 +0200
-Message-ID: <20260930152426.481370858@linuxfoundation.org>
+Subject: [PATCH 6.1 452/982] net: ethernet: cortina: Count RX descriptors for freeq refill
+Date: Wed, 30 Sep 2026 17:19:48 +0200
+Message-ID: <20260930152426.501972131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,148 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 6520198c430c81bcc367f0dd5e32f2fb740b9d51 ]
+[ Upstream commit e89e88ad41d9f31c829c2af39c48313e8e48d5b0 ]
 
-The absence of a partial skb means either that the driver is not
-assembling a frame or that the current frame was already dropped.
-Consequently, repeated descriptor errors can increment rx_dropped more
-than once, while an orphaned descriptor chain can reach EOF without being
-counted at all.
+The software free queue provides one buffer fragment for every descriptor
+moved to an RX queue. The refill heuristic instead advances by NAPI work,
+which counts frames. A fragmented or discarded frame can consume several
+queue entries while adding only one to the refill count.
 
-Track the dropping state across NAPI polls. Clear it at frame boundaries
-and route mapping failures and orphaned continuations through the common
-drop path so each discarded frame is counted exactly once.
+Count the RX descriptors as they are consumed and report that separately
+from NAPI work. Use the descriptor count to drive free queue refills.
 
 Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Reported-by: Joe Damato <joe@dama.to>
-Closes: https://lore.kernel.org/netdev/apdK5aMmvYssz35F@devvm20253.cco0.facebook.com/
 Assisted-by: LLM
+Reviewed-by: Joe Damato <joe@dama.to>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-4-2bbbd598ca6e@kernel.org
+Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-5-2bbbd598ca6e@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 41 +++++++++++++++------------
- 1 file changed, 23 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 85d476301f3ea..03f8546bc224a 100644
+index 03f8546bc224a..fcc6018067226 100644
 --- a/drivers/net/ethernet/cortina/gemini.c
 +++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -123,6 +123,7 @@ struct gemini_ethernet_port {
- 	unsigned int		rx_coalesce_nsecs;
- 	struct sk_buff		*rx_skb;
- 	unsigned int		rx_frag_nr;
-+	bool			rx_dropping;
+@@ -1445,7 +1445,8 @@ static struct sk_buff *gmac_skb_if_good_frame(struct gemini_ethernet_port *port,
+ 	return skb;
+ }
  
- 	unsigned int		freeq_refill;
- 	struct gmac_txq		txq[TX_QUEUE_NUM];
-@@ -1456,6 +1457,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+-static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
++static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget,
++			    unsigned int *freeq_consumed)
+ {
+ 	struct gemini_ethernet_port *port = netdev_priv(netdev);
+ 	unsigned short m = (1 << port->rxq_order) - 1;
+@@ -1453,6 +1454,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	void __iomem *ptr_reg = port->rxq_rwptr;
+ 	unsigned int frag_nr = port->rx_frag_nr;
+ 	struct sk_buff *skb = port->rx_skb;
++	unsigned int consumed = 0;
+ 	unsigned int frame_len, frag_len;
  	struct gmac_rxdesc *rx = NULL;
  	struct gmac_queue_page *gpage;
- 	unsigned int received = 0;
-+	bool dropping = port->rx_dropping;
- 	union gmac_rxdesc_0 word0;
- 	union gmac_rxdesc_1 word1;
- 	union gmac_rxdesc_3 word3;
-@@ -1477,6 +1479,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	w = rw.bits.wptr;
+@@ -1488,6 +1490,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
  
- 	while (budget && w != r) {
-+		page = NULL;
- 		rx = port->rxq_ring + r;
- 		word0 = rx->word0;
- 		word1 = rx->word1;
-@@ -1490,6 +1493,16 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		r++;
+ 		r &= m;
++		consumed++;
+ 
+ 		frag_len = word0.bits.buffer_size;
  		frame_len = word1.bits.byte_count;
- 		page_offs = mapping & ~PAGE_MASK;
- 
-+		if (word3.bits32 & SOF_BIT) {
-+			if (skb) {
-+				napi_free_frags(&port->napi);
-+				port->stats.rx_dropped++;
-+				skb = NULL;
-+				frag_nr = 0;
-+			}
-+			dropping = false;
-+		}
-+
- 		if (!mapping) {
- 			netdev_err(netdev,
- 				   "rxq[%u]: HW BUG: zero DMA desc\n", r);
-@@ -1500,24 +1513,11 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
- 		if (!gpage) {
- 			dev_err(geth->dev, "could not find mapping\n");
--			port->stats.rx_dropped++;
--			if (skb) {
--				napi_free_frags(&port->napi);
--				skb = NULL;
--				frag_nr = 0;
--			}
--			goto next_desc;
-+			goto err_drop;
- 		}
- 		page = gpage->page;
- 
- 		if (word3.bits32 & SOF_BIT) {
--			if (skb) {
--				napi_free_frags(&port->napi);
--				port->stats.rx_dropped++;
--				skb = NULL;
--				frag_nr = 0;
--			}
--
- 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
- 			if (!skb)
- 				goto err_drop;
-@@ -1527,8 +1527,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			frag_nr = 0;
- 
- 		} else if (!skb) {
--			put_page(page);
--			goto next_desc;
-+			goto err_drop;
- 		}
- 
- 		if (word3.bits32 & EOF_BIT)
-@@ -1561,21 +1560,26 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			frag_nr = 0;
- 		}
- 
--		if (mapping)
-+		if (page)
- 			put_page(page);
- 
--		port->stats.rx_dropped++;
-+		if (!dropping) {
-+			port->stats.rx_dropped++;
-+			dropping = true;
-+		}
- 
- next_desc:
- 		/* Final or single-descriptor fragment, advance things */
- 		if (word3.bits32 & EOF_BIT) {
- 			budget--;
- 			received++;
-+			dropping = false;
- 		}
- 	}
- 
+@@ -1580,6 +1583,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
  	port->rx_skb = skb;
  	port->rx_frag_nr = frag_nr;
-+	port->rx_dropping = dropping;
+ 	port->rx_dropping = dropping;
++	*freeq_consumed = consumed;
  	writew(r, ptr_reg);
  	return received;
  }
-@@ -1906,6 +1910,7 @@ static int gmac_stop(struct net_device *netdev)
- 	napi_disable(&port->napi);
- 	port->rx_skb = NULL;
- 	port->rx_frag_nr = 0;
-+	port->rx_dropping = false;
+@@ -1589,18 +1593,19 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 	struct gemini_ethernet_port *port = netdev_priv(napi->dev);
+ 	struct gemini_ethernet *geth = port->geth;
+ 	unsigned int freeq_threshold;
++	unsigned int freeq_consumed;
+ 	unsigned int received;
  
- 	gmac_enable_irq(netdev, 0);
- 	gmac_cleanup_rxq(netdev);
+ 	freeq_threshold = 1 << (geth->freeq_order - 1);
+ 	u64_stats_update_begin(&port->rx_stats_syncp);
+ 
+-	received = gmac_rx(napi->dev, budget);
++	received = gmac_rx(napi->dev, budget, &freeq_consumed);
+ 	if (received < budget)
+ 		++port->rx_napi_exits;
+ 
+ 	u64_stats_update_end(&port->rx_stats_syncp);
+ 
+-	port->freeq_refill += received;
++	port->freeq_refill += freeq_consumed;
+ 	if (port->freeq_refill > freeq_threshold) {
+ 		port->freeq_refill -= freeq_threshold;
+ 		geth_fill_freeq(geth, true);
 -- 
 2.53.0
 
