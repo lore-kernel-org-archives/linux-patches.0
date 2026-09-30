@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D49F2F25F3;
-	Wed, 30 Sep 2026 18:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B173AFAE2;
+	Wed, 30 Sep 2026 18:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794411; cv=none; b=uvyktBxVhRIG9nzuCdODVYe4k5Fq1AKjcXINgJUVaVjkTHPdNC/3FavklBBuzbXmlkjngOnlDJRT7j7eexZ/ARaEeuB5IwQkAJPgCSin3wnZak+W72oGgwhG2Vp1fyWkKRRbMB4by0jPQ1hyA0u+lEjxwn3FdhZ/Kp8NG+HY7H0=
+	t=1790794414; cv=none; b=U+gETtZ4noJJf7A35ekP23Q1whgHmzszaIcnOe7V106onaLibOLsM9F9FiFte3pvNivLtxg4W+cq9CgTYjSWEBAhocLobO51n3CdUZwotFKbcDqNBNUf880Fs8EjicOmus8OlguDe2a7nouNhpX/lu53HGuBVL7/b6umhmoqUaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794411; c=relaxed/simple;
-	bh=K6CvEMp4Sgg5iByW6j2vPOByo2N+9jf+kSSX4eDwsKY=;
+	s=arc-20240116; t=1790794414; c=relaxed/simple;
+	bh=Md/P8LgpzaA8cp7agUBo+KRwTYcEeoVP989Pa4dko2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCr9wHENQa8dn/GYtZRyZgOjrQDIpWHAbQHcSNOFbzsJ2Z5N1bJA1m8I+GhdzYDZdfiD3EIkuQN/RF93sgwY/e0uzAEC4ses+k73paveMal+Yl1hmBRzkv+8gKcBTtBxPRGDj1g6KI5A6a6CAWyqG+M9rdZufvBn37/96jNNrb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RS1mgHzP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PjX8fDd6UAxac9rxoTkTg8Ui6Arc5ZhCBnJgzgrrJ3I+boVZ3ITHwd5VncpZYuiYQISYBabjLgaUQnZwybRXobQsjAUBaBLKj/cD/tWHQ9Bruv3u48iVbIggXwiGFb9qyaDOJrlZ9FUQ/OIkTvdpN1CxyXgT+5PEd4mJ6WUIeaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROfFVFS0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RS1mgHzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C041F000FF;
-	Wed, 30 Sep 2026 18:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROfFVFS0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617511F00898;
+	Wed, 30 Sep 2026 18:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794410;
-	bh=HXcdykNRuOPQp516UdT1xu83Fo8NzJVeL5NpmkAZQuc=;
+	s=korg; t=1790794412;
+	bh=nADfc9sCdo5T3QQ0AlYdR4vmgy48o6j4XRiQSLP/i30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RS1mgHzP9KETnjSFcfSE5VZkV/rWlBHmR19n0HYACR73c56+AQ0BoCMI0YYMpc5lk
-	 tl2Yn0vorC2+Kvzz1SBo/079uN0RnvN7P4mnQwCH8Jc2jQbCu6UbiES8urMmZHGGpZ
-	 pYlp+CFHcuLSRjVn3qWjYGhpjL560uxEn/mAIw+w=
+	b=ROfFVFS0CDeqClbqfI65JDy9UK/cenLZuyzk+U4wPgWd30vp/fFLUxkcyqGaAECVT
+	 L57Ejmw5YI+eyU1LpSsFGoPwTUlaepm20hizMkNZ3L3AxRhRPCvpcWZ1Fp1v3S3sU4
+	 05ZdEWHEiTs1Lndlnj62ECblhLSgGxnPOCttc8HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Aljoscha Schnuell <felix.aljoscha.schnuell@stud.uni-hannover.de>,
-	Moritz Baron <moritz.baron@stud.uni-hannover.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Xu Rao <raoxu@uniontech.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0202/1193] ALSA: hda/realtek: Add quirk for Lenovo Yoga Pro 7 14IRH8
-Date: Wed, 30 Sep 2026 17:14:46 +0200
-Message-ID: <20260930152438.696198576@linuxfoundation.org>
+Subject: [PATCH 6.6 0203/1193] ata: libata-pmp: add JMicron JMS562 quirk
+Date: Wed, 30 Sep 2026 17:14:47 +0200
+Message-ID: <20260930152438.719690467@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,47 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moritz Baron <moritz.baron@stud.uni-hannover.de>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 853e10ec445984e99b3c7f6375f4e185614b842a ]
+[ Upstream commit c62aff1174cf88e10716c7513702443c47551fc6 ]
 
-The Lenovo Yoga Pro 7 14IRH8 (ALC287 codec, subsystem ID 0x17aa:0x38b1)
-has bass speakers on pin 0x17 that are not routed through a DAC with
-volume control. This causes the bass speakers to play at full volume
-regardless of the volume slider position.
+JMicron JMS562, as used in QNAP QDA-A2AR RAID1 adapters, may
+keep the exported ATA device not ready while the array is rebuilding.
 
-Apply ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN which corrects the DAC
-routing for pin 0x17, enabling proper volume control. This is the same
-fix used for other Yoga Pro 7 models with identical audio topology
-(14APH8, 14AHP9, 14ASP10, 14IAH10).
+In this state, libata may repeatedly try to softreset and classify
+the fan-out link.  On the affected adapter, this can time out, make
+PMP/SCR access fail, and eventually disable the fan-out link before
+the RAID volume is exported.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217949
+A failing boot shows the fan-out link failing SRST, PMP access
+timing out, SCR read failing, and the link being disabled:
 
-Co-developed-by: Felix Aljoscha Schnuell <felix.aljoscha.schnuell@stud.uni-hannover.de>
-Signed-off-by: Felix Aljoscha Schnuell <felix.aljoscha.schnuell@stud.uni-hannover.de>
-Signed-off-by: Moritz Baron <moritz.baron@stud.uni-hannover.de>
-Link: https://patch.msgid.link/20260609141648.60608-1-moritz.baron@stud.uni-hannover.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  ata4.00: softreset failed (device not ready)
+  ata4.15: qc timeout after 3000 msecs (cmd 0xe4)
+  ata4.00: failed to read SCR 0 (Emask=0x4)
+  ata4.00: failed to recover link after 3 tries, disabling
+
+After that, the root filesystem on the exported RAID volume cannot
+be found.
+
+Add JMS562 to the existing JMicron PMP quirk that disables LPM,
+avoids softreset on fan-out links, and assumes an ATA device.  This
+prevents libata from dropping the exported RAID volume during rebuild
+recovery.
+
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/libata-pmp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 855c9cb15aa4f..816a7c500378e 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10566,6 +10566,10 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3843, "Yoga 9i", ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP),
- 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
- 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
-+	/* Yoga Pro 7 14IRH8 shares PCI SSID 17aa:3852 with Yoga 7 14ITL5;
-+	 * use codec SSID to distinguish them
-+	 */
-+	HDA_CODEC_QUIRK(0x17aa, 0x38b1, "Lenovo Yoga Pro 7 14IRH8", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3853, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3855, "Legion 7 16ITHG6", ALC287_FIXUP_LEGION_16ITHG6),
+diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
+index e2e9cbd405fa0..97f9fe5f5fb02 100644
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -446,8 +446,13 @@ static void sata_pmp_quirks(struct ata_port *ap)
+ 		 * otherwise.  Don't try hard to recover it.
+ 		 */
+ 		ap->pmp_link[ap->nr_pmp_links - 1].flags |= ATA_LFLAG_NO_RETRY;
+-	} else if (vendor == 0x197b && (devid == 0x2352 || devid == 0x0325)) {
++	} else if (vendor == 0x197b &&
++		   (devid == 0x0562 || devid == 0x2352 || devid == 0x0325)) {
+ 		/*
++		 * 0x0562: JMicron JMS562, as used in QNAP QDA-A2AR RAID1
++		 *         adapters.  The exported device may stay not ready
++		 *         while the array is rebuilding, and SRST/classify can
++		 *         time out before the RAID volume is exported.
+ 		 * 0x2352: found in Thermaltake BlackX Duet, jmicron JMB350?
+ 		 * 0x0325: jmicron JMB394.
+ 		 */
 -- 
 2.53.0
 
