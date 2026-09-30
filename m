@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5DB3E9C1A;
-	Wed, 30 Sep 2026 19:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FD43FCB3D;
+	Wed, 30 Sep 2026 19:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796694; cv=none; b=IO22d1FqWnADW5/wRdRcZ88RGEBIWOJDot93IB52XLDSwRYC9lqFibTHXIxRoO91shRm8XFHrS6P4Bi3CTAcz+JRXZJsXlGTvwFjp085eO+KWbKVTyqU/j4wZ8mEANBbraFFk2Vi+jw1ao9Rb9i/qEjG+9TfBA8ob1UAALpscLY=
+	t=1790796696; cv=none; b=WQKWr5qbWzoN/eGUknU0y2fWiyomgH0GmQAN9kg3wWtnp02dmtS3k7gaXNgpsa5EP+dNzoVvuSDs/fJLAV8HIPdjZU/v/5Sxq/rhghvNpxj2wZbKvXNIAtoU+XE5aSBMhXtZg/vLiEZwgCssvTWLzMbuqaSu6Gv0h8A3iRVAkGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796694; c=relaxed/simple;
-	bh=9G7voCu0NWf7WVMvDAhWg1XemL2aoa4vX/4VKxQ/aAI=;
+	s=arc-20240116; t=1790796696; c=relaxed/simple;
+	bh=/JBfn4cKpNJlnXBxPMcU2HAgy2dyXKdTF/zmoxGJWzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XI94h3jUNObm1lq8PPrcnOTmtcIQgvQ1ERZWGjKzFEJ+2+KmCLnp4Sl6NMeRtFgq47NYta11fRehe1OJ8HYYraNKQQiZC5usLBFCwxvOoxh2UMQWhjy3wK0Zh9Rd4g8ZzQriqKb6UXB3KWOHb74gSl9bhhpA6T7k1g3mqakc7k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WEyuJIx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ln2SdAAh9booHLHj4lbzAx3di8n0mzfE0d414u/MzmQpLxZfho0p/Qyd3jHKraUJSxvojH/ETuKpBOcMajQF+jhR/+Zpk/2k2BbS4LMc0I5G0KiPKyyR6ikDD2Y12q7KnqfVNHbh+9isxONf4N/QC4elSyZd8leOiKLZOKRxiuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teLYn63C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WEyuJIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A6A1F00898;
-	Wed, 30 Sep 2026 19:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teLYn63C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E240F1F000FF;
+	Wed, 30 Sep 2026 19:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796692;
-	bh=A+CfAY+FY9kfY8SKeerJGnq0DD54VltpXuoQM2H8Af4=;
+	s=korg; t=1790796695;
+	bh=uwHdKmbdddI82yIQuHFKcXcQcTU4i4+mTZj9DHf7oNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0WEyuJIxJbm7dxviXvbKSReQH3MRhoz9/7qBGmhgtvotAoCEQMX1txZkP0igj9Io8
-	 pRxIJBpEhAsFwiHa9fgjkWdgGSHPOY9oYPiXmjgU5wBqzltPbAfCRUlaVioFtGIxWf
-	 CFoLP1rJN9jXi46/rjlLHYnefMYm2YgzQgb+RkxQ=
+	b=teLYn63Car/iesRoFspVlkFAHrcNNMFMiLXmxTAffkNK6fdgqP1kckVlGp1sJ5PXp
+	 61NTFtw5tz8u1ROIi7pPO6WDQzEj3Oh5Tdw2UFlbnqEI2Ca2vHtfSjsxf/NhyBJt6K
+	 QidSF5CfGZJWDe0iRbG547Y9gvwUo2qufll4iF6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mobin Aydinfar <mobin@mobintestserver.ir>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.6 0948/1193] ksmbd: fix partial normalized name responses
-Date: Wed, 30 Sep 2026 17:27:12 +0200
-Message-ID: <20260930152455.303034450@linuxfoundation.org>
+	syzbot+4bd730aede2791e40bdf@syzkaller.appspotmail.com,
+	Naman Gulati <namangulati@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0997/1193] netfilter: ctnetlink: fix suspicious RCU usage in expect_iter_name
+Date: Wed, 30 Sep 2026 17:28:01 +0200
+Message-ID: <20260930152456.390729525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,48 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Naman Gulati <namangulati@google.com>
 
-commit f4fafaf02174c32bce2f9bb4196fadf13f1fd96e upstream.
+[ Upstream commit 207d591c353201f3bd3e0c89bb7d44a849c8fd59 ]
 
-Windows may request FILE_NORMALIZED_NAME_INFORMATION with an output
-buffer that only fits the fixed portion of the variable-length response.
-Treat the fixed portion as FILE_NORMALIZED_NAME_INFORMATION_SIZE so ksmbd
-returns STATUS_BUFFER_OVERFLOW instead of STATUS_INFO_LENGTH_MISMATCH.
+expect_iter_name() is invoked by nf_ct_expect_iterate_net() under
+spin_lock_bh(&nf_conntrack_expect_lock). It does not hold
+rcu_read_lock().
 
-This avoids rejecting valid partial normalized-name responses.
+When accessing exp->helper with rcu_dereference() in syzbot's report,
+lockdep warns:
 
-Fixes: 6b8b79226bc3 ("ksmbd: fix partial file information responses")
-Reported-by: Mobin Aydinfar <mobin@mobintestserver.ir>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  =============================
+  WARNING: suspicious RCU usage
+  syzkaller #0 Not tainted
+  -----------------------------
+  net/netfilter/nf_conntrack_netlink.c:3393 suspicious rcu_dereference_check() usage!
+
+  locks held by syz-executor381/5628: 2, last CPU#1:
+   #0: ffffffff9aee42a0 (nfnl_subsys_ctnetlink_exp){+.+.}-{4:4},
+       at: nfnetlink_rcv_msg+0xa69/0x12b0
+   #1: ffffffff8ea74d58 (nf_conntrack_expect_lock){+...}-{3:3},
+       at: nf_ct_expect_iterate_net+0x38/0x180
+
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xe8/0x150
+   lockdep_rcu_suspicious+0x140/0x1d0
+   expect_iter_name+0xfb/0x100
+   nf_ct_expect_iterate_net+0xf2/0x180
+   ctnetlink_del_expect+0x45d/0x640
+   nfnetlink_rcv_msg+0xcc2/0x12b0
+   netlink_rcv_skb+0x226/0x4a0
+   nfnetlink_rcv+0x2b9/0x28c0
+   netlink_unicast+0x7bd/0x940
+   netlink_sendmsg+0x813/0xb40
+   ____sys_sendmsg+0x54e/0x850
+   ___sys_sendmsg+0x2a5/0x360
+   __sys_sendmsg+0x2a5/0x360
+   do_syscall_64+0x166/0x520
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Use rcu_dereference_protected() with lockdep_is_held() on
+nf_conntrack_expect_lock instead, similar to expect_iter_me() in
+nf_conntrack_helper.c.
+
+Fixes: f01794106042 ("netfilter: nf_conntrack_expect: use expect->helper")
+Reported-by: syzbot+4bd730aede2791e40bdf@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6aa4a377.f81106d8.2ab401.0024.GAE@google.com/T/#u
+Signed-off-by: Naman Gulati <namangulati@google.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c |    3 +++
- fs/smb/server/smb2pdu.h |    1 +
- 2 files changed, 4 insertions(+)
+ net/netfilter/nf_conntrack_netlink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5508,6 +5508,9 @@ static int smb2_get_info_file(struct ksm
- 		case FILE_ALTERNATE_NAME_INFORMATION:
- 			fixed_len = FILE_ALTERNATE_NAME_INFORMATION_SIZE;
- 			break;
-+		case FILE_NORMALIZED_NAME_INFORMATION:
-+			fixed_len = FILE_NORMALIZED_NAME_INFORMATION_SIZE;
-+			break;
- 		case FILE_STREAM_INFORMATION:
- 			fixed_len = FILE_STREAM_INFORMATION_SIZE;
- 			break;
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -239,6 +239,7 @@ struct file_sparse {
- #define FILE_ALLOCATION_INFORMATION_SIZE      19
- #define FILE_END_OF_FILE_INFORMATION_SIZE     20
- #define FILE_ALTERNATE_NAME_INFORMATION_SIZE  8
-+#define FILE_NORMALIZED_NAME_INFORMATION_SIZE 8
- #define FILE_STREAM_INFORMATION_SIZE          32
- #define FILE_PIPE_INFORMATION_SIZE            23
- #define FILE_PIPE_LOCAL_INFORMATION_SIZE      24
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 979d3e71407eb..537a44967bc8b 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3384,7 +3384,8 @@ static bool expect_iter_name(struct nf_conntrack_expect *exp, void *data)
+ 	struct nf_conntrack_helper *helper;
+ 	const char *name = data;
+ 
+-	helper = rcu_dereference(exp->helper);
++	helper = rcu_dereference_protected(exp->helper,
++					   lockdep_is_held(&nf_conntrack_expect_lock));
+ 	if (!helper)
+ 		return false;
+ 
+-- 
+2.53.0
+
 
 
