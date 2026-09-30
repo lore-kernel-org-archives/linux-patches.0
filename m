@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D654E1C7E;
-	Wed, 30 Sep 2026 15:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE634FECE1;
+	Wed, 30 Sep 2026 15:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783760; cv=none; b=vCNfZg9ClSj4DluLA4R1sSJdqy6TPEcs4MnJPHW0DVJdIMQFv/lcugzlAojg+RUOsWT5c7c+EM4kjsIhcCwbbHEdudFtwasguxufXnPSVgC+VBuR3/pTlaEfpgtLrA0Mx7mfbK3q9o9yUEnzv4z5NrOgY5nTTJYLmc/s9ZydmAw=
+	t=1790783759; cv=none; b=gQ3/4215ZVZB8SUfgeBqe7aFTdaTPWDeM312PNttGMLGqnFvVylOJaU53azBKWtY7RMbOldB3jANayf44ytXKcYNIZkuc31oV1gU4O+TBTAFxCfZlRWKAADzn0ydZS2Lle7EGix8fJk9XiiPs7AbxE0KGEImtypIzOpVB24I1Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783760; c=relaxed/simple;
-	bh=2kINU6b/CG6qTYEponWwUKzz0WPs/Tsu7lRwoo+g5jY=;
+	s=arc-20240116; t=1790783759; c=relaxed/simple;
+	bh=nwwe1nvjpbxMkybOx6j7bokoEO4zG+nUgbFY6iPaMy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCZYIhF3idt0LM30v9a2gYIIVPrPcA2QJvbbfffAY4i4jXAYimu5mdeNkJgXi13O/ECROEyhDRtFe8+0KAoqKDoFaCf/YhCsAW+D6o2xB521scvClra09+HJlbvbvol7EecZ3TzqAy01uO/Izfd5iut4WYVHEfj+pddyMr4a8Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFaDVbcv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jDrXjck0i5k89TpVkXRQsUwLL2cScHoBVZJV5t76l6a4q5b0QkoQdym65vQgrJokJvdN0uXsZbaGKDI/I6Q2h7EsR98r3G2CZw1VQNLxNaFy5SEUTT88lOM0WdS5apHUDmVdSdTUJUNQZfU9zXtJVeoT+VxpatV3UiLOQfQVrZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjXGpcQZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFaDVbcv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692981F00893;
-	Wed, 30 Sep 2026 15:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjXGpcQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8B21F00898;
+	Wed, 30 Sep 2026 15:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783755;
-	bh=EtpXBQmzPwXtUsBnUI05Hh4zDf1mXPlQaCKR1KZ5YZc=;
+	s=korg; t=1790783753;
+	bh=GJrB6nT7JVmUdytnBOREZiMTmWSLOnUgiAwH7mg4CPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JFaDVbcvYzC4CBBKZnyY9RxqdbNLmmMQAYLLMkCTdll6Y46zJgQqbdt7yzfJ/5Huj
-	 cjdwe2xuvb3tiEb5duQq9uE7kGk/tO42ZAhEvi8ZKcpJ7REWtJsUQXwXHNIT8ikooy
-	 +5KdGDk2cdvvb2231B4h4cle0gD+NT97IhDx49sw=
+	b=gjXGpcQZSxOcGT1HKRtN8TQN8VeEbjzGtvHmE+z5sv4CDUIEuuPI3rnsxwFisccau
+	 9QyYRH0C7LbJ8FvPVLxnZkI4mhzW5lII9sBIpkNRDzRAKR5cai4xjRqPS2YigCbwse
+	 Yq2ZZ4Upo4QMdzSwI/L2cqIsjHOjw3OFJqwvKPcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Pengpeng Hou <hppiscas@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hui Peng <benquike@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 512/595] net: usb: sr9700: include receive overhead in the length check
-Date: Wed, 30 Sep 2026 17:26:45 +0200
-Message-ID: <20260930152358.715248673@linuxfoundation.org>
+Subject: [PATCH 5.10 511/595] Bluetooth: RFCOMM: Reject short EA=0 frames in rfcomm_recv_frame()
+Date: Wed, 30 Sep 2026 17:26:44 +0200
+Message-ID: <20260930152358.694014981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,47 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit c06bde80ae7a7b595732f7cabcb92cf08db9d56a ]
+[ Upstream commit 6d91041bb38b97e2feb625123cc0529d7b83a0e1 ]
 
-The receive fixup subtracts the Ethernet CRC from the reported packet
-length, but compares that payload length against the whole remaining
-receive buffer. The following copy starts after the three-byte header,
-and the cursor advance consumes both that header and the four-byte CRC.
+While rfcomm_recv_frame() verifies that skb->len is at least
+sizeof(*hdr) + 1 (4 bytes: 3-byte header + 1-byte FCS), an RFCOMM frame
+with an extended 2-byte length field (!__test_ea(hdr->len)) has a 4-byte
+header plus a 1-byte FCS (5 bytes minimum, sizeof(*hdr) + 2).
 
-Require the payload to fit after SR_RX_OVERHEAD before copying it or
-advancing to the next packet. The loop already ensures that the
-remaining buffer is larger than the overhead, so the subtraction is
-safe.
+When a 4-byte RFCOMM frame with EA == 0 arrives:
+1. The initial skb->len < sizeof(*hdr) + 1 check passes (4 < 4 is false).
+2. Trimming the FCS byte decrements skb->len to 3.
+3. If __check_fcs() succeeds, skb_pull(skb, 4) fails (4 > 3) and returns
+   NULL without advancing skb->data.
+4. Because the return value of skb_pull() is ignored, the un-pulled
+   3-byte struct rfcomm_hdr remains at skb->data and is either queued as
+   application payload via rfcomm_recv_data() or parsed as a multiplexer
+   control command via rfcomm_recv_mcc() on DLCI 0.
 
-The issue was found by our static-analysis tool.
+Fix this by extending the length check in rfcomm_recv_frame() to also
+require skb->len >= sizeof(*hdr) + 2 when !__test_ea(hdr->len).
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Reviewed-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Tested-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Link: https://patch.msgid.link/20260920034745.18468-1-hppiscas@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b230e5bf501c ("Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame")
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 3 ++-
+ net/bluetooth/rfcomm/core.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 9dbce3232d7c2..abfc7fdbe71d3 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -402,7 +402,8 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		/* ignore the CRC length */
- 		len = (skb->data[1] | (skb->data[2] << 8)) - 4;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 05f576463a27f..99347e95805b7 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1782,7 +1782,8 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
+ 		return s;
+ 	}
  
--		if (len > ETH_FRAME_LEN || len > skb->len || len < 0)
-+		if (len > ETH_FRAME_LEN || len < 0 ||
-+		    len > skb->len - SR_RX_OVERHEAD)
- 			return 0;
- 
- 		/* the last packet of current skb */
+-	if (skb->len < sizeof(*hdr) + 1) {
++	if (skb->len < sizeof(*hdr) + 1 ||
++	    (!__test_ea(hdr->len) && skb->len < sizeof(*hdr) + 2)) {
+ 		kfree_skb(skb);
+ 		return s;
+ 	}
 -- 
 2.53.0
 
