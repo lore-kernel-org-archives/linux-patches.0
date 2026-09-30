@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE8865192;
-	Wed, 30 Sep 2026 18:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F285265192;
+	Wed, 30 Sep 2026 18:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791983; cv=none; b=S4kPgWWlsPVcsYexYLyfjHTPkQTmfGUIdFZMTEFnLZDXO2khRLSujJSBtMoVI5a2DZgnGPWolsyRcgvDqdFzWzFcT6jhORh5uYPCtPAoQxJxloa6x1ki/e09C7AWnN81Cjun49v8kzC+lWFAhvI4uIUVC2OQ0mD7KSR4iKbBuqk=
+	t=1790791986; cv=none; b=ahxLikxe2A+A/qWws7JPhcTfptqCuN1lvnUtco6qUbG0OLAjStzfrpcm30yjQzcaXAjYhzhaemx3JRxJZmvWwJWnRt0K+9Y8FHDwGLyVY/Lns7TyDugRq3iSIaeKMMTjXhtoP0kfXke1KHLI2t7FjX3FGE8Nugw8Pi4Kdx/m4lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791983; c=relaxed/simple;
-	bh=MkLTZSdzQb1GHDCeiPzJcbRXUfeQ0s8eaTtGWXrir8w=;
+	s=arc-20240116; t=1790791986; c=relaxed/simple;
+	bh=1FqY1irauDILPejFC5pPf0bBgE6s7APVc5b4tQVoqZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhmiVjdNEAg/dUWpBOAww3der0I3IDeKkjvjivTCkaSVcU9J7Mcvu9YmAaVX9YEjC38blQybqP76v830VWY6qpYJ5EWp2WuiOSfv+OXilsy7oTaVGtn6XT8sUo+R4VOf+eL0kBIOxpuNw0pOHRB4crOGnPJjOkRfNxWjX8FfFOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOU5VLN8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DVGJm0NuES1yEqH/0wlPQjXnpbOVCEVmmhpNrpGRvpu00ECtHJ47WHTSrSqZMWxgqq8CeorFanDwTUrqxr9wUBGQeWPOZHJkVjyxs7arRAIbouwR5oGFrRGFK1RhfbEIL1UmlNnDCMdyfBuJFqe4WlJzMnLU3DpF2Y358oVoWK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5usUCib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOU5VLN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779EB1F000FF;
-	Wed, 30 Sep 2026 18:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5usUCib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551A21F00898;
+	Wed, 30 Sep 2026 18:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791982;
-	bh=rR66F3aVGRKpjtgaduyRwoLO3EvdR0Wni4fxOWqYJMI=;
+	s=korg; t=1790791984;
+	bh=4Rv5o3Ym6jLarQfuYUbpoFcMsbiDNRtIz88dpfGJKe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MOU5VLN8C1qOnjJGUb2rBQ28folgrJUCWXpO8cgiU2lVk2/8XzQTi8M9amOLnrt7I
-	 afi85/14KSj2ykbNEykmrAB6MQh9VcX7UIMFD42aRUdwNQ3JJtXzkRWN28PG3jQC4Y
-	 fhDRZDUOWIZLvnapL5jNRSvPKprhN8ryB8lgi3e0=
+	b=o5usUCibwdYRO5hpCxVTriGxV8p8A44BCPUxDYsppxHxVjQoW3jyJNJEoH7pPAywf
+	 ObMzbsdnx5jb4PqKE0CWyD50M28rZZAYaQu4mgZSmZY3Ib05iLGBQLKmTYTE4qNqEq
+	 j7n+p09sUWSByb580AwX1H7j+oop/xvNoo48VbyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hohyun Sim <tlaghgus0425@korea.ac.kr>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 493/752] seg6: set IPSKB_L3SLAVE from IP6SKB_L3SLAVE on IPIP decapsulation
-Date: Wed, 30 Sep 2026 17:26:03 +0200
-Message-ID: <20260930152408.934521511@linuxfoundation.org>
+Subject: [PATCH 5.15 494/752] net: fddi: skfp: fix NULL deref when setting the MAC address while down
+Date: Wed, 30 Sep 2026 17:26:04 +0200
+Message-ID: <20260930152408.955770096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,61 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Hohyun Sim <tlaghgus0425@korea.ac.kr>
 
-[ Upstream commit 7616242a2b37883f7322aaa1d2bd6cd0fed28315 ]
+[ Upstream commit 7c8810c2e69c3d9ca6df870b40ae9218e50b4fb1 ]
 
-When an SRv6 packet arrives on an interface enslaved to a VRF,
-vrf_ip6_rcv() sets IP6SKB_L3SLAVE in IP6CB, but decap_and_validate()
-has never set IPSKB_L3SLAVE in IPCB. The bit stayed clear in the
-common case, and with CONFIG_IPV6_MIP6 the leftover frag_max_size of
-a reassembled outer packet could even set it, with no VRF involved.
-Commit 44930446dde4 ("ipv6: seg6: clear IPv4 control block on IPIP
-decapsulation") then made the unreliable bit reliably clear.
+skfp_ctl_set_mac_address() calls ResetAdapter() unconditionally, without
+checking netif_running(). ResetAdapter() first calls card_stop(), which
+sets smc->hw.hw_state to STOPPED, and then mac_drv_clear_tx_queue(),
+which walks the two transmit queues:
 
-The effect of the missing flag is visible with End.DX4 when a
-delivery to a local address of the node reaches the socket lookup.
-For example, a UDP socket bound to the enslaved ingress interface
-does not receive any of the decapsulated packets, while an unbound
-socket outside the VRF does.
-This contradicts Documentation/networking/vrf.rst: by default the
-scope of an unbound UDP or TCP socket is limited to the default VRF.
+	for (i = QUEUE_S; i <= QUEUE_A0; i++) {
+		queue = smc->hw.fp.tx[i] ;
+		...
+		t = queue->tx_curr_get ;
 
-Set IPSKB_L3SLAVE for IPv4 in decap_and_validate(), which already does
-the same for IPv6. The socket lookup then matches the decapsulated
-packet like any other packet received on that enslaved interface. Such
-a packet matches an unbound UDP or TCP socket only when
-udp_l3mdev_accept or tcp_l3mdev_accept is set.
+smc->hw.fp.tx[] is only populated by init_tx(), which is reached from
+skfp_open() through init_smt() -> init_fddi_driver() -> init_fplus() ->
+init_mac() -> init_tx(). The private area is allocated and zeroed by
+alloc_fddidev(), so on an interface that has never been brought up both
+queue pointers are still NULL. The hw_state test at the top of
+mac_drv_clear_tx_queue() does not catch this, because card_stop() has
+just set STOPPED; the function proceeds into the loop and dereferences
+NULL. ResetAdapter() does call init_smt() itself, but only after the
+queues have been cleared.
 
-Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260913194421.31-1-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Setting the MAC address on a down interface therefore oopses:
+
+  ip link set dev fddi0 address 02:00:00:00:00:01
+
+  BUG: KASAN: null-ptr-deref in mac_drv_clear_tx_queue+0x68/0x2c0 [skfp]
+  Read of size 8 at addr 0000000000000010 by task ip/302
+  Call Trace:
+   <TASK>
+   mac_drv_clear_tx_queue+0x68/0x2c0 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
+   ResetAdapter+0x29/0x100 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
+   skfp_ctl_set_mac_address+0x57/0x80 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
+   netif_set_mac_address+0x1e4/0x2c0
+   do_setlink+0x684/0x2680
+   </TASK>
+
+Address 0x10 is the offset of tx_curr_get, the third pointer in
+struct s_smt_tx_queue, on 64-bit. mac_drv_clear_rx_queue(), which
+ResetAdapter() calls immediately afterwards, dereferences
+smc->hw.fp.rx[QUEUE_R1] in the same way behind the same ineffective
+hw_state test; the transmit queue merely crashes first. Both are
+covered by the guard below.
+
+Skip the adapter reset when the interface is down. dev_addr_set() is
+left unconditional, so the new address is still recorded in
+dev->dev_addr. Nothing is lost by not resetting the adapter here:
+skfp_open() deliberately re-reads the factory address on every open,
+
+	read_address(smc, NULL);
+	eth_hw_addr_set(dev, smc->hw.fddi_canon_addr.a);
+
+and the comment above it states this is done to discard exactly such an
+address override across a close/open cycle. An address set while the
+interface is down could not have survived the following open even
+before this change, so the guard removes no working behaviour. Guarding
+the hardware side of ndo_set_mac_address() with netif_running() is
+established practice; skge_set_mac_address() has done so since commit
+2eb3e621c4e0 ("skge: set mac address bonding fix").
+
+Guarding the reset as a whole, rather than NULL-checking the queues, is
+also what the rest of the driver expects. After a previous open/close
+the queue pointers are stale but non-NULL, so there is no crash, yet
+ResetAdapter() goes on to call smt_online() and STI_FBI() ("Enable
+Board Interrupts") while skfp_close() has already called free_irq() -
+the adapter would be brought back online with no handler installed. The
+only other ResetAdapter() caller is skfp_interrupt(), which by
+construction runs only while the device is open.
+
+Found by automated driver testing against an emulated SysKonnect FDDI
+adapter under a KASAN-enabled 7.0.0 kernel. Triggering it requires
+CAP_NET_ADMIN.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: LLM KASAN
+Signed-off-by: Hohyun Sim <tlaghgus0425@korea.ac.kr>
+Link: https://patch.msgid.link/20260910063743.110747-1-tlaghgus0425@korea.ac.kr
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/fddi/skfp/skfddi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 3b74e3413e369..de26ab96b43d0 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -194,10 +194,13 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
- 		return false;
+diff --git a/drivers/net/fddi/skfp/skfddi.c b/drivers/net/fddi/skfp/skfddi.c
+index c5cb421f9890d..f27255b516289 100644
+--- a/drivers/net/fddi/skfp/skfddi.c
++++ b/drivers/net/fddi/skfp/skfddi.c
+@@ -926,7 +926,8 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
  
- 	if (proto == IPPROTO_IPIP) {
-+		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
- 		int iif = IP6CB(skb)->iif;
+ 	memcpy(dev->dev_addr, p_sockaddr->sa_data, FDDI_K_ALEN);
+ 	spin_lock_irqsave(&bp->DriverLock, Flags);
+-	ResetAdapter(smc);
++	if (netif_running(dev))
++		ResetAdapter(smc);
+ 	spin_unlock_irqrestore(&bp->DriverLock, Flags);
  
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
- 		IPCB(skb)->iif = iif;
-+		if (l3slave)
-+			IPCB(skb)->flags |= IPSKB_L3SLAVE;
- 	} else if (proto == IPPROTO_IPV6) {
- 		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
- 		int iif = IP6CB(skb)->iif;
+ 	return 0;		/* always return zero */
 -- 
 2.53.0
 
