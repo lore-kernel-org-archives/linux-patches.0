@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9555221CB;
-	Wed, 30 Sep 2026 17:29:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3661E51B167;
+	Wed, 30 Sep 2026 17:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789393; cv=none; b=GT5D7njS22W4OLxeN5GuEywvc+qFcLQEp2COXj0wFFAK2G/21v0VifTAAhFAKcRxacgJCx+JsTh/06sirFop0mxYWRSZH5W17mfaiHomq7C9mR2G43Mlk9qqQat7NR6acTuVwEIakdcq/e9R9MWA3sH94iGkJ4IFdakbMqySWjQ=
+	t=1790789395; cv=none; b=u/071JHIvTSe0Vmh/FExzfwGPArKDkBaD8us8PBDrKMLB5YWs4CrEff10QrwJ2xwIWy5lDLpJgevlCd4Vd2dSz3vISsNm21es8quxUlC6C+VlDNLXJJB1ghkpinfJLqgMZk/Fu9Su85qFp66OkqYEo/I6kr+xvFqW4ZykyrGLDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789393; c=relaxed/simple;
-	bh=cTTNIEVvOadLiV7lz6Ok7pylNn4Lovp8Z7MaJ42LQgY=;
+	s=arc-20240116; t=1790789395; c=relaxed/simple;
+	bh=gSD6hLaZpSZMbqF+slFuvx45zeLDRZEXgvAsFj851sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BufbsGN/wFNf6A72z7zHYuVYjdh3OoA3Q5sKO12zivVmj33aTrHJ+FVCGQ1YyF8g9jM3vaVHwJnGjqhA3oBfBEnyysX8cWpcTV2OxDardhvWFpL4+7SMP0iTVknoQjGTHXT6QsJ61XSkjqp4MQ6zv4xhn+Ua0bz2bvX7LcufUTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdYFKUW5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b6ROCiBbUIdEGvGfbnqkEpndc59+A7ZHZWCF+xubjNTlYGiRPLdWEYjoj6epYtDNn/pDqMgKpy8LDQYT/z2dp9aQb5bGglLMt1+RP4h8V26KbQ9QiFIXEKPNBcNLwa1H93IC6f2bFfL0gN29qtKMy3jVfp8jTLqIoGs5iWVvT5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6BnNm/F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdYFKUW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FF11F000FF;
-	Wed, 30 Sep 2026 17:29:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6BnNm/F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC1D1F000FF;
+	Wed, 30 Sep 2026 17:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789391;
-	bh=pOP4fzL8BtgEvwGZNP/WYb88tmwGbD8iYnuyTer/9jo=;
+	s=korg; t=1790789394;
+	bh=YwUR0oGb2bFf+THOLTJzw4EDR3Pn6KXzc1wQuao+xC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RdYFKUW57+3lA75Wc65Gg8gbY4rO9/PK2+lvVQnpIz0nisGMJ2XWI7oFCPe27AoP0
-	 uRBOLAGbfwNvlumpX2c/x8Ow8jOg5xRNVMAwluW7N1ELFhod0l30KgiVeNb4vbcIBZ
-	 ATvctPghShTzFU2tL0zhTBH/JkLM3D/SRGOvLlV0=
+	b=i6BnNm/Fevw0WrbR3PUscmgkNVYlnAB9OwIKDaOhqQLlGUKwVKMaCVG6XvGgN49eG
+	 QLVO2LI3w0RzEvp87Qs4+pss3fPqjDWknY+D0sMI2/ySrGaox7j1oBhDevoVBFyV/f
+	 uoR5y7Yl2sIEV0NpXI1SttdR5KGTSOGlnwzAA0g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 462/877] af_packet: fix integer overflow in prb_calc_retire_blk_tmo()
-Date: Wed, 30 Sep 2026 17:22:53 +0200
-Message-ID: <20260930152424.647317809@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 463/877] ata: libata-scsi: bound the ATA passthru sense descriptor writes
+Date: Wed, 30 Sep 2026 17:22:54 +0200
+Message-ID: <20260930152424.667378010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,98 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dairui Zhang <zhangdairui@gmail.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-commit 56d82862a0a243ac14ba11b6d7b57ddc2d064b95 upstream.
+commit 80320b278fea07ffcda3f57b67b61658e0a4e1ca upstream.
 
-prb_calc_retire_blk_tmo() computes in 32-bit int arithmetic:
+When an ATA PASS-THROUGH command to an ATAPI device fails, the sense
+buffer holds the device's REQUEST SENSE reply, and
+ata_scsi_set_passthru_sense_fields() trusts its additional length
+byte, sb[7], when adding the ATA Status Return descriptor.  A faulty
+or malicious device can use that to make the kernel read and write
+past the 96-byte buffer in three ways:
 
-        mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
+- scsi_sense_desc_find() is passed sb[7] + 8 as the buffer length, so
+  its clamp against sb[7] does nothing and the walk runs off the end.
+- A type-9 descriptor found near the end is filled in unchecked.
+- A new descriptor at sb[8 + len] needs len + 22 bytes, not len + 14,
+  so len 75..82 writes up to 8 bytes past the end.
 
-If I'm reading the validation right, tp_block_size is user
-controlled and packet_set_ring() only rejects values that are <= 0
-as int or not page aligned, so a 256MiB block goes right through
-(and alloc_one_pg_vec_page() even has a vzalloc fallback for it).
-0x10000000 * 8 wraps to INT_MIN, and on a NIC reporting 1 Gbps
-(div == 1) the function ends up returning -2047.
+Reproduced with KASAN under qemu, with the emulated ATAPI REQUEST SENSE
+reply patched:
 
-The condition is actually (8 * size) mod 2^32 >= 2^31 && div == 1,
-so the trigger set is [256,512), [768,1024), [1280,1536) and
-[1792,2048) MiB. Other sizes wrap to non-negative values and faster
-links divide the unsigned value back below 2^31, which is why this
-doesn't blow up for everyone.
+  BUG: KASAN: slab-out-of-bounds in scsi_sense_desc_find+0x1a5/0x210
+  BUG: KASAN: slab-out-of-bounds in ata_scsi_qc_complete+0x1a15/0x1a50
 
-What makes it fatal is what happens next in init_prb_bdqc():
+Both are gone with this patch, and a valid descriptor is still filled
+in.
 
-        p1->interval_ktime = ms_to_ktime(prb_calc_retire_blk_tmo(...));
-        hrtimer_start(&p1->retire_blk_timer, p1->interval_ktime,
-                      HRTIMER_MODE_REL_SOFT);
-
-A negative relative timeout expires immediately. The callback
-unconditionally returns HRTIMER_RESTART, and hrtimer_forward() turns
-the negative interval into hrtimer_resolution:
-
-        if (interval < hrtimer_resolution)
-                interval = hrtimer_resolution;
-
-So the SOFT timer re-fires at the maximum rate forever, holding
-sk_receive_queue.lock each pass. One CPU spins in softirq until the
-socket is closed. Repeat with more rings and the machine is gone.
-
-The overflow itself is ancient - it was introduced together with
-TPACKET_V3 in f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer
-implementation."). Its effect prior to f7460d2989fa ("net:
-af_packet: Use hrtimer to do the retire operation", v6.18) was not
-as clear-cut, though: the return value was stored into an unsigned
-short retire_blk_tov, so a negative result was truncated, and a
-0-jiffy delay loop could be programmed as well. Neither is nearly
-as detrimental as the immediate maximum-rate spin the hrtimer
-conversion turned it into.
-
-(Unrelated to CVE-2019-20812 - that one was the ethtool failure path
-returning 0, which now returns DEFAULT_PRB_RETIRE_TOV.)
-
-Reproducer, needs CAP_NET_RAW (a --network host container has it by
-default) and a 1 Gbps NIC (QEMU e1000 works):
-
-        int fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-        bind(fd, ...);
-        int v = TPACKET_V3;
-        setsockopt(fd, SOL_PACKET, PACKET_VERSION, &v, sizeof(v));
-        struct tpacket_req3 req = {
-                .tp_block_size = 0x10000000,
-                .tp_block_nr = 1,
-                .tp_frame_size = 2048,
-                .tp_frame_nr = 0x10000000 / 2048,
-                .tp_retire_blk_tov = 0,
-        };
-        setsockopt(fd, SOL_PACKET, PACKET_RX_RING, &req, sizeof(req));
-
-Compute in 64 bits instead. The operands are already bounded by the
-existing validation, so nothing else changes. If you'd prefer a
-different fix, just say so and I'll respin.
-
-Fixes: f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer implementation.")
+Fixes: 97981926224a ("ata: libata-scsi: Do not overwrite valid sense data when CK_COND=1")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260923050101.1510064-1-zhangdairui@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://lore.kernel.org/r/20260923175203.1576825-1-matthias.goergens@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-scsi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -636,7 +636,7 @@ static int prb_calc_retire_blk_tmo(struc
- 		return DEFAULT_PRB_RETIRE_TOV;
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -257,12 +257,18 @@ static void ata_scsi_set_passthru_sense_
  
- 	div = ecmd.base.speed / 1000;
--	mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
-+	mbits = (u64)blk_size_in_bytes * 8 / (1024 * 1024);
- 
- 	if (div)
- 		mbits /= div;
+ 		/* descriptor format */
+ 		len = sb[7];
+-		desc = (char *)scsi_sense_desc_find(sb, len + 8, 9);
++		desc = (char *)scsi_sense_desc_find(sb, SCSI_SENSE_BUFFERSIZE, 9);
+ 		if (!desc) {
+-			if (SCSI_SENSE_BUFFERSIZE < len + 14)
++			/*
++			 * The descriptor is written at sb[8 + len] and is 14
++			 * bytes long, so it needs len + 22 bytes of buffer.
++			 */
++			if (len + 22 > SCSI_SENSE_BUFFERSIZE)
+ 				return;
+ 			sb[7] = len + 14;
+ 			desc = sb + 8 + len;
++		} else if (desc - sb > SCSI_SENSE_BUFFERSIZE - 14) {
++			return;
+ 		}
+ 		desc[0] = 9;
+ 		desc[1] = 12;
 
 
