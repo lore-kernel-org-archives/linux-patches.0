@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68534ABBA5;
-	Wed, 30 Sep 2026 18:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C4E4ED1A1;
+	Wed, 30 Sep 2026 18:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791957; cv=none; b=W+JGMvL8WzhARfu7DQqqVhVRjFXhEIrA00s8vkfS5hK9gHdRYZzqZ3y23Yg0O9FBTQDwWk7OT1dc5SDYNIuTxF+dDQiH1SYz1h7W4t12BZ+XzsTe6K6Shn6qduqUXKmJanGqFaJk5eshYjirMbsXl/cH5qTIc4Bg4o0l6NrmxYo=
+	t=1790791960; cv=none; b=b3hYG8xSKAKhOLvUYMAzKddLnYHUpd7E2n3fIYU9w3xRC3TLB+AKakExtkGP2xaPxXDeFK+au77U+Xg93sZdHx1i1B9SqG+nFJhqTNcmf5Z2LFtnclGyKPtzETGkugxyTHyYyFIa+LU+dmm/N8Fx+hsRPnkkqRLo5JZ0/P0vKZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791957; c=relaxed/simple;
-	bh=9vlJ6GTBFdJ2wwGVnA476cRAf9mZ4Dz2MV+btgOGCQ4=;
+	s=arc-20240116; t=1790791960; c=relaxed/simple;
+	bh=RGsO8dJmq6TbUjRb5/gwzmvxZPclv4kBTbmLiBr8AQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZHjIkfJf8X0xKqpV9LHnlLhoMW16jUIiDIkvXMggshImN/DITGoINiSpB/KvOPdRP0HShDI1ny//0DR6ZtELRNNm58a5ibB0m45Z5tMmmby6VMfD9PyUDi7/tk3i3CKsexfcjfy1iainNQFobkQ1v96HQZ/d8xcTsMbyOyf73o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOgs2d5X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O7KTGOtj3wvNJMzmAMCDq9k7jl6A+rV1zdAY6nIJhRfb4bK9mRnh0Oekfk4fS+7SuTQltbwopQtNGC3Mu4mz4yD70jm1ao4eesiUvUB1ylqx82asfJSNqB5EAzf0okWIeTvhXhqCBN0hJl4y9IlCm6dj4X1lNyis8k2g1Uy7bNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJIQPm8K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOgs2d5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA0F1F000FF;
-	Wed, 30 Sep 2026 18:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJIQPm8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5E51F000FF;
+	Wed, 30 Sep 2026 18:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791956;
-	bh=aDqfmE9cpGsKBksqccFtvs8K42ANakRVZaOFd89pXf4=;
+	s=korg; t=1790791959;
+	bh=NwH+Hieh8o2+Lt7+3fwl+lT5Bo2rgK+M0eDBitbUMQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vOgs2d5XzY6hcaVAO3eVUdWlajSoH8cIAtTOD6TkGlUhcQ8lJGh+muYvncdp1qP76
-	 tvFiszxXM2JPm2OIwXrEq2g/KjsUTtRFGB1VV45TzqCJ9qAXjXgVXQVl1RHbk3sLLx
-	 4BWETpgUzlo8tI0gXXSdWHGREEjdcOZgBS67IhW8=
+	b=cJIQPm8Klr5CInUdwN3YxxmkYaRNiN7mO1clMIlqDRfQOe9d3SkGRqj5Naujx3KEF
+	 hhUaPc1S6SCQ1ZOcAFbScan4RxYQG9axLWcjrz7x9cXuipNo6YxThcD6u0qerZD/8q
+	 UvWNhGU5Dd2YX/R9Hi2Wb0NyDRPyRlzLt5UVEMmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	syzbot+19da64013c46df87f971@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 485/752] keys: fix lost wakeup when reaping a dead key type
-Date: Wed, 30 Sep 2026 17:25:55 +0200
-Message-ID: <20260930152408.763098143@linuxfoundation.org>
+Subject: [PATCH 5.15 486/752] ALSA: pcm: set timer->private_data before registering the PCM timer
+Date: Wed, 30 Sep 2026 17:25:56 +0200
+Message-ID: <20260930152408.784859687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,54 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 2725ab3f5ad1c5f375c7c9fee4af02a9b138f701 ]
+[ Upstream commit 1e713f9bb2ac583521f06b0eb4e22440b1e3d078 ]
 
-clear_bit() is atomic with respect to the word it modifies, but it is
-an unordered operation: it implies no memory barrier on either side
-(Documentation/atomic_bitops.txt).
+snd_pcm_timer_init() calls snd_device_register() to link the new
+struct snd_timer into the global timer list while it still carries
+hw.c_resolution = snd_pcm_timer_resolution (and hw.start/hw.stop),
+and only afterwards sets timer->private_data = substream.
 
-key_garbage_collector() clears KEY_GC_REAPING_KEYTYPE with clear_bit()
-and calls wake_up_bit() after reaping a dead key type. wake_up_bit()
-uses a lockless waitqueue check and requires a full barrier after the
-clear.
+Once the timer is on the list under register_mutex, a concurrent
+reader can already reach it through the same mutex and invoke these
+callbacks. /proc/asound/timers does this via c_resolution(), and
+snd_timer_open()+snd_timer_start() reach start()/stop() the same way.
+All three dereference timer->private_data, which for this brief
+window is NULL, giving a NULL-pointer dereference:
 
-The existing smp_mb() is before clear_bit(), so nothing orders the clear
-against that check. The GC can see an empty waitqueue while
-unregister_key_type() still sees the bit set. The final wakeup is then
-lost, leaving module unload stuck in wait_on_bit().
+  substream = timer->private_data;
+  return substream->runtime ? ...   // substream is NULL
 
-Use clear_and_wake_up_bit(). Its clear_bit_unlock() has RELEASE
-semantics, so the completed GC work stays ordered before the clear, and
-its smp_mb__after_atomic() orders the clear before the waitqueue check.
+Move the private_data/private_free assignment before
+snd_device_register() so the timer is never visible on the list
+without its private_data set. On the snd_device_register() failure
+path, private_free() (snd_pcm_timer_free()) can now run, but it only
+does substream->timer = NULL, which is already NULL at that point
+since substream->timer is set to the new timer just once, after a
+successful registration -- so the failure path stays safe.
 
-Fixes: 0c061b5707ab ("KEYS: Correctly destroy key payloads when their keytype is removed")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/r/20260821025327.61488-1-kmehltretter@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reported-by: syzbot+19da64013c46df87f971@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=19da64013c46df87f971
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Link: https://patch.msgid.link/20260913134446.114724-1-ngocthang2710.1999@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/gc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/core/pcm_timer.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/security/keys/gc.c b/security/keys/gc.c
-index eaddaceda14ea..285ebbf490f04 100644
---- a/security/keys/gc.c
-+++ b/security/keys/gc.c
-@@ -324,9 +324,7 @@ static void key_garbage_collector(struct work_struct *work)
- 
- 	if (unlikely(gc_state & KEY_GC_REAPING_DEAD_3)) {
- 		kdebug("dead wake");
--		smp_mb();
--		clear_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
--		wake_up_bit(&key_gc_flags, KEY_GC_REAPING_KEYTYPE);
-+		clear_and_wake_up_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
+diff --git a/sound/core/pcm_timer.c b/sound/core/pcm_timer.c
+index c43484b22b34c..725a7272cd076 100644
+--- a/sound/core/pcm_timer.c
++++ b/sound/core/pcm_timer.c
+@@ -112,12 +112,15 @@ void snd_pcm_timer_init(struct snd_pcm_substream *substream)
+ 				"capture" : "playback",
+ 			tid.card, tid.device, tid.subdevice);
+ 	timer->hw = snd_pcm_timer;
++	/* Set before registering: a concurrent reader can invoke our hw
++	 * callbacks as soon as the timer is on the global list.
++	 */
++	timer->private_data = substream;
++	timer->private_free = snd_pcm_timer_free;
+ 	if (snd_device_register(timer->card, timer) < 0) {
+ 		snd_device_free(timer->card, timer);
+ 		return;
  	}
+-	timer->private_data = substream;
+-	timer->private_free = snd_pcm_timer_free;
+ 	substream->timer = timer;
+ }
  
- 	if (gc_state & KEY_GC_REAP_AGAIN)
 -- 
 2.53.0
 
