@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEE236D4E1;
-	Wed, 30 Sep 2026 18:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3EC51C357;
+	Wed, 30 Sep 2026 18:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791526; cv=none; b=f5Ig+anJrfiuNZLdjwi7Sp+AXaOLWT8rdWbPJ2NPLlTLl2nad7xtLkdD9CoGuzlX9KtAIUsUZkjFfhRwoteFvRwfHd++jLyICCkF26j4NYGJNY0s3z39GVvuZqjnlHkCjddA1nKaamDRFGhc21KUazOCQRLp5qRIclYvnVpFz3E=
+	t=1790791529; cv=none; b=CMB3B+B6QdJHExnWmjAdfu4S/YQtFq1VsWz4/c4MvIEslv8NY2CNztYpFgb5CHtUYFdpHdAPMb9dZdPgG3zeVysTjSPwEbUOu1noLFIG4iYdAeyZ3RBGDaZaE3UA/EYH/nmSfGMzb0lx1fpZ0+s+6nMVXNsq+WQ8sz4antgAAS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791526; c=relaxed/simple;
-	bh=TkhXJ9jUgg2r7oLfh030Rc2yjVaG86aTfV8nn+zN29c=;
+	s=arc-20240116; t=1790791529; c=relaxed/simple;
+	bh=GGBW7WJCkSE6s4UZnNwSn3QrGYshlsxa1Nb0SPt1OzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RtY81U6FNyZsbRYXecygQahpgGJOZ7rARLnWmmmEM/tCR94hGkLt3EhflUjJmnsFgRoQkMyHFjMFcT/xq9jyphA8UjKZuGO756vbp+1R0E5CznU9Iv2qPKxIFXBccDF73DtTjQoKCUJVVDXkdDQm4c1QZS5Oh8he6ohLl8Rhm94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJFs3Mqk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qqDAllSvo8SFVqmXcEyfI7tz66rXY0PnlYR5m43yOXgtTZNdh/TA2Thisp/n+cZuf2xM2dwL84X8dAa9xrB1uA/YbGd6it6Dkfy9vjtXhLnds4J/+MdvyNBOTv//TptJ1pSaav2NXW8OwI9GW4W5XKjQ+XKe7Af40I9MPkS07ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUXYu0dH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJFs3Mqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59581F000FF;
-	Wed, 30 Sep 2026 18:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUXYu0dH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85551F00899;
+	Wed, 30 Sep 2026 18:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791525;
-	bh=cqrehyGsjDUUSRkqJk+bn2/Ep9kXgZiIIiAGYrbpZ7s=;
+	s=korg; t=1790791528;
+	bh=+prN4IwSeB6z3DgvKgXSknJBHONpASIjQjZRPpiB2O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bJFs3MqkrFTsErOAyOCstJqayb01SYgxhwXJVrDarESReFcm4marS/3+6fMgCnjn1
-	 wvytFnYNyTsjBrWHNTp2eXJQ45i9u5BEDbVGj9kMZMg7t1HrARrp7ENUlFuEcQmI6j
-	 qxqNe4Fe6qAd50a37BQwrXDrYfKvxT2PgRmX/HYc=
+	b=uUXYu0dH7eWWcZb0HGrQgA2ZGXV2q0LeIziE4J19/d3XXfJxkx14AJRW+oa1TyIni
+	 /0vzsHYcdGOycMia2b5J+s3TKi86zrt9JYnwB3APQSn2E2UT4lib6wfzAm4NWfhg+B
+	 flR/4YfEOVoDqFteCDyHnbQfC5gMY1Hi0Gr0n4CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Andrew Stellman <astellman@stellman-greene.com>,
+	Alice Mikityanska <alice@isovalent.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 334/752] virtio-pci: return IRQ_HANDLED after non-zero ISR
-Date: Wed, 30 Sep 2026 17:23:24 +0200
-Message-ID: <20260930152405.520972658@linuxfoundation.org>
+Subject: [PATCH 5.15 335/752] net: ipv6: Clamp to IP6_MAX_MTU in ip6_dst_mtu_maybe_forward
+Date: Wed, 30 Sep 2026 17:23:25 +0200
+Message-ID: <20260930152405.541729234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,60 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Stellman <astellman@stellman-greene.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 93fa09455fb1a9624b73d42ac1f83771f4818e80 ]
+[ Upstream commit 199271ebc71c1e0913b2fad988a7bff330a8828a ]
 
-vp_interrupt() reads the ISR before dispatching config-change and
-vring handling. Reading the ISR also clears it, so once the read
-returns non-zero the interrupt was from this device and has already
-been consumed.
+Commit 427faee167bc ("net: ipv6: introduce ip6_dst_mtu_maybe_forward")
+dropped the IP6_MAX_MTU clamp that used to be present in ip6_mtu(). A
+similar IPv4 commit ac6627a28dbf ("net: ipv4: Consolidate ipv4_mtu and
+ip_dst_mtu_maybe_forward") preserves the IP_MAX_MTU clamp.
 
-Currently vp_interrupt() returns the result of vp_vring_interrupt().
-For a config-change interrupt with no vring work, that can return
-IRQ_NONE even though the ISR was non-zero and the interrupt was
-handled.
+Restore the upper bound in the IPv6 flow to avoid potential 16-bit
+overflows in forwarding paths.
 
-Call vp_vring_interrupt() for any queue work, but once the ISR is
-non-zero return IRQ_HANDLED.
-
-Tested with QEMU virtio-blk-pci forced to INTx using vectors=0 and
-pci=nomsi. On an idle device, 200 config-change interrupts were
-generated using QMP block_resize.
-
-Before this change, irq_handler_exit reported ret=unhandled and
-/proc/irq/11/spurious increased from 0 to 200 unhandled interrupts.
-After this change, irq_handler_exit reported ret=handled and the
-unhandled count remained at 0.
-
-The issue was found during an LLM-assisted Quality Playbook review.
-
-Fixes: 77cf524654a8 ("virtio_pci: split up vp_interrupt")
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Assisted-by: LLM
-Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
-Message-ID: <20260904141318.30278-1-astellman@stellman-greene.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 427faee167bc ("net: ipv6: introduce ip6_dst_mtu_maybe_forward")
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260901195714.673548-5-alice.kernel@fastmail.im
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_common.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/ip6_route.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
-index a6f375417fd54..437622cd079f5 100644
---- a/drivers/virtio/virtio_pci_common.c
-+++ b/drivers/virtio/virtio_pci_common.c
-@@ -96,7 +96,9 @@ static irqreturn_t vp_interrupt(int irq, void *opaque)
- 	if (isr & VIRTIO_PCI_ISR_CONFIG)
- 		vp_config_changed(irq, opaque);
+diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
+index 5efd0b71dc673..1e54bd8a347ff 100644
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -336,6 +336,8 @@ static inline unsigned int ip6_dst_mtu_maybe_forward(const struct dst_entry *dst
+ 	rcu_read_unlock();
  
--	return vp_vring_interrupt(irq, opaque);
-+	vp_vring_interrupt(irq, opaque);
+ out:
++	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
 +
-+	return IRQ_HANDLED;
+ 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
  }
  
- static int vp_request_msix_vectors(struct virtio_device *vdev, int nvectors,
 -- 
 2.53.0
 
