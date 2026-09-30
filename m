@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D49B50E5B1;
-	Wed, 30 Sep 2026 15:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5649F4F4D08;
+	Wed, 30 Sep 2026 15:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782377; cv=none; b=ddfeBuop86E18OOdvew08vwOR8AZnpS7MlVV8THgKYycnonfASd9US1TuovaDA7bnG/CReaP18G6TQXbfNGQQcLaUOKA2+a5y4M/QNIvFOxgVJQUYNiAcPB5Lk7lvnYkSgP5nxB/uWVz/T/W1YTxPzmbQvWwp6LRccze/0jzW5M=
+	t=1790782382; cv=none; b=glQfmEKOJQB494XyR6y5037uifXf70AQ1gFobiWwJN5fuDCYVoYen3ptYZTKJe8jGOp8VnYX+TidTYidFY1W1MbuBjA6gwGPkLoLTYqhm0n6XPX/cqaUxH/QOeoz3aGThkPNoZtjd8PBkOEXoMdhma02Fj/FAUD3/nsdVZGWY1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782377; c=relaxed/simple;
-	bh=fYF+HUQhJcHFa5ifpWuocgDdmYVNHRLMv+8FQd1BxJg=;
+	s=arc-20240116; t=1790782382; c=relaxed/simple;
+	bh=Ctcp9Sbm0gmxBfPyKcucr0VV1KFH4x8FWhNQXMS8EQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCGFS6ZTda0BY+3B1oeDOHIaEerrqeUe1yPvHz25Md4DSGoVQgevyzxjH0avz/IobzUCu5NnfcDkPP34wCd0AELfkKqQGYQsbcWZdQuMVSPWwbEdF5njhvLrv81swpgdK3qkT0xFIsY32ICQZHieJeQTp/Cc2uZnq5nDdiiTpLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oW6o/Jp/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ud6tsfwRjZ1qWbhHeu9QkR7aYSde91p6iMZPk77kLdkvMAj1TBM4lG3zMYHRkMLdnpz/OHBduxQ2TVjwXDx6DcNZMFs0T4ZIzrpPudvEmjjbpC3j3wL7szJ8ZIkMDMywfSyTE1DtCqc6+25baHLm8x6BqHobEXa+z+26sWE/Wj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sl+Kaeiz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW6o/Jp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243371F00898;
-	Wed, 30 Sep 2026 15:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sl+Kaeiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A431F0089B;
+	Wed, 30 Sep 2026 15:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782365;
-	bh=Olpkrw3ThneVT8/DSnORIrIOytBeto4TqjE8A9RA7FE=;
+	s=korg; t=1790782377;
+	bh=4jhlFpwqzGdjreNS2nsdWcXMHp6ytuvCELkXT1E+bEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oW6o/Jp/vcyPeU4rkfYhJ8qtMoImuuRdD/8myzcI7xbUtzHXwCY+ErOnU9frOkMu2
-	 794IQEA/eyNMzuRnRLYhO29x57QCxbWG9+8a9faHZrJ9kUIppFNdlWEWqcbNzmXqz6
-	 dv9/BKMMA2s3pX6/reRKbke81hldGmd98TqjQe1c=
+	b=Sl+Kaeiz4IEBw94LFJbhLqI211LroqAAZhz2wgv7L7twetkiuee2/TD4pBBjJxK0I
+	 qxL4CzjOcfgjrxxAflgz96ui02E/SetUGmWIOLfi2yaUReWO1NlTA5/eO7Q00qWb3y
+	 VNOBVXyb7MrIp3Oaqqh4G64/YSdiXLgzsevxOKcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 009/595] bridge: Do not suppress ARP probes and DAD NS unconditionally
-Date: Wed, 30 Sep 2026 17:18:22 +0200
-Message-ID: <20260930152347.917621958@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 026/595] crypto: ecc - Unbreak the build on arm with CONFIG_KASAN_STACK=y
+Date: Wed, 30 Sep 2026 17:18:39 +0200
+Message-ID: <20260930152348.289682642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,113 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Ratson <danieller@nvidia.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit fee1fc1d5a5475f5516d406a03e443348cd0f06c ]
+[ Upstream commit c64ba13e2033c3c6dc1a097bf35f9f1fe457c3f7 ]
 
-When neighbor suppression is enabled on a VXLAN port, the bridge is
-expected to reply to ARP/NS messages on behalf of remote hosts when both
-FDB and neighbor entries exist. This allows the bridge to suppress
-flooding of these messages to the VXLAN overlay.
+Andrew reports build breakage of arm allmodconfig, reproducible with gcc
+14.2.0 and 15.2.0:
 
-According to RFC 9161 ("Operational Aspects of Proxy ARP/ND in Ethernet
-Virtual Private Networks"):
-"A PE SHOULD reply to broadcast/multicast address resolution messages,
-i.e., ARP Requests, ARP probes, NS messages, as well as DAD NS messages.
-An ARP probe is an ARP Request constructed with an all-zero sender IP
-address that may be used by hosts for IPv4 Address Conflict Detection as
-specified in [RFC5227]".
+  crypto/ecc.c: In function 'ecc_point_mult':
+  crypto/ecc.c:1380:1: error: the frame size of 1360 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
 
-However, the current implementation unconditionally suppresses ARP probes
-and DAD Neighbor Solicitations, which breaks Duplicate Address Detection
-(DAD) over EVPN.
+gcc aggressively inlines functions called by ecc_point_mult() (without
+there being any explicit inline declarations), which pushes stack usage
+close to the limit imposed by CONFIG_FRAME_WARN.  allmodconfig implies
+CONFIG_KASAN_STACK=y, which increases the stack above that limit.
 
-For DAD to work correctly over the VXLAN fabric:
-- When the bridge does not know the answer:
-  flood the probe/DAD packet to allow remote VTEPs to respond.
-- When the bridge knows the answer:
-  reply to indicate the address is in use.
+In the bugzilla entry linked below, gcc maintainers explain that gcc
+estimates extra stack usage caused by inlining, but ASAN instrumentation
+is added in post-IPA passes and thus the inlining heuristics cannot
+account for it.
 
-Fix by adjusting the early suppression checks to exclude ARP probes and
-DAD NS from unconditional suppression.
+It could be argued that -Werror=frame-larger-than=1280 instructs the
+compiler to avoid inlining beyond that limit lest the build breaks,
+which would imply gcc behaves incorrectly.  But gcc maintainers reject
+this notion and believe that a warning switch should never affect code
+generation, even if it is promoted to an error.
 
-When replying to a DAD NS, br_nd_send() is adjusted to set the NA
-destination to the all-nodes multicast address (ff02::1) and clear the
-Solicited flag, in accordance with RFC 4861 section 7.2.4.
+One way to unbreak the build is to limit inlining via -finline-limit=100
+or by explicitly declaring some functions noinline.  However while it
+does keep stack usage of individual functions below the limit, *total*
+stack usage increases.
 
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Danielle Ratson <danieller@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260429062405.1386417-2-danieller@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+A longterm solution is to refactor ecc.c for reduced stack usage.  It
+currently performs ECC point multiplication with a Montgomery ladder
+which uses co-Z (conjugate) addition to trade off memory for speed.
+The algorithm is susceptible to timing attacks and needs to be replaced
+with a constant time Montgomery ladder, which should consume less memory
+and thus resolve the stack usage issue as a side effect.
+
+In the interim, raise the limit for ecc.c, as is already done for
+several other files in the source tree.
+
+Constrain to gcc because clang 19.1.7 does not exhibit the issue.  It
+makes do with a 724 bytes stack frame even though it inlines almost the
+same functions as gcc.
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
+Reported-by: Andrew Morton <akpm@linux-foundation.org> # off-list
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_arp_nd_proxy.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ crypto/Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
-index 742b3a24f9c88..a411b7fa5f9db 100644
---- a/net/bridge/br_arp_nd_proxy.c
-+++ b/net/bridge/br_arp_nd_proxy.c
-@@ -162,7 +162,7 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
- 			return;
- 		if (parp->ar_op != htons(ARPOP_RREQUEST) &&
- 		    parp->ar_op != htons(ARPOP_RREPLY) &&
--		    (ipv4_is_zeronet(sip) || sip == tip)) {
-+		    sip == tip) {
- 			/* prevent flooding to neigh suppress ports */
- 			BR_INPUT_SKB_CB(skb)->proxyarp_replied = 1;
- 			return;
-@@ -260,6 +260,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	int ns_olen;
- 	int i, len;
- 	u8 *daddr;
-+	bool dad;
- 	u16 pvid;
+diff --git a/crypto/Makefile b/crypto/Makefile
+index 3d53cc1d8a867..413d333fceb9d 100644
+--- a/crypto/Makefile
++++ b/crypto/Makefile
+@@ -176,6 +176,11 @@ obj-$(CONFIG_CRYPTO_ECC) += ecc.o
+ obj-$(CONFIG_CRYPTO_ESSIV) += essiv.o
+ obj-$(CONFIG_CRYPTO_CURVE25519) += curve25519-generic.o
  
- 	if (!dev || skb_linearize(request))
-@@ -298,8 +299,13 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 		}
- 	}
- 
-+	dad = ipv6_addr_any(&ipv6_hdr(request)->saddr);
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
++ifeq ($(CONFIG_ARM)$(CONFIG_KASAN_STACK)$(CONFIG_CC_IS_GCC),yyy)
++CFLAGS_ecc.o += $(call cc-option,-Wframe-larger-than=1536)
++endif
 +
- 	/* Ethernet header */
--	ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
-+	if (dad)
-+		ipv6_eth_mc_map(&in6addr_linklocal_allnodes, eth_hdr(reply)->h_dest);
-+	else
-+		ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
- 	ether_addr_copy(eth_hdr(reply)->h_source, n->ha);
- 	eth_hdr(reply)->h_proto = htons(ETH_P_IPV6);
- 	reply->protocol = htons(ETH_P_IPV6);
-@@ -315,7 +321,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	pip6->priority = ipv6_hdr(request)->priority;
- 	pip6->nexthdr = IPPROTO_ICMPV6;
- 	pip6->hop_limit = 255;
--	pip6->daddr = ipv6_hdr(request)->saddr;
-+	pip6->daddr = dad ? in6addr_linklocal_allnodes : ipv6_hdr(request)->saddr;
- 	pip6->saddr = *(struct in6_addr *)n->primary_key;
- 
- 	skb_pull(reply, sizeof(struct ipv6hdr));
-@@ -328,7 +334,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
- 	na->icmph.icmp6_type = NDISC_NEIGHBOUR_ADVERTISEMENT;
- 	na->icmph.icmp6_router = (n->flags & NTF_ROUTER) ? 1 : 0;
- 	na->icmph.icmp6_override = 1;
--	na->icmph.icmp6_solicited = 1;
-+	na->icmph.icmp6_solicited = dad ? 0 : 1;
- 	na->target = ns->target;
- 	ether_addr_copy(&na->opt[2], n->ha);
- 	na->opt[0] = ND_OPT_TARGET_LL_ADDR;
-@@ -429,7 +435,7 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
- 	saddr = &iphdr->saddr;
- 	daddr = &iphdr->daddr;
- 
--	if (ipv6_addr_any(saddr) || !ipv6_addr_cmp(saddr, daddr)) {
-+	if (!ipv6_addr_cmp(saddr, daddr)) {
- 		/* prevent flooding to neigh suppress ports */
- 		BR_INPUT_SKB_CB(skb)->proxyarp_replied = 1;
- 		return;
+ ecdh_generic-y += ecdh.o
+ ecdh_generic-y += ecdh_helper.o
+ obj-$(CONFIG_CRYPTO_ECDH) += ecdh_generic.o
 -- 
 2.53.0
 
