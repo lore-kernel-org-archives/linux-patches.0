@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A88A51AFF5;
-	Wed, 30 Sep 2026 18:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6679D51AFF5;
+	Wed, 30 Sep 2026 18:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792557; cv=none; b=gsugqUYPt2vwFV/440eePMumouWQrZprQ5+kldTBwBZm0aklxzl1pRBljBilD3Nq2lMacYweclzEg5hCEwDWa/fJQWAuAADSMy1GxM5HLpp3ifq3xaSij1LzNnTPvfeRDbxGoGaQbMvlHnSwVsN7atfiHTTXgQMm7B5wMbQJaCE=
+	t=1790792560; cv=none; b=fFJb1Lagu/6WsJSl2thUNxhOqlU8N/VizXY218CqcWbH7l31Fe1ZHxABqVcd/uZ5+Ki6zYFg1/5JcSdpSC85t08GNy3Lj963j4TcizbouuoyCqiFg+GqK3dxU1lEpAX9WgrwJCxzulArx9lJBwxKOcDn0FdJgaIc+qMJ+8Qy5PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792557; c=relaxed/simple;
-	bh=FSRnDeK/t9rY8SweL7Q16HWyWgMG7V9OdmA0acE5NS0=;
+	s=arc-20240116; t=1790792560; c=relaxed/simple;
+	bh=2LL5rxGPiGDhQiZjYYvkANgaFLZvjbxlEcUGvhGSces=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rW3kRQuwoy2g10wIC3NcNxgPL63vxRNBzd97ArMmUnUJeEuzH86B8tc6+9NH4EATwvWM/XOOQ0zP4qHYPephz1hBJmjgUsGQBGAvo0iU2CqXeBd59N30sxUYxMNhs0muHPZNc0OEMmc7i6In3fYutv1hY8Am/s+ziVfbdU+/X94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZwMHwni; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1MbQQMHfsoGlWNgTnzxW8FWat0gxXwuK9I2oCUfPUmIEOwS0Cxu8CeSYUoLrM6mliLwqMfFDFt1oPei1CuC8IznRxmlWr5J6A9mQNCOgCqzsDBguZJv8KzJygmU2soRYasuMSemkHSxHBlDmqmepyjbcTUjvgi7Kk6jiKsD1uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJcN6ytq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZwMHwni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E655F1F000FF;
-	Wed, 30 Sep 2026 18:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJcN6ytq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EB81F000FF;
+	Wed, 30 Sep 2026 18:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792556;
-	bh=LcI34eF+0jtD6grv5F8VXc0XWfRoLOPY8Db4zaZFtGM=;
+	s=korg; t=1790792559;
+	bh=IDv+gSCP6WebEnHeGva1kTirmkWVdWiZd9wWhd/5514=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZwMHwnigfyBQW+L07aeXgpJ+ph/0FwBAQQTR0xjS/tr7sxRov/OP+t72tlg99UUA
-	 wEP3z+f2nndascKhWM9oRInIalEy9KzXH0190kbSBqJAkJRpJ1njLTcire4lpuiuPx
-	 RQ2WhTwT2IJiYi0Sa62wy6YnZgsWUopu/8wWwQDc=
+	b=iJcN6ytqZGQByQizo84dOo8vCSsWN6/QKxFuTYyIOxTI97WAzYTVsJL32vqhe5ojZ
+	 NUtkKBU82z2SKPXIu6Z7cFItcDEfmmXM7vKaYMLQsJRZUIDKcYqaRUC+2NuRz++dZy
+	 6WkgXKVoUdreHKwGoPZK8CVcJdQdSclwh9r9v7RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Burton <jamesburton@meta.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 695/752] tipc: reject invalid and unexpected GRP_ACK_MSG to prevent bc_ackers underflow
-Date: Wed, 30 Sep 2026 17:29:25 +0200
-Message-ID: <20260930152413.274988006@linuxfoundation.org>
+Subject: [PATCH 5.15 696/752] sctp: discard the rest of the packet on a stale-cookie error
+Date: Wed, 30 Sep 2026 17:29:26 +0200
+Message-ID: <20260930152413.295119845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,77 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Aohan Mei <henrymei@tencent.com>
 
-commit 99cc2a62e07a44a22254d7beca9ef1f8ad886d0d upstream.
+commit 4498467a8af06cfa3d71cb04bd7c4170dec8f449 upstream.
 
-Commit 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate
-GRP_ACK_MSG") rejected duplicate/stale ACKs in tipc_group_proto_rcv()
-by returning early when less_eq(acked, m->bc_acked).
+When an association is in COOKIE-ECHOED state and the peer sends a
+bundled [ERROR(Stale Cookie)][DATA] packet from one of its non-primary
+addresses, processing the ERROR chunk takes the non-fatal stale-cookie
+retry path sctp_sf_do_5_2_6_stale(), which queues
+SCTP_CMD_DEL_NON_PRIMARY while keeping the association alive.
+sctp_cmd_del_non_primary() removes every non-primary transport -
+including the very transport this packet arrived on, which is still
+referenced by the receive lookup and shared by all chunks of the
+packet via chunk->transport.
 
-However, that check remains incomplete in two ways:
+sctp_assoc_rm_peer() does redirect asoc->peer.last_data_from away from
+the removed transport, but right afterwards the bundled DATA chunk
+makes sctp_assoc_bh_rcv() re-register
+asoc->peer.last_data_from = chunk->transport unconditionally, undoing
+the redirection with the just-removed transport.
 
-1. When grp->bc_ackers is zero (e.g. on a quiet group, when replicast
-   ACKs were not requested, or after all expected members have already
-   acknowledged), an unexpected GRP_ACK_MSG with acked > m->bc_acked
-   passes less_eq() and unconditionally decrements grp->bc_ackers.
-   Because bc_ackers is a u16, this wraps to 65535, causing
-   tipc_group_bc_cong() to permanently report congestion and blocking
-   all future group broadcasts on the socket.
+Once the packet is done, the receive reference is dropped and the
+transport is RCU-freed, while the surviving association keeps the
+dangling last_data_from.  A later FWD-TSN (or the delayed SACK timer)
+makes sctp_gen_sack() dereference it (->param_flags and friends), and
+sctp_make_sack()/sctp_outq_select_transport() may write to the freed
+object and link it into the live transport list.  This is a
+use-after-free triggerable by any malicious SCTP peer (or a local
+unprivileged user acting as one) with no capabilities required:
 
-2. During an active broadcast round (grp->bc_ackers > 0), the sender
-   transmits packet S and advances grp->bc_snd_nxt to S + 1. Receivers
-   increment their expected counter to S + 1 upon consuming packet S,
-   so the only valid ACK value for the current round is strictly
-   acked == grp->bc_snd_nxt.
+  BUG: KASAN: slab-use-after-free in sctp_do_sm+0x498a/0x5660
+  Read of size 4 at addr ffff88800e1e356c by task poc/115
+  Call Trace: sctp_do_sm <- sctp_assoc_bh_rcv <- sctp_inq_push <-
+              sctp_rcv <- ip_protocol_deliver_rcu <- ip_rcv
+  Allocated: sctp_transport_new <- sctp_assoc_add_peer <-
+             sctp_process_init (INIT-ACK processing)
+  Freed: kfree <- sctp_transport_destroy_rcu <- rcu_core
+         (call_rcu queued by sctp_transport_put at end of sctp_rcv)
+  The buggy address is located 364 bytes inside of freed 1024-byte
+  region [ffff88800e1e3400, ffff88800e1e3800), cache kmalloc-1k
 
-   However, tipc_group_update_bc_members() initializes each member's
-   m->bc_acked to prev = grp->bc_snd_nxt - 1 (S - 1 before increment).
-   This leaves a 2-sequence gap (S - 1 to S + 1) in sequence space.
-   An incoming ACK is therefore neither rejected as duplicate nor
-   prevented from decrementing grp->bc_ackers if an unexpected or stale
-   value (such as S) is received. A member sending acked = S followed
-   by acked = S + 1 could decrement grp->bc_ackers twice in the same
-   round, prematurely clearing bc_ackers or underflowing it.
+Note that commit 03a9d10ecf71 ("sctp: drop a chunk if its transport
+was removed") only covers the window between the receive lookup and
+the chunk processing (e.g. an ASCONF DEL-IP racing the socket backlog);
+here the transport is removed *while* the packet is being processed,
+by an earlier chunk of the same packet, so the drop in sctp_inq_push()
+does not reach this path.  Verified with the bundled [ERROR(Stale
+Cookie)][DATA] + FWD-TSN reproducer: the KASAN report above still
+fires with that commit applied, and is gone with this patch on top.
 
-Fix this by:
-- Dropping GRP_ACK_MSG immediately if grp->bc_ackers is zero.
-- Requiring acked == grp->bc_snd_nxt and rejecting duplicates where
-  m->bc_acked == acked. Because replicast broadcast rounds are strictly
-  sequential, only grp->bc_snd_nxt can be acknowledged, and each member
-  can acknowledge at most once per round.
+Fix it by discarding the rest of the packet on this path, as suggested
+by Xin.  After the stale-cookie ERROR has sent the association back to
+COOKIE-WAIT and removed the non-primary transports, the remaining
+chunks of the packet can only run against the restarted handshake
+while referencing the removed arrival transport through
+chunk->transport: besides the last_data_from registration above,
+sctp_cmd_setup_t2() and the sctp_make_*() reply builders would also
+copy that pointer into association-lifetime state that
+sctp_assoc_rm_peer() has already sanitized.  Let the peer retransmit
+them, in line with what sctp_inq_push() does for chunks whose
+transport was removed before processing.
 
-Note that a related pre-existing issue in tipc_group_delete_member()
-(where grp->bc_ackers decrementing to zero upon member departure does
-not restore *grp->open or trigger a socket wakeup) will be addressed
-in a separate patch.
-
-Fixes: 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG")
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Reported-by: James Burton <jamesburton@meta.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260913044233.193927-1-edumazet@google.com
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260921093707.1432184-1-ljp1205831794@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/group.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/sm_statefuns.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -797,10 +797,10 @@ void tipc_group_proto_rcv(struct tipc_gr
- 		tipc_group_open(m, usr_wakeup);
- 		return;
- 	case GRP_ACK_MSG:
--		if (!m)
-+		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (less_eq(acked, m->bc_acked))
-+		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
- 			return;
- 		m->bc_acked = acked;
- 		if (--grp->bc_ackers)
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -2604,6 +2604,8 @@ static enum sctp_disposition sctp_sf_do_
+ 
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
+ 
++	sctp_add_cmd_sf(commands, SCTP_CMD_DISCARD_PACKET, SCTP_NULL());
++
+ 	return SCTP_DISPOSITION_CONSUME;
+ 
+ nomem:
 
 
