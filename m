@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECB74D2EFE;
-	Wed, 30 Sep 2026 17:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFEC38944D;
+	Wed, 30 Sep 2026 17:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787812; cv=none; b=ut1Z/EVKQJeZMXpM3FHFz7IxIwyIwMLuaMaQvjqWC6Ny/MDn5//31tkTk2WZpsC7Wq0tybVrPGmD2aueUES4sz6wJ7qK3sETt8FK/eEhBQ2jQhyoI98iYprnq29Ii5lGhvQiExAstcPy0jIcv91s/xd+gGKAA3KdpBEC9ivkYZ0=
+	t=1790787815; cv=none; b=F1oTJgdt7LAaQt0hCxLbq1Z9+4fXHNzONFG87m+q/d1sx0elw8i/tK4lD2kDetV9B+lM/EicAxZakNU7S/AD5Dj+KFHvDAuwJ291VeiyGlzkn6JQlBPGM0twtjMjyapgUiAkA1B7cMpak+3cJ7Al9u9Vk8aFpdChTu2/1L8lRq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787812; c=relaxed/simple;
-	bh=48zjS2Nxd5+0m68HmUHWJqgYOFUnu3fE1xcVveC/9dk=;
+	s=arc-20240116; t=1790787815; c=relaxed/simple;
+	bh=THiDQbS358c4Yk94HuohInODVNA08EemDSBHXIfSXCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBYx6nGBK/p6Yw2YOyg+zW+cXll4/h3yzXVjPVeaJroWTO4aXyIsGbEGNYiod7qckrHyvbMVeNfQ7iWdqE0LuCEmtAo9e9kCD8o4fBWQbKbs1nPtYutWY5I3lhSfhjiLRsjndwTdrqdzADgvyI5PVJ/+yOFL7RDZbZouKNFcIRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WmkyOKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUiiOezGAXIY7L0iu4zrQHfWXOdjpKuLP39mmk1GPGvQlVBzTuHVJ3NP82NbSf1ke/uWw0aNSG/Ee94F2b3RA+wXw+IXqF5kYkgVIyNoiasMi2BxTuSYA4mRCAYwm9igP/rQvLCRTllBxBMZPRAAV5lrLFLVFsUo9JEN+LlMOxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrKIhy+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WmkyOKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAD31F000FF;
-	Wed, 30 Sep 2026 17:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrKIhy+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9806F1F000FF;
+	Wed, 30 Sep 2026 17:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787811;
-	bh=uz96cYKC90pqu6VWJwcGtho1fZPBbPS4/wk7vB2jgaU=;
+	s=korg; t=1790787814;
+	bh=WBnLWxcDR73HcVUoQooCZUl28SyoES4+E0Iy6oufHw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2WmkyOKqAWtkqs2eSsRxNkLkVxcb6mGeBPnqD2sYRr1vN+vfvo0dEmL+s1fLjxCm6
-	 cHII3tFYquDPXYlPhCLmsPAvy7OffiOFbVZFj/WGJWd67xWtK/XOyMxHhcMhmFAcrf
-	 jK0WCZCp+Ur2JPORoP79JmzyryMjCBdTB883LS8o=
+	b=LrKIhy+f2lfTM6PapdKAz2amYRsekHncXzn/Wa0ACIpqOa+HmERuYogztthJ0/Z0B
+	 WRZSdht+R2VrlI5R6VtyhsFTAAnx4MSUt/6+2crTuRyE4N+IJREiPcIc1ECjV4MQB2
+	 tBZyV6tA7dXCsBA5wkYzdwpr2uxWfcYy0Ag4aMgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Yifan Wu <wuyifan50@huawei.com>
-Subject: [PATCH 7.2 363/457] perf/core: Run sched_task() for PMUs with only CPU-wide events
-Date: Wed, 30 Sep 2026 17:27:48 +0200
-Message-ID: <20260930152353.841607455@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 7.2 364/457] perf/x86/intel: Fix CMT PEBS load/store direction for latency events, to fix sample classification
+Date: Wed, 30 Sep 2026 17:27:49 +0200
+Message-ID: <20260930152353.862909510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,84 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-commit 3d8d74100954a3b17e5c5e37adfe14e16b1db103 upstream.
+commit e961d6db42d1f1b66c81438969a648f08573bd9c upstream.
 
-perf_pmu_sched_task() returns early when cpuctx->task_ctx is set and
-leaves the work to perf_ctx_sched_task_cb(), which only walks
-ctx->pmu_ctx_list. A PMU whose events are all CPU-wide is not on that
-list, so nothing calls its sched_task(). With
+The same bug exists on Crestmont as on Gracemont:
+intel_cmt_pebs_event_constraints[] applies LAT_CONSTRAINT constraints to
+MEM_UOPS_RETIRED.{LOAD,STORE}_LATENCY, but does not set explicit
+LOAD/STORE flags for those events.
 
-  perf record -b -e cycles -a -- ls
+The PEBS latency path (pebs_latency_data(), via cmt_latency_data) uses
+the event flags to determine memory operation direction. Without an
+explicit STORE flag, samples from MEM_UOPS_RETIRED.STORE_LATENCY can be
+misclassified as LOADs.
 
-armv8pmu_sched_task() is skipped on every switch to a task that has a
-perf context but no event on that PMU, and BRBE records leak across the
-task boundary. intel_pmu_lbr_add() calls perf_sched_cb_inc()
-unconditionally too, so LBR records leak the same way on x86.
+Set explicit LOAD/STORE flags in intel_cmt_pebs_event_constraints[] for:
 
-Drop the early return and skip only the CPCs that
-perf_ctx_sched_task_cb() handles. That one needs a gate of its own to
-make the split exact: it tests cpc->sched_cb_usage, which
-perf_sched_cb_inc() sets per CPU for every branch stack user, so a task
-with an event for that PMU pinned to another CPU would be handled twice.
-On x86 the second __intel_pmu_lbr_restore() finds lbr_stack_state ==
-LBR_NONE and calls intel_pmu_lbr_reset(), throwing away the callstack
-the first one restored.
+- MEM_UOPS_RETIRED.LOAD_LATENCY
+- MEM_UOPS_RETIRED.STORE_LATENCY
 
-cpc->task_epc is set only while a task context is scheduled in, and
-there is one epc per PMU on ctx->pmu_ctx_list, so the two gates are
-inverses.
+This fixes incorrect STORE sample classification.
 
-For the CPCs perf_pmu_sched_task() picks up, the callback now runs
-outside the perf_ctx_disable() and perf_ctx_enable() pair in
-perf_event_context_sched_in(). __perf_pmu_sched_task() disables the PMU
-around the call itself.
-
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Fixes: e99fb45436ea ("perf/x86/intel: Update event constraints and cache_extra_regsfor MTL")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Yifan Wu <wuyifan50@huawei.com>
-Link: https://patch.msgid.link/20260810133540.1947118-3-puranjay@kernel.org
-Cc: stable@vger.kernel.org
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: <stable@vger.kernel.org> # v7.2+
+Link: https://patch.msgid.link/20260917015234.981153-3-dapeng1.mi@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/x86/events/intel/ds.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -3764,6 +3764,9 @@ static void perf_ctx_sched_task_cb(struc
- 	list_for_each_entry(pmu_ctx, &ctx->pmu_ctx_list, pmu_ctx_entry) {
- 		cpc = this_cpc(pmu_ctx->pmu);
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -1298,8 +1298,8 @@ struct event_constraint intel_grt_pebs_e
  
-+		if (cpc->task_epc != pmu_ctx)
-+			continue;
-+
- 		if (cpc->sched_cb_usage && pmu_ctx->pmu->sched_task)
- 			pmu_ctx->pmu->sched_task(pmu_ctx, task, sched_in);
- 	}
-@@ -3924,15 +3927,17 @@ static void perf_pmu_sched_task(struct t
- 				struct task_struct *next,
- 				bool sched_in)
- {
--	struct perf_cpu_context *cpuctx = this_cpu_ptr(&perf_cpu_context);
- 	struct perf_cpu_pmu_context *cpc, *cpc2;
+ struct event_constraint intel_cmt_pebs_event_constraints[] = {
+ 	/* Allow all events as PEBS with no flags */
+-	INTEL_HYBRID_LAT_CONSTRAINT(0x5d0, 0x3),
+-	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0xff),
++	INTEL_HYBRID_LDLAT_CONSTRAINT(0x5d0, 0x3),
++	INTEL_HYBRID_STLAT_CONSTRAINT(0x6d0, 0xff),
+ 	EVENT_CONSTRAINT_END
+ };
  
--	/* cpuctx->task_ctx will be handled in perf_event_context_sched_in/out */
--	if (prev == next || cpuctx->task_ctx)
-+	if (prev == next)
- 		return;
- 
--	list_for_each_entry_safe(cpc, cpc2, this_cpu_ptr(&sched_cb_list), sched_cb_entry)
-+	list_for_each_entry_safe(cpc, cpc2, this_cpu_ptr(&sched_cb_list), sched_cb_entry) {
-+		if (cpc->task_epc)
-+			continue;
-+
- 		__perf_pmu_sched_task(cpc, sched_in ? next : prev, sched_in);
-+	}
- }
- 
- static void perf_event_switch(struct task_struct *task,
 
 
