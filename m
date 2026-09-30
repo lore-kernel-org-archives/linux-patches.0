@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1673A3E9C18;
-	Wed, 30 Sep 2026 16:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48020364028;
+	Wed, 30 Sep 2026 16:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785375; cv=none; b=csg90/gRNBNE29xOKIAVIETd7P2MHerpCk4rJ+OoDNrrRxdR92Ei5lj4jfaLOvSdX4s6e/SYhpXt3GxViYhyd+z4vTsaZ/GL40NQplYW8WQvUlIrMmmdgeQukFwHUwSFNgJe5DcGqbCBXFLSPMh9ve2Mwe2W+g5z+YUTusFHj3E=
+	t=1790785377; cv=none; b=s8M9U4ZjfbPejQfE3/2rh0yPL41CgzJYyuoeGMrkCI8aVZ3LDAJLb8D2w+rhdU4YBZYjDFPb2xZfWsznNse09R5Sn05WXQwDC2/xz6dRO5QsNiTjzimBa4Sk1HX4Y3VIQqmYl3+1udtNTeZIlt4EsCHl9d2fBXqGZ3wvlamh7BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785375; c=relaxed/simple;
-	bh=Q3+NYC/sxombaAWPhPvKiq9A4vN/LSXjuytoXgxJV3w=;
+	s=arc-20240116; t=1790785377; c=relaxed/simple;
+	bh=o680gW4ZhHR3nGbTkYCW1VmcrqqQUpr2B/GHeoZcGf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P62454TmI2n/krgwWbPQXCQfiuJ1bRR9M/HXcWYALG3flBhyXhMtJARo0dtRH+HKCo5FVx1x31r9O0ElqaLx8YXroxn3UWPs94+seYIGO0dlZZIUmNC+fUGoerY52PF34j3/0ziu7H4Ie41eqNj9gWVoJoc7tgH+zfbvO07X2AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvTCfHxi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T6n8tRCzlVQhjvVljp06IwIa3dciz9xKBiVnO/4+mTBk37HgvDMNc02fkHHOLsP3ky+B2/+e2bcE7MGN5kqYj7D9kpw0zFUrbI5R5j1JFyymnFOwJ+yqIZup0sh8I3aU39U5mxD86VrWa1eFAuGhv0DCa69B8/seh2P8Og7WLqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEHuswpp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvTCfHxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF551F000FF;
-	Wed, 30 Sep 2026 16:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEHuswpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C1A1F00893;
+	Wed, 30 Sep 2026 16:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785370;
-	bh=Ypi/MJnE2LMjSPV+nAEGqr6hYfoJmm+9i6OmmmV6Nto=;
+	s=korg; t=1790785373;
+	bh=+HIaFPI1oqiXxwujI/khWqYctMZG+pBT0tvFE2vVqaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WvTCfHxiyBmQJ35bCBuQsF+y0GM8bFkVG2ip8WtA5/rtz2nqfsax9Ldm8+ccpaxKx
-	 EeuInaVrdlz72WCij6xHNHiijhcBOxi1UC1tSTnb1gMYOIDmUKOoAtR3VwoH0+94hU
-	 ozAuHR/mWkkj/T8OAZ215yX/VEQNxg3mNRx2O/kE=
+	b=KEHuswppl4F6hMpnvL0qtdBRMpKaQZqRB6u7v/46qMNeJbDOmHh24ElT4iYXAJ5Kh
+	 pXzE8OTnZAAnoetKRLsBxkmMldQRQCASVdFqJv/afdtARJksy/rs8kftyOgJjnTAqc
+	 jNt0WVrfVDCPnX1bBcUXCRn7+4nDgTH52p2rrpOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Linus Walleij <linusw@kernel.org>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 448/982] net: ethernet: cortina: Finish RX updates before NAPI completion
-Date: Wed, 30 Sep 2026 17:19:44 +0200
-Message-ID: <20260930152426.417632515@linuxfoundation.org>
+Subject: [PATCH 6.1 484/982] net: hinic: fix mailbox segment buffer overflow
+Date: Wed, 30 Sep 2026 17:20:20 +0200
+Message-ID: <20260930152427.176082714@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,61 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-[ Upstream commit baa26841cb9a2cdc7e0e99d6854a4e3359bf7393 ]
+[ Upstream commit 5d4d985957434867bbe85e4fa5e638f3e48ad522 ]
 
-napi_complete_done() releases ownership of the NAPI instance, but the
-Gemini poll keeps the RX statistics writer section open and updates the
-free queue after calling it. A new poll can therefore start while the old
-writer is still active.
+check_mbox_seq_id_and_seg_len() validates that seq_id does not
+exceed SEQ_ID_MAX_VAL (42) and seg_len does not exceed
+MBOX_SEG_LEN (48).  However, this allows the last segment
+(seq_id=42) to carry a full 48-byte payload, writing to offset
+42*48=2016 for 48 bytes (ending at byte 2064).  The receive
+buffer is only MBOX_MAX_BUF_SZ (2048) bytes, resulting in a
+16-byte heap buffer overflow.
 
-Finish the statistics and free queue updates before releasing ownership.
-Only re-enable RX interrupts when napi_complete_done() reports successful
-completion.
+The hinic3 driver already handles this correctly by defining
+MBOX_LAST_SEG_MAX_LEN and rejecting the last segment when it
+exceeds the remaining buffer space.  Apply the same fix to the
+hinic driver.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Suggested-by: Joe Damato <joe@dama.to>
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-2-2bbbd598ca6e@kernel.org
+Fixes: a425b6e1c69b ("hinic: add mailbox function support")
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Link: https://patch.msgid.link/AS8P251MB0001AE870B09020B46B5D7DBC8B22@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index b8e4045d9821c..1092f558bc34f 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1586,12 +1586,10 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 	u64_stats_update_begin(&port->rx_stats_syncp);
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
+index 3f9c31d292158..420fb64460e10 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
+@@ -128,6 +128,7 @@ enum hinic_mbox_tx_status {
  
- 	received = gmac_rx(napi->dev, budget);
--	if (received < budget) {
--		napi_gro_flush(napi, false);
--		napi_complete_done(napi, received);
--		gmac_enable_rx_irq(napi->dev, 1);
-+	if (received < budget)
- 		++port->rx_napi_exits;
--	}
-+
-+	u64_stats_update_end(&port->rx_stats_syncp);
+ #define SEQ_ID_START_VAL			0
+ #define SEQ_ID_MAX_VAL				42
++#define MBOX_LAST_SEG_MAX_LEN			(MBOX_MAX_BUF_SZ - SEQ_ID_MAX_VAL * MBOX_SEG_LEN)
  
- 	port->freeq_refill += received;
- 	if (port->freeq_refill > freeq_threshold) {
-@@ -1599,7 +1597,9 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 		geth_fill_freeq(geth, true);
- 	}
+ #define NO_DMA_ATTRIBUTE_VAL			0
  
--	u64_stats_update_end(&port->rx_stats_syncp);
-+	if (received < budget && napi_complete_done(napi, received))
-+		gmac_enable_rx_irq(napi->dev, 1);
-+
- 	return received;
- }
+@@ -372,7 +373,8 @@ recv_pf_from_vf_mbox_handler(struct hinic_mbox_func_to_func *func_to_func,
+ static bool check_mbox_seq_id_and_seg_len(struct hinic_recv_mbox *recv_mbox,
+ 					  u8 seq_id, u8 seg_len)
+ {
+-	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN)
++	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN ||
++	    (seq_id == SEQ_ID_MAX_VAL && seg_len > MBOX_LAST_SEG_MAX_LEN))
+ 		return false;
  
+ 	if (seq_id == 0) {
 -- 
 2.53.0
 
