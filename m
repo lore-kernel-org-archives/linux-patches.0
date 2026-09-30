@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BD551C056;
-	Wed, 30 Sep 2026 18:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2581C51588D;
+	Wed, 30 Sep 2026 18:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793754; cv=none; b=rN2ljcDa000DZ+hYjtujq6uRlFu6ZwWRvxZFhnSj/8LeGMX1fc7WxCGF2igx2sci08P+/VIUyzQm7IVXqD65AUjhrZit/Ylbbwgqiv/ULs3sJsFAoXTlylo70hocOtKZbhZ9zqki0++QxxGyadIR+/7OFBojkLYGIO0/1PLyEFM=
+	t=1790793757; cv=none; b=fnamjtfpvVtiNOCVur+L0ClMZY6h2wI08dgPuWm3cioieGCAYvG59uA9egKCsLXI/iHQwEsMQfqBgfbw8aAR80yVEg0uRxwmcMUOKGTIF3L2hOIdXvkQvyjA/bsvwWju73wujthWymzSEOIJ6l8n0bcGDGy1AnldblvCXOmECiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793754; c=relaxed/simple;
-	bh=bdCVlGmmV+I8NDe650UbLpMC1ivd9E+XPFowe5/Kxso=;
+	s=arc-20240116; t=1790793757; c=relaxed/simple;
+	bh=QsVnZ/nfhpdYUmONjgv6aqyfgKRK+n3ZGO6hkv540ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MDAGElTii6hvKgr3nrDMnrLaqgkLO+pqYJD5RfQzdd9LdGJebDe1S4JGqAhs6ymSFzE8TX1wg9A+faR9Kb+rVepcSB1fb3dczVJKiLboeEX2rMlgJJpB4QwIbIE4rF4205XeBJw4mA8VCEbbql1IRJc9Kux3I/S8U2pIOThlZ6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmUhI+me; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DICgFFWhj5bbMVHNJMumhhaa4UKKyQJDX/JaCKnPJlrT+XH2/fO5dYN6eeLzRjN3znKNchpuxkHX0on5yTlDuWNg54AMGbOy277WYQ1a3fXDhHJF3Lirm4+P5wbOMxD33txMJzt/dCaX9Hp/3IDctgee5Gu2J+Mm1GpXYFY0x5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQXSczDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmUhI+me"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A57C1F000FF;
-	Wed, 30 Sep 2026 18:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQXSczDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FBB1F000FF;
+	Wed, 30 Sep 2026 18:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793753;
-	bh=crBOkr4fXgyKNNjcxRnQNUFA5p8d2OG4uFyBbzEmofs=;
+	s=korg; t=1790793756;
+	bh=AtTg1s3HY5N/Iiz8qxslzU4LIWHM+FxRkcryINce3Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmUhI+meVXYedYcGh+hH/lz2vyXZ2F7NCCQXufo9vChddPGr2E++9q97bD5r5tykk
-	 AdAh7YFyvejNBBe8ZOmr7kHQEvfRtmoChCZ3ree5f9hAmgrDaJ2iPx3vscepMrgHKI
-	 YuCA0qeI1HpCR6CEviNQTEO5FAwARFpufRofQulA=
+	b=HQXSczDOMaDsptHd9fGUWc4WXXBqAkqeiCCDwH6sJyesSc1MfHL9skbgZJ6/0t5QG
+	 5XKPhk4P3jgcVJmPF0oGsEqhrTC3/OSeeUdIXl+CMIDPWJY88VTUrnkf2u6+v/Gktb
+	 q3JGEmIXiXJr1CbAomtokosLehsfW/tFPR5aWeM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 321/395] Bluetooth: hci_conn: fix CIS hold ownership on reuse
-Date: Wed, 30 Sep 2026 17:29:43 +0200
-Message-ID: <20260930152347.624114447@linuxfoundation.org>
+Subject: [PATCH 6.18 322/395] Bluetooth: hci_sock: validate event length before filtering
+Date: Wed, 30 Sep 2026 17:29:44 +0200
+Message-ID: <20260930152347.644866667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,66 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit e06d549fcd4a0ba381ed67ddf1ab3c7a6ca4314c upstream.
+commit b0a6cf99afd57a39598b1beca0e86ef5004980de upstream.
 
-Commit 69997d50ec57 ("Bluetooth: ISO: handle bound CIS cleanup via
-hci_conn") made hci_bind_cis() and hci_connect_cis() return a
-connection with one hold for the ISO layer.  hci_bind_cis() currently
-takes that hold only after configuring a CIS, so its BT_CONNECTED and
-matching BT_BOUND paths return a bare lookup result.  Its configuration
-failure path can likewise call hci_conn_drop() before taking a hold.
+is_filtered_packet() reads the event code from skb->data[0] without first
+checking that the skb is nonempty. When an opcode filter is configured,
+it also reads the command opcode at offsets 3 or 4 without checking that
+a Command Complete or Command Status event is long enough.
 
-Take the hold before any state-dependent return or configuration error
-so every successful return follows the documented ownership contract
-and every error drop is balanced.
+hci_send_to_sock() invokes the filter before hci_event_packet() validates
+the event header. A malformed event supplied by a controller or a vhci
+device can therefore cause an out-of-bounds read.
 
-hci_connect_cis() also assumes hci_conn_link() always takes a new CIS
-hold before dropping the one returned by hci_bind_cis().  However, the
-helper returns an existing link without taking another hold.  In that
-case, preserve the CIS hold for the caller and drop the redundant LE
-hold because the existing link already owns its parent hold.  Returning
-early also avoids changing an existing CIS back to BT_CONNECT.
+Keep the unmasked event code for the opcode checks. The masked value is
+needed for the 64-bit event bitmap, but using it to identify command events
+aliases event codes above 0x3f. In particular, Synchronous Train Complete
+(0x4f) was treated as Command Status (0x0f) even though its payload has no
+opcode.
 
-Fixes: 69997d50ec57 ("Bluetooth: ISO: handle bound CIS cleanup via hci_conn")
+Reject actual command events that are too short for the field being
+inspected. A truncated command event cannot match a configured opcode.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sock.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1975,6 +1975,8 @@ struct hci_conn *hci_bind_cis(struct hci
- 		cis->conn_timeout = timeout;
- 	}
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -166,6 +166,7 @@ static bool is_filtered_packet(struct so
+ {
+ 	struct hci_filter *flt;
+ 	int flt_type, flt_event;
++	u8 event;
  
-+	hci_conn_hold(cis);
+ 	/* Apply filter */
+ 	flt = &hci_pi(sk)->filter;
+@@ -179,7 +180,11 @@ static bool is_filtered_packet(struct so
+ 	if (hci_skb_pkt_type(skb) != HCI_EVENT_PKT)
+ 		return false;
+ 
+-	flt_event = (*(__u8 *)skb->data & HCI_FLT_EVENT_BITS);
++	if (skb->len < 1)
++		return true;
 +
- 	if (cis->state == BT_CONNECTED)
- 		return cis;
++	event = *(__u8 *)skb->data;
++	flt_event = event & HCI_FLT_EVENT_BITS;
  
-@@ -2016,7 +2018,6 @@ struct hci_conn *hci_bind_cis(struct hci
- 		return ERR_PTR(-EINVAL);
- 	}
+ 	if (!hci_test_bit(flt_event, &flt->event_mask))
+ 		return true;
+@@ -188,11 +193,17 @@ static bool is_filtered_packet(struct so
+ 	if (!flt->opcode)
+ 		return false;
  
--	hci_conn_hold(cis);
- 	cis->state = BT_BOUND;
- 
- 	return cis;
-@@ -2380,6 +2381,12 @@ struct hci_conn *hci_connect_cis(struct
- 		hci_conn_drop(le);
- 		return cis;
- 	}
+-	if (flt_event == HCI_EV_CMD_COMPLETE &&
++	if (event == HCI_EV_CMD_COMPLETE && skb->len < 5)
++		return true;
 +
-+	/* The existing link already owns the hold on its parent. */
-+	if (cis->link) {
-+		hci_conn_drop(le);
-+		return cis;
-+	}
++	if (event == HCI_EV_CMD_COMPLETE &&
+ 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 3)))
+ 		return true;
  
- 	link = hci_conn_link(le, cis);
- 	hci_conn_drop(cis);
+-	if (flt_event == HCI_EV_CMD_STATUS &&
++	if (event == HCI_EV_CMD_STATUS && skb->len < 6)
++		return true;
++
++	if (event == HCI_EV_CMD_STATUS &&
+ 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 4)))
+ 		return true;
+ 
 
 
