@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B8523792;
-	Wed, 30 Sep 2026 17:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0183552ED59;
+	Wed, 30 Sep 2026 17:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790561; cv=none; b=A69ZYV9c+ydZW8tMEcI1Ga1LUi/wg2MBqvJxgKxr+K8xxTehQfFbjIkMzp7M/jdCD8zV/npTIlDwaN0uC8vV7zdxuAa6brVK6IYZ1MP3f8rk7D8qg9RQRPBcPpt8dG0JCT/LhVcMjZ0fUSW5waOFAsbqqd4uBcFDosQbUE3Qwrk=
+	t=1790790564; cv=none; b=QrRCWsgQ6ifETg8aZwHGrxyHMmW1u/Qrx+olZYMUFgpNVzSLzwnSeurpArf36AAdOQsPpDYEeINvNVgjdHMMRIyti1RnH/LG0b10HawPTM3umMP1LBud6YcJzGeNe5sK7ThZnyB7GuE9eBaTuFP78aWly/wzW1kglAtZVks8AYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790561; c=relaxed/simple;
-	bh=OFAS7rM8cbJqjW6nR1xWuk5UK+G2D2SNjJLYshYZJmQ=;
+	s=arc-20240116; t=1790790564; c=relaxed/simple;
+	bh=dBRtw1E3EOXO3VBEeORnH/PiTA1XKlHvIAb7lGKoTtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aww0nPGwDfWVJ3XSRJjydLbi/tOQ7AsPOBy6DpJSo/4O5zhsMdsplzWWqipsEN8lMuUTSpDMys/9OMZBRyYeTaRIlwhPI5tCvGUXs1l8r8AFnUkhs/+ctuy7D7l318X26KKpjnWqjRccFgNeADZPY20UxbgjptNBAFET7z0frcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMdyt9GZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnjenCUvyn9oTym3sBn+6eVbXa1hd/1oTy7c3uETmLes1KGudI0P8tTX01cUFuDSYtf2P1OBLopKY8b1BeHUeRTW2LlN0SwkNB9nlbTxV9aShzLSXZTACQUajzfdv2giQejZeGD27vt9saIhFMfzJU3xYKGS6aMgPkAoxV/GPmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDsYRA4F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMdyt9GZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0BC1F000FF;
-	Wed, 30 Sep 2026 17:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDsYRA4F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362B71F000FF;
+	Wed, 30 Sep 2026 17:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790559;
-	bh=ngTJvxXHrcl/jJJEznmEyCl0xGCMngNhfWntGI5MjLY=;
+	s=korg; t=1790790562;
+	bh=3o6TBOjU58SdmY24PW6k4cMBrAF3Dr70guN70lceut0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OMdyt9GZoB23p/HYGe5bYrJgPC5kqA4IXzvQWr8hHQJ5foPpBEVb6ki5Dqsq34Yw5
-	 QGtKcZAHPqYx+4p0zu7zJBrv0GJiuqaMj2bUDyKzTHDNNJWnxcYd1K5zF7VmJC9CMd
-	 CYDybpVWkIFCJxr3xu/ytYoREITeWv8iD09ktoxE=
+	b=hDsYRA4FT+MPTm4BLrbpGDYmtdMfcoadlvDZ6fm+IbORtdQUP7ka63bNCo9gRxuVz
+	 RidUARtTVKUkbsAME+5IsKo/TY6IZB6tunlfiei59+fUN+BWV2SPfBlCaqMe+8VxDg
+	 ZqozpD35CsAZThiOaa6Xonl9UCJHfK3/uZXoHPKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Alan Adamson <alan.adamson@oracle.com>,
-	Keith Busch <kbusch@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>
-Subject: [PATCH 6.12 870/877] nvme: revert the cross-controller atomic write size validation
-Date: Wed, 30 Sep 2026 17:29:41 +0200
-Message-ID: <20260930152433.508066701@linuxfoundation.org>
+	Ben Hutchings <benh@debian.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 871/877] bootconfig: Fix negative seeks on 32-bit with LFS enabled
+Date: Wed, 30 Sep 2026 17:29:42 +0200
+Message-ID: <20260930152433.528464168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,55 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ben Hutchings <benh@debian.org>
 
-commit 1fc09f2961f5c6d8bb53bc989f17b12fdc6bc93d upstream.
+commit 729dc340a4ed1267774fc8518284e976e2210bdc upstream.
 
-This was originally added by commit 8695f060a029 ("nvme: all namespaces
-in a subsystem must adhere to a common atomic write size") to check
-the all controllers in a subsystem report the same atomic write size,
-but the check wasn't quite correct and caused problems for devices
-with multiple namespaces that report different LBA sizes.  Commit
-f46d273449ba ("nvme: fix atomic write size validation") tried to fix
-this, but then caused problems for namespace rediscovery after a
-format with an LBA size change that changes the AWUPF value.
+Commit 26dda5769509 "tools/bootconfig: Cleanup bootconfig footer size
+calculations" replaced some expressions of type int with the
+BOOTCONFIG_FOOTER_SIZE macro, which expands to an expression of type
+size_t, which is unsigned.
 
-This drops the validation and essentially reverts those two commits while
-keeping the cleanup that went in between the two.  We'll need to figure
-out how to properly check for the mouse trap that nvme left us, but for
-now revert the check to keep devices working for users who couldn't care
-less about the atomic write feature.
+On 32-bit architectures with LFS enabled (i.e. off_t is 64-bit), the
+seek offset of -BOOTCONFIG_FOOTER_SIZE now turns into a positive
+value.
 
-Fixes: 8695f060a029 ("nvme: all namespaces in a subsystem must adhere to a common atomic write size")
-Fixes: f46d273449ba ("nvme: fix atomic write size validation")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Alan Adamson <alan.adamson@oracle.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Tested-by: Alan Adamson <alan.adamson@oracle.com>
+Fix this by casting the size to off_t before negating it.
+
+Just in case someone changes BOOTCONFIG_MAGIC_LEN to have type size_t
+later, do the same thing to the seek offset of -BOOTCONFIG_MAGIC_LEN.
+
+Link: https://lore.kernel.org/all/aKHlevxeg6Y7UQrz@decadent.org.uk/
+
+Fixes: 26dda5769509 ("tools/bootconfig: Cleanup bootconfig footer size calculations")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    9 ---------
- 1 file changed, 9 deletions(-)
+ tools/bootconfig/main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3373,15 +3373,6 @@ static int nvme_init_identify(struct nvm
- 		if (ret)
- 			goto out_free;
- 	}
--
--	if (le16_to_cpu(id->awupf) != ctrl->subsys->awupf) {
--		dev_err_ratelimited(ctrl->device,
--			"inconsistent AWUPF, controller not added (%u/%u).\n",
--			le16_to_cpu(id->awupf), ctrl->subsys->awupf);
--		ret = -EINVAL;
--		goto out_free;
--	}
--
- 	memcpy(ctrl->subsys->firmware_rev, id->fr,
- 	       sizeof(ctrl->subsys->firmware_rev));
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -205,7 +205,7 @@ static int load_xbc_from_initrd(int fd,
+ 	if (stat.st_size < BOOTCONFIG_FOOTER_SIZE)
+ 		return 0;
  
+-	if (lseek(fd, -BOOTCONFIG_MAGIC_LEN, SEEK_END) < 0)
++	if (lseek(fd, -(off_t)BOOTCONFIG_MAGIC_LEN, SEEK_END) < 0)
+ 		return pr_errno("Failed to lseek for magic", -errno);
+ 
+ 	if (read(fd, magic, BOOTCONFIG_MAGIC_LEN) < 0)
+@@ -215,7 +215,7 @@ static int load_xbc_from_initrd(int fd,
+ 	if (memcmp(magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN) != 0)
+ 		return 0;
+ 
+-	if (lseek(fd, -BOOTCONFIG_FOOTER_SIZE, SEEK_END) < 0)
++	if (lseek(fd, -(off_t)BOOTCONFIG_FOOTER_SIZE, SEEK_END) < 0)
+ 		return pr_errno("Failed to lseek for size", -errno);
+ 
+ 	if (read(fd, &size, sizeof(uint32_t)) < 0)
 
 
