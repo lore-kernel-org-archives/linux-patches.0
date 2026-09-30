@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18D94E324C;
-	Wed, 30 Sep 2026 16:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81D01E5B9A;
+	Wed, 30 Sep 2026 16:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786774; cv=none; b=YrvFYRtlEbCqtbZ8cwnGliAiSotG6ByqEflkFEPzfWuyLPfc1y7rxLSKP0zDxQW5c3Z+kXCmsCs4yrto1Uti06zX2s/loKLxOasHAedEnNyUF/n0+XbOAehFinA5e7yVX0AyCa3sT2Sdnpn9WWzl6gIV3bX1qASrYUhz5F1wTu0=
+	t=1790786777; cv=none; b=t5+D4EnusZ52T6UYiLlqDa0/vQpRCAYitev4eRlVCaP7ZHFMaUK9Y/EkRx52MoNQLy3qTZgMQAMdOnIFcN9s7VswDWBFujBQy0vIrtx2snEutZE/7X0Kt8I9WotX7DA0bvsKbpCMC2FGWOS8lKq6V6n9RUsEvayHEw/x2FKZ5xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786774; c=relaxed/simple;
-	bh=h1SZMIY29VHki1T+UcAvK96OhYlST2s4osHmJEwIQIg=;
+	s=arc-20240116; t=1790786777; c=relaxed/simple;
+	bh=vayP+/vQAptDYrINzmSAQ9bfDDjWT6TbLkaWX6HipGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CdOJG7hbyRZTn3e3MbhCi5wT/jekKbeRU/cV3iNZmKwyoP92vh4uxiKmlmkoQ+5f8gp0pCOo8KyjTOlEUT4H5F6eleImOqszaF+HmgsXvtdp3ZRB962h6NvSpBf+InjOyhn3vGP4SuM45xXs+JqoMFPV4LuT9oQ/c4+VmTzguso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3DDezKt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dv0CJceHQHtIDKj1jm2Ta1vcjxWuTgAmb8Tz1aNRsk9OYFCqbQKtKaAJxzoK7bs5X9TyXTovMA1TnkFgJHkL0dqon4w112qSbjIV6TL65xmQCde2BFI+qj6EaK4BZAl2SrFMZ/TCrwd5LTL1EVU25Qk8fstCYvR5nXp/pfjzAWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFsmGRQO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3DDezKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0631F000FF;
-	Wed, 30 Sep 2026 16:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFsmGRQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3058D1F000FF;
+	Wed, 30 Sep 2026 16:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786772;
-	bh=i4mWavE9hcSwxQ4DGwOW0eZPeCkr4psOFf85S22kqkw=;
+	s=korg; t=1790786775;
+	bh=8Nd9IMUTpnUW4Uxr1UG7yx0Bo6ovCWOUumJG5I/RxIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D3DDezKtODFwAE/S6EICbhtwXScuTHEiNIuvYMI456DD3bKc+zym407lOREMhu63K
-	 ESWaIE98n8zbN2EXmhaa3r1HlbFd/x96ImzH+GsH+IMROxY3JRoBJIWi0541Dhc3lO
-	 cpjMJ0iF4ju9zd4YYBBtECieLeCzyowPN2gQ+xio=
+	b=oFsmGRQOHyfPgfhL2MWJrRepPG8XCg6z4/Ahipv+v99BVR48vjf6FDj3KEMGGBWTw
+	 tP1DjnvgbIuHq2TauBFPiUelTlH1ebCx/htgBsPg83jFvGDnaE5G6Afq7x2ZS+Shjy
+	 dogCeTkcjUD1+WnrcfxmMDb9ZKXk+isdsy87gNkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Burton <jamesburton@meta.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 925/982] tipc: reject invalid and unexpected GRP_ACK_MSG to prevent bc_ackers underflow
-Date: Wed, 30 Sep 2026 17:27:41 +0200
-Message-ID: <20260930152436.609735805@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.1 974/982] smb: client: validate POSIX create context length
+Date: Wed, 30 Sep 2026 17:28:30 +0200
+Message-ID: <20260930152437.665236120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,77 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 99cc2a62e07a44a22254d7beca9ef1f8ad886d0d upstream.
+commit fa2e9900dd2a3f5a1e7ef5a8c5e8d435feedbfcc upstream.
 
-Commit 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate
-GRP_ACK_MSG") rejected duplicate/stale ACKs in tipc_group_proto_rcv()
-by returning early when less_eq(acked, m->bc_acked).
+parse_posix_ctxt() reads the fixed nlink, reparse_tag, and mode fields
+before checking that the POSIX create context contains them.  A short
+context can pass the generic checks and still make these fixed-width
+reads run past its declared data.
 
-However, that check remains incomplete in two ways:
+The current in-tree smb2_open_file() path passes a NULL posix pointer,
+so this handler is not reached on the ordinary open path.  Still require
+the POSIX data to cover all three fields before reading them because the
+helper performs those unguarded reads.  Keep the existing soft-failure
+behavior so malformed optional metadata does not fail the open.
 
-1. When grp->bc_ackers is zero (e.g. on a quiet group, when replicast
-   ACKs were not requested, or after all expected members have already
-   acknowledged), an unexpected GRP_ACK_MSG with acked > m->bc_acked
-   passes less_eq() and unconditionally decrements grp->bc_ackers.
-   Because bc_ackers is a u16, this wraps to 65535, causing
-   tipc_group_bc_cong() to permanently report congestion and blocking
-   all future group broadcasts on the socket.
-
-2. During an active broadcast round (grp->bc_ackers > 0), the sender
-   transmits packet S and advances grp->bc_snd_nxt to S + 1. Receivers
-   increment their expected counter to S + 1 upon consuming packet S,
-   so the only valid ACK value for the current round is strictly
-   acked == grp->bc_snd_nxt.
-
-   However, tipc_group_update_bc_members() initializes each member's
-   m->bc_acked to prev = grp->bc_snd_nxt - 1 (S - 1 before increment).
-   This leaves a 2-sequence gap (S - 1 to S + 1) in sequence space.
-   An incoming ACK is therefore neither rejected as duplicate nor
-   prevented from decrementing grp->bc_ackers if an unexpected or stale
-   value (such as S) is received. A member sending acked = S followed
-   by acked = S + 1 could decrement grp->bc_ackers twice in the same
-   round, prematurely clearing bc_ackers or underflowing it.
-
-Fix this by:
-- Dropping GRP_ACK_MSG immediately if grp->bc_ackers is zero.
-- Requiring acked == grp->bc_snd_nxt and rejecting duplicates where
-  m->bc_acked == acked. Because replicast broadcast rounds are strictly
-  sequential, only grp->bc_snd_nxt can be acknowledged, and each member
-  can acknowledge at most once per round.
-
-Note that a related pre-existing issue in tipc_group_delete_member()
-(where grp->bc_ackers decrementing to zero upon member departure does
-not restore *grp->open or trigger a socket wakeup) will be addressed
-in a separate patch.
-
-Fixes: 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG")
-Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
-Reported-by: James Burton <jamesburton@meta.com>
+Fixes: 69dda3059e7a ("cifs: add SMB2_open() arg to return POSIX data")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260913044233.193927-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Tested-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/group.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2pdu.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/tipc/group.c
-+++ b/net/tipc/group.c
-@@ -797,10 +797,10 @@ void tipc_group_proto_rcv(struct tipc_gr
- 		tipc_group_open(m, usr_wakeup);
- 		return;
- 	case GRP_ACK_MSG:
--		if (!m)
-+		if (!m || !grp->bc_ackers)
- 			return;
- 		acked = msg_grp_bc_acked(hdr);
--		if (less_eq(acked, m->bc_acked))
-+		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
- 			return;
- 		m->bc_acked = acked;
- 		if (--grp->bc_ackers)
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2190,12 +2190,15 @@ static void
+ parse_posix_ctxt(struct create_context *cc, struct smb2_file_all_info *info,
+ 		 struct create_posix_rsp *posix)
+ {
+-	int sid_len;
+ 	u8 *beg = (u8 *)cc + le16_to_cpu(cc->DataOffset);
+-	u8 *end = beg + le32_to_cpu(cc->DataLength);
++	u32 dlen = le32_to_cpu(cc->DataLength);
++	u8 *end = beg + dlen;
++	int sid_len;
+ 	u8 *sid;
+ 
+ 	memset(posix, 0, sizeof(*posix));
++	if (dlen < 3 * sizeof(__le32))
++		return;
+ 
+ 	posix->nlink = get_unaligned_le32(beg);
+ 	posix->reparse_tag = get_unaligned_le32(beg + 4);
 
 
