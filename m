@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D425208B5;
-	Wed, 30 Sep 2026 18:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF9351DAEB;
+	Wed, 30 Sep 2026 18:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792989; cv=none; b=ZU8uhoyGoxu+/6mojzDC06Wp0Uxl+TGB2Tg4CkbGWqXqTbWA0gHRa80hDSOjhS+Fgm2oblwP50iVw09zQLovq4I4QzoVxK/00GJkejdjCZPUMYonslcehVPTdkXDoaGJSddf3giHnVtUSmFXFBcFok+02/l8oAa5o9pdIxcZkL0=
+	t=1790792992; cv=none; b=ngUUAiQE9TsinYzw69Vv0l53bbywHcPMwzutyzbR84ol9MUzpy4Gm3vEwb1QVIiLUX+MSEpRtvAcNzukWpEJJIhBs/elci10FKuMMl9hV1y47SOk4GH7verlKfJho+FxX38U/knWv+aQFbF/Jfsnl/1mSxZoBoeL8g7D9SEWL1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792989; c=relaxed/simple;
-	bh=P7Airq0u/mkr9Q60FnVar+1qOyH66it7KaOvBbYtHPg=;
+	s=arc-20240116; t=1790792992; c=relaxed/simple;
+	bh=DsvXkw86ssGybaTMI9+ADm2ydkQXHpbQA3Ch4w4ExR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPkrrdOu8HV+RpifXL5TdUuu29p8/Mj0UdEaVp+yINJbFqDWie+s66W5MxKmAen+TYIBRbErI6h2Xep/8/FsYYD0UkAICJvr0q8ehqlyiMFA93FkdE+tr6SCwSfFX830Sbv+iqPZGzSxDsmji1cYKVspapclMc+za1fM6RhH+z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vR//d+yl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nVRFRq/Nicr70AVx0WSAqHRbb5OLD7J35Oc8BsmNtWinqlmyqnA8ustizLPhcjXKKvLf+nbsenTk72eGJxYloG+LtLlKMHO1y4szUjGrttaXo+h74oXjCNnWi0SRN83A9DsdMc//4vI9G9UDeFlUvTNvwiLCWle/atcSeiK24iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPGunUdj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR//d+yl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158A81F000FF;
-	Wed, 30 Sep 2026 18:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPGunUdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB661F000FF;
+	Wed, 30 Sep 2026 18:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792987;
-	bh=Z+z74U1GlHGnHisISIKvg74gvfEnJzDraLqyC6iao9g=;
+	s=korg; t=1790792990;
+	bh=0hAwg+Fb92QHc9jjRrHGtmVXkHC5LQhLd/VQy6yRxT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vR//d+ylNUL90P3j4zuz1K4jFPPQeonmbm7BHPmCmmAwB2rg4CSAMFHdrODgZM+z0
-	 aryTOVScC0I/tUINnr0SZ/fmn+Eyst/SvATxaYEnwVPzFG4NMOS+kVYqso2urr7z6n
-	 AEMciC2N1XJ/qAnEG+aFjHM9WhbUlD+51xd/2HUU=
+	b=cPGunUdj2pxB7R9pGyOxAqOyrD7HXdise0jQGWr+ygbxoQCm/hboxTWAGPBC3eYU/
+	 fbN0F+DKuog1Ru22ir9g9//u1jD/9kfBIxDd9RfK2JFQkpzEh56XkwQahErjfseDg7
+	 PNlIPBdAQbhsatvLOFi3K9qAhsp5fs//vdrEAVq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Benjamin Leggett <benjamin@edera.io>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Li Youhong <liyouhong@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 096/395] drm/virtio: sync shmem backing on guest-bound transfers
-Date: Wed, 30 Sep 2026 17:25:58 +0200
-Message-ID: <20260930152342.716723316@linuxfoundation.org>
+Subject: [PATCH 6.18 097/395] drm/bridge: samsung-dsim: fix TE GPIO lifetime for host attach
+Date: Wed, 30 Sep 2026 17:25:59 +0200
+Message-ID: <20260930152342.738763378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,257 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Leggett <benjamin@edera.io>
+From: Li Youhong <liyouhong@kylinos.cn>
 
-[ Upstream commit 598c1c3e895590f845e04455d5580ea28ffde666 ]
+[ Upstream commit ada667890773e033d2f40dc94176e3beb930b516 ]
 
-virtio_gpu_cmd_transfer_to_host_{2d,3d}() sync the shmem backing for the
-device before the transfer, but nothing syncs for the CPU when a transfer
-runs the other way. That breaks two ways. Where the DMA layer bounces, the
-device writes into the bounce buffer while the guest keeps reading the
-original pages. Where DMA is not coherent, the device writes memory while
-the CPU keeps stale cache lines, because nothing reaches
-arch_sync_dma_for_cpu(). Either way DRM_IOCTL_VIRTGPU_TRANSFER_FROM_HOST
-hands back stale data.
+When the Exynos DSI driver was generalized into samsung-dsim, the TE
+GPIO acquisition was switched from gpiod_get_optional() to
+devm_gpiod_get_optional() while keeping the matching gpiod_put() calls.
+That combination is wrong for a managed descriptor.
 
-Sashiko originally found this in
-https://lore.kernel.org/dri-devel/20260806231002.27B4D1F000E9@smtp.kernel.org
-but the suggestion there to fix this with dma_sync_sgtable_for_cpu()
-isn't a sufficient fix, for two reasons.
+However, dropping the puts and keeping the managed get is also wrong:
+samsung_dsim_register_te_irq() runs from the DSI host attach callback,
+and host detach/reattach can happen without destroying the device that
+owns the managed action. A second attach would then request the GPIO
+again without having released it.
 
-- The transfer is asynchronous. virtio_gpu_cmd_transfer_from_host_3d() only
-queues the command, so a sync there would run before the device had written
-anything. It belongs on completion, and ahead of any fence signalling.
-A waiter woken by the fence would otherwise race the sync and read the
-backing pages regardless. It needs its own pass over the reclaim list
-rather than a step inside the existing one, because
-virtio_gpu_fence_event_process() also signals every earlier fence in the
-same context, so any entry in that loop may signal an earlier entry's
-fence.
+Switch back to a non-managed gpiod_get_optional() and keep the explicit
+gpiod_put() on the request_irq() error path and in
+samsung_dsim_unregister_te_irq().
 
-- The transfer is also partial, carrying an offset, a level and a box.
-Where the mapping bounces, a sync for the CPU copies the whole mapping
-back, so unless the mapping is primed first the regions the device did not
-write come back holding whatever the bounce buffer contained, discarding
-data the guest owned.
-
-So the fix: Prime the mapping before queueing, tag the vbuffer, and sync
-for the CPU on completion before the fence is signalled.
-
-A second transfer must not snapshot the mapping while an earlier one is
-still in flight, or the snapshot would predate whatever the CPU wrote once
-the earlier fence signalled and the later sync would discard it.
-
-To mitigate this, wait for outstanding fences under the reservation before
-priming.
-
-Neither sync copies anything unless the mapping genuinely bounces:
-swiotlb_sync_single_for_cpu() and its Xen counterpart look the address up
-in the bounce pool and return early when it is absent. On a platform with
-non-coherent DMA they still perform the necessary cache maintenance.
-
-The range cannot be narrowed to the box, since for a non-blob resource
-virtio_gpu_transfer_from_host_ioctl() rejects a caller-supplied stride and
-layer_stride, leaving the layout to the host and the guest with no way to
-work out which bytes the device writes. A host3d guest blob does carry
-both, so its extent could be bounded, but the sync is left whole there too
-rather than special-cased: priming makes the untouched regions round-trip
-unchanged either way.
-
-Behaviour changes worth noting:
-
-- TRANSFER_FROM_HOST can now block, where before it returned as soon as the
-command was queued. Repeated readbacks of one resource serialise, and a
-readback can wait behind an earlier queued command that touched it, since
-virtio_gpu_array_add_fence() tags uploads, execbufs and plane flushes
-alike with DMA_RESV_USAGE_WRITE. -ERESTARTSYS was already possible here
-via dma_resv_lock_interruptible().
-
-- A CPU write racing an in-flight transfer to the same resource is now
-lost, where before it survived and the transfer was lost instead. Priming
-captures the pages as of queueing, so a write landing before completion is
-overwritten by the sync.
-
-- TRANSFER_TO_HOST can also block now, but only while a guest-bound
-transfer on the same resource is outstanding, which happens only for
-callers that issue both without waiting.
-
-- Where a batch of completions contains a guest-bound transfer, the sync
-pass delays fence signalling for the whole batch. Only bounced pages are
-copied and the swiotlb pool bounds it. A batch with no such transfer is
-unaffected.
-
-Tested under QEMU on x86 with swiotlb=force and virtio-vga-gl
-iommu_platform=on, which forces both preconditions required to hit the
-original bug.
-
-Fixes: a3b815f09bb8 ("drm/virtio: add iommu support.")
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260806231002.27B4D1F000E9@smtp.kernel.org/
-Signed-off-by: Benjamin Leggett <benjamin@edera.io>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260814-virtgpu-from-host-sync-v4-1-64dd736b1779@edera.io
+Fixes: e7447128ca4a ("drm: bridge: Generalize Exynos-DSI driver into a Samsung DSIM bridge")
+Suggested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260904014958.1572918-1-dayou5941@163.com
+[Luca: remove unnecessary comment]
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.h   |  5 +++
- drivers/gpu/drm/virtio/virtgpu_ioctl.c | 43 ++++++++++++++++++++++++
- drivers/gpu/drm/virtio/virtgpu_vq.c    | 46 ++++++++++++++++++++++++++
- 3 files changed, 94 insertions(+)
+ drivers/gpu/drm/bridge/samsung-dsim.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
-index 00c609c3b53a8..8575c7787fc36 100644
---- a/drivers/gpu/drm/virtio/virtgpu_drv.h
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
-@@ -113,6 +113,8 @@ struct virtio_gpu_object {
- 	bool dumb;
- 	bool created;
- 	bool attached;
-+	/* a guest-bound transfer is queued and its mapping not yet synced */
-+	bool from_host_pending;
- 	bool host3d_blob, guest_blob;
- 	uint32_t blob_mem, blob_flags;
+diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
+index ad8c6aa49d48a..272e6255c7322 100644
+--- a/drivers/gpu/drm/bridge/samsung-dsim.c
++++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+@@ -1862,7 +1862,7 @@ static int samsung_dsim_register_te_irq(struct samsung_dsim *dsi, struct device
+ 	int te_gpio_irq;
+ 	int ret;
  
-@@ -191,6 +193,9 @@ struct virtio_gpu_vbuffer {
- 	struct list_head list;
- 
- 	uint32_t seqno;
-+
-+	/* guest-bound transfer whose shmem backing needs a CPU sync */
-+	bool sync_for_cpu;
- };
- 
- struct virtio_gpu_output {
-diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-index bb3f8ebcf4dc1..86777a7d41d8f 100644
---- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-@@ -256,6 +256,27 @@ static int virtio_gpu_transfer_from_host_ioctl(struct drm_device *dev,
- 	if (ret != 0)
- 		goto err_put_free;
- 
-+	if (virtio_gpu_is_shmem(bo) && virtio_gpu_use_dma_api(vgdev->vdev)) {
-+		/*
-+		 * The sync on completion restores the whole mapping, so an
-+		 * earlier transfer has to be done before this one snapshots it.
-+		 * Otherwise the snapshot predates anything the CPU wrote once
-+		 * that transfer's fence signalled, and the later sync would
-+		 * discard it. Nothing can add a fence behind our back here,
-+		 * since doing so takes the reservation we already hold.
-+		 * This writes the pages, so it waits as a writer does. READ
-+		 * usage covers existing readers.
-+		 */
-+		long wait = dma_resv_wait_timeout(objs->objs[0]->resv,
-+						  DMA_RESV_USAGE_READ, true,
-+						  MAX_SCHEDULE_TIMEOUT);
-+
-+		if (wait < 0) {
-+			ret = wait;
-+			goto err_unlock;
-+		}
-+	}
-+
- 	fence = virtio_gpu_fence_alloc(vgdev, vgdev->fence_drv.context, 0);
- 	if (!fence) {
- 		ret = -ENOMEM;
-@@ -315,6 +336,28 @@ static int virtio_gpu_transfer_to_host_ioctl(struct drm_device *dev, void *data,
- 		if (ret != 0)
- 			goto err_put_free;
- 
-+		/*
-+		 * A transfer the other way may have queued without yet syncing
-+		 * its mapping. Pushing the guest pages into it now would
-+		 * discard what the device wrote there, so wait for that sync:
-+		 * it runs before the fence it belongs to is signalled. The
-+		 * flag is only set under this reservation, so it cannot appear
-+		 * behind our back, and the acquire pairs with the release in
-+		 * that sync, so finding it clear means the pages it wrote are
-+		 * visible here too.
-+		 */
-+		if (smp_load_acquire(&bo->from_host_pending)) {
-+			long wait = dma_resv_wait_timeout(objs->objs[0]->resv,
-+							  DMA_RESV_USAGE_WRITE,
-+							  true,
-+							  MAX_SCHEDULE_TIMEOUT);
-+
-+			if (wait < 0) {
-+				ret = wait;
-+				goto err_unlock;
-+			}
-+		}
-+
- 		ret = -ENOMEM;
- 		fence = virtio_gpu_fence_alloc(vgdev, vgdev->fence_drv.context,
- 					       0);
-diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
-index 4a72c69fe28ec..592ad4f9b100d 100644
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -240,6 +240,33 @@ void virtio_gpu_dequeue_ctrl_func(struct work_struct *work)
- 	} while (!virtqueue_enable_cb(vgdev->ctrlq.vq));
- 	spin_unlock(&vgdev->ctrlq.qlock);
- 
-+	/*
-+	 * Sync guest-bound transfers before signalling anything, so that a
-+	 * waiter cannot read the backing pages while what the device wrote is
-+	 * still in a bounce buffer. This cannot be folded into the loop below:
-+	 * virtio_gpu_fence_event_process() also signals every earlier fence in
-+	 * the same context, so any entry there may signal this entry's fence.
-+	 */
-+	list_for_each_entry(entry, &reclaim_list, list) {
-+		if (entry->sync_for_cpu) {
-+			struct virtio_gpu_object *bo =
-+				gem_to_virtio_gpu_obj(entry->objs->objs[0]);
-+
-+			dma_sync_sgtable_for_cpu(vgdev->vdev->dev.parent,
-+						 bo->base.sgt, DMA_FROM_DEVICE);
-+			/*
-+			 * Release, so a transfer the other way that skips its
-+			 * wait on the strength of this cannot go on to read
-+			 * the backing pages before the sync above is visible.
-+			 * Nothing orders the two otherwise: where the mapping
-+			 * bounces on a coherent device the sync is a plain
-+			 * copy, and dma_direct_sync_sg_for_cpu() emits its
-+			 * barrier only for the non-coherent case.
-+			 */
-+			smp_store_release(&bo->from_host_pending, false);
-+		}
-+	}
-+
- 	list_for_each_entry(entry, &reclaim_list, list) {
- 		resp = (struct virtio_gpu_ctrl_hdr *)entry->resp_buf;
- 
-@@ -1225,12 +1252,31 @@ void virtio_gpu_cmd_transfer_from_host_3d(struct virtio_gpu_device *vgdev,
- 	struct virtio_gpu_object *bo = gem_to_virtio_gpu_obj(objs->objs[0]);
- 	struct virtio_gpu_transfer_host_3d *cmd_p;
- 	struct virtio_gpu_vbuffer *vbuf;
-+	bool use_dma_api = virtio_gpu_use_dma_api(vgdev->vdev);
- 
- 	cmd_p = virtio_gpu_alloc_cmd(vgdev, &vbuf, sizeof(*cmd_p));
- 	memset(cmd_p, 0, sizeof(*cmd_p));
- 
- 	vbuf->objs = objs;
- 
-+	if (virtio_gpu_is_shmem(bo) && use_dma_api) {
-+		/*
-+		 * The device writes only the requested box, so prime the
-+		 * mapping with the current contents: otherwise the sync on
-+		 * completion would hand back whatever a bounce buffer held for
-+		 * the regions the device does not touch.
-+		 */
-+		dma_sync_sgtable_for_device(vgdev->vdev->dev.parent,
-+					    bo->base.sgt, DMA_TO_DEVICE);
-+		vbuf->sync_for_cpu = true;
-+		/*
-+		 * Set under the reservation the caller holds, so a transfer
-+		 * the other way cannot miss it and push the guest pages into
-+		 * the mapping while the device still owns it.
-+		 */
-+		WRITE_ONCE(bo->from_host_pending, true);
-+	}
-+
- 	cmd_p->hdr.type = cpu_to_le32(VIRTIO_GPU_CMD_TRANSFER_FROM_HOST_3D);
- 	cmd_p->hdr.ctx_id = cpu_to_le32(ctx_id);
- 	cmd_p->resource_id = cpu_to_le32(bo->hw_res_handle);
+-	dsi->te_gpio = devm_gpiod_get_optional(dev, "te", GPIOD_IN);
++	dsi->te_gpio = gpiod_get_optional(dev, "te", GPIOD_IN);
+ 	if (!dsi->te_gpio)
+ 		return 0;
+ 	else if (IS_ERR(dsi->te_gpio))
 -- 
 2.53.0
 
