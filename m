@@ -1,38 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26B34A8430;
-	Wed, 30 Sep 2026 17:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67423A784F;
+	Wed, 30 Sep 2026 17:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788687; cv=none; b=C/WDn05Gx8o41/w22Z+mcTvn3oQAfNui5sCRDiz96gWyijPfZHyh948lIVTXvC0kO/DIpK4BouDm5vbD42zcVi7Ne38FeQrQHau8gT/M7qefZnwecnZCukq16+DK/KH1+rZ8mhbsQBi94t9EmCwUdwQyVXDPmNCskq5hCKE9nKY=
+	t=1790788689; cv=none; b=XQn2G0H1IAcR3uH5n6+mUcJBfU2povueb4tJwBimoE7tfdJDv/PaN3Pz0CMrJ/AIL9EumZpqHh3Rbmm8IUi/OjXNo/+vnq9vXjwka6TNvVobPc+wzv1WQEkxR+14RbZoxJWgd7wqGL2zm3Q5z373k8NohkJgAPqBRd9lnfmlSYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788687; c=relaxed/simple;
-	bh=Z6xHJUl52ZsSYcgk1iBsKhxHHHjq79+Dhk6a4mNyH1s=;
+	s=arc-20240116; t=1790788689; c=relaxed/simple;
+	bh=OBMsysFdhYgCTCDLfxoEf+RHGA7NFS5435qQEs/B+Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPYIKtqmeJSpIB2gh14HP4fOgoFBwRleBaiHpKHpFObmnzdKNHq0vvPmQPNBrpWAP28H0JgTwA/s3iQqQRQiW6D1RhNBuFnyEqVV/D+Vz9MQvksxigTuHKq7RO1UUuRW7et5smIRJUaxtcJLCpB26OlaCsEZA5/P0NSHM+VzKWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKOvwBvS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aprj09xbyMbMcUW/FJDG0MMwreAYG6LxQTnuryihDp8PI8Z17nbSLsgK6mQFor0q0humSRGXJLsuCWJmFIwFozZ/bpPXu8IaAXrv8rWL/zgPlR/pfdywgO7HE7VbfOovdSRInPVFDUmh/zpdjneMedayocZCkM5LApz00lpCPck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=altkosFx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKOvwBvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92451F000FF;
-	Wed, 30 Sep 2026 17:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="altkosFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4711F000FF;
+	Wed, 30 Sep 2026 17:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788685;
-	bh=NpYEIlXDkpiUW1193JB04CGHN7lDcF+UYpDukqtOg7E=;
+	s=korg; t=1790788688;
+	bh=3PCwQ6OYls26fi/zsEy12M9XC2Qn0HwyqNpLDMM0peo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mKOvwBvSDZ7jS0tDTs+PlKBdC45HOS/5RTgDf6Q/1GaxbB2hmOthA8owba9USFPj4
-	 mVLG+Rs6Hml1BnjdxrOdMfzRGWQoqKK6ewIjdaGGt7ONB/uyQitmdch8sZjK2uulBY
-	 S6B+7PKxynaz3s+AppHKCC78USeQWknJXRvim90w=
+	b=altkosFx5Z4rtmaQ9XSXq87AkkXxjaf2qmQyHpqAjxZBI1PaHOSb3WHx4cpCMRUxc
+	 Dm8kCt2h3/hVXTyn2iG0eCUQCAsYDIfsI+TKw86SlZbkF2dil6xSOIN3Z8AIf34Leg
+	 KfjcwiiPKoqwHhW3mG1NDq7TwdHJ892s/Z6tWlcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roland Waltersson <roland.waltersson@netinsight.net>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 167/877] ata: libahci: clear PxCLBU and PxFBU for AHCI_HFLAG_32BIT_ONLY
-Date: Wed, 30 Sep 2026 17:17:58 +0200
-Message-ID: <20260930152418.327746648@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 158/877] mm/huge_memory: use folios memcg inside __folio_split()
+Date: Wed, 30 Sep 2026 17:17:49 +0200
+Message-ID: <20260930152418.129969084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,70 +62,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 82e47533221d4746947b74d2e79a478c36c6433a upstream.
+commit c299a2285d9d8bda4da024455de65e3d00de6f17 upstream.
 
-A user reported that commit 105c42566a55 ("ata: ahci: force 32-bit DMA for
-JMicron JMB582/JMB585") made the JMicron JMB585 unusable on his board.
+Patch series "Honor XA_FLAGS_ACCOUNT in xas_split_alloc() and charge to
+folio's memcg", v3.
 
-The failure is seen as soon as the ahci driver is probed, and booting with
-iommu=off does not solve the problem.
+__GFP_ACCOUNT is needed for xarray node allocation accounting when
+XA_FLAGS_ACCOUNT is set. Commit 7b785645e8f13 ("mm: fix page cache
+convergence regression") fixed a workingset regression with it.
+xas_split_alloc() does not have it and needs to be fixed.
 
-Looking at the AHCI specification, PxCLBU and PxFBU are both read only '0'
-for HBAs that do not support 64-bit addressing.
+In addition, based on Sashiko's review[1] and Johannes' confirmation[2], to
+charge the right memcg, folio's memcg needs to be active during folio
+split. Add that before adding __GFP_ACCOUNT.
 
-For HBAs that do support 64-bit addressing, the registers are read write,
-with a reset value that is Implementation Specific.
+There is no workingset convergence regression related to missing
+__GFP_ACCOUNT in xas_split_alloc() and the impact to userspace should be
+minor.
 
-When using the AHCI_HFLAG_32BIT_ONLY flag, the HBA does support 64-bit
-addressing, and a 32-bit DMA mask is set by simply clearing HOST_CAP_64.
-Thus, in this case, we need to explicitly clear the registers to 0.
+This patch (of 2):
 
-Fixes: 105c42566a55 ("ata: ahci: force 32-bit DMA for JMicron JMB582/JMB585")
-Fixes: c7a42156d99b ("ahci: disable 64bit dma on sb600")
-Cc: stable@vger.kernel.org
-Reported-by: Roland Waltersson <roland.waltersson@netinsight.net>
-Closes: https://lore.kernel.org/linux-ide/IA0PR17MB668730A4ECCD65F7A1DC3EDC9EB62@IA0PR17MB6687.namprd17.prod.outlook.com/
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260904134310.1465051-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+During a pagecache folio split, an xarray node allocation can happen and
+needs to charge at folio's memcg instead of folio split invoker's memcg,
+because for example folio split can happen during reclaim and reclaim's
+active memcg might not be folio's memcg.  Switch to folio's memcg at the
+beginning and switch back afterwards.
+
+Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-0-38cb3ff325c5@nvidia.com
+Link: https://lore.kernel.org/20260804-add-gfp_account-to-xas_split_alloc-v3-1-38cb3ff325c5@nvidia.com
+Link: https://sashiko.dev/#/patchset/20260727-add-gfp_account-to-xas_split_alloc-v1-1-9fae6bf64838%40nvidia.com?part=1 [1]
+Link: https://lore.kernel.org/all/amtcBZ-_QVRgCd6b@cmpxchg.org/ [2]
+Fixes: 6b24ca4a1a8d ("mm: Use multi-index entries in the page cache")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit c299a2285d9d8bda4da024455de65e3d00de6f17)
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ mm/huge_memory.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -748,15 +748,28 @@ void ahci_start_fis_rx(struct ata_port *
- 	struct ahci_port_priv *pp = ap->private_data;
- 	u32 tmp;
- 
--	/* set FIS registers */
-+	/*
-+	 * On HBAs that only support 32-bit addressing PxCLBU is read only '0'.
-+	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxCLBU is RW, and the
-+	 * reset value is Implementation Specific, so we need to clear it to 0.
-+	 */
- 	if (hpriv->cap & HOST_CAP_64)
- 		writel((pp->cmd_slot_dma >> 16) >> 16,
- 		       port_mmio + PORT_LST_ADDR_HI);
-+	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
-+		writel(0, port_mmio + PORT_LST_ADDR_HI);
- 	writel(pp->cmd_slot_dma & 0xffffffff, port_mmio + PORT_LST_ADDR);
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 6fc4e1fb88ae6..1a76a21724d40 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3420,6 +3420,7 @@ int split_huge_page_to_list_to_order(struct page *page, struct list_head *list,
+ 	/* reset xarray order to new order after split */
+ 	XA_STATE_ORDER(xas, &folio->mapping->i_pages, folio->index, new_order);
+ 	bool is_anon = folio_test_anon(folio);
++	struct mem_cgroup *memcg, *old_memcg;
+ 	struct address_space *mapping = NULL;
+ 	struct anon_vma *anon_vma = NULL;
+ 	int order = folio_order(folio);
+@@ -3483,6 +3484,13 @@ int split_huge_page_to_list_to_order(struct page *page, struct list_head *list,
+ 	if (folio_test_writeback(folio))
+ 		return -EBUSY;
  
 +	/*
-+	 * On HBAs that only support 32-bit addressing PxFBU is read only '0'.
-+	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxFBU is RW, and the
-+	 * reset value is Implementation Specific, so we need to clear it to 0.
++	 * switch to folio's memcg as xarray node allocation can happen and
++	 * needs to charge to it.
 +	 */
- 	if (hpriv->cap & HOST_CAP_64)
- 		writel((pp->rx_fis_dma >> 16) >> 16,
- 		       port_mmio + PORT_FIS_ADDR_HI);
-+	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
-+		writel(0, port_mmio + PORT_FIS_ADDR_HI);
- 	writel(pp->rx_fis_dma & 0xffffffff, port_mmio + PORT_FIS_ADDR);
- 
- 	/* enable FIS reception */
++	memcg = folio_memcg(folio);
++	old_memcg = set_active_memcg(memcg);
++
+ 	if (is_anon) {
+ 		/*
+ 		 * The caller does not necessarily hold an mmap_lock that would
+@@ -3629,6 +3637,8 @@ int split_huge_page_to_list_to_order(struct page *page, struct list_head *list,
+ 	if (mapping)
+ 		i_mmap_unlock_read(mapping);
+ out:
++	/* restore to caller's old_memcg */
++	set_active_memcg(old_memcg);
+ 	xas_destroy(&xas);
+ 	if (order == HPAGE_PMD_ORDER)
+ 		count_vm_event(!ret ? THP_SPLIT_PAGE : THP_SPLIT_PAGE_FAILED);
+-- 
+2.53.0
+
 
 
