@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98F33A75BD;
-	Wed, 30 Sep 2026 18:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A34F3B3C03;
+	Wed, 30 Sep 2026 18:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791768; cv=none; b=rA6koL0LhP5ijotAvdqKDU0SSlP3+avoKhIxp+9SjC1K+Z/a4KCNG3RcP+OEgbgAuqk1xz8CNgdC6cCsAHQRhqGsbOG24zfal5bK7+zVUK71YqlYhHhjJ3eRWS0wST58B3AJVCv8SEYzmOGuja8ap1PCz7VyIkEn028B2lVhWkI=
+	t=1790791770; cv=none; b=fmabNr2sMmmotzq6T6YYJrB2ky8/QA1CDpJV5qhuQpHPj5KoMfl6dujMxg30/Vs3l/iDJp8gAmxCUsHQ/wkNzspQmXOWVikAf4YHrzQfun2i5iQvuQhDRHsESzcGLhYlXA7i3X/kJz5EW3lRIoF1COR6eqL+vwrDPgvnA21fz+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791768; c=relaxed/simple;
-	bh=7pnyZmfz6dQ2Tunqyh8fMRvNVXFzaDMZrYLyW6PZk4g=;
+	s=arc-20240116; t=1790791770; c=relaxed/simple;
+	bh=57BWzsmY+weXddlyir01aTCk+Ip34K6g7iIXrxzkxB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gmr3QyFPFSFSDtprhGLi9ywxmEIg/zTbqWo4Xv47i0QNgFc1gadEOt0X5tQhSTR2SuAJZrbK82JjN8hwykRdTAFu9Vq9wYozcdMDJC0GkZ2NrkMiIxeBcXMkbNSs/xPlqheveHJz+uSZhfIsr+CvoVc7ImmPA6xx0Ddz6rys69E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFIANMLS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JGwooU02G7FvaC65FAFHZ3bXqfXzkTDBu+Df8BQtbNeCjWxV3KvtYiWiBoLR7Nf8SdecSlPBv8dCZ1/pYPXVxkvCF4inPSD3bCTBSFHe9pb33uVbuipSms4qknGK5zLk6hgsfC27N0tB12tngPvR5VvebMXqtFgzc8i02D/FwF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2QwnaV4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFIANMLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93761F000FF;
-	Wed, 30 Sep 2026 18:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2QwnaV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33FA1F000FF;
+	Wed, 30 Sep 2026 18:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791766;
-	bh=J2MNjQv0LSlt4LfFBCo48sOd750nl8J5S16plmDj0E4=;
+	s=korg; t=1790791769;
+	bh=Sxf3zx017eFqS45CyjbQMF6HY8ltFKzKoZsqNQIGKhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFIANMLStL9S+cNFjJCPXipPfnid1gk1gj4cbMaISkaOd0yGr5XTJWwljtH1IzMNf
-	 A751M24SAum2RKx119Phj6MsIOhc0R2rUX0Mj/rfr/mSAY4FyQ4jLfRJnTYh2aKgX/
-	 5/KwLYetjNGN/8nfwlCHurGTjJ0oBc9TLRpIHuh4=
+	b=b2QwnaV4db5aqWA9p5CPUgH889fJ2o8zvz3ft06Fb5I/sFpmW7rfKFDUzcSzLTEDb
+	 60AW8hWXIUPixZAxXhh4jXaJL6D60tIeb2COm4EKyu1ivZEAn34wG76Ynq3wKxtpGU
+	 7hvmhBnSxzNAwWEm7fc627tjPLlT1Z0RrkgNhbWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 373/752] ALSA: usbusx2y: fix in04_last array size mismatch with in04_buf
-Date: Wed, 30 Sep 2026 17:24:03 +0200
-Message-ID: <20260930152406.349401222@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 374/752] dm/amdgpu: fix malformed link_settings debugfs output
+Date: Wed, 30 Sep 2026 17:24:04 +0200
+Message-ID: <20260930152406.371531650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,84 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 861111a14740e12c36d363e9830f8daa734279c9 upstream.
+commit 622b4e8505aa7453a53d17fa3a288871f270fc8b upstream.
 
-The in04_last array in struct usx2ydev is declared as char[24], but
-in04_buf is allocated as sizeof(struct us428_ctls) which is 21 bytes.
-In i_usx2y_in04_int(), when ctl_snapshot_last == -2 (initialization
-path):
+[Why]
+dp_link_settings_read() passed strlen() of each format string as the size
+argument to snprintf() and then advanced rd_buf_ptr by that same fixed amount.
+The format-string length has no relation to the formatted output length, so
+snprintf() truncated each field at a NUL it wrote inside the buffer while the
+pointer was advanced past it. The result is a buffer peppered with embedded NUL
+bytes and fields that are silently cut short, so the data read back from the
+debugfs node does not reflect the actual link settings.
 
-    memcpy(usx2y->in04_last, usx2y->in04_buf, sizeof(usx2y->in04_last));
+[How]
+Use scnprintf() with the real remaining buffer size
+(rd_buf_size - (rd_buf_ptr - rd_buf)) and advance rd_buf_ptr by its return
+value, which is the number of characters actually written. This both bounds
+each write to the space left in rd_buf and keeps the output a single,
+properly terminated string. The now-unused str_len local is removed.
 
-This copies 24 bytes from a 21-byte slab allocation, reading 3 bytes
-past the end of the source object.
-
-Introduce a USX2Y_IN04_SIZE constant defined as sizeof(struct
-us428_ctls) and use it consistently for the in04_last array, the
-in04_buf allocation, the URB transfer length, and the comparison loop,
-replacing the bare 24 and 21 literals throughout.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 41db5f1931ec ("drm/amd/display: set-read link rate and lane count through debugfs")
+Assisted-by: Copilot:claude-opus-4.8
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 43b9f0f18693c7f7b75613f3aeae25fa2b4e2f76)
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260904205826.4071119-1-tristmd@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/usx2y/usbusx2y.c |    6 +++---
- sound/usb/usx2y/usbusx2y.h |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |   20 +++++---------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/sound/usb/usx2y/usbusx2y.c
-+++ b/sound/usb/usx2y/usbusx2y.c
-@@ -197,7 +197,7 @@ static void i_usx2y_in04_int(struct urb
- 			memcpy(usx2y->in04_last, usx2y->in04_buf, sizeof(usx2y->in04_last));
- 			us428ctls->ctl_snapshot_last = -1;
- 		} else {
--			for (i = 0; i < 21; i++) {
-+			for (i = 0; i < USX2Y_IN04_SIZE; i++) {
- 				if (usx2y->in04_last[i] != ((char *)usx2y->in04_buf)[i]) {
- 					if (diff < 0)
- 						diff = i;
-@@ -306,7 +306,7 @@ int usx2y_in04_init(struct usx2ydev *usx
- 		goto error;
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -185,7 +185,6 @@ static ssize_t dp_link_settings_read(str
+ 	char *rd_buf_ptr = NULL;
+ 	const uint32_t rd_buf_size = 100;
+ 	uint32_t result = 0;
+-	uint8_t str_len = 0;
+ 	int r;
  
--	usx2y->in04_buf = kmalloc(21, GFP_KERNEL);
-+	usx2y->in04_buf = kmalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
- 	if (!usx2y->in04_buf) {
- 		err = -ENOMEM;
- 		goto error;
-@@ -314,7 +314,7 @@ int usx2y_in04_init(struct usx2ydev *usx
+ 	if (*pos & 3 || size & 3)
+@@ -197,29 +196,26 @@ static ssize_t dp_link_settings_read(str
  
- 	init_waitqueue_head(&usx2y->in04_wait_queue);
- 	usb_fill_int_urb(usx2y->in04_urb, usx2y->dev, usb_rcvintpipe(usx2y->dev, 0x4),
--			 usx2y->in04_buf, 21,
-+			 usx2y->in04_buf, USX2Y_IN04_SIZE,
- 			 i_usx2y_in04_int, usx2y,
- 			 10);
- 	if (usb_urb_ep_type_check(usx2y->in04_urb)) {
---- a/sound/usb/usx2y/usbusx2y.h
-+++ b/sound/usb/usx2y/usbusx2y.h
-@@ -5,6 +5,8 @@
- #include "../midi.h"
- #include "usbus428ctldefs.h"
+ 	rd_buf_ptr = rd_buf;
  
-+#define USX2Y_IN04_SIZE	sizeof(struct us428_ctls)
-+
- #define NRURBS	        2
+-	str_len = strlen("Current:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Current:  %d  0x%x  %d  ",
+ 			link->cur_link_settings.lane_count,
+ 			link->cur_link_settings.link_rate,
+ 			link->cur_link_settings.link_spread);
+-	rd_buf_ptr += str_len;
  
- /* Default value used for nr of packs per urb.
-@@ -55,7 +57,7 @@ struct usx2ydev {
- 	int			stride;
- 	struct urb		*in04_urb;
- 	void			*in04_buf;
--	char			in04_last[24];
-+	char			in04_last[USX2Y_IN04_SIZE];
- 	unsigned int		in04_int_calls;
- 	struct snd_usx2y_urb_seq	*us04;
- 	wait_queue_head_t	in04_wait_queue;
+-	str_len = strlen("Verified:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Verified:  %d  0x%x  %d  ",
+ 			link->verified_link_cap.lane_count,
+ 			link->verified_link_cap.link_rate,
+ 			link->verified_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Reported:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Reported:  %d  0x%x  %d  ",
+ 			link->reported_link_cap.lane_count,
+ 			link->reported_link_cap.link_rate,
+ 			link->reported_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Preferred:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Preferred:  %d  0x%x  %d\n",
+ 			link->preferred_link_setting.lane_count,
+ 			link->preferred_link_setting.link_rate,
+ 			link->preferred_link_setting.link_spread);
 
 
