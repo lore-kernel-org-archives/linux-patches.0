@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BE751D50F;
-	Wed, 30 Sep 2026 18:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89AE5187CA;
+	Wed, 30 Sep 2026 18:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791356; cv=none; b=Tm7TO+PmI3QAAEsyCQx4PuVkWbja1+vZdJTKg2BVqNb5uUEp0rtmddF9mnX1+Szgwh66WGdaF7gE3bibPa7Bgik2N8mHL8uJAiIwx8rsSWZe8ig9QmZkOEi7C40x2P3WFugc8lqdLJGeMwJNGhYSBfj5wusY67X5R+HGFSg/+vk=
+	t=1790791359; cv=none; b=a9Ux56ZSLipVv1qd5b4Jr1vpQrYbdqsc1drhKDCpEMgOu02LZUORphtHHe8bAx6tF1MWMj1Vm2UQ4VWtv1sQGU86VHSmBMGmsqiezH2MUUZFVSj3Qv1J3F4RF8iRKmYxAjo9CkNCe+Ow0cNGrwvcmPA+jYn2WUd4AlskHYVNg60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791356; c=relaxed/simple;
-	bh=XUqEe+MlBVJ9PZvlo37vsNAzuN6ds7IaaP/kVU5V7TY=;
+	s=arc-20240116; t=1790791359; c=relaxed/simple;
+	bh=8FHtO/3MByBN7EWRCg7ZWzH0R/fBs4ztpx55MB8ilNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QcCbzkhxSfrXxZRjEmklk5518otJsO8hD1jNPegJQN2IBrnioNs5gvaANTLKkOM1b0nlBdl2FvNm/5oUFHd80nAzV9J6rVqKqw6Waxk2U7nxZlnF9KrHzQ5rA7p6eqrrksJTznl69cAJOi4VS9IlWy/z3dgarg7duP7h7tv6nKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWYj+1Eg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s0Y8y7Iogy5iHkossQiE/uuRrT6qb2VhLXe5hq8AJFA0FjxVY9Vo1fa90qvX8kIszlcT7LnUfQSHJ+ZVX9On6ef+zHRoZ/hSyZa0Hmvp5saM70zK7YlsfRvTddDghn+Mx60scouQqFT+Hqlg7eyWhXmizrODpXTewFjWEVAV+CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3QeWw/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWYj+1Eg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618EF1F000FF;
-	Wed, 30 Sep 2026 18:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3QeWw/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BBA1F000FF;
+	Wed, 30 Sep 2026 18:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791354;
-	bh=ErEhYoBrj8Vty1cAqxQxVD9hKUiuUs6SHVr9J8q/hBA=;
+	s=korg; t=1790791357;
+	bh=VL9GLH0cO5QmD6NPCiet+1D346q4JM6vuHxJ/IcVJio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWYj+1Eg8JUDSS4WFCtcddRVN05xeHUgoMMbZSMsT/SCUXt+0C6kfYy4pYR3Fj5fZ
-	 HJxEeu7VT9a82Efwey6jk7eQhmJGtW+7Z48ANdD/3qHEuRjEvf39kKQpTMYR6NBJLw
-	 zoVaSc8GwFTFEdU/5rUSxDjx7WepoIJKAPsuPuBQ=
+	b=f3QeWw/u+nU7a4bOEYb/OPbvT3t0aOtd1xMy4Xc2rp1+JKdTAd20QHUqwglIjH1+B
+	 Ppdone6aRfQ+SgcRfXQQ853KW9J5nnfPsSlPiuI/YWLltfMCnhf/xqXdMIgj3DWKYV
+	 Mb6gYrsXPOwBvcbKzAMtLOlonKxbh67Ege5rDIiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yury Norov <yury.norov@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/752] netfilter: nfnetlink_log: wait for rcu grace period before freeing pernet state
-Date: Wed, 30 Sep 2026 17:21:38 +0200
-Message-ID: <20260930152403.193693951@linuxfoundation.org>
+Subject: [PATCH 5.15 229/752] clk: at91: pmc: #undef field_{get,prep}() before definition
+Date: Wed, 30 Sep 2026 17:21:39 +0200
+Message-ID: <20260930152403.216782276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,85 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 33d1469b0124cc0baaea7a2032123b77a81e0940 ]
+[ Upstream commit dbfe51513aae6bace00cc390e11cb486a64a63d2 ]
 
-sashiko reports: "nfnl_log_net_exit() calls nf_log_unset(), which
-clears the logger pointer without an RCU grace period.  Immediately after,
-ops_free_list() frees the per-net state while concurrent packets might
-still be executing nf_log_packet() under rcu_read_lock()."
+Prepare for the advent of globally available common field_get() and
+field_prep() macros by undefining the symbols before defining local
+variants.  This prevents redefinition warnings from the C preprocessor
+when introducing the common macros later.
 
-Clear the pointer via .pre_exit to make sure rcu readers have completed
-before pernet storage is free'd.  The change in nf_log_syslog.c is only
-done for consistency: it doesn't use pernet data.
-
-Link: https://sashiko.dev/#/patchset/20260731151806.849724-1-pablo%40netfilter.org
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Suggested-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Acked-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_log_syslog.c |  4 ++--
- net/netfilter/nfnetlink_log.c | 13 +++++++++----
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ drivers/clk/at91/pmc.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index cae95c7963d73..b741d75dc329f 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -1011,7 +1011,7 @@ static int __net_init nf_log_syslog_net_init(struct net *net)
- 	return ret;
- }
- 
--static void __net_exit nf_log_syslog_net_exit(struct net *net)
-+static void __net_exit nf_log_syslog_net_pre_exit(struct net *net)
- {
- 	nf_log_unset(net, &nf_ip_logger);
- 	nf_log_unset(net, &nf_arp_logger);
-@@ -1022,7 +1022,7 @@ static void __net_exit nf_log_syslog_net_exit(struct net *net)
- 
- static struct pernet_operations nf_log_syslog_net_ops = {
- 	.init = nf_log_syslog_net_init,
--	.exit = nf_log_syslog_net_exit,
-+	.pre_exit = nf_log_syslog_net_pre_exit,
+diff --git a/drivers/clk/at91/pmc.h b/drivers/clk/at91/pmc.h
+index a49076c804a9a..0469ae58376ad 100644
+--- a/drivers/clk/at91/pmc.h
++++ b/drivers/clk/at91/pmc.h
+@@ -98,7 +98,9 @@ struct clk_pcr_layout {
+ 	u32 pid_mask;
  };
  
- static int __init nf_log_syslog_init(void)
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index db309c4167427..7ad0cf0cb6935 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -1126,21 +1126,26 @@ static int __net_init nfnl_log_net_init(struct net *net)
- 	return 0;
- }
++#undef field_get
+ #define field_get(_mask, _reg) (((_reg) & (_mask)) >> (ffs(_mask) - 1))
++#undef field_prep
+ #define field_prep(_mask, _val) (((_val) << (ffs(_mask) - 1)) & (_mask))
  
--static void __net_exit nfnl_log_net_exit(struct net *net)
-+static void __net_exit nfnl_log_net_pre_exit(struct net *net)
- {
--	struct nfnl_log_net *log = nfnl_log_pernet(net);
--	unsigned int i;
--
- #ifdef CONFIG_PROC_FS
- 	remove_proc_entry("nfnetlink_log", net->nf.proc_netfilter);
- #endif
- 	nf_log_unset(net, &nfulnl_logger);
-+}
-+
-+static void __net_exit nfnl_log_net_exit(struct net *net)
-+{
-+	struct nfnl_log_net *log = nfnl_log_pernet(net);
-+	unsigned int i;
-+
- 	for (i = 0; i < INSTANCE_BUCKETS; i++)
- 		WARN_ON_ONCE(!hlist_empty(&log->instance_table[i]));
- }
- 
- static struct pernet_operations nfnl_log_net_ops = {
- 	.init	= nfnl_log_net_init,
-+	.pre_exit = nfnl_log_net_pre_exit,
- 	.exit	= nfnl_log_net_exit,
- 	.id	= &nfnl_log_net_id,
- 	.size	= sizeof(struct nfnl_log_net),
+ #define ndck(a, s) (a[s - 1].id + 1)
 -- 
 2.53.0
 
