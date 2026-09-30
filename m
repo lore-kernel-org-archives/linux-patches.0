@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B849E3F5BFC;
-	Wed, 30 Sep 2026 18:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C83509F06;
+	Wed, 30 Sep 2026 18:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791328; cv=none; b=LzMYXM43leiN9EPJmp9To/wewAaJPfeXThlKrba9lRpALE2bIZsh/5z0BIaEx7TSsXjUFcAUKxEZnAO7dergKQOGuXnC+rAMX0WNNGOQ58raRoFC5Y8KPDk87azhacnIpSZ4BSl9TKU4ZgeW4+N4bO7AJeKKDAHvqyJWdBqYLe0=
+	t=1790791330; cv=none; b=BYUPg9ayJ2SHmeovHC1dXNHDhLpon3dfyQfrEJxARClyAZHzw1dWmZjZf76UACqMKEUqJLgMIS99HEqZgdQnPOfJr5WH8Qz/uacZHGpkisV6Xs8A+IT01ZTf28Ub2sTF3RooK9mDzEFF38bPagJdVADa1zqEfdd4jQMae8SpnOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791328; c=relaxed/simple;
-	bh=iS7mQWHfmikc7VNRqRUtLw2E+KfKGu1jMJriI+XkDQc=;
+	s=arc-20240116; t=1790791330; c=relaxed/simple;
+	bh=UvzkTjvlp+9UenFxRn5F38GYV8twuRSLBNBl1B9ipjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7QMEOgEBWSs3DnC974lBDA5p+PEKh1ELyFL4dVijdVwmqIxKbHsoXbi15iG9Gmd4wbR8Mw2e9pd+YYpP++6UaCU4cqyPTxSIuj3zYFMHwIXEV1SH8bOh0q6GRWq2ARg/xxZo1Gp0DPSERMyItK0rrYhduPyH64djlBHhbdxeMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eK3KPWP7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SzCq4lTMDOlCZ8CM/CBU6drP1FYPUXASZeWBORtoPDO4xUxfxD57MfqC04z6VpiVCFnYQQO31wlM786bR86Qvas+7jfuzAr0ZDJO0v/NaqGknN+idp2Eqrd/ibLSq1IPiZNgH8et4ESeqrhohbbOgIlfgZrfjYxVpiJ0QK0r3rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZD1UjQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eK3KPWP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1656C1F000FF;
-	Wed, 30 Sep 2026 18:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZD1UjQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7F21F000FF;
+	Wed, 30 Sep 2026 18:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791326;
-	bh=SkNjKOcrmg6Z+YbfrmJ5BcuG/6gIbnstBoFTQ+W48bU=;
+	s=korg; t=1790791329;
+	bh=+JXAzDEfHKcGKUXiq5h+S1BUDw88s7ptD6+9TaDjgws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eK3KPWP7aI3ikLTHqEnwVVbGbRfZ+HdhEf+PhwhtvAxqAyf5uvFOrbZoB0flDs5Gv
-	 FoU+d1A/DEig/hVPnBMZnkU4GpoPKR0UFgvlz5OTXAeZ/eFtmXU4sZt3qfwGpdU04t
-	 uiRlqe6naIT/Vzyu8qBuDbSSLUrwNJaO7OC+0+O8=
+	b=fZD1UjQ2ao0fQNStAfceaZAKsmcl9u0mMNvV2fuDy4jJiFYxcFo22j/8cr9Qs3cBF
+	 DGqwc51xnd8JgMrqpqfSVfAM3WapcX1sYyOAohqiHNElndy76mZl1BWgG9hgReDYxd
+	 gr8fdErhbLtDPB6/64vKCm36alLIJr0qNBOqf7p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/752] ppp: ppp_async: simplify tty disc_data access
-Date: Wed, 30 Sep 2026 17:22:11 +0200
-Message-ID: <20260930152403.931120353@linuxfoundation.org>
+Subject: [PATCH 5.15 262/752] tipc: fix NULL deref in tipc_named_node_up() on empty publication list
+Date: Wed, 30 Sep 2026 17:22:12 +0200
+Message-ID: <20260930152403.952319543@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,216 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Tung Nguyen <tung.quang.nguyen@est.tech>
 
-[ Upstream commit 9feb069e5ed03582fbf6272539f1caa2a17dc6d5 ]
+[ Upstream commit b3b76e9f4f2476f1135b2ba7743a821db4a0df4b ]
 
-tty_ldisc_hangup() invokes the hangup callback while holding only a read
-lock on tty->ldisc_sem, so it can run concurrently with other line
-discipline callbacks. This currently forces async PPP to maintain
-separate lifetime protection around tty->disc_data.
+User-space applications can bind a large number of service addresses to
+one or more sockets. Each binding of a local-scope service address inserts
+one entry (publication) into the TIPC name table. If the number of these
+publications exceeds TIPC_MAX_PUBL (65535), protocol service types
+(such as node state and link state) are no longer inserted into the name
+table. This causes two issues:
 
-Line discipline close is called under the write lock during hangup
-processing. Remove the hangup callback and rely on close for teardown,
-as done for SLIP by commit 23c53269f2ba ("slip: remove slip_hangup() to
-fix use-after-free in slip_receive_buf()"). This serializes teardown
-with all other line discipline operations.
+1. User-space applications subscribing to node or link up/down events
+   stop receiving notifications.
 
-disc_data_lock, refcount and completion are redundant with that
-serialization. Remove them and access tty->disc_data directly.
+2. A NULL pointer dereference can occur:
 
-This also eliminates a lockdep warning reported by syzbot. The warning
-does not indicate a real deadlock because the write side runs only in
-process context with hardirqs disabled.
+   BUG: kernel NULL pointer dereference, address: 00000000000000d0
+   ...
+   CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc4-default+ #5 PREEMPT(full)
+   ...
+   RIP: 0010:tipc_named_node_up (./include/linux/skbuff.h:2251 net/tipc/name_distr.c:195 net/tipc/name_distr.c:221)
+   ...
+   Call Trace:
+   <IRQ>
+   tipc_node_write_unlock (net/tipc/node.c:428)
+   tipc_rcv (net/tipc/node.c:934 net/tipc/node.c:2189)
+   tipc_udp_recv (net/tipc/udp_media.c:389)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/0000000000002fbad30611e25849@google.com/
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828073245.126804-1-qingfang.deng@linux.dev
+   Thread 1 (tipc_net_finalize) | Thread 2 (named_distribute)
+   -----------------------------|-----------------------------
+                                | ...
+                                | list_for_each_entry(publ, pls, binding_node) {
+                                | ...
+                                | __skb_queue_tail(list, skb);
+                                | ...
+                                | }
+                                | ...
+                                | hdr = buf_msg(skb_peek_tail(list));
+   ...                          |
+   tipc_nametbl_publish();      |
+
+   If 'tipc_nametbl_publish()' (Thread 1) fails because the number of
+   local publications reaches TIPC_MAX_PUBL, list (Thread 2) will be empty. As a
+   result, NULL is passed to 'buf_msg()', leading to a NULL pointer dereference.
+
+Fix these issues by allowing protocol service types (node state, link state,
+and topology server) to be inserted into the name table unconditionally.
+This ensures that users subscribing to these types always receive
+notifications. In addition, the maximum number of local user publications is
+reduced to (TIPC_MAX_PUBL - 1). This ensures that the maximum bulk size
+calculated in tipc_link_set_queue_limits() remains valid.
+
+Fixes: a5e7ac5ce134 ("tipc: fix regression bug where node events are not being generated")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Tested-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260827111418.164957-1-tung.quang.nguyen@est.tech
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 82 ++++---------------------------------
- 1 file changed, 7 insertions(+), 75 deletions(-)
+ net/tipc/name_table.c | 30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index ff3e71e2b0651..1774318d1a41e 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -65,8 +65,6 @@ struct asyncppp {
- 
- 	struct tasklet_struct tsk;
- 
--	refcount_t	refcnt;
--	struct completion dead;
- 	struct ppp_channel chan;	/* interface to generic ppp layer */
- 	unsigned char	obuf[OBUFSIZE];
- };
-@@ -115,38 +113,6 @@ static const struct ppp_channel_ops async_ops = {
-  * Routines implementing the PPP line discipline.
-  */
- 
--/*
-- * We have a potential race on dereferencing tty->disc_data,
-- * because the tty layer provides no locking at all - thus one
-- * cpu could be running ppp_asynctty_receive while another
-- * calls ppp_asynctty_close, which zeroes tty->disc_data and
-- * frees the memory that ppp_asynctty_receive is using.  The best
-- * way to fix this is to use a rwlock in the tty struct, but for now
-- * we use a single global rwlock for all ttys in ppp line discipline.
-- *
-- * FIXME: this is no longer true. The _close path for the ldisc is
-- * now guaranteed to be sane.
-- */
--static DEFINE_RWLOCK(disc_data_lock);
--
--static struct asyncppp *ap_get(struct tty_struct *tty)
--{
--	struct asyncppp *ap;
--
--	read_lock(&disc_data_lock);
--	ap = tty->disc_data;
--	if (ap != NULL)
--		refcount_inc(&ap->refcnt);
--	read_unlock(&disc_data_lock);
--	return ap;
--}
--
--static void ap_put(struct asyncppp *ap)
--{
--	if (refcount_dec_and_test(&ap->refcnt))
--		complete(&ap->dead);
--}
--
- /*
-  * Called when a tty is put into PPP line discipline. Called in process
-  * context.
-@@ -181,9 +147,6 @@ ppp_asynctty_open(struct tty_struct *tty)
- 	skb_queue_head_init(&ap->rqueue);
- 	tasklet_setup(&ap->tsk, ppp_async_process);
- 
--	refcount_set(&ap->refcnt, 1);
--	init_completion(&ap->dead);
--
- 	ap->chan.private = ap;
- 	ap->chan.ops = &async_ops;
- 	ap->chan.mtu = PPP_MRU;
-@@ -204,34 +167,18 @@ ppp_asynctty_open(struct tty_struct *tty)
- }
- 
- /*
-- * Called when the tty is put into another line discipline
-- * or it hangs up.  We have to wait for any cpu currently
-- * executing in any of the other ppp_asynctty_* routines to
-- * finish before we can call ppp_unregister_channel and free
-- * the asyncppp struct.  This routine must be called from
-- * process context, not interrupt or softirq context.
-+ * Called when the tty is put into another line discipline or it hangs up.
-+ * This call is serialized against other ldisc functions.
-  */
- static void
- ppp_asynctty_close(struct tty_struct *tty)
+diff --git a/net/tipc/name_table.c b/net/tipc/name_table.c
+index 3d0598afde79a..5813172af92ba 100644
+--- a/net/tipc/name_table.c
++++ b/net/tipc/name_table.c
+@@ -763,21 +763,40 @@ struct publication *tipc_nametbl_publish(struct net *net, struct tipc_uaddr *ua,
+ 					 struct tipc_socket_addr *sk, u32 key)
  {
--	struct asyncppp *ap;
-+	struct asyncppp *ap = tty->disc_data;
+ 	struct name_table *nt = tipc_name_table(net);
++	u32 max_user_pub = TIPC_MAX_PUBL - 1;
+ 	struct tipc_net *tn = tipc_net(net);
+ 	struct publication *p = NULL;
+ 	struct sk_buff *skb = NULL;
++	bool protocol_type = false;
+ 	u32 rc_dests;
  
--	write_lock_irq(&disc_data_lock);
--	ap = tty->disc_data;
--	tty->disc_data = NULL;
--	write_unlock_irq(&disc_data_lock);
- 	if (!ap)
- 		return;
++	if (ua->sr.type == TIPC_NODE_STATE || ua->sr.type == TIPC_LINK_STATE ||
++	    ua->sr.type == TIPC_TOP_SRV)
++		protocol_type = true;
++
+ 	spin_lock_bh(&tn->nametbl_lock);
++	if (protocol_type)
++		goto insert;
  
--	/*
--	 * We have now ensured that nobody can start using ap from now
--	 * on, but we have to wait for all existing users to finish.
--	 * Note that ppp_unregister_channel ensures that no calls to
--	 * our channel ops (i.e. ppp_async_send/ioctl) are in progress
--	 * by the time it returns.
--	 */
--	if (!refcount_dec_and_test(&ap->refcnt))
--		wait_for_completion(&ap->dead);
-+	tty->disc_data = NULL;
- 	tasklet_kill(&ap->tsk);
- 
- 	ppp_unregister_channel(&ap->chan);
-@@ -241,17 +188,6 @@ ppp_asynctty_close(struct tty_struct *tty)
- 	kfree(ap);
- }
- 
--/*
-- * Called on tty hangup in process context.
-- *
-- * Wait for I/O to driver to complete and unregister PPP channel.
-- * This is already done by the close routine, so just call that.
-- */
--static void ppp_asynctty_hangup(struct tty_struct *tty)
--{
--	ppp_asynctty_close(tty);
--}
--
- /*
-  * Read does nothing - no data is ever available this way.
-  * Pppd reads and writes packets via /dev/ppp instead.
-@@ -284,7 +220,7 @@ static int
- ppp_asynctty_ioctl(struct tty_struct *tty, struct file *file,
- 		   unsigned int cmd, unsigned long arg)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	int err, val;
- 	int __user *p = (int __user *)arg;
- 
-@@ -325,7 +261,6 @@ ppp_asynctty_ioctl(struct tty_struct *tty, struct file *file,
- 		err = tty_mode_ioctl(tty, file, cmd, arg);
+-	if (nt->local_publ_count >= TIPC_MAX_PUBL) {
+-		pr_warn("Bind failed, max limit %u reached\n", TIPC_MAX_PUBL);
++	/* Reserve one entry for node state service type because it has cluster
++	 * scope and it is distributed in bulk. So, the maximum number of user's
++	 * publications is (TIPC_MAX_PUBL - 1).
++	 */
++	if (nt->local_publ_count >= max_user_pub) {
++		pr_warn("Bind failed, max limit %u reached\n", max_user_pub);
+ 		goto exit;
  	}
  
--	ap_put(ap);
- 	return err;
- }
++insert:
+ 	p = tipc_nametbl_insert_publ(net, ua, sk, key);
+ 	if (p) {
+-		nt->local_publ_count++;
++		/* Not count node state, link state and topology server types
++		 * so that maximum nt->local_publ_count does not prevent
++		 * protocol service types from being inserted into the name
++		 * table.
++		 */
++		if (!protocol_type)
++			nt->local_publ_count++;
+ 		skb = tipc_named_publish(net, p);
+ 	}
+ 	rc_dests = nt->rc_dests;
+@@ -810,7 +829,10 @@ void tipc_nametbl_withdraw(struct net *net, struct tipc_uaddr *ua,
  
-@@ -341,7 +276,7 @@ static void
- ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
- 		  const char *cflags, int count)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	unsigned long flags;
- 
- 	if (!ap)
-@@ -351,21 +286,19 @@ ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
- 	spin_unlock_irqrestore(&ap->recv_lock, flags);
- 	if (!skb_queue_empty(&ap->rqueue))
- 		tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- 	tty_unthrottle(tty);
- }
- 
- static void
- ppp_asynctty_wakeup(struct tty_struct *tty)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
- 	if (!ap)
- 		return;
- 	set_bit(XMIT_WAKEUP, &ap->xmit_flags);
- 	tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- }
- 
- 
-@@ -375,7 +308,6 @@ static struct tty_ldisc_ops ppp_ldisc = {
- 	.name	= "ppp",
- 	.open	= ppp_asynctty_open,
- 	.close	= ppp_asynctty_close,
--	.hangup	= ppp_asynctty_hangup,
- 	.read	= ppp_asynctty_read,
- 	.write	= ppp_asynctty_write,
- 	.ioctl	= ppp_asynctty_ioctl,
+ 	p = tipc_nametbl_remove_publ(net, ua, sk, key);
+ 	if (p) {
+-		nt->local_publ_count--;
++		if (p->sr.type != TIPC_NODE_STATE &&
++		    p->sr.type != TIPC_LINK_STATE &&
++		    p->sr.type != TIPC_TOP_SRV)
++			nt->local_publ_count--;
+ 		skb = tipc_named_withdraw(net, p);
+ 		list_del_init(&p->binding_sock);
+ 		kfree_rcu(p, rcu);
 -- 
 2.53.0
 
