@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3CA4EDCA2;
-	Wed, 30 Sep 2026 15:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33954FC35E;
+	Wed, 30 Sep 2026 15:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782755; cv=none; b=GRk5G34jv5bS695bYomDkQQth89UDFmw3ob0F8YfHuSYEGhRB72HS9EZ42S90MKeqbbwGdLPvEPfdxRL+QrCX9udnXFVWC3MQMaceBUG/345eQBAvYKiTwXpewwl9CLBICx20+4eEbiYQXHqIfmiRkWlnOUt7SvaF3fUT3ZVGb0=
+	t=1790782758; cv=none; b=SjEwJCWoRl5ULWAOz4jOMUlAlOM6HHOXit9u8hVFEV9I0ZD/BKD06p8OVECYdfr4YfFA+LqvAPbxRmnZ3sl+bz1fqwP221VwVQno67YF2aeyaEYuzq7NDh8jtAwOIGR1uVfpHZinMunDfb+fGnFw0dEN0XdESRY9roIt5SyXxJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782755; c=relaxed/simple;
-	bh=SwoKgjmG3yGuIMiev/zeUouRP6IvUQlGPoStQ07e9DA=;
+	s=arc-20240116; t=1790782758; c=relaxed/simple;
+	bh=XsXTsm35Jmz55k0yQJ8iy+ZnSNf57scPD0bHuK68pck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGQ6KTHEWyTpOQ2geq4J2ZwHF7/4K6CV6W0yHsC2oW9XmBUKg7LFUFoaYLf4sfrEDqbbneR6GS3a/B4+2xuM34DQFVF38XrVIh1gqovjKlaN4P06c4CELyeomwaHKm3GdfnUID4BHiPdfTYItYV7dtr0T6vAABuVmeZA2mJttVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=powHj/P7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VVqEd9tjX4N80fwQQ/AKlmTu071GqbWFXUgEH7a5VpZNoiacDGAfk02ElKySCiJs6nfHrBd9ZsRPO4vyvh8ZG2tLW6dTmHFwbfAExU3Gu51ztf8Yyj5Q4+NZ6UcdIqXprU/qcQt1SQZWHcTjVf0f80oSCxlgCRxDu8XNqTMef/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bypWti9r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="powHj/P7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC371F00898;
-	Wed, 30 Sep 2026 15:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bypWti9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958AB1F00893;
+	Wed, 30 Sep 2026 15:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782749;
-	bh=arqTP0iogtEYpufnZ83Gj0NVW//KOgqjSqahXeZn8hM=;
+	s=korg; t=1790782752;
+	bh=6j7hrWPx2MvjQizlQp10/8alb/8ILKmN+4AwmPZauUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=powHj/P7HAy8+A/7niSV98gniKzmqNZpB5dlObebETHBcl9WlB5z5hMGcRdZWNLNH
-	 FZ/8tFmE0/+5m4CzEy4DwxU6nGwlFxrE/gCuh6tbHkQxlhpo4WbsiopzMJUAs3jeFn
-	 r36bSTCWPYYKNXa2fxAMJgTwQeqKRE4+6qRLkXFc=
+	b=bypWti9rYJ4vYIBSk0VD9YzMQxbSXFFrNGyC3932ryGKB4OlEYjLagSZkVIxZ6k0O
+	 cKnzr7szORX4mp5L4y2UR1U24sf1CDqiZgZHjNfys8CkTOwDZ+FStdLGh4HoNXCtw4
+	 GakJLUulSOEQHyWne1HnB3dyVU5+9fcFzVYFSKNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/595] ALSA: usb-audio: caiaq: validate EP1 reply lengths
-Date: Wed, 30 Sep 2026 17:20:47 +0200
-Message-ID: <20260930152351.046754602@linuxfoundation.org>
+Subject: [PATCH 5.10 155/595] wifi: ralink: RT2X00: init EEPROM properly
+Date: Wed, 30 Sep 2026 17:20:48 +0200
+Message-ID: <20260930152351.068218250@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,110 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit aba30af07d4fe499b50209801eba9da8a815522f ]
+[ Upstream commit 0a2581cbae9e442835f68d22044157db61cdf54d ]
 
-usb_ep1_command_reply_dispatch() uses buf[0] as a command byte and then
-reads command-specific fixed items from the same URB buffer. Several
-paths use buf + 1, buf[1], buf[2], or buf + 3 without first proving that
-urb->actual_length contains those bytes.
+I have an hostapd setup with a
+01:00.0 Network controller: Ralink corp. RT2790 Wireless 802.11n 1T/2R PCIe
 
-Add per-command length checks, use a payload length derived from the
-bytes after the command byte for the control-state copy, and reject short
-analog input payloads before the input helper reads fixed offsets from
-the EP1 reply.
+The setup work fine on 6.18.26-gentoo
+It breaks on 6.18.33-gentoo (and still broken on 6.18.37)
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260705084601.56400-1-pengpeng@iscas.ac.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+I found an hint in dmesg:
+On 6.18.26-gentoo I see:
+May 31 15:48:45 trash01 kernel: ieee80211 phy0: rt2x00_set_rf: Info - RF chipset 0003 detected
+On 6.18.33-gentoo I see:
+May 31 15:22:57 trash01 kernel: ieee80211 phy0: rt2x00_set_rf: Info - RF chipset 0006 detected
+
+The RF chipset seems badly detected.
+
+The problem was the EEPROM which was badly initialized.
+Probably the origin was in some PCI change but unfortunately I couldn't play
+to bisect/reboot often the board with this card to do it.
+
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260703134932.3786771-1-clabbe@baylibre.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c | 17 ++++++++++++++---
- sound/usb/caiaq/input.c  |  6 ++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2400pci.c | 2 +-
+ drivers/net/wireless/ralink/rt2x00/rt2500pci.c | 2 +-
+ drivers/net/wireless/ralink/rt2x00/rt2800pci.c | 2 +-
+ drivers/net/wireless/ralink/rt2x00/rt61pci.c   | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
-index ba1029f8eeb7e..8594cefdeba2c 100644
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -148,14 +148,22 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 	struct device *dev = &urb->dev->dev;
- 	struct snd_usb_caiaqdev *cdev = urb->context;
- 	unsigned char *buf = urb->transfer_buffer;
-+	unsigned int payload_len;
-+	unsigned int copy_len;
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
+index 1520785c3ddbb..b3e3eac9dd266 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
+@@ -1429,7 +1429,7 @@ static irqreturn_t rt2400pci_interrupt(int irq, void *dev_instance)
+  */
+ static int rt2400pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 	u16 word;
+ 	u8 *mac;
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
+index 1be535c74917c..758be3c1a2599 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
+@@ -1555,7 +1555,7 @@ static irqreturn_t rt2500pci_interrupt(int irq, void *dev_instance)
+  */
+ static int rt2500pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 	u16 word;
+ 	u8 *mac;
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2800pci.c b/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
+index 9a33baaa61843..d5c930c1d62e9 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
+@@ -108,7 +108,7 @@ static void rt2800pci_eepromregister_write(struct eeprom_93cx6 *eeprom)
  
- 	if (urb->status || !cdev) {
- 		dev_warn(dev, "received EP1 urb->status = %i\n", urb->status);
- 		return;
- 	}
-+	if (urb->actual_length < 1)
-+		return;
-+
-+	payload_len = urb->actual_length - 1;
+ static int rt2800pci_read_eeprom_pci(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
  
- 	switch(buf[0]) {
- 	case EP1_CMD_GET_DEVICE_INFO:
-+		if (payload_len < sizeof(struct caiaq_device_spec))
-+			break;
- 	 	memcpy(&cdev->spec, buf+1, sizeof(struct caiaq_device_spec));
- 		cdev->spec.fw_version = le16_to_cpu(cdev->spec.fw_version);
- 		dev_dbg(dev, "device spec (firmware %d): audio: %d in, %d out, "
-@@ -171,18 +179,21 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 		wake_up(&cdev->ep1_wait_queue);
- 		break;
- 	case EP1_CMD_AUDIO_PARAMS:
-+		if (payload_len < 1)
-+			break;
- 		cdev->audio_parm_answer = buf[1];
- 		wake_up(&cdev->ep1_wait_queue);
- 		break;
- 	case EP1_CMD_MIDI_READ:
-+		if (urb->actual_length < 3 || urb->actual_length - 3 < buf[2])
-+			break;
- 		snd_usb_caiaq_midi_handle_input(cdev, buf[1], buf + 3, buf[2]);
- 		break;
- 	case EP1_CMD_READ_IO:
- 		if (cdev->chip.usb_id ==
- 			USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_AUDIO8DJ)) {
--			if (urb->actual_length > sizeof(cdev->control_state))
--				urb->actual_length = sizeof(cdev->control_state);
--			memcpy(cdev->control_state, buf + 1, urb->actual_length);
-+			copy_len = min_t(unsigned int, payload_len, sizeof(cdev->control_state));
-+			memcpy(cdev->control_state, buf + 1, copy_len);
- 			wake_up(&cdev->ep1_wait_queue);
- 			break;
- 		}
-diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
-index 2db4d1332df1c..c12eeb9710002 100644
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -203,6 +203,8 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
- 
- 	switch (cdev->chip.usb_id) {
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL2):
-+		if (len < 6)
-+			return;
- 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 2);
- 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 0);
- 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 1);
-@@ -210,11 +212,15 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL3):
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER):
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER2):
-+		if (len < 6)
-+			return;
- 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 0);
- 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 1);
- 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 2);
- 		break;
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_TRAKTORKONTROLX1):
-+		if (len < 16)
-+			return;
- 		snd_caiaq_input_report_abs(cdev, ABS_HAT0X, buf, 4);
- 		snd_caiaq_input_report_abs(cdev, ABS_HAT0Y, buf, 2);
- 		snd_caiaq_input_report_abs(cdev, ABS_HAT1X, buf, 6);
+ 	reg = rt2x00mmio_register_read(rt2x00dev, E2PROM_CSR);
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt61pci.c b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
+index d04761c32a5d2..102cee7cc8695 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt61pci.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
+@@ -2298,7 +2298,7 @@ static irqreturn_t rt61pci_interrupt(int irq, void *dev_instance)
+  */
+ static int rt61pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	u32 reg;
+ 	u16 word;
+ 	u8 *mac;
 -- 
 2.53.0
 
