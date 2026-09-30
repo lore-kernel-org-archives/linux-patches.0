@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310C643E074;
-	Wed, 30 Sep 2026 19:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F9B3ED13E;
+	Wed, 30 Sep 2026 19:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796945; cv=none; b=krc6cKs7M434Q553VF02/qoUQVFM4zOnDCXomQDQoHAX4eSdl1cLytz1KFNIyBks9DK8HvORz0fY/32W/FD+8pGOVB8PNZfrtuAnf+UWxeHAfXhJ4IM+DkJxjRNjOkfIN4CeWnEK9Dz5ZlpYbUgTJjEjYrxx2jmf9n2lZ5wJzZI=
+	t=1790796948; cv=none; b=gMjrNd4rvXqPgziioNGRu/n/poqjDGdN1cJQmpnHrjRkw5GdQxor81qkeGAcRqx6l7tgBFUrdabT9POLcxJLXZOHkiMg59VgW141sNAo2aGJhKXTJjdXVizu9Pol8r74gfa95LHMFhDedhdN5uIRkgiwNdgCww//2s0Pf1xaaiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796945; c=relaxed/simple;
-	bh=KlleN7WziFdhLf3bSYZYUkpjAXVFG9psL19QOKM/1t0=;
+	s=arc-20240116; t=1790796948; c=relaxed/simple;
+	bh=FsvJXlaEKHIKmyPxp50hw6krxzuMrGEyp2r48OOFBgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lb8Ko+1sfkQbAiTN0qJXY8MvpHLceY33yx3botUQ0XutRdy9VxjKAZRTzryw/xx5fY4J+8/Hurn3MZ+dmYA58CUSrVFpvOgUjkXzth6iacFWCy6JoAv+BK7jsQTJELzBHdKGmRXCAIZnB4ag46Nv1bkOgfYCkxPQSPZUUACzOIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKzRq7Dd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRfOfFkpalewPNNwaPqXKZJUZ5bfq+szavfSupaWdlLpBLjd14ufu/F2Gq2eOuhJlfj8wJtPxiTecIr5A9gof2I+5NLl9siofY2Z7Lyxwi4HPZoingzCxpxGZil8Ok+IIDYUsMvS3wxI/XTl/Je++P1++vd+HptTITjENT+xax0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtbm6PKK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKzRq7Dd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775061F00898;
-	Wed, 30 Sep 2026 19:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtbm6PKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 277581F000FF;
+	Wed, 30 Sep 2026 19:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796944;
-	bh=Nc/6TxZaHC+bT4zZMrT5nxHkZfeBrloCSOR2CNaSF7w=;
+	s=korg; t=1790796946;
+	bh=mziziFIwdMFfgLaoRN1hxZJVjKoxvDFQkmjAezE8l5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XKzRq7Ddh7iF94nLvkGDe4K1wdSFSDIxxvbD4yeyNvEtE5P6WFdF3hT1ML6gQqweR
-	 9LyfQXt8EZXbeKrZ1+Zk0N3AViWR6kYiav4Ys1TEiX4P7SVPkCWy22AjKrUv4WRGuD
-	 KELMlQaeUIFGOr81UZhrbL6QsvN5gv3pHDSMi5N4=
+	b=rtbm6PKKVXjClMiI0LjVzAHIm9ummRJJxpJ1eZ7j+Nfup5EDQbnAeHvPA1UYSxokh
+	 ZmUIwdfiFgr1IJs6XIObRasw029KuymHaLVDZfCh14ioaUvkjmRn+i9Px5q9Hi3XVY
+	 pugX4Yd7Opsp5v6DumWDsdIY3iSUm4ONbWK1HbfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1090/1193] af_unix: Drop all SCM attributes for SOCKMAP.
-Date: Wed, 30 Sep 2026 17:29:34 +0200
-Message-ID: <20260930152458.452579183@linuxfoundation.org>
+	Mikael Etienne <mikael1022bzh@gmail.com>,
+	Arthur Husband <artmoty@gmail.com>,
+	Alvin Lim <alvinwylim@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	John Smith <imjohnsmith4000@gmail.com>,
+	Lennert Buytenhek <kernel@wantstofly.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Roland Waltersson <roland.waltersson@netinsight.net>
+Subject: [PATCH 6.6 1091/1193] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
+Date: Wed, 30 Sep 2026 17:29:35 +0200
+Message-ID: <20260930152458.473421618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,192 +58,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 965dc93481d1b80d341bdd16c27b16fe197175ee ]
+commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
 
-SOCKMAP can hide inflight fd from AF_UNIX GC.
+Multiple users report data corruption during 64-bit DMA transfers on
+systems with AMD NBIO 7.7 and 7.11 controllers.
 
-When a socket in SOCKMAP receives skb with inflight fd,
-sk_psock_verdict_data_ready() looks up the mapped socket and
-enqueue skb to its psock->ingress_skb.
+This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
+Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
+corrupted.
 
-Since neither the old nor the new GC can inspect the psock
-queue, the hidden skb leaks the inflight sockets.  Note that
-this cannot be detected via kmemleak because inflight sockets
-are linked to a global list.
+Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
 
-In addition, SOCKMAP redirect breaks the Tarjan-based GC's
-assumption that unix_edge.successor is always alive, which
-is no longer true once skb is redirected, resulting in
-use-after-free below. [0]
-
-Moreover, SOCKMAP does not call scm_stat_del() properly,
-so unix_show_fdinfo() could report an incorrect fd count.
-
-sk_msg_recvmsg() does not support any SCM attributes in the
-first place.
-
-Let's drop all SCM attributes before passing skb to the
-SOCKMAP layer.
-
-[0]:
-BUG: KASAN: slab-use-after-free in unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
-Read of size 8 at addr ffff888125362670 by task kworker/56:1/496
-
-CPU: 56 UID: 0 PID: 496 Comm: kworker/56:1 Not tainted 7.0.0-rc7-00263-gb9d8b856689d #3 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: events sk_psock_backlog
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:122)
- print_report (mm/kasan/report.c:379)
- kasan_report (mm/kasan/report.c:597)
- unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
- unix_destroy_fpl (net/unix/garbage.c:317)
- unix_destruct_scm (./include/net/scm.h:80 ./include/net/scm.h:86 net/unix/af_unix.c:1976)
- sk_psock_backlog (./include/linux/skbuff.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
- </TASK>
-
-Allocated by task 955:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- __kasan_slab_alloc (mm/kasan/common.c:369)
- kmem_cache_alloc_noprof (mm/slub.c:4539)
- sk_prot_alloc (net/core/sock.c:2240)
- sk_alloc (net/core/sock.c:2301)
- unix_create1 (net/unix/af_unix.c:1099)
- unix_create (net/unix/af_unix.c:1169)
- __sock_create (net/socket.c:1606)
- __sys_socketpair (net/socket.c:1811)
- __x64_sys_socketpair (net/socket.c:1863 net/socket.c:1860 net/socket.c:1860)
- do_syscall_64 (arch/x86/entry/syscall_64.c:?)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Freed by task 496:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:587)
- __kasan_slab_free (mm/kasan/common.c:287)
- kmem_cache_free (mm/slub.c:6165)
- __sk_destruct (net/core/sock.c:2282 net/core/sock.c:2384)
- sk_psock_destroy (./include/net/sock.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
-
-Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
-Fixes: 77462de14a43 ("af_unix: Add read_sock for stream socket types")
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260415184830.3988432-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Lee: Drop skb_orphan() from unix_destruct_scm() and omit the
-      unix_stream_read_skb() / unix_dgram_read_skb() hunks as
-      69bbe2bcbe8c and d92fbaccd09a are not present]
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
+Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
+Reported-by: Arthur Husband <artmoty@gmail.com>
+Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
+Reported-by: Alvin Lim <alvinwylim@gmail.com>
+Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: commit log, s/IOVA/DMA/ in comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Cc: David Laight <david.laight.linux@gmail.com>
+Cc: John Smith <imjohnsmith4000@gmail.com>
+Cc: Lennert Buytenhek <kernel@wantstofly.org>
+Cc: Niklas Cassel <cassel@kernel.org>
+Cc: Roland Waltersson <roland.waltersson@netinsight.net>
+Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c | 42 ++++++++++++++++++++++++++++++++----------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 8bd78cad69e7c..e1f798af1a8af 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1854,16 +1854,19 @@ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
- 
- static void unix_destruct_scm(struct sk_buff *skb)
- {
--	struct scm_cookie scm;
-+	struct scm_cookie scm = {};
-+
-+	swap(scm.pid, UNIXCB(skb).pid);
- 
--	memset(&scm, 0, sizeof(scm));
--	scm.pid  = UNIXCB(skb).pid;
- 	if (UNIXCB(skb).fp)
- 		unix_detach_fds(&scm, skb);
- 
--	/* Alas, it calls VFS */
--	/* So fscking what? fput() had been SMP-safe since the last Summer */
- 	scm_destroy(&scm);
-+}
-+
-+static void unix_wfree(struct sk_buff *skb)
-+{
-+	unix_destruct_scm(skb);
- 	sock_wfree(skb);
- }
- 
-@@ -1879,7 +1882,7 @@ static int unix_scm_to_skb(struct scm_cookie *scm, struct sk_buff *skb, bool sen
- 	if (scm->fp && send_fds)
- 		err = unix_attach_fds(scm, skb);
- 
--	skb->destructor = unix_destruct_scm;
-+	skb->destructor = unix_wfree;
- 	return err;
- }
- 
-@@ -1940,6 +1943,13 @@ static void scm_stat_del(struct sock *sk, struct sk_buff *skb)
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -846,6 +846,105 @@ static void quirk_clear_strap_no_soft_re
  	}
  }
- 
-+static void unix_orphan_scm(struct sock *sk, struct sk_buff *skb)
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
++
++/*
++ * Enhanced atomic operations can cause corruption with 64-bit DMA
++ * on these devices.
++ */
++#define RX_ENH_ATOMIC_EN		BIT(8)
++
++static const u32 nbio_7_7_pcie_smn_addrs[] = {
++	0x111401d0,
++	0x111411d0,
++	0x111421d0,
++	0x111431d0,
++	0x111441d0,
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x114401d0,
++};
++
++static const u32 nbio_7_11_pcie_smn_addrs[] = {
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x113411d0,
++	0x113421d0,
++	0x113431d0,
++	0x113441d0,
++	0x113451d0,
++};
++
++static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
++					   const u32 *smn_addrs,
++					   size_t nr_smn_addrs)
 +{
-+	scm_stat_del(sk, skb);
-+	unix_destruct_scm(skb);
-+	skb->destructor = sock_wfree;
++	bool changed = false;
++	size_t i;
++	u32 data;
++	int ret;
++
++	for (i = 0; i < nr_smn_addrs; i++) {
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (!(data & RX_ENH_ATOMIC_EN))
++			continue;
++		data = data & ~RX_ENH_ATOMIC_EN;
++		ret = amd_smn_write(0, smn_addrs[i], data);
++		if (ret)
++			continue;
++		if (changed)
++			continue;
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (data & RX_ENH_ATOMIC_EN)
++			continue;
++		changed = true;
++	}
++
++	if (changed)
++		pci_info(host_bridge, "enhanced atomics disabled\n");
 +}
 +
++static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
++}
++
++static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
++}
++
++/* Phoenix, Hawk Point (NBIO 7.7) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++
++/* Strix, Krackan, Strix Halo (NBIO 7.11) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++
+ #endif
+ 
  /*
-  *	Send AF_UNIX data.
-  */
-@@ -2516,10 +2526,16 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 	int err;
- 
- 	mutex_lock(&u->iolock);
-+
- 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
--	mutex_unlock(&u->iolock);
--	if (!skb)
-+	if (!skb) {
-+		mutex_unlock(&u->iolock);
- 		return err;
-+	}
-+
-+	unix_orphan_scm(sk, skb);
-+
-+	mutex_unlock(&u->iolock);
- 
- 	return recv_actor(sk, skb);
- }
-@@ -2673,10 +2689,16 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 		return -ENOTCONN;
- 
- 	mutex_lock(&u->iolock);
-+
- 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
--	mutex_unlock(&u->iolock);
--	if (!skb)
-+	if (!skb) {
-+		mutex_unlock(&u->iolock);
- 		return err;
-+	}
-+
-+	unix_orphan_scm(sk, skb);
-+
-+	mutex_unlock(&u->iolock);
- 
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 	if (unlikely(skb == READ_ONCE(u->oob_skb))) {
--- 
-2.53.0
-
 
 
