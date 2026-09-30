@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B277836A37E;
-	Wed, 30 Sep 2026 17:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8809A4F7CCF;
+	Wed, 30 Sep 2026 17:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788986; cv=none; b=ibYJP34T6tkoZnSupIjvJSpj/1qwY95Z0bRUe90rAvVj7+bRijS/PNLBv0hIE7ecWLtJqwLjFF7SZr6cFnfjm5wlKVpYl7uWP8dkv4GwudzpnNaygf1lCBUJeGNhhKibSbZ8C7kVOcJWRLGT3az6Dk/MF9OQ8tC/ILbOtMQ4rZc=
+	t=1790788989; cv=none; b=qjqUZBk2MwE/PnwBq1G7bpf06Wzktd6N4blOkxjphepval5k+PCHH7SnVwb7g2vmP9GbJAO0gy2PkaTPzcEkEmVhFKMwYNkcVBDnVtdq7rA/tuVyRUCIbjADWbENDMGQ6uqxRJiaoel8WJphKNGLDAAHpWBSEiE0Hu+86ZAv540=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788986; c=relaxed/simple;
-	bh=PYVuaLswfPhlu8L94BzfGSs0Bfs1MTlAJUEuGn9QGKs=;
+	s=arc-20240116; t=1790788989; c=relaxed/simple;
+	bh=iUd9Ujiypy4n89uc9nQ0Wl+a1WCiKZTe/Ixlq7jmwkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imrcdtaM37ck5T7q87mDv0ZvWctJfYzPl3jT9+Y9+F7hbl9cm7mMD1JZO2EWAOCITuglCuSE6fHfu+/Kqo1aEV1IWcz1FEWdUTcsZYm+JZ18thjZMe6YwvGV1lgmmRsB9BpNectjUc6NVCGsBwffeAGCTKDHfvd4ORtlv36F47M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7UszbVf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PpvUvr5jBo8Lz177owQAVZyWKHSkgVhTqAoH8sHc8MF51yCxPEfUEMNTN6RwhYFMKkmE/bA2QNbpgmlf+uz8syr4aV36+rcASw85Cn82SON5W8A1VXveY3QrhdKrouHU+kLnkBgPxSe7q53xRoO1e1rtQdyOZuvzfEiuRHNkC+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oh56qS8b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7UszbVf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1481F000FF;
-	Wed, 30 Sep 2026 17:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oh56qS8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35811F000FF;
+	Wed, 30 Sep 2026 17:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788985;
-	bh=ZldlARLL6uSo5i2fcm99FwYMzQgPXPD7gLKDIABwyHw=;
+	s=korg; t=1790788988;
+	bh=6AlqalGIChc7Vlb6x02IkZY1MKukgdbs4xmH3WyoXX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V7UszbVfNrn25SGnRloxkZv68tQb4O3W3oh88M8/yyq+yqXxxaEU6eXnIaPWvx22h
-	 lrdgbwSjZTz28bzFzVZKsgF3Jd0+HoZI/LcvctmYI50Mf4zEC2kgMIyftMYzL7xPpD
-	 /Ttn9GpdazIydnSNel4lZG+s94o2iJJK66O3xAtQ=
+	b=Oh56qS8bAtU8okUtUhWdM3LM98f0rgf9f1srK54qFA3XMvFxhgXwVqSdF9lb6iGo/
+	 AyXtrFlI3/+zVYjWmYdpHiJxsbAmlmXGzOZSeY4YvW+ybTz2Mz5kbjKWXU2XQSStZS
+	 cjrW/3kwcaUh6ZEhQivDM6Os8T/kDxGTQ08rXWhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/877] HID: amd_sfh: Validate PCI BAR size before mapping
-Date: Wed, 30 Sep 2026 17:20:30 +0200
-Message-ID: <20260930152421.571158062@linuxfoundation.org>
+Subject: [PATCH 6.12 320/877] HID: bpf: fix __hid_bpf_hw_check_params report length
+Date: Wed, 30 Sep 2026 17:20:31 +0200
+Message-ID: <20260930152421.591892255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,96 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 65bcc5f89704efe5b9d69d4ea2c1002d90c31382 ]
+[ Upstream commit c4afa4862b878d56e0cc1021298794ac1b45bc49 ]
 
-The amd_sfh driver maps PCI BAR 2 using pcim_iomap_regions() and
-subsequently accesses MMIO registers at offsets up to 0x10958 (e.g.,
-AMD_P2C_MSG3 at 0x1068C). However, the driver never validates that the BAR
-size is large enough to cover these accesses. If the driver is bound to a
-device with a smaller BAR 2, this leads to an out-of-bounds memory access
-and a page fault during the probe function.
+Turns out that USB, I2C and other transport drivers (except uhid which
+just passes the data) still need to have the report ID in the first
+byte.
 
-For example, a page fault can occur when reading from privdata->mmio +
-AMD_P2C_MSG3 in mp2_select_ops():
+Because they expect the first byte to be the report ID or 0, when the
+report ID is 0, they strip that first byte before forwarding to the
+device. This means that the transport layer forwards a buffer of size
+N-1 to the device, which gets rejected.
 
-  BUG: unable to handle page fault for address: ffffc9000390368c
-  PGD 100000067 P4D 100000067 PUD 1012c1067 PMD 105b64067 PTE 0
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:readl arch/x86/include/asm/io.h:59 [inline]
-  RIP: 0010:mp2_select_ops drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:282
-  [inline]
-  RIP: 0010:amd_mp2_pci_probe+0x337/0x5f0
-  drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:487
-  Call Trace:
-   <TASK>
-   local_pci_probe drivers/pci/pci-driver.c:332 [inline]
-   pci_call_probe drivers/pci/pci-driver.c:394 [inline]
-   __pci_device_probe drivers/pci/pci-driver.c:455 [inline]
-   pci_device_probe+0x431/0xc90 drivers/pci/pci-driver.c:489
-
-Fix this by verifying that the length of BAR 2 is at least 128KB before
-attempting to map it. Since the maximum accessed offset is 0x10958, and PCI
-BAR sizes are powers of 2, any legitimate hardware will have a BAR size of
-at least 128KB.
-
-Fixes: 4f567b9f8141 ("SFH: PCIe driver to add support of AMD sensor fusion hub")
-Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
-Link: https://syzkaller.appspot.com/ai_job?id=3bc1c45c-548f-4ab5-8243-d2c8ec321d6c
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 5599f8019661 ("HID: bpf: export hid_hw_output_report as a BPF kfunc")
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_common.h |  4 ++++
- drivers/hid/amd-sfh-hid/amd_sfh_pcie.c   | 10 ++++++++++
- 2 files changed, 14 insertions(+)
+ drivers/hid/bpf/hid_bpf_dispatch.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_common.h b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
-index 00308d8998d4d..f05078f93b138 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_common.h
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
-@@ -12,11 +12,15 @@
+diff --git a/drivers/hid/bpf/hid_bpf_dispatch.c b/drivers/hid/bpf/hid_bpf_dispatch.c
+index 1de6a7e0af7b4..a421fecce9dd1 100644
+--- a/drivers/hid/bpf/hid_bpf_dispatch.c
++++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+@@ -359,7 +359,7 @@ hid_bpf_release_context(struct hid_bpf_ctx *ctx)
  
- #include <linux/mutex.h>
- #include <linux/pci.h>
-+#include <linux/sizes.h>
- #include "amd_sfh_hid.h"
+ static int
+ __hid_bpf_hw_check_params(struct hid_bpf_ctx *ctx, __u8 *buf, size_t *buf__sz,
+-			  enum hid_report_type rtype)
++			  enum hid_report_type rtype, bool hw_request)
+ {
+ 	struct hid_report_enum *report_enum;
+ 	struct hid_report *report;
+@@ -391,6 +391,10 @@ __hid_bpf_hw_check_params(struct hid_bpf_ctx *ctx, __u8 *buf, size_t *buf__sz,
  
- #define PCI_DEVICE_ID_AMD_MP2		0x15E4
- #define PCI_DEVICE_ID_AMD_MP2_1_1	0x164A
+ 	report_len = hid_report_len(report);
  
-+/* The BAR 2 size must cover the highest register offset (0x10958) */
-+#define AMD_SFH_MIN_BAR_SIZE		SZ_128K
++	/* unnumbered reports need to have a report ID reserved in the first byte */
++	if (hw_request && report_enum->numbered == 0)
++		report_len += 1;
 +
- #define AMD_C2P_MSG(regno) (0x10500 + ((regno) * 4))
- #define AMD_P2C_MSG(regno) (0x10680 + ((regno) * 4))
+ 	if (*buf__sz > report_len)
+ 		*buf__sz = report_len;
  
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-index 33ba9af1a249f..b29f8ea39c4c1 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-@@ -390,6 +390,16 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
- 	if (rc)
- 		return rc;
+@@ -424,7 +428,7 @@ hid_bpf_hw_request(struct hid_bpf_ctx *ctx, __u8 *buf, size_t buf__sz,
+ 		return -EDEADLOCK;
  
-+	if (!(pci_resource_flags(pdev, 2) & IORESOURCE_MEM)) {
-+		dev_err(&pdev->dev, "BAR 2 is not IORESOURCE_MEM\n");
-+		return -ENODEV;
-+	}
-+
-+	if (pci_resource_len(pdev, 2) < AMD_SFH_MIN_BAR_SIZE) {
-+		dev_err(&pdev->dev, "BAR 2 is too small\n");
-+		return -EINVAL;
-+	}
-+
- 	rc = pcim_iomap_regions(pdev, BIT(2), DRIVER_NAME);
- 	if (rc)
- 		return rc;
+ 	/* check arguments */
+-	ret = __hid_bpf_hw_check_params(ctx, buf, &size, rtype);
++	ret = __hid_bpf_hw_check_params(ctx, buf, &size, rtype, true);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -487,7 +491,7 @@ hid_bpf_hw_output_report(struct hid_bpf_ctx *ctx, __u8 *buf, size_t buf__sz)
+ 		return -EDEADLOCK;
+ 
+ 	/* check arguments */
+-	ret = __hid_bpf_hw_check_params(ctx, buf, &size, HID_OUTPUT_REPORT);
++	ret = __hid_bpf_hw_check_params(ctx, buf, &size, HID_OUTPUT_REPORT, true);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -515,7 +519,7 @@ __hid_bpf_input_report(struct hid_bpf_ctx *ctx, enum hid_report_type type, u8 *b
+ 		return -EDEADLOCK;
+ 
+ 	/* check arguments */
+-	ret = __hid_bpf_hw_check_params(ctx, buf, &size, type);
++	ret = __hid_bpf_hw_check_params(ctx, buf, &size, type, false);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
