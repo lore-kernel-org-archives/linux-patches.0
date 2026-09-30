@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B9F3D25B2;
-	Wed, 30 Sep 2026 19:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7921F3D3326;
+	Wed, 30 Sep 2026 19:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795886; cv=none; b=X04A5nghw9k8Vb/vJ1Rvpi5VVxbBb9+od07taoh5lpyUhl+BbD3HkVLMGU79BtrkdCHU9Dx1M0g2vUWYaLMTR4jP/iMHkQ1CNj3m3/KDvq6IfsAYyOwBah0F2wV3LWqsxIeGLWrHCd+7uARzbkGQY5EfXKYmu+0g/6kg75C8bkY=
+	t=1790795888; cv=none; b=WNYNxM8r8YMZGguKoh/DHuAF8tg5f8xeq/CbHwgvx/v4mEFyOTIeP6Pkvv/FMFsh8fywmEtrJ12CkgE5/LTsIo3L5rIdI7AUjfDpq90BFHy/Y9sPMoODSKopR4FLCsYCN7WCT1dBM6pFjAYnSrnJX+TDio1OM7dXD+R0+B3l0mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795886; c=relaxed/simple;
-	bh=3kapJt/3w2g15O+R+Pl7j5x9I1TrI9u+SlO5cd1UEHQ=;
+	s=arc-20240116; t=1790795888; c=relaxed/simple;
+	bh=vmsHO9Ww55SuXd9snC10Wtxzh2GveJ3n5s7knpKjOQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLTis4AziKVOjYHl17HTAfbbtUWe77KvBhkSiFeUJROlJyHgCqrjlnxZ/P020DByJSGGH6XQfa3w2OciOmehu7ZUyGgDvVQvjNFyqK8QdvRuPAV/NykNWln1+f1PBD7GkizzkFJVPq62OsrEyCbVbxUTskIPV1totkHzgHoVB8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQnXc4/e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lYs5TWl/S8+uCiwoBe0vGh1k87mCRAfdXbYT/gv/6jlQxQqTQmrLZnaXHEDmVJaxocLZvziVpErtCUNZ+Y79KxB45at9oBNTCgp0cog0yTcnSV18UC2n0Q9YhTW4kH2oUQj+CiDXZ3Eh9tYtO7LNDogSKNQmN6TI9+c29bJzcPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0Bn8uUb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQnXc4/e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE871F000FF;
-	Wed, 30 Sep 2026 19:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0Bn8uUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70881F000FF;
+	Wed, 30 Sep 2026 19:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795884;
-	bh=Dk/CdR6H8TZf78yKkLgZuJlaKwIr1cqgCpYiQflLfik=;
+	s=korg; t=1790795887;
+	bh=/F/UCp1IfdaTgUelF+8oSIdWZwq6Jr1T/a2Th7yIDkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQnXc4/e7i5h2RA1LSomiYbl8MgtGmaVdCi4yVy3TzZK4kufA8BQBvVumTb42G2hb
-	 ksUJIfQzAU25jDdykXkn4+qI/DUcHqJhiOr0K5zub5Yp5ckEOg5Cw8eS9/biF9OW6u
-	 E9eJKt6vYV91v5YnsFaEJd3PHsmKgfBUCvPSzy5U=
+	b=m0Bn8uUbusYpuDjNdeS40qeN40/MkiZlyzgkZRYUs3dhszvPnRuJtQcro/AyEnKTU
+	 2/idOf988akrB8+5m15uUhth11iYC9o0QwioF4ATlo9ep3LqTN2/g2tMAHmifVaCF2
+	 5ZAC7oH94g9uO1L239U+6dgIpO4AdoyAXdT8UY2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0719/1193] ipv6: Honor oif when choosing nexthop for locally generated traffic
-Date: Wed, 30 Sep 2026 17:23:23 +0200
-Message-ID: <20260930152450.223551968@linuxfoundation.org>
+Subject: [PATCH 6.6 0720/1193] xfrm: avoid RCU warnings around the per-netns netlink socket
+Date: Wed, 30 Sep 2026 17:23:24 +0200
+Message-ID: <20260930152450.245159962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,117 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
+[ Upstream commit d87f8bc47fbf012a7f115e311d0603d97e47c34c ]
 
-Commit 741a11d9e410 ("net: ipv6: Add RT6_LOOKUP_F_IFACE flag if oif is
-set") made the kernel honor the oif parameter when specified as part of
-output route lookup:
+net->xfrm.nlsk is used in 2 types of contexts:
+ - fully under RCU, with rcu_read_lock + rcu_dereference and a NULL check
+ - in the netlink handlers, with requests coming from a userspace socket
 
- # ip route add 2001:db8:1::/64 dev dummy1
- # ip route add ::/0 dev dummy2
- # ip route get 2001:db8:1::1 oif dummy2 fibmatch
- default dev dummy2 metric 1024 pref medium
+In the 2nd case, net->xfrm.nlsk is guaranteed to stay non-NULL and the
+object is alive, since we can't enter the netns destruction path while
+the user socket holds a reference on the netns.
 
-Due to regression reports, the behavior was partially reverted in commit
-d46a9d678e4c ("net: ipv6: Dont add RT6_LOOKUP_F_IFACE flag if saddr
-set") to only honor the oif if source address is not specified:
+After adding the __rcu annotation to netns_xfrm.nlsk (which silences
+sparse warnings in the RCU users and __net_init code), we need to tell
+sparse that the 2nd case is safe. Add a helper for that.
 
- # ip route get 2001:db8:1::1 from 2001:db8:2::1 oif dummy2 fibmatch
- 2001:db8:1::/64 dev dummy1 metric 1024 pref medium
-
-That is, when source address is specified, the kernel will choose the
-most specific route even if its nexthop device does not match the
-specified oif.
-
-This creates a problem for multipath routes. After looking up a route,
-when source address is not specified, the kernel will choose a nexthop
-whose nexthop device matches the specified oif:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But will disregard the oif when source address is specified despite the
-fact that a matching nexthop exists:
-
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      53 dummy1
-      47 dummy2
-
-This behavior differs from IPv4:
-
- # ip address add 192.0.2.1/32 dev lo
- # ip route add 198.51.100.0/24 nexthop via inet6 fe80::1 dev dummy1 nexthop via inet6 fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 198.51.100.${i} from 192.0.2.1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-What happens is that fib6_table_lookup() returns a route with a matching
-nexthop device (assuming it exists):
-
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But it is later overwritten during path selection in fib6_select_path()
-which instead chooses a nexthop according to the calculated hash.
-
-Solve this by telling fib6_select_path() to skip path selection if we
-have an oif match during output route lookup (iif being
-LOOPBACK_IFINDEX).
-
-Behavior after the change:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-Note that enabling forwarding is only needed because we did not add
-neighbor entries for the gateway addresses. When forwarding is disabled
-and CONFIG_IPV6_ROUTER_PREF is not enabled in kernel config, the kernel
-will treat non-existing neighbor entries as errors and perform
-round-robin between the nexthops:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=0
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      50 dummy1
-      50 dummy2
-
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: d1ebd9081879 ("xfrm: fix compat ALLOCSPI request use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/net/netns/xfrm.h |  2 +-
+ net/xfrm/xfrm_user.c     | 25 +++++++++++++++++--------
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 8be1187add1a7..3193e61505394 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -2257,6 +2257,7 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
+diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
+index 423b52eca908d..7922ec72eaa68 100644
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -59,7 +59,7 @@ struct netns_xfrm {
+ 	struct list_head	inexact_bins;
+ 
+ 
+-	struct sock		*nlsk;
++	struct sock		__rcu *nlsk;
+ 	struct sock		*nlsk_stash;
+ 
+ 	u32			sysctl_aevent_etime;
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 419af08e31a22..5634973136c3a 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -35,6 +35,15 @@
+ #endif
+ #include <asm/unaligned.h>
+ 
++static struct sock *xfrm_net_nlsk(const struct net *net, const struct sk_buff *skb)
++{
++	/* get the source of this request, see netlink_unicast_kernel */
++	const struct sock *sk = NETLINK_CB(skb).sk;
++
++	/* sk is refcounted, the netns stays alive and nlsk with it */
++	return rcu_dereference_protected(net->xfrm.nlsk, sk->sk_net_refcnt);
++}
++
+ static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type,
+ 			  struct netlink_ext_ack *extack)
  {
- 	struct fib6_result res = {};
- 	struct rt6_info *rt = NULL;
-+	bool have_oif_match;
- 	int strict = 0;
+@@ -1483,7 +1492,7 @@ static int xfrm_get_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	err = build_spdinfo(r_skb, net, sportid, seq, *flags);
+ 	BUG_ON(err < 0);
  
- 	WARN_ON_ONCE((flags & RT6_LOOKUP_F_DST_NOREF) &&
-@@ -2273,7 +2274,9 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
- 	if (res.f6i == net->ipv6.fib6_null_entry)
- 		goto out;
+-	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
++	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
+ }
  
--	fib6_select_path(net, &res, fl6, oif, false, skb, strict);
-+	have_oif_match = fl6->flowi6_iif == LOOPBACK_IFINDEX &&
-+			 oif == res.nh->fib_nh_dev->ifindex;
-+	fib6_select_path(net, &res, fl6, oif, have_oif_match, skb, strict);
+ static inline unsigned int xfrm_sadinfo_msgsize(void)
+@@ -1543,7 +1552,7 @@ static int xfrm_get_sadinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	err = build_sadinfo(r_skb, net, sportid, seq, *flags);
+ 	BUG_ON(err < 0);
  
- 	/*Search through exception table */
- 	rt = rt6_find_cached_rt(&res, &fl6->daddr, &fl6->saddr);
+-	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
++	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
+ }
+ 
+ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+@@ -1563,7 +1572,7 @@ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (IS_ERR(resp_skb)) {
+ 		err = PTR_ERR(resp_skb);
+ 	} else {
+-		err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
++		err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
+ 	}
+ 	xfrm_state_put(x);
+ out_noput:
+@@ -1641,7 +1650,7 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		}
+ 	}
+ 
+-	err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
++	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
+ 
+ out:
+ 	xfrm_state_put(x);
+@@ -2284,7 +2293,7 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	r_up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
+ 	nlmsg_end(r_skb, r_nlh);
+ 
+-	return nlmsg_unicast(net->xfrm.nlsk, r_skb, portid);
++	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, portid);
+ }
+ 
+ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+@@ -2350,7 +2359,7 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		if (IS_ERR(resp_skb)) {
+ 			err = PTR_ERR(resp_skb);
+ 		} else {
+-			err = nlmsg_unicast(net->xfrm.nlsk, resp_skb,
++			err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb,
+ 					    NETLINK_CB(skb).portid);
+ 		}
+ 	} else {
+@@ -2510,7 +2519,7 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	err = build_aevent(r_skb, x, &c);
+ 	BUG_ON(err < 0);
+ 
+-	err = nlmsg_unicast(net->xfrm.nlsk, r_skb, NETLINK_CB(skb).portid);
++	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
+ 	spin_unlock_bh(&x->lock);
+ 	xfrm_state_put(x);
+ 	return err;
+@@ -3151,7 +3160,7 @@ static int xfrm_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			goto err;
+ 		}
+ 
+-		err = netlink_dump_start(net->xfrm.nlsk, skb, nlh, &c);
++		err = netlink_dump_start(xfrm_net_nlsk(net, skb), skb, nlh, &c);
+ 		goto err;
+ 	}
+ 
 -- 
 2.53.0
 
