@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391F447A0DD;
-	Wed, 30 Sep 2026 16:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C0A318EC5;
+	Wed, 30 Sep 2026 16:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785720; cv=none; b=RhlY3uqK+rw1iPkidfW3VDTj+4wqJT9SWoNIOcgBQ/w7RRu9sCYLn9KZJGxuKvAp8yJlnGhKjwYay9U0tb3oHGIRcz3uegty7gm5fodcFY1OCTBKsAFWa6VQjgJdn7QF3eUuJqa71HNbf4UpdMkH1tf1aYi5sfmHev6QScH8aHA=
+	t=1790785723; cv=none; b=PiHmp9Qf7/v0E7D1GXo/4Iw8nFsemjIDowo/J0CIzleVp8xVQ7lYddd+tNhhADJBStrmUknAkyHvN+lhFzTdXDMROMidoPwYPhWYAkIIf77DCqs9VAz4dN1El59cU4ShNrqBKAAu6DCZrGKpwkFkfLwPmL+y3JsJoWX0Nr/99qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785720; c=relaxed/simple;
-	bh=9jJd6SVmWkn+RKvs/bdhSoG8XBHrXVOt953E3oKcDW4=;
+	s=arc-20240116; t=1790785723; c=relaxed/simple;
+	bh=3DXRuv+P8Jx8Rio9fXBvQId5v71mJnGpOXNQg3i7tq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLe+3emRWlJgF0daJnbeTh8UcKJjDOqJZkZA7Pxs2ZYoE1JVJpgcwAWf10KlKGX+M+q3fsv9wtRbRiqtWuETJ1CMrqHPcpNicEZxjNBerksQV/pEUMgPdE4+E9mTzTahbbtX/xAnO+mhmvmatngoqpR+FEI1n3y9cX58W9yRvN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkIJRWt4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hFkUMNlNwEa3HcobUO8180LEslvs3PjQnW09dZdDOvQ/zELYCf0a+aeY/CTbbttPlQf2Yz0a7QG2itTM17SDDG0g/tBqTy9fyWSPAlpLTgMUM/PSDlg90x5OhlVknwwVXoKXs+lYb2Hsk9EafG4RFA35ZIrCdPenXKGyOHeBy8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufuJqDV4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkIJRWt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BD71F000FF;
-	Wed, 30 Sep 2026 16:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufuJqDV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEDE1F000FF;
+	Wed, 30 Sep 2026 16:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785719;
-	bh=23wKD1eJQEgWuCVN8VA1DnJ2ClmdeyciwDh6ng/g/q8=;
+	s=korg; t=1790785721;
+	bh=NMQaAYU+Unf6/D47oaZjaXoReKHbwDRdNAYftxRknDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xkIJRWt40HpJe2RNLhmmGKuAfFhE09YwI71N094+8lEIG0e/ZY5+n0BDaZP7P4cmD
-	 sFpXPSuY7FUtFiCby/YPk7WIpngoAfpUmtWoAIbfiL1YSrKbXe6ch3IixD98hYROJc
-	 cDOb3dBpHq9o1BWsbWBi/wxa2NC41HYdZ80iPnew=
+	b=ufuJqDV4agZ0i3h8fngxXHRGWx79Vo4yRsFtnDSUzUBOUJTNdxzU7T4u/5lORIXUt
+	 RKiL5tiO+01adfs2hlJmRfmIDTy9Ydz0lVJiTGH6XM2O3fqrHMKB0wnpQWAtxypzwE
+	 RXkbY5a+sDqYY0YYkQzNu08peTPqTtxnlOXVvA/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Liu Jian <liujian56@huawei.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 591/982] xfrm: add missing rcu_read_lock(), skb_dst_force() and dev_hold() for xfrm_trans_reinject()
-Date: Wed, 30 Sep 2026 17:22:07 +0200
-Message-ID: <20260930152429.479803150@linuxfoundation.org>
+Subject: [PATCH 6.1 609/982] RDMA/irdma: Enforce local fence for IB_WR_REG_MR
+Date: Wed, 30 Sep 2026 17:22:25 +0200
+Message-ID: <20260930152429.859606192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,101 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit d2f5082f9e84653fa1a9e8aebaaff23e688f5e19 ]
+[ Upstream commit 3fb905f07ea45b31c8f67ba6e4668de46f527e65 ]
 
-syzbot reported a suspicious RCU usage warning in ip6_pkt_drop():
+Enforce local fence for IB_WR_REG_MR to avoid spurious
+FASTREG_VALID_MKEY async events during heavy invalidation
+and registration activity.
 
-  WARNING: suspicious RCU usage in ip6_pkt_drop
-  include/net/addrconf.h:389 suspicious rcu_dereference_check() usage!
+Commit 69e8e429bca2 ("RDMA/irdma: Enforce local fence for LOCAL_INV WRs")
+was very similar, but was not sufficient to prevent all occurrences
+of these async events.
 
-  Call Trace:
-   __in6_dev_get_safely include/net/addrconf.h:389 [inline]
-   ip6_pkt_drop+0x596/0x610 net/ipv6/route.c:4620
-   ip6_pkt_discard+0x1c/0x30 net/ipv6/route.c:4651
-   xfrm_trans_reinject+0x324/0x630 net/xfrm/xfrm_input.c:806
-   process_one_work kernel/workqueue.c:3322 [inline]
-   process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
-   worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
-
-When commit 4f4920669d21 ("xfrm: Reinject transport-mode packets through
-workqueue") converted xfrm_trans_reinject from a tasklet to a workqueue,
-the reinjection loop ceased running in softirq context. Workqueue workers
-run in process context where local_bh_disable() does not enter an RCU
-read-side critical section under CONFIG_PREEMPT_RCU.
-
-Because finish callbacks (such as ip6_rcv_finish) expect to run under an
-RCU read lock (performing route lookups, l3mdev lookups, and accessing
-RCU-protected data structures), invoking them in workqueue context without
-rcu_read_lock() triggers RCU lockdep warnings.
-
-Furthermore, packets queued to the workqueue via xfrm_trans_queue_net()
-may carry non-refcounted (noref) dst entries (e.g. from ip_route_input_noref).
-Additionally, on netdevice unregistration, dst_dev_put() replaces dst->dev
-with blackhole_netdev, so dst entries do not keep skb->dev alive while
-queued in the workqueue.
-
-Fix these issues by:
-1. Calling skb_dst_force(skb) in xfrm_trans_queue_net() while still in the
-   caller's RCU section to ensure dst is reference-counted before queuing.
-2. Holding a reference on skb->dev via dev_hold()/dev_put() across workqueue
-   deferral so skb->dev remains valid during finish() callback processing.
-3. Acquiring rcu_read_lock() around the finish callback invocation loop in
-   xfrm_trans_reinject().
-
-Fixes: 4f4920669d21 ("xfrm: Reinject transport-mode packets through workqueue")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Liu Jian <liujian56@huawei.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260901160014.2026285-1-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/infiniband/hw/irdma/verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index c3c909d9c8fab..de2e8b16b217a 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -757,12 +757,17 @@ static void xfrm_trans_reinject(struct work_struct *work)
- 	spin_unlock_bh(&trans->queue_lock);
- 
- 	local_bh_disable();
-+	rcu_read_lock();
- 	while ((skb = __skb_dequeue(&queue))) {
- 		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
-+		struct net_device *dev = skb->dev;
- 
- 		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
-+		if (dev)
-+			dev_put(dev);
- 		put_net(net);
- 	}
-+	rcu_read_unlock();
- 	local_bh_enable();
- }
- 
-@@ -778,12 +783,18 @@ int xfrm_trans_queue_net(struct net *net, struct sk_buff *skb,
- 	if (skb_queue_len(&trans->queue) >= READ_ONCE(netdev_max_backlog))
- 		return -ENOBUFS;
- 
-+	if (skb_dst(skb) && !skb_dst_force(skb))
-+		return -EHOSTUNREACH;
-+
- 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
- 
- 	hold_net = maybe_get_net(net);
- 	if (!hold_net)
- 		return -ENODEV;
- 
-+	if (skb->dev)
-+		dev_hold(skb->dev);
-+
- 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
- 	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
- 	spin_lock_bh(&trans->queue_lock);
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 56e3103aa77f9..a8856a8613f45 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -3282,7 +3282,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
+ 			stag_info.total_len = iwmr->ibmr.length;
+ 			stag_info.reg_addr_pa = *palloc->level1.addr;
+ 			stag_info.first_pm_pbl_index = palloc->level1.idx;
+-			stag_info.local_fence = ib_wr->send_flags & IB_SEND_FENCE;
++			stag_info.local_fence = true;
+ 			if (iwmr->npages > IRDMA_MIN_PAGES_PER_FMR)
+ 				stag_info.chunk_size = 1;
+ 			err = irdma_sc_mr_fast_register(&iwqp->sc_qp, &stag_info,
 -- 
 2.53.0
 
