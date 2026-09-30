@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C324F5E0A;
-	Wed, 30 Sep 2026 15:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4224BE423;
+	Wed, 30 Sep 2026 15:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783004; cv=none; b=cloaE3niHiI0L3pMHZp2XntFIbf6P8bfRAcWI3KSA1BzJ5HuiDdSMJ1VF9E61naKj40aI01EIVJdPgjJUZKNw5vXXYPrmt+JEaR6gv4lT7Bss9gkP81GADA8mbd+MWWwm7+SOW7/mvcfu3NcfVLqqM+fp87crZtZPSsqW+lla9Y=
+	t=1790783005; cv=none; b=M9pEkbuoNwgKyf0YRueKVC/S/ghvGTuGRNllhHHWnsF+8hxtyDVES31SlqKMELZSiB+sLyLkC+6wm8ZpfywkatrlqnVh++8mxGX5VvD0aL78CeZFXwaO+lLOm4hyJ8RTCx6WCUFRPGOVt+hQSrmF1+OLqBjN0vkV0VWRJpdM30M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783004; c=relaxed/simple;
-	bh=4hibWTWb/SZ943AJPdJgDGRlHUlTRasrfiJ8353yRgU=;
+	s=arc-20240116; t=1790783005; c=relaxed/simple;
+	bh=FmXy9iR0oAqm5qbjbvM0V4aDCfuNCEYQLQwlYCagVUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JioP2Kn4y9J87kj68dEgPEU0YfCTHixo+OCd4tg1GGlQOQTvosCaQB0YBM5uRp/eU7LzC5X1XKtYkeQdejmzlfVB9XR3r/3CDztxDKAPz51bPUVMiei64LXwp17S5w/blqw5m6OFlH+DaLZdxW6pMYDli21905awAezHQFAaV1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOn3kES5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=flv/n+NbdKfaLFM8yACYXrELS62dd4g2GHOynkntC4NtrRvD7f+1gbRah6Rf7rWcHjnk3iNhXuXX1JT0jG4WiRswC/ZuHna6Ho2ncBudtnsME11e8wFB7ugFvMGdGfFXVo7mP9P1+KsH+Z2EDzB9l+ivaw6pSKYGAuEt/zdN0kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7OYjDfC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOn3kES5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDCB1F00898;
-	Wed, 30 Sep 2026 15:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7OYjDfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316011F0089D;
+	Wed, 30 Sep 2026 15:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782998;
-	bh=vTug4VC+0OK6kpQCzuJH7orpLeVfRp0Zhe5I11xKYso=;
+	s=korg; t=1790783001;
+	bh=XCJAAu1SttSptQh/WSVQ02jPcWYVzNoPZ3FHFgfGcZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SOn3kES5R2p80q+eEncH1Q06RBrckx66EBhj3DS41W/qfgyup3zl1YXeEcx8gUfRC
-	 4ZlswxL9oOjxAHHT5aLTJEMleHl6BHyr/Y3qgGyKLUnwJWrIIx5ztlfsigiWCx6HVd
-	 jS1WDtkuqktuWpigelJ7s6lyy+Y6rG99h9cRnsl0=
+	b=P7OYjDfCoYiCAlP0ltnBs7kga5Bmu2j0DoydJvm33R7PuXtibcqDPT0KotyJl6Kre
+	 dT0D3zXQL4WmOVm0gAdx3SjxXMQBIMxcGMcQnt78kdf9TgE3NmUtKxCld6rQlTxcu/
+	 QyWzsyWmTOXMX799W98Qz6UsP+kihrJB+qHwceeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Seungwon Bae <qotmddnjs@ajou.ac.kr>,
+	Vega <vega@nebusec.ai>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 243/595] vxlan: reject dynamic fdb entries that reference a nexthop id
-Date: Wed, 30 Sep 2026 17:22:16 +0200
-Message-ID: <20260930152352.944646715@linuxfoundation.org>
+Subject: [PATCH 5.10 244/595] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
+Date: Wed, 30 Sep 2026 17:22:17 +0200
+Message-ID: <20260930152352.965662270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,128 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungwon Bae <qotmddnjs@ajou.ac.kr>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 98fc57d167446b95b4e719815fe79edef93f8e7a ]
+[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
 
-The commit cited in the Fixes tag allowed VXLAN FDB entries to point to
-FDB nexthops so that overlay traffic could be load balanced across
-multiple VTEPs. Such entries can only be configured from user space,
-cannot be learned and cannot roam. They only make sense with a user space
-control plane such as E-VPN where data plane learning is disabled.
+Several subsystems allocate ring buffers sized by dev->tx_queue_len
+with no upper bound. An unprivileged user (via unshare -Urn) can set a
+huge tx_queue_len and exhaust global memory with ring allocations:
 
-Despite that, the VXLAN driver does not currently prevent such entries
-from being configured with the "dynamic" flag. The per-nexthop FDB list
-is only protected by the per-device hash lock, which is not sufficient
-when two VXLAN devices point to the same FDB nexthop and therefore share
-the list. Aging runs in softirq context without RTNL, so an entry deleted
-by one device can race with an addition or deletion from the other,
-leading to list corruption:
+- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
+  allocate 3 skb_array rings of tx_queue_len entries each.
+- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
+  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
+- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
+  ptr_rings to tx_queue_len on the same notifier.
 
-  list_del corruption. next->prev should be ffff8881069d9548, but was
-  dead000000000122. (next=ffff8881069d9448)
-  WARNING: CPU: 0 PID: 90 at lib/list_debug.c:65
-  __list_del_entry_valid_or_report+0x1aa/0x210
-  ...
-   vxlan_fdb_destroy+0x5b8/0xad0
-   vxlan_cleanup+0x328/0x450
-   call_timer_fn+0x2a/0x1c0
-   run_timer_softirq+0x18c/0x210
-  BUG: KASAN: slab-use-after-free in vxlan_fdb_destroy
+netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
+sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
+there so the oversized value is rejected at set time. This takes
+effect whether the device is up or down, before dev->tx_queue_len is
+written, before any notifier fires, and before any ring is allocated.
+The "> S16_MAX" check also subsumes the previous unsigned-long
+truncation test, and a negative ifr_qlen from the ioctl lands far
+above the cap after conversion, so both old failure modes are covered
+by the one comparison.
 
-Fix this by rejecting the bogus configuration of dynamic FDB entries that
-point to FDB nexthops, both when created and when an existing entry is
-updated. As such, the per-nexthop FDB list is only ever mutated under the
-RTNL lock. Add test cases to make sure that this does not regress in the
-future.
+tx_queue_len is ambigious: both a per-ring sizing multiplier and a
+default queue-length/limit knob for consumers that allocate
+nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
+direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
+value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
+policy in patch 2/3 while staying a legitimate queue length on
+high-BDP paths; the ring-memory trade-off of a shared knob is
+disclosed below.
 
-Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Seungwon Bae <qotmddnjs@ajou.ac.kr>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260902155956.296699-1-qotmddnjs@ajou.ac.kr
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
+- Unprivileged user in a fresh user+net namespace (unshare -Urn).
+- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
+  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
+- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
+  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
+  512MB guest.
+- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
+- On the fixed kernel the oversized tx_queue_len is rejected with
+  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
+  create, sysfs, ioctl - the latter two via this check, the former
+  two via this check and the 2/3 parse policy respectively).
+
+Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c              | 11 ++++++++
- tools/testing/selftests/net/fib_nexthops.sh | 28 +++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 8dad17023e36d..a2955729998cd 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1065,6 +1065,12 @@ static int vxlan_fdb_update_existing(struct vxlan_dev *vxlan,
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 9183fbc434d22..3e41d02fe28ce 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -8715,7 +8715,7 @@ int dev_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
+ 	unsigned int orig_len = dev->tx_queue_len;
+ 	int res;
  
-+	if (rcu_access_pointer(f->nh) &&
-+	    !(state & (NUD_PERMANENT | NUD_NOARP))) {
-+		NL_SET_ERR_MSG(extack, "Cannot make a nexthop fdb dynamic");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	/* Do not allow an externally learned entry to take over an entry added
- 	 * by the user.
- 	 */
-@@ -1317,6 +1323,11 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
- 	if (err)
- 		return err;
+-	if (new_len != (unsigned int)new_len)
++	if (new_len > S16_MAX)
+ 		return -ERANGE;
  
-+	if (nhid && !(ndm->ndm_state & (NUD_PERMANENT | NUD_NOARP))) {
-+		NL_SET_ERR_MSG(extack, "A nexthop fdb cannot be dynamic");
-+		return -EINVAL;
-+	}
-+
- 	if (vxlan->default_dst.remote_ip.sa.sa_family != ip.sa.sa_family)
- 		return -EAFNOSUPPORT;
- 
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index cdc7c0ff090f6..bd9448be9dfe6 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -405,6 +405,20 @@ ipv6_fdb_grp_fcnal()
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 61 self"
- 	log_test $? 255 "Fdb mac add with nexthop"
- 
-+	# fdb entries with a nexthop group cannot be aged out
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:15 dev vx10 nhid 102 self static"
-+	log_test $? 0 "Fdb mac add with nexthop group and static state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
-+	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
-+	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
-+	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
-+	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+
- 	run_cmd "$IP -6 ro add 2001:db8:101::1/128 nhid 66"
- 	log_test $? 2 "Route add with fdb nexthop"
- 
-@@ -485,6 +499,20 @@ ipv4_fdb_grp_fcnal()
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:14 dev vx10 nhid 12 self"
- 	log_test $? 255 "Fdb mac add with nexthop"
- 
-+	# fdb entries with a nexthop group cannot be aged out
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:15 dev vx10 nhid 102 self static"
-+	log_test $? 0 "Fdb mac add with nexthop group and static state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
-+	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
-+	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
-+	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
-+	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+
- 	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
- 	log_test $? 2 "Route add with fdb nexthop"
- 
+ 	if (new_len != orig_len) {
 -- 
 2.53.0
 
