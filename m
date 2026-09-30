@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A8B4F30E3;
-	Wed, 30 Sep 2026 16:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FBA4DEC1B;
+	Wed, 30 Sep 2026 16:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785479; cv=none; b=gRaOWZGtHwRqHjt2CRELYS/ZXws5dz11Q7MQ2lPDuws2DjiMgRRwcr8CuX0/oTovmB2mPvhVtVAcM9M1v1LWUxjiy1tEx37aBUaRdD7Sur0HKlFWtNrdZqIMMYEppuZqNfmRHpjAt3VeVEhkDO+5Ovzdk3TolcJLD6mPPJYypQ8=
+	t=1790785483; cv=none; b=h2wHHk5cIH2uBCLRdhSNP97LMW0NJyhxobdoquGivNfZIeABrCvCHpNzClylW/v08ezAouf1038TBuJ0mUYefcVBxF1Q1h3RRDejAPDg+A/YrT4ut06pr+KALwaoDX5JvUZT4jqHE8b8/XbXQESWEhxWxKCPU9K03dzH0kTfo8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785479; c=relaxed/simple;
-	bh=cZ37tJeVQ2bkssXJ+TJTQPtfgC6M8leA8hGPf7HOKoQ=;
+	s=arc-20240116; t=1790785483; c=relaxed/simple;
+	bh=tANrSEKbsUMsaN28ugbBFUxoeoDOwD8+oOrKIE/4HFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5T0cVA3GzcVAuPHC0YxVW0KyxBJB8StIuIkxX848UOnmddOql5Pc/e5j5bIFSFpOHu0RK6ZdFotdCXVN+Zy4nsCjleJVFvBJPOX85uPE7UzXojT7aa+qsFZbKP6fvtstr0uQH1k8QBMDFDo7C4+4Bv7U0mpqa162OVUjNzBXJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3gtV5ZH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nw+n4K0D07aatDJkIM09BJuB2SX5pxDpU7Nz6a+CC/frawFuoq1iYRVtZTEznZwqpoczQbj6/nOYDtC6ctzL/5BhwDxe5aLhe2BZXQjOtZyn0ZEQyd7Tps6i5ZFaq0VKMOwKy9c6IzEiuY7kjl8qmqVC9xhneVDhNdSES4mlfHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S47hz5pH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3gtV5ZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9301F00893;
-	Wed, 30 Sep 2026 16:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S47hz5pH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB581F00898;
+	Wed, 30 Sep 2026 16:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785472;
-	bh=oYFybFPw6r3rLdyvHQBmwh3bA0ElnV3ifOXuIwoF9ys=;
+	s=korg; t=1790785475;
+	bh=snov//ytzTXhmGpzjLg66K88O4vnjzLqPK/kZdMuBE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A3gtV5ZH2Q4XKmy/u+RTzNw47dWTOJCsCHZNgI3mNTF0iP6yEZA7+LBtHfsY0/k6f
-	 9dXI5lG0wPR6zNX4Y7qOA9YnGysEcDhy7Ut0MZ1cUkcNecnZg2uQPTVByaQ9IHk/xq
-	 Bi/AG28LG3KLodiDM9KDvm2h5RtsV4SiEq47cyp4=
+	b=S47hz5pHqN8/tvV7d5CZ5Xn3G7+8cGkbZpSKblk7gmRhuzfogIZz+bUYLC5PC/UqP
+	 VM7H8fYyrjZPWgjKD/bNPmwRTTaxddmi9kPKLND+s1i7sMdbYGucKujRfNGooXOMYF
+	 GR2S9wCX5wlYp8VzaXe8SCBzVxAgi6GBgD+Sd474=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 521/982] net: openvswitch: fix use-after-free of the flow table mask array
-Date: Wed, 30 Sep 2026 17:20:57 +0200
-Message-ID: <20260930152427.967441784@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Miguel Gazquez <miguel.gazquez@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 495/982] net: dst: introduce dst->dev_rcu
+Date: Wed, 30 Sep 2026 17:20:31 +0200
+Message-ID: <20260930152427.413673500@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,73 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit ba4ba11ed6eb8972c69070417fc27b48deb002e8 upstream.
+[ Upstream commit caedcc5b6df1b2e2b5f39079e3369c1d4d5c5f50 ]
 
-tbl_mask_array_realloc() retires the old mask_array before it stops being
-reachable:
+Followup of commit 88fe14253e18 ("net: dst: add four helpers
+to annotate data-races around dst->dev").
 
-	old = ovsl_dereference(tbl->mask_array);
-	if (old) {
-		...
-		call_rcu(&old->rcu, mask_array_rcu_cb);
-	}
+We want to gradually add explicit RCU protection to dst->dev,
+including lockdep support.
 
-	rcu_assign_pointer(tbl->mask_array, new);
+Add an union to alias dst->dev_rcu and dst->dev.
 
-call_rcu() only waits for read-side critical sections already in flight.
-tbl->mask_array still points at old between the call_rcu() and the
-rcu_assign_pointer(), so a reader entering ovs_flow_tbl_lookup_stats() in
-that window picks up old in a fresh critical section that the pending
-grace period does not cover.
+Add dst_dev_net_rcu() helper.
 
-tbl_mask_array_realloc() runs in process context under ovs_mutex, so the
-window is preemptible and can outlast the grace period. Then
-mask_array_rcu_cb() frees old before the swap runs:
-
-  BUG: KASAN: slab-use-after-free in flow_lookup.constprop.0+0x2bf/0x2f0
-  Read of size 8 at addr ffff888020b3e018 by task poc/741
-   flow_lookup.constprop.0+0x2bf/0x2f0
-   ovs_flow_tbl_lookup_stats+0x4a3/0x5c0
-   ovs_dp_process_packet+0x19c/0x710
-   ovs_vport_receive+0x243/0x390
-   internal_dev_xmit+0x81/0x170
-  Freed by task 728:
-   kfree+0x16a/0x4e0
-   rcu_core+0x853/0x1030
-
-Publish the new array before retiring the old one. The kfree_rcu() that
-call_rcu() replaced ran after the swap.
-
-Fixes: eac87c413bf9 ("net: openvswitch: reorder masks array based on usage")
-Cc: stable@vger.kernel.org
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron echaudro@redhat.com
-Link: https://patch.msgid.link/DE115F9C-2545-423E-A702-986FC952FD62@doyensec.com
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Miguel Gazquez <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_table.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/dst.h | 16 +++++++++++-----
+ net/core/dst.c    |  2 +-
+ net/ipv4/route.c  |  4 ++--
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
---- a/net/openvswitch/flow_table.c
-+++ b/net/openvswitch/flow_table.c
-@@ -261,11 +261,13 @@ static int tbl_mask_array_realloc(struct
- 			if (ovsl_dereference(old->masks[i]))
- 				new->masks[new->count++] = old->masks[i];
- 		}
--		call_rcu(&old->rcu, mask_array_rcu_cb);
- 	}
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 7c0cf856154de..96dd65a941c51 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -23,7 +23,10 @@
+ struct sk_buff;
  
- 	rcu_assign_pointer(tbl->mask_array, new);
+ struct dst_entry {
+-	struct net_device       *dev;
++	union {
++		struct net_device       *dev;
++		struct net_device __rcu *dev_rcu;
++	};
+ 	struct  dst_ops	        *ops;
+ 	unsigned long		_metrics;
+ 	unsigned long           expires;
+@@ -562,9 +565,12 @@ static inline struct net_device *dst_dev(const struct dst_entry *dst)
  
-+	if (old)
-+		call_rcu(&old->rcu, mask_array_rcu_cb);
+ static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
+ {
+-	/* In the future, use rcu_dereference(dst->dev) */
+-	WARN_ON_ONCE(!rcu_read_lock_held());
+-	return READ_ONCE(dst->dev);
++	return rcu_dereference(dst->dev_rcu);
++}
 +
- 	return 0;
++static inline struct net *dst_dev_net_rcu(const struct dst_entry *dst)
++{
++	return dev_net_rcu(dst_dev_rcu(dst));
  }
  
+ static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
+@@ -584,7 +590,7 @@ static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+ 
+ static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+ {
+-	return dev_net_rcu(skb_dst_dev(skb));
++	return dev_net_rcu(skb_dst_dev_rcu(skb));
+ }
+ 
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+diff --git a/net/core/dst.c b/net/core/dst.c
+index 24a1cc3d2a084..cbb6888aa32ba 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -151,7 +151,7 @@ void dst_dev_put(struct dst_entry *dst)
+ 		dst->ops->ifdown(dst, dev, true);
+ 	dst->input = dst_discard;
+ 	dst->output = dst_discard_out;
+-	WRITE_ONCE(dst->dev, blackhole_netdev);
++	rcu_assign_pointer(dst->dev_rcu, blackhole_netdev);
+ 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
+ 			   GFP_ATOMIC);
+ }
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index a2985265c7929..e3cce307e0e9c 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1069,7 +1069,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
+ 		return;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
+ 		lock = true;
+ 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
+@@ -1367,7 +1367,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
+ 	struct net *net;
+ 
+ 	rcu_read_lock();
+-	net = dev_net_rcu(dst_dev(dst));
++	net = dst_dev_net_rcu(dst);
+ 	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
+ 				   net->ipv4.ip_rt_min_advmss);
+ 	rcu_read_unlock();
+-- 
+2.53.0
+
 
 
