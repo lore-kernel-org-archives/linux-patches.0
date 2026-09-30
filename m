@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AA85226AE;
-	Wed, 30 Sep 2026 17:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0B83438A6;
+	Wed, 30 Sep 2026 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791086; cv=none; b=lG37Z5HVWDQl40rIc42cy+1c0dtflSkS59fkcYVgy9xtdISNYwSq8UnNPpb8yMK6I3jmS3GF6D7AL0EmnDU9w7r+FJrQMnMFtfIH5pNY8GM07pcOD+42Brs0XjarN7X4VJMm/0nzh80KgZdVLnzE3dYlt70089npr1ydSpLi2As=
+	t=1790791089; cv=none; b=P7cmOUH7SGhI86D19xEjUaby/nyZF1ILyjDQlI5iyNZkdwaMv65gqL6SiAJ2mw88spPBb3Djkyk5MMTwhE0wJao7RqvBeVURMwLL6AFWvEfIjEKk9mmPacZOKJNcY25qKvB3nudSiWzhAGWMZo00EST2kKqvBCSx0VYlqb3h9bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791086; c=relaxed/simple;
-	bh=ib4HWV/TEv0JbzI5kzDHN/oaCplVOtVtwLWYBck2XmU=;
+	s=arc-20240116; t=1790791089; c=relaxed/simple;
+	bh=pckph+sDh+H0VdaXkR5z5KJLpAmq2EwDw2D4VC0wcwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GsQ+TaG+NFaN03gfjZnxZ73jlgCXpoXSYONrDwUXDhJPUN1BNheimNmQzJaedelxc9mBoIkh5DpnJBWK0CZi5WaHQxmRYIgsYKNeyl7F7srQcRWO+iNiP0NdUwwTdIwXNz+qbIdDtgAzKykkL4Abtm3F/XyB7jmE2poCSTgkBsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKzbtt1a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gdudkE86WzPAJuF9uyxXpUuVxgX2sojNuxKPlJCuyQzpHM8GSdUHdk8GYDH1f5XJ5T9rQJQ1/q1CPvX8kd9qlZU4o1t4qoiq6Hq3ixPBsCJDjX3ljzmyVA23p7bbHEcLROvV1O52t5RQoQJMtpfi8Gh+I1jMszmr3/S5ABLRYao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVOjrB++; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKzbtt1a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16381F000FF;
-	Wed, 30 Sep 2026 17:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVOjrB++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CBB1F000FF;
+	Wed, 30 Sep 2026 17:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791085;
-	bh=aN6zv5f3YizYtz7lD8HAJ9VNudT65dUD9drh+ad7MCU=;
+	s=korg; t=1790791088;
+	bh=p5M5CHdHTO6aNPZn5ziikQ/+n2hXAMWpHxzi3boBjBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKzbtt1a4tyDQsk2Huu2uaZouXdI/YkJfmKdqUlBLJDnYp3zUWxVpDXLQzaJrfnMV
-	 Bs80SO+VW+rp6qFGgtPmXwukMvzsE9tMk8Uz4cgPdxewicbwSQ420HmlFWYRUjia0w
-	 tkPKQo332K0dyG1lVPRtojiQPVzuvSu65mlgXpWY=
+	b=WVOjrB++1PGssKJ1tkm5ILzT+0QveMjRXWQ9cIBD7+m7rN6sv+L3ZjjA/m8sQkluB
+	 UnzbWO7iKY4VxtZDOaYrjond5Djz271zFi7zkrEhjTBVe1pUI/jnQoLM63gm+mZz3s
+	 SWF5rhUDLHYcF3Ey0eU104gBju43BrIH167yeajc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Metchev <nikolaymetchev@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Aurelien DESBRIERES <aurelien@hackers.camp>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/752] platform/x86: intel-hid: Add HP ProBook x360 440 G1 to button_array_table
-Date: Wed, 30 Sep 2026 17:20:07 +0200
-Message-ID: <20260930152401.142651580@linuxfoundation.org>
+Subject: [PATCH 5.15 128/752] RDMA/rtrs-srv: Fix integer underflow in process_read and process_write
+Date: Wed, 30 Sep 2026 17:19:58 +0200
+Message-ID: <20260930152400.948938174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -46,59 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Metchev <nikolaymetchev@gmail.com>
+From: Aurelien DESBRIERES <aurelien@hackers.camp>
 
-[ Upstream commit c39023ca9a447f09c072080efc84d6874c2275c9 ]
+[ Upstream commit 54bf38b27afc08a0eb6b732f9c14eb8a4bcb66b5 ]
 
-The volume rocker buttons on the HP ProBook x360 440 G1 convertible emit
-events 0xc4-0xc7 via the intel-hid ACPI device (INT33D5). These codes are
-only present in intel_array_keymap, which is used when the "5 button
-array" input device exists. On this machine button_array_present()
-returns false because the firmware does not advertise the array through
-the HEBC method, so notify_handler() routes the events to a NULL
-priv->array and they are dropped as "unknown event 0xc4". As a result
-the side volume keys do nothing.
+usr_len is read from a network-supplied message field (le16_to_cpu)
+and used to compute data_len = off - usr_len without validating that
+usr_len <= off. A malicious RDMA client can send usr_len > off causing
+an integer underflow, resulting in data_len wrapping to a huge size_t
+value which is then passed to the rdma_ev callback as a memory length,
+leading to out-of-bounds memory access.
 
-Add the machine to button_array_table so the array device is created and
-the volume rocker emits KEY_VOLUMEUP / KEY_VOLUMEDOWN. This is equivalent
-to booting with the enable_5_button_array=1 module parameter, which was
-used to confirm the fix on the affected hardware.
+Fix by reading and validating usr_len <= off before rtrs_srv_get_ops_ids()
+in both process_read() and process_write(), ensuring the early return
+path acquires no reference and has no resource leak.
 
-Signed-off-by: Nikolay Metchev <nikolaymetchev@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260609213309.445019-1-nikolaymetchev@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/r/20260608134802.5019-1-aurelien@hackers.camp
+Reported-by: Aurelien DESBRIERES <aurelien@hackers.camp>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
+Assisted-by: Claude <claude-sonnet-4-6>
+Acked-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/hid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index b19cd6ca4e2f5..5326ea1e3ba5b 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -123,6 +123,13 @@ static const struct dmi_system_id button_array_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Surface Go 3"),
- 		},
- 	},
-+	{
-+		.ident = "HP ProBook x360 440 G1",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP ProBook x360 440 G1"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index b7f7e24807dfb..455d315dcebf5 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -1047,6 +1047,11 @@ static void process_read(struct rtrs_srv_con *con,
+ 			    "Processing read request failed, invalid message\n");
+ 		return;
+ 	}
++	usr_len = le16_to_cpu(msg->usr_len);
++	if (usr_len > off) {
++		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
++		return;
++	}
+ 	rtrs_srv_get_ops_ids(srv_path);
+ 	rtrs_srv_update_rdma_stats(srv_path->stats, off, READ);
+ 	id = srv_path->ops_ids[buf_id];
+@@ -1054,7 +1059,6 @@ static void process_read(struct rtrs_srv_con *con,
+ 	id->dir		= READ;
+ 	id->msg_id	= buf_id;
+ 	id->rd_msg	= msg;
+-	usr_len = le16_to_cpu(msg->usr_len);
+ 	data_len = off - usr_len;
+ 	data = page_address(srv->chunks[buf_id]);
+ 	ret = ctx->ops.rdma_ev(srv->priv, id, READ, data, data_len,
+@@ -1100,6 +1104,11 @@ static void process_write(struct rtrs_srv_con *con,
+ 			     rtrs_srv_state_str(srv_path->state));
+ 		return;
+ 	}
++	usr_len = le16_to_cpu(req->usr_len);
++	if (usr_len > off) {
++		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
++		return;
++	}
+ 	rtrs_srv_get_ops_ids(srv_path);
+ 	rtrs_srv_update_rdma_stats(srv_path->stats, off, WRITE);
+ 	id = srv_path->ops_ids[buf_id];
+@@ -1107,7 +1116,6 @@ static void process_write(struct rtrs_srv_con *con,
+ 	id->dir    = WRITE;
+ 	id->msg_id = buf_id;
  
+-	usr_len = le16_to_cpu(req->usr_len);
+ 	data_len = off - usr_len;
+ 	data = page_address(srv->chunks[buf_id]);
+ 	ret = ctx->ops.rdma_ev(srv->priv, id, WRITE, data, data_len,
 -- 
 2.53.0
 
