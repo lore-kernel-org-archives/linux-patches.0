@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173B64E01E3;
-	Wed, 30 Sep 2026 15:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656A638944D;
+	Wed, 30 Sep 2026 15:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783628; cv=none; b=uGXkVeXjRJ+U9u33eT4o+1BqcxmUCVv+LBrU3j7mJ5TITDTCYX1fcYd890nSIWfoLn4VNKqU3jukGXcXrgdO2Fxj/QXGcC+iWpP7QxsjTn87SVxrkiXH7B3hyRv0Kwv9qmOC0RJGAp4SldHzsB2/ekIuavDsH872zKV+ktwl/5E=
+	t=1790783632; cv=none; b=GOffqmjTn/X5H0J9XIOYo1gDDOp/UVu4qol+30n+VRiPhiRLpvFr/RhLiDLS0+UZuL9VOyHX9rkEqf+6fvP4DkGD5SoFTLK09udTTgOeEnTPE9l8Xe+nsXlysOyeZH6ckYsFAiRLxsW5Jysb2wxOOlylRa9xQ5XHnTjdDtey0F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783628; c=relaxed/simple;
-	bh=GO+hSOyQ1qqCy4TCPJmDaHiYF9wRqL1wYJ8qqPbcclI=;
+	s=arc-20240116; t=1790783632; c=relaxed/simple;
+	bh=QKFgM+/CTUd+GjXYuVR130IkwkWieH+KFmfVE4Twhn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=feUH+sFDDfNigIaAQ23601aBBKq7/JDiq98/XCJmNViqv88yEF9J80qCUDcyK659ki0//+tS7WSXiGA4RymoUA5HvNTfxse0+NkzMSo9IqsX7DMAYIltvP2yJnveIxjeuDeP+emvhiY3o2ylvieVJWwIGUzFQ8nGrBAXMepSN58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyO9CXRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q/Qo1rU6Vqwyeh3gNBan6LvSamMGGG1wz9YeJ7Jt75RkpMLNaGNeOHOYt8kg0MJAEKFBjfOE0nqDDZh2oDgD/RDx4EO1ioVyI4C5RFtz007r67NLFS1Aae1NRPtPHRywIozZIj2+sub9+o6wrcektVUVV67DahQybKtA9mUQe/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szKKDAnS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyO9CXRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3FE1F000FF;
-	Wed, 30 Sep 2026 15:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szKKDAnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0931F00898;
+	Wed, 30 Sep 2026 15:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783620;
-	bh=2Rw0XyRJ8Kxl/ExhyS8giPt15Ico3D4UXYWLyvhmpBk=;
+	s=korg; t=1790783625;
+	bh=8OsaWtjxB2JeR++ugiyOEi/3jeC3vE6qsgWtz0pOt3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GyO9CXRZoDVjR4vW2I5iot5F37Bj0IEFuBjUUso9FC/RL+yRNBjvGhFrIPOYVm7KF
-	 8ITf8nwV2PzR6ChRgHWSVO5STHgaB5u7T54YZW100DEOk5fewtvdfQQmizxvqwwY50
-	 ojO2+0VSYT8B2xee8kyUyyiYLRql4I3X3YTvhdBA=
+	b=szKKDAnSGM1nqTBnqLiRHvb3SiymNUWfQG5Ub5mnh69d8bAgVEbUzIdxQeg7sF9nq
+	 7GgZXL86s3YaaR8dqJut3eH5FiBk2R2ZYVKbiC4BBPNcomcrxF53+ZvZPFIcWG4303
+	 QoVUj7V4tGA6q0VRKr5DuXV2yMJLvIsgTa6cIMJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 464/595] wifi: rsi: fix heap OOB write on key removal
-Date: Wed, 30 Sep 2026 17:25:57 +0200
-Message-ID: <20260930152357.662323040@linuxfoundation.org>
+Subject: [PATCH 5.10 466/595] wifi: wilc1000: fix out-of-bounds read in P2P public action frames
+Date: Wed, 30 Sep 2026 17:25:59 +0200
+Message-ID: <20260930152357.703486308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,51 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-commit e6c5ed7a98d7bc8b0f7918246f1c90ddb3f79dfa upstream.
+commit ba6cb7c0868a412c2eb68e8efd5aa38bfb258a14 upstream.
 
-When a key is removed (data == NULL), rsi_hal_load_key() runs:
+wilc_wfi_p2p_rx() and mgmt_tx() start parsing a frame once
+ieee80211_is_public_action() returns true. That helper only verifies the
+frame is long enough for the action category field, that is
+offsetofend(struct ieee80211_mgmt, u.action.category), 25 bytes. Both
+functions then read the P2P public action header up to oui_subtype at
+offset 30 and pass "size - ie_offset" to cfg80211_find_vendor_ie(), where
+ie_offset is offsetof(struct ieee80211_mgmt, u) + sizeof(*d), i.e. 32.
 
-	memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
+A public action frame of 25 to 31 bytes passes the check but is shorter
+than that 32 byte header, so oui_subtype can be read out of bounds, and
+because the length is unsigned, "size - ie_offset" underflows to a value
+close to 4 GiB. cfg80211_find_vendor_ie() takes an unsigned int length,
+so even the size_t subtraction in mgmt_tx() is truncated to the same
+value. It then walks far past the buffer searching for a vendor element
+until it reaches unmapped memory.
 
-set_key is a struct rsi_set_key *, so the subscript is scaled by
-sizeof(struct rsi_set_key) (160 bytes): &set_key[FRAME_DESC_SZ] is
-skb->data + 2560, and the memset writes 144 zero bytes starting
-2.4KB past the end of the 160-byte skb data buffer, corrupting
-unrelated heap objects. The intended byte offset would have been
-(u8 *)set_key + FRAME_DESC_SZ.
+In the receive path the frame arrives over the air and needs no
+association, so a nearby unauthenticated device can crash the host while
+it is in P2P listen. Reject frames shorter than the P2P public action
+header in both paths before dereferencing it.
 
-The write fires on every DISABLE_KEY callback, so plain disconnects,
-roams and interface teardowns trigger it on real networks.
-
-The memset is redundant: the whole buffer is zeroed right after
-allocation, so the frame sent to the device is byte-identical
-without it. Drop the else branch; normal operation is unaffected.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
+Fixes: 4fb8b5aa2a11 ("staging: wilc1000: refactor p2p action frames handling API's")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/90bb2b07007942064c04aa3729cedd9eb1e930b1@linux.dev
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Link: https://patch.msgid.link/20260807115230.136767-1-ali@iusegentoo.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mgmt.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/microchip/wilc1000/cfg80211.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-@@ -852,8 +852,6 @@ int rsi_hal_load_key(struct rsi_common *
- 			memcpy(set_key->tx_mic_key, &data[16], 8);
- 			memcpy(set_key->rx_mic_key, &data[24], 8);
- 		}
--	} else {
--		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
- 	}
+--- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
++++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
+@@ -1039,6 +1039,13 @@ void wilc_wfi_p2p_rx(struct wilc_vif *vi
+ 	if (!ieee80211_is_public_action((struct ieee80211_hdr *)buff, size))
+ 		goto out_rx_mgmt;
  
- 	skb_put(skb, frame_len);
++	/* ieee80211_is_public_action() only validates up to the category
++	 * byte, so reject frames too short for the P2P public action header
++	 * before dereferencing it or computing size - ie_offset.
++	 */
++	if (size < ie_offset)
++		goto out_rx_mgmt;
++
+ 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
+ 	if (d->oui_subtype != GO_NEG_REQ && d->oui_subtype != GO_NEG_RSP &&
+ 	    d->oui_subtype != P2P_INV_REQ && d->oui_subtype != P2P_INV_RSP)
+@@ -1183,6 +1190,13 @@ static int mgmt_tx(struct wiphy *wiphy,
+ 	if (!ieee80211_is_public_action((struct ieee80211_hdr *)buf, len))
+ 		goto out_set_timeout;
+ 
++	/* ieee80211_is_public_action() only validates up to the category
++	 * byte, so reject frames too short for the P2P public action header
++	 * before dereferencing it or computing len - ie_offset.
++	 */
++	if (len < ie_offset)
++		goto out_set_timeout;
++
+ 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
+ 	if (d->oui_type != WLAN_OUI_TYPE_WFA_P2P ||
+ 	    d->oui_subtype != GO_NEG_CONF) {
 
 
