@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D6B4FE2FE;
-	Wed, 30 Sep 2026 15:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495D1502565;
+	Wed, 30 Sep 2026 15:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783595; cv=none; b=OOkW8xBoXQEBxWwupy9BsE43GASytcn3dnqvDL82uWdszyQc72X07r6djZXHjMUxDTOCR9nGjveU8KnNHcYZxYldzHTIUxwVIlJU0r5hvlg+y+DOZqxASddL+PsQxNQfvB4xJ6/FSoTKi/SqIHcEz4/LoP7AfMNhOrPP7jK5YU0=
+	t=1790783600; cv=none; b=B0dR01fctICRGGFzvFNWX8gOKFvaI2efGxwzuQQdcOYCV7ioS69UITr0G3++xZsKx+1YzZ2Tqfed/xVAVaAj9BSnO0YJox9k+rj7m77SWsMJ5PWfH0qDKGhW6wZ3bB8+bodTzWiHEE1CotBhe3VuAG1PxZkM2jQR4BILGgTbRcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783595; c=relaxed/simple;
-	bh=ngD/KWG6hJlBHhPbCsNR+pcO+f/ToPrGiwQND/yAXqo=;
+	s=arc-20240116; t=1790783600; c=relaxed/simple;
+	bh=L9jFEtWlpOJ+JPawQ2+UJ+GGRc36iJT8e7THqN06QvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ldzi/1UWc7/uYQq6yPyqHgwRrTey8gso8o5ZGYRt2v6zSFXOri6GNHuN7exS6LSs8mB5JYdmMzIvAMYrJVKWQMb2n2+Ybqa159bK8bj/oOT3ssFaO0ePVRA4oWSsK222+I7v3ZBbDzf0rn1+gEyiI/qBECER6mKIfotc4I1hTdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeTuXF4R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCMj5wGtT8xYOym7clr+gZ1ENrCL+wVPxJfTh+UwUst+LpVoJviOFfVdaG8DmTc35Pifk4IZPw0J+HJKHQJdnZUWzjeNCVO7NEVyMiEKU2HkunSADMlpXPgtSHpXxIYGLjh0XeZOtRQzF9GGua1gh9Q1n0iuKXq6S5oAO5swxME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdlkNghU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeTuXF4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38561F000FF;
-	Wed, 30 Sep 2026 15:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdlkNghU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5D81F00893;
+	Wed, 30 Sep 2026 15:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783591;
-	bh=heNJmPVrT51X2jfUu4vC3J13Fuv8dORlTiAe3uPtP4U=;
+	s=korg; t=1790783594;
+	bh=pE6rZZ2lkTfNtOLEmTqwQcwmRghv6NidxkvCBUx1MGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eeTuXF4RejVN2FKAdtFA4YQIkTadNTTxja8Ecz0mnWFJovS4sTclY1PYej8XPGNzb
-	 HZqu+b6n5tJ+2AUS2Oc40HuZS/JzwWGp1LHzLQDuuqvfbgv0DeN45hL3WTVr78V5/d
-	 fi2OVNl7i3eMtGb2Tt6JUkRsevaYUVwEH5bXizCo=
+	b=hdlkNghU8rqkYAvoxFWuilUE2zPNNQB8qnc/G3Hyy3QpeNq15tq8GeSESJHc5Mfg9
+	 5ch0dUuQUiQ0SUEMZhtNSa5Gb630mk64KOwFwiqgOyXcvyTMaGfJKfVCktwBOGgkvz
+	 vT51kLirKUE2kC8XnJtFAo5UfjqnaDY5ATY9KGlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 408/595] KVM: PPC: Book3S HV: fix secure device page leak on uv_page_in() failure
-Date: Wed, 30 Sep 2026 17:25:01 +0200
-Message-ID: <20260930152356.451929901@linuxfoundation.org>
+Subject: [PATCH 5.10 399/595] seg6: set IPSKB_L3SLAVE from IP6SKB_L3SLAVE on IPIP decapsulation
+Date: Wed, 30 Sep 2026 17:24:52 +0200
+Message-ID: <20260930152356.254443704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -48,67 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit 0a416ee20bcccddf91ca5b63696a23b9d11d73aa ]
+[ Upstream commit 7616242a2b37883f7322aaa1d2bd6cd0fed28315 ]
 
-In kvmppc_svm_page_in(), if uv_page_in() fails after
-kvmppc_uvmem_get_page() has succeeded, the secure device page is never
-released.  kvmppc_uvmem_get_page() sets a bit in kvmppc_uvmem_bitmap,
-allocates a kvmppc_uvmem_page_pvt struct, marks the GFN as
-KVMPPC_GFN_UVMEM_PFN, and calls zone_device_page_init() which sets
-refcount=1 and locks the page.  The subsequent goto out_finalize skips
-the *mig.dst assignment, so migrate_vma_finalize() is a no-op for the
-page, and none of those resources are ever reclaimed.
+When an SRv6 packet arrives on an interface enslaved to a VRF,
+vrf_ip6_rcv() sets IP6SKB_L3SLAVE in IP6CB, but decap_and_validate()
+has never set IPSKB_L3SLAVE in IPCB. The bit stayed clear in the
+common case, and with CONFIG_IPV6_MIP6 the leftover frag_max_size of
+a reassembled outer packet could even set it, with no VRF involved.
+Commit 44930446dde4 ("ipv6: seg6: clear IPv4 control block on IPIP
+decapsulation") then made the unreliable bit reliably clear.
 
-Each occurrence permanently consumes one entry from the firmware-bounded
-secure memory pool (kvmppc_uvmem_bitmap), leaks pvt, and leaves the GFN
-marked as secure — making it unusable for the lifetime of the VM.
+The effect of the missing flag is visible with End.DX4 when a
+delivery to a local address of the node reaches the socket lookup.
+For example, a UDP socket bound to the enslaved ingress interface
+does not receive any of the decapsulated packets, while an unbound
+socket outside the VRF does.
+This contradicts Documentation/networking/vrf.rst: by default the
+scope of an unbound UDP or TCP socket is limited to the default VRF.
 
-The twin __kvmppc_svm_page_out() already handles the analogous uv_page_out()
-failure correctly with unlock_page(dpage); __free_page(dpage).  Apply
-the same pattern here: unlock_page() followed by put_page(), which
-chains through free_zone_device_folio() into kvmppc_uvmem_folio_free()
-to clear the bitmap bit, free pvt, and reset the GFN state.
+Set IPSKB_L3SLAVE for IPv4 in decap_and_validate(), which already does
+the same for IPv6. The socket lookup then matches the decapsulated
+packet like any other packet received on that enslaved interface. Such
+a packet matches an unbound UDP or TCP socket only when
+udp_l3mdev_accept or tcp_l3mdev_accept is set.
 
-Reachable whenever uv_page_in() returns an error (e.g. UV pool
-exhaustion) on any POWER9/10 + Ultravisor/PEF system.
-
-Fixes: ca9f4942670c ("KVM: PPC: Book3S HV: Support for running secure guests")
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260913194421.31-1-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/book3s_hv_uvmem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv6/seg6_local.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/powerpc/kvm/book3s_hv_uvmem.c b/arch/powerpc/kvm/book3s_hv_uvmem.c
-index 5f6b3f80023de..296d910a7075d 100644
---- a/arch/powerpc/kvm/book3s_hv_uvmem.c
-+++ b/arch/powerpc/kvm/book3s_hv_uvmem.c
-@@ -770,8 +770,11 @@ static int kvmppc_svm_page_in(struct vm_area_struct *vma,
- 		if (spage) {
- 			ret = uv_page_in(kvm->arch.lpid, pfn << page_shift,
- 					gpa, 0, page_shift);
--			if (ret)
-+			if (ret) {
-+				unlock_page(dpage);
-+				put_page(dpage);
- 				goto out_finalize;
-+			}
- 		}
- 	}
+diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
+index 3c022d694a4ec..ddec0f26b2223 100644
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -140,10 +140,13 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
+ 		return false;
  
+ 	if (proto == IPPROTO_IPIP) {
++		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
+ 		int iif = IP6CB(skb)->iif;
+ 
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
+ 		IPCB(skb)->iif = iif;
++		if (l3slave)
++			IPCB(skb)->flags |= IPSKB_L3SLAVE;
+ 	} else if (proto == IPPROTO_IPV6) {
+ 		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
+ 		int iif = IP6CB(skb)->iif;
 -- 
 2.53.0
 
