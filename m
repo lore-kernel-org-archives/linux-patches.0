@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13984CE681;
-	Wed, 30 Sep 2026 16:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117A54CE67C;
+	Wed, 30 Sep 2026 16:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785367; cv=none; b=MfztOsC8LCY4TevJwD4Ed90FZhOwRcDrWzy9kvfIS79RXBdK5JTM1JmW5dYhG8CL0rHXGwx+0ob85wj0pmHYsSVyotNk8uUoDvJ9yQelY6I7eOKpCMJUin7sYZCyqBsjQ59jE88OdV4ZNImLcE8/flHk1rVxQOkEH10Rvl1URHY=
+	t=1790785371; cv=none; b=gTbfak6uyzGS+/z5f4SkbzNoA+4DxfdAGDHpZwgRFbBRELT2iUGdnLAg+WJQcdt+QtGgq8XG2YZtPpsxWwefbxurpwDIJKgSZd1Z4OMdZkpLRRNjzYaL1ON1+I4v9Kz3cOlCwIwknRJ5kfoHOPA5weHNtIjfeMuMKJONAiXFALc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785367; c=relaxed/simple;
-	bh=m0MyIjTWDHsnPpIlXlB/11hQhxf2j92yC/QtneZFCng=;
+	s=arc-20240116; t=1790785371; c=relaxed/simple;
+	bh=VW8zsiCBYUf1ThrzvzlqjEM+RhTkJHvVQbo2Zzdw86Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUJvVnXSqOb90vKh54EyizPkVmNUr8WUlWp9IfJy/ZfPXRf4fLmViNLOfwrcOZvMbdKK1n/ahUUVsgy2Rlyphe7zBVqijVtVA2e6kD4+kcwAKnWiQfCnZqEHqRgxkhmBwvDmVxMV27d7r0MUshTlM6BHmlWIUPwItx2D90KMz/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJWufzgf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bVZpAbNEdmVgBKTlsw8427SD2B1wpjLaXi2yWBNBzyVsS+adKHuazNSiuzpfSOuJ0ZG1YGhpsEHVZT6hWq+wUVbATsDvVVWMkeCGMZT+jGn5WGJ9ue/hqOWMNCFIvohCwca9EMjASyKjvZ2x8ZR872VTJWW45Zq9ZWkl1/1EYAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjiXASI1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJWufzgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA651F000FF;
-	Wed, 30 Sep 2026 16:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjiXASI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3045D1F0089C;
+	Wed, 30 Sep 2026 16:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785359;
-	bh=Ct18YIGBayukmvPX/J7PmzQvu/yDTPe1F1+n/MV3njM=;
+	s=korg; t=1790785364;
+	bh=3xm3trFg0r80SDvtuLEuYtXICpgGAwDEzEFCQ0aOQ1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJWufzgfpY1Lslj6kdX0waEfrcTTN6A3RLPDpLMucoWuIXML8km1PRcsERhMioQCN
-	 K6uIiFVUxPVK6AjjSANGUfEk4wx7yFAzvo/4gvaSY8C22FLnLUWytgjj6Hp23tIRfx
-	 ccW4SWsIYwaKdbzVEma7dvSjzhsOBT+o7qEUiaEM=
+	b=tjiXASI1X+y8FsgLRp7MF1n4mubNRrjZUyI5u/6oZpZvJoOCncA4IVRfmYznyxpIp
+	 GeZPSr7FZWZTzaIPp7cgHbwA7C0q/ZzSvynr7DnB2mfwVX260rAwYI1bukcKppuW/o
+	 w66BpsTWOJhe+nmYGK/2YmU9JwkkFhUGLa+BgYYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thibault Ferrante <thibault.ferrante@canonical.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	hybris@mojatatu.ai,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 480/982] selftests/powerpc/tm: Fix tcheck() reading uninitialised CR value
-Date: Wed, 30 Sep 2026 17:20:16 +0200
-Message-ID: <20260930152427.091130810@linuxfoundation.org>
+Subject: [PATCH 6.1 482/982] net/sched: cls_api: Dont replay RTM_GETCHAIN in tc_ctl_chain().
+Date: Wed, 30 Sep 2026 17:20:18 +0200
+Message-ID: <20260930152427.133149721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,61 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thibault Ferrante <thibault.ferrante@canonical.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ed28b16eab705071d28edaace47189c2eb3aa108 ]
+[ Upstream commit dff39930ad5e53d202bfdfb14687d1d2fd753b4d ]
 
-tcheck() is used to check the current transaction state (active,
-suspended, doomed) via the "tcheck" instruction, which writes its
-result into CR field 0. The inline asm declared a GPR output operand
-for this result but never actually moved the CR into it.
+If a netlink socket sends RTM_GETCHAIN requests repeatedly
+without recv()ing the responses, tc_ctl_chain() hogs CPU and
+triggers Hung Task splat. [0]
 
-Every caller (tcheck_doomed(), tcheck_active(), tcheck_suspended(),
-tcheck_transactional()) has effectively been testing bits of an unrelated,
-arbitrary register value since this helper was introduced.
-The "& 4" mask discards the TDOOMED and TS_lsb (suspended) bits before
-they ever reach the callers, so tcheck_doomed() and tcheck_suspended()
-can never return true, and tcheck_transactional() degrades to being
-equivalent to tcheck_active().
+As caught in the stack trace, netlink_attachskb() could confuse
+tc_ctl_chain() by returning -EAGAIN when the userspace netlink
+socket's receive buffer is full.
 
-Fix tcheck() to actually move CR into the output register with mfcr,
-and widen the mask from "& 4" to "& 0xf" so the full CR0 nibble
-(TDOOMED | TS_msb | TS_lsb | reserved) is preserved for the callers.
+The replay: label exists since commit 32a4f5ecd738 ("net: sched:
+introduce chain object to uapi") but was not used initially.
 
-This bug has been present since tcheck() was introduced.
+Since commit 9f407f1768d3 ("net: sched: introduce chain templates"),
+the label is needed for RTM_NEWCHAIN because tcf_proto_lookup_ops()
+may release RTNL to call request_module().
 
-Link: https://bugs.launchpad.net/bugs/2107442
-Fixes: 8e03bd4e70b6 ("selftests/powerpc: Add TM tcheck helpers in C")
-Signed-off-by: Thibault Ferrante <thibault.ferrante@canonical.com>
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/all/364996ce-aba2-4213-8d20-7dd481b43fe6@linux.ibm.com/
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260907215420.1258678-1-thibault.ferrante@canonical.com
+However, the replay logic is unnecessary for RTM_GETCHAIN.
+
+Let's apply the replay logic only for RTM_NEWCHAIN.
+
+[0]:
+INFO: task repro:1018 is blocked on a mutex likely owned by task repro:1022.
+task:repro           state:R  running task     stack:14096 pid:1022  tgid:1014  ppid:961    task_flags:0x400040 flags:0x00080000
+Call Trace:
+ <TASK>
+ ? clockevents_program_event (kernel/time/clockevents.c:372)
+ ? pskb_expand_head (net/core/skbuff.c:615)
+ ? skb_release_data (net/core/skbuff.c:1122)
+ ? netlink_attachskb (./include/linux/skbuff.h:1323 ./include/linux/skbuff.h:1332 net/netlink/af_netlink.c:1232)
+ ? __netlink_lookup (./include/linux/rcupdate.h:882 ./include/linux/rhashtable.h:711 net/netlink/af_netlink.c:499)
+ ? tc_chain_notify (net/sched/cls_api.c:3045)
+ ? tc_chain_notify (./include/linux/skbuff.h:1384 net/sched/cls_api.c:3041)
+ ? netlink_unicast (net/netlink/af_netlink.c:1335)
+ ? rtnl_unicast (./include/net/netlink.h:1198 net/core/rtnetlink.c:985)
+ ? tc_ctl_chain (net/sched/cls_api.c:3242)
+ ? rtnetlink_rcv_msg (net/core/rtnetlink.c:7146)
+ ? netlink_unicast (net/netlink/af_netlink.c:1354)
+ ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:7177)
+ ? netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ ? netlink_unicast (net/netlink/af_netlink.c:1319)
+ ? netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ? __sock_sendmsg (net/socket.c:800)
+ ? __sys_sendto (net/socket.c:2281)
+ ? __x64_sys_sendto (net/socket.c:2288 net/socket.c:2284 net/socket.c:2284)
+ ? do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ ? entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
+
+Fixes: 2ed9db3074fc ("net: sched: cls_api: fix dead code in switch")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: hybris@mojatatu.ai
+Link: https://patch.msgid.link/20260908205537.863484-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/tm/tm.h | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/powerpc/tm/tm.h b/tools/testing/selftests/powerpc/tm/tm.h
-index c03c6e7788767..6024ce4ba6ffd 100644
---- a/tools/testing/selftests/powerpc/tm/tm.h
-+++ b/tools/testing/selftests/powerpc/tm/tm.h
-@@ -105,8 +105,12 @@ static inline bool failure_is_nesting(void)
- static inline int tcheck(void)
- {
- 	long cr;
--	asm volatile ("tcheck 0" : "=r"(cr) : : "cr0");
--	return (cr >> 28) & 4;
-+	asm volatile("tcheck 0;"
-+		     "mfcr %0;"
-+		     : "=r"(cr)
-+		     :
-+		     : "cr0");
-+	return (cr >> 28) & 0xf;
- }
- 
- static inline bool tcheck_doomed(void)
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 0db96c920ea58..341128a00420c 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -2998,7 +2998,7 @@ static int tc_ctl_chain(struct sk_buff *skb, struct nlmsghdr *n,
+ 	tcf_chain_put(chain);
+ errout_block:
+ 	tcf_block_release(q, block, true);
+-	if (err == -EAGAIN)
++	if (err == -EAGAIN && n->nlmsg_type == RTM_NEWCHAIN)
+ 		/* Replay the request. */
+ 		goto replay;
+ 	return err;
 -- 
 2.53.0
 
