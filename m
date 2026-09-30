@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B724251DDF3;
-	Wed, 30 Sep 2026 17:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F2950B43C;
+	Wed, 30 Sep 2026 17:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790842; cv=none; b=arzJWRl3vD0Vz2ZQj0jIldBj5PrdJbUccRPN8LXHJ/UM13RGnrJ0QQxOZhnNPHqeGcWKZEXVz9WKRrODu/bbA+5ksDBiOeXQIewrPVIpOg7vkDNVMoBa3A7uqnA41QRRJ9UukrvTXkO1brsusHusBKY9aPdrDSelUQHV5BM12S0=
+	t=1790790845; cv=none; b=i9mxl0L7kkUIt1IZniP15MCaAiIjodnev2+S5/ODPkZ82R/NkZaF+j5SXK2Fj4rDGp3jiQz8V7B2uPV5tj9BFoomI7AZJG8WMq4sTA8VB9ynLKxdmgu2zOBxQYg/2iUIbdz70Rads4z5OCuj6zC3N67yuBzu/VMmKDWn93wWOrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790842; c=relaxed/simple;
-	bh=xWOpM+yEzQuXnaWRUoEivT5i8EjpQ9h7jFdubqFvU5s=;
+	s=arc-20240116; t=1790790845; c=relaxed/simple;
+	bh=uZ3VBo2aOFZ88UH0XmgW049B53EpQnmLapq6gCJQRsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tHItznGSbKHPt2YwvJwc4XsH4hpov4LWtFu1CztCM3Xy3rtXkLuPGaQ5VaVJVdf5iVH5YvpKQdzspJQSFEdiSJFF31+fM0lcICrPZKHbHcG07SzPQSBfRYaUUFfeOgw/X0qOatLC8TyAvnCuOkfjjF9yLTqanQT+KokpwMEvwvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ky2mI5JW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LaygHPi3ARGuwhQXCGR18urwSM82ibc0nVTWG8v/51JCa2C5trLOK8J+IZRAadl9cE5dFYMghYUBw3jfNhnA00ydnelACi4Ur4o/UmN9gEc7KW1IeYRE76yS+rWE6pMIdGFbVHfCXzkeJBu/5VnuO/8umF6HEUDKptzIvmSqvmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQABRURC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ky2mI5JW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D971C1F000FF;
-	Wed, 30 Sep 2026 17:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQABRURC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA4C1F000FF;
+	Wed, 30 Sep 2026 17:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790841;
-	bh=Wq5/E8EN6zlKEoi1ASOIQ6N7175gkWbqzEDOT0ELdN4=;
+	s=korg; t=1790790844;
+	bh=qSlrAYhFXwkHy9ctoe4tkHu5bnvtTVvfPlld34LoOrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ky2mI5JWY7LbZxNSgm8ZceN2Z/i3T6sp20TZAS8bQs681iVjoPLZWmI59XIBKkuQ5
-	 pvS+ka3NWe7jZTNQ7CzY74KcGYAR6+LmVVGH+4ONPSB1r2bvOrwjacI4/LKCbO06H+
-	 LKeK6MmyPDVF4w3EhpeXP9P4D8PqrYYR3fF2fwB4=
+	b=FQABRURC9n9Y6OqC/KigFX3Vtja20c4Iexhp2PMijH/cR6/ju2zVy6kA8B5NyetWd
+	 1ixAFdwUHOJTWWfZ/+YDWtBTOZflMat+5F8ARXSIFB8cW8fJGCP5e4iNeMg10mL+9r
+	 bttL2JqtRTE4NvriEkNU2G5G1q+MVw3/pPUk+dDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/752] mmc: davinci: fix mmc_add_host order in probe
-Date: Wed, 30 Sep 2026 17:19:24 +0200
-Message-ID: <20260930152400.202125899@linuxfoundation.org>
+Subject: [PATCH 5.15 077/752] ACPICA: Fix use-after-free in acpi_ds_terminate_control_method()
+Date: Wed, 30 Sep 2026 17:19:07 +0200
+Message-ID: <20260930152359.832169372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,61 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit d04e0151d316edbdb4f0397a9b92a1936e4a1421 ]
+[ Upstream commit 945e87267cfd90937b3c637f87324cbb56998b72 ]
 
-mmc_add_host() makes the host visible to the MMC core. Register the
-interrupt handlers and advertise MMC_CAP_SDIO_IRQ before that, so the
-core cannot start using the host before IRQ handling is set up.
+Fix use-after-free issue in acpi_ds_terminate_control_method() by
+clearing references to method locals and arguments.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Link: https://github.com/acpica/acpica/commit/36f22a94cb1b
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/8730924.NyiUUSuA9g@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/acpi/acpica/dsmethod.c | 43 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 845604a96bc93..0f72c153e611a 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1305,14 +1305,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 		goto cpu_freq_fail;
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index f97286c6cb176..7986c74a55376 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -698,6 +698,8 @@ void
+ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
+ 				 struct acpi_walk_state *walk_state)
+ {
++	u32 i;
++	struct acpi_namespace_node *ref_node;
+ 
+ 	ACPI_FUNCTION_TRACE_PTR(ds_terminate_control_method, walk_state);
+ 
+@@ -708,6 +710,47 @@ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
  	}
  
--	ret = mmc_add_host(mmc);
--	if (ret < 0)
--		goto mmc_add_host_fail;
--
- 	ret = devm_request_irq(&pdev->dev, irq, mmc_davinci_irq, 0,
- 			       mmc_hostname(mmc), host);
- 	if (ret)
--		goto request_irq_fail;
-+		goto mmc_add_host_fail;
- 
- 	if (host->sdio_irq >= 0) {
- 		ret = devm_request_irq(&pdev->dev, host->sdio_irq,
-@@ -1322,6 +1318,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 			mmc->caps |= MMC_CAP_SDIO_IRQ;
- 	}
- 
-+	ret = mmc_add_host(mmc);
-+	if (ret < 0)
-+		goto mmc_add_host_fail;
+ 	if (walk_state) {
++		/*
++		 * Check if the return value is a ref_of reference to a method local
++		 * or argument. If so, clear the reference to avoid use-after-free
++		 * when the walk state is deleted.
++		 */
++		if (walk_state->return_desc &&
++		    (walk_state->return_desc->common.type ==
++		     ACPI_TYPE_LOCAL_REFERENCE)
++		    && (walk_state->return_desc->reference.class ==
++			ACPI_REFCLASS_REFOF)) {
++			ref_node = walk_state->return_desc->reference.object;
++			if (ref_node) {
 +
- 	rename_region(mem, mmc_hostname(mmc));
++				/* Check against method locals */
++				for (i = 0; i < ACPI_METHOD_NUM_LOCALS; i++) {
++					if (ref_node ==
++					    &walk_state->local_variables[i]) {
++						acpi_ut_remove_reference
++						    (walk_state->return_desc);
++						walk_state->return_desc = NULL;
++						break;
++					}
++				}
++
++				/* Check against method arguments if not already cleared */
++				if (walk_state->return_desc) {
++					for (i = 0; i < ACPI_METHOD_NUM_ARGS;
++					     i++) {
++						if (ref_node ==
++						    &walk_state->arguments[i]) {
++							acpi_ut_remove_reference
++							    (walk_state->
++							     return_desc);
++							walk_state->
++							    return_desc = NULL;
++							break;
++						}
++					}
++				}
++			}
++		}
  
- 	dev_info(mmc_dev(host->mmc), "Using %s, %d-bit mode\n",
-@@ -1330,8 +1330,6 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
+ 		/* Delete all arguments and locals */
  
- 	return 0;
- 
--request_irq_fail:
--	mmc_remove_host(mmc);
- mmc_add_host_fail:
- 	mmc_davinci_cpufreq_deregister(host);
- cpu_freq_fail:
 -- 
 2.53.0
 
