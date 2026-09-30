@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB90523792;
-	Wed, 30 Sep 2026 17:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302B952ED30;
+	Wed, 30 Sep 2026 17:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789717; cv=none; b=Tu9dNXvjXpQyCsY9RNxrxcKlgsWmbmbeSB1Y5o1StclL0t+wkYxlSPxr3Z0UP3JT9132mnPCVZZk/qYogZYIO8XrFhegh7ZYOd+E0XdcSmtOtZabdaPlAYS54WnahmCaIHZYdRKhq4TBLOsu0zItHPRz5++xF+/kWeJsGO2z5xg=
+	t=1790789720; cv=none; b=ZjQjkibF1TVU/w2QXJW7JKvmW49UHBgFYCVLc9cfIgE2qeZroVQ7SeakBn/6q38Z81lbn4VgYV3YYt0i+toMjD5ru4jXdbjLfiQooVQjOZmf/HkCF/9VB/kvT3CfhWOsx8Pvsap/VjGQbxONFwmj2AeUq3DVmM2cTm+IleansSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789717; c=relaxed/simple;
-	bh=eMoNUJ7xaiDARXQkfAQIKrQvrfdMZI0FRphkQDYtcP0=;
+	s=arc-20240116; t=1790789720; c=relaxed/simple;
+	bh=nPA08HrPkmLOws5ynjoB53O+dSGqYkROak/9UEnAQwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQ482QrqKizUEjoaFfGSIxKltWYvCLw/6oP9hE9QZ40K8jh/moUevl6UjnBDcQyhSN3TLkmEuS45FT0AJYzOZSOBaaF8GII2PBM0L9daDIh4UjvufkgE+VMTM28lRxh6Bx9B6YUDUTTB8NKefYjPV7WhStsTVSKEoLivnTWfssY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5/DZwyf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZENmay8EJJkYBoJAB3o4/uq68j2DMLaFlsj2L8lbr9jAaEOvnl4OqOeT72RaQyP8aELxIN9k8MjapSNkM1iATugkmfkQ8QNt6hIe8++OsKrL7BUx83O9CJ1dnYaXMYW18nyOLrzm34RvdhrClK9coyCJorCfNk9Fzta2KBKj3zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z70+nfvu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5/DZwyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F151F0089B;
-	Wed, 30 Sep 2026 17:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z70+nfvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787181F008BC;
+	Wed, 30 Sep 2026 17:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789715;
-	bh=JcFrECodEQ1zsXpLBSWbOM7KgmjcaI10tuodamljzFU=;
+	s=korg; t=1790789718;
+	bh=Fds/wD+oNPr9ZkSyqs4VenPq60Pvm1COc8uoCS7v7mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y5/DZwyfPn2r0d3t2R7pECNxGlDKo9y+jrtBJIV3jnYBqeXH6T+8isbSjFpnZAhTm
-	 2Y1Bm7NGZuzpANntgK+K673aV0A4WgmfDqhLUALIhmw/wkNExjtdhAmtBw3YUBxVpp
-	 8UjBGz1Vawem0pEXWZn4GyIg2OIes3Ep/AcJlaoQ=
+	b=Z70+nfvuiyH1YyOVEicZ/8AvFsWRckmiWzU/OQ56irqxceULGa/Q71rFz/L28kOUv
+	 7RJ9onjfqDXEUMGAKS4pdPwyQ5iJfde+7R13AEQzP5id/Hwz00uXl+LPpAsh+W0f/g
+	 pW5a+S4MY1ygqhMJ0k8kzsFQpgVbWaLFIaRgsBEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Tariq <alitariq45892@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 574/877] PCI: starfive: Fix resource leaks on error paths in host_init()
-Date: Wed, 30 Sep 2026 17:24:45 +0200
-Message-ID: <20260930152427.028190966@linuxfoundation.org>
+Subject: [PATCH 6.12 575/877] iommu/msm: Use helper function devm_clk_get_prepared()
+Date: Wed, 30 Sep 2026 17:24:46 +0200
+Message-ID: <20260930152427.049539220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,74 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Tariq <alitariq45892@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 22877a061f81c5d58041e384b3131684bec636b9 ]
+[ Upstream commit afc0cbc6e25b37dc9ba11d415ea6858902a7f04b ]
 
-starfive_pcie_host_init() acquires the PHY, clocks/resets, and an
-optional regulator in sequence, but does not correctly unwind these
-resources when a later step fails.
+Since commit 7ef9651e9792 ("clk: Provide new devm_clk helpers for prepared
+and enabled clocks"), devm_clk_get() and clk_prepare() can now be replaced
+by devm_clk_get_prepared() when driver prepares the clocks for the whole
+lifetime of the device. Moreover, it is no longer necessary to unprepare
+the clocks explicitly.
 
-If starfive_pcie_clk_rst_init() fails after the PHY has already been
-successfully enabled, the function returns directly without disabling
-the PHY, leaking it and leaving it powered.
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20250103113059.463033-1-zhangheng@kylinos.cn
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 
-If regulator_enable() fails for the optional vpcie3v3 regulator, the
-failure is only logged; the function falls through and returns
-success, leaving the driver believing the regulator is enabled while
-continuing to configure PCIe hardware that may be unpowered. This
-also leaves the clocks and PHY enabled with nothing to clean them up.
+Backport to 6.12: remove the .remove_new callback entry used by this
+stable tree instead of the upstream .remove entry. The callback only
+unprepares clocks, which devm_clk_get_prepared() now handles. Keep
+the remaining upstream changes to prepare the probe error paths for
+535a200220ca ("iommu/msm: Unwind probe state on registration failure").
 
-Disable the PHY on the clk/reset failure path, and disable the
-clocks/resets and PHY, then return the error, if the regulator fails
-to enable.
-
-Build-tested and boot-tested on StarFive VisionFive 2 v1.2A
-
-Fixes: 05a75df4182e ("PCI: starfive: Use regulator APIs to control the 3v3 power supply of PCIe slots")
-Fixes: 39b91eb40c6a ("PCI: starfive: Add JH7110 PCIe controller")
-Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260716102053.185276-1-alitariq45892@gmail.com
+Stable-dep-of: 535a200220ca ("iommu/msm: Unwind probe state on registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/plda/pcie-starfive.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iommu/msm_iommu.c |   51 +++++++++-------------------------------------
+ 1 file changed, 11 insertions(+), 40 deletions(-)
 
---- a/drivers/pci/controller/plda/pcie-starfive.c
-+++ b/drivers/pci/controller/plda/pcie-starfive.c
-@@ -304,12 +304,14 @@ static int starfive_pcie_host_init(struc
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -725,47 +725,32 @@ static int msm_iommu_probe(struct platfo
+ 	iommu->dev = &pdev->dev;
+ 	INIT_LIST_HEAD(&iommu->ctx_list);
  
- 	ret = starfive_pcie_clk_rst_init(pcie);
- 	if (ret)
--		return ret;
-+		goto err_disable_phy;
+-	iommu->pclk = devm_clk_get(iommu->dev, "smmu_pclk");
++	iommu->pclk = devm_clk_get_prepared(iommu->dev, "smmu_pclk");
+ 	if (IS_ERR(iommu->pclk))
+ 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->pclk),
+ 				     "could not get smmu_pclk\n");
  
- 	if (pcie->vpcie3v3) {
- 		ret = regulator_enable(pcie->vpcie3v3);
--		if (ret)
-+		if (ret) {
- 			dev_err_probe(dev, ret, "failed to enable vpcie3v3 regulator\n");
-+			goto err_clk_rst;
-+		}
+-	ret = clk_prepare(iommu->pclk);
+-	if (ret)
+-		return dev_err_probe(iommu->dev, ret,
+-				     "could not prepare smmu_pclk\n");
+-
+-	iommu->clk = devm_clk_get(iommu->dev, "iommu_clk");
+-	if (IS_ERR(iommu->clk)) {
+-		clk_unprepare(iommu->pclk);
++	iommu->clk = devm_clk_get_prepared(iommu->dev, "iommu_clk");
++	if (IS_ERR(iommu->clk))
+ 		return dev_err_probe(iommu->dev, PTR_ERR(iommu->clk),
+ 				     "could not get iommu_clk\n");
+-	}
+-
+-	ret = clk_prepare(iommu->clk);
+-	if (ret) {
+-		clk_unprepare(iommu->pclk);
+-		return dev_err_probe(iommu->dev, ret, "could not prepare iommu_clk\n");
+-	}
+ 
+ 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	iommu->base = devm_ioremap_resource(iommu->dev, r);
+ 	if (IS_ERR(iommu->base)) {
+ 		ret = dev_err_probe(iommu->dev, PTR_ERR(iommu->base), "could not get iommu base\n");
+-		goto fail;
++		return ret;
+ 	}
+ 	ioaddr = r->start;
+ 
+ 	iommu->irq = platform_get_irq(pdev, 0);
+-	if (iommu->irq < 0) {
+-		ret = -ENODEV;
+-		goto fail;
+-	}
++	if (iommu->irq < 0)
++		return -ENODEV;
+ 
+ 	ret = of_property_read_u32(iommu->dev->of_node, "qcom,ncb", &val);
+ 	if (ret) {
+ 		dev_err(iommu->dev, "could not get ncb\n");
+-		goto fail;
++		return ret;
+ 	}
+ 	iommu->ncb = val;
+ 
+@@ -780,8 +765,7 @@ static int msm_iommu_probe(struct platfo
+ 
+ 	if (!par) {
+ 		pr_err("Invalid PAR value detected\n");
+-		ret = -ENODEV;
+-		goto fail;
++		return -ENODEV;
  	}
  
- 	if (pcie->reset_gpio)
-@@ -379,6 +381,13 @@ static int starfive_pcie_host_init(struc
- 		dev_info(dev, "port link down\n");
+ 	ret = devm_request_threaded_irq(iommu->dev, iommu->irq, NULL,
+@@ -791,7 +775,7 @@ static int msm_iommu_probe(struct platfo
+ 					iommu);
+ 	if (ret) {
+ 		pr_err("Request IRQ %d failed with ret=%d\n", iommu->irq, ret);
+-		goto fail;
++		return ret;
+ 	}
  
- 	return 0;
-+
-+err_clk_rst:
-+	starfive_pcie_clk_rst_deinit(pcie);
-+err_disable_phy:
-+	starfive_pcie_disable_phy(pcie);
-+
-+	return ret;
+ 	list_add(&iommu->dev_node, &qcom_iommu_devices);
+@@ -800,23 +784,19 @@ static int msm_iommu_probe(struct platfo
+ 				     "msm-smmu.%pa", &ioaddr);
+ 	if (ret) {
+ 		pr_err("Could not add msm-smmu at %pa to sysfs\n", &ioaddr);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	ret = iommu_device_register(&iommu->iommu, &msm_iommu_ops, &pdev->dev);
+ 	if (ret) {
+ 		pr_err("Could not register msm-smmu at %pa\n", &ioaddr);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	pr_info("device mapped at %p, irq %d with %d ctx banks\n",
+ 		iommu->base, iommu->irq, iommu->ncb);
+ 
+ 	return ret;
+-fail:
+-	clk_unprepare(iommu->clk);
+-	clk_unprepare(iommu->pclk);
+-	return ret;
  }
  
- static const struct plda_pcie_host_ops sf_host_ops = {
+ static const struct of_device_id msm_iommu_dt_match[] = {
+@@ -824,20 +804,11 @@ static const struct of_device_id msm_iom
+ 	{}
+ };
+ 
+-static void msm_iommu_remove(struct platform_device *pdev)
+-{
+-	struct msm_iommu_dev *iommu = platform_get_drvdata(pdev);
+-
+-	clk_unprepare(iommu->clk);
+-	clk_unprepare(iommu->pclk);
+-}
+-
+ static struct platform_driver msm_iommu_driver = {
+ 	.driver = {
+ 		.name	= "msm_iommu",
+ 		.of_match_table = msm_iommu_dt_match,
+ 	},
+ 	.probe		= msm_iommu_probe,
+-	.remove_new	= msm_iommu_remove,
+ };
+ builtin_platform_driver(msm_iommu_driver);
 
 
