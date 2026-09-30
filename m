@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846D84F648A;
-	Wed, 30 Sep 2026 15:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099214CCDC1;
+	Wed, 30 Sep 2026 15:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782701; cv=none; b=rqK1bqVU4veUgflATkj3r/JCUmCVRd3jc7N/VlBzxgXdnr83PH/RYYHBDy7JypSaH4TU0BewaFuGQWg9I+tfFZS6X87BvhDbM+AbIbOwQru5ywbuhTT3O6z1wcSai5GHjnLkp0rATSwBzOUZepNhZM8WvY2ohHhJ7IoPSxrPI68=
+	t=1790782700; cv=none; b=bHsxgYxe7D32GVm5LMDOgECwm449LIIVBPvGODfehpAXoyAiZax2K1hwQM5RLxi9g1l9njm7jqyfpjIxjpM6hbqNWhbpBqiUcTZOic7ggNRno7QAphZ+iDLbSp5kn9+8cS9ZTJ0KqQw/AA3EHE+/wy8Ykz9rYRYlh5Vs9bz+Ggk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782701; c=relaxed/simple;
-	bh=wzBluChLDI9USRr1B8A49a7DsaXx+tn1wKOe+WTHn1g=;
+	s=arc-20240116; t=1790782700; c=relaxed/simple;
+	bh=XiY6qkN+qI+DhohqWBU3k4tcbnMIYAFqmHhGPCgu8pE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGyOBwq13ViKnX9ka6e+CGHaFjYHEfZisGYZtGsA+v6gnUChGs1ucO44EWjGVE4gazFuoD9XycehiIBDq/I5qP4t6ws/3HMXYe4tstfVbAgV2R7/nya5nypxf1otWzUH6bCuGsr4TUtARJp/78EhGNw95/7uKI4eMGU7LYnif9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKrd5h4z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E+TSxBDDezageyC65rl4TzesqUNJzZhujSpt5FQjF73OpdU2HHKioVkG2XaLjP1YuLisy5ue4Hns+hKktc7/ong8QaarlW6qS8LoBmd3WjQInQbsSn9SG/hgbbPTHt3+k13FKFlghkNIwK8LKxmL2CL3be+Snlkuxn67ybuXAN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1oJGAtf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKrd5h4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BEA1F0089A;
-	Wed, 30 Sep 2026 15:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1oJGAtf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9191F000FF;
+	Wed, 30 Sep 2026 15:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782683;
-	bh=T6eG6neEhqfrlNvCncuLWU0mafWWSTCwavjfATSkw+s=;
+	s=korg; t=1790782678;
+	bh=K03rCuUC8JgJfCSlAp4Zq+9li2oKL/azdjxN/CoZz2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cKrd5h4zdglsRhJf6S2ewl+MIIxd9oY2UaQUanj8ydjIamdghBApnSiBpIWRP94LU
-	 THn1bssraTMYVC8okH4krf9w7u5EQCg7IJrQ2gq/x0xHwOEtF56FqjE+IXJDzBGAvn
-	 Wo8JysR8SdV+xz1vJZsSkI4Ap1l8A6P8BuNaRU/A=
+	b=z1oJGAtfPOoDjdE10fwJRkboeKsCnTMt3EapoCCHJvAeDFkFWfwN+CHdpmS1O9hZT
+	 fnv7YeIXcUxaUulzM10UbwRxTx/U4+vhfKWND4wSPc4gLvMJPDW+IvBE5K5PSMSx8P
+	 nq77yJyly9/HzZ1ntYJccvxvQA4RwHLmePy7u0To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Galen Hassen <rwekyes@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/595] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
-Date: Wed, 30 Sep 2026 17:20:26 +0200
-Message-ID: <20260930152350.597603902@linuxfoundation.org>
+Subject: [PATCH 5.10 131/595] scsi: bfa: Reduce kernel stack usage in bfa_fcs_lport_fdmi_build_portattr_block()
+Date: Wed, 30 Sep 2026 17:20:24 +0200
+Message-ID: <20260930152350.556123589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,73 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Galen Hassen <rwekyes@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
+[ Upstream commit 57a6ed0b41677ccc5e28cc0976e495c1dfa33747 ]
 
-The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
-Conexant SN6140 codec. The internal microphone is on pin 0x1a but
-the BIOS configures it with pin default 0x95a60120, which includes
-a jack detection bit that causes the kernel to treat it as an
-unplugged external mic rather than a fixed internal mic.
+bfa_fcs_fdmi_get_portattr() gets inlined into multiple places and has
+two fairly large variables on the stack, to the point of causing a
+warning in some randconfig builds:
 
-Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
-setting the connectivity bits to indicate a fixed/always-connected
-device. This allows the internal microphone to be correctly
-identified and used.
+drivers/scsi/bfa/bfa_fcs_lport.c:2198:1: error: stack frame size (1560) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_portattr_block' [-Werror,-Wframe-larger-than]
+ 2198 | bfa_fcs_lport_fdmi_build_portattr_block(struct bfa_fcs_lport_fdmi_s *fdmi,
+      | ^
+drivers/scsi/bfa/bfa_fcs_lport.c:1856:1: error: stack frame size (1600) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_rhba_pyld' [-Werror,-Wframe-larger-than]
+ 1856 | bfa_fcs_lport_fdmi_build_rhba_pyld(struct bfa_fcs_lport_fdmi_s *fdmi, u8 *pyld)
+      | ^
 
-Signed-off-by: Galen Hassen <rwekyes@gmail.com>
-Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Mark the inner function as noinline_for_stack to keep it separate from
+the other variables and prevent multiple copies of the same variable to
+get inlined here.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260611125601.3385418-1-arnd@kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/scsi/bfa/bfa_fcs_lport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 4d0bd1903ccbd..6a7fcb4c77dda 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -237,6 +237,7 @@ enum {
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
- 	CXT_PINCFG_SWS_JS201D,
-+	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
- 	CXT_PINCFG_TOP_SPEAKER,
- 	CXT_FIXUP_HP_A_U,
- 	CXT_FIXUP_ACER_SWIFT_HP,
-@@ -771,6 +772,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
- 	{}
- };
+diff --git a/drivers/scsi/bfa/bfa_fcs_lport.c b/drivers/scsi/bfa/bfa_fcs_lport.c
+index 3486e402bfc1f..c61008224745a 100644
+--- a/drivers/scsi/bfa/bfa_fcs_lport.c
++++ b/drivers/scsi/bfa/bfa_fcs_lport.c
+@@ -2665,7 +2665,7 @@ bfa_fcs_fdmi_get_hbaattr(struct bfa_fcs_lport_fdmi_s *fdmi,
  
-+/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
-+static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
-+	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
-+	{}
-+};
-+
- /* SuoWoSi/South-holding JS201D with sn6140 */
- static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
- 	{ 0x16, 0x03211040 }, /* hp out */
-@@ -962,6 +969,10 @@ static const struct hda_fixup cxt_fixups[] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = cxt_pincfg_sws_js201d,
- 	},
-+	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
-+	},
- 	[CXT_PINCFG_TOP_SPEAKER] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = cxt_fixup_sirius_top_speaker,
-@@ -1067,6 +1078,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
-+	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
- 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
+ }
+ 
+-static void
++static noinline_for_stack void
+ bfa_fcs_fdmi_get_portattr(struct bfa_fcs_lport_fdmi_s *fdmi,
+ 			  struct bfa_fcs_fdmi_port_attr_s *port_attr)
+ {
 -- 
 2.53.0
 
