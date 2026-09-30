@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DF15111B5;
-	Wed, 30 Sep 2026 16:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200695111B5;
+	Wed, 30 Sep 2026 16:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786278; cv=none; b=kdmKfIoYnJdAw4kkVQZKNRDHNKHalpMYy6r6XWu9k4jVBgXUl9wYk7kfEVdRXklMgnXWcgJTo2Mlho9LHXAXxns3DLNA9+woCh8e9flIzkhfhEn0SXzxPDfWIhaRkpU2LZlw/JztK7BwiB0qItWN44stQ/qXLhaNrTNNgQ2PL+Q=
+	t=1790786281; cv=none; b=oQhRkpN5ZueiBbyYjQPyhggNSJm569ZfEIbnm00xDHXXp7nxJmoePpF/2Q9O0dvMFQL06zXR5YUcDv+9cWD0lsAGQTAckZwTUpEMADzR5viBjFl2/hDtud0wciRMzLibDOLhu5wqZr5e0x2z2X5sX8q4U6AS0mj9sF3+plOBCOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786278; c=relaxed/simple;
-	bh=bTrCvHgtJSyDn+FStcmlcv29mbmxg5I1y8cHfcpcELI=;
+	s=arc-20240116; t=1790786281; c=relaxed/simple;
+	bh=LHUvmqOJYdu7SLAd3zG1dCSd/u2+2P0swlY9y4A8UIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsLTpN1fNXXaVaOmFC0RxQMcGFwIgOJ5ezghU4ZDYaSNT5dvD1fEMUF6zm/rzAp9D7RT/7JUzhRCnqgD3fJnqjJLzpY59Lg6Ohg7OOjtk+atZf8sUjFOGZWXl69OE4JM1YF4TlrFiAxtrvBaeWd97Rnb9MilKTZswmjV0JYE8Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PejvviHo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F8kV3IHU3Z+r2i7uCE75sagRtifX68U1omWaf2M6dXvCEjVdb0+iFuIAMTxX13AO6JeYX0e/P+8JGAzOqEJhhh2jZtLfZqfTyQah/ujBeZ8oSoVTvl26KZzr0H6t6e7dJcE9RZgGTI84t5RVdqOgJqj/PYyEkf0n8ku4QWDv6AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmG4LaHX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PejvviHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A46F1F000FF;
-	Wed, 30 Sep 2026 16:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmG4LaHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D6B1F000FF;
+	Wed, 30 Sep 2026 16:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786276;
-	bh=qMH67HbuwWoJSOVn86GTKvDHahWpsFzaQ3WVM2u+xW4=;
+	s=korg; t=1790786279;
+	bh=ybyl/2sCjbALTWh0AjFhIYW7ecELFkYLixJiefwOccI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PejvviHoj9c1NeIs4jhr17l/3BWY/j2Bg29urPuI7hxGIruoEmp8VQxdCy1mp11Ir
-	 KEC2tCsKcqVdZ1/3RV4em+MFpzP87hUGs4GJWJ11iZxL+5r2zQYuxiQmbSKV4EoFWh
-	 lSGEEeLBAXkdYMMHA/P7qKqPizGtEHL6Lq8YVS4o=
+	b=OmG4LaHXDlF28s/ysaGA5RHkzb8gfpBHhAO7OZBS1n5svGKHhj/NVW5cWsfnHjln5
+	 2XXUKe9uQ25249DsaJB79aOPciuxM86Z052m2ZzGlw3UDPHfKSuPUKvusbCHOdNWsO
+	 7X8HqonnftZ9e7vh/QG7kbzRF7C+xrafcaXZ6tro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 805/982] scsi: hisi_sas: Grab sas_dev lock when traversing the members of sas_dev.list
-Date: Wed, 30 Sep 2026 17:25:41 +0200
-Message-ID: <20260930152434.049990402@linuxfoundation.org>
+Subject: [PATCH 6.1 806/982] KVM: s390: Fix IRQ injection with SIGP Stop and Store Status
+Date: Wed, 30 Sep 2026 17:25:42 +0200
+Message-ID: <20260930152434.071123112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,242 +50,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 71fb36b5ff113a7674710b9d6063241eada84ff7 ]
+[ Upstream commit d343407b728a80b74be3c24b59f15e60289ea527 ]
 
-When freeing slots in function slot_complete_v3_hw(), it is possible that
-sas_dev.list is being traversed elsewhere, and it may trigger a NULL
-pointer exception, such as follows:
+When __inject_sigp_stop() is called for a Stop and Store Status
+operation, if the vCPU is running, the interrupt is marked as pending
+and the status is stored by the thread performing the KVM_RUN IOCTL.
 
-==>cq thread                    ==>scsi_eh_6
+If the vCPU is already stopped, the status is stored immediately.
 
-                                ==>scsi_error_handler()
-				  ==>sas_eh_handle_sas_errors()
-				    ==>sas_scsi_find_task()
-				      ==>lldd_abort_task()
-==>slot_complete_v3_hw()              ==>hisi_sas_abort_task()
-  ==>hisi_sas_slot_task_free()	        ==>dereg_device_v3_hw()
-    ==>list_del_init()        		  ==>list_for_each_entry_safe()
+Storing the status means writing into userspace, which might fault, and
+__inject_sigp_stop() is called from do_inject_vcpu() which in turn is
+always called holding a spinlock, which is obviously an issue.
 
-[ 7165.434918] sas: Enter sas_scsi_recover_host busy: 32 failed: 32
-[ 7165.434926] sas: trying to find task 0x00000000769b5ba5
-[ 7165.434927] sas: sas_scsi_find_task: aborting task 0x00000000769b5ba5
-[ 7165.434940] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(00000000769b5ba5) aborted
-[ 7165.434964] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(00000000c9f7aa07) ignored
-[ 7165.434965] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(00000000e2a1cf01) ignored
-[ 7165.434968] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[ 7165.434972] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(0000000022d52d93) ignored
-[ 7165.434975] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(0000000066a7516c) ignored
-[ 7165.434976] Mem abort info:
-[ 7165.434982]   ESR = 0x96000004
-[ 7165.434991]   Exception class = DABT (current EL), IL = 32 bits
-[ 7165.434992]   SET = 0, FnV = 0
-[ 7165.434993]   EA = 0, S1PTW = 0
-[ 7165.434994] Data abort info:
-[ 7165.434994]   ISV = 0, ISS = 0x00000004
-[ 7165.434995]   CM = 0, WnR = 0
-[ 7165.434997] user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000f29543f2
-[ 7165.434998] [0000000000000000] pgd=0000000000000000
-[ 7165.435003] Internal error: Oops: 96000004 [#1] SMP
-[ 7165.439863] Process scsi_eh_6 (pid: 4109, stack limit = 0x00000000c43818d5)
-[ 7165.468862] pstate: 00c00009 (nzcv daif +PAN +UAO)
-[ 7165.473637] pc : dereg_device_v3_hw+0x68/0xa8 [hisi_sas_v3_hw]
-[ 7165.479443] lr : dereg_device_v3_hw+0x2c/0xa8 [hisi_sas_v3_hw]
-[ 7165.485247] sp : ffff00001d623bc0
-[ 7165.488546] x29: ffff00001d623bc0 x28: ffffa027d03b9508
-[ 7165.493835] x27: ffff80278ed50af0 x26: ffffa027dd31e0a8
-[ 7165.499123] x25: ffffa027d9b27f88 x24: ffffa027d9b209f8
-[ 7165.504411] x23: ffffa027c45b0d60 x22: ffff80278ec07c00
-[ 7165.509700] x21: 0000000000000008 x20: ffffa027d9b209f8
-[ 7165.514988] x19: ffffa027d9b27f88 x18: ffffffffffffffff
-[ 7165.520276] x17: 0000000000000000 x16: 0000000000000000
-[ 7165.525564] x15: ffff0000091d9708 x14: ffff0000093b7dc8
-[ 7165.530852] x13: ffff0000093b7a23 x12: 6e7265746e692067
-[ 7165.536140] x11: 0000000000000000 x10: 0000000000000bb0
-[ 7165.541429] x9 : ffff00001d6238f0 x8 : ffffa027d877af00
-[ 7165.546718] x7 : ffffa027d6329600 x6 : ffff7e809f58ca00
-[ 7165.552006] x5 : 0000000000001f8a x4 : 000000000000088e
-[ 7165.557295] x3 : ffffa027d9b27fa8 x2 : 0000000000000000
-[ 7165.562583] x1 : 0000000000000000 x0 : 000000003000188e
-[ 7165.567872] Call trace:
-[ 7165.570309]  dereg_device_v3_hw+0x68/0xa8 [hisi_sas_v3_hw]
-[ 7165.575775]  hisi_sas_abort_task+0x248/0x358 [hisi_sas_main]
-[ 7165.581415]  sas_eh_handle_sas_errors+0x258/0x8e0 [libsas]
-[ 7165.586876]  sas_scsi_recover_host+0x134/0x458 [libsas]
-[ 7165.592082]  scsi_error_handler+0xb4/0x488
-[ 7165.596163]  kthread+0x134/0x138
-[ 7165.599380]  ret_from_fork+0x10/0x18
-[ 7165.602940] Code: d5033e9f b9000040 aa0103e2 eb03003f (f9400021)
-[ 7165.609004] kernel fault(0x1) notification starting on CPU 75
-[ 7165.700728] ---[ end trace fc042cbbea224efc ]---
-[ 7165.705326] Kernel panic - not syncing: Fatal exception
+Fix this by returning -EWOULDBLOCK from __inject_sigp_stop(), and
+adding a bool flag to indicate whether a store status is needed. The
+callers of do_inject_vcpu() are modified to pass the pointer to the
+bool flag; whenever a Store Status operation is needed, the callers can
+now perform it outside the spinlock.
 
-To fix the issue, grab sas_dev lock when traversing the members of
-sas_dev.list in dereg_device_v3_hw() and hisi_sas_release_tasks() to avoid
-concurrency of adding and deleting member. When function
-hisi_sas_release_tasks() calls hisi_sas_do_release_task() to free slot, the
-lock cannot be grabbed again in hisi_sas_slot_task_free(), then a bool
-parameter need_lock is added.
+Opportunistically refactor kvm_s390_set_irq_state() to use
+scoped_guard() and __free().
 
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1679283265-115066-2-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-
-[ Backport to 6.1.y: omit the SATA NCQ-error call-site update because that
-  path does not call hisi_sas_do_release_task() in 6.1.y. The list locking
-  change is otherwise identical to upstream. ]
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Fixes: 6cddd432e3da ("KVM: s390: handle stop irqs without action_bits")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+[ Added Fixes tag while picking -- Claudio ]
+Message-ID: <20260812104436.109741-7-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas.h       |  3 ++-
- drivers/scsi/hisi_sas/hisi_sas_main.c  | 23 +++++++++++++++--------
- drivers/scsi/hisi_sas/hisi_sas_v1_hw.c |  2 +-
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c |  2 +-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  4 +++-
- 5 files changed, 22 insertions(+), 12 deletions(-)
+ arch/s390/kvm/interrupt.c | 70 +++++++++++++++++++++------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
-index 9aebf4a26b132..2ecf97f7ae525 100644
---- a/drivers/scsi/hisi_sas/hisi_sas.h
-+++ b/drivers/scsi/hisi_sas/hisi_sas.h
-@@ -652,7 +652,8 @@ extern void hisi_sas_phy_down(struct hisi_hba *hisi_hba, int phy_no, int rdy,
- extern void hisi_sas_phy_bcast(struct hisi_sas_phy *phy);
- extern void hisi_sas_slot_task_free(struct hisi_hba *hisi_hba,
- 				    struct sas_task *task,
--				    struct hisi_sas_slot *slot);
-+				    struct hisi_sas_slot *slot,
-+				    bool need_lock);
- extern void hisi_sas_init_mem(struct hisi_hba *hisi_hba);
- extern void hisi_sas_rst_work_handler(struct work_struct *work);
- extern void hisi_sas_sync_rst_work_handler(struct work_struct *work);
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 10ea1d434c48d..290c9915fb9b2 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -205,7 +205,7 @@ static int hisi_sas_slot_index_alloc(struct hisi_hba *hisi_hba,
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 6be9c79383dd5..9e76d26e02121 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -1582,23 +1582,21 @@ static int __inject_set_prefix(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
  }
  
- void hisi_sas_slot_task_free(struct hisi_hba *hisi_hba, struct sas_task *task,
--			     struct hisi_sas_slot *slot)
-+			     struct hisi_sas_slot *slot, bool need_lock)
+ #define KVM_S390_STOP_SUPP_FLAGS (KVM_S390_STOP_FLAG_STORE_STATUS)
+-static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
  {
- 	int device_id = slot->device_id;
- 	struct hisi_sas_device *sas_dev = &hisi_hba->devices[device_id];
-@@ -239,9 +239,13 @@ void hisi_sas_slot_task_free(struct hisi_hba *hisi_hba, struct sas_task *task,
- 		}
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+ 	struct kvm_s390_stop_info *stop = &li->irq.stop;
+-	int rc = 0;
+ 
+ 	vcpu->stat.inject_stop_signal++;
+ 	trace_kvm_s390_inject_vcpu(vcpu->vcpu_id, KVM_S390_SIGP_STOP, 0, 0);
+ 
+ 	if (irq->u.stop.flags & ~KVM_S390_STOP_SUPP_FLAGS)
+ 		return -EINVAL;
+-
+ 	if (is_vcpu_stopped(vcpu)) {
+-		if (irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS)
+-			rc = kvm_s390_store_status_unloaded(vcpu,
+-						KVM_S390_STORE_STATUS_NOADDR);
+-		return rc;
++		if (!(irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS))
++			return 0;
++		*storestatus = true;
++		return -EWOULDBLOCK;
  	}
  
--	spin_lock(&sas_dev->lock);
--	list_del_init(&slot->entry);
--	spin_unlock(&sas_dev->lock);
-+	if (need_lock) {
-+		spin_lock(&sas_dev->lock);
-+		list_del_init(&slot->entry);
-+		spin_unlock(&sas_dev->lock);
-+	} else {
-+		list_del_init(&slot->entry);
+ 	if (test_and_set_bit(IRQ_PEND_SIGP_STOP, &li->pending_irqs))
+@@ -2138,7 +2136,7 @@ void kvm_s390_clear_stop_irq(struct kvm_vcpu *vcpu)
+ 	spin_unlock(&li->lock);
+ }
+ 
+-static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
+ {
+ 	int rc;
+ 
+@@ -2150,7 +2148,7 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ 		rc = __inject_set_prefix(vcpu, irq);
+ 		break;
+ 	case KVM_S390_SIGP_STOP:
+-		rc = __inject_sigp_stop(vcpu, irq);
++		rc = __inject_sigp_stop(vcpu, irq, storestatus);
+ 		break;
+ 	case KVM_S390_RESTART:
+ 		rc = __inject_sigp_restart(vcpu);
+@@ -2186,11 +2184,16 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ int kvm_s390_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
++	bool storestatus = false;
+ 	int rc;
+ 
+ 	spin_lock(&li->lock);
+-	rc = do_inject_vcpu(vcpu, irq);
++	rc = do_inject_vcpu(vcpu, irq, &storestatus);
+ 	spin_unlock(&li->lock);
++
++	if (rc == -EWOULDBLOCK && storestatus)
++		rc = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++
+ 	if (!rc)
+ 		kvm_s390_vcpu_wakeup(vcpu);
+ 	return rc;
+@@ -2926,7 +2929,8 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e, struct kvm *kvm,
+ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+-	struct kvm_s390_irq *buf;
++	struct kvm_s390_irq *buf __free(kvfree) = NULL;
++	bool tmp, storestatus = false;
+ 	int r = 0;
+ 	int n;
+ 
+@@ -2934,31 +2938,33 @@ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	if (copy_from_user((void *) buf, irqstate, len)) {
+-		r = -EFAULT;
+-		goto out_free;
+-	}
++	if (copy_from_user((void *)buf, irqstate, len))
++		return -EFAULT;
+ 
+-	/*
+-	 * Don't allow setting the interrupt state
+-	 * when there are already interrupts pending
+-	 */
+-	spin_lock(&li->lock);
+-	if (li->pending_irqs) {
+-		r = -EBUSY;
+-		goto out_unlock;
+-	}
++	scoped_guard(spinlock, &li->lock) {
++		/*
++		 * Don't allow setting the interrupt state
++		 * when there are already interrupts pending
++		 */
++		if (li->pending_irqs)
++			return -EBUSY;
+ 
+-	for (n = 0; n < len / sizeof(*buf); n++) {
+-		r = do_inject_vcpu(vcpu, &buf[n]);
+-		if (r)
+-			break;
++		for (n = 0; n < len / sizeof(*buf); n++) {
++			tmp = false;
++			r = do_inject_vcpu(vcpu, &buf[n], &tmp);
++			if (r == -EWOULDBLOCK && tmp) {
++				storestatus = true;
++				r = 0;
++			}
++			if (r)
++				break;
++		}
+ 	}
+ 
+-out_unlock:
+-	spin_unlock(&li->lock);
+-out_free:
+-	vfree(buf);
++	if (storestatus) {
++		n = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++		return r ? r : n;
 +	}
  
- 	memset(slot, 0, offsetof(struct hisi_sas_slot, buf));
- 
-@@ -1059,7 +1063,7 @@ static void hisi_sas_port_notify_formed(struct asd_sas_phy *sas_phy)
+ 	return r;
  }
- 
- static void hisi_sas_do_release_task(struct hisi_hba *hisi_hba, struct sas_task *task,
--				     struct hisi_sas_slot *slot)
-+				     struct hisi_sas_slot *slot, bool need_lock)
- {
- 	if (task) {
- 		unsigned long flags;
-@@ -1076,7 +1080,7 @@ static void hisi_sas_do_release_task(struct hisi_hba *hisi_hba, struct sas_task
- 		spin_unlock_irqrestore(&task->task_state_lock, flags);
- 	}
- 
--	hisi_sas_slot_task_free(hisi_hba, task, slot);
-+	hisi_sas_slot_task_free(hisi_hba, task, slot, need_lock);
- }
- 
- static void hisi_sas_release_task(struct hisi_hba *hisi_hba,
-@@ -1085,8 +1089,11 @@ static void hisi_sas_release_task(struct hisi_hba *hisi_hba,
- 	struct hisi_sas_slot *slot, *slot2;
- 	struct hisi_sas_device *sas_dev = device->lldd_dev;
- 
-+	spin_lock(&sas_dev->lock);
- 	list_for_each_entry_safe(slot, slot2, &sas_dev->list, entry)
--		hisi_sas_do_release_task(hisi_hba, slot->task, slot);
-+		hisi_sas_do_release_task(hisi_hba, slot->task, slot, false);
-+
-+	spin_unlock(&sas_dev->lock);
- }
- 
- void hisi_sas_release_tasks(struct hisi_hba *hisi_hba)
-@@ -1620,7 +1627,7 @@ static int hisi_sas_abort_task(struct sas_task *task)
- 		 */
- 		if (rc == TMF_RESP_FUNC_COMPLETE && rc2 != TMF_RESP_FUNC_SUCC) {
- 			if (task->lldd_task)
--				hisi_sas_do_release_task(hisi_hba, task, slot);
-+				hisi_sas_do_release_task(hisi_hba, task, slot, true);
- 		}
- 	} else if (task->task_proto & SAS_PROTOCOL_SATA ||
- 		task->task_proto & SAS_PROTOCOL_STP) {
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-index 70c24377c6a19..76176b1fc035d 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-@@ -1310,7 +1310,7 @@ static void slot_complete_v1_hw(struct hisi_hba *hisi_hba,
- 	}
- 
- out:
--	hisi_sas_slot_task_free(hisi_hba, task, slot);
-+	hisi_sas_slot_task_free(hisi_hba, task, slot, true);
- 
- 	if (task->task_done)
- 		task->task_done(task);
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index ae39f6b5dc9a8..1470d6bf3052b 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2473,7 +2473,7 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
- 	}
- 	task->task_state_flags |= SAS_TASK_STATE_DONE;
- 	spin_unlock_irqrestore(&task->task_state_lock, flags);
--	hisi_sas_slot_task_free(hisi_hba, task, slot);
-+	hisi_sas_slot_task_free(hisi_hba, task, slot, true);
- 
- 	if (!is_internal && (task->task_proto != SAS_PROTOCOL_SMP)) {
- 		spin_lock_irqsave(&device->done_lock, flags);
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index ccd52fc7d34a2..3db206c743831 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -873,6 +873,7 @@ static void dereg_device_v3_hw(struct hisi_hba *hisi_hba,
- 
- 	cfg_abt_set_query_iptt = hisi_sas_read32(hisi_hba,
- 		CFG_ABT_SET_QUERY_IPTT);
-+	spin_lock(&sas_dev->lock);
- 	list_for_each_entry_safe(slot, slot2, &sas_dev->list, entry) {
- 		cfg_abt_set_query_iptt &= ~CFG_SET_ABORTED_IPTT_MSK;
- 		cfg_abt_set_query_iptt |= (1 << CFG_SET_ABORTED_EN_OFF) |
-@@ -880,6 +881,7 @@ static void dereg_device_v3_hw(struct hisi_hba *hisi_hba,
- 		hisi_sas_write32(hisi_hba, CFG_ABT_SET_QUERY_IPTT,
- 			cfg_abt_set_query_iptt);
- 	}
-+	spin_unlock(&sas_dev->lock);
- 	cfg_abt_set_query_iptt &= ~(1 << CFG_SET_ABORTED_EN_OFF);
- 	hisi_sas_write32(hisi_hba, CFG_ABT_SET_QUERY_IPTT,
- 		cfg_abt_set_query_iptt);
-@@ -2364,7 +2366,7 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 	}
- 	task->task_state_flags |= SAS_TASK_STATE_DONE;
- 	spin_unlock_irqrestore(&task->task_state_lock, flags);
--	hisi_sas_slot_task_free(hisi_hba, task, slot);
-+	hisi_sas_slot_task_free(hisi_hba, task, slot, true);
- 
- 	if (!is_internal && (task->task_proto != SAS_PROTOCOL_SMP)) {
- 		spin_lock_irqsave(&device->done_lock, flags);
 -- 
 2.53.0
 
