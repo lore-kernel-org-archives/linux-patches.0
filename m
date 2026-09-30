@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD604F4754;
-	Wed, 30 Sep 2026 16:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368EA4F7CCF;
+	Wed, 30 Sep 2026 16:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785399; cv=none; b=MwWEaFKavpkHFqE/IDIefDZBfRpO6TXz7XXbkQ+3VXJkwmYYxslkLarPMYtVqIFiqJU4CQqKibCbQoZsZ6oHIEiM+yOCiLbC2xVfAbEnH5aeD+v+Wfv/nse2rsfKUHMDNg7rLSyC4lsgfjTHG7VwY6GVpgs42KFdvMLFFdaontc=
+	t=1790785402; cv=none; b=XCnmteiYWH7PAxg9f7HDQv65GeW2POMxjkd8HjDJD+716qWE5rQAZX7al4Sf4ZL2z1NeckmYBck3VVCQHFj9oj+HpF/AMQ1baAMP1uLJbxQAuaN1apvTQMdR8myCNuHNPhMtZ7w9OnoU7kxcpS2AZiXQ7bXbVP2fz5pt4RvOTnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785399; c=relaxed/simple;
-	bh=nW0CQT3hvppjMG8FKbLLAIZsmGLgM80xPomWr8ikAhM=;
+	s=arc-20240116; t=1790785402; c=relaxed/simple;
+	bh=17C0WNLNahdR27IWZJh+ZMZx0d9IbTzfTYC2sOW+0VA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXVg8QjK844n+0+16MofqzuXOzArTJXSHt2giSvOKmh1jdgjmunx99JvLcDdEHalCbvjVFoZOxP+0m/9/eE+NdvqOEr2g5XX424QkJM8sKuMb2h7r++IvanCWnRx/XVwf3Flq/ByH2ORVVlrFTB+Y32hQTPHNSjzVgNW7RDFYPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGTWV6Ay; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZKT16UDS++CFi904xIy+qdxG6mL8cqgjmuJu9wx1caNcSDdcbhxHuQaPSJFTtQaxVz9tC5/s5+4Gg5DqBubDdIWOR+fJPjVrl0g6ytOPZHFej7dp0w62iblUOIlPRdgJtCFK9ee5qztRoYAPUByf2fj9EhdDbfsWwErcEI9Qbo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6stykPY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGTWV6Ay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1BC1F000FF;
-	Wed, 30 Sep 2026 16:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6stykPY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84ECA1F00899;
+	Wed, 30 Sep 2026 16:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785387;
-	bh=Kpygkz5ZW1SQWo1znmlypG/OyE9yoiVlsxVxyP15s58=;
+	s=korg; t=1790785393;
+	bh=ynvXslOGVRrRMAw8Ys07kMeC4AM81E+ZAzeU6JPwwVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jGTWV6AyDrTvvbE7PqfJuFR5vxrGZzQNXBksdOcD4PH+u64yjJhlft5XRAYKMWl9g
-	 0XtBqq8vsOgO3KOcGHncXLESxM1TGYXq+BNLxdlLP7/JuSQSf0HtzCtfaB0SRUNeji
-	 eHV1NV1gS+oPCLn1uJAm1eMsweeP045SkNNI0ja8=
+	b=h6stykPYxBdtZE7cQuNPUCKkbPCaPcD0QBBK/RrMIA68Lao1xoqDaiR7QuJENlZT9
+	 gm/tn35Dq8Yoqj9dKsm72oPN6b+3p8P9A9BcmAwAxxzm9unE4WkLvTQWvkG3/1jymp
+	 1a8yAHuyVzP4JpI8tjcUjGFOCTAXR1WeF4GGpjk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	George Zhang <george.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Roman Demidov <roman.demidov.nn@gmail.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 489/982] drm/amd/display: set new_stream to NULL after release
-Date: Wed, 30 Sep 2026 17:20:25 +0200
-Message-ID: <20260930152427.285544727@linuxfoundation.org>
+Subject: [PATCH 6.1 491/982] scsi: target: iscsi: Fix hang for aborted WRITE_PENDING commands
+Date: Wed, 30 Sep 2026 17:20:27 +0200
+Message-ID: <20260930152427.327798190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,41 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 9fa26b9eed6195bf840f39ac183b9a6237548755 upstream.
+[ Upstream commit d5869dae5080e976d4b03cc33eb7ceb527f242bf ]
 
-In dm_update_crtc_state(), the skip_modeset path releases new_stream
-via dc_stream_release() but does not set the pointer to NULL.
+When a LUN_RESET aborts a WRITE command that is in the
+TRANSPORT_WRITE_PENDING state, the target core sets CMD_T_ABORTED and
+waits for the frontend to finish processing.
 
-If a later error (e.g., color management failure) triggers the fail
-label, the error path calls dc_stream_release() again on the same
-dangling pointer, causing a double release and potential use-after-free.
+If the initiator subsequently sends the remaining dataout PDUs,
+__iscsit_check_dataout_hdr() catches the payload, stops the dataout
+timer if the sequence is final and finally dumps the data.  However, the
+iSCSI target doesn't trigger the completion process for these aborted
+commands. Because of this, the abort path hangs indefinitely in
+target_put_cmd_and_wait(), leading to a deadlocked target worker thread.
 
-Fix this by setting new_stream to NULL after the initial release.
+Fix this by explicitly calling target_complete_cmd() when the final
+dataout PDU is received for an aborted WRITE command.
+target_complete_cmd() detects the CMD_T_ABORTED flag and cleanly routes
+the command into target_abort_work, allowing the abort completion to
+successfully unblock.
 
-Fixes: 9b690ef3c704 ("drm/amd/display: Avoid full modeset when not required")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Reviewed-by: George Zhang <george.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260717143828.76291-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/target/iscsi/iscsi_target.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index bb5e3a6086f2e..deaf98957cb76 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9293,6 +9293,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
- 	/* Release extra reference */
- 	if (new_stream)
- 		 dc_stream_release(new_stream);
-+	new_stream = NULL;
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 8806be03c304f..fea642ab87779 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -1569,8 +1569,10 @@ __iscsit_check_dataout_hdr(struct iscsit_conn *conn, void *buf,
+ 		 */
+ 		if (se_cmd->transport_state & CMD_T_ABORTED) {
+ 			if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
+-			    --cmd->outstanding_r2ts < 1)
++			    --cmd->outstanding_r2ts < 1) {
+ 				iscsit_stop_dataout_timer(cmd);
++				target_complete_cmd(se_cmd, SAM_STAT_TASK_ABORTED);
++			}
  
- 	/*
- 	 * We want to do dc stream updates that do not require a
+ 			return iscsit_dump_data_payload(conn, payload_length, 1);
+ 		}
 -- 
 2.53.0
 
