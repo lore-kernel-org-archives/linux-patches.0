@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84063750CF;
-	Wed, 30 Sep 2026 15:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166294E3245;
+	Wed, 30 Sep 2026 15:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782948; cv=none; b=gjB4PnHY8mh+94PaNP7qJwNFxhCEL+VG6Iwn/3I2+dNLQAK0OneRqM2F5Kh7FJyUuaanndgLB7jyLRHxpWAT/qBfYF5fn1lziNU/O1Is3kD0Twu1j/wyaZ/7JkSZESZWzeTfjwM0bc3NDEH54vO1cB2Lx3vW5TpN7K3HQpwdgBM=
+	t=1790782955; cv=none; b=obdTqLh6DsVd2A3JfAZoK4tL6gnkIc3Npx1KHaQsllewbOCA4+VsXChk1uDeyjJGIFzPXv9xaLkZOt2q4oTkLeMR7hB9Z1brM0iG/qyQFcasavQo/qEJs9VYmNosr/8dTJexdWlEPa+5POUEMeJgujpbok7kQgPoA2Mzy3LOA48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782948; c=relaxed/simple;
-	bh=mCWbp3tIVsDridxgtW+JvXQhdRQpfrHSlhzouu0XHKM=;
+	s=arc-20240116; t=1790782955; c=relaxed/simple;
+	bh=SwEzlXuaGP/kmjfnVz9s6k3jBtX2rB5Xxh8dUU5PZ8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mysVNv+yUN9JPiq/M+lTTamAa15OTBT8kovM339oA47oV4CKFTVW+58NhdeU/udQQ9Li4AThlocLGXhpBUC7hwSyceEc+2EKlUJNYlYu2dFUN4smXc3oRzMTGIS5OTN0q7Kp+Zpj8AdXHL5ZBNr+L154+kTojAItihv74uL0IXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INGRWCAX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4R5tMF1VSr2Im+3uecUQ08MamCI152ETYnfK04KfKICoUUn8uH4sPdB+hNoilRqL/r7VHYEahTVCYOgYUcfma6525StqPpHScSPXbOiCAcvoZtQe12NtWehl6df5T+nlqTQTemCmakbkooqf7cA+d3RUCQ1Uau34j83yGhajeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2lF52jz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INGRWCAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873801F000FF;
-	Wed, 30 Sep 2026 15:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2lF52jz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6A21F000FF;
+	Wed, 30 Sep 2026 15:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782945;
-	bh=k3MyyhCbB1vlBByaWT/sytE/47KX8q+hSKYNJsHPNMY=;
+	s=korg; t=1790782950;
+	bh=ZXa2e+q7hchVz3t0Q6eg7CXt3ZnVrWFHEKEUeTCcBFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=INGRWCAXcDhkG2uOqf3z9tkXi+ygE4mG+iRvMZ/EdEz2yibXzNlO7jij4K6sDxCjR
-	 J05WJbNWa7XOhVULafOLOqZVCzK6LCvfRimHuWRF59Xm/n5Dui/HkM/7o3PqOcMBeC
-	 2OBQU78ryrpOKUSMmOnGQAB0nOrT5APUPZWR2CK8=
+	b=M2lF52jznWltsOhgpEtRknEmzMwNogdsg2SiA3s4nB6XySBZbnZUfYMOYtAYWeOc3
+	 K6YtqYmRv7ljAMm3vFZmj1ddebxokDVHYBa87PQSV8PxB3ha+pezNk55E/Z8XZNSFM
+	 +rtDNGUP6XZQAFgfRpSgcEjDUh7eWYcOZhtxox6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 226/595] tracing/probes: Fix use-after-free on field name/type of events with multiple probes
-Date: Wed, 30 Sep 2026 17:21:59 +0200
-Message-ID: <20260930152352.586348653@linuxfoundation.org>
+Subject: [PATCH 5.10 227/595] bonding: do not clear curr_active_slave prematurely when releasing all slaves
+Date: Wed, 30 Sep 2026 17:22:00 +0200
+Message-ID: <20260930152352.607567432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,164 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 86b7a239ec6b14a7544200ede85474c6f5526049 ]
+[ Upstream commit af602c7aa5fedc9be3043244017aef4f26c96b70 ]
 
-The fields of a probe-based dynamic event (kprobe, uprobe, eprobe and
-fprobe events) are created in traceprobe_define_arg_fields() by handing
-the probe_arg name/type strings to trace_define_field(), which only
-stores the pointers without copying. Those strings are owned by the
-trace_probe and are freed when that probe is removed.
+When releasing all slaves during bond destruction (all == true),
+__bond_release_one() unconditionally clears bond->curr_active_slave to
+NULL in every iteration.
 
-An event can have several probes attached. The field list is defined
-only once, by the first probe that registers the event, but it is kept
-alive by any surviving sibling probe. Deleting just that first probe by
-symbol -
+If a backup slave is released before the active slave,
+bond_alb_deinit_slave() triggers rlb_teach_disabled_mac_on_primary(),
+which increments the active slave dev promiscuity counter and sets
+bond_info->primary_is_promisc = 1.
 
-  # primary A: fields are defined from A's args
-  echo 'p:kprobes/ev vfs_read  a1=$arg1' >  kprobe_events
-  # append B: shares A's event call
-  echo 'p:kprobes/ev vfs_write a1=$arg1' >> kprobe_events
-  # delete only A (matched by symbol), B survives
-  echo '-:kprobes/ev vfs_read'           >> kprobe_events
+Because bond->curr_active_slave was prematurely cleared to NULL when
+releasing the backup slave, the subsequent iteration releasing the active
+slave evaluates oldcurrent as NULL, so bond_change_active_slave(bond, NULL)
+is skipped. Consequently, bond_alb_handle_active_change() is never called
+to decrement the promiscuity counter, permanently leaking promiscuous
+mode on the physical device after bond teardown.
 
-frees A's args (trace_probe_cleanup() -> traceprobe_free_probe_arg()),
-but trace_probe_unlink() keeps the trace_probe_event because the probe
-list is not empty. The event call stays registered via B while its
-fields now reference freed memory. Any field lookup then reads it, e.g.
+When oldcurrent == slave, bond_change_active_slave(bond, NULL) already sets
+bond->curr_active_slave to NULL. We only need to avoid selecting a new
+active slave when all == true. Replace the if (all) branch with
+if (!all && oldcurrent == slave).
 
-  echo 'a1 == 1' > events/kprobes/ev/filter
-
-  BUG: KASAN: slab-use-after-free in strcmp+0xa7/0xb0
-  Call Trace:
-   strcmp
-   trace_find_event_field
-   parse_pred
-   process_preds
-   create_filter
-   apply_event_filter
-   event_filter_write
-
-field->name references parg->name (kstrdup'd, freed with the probe) and,
-for array arguments, field->type references parg->fmt (kmalloc'd, freed
-with the probe) - the scalar type otherwise points at the static
-fmttype rodata, which is safe.
-
-Have traceprobe_define_arg_fields() duplicate the name and type strings
-and anchor the copies on the trace_probe_event, which embeds the event
-call and outlives every individual probe; trace_probe_event_free()
-releases them.
-
-The reproducer above triggers reliably; the field lookup and the delete
-both run under event_mutex, so this is a dangling reference after
-removal rather than a race.
-
-The issue was found by the autokbug dynamic kernel fuzzer at Tencent
-Yunding Lab.
-
-Link: https://lore.kernel.org/all/20260826030009.1855331-1-bsdhenrymartin@gmail.com/
-
-Fixes: ca89bc071d5e4 ("tracing/kprobe: Add multi-probe per event support")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 0896341a44bf ("bonding: fix bond_release_all inconsistencies")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260831203042.164466-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 48 +++++++++++++++++++++++++++++++++++++-
- kernel/trace/trace_probe.h |  2 ++
- 2 files changed, 49 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index d839736e6f725..8613b16bb11f0 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -927,19 +927,60 @@ int traceprobe_set_print_fmt(struct trace_probe *tp, bool is_return)
- int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 				 size_t offset, struct trace_probe *tp)
- {
-+	struct trace_probe_event *tpe = trace_probe_event_from_call(event_call);
- 	int ret, i;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 1c90724603d67..e977fd528d757 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2272,9 +2272,7 @@ static int __bond_release_one(struct net_device *bond_dev,
+ 		bond_alb_deinit_slave(bond, slave);
+ 	}
  
-+	/*
-+	 * A field created by trace_define_field() only stores the name and
-+	 * type pointers, it does not copy the strings. Here they point into
-+	 * the probe_arg of @tp, which is freed when @tp is removed. For an
-+	 * event with multiple probes attached, the field list is defined
-+	 * once by the first probe but kept alive by the surviving siblings,
-+	 * so removing that first probe would leave the fields referencing
-+	 * freed memory. Duplicate the strings and anchor the copies on the
-+	 * trace_probe_event, which lives as long as the field list itself.
-+	 *
-+	 * event_define_fields() ignores the return value of this hook, so
-+	 * if a previous attempt failed before creating any field, it may
-+	 * call here again. Release duplicates left behind by such an
-+	 * attempt before starting over.
-+	 */
-+	for (i = 0; i < tpe->nr_field_strings; i++)
-+		kfree(tpe->field_strings[i]);
-+	kfree(tpe->field_strings);
-+	tpe->field_strings = NULL;
-+	tpe->nr_field_strings = 0;
-+
-+	if (tp->nr_args) {
-+		tpe->field_strings = kcalloc(tp->nr_args * 2, sizeof(char *),
-+					     GFP_KERNEL);
-+		if (!tpe->field_strings)
-+			return -ENOMEM;
-+	}
-+
- 	/* Set argument names as fields */
- 	for (i = 0; i < tp->nr_args; i++) {
- 		struct probe_arg *parg = &tp->args[i];
- 		const char *fmt = parg->type->fmttype;
- 		int size = parg->type->size;
-+		char *name, *type;
- 
- 		if (parg->fmt)
- 			fmt = parg->fmt;
- 		if (parg->count)
- 			size *= parg->count;
--		ret = trace_define_field(event_call, fmt, parg->name,
-+
-+		name = kstrdup(parg->name, GFP_KERNEL);
-+		type = kstrdup(fmt, GFP_KERNEL);
-+		if (!name || !type) {
-+			kfree(name);
-+			kfree(type);
-+			return -ENOMEM;
-+		}
-+		tpe->field_strings[tpe->nr_field_strings++] = name;
-+		tpe->field_strings[tpe->nr_field_strings++] = type;
-+
-+		ret = trace_define_field(event_call, type, name,
- 					 offset + parg->offset, size,
- 					 parg->type->is_signed,
- 					 FILTER_OTHER);
-@@ -951,6 +992,11 @@ int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 
- static void trace_probe_event_free(struct trace_probe_event *tpe)
- {
-+	int i;
-+
-+	for (i = 0; i < tpe->nr_field_strings; i++)
-+		kfree(tpe->field_strings[i]);
-+	kfree(tpe->field_strings);
- 	kfree(tpe->class.system);
- 	kfree(tpe->call.name);
- 	kfree(tpe->call.print_fmt);
-diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
-index 0f7a584ac21bf..8bd8d82bccda8 100644
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -236,6 +236,8 @@ struct trace_probe_event {
- 	struct trace_event_call		call;
- 	struct list_head 		files;
- 	struct list_head		probes;
-+	char				**field_strings;
-+	int				nr_field_strings;
- 	struct trace_uprobe_filter	filter[];
- };
- 
+-	if (all) {
+-		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
+-	} else if (oldcurrent == slave) {
++	if (!all && oldcurrent == slave) {
+ 		/* Note that we hold RTNL over this sequence, so there
+ 		 * is no concern that another slave add/remove event
+ 		 * will interfere.
 -- 
 2.53.0
 
