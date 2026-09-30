@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23613D3002;
-	Wed, 30 Sep 2026 18:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F1F3D6CB4;
+	Wed, 30 Sep 2026 18:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794351; cv=none; b=gOmIgam75pc4OPh01VYjYhFoJkYDGUFOSLa8DvQ23mSaq7QoUvqwHlZDFKvkECw2LP6j9oolT1ySv5p7hmRoH6O2021iH1Oo+IzrWmwJk8WIyQNE14kBb2OQk3qyzXm8s765kclTEUXJO/n/WBiM2Wa2WmX3w4P+nKkA30kZ59k=
+	t=1790794354; cv=none; b=qHZIi+O8wNVAwDz2Ga0vhJqX8BkrSzBpNN75toTKmsMxRgzWEv+CysrxD5WEwJFhvbAJv7WuUWxdsUOay2NmOmkYXsbVIaJDpuLsWWKf4E+OqFAlTHPwtcGkBHeHKTRvgbTa38meh10IMj5Y1Se3dXv7YZgBVfSWBDuM4dQyxlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794351; c=relaxed/simple;
-	bh=AsEUHjaobLtrUR5VzKyEm75ntAuyUnjiZfaQV2tCKSc=;
+	s=arc-20240116; t=1790794354; c=relaxed/simple;
+	bh=XUZRG1LrtiwNTuRtyswoTljimUcZlt7i3mR/2P23rbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVToSq7k5Y/2agGHfE4Qv+L+5fH4jxQ5oCGfCIyJKE/amzPStZdzNG1XVfoWlZn5ogZiCIjzjOkQwKlWgO6Gb6AAbFUg0gN8u+dBqm6YjWzjvrEzL2CEPGzjhX9+msoTvkwRmARdx2ndKfBagr85w+DdW0YF1XKITrjmp+sRr+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsKDZScc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RU7OFPHtz7qFvK39fPNG69CzI9xTczaHasrke3CDOCncx2ZXc+XqP401Cdbp7xflOTh5tfVFvIUK2NT2rb7W7LLP/hvav89s3phR15MqCIegZIQrCxyWN18ENOVZ0uVD6ips217rwEAwOVq8K8zaFQZdnX6mPg1boYg1jeFzLLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjSt96NB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsKDZScc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181141F00898;
-	Wed, 30 Sep 2026 18:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjSt96NB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD381F000FF;
+	Wed, 30 Sep 2026 18:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794350;
-	bh=g6nnwaWUzK3MWrybcBRzuPStGta/DmUb8C3gZFttKZ4=;
+	s=korg; t=1790794353;
+	bh=iOYDQM3jyx5Qvsghkkarryq8MxxbYjzrw9rOsXTnq7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UsKDZSccldVCIIcVBnt3/Cq50lP/y9J4lqj8ceDB7Fl32e1x64Bx+xC3miWaO5gsR
-	 7SxGSr5yLPWCmEs4+NS+np/GiRHczmLtwTiHvG4eLh1fGxT6GFA4ipwz8+dAzacHGS
-	 zbrtN3zBh8q4Cf47r38p9WWAweYMmcSF3b0zkC+k=
+	b=pjSt96NB5fT+wp1jw68Tn/bOEp1c+NZxUd57zfi4gvXcNoKvBIT/kTwoq1Mu7pujw
+	 ghZNLpTz4MKdHNyZ67bOMaXk/bGKYtlyL5CQ7qTyZXpAxHsNq9FtiwicjTrdK65FIo
+	 ixQkdIwh1jVivf7W+bLx9SndcSLziPBEd0kbikpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Li RongQing <lirongqing@baidu.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0179/1193] RDMA/umem: Be careful about boundary conditions in ib_umem_find_best_pgsz()
-Date: Wed, 30 Sep 2026 17:14:23 +0200
-Message-ID: <20260930152438.172042196@linuxfoundation.org>
+Subject: [PATCH 6.6 0180/1193] RDMA/mlx5: Fix state and counter desync on loopback enable failure
+Date: Wed, 30 Sep 2026 17:14:24 +0200
+Message-ID: <20260930152438.195928728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,88 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 09ea6837a0434fb4db99528a5055b6d822135dcf ]
+[ Upstream commit 0d32eabccbe4b2f8d45be3192c5f3c76c8af703d ]
 
-Several corner cases, especially important on 32 bits:
+In mlx5_ib_enable_lb(), dev->lb.enabled was unconditionally set
+to true even if mlx5_nic_vport_update_local_lb() failed.
 
-- umem->iova is u64, the function argument should pass in u64 or
-  iova will be truncated
-- Check that the length is not too large for the iova
-- Check that lengths > 4G don't overflow the GENMASK
+Fix this by only setting dev->lb.enabled on success. On failure,
+roll back the reference counters and return the error.
 
-Link: https://patch.msgid.link/r/2-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
+Link: https://patch.msgid.link/r/20260601095818.2227-1-lirongqing@baidu.com
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/umem.c | 18 ++++++++++++------
- include/rdma/ib_umem.h         |  4 ++--
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/mlx5/main.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/infiniband/core/umem.c b/drivers/infiniband/core/umem.c
-index fd3a774904f8d..468d662c42c47 100644
---- a/drivers/infiniband/core/umem.c
-+++ b/drivers/infiniband/core/umem.c
-@@ -78,14 +78,17 @@ static void __ib_umem_release(struct ib_device *dev, struct ib_umem *umem, int d
-  */
- unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
- 				     unsigned long pgsz_bitmap,
--				     unsigned long virt)
-+				     u64 virt)
- {
- 	unsigned long curr_len = 0;
- 	dma_addr_t curr_base = ~0;
--	unsigned long va, pgoff;
-+	unsigned long pgoff;
- 	struct scatterlist *sg;
--	dma_addr_t mask;
-+	unsigned long mask = 0;
-+	unsigned int bits;
- 	dma_addr_t end;
-+	u64 last_va;
-+	u64 va;
- 	int i;
- 
- 	umem->iova = va = virt;
-@@ -103,9 +106,12 @@ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
- 	 * number of required pages. Compute the largest page size that could
- 	 * work based on VA address bits that don't change.
- 	 */
--	mask = pgsz_bitmap &
--	       GENMASK(BITS_PER_LONG - 1,
--		       bits_per((umem->length - 1 + virt) ^ virt));
-+	if (check_add_overflow(umem->length - 1, virt, &last_va))
-+		return 0;
-+	bits = bits_per(virt ^ last_va);
-+	if (bits < BITS_PER_LONG)
-+		mask = pgsz_bitmap & GENMASK(BITS_PER_LONG - 1, bits);
+diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
+index 57f0f9a6e8e5d..df9d4b8373d11 100644
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -1739,6 +1739,9 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ 	    dev->lb.qps == 1) {
+ 		if (!dev->lb.enabled) {
+ 			err = mlx5_nic_vport_update_local_lb(dev->mdev, true);
++			if (err)
++				goto err_rollback;
 +
- 	/* offset into first SGL */
- 	pgoff = umem->address & ~PAGE_MASK;
+ 			dev->lb.enabled = true;
+ 		}
+ 	}
+@@ -1746,6 +1749,14 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ 	mutex_unlock(&dev->lb.mutex);
  
-diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
-index 4c5329b504d0c..821f23d2a4458 100644
---- a/include/rdma/ib_umem.h
-+++ b/include/rdma/ib_umem.h
-@@ -81,7 +81,7 @@ int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offset,
- 		      size_t length);
- unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
- 				     unsigned long pgsz_bitmap,
--				     unsigned long virt);
-+				     u64 virt);
+ 	return err;
++
++err_rollback:
++	if (td)
++		dev->lb.user_td--;
++	if (qp)
++		dev->lb.qps--;
++	mutex_unlock(&dev->lb.mutex);
++	return err;
+ }
  
- /**
-  * ib_umem_find_best_pgoff - Find best HW page size
-@@ -161,7 +161,7 @@ static inline int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offs
- }
- static inline unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
- 						   unsigned long pgsz_bitmap,
--						   unsigned long virt)
-+						   u64 virt)
- {
- 	return 0;
- }
+ void mlx5_ib_disable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
 -- 
 2.53.0
 
