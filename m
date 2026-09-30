@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A22F8BEE;
-	Wed, 30 Sep 2026 18:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C4B2DEA95;
+	Wed, 30 Sep 2026 18:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794405; cv=none; b=Ck843M7YIA74vD3c3Bb8x77iFSKeQQPaxNTJpDMb/HhlkKAya7zepXNIp/La8sSgZhI7zz7OkjPYvklZEb/ZbbrqM0j168xtjw9+E0FnsZsNoofSUlSIs9wE4gmnGSE46LXDH8IiLcALnhjBcVA6g2oV9wYgbP8WNCXZS+GkAq8=
+	t=1790794408; cv=none; b=b0Qg0N+xKUPWbPbQhBOSMfa9/1Ieve/u7/rNPTk3kOHrmwrW7OAdAbmR3QZMttUDVpkCjFUaJZRBmY1ZGEIiqJqYkGdunVSBmbr+W/TLktmnLcOAslh486/rmnH39rJEHNrfZFIsaz6Ozqp8xvtpjwjyYHUZpxT/d44jWTypXQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794405; c=relaxed/simple;
-	bh=CYWEmNEnIOcdNqZhgWoCjNAJEnHp5xlR72+yV/auFtc=;
+	s=arc-20240116; t=1790794408; c=relaxed/simple;
+	bh=VXUgj/xGblW2r3+WDEix9+C0Ro+OorQiIksa2hnokas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7Lz5TQ4Hi1n5ELGFQoEhdAdqWZ54ZfmghBJPR3uomJNRB7m7AeG1xuJRfEwM3cjRUtXNF7o+mut6LMBeATMOjCV8R3W1GlNbBqr59WsE5lng40qrTZdNfyDHFUVhgdVZk8saGsOOWUa2WNsIcBxkt+6KjIO+wV3CgmSSBHbBTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObH8JbhS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I8V/EwHTSA0Z07HrcSfCQrgq7/f8Dq20vUEZ+ONw1WjPU4DP9u2TF2wrd/1GkWPKXQogX9m605jf4ye9OSQtM0aTPUr2E/1pWj/KORfVgYIRT89QGR+NdTHBrihZbSYwkNbDYA+9FgRiHLnbZkmlY73rdG9aMz6meiPkGXvWbho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw7Dkk4L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObH8JbhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BD11F000FF;
-	Wed, 30 Sep 2026 18:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw7Dkk4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10491F00898;
+	Wed, 30 Sep 2026 18:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794404;
-	bh=wvcJ2L3fLXJHIK1FN3rVBTlv4PIsIXShqgwnuwqxUHg=;
+	s=korg; t=1790794407;
+	bh=rRp+9dMHcBC7cjdobB+IK6UYeYkppuGXxFpmr2Gr69I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ObH8JbhSKM1WO3pWN/Tml5p9BK1a73+dACeKnNEm31oQLKQrazH+qGRWSI5FOuBil
-	 JAvVRZ/kLV4t8lyg1P7cFz+mVs85MiZrdPbtOPruvlQK0JaWfvs2SIhJn23mz5fWzd
-	 Q8gS7OFEV2tavx5NYP+UC1XFYxLxX5xrv/a9NsRY=
+	b=Rw7Dkk4LWs/i5fF9jhN1KwqXdH1yrHDmtAYnBAhji/g6luGFrXHc13q7ABIn+AkUO
+	 jIo6QFJoqdeNCipUIHQJFZG6iKfGE9jLOdE1TSAIPTyG9zZYx4wRw4qf8b3DDzNpHM
+	 0WFe6BdIJ+Ww+IPNM5V9EYvsnqnX3b+0/oL3RWks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgenii Burenchev <evg28bur@yandex.ru>,
-	Jason Wang <jasowang@redhat.com>,
-	Zhu Lingshan <lingshan.zhu@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Furst Blumier <seal@furst.blue>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0200/1193] vdpa/ifcvf: handle dev_set_name() failure in ifcvf_vdpa_dev_add()
-Date: Wed, 30 Sep 2026 17:14:44 +0200
-Message-ID: <20260930152438.649765872@linuxfoundation.org>
+Subject: [PATCH 6.6 0201/1193] ALSA: hda/realtek: Add quirk for HP 255 15.6 inch G9 Notebook PC
+Date: Wed, 30 Sep 2026 17:14:45 +0200
+Message-ID: <20260930152438.674052505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,58 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgenii Burenchev <evg28bur@yandex.ru>
+From: Furst Blumier <seal@furst.blue>
 
-[ Upstream commit 4c653e85857b41a7148917f2628fae1d04a9c251 ]
+[ Upstream commit 98e157916f83c26a41448267180944048d2f1460 ]
 
-dev_set_name() may fail and return an error, but its return value
-is currently ignored and overwritten by _vdpa_register_device().
+The HP 255 15.6 inch G9 Notebook PC (PCI SSID 103c:8a1b) uses the
+ALC236 codec but lacks an entry in the quirk table, causing the kernel
+to fall back to a null SSID match (103c:0000) and skip the necessary
+fixup. Add a quirk entry using ALC236_FIXUP_HP_MUTE_LED_COEFBIT2,
+matching the HP 255 G8 which uses the same codec and fixup. This fixes
+the mute-button LED and fixes an issue with unplugging and replugging a
+headset jack not being recognized as an audio sink.
 
-Abort device creation if dev_set_name() fails and release the
-device reference to avoid continuing with an improperly initialized
-struct device.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Evgenii Burenchev <evg28bur@yandex.ru>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Zhu Lingshan <lingshan.zhu@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260226152924.38790-1-evg28bur@yandex.ru>
+Signed-off-by: Furst Blumier <seal@furst.blue>
+Link: https://patch.msgid.link/20260609201706.502075-1-seal@furst.blue
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/ifcvf/ifcvf_main.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vdpa/ifcvf/ifcvf_main.c b/drivers/vdpa/ifcvf/ifcvf_main.c
-index e98fa8100f3cc..1039202934caa 100644
---- a/drivers/vdpa/ifcvf/ifcvf_main.c
-+++ b/drivers/vdpa/ifcvf/ifcvf_main.c
-@@ -718,15 +718,22 @@ static int ifcvf_vdpa_dev_add(struct vdpa_mgmt_dev *mdev, const char *name,
- 		ret = dev_set_name(&vdpa_dev->dev, "%s", name);
- 	else
- 		ret = dev_set_name(&vdpa_dev->dev, "vdpa%u", vdpa_dev->index);
-+	if (ret) {
-+		IFCVF_ERR(pdev, "Failed to set device name");
-+		goto err;
-+	}
- 
- 	ret = _vdpa_register_device(&adapter->vdpa, vf->nr_vring);
- 	if (ret) {
--		put_device(&adapter->vdpa.dev);
- 		IFCVF_ERR(pdev, "Failed to register to vDPA bus");
--		return ret;
-+		goto err;
- 	}
- 
- 	return 0;
-+
-+err:
-+	put_device(&adapter->vdpa.dev);
-+	return ret;
- }
- 
- static void ifcvf_vdpa_dev_del(struct vdpa_mgmt_dev *mdev, struct vdpa_device *dev)
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index caf5347406cdd..855c9cb15aa4f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10177,6 +10177,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8a0f, "HP Pavilion 14-ec1xxx", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8a1b, "HP 255 15.6 inch G9 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a1f, "HP Laptop 14s-dr5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a20, "HP Laptop 15s-fq5xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a25, "HP Victus 16-d1xxx (MB 8A25)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
 -- 
 2.53.0
 
