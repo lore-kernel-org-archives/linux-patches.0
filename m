@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86044DEC26;
-	Wed, 30 Sep 2026 18:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A18B51121D;
+	Wed, 30 Sep 2026 18:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792263; cv=none; b=Z9J0ROCTkdpwdkPPCcMPB11gyWQ0Q4gJ6LDYvVHndMnXmzOtVbviD0VBcSBFGiJ+PF+1Tyw3/2u2RUVysTkptdln24aUluf4nKwDb/tMLPXPO+BnUU6UjkYJVvpXePYxUwtxN2Gu7/6kBOZlD9WCqXjtv8kIHBuYyU9qTpaulwg=
+	t=1790792266; cv=none; b=sr/WkET9jRoZv85o+DTRSLFlW3LSyZEEVx9eBrEW1hALS0WK0D3KA2bbkwG/KbK8p2+zwz9C4hQ2fCLdE9mGOUPyfUuRRfx3Ss0Lc8toBEg7GjDEt17T3I9j4RmkSlC9CwusBVOI9fwsdmHb3LK6mk34VAQCNqCCLYZAJF+NRnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792263; c=relaxed/simple;
-	bh=VQZ+IfYZilpUAq3Z1Ue3wo4kaQFUJE916JXzHkskYpc=;
+	s=arc-20240116; t=1790792266; c=relaxed/simple;
+	bh=fiMZmZ/6RfxvXAZ6MJNgFqzqFj3y9sJ/iKV05lzUpXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEas+dodoMImR8gaH+NlKo5dT2GKy4eJP9wJzV59vRLnW+bl45sVrK/n12T+zv1tedMqTc9dVPDcC4N+j9gBd7EilzbMMgiTETu6qqMP0n5sZjLi6jxrg/Vb86foFSHaZ2zZLf4ADc5ZiXvPjeiYEIXFC+n7RrH2Y7HvGW6Trb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1202sqcM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AzurnpQlkkU1ukccrhME8tpxXFPdTt7v1/t3afduXEarLm7DGl+pAP80EdXpUngpar+zq+gFGlxCalGGvT6zTfN5DIkaoz1wrWeTvVZx2YwgpPg3A6RKrEGHMTJi7tVBE1czHBMRriAA0e+GFF6MuuoFAme3ihLirMmR4yv2JPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JY/p99c8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1202sqcM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBB41F000FF;
-	Wed, 30 Sep 2026 18:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JY/p99c8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BE51F000FF;
+	Wed, 30 Sep 2026 18:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792262;
-	bh=PUwmriuELZ7roBAZ/otJ0xMGhEGb0UdTvGTWoAhvHUE=;
+	s=korg; t=1790792265;
+	bh=bsSD/kj5IvOR/xXm4xENcspDXaiEvV1LFR2sx3QOphQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1202sqcMeHPotZ1zIQwtH/nLbcjFSd2zWTHME5eYO05w3j3bWQjVNFEuBMXqMgSDY
-	 UdVm5nYFRQw8za/WvOlBNLFR8x23O11fUoqBs9HlVMOrqJQN1sGKKU93sUjMcm4em3
-	 F9R1Aq4qsEAw45v1YZ6tIdPsq61tpR3+V2UXGQ8M=
+	b=JY/p99c8oJ6ZKiOMQfDQmnLpPei+miQVU+QZtVuHkxgIyx1qK3DASdhh9rRaXwAHr
+	 krNbS27D0IAWNjJ9rYn8QB3GGbKYosrmvcjvCj7si4J1ZvluA1yV3BB2ew1rmzXf4s
+	 0IRub24PJ9Hn6KddgU42T9a11r0ZmcuSz1uJaZ2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Tom Hadlaw <tom.hadlaw@isovalent.com>,
+	Yusuke Suzuki <yusuke.suzuki@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 592/752] KVM: s390: Fix IRQ injection with SIGP Stop and Store Status
-Date: Wed, 30 Sep 2026 17:27:42 +0200
-Message-ID: <20260930152411.097827890@linuxfoundation.org>
+Subject: [PATCH 5.15 593/752] bpf: Fix bpf_skb_change_tail wrt csum partial skbs
+Date: Wed, 30 Sep 2026 17:27:43 +0200
+Message-ID: <20260930152411.119710345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,172 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit d343407b728a80b74be3c24b59f15e60289ea527 ]
+[ Upstream commit 3b55f350c68a0aceff108f47f9d31f47ebffaf7b ]
 
-When __inject_sigp_stop() is called for a Stop and Store Status
-operation, if the vCPU is running, the interrupt is marked as pending
-and the status is stored by the thread performing the KVM_RUN IOCTL.
+Cilium generates ICMP "frag needed" replies from BPF when a LB DSR
+packet exceeds the egress MTU. The reply is built by first trimming the
+packet down to target size via bpf_skb_change_tail(), and then pushing
+the ICMP error headers in front of it.
 
-If the vCPU is already stopped, the status is stored immediately.
+The trim is rejected for skbs which carry a checksum offload, e.g. TCP
+packets aggregated by GRO on ingress where tcp_gro_complete() leaves
+the skb as CHECKSUM_PARTIAL. __bpf_skb_min_len() raises the minimum
+length to the end of the L4 checksum field, so a trim to 42 bytes bails
+out with -EINVAL given a min_len of 52 in this case, and due to that
+the ICMP generator fails. This is not the case if GRO is turned off.
 
-Storing the status means writing into userspace, which might fault, and
-__inject_sigp_stop() is called from do_inject_vcpu() which in turn is
-always called holding a spinlock, which is obviously an issue.
+Fix this bpf_skb_change_tail() restriction and drop the checksum offload
+when the new length no longer covers the checksum field. The BPF program
+rewrites the skb into an ICMP error and computes the checksum itself
+anyway.
 
-Fix this by returning -EWOULDBLOCK from __inject_sigp_stop(), and
-adding a bool flag to indicate whether a store status is needed. The
-callers of do_inject_vcpu() are modified to pass the pointer to the
-bool flag; whenever a Store Status operation is needed, the callers can
-now perform it outside the spinlock.
-
-Opportunistically refactor kvm_s390_set_irq_state() to use
-scoped_guard() and __free().
-
-Fixes: 6cddd432e3da ("KVM: s390: handle stop irqs without action_bits")
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-[ Added Fixes tag while picking -- Claudio ]
-Message-ID: <20260812104436.109741-7-imbrenda@linux.ibm.com>
+Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
+Reported-by: Tom Hadlaw <tom.hadlaw@isovalent.com>
+Reported-by: Yusuke Suzuki <yusuke.suzuki@isovalent.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260907121025.1923656-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/interrupt.c | 70 +++++++++++++++++++++------------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ net/core/filter.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
-index 7207390bd849e..4b0640bf3a671 100644
---- a/arch/s390/kvm/interrupt.c
-+++ b/arch/s390/kvm/interrupt.c
-@@ -1579,23 +1579,21 @@ static int __inject_set_prefix(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
- }
- 
- #define KVM_S390_STOP_SUPP_FLAGS (KVM_S390_STOP_FLAG_STORE_STATUS)
--static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
-+static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
- {
- 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
- 	struct kvm_s390_stop_info *stop = &li->irq.stop;
--	int rc = 0;
- 
- 	vcpu->stat.inject_stop_signal++;
- 	trace_kvm_s390_inject_vcpu(vcpu->vcpu_id, KVM_S390_SIGP_STOP, 0, 0);
- 
- 	if (irq->u.stop.flags & ~KVM_S390_STOP_SUPP_FLAGS)
- 		return -EINVAL;
--
- 	if (is_vcpu_stopped(vcpu)) {
--		if (irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS)
--			rc = kvm_s390_store_status_unloaded(vcpu,
--						KVM_S390_STORE_STATUS_NOADDR);
--		return rc;
-+		if (!(irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS))
-+			return 0;
-+		*storestatus = true;
-+		return -EWOULDBLOCK;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index f51e3940a2fe9..cd52ded01309a 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3757,12 +3757,6 @@ static u32 __bpf_skb_min_len(const struct sk_buff *skb)
+ 		if (offset > 0)
+ 			min_len = offset;
  	}
- 
- 	if (test_and_set_bit(IRQ_PEND_SIGP_STOP, &li->pending_irqs))
-@@ -2136,7 +2134,7 @@ void kvm_s390_clear_stop_irq(struct kvm_vcpu *vcpu)
- 	spin_unlock(&li->lock);
+-	if (skb->ip_summed == CHECKSUM_PARTIAL) {
+-		offset = skb_checksum_start_offset(skb) +
+-			 skb->csum_offset + sizeof(__sum16);
+-		if (offset > 0)
+-			min_len = offset;
+-	}
+ 	return min_len;
  }
  
--static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
-+static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
- {
- 	int rc;
+@@ -3779,6 +3773,11 @@ static int bpf_skb_grow_rcsum(struct sk_buff *skb, unsigned int new_len)
  
-@@ -2148,7 +2146,7 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
- 		rc = __inject_set_prefix(vcpu, irq);
- 		break;
- 	case KVM_S390_SIGP_STOP:
--		rc = __inject_sigp_stop(vcpu, irq);
-+		rc = __inject_sigp_stop(vcpu, irq, storestatus);
- 		break;
- 	case KVM_S390_RESTART:
- 		rc = __inject_sigp_restart(vcpu);
-@@ -2184,11 +2182,16 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
- int kvm_s390_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ static int bpf_skb_trim_rcsum(struct sk_buff *skb, unsigned int new_len)
  {
- 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
-+	bool storestatus = false;
- 	int rc;
- 
- 	spin_lock(&li->lock);
--	rc = do_inject_vcpu(vcpu, irq);
-+	rc = do_inject_vcpu(vcpu, irq, &storestatus);
- 	spin_unlock(&li->lock);
++	if (skb->ip_summed == CHECKSUM_PARTIAL &&
++	    new_len < skb_checksum_start_offset(skb) + skb->csum_offset +
++		      sizeof(__sum16))
++		skb->ip_summed = CHECKSUM_NONE;
 +
-+	if (rc == -EWOULDBLOCK && storestatus)
-+		rc = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
-+
- 	if (!rc)
- 		kvm_s390_vcpu_wakeup(vcpu);
- 	return rc;
-@@ -2924,7 +2927,8 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e, struct kvm *kvm,
- int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len)
- {
- 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
--	struct kvm_s390_irq *buf;
-+	struct kvm_s390_irq *buf __free(kvfree) = NULL;
-+	bool tmp, storestatus = false;
- 	int r = 0;
- 	int n;
- 
-@@ -2932,31 +2936,33 @@ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len
- 	if (!buf)
- 		return -ENOMEM;
- 
--	if (copy_from_user((void *) buf, irqstate, len)) {
--		r = -EFAULT;
--		goto out_free;
--	}
-+	if (copy_from_user((void *)buf, irqstate, len))
-+		return -EFAULT;
- 
--	/*
--	 * Don't allow setting the interrupt state
--	 * when there are already interrupts pending
--	 */
--	spin_lock(&li->lock);
--	if (li->pending_irqs) {
--		r = -EBUSY;
--		goto out_unlock;
--	}
-+	scoped_guard(spinlock, &li->lock) {
-+		/*
-+		 * Don't allow setting the interrupt state
-+		 * when there are already interrupts pending
-+		 */
-+		if (li->pending_irqs)
-+			return -EBUSY;
- 
--	for (n = 0; n < len / sizeof(*buf); n++) {
--		r = do_inject_vcpu(vcpu, &buf[n]);
--		if (r)
--			break;
-+		for (n = 0; n < len / sizeof(*buf); n++) {
-+			tmp = false;
-+			r = do_inject_vcpu(vcpu, &buf[n], &tmp);
-+			if (r == -EWOULDBLOCK && tmp) {
-+				storestatus = true;
-+				r = 0;
-+			}
-+			if (r)
-+				break;
-+		}
- 	}
- 
--out_unlock:
--	spin_unlock(&li->lock);
--out_free:
--	vfree(buf);
-+	if (storestatus) {
-+		n = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
-+		return r ? r : n;
-+	}
- 
- 	return r;
+ 	return __skb_trim_rcsum(skb, new_len);
  }
+ 
 -- 
 2.53.0
 
