@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91CE311C15;
-	Wed, 30 Sep 2026 15:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369F04F68A7;
+	Wed, 30 Sep 2026 15:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782544; cv=none; b=LtU8bnqxkxJaweBUc6x5/znXfcMtfy7q4gN75s7kqqkmRZDLmPM12WeHO6UgHIhB2J6bhjGKVahrerzmfFWdFSE0gGBpvrQfOlymCDheKRBCSWV6lYpg4aebOuKM0MWUqwaT62agDjGwrD0DWhglroklrCR5jY9w/TtWqKVHKmU=
+	t=1790782544; cv=none; b=d7ukUAMIv4RTLCDwNrh3xg/R6R1H6tC/h2aEdCns+M0Pzse77CPZK9uOu+Y40k4hPdufp6+YmonN4tb5TWtU9KQCuICAJhEVhctUHP1YtjdWfRjWd9KkTBWYeItpffTAPd1h9VAr4hq2nkMqnfltj/1aqf9RIAyr30mNBQ5DKpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782544; c=relaxed/simple;
-	bh=nRbtn4C/yx0U/Uyy2HdG1pbRjh1SmqIEJzqp7VfTvpc=;
+	bh=cu/hx0ITGlvCXySP4brIxBCDkXyyvYtWOhE3XdW387o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pzGX+L+Opvt3sgknOldkZ6BgqJ5VsbioOODKZwWMU8cAKtIbRSorIMvJPVRkH0J/B3LJWqq7eZq4v7BxTxv58vgJ14E3xzcL9BieZ5dzN3muIfpKdm2lS1twKpNZnRxYuoCc90PfeKpoE0cif5k4/ExOT5iU9Z/plvhoo7Kh0Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlyfT82C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e8KVUmP75bdusr7CioxulV/+6+uuw0R5Nd+GqETjqL9YzdjEsWCWNHeB5VBp0V1GK0jbE4ykrd+yyOQw6y5zsN1lOnerMk1AdFA63HrBi78Mn7QtU6OqgcOtSQFfJV3NBlRyvqQsxCmMIkI/8YucWvthehRd/Geb3twrgxjsQoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCl1/w1c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlyfT82C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BC41F000FF;
-	Wed, 30 Sep 2026 15:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCl1/w1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244B61F0089B;
+	Wed, 30 Sep 2026 15:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782533;
-	bh=Huhgrls87/5huizbw9aTD1lj7bcuSaOK86Guzar3GH4=;
+	s=korg; t=1790782541;
+	bh=BccRhgv1C+bX41hVJlPQT/Lcg1JWbMYk2+oIx2H0mFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AlyfT82CEj27tMlbalcRFy0lNozSAxQBpbChuhzKJXNNrz+coR4JDpK538HJsM6VI
-	 J+OEbPiG6GVznyz47BLR1tTasH/ihP/2ozjI74HWo0wv+KrRjXNI/zhI1TKsNjoMFR
-	 +PTehQtYXQIwRWbXgeYSNpvxCjrlnKuy75uENzbc=
+	b=DCl1/w1cvPrDCJZ0X0kFV8Wo96vTFo3f4n2VKlheDYq+XLWmORH0Xa/c2uHrA0dG/
+	 TOj/sWSuWBsDPC71lBNKVyxdqhrUQXyNJROwBm6Ok0hanhkitvNjUUXvxcX7K/Oh25
+	 GBbSi86QIsnR+PoRMEJ/oy3AHfRXrph40Pf4M9o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/595] ACPICA: add boundary checks in two places
-Date: Wed, 30 Sep 2026 17:19:34 +0200
-Message-ID: <20260930152349.481560318@linuxfoundation.org>
+Subject: [PATCH 5.10 083/595] scripts: modpost: detect and report truncated buf_printf() output
+Date: Wed, 30 Sep 2026 17:19:36 +0200
+Message-ID: <20260930152349.524212880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,93 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit bdc35754012906dbf094be104b103ca3adfef6f7 ]
+[ Upstream commit d7231d8cb262b1e350c00271bf53d54414b4f3b1 ]
 
-Add boundary checks in acpi_ps_get_next_namestring() and
-acpi_ps_peek_opcode() to prevent out-of-bounds access.
+buf_printf() uses a fixed-size stack buffer. vsnprintf() returns the
+number of bytes that *would* have been written to that buffer, which can
+be larger than the size of said buffer if the formatted string is too
+long.
 
-Link: https://github.com/acpica/acpica/commit/cfdc96896d8d
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5180044.0VBMTVartN@rafael.j.wysocki
+The problem is that whenever this happens buf_printf() currently passes
+this length, unchecked, to buf_write(), which silently reads past the
+stack buffer and copies invalid data into the output buffer.
+
+Fix this by detecting vsnprintf() failures and truncations before
+appending to the output buffer, and report a fatal error instead of
+producing corrupt symbol names.
+
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20260527-nova-exports-v2-1-06de4c556d55@nvidia.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c  | 18 +++++++++++++++++-
- drivers/acpi/acpica/psparse.c |  6 ++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+ scripts/mod/modpost.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 7f986b7a52464..5438903650943 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -148,10 +148,16 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 379d03d0c5e6d..f5c166bf20fdd 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -2146,8 +2146,17 @@ void __attribute__((format(printf, 2, 3))) buf_printf(struct buffer *buf,
  
- 	/* Point past any namestring prefix characters (backslash or carat) */
- 
--	while (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end)) {
-+	while (end < parser_state->aml_end &&
-+	       (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end))) {
- 		end++;
- 	}
- 
-+	if (end >= parser_state->aml_end) {
-+		parser_state->aml = parser_state->aml_end;
-+		return_PTR(NULL);
+ 	va_start(ap, fmt);
+ 	len = vsnprintf(tmp, SZ, fmt, ap);
+-	buf_write(buf, tmp, len);
+ 	va_end(ap);
++
++	if (len < 0) {
++		perror("vsnprintf failed");
++		exit(1);
 +	}
++	if (len >= SZ)
++		fatal("buf_printf output truncated for string %s: %d bytes needed, %d available\n",
++		      tmp, len + 1, SZ);
 +
- 	/* Decode the path prefix character */
- 
- 	switch (*end) {
-@@ -176,6 +182,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
- 
- 		/* Multiple name segments, 4 chars each, count in next byte */
- 
-+		if ((end + 1) >= parser_state->aml_end) {
-+			parser_state->aml = parser_state->aml_end;
-+			return_PTR(NULL);
-+		}
-+
- 		end += 2 + (*(end + 1) * ACPI_NAMESEG_SIZE);
- 		break;
- 
-@@ -187,6 +198,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
- 		break;
- 	}
- 
-+	if (end > parser_state->aml_end) {
-+		parser_state->aml = parser_state->aml_end;
-+		return_PTR(NULL);
-+	}
-+
- 	parser_state->aml = end;
- 	return_PTR((char *)start);
++	buf_write(buf, tmp, len);
  }
-diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
-index 49fbe35c4f7c0..700a621abd9b7 100644
---- a/drivers/acpi/acpica/psparse.c
-+++ b/drivers/acpi/acpica/psparse.c
-@@ -70,6 +70,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
- 	u16 opcode;
  
- 	aml = parser_state->aml;
-+	if (aml >= parser_state->aml_end) {
-+		return (0xFFFF);
-+	}
- 	opcode = (u16) ACPI_GET8(aml);
- 
- 	if (opcode == AML_EXTENDED_PREFIX) {
-@@ -77,6 +80,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
- 		/* Extended opcode, get the second opcode byte */
- 
- 		aml++;
-+		if (aml >= parser_state->aml_end) {
-+			return (0xFFFF);
-+		}
- 		opcode = (u16) ((opcode << 8) | ACPI_GET8(aml));
- 	}
- 
+ void buf_write(struct buffer *buf, const char *s, int len)
 -- 
 2.53.0
 
