@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C9450B42A;
-	Wed, 30 Sep 2026 15:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0B8502795;
+	Wed, 30 Sep 2026 15:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782351; cv=none; b=YMBtFqBLdU0ftWPwAUKHgvHKeFMsPJ5e5/QM1QsjOI9nLc63kOnl6uwUfPCaMliziqocGH2CNOLIPUzeq0TroUJIpmDC/ml2i5ldg2eAI87jOPDgQTMFj2Jj31Ms5CnA8nUNgYiJNYxd9OV9W+Fnz70FHaaVc6sNXpYmwS8BywQ=
+	t=1790782356; cv=none; b=m/tIwLwwpsE33A0zLZ5ZjJtY7R8hkLHhWFQcl9g7RxSudsj9fGEINOx6voSvhrCMCFtUs9gO/lPy6YLH35aPbAnCfmJZj7QiOTxvaH14NdWxGjRlIsXUb1CREmT2e/zOY3IiEIorGpW+fu85R55X/ja226AAW9RfmdGnxL33syo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782351; c=relaxed/simple;
-	bh=hpO5VTTqU8iagYXaF734ttIaBM7+KC/FKbU4nGP04s8=;
+	s=arc-20240116; t=1790782356; c=relaxed/simple;
+	bh=VXN7w6GjrSxEHIciIadgXBROsSsFooGL3bBi3aRZNIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYTGLCXlOKPTmkvaxFHvLiVP4i9PtiPHbMUH4gCEge4lzrIrteXM3joKqDjMy7voOXA6j0690bCqKuW7U0g+221N+uW6hQWXpVIoxjVDvd6IKOBXXhoh4eqCDHo0X6IjlATnKGj9c1u4c/cRJdbJyz/kBMXUjxzu/a572dzSbjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZDLYHke; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ouYkr/44WM6U23Op8QumAmVUaJkmmZrkW/O3y3Nq5GW2kbjhjTYUEWAJixLqe5vlq4rInjWOCgtMUd9YGZpW+fdG7Elj2FW6PWoMn3GwvLO6nJ67VUpOtIumsvxyoW+BcBwkPjbUKJYwjszQMUwhxstq7HABPOSq8LTKcP+ihUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSCCG6Up; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZDLYHke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C294C1F008A1;
-	Wed, 30 Sep 2026 15:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSCCG6Up"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484C61F000FF;
+	Wed, 30 Sep 2026 15:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782337;
-	bh=HHOOW9odzintQwbksNXIF4f6eCUiCFi3rEJHO8d3yEg=;
+	s=korg; t=1790782345;
+	bh=OJqAr2wN6wGGetI0BkjwLMmHiCzLSFvT4mWpQ6k75xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZDLYHkeOI1T4Vib4T4QEcvSEJh4toX+IIvjP478/em5qUtb0IUOuq01yr5VjsrHh
-	 31cH0c75PMJNrRn+DIthSqcN2gD1Zbbqpv0SpfqNTvetU2gZXNRs4+mua2z471twal
-	 ODf1HTDRY+n+8Wg382gGyUW9w1A5NPA1aC0Oe0gY=
+	b=bSCCG6Up9xt9DkXgYl0jTgg73VMShB6YE2zLtWl1Nq+7AkZHN4dv37Uqnfe3RYMEO
+	 o9PJr6FHma/KcurzEWCT0eLokYVaCgu9c4Uypz8YAoLJTdTHRIherw6GW6LFINBtNC
+	 7L+MHZJxr2P1gt/8i1zbYp3GFikGLwN3Q5QlUa98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/595] thunderbolt: Release request if tb_cfg_request() fails in __tb_xdomain_response()
-Date: Wed, 30 Sep 2026 17:18:25 +0200
-Message-ID: <20260930152347.982426851@linuxfoundation.org>
+Subject: [PATCH 5.10 002/595] ALSA: usb-audio: Propagate write errors in generic mixer put callbacks
+Date: Wed, 30 Sep 2026 17:18:15 +0200
+Message-ID: <20260930152347.762010466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -44,52 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 4c63f29872cb444b33665348bbd2f45cab06afcd ]
+[ Upstream commit 87a6f2fa6e6c69bb649fa327635a0bd977724603 ]
 
-If tb_cfg_request() fails setting up the request (for example the
-control channel is shut down already) it returns an error without
-calling the callback. To avoid leaking that memory, call
-tb_cfg_request_put() if tb_cfg_request() fails.
+mixer_ctl_feature_put(), mixer_ctl_procunit_put(), and
+mixer_ctl_selector_put() ignore failures from their SET_CUR helper
+routines and report the control as changed whenever the requested
+value differs from the current one.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+If the device rejects the write, userspace still sees success although
+the hardware state did not change. Propagate write failures instead,
+using filter_error() so ignore_ctl_error keeps the same semantics as
+the existing get paths.
+
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-1-5a3bd4a673ae@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/xdomain.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/usb/mixer.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 47ccebf42c5a5..a354532988fb2 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -97,6 +97,7 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
- 				 size_t size, enum tb_cfg_pkg_type type)
- {
- 	struct tb_cfg_request *req;
-+	int ret;
- 
- 	req = tb_cfg_request_alloc();
- 	if (!req)
-@@ -108,7 +109,11 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
- 	req->request_size = size;
- 	req->request_type = type;
- 
--	return tb_cfg_request(ctl, req, response_ready, req);
-+	ret = tb_cfg_request(ctl, req, response_ready, req);
-+	if (ret)
-+		tb_cfg_request_put(req);
-+
-+	return ret;
- }
- 
- /**
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 7f64199139d31..7c3f9ab4a9f20 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1419,7 +1419,10 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 			val = ucontrol->value.integer.value[cnt];
+ 			val = get_abs_value(cval, val);
+ 			if (oval != val) {
+-				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
++				err = snd_usb_set_cur_mix_value(cval, c + 1,
++								cnt, val);
++				if (err < 0)
++					return filter_error(cval, err);
+ 				changed = 1;
+ 			}
+ 			cnt++;
+@@ -1432,7 +1435,9 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 		val = ucontrol->value.integer.value[0];
+ 		val = get_abs_value(cval, val);
+ 		if (val != oval) {
+-			snd_usb_set_cur_mix_value(cval, 0, 0, val);
++			err = snd_usb_set_cur_mix_value(cval, 0, 0, val);
++			if (err < 0)
++				return filter_error(cval, err);
+ 			changed = 1;
+ 		}
+ 	}
+@@ -2264,7 +2269,9 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
+ 	val = ucontrol->value.integer.value[0];
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+-		set_cur_ctl_value(cval, cval->control << 8, val);
++		err = set_cur_ctl_value(cval, cval->control << 8, val);
++		if (err < 0)
++			return filter_error(cval, err);
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -2626,7 +2633,9 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
+ 	val = ucontrol->value.enumerated.item[0];
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+-		set_cur_ctl_value(cval, cval->control << 8, val);
++		err = set_cur_ctl_value(cval, cval->control << 8, val);
++		if (err < 0)
++			return filter_error(cval, err);
+ 		return 1;
+ 	}
+ 	return 0;
 -- 
 2.53.0
 
