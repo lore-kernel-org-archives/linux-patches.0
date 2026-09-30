@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AACB51597D;
-	Wed, 30 Sep 2026 17:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F5350C2A4;
+	Wed, 30 Sep 2026 17:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788825; cv=none; b=n9kSuf9gCWnqgDyuQYq1VEmeCUJ7MZxwO/QSHazP/3r54nr7/tHwHYVu4jq38vwJLQubjTBcJeZ9ZtJ/xjryt3XjyvBllNcJVco04Ba7Luz9fx5FZvBJT5a7BECI+WPmZsIODp1W0wwPyAOr3NmUv/YUQwSBGLRcqH8W4PVvhgg=
+	t=1790788828; cv=none; b=YnmeC+tXf0xk+JSKrx5Zf+JcS/VnzZgMves3HyWfD/Mzy7f6K+JTet8UtVu1XBFLEEXbLvxjN7N05m61RzkAwslZBBVDU3wMH7qsLytxatheM2C6/Oqt66cixF7wQcO5zao89j2yPM55idcPPozRnkUkaQatjTMRug52tNcRrYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788825; c=relaxed/simple;
-	bh=+sJsmxlz8RLzS/ksz0dPY2Pi92eOf7piOA5eq3DEi6s=;
+	s=arc-20240116; t=1790788828; c=relaxed/simple;
+	bh=vVk4/jPDFYjykkwyEUyGNlsJS7fQVkN3ycyp8dtGOeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObE3bKm5NwUuH9NlMZh0uk5YnHFYCQTpgIddu70gBzk7xvLFF2v3fTt3pjoDW7aJVzj4Dg+LUgwiyiHFS61DVrPq0EN5c8g5hfz1lzTTSmk+4QzZF9zJMarYNdEVIQgwctGEsxXxjJOntcqZ5elvEKS0w0i6r4fwk3WzJZxh/no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjbOlPBr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kk/dJTqP4fz9rUDaQEN390/mHazNbgLn1PLIMRajCKyG9kdNgCm75LwKWV9DT7FrwjS1ZyZ90nFvXjBY/oTFbt5AfRhQxzKzYaeGWs80pdziGkBcjKW7R4Pv8se6Q6XoUvo4LauST4v2QxGGzAotC6qZHr6Jy/AaRZWnVNbCzh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pXB0f6R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjbOlPBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CC91F000FF;
-	Wed, 30 Sep 2026 17:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pXB0f6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6041F000FF;
+	Wed, 30 Sep 2026 17:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788824;
-	bh=BulVHPH4q+5bAsPa1jHuj0/lmPJEYskwYOZ9PcZnwLE=;
+	s=korg; t=1790788827;
+	bh=4Ym+TCKuwdKeER8l2Zgw0b3+nJz6J8PctcuTLfGsahc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XjbOlPBranD9ZRa8I15Laj3x/4ujMy9CFTT84UY71a9mxrFEBNNpyYXeddK+ua6mc
-	 9+sNOjW00Lk1yZ1GIDdUDlHyIDnMDNPwmPEu9VtZbT9hOcgAaDegQXDlVnKvZYSmqC
-	 ikibhuE4lV0XoVJPccQ0eaVgoVU/uymmTbXrL5H8=
+	b=0pXB0f6RKz8fI8o1/nuB8JxeB7UpHloegTqiiUR7snAONrgyU52YuRkjnTd4WwjRQ
+	 y0cTI/fCBMGO+Lj3kz7VilYbAz5nbgLPLqLvE31W+bdF6BqElYpkRETI49ts/YbWZN
+	 mX/HBXZzEKD61gg9s6DK6ZbH/QcjWQFa6T7SQfEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 215/877] selinux: preserve user SID across nested backing files
-Date: Wed, 30 Sep 2026 17:18:46 +0200
-Message-ID: <20260930152419.369994267@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.12 206/877] keys: translate request_key_auth pid for the reading procfs instance
+Date: Wed, 30 Sep 2026 17:18:37 +0200
+Message-ID: <20260930152419.169923482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,78 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 8c0c602202b9a4909b00bc3354e3c0355bc69e65 upstream.
+commit 0d6a4268b06084baafd8ee5d66955c7e1c2e053b upstream.
 
-SELinux saves the user file SID in a backing-file security blob so it
-remains available after mmap() replaces vma->vm_file with a backing file.
+request_key_auth_describe() prints rka->pid into /proc/keys as a raw
+pid_t in the initial pid namespace. A reader can open /proc/keys through
+a mount in another pid namespace. That reader sees a number with no
+meaning there. The number can even name an unrelated task. The line
+needs VIEW on the key. So the reader either shares the key owner's uid
+or possesses the key.
 
-For nested backing files (overlayfs over overlayfs, or FUSE passthrough
-backed by overlayfs), user_file may itself be a backing file.  Its
-fsec->sid is the SID of the mounter that opened it, rather than the user
-that opened the top-level file.  mprotect() then checks fd { use } against
-the mounter SID.  This can incorrectly deny access without a domain
-transition, or check the wrong target SID after one.
+The fix keeps a struct pid. Commit 4f82f45730c6 ("net ip6 flowlabel:
+Make owner a union of struct pid * and kuid_t") gave
+/proc/net/ip6_flowlabel the same storage. The print goes through
+pid_nr_ns(). It renders against the pid namespace of the procfs instance
+the line is read through. Commit ad08978ab41c ("ipv6/flowlabel: simplify
+pid namespace lookup") moved that print to the same anchor. Output
+through an initial namespace /proc does not change. The line shows 0 for
+a requestor with no number in that namespace.
 
-Copy the saved user SID when user_file is a backing file.  Keep using the
-regular file SID for the first backing layer.
+Translating at read time was the alternative. find_pid_ns() can resolve
+a recycled number. The line would then name a live task with no
+connection to the key. A stored struct pid gives 0 instead when the
+requestor has no number there.
 
-With two nested overlayfs mounts and SELinux enforcing,
-mprotect(PROT_READ) returns EACCES with an fd { use } denial against the
-mounter SID.  With this change, mprotect() succeeds.
-
-Tested on arm64 QEMU with a small BusyBox initramfs and a purpose-built
-SELinux policy.  The original test was also repeated with Fedora Cloud
-Base 44 userspace and gave the same result.
-
-Cc: stable@vger.kernel.org
-Fixes: 82544d36b172 ("selinux: fix overlayfs mmap() and mprotect() access checks")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Link: https://lore.kernel.org/keyrings/20260809110202.2180410-1-maoyixie.tju@gmail.com/
+Fixes: 78b7280cce23 ("KEYS: Improve /proc/keys")
+Cc: stable@vger.kernel.org # v5.10+
+Assisted-by: Claude:claude-opus-5 codeql
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://lore.kernel.org/r/20260821095935.1864998-1-maoyixie.tju@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c          |    9 ++++++++-
- security/selinux/include/objsec.h |    2 +-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ include/keys/request_key_auth-type.h |    2 +-
+ security/keys/request_key_auth.c     |   12 +++++++++---
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -3676,13 +3676,20 @@ static int selinux_file_alloc_security(s
- 	return 0;
+--- a/include/keys/request_key_auth-type.h
++++ b/include/keys/request_key_auth-type.h
+@@ -22,7 +22,7 @@ struct request_key_auth {
+ 	const struct cred	*cred;
+ 	void			*callout_info;
+ 	size_t			callout_len;
+-	pid_t			pid;
++	struct pid		*pid;
+ 	char			op[8];
+ } __randomize_layout;
+ 
+--- a/security/keys/request_key_auth.c
++++ b/security/keys/request_key_auth.c
+@@ -9,6 +9,8 @@
+ 
+ #include <linux/sched.h>
+ #include <linux/err.h>
++#include <linux/pid.h>
++#include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+@@ -73,7 +75,10 @@ static void request_key_auth_describe(co
+ 	seq_puts(m, "key:");
+ 	seq_puts(m, key->description);
+ 	if (key_is_positive(key))
+-		seq_printf(m, " pid:%d ci:%zu", rka->pid, rka->callout_len);
++		seq_printf(m, " pid:%d ci:%zu",
++			   pid_nr_ns(rka->pid,
++				     proc_pid_ns(file_inode(m->file)->i_sb)),
++			   rka->callout_len);
  }
  
-+static inline u32 selinux_file_user_sid(const struct file *file)
-+{
-+	if (unlikely(file->f_mode & FMODE_BACKING))
-+		return selinux_backing_file(file)->uf_sid;
-+	return selinux_file(file)->sid;
-+}
-+
- static int selinux_backing_file_alloc(struct file *backing_file,
- 				      const struct file *user_file)
- {
- 	struct backing_file_security_struct *bfsec;
- 
- 	bfsec = selinux_backing_file(backing_file);
--	bfsec->uf_sid = selinux_file(user_file)->sid;
-+	bfsec->uf_sid = selinux_file_user_sid(user_file);
- 
- 	return 0;
+ /*
+@@ -113,6 +118,7 @@ static void free_request_key_auth(struct
+ 	if (rka->cred)
+ 		put_cred(rka->cred);
+ 	kfree(rka->callout_info);
++	put_pid(rka->pid);
+ 	kfree(rka);
  }
---- a/security/selinux/include/objsec.h
-+++ b/security/selinux/include/objsec.h
-@@ -62,7 +62,7 @@ struct file_security_struct {
- };
  
- struct backing_file_security_struct {
--	u32 uf_sid; /* associated user file fsec->sid */
-+	u32 uf_sid; /* top-level user file fsec->sid */
- };
+@@ -226,14 +232,14 @@ struct key *request_key_auth_new(struct
  
- struct superblock_security_struct {
+ 		irka = cred->request_key_auth->payload.data[0];
+ 		rka->cred = get_cred(irka->cred);
+-		rka->pid = irka->pid;
++		rka->pid = get_pid(irka->pid);
+ 
+ 		up_read(&cred->request_key_auth->sem);
+ 	}
+ 	else {
+ 		/* it isn't - use this process as the context */
+ 		rka->cred = get_cred(cred);
+-		rka->pid = current->pid;
++		rka->pid = get_pid(task_pid(current));
+ 	}
+ 
+ 	rka->target_key = key_get(target);
 
 
