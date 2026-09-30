@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C903E7BAD;
-	Wed, 30 Sep 2026 19:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364A93515DC;
+	Wed, 30 Sep 2026 19:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796506; cv=none; b=Py85ab5Fb0Is2sHILSxrwmefwAJ4j+qEcsJ2krtqLYwQZQg48TpR2alVSbyT61Z40dddlGXlKj7SinYXsU4BbMY7v5JL0x+GCqA6U/iCXYyk2Mc/IZel5pm9WZu0nILBMgAgaqBtUiCURCR4L/l30MhiEdb4E4jFM9H65eJEL6I=
+	t=1790796509; cv=none; b=i9ysfS6ygx/H7f7H5YZvNi3Zo+hyL5f8LShXYkPGHnR7QZpsq4uoSdLF1P6Rp2apWngjL0XcVrZKLXSFOBDCCwpVoZbxWyER4E9dPp6SlKt1Dqyq3XwlDt92U/N7C7ibXaR9pDtdhPIGVd55TUAlU2522HrOSiYgESHoCeWiiFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796506; c=relaxed/simple;
-	bh=0xIQ8VYsqpy6Y/uVfKZs4ZhkOtPtOr4NN7Ej68YMAsA=;
+	s=arc-20240116; t=1790796509; c=relaxed/simple;
+	bh=P8rzaTDqHRAfNt6QljqgcYHOQ6uxbkePts9+HUWUXVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6eKLBMmR2fKnVdbZg0wrZJ5MWKfQhy5OBh1NW8qGuuUf4bnsfy6dsZdpYSGVzfEKlgkul1IcZDIZgjSqP5Y6hykmzPlvRKlOjIjsW3Y41PTAVOkw4U3Z8la0wl412AqVxQqQ1GtqHGUe61b3z2v3woxarkyPmIk5gGI87PXdac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swtt3Mpk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mDAmwMaRJPdwq/7IdVT/aa7B3wsqc+sh1N8fUIBU+qaZ5E1SL7fffykLQxRWGCVGpDf11yc2Cyse2vwf3BxfKliugDURtm0J9aaPGtCadxNPkCi+bkTWLUa6MiiJ2nEGOr0l5/IdKs5NkLfHBUgD8KJDXbZ7IvsUbAJiUGMi9i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6VietLp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swtt3Mpk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D681F000FF;
-	Wed, 30 Sep 2026 19:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6VietLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437101F00898;
+	Wed, 30 Sep 2026 19:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796505;
-	bh=V5MYtvHVTmQ/u8GWccn4VZE0ajhfM4D3fO/taVfLo6Q=;
+	s=korg; t=1790796507;
+	bh=CuROB8Nelzi8zowu5kognyZVKWGj91erX6Vhtvf8lw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=swtt3Mpkr5A6Pw3Hs77UGCWajzknINOrE2RqSnWstqdTEra//PpdmoBWoimNAMOlK
-	 NTY5wccOMd8LzZjbeqzYIgZ7nSTKuvup/BdNP9wi3A6my1k6RTNKGxWNHdjt/k/vYy
-	 Ut/g1VoAUWehK9zH7KfQHh+XMKTVv3FLnuE5kHxY=
+	b=x6VietLpN8oCVM0QcoDuyW/8pKS8S83bDMGxYPFEBcEKClJVKfxSnqIERs7XsXE4S
+	 kfqTOtDL2iTHXr5miEx80wctDqgTN9SP2iNOtIb552EwYLNtGpWzKdBmMENs4uC0tt
+	 SdW80KFxn+sgzd2gRzs/Saq+aStCDlh0hTAzmxRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Tom Talpey <tom@talpey.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.6 0936/1193] smb: client: fix smbd_connection leak on cifs_get_tcp_session() error
-Date: Wed, 30 Sep 2026 17:27:00 +0200
-Message-ID: <20260930152455.036199302@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 0937/1193] smb: client: fix next_buffer UAF and NextCommand bounds in compound PDUs
+Date: Wed, 30 Sep 2026 17:27:01 +0200
+Message-ID: <20260930152455.059205844@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,44 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit e75c96157d45e498970158c8f7373d90102e33b9 upstream.
+commit 05762c5bc1cfdcac36747994fde2c04387a457f1 upstream.
 
-When an RDMA connection is successfully established via
-smbd_get_connection() but cifs_get_tcp_session() later fails (e.g.
-kthread_create() returns an error), the error path frees tcp_ses
-without first destroying the smbd_connection.
+Fix several related bounds checking and pointer lifecycle issues in
+receive_encrypted_standard()'s handling of compound encrypted frames:
 
-Fix this by calling smbd_destroy() in the out_err cleanup path before
-kfree(tcp_ses).  smbd_destroy() safely handles the case where
-smbd_conn is NULL, so it can be called unconditionally.
+- Clear next_buffer after assigning it to server->bigbuf. A stale
+  next_buffer pointer can lead to a use-after-free on subsequent
+  error paths.
+- Update pdu_length to the decrypted plaintext size (buf_size). Using
+  the pre-decryption length allows NextCommand to point into stale
+  ciphertext residue.
+- Reject next_cmd values smaller than MID_HEADER_SIZE(server).
+- Fix an integer overflow in the upper bound check by verifying
+  pdu_length - next_cmd < MID_HEADER_SIZE(server), ensuring the
+  trailing slice is large enough for a header.
 
-Closes: https://sashiko.dev/#/patchset/20260912165503.521597-1-pc%40manguebit.org
-Fixes: 2f8946464b11 ("CIFS: SMBD: Upper layer connects to SMBDirect session")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Stefan Metzmacher <metze@samba.org>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
 Cc: stable@vger.kernel.org
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/smb2ops.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1901,6 +1901,7 @@ out_err:
- 		kfree(tcp_ses->leaf_fullpath);
- 		if (tcp_ses->ssocket)
- 			sock_release(tcp_ses->ssocket);
-+		smbd_destroy(tcp_ses);
- 		kfree(tcp_ses);
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4963,6 +4963,7 @@ receive_encrypted_standard(struct TCP_Se
+ 	length = decrypt_raw_data(server, buf, buf_size, NULL, false);
+ 	if (length)
+ 		return length;
++	pdu_length = buf_size;
+ 
+ 	next_is_large = server->large_buf;
+ one_more:
+@@ -4975,8 +4976,15 @@ one_more:
  	}
- 	return ERR_PTR(rc);
+ 
+ 	if (next_cmd) {
+-		if (WARN_ON_ONCE(next_cmd > pdu_length))
++		if (next_cmd < MID_HEADER_SIZE(server) ||
++		    next_cmd > pdu_length ||
++		    pdu_length - next_cmd < MID_HEADER_SIZE(server)) {
++			unsigned int max_next = pdu_length > (unsigned int)MID_HEADER_SIZE(server) ?
++					pdu_length - (unsigned int)MID_HEADER_SIZE(server) : 0;
++			cifs_server_dbg(VFS, "invalid NextCommand offset %u out of range [%zu, %u]\n",
++					next_cmd, MID_HEADER_SIZE(server), max_next);
+ 			return -1;
++		}
+ 		if (next_is_large)
+ 			next_buffer = (char *)cifs_buf_get();
+ 		else
+@@ -5012,6 +5020,7 @@ one_more:
+ 			server->bigbuf = buf = next_buffer;
+ 		else
+ 			server->smallbuf = buf = next_buffer;
++		next_buffer = NULL;
+ 		goto one_more;
+ 	} else if (ret != 0) {
+ 		/*
 
 
