@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C993B2D1A;
-	Wed, 30 Sep 2026 19:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAF63FC5BD;
+	Wed, 30 Sep 2026 19:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797243; cv=none; b=QN2Vy3VhkBrmXNmeLmx8f1YHY+CpiRGP9maeLX8xlSQToV6OYeK5GY+a8vqNjXRJ9hYEF3QBtCQtKMS5SSKiqSLJtI4jUwXGLFCrNNgwsvDIWriij7hBydn9KhBMc95F2bwFUdSID1ixOUpAYdZWkNlFpqyw3syeKys2IEkigxo=
+	t=1790797246; cv=none; b=nJ6O//75oV1+N+B1rb2WxIq7rVtY0aevaGJ0+GM3gavfu7TdMpp62hKWe8L7lvMrZECx4tgg1DMVVk8RBkPKQlT3ccyfBS67rtFCwshRCSqn8XmOVaZPTzmWUqk7CTt/ue9ArSD+QrBOaPQPnw+8HlinwcCKVM9yiJvevOkLJzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797243; c=relaxed/simple;
-	bh=XE13Hp4lHFYkJeIDP7vJMD8DfnDZy6/1YqWFU51MkLs=;
+	s=arc-20240116; t=1790797246; c=relaxed/simple;
+	bh=wp+u2kuHZC8+MdbHU0FFzbMvgrx71VfWpxuGtpsqa74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jvgg5rW+qIKV2oH+KBWkVKrAVmQZb90cXN/geWZPzkHyWKSg/s4JBm/nTwhfP1+HIMPaqybDIJATcJJsHeHHhIeL/Fo32juuB2buK3YwpHdyLUWgNxszSUJLES8OcVLIRkQpzRYxAi2ClWcX05RRosj04KSVNojrRbwCqk1PfFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usbE0SzB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xk2OUU1JTqDzKIqQiQCLGZBByXabeuKXBes349stlxvQfTHLDDySNaRx1kB5X0Agt5CoglbaIrsrxfQN/jXQXhGJu0HuCOw/oYY7m2USDEVnhqxbGYaiaDq5ezd+dUYvk1lYD8jixOtntgbFqnAcFL6BCkLiNE0Dgt7F4oPpRMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvhiiPN0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usbE0SzB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C591F000FF;
-	Wed, 30 Sep 2026 19:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvhiiPN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FBE1F000FF;
+	Wed, 30 Sep 2026 19:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797241;
-	bh=h5aMkclh+BOzOvePtyfQQ1oK/DoyU/0zE7bgcxwSQjQ=;
+	s=korg; t=1790797244;
+	bh=yu1/ak1OA3AfC5YtEALQD28k615r+HSEheDjAJsPzBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=usbE0SzBtiFKswvdzDv38DmeNElvgRkv5wJ/lARO2LfS6eiDusU0HRZzfbhsq5wFb
-	 s0R5jEQf1ZfktWOOfdOgT6K4R06AT9i/wh9nolyKbUDTSn5GyR7a1zlLcoXyjYgo1X
-	 31PUW83c9Yb0rzqOXi2Ot1jOAltqNiLyqtNWBTkk=
+	b=UvhiiPN0y0QaI+JttQ2pqbtMk8oQzTsEFIpzHb0P1ypkVwSxkt0tT2lvETgXjJJpw
+	 oh0K1jWfnz7VcZxCjc82f4ld8T2n/7t7FHgahsAhgijLH+6b4tvBudSyUMVuoyWD4M
+	 c+UrzzHpHF0Z80H6hx4KFlm0JHVlrr8/W6rlnoT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Fourie Zhang <fouriezhang@tencent.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1190/1193] netfilter: nf_tables: place base_seq in struct net
-Date: Wed, 30 Sep 2026 17:31:14 +0200
-Message-ID: <20260930152500.685197948@linuxfoundation.org>
+Subject: [PATCH 6.6 1191/1193] netfilter: nf_tables: dont queue packet path object notifications
+Date: Wed, 30 Sep 2026 17:31:15 +0200
+Message-ID: <20260930152500.708059173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,224 +53,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Fourie Zhang <littleddfu@gmail.com>
 
-[ Upstream commit 64102d9bbc3d41dac5188b8fba75b1344c438970 ]
+[ Upstream commit 7904b94768e983bcb2be34a8d6d1f3450f5b838b ]
 
-This will soon be read from packet path around same time as the gencursor.
+All file:line references below are against v7.2-rc4 (ac5b0e5651b1). The
+trace was captured on 7.2.0-rc6-kasan72rc6 (075b74841bd0), where the same
+lines apply.
 
-Both gencursor and base_seq get incremented almost at the same time, so
-it makes sense to place them in the same structure.
+nft_obj_notify() is exported and reached from the packet path. Its only
+in-tree caller is nft_quota_obj_eval() (net/netfilter/nft_quota.c:68),
+which notifies with GFP_ATOMIC while evaluating a rule for a transiting
+packet, holding no mutex.
 
-This doesn't increase struct net size on 64bit due to padding.
+Since commit 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple
+notifications into one skbuff") that notification is no longer sent
+immediately. __nft_obj_notify() queues it onto nft_net->notify_list via
+nft_notify_enqueue() (net/netfilter/nf_tables_api.c:1211), which is a bare
+list_add_tail(). notify_list has no lock of its own
+(include/net/netfilter/nf_tables.h:1951), it is serialised by commit_mutex:
+the six other enqueue sites all run inside a netlink transaction, and the
+drain in nft_commit_notify() (net/netfilter/nf_tables_api.c:10746) does
+list_del() + kfree_skb() from nf_tables_commit() with commit_mutex held.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 7904b94768e9 ("netfilter: nf_tables: don't queue packet path object notifications")
+Sending packets through a chain that references a depleted quota object
+therefore races an unlocked list_add_tail() against list_del() +
+kfree_skb() on another CPU. The WRITE_ONCE(prev->next, new) in __list_add()
+then stores through an sk_buff that has already been freed:
+
+  BUG: KASAN: slab-use-after-free in __nft_obj_notify+0x2c5/0x2d0
+  Write of size 8 at addr ff110001047183c0 by task poc/76
+  CPU: 0 UID: 1000 PID: 76 Comm: poc Tainted: G  W  7.2.0-rc6-kasan72rc6 #4
+  Call Trace:
+   <IRQ>
+   __nft_obj_notify (include/linux/list.h:164 include/linux/list.h:191
+                     net/netfilter/nf_tables_api.c:1211
+                     net/netfilter/nf_tables_api.c:8743)
+   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
+   nft_do_chain_inet
+   nf_hook_slow
+   __ip_local_out
+   ip_push_pending_frames
+   udp_send_skb
+   udp_sendmsg
+   __x64_sys_sendto
+
+  Allocated by task 77:
+   __alloc_skb (net/core/skbuff.c:704)
+   __nft_obj_notify (include/net/netlink.h:1055
+                     net/netfilter/nf_tables_api.c:8731)
+   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
+   nft_do_chain
+
+  Freed by task 79:
+   nf_tables_commit (include/linux/skbuff.h:1332
+                     net/netfilter/nf_tables_api.c:10759
+                     net/netfilter/nf_tables_api.c:11185)
+   nfnetlink_rcv_batch (net/netfilter/nfnetlink.c:574)
+   netlink_unicast
+   netlink_sendmsg
+
+  The buggy address belongs to the cache skbuff_head_cache of size 232
+
+Queueing from the packet path is wrong even leaving the race aside:
+notify_list is only drained by nft_commit_notify() from nf_tables_commit()
+(:11185), so a notification enqueued outside a transaction is not sent
+until some later netlink batch commits, if one ever does.
+
+The gfp argument that nft_obj_notify() still takes is a leftover of the
+pre-67cc570edaa0 behaviour, where this path called nfnetlink_send()
+directly. Restore that: split the message construction out into
+nft_obj_notify_alloc() and let each caller decide what to do with the skb.
+nft_obj_notify(), the exported one reached from the packet path, sends it
+straight away; nf_tables_obj_notify(), which runs under commit_mutex, keeps
+queueing it, so transaction notifications are still coalesced.
+
+Fixes: 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple notifications into one skbuff")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    1 
- include/net/netns/nftables.h      |    1 
- net/netfilter/nf_tables_api.c     |   40 +++++++++++++++++---------------------
- 3 files changed, 19 insertions(+), 23 deletions(-)
+ net/netfilter/nf_tables_api.c |   36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1815,7 +1815,6 @@ struct nftables_pernet {
- 	struct mutex		commit_mutex;
- 	u64			table_handle;
- 	u64			tstamp;
--	unsigned int		base_seq;
- 	unsigned int		gc_seq;
- 	u8			validate_state;
- };
---- a/include/net/netns/nftables.h
-+++ b/include/net/netns/nftables.h
-@@ -3,6 +3,7 @@
- #define _NETNS_NFTABLES_H_
- 
- struct netns_nftables {
-+	unsigned int		base_seq;
- 	u8			gencursor;
- };
- 
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -924,9 +924,7 @@ nf_tables_chain_type_lookup(struct net *
- 
- static unsigned int nft_base_seq(const struct net *net)
- {
--	struct nftables_pernet *nft_net = nft_pernet(net);
--
--	return READ_ONCE(nft_net->base_seq);
-+	return READ_ONCE(net->nft.base_seq);
+@@ -8170,18 +8170,17 @@ static int nf_tables_delobj(struct sk_bu
+ 	return nft_delobj(&ctx, obj);
  }
  
- static const struct nla_policy nft_table_policy[NFTA_TABLE_MAX + 1] = {
-@@ -1033,7 +1031,7 @@ static int nf_tables_dump_tables(struct
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (family != NFPROTO_UNSPEC && family != table->family)
-@@ -1885,7 +1883,7 @@ static int nf_tables_dump_chains(struct
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (family != NFPROTO_UNSPEC && family != table->family)
-@@ -3569,7 +3567,7 @@ static int nf_tables_dump_rules(struct s
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (family != NFPROTO_UNSPEC && family != table->family)
-@@ -3708,7 +3706,6 @@ nf_tables_getrule_single(u32 portid, con
- static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
- 			     const struct nlattr * const nla[])
- {
--	struct nftables_pernet *nft_net = nft_pernet(info->net);
- 	u32 portid = NETLINK_CB(skb).portid;
- 	struct net *net = info->net;
- 	struct sk_buff *skb2;
-@@ -3740,7 +3737,7 @@ static int nf_tables_getrule(struct sk_b
- 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
- 			nla_len(nla[NFTA_RULE_TABLE]),
- 			(char *)nla_data(nla[NFTA_RULE_TABLE]),
--			nft_net->base_seq);
-+			nft_base_seq(net));
- 	audit_log_nfcfg(buf, info->nfmsg->nfgen_family, 1,
- 			AUDIT_NFT_OP_RULE_RESET, GFP_ATOMIC);
- 	kfree(buf);
-@@ -4730,7 +4727,7 @@ static int nf_tables_dump_sets(struct sk
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (ctx->family != NFPROTO_UNSPEC &&
-@@ -5910,7 +5907,7 @@ static int nf_tables_dump_set(struct sk_
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (dump_ctx->ctx.family != NFPROTO_UNSPEC &&
-@@ -6257,7 +6254,7 @@ static int nf_tables_getsetelem(struct s
- 	}
- 
- 	if (reset)
--		audit_log_nft_set_reset(table, nft_pernet(net)->base_seq,
-+		audit_log_nft_set_reset(table, nft_base_seq(net),
- 					nelems);
- 
- 	return err;
-@@ -7900,7 +7897,7 @@ static int nf_tables_dump_obj(struct sk_
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (family != NFPROTO_UNSPEC && family != table->family)
-@@ -7934,7 +7931,7 @@ cont:
- 			idx++;
- 		}
- 		if (ctx->reset && entries)
--			audit_log_obj_reset(table, nft_net->base_seq, entries);
-+			audit_log_obj_reset(table, nft_base_seq(net), entries);
- 		if (rc < 0)
- 			break;
- 	}
-@@ -8103,7 +8100,7 @@ static int nf_tables_getobj_reset(struct
- 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
- 			nla_len(nla[NFTA_OBJ_TABLE]),
- 			(char *)nla_data(nla[NFTA_OBJ_TABLE]),
--			nft_net->base_seq);
-+			nft_base_seq(net));
- 	audit_log_nfcfg(buf, info->nfmsg->nfgen_family, 1,
- 			AUDIT_NFT_OP_OBJ_RESET, GFP_ATOMIC);
- 	kfree(buf);
-@@ -8935,7 +8932,7 @@ static int nf_tables_dump_flowtable(stru
- 
- 	rcu_read_lock();
- 	nft_net = nft_pernet(net);
--	cb->seq = READ_ONCE(nft_net->base_seq);
-+	cb->seq = nft_base_seq(net);
- 
- 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
- 		if (family != NFPROTO_UNSPEC && family != table->family)
-@@ -9115,7 +9112,6 @@ static void nf_tables_flowtable_destroy(
- static int nf_tables_fill_gen_info(struct sk_buff *skb, struct net *net,
- 				   u32 portid, u32 seq)
+-static void
+-__nft_obj_notify(struct net *net, const struct nft_table *table,
+-		 struct nft_object *obj, u32 portid, u32 seq, int event,
+-		 u16 flags, int family, int report, gfp_t gfp)
++static struct sk_buff *
++nft_obj_notify_alloc(struct net *net, const struct nft_table *table,
++		     struct nft_object *obj, u32 portid, u32 seq, int event,
++		     u16 flags, int family, int report, gfp_t gfp)
  {
 -	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct nlmsghdr *nlh;
- 	char buf[TASK_COMM_LEN];
- 	int event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, NFT_MSG_NEWGEN);
-@@ -9125,7 +9121,7 @@ static int nf_tables_fill_gen_info(struc
- 	if (!nlh)
- 		goto nla_put_failure;
+ 	struct sk_buff *skb;
+ 	int err;
  
--	if (nla_put_be32(skb, NFTA_GEN_ID, htonl(nft_net->base_seq)) ||
-+	if (nla_put_be32(skb, NFTA_GEN_ID, htonl(nft_base_seq(net))) ||
- 	    nla_put_be32(skb, NFTA_GEN_PROC_PID, htonl(task_pid_nr(current))) ||
- 	    nla_put_string(skb, NFTA_GEN_PROC_NAME, get_task_comm(buf, current)))
- 		goto nla_put_failure;
-@@ -10259,11 +10255,11 @@ static int nf_tables_commit(struct net *
- 	 * Bump generation counter, invalidate any dump in progress.
- 	 * Cannot fail after this point.
- 	 */
--	base_seq = READ_ONCE(nft_net->base_seq);
-+	base_seq = nft_base_seq(net);
- 	while (++base_seq == 0)
- 		;
+ 	if (!report &&
+ 	    !nfnetlink_has_listeners(net, NFNLGRP_NFTABLES))
+-		return;
++		return NULL;
  
--	WRITE_ONCE(nft_net->base_seq, base_seq);
-+	WRITE_ONCE(net->nft.base_seq, base_seq);
+ 	skb = nlmsg_new(NLMSG_GOODSIZE, gfp);
+ 	if (skb == NULL)
+@@ -8195,10 +8194,10 @@ __nft_obj_notify(struct net *net, const
+ 		goto err;
+ 	}
  
- 	gc_seq = nft_gc_seq_begin(nft_net);
+-	nft_notify_enqueue(skb, report, &nft_net->notify_list);
+-	return;
++	return skb;
+ err:
+ 	nfnetlink_set_err(net, portid, NFNLGRP_NFTABLES, -ENOBUFS);
++	return NULL;
+ }
  
-@@ -10480,7 +10476,7 @@ static int nf_tables_commit(struct net *
+ void nft_obj_notify(struct net *net, const struct nft_table *table,
+@@ -8207,6 +8206,7 @@ void nft_obj_notify(struct net *net, con
+ {
+ 	char *buf = kasprintf(gfp, "%s:%u",
+ 			      table->name, nft_base_seq(net));
++	struct sk_buff *skb;
  
- 	nft_commit_notify(net, NETLINK_CB(skb).portid);
- 	nf_tables_gen_notify(net, skb, NFT_MSG_NEWGEN);
--	nf_tables_commit_audit_log(&adl, nft_net->base_seq);
-+	nf_tables_commit_audit_log(&adl, nft_base_seq(net));
+ 	audit_log_nfcfg(buf,
+ 			family,
+@@ -8217,17 +8217,27 @@ void nft_obj_notify(struct net *net, con
+ 			gfp);
+ 	kfree(buf);
  
- 	nft_gc_seq_end(nft_net, gc_seq);
- 	nft_net->validate_state = NFT_VALIDATE_SKIP;
-@@ -10800,7 +10796,7 @@ static bool nf_tables_valid_genid(struct
- 	mutex_lock(&nft_net->commit_mutex);
- 	nft_net->tstamp = get_jiffies_64();
+-	__nft_obj_notify(net, table, obj, portid, seq, event,
+-			 flags, family, report, gfp);
++	/* Called from the packet path, holding no mutex: notify_list is
++	 * serialised by commit_mutex, so send this notification directly.
++	 */
++	skb = nft_obj_notify_alloc(net, table, obj, portid, seq, event,
++				   flags, family, report, gfp);
++	if (skb)
++		nfnetlink_send(skb, net, portid, NFNLGRP_NFTABLES, report, gfp);
+ }
+ EXPORT_SYMBOL_GPL(nft_obj_notify);
  
--	genid_ok = genid == 0 || nft_net->base_seq == genid;
-+	genid_ok = genid == 0 || nft_base_seq(net) == genid;
- 	if (!genid_ok)
- 		mutex_unlock(&nft_net->commit_mutex);
+ static void nf_tables_obj_notify(const struct nft_ctx *ctx,
+ 				 struct nft_object *obj, int event)
+ {
+-	__nft_obj_notify(ctx->net, ctx->table, obj, ctx->portid,
+-			 ctx->seq, event, ctx->flags, ctx->family,
+-			 ctx->report, GFP_KERNEL);
++	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
++	struct sk_buff *skb;
++
++	skb = nft_obj_notify_alloc(ctx->net, ctx->table, obj, ctx->portid,
++				   ctx->seq, event, ctx->flags, ctx->family,
++				   ctx->report, GFP_KERNEL);
++	if (skb)
++		nft_notify_enqueue(skb, ctx->report, &nft_net->notify_list);
+ }
  
-@@ -11423,7 +11419,7 @@ static int __net_init nf_tables_init_net
- 	INIT_LIST_HEAD(&nft_net->module_list);
- 	INIT_LIST_HEAD(&nft_net->notify_list);
- 	mutex_init(&nft_net->commit_mutex);
--	nft_net->base_seq = 1;
-+	net->nft.base_seq = 1;
- 	nft_net->gc_seq = 0;
- 	nft_net->validate_state = NFT_VALIDATE_SKIP;
- 
+ /*
 
 
