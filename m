@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B417528423;
-	Wed, 30 Sep 2026 17:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2103451B16A;
+	Wed, 30 Sep 2026 17:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789960; cv=none; b=V/w3pN79jP9ClIt0dkV4J8QtEZ4LPFf8U698JYgqllhC+ENdNAWhIBWUuHdwvanuSQAsHuvGFWGBqZmdxsN2r3FH0XXRAmGfv6pbRNBLhglyAui4yj5EwY/7r2ASArmWta5DBtTY+7Y1NJ7d91ZJwurrAY1OPmzvKVWQTUsXkY0=
+	t=1790789963; cv=none; b=OfkaJDYcqZ3dptFtkB25p3gn0yireyUulPtUCA8RRixh9VMpOGUXepLg4frp1z2Pa9dsaC6W/NGceEFOB80l+UgrT/1cCktfS9Vs4v5Nx+wao1HyiadXGy1evx3kAhEtApWcclkbkVWllcLdr9ugbaGoYAsLoZHW8bFrTNvw8Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789960; c=relaxed/simple;
-	bh=HG3f559JaQsHAEaXs+wdI15vMhnw3CVQSj+KZ74UiH4=;
+	s=arc-20240116; t=1790789963; c=relaxed/simple;
+	bh=lRvLG7HOiw593ONtYr6oCVcXFATA7HvhaehEEpn0oFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ClDhvgH4fti40L/1sF7Ksq457bqtCq1cpK42QG/RUEp7+2jrrR0l5AGZ6WRWoq/RU7wtOnwdJsqn262AIoiiU7Aez4LhuHj3ruzri36I+XnXlN6omszN/338Ek1DGUHfDVSIR4Oav6TMgZ86aXDTrfa2vS4GPcMG6jv7YT6n8aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqc78erq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dR+TVPrrVwsPqcNW5/1C9MnTa9SfgGvEsWrdC/yoqWZ9CW38Fh91GhWiLnMsA4wrRJBeFaB+dEgHsZCA8zIMGy2KDRR7aiUlmP0BUR97n4NJKTLHFx4LNH8PskhU8KhkDrjlIYb4gmPrw9gHSrx8k5b6PLvZOnLsgtn0NkWlkkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ccjqx101; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqc78erq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CF01F000FF;
-	Wed, 30 Sep 2026 17:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ccjqx101"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802A51F000FF;
+	Wed, 30 Sep 2026 17:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789959;
-	bh=4qlLuvrKpLrElhRChPaRJGrWochmIK5lu9J3RtCM+Dg=;
+	s=korg; t=1790789962;
+	bh=T4fjgrFLpwrNASu3Jv1jhjPuQxf/VLCs1S6Lzkw7uGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wqc78erqeTL2WBUK4hRsj+TFJzGmGt3rJOvNNZ//aEtNVsAB5/0AkBKpqpiJyDe5j
-	 0YIOtg1kiMYwZ981ZQpUKwO4kZ8LeUolLrhS2BhyWVWSkpP5r+x/Pok+wh0oroBFp+
-	 G5du7vsNrsW7EnYsMj21Y4nKbo1UIMKFBkUkKfP8=
+	b=Ccjqx101PSySvi6lcYbiIkaRD+fQOj/hfOxbHdsAbcDLCAsfnZSkXV5ZfsBnQu76H
+	 SvAm/GCabb/AoJvo+7LQCuM00+UdQU9IfW7F5aMLerhwEK5YpPfCqIm6oelDFsuFrp
+	 C/65psEQfyOjP+OlTElVP7e5tpUuD/81PYbSfKJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Roth <michael.roth@amd.com>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 661/877] KVM: x86/mmu: Split kvm_mmu_zap_all_fast() into "front" and "back" halves
-Date: Wed, 30 Sep 2026 17:26:12 +0200
-Message-ID: <20260930152428.927441146@linuxfoundation.org>
+Subject: [PATCH 6.12 662/877] KVM: x86: Extract REGS and SREGS runtime sync code to helpers
+Date: Wed, 30 Sep 2026 17:26:13 +0200
+Message-ID: <20260930152428.949186316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,89 +56,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit b27622c4eeb125814081baaefe9175191be5b94d ]
+[ Upstream commit 6a8a98aa9c147eb63f5a360f157f207bf46c05ee ]
 
-Split kvm_mmu_zap_all_fast() into a "front half" and a "back half", where
-the front half is everything that runs with mmu_lock held for write, and
-the back half is the code that runs outside of mmu_lock.  This will allow
-putting more code inside kvm_arch_flush_shadow_memslot()'s critical section
-without having to take mmu_lock twice in quick succession.
+Extract the REGS and SREGS portions of {store,sync}_regs() into separate
+helpers in anticipation of moving the register specific code out of x86.c
+and into regs.c.
 
 No functional change intended.
 
-Cc: stable@vger.kernel.org # 6.12.x
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Link: https://patch.msgid.link/20260709204948.1988414-9-seanjc@google.com
+Cc: Yosry Ahmed <yosry@kernel.org>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Message-ID: <20260613000329.732085-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 184bd464bdb6 ("KVM: x86: Check EFER validity on KVM_SET_SREGS*")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c |   37 +++++++++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ arch/x86/kvm/x86.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -6489,20 +6489,11 @@ restart:
- 	kvm_mmu_commit_zap_page(kvm, &kvm->arch.zapped_obsolete_pages);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -12310,7 +12310,7 @@ int kvm_arch_vcpu_ioctl_set_fpu(struct k
+ 	return 0;
  }
  
--/*
-- * Fast invalidate all shadow pages and use lock-break technique
-- * to zap obsolete pages.
-- *
-- * It's required when memslot is being deleted or VM is being
-- * destroyed, in these cases, we should ensure that KVM MMU does
-- * not use any resource of the being-deleted slot or all slots
-- * after calling the function.
-- */
--static void kvm_mmu_zap_all_fast(struct kvm *kvm)
-+static void __kvm_mmu_zap_all_fast_front_half(struct kvm *kvm)
+-static void store_regs(struct kvm_vcpu *vcpu)
++static void kvm_run_sync_regs_to_user(struct kvm_vcpu *vcpu)
  {
- 	lockdep_assert_held(&kvm->slots_lock);
-+	lockdep_assert_held_write(&kvm->mmu_lock);
+ 	BUILD_BUG_ON(sizeof(struct kvm_sync_regs) > SYNC_REGS_SIZE_BYTES);
  
--	write_lock(&kvm->mmu_lock);
- 	trace_kvm_mmu_zap_all_fast(kvm);
+@@ -12319,13 +12319,18 @@ static void store_regs(struct kvm_vcpu *
  
- 	/*
-@@ -6534,8 +6525,12 @@ static void kvm_mmu_zap_all_fast(struct
- 	kvm_make_all_cpus_request(kvm, KVM_REQ_MMU_FREE_OBSOLETE_ROOTS);
- 
- 	kvm_zap_obsolete_pages(kvm);
+ 	if (vcpu->run->kvm_valid_regs & KVM_SYNC_X86_SREGS)
+ 		__get_sregs(vcpu, &vcpu->run->s.regs.sregs);
 +}
- 
--	write_unlock(&kvm->mmu_lock);
-+static void __kvm_mmu_zap_all_fast_back_half(struct kvm *kvm)
++
++static void store_regs(struct kvm_vcpu *vcpu)
 +{
-+	lockdep_assert_held(&kvm->slots_lock);
-+	lockdep_assert_not_held(&kvm->mmu_lock);
++	kvm_run_sync_regs_to_user(vcpu);
  
- 	/*
- 	 * Zap the invalidated TDP MMU roots, all SPTEs must be dropped before
-@@ -6554,6 +6549,24 @@ static bool kvm_has_zapped_obsolete_page
- 	return unlikely(!list_empty_careful(&kvm->arch.zapped_obsolete_pages));
+ 	if (vcpu->run->kvm_valid_regs & KVM_SYNC_X86_EVENTS)
+ 		kvm_vcpu_ioctl_x86_get_vcpu_events(
+ 				vcpu, &vcpu->run->s.regs.events);
  }
  
-+/*
-+ * Fast invalidate all shadow pages and use lock-break technique
-+ * to zap obsolete pages.
-+ *
-+ * It's required when memslot is being deleted or VM is being
-+ * destroyed, in these cases, we should ensure that KVM MMU does
-+ * not use any resource of the being-deleted slot or all slots
-+ * after calling the function.
-+ */
-+static void kvm_mmu_zap_all_fast(struct kvm *kvm)
-+{
-+	write_lock(&kvm->mmu_lock);
-+	__kvm_mmu_zap_all_fast_front_half(kvm);
-+	write_unlock(&kvm->mmu_lock);
-+
-+	__kvm_mmu_zap_all_fast_back_half(kvm);
+-static int sync_regs(struct kvm_vcpu *vcpu)
++static int kvm_run_sync_regs_from_user(struct kvm_vcpu *vcpu)
+ {
+ 	if (vcpu->run->kvm_dirty_regs & KVM_SYNC_X86_REGS) {
+ 		__set_regs(vcpu, &vcpu->run->s.regs.regs);
+@@ -12341,6 +12346,14 @@ static int sync_regs(struct kvm_vcpu *vc
+ 		vcpu->run->kvm_dirty_regs &= ~KVM_SYNC_X86_SREGS;
+ 	}
+ 
++	return 0;
 +}
 +
- int kvm_mmu_init_vm(struct kvm *kvm)
- {
- 	int r;
++static int sync_regs(struct kvm_vcpu *vcpu)
++{
++	if (kvm_run_sync_regs_from_user(vcpu))
++		return -EINVAL;
++
+ 	if (vcpu->run->kvm_dirty_regs & KVM_SYNC_X86_EVENTS) {
+ 		struct kvm_vcpu_events events = vcpu->run->s.regs.events;
+ 
 
 
