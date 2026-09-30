@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E004FD269;
-	Wed, 30 Sep 2026 15:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37234F93CC;
+	Wed, 30 Sep 2026 15:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782641; cv=none; b=fHOSNZKVxvFrbVJRK08yJ6qzRXHOFzblzvAvgzxEe9LrhWRu4/YhXAODBQxQA4sGqPyUe8fgSqRCq00wG66UzEE+EZn24P+W/maaxBcpub7h5vkTFEMAzwyfHWBAgo44RZXOFWLAuSu05+b961Oxm1uJw0G4wCVXQN3L0cTNdtg=
+	t=1790782641; cv=none; b=ASr+Vd2v48zijZcmuYJPE9iYjXnB4PZE8kJ/QzJllM7Ea1XjHQNTDBPyLJvIR/kXYnrdy7S5dAtq507eUxT8oigVOxq4ZuKVR5Cg6WwsAzZit1/s6stCZHcp+hR0Nr6S0ZiyOBnnHbdAXmDbv5aBZ6yxE1qaSS5gTqDF7HskI+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782641; c=relaxed/simple;
-	bh=3k9YmdF8gFoPFknS/6+j7pqWjJrP7OGYYFl6n3TfCKs=;
+	bh=1mTRJiBixJSSo0Alo2QmxEJfi6Gi6FPuURRXb77Dkp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDrKXsc4BwjDScg75iN7/G6QWzr77026XwcFOLf6Q1F1KBozL1y7w211hg6tFDAtjzkra3qDialqi0+oKfY6X9nzWWluRpMBX9BTsSn2Hm2Qc4o+tftVC9kq0ZsR6AMFlwEkyfu5s/RRiuEPYlZG1hq8jPXZniRlfkQ7uLO94oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbXfV59B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iKzjwc0HvOQAQrl47Lcf/wAiKZKMyBHLUgzyANurUxyyHwtFsrolhwQKBrxw2Blp5lgULv8us2up6ciVB3zBgL4PiQMLyCa0Kzg7h8nMxXSN59VDfdORLyfoag5//UNhe1J2mbbKzyU7cxvVJL48Z4Rz04anQvhRzjNszZ6YrA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BENt/8Ky; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbXfV59B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5731F00893;
-	Wed, 30 Sep 2026 15:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BENt/8Ky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1414A1F0089A;
+	Wed, 30 Sep 2026 15:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782635;
-	bh=I0F3Gesce8rrvWJteWoR/rAVlAhgDjNEESErFxn4LvY=;
+	s=korg; t=1790782632;
+	bh=rgFMiPzCAXvRb6css9DRH1C8ZHHkuEbgLh8LZi9waKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RbXfV59BuJucUrBfTjBwDKRcPnC/a+CC7H3m3SHfeuUNmNLwF6mVN4b8GmrKGfqs3
-	 rXvxzB7XE0aVwVg8z16zWewVHeh/9oPz+xhBX8abMrafcbOa+3sHNub7JiIa31k9ip
-	 s+e/8Wu9dLfThh1H4o1Zrw8sqK6NJ6hy6TmIUI6Y=
+	b=BENt/8KyrVf1cP+rgCFT0odREeQiLI5hCsnszelkn/d5MyFJ+Bq4jITca7976mzkk
+	 GRT3pz5/kwZIL3jq1m9N7hM7wzA3zbGROsptq9Nc43JaSo452FuQLMFFuRTuSrrsLq
+	 jy7Oe9+NPVDToYYI2KqyMd5suLFwOQaIW8qJ1KiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/595] ACPICA: add boundary checks in acpi_ps_get_next_field()
-Date: Wed, 30 Sep 2026 17:19:24 +0200
-Message-ID: <20260930152349.266591648@linuxfoundation.org>
+Subject: [PATCH 5.10 070/595] ACPICA: Fix use-after-free in acpi_ds_terminate_control_method()
+Date: Wed, 30 Sep 2026 17:19:23 +0200
+Message-ID: <20260930152349.244862442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,68 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit e15aa60de0256d63df2331bf5a4bc4dd287504cd ]
+[ Upstream commit 945e87267cfd90937b3c637f87324cbb56998b72 ]
 
-Add boundary checks in acpi_ps_get_next_field() to prevent out-of-bounds
-access.
+Fix use-after-free issue in acpi_ds_terminate_control_method() by
+clearing references to method locals and arguments.
 
-Link: https://github.com/acpica/acpica/commit/c39183ea84bc
+Link: https://github.com/acpica/acpica/commit/36f22a94cb1b
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/24388159.6Emhk5qWAg@rafael.j.wysocki
+Link: https://patch.msgid.link/8730924.NyiUUSuA9g@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/acpi/acpica/dsmethod.c | 43 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 7a1120262a147..ce060adeefa91 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -474,6 +474,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 	ASL_CV_CAPTURE_COMMENTS_ONLY(parser_state);
- 	aml = parser_state->aml;
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index 0f4770a48912d..f77c7f5ab770a 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -698,6 +698,8 @@ void
+ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
+ 				 struct acpi_walk_state *walk_state)
+ {
++	u32 i;
++	struct acpi_namespace_node *ref_node;
  
-+	if (aml >= parser_state->aml_end) {
-+		return_PTR(NULL);
-+	}
+ 	ACPI_FUNCTION_TRACE_PTR(ds_terminate_control_method, walk_state);
+ 
+@@ -708,6 +710,47 @@ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
+ 	}
+ 
+ 	if (walk_state) {
++		/*
++		 * Check if the return value is a ref_of reference to a method local
++		 * or argument. If so, clear the reference to avoid use-after-free
++		 * when the walk state is deleted.
++		 */
++		if (walk_state->return_desc &&
++		    (walk_state->return_desc->common.type ==
++		     ACPI_TYPE_LOCAL_REFERENCE)
++		    && (walk_state->return_desc->reference.class ==
++			ACPI_REFCLASS_REFOF)) {
++			ref_node = walk_state->return_desc->reference.object;
++			if (ref_node) {
 +
- 	/* Determine field type */
- 
- 	switch (ACPI_GET8(parser_state->aml)) {
-@@ -522,6 +526,11 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 
- 		/* Get the 4-character name */
- 
-+		if ((parser_state->aml + ACPI_NAMESEG_SIZE) >
-+		    parser_state->aml_end) {
-+			acpi_ps_free_op(field);
-+			return_PTR(NULL);
-+		}
- 		ACPI_MOVE_32_TO_32(&name, parser_state->aml);
- 		acpi_ps_set_name(field, name);
- 		parser_state->aml += ACPI_NAMESEG_SIZE;
-@@ -567,6 +576,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 
- 		/* Get the two bytes (Type/Attribute) */
- 
-+		if ((parser_state->aml + 2) > parser_state->aml_end) {
-+			acpi_ps_free_op(field);
-+			return_PTR(NULL);
-+		}
- 		access_type = ACPI_GET8(parser_state->aml);
- 		parser_state->aml++;
- 		access_attribute = ACPI_GET8(parser_state->aml);
-@@ -578,6 +591,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
- 		/* This opcode has a third byte, access_length */
- 
- 		if (opcode == AML_INT_EXTACCESSFIELD_OP) {
-+			if (parser_state->aml >= parser_state->aml_end) {
-+				acpi_ps_free_op(field);
-+				return_PTR(NULL);
++				/* Check against method locals */
++				for (i = 0; i < ACPI_METHOD_NUM_LOCALS; i++) {
++					if (ref_node ==
++					    &walk_state->local_variables[i]) {
++						acpi_ut_remove_reference
++						    (walk_state->return_desc);
++						walk_state->return_desc = NULL;
++						break;
++					}
++				}
++
++				/* Check against method arguments if not already cleared */
++				if (walk_state->return_desc) {
++					for (i = 0; i < ACPI_METHOD_NUM_ARGS;
++					     i++) {
++						if (ref_node ==
++						    &walk_state->arguments[i]) {
++							acpi_ut_remove_reference
++							    (walk_state->
++							     return_desc);
++							walk_state->
++							    return_desc = NULL;
++							break;
++						}
++					}
++				}
 +			}
- 			access_length = ACPI_GET8(parser_state->aml);
- 			parser_state->aml++;
++		}
+ 
+ 		/* Delete all arguments and locals */
  
 -- 
 2.53.0
