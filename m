@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB1D5187DE;
-	Wed, 30 Sep 2026 17:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0C365192;
+	Wed, 30 Sep 2026 17:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788261; cv=none; b=tEcaes8DzG46+2nNIgUI803iYAWLjbEpS2wgEj+hFSBDKIx0BEbNxtqL8n+gD/QPw2ARDambIvmx38ThzSicMM+gi4lt2iOIW9UeuXRLx6+yH620lSC055mQIUrm0sJ1Dspc77d2jXf7UsxiLN5mvmll0xFaqQFQQABr6vQE39o=
+	t=1790788264; cv=none; b=sxK96sWNGAdACDR/wl2McUoLS4GtCc9CK6ioyWYyCVOTdPXvSbnJkiOfIdnrmfsLq9B7+gfA7cMXGfQTxIGm4fwtkNdOmYmqhSrd2yI8tFonl4OgiA3xSpoDpHDr60B6HIVVKowkXkfma6ba17754lSrffigJR0QfJ93sDGD6xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788261; c=relaxed/simple;
-	bh=b8JFs6sZf9hiqLA5ctlMs9V5kGJ4MPsEyTPlAXSWrfU=;
+	s=arc-20240116; t=1790788264; c=relaxed/simple;
+	bh=t8xmr1vyG5eYXBxDb4XJ7b/730ntHGmXFCD+ixKyYvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s3zPSNYe+HZDbrsvFNyZjyqiucgM2T8/gqMxlsyxBD+2UV/D7iW3d+95VQj5pVohB8XtB/HtTgmdcnQpUhMOBgRFebQ4MZNjsStvb9d5m+0sqO4NuDsAgFRauEx5m8O2/lEu0aK/DfbK47NzEOZgeb9JsyXo2cTVdPux0r091so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7wCZ6RR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YwNSQmU4YoarfbPVWyZAZIU3FdJbho6+VOd51+JsdPTqtwLlOwsbFVD6kpKiFf44UyxeVDBPSaE3WvV4XnILUGb/+xBnqgOCrenfJ6G52DsSTzUWllqpYlmtM8+hM+v4VM/n8381DLCkk1RfVvIOHhAh5ENhIHm/cPkAnQB+VGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXvXgH75; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7wCZ6RR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A261F000FF;
-	Wed, 30 Sep 2026 17:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXvXgH75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01B31F000FF;
+	Wed, 30 Sep 2026 17:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788260;
-	bh=4x+NtirnOmfA1Z5opVuMuaMuDXZNuMxAMgWi6GReM0s=;
+	s=korg; t=1790788263;
+	bh=nRufxtjiD1b15XgxkadrEwakTiq45VT4hhldWJrNd6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7wCZ6RRNVogybD+ddQ+0KE2jRCdaaCgOAXqqazTmifPaSj8E0lpgIgzmMjaGOTA3
-	 QV5sVtsAzTy039PmrwXbburS5onQ/FOvKIGjI69eA6ivMoANqxAo51InWvWVZVvmsc
-	 dTqXuS1V1L/QLzumJv6vqZuOkRidgt+7Whh6nwpg=
+	b=TXvXgH75iy76PpMil7OATz0AkATvHW6X6++bELmSuC89Ov2+bJjFRZowpfVZlsxu+
+	 zmjIV7jq2xkTLsOb3r8qge/v7YJGm8Ld76qvjqIlI3Q3T7SEVg/9ZM6CrBVWFeVvQe
+	 eDZBi61w8pL2enIFJY6o4ssYNOmAEUK2NR17r5Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1634c5399e29d8b66789@syzkaller.appspotmail.com,
+	syzbot+f1ba58d6b55abd13239e@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/877] wifi: mac80211: dont warn when an IBSS has no channel to scan
-Date: Wed, 30 Sep 2026 17:16:11 +0200
-Message-ID: <20260930152416.039177757@linuxfoundation.org>
+Subject: [PATCH 6.12 061/877] wifi: mac80211: dont offload TC setup on AP_VLAN interfaces
+Date: Wed, 30 Sep 2026 17:16:12 +0200
+Message-ID: <20260930152416.059543237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,39 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a7491b7efbd9136b120a12ed72af9c12121dd134 ]
+[ Upstream commit 362bd5bce29ed0f6fd3d39a7065567777d70606e ]
 
-ieee80211_request_ibss_scan() warns when regulatory leaves no
-allowed channel, but that can happen as the regdomain can change
-while IBSS is operating, and it can continue to operate briefly
-during the 60s grace period until it's shut down.
+AP_VLAN interfaces are purely virtual, so don't try to offload
+TC setup to drivers. We can't really use the AP interface either
+since we may not know it all the time, and it could technically
+even change.
 
-Just remove the warning in this case.
+Just reject the TC offload so things get done in software.
 
 Assisted-by: LLM
-Fixes: 34bcf7150241 ("mac80211: fix ibss scanning")
-Reported-by: syzbot+1634c5399e29d8b66789@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1634c5399e29d8b66789
-Link: https://patch.msgid.link/20260904165722.fe380c27fef4.I0e8bee2e12a40d240851a4bc724d47753af46159@changeid
+Fixes: 61587f1556fe ("wifi: mac80211: add support for letting drivers register tc offload support")
+Reported-by: syzbot+f1ba58d6b55abd13239e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f1ba58d6b55abd13239e
+Link: https://patch.msgid.link/20260904165722.726cc076cecb.Iccfd88b13635425e850ce031376eb60a4ce5f4f8@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/iface.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 07ce9cd35dab2..19e374fa00795 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -1214,7 +1214,7 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 7a79b40d23b36..98bc924d74fa6 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -873,6 +873,9 @@ static int ieee80211_netdev_setup_tc(struct net_device *dev,
+ 	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
+ 	struct ieee80211_local *local = sdata->local;
  
--		if (WARN_ON_ONCE(n_ch == 0))
-+		if (n_ch == 0)
- 			return -EINVAL;
++	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
++		return -EOPNOTSUPP;
++
+ 	return drv_net_setup_tc(local, sdata, dev, type, type_data);
+ }
  
- 		local->int_scan_req->n_channels = n_ch;
 -- 
 2.53.0
 
