@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85B93264C2;
-	Wed, 30 Sep 2026 16:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1450D4FDA5A;
+	Wed, 30 Sep 2026 16:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785348; cv=none; b=X75unSUVPdc7iiEKW8WGjkjQfqblgaEBkvSCshxcNFoM2nOFa9gPUW5w0LuzK70EQdIyRCTEikid8mlZdHYWDLW0oGdWVdyfhesKICfhquI6zsmwMplWf/O0meE/ByBq4x3mLOC65oCaBEXoYgcRsJvB1yXhLvaUQWXFsF15FSs=
+	t=1790785354; cv=none; b=ZwscVywUNhoMOSTY4+7c04jQkuE6afz+G0qdhdR2rcJsc47DaI/WO9gIfewLs0BpJ81L+21wPnzFkyRFbQ1Vvb7iTkxJOj6DdEnSMmYrpBRucDWWX6VecQhBuUYmJzPY3BDkPqx7TYRC+s0AMqdT4gOgSjqTk7Hd/sKWqPKNuvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785348; c=relaxed/simple;
-	bh=asIVERVI3RbItWucHgQnmttWqjw+FzMcMYukpHCh6ws=;
+	s=arc-20240116; t=1790785354; c=relaxed/simple;
+	bh=G2YI5hZnMkbQ9e6jZEPyzG+eK8FjGRNHRELF3X0Mxlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucjFLdrug9jMOkNEAJJJr2zo0XhsYN2wYmbd7MeZwaAbCKCnkP5KReYMKnaAR6QugsZH/HoFPzudLh4h/hyae0ilMGiyAG49SGBQiCIXN/08TEeHpcVyqgQsEUkKjGlUMkdqT93ayRzffyYHEQzq5S6KjqspK5mk4ZE0LEj+4yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dx64AgPi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EOSb+VSPBo4oUtiH6WzBxO0bLsZUXQmYe98iMP1QT0pSDIXwsKVcwGTO1CJg8wD71yhLTbp+SRYL68B4wYmc+uW5AbbFHXLSLJWnQc/UVESUHTaj92KCfVuho8bkM7hwSj7CwAZ0ZP8UpatEdzG/w/z/WLh3On+JT15jzKlj6n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+DwSId+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dx64AgPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B2F1F00893;
-	Wed, 30 Sep 2026 16:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+DwSId+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E6E1F00898;
+	Wed, 30 Sep 2026 16:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785342;
-	bh=p9xyMYR7obpUr5TB9h3xGwDqEyUKZxKP2sCSWA/BHBU=;
+	s=korg; t=1790785344;
+	bh=lsQ7I/HOy1M55zjcBtr053nNWQaayeFetSb8BeJl51I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dx64AgPiNAoWbRK8hDEhkaWKxI7PpwFSla+yCOPTKYL32W0rExFWmGUDYHsolkjmX
-	 8JEFd85oV2XBIcCJffeYe/TaqpuXzZAc4ptIfDn49aiGtfETj1PJO860cYPeiGV863
-	 MT67ng8Ln+xpbCcU9b9riaIlXpNVzcdnmyBv68Po=
+	b=M+DwSId+wRVt9dkt3CdzphFt130bg0uFC+Ms9y6+61x49wftaHEyVkfI1GT77sM5K
+	 bh5z4h97xXPMir9AeX6DhbjLUXFQNmsiCd7buIMk+YfX+5uIIsKnGLbZg7yTcmeMty
+	 L+KNtTgycnMqEo39vQL0qsuX/AUi/XDjxhCZ2cKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 474/982] ipv6: add new arguments to udp_tunnel6_dst_lookup()
-Date: Wed, 30 Sep 2026 17:20:10 +0200
-Message-ID: <20260930152426.963611341@linuxfoundation.org>
+Subject: [PATCH 6.1 475/982] vxlan: use generic function for tunnel IPv6 route lookup
+Date: Wed, 30 Sep 2026 17:20:11 +0200
+Message-ID: <20260930152426.985195659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -55,26 +55,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Beniamino Galvani <b.galvani@gmail.com>
 
-[ Upstream commit 946fcfdbc5b97e26d31339ebca2d9a51a4f975ff ]
+[ Upstream commit 2aceb896ee18ae35b21b14c978d8c2ef8c7b439d ]
 
-We want to make the function more generic so that it can be used by
-other UDP tunnel implementations such as geneve and vxlan. To do that,
-add the following arguments:
+The route lookup can be done now via generic function
+udp_tunnel6_dst_lookup() to replace the custom implementation in
+vxlan6_get_route().
 
- - source and destination UDP port;
- - ifindex of the output interface, needed by vxlan;
- - the tos, because in some cases it is not taken from struct
-   ip_tunnel_info (for example, when it's inherited from the inner
-   packet);
- - the dst cache, because not all tunnel types (e.g. vxlan) want to
-   use the one from struct ip_tunnel_info.
-
-With these parameters, the function no longer needs the full struct
-ip_tunnel_info as argument and we can pass only the relevant part of
-it (struct ip_tunnel_key).
-
-This is similar to what already done for IPv4 in commit 72fc68c6356b
-("ipv4: add new arguments to udp_tunnel_dst_lookup()").
+This is similar to what already done for IPv4 in commit 6f19b2c136d9
+("vxlan: use generic function for tunnel IPv4 route lookup").
 
 Suggested-by: Guillaume Nault <gnault@redhat.com>
 Signed-off-by: Beniamino Galvani <b.galvani@gmail.com>
@@ -83,130 +71,299 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: be83178bfc44 ("vxlan: initialize _md in vxlan_xmit_one()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bareudp.c     | 10 +++++++---
- include/net/udp_tunnel.h  |  7 ++++---
- net/ipv6/ip6_udp_tunnel.c | 33 ++++++++++++++++++---------------
- 3 files changed, 29 insertions(+), 21 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 136 ++++++++-------------------------
+ 1 file changed, 30 insertions(+), 106 deletions(-)
 
-diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
-index eaaa7bf89accf..338958d2c1531 100644
---- a/drivers/net/bareudp.c
-+++ b/drivers/net/bareudp.c
-@@ -393,8 +393,10 @@ static int bareudp6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	if (!sock)
- 		return -ESHUTDOWN;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 5d24ed25b68b0..34cdc9b4221bc 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2332,63 +2332,6 @@ static int vxlan_build_skb(struct sk_buff *skb, struct dst_entry *dst,
+ 	return 0;
+ }
  
--	dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock, &saddr, info,
--				     use_cache);
-+	dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock, 0, &saddr,
-+				     key, 0, 0, key->tos,
-+				     use_cache ?
-+				     (struct dst_cache *) &info->dst_cache : NULL);
- 	if (IS_ERR(dst))
- 		return PTR_ERR(dst);
- 
-@@ -524,7 +526,9 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
- 			return -ESHUTDOWN;
- 
- 		dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock,
--					     &saddr, info, use_cache);
-+					     0, &saddr, &info->key,
-+					     0, 0, info->key.tos,
-+					     use_cache ? &info->dst_cache : NULL);
- 		if (IS_ERR(dst))
- 			return PTR_ERR(dst);
- 
-diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
-index 8409a5429349b..a5fae599eaa9f 100644
---- a/include/net/udp_tunnel.h
-+++ b/include/net/udp_tunnel.h
-@@ -171,10 +171,11 @@ struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
- struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
- 					 struct net_device *dev,
- 					 struct net *net,
--					 struct socket *sock,
-+					 struct socket *sock, int oif,
- 					 struct in6_addr *saddr,
--					 const struct ip_tunnel_info *info,
--					 bool use_cache);
-+					 const struct ip_tunnel_key *key,
-+					 __be16 sport, __be16 dport, u8 dsfield,
-+					 struct dst_cache *dst_cache);
- 
- struct metadata_dst *udp_tun_rx_dst(struct sk_buff *skb, unsigned short family,
- 				    __be16 flags, __be64 tunnel_id,
-diff --git a/net/ipv6/ip6_udp_tunnel.c b/net/ipv6/ip6_udp_tunnel.c
-index 812fc284cf36e..fe7a92cbbd449 100644
---- a/net/ipv6/ip6_udp_tunnel.c
-+++ b/net/ipv6/ip6_udp_tunnel.c
-@@ -118,9 +118,13 @@ EXPORT_SYMBOL_GPL(udp_tunnel6_xmit_skb);
-  *      @dev: Tunnel device
-  *      @net: Network namespace of tunnel device
-  *      @sock: Socket which provides route info
-+ *      @oif: Index of the output interface
-  *      @saddr: Memory to store the src ip address
-- *      @info: Tunnel information
-- *      @use_cache: Flag to enable cache usage
-+ *      @key: Tunnel information
-+ *      @sport: UDP source port
-+ *      @dport: UDP destination port
-+ *      @dsfield: The traffic class field
-+ *      @dst_cache: The dst cache to use for lookup
-  *      This function performs a route lookup on a UDP tunnel
-  *
-  *      It returns a valid dst pointer and stores src address to be used in
-@@ -131,20 +135,17 @@ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
- 					 struct net_device *dev,
- 					 struct net *net,
- 					 struct socket *sock,
-+					 int oif,
- 					 struct in6_addr *saddr,
--					 const struct ip_tunnel_info *info,
--					 bool use_cache)
-+					 const struct ip_tunnel_key *key,
-+					 __be16 sport, __be16 dport, u8 dsfield,
-+					 struct dst_cache *dst_cache)
- {
- 	struct dst_entry *dst = NULL;
--#ifdef CONFIG_DST_CACHE
--	struct dst_cache *dst_cache;
--#endif
- 	struct flowi6 fl6;
--	__u8 prio;
- 
- #ifdef CONFIG_DST_CACHE
--	dst_cache = (struct dst_cache *)&info->dst_cache;
+-#if IS_ENABLED(CONFIG_IPV6)
+-static struct dst_entry *vxlan6_get_route(struct vxlan_dev *vxlan,
+-					  struct net_device *dev,
+-					  struct vxlan_sock *sock6,
+-					  struct sk_buff *skb, int oif, u8 tos,
+-					  __be32 label,
+-					  const struct in6_addr *daddr,
+-					  struct in6_addr *saddr,
+-					  __be16 dport, __be16 sport,
+-					  struct dst_cache *dst_cache,
+-					  const struct ip_tunnel_info *info)
+-{
+-	bool use_cache = ip_tunnel_dst_cache_usable(skb, info);
+-	struct dst_entry *ndst;
+-	struct flowi6 fl6;
+-
+-	if (!sock6)
+-		return ERR_PTR(-EIO);
+-
+-	if (tos && !info)
+-		use_cache = false;
 -	if (use_cache) {
-+	if (dst_cache) {
- 		dst = dst_cache_get_ip6(dst_cache, saddr);
- 		if (dst)
- 			return dst;
-@@ -153,10 +154,12 @@ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
- 	memset(&fl6, 0, sizeof(fl6));
- 	fl6.flowi6_mark = skb->mark;
- 	fl6.flowi6_proto = IPPROTO_UDP;
--	fl6.daddr = info->key.u.ipv6.dst;
--	fl6.saddr = info->key.u.ipv6.src;
--	prio = info->key.tos;
--	fl6.flowlabel = ip6_make_flowinfo(prio, info->key.label);
-+	fl6.flowi6_oif = oif;
-+	fl6.daddr = key->u.ipv6.dst;
-+	fl6.saddr = key->u.ipv6.src;
-+	fl6.fl6_sport = sport;
-+	fl6.fl6_dport = dport;
-+	fl6.flowlabel = ip6_make_flowinfo(dsfield, key->label);
- 
- 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sock->sk, &fl6,
- 					      NULL);
-@@ -170,7 +173,7 @@ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
- 		return ERR_PTR(-ELOOP);
- 	}
- #ifdef CONFIG_DST_CACHE
+-		ndst = dst_cache_get_ip6(dst_cache, saddr);
+-		if (ndst)
+-			return ndst;
+-	}
+-
+-	memset(&fl6, 0, sizeof(fl6));
+-	fl6.flowi6_oif = oif;
+-	fl6.daddr = *daddr;
+-	fl6.saddr = *saddr;
+-	fl6.flowlabel = ip6_make_flowinfo(tos, label);
+-	fl6.flowi6_mark = skb->mark;
+-	fl6.flowi6_proto = IPPROTO_UDP;
+-	fl6.fl6_dport = dport;
+-	fl6.fl6_sport = sport;
+-
+-	ndst = ipv6_stub->ipv6_dst_lookup_flow(vxlan->net, sock6->sock->sk,
+-					       &fl6, NULL);
+-	if (IS_ERR(ndst)) {
+-		netdev_dbg(dev, "no route to %pI6\n", daddr);
+-		return ERR_PTR(-ENETUNREACH);
+-	}
+-
+-	if (unlikely(ndst->dev == dev)) {
+-		netdev_dbg(dev, "circular route to %pI6\n", daddr);
+-		dst_release(ndst);
+-		return ERR_PTR(-ELOOP);
+-	}
+-
+-	*saddr = fl6.saddr;
 -	if (use_cache)
-+	if (dst_cache)
- 		dst_cache_set_ip6(dst_cache, dst, &fl6.saddr);
+-		dst_cache_set_ip6(dst_cache, ndst, saddr);
+-	return ndst;
+-}
+-#endif
+-
+ /* Bypass encapsulation if the destination is local */
+ static void vxlan_encap_bypass(struct sk_buff *skb, struct vxlan_dev *src_vxlan,
+ 			       struct vxlan_dev *dst_vxlan, __be32 vni,
+@@ -2451,7 +2394,7 @@ static void vxlan_encap_bypass(struct sk_buff *skb, struct vxlan_dev *src_vxlan,
+ 
+ static int encap_bypass_if_local(struct sk_buff *skb, struct net_device *dev,
+ 				 struct vxlan_dev *vxlan,
+-				 union vxlan_addr *daddr,
++				 int addr_family,
+ 				 __be16 dst_port, int dst_ifindex, __be32 vni,
+ 				 struct dst_entry *dst,
+ 				 u32 rt_flags)
+@@ -2470,7 +2413,7 @@ static int encap_bypass_if_local(struct sk_buff *skb, struct net_device *dev,
+ 
+ 		dst_release(dst);
+ 		dst_vxlan = vxlan_find_vni(vxlan->net, dst_ifindex, vni,
+-					   daddr->sa.sa_family, dst_port,
++					   addr_family, dst_port,
+ 					   vxlan->cfg.flags);
+ 		if (!dst_vxlan) {
+ 			dev->stats.tx_errors++;
+@@ -2497,13 +2440,12 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	struct ip_tunnel_key key;
+ 	struct vxlan_dev *vxlan = netdev_priv(dev);
+ 	const struct iphdr *old_iph = ip_hdr(skb);
+-	union vxlan_addr *dst;
+-	union vxlan_addr remote_ip;
+ 	struct vxlan_metadata _md;
+ 	struct vxlan_metadata *md = &_md;
+ 	unsigned int pkt_len = skb->len;
+ 	__be16 src_port = 0, dst_port;
+ 	struct dst_entry *ndst = NULL;
++	int addr_family;
+ 	__u8 tos, ttl;
+ 	int ifindex;
+ 	int err;
+@@ -2512,20 +2454,15 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	bool udp_sum = false;
+ 	bool xnet = !net_eq(vxlan->net, dev_net(vxlan->dev));
+ 	__be32 vni = 0;
+-#if IS_ENABLED(CONFIG_IPV6)
+-	union vxlan_addr local_ip;
+-	__be32 label;
+-#endif
+ 
+ 	info = skb_tunnel_info(skb);
+ 	use_cache = ip_tunnel_dst_cache_usable(skb, info);
+ 
+ 	if (rdst) {
+-		dst = &rdst->remote_ip;
+ 		memset(&key, 0, sizeof(key));
+ 		pkey = &key;
+ 
+-		if (vxlan_addr_any(dst)) {
++		if (vxlan_addr_any(&rdst->remote_ip)) {
+ 			if (did_rsc) {
+ 				/* short-circuited back to local bridge */
+ 				vxlan_encap_bypass(skb, vxlan, vxlan,
+@@ -2535,11 +2472,12 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			goto drop;
+ 		}
+ 
++		addr_family = vxlan->cfg.saddr.sa.sa_family;
+ 		dst_port = rdst->remote_port ? rdst->remote_port : vxlan->cfg.dst_port;
+ 		vni = (rdst->remote_vni) ? : default_vni;
+ 		ifindex = rdst->remote_ifindex;
+ 
+-		if (dst->sa.sa_family == AF_INET) {
++		if (addr_family == AF_INET) {
+ 			key.u.ipv4.src = vxlan->cfg.saddr.sin.sin_addr.s_addr;
+ 			key.u.ipv4.dst = rdst->remote_ip.sin.sin_addr.s_addr;
+ 		} else {
+@@ -2553,23 +2491,21 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			ttl = ip_tunnel_get_ttl(old_iph, skb);
+ 		} else {
+ 			ttl = vxlan->cfg.ttl;
+-			if (!ttl && vxlan_addr_multicast(dst))
++			if (!ttl && vxlan_addr_multicast(&rdst->remote_ip))
+ 				ttl = 1;
+ 		}
+-
+ 		tos = vxlan->cfg.tos;
+ 		if (tos == 1)
+ 			tos = ip_tunnel_get_dsfield(old_iph, skb);
+ 		if (tos && !info)
+ 			use_cache = false;
+ 
+-		if (dst->sa.sa_family == AF_INET)
++		if (addr_family == AF_INET)
+ 			udp_sum = !(flags & VXLAN_F_UDP_ZERO_CSUM_TX);
+ 		else
+ 			udp_sum = !(flags & VXLAN_F_UDP_ZERO_CSUM6_TX);
+ #if IS_ENABLED(CONFIG_IPV6)
+-		local_ip = vxlan->cfg.saddr;
+-		label = vxlan->cfg.label;
++		key.label = vxlan->cfg.label;
  #endif
- 	*saddr = fl6.saddr;
+ 	} else {
+ 		if (!info) {
+@@ -2577,17 +2513,8 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 				  dev->name);
+ 			goto drop;
+ 		}
+-		remote_ip.sa.sa_family = ip_tunnel_info_af(info);
+-		if (remote_ip.sa.sa_family == AF_INET) {
+-			remote_ip.sin.sin_addr.s_addr = info->key.u.ipv4.dst;
+-		} else {
+-			remote_ip.sin6.sin6_addr = info->key.u.ipv6.dst;
+-#if IS_ENABLED(CONFIG_IPV6)
+-			local_ip.sin6.sin6_addr = info->key.u.ipv6.src;
+-#endif
+-		}
+-		dst = &remote_ip;
+ 		pkey = &info->key;
++		addr_family = ip_tunnel_info_af(info);
+ 		dst_port = info->key.tp_dst ? : vxlan->cfg.dst_port;
+ 		vni = tunnel_id_to_key32(info->key.tun_id);
+ 		ifindex = 0;
+@@ -2599,16 +2526,13 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 		}
+ 		ttl = info->key.ttl;
+ 		tos = info->key.tos;
+-#if IS_ENABLED(CONFIG_IPV6)
+-		label = info->key.label;
+-#endif
+ 		udp_sum = !!(info->key.tun_flags & TUNNEL_CSUM);
+ 	}
+ 	src_port = udp_flow_src_port(dev_net(dev), skb, vxlan->cfg.port_min,
+ 				     vxlan->cfg.port_max, true);
+ 
+ 	rcu_read_lock();
+-	if (dst->sa.sa_family == AF_INET) {
++	if (addr_family == AF_INET) {
+ 		struct vxlan_sock *sock4 = rcu_dereference(vxlan->vn4_sock);
+ 		struct rtable *rt;
+ 		__be16 df = 0;
+@@ -2627,7 +2551,7 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 
+ 		if (!info) {
+ 			/* Bypass encapsulation if the destination is local */
+-			err = encap_bypass_if_local(skb, dev, vxlan, dst,
++			err = encap_bypass_if_local(skb, dev, vxlan, AF_INET,
+ 						    dst_port, ifindex, vni,
+ 						    &rt->dst, rt->rt_flags);
+ 			if (err)
+@@ -2681,15 +2605,15 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	} else {
+ 		struct vxlan_sock *sock6 = rcu_dereference(vxlan->vn6_sock);
++		struct in6_addr saddr;
+ 
+ 		if (!ifindex)
+ 			ifindex = sock6->sock->sk->sk_bound_dev_if;
+ 
+-		ndst = vxlan6_get_route(vxlan, dev, sock6, skb, ifindex, tos,
+-					label, &dst->sin6.sin6_addr,
+-					&local_ip.sin6.sin6_addr,
+-					dst_port, src_port,
+-					dst_cache, info);
++		ndst = udp_tunnel6_dst_lookup(skb, dev, vxlan->net, sock6->sock,
++					      ifindex, &saddr, pkey,
++					      src_port, dst_port, tos,
++					      use_cache ? dst_cache : NULL);
+ 		if (IS_ERR(ndst)) {
+ 			err = PTR_ERR(ndst);
+ 			ndst = NULL;
+@@ -2699,7 +2623,7 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 		if (!info) {
+ 			u32 rt6i_flags = dst_rt6_info(ndst)->rt6i_flags;
+ 
+-			err = encap_bypass_if_local(skb, dev, vxlan, dst,
++			err = encap_bypass_if_local(skb, dev, vxlan, AF_INET6,
+ 						    dst_port, ifindex, vni,
+ 						    ndst, rt6i_flags);
+ 			if (err)
+@@ -2714,16 +2638,13 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 		} else if (err) {
+ 			if (info) {
+ 				struct ip_tunnel_info *unclone;
+-				struct in6_addr src, dst;
+ 
+ 				unclone = skb_tunnel_info_unclone(skb);
+ 				if (unlikely(!unclone))
+ 					goto tx_error;
+ 
+-				src = remote_ip.sin6.sin6_addr;
+-				dst = local_ip.sin6.sin6_addr;
+-				unclone->key.u.ipv6.src = src;
+-				unclone->key.u.ipv6.dst = dst;
++				unclone->key.u.ipv6.src = pkey->u.ipv6.dst;
++				unclone->key.u.ipv6.dst = saddr;
+ 			}
+ 
+ 			vxlan_encap_bypass(skb, vxlan, vxlan, vni, false);
+@@ -2740,9 +2661,8 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			goto tx_error;
+ 
+ 		udp_tunnel6_xmit_skb(ndst, sock6->sock->sk, skb, dev,
+-				     &local_ip.sin6.sin6_addr,
+-				     &dst->sin6.sin6_addr, tos, ttl,
+-				     label, src_port, dst_port, !udp_sum);
++				     &saddr, &pkey->u.ipv6.dst, tos, ttl,
++				     pkey->label, src_port, dst_port, !udp_sum);
+ #endif
+ 	}
+ 	vxlan_vnifilter_count(vxlan, vni, NULL, VXLAN_VNI_STATS_TX, pkt_len);
+@@ -3145,10 +3065,14 @@ static int vxlan_fill_metadata_dst(struct net_device *dev, struct sk_buff *skb)
+ 		struct vxlan_sock *sock6 = rcu_dereference(vxlan->vn6_sock);
+ 		struct dst_entry *ndst;
+ 
+-		ndst = vxlan6_get_route(vxlan, dev, sock6, skb, 0, info->key.tos,
+-					info->key.label, &info->key.u.ipv6.dst,
+-					&info->key.u.ipv6.src, dport, sport,
+-					&info->dst_cache, info);
++		if (!sock6)
++			return -EIO;
++
++		ndst = udp_tunnel6_dst_lookup(skb, dev, vxlan->net, sock6->sock,
++					      0, &info->key.u.ipv6.src,
++					      &info->key,
++					      sport, dport, info->key.tos,
++					      &info->dst_cache);
+ 		if (IS_ERR(ndst))
+ 			return PTR_ERR(ndst);
+ 		dst_release(ndst);
 -- 
 2.53.0
 
