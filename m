@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7623F502554;
-	Wed, 30 Sep 2026 17:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93649502554;
+	Wed, 30 Sep 2026 17:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788924; cv=none; b=dH69pxQoE6xFit7cXFwRSlYsiBf3AD+n9+N4QTvq2aYsJRl8Q4R/CphgQMen0NiGzo9DLk+t2HvaSEUfPUIpAjbieIiNo2eYZtZaZpPrxVFrVICsQCQfwPV+YAed0eVbVNmdRKtLyRmHI2cw9yc/VdIT4WQdh4VD7kqSUy8jXJo=
+	t=1790788927; cv=none; b=mb91DgQOlLEHtVzECHY2f1xwcr0/wZnGNnH20EmXr5ExXoY8+NGiSOtoaUGU5L1DebKnWndpM41J+MnHBjGheonO7o33ZdLBWYYT0pNFu85Fc0VEygLiclc2vrA+G7AoInI92A6cc7WFpm0QnW5U+YxKhZaviRIb9haARrGy8n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788924; c=relaxed/simple;
-	bh=BAk+lHDuuoAvrGGNpLsxTSmQ0Tml37cF0LpbNksj9oQ=;
+	s=arc-20240116; t=1790788927; c=relaxed/simple;
+	bh=9vijwZFPphXZizDrmYZPN53V40t4E+9gJAS2PsMk7f4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYiNSO98DzTE+r0GLNk+hVYA0ycIEYdlAF6NFmzjzP7p7LHH59PCRmsly0sawuHcZzoTAgYaAn9VrC1XNP7vjcQyIO6G3mqs1w9Hh7OdiinO/Sd8cslp7KK/h/pkoSica0p+jgsr+PFiLCfmyBtlC9W1iOEptwEF9WSPkcpEzbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPXwtBkA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tueMolrojhBErfudlq30uX4srU10GkFHZ8vzqdf41P2e1b8hUiwJH7TKqQCOWDhVQwh54sbkvCm+DU23OohRVGO0YB6TpKaenEyMtAk8hAE/i6Fc99HSHOFpqu02zSsg3dgpkBYOyuYC5KplpCI723+xkWLwfzibcsJ7virpTWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iENWqvHB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPXwtBkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C788B1F000FF;
-	Wed, 30 Sep 2026 17:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iENWqvHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A645B1F000FF;
+	Wed, 30 Sep 2026 17:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788923;
-	bh=s86aXEO7dHCK+n36LmDbna9DBMWIs1XZt7EjTa528Go=;
+	s=korg; t=1790788926;
+	bh=qnt/hBaA39STa7usUKbgUE8/QBdN1CAE5Kp9eqZlWn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yPXwtBkA1MWiKwxtr/t9OQMxoUFEzCl+RkvjFHOsWbV1zb0XeD89Fd/d3/GvEIcjF
-	 yQYqZKHcNG+LCgk/j2T4OGV1aqVi2Y+4VZtRGhRB+QURTLB/2UdHkExzq14c1RlLMn
-	 zJmVcVFldPc/P8DVFgryehjQM+9a+lhPPtE3gjlk=
+	b=iENWqvHB9FD+gznvQ9HJEIKaLE9uB5mApgXWslO0jUz9LjHeaJHMka5oHwhvgJY5v
+	 GNTGUYB94nsB2wrBGwqD9ZJNzrNipDBojAcXfisEqfU50FLyrE1VgKt9pwXHrB+KS+
+	 5G79Nvgoi82s+P9lNN1+2snx/6pErfDgna2S7eGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 259/877] wifi: brcmsmac: fix UAF in brcms_free_timer()
-Date: Wed, 30 Sep 2026 17:19:30 +0200
-Message-ID: <20260930152420.311043153@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yu Junzhe <junzheyu1@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 295/877] netfilter: nf_tables: Simplify chain netdev notifier
+Date: Wed, 30 Sep 2026 17:20:06 +0200
+Message-ID: <20260930152421.072397159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,43 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Phil Sutter <phil@nwl.cc>
 
-commit 1eeca1d5e0920fbdad6449768fd2d4364e714180 upstream.
+commit 375f222800bc001bb9cbd2baa1daec006430aeba upstream.
 
-brcms_free_timer() calls brcms_del_timer() which uses the non-synchronous
-cancel_delayed_work() to cancel the timer's underlying delayed work.  If
-the work callback (_brcms_timer) is already running, cancel_delayed_work()
-returns false without waiting, and brcms_free_timer() proceeds to kfree(t)
-while the callback still accesses t through container_of().
+With conditional chain deletion gone, callback code simplifies: Instead
+of filling an nft_ctx object, just pass basechain to the per-chain
+function. Also plain list_for_each_entry() is safe now.
 
-Add an explicit cancel_delayed_work_sync() after brcms_del_timer() to
-guarantee that any in-flight callback has completed before the timer
-structure is freed.
-
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260815121043.938414-1-yijiangshan@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nft_chain_filter.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-@@ -1569,6 +1569,10 @@ void brcms_free_timer(struct brcms_timer
+diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
+index 543f258b7c6ba..19a553550c769 100644
+--- a/net/netfilter/nft_chain_filter.c
++++ b/net/netfilter/nft_chain_filter.c
+@@ -319,17 +319,16 @@ static const struct nft_chain_type nft_chain_filter_netdev = {
+ };
  
- 	/* delete the timer in case it is active */
- 	brcms_del_timer(t);
-+	/* Ensure the callback has finished before freeing the timer
-+	 * structure, since brcms_del_timer() uses non-synchronous cancel.
-+	 */
-+	cancel_delayed_work_sync(&t->dly_wrk);
+ static void nft_netdev_event(unsigned long event, struct net_device *dev,
+-			     struct nft_ctx *ctx)
++			     struct nft_base_chain *basechain)
+ {
+-	struct nft_base_chain *basechain = nft_base_chain(ctx->chain);
+ 	struct nft_hook *hook;
  
- 	if (wl->timers == t) {
- 		wl->timers = wl->timers->next;
+ 	list_for_each_entry(hook, &basechain->hook_list, list) {
+ 		if (hook->ops.dev != dev)
+ 			continue;
+ 
+-		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
+-			nf_unregister_net_hook(ctx->net, &hook->ops);
++		if (!(basechain->chain.table->flags & NFT_TABLE_F_DORMANT))
++			nf_unregister_net_hook(dev_net(dev), &hook->ops);
+ 
+ 		list_del_rcu(&hook->list);
+ 		kfree_rcu(hook, rcu);
+@@ -343,25 +342,20 @@ static int nf_tables_netdev_event(struct notifier_block *this,
+ 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
+ 	struct nft_base_chain *basechain;
+ 	struct nftables_pernet *nft_net;
+-	struct nft_chain *chain, *nr;
++	struct nft_chain *chain;
+ 	struct nft_table *table;
+-	struct nft_ctx ctx = {
+-		.net	= dev_net(dev),
+-	};
+ 
+ 	if (event != NETDEV_UNREGISTER)
+ 		return NOTIFY_DONE;
+ 
+-	nft_net = nft_pernet(ctx.net);
++	nft_net = nft_pernet(dev_net(dev));
+ 	mutex_lock(&nft_net->commit_mutex);
+ 	list_for_each_entry(table, &nft_net->tables, list) {
+ 		if (table->family != NFPROTO_NETDEV &&
+ 		    table->family != NFPROTO_INET)
+ 			continue;
+ 
+-		ctx.family = table->family;
+-		ctx.table = table;
+-		list_for_each_entry_safe(chain, nr, &table->chains, list) {
++		list_for_each_entry(chain, &table->chains, list) {
+ 			if (!nft_is_base_chain(chain))
+ 				continue;
+ 
+@@ -370,8 +364,7 @@ static int nf_tables_netdev_event(struct notifier_block *this,
+ 			    basechain->ops.hooknum != NF_INET_INGRESS)
+ 				continue;
+ 
+-			ctx.chain = chain;
+-			nft_netdev_event(event, dev, &ctx);
++			nft_netdev_event(event, dev, basechain);
+ 		}
+ 	}
+ 	mutex_unlock(&nft_net->commit_mutex);
+-- 
+2.53.0
+
 
 
