@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618A83B2FDC;
-	Wed, 30 Sep 2026 18:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF4151DAEB;
+	Wed, 30 Sep 2026 18:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792816; cv=none; b=PuaCH1jEqhQR9rPnZsS5vQ8wowCPj7IbGNLLf4xRval1a5bQZyT5ezsSF3f++GrEZBNcIeLrl5a/27ZIQ9+fr8rYxRGsL1vHxx681O97IWAyc2gOcfo33FHPZHCPtnuq8TG5Jx5xQN2bsPg3Dwu9SDO4kDBCbdypX3IPOlBBADU=
+	t=1790792819; cv=none; b=Fh77/1O4faWMz+uwXPveAPEauETMxxOgE7Msr8roA4GFioDSDFwrwhqnXBOrfz7VBPWHmCzW47bbYwoKwriMXY+NXPpwsU4SVW+kgTI+qTaUAVZRI75ONIvY82fnNYjmvj4xJBKeocGPk2NqBjbK9D72VZZa+e3SzoT5jegNDVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792816; c=relaxed/simple;
-	bh=FEJE9ZX9UgtJZlKOmzBQRtwGHvuaGcJBqmenIGh+y+c=;
+	s=arc-20240116; t=1790792819; c=relaxed/simple;
+	bh=22JWvb2tBcOXPUCUPk7B6iU2j8ORsZsQi9mCYN17Pvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HelhV8EPGVeq+HvDa1/6MRiZFF0R+6w2LZNPdNLf+I9AvmSk9+L/ju4BK2Bbds64Nvw2UoHxulGArqUHwuN2Ze5qK62gOOBxovJdz06xHq1s7lh8iUsBvlzkF0RJyPe1lFN6YbW7pwIhPL495Ta9JvWxw2/2mvx5hI6BaK4gj5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4Ec+u6B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ToNTDZQU4cbrkRAcuklrbjZ5a5Z3QxXN4/ofvLrrClSRu54Q53fe6mNsRv5yKKDqWufR86ag8Gx3ArdNijjt+NppqGau7GU6vi4dS1ZiWoxwHijwU6AUieDrEiEXHJZdJkonR/mq10xP08FOtPxLzu309T6fIC5BSyBrhFaVXcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhpPTCT5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4Ec+u6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958691F000FF;
-	Wed, 30 Sep 2026 18:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhpPTCT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6938C1F000FF;
+	Wed, 30 Sep 2026 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792815;
-	bh=L5a1zcAShG7gW4TrHgCuHcZBdhK7JOL/XG/Olw1JLfg=;
+	s=korg; t=1790792817;
+	bh=kwTFmDyoYerSQ3vp+JYtMAfR41gxn4XPfXLLUE39YWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R4Ec+u6BHx4x8K17ZwTfehObx+4vGkFwgDeoshJ1aSLXEGG3imJRTCVs6OKvfwwov
-	 gV4OHjwD2jO+DZH9DAadCKKw6xj4ll5KYdhod9QPzsfooVduAJuwp+sQZ32k/wcTod
-	 tXuYLvgBaOucEWkhGd/oQe6n620YlneqAJ9w1dAI=
+	b=LhpPTCT5aF4kL4kWcqeq9AVwggYJ2lDW1uygVlkN6iyu5cmW/fnIvrakAparNscJT
+	 PEoRQBB5QCHwDDi9idNLyrHRGWDEW//Xk0YS1O4O+9XYAHxpgsmlHel1SwnK9Cj2Dk
+	 Vz5jLxETU0xyX4J1u6zYaCLIaqFDQxap04EIKa0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ben Horgan <ben.horgan@arm.com>,
 	Fuad Tabba <tabba@google.com>,
 	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/395] KVM: arm64: vgic-v3: Fix GICv3 trapping in protected mode
-Date: Wed, 30 Sep 2026 17:24:58 +0200
-Message-ID: <20260930152341.406765796@linuxfoundation.org>
+Subject: [PATCH 6.18 037/395] KVM: arm64: Fix MTE flag initialization for protected VMs
+Date: Wed, 30 Sep 2026 17:24:59 +0200
+Message-ID: <20260930152341.427929483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,69 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 567ebfedb5bd204a8ce6a11695f02730f1bf57f4 ]
+[ Upstream commit ebbcaece84738f71b35f32339bdeb8776004e641 ]
 
-As we are about to start trapping a bunch of extra things, augment
-the pKVM trap description with all the registers trapped by ICH_HCR_EL2.TC,
-making them legal instead of resulting in a UNDEF injection in the guest.
+The function pkvm_init_features_from_host() initializes guest
+features, propagating them from the host. The logic to propagate
+KVM_ARCH_FLAG_MTE_ENABLED (Memory Tagging Extension)
+has a couple of issues.
 
-While we're at it, ensure that pKVM captures the vgic model so that it
-can be checked by the emulation code.
+First, the check was in the common path, before the divergence for
+protected and non-protected VMs. For non-protected VMs, this was
+unnecessary, as 'kvm->arch.flags' is completely overwritten by
+host_arch_flags immediately after, which already contains the MTE flag.
+For protected VMs, this was setting the flag even if the feature is not
+allowed.
 
-Tested-by: Fuad Tabba <tabba@google.com>
+Second, the check was reading 'host_kvm->arch.flags' instead of using
+the local 'host_arch_flags', which is read once from the host flags.
+
+Fix these by moving the MTE flag check inside the protected-VM-only
+path, checking if the feature is allowed, and changing it to use the
+correct host_arch_flags local variable. This ensures non-protected VMs
+get the flag via the bulk copy, and protected VMs get it via an explicit
+check.
+
+Fixes: b7f345fbc32a ("KVM: arm64: Fix FEAT_MTE in pKVM")
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Link: https://patch.msgid.link/20251211104710.151771-4-tabba@google.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Tested-by: Mark Brown <broonie@kernel.org>
-Link: https://msgid.link/20251120172540.2267180-6-maz@kernel.org
-Signed-off-by: Oliver Upton <oupton@kernel.org>
 Stable-dep-of: 4f16c5fc8dc4 ("KVM: arm64: Derive GUEST_HAS_SVE from the SVE feature bit at EL2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/pkvm.c     | 3 +++
- arch/arm64/kvm/hyp/nvhe/sys_regs.c | 5 +++++
- 2 files changed, 8 insertions(+)
+ arch/arm64/kvm/hyp/nvhe/pkvm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index b3ea49f121870..26a19185e2ada 100644
+index 26a19185e2ada..1b73a2411a998 100644
 --- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
 +++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -338,6 +338,9 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
- 	/* CTR_EL0 is always under host control, even for protected VMs. */
- 	hyp_vm->kvm.arch.ctr_el0 = host_kvm->arch.ctr_el0;
+@@ -341,9 +341,6 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
+ 	/* Preserve the vgic model so that GICv3 emulation works */
+ 	hyp_vm->kvm.arch.vgic.vgic_model = host_kvm->arch.vgic.vgic_model;
  
-+	/* Preserve the vgic model so that GICv3 emulation works */
-+	hyp_vm->kvm.arch.vgic.vgic_model = host_kvm->arch.vgic.vgic_model;
+-	if (test_bit(KVM_ARCH_FLAG_MTE_ENABLED, &host_kvm->arch.flags))
+-		set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
+-
+ 	/* No restrictions for non-protected VMs. */
+ 	if (!kvm_vm_is_protected(kvm)) {
+ 		hyp_vm->kvm.arch.flags = host_arch_flags;
+@@ -359,6 +356,9 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
+ 		return;
+ 	}
+ 
++	if (kvm_pvm_ext_allowed(KVM_CAP_ARM_MTE))
++		kvm->arch.flags |= host_arch_flags & BIT(KVM_ARCH_FLAG_MTE_ENABLED);
 +
- 	if (test_bit(KVM_ARCH_FLAG_MTE_ENABLED, &host_kvm->arch.flags))
- 		set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
+ 	bitmap_zero(allowed_features, KVM_VCPU_MAX_FEATURES);
  
-diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-index 82da9b03692d4..3108b5185c204 100644
---- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-+++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-@@ -444,6 +444,8 @@ static const struct sys_reg_desc pvm_sys_reg_descs[] = {
- 
- 	/* Scalable Vector Registers are restricted. */
- 
-+	HOST_HANDLED(SYS_ICC_PMR_EL1),
-+
- 	RAZ_WI(SYS_ERRIDR_EL1),
- 	RAZ_WI(SYS_ERRSELR_EL1),
- 	RAZ_WI(SYS_ERXFR_EL1),
-@@ -457,9 +459,12 @@ static const struct sys_reg_desc pvm_sys_reg_descs[] = {
- 
- 	/* Limited Ordering Regions Registers are restricted. */
- 
-+	HOST_HANDLED(SYS_ICC_DIR_EL1),
-+	HOST_HANDLED(SYS_ICC_RPR_EL1),
- 	HOST_HANDLED(SYS_ICC_SGI1R_EL1),
- 	HOST_HANDLED(SYS_ICC_ASGI1R_EL1),
- 	HOST_HANDLED(SYS_ICC_SGI0R_EL1),
-+	HOST_HANDLED(SYS_ICC_CTLR_EL1),
- 	{ SYS_DESC(SYS_ICC_SRE_EL1), .access = pvm_gic_read_sre, },
- 
- 	HOST_HANDLED(SYS_CCSIDR_EL1),
+ 	set_bit(KVM_ARM_VCPU_PSCI_0_2, allowed_features);
 -- 
 2.53.0
 
