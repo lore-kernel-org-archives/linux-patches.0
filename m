@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DCE5172EF;
-	Wed, 30 Sep 2026 16:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0C2517BD9;
+	Wed, 30 Sep 2026 16:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787384; cv=none; b=i8mbf1CX326KvQMR1R8kKCYpSgxjVfAbW2k8326Pta/Yg/UYFxsegwpl/6Y7fdv6lm0arkAZ+JYEVqikymeT7Tnz+l7MknofybfA1vB1YcqJ3DOD3YQ/CYFld2DnGlwS9jPEefq91xozsDSkAopSSygwc7cVwxCXeJnacAtehD8=
+	t=1790787386; cv=none; b=XLcS7GI6rXsitbwMvuZO7h7M6cxvrfcqAdBLhjMw/A5XOHA3btE2hnQwNJs+JbqF3th4h1xGywZi9XC5fV+82jmh5HlTAGWVOckgnmd4YN32sEvOObwX8mkRCxgeRPSl/dITrk7K/aeBzPW20TgXysdWhRwVPhvzqYHnLhNwP9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787384; c=relaxed/simple;
-	bh=4Rn9tnsL2l4fYAUC6ukMhXKXlM6SClIQTzUYb5ltpw8=;
+	s=arc-20240116; t=1790787386; c=relaxed/simple;
+	bh=Iayd+nvv8/AesUUcPFP0FvZJxXTNxvKKgfq8a0peImY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2nWx3uQFGtqSZLGs1EkEEORkuNZ1TswdfHi4r5GmqP9Rmyg8hmjiWJpOPYlZ85pNPYP3m1yNVAKPZ84811iCg9066qhpv+1O4c96/ZKjVWuPpClmSGn38K1o6vpFU5jo1u0yMA8D2w7HyX3SVz0dBo03iXcoiSxhWZuTQ/gxM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGo+QtSe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WvxUP1tRUwXAtEGS4PFI09Kbq9lDF+0IhoK6CmzqvBNDBFUk2dAQ18h38FIvquxOHUrxmTuTGhA3X0vuyvr7dFiV7mVHWCEKrZvgwXeBT545k7YrFChWaLYvSx6fKa9hB3rjkqtlZ+Zol/cGSVzYEgqAUrca6Cx/Sh6ZLzj4QLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0gDDeiv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGo+QtSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF5B1F000FF;
-	Wed, 30 Sep 2026 16:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0gDDeiv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B051F00898;
+	Wed, 30 Sep 2026 16:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787382;
-	bh=4Ixc53lRSzraMIPnJNEuPqEBymd7uiExdZEsikx5UYo=;
+	s=korg; t=1790787385;
+	bh=LMxrotf1e3A252bjRYDbWK4BR3xrpWoDaBx7LCydmoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iGo+QtSemhp4Z9yQiVDfwbZATkqDxIXEKsT5L6d5W2y+TTyL0i2MyS3ctppH0H9DV
-	 OE8ZWushaBTpkkpab0K53y8xlhe4w6/4gDESkBFcKGOA93Jf66Zrt/4Mqspc/qv7ne
-	 lPN9Gk1ZweHRCI2kqb+tbXCniyRejvcED+ujNMu0=
+	b=i0gDDeivJgDXPwmMSIimn89Su4mV+Mxm4G5RYC1oyc4UvPTXtrs3889pQl4k3Hcg+
+	 0ABnP9NUDtT+WIq5JyYzY7NecTt/ktq4XSwyyT1HzyaFaAabYctsCqLUAjFXMpKiEY
+	 gXCaVPR2lC26luK8Cux7pPZqf7v0BK0uRXIx1//w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Changyul Lee <lcy8047@gmail.com>,
+	Sang-Hoon Choi <csh0052@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 212/457] net: libwx: fix races in Tx timestamp handling
-Date: Wed, 30 Sep 2026 17:25:17 +0200
-Message-ID: <20260930152350.626678429@linuxfoundation.org>
+Subject: [PATCH 7.2 213/457] nfp: hold IPsec RX state under the XArray lock
+Date: Wed, 30 Sep 2026 17:25:18 +0200
+Message-ID: <20260930152350.647582577@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,378 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Sang-Hoon Choi <csh0052@gmail.com>
 
-[ Upstream commit 3173cba1170131816972ed2b6185cb970ba8b747 ]
+[ Upstream commit 1a983a4e14c635c40354be110cd9a1a5c94e01e6 ]
 
-wx->ptp_tx_skb is shared between the Tx path, the PTP auxiliary
-worker and the timestamp cleanup paths. The
-WX_STATE_PTP_TX_IN_PROGRESS bit prevents multiple Tx paths from
-submitting timestamp requests, but does not serialize the worker
-against cleanup.
+nfp_net_ipsec_rx() drops the XArray lock before taking a reference to the
+xfrm_state it found. The delete path can erase the entry and drop the last
+state reference in that interval. RX can then try to increment a zero
+refcount after the state has been queued for destruction.
 
-As a result, wx_ptp_clear_tx_timestamp() can free an skb after
-wx_ptp_tx_hwtstamp_work() has obtained its pointer. The worker may
-then pass the freed skb to skb_tstamp_tx() and release the same
-reference again.
+The driver queues firmware invalidation asynchronously; the delete path
+does not wait for the command to complete or drain pending RX processing.
 
-The cleanup path may also clear the in-progress bit while the worker
-is still processing the old skb. This allows the Tx path to publish a
-new skb which the worker can subsequently overwrite with NULL,
-leaking its reference.
+The XFRM garbage collector waits for an RCU grace period before freeing
+the state. That delays reclamation but does not make acquiring a reference
+from zero valid.
 
-Add a dedicated spinlock to protect publication and consumption of
-the Tx timestamp skb. Detach the skb and clear the in-progress bit
-while holding the lock, then deliver the timestamp and release the skb
-after dropping it. Use the same locked cleanup in the quiesce path,
-but keep the detach there free of register accesses: quiesce runs
-during PCIe error recovery, where MMIO is not reliable, and it
-deliberately did not touch the device before. The lock is taken with
-interrupts disabled, because netpoll can call ndo_start_xmit() with
-hard interrupts already off.
+Take the xfrm_state reference before releasing the XArray lock so
+xa_erase() cannot run between lookup and reference acquisition.
 
-When handling a Tx DMA mapping failure, keep the transmit path
-reference until after comparing the skb under the lock. This prevents
-skb address reuse from making the error path mistake a newer timestamp
-request for the failed one.
-
-Fixes: 06e75161b9d4 ("net: wangxun: Add support for PTP clock")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/6C7EC12D69217315%2B20260818074721.45536-1-jiawenwu%40trustnetic.com
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/77431AF9A0E369F3+20260921071549.1141804-1-jiawenwu@trustnetic.com
+Fixes: 57f273adbcd4 ("nfp: add framework to support ipsec offloading")
+Reported-by: Changyul Lee <lcy8047@gmail.com>
+Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
+Link: https://patch.msgid.link/179001455912.44752.17153022439349797877.idr-bug-92@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_hw.c   |   1 +
- drivers/net/ethernet/wangxun/libwx/wx_lib.c  |  47 ++++--
- drivers/net/ethernet/wangxun/libwx/wx_ptp.c  | 142 +++++++++++++------
- drivers/net/ethernet/wangxun/libwx/wx_type.h |   2 +
- 4 files changed, 132 insertions(+), 60 deletions(-)
+ drivers/net/ethernet/netronome/nfp/crypto/ipsec.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_hw.c b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-index 260e14d5d5412..9119c931b3a3f 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-@@ -2517,6 +2517,7 @@ int wx_sw_init(struct wx *wx)
- 	}
+diff --git a/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c b/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
+index 9e7c285eaa6bc..960d7513aa8dd 100644
+--- a/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
++++ b/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
+@@ -625,11 +625,12 @@ int nfp_net_ipsec_rx(struct nfp_meta_parsed *meta, struct sk_buff *skb)
  
- 	spin_lock_init(&wx->hw_stats_lock);
-+	spin_lock_init(&wx->ptp_tx_lock);
- 	mutex_init(&wx->reset_lock);
- 	bitmap_zero(wx->state, WX_STATE_NBITS);
- 	bitmap_zero(wx->flags, WX_PF_FLAGS_NBITS);
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index 7e2ae41a321e1..287172348b07e 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1163,9 +1163,11 @@ static int wx_tx_map(struct wx_ring *tx_ring,
- 		i--;
- 	}
+ 	xa_lock(&nn->xa_ipsec);
+ 	x = xa_load(&nn->xa_ipsec, saidx);
++	if (x)
++		xfrm_state_hold(x);
+ 	xa_unlock(&nn->xa_ipsec);
+ 	if (!x)
+ 		return -EINVAL;
  
--	dev_kfree_skb_any(first->skb);
--	first->skb = NULL;
--
-+	/* first->skb is released by the caller, which keeps a reference on it
-+	 * until the PTP cleanup has compared it against wx->ptp_tx_skb. That
-+	 * prevents the address from being reused by a newer request while the
-+	 * comparison is pending.
-+	 */
- 	tx_ring->next_to_use = i;
- 
- 	return -ENOMEM;
-@@ -1612,9 +1614,11 @@ static netdev_tx_t wx_xmit_frame_ring(struct sk_buff *skb,
- 
- 	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
- 	    wx->ptp_clock) {
-+		unsigned long flags;
-+
-+		spin_lock_irqsave(&wx->ptp_tx_lock, flags);
- 		if (wx->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
--		    !test_and_set_bit_lock(WX_STATE_PTP_TX_IN_PROGRESS,
--					   wx->state)) {
-+		    !test_and_set_bit(WX_STATE_PTP_TX_IN_PROGRESS, wx->state)) {
- 			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
- 			tx_flags |= WX_TX_FLAGS_TSTAMP;
- 			wx->ptp_tx_skb = skb_get(skb);
-@@ -1622,6 +1626,7 @@ static netdev_tx_t wx_xmit_frame_ring(struct sk_buff *skb,
- 		} else {
- 			wx->tx_hwtstamp_skipped++;
- 		}
-+		spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
- 	}
- 
- 	/* record initial flags and protocol */
-@@ -1640,19 +1645,35 @@ static netdev_tx_t wx_xmit_frame_ring(struct sk_buff *skb,
- 		wx->atr(tx_ring, first, ptype);
- 
- 	if (wx_tx_map(tx_ring, first, hdr_len))
--		goto cleanup_tx_tstamp;
-+		goto out_drop;
- 
- 	return NETDEV_TX_OK;
- out_drop:
--	dev_kfree_skb_any(first->skb);
--	first->skb = NULL;
--cleanup_tx_tstamp:
-+	/* The frame never reached the hardware, so no timestamp will ever be
-+	 * reported for it and the request has to be cancelled. The slot is
-+	 * shared, though: wx_ptp_clear_tx_timestamp() or wx_ptp_tx_hang() may
-+	 * have dropped our request already, and a transmit on another queue
-+	 * can have claimed the slot since. Only cancel it while it is still
-+	 * ours, otherwise we would free somebody else's skb and release their
-+	 * in-progress bit.
-+	 */
- 	if (unlikely(tx_flags & WX_TX_FLAGS_TSTAMP)) {
--		dev_kfree_skb_any(wx->ptp_tx_skb);
--		wx->ptp_tx_skb = NULL;
--		wx->tx_hwtstamp_errors++;
--		clear_bit_unlock(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
-+		struct sk_buff *ptp_tx_skb = NULL;
-+		unsigned long flags;
-+
-+		spin_lock_irqsave(&wx->ptp_tx_lock, flags);
-+		if (wx->ptp_tx_skb == skb) {
-+			ptp_tx_skb = wx->ptp_tx_skb;
-+			wx->ptp_tx_skb = NULL;
-+			clear_bit(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
-+			wx->tx_hwtstamp_errors++;
-+		}
-+		spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
-+
-+		dev_kfree_skb_any(ptp_tx_skb);
- 	}
-+	dev_kfree_skb_any(first->skb);
-+	first->skb = NULL;
- 
- 	return NETDEV_TX_OK;
- }
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_ptp.c b/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
-index 4708e7f3958f7..65b8937f6e94c 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_ptp.c
-@@ -129,6 +129,34 @@ static int wx_ptp_settime64(struct ptp_clock_info *ptp,
- 	return 0;
- }
- 
-+/**
-+ * __wx_ptp_detach_tx_skb - detach the skb tracking the Tx timestamp request
-+ * @wx: the private board structure
-+ *
-+ * Detach the skb of the outstanding request and release the in-progress bit,
-+ * so that a new request can be submitted.
-+ *
-+ * This performs no register access. Callers that need a timestamp the hardware
-+ * may have left latched must unlatch it themselves, while the device is known
-+ * to be alive. wx_ptp_quiesce() runs during PCIe error recovery, where MMIO is
-+ * not reliable, and therefore deliberately skips the unlatch.
-+ *
-+ * Context: Expects wx->ptp_tx_lock to be held by the caller.
-+ * Return: the detached skb, or NULL if no request was outstanding. The caller
-+ * owns the returned reference and must release it once the lock is dropped.
-+ */
-+static struct sk_buff *__wx_ptp_detach_tx_skb(struct wx *wx)
-+{
-+	struct sk_buff *skb = wx->ptp_tx_skb;
-+
-+	lockdep_assert_held(&wx->ptp_tx_lock);
-+
-+	wx->ptp_tx_skb = NULL;
-+	clear_bit(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
-+
-+	return skb;
-+}
-+
- /**
-  * wx_ptp_clear_tx_timestamp - utility function to clear Tx timestamp state
-  * @wx: the private board structure
-@@ -139,12 +167,16 @@ static int wx_ptp_settime64(struct ptp_clock_info *ptp,
-  */
- static void wx_ptp_clear_tx_timestamp(struct wx *wx)
- {
-+	struct sk_buff *skb;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&wx->ptp_tx_lock, flags);
-+	/* Unlatch a timestamp the hardware may have left pending. */
- 	rd32ptp(wx, WX_TSC_1588_STMPH);
--	if (wx->ptp_tx_skb) {
--		dev_kfree_skb_any(wx->ptp_tx_skb);
--		wx->ptp_tx_skb = NULL;
--	}
--	clear_bit_unlock(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
-+	skb = __wx_ptp_detach_tx_skb(wx);
-+	spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
-+
-+	dev_kfree_skb_any(skb);
- }
- 
- /**
-@@ -175,49 +207,54 @@ static void wx_ptp_convert_to_hwtstamp(struct wx *wx,
- }
- 
- /**
-- * wx_ptp_tx_hwtstamp - utility function which checks for TX time stamp
-+ * wx_ptp_tx_hwtstamp_work - check for a pending Tx time stamp
-  * @wx: the private board struct
-  *
-- * if the timestamp is valid, we convert it into the timecounter ns
-- * value, then store that result into the shhwtstamps structure which
-- * is passed up the network stack
-+ * If a Tx timestamp request is outstanding and the hardware has latched a
-+ * valid value, we convert it into the timecounter ns value, then store that
-+ * result into the shhwtstamps structure which is passed up the network stack.
-+ *
-+ * Return: 0 when there is nothing left to poll for, -1 when the timestamp is
-+ * not available yet and the caller should poll again.
-  */
--static void wx_ptp_tx_hwtstamp(struct wx *wx)
-+static int wx_ptp_tx_hwtstamp_work(struct wx *wx)
- {
- 	struct skb_shared_hwtstamps shhwtstamps;
--	struct sk_buff *skb = wx->ptp_tx_skb;
-+	unsigned long flags;
-+	struct sk_buff *skb;
-+	u32 tsynctxctl;
- 	u64 regval = 0;
- 
--	regval |= (u64)rd32ptp(wx, WX_TSC_1588_STMPL);
--	regval |= (u64)rd32ptp(wx, WX_TSC_1588_STMPH) << 32;
--
--	wx_ptp_convert_to_hwtstamp(wx, &shhwtstamps, regval);
--
--	wx->ptp_tx_skb = NULL;
--	clear_bit_unlock(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
--	skb_tstamp_tx(skb, &shhwtstamps);
--	dev_kfree_skb_any(skb);
--	wx->tx_hwtstamp_pkts++;
--}
--
--static int wx_ptp_tx_hwtstamp_work(struct wx *wx)
--{
--	u32 tsynctxctl;
-+	spin_lock_irqsave(&wx->ptp_tx_lock, flags);
- 
- 	/* we have to have a valid skb to poll for a timestamp */
- 	if (!wx->ptp_tx_skb) {
--		wx_ptp_clear_tx_timestamp(wx);
-+		rd32ptp(wx, WX_TSC_1588_STMPH);
-+		__wx_ptp_detach_tx_skb(wx);
-+		spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
- 		return 0;
- 	}
- 
- 	/* stop polling once we have a valid timestamp */
- 	tsynctxctl = rd32ptp(wx, WX_TSC_1588_CTL);
--	if (tsynctxctl & WX_TSC_1588_CTL_VALID) {
--		wx_ptp_tx_hwtstamp(wx);
--		return 0;
-+	if (!(tsynctxctl & WX_TSC_1588_CTL_VALID)) {
-+		spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
-+		return -1;
- 	}
- 
--	return -1;
-+	regval |= (u64)rd32ptp(wx, WX_TSC_1588_STMPL);
-+	regval |= (u64)rd32ptp(wx, WX_TSC_1588_STMPH) << 32;
-+	skb = wx->ptp_tx_skb;
-+	wx->ptp_tx_skb = NULL;
-+	clear_bit(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
-+	spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
-+
-+	wx_ptp_convert_to_hwtstamp(wx, &shhwtstamps, regval);
-+	skb_tstamp_tx(skb, &shhwtstamps);
-+	dev_kfree_skb_any(skb);
-+	wx->tx_hwtstamp_pkts++;
-+
-+	return 0;
- }
- 
- /**
-@@ -296,24 +333,29 @@ static void wx_ptp_rx_hang(struct wx *wx)
-  */
- static void wx_ptp_tx_hang(struct wx *wx)
- {
--	bool timeout = time_is_before_jiffies(wx->ptp_tx_start +
--					      WX_PTP_TX_TIMEOUT);
--
--	if (!wx->ptp_tx_skb)
--		return;
-+	struct sk_buff *skb = NULL;
-+	unsigned long flags;
- 
--	if (!test_bit(WX_STATE_PTP_TX_IN_PROGRESS, wx->state))
--		return;
-+	spin_lock_irqsave(&wx->ptp_tx_lock, flags);
- 
- 	/* If we haven't received a timestamp within the timeout, it is
- 	 * reasonable to assume that it will never occur, so we can unlock the
- 	 * timestamp bit when this occurs.
- 	 */
--	if (timeout) {
--		wx_ptp_clear_tx_timestamp(wx);
--		wx->tx_hwtstamp_timeouts++;
--		dev_warn(&wx->pdev->dev, "clearing Tx timestamp hang\n");
-+	if (wx->ptp_tx_skb &&
-+	    test_bit(WX_STATE_PTP_TX_IN_PROGRESS, wx->state) &&
-+	    time_is_before_jiffies(wx->ptp_tx_start + WX_PTP_TX_TIMEOUT)) {
-+		rd32ptp(wx, WX_TSC_1588_STMPH);
-+		skb = __wx_ptp_detach_tx_skb(wx);
- 	}
-+	spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
-+
-+	if (!skb)
-+		return;
-+
-+	dev_kfree_skb_any(skb);
-+	wx->tx_hwtstamp_timeouts++;
-+	dev_warn(&wx->pdev->dev, "clearing Tx timestamp hang\n");
- }
- 
- static long wx_ptp_do_aux_work(struct ptp_clock_info *ptp)
-@@ -841,6 +883,9 @@ EXPORT_SYMBOL(wx_ptp_stop);
- 
- void wx_ptp_quiesce(struct wx *wx)
- {
-+	struct sk_buff *skb;
-+	unsigned long flags;
-+
- 	if (!test_and_clear_bit(WX_STATE_PTP_RUNNING, wx->state))
- 		return;
- 
-@@ -849,11 +894,14 @@ void wx_ptp_quiesce(struct wx *wx)
- 	if (wx->ptp_clock)
- 		ptp_cancel_worker_sync(wx->ptp_clock);
- 
--	if (wx->ptp_tx_skb) {
--		dev_kfree_skb_any(wx->ptp_tx_skb);
--		wx->ptp_tx_skb = NULL;
--	}
--	clear_bit_unlock(WX_STATE_PTP_TX_IN_PROGRESS, wx->state);
-+	/* Drop a pending Tx timestamp request. Do not touch the registers
-+	 * here: quiesce runs during PCIe error recovery, where the device may
-+	 * already be gone and MMIO is not reliable.
-+	 */
-+	spin_lock_irqsave(&wx->ptp_tx_lock, flags);
-+	skb = __wx_ptp_detach_tx_skb(wx);
-+	spin_unlock_irqrestore(&wx->ptp_tx_lock, flags);
-+	dev_kfree_skb_any(skb);
- 
- 	if (wx->ptp_clock) {
- 		ptp_clock_unregister(wx->ptp_clock);
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_type.h b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-index 0520288d18ab9..e63a1666d8ed1 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
-@@ -1413,6 +1413,8 @@ struct wx {
- 	unsigned long last_overflow_check;
- 	unsigned long last_rx_ptp_check;
- 	unsigned long ptp_tx_start;
-+	/* protects ptp_tx_skb, ptp_tx_start and the in-progress state bit */
-+	spinlock_t ptp_tx_lock;
- 	seqlock_t hw_tc_lock; /* seqlock for ptp */
- 	struct cyclecounter hw_cc;
- 	struct timecounter hw_tc;
+-	xfrm_state_hold(x);
+ 	sp->xvec[sp->len++] = x;
+ 	sp->olen++;
+ 	xo = xfrm_offload(skb);
 -- 
 2.53.0
 
