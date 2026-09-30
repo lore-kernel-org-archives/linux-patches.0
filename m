@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B1E4F0526;
-	Wed, 30 Sep 2026 16:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1D050EC01;
+	Wed, 30 Sep 2026 16:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785814; cv=none; b=ezHJTbpJRn4/gaHWjqg3ZwN3a+2X75CHqTobuDWMWIfRIOISCqwq/L85CfVujOu18eA5i9qL3xDCZR78iISAig+VKejlzQmmAYUxUxgePY7RNXnTngCXSCkm7u7S3kmtq5TivHftcdGcbjQgjswyN6yT+lA2aoDMIvETsm6wB0M=
+	t=1790785817; cv=none; b=PFl4BFHuY0RGBrHBlZs2Hi/h4RKTJ59a7fRDK3DsqkAVcoWajaBhxCu08+GyyJOL2kJo7VwZfobxMqUxDWRLsCYtRuTjXJLb2FBKuz4wt7BLds8tVs0mrxUwhQP0DrscMp/u5TsYmk8Ov8sd6BSvz/QeYaJw+T2fRJf+jC9gEAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785814; c=relaxed/simple;
-	bh=6mk4cYuKnss8J0J9A7P6Rwa1NV8pwQ5XwLpSWYmo7v0=;
+	s=arc-20240116; t=1790785817; c=relaxed/simple;
+	bh=ZRIrClhb6TWXvxWFPm57MjKnF/TBtTzOh9yb4O1OluE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kj6EmDTI559+IbP/wFa/xiy+WSwPXYajc2NMPe16tg+dWTOZp+BmT/bgSFalIb9iNBfaLoUIZmB31hcAeL0wnDIszmnb8SocX3vEhoNoBvhgbkIe27WWwxC+C5NbgU1KW8BMqtvLnW0bMCc5K5l8DbfoXN/rMrPTXj0NoDkucAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbKEwJjO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hrt2vrS0v8KFd/5YDJRRGmafwwaG3ZtCmCxIOQWNLTRogYa0Njs555Xs129vlI8H2iF+VtNvFRMhSvualsUIc+eI++02l17Qh0s3OUkY1s6SyWIn7C+R3lvx6VpJJvNrAKhgY+17f/kwN3uMIRRrOPE0ZSeva0DxYEi+O82htrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzM+CKs3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbKEwJjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A914F1F000FF;
-	Wed, 30 Sep 2026 16:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzM+CKs3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889CA1F000FF;
+	Wed, 30 Sep 2026 16:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785813;
-	bh=JwxZVhmERjnlSxyDYrj2axutUSCxB2gxj3fVEZQr19c=;
+	s=korg; t=1790785816;
+	bh=nYRBOanoW6kLR6y9XW23JmRhXwxz3Y/cbGA37C+1N3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dbKEwJjO1ctrJ17Eol+zevKwtEO+DyD3C0MXBK39nXC3CygAkORLTtNorOVvA3kfV
-	 i8WLdHDRYz3+QJqomC/M/RxoB/4TQbetmOlT1+JRh86AVbMn0pbORPPKkpucqFnr2V
-	 4UlGgqCL0bsMe8N9Y5/WpZqWN23fzsTDmubpCVq4=
+	b=EzM+CKs3TUtj6qGco5yBtu/LzS43Xbns7K8zmJvxLiQpxf8DqkAbVCfw+sMDSLDW0
+	 vv5LnUN0RtFsypM32UakZlF3A6WF7jPUsPERcsPgg6rF0AXAy4edJUB8QGSykwhA27
+	 Aql3MD7z6AqLXo49SeTkV/hilrtk4+CjzyWfiCrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 596/982] RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept
-Date: Wed, 30 Sep 2026 17:22:12 +0200
-Message-ID: <20260930152429.585115286@linuxfoundation.org>
+Subject: [PATCH 6.1 597/982] firmware: arm_scpi: reject DVFS OPP count above MAX_DVFS_OPPS
+Date: Wed, 30 Sep 2026 17:22:13 +0200
+Message-ID: <20260930152429.604927395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,65 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 32cd87f54dd1070020e664ccb0312a9f0fea79b4 ]
+[ Upstream commit 32471d84a487c7fd74532bc96be56f8028cf4a3f ]
 
-We need to clear cep before release state_lock as siw_qp_llp_close and
-siw_qp_modify->siw_qp_llp_close did.
+scpi_dvfs_get_info() already rejected a zero opp_count, but still trusted
+any larger value from the SCP firmware. The shared-memory reply only holds
+MAX_DVFS_OPPS entries in buf.opps[]; a bigger count over-reads that array
+and then sizes the allocated OPP table incorrectly (garbage OPPs / OOB).
+The missing upper bound dates back to the original SCPI DVFS support.
 
-Otherwise if siw_qp_modify() fails in siw_accept(), the QP's state_lock
-is released before the error path cleanup. A concurrent ibv_modify_qp()
-transitioning the QP to ERROR can race in this window:
+Reject zero and out-of-range counts in one check and return -EINVAL.
 
-  siw_accept()                       ibv_modify_qp(ERROR)
-  ----------------------             ----------------------
-  siw_qp_modify() fails
-  up_write(&qp->state_lock)
-                                     down_write(&qp->state_lock)
-                                     nextstate_from_idle():
-				     if (qp->cep)
-                                       siw_cep_put(qp->cep) <- frees cep
-                                       qp->cep = NULL
-  goto error
-    cep->qp = NULL                   <- UAF
-
-Clear qp->cep and drop the association reference taken by siw_cep_get(),
-all under the write lock held from the initial down_write(&qp->state_lock).
-Thread B therefore sees qp->cep == NULL, skips its own put, and cannot free
-the cep before siw_accept() is done with it.
-
-Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Link: https://lore.kernel.org/linux-rdma/d6fbe475-a5c2-f975-99b0-a0bd6b6d10e8@linux.dev/T/#m5876c1ff2de8686a9a1173b8f1aa0ff5363a785c
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://patch.msgid.link/20260827125553.12831-1-guoqing.jiang@linux.dev
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Link: https://patch.msgid.link/022802f0b38f.v2.1785200642.git.liuxixin@kylinos.cn
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index 629ed5e58473d..19932fc8856d7 100644
---- a/drivers/infiniband/sw/siw/siw_cm.c
-+++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -1668,9 +1668,12 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 			   SIW_QP_ATTR_STATE | SIW_QP_ATTR_LLP_HANDLE |
- 				   SIW_QP_ATTR_ORD | SIW_QP_ATTR_IRD |
- 				   SIW_QP_ATTR_MPA);
-+	if (rv) {
-+		qp->cep = NULL;
-+		siw_cep_put(cep);
-+		goto error_unlock;
-+	}
- 	up_write(&qp->state_lock);
--	if (rv)
--		goto error;
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 2d85e783ae267..aa27eb5278520 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -628,8 +628,8 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	siw_dbg_cep(cep, "[QP %u]: send mpa reply, %d byte pdata\n",
- 		    qp_id(qp), params->private_data_len);
+-	if (!buf.opp_count)
+-		return ERR_PTR(-ENOENT);
++	if (!buf.opp_count || buf.opp_count > MAX_DVFS_OPPS)
++		return ERR_PTR(-EINVAL);
+ 
+ 	info = kmalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info)
 -- 
 2.53.0
 
