@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891A536D4E1;
-	Wed, 30 Sep 2026 18:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AE2A59;
+	Wed, 30 Sep 2026 18:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791784; cv=none; b=FrX0THXnwnwxTGkjjFzmKRkv5rZU7QEBYBXhBb6J6zxyDVWfK5ePcie+xaOj9ehRQu7pILDHAGXkf3k8vxgl7K6NfITQ2/jt2YDZSQ8QPFRnOtMqQI0+Q4hBVd9AkwAu6TOaCC39MIjKHIKwc6E5sknP2HpoYD59WC73i2akGW8=
+	t=1790791787; cv=none; b=s+zhXJ6t52j6fj84RLP5BtwbTeD6kJ6zbbGLxwlK7LJn2bN2mbUGfxBcrFl7l8Di8oSg5mGGhE9k/33NnBotqjTPG/E9ycWp5ikxnsuShsj6SGjB7eVP/uKo6Ok5HVkozvvd9djGdIZmDHh7dB2hlpcmKvY7WOLYbyqwOzIJams=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791784; c=relaxed/simple;
-	bh=DDmlztucevtDl6RxYJtXkym63iE8QYZmmuQUJAi1Nxs=;
+	s=arc-20240116; t=1790791787; c=relaxed/simple;
+	bh=0V11+BuJJNdhtNQd8oY5l6tTeaV4iTzpeSUNvejFdY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jR8qgQwKbA1QA27d9vYDw83k98x7rq5FNZNFbPAYuYWWuh2AoEZ/uzyjnYeeit08Y73HXFOzmJdJkymejJocGLPycP0i2+xlHuBkrnkaoLH3RzrV7aePwkMvh7nJVQrNbpRkKoLd+Vh9mpZj981ANo/C6SCU9+GCfsxAn3DNrdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbDw5ifs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ANFddh14rLEDAL5OK44ZivwRQeet2qe9uE6weV0eJiEVnlHe2WlWMLE1SDucJtfNgX/ig50s3cEHQ8r5fPTdPOVuU9IdtSMaaQjFrXEHkdbete2aGAo9kGmEvyFbgT+1/ncuzkxrP0xu1Kkwj12wMPqbfkb+ydnC6A/Zb8lKmgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taLCLgOm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbDw5ifs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32441F000FF;
-	Wed, 30 Sep 2026 18:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taLCLgOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935D11F000FF;
+	Wed, 30 Sep 2026 18:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791783;
-	bh=XwOLfuAOa7uyB0jmIdrFEM9KP3GMf/33cwh7dAsmH8M=;
+	s=korg; t=1790791786;
+	bh=U99KvTH9nHIRQYz4+aktnr2YoDbSkkGirAhLZl100xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CbDw5ifszsP2ivHLajGrp+Vt7eCNGhVuaJDw9EM7FzCsG5d1VHKWFNiANXZx5V1tC
-	 JSNavh8LkKN1jEKDJVZKoJWWOhpXnzsHVlSm+lHOQwoD/SHFG2j59GySGvfcEHDxhs
-	 TPTP0nHXNyvNHfRt0OHHcJHsHCUUyFeUn78FXj8Y=
+	b=taLCLgOmFf3oMdGPIzCi6ilI8BefarZxRLTST4C0LN6MP450iXpGS358Sk8w7J10+
+	 vk3e8v+q1VvY6uqYRaFBr9qtZPT8D/hc71hYM1eKHViVk2c6IplhfMtIxY9JzHBoWl
+	 eKQCakTWVX2cjD7A4o3pJLADMxWvvmYUdOEheexI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 425/752] bluetooth/l2cap: sync sock recv cb and release
-Date: Wed, 30 Sep 2026 17:24:55 +0200
-Message-ID: <20260930152407.482200989@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	James Morris <jmorris@namei.org>,
+	Kentaro Takeda <takedakn@nttdata.co.jp>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	John Johansen <john.johansen@canonical.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Paul Moore <paul@paul-moore.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 426/752] landlock: Require LANDLOCK_ACCESS_FS_MAKE_REG for whiteout creation
+Date: Wed, 30 Sep 2026 17:24:56 +0200
+Message-ID: <20260930152407.504210285@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -47,84 +52,315 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 89e856e124f9ae548572c56b1b70c2255705f8fe ]
+[ Upstream commit 672fa082d48b21e1fb62cdb184fee41513e53421 ]
 
-The problem occurs between the system call to close the sock and hci_rx_work,
-where the former releases the sock and the latter accesses it without lock protection.
+Whiteout objects are used in the upper layer of an OverlayFS to
+indicate that the file with this name does not exist in the unified
+view, even if it is present in one of the lower layer file systems.
 
-           CPU0                       CPU1
-           ----                       ----
-           sock_close                 hci_rx_work
-	   l2cap_sock_release         hci_acldata_packet
-	   l2cap_sock_kill            l2cap_recv_frame
-	   sk_free                    l2cap_conless_channel
-	                              l2cap_sock_recv_cb
+For the userspace implementations of OverlayFS (fuse-overlayfs),
+whiteout objects can be created from userspace as well:
 
-If hci_rx_work processes the data that needs to be received before the sock is
-closed, then everything is normal; Otherwise, the work thread may access the
-released sock when receiving data.
+* mknod(2) with S_IFCHR and makedev(0, 0)
+* renameat2(2) with RENAME_WHITEOUT,
+  creating the whiteout in the old place of the moved file.
 
-Add a chan mutex in the rx callback of the sock to achieve synchronization between
-the sock release and recv cb.
+This commit guards whiteout creation in both of these cases with
+LANDLOCK_ACCESS_FS_MAKE_REG.  Whiteout objects are *not* considered
+character devices and are not bound to a driver.
 
-Sock is dead, so set chan data to NULL, avoid others use invalid sock pointer.
+LANDLOCK_ACCESS_FS_MAKE_REG describes the same permission class as a
+whiteout object: creating one is the only S_IFCHR creation that the VFS
+exempts from CAP_MKNOD, so it is as unprivileged as creating a regular
+file, while LANDLOCK_ACCESS_FS_MAKE_CHAR and
+LANDLOCK_ACCESS_FS_MAKE_BLOCK keep meaning the creation of devices that
+expose a kernel interface [1].
 
-Reported-and-tested-by: syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Karl Mehltretter: applied in the form this commit has after
-  f1a8f402f13f ("Bluetooth: L2CAP: Fix deadlock"), that is the
-  chan->data clearing in l2cap_sock_kill() and the guard in
-  l2cap_sock_recv_cb(), without the channel locking in the callback.
-  That locking is what caused the recursive chan->lock deadlock.
-  f1a8f402f13f removes it and moves the lock to l2cap_conless_channel(),
-  which the previous patch does here. l2cap_data_channel() already
-  obtains the channel locked from l2cap_get_chan_by_scid(). ]
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+For the mknod(2) case, introduce a Landlock erratum.  The creation of
+whiteout objects through mknod(2) was previously guarded using
+LANDLOCK_ACCESS_FS_MAKE_CHAR, and it is now guarded using
+LANDLOCK_ACCESS_FS_MAKE_REG.
+
+For the renameat2(2) case, fix a bug: Before this commit, renameat2(2)
+with RENAME_WHITEOUT would create a directory entry even when all
+LANDLOCK_ACCESS_FS_MAKE_* rights were denied.
+
+This does not affect normal renames within layered OverlayFS mounts:
+When doing a regular rename() on a mounted fuse-overlayfs, it is the
+fuse-overlayfs daemon that exercises renameat2() with RENAME_WHITEOUT,
+and only the Landlock domain of that daemon is checked there.
+
+Suggested-by: Christian Brauner <brauner@kernel.org>
+Suggested-by: Mickaël Salaün <mic@digikod.net>
+Cc: stable@vger.kernel.org
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260720.chow9ohYie5b@digikod.net [1]
+Link: https://patch.msgid.link/20260813093157.1436894-3-gnoack@google.com
+[mic: Record why LANDLOCK_ACCESS_FS_MAKE_REG is the matching right, and
+add link(2) to the user doc]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: partially backport 100f59d96405 ("LSM: Remove double
+path_rename hook calls for RENAME_EXCHANGE") to propagate rename flags,
+adapt to ABI 1, and omit the unavailable REFER and context-only
+documentation dependencies]
+Cc: James Morris <jmorris@namei.org>
+Cc: Kentaro Takeda <takedakn@nttdata.co.jp>
+Cc: Serge E. Hallyn <serge@hallyn.com>
+Cc: John Johansen <john.johansen@canonical.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Cc: Paul Moore <paul@paul-moore.com>
+Link: https://lore.kernel.org/r/20220506161102.525323-7-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/linux/lsm_hook_defs.h    |  2 +-
+ include/linux/lsm_hooks.h        |  1 +
+ include/uapi/linux/landlock.h    |  1 +
+ security/apparmor/lsm.c          |  7 ++++--
+ security/landlock/errata/abi-1.h | 24 +++++++++++++++++++
+ security/landlock/fs.c           | 40 ++++++++++++++++++++++++--------
+ security/security.c              |  4 ++--
+ security/tomoyo/tomoyo.c         |  4 +++-
+ 8 files changed, 67 insertions(+), 16 deletions(-)
+ create mode 100644 security/landlock/errata/abi-1.h
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 0b51c3e0f4692..bef6a948d7d51 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1237,6 +1237,10 @@ static void l2cap_sock_kill(struct sock *sk)
+diff --git a/include/linux/lsm_hook_defs.h b/include/linux/lsm_hook_defs.h
+index 2ef89b872716e..da79e7ef1ca6f 100644
+--- a/include/linux/lsm_hook_defs.h
++++ b/include/linux/lsm_hook_defs.h
+@@ -101,7 +101,7 @@ LSM_HOOK(int, 0, path_link, struct dentry *old_dentry,
+ 	 const struct path *new_dir, struct dentry *new_dentry)
+ LSM_HOOK(int, 0, path_rename, const struct path *old_dir,
+ 	 struct dentry *old_dentry, const struct path *new_dir,
+-	 struct dentry *new_dentry)
++	 struct dentry *new_dentry, unsigned int flags)
+ LSM_HOOK(int, 0, path_chmod, const struct path *path, umode_t mode)
+ LSM_HOOK(int, 0, path_chown, const struct path *path, kuid_t uid, kgid_t gid)
+ LSM_HOOK(int, 0, path_chroot, const struct path *path)
+diff --git a/include/linux/lsm_hooks.h b/include/linux/lsm_hooks.h
+index 9ccfc8fbbe0be..8eec3bdaee323 100644
+--- a/include/linux/lsm_hooks.h
++++ b/include/linux/lsm_hooks.h
+@@ -357,6 +357,7 @@
+  *	@old_dentry contains the dentry structure of the old link.
+  *	@new_dir contains the path structure for parent of the new link.
+  *	@new_dentry contains the dentry structure of the new link.
++ *	@flags may contain rename options such as RENAME_EXCHANGE.
+  *	Return 0 if permission is granted.
+  * @path_chmod:
+  *	Check for permission to change a mode of the file @path. The new
+diff --git a/include/uapi/linux/landlock.h b/include/uapi/linux/landlock.h
+index d00621d4d52d3..0fb097510fcf0 100644
+--- a/include/uapi/linux/landlock.h
++++ b/include/uapi/linux/landlock.h
+@@ -109,6 +109,7 @@ struct landlock_path_beneath_attr {
+  *   device.
+  * - %LANDLOCK_ACCESS_FS_MAKE_DIR: Create (or rename) a directory.
+  * - %LANDLOCK_ACCESS_FS_MAKE_REG: Create (or rename or link) a regular file.
++ *   This also guards the creation of whiteout objects as used in OverlayFS.
+  * - %LANDLOCK_ACCESS_FS_MAKE_SOCK: Create (or rename or link) a UNIX domain
+  *   socket.
+  * - %LANDLOCK_ACCESS_FS_MAKE_FIFO: Create (or rename or link) a named pipe.
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index afa19da694360..f63db47d57e76 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -353,8 +353,11 @@ static int apparmor_path_link(struct dentry *old_dentry, const struct path *new_
+ 	return error;
+ }
  
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
-+	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
-+	 * sock pointer.
-+	 */
-+	l2cap_pi(sk)->chan->data = NULL;
- 	/* Kill poor orphan */
- 
- 	l2cap_chan_put(l2cap_pi(sk)->chan);
-@@ -1519,9 +1523,13 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
- 
- static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+-static int apparmor_path_rename(const struct path *old_dir, struct dentry *old_dentry,
+-				const struct path *new_dir, struct dentry *new_dentry)
++static int apparmor_path_rename(const struct path *old_dir,
++				struct dentry *old_dentry,
++				const struct path *new_dir,
++				struct dentry *new_dentry,
++				const unsigned int flags)
  {
--	struct sock *sk = chan->data;
-+	struct sock *sk;
- 	int err;
- 
-+	sk = chan->data;
-+	if (!sk)
-+		return -ENXIO;
+ 	struct aa_label *label;
+ 	int error = 0;
+diff --git a/security/landlock/errata/abi-1.h b/security/landlock/errata/abi-1.h
+new file mode 100644
+index 0000000000000..53c96c2057fa0
+--- /dev/null
++++ b/security/landlock/errata/abi-1.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
 +
- 	lock_sock(sk);
++/**
++ * DOC: erratum_4
++ *
++ * Erratum 4: Creation of whiteout objects
++ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ *
++ * This fix changes the access rights required for the creation of whiteout
++ * objects through :manpage:`mknod(2)`, :manpage:`renameat2(2)`, or
++ * :manpage:`link(2)`.  Creating whiteout objects is now guarded by
++ * ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
++ *
++ * Whiteout objects are used in OverlayFS to mark the absence of a file in an
++ * upper file system.  Despite being created with ``S_IFCHR``, whiteout objects
++ * do not count as character devices.
++ *
++ * Impact:
++ *
++ * Sandboxed programs that create OverlayFS whiteouts (such as fuse-overlayfs)
++ * now require ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of
++ * ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
++ */
++LANDLOCK_ERRATUM(4)
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index a3d99bba5f1e7..51d095f078903 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -14,6 +14,7 @@
+ #include <linux/err.h>
+ #include <linux/fs.h>
+ #include <linux/init.h>
++#include <linux/kdev_t.h>
+ #include <linux/kernel.h>
+ #include <linux/limits.h>
+ #include <linux/list.h>
+@@ -365,7 +366,7 @@ static inline int current_check_access_path(const struct path *const path,
+ 	return check_access_path(dom, path, access_request);
+ }
  
- 	if (l2cap_pi(sk)->rx_busy_skb) {
+-static inline access_mask_t get_mode_access(const umode_t mode)
++static inline access_mask_t get_mode_access(const umode_t mode, const dev_t dev)
+ {
+ 	switch (mode & S_IFMT) {
+ 	case S_IFLNK:
+@@ -373,6 +374,9 @@ static inline access_mask_t get_mode_access(const umode_t mode)
+ 	case S_IFDIR:
+ 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
+ 	case S_IFCHR:
++		/* Whiteout objects are guarded with MAKE_REG. */
++		if (dev == WHITEOUT_DEV)
++			return LANDLOCK_ACCESS_FS_MAKE_REG;
+ 		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
+ 	case S_IFBLK:
+ 		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
+@@ -389,6 +393,13 @@ static inline access_mask_t get_mode_access(const umode_t mode)
+ 	}
+ }
+ 
++static inline access_mask_t get_dentry_access(const struct dentry *const dentry)
++{
++	const struct inode *const inode = d_backing_inode(dentry);
++
++	return get_mode_access(inode->i_mode, inode->i_rdev);
++}
++
+ static inline access_mask_t maybe_remove(const struct dentry *const dentry)
+ {
+ 	if (d_is_negative(dentry))
+@@ -613,18 +624,18 @@ static int hook_path_link(struct dentry *const old_dentry,
+ 		return -EXDEV;
+ 	if (unlikely(d_is_negative(old_dentry)))
+ 		return -ENOENT;
+-	return check_access_path(
+-		dom, new_dir,
+-		get_mode_access(d_backing_inode(old_dentry)->i_mode));
++	return check_access_path(dom, new_dir, get_dentry_access(old_dentry));
+ }
+ 
+ static int hook_path_rename(const struct path *const old_dir,
+ 			    struct dentry *const old_dentry,
+ 			    const struct path *const new_dir,
+-			    struct dentry *const new_dentry)
++			    struct dentry *const new_dentry,
++			    const unsigned int flags)
+ {
+ 	const struct landlock_ruleset *const dom =
+ 		landlock_get_current_domain();
++	access_mask_t access_request;
+ 
+ 	if (!dom)
+ 		return 0;
+@@ -635,10 +646,18 @@ static int hook_path_rename(const struct path *const old_dir,
+ 	if (unlikely(d_is_negative(old_dentry)))
+ 		return -ENOENT;
+ 	/* RENAME_EXCHANGE is handled because directories are the same. */
+-	return check_access_path(
+-		dom, old_dir,
+-		maybe_remove(old_dentry) | maybe_remove(new_dentry) |
+-			get_mode_access(d_backing_inode(old_dentry)->i_mode));
++	access_request = maybe_remove(old_dentry) | maybe_remove(new_dentry) |
++			 get_dentry_access(old_dentry);
++	/*
++	 * In case of renameat2(2) with RENAME_WHITEOUT, a whiteout object is
++	 * created in the source location, so we require an additional access
++	 * right there.
++	 */
++	if (flags & RENAME_WHITEOUT)
++		access_request |=
++			get_mode_access(S_IFCHR | WHITEOUT_MODE, WHITEOUT_DEV);
++
++	return check_access_path(dom, old_dir, access_request);
+ }
+ 
+ static int hook_path_mkdir(const struct path *const dir,
+@@ -656,7 +675,8 @@ static int hook_path_mknod(const struct path *const dir,
+ 
+ 	if (!dom)
+ 		return 0;
+-	return check_access_path(dom, dir, get_mode_access(mode));
++	return check_access_path(dom, dir,
++				 get_mode_access(mode, new_decode_dev(dev)));
+ }
+ 
+ static int hook_path_symlink(const struct path *const dir,
+diff --git a/security/security.c b/security/security.c
+index 1daea0a94626e..e8bd6701a415c 100644
+--- a/security/security.c
++++ b/security/security.c
+@@ -1247,13 +1247,13 @@ int security_path_rename(const struct path *old_dir, struct dentry *old_dentry,
+ 
+ 	if (flags & RENAME_EXCHANGE) {
+ 		int err = call_int_hook(path_rename, new_dir, new_dentry,
+-					old_dir, old_dentry);
++					old_dir, old_dentry, flags);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+ 	return call_int_hook(path_rename, old_dir, old_dentry, new_dir,
+-				new_dentry);
++			     new_dentry, flags);
+ }
+ EXPORT_SYMBOL(security_path_rename);
+ 
+diff --git a/security/tomoyo/tomoyo.c b/security/tomoyo/tomoyo.c
+index 1be96e2ce9f1a..f2103b0c4c7a2 100644
+--- a/security/tomoyo/tomoyo.c
++++ b/security/tomoyo/tomoyo.c
+@@ -264,13 +264,15 @@ static int tomoyo_path_link(struct dentry *old_dentry, const struct path *new_di
+  * @old_dentry: Pointer to "struct dentry".
+  * @new_parent: Pointer to "struct path".
+  * @new_dentry: Pointer to "struct dentry".
++ * @flags: Rename options.
+  *
+  * Returns 0 on success, negative value otherwise.
+  */
+ static int tomoyo_path_rename(const struct path *old_parent,
+ 			      struct dentry *old_dentry,
+ 			      const struct path *new_parent,
+-			      struct dentry *new_dentry)
++			      struct dentry *new_dentry,
++			      const unsigned int flags)
+ {
+ 	struct path path1 = { .mnt = old_parent->mnt, .dentry = old_dentry };
+ 	struct path path2 = { .mnt = new_parent->mnt, .dentry = new_dentry };
 -- 
 2.53.0
 
