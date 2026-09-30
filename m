@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BD13DBD65;
-	Wed, 30 Sep 2026 19:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4993DBD65;
+	Wed, 30 Sep 2026 19:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796121; cv=none; b=oNM3n5j/c6Dxl9fwfwk++s3YHfcqBjbKQrHV0a4vpdAFnuAna5PGDABUG6krq7iBIYjoZS/32QS2gFFkS4BkSut34CCliKOH1U2deIqateWLWkAffwu76ynOh0O/bF8bMenkm9bu6fS2XJXK2iXXayNB3BVZaxMklbgLrYil/6g=
+	t=1790796124; cv=none; b=jq4OjApmnHo8KGuVS9fDgPwqbJ1oujzpdkt1aS1G7eOZ+W3DhldWOn2nr0FzG7MEOZAx7goGNrEbBuGpLXKJBRZ23ICmmrxfOpUwbw0C1Acz/xzXOcqSM5NI9C5QSQfcbhEp3SRE3fvvrzb5JIeiU7acOUVcl/+YRg5GZQrOFu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796121; c=relaxed/simple;
-	bh=LU3pm4yoH1brUeNqteFyDdQlfWcGaBIrWcieBr/vVUo=;
+	s=arc-20240116; t=1790796124; c=relaxed/simple;
+	bh=k1U6r4VtHI2BpM1xRrTCQBKcLSN+cw+uk5O/KsdiWvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPAR2qUAVWtbCf4JoCP+UXYUeXYlFfRDwRNbEj8tbE2YXNUQqcl/VtalZiFJFaHWmRbv6inMAKtgvhFuU3YcP7vIG6bZnE+bOsfJL+oWsFhyeGQSLEpNxcERhFTpegT3JG5Z0W7G/fBg+kEWMby7pqjBSKq8o6MszjEQjHgdinA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1s1qU3s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ShiGy/4/RIbf34upoa6nyoE6uZp1USbn0zhRXbONcprp5OeO6Jr2TDPH7STftSzJZ/kkvfYrcroRAxNCOcM3qekrYp3pC3E/3moBGs55uzwMJ6Y8oX+t5bd3xMdP2bsfIER1L+ABb6miMpWOXU8j5V5ZBl2ZZWwhwmBfkHMdlHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAcB1X3t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1s1qU3s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3891F000FF;
-	Wed, 30 Sep 2026 19:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAcB1X3t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C25C1F000FF;
+	Wed, 30 Sep 2026 19:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796120;
-	bh=xf7+CPNjlo7zwTA5WdUgmjXApkcyiUI5T9RtNhhfqWI=;
+	s=korg; t=1790796122;
+	bh=JoafAOnz6Naw47vx9GgQtmSGDeY+cs9J14jDGT/xaKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1s1qU3s6PGRLkWepMwFSxEBQKSuk65a9r1Z2Ak0CE6DBgQ+/TFzxoTPBPgiWXOJr
-	 5Xjxc7MxxT0EHpv5wH4F4pOaaAZXIyWmpbw5b1ozProGbYc0gOd32h2nWPjh/s6Zzl
-	 Tl2bvi6d19EFSP1pYNQrKAD0/P6ECb+ttxkIgt/Q=
+	b=AAcB1X3t4A2e5eNJuUtRBRKZbKz1E2FrMTIt3CmQgdiOBv0IH/p0vTnBMlvcAhR1A
+	 ns26OjrCYaRvgKUWJxW0nZQ/7HYLhUrjggHV0TLpif/z/irfkcNfUzQ0ElMGsNLKH/
+	 KUqorQMZ065WyguoQ02UfGS9BN2tglTtzHWm/am8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Eric Dumazet <edumazet@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0799/1193] net: bridge: mst: move switchdev call outside rcu
-Date: Wed, 30 Sep 2026 17:24:43 +0200
-Message-ID: <20260930152451.997440357@linuxfoundation.org>
+Subject: [PATCH 6.6 0800/1193] tcp: Dont call skb_clone_and_charge_r() for close()d listener in tcp_v6_do_rcv().
+Date: Wed, 30 Sep 2026 17:24:44 +0200
+Message-ID: <20260930152452.019849043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,78 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 18a6fe05fb6e18de29fa90d388bb34044114b3d8 ]
+[ Upstream commit 8e759cd1f6444a946bd1fd2b2b29eea582eea1d5 ]
 
-This is a follow-up of one of sashiko's pre-existing bug reports.
-br_mst_set_state() calls switchdev_port_attr_set() for nonzero MSTIs
-while holding rcu_read_lock() which invokes the blocking switchdev
-notifier chain and may sleep. Nonzero MSTI changes come from netlink
-with rtnl held. Move the switchdev call before entering the rcu section and
-assert that rtnl is held.
+tcp_v6_do_rcv() no longer calls skb_clone_and_charge_r() for
+TCP_LISTEN since commit 073d89808c06 ("net: fix data-races around
+sk->sk_forward_alloc").
 
-The call cannot be deferred because netlink needs its error and extack.
-Also DSA reads the old bridge MST state during the callback and checks it.
-A deferred callback will be late and will see the updated state.
+However, there is still a small race window between tcp_v6_rcv()
+and tcp_v6_do_rcv(), where concurrent close() changes TCP_LISTEN
+to TCP_CLOSE, causing skb_clone_and_charge_r() to be called
+locklessly and resulting in the splat below. [0]
 
-Fixes: 3a7c1661ae13 ("net: bridge: mst: fix vlan use-after-free")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260911105021.1385934-1-razor@blackwall.org
+Let's avoid calling skb_clone_and_charge_r() for TCP_CLOSE as well.
+
+This is fine for non-listeners because tcp_rcv_state_process()
+drops skb for TCP_CLOSE and opt_skb was freed immediately anyway.
+
+[0]:
+sk->sk_forward_alloc
+WARNING: net/ipv4/af_inet.c:162 at inet_sock_destruct+0x64d/0x810 net/ipv4/af_inet.c:162, CPU#1: ksoftirqd/1/28
+Modules linked in:
+CPU: 1 UID: 0 PID: 28 Comm: ksoftirqd/1 Not tainted 7.2.0 #17 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+RIP: 0010:inet_sock_destruct+0x64d/0x810 net/ipv4/af_inet.c:162
+Code: 3d 49 ff e9 06 fd ff ff e8 d0 5b 83 f8 90 0f 0b 90 e9 35 fe ff ff e8 c2 5b 83 f8 90 0f 0b 90 e9 c5 fe ff ff e8 b4 5b 83 f8 90 <0f> 0b 90 e9 04 ff ff ff e8 a6 5b 83 f8 90 0f 0b 90 e9 65 fe ff ff
+RSP: 0018:ffffc90000677bb8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8880117bde80 RCX: ffffffff8957eb41
+RDX: ffff88801dad5d00 RSI: ffffffff8957ec3c RDI: 0000000000000005
+RBP: 00000000fffff000 R08: ffffffff8957eb41 R09: 00000000fffff000
+R10: 0000000000000005 R11: 0000000000000000 R12: dffffc0000000000
+R13: ffff8880117bdf10 R14: ffffffff81c08eb7 R15: 0000000000000003
+FS:  0000000000000000(0000) GS:ffff8880d7ae5000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f93a1021138 CR3: 00000000207a9000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+ __sk_destruct+0x82/0xae0 net/core/sock.c:2356
+ rcu_do_batch kernel/rcu/tree.c:2645 [inline]
+ rcu_core+0x59c/0x1100 kernel/rcu/tree.c:2897
+ handle_softirqs+0x1e4/0x9b0 kernel/softirq.c:622
+ run_ksoftirqd kernel/softirq.c:1076 [inline]
+ run_ksoftirqd+0x38/0x60 kernel/softirq.c:1068
+ smpboot_thread_fn+0x458/0xc80 kernel/smpboot.c:160
+ kthread+0x396/0x4a0 kernel/kthread.c:436
+ ret_from_fork+0x8e0/0xe40 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260914011420.115556-1-kuniyu@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mst.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ net/ipv6/tcp_ipv6.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
-index 43a300ae6bfaf..1654efd3045b0 100644
---- a/net/bridge/br_mst.c
-+++ b/net/bridge/br_mst.c
-@@ -107,21 +107,24 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 	struct net_bridge_vlan *v;
- 	int err = 0;
- 
--	rcu_read_lock();
--	vg = nbp_vlan_group_rcu(p);
--	if (!vg)
--		goto out;
--
- 	/* MSTI 0 (CST) state changes are notified via the regular
--	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE.
-+	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE. All other MSTIs are handled via
-+	 * netlink with RTNL held
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 87035663d8aa8..4a51015ef4ea2 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1438,7 +1438,8 @@ int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
+ 	   by tcp. Feel free to propose better solution.
+ 					       --ANK (980728)
  	 */
- 	if (msti) {
-+		ASSERT_RTNL();
-+
- 		err = switchdev_port_attr_set(p->dev, &attr, extack);
- 		if (err && err != -EOPNOTSUPP)
- 			goto out;
-+		err = 0;
- 	}
+-	if (np->rxopt.all && sk->sk_state != TCP_LISTEN)
++	if (np->rxopt.all &&
++	    !((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)))
+ 		opt_skb = skb_clone_and_charge_r(skb, sk);
  
--	err = 0;
-+	rcu_read_lock();
-+	vg = nbp_vlan_group_rcu(p);
-+	if (!vg)
-+		goto out_rcu_unlock;
-+
- 	list_for_each_entry_rcu(v, &vg->vlan_list, vlist) {
- 		if (v->brvlan->msti != msti)
- 			continue;
-@@ -129,8 +132,9 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
- 		br_mst_vlan_set_state(vg, v, state);
- 	}
- 
--out:
-+out_rcu_unlock:
- 	rcu_read_unlock();
-+out:
- 	return err;
- }
- 
+ 	reason = SKB_DROP_REASON_NOT_SPECIFIED;
 -- 
 2.53.0
 
