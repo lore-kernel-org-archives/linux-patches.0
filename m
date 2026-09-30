@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00CD3AD539;
-	Wed, 30 Sep 2026 18:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26B43AD539;
+	Wed, 30 Sep 2026 18:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793023; cv=none; b=ByT1oQ1Hl4PAeksA3XCihFBBUHORvy/G4/4E8Vm5IU1yFD3SSArNpgQnZFghQi81kKFsfIVt9W3A2y27yLcqbzJaSTLUmxSuwHWrlh+GKyJEpo359tPIR8qYOVnJvL24nmrJTMeJXVODfGyK24SFLvXCPoM/cBZNpUTKgNQqtFY=
+	t=1790793025; cv=none; b=rsLdc0Dx4E8Yy3RYLLdcs0Krn1zWc3fecJgIJvsUvz0TJHKIxrOQet8/Se+/zMP/ltTuQqFgVeSmmlGyV/k3o97Yu4NlMFnZkFJog0yVKFe7+/oBCOwZyHDFa+XyCF+jR4cbiWQS4PstgqysTTZJy1e2DLGhC7GQcn3YO5nFhFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793023; c=relaxed/simple;
-	bh=tQnxLCaz5x2W/qJ9OVZy0VXSLs4jR4y+VDPQx2ZToa0=;
+	s=arc-20240116; t=1790793025; c=relaxed/simple;
+	bh=eQmYUb9bPBo1nycDe95NlWUMSEZKz38hUEFeq/IT1fE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wn3qnlX+4UW1tcKcSJ23k4rQaTG3HO658gbJsIHmDbgB437L8ZO378PlN87i1djHosAHQQxaT3D8/7BirYfqE/9xHNlr0Pwnfzqum2OxFPydRBNpeiO3VZoA3C5wyymxXyBfa1wu5AzJhz8wva2foo0vs3hTVhdFZtF6D7Cx+0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEJs7zWd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mUiQsqAKPVu8ja3u8HaMvX2VUUPvam/D9+J69+ZOXIrVbXH9fT7idZjhjGoiI0n/mBW+gZkuzzRRACqDl7rgKfDDR8Ov8qu8nG6jMZwZRGDIGHlKnnU9N8EnI8WXeoVEGI/C+5ejTtty5fQn3vx/zlLxTv4ZKunBYvGl2l0GDtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00WnAX3x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEJs7zWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411591F000FF;
-	Wed, 30 Sep 2026 18:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00WnAX3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E76D1F000FF;
+	Wed, 30 Sep 2026 18:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793021;
-	bh=qXUlxSO6cKxd+vvqWDoKHEBzLzGYWGYk9FHU7aIwhWo=;
+	s=korg; t=1790793024;
+	bh=apteX4FTthF9LtYEm7FTkIhvzkk531IhfPA8+WAz24g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AEJs7zWdGbnnKPsswtZ8f0C3tMcKfv26+SR21B7a9hezrz2K+vDfF94/d2xqc+BKt
-	 nXKKTvD04YD5Hq4N/cCQjKOuxNMMgZRgacl8IRC2cx1S+4/F8gg6w64nwj4beGwp4V
-	 cz7aigs+HpSgm9Qef5RYwBZquVQSImgJMX/s/2/k=
+	b=00WnAX3x4+2iBPM0gvFbGLd5hf/V/s/mYSdUyrvNUoxvYqDopkcrze8QAwpqZtM+b
+	 nk8U2rv7ZkK5UxJDMBbw2hF07gw7mT8JtvHxsi97p7KkO5n2V39MmqRU/Ns9effURb
+	 Tmh8gbYb7qKTAj+sy4mu+pGEGJGGRKSVgI+N4l7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Hui Peng <benquike@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 107/395] ovpn: reject invalid peer VPN addresses
-Date: Wed, 30 Sep 2026 17:26:09 +0200
-Message-ID: <20260930152342.958385641@linuxfoundation.org>
+Subject: [PATCH 6.18 108/395] Bluetooth: bnep: fix out-of-bounds reads on short RX/TX frames and control fallthrough
+Date: Wed, 30 Sep 2026 17:26:10 +0200
+Message-ID: <20260930152342.979998212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,107 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit 5940f3407b78062442cb01f541ef6eed709fc380 ]
+[ Upstream commit f0ca020cbb9bb7f3f4ea8ba1dfcf30a282aec91e ]
 
-In MP mode, ovpn uses peer VPN addresses as lookup keys for selecting
-the peer that should receive outgoing tunnel packets. The netlink
-configuration path currently accepts address values that cannot sensibly
-identify a VPN peer, such as multicast, broadcast or loopback addresses.
+Fix multiple out-of-bounds reads in Bluetooth BNEP frame processing:
 
-Reject invalid peer VPN addresses when creating or updating an MP peer.
-Keep accepting the unspecified address as the internal unset value,
-provided that at least one VPN address family remains configured.
+1. In bnep_rx_frame() and bnep_ctrl_frame() (net/bluetooth/bnep/core.c),
+   use pskb_may_pull() to verify the BNEP header, control type byte,
+   filter count, and extension headers exist before reading them, and
+   return 0 after handling BNEP_CONTROL instead of falling through to
+   Ethernet frame submission when no extension headers follow.
+2. In bnep_net_xmit() (net/bluetooth/bnep/netdev.c), verify skb->len >=
+   ETH_HLEN with pskb_may_pull() before reading the 14-byte Ethernet
+   header to prevent an out-of-bounds heap read and infoleak on short
+   AF_PACKET TX frames.
 
-Fixes: 1d36a36f6d53 ("ovpn: implement peer add/get/dump/delete via netlink")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/netlink.c | 55 +++++++++++++++++++++++++++++---------
- 1 file changed, 42 insertions(+), 13 deletions(-)
+ net/bluetooth/bnep/core.c   | 17 ++++++++++++++++-
+ net/bluetooth/bnep/netdev.c |  8 +++++++-
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ovpn/netlink.c b/drivers/net/ovpn/netlink.c
-index 45fa69d9c951f..15664cde85e0b 100644
---- a/drivers/net/ovpn/netlink.c
-+++ b/drivers/net/ovpn/netlink.c
-@@ -185,6 +185,39 @@ static sa_family_t ovpn_nl_family_get(struct nlattr *addr4,
- 	return AF_UNSPEC;
- }
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index ed3ca38d8a6e1..e93c79982abcc 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -273,9 +273,14 @@ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
  
-+static int ovpn_nl_peer_check_vpn_addrs(const struct in_addr *addr4,
-+					const struct in6_addr *addr6,
-+					struct genl_info *info)
-+{
-+	int addr6_type;
-+
-+	if (addr4->s_addr == htonl(INADDR_ANY) && ipv6_addr_any(addr6)) {
-+		NL_SET_ERR_MSG_MOD(info->extack,
-+				   "at least one VPN IP must be configured in MP mode");
-+		return -EINVAL;
-+	}
-+
-+	if (ipv4_is_multicast(addr4->s_addr) || ipv4_is_lbcast(addr4->s_addr) ||
-+	    ipv4_is_loopback(addr4->s_addr)) {
-+		NL_SET_ERR_MSG_MOD(info->extack,
-+				   "VPN IPv4 address must be valid unicast or any");
-+		return -EADDRNOTAVAIL;
-+	}
-+
-+	if (!ipv6_addr_any(addr6)) {
-+		addr6_type = ipv6_addr_type(addr6);
-+
-+		if (!(addr6_type & IPV6_ADDR_UNICAST) ||
-+		    (addr6_type & (IPV6_ADDR_LOOPBACK | IPV6_ADDR_COMPATv4))) {
-+			NL_SET_ERR_MSG_MOD(info->extack,
-+					   "VPN IPv6 address must be valid unicast or any");
-+			return -EADDRNOTAVAIL;
+ 		BT_DBG("type 0x%x len %u", h->type, h->len);
+ 
++		if (skb->len < h->len) {
++			err = -EILSEQ;
++			break;
 +		}
++
+ 		switch (h->type & BNEP_TYPE_MASK) {
+ 		case BNEP_EXT_CONTROL:
+-			bnep_rx_control(s, skb->data, skb->len);
++			bnep_rx_control(s, skb->data, h->len);
+ 			break;
+ 
+ 		default:
+@@ -376,6 +381,11 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 			goto badframe;
+ 	}
+ 
++	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
++		kfree_skb(skb);
++		return 0;
 +	}
 +
-+	return 0;
-+}
+ 	/* Strip 802.1p header */
+ 	if (ntohs(s->eh.h_proto) == ETH_P_8021Q) {
+ 		if (!skb_pull(skb, 4))
+@@ -454,6 +464,11 @@ static int bnep_tx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 		goto send;
+ 	}
+ 
++	if (skb->len < ETH_HLEN) {
++		kfree_skb(skb);
++		return 0;
++	}
 +
- static int ovpn_nl_peer_precheck(struct ovpn_priv *ovpn,
- 				 struct genl_info *info,
- 				 struct nlattr **attrs)
-@@ -381,12 +414,10 @@ int ovpn_nl_peer_new_doit(struct sk_buff *skb, struct genl_info *info)
- 			vpn_addr6 =
- 				nla_get_in6_addr(attrs[OVPN_A_PEER_VPN_IPV6]);
+ 	iv[il++] = (struct kvec) { &type, 1 };
+ 	len++;
  
--		if (vpn_addr4.s_addr == htonl(INADDR_ANY) &&
--		    ipv6_addr_any(&vpn_addr6)) {
--			NL_SET_ERR_MSG_FMT_MOD(info->extack,
--					       "at least one VPN IP must be configured in MP mode");
--			return -EINVAL;
--		}
-+		ret = ovpn_nl_peer_check_vpn_addrs(&vpn_addr4, &vpn_addr6,
-+						   info);
-+		if (ret < 0)
-+			return ret;
- 	}
+diff --git a/net/bluetooth/bnep/netdev.c b/net/bluetooth/bnep/netdev.c
+index cc1cff63194f0..5d9d851db926f 100644
+--- a/net/bluetooth/bnep/netdev.c
++++ b/net/bluetooth/bnep/netdev.c
+@@ -169,6 +169,12 @@ static netdev_tx_t bnep_net_xmit(struct sk_buff *skb,
  
- 	peer_id = nla_get_u32(attrs[OVPN_A_PEER_ID]);
-@@ -551,13 +582,11 @@ int ovpn_nl_peer_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	}
+ 	BT_DBG("skb %p, dev %p", skb, dev);
  
- 	/* in MP mode VPN IPs are required for selecting the right peer */
--	if (ovpn->mode == OVPN_MODE_MP &&
--	    vpn_addr4.s_addr == htonl(INADDR_ANY) &&
--	    ipv6_addr_any(&vpn_addr6)) {
--		NL_SET_ERR_MSG_FMT_MOD(info->extack,
--				       "at least one VPN IP must be configured in MP mode");
--		ret = -EINVAL;
--		goto unlock;
-+	if (ovpn->mode == OVPN_MODE_MP) {
-+		ret = ovpn_nl_peer_check_vpn_addrs(&vpn_addr4, &vpn_addr6,
-+						   info);
-+		if (ret < 0)
-+			goto unlock;
- 	}
++	if (!pskb_may_pull(skb, ETH_HLEN)) {
++		dev->stats.tx_dropped++;
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
++
+ #ifdef CONFIG_BT_BNEP_MC_FILTER
+ 	if (bnep_net_mc_filter(skb, s)) {
+ 		kfree_skb(skb);
+@@ -221,7 +227,7 @@ void bnep_net_setup(struct net_device *dev)
+ 	dev->addr_len = ETH_ALEN;
  
- 	ret = ovpn_nl_peer_modify(peer, info, attrs);
+ 	ether_setup(dev);
+-	dev->min_mtu = 0;
++	dev->min_mtu = ETH_MIN_MTU;
+ 	dev->max_mtu = ETH_MAX_MTU;
+ 	dev->priv_flags &= ~IFF_TX_SKB_SHARING;
+ 	dev->netdev_ops = &bnep_netdev_ops;
 -- 
 2.53.0
 
