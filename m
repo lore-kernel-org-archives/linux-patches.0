@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E18D34CFDE;
-	Wed, 30 Sep 2026 19:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072D83D3002;
+	Wed, 30 Sep 2026 19:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794939; cv=none; b=rovUMdtQPK2QymlepHWPeQUAonrqr5r+C0W/vWymIpKmm4qVFT8PHEUsmLh0T5J/J3bKKOeMjEgfmGaBl3aD1Vqq/YQ5ddS4nivEGIK4uok/+Ft73hRF58Tn1dKpsu05bSh3AvsPcuWozv1P6vc3lRzqVJZNPHg3G+8/4/jV2wo=
+	t=1790794942; cv=none; b=dVWB20eGDhOtbRQSW/pyObX8hfd+ZvRPORWDOHL2ltTNTaaFBMcB4QPxNjEmcqkfOuSI5d0IOuAKxGS+tCuaFyEbzCZ1jxT/cqKctdkBvNdfMTvcRWqbgU7Ida6uC1VLQkI0q1g9eN+KrvKPaKD52/hr8uvD4pr6GHi8sfQ40Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794939; c=relaxed/simple;
-	bh=raW5sr1SG+2YEpyGmc596biNFG6geGwtOuqMSr4N1u0=;
+	s=arc-20240116; t=1790794942; c=relaxed/simple;
+	bh=jVIKqgLDnsRlUtz/HjF8CWtbYkAfV7r8rYx3GxAA1ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ali1lT4OtDUNd0fvA+9P3Oc0WttT2nVkaytZ6m+SP6xcNX0sls4GHf0rD11vO/1cvY66cHxB0qib0lUMoprHQHhn4ud8aj3nBt5iZhFFxlVWB4fetQkPaJqhRbL3Ti4Co/bq1Om6PJMsdFii/YjRjRnOuwKyEm2TFQ0NrSyY15E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU+jc5r5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SpJxy6qLRrLLjxYRc72jLoquYZxoCWfI46GNMJ/ZQd322onEKgyApY905XLfdOJXb+8XV3kpeklJpyUhWzk4UcbF+5RjmeC/1dlzmrMRbvbEA4GZfZk25svEAFr0MEvP/6aUprnBZpwkQDwMXJvrDcQuVYUYJn1sGOt0TkRhtVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAYr3aar; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU+jc5r5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B6B1F000FF;
-	Wed, 30 Sep 2026 19:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAYr3aar"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611261F000FF;
+	Wed, 30 Sep 2026 19:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794938;
-	bh=2UH0U5kry+pAx99Hp0/Phc5bc/UHsF8CcQkV4pRhYs8=;
+	s=korg; t=1790794940;
+	bh=ZA7RaRhkO17S/vF2TUZewHvL/9djIZASsp9qrFJhlD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QU+jc5r5+Qm0YpFLofWtSbElvKKb4eyDARB58F9XqKVwqpq7b7MxNAOW27dLarHsn
-	 hBmZ3gHOl0FQSnTNOs2asInCjty9K3ZBzp3Dyfo1zedaoZE4Al1Yn0zJQAFJVfRhhP
-	 t88e7Xmzk5aQV2lum0YuW5BHBzoQZP98JrsbMrI8=
+	b=SAYr3aar2TCxEWXLt40nbjtD764zRicAN1zmA4piYP7NFiZAYxoaE9vRd0x82yc40
+	 Ir3OF/xY4wXSq5m9jzXAbkxSWCwuN1tUT3FSJukMCPuqo3wW01+mHREuEt5J8aRGvi
+	 hwrC+wF8ipVdJ05aRfUXePgPAg0ecjlNVY2LpvaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6d2762674103618994b0@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Peilin He <he.peilin@zte.com.cn>,
-	xu xin <xu.xin16@zte.com.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0387/1193] net: icmp: avoid invalid transport header access in icmp_send tracepoint
-Date: Wed, 30 Sep 2026 17:17:51 +0200
-Message-ID: <20260930152442.781645563@linuxfoundation.org>
+Subject: [PATCH 6.6 0388/1193] net/sched: act_api: budget all shared attributes in notify skbs
+Date: Wed, 30 Sep 2026 17:17:52 +0200
+Message-ID: <20260930152442.806338516@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -57,89 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 7fcc2fe39fed1cb98a7374a113ff3800e8f9af80 ]
+[ Upstream commit 13eb543cebef6d6c3ec42e31afe3856f51b7126b ]
 
-syzbot reported a WARNING triggered by DEBUG_NET_WARN_ON_ONCE():
+tcf_action_shared_attrs_size() is supposed to return an upper bound on the
+netlink attributes every action dump emits outside of TCA_ACT_OPTIONS, so
+that tcf_add_notify_msg(), tcf_del_notify_msg() and friends can allocate
+an skb large enough for the reply.  It has fallen behind the dump path and
+is now an underestimate for every single action.
 
- WARNING: at skb_transport_header include/linux/skbuff.h:3087 [inline]
- WARNING: at udp_hdr include/linux/udp.h:23 [inline]
- WARNING: at do_trace_event_raw_event_icmp_send include/trace/events/icmp.h:30 [inline]
- WARNING: at trace_event_raw_event_icmp_send+0x48c/0x6ec include/trace/events/icmp.h:11
- Call trace:
-  skb_transport_header include/linux/skbuff.h:3087 [inline]
-  udp_hdr include/linux/udp.h:23 [inline]
-  do_trace_event_raw_event_icmp_send include/trace/events/icmp.h:30 [inline]
-  trace_event_raw_event_icmp_send+0x48c/0x6ec include/trace/events/icmp.h:11
-  __traceiter_icmp_send include/trace/events/icmp.h:11 [inline]
-  __do_trace_icmp_send include/trace/events/icmp.h:11 [inline]
-  trace_icmp_send+0x320/0x49c include/trace/events/icmp.h:11
-  __icmp_send+0xcfc/0x11d8 net/ipv4/icmp.c:1013
-  ipv4_send_dest_unreach net/ipv4/route.c:1280 [inline]
-  ipv4_link_failure+0x57c/0x8dc net/ipv4/route.c:1287
-  dst_link_failure include/net/dst.h:438 [inline]
-  vti_tunnel_xmit+0xe40/0x17a4 net/ipv4/ip_vti.c:307
+Attributes, such as, TCA_ACT_IN_HW_COUNT and TCA_STATS_BASIC_HW are
+emitted unconditionally and never accounted for. TCA_STATS_PKT64,
+TCA_ACT_USED_HW_STATS, TCA_STATS_RATE_EST, TCA_STATS_RATE_EST64 require
+specific conditions, but are also not accounted for.
 
-TP_fast_assign() unconditionally calls udp_hdr(skb) before checking
-whether the packet is UDP. Furthermore, __icmp_send() can be invoked
-from paths (e.g., link failures, ARP errors, forwarding, AF_PACKET)
-where skb->transport_header was never initialized (~0U).
+Fix the issue by budgeting all of them so that we have a legitimate
+upper bound. Even tough for of them require specific conditions, they
+are cheap so, to avoid overcomplicating, we opted to account for them
+unconditionally as well to account for a real worst case scenario.
 
-Under CONFIG_DEBUG_NET=y, calling skb_transport_header(skb) triggers
-DEBUG_NET_WARN_ON_ONCE(!skb_transport_header_was_set(skb)).
-
-Fix this by:
-1. Only parsing transport info when iph->protocol == IPPROTO_UDP.
-2. Using skb_header_pointer() at skb_network_offset(skb) + (iph->ihl << 2)
-   to safely fetch the UDP header without assuming transport_header is set.
-
-Fixes: db3efdcf70c7 ("net/ipv4: add tracepoint for icmp_send")
-Reported-by: syzbot+6d2762674103618994b0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a8d5538.91706f20.ef82.0009.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Peilin He <he.peilin@zte.com.cn>
-Cc: xu xin <xu.xin16@zte.com.cn>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260825084551.1562967-1-edumazet@google.com
+Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260824153903.4143642-2-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/icmp.h | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/sched/act_api.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/include/trace/events/icmp.h b/include/trace/events/icmp.h
-index 31559796949a7..acfcf2b132d60 100644
---- a/include/trace/events/icmp.h
-+++ b/include/trace/events/icmp.h
-@@ -27,17 +27,20 @@ TRACE_EVENT(icmp_send,
- 
- 		TP_fast_assign(
- 			struct iphdr *iph = ip_hdr(skb);
--			struct udphdr *uh = udp_hdr(skb);
--			int proto_4 = iph->protocol;
-+			struct udphdr _uh, *uh = NULL;
- 			__be32 *p32;
- 
- 			__entry->skbaddr = skb;
- 			__entry->type = type;
- 			__entry->code = code;
- 
--			if (proto_4 != IPPROTO_UDP || (u8 *)uh < skb->head ||
--				(u8 *)uh + sizeof(struct udphdr)
--				> skb_tail_pointer(skb)) {
-+			if (iph->protocol == IPPROTO_UDP)
-+				uh = skb_header_pointer(skb,
-+							skb_network_offset(skb) +
-+							(iph->ihl << 2),
-+							sizeof(_uh), &_uh);
-+
-+			if (!uh) {
- 				__entry->sport = 0;
- 				__entry->dport = 0;
- 				__entry->ulen = 0;
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 8514888378168..cfd0a345d4948 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -443,12 +443,21 @@ static size_t tcf_action_shared_attrs_size(const struct tc_action *act)
+ 		+ nla_total_size(IFNAMSIZ) /* TCA_ACT_KIND */
+ 		+ cookie_len /* TCA_ACT_COOKIE */
+ 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_HW_STATS */
++		/* TCA_ACT_USED_HW_STATS */
++		+ nla_total_size(sizeof(struct nla_bitfield32))
++		+ nla_total_size(sizeof(u32)) /* TCA_ACT_IN_HW_COUNT */
+ 		+ nla_total_size(0) /* TCA_ACT_STATS nested */
+ 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_FLAGS */
+ 		/* TCA_STATS_BASIC */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
+-		/* TCA_STATS_PKT64 */
+-		+ nla_total_size_64bit(sizeof(u64))
++		/* TCA_STATS_BASIC_HW */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
++		/* TCA_STATS_PKT64, emitted by both of the basic copies above */
++		+ 2 * nla_total_size_64bit(sizeof(u64))
++		/* TCA_STATS_RATE_EST */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est))
++		/* TCA_STATS_RATE_EST64 */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est64))
+ 		/* TCA_STATS_QUEUE */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_queue))
+ 		+ nla_total_size(0) /* TCA_ACT_OPTIONS nested */
 -- 
 2.53.0
 
