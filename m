@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8663850279A;
-	Wed, 30 Sep 2026 18:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2034F68C9;
+	Wed, 30 Sep 2026 18:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793842; cv=none; b=Z9EhZ3XoDnuoWKHnEtBW5l/2d/XnI8oUuqChp+YEpr+16Q2QGviE+uk26Fy5SXzivgigHuo8zsmkV03xQ8IZZvcVdkA9yjfjjXUXvuJPqulHUF9j/ElRlo2qr5Ee8r0XtxNZ7r+qUDeedrHSE24s/3OOXThXwbuiOFZ7F0E3sZI=
+	t=1790793845; cv=none; b=ncj6pf0Y1N3834iDKYis0OV6lEj3G2GShG+49jQx7rGrIUU7iQZ7sNGTGn/g4yi/hkKv0WhHJ+JRvVf3mFNsRF89ez95rpNBFRTEhi+nvCuY7uAPYhTaACzrfsH/calMfoPyBNhAbpGVCkOUn51vonwqPoazMINRi4gIE9WN1iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793842; c=relaxed/simple;
-	bh=yBCP4Uy8RqTWjUoZV2mdPDbrCB5lNwM9aRm4g2Nf9sU=;
+	s=arc-20240116; t=1790793845; c=relaxed/simple;
+	bh=F0HDq2slnMu4nUQG2j4JdDXpB8BcGsyTiaYZyGljVfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0YVLo4LEW8u5NIWFAJCNCQdb8vwy34OVMAq7Wh98k3V6pcOc54VmsOPvd4W3BRn0TdiB3inaY1xQMYxiF++j+ZCfYtQteoTxxM7YI4kryd1DdwjCk6ZYO1M/4tRlUm3+HLJ0bU15ebisWWfSD2CYb9rTESUqv1M1I8K3BY9DHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7KG0EAs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WqD9tyDm900wlvzDmuhL5QdSZRgge5S6982B3kuC5kHaL2uLbtsMCFqNCIXAXdiH3Ih1XHYTk4XEt1mdMBzpB5RxRgvFkeaBXyReboc+psonVLiQDQjIJs27wq+6Eea9/Z/kU5jRwWuetC8cqWjYr7OVjYNZcLYIFZfytLT2EX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2sYSqBL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7KG0EAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA251F000FF;
-	Wed, 30 Sep 2026 18:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2sYSqBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9288B1F000FF;
+	Wed, 30 Sep 2026 18:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793841;
-	bh=KqR/ipp/PIUsDRKjH41+mmBPfaYLMPM+WRX4CmzQF9g=;
+	s=korg; t=1790793844;
+	bh=9v2BvUPtWYqtLmSLnpMgw04nK7nm+42qk+hZLru1wVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7KG0EAskoewcE9TobDX0fFKG58z5yI/xKOsCUTeaF+lkHXh3TtA95G0MLTvowhI2
-	 AzFIiI0oJKd76rx5XPmt9zxnR2AlZvcTB+jVtbD6YwTbxvh3oD5JdCmExFyq7umT0M
-	 moOWDxdIQefaKMsOP1DGtfq4Kx/L5siAe3YWxdqs=
+	b=l2sYSqBLMg5r+Z9sjeeD5dGNoRI05a1Kd/hdqxgJ0qAzvpUS50eiCfbfgpA2Kk/7f
+	 OjlM2MqHPedG3tGoha1GdUXjWCUb8KaZcyDcneHnsumvaDUzArwiptRUYUb2NNm0ex
+	 LA5yfCGki+5UHiUJOsdvc6DS/WA+lNGiG9ZJGpBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Liz Fong-Jones <lizf@honeycomb.io>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 366/395] super: make iterate_supers_type() deletion-safe
-Date: Wed, 30 Sep 2026 17:30:28 +0200
-Message-ID: <20260930152348.631901136@linuxfoundation.org>
+Subject: [PATCH 6.18 367/395] PCI: Fix BAR resize for devices on a root bus
+Date: Wed, 30 Sep 2026 17:30:29 +0200
+Message-ID: <20260930152348.654674358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -46,167 +46,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Liz Fong-Jones <lizf@honeycomb.io>
 
-[ Upstream commit 2d2a2d7aa98741b58f54cacc99b52024e4d865f9 ]
+[ Upstream commit d58384c22739848efe14b34e9586e4f1242f33c0 ]
 
-iterate_supers_type() drops sb_lock while invoking the callback and keeps
-only a passive reference to the current superblock. That reference keeps
-the object allocated, but does not keep its s_instances node linked.
+pci_do_resource_release_and_resize() releases device BARs that share a
+bridge window with the BAR being resized, but when the device sits directly
+on a root bus (pdev->bus->self == NULL) it then skips resource assignment
+entirely and returns success, leaving the BARs it just released unassigned
+(IORESOURCE_UNSET).
 
-After the iterator releases s_umount, final teardown can unlink the current
-s_instances node. The iterator then advances through a reinitialized node.
-With the current hlist it stops without visiting the remaining superblocks.
-The unlink moved from generic_shutdown_super() to kill_super_notify(), but
-the cursor lifetime has been unsafe since the helper was introduced.
+Skipping pbus_reassign_bridge_resources() is correct in that case -- there
+is no bridge window to adjust -- but the device BARs still have to be
+reassigned. Before the BAR release was consolidated into the PCI core, this
+case worked for amdgpu because the driver released the BARs itself and then
+called pci_assign_unassigned_bus_resources() unconditionally after the
+resize, which assigns unassigned device BARs also on a root bus. Commit
+db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
+removed that call, so nothing assigns the released BARs anymore.
 
-The CIFS DFS lookup can consequently miss a matching superblock and return
--EINVAL.
+This breaks amdgpu completely on the SolidRun HoneyComb LX2K (NXP LX2160A,
+arm64, ACPI), where ACPI doesn't expose the Root Port so the GPU endpoint
+appears directly on a "root bus" of its segment:
 
-Move removal from fs_supers to put_super(), alongside removal from
-super_blocks, so a passive reference keeps both list nodes linked. Keep
-the filesystem module reference until then, since unlinking s_instances
-may touch type->fs_supers.
+  amdgpu 0004:01:00.0: BAR 0 [mem 0xa400000000-0xa40fffffff 64bit pref]: releasing
+  amdgpu 0004:01:00.0: BAR 2 [mem 0xa410000000-0xa4101fffff 64bit pref]: releasing
+  amdgpu 0004:01:00.0: sw_init of IP block <gmc_v8_0> failed -19
+  amdgpu 0004:01:00.0: amdgpu_device_ip_init failed
+  amdgpu 0004:01:00.0: Fatal error during GPU init
 
-Make sget_fc() skip SB_DEAD superblocks before invoking test(), and set
-SB_DEAD under sb_lock to serialize with those callbacks. This allows
-kernfs to free its private information after kill_anon_super() returns.
-Keep matching SB_DYING superblocks until SB_DEAD is set so concurrent
-mounts still wait for teardown before retrying.
+No error is logged because the resize path reports success; amdgpu then
+finds BAR 0 IORESOURCE_UNSET and bails out with -ENODEV.
 
-Fixes: 43e15cdbefea ("new helper: iterate_supers_type()")
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Closes: https://lore.kernel.org/r/20260903013336.92081-1-kmehltretter@gmail.com
-Suggested-by: Jan Kara <jack@suse.cz>
+When there is no upstream bridge, call pci_bus_assign_resources() on the
+root bus to place the BARs released above, using the same alignment-sorted
+algorithm as normal enumeration instead of a manual per-BAR loop. This also
+walks the rest of the hierarchy under the root bus, as
+pci_assign_unassigned_bus_resources() used to for amdgpu before commit
+db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
+removed that call -- the core-side fix that commit asked for ("such a
+problem should be fixed inside pci_resize_resource() instead").
+
+pci_bus_assign_resources() returns void, so failure is detected by checking
+whether the released BARs are still assigned afterward; if not, roll back
+as in the bridged case. This is stricter than the bridged path -- it fails
+on any unplaced resource, not just required ones -- since a root bus
+typically has one shared window, and failing loudly seemed better than
+leaving something silently unassigned.
+
+The root bus path also had a locking bug that any fix here necessarily
+touches: the old "goto out" jumped to up_read(&pci_bus_sem) without a
+matching down_read() (as does the "goto restore" taken when
+pci_dev_res_add_to_list() fails in the release loop). Take pci_bus_sem
+before the BAR release loop so every path through the function holds it
+exactly once.
+
+Fixes: 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
+Link: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-7.0/+bug/2159596
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Assisted-by: Claude:claude-fable-5 checkpatch
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Cc: stable@vger.kernel.org
-Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
-[kmehltretter: supplied the commit message]
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260909193034.7467-1-kmehltretter@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ Adapted s_passive reference counting to s_count using the existing __put_super() helper. ]
+Link: https://patch.msgid.link/20260918035633.566823-1-lizf@honeycomb.io
+[ Replaced unavailable resource_assigned(dev_res->res) with the equivalent dev_res->res->parent check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/kernfs/mount.c |    4 ++--
- fs/super.c        |   43 +++++++++++++++++++++++--------------------
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ drivers/pci/setup-bus.c |   25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
---- a/fs/kernfs/mount.c
-+++ b/fs/kernfs/mount.c
-@@ -433,8 +433,8 @@ void kernfs_kill_sb(struct super_block *
- 	up_write(&root->kernfs_supers_rwsem);
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -2449,6 +2449,7 @@ int pci_do_resource_release_and_resize(s
+ 	struct resource *res = pci_resource_n(pdev, resno);
+ 	struct pci_dev_resource *dev_res;
+ 	struct pci_bus *bus = pdev->bus;
++	struct pci_dev *bridge = pci_upstream_bridge(pdev);
+ 	struct resource *b_win, *r;
+ 	LIST_HEAD(saved);
+ 	unsigned int i;
+@@ -2466,6 +2467,8 @@ int pci_do_resource_release_and_resize(s
+ 	if (ret)
+ 		return ret;
  
- 	/*
--	 * Remove the superblock from fs_supers/s_instances
--	 * so we can't find it, before freeing kernfs_super_info.
-+	 * Mark the superblock dead so sget_fc() can't find it,
-+	 * before freeing kernfs_super_info.
- 	 */
- 	kill_anon_super(sb);
- 	kfree(info);
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -404,11 +404,16 @@ fail:
- static void __put_super(struct super_block *s)
- {
- 	if (!--s->s_count) {
-+		struct file_system_type *type = s->s_type;
++	down_read(&pci_bus_sem);
 +
- 		list_del_init(&s->s_list);
-+		hlist_del_init(&s->s_instances);
- 		WARN_ON(s->s_dentry_lru.node);
- 		WARN_ON(s->s_inode_lru.node);
- 		WARN_ON(s->s_mounts);
- 		call_rcu(&s->rcu, destroy_super_rcu);
-+		/* The unlink above may touch type->fs_supers, so drop it last. */
-+		put_filesystem(type);
- 	}
- }
+ 	pci_dev_for_each_resource(pdev, r, i) {
+ 		if (i >= PCI_BRIDGE_RESOURCES)
+ 			break;
+@@ -2484,13 +2487,21 @@ int pci_do_resource_release_and_resize(s
  
-@@ -435,23 +440,16 @@ static void kill_super_notify(struct sup
- 		return;
+ 	pci_resize_resource_set_size(pdev, resno, size);
  
- 	/*
--	 * Remove it from @fs_supers so it isn't found by new
--	 * sget{_fc}() walkers anymore. Any concurrent mounter still
--	 * managing to grab a temporary reference is guaranteed to
--	 * already see SB_DYING and will wait until we notify them about
--	 * SB_DEAD.
--	 */
--	spin_lock(&sb_lock);
--	hlist_del_init(&sb->s_instances);
--	spin_unlock(&sb_lock);
+-	if (!bus->self)
+-		goto out;
 -
--	/*
- 	 * Let concurrent mounts know that this thing is really dead.
--	 * We don't need @sb->s_umount here as every concurrent caller
--	 * will see SB_DYING and either discard the superblock or wait
--	 * for SB_DEAD.
-+	 * sget{_fc}() skips SB_DEAD superblocks and calls test() under
-+	 * sb_lock, so set it under sb_lock: once we return no test()
-+	 * runs on this superblock anymore and none will start. Everyone
-+	 * else already saw SB_DYING and either discarded the superblock
-+	 * or waits for SB_DEAD.
- 	 */
-+	spin_lock(&sb_lock);
- 	super_wake(sb, SB_DEAD);
-+	spin_unlock(&sb_lock);
- }
+-	down_read(&pci_bus_sem);
+-	ret = pbus_reassign_bridge_resources(bus, res, &saved);
+-	if (ret)
+-		goto restore;
++	if (bridge) {
++		ret = pbus_reassign_bridge_resources(bus, res, &saved);
++		if (ret)
++			goto restore;
++	} else {
++		/* No bridge window to adjust; let the core reassign the bus. */
++		pci_bus_assign_resources(bus);
++
++		list_for_each_entry(dev_res, &saved, list) {
++			if (!dev_res->res->parent) {
++				ret = -ENOSPC;
++				goto restore;
++			}
++		}
++	}
  
- /**
-@@ -482,7 +480,6 @@ void deactivate_locked_super(struct supe
- 		list_lru_destroy(&s->s_dentry_lru);
- 		list_lru_destroy(&s->s_inode_lru);
- 
--		put_filesystem(fs);
- 		put_super(s);
- 	} else {
- 		super_unlock_excl(s);
-@@ -668,12 +665,12 @@ void generic_shutdown_super(struct super
- 	}
- 	/*
- 	 * Broadcast to everyone that grabbed a temporary reference to this
--	 * superblock before we removed it from @fs_supers that the superblock
--	 * is dying. Every walker of @fs_supers outside of sget{_fc}() will now
--	 * discard this superblock and treat it as dead.
-+	 * superblock that it is dying. Every walker of @fs_supers outside
-+	 * of sget{_fc}() will now discard this superblock and treat it as
-+	 * dead.
- 	 *
--	 * We leave the superblock on @fs_supers so it can be found by
--	 * sget{_fc}() until we passed sb->kill_sb().
-+	 * sget{_fc}() keeps finding the superblock until SB_DEAD is set, so
-+	 * a concurrent mounter waits until we passed sb->kill_sb().
- 	 */
- 	super_wake(sb, SB_DYING);
- 	super_unlock_excl(sb);
-@@ -752,6 +749,9 @@ retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
- 		hlist_for_each_entry(old, &fc->fs_type->fs_supers, s_instances) {
-+			/* Only unlinked at the last passive reference. */
-+			if (super_flags(old, SB_DEAD))
-+				continue;
- 			if (test(old, fc))
- 				goto share_extant_sb;
- 		}
-@@ -828,6 +828,9 @@ retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
- 		hlist_for_each_entry(old, &type->fs_supers, s_instances) {
-+			/* Only unlinked at the last passive reference. */
-+			if (super_flags(old, SB_DEAD))
-+				continue;
- 			if (!test(old, data))
- 				continue;
- 			if (user_ns != old->s_user_ns) {
+ out:
+ 	up_read(&pci_bus_sem);
 
 
