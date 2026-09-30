@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D53389104;
-	Wed, 30 Sep 2026 16:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B4D511194;
+	Wed, 30 Sep 2026 16:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786326; cv=none; b=RSo42lQwAEqUWLGaBel7Etr1OcDEZyhPc9fA08psBVa5juhmLQ10Z4kukB+hBjtNvZ9890MFJR8NYIpfGTVqwZEfjImo2RYDjW2km4FOqiKyQqUg58WUykWki7R3nWXmXsb6Y5cJ+/KVrvejs5L860iaPvWmA2wur+gV3AsWESc=
+	t=1790786329; cv=none; b=sGmlTO8f/yw1Hdn+IoQXQciATIQhx5ZSrtPvcTLTR2gcjtu5Ud+LzmlCCE0txaZBYstw//wmypX3Ch3GNAtL0QtHTsJYEvSMfWSZfUChdI0R7qLM5uL0OiyXWifqT4TWfd0NmA79FMwZb4L2Vuz4a9C977++MuMzlxu2T1+FJPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786326; c=relaxed/simple;
-	bh=MWsXrxNNY6EwXKudB+leyfnrfF+fOrZ99aeX6Jjacro=;
+	s=arc-20240116; t=1790786329; c=relaxed/simple;
+	bh=AebU0c/X9tXvjfkl6mPY3SeoVuIH2fiN7vExID4Xbhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0byW9xridXh02CC/KUiKA4OejSQn9wKdxwxQOZNOCV6L4CwsTvN+HDorgR0LhLBSFAjJatrjuetv3SUMmC5UgEcYQ1+f6Yb0EtD6CsWvD8hmXwwn8mGc9A707ZbjWo9Hx78IYtgM8aGeuI+0hwEdlF93NreBOJ4z9PqNrJkM7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWmwFLRh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kVvuoh/jiqqHjtkrydJtB9MSE8pNokCjx/rCvILLwH3zGxZQQg47fpT9d2bRPde/iF+r+h7ddd/cIql9K6IyhXytApEIZOB21sXUzoAHfzzIPnpRsMFfwLa9QV620qb0PCWo2a9YdBik9yQ3YNFvGZF+foI/tjibYkHPD32zL8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtDAJeGg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWmwFLRh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0E31F000FF;
-	Wed, 30 Sep 2026 16:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtDAJeGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD441F000FF;
+	Wed, 30 Sep 2026 16:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786324;
-	bh=dAW5dKHNiNrigmH4s2lXutGoiuGzb82rqNnAgRCSNWE=;
+	s=korg; t=1790786327;
+	bh=aPLXOuHS39UBSqzYdvfLOd6s+Q6N6w5ugvm2kM3Fdoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OWmwFLRhxI3L3p4ptfREmFVF5n0S/13p2S548VX645Ey+00ORb2XDJoXlQ8IeH84T
-	 UZiLMF3JQh/il/9ry++OlwpFkhAaB9hBl6d4sGF3RcbEfM51Jgt9cMZ1yR43lvUkby
-	 Dzfs1XucJq1TtNBx9yNOKyUXCNCFUxZKZ7+J8CdI=
+	b=LtDAJeGgUWiannWMrRxMK1cKaV+Ynen1jrvNVMlhq87fHSLEnGIrfiM44aFaLbQ8J
+	 hJsT+t/aROirTyChjmhxV6r6UmNknhyL1/ZCpDn/gBb27MKrGGpteSlnDjREIiBxKk
+	 Re6Aq1YBqI6G7OO+nRtSN94NXklgPN+3cfilHVag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
-	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 821/982] scsi: megaraid_sas: Protect megasas_get_ctrl_info() in megasas_resume()
-Date: Wed, 30 Sep 2026 17:25:57 +0200
-Message-ID: <20260930152434.394336989@linuxfoundation.org>
+Subject: [PATCH 6.1 786/982] Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync
+Date: Wed, 30 Sep 2026 17:25:22 +0200
+Message-ID: <20260930152433.638128775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -55,45 +52,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 42d1221d321e55afc7bba9109a77aaf5a817c8a3 ]
+[ Upstream commit 94d9ba9f9888b748d4abd2aa1547af56ae85f772 ]
 
-Protect the megasas_get_ctrl_info() call in megasas_resume() with
-instance->reset_mutex using scoped_guard().
+Use-after-free can occur in hci_disconnect_all_sync if a connection is
+deleted by concurrent processing of a controller event.
 
-megasas_get_ctrl_info() may release and reacquire instance->reset_mutex.
-Hence, calling this function without holding instance->reset_mutex is not
-safe.
+To prevent this the code now tries to iterate over the list backwards
+to ensure the links are cleanup before its parents, also it no longer
+relies on a cursor, instead it always uses the last element since
+hci_abort_conn_sync is guaranteed to call hci_conn_del.
 
-Fixes: c3b10a55abc9 ("scsi: megaraid_sas: Update controller info during resume")
-Cc: Kashyap Desai <kashyap.desai@broadcom.com>
-Cc: Sumit Saxena <sumit.saxena@broadcom.com>
-Cc: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
-Cc: Chandrakanth patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/f06b5ee432b21cf293f0663e15b64f75a84b9fd5.1788204406.git.bvanassche@acm.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+UAF crash log:
+==================================================================
+BUG: KASAN: slab-use-after-free in hci_set_powered_sync
+(net/bluetooth/hci_sync.c:5424) [bluetooth]
+Read of size 8 at addr ffff888009d9c000 by task kworker/u9:0/124
+
+CPU: 0 PID: 124 Comm: kworker/u9:0 Tainted: G        W
+6.5.0-rc1+ #10
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+1.16.2-1.fc38 04/01/2014
+Workqueue: hci0 hci_cmd_sync_work [bluetooth]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5b/0x90
+ print_report+0xcf/0x670
+ ? __virt_addr_valid+0xdd/0x160
+ ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+ kasan_report+0xa6/0xe0
+ ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+ ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+ hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+ ? __pfx_hci_set_powered_sync+0x10/0x10 [bluetooth]
+ ? __pfx_lock_release+0x10/0x10
+ ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+ hci_cmd_sync_work+0x137/0x220 [bluetooth]
+ process_one_work+0x526/0x9d0
+ ? __pfx_process_one_work+0x10/0x10
+ ? __pfx_do_raw_spin_lock+0x10/0x10
+ ? mark_held_locks+0x1a/0x90
+ worker_thread+0x92/0x630
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x196/0x1e0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x2c/0x50
+ </TASK>
+
+Allocated by task 1782:
+ kasan_save_stack+0x33/0x60
+ kasan_set_track+0x25/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ hci_conn_add+0xa5/0xa80 [bluetooth]
+ hci_bind_cis+0x881/0x9b0 [bluetooth]
+ iso_connect_cis+0x121/0x520 [bluetooth]
+ iso_sock_connect+0x3f6/0x790 [bluetooth]
+ __sys_connect+0x109/0x130
+ __x64_sys_connect+0x40/0x50
+ do_syscall_64+0x60/0x90
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Freed by task 695:
+ kasan_save_stack+0x33/0x60
+ kasan_set_track+0x25/0x30
+ kasan_save_free_info+0x2b/0x50
+ __kasan_slab_free+0x10a/0x180
+ __kmem_cache_free+0x14d/0x2e0
+ device_release+0x5d/0xf0
+ kobject_put+0xdf/0x270
+ hci_disconn_complete_evt+0x274/0x3a0 [bluetooth]
+ hci_event_packet+0x579/0x7e0 [bluetooth]
+ hci_rx_work+0x287/0xaa0 [bluetooth]
+ process_one_work+0x526/0x9d0
+ worker_thread+0x92/0x630
+ kthread+0x196/0x1e0
+ ret_from_fork+0x2c/0x50
+==================================================================
+
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+[ Backport to 6.1.y: the source change is unchanged; only hunk locations
+  in hci_sync.c differ. ]
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 55 +++++++++++++++++++++++++---------------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
-index 0d398029b2afe..483df636fe865 100644
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -7872,7 +7872,9 @@ megasas_resume(struct device *dev)
- 			goto fail_init_mfi;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index c5adc87b4992b..84d98bc3efa3f 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5589,6 +5589,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ {
+ 	int err = 0;
+ 	u16 handle = conn->handle;
++	struct hci_conn *c;
+ 
+ 	switch (conn->state) {
+ 	case BT_CONNECTED:
+@@ -5602,43 +5603,57 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+ 		err = hci_reject_conn_sync(hdev, conn, reason);
+ 		break;
+ 	default:
++		hci_dev_lock(hdev);
+ 		conn->state = BT_CLOSED;
++		hci_disconn_cfm(conn, reason);
++		hci_conn_del(conn);
++		hci_dev_unlock(hdev);
+ 		return 0;
  	}
  
--	if (megasas_get_ctrl_info(instance) != DCMD_SUCCESS)
-+	scoped_guard(mutex, &instance->reset_mutex)
-+		rval = megasas_get_ctrl_info(instance);
-+	if (rval != DCMD_SUCCESS)
- 		goto fail_init_mfi;
++	hci_dev_lock(hdev);
++
++	/* Check if the connection hasn't been cleanup while waiting
++	 * commands to complete.
++	 */
++	c = hci_conn_hash_lookup_handle(hdev, handle);
++	if (!c || c != conn) {
++		err = 0;
++		goto unlock;
++	}
++
+ 	/* Cleanup hci_conn object if it cannot be cancelled as it
+ 	 * likelly means the controller and host stack are out of sync
+ 	 * or in case of LE it was still scanning so it can be cleanup
+ 	 * safely.
+ 	 */
+-	if (err) {
+-		struct hci_conn *c;
+-
+-		/* Check if the connection hasn't been cleanup while waiting
+-		 * commands to complete.
+-		 */
+-		c = hci_conn_hash_lookup_handle(hdev, handle);
+-		if (!c || c != conn)
+-			return 0;
+-
+-		hci_dev_lock(hdev);
+-		hci_conn_failed(conn, err);
+-		hci_dev_unlock(hdev);
+-	}
++	hci_conn_failed(conn, reason);
  
- 	tasklet_init(&instance->isr_tasklet, instance->instancet->tasklet,
++unlock:
++	hci_dev_unlock(hdev);
+ 	return err;
+ }
+ 
+ static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
+ {
+-	struct hci_conn *conn, *tmp;
+-	int err;
++	struct list_head *head = &hdev->conn_hash.list;
++	struct hci_conn *conn;
+ 
+-	list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
+-		err = hci_abort_conn_sync(hdev, conn, reason);
+-		if (err)
+-			return err;
++	rcu_read_lock();
++	while ((conn = list_first_or_null_rcu(head, struct hci_conn, list))) {
++		/* Make sure the connection is not freed while unlocking */
++		conn = hci_conn_get(conn);
++		rcu_read_unlock();
++		/* Disregard possible errors since hci_conn_del shall have been
++		 * called even in case of errors had occurred since it would
++		 * then cause hci_conn_failed to be called which calls
++		 * hci_conn_del internally.
++		 */
++		hci_abort_conn_sync(hdev, conn, reason);
++		hci_conn_put(conn);
++		rcu_read_lock();
+ 	}
++	rcu_read_unlock();
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
