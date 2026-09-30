@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285CD3515C5;
-	Wed, 30 Sep 2026 18:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23613D3002;
+	Wed, 30 Sep 2026 18:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794349; cv=none; b=kdmSShabmOOyhQnkQVdiimG1HVRmsqfEKYL2apilcjCzs0rmjChFMuMgFBXy/0M9VIfUtq8/B3OtYUFQ1tl0S3jtmHQITeSSZMvAx+sa5E+BL1j40L0VQm/rNV1/k5SkSGsfrgkbp7GxwcoM9gw6uQWbsM+eVMWG28oH/wQN4QM=
+	t=1790794351; cv=none; b=gOmIgam75pc4OPh01VYjYhFoJkYDGUFOSLa8DvQ23mSaq7QoUvqwHlZDFKvkECw2LP6j9oolT1ySv5p7hmRoH6O2021iH1Oo+IzrWmwJk8WIyQNE14kBb2OQk3qyzXm8s765kclTEUXJO/n/WBiM2Wa2WmX3w4P+nKkA30kZ59k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794349; c=relaxed/simple;
-	bh=vATFhYFvRF5+gjYLTRYOd6Mcw1Q1sytSItfQiKqIVxQ=;
+	s=arc-20240116; t=1790794351; c=relaxed/simple;
+	bh=AsEUHjaobLtrUR5VzKyEm75ntAuyUnjiZfaQV2tCKSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOB/iqlrn+2xzyo0K4U2BOCeNbs95JPhKCJjt0ePjn+ebGXz9HsgLf+k6ZY+WSzPFdPDpwTUTtpkEBXZoKFlAoVzHXYWzl137EJMEzSF4/ZyBpecbUvECBzKlJxCmUWINY+z4ewf6MkamJ+LvHymQLRanjwlDaKJ8tJQluih74M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQAIpRCL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VVToSq7k5Y/2agGHfE4Qv+L+5fH4jxQ5oCGfCIyJKE/amzPStZdzNG1XVfoWlZn5ogZiCIjzjOkQwKlWgO6Gb6AAbFUg0gN8u+dBqm6YjWzjvrEzL2CEPGzjhX9+msoTvkwRmARdx2ndKfBagr85w+DdW0YF1XKITrjmp+sRr+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsKDZScc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQAIpRCL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4B11F00898;
-	Wed, 30 Sep 2026 18:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsKDZScc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181141F00898;
+	Wed, 30 Sep 2026 18:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794347;
-	bh=rC4BzrayuBsNFoex5hr7sCwwILOL1wswzqn6+Dntqe8=;
+	s=korg; t=1790794350;
+	bh=g6nnwaWUzK3MWrybcBRzuPStGta/DmUb8C3gZFttKZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rQAIpRCL2l7C92V6FjtMVujVdSkvWJzHs1+iJwn8om5+Xn+gwxO1+cHlikpVwM7nk
-	 dFut7kG5F0/w/rzg0dJSlPRdwAXLjOdWitanCu2YHbfSqZ72SO/pqSJ6E8KmnIsY6S
-	 1uPbxsjKh0UU8e6cPWnBzO4RP4qsv5QxiO39RMBg=
+	b=UsKDZSccldVCIIcVBnt3/Cq50lP/y9J4lqj8ceDB7Fl32e1x64Bx+xC3miWaO5gsR
+	 7SxGSr5yLPWCmEs4+NS+np/GiRHczmLtwTiHvG4eLh1fGxT6GFA4ipwz8+dAzacHGS
+	 zbrtN3zBh8q4Cf47r38p9WWAweYMmcSF3b0zkC+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0152/1193] ASoC: codecs: pcm3168a: Drop CONFIG_PM-conditional preproc directive
-Date: Wed, 30 Sep 2026 17:13:56 +0200
-Message-ID: <20260930152437.584513302@linuxfoundation.org>
+Subject: [PATCH 6.6 0179/1193] RDMA/umem: Be careful about boundary conditions in ib_umem_find_best_pgsz()
+Date: Wed, 30 Sep 2026 17:14:23 +0200
+Message-ID: <20260930152438.172042196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,69 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit eb7107264da8545ba7381a76818bae553e1fd1e4 ]
+[ Upstream commit 09ea6837a0434fb4db99528a5055b6d822135dcf ]
 
-Revert changes done in commit 489db5d94150 ("ASoC: pcm3168a:
-Don't disable pcm3168a when CONFIG_PM defined") and add
-pm_runtime_status_suspended() check.
+Several corner cases, especially important on 32 bits:
 
-The suspended-check addresses regulator's "unbalanced disables"
-warning during driver removal even when CONFIG_PM is enabled.
+- umem->iova is u64, the function argument should pass in u64 or
+  iova will be truncated
+- Check that the length is not too large for the iova
+- Check that lengths > 4G don't overflow the GENMASK
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260525201801.1336936-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/r/2-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm3168a.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/infiniband/core/umem.c | 18 ++++++++++++------
+ include/rdma/ib_umem.h         |  4 ++--
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
-index 329549936bd5c..e5ac1146588cc 100644
---- a/sound/soc/codecs/pcm3168a.c
-+++ b/sound/soc/codecs/pcm3168a.c
-@@ -820,15 +820,6 @@ int pcm3168a_probe(struct device *dev, struct regmap *regmap)
- }
- EXPORT_SYMBOL_GPL(pcm3168a_probe);
- 
--static void pcm3168a_disable(struct device *dev)
--{
--	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
--
--	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies),
--			       pcm3168a->supplies);
--	clk_disable_unprepare(pcm3168a->scki);
--}
--
- void pcm3168a_remove(struct device *dev)
+diff --git a/drivers/infiniband/core/umem.c b/drivers/infiniband/core/umem.c
+index fd3a774904f8d..468d662c42c47 100644
+--- a/drivers/infiniband/core/umem.c
++++ b/drivers/infiniband/core/umem.c
+@@ -78,14 +78,17 @@ static void __ib_umem_release(struct ib_device *dev, struct ib_umem *umem, int d
+  */
+ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 				     unsigned long pgsz_bitmap,
+-				     unsigned long virt)
++				     u64 virt)
  {
- 	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
-@@ -840,10 +831,12 @@ void pcm3168a_remove(struct device *dev)
- 	 * The asserted level of GPIO_ACTIVE_LOW is LOW.
+ 	unsigned long curr_len = 0;
+ 	dma_addr_t curr_base = ~0;
+-	unsigned long va, pgoff;
++	unsigned long pgoff;
+ 	struct scatterlist *sg;
+-	dma_addr_t mask;
++	unsigned long mask = 0;
++	unsigned int bits;
+ 	dma_addr_t end;
++	u64 last_va;
++	u64 va;
+ 	int i;
+ 
+ 	umem->iova = va = virt;
+@@ -103,9 +106,12 @@ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 	 * number of required pages. Compute the largest page size that could
+ 	 * work based on VA address bits that don't change.
  	 */
- 	gpiod_set_value_cansleep(pcm3168a->gpio_rst, 1);
+-	mask = pgsz_bitmap &
+-	       GENMASK(BITS_PER_LONG - 1,
+-		       bits_per((umem->length - 1 + virt) ^ virt));
++	if (check_add_overflow(umem->length - 1, virt, &last_va))
++		return 0;
++	bits = bits_per(virt ^ last_va);
++	if (bits < BITS_PER_LONG)
++		mask = pgsz_bitmap & GENMASK(BITS_PER_LONG - 1, bits);
 +
- 	pm_runtime_disable(dev);
--#ifndef CONFIG_PM
--	pcm3168a_disable(dev);
--#endif
-+	if (!pm_runtime_status_suspended(dev)) {
-+		regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
-+		clk_disable_unprepare(pcm3168a->scki);
-+	}
+ 	/* offset into first SGL */
+ 	pgoff = umem->address & ~PAGE_MASK;
+ 
+diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
+index 4c5329b504d0c..821f23d2a4458 100644
+--- a/include/rdma/ib_umem.h
++++ b/include/rdma/ib_umem.h
+@@ -81,7 +81,7 @@ int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offset,
+ 		      size_t length);
+ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 				     unsigned long pgsz_bitmap,
+-				     unsigned long virt);
++				     u64 virt);
+ 
+ /**
+  * ib_umem_find_best_pgoff - Find best HW page size
+@@ -161,7 +161,7 @@ static inline int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offs
  }
- EXPORT_SYMBOL_GPL(pcm3168a_remove);
- 
-@@ -899,7 +892,8 @@ static int pcm3168a_rt_suspend(struct device *dev)
- 
- 	regcache_cache_only(pcm3168a->regmap, true);
- 
--	pcm3168a_disable(dev);
-+	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
-+	clk_disable_unprepare(pcm3168a->scki);
- 
+ static inline unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
+ 						   unsigned long pgsz_bitmap,
+-						   unsigned long virt)
++						   u64 virt)
+ {
  	return 0;
  }
 -- 
