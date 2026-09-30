@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F173B1ED7;
-	Wed, 30 Sep 2026 18:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD043BC68E;
+	Wed, 30 Sep 2026 18:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794749; cv=none; b=ey5Tu0G32/9YGSW5SZUYeiV3u2FJEXI+hNNucu9Rs6fKQKJE6E15DSTEfwK4sjWxpBdORA4AopvMFM5y3lU8m2WHHw32PNWJQWzGAfrDgWhrLwlVOqaMBqdnjSm5Racad6T0H4niB0u0NnDVLtAby6qUdrlvnspVLTI32YbNjL4=
+	t=1790794752; cv=none; b=T4UDFlCgp+etnO2J5FlQH41pkQoDsjh7PsqAn9n/DjTFMzTbYWlzYhUiZXIVpH+5BFeOtp0S8q4tFdjtG7Au2+nqOZRwE9gS8QhxRTSC5e2VVm0sp+3farA884kk5bdyxheLPgY99+0PNFAWCe9tD+bkLqJ87Cj7Ot2Mh5N615k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794749; c=relaxed/simple;
-	bh=YpJsZoaigK0hnHCOR99OJ1+SAOviKDcFCuEYdsyaAbc=;
+	s=arc-20240116; t=1790794752; c=relaxed/simple;
+	bh=iiw7FL/6GNcp5c3658LGk+XJJG+DI9lzwYL9SE0q+WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G8E88rE5g7T1J3SB+isiPEQZp9iqKHMAmLKwSw1rtmlWBIaY9JVu6rii1aUD1vhPWALJ2aaVZ039Vs+EImILCCmEF3TOfENNoGDTuj5YntYfIx4LCDOeSN0ep58Hw7oIKwMB98qsQdpy2NPuoaE4dGCNPW1vnjFqw4+XqfYGr3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPQQHZ0L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CRrFzpBcKWC27hTb/0s3HhIijQWfmSIrWGdNLuc0qemWG6KGG/iH48fVwFAewQFZnTbTrVa68LqUQw41etz8d3yYvTx09OHDv7b1UFa3ZqqlESE61hKWkfQleagxs1y2MwV538HOMFMa/rr5aZI34vz+NfTjBo8at4J0sM0N6Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXFt0SjK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPQQHZ0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51961F00898;
-	Wed, 30 Sep 2026 18:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXFt0SjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8AA1F000FF;
+	Wed, 30 Sep 2026 18:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794748;
-	bh=Bcq5FEE/KrvRWxaq83TySkMk//W9CQ0DFr+I19KtqWQ=;
+	s=korg; t=1790794751;
+	bh=wjShtiKGr+ZhBQZ5xYCfEiqo8H7wcY0TETSFtTKFriE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DPQQHZ0LfMvW8Y/9jsEuWHnoZ1JeciQFKb8veWThNDBS2bMnvm/4vUCN7dMsVqJXs
-	 9+YJZ+UDpxfVPx5yircOlGkCPoPMngk9r5VhlcRnUlc+W9VhXibQ95Z4vTjDNNZNy0
-	 lpLPdaIQuk6yX7mF4tAagbtiCmr9BWdPvm3T4844=
+	b=FXFt0SjKh0DPBsJKG+Jd5lzHyjiN/xNeFdWI1egcByi6VzrA4Sud6dgks7mz2KGbp
+	 sTWEama070jXFfIBhtNkgfHawHosf0bMXY+2qRNxn+zu+3d1IlYHEvxmbuH66x91R7
+	 EOHS+F/V4LtdC2TbI9kB8hBcm0bH+9xaESbXBmGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	"Daniel C. Ribeiro" <dcoutinho.96@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0318/1193] wifi: iwlwifi: bound aligned TLV advance in FW parser
-Date: Wed, 30 Sep 2026 17:16:42 +0200
-Message-ID: <20260930152441.203709899@linuxfoundation.org>
+Subject: [PATCH 6.6 0319/1193] ALSA: usb-audio: Add FIXED_RATE quirk for JBL Quantum650 Wireless
+Date: Wed, 30 Sep 2026 17:16:43 +0200
+Message-ID: <20260930152441.225391113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Daniel C. Ribeiro <dcoutinho.96@gmail.com>
 
-[ Upstream commit acad742714bdc70e7fd7f234323807c596828213 ]
+[ Upstream commit f6d6a4147ace0c417035f65b021027c209c75190 ]
 
-Validate ALIGN(tlv_len, 4) against remaining parser length before
-consuming bytes from the firmware image.
+JBL Quantum650 Wireless (0ecb:2125) requires the same workaround that
+was used for JBL Quantum610 and Quantum810 for limiting the sample rate.
+Without it, the capture (microphone) stream fails to work.  Setting the
+QUIRK_FLAG_FIXED_RATE flag, as done for the sibling models, makes both
+playback and capture work correctly.
 
-This avoids length underflow on malformed TLVs.
-
-Assisted-by: GitHubCopilot:GPT-5.3-Codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260717173215.393c286488f9.Ia39144dc3ca334325ee4eacb7420901e2446fc23@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Daniel C. Ribeiro <dcoutinho.96@gmail.com>
+Link: https://patch.msgid.link/20260719090037.40149-1-dcoutinho.96@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index 42f7f95dac225..36e8d0e8c91bb 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -703,6 +703,7 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
- 	u32 build, paging_mem_size;
- 	int num_of_cpus;
- 	bool usniffer_req = false;
-+	size_t aligned_tlv_len;
- 
- 	if (len < sizeof(*ucode)) {
- 		IWL_ERR(drv, "uCode has invalid length: %zd\n", len);
-@@ -751,8 +752,16 @@ static int iwl_parse_tlv_firmware(struct iwl_drv *drv,
- 				len, tlv_len);
- 			return -EINVAL;
- 		}
--		len -= ALIGN(tlv_len, 4);
--		data += sizeof(*tlv) + ALIGN(tlv_len, 4);
-+
-+		aligned_tlv_len = ALIGN(tlv_len, 4);
-+		if (len < aligned_tlv_len) {
-+			IWL_ERR(drv, "invalid aligned TLV len: %zd/%zu\n",
-+				len, aligned_tlv_len);
-+			return -EINVAL;
-+		}
-+
-+		len -= aligned_tlv_len;
-+		data += sizeof(*tlv) + aligned_tlv_len;
- 
- 		switch (tlv_type) {
- 		case IWL_UCODE_TLV_INST:
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index aaa3ea577a59b..edfdf1625a671 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2165,6 +2165,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_MIN_MUTE),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
++	DEVICE_FLG(0x0ecb, 0x2125, /* JBL Quantum650 Wireless */
++		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0fd9, 0x0008, /* Hauppauge HVR-950Q */
 -- 
 2.53.0
 
