@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABB031D366;
-	Wed, 30 Sep 2026 18:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33073264C2;
+	Wed, 30 Sep 2026 18:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791779; cv=none; b=WiRegB+UanryvjiDQ0BSm7xWNRh1LErRKLmCQElS6Lq1sOXi7yduTnYyi32Q31KjWTlQA8LYbXyaQ2xqBm/H5O9LYurMBfEviz3aolqHwChy0UK//S/7I9jcKgxWl7cJw7wOTUbjk8VQCBR2WWRDAYKENHc/aWcBZox9npPLM7Q=
+	t=1790791781; cv=none; b=CqYzJFNa6RU+utURyGWwqaWLbYImLhbFV6B9qSXTnQGjC3pNiM1zrX8wlVVzcvspC/jQTOK8xcikWL8XtDFHWU8yE0b0C2uhtAnxTbPNMaNbRxG5UA1j7lVKATtTQIebxVKPaUjwVFz930BE6AV19Ge5rBadMjwtNw8w7I/5bl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791779; c=relaxed/simple;
-	bh=d6NlIyMKw+A0WfwCswgx7Mv6b1aH7ql4/rlY5+f6eWk=;
+	s=arc-20240116; t=1790791781; c=relaxed/simple;
+	bh=0XB7orkhI2shBMO+RBZmXpnKKuuKnveT9BfFPf3jz3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8HfbUP7NUMQcC8RO0Qt6Bj6g9F8gkf5sNIdm9JStbzEvWXKzoQ3LNTkS+xIswvHgoW59Fzwhp81t/NLuz7k+PanqAZv4C7rhaAPfY+nISKrKVAkY0rWJmBJ50QtQaBfiF6eWzFk74aWcweNhui01twNB2THMGKQoOFeoKTJPIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp64yYqh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oRJScjRsH0ZLFnErJRlD40WpjUoM91WpkBQ3Y/zpoqQC4CucfVxrHzoyPDvL9ctrw5T7PCx6GOQY9k3hTRQT2V3CGxOkscD3l1nBeSdzlF6pjNsLPROIx40uHd6cgwnrm9qPSxB4wQPuTV6QL9yfDfsiON+WR0xjAd/EHvCtdr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXNd5XaQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp64yYqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331461F000FF;
-	Wed, 30 Sep 2026 18:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXNd5XaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107411F000FF;
+	Wed, 30 Sep 2026 18:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791777;
-	bh=WWi4UX4zClPce+f/FVqaGZWuAEWZ8V1Nt5zhKkKuXI8=;
+	s=korg; t=1790791780;
+	bh=Vqd37QiCPVnXbLA/GrGTHobKET1MXW3KgP6Q8ILOxbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xp64yYqhOZDWEty7PdwkdYQbrdmOfMKJY95AKKLM+6sjIAXfnM01xvmjk5WIlf9Bj
-	 /NfKC0WB+tixlfHvvQ0c5+kAFpxMJCrt4+2fggnzsY2yIupGYXiQ7uUZXvII6gR7yg
-	 EzFzXXVcbVFoLNkbxiapbQTUBL87KzM4/gPKSeHs=
+	b=zXNd5XaQpKx3tgU3TL3++ffzaPwfemUTtyD+4w9FBrxhMnyadw3feLSoJngM+Ehsj
+	 CpxEdtjlGvldtc5krhAZp21pRNU8EFCpvzoBb4riL0wqsy+H7xRVZrgAtW3prfUzLT
+	 MW7F3YElDfMsBsrGmyurdDmHhJ6MqzH2glG6Yy4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yadi.hu" <yadi.hu@windriver.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 423/752] ARM: ensure interrupts are enabled in __do_user_fault()
-Date: Wed, 30 Sep 2026 17:24:53 +0200
-Message-ID: <20260930152407.438469428@linuxfoundation.org>
+Subject: [PATCH 5.15 424/752] Bluetooth: L2CAP: Fix deadlock
+Date: Wed, 30 Sep 2026 17:24:54 +0200
+Message-ID: <20260930152407.460687236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,59 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 59e4f3b45b96a24fc9b7a89e5f8a2168b30f95af ]
+[ Upstream commit f1a8f402f13f94263cf349216c257b2985100927 ]
 
-__do_user_fault() may be called from fault handling paths where the
-interrupts are enabled or disabled. E.g. do_page_fault() calls this
-with interrupts enabled, whereas do_sect_fault()->do_bad_area()
-will call this with interrupts disabled. Since this is a userspace
-fault, we know that interrupts were enabled in the parent context,
-so call local_irq_enable() here to give a consistent interrupt state.
+This fixes the following deadlock introduced by 39a92a55be13
+("bluetooth/l2cap: sync sock recv cb and release")
 
-This is necessary for force_sig_info() when PREEMPT_RT is enabled.
+============================================
+WARNING: possible recursive locking detected
+6.10.0-rc3-g4029dba6b6f1 #6823 Not tainted
+--------------------------------------------
+kworker/u5:0/35 is trying to acquire lock:
+ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+l2cap_sock_recv_cb+0x44/0x1e0
 
-Reported-by: Yadi.hu <yadi.hu@windriver.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+but task is already holding lock:
+ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+l2cap_get_chan_by_scid+0xaf/0xd0
+
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+
+       CPU0
+       ----
+  lock(&chan->lock#2/1);
+  lock(&chan->lock#2/1);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+3 locks held by kworker/u5:0/35:
+ #0: ffff888002b8a940 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
+process_one_work+0x750/0x930
+ #1: ffff888002c67dd0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
+at: process_one_work+0x44e/0x930
+ #2: ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+l2cap_get_chan_by_scid+0xaf/0xd0
+
+To fix the original problem this introduces l2cap_chan_lock at
+l2cap_conless_channel to ensure that l2cap_sock_recv_cb is called with
+chan->lock held.
+
+Fixes: 89e856e124f9 ("bluetooth/l2cap: sync sock recv cb and release")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Karl Mehltretter: backport only the l2cap_core.c changes. The HCI
+  changes are from an unrelated patch accidentally squashed into this
+  commit. The l2cap_sock.c change removes locking added by 89e856e124f9,
+  which is absent from 5.15.y, so the quoted deadlock cannot occur. The
+  core changes are needed because c531e63871c0 was backported without
+  the matching lock. ]
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index b186a31b3cf72..7ac46e1b85a61 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -137,7 +137,8 @@ __do_kernel_fault(struct mm_struct *mm, unsigned long addr, unsigned int fsr,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index ece7d37339c46..bb514810945ab 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -8003,6 +8003,8 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
  
- /*
-  * Something tried to access memory that isn't in our memory map..
-- * User mode accesses just cause a SIGSEGV
-+ * User mode accesses just cause a SIGSEGV. Ensure interrupts are enabled
-+ * for preempt RT.
-  */
- static void
- __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
-@@ -145,6 +146,8 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- {
- 	struct task_struct *tsk = current;
+ 	BT_DBG("chan %p, len %d", chan, skb->len);
  
-+	local_irq_enable();
++	l2cap_chan_lock(chan);
 +
- #ifdef CONFIG_DEBUG_USER
- 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
- 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
-@@ -254,6 +257,7 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
- 		 * should not be faulting in kernel space, which includes the
- 		 * vector/khelper page. Handle the branch predictor hardening
- 		 * while interrupts are still disabled, then send a SIGSEGV.
-+		 * Note that __do_user_fault() will enable interrupts.
- 		 */
- 		harden_branch_predictor();
- 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
+ 	if (chan->state != BT_BOUND && chan->state != BT_CONNECTED)
+ 		goto drop;
+ 
+@@ -8020,6 +8022,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
+ 	}
+ 
+ drop:
++	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ free_skb:
+ 	kfree_skb(skb);
 -- 
 2.53.0
 
