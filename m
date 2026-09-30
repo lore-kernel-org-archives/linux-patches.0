@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033EA3B3BF2;
-	Wed, 30 Sep 2026 19:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B433B3BF2;
+	Wed, 30 Sep 2026 19:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795553; cv=none; b=mawhPSmdOKU0YxuNK7Xo2F+r8OfX1gsj+RuA//a7CKHSWAK9CxR7OxtxlyBXlnzE8FAvdrw2V9fV/hDckvSRE4BVo7tad4NS/z8YW6vIAU2zF5UnvDJDMNoQIvrLCxS/dvhfXZo9Ohrs7sEqiqveo+y05A3bl3PLYnYdDCCP36M=
+	t=1790795556; cv=none; b=QsVMpuZwj2PzmLKu1GOYeO2bjZxONkrhpTWqocysBLk+VmYu4kkZg7sWEj9uogZVCOgwGG90ot8xhhDqrJKaS2uAGLwMqx6xD9Y8lmOSp7LRrzAAEgDkOu/atVjCnwy8uoNRfZyJ+Ejvw6DUrBLkk6QKJsCo7ReI65+3v9W+hrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795553; c=relaxed/simple;
-	bh=/ZFvT0Ls3JbyeyYuub3mMwM/+ScIFG43wGGuWsidyow=;
+	s=arc-20240116; t=1790795556; c=relaxed/simple;
+	bh=jTRatSHtWTMg/ZyDWel7mgiw9Vc5obMrolxMgtZsSpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cf6q29HtjnBk/oMC2Q+PnvBdeYmu+vpln5xYZcT0nODf7mSQTapKLaRjm1by/CeI83PG/dt+CQYDDGw93rTJmTAUyodI6hz7eu4Jxd647JS6aRGmRTRde9QD/RkTgfmNmJ3BRR9jEaAsjjm7PMJspL9AfWTsMK4iMMgJk0ExPyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeEmtk2S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NBf3gvCdqIHg6rf11JO70gHH6EsKAr6LdkuBFTRarxGd7ibnp2pr0Pw0mtQoau/esEvftANC/bqJQ29tf1+oqhWRSYPaJj9AL5i3XeMUce7XqhnuZL0MOxSBSgUOCdl0ujaOeVyE5zjwbDIkY4deHq080hR/ctIQZHTr1VvsTAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuhRNiNR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeEmtk2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAF11F000FF;
-	Wed, 30 Sep 2026 19:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuhRNiNR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D5C1F00898;
+	Wed, 30 Sep 2026 19:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795551;
-	bh=qu0c/AQhhHIWPn279mAuwCOGL6ukb2evpWM4/m6uTBA=;
+	s=korg; t=1790795554;
+	bh=rBA0bcwsiS3ivM8NoemSzb2fY3skFlcMqL8VjsqaGFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eeEmtk2SPQJccWIfreRRNFXgL2lZng0EgUiXRgrrVwY5pkkUHcvYcLm826dOvflWs
-	 Mp2A936S4HE8dkKHJxxxmgNsOvwduwzCWOZKK71WHtb0mTF0dcf/mqZOZdZFs18UtD
-	 I6KUzQL9d5rvlFjd3raiWRsvLzmcVPwtM0RTFfog=
+	b=yuhRNiNRU0TYIhrLevJ134NEi2xPnZ/NOPQo4pviVA2F3+EFgFW6Yq/F3M7mzaN9t
+	 yIQJT+XrlgoRBlCV65qAjRjMqvhVBaWOXrvn/Yrfn385cvQPzdodY1I7YaM6TtwRvZ
+	 nWP80lNxh3oGoFqYEcrT17tzruWpecWEDQuPKdnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orson Peters <orsonpeters@gmail.com>,
-	Vernon Yang <yanglincheng@kylinos.cn>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: [PATCH 6.6 0600/1193] x86/mm: Fix user-space data loss with MADV_FREE and THP
-Date: Wed, 30 Sep 2026 17:21:24 +0200
-Message-ID: <20260930152447.574449270@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0601/1193] ipv6: fix fib6 walker UAF on seq stop
+Date: Wed, 30 Sep 2026 17:21:25 +0200
+Message-ID: <20260930152447.597996865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,75 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vernon Yang <yanglincheng@kylinos.cn>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit f7491d7c81db0e7c304a7bd757a76d2fbeaff80e upstream.
+commit 19b4ed644d68098cc62ab612727f40d30f43476c upstream.
 
-Some of users of Polars (a data analytics library) have lost production
-data from this bug. They seem to have just the right combination of
-huge pages, MADV_FREE and heavy reclaim pressure.
+ipv6_route_iter_active() treats a walker in FWS_U at the table root as
+already unlinked. fib6_del_route() can move a still-linked walker into
+that same state when the current leaf is the last route at the root,
+so ipv6_route_native_seq_stop() skips fib6_walker_unlink(). The seq
+private object can then be freed while it remains on
+net->ipv6.fib6_walkers. A later route deletion walks the dangling list
+and uses the freed walker.
 
-pmd_modify() masks the old value with (_HPAGE_CHG_MASK & ~_PAGE_DIRTY),
-silently discarding the hardware dirty bit.  The subsequent
-pmd_mksaveddirty() call is supposed to transfer _PAGE_DIRTY into
-_PAGE_SAVED_DIRTY when write-protecting, but the dirty bit was already
-stripped from the value, so there is nothing left to transfer.
+Use the list head as membership state and reinitialize it when
+unlinking. Keep the existing w->node check so a never-started iterator
+with a zeroed private object is not treated as linked.
 
-Contrast with pte_modify(), which keeps _PAGE_DIRTY_BITS in its mask,
-and pud_modify(), which keeps _HPAGE_CHG_MASK untouched: pmd_modify()
-is the odd one out.  Any pmd_modify() on a writable, dirty PMD loses
-the dirty state.
+The same stop helper is used by /proc/net/ipv6_route and by the BPF
+ipv6_route iterator. The BPF show path only widens the race.
 
-One visible consequence is data loss with MADV_FREE on PMD-mapped THP:
-
-    memset(buf, 0x5A, size);          // PMD-mapped THP, PMD dirty
-    madvise(buf, size, MADV_FREE);    // PMD cleaned but left writable,
-                                      // folio marked lazyfree
-    memset(buf, 0x5A, size);          // hardware sets _PAGE_DIRTY again
-    mprotect(buf, size, PROT_READ);   // pmd_modify() drops the dirty bit
-    mprotect(buf, size, PROT_READ|PROT_WRITE);
-    // ... memory pressure ...
-
-Reclaim (e.g. under memcg pressure) then finds the lazyfree folio with
-no dirty bit set anywhere and frees it in
-__discard_anon_folio_pmd_locked(), even though the data was rewritten
-after MADV_FREE; subsequent reads fault in fresh zero pages.  NUMA
-hinting alone can trigger the same loss, as do_huge_pmd_numa_page()
-restores the PMD through pmd_modify() as well.
-
-PMD-mapped file THPs are affected too: mprotect()/NUMA hinting dropping
-the dirty bit means rewritten data is never written back.
-
-Fix it by keeping _PAGE_DIRTY in the preserved mask, exactly like
-pte_modify() and pud_modify() do.  The existing
-pmd_mksaveddirty()/pmd_clear_saveddirty() pair then performs the
-hardware-dirty <-> saved-dirty transition based on the write bit,
-preserving the shadow-stack encoding rules.
-
-Fixes: bb3aadf7d446 ("x86/mm: Start actually marking _PAGE_SAVED_DIRTY")
-Closes: https://lore.kernel.org/r/CAJxLxMUGu1-L+O_nAONOwOXnS=cNbNApCWqdthRjd76LThtSPg@mail.gmail.com/
-Reported-by: Orson Peters <orsonpeters@gmail.com>
-Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Fixes: 8d2ca1d7b5c3 ("ipv6: avoid high order memory allocations for /proc/net/ipv6_route")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260903031608.1194238-1-vernon2gm@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/89699735763f6c297584d7c2ff106239cc1e8ce0.1788837093.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/pgtable.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_fib.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/pgtable.h
-+++ b/arch/x86/include/asm/pgtable.h
-@@ -814,7 +814,7 @@ static inline pmd_t pmd_modify(pmd_t pmd
- 	pmdval_t val = pmd_val(pmd), oldval = val;
- 	pmd_t pmd_result;
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -85,7 +85,7 @@ static void fib6_walker_link(struct net
+ static void fib6_walker_unlink(struct net *net, struct fib6_walker *w)
+ {
+ 	write_lock_bh(&net->ipv6.fib6_walker_lock);
+-	list_del(&w->lh);
++	list_del_init(&w->lh);
+ 	write_unlock_bh(&net->ipv6.fib6_walker_lock);
+ }
  
--	val &= (_HPAGE_CHG_MASK & ~_PAGE_DIRTY);
-+	val &= _HPAGE_CHG_MASK;
- 	val |= check_pgprot(newprot) & ~_HPAGE_CHG_MASK;
- 	val = flip_protnone_guard(oldval, val, PHYSICAL_PMD_PAGE_MASK);
+@@ -2715,7 +2715,7 @@ static void *ipv6_route_seq_start(struct
+ static bool ipv6_route_iter_active(struct ipv6_route_iter *iter)
+ {
+ 	struct fib6_walker *w = &iter->w;
+-	return w->node && !(w->state == FWS_U && w->node == w->root);
++	return w->node && !list_empty(&w->lh);
+ }
  
+ static void ipv6_route_native_seq_stop(struct seq_file *seq, void *v)
 
 
