@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C225851D520;
-	Wed, 30 Sep 2026 17:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964D251A14E;
+	Wed, 30 Sep 2026 17:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789163; cv=none; b=jQjwFy35Y12JuHYhJEXHnK5XAKv48npcKJ+tO4xRiPRRBM36DevZpLKi8l2B9d7Nr63MDJB4xec4dvxmDZly5MyI5tw8dhUTMiYXjIxuPRUMn2tnaT6RgB8SxNEvBiXn8THoSdqV7Ah0svYxZN0dS0amZ6z9RQGOGVI3OKC5Dog=
+	t=1790789166; cv=none; b=S4TJsF4/I1kAnJJu0/Q/g+qjGN6Ktil/gHGHDrxfmmlpaLtZn6o136bw+ER1M5uUCsudKz/wROW5YksP+IzPq1mtVJ1DwMHMP/t1KZo9CYS3YXE1TOY2edJpKqTSj/EH5bz92Xgz8aSOaSu3lFVuMp0t56PMjcAf2aiPrBbOSeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789163; c=relaxed/simple;
-	bh=wP5GAexNhmYNJMDtXmNUcFXnQP2g/c7HqDrsLdf9hJo=;
+	s=arc-20240116; t=1790789166; c=relaxed/simple;
+	bh=LZdadycj/n7zkyMLEj5TQlnN7cATqkwrTiBXE1HZSJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNK2Lc34p9UB37quWkSPnObSADg6TuiaWsYcTWRqUdumpKZmoMsEcbUDPCM/kFImFqsE0Zc3HhV4HlWVT8PXvJNWdq7bKzrvdSrpDD01Wi+J1bH+qGynCN0jcLOwTTG5T1eewFuxdB8o+gd5IeicIOTWPoRE2TZ1FuT48kWBD1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXk0da6H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TKLVrxwFwKoYW+UzpIbeRHJ1JoL42OjKh5MfhC1EWoNjy72lSQaz4eYcoNdDzijiXUAsgb50f3oRJIdDbnGzxuHhrV3sySLP3CjmU6CO8LlpiwNe9JMzfrjAZH27d6QoAiZ4WksPe3heb/yKXINoOp1yY7oX7bJEwPD0c2tVwAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsVgaE0G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXk0da6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2014A1F00898;
-	Wed, 30 Sep 2026 17:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsVgaE0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013B61F00898;
+	Wed, 30 Sep 2026 17:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789161;
-	bh=y42632uV5UudBqd1gDRLowa5Y3cj7uE+iNslM4We3Q8=;
+	s=korg; t=1790789164;
+	bh=4i2ILtdixZnq132tsV3mfuqX4cH6vz51mpwD1+v87jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXk0da6HFJUS85ZUkbmO1OdPN0OQy5F59EGoVtgVbBXSz7hSoAZZjn8gXdmzIwpCb
-	 HLgfrTqsGC7VOJff78V+w8AhRVi+fi4uR9camv4NVxfWIJlpv3H1i5Qt1JGk/RXeX+
-	 ChbToCCgz7uLcfJthfOD1nJrIWabjAGV+URtU4wo=
+	b=bsVgaE0GuW1ZWGmuP/bGXGOZrZlE6nknTW7EaCjlTCS9GniHViFJVxMFpIUoGP2Ew
+	 ag6x+i3qZt7LYuZylX1NSfOu6ZNSOHuEBeQYVcRJDZG6BfulJOibUKPhRjYWIFLMXI
+	 Der2huCh6uDv2IfBydLVK4Go/lbuInYO/fDJKS2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 353/877] arm64: io: Reject non-user protection in ioremap_prot()
-Date: Wed, 30 Sep 2026 17:21:04 +0200
-Message-ID: <20260930152422.290032236@linuxfoundation.org>
+Subject: [PATCH 6.12 380/877] ipv6: Fix dst leak for uncached routes.
+Date: Wed, 30 Sep 2026 17:21:31 +0200
+Message-ID: <20260930152422.876190422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,60 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit bb756b11ad63832ebee58caf9e8f9381eaecff9f ]
+[ Upstream commit be31fe6333f534155e6b408f1ef6d77974bb41aa ]
 
-Mapping a stack-top page via /dev/mem with PROT_NONE and then
-reading that process's /proc/<pid>/cmdline triggers a spurious WARN
-in ioremap_prot() through generic_access_phys():
+ip6_route_output_flags(), ip6_rt_put_flags(), and ip6_dst_check()
+detect an uncached route by list_empty(&rt->dst.rt_uncached),
+which replaced the static DST_NOCACHE flag check in commit
+a4c2fd7f7891 ("net: remove DST_NOCACHE flag").
 
-  WARNING: ./arch/arm64/include/asm/io.h:275 at generic_access_phys
-  Call trace:
-    generic_access_phys+0x1c8/0x228 (P)
-    __access_remote_vm+0x2b4/0x398
-    access_remote_vm+0x14/0x30
-    get_mm_cmdline+0xf8/0x2a0
-    proc_pid_cmdline_read+0x68/0x120
+When a device is unregistered, rt6_uncached_list_flush_dev()
+unlinks uncached routes tied to the device from rt6_uncached_list.
 
-generic_access_phys() passes the protection derived from the user PTE
-to ioremap_prot(). On arm64, a PROT_NONE mapping is represented by a
-present-invalid PTE, so pte_present() still returns true and the
-protection reaches ioremap_prot().
+Previously, they were moved to another list with list_move()
+(__list_del_entry() + list_add()), and since commit 98aa546af5e4
+("inet: remove (struct uncached_list)->quarantine"), the routes
+are just unlinked with list_del_init().
 
-A PROT_NONE mapping does not have PTE_USER, causing the existing
-WARN_ON_ONCE() in ioremap_prot() to fire even though this is a valid
-user mapping. Execute-only mappings have the same issue and must not
-be readable through this path either.
+If list_del_init() runs concurrently, list_empty() evaluates to
+true; ip6_route_output_flags() calls dst_hold_safe() incorrectly
+and ip6_rt_put_flags() skips ip6_rt_put(), leaking dst, and thus
+dev tied via rt->from as well.
 
-ioremap_prot() should therefore reject protection values without
-PTE_USER without warning. This makes the access fail cleanly for
-PROT_NONE and execute-only mappings while retaining the existing
-user-protection contract.
+The same race is partially fixed by commit 9a6f0c4d5796 ("dst:
+fix races in rt6_uncached_list_del() and rt_del_uncached_list()").
 
-Fixes: 8f098037139b ("arm64: io: Extract user memory type in ioremap_prot()")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Let's check rt6->dst.rt_uncached_list instead.
+
+Note that IPv4 does not have the same issue.
+
+Fixes: 98aa546af5e4 ("inet: remove (struct uncached_list)->quarantine")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260920191558.2990636-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/io.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/ip6_route.h | 4 ++--
+ net/ipv6/route.c        | 7 ++++---
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
-index 46bd37707e080..16a423101bdcd 100644
---- a/arch/arm64/include/asm/io.h
-+++ b/arch/arm64/include/asm/io.h
-@@ -282,7 +282,8 @@ static inline void __iomem *ioremap_prot(phys_addr_t phys, size_t size,
- 	pgprot_t prot;
- 	pteval_t user_prot_val = pgprot_val(__pgprot(user_prot));
+diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
+index eaa2f6770ce77..1de182615a07a 100644
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -94,12 +94,12 @@ static inline struct dst_entry *ip6_route_output(struct net *net,
+ }
  
--	if (WARN_ON_ONCE(!(user_prot_val & PTE_USER)))
-+	/* Reject PROT_NONE and exec-only */
-+	if (!(user_prot_val & PTE_USER))
- 		return NULL;
+ /* Only conditionally release dst if flags indicates
+- * !RT6_LOOKUP_F_DST_NOREF or dst is in uncached_list.
++ * !RT6_LOOKUP_F_DST_NOREF or dst is uncached.
+  */
+ static inline void ip6_rt_put_flags(struct rt6_info *rt, int flags)
+ {
+ 	if (!(flags & RT6_LOOKUP_F_DST_NOREF) ||
+-	    !list_empty(&rt->dst.rt_uncached))
++	    rt->dst.rt_uncached_list)
+ 		ip6_rt_put(rt);
+ }
  
- 	prot = __pgprot_modify(PAGE_KERNEL, PTE_ATTRINDX_MASK,
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 15f02882be040..692b44975af31 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -139,6 +139,7 @@ void rt6_uncached_list_add(struct rt6_info *rt)
+ {
+ 	struct uncached_list *ul = raw_cpu_ptr(&rt6_uncached_list);
+ 
++	/* Set once and never cleared: non-NULL marks an uncached route. */
+ 	rt->dst.rt_uncached_list = ul;
+ 
+ 	spin_lock_bh(&ul->lock);
+@@ -2706,8 +2707,8 @@ struct dst_entry *ip6_route_output_flags(struct net *net,
+ 	rcu_read_lock();
+ 	dst = ip6_route_output_flags_noref(net, sk, fl6, flags);
+ 	rt6 = dst_rt6_info(dst);
+-	/* For dst cached in uncached_list, refcnt is already taken. */
+-	if (list_empty(&rt6->dst.rt_uncached) && !dst_hold_safe(dst)) {
++	/* For an uncached dst, refcnt is already taken. */
++	if (!rt6->dst.rt_uncached_list && !dst_hold_safe(dst)) {
+ 		dst = &net->ipv6.ip6_null_entry->dst;
+ 		dst_hold(dst);
+ 	}
+@@ -2817,7 +2818,7 @@ INDIRECT_CALLABLE_SCOPE struct dst_entry *ip6_dst_check(struct dst_entry *dst,
+ 	from = rcu_dereference(rt->from);
+ 
+ 	if (from && (rt->rt6i_flags & RTF_PCPU ||
+-	    unlikely(!list_empty(&rt->dst.rt_uncached))))
++	    unlikely(rt->dst.rt_uncached_list)))
+ 		dst_ret = rt6_dst_from_check(rt, from, cookie);
+ 	else
+ 		dst_ret = rt6_check(rt, from, cookie);
 -- 
 2.53.0
 
