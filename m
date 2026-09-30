@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106D5221C1;
-	Wed, 30 Sep 2026 18:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E625218B2;
+	Wed, 30 Sep 2026 18:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792719; cv=none; b=FWuxGcNdfzYptnQPWDnQJQfD3cDllbJ8an47xM9U1TBeHv1V/O5DJktMvgl50RXKhP7pKgrtMaw+VgO+kQcrmQCWlvCkp2ekXL4pU5A7Jx2MFWPkaETi1QKDHgPf02Fgn4XwO6pppDpa3I4VCjBbhpbeeVPjV8rVoBmYEdjWm3k=
+	t=1790792722; cv=none; b=pBNY/a6Vvny0GzBY1/ih54EdU92g5ff0L+PK35MoSCN1WpIkp8imCfnpxGbe/ODLgMllkUHIP2V/jUYCiuqHSmMh7E7XhaJJO6/Vq5Ay+Ik+8jIctBJ+GeOiJZ+OVgTHMcdYQzVSQFvZ5yLFUfvOP1yCWRjxV7rXtBYh80TR6gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792719; c=relaxed/simple;
-	bh=mq8YWm/MmA8iL7iBlyg5qD4vZmdxqm6n6vi/b8I0ekA=;
+	s=arc-20240116; t=1790792722; c=relaxed/simple;
+	bh=vVHruRzJFryP+Ia7PREWpvAQkC1T9h/HdBPuWf1SjCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3ua8gc2RiRjj83Dp5VDni8IO/Km3H62IfMzm6rQ729EA6TowFkAvsAkbws2r4aH+8swu9rlnp/IRias1oGwRQYVcgA6+HuSSX8bwqYfMn3DEe04rDYZh1fNHjTwj+nAaq5fT6qeDJ30IOVsUlQMBm82H320vkJDu+VZxdcJT6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToXWJP5E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CNSmc+jigA1vhRxy4PyGoyc5AXy9gVp0jZoFCq4U5ik6tXyGt5m84xPAG4fvdyNF8tf1TrbJWwUc9vsrH/Lxt3yL2G2WIl7PAMlBx0LO6bf9thY+tDbMoL1xetimTKVL2lSTeoiYMvJRj5PhqKvr4ue7ohVdHsTouPORQyPqWdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPPVzX4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToXWJP5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB7631F000FF;
-	Wed, 30 Sep 2026 18:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPPVzX4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AED1F000FF;
+	Wed, 30 Sep 2026 18:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792718;
-	bh=bSGs2Aat3LIfr1XeYh3rTMiCj1RBrtK2OkZ6zh0Hi1s=;
+	s=korg; t=1790792721;
+	bh=NSAlsEroJahW1Z5CJ1elFPlevH5BEc8lTLsa96hG5fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ToXWJP5ExAiAo0LzqHbZicz+0Mgo1jHU5DY3JCPQbyuIyrufodGcTXvpCKfqfH5N3
-	 EdH8zq9JySs3tBkhshu94P2/u2rqHTcIGNLL0EdAFmWAZcgr7c+wJVYgDY4nZkvzZW
-	 /gQlMSo7Cskzjn6dK4PB/XKTO4by2XsmvfKzbC0g=
+	b=tPPVzX4j4RdIVgHXqPQeeTYfnTOUqkt8Fa58BgoyMSg8C7gx2aekuNzpH4b9bqnoT
+	 EltlV0DC2i1QhoIU2Jgj6MGkyYsMfbthBZZfgrWs3wsxA0jjyZDmZx97nJ+glvVzYF
+	 tBNZukUVIXC2fyDeaM6N0WDy0JxCZIDzQkkeuq/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 5.15 710/752] drm/nouveau: fix double-free in nvif_vmm_dtor
-Date: Wed, 30 Sep 2026 17:29:40 +0200
-Message-ID: <20260930152413.594962282@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 701/752] fsl/fman: Fix clk reference leak in read_dts_node()
+Date: Wed, 30 Sep 2026 17:29:31 +0200
+Message-ID: <20260930152413.403516229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,213 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 97077ac87afe9e91ec074ef0be64454e7ccbf344 upstream.
+commit a644f09b2090ad22a13fbcf9d141084f573108ef upstream.
 
-On failure, nouveau_cli_init() calls nouveau_cli_fini() to tear
-the client down. Then, nouveau_drm_open() also enters into its
-cleanup path and calls nouveau_cli_fini() AGAIN. nouveau_cli_fini()
-calls nouveau_vmm_fini():
+of_clk_get() returns a clock with its reference count incremented, but
+read_dts_node() only uses it to read the rate and never calls clk_put().
+The clock is not stored anywhere, so the reference cannot be released
+later either.
 
-	void
-	nouveau_vmm_fini(struct nouveau_vmm *vmm)
-	{
-		nouveau_svmm_fini(&vmm->svmm);
-		nvif_vmm_dtor(&vmm->vmm);
-		vmm->cli = NULL;
-	}
+Release the clock once its rate has been read, which also covers the
+error path taken when the rate is zero.
 
-Inside nvif_vmm_dtor(), vmm->page is freed unconditionally:
-
-	void
-	nvif_vmm_dtor(struct nvif_vmm *vmm)
-	{
-		kfree(vmm->page);
-		nvif_object_dtor(&vmm->object);
-	}
-
-vmm->page is never cleared after being freed, so the second call of
-nvif_vmm_dtor() will cause a double-free.
-
-Found by fuzzing the nouveau driver with a modified Syzkaller:
-
-	BUG: KASAN: double-free in nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
-	Free of addr ffff888010fcdc30 by task syz.0.173/2567
-
-	CPU: 1 UID: 0 PID: 2567 Comm: syz.0.173 Not tainted 7.2.0 #24 PREEMPT(lazy)
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	Call Trace:
-	<TASK>
-	__dump_stack lib/dump_stack.c:94 [inline]
-	dump_stack_lvl+0x95/0xe0 lib/dump_stack.c:120
-	print_address_description mm/kasan/report.c:378 [inline]
-	print_report+0xcb/0x5a0 mm/kasan/report.c:482
-	kasan_report_invalid_free+0xaa/0xd0 mm/kasan/report.c:557
-	check_slab_allocation+0xe4/0x110 mm/kasan/common.c:235
-	kasan_slab_pre_free include/linux/kasan.h:199 [inline]
-	slab_free_hook mm/slub.c:2622 [inline]
-	slab_free mm/slub.c:6377 [inline]
-	kfree+0x192/0x590 mm/slub.c:6692
-	nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
-	nouveau_vmm_fini+0x16/0x50 drivers/gpu/drm/nouveau/nouveau_vmm.c:127
-	nouveau_cli_fini+0x10e/0x210 drivers/gpu/drm/nouveau/nouveau_drm.c:225
-	nouveau_drm_open+0x24e/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1255
-	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
-	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
-	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
-	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
-	chrdev_open+0x21c/0x660 fs/char_dev.c:411
-	do_dentry_open+0x59d/0x12b0 fs/open.c:947
-	vfs_open+0x82/0x390 fs/open.c:1052
-	do_open fs/namei.c:4700 [inline]
-	path_openat+0x2345/0x3420 fs/namei.c:4863
-	do_file_open+0x207/0x460 fs/namei.c:4892
-	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
-	do_sys_open fs/open.c:1374 [inline]
-	__do_sys_openat fs/open.c:1390 [inline]
-	__se_sys_openat fs/open.c:1385 [inline]
-	__x64_sys_openat+0x144/0x200 fs/open.c:1385
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7fc6d687594d
-	Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-	RSP: 002b:00007fc6d5295008 EFLAGS: 00000246 ORIG_RAX: 0000000000000101
-	RAX: ffffffffffffffda RBX: 00007fc6d6b06180 RCX: 00007fc6d687594d
-	RDX: 0000000000022501 RSI: 0000200000000000 RDI: ffffffffffffff9c
-	RBP: 00007fc6d691c303 R08: 0000000000000000 R09: 0000000000000000
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 00007fc6d6b06218 R14: 00007fc6d6b06180 R15: 00007ffd9451d760
-	</TASK>
-
-	Allocated by task 2567 on cpu 1 at 163.593900s:
-	kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
-	kasan_save_track+0x17/0x60 mm/kasan/common.c:78
-	poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
-	__kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:415
-	kasan_kmalloc include/linux/kasan.h:263 [inline]
-	__do_kmalloc_node mm/slub.c:5334 [inline]
-	__kmalloc_noprof+0x304/0x7c0 mm/slub.c:5359
-	_kmalloc_noprof include/linux/slab.h:992 [inline]
-	nvif_vmm_ctor+0x3c0/0x7e0 drivers/gpu/drm/nouveau/nvif/vmm.c:237
-	nouveau_vmm_init+0x40/0x90 drivers/gpu/drm/nouveau/nouveau_vmm.c:134
-	nouveau_cli_init+0x7b9/0xe10 drivers/gpu/drm/nouveau/nouveau_drm.c:293
-	nouveau_drm_open+0x236/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1243
-	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
-	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
-	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
-	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
-	chrdev_open+0x21c/0x660 fs/char_dev.c:411
-	do_dentry_open+0x59d/0x12b0 fs/open.c:947
-	vfs_open+0x82/0x390 fs/open.c:1052
-	do_open fs/namei.c:4700 [inline]
-	path_openat+0x2345/0x3420 fs/namei.c:4863
-	do_file_open+0x207/0x460 fs/namei.c:4892
-	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
-	do_sys_open fs/open.c:1374 [inline]
-	__do_sys_openat fs/open.c:1390 [inline]
-	__se_sys_openat fs/open.c:1385 [inline]
-	__x64_sys_openat+0x144/0x200 fs/open.c:1385
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-	Freed by task 2567 on cpu 1 at 163.601355s:
-	kasan_save_stack+0x24/0x50 mm/kasan/common.c:57
-	kasan_save_track+0x17/0x60 mm/kasan/common.c:78
-	kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
-	poison_slab_object mm/kasan/common.c:253 [inline]
-	__kasan_slab_free+0x61/0x80 mm/kasan/common.c:285
-	kasan_slab_free include/linux/kasan.h:235 [inline]
-	slab_free_hook mm/slub.c:2677 [inline]
-	slab_free mm/slub.c:6377 [inline]
-	kfree+0x383/0x590 mm/slub.c:6692
-	nvif_vmm_dtor+0x31/0x50 drivers/gpu/drm/nouveau/nvif/vmm.c:194
-	nouveau_vmm_fini+0x16/0x50 drivers/gpu/drm/nouveau/nouveau_vmm.c:127
-	nouveau_cli_fini+0x10e/0x210 drivers/gpu/drm/nouveau/nouveau_drm.c:225
-	nouveau_cli_init+0x593/0xe10 drivers/gpu/drm/nouveau/nouveau_drm.c:324
-	nouveau_drm_open+0x236/0x740 drivers/gpu/drm/nouveau/nouveau_drm.c:1243
-	drm_file_alloc+0x5f2/0xad0 drivers/gpu/drm/drm_file.c:176
-	drm_open_helper+0x1d7/0x4a0 drivers/gpu/drm/drm_file.c:335
-	drm_open+0x190/0x3d0 drivers/gpu/drm/drm_file.c:388
-	drm_stub_open+0x1f2/0x460 drivers/gpu/drm/drm_drv.c:1211
-	chrdev_open+0x21c/0x660 fs/char_dev.c:411
-	do_dentry_open+0x59d/0x12b0 fs/open.c:947
-	vfs_open+0x82/0x390 fs/open.c:1052
-	do_open fs/namei.c:4700 [inline]
-	path_openat+0x2345/0x3420 fs/namei.c:4863
-	do_file_open+0x207/0x460 fs/namei.c:4892
-	do_sys_openat2+0xd1/0x1d0 fs/open.c:1368
-	do_sys_open fs/open.c:1374 [inline]
-	__do_sys_openat fs/open.c:1390 [inline]
-	__se_sys_openat fs/open.c:1385 [inline]
-	__x64_sys_openat+0x144/0x200 fs/open.c:1385
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x115/0x690 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-	The buggy address belongs to the object at ffff888010fcdc30
-	which belongs to the cache kmalloc-16 of size 16
-	The buggy address is located 0 bytes inside of
-	16-byte region [ffff888010fcdc30, ffff888010fcdc40)
-
-	The buggy address belongs to the physical page:
-	page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x10fcd
-	flags: 0x100000000000000(node=0|zone=1)
-	page_type: f5(slab)
-	raw: 0100000000000000 ffff88800d441640 dead000000000100 dead000000000122
-	raw: 0000000000000000 0000000000550055 00000000f5000000 0000000000000000
-	page dumped because: kasan: bad access detected
-
-	Memory state around the buggy address:
-	ffff888010fcdb00: fc fc 00 04 fc fc fc fc fa fb fc fc fc fc fa fb
-	ffff888010fcdb80: fc fc fc fc fa fb fc fc fc fc 00 07 fc fc fc fc
-	>ffff888010fcdc00: fa fb fc fc fc fc fa fb fc fc fc fc fa fb fc fc
-										^
-	ffff888010fcdc80: fc fc fa fb fc fc fc fc 00 04 fc fc fc fc fa fb
-	ffff888010fcdd00: fc fc fc fc 00 00 fc fc fc fc fa fb fc fc fc fc
-
-Fix by removing the redundant teardown in nouveau_drm_open(),
-since nouveau_cli_init() already does the cleanup work.
-Also clear vmm->page after its freeing.
-
+Fixes: 414fd46e7762 ("fsl/fman: Add FMan support")
 Cc: stable@vger.kernel.org
-Fixes: 20d8a88e557a ("drm/nouveau: tidy up the client init/fini interfaces")
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: LLM
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/03BA723D9E5FF725+20260916103138.2651605-1-peiyang_he@smail.nju.edu.cn
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260917110135.2148068-1-vulab@iscas.ac.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_drm.c |    4 +---
- drivers/gpu/drm/nouveau/nvif/vmm.c    |    1 +
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/fman/fman.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -1123,10 +1123,8 @@ nouveau_drm_open(struct drm_device *dev,
- 	mutex_unlock(&drm->clients_lock);
+--- a/drivers/net/ethernet/freescale/fman/fman.c
++++ b/drivers/net/ethernet/freescale/fman/fman.c
+@@ -2778,6 +2778,7 @@ static struct fman *read_dts_node(struct
+ 	}
  
- done:
--	if (ret && cli) {
--		nouveau_cli_fini(cli);
-+	if (ret && cli)
- 		kfree(cli);
--	}
- 
- 	pm_runtime_mark_last_busy(dev->dev);
- 	pm_runtime_put_autosuspend(dev->dev);
---- a/drivers/gpu/drm/nouveau/nvif/vmm.c
-+++ b/drivers/gpu/drm/nouveau/nvif/vmm.c
-@@ -108,6 +108,7 @@ void
- nvif_vmm_dtor(struct nvif_vmm *vmm)
- {
- 	kfree(vmm->page);
-+	vmm->page = NULL;
- 	nvif_object_dtor(&vmm->object);
- }
- 
+ 	clk_rate = clk_get_rate(clk);
++	clk_put(clk);
+ 	if (!clk_rate) {
+ 		dev_err(&of_dev->dev, "%s: Failed to determine FM%d clock rate\n",
+ 			__func__, fman->dts_params.id);
 
 
