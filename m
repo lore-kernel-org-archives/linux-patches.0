@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C271F31D366;
-	Wed, 30 Sep 2026 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB7A503918;
+	Wed, 30 Sep 2026 18:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791376; cv=none; b=X8fTG5xaoOSCeA7YHm5qFZK1yG1XxiClJnVmNxdqmnENfLKe771MHXoi8qGbVr8nOGd02dq8xWSrzT5c5A6rpOK9oNW49hKCfvbHQA/E/LJZxLU8Qlk9rZyH69sETNFevuoDLC9QzAXtFXZJsi+jfLhJADbISnCXsGuylourDsY=
+	t=1790791379; cv=none; b=q/w5vqUvhPoXzPB1XkfkruyhLi88SF7E5VlY0P3Pk3rqjWLYkbn0a4Zkc44kihLdHsIu82nJxCSjefeGfgZVipI39UZwfhNJnfwbtFsBftBcgxA0Lzwb6eDYivQRNqQ9Eb2xsaqWFlEHPmFhPPTTYpNLwKFcFpGHGvsziy+FLtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791376; c=relaxed/simple;
-	bh=LfcXOJwBN1E6dDPnurOgaZovkjvInI0wr7N/HlsCrvI=;
+	s=arc-20240116; t=1790791379; c=relaxed/simple;
+	bh=h2gX1Mi8M2mRzqWVdGfSVt95RhriYNQcEnTcXr9c2Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6Sn7NtqwTNv3oztaLbQ7s0L0RVLphrhXE9EQLriq1lI/XJ5yVEcznCRDIfc3QQpHURAKUgaTazZZ3ErD2NbcTdv3hnpihKWhmhtOnykbf8C5OlHASgSWXO/JbHPavXn2fmcB75gJ29wB8UGt+G1zzB5ZCXjZci7MAvCZy18DqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCwV5Luu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qp5c4fYXHytdEcMGWaQf+uKkxC9fp5pWW069FOgXUvKGDBYStOefrt0cSHjyty5Akt+xsSyGAVU4mmvxTorUjwZli6ibkImtm32dnKis12wWxd1Qc4q7jdAGb834d8me45R5o7huyz94M/oKQxSVJDaeanFRl9CO2QaMXOZMAxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vf5mIPAY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCwV5Luu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A1B1F000FF;
-	Wed, 30 Sep 2026 18:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vf5mIPAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059D11F000FF;
+	Wed, 30 Sep 2026 18:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791374;
-	bh=SFetaCLa0H5soOxVuMBfXgQDg4aCyjfbr8O/7P/cTi4=;
+	s=korg; t=1790791377;
+	bh=mJ0Xpw+DRzkUN81H7WXsZ0blfi83yePuWdhScHKahuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hCwV5Luu2B2uYMYS4gyat0r/SxPizoH5BLnJnOOt6iznl5etlh5pviZqReaVT4XqO
-	 CbEjFAWDXbnODoaaePDfGMOpFoJatB5uMs5FPtIKEBeyEtGcAdZmMMlq5aOxGpIQrk
-	 Mf/EimOqR+UUpsUwv/JB78hTDCZTvABRBRxvdk5c=
+	b=Vf5mIPAYAoSCOU5ycnPQnj4CZxIZa65JXs5unZMyH6ZoOqJCIZmK1kUwsBZ0CFVWI
+	 Tygx8KuRmsw+KuTPcVOUS6V4n/LsUUUqckZVGxoRQ8QX2/8qCVfPIfsqsKKmdfKdjs
+	 qw1A+Chuk8yxm7oALY9As9UvZgUK4eeBniIKFoTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 281/752] ASoC: ux500: Validate MSP DAI configuration
-Date: Wed, 30 Sep 2026 17:22:31 +0200
-Message-ID: <20260930152404.369461543@linuxfoundation.org>
+Subject: [PATCH 5.15 282/752] ASoC: ux500: remove stedma40 references
+Date: Wed, 30 Sep 2026 17:22:32 +0200
+Message-ID: <20260930152404.391349267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,178 +52,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9ccbacf5a0120964fc1ffacb8151e3347bee9287 ]
+[ Upstream commit aafe9375b386010e28614f58499d199250a16874 ]
 
-Installing channel constraints from hw_params is too late to affect the
-parameters being committed. The driver consequently accepts channel
-counts which disagree with the I2S or TDM setup. It also silently
-truncates out-of-range slot masks and accepts inverted bit clock formats
-which prepare then rejects.
+ux500_pcm_request_chan() is never called because the dma channels
+are already set up from DT. Remove this, along with the
+ux500_msp_dma_params structure.
 
-Validate the selected channel count directly, reject invalid masks
-before changing cached TDM state, and implement all four standard clock
-and frame inversion combinations. Use the requested format in
-validation diagnostics.
-
-Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-4-4b60b002d55a@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230118161110.521504-4-arnd@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 4fb67925f33a ("ASoC: ux500: Request the MSP MMIO resource")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_dai.c | 41 ++++++++++++++++++++++-----------
- sound/soc/ux500/ux500_msp_i2s.c |  7 ++++--
- sound/soc/ux500/ux500_msp_i2s.h |  1 +
- 3 files changed, 33 insertions(+), 16 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c |  4 +--
+ sound/soc/ux500/ux500_msp_i2s.c | 41 +------------------------------
+ sound/soc/ux500/ux500_msp_i2s.h |  9 +------
+ sound/soc/ux500/ux500_pcm.c     | 43 +--------------------------------
+ 4 files changed, 5 insertions(+), 92 deletions(-)
 
 diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
-index 2de62175019af..00e6be71d9637 100644
+index 00e6be71d9637..97f514d89fda2 100644
 --- a/sound/soc/ux500/ux500_msp_dai.c
 +++ b/sound/soc/ux500/ux500_msp_dai.c
-@@ -132,7 +132,16 @@ static int setup_clocking(struct snd_soc_dai *dai,
- 	case SND_SOC_DAIFMT_NB_IF:
- 		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
- 		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
-+		break;
-+
-+	case SND_SOC_DAIFMT_IB_NF:
-+		msp_config->bclk_inverted = true;
-+		break;
+@@ -642,8 +642,8 @@ static int ux500_msp_dai_of_probe(struct snd_soc_dai *dai)
+ 	if (!capture_dma_data)
+ 		return -ENOMEM;
  
-+	case SND_SOC_DAIFMT_IB_IF:
-+		msp_config->bclk_inverted = true;
-+		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
-+		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
- 		break;
+-	playback_dma_data->addr = drvdata->msp->playback_dma_data.tx_rx_addr;
+-	capture_dma_data->addr = drvdata->msp->capture_dma_data.tx_rx_addr;
++	playback_dma_data->addr = drvdata->msp->tx_rx_addr;
++	capture_dma_data->addr = drvdata->msp->tx_rx_addr;
  
- 	default:
-@@ -455,7 +464,6 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 				struct snd_soc_dai *dai)
- {
- 	unsigned int mask, slots_active;
--	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
- 
- 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter.\n",
-@@ -463,9 +471,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 
- 	switch (drvdata->fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
--		snd_pcm_hw_constraint_minmax(runtime,
--				SNDRV_PCM_HW_PARAM_CHANNELS,
--				1, 2);
-+		if (params_channels(params) < 1 || params_channels(params) > 2)
-+			return -EINVAL;
- 		break;
- 
- 	case SND_SOC_DAIFMT_DSP_B:
-@@ -477,9 +484,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 		slots_active = hweight32(mask);
- 		dev_dbg(dai->dev, "TDM-slots active: %d", slots_active);
- 
--		snd_pcm_hw_constraint_single(runtime,
--				SNDRV_PCM_HW_PARAM_CHANNELS,
--				slots_active);
-+		if (!slots_active || params_channels(params) != slots_active)
-+			return -EINVAL;
- 		break;
- 
- 	default:
-@@ -512,20 +518,21 @@ static int ux500_msp_dai_set_dai_fmt(struct snd_soc_dai *dai,
- 	default:
- 		dev_err(dai->dev,
- 			"%s: Error: Unsupported protocol/master (fmt = 0x%x)!\n",
--			__func__, drvdata->fmt);
-+			__func__, fmt);
- 		return -EINVAL;
- 	}
- 
- 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
- 	case SND_SOC_DAIFMT_NB_NF:
- 	case SND_SOC_DAIFMT_NB_IF:
-+	case SND_SOC_DAIFMT_IB_NF:
- 	case SND_SOC_DAIFMT_IB_IF:
- 		break;
- 
- 	default:
- 		dev_err(dai->dev,
- 			"%s: Error: Unsupported inversion (fmt = 0x%x)!\n",
--			__func__, drvdata->fmt);
-+			__func__, fmt);
- 		return -EINVAL;
- 	}
- 
-@@ -559,17 +566,23 @@ static int ux500_msp_dai_set_tdm_slot(struct snd_soc_dai *dai,
- 			__func__, slots);
- 		return -EINVAL;
- 	}
--	drvdata->slots = slots;
- 
--	if (!(slot_width == 16)) {
-+	if (slot_width != 16) {
- 		dev_err(dai->dev, "%s: Error: Unsupported slot-width (%d)!\n",
- 			__func__, slot_width);
- 		return -EINVAL;
- 	}
--	drvdata->slot_width = slot_width;
- 
--	drvdata->tx_mask = tx_mask & cap;
--	drvdata->rx_mask = rx_mask & cap;
-+	if ((tx_mask | rx_mask) & ~cap) {
-+		dev_err(dai->dev, "%s: Slot mask exceeds %d slots\n",
-+			__func__, slots);
-+		return -EINVAL;
-+	}
-+
-+	drvdata->slots = slots;
-+	drvdata->slot_width = slot_width;
-+	drvdata->tx_mask = tx_mask;
-+	drvdata->rx_mask = rx_mask;
- 
- 	return 0;
- }
+ 	playback_dma_data->maxburst = 4;
+ 	capture_dma_data->maxburst = 4;
 diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
-index 5d5efd5074a7d..f36ff74578db1 100644
+index f36ff74578db1..6e0e10cd86e5e 100644
 --- a/sound/soc/ux500/ux500_msp_i2s.c
 +++ b/sound/soc/ux500/ux500_msp_i2s.c
-@@ -203,10 +203,12 @@ static int configure_protocol(struct ux500_msp *msp,
+@@ -379,20 +379,6 @@ static int enable_msp(struct ux500_msp *msp, struct ux500_msp_config *config,
+ 			return status;
+ 	}
  
- 	/* The code below should not be separated. */
- 	temp_reg = readl(msp->registers + MSP_GCR) & ~TX_CLK_POL_RISING;
--	temp_reg |= MSP_TX_CLKPOL_BIT(~protdesc->tx_clk_pol);
-+	temp_reg |= MSP_TX_CLKPOL_BIT(!protdesc->tx_clk_pol ^
-+					  config->bclk_inverted);
- 	writel(temp_reg, msp->registers + MSP_GCR);
- 	temp_reg = readl(msp->registers + MSP_GCR) & ~RX_CLK_POL_RISING;
--	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol);
-+	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol ^
-+					  config->bclk_inverted);
- 	writel(temp_reg, msp->registers + MSP_GCR);
+-	/* Make sure the correct DMA-directions are configured */
+-	if ((config->direction & MSP_DIR_RX) &&
+-			!msp->capture_dma_data.dma_cfg) {
+-		dev_err(msp->dev, "%s: ERROR: MSP RX-mode is not configured!",
+-			__func__);
+-		return -EINVAL;
+-	}
+-	if ((config->direction == MSP_DIR_TX) &&
+-			!msp->playback_dma_data.dma_cfg) {
+-		dev_err(msp->dev, "%s: ERROR: MSP TX-mode is not configured!",
+-			__func__);
+-		return -EINVAL;
+-	}
+-
+ 	reg_val_DMACR = readl(msp->registers + MSP_DMACR);
+ 	if (config->direction & MSP_DIR_RX)
+ 		reg_val_DMACR |= RX_DMA_ENABLE;
+@@ -746,40 +732,17 @@ int ux500_msp_i2s_close(struct ux500_msp *msp, unsigned int dir)
  
- 	return 0;
-@@ -457,6 +459,7 @@ static bool ux500_msp_config_compatible(struct ux500_msp *msp,
- 	       active->data_size == config->data_size &&
- 	       active->def_elem_len == config->def_elem_len &&
- 	       active->clock_provider == config->clock_provider &&
-+	       active->bclk_inverted == config->bclk_inverted &&
- 	       !memcmp(&active->protdesc, &config->protdesc,
- 		       sizeof(active->protdesc));
  }
+ 
+-static int ux500_msp_i2s_of_init_msp(struct platform_device *pdev,
+-				struct ux500_msp *msp);
+-{
+-	msp->playback_dma_data.dma_cfg = devm_kzalloc(&pdev->dev,
+-					sizeof(struct stedma40_chan_cfg),
+-					GFP_KERNEL);
+-	if (!msp->playback_dma_data.dma_cfg)
+-		return -ENOMEM;
+-
+-	msp->capture_dma_data.dma_cfg = devm_kzalloc(&pdev->dev,
+-					sizeof(struct stedma40_chan_cfg),
+-					GFP_KERNEL);
+-	if (!msp->capture_dma_data.dma_cfg)
+-		return -ENOMEM;
+-
+-	return 0;
+-}
+-
+ int ux500_msp_i2s_init_msp(struct platform_device *pdev,
+ 			struct ux500_msp **msp_p)
+ {
+ 	struct resource *res = NULL;
+ 	struct ux500_msp *msp;
+-	int ret;
+ 
+ 	*msp_p = devm_kzalloc(&pdev->dev, sizeof(struct ux500_msp), GFP_KERNEL);
+ 	msp = *msp_p;
+ 	if (!msp)
+ 		return -ENOMEM;
+ 
+-	ret = ux500_msp_i2s_of_init_msp(pdev, msp);
+-	if (ret)
+-		return ret;
+-
+ 	msp->dev = &pdev->dev;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+@@ -789,9 +752,7 @@ int ux500_msp_i2s_init_msp(struct platform_device *pdev,
+ 		return -ENOMEM;
+ 	}
+ 
+-	msp->playback_dma_data.tx_rx_addr = res->start + MSP_DR;
+-	msp->capture_dma_data.tx_rx_addr = res->start + MSP_DR;
+-
++	msp->tx_rx_addr = res->start + MSP_DR;
+ 	msp->registers = devm_ioremap(&pdev->dev, res->start,
+ 				      resource_size(res));
+ 	if (msp->registers == NULL) {
 diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
-index 86a584e18353c..e51dbf9ba92cd 100644
+index e51dbf9ba92cd..983bc84fbf7e2 100644
 --- a/sound/soc/ux500/ux500_msp_i2s.h
 +++ b/sound/soc/ux500/ux500_msp_i2s.h
-@@ -461,6 +461,7 @@ struct ux500_msp_config {
- 	unsigned int def_elem_len;
- 	unsigned int iodelay;
- 	bool clock_provider;
-+	bool bclk_inverted;
+@@ -464,18 +464,11 @@ struct ux500_msp_config {
+ 	bool bclk_inverted;
  };
  
- struct ux500_msp_dma_params {
+-struct ux500_msp_dma_params {
+-	unsigned int data_size;
+-	dma_addr_t tx_rx_addr;
+-	struct stedma40_chan_cfg *dma_cfg;
+-};
+-
+ struct ux500_msp {
+ 	int id;
+ 	void __iomem *registers;
+ 	struct device *dev;
+-	struct ux500_msp_dma_params playback_dma_data;
+-	struct ux500_msp_dma_params capture_dma_data;
++	dma_addr_t tx_rx_addr;
+ 	enum msp_state msp_state;
+ 	int def_elem_len;
+ 	unsigned int dir_busy;
+diff --git a/sound/soc/ux500/ux500_pcm.c b/sound/soc/ux500/ux500_pcm.c
+index c5c0d1c719e29..972913e4c64c5 100644
+--- a/sound/soc/ux500/ux500_pcm.c
++++ b/sound/soc/ux500/ux500_pcm.c
+@@ -15,7 +15,6 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/dmaengine.h>
+ #include <linux/slab.h>
+-#include <linux/platform_data/dma-ste-dma40.h>
+ 
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
+@@ -31,44 +30,6 @@
+ #define UX500_PLATFORM_PERIODS_MAX		48
+ #define UX500_PLATFORM_BUFFER_BYTES_MAX		(2048 * PAGE_SIZE)
+ 
+-static struct dma_chan *ux500_pcm_request_chan(struct snd_soc_pcm_runtime *rtd,
+-	struct snd_pcm_substream *substream)
+-{
+-	struct snd_soc_dai *dai = asoc_rtd_to_cpu(rtd, 0);
+-	u16 per_data_width, mem_data_width;
+-	struct stedma40_chan_cfg *dma_cfg;
+-	struct ux500_msp_dma_params *dma_params;
+-
+-	dma_params = snd_soc_dai_get_dma_data(dai, substream);
+-	dma_cfg = dma_params->dma_cfg;
+-
+-	mem_data_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+-
+-	switch (dma_params->data_size) {
+-	case 32:
+-		per_data_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+-		break;
+-	case 16:
+-		per_data_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+-		break;
+-	case 8:
+-		per_data_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
+-		break;
+-	default:
+-		per_data_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+-	}
+-
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+-		dma_cfg->src_info.data_width = mem_data_width;
+-		dma_cfg->dst_info.data_width = per_data_width;
+-	} else {
+-		dma_cfg->src_info.data_width = per_data_width;
+-		dma_cfg->dst_info.data_width = mem_data_width;
+-	}
+-
+-	return snd_dmaengine_pcm_request_channel(stedma40_filter, dma_cfg);
+-}
+-
+ static int ux500_pcm_prepare_slave_config(struct snd_pcm_substream *substream,
+ 		struct snd_pcm_hw_params *params,
+ 		struct dma_slave_config *slave_config)
+@@ -100,7 +61,6 @@ static int ux500_pcm_prepare_slave_config(struct snd_pcm_substream *substream,
+ }
+ 
+ static const struct snd_dmaengine_pcm_config ux500_dmaengine_of_pcm_config = {
+-	.compat_request_channel = ux500_pcm_request_chan,
+ 	.prepare_slave_config = ux500_pcm_prepare_slave_config,
+ };
+ 
+@@ -109,8 +69,7 @@ int ux500_pcm_register_platform(struct platform_device *pdev)
+ 	int ret;
+ 
+ 	ret = snd_dmaengine_pcm_register(&pdev->dev,
+-					 &ux500_dmaengine_of_pcm_config,
+-					 SND_DMAENGINE_PCM_FLAG_COMPAT);
++					 &ux500_dmaengine_of_pcm_config, 0);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev,
+ 			"%s: ERROR: Failed to register platform '%s' (%d)!\n",
 -- 
 2.53.0
 
