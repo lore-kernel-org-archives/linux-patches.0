@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3A84ABBA5;
-	Wed, 30 Sep 2026 18:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1DD4CC63A;
+	Wed, 30 Sep 2026 18:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791906; cv=none; b=Njeifep1RW3IBucxoELqxqTfSd7kPnrwd2EZDDhA5ZDMD8o3Y56sJ/fbx/9AgCfpxYhixes8RBctsjcqBgq2ulxm8+7y6LMPdGyF/1itdSRA2JayC/zw5juMH9QCKhd62S0Wkm+rlNOGV9atmJngIj74rYmSDqTh2gZYrDsKt00=
+	t=1790791909; cv=none; b=dzUIVpnY/R1xWw22nrm43keg+vPu98d63FLaZlQHbUKk1GKlAK19tD6UkbLBf83pHcbfRBf+KxhdBmF5ixoVpHWPDLaxK63EsqdIxyCLRmFN66d3EBkezUaC9UrkQrXK5I/HjRzzPFrxsPY8Aaeptm24irIG8ecv3stjuVF9U5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791906; c=relaxed/simple;
-	bh=4dyCHt2Ao4AZ/6rUJyrgkai/zytHgbn+4OOJGMwLeMg=;
+	s=arc-20240116; t=1790791909; c=relaxed/simple;
+	bh=IVVd6+A4j4oEQ2VRFv4bSaMdeyLw2sYPvLvf6TqhmkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNPMptCN/NvejKOVWE48Dg0SSdi1LU1SLbE8tNg7n1nMoSU7h7OizGY3N63Gbj7d/Uj/KHEmVAQ6w7QrhKV3KQrHJS70lxN04nVuI0yO3d/HQjr/GhWzaC0snpyeG8TluvNGSEfzxef8bWxbWRak+XrrkHijOm/+ItJMrj9X470=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNTKbizO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jMD5DZJ0m8AW37iwaS3wqbgKuhlRUVth0KUMg4rh/trom9+BnqKUO6EW78MLJpi+OOD7SkL7lgXdbYY/KO0fn5JQqRLay7BSJHWGzxHsfd6RpGNJUzV/UFfFZUzgTR/Ut3wU3onL1qTbviAaNpJqs6dcwJ/i624OaITwaueRutc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uoQRO3rP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNTKbizO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08211F000FF;
-	Wed, 30 Sep 2026 18:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uoQRO3rP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94101F0089D;
+	Wed, 30 Sep 2026 18:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791905;
-	bh=lLPyRH2WmSaft1RKQAuWZf2B1Qe51wwWtF9nlCL7dME=;
+	s=korg; t=1790791908;
+	bh=pNGLz+lGUpVuEP69t6nTUYGd89BCgAXSM11CEiCZ81Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hNTKbizO7oW/EZ+JIeXATrwHr1jvO3tszEyNlHaKl8qnfyxB3xyDER78T+tPU7KNb
-	 LTxQ5k7fRtMoclKqTaDUhs+85uS2DJO+lfWk7wopvCaqcwjRYeuemkGMqBAYKKV/Za
-	 dP/NVdUk6Qd0WmxpCOre/ztCP1rAFeu/pUHT+17U=
+	b=uoQRO3rPiX68mk82iRdEoSH4Rk0Wn/PhxWWftaR8R02blxO2kRrXUV3FKGT9HXKf1
+	 qzlln8xol8fh81CW2Xwu7SongfLpLHToRiFlcknhn9Q6dxEW6J6x87bN3JoUtswq+u
+	 bXKhRITsMtUGzMKJm5YqWv4XeLsFQM5MOaYS18Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 413/752] net: appletalk: fix NULL pointer dereference in aarp_send_ddp()
-Date: Wed, 30 Sep 2026 17:24:43 +0200
-Message-ID: <20260930152407.213770867@linuxfoundation.org>
+	Peng Hao <flyingpeng@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 461/752] wifi: mwifiex: fix IRQ leak using wrong index in MSI-X error path
+Date: Wed, 30 Sep 2026 17:25:31 +0200
+Message-ID: <20260930152408.251848950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,51 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Peng Hao <flyingpenghao@gmail.com>
 
-commit 9e7f36ab5b7bf68463faa5f7b926fea8f35597bb upstream.
+[ Upstream commit a3d722190cdef18da4878b5efc27c3c386dda248 ]
 
-aarp_send_ddp() calls atalk_find_dev_addr(dev) in the LocalTalk fast
-path without checking for NULL. When the device has no AppleTalk
-interface configured (dev->atalk_ptr == NULL), this leads to a NULL
-pointer dereference at the at->s_net access.
+mwifiex_pcie_request_irq() registers each MSI-X vector with a per-index
+dev_id (&card->msix_ctx[i]). On a request_irq() failure the cleanup loop
+"for (j = 0; j < i; j++)" frees msix_entries[j].vector but passes the
+failed index's &card->msix_ctx[i] as the dev_id. free_irq() matches on
+(irq, dev_id), so it fails to find the action registered with
+&card->msix_ctx[j]: the already-requested IRQ j is not freed (leaked) and
+free_irq() warns about freeing a non-existent IRQ. Use &card->msix_ctx[j].
 
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:aarp_send_ddp (net/appletalk/aarp.c:552 (discriminator 2))
- Call Trace:
-  <TASK>
-  atalk_sendmsg (net/appletalk/ddp.c:1715)
-  __sys_sendto (net/socket.c:2265 (discriminator 1))
-  __x64_sys_sendto (net/socket.c:2272)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Add a NULL check consistent with the other callers of
-atalk_find_dev_addr().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260514123806.3085961-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 99074fc1e67b ("mwifiex: enable pcie MSIx interrupt mode support")
+Signed-off-by: Peng Hao <flyingpeng@tencent.com>
+Link: https://patch.msgid.link/20260828111531.56723-1-flyingpeng@tencent.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/appletalk/aarp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/appletalk/aarp.c
-+++ b/net/appletalk/aarp.c
-@@ -573,6 +573,11 @@ int aarp_send_ddp(struct net_device *dev
- 		struct ddpehdr *ddp = (struct ddpehdr *)skb->data;
- 		int ft = 2;
- 
-+		if (!at) {
-+			kfree_skb(skb);
-+			return NET_XMIT_DROP;
-+		}
-+
- 		/*
- 		 * Compressible ?
- 		 *
+diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
+index 8b3f46586654a..09ec5ffd793b2 100644
+--- a/drivers/net/wireless/marvell/mwifiex/pcie.c
++++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
+@@ -3253,7 +3253,7 @@ static int mwifiex_pcie_request_irq(struct mwifiex_adapter *adapter)
+ 					    ret);
+ 				for (j = 0; j < i; j++)
+ 					free_irq(card->msix_entries[j].vector,
+-						 &card->msix_ctx[i]);
++						 &card->msix_ctx[j]);
+ 				pci_disable_msix(pdev);
+ 			} else {
+ 				mwifiex_dbg(adapter, MSG, "MSIx enabled!");
+-- 
+2.53.0
+
 
 
