@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89034F405E;
-	Wed, 30 Sep 2026 18:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88ADE51C056;
+	Wed, 30 Sep 2026 18:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793746; cv=none; b=GBY6pukhwZ3CPZyrc8j6h6dE1pGyQA6r54fU8n3vYBBYY/wrB0mH6eHF48ZfNqnMN77z5mOzFXsm0ay7jzrllq8kRXfEwM+AIg1/t8K73bGd9s6BdR3mhLpq2diQ2U4t7rE1Tqm9QeSslRnIteJYFn3ViD6ioJM5T3QGIDjabMk=
+	t=1790793748; cv=none; b=E5/ZrZRYo/Ww2VimXL0uSwk5TSUV2eU8kz1OP0sXNF44TSYiGZc1ac1sV/1EfbbZ0JRkT/ge61A2U/zz+LpTfKV8rNZKqiAKY6m/II3cbblPO/Wn6cYfUGFylxJFElETQswNaBgXhjurxGoj8rWTBaB5Y3iOzGF2Pj94x1PWD2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793746; c=relaxed/simple;
-	bh=18ubxypm9jJBPCQUwE+HzZVfJszljxLW6SjteJH2bEE=;
+	s=arc-20240116; t=1790793748; c=relaxed/simple;
+	bh=6I0hzc0SZCF1JFUM8I2qvQmbC+KAThYGyePNv89SMJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5+Df6rwCP6nDex62FtDShtIa7gSdlNKLuo80LWl+O2Qdl4uPoaF1DuuQojBI09Km5KOqOsF1LzDWtLe4Myikl8RAbx9cB2LPfAnfgqP5nHD927jbhqSjT5h3TDl4cluMDveNdTB8x0DhfBnw88m87b7wpnro0AoTHUwAk5dis0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJASTSNQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xtb5fWZpI5xGQtb7Y8EA+cB9+M/3ocLp1Uevk7Vw2z6Jx53TryCbm+KqH2ObY7mkl6LF+GMTpP1sU7B4gegkSsHoudN6lQ8/dkHBD43xh4Ta2FWSG96t/sMgEgrz4Q2bUTolZvhWpgB4chGDg/onXLMvCQT1hf5urMRuo9VyQaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0KekKrV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJASTSNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C881F000FF;
-	Wed, 30 Sep 2026 18:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0KekKrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28641F000FF;
+	Wed, 30 Sep 2026 18:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793744;
-	bh=SPtPi3oMByJlqSDJ3EwFuyFyLwsXlvwb/IH+XX5JoR8=;
+	s=korg; t=1790793747;
+	bh=evBUpeiNz2/c7Z8P3ia0uC9DdXHil+7gqz3CH0129Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LJASTSNQp21XMLveQAlD0HSonDe/ieQeCNvHOlFsAv1kSK6lnIjWJQRdjuGoJ97b/
-	 hZoSLcg7Hd2+wpe9t/JpcBYl07ffnbMe/1vEly98Fh+lXmkj00ILIQ5Qrthrb3Pxkg
-	 Vl1tai4+6pk2AOhi3Kq55nGhj8g12GTa1mcpOvWw=
+	b=k0KekKrV0WUdskjKqMNp2C6xCHgDUBaML5Bsc/jvlYeUVq0VMG35Jj1IlTkXyuiIO
+	 6MS3dvqxOeP6joSctkSEB8iKL6zS3Fil7TDQ9s4q91eHKlVuEmZGs+v1t+0YZuYQAR
+	 0EdzU60+sErIQvOGNvlVwZy7P2PzeOJNWlJWK7Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shechenglong <shechenglong@xfusion.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 361/395] drm/client: fix restore of partially initialized client
-Date: Wed, 30 Sep 2026 17:30:23 +0200
-Message-ID: <20260930152348.518394044@linuxfoundation.org>
+	Xie Bo <xb@ultrarisc.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.18 319/395] RISC-V: KVM: Propagate interrupted G-stage faults
+Date: Wed, 30 Sep 2026 17:29:41 +0200
+Message-ID: <20260930152347.580597278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,101 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shechenglong <shechenglong@xfusion.com>
+From: Xie Bo <xb@ultrarisc.com>
 
-[ Upstream commit 1fca688e9443003e33cf30453e7a7560367656c9 ]
+commit f41fb17143df890855d3de980f8eb92dfd595817 upstream.
 
-I got a null-ptr-deref report when closing a DRM file descriptor:
+__kvm_faultin_pfn() reports an interrupted host page fault with
+KVM_PFN_ERR_SIGPENDING. RISC-V currently handles it as a generic
+error PFN and returns -EFAULT.
 
-WARNING: drivers/gpu/drm/drm_atomic.c:2031 at
-__drm_atomic_helper_set_config+0x18e/0x1b0 [drm]
+Return -EINTR for the signal-pending sentinel so callers can distinguish
+an interrupted fault from an invalid userspace mapping. Do not log the
+expected interruption as a vCPU exit error.
 
-Call Trace:
-drm_client_modeset_commit_atomic+0x16b/0x220 [drm]
-drm_client_modeset_commit_locked+0x56/0x160 [drm]
-drm_client_modeset_commit+0x21/0x40 [drm]
-__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0x7b/0x80
-drm_fbdev_client_restore+0xe/0x20 [drm_client_lib]
-drm_client_dev_restore+0x9f/0xc0 [drm]
-drm_release+0xc5/0xe0 [drm]
-
-The warning is followed by a NULL pointer dereference:
-
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-
-RIP:
-__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0x41/0x80
-[drm_kms_helper]
-
-Call Trace:
-drm_fbdev_client_restore+0xe/0x20 [drm_client_lib]
-drm_client_dev_restore+0x9f/0xc0 [drm]
-drm_release+0xc5/0xe0 [drm]
-__fput+0xdc/0x2b0
-__x64_sys_close+0x39/0x80
-do_syscall_64+0x8d/0x460
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-drm_client_register() adds the DRM client to the device client list
-before invoking the initial hotplug callback. If the hotplug callback
-fails, the client remains registered.
-
-For the fbdev client, a failure during drm_fb_helper_initial_config()
-causes the partially initialized fbdev helper to be cleaned up.
-drm_fb_helper_fini() releases fb_helper->info and leaves it NULL.
-
-The fbdev client therefore remains registered even though there is no
-fully initialized framebuffer device.
-
-Later, when userspace closes the DRM file descriptor, drm_release()
-can invoke the restore callbacks of registered DRM clients:
-
-drm_release()
-drm_client_dev_restore()
-drm_fbdev_client_restore()
-drm_fb_helper_restore_fbdev_mode_unlocked()
-
-drm_fbdev_client_restore() currently restores the fbdev state
-unconditionally. For a partially initialized fbdev client this can
-submit an incomplete modeset state and subsequently access fbdev
-state which has not been initialized, resulting in the warning and
-NULL pointer dereference above.
-
-drm_fbdev_client_unregister() already uses fb_helper->info to
-distinguish a fully probed framebuffer device from a partially
-initialized client.
-
-Use the same condition in drm_fbdev_client_restore() and skip restore
-if no framebuffer device has been successfully initialized.
-
-Signed-off-by: shechenglong <shechenglong@xfusion.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 5d08c44e47b9 ("drm/fbdev: Add memory-agnostic fbdev client")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: <stable@vger.kernel.org> # v6.13+
-Link: https://patch.msgid.link/20260907035147.1339-1-shechenglong@xfusion.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9d05c1fee837 ("RISC-V: KVM: Implement stage2 page table programming")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260810051544.3953925-3-xb@ultrarisc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/clients/drm_fbdev_client.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/riscv/kvm/mmu.c       |    2 ++
+ arch/riscv/kvm/vcpu_exit.c |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/clients/drm_fbdev_client.c
-+++ b/drivers/gpu/drm/clients/drm_fbdev_client.c
-@@ -30,6 +30,14 @@ static int drm_fbdev_client_restore(stru
- {
- 	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
+--- a/arch/riscv/kvm/mmu.c
++++ b/arch/riscv/kvm/mmu.c
+@@ -380,6 +380,8 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *v
+ 				vma_pageshift, current);
+ 		return 0;
+ 	}
++	if (is_sigpending_pfn(hfn))
++		return -EINTR;
+ 	if (is_error_noslot_pfn(hfn))
+ 		return -EFAULT;
  
-+	/*
-+	 * The client is registered before the initial fbdev probe.
-+	 * If probing failed, the client remains registered but there
-+	 * is no valid fbdev framebuffer to restore.
-+	 */
-+	if (!fb_helper->info || !fb_helper->fb)
-+		return 0;
-+
- 	drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, force);
+--- a/arch/riscv/kvm/vcpu_exit.c
++++ b/arch/riscv/kvm/vcpu_exit.c
+@@ -248,7 +248,7 @@ int kvm_riscv_vcpu_exit(struct kvm_vcpu
+ 	}
  
- 	return 0;
+ 	/* Print details in-case of error */
+-	if (ret < 0) {
++	if (ret < 0 && ret != -EINTR) {
+ 		kvm_err("VCPU exit error %d\n", ret);
+ 		kvm_err("SEPC=0x%lx SSTATUS=0x%lx HSTATUS=0x%lx\n",
+ 			vcpu->arch.guest_context.sepc,
 
 
