@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA4D3E40E9;
-	Wed, 30 Sep 2026 18:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F8A4F405E;
+	Wed, 30 Sep 2026 18:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791639; cv=none; b=C7TLek2i+n8Bi6K+3SGzPqEXMmHnHk+pHAoUmdqqnQ1Ph/QlOfdwMsiig0AJabh5+gww+5k2Wo7wq7/56uD+/BU9jRfV0s80VNnmnN4XN7YqVtTPqmHTC2WSyAKBANPEoxfr+Hr4aR/PT0IpwzOoa6qqyZmfLWo60T2ujz6f600=
+	t=1790791642; cv=none; b=N8CumjFb1pY4FoBwsTD8QyFz86Ql+Jnqg0MkmxRhZmEJBW2yhXIZDSXovDmf3k3Ltc9xnXODBEpIqJEoQArIQgDuGfxxWKCjZlYYGKW5q8d463mxRUZlQlGi6pIVPliWJrbuLFckcY+f0wxVnWabTn6lTgk1uBgnbtAtJ2qD+xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791639; c=relaxed/simple;
-	bh=RDqpjbRQhbgIOH+QNOTDRPpGN7aEK6VcNBuK7/qjdjs=;
+	s=arc-20240116; t=1790791642; c=relaxed/simple;
+	bh=/xFYwRneoLGpS/1DfpQ6Tn2+643OvH0I4rqK5s2v71o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYtdX8XpWHg+FM2Nc+/TzdUbIEGrLDn8Mpo1dgXuywzyLn3+VV1KZdLa0SR/B/ViZqoPeeXALndjTyAQxfFLgxM0/SmCG7ujnxwLgf/jtGO16C7djcRtB/M5q0ZCb0CAXPuAo4zgbwLyLXLIGRKz66U5avfZVr7nSBH5CEFtzYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAJ4olyy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uaNplvHxXsoBpyfxgkaQns4gYCdL7f1ro6AScrmXE5wOb85910+XBXJ5n+sLvHoynZYnlDACDElkKXM3PGTl7/ep62NAy+mQagYLKeXH7Wo42b0VeDSFkZNJk4Nl/i3q2hn6pIdX7z5I+kbT7VKUQPrRXZ81XTOpCQeJ5Uwenjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/WuErNT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAJ4olyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C491F000FF;
-	Wed, 30 Sep 2026 18:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/WuErNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECC61F000FF;
+	Wed, 30 Sep 2026 18:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791638;
-	bh=6UsgYzyoDv3/YtcxTa0ZzucZaeUAxv80dQQOICjWbzg=;
+	s=korg; t=1790791641;
+	bh=ynaDpKNqypoeQqOwxmj8LjirwpEdROBpQYLCjB8h3/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hAJ4olyyWH45lbx1Vq+I+SSS7GHr+9j3cKhjQbjG6u+Wq4KYYY7/TRfRnWgFr95xe
-	 B0ONEfVn4XpFj/ROn9kjPi1Ty5ugd1QQzwJfZ5uLCZILVoYwxm8rUPCr3W4kUHtjtR
-	 x5b7SRzaQB0VbVVrIlszgqE/qEPPObMuKP6qONhg=
+	b=q/WuErNTK+RmDZcaKe2QBj5spa6+Poz+sJ6PRB6zkJpEBwcY9iBPHXDuVnBtvKmhy
+	 3JXQnILaCIGHDjl2OXB/GjxB3oMqI24AuptaYvOarF3/PgxTW/reJ8TgExA6IvJN41
+	 23SPWxLM0a/1t+r+pPoHvNbJFSs10TSn7ln3p3JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 366/752] Revert "scsi: smartpqi: Fix BUILD_BUG_ON() statements"
-Date: Wed, 30 Sep 2026 17:23:56 +0200
-Message-ID: <20260930152406.200194821@linuxfoundation.org>
+	James Hilliard <james.hilliard1@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.15 375/752] watchdog: sunxi_wdt: preserve boot-enabled watchdog
+Date: Wed, 30 Sep 2026 17:24:05 +0200
+Message-ID: <20260930152406.392136127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -49,72 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit e434879e7e0880de501f745550671cb71a556bc8.
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit aab55360fa11a2c054798a484ac67ad606f563e4 upstream.
+
+sunxi_wdt_probe() unconditionally stops the watchdog even when firmware
+left it running. This opens an unprotected interval during boot and
+prevents CONFIG_WATCHDOG_HANDLE_BOOT_ENABLED from taking over the active
+watchdog.
+
+Detect an enabled watchdog and decode its programmed interval. Preserve
+representable timeouts, and round the 0.5-second interval up to the
+minimum representable one-second timeout. Use the configured timeout for
+reserved interval encodings. Set the Linux reset mode and ping the
+watchdog without clearing its enable bit, then mark it hardware-running
+before registration so the watchdog core services it until userspace
+takes control. Leave disabled watchdogs untouched.
+
+Fixes: d00680ed0026 ("watchdog: sunxi: New watchdog driver for Allwinner A10/A13")
+Cc: stable@vger.kernel.org
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Link: https://patch.msgid.link/20260827-submit-sunxi-wdt-boot-enabled-v1-v2-1-610d37dccc97@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/smartpqi/smartpqi_init.c | 5 +----
- drivers/scsi/smartpqi/smartpqi_sis.c  | 2 +-
- drivers/scsi/smartpqi/smartpqi_sis.h  | 1 -
- 3 files changed, 2 insertions(+), 6 deletions(-)
+ drivers/watchdog/sunxi_wdt.c |   45 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 1df17ef2ec93a..6ecc56fb9fb25 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -54,7 +54,6 @@ MODULE_DESCRIPTION("Driver for Microchip Smart Family Controller version "
- MODULE_VERSION(DRIVER_VERSION);
- MODULE_LICENSE("GPL");
- 
--static void pqi_verify_structures(void);
- static void pqi_take_ctrl_offline(struct pqi_ctrl_info *ctrl_info,
- 	enum pqi_ctrl_shutdown_reason ctrl_shutdown_reason);
- static void pqi_ctrl_offline_worker(struct work_struct *work);
-@@ -9296,8 +9295,6 @@ static int __init pqi_init(void)
- 	int rc;
- 
- 	pr_info(DRIVER_NAME "\n");
--	pqi_verify_structures();
--	sis_verify_structures();
- 
- 	pqi_sas_transport_template = sas_attach_transport(&pqi_sas_transport_functions);
- 	if (!pqi_sas_transport_template)
-@@ -9321,7 +9318,7 @@ static void __exit pqi_cleanup(void)
- module_init(pqi_init);
- module_exit(pqi_cleanup);
- 
--static void pqi_verify_structures(void)
-+static void __attribute__((unused)) verify_structures(void)
- {
- 	BUILD_BUG_ON(offsetof(struct pqi_ctrl_registers,
- 		sis_host_to_ctrl_doorbell) != 0x20);
-diff --git a/drivers/scsi/smartpqi/smartpqi_sis.c b/drivers/scsi/smartpqi/smartpqi_sis.c
-index f48ffdc465563..d66eb8ea161c5 100644
---- a/drivers/scsi/smartpqi/smartpqi_sis.c
-+++ b/drivers/scsi/smartpqi/smartpqi_sis.c
-@@ -479,7 +479,7 @@ int sis_wait_for_fw_triage_completion(struct pqi_ctrl_info *ctrl_info)
- 	return rc;
+--- a/drivers/watchdog/sunxi_wdt.c
++++ b/drivers/watchdog/sunxi_wdt.c
+@@ -125,6 +125,38 @@ static int sunxi_wdt_ping(struct watchdo
+ 	return 0;
  }
  
--void sis_verify_structures(void)
-+static void __attribute__((unused)) verify_structures(void)
++static bool sunxi_wdt_is_running(struct watchdog_device *wdt_dev)
++{
++	struct sunxi_wdt_dev *sunxi_wdt = watchdog_get_drvdata(wdt_dev);
++	const struct sunxi_wdt_reg *regs = sunxi_wdt->wdt_regs;
++
++	return readl(sunxi_wdt->wdt_base + regs->wdt_mode) & WDT_MODE_EN;
++}
++
++static unsigned int sunxi_wdt_get_timeout(struct watchdog_device *wdt_dev)
++{
++	struct sunxi_wdt_dev *sunxi_wdt = watchdog_get_drvdata(wdt_dev);
++	const struct sunxi_wdt_reg *regs = sunxi_wdt->wdt_regs;
++	unsigned int timeout;
++	u32 interval;
++
++	interval = readl(sunxi_wdt->wdt_base + regs->wdt_mode);
++	interval >>= regs->wdt_timeout_shift;
++	interval &= WDT_TIMEOUT_MASK;
++	/* Round the 0.5-second interval up to the minimum representable timeout. */
++	if (!interval)
++		return WDT_MIN_TIMEOUT;
++
++	for (timeout = WDT_MIN_TIMEOUT;
++	     timeout < ARRAY_SIZE(wdt_timeout_map); timeout++) {
++		if (wdt_timeout_map[timeout] == interval)
++			return timeout;
++	}
++
++	/* Reserved interval encoding. */
++	return 0;
++}
++
+ static int sunxi_wdt_set_timeout(struct watchdog_device *wdt_dev,
+ 		unsigned int timeout)
  {
- 	BUILD_BUG_ON(offsetof(struct sis_base_struct,
- 		revision) != 0x0);
-diff --git a/drivers/scsi/smartpqi/smartpqi_sis.h b/drivers/scsi/smartpqi/smartpqi_sis.h
-index 5f3575261a8ed..bd92ff49f3855 100644
---- a/drivers/scsi/smartpqi/smartpqi_sis.h
-+++ b/drivers/scsi/smartpqi/smartpqi_sis.h
-@@ -12,7 +12,6 @@
- #if !defined(_SMARTPQI_SIS_H)
- #define _SMARTPQI_SIS_H
+@@ -231,6 +263,7 @@ static int sunxi_wdt_probe(struct platfo
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct sunxi_wdt_dev *sunxi_wdt;
++	unsigned int running_timeout;
+ 	int err;
  
--void sis_verify_structures(void);
- int sis_wait_for_ctrl_ready(struct pqi_ctrl_info *ctrl_info);
- int sis_wait_for_ctrl_ready_resume(struct pqi_ctrl_info *ctrl_info);
- bool sis_is_firmware_running(struct pqi_ctrl_info *ctrl_info);
--- 
-2.53.0
-
+ 	sunxi_wdt = devm_kzalloc(dev, sizeof(*sunxi_wdt), GFP_KERNEL);
+@@ -258,7 +291,17 @@ static int sunxi_wdt_probe(struct platfo
+ 
+ 	watchdog_set_drvdata(&sunxi_wdt->wdt_dev, sunxi_wdt);
+ 
+-	sunxi_wdt_stop(&sunxi_wdt->wdt_dev);
++	if (sunxi_wdt_is_running(&sunxi_wdt->wdt_dev)) {
++		running_timeout = sunxi_wdt_get_timeout(&sunxi_wdt->wdt_dev);
++		if (running_timeout)
++			sunxi_wdt->wdt_dev.timeout = running_timeout;
++
++		err = sunxi_wdt_start(&sunxi_wdt->wdt_dev);
++		if (err)
++			return err;
++
++		set_bit(WDOG_HW_RUNNING, &sunxi_wdt->wdt_dev.status);
++	}
+ 
+ 	watchdog_stop_on_reboot(&sunxi_wdt->wdt_dev);
+ 	err = devm_watchdog_register_device(dev, &sunxi_wdt->wdt_dev);
 
 
