@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240AD1E5B9A;
-	Wed, 30 Sep 2026 16:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18D94E324C;
+	Wed, 30 Sep 2026 16:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786771; cv=none; b=c/MDbnUY6Yb65aA0dZ2QxT74c9BBAoSi+0YmZXur9TiAu4WMOQJL8yPEdUAAezi3V27gGhMKWXrBSDBWBCQq5pm2jkuSvvgSDIdEwXWtvW5DCTczH88rVKOXM7mwbx1Xzhba51ba3EEei9cqLUwMyJaI7bflMdJZTikyF9Sflt0=
+	t=1790786774; cv=none; b=YrvFYRtlEbCqtbZ8cwnGliAiSotG6ByqEflkFEPzfWuyLPfc1y7rxLSKP0zDxQW5c3Z+kXCmsCs4yrto1Uti06zX2s/loKLxOasHAedEnNyUF/n0+XbOAehFinA5e7yVX0AyCa3sT2Sdnpn9WWzl6gIV3bX1qASrYUhz5F1wTu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786771; c=relaxed/simple;
-	bh=Mm4kk6iyo4qvmE3x92yuUW526UzhcSeHf+nNEwUzw3Q=;
+	s=arc-20240116; t=1790786774; c=relaxed/simple;
+	bh=h1SZMIY29VHki1T+UcAvK96OhYlST2s4osHmJEwIQIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5R4VpE7lytY9lX0F25o/cjwpgjeOF3b/EaJYIjeP3lwp1IIjWrS+u/+ca/SIe626SVGNP6lQqet/4mqi8W59CKRcuM3BaT5BuWFNAIv9HCsMuld18vOHZy6wgeTVSfRh9T4P9T/0xkiovtxq3ML1eH6E+Rxq4h/R1r5d6YbRrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/GQ/eOM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CdOJG7hbyRZTn3e3MbhCi5wT/jekKbeRU/cV3iNZmKwyoP92vh4uxiKmlmkoQ+5f8gp0pCOo8KyjTOlEUT4H5F6eleImOqszaF+HmgsXvtdp3ZRB962h6NvSpBf+InjOyhn3vGP4SuM45xXs+JqoMFPV4LuT9oQ/c4+VmTzguso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3DDezKt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/GQ/eOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1681F000FF;
-	Wed, 30 Sep 2026 16:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3DDezKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0631F000FF;
+	Wed, 30 Sep 2026 16:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786770;
-	bh=Ae0/zJsC4w7+2fc/l1OqVKihQK1TTcaVs2u9NkHk6o4=;
+	s=korg; t=1790786772;
+	bh=i4mWavE9hcSwxQ4DGwOW0eZPeCkr4psOFf85S22kqkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/GQ/eOMvd8SzR03dey7ghzKRf68X7rhZujuTJyRn7OS1RTNIweAqzOGj1jxlITOR
-	 2+6WYPuBcWni4sJ4MBUt9ydnii5i18e6w0AKTpKwzIBBpLhE0loek7Vkr+Huz/NetU
-	 jbEhPFjqjksRZ0E+iXpmY3tSMVnsNL6xse4Nyayg=
+	b=D3DDezKtODFwAE/S6EICbhtwXScuTHEiNIuvYMI456DD3bKc+zym407lOREMhu63K
+	 ESWaIE98n8zbN2EXmhaa3r1HlbFd/x96ImzH+GsH+IMROxY3JRoBJIWi0541Dhc3lO
+	 cpjMJ0iF4ju9zd4YYBBtECieLeCzyowPN2gQ+xio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	James Burton <jamesburton@meta.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 934/982] ipv6: sr: enforce exact attribute length for SEG6_ATTR_DST
-Date: Wed, 30 Sep 2026 17:27:50 +0200
-Message-ID: <20260930152436.802678043@linuxfoundation.org>
+Subject: [PATCH 6.1 925/982] tipc: reject invalid and unexpected GRP_ACK_MSG to prevent bc_ackers underflow
+Date: Wed, 30 Sep 2026 17:27:41 +0200
+Message-ID: <20260930152436.609735805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,58 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 2d959c75c27f90e9ec489d18ce5ee6b852ad4741 upstream.
+commit 99cc2a62e07a44a22254d7beca9ef1f8ad886d0d upstream.
 
-In seg6_genl_policy, SEG6_ATTR_DST is defined with .type = NLA_BINARY and
-.len = sizeof(struct in6_addr). For NLA_BINARY, .len only enforces the
-maximum payload length and permits shorter payloads (e.g., 0 bytes).
-When seg6_genl_set_tunsrc() copies sizeof(struct in6_addr) bytes via
-kmemdup(val, sizeof(*val), GFP_KERNEL), a short SEG6_ATTR_DST attribute
-triggers a 16-byte out-of-bounds read past skb->tail into uninitialized
-skb->head memory, which is stored in sdata->tun_src and leaked back to
-userspace via SEG6_CMD_GET_TUNSRC.
+Commit 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate
+GRP_ACK_MSG") rejected duplicate/stale ACKs in tipc_group_proto_rcv()
+by returning early when less_eq(acked, m->bc_acked).
 
-Switch SEG6_ATTR_DST in seg6_genl_policy to
-NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)) so that generic netlink
-validation rejects any attribute whose length is not exactly
-sizeof(struct in6_addr) with -ERANGE.
+However, that check remains incomplete in two ways:
 
-Tested in QEMU against Linux 7.3.0-rc3 by sending a SEG6_CMD_SET_TUNSRC
-Generic Netlink message with a 0-byte SEG6_ATTR_DST attribute followed
-by SEG6_CMD_GET_TUNSRC. On the unfixed kernel, SEG6_CMD_SET_TUNSRC
-succeeds (err = 0) and SEG6_CMD_GET_TUNSRC leaks 16 bytes of
-uninitialized kernel heap memory (tun_src =
-836a61ecc4d25a1042a8d60411cfb378); with this patch applied,
-SEG6_CMD_SET_TUNSRC is rejected by netlink policy validation with
--ERANGE (-34) and tun_src remains zeroed.
+1. When grp->bc_ackers is zero (e.g. on a quiet group, when replicast
+   ACKs were not requested, or after all expected members have already
+   acknowledged), an unexpected GRP_ACK_MSG with acked > m->bc_acked
+   passes less_eq() and unconditionally decrements grp->bc_ackers.
+   Because bc_ackers is a u16, this wraps to 65535, causing
+   tipc_group_bc_cong() to permanently report congestion and blocking
+   all future group broadcasts on the socket.
 
-Fixes: 915d7e5e5930 ("ipv6: sr: add code base for control plane support of SR-IPv6")
+2. During an active broadcast round (grp->bc_ackers > 0), the sender
+   transmits packet S and advances grp->bc_snd_nxt to S + 1. Receivers
+   increment their expected counter to S + 1 upon consuming packet S,
+   so the only valid ACK value for the current round is strictly
+   acked == grp->bc_snd_nxt.
+
+   However, tipc_group_update_bc_members() initializes each member's
+   m->bc_acked to prev = grp->bc_snd_nxt - 1 (S - 1 before increment).
+   This leaves a 2-sequence gap (S - 1 to S + 1) in sequence space.
+   An incoming ACK is therefore neither rejected as duplicate nor
+   prevented from decrementing grp->bc_ackers if an unexpected or stale
+   value (such as S) is received. A member sending acked = S followed
+   by acked = S + 1 could decrement grp->bc_ackers twice in the same
+   round, prematurely clearing bc_ackers or underflowing it.
+
+Fix this by:
+- Dropping GRP_ACK_MSG immediately if grp->bc_ackers is zero.
+- Requiring acked == grp->bc_snd_nxt and rejecting duplicates where
+  m->bc_acked == acked. Because replicast broadcast rounds are strictly
+  sequential, only grp->bc_snd_nxt can be acknowledged, and each member
+  can acknowledge at most once per round.
+
+Note that a related pre-existing issue in tipc_group_delete_member()
+(where grp->bc_ackers decrementing to zero upon member departure does
+not restore *grp->open or trigger a socket wakeup) will be addressed
+in a separate patch.
+
+Fixes: 48a5fe38772b ("tipc: fix bc_ackers underflow on duplicate GRP_ACK_MSG")
+Fixes: 2f487712b893 ("tipc: guarantee that group broadcast doesn't bypass group unicast")
+Reported-by: James Burton <jamesburton@meta.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260921044025.1535982-1-benquike@gmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260913044233.193927-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6.c |    4 ++--
+ net/tipc/group.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -140,8 +140,8 @@ out:
- static struct genl_family seg6_genl_family;
- 
- static const struct nla_policy seg6_genl_policy[SEG6_ATTR_MAX + 1] = {
--	[SEG6_ATTR_DST]				= { .type = NLA_BINARY,
--		.len = sizeof(struct in6_addr) },
-+	[SEG6_ATTR_DST]				=
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
- 	[SEG6_ATTR_DSTLEN]			= { .type = NLA_S32, },
- 	[SEG6_ATTR_HMACKEYID]		= { .type = NLA_U32, },
- 	[SEG6_ATTR_SECRET]			= { .type = NLA_BINARY, },
+--- a/net/tipc/group.c
++++ b/net/tipc/group.c
+@@ -797,10 +797,10 @@ void tipc_group_proto_rcv(struct tipc_gr
+ 		tipc_group_open(m, usr_wakeup);
+ 		return;
+ 	case GRP_ACK_MSG:
+-		if (!m)
++		if (!m || !grp->bc_ackers)
+ 			return;
+ 		acked = msg_grp_bc_acked(hdr);
+-		if (less_eq(acked, m->bc_acked))
++		if (acked != grp->bc_snd_nxt || m->bc_acked == acked)
+ 			return;
+ 		m->bc_acked = acked;
+ 		if (--grp->bc_ackers)
 
 
