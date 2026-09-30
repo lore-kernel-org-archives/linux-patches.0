@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F8A360ECA;
-	Wed, 30 Sep 2026 18:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA807309EF2;
+	Wed, 30 Sep 2026 18:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794556; cv=none; b=UjcDtG2+R+UQgZn0QYoBlf3GivB/y6dVR8pxJRk6NL0o+QlGRXNj4998jPyyTBUtHyrMvyFkku5zBp0ijF8p7eJ9SKTQjADsQ8agrbBiQSUDqDa/HzB+Wq8g51C/nPziLsddyq52QPwqoL/O5xZy+Ppd2dZODRDvCboT4IWEpKI=
+	t=1790794559; cv=none; b=MuXbUI7vhCyoUqY278tBLK7Hs0n7y7Nkwk9JrIg8IrRYRL6Ver1IFEbr6dHRuH8HmErcn+xkwHlvxIsqKpSUzm0Pzcui/2lkA0kFjAU3qvS/j8aAWaCnbjnYuJM0kML32iT5saLKDDMpdsH8Dqk3STLLhXxS6HeHZsBFNh8ZLqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794556; c=relaxed/simple;
-	bh=z+8PDwBeZm0rdNQ7uDx9tMxs/dLCwybiXQrsoGtr+rY=;
+	s=arc-20240116; t=1790794559; c=relaxed/simple;
+	bh=vsPu+AEuvIbsUqNdZ7M+wyPLrGzvZL7at1olTHP4QE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKe4btvJRg2tkLrWMSY9cT/Ya7vmPwt7y17ueifbzVrvE438eUS6Iz0LbHQveQLR2uMSzw0iTA4pUYknodryX0EN/aHDznF5I7u+GZSetrbikrGwXjJD/Kbovn6ucr1//G0zoMluskNQ5bRePOxdIzGR7wwvvRIdMVsHBFZkMUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6tjGED4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ih8102CG9Codp/42/wpBbV8l7eBeUBQVEmDqkzMhn763P8eS9FiM/LbvInqDpxpETb3OQn7XXasxiJts9r5uxt++lpAQNOGUqM89BGDHmVTuFfI14acnFWURGc87NMuy4R02kE9cN+Ppl+6v5Ro0QkR+/KZIgvSKPI+/+X5bE2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTBIIk/8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6tjGED4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACBE1F000FF;
-	Wed, 30 Sep 2026 18:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTBIIk/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC1A1F000FF;
+	Wed, 30 Sep 2026 18:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794554;
-	bh=hCb4SJOzp5/lcfhFDhD3n9Gt6rJk6fKZfrmolf2ZTDA=;
+	s=korg; t=1790794557;
+	bh=HG8RVuZSkQeaAoL/9nM2ujY2GE0m51j73D0drOax7+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L6tjGED4upxjifMn0aJS60CFK7WPLZRCqt8rNI2b64Vh6I4mysIbWXIWeAMLqX1Xx
-	 YioHdWOV9ixfjurJUiMMRDuWCxX5ObL0Olvcbbor8mT52r8Ef1mimzdHPtBRf11yMi
-	 v5SLvk3NMvbtQW/Ttfo6mI1P2tiVyCMYNNVDn2Mo=
+	b=WTBIIk/81Nvmcg+57HelicKIEv6PzMLYudJ+JIUoAn788itzUOVouBx82zupi+gf6
+	 DUV0DY3d7jN9e3RjYkSAZ1sQuGSUGiuWDXdIlbVCJNU4Q+VUt98+PVtFrTmQEDXnsf
+	 DBppKE+d9DV4jDotvXHlOqk34b1jyeOaOgCpjtok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0252/1193] ksmbd: fix lease break and ack state handling
-Date: Wed, 30 Sep 2026 17:15:36 +0200
-Message-ID: <20260930152439.781138156@linuxfoundation.org>
+Subject: [PATCH 6.6 0253/1193] ksmbd: validate SMB2 lease create contexts
+Date: Wed, 30 Sep 2026 17:15:37 +0200
+Message-ID: <20260930152439.801636946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,221 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 5015191096db311759fef98769270336cd8b1324 ]
+[ Upstream commit b69be2c58615950ee7353b61a21acdf8508c0cbb ]
 
-Do not skip valid lease states containing WRITE_CACHING when breaking
-level-II/read leases for writes and truncates.
+Validate SMB2 lease context lengths, requested lease state bits, and v2
+flags before using the context. Return errors via ERR_PTR so CREATE can
+distinguish a missing lease context from a malformed one.
 
-Handle lease break acknowledgments according to the SMB2 rule that the
-acknowledged state must be a subset of the server's break target. Apply
-the acknowledged state directly and keep the break pending on failed ACKs.
+Also ignore lease v2 contexts for SMB 2.1, where they are not valid.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c  |  24 +++------
- fs/smb/server/smb2pdu.c | 106 ++++++++++------------------------------
- 2 files changed, 34 insertions(+), 96 deletions(-)
+ fs/smb/server/oplock.c  | 33 ++++++++++++++++++++++++++++-----
+ fs/smb/server/smb2pdu.c | 24 +++++++++++++++++++++++-
+ 2 files changed, 51 insertions(+), 6 deletions(-)
 
 diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 296eb3db37355..2ae3d36e05abf 100644
+index 2ae3d36e05abf..ed701b254efdd 100644
 --- a/fs/smb/server/oplock.c
 +++ b/fs/smb/server/oplock.c
-@@ -1485,14 +1485,8 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
- 			continue;
- 		}
- 
--		if (brk_op->is_lease && (brk_op->o_lease->state &
--		    (~(SMB2_LEASE_READ_CACHING_LE |
--				SMB2_LEASE_HANDLE_CACHING_LE)))) {
--			ksmbd_debug(OPLOCK, "unexpected lease state(0x%x)\n",
--				    brk_op->o_lease->state);
--			goto next;
--		} else if (brk_op->level !=
--				SMB2_OPLOCK_LEVEL_II) {
-+		if (!brk_op->is_lease &&
-+		    brk_op->level != SMB2_OPLOCK_LEVEL_II) {
- 			ksmbd_debug(OPLOCK, "unexpected oplock(0x%x)\n",
- 				    brk_op->level);
- 			goto next;
-@@ -1553,15 +1547,13 @@ void smb_break_all_oplock(struct ksmbd_work *work, struct ksmbd_file *fp)
+@@ -5,6 +5,7 @@
   */
- __u8 smb2_map_lease_to_oplock(__le32 lease_state)
- {
--	if (lease_state == (SMB2_LEASE_HANDLE_CACHING_LE |
--			    SMB2_LEASE_READ_CACHING_LE |
--			    SMB2_LEASE_WRITE_CACHING_LE)) {
-+	if ((lease_state & SMB2_LEASE_WRITE_CACHING_LE) &&
-+	    (lease_state & SMB2_LEASE_HANDLE_CACHING_LE)) {
- 		return SMB2_OPLOCK_LEVEL_BATCH;
--	} else if (lease_state != SMB2_LEASE_WRITE_CACHING_LE &&
--		 lease_state & SMB2_LEASE_WRITE_CACHING_LE) {
--		if (!(lease_state & SMB2_LEASE_HANDLE_CACHING_LE))
--			return SMB2_OPLOCK_LEVEL_EXCLUSIVE;
--	} else if (lease_state & SMB2_LEASE_READ_CACHING_LE) {
-+	} else if (lease_state & SMB2_LEASE_WRITE_CACHING_LE) {
-+		return SMB2_OPLOCK_LEVEL_EXCLUSIVE;
-+	} else if (lease_state & (SMB2_LEASE_READ_CACHING_LE |
-+				  SMB2_LEASE_HANDLE_CACHING_LE)) {
- 		return SMB2_OPLOCK_LEVEL_II;
- 	}
- 	return 0;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 807bfcebb5c24..b76a00fe93d7e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8743,16 +8743,17 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 	ksmbd_fd_put(work, fp);
- }
  
--static int check_lease_state(struct lease *lease, __le32 req_state)
-+static bool smb2_lease_state_valid(__le32 state)
- {
--	if ((lease->new_state ==
--	     (SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE)) &&
--	    !(req_state & SMB2_LEASE_WRITE_CACHING_LE)) {
--		lease->new_state = req_state;
--		return 0;
--	}
-+	return !(state & ~(SMB2_LEASE_READ_CACHING_LE |
-+			   SMB2_LEASE_HANDLE_CACHING_LE |
-+			   SMB2_LEASE_WRITE_CACHING_LE));
-+}
+ #include <linux/moduleparam.h>
++#include <linux/err.h>
  
--	if (lease->new_state == req_state)
-+static int check_lease_state(struct lease *lease, __le32 req_state)
-+{
-+	if (smb2_lease_state_valid(req_state) &&
-+	    !(req_state & ~lease->new_state))
- 		return 0;
+ #include "glob.h"
+ #include "oplock.h"
+@@ -19,6 +20,20 @@
+ static LIST_HEAD(lease_table_list);
+ static DEFINE_RWLOCK(lease_list_lock);
  
- 	return 1;
-@@ -8770,9 +8771,7 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 	struct smb2_lease_ack *req;
- 	struct smb2_lease_ack *rsp;
- 	struct oplock_info *opinfo;
--	__le32 err = 0;
- 	int ret = 0;
--	unsigned int lease_change_type;
- 	__le32 lease_state;
- 	struct lease *lease;
- 
-@@ -8796,80 +8795,23 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	if (check_lease_state(lease, req->LeaseState)) {
--		rsp->hdr.Status = STATUS_REQUEST_NOT_ACCEPTED;
--		ksmbd_debug(OPLOCK,
--			    "req lease state: 0x%x, expected state: 0x%x\n",
--			    req->LeaseState, lease->new_state);
--		goto err_out;
--	}
--
- 	if (!atomic_read(&opinfo->breaking_cnt)) {
- 		rsp->hdr.Status = STATUS_UNSUCCESSFUL;
- 		goto err_out;
- 	}
- 
--	/* check for bad lease state */
--	if (req->LeaseState &
--	    (~(SMB2_LEASE_READ_CACHING_LE | SMB2_LEASE_HANDLE_CACHING_LE))) {
--		err = STATUS_INVALID_OPLOCK_PROTOCOL;
--		if (lease->state & SMB2_LEASE_WRITE_CACHING_LE)
--			lease_change_type = OPLOCK_WRITE_TO_NONE;
--		else
--			lease_change_type = OPLOCK_READ_TO_NONE;
--		ksmbd_debug(OPLOCK, "handle bad lease state 0x%x -> 0x%x\n",
--			    le32_to_cpu(lease->state),
--			    le32_to_cpu(req->LeaseState));
--	} else if (lease->state == SMB2_LEASE_READ_CACHING_LE &&
--		   req->LeaseState != SMB2_LEASE_NONE_LE) {
--		err = STATUS_INVALID_OPLOCK_PROTOCOL;
--		lease_change_type = OPLOCK_READ_TO_NONE;
--		ksmbd_debug(OPLOCK, "handle bad lease state 0x%x -> 0x%x\n",
--			    le32_to_cpu(lease->state),
--			    le32_to_cpu(req->LeaseState));
--	} else {
--		/* valid lease state changes */
--		err = STATUS_INVALID_DEVICE_STATE;
--		if (req->LeaseState == SMB2_LEASE_NONE_LE) {
--			if (lease->state & SMB2_LEASE_WRITE_CACHING_LE)
--				lease_change_type = OPLOCK_WRITE_TO_NONE;
--			else
--				lease_change_type = OPLOCK_READ_TO_NONE;
--		} else if (req->LeaseState & SMB2_LEASE_READ_CACHING_LE) {
--			if (lease->state & SMB2_LEASE_WRITE_CACHING_LE)
--				lease_change_type = OPLOCK_WRITE_TO_READ;
--			else
--				lease_change_type = OPLOCK_READ_HANDLE_TO_READ;
--		} else {
--			lease_change_type = 0;
--		}
--	}
--
--	switch (lease_change_type) {
--	case OPLOCK_WRITE_TO_READ:
--		ret = opinfo_write_to_read(opinfo);
--		break;
--	case OPLOCK_READ_HANDLE_TO_READ:
--		ret = opinfo_read_handle_to_read(opinfo);
--		break;
--	case OPLOCK_WRITE_TO_NONE:
--		ret = opinfo_write_to_none(opinfo);
--		break;
--	case OPLOCK_READ_TO_NONE:
--		ret = opinfo_read_to_none(opinfo);
--		break;
--	default:
--		ksmbd_debug(OPLOCK, "unknown lease change 0x%x -> 0x%x\n",
--			    le32_to_cpu(lease->state),
--			    le32_to_cpu(req->LeaseState));
--	}
--
--	if (ret < 0) {
--		rsp->hdr.Status = err;
-+	if (check_lease_state(lease, req->LeaseState)) {
-+		rsp->hdr.Status = STATUS_REQUEST_NOT_ACCEPTED;
-+		ksmbd_debug(OPLOCK,
-+			    "req lease state: 0x%x, expected state: 0x%x\n",
-+			    req->LeaseState, lease->new_state);
- 		goto err_out;
- 	}
- 
--	lease_state = lease->state;
-+	lease_state = req->LeaseState;
-+	lease->state = lease_state;
-+	lease->new_state = SMB2_LEASE_NONE_LE;
-+	opinfo->level = smb2_map_lease_to_oplock(lease_state);
- 
- 	rsp->StructureSize = cpu_to_le16(36);
- 	rsp->Reserved = 0;
-@@ -8878,16 +8820,20 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 	rsp->LeaseState = lease_state;
- 	rsp->LeaseDuration = 0;
- 	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_lease_ack));
--	if (ret) {
--err_out:
--		smb2_set_err_rsp(work);
--	}
-+	if (ret)
-+		goto err_out;
- 
- 	opinfo->op_state = OPLOCK_STATE_NONE;
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- 	atomic_dec(&opinfo->breaking_cnt);
- 	wake_up_interruptible_all(&opinfo->oplock_brk);
- 	opinfo_put(opinfo);
-+	return;
++#define SMB2_LEASE_STATE_MASK_LE	(SMB2_LEASE_READ_CACHING_LE | \
++					 SMB2_LEASE_HANDLE_CACHING_LE | \
++					 SMB2_LEASE_WRITE_CACHING_LE)
 +
-+err_out:
-+	smb2_set_err_rsp(work);
-+	opinfo_put(opinfo);
-+	return;
++static bool lease_state_valid(__le32 state)
++{
++	return !(state & ~SMB2_LEASE_STATE_MASK_LE);
++}
++
++static bool lease_v2_flags_valid(__le32 flags)
++{
++	return !(flags & ~SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE);
++}
++
+ /**
+  * alloc_opinfo() - allocate a new opinfo object for oplock info
+  * @work:	smb work
+@@ -1621,12 +1636,14 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 	struct lease_ctx_info *lreq;
+ 
+ 	cc = smb2_find_context_vals(req, SMB2_CREATE_REQUEST_LEASE, 4);
+-	if (IS_ERR_OR_NULL(cc))
++	if (IS_ERR(cc))
++		return ERR_CAST(cc);
++	if (!cc)
+ 		return NULL;
+ 
+ 	lreq = kzalloc(sizeof(struct lease_ctx_info), GFP_KERNEL);
+ 	if (!lreq)
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	if (sizeof(struct lease_context_v2) == le32_to_cpu(cc->DataLength)) {
+ 		struct create_lease_v2 *lc = (struct create_lease_v2 *)cc;
+@@ -1640,11 +1657,14 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 		lreq->flags = lc->lcontext.LeaseFlags;
+ 		lreq->epoch = lc->lcontext.Epoch;
+ 		lreq->duration = lc->lcontext.LeaseDuration;
++		if (!lease_state_valid(lreq->req_state) ||
++		    !lease_v2_flags_valid(lreq->flags))
++			goto err_out;
+ 		if (lreq->flags == SMB2_LEASE_FLAG_PARENT_LEASE_KEY_SET_LE)
+ 			memcpy(lreq->parent_lease_key, lc->lcontext.ParentLeaseKey,
+ 			       SMB2_LEASE_KEY_SIZE);
+ 		lreq->version = 2;
+-	} else {
++	} else if (sizeof(struct lease_context) == le32_to_cpu(cc->DataLength)) {
+ 		struct create_lease *lc = (struct create_lease *)cc;
+ 
+ 		if (le16_to_cpu(cc->DataOffset) + le32_to_cpu(cc->DataLength) <
+@@ -1655,12 +1675,15 @@ struct lease_ctx_info *parse_lease_state(void *open_req)
+ 		lreq->req_state = lc->lcontext.LeaseState;
+ 		lreq->flags = lc->lcontext.LeaseFlags;
+ 		lreq->duration = lc->lcontext.LeaseDuration;
++		if (!lease_state_valid(lreq->req_state))
++			goto err_out;
+ 		lreq->version = 1;
+-	}
++	} else
++		goto err_out;
+ 	return lreq;
+ err_out:
+ 	kfree(lreq);
+-	return NULL;
++	return ERR_PTR(-EINVAL);
  }
  
  /**
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index b76a00fe93d7e..064d6b6db8549 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2986,6 +2986,17 @@ int smb2_open(struct ksmbd_work *work)
+ 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE &&
+ 	    req->CreateContextsOffset) {
+ 		lc = parse_lease_state(req);
++		if (IS_ERR(lc)) {
++			rc = PTR_ERR(lc);
++			lc = NULL;
++			goto err_out2;
++		}
++		if (lc && lc->version == 2 && conn->dialect < SMB30_PROT_ID) {
++			kfree(lc);
++			lc = NULL;
++			if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
++				req_op_level = SMB2_OPLOCK_LEVEL_NONE;
++		}
+ 		rc = parse_durable_handle_context(work, req, lc, &dh_info);
+ 		if (rc) {
+ 			ksmbd_debug(SMB, "error parsing durable handle context\n");
+@@ -3017,8 +3028,19 @@ int smb2_open(struct ksmbd_work *work)
+ 
+ 			goto reconnected_fp;
+ 		}
+-	} else if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
++	} else if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE) {
+ 		lc = parse_lease_state(req);
++		if (IS_ERR(lc)) {
++			rc = PTR_ERR(lc);
++			lc = NULL;
++			goto err_out2;
++		}
++		if (lc && lc->version == 2 && conn->dialect < SMB30_PROT_ID) {
++			kfree(lc);
++			lc = NULL;
++			req_op_level = SMB2_OPLOCK_LEVEL_NONE;
++		}
++	}
+ 
+ 	if (le32_to_cpu(req->ImpersonationLevel) > le32_to_cpu(IL_DELEGATE)) {
+ 		pr_err("Invalid impersonationlevel : 0x%x\n",
 -- 
 2.53.0
 
