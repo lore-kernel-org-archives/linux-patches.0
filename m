@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8FB51D53E;
-	Wed, 30 Sep 2026 17:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F2D51DDFB;
+	Wed, 30 Sep 2026 17:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790285; cv=none; b=pwrEbIq8LTVJrtr+2QyvA+3HQpJ94i20wEozXmglNTQ56WU0BDmxr2MyXq7YuO00XCsQaaOBSM1wXSfjrYCZrGE5hvV9VaGrWPQxBjVeOLc68eifgMywKPRzzRD979yYrNc9iMRitg6MfYNcNuIjuoE0UmPOHucglsMuQHpYuHw=
+	t=1790790288; cv=none; b=FMf493O8hoSiDuGyp4XRoh6BtcPXVya9NF4NVg8VrJB70XkvR7SbwKbcmbZpO1S1kgX6HjtPW9jvtDzMBUC9QJmExu1ZqYydmpUVO7I1WNaLzKHFd51KLaCX5voBc/4YkGZN7ek1vugQTx3asheua4wHc48bpqodgHwI9rxOHjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790285; c=relaxed/simple;
-	bh=QRpkGjyeRZ/AR3w6aIi+0K6dA/yBwJ2H7Pxdz27lqIw=;
+	s=arc-20240116; t=1790790288; c=relaxed/simple;
+	bh=ctjP7tpOlfJiP+G/u7BCT0+/4+v0KxMKzzLRWsDthJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HovsQJomhIM1MPeP4f2XvTs6SMkKpHnb0yZeS+M1pyw9Clv3SXSFoqlabe6CV1tEVQv+7kfWiwV0eqjbqRIJndeYncV7MEUA6EJRYaZ8YDjyjil4PMPVyB0W7H6znD5gXRlJv2SoN55GeFbGcRhlC0lCOBPHYeM73gw+77YEP+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUaSKNj8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pIy0aapGTyjzAxdsyFMBupulOi4XdkQ1aG946mtN/4VFB5lX3dd2ldnAvsvn3ewXZHmMIndfiAO1jW2rIOORQQnIf6OZO8f2wiUYpVoZxjQqvHDLyaOGUOIfnyO8JpBtuPVoYa2ex9dVtwKX5eiYWbT2hRBzjMZhE55Z06sfwCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlSCUIvL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUaSKNj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0BB1F000FF;
-	Wed, 30 Sep 2026 17:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlSCUIvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1DA1F00898;
+	Wed, 30 Sep 2026 17:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790284;
-	bh=MovbtiRQ0c7p40Z1nQXjtRC5AeiqCWNhox8sY18wQfk=;
+	s=korg; t=1790790287;
+	bh=tetfT+lYogwWOntpxs9/tNss9M6J//9LKCv0uaoxcdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUaSKNj8p/1z5bjcS8atFT33IYr7ok6SChnrY65eKYKTFD+bLXBND+yMg5xZiVoxt
-	 SPDa2BuwPUtgaV1KzaZU1xOrhG+67rAPFU1NEetpuq9Leha3IQezFB7onssvo5RL/e
-	 4j0L08GSdptSvsQgS+1Jdj+ZXYrY9Bn261ar6RJU=
+	b=DlSCUIvLdsSof2uQBMHzcCJTj0xPChjN+X1Kz2jjKbUkIMTiEKEb81RAeKfdtUkBc
+	 4GwndhZBUZp8NyAKhF6iYqoFyzpOqs9YT762SBd2gzimEyG+bKgTImglTZ8R0Ced/I
+	 I+4nsGB1hOCeGY+1SqGkadw1+fY+c0rG0ZMIgHN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ralph Boehme <slow@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 773/877] mptcp: prevent race between disconnect() and rtx
-Date: Wed, 30 Sep 2026 17:28:04 +0200
-Message-ID: <20260930152431.395456304@linuxfoundation.org>
+Subject: [PATCH 6.12 774/877] smb: client: refactor ACL setting control flow in id_mode_to_cifs_acl()
+Date: Wed, 30 Sep 2026 17:28:05 +0200
+Message-ID: <20260930152431.415883145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,51 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Ralph Boehme <slow@samba.org>
 
-[ Upstream commit 85c580b0d8590520ae00a15c29e9fb9c99427a3e ]
+[ Upstream commit a540a64c4801fe02e452ee37e961018106418260 ]
 
-Sashiko noted that the two event can race, leading to inconsistent
-status. Prevent the race using the synchronous timer stop operation.
+Refactor the control flow in id_mode_to_cifs_acl() to reduce nesting and
+prevent error code overwriting.
 
-Cc: stable@vger.kernel.org
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-6-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Instead of wrapping the call to ops->set_acl() in a conditional block,
+introduce early exits (goto id_mode_to_cifs_acl_exit) when build_sec_desc()
+fails or ops->set_acl is NULL. This ensures that any actual error returned
+by build_sec_desc() is not overwritten with -EOPNOTSUPP.
+
+Signed-off-by: Ralph Boehme <slow@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: d05045177a85 ("smb: client: fail DACL rewrite when the new DACL exceeds 64K")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsacl.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3367,6 +3367,7 @@ static void mptcp_copy_inaddrs(struct so
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -1798,14 +1798,18 @@ id_mode_to_cifs_acl(struct inode *inode,
  
- static int mptcp_disconnect(struct sock *sk, int flags)
- {
-+	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	cifs_dbg(NOISY, "build_sec_desc rc: %d\n", rc);
  
- 	/* We are on the fastopen error path. We can't call straight into the
-@@ -3379,8 +3380,13 @@ static int mptcp_disconnect(struct sock
- 	mptcp_check_listen_stop(sk);
- 	mptcp_set_state(sk, TCP_CLOSE);
+-	if (ops->set_acl == NULL)
+-		rc = -EOPNOTSUPP;
++	if (rc != 0)
++		goto id_mode_to_cifs_acl_exit;
  
--	mptcp_stop_rtx_timer(sk);
--	mptcp_stop_tout_timer(sk);
-+	/* The later subflow close can not kick again the tout timer,
-+	 * as the msk is already in closed status.
-+	 */
-+	msk->timer_ival = icsk->icsk_rto_min;
-+	sk_stop_timer_sync(sk, &sk->mptcp_retransmit_timer);
-+	icsk->icsk_mtup.probe_timestamp = 0;
-+	sk_stop_timer_sync(sk, &icsk->mptcp_tout_timer);
+-	if (!rc) {
+-		/* Set the security descriptor */
+-		rc = ops->set_acl(pnntsd, nsecdesclen, inode, path, aclflag);
+-		cifs_dbg(NOISY, "set_cifs_acl rc: %d\n", rc);
++	if (ops->set_acl == NULL) {
++		rc = -EOPNOTSUPP;
++		goto id_mode_to_cifs_acl_exit;
+ 	}
++
++	/* Set the security descriptor */
++	rc = ops->set_acl(pnntsd, nsecdesclen, inode, path, aclflag);
++	cifs_dbg(NOISY, "set_cifs_acl rc: %d\n", rc);
++
+ id_mode_to_cifs_acl_exit:
+ 	cifs_put_tlink(tlink);
  
- 	if (msk->token)
- 		mptcp_event(MPTCP_EVENT_CLOSED, msk, NULL, GFP_KERNEL);
 
 
