@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9405221E0;
-	Wed, 30 Sep 2026 17:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561645221EA;
+	Wed, 30 Sep 2026 17:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790356; cv=none; b=AZ4URwoDDpNaw1GfXFJwFEK37q19owbyzM0+PbAvfAL+lw/P4TsbAW3TDB9fZKNARGP9MGFuDgeIS0Bxz27chDn/R00mwtGcuU6hOJBMLDhd/aDphS8z9AdpM1J0HmYPwjk00B3nQmdaoAhHLEmem5KPOZBgRLfYAciEzHPFpfs=
+	t=1790790359; cv=none; b=BGb5+L1T1wh4f2zgK62geHZkgEr0qiJkqVHD5JsvyePphz40Fje6eH/GxolKS4oqp2ZPy5PM0qEJnDWQp2GtHzOgcmooB+JM2XGtX8ryiJ+AjZQUCD89AJ2dLjCJu7LdwycJXdGNqup1tKJ+n4IuAo9f5NYqkgrgFqSoJG0RLsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790356; c=relaxed/simple;
-	bh=kVUeS2CWMJjFJ36oPGxPKMNRtCNa7X6xqg757RKShk4=;
+	s=arc-20240116; t=1790790359; c=relaxed/simple;
+	bh=3gYzb/59DtCfy7ZV70b1Oc3IM9ViQK8MmrXtVvPfc44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LyWWhP0awKBR7hXXfaMQweFA9wGgOB6LrDbnMLssES16WLm1SiNz8k1kukoJwRUuO3Jf78I6BYaOcyssdDRelAj7/Flcl1dkooBKCo3fH5KtdrRK887RBG5/YbQGEEA8aZmr+Xy9HRQ89HoHh8oeF9IaRUPGKI5gCpbyq/1cAwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLSyWoxd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XgwPZaE7Hva2pk1Zni+3uunHuheVEJqDcMV2QQolW6EwBypaPHVd/V7kUNXDVj/tLCcj3OyZ16xtKtmXh03/pd5BvDN+eEyodatvj3n/Db2SVH12CNOPk6nTaohd8eL6QItPRPl28/Zy7q1OTzmotMg+cz4YsjRsX7SV8+Mgp8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qmb/bwGR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLSyWoxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73231F00898;
-	Wed, 30 Sep 2026 17:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmb/bwGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E091F000FF;
+	Wed, 30 Sep 2026 17:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790355;
-	bh=ypzC413Hywsl8ICfKzhtHHJRBsskDAs4ssqxjwSpDtA=;
+	s=korg; t=1790790358;
+	bh=+qxlTJurCV3cXh5i2wUE46ZYyzDvDDE0T3udbbBOVFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vLSyWoxd3IvS3aVxa6K/yeL4D8J8/5Ad/ZLDXtHV+R95aFu0aogxZhspOLmFRMuC7
-	 t+YCjgHtChnKmrNPide1GFYwMMimRFwTd4HCLz1Un93NgGQT20gTgGqjvjBj/73ev2
-	 E+/jlP+oYlpX1oIaoemWpKplLkjwQ0SCdYPPNGYM=
+	b=Qmb/bwGROZoS+UBnbIMcc3+Ex18bqep6fi3s76SOapBdtREgr6DvJqmqKAnFkVYT3
+	 PH1D98jC8uvFTuOPTtD89CG5e1gt2E34fCiS+mq8+Df+9GIALfGnKYJOCvNCOl3yQV
+	 yYvZQGwLBx9g9T77UrkjNXSmCMgySyLbnLl5Fir4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saim Shujah <saimzst@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 800/877] drm/msm/dpu: clear pending peripheral flush state
-Date: Wed, 30 Sep 2026 17:28:31 +0200
-Message-ID: <20260930152431.980478396@linuxfoundation.org>
+Subject: [PATCH 6.12 801/877] wifi: libipw: reject TKIP frames without a full MIC
+Date: Wed, 30 Sep 2026 17:28:32 +0200
+Message-ID: <20260930152432.001805678@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,43 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saim Shujah <saimzst@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit a5b5cc909931572aec446e129c035b76b3f0c1fa ]
+[ Upstream commit 06f42accaf3c6aecab1dcc57f68dde6c06c8b380 ]
 
-dpu_hw_ctl_clear_pending_flush() resets the cached per-block state after a
-flush transaction, but misses pending_periph_flush_mask.
+libipw_michael_mic_verify() assumes that an skb contains an eight-byte
+Michael MIC. A short TKIP frame makes the unsigned payload length wrap,
+causing michael_mic() to read past the skb.
 
-The peripheral flush updater accumulates interface bits in this mask. A
-later transaction which sets the top-level peripheral flush bit can write
-stale interface bits to CTL_PERIPH_FLUSH together with the current state.
+Check that the MIC is present before verifying it, and use the existing
+MICHAEL_MIC_LEN constant for all MIC lengths in the verifier.
 
-Peripheral flush support was added after the helper started clearing every
-individual pending flush mask. Clear the peripheral mask together with the
-other cached child masks.
-
-Fixes: 64f7b81f0358 ("drm/msm/dpu: add support of new peripheral flush mechanism")
+Fixes: b453872c35cf ("[NET] ieee80211 subsystem")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saim Shujah <saimzst@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/748968/
-Link: https://lore.kernel.org/r/20260828065440.140410-1-saimzst@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-[ Adjusted context due to the missing pending_cwb_flush_mask field in Linux 6.12. ]
+Assisted-by: LLM
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20260909061124.3802517-1-4ncienth@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ adapted libipw changes to the older lib80211 implementation and Michael MIC helper interface. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/lib80211_crypt_tkip.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -110,6 +110,7 @@ static inline void dpu_hw_ctl_clear_pend
- 	ctx->pending_flush_mask = 0x0;
- 	ctx->pending_intf_flush_mask = 0;
- 	ctx->pending_wb_flush_mask = 0;
-+	ctx->pending_periph_flush_mask = 0;
- 	ctx->pending_merge_3d_flush_mask = 0;
- 	ctx->pending_dsc_flush_mask = 0;
- 	ctx->pending_cdm_flush_mask = 0;
+--- a/net/wireless/lib80211_crypt_tkip.c
++++ b/net/wireless/lib80211_crypt_tkip.c
+@@ -38,6 +38,7 @@ MODULE_DESCRIPTION("lib80211 crypt: TKIP
+ MODULE_LICENSE("GPL");
+ 
+ #define TKIP_HDR_LEN 8
++#define MICHAEL_MIC_LEN 8
+ 
+ struct lib80211_tkip_data {
+ #define TKIP_KEY_LEN 32
+@@ -585,16 +586,18 @@ static int lib80211_michael_mic_verify(s
+ 					int hdr_len, void *priv)
+ {
+ 	struct lib80211_tkip_data *tkey = priv;
+-	u8 mic[8];
++	u8 mic[MICHAEL_MIC_LEN];
+ 
+-	if (!tkey->key_set)
++	if (!tkey->key_set || skb->len < hdr_len + MICHAEL_MIC_LEN)
+ 		return -1;
+ 
+ 	michael_mic_hdr(skb, tkey->rx_hdr);
+ 	if (michael_mic(tkey->rx_tfm_michael, &tkey->key[24], tkey->rx_hdr,
+-			skb->data + hdr_len, skb->len - 8 - hdr_len, mic))
++			skb->data + hdr_len,
++			skb->len - MICHAEL_MIC_LEN - hdr_len, mic))
+ 		return -1;
+-	if (memcmp(mic, skb->data + skb->len - 8, 8) != 0) {
++	if (memcmp(mic, skb->data + skb->len - MICHAEL_MIC_LEN,
++		   MICHAEL_MIC_LEN) != 0) {
+ 		struct ieee80211_hdr *hdr;
+ 		hdr = (struct ieee80211_hdr *)skb->data;
+ 		printk(KERN_DEBUG "%s: Michael MIC verification failed for "
+@@ -612,7 +615,7 @@ static int lib80211_michael_mic_verify(s
+ 	tkey->rx_iv32 = tkey->rx_iv32_new;
+ 	tkey->rx_iv16 = tkey->rx_iv16_new;
+ 
+-	skb_trim(skb, skb->len - 8);
++	skb_trim(skb, skb->len - MICHAEL_MIC_LEN);
+ 
+ 	return 0;
+ }
 
 
