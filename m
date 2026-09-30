@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49B433DEDF;
-	Wed, 30 Sep 2026 15:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6F34ED187;
+	Wed, 30 Sep 2026 15:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783011; cv=none; b=N73UoQzuLtJmoSB/K8W5+y+vTrMhviDNsXTmxVuBAPjbF06xdteuhwssplKayoOrV1ful/WakagvhkZlBBjkpjJGkXb5izVW67XHaPOviskL0cuAboatmoe+n3eKc7rWDL+HHkOg1mWfO+SxGV0ufBrV8kwUJJhA2op9Kg9HkSc=
+	t=1790783014; cv=none; b=DHHbt7FIYDdKbe1CbPuZdhl18FwHcz1LeHF9r7RZ3WQ7ySMPUJY6Vg63gX4ROGcFNs/1HHt66wmPLPhlRgPOiMBLH/XhgiFrADzniND2wGCldCZ/ii7dp16sJRmOG+fZXgNI2UVGNKfKH11XJsRF3rASih8RmKUyvSkPIwawwSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783011; c=relaxed/simple;
-	bh=/jWiSYLW38zKyTBrWFxI0VqX8F75ys8mABIl7e654yo=;
+	s=arc-20240116; t=1790783014; c=relaxed/simple;
+	bh=g9BIZNDrI1Rc9t22vtZ10OcheTCLqP2jpDIMbm8VNig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5LWhz99BbMUSMFF8+IAeViDPzBfGnvcxffrPTEM58ymo7CXVtIWoX7rJfA10xo0zyeIeCvybgiPGc59yDNPcqg262aqW6fAHNz3bZ89x9cghvL7VroYX+tHcau+9HKw45BorrnEZfIVZmYJ0MV5O5ltUIZ3MFRYn5mgG75kJyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dRfciLp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=URTZlaWwCPd8kXbS5nCwCiVPtZ8cfdWoUeOkuxH8UAaaKnmc2UFB/7cJ9IXArsfuE0jnabfDWK/qMJTYPQaBKBayyTYEgxtfsq68CneTjaKCq6S7C3aRtKuKjczrMxAOBMHXYhDAnUsxv6vQI0c59MA0wUjz+m/g23FLk+ybWs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqI3JvL4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dRfciLp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD43A1F000FF;
-	Wed, 30 Sep 2026 15:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqI3JvL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22AB1F00898;
+	Wed, 30 Sep 2026 15:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783007;
-	bh=OG/uGDoLFiuVa3Gb/tswixDwjwqkOHhuw66qiAWG7qA=;
+	s=korg; t=1790783010;
+	bh=o3vACZ74Oxk+cb6euP3am+sCSSm5/5p2FdkzU5lBPiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0dRfciLpxcQfJS/7HRwUT1hrEVXjKkTpgT+atQopfvpkdroHzToHrurL600r1fMlU
-	 acSRGhBqK1cJv7a/hNy+d7JnWKRJS6hTfN/gY9he2KzF5q2dob0LHgZvV4H6tOG524
-	 jJMoeK85RxBY/Dc9pHIRdNF0zPY7XxV3xbtbPDGo=
+	b=QqI3JvL4sLuZEnthAWKJ0Ofg5TftYUC89FHRQZCN80r/w5qfRfsUW6bzPVxcxIhaR
+	 6zvs90laiZgoB0Gs8p2Mjk2G+T/D0E+3TajGh2PH0Dax8MapHrpTkh60Oop0uu2rN/
+	 4CKbhV8rM1kC5j/hrrbSbyLqo2GTZsKZTXbQsXRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hui Su <sh_def@163.com>,
+	Nam Cao <namcao@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 246/595] net/mlx5e: Fix setting RS FEC after remapping
-Date: Wed, 30 Sep 2026 17:22:19 +0200
-Message-ID: <20260930152353.008773981@linuxfoundation.org>
+Subject: [PATCH 5.10 211/595] staging: fbtft: make dirty_lock IRQ-safe
+Date: Wed, 30 Sep 2026 17:21:44 +0200
+Message-ID: <20260930152352.272289443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,86 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit b9d755c5a37519fb1354034db1dfeb30e1ba6856 ]
+[ Upstream commit f576944a59f31bcffff121117ebf452c5dd162b7 ]
 
-When a user sets a FEC mode via ethtool, the driver maps the ethtool
-FEC type to the lowest mlx5 bit of that type. For RS FEC, this is
-MLX5E_FEC_RS_528_514 (bit 2). The driver then checks whether this
-bit is supported by at least one link mode by inspecting the
-fec_override_cap fields via mlx5e_fec_in_caps(), and returns
--EOPNOTSUPP if not.
+fbtft_mkdirty() can be reached from the fbcon rendering path while
+processing printk() in hardirq context. Meanwhile, dirty_lock is also
+taken by fbtft_deferred_io() in workqueue context with local interrupts
+enabled.
 
-This check is incorrect. RS FEC has three supported hardware variants:
-RS_528_514 (bit 2), RS_544_514_INTERLEAVED_QUAD (bit 4), and
-RS_544_514 (bit 7). mlx5e_remap_fec_conf_mode() already remaps bit 2
-to the appropriate RS variant per link mode when writing the admin
-fields, but the early capability check is done against the raw
-unmapped bit. As a result, a device that supports RS_544_514 or
-RS_544_514_INTERLEAVED_QUAD but not RS_528_514 will incorrectly reject
-the user's RS FEC request.
+Lockdep reports a possible IRQ lock inversion involving dirty_lock and
+console_owner. A hardirq can interrupt a CPU holding dirty_lock and
+enter the console rendering path, which can attempt to acquire
+dirty_lock again.
 
-Remove the early support check from mlx5e_set_fec_mode() and fold
-it into the existing write loop, checking caps against the remapped
-policy per link mode. Return -EOPNOTSUPP before the final register
-write if no link mode accepted the policy.
+The following lockdep report was observed on an RK3566 system with
+CONFIG_PROVE_LOCKING enabled:
 
-Fixes: 2608a2f831c4 ("net/mlx5e: Fix return status when setting unsupported FEC mode")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902164634.3657606-3-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  WARNING: possible irq lock inversion dependency detected
+  swapper/2/0 just changed the state of lock:
+  (console_owner){-...}-{0:0}
+  but this lock took another, HARDIRQ-unsafe lock in the past:
+  (&par->dirty_lock){+.+.}-{2:2}
+
+  CPU0                    CPU1
+  ----                    ----
+  lock(&par->dirty_lock);
+                         local_irq_disable();
+                         lock(console_owner);
+                         lock(&par->dirty_lock);
+  <Interrupt>
+    lock(console_owner);
+
+  *** DEADLOCK ***
+
+Use spin_lock_irqsave() for fbtft_mkdirty() and spin_lock_irq() for
+fbtft_deferred_io(). They only access the dirty line range, so the
+IRQ-off regions remain short.
+
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://lore.kernel.org/lkml/20260804173712.176017-1-sh_def@163.com/
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Link: https://patch.msgid.link/20260807150953.2811933-3-sh_def@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/staging/fbtft/fbtft-core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-index 89510cac46c22..0ac51c6d1900a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-@@ -542,6 +542,7 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 	u32 in[MLX5_ST_SZ_DW(pplm_reg)] = {};
- 	int sz = MLX5_ST_SZ_BYTES(pplm_reg);
- 	u16 fec_policy_auto = 0;
-+	bool fec_set = false;
- 	int err;
- 	int i;
+diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
+index 723ca72d1bd39..1bfad2a6852e2 100644
+--- a/drivers/staging/fbtft/fbtft-core.c
++++ b/drivers/staging/fbtft/fbtft-core.c
+@@ -303,6 +303,7 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
+ {
+ 	struct fbtft_par *par = info->par;
+ 	struct fb_deferred_io *fbdefio = info->fbdefio;
++	unsigned long flags;
  
-@@ -554,9 +555,6 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 	if (fec_policy >= (1 << MLX5E_FEC_LLRS_272_257_1) && !fec_50g_per_lane)
- 		return -EOPNOTSUPP;
- 
--	if (fec_policy && !mlx5e_fec_in_caps(dev, fec_policy))
--		return -EOPNOTSUPP;
--
- 	MLX5_SET(pplm_reg, in, local_port, 1);
- 	err = mlx5_core_access_reg(dev, in, sz, out, sz, MLX5_REG_PPLM, 0, 0);
- 	if (err)
-@@ -583,12 +581,17 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 		mlx5e_get_fec_cap_field(out, &fec_caps, i);
- 
- 		/* policy supported for link speed */
--		if (fec_caps & conf_fec)
-+		if (fec_caps & conf_fec) {
- 			mlx5e_fec_admin_field(out, &conf_fec, 1, i);
--		else
--			/* set FEC to auto*/
-+			fec_set = true;
-+		} else {
-+			/* set FEC to auto */
- 			mlx5e_fec_admin_field(out, &fec_policy_auto, 1, i);
-+		}
+ 	/* special case, needed ? */
+ 	if (y == -1) {
+@@ -311,12 +312,12 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
  	}
  
-+	if (fec_policy && !fec_set)
-+		return -EOPNOTSUPP;
-+
- 	return mlx5_core_access_reg(dev, out, sz, out, sz, MLX5_REG_PPLM, 0, 1);
- }
+ 	/* Mark display lines/area as dirty */
+-	spin_lock(&par->dirty_lock);
++	spin_lock_irqsave(&par->dirty_lock, flags);
+ 	if (y < par->dirty_lines_start)
+ 		par->dirty_lines_start = y;
+ 	if (y + height - 1 > par->dirty_lines_end)
+ 		par->dirty_lines_end = y + height - 1;
+-	spin_unlock(&par->dirty_lock);
++	spin_unlock_irqrestore(&par->dirty_lock, flags);
+ 
+ 	/* Schedule deferred_io to update display (no-op if already on queue)*/
+ 	schedule_delayed_work(&info->deferred_work, fbdefio->delay);
+@@ -331,13 +332,13 @@ static void fbtft_deferred_io(struct fb_info *info, struct list_head *pagelist)
+ 	unsigned int y_low = 0, y_high = 0;
+ 	int count = 0;
+ 
+-	spin_lock(&par->dirty_lock);
++	spin_lock_irq(&par->dirty_lock);
+ 	dirty_lines_start = par->dirty_lines_start;
+ 	dirty_lines_end = par->dirty_lines_end;
+ 	/* set display line markers as clean */
+ 	par->dirty_lines_start = par->info->var.yres - 1;
+ 	par->dirty_lines_end = 0;
+-	spin_unlock(&par->dirty_lock);
++	spin_unlock_irq(&par->dirty_lock);
+ 
+ 	/* Mark display lines as dirty */
+ 	list_for_each_entry(page, pagelist, lru) {
 -- 
 2.53.0
 
