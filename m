@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994A93CAA41;
-	Wed, 30 Sep 2026 19:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C6C34E75A;
+	Wed, 30 Sep 2026 19:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795564; cv=none; b=HM3RvqVvU+Tvcbx2Xe3QWcXxjhcalQl1UcSP1cSzPBgullyXHJZxqOY+2j/sZUUVPpTyXVTd/HPaAnC2MEa0kRtDH4abMaIBcyp3FK3PH9aYNJmfmNzn3FZlJXg4qPy8DdPF2BQERqJT+FM1QsQOHaFxYzBmf7HEpokcY3hHmVI=
+	t=1790795567; cv=none; b=owFUSzpLaFarIVMhH5LwW4MqoXg7lnfcB5WYsKl3dqbF38WMRH91cfQ1BMinKnU+s2PD+jJq+hJ3CiZQQtE2KcsZ3J8B9YMX+PnEnEY9oohUaTsdawdkmhBsZMbLkiKjI84QCnSBNbQhMDQ4wBKztekkxdcyLEcV1nYNKaRoZRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795564; c=relaxed/simple;
-	bh=O9jxsJAGFmBYM6xiG4XdS9L0cChTZbIBquqyW+jEM1c=;
+	s=arc-20240116; t=1790795567; c=relaxed/simple;
+	bh=dhwqKgJG1hVnXkht841Tb0oysuFK831cZ6fxBuFl0SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJodHQ4dcjn5Q/Gj/1LoUvg/1taa9q9HmJwjh+j/mE1hqR01ml8nvd1YrNeICoBWtJhQ9H7dFpJ+yjkLHVhx6sdigbYLSi+Uzv03gTcTdgkdwUEmSzqyHLCqNFsWK9KSTn8KeOT7WAAz5dIgpSBV5z288PchvPd9QbZuVp9dA70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WC4VlPhq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hpz8hH9WeYte6GEivKvrpfI6baqBOU3wQEE6TgB2KATCLFv8fGNhLlpNK1vmVsYQgNrQzHg5bQdWaaKCY+5LynD8LLdOsWdcZLCENfDcw3M/8MIGMHxzvQ7Te7gVScC4jKo4m/uscBJyVHNs0Ul0bAkzCkya0iKUDPtmdcEWQCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHtKT7sO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WC4VlPhq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67721F000FF;
-	Wed, 30 Sep 2026 19:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHtKT7sO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39071F000FF;
+	Wed, 30 Sep 2026 19:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795563;
-	bh=n4HauzlkWyVCRlEVm338eDxwq1jI9nKM6WfEAqO4GJI=;
+	s=korg; t=1790795566;
+	bh=9X0ryHfjQp6Su9PDHl4nUAmS+pWwZ6vhj/9PKLSExLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WC4VlPhqOrfm3d3g1/zE6JjOcV2ypp0EITuhacI/b4ZLf9iKeSKMWqP3ifJebqDgm
-	 xqYJV1pFQ+3DoJM+ffqP3P9AINvDBaoeycFzV8VZxobEUdJvYg3/l2R5VGmfQevOBC
-	 0UuUm64srhrlgUjJ9w0jl4sIshmMdKGlrDPdWgag=
+	b=rHtKT7sOOOQ2GZ+BbQVFdIHbcejX8QLERhqlxAz/exGmWTJHeRS86Vp0oYKI1KsYy
+	 v2GsVuKaAzumOohF4EJJM0yEG19uUAq+zz07YrlXOCEQk/zL8necdCGg3M58WbiypJ
+	 0mrFFmAMkKHLcLLIVIJ84jJ12iwizrS+gR7zKRBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Prucha <zorgan.roman@gmail.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0603/1193] ALSA: ctxfi: Fix CA20K2 S/PDIF passthrough
-Date: Wed, 30 Sep 2026 17:21:27 +0200
-Message-ID: <20260930152447.642740134@linuxfoundation.org>
+Subject: [PATCH 6.6 0604/1193] ALSA: usbusx2y: fix in04_last array size mismatch with in04_buf
+Date: Wed, 30 Sep 2026 17:21:28 +0200
+Message-ID: <20260930152447.664367627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,54 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Prucha <zorgan.roman@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit b26a7a80e6bbf8dd17dacb127d12435d79375cf2 upstream.
+commit 861111a14740e12c36d363e9830f8daa734279c9 upstream.
 
-dao_rsc_init() encodes the DAIO configuration as
+The in04_last array in struct usx2ydev is declared as char[24], but
+in04_buf is allocated as sizeof(struct us428_ctls) which is 21 bytes.
+In i_usx2y_in04_int(), when ctl_snapshot_last == -2 (initialization
+path):
 
-    conf = (desc->msr & 0x7) | (desc->passthru << 3);
+    memcpy(usx2y->in04_last, usx2y->in04_buf, sizeof(usx2y->in04_last));
 
-S/PDIF passthrough uses msr=1 and passthru=1, resulting in
-conf=9.
+This copies 24 bytes from a 21-byte slab allocation, reading 3 bytes
+past the end of the source object.
 
-daio_mgr_dao_init() masks conf with 0xf, but handles only values
-1, 2, 4 and 8 when programming ATXCTL_NUC. As a result, conf=9
-falls through to the default case and leaves NUC at its previous
-setting.
+Introduce a USX2Y_IN04_SIZE constant defined as sizeof(struct
+us428_ctls) and use it consistently for the in04_last array, the
+in04_buf allocation, the URB transfer length, and the comparison loop,
+replacing the bare 24 and 21 literals throughout.
 
-On a Creative X-Fi Titanium HD SB1270 (CA20K2), this breaks AC3
-IEC61937 passthrough when snd_ctxfi runs with
-reference_rate=48000,multiple=2. The receiver detects a non-audio
-stream but cannot decode the AC3 payload.
-
-With the unmodified driver, multiple=1 makes the same stream work.
-Handle conf=9 through the same NUC=0 path as conf=1.
-
-The change was runtime tested on the SB1270 with multiple=2 using
-IEC958 stereo PCM, pre-encoded AC3 IEC61937 passthrough and ALSA
-A52 live 5.1 encoding.
-
-Fixes: 26a9630c72eb ("ALSA: ctxfi: cthw20k2: fix mask on conf to allow 4 bits")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Roman Prucha <zorgan.roman@gmail.com>
-Link: https://patch.msgid.link/20260903-ctxfi-spdif-conf9-fix-v1-1-5e4e3e1f801c@gmail.com
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260904205826.4071119-1-tristmd@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/cthw20k2.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/usx2y/usbusx2y.c |    6 +++---
+ sound/usb/usx2y/usbusx2y.h |    4 +++-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/sound/pci/ctxfi/cthw20k2.c
-+++ b/sound/pci/ctxfi/cthw20k2.c
-@@ -993,6 +993,7 @@ static int daio_mgr_dao_init(void *blk,
- 		/* S/PDIF output */
- 		switch ((conf & 0xf)) {
- 		case 1:
-+		case 9:
- 			set_field(&ctl->txctl[idx], ATXCTL_NUC, 0);
- 			break;
- 		case 2:
+--- a/sound/usb/usx2y/usbusx2y.c
++++ b/sound/usb/usx2y/usbusx2y.c
+@@ -197,7 +197,7 @@ static void i_usx2y_in04_int(struct urb
+ 			memcpy(usx2y->in04_last, usx2y->in04_buf, sizeof(usx2y->in04_last));
+ 			us428ctls->ctl_snapshot_last = -1;
+ 		} else {
+-			for (i = 0; i < 21; i++) {
++			for (i = 0; i < USX2Y_IN04_SIZE; i++) {
+ 				if (usx2y->in04_last[i] != ((char *)usx2y->in04_buf)[i]) {
+ 					if (diff < 0)
+ 						diff = i;
+@@ -306,7 +306,7 @@ int usx2y_in04_init(struct usx2ydev *usx
+ 		goto error;
+ 	}
+ 
+-	usx2y->in04_buf = kmalloc(21, GFP_KERNEL);
++	usx2y->in04_buf = kmalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
+ 	if (!usx2y->in04_buf) {
+ 		err = -ENOMEM;
+ 		goto error;
+@@ -314,7 +314,7 @@ int usx2y_in04_init(struct usx2ydev *usx
+ 
+ 	init_waitqueue_head(&usx2y->in04_wait_queue);
+ 	usb_fill_int_urb(usx2y->in04_urb, usx2y->dev, usb_rcvintpipe(usx2y->dev, 0x4),
+-			 usx2y->in04_buf, 21,
++			 usx2y->in04_buf, USX2Y_IN04_SIZE,
+ 			 i_usx2y_in04_int, usx2y,
+ 			 10);
+ 	if (usb_urb_ep_type_check(usx2y->in04_urb)) {
+--- a/sound/usb/usx2y/usbusx2y.h
++++ b/sound/usb/usx2y/usbusx2y.h
+@@ -5,6 +5,8 @@
+ #include "../midi.h"
+ #include "usbus428ctldefs.h"
+ 
++#define USX2Y_IN04_SIZE	sizeof(struct us428_ctls)
++
+ #define NRURBS	        2
+ 
+ /* Default value used for nr of packs per urb.
+@@ -55,7 +57,7 @@ struct usx2ydev {
+ 	int			stride;
+ 	struct urb		*in04_urb;
+ 	void			*in04_buf;
+-	char			in04_last[24];
++	char			in04_last[USX2Y_IN04_SIZE];
+ 	unsigned int		in04_int_calls;
+ 	struct snd_usx2y_urb_seq	*us04;
+ 	wait_queue_head_t	in04_wait_queue;
 
 
