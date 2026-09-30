@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897FE3E9C1A;
-	Wed, 30 Sep 2026 19:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301903E022B;
+	Wed, 30 Sep 2026 19:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796645; cv=none; b=N9Q8mH9AnM5rOlj4RjplDKexMM/ZjcbLTtayYX+F3ZL1wAuQ7EAYH81van/06RaoVf8eqr4hzEbIHvb1zXgGgV2XAz490GRuSbsXWkOiGKCi5DiSxzr4n5lwnq1AU8oPcF+cpGHduGapziJubx8s4U/kHcTV7uLv2qIj2cwoheA=
+	t=1790796648; cv=none; b=M9B1H87+hjvADTx8y0wW7tvlz8BqpiQRV+pimjrB63zHtZcgiXkvITZhg6BuyqBR1ewpPrJlrWTSzk3SGa93poGRvbpakGC/mtslaWo2R5kawN5/wSMSZZmlPKvaWJX4s6DcqlzrQXC964UQ6TIDojvrkV7GY8H8WL+uU1BYhtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796645; c=relaxed/simple;
-	bh=Adk8bye78K4lifmfII3+VvTZXyIw6OhBUyT1Ti+0hjY=;
+	s=arc-20240116; t=1790796648; c=relaxed/simple;
+	bh=vBYrp8g6lBAUpVI+0xy0DXK7v14TI66dbwGcoA2E010=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eq8Kr4Ap3Jb3tQTEYkSzLsRiSH/hOrnnx2CfmdXWmUobTU/hcZueBQpX5FTIhqRxgqPdVtWnS+RVgqJKuLf8uMJmqw09ZyMW4I/D2SPzhsLmIiOfUkdOkfCpuHVhyC1aej45QIdffZUDjUXyReq2AaZgnbj9ASNg3wQzasglhfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQuKE+PV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TboAVzd4D/2M1YERrqNxQsCr6Ele9AeaDbGpDnOSkT8rEUj68VHCJ03B9Hg//5WVd2EWNrQxYBx3WHNc3Y2Zg/hr8EtVhmA+yFbcnEoauRdGC2SO78RS2lfU97BJFsUVG9+vfzQSUPD9teUT1XxZ3ekEQjpNjPEAS43eatfmZu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VId/VbiR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQuKE+PV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63801F00898;
-	Wed, 30 Sep 2026 19:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VId/VbiR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6101F000FF;
+	Wed, 30 Sep 2026 19:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796644;
-	bh=o0uD9IWxKC2mghsTKEuWvuc3NFV2aoyKalY0mrPNe94=;
+	s=korg; t=1790796647;
+	bh=K9UM1FrbpDx+0DTjh6bZSrA2zU/RqZvrKw1LVKDftKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQuKE+PVX/x/d8ipR/tCexPkQblaTg+ezttIZqC/fmCemP4fNs7BQ6rwMmiAlmKCY
-	 SPEZE5zFqHTN9XGmo/JNaIg+O5QsL5nq/9hhYopzIFs8+4Y7USg4jQrhQm8OkhzjnS
-	 zxEB4T4YheZ3QmQyHUFNsbdhyndI48dLaNEH6d8A=
+	b=VId/VbiRrid1LXoOuflxSLgH+ZJXvmCJ15uh6hiLj7YMRRpTfWoqHbUrj1ASc/bQ0
+	 QgcSIdycDzIxhpKlHOOO/X4+9NG6p6pH0CBFOP3vW0TcursPukGoaGAD47pBUbG4rH
+	 RrJafD0ThddZg7DKUc14llBOmy37scPSWCJzpsvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Bezenah <wbezenah@linux.ibm.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0985/1193] s390/cio: Guard PMCW field accesses with dnv check
-Date: Wed, 30 Sep 2026 17:27:49 +0200
-Message-ID: <20260930152456.128697895@linuxfoundation.org>
+Subject: [PATCH 6.6 0986/1193] fs: avoid repeated scans in evict_inodes()
+Date: Wed, 30 Sep 2026 17:27:50 +0200
+Message-ID: <20260930152456.151441823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,153 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 9590f4d83880dfb5a81906e48e72779248fbe8f0 ]
+[ Upstream commit 7459c021874246c196f397686e100702f059b9e7 ]
 
-When PMCW.DNV is 0, no I/O device is associated with the subchannel.
-However, several code paths access PMCW fields directly from the cached
-sch->schib without first invoking the update helper. Add explicit DNV
-validation before accessing PMCW fields from the cached SCHIB to avoid
-using invalid data.
+We observed hung tasks when users attempted to unmount a filesystem
+after its disk had been removed while still in use. During device
+removal, fs_bdev_mark_dead() calls evict_inodes() while holding s_umount.
 
-Reported-by: William Bezenah <wbezenah@linux.ibm.com>
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Fixes: 8c58a229688c ("s390/cio: Do not unregister the subchannel based on DNV")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Each time evict_inodes() drops s_inode_list_lock to reschedule, it
+restarts the walk from the head of s_inodes. With many referenced inodes
+at the head of the list, these restarts repeatedly scan the same inodes
+without reclaiming them. This can keep s_umount held for a long time,
+blocking concurrent umount attempts and triggering hung-task reports.
+
+Keep the current inode, already marked I_FREEING, out of the disposal
+batch until s_inode_list_lock is reacquired. Resume the walk from this
+inode and dispose of it in a later batch or at the end of the walk.
+
+The zero-refcount and state checks under i_lock allow this walker to
+claim the inode by setting I_FREEING and removing it from the LRU.
+Other reclaimers skip the inode, leaving this walker responsible for
+eviction. Only evict() removes it from s_inodes, so keeping it out of
+the disposal batch ensures that it remains on the list while the lock
+is dropped. After reacquiring the lock, reading its current next pointer
+accounts for concurrent removal of following inodes.
+
+The existing inode lifetime rules prohibit acquiring a reference to an
+inode marked I_FREEING or I_WILL_FREE. __iget() requires its caller to
+hold i_lock and establish that taking a reference is valid. Inode lookup
+and igrab() check these flags under i_lock when acquiring a reference
+from zero. ihold() requires an existing reference, which would keep
+i_count nonzero and prevent this walker from claiming the inode. These
+rules already allow iput_final() and the inode shrinker to release
+i_lock after setting I_FREEING and before eviction completes.
+
+A temporary __iget() reference would also keep the inode on the list,
+but its release must preserve last-reference handling. Another user can
+acquire a reference, update lazy timestamps and drop its reference while
+the pin is held. If the pin becomes the last reference, dropping it with
+atomic_dec_and_test() and evicting directly bypasses iput()'s lazytime
+handling and can lose those timestamp updates.
+
+Releasing the pin with iput() preserves that handling, but does not
+guarantee eviction. fs_bdev_mark_dead() runs with SB_ACTIVE set, so iput()
+may retain the inode in cache, whereas evict_inodes() must evict eligible
+zero-reference inodes. The inode may also have been freed when iput()
+returns, so the walker cannot then use it to force eviction. Using
+I_FREEING preserves the existing eviction behavior without introducing
+an additional last-reference transition.
+
+The xfstests auto group passed on ext4 and XFS with known unrelated
+failures excluded. No new issues were observed, and the previously
+reproducible hung task no longer occurs with this patch.
+
+Fixes: ac05fbb40062 ("inode: don't softlockup when evicting inodes")
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20260915044912.3183440-1-sunjunchao@bytedance.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/chp.c          | 3 +++
- drivers/s390/cio/device.c       | 9 +++++----
- drivers/s390/cio/device_fsm.c   | 3 +++
- drivers/s390/cio/device_ops.c   | 9 +++++++++
- drivers/s390/cio/vfio_ccw_fsm.c | 2 +-
- 5 files changed, 21 insertions(+), 5 deletions(-)
+ fs/inode.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/s390/cio/chp.c b/drivers/s390/cio/chp.c
-index 7e00c061538db..434ac11e8f3a3 100644
---- a/drivers/s390/cio/chp.c
-+++ b/drivers/s390/cio/chp.c
-@@ -78,6 +78,9 @@ u8 chp_get_sch_opm(struct subchannel *sch)
- 	int opm;
- 	int i;
+diff --git a/fs/inode.c b/fs/inode.c
+index 030e07b169c27..7137f10e76e75 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -754,7 +754,6 @@ void evict_inodes(struct super_block *sb)
+ 	struct inode *inode, *next;
+ 	LIST_HEAD(dispose);
  
-+	if (!sch->schib.pmcw.dnv)
-+		return 0;
-+
- 	opm = 0;
- 	chp_id_init(&chpid);
- 	for (i = 0; i < 8; i++) {
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index e623359862ea2..d38e8eebada5e 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -925,7 +925,7 @@ static int ccw_device_move_to_sch(struct ccw_device *cdev,
+-again:
+ 	spin_lock(&sb->s_inode_list_lock);
+ 	list_for_each_entry_safe(inode, next, &sb->s_inodes, i_sb_list) {
+ 		if (atomic_read(&inode->i_count))
+@@ -773,19 +772,19 @@ void evict_inodes(struct super_block *sb)
+ 		inode->i_state |= I_FREEING;
+ 		inode_lru_list_del(inode);
+ 		spin_unlock(&inode->i_lock);
+-		list_add(&inode->i_lru, &dispose);
  
- 	if (!sch_is_pseudo_sch(old_sch)) {
- 		spin_lock_irq(&old_sch->lock);
--		old_enabled = old_sch->schib.pmcw.ena;
-+		old_enabled = old_sch->schib.pmcw.dnv && old_sch->schib.pmcw.ena;
- 		rc = 0;
- 		if (old_enabled)
- 			rc = cio_disable_subchannel(old_sch);
-@@ -944,7 +944,7 @@ static int ccw_device_move_to_sch(struct ccw_device *cdev,
- 		CIO_MSG_EVENT(0, "device_move(0.%x.%04x,0.%x.%04x)=%d\n",
- 			      cdev->private->dev_id.ssid,
- 			      cdev->private->dev_id.devno, sch->schid.ssid,
--			      sch->schib.pmcw.dev, rc);
-+			      sch->schid.sch_no, rc);
- 		if (old_enabled) {
- 			/* Try to re-enable the old subchannel. */
- 			spin_lock_irq(&old_sch->lock);
-@@ -1210,7 +1210,7 @@ static void io_subchannel_quiesce(struct subchannel *sch)
- 	cdev = sch_get_cdev(sch);
- 	if (cio_is_console(sch->schid))
- 		goto out_unlock;
--	if (!sch->schib.pmcw.ena)
-+	if (!sch->schib.pmcw.dnv || !sch->schib.pmcw.ena)
- 		goto out_unlock;
- 	ret = cio_disable_subchannel(sch);
- 	if (ret != -EBUSY)
-@@ -1257,7 +1257,8 @@ static int recovery_check(struct device *dev, void *data)
- 	switch (cdev->private->state) {
- 	case DEV_STATE_ONLINE:
- 		sch = to_subchannel(cdev->dev.parent);
--		if ((sch->schib.pmcw.pam & sch->opm) == sch->vpm)
-+		if (sch->schib.pmcw.dnv &&
-+		    (sch->schib.pmcw.pam & sch->opm) == sch->vpm)
- 			break;
- 		fallthrough;
- 	case DEV_STATE_DISCONNECTED:
-diff --git a/drivers/s390/cio/device_fsm.c b/drivers/s390/cio/device_fsm.c
-index c396ac3e3a327..0bfd92c672cfa 100644
---- a/drivers/s390/cio/device_fsm.c
-+++ b/drivers/s390/cio/device_fsm.c
-@@ -169,6 +169,9 @@ __recover_lost_chpids(struct subchannel *sch, int old_lpm)
- 	int mask, i;
- 	struct chp_id chpid;
+ 		/*
+-		 * We can have a ton of inodes to evict at unmount time given
+-		 * enough memory, check to see if we need to go to sleep for a
+-		 * bit so we don't livelock.
++		 * Keep this inode out of dispose so it stays on s_inodes while
++		 * the list lock is dropped. I_FREEING prevents new references
++		 * and leaves eviction to us, so we can resume the walk from it.
+ 		 */
+ 		if (need_resched()) {
+ 			spin_unlock(&sb->s_inode_list_lock);
+ 			cond_resched();
+ 			dispose_list(&dispose);
+-			goto again;
++			spin_lock(&sb->s_inode_list_lock);
+ 		}
++		list_add(&inode->i_lru, &dispose);
+ 	}
+ 	spin_unlock(&sb->s_inode_list_lock);
  
-+	if (!sch->schib.pmcw.dnv)
-+		return;
-+
- 	chp_id_init(&chpid);
- 	for (i = 0; i<8; i++) {
- 		mask = 0x80 >> i;
-diff --git a/drivers/s390/cio/device_ops.c b/drivers/s390/cio/device_ops.c
-index a18919a50909a..8447a14016508 100644
---- a/drivers/s390/cio/device_ops.c
-+++ b/drivers/s390/cio/device_ops.c
-@@ -486,6 +486,8 @@ struct channel_path_desc_fmt0 *ccw_device_get_chp_desc(struct ccw_device *cdev,
- 	struct chp_id chpid;
- 
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return NULL;
- 	chp_id_init(&chpid);
- 	chpid.id = sch->schib.pmcw.chpid[chp_idx];
- 	return chp_get_chp_desc(chpid);
-@@ -506,6 +508,8 @@ u8 *ccw_device_get_util_str(struct ccw_device *cdev, int chp_idx)
- 	struct chp_id chpid;
- 	u8 *util_str;
- 
-+	if (!sch->schib.pmcw.dnv)
-+		return NULL;
- 	chp_id_init(&chpid);
- 	chpid.id = sch->schib.pmcw.chpid[chp_idx];
- 	chp = chpid_to_chp(chpid);
-@@ -654,6 +658,9 @@ int ccw_device_get_mdc(struct ccw_device *cdev, u8 mask)
- 	struct chp_id chpid;
- 	int mdc = 0, i;
- 
-+	if (!sch->schib.pmcw.dnv)
-+		return 0;
-+
- 	/* Adjust requested path mask to excluded varied off paths. */
- 	if (mask)
- 		mask &= sch->lpm;
-@@ -790,6 +797,8 @@ int ccw_device_get_chpid(struct ccw_device *cdev, int chp_idx, u8 *chpid)
- 
- 	if ((chp_idx < 0) || (chp_idx > 7))
- 		return -EINVAL;
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	mask = 0x80 >> chp_idx;
- 	if (!(sch->schib.pmcw.pim & mask))
- 		return -ENODEV;
-diff --git a/drivers/s390/cio/vfio_ccw_fsm.c b/drivers/s390/cio/vfio_ccw_fsm.c
-index 29848cebfc63d..9926cffe728e9 100644
---- a/drivers/s390/cio/vfio_ccw_fsm.c
-+++ b/drivers/s390/cio/vfio_ccw_fsm.c
-@@ -399,7 +399,7 @@ static void fsm_close(struct vfio_ccw_private *private,
- 
- 	spin_lock_irq(&sch->lock);
- 
--	if (!sch->schib.pmcw.ena)
-+	if (!sch->schib.pmcw.dnv || !sch->schib.pmcw.ena)
- 		goto err_unlock;
- 
- 	ret = cio_disable_subchannel(sch);
 -- 
 2.53.0
 
