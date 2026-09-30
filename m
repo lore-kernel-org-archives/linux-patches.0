@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F376526AB8;
-	Wed, 30 Sep 2026 17:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBCA5187EF;
+	Wed, 30 Sep 2026 17:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791069; cv=none; b=NSaUuEMFQTfTze2zHIWiCF/k7Nj8xn/e/l+IXEDLujE00MpaIwpxBzXKb5j15P119B2gnZtFg0DO1UeEs6iUAilHtVBm61sLP+QYmAUrwew3pCobLZk4PHh+mIz64jE3FOwQt3UVAdHGrjT0z8EgYH+ZSM5jPt2L4GdCnhCllh4=
+	t=1790791072; cv=none; b=n/R3apNHkb/nzqz39EcZ+I21BJjaXHD8f0DTzqdpTj0AsBHaG9hWObOQSijMG+TZaKIS9HV037gaKYF0RaMCPSfWTfgp64qPbcOf+GhO8642EyJO3rTeGx3z742iNxApKuQfXE52+kyzLLOjIi+UHgB2vMeWJ8YSqgTm7l5Wn9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791069; c=relaxed/simple;
-	bh=oOdvgcygGMbG3Ue5bJytWUoulNB9GnbOoI7GsoYevU8=;
+	s=arc-20240116; t=1790791072; c=relaxed/simple;
+	bh=g92l1x/VtNUf77kFKGZ35nPq4yUA9VbfPNWZug9Nw3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEKhxvDXBmBUFi1eH3ljfJbzmDMovAhlD2cdjCM/Uyjw9ykeHeISBmgOmx8L0/8ph3lN1RdVuDDQBPYVzX4HVEKo+UUFeJinmRtTk1JWXkMqgRqatV+c8F6E7ks3PntyEHIZPwIacGFTsh6AwhZVcCfv62NNxgjtMrQU79iLGbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hv6a0a2/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tCdulgKFFrw10or2WnhNIn4bATP54Rkx6arPAQDJfWWK7NbN3wg5WfGKAhfOrLNkDwiA7yH4rQmmL3DZtspVmv8REPmTE+KTCwS80GuU2o4V1PuEv6rG0bBN/rPed8fGUk9BChBPkN3wx3qMr2GfCGebgPRdperIHX3Vz4ApknE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHpnJ3u9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hv6a0a2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96F91F000FF;
-	Wed, 30 Sep 2026 17:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHpnJ3u9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C982C1F000FF;
+	Wed, 30 Sep 2026 17:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791068;
-	bh=i4ttN8f84pe2Y0yhW8+AqpEAxV2SZjFnxsFDm530/zQ=;
+	s=korg; t=1790791071;
+	bh=K5FFEK2ExB/UOvrRti7jXUVpqirI8eUojZdeceWCiZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hv6a0a2/ty90ZfOoyvNeTP16ixjj2mxWR1dxFwMBOxpM2bHUVI4ETSDH5WUS3N5Wb
-	 HjfctuBuC0fSB23xZMhKgH0P+9CmrXwZI39ELiIFGNXrlozsw2+U+yfo1W8vnzjs9l
-	 bg6GocF5x4jJ9xDz/uS8heCovZD3FGUgKN3B5qL0=
+	b=pHpnJ3u94lYQvmt80HBV8woOP5kBaRWY9c54da/Mcush4mC7W2V15IFPNR6Ou0cRj
+	 S3HLN34G+1/7Ka7lDMQX0QXRwoIH49lgsTtEg+69u/Q7IFyRQxef7dW8e6PNBETEn0
+	 DsvEq1O/g7+LcYgNNrt5+BiD8dYJJVqoi5GK9z80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/752] ksmbd: use connection ClientGUID for lease lookup
-Date: Wed, 30 Sep 2026 17:20:41 +0200
-Message-ID: <20260930152401.902155970@linuxfoundation.org>
+Subject: [PATCH 5.15 172/752] ksmbd: treat unnamed DATA stream as base file
+Date: Wed, 30 Sep 2026 17:20:42 +0200
+Message-ID: <20260930152401.925087340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,123 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit fa111daae1a02dbff5693dfc12f368bccd9eb5f4 ]
+[ Upstream commit 171b5d72dd80f99271c073c6e38d5263687c3b6d ]
 
-MS-SMB2 defines the lease table lookup key as Connection.ClientGuid.
-Use the connection ClientGUID consistently when checking for same-client
-leases and duplicate lease keys.
+The SMB path suffix :: names the unnamed data stream of the base
+file, not an alternate data stream backed by a DosStream xattr.
 
-Also preserve directory and parent lease metadata when copying an existing
-lease state to a new open.
+Canonicalize an empty stream name with an explicit  type to a NULL
+stream name after parsing. This keeps the base filename produced by
+strsep() and lets open continue through the normal base-file path instead
+of looking for a non-existent empty stream xattr.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/oplock.c  | 16 +++++++++-------
- fs/ksmbd/oplock.h  |  2 +-
- fs/ksmbd/smb2pdu.c |  2 +-
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ fs/ksmbd/misc.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ksmbd/oplock.c b/fs/ksmbd/oplock.c
-index 78d73deb54443..e938921d20085 100644
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -510,7 +510,7 @@ static inline int compare_guid_key(struct oplock_info *opinfo,
-  * Return:      oplock(lease) object on success, otherwise NULL
-  */
- static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
--						 char *client_guid,
-+						 const char *client_guid,
- 						 struct lease_ctx_info *lctx)
- {
- 	int ret;
-@@ -981,7 +981,7 @@ void destroy_lease_table(struct ksmbd_conn *conn)
- 	write_unlock(&lease_list_lock);
- }
+diff --git a/fs/ksmbd/misc.c b/fs/ksmbd/misc.c
+index 9e8afaa686e3a..11314f7c622a6 100644
+--- a/fs/ksmbd/misc.c
++++ b/fs/ksmbd/misc.c
+@@ -121,7 +121,9 @@ int parse_stream_name(char *filename, char **stream_name, int *s_type)
+ 	char *stream_type;
+ 	char *s_name;
+ 	int rc = 0;
++	bool has_stream_type = false;
  
--int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
-+int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
- 			struct lease_ctx_info *lctx)
- {
- 	struct oplock_info *opinfo;
-@@ -998,7 +998,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++	*stream_name = NULL;
+ 	s_name = filename;
+ 	filename = strsep(&s_name, ":");
+ 	ksmbd_debug(SMB, "filename : %s, streams : %s\n", filename, s_name);
+@@ -137,14 +139,20 @@ int parse_stream_name(char *filename, char **stream_name, int *s_type)
+ 
+ 		ksmbd_debug(SMB, "stream name : %s, stream type : %s\n", s_name,
+ 			    stream_type);
+-		if (!strncasecmp("$data", stream_type, 5))
++		if (!strncasecmp("$data", stream_type, 5)) {
+ 			*s_type = DATA_STREAM;
+-		else if (!strncasecmp("$index_allocation", stream_type, 17))
++			has_stream_type = true;
++		} else if (!strncasecmp("$index_allocation", stream_type, 17)) {
+ 			*s_type = DIR_STREAM;
+-		else
++			has_stream_type = true;
++		} else {
+ 			rc = -ENOENT;
++		}
  	}
  
- 	list_for_each_entry(lb, &lease_table_list, l_entry) {
--		if (!memcmp(lb->client_guid, sess->ClientGUID,
-+		if (!memcmp(lb->client_guid, conn->ClientGUID,
- 			    SMB2_CLIENT_GUID_SIZE))
- 			goto found;
- 	}
-@@ -1014,7 +1014,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
- 		rcu_read_unlock();
- 		if (opinfo->o_fp->f_ci == ci)
- 			goto op_next;
--		err = compare_guid_key(opinfo, sess->ClientGUID,
-+		err = compare_guid_key(opinfo, conn->ClientGUID,
- 				       lctx->lease_key);
- 		if (err) {
- 			err = -EINVAL;
-@@ -1047,6 +1047,9 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
- 	lease2->flags = lease1->flags;
- 	lease2->epoch = lease1->epoch;
- 	lease2->version = lease1->version;
-+	lease2->is_dir = lease1->is_dir;
-+	memcpy(lease2->parent_lease_key, lease1->parent_lease_key,
-+	       SMB2_LEASE_KEY_SIZE);
- }
- 
- static int add_lease_global_list(struct oplock_info *opinfo)
-@@ -1195,7 +1198,6 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 		     struct ksmbd_file *fp, __u16 tid,
- 		     struct lease_ctx_info *lctx, int share_ret)
- {
--	struct ksmbd_session *sess = work->sess;
- 	int err = 0;
- 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
- 	struct ksmbd_inode *ci = fp->f_ci;
-@@ -1235,12 +1237,12 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
- 		struct oplock_info *m_opinfo;
- 
- 		/* is lease already granted ? */
--		m_opinfo = same_client_has_lease(ci, sess->ClientGUID,
-+		m_opinfo = same_client_has_lease(ci, work->conn->ClientGUID,
- 						 lctx);
- 		if (m_opinfo) {
- 			copy_lease(m_opinfo, opinfo);
- 			if (atomic_read(&m_opinfo->breaking_cnt))
--				opinfo->o_lease->flags =
-+				opinfo->o_lease->flags |=
- 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
- 			opinfo_put(m_opinfo);
- 			goto out;
-diff --git a/fs/ksmbd/oplock.h b/fs/ksmbd/oplock.h
-index 5b93ea9196c01..0e2b1d63ca26b 100644
---- a/fs/ksmbd/oplock.h
-+++ b/fs/ksmbd/oplock.h
-@@ -124,7 +124,7 @@ void create_posix_rsp_buf(char *cc, struct ksmbd_file *fp);
- struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len);
- struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
- 					  char *lease_key);
--int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
-+int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
- 			struct lease_ctx_info *lctx);
- void destroy_lease_table(struct ksmbd_conn *conn);
- void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 31b198b3f01df..12ca40e0f8bcd 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -3269,7 +3269,7 @@ int smb2_open(struct ksmbd_work *work)
- 			ksmbd_debug(SMB,
- 				    "lease req for(%s) req oplock state 0x%x, lease state 0x%x\n",
- 				    name, req_op_level, lc->req_state);
--			rc = find_same_lease_key(sess, fp->f_ci, lc);
-+			rc = find_same_lease_key(conn, fp->f_ci, lc);
- 			if (rc)
- 				goto err_out1;
- 		} else if (open_flags == O_RDONLY &&
++	if (has_stream_type && !s_name[0] && *s_type == DATA_STREAM)
++		goto out;
++
+ 	*stream_name = s_name;
+ out:
+ 	return rc;
 -- 
 2.53.0
 
