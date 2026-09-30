@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8227A34CFDE;
-	Wed, 30 Sep 2026 18:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE8138E8CE;
+	Wed, 30 Sep 2026 18:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791364; cv=none; b=iAwB5SarES0tpKR+cUburX2bLIb2Jc/4Upq8PuA6P2WLmshUGlFcUCZD03FX3xhXzwgrN39fsI5AH8irHK9yQLW3ts56RzdB0sjaNMmQ3nT1A60iSUb8Fbjlwx2r9f2P6uY6eUow1l++tfd5PetsBDSBUp15R2CyuyMjEsqtFK8=
+	t=1790791367; cv=none; b=T0Xjqo1GtvSa902S5ddg5FKonLhjKbXoCIxroZdkJ0QWXecn50uzdxy+D3bWMMHoLsyXIRP/z8uwz3ljLIrurrYH3qtB/tzAycWIokXSPEOLaxkSgHInJuu7UBIHjm12ot4n7XH82QRnZvuuK3mNuibeJ5VTKWAo16Ein6JIIm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791364; c=relaxed/simple;
-	bh=mX3Zr1OEoc0b6htyI6pvX4L/hBJipzPRNcE2kX24lLI=;
+	s=arc-20240116; t=1790791367; c=relaxed/simple;
+	bh=tB7eyQBwktjdMVdppjEoc5JnZzWAEum8eDsKOVZnP/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfZQLbSUU6aY4wkhVFNJqoieHVc6eR3XIhhOc3FHNIFYkgiOqcrJPbn89tl8ALNugoy0ZXrpJ4Udmq2OTRinmh7WLlQzzyMQtbjfpFTyeFeo5GL5aTKlPDGAsal/5+jI4j9MauvG9EHsb5R1eStMxga2/5zXTCiVWMz23BI6Z10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHTov9va; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hwpdJdjZyeAsoW5YDRD9vj+WLBf52Jx/5UdspR0c9mYLPziaFz9gHmXO3YixUXlYCJlVL5iCfRZDbEv1W755oAyrbRPGJqQXjbXP+EVo/2j7ZnKjmfF2jBvv+QzNAS4etbiROnGc1f6fUKgDuF3P7gXvB8ikfz+lAQvZJDxaMko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm+f4V+O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHTov9va"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCA31F000FF;
-	Wed, 30 Sep 2026 18:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm+f4V+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F021F000FF;
+	Wed, 30 Sep 2026 18:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791363;
-	bh=hAuiDCR0tor4YKpmk3fLzhSjxiMlzxEke6Ctf3iBMWE=;
+	s=korg; t=1790791366;
+	bh=5dk8sCKJ65K2yqEL7+bJ185nK1v+Gst0vaPiztkrHZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHTov9vahFz0UE8heS36CbvnVQt0VwV9ablYRcmHER9Gx+q6j9l//RQc5kZ32iv19
-	 2/wR1eV7RLa8z2Ydy5GqM49kZrt+nS45G0ogJEsui+iFiTUzrg2SZNLDMJyz1K3qTr
-	 cIUJ/H9DyIGZkNRSqrbOKSoidjGN07apQOqzICO4=
+	b=Qm+f4V+OLw1CL1huonb3kR/ZcKpCm8u5Cef5sz42bFtWFWUCsJqGguhtV0y7i/XcP
+	 HxO8/PpzEF9t+tElQ1WRhqU+FHGiYMJg0zP51AYZy4t7XsC7IeazsDLJ8FkvUJllXW
+	 pd+wnwGH68scFz3myNWP+vw0PwYECtBLceY7+Rhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vaibhav Jain <vaibhav@linux.ibm.com>,
-	Anushree Mathur <anushree.mathur@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Nitesh Narayan Lal <nitesh@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/752] powerpc/pseries: Ensure vpa,slb_shadow & dtl are unregistered during crash
-Date: Wed, 30 Sep 2026 17:21:31 +0200
-Message-ID: <20260930152403.036497621@linuxfoundation.org>
+Subject: [PATCH 5.15 270/752] scsi: mpt3sas: Use irq_set_affinity_and_hint()
+Date: Wed, 30 Sep 2026 17:22:20 +0200
+Message-ID: <20260930152404.126807841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,65 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vaibhav Jain <vaibhav@linux.ibm.com>
+From: Nitesh Narayan Lal <nitesh@redhat.com>
 
-[ Upstream commit 810d07fb4cf7577847f85a6fd6273b69cad8d580 ]
+[ Upstream commit fdb8ed13a77270c8e6e05b3ff9f4cb2f57e16d6a ]
 
-Currently pseries_kexec_cpu_down() skips unregistering vpa, slb_shadow and
-dtl areas during a crash and kexec shutdown path. It was done to avoid
-doing an HCALL while crashing. However recently Anushree reported that
-during kernel crash while the kdump kernel was coming up, Hypervisor
-reported invalid values for 'vpa.yield_count' while it dispatching L2-KVM
-Guest vcpus. The error manifested as debug build Hypervisor assert
-triggering to indicate possible VPA corruption.
+The driver uses irq_set_affinity_hint() specifically for the high IOPS
+queue interrupts for two purposes:
 
-Looking at the kexec cpu offline path it was discovered that during crash
-kernel doesn't unregister the VPA/SLB-Shadow/DTL area with
-Hypervisor. Instead it re-allocates and re-registers these areas
-for cpus during boot. During kexec boot the previously allocated areas
-can get overwritten with new content without hypervisor knowledge. This
-creates a small window where while kexec kernel boots and the L2-VCPUs are
-being dispatched, Hypervisor may try to read/write to a wrong memory area
-which previously belonged to older VPA.
+ - To set the affinity_hint which is consumed by the userspace for
+   distributing the interrupts
 
-Fix this possible race and memory corruption by updating
-pseries_kexec_cpu_down() to also unregister vpa,slb_shadow & dtl areas
-during a kernel crash.
+ - To apply an affinity that it provides
 
-Signed-off-by: Vaibhav Jain <vaibhav@linux.ibm.com>
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260708015802.274271-1-vaibhav@linux.ibm.com
+The driver enforces its own affinity to bind the high IOPS queue interrupts
+to the local NUMA node. However, irq_set_affinity_hint() applying the
+provided cpumask as an affinity (if not NULL) for the interrupt is an
+undocumented side effect.
+
+To remove this side effect irq_set_affinity_hint() has been marked
+as deprecated and new interfaces have been introduced. Hence, replace the
+irq_set_affinity_hint() with the new interface irq_set_affinity_and_hint()
+where the provided mask needs to be applied as the affinity and
+affinity_hint pointer needs to be set and replace with
+irq_update_affinity_hint() where only affinity_hint needs to be updated.
+
+Signed-off-by: Nitesh Narayan Lal <nitesh@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
+Link: https://lore.kernel.org/r/20210903152430.244937-6-nitesh@redhat.com
+Stable-dep-of: e0d26fe176a8 ("scsi: mpt3sas: Avoid out-of-bounds cpumask_of_node() call in _base_assign_reply_queues()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/kexec.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/kexec.c b/arch/powerpc/platforms/pseries/kexec.c
-index 145fcfbc017f2..d8bded55e9e53 100644
---- a/arch/powerpc/platforms/pseries/kexec.c
-+++ b/arch/powerpc/platforms/pseries/kexec.c
-@@ -20,12 +20,15 @@
- void pseries_kexec_cpu_down(int crash_shutdown, int secondary)
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 32c8f5728d4cb..80c12b5a468cf 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -3114,6 +3114,7 @@ _base_check_enable_msix(struct MPT3SAS_ADAPTER *ioc)
+ void
+ mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
  {
- 	/*
--	 * Don't risk a hypervisor call if we're crashing
--	 * XXX: Why? The hypervisor is not crashing. It might be better
--	 * to at least attempt unregister to avoid the hypervisor stepping
--	 * on our memory.
-+	 * Ensure vpa/slb_shadow/dtl cleanup even while we are crashing.
-+	 * Why? The hypervisor is not crashing so at least attempt unregister to
-+	 * avoid the hypervisor stepping on our memory. If hypervisor or kexec
-+	 * kernel steps on the old memory allocated to these areas before the
-+	 * new kexec-kernel happens to allocate and register new areas,
-+	 * the hypervisor will see invalid content which may cause
-+	 * unexpected behavior.
- 	 */
--	if (firmware_has_feature(FW_FEATURE_SPLPAR) && !crash_shutdown) {
-+	if (firmware_has_feature(FW_FEATURE_SPLPAR)) {
- 		int ret;
- 		int cpu = smp_processor_id();
- 		int hwcpu = hard_smp_processor_id();
++	unsigned int irq;
+ 	struct adapter_reply_queue *reply_q, *next;
+ 
+ 	if (list_empty(&ioc->reply_queue_list))
+@@ -3126,9 +3127,10 @@ mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
+ 			continue;
+ 		}
+ 
+-		if (ioc->smp_affinity_enable)
+-			irq_set_affinity_hint(pci_irq_vector(ioc->pdev,
+-			    reply_q->msix_index), NULL);
++		if (ioc->smp_affinity_enable) {
++			irq = pci_irq_vector(ioc->pdev, reply_q->msix_index);
++			irq_update_affinity_hint(irq, NULL);
++		}
+ 		free_irq(pci_irq_vector(ioc->pdev, reply_q->msix_index),
+ 			 reply_q);
+ 		kfree(reply_q);
+@@ -3195,18 +3197,15 @@ _base_request_irq(struct MPT3SAS_ADAPTER *ioc, u8 index)
+  * @ioc: per adapter object
+  *
+  * The enduser would need to set the affinity via /proc/irq/#/smp_affinity
+- *
+- * It would nice if we could call irq_set_affinity, however it is not
+- * an exported symbol
+  */
+ static void
+ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
+ {
+-	unsigned int cpu, nr_cpus, nr_msix, index = 0;
++	unsigned int cpu, nr_cpus, nr_msix, index = 0, irq;
+ 	struct adapter_reply_queue *reply_q;
+-	int local_numa_node;
+ 	int iopoll_q_count = ioc->reply_queue_count -
+ 	    ioc->iopoll_q_start_index;
++	const struct cpumask *mask;
+ 
+ 	if (!_base_is_controller_msix_enabled(ioc))
+ 		return;
+@@ -3229,11 +3228,11 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
+ 		 * corresponding to high iops queues.
+ 		 */
+ 		if (ioc->high_iops_queues) {
+-			local_numa_node = dev_to_node(&ioc->pdev->dev);
++			mask = cpumask_of_node(dev_to_node(&ioc->pdev->dev));
+ 			for (index = 0; index < ioc->high_iops_queues;
+ 			    index++) {
+-				irq_set_affinity_hint(pci_irq_vector(ioc->pdev,
+-				    index), cpumask_of_node(local_numa_node));
++				irq = pci_irq_vector(ioc->pdev, index);
++				irq_set_affinity_and_hint(irq, mask);
+ 			}
+ 		}
+ 
 -- 
 2.53.0
 
