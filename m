@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1648B531603;
-	Wed, 30 Sep 2026 17:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5276530E16;
+	Wed, 30 Sep 2026 17:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790643; cv=none; b=YaMdUrs1GcHFJPJwr4fpIlQRh6AbSJZUO43YdIaSrUCfU8HoiNU1/bLuyUhbdLWrHE9w5ui7TwndHKO+eNlUA90TamI92AlEJLMlZsLAW8ellK7uTM29bA1odjya/1Cau+Lxc6yk0E4oMxxLY5vwGchZtijXN6C2QvJyCQeanH8=
+	t=1790790646; cv=none; b=pivfrKZ8STXuFIBY5HFuCQJGwEvCbysrKV3PxIKUIRiG3LHy4KeE+38LMllIK3t+uc40KLh10UmvN3KyIFZ8NRy1gy8AJpvkFmBevx2WlwbGKydJYkRuqdmrjB19qJPugGiGV21Dx/N+6WTOrdeCmsZHemcEBrzi1ZmvMDyRFgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790643; c=relaxed/simple;
-	bh=SYWnlaaSLzaDW6Tn55WH8Uq9u8KEIuD9WnXlE727r3c=;
+	s=arc-20240116; t=1790790646; c=relaxed/simple;
+	bh=Kj6Bpjn0iEWOfDXCaK/ER1W/MozNVbgs/vASBpe8Ogs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaD77uGesK1FFHKjAuVMDpJMxV8HLfDVgy2vjFvSB/wtvFho9jE71QGUk1jxWS4uuNvFGwCEgw+G1OGMAG7xVeyj5c3rOBIAOhPgxqAq1EpK1/UrUA1yOk4wLm5eMiRjSTjOcJDwD6hH/QB9AuceFAJFtfREnoS0XO9TWHt3K/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gvk+52dZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gBMedpINo5LsvCZ90AqyiIVdl2wOCzCG8pZgAYE4QPwKOuxliu8YYQgE1u0kT50QG955y//q+KpPhF0f3zfwKeXdmZOm9BQfhZMAK5us6lZBPFBMBGTXEWuGQEo6T0XotEu+ZwxPwtDs3zeZkc78DjbbR8TmetyUh5E15LuI8yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUlRItq6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gvk+52dZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECC11F000FF;
-	Wed, 30 Sep 2026 17:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUlRItq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2E41F0089B;
+	Wed, 30 Sep 2026 17:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790642;
-	bh=eTYkJ1hZLdvZIbeDFV5QsUgU7Vogc6bDbTJPa1Rre1Y=;
+	s=korg; t=1790790644;
+	bh=KCQsog9+LmjYkcgzU7FhvoT+KGYMNpxRQVr4aDCtHvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gvk+52dZuYKOyIcEkcVRrK9rkdmYXgySL0ASTTZ2Qw1VCK1mEeKrHHCmlibXw44Yh
-	 jy8ZkgPWHjT89MQYeMrMvYgBVBW6+1pjcVo/m41BjpnRCDRMYUxDQkvhg3oeVAnTz6
-	 j0OgdyWacm/6gHKxthH5qlAUCrBvaUzlCU1ykAhY=
+	b=OUlRItq6zbvx7FPAWSx2msX6gv/A6uR8Q4i91WY15tVaIZ8rOzEyM5y7Ws7rR7y58
+	 4xnFRnYMaf/KYQwRTnhV48RwDTX5pMLxNMD+cpuOCYYm0IXAntG/udW0MOz4xTbmEO
+	 NACbTQAfzzg1HERC1YC1Z6lTkRhs+XNyZMaBTDcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Jarkko Nikula <jarkko.nikula@bitmer.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/752] ASoC: ti: omap3pandora: update board check to use DT compatible
-Date: Wed, 30 Sep 2026 17:18:13 +0200
-Message-ID: <20260930152358.653570251@linuxfoundation.org>
+Subject: [PATCH 5.15 024/752] mmc: core: Add validation for host-provided max_segs
+Date: Wed, 30 Sep 2026 17:18:14 +0200
+Message-ID: <20260930152358.675761410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,57 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 45efb8fbdae303539e7fb5562e147583d4ed63ad ]
+[ Upstream commit 3e0483e93a8be320f70a1ff68d835f7f015af311 ]
 
-The omap3pandora driver contains a check for the ARM machine ID via the
-machine_is_omap3_pandora() macro. The board concerned now supports
-only FDT booting, which does not use machine IDs, and therefore the
-code should be updated to check the DT compatible property instead. The
-legacy board file for this machine was removed in commit 7fcf7e061edd
-("ARM: OMAP2+: Remove legacy booting support for Pandora").
-The presence of this machine ID check prevents the removal of machine
-IDs no longer used by the kernel from arch/arm/tools/mach-types,
-because the machine_is_*() macros are generated from mach-types. To
-resolve this issue, use of_machine_is_compatible() instead.
+The max_segs field is of type unsigned short, and if a host driver
+sets an excessively large value, it may be truncated to zero. This
+can cause mmc_alloc_sg() to call kmalloc_objs() with a zero size
+allocation request, which leads to undefined behavior.
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@bitmer.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Under the SLUB allocator, kmalloc(0) returns a special pointer
+(ZERO_SIZE_PTR). The subsequent 'if (sg)' check will evaluate to
+true, and sg_init_table() will then attempt to access invalid memory,
+resulting in a crash:
+
+dwmmc_rockchip 2a310000.mmc: Successfully tuned phase to 133
+mmc1: new UHS-I speed SDR104 SDHC card at address aaaa
+Unable to handle kernel paging request at virtual address 0000001ffffffff0
+Mem abort info:
+ESR = 0x0000000096000004
+EC = 0x25: DABT (current EL), IL = 32 bits
+SET = 0, FnV = 0
+EA = 0, S1PTW = 0
+FSC = 0x04: level 0 translation fault
+Data abort info:
+ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=0000000102c88000
+[0000001ffffffff0] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1] SMP
+Modules linked in:
+CPU: 2 UID: 0 PID: 102 Comm: kworker/2:1 Not tainted 7.0.0-rc6-next-20260331-00013-g4d93c25963c5-dirty #80 PREEMPT
+Hardware name: Rockchip RK3576 EVB V10 Board (DT)
+Workqueue: events_freezable mmc_rescan
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : sg_init_table+0x2c/0x50
+lr : sg_init_table+0x24/0x50
+sp : ffff8000837db710
+x29: ffff8000837db710 x28: 000000000000c000 x27: 0000000000000300
+x26: 0000000000000000 x25: 0000000000000040 x24: ffff0000c46a0000
+x23: 0000000000000000 x22: ffff0000c0c73c00 x21: 0000000000000010
+x20: 0000000000000010 x19: 0000000000000000 x18: 000000000000002c
+x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
+x14: 0000000000000400 x13: ffff8000837dc000 x12: 0000000000000000
+x11: ffff0000c0c73ca0 x10: 0000000000000040 x9 : 459ec1f0abbdbb00
+x8 : 0000001fffffffe0 x7 : 0000000000000000 x6 : 000000000000003f
+x5 : 0000000000035579 x4 : 0000000000000901 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000010
+Call trace:
+sg_init_table+0x2c/0x50 (P)
+mmc_mq_init_request+0x64/0x90
+blk_mq_alloc_map_and_rqs+0x3ac/0x480
+blk_mq_alloc_set_map_and_rqs+0x98/0x1e0
+blk_mq_alloc_tag_set+0x1c0/0x290
+mmc_init_queue+0x120/0x370
+mmc_blk_alloc_req+0x150/0x420
+
+To prevent this, add a validation check in mmc_mq_init_request() to
+detect when sg_len (derived from max_segs) is zero. If sg_len is zero,
+we return an error and print an error message, allowing host driver
+developers to identify and fix incorrect max_segs configuration.
+
+This is a defensive measure that ensures the MMC core fails gracefully
+when host drivers provide invalid max_segs values, rather than crashing
+with a page fault.
+
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/omap3pandora.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mmc/core/queue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/ti/omap3pandora.c b/sound/soc/ti/omap3pandora.c
-index a287e9747c2a1..3cec2eaafe62f 100644
---- a/sound/soc/ti/omap3pandora.c
-+++ b/sound/soc/ti/omap3pandora.c
-@@ -11,12 +11,12 @@
- #include <linux/delay.h>
- #include <linux/regulator/consumer.h>
- #include <linux/module.h>
-+#include <linux/of.h>
+diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+index b15c034b42fb5..c50b0ac068d4a 100644
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -206,8 +206,14 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
+ 	struct mmc_queue *mq = set->driver_data;
+ 	struct mmc_card *card = mq->card;
+ 	struct mmc_host *host = card->host;
++	u16 sg_len = mmc_get_max_segments(host);
  
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/soc.h>
+-	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
++	if (!sg_len) {
++		dev_err(mmc_dev(host), "Wrong max_segs assigned\n");
++		return -EINVAL;
++	}
++
++	mq_rq->sg = mmc_alloc_sg(sg_len, GFP_KERNEL);
+ 	if (!mq_rq->sg)
+ 		return -ENOMEM;
  
--#include <asm/mach-types.h>
- #include <linux/platform_data/asoc-ti-mcbsp.h>
- 
- #include "omap-mcbsp.h"
-@@ -224,7 +224,8 @@ static int __init omap3pandora_soc_init(void)
- {
- 	int ret;
- 
--	if (!machine_is_omap3_pandora())
-+	if (!of_machine_is_compatible("openpandora,omap3-pandora-600mhz") &&
-+		!of_machine_is_compatible("openpandora,omap3-pandora-1ghz"))
- 		return -ENODEV;
- 
- 	pr_info("OMAP3 Pandora SoC init\n");
 -- 
 2.53.0
 
