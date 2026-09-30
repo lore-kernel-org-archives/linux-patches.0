@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFA552B1FB;
-	Wed, 30 Sep 2026 17:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE35252BE34;
+	Wed, 30 Sep 2026 17:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790510; cv=none; b=oB+cTMLSpU7OcUmANGY8lJAdxr1EfG6Y+LNsWeYPrNFuFpqk/t5shPDYm2wONL9TY5A/oBA4HEYQJ1Bz5HRnVZnJJFA0GdrOFRiLcIdV35CvOmUtI/HyhrFePmMrhfHJi6E0Ih2Q3sqXcrGG8mXwkVSPQdaYW6pd33/pDdvXd5k=
+	t=1790790513; cv=none; b=Fi+n2hV1S2Fymw4PDX+4+eRkk+vi7M8M1qJXu+AXvnstlWFHdSohTJwGguay8FX5JpoD9ZqbzC0wsm74xq4M5RupyBwcG7QQ0Goh2q37v2PERmhTZYYElU+ULfZU96qOoraTtHG8EG4QUoyB0ekD1Wx7WTrSdn+ojGRT2ucAxBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790510; c=relaxed/simple;
-	bh=5EDJ2j5O/xFQxMfQywXyKsdezJ0Llyed6cDYozaWtqE=;
+	s=arc-20240116; t=1790790513; c=relaxed/simple;
+	bh=s0fNWj7zcIk+oMtBUAfHNdt0CLxd5z571VVNGJtxJo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5sUlUNQMzEN1QgZP06FaZ7SXLgYyOxV973tfhnBu5KodWX+xf7KhNIiwFfYH2XW8HPC/bn3EcShv28jEutCFSXWwqxaRC/eEtLN1hIxTJQbesqKZPXOwp0YN1hVMdW46Bl3fc+iE831Q3MjO2lFvxngrTczJlVBxdzOkOWThCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0EDTOcc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QQnsFUFRG6Td38+B3ftu2vuIzTrlcDHKbzWhQBjSerJkfw929LRAde96bEMdtCMr3QElLv0PifjAK3yGoW4JenaWNEKNGY7HR+fj1CWfj3yFirBcI+qR4UJxugWwU9nnpFTuJ3e1aMlp9VuyKSI1p/aD3EbXIb95w/arg3KGkRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chC7mYO4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0EDTOcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802E01F00898;
-	Wed, 30 Sep 2026 17:48:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chC7mYO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568051F000FF;
+	Wed, 30 Sep 2026 17:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790509;
-	bh=jTnjnpj7w90kfOaqMeia8xj41VMVya4Y93k0YTSbD+E=;
+	s=korg; t=1790790511;
+	bh=TAMv8EBxMjlRG+JDO1CpFiCV0naAE2SKOE6/a1dLOwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e0EDTOccXyO8FMr+IBBTvIVNvnQOYa249F87kGpG14yFgdueX3xOjbEemstO/wjGQ
-	 oogC9hbC6IoORol3tdtslQeqD1Hg0VBcBbfe+UBxrl7kl6PCRJQ6n7hHMLHFy8NgGK
-	 KUsdVYR9FlJA8q8HSWhvWvJBF8xlDRN5wxdW16pE=
+	b=chC7mYO42A4iAxOCC0aCSfF+5ZTKr/r/HHEbHhPtQe4sKUpXFXEBqMkx/Q1WuRbVO
+	 eTyKeRJOKFLOzd0xmzbe35YM2gZSMrGQvuPNP3K9vfXJI5hJ9Iy/pRvvyaDOMW8tzW
+	 Ge1SdoFC5yQw62OHD5W+wFZM3+m6+qabac8ryqAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.12 854/877] rose: fix dev_put() leak in rose_loopback_timer()
-Date: Wed, 30 Sep 2026 17:29:25 +0200
-Message-ID: <20260930152433.169419666@linuxfoundation.org>
+Subject: [PATCH 6.12 855/877] rose: hold loopback neighbour reference across timer callback
+Date: Wed, 30 Sep 2026 17:29:26 +0200
+Message-ID: <20260930152433.190199487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,54 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit ff91adc54db2b62c7cdf063ff761eceb5adf2215 upstream.
+commit d270a7a5793af84555c40dd1eb80f1d497fdf53c upstream.
 
-rose_rx_call_request() always consumes or returns the skb but never
-releases the device reference obtained from rose_dev_get().  When
-rose_rx_call_request() succeeds (returns non-zero) dev_put() was never
-called, leaking one reference per loopback CALL_REQUEST.
+rose_loopback_timer() dereferences rose_loopback_neigh throughout its
+body but holds no reference on it.  A concurrent rose_loopback_clear()
+followed by rose_add_loopback_neigh() could free and reallocate the
+neighbour while the timer body is running, causing a use-after-free.
 
-Move dev_put() outside the conditional so it is called unconditionally
-after rose_rx_call_request() in all cases.
+Take a reference with rose_neigh_hold() at the start of the callback
+(bailing out if the pointer is already NULL) and release it with
+rose_neigh_put() at the single exit point.  The neigh cannot be freed
+while the callback holds a reference.
 
-Also remove the dead check (!rose_loopback_neigh->dev &&
-!rose_loopback_neigh->loopback) that immediately precedes it: the
-loopback neighbour always has loopback=1 so this condition can never
-be true.
-
-Fixes: 0453c6824595 ("net/rose: fix unbound loop in rose_loopback_timer()")
+Fixes: d860d1faa6b2 ("net: rose: convert 'use' field to refcount_t")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_loopback.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ net/rose/rose_loopback.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 --- a/net/rose/rose_loopback.c
 +++ b/net/rose/rose_loopback.c
-@@ -96,22 +96,15 @@ static void rose_loopback_timer(struct t
- 		}
+@@ -66,10 +66,15 @@ static void rose_loopback_timer(struct t
+ 	unsigned int lci_i, lci_o;
+ 	int count;
  
- 		if (frametype == ROSE_CALL_REQUEST) {
--			if (!rose_loopback_neigh->dev &&
--			    !rose_loopback_neigh->loopback) {
--				kfree_skb(skb);
--				continue;
--			}
--
- 			dev = rose_dev_get(dest);
- 			if (!dev) {
- 				kfree_skb(skb);
- 				continue;
- 			}
- 
--			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0) {
--				dev_put(dev);
-+			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
- 				kfree_skb(skb);
--			}
-+			dev_put(dev);
- 		} else {
++	if (rose_loopback_neigh)
++		rose_neigh_hold(rose_loopback_neigh);
++	else
++		return;
++
+ 	for (count = 0; count < ROSE_LOOPBACK_LIMIT; count++) {
+ 		skb = skb_dequeue(&loopback_queue);
+ 		if (!skb)
+-			return;
++			goto out;
+ 		if (skb->len < ROSE_MIN_LEN) {
+ 			kfree_skb(skb);
+ 			continue;
+@@ -109,6 +114,10 @@ static void rose_loopback_timer(struct t
  			kfree_skb(skb);
  		}
+ 	}
++
++out:
++	rose_neigh_put(rose_loopback_neigh);
++
+ 	if (!skb_queue_empty(&loopback_queue))
+ 		mod_timer(&loopback_timer, jiffies + 1);
+ }
 
 
