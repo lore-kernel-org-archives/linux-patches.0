@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26D03C3C0C;
-	Wed, 30 Sep 2026 19:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1673C108F;
+	Wed, 30 Sep 2026 19:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794881; cv=none; b=Yz8MGxxClEdRsFlTE2mMdoIhj7DVmbzQlhlGwPNN5WiOanhO332sh213+b/DWU+Lkgs2t+W3vMBZjeHSxnK4c+FZ6N1L/g09t2fNS95sFJXa0dskB2wfCzZ0CvWzJnTDhkhLbAqj1hHtiQqiJY3zTwXA/iM4E+hUNAcWwDVSDnU=
+	t=1790794882; cv=none; b=okRbJvX4TkBqzx/tVN/YwUYU57A1MZIoDmMcGtkwfduiLFt4rszbeQsbStutf099qe31jU6VoCYyQRlmdPA/HlnqO0ZHmASNRr1Qb0WgXtkkoYi4yOO0RQ0+CcVsXmVoZ7eCFWG3ZtcMAkMMCxQnrHEjTY0ljqajbT8Sid0fP1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794881; c=relaxed/simple;
-	bh=b86QAcDmF8YzztrTTpMzbbN0BIKbjGScBJrHNgRkGAU=;
+	s=arc-20240116; t=1790794882; c=relaxed/simple;
+	bh=rNahraFEbEtbYEoZiBjImBoRFO2mU4/G2N/3wWOV3Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1k5pONUKDTHsWpTHRN2OFf1ONgk8K871fJVPfMFG3RuXwHQZyWvs6Fb8sRDhY5H1H6+tvKIaE8eTT2iyBFji8hscpE4VO4eghw12BBsTW0qM0d5wGj7PyMZqwXZr8FH5L7AAAaUQylH/ezYEMVeYqIQEhutZznjJxfuEqmExhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03brtLED; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZqTyf3NEgJi5XkI6w1By0R4wbJRrrVNzGFL/+1q0uUBENk0VHrzSDzAsq7vF2pTp4ZYAQ44kK0w050tkRYn/trI4ZjS/oTOQwjKLugTCp70K4l4vZp3Q0zteksfKxSStryL47v1iUmmKKHu8r7eLQdKfZhvOFKX7U+qQYUPsAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyIVtBdh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03brtLED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BBC1F0089A;
-	Wed, 30 Sep 2026 19:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyIVtBdh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7888A1F00898;
+	Wed, 30 Sep 2026 19:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794861;
-	bh=nXO4WwtVSzU8V+Bts8zjg0EieYbsMBJhqD1iIv6X3n4=;
+	s=korg; t=1790794853;
+	bh=wjuZ8Kdwy8SodkPjSJErzcdS8zf0z8w3hBTSY4iLd+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=03brtLEDdXAMtJxWh+ZN4Ubyx36bmSBF+oJcSaIk2hiu7dRrGee0U6+58GYKi5Vsy
-	 iCh44QvsQcFDcrcyRn/QO8zhdBahv22KUaSOf1So0MoIAFgQe/Fc++qJa2SN7XzZwk
-	 n3Auk4+/o4VdgwSFPNbnH9ftv7Caxip3SRLvH/7g=
+	b=HyIVtBdhQirLPYq2wfsgeT5nTmRgUSQD15uw1eZwuf0QdZ9vzuvDGauGjoxIPqCOJ
+	 elkWguv7IY9TRRIq/Jo/3i88YMBc0HD56DnidaYvxZj+DX14heU7VBniejQSsZw0S7
+	 re2ymrkxkZtcHgpQiHfDG6QG04L8qVoFnxTPgQN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0358/1193] sctp: fix err_chunk memory leaks in INIT handling
-Date: Wed, 30 Sep 2026 17:17:22 +0200
-Message-ID: <20260930152442.125223362@linuxfoundation.org>
+Subject: [PATCH 6.6 0355/1193] tipc: fix integer overflow in tipc_recvmsg() and tipc_recvstream()
+Date: Wed, 30 Sep 2026 17:17:19 +0200
+Message-ID: <20260930152442.054453318@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,72 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 9f58a0a4d6c2ed5d341bba64f058f15d1b0c36f2 ]
+[ Upstream commit 47f42ff521b4eeb46e82f9a46a4783a99f7570d7 ]
 
-When sctp_verify_init() encounters unrecognized parameters, it allocates an
-err_chunk to report them. However, this chunk is leaked in several code
-paths:
+In tipc_recvmsg(), the copy length is computed as:
 
-1. In sctp_sf_do_5_1B_init(), if security_sctp_assoc_request() fails after
-   sctp_verify_init() has populated err_chunk, the function returns
-   immediately without freeing it.
+  copy = min_t(int, dlen - offset, buflen);
 
-2. In sctp_sf_do_unexpected_init(), the same leak occurs on the
-   security_sctp_assoc_request() failure path.
+buflen is size_t but min_t(int, ...) casts it to int. When buflen
+exceeds INT_MAX (e.g. 0xFFFFFFFF via io_uring provided buffers), it
+wraps negative, wins the comparison, and the negative copy length
+propagates to simple_copy_to_iter() where int-to-size_t promotion
+makes it SIZE_MAX, triggering a WARN_ON. tipc_recvstream() has the
+same pattern.
 
-3. In sctp_sf_do_unexpected_init(), on the success path after copying
-   unrecognized parameters to the INIT-ACK, the function returns without
-   freeing err_chunk, unlike sctp_sf_do_5_1B_init() which properly frees
-   it.
+  Kernel panic - not syncing: kernel: panic_on_warn set ...
+  RIP: 0010:simple_copy_to_iter+0x9e/0xd0 (net/core/datagram.c:521)
+  Call Trace:
+   __skb_datagram_iter+0x123/0x8b0 (net/core/datagram.c:402)
+   skb_copy_datagram_iter+0x77/0x1a0 (net/core/datagram.c:534)
+   tipc_recvmsg+0x3d7/0xe80 (net/tipc/socket.c:1934)
+   io_recvmsg+0x47e/0xda0
 
-Fix all three leaks by adding sctp_chunk_free(err_chunk) calls before
-returning in the error paths and on the success path in
-sctp_sf_do_unexpected_init().
+Fix by changing min_t(int, ...) to min_t(size_t, ...) in both
+functions. The result is always <= (dlen - offset), which is bounded
+by TIPC maximum message size (0x1ffff bytes), so the implicit
+narrowing on assignment to int copy is always safe.
 
-Fixes: c081d53f97a1 ("security: pass asoc to sctp_assoc_request and sctp_sk_clone")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0656704f1b0158287c98aec09ba36c83e4a537ab.1781970534.git.lucien.xin@gmail.com
+Fixes: e9f8b10101c6 ("tipc: refactor function tipc_sk_recvmsg()")
+Fixes: ec8a09fbbeff ("tipc: refactor function tipc_sk_recv_stream()")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260720214103.47732-1-blbllhy@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/tipc/socket.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 0a44a581900a0..3b67c503e5b99 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -415,6 +415,8 @@ enum sctp_disposition sctp_sf_do_5_1B_init(struct net *net,
- 	/* Update socket peer label if first association. */
- 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
- 		sctp_association_free(new_asoc);
-+		if (err_chunk)
-+			sctp_chunk_free(err_chunk);
- 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
- 	}
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index 6d9bc9397b03c..157d68b91c5c3 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -1940,7 +1940,7 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
+ 	if (likely(!err)) {
+ 		int offset = skb_cb->bytes_read;
  
-@@ -1606,6 +1608,8 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 	/* Update socket peer label if first association. */
- 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
- 		sctp_association_free(new_asoc);
-+		if (err_chunk)
-+			sctp_chunk_free(err_chunk);
- 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
- 	}
- 
-@@ -1671,6 +1675,7 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
- 		 * parameter type.
- 		 */
- 		sctp_addto_chunk(repl, len, unk_param);
-+		sctp_chunk_free(err_chunk);
- 	}
- 
- 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_ASOC, SCTP_ASOC(new_asoc));
+-		copy = min_t(int, dlen - offset, buflen);
++		copy = min_t(size_t, dlen - offset, buflen);
+ 		rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
+ 		if (unlikely(rc))
+ 			goto exit;
+@@ -2072,7 +2072,7 @@ static int tipc_recvstream(struct socket *sock, struct msghdr *m,
+ 		/* Copy data if msg ok, otherwise return error/partial data */
+ 		if (likely(!err)) {
+ 			offset = skb_cb->bytes_read;
+-			copy = min_t(int, dlen - offset, buflen - copied);
++			copy = min_t(size_t, dlen - offset, buflen - copied);
+ 			rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
+ 			if (unlikely(rc))
+ 				break;
 -- 
 2.53.0
 
