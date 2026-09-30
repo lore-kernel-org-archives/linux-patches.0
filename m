@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82243B3C03;
-	Wed, 30 Sep 2026 18:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAD93B42E7;
+	Wed, 30 Sep 2026 18:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793236; cv=none; b=XH1YiuU6h7Bh7vYkqXA2U2meImPR4V3BEj5Mbk7FupLBzrQJiyyr8l2Lo4aVJxDrkdHH1J7IpJw3nKAaOF9Ks0TSpPsJSB1CIiuZ5rQL4XAJ46yua/Hi3t8M2Ei/UbescGk5OjlHRlvDV0U9bN2JFaCP0+j85FTwFuU/v0F7Yhs=
+	t=1790793239; cv=none; b=bFkTOqn1hjaaodY4jtdF9FZsyVD4ctc0ugpEj71ENllDkOBZolqw1kD/d5JsF6Fsy393dcJJ5DLnZllvfekomqV8YxQTfIAUjACFW8hcO+/EFS9E6tCO6nlPvlX/cNS70HkdzywkwC4x+fWdTOEq0WhjyWJ/R1cfkTwEfZdwj84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793236; c=relaxed/simple;
-	bh=VMpt0EgWgaWqDnYPfDcMu1dVaDiuCK2c56qnE+bTf18=;
+	s=arc-20240116; t=1790793239; c=relaxed/simple;
+	bh=0OC7GY9YRKD6/p7TpnCx6ipcdDHUHQahvgADwt4Cad0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7jnyTGgGe+mM8evqRbuk0gM82GCwKVS+kAGvAl71po1worgQxQQ5btR7/Y+wj27GDKHkmp7UO04isx/LSlR7g0jx3Er8m/LPilyMw0ghIfuDI8ikrR6Se9aogTnak7bXEApcqaAx8tfB7ThxSWzbhWHOm7Nouhb272a4E9+Oo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE6sUaA0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j3BOFfUt+TQXM7tdgVJWfIxrIVp7RT9yoJjyZltSmhuNdVq/7Y3rrRv7rpk2gEBmOJX0BxbLFbWM1cF0VXb++ZA2tKUPSThv5kUux2sCbo/TCsYcwY4FuVc4CzB23VXYQ95qVfZJ4YOnzogBfdRJGt3voZgYZxKz8MPMETCFN7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB7hMuk/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE6sUaA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545841F000FF;
-	Wed, 30 Sep 2026 18:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB7hMuk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297941F00898;
+	Wed, 30 Sep 2026 18:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793234;
-	bh=nyPYC2cOOvRDDBlw6EEeyo+5W4vXBH4qS14j6UnH0vk=;
+	s=korg; t=1790793237;
+	bh=ZaZnLjQiFqlWir2Oxb0OEo9BfzY8ByEQcf4fQML59ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TE6sUaA0T+ytm4UotqwFtGf8zdZOT8l4c44r+UhW2bx/q3mDjrcZcy3mqvINCw5O4
-	 MEY0q9BOLgOUi1HEuIj3MaBUK2bq1mBFfB9I+VBzGArlZmna3Z3Smzy91H5pH4QT8b
-	 vTuVcg2K8Um+TIvoRMJyWnfVbGvRNEwzvUzmpux4=
+	b=QB7hMuk/aa42SbSqY6ozpLPaqwqDWF2MOdr1snRXx4e2TMpzqj1lR704Rwi1FVVhK
+	 5nD6X+xB9aTK1sF3SXsqHFBcxvazRq0EKxrPYeR62xcnTTTQ1dHJIMDp14j4qFAYk6
+	 SqDtA5NVPyxMGZj3kJXPIAcV53SKQDDwm6yl0UGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ankit Garg <nktgrg@google.com>,
 	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jordan Rhee <jordanrhee@google.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Joshua Washington <joshwash@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 184/395] gve: Use extack to log xdp config verification errors
-Date: Wed, 30 Sep 2026 17:27:26 +0200
-Message-ID: <20260930152344.643221383@linuxfoundation.org>
+Subject: [PATCH 6.18 185/395] gve: Allow ethtool to configure rx_buf_len
+Date: Wed, 30 Sep 2026 17:27:27 +0200
+Message-ID: <20260930152344.664786322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -56,90 +57,164 @@ Content-Transfer-Encoding: 8bit
 
 From: Ankit Garg <nktgrg@google.com>
 
-[ Upstream commit 091a3b6ff2b98354270cb9278faad6d17d5aa27d ]
+[ Upstream commit d235bb213f411ace8317bcca3740a1008628ea9c ]
 
-Plumb extack as it allows us to send more detailed error messages back
-and append 'gve' suffix to method name per convention.
+Add support for getting and setting the RX buffer length via the
+ethtool ring parameters (`ethtool -g`/`-G`). The driver restricts the
+allowed buffer length to 2048 (SZ_2K) by default and allows 4096 (SZ_4K)
+based on device options.
 
-NL_SET_ERR_MSG_FMT_MOD doesn't support format string longer than 80
-chars so keeping netdev warning with actual queue count details.
+As XDP is only supported when the `rx_buf_len` is 2048, the driver now
+enforces this in two places:
+1.  In `gve_xdp_set`, rejecting XDP programs if the current buffer
+    length is not 2048.
+2.  In `gve_set_rx_buf_len_config`, rejecting buffer length changes if XDP
+    is loaded and the new length is not 2048.
 
 Signed-off-by: Ankit Garg <nktgrg@google.com>
 Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Joshua Washington <joshwash@google.com>
-Link: https://patch.msgid.link/20251106192746.243525-3-joshwash@google.com
+Link: https://patch.msgid.link/20251106192746.243525-4-joshwash@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 3b430ea62340 ("gve: fix TX drop when GSO MSS is too small for hw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c | 24 ++++++++++++++--------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/google/gve/gve.h         |  9 +++++
+ drivers/net/ethernet/google/gve/gve_ethtool.c | 13 ++++++-
+ drivers/net/ethernet/google/gve/gve_main.c    | 39 +++++++++++++++++++
+ 3 files changed, 60 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index 78e72a1e71824..2f7d6fa82b374 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1707,18 +1707,21 @@ static int gve_xsk_wakeup(struct net_device *dev, u32 queue_id, u32 flags)
- 	return 0;
+diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
+index 64075bdc6789b..f0bc910dd6d44 100644
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -1172,6 +1172,12 @@ static inline bool gve_is_gqi(struct gve_priv *priv)
+ 		priv->queue_format == GVE_GQI_QPL_FORMAT;
  }
  
--static int verify_xdp_configuration(struct net_device *dev)
-+static int gve_verify_xdp_configuration(struct net_device *dev,
-+					struct netlink_ext_ack *extack)
++static inline bool gve_is_dqo(struct gve_priv *priv)
++{
++	return priv->queue_format == GVE_DQO_RDA_FORMAT ||
++	       priv->queue_format == GVE_DQO_QPL_FORMAT;
++}
++
+ static inline u32 gve_num_tx_queues(struct gve_priv *priv)
  {
- 	struct gve_priv *priv = netdev_priv(dev);
- 	u16 max_xdp_mtu;
+ 	return priv->tx_cfg.num_queues + priv->tx_cfg.num_xdp_queues;
+@@ -1254,6 +1260,9 @@ void gve_rx_start_ring_gqi(struct gve_priv *priv, int idx);
+ void gve_rx_stop_ring_gqi(struct gve_priv *priv, int idx);
+ u16 gve_get_pkt_buf_size(const struct gve_priv *priv, bool enable_hplit);
+ bool gve_header_split_supported(const struct gve_priv *priv);
++int gve_set_rx_buf_len_config(struct gve_priv *priv, u32 rx_buf_len,
++			      struct netlink_ext_ack *extack,
++			      struct gve_rx_alloc_rings_cfg *rx_alloc_cfg);
+ int gve_set_hsplit_config(struct gve_priv *priv, u8 tcp_data_split,
+ 			  struct gve_rx_alloc_rings_cfg *rx_alloc_cfg);
+ /* rx buffer handling */
+diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
+index c34319bfd32b4..7135112eb870c 100644
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -554,6 +554,8 @@ static void gve_get_ringparam(struct net_device *netdev,
+ 	cmd->rx_pending = priv->rx_desc_cnt;
+ 	cmd->tx_pending = priv->tx_desc_cnt;
  
- 	if (dev->features & NETIF_F_LRO) {
--		netdev_warn(dev, "XDP is not supported when LRO is on.\n");
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "XDP is not supported when LRO is on.");
- 		return -EOPNOTSUPP;
- 	}
- 
- 	if (priv->header_split_enabled) {
--		netdev_warn(dev, "XDP is not supported when header-data split is enabled.\n");
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "XDP is not supported when header-data split is enabled.");
- 		return -EOPNOTSUPP;
- 	}
- 
-@@ -1727,17 +1730,20 @@ static int verify_xdp_configuration(struct net_device *dev)
- 		max_xdp_mtu -= GVE_RX_PAD;
- 
- 	if (dev->mtu > max_xdp_mtu) {
--		netdev_warn(dev, "XDP is not supported for mtu %d.\n",
--			    dev->mtu);
-+		NL_SET_ERR_MSG_FMT_MOD(extack,
-+				       "XDP is not supported for mtu %d.",
-+				       dev->mtu);
- 		return -EOPNOTSUPP;
- 	}
- 
- 	if (priv->rx_cfg.num_queues != priv->tx_cfg.num_queues ||
- 	    (2 * priv->tx_cfg.num_queues > priv->tx_cfg.max_queues)) {
--		netdev_warn(dev, "XDP load failed: The number of configured RX queues %d should be equal to the number of configured TX queues %d and the number of configured RX/TX queues should be less than or equal to half the maximum number of RX/TX queues %d",
--			    priv->rx_cfg.num_queues,
--			    priv->tx_cfg.num_queues,
-+		netdev_warn(dev,
-+			    "XDP load failed: The number of configured RX queues %d should be equal to the number of configured TX queues %d and the number of configured RX/TX queues should be less than or equal to half the maximum number of RX/TX queues %d.",
-+			    priv->rx_cfg.num_queues, priv->tx_cfg.num_queues,
- 			    priv->tx_cfg.max_queues);
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "XDP load failed: The number of configured RX queues should be equal to the number of configured TX queues and the number of configured RX/TX queues should be less than or equal to half the maximum number of RX/TX queues");
- 		return -EINVAL;
- 	}
- 	return 0;
-@@ -1748,7 +1754,7 @@ static int gve_xdp(struct net_device *dev, struct netdev_bpf *xdp)
- 	struct gve_priv *priv = netdev_priv(dev);
++	kernel_cmd->rx_buf_len = priv->rx_cfg.packet_buffer_size;
++
+ 	if (!gve_header_split_supported(priv))
+ 		kernel_cmd->tcp_data_split = ETHTOOL_TCP_DATA_SPLIT_UNKNOWN;
+ 	else if (priv->header_split_enabled)
+@@ -614,6 +616,12 @@ static int gve_set_ringparam(struct net_device *netdev,
  	int err;
  
--	err = verify_xdp_configuration(dev);
-+	err = gve_verify_xdp_configuration(dev, xdp->extack);
+ 	gve_get_curr_alloc_cfgs(priv, &tx_alloc_cfg, &rx_alloc_cfg);
++
++	err = gve_set_rx_buf_len_config(priv, kernel_cmd->rx_buf_len, extack,
++					&rx_alloc_cfg);
++	if (err)
++		return err;
++
+ 	err = gve_set_hsplit_config(priv, kernel_cmd->tcp_data_split,
+ 				    &rx_alloc_cfg);
  	if (err)
- 		return err;
- 	switch (xdp->command) {
+@@ -630,6 +638,8 @@ static int gve_set_ringparam(struct net_device *netdev,
+ 			return err;
+ 	} else {
+ 		/* Set ring params for the next up */
++		priv->rx_cfg.packet_buffer_size =
++			rx_alloc_cfg.packet_buffer_size;
+ 		priv->header_split_enabled = rx_alloc_cfg.enable_header_split;
+ 		priv->rx_cfg.packet_buffer_size =
+ 			rx_alloc_cfg.packet_buffer_size;
+@@ -971,7 +981,8 @@ static int gve_get_ts_info(struct net_device *netdev,
+ 
+ const struct ethtool_ops gve_ethtool_ops = {
+ 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS,
+-	.supported_ring_params = ETHTOOL_RING_USE_TCP_DATA_SPLIT,
++	.supported_ring_params = ETHTOOL_RING_USE_TCP_DATA_SPLIT |
++				 ETHTOOL_RING_USE_RX_BUF_LEN,
+ 	.get_drvinfo = gve_get_drvinfo,
+ 	.get_strings = gve_get_strings,
+ 	.get_sset_count = gve_get_sset_count,
+diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
+index 2f7d6fa82b374..c94f1615a4127 100644
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -1725,6 +1725,13 @@ static int gve_verify_xdp_configuration(struct net_device *dev,
+ 		return -EOPNOTSUPP;
+ 	}
+ 
++	if (priv->rx_cfg.packet_buffer_size != SZ_2K) {
++		NL_SET_ERR_MSG_FMT_MOD(extack,
++				       "XDP is not supported for Rx buf len %d, only %d supported.",
++				       priv->rx_cfg.packet_buffer_size, SZ_2K);
++		return -EOPNOTSUPP;
++	}
++
+ 	max_xdp_mtu = priv->rx_cfg.packet_buffer_size - sizeof(struct ethhdr);
+ 	if (priv->queue_format == GVE_GQI_QPL_FORMAT)
+ 		max_xdp_mtu -= GVE_RX_PAD;
+@@ -2064,6 +2071,38 @@ bool gve_header_split_supported(const struct gve_priv *priv)
+ 		priv->queue_format == GVE_DQO_RDA_FORMAT && !priv->xdp_prog;
+ }
+ 
++int gve_set_rx_buf_len_config(struct gve_priv *priv, u32 rx_buf_len,
++			      struct netlink_ext_ack *extack,
++			      struct gve_rx_alloc_rings_cfg *rx_alloc_cfg)
++{
++	u32 old_rx_buf_len = rx_alloc_cfg->packet_buffer_size;
++
++	if (rx_buf_len == old_rx_buf_len)
++		return 0;
++
++	/* device options may not always contain support for 4K buffers */
++	if (!gve_is_dqo(priv) || priv->max_rx_buffer_size < SZ_4K) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Modifying Rx buf len is not supported");
++		return -EOPNOTSUPP;
++	}
++
++	if (priv->xdp_prog && rx_buf_len != SZ_2K) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Rx buf len can only be 2048 when XDP is on");
++		return -EINVAL;
++	}
++
++	if (rx_buf_len != SZ_2K && rx_buf_len != SZ_4K) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Rx buf len can only be 2048 or 4096");
++		return -EINVAL;
++	}
++	rx_alloc_cfg->packet_buffer_size = rx_buf_len;
++
++	return 0;
++}
++
+ int gve_set_hsplit_config(struct gve_priv *priv, u8 tcp_data_split,
+ 			  struct gve_rx_alloc_rings_cfg *rx_alloc_cfg)
+ {
 -- 
 2.53.0
 
