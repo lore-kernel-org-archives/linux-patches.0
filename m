@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34303C1986;
-	Wed, 30 Sep 2026 19:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3622BEFEF;
+	Wed, 30 Sep 2026 19:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794998; cv=none; b=AJS9/qC626G5OBQSKZIT110nDuWYMU51betgYgC2/STzZazHIHeesEuneg4dpkgYaLN+XsE3NYgYIpqhKa5wZ1tMD87omXh6TlXYzIE6EvbDggdOGKCjQp+GwxfKmXfUKQTVOCjT5WSEj1c7F2oKi2Owiiuu7Ahy9YYhc5hU9HA=
+	t=1790795001; cv=none; b=Cx6wl4xO5u+hB25ysX+TKqguFwQvY1MAugy81rf4pSXjo4OrUkT3D7YpHYMzGWvRO8CJMz1T+Tp1AZjrRbXOST4oscm9kQuxlg5cx/5PWHG8KAjTfZf86pJzeU5j3MOCLttMvy78s2C4p5DcTckXAKjujqb8tXkPNWbMYdB1g10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794998; c=relaxed/simple;
-	bh=l4YYD+mucxrQyLvajHsrrZpln6IvnBaUQ1+rMuG9tNU=;
+	s=arc-20240116; t=1790795001; c=relaxed/simple;
+	bh=KTm203oKp2pe2HQUQjAk/qKHfe1NeJubQ2JD3zYuyH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3afK4tUzEGbl3mkzZ/iZQvvVtmDh+SSSLqsssYAOGCNWIvugIpOggNnbq2SrRSUnrED5U2OEr/Dmw7sD/KamDr4XnJRzPxsG1fUbq5qWO+Cy6t8qTOL927+f1o5TGgF3kVCPqVUYEX69P/Y3j03go8NH80lY52p6m7MlEwIWCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU5XLQba; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ewDz8lOcbjkvBxysCYpq8xOrPAEOXc+8peBQ9+Q0u4N34b5IwZ9T+D5TDKO6KLQMAKz6uN1Y8CO/Wd4cg0ZM5RzxZY4TVFz/eJXr5WZeZksg3o0bZ8jWNrKeYP0pYcCU6dW4Tf7V66qv8zdx45gbDV/jA0aLTUVCzX/tXrv0J2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsnEGxSv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU5XLQba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B50E1F000FF;
-	Wed, 30 Sep 2026 19:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsnEGxSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C301F00899;
+	Wed, 30 Sep 2026 19:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794997;
-	bh=VmE9anP6nXwjtDSfx0o7pppqblt9Aax2gnEm97Q2k00=;
+	s=korg; t=1790795000;
+	bh=b3jHIBkFN5SaoXhTLfeIh0DYWh5O+W+OO0wSfruo9b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SU5XLQbaIFFxlfRV7pyE5OgV+TCaS5fkhi6fVCJZ+CXCoo9vRqp+AezRYi3oVvIbp
-	 CxHDtuF00Q6qjUBvunvOhjLaJv1I+4K77l6V0fVyJPBKWEN+cNuqNJl2VRcPWLiY7Y
-	 r7HQ8SS/QUlxte3fc4dwZwHUSFe8MLkNNBCnubPI=
+	b=QsnEGxSvVQuekCC46nwYm4fxGaO7/LT9jL/0IKjE9JmSrxDSsH2+b9W4tU38/jGK1
+	 wpuW2egoTTuXOoRE55imDljAitR+vMJn8wzxW6bt5it7/RyN8xGNP8nqnP5sBKf4ws
+	 NVbFLd+TvMzTKUVwp8VFUrfJQ/RuE9HFh5vHnvgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheryl Babcock <cheryl@renat.io>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0406/1193] ksmbd: rate limit unmapped SID errors
-Date: Wed, 30 Sep 2026 17:18:10 +0200
-Message-ID: <20260930152443.216055184@linuxfoundation.org>
+Subject: [PATCH 6.6 0407/1193] s390/checksum: call instrument_read() instead of kasan_check_read()
+Date: Wed, 30 Sep 2026 17:18:11 +0200
+Message-ID: <20260930152443.240037591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,40 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit feca5e70fc963b088377b20879e8cd8237c2fd7d ]
+[ Upstream commit 4ce69fcf17d067112f754414aa563e0cd74cc49d ]
 
-A client can include many structurally valid but unmapped SIDs in a DACL.
-Logging every mapping failure lets one request generate hundreds of kernel
-error messages.
+Call instrument_read() from csum_partial() instead of kasan_check_read().
+instrument_read() covers all memory access instrumentation methods.
 
-Rate limit the message to prevent an authenticated client from flooding
-the kernel log.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: Cheryl Babcock <cheryl@renat.io>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: 7f918871112e ("s390/ipl: Fix NULL deref in kdump without re-IPL parm block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 4 ++--
+ arch/s390/include/asm/checksum.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 3056634d0b4b5..b68b63a3195fa 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -521,8 +521,8 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 			temp_fattr.cf_uid = INVALID_UID;
- 			ret = sid_to_id(idmap, &ppace[i]->sid, SIDOWNER, &temp_fattr);
- 			if (ret || uid_eq(temp_fattr.cf_uid, INVALID_UID)) {
--				pr_err("%s: Error %d mapping Owner SID to uid\n",
--				       __func__, ret);
-+				pr_err_ratelimited("%s: Error %d mapping Owner SID to uid\n",
-+						   __func__, ret);
- 				continue;
- 			}
+diff --git a/arch/s390/include/asm/checksum.h b/arch/s390/include/asm/checksum.h
+index 69837eec2ff5d..fcef9ae433a7a 100644
+--- a/arch/s390/include/asm/checksum.h
++++ b/arch/s390/include/asm/checksum.h
+@@ -12,7 +12,7 @@
+ #ifndef _S390_CHECKSUM_H
+ #define _S390_CHECKSUM_H
  
+-#include <linux/kasan-checks.h>
++#include <linux/instrumented.h>
+ #include <linux/in6.h>
+ 
+ /*
+@@ -34,7 +34,7 @@ static inline __wsum csum_partial(const void *buff, int len, __wsum sum)
+ 		.odd = (unsigned long) len,
+ 	};
+ 
+-	kasan_check_read(buff, len);
++	instrument_read(buff, len);
+ 	asm volatile(
+ 		"0:	cksm	%[sum],%[rp]\n"
+ 		"	jo	0b\n"
 -- 
 2.53.0
 
