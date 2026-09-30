@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F97327BEC;
-	Wed, 30 Sep 2026 18:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D97E344D9D;
+	Wed, 30 Sep 2026 18:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794567; cv=none; b=OXkBWYPzD/mDPd40uoHkzFRLyB2vOmJFb9mDhTQeaZK3zl+ZlejfhVEGnF5pkZfI7nuGXk/HmQvqAnZlv4+8+hxgqIyZsCbtZt71dHSk6f8ExL8luz8Q/ij3mjw6Z6BJhf0zHmAkzGApWJTJpIhyQTCx8ouNooEGOLT8wMivrM8=
+	t=1790794570; cv=none; b=giwX1jGTvyugw8Zb9nYD+2sBd8jP2RVpFxvQB/iVw4uXTE2K/Y97s/S3KLm7Iixiu8xyAs9+2e3olG9aUL2VOx/1Qibz6qlwGKHXzfaO7HhjqE8FYoVGagQDogtHALs2CIJFstplSB8ExzskVeOkf9DONbfwbPdd8msf++0WWAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794567; c=relaxed/simple;
-	bh=FDnKLH9C2z6ntPt0nM7neOCt5JkAEcJMeOs4G4lkKzI=;
+	s=arc-20240116; t=1790794570; c=relaxed/simple;
+	bh=8Ftaq9BR5TyDINDDqgRuUPwnx0yRGGtJIqgZz6+gBSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NAV4sgWw14AuQBFp1i9138XD5ZN/RS7xAg1+kW6ojxvGTL2KEaKzjtVPxlRBrn+LOWosHPSuk4wvc5yJXlFpkM/zrOC0iwFecEBvJehp4VCt4QmBIER4Ov80WyStG9qDv6Rkz3NxWcbYNjhkRy3yweg6X5HucwNPlkGosVLFd3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DR6Z2cBj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kTOVXhllOPwaKrw4jki23MLsbXLJfGJ93K6G9Tm2GAtaIa8zs+QrQbyCRYfbfg28QmnWWPiZw47TUxDXgx/1xWyn608FU9N8L92ALBlNN7X10/K4dvSHlLooEUxe+sSIFNqO0WoB16ACqKHFxI8ZsEP6TZ8R+Y5Q7nrh9+ZYNYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmLMb3JQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DR6Z2cBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67C11F000FF;
-	Wed, 30 Sep 2026 18:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmLMb3JQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F511F000FF;
+	Wed, 30 Sep 2026 18:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794566;
-	bh=dlcUQcw920QZQpjNqGW7z/PEE6GyUfc8LIHUOKufJNo=;
+	s=korg; t=1790794569;
+	bh=ncABMScEATuYC1JznMPehG+pKHGVRoJl8nMiLm2qlyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DR6Z2cBj7NleScs5R2jMa5+ILEZ97TARRykZ/efJbysi0rFQX0DamEe5HdhGLi3vn
-	 CvUSUBfwLfcc8qmjJW0kgMnxqGX4bEssqJh9oDvZzF2ALEJn1HRr+stNfX3OGvDnXW
-	 olMyY8Ivd4RkQWEdKUR3oYGC8MiXor0beEaGKbUA=
+	b=LmLMb3JQkk9b5jvpwaNQwnQRpBLeK9oo6Emx+8ikJ9FsCV7R/7hsYxnLxs9aGWwkx
+	 rIZbEikG997gUDeYbYjZ2yFb2XXYRM+bxdg+kdQI0SQmzVAWZ6KgVSWwxvSDbwGL0P
+	 DFmmfXobdz6Cl5Yi81yLCQlmAjkxwpbtt75miUUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0256/1193] ksmbd: treat unnamed DATA stream as base file
-Date: Wed, 30 Sep 2026 17:15:40 +0200
-Message-ID: <20260930152439.864012483@linuxfoundation.org>
+Subject: [PATCH 6.6 0230/1193] scsi: bfa: Reduce kernel stack usage in bfa_fcs_lport_fdmi_build_portattr_block()
+Date: Wed, 30 Sep 2026 17:15:14 +0200
+Message-ID: <20260930152439.305921643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,63 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 171b5d72dd80f99271c073c6e38d5263687c3b6d ]
+[ Upstream commit 57a6ed0b41677ccc5e28cc0976e495c1dfa33747 ]
 
-The SMB path suffix :: names the unnamed data stream of the base
-file, not an alternate data stream backed by a DosStream xattr.
+bfa_fcs_fdmi_get_portattr() gets inlined into multiple places and has
+two fairly large variables on the stack, to the point of causing a
+warning in some randconfig builds:
 
-Canonicalize an empty stream name with an explicit  type to a NULL
-stream name after parsing. This keeps the base filename produced by
-strsep() and lets open continue through the normal base-file path instead
-of looking for a non-existent empty stream xattr.
+drivers/scsi/bfa/bfa_fcs_lport.c:2198:1: error: stack frame size (1560) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_portattr_block' [-Werror,-Wframe-larger-than]
+ 2198 | bfa_fcs_lport_fdmi_build_portattr_block(struct bfa_fcs_lport_fdmi_s *fdmi,
+      | ^
+drivers/scsi/bfa/bfa_fcs_lport.c:1856:1: error: stack frame size (1600) exceeds limit (1280) in 'bfa_fcs_lport_fdmi_build_rhba_pyld' [-Werror,-Wframe-larger-than]
+ 1856 | bfa_fcs_lport_fdmi_build_rhba_pyld(struct bfa_fcs_lport_fdmi_s *fdmi, u8 *pyld)
+      | ^
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Mark the inner function as noinline_for_stack to keep it separate from
+the other variables and prevent multiple copies of the same variable to
+get inlined here.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260611125601.3385418-1-arnd@kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/misc.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/scsi/bfa/bfa_fcs_lport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/misc.c b/fs/smb/server/misc.c
-index 1a5faa6f6e7bc..7cc4b84a49b30 100644
---- a/fs/smb/server/misc.c
-+++ b/fs/smb/server/misc.c
-@@ -121,7 +121,9 @@ int parse_stream_name(char *filename, char **stream_name, int *s_type)
- 	char *stream_type;
- 	char *s_name;
- 	int rc = 0;
-+	bool has_stream_type = false;
+diff --git a/drivers/scsi/bfa/bfa_fcs_lport.c b/drivers/scsi/bfa/bfa_fcs_lport.c
+index 008afd8170871..7800af967a5c9 100644
+--- a/drivers/scsi/bfa/bfa_fcs_lport.c
++++ b/drivers/scsi/bfa/bfa_fcs_lport.c
+@@ -2673,7 +2673,7 @@ bfa_fcs_fdmi_get_hbaattr(struct bfa_fcs_lport_fdmi_s *fdmi,
  
-+	*stream_name = NULL;
- 	s_name = filename;
- 	filename = strsep(&s_name, ":");
- 	ksmbd_debug(SMB, "filename : %s, streams : %s\n", filename, s_name);
-@@ -137,14 +139,20 @@ int parse_stream_name(char *filename, char **stream_name, int *s_type)
+ }
  
- 		ksmbd_debug(SMB, "stream name : %s, stream type : %s\n", s_name,
- 			    stream_type);
--		if (!strncasecmp("$data", stream_type, 5))
-+		if (!strncasecmp("$data", stream_type, 5)) {
- 			*s_type = DATA_STREAM;
--		else if (!strncasecmp("$index_allocation", stream_type, 17))
-+			has_stream_type = true;
-+		} else if (!strncasecmp("$index_allocation", stream_type, 17)) {
- 			*s_type = DIR_STREAM;
--		else
-+			has_stream_type = true;
-+		} else {
- 			rc = -ENOENT;
-+		}
- 	}
- 
-+	if (has_stream_type && !s_name[0] && *s_type == DATA_STREAM)
-+		goto out;
-+
- 	*stream_name = s_name;
- out:
- 	return rc;
+-static void
++static noinline_for_stack void
+ bfa_fcs_fdmi_get_portattr(struct bfa_fcs_lport_fdmi_s *fdmi,
+ 			  struct bfa_fcs_fdmi_port_attr_s *port_attr)
+ {
 -- 
 2.53.0
 
