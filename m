@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309B2519DEA;
-	Wed, 30 Sep 2026 16:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4CF518133;
+	Wed, 30 Sep 2026 16:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784627; cv=none; b=CQacpvIkoiHz+xoIZQdjcNw3BX4iXiDY71pGAHWBnVnfMFMnbokNi/UCd79gSLFo2Hp/hAOcNiBWBkEqGiXqlIqzvJB+F23NdVTwLXREa4zgEhLxo4L7AIiTIW7y9THMu0bvHnmBKM22jH/511VQiIr+3ld7rgmT6cRLHMsgIDY=
+	t=1790784629; cv=none; b=TROmymomewcl09FwEbpcKzC+iKPtvKMPUOJqL23oH8gTdzVKgVPGTAdwloufMSSfUPWZVD7Do+vEFE6kl3BkO5ZDnIBbcj2XKRcIBf/AJQVWPATq5nLZRMqhJQ/rtXI9AEq7HK3l+eiVGkFyMOeZJN6sYCkPtOsVOMoe36TcwRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784627; c=relaxed/simple;
-	bh=o8IshO6ZURIqtHJSboHHTWS1pVq+WFpLMho/dRXTfgA=;
+	s=arc-20240116; t=1790784629; c=relaxed/simple;
+	bh=tHNFcKB1cyDrYPmInQkcME2Do94EEDBi+3CFseC/SJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMtau0/z9x+4lwGuKQF2QRt1rdTuLTuA1dmEwNV6cEHt2kKKUEB+biy6CSZxh0aJw5PYtyQunZeNa2rWhjDh8oc2c0T/eqW4sslT5hzTuvWki6AXlZ9XQgYFtAfptTjL7IIPyx1Gn+XuDGioErCWxw6uDvgQUzQ2YCh+pWBaq+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzddnhqH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MlQAFOtXgz19g/cX5AFZY1g9cp9ItQN3zeynNgnvGZtZ7gR4LuS73NoNdhdgYSvaAkpY76pQKva8Jlv0IS6Jz/ack/yHYx8tCJ90JNlu88mMB9n0XDEskfC1F94IrcCkb7azCvDlUj32FNMmS6kDNPenFBfNk+5/zJscbhyKalU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8HnyqxW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzddnhqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5891F00893;
-	Wed, 30 Sep 2026 16:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8HnyqxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8C61F000FF;
+	Wed, 30 Sep 2026 16:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784623;
-	bh=R7/eoNDa+d/VOJV+4H5e/jXbtKHQ5Pp4VrbvYaV5p64=;
+	s=korg; t=1790784620;
+	bh=9okC6m329XxuN89Kvy2oQ+672yoEPcBNUDT+u9ITVB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KzddnhqHPuRLOVl2xjIYXMGLm+pcpAsRUXaNMs9svy1fwxB+Le4blnsxZH8GzCnCx
-	 221Kedg8PBFqpM2nnws/6MOrlo/0IGPQJa2ok3p9LdfOsfLwWP02Kbor0dG5Tbq/HM
-	 TMKKrwWaFOOx4n1g6OwwQ935DAVY3UK6QFjPwjjg=
+	b=b8HnyqxWXelMoDJnJ1B2syt2yz5MiVUenSa4VrkjNpmnRAQKXyxXHSOS8IE6WI3gZ
+	 eT/8Kp4poWFUZYtj0VRMvyHQk5WUnhIkoHDz3ylGBsahLsZRb7RUx8p+BkitmQQ/Wn
+	 YnOvugXyFdN1bJVS1OZQxIcIw2oMekghGNwIIcn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 222/982] ksmbd: break RH leases before delete-on-close
-Date: Wed, 30 Sep 2026 17:15:58 +0200
-Message-ID: <20260930152421.569480716@linuxfoundation.org>
+Subject: [PATCH 6.1 221/982] ksmbd: start file id allocation at 1
+Date: Wed, 30 Sep 2026 17:15:57 +0200
+Message-ID: <20260930152421.548984019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,70 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 1f1083c36fa11c5d9011451c7b9ab380545c72ea ]
+[ Upstream commit 6b375be0b4e1be89e9a817880515311503a19114 ]
 
-The delete paths only marked the opened file delete pending or
-delete-on-close.  When another client still held a read/handle lease, no
-lease break was sent before the delete state changed.
+ksmbd allocates both the volatile id (per-session file table) and the
+persistent id (global file table) with idr_alloc_cyclic() starting at 0.
+The first open after the module loads therefore gets volatile id 0 and
+persistent id 0, and ksmbd returns an SMB2 FileId of {0, 0} in the create
+response.
 
-smb2.lease.unlink uses a create request with FILE_DELETE_ON_CLOSE and
-expects the second client's unlink to break the first client's RH lease to
-R with ACK_REQUIRED set.  SetInfo(FileDispositionInformation) has the same
-lease-breaking requirement.
+Clients treat an all-zero FileId as a null handle. smbtorture's
+smb2_util_handle_empty() considers {0, 0} empty, so tests that guard the
+close with it (e.g. smb2.oplock.statopen1, smb2.lease.statopen*) never
+close that first handle. The leaked open keeps the inode's oplock count
+non-zero, so a later batch oplock request on the same file is downgraded
+to level II and the test fails.
 
-Break level-II/read-handle leases before setting delete pending or
-delete-on-close so clients are notified before the file is removed.
+Start the id allocation at 1 (KSMBD_START_FID) so no handle is ever
+assigned a {0, 0} FileId, matching the behaviour of other SMB servers.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/smb/server/vfs_cache.c | 3 ++-
+ fs/smb/server/vfs_cache.h | 7 ++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 5e20db1d0ddd6..ebd13393f8d46 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3285,8 +3285,10 @@ int smb2_open(struct ksmbd_work *work)
- 			goto err_out1;
- 	}
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 5b3a55bd700dc..9eb9f892ac2b5 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -556,7 +556,8 @@ static int __open_id(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
  
--	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)
-+	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE) {
-+		smb_break_all_levII_oplock(work, fp, 0);
- 		ksmbd_fd_set_delete_on_close(fp, file_info);
-+	}
+ 	idr_preload(GFP_KERNEL);
+ 	write_lock(&ft->lock);
+-	ret = idr_alloc_cyclic(ft->idr, fp, 0, INT_MAX - 1, GFP_NOWAIT);
++	ret = idr_alloc_cyclic(ft->idr, fp, KSMBD_START_FID, INT_MAX - 1,
++			       GFP_NOWAIT);
+ 	if (ret >= 0) {
+ 		id = ret;
+ 		ret = 0;
+diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
+index 8d1bf34eb4a18..ffa2737e279af 100644
+--- a/fs/smb/server/vfs_cache.h
++++ b/fs/smb/server/vfs_cache.h
+@@ -22,7 +22,12 @@
+ #define	FILE_GENERIC_WRITE	0x120116
+ #define	FILE_GENERIC_EXECUTE	0X1200a0
  
- 	if (need_truncate) {
- 		rc = smb2_create_truncate(&fp->filp->f_path);
-@@ -5952,7 +5954,8 @@ static int set_rename_info(struct ksmbd_work *work, struct ksmbd_file *fp,
- 	return smb2_rename(work, fp, rename_info, work->conn->local_nls);
- }
+-#define KSMBD_START_FID		0
++/*
++ * Start volatile/persistent file id allocation at 1. A file id of 0 yields an
++ * SMB2 FileId of {0, 0}, which clients (e.g. Windows, Samba) treat as a null
++ * handle and never close, leaking the open on the server.
++ */
++#define KSMBD_START_FID		1
+ #define KSMBD_NO_FID		(INT_MAX)
+ #define SMB2_NO_FID		(0xFFFFFFFFFFFFFFFFULL)
  
--static int set_file_disposition_info(struct ksmbd_file *fp,
-+static int set_file_disposition_info(struct ksmbd_work *work,
-+				     struct ksmbd_file *fp,
- 				     struct smb2_file_disposition_info *file_info)
- {
- 	struct inode *inode;
-@@ -5967,6 +5970,7 @@ static int set_file_disposition_info(struct ksmbd_file *fp,
- 		if (S_ISDIR(inode->i_mode) &&
- 		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
- 			return -EBUSY;
-+		smb_break_all_levII_oplock(work, fp, 0);
- 		ksmbd_set_inode_pending_delete(fp);
- 	} else {
- 		ksmbd_clear_inode_pending_delete(fp);
-@@ -6090,7 +6094,7 @@ static int smb2_set_info_file(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (buf_len < sizeof(struct smb2_file_disposition_info))
- 			return -EINVAL;
- 
--		return set_file_disposition_info(fp,
-+		return set_file_disposition_info(work, fp,
- 						 (struct smb2_file_disposition_info *)buffer);
- 	}
- 	case FILE_FULL_EA_INFORMATION:
 -- 
 2.53.0
 
