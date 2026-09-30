@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD933750CF;
-	Wed, 30 Sep 2026 17:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053E551357A;
+	Wed, 30 Sep 2026 17:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787920; cv=none; b=Y+5XTBS58AKrI1FoAWafdopN5KKW8Yz9jZDkWk/At7/mFd4PiadIqDTz5drM6yScOjL0SbQ8mwFqJ2vjgPhVOba1j+Eo4hggci5sB9lgHgMZmdlAiTg4uGHIpj244SJaJw6bNY5V0skP88glzlm2xdJJkN13OTXJ1XXjVAbakp8=
+	t=1790787923; cv=none; b=OMzlIzkH6mRs+IoVoIRcfXJD9CsIk9dA7/X5vl+9lMk7uIFOyHjyRup9f3fIKG5pEag9skc3PyXRccRo+g5+Ynwxcqk9dB6PYhBFiHvKOd2M5q6qdEVDXpgleen7yYbPn2augUiF1tKJFz1UZjCKP+sb1prOMjvP0ZaLK7YIs4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787920; c=relaxed/simple;
-	bh=9q8e41GBCro5rnMMZzZmx9R5ktZjcawqYXeQvVk79ws=;
+	s=arc-20240116; t=1790787923; c=relaxed/simple;
+	bh=LBaTNRkk1HDB+UnI4hCPqpwIYHzF6g03e44cHAnpYBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZh/WDGwweT0ivSr+ZLT64if1A7bem791+eo5xXqSslEXfD1gWN97Ix21JaJNlhBL2pKY48lLbipq9GHxIs5IJg0x6Gh/ZdiBMIu1weGmoKnSaiUPKmaUf8o93WFpWGEc147b/4lgt8jU59xLfAN2XNujz4Xh+uFplnXAqCPY20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCIYS0Ak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J8WgRrwgLmX5p6xRiqoM2K8LnrrHst+sGN/C+dekLaRwwgBX2+lE3aQNQrKCJaPk6iF0o/EEXxteejYHmu9F/S0R5EG0ncTdexH5rE9QuXiy/fT+Sa5LUzzbvG+grh8/HduidvKS9Kg17wvo/jit6BmN/hDO3AHa6opPQe8TPjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NSI3JduG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCIYS0Ak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869E71F000FF;
-	Wed, 30 Sep 2026 17:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NSI3JduG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9091F000FF;
+	Wed, 30 Sep 2026 17:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787919;
-	bh=9+palnKZLAKwPhjsViqZFFjgXc5A280afieMEYxxnqE=;
+	s=korg; t=1790787921;
+	bh=UuIA/jkCob50Hs2SwdyQVXplcr+EGeXunoHW5AjBlvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wCIYS0AkOG/TimbNNKZrYgEV2HsGQbYgJ4mD5VxKCVoMKCOKM0OIClFmBtTjG6lop
-	 oufuoLpvHwJNVDjiYUBeecdWSgkkBFt0xj6r1guAIFDGQkRHQg4uXUFwRiqdNnj41r
-	 4fqy95TI0SyK/DHW3JRgDgmjf9HU919Ed1Zi86vs=
+	b=NSI3JduGr8Wr3XkAZy/7zmWZ6iyciS4yVplxMIHCxGHzUG6bDFHalAPWVuZJN/LxP
+	 Woug0USJkCudVi5dQolbJHqKex/tMEeE++gJ/o0BWOeJ7/RGEzuP877UfR5WF1tvwO
+	 NlWeNqF8La2bmRx7fh+gqcpVAfMycwuIhelkuRX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.2 354/457] nfc: llcp: drop truncated I/RR/RNR PDUs in nfc_llcp_recv_hdlc()
-Date: Wed, 30 Sep 2026 17:27:39 +0200
-Message-ID: <20260930152353.650387951@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 345/457] net: phy: intel-xway: workaround 100BASE-TX Link-Up issue
+Date: Wed, 30 Sep 2026 17:27:30 +0200
+Message-ID: <20260930152353.459637422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,49 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 273f9d667cde649f8de9d72b1303cc2f4b658c50 upstream.
+commit b94773dc4df7026a6f29b2c65e96e88d29cdb576 upstream.
 
-nfc_llcp_recv_hdlc() reads the sequence byte skb->data[2], via
-nfc_llcp_ns()/nfc_llcp_nr(), before any length check. The receive path
-only guarantees the two-byte LLCP header -- __nfc_llcp_recv() checks it
-with pskb_may_pull() and nfc_llcp_recv_agf() admits two-byte inner PDUs
--- so a two-byte I, RR or RNR PDU reads one byte of uninitialised skb
-tailroom. The byte becomes N(R)/N(S); a peer can already set those with
-a well-formed PDU, so this is acting on uninitialised memory, not new
-peer control.
+MaxLinear GSW12x/GSW14x Ethernet Switch Errata Sheet states:
+"An issue has been sporadically observed after device power-on on the first
+link-up attempt in 100BASE-TX mode resulting in either the link-up taking a
+long time, or failing to link-up altogether...
 
-Guard the read with pskb_may_pull(), as commit 95674f506c63 ("nfc: llcp:
-reject PDUs shorter than the LLCP header") did for the two-byte header,
-so the sequence byte is present and linear before it is read. RR and RNR
-PDUs are LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE bytes and an I PDU is
-longer, so no valid frame is rejected; a truncated PDU is malformed, so
-return without a DM reply.
+Workaround:
+After power-on, enable Cable Diagnostic Mode for all ports and disable
+it..."
 
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Implement the proposed workaround unconditionally in the Intel XWAY driver
+(MaxLinear GSW1xx switches incorporate Intel XWAY PHYs) because the
+diagnostic bits have the same meaning even in older integral PHYs such as
+GPY111/PEF7071/PHY11G. So it's not clear how to distinguish the affected
+newer integrated PHYs, but the workaround should not hurt the older PHYs.
+
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/AS8P251MB0001789BBF04B72745C7D96BC8BA2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: 22335939ec90 ("net: dsa: add driver for MaxLinear GSW1xx switch family")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260922075251.23386-1-alexander.sverdlin@siemens.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/intel-xway.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1101,6 +1101,9 @@ static void nfc_llcp_recv_hdlc(struct nf
- 	struct sock *sk;
- 	u8 dsap, ssap, ptype, ns, nr;
+--- a/drivers/net/phy/intel-xway.c
++++ b/drivers/net/phy/intel-xway.c
+@@ -16,6 +16,11 @@
+ #define XWAY_MDIO_ISTAT			0x1A	/* interrupt status */
+ #define XWAY_MDIO_LED			0x1B	/* led control */
  
-+	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE))
-+		return;
++#define XWAY_MDIO_GCTRL_TM_MASK		GENMASK(15, 13)
++#define XWAY_MDIO_GCTRL_TM(mode)	FIELD_PREP(XWAY_MDIO_GCTRL_TM_MASK, (mode))
++#define XWAY_MDIO_GCTRL_TM_NOP		XWAY_MDIO_GCTRL_TM(0)	/* Normal operation */
++#define XWAY_MDIO_GCTRL_TM_CDIAG	XWAY_MDIO_GCTRL_TM(6)	/* Cable diagnostics */
 +
- 	ptype = nfc_llcp_ptype(skb);
- 	dsap = nfc_llcp_dsap(skb);
- 	ssap = nfc_llcp_ssap(skb);
+ #define XWAY_MDIO_ERRCNT_SEL		GENMASK(11, 8)
+ #define XWAY_MDIO_ERRCNT_COUNT		GENMASK(7, 0)
+ #define XWAY_MDIO_ERRCNT_SEL_RXERR	0
+@@ -326,6 +331,28 @@ static int xway_gphy_probe(struct phy_de
+ 	return 0;
+ }
+ 
++static int xway_11g_int_config_init(struct phy_device *phydev)
++{
++	int err;
++
++	/* An issue has been sporadically observed after device power-on on the
++	 * first link-up attempt in 100BASE-TX mode resulting in either the
++	 * link-up taking a long time, or failing to link-up altogether.
++	 *
++	 * Workaround:
++	 * After power-on, enable Cable Diagnostic Mode for all ports and
++	 * disable it.
++	 */
++	err = phy_modify(phydev, MII_CTRL1000, XWAY_MDIO_GCTRL_TM_MASK, XWAY_MDIO_GCTRL_TM_CDIAG);
++	if (err)
++		return err;
++	err = phy_modify(phydev, MII_CTRL1000, XWAY_MDIO_GCTRL_TM_MASK, XWAY_MDIO_GCTRL_TM_NOP);
++	if (err)
++		return err;
++
++	return xway_gphy_config_init(phydev);
++}
++
+ static int xway_gphy14_config_aneg(struct phy_device *phydev)
+ {
+ 	int reg, err;
+@@ -735,7 +762,7 @@ static struct phy_driver xway_gphy[] = {
+ 		.phy_id_mask	= 0xffffffff,
+ 		.name		= "Intel XWAY PHY11G (xRX v1.2 integrated)",
+ 		/* PHY_GBIT_FEATURES */
+-		.config_init	= xway_gphy_config_init,
++		.config_init	= xway_11g_int_config_init,
+ 		.probe		= xway_gphy_probe,
+ 		.handle_interrupt = xway_gphy_handle_interrupt,
+ 		.config_intr	= xway_gphy_config_intr,
 
 
