@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DF73AFB11;
-	Wed, 30 Sep 2026 16:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CFD33D6FD;
+	Wed, 30 Sep 2026 16:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785933; cv=none; b=RgeoBuK+bBl1YnmivoJqxPzTu0JF+R6PqNQy5G3XWI6vwAnYietGOO+gforQeHKc6+y+5/+OdOq9C02pYonnNm1I7upbhWRsuWga3Q0FP7jfAi40VbK0LdnDuPsQQNwnxEkvd/TM2vi3nSpM6+ECk1TPWBDoadKpYsi/+AL7xYc=
+	t=1790785936; cv=none; b=Yds7ew5PyXqbPnmMnhjdtjrHDiQMxGVZ1qta7T8A0CJcYKzHCippvdWFzccWHuh8qeZIuxE7fZYdr+mReOCRkClOAxeV9iHX3jT2xGQF6ZeNgAld7tDqJ5d2dGK96XR2sS22JuWVR0cy1gQyPwFrlLctQPZJ5pQ+sQVaF2dY8vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785933; c=relaxed/simple;
-	bh=/maHto5L4Ww3CziFrXS7qPkv1UWwcGzW4LvdET32aCI=;
+	s=arc-20240116; t=1790785936; c=relaxed/simple;
+	bh=yVDsb5LcneYwzEl0A/w1x/k/GAOBO2MSaWIKz3DSGFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bCU80upj4c5ytv2FFf3HjzPRlaciPeEgk+a5jPnVocWpjg2BPo6M+oSg/ezUhYTltP8HfX3nasKtZXVxkoUUKac/PyQ/ZkqeWIcEmb/fNHfdmny94lgufpzQKP7oS/vu7C0+TozAv7rIP9DXtjUXpJSfTNAn+fGoNxeX/ckFiGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCBajd67; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=beDG6TN70BSPDDXW4ULMhJXNiJ+9RhbtWvSQuBb4ftJiFuFul+UqN1w2FiUgD1v6wuNwsAAI3CGxkSNtGvaaxS4LJnJiwnOEeZLjby6c8I1+G7RHdxBT8zkCXdrOQsEIoCvhOdyMjUodIjeIRTZZnLfzZ4sWj+ZT7s4xLjqhV1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Exo30jkV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCBajd67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7C01F000FF;
-	Wed, 30 Sep 2026 16:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Exo30jkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9BB1F000FF;
+	Wed, 30 Sep 2026 16:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785932;
-	bh=5V7U+7g3eKpKoKot0W6tAfJnGwhl+ZSsP01oKbZcIic=;
+	s=korg; t=1790785935;
+	bh=d4lELuISYm+8GkEIGGNeSSeBNH2V209hZbmtIhPewUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCBajd67D0oq8yvCOThY5yeAN7OnKKtHHYdLsrgQIYMLi31TmlPoonyDj8IvpQW6a
-	 I2zajL5D3S1uNIlbzKdPT99MDpMVg9ZfRtcDliybJ7NLi3We2B/DbqasY2TuhS7ZTD
-	 eIYZKEv9fhQPlJWX07vOn6xnWrSO+h+dx6y94tsA=
+	b=Exo30jkVvwMB6ol0kSb1j1zoUofwj3u6VRkzI6MIZRzoIeusgQ3pBJMvYd9TqGErS
+	 wvQpwSqU/ECDTuJcT/l91bk6LfYbbmb7OngLPExleKl+V7RBkDBV9mBzw4R8phU5gf
+	 DsCj7jjM9EohsLINwvqX5U5aAFj0B9Td7AUkHGcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
 	Gautam Menghani <gautam@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 681/982] KVM: PPC: Book3S HV: fix secure device page leak on uv_page_in() failure
-Date: Wed, 30 Sep 2026 17:23:37 +0200
-Message-ID: <20260930152431.391022861@linuxfoundation.org>
+Subject: [PATCH 6.1 682/982] powerpc/iommu: Fix the overflow validation in iommu_tce_check_ioba
+Date: Wed, 30 Sep 2026 17:23:38 +0200
+Message-ID: <20260930152431.412045597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -48,67 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-[ Upstream commit 0a416ee20bcccddf91ca5b63696a23b9d11d73aa ]
+[ Upstream commit 0b271f7d7f5ed45bc498a03ce0aa9cfd8402fc71 ]
 
-In kvmppc_svm_page_in(), if uv_page_in() fails after
-kvmppc_uvmem_get_page() has succeeded, the secure device page is never
-released.  kvmppc_uvmem_get_page() sets a bit in kvmppc_uvmem_bitmap,
-allocates a kvmppc_uvmem_page_pvt struct, marks the GFN as
-KVMPPC_GFN_UVMEM_PFN, and calls zone_device_page_init() which sets
-refcount=1 and locks the page.  The subsequent goto out_finalize skips
-the *mig.dst assignment, so migrate_vma_finalize() is a no-op for the
-page, and none of those resources are ever reclaimed.
+The commit b1af23d836f8 ("KVM: PPC: iommu: Unify TCE checking") unified
+IOBA parameter checking across KVM and VFIO into iommu_tce_check_ioba().
+While doing so, the passed in argument npages is ignored and constant
+value '1' is used leaving out a possible overflow as the callers can
+legitimately be using npages > 1 for H_STUFF_TCE or H_PUT_TCE_INDIRECT
+cases.
 
-Each occurrence permanently consumes one entry from the firmware-bounded
-secure memory pool (kvmppc_uvmem_bitmap), leaks pvt, and leaves the GFN
-marked as secure — making it unusable for the lifetime of the VM.
+Fix this by accounting for 'npages', checking for arithmetic overflow,
+and verifying that the entire requested range (ioba - offset + npages)
+does not exceed the table capacity 'size'.
 
-The twin __kvmppc_svm_page_out() already handles the analogous uv_page_out()
-failure correctly with unlock_page(dpage); __free_page(dpage).  Apply
-the same pattern here: unlock_page() followed by put_page(), which
-chains through free_zone_device_folio() into kvmppc_uvmem_folio_free()
-to clear the bitmap bit, free pvt, and reset the GFN state.
-
-Reachable whenever uv_page_in() returns an error (e.g. UV pool
-exhaustion) on any POWER9/10 + Ultravisor/PEF system.
-
-Fixes: ca9f4942670c ("KVM: PPC: Book3S HV: Support for running secure guests")
+Fixes: b1af23d836f8 ("KVM: PPC: iommu: Unify TCE checking")
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/book3s_hv_uvmem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kvm/book3s_hv_uvmem.c b/arch/powerpc/kvm/book3s_hv_uvmem.c
-index e2f11f9c3f2aa..2bc67f8ef82c5 100644
---- a/arch/powerpc/kvm/book3s_hv_uvmem.c
-+++ b/arch/powerpc/kvm/book3s_hv_uvmem.c
-@@ -774,8 +774,11 @@ static int kvmppc_svm_page_in(struct vm_area_struct *vma,
- 		if (spage) {
- 			ret = uv_page_in(kvm->arch.lpid, pfn << page_shift,
- 					gpa, 0, page_shift);
--			if (ret)
-+			if (ret) {
-+				unlock_page(dpage);
-+				put_page(dpage);
- 				goto out_finalize;
-+			}
- 		}
- 	}
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index a612abe4bfd57..81bd60c8094c1 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -1055,7 +1055,7 @@ int iommu_tce_check_ioba(unsigned long page_shift,
+ 	if (ioba < offset)
+ 		return -EINVAL;
  
+-	if ((ioba + 1) > (offset + size))
++	if ((ioba + npages < ioba) || (ioba - offset + npages > size))
+ 		return -EINVAL;
+ 
+ 	return 0;
 -- 
 2.53.0
 
