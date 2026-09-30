@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA943AEB2C;
-	Wed, 30 Sep 2026 17:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C176A4D1784;
+	Wed, 30 Sep 2026 17:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788647; cv=none; b=bMI7ndQrpizqUar/yGuK+WieqJSpaVSZ+s0m+uaemvZg44jKim0rENFGK6UX0mRQfuQJnXaFrXpofv44gj5tU/eEQ3eRg6eI/lVXvPuCivMGZOjOaX2wzgDyElPXATViM9gzh36wqx/X0X9K68mszvlm4JG6Jgb7mBPZrllRhAM=
+	t=1790788649; cv=none; b=rWo9494ySU8AEWxTqV0A+m0W5fWnuL9jgvAupTzG4ElqDRmZK19nIjU3bv3vBpoYpedtnFeUVoySt9k1b4kh82/N+z1qi84LK4SP2q/S9d44eJcE9Wt4DXpHco6MpQLOmSbTIJatqOZrQZNTJT8L2LKkmECexbL/345JhqgPUaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788647; c=relaxed/simple;
-	bh=/zClz/z7ozmOLbZXDP3QgjE7hr5eqB173ldiukRBYJc=;
+	s=arc-20240116; t=1790788649; c=relaxed/simple;
+	bh=NtqkG7Z6T3x8vgQ0ULqqZ5VA8h4VRsQh9BaTsmq7Zy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9fc/pHgElMyJcF+D7qyBI6yZ9XiPmGGX82ZBAkHySYoZAG9h19jY3BwN+hv1DWUxfWe5MqD790bz4kwN+eqIJw7HLur/VjEun9q4paZxocbuqgNz9j3A6Qp8KpcmDFkCkHQZPG36545yI/YZWy31Q9eYpv5JZcQMqyn/cW8/8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOFrwG8t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YvY5HCixrXrTRSXWjukScGuz4HX6g7KvNDY5mdBUBujKa63b3W57JW3KIbE780Fo368+EbJBLlf8hBoNzS6K+nhZpuvbfUPdLjq4JlOAwIzBoQh3FIXx/I5AEgvftF3gFRZuzc22lEpGllD9EDQ52eavhG8lg/xMtMv4h/Adqzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFTncytf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOFrwG8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1741F00898;
-	Wed, 30 Sep 2026 17:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFTncytf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CED31F000FF;
+	Wed, 30 Sep 2026 17:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788645;
-	bh=E0j13IObsfakL8IJ+W1tjV444IHyZvGjNAZvgqwkSa4=;
+	s=korg; t=1790788648;
+	bh=0g52N9TodR0cYAoP8cch6Oz3ToUd5FMFy0rA3I7RYJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WOFrwG8tuDyGM8LWHoXLC6hi8KplGe1fOPsIMs57aJVncKCHZMslzfhgWwSXghk2G
-	 /enHz21kZbHCcTgSX9RP117yLNcbsb10NpWwNxJdauTNTo5Z1voT23ooOREWt/SUxc
-	 3ZURBigPjowZAM8svq4UPqgzb5NZVQbNPful6IKQ=
+	b=qFTncytfuqJyKa7CI8EjzwuPpqnYh+I/I3hsqJg8ZkBP1kz4hWZAFtnyKrooTWgqj
+	 2kJBrVZ4ZVVJvUCVTEF4vemT12Z43jXWTl47q7QuugOgZGaS+ddbTHO2HsxRUMFBHK
+	 VSrd/FjFyxNT9mpJH5TtX1b8UBijqjg+eWig0has=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 197/877] net/sched: hhf: cap hh_flows_limit at change time
-Date: Wed, 30 Sep 2026 17:18:28 +0200
-Message-ID: <20260930152418.976264508@linuxfoundation.org>
+	Roberts Kursitis <roberts.kursitis@azeron.eu>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 162/877] Input: xpad - add support for Azeron devices
+Date: Wed, 30 Sep 2026 17:17:53 +0200
+Message-ID: <20260930152418.217377103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,91 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Roberts Kursitis <roberts.kursitis@azeron.eu>
 
-commit 2cef2588c995722a901368def30befeef9ae55c6 upstream.
+commit cba76c0f47af1a389d718c5bb69e75cbd67bba98 upstream.
 
-hhf_change() stores TCA_HHF_HH_FLOWS_LIMIT with no upper bound. A huge
-hh_flows_limit lets each new heavy-hitter flow pass the
-hh_flows_current_cnt check in alloc_new_hh() and forces a fixed-size
-kzalloc(GFP_ATOMIC) per flow under spoofed traffic, for unbounded memory
-growth.
+Azeron controllers (Cyro, Cyborg, Classic/Compact, Cyro Lefty,
+Cyborg II and Keyzen) present a standard Xbox 360 controller
+interface, so they work with the existing xpad driver once their
+USB IDs are added.
 
-Bound the attribute with NLA_POLICY_MAX() at 2*HH_FLOWS_CNT (the
-hhf_init() default) and report the rejected value via extack. The
-deprecated nested parse is kept: legacy tc does not set NLA_F_NESTED on
-TCA_OPTIONS. Configs relying on hh_limit above the default were relying
-on unbounded, unsafe behaviour and are not supported going forward.
+The 0x16d0 vendor ID is a shared block, but this is safe because
+xpad only binds interfaces that match the Xbox 360 signature.
 
-hhf_init() also ran hhf_change() before setting the default
-hh_flows_limit, so a user-supplied hh_limit at add time was clobbered
-back to 2048. Set the default before hhf_change() so the configured
-value sticks.
+Tested with an Azeron Keyzen.
 
-This is a follow-up to commit eb56a495f59b ("net/sched: hhf: clamp
-quantum in change and init paths"), which bounded the quantum of the
-same qdisc; the hh_flows_limit bound is the remaining unbounded knob of
-that series' scope.
-
-Conditions to recreate the bug: CAP_NET_ADMIN in a user namespace;
-tc qdisc change dev X root hhf hh_limit 4294967295 succeeds and the
-value is echoed by tc qdisc show, unbounding heavy-hitter flow
-allocations; also tc qdisc add dev X root hhf hh_limit 500 stores 2048
-instead of 500.
-
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Signed-off-by: Roberts Kursitis <roberts.kursitis@azeron.eu>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260822195509.112717-1-jhs@mojatatu.com
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-B855.v1.20260911153152@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260906143040.162418-1-roberts.kursitis@azeron.eu
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hhf.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/input/joystick/xpad.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -526,7 +526,7 @@ static void hhf_destroy(struct Qdisc *sc
- static const struct nla_policy hhf_policy[TCA_HHF_MAX + 1] = {
- 	[TCA_HHF_BACKLOG_LIMIT]	 = { .type = NLA_U32 },
- 	[TCA_HHF_QUANTUM]	 = { .type = NLA_U32 },
--	[TCA_HHF_HH_FLOWS_LIMIT] = { .type = NLA_U32 },
-+	[TCA_HHF_HH_FLOWS_LIMIT] = NLA_POLICY_MAX(NLA_U32, 2 * HH_FLOWS_CNT),
- 	[TCA_HHF_RESET_TIMEOUT]	 = { .type = NLA_U32 },
- 	[TCA_HHF_ADMIT_BYTES]	 = { .type = NLA_U32 },
- 	[TCA_HHF_EVICT_TIMEOUT]	 = { .type = NLA_U32 },
-@@ -545,7 +545,7 @@ static int hhf_change(struct Qdisc *sch,
- 	u32 new_hhf_non_hh_weight = q->hhf_non_hh_weight;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_HHF_MAX, opt, hhf_policy,
--					  NULL);
-+					  extack);
- 	if (err < 0)
- 		return err;
- 
-@@ -621,6 +621,9 @@ static int hhf_init(struct Qdisc *sch, s
- 	q->hhf_evict_timeout = HZ;      /* 1  sec */
- 	q->hhf_non_hh_weight = 2;
- 
-+	/* Cap max active HHs at twice len of hh_flows table. */
-+	q->hh_flows_limit = 2 * HH_FLOWS_CNT;
-+
- 	if (opt) {
- 		int err = hhf_change(sch, opt, extack);
- 
-@@ -637,8 +640,6 @@ static int hhf_init(struct Qdisc *sch, s
- 		for (i = 0; i < HH_FLOWS_CNT; i++)
- 			INIT_LIST_HEAD(&q->hh_flows[i]);
- 
--		/* Cap max active HHs at twice len of hh_flows table. */
--		q->hh_flows_limit = 2 * HH_FLOWS_CNT;
- 		q->hh_flows_overlimit = 0;
- 		q->hh_flows_total_cnt = 0;
- 		q->hh_flows_current_cnt = 0;
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -321,6 +321,12 @@ static const struct xpad_device {
+ 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
+ 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
+ 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
++	{ 0x16d0, 0x1103, "Azeron Cyro", 0, XTYPE_XBOX360 },
++	{ 0x16d0, 0x113c, "Azeron Cyborg", 0, XTYPE_XBOX360 },
++	{ 0x16d0, 0x1192, "Azeron Classic/Compact", 0, XTYPE_XBOX360 },
++	{ 0x16d0, 0x1212, "Azeron Cyro Lefty", 0, XTYPE_XBOX360 },
++	{ 0x16d0, 0x12f7, "Azeron Cyborg II", 0, XTYPE_XBOX360 },
++	{ 0x16d0, 0x13ea, "Azeron Keyzen", 0, XTYPE_XBOX360 },
+ 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
+ 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
+@@ -555,6 +561,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
++	XPAD_XBOX360_VENDOR(0x16d0),		/* Azeron controllers */
+ 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
+ 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
+ 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
 
 
