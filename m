@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD7551FCC3;
-	Wed, 30 Sep 2026 17:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7BF51FCD9;
+	Wed, 30 Sep 2026 17:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790916; cv=none; b=SHFJzVSAAVK8eVvdCOfQzk8a5aHsHGsdO8CkdeJoArXewEfetL0h9Cn2ig/rLmb7mIk0H0VuYbrw5Otk1FkB4IAwYTCAp2hblKI6j9+bILUFFd3wbg+sxCDOFXTB1H8Ww2SB7R3StaBxKxadfi1+VfmMDLJu/y/Men4cBCxaOuM=
+	t=1790790919; cv=none; b=FkKy0sNZwY3qGqIUeGRJuHiDUFCgRPsyruA8m6GQzs1YFccZQmzrEb/VZoyEdQm9nMYMmK4LWlYa0PPueGAGGbHfZvBWxdirBPTf1JwwWimwYzsnOKYc29ySz0WLzqCODb8T8UnDoMveYtIY0jOs5EUvRaePsV71LAMH4QkGgs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790916; c=relaxed/simple;
-	bh=29ZY8TIkZOgqAagAOoIF0Vz1Rjsx05UxHW8AHBnGthk=;
+	s=arc-20240116; t=1790790919; c=relaxed/simple;
+	bh=PxJUza089yJjE+rtTV++ErlOrUOO5j2jw5wPsalbfys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJlVWFSeYSdTbpGYRKiI/TpXl337vCJDdh9lsn7laFx+5tTn0nJzf7NqKoDxR3xTyTGJkFm2UGehIsIoyNa2oC1rZdpa+Q8vSL2dtvskgCTtqYWsoM8khoVVXITsqe8DTWD3SYDcI5+d4HWATt6KcLnQQ2ncQCb08Hj7NxZK3yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQ49Frl1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C9BkWuhwQuSEozdutWHej6LsAUAKnZK9DK4zsBr1tclDGL8hfV03xA28bAahEBSuDfGmxcgjbGpVtIWqrhm3K83DsWLtyA3GspGB7bxnH1cC0+43gGQdWEF9lmv5hheKrs3YPL7YFGZjPN/s/oIsIN++jGNzW7i25zzhggcdtfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afuSIHkJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQ49Frl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6621F000FF;
-	Wed, 30 Sep 2026 17:55:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afuSIHkJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EBC1F000FF;
+	Wed, 30 Sep 2026 17:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790915;
-	bh=Oo/4pUFa8YRJl8avkIw/NgnRKFNHeHGaILMskrUJv6M=;
+	s=korg; t=1790790918;
+	bh=qr/6W0ac1WKb7tK5/ebNX35nw5eYa+R6ZhUSr9A5e50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQ49Frl10F3c00jY/fDnHCGDfn4mz5tu5mkEPZ9dA9PyITcoLsKSZ1Z0I8l3+aN7c
-	 QI2OxChbHYpuFcXwkWEEoye823Xvwd06TUyTm2zztGgXTIiRbJStswqJLp3HyNQ4F8
-	 C1AXYkM0sOpz6ahHI7Lou42N8nACJpa5K5ZbHj4g=
+	b=afuSIHkJxjVNj5oszTiRgYbKq8OwMU8IgezuugQxXK2iK4kd7cP0vZu2YWLRsBOYm
+	 DRwBK7FOhTH3aE/aoMTlvKGNM0VFETUcd9bgunoURvefYTSzZy+qb+InhsFY5e2t6v
+	 6aG98TpVVOZ121/SHBZpkH8gqmxTMNkXalGxwrsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Faleichyk <andrei.faleichyk@noogadev.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Rosen Penev <rosenp@gmail.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/752] ALSA: hda/realtek: Add quirk for ASUS VivoBook X509DAP
-Date: Wed, 30 Sep 2026 17:19:47 +0200
-Message-ID: <20260930152400.709808179@linuxfoundation.org>
+Subject: [PATCH 5.15 118/752] ipmi: si: Use platform_get_irq_optional() to retrieve interrupt
+Date: Wed, 30 Sep 2026 17:19:48 +0200
+Message-ID: <20260930152400.732402342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,34 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Faleichyk <andrei.faleichyk@noogadev.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 3580bc53520ce4efc94ece5886ad3670b93667ba ]
+[ Upstream commit 39851b7e580a65bee732e5364f0efb974b242370 ]
 
-The internal microphone on ASUS VivoBook X509DAP (subsystem ID
-0x1043:0x197e) is not detected without a quirk entry. Add
-ALC256_FIXUP_ASUS_MIC_NO_PRESENCE to fix the issue.
+Use platform_get_irq_optional() to retrieve the interrupt resource
+instead of directly parsing and mapping the OF node via
+irq_of_parse_and_map().  This is the standard pattern for platform
+devices.  irq_of_parse_and_map() requires ire_dispose_mapping(), which
+is missing.
 
-Signed-off-by: Andrei Faleichyk <andrei.faleichyk@noogadev.com>
-Link: https://patch.msgid.link/20260603213313.6298-1-andrei.faleichyk@noogadev.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: Antigravity:Gemini-3.5-Flash
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Message-ID: <20260603192511.6869-1-rosenp@gmail.com>
+[Handle a negative return from platform_get_irq_optional() to mean
+ no interrupt is assigned.]
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/ipmi/ipmi_si_platform.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index bd8878f4896c8..479e0fe7f7821 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9430,6 +9430,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x18f1, "Asus FX505DT", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x194e, "ASUS UX563FD", ALC294_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x1970, "ASUS UX550VE", ALC289_FIXUP_ASUS_GA401),
-+	SND_PCI_QUIRK(0x1043, 0x197e, "ASUS VivoBook X509DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1982, "ASUS B1400CEPE", ALC256_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x19ce, "ASUS B9450FA", ALC294_FIXUP_ASUS_HPE),
- 	SND_PCI_QUIRK(0x1043, 0x19e1, "ASUS UX581LV", ALC295_FIXUP_ASUS_MIC_NO_PRESENCE),
+diff --git a/drivers/char/ipmi/ipmi_si_platform.c b/drivers/char/ipmi/ipmi_si_platform.c
+index 505cc978c97a0..f7f602067a574 100644
+--- a/drivers/char/ipmi/ipmi_si_platform.c
++++ b/drivers/char/ipmi/ipmi_si_platform.c
+@@ -279,7 +279,10 @@ static int of_ipmi_probe(struct platform_device *pdev)
+ 	io.regspacing	= regspacing ? be32_to_cpup(regspacing) : DEFAULT_REGSPACING;
+ 	io.regshift	= regshift ? be32_to_cpup(regshift) : 0;
+ 
+-	io.irq		= irq_of_parse_and_map(pdev->dev.of_node, 0);
++	io.irq = platform_get_irq_optional(pdev, 0);
++	if (io.irq < 0)
++		io.irq = 0;
++
+ 	io.dev		= &pdev->dev;
+ 
+ 	dev_dbg(&pdev->dev, "addr 0x%lx regsize %d spacing %d irq %d\n",
 -- 
 2.53.0
 
