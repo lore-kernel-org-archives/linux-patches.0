@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76146371049;
-	Wed, 30 Sep 2026 19:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A594409277;
+	Wed, 30 Sep 2026 19:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796829; cv=none; b=jeCzFEmkKleMFFnct/vqm5vN14YZJgpav1johtMB3pmphhZ071Eo7hZgSKIwKihH23n0XnwnXF1cKWPQlAjK1PP0+9cgi0us5qCZCt+V6gVBz6ihax7MQ66YLy2ZylcfRm1blgU9WcWb7yxyLA9np+IYZxfUdIOu7Peuukynz6Q=
+	t=1790796832; cv=none; b=qCsA7q+fOJ/N0kKcQD3U1PsBJ2Qol2tLZAhTBYkmvEhkdgwgGZHvJ8ewq8Nvnm+Jb937qLb+EPyylJOg5b/LPmccHavqscfDhkL/9ukKBxeCmezWJLKj3tawfU0XhGID5JsqAVe9xvAftPM7hmDMuc+GjBgmoh8kqDbm/BqKGu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796829; c=relaxed/simple;
-	bh=ZzONazAc2y4rfm/WlI/7qkWvkF7+jFCzQYI/BdPlQhc=;
+	s=arc-20240116; t=1790796832; c=relaxed/simple;
+	bh=4MinrT1TjsOxA4zG0cqkWOlacwdzpLNyosHxgmzBRzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSfe7qWuJL+Z1TDO4wTdPMST09wRmR4gKh1hK6IBHTCSxCXQVSvbhv/J7O1cjRc6FEACCI9nQijiWRDVJNwZfNDr6G9vGEFggTuITi0W34alaE1mzEGlB5sFuwuIKwBxZoeaWwqjfp/y0UdMJk3XT28hjgakx0ZSMs/PzgZtAMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heni+1Li; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A9Oj0iWm2J4hgP1Ysdx/dmozCoRvQSrVydmVPy1XRqqxVlgdqXLFGlzElzKFAO/Rl/p2HfdyeF0VKjM6tbSSrLI7rXh9BpmHvnD5Ge9KEoFZce4XP2a122osbOBhhPJx0X0vQbgRGXkNly0tviqyHfpnOpjUpR0b6muP1OkGeFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scmRnFqg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heni+1Li"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B8A1F000FF;
-	Wed, 30 Sep 2026 19:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scmRnFqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A44F81F000FF;
+	Wed, 30 Sep 2026 19:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796828;
-	bh=w+lwjC4xVR8gXhLeZvobM7x70e8y2Bu93cRMHicPrnw=;
+	s=korg; t=1790796831;
+	bh=yps5aqEBVCIWasx3wzB6XFS+nlMmzNT7IE0u8ZqkEbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=heni+1Li18thAfH/93sP0l4ujRDte5ETNj1And1Rqu1agI8K4ZLbK8Js/rBAvLHF+
-	 ue60csMLlP5s5QhvGe1HHXgEgi7V7kvUDm2TrqH8BfUwR2d/cBg2Dq5ehg6OwQqHu7
-	 n+k0BA5ehaQAhJrpf+LkV8ugjRqq7ya7G6+Tv2CE=
+	b=scmRnFqggvR3z0pm5kBxnZugzATkT6js8v02g0pBZSHcSBTQH0PREM0vXOjgBtSeI
+	 UA/Pssk4w2sM0xyXPVN/68wEe5wRXjLmZ23NvJVjFqBGuO3kaFf9lXkIQLXHOmKoxb
+	 ZmS2hT4IOPbiUeY60Yl+dVxMNZh1VUm4iPDlPN7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Breno Leitao <leitao@debian.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1005/1193] net: core: Fix documentation
-Date: Wed, 30 Sep 2026 17:28:09 +0200
-Message-ID: <20260930152456.569494090@linuxfoundation.org>
+Subject: [PATCH 6.6 0996/1193] ipvs: revalidate ihl before icmp_send
+Date: Wed, 30 Sep 2026 17:28:00 +0200
+Message-ID: <20260930152456.368274100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit c6e7f276841d9a31009766f3e6f33e00cf3d93ed ]
+[ Upstream commit e290145564886d6a3038810c621f738c1fe9fa51 ]
 
-Fix bad grammar in description of init_dummy_netdev() function.  This
-topic showed up in the review of the "allocate dummy device dynamically"
-patch set.
+While the outer IP header is already pulled into the skb head, we must
+be careful and revalidate the embedded headers after reading them from
+the skb frags to prevent possible out-of-bounds access.
 
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 310d1ac61a4d ("net: ethernet: mtk_eth_soc: unregister net_devices in case of probe failure")
+One such place reported by Sashiko is ip_vs_in_icmp() where local
+process can change the ihl field and after pskb_may_pull() we can see
+larger value. Even if icmp_send() has checks to prevent out-of-bounds
+access, play safe and add check to drop the packet if the ihl field is
+changed.  As the outer headers are pulled, make sure the transport
+header is updated too, it was used before commit 7fcc2fe39fed ("net:
+icmp: avoid invalid transport header access in icmp_send tracepoint")
+
+Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
+Link: https://sashiko.dev/#/patchset/20260806105211.34622-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/ipvs/ip_vs_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 2adf534a46f14..57ffe8b86d779 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10412,7 +10412,7 @@ EXPORT_SYMBOL(register_netdevice);
-  *	init_dummy_netdev	- init a dummy network device for NAPI
-  *	@dev: device to init
-  *
-- *	This takes a network device structure and initialize the minimum
-+ *	This takes a network device structure and initializes the minimum
-  *	amount of fields so it can be used to schedule NAPI polls without
-  *	registering a full blown interface. This is to be used by drivers
-  *	that need to tie several hardware interfaces to a single NAPI
-@@ -10421,7 +10421,7 @@ EXPORT_SYMBOL(register_netdevice);
- void init_dummy_netdev(struct net_device *dev)
- {
- 	/* Clear everything. Note we don't initialize spinlocks
--	 * are they aren't supposed to be taken by any of the
-+	 * as they aren't supposed to be taken by any of the
- 	 * NAPI code and this dummy netdev is supposed to be
- 	 * only ever used for NAPI polls
- 	 */
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index d15661e5a7f16..a7b495bf1985d 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1772,6 +1772,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		/* Ensure the IP header is present in headroom */
+ 		if (!pskb_may_pull(skb, hlen_orig))
+ 			goto ignore_tunnel;
++		skb_set_transport_header(skb, hlen_orig);
++		/* Before now we may used ihl from skb frag, revalidate it after
++		 * copying it into skb head to prevent out-of-bounds access
++		 */
++		if (ip_hdr(skb)->ihl * 4 != hlen_orig)
++			goto ignore_tunnel;
+ 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
+ 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
+ 			type, code, ntohl(info));
 -- 
 2.53.0
 
