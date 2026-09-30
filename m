@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1A24FDA5A;
-	Wed, 30 Sep 2026 16:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB5934D916;
+	Wed, 30 Sep 2026 16:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785545; cv=none; b=YSPePUfXs25v2hXTjY8OZajeAyWjkqcYMxve5XlRiM20hfhXCOAAX3OX4LmWdT6lX4RsgIVBq8cW5thHnM2CYn/UmUR/QFfSYDJ3a2+BkPOsapLtklqN2Rzwr7GDq/bTlLm3j561CvOYoTb3b/PLKcL4kWuNP1QiQBvu7VNJ9Cw=
+	t=1790785545; cv=none; b=KjPGRx7aKTADjadZcxSETEuckRc7jwxN+hY/Ot/rSIMSKxxHy4T5lzxyBr2o7GyIcBIBUBnXAGV/xldzfrMGNTw6OZTMtRLFzK6qiLv4eSk/WZEhTNBNbmwhEy5bROesx8rP2tpkCfETYWEHeHw6VqaV/aBJq6wE9YwPPSmJjnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790785545; c=relaxed/simple;
-	bh=F5/+c08ibUb1aILY54CZhw6qALtpnQ9NTYI57CqhPkk=;
+	bh=zZXCHPMbiy8viaPt9reAWXy2Q2iCgJxxHkGGgARsW2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pD7yp5MbQUJfXBfIMABaQqbFCXVpjAvGfzEkjMuGDcwkwzC3DBs8/2I7yN6R5n8ZGuK725+oUPBcPllYKiaYzqbLo00ldzyIxvZyNjnZJ2YaMmvez5xbLdXmi3d3gY6wO4ksNcUha+3g12t7qfLbsInR6Y5N4xVlZy1PG9UHauQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5OKb3Kq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sAf63W+2syKjJo63kE6vByAGwriO+WONqICCBk4EucOdyCBrhaiq0MM1nW3+/xh3ton9d6gm6UY2yNNk1ktoEqUPTE7B3ZH0PF0qT8GdCbV1Sv5sY0RXQKmm/njn+tyLPmAFdEzrkJ+Jyof21LmH+rWWGM+v1n40fZbsvjz+0o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXywNjVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5OKb3Kq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3951F00893;
-	Wed, 30 Sep 2026 16:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXywNjVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E181F00899;
+	Wed, 30 Sep 2026 16:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785531;
-	bh=M8gF9wMpcFXThwg83aWT2hP5++Gk+zo7fv64DOJATuw=;
+	s=korg; t=1790785534;
+	bh=3BM1sHZTPiGidKnFszRnVH51xRXkyVHYVTHjzCU0NrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y5OKb3Kq0fQYR66cvaj682MfMkHFdkfXpNUI7t2tK4PgBaOecg9u76DkHyCMpH81z
-	 vN0tIuB0R0t6VYRo+IkmYVapMEMM6YocwZwhrI8PtWmhS+IJ943F06sBKwa8DnaQXJ
-	 ZSgQ/H8l2CPUNDZwtgRSLRAniYplrczGDWAtNfP8=
+	b=CXywNjVxI9IXVzIZXVTrI/ZcN6rITxF4F8F0yfY5EDHoKtB0NLw5pc1gteF+cGiZz
+	 jl8S8u5fswQ16ygLGMKri8h0tYIUV3qfSE5SiRw7059bqpQcnTUKXTN2ug1DHk5gsA
+	 0xpwcRXI2CN5vr/jlPq3a7G9VIpCJF6Cj5lnAe+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.1 497/982] powerpc/eeh: Fix recursive locking on devices without EEH sensitive driver
-Date: Wed, 30 Sep 2026 17:20:33 +0200
-Message-ID: <20260930152427.457563168@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 498/982] ipv6: fix fib6 walker UAF on seq stop
+Date: Wed, 30 Sep 2026 17:20:34 +0200
+Message-ID: <20260930152427.478621697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,57 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit c5e68706527968282e49de205cc2b935823cb88a upstream.
+commit 19b4ed644d68098cc62ab612727f40d30f43476c upstream.
 
-The commit 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug
-safe") refactored the EEH code such that the pci_rescan_remove_lock is
-held at the beginning of eeh_handle_normal_event() and the
-eeh_reset_device() is called with that lock being held. Looks like the
-commit missed to remove the existing lock/unlock inside eeh_rmv_device()
-which is no longer necessary. This is causing the eehd to hang on the
-lock which it actually holds when that code path is taken.
+ipv6_route_iter_active() treats a walker in FWS_U at the table root as
+already unlinked. fib6_del_route() can move a still-linked walker into
+that same state when the current leaf is the last route at the root,
+so ipv6_route_native_seq_stop() skips fib6_walker_unlink(). The seq
+private object can then be freed while it remains on
+net->ipv6.fib6_walkers. A later route deletion walks the dangling list
+and uses the freed walker.
 
-[<0>] 0xc00000011c78f870
-[<0>] __switch_to+0xfc/0x1a0
-[<0>] pci_lock_rescan_remove+0x30/0x44
-[<0>] eeh_rmv_device+0x290/0x2e0
-[<0>] eeh_pe_dev_traverse+0x80/0x130
-[<0>] eeh_reset_device+0xcc/0x23c
-[<0>] eeh_handle_normal_event+0x830/0xa80
-[<0>] eeh_event_handler+0xf8/0x190
-[<0>] kthread+0x194/0x1b0
-[<0>] start_kernel_thread+0x14/0x18
+Use the list head as membership state and reinitialize it when
+unlinking. Keep the existing w->node check so a never-started iterator
+with a zeroed private object is not treated as linked.
 
-The issue is seen for cases where the errors are detected on the PHB
-directly AND|OR for devices where the driver error_detected() returns
-PCI_ERS_RESULT_NEED_RESET, and driver being not EEH sensitive(i.e no
-error handlers like slot_reset(), resume() etc defined).
+The same stop helper is used by /proc/net/ipv6_route and by the BPF
+ipv6_route iterator. The BPF show path only widens the race.
 
-Fixes: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/178404937381.913.2759874335293830160.stgit@linux.ibm.com
+Fixes: 8d2ca1d7b5c3 ("ipv6: avoid high order memory allocations for /proc/net/ipv6_route")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/89699735763f6c297584d7c2ff106239cc1e8ce0.1788837093.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/eeh_driver.c |    2 --
- 1 file changed, 2 deletions(-)
+ net/ipv6/ip6_fib.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -533,9 +533,7 @@ static void eeh_rmv_device(struct eeh_de
- 		if (rmv_data)
- 			list_add(&edev->rmv_entry, &rmv_data->removed_vf_list);
- 	} else {
--		pci_lock_rescan_remove();
- 		pci_stop_and_remove_bus_device(dev);
--		pci_unlock_rescan_remove();
- 	}
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -85,7 +85,7 @@ static void fib6_walker_link(struct net
+ static void fib6_walker_unlink(struct net *net, struct fib6_walker *w)
+ {
+ 	write_lock_bh(&net->ipv6.fib6_walker_lock);
+-	list_del(&w->lh);
++	list_del_init(&w->lh);
+ 	write_unlock_bh(&net->ipv6.fib6_walker_lock);
  }
  
+@@ -2650,7 +2650,7 @@ static void *ipv6_route_seq_start(struct
+ static bool ipv6_route_iter_active(struct ipv6_route_iter *iter)
+ {
+ 	struct fib6_walker *w = &iter->w;
+-	return w->node && !(w->state == FWS_U && w->node == w->root);
++	return w->node && !list_empty(&w->lh);
+ }
+ 
+ static void ipv6_route_native_seq_stop(struct seq_file *seq, void *v)
 
 
