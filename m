@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B34D9540;
-	Wed, 30 Sep 2026 18:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BAA4BD7BC;
+	Wed, 30 Sep 2026 18:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793976; cv=none; b=t4qV1tRBu+BxRhnGxRft90dI4NicGtD1lOLwIY0ISI18m4CYWDdL9BcXvMldBY/5MHt6ffNfuWrQsHigvl0pJR9B0tMlplLpXRev2sQ7QFvDxDG9pyWaCQ1/PKRgK48Gx55bIbfLVL52Wc4YIX+UWfDupxz0UDSXcHiYzC4+hgs=
+	t=1790793979; cv=none; b=XB5lFHYHuF0Qhs2BQ3E7+EWs61hm1Y+T1Q1j3taQzhc89OJYIpRtN6uXQUodVQmBGqoCwHL6f7rLdz2zFrHzpDzFcqVYwaAtxtKzPxNhi6rckZFI9z3OWOj1It0QT5wpSEr4bFko5Hr4KdSr/gLqD13nJf58/OB5TbJ4XB/AHRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793976; c=relaxed/simple;
-	bh=09f07e2fKxu5B0S7EWan8dXPu7//Q7s+5u+wBukG4h4=;
+	s=arc-20240116; t=1790793979; c=relaxed/simple;
+	bh=ih2+IKlpG7Ghe03T/Q7DWKegcJBphQYWudt8rpD+WB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iy4iiFk68Bwg7cSa722kzgtH886GTfMbqtQFF5/5GDnHaKBhQ6CKFN3UoB0+2C6OOklkyd7Fz7x/V92u+7DCfNKLe7eWfCzQBkw03gyeRqgtVYzkyKIpHTCSxiefamgX0l062u7AY3J3Y/HuuaTv+YNDf//gIozqKPScceOALaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5iB2C6z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+iCRsfskeWZFB1zDWYX5dgW5XZM9jBpfjdkrQN6YCwg5uxx1tfinj0+UpcHaze0Evlc0ZS57GH0uFKe6Q6uNctKFKuwmxA41St/oglCG8XSONg32dU6cT2ld3qdX3fGbcY3Sj8a2i4np0nxZMy/2RGIH95wszdcEIGprCgJ0kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17xAWhTJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5iB2C6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B361F000FF;
-	Wed, 30 Sep 2026 18:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17xAWhTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786581F000FF;
+	Wed, 30 Sep 2026 18:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793975;
-	bh=vU+7NPBXW+GcklHdYBk7501DaGjg4F2/FxtroOTssI4=;
+	s=korg; t=1790793978;
+	bh=iIaKE7GEicMcHkVwmxTt3bA1DbTkD0wM4D2NIA8v1oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N5iB2C6zFB0SzGTd/vyA1xKPZROwOlVIzinqb5gUURK4a1eVRwu8GTHLzt3R2nVgt
-	 5ls8UpWeUVcT0KlemNXm+5TU3Y/6LM2R123giBR+PH7JYyE9Ozkt4qCkuRTWpoF42L
-	 /d0m53Ds5DOpupa6kjjibIQ5qwmvhWYi+AN3CEPY=
+	b=17xAWhTJdoKLU8eHcNf8TlFcPpqcg8OjiS2XT0CYXWyEo1zOswQRam1j7V31Qan9j
+	 iK0rAP7g7LmKV989woKGvycO+7zLK+hSrB/V3mGKBrUOq82bmSly2bYXia3RFvrWTQ
+	 S+JHMTbYcgG4t2e3i3R4YILS7xhmdR7TigKKyIGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0046/1193] media: video-i2c: use vb2_video_unregister_device on driver removal
-Date: Wed, 30 Sep 2026 17:12:10 +0200
-Message-ID: <20260930152435.307038549@linuxfoundation.org>
+Subject: [PATCH 6.6 0047/1193] wifi: rtw89: phy: check length before parsing PHY status IE
+Date: Wed, 30 Sep 2026 17:12:11 +0200
+Message-ID: <20260930152435.327855996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,37 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 56384b486b80ce4a2bc93689aae49995f908f90d ]
+[ Upstream commit 884495c39de1a02f42bd40051b921e2311d6ac91 ]
 
-The driver uses vb2_fop_release() as its file release operation, so
-vb2_video_unregister_device() should be used instead of
-video_unregister_device() during driver removal.
+Hardware might report PHY status IE with unexpected length, and parser
+might access out of range. Check the length ahead.
 
-This ensures that the vb2 queue is properly disconnected before the
-video device is unregistered.
-
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260506131000.1706298-12-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/video-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-index 15a7fcf0c3a70..7a975e2eab00b 100644
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -911,7 +911,7 @@ static void video_i2c_remove(struct i2c_client *client)
- 	if (data->chip->set_power)
- 		data->chip->set_power(data, false);
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index c172ef13c9540..a31bfb81818cd 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -1423,13 +1423,15 @@ static int rtw89_core_rx_parse_phy_sts(struct rtw89_dev *rtwdev,
+ 		const struct rtw89_phy_sts_iehdr *iehdr = pos;
  
--	video_unregister_device(&data->vdev);
-+	vb2_video_unregister_device(&data->vdev);
- }
+ 		ie_len = rtw89_core_get_phy_status_ie_len(rtwdev, iehdr);
+-		rtw89_core_process_phy_status_ie(rtwdev, iehdr, phy_ppdu);
+ 		pos += ie_len;
+ 		if (pos > end || ie_len == 0) {
+ 			rtw89_debug(rtwdev, RTW89_DBG_TXRX,
+ 				    "phy status parse failed\n");
++
+ 			return -EINVAL;
+ 		}
++
++		rtw89_core_process_phy_status_ie(rtwdev, iehdr, phy_ppdu);
+ 	}
  
- #ifdef CONFIG_PM
+ 	rtw89_phy_antdiv_parse(rtwdev, phy_ppdu);
 -- 
 2.53.0
 
