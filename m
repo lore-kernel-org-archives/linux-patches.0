@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920774D2EFE;
-	Wed, 30 Sep 2026 17:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1954F3EAA;
+	Wed, 30 Sep 2026 17:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787826; cv=none; b=dnv0VafXtSv40GOocW/3rfF4JlRknATS+0uHhTivn3rNMzs3PyT1KaKKAxNQXXTkttoZVQvoseVg1k00GIWixNprmS+bsrAFqP17+k9vyX3471obPzLjVppEOj3uSduPwvJWhMshRgtpjZyCceu2QGaHl6skPeZEULvMlyR/1ko=
+	t=1790787829; cv=none; b=nvpAMCuU4KnewjdEFVqzUdwYWFvwQ2Fi01U5+4GKfpCuuW2kXQq25Q9x9uc/mtCHq6dSFd2O8GASe8syeLqvwCKhUD7zfl435QQ/dd+ovG2ilkaPOybDIZ+n31fz+jB/Gon0VhSyrLsp+rNtHgI5W4xZ8xE2HqnuUKmQkE5oomA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787826; c=relaxed/simple;
-	bh=6kgoSormM1X1kFb1oypxaQOkuwiHUZ26fGdRxFJpGWE=;
+	s=arc-20240116; t=1790787829; c=relaxed/simple;
+	bh=GM8bFnwYAJ4a1ZYlAAH/py5OeI1L7f5Icd2nd7jn1J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsQUT7u38//fgUKcycDy6i8dASYu8NZFcR7Fzb8HzjS+4xtEkZpl7/0ysbiWicq657C8WzIbtSfX/qpqbPNh3w7EcpExVNOEQa3h3k5eNLWgtu3krvN+U4Y7zNeGICOKQGCyS2p4n+m1RQDQEIBWRhH2xjJihlZ0ASP3/d1yVCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy+wJ4Y4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GZlzvEt7qraDJdTKE73TZl8iNMrRK5fqg+8o4CE6DmyhHF/U9ZimG8Fei68+mlfCLfzlOZQSakOBsL3wzYfgIyBgkjRFQD674z4HOmUS9uR8Cf3/ugizhu7n3oDByVcolw6RO8NYyW/5/Z1P4QCbtr/WxWtLrr0yv7q0+CfsQn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdVj/yp2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy+wJ4Y4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4FD1F000FF;
-	Wed, 30 Sep 2026 17:03:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdVj/yp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DF51F000FF;
+	Wed, 30 Sep 2026 17:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787825;
-	bh=/fT2ZYtGMNveoDwHY829+NMbJdi9xg+Pv89xGx8ZgUU=;
+	s=korg; t=1790787828;
+	bh=mxGCWNbzhGnAx+Q4xdw1CIIl1dj8CD4gahP4pzzTL18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qy+wJ4Y4yOa5sBdvuVqIM+hAKtSW5m1DJwG4TCMD+pHJ2Ynkwf0JyKhSiRVcTxg91
-	 /b4cLjdQBEj/gxW8jl64tViJy+xyhE8KIztwA+/PTTTM9itT98donphitEbj4D4GRc
-	 eztpnOdgNvyeXbja3o4qfn86sYAzzJNadla80x+8=
+	b=IdVj/yp2qs9xatrkSFQLzrYDRaR5LnWwZoOfw+5wmycz/hESj2HHClgM78LAQbHJz
+	 fxYb0yVD1Hd4rJAmppXZ8ugcefViw465gQwhRhZei0yW0Wk5wSmGPgy5N5l2WopRtD
+	 ngVMQcHbI5as5S0atGTMOjPRqBUlehSbBCyIOPJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 7.2 367/457] perf/x86/intel: Fix Panther Cove PEBS data-source snoop states
-Date: Wed, 30 Sep 2026 17:27:52 +0200
-Message-ID: <20260930152353.927060321@linuxfoundation.org>
+Subject: [PATCH 7.2 368/457] perf/x86/intel: Remove incorrect LionCove PEBS data-source constraints
+Date: Wed, 30 Sep 2026 17:27:53 +0200
+Message-ID: <20260930152353.947911389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,42 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-commit 0ac5d6ca2c3b7d047963b67dccef17902dc6c017 upstream.
+commit 7c944595cc43a664019edc22505b6d6f6039be5e upstream.
 
-For Panther Cove, the snoop states for the data source encodings
-"Prefetch Promotion" and "Cross Core Prefetch Promotion" should be
-SNOOP_NONE instead of SNOOP_MISS.
+On Lion Cove, PEBS data source is valid only for these events:
 
-Fix the incorrect snooping states for Panther Cove.
+- MEM_TRANS_RETIRED.LOAD_LATENCY (0x1cd)
+- MEM_TRANS_RETIRED.STORE_SAMPLE (0x2cd)
 
-Fixes: d2bdcde9626c ("perf/x86/intel: Add support for PEBS memory auxiliary info field in DMR")
+The perfmon database (https://github.com/intel/perfmon) previously
+tagged additional memory events such as MEM_INST_RETIRED.STLB_MISS_LOADS
+with L1_Hit_Indication, implying PEBS data-source support, which is
+incorrect. The database has since been fixed, but
+intel_lnc_pebs_event_constraints[] still follows the old definition and
+marks those events as data-source capable.
+
+As a result, get_data_src() may decode data-source information for
+events that do not provide valid PEBS data-source data and mislead
+users.
+
+Remove those non-data-source memory events from the Lion Cove PEBS
+constraint table so matching falls back to the regular non-PEBS
+constraints, which already provide the same counter constraints.
+
+Also update lnc_latency_data() to decode LOAD/STORE flags explicitly
+when setting memory operation direction, for consistency with other
+*_latency_data() helpers.
+
+Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
 Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@vger.kernel.org> # v7.0+
-Link: https://patch.msgid.link/20260917015234.981153-8-dapeng1.mi@linux.intel.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260917015234.981153-6-dapeng1.mi@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/ds.c |   22 +++++-----------------
+ 1 file changed, 5 insertions(+), 17 deletions(-)
 
-diff --git a/arch/x86/events/intel/ds.c b/arch/x86/events/intel/ds.c
-index 72179bcf6d0d..d0329a7eb8a5 100644
 --- a/arch/x86/events/intel/ds.c
 +++ b/arch/x86/events/intel/ds.c
-@@ -277,8 +277,8 @@ static u64 pnc_pebs_l2_hit_data_source[PNC_PEBS_DATA_SOURCE_MAX] = {
- 	0,							/* 0x06: Reserved */
- 	OP_LH | P(LVL, L2)  | LEVEL(L2) | P(SNOOP, HIT),	/* 0x07: L2 Hit Snoop HIT */
- 	OP_LH | P(LVL, L2)  | LEVEL(L2) | P(SNOOP, HITM),	/* 0x08: L2 Hit Snoop Hit Modified */
--	OP_LH | P(LVL, L2)  | LEVEL(L2) | P(SNOOP, MISS),	/* 0x09: Prefetch Promotion */
--	OP_LH | P(LVL, L2)  | LEVEL(L2) | P(SNOOP, MISS),	/* 0x0a: Cross Core Prefetch Promotion */
-+	OP_LH | P(LVL, L2)  | LEVEL(L2) | P(SNOOP, NONE),	/* 0x09: Prefetch Promotion */
-+	OP_LH | P(LVL, L2)  | LEVEL(L2) | P(SNOOP, NONE),	/* 0x0a: Cross Core Prefetch Promotion */
- 	0,							/* 0x0b: Reserved */
- 	0,							/* 0x0c: Reserved */
- 	0,							/* 0x0d: Reserved */
--- 
-2.55.0
-
+@@ -573,7 +573,11 @@ static u64 lnc_latency_data(struct perf_
+ 		val |= P(BLK, NA);
+ 
+ 	src.val = val;
+-	if (event->hw.flags & PERF_X86_EVENT_PEBS_ST_HSW)
++	if (event->hw.flags &
++	    (PERF_X86_EVENT_PEBS_LDLAT | PERF_X86_EVENT_PEBS_LD_HSW))
++		src.mem_op = P(OP, LOAD);
++	if (event->hw.flags &
++	    (PERF_X86_EVENT_PEBS_STLAT | PERF_X86_EVENT_PEBS_ST_HSW))
+ 		src.mem_op = P(OP, STORE);
+ 
+ 	return src.val;
+@@ -1516,24 +1520,8 @@ struct event_constraint intel_lnc_pebs_e
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x012a, 0x1),		/* OCR.* events */
+ 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x012b, 0x1),		/* OCR.* events */
+ 
+-	INTEL_FLAGS_UEVENT_CONSTRAINT(0x04a4, 0x1),		/* TOPDOWN.BAD_SPEC_SLOTS */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT(0x08a4, 0x1),		/* TOPDOWN.BR_MISPREDICT_SLOTS */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT(0x10a4, 0x8),		/* TOPDOWN.MEMORY_BOUND_SLOTS */
+-
+ 	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3fc),
+ 	INTEL_HYBRID_STLAT_CONSTRAINT(0x2cd, 0x3),
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x12d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_STORES */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x21d0, 0xf),	/* MEM_INST_RETIRED.LOCK_LOADS */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x41d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_LOADS */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x42d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_STORES */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x81d0, 0xf),	/* MEM_INST_RETIRED.ALL_LOADS */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x82d0, 0xf),	/* MEM_INST_RETIRED.ALL_STORES */
+-	INTEL_FLAGS_UEVENT_CONSTRAINT(0x87d0, 0x3ff),		/* MEM_INST_RETIRED.ANY */
+-
+-	INTEL_FLAGS_EVENT_CONSTRAINT_DATALA_LD_RANGE(0xd1, 0xd4, 0xf),
+-
+-	INTEL_FLAGS_EVENT_CONSTRAINT(0xd0, 0xf),
+ 
+ 	/*
+ 	 * Everything else is handled by PMU_FL_PEBS_ALL, because we
 
 
