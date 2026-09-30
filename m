@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820363644C1;
-	Wed, 30 Sep 2026 17:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543A54E9C32;
+	Wed, 30 Sep 2026 17:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790228; cv=none; b=ZkZEz8anEqHuVZGis2cmEq9kHi4hFayXu8XlPFxI1N1dOwBJH/nhT6O4JVzcHN/XP1RGI3NNLuamEDgpZzswwROhhyGHuRr10bwco1eSoO1GyjIKbV2LbqyidMI+DA/h5W6CQRi7x7Rcxhu762uRgjsLXv8E96ovXmhbUop5QMs=
+	t=1790790231; cv=none; b=bSQs1ugOCMJaCJgG9kPqjwMN5vMmATXNlpOm4ogE7seGl4uM6WcATgVsB4GKYkkDxR/NDjeuHghfiOdZXnHT5x33QDh3ReHXVVUO0BTguLCDW2RIcunW3Bm4q9XpYoYruZPfADg3HB5i8dm3Q7eR3mw+akrRkytH8TOkPiNLACA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790228; c=relaxed/simple;
-	bh=UtaOYMmryecEO+6aa/jTStrOk7Nbnt8o+a+/qcIcf6o=;
+	s=arc-20240116; t=1790790231; c=relaxed/simple;
+	bh=pmxL1eKkhwPUDq5WhBsVJV2Sp/9QCoQBizi6KMWqC40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C90+W8d1B131KsLGjnTiCPa5PdYOadnW5jLRhy4humbLP3cjePTlquPYBO9erzQNDBSmPG944tGsIViGJ2LVtutyNh0Riwki4pRpVC3NM5pp0v+21tJHJcd0WSFHI+W5b40T3qI4Q0GjIpuV5718WZy7sapYi9O1DwyMYZ1lFu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcAd7p8r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tkLNV/zzXEp9sWaFrVtowgnPxY36bR6MKEFaxDRoXjH5ojCSg1mHxV4CUDFpXA6gkSIK/o5xfhgZRdhumjGiqZPBH5fFi54Ji2i7xg8Ltjd7GODZzeCN9g/bGEglw2nrjYdJi3yNbunkt3PJza+lnwHZasBxjqn1IkDjTGcGHSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMzUje7s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcAd7p8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC36C1F000FF;
-	Wed, 30 Sep 2026 17:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMzUje7s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D2D1F000FF;
+	Wed, 30 Sep 2026 17:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790227;
-	bh=9/nDBqN8wb35DtkrO8yO3/kb7T/YedtHTwYcOLfrEXU=;
+	s=korg; t=1790790230;
+	bh=iqgnrJeVfGxjO7r+hvOFuWTx6AwuABms/gL3q+lXKXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VcAd7p8rrnpbsHO+JWuvUldcL4kUJaxeF2XrxMFyD5KWuVj1jscez/nWkWI/sQpVr
-	 8OTC1AZvqNxwj7CdUPIB6BcbFSloLh87PJOnQYOMUeUCDOBXu9S1gIFp0yauJUyLq2
-	 tQgdMM1EHn5dLE++yPp2cSSJktukjVK3xIOO06gQ=
+	b=qMzUje7snBUA2IYIQ/nq9ywzUn5RpNi7wcw6jkLQs3sSx28/swT1lwLddhV3zYzAE
+	 bs1+5xzlNhz7Tqzq8imuOPeSCZsra7PHLTPZXdZa4He/O4YkX915xA5RSAUeJBmouR
+	 CMMBmCUBMsWL0EJyiFMpPYO5pDaSVplwNCbXIemU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 755/877] netmem: add a couple of page helper wrappers
-Date: Wed, 30 Sep 2026 17:27:46 +0200
-Message-ID: <20260930152430.990892427@linuxfoundation.org>
+Subject: [PATCH 6.12 756/877] net: page_pool: rename page_pool_alloc_netmem to *_netmems
+Date: Wed, 30 Sep 2026 17:27:47 +0200
+Message-ID: <20260930152431.013601363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,167 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Mina Almasry <almasrymina@google.com>
 
-[ Upstream commit 9bd9f72a74344b54cfb6fcabf1173e6c6e5c6952 ]
+[ Upstream commit 91a152cbb49c26609d217cf2f116d46143b9b8be ]
 
-Add the following netmem counterparts:
+page_pool_alloc_netmem (without an s) was the mirror of
+page_pool_alloc_pages (with an s), which was confusing.
 
-* virt_to_netmem() -- simple page_to_netmem(virt_to_page()) wrapper;
-* netmem_is_pfmemalloc() -- page_is_pfmemalloc() for page-backed
-			    netmems, false otherwise;
+Rename to page_pool_alloc_netmems so it's the mirror of
+page_pool_alloc_pages.
 
-and the following "unsafe" versions:
-
-* __netmem_to_page()
-* __netmem_get_pp()
-* __netmem_address()
-
-They do the same as their non-underscored buddies, but assume the netmem
-is always page-backed. When working with header &page_pools, you don't
-need to check whether netmem belongs to the host memory and you can
-never get NULL instead of &page. Checks for the LSB, clearing the LSB,
-branches take cycles and increase object code size, sometimes
-significantly. When you're sure your PP is always host, you can avoid
-this by using the underscored counterparts.
-
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20241203173733.3181246-8-aleksander.lobakin@intel.com
+Signed-off-by: Mina Almasry <almasrymina@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20241211212033.1684197-2-almasrymina@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: b814dfbfeb0a ("bnxt_en: Propagate TPA buffer allocation failures in bnxt_queue_mem_alloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netmem.h |   78 +++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 76 insertions(+), 2 deletions(-)
+ include/net/page_pool/types.h |    2 +-
+ net/core/page_pool.c          |    8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/include/net/netmem.h
-+++ b/include/net/netmem.h
-@@ -72,6 +72,22 @@ static inline bool netmem_is_net_iov(con
- 	return (__force unsigned long)netmem & NET_IOV;
- }
+--- a/include/net/page_pool/types.h
++++ b/include/net/page_pool/types.h
+@@ -252,7 +252,7 @@ struct page_pool {
+ };
  
-+/**
-+ * __netmem_to_page - unsafely get pointer to the &page backing @netmem
-+ * @netmem: netmem reference to convert
-+ *
-+ * Unsafe version of netmem_to_page(). When @netmem is always page-backed,
-+ * e.g. when it's a header buffer, performs faster and generates smaller
-+ * object code (no check for the LSB, no WARN). When @netmem points to IOV,
-+ * provokes undefined behaviour.
-+ *
-+ * Return: pointer to the &page (garbage if @netmem is not page-backed).
-+ */
-+static inline struct page *__netmem_to_page(netmem_ref netmem)
-+{
-+	return (__force struct page *)netmem;
-+}
-+
- /* This conversion fails (returns NULL) if the netmem_ref is not struct page
-  * backed.
+ struct page *page_pool_alloc_pages(struct page_pool *pool, gfp_t gfp);
+-netmem_ref page_pool_alloc_netmem(struct page_pool *pool, gfp_t gfp);
++netmem_ref page_pool_alloc_netmems(struct page_pool *pool, gfp_t gfp);
+ struct page *page_pool_alloc_frag(struct page_pool *pool, unsigned int *offset,
+ 				  unsigned int size, gfp_t gfp);
+ netmem_ref page_pool_alloc_frag_netmem(struct page_pool *pool,
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -673,7 +673,7 @@ static noinline netmem_ref __page_pool_a
+ /* For using page_pool replace: alloc_pages() API calls, but provide
+  * synchronization guarantee for allocation side.
   */
-@@ -80,7 +96,7 @@ static inline struct page *netmem_to_pag
- 	if (WARN_ON_ONCE(netmem_is_net_iov(netmem)))
- 		return NULL;
- 
--	return (__force struct page *)netmem;
-+	return __netmem_to_page(netmem);
- }
- 
- static inline struct net_iov *netmem_to_net_iov(netmem_ref netmem)
-@@ -103,6 +119,17 @@ static inline netmem_ref page_to_netmem(
- 	return (__force netmem_ref)page;
- }
- 
-+/**
-+ * virt_to_netmem - convert virtual memory pointer to a netmem reference
-+ * @data: host memory pointer to convert
-+ *
-+ * Return: netmem reference to the &page backing this virtual address.
-+ */
-+static inline netmem_ref virt_to_netmem(const void *data)
-+{
-+	return page_to_netmem(virt_to_page(data));
-+}
-+
- static inline int netmem_ref_count(netmem_ref netmem)
+-netmem_ref page_pool_alloc_netmem(struct page_pool *pool, gfp_t gfp)
++netmem_ref page_pool_alloc_netmems(struct page_pool *pool, gfp_t gfp)
  {
- 	/* The non-pp refcount of net_iov is always 1. On net_iov, we only
-@@ -127,6 +154,22 @@ static inline struct net_iov *__netmem_c
- 	return (struct net_iov *)((__force unsigned long)netmem & ~NET_IOV);
- }
+ 	netmem_ref netmem;
  
-+/**
-+ * __netmem_get_pp - unsafely get pointer to the &page_pool backing @netmem
-+ * @netmem: netmem reference to get the pointer from
-+ *
-+ * Unsafe version of netmem_get_pp(). When @netmem is always page-backed,
-+ * e.g. when it's a header buffer, performs faster and generates smaller
-+ * object code (avoids clearing the LSB). When @netmem points to IOV,
-+ * provokes invalid memory access.
-+ *
-+ * Return: pointer to the &page_pool (garbage if @netmem is not page-backed).
-+ */
-+static inline struct page_pool *__netmem_get_pp(netmem_ref netmem)
-+{
-+	return __netmem_to_page(netmem)->pp;
-+}
-+
- static inline struct page_pool *netmem_get_pp(netmem_ref netmem)
+@@ -689,11 +689,11 @@ netmem_ref page_pool_alloc_netmem(struct
+ 		netmem = __page_pool_alloc_pages_slow(pool, gfp);
+ 	return netmem;
+ }
+-EXPORT_SYMBOL(page_pool_alloc_netmem);
++EXPORT_SYMBOL(page_pool_alloc_netmems);
+ 
+ struct page *page_pool_alloc_pages(struct page_pool *pool, gfp_t gfp)
  {
- 	return __netmem_clear_lsb(netmem)->pp;
-@@ -158,12 +201,43 @@ static inline netmem_ref netmem_compound
- 	return page_to_netmem(compound_head(netmem_to_page(netmem)));
+-	return netmem_to_page(page_pool_alloc_netmem(pool, gfp));
++	return netmem_to_page(page_pool_alloc_netmems(pool, gfp));
  }
+ EXPORT_SYMBOL(page_pool_alloc_pages);
+ ALLOW_ERROR_INJECTION(page_pool_alloc_pages, NULL);
+@@ -1051,7 +1051,7 @@ netmem_ref page_pool_alloc_frag_netmem(s
+ 	}
  
-+/**
-+ * __netmem_address - unsafely get pointer to the memory backing @netmem
-+ * @netmem: netmem reference to get the pointer for
-+ *
-+ * Unsafe version of netmem_address(). When @netmem is always page-backed,
-+ * e.g. when it's a header buffer, performs faster and generates smaller
-+ * object code (no check for the LSB). When @netmem points to IOV, provokes
-+ * undefined behaviour.
-+ *
-+ * Return: pointer to the memory (garbage if @netmem is not page-backed).
-+ */
-+static inline void *__netmem_address(netmem_ref netmem)
-+{
-+	return page_address(__netmem_to_page(netmem));
-+}
-+
- static inline void *netmem_address(netmem_ref netmem)
- {
- 	if (netmem_is_net_iov(netmem))
- 		return NULL;
- 
--	return page_address(netmem_to_page(netmem));
-+	return __netmem_address(netmem);
-+}
-+
-+/**
-+ * netmem_is_pfmemalloc - check if @netmem was allocated under memory pressure
-+ * @netmem: netmem reference to check
-+ *
-+ * Return: true if @netmem is page-backed and the page was allocated under
-+ * memory pressure, false otherwise.
-+ */
-+static inline bool netmem_is_pfmemalloc(netmem_ref netmem)
-+{
-+	if (netmem_is_net_iov(netmem))
-+		return false;
-+
-+	return page_is_pfmemalloc(netmem_to_page(netmem));
- }
- 
- static inline unsigned long netmem_get_dma_addr(netmem_ref netmem)
+ 	if (!netmem) {
+-		netmem = page_pool_alloc_netmem(pool, gfp);
++		netmem = page_pool_alloc_netmems(pool, gfp);
+ 		if (unlikely(!netmem)) {
+ 			pool->frag_page = 0;
+ 			return 0;
 
 
