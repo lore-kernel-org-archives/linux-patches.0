@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4524D2EFE;
-	Wed, 30 Sep 2026 17:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE4B4F7CBF;
+	Wed, 30 Sep 2026 17:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788267; cv=none; b=feeWuB3A1sDbRifCqYdQ83djAHVCWWmgP1yv+6cbIWdbG7t3lltjEpIcu3eJFumRTZ2it0wgiu8H8ylbrSX5LI8jFco5YqIOwZUO6IehYBnQ3gnwydialuyz8SFfd7ikw1gfMjTQ3GDZXA9K7kIHx87sYKvvVIjWzp6uE2Q/DRY=
+	t=1790788270; cv=none; b=kr4rUe/6ERcf4iQiqgtMHhzHaRwG49q+b/tqjD4rHvoSkfTHepDUGK/ht31NGfBMwHLQWrYnjt1O/bhxQ5dI4bPG0RGupzImHbILRY9B98SD4TC0OKE/GQDxCSzwJl+uoDEdjRDva+x7tLI7BTnyvWSnNYb1S7nHEIg9QWShFF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788267; c=relaxed/simple;
-	bh=crJv70ofeV0Xq3eWbd63nz5iXRvbnN0txL5LCA9WuXc=;
+	s=arc-20240116; t=1790788270; c=relaxed/simple;
+	bh=isieRp5cK6yHRr5rQbcNLrfOPeLrFw17HSDxOKHM2oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3WcUzEhkWGbm89ymOlHHRm4voNjkXQtYlkcWXjja6AWfUeXBRjzupYNQT8BwlsYCO0XuM3QUqorNKM5TmkSEQ6Qi2XfJEeTyLDVjOK4oIGc+23VAVyQ2RQduBiIp6Vw4LegNyfDqoWiHyTJjyxir41/MOTR/XhlcNEiBdffnfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSNmslFu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nmKOCUmpmH72nYaoNd7UPlrV6FZDjYnV0E1SKVaSRkaAb1siRrw9SWhzmiXNnrkU+2rOPENNNuXlvtLbB9dwNAmSfryZbE9rhYKpPc9z47sgllwCVa1icQRqi6hncO5rakIp+gIGp1zzoCQfSmhcqEC0m659Ge7KC7DzZ+xRCAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYJ00Oji; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSNmslFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2C71F000FF;
-	Wed, 30 Sep 2026 17:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYJ00Oji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753991F000FF;
+	Wed, 30 Sep 2026 17:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788266;
-	bh=M4qi5aK/SxFNEe5LkLFHGFJeBruwKPw+34/6GrNjDjU=;
+	s=korg; t=1790788269;
+	bh=LQ20Tney2yqMcGwEEXbP/5jgVjNfACcaihoVpoKcOwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WSNmslFuIOlg77W/xagG8kUXDhJg4w6U8tOGpMdyHc9cAVLfXYby3A4nx4LyVUI2r
-	 rT+G1XFNKZ2Pjm9Oybgq9UgipPpag84sG1Td+0lrNnw774kSw5JcvAoHxGiiNHDzsL
-	 d/iQui/spryDTdbc/kjhGhx5r+xqbTPNT0J5+fmY=
+	b=xYJ00Oji4XXzOPZTNCDiupZobEioE+NZwj7baJpKgpXkRQ3EBLOHpzxdHEkM54sNa
+	 tmGPXGBB5BLDzNCS8UxEI8dAXVROVKnTWNoLbTJ63wbuGtjfdy51+/wl8/sfGcbH8F
+	 gjYSTFB5wy0aBzBcEhXnEi4ptmHIF3gM09h2/g8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/877] media: video-i2c: fix buffer queue ordering
-Date: Wed, 30 Sep 2026 17:15:30 +0200
-Message-ID: <20260930152415.160019130@linuxfoundation.org>
+Subject: [PATCH 6.12 020/877] ipv6: Select best matching nexthop object in fib6_table_lookup()
+Date: Wed, 30 Sep 2026 17:15:31 +0200
+Message-ID: <20260930152415.182270219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,42 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit bc4574c265ed738849e46d942617100580fcedd2 ]
+[ Upstream commit 484bb9d164df397a53e0f533b262b27b1590efcb ]
 
-Queued buffers are added to the tail of vid_cap_active in
-buffer_queue(), but the capture kthread also retrieves buffers from
-the tail of the list.
+Currently, when using multipath routes without nexthop objects,
+fib6_table_lookup() selects the nexthop with the highest score. This
+means that when both a source address and an oif are specified, the
+nexthop that is chosen is the one that matches in terms of oif:
 
-This makes the queue behave as LIFO instead of FIFO when multiple
-buffers are queued.
+ # sysctl -wq net.ipv6.conf.all.forwarding=1
+ # ip address add 2001:db8:2::1/64 dev lo
+ # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
 
-Fix this by retrieving buffers from the head of the list.
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy1; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy1
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy2
 
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+When using nexthop objects, fib6_table_lookup() selects the first
+matching nexthop and not necessarily the one with the highest score:
+
+ # ip nexthop add id 1 via fe80::1 dev dummy1
+ # ip nexthop add id 2 via fe80::2 dev dummy2
+ # ip nexthop add id 3 group 1/2
+ # ip route add 2001:db8:20::/64 nhid 3
+
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy1; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy1
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy1
+
+This is not very significant right now because the nexthop is later
+overwritten during path selection in fib6_select_path(). However, the
+next patch is going to skip path selection when we have an oif match
+during output route lookup.
+
+As a preparation for this change, align the nexthop object behavior with
+the legacy one and make sure that fib6_table_lookup() always selects the
+best matching nexthop. Do that by always returning 0 from
+rt6_nh_find_match() in order not to terminate the loop in
+nexthop_for_each_fib6_nh() and storing in arg->nh the best matching
+nexthop so far.
+
+Behavior after the change:
+
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy1; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy1
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
+ # perf script | grep -o dummy[0-9] | sort | uniq -c
+     100 dummy2
+
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260611154605.992528-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/video-i2c.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv6/route.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-index a091fd6d3e607..a4ddc10c5f22e 100644
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -465,8 +465,9 @@ static int video_i2c_thread_vid_cap(void *priv)
- 		spin_lock(&data->slock);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 19c970978e863..b30cb180009b1 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -820,9 +820,11 @@ static int rt6_nh_find_match(struct fib6_nh *nh, void *_arg)
+ {
+ 	struct fib6_nh_frl_arg *arg = _arg;
  
- 		if (!list_empty(&data->vid_cap_active)) {
--			vid_cap_buf = list_last_entry(&data->vid_cap_active,
--						 struct video_i2c_buffer, list);
-+			vid_cap_buf = list_first_entry(&data->vid_cap_active,
-+						       struct video_i2c_buffer,
-+						       list);
- 			list_del(&vid_cap_buf->list);
- 		}
+-	arg->nh = nh;
+-	return find_match(nh, arg->flags, arg->oif, arg->strict,
+-			  arg->mpri, arg->do_rr);
++	if (find_match(nh, arg->flags, arg->oif, arg->strict, arg->mpri,
++		       arg->do_rr))
++		arg->nh = nh;
++
++	return 0;
+ }
  
+ static void __find_rr_leaf(struct fib6_info *f6i_start,
+@@ -862,11 +864,10 @@ static void __find_rr_leaf(struct fib6_info *f6i_start,
+ 				res->nh = nexthop_fib6_nh(f6i->nh);
+ 				return;
+ 			}
+-			if (nexthop_for_each_fib6_nh(f6i->nh, rt6_nh_find_match,
+-						     &arg)) {
+-				matched = true;
+-				nh = arg.nh;
+-			}
++			nexthop_for_each_fib6_nh(f6i->nh, rt6_nh_find_match,
++						 &arg);
++			matched = !!arg.nh;
++			nh = arg.nh;
+ 		} else {
+ 			nh = f6i->fib6_nh;
+ 			if (find_match(nh, f6i->fib6_flags, oif, strict,
 -- 
 2.53.0
 
