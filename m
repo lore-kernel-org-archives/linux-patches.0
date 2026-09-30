@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92563314A86;
-	Wed, 30 Sep 2026 17:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799D84E7802;
+	Wed, 30 Sep 2026 17:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788785; cv=none; b=j1drRv+Ank+2k3aNPo8vsQ13/g6W/Bkrqs+9aUqEDkR0SS58zpDqljBXU9Dw9hE45kHjFlg6UGGoaCZ/WVDaW1/tsGmDO5AaJW7JP/Sz/+nhS4k6rpIkKnRvaaNRvNrXMWl3O9wGMYwm2v2FjuYyI+nE1HSk+YcW1QCCpmNp8xM=
+	t=1790788788; cv=none; b=R/gKCGnggDGdjdCf4vm9FEeL19bKrFZxLTVEVlcPe/Mq9PxNKVZPX2giXnVOyZkHDSaDlK4nbmHuM6GJv5XXhq12qiiBAV9x/iknHLvynhvbOXaeXKMDIxtA/EZ7dieBy6SyuyhD4mRO/Z3Dr5isp1TjwXeZTBAxSbFcXFeAFR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788785; c=relaxed/simple;
-	bh=McAAk2MdHUaCPz+aXE+4DpZv13lkHLWFK/XpE2gRcME=;
+	s=arc-20240116; t=1790788788; c=relaxed/simple;
+	bh=MLglkbfXfYFhwl1DcQ7+j1EyeScVekGBOH2YzkVrukQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUkE2rCw/k/a6Z7AkGPjijUF+6KdQe360x1VrgW+Yo4rJpYWHqTl8QRHUiDTOfDr0Ug4wQvmj+60HN/IRZSXgNtjSW3cSYcIMsArvKKdSFqjGl+hZD0TfZYdFEMH/1q3RjsA0aJ8KJEPFUboOXU8dUudmWJCadF2K5VLtxQ+2hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1uQqlLD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ozAN/UVCYgqLuyRNOyd22cO9Atyd/sghNLN6zimMF/ZHICEts3HKOPg9n9OXHbsWaOT5UU0i0l2yJhIv8dG/Wyx0NIg64xZy/JBvK92XciHOuIC8YFGnfV3sNqkSbmqs+gw6Lsr3AlZPBDdVulsS1priMh8rlrYb28VZz8aN858=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6ukreri; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1uQqlLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9F01F000FF;
-	Wed, 30 Sep 2026 17:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6ukreri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D721F000FF;
+	Wed, 30 Sep 2026 17:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788784;
-	bh=gUDptQLtsGpeDlHSt34tALng4YkgERcpWCoK7T9bjdE=;
+	s=korg; t=1790788787;
+	bh=Kc11FenEoYbVjcTzj7BEGp8GWjSjRBKh7D1cZ7NxJkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y1uQqlLDR2BzBfK9cocNUkx1sP2KZaJ+FGQpjrIjHg82bggjbI9kSKNlTfrZf2IAI
-	 MU64eVS439K9/F4OgF1yJe1viXW0z33W4vX9OLRYYBVhUkK2pvnjnsyriC27VrDF14
-	 cUGipzlxnGf00Ir03O8aN1VyD67GvEPjPHGUtJ9M=
+	b=S6ukreriiL6WRz2BUFWwBfG3PP3GeRZLze5WQ2S7kqCmwTQXR5IjFybLXJhmtC4ol
+	 /+5xXu0zZBOYr/U6AZEagTrw+LFG4QNa+sZgheD52WJoEAYAlhIB3xVcb/IgfVkr+w
+	 bMn9EYomKMQgA77yvMhn2K1ZYIS8OqUKe8q+RNy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengzhuo Wei <me@cherr.cc>,
-	Frank Li <Frank.Li@nxp.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 210/877] i2c: imx: release DMA channels on probe error
-Date: Wed, 30 Sep 2026 17:18:41 +0200
-Message-ID: <20260930152419.259205414@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	James Seo <james@equiv.tech>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 246/877] hwmon: (hp-wmi-sensors) Fix use-after-free in fungible_show()
+Date: Wed, 30 Sep 2026 17:19:17 +0200
+Message-ID: <20260930152420.032703102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,42 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit e9f03b9625e2eeaca357b065c92d5b14064a1583 upstream.
+commit e6cb0b4d4ecb8e71fd2200d907ab2e9663356f69 upstream.
 
-i2c_imx_dma_request() acquires exclusive tx/rx DMA channels and is
-optional: on errors other than -EPROBE_DEFER the driver falls back to
-PIO mode and probe continues. If i2c_add_numbered_adapter() then fails,
-probe returns through clk_notifier_unregister without releasing the
-channels, because the remove callback is not invoked after a failed
-probe.
+nsensor->current_state is dynamically replaced as the sensor's state
+changes. update_numeric_sensor_from_wobj() does this by freeing the
+old string and installing a new one:
 
-Release the channels on the probe error path, mirroring
-i2c_imx_remove().
+	if (strcmp(trimmed, nsensor->current_state)) {
+		new_string = hp_wmi_strdup(dev, trimmed);
+		if (new_string) {
+			devm_kfree(dev, nsensor->current_state);
+			nsensor->current_state = new_string;
+		}
+	}
 
-Fixes: ce1a78840ff7 ("i2c: imx: add DMA support for freescale i2c driver")
-Assisted-by: GLM:5.3
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Cc: <stable@vger.kernel.org> # v3.19+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260827-i2c-dma-channel-leak-v1-2-271d4adc03a0@cherr.cc
+This function is only ever called from hp_wmi_update_info() while
+state->lock is held, so the free-and-replace itself is properly
+serialized against concurrent updates.
+
+fungible_show(), however, reads the same pointer after the lock has
+already been dropped:
+
+	err = hp_wmi_update_info(state, info);
+	if (err)
+		return err;
+
+	switch (prop) {
+	...
+	case HP_WMI_PROPERTY_CURRENT_STATE:
+		seq_printf(seqf, "%s\n", nsensor->current_state);
+		break;
+
+hp_wmi_update_info() takes state->lock internally and releases it
+before returning, so by the time fungible_show() dereferences
+nsensor->current_state in seq_printf(), no lock is held. Two
+processes reading a sensor's current_state debugfs entry at
+overlapping times (or one reading it while another read of the same
+sensor triggers a refresh) can race: one thread's seq_printf() can
+be part-way through printing the string at the moment another
+thread's call into update_numeric_sensor_from_wobj() frees it with
+devm_kfree() and installs a new pointer, causing a use-after-free
+read.
+
+Take state->lock around the read in fungible_show() as well, so it
+can never run concurrently with the free-and-replace in
+update_numeric_sensor_from_wobj().
+
+Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Acked-by: James Seo <james@equiv.tech>
+Link: https://patch.msgid.link/20260916002926.161595-1-meatuni001@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |    2 ++
+ drivers/hwmon/hp-wmi-sensors.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1557,6 +1557,8 @@ static int i2c_imx_probe(struct platform
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -1247,7 +1247,9 @@ static int fungible_show(struct seq_file
+ 		break;
  
- clk_notifier_unregister:
- 	clk_notifier_unregister(i2c_imx->clk, &i2c_imx->clk_change_nb);
-+	if (i2c_imx->dma)
-+		i2c_imx_dma_free(i2c_imx);
- 	free_irq(irq, i2c_imx);
- rpm_disable:
- 	pm_runtime_put_noidle(&pdev->dev);
+ 	case HP_WMI_PROPERTY_CURRENT_STATE:
++		mutex_lock(&state->lock);
+ 		seq_printf(seqf, "%s\n", nsensor->current_state);
++		mutex_unlock(&state->lock);
+ 		break;
+ 
+ 	case HP_WMI_PROPERTY_UNIT_MODIFIER:
 
 
