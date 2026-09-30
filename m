@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2654F4047;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59C24F472F;
 	Wed, 30 Sep 2026 15:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783765; cv=none; b=MAUzXT4Cwik/avwtdFW7z8+SqTpnoP16ISTvbqmh39PSc8KL09Jdn/1mkLFzsDZK3JzWBSu2yMuOpzKpJ+OtfgdiaFhD8vo02Jeggm7Rt2G21pM2eSFlClySxKR01tvfaGv43Ij+W4CVMFmEQy6TK0YTQPUvoksH1DTfTY0KxSU=
+	t=1790783766; cv=none; b=aGXa27GtC8/8ReeEp+F/4AZQkt3jLnWun6DVC2+qHaCYdjfkIbpSOEl6L/QTjBBrYRXgXLGjiUEtIeL+3ExJDUoQoaBj5komuvbQT3xRydKxSHpr4buX2uvWGns8waHSrJYT3Sd2czr7gOiUfh8Sa8klZCi6rs5WQ25ueLoyGU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783765; c=relaxed/simple;
-	bh=AGYvoJCojWz8oPU+gcudK+RlLmdLV4D5PjRfxLAxiso=;
+	s=arc-20240116; t=1790783766; c=relaxed/simple;
+	bh=aAnhIYRZzELLuN61T493bjfyXOq5o6TqkCamPbGqtgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvMEqAO3Urqj17Fo6w9yvQ3DO7T12/tNLQnjt+E/LCMKSry5N6T2ozL5uh/0afApCZ3SLOPDH8jFYr3Lda0mciCymyTSFydzPsZ0Oa24U1oHXn++p5PJ8+gTIeCyY2vuPSGd0l6m1xHBzObUDt77km7qKPXbuIm8aY5iBvBuj/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Us1lTIYU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DYmf0kLp72geqyAMqk4Vvwqu1ZAgzA1Z2Q9/xLQNIPPqBQJl+J7vxI4QLn1yjyIrDH0TpnaR3IU9O0kXnnKyfVcxGNaJuxS3GJNQWDZ7655mee9KU0U2+cTL6Rj05yoxR8wzwUrwTUIGK3BZujYDw53t9kH0+djLbgMT91EPeWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWbCbot2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Us1lTIYU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2FC1F000FF;
-	Wed, 30 Sep 2026 15:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWbCbot2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDBA1F00899;
+	Wed, 30 Sep 2026 15:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783761;
-	bh=Er40npCHcEODdpa60MhOumwrkk9NyagwLNb51GPMB/0=;
+	s=korg; t=1790783758;
+	bh=uRjnj5dJGEkFgNDTrnkJu2YgVMTh1GCq9WTms7AJdy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Us1lTIYUSCskzAgKznvTS27K1VMyoVGFs777wuY6uLDtsGBhp+/1ZNl2rB6eBFs7/
-	 AErjT+S8oYvxxDocuC0S6zzkPDy6PaxyRvwlmEGzRqHsGhclr7YxYVytah11m6nJAv
-	 v4CpJmCWFg73cVo19nsFx4Oqm9pHyQmgAWm898aI=
+	b=GWbCbot27DLV6FRxDhoezYz6ebPXIi8Yjf/i4Exc4yfq1VF/MXE89gCPXBxC+uSUg
+	 Z+0gdV4VpioIXi89CdIzz4bowprY+Fj5ZaH/5Ta8ZwH27jEtsOEuVOBjaf3pmsJKH8
+	 YMM6pRZXv15B+GBuBq7q3dQzv/57nPhYGWMMcBqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 514/595] net: ethernet: ti: netcp: fix pm_runtime usage counter leak on error
-Date: Wed, 30 Sep 2026 17:26:47 +0200
-Message-ID: <20260930152358.757571240@linuxfoundation.org>
+Subject: [PATCH 5.10 513/595] tg3: clean up PHYLIB resources on probe failure
+Date: Wed, 30 Sep 2026 17:26:46 +0200
+Message-ID: <20260930152358.736935144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit ac4334522e4ba4a3b6710dd5d4cc98092824b8ca ]
+[ Upstream commit a92e1a412c53dc0d9ad639e7abf8b3fc70a5b6ad ]
 
-pm_runtime_get_sync() leaves the runtime PM usage counter incremented even
-when it fails, but the error path in netcp_probe() does not call
-pm_runtime_put_noidle() to balance it, leaking a reference each time
-resume fails.
+tg3_get_invariants() can register an MDIO bus and connect a PHY for
+USE_PHYLIB devices. If tg3_init_one() later fails, its common error path
+releases the mappings and netdev without undoing those PHYLIB resources.
 
-Use pm_runtime_resume_and_get() instead, which automatically drops the
-usage counter on failure, fixing the leak.
+Disconnect the PHY and unregister the MDIO bus before the remaining
+teardown. Guard PHY cleanup with USE_PHYLIB to match tg3_phy_init(), and
+call tg3_mdio_fini() unconditionally to match tg3_mdio_init(). The existing
+IS_CONNECTED and MDIOBUS_INITED flags make both helpers safe when
+initialization only completed partially.
 
-Fixes: 84640e27f230 ("net: netcp: Add Keystone NetCP core ethernet driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260918042804.13101-1-phucduc.bui@gmail.com
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 158d7abdae85 ("tg3: Add mdio bus registration")
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260917183336.36239-1-mhun512@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index 77dd20431c447..7c209a749c1e8 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -2171,7 +2171,7 @@ static int netcp_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 954a51fe0cd70..92425b387b54d 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18028,6 +18028,10 @@ static int tg3_init_one(struct pci_dev *pdev,
+ 	return 0;
  
- 	pm_runtime_enable(&pdev->dev);
--	ret = pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to enable NETCP power-domain\n");
- 		pm_runtime_disable(&pdev->dev);
+ err_out_apeunmap:
++	if (tg3_flag(tp, USE_PHYLIB))
++		tg3_phy_fini(tp);
++	tg3_mdio_fini(tp);
++
+ 	if (tp->aperegs) {
+ 		iounmap(tp->aperegs);
+ 		tp->aperegs = NULL;
 -- 
 2.53.0
 
