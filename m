@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EB34E06FC;
-	Wed, 30 Sep 2026 16:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194EC37CD22;
+	Wed, 30 Sep 2026 16:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785430; cv=none; b=LXdbJak6NuhMSMVr6Wgyzq+LcnRhUwT7Mnea0sTLjgMeYE2qOOPcD/QTGC5xEho5Htcv3SCTM8p3MOqUS1rWLRiPCyX3eqq/5egj1jQ7V48MziOfxaJw8eG38xGJofl4ZEi/AEDYJskcfsDtEZjDg0IrgZ7/6SuxyN7M7UPtsWo=
+	t=1790785440; cv=none; b=kUXD1tmnY8dqwuyQs3Ywf/g6Qf8Qf0r9Bx17QSEt7akfpkTQ09ygDKcr4VpeFIOme385blNcx/JvEB7HE7mR38YwvV9FPfyNCITujq17vjPHpvvfRy3Jh/WPHJjzhE/YcBjApxks9IOPNGQxjFhazppkjU6P/xk9oZvRP8/1rXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785430; c=relaxed/simple;
-	bh=0PlLre5WrN3MKw3qSvcxcCNBgNhXpRx/JrAPyq67VRU=;
+	s=arc-20240116; t=1790785440; c=relaxed/simple;
+	bh=J+PbRsIBZ2d9YUPXqcBJ95Fl+6XPAVQDLZOubG56a+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TNBL4HuglsOg1+zmZlFMu5N5ydZLUukAPTLhFENf/Yy7/oDCR9zC9RBhUwx0PcfvGmfhBmIJym8vhC/BHkJ0+mifCQ73w8SEwXkytPmz0QFh8egAWngijhGlSp76KYscHIKf+Ll80wtVBF9xh+YET7/CaKl7pzWP3ymZSHrH2+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdUW8j/+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IY5Jkpna7B8lQ4QibTQNUSrl4szDkXxomgcCRDXkGLV9iJc0wdGApd7Phpyx3knnv2RLzyq932cBcD+00c8jik7vvoEKkgmGmTbv65O0KlX8e80HkgySV6TVWc2FfWaRctETq9zlHuKMPMzALUwYMoODdcnqUfToxArsGH6NePM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLpkJxIU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdUW8j/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544BC1F00893;
-	Wed, 30 Sep 2026 16:23:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLpkJxIU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA2F1F00893;
+	Wed, 30 Sep 2026 16:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785426;
-	bh=qwEBBVXYJmOwYck88r8iFU9BnMdJJahNI++svsIK1ZM=;
+	s=korg; t=1790785432;
+	bh=cjZdjLc2Z3n75QrRktXXH8O009YC0sVTbPYNxqEmnXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gdUW8j/+HuMnJNMPpAAWy0eDtpGn82WHD7vhqj00yfSZW+MG5v3qGaWmC9TwNv8nP
-	 t1bWP5Ezd2yurY9DOg3VSX34HxRq9w6fVOzt6Z27kF1kwt6HohQMJl99gYTtFJlc75
-	 xy+Q7UXSx3xT7EtsvmASKRi0oGYvcdS6RvwUoEKU=
+	b=YLpkJxIUDzD1eJC2lgdJTsy1EQxtNM9ved/AJPYtGKp6yiXkFtD4Rqbq73fpn3357
+	 e7+gV6p8iFz+xKb+/LqsbIXtC/yT9N3BgXopXwFR6MiNzypdJ9FvnYgyWiLna0OZQ6
+	 QAHegxKDHZjoKoQtlgt9IvPdmoX2c4YbHG9l5TBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E6=9C=B1=E6=81=BA=E4=B9=BE?= <zhukaiqian@xiaomi.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	=?UTF-8?q?=E5=88=98=E6=9C=AF=E9=AB=98?= <liushugao@xiaomi.com>
-Subject: [PATCH 6.1 506/982] tick/broadcast: Plug clockevents replacement race
-Date: Wed, 30 Sep 2026 17:20:42 +0200
-Message-ID: <20260930152427.646991654@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.1 508/982] tracing: Free histogram var refs regardless of how often they are referenced
+Date: Wed, 30 Sep 2026 17:20:44 +0200
+Message-ID: <20260930152427.690453080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -47,207 +44,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 113a9796effe3376d2ec5aabcca1fef4fef4cd62 upstream.
+commit 4bddcb346a6cf4615ca77f69a589623b877ca267 upstream.
 
-朱恺乾 reported and decoded the following race condition when a broadcast
-device is replaced:
+Using the same variable three or more times in one hist trigger leaks the
+variable reference and its strings when the trigger is removed.
 
-CPUA					CPUB
- __tick_broadcast_oneshot_control()
-   bc = tick_broadcast_device.evtdev;
-					tick_install_broadcast_device(dev)
-        				clockevents_exchange_device(cur, dev)
-					   shutdown(cur);
-					   detach(cur);
-					   cur->handler = noop;
-					   tick_broadcast_device.evtdev = dev;
+commit 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy
+var_refs") made a trigger's var_refs[] array the only owner of a var ref:
+destroy_hist_field() returns early for HIST_FIELD_FL_VAR_REF, so the field
+expressions never destroy one. One entry, freed once, no count needed.
 
-  tick_broadcast_set_event(bc, next_event); <- FAIL: arms a detached device.
+commit 8bcebc77e85f ("tracing: Fix histogram code when expression has same
+var as value") then made repeated references share one object and added a
+count of them. Only the increment side exists, since those expressions
+still return early and never drop a reference, so __destroy_hist_field()
+sees how many references were created rather than how many are left. It
+frees when the decremented count is 0 or 1, so two references work and
+three or more leak.
 
-If the original broadcast device has a restricted interrupt affinity mask
-and the last CPU in that mask goes offline then the BUG() in
-tick_cleanup_dead_cpu() triggers because the clockevent device is not in
-detached state.
+Sharing kept one array entry per object, and create_var_ref() searches and
+appends within a single trigger, so nothing outside it holds the object.
+Removing a trigger whose variables are still referenced is already refused
+by check_var_refs() with -EBUSY. Drop the count and free unconditionally.
 
-The reason for this is that tick_install_broadcast_device() is not
-serialized vs. tick broadcast operations.
-
-The obvious cure is to serialize tick_install_broadcast_device() with
-tick_broadcast_lock against a concurrent tick broadcast operation.
-
-That requires to split clockevents_exchange_device() into two parts, one
-which does the exchange, shutdown and detach operation and the other which
-drops the module reference count. This is required because the module
-reference cannot be dropped while holding tick_broadcast_lock.
-
-Let clockevents_exchange_device() do both operations as before, but let the
-broadcast device code take the two step approach and do the device
-exchange under tick_broadcast_lock and drop the module reference count
-after releasing it.
-
-Fixes: f8381cba04ba ("[PATCH] tick-management: broadcast functionality")
-Reported-by: 朱恺乾 <zhukaiqian@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Tested-by: 刘术高 <liushugao@xiaomi.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/87cymdsu0r.ffs@tglx
+Link: https://patch.msgid.link/20260906124025.3550596-1-donggeunyoo.kernel@gmail.com
+Fixes: 8bcebc77e85f ("tracing: Fix histogram code when expression has same var as value")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/clockevents.c    |   33 ++++++++++++++++++++-------------
- kernel/time/tick-broadcast.c |   36 ++++++++++++++++++++++--------------
- kernel/time/tick-internal.h  |    2 ++
- 3 files changed, 44 insertions(+), 27 deletions(-)
+ kernel/trace/trace_events_hist.c |   16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
---- a/kernel/time/clockevents.c
-+++ b/kernel/time/clockevents.c
-@@ -557,34 +557,41 @@ void clockevents_handle_noop(struct cloc
- {
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -160,7 +160,6 @@ struct hist_field {
+ 	struct hist_field		*operands[HIST_FIELD_OPERANDS_MAX];
+ 	struct hist_trigger_data	*hist_data;
+ 	enum hist_field_fn		fn_num;
+-	unsigned int			ref;
+ 	unsigned int			size;
+ 	unsigned int			offset;
+ 	unsigned int                    is_signed;
+@@ -1879,16 +1878,8 @@ out:
+ 	return field_op;
  }
  
--/**
-- * clockevents_exchange_device - release and request clock devices
-- * @old:	device to release (can be NULL)
-- * @new:	device to request (can be NULL)
-- *
-- * Called from various tick functions with clockevents_lock held and
-- * interrupts disabled.
-- */
--void clockevents_exchange_device(struct clock_event_device *old,
--				 struct clock_event_device *new)
-+void __clockevents_exchange_device(struct clock_event_device *old,
-+				   struct clock_event_device *new)
+-static void get_hist_field(struct hist_field *hist_field)
+-{
+-	hist_field->ref++;
+-}
+-
+ static void __destroy_hist_field(struct hist_field *hist_field)
  {
- 	/*
- 	 * Caller releases a clock event device. We queue it into the
- 	 * released list and do a notify add later.
- 	 */
- 	if (old) {
--		module_put(old->owner);
- 		clockevents_switch_state(old, CLOCK_EVT_STATE_DETACHED);
- 		list_move(&old->list, &clockevents_released);
+-	if (--hist_field->ref > 1)
+-		return;
+-
+ 	kfree(hist_field->var.name);
+ 	kfree(hist_field->name);
+ 
+@@ -1935,8 +1926,6 @@ static struct hist_field *create_hist_fi
+ 	if (!hist_field)
+ 		return NULL;
+ 
+-	hist_field->ref = 1;
+-
+ 	hist_field->hist_data = hist_data;
+ 
+ 	if (flags & HIST_FIELD_FL_EXPR || flags & HIST_FIELD_FL_ALIAS)
+@@ -2168,10 +2157,8 @@ static struct hist_field *create_var_ref
+ 	for (i = 0; i < hist_data->n_var_refs; i++) {
+ 		ref_field = hist_data->var_refs[i];
+ 		if (ref_field->var.idx == var_field->var.idx &&
+-		    ref_field->var.hist_data == var_field->hist_data) {
+-			get_hist_field(ref_field);
++		    ref_field->var.hist_data == var_field->hist_data)
+ 			return ref_field;
+-		}
+ 	}
+ 	/* Sanity check to avoid out-of-bound write on 'hist_data->var_refs' */
+ 	if (hist_data->n_var_refs >= TRACING_MAP_VARS_MAX)
+@@ -3160,7 +3147,6 @@ static struct hist_field *create_var(str
+ 		goto out;
  	}
  
- 	if (new) {
--		BUG_ON(!clockevent_state_detached(new));
-+		WARN_ON(!clockevent_state_detached(new));
- 		clockevents_shutdown(new);
- 	}
- }
- 
- /**
-+ * clockevents_exchange_device - release and request clock devices
-+ * @old:	device to release (can be NULL)
-+ * @new:	device to request (can be NULL)
-+ *
-+ * Called from various tick functions with clockevents_lock held and
-+ * interrupts disabled.
-+ */
-+void clockevents_exchange_device(struct clock_event_device *old,
-+				 struct clock_event_device *new)
-+{
-+	__clockevents_exchange_device(old, new);
-+	if (old)
-+		module_put(old->owner);
-+}
-+
-+/**
-  * clockevents_suspend - suspend clock devices
-  */
- void clockevents_suspend(void)
-@@ -650,7 +657,7 @@ void tick_cleanup_dead_cpu(int cpu)
- 		if (cpumask_test_cpu(cpu, dev->cpumask) &&
- 		    cpumask_weight(dev->cpumask) == 1 &&
- 		    !tick_is_broadcast_device(dev)) {
--			BUG_ON(!clockevent_state_detached(dev));
-+			WARN_ON(!clockevent_state_detached(dev));
- 			list_del(&dev->list);
- 		}
- 	}
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -162,23 +162,31 @@ static bool tick_set_oneshot_wakeup_devi
-  */
- void tick_install_broadcast_device(struct clock_event_device *dev, int cpu)
- {
--	struct clock_event_device *cur = tick_broadcast_device.evtdev;
-+	struct clock_event_device *cur;
- 
--	if (tick_set_oneshot_wakeup_device(dev, cpu))
--		return;
-+	scoped_guard(raw_spinlock_irqsave, &tick_broadcast_lock) {
- 
--	if (!tick_check_broadcast_device(cur, dev))
--		return;
-+		if (tick_set_oneshot_wakeup_device(dev, cpu))
-+			return;
- 
--	if (!try_module_get(dev->owner))
--		return;
-+		cur = tick_broadcast_device.evtdev;
-+		if (!tick_check_broadcast_device(cur, dev))
-+			return;
- 
--	clockevents_exchange_device(cur, dev);
-+		if (!try_module_get(dev->owner))
-+			return;
-+
-+		__clockevents_exchange_device(cur, dev);
-+		if (cur)
-+			cur->event_handler = clockevents_handle_noop;
-+		WRITE_ONCE(tick_broadcast_device.evtdev, dev);
-+		if (!cpumask_empty(tick_broadcast_mask))
-+			tick_broadcast_start_periodic(dev);
-+	}
-+
-+	/* Module release must be outside of the lock */
- 	if (cur)
--		cur->event_handler = clockevents_handle_noop;
--	tick_broadcast_device.evtdev = dev;
--	if (!cpumask_empty(tick_broadcast_mask))
--		tick_broadcast_start_periodic(dev);
-+		module_put(cur->owner);
- 
- 	if (!(dev->features & CLOCK_EVT_FEAT_ONESHOT))
- 		return;
-@@ -1205,7 +1213,7 @@ int tick_broadcast_oneshot_active(void)
-  */
- bool tick_broadcast_oneshot_available(void)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	return bc ? bc->features & CLOCK_EVT_FEAT_ONESHOT : false;
- }
-@@ -1213,7 +1221,7 @@ bool tick_broadcast_oneshot_available(vo
- #else
- int __tick_broadcast_oneshot_control(enum tick_broadcast_state state)
- {
--	struct clock_event_device *bc = tick_broadcast_device.evtdev;
-+	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
- 
- 	if (!bc || (bc->features & CLOCK_EVT_FEAT_HRTIMER))
- 		return -EBUSY;
---- a/kernel/time/tick-internal.h
-+++ b/kernel/time/tick-internal.h
-@@ -48,6 +48,8 @@ static inline void clockevent_set_state(
- }
- 
- extern void clockevents_shutdown(struct clock_event_device *dev);
-+extern void __clockevents_exchange_device(struct clock_event_device *old,
-+					  struct clock_event_device *new);
- extern void clockevents_exchange_device(struct clock_event_device *old,
- 					struct clock_event_device *new);
- extern void clockevents_switch_state(struct clock_event_device *dev,
+-	var->ref = 1;
+ 	var->flags = HIST_FIELD_FL_VAR;
+ 	var->var.idx = idx;
+ 	var->var.hist_data = var->hist_data = hist_data;
 
 
