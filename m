@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE8026ED40;
-	Wed, 30 Sep 2026 18:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FB3360ECA;
+	Wed, 30 Sep 2026 18:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794280; cv=none; b=fg9EEvEuHSn+bnkTZsbYBGeW55nzaMNJ7DMKPT4nNFhTQtfag0wVedGX+kJMlm2fopRnsdyN+RZdBhyjfLuHbr0ZwyzGujbIGBRaB+/QeZEO/sx965UnQIMlUK369Kzv2vYPhyLAHjhSlxYg+mJUCsV0a4bGFbYmenAg7+fYtsw=
+	t=1790794283; cv=none; b=dLyoo+9NFNY01kIh6HBJad/EZk9ulJeuxBOJX3LtBH61VZqCQaa1YhoGRSUm6yTBNSeNmVyhPIMUswnVd1BZ9Dvtv9priF89wQoDb2W2vfw/ZvWTykWrvn+3rXi0sprhaZKWMMnOwcbyf+oo25Fl/PhaiXldk0qRIw1KNRoS1zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794280; c=relaxed/simple;
-	bh=E2KcN4t9bWmAW52yYhQdriu2CKBmG4/UTn6ZneneMhA=;
+	s=arc-20240116; t=1790794283; c=relaxed/simple;
+	bh=qsEt80eVDsEuCLHSvzH+MAKEWhRQe1gpAP6Ij/H7wmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQxYM+9f1t5kGZFDgA71jkkICLrllwO60TG+oF8/OtHTYy58djEUcH1bFqwgrkXCRkQpDNZK7mrnoK3Olc4RyWPLXG2o+n9jqAa6XFafr7m4vGHqeNH90TyvuLby86bf6BPdkHrp+vphAxgGqr7TxxskUG41duh/YBAzuiWftr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAETLSYG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mGud4viFXPd/5iwgTxCFu867O4OH+bD+c4LWs/v9SKSTfx354ap1fcc6M2WyMv4LI0sFDA7losSf5d0doS56l9daklM94siciIdj+HOb6Uie6Fn+5WMYBCElM9Msbo5jCR4Ade76+ejvkndxh6yl4mO9exVWKqoWvsQfL6TeJRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5yKi75a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAETLSYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BC21F000FF;
-	Wed, 30 Sep 2026 18:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5yKi75a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFA91F000FF;
+	Wed, 30 Sep 2026 18:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794279;
-	bh=U3kUxHjxxLSjtvktJwCxqgIg/0+ebeVWeYmES25b0+M=;
+	s=korg; t=1790794282;
+	bh=vUWxNjYsRfZ9yUmr2qHlKHkXn9fFV97qf9ELcUWVy6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XAETLSYGyjxVj1IRa1KomagkrrpVwIWZJ2ieLApMSZILdlz9F+fZg1AD3FiiK5L34
-	 4nipflEoyilnVVn035Ny90YN0TgoDdDH7Hp31T1NRsqExVdXo5Mhxdy23KLS+wEXSR
-	 s4MRGrd4rTRHtWueybjHzLC1nzMybcplVXMo+/jE=
+	b=d5yKi75ajMLYzG40YBzXosFS3JIM1B2CySXwYQASQu5TueIBsl9fZvcUkZzzfZOcc
+	 ngvZbdBYyrk0Er+4DU/ffSU4DVTx3bQcu+M09T4An/Di4NuJFkynyrvh+Obo2t8Syp
+	 j/ohSv+0hLxEHJOIKvhT6zsDYW4gAFCTbI2fVcxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0110/1193] iio: adc: qcom-spmi-iadc: balance enable_irq_wake() on driver unbind
-Date: Wed, 30 Sep 2026 17:13:14 +0200
-Message-ID: <20260930152436.672502679@linuxfoundation.org>
+Subject: [PATCH 6.6 0101/1193] wifi: rtw89: pci: enable LTR based on pcie control register
+Date: Wed, 30 Sep 2026 17:13:05 +0200
+Message-ID: <20260930152436.478317466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,64 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
 
-[ Upstream commit 929fec2964f71d4b1ac664ee963d8226c5cf01c6 ]
+[ Upstream commit 779bbe1902f29d0ef131249ddd42a8dfbe21d0fb ]
 
-iadc_probe() calls enable_irq_wake() after a successful
-devm_request_irq(), but the driver has no remove callback or
-matching disable_irq_wake(), so the wake reference count on the
-IRQ is leaked on module unload or driver unbind.
+Originally, driver always transmits LTR (Latency Tolerance Reporting) to
+pcie host, but it may cause pcie link down on some platforms because
+LTR is not supported. As a result, driver will check the control
+register of LTR setting to decide whether to enable LTR feature.
 
-Check the IRQ request error first, then register a devm action
-that calls disable_irq_wake() so the wake reference is released
-in the same scope as the enable. While here, drop the inverted
-"if (!ret) ... else return ret" in favour of the standard
-"if (ret) return ret;" pattern.
+This applies to Wi-Fi 6 chips only. For Wi-Fi 7 chips, although the
+driver still issues LTR, the hardware has its own internal logic
+to determine whether to actually transmit it to pcie host.
 
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260515014433.16168-5-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/qcom-spmi-iadc.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/pci.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index 7fb8b2499a1d0..e053bc47b99ca 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -481,6 +481,11 @@ static const struct iio_chan_spec iadc_channels[] = {
- 	},
- };
+diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
+index 1ac5d021893d3..1a1027dd01d3e 100644
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -2543,6 +2543,17 @@ static int rtw89_pci_mode_op(struct rtw89_dev *rtwdev)
+ 	return 0;
+ }
  
-+static void iadc_disable_irq_wake(void *data)
++static bool rtw89_pci_dev_ltr_enabled(struct rtw89_dev *rtwdev)
 +{
-+	disable_irq_wake((unsigned long)data);
++	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
++	struct pci_dev *pdev = rtwpci->pdev;
++	u16 cap;
++
++	pcie_capability_read_word(pdev, PCI_EXP_DEVCTL2, &cap);
++
++	return !!(cap & PCI_EXP_DEVCTL2_LTR_EN);
 +}
 +
- static int iadc_probe(struct platform_device *pdev)
+ static int rtw89_pci_ops_deinit(struct rtw89_dev *rtwdev)
  {
- 	struct device_node *node = pdev->dev.of_node;
-@@ -538,9 +543,16 @@ static int iadc_probe(struct platform_device *pdev)
- 	if (!iadc->poll_eoc) {
- 		ret = devm_request_irq(dev, irq_eoc, iadc_isr, 0,
- 					"spmi-iadc", iadc);
--		if (!ret)
--			enable_irq_wake(irq_eoc);
--		else
-+		if (ret)
-+			return ret;
+ 	const struct rtw89_pci_info *info = rtwdev->pci_info;
+@@ -2646,7 +2657,7 @@ int rtw89_pci_ltr_set(struct rtw89_dev *rtwdev, bool en)
+ {
+ 	u32 val;
+ 
+-	if (!en)
++	if (!en || !rtw89_pci_dev_ltr_enabled(rtwdev))
+ 		return 0;
+ 
+ 	val = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
+@@ -2682,6 +2693,9 @@ int rtw89_pci_ltr_set_v1(struct rtw89_dev *rtwdev, bool en)
+ 	u32 dec_ctrl;
+ 	u32 val32;
+ 
++	if (!rtw89_pci_dev_ltr_enabled(rtwdev))
++		return 0;
 +
-+		ret = enable_irq_wake(irq_eoc);
-+		if (ret)
-+			return ret;
-+
-+		ret = devm_add_action_or_reset(dev, iadc_disable_irq_wake,
-+					       (void *)(unsigned long)irq_eoc);
-+		if (ret)
- 			return ret;
- 	} else {
- 		device_init_wakeup(iadc->dev, 1);
+ 	val32 = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
+ 	if (rtw89_pci_ltr_is_err_reg_val(val32))
+ 		return -EINVAL;
 -- 
 2.53.0
 
