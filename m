@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B5F36A37E;
-	Wed, 30 Sep 2026 17:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92B6516148;
+	Wed, 30 Sep 2026 17:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788961; cv=none; b=YWAuTjIhNiFtbMEqizeyqRHkqzrGfBJK0ZSxHVF7Z3/moyZUTAlpthIVYKOH8qLAvIuRQYijwAH53G6fU3UmB7hn5FZG+nD0rYVVgt6if4eWALwBIaH+me+nT4h8qX4Vk994Ufqxi100Vn+wqeoHD3Q3y+rpQxh4A1RFn6buvSo=
+	t=1790788964; cv=none; b=azFFvSfK1TL/7FMtaaEjLgFpZAVUEKIYQ7U80WGPQdTn8UnPexqdW0LWNqKWttBdN03/OuTc3bnkAKLPN050lOUk3b7jqonJk9EM01LA0e1n33yEVEYVFMcy7zTGKHCdztKQdsaYo8GIbw7QgAGJhb1zi7q44aDkkUgYE5DJs3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788961; c=relaxed/simple;
-	bh=N1Wft4GTvMPR/lCIcVkqPiHuoSv1umMjWHlG0+eS78w=;
+	s=arc-20240116; t=1790788964; c=relaxed/simple;
+	bh=T7qGKpZM2egLD03ZN+QNrvPUcTkmQb++Kv7Vy1fYGJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BA2Tb85JsaPura/wTuN0ANZRyRGExVs7X2nZxGA4tXTPJt1eSH6KXPue0jGQnlwIPrj8smK/Ntm98QJEaijmUuilNHsLG47W0g6t97gIDGpcuE5WUZ1Az6Ywanly1gS+FNSoZyIWc/HkFBrZO3PnmlqwRFQJpGA+ALPOPqDqWjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAcAg1Gz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZR6N7zLVo18aNwom4myl6QSCoJ1jgVFTMUI3Nef4n9vtLBLF6Ws2Qh81CZc2dUMSEwfae4yIl7qohqRFqw0KyOdFma+k6rG0UDjMr5GBKR/fk8adE64f1uPOMGPyBh/Hbu7Wm8ehQPte8DV8j6T1hB6/6AB2vQOb6IuBCPgspsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rq8O9PCa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAcAg1Gz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636A91F000FF;
-	Wed, 30 Sep 2026 17:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rq8O9PCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E70B1F000FF;
+	Wed, 30 Sep 2026 17:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788959;
-	bh=oQKM5p1fWTO2Pyez5fxvIwM4yuPKhpDcw5jxv6jPrHc=;
+	s=korg; t=1790788962;
+	bh=AiFckynmaEU9OokDXTrr/8e0wsNI9l4vqLidxCqLa5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAcAg1GzAxR4Bzlbm76RQwpoKRUpgnmwDu2ynBdNSzrt31v+oe3blQ0VRMLWZPSIR
-	 hAimATPyYZH0kTUodlWhofArZ1eEr4HF1clcgU7Hnck0eHCApi7X+ZgKcj5LWqszZ2
-	 24NTJVasNsp56hm/qtBxg19Snxjsj5MfnCunNUik=
+	b=rq8O9PCaX/rFcqykLD6Gw/qG0YHzxSCkP6wwYzUBCRT8dm8ksxaNAEvtTXzNkR9MX
+	 EBhZWdyCP1Mat3TzUkLTNKEpOx6HSYeX/X1PeDJ8Lgn4PZKIpA8dfOU697f1D8Ng6C
+	 YalAueS1aAzs8x/O4X/ABEmQM98imQh+eGdbwMvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 264/877] wifi: wilc1000: fix out-of-bounds read in P2P public action frames
-Date: Wed, 30 Sep 2026 17:19:35 +0200
-Message-ID: <20260930152420.421495081@linuxfoundation.org>
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 255/877] watchdog: msc313e: Propagate error code in resume()
+Date: Wed, 30 Sep 2026 17:19:26 +0200
+Message-ID: <20260930152420.224270667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,70 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit ba6cb7c0868a412c2eb68e8efd5aa38bfb258a14 upstream.
+commit 1d9763f34a85680db1e8233d654fdb85e5f897cc upstream.
 
-wilc_wfi_p2p_rx() and mgmt_tx() start parsing a frame once
-ieee80211_is_public_action() returns true. That helper only verifies the
-frame is long enough for the action category field, that is
-offsetofend(struct ieee80211_mgmt, u.action.category), 25 bytes. Both
-functions then read the P2P public action header up to oui_subtype at
-offset 30 and pass "size - ie_offset" to cfg80211_find_vendor_ie(), where
-ie_offset is offsetof(struct ieee80211_mgmt, u) + sizeof(*d), i.e. 32.
+If msc313e_wdt_start() fails during system resume, the error is
+currently ignored.  Consequently, the watchdog isn't running without the
+user's knowledge.
 
-A public action frame of 25 to 31 bytes passes the check but is shorter
-than that 32 byte header, so oui_subtype can be read out of bounds, and
-because the length is unsigned, "size - ie_offset" underflows to a value
-close to 4 GiB. cfg80211_find_vendor_ie() takes an unsigned int length,
-so even the size_t subtraction in mgmt_tx() is truncated to the same
-value. It then walks far past the buffer searching for a vendor element
-until it reaches unmapped memory.
+Propagate the error code and print a message if msc313e_wdt_start()
+fails.
 
-In the receive path the frame arrives over the air and needs no
-association, so a nearby unauthenticated device can crash the host while
-it is in P2P listen. Reject frames shorter than the P2P public action
-header in both paths before dereferencing it.
-
-Fixes: 4fb8b5aa2a11 ("staging: wilc1000: refactor p2p action frames handling API's")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: e9800b7994642 ("watchdog: Add Mstar MSC313e WDT driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260807115230.136767-1-ali@iusegentoo.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20260912163334.28636-1-tzungbi@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/cfg80211.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/watchdog/msc313e_wdt.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-+++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-@@ -1066,6 +1066,13 @@ void wilc_wfi_p2p_rx(struct wilc_vif *vi
- 	if (!ieee80211_is_public_action((struct ieee80211_hdr *)buff, size))
- 		goto out_rx_mgmt;
+--- a/drivers/watchdog/msc313e_wdt.c
++++ b/drivers/watchdog/msc313e_wdt.c
+@@ -198,11 +198,15 @@ static int __maybe_unused msc313e_wdt_su
+ static int __maybe_unused msc313e_wdt_resume(struct device *dev)
+ {
+ 	struct msc313e_wdt_priv *priv = dev_get_drvdata(dev);
++	int ret = 0;
  
-+	/* ieee80211_is_public_action() only validates up to the category
-+	 * byte, so reject frames too short for the P2P public action header
-+	 * before dereferencing it or computing size - ie_offset.
-+	 */
-+	if (size < ie_offset)
-+		goto out_rx_mgmt;
-+
- 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
- 	if (d->oui_subtype != GO_NEG_REQ && d->oui_subtype != GO_NEG_RSP &&
- 	    d->oui_subtype != P2P_INV_REQ && d->oui_subtype != P2P_INV_RSP)
-@@ -1214,6 +1221,13 @@ static int mgmt_tx(struct wiphy *wiphy,
- 		goto out_set_timeout;
- 	}
+-	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev))
+-		msc313e_wdt_start(&priv->wdev);
++	if (watchdog_active(&priv->wdev) || watchdog_hw_running(&priv->wdev)) {
++		ret = msc313e_wdt_start(&priv->wdev);
++		if (ret)
++			dev_err(dev, "Failed to restart watchdog (err=%d)\n", ret);
++	}
  
-+	/* ieee80211_is_public_action() only validates up to the category
-+	 * byte, so reject frames too short for the P2P public action header
-+	 * before dereferencing it or computing len - ie_offset.
-+	 */
-+	if (len < ie_offset)
-+		goto out_set_timeout;
-+
- 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
- 	if (d->oui_type != WLAN_OUI_TYPE_WFA_P2P ||
- 	    d->oui_subtype != GO_NEG_CONF) {
+-	return 0;
++	return ret;
+ }
+ 
+ static SIMPLE_DEV_PM_OPS(msc313e_wdt_pm_ops, msc313e_wdt_suspend, msc313e_wdt_resume);
 
 
