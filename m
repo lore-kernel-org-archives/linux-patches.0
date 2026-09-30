@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9B63DEFE7;
-	Wed, 30 Sep 2026 19:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3CA3D25B2;
+	Wed, 30 Sep 2026 19:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795954; cv=none; b=RPOiSZpoOgT2bpMZTyj77qyLGxhx7bX3Uh95Ec+GuBKdF+2DhJ0v9RNyC4TI8Yc3s7Vch6CqnWTs4FugxRr/zbi5WSywIyrhEiQkByvldQgo9jZ9KegWAlgDcAwLh0AyKknYroYBECsNbdPTM5ZH7DLO5/ntquGJqMkbUcNKwF4=
+	t=1790795957; cv=none; b=Mwrueg2OxUHXq3nalxPb63vxFcMCkbEODFVXmwwsJFkvJ1OTiOARhylS8chQRoW77ZfZbKgLOqtVEHS/TFoI2ScyBXebHmIDJ7Eo435UDui4+y0i7wVtK8KmEg4xvhc92EzS3GoIai2oSqZkIcrK+XS7hztbBTLRU38pQAirOkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795954; c=relaxed/simple;
-	bh=zAhiKadNdWcPFbhuTXW6U6cIO+4txfhJy4vrcAWpzDA=;
+	s=arc-20240116; t=1790795957; c=relaxed/simple;
+	bh=c+d3hYxhHmjIJRV8pvpw61matvJzdomTgvUoq9j+PBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJoK1a9hNJpd7d5xDWJlf7k3NI8CD/ali6TXV1fOo1N/Ho3vp7t84jrcd2Q4nGEeiGwLoVujhLFBG0TVmVtjU182ii2dpZmCkGFSVHcsbGGxS/zgjSEcHEqs7z/6PTJcGhGXLdQFCZa+CDVCrBMlqvGQboTvTNTpFgUQFOpWhUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fB32fX8p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X9Hq8YuAADTs6aYZWUZR0xr4DWFun+OghSFE/EhoLtqREOs5pvlD7NUehFGSyk0j4HPcCvYyoruJuhodBwJbQG/++8q7RApeLdxQeBbz5wOnm2A/tmd/qm6NY8Ud0LNRfa18J7lkfBWKBL7+/2CNSGYz5AD6g+FGTQuT6zn82j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRybJRzC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fB32fX8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CB11F000FF;
-	Wed, 30 Sep 2026 19:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRybJRzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439751F000FF;
+	Wed, 30 Sep 2026 19:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795952;
-	bh=SbEgUf4uM1QcDiMOGt/vERMxPHj813z6hKJ9DTFtOWA=;
+	s=korg; t=1790795955;
+	bh=KQQ2mdTF11fbdivi9gAeWQK2NL0ejGvzRU46YCJLokk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fB32fX8pQNMsgKuyQjKPqmx7NatEBXeNJcW64/9qxKzuCT4RJXWpoL74MY9W2B8Db
-	 sT8W4WpU5qflrbphZcbMMJ5T2WGr2vows9qS4RqvrhyxjQIWsRv64WPxowYayLHC0i
-	 /ffEpUYRM3Hl6X9PRTZfOZqJDkSohWYa9ew16CWM=
+	b=WRybJRzC7G15yn15nxEIHHqifpptjxKuH38Nic7HZFG79wou67sEwFCDIx6fW6g6p
+	 TkgprypYniWONbuYL7Iu9st67tgHqZufjxqX6vswGpeP2FKaaisEoa+Sfna2arLw96
+	 Csi4gMPgnUse48x7GwEJnD8Pxez8yaI2osWC4m60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mariano Baragiola <mbaragiola@linux.com>,
+	Peng Hao <flyingpeng@tencent.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0741/1193] wifi: virt_wifi: free skb when disconnected
-Date: Wed, 30 Sep 2026 17:23:45 +0200
-Message-ID: <20260930152450.713366667@linuxfoundation.org>
+Subject: [PATCH 6.6 0742/1193] wifi: mwifiex: fix IRQ leak using wrong index in MSI-X error path
+Date: Wed, 30 Sep 2026 17:23:46 +0200
+Message-ID: <20260930152450.735407901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mariano Baragiola <mbaragiola@linux.com>
+From: Peng Hao <flyingpenghao@gmail.com>
 
-[ Upstream commit f9edf7cf63b96d2b776fca8d258d3c5256e40c8e ]
+[ Upstream commit a3d722190cdef18da4878b5efc27c3c386dda248 ]
 
-When the simulated link is disconnected, virt_wifi_start_xmit() returns
-NET_XMIT_DROP without freeing the skb. dev_hard_start_xmit() treats this
-return value as consumed, so every packet sent while disconnected leaks its
-skb.
+mwifiex_pcie_request_irq() registers each MSI-X vector with a per-index
+dev_id (&card->msix_ctx[i]). On a request_irq() failure the cleanup loop
+"for (j = 0; j < i; j++)" frees msix_entries[j].vector but passes the
+failed index's &card->msix_ctx[i] as the dev_id. free_irq() matches on
+(irq, dev_id), so it fails to find the action registered with
+&card->msix_ctx[j]: the already-requested IRQ j is not freed (leaked) and
+free_irq() warns about freeing a non-existent IRQ. Use &card->msix_ctx[j].
 
-Free the skb before returning the drop status.
-
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
-Link: https://patch.msgid.link/20260809124947.3590270-1-mbaragiola@linux.com
+Fixes: 99074fc1e67b ("mwifiex: enable pcie MSIx interrupt mode support")
+Signed-off-by: Peng Hao <flyingpeng@tencent.com>
+Link: https://patch.msgid.link/20260828111531.56723-1-flyingpeng@tencent.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/virt_wifi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
-index 55b2d44e4315f..41a81642688d4 100644
---- a/drivers/net/wireless/virtual/virt_wifi.c
-+++ b/drivers/net/wireless/virtual/virt_wifi.c
-@@ -432,6 +432,7 @@ static netdev_tx_t virt_wifi_start_xmit(struct sk_buff *skb,
- 	priv->tx_packets++;
- 	if (!priv->is_connected) {
- 		priv->tx_failed++;
-+		dev_kfree_skb_any(skb);
- 		return NET_XMIT_DROP;
- 	}
- 
+diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
+index 6697132ecc977..86419669c11bf 100644
+--- a/drivers/net/wireless/marvell/mwifiex/pcie.c
++++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
+@@ -3241,7 +3241,7 @@ static int mwifiex_pcie_request_irq(struct mwifiex_adapter *adapter)
+ 					    ret);
+ 				for (j = 0; j < i; j++)
+ 					free_irq(card->msix_entries[j].vector,
+-						 &card->msix_ctx[i]);
++						 &card->msix_ctx[j]);
+ 				pci_disable_msix(pdev);
+ 			} else {
+ 				mwifiex_dbg(adapter, MSG, "MSIx enabled!");
 -- 
 2.53.0
 
