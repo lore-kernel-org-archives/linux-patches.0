@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1674E322A;
-	Wed, 30 Sep 2026 15:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3274E234D;
+	Wed, 30 Sep 2026 15:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783602; cv=none; b=p/lHxLcK1YHX4B8Runwv/2Ucqf0AQfcYlR/EgV4CqwyMxoG0SokAkLmHPm3LhlESMvBLiqB+armle7Lg3OSdxYf9nuA6WsfCfuTehVbZ/EEy9ko2z51LXiYc99IbIrkSvcdb1sOsdpSq9pi+0rDA9kM6lX0IX6W/DAKTp3NDuyA=
+	t=1790783603; cv=none; b=rssr6va4wXARYeeHD+gXP+wyba3sOqLSKnClBy3R6cXiQaUx3dIB3UOV9JWjmgurkGMQYt05kU9M8vXg2v7Ih4SBzFzzSPIbdLj9z69s3NIe0m+qiDu7IFJ33Zq4CLRV1Ew1reMKBEqCAgjIDEGlBSVHQabWJPPMvICRCBZL0sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783602; c=relaxed/simple;
-	bh=A9MiEDH1CNJCgHAengHp7uj/hDqD9/M8XQo0UaTZvHA=;
+	s=arc-20240116; t=1790783603; c=relaxed/simple;
+	bh=GxJGW/p7tsQMrbR1DV1KW3EcADeet/DubtjTWl7ykRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riNeINUIvGIdirnSvBP8+mvStwrXvsgRvF8nmAhpSGao1WJtlPVVQYCi7UXf2oG/6TPVoZ9ybmfEhGTI55i3uUhfrgnY4ZZYS3FUpG7YJFk/ulPilHyXBkEvP5tV2T6zQVGDvPZJNKE/LznI33aHJKM3DGoL6oxeYCRG5qqpMSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soDoiKXb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QUcVvhEqY/+NJ2Gca/8zwTY+wkU1QVJiCL7flp4rvpJG+Il8tm98oC+9gVuY4IHljIVvGh6MG4qBVtmwD66H2rRPmg9YEWHvdhVa9hbsFd/CVbleN8wS0RgTzEZQv87DvU48ksOBi7wEDHmySbb+AVqvB3wa0dQ6RjIo1aNJFHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0Hz/rI9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soDoiKXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7CA1F000FF;
-	Wed, 30 Sep 2026 15:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0Hz/rI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B91A1F00898;
+	Wed, 30 Sep 2026 15:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783597;
-	bh=nctGh0mmYt0t+z91thGk2lSdfYuXAuADmZCZ3nnlFv0=;
+	s=korg; t=1790783600;
+	bh=CT9atNz/4/Z/iXBdJrLo01yon9zUWMbGMKIybXwu154=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=soDoiKXbp0oH92nU1HEB2YiHm5/ecoIj4RMcIX9i7kefXqK61On99JPXAe+RKMnCF
-	 Lmg3PHuytjaSriyl/JenLBMmTjYnAYuOTbxm3xmJxuf8cl5GyVHtfS9JCxWnv3YBnf
-	 FMDnCYvdSllZ5if/1LhPhjqblCX7zuN7wGipJZ0o=
+	b=Y0Hz/rI9gTkeChEb7cH5tvIySSVZ5ImK5Byamf/xMk4nMJaO/ZEbjOSdmJjqT5b+b
+	 AYEzv8jiwHcu4qLr+N16t3+mdnvjAFsE4n2Enr9AV5ZFSV0+lVENFOFfMzDQX5tSyp
+	 CVUPTAq9xMaNEJBbXui/t7Evc1jeW8BKUOI908dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Turtanov <9alexei9@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 448/595] Input: atkbd - skip deactivate for Xiaomi Redmi Book Pro 16 2026
-Date: Wed, 30 Sep 2026 17:25:41 +0200
-Message-ID: <20260930152357.316462030@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 457/595] hwmon: (w83791d) remove fan/pwm 4-5 sysfs group on remove
+Date: Wed, 30 Sep 2026 17:25:50 +0200
+Message-ID: <20260930152357.511423749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,58 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Turtanov <9alexei9@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit aefbda23eeba234c3ff0f135dc5be6e294bd25a6 upstream.
+commit 0ff9c7775e51ac6d47b1bb5c46f06b1434fe58a8 upstream.
 
-The internal keyboard of the Xiaomi Redmi Book Pro 16 2026 (board TM2425)
-does not work: atkbd_probe() succeeds and every command is ACKed, but no
-scancodes ever arrive afterwards.
+When the fan/pwm 4-5 pins are not used as GPIO, w83791d_probe()
+creates the w83791d_group_fanpwm45 sysfs group on the I2C client
+device.
 
-Testing on the hardware through serio_raw shows that ATKBD_CMD_RESET_DIS
-(0xF5) is the culprit. After 0xF5 the embedded controller keeps ACKing
-commands but stops delivering scancodes, and neither ATKBD_CMD_ENABLE
-(0xF4) nor ATKBD_CMD_RESET_BAT (0xFF) bring them back. Only re-enabling
-the keyboard interface at the controller level (i8042 command 0xAE, or
-rewriting the command byte as i8042_port_close() does) revives it.
-Running the init sequence without 0xF5 (0xED 0x00, 0xF3 0x00, 0xF4)
-keeps the keyboard working.
+The probe error path removes this group when a later initialization
+step fails, but the normal remove path only removes w83791d_group.
+As a result, the optional fan/pwm 4-5 sysfs files can remain after the
+driver is unbound.
 
-'i8042.dumbkbd=1' also works around this, but then the driver never
-writes to the keyboard and the LEDs cannot be controlled. Use the
-existing atkbd_deactivate_fixup quirk instead, as done for the sibling
-TM2424 by commit 3a046db33bb9 ("Input: atkbd - skip deactivate for
-Xiaomi Book Pro 14's internal keyboard"). Tested on v7.2: keyboard,
-Caps Lock LED and s2idle suspend/resume all work.
+The callbacks associated with these files access the driver data,
+which is devm allocated and released after driver unbind. Leaving the
+sysfs files behind can therefore result in accesses to stale driver
+data.
 
-DMI: XIAOMI REDMI Book Pro 16 2026/TM2425, BIOS RMAPT6B0P0909 05/22/2026
+Remove w83791d_group_fanpwm45 during normal teardown as well.
 
-Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+This issue was found by manual code inspection.
+
+Fixes: 6e1ecd9b8f13 ("hwmon: (w83791d) fan 4/5 pins can also be used for gpio")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexei Turtanov <9alexei9@gmail.com>
-Link: https://patch.msgid.link/20260828112239.18081-1-9alexei9@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260914062809.1650538-1-lgs201920130244@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hwmon/w83791d.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1962,6 +1962,14 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		/* Xiaomi Redmi Book Pro 16 2026 (TM2425) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "REDMI Book Pro 16 2026"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/drivers/hwmon/w83791d.c
++++ b/drivers/hwmon/w83791d.c
+@@ -1415,6 +1415,7 @@ static int w83791d_remove(struct i2c_cli
+ 	struct w83791d_data *data = i2c_get_clientdata(client);
  
+ 	hwmon_device_unregister(data->hwmon_dev);
++	sysfs_remove_group(&client->dev.kobj, &w83791d_group_fanpwm45);
+ 	sysfs_remove_group(&client->dev.kobj, &w83791d_group);
+ 
+ 	return 0;
 
 
