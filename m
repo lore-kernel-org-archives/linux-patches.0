@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6C3344D92;
-	Wed, 30 Sep 2026 18:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2444F3D3CEF;
+	Wed, 30 Sep 2026 18:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794235; cv=none; b=PkQxX3bf/WJpHD8SR7DsJdbQ+GCDbwfUMW4+yekgN134WuSPOA9pANVhg2VzlCyi4Qtu6gOzmjaGviDuPD0d3qKcoqvORWEPVkEkPnStUVG00AXn84DYWxyQnq/aB5uQPUg/JlmcYCy/OlgOEFw1hI9Nd80jaTKDAoYQ5Y5KMl8=
+	t=1790794238; cv=none; b=NfBYSNb62DrX9bW9yn0ndAHTV++85+WzHPYE68Y74x9LilqwczA+XAhMav2YJ7HsMsNV4gijwFRYOtcK4HcHFx9LZ08VHVCR8iC+ab+Uc76Rl59LECLuLs8joT4yqGYxKyzADKfiS2CyyaXBklVzqbAA1OlMmWBXJpyzUs8W9Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794235; c=relaxed/simple;
-	bh=y6A5kV4upc4wF24/yin6iDjt9agu06fG2LBFuXelL8g=;
+	s=arc-20240116; t=1790794238; c=relaxed/simple;
+	bh=HH7nmLfkgcBgoIDFfrZraImlNB17C7JQeGDn9YbiFoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twhz98yIiDFVvGdYO5QzTRzmCdxHeHE28SWhHoEQkK/Gy281AgrP/umz2erywD4HAxwRocrk7XrvAsquemQxcFiS9npJ9GAMOqkHQ0LHB5GidMC7477z/kjpSHuQ+kW6uw4d1kCVF/lpXHCg1cPlldcrNL9ei3mqjtBHyudhL7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IXApixe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qaENL+XwyFc8RDpFRu51zg9urkvtTTHPqzRNdiUpMeKJiQYXlf01A/zxnzN2TP3Hzocy8ij+1uloTDjIuDmd2CxEbXkCrKKdMaxjtqMA8ruR3oppT3ZXeNpGqmqAWKfESnYjo3DJMoOIqcrrNNsNmSQkAvFSPxruRHymA44tUoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dBlPHRn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IXApixe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7C01F000FF;
-	Wed, 30 Sep 2026 18:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dBlPHRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF351F00898;
+	Wed, 30 Sep 2026 18:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794234;
-	bh=3BDEo3mxTI9LihapoQ/2ef8O79vyDqlLfPe2ykI1UXg=;
+	s=korg; t=1790794236;
+	bh=wxEkbULCgVD8pK7tMff2LHqpn2IIVzLe4PRPqxmm41A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0IXApixej1jVXvuNpE7i01Pf+fPdPrlhbL/HJd+ZcH8mXfqVi4nHC6u7wDB7iqbjV
-	 VWxktqiyPBd/30Pq8MJHajHmVyBbXP9wWb5Gt0bNmFHTOMKtIViFWEd2e4NdlNxhMW
-	 mXKGjeopLfU0Cl3d6XVZDKjGzTJ9X2PPpRzAXBWE=
+	b=0dBlPHRnocS5qOSkCi9nyztyaDXu+1bpzjx80dsjPBr1SCDYwLhFwPyNadq3cOHnV
+	 Iin+41FwtbfjBKm8DGlAA2dHcyjgF9ONnJhaqmf+M/9gNqOinDPXdqzT7oZzN7bx2H
+	 JeT4TClDqAJoMVZgGdDSmhMsGkRdv1kKZHEbKAWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0138/1193] soundwire: dmi-quirks: Disable ghost Realtek devices
-Date: Wed, 30 Sep 2026 17:13:42 +0200
-Message-ID: <20260930152437.275979173@linuxfoundation.org>
+Subject: [PATCH 6.6 0139/1193] gfs2: page poisoning fix
+Date: Wed, 30 Sep 2026 17:13:43 +0200
+Message-ID: <20260930152437.298418804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,86 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 4dab2b904414fac53535c4e4cdad808132f4cdc2 ]
+[ Upstream commit 4982e58669b11c43644efb5fb7435975848b716e ]
 
-Many systems ship with a Realtek audio codec in the ACPI that doesn't
-physically exist in the system. This confuses the newer function
-topology system that creates the soundcard, as it builds the card based
-on the ACPI information.
+Processes can write to the last page of a file using mmap, and when the file
+size is not a multiple of the page size, this can be used to write beyond the
+end of the file.  This is sometimes referred to as page poisoning, and it is
+not a problem in itself because the data beyond eof will be ignored.  However,
+we currently fail to clear out any space beyond the end of the file that we
+skip over when the file size is increased, so that "poison" can end up getting
+exposed.  Fix that.
 
-Whilst we are working with the laptop vendors to try and stop this
-happening there are quite a few systems where this has shipped. Add a
-quirk to disable this "ghost" device.
+Fixes xfstest generic/363.
 
-Currently this patch should cover:
- - Asus UX5406AA
- - Lenovo Yoga Pro 9i (83SF)
- - Lenovo Yoga Slim 7 Ultra (83QK)
-
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260520163631.3300102-4-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 35 ++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ fs/gfs2/bmap.c | 19 +++++++++++++++++++
+ fs/gfs2/bmap.h |  1 +
+ fs/gfs2/file.c | 10 ++++++++++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 5854218e1a274..32a46a2d90f7c 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -90,6 +90,19 @@ static const struct adr_remap intel_rooks_county[] = {
- 	{}
- };
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index bc0f7023adcf3..06825903ea1dc 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -1317,6 +1317,19 @@ static int gfs2_block_zero_range(struct inode *inode, loff_t from,
+ 	return iomap_zero_range(inode, from, length, NULL, &gfs2_iomap_ops);
+ }
  
-+/*
-+ * Many platforms have ghost realtek devices in the ACPI that don't physically
-+ * exist, remove those devices.
-+ */
-+static const struct adr_remap ghost_realtek[] = {
-+	/* rt722 on link3 */
-+	{
-+		0x000330025d072201ull,
-+		0x0000000000000000ull
-+	},
-+	{}
-+};
++int gfs2_clear_beyond_eof(struct inode *inode, loff_t end)
++{
++	loff_t isize = i_size_read(inode);
++	unsigned int len = isize & ~PAGE_MASK;
 +
- static const struct dmi_system_id adr_remap_quirk_table[] = {
- 	/* TGL devices */
- 	{
-@@ -164,6 +177,28 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)hp_omen_16,
- 	},
-+	/* PTL devices */
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
-+			DMI_MATCH(DMI_BOARD_NAME, "UX5406AA"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83SF"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
- 	{}
- };
++	if (!len || isize >= end)
++		return 0;
++	len = PAGE_SIZE - len;
++	if (end - isize < len)
++		len = end - isize;
++	return gfs2_block_zero_range(inode, isize, len);
++}
++
+ #define GFS2_JTRUNC_REVOKES 8192
  
+ /**
+@@ -2092,6 +2105,12 @@ static int do_grow(struct inode *inode, u64 size)
+ 		unstuff = 1;
+ 	}
+ 
++	if (!unstuff) {
++		error = gfs2_clear_beyond_eof(inode, size);
++		if (error)
++			goto do_grow_qunlock;
++	}
++
+ 	error = gfs2_trans_begin(sdp, RES_DINODE + RES_STATFS + RES_RG_BIT +
+ 				 (unstuff &&
+ 				  gfs2_is_jdata(ip) ? RES_JDATA : 0) +
+diff --git a/fs/gfs2/bmap.h b/fs/gfs2/bmap.h
+index 4e8b1e8ebdf39..12cd9dc68deb8 100644
+--- a/fs/gfs2/bmap.h
++++ b/fs/gfs2/bmap.h
+@@ -57,6 +57,7 @@ int gfs2_get_extent(struct inode *inode, u64 lblock, u64 *dblock,
+ 		    unsigned int *extlen);
+ int gfs2_alloc_extent(struct inode *inode, u64 lblock, u64 *dblock,
+ 		      unsigned *extlen, bool *new);
++int gfs2_clear_beyond_eof(struct inode *inode, loff_t end);
+ int gfs2_setattr_size(struct inode *inode, u64 size);
+ int gfs2_truncatei_resume(struct gfs2_inode *ip);
+ int gfs2_file_dealloc(struct gfs2_inode *ip);
+diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
+index 2adaffa58e88b..3fef6d7578947 100644
+--- a/fs/gfs2/file.c
++++ b/fs/gfs2/file.c
+@@ -1056,6 +1056,10 @@ static ssize_t gfs2_file_buffered_write(struct kiocb *iocb,
+ 			goto out_unlock;
+ 	}
+ 
++	ret = gfs2_clear_beyond_eof(inode, iocb->ki_pos);
++	if (ret)
++		goto out_unlock;
++
+ 	pagefault_disable();
+ 	ret = iomap_file_buffered_write(iocb, from, &gfs2_iomap_ops);
+ 	pagefault_enable();
+@@ -1258,6 +1262,12 @@ static long __gfs2_fallocate(struct file *file, int mode, loff_t offset, loff_t
+ 
+ 	next = (next + 1) << sdp->sd_sb.sb_bsize_shift;
+ 
++	if (!(mode & FALLOC_FL_KEEP_SIZE)) {
++		error = gfs2_clear_beyond_eof(inode, offset + len);
++		if (error)
++			return error;
++	}
++
+ 	offset &= bsize_mask;
+ 
+ 	len = next - offset;
 -- 
 2.53.0
 
