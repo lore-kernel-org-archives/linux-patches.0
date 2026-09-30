@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80925503BEE;
-	Wed, 30 Sep 2026 16:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6652E2286;
+	Wed, 30 Sep 2026 16:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785211; cv=none; b=PhP6uaWQZQ8quYbH+RzxoLCZjmFnv0FTtyst0l7fGwA25iXSE/WtIhQSL5pChi3mGQr36VuqesQYYCgae9URWwAQohK0MEU9BLtVzZyyZdxSwu6EfckIqr9FaVZ0ybbY7Jf1xNnHDvRPXeQTnC8UxjasXaYHA2ouisUcXxwGm5A=
+	t=1790785210; cv=none; b=gvzN4mSnbcvR9x8qia7EeRjGgvdgqI2wrcp5lXH8HOh+402+3JdE3OGA5vehti8xa1DzkYeyWFwH/0FBrR98HHVGppMac9HumbfcLK17WrhBXSCOQ8W4X/IomQxMfsUlIaoTZntR2NIEvjNm1SNpm6Oq30joGbATv1lmJ6tvnG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785211; c=relaxed/simple;
-	bh=nvdnJEWF1oTNg2F7dYX+SX59dI3tz5O2c8I8wdzA6nE=;
+	s=arc-20240116; t=1790785210; c=relaxed/simple;
+	bh=+vjsAQy+F1GrskGp2BrbzCKtXaHxGTE/pZkm4GLFJjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4MvJfFmliTpNTUdCT6Bsb6b8s7Tfo8O3Vzd2cnrIQ3Sjm3tuGXeY98CGFraNQIZI5oPulz8yZCnqzSu+kWOPkp/ojLzTCMtkA6hoHL3FFy8YDubcjFrGLKByYcC9DsSkst9uykVijvW0/ft3gvFjSUpMzc4V8/uKO3lc/g7nZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tyj9nZXU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ddYFxGZCt1kSTjHMALb1kqGFjOv/PpS+txgaDwNRR8H+HUX3OGpBETzU5V2S45XIGsmaUdrUz0WjV/+xQEALRNIIbPtION0RFshSbTV4o/pFI+0FFAlAcaGXGrX8+5tq87d1ej0ymFObh0mSd5/Lw/XQjVeACdYeLNldUKTamvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQuPW/sl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tyj9nZXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CF91F00898;
-	Wed, 30 Sep 2026 16:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQuPW/sl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6381F000FF;
+	Wed, 30 Sep 2026 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785203;
-	bh=MoM3M8GiDnh8ER4UZK98876YfysIesuotbH6HkqXYU4=;
+	s=korg; t=1790785206;
+	bh=7u3oBbMddiV8ElvxNAINxHFs0ytoge54wh918wOCi4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tyj9nZXUP2lRlDFOy16vFpyNJCotanBLpQwLJ1ms/LHP4Od8xr6m7LjVEWNYjcqpW
-	 hC2MUut3TaVDrXGmEGBNUWEwysrkzDh73YtKseKiRV/gkon5OHS1Apt85OGpXsNn/g
-	 81KZmd2Gub6hJBn05WvfK1jdsXj47Tfb2kcRkXSA=
+	b=tQuPW/slhyFrS9xDIeLh2iIE/SVUNP25g8XVvuS5FzUIxbYOUPI7zCjWYw/Tf+HeO
+	 dy/tcByDmU6wYtto4N4C6MsYnz66L7/m+ufEPz9+pY39JykPgI7wUOUIuaElBZgXTv
+	 L75gYtdw9GuqHGaCK6ZuBUkWG9byGDA0xAWQSKns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 399/982] ALSA: caiaq: Fix potential double-free at error path
-Date: Wed, 30 Sep 2026 17:18:55 +0200
-Message-ID: <20260930152425.380020071@linuxfoundation.org>
+Subject: [PATCH 6.1 426/982] net/sched: hhf: clamp quantum in change and init paths
+Date: Wed, 30 Sep 2026 17:19:22 +0200
+Message-ID: <20260930152425.950717508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -44,67 +48,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
+[ Upstream commit eb56a495f59baf6cad5ed80e3ffb9078098b1346 ]
 
-The fix for caiaq driver's resource management to handle the errors
-tries to release the resources in a common destructor call, but as a
-sashiko review for another patch suggested, some of the audio
-resources such as URBs have been already freed, and this may lead to a
-double-free.
+hhf_change() accepts any quantum from userspace, including 1. With a
+crafted size table qdisc_pkt_len reaches ~2 GiB, so quantum=1 makes
+the deficit-refill loop spin ~2^31 times under the qdisc lock
+(a soft lockup / denial of service).
 
-For addressing the double-free, call the common destructor function
-from each place, and assure that the resource pointers get cleared.
+Add max(256U, ...) in hhf_change() matching fq_codel_change(). Clamp
+hhf_init() to [256, 1<<20] matching the siblings, and remove the old
+fallback that only set quantum=256 on overflow.
 
-Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_HHF=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
+
+  tc qdisc add dev dummy0 root hhf
+  tc qdisc change dev dummy0 root hhf quantum 1 stab data 32768 size_log 15 cell_log 0
+
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.5
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/audio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/sched/sch_hhf.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
-index 7a89872aa0cbd..11d959887de56 100644
---- a/sound/usb/caiaq/audio.c
-+++ b/sound/usb/caiaq/audio.c
-@@ -853,16 +853,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index f9eab403ac161..fa7480474976f 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -550,7 +550,7 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
+ 		return err;
  
- 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
+ 	if (tb[TCA_HHF_QUANTUM])
+-		new_quantum = nla_get_u32(tb[TCA_HHF_QUANTUM]);
++		new_quantum = max(256U, nla_get_u32(tb[TCA_HHF_QUANTUM]));
  
- 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
--		free_urbs(cdev->data_urbs_out);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
+ 	if (tb[TCA_HHF_NON_HH_WEIGHT])
+ 		new_hhf_non_hh_weight = nla_get_u32(tb[TCA_HHF_NON_HH_WEIGHT]);
+@@ -606,7 +606,7 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
+ 	int i;
  
-@@ -883,6 +880,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
+ 	sch->limit = 1000;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
+ 	INIT_LIST_HEAD(&q->new_buckets);
+ 	INIT_LIST_HEAD(&q->old_buckets);
+@@ -617,10 +617,6 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->hhf_evict_timeout = HZ;      /* 1  sec */
+ 	q->hhf_non_hh_weight = 2;
  
- 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
- 	free_urbs(cdev->data_urbs_in);
-+	cdev->data_urbs_in = NULL;
- 	free_urbs(cdev->data_urbs_out);
-+	cdev->data_urbs_out = NULL;
- 	kfree(cdev->data_cb_info);
-+	cdev->data_cb_info = NULL;
- }
+-	if ((int)q->quantum <= 0 ||
+-	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
+-		q->quantum = 256;
+-
+ 	if (opt) {
+ 		int err = hhf_change(sch, opt, extack);
+ 
 -- 
 2.53.0
 
