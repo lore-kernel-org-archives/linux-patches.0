@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1481131D366;
-	Wed, 30 Sep 2026 18:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C703B3C03;
+	Wed, 30 Sep 2026 18:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791742; cv=none; b=HBKp3SGBAcqEElj8b6acZ1FcGWaGvvSVmYOdznV1pgZZjXjHaj3FBWLMpmJLbP2GbkaE4uwvAyn6hc+cIBhT+e9tbMQvPe/MUAkymFZ5i0+ZvOY7a5cQTxfFyM76KxbwFnk+d7ZTsTz++ZJQ9+9GgAEecOO4njQ0xn+pTDMN48c=
+	t=1790791745; cv=none; b=OwwAEX5oNNtb3FHjd/A6OuAp/aA+yyqdzTJ/aYEWjSaYE6V+ytjbOuu5XcspHADJy+hD2iMkO6tgRZRvgnNdyXOJGxB4NJGjmCKRLyEJuYxrbvxwsS/5pYxWli94lyOTXeIl/lWAmo6jdv9aTacmXlvwZZSjuI0dpqqiy+qmwwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791742; c=relaxed/simple;
-	bh=FN9YlYrn01kvvlR2aNLAiteI2haA4ARnsOm7Iyezwbw=;
+	s=arc-20240116; t=1790791745; c=relaxed/simple;
+	bh=sBxO0ItJPIUHNY2hw2uizUYtJT+A2G82kC/ma7uK9Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YppbOWXQLZMdJYmvJPcL4INjhucaA7yOE/HO5nZsGivQdtQc1uBz8v+94u+NI5jN2aL0diIn4p/5aDhhZTVONa9oNcncm8HE2/HszFFw+NUjK8GMrPw4iUBFLribyiKWlYwjJWL/dn/tLuJdcMt7h/wDLXSvWRZWtiC0VqEnLeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Slt+BkhK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PkUIDHUz6CAsOZGnuDyiHkeZQgSi/BSwCXi4E83TPzeJaEQ19QaYiC6vGhH9a/+ErZpdJ2ajCzQR1IfpZTbfAhw9qNa4lmuJYTLOxCD26zXAMDAaoo6bbs8bF8527wi+GVuzOrGBubMx4MNYK7FK2wFl0EP4ewDBFN9+2nBInDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9oNPGF3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Slt+BkhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4941F000FF;
-	Wed, 30 Sep 2026 18:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9oNPGF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A40C1F0089B;
+	Wed, 30 Sep 2026 18:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791741;
-	bh=ElsJ1K0LtZoRpvphJQuzpskUcfs5Al9otLcrTN7/104=;
+	s=korg; t=1790791743;
+	bh=PSd0LU8KHsslTlBr7K8ZnfN5qK0MMzOv5OZwAKFxnLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Slt+BkhKHHhLdYUXvoQST7h1NoKdy2+8t2+QiFdBmtgmmdfNnknsLW2B4sgthI1ks
-	 ImCCmCzH7w3uBh/8TD03g/nJWQ83pc1+HPMTyrxutGMZ3SzS4Shqty03AgVsWD6qmp
-	 4MjE9UB1JYq/ASjHDlDg5u/LibDG7T1iAat2fRPY=
+	b=J9oNPGF3/A0xYxwRxi48OO0hZ2D8M0xJFQ4T5TCnxOqoNojbv4HJZLuCKnF6Bs6fg
+	 C3bm89F/9XT9lAZLMctZXnOcEVFOv46p45Z9/SXvuVbEffVfqpnyGyViq/e4aTpmZM
+	 I9W3+jA0piMOzkVzIsMNfbD9VZ8wZpcmBb6MHdG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 407/752] mptcp: syncookies: remember the request backup flag
-Date: Wed, 30 Sep 2026 17:24:37 +0200
-Message-ID: <20260930152407.084828403@linuxfoundation.org>
+	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 408/752] bpftool: remove duplicate free_btf_vmlinux() definition
+Date: Wed, 30 Sep 2026 17:24:38 +0200
+Message-ID: <20260930152407.105151850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,55 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Suraj Jitindar Singh <surajjs@amazon.com>
 
-commit b76c0e28b392620dfbaf92cdeedbf115820b44cb upstream.
+v5.15.221 backported
 
-Instead of using an uninitialised bit when copying the info in
-subflow_ulp_clone().
+  a9e2496111aa ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
+  [ upstream commit 66d7e39e49b0 ]
 
-To fix this, no need to extend the join_entry structure: backup is
-coming from struct mptcp_subflow_request_sock, only one bit. Do the same
-here by using one bit for both.
+which re-adds free_btf_vmlinux(). However, the prerequisite cleanup
 
-Fixes: efd340bf3d77 ("mptcp: distinguish rcv vs sent backup flag in requests")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-3-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  52df1a8aabad ("bpftool: remove function free_btf_vmlinux()")
+
+was never backported to 5.15.y, so the tree still carried the original
+free_btf_vmlinux() definition. The backport therefore produced two
+identical-signature static definitions in tools/bpf/bpftool/map.c and
+the build fails:
+
+  map.c: error: redefinition of 'free_btf_vmlinux'
+
+Remove the stale pre-existing definition, keeping the one reintroduced
+by a9e2496111aa (which also resets btf_vmlinux = NULL). This matches the
+current mainline end state.
+
+Fixes: a9e2496111aa ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/syncookies.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/map.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/net/mptcp/syncookies.c
-+++ b/net/mptcp/syncookies.c
-@@ -26,7 +26,8 @@ struct join_entry {
- 	u32 local_nonce;
- 	u8 join_id;
- 	u8 local_id;
--	u8 backup;
-+	u8 backup:1,
-+	   request_bkup:1;
- 	u8 valid;
- };
+diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
+index cf257da201951..54d855ac54080 100644
+--- a/tools/bpf/bpftool/map.c
++++ b/tools/bpf/bpftool/map.c
+@@ -828,12 +828,6 @@ static void free_map_kv_btf(struct btf *btf)
+ 		btf__free(btf);
+ }
  
-@@ -63,6 +64,7 @@ static void mptcp_join_store_state(struc
- 	entry->remote_nonce = subflow_req->remote_nonce;
- 	entry->local_nonce = subflow_req->local_nonce;
- 	entry->backup = subflow_req->backup;
-+	entry->request_bkup = subflow_req->request_bkup;
- 	entry->join_id = subflow_req->remote_id;
- 	entry->local_id = subflow_req->local_id;
- 	entry->valid = 1;
-@@ -117,6 +119,7 @@ bool mptcp_token_join_cookie_init_state(
- 	subflow_req->remote_nonce = e->remote_nonce;
- 	subflow_req->local_nonce = e->local_nonce;
- 	subflow_req->backup = e->backup;
-+	subflow_req->request_bkup = e->request_bkup;
- 	subflow_req->remote_id = e->join_id;
- 	subflow_req->local_id = e->local_id;
- 	subflow_req->token = e->token;
+-static void free_btf_vmlinux(void)
+-{
+-	if (!libbpf_get_error(btf_vmlinux))
+-		btf__free(btf_vmlinux);
+-}
+-
+ static int
+ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 	 bool show_header)
+-- 
+2.53.0
+
 
 
