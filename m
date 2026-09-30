@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8855734E75A;
-	Wed, 30 Sep 2026 19:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1E53CAA41;
+	Wed, 30 Sep 2026 19:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795541; cv=none; b=gL0tGcP5R2hGGafUcU8SUkVmmnzfjemlKdXGPmLcOkTZ3Hv9SE0Gf9q3obbLpaJw60cSNcQq+/4qhtUO92LgzOeRWHArI+zw+sEqVFKXpEv26KcuWhTO+T+K6APNET4UVIn8hXoyZQhUPskjakYNnK/D1HPWQ8uJaIfVGbRLTuo=
+	t=1790795544; cv=none; b=uLtSGPWA+ryqJomkiLQxAMWFSAmc2Qtt9uqK9kRBPlfhXtKHtOsnEx/4B0PGnwsVWvntDpewgT/0AtdHbY5x+0XY+UrIrSytK0d1gyqr16y7xbD+sM64cGCjMDSWh06+OuSdSgSekJ3K+i3AkJ83+6YVo3gjK9d0TkQ5P9/g1+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795541; c=relaxed/simple;
-	bh=rtvqPBtqkrRQvsYPAH4D3Wk5z0mgIViKqT7Vlt+ZL6k=;
+	s=arc-20240116; t=1790795544; c=relaxed/simple;
+	bh=c7MiIu0Z+7IJjm/XEIN+b0O9+tpkrtzeYBc7AYlpR9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AZZy9cwFOwpUP63If1QvktupEbqhOVhJLIJtp8IHOhaR/vH3wXZwYD5iYrTP8Bfjk0guvTtunNpaXOJBph+dEFwabhnBG+tQhsk2xFPYKcff/px0+47sw2qjEWQZQ/Ise84901CKx5EGGLtMfkT4dja/PPjuT1vqJml3ZkDE8Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOa03gXY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ilCkdE8pHznKOZl4+orgI4Hs8+eA+pKDP+ztJVDtmw5hIWgcUGAAmbNXcZ3b2swV+ge3w3AWnbb+ju98s2ctaWMKCCnLO+6NvQu8TzYKWrczW/MWGFFozbic//V8ita6UGicodl+TeauBoJFIvURMsE3IEoAU6Sg2BqeAR7OPRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKCCd3Ou; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOa03gXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F1A1F000FF;
-	Wed, 30 Sep 2026 19:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKCCd3Ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4C51F000FF;
+	Wed, 30 Sep 2026 19:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795540;
-	bh=0HZDTY0euGNmK7vuSQQ3BOHw93TUpT16ZDOby+wS/qg=;
+	s=korg; t=1790795543;
+	bh=nrfHlbjfT/GxWpeKDG0u015gwJBeOvoPy1LkafOMVVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOa03gXYd9VJ9dQsnaVG34ubWfkfeV6/pHXm4E1uCl9JnYAWtVUvvH+44xlJCh4Lp
-	 suhUgLutwx5g1UOuLnU4POt/2uAW35C2c2W9IK5UhcZI7/Nf0sDpMniB0NsWjrU9xq
-	 oVqDI3Yf0SfMkEnCw8FerMsjgKuTpP60eMYM3HAY=
+	b=uKCCd3OuWKZjfC2TgYOf1wobiDT7NrjStecdL7As8WtbgAhumezL4YfLmfVZSHgwl
+	 iZrARhCF+GLEvVSuo+WzMbN3NO2OgQS/FjON8QE9E9kDqATESLx9SuHcvg/0CQ4w0g
+	 SrQ9u6D3hGgsdzad5DQEko6rJ/pcDnlJd+Tsig4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	stable <stable@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 0596/1193] powerpc/ps3: Fix repository.c build failure
-Date: Wed, 30 Sep 2026 17:21:20 +0200
-Message-ID: <20260930152447.485366508@linuxfoundation.org>
+Subject: [PATCH 6.6 0597/1193] powerpc/eeh: Fix recursive locking on devices without EEH sensitive driver
+Date: Wed, 30 Sep 2026 17:21:21 +0200
+Message-ID: <20260930152447.506669343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -44,71 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-commit 5ba79d37403d86082ab4083b0f51ec3008a942cb upstream.
+commit c5e68706527968282e49de205cc2b935823cb88a upstream.
 
-GCC fails to build ps3_defconfig with the following errors:
+The commit 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug
+safe") refactored the EEH code such that the pci_rescan_remove_lock is
+held at the beginning of eeh_handle_normal_event() and the
+eeh_reset_device() is called with that lock being held. Looks like the
+commit missed to remove the existing lock/unlock inside eeh_rmv_device()
+which is no longer necessary. This is causing the eehd to hang on the
+lock which it actually holds when that code path is taken.
 
-  arch/powerpc/platforms/ps3/repository.c: In function ‘make_first_field.constprop’:
-  arch/powerpc/platforms/ps3/repository.c:78:9: error: ‘strnlen’ specified bound 8 exceeds source size 3 [-Werror=stringop-overread]
-     78 |         memcpy((char *)&n, text, strnlen(text, sizeof(n)));
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  arch/powerpc/platforms/ps3/repository.c: In function ‘make_first_field.constprop’:
-  arch/powerpc/platforms/ps3/repository.c:78:9: error: ‘strnlen’ specified bound 8 exceeds source size 4 [-Werror=stringop-overread]
-     78 |         memcpy((char *)&n, text, strnlen(text, sizeof(n)));
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[<0>] 0xc00000011c78f870
+[<0>] __switch_to+0xfc/0x1a0
+[<0>] pci_lock_rescan_remove+0x30/0x44
+[<0>] eeh_rmv_device+0x290/0x2e0
+[<0>] eeh_pe_dev_traverse+0x80/0x130
+[<0>] eeh_reset_device+0xcc/0x23c
+[<0>] eeh_handle_normal_event+0x830/0xa80
+[<0>] eeh_event_handler+0xf8/0x190
+[<0>] kthread+0x194/0x1b0
+[<0>] start_kernel_thread+0x14/0x18
 
-The current use of strnlen(text, sizeof(n)) triggers -Wstringop-overread
-when text is a short string literal that is smaller than sizeof(n), such
-as "bi" or "bus". Use strlen(text) instead and clamp the copy length to
-sizeof(n) before memcpy().
+The issue is seen for cases where the errors are detected on the PHB
+directly AND|OR for devices where the driver error_detected() returns
+PCI_ERS_RESULT_NEED_RESET, and driver being not EEH sensitive(i.e no
+error handlers like slot_reset(), resume() etc defined).
 
-Drop the redundant char * cast while at it.
-
-Fixes: f94a84a09148 ("powerpc/ps3: refactor strncpy usage")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Fixes: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260703165834.137242-2-thorsten.blum@linux.dev
+Link: https://patch.msgid.link/178404937381.913.2759874335293830160.stgit@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/ps3/repository.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/kernel/eeh_driver.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/ps3/repository.c b/arch/powerpc/platforms/ps3/repository.c
-index b8c030eab138..0cc755ac3e7f 100644
---- a/arch/powerpc/platforms/ps3/repository.c
-+++ b/arch/powerpc/platforms/ps3/repository.c
-@@ -6,6 +6,8 @@
-  *  Copyright 2006 Sony Corp.
-  */
- 
-+#include <linux/minmax.h>
-+
- #include <asm/lv1call.h>
- 
- #include "platform.h"
-@@ -74,8 +76,9 @@ static void _dump_node(unsigned int lpar_id, u64 n1, u64 n2, u64 n3, u64 n4,
- static u64 make_first_field(const char *text, u64 index)
- {
- 	u64 n = 0;
-+	size_t len = min(strlen(text), sizeof(n));
- 
--	memcpy((char *)&n, text, strnlen(text, sizeof(n)));
-+	memcpy(&n, text, len);
- 	return PS3_VENDOR_ID_NONE + (n >> 32) + index;
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -533,9 +533,7 @@ static void eeh_rmv_device(struct eeh_de
+ 		if (rmv_data)
+ 			list_add(&edev->rmv_entry, &rmv_data->removed_vf_list);
+ 	} else {
+-		pci_lock_rescan_remove();
+ 		pci_stop_and_remove_bus_device(dev);
+-		pci_unlock_rescan_remove();
+ 	}
  }
  
--- 
-2.55.0
-
 
 
