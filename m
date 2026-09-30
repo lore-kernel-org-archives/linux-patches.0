@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021B54F93DB;
-	Wed, 30 Sep 2026 16:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEBE348896;
+	Wed, 30 Sep 2026 16:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787153; cv=none; b=TbaTc8OjIGcIw4DyxZ5Zocde+P4AmoBFqjAH0g7YhuTK/Ljvw0cLf/EohdIQhqxWjoEDMnAmUsd+3/WyqaacDMYqdTJmfhlAU2LI9eJGw59jnz4+qYeLYx++nySmB8bo7r4Ia5ORI+CaMZpqek9tmqKVqv2d9sKhCYtTRR1/wQc=
+	t=1790787156; cv=none; b=EbcS0yokcxsteUcHfLcOX0rWnSZXOzNtequbh7fKerQNE7+bcQuoZZ93YcuX0bEJdjH8TVqxm1R/lxhkcJaMUL43ZcvEF3z1dCcJVCeh7xabH3PhB1WeqoUCtb1U/rAU3nqi8+oRKaHebMzI/4CEzT1BG4eGKYYpc+TPWBUfIUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787153; c=relaxed/simple;
-	bh=zjjrvxABX5PXpJivJFuB6LAS2MRCaAAAmhj0GmzLwY0=;
+	s=arc-20240116; t=1790787156; c=relaxed/simple;
+	bh=3XUPFrbpUzYyWYWwrRW3rWM6Pg+BwN7oRkgmARdy5k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hvh3MsHSiLDJttn9tpikYoAx1MIMhG69wU1jB3FRhN+d2AgZdTmiUM+q7MDKUD7T2boRZi3oJ3nH1DnWtycCjxXk1p1Toz7C4GXUG8rYYMvqA3t1ZJld3ioJ7zpRkODUBGpAnIxZPzK0fINWw1XENftd+FwQr/jrkgrZwVuJ27c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVE39G0g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pjMP2SCJfkWutvkoKgdoCRVWo0qSAaWEKF6EQbSkPFpRbnHa5L55HEQ3acx3I18Bb5j1BDgw9oOS4GoTat/AhycwC0t0hVRmugDvSx3DR7QZQnHmMCj4ASFwHRH8b5wPe2g4mE5okw6Uzf4DG+WVdZms7MKw2q8hN+gioHoxpaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkuLCObE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVE39G0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BF01F000FF;
-	Wed, 30 Sep 2026 16:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkuLCObE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36ADF1F00898;
+	Wed, 30 Sep 2026 16:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787151;
-	bh=yh0suxmBeaOeSAnNzcHgcA8/ofIjRd2ot2QVPCJFvDU=;
+	s=korg; t=1790787154;
+	bh=aqCdhLICkJ9b5CPWTGUgbGW35yoHflqgkg3X64Ft9qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVE39G0gb2kwKcuQtwtS7jc86BnF+Ew60phoZhC/m13D5iWaUHcpIdW7abTXMDFlB
-	 962Jnxe4andWLnBjnCeY6YBg4IPrpW1omcWKkG1WEuLHlrbpC2H1oHX3DoLJVJcVnw
-	 jS1l/ylxjb+DOkNMfAwg9xE7w30P9I37KB7FpFGw=
+	b=JkuLCObEmzHB3ojnig9YR/SMhrSSnQrF6ly0/gn99vOf3eE8oT3jlRvXb3yzEjBgm
+	 6heGSSIjf0mHKndLE3GekFRuFIdqznRUXJnL9AzftWzDy3ADxGuyl2ySy/YXfnWZy7
+	 T7aGt209/xjKgEtfyFzy2o9jYOdWlg1cpJGhzmHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yunxiang <xyx2021@mail.ustc.edu.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 130/457] bpf: Reject non-negative offsets in stack_slot_obj_get_spi()
-Date: Wed, 30 Sep 2026 17:23:55 +0200
-Message-ID: <20260930152348.854636471@linuxfoundation.org>
+Subject: [PATCH 7.2 131/457] octeontx2-af: Fix memory scaling limitation in SR-IOV mode
+Date: Wed, 30 Sep 2026 17:23:56 +0200
+Message-ID: <20260930152348.876707159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,47 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 79a9172f3ab4ad8392c5e5c8944b9b7710ade620 ]
+[ Upstream commit d06f2ebf67ff2962fe00d687e4f0d4703eb41a12 ]
 
-bpf_get_spi() computes (-off - 1) / BPF_REG_SIZE using C division,
-which truncates toward zero. For off == 0, this produces spi 0, the
-same index used by the valid stack slot at fp-8.
+The original code used DMA_ATTR_FORCE_CONTIGUOUS, which could exhaust
+the CMA pool when a large number of VFs were requested.
 
-stack_slot_obj_get_spi() currently checks alignment and the resulting
-spi bounds, but does not reject the non-negative offset itself. It can
-therefore validate a PTR_TO_STACK register holding fp+0 against an
-iterator stored at fp-8 even though the runtime receives the actual fp+0
-pointer. An effectful iterator kfunc can then interpret memory outside
-the BPF stack as iterator state.
+Fix this by switching to the DMA streaming API. This is equivalent on
+Octeon platforms, which provide full I/O coherency via the SMMU.
 
-Reject non-negative offsets before converting the offset to an spi. All
-valid stack objects begin at a negative offset from the frame pointer.
-
-Fixes: 06accc8779c1 ("bpf: add support for open-coded iterator loops")
-Signed-off-by: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://lore.kernel.org/bpf/20260920210423.345636-2-xyx2021@mail.ustc.edu.cn
+Cc: Leon Romanovsky <leon@kernel.org>
+Fixes: 73d33dbc0723 ("octeontx2-af: Use DMA_ATTR_FORCE_CONTIGUOUS attribute in DMA alloc")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Leon Romanovsky <leon@kernel.org>
+Link: https://patch.msgid.link/20260916022111.1083017-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/marvell/octeontx2/af/common.h    | 45 ++++++++++++++++---
+ 1 file changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index dc1a9ef32b78e..cb523cc5465dd 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -582,7 +582,7 @@ static int stack_slot_obj_get_spi(struct bpf_verifier_env *env, struct bpf_reg_s
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/common.h b/drivers/net/ethernet/marvell/octeontx2/af/common.h
+index 779413a383b74..78e42549d9908 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/common.h
+@@ -7,6 +7,10 @@
+ #ifndef COMMON_H
+ #define COMMON_H
  
- 	off = reg->var_off.value;
--	if (off % BPF_REG_SIZE) {
-+	if (off >= 0 || off % BPF_REG_SIZE) {
- 		verbose(env, "cannot pass in %s at an offset=%d\n", obj_kind, off);
- 		return -EINVAL;
- 	}
++#include <linux/dma-mapping.h>
++#include <linux/gfp.h>
++#include <linux/mm.h>
++
+ #include "rvu_struct.h"
+ 
+ #define OTX2_ALIGN			128  /* Align to cacheline */
+@@ -44,6 +48,33 @@ struct qmem {
+ 	u32		qsize;
+ };
+ 
++static inline void *otx2_dma_alloc_coherent(struct device *dev, size_t size,
++					    dma_addr_t *dma_handle)
++{
++	dma_addr_t dma_addr;
++	void *vaddr;
++
++	vaddr = kzalloc(size, GFP_KERNEL);
++	if (!vaddr)
++		return NULL;
++
++	dma_addr = dma_map_single(dev, vaddr, size, DMA_BIDIRECTIONAL);
++	if (dma_mapping_error(dev, dma_addr)) {
++		kfree(vaddr);
++		return NULL;
++	}
++
++	*dma_handle = dma_addr;
++	return vaddr;
++}
++
++static inline void otx2_dma_free_coherent(struct device *dev, size_t size,
++					  void *vaddr, dma_addr_t dma_handle)
++{
++	dma_unmap_single(dev, dma_handle, size, DMA_BIDIRECTIONAL);
++	kfree(vaddr);
++}
++
+ static inline int qmem_alloc(struct device *dev, struct qmem **q,
+ 			     int qsize, int entry_sz)
+ {
+@@ -60,8 +91,11 @@ static inline int qmem_alloc(struct device *dev, struct qmem **q,
+ 
+ 	qmem->entry_sz = entry_sz;
+ 	qmem->alloc_sz = (qsize * entry_sz) + OTX2_ALIGN;
+-	qmem->base = dma_alloc_attrs(dev, qmem->alloc_sz, &qmem->iova,
+-				     GFP_KERNEL, DMA_ATTR_FORCE_CONTIGUOUS);
++
++	if (get_order(PAGE_ALIGN(qmem->alloc_sz)) > MAX_PAGE_ORDER)
++		return -ENOMEM;
++
++	qmem->base = otx2_dma_alloc_coherent(dev, qmem->alloc_sz, &qmem->iova);
+ 	if (!qmem->base)
+ 		return -ENOMEM;
+ 
+@@ -80,10 +114,9 @@ static inline void qmem_free(struct device *dev, struct qmem *qmem)
+ 		return;
+ 
+ 	if (qmem->base)
+-		dma_free_attrs(dev, qmem->alloc_sz,
+-			       qmem->base - qmem->align,
+-			       qmem->iova - qmem->align,
+-			       DMA_ATTR_FORCE_CONTIGUOUS);
++		otx2_dma_free_coherent(dev, qmem->alloc_sz,
++				       qmem->base - qmem->align,
++				       qmem->iova - qmem->align);
+ 	devm_kfree(dev, qmem);
+ }
+ 
 -- 
 2.53.0
 
