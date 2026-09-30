@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F47F3B42C0;
-	Wed, 30 Sep 2026 18:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C913B42C0;
+	Wed, 30 Sep 2026 18:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794286; cv=none; b=muesvBvW1/T4DiQ/BfnVrrfBoer378H+McX8lErSsR3wHYcE5PJ4eN8R0umw7JiK+bwlT+fz10yFctp+k3/L1faw4vq2ruT5wz0CzI4yj8aDdSK0bZUF8/gb561ge5IsH+sxU1zmG9iJhoaSXq8nhOJdPpLzQtkjnZ+Tj9UiuKE=
+	t=1790794289; cv=none; b=EvE+JVadw12zRTBdBpm1t3zkONyD2pSfHd8OqtDBKJDVVk+p3xPHcGDDccLphP6utSHKV79URwuLwl1bPEQCy+594Ny0hGbsnv0ViOgC8FrTqFGfj8pVQwykViBs/avaMQhnigqHyUGdqKs90Rc0XQ1WX8BYERJfeydCtivhBWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794286; c=relaxed/simple;
-	bh=yRtOUmWnlmarXq4wIxtb6xfcVA3/iPqYnKZHYkMYEOE=;
+	s=arc-20240116; t=1790794289; c=relaxed/simple;
+	bh=ao5XYmElVWLS5/n12bL+Yq6Z9zmmnKNwTMPrjYnmaVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb+dHbRIruDlh+hyH/O445LcDCDzvZy0rRQznDU4YFxZ/UnSYPhEprvUf3AEix2nNn62D/a9yXr/5bU6dl1q0LUobr5jt/A5wsfJD+1tKvHpc8TFkYjpmmXsskf7ok0ln6U+DgrZ7zc+Y+7S1+R8hsaNadLTNnXS+rBOZDfG0rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FX+VkqSQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8aRSRiPZeUddsq7YUiT8wmJFybrVBRjpgjUd6SAAmTfrmRHwaXiKY6dZtHeI5kKFvOmJ+iVaJLVzIVQbBJycxuu2FQgl9e58QGE3pFzHPsbEpNq/jL6MBpQ3OfmWaNGSQ4K3AAf2GtRr830uQ7HabCndWKd4oer82Oi2+BU3GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/Kprqlh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX+VkqSQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2AE1F000FF;
-	Wed, 30 Sep 2026 18:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/Kprqlh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B9C1F000FF;
+	Wed, 30 Sep 2026 18:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794285;
-	bh=abhk+0XppS6BDH8ICSlv7ugSsb/TxteS/RsLh4ByTL8=;
+	s=korg; t=1790794287;
+	bh=tmvGqy+uRAdfC4yioeokeaTMr2a758fOH3HKv+RwWQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FX+VkqSQXpyP22Df73lKABaHULbKZhEou8c2vPA7h4E3LpvUVnMakbhiG7lgPE42i
-	 bInFx/pgW08n+kl6ENQ9HqBaHEEbPT5QQen944fbGTk/WDfK1qTcVypn/etM60G0Gj
-	 KhAA7y6fMIw/SE9biz31S/up69BjANmaK87U1oNs=
+	b=a/KprqlhTUJ3PzT7B10eK5cQKabDg5QEWMDbmYVDX01uX2IGeIV0spSX5L6Jdk/Wz
+	 U19cyvsZJjWPY89k1wUflmvlXieOC6hUr+nDRyIEAu5cAHiADkSEoDwNTWVKq5AI4H
+	 LKDiGqfJqZYtW6qgB3Dq1twjE+XQPGnBh6IfuKyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0150/1193] wifi: ath11k: fix invalid data access in ath11k_dp_rx_h_undecap_nwifi
-Date: Wed, 30 Sep 2026 17:13:54 +0200
-Message-ID: <20260930152437.539758926@linuxfoundation.org>
+Subject: [PATCH 6.6 0159/1193] fs/ntfs3: validate index entry key bounds
+Date: Wed, 30 Sep 2026 17:14:03 +0200
+Message-ID: <20260930152437.732529587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,165 +51,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 6b471e9aefee9ed73278eb1141e0d8530a56fae9 ]
+[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
 
-In certain cases, hardware might provide packets with a
-length greater than the maximum native Wi-Fi header length.
-This can lead to accessing and modifying fields in the header
-within the ath11k_dp_rx_h_undecap_nwifi() function for the
-DP_RX_DECAP_TYPE_NATIVE_WIFI decap type and
-potentially result in invalid data access and memory corruption.
+[BUG]
+A malformed NTFS directory index entry can advertise a key_size larger
+than the bytes actually present in its NTFS_DE payload. Directory lookup
+then passes that malformed key to cmp_fnames(), which can read past the
+end of the kmalloc'ed index buffer.
 
-Kernel stack is corrupted in: ath11k_dp_rx_h_undecap+0x6b0/0x6b0 [ath11k]
-Call trace:
- ath11k_dp_rx_h_mpdu+0x0/0x2e8 [ath11k]
- ath11k_dp_rx_h_mpdu+0x1e0/0x2e8 [ath11k]
- ath11k_dp_rx_wbm_err+0x1e0/0x450 [ath11k]
- ath11k_dp_rx_process_wbm_err+0x2fc/0x460 [ath11k]
- ath11k_dp_service_srng+0x2e0/0x348 [ath11k]
+BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
+BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
+Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
 
-Add a sanity check before processing the SKB to prevent invalid
-data access in the undecap native Wi-Fi function for the
-DP_RX_DECAP_TYPE_NATIVE_WIFI decap type.
+Call Trace:
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xd1/0x650 mm/kasan/report.c:482
+ kasan_report+0xfb/0x140 mm/kasan/report.c:595
+ __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
+ fname_full_size fs/ntfs3/ntfs.h:590 [inline]
+ cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
+ hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
+ indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
+ dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
+ ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
+ __lookup_slow+0x241/0x450 fs/namei.c:1816
+ lookup_slow fs/namei.c:1833 [inline]
+ walk_component+0x31c/0x570 fs/namei.c:2151
+ link_path_walk+0x592/0xd60 fs/namei.c:2519
+ path_lookupat+0x138/0x660 fs/namei.c:2675
+ filename_lookup+0x1f3/0x560 fs/namei.c:2705
+ filename_setxattr+0xad/0x1c0 fs/xattr.c:660
+ path_setxattrat+0x1d8/0x280 fs/xattr.c:713
+ __do_sys_lsetxattr fs/xattr.c:754 [inline]
+ __se_sys_lsetxattr fs/xattr.c:750 [inline]
+ __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
+ ...
 
-This adapted from the discussion/patch of the ath12k driver [1].
+Allocated by task 9279:
+ kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
+ kasan_save_track+0x14/0x40 mm/kasan/common.c:77
+ kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
+ poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
+ __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
+ kasan_kmalloc include/linux/kasan.h:262 [inline]
+ __do_kmalloc_node mm/slub.c:5650 [inline]
+ __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
+ kmalloc_noprof include/linux/slab.h:961 [inline]
+ indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
+ indx_find+0x447/0x900 fs/ntfs3/index.c:1179
+ dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
+ ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
+ __lookup_slow+0x241/0x450 fs/namei.c:1816
+ lookup_slow fs/namei.c:1833 [inline]
+ walk_component+0x31c/0x570 fs/namei.c:2151
+ link_path_walk+0x592/0xd60 fs/namei.c:2519
+ path_lookupat+0x138/0x660 fs/namei.c:2675
+ filename_lookup+0x1f3/0x560 fs/namei.c:2705
+ filename_setxattr+0xad/0x1c0 fs/xattr.c:660
+ path_setxattrat+0x1d8/0x280 fs/xattr.c:713
+ __do_sys_lsetxattr fs/xattr.c:754 [inline]
+ __se_sys_lsetxattr fs/xattr.c:750 [inline]
+ __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
+ ...
 
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-04685-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+[CAUSE]
+The index-header validators only validated INDEX_HDR-level geometry.
+They did not walk each NTFS_DE to verify entry alignment, subnode
+layout, or that key_size fit inside the entry payload. They also
+allowed a last sentinel entry to carry a non-zero key_size.
 
-Link: https://lore.kernel.org/linux-wireless/20250211090302.4105141-1-tamizh.raja@oss.qualcomm.com/ # [1]
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260512022351.2033155-2-miaoqing.pan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[FIX]
+Walk every NTFS_DE in ntfs3's index-header validators and reject
+entries with invalid layout, mismatched subnode state, oversized
+key_size, or non-zero sentinel keys before lookup or log replay can
+consume them.
+
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 50 +++++++++++++++++++++++--
- 1 file changed, 47 insertions(+), 3 deletions(-)
+ fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
+ fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 56 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 7e9a5de2776c6..b5def3cfcad35 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2504,6 +2504,29 @@ static void ath11k_dp_rx_deliver_msdu(struct ath11k *ar, struct napi_struct *nap
- 	ieee80211_rx_napi(ar->hw, pubsta, msdu, napi);
- }
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index c293e09881626..cd40a4ddc53d7 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2641,11 +2641,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
  
-+static bool ath11k_dp_rx_check_nwifi_hdr_len_valid(struct ath11k_base *ab,
-+						   struct hal_rx_desc *rx_desc,
-+						   struct sk_buff *msdu)
-+{
-+	struct ieee80211_hdr *hdr;
-+	u8 decap_type;
-+	u32 hdr_len;
-+
-+	decap_type = ath11k_dp_rx_h_msdu_start_decap_type(ab, rx_desc);
-+	if (decap_type != DP_RX_DECAP_TYPE_NATIVE_WIFI)
-+		return true;
-+
-+	hdr = (struct ieee80211_hdr *)msdu->data;
-+	hdr_len = ieee80211_hdrlen(hdr->frame_control);
-+
-+	if (likely(hdr_len <= DP_MAX_NWIFI_HDR_LEN))
-+		return true;
-+
-+	ab->soc_stats.invalid_rbm++;
-+	WARN_ON_ONCE(1);
-+	return false;
-+}
-+
- static int ath11k_dp_rx_process_msdu(struct ath11k *ar,
- 				     struct sk_buff *msdu,
- 				     struct sk_buff_head *msdu_list,
-@@ -2574,6 +2597,11 @@ static int ath11k_dp_rx_process_msdu(struct ath11k *ar,
+ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
+ {
++	const bool has_subnode = hdr_has_subnode(hdr);
+ 	__le16 mask;
+ 	u32 min_de, de_off, used, total;
+ 	const struct NTFS_DE *e;
+ 
+-	if (hdr_has_subnode(hdr)) {
++	if (has_subnode) {
+ 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
+ 		mask = NTFS_IE_HAS_SUBNODES;
+ 	} else {
+@@ -2662,20 +2663,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
+ 		return false;
+ 	}
+ 
+-	e = Add2Ptr(hdr, de_off);
++	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
+ 	for (;;) {
+ 		u16 esize = le16_to_cpu(e->size);
+-		struct NTFS_DE *next = Add2Ptr(e, esize);
++		u16 key_size = le16_to_cpu(e->key_size);
++		u16 data_size;
+ 
+-		if (esize < min_de || PtrOffset(hdr, next) > used ||
++		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
+ 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
+ 			return false;
  		}
+ 
+-		if (de_is_last(e))
++		if (size_add(de_off, esize) > used)
++			return false;
++
++		if (de_is_last(e)) {
++			if (key_size)
++				return false;
++
+ 			break;
++		}
++
++		data_size = esize - min_de;
++		if (key_size > data_size)
++			return false;
+ 
+-		e = next;
++		de_off += esize;
++		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
  	}
  
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ab, rx_desc, msdu))) {
-+		ret = -EINVAL;
-+		goto free_out;
-+	}
-+
- 	ath11k_dp_rx_h_ppdu(ar, rx_desc, rx_status);
- 	ath11k_dp_rx_h_mpdu(ar, msdu, rx_desc, rx_status);
+ 	return true;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 1e468cddb3374..25707c87fa363 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
+  */
+ static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
+ {
++	const bool has_subnode = hdr_has_subnode(hdr);
++	const u16 min_size = sizeof(struct NTFS_DE) +
++			     (has_subnode ? sizeof(u64) : 0);
+ 	u32 end = le32_to_cpu(hdr->used);
+ 	u32 tot = le32_to_cpu(hdr->total);
+ 	u32 off = le32_to_cpu(hdr->de_off);
++	const struct NTFS_DE *e;
  
-@@ -3314,6 +3342,12 @@ static int ath11k_dp_rx_h_verify_tkip_mic(struct ath11k *ar, struct ath11k_peer
- 		    RX_FLAG_IV_STRIPPED | RX_FLAG_DECRYPTED;
- 	skb_pull(msdu, hal_rx_desc_sz);
- 
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ar->ab, rx_desc,
-+							     msdu))) {
-+		dev_kfree_skb_any(msdu);
-+		return -EINVAL;
-+	}
-+
- 	ath11k_dp_rx_h_ppdu(ar, rx_desc, rxs);
- 	ath11k_dp_rx_h_undecap(ar, msdu, rx_desc,
- 			       HAL_ENCRYPT_TYPE_TKIP_MIC, rxs, true);
-@@ -4006,6 +4040,10 @@ static int ath11k_dp_rx_h_null_q_desc(struct ath11k *ar, struct sk_buff *msdu,
- 		skb_put(msdu, hal_rx_desc_sz + l3pad_bytes + msdu_len);
- 		skb_pull(msdu, hal_rx_desc_sz + l3pad_bytes);
+ 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
+-	    size_add(off, sizeof(struct NTFS_DE)) > end) {
++	    size_add(off, min_size) > end) {
+ 		/* incorrect index buffer. */
+ 		return false;
  	}
-+
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ar->ab, desc, msdu)))
-+		return -EINVAL;
-+
- 	ath11k_dp_rx_h_ppdu(ar, desc, status);
  
- 	ath11k_dp_rx_h_mpdu(ar, msdu, desc, status);
-@@ -4050,7 +4088,7 @@ static bool ath11k_dp_rx_h_reo_err(struct ath11k *ar, struct sk_buff *msdu,
- 	return drop;
++	/* Ensure every key stays inside its entry before lookup walks it. */
++	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
++	for (;;) {
++		u16 e_size = le16_to_cpu(e->size);
++		u16 key_size = le16_to_cpu(e->key_size);
++		u16 data_size;
++
++		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
++		    de_has_vcn(e) != has_subnode) {
++			/* incorrect index entry. */
++			return false;
++		}
++
++		if (size_add(off, e_size) > end)
++			return false;
++
++		if (de_is_last(e)) {
++			if (key_size)
++				return false;
++
++			break;
++		}
++
++		data_size = e_size - min_size;
++		if (key_size > data_size)
++			return false;
++
++		off += e_size;
++		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
++	}
++
+ 	return true;
  }
  
--static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
-+static bool ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 					struct ieee80211_rx_status *status)
- {
- 	u16 msdu_len;
-@@ -4058,6 +4096,7 @@ static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 	u8 l3pad_bytes;
- 	struct ath11k_skb_rxcb *rxcb = ATH11K_SKB_RXCB(msdu);
- 	u32 hal_rx_desc_sz = ar->ab->hw_params.hal_desc_sz;
-+	struct ath11k_base *ab = ar->ab;
- 
- 	rxcb->is_first_msdu = ath11k_dp_rx_h_msdu_end_first_msdu(ar->ab, desc);
- 	rxcb->is_last_msdu = ath11k_dp_rx_h_msdu_end_last_msdu(ar->ab, desc);
-@@ -4067,6 +4106,9 @@ static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 	skb_put(msdu, hal_rx_desc_sz + l3pad_bytes + msdu_len);
- 	skb_pull(msdu, hal_rx_desc_sz + l3pad_bytes);
- 
-+	if (unlikely(!ath11k_dp_rx_check_nwifi_hdr_len_valid(ab, desc, msdu)))
-+		return true;
-+
- 	ath11k_dp_rx_h_ppdu(ar, desc, status);
- 
- 	status->flag |= (RX_FLAG_MMIC_STRIPPED | RX_FLAG_MMIC_ERROR |
-@@ -4074,19 +4116,21 @@ static void ath11k_dp_rx_h_tkip_mic_err(struct ath11k *ar, struct sk_buff *msdu,
- 
- 	ath11k_dp_rx_h_undecap(ar, msdu, desc,
- 			       HAL_ENCRYPT_TYPE_TKIP_MIC, status, false);
-+
-+	return false;
- }
- 
- static bool ath11k_dp_rx_h_rxdma_err(struct ath11k *ar,  struct sk_buff *msdu,
- 				     struct ieee80211_rx_status *status)
- {
- 	struct ath11k_skb_rxcb *rxcb = ATH11K_SKB_RXCB(msdu);
--	bool drop = false;
-+	bool drop;
- 
- 	ar->ab->soc_stats.rxdma_error[rxcb->err_code]++;
- 
- 	switch (rxcb->err_code) {
- 	case HAL_REO_ENTR_RING_RXDMA_ECODE_TKIP_MIC_ERR:
--		ath11k_dp_rx_h_tkip_mic_err(ar, msdu, status);
-+		drop = ath11k_dp_rx_h_tkip_mic_err(ar, msdu, status);
- 		break;
- 	default:
- 		/* TODO: Review other rxdma error code to check if anything is
 -- 
 2.53.0
 
