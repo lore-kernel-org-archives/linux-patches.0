@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A08385D97;
-	Wed, 30 Sep 2026 15:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCA04FECE0;
+	Wed, 30 Sep 2026 15:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783150; cv=none; b=SfPctVbcsfeSRZnUhD8x8jtFv0EkU22IxSyNtzG5iBQdOizwYNADaRKhjxzG3aYkls+jPmlRcW4HIEy8HiujXaiIVj+/V7HynSAg4TQOyUkYTgl1pB10e0HGmLoxB3+E+mHQIVATyxAtdso3L7cMaEdNEvd3jqyPmgpzsJGSU90=
+	t=1790783155; cv=none; b=sBsfKKnUhUp8Kq+dBoGyqCE9UARuqwysRXrEPaOPWfG9voqinDjcVDuhvyOi5a5leL7bkZQamsgu8SKSZ6pWM17o2hQzBl6K9xdQb8uw1G2jcEd+YH2ilbx1DfHAk3vfIDq2RckAHbQnwQAIczJbWLxPwzr9ouHwalwmTOwdXsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783150; c=relaxed/simple;
-	bh=NgJrgScMf6JGBV3j/0HnKsuOy4oWswdp2hHKf/kIeJ4=;
+	s=arc-20240116; t=1790783155; c=relaxed/simple;
+	bh=UXta+D97hSECDVr5agHzoB7KghSBAoEfY2wJyt5MM4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDk+Jn7eQv/k+BKn3G9N3ZPUeRTuz5zY8NIJiJ4S6ZKYxYd1+nTodD3lYXaQ9k9QTRitxJo9+bN6zm5D2kYR4U3pMQqnUrJ7pSJYX1P6YuMnKGjYbq/o0+4sFomO0/J7dVpop6LWmYKwv3XOyXxB5XlZ1s0k3t3IruVoGrn1z5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqJHUc4k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XwcQH5cBK73Tlu/wYe4ZV4OGDx3jQg7YatfulI058IJGlHVOCUplx2fX8jUTKAeNJ5IP5frYNJNUB9YSy4sfX6+KrsovrzMgr3EE4OzTawpmNVdnFuZ7jrwFZN/TK+kcJsKVoF8jckPNgg/bVvTyhT82I8s65nzveAfZbVVefzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+40Mbfp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqJHUc4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600681F00899;
-	Wed, 30 Sep 2026 15:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+40Mbfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0311F000FF;
+	Wed, 30 Sep 2026 15:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783145;
-	bh=Vo1GNVA91fH9nroQYCepwCUMzM0WiV2Jyxhzs379H9A=;
+	s=korg; t=1790783148;
+	bh=foAHT7YSaixLnoXUwDY7NfFRqqrjSqnW8ITH2aF0W8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqJHUc4kmCCvRPzraVVyt3Xgmxm6de0qH2B/cKG/BcIby1+lV2PleBa5wvjjk7yTA
-	 mUT6lZJ/zpjefZHcH9mVkLX/JIjwpi+DN16sMFvd63fNc6xE1sbbEc7F+L5x+/VYh3
-	 +SIUwIKSTLN2Q0tBcs0eAcnWce1LRmYwNBjS/Wec=
+	b=G+40MbfpdL5EeqmykwtnSFy/l2JIeqE0gzTp8wTF66tzpKGCnrWBXEiiFruQ3D91n
+	 P6XTisKPe0cTq2j0EgrkddgRj0PZB2BLUQHuhD9ZwPFFD4EfOq86trYRww9OXdNzHS
+	 tsKjKisFn/pggk34CHOfq6bYYHmMeNZbNjqizQqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 259/595] netfilter: nfnetlink_log: cope with concurrent instance destruction
-Date: Wed, 30 Sep 2026 17:22:32 +0200
-Message-ID: <20260930152353.278672596@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 295/595] tracing: Free histogram the var ref when its initialization fails
+Date: Wed, 30 Sep 2026 17:23:08 +0200
+Message-ID: <20260930152354.039091559@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,64 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 387d744fa7e499d2c3748a4e60e02ebb24e7fb16 ]
+commit 516001d53e6b2ea95a251ee2ef54a1a689a3fd58 upstream.
 
-Instances are refcounted. However, only memory release happens on the
-1 -> 0 transition; the unlink from hashes can occur with any refcount.
+create_var_ref() allocates a VAR_REF hist_field and then calls
+init_var_ref() to fill it in. When that fails the field is leaked.
 
-Uncooperative userspace can force a situation where a queue is pending
-for destruction from netlink event while a different socket with same
-portid processes an UNBIND request.
+commit 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy
+var_refs") made destroy_hist_field() return early for
+HIST_FIELD_FL_VAR_REF, since var refs are freed by walking the trigger's
+var_refs[] array instead. create_var_ref() adds the field to that array
+only after init_var_ref() has succeeded, so on this path the field is in
+neither place and nothing frees it. The call was correct when it was
+written, before var refs were taken out of destroy_hist_field().
 
-With right timing, this will unhash the instance again:
+init_var_ref() cannot free it either. The caller owns the field, so
+init_var_ref() undoes only its own string allocations and leaves the
+field alone. Freeing it there would leave create_var_ref() passing freed
+memory to destroy_hist_field(), which reads its flags.
 
-Oops: general protection fault, [..]
-Call Trace:
- <TASK>
- nfulnl_recv_config+0x31a/0xd50
- nfnetlink_rcv_msg+0x7c2/0xeb0
+Call __destroy_hist_field(), which frees the field without consulting
+the flag.
 
-Fixes: 0597f2680d66 ("[NETFILTER]: Add new "nfnetlink_log" userspace packet logging facility")
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260906133352.3815019-1-donggeunyoo.kernel@gmail.com
+Fixes: 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy var_refs")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nfnetlink_log.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index 8c967bd772ec3..042d417eb5ec0 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -213,13 +213,18 @@ static void __nfulnl_flush(struct nfulnl_instance *inst);
- static void
- __instance_destroy(struct nfulnl_instance *inst)
- {
-+	spin_lock(&inst->lock);
-+	if (inst->copy_mode == NFULNL_COPY_DISABLED) {
-+		/* attempt to UNBIND a queue already pending
-+		 * destruction via netlink close event. Ignore.
-+		 */
-+		spin_unlock(&inst->lock);
-+		return;
-+	}
-+
- 	/* first pull it out of the global list */
- 	hlist_del_rcu(&inst->hlist);
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1853,7 +1853,7 @@ static struct hist_field *create_var_ref
+ 	ref_field = create_hist_field(var_field->hist_data, NULL, flags, NULL);
+ 	if (ref_field) {
+ 		if (init_var_ref(ref_field, var_field, system, event_name)) {
+-			destroy_hist_field(ref_field, 0);
++			__destroy_hist_field(ref_field);
+ 			return NULL;
+ 		}
  
--	/* then flush all pending packets from skb */
--
--	spin_lock(&inst->lock);
--
- 	/* lockless readers wont be able to use us */
- 	inst->copy_mode = NFULNL_COPY_DISABLED;
- 
--- 
-2.53.0
-
 
 
