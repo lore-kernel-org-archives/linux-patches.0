@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA6C34D916;
-	Wed, 30 Sep 2026 16:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7B94F30C3;
+	Wed, 30 Sep 2026 16:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785238; cv=none; b=SVXV9pw44+q3T83+h99fkZsbfxqw6gMNBs/XSeQOdNCPLxLKyyc7FYN8pZAYrLcptNPrtS+6kEozy0b3FcewaIk2FTwYmQa0KmsR7AJ4lQv1fVIj5zDy4Oz8KGx620cW9o+ZVes+olhcpP8RY8Nk0jKL8aS+rG/rIvMQ3Y73DZI=
+	t=1790785241; cv=none; b=gOR+fB5a2flzx8CoWrT5Fez6Js7GbZuN9Eyau+NJlFZJT2oU7LQB2Ov0i1I2ieOV5TKUS5XzCQhR9gHSvtrTcsRXdj9Y/+KtN3lI4y9cBEpIYfdMZmTUO4XSeL9adkyxiW99BLr/5bDmRpSG1I9qKDfWXmq8akYQlBqHNHL0OPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785238; c=relaxed/simple;
-	bh=xiwUNLiRoWPJbB3e4C8jHEM8/QcivLcPw09N11/nsnU=;
+	s=arc-20240116; t=1790785241; c=relaxed/simple;
+	bh=KDYcpYYBo7W6m43BjobCyST7pF6FUeSsnpaDlaShkhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z95REIeTUPVzVSLDWYb2GC7rt4SYmOCL7/OMRzFDY5CxfSv7BCqUocfjGlZaeg6Snc5KOddb3FROTwZN9D4h5RGiKdjqNvc3aUgI/Jhh6leFwlAhlsft7HyvF/yBqm5YhTSgtalEJ1P4GMgtvsNtKLH18Vaeel0x62+QHWLUS5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyF3LKGA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pi6jAAo8t0mzYixhWVKoEXs9L6oNhw29iiftviriRRg/jqqF5jweCbJa2Pn2rMK5c1LQm4ZB0l+oNWLgVISQtxV4CGAZz4DxuvfcAKlINwRvV5iYSDZRANB19fBv01WRMYotvccIe6vXkLISgbxLg0nzhj+SNT4ZfELCGgxJXUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iiAXq479; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyF3LKGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5D21F00893;
-	Wed, 30 Sep 2026 16:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiAXq479"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE11C1F000FF;
+	Wed, 30 Sep 2026 16:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785234;
-	bh=p0rjfDMp2Bo2duXFHJ5ceLxFOwNZ+VmQgepuHvN0k5c=;
+	s=korg; t=1790785237;
+	bh=p2bX/0a7WT69hXHZHKr2cusN8kYGDgkIIZIR0PnoURM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hyF3LKGAMrg6QbDHnSsoJqBo9AFGQL72iCxCVelHC3wEI1MAjHY4jJa9XG4UuS2k3
-	 /qzUtQ24/B+R1N7AHlPvvpX1heE97RtEuthQpsnB8BxeBlfsLWTVOWMOhMHBMm2USk
-	 1VmQE5dJfejDRsJhUd4uIefXXEi2VUFRpO1H+rP4=
+	b=iiAXq479hWNxk07QClBZZGOM9gL3BdFDmGpiTGWAY+cop4RM1++ewcIZpwfSeq4Gh
+	 N4kzs5rBuJpzoJUwT3x2dSVkqYpj0BQ0LkJJUBDInB8xbxe1GUIg6BrJUhipK4lUXV
+	 BI4+WWgcOKtf7UzlVfj5UeJ+0OX2E7Y5AXqppB1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/982] bpf: Fix NULL-ptr-deref when showing a void BTF type
-Date: Wed, 30 Sep 2026 17:18:56 +0200
-Message-ID: <20260930152425.401536878@linuxfoundation.org>
+Subject: [PATCH 6.1 436/982] netfilter: nfnetlink_log: cope with concurrent instance destruction
+Date: Wed, 30 Sep 2026 17:19:32 +0200
+Message-ID: <20260930152426.159718414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,67 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 4ea508b9ebd78bce7f212166d2e2cba66b875f08 ]
+[ Upstream commit 387d744fa7e499d2c3748a4e60e02ebb24e7fb16 ]
 
-btf_modifier_show() resolves the modifier and then calls
-btf_type_ops(t)->show() unconditionally. For the void type (type_id 0,
-BTF_KIND_UNKN) kind_ops[] has no entry, so ->show is NULL.
+Instances are refcounted. However, only memory release happens on the
+1 -> 0 transition; the unlink from hashes can occur with any refcount.
 
-A "const void" (a modifier resolving to void) cannot be a map key or
-value - map_check_btf() rejects it because void has no size - so the map
-dump path does not reach it. But bpf_snprintf_btf() takes a type_id
-straight from the BPF program, and passing such a "const void" from the
-vmlinux BTF NULL-derefs:
+Uncooperative userspace can force a situation where a queue is pending
+for destruction from netlink event while a different socket with same
+portid processes an UNBIND request.
 
-KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
-RIP: 0010:btf_modifier_show (kernel/bpf/btf.c:2914)
+With right timing, this will unhash the instance again:
+
+Oops: general protection fault, [..]
 Call Trace:
  <TASK>
- btf_type_show (kernel/bpf/btf.c:8251)
- btf_type_snprintf_show (kernel/bpf/btf.c:8321)
- bpf_snprintf_btf (kernel/trace/bpf_trace.c:1047)
- bpf_prog_test_run_raw_tp (net/bpf/test_run.c:829)
- __sys_bpf (kernel/bpf/syscall.c:4804)
- do_syscall_64 (arch/x86/entry/syscall_64.c:94)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
+ nfulnl_recv_config+0x31a/0xd50
+ nfnetlink_rcv_msg+0x7c2/0xeb0
 
-Fall back to btf_df_show() when the resolved type has no show op; it
-emits the "<unsupported kind:N>" placeholder already used for kinds like
-FWD and FUNC. bpf_snprintf_btf() then returns the length as usual.
-
-Fixes: c4d0bfb45068 ("bpf: Add bpf_snprintf_btf helper")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260901104924.346187-3-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0597f2680d66 ("[NETFILTER]: Add new "nfnetlink_log" userspace packet logging facility")
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/netfilter/nfnetlink_log.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index d9f6ad515d890..da85fc671023c 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -2668,7 +2668,14 @@ static void btf_modifier_show(const struct btf *btf,
- 	else
- 		t = btf_type_skip_modifiers(btf, type_id, NULL);
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index d3c43897250a5..60c73d3188896 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -218,13 +218,18 @@ static void __nfulnl_flush(struct nfulnl_instance *inst);
+ static void
+ __instance_destroy(struct nfulnl_instance *inst)
+ {
++	spin_lock(&inst->lock);
++	if (inst->copy_mode == NFULNL_COPY_DISABLED) {
++		/* attempt to UNBIND a queue already pending
++		 * destruction via netlink close event. Ignore.
++		 */
++		spin_unlock(&inst->lock);
++		return;
++	}
++
+ 	/* first pull it out of the global list */
+ 	hlist_del_rcu(&inst->hlist);
  
--	btf_type_ops(t)->show(btf, t, type_id, data, bits_offset, show);
-+	/*
-+	 * A modifier can resolve to void, which has no show op; print a
-+	 * placeholder rather than dereferencing NULL.
-+	 */
-+	if (!btf_type_ops(t))
-+		btf_df_show(btf, t, type_id, data, bits_offset, show);
-+	else
-+		btf_type_ops(t)->show(btf, t, type_id, data, bits_offset, show);
- }
+-	/* then flush all pending packets from skb */
+-
+-	spin_lock(&inst->lock);
+-
+ 	/* lockless readers wont be able to use us */
+ 	inst->copy_mode = NFULNL_COPY_DISABLED;
  
- static void btf_var_show(const struct btf *btf, const struct btf_type *t,
 -- 
 2.53.0
 
