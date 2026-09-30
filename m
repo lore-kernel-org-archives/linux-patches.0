@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFA352BE3E;
-	Wed, 30 Sep 2026 17:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA804DDB2B;
+	Wed, 30 Sep 2026 17:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789398; cv=none; b=r6BGl5RodtxBj5/HszVxgtSQiduDnNNNMhtD6/X/3BUI/bY+O8ekLmZXjNvlCKTfwzHWisrA/JgcQhXacj0fTXTIrpAKbljjVx1lDHujM1EqJ5FJV+WcEBBf3fG/LWVjjezTA933KZS/pGPQAXtc6ORFWBQi9tD3d1OttrzOwAg=
+	t=1790789401; cv=none; b=uwlPCskHi7bKx9E6i7ilD/v3CPvrKAvvFfo9DD+pSO2DW+iJNX//utx6tGeG390Vl2q3LOtL4dlM5yiIMK4+d30fklmDU+BD1BEsgYEnmDW5SMPrpU7gSZDuQJ/s+hkyKomfhW/ZQ8LKjD63YB+11RZ7v4BX6sVNL5HwTbZZHx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789398; c=relaxed/simple;
-	bh=//tgjwXKx1oaHZpJUeTi1peszXR4OefzQ23dGhE4VJc=;
+	s=arc-20240116; t=1790789401; c=relaxed/simple;
+	bh=wfLM/0KoWUNvKhbshKrkNlY9YViMwhvErcsITdK3E1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLlhXRQn+hkMmv/WJ66dD+MbdQv9eVELOQ8o1rqCfcbPQDZyNy0kmaUKwyMSpa6RS2lU6gVsAjOqmlEmbZY56xM0dlUgQvFTQUypDsLf03FsVm95+2Cbq9JohK4b6nIdhuFdWSq3pobNxnggWjhHLIs3epwbKX+Om9u6uw0/iHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciCRBUGV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvqOqQ/KYUXMh5dFVh+6+goJepR9ccWT6C96oCvHGIWMndxYLBG0iYEAxrPM0AewbjnUTseaazhFFb3+h6q2e8Q7n2EHViPsvCUEDKKfgj8os6L1+UaRrS7+RdmDXMARU6DNZ/oQemOHQUg/PxedXZ7duJIVgNbaZnKyo3i6w6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGjkEd9v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciCRBUGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671DB1F000FF;
-	Wed, 30 Sep 2026 17:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGjkEd9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2EB1F00898;
+	Wed, 30 Sep 2026 17:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789396;
-	bh=f2NRL8n3VOKoLP7lMOzS7vOAJ0x3JTaGjamrYs5jOMI=;
+	s=korg; t=1790789399;
+	bh=JUkFfZiJppFrUxI1gwDV979y/wKs7rzF7li1oA67o34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ciCRBUGVOOob1gqRkPby2lalLNR1wKFpmwKGdHBHX9Dj8OOh6FKkDMHKNcR8vPsx0
-	 xwsTs0ALm6CGcqrvo49YXdqWpiMObDjc9H3bp/eV97ScqY/K2FNIrLZY4xVWtRibi+
-	 jYVHMrFtj6uE+07J6tm9bAjgZLXaJOwGQM/yHpRU=
+	b=dGjkEd9vdig36KyvQ3u0WXmELi20CxE2sESWK3MMHy1dvzv9RvgoXUzs9/kpdBA2+
+	 WdDhySwog0E8vnamTX6xABExMShEFO+KOzTLN3l11afAS8XFRb0kTtWrwZkim8D1dR
+	 11DYUvBcw7mKz/567wmxhy7ssgnzFNklRODaTrMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 464/877] cgroup/pids: Restore pids.events notifications in local mode
-Date: Wed, 30 Sep 2026 17:22:55 +0200
-Message-ID: <20260930152424.688564992@linuxfoundation.org>
+	Hui Peng <benquike@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 465/877] fou: reject omitted FOU_ATTR_IPPROTO on FOU_ENCAP_DIRECT
+Date: Wed, 30 Sep 2026 17:22:56 +0200
+Message-ID: <20260930152424.709953917@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Hui Peng <benquike@gmail.com>
 
-commit 1765a153d985c231357145e26798f9408db10e42 upstream.
+commit d22609f3d13fc5baacd92c222731b03c593401db upstream.
 
-A fork rejected by the pids controller increments the counter reported by
-pids.events. When local event accounting is selected, however, pids_event()
-returns after notifying only events_local_file, leaving pids.events pollers
-asleep.
+Commit 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.") added
+NLA_POLICY_MIN(NLA_U8, 1) to fou_nl_policy[FOU_ATTR_IPPROTO], which
+rejects an explicitly supplied FOU_ATTR_IPPROTO == 0 attribute with
+-ERANGE.
 
-On legacy hierarchies, pids.events.local does not exist. With
-pids_localevents, pids.events reports the same local counter. In both
-cases, pids.events changes without generating a notification.
+However, FOU_ATTR_IPPROTO is an optional netlink attribute. When a user
+sends FOU_CMD_ADD with FOU_ATTR_TYPE set to FOU_ENCAP_DIRECT and omits
+FOU_ATTR_IPPROTO entirely, nla_policy validation succeeds and
+parse_nl_config() leaves cfg->protocol as 0 (from memset(cfg, 0,
+sizeof(*cfg))). fou_create() then creates a FOU_ENCAP_DIRECT socket with
+fou->protocol == 0.
 
-This can be reproduced with a pids_localevents mount:
+In fou_udp_recv(), returning -fou->protocol to udp_queue_rcv_one_skb()
+triggers IP protocol resubmission when fou->protocol > 0, whereas
+returning 0 tells the UDP tunnel layer that the skb was consumed without
+freeing it. When fou->protocol == 0, every packet received on the socket
+returns 0 from fou_udp_recv() and leaks the sk_buff.
 
-    mkdir /tmp/test
-    mount -t cgroup2 -o pids_localevents none /tmp/test
-    mkdir /tmp/test/t
-    echo 1 > /tmp/test/t/pids.max
-    cat /tmp/test/t/pids.events                 # max 0
-    timeout 3 inotifywait -e modify /tmp/test/t/pids.events &
-    sh -c 'echo $$ > /tmp/test/t/cgroup.procs; (true &)' 2>/dev/null
-    wait
-    cat /tmp/test/t/pids.events                 # max 1
+Reject FOU_ENCAP_DIRECT when !cfg->protocol in fou_create() so that
+creating a direct encapsulation port without FOU_ATTR_IPPROTO fails with
+-EINVAL while leaving FOU_CMD_DEL and FOU_CMD_GET (which share
+parse_nl_config()) unaffected.
 
-Without this patch, inotifywait times out without reporting an event.
-Notify pids.events before returning from the local event path.
+Tested in QEMU against Linux 7.3.0-rc3 by sending a FOU_CMD_ADD Generic
+Netlink request with FOU_ATTR_PORT = 5555 and FOU_ATTR_TYPE =
+FOU_ENCAP_DIRECT while omitting FOU_ATTR_IPPROTO. On the unfixed kernel,
+FOU_CMD_ADD succeeds (err = 0), FOU_CMD_GET reports fou->type = 1 and
+fou->protocol = 0, and sending 4000 UDP packets to 127.0.0.1:5555 leaks
+all 4000 sk_buffs (SUnreclaim in /proc/meminfo grows from 41456 kB to
+59008 kB, +17552 kB); with this patch applied, FOU_CMD_ADD is rejected
+with -EINVAL (-22).
 
-Fixes: 3f26a885a068 ("cgroup/pids: Add pids.events.local")
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
+Fixes: 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260921045920.1613098-1-benquike@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/pids.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/fou_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/cgroup/pids.c b/kernel/cgroup/pids.c
-index ecbb839d2acb..78cdc0558d0c 100644
---- a/kernel/cgroup/pids.c
-+++ b/kernel/cgroup/pids.c
-@@ -253,6 +253,11 @@ static void pids_event(struct pids_cgroup *pids_forking,
- 	}
- 	if (!cgroup_subsys_on_dfl(pids_cgrp_subsys) ||
- 	    cgrp_dfl_root.flags & CGRP_ROOT_PIDS_LOCAL_EVENTS) {
-+		/*
-+		 * pids.events reports the local counter on legacy hierarchies
-+		 * and when pids_localevents is enabled.
-+		 */
-+		cgroup_file_notify(&p->events_file);
- 		cgroup_file_notify(&p->events_local_file);
- 		return;
- 	}
--- 
-2.55.0
-
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -607,6 +607,10 @@ static int fou_create(struct net *net, s
+ 	/* Initial for fou type */
+ 	switch (cfg->type) {
+ 	case FOU_ENCAP_DIRECT:
++		if (!cfg->protocol) {
++			err = -EINVAL;
++			goto error;
++		}
+ 		tunnel_cfg.encap_rcv = fou_udp_recv;
+ 		tunnel_cfg.gro_receive = fou_gro_receive;
+ 		tunnel_cfg.gro_complete = fou_gro_complete;
 
 
