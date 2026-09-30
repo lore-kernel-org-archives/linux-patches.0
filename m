@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7697D4E77FD;
-	Wed, 30 Sep 2026 18:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F414DEC26;
+	Wed, 30 Sep 2026 18:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792548; cv=none; b=nvHiLRRSf/zKtZHdYPi7W65wZxCKuyRCNqYtr/9PVAK4UX6JKpkL6wtBJQH4R88ki4s1SPa5vWhSwY43d/uJNiPhcgJPURwIIX0DfQiRYHSVNK53tKDCKu3X4ir/nluAOn0O/B5VB+PYRTR4NkXMDQa3Fa6mmh9lsD5wEyw9d+k=
+	t=1790792549; cv=none; b=F/omx/WRiRF6uU2+A3QNxCR16H82BC6POOZypIcuZC2PAG0saEKGpcwxqBSKnajHC5YMIvtGNiEBV3OBWK25dVuWet7ULxG37nzEfnsEtfITZ5Y/FtiBp59KgiX4a92bP7c1FlGnX1m9QRad+yLxOpYUAxR1Y3B1pjzkfv/txN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792548; c=relaxed/simple;
-	bh=jRGa+gt30i3gDgUHZKrfHBiuSRHErAxmWCnHjkL5PRg=;
+	s=arc-20240116; t=1790792549; c=relaxed/simple;
+	bh=0a3ppWExgoUEZmzYswj6cT+CVMJu31tPAvEK1Mzp9Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mVH4fFTbYmw2X56DCrMCXYvclW8C9VWcsHdbTKwsM0usIampWll6EKXBMmzwR5YWYFeTy4l5eQ9tdflMVA4Mk4FJtT8moDpPKnrgtvGDyLcMY5BSaVdVI4oNRhAMJE+RkQ8XQ3awASVSGv2fUEoxVAXh9X7qk+e7AXzjLuZMPy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuyebYc+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OyMMXrNvXe4ICkTXmIwMNRjNOnSfT4qsu31xA27gb053fjTQ3QbeebNntceal3sIjE2aFpffzRVC7uAO3IYEsjKmTbOibMTKV21WS8qjqh+1WqCRkN031kR5Ax5lmiv67aTv/Y/XkHvfYUvpqXh/frjihO2cZzylaAT5v5t35Xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGbDJ+F9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuyebYc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DC91F000FF;
-	Wed, 30 Sep 2026 18:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGbDJ+F9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9671F00898;
+	Wed, 30 Sep 2026 18:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792545;
-	bh=xcY+wb7NSWxMllqA1H50mUtTj141QJTKoq+4s7WXABk=;
+	s=korg; t=1790792548;
+	bh=L5e+colVDBFr9cR8MdlHxeJX4s8P6VVAmyVIzacsKi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vuyebYc+3amyOSQQ4yDkiGbriq1TDFaDSA6jqHmSC9VU4ajLQr2fDMwrpZ/EdLM67
-	 hTt4wcGbM1dauDduNSnFuC8U6pY4ejMufeDtIiRcButI4/ZP67Zi3bKLzSnRznu0+D
-	 uryq+ujQ5R5tSpgEt2XCx30+YMe5BqzZToZ8QQkY=
+	b=QGbDJ+F9Ca1YwFDPOItA0EA1Jb7nmOnSOWbciAJZApIDZE3chRPWZXZeCI5zXeNX9
+	 yZ0NHd3m9nGPOOFLYkhz9qjoIQM92b4DWisz4xRGomlVWPk7OYGH5jwzlQ3Uh3a+be
+	 njTt+uwF3HvkgmTbmWDhhSjtZ/SEfMWKDY8ZV5l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Gellermann <christian.gellermann@codasip.com>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 656/752] nfc: virtual_ncidev: Add missing ioctl compat handler
-Date: Wed, 30 Sep 2026 17:28:46 +0200
-Message-ID: <20260930152412.451538593@linuxfoundation.org>
+Subject: [PATCH 5.15 692/752] KVM: x86/mmu: WARN and clear role.invalid when creating a child shadow page
+Date: Wed, 30 Sep 2026 17:29:22 +0200
+Message-ID: <20260930152413.211094131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,73 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Gellermann <christian.gellermann@codasip.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 51814683e28fc64eceb415962376956c3cfc75a7 ]
+[ Upstream commit 5ec42d57655c690234c14aece6dd3f209778c1d8 ]
 
-The compat handler for ioctls to the virtual nci device is missing. So,
-nci-specific ioctls of a compat task return with -1 and errno set to
-ENOTTY. Add a handler.
+Explicitly clear role.invalid when deriving a child shadow page's role from
+its parent to harden against bugs elsewhere in KVM, as violating KVM's
+invariant that invalid pages are NOT on the list of active MMU pages leads
+to use-after-free due to __kvm_mmu_prepare_zap_page() using list_add()
+instead of list_move() when processing an invalid shadow page, i.e. makes a
+bad situation far worse.
 
-The handling of an ioctl() call of a compat task to get the index of
-virtual nci device (IOCTL_GET_NCIDEV_IDX) lands in the default case of
-the ioctl compat handler (see fs/ioctl.c):
+Yell loudly if the parent is invalid, as it means KVM has missed a validity
+check, i.e. KVM is attempting to map memory using an invalid/obsolete root,
+but continue on as the child is otherwise still a valid shadow page.
 
-COMPAT_SYSCALL_DEFINE3(ioctl, ...)
-{
-	...
-	default:
-       		error = do_vfs_ioctl(fd_file(f), fd, cmd, ...);
-		if (error != -ENOIOCTLCMD)
-			break;
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
+  Write of size 8 at addr ff11000153dd1368 by task repro/853
 
-		if (fd_file(f)->f_op->compat_ioctl)
-			error = fd_file(f)->f_op->compat_ioctl(fd_file(f), cmd, arg);
-		if (error == -ENOIOCTLCMD)
-			error = -ENOTTY;
-	...
-}
+  CPU: 1 UID: 1000 PID: 853 Comm: repro Not tainted 7.2.0-rc2-3aec122bdcaf-next-vm #5 PREEMPT
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4b/0x70
+   print_report+0x153/0x49c
+   kasan_report+0xbc/0xf0
+   __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
+   mmu_alloc_root+0x141/0x320 [kvm]
+   kvm_mmu_load+0x612/0x20f0 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x3dd5/0x6150 [kvm]
+   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
+   __x64_sys_ioctl+0x131/0x1b0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
 
-There, do_vfs_ioctl() returns -ENOIOCTLCMD and compat_ioctl is not
-set for virtual_ncidev_fops, i.e. f_op->compat_ioctl == NULL. So, the
-ioctl() syscall returns with -1 and errno set to ENOTTY to the compat
-task.
+  Allocated by task 853:
+   kasan_save_stack+0x20/0x40
+   kasan_save_track+0x14/0x30
+   __kasan_slab_alloc+0x5f/0x70
+   kmem_cache_alloc_noprof+0xfe/0x2e0
+   __kvm_mmu_topup_memory_cache+0x135/0x530 [kvm]
+   paging64_page_fault+0x318/0x1e30 [kvm]
+   kvm_mmu_do_page_fault+0x21d/0x630 [kvm]
+   kvm_mmu_page_fault+0x18c/0x17b0 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x1f35/0x6150 [kvm]
+   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
+   __x64_sys_ioctl+0x131/0x1b0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-To fix this, use the compat_ptr_ioctl helper for compat handling here.
-It shall be used for ioctls that "either ignore the argument or pass a
-pointer to a compatible data type". The driver's sole ioctl takes a user
-void pointer and copies nfc_dev->idx to it, a 4-byte integer across all
-ABIs.
+  Freed by task 853:
+   kasan_save_stack+0x20/0x40
+   kasan_save_track+0x14/0x30
+   kasan_save_free_info+0x3b/0x60
+   __kasan_slab_free+0x43/0x70
+   kmem_cache_free+0xe2/0x400
+   kvm_mmu_commit_zap_page.part.0+0x1e2/0x310 [kvm]
+   kvm_mmu_free_roots+0x283/0x560 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x33c8/0x6150 [kvm]
+   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
+   __x64_sys_ioctl+0x131/0x1b0
+   do_syscall_64+0x67/0x5f0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-This issue has been found by running the nci_dev kernel selftest as
-rv64 binary on top of a CHERI kernel, where the ioctl() ends up in
-the ioctl compat handler, similar to a 32-bit application on top of a
-64-bit kernel.
-
-Fixes: e624e6c3e777 ("nfc: Add a virtual nci device driver")
-Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904164252.18351-1-christian.gellermann@codasip.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: a770f6f28b1a ("KVM: MMU: Inherit a shadow page's guest level count from vcpu setup")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/virtual_ncidev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/mmu/mmu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
-index 6317e8505aaad..443fa9bb52d4f 100644
---- a/drivers/nfc/virtual_ncidev.c
-+++ b/drivers/nfc/virtual_ncidev.c
-@@ -196,7 +196,8 @@ static const struct file_operations virtual_ncidev_fops = {
- 	.write = virtual_ncidev_write,
- 	.open = virtual_ncidev_open,
- 	.release = virtual_ncidev_close,
--	.unlocked_ioctl = virtual_ncidev_ioctl
-+	.unlocked_ioctl = virtual_ncidev_ioctl,
-+	.compat_ioctl = compat_ptr_ioctl,
- };
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index b2525c38197f3..081547246801b 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2148,6 +2148,9 @@ static union kvm_mmu_page_role kvm_mmu_child_role(u64 *sptep, bool direct, unsig
+ 	role.access = access;
+ 	role.direct = direct;
  
- static int __init virtual_ncidev_init(void)
++	WARN_ON_ONCE(role.invalid);
++	role.invalid = 0;
++
+ 	/*
+ 	 * If the guest has 4-byte PTEs then that means it's using 32-bit,
+ 	 * 2-level, non-PAE paging. KVM shadows such guests with PAE paging
 -- 
 2.53.0
 
