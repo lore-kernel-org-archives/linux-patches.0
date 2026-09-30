@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714A8509EFF;
-	Wed, 30 Sep 2026 16:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468E54E1C76;
+	Wed, 30 Sep 2026 16:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785676; cv=none; b=diOW/a7m9+ZqhHeuX8jMxdtu3TnRvLjk/FQS4dedSYRFBW6jrA+Z0o5Y/qTy+TTRuyf5NOkF7CHYqxDHPCjOQfqF6THWO6Vjbm2XWX31v1lWZMCSAh0CZHoqO7oza1ryivGW+F6WnHhxE5Si0+VQ7ioL/VswAiOrk0SUGegk+Qw=
+	t=1790785678; cv=none; b=kDiU/8pRLLi9tq7q7WOVxeXY5h4y92hbNXqP2Rx9ti5IWUJKvpfEbXLIg+jKZtmFNbQkuDLo9jt2L5yM42hAKLClFNRHk1Qo0gq9OsdNZhnrlZNUn5UqpokBpzYPOWuQVGh4p+Qxo0K0N6M818i3y9T+Dt3qeb2U6TMAYOpgH+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785676; c=relaxed/simple;
-	bh=W0v4h3sp+G9NvBQn0yFMOsFts7C9cvLLKrhgUNmepZs=;
+	s=arc-20240116; t=1790785678; c=relaxed/simple;
+	bh=lF2OhdUpNqPj3w+0W1ypKdrl6F3iNIvljxdIws9sOLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoqltQWzqwascpphlqsbjyGp/65wldelwyc0aKrghe8DkETiWgSyqcpo31TAbBLCZ5pNJ0k9AqbvEXRWHPcBL71dSqGE6qBtdNMO9VVlq71rOFDiYQWwMoOLpSSPNCZp7sEvLYGb+c5eiqO29qlGq+hCgzaQx31ez0RY0t8xxRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2zfcKaB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qkP+D3ZgVqbEOrq5t4R0CYLNLrae4FNMCIgZwcKbd+lF1jZALHmXMJXgAIJtekHghLSVIiv5rnowbi/MRceR9yjoht0NDXp97/uTD3gUG4eerxQuwKirLCFjznwzF59+z1xdlGd90cq5Iz/KcuM7jExSRwII0Y7nRXwaD+as6Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkUMH958; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2zfcKaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68A11F000FF;
-	Wed, 30 Sep 2026 16:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkUMH958"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912031F00898;
+	Wed, 30 Sep 2026 16:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785668;
-	bh=RXiOXEgBi9DqMHKO4G4Qn6CTpkeXTZYBSYdC1tHs5vc=;
+	s=korg; t=1790785671;
+	bh=Vc9++yir5bdvCOYLml7csvyJmMpLQOdq+5fhkWl1/V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p2zfcKaB4kfjW5+wITQMpCvT5sv+sda16jP8Sw3ChWelg9wMbZrfyqyFa5CWSxLrK
-	 IajhsVLd4yKMCw1KHOpCJHi/YdGpdcoEVX7DK5rBUz6Q1WhGCELlHxfJsXjynFQ7/6
-	 WDgo/IH3DlGwjOTXKyNhs7upOO8f7yJSv3foqoOw=
+	b=TkUMH958+ABU25sfLTuNZZYoIKdbRyfRJDDHpTfvtAZKzK3PP3JOxvk5x8pOYcpTq
+	 WUO+cKMcD/FxQJAGQTCd+hQSZjiRGBTcyS37f12jnVnEht3vk/DELlzBCQEqbrk+O7
+	 Ka4Vc+8tSWAbv1jJ69UE05OQgY9Y2A9vuRTcL2kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 588/982] ipv6: Honor oif when choosing nexthop for locally generated traffic
-Date: Wed, 30 Sep 2026 17:22:04 +0200
-Message-ID: <20260930152429.413666429@linuxfoundation.org>
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.1 545/982] smb: client: reject userspace cifs.idmap descriptions
+Date: Wed, 30 Sep 2026 17:21:21 +0200
+Message-ID: <20260930152428.477645848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,119 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Aohan Mei <henrymei@tencent.com>
 
-[ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
+commit d9d7eeb0cea5b55b82888f443622fd8d4ee064f3 upstream.
 
-Commit 741a11d9e410 ("net: ipv6: Add RT6_LOOKUP_F_IFACE flag if oif is
-set") made the kernel honor the oif parameter when specified as part of
-output route lookup:
+cifs.idmap key descriptions carry authority-bearing fields (owner and
+group SIDs and uid/gid values in "os:"/"gs:"/"oi:"/"gi:" form) that the
+cifs.idmap upcall helper treats as kernel-originating inputs.  Unlike
+its sibling cifs.spnego, the cifs.idmap key type has no vet_description
+hook, so userspace can create keys of this type through
+request_key(2)/add_key(2) and supply those fields without CIFS origin.
+A request_key(2) call with a non-NULL callout then drives a root
+usermodehelper upcall (/sbin/request-key -> cifs.idmap) that consumes
+the unvetted description in root context.
 
- # ip route add 2001:db8:1::/64 dev dummy1
- # ip route add ::/0 dev dummy2
- # ip route get 2001:db8:1::1 oif dummy2 fibmatch
- default dev dummy2 metric 1024 pref medium
+Only accept cifs.idmap descriptions while CIFS is using its private
+root_cred to request the key.  id_to_sid()/sid_to_id() already run
+under override_creds(root_cred), so the kernel-originated path is
+unaffected.
 
-Due to regression reports, the behavior was partially reverted in commit
-d46a9d678e4c ("net: ipv6: Dont add RT6_LOOKUP_F_IFACE flag if saddr
-set") to only honor the oif if source address is not specified:
+This mirrors commit 3da1fdf4efbc ("smb: client: reject userspace
+cifs.spnego descriptions"), which applied the same restriction to
+cifs.spnego.
 
- # ip route get 2001:db8:1::1 from 2001:db8:2::1 oif dummy2 fibmatch
- 2001:db8:1::/64 dev dummy1 metric 1024 pref medium
-
-That is, when source address is specified, the kernel will choose the
-most specific route even if its nexthop device does not match the
-specified oif.
-
-This creates a problem for multipath routes. After looking up a route,
-when source address is not specified, the kernel will choose a nexthop
-whose nexthop device matches the specified oif:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But will disregard the oif when source address is specified despite the
-fact that a matching nexthop exists:
-
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      53 dummy1
-      47 dummy2
-
-This behavior differs from IPv4:
-
- # ip address add 192.0.2.1/32 dev lo
- # ip route add 198.51.100.0/24 nexthop via inet6 fe80::1 dev dummy1 nexthop via inet6 fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 198.51.100.${i} from 192.0.2.1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-What happens is that fib6_table_lookup() returns a route with a matching
-nexthop device (assuming it exists):
-
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But it is later overwritten during path selection in fib6_select_path()
-which instead chooses a nexthop according to the calculated hash.
-
-Solve this by telling fib6_select_path() to skip path selection if we
-have an oif match during output route lookup (iif being
-LOOPBACK_IFINDEX).
-
-Behavior after the change:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-Note that enabling forwarding is only needed because we did not add
-neighbor entries for the gateway addresses. When forwarding is disabled
-and CONFIG_IPV6_ROUTER_PREF is not enabled in kernel config, the kernel
-will treat non-existing neighbor entries as errors and perform
-round-robin between the nexthops:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=0
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      50 dummy1
-      50 dummy2
-
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4d79dba0e007 ("cifs: Add idmap key and related data structures and functions (try #17 repost)")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Cc: stable@vger.kernel.org
+Assisted-by: CodeBuddy:Kimi-K3
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/cifsacl.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index be3e36162d059..0a819dbd8e58d 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -2249,6 +2249,7 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
- {
- 	struct fib6_result res = {};
- 	struct rt6_info *rt = NULL;
-+	bool have_oif_match;
- 	int strict = 0;
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -96,8 +96,23 @@ cifs_idmap_key_destroy(struct key *key)
+ 		kfree(key->payload.data[0]);
+ }
  
- 	WARN_ON_ONCE((flags & RT6_LOOKUP_F_DST_NOREF) &&
-@@ -2265,7 +2266,9 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
- 	if (res.f6i == net->ipv6.fib6_null_entry)
- 		goto out;
- 
--	fib6_select_path(net, &res, fl6, oif, false, skb, strict);
-+	have_oif_match = fl6->flowi6_iif == LOOPBACK_IFINDEX &&
-+			 oif == res.nh->fib_nh_dev->ifindex;
-+	fib6_select_path(net, &res, fl6, oif, have_oif_match, skb, strict);
- 
- 	/*Search through exception table */
- 	rt = rt6_find_cached_rt(&res, &fl6->daddr, &fl6->saddr);
--- 
-2.53.0
-
++static int
++cifs_idmap_key_vet_description(const char *description)
++{
++	/*
++	 * cifs.idmap descriptions are authority-bearing inputs to the
++	 * cifs.idmap upcall helper.  Only allow the kernel to create this
++	 * type of key using the private root_cred installed in
++	 * init_cifs_idmap; reject userspace request_key(2)/add_key(2).
++	 */
++	if (current_cred() != root_cred)
++		return -EPERM;
++	return 0;
++}
++
+ static struct key_type cifs_idmap_key_type = {
+ 	.name        = "cifs.idmap",
++	.vet_description = cifs_idmap_key_vet_description,
+ 	.instantiate = cifs_idmap_key_instantiate,
+ 	.destroy     = cifs_idmap_key_destroy,
+ 	.describe    = user_describe,
 
 
