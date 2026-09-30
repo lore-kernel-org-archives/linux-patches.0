@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767E95187C2;
-	Wed, 30 Sep 2026 17:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EACC36A37E;
+	Wed, 30 Sep 2026 17:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788979; cv=none; b=SfaXticB7hfKnem/m9sZjHFvAGq4pTpqQH0TKJ7jGGoyzlx5rkqugZl6XM4xlzTPMNG3r6IrHUSWriWfR7ehgzEijJmzR8D5/YBdtYRBSyrZhjg4eQcQMJ6sn9dezO8G1J3wbohHY6s1HnmcaYHkGw9RlwPGIZAzBb4pxf+isCo=
+	t=1790788981; cv=none; b=ZYHaF4506NkOm9eMoA9YqsdvGPZIA140Bu8/s+xaU051qSIJTqBdyureGJvYb4l4tKsUzgSrlaeR3O1ONyOd3ZnOfUW9Zk+hVWmLKavm770BoVA63boFIRhzfg0YamMnx9L9dCYybinbVdilS5M8BFRtozgwhTukcKiFvjdMf/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788979; c=relaxed/simple;
-	bh=u7wHw/nrMWbW8kcPA4VC8ysB+tzvtXHOmOF1WJOJRz0=;
+	s=arc-20240116; t=1790788981; c=relaxed/simple;
+	bh=uAatKQUlEeWLw2hiLseM48mdqFcBIQjuLE56yHIbADo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLdysVM8FzLMl0a6tETM0+3PV/ShJdG9u9DJcdqZ37gywreVNrjGgqmWohJPUifSQx4hDyuOT+JZddeLc0q4D9TGXPk5pBc3riJMjCAwUSvOrLkTM2RpMbNS1pal0P/85B/lgiQYVbjLKeci56ogMcddRaZoZNIsvItRgH2eMc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2eAmMJ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQgY75o8pZPKXnnMPP8eMyXnrsR5KoEEzifTAxFIO3FbSu0b0AZhQEXdr1wguYDYWSDZER0J9bgJDYdPg36WR2xFh0D0DoSIeyRL+LUZhrTXSHCjpj70Ytj5NZGSGUEhs4TFc7qJe7hlfOb+AIb6wfMVtFdexiBi/dJ6j1sCoiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTvgos+R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2eAmMJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0F61F000FF;
-	Wed, 30 Sep 2026 17:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTvgos+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AA01F00898;
+	Wed, 30 Sep 2026 17:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788977;
-	bh=odcNnzHuTTf35eCymsPXeg2AbFrxHCOFHXSsR/uE2Pg=;
+	s=korg; t=1790788979;
+	bh=xu5MSn+W2seju0Mka+LTL+92UGl+1sA8/ZORZthgGZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r2eAmMJ10+LS+LlmprzaU1WHnBfoAJRrQhPIK6O022IJdhMtuakhl/V6dzqbKpab1
-	 0H69LRj5Ohuz8KBnB/xiWb/izTCVkq6y5tufk5RDLd3d351l1Pt5juO+cP828Xb4wI
-	 y5sw+MUDRVkRRP3IKCbTVrZNsLzJrpEOMn0xcDMk=
+	b=tTvgos+Rt8DWuSRXVdFz0Lwp3+GljHcOhiybP8D6pnYFKE1ERwuQK+Ge/Ymkh5GHW
+	 4KwhsQ/HXv0ADEnoIkhxrOBY//Y2qNEiP9sR2EXkFmI7LvdjKijX45nnOV4uOMaGmg
+	 0QnalTpuBGBvfvOg8E65A1zRzIZnrFAOJb3jziBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 316/877] bpf, sockmap: Fix self-redirect copied_seq double-counting
-Date: Wed, 30 Sep 2026 17:20:27 +0200
-Message-ID: <20260930152421.507705529@linuxfoundation.org>
+Subject: [PATCH 6.12 317/877] bpf, arm64: set up the frame pointer for the exception callback
+Date: Wed, 30 Sep 2026 17:20:28 +0200
+Message-ID: <20260930152421.529581876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,77 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit 490a83d6386eec1d29f470c8d7331677fb46c3b7 ]
+[ Upstream commit ef1fb82f12186dd26153b14d9fbcf4ec98db81b3 ]
 
-When a BPF stream_verdict program redirects an skb back to the same
-socket (self-redirect with BPF_F_INGRESS), sk_psock_verdict_apply()
-calls tcp_eat_skb() which advances tcp_sk->copied_seq. However, the
-skb is then delivered to the socket's psock ingress queue and later
-read by tcp_bpf_recvmsg_parser(), which also advances copied_seq via
-the copied_from_self accounting path. This double-counting causes
-copied_seq to advance by 2x the actual data length, triggering:
+A program acting as exception boundary saves all callee-saved registers,
+so build_prologue() takes the exception_cb path and never calls
+push_callee_regs(). That is the only place find_used_callee_regs() runs,
+and with it the only place ctx->fp_used is set, so the callback prologue
+does not emit the
 
-  TCP recvmsg seq # bug 2: copied BF2E806, seq BF2E7FD, \
-			   rcvnxt BF2E806, fl 0
-  WARNING: net/ipv4/tcp.c:2745 at tcp_recvmsg_locked+0x72b/0x2640
-  Call Trace:
-   tcp_recvmsg+0x10a/0x500
-   sock_recvmsg+0x168/0x1d0
-   __sys_recvfrom+0x19a/0x2a0
-   __x64_sys_recvfrom+0xe4/0x1f0
-   do_syscall_64+0xf7/0x530
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  mov x25, sp
 
-  cleanup rbuf bug: copied BF2E806 seq BF2E806 rcvnxt BF2E806
-  WARNING: net/ipv4/tcp.c:1609 at tcp_cleanup_rbuf+0xf2/0x1c0
-  Call Trace:
-   tcp_recvmsg_locked+0x8d1/0x2640
-   tcp_recvmsg+0x10a/0x500
-   sock_recvmsg+0x168/0x1d0
-   __sys_recvfrom+0x19a/0x2a0
-   __x64_sys_recvfrom+0xe4/0x1f0
-   do_syscall_64+0xf7/0x530
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+that points BPF_REG_FP at the frame the callback runs on. x25 keeps
+whatever it held when bpf_throw() was called. If the throw came from a
+subprogram that uses its own BPF stack, that is the subprogram's frame
+pointer, and since the subprogram never returns it never restores x25
+either.
 
-Fix this by converting self-redirect verdict to __SK_PASS at the
-beginning of sk_psock_verdict_apply(). This bypasses the
-__SK_REDIRECT case entirely (which calls sk_psock_eat_skb), letting
-the __SK_PASS path queue the skb to the psock ingress queue. The
-data is then read via tcp_bpf_recvmsg_parser(), which advances
-copied_seq exactly once through copied_from_self. Cross-socket
-redirects continue through __SK_REDIRECT with sk_psock_eat_skb()
-unchanged.
+Stack accesses through BPF_REG_FP are rewritten to be stack pointer
+relative, so those still land in the callback's own frame. Materializing
+the register does not: a callback that passes the address of a local
+variable to a helper hands over an address in the dead subprogram's
+frame. That address is below the callback's stack pointer by then, and
+the helper's own call chain covers it, so the helper can write over its
+own return address. 0x1234 below is the value the helper was asked to
+store:
 
-Fixes: e5c6de5fa025 ("bpf, sockmap: Incorrectly handling copied_seq")
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/1a8e797a1b26e2f695aaac22ac644c2862f63466.1788858299.git.tanggeliang@kylinos.cn
+  pc : 0x1234
+  lr : 0x1234
+  Call trace:
+   0x1234 (P)
+   bpf_test_run+0x188/0x3e0
+   bpf_prog_test_run_skb+0x47c/0x998
+   __sys_bpf+0xbdc/0xdd8
+  Kernel panic - not syncing: Oops: Fatal exception in interrupt
+
+Set ctx->fp_used on the exception callback path so that the existing code
+further down sets x25 from the stack pointer. The epilogue restores it
+from the main program's save area along with the other callee-saved
+registers, as it already does. x86 sets the frame pointer for the
+callback from the argument it is passed, and powerpc computes it from
+the stack pointer.
+
+Fixes: 5d4fa9ec5643 ("bpf, arm64: Avoid blindly saving/restoring all callee-saved registers")
+Acked-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20260907130624.611942-2-donggeunyoo.kernel@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/net/bpf_jit_comp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 7e68b4fdbfce0..6eca57da3cff6 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -1035,6 +1035,10 @@ static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
- 	int err = 0;
- 	u32 len, off;
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 27d27848db52d..9c28bb7b69ae6 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -537,6 +537,8 @@ static int build_prologue(struct jit_ctx *ctx, bool ebpf_from_cbpf)
+ 		 * 12 registers are on the stack
+ 		 */
+ 		emit(A64_SUB_I(1, A64_SP, A64_FP, 96), ctx);
++		/* The callback may use its own BPF stack, set up fp for it. */
++		ctx->fp_used = true;
+ 	}
  
-+	if (verdict == __SK_REDIRECT && skb_bpf_ingress(skb) &&
-+	    skb_bpf_redirect_fetch(skb) == psock->sk)
-+		verdict = __SK_PASS;
-+
- 	switch (verdict) {
- 	case __SK_PASS:
- 		err = -EIO;
+ 	if (ctx->fp_used)
 -- 
 2.53.0
 
