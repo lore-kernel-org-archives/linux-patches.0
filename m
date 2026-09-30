@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD7B3624BF;
-	Wed, 30 Sep 2026 16:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B732AF1D;
+	Wed, 30 Sep 2026 16:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787281; cv=none; b=LnKzDZtsG3yCep6HwoVzWHRMmHBdQh587ksKtiWRf0gVnlJ93u+AbJ9QjNimyuDgwbt8gEM1t3cGJ9iuQWTtm8Pnvp+Wbq3JT6w5yhTu2H4xk6VLOuCAYMhhCQkvaZfGlVq4ba3UJUdXoppBI6SPtJ0ftMQwOSc7AGd/RNGeAto=
+	t=1790787284; cv=none; b=s93wKrXDtsfEGcOhVTerF9JBKnAJS8b+w7DIJQxfICzhec91gkSmiwajJE+gUchwlSnUN5Dyos6mzXN+4izLaD7+w3J9QE3r/ru3XXJpS3tm2oM7ige9OQSFuHtfxRsZu4C7izeRsByu33+AewwOcMAUcRDtjrU9iWeBxf8JaoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787281; c=relaxed/simple;
-	bh=J7rsqt8IgEUCY+HDjN5mSOOzTH1tInWdrcINAkbO7Hc=;
+	s=arc-20240116; t=1790787284; c=relaxed/simple;
+	bh=Q/6N/5kZhR4W+WkVk2DfZd4UChayLRoShb1Cy0urCrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7gqOPb906YjN61vZmCAzyGWz8cfLfZqkXl4AgIJWOGicK1ohlXixhVTXwfMuCA63d32wC+Yiq9nusOsc7l6W5Ymr/AS0Z6WLVhqO1CpKOzgUmjYIvApGfliXaIXnfR/d+JLfwzEF8dbH8AZFYmMlzlrT7nC8kDdkwTo/TqSs9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEvHE0xo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jJrs5D+lsyYxp8uBtl6iBskcZSFe1zIwQbIFT7EJQNAyZ8D1Sq+zY7kv3ujRQYiwlUJm8V0Uxtb93b6AvWB+LLMsd4vMKK7X1CkGVeclqxbb5cjbAx/yTaLAf5Fw6PBi5kUOgvRHkQn4LabLZjCD8t9ULKafduBHnmIPPvIhmxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FepTk5u6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEvHE0xo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A221F000FF;
-	Wed, 30 Sep 2026 16:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FepTk5u6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AAA1F000FF;
+	Wed, 30 Sep 2026 16:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787280;
-	bh=aAJDFn7P62UHaOQyTg7qrm5zUldGf9xhluUfTl4kr2U=;
+	s=korg; t=1790787283;
+	bh=3oLfZypFg6a0SkF6Zmz6tjQM0mInxN0kiS6x4ESSpqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zEvHE0xo14TJxa3JAp8oqRrELZjLjb3mVAptegkfhNgTnBY3j3KisGR48/ddcIE3/
-	 GIz8GYud9kHLJuwAyn9NlUq9Lj6A16H0pJm/C5rVk+JrZzfdXQCrDaOZU82C/HnVQa
-	 qFf3Anr+9r0YoMuGYj73+ucJNJm0p/BXr5tc8ECo=
+	b=FepTk5u6CI8MR9eRG41wkJ62xYoM0DB2NS1HNuHmodmgLmFp2T6tiQ80vIQCu4sQH
+	 kqsEoncnGI0kIQ0InGXSUwItnqXzYxsqqPY/A7okthbC5WyilViFMO+PxULO5MK3oa
+	 TNpu+BTBzZFlr3K/VeTPXinyIEwybK1JT8MhGwT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 175/457] nfc: llcp: fix sdreq TLV list leak on parse/alloc/send failure
-Date: Wed, 30 Sep 2026 17:24:40 +0200
-Message-ID: <20260930152349.830726678@linuxfoundation.org>
+Subject: [PATCH 7.2 176/457] nfc: st21nfca: validate ISO15693 inventory length
+Date: Wed, 30 Sep 2026 17:24:41 +0200
+Message-ID: <20260930152349.852929164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,63 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 66f4300206b82b0b143ef0d9be90cd8d29f23a47 ]
+[ Upstream commit 7f2ea5ed588c03d481f0301e6c3d4240132383fb ]
 
-nfc_genl_llc_sdreq() builds a list of TLV nodes while walking nested
-netlink attrs, but 3 error paths (nested-attr parse failure, TLV alloc
-ENOMEM, nfc_llcp_send_snl_sdreq() failure) all skip freeing what was
-already queued.
+The ISO15693 inventory helper removes a two-byte prefix without checking
+that it exists, then accepts a one-byte remainder before reading data[1] as
+the DSFID.
 
-Route them through a new free_list label, mirroring the SDRES path in
-the same file which already does this. Harmless on the success path
-too -- send_snl_sdreq() drains the list as it moves nodes, so it's
-already empty by the time free_list runs.
+Require the prefix and at least two remaining bytes before copying the UID
+data and reading the DSFID.
 
-Fixes: d9b8d8e19b07 ("NFC: llcp: Service Name Lookup netlink interface")
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260914121129.2098606-1-congnt264@gmail.com
+Fixes: 7974728094d3 ("NFC: st21nfca: Add ISO15693 Reader/Writer support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830132958.6397-1-pengpeng@iscas.ac.cn
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/nfc/st21nfca/core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index 0c58824cb150d..224bdfa2dd0dc 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1181,7 +1181,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/nfc/st21nfca/core.c b/drivers/nfc/st21nfca/core.c
+index fd39a05c96222..34d797a29d21b 100644
+--- a/drivers/nfc/st21nfca/core.c
++++ b/drivers/nfc/st21nfca/core.c
+@@ -577,9 +577,7 @@ static int st21nfca_get_iso15693_inventory(struct nfc_hci_dev *hdev,
+ 	if (r < 0)
+ 		goto exit;
  
- 		if (rc != 0) {
- 			rc = -EINVAL;
--			goto put_local;
-+			goto free_list;
- 		}
- 
- 		if (!sdp_attrs[NFC_SDP_ATTR_URI])
-@@ -1200,7 +1200,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
- 		sdreq = nfc_llcp_build_sdreq_tlv(tid, uri, uri_len);
- 		if (sdreq == NULL) {
- 			rc = -ENOMEM;
--			goto put_local;
-+			goto free_list;
- 		}
- 
- 		tlvs_len += sdreq->tlv_len;
-@@ -1215,6 +1215,9 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
- 
- 	rc = nfc_llcp_send_snl_sdreq(local, &sdreq_list, tlvs_len);
- 
-+free_list:
-+	nfc_llcp_free_sdp_tlv_list(&sdreq_list);
-+
- put_local:
- 	nfc_llcp_local_put(local);
- 
+-	skb_pull(inventory_skb, 2);
+-
+-	if (inventory_skb->len == 0 ||
++	if (!skb_pull(inventory_skb, 2) || inventory_skb->len < 2 ||
+ 	    inventory_skb->len > NFC_ISO15693_UID_MAXSIZE) {
+ 		r = -EPROTO;
+ 		goto exit;
 -- 
 2.53.0
 
