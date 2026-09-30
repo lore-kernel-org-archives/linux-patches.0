@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEFF3DA7DB;
-	Wed, 30 Sep 2026 19:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA453CBE6E;
+	Wed, 30 Sep 2026 19:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795874; cv=none; b=eskH4u/D7wCuzx7VdqXXkVPoGKgZ0wSH6xTHadpMQCKY5ycaaryFEVoMilra7o60FUOtrsVQU1LEpjGgKtqQ9ddrn5aDY96ApskDgpbgo9cxzo5ksE63rhz+7b2PFBgRbpVEpnGTvXPWUVwVfVLNKsvEk37Rc4VaxvUbrnStu5Y=
+	t=1790795877; cv=none; b=uac9rPUVEWCoBya4gQsWa8d5wEHYZs8aIKjVwE7jjCTms3XqIhKzPIsYtBnLM0uK7xUpBsexx04XyzQkC65v0hLCM85BOys38zbKRE6oaF4bBx3COnMJwmyi4v0aJXV7lyXyuYWVIdVA6bVYCyBNNlb6jA11uypVKQRF5iT4stk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795874; c=relaxed/simple;
-	bh=n192dAIzIsVgKl5YTaMcaSv9iToGFiNy6cLWv3LXRVU=;
+	s=arc-20240116; t=1790795877; c=relaxed/simple;
+	bh=pArNHCd3RmzlQc45NPqkHIODDhswcQ8nOWKAGAIoJ4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9OB1WXh2MldW0rNRXeH85NRbDb/+vpB5Px5ciP8fY/6PCBr9cOGHpYNLMn+tv7LMBtmvlIssT+Nt49pJBGhf2RSYev1yC5wuo3R2OWD8AgIOlufGviadBlo23owOUjoln2uzX4CeihfRy1xaCgnDPZoNxtxxxPZtq6B/r4DosA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijtOkRfj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B3Ki7otgrVRwquKrXmiUj9oXb3jlbTiGXYTGqByrCTF7ZwR9nKw6S/pI5UvwOSRtMq0+tWkpCMUPHp5+jbg+4G1xZ3Fqi+Xjc10kZ14RsOTsm80txfbWmXrX7ApZy7fxLETOft9tHxF/YPz9YCp+2Dkq7dCCsUOPNvj5Ara+7KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxIrUiy7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijtOkRfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3FA1F000FF;
-	Wed, 30 Sep 2026 19:17:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxIrUiy7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA7B1F000FF;
+	Wed, 30 Sep 2026 19:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795873;
-	bh=ZoYZDhiaoK1rZ6GO9doeqXE1BLRiAHJEaRK3UeCQeZE=;
+	s=korg; t=1790795876;
+	bh=Y5fXTH8KAfdVuW4G0Zf6BPrZydbDdiH61cs0zvT7Xzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ijtOkRfjDfQ69oKKG7Iqe5xkfkeuVXu2nk28eaEVXB5LHhRskK3186TrG1FPEz7IH
-	 uI5ZO1QwjYC8gXGl8KyycIL6x6pWqKYuHuRPsECfaoI+KmRe9EVjpVaFHTsDyhZV9D
-	 2THM+dZ1QKD2RhmnZFMZXEnU6jXIJudyJwLs2hPE=
+	b=CxIrUiy7rdoCmy3Qe9+P22252kO84WqgRv97xupKzNF/waWBIpMQSuc7iAGSoEwRI
+	 xQH6HMfUaTTvAQHCkf2Dqp4JTT9zn++t4zPHDzqepb0d33liNZ3MkOvvPktng2Z1sJ
+	 03BXt8hpu1mvb0DU3Rr+Cmrt9gxSCqsQMpEVTLBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjoern Doebel <doebel@amazon.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0669/1193] smb: client: avoid leaking refcount when cifs_sb_tlink() fails
-Date: Wed, 30 Sep 2026 17:22:33 +0200
-Message-ID: <20260930152449.106899351@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0660/1193] mptcp: subflow: no need to copy thmac during ulp_clone
+Date: Wed, 30 Sep 2026 17:22:24 +0200
+Message-ID: <20260930152448.902309665@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,56 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 23b26f4408ac3f35a482d2e5cf6fc865d4201b71 upstream.
+commit 29f641951be0d91036d77edf677807f1447dbe65 upstream.
 
-cifs_oplock_break() takes over the reference that
-cifs_queue_oplock_break() acquired when it queued the work, and drops it
-with _cifsFileInfo_put() once the break has been processed.
+'thmac' is not used after that point.
 
-Only in setups with "-o multiuser", cifs_sb_tlink() may fail, at which
-point cifs_oplock_break() returns without putting the file reference,
-mirroring the reference leak we already fixed in the companion patch to
-cifs_queue_oplock_break().
+Indeed, subflow_ulp_clone() is called when the request on the passive
+side is over, so when the truncated HMAC is no longer needed.
 
-This would trigger a crash due to busy inodes on the next unmount:
+Note that in case of SYN cookies, thmac will not be initialised. So
+better to remove it to avoid a warning from debug tools like KMSAN for
+reading uninitialised data.
 
-  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
-  VFS: Busy inodes after unmount of cifs (cifs)
-
-Drop the reference on that path as well. Doing so before the out label
-mirrors the normal path, which also puts the reference before
-cifs_done_oplock_break().
-
-Found by Sashiko code review. The failure path was not exercised at
-runtime.
-
-Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
+Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
 Cc: stable@vger.kernel.org
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-2-df1de70348b6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mptcp/subflow.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -5154,8 +5154,11 @@ void cifs_oplock_break(struct work_struc
- 			TASK_UNINTERRUPTIBLE);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -2011,7 +2011,6 @@ static void subflow_ulp_clone(const stru
+ 		new_ctx->request_bkup = subflow_req->request_bkup;
+ 		WRITE_ONCE(new_ctx->remote_id, subflow_req->remote_id);
+ 		new_ctx->token = subflow_req->token;
+-		new_ctx->thmac = subflow_req->thmac;
  
- 	tlink = cifs_sb_tlink(cifs_sb);
--	if (IS_ERR(tlink))
-+	if (IS_ERR(tlink)) {
-+		/* drop the reference taken when the break was queued */
-+		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
- 		goto out;
-+	}
- 	tcon = tlink_tcon(tlink);
- 	server = tcon->ses->server;
- 
+ 		/* the subflow req id is valid, fetched via subflow_check_req()
+ 		 * and subflow_token_join_request()
 
 
