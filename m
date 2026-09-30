@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F0447A0DD;
-	Wed, 30 Sep 2026 16:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E335B50EC15;
+	Wed, 30 Sep 2026 16:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785998; cv=none; b=OWu7VAETEt3xJbrd8Rtaq5kUEnXZhHEAS/pR4sJozgaBOUV21etK8/n/lMmepqgNCqMgDMeb8m/U+j0uMozmnS6S9XQpPSGDEo6TpcHnEFt9l3/giXvzcKb/fMZcbNNzhiZAJsn9USb4Y+r9LQeyfQ+djrHRXVC4azNiRUlSxrs=
+	t=1790786001; cv=none; b=rPxKom1NsZ0rgEzdsnOEyTXbF1WpF2dWfS62Z+5mki6mVimH5MpQaOQmWz6phiHiYGb+2sPRbgfHW5YUp06pxWGn4HFYsab61TLtjRl/ocIfu6FKWjZHnwgIH9gKitCZSfqXzWea9cYrw2emIlbn2n6o+IydW8EdxVsNbfzO9dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785998; c=relaxed/simple;
-	bh=EDFatmvhQ0O1bD11/8r5SwLU1UY5M5IcSkE+hBpLnx4=;
+	s=arc-20240116; t=1790786001; c=relaxed/simple;
+	bh=teu0mDMEYwDxWQ3ouYyKHCIqs4p2CdxNrZ3b0mPJcXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUP9fDzvY9fP9I/LzFwZo+H6hCexnkYK9DOXg5p+8DAKjjcVKifRWJmxs935/C4M8B70XpFd3gSdveT0asxSfDXfJg03yU1hoks7goDXlpFUr8ji7akRHaJVzj7XPWaUVovGfGWqpwjs0Kw1MiPeVr6PFoVjpXwgiGoiFGEBwac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJq4GsKk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QgZ8Zd4VIK7oDDZ5jipJAtqFm1YZPf60kb7Y1I9OjB2IRU1qC03uQ0mYLxSNRrtLWF3qNNLJTD0WnYQgjHIz+l1VIXvtjniGz+aygImyNKQ7i1mknUlz0NdAjkrqZNT2+xyYteVyH7NTRSpB8dMDgdgAme4hcQZ02+MJ3G7xGoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgJGjFMM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJq4GsKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE291F000FF;
-	Wed, 30 Sep 2026 16:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgJGjFMM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E7B1F000FF;
+	Wed, 30 Sep 2026 16:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785996;
-	bh=OBBBelnPYqQPm6X3TSQgZ1MFdl0xXdLoyD3VfX4tQv8=;
+	s=korg; t=1790785999;
+	bh=4UP//32jzFxfdyhEnwiSRJC/YgleSqcOcMgxXrEnAS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJq4GsKk2GJZ/NbVN6kex9k3gNvWAAw8wdsOprhDfmcT1SbXEFEQ8Zocs9tSd7XgE
-	 5vfU9BRDF76ovPTgPCM1PJnGOwWuKoLi6sw7gIeWo2gtxjhNbqd5Os2H/lt5r7HYIG
-	 Iut+7Wwpd7X+dy4oSjGGmUJ6hjIER0Oc6OgmBIAs=
+	b=jgJGjFMM5qqx0aDpUdmfkc8z2lZeGfNSpu+t20rcIAq3OUbjnxQf2WdqY7fDQAK39
+	 M9ZERLoGZ4TMC0FefRpXN+gQOowTSGX/FzjBhT4ckPFThHG8FL6Z5MMzvhKRm51ViR
+	 qFstaucr46yJF104m0UJ8OFMF+/MnhxlKz8q6V3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.1 706/982] arm64: dts: renesas: r8a779f0: Set UFS lane count
-Date: Wed, 30 Sep 2026 17:24:02 +0200
-Message-ID: <20260930152431.923029691@linuxfoundation.org>
+	David Laight <david.laight.linux@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"Christopher Lameter (Ampere)" <cl@gentwo.org>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+Subject: [PATCH 6.1 707/982] arm64: percpu: Fix this_cpu_write() casting
+Date: Wed, 30 Sep 2026 17:24:03 +0200
+Message-ID: <20260930152431.944735482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,51 +63,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 8dc2615d5702059b2b71fca6f93c0d7d10ae54cb upstream.
+commit 885bff055a0f251a51a0d4fd4f0a7b525582a3de upstream.
 
-Since commit e72323f3b09f ("scsi: ufs: core: Configure only active lanes
-during link"), the following error is observed on R-Car S4:
+The arm64 implementation of this_cpu_write() casts 'val' to unsigned
+long. This is necessary to handle cases where 'val' is a pointer type,
+and to avoid spurious compiler warnings for the (unreachable!) cases
+where the pointer type would be cast to a smaller integer type.
 
-    ufshcd-renesas e6860000.ufs: Tx lane mismatch [config,reported] [2,1]
-    ufshcd-renesas e6860000.ufs: link startup failed -67
-    ufshcd-renesas e6860000.ufs: error -ENOLINK: Initialization failed with error -67
-    ufshcd-renesas e6860000.ufs: probe with driver ufshcd-renesas failed with error -67
+Unfortunately, the cast is applied to 'val' rather than '(val)', which
+won't always generate the expected value when 'val' is an expression.
 
-R-Car S4 has one UFS lane per direction, as described in section 152.1
-of its hardware manual.  Without lanes-per-direction, the UFS platform
-driver defaults to two lanes.
+For example, for this_cpu_write(pcp, zero - 1), where 'pcp' is a u64 and
+'zero' is a u32:
 
-Previously, the core used PA_CONNECTEDRXDATALANES and
-PA_CONNECTEDTXDATALANES to configure the link without checking them
-against lanes-per-direction, so the missing property did not prevent
-initialization.
+* 'zero'                      ===> (u32) 0x00000000
+* 'zero - 1'                  ===> (u32) 0xffffffff
+* '(unsigned long)zero - 1'   ===> (u64) 0xffffffffffffffff
+* '(unsigned long)(zero - 1)' ===> (u64) 0x00000000ffffffff
 
-Explicitly set lanes-per-direction to 1, now that the validation is in
-place.
+Fix this by adding brackets around 'val'.
 
-Fixes: 5235d551779d ("arm64: dts: renesas: r8a779f0: Add UFS node")
-Cc: stable@vger.kernel.org # 7.2+
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260911073058.253000-1-den@valinux.co.jp
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
+Reported-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: David Laight <david.laight.linux@gmail.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Acked-by: Christopher Lameter (Ampere) <cl@gentwo.org>
+Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yang Shi <yang@os.amperecomputing.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779f0.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/percpu.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-@@ -646,6 +646,7 @@
- 			clocks = <&cpg CPG_MOD 1514>, <&ufs30_clk>;
- 			clock-names = "fck", "ref_clk";
- 			freq-table-hz = <200000000 200000000>, <38400000 38400000>;
-+			lanes-per-direction = <1>;
- 			power-domains = <&sysc R8A779F0_PD_ALWAYS_ON>;
- 			resets = <&cpg 1514>;
- 			status = "disabled";
+--- a/arch/arm64/include/asm/percpu.h
++++ b/arch/arm64/include/asm/percpu.h
+@@ -178,13 +178,13 @@ PERCPU_RET_OP(add, add, ldadd)
+ 	_pcp_protect_return(__percpu_read_64, pcp)
+ 
+ #define this_cpu_write_1(pcp, val)	\
+-	_pcp_protect(__percpu_write_8, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_8, pcp, (unsigned long)(val))
+ #define this_cpu_write_2(pcp, val)	\
+-	_pcp_protect(__percpu_write_16, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_16, pcp, (unsigned long)(val))
+ #define this_cpu_write_4(pcp, val)	\
+-	_pcp_protect(__percpu_write_32, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_32, pcp, (unsigned long)(val))
+ #define this_cpu_write_8(pcp, val)	\
+-	_pcp_protect(__percpu_write_64, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_64, pcp, (unsigned long)(val))
+ 
+ #define this_cpu_add_1(pcp, val)	\
+ 	_pcp_protect(__percpu_add_case_8, pcp, val)
 
 
