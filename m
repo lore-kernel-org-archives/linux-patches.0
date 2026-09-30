@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490673E024D;
-	Wed, 30 Sep 2026 19:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADF5348C6B;
+	Wed, 30 Sep 2026 19:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796271; cv=none; b=lezgotiJd+FgX7PIkrhSki8Aw/MbgSJq2jbJsnRuHJ60wpgiNUVpkPs2HOD0PAVNMv7gvSMIsfHbSYOEXwthJD1Qbr0RiJq5tZOF3H/z+0ZeCS1Uj+DbDHkJczD88Y4ub3na1PBdd/CIeRzgH6Bdk9fSG/b6RX/QI+cu7dYdqPM=
+	t=1790796274; cv=none; b=m1vPuLd5kfLJjTHUp0dL0YYa+PQ018CcX/UN0q9YRmrgwQZNeVPR9g8IaTScVOF7I8h1aEE6J6FnwKJ29KeIbrW7dfyfoWS9BA5/m9doUcApvWdXRVlQsPW9WD+EMaR7CRqvISGjXCQyklfMPm8SACdR7DIS9HalybJHBjD7a7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796271; c=relaxed/simple;
-	bh=RR62wTlS+eqeHabV0AsUWjPeKq/ytxnr5qapD9dNoPw=;
+	s=arc-20240116; t=1790796274; c=relaxed/simple;
+	bh=q6/kPGHEP2bqUlJ7m2+MRSYVAk0NEKyV+XzqBHyv8Hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ag8ll+jeS31dLS078jIN/k5mlOylHDctrfY1GkZf6yJHq5esgAqTI5xXmiYFlS0IY2Y2J+e19d3FRYl0WA6eXkL5uEt7ktvvO1eWevBIBZuSpkr3AtlUjWn4/viK2Xvpb1K9FfyiiLMtfu2wzMLmlp84RpX7k9oCJGQFYuShc6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w83YZ40O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pDr2PUXZL930hFniDBJP+Ur1WUiXCQ2fGxHG/iKm+T7nHW2DqBToXvOYxW0nAYZ2eWZskxs/dNFgbu5N53G4KAxqWDPlMlJyJtKddsuU7uS/MzsgMNwAFvOrhRyuw3TAOjwQ8ruGNfyqkNyE4XLaUOkXV3dpHjoS5VKQQ1ATqaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vx4mvWQY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w83YZ40O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C4D1F000FF;
-	Wed, 30 Sep 2026 19:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vx4mvWQY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C191F000FF;
+	Wed, 30 Sep 2026 19:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796270;
-	bh=5TFT8Zsdz2XHu+oxBOwy1km13eUKNidQmTCw5s6dE5k=;
+	s=korg; t=1790796273;
+	bh=6PBIU3KaWYhY98h62loQDkDXrAso8HVUTWGoyFMinYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w83YZ40ONtOlvFA0PLZzZ0+Q3mUOxtegBHQL2HN4Xy0C2agidM9D3hmIZzmr9X4yH
-	 26dUFCgS0mLnWsOHuzsYRdtVaveW0XPhzeAnBJH2+QMrSOkFkZbIAkPj3Na6hbQu6o
-	 GjyW4R2alSe4yp6TPNzSuHc8e1SEx/6cMNSlk+XE=
+	b=Vx4mvWQY5DUU9DmmW1UtwrrKXuRkfaNQOH2P4JcDHcWjwfs8CgrRnUsQYG26zagm2
+	 FO6zuxXcBxZx+toc4iFY1FBO/dpVejeLrRZe6HuIsO/GjoHE8AIgRPeKBUtft6D9AI
+	 lJfNg4CAHNOXOH5YKqvTi1/T4t99Wt5dLzqYQvLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com,
-	Juan Perdomo <jcperdomo100@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0809/1193] Bluetooth: RFCOMM: avoid socket lock inversion in listener cleanup
-Date: Wed, 30 Sep 2026 17:24:53 +0200
-Message-ID: <20260930152452.219831535@linuxfoundation.org>
+Subject: [PATCH 6.6 0810/1193] pppoatm: ensure a writable skb header and linear data
+Date: Wed, 30 Sep 2026 17:24:54 +0200
+Message-ID: <20260930152452.241923926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,77 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juan Perdomo <jcperdomo100@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 801fb950cae7048eb7d83b18857d1ca37b8cd5a4 ]
+[ Upstream commit ecc7253683a3c55caa868ce0ee530fcb0044bd3c ]
 
-rfcomm_sock_cleanup_listen() closes unaccepted child sockets through
-rfcomm_sock_close(), which takes the child socket lock before
-rfcomm_dlc_close() acquires rfcomm_mutex. The RFCOMM worker takes these
-locks in reverse order while handling connections and DLC state changes,
-so lockdep reports a possible deadlock.
+In pppoatm_send(), LLC encapsulation checks whether there is sufficient
+headroom for the 4-byte LLC header, but does not ensure that the skb header
+is writable.
 
-Close dequeued children without taking their socket lock. The accept queue
-owns a reference to each child, and bt_accept_dequeue() locks the child
-while unlinking it and clearing its parent pointer.
+Normal transmit packets passing through ppp_start_xmit() have their header
+unshared via skb_cow_head(). However, packets can also reach pppoatm_send()
+via PPP channel bridging (PPPIOCBRIDGECHAN) without going through
+ppp_start_xmit().
 
-Dropping the child lock makes it important to prevent a concurrent
-rfcomm_connect_ind() from enqueueing a new child after cleanup observes an
-empty queue. Set a listening socket to BT_CLOSED while its lock is still
-held, before dropping the lock and draining the queue. The state check in
-rfcomm_connect_ind() then rejects new children once cleanup starts.
+Use skb_cow_head() to ensure both sufficient headroom and a writable
+header before pushing the LLC header.
 
-Reported-by: syzbot+0cece8fa7d83523f47a3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0cece8fa7d83523f47a3
-Fixes: b7ce436a5d79 ("Bluetooth: switch to lock_sock in RFCOMM")
-Signed-off-by: Juan Perdomo <jcperdomo100@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+While at it:
+- Call pskb_may_pull(skb, 1) before inspecting skb->data[0] to prevent
+  out-of-bounds reads on zero-length or non-linear frames (e.g. from
+  bridging).
+- Defer SC_COMP_PROT protocol compression until after pppoatm_may_send()
+  succeeds. This eliminates the temporary skb allocation on admission failure
+  and completely removes the fragile "undo" heuristic at the nospace label,
+  avoiding any risk of reading uninitialized headroom or performing an
+  unbalanced skb_push().
+
+Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260912233048.3977192-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/atm/pppoatm.c | 42 +++++++++++++++++-------------------------
+ 1 file changed, 17 insertions(+), 25 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index d72cdcd2e2bb1..729c70c992cfa 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -243,9 +243,7 @@ static void __rfcomm_sock_close(struct sock *sk)
-  */
- static void rfcomm_sock_close(struct sock *sk)
- {
--	lock_sock(sk);
- 	__rfcomm_sock_close(sk);
--	release_sock(sk);
+diff --git a/net/atm/pppoatm.c b/net/atm/pppoatm.c
+index 3e4f17d335feb..b668a30b67a8d 100644
+--- a/net/atm/pppoatm.c
++++ b/net/atm/pppoatm.c
+@@ -292,10 +292,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 	struct atm_vcc *vcc;
+ 	int ret;
+ 
++	if (!pskb_may_pull(skb, 1)) {
++		kfree_skb(skb);
++		return DROP_PACKET;
++	}
++
+ 	ATM_SKB(skb)->vcc = pvcc->atmvcc;
+ 	pr_debug("(skb=0x%p, vcc=0x%p)\n", skb, pvcc->atmvcc);
+-	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
+-		(void) skb_pull(skb, 1);
+ 
+ 	vcc = ATM_SKB(skb)->vcc;
+ 	bh_lock_sock(sk_atm(vcc));
+@@ -318,23 +321,13 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 
+ 	switch (pvcc->encaps) {		/* LLC encapsulation needed */
+ 	case e_llc:
+-		if (skb_headroom(skb) < LLC_LEN) {
+-			struct sk_buff *n;
+-			n = skb_realloc_headroom(skb, LLC_LEN);
+-			if (n != NULL &&
+-			    !pppoatm_may_send(pvcc, n->truesize)) {
+-				kfree_skb(n);
+-				goto nospace;
+-			}
+-			consume_skb(skb);
+-			skb = n;
+-			if (skb == NULL) {
+-				bh_unlock_sock(sk_atm(vcc));
+-				return DROP_PACKET;
+-			}
+-		} else if (!pppoatm_may_send(pvcc, skb->truesize))
++		if (skb_cow_head(skb, LLC_LEN)) {
++			bh_unlock_sock(sk_atm(vcc));
++			kfree_skb(skb);
++			return DROP_PACKET;
++		}
++		if (!pppoatm_may_send(pvcc, skb->truesize))
+ 			goto nospace;
+-		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
+ 		break;
+ 	case e_vc:
+ 		if (!pppoatm_may_send(pvcc, skb->truesize))
+@@ -347,6 +340,12 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 		return 1;
+ 	}
+ 
++	if (skb->data[0] == '\0' && (pvcc->flags & SC_COMP_PROT))
++		skb_pull(skb, 1);
++
++	if (pvcc->encaps == e_llc)
++		memcpy(skb_push(skb, LLC_LEN), pppllc, LLC_LEN);
++
+ 	atm_account_tx(vcc, skb);
+ 	pr_debug("atm_skb(%p)->vcc(%p)->dev(%p)\n",
+ 		 skb, ATM_SKB(skb)->vcc, ATM_SKB(skb)->vcc->dev);
+@@ -356,13 +355,6 @@ static int pppoatm_send(struct ppp_channel *chan, struct sk_buff *skb)
+ 	return ret;
+ nospace:
+ 	bh_unlock_sock(sk_atm(vcc));
+-	/*
+-	 * We don't have space to send this SKB now, but we might have
+-	 * already applied SC_COMP_PROT compression, so may need to undo
+-	 */
+-	if ((pvcc->flags & SC_COMP_PROT) && skb_headroom(skb) > 0 &&
+-	    skb->data[-1] == '\0')
+-		(void) skb_push(skb, 1);
+ 	return 0;
  }
  
- static void rfcomm_sock_init(struct sock *sk, struct sock *parent)
-@@ -903,6 +901,7 @@ static int rfcomm_sock_compat_ioctl(struct socket *sock, unsigned int cmd, unsig
- static int rfcomm_sock_shutdown(struct socket *sock, int how)
- {
- 	struct sock *sk = sock->sk;
-+	bool cleanup_listen = false;
- 	int err = 0;
- 
- 	BT_DBG("sock %p, sk %p", sock, sk);
-@@ -913,9 +912,17 @@ static int rfcomm_sock_shutdown(struct socket *sock, int how)
- 	lock_sock(sk);
- 	if (!sk->sk_shutdown) {
- 		sk->sk_shutdown = SHUTDOWN_MASK;
-+		if (sk->sk_state == BT_LISTEN) {
-+			/* Block new children before cleaning up without sk lock. */
-+			sk->sk_state = BT_CLOSED;
-+			cleanup_listen = true;
-+		}
- 
- 		release_sock(sk);
--		__rfcomm_sock_close(sk);
-+		if (cleanup_listen)
-+			rfcomm_sock_cleanup_listen(sk);
-+		else
-+			__rfcomm_sock_close(sk);
- 		lock_sock(sk);
- 
- 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
 -- 
 2.53.0
 
