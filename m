@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5294E9C21;
-	Wed, 30 Sep 2026 15:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AD94FE2F4;
+	Wed, 30 Sep 2026 15:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782922; cv=none; b=TZHn1vqTA2iYDxTvo21Qb5iCNFozTQtkxRxwDxuE1SMZfMSdN6CpR2oUBbitBl+4nQn47/bBvEiUMVMn6zcQBGfXAWPyUbSRjg90AU962o/WZB+06h5dbPX5QFy1ysbZhBDVOX+OIXfBffCitN+6/EaooKse5gyKy/FjqW+oL7c=
+	t=1790782923; cv=none; b=hUTeRg+Dp2fdaadQ3tmiqdPwRr0H8TWCq+qLr1LA9Vel4V3RmJj0IZ7PGABc8msRZPx8idWZZN+0vcaJTVlFy/jKYbm530Omfw7qssc8E5jqtu1zfb4WPlBNbuSBUo1o4bI7xI/pZNZIP5I31WqTpyXmpf/gG/XSbbtYZ3NkhWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782922; c=relaxed/simple;
-	bh=uDGkkG1FAGnGw/pxjmqTyUscWbMvHV8xpIc1v2+Kg6w=;
+	s=arc-20240116; t=1790782923; c=relaxed/simple;
+	bh=cDs+/mPyjuV4w5OwB4Ocq4Bdyqbz3mHN/hQp5/9GG4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pac0Aj0FnUNm/QMEjMWScO8ZH1vFURJnWlWQRmqzEgdj3qWTuUZmxP+595wUzqzXP5h0XEoDGQlbPZU7gVCMNJd7Tdwr5Vz6IQNmd3bztnyKHaziB5xBaZMnar4xXtmw6iG742SConzVLpdlgm/Jm2GB9QidWG4V6jm6Br1m2Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPASeclB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BGWRO73Dd3EKPvxxjFz9G/ZNr4PZCnNA88tnGiPPYwATGt5IP591V7E7YAOTX6NWbAACHym4IcygCBSYH2Brf52tCR+/mvMKmCb/jJ+T0dP4bb+LFZUPQJDxnyWmSL9H7gBOH58V8I37mtP2NbAydPyChv8BActYXTd3FDyS3/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C22zmfhY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPASeclB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0371C1F000FF;
-	Wed, 30 Sep 2026 15:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C22zmfhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2E91F00893;
+	Wed, 30 Sep 2026 15:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782916;
-	bh=r9LGZk6r059DUEYSLTzuj4yAI2KvSAhvTUJPELiautY=;
+	s=korg; t=1790782919;
+	bh=NOuLfGbbS0w69FyuICEbQt5n8OCz2ur0rxb7oqIQgHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bPASeclBGtp0Z6OVMaO8tMelCD5vgIyzFCeEOkl4xuYGEhI8g4OTnJ/Yg0qgEauCD
-	 bX5HbnaaIE8cyS8byyyDNRWZZEBMYqnppNMt00QbgTxGdZnVEbAq9Mo4IUXVeGD8H2
-	 WSXUtD6dTGxOUzHt9IhIGDyKLU7Kx7ll9rZdMohs=
+	b=C22zmfhYt+LX2WIJTi5ZXpzga1AYybYjFZ4F0Cjk7Vh8UQlXpnJI8bwpolqiMczuo
+	 EQfJMPP+OveCBcgj3WGrH9WtUJo49YYx15ZZPNgd4m1rtUYQaFmUmQAKX4UASq2TJ9
+	 x1njadhbnFq1LO0rAlDdLoYAWMwY3Tsn/Jvqf7V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 208/595] ppp: ppp_async: simplify tty disc_data access
-Date: Wed, 30 Sep 2026 17:21:41 +0200
-Message-ID: <20260930152352.210031782@linuxfoundation.org>
+Subject: [PATCH 5.10 217/595] ASoC: ux500: Correct MSP frame and bit clock setup
+Date: Wed, 30 Sep 2026 17:21:50 +0200
+Message-ID: <20260930152352.399472346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,216 +51,275 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9feb069e5ed03582fbf6272539f1caa2a17dc6d5 ]
+[ Upstream commit 94c18cea657c48680e4ee20b635b6c01f3eb352e ]
 
-tty_ldisc_hangup() invokes the hangup callback while holding only a read
-lock on tty->ldisc_sem, so it can run concurrently with other line
-discipline callbacks. This currently forces async PPP to maintain
-separate lifetime protection around tty->disc_data.
+FRPER plus one is the number of bit clocks in a frame. It must follow
+the configured slot count and width. The legacy rate-dependent
+constants produce malformed frames; notably, a 16-slot, 16-bit frame
+is programmed as 278 rather than 256 clocks.
 
-Line discipline close is called under the write lock during hangup
-processing. Remove the hangup callback and rely on close for teardown,
-as done for SLIP by commit 23c53269f2ba ("slip: remove slip_hangup() to
-fix use-after-free in slip_receive_buf()"). This serializes teardown
-with all other line discipline operations.
+Derive the frame period from the TDM geometry and use the real
+functional clock rate. Validate that the requested bit clock has an
+exact, representable divider, program SCKDIV as divider minus one, and
+report the resulting bit clock using that same divisor.
 
-disc_data_lock, refcount and completion are redundant with that
-serialization. Remove them and access tty->disc_data directly.
-
-This also eliminates a lockdep warning reported by syzbot. The warning
-does not indicate a real deadlock because the write side runs only in
-process context with hardirqs disabled.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/0000000000002fbad30611e25849@google.com/
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828073245.126804-1-qingfang.deng@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-3-4b60b002d55a@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 82 ++++---------------------------------
- 1 file changed, 7 insertions(+), 75 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c | 75 +++++++--------------------------
+ sound/soc/ux500/ux500_msp_dai.h | 11 -----
+ sound/soc/ux500/ux500_msp_i2s.c | 54 ++++++++++++++----------
+ sound/soc/ux500/ux500_msp_i2s.h |  2 -
+ 4 files changed, 46 insertions(+), 96 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index ffc74744a7fe7..ceb4cdbb0aef9 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -65,8 +65,6 @@ struct asyncppp {
- 
- 	struct tasklet_struct tsk;
- 
--	refcount_t	refcnt;
--	struct completion dead;
- 	struct ppp_channel chan;	/* interface to generic ppp layer */
- 	unsigned char	obuf[OBUFSIZE];
- };
-@@ -115,38 +113,6 @@ static const struct ppp_channel_ops async_ops = {
-  * Routines implementing the PPP line discipline.
-  */
- 
--/*
-- * We have a potential race on dereferencing tty->disc_data,
-- * because the tty layer provides no locking at all - thus one
-- * cpu could be running ppp_asynctty_receive while another
-- * calls ppp_asynctty_close, which zeroes tty->disc_data and
-- * frees the memory that ppp_asynctty_receive is using.  The best
-- * way to fix this is to use a rwlock in the tty struct, but for now
-- * we use a single global rwlock for all ttys in ppp line discipline.
-- *
-- * FIXME: this is no longer true. The _close path for the ldisc is
-- * now guaranteed to be sane.
-- */
--static DEFINE_RWLOCK(disc_data_lock);
--
--static struct asyncppp *ap_get(struct tty_struct *tty)
--{
--	struct asyncppp *ap;
--
--	read_lock(&disc_data_lock);
--	ap = tty->disc_data;
--	if (ap != NULL)
--		refcount_inc(&ap->refcnt);
--	read_unlock(&disc_data_lock);
--	return ap;
--}
--
--static void ap_put(struct asyncppp *ap)
--{
--	if (refcount_dec_and_test(&ap->refcnt))
--		complete(&ap->dead);
--}
--
- /*
-  * Called when a tty is put into PPP line discipline. Called in process
-  * context.
-@@ -181,9 +147,6 @@ ppp_asynctty_open(struct tty_struct *tty)
- 	skb_queue_head_init(&ap->rqueue);
- 	tasklet_init(&ap->tsk, ppp_async_process, (unsigned long) ap);
- 
--	refcount_set(&ap->refcnt, 1);
--	init_completion(&ap->dead);
--
- 	ap->chan.private = ap;
- 	ap->chan.ops = &async_ops;
- 	ap->chan.mtu = PPP_MRU;
-@@ -204,34 +167,18 @@ ppp_asynctty_open(struct tty_struct *tty)
+diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
+index 6e71615c3b840..2de62175019af 100644
+--- a/sound/soc/ux500/ux500_msp_dai.c
++++ b/sound/soc/ux500/ux500_msp_dai.c
+@@ -61,72 +61,21 @@ static int setup_pcm_multichan(struct snd_soc_dai *dai,
+ 	return 0;
  }
  
- /*
-- * Called when the tty is put into another line discipline
-- * or it hangs up.  We have to wait for any cpu currently
-- * executing in any of the other ppp_asynctty_* routines to
-- * finish before we can call ppp_unregister_channel and free
-- * the asyncppp struct.  This routine must be called from
-- * process context, not interrupt or softirq context.
-+ * Called when the tty is put into another line discipline or it hangs up.
-+ * This call is serialized against other ldisc functions.
-  */
- static void
- ppp_asynctty_close(struct tty_struct *tty)
+-static int setup_frameper(struct snd_soc_dai *dai, unsigned int rate,
+-			struct msp_protdesc *prot_desc)
++static void setup_frameper(struct snd_soc_dai *dai,
++			   struct msp_protdesc *prot_desc)
  {
--	struct asyncppp *ap;
-+	struct asyncppp *ap = tty->disc_data;
+ 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
  
--	write_lock_irq(&disc_data_lock);
--	ap = tty->disc_data;
--	tty->disc_data = NULL;
--	write_unlock_irq(&disc_data_lock);
- 	if (!ap)
- 		return;
+-	switch (drvdata->slots) {
+-	case 1:
+-		switch (rate) {
+-		case 8000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_8_KHZ;
+-			break;
+-
+-		case 16000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_16_KHZ;
+-			break;
+-
+-		case 44100:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_44_1_KHZ;
+-			break;
+-
+-		case 48000:
+-			prot_desc->frame_period =
+-				FRAME_PER_SINGLE_SLOT_48_KHZ;
+-			break;
+-
+-		default:
+-			dev_err(dai->dev,
+-				"%s: Error: Unsupported sample-rate (freq = %d)!\n",
+-				__func__, rate);
+-			return -EINVAL;
+-		}
+-		break;
+-
+-	case 2:
+-		prot_desc->frame_period = FRAME_PER_2_SLOTS;
+-		break;
+-
+-	case 8:
+-		prot_desc->frame_period = FRAME_PER_8_SLOTS;
+-		break;
+-
+-	case 16:
+-		prot_desc->frame_period = FRAME_PER_16_SLOTS;
+-		break;
+-	default:
+-		dev_err(dai->dev,
+-			"%s: Error: Unsupported slot-count (slots = %d)!\n",
+-			__func__, drvdata->slots);
+-		return -EINVAL;
+-	}
+-
+-	prot_desc->clocks_per_frame =
+-			prot_desc->frame_period+1;
++	prot_desc->clocks_per_frame = drvdata->slots * drvdata->slot_width;
++	prot_desc->frame_period = prot_desc->clocks_per_frame - 1;
  
--	/*
--	 * We have now ensured that nobody can start using ap from now
--	 * on, but we have to wait for all existing users to finish.
--	 * Note that ppp_unregister_channel ensures that no calls to
--	 * our channel ops (i.e. ppp_async_send/ioctl) are in progress
--	 * by the time it returns.
--	 */
--	if (!refcount_dec_and_test(&ap->refcnt))
--		wait_for_completion(&ap->dead);
-+	tty->disc_data = NULL;
- 	tasklet_kill(&ap->tsk);
- 
- 	ppp_unregister_channel(&ap->chan);
-@@ -241,17 +188,6 @@ ppp_asynctty_close(struct tty_struct *tty)
- 	kfree(ap);
+ 	dev_dbg(dai->dev, "%s: Clocks per frame: %u\n",
+ 		__func__,
+ 		prot_desc->clocks_per_frame);
+-
+-	return 0;
  }
  
--/*
-- * Called on tty hangup in process context.
-- *
-- * Wait for I/O to driver to complete and unregister PPP channel.
-- * This is already done by the close routine, so just call that.
-- */
--static void ppp_asynctty_hangup(struct tty_struct *tty)
--{
--	ppp_asynctty_close(tty);
--}
--
- /*
-  * Read does nothing - no data is ever available this way.
-  * Pppd reads and writes packets via /dev/ppp instead.
-@@ -284,7 +220,7 @@ static int
- ppp_asynctty_ioctl(struct tty_struct *tty, struct file *file,
- 		   unsigned int cmd, unsigned long arg)
+-static int setup_pcm_framing(struct snd_soc_dai *dai, unsigned int rate,
+-			struct msp_protdesc *prot_desc)
++static int setup_pcm_framing(struct snd_soc_dai *dai,
++			     struct msp_protdesc *prot_desc)
  {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	int err, val;
- 	int __user *p = (int __user *)arg;
+ 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
  
-@@ -325,7 +261,6 @@ ppp_asynctty_ioctl(struct tty_struct *tty, struct file *file,
- 		err = tty_mode_ioctl(tty, file, cmd, arg);
+@@ -167,7 +116,9 @@ static int setup_pcm_framing(struct snd_soc_dai *dai, unsigned int rate,
+ 	prot_desc->tx_elem_len_2 = MSP_ELEM_LEN_16;
+ 	prot_desc->rx_elem_len_2 = MSP_ELEM_LEN_16;
+ 
+-	return setup_frameper(dai, rate, prot_desc);
++	setup_frameper(dai, prot_desc);
++
++	return 0;
+ }
+ 
+ static int setup_clocking(struct snd_soc_dai *dai,
+@@ -368,7 +319,7 @@ static int setup_msp_config(struct snd_pcm_substream *substream,
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		ret = setup_pcm_framing(dai, runtime->rate, prot_desc);
++		ret = setup_pcm_framing(dai, prot_desc);
+ 		if (ret < 0)
+ 			return ret;
+ 
+@@ -736,7 +687,6 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 	drvdata->tx_mask = 0x01;
+ 	drvdata->rx_mask = 0x01;
+ 	drvdata->slot_width = 16;
+-	drvdata->master_clk = MSP_INPUT_FREQ_APB;
+ 
+ 	drvdata->reg_vape = devm_regulator_get(&pdev->dev, "v-ape");
+ 	if (IS_ERR(drvdata->reg_vape)) {
+@@ -765,6 +715,11 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 			__func__, ret);
+ 		return ret;
+ 	}
++	drvdata->master_clk = clk_get_rate(drvdata->clk);
++	if (!drvdata->master_clk) {
++		dev_err(&pdev->dev, "MSP clock has no rate\n");
++		return -EINVAL;
++	}
+ 
+ 	ret = ux500_msp_i2s_init_msp(pdev, &drvdata->msp);
+ 	if (ret) {
+diff --git a/sound/soc/ux500/ux500_msp_dai.h b/sound/soc/ux500/ux500_msp_dai.h
+index fcd4b26f5d2de..731f87d626733 100644
+--- a/sound/soc/ux500/ux500_msp_dai.h
++++ b/sound/soc/ux500/ux500_msp_dai.h
+@@ -24,17 +24,6 @@
+ 
+ #define UX500_I2S_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
+ 
+-#define FRAME_PER_SINGLE_SLOT_8_KHZ		31
+-#define FRAME_PER_SINGLE_SLOT_16_KHZ	124
+-#define FRAME_PER_SINGLE_SLOT_44_1_KHZ	63
+-#define FRAME_PER_SINGLE_SLOT_48_KHZ	49
+-#define FRAME_PER_2_SLOTS				31
+-#define FRAME_PER_8_SLOTS				138
+-#define FRAME_PER_16_SLOTS				277
+-
+-#define UX500_MSP_INTERNAL_CLOCK_FREQ  40000000
+-#define UX500_MSP1_INTERNAL_CLOCK_FREQ UX500_MSP_INTERNAL_CLOCK_FREQ
+-
+ #define UX500_MSP_MIN_CHANNELS		1
+ #define UX500_MSP_MAX_CHANNELS		8
+ 
+diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
+index 0b266b682f8b1..5d5efd5074a7d 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.c
++++ b/sound/soc/ux500/ux500_msp_i2s.c
+@@ -214,35 +214,20 @@ static int configure_protocol(struct ux500_msp *msp,
+ 
+ static int setup_bitclk(struct ux500_msp *msp, struct ux500_msp_config *config)
+ {
++	struct msp_protdesc *protdesc;
++	u64 desired_bitclk;
++	unsigned int bitclk;
+ 	u32 reg_val_GCR;
+-	u32 frame_per = 0;
+-	u32 sck_div = 0;
+-	u32 frame_width = 0;
+-	u32 temp_reg = 0;
+-	struct msp_protdesc *protdesc = NULL;
++	u32 sck_div;
++	u32 temp_reg;
+ 
+ 	reg_val_GCR = readl(msp->registers + MSP_GCR);
+ 	writel(reg_val_GCR & ~SRG_ENABLE, msp->registers + MSP_GCR);
+ 
+-	if (config->default_protdesc)
+-		protdesc =
+-			(struct msp_protdesc *)&prot_descs[config->protocol];
+-	else
+-		protdesc = (struct msp_protdesc *)&config->protdesc;
+-
+ 	switch (config->protocol) {
+ 	case MSP_PCM_PROTOCOL:
+ 	case MSP_PCM_COMPAND_PROTOCOL:
+-		frame_width = protdesc->frame_width;
+-		sck_div = config->f_inputclk / (config->frame_freq *
+-			(protdesc->clocks_per_frame));
+-		frame_per = protdesc->frame_period;
+-		break;
+ 	case MSP_I2S_PROTOCOL:
+-		frame_width = protdesc->frame_width;
+-		sck_div = config->f_inputclk / (config->frame_freq *
+-			(protdesc->clocks_per_frame));
+-		frame_per = protdesc->frame_period;
+ 		break;
+ 	default:
+ 		dev_err(msp->dev, "%s: ERROR: Unknown protocol (%d)!\n",
+@@ -251,12 +236,35 @@ static int setup_bitclk(struct ux500_msp *msp, struct ux500_msp_config *config)
+ 		return -EINVAL;
  	}
  
--	ap_put(ap);
- 	return err;
- }
++	if (config->default_protdesc)
++		protdesc = (struct msp_protdesc *)&prot_descs[config->protocol];
++	else
++		protdesc = &config->protdesc;
++
++	if (!config->frame_freq || !protdesc->clocks_per_frame)
++		return -EINVAL;
++
++	desired_bitclk = (u64)config->frame_freq * protdesc->clocks_per_frame;
++	if (desired_bitclk > config->f_inputclk)
++		return -EINVAL;
++	bitclk = desired_bitclk;
++	if (config->f_inputclk % bitclk) {
++		dev_err(msp->dev,
++			"Input clock %u cannot generate bit clock %u\n",
++			config->f_inputclk, bitclk);
++		return -EINVAL;
++	}
++
++	sck_div = config->f_inputclk / bitclk;
++	if (!sck_div || sck_div > SCK_DIV_MASK + 1)
++		return -EINVAL;
++
+ 	temp_reg = (sck_div - 1) & SCK_DIV_MASK;
+-	temp_reg |= FRAME_WIDTH_BITS(frame_width);
+-	temp_reg |= FRAME_PERIOD_BITS(frame_per);
++	temp_reg |= FRAME_WIDTH_BITS(protdesc->frame_width);
++	temp_reg |= FRAME_PERIOD_BITS(protdesc->frame_period);
+ 	writel(temp_reg, msp->registers + MSP_SRG);
  
-@@ -341,7 +276,7 @@ static void
- ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
- 		  char *cflags, int count)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	unsigned long flags;
+-	msp->f_bitclk = (config->f_inputclk)/(sck_div + 1);
++	msp->f_bitclk = config->f_inputclk / sck_div;
  
- 	if (!ap)
-@@ -351,21 +286,19 @@ ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
- 	spin_unlock_irqrestore(&ap->recv_lock, flags);
- 	if (!skb_queue_empty(&ap->rqueue))
- 		tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- 	tty_unthrottle(tty);
- }
+ 	/* Enable bit-clock */
+ 	udelay(100);
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 9b9500492dc73..86a584e18353c 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -14,8 +14,6 @@
  
- static void
- ppp_asynctty_wakeup(struct tty_struct *tty)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
+ #include <linux/platform_device.h>
  
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
- 	if (!ap)
- 		return;
- 	set_bit(XMIT_WAKEUP, &ap->xmit_flags);
- 	tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- }
- 
- 
-@@ -375,7 +308,6 @@ static struct tty_ldisc_ops ppp_ldisc = {
- 	.name	= "ppp",
- 	.open	= ppp_asynctty_open,
- 	.close	= ppp_asynctty_close,
--	.hangup	= ppp_asynctty_hangup,
- 	.read	= ppp_asynctty_read,
- 	.write	= ppp_asynctty_write,
- 	.ioctl	= ppp_asynctty_ioctl,
+-#define MSP_INPUT_FREQ_APB 48000000
+-
+ /*** Stereo mode. Used for APB data accesses as 16 bits accesses (mono),
+  *   32 bits accesses (stereo).
+  ***/
 -- 
 2.53.0
 
