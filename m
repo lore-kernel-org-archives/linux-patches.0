@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F53DDAFC;
-	Wed, 30 Sep 2026 19:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9063CAA55;
+	Wed, 30 Sep 2026 19:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796251; cv=none; b=mC7EnZ36JqDVi9Vlzqw1DjG9kZ17qvdwqr6z2Rjx9/OY0QUF+Gp5YU20hR6Y93LtLjVUmTOEGXlsgW1K6LrEpmaa5dD6d8LGADRe8q472FTGgAlDnV6MW58SVilktI94FLGcwZ6YVrOpUDVuKm3hyuN5hPJU8py2gNvaxuPdX5M=
+	t=1790796254; cv=none; b=AenbcUV2JuiEJJiV7d7ZqbUtL1HQ95+fB5qs49+cKkZpqKS0ScBpKMf5YhaNALFKWQQVJoi31KHvrG+tKZ2LVsRPLqEIcuHjK4QYYYNP9sae2o4PXruVMCxAxHGA+1BmNY2qb3eUMk0EEHqAzM6MpOVXyzAZlBJQP1OsjkglOl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796251; c=relaxed/simple;
-	bh=8oInQk3JYt7QxPm4XJPqxlSi7z2gYip9h1ymqCy8bdA=;
+	s=arc-20240116; t=1790796254; c=relaxed/simple;
+	bh=zxQiWbNq98O1qK64wteL+OpdCzwbM24mHx1zK1sKEl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYpx5l6t78mQEV4XJzbKWo1pxkGz55ajZRATkSJO07DHfo0BsvcA1wL3+wkzzZYlagSVfGQueTKOeGrWvxZxuf4/D8/cyysZZr3zJFEZquQDGuiOgmcC/O8i/Nkc3eeUczbnyrTTP+4CJT3L1CT6LPfM1tewSgmoo6Z6thb/Yi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mx64fqUO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fOuMxVuqxlJNwPLi8M+5+1GghNEQh51U5ommQTneFGzvkj/Te+Ge5Bz91GO4RXJ6V51qjNh89CJmGS99iwxWvMmBCmcQDyVr0HL+I2uJ0ogbjczH+wqvkoQJD4d7XKGkamsh+NuokAJIc261lwuYWmXwpwJk7lsbt8zE5EcPKh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liW9i1S/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mx64fqUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D7C1F000FF;
-	Wed, 30 Sep 2026 19:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liW9i1S/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DF31F000FF;
+	Wed, 30 Sep 2026 19:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796250;
-	bh=JjisYUIaiVAKVU81F9zZWP10AIj1DqSf2BWDQWwnKBQ=;
+	s=korg; t=1790796253;
+	bh=so2EP+JR7PjGAmawDXYC+ImRFd12M312WKUvBgOPyB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mx64fqUOTDdHDWpXWD6L3c+WtoINkMVu9hM1T33W3gdarveuqHesL/VtaM8amOMaY
-	 4RMfc65wxzRSJrZtM59aRZZ///Bq4zn9/W+kqsLiAL1sO2SORJL2yMOf+Y0rlpa5Je
-	 F6t2cm4VTmASdhAFX9VjMv5Z82H4LzMJbBTrGFM0=
+	b=liW9i1S/iBpkNN0tNpGbR3m/5ZPnw+eigQw2xADf7oQHTl59uPFlp2ZgzhaOK8QnT
+	 x6tcV6B/CkK23Kp5V2Pqr6lkjL9c/0DGOD+gCnkw2T0mU/wqNK/dlv8EzxY0lR+ZMj
+	 MwWCOpEOPKbK04RQ6KNRxo/LjF87Nnp9MfvWP5B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Wyatt Feng <wf.kernel.dev@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.6 0845/1193] net: xfrm: reject unrepresentable espintcp transport headers
-Date: Wed, 30 Sep 2026 17:25:29 +0200
-Message-ID: <20260930152453.013029414@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 0846/1193] HID: logitech-hidpp: fix race condition when accessing stale stack pointer
+Date: Wed, 30 Sep 2026 17:25:30 +0200
+Message-ID: <20260930152453.033626712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -46,49 +45,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wyatt Feng <wf.kernel.dev@gmail.com>
+From: Benoît Sevens <bsevens@google.com>
 
-commit 96f01b53c2d05e003b040892256de54a586e8529 upstream.
+commit e2aaf2d3ad92ac4a8afa6b69ad4c38e7747d3d6e upstream.
 
-ESP-in-TCP can hand xfrm packets whose transport header offset no longer
-fits after the stream parser trims the TCP envelope. The plain transport
-header reset truncates that offset and triggers the skb warning path.
+The driver uses hidpp->send_receive_buf to point to a stack-allocated
+buffer in the synchronous command path (__do_hidpp_send_message_sync).
+However, this pointer is not cleared when the function returns.
 
-Use the careful transport-header helper and drop the skb through the
-existing XFRM error path when the offset cannot be represented.
+If an event is processed (e.g. by a different thread) while the
+send_mutex is held by a new command, but before that command has
+updated send_receive_buf, the handler (hidpp_raw_hidpp_event) will
+observe that the mutex is locked and dereference the stale pointer.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <wf.kernel.dev@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+This results in an out-of-bounds access on a different thread's kernel
+stack (or a NULL pointer dereference on the very first command).
+
+Fix this by:
+1. Clearing hidpp->send_receive_buf to NULL before releasing the mutex
+   in the synchronous command path.
+2. Moving the assignment of the local 'question' and 'answer' pointers
+   inside the mutex_is_locked() block in the handler, and adding
+   a NULL check before dereferencing.
+
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Cc: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/espintcp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -32,7 +32,11 @@ static void handle_esp(struct sk_buff *s
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -304,21 +304,22 @@ static int __do_hidpp_send_message_sync(
+ 	if (ret) {
+ 		dbg_hid("__hidpp_send_report returned err: %d\n", ret);
+ 		memset(response, 0, sizeof(struct hidpp_report));
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
+ 				5*HZ)) {
+ 		dbg_hid("%s:timeout waiting for response\n", __func__);
+ 		memset(response, 0, sizeof(struct hidpp_report));
+-		return -ETIMEDOUT;
++		ret = -ETIMEDOUT;
++		goto out;
+ 	}
+ 
+ 	if (response->report_id == REPORT_ID_HIDPP_SHORT &&
+ 	    response->rap.sub_id == HIDPP_ERROR) {
+ 		ret = response->rap.params[1];
+ 		dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	if ((response->report_id == REPORT_ID_HIDPP_LONG ||
+@@ -326,10 +327,14 @@ static int __do_hidpp_send_message_sync(
+ 	    response->fap.feature_index == HIDPP20_ERROR) {
+ 		ret = response->fap.params[1];
+ 		dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+-	return 0;
++	ret = 0;
++
++out:
++	hidpp->send_receive_buf = NULL;
++	return ret;
+ }
+ 
+ /*
+@@ -3867,8 +3872,7 @@ static int hidpp_input_configured(struct
+ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
+ 		int size)
  {
- 	struct tcp_skb_cb *tcp_cb = (struct tcp_skb_cb *)skb->cb;
+-	struct hidpp_report *question = hidpp->send_receive_buf;
+-	struct hidpp_report *answer = hidpp->send_receive_buf;
++	struct hidpp_report *question, *answer;
+ 	struct hidpp_report *report = (struct hidpp_report *)data;
+ 	int ret;
  
--	skb_reset_transport_header(skb);
-+	if (!skb_reset_transport_header_careful(skb)) {
-+		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
-+		kfree_skb(skb);
-+		return;
-+	}
- 
- 	/* restore IP CB, we need at least IP6CB->nhoff */
- 	memmove(skb->cb, &tcp_cb->header, sizeof(tcp_cb->header));
+@@ -3877,6 +3881,12 @@ static int hidpp_raw_hidpp_event(struct
+ 	 * previously sent command.
+ 	 */
+ 	if (unlikely(mutex_is_locked(&hidpp->send_mutex))) {
++		question = hidpp->send_receive_buf;
++		answer = hidpp->send_receive_buf;
++
++		if (!question)
++			return 0;
++
+ 		/*
+ 		 * Check for a correct hidpp20 answer or the corresponding
+ 		 * error
 
 
