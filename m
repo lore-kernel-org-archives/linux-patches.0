@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB0D3BA244;
-	Wed, 30 Sep 2026 19:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7C33DBD44;
+	Wed, 30 Sep 2026 19:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796104; cv=none; b=MG6Y9Yd4gE49AkhAq3mCbhksTPDizTXL0UPJOIpuo5yar9UkBtjicJvj6gvua9OJWW1a1DYNzF9bEe1Ks9gT/BnN9RFhXaMohD7YvRAL5TNOoXV7cdkt4epqSUUyEY7tEEMLPsol9CYtiIguFSJI8FDrFamRO1pJq+6X1u6NM4c=
+	t=1790796107; cv=none; b=d97v5XLadHlnDM+uf5gzS0WYi0DYfSVJNaST/4B7/TIaNd/lt7CCiEhjM04DX8jDoFXUarAU3fpfmbmaaDTtmqVAzWCnEwcStY1pMTdQg68jek9bqaWuaO+yraGVFH7bdifSdR31Q/gCd18gTMV/RVX0F2NBMlqwJUUjq6BfakE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796104; c=relaxed/simple;
-	bh=ne1T4YHkevb+XKCA1ZHInybZ7ZyyApUcdhbfFyVjkQ0=;
+	s=arc-20240116; t=1790796107; c=relaxed/simple;
+	bh=3pWjbU2QJq2oasl/xtA+aESPlrtsYeFN5EKWnSjW0Jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Km7QOkVcxb32dxHH4rFbYvHcHKc6QsJUiRsu3WuGPicJ+T3JmOMcEWJJv6sHfNXZg+9waG0W/8337wP1xMOK7iddO+nOJ9yj9y2olrjwLkCPF9dNVoLiRloDuXqc/CXCMBr+rLJSoVqi86FpjiYeswyZ12s7W1D4OiryYmoGDQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hplHpiSi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dnso3jY058hTTx3xKfL49gG2IvFpInvxRry+DWXrZzCKXvHuJD+aU5fPOFivzqeE2Q5X6foKBeD6bnN/pt0UNfR8UR3+u6TqeFnk/nx2MK0sHBAll83DlXacCBsz+jO46nopyvqxLpmOx7CyQWqaz3rWxiSS0Ziu7t2oRm2/GRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zc4bSsOI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hplHpiSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733181F000FF;
-	Wed, 30 Sep 2026 19:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zc4bSsOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466451F000FF;
+	Wed, 30 Sep 2026 19:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796103;
-	bh=m0XLllLLgdCzR80iXF+DX0DBYMdzKyjAYH0RV8FYI+8=;
+	s=korg; t=1790796105;
+	bh=ymfP9KQhMd3N3mDZNDfmu8cFA7I7Qiff2neVd64gCQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hplHpiSineEAkYTzuEtezzE0ElcUpkLfaBwNMDf62/f6Cg0XDPfbw+6Xqi+6uyn6p
-	 ojmArKy6bJMTa7XkEkbjq4ErMbVUw2rAuvXwlBAxa/1JIpe2yd4GAAhezHiyWpmcPb
-	 8hSCHWu2lHFweEJvz8CsixA/fGVROma4AzexmzgM=
+	b=zc4bSsOIIt974zcHNeb5yFtDCrWVoYnLqG4GtwMDAyQbB9gdv2uoG7a38GMqtIYFC
+	 KcRjjwZnAkNJQ7/+sWOoF/j8/FAADS42t/zbOgwDpDyxqBuEO16TLpWQ03nek1l6sm
+	 HHO/tUj2ZD1ooecD8If+bZcxrQa+8epwgTgsLWhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0794/1193] drm/msm/dsi: round the byte clock rate after reparenting to the PHY PLL
-Date: Wed, 30 Sep 2026 17:24:38 +0200
-Message-ID: <20260930152451.885806406@linuxfoundation.org>
+Subject: [PATCH 6.6 0795/1193] seg6: set IPSKB_L3SLAVE from IP6SKB_L3SLAVE on IPIP decapsulation
+Date: Wed, 30 Sep 2026 17:24:39 +0200
+Message-ID: <20260930152451.908748631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,125 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit 2028280686f4fa78e2f1f6dede4b6c1fd782b9e3 ]
+[ Upstream commit 7616242a2b37883f7322aaa1d2bd6cd0fed28315 ]
 
-DSI 6G v2.9 hosts (SM8650, SM8750, Kaanapali, etc.) reparent the byte and
-pixel RCGs to the DSI PHY PLL at runtime from
-dsi_link_clk_set_rate_6g_v2_9(), after the PHY has been enabled. However
-dsi_calc_clk_rate_6g() runs earlier, in order to compute the bit clock
-request for the PHY. At that point the byte RCG still has its reset
-parent (XO), so clk_round_rate() returns a bogus rate, which then ends up
-in the PHY bit clock request and the PLL gets programmed to a wrong
-frequency, breaking the panel.
+When an SRv6 packet arrives on an interface enslaved to a VRF,
+vrf_ip6_rcv() sets IP6SKB_L3SLAVE in IP6CB, but decap_and_validate()
+has never set IPSKB_L3SLAVE in IPCB. The bit stayed clear in the
+common case, and with CONFIG_IPV6_MIP6 the leftover frag_max_size of
+a reassembled outer packet could even set it, with no VRF involved.
+Commit 44930446dde4 ("ipv6: seg6: clear IPv4 control block on IPIP
+decapsulation") then made the unreliable bit reliably clear.
 
-Move the rounding to dsi_link_clk_set_rate_6g(), which is called after
-the RCGs have been reparented to the PLL. Storing the rounded rate at
-this point still makes later link_clk_set_rate() calls no-ops in the
-CCF. Derive the byte interface clock rate from the rounded byte clock
-rate, otherwise it would keep requesting the idealized rate and
-retrigger the PLL on every transfer.
+The effect of the missing flag is visible with End.DX4 when a
+delivery to a local address of the node reaches the socket lookup.
+For example, a UDP socket bound to the enslaved ingress interface
+does not receive any of the decapsulated packets, while an unbound
+socket outside the VRF does.
+This contradicts Documentation/networking/vrf.rst: by default the
+scope of an unbound UDP or TCP socket is limited to the default VRF.
 
-Reported-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Fixes: 6cd33b6f4155 ("drm/msm/dsi: round 6G byte clock rate to the PLL-achievable value")
-Assisted-by: LLM
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SM6115P J606F
-Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/750496/
-Link: https://lore.kernel.org/r/20260903-fix-eliza-dsi-v1-1-3474a6c9f2e0@oss.qualcomm.com
+Set IPSKB_L3SLAVE for IPv4 in decap_and_validate(), which already does
+the same for IPv6. The socket lookup then matches the decapsulated
+packet like any other packet received on that enslaved interface. Such
+a packet matches an unbound UDP or TCP socket only when
+udp_l3mdev_accept or tcp_l3mdev_accept is set.
+
+Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260913194421.31-1-andrea.mayer@uniroma2.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 36 ++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ net/ipv6/seg6_local.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index be61f265fad94..cdc964aaf405f 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -121,7 +121,7 @@ struct msm_dsi_host {
- 	struct clk *byte_intf_clk;
+diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
+index 129cb659bab2c..206e2cc2d3141 100644
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -257,10 +257,13 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
+ 		return false;
  
- 	unsigned long byte_clk_rate;
--	unsigned long byte_intf_clk_rate;
-+	bool byte_intf_clk_div_2;
- 	unsigned long pixel_clk_rate;
- 	unsigned long esc_clk_rate;
+ 	if (proto == IPPROTO_IPIP) {
++		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
+ 		int iif = IP6CB(skb)->iif;
  
-@@ -364,8 +364,20 @@ int msm_dsi_runtime_resume(struct device *dev)
- 
- int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
- {
-+	unsigned long byte_intf_clk_rate;
-+	long rounded_byte_clk_rate;
- 	int ret;
- 
-+	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
-+					       msm_host->byte_clk_rate);
-+	if (rounded_byte_clk_rate < 0) {
-+		pr_err("%s: failed to round byte clock rate, %ld\n",
-+		       __func__, rounded_byte_clk_rate);
-+		return rounded_byte_clk_rate;
-+	}
-+
-+	msm_host->byte_clk_rate = rounded_byte_clk_rate;
-+
- 	DBG("Set clk rates: pclk=%lu, byteclk=%lu",
- 	    msm_host->pixel_clk_rate, msm_host->byte_clk_rate);
- 
-@@ -383,7 +395,11 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
- 	}
- 
- 	if (msm_host->byte_intf_clk) {
--		ret = clk_set_rate(msm_host->byte_intf_clk, msm_host->byte_intf_clk_rate);
-+		byte_intf_clk_rate = msm_host->byte_clk_rate;
-+		if (msm_host->byte_intf_clk_div_2)
-+			byte_intf_clk_rate /= 2;
-+
-+		ret = clk_set_rate(msm_host->byte_intf_clk, byte_intf_clk_rate);
- 		if (ret) {
- 			pr_err("%s: Failed to set rate byte intf clk, %d\n",
- 			       __func__, ret);
-@@ -633,24 +649,12 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 
- int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- {
--	long rounded_byte_clk_rate;
--
- 	if (!msm_host->mode) {
- 		pr_err("%s: mode not set\n", __func__);
- 		return -EINVAL;
- 	}
- 
- 	dsi_calc_pclk(msm_host, is_bonded_dsi);
--
--	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
--					       msm_host->byte_clk_rate);
--	if (rounded_byte_clk_rate < 0) {
--		pr_err("%s: failed to round byte clock rate, %ld\n",
--		       __func__, rounded_byte_clk_rate);
--		return rounded_byte_clk_rate;
--	}
--
--	msm_host->byte_clk_rate = rounded_byte_clk_rate;
- 	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
- 	return 0;
- }
-@@ -2406,9 +2410,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
- 		goto unlock_ret;
- 	}
- 
--	msm_host->byte_intf_clk_rate = msm_host->byte_clk_rate;
--	if (phy_shared_timings->byte_intf_clk_div_2)
--		msm_host->byte_intf_clk_rate /= 2;
-+	msm_host->byte_intf_clk_div_2 = phy_shared_timings->byte_intf_clk_div_2;
- 
- 	msm_dsi_sfpb_config(msm_host, true);
- 
+ 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
+ 		IPCB(skb)->iif = iif;
++		if (l3slave)
++			IPCB(skb)->flags |= IPSKB_L3SLAVE;
+ 	} else if (proto == IPPROTO_IPV6) {
+ 		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
+ 		int iif = IP6CB(skb)->iif;
 -- 
 2.53.0
 
