@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626DE4D6C2E;
-	Wed, 30 Sep 2026 18:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D57B2D9484;
+	Wed, 30 Sep 2026 18:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791977; cv=none; b=ZK1+QogwOKnNYIsC8otaloRa+yGv/q2JykUJRJZev3Hch8K/g4/1llNfwleVCik4rrsBFyyDHLXS0AgRNxJubvC2Sh5MNh7XSnPQBgCvae+IIUZ49vjvUzY8Om92e7LyYboIGTnzkk88S9sWC0K6+K5ifCTYAHGTWQY/zKeS4U8=
+	t=1790791980; cv=none; b=YYzmFJlrPvhAdYgdUBTvsDHe4Gu72lLCZomuD5DkAEPChXXOZqtkGuTCCP89+RB8zN/OQu0z/n3zzjHdxu/h0f4FDFkI6s25QI1XUOIiMYm015SYTdLe0k406pzn242jhWvNPptFoByq7K3Agm826IWmn9Vg4/4taMECY6/uQqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791977; c=relaxed/simple;
-	bh=CYZipjzFW4aCRDWXNrKVB9oYRtQ8UEk+6IDIMi1Qx9I=;
+	s=arc-20240116; t=1790791980; c=relaxed/simple;
+	bh=z1uOQPw3xZeQ/Z1I0oE3i+630zGyfwZAthf09FNmlSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUNb8MoRz6rO1w4Q/tPvG4diD9w4MtNx4P3BpR6YDuaA0ZpxObSJGVUkql6S1PLiyapki9j4l0bu1aT1nXCWHFhFOQ/n68O3UI/4zbfeMP9SZcM4V5Tk1R88lvgRD4Z9QLPqzk5Fxxv1bapkCAKN93Am9h2n0S/ZGVHDsEq6jEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2E4AHAq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qE5FsBj6xvTDBW3K5WaI3yBY3MMU1eqXBPZyI2sVCPXhZSPHq556U0DnBj7+lpjtc/NDyeMZ6hhdQ5IXWqIWgNXev1Xxsi/te6uZbDn5LlF+UxRojU0/R8DgV1fRGd7kUF+g1wI++y0iuHz72Th+P/Q8hptmGfo17Y2WsHhOyas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3zyv0mC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2E4AHAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE921F000FF;
-	Wed, 30 Sep 2026 18:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3zyv0mC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965C61F000FF;
+	Wed, 30 Sep 2026 18:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791976;
-	bh=2w9ipaupr9VUQltuPtk0Sj/8XKCLeIV+uLSO/dMokAE=;
+	s=korg; t=1790791979;
+	bh=AJczR0MQyoWOa7kLluyHqtyvk/PJ4EK1BI4fgv3Icyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o2E4AHAq/GiAgiM4qZ3VWrpbzpY9xYEPLyxqU1VImSljkG2BwqSxhKDe50BP03TEv
-	 vx9umzFd+yWvB06EJWfi2HBlsJw/zcqI/Yc7oWPM0M5cyXusnsDl/nS5PZrLP9NZoR
-	 3gImNV/wzalTStgTjb9gYVYHftfDmRkIQ/ssI00g=
+	b=X3zyv0mCqnjMDLWcwGyoU5Wq5beF6EzSH2MWr6SKfanvMcjv6fHXBZ3xyFxpM3Yvc
+	 mLGnz1CHkazp6VH8XxpWBaFnsdX5KwfC7bmz22dp/GSINmodvH7bODLcGQUhb+ksT4
+	 KTC85bTH6j4wA/jQHDPLoWfBHlF0oqdiISImBICE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 491/752] drm/msm/dsi: correct byte intf clock rate for 14nm DSI PHY
-Date: Wed, 30 Sep 2026 17:26:01 +0200
-Message-ID: <20260930152408.890842048@linuxfoundation.org>
+Subject: [PATCH 5.15 492/752] drm/msm/dsi: round the byte clock rate after reparenting to the PHY PLL
+Date: Wed, 30 Sep 2026 17:26:02 +0200
+Message-ID: <20260930152408.912807068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,115 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 1d5e01dfa3410bc94476e3050485852d6bba3fe0 ]
+[ Upstream commit 2028280686f4fa78e2f1f6dede4b6c1fd782b9e3 ]
 
-According to the vendor kernel, byte intf clock rate should be a half of
-the byte clock only when DSI PHY version is above 2.0 (in other words,
-10nm PHYs and later) and only if PHY is used in D-PHY mode. Currently
-MSM DSI code handles only the second part of the clause (C-PHY vs
-D-PHY), skipping DSI PHY version check, which causes issues on some of
-14nm DSI PHY platforms (e.g. qcm2290).
+DSI 6G v2.9 hosts (SM8650, SM8750, Kaanapali, etc.) reparent the byte and
+pixel RCGs to the DSI PHY PLL at runtime from
+dsi_link_clk_set_rate_6g_v2_9(), after the PHY has been enabled. However
+dsi_calc_clk_rate_6g() runs earlier, in order to compute the bit clock
+request for the PHY. At that point the byte RCG still has its reset
+parent (XO), so clk_round_rate() returns a bogus rate, which then ends up
+in the PHY bit clock request and the PLL gets programmed to a wrong
+frequency, breaking the panel.
 
-Move divisor selection to DSI PHY code, pass selected divisor through
-shared timings and set byte intf clock rate accordingly.
+Move the rounding to dsi_link_clk_set_rate_6g(), which is called after
+the RCGs have been reparented to the PLL. Storing the rounded rate at
+this point still makes later link_clk_set_rate() calls no-ops in the
+CCF. Derive the byte interface clock rate from the rounded byte clock
+rate, otherwise it would keep requesting the idealized rate and
+retrigger the PLL on every transfer.
 
-Cc: Loic Poulain <loic.poulain@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM6115P J606F
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/519006/
-Link: https://lore.kernel.org/r/20230118130027.2345719-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Stable-dep-of: 2028280686f4 ("drm/msm/dsi: round the byte clock rate after reparenting to the PHY PLL")
+Reported-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reported-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Fixes: 6cd33b6f4155 ("drm/msm/dsi: round 6G byte clock rate to the PLL-achievable value")
+Assisted-by: LLM
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SM6115P J606F
+Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/750496/
+Link: https://lore.kernel.org/r/20260903-fix-eliza-dsi-v1-1-3474a6c9f2e0@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi.h         |  1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c    | 14 ++++++--------
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c |  4 ++++
- 3 files changed, 11 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 36 ++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index a63666e59d19e..36a17039f2a4f 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -157,6 +157,7 @@ struct msm_dsi_phy_shared_timings {
- 	u32 clk_post;
- 	u32 clk_pre;
- 	bool clk_pre_inc_by_2;
-+	bool byte_intf_clk_div_2;
- };
- 
- struct msm_dsi_phy_clk_request {
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index dcee10eaa70ed..a617b18ae5f6c 100644
+index a617b18ae5f6c..815b0c2d9e333 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -116,6 +116,7 @@ struct msm_dsi_host {
+@@ -116,7 +116,7 @@ struct msm_dsi_host {
  	struct clk *byte_intf_clk;
  
  	unsigned long byte_clk_rate;
-+	unsigned long byte_intf_clk_rate;
+-	unsigned long byte_intf_clk_rate;
++	bool byte_intf_clk_div_2;
  	unsigned long pixel_clk_rate;
  	unsigned long esc_clk_rate;
  
-@@ -498,7 +499,6 @@ int msm_dsi_runtime_resume(struct device *dev)
+@@ -499,8 +499,20 @@ int msm_dsi_runtime_resume(struct device *dev)
  
  int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
  {
--	unsigned long byte_intf_rate;
++	unsigned long byte_intf_clk_rate;
++	long rounded_byte_clk_rate;
  	int ret;
  
++	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
++					       msm_host->byte_clk_rate);
++	if (rounded_byte_clk_rate < 0) {
++		pr_err("%s: failed to round byte clock rate, %ld\n",
++		       __func__, rounded_byte_clk_rate);
++		return rounded_byte_clk_rate;
++	}
++
++	msm_host->byte_clk_rate = rounded_byte_clk_rate;
++
  	DBG("Set clk rates: pclk=%lu, byteclk=%lu",
-@@ -518,13 +518,7 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
+ 	    msm_host->pixel_clk_rate, msm_host->byte_clk_rate);
+ 
+@@ -518,7 +530,11 @@ int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
  	}
  
  	if (msm_host->byte_intf_clk) {
--		/* For CPHY, byte_intf_clk is same as byte_clk */
--		if (msm_host->cphy_mode)
--			byte_intf_rate = msm_host->byte_clk_rate;
--		else
--			byte_intf_rate = msm_host->byte_clk_rate / 2;
--
--		ret = clk_set_rate(msm_host->byte_intf_clk, byte_intf_rate);
-+		ret = clk_set_rate(msm_host->byte_intf_clk, msm_host->byte_intf_clk_rate);
+-		ret = clk_set_rate(msm_host->byte_intf_clk, msm_host->byte_intf_clk_rate);
++		byte_intf_clk_rate = msm_host->byte_clk_rate;
++		if (msm_host->byte_intf_clk_div_2)
++			byte_intf_clk_rate /= 2;
++
++		ret = clk_set_rate(msm_host->byte_intf_clk, byte_intf_clk_rate);
  		if (ret) {
  			pr_err("%s: Failed to set rate byte intf clk, %d\n",
  			       __func__, ret);
-@@ -2426,6 +2420,10 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+@@ -712,24 +728,12 @@ static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 
+ int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ {
+-	long rounded_byte_clk_rate;
+-
+ 	if (!msm_host->mode) {
+ 		pr_err("%s: mode not set\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 
+ 	dsi_calc_pclk(msm_host, is_bonded_dsi);
+-
+-	rounded_byte_clk_rate = clk_round_rate(msm_host->byte_clk,
+-					       msm_host->byte_clk_rate);
+-	if (rounded_byte_clk_rate < 0) {
+-		pr_err("%s: failed to round byte clock rate, %ld\n",
+-		       __func__, rounded_byte_clk_rate);
+-		return rounded_byte_clk_rate;
+-	}
+-
+-	msm_host->byte_clk_rate = rounded_byte_clk_rate;
+ 	msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
+ 	return 0;
+ }
+@@ -2420,9 +2424,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
  		goto unlock_ret;
  	}
  
-+	msm_host->byte_intf_clk_rate = msm_host->byte_clk_rate;
-+	if (phy_shared_timings->byte_intf_clk_div_2)
-+		msm_host->byte_intf_clk_rate /= 2;
-+
+-	msm_host->byte_intf_clk_rate = msm_host->byte_clk_rate;
+-	if (phy_shared_timings->byte_intf_clk_div_2)
+-		msm_host->byte_intf_clk_rate /= 2;
++	msm_host->byte_intf_clk_div_2 = phy_shared_timings->byte_intf_clk_div_2;
+ 
  	msm_dsi_sfpb_config(msm_host, true);
  
- 	ret = dsi_host_regulator_enable(msm_host);
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 6b9a9e56df372..05f6f499f17d8 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -350,6 +350,8 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
- 		timing->shared_timings.clk_pre_inc_by_2 = 0;
- 	}
- 
-+	timing->shared_timings.byte_intf_clk_div_2 = true;
-+
- 	timing->ta_go = 3;
- 	timing->ta_sure = 0;
- 	timing->ta_get = 4;
-@@ -454,6 +456,8 @@ int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
- 	tmax = 255;
- 	timing->shared_timings.clk_pre = DIV_ROUND_UP((tmax - tmin) * 125, 10000) + tmin;
- 
-+	timing->shared_timings.byte_intf_clk_div_2 = true;
-+
- 	DBG("%d, %d, %d, %d, %d, %d, %d, %d, %d, %d",
- 		timing->shared_timings.clk_pre, timing->shared_timings.clk_post,
- 		timing->clk_zero, timing->clk_trail, timing->clk_prepare, timing->hs_exit,
 -- 
 2.53.0
 
