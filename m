@@ -1,36 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D622852F27A;
-	Wed, 30 Sep 2026 17:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A350252F26F;
+	Wed, 30 Sep 2026 17:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790547; cv=none; b=ZOzNTqlgXUWE3ntFoDd5pyhaZA0wyubrwrth90WYEnCBgljkSMnkXpbW3gkonQ3eTrQIwMjhsTzEzn+6thmMY+S3qTVtFyTduoQw3HHub/00rukhDQQOtD/xH8VSi5LOO3nHmhiMLyrj9iT5JfvrgZOlpN0EKq3ymZ+C4fhPP7k=
+	t=1790790549; cv=none; b=KLCNCk8VOpDeAryUfkxxsmjG01JyD+3WG0jg3ZS8GYv+rcokOAYNcfTn5/bRiwNZC5ws0SwTxIPBiEyQpw4jLDUkJZXagDqoddB8B1FIcNceRsETuqj/co4iH0L5D7JVrBjkk8ym0coGBiUydUH3R+4wscLYE4gHqvbjjK7Adkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790547; c=relaxed/simple;
-	bh=RtcvjS6deIS9yyQ6uuj33YjM+AvFXwaYWWTi7pVGN74=;
+	s=arc-20240116; t=1790790549; c=relaxed/simple;
+	bh=DxAGJsw5Sw5oyGI4RT4kIbAWDwDaO+NbkrFR4jZZiQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AB+P3UhmVnKSsvQbipbb5fQLhOKxXLiRvBukzn3GDSfhbkUvmi3GxGXCQFgdN9pdwLN7ikqGEyPJTcodG2S9FhtlIP3u8kxyhxcGKsvMtfpwljt2cdkDqvqrx9tySvjjZyhhBHXbg04inknbJtPHir5slJB7NFzKb1nyZ5uhyIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjNqFJgk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ls1Jzhye/F2BZbNwKOHDXa7rRF1/hOBxfYuDL24iKFTk6CJxNWUvS9EyeHhvFCxXL2BQG0jnrMvAGQK3rORZHeY1+GeU3DWM2mWv10BWVlD0PGV4S3DXgnsCrp8CJl0MD9fKoFPC7quo7E9mwV+TaJVHcHi3cOgmqEA4NEEqB6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baYhyJjP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjNqFJgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1971F000FF;
-	Wed, 30 Sep 2026 17:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baYhyJjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128B01F000FF;
+	Wed, 30 Sep 2026 17:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790545;
-	bh=dqVFSPxbaTA6ZtH7Slbao5qGn5zLXSNgG3txJIzIgmI=;
+	s=korg; t=1790790548;
+	bh=yQYb8LYDjn8uFv62n+rOnGBGdLL8Bq5Z1xWQskaFaOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zjNqFJgkta6KnO7q+5hdrqm8g5k6Apuxg0Xk77HbN2gkETSxHb+S8FkMGRJKorbLA
-	 oiYnfWTPUuTCZmpCc5KylQvz3pS78XcXs6CDh+pnMjthHqu6y5f3CyLhK5DXiSU71j
-	 Mfg/jFmMVhRgme6KVGAqmFP0ucaKnWJPwxAfMvfs=
+	b=baYhyJjPFbk8wHv77xznO8lDrPKAls/xTuUxB4e3792GjKzrF7jFfaQkLrEXimLIT
+	 EidH4rAwUTjpdq6uhQUy8BTtWTDvNaqzmLdidr2O7HnYpi1tOLwT1xRvjA3l2k0W1w
+	 y7/RCdVcsEMgfxZ1DsIWEoOCfsY4g7NUe5Gnxy1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.12 866/877] rose: cancel neighbour timers in rose_neigh_put() before freeing
-Date: Wed, 30 Sep 2026 17:29:37 +0200
-Message-ID: <20260930152433.422386624@linuxfoundation.org>
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 831/877] mm/hugetlb: fix surplus pages in dissolve_free_huge_page()
+Date: Wed, 30 Sep 2026 17:29:02 +0200
+Message-ID: <20260930152432.665237618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -43,54 +50,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-commit 9b222cb1d23ff210975e9df5ebab7b011acb6fad upstream.
+[ Upstream commit cb402bbdabcaa5a765068c5b8673bbfc1c264242 ]
 
-rose_neigh_put() kfree()s the neighbour but never cancels its ftimer and
-t0timer. Until now every caller that dropped the final reference first
-called rose_remove_neigh(), which deletes those timers. The socket
-heartbeat reaping path drops the last reference directly, so a neighbour
-could be freed with t0timer still armed -- it re-arms itself in
-rose_t0timer_expiry() -- leading to a use-after-free write in
-enqueue_timer().
+In dissolve_free_huge_page(), free huge pages are dissolved without
+adjusting surplus count. However, free huge pages may be accounted as
+surplus pages, and will lead to wrong surplus count.
 
-Cancel both timers with timer_delete_sync() (the synchronous variant, to
-wait out a concurrently running, self-rearming handler) in the
-refcount-zero branch of rose_neigh_put().
+I reproduce this issue on qemu. The steps are:
+1) Node1 is memory-less at first. Hot-add memory to node1 by executing
+the two commands in qemu monitor:
+  object_add memory-backend-ram,id=mem1,size=1G
+  device_add pc-dimm,id=dimm1,memdev=mem1,node=1
+2) online one memory block of Node1 with：
+  echo online_movable > /sys/devices/system/node/node1/memoryX/state
+3) create 64 huge pages for node1
+4) run a program to reserve (don't consume) all the huge pages
+5) echo 0 > nr_huge_pages for node1. After this step, free huge pages in
+Node1 are surplus.
+6) create 80 huge pages for node0
+7) offline memory of node1, The memory range to offline contains the free
+surplus huge pages created in step3) ~ step5)
+  echo offline > /sys/devices/system/node/node1/memoryX/state
+8) kill the program in step 4)
 
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+The result:
+           Node0     Node1
+total       80        0
+free        80        0
+surplus     0         61
+
+To fix it, adjust surplus when destroying huge pages if the node has
+surplus pages in dissolve_free_hugetlb_folio().
+
+The result with this patch:
+           Node0     Node1
+total       80        0
+free        80        0
+surplus     0         0
+
+Link: https://lkml.kernel.org/r/20250304132106.2872754-1-tujinjiang@huawei.com
+Fixes: c8721bbbdd36 ("mm: memory-hotplug: enable memory hotplug to handle hugepage")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: a363c62a653c ("mm/hugetlb: do not dissolve gigantic pages without runtime support")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/rose.h |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/hugetlb.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/include/net/rose.h
-+++ b/include/net/rose.h
-@@ -160,6 +160,18 @@ static inline void rose_neigh_hold(struc
- static inline void rose_neigh_put(struct rose_neigh *rose_neigh)
- {
- 	if (refcount_dec_and_test(&rose_neigh->use)) {
-+		/* We are dropping the last reference, so we are about to free the
-+		 * neighbour.  Its timers may still be armed -- t0timer in particular
-+		 * re-arms itself in rose_t0timer_expiry().  rose_remove_neigh()
-+		 * cancels them before its own put, but callers that drop the final
-+		 * reference without first calling rose_remove_neigh() (the socket
-+		 * heartbeat reaping path) would otherwise kfree() a neighbour with a
-+		 * live timer -> use-after-free.  timer_delete_sync() (not the async
-+		 * variant) is required: it waits out a concurrently running handler
-+		 * and loops until the self-rearming timer stays stopped.
-+		 */
-+		timer_delete_sync(&rose_neigh->ftimer);
-+		timer_delete_sync(&rose_neigh->t0timer);
- 		if (rose_neigh->ax25)
- 			ax25_cb_put(rose_neigh->ax25);
- 		kfree(rose_neigh->digipeat);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2201,6 +2201,8 @@ retry:
+ 
+ 	if (!folio_ref_count(folio)) {
+ 		struct hstate *h = folio_hstate(folio);
++		bool adjust_surplus = false;
++
+ 		if (!available_huge_pages(h))
+ 			goto out;
+ 
+@@ -2223,7 +2225,9 @@ retry:
+ 			goto retry;
+ 		}
+ 
+-		remove_hugetlb_folio(h, folio, false);
++		if (h->surplus_huge_pages_node[folio_nid(folio)])
++			adjust_surplus = true;
++		remove_hugetlb_folio(h, folio, adjust_surplus);
+ 		h->max_huge_pages--;
+ 		spin_unlock_irq(&hugetlb_lock);
+ 
+@@ -2243,7 +2247,7 @@ retry:
+ 			rc = hugetlb_vmemmap_restore_folio(h, folio);
+ 			if (rc) {
+ 				spin_lock_irq(&hugetlb_lock);
+-				add_hugetlb_folio(h, folio, false);
++				add_hugetlb_folio(h, folio, adjust_surplus);
+ 				h->max_huge_pages++;
+ 				goto out;
+ 			}
 
 
