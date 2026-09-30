@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0035251357A;
-	Wed, 30 Sep 2026 16:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE675513551;
+	Wed, 30 Sep 2026 16:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786451; cv=none; b=XPJOxOeFTmvTLPrmlKqgZVWyef/yHva2cVzyHQBxFErlj0JMn8AgOBmNkXbOlCah5NKptNpT07Yshx0bix75YgfFNENOwnj2qRFDCu8yAOBYfSp0RvXqP0vLbCaMcTT+4PhS9bYyUVmXTM93OwuZ+ygKzK7U79UgOE3KVthm5LM=
+	t=1790786454; cv=none; b=kP9rjZjEx3FL1QkQl4hQVAP2sbCRsnm4JfaUgbQxxPtWWfiviBCuGDqU1hum+cKfYtcFGpIVx4aZJ9L8RHV/fikBKVieVJydFpMEJAU4d9rXcG9emAa6HVu2QpmoF/mJ1iaekPm9O1jCdz10QXhKp9RMYXuGTKHKn2R56oPJmDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786451; c=relaxed/simple;
-	bh=c2Lomj6l0/3YsRVctjaV4twrP7k0UGaa3dodvlYGmwY=;
+	s=arc-20240116; t=1790786454; c=relaxed/simple;
+	bh=dKgBScshW1MWxmqKfpRuBAiathbe4Giihixvrd79IKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KXzPgR5uJ5sTLH/oS3kn3VbHhL4T3E2kmwsJ3JfNWrblgH8kCC7RrCrP625yesns1ONRvOXEijhkZzGwL5MSDj+hyVUbnM8AUgO7pngvx9t8PVWsO1/a/GwlXkoY5U7MSWvaibDOPIM69jmKXfYcOFTzkDTXOXo0lWxmraIz9i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWzBCni2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b5GmXn94PMBXX+XSo6u6L/68SEs8YbkzdM7dWNdP7DSnZZbqqvm07iaBrdgehKpKhVRA99JkiEbbdBKANImqmbKBQmUQJRzEG+TbLY5+cDLQD21GPEUbpxkrQSDJoF701sWKSGSr0TZrZaWYubBot8h67rMH34vv0sBErum+brM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQ2pmHzL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWzBCni2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C991F00893;
-	Wed, 30 Sep 2026 16:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQ2pmHzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328E31F000FF;
+	Wed, 30 Sep 2026 16:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786449;
-	bh=oav0g4xz0HOjm8wC8GOoFNe2pP+d8Zy/gIj/Aszu8FA=;
+	s=korg; t=1790786452;
+	bh=RY0rOVDkux6XsuOXXt+Kpzf8h3inl0qRWXLZ/ntFyXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kWzBCni2t9ou6TpVFtb+VsgmRa9twJaWhJzieDCNEncQiPsCRzZ8EkttbmQPOkvAK
-	 PXAgnppYVKAwbsvAbJonjBrivfuCWJvyAbTaJ9Orp8pv4xSECNbvyz286VcdB3wjiF
-	 /eU4nKgxOlCxvV5RwiZqPqQlGdPRc/kI9XsAgEFc=
+	b=DQ2pmHzLGRSoPF5LSPT4Vja8qB6oVC3qgexGfWCmDpAlyjztZR0d44j1To/ep1n/4
+	 JFTzayOmsIf1SvLEkNHRiQx1omROpuTOP23+gxQ8lCc8y/UrAka9udTystLtdzf+Rl
+	 R+hSVZB3Kdm2fZwjdweaVWwsaH3W4tnDnVCh2BUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bernardo Soares <bsoares.it@gmail.com>,
 	Vlad Buslov <vladbu@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 865/982] net/mlx5: Bridge, snoop igmp/mld packets
-Date: Wed, 30 Sep 2026 17:26:41 +0200
-Message-ID: <20260930152435.330130219@linuxfoundation.org>
+Subject: [PATCH 6.1 866/982] net/mlx5: Bridge, dont fail switchdev events of sibling eswitch ports
+Date: Wed, 30 Sep 2026 17:26:42 +0200
+Message-ID: <20260930152435.351742209@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,524 +54,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Bernardo Soares <bsoares.it@gmail.com>
 
-[ Upstream commit 18c2916cee12137f32669d42ac1fbb87cba343bb ]
+[ Upstream commit 35e6f970f553954d92ba20afa885139a8e7dd0d7 ]
 
-Handle SWITCHDEV_ATTR_ID_BRIDGE_MC_DISABLED attribute notification to
-dynamically toggle bridge multicast offload. Set new
-MLX5_ESW_BRIDGE_MCAST_FLAG bridge flag when multicast offload is enabled.
-Put multicast-specific code into new bridge_mcast.c file.
+mlx5 registers the bridge offload switchdev notifiers once per eswitch
+instance, but the notifier chains are global, so every instance sees
+every event and must filter out the ones that aren't its own. The
+existing filter, mlx5_esw_bridge_dev_same_hw(), only checks that the
+event netdevice sits on the same HCA - intentional for merged eswitch,
+where one bridge can span representors of several eswitches on one
+HCA - but same-HCA doesn't mean the instance actually has that port:
+peer ports are only created reactively from NETDEV_CHANGEUPPER, so an
+instance brought up after a sibling PF's port was already enslaved has
+none. The port object and attribute handlers claim the event anyway
+once same-HW passes, then fail the port lookup and return -EINVAL,
+which gets reported to user space even though the owning instance
+already handled it (e.g. "bridge vlan add ... RTNETLINK answers:
+Invalid argument"). Fix by filtering on the tracked port instead.
 
-When initializing bridge multicast pipeline create a static rule for
-snooping on IGMP traffic and three rules for snooping on MLD traffic (for
-query, report and done message types). Note that matching MLD traffic
-requires having flexparser MLX5_FLEX_PROTO_ICMPV6 capability enabled.
+The same gap exists in the generic recursive lower-device walk used by
+attribute changes on a bridge with more than one representor enslaved
+directly: mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get() is entered
+with the bridge master netdevice, falls through to its generic
+netdev_for_each_lower_dev() loop, and returns as soon as the recursion
+into any one lower device yields a non-NULL rep - the underlying base
+case, mlx5_esw_bridge_rep_vport_num_vhca_id_get(), only checks
+mlx5_esw_bridge_dev_same_hw(), not ownership by the calling instance's
+br_offloads. mlx5_esw_bridge_lag_rep_get(), used for the LAG-master
+case, already filters on mlx5_esw_bridge_dev_same_esw() per candidate
+and so cannot select a sibling's rep; it is not the source of this bug.
+On a merged-eswitch HCA with a bridge spanning representors of more
+than one eswitch instance directly, the walk can return a sibling's rep
+instead of continuing to the one the calling instance actually owns, so
+the attribute change fails the same way as above. Fix by checking
+mlx5_esw_bridge_port_exists() at the point each rep is picked, same as
+the previous fix did for the notifier filter.
 
-By default Linux bridge is created with multicast enabled which can be
-modified by 'mcast_snooping' argument:
-
-$ ip link set name my_bridge type bridge mcast_snooping 0
-
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Stable-dep-of: 35e6f970f553 ("net/mlx5: Bridge, don't fail switchdev events of sibling eswitch ports")
+Fixes: c358ea1741bc ("net/mlx5: Bridge, allow merged eswitch connectivity")
+Signed-off-by: Bernardo Soares <bsoares.it@gmail.com>
+Cc: Vlad Buslov <vladbu@nvidia.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20260918095931.29792-2-bsoares.it@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/Makefile  |   2 +-
- .../mellanox/mlx5/core/en/rep/bridge.c        |   4 +
- .../ethernet/mellanox/mlx5/core/esw/bridge.c  |  31 ++
- .../ethernet/mellanox/mlx5/core/esw/bridge.h  |   9 +
- .../mellanox/mlx5/core/esw/bridge_mcast.c     | 316 ++++++++++++++++++
- .../mellanox/mlx5/core/esw/bridge_priv.h      |  27 +-
- 6 files changed, 384 insertions(+), 5 deletions(-)
- create mode 100644 drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_mcast.c
+ .../mellanox/mlx5/core/en/rep/bridge.c        | 45 +++++++++++++++----
+ .../ethernet/mellanox/mlx5/core/esw/bridge.c  |  6 +++
+ .../ethernet/mellanox/mlx5/core/esw/bridge.h  |  2 +
+ 3 files changed, 44 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/Makefile b/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-index a22c32aabf111..0eb76b78e9121 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/Makefile
-@@ -75,7 +75,7 @@ mlx5_core-$(CONFIG_MLX5_ESWITCH)   += esw/acl/helper.o \
- 				      esw/acl/egress_lgcy.o esw/acl/egress_ofld.o \
- 				      esw/acl/ingress_lgcy.o esw/acl/ingress_ofld.o
- 
--mlx5_core-$(CONFIG_MLX5_BRIDGE)    += esw/bridge.o en/rep/bridge.o
-+mlx5_core-$(CONFIG_MLX5_BRIDGE)    += esw/bridge.o esw/bridge_mcast.o en/rep/bridge.o
- 
- mlx5_core-$(CONFIG_MLX5_MPFS)      += lib/mpfs.o
- mlx5_core-$(CONFIG_VXLAN)          += lib/vxlan.o
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-index 6748c92941b1e..6ea546a22b31a 100644
+index 6ea546a22b31a..ea7c5e907266e 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-@@ -301,6 +301,10 @@ mlx5_esw_bridge_port_obj_attr_set(struct net_device *dev,
- 						     attr->u.vlan_protocol,
- 						     br_offloads);
- 		break;
-+	case SWITCHDEV_ATTR_ID_BRIDGE_MC_DISABLED:
-+		err = mlx5_esw_bridge_mcast_set(vport_num, esw_owner_vhca_id,
-+						!attr->u.mc_disabled, br_offloads);
-+		break;
- 	default:
- 		err = -EOPNOTSUPP;
- 	}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-index 776441b16bb85..94d8f42e4318d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-@@ -868,6 +868,7 @@ static void mlx5_esw_bridge_put(struct mlx5_esw_bridge_offloads *br_offloads,
- 		return;
+@@ -85,9 +85,16 @@ mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(struct net_device *dev, struct m
+ 	struct net_device *lower_dev;
+ 	struct list_head *iter;
  
- 	mlx5_esw_bridge_egress_table_cleanup(bridge);
-+	mlx5_esw_bridge_mcast_disable(bridge);
- 	list_del(&bridge->list);
- 	rhashtable_destroy(&bridge->fdb_ht);
- 	kvfree(bridge);
-@@ -1458,6 +1459,36 @@ int mlx5_esw_bridge_vlan_proto_set(u16 vport_num, u16 esw_owner_vhca_id, u16 pro
- 	return 0;
+-	if (netif_is_lag_master(dev) || mlx5e_eswitch_rep(dev))
+-		return mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, esw, vport_num,
+-								 esw_owner_vhca_id);
++	if (netif_is_lag_master(dev) || mlx5e_eswitch_rep(dev)) {
++		struct net_device *rep;
++
++		rep = mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, esw, vport_num,
++								esw_owner_vhca_id);
++		if (rep && !mlx5_esw_bridge_port_exists(*vport_num, *esw_owner_vhca_id,
++							esw->br_offloads))
++			return NULL;
++		return rep;
++	}
+ 
+ 	netdev_for_each_lower_dev(dev, lower_dev, iter) {
+ 		struct net_device *rep;
+@@ -104,6 +111,28 @@ mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(struct net_device *dev, struct m
+ 	return NULL;
  }
  
-+int mlx5_esw_bridge_mcast_set(u16 vport_num, u16 esw_owner_vhca_id, bool enable,
-+			      struct mlx5_esw_bridge_offloads *br_offloads)
++static bool mlx5_esw_bridge_rep_port_lookup(struct net_device *dev,
++					    struct mlx5_esw_bridge_offloads *br_offloads,
++					    u16 *vport_num, u16 *esw_owner_vhca_id)
 +{
-+	struct mlx5_eswitch *esw = br_offloads->esw;
-+	struct mlx5_esw_bridge *bridge;
-+	int err = 0;
-+	bool mcast;
++	if (!mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, br_offloads->esw, vport_num,
++						       esw_owner_vhca_id))
++		return false;
 +
-+	if (!(MLX5_CAP_ESW_FLOWTABLE((esw)->dev, fdb_multi_path_any_table) ||
-+	      MLX5_CAP_ESW_FLOWTABLE((esw)->dev, fdb_multi_path_any_table_limit_regc)) ||
-+	    !MLX5_CAP_ESW_FLOWTABLE((esw)->dev, fdb_uplink_hairpin) ||
-+	    !MLX5_CAP_ESW_FLOWTABLE_FDB((esw)->dev, ignore_flow_level))
-+		return -EOPNOTSUPP;
-+
-+	bridge = mlx5_esw_bridge_from_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
-+	if (!bridge)
-+		return -EINVAL;
-+
-+	mcast = bridge->flags & MLX5_ESW_BRIDGE_MCAST_FLAG;
-+	if (mcast == enable)
-+		return 0;
-+
-+	if (enable)
-+		err = mlx5_esw_bridge_mcast_enable(bridge);
-+	else
-+		mlx5_esw_bridge_mcast_disable(bridge);
-+
-+	return err;
++	return mlx5_esw_bridge_port_exists(*vport_num, *esw_owner_vhca_id, br_offloads);
 +}
 +
- static int mlx5_esw_bridge_vport_init(u16 vport_num, u16 esw_owner_vhca_id, u16 flags,
- 				      struct mlx5_esw_bridge_offloads *br_offloads,
- 				      struct mlx5_esw_bridge *bridge)
++static bool mlx5_esw_bridge_lower_rep_port_lookup(struct net_device *dev,
++						  struct mlx5_esw_bridge_offloads *br_offloads,
++						  u16 *vport_num, u16 *esw_owner_vhca_id)
++{
++	if (!mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(dev, br_offloads->esw, vport_num,
++							     esw_owner_vhca_id))
++		return false;
++
++	return mlx5_esw_bridge_port_exists(*vport_num, *esw_owner_vhca_id, br_offloads);
++}
++
+ static bool mlx5_esw_bridge_is_local(struct net_device *dev, struct net_device *rep,
+ 				     struct mlx5_eswitch *esw)
+ {
+@@ -218,8 +247,7 @@ mlx5_esw_bridge_port_obj_add(struct net_device *dev,
+ 	u16 vport_num, esw_owner_vhca_id;
+ 	int err;
+ 
+-	if (!mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, br_offloads->esw, &vport_num,
+-						       &esw_owner_vhca_id))
++	if (!mlx5_esw_bridge_rep_port_lookup(dev, br_offloads, &vport_num, &esw_owner_vhca_id))
+ 		return 0;
+ 
+ 	port_obj_info->handled = true;
+@@ -245,8 +273,7 @@ mlx5_esw_bridge_port_obj_del(struct net_device *dev,
+ 	const struct switchdev_obj_port_vlan *vlan;
+ 	u16 vport_num, esw_owner_vhca_id;
+ 
+-	if (!mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, br_offloads->esw, &vport_num,
+-						       &esw_owner_vhca_id))
++	if (!mlx5_esw_bridge_rep_port_lookup(dev, br_offloads, &vport_num, &esw_owner_vhca_id))
+ 		return 0;
+ 
+ 	port_obj_info->handled = true;
+@@ -272,8 +299,8 @@ mlx5_esw_bridge_port_obj_attr_set(struct net_device *dev,
+ 	u16 vport_num, esw_owner_vhca_id;
+ 	int err = 0;
+ 
+-	if (!mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(dev, br_offloads->esw, &vport_num,
+-							     &esw_owner_vhca_id))
++	if (!mlx5_esw_bridge_lower_rep_port_lookup(dev, br_offloads, &vport_num,
++						   &esw_owner_vhca_id))
+ 		return 0;
+ 
+ 	port_attr_info->handled = true;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index 94d8f42e4318d..bb7698e967977 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1618,6 +1618,12 @@ int mlx5_esw_bridge_vport_peer_unlink(int ifindex, u16 vport_num, u16 esw_owner_
+ 					    extack);
+ }
+ 
++bool mlx5_esw_bridge_port_exists(u16 vport_num, u16 esw_owner_vhca_id,
++				 struct mlx5_esw_bridge_offloads *br_offloads)
++{
++	return mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
++}
++
+ int mlx5_esw_bridge_port_vlan_add(u16 vport_num, u16 esw_owner_vhca_id, u16 vid, u16 flags,
+ 				  struct mlx5_esw_bridge_offloads *br_offloads,
+ 				  struct netlink_ext_ack *extack)
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h
-index 10851a515bca8..b18f137173d98 100644
+index b18f137173d98..bda199cdd931b 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h
-@@ -25,12 +25,19 @@ struct mlx5_esw_bridge_offloads {
- 	struct delayed_work update_work;
- 
- 	struct mlx5_flow_table *ingress_ft;
-+	struct mlx5_flow_group *ingress_igmp_fg;
-+	struct mlx5_flow_group *ingress_mld_fg;
- 	struct mlx5_flow_group *ingress_vlan_fg;
- 	struct mlx5_flow_group *ingress_vlan_filter_fg;
- 	struct mlx5_flow_group *ingress_qinq_fg;
- 	struct mlx5_flow_group *ingress_qinq_filter_fg;
- 	struct mlx5_flow_group *ingress_mac_fg;
- 
-+	struct mlx5_flow_handle *igmp_handle;
-+	struct mlx5_flow_handle *mld_query_handle;
-+	struct mlx5_flow_handle *mld_report_handle;
-+	struct mlx5_flow_handle *mld_done_handle;
-+
- 	struct mlx5_flow_table *skip_ft;
- };
- 
-@@ -64,6 +71,8 @@ int mlx5_esw_bridge_vlan_filtering_set(u16 vport_num, u16 esw_owner_vhca_id, boo
- 				       struct mlx5_esw_bridge_offloads *br_offloads);
- int mlx5_esw_bridge_vlan_proto_set(u16 vport_num, u16 esw_owner_vhca_id, u16 proto,
+@@ -73,6 +73,8 @@ int mlx5_esw_bridge_vlan_proto_set(u16 vport_num, u16 esw_owner_vhca_id, u16 pro
  				   struct mlx5_esw_bridge_offloads *br_offloads);
-+int mlx5_esw_bridge_mcast_set(u16 vport_num, u16 esw_owner_vhca_id, bool enable,
-+			      struct mlx5_esw_bridge_offloads *br_offloads);
+ int mlx5_esw_bridge_mcast_set(u16 vport_num, u16 esw_owner_vhca_id, bool enable,
+ 			      struct mlx5_esw_bridge_offloads *br_offloads);
++bool mlx5_esw_bridge_port_exists(u16 vport_num, u16 esw_owner_vhca_id,
++				 struct mlx5_esw_bridge_offloads *br_offloads);
  int mlx5_esw_bridge_port_vlan_add(u16 vport_num, u16 esw_owner_vhca_id, u16 vid, u16 flags,
  				  struct mlx5_esw_bridge_offloads *br_offloads,
  				  struct netlink_ext_ack *extack);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_mcast.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_mcast.c
-new file mode 100644
-index 0000000000000..d5a89a86c9e84
---- /dev/null
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_mcast.c
-@@ -0,0 +1,316 @@
-+// SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
-+/* Copyright (c) 2022, NVIDIA CORPORATION & AFFILIATES. All rights reserved. */
-+
-+#include "bridge.h"
-+#include "eswitch.h"
-+#include "bridge_priv.h"
-+
-+static struct mlx5_flow_group *
-+mlx5_esw_bridge_ingress_igmp_fg_create(struct mlx5_eswitch *esw,
-+				       struct mlx5_flow_table *ingress_ft)
-+{
-+	int inlen = MLX5_ST_SZ_BYTES(create_flow_group_in);
-+	struct mlx5_flow_group *fg;
-+	u32 *in, *match;
-+
-+	in = kvzalloc(inlen, GFP_KERNEL);
-+	if (!in)
-+		return ERR_PTR(-ENOMEM);
-+
-+	MLX5_SET(create_flow_group_in, in, match_criteria_enable, MLX5_MATCH_OUTER_HEADERS);
-+	match = MLX5_ADDR_OF(create_flow_group_in, in, match_criteria);
-+
-+	MLX5_SET_TO_ONES(fte_match_param, match, outer_headers.ip_version);
-+	MLX5_SET_TO_ONES(fte_match_param, match, outer_headers.ip_protocol);
-+
-+	MLX5_SET(create_flow_group_in, in, start_flow_index,
-+		 MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_IDX_FROM);
-+	MLX5_SET(create_flow_group_in, in, end_flow_index,
-+		 MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_IDX_TO);
-+
-+	fg = mlx5_create_flow_group(ingress_ft, in);
-+	kvfree(in);
-+	if (IS_ERR(fg))
-+		esw_warn(esw->dev,
-+			 "Failed to create IGMP flow group for bridge ingress table (err=%pe)\n",
-+			 fg);
-+
-+	return fg;
-+}
-+
-+static struct mlx5_flow_group *
-+mlx5_esw_bridge_ingress_mld_fg_create(struct mlx5_eswitch *esw,
-+				      struct mlx5_flow_table *ingress_ft)
-+{
-+	int inlen = MLX5_ST_SZ_BYTES(create_flow_group_in);
-+	struct mlx5_flow_group *fg;
-+	u32 *in, *match;
-+
-+	if (!(MLX5_CAP_GEN(esw->dev, flex_parser_protocols) & MLX5_FLEX_PROTO_ICMPV6)) {
-+		esw_warn(esw->dev,
-+			 "Can't create MLD flow group due to missing hardware ICMPv6 parsing support\n");
-+		return NULL;
-+	}
-+
-+	in = kvzalloc(inlen, GFP_KERNEL);
-+	if (!in)
-+		return ERR_PTR(-ENOMEM);
-+
-+	MLX5_SET(create_flow_group_in, in, match_criteria_enable,
-+		 MLX5_MATCH_OUTER_HEADERS | MLX5_MATCH_MISC_PARAMETERS_3);
-+	match = MLX5_ADDR_OF(create_flow_group_in, in, match_criteria);
-+
-+	MLX5_SET_TO_ONES(fte_match_param, match, outer_headers.ip_version);
-+	MLX5_SET_TO_ONES(fte_match_param, match, misc_parameters_3.icmpv6_type);
-+
-+	MLX5_SET(create_flow_group_in, in, start_flow_index,
-+		 MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_IDX_FROM);
-+	MLX5_SET(create_flow_group_in, in, end_flow_index,
-+		 MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_IDX_TO);
-+
-+	fg = mlx5_create_flow_group(ingress_ft, in);
-+	kvfree(in);
-+	if (IS_ERR(fg))
-+		esw_warn(esw->dev,
-+			 "Failed to create MLD flow group for bridge ingress table (err=%pe)\n",
-+			 fg);
-+
-+	return fg;
-+}
-+
-+static int
-+mlx5_esw_bridge_ingress_mcast_fgs_init(struct mlx5_esw_bridge_offloads *br_offloads)
-+{
-+	struct mlx5_flow_table *ingress_ft = br_offloads->ingress_ft;
-+	struct mlx5_eswitch *esw = br_offloads->esw;
-+	struct mlx5_flow_group *igmp_fg, *mld_fg;
-+
-+	igmp_fg = mlx5_esw_bridge_ingress_igmp_fg_create(esw, ingress_ft);
-+	if (IS_ERR(igmp_fg))
-+		return PTR_ERR(igmp_fg);
-+
-+	mld_fg = mlx5_esw_bridge_ingress_mld_fg_create(esw, ingress_ft);
-+	if (IS_ERR(mld_fg)) {
-+		mlx5_destroy_flow_group(igmp_fg);
-+		return PTR_ERR(mld_fg);
-+	}
-+
-+	br_offloads->ingress_igmp_fg = igmp_fg;
-+	br_offloads->ingress_mld_fg = mld_fg;
-+	return 0;
-+}
-+
-+static void
-+mlx5_esw_bridge_ingress_mcast_fgs_cleanup(struct mlx5_esw_bridge_offloads *br_offloads)
-+{
-+	if (br_offloads->ingress_mld_fg)
-+		mlx5_destroy_flow_group(br_offloads->ingress_mld_fg);
-+	br_offloads->ingress_mld_fg = NULL;
-+	if (br_offloads->ingress_igmp_fg)
-+		mlx5_destroy_flow_group(br_offloads->ingress_igmp_fg);
-+	br_offloads->ingress_igmp_fg = NULL;
-+}
-+
-+static struct mlx5_flow_handle *
-+mlx5_esw_bridge_ingress_igmp_fh_create(struct mlx5_flow_table *ingress_ft,
-+				       struct mlx5_flow_table *skip_ft)
-+{
-+	struct mlx5_flow_destination dest = {
-+		.type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE,
-+		.ft = skip_ft,
-+	};
-+	struct mlx5_flow_act flow_act = {
-+		.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST,
-+		.flags = FLOW_ACT_NO_APPEND,
-+	};
-+	struct mlx5_flow_spec *rule_spec;
-+	struct mlx5_flow_handle *handle;
-+
-+	rule_spec = kvzalloc(sizeof(*rule_spec), GFP_KERNEL);
-+	if (!rule_spec)
-+		return ERR_PTR(-ENOMEM);
-+
-+	rule_spec->match_criteria_enable = MLX5_MATCH_OUTER_HEADERS;
-+
-+	MLX5_SET_TO_ONES(fte_match_param, rule_spec->match_criteria, outer_headers.ip_version);
-+	MLX5_SET(fte_match_param, rule_spec->match_value, outer_headers.ip_version, 4);
-+	MLX5_SET_TO_ONES(fte_match_param, rule_spec->match_criteria, outer_headers.ip_protocol);
-+	MLX5_SET(fte_match_param, rule_spec->match_value, outer_headers.ip_protocol, IPPROTO_IGMP);
-+
-+	handle = mlx5_add_flow_rules(ingress_ft, rule_spec, &flow_act, &dest, 1);
-+
-+	kvfree(rule_spec);
-+	return handle;
-+}
-+
-+static struct mlx5_flow_handle *
-+mlx5_esw_bridge_ingress_mld_fh_create(u8 type, struct mlx5_flow_table *ingress_ft,
-+				      struct mlx5_flow_table *skip_ft)
-+{
-+	struct mlx5_flow_destination dest = {
-+		.type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE,
-+		.ft = skip_ft,
-+	};
-+	struct mlx5_flow_act flow_act = {
-+		.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST,
-+		.flags = FLOW_ACT_NO_APPEND,
-+	};
-+	struct mlx5_flow_spec *rule_spec;
-+	struct mlx5_flow_handle *handle;
-+
-+	rule_spec = kvzalloc(sizeof(*rule_spec), GFP_KERNEL);
-+	if (!rule_spec)
-+		return ERR_PTR(-ENOMEM);
-+
-+	rule_spec->match_criteria_enable = MLX5_MATCH_OUTER_HEADERS | MLX5_MATCH_MISC_PARAMETERS_3;
-+
-+	MLX5_SET_TO_ONES(fte_match_param, rule_spec->match_criteria, outer_headers.ip_version);
-+	MLX5_SET(fte_match_param, rule_spec->match_value, outer_headers.ip_version, 6);
-+	MLX5_SET_TO_ONES(fte_match_param, rule_spec->match_criteria, misc_parameters_3.icmpv6_type);
-+	MLX5_SET(fte_match_param, rule_spec->match_value, misc_parameters_3.icmpv6_type, type);
-+
-+	handle = mlx5_add_flow_rules(ingress_ft, rule_spec, &flow_act, &dest, 1);
-+
-+	kvfree(rule_spec);
-+	return handle;
-+}
-+
-+static int
-+mlx5_esw_bridge_ingress_mcast_fhs_create(struct mlx5_esw_bridge_offloads *br_offloads)
-+{
-+	struct mlx5_flow_handle *igmp_handle, *mld_query_handle, *mld_report_handle,
-+		*mld_done_handle;
-+	struct mlx5_flow_table *ingress_ft = br_offloads->ingress_ft,
-+		*skip_ft = br_offloads->skip_ft;
-+	int err;
-+
-+	igmp_handle = mlx5_esw_bridge_ingress_igmp_fh_create(ingress_ft, skip_ft);
-+	if (IS_ERR(igmp_handle))
-+		return PTR_ERR(igmp_handle);
-+
-+	if (br_offloads->ingress_mld_fg) {
-+		mld_query_handle = mlx5_esw_bridge_ingress_mld_fh_create(ICMPV6_MGM_QUERY,
-+									 ingress_ft,
-+									 skip_ft);
-+		if (IS_ERR(mld_query_handle)) {
-+			err = PTR_ERR(mld_query_handle);
-+			goto err_mld_query;
-+		}
-+
-+		mld_report_handle = mlx5_esw_bridge_ingress_mld_fh_create(ICMPV6_MGM_REPORT,
-+									  ingress_ft,
-+									  skip_ft);
-+		if (IS_ERR(mld_report_handle)) {
-+			err = PTR_ERR(mld_report_handle);
-+			goto err_mld_report;
-+		}
-+
-+		mld_done_handle = mlx5_esw_bridge_ingress_mld_fh_create(ICMPV6_MGM_REDUCTION,
-+									ingress_ft,
-+									skip_ft);
-+		if (IS_ERR(mld_done_handle)) {
-+			err = PTR_ERR(mld_done_handle);
-+			goto err_mld_done;
-+		}
-+	} else {
-+		mld_query_handle = NULL;
-+		mld_report_handle = NULL;
-+		mld_done_handle = NULL;
-+	}
-+
-+	br_offloads->igmp_handle = igmp_handle;
-+	br_offloads->mld_query_handle = mld_query_handle;
-+	br_offloads->mld_report_handle = mld_report_handle;
-+	br_offloads->mld_done_handle = mld_done_handle;
-+
-+	return 0;
-+
-+err_mld_done:
-+	mlx5_del_flow_rules(mld_report_handle);
-+err_mld_report:
-+	mlx5_del_flow_rules(mld_query_handle);
-+err_mld_query:
-+	mlx5_del_flow_rules(igmp_handle);
-+	return err;
-+}
-+
-+static void
-+mlx5_esw_bridge_ingress_mcast_fhs_cleanup(struct mlx5_esw_bridge_offloads *br_offloads)
-+{
-+	if (br_offloads->mld_done_handle)
-+		mlx5_del_flow_rules(br_offloads->mld_done_handle);
-+	br_offloads->mld_done_handle = NULL;
-+	if (br_offloads->mld_report_handle)
-+		mlx5_del_flow_rules(br_offloads->mld_report_handle);
-+	br_offloads->mld_report_handle = NULL;
-+	if (br_offloads->mld_query_handle)
-+		mlx5_del_flow_rules(br_offloads->mld_query_handle);
-+	br_offloads->mld_query_handle = NULL;
-+	if (br_offloads->igmp_handle)
-+		mlx5_del_flow_rules(br_offloads->igmp_handle);
-+	br_offloads->igmp_handle = NULL;
-+}
-+
-+static int mlx5_esw_brige_mcast_global_enable(struct mlx5_esw_bridge_offloads *br_offloads)
-+{
-+	int err;
-+
-+	if (br_offloads->ingress_igmp_fg)
-+		return 0; /* already enabled by another bridge */
-+
-+	err = mlx5_esw_bridge_ingress_mcast_fgs_init(br_offloads);
-+	if (err) {
-+		esw_warn(br_offloads->esw->dev,
-+			 "Failed to create global multicast flow groups (err=%d)\n",
-+			 err);
-+		return err;
-+	}
-+
-+	err = mlx5_esw_bridge_ingress_mcast_fhs_create(br_offloads);
-+	if (err) {
-+		esw_warn(br_offloads->esw->dev,
-+			 "Failed to create global multicast flows (err=%d)\n",
-+			 err);
-+		goto err_fhs;
-+	}
-+
-+	return 0;
-+
-+err_fhs:
-+	mlx5_esw_bridge_ingress_mcast_fgs_cleanup(br_offloads);
-+	return err;
-+}
-+
-+static void mlx5_esw_brige_mcast_global_disable(struct mlx5_esw_bridge_offloads *br_offloads)
-+{
-+	struct mlx5_esw_bridge *br;
-+
-+	list_for_each_entry(br, &br_offloads->bridges, list) {
-+		/* Ingress table is global, so only disable snooping when all
-+		 * bridges on esw have multicast disabled.
-+		 */
-+		if (br->flags & MLX5_ESW_BRIDGE_MCAST_FLAG)
-+			return;
-+	}
-+
-+	mlx5_esw_bridge_ingress_mcast_fhs_cleanup(br_offloads);
-+	mlx5_esw_bridge_ingress_mcast_fgs_cleanup(br_offloads);
-+}
-+
-+int mlx5_esw_bridge_mcast_enable(struct mlx5_esw_bridge *bridge)
-+{
-+	int err;
-+
-+	err = mlx5_esw_brige_mcast_global_enable(bridge->br_offloads);
-+	if (err)
-+		return err;
-+
-+	bridge->flags |= MLX5_ESW_BRIDGE_MCAST_FLAG;
-+	return 0;
-+}
-+
-+void mlx5_esw_bridge_mcast_disable(struct mlx5_esw_bridge *bridge)
-+{
-+	bridge->flags &= ~MLX5_ESW_BRIDGE_MCAST_FLAG;
-+	mlx5_esw_brige_mcast_global_disable(bridge->br_offloads);
-+}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_priv.h b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_priv.h
-index b99761e73c1b6..dbb935db1b3c7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_priv.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge_priv.h
-@@ -12,11 +12,26 @@
- #include <linux/xarray.h>
- #include "fs_core.h"
- 
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_SIZE 1
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_SIZE 3
- #define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_SIZE 131072
--#define MLX5_ESW_BRIDGE_INGRESS_TABLE_UNTAGGED_GRP_SIZE 524288
--#define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_IDX_FROM 0
--#define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_IDX_TO		\
--	(MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_SIZE - 1)
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_UNTAGGED_GRP_SIZE			\
-+	(524288 - MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_SIZE -		\
-+	 MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_SIZE)
-+
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_IDX_FROM 0
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_IDX_TO		\
-+	(MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_SIZE - 1)
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_IDX_FROM	\
-+	(MLX5_ESW_BRIDGE_INGRESS_TABLE_IGMP_GRP_IDX_TO + 1)
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_IDX_TO		\
-+	(MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_IDX_FROM +	\
-+	 MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_SIZE - 1)
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_IDX_FROM			\
-+	(MLX5_ESW_BRIDGE_INGRESS_TABLE_MLD_GRP_IDX_TO + 1)
-+#define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_IDX_TO			\
-+	(MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_IDX_FROM +		\
-+	 MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_SIZE - 1)
- #define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_FILTER_GRP_IDX_FROM	\
- 	(MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_GRP_IDX_TO + 1)
- #define MLX5_ESW_BRIDGE_INGRESS_TABLE_VLAN_FILTER_GRP_IDX_TO		\
-@@ -74,6 +89,7 @@ enum {
- 
- enum {
- 	MLX5_ESW_BRIDGE_VLAN_FILTERING_FLAG = BIT(0),
-+	MLX5_ESW_BRIDGE_MCAST_FLAG = BIT(1),
- };
- 
- struct mlx5_esw_bridge_fdb_key {
-@@ -145,4 +161,7 @@ struct mlx5_esw_bridge {
- 	u16 vlan_proto;
- };
- 
-+int mlx5_esw_bridge_mcast_enable(struct mlx5_esw_bridge *bridge);
-+void mlx5_esw_bridge_mcast_disable(struct mlx5_esw_bridge *bridge);
-+
- #endif /* _MLX5_ESW_BRIDGE_PRIVATE_ */
 -- 
 2.53.0
 
