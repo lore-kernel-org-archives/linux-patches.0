@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684C83DAAA4;
-	Wed, 30 Sep 2026 19:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F613DAAA4;
+	Wed, 30 Sep 2026 19:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796044; cv=none; b=acLeV/wDLpLsxIkA56xnu97ibxmDjEGN9MjxXYJSqzwW9z3C6XfqJjBOkSbjyDrvLkdMep5MGqMDvxBlTR66tLvbrk+2w2LyVEOX0T4nMbSXy37Itrjg/1in/lh+f7aLXUpYDvLKYflxj0Xh/UUTViS2uWol/Mc9KDjv80bBXpQ=
+	t=1790796047; cv=none; b=lYnTCFoB9DiXY3WIqIn8Ej3/bY/MRCUXGzXDqDvntR8Z/Vm4NeTRQE7xUICaZ3JkyJk+y7u9jgHfeCBUeJ0oLaeRcyooq6ipopkO6zH9owNV56pqVTcpLUexbkWvYukCRJ7BzLEY2gHGuI6pQ3eXbY/FdQ4QzU6W7N2/oskrBd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796044; c=relaxed/simple;
-	bh=MXdXf5/OjSWrPJhdW2GtK6ASE9ivbym8qcCazl9HN5E=;
+	s=arc-20240116; t=1790796047; c=relaxed/simple;
+	bh=92ZitQNQtraRk1R9cLxUKirbWjygSry8xl2+wbxi4hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b7CrsoxkCLYIe4WNmQRJQxIpYIK6hiZVELxDoYLM+GOKGJdq8G/MY6olqQiptHjSY3TEVi1Wi8sY8S/Vj27G9WeYIuwpVuueP1s6z4HlgN6d0eUQ1G+MFYZySW/ZFlbL6jjqbY1KnwmXavlZiLz1oUpLFxsJlH7wCOGP0pTyKts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ql8Vt2kT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tIBIBtRrLvLzL0ger82PfJO3IDA6gmy3tz/r5Uc8GmVeWFs6AaltT9EL+w1bfxstuJ8ZRhxPOfvm/V5eJWNbm+lPdHn4WY8wLiuvhu9Q599ZJAUpJul26jYnj0K3pg44C+0fG7ginCRuspH00qgFbd7/9FOje5Deg7xFMWSbTL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkRfo/kl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ql8Vt2kT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41181F000FF;
-	Wed, 30 Sep 2026 19:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkRfo/kl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997091F000FF;
+	Wed, 30 Sep 2026 19:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796043;
-	bh=A3vbCmx4mIz/fnxvtKew4Pn3Nlv7YPYKgIzuhvoSouk=;
+	s=korg; t=1790796046;
+	bh=d/jkGSi75u1WqwjPzbktHONS3qQqhPOgYxOzBjeeYw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ql8Vt2kTLKyCcWkGnZeayPfS/mctqKCGqgwrs9iPOJFy5hgHhSo4j2+jGa881tDCl
-	 lxqcoxHxpNROV5QC7m4NkzHconvBieu9bICbt1ta1zulE9zShl504tRYmTlAots+Mx
-	 tt6muW+zNLn/ieynhiXTZ9cQQCFGwVUp5+ysLUZE=
+	b=RkRfo/klifZfoOQ1Q/lWv05hPZiUebzZVE6VOgphsIADPtorAB7SzqFAF6iuoDTAv
+	 LM16N78aWWAUpSTThpoHUxkphDIJ/+L4+3C1iYzxfK3C6gGyH5H1YxbZLhc6cmUzIg
+	 NB8xUloiT0mXnIA6nZJdGjxT0vRW7tKY+VEBxMD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0775/1193] RDMA/siw: Bound fragmented header copies by the remaining length
-Date: Wed, 30 Sep 2026 17:24:19 +0200
-Message-ID: <20260930152451.472643937@linuxfoundation.org>
+Subject: [PATCH 6.6 0758/1193] wifi: mac80211: unlist vifs when their netdev is unregistered
+Date: Wed, 30 Sep 2026 17:24:02 +0200
+Message-ID: <20260930152451.095045964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -46,52 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9ff797e516dbc1ecb73701ec4c24055712d44411 ]
+[ Upstream commit eee2efd82867b623982ac51925b5a1812a74c50d ]
 
-siw_get_hdr() can receive an extended DDP/RDMAP header across more than
-one TCP callback. The first callback may receive most of the header,
-while the next one still limits the copy to hdrlen - MIN_DDP_HDR instead
-of the number of missing bytes. This makes the destination move past the
-end of the header and overwrite the receive state, including
-fpdu_part_rcvd. A later callback can then use a negative fpdu_part_rcvd
-value as a copy offset, which creates an OOB write.
+mac80211 only removes vifs from the local->interfaces list when
+an interface is removed via ieee80211_if_remove(), before it
+unregisters the netdev. However, it's possible for a netdev to
+be unregistered without going through that: When the netns that
+holds the wiphy is destroyed, the wiphy is supposed to move to
+the init_ns, but that can run into allocation failures.
 
-Use the number of header bytes already received when calculating the
-next copy length.
+Then, mac80211 has an interface listed that doesn't exist, and
+will eventually hit
 
-Fixes: 754209850df8 ("RDMA/siw: Always consume all skbuf data in sk_data_ready() upcall.")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260908085520.1746329-1-Jeremy.Jean@oss.cyber.gouv.fr
-Assisted-by: Codex:gpt-6
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  BUG: failure at net/wireless/core.h:141/wiphy_to_rdev()!
+  ...
+  _cfg80211_unregister_wdev+0x24/0x36a [cfg80211]
+  cfg80211_unregister_wdev+0x15/0x1d [cfg80211]
+  ieee80211_remove_interfaces+0x1ff/0x257 [mac80211]
+  ieee80211_unregister_hw+0x73/0x1d1 [mac80211]
+  mac80211_hwsim_del_radio+0x114/0x166 [mac80211_hwsim]
+
+Remove the interface from the list in ->ndo_uninit if it's still
+around to avoid this.
+
+Assisted-by: LLM
+Fixes: 463d018323851 ("cfg80211: make aware of net namespaces")
+Link: https://patch.msgid.link/20260904170220.038ad73e6c04.I990abca78483e058746b6f42b4796717c3028164@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/iface.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_rx.c b/drivers/infiniband/sw/siw/siw_qp_rx.c
-index 96a8e23a8ce22..907fca0765d34 100644
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1095,7 +1095,7 @@ static int siw_get_hdr(struct siw_rx_stream *srx)
- 	if (iwarp_pktinfo[opcode].hdr_len > sizeof(struct iwarp_ctrl_tagged)) {
- 		int hdrlen = iwarp_pktinfo[opcode].hdr_len;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 583d257f593c2..e8dfee9760da0 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -859,9 +859,33 @@ static void ieee80211_teardown_sdata(struct ieee80211_sub_if_data *sdata)
+ 	ieee80211_link_stop(&sdata->deflink);
+ }
  
--		bytes = min_t(int, hdrlen - MIN_DDP_HDR, srx->skb_new);
-+		bytes = min_t(int, hdrlen - srx->fpdu_part_rcvd, srx->skb_new);
++/*
++ * The netdev can be unregistered without mac80211 doing it, e.g. by the netdev
++ * core when cfg80211 couldn't move it out of a network namespace that's being
++ * destroyed. Drop it from the interface list either way.
++ */
++static void ieee80211_unlist_sdata(struct ieee80211_sub_if_data *sdata)
++{
++	struct ieee80211_local *local = sdata->local;
++	struct ieee80211_sub_if_data *iter;
++
++	ASSERT_RTNL();
++
++	list_for_each_entry(iter, &local->interfaces, list) {
++		if (iter != sdata)
++			continue;
++		guard(mutex)(&local->iflist_mtx);
++		list_del_rcu(&sdata->list);
++		return;
++	}
++}
++
+ static void ieee80211_uninit(struct net_device *dev)
+ {
+-	ieee80211_teardown_sdata(IEEE80211_DEV_TO_SUB_IF(dev));
++	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
++
++	ieee80211_unlist_sdata(sdata);
++	ieee80211_teardown_sdata(sdata);
+ }
  
- 		skb_copy_bits(skb, srx->skb_offset,
- 			      (char *)c_hdr + srx->fpdu_part_rcvd, bytes);
+ static void
 -- 
 2.53.0
 
