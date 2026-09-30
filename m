@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCD24E4305;
-	Wed, 30 Sep 2026 16:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678564F55B6;
+	Wed, 30 Sep 2026 16:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787017; cv=none; b=edHfT8v3XgfUiOt8KuuKkue3EDWuuh1fRXSm9DGJlLTgfL7L/q3ZUc8PjPSwQf5cOBXUYiwvJwvJCWU1s2Tz+1N7DgvLbL8KecoDp8fuHgeIcHYMgK58xel6oKsg3GHPE4ZqicqaIbB2TJrT/MYkx7jQxk3o7FzKwXuAG/OyMCc=
+	t=1790787019; cv=none; b=SRISHaH6lJ48MeZq8IxqeLF4GrpiLcmgzVSdohCAyO+bfHChR6DSWEME9UN/7Svl80YNQAJ55KGandMbtU1wnT+qqMhIxGBstxGV27QSdDF9s/WgWTO1XVVub28ZlxKuXSNTx/AhGBBRw7zYkzO148eF/Ggmexlgi8HosjDKsrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787017; c=relaxed/simple;
-	bh=+BzxGZDl37zLqQSekZxQxVPT4FKgz3XjKaz1bDshZZM=;
+	s=arc-20240116; t=1790787019; c=relaxed/simple;
+	bh=u/SMlNayOj3GaXQ+A5cYyBfbBOhCcfm3EPnUeSX/SKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E6yBG7SN8fd80gQX0GTwbgyMYvCp9U84NmNx/tJtF/gCnU0v1c/MlAHfbn4AqmI0OF5dMcC66jaDj7EUyDea2c/6VRMqasq9TgxG52aGK8PLbXUhi3xbhVXtyvyC8xk9gMszV+rVp2+8SydVWrc3tDrXhsz6uTMvj5K272/Ua64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnc2uTwf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t5rp72npVEQ0kwUNKg0qblr4uAnc4R3y4GKMzQ0U+goq17u+Gwyrd6B1UTYdfoGgDx4zkodVvKJFAJznq5n0uztaNQeUaTz+6msron7EeKnWzG0VQECRXtSoaG8XUqs/5wSKEXsxZLRMjboo6qt0fiSNXBmHIVCqjsc++wLSrxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTIrUNiw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnc2uTwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CD11F00898;
-	Wed, 30 Sep 2026 16:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTIrUNiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C513E1F000FF;
+	Wed, 30 Sep 2026 16:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787015;
-	bh=o9w9ubbU/lo1rK4CEeLQhw1XQgDENAqUz/rMSBtojLw=;
+	s=korg; t=1790787018;
+	bh=rcM4r+MZJyXMazv3ojoOWjbR5k5UBCwM9DQWQ3RFM4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mnc2uTwfPbPCVFpc2hDlkZfBqmlEaNy/jEkFHVjjIqBq8sIHJfAb+nWeg7vrR1oKZ
-	 8gRBVczycguP64764exRFmLbgcrQzLZnsPGU89GhHQLta9LBoZLu0hjldMEtV5jI7E
-	 Bx086gbILuFvwStvSc23zBNGBUGtGWwzQq7HeS3M=
+	b=zTIrUNiwTCY65nqhf7RJ2g6gI2MxJqOEzfiCjGhU+cTSPaAFNYNvhYtCBaMn6Wxzq
+	 CwUYnptPsC33DzpFMQFnPrpG9K2pc9ZGLMXeJ8/Wuw8SnOu/gWpiFCbjy5c37kXCXD
+	 7iKpg6mKJJ0bGNbgXKy42lhnufTUkysmiDqNvAk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 082/457] netfilter: nfnetlink_queue: hold nfnl mutex in event notifier
-Date: Wed, 30 Sep 2026 17:23:07 +0200
-Message-ID: <20260930152347.820467103@linuxfoundation.org>
+Subject: [PATCH 7.2 083/457] netfilter: nft_synproxy: use the family-aware checksum helper
+Date: Wed, 30 Sep 2026 17:23:08 +0200
+Message-ID: <20260930152347.841506063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,68 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 9461613afc59acef44a0071b0dd5075f6e993ffe ]
+[ Upstream commit a311a898172743558b82f6035ef2aa8c310a4223 ]
 
-We must serialize the release notifier and the config netlink function.
-A concurrent thread can issue close() which can call the release function
-while unrelated socket processes UNBIND request for same portid:
+nft_synproxy_do_eval() verifies the TCP checksum before it switches on
+skb->protocol.  It uses nf_ip_checksum(), which constructs an IPv4
+pseudo header and relies on the IPv4 header checksum when folding the
+whole skb.  Neither operation is valid for an IPv6 packet.
 
-Oops: general protection fault, [..]
-RIP: 0010:__instance_destroy+0x60/0x210 [nfnetlink_queue]
-Call Trace:
- nfqnl_recv_config+0x9b0/0xdc0 [nfnetlink_queue]
- nfnetlink_rcv_msg+0x7c2/0xeb0
- ? __pfx_nfnetlink_rcv_msg+0x10/0x10
+A correctly checksummed IPv6 segment can therefore fail verification
+when it reaches the hook as CHECKSUM_NONE or, at NF_INET_LOCAL_IN,
+CHECKSUM_COMPLETE.  nft_synproxy_do_eval() returns NF_DROP before
+nft_synproxy_eval_v6() can send a SYN-ACK.
 
-After this, parallel UNBIND and URELEASE events are impossible.
+nft_synproxy_validate() deliberately admits NFPROTO_IPV6 and
+NFPROTO_INET, and the xtables counterpart ip6t_SYNPROXY.c already calls
+nf_ip6_checksum().
 
-This change isn't nice, but its the shortest fix given instances
-are not refcounted and the nfnetlink config callback drops the
-rcu read lock early due to need for sleeping allocations.
+Use nf_checksum() with nft_pf() so the checksum helper dispatches to the
+packet family's implementation.
 
-Fixes: 7af4cc3fa158 ("[NETFILTER]: Add "nfnetlink_queue" netfilter queue handler over nfnetlink")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: ad49d86e07a4 ("netfilter: nf_tables: Add synproxy support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/netfilter/nft_synproxy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index b8aaf39cb4d8e..ec5e7716df8b5 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -1527,6 +1527,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
- 	if (event == NETLINK_URELEASE && n->protocol == NETLINK_NETFILTER) {
- 		int i;
- 
-+		nfnl_lock(NFNL_SUBSYS_QUEUE);
- 		/* destroy all instances for this portid */
- 		spin_lock(&q->instances_lock);
- 		for (i = 0; i < INSTANCE_BUCKETS; i++) {
-@@ -1540,6 +1541,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
- 			}
- 		}
- 		spin_unlock(&q->instances_lock);
-+		nfnl_unlock(NFNL_SUBSYS_QUEUE);
+diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
+index 9ed288c9d1688..554a96a000f40 100644
+--- a/net/netfilter/nft_synproxy.c
++++ b/net/netfilter/nft_synproxy.c
+@@ -118,7 +118,8 @@ static void nft_synproxy_do_eval(const struct nft_synproxy *priv,
+ 		return;
  	}
- 	return NOTIFY_DONE;
- }
-@@ -1859,9 +1861,9 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
  
- 	/* Lookup queue under RCU. After peer_portid check (or for new queue
- 	 * in BIND case), the queue is owned by the socket sending this message.
--	 * A socket cannot simultaneously send a message and close, so while
--	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
--	 * socket close) cannot destroy this queue. Safe to use without RCU.
-+	 * nfqnl_rcv_nl_event() will block on the nfnl subsys mutex that is
-+	 * held by the caller, so the queue cannot be destroyed in parallel,
-+	 * even after we drop the RCU read lock.
- 	 */
- 	rcu_read_lock();
- 	queue = instance_lookup(q, queue_num);
+-	if (nf_ip_checksum(skb, nft_hook(pkt), thoff, IPPROTO_TCP)) {
++	if (nf_checksum(skb, nft_hook(pkt), thoff, IPPROTO_TCP,
++			nft_pf(pkt))) {
+ 		regs->verdict.code = NF_DROP;
+ 		return;
+ 	}
 -- 
 2.53.0
 
