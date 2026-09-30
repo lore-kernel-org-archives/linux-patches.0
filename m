@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEC6516148;
-	Wed, 30 Sep 2026 17:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47334518132;
+	Wed, 30 Sep 2026 17:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788904; cv=none; b=sm4S8ldUzmDh130tht39yVm/S9XnQ28vPFC1PNcjrlGXB4Ti96GiRFSDKVZn1uGABKuyppWXhkqmx0k0Vwc+IsR7VaLozFXxgkplABY08C3IOmbfWb+5uvlWvxvFBTe2C3CibirwliYkz3+fLPeZ22+rnymnO8uxo9sEKT/OyJk=
+	t=1790788907; cv=none; b=RoEGduox5nyb/yICwkYlpzY/CtjAkwlFyolKBFwRXk4gBECJsuRz4Fl5ewuv3lgwQoZs6RX/3ieRxmDZdM6N2+sb906+EKWXcHWbedddG4N5XKafld4hpaeEwQowQ6UZNJy3tbZmU2MLVugaaCcaOxa7r1Y2DhuJDAhop8OKeKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788904; c=relaxed/simple;
-	bh=kF1RRlnDHT3vmnUvSEgT/C1m/Wo1zXIJFdXUm7EvT58=;
+	s=arc-20240116; t=1790788907; c=relaxed/simple;
+	bh=Sejnw+PzTsxs9yL2piZqaIp+YfNUcBmulaxkILjCDtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYEzaa4sRze5sRuR7LaTxa3otLGD5+pvBBcRE98QLAsaPoh01IM1szUU/8gpbAsRiKRGFeJZ2ifumLp7GIbyqkKl64zUsBb3a/XrwF8t/bfdSvlGkG725PW5kOQVH3gDXoZymSAOThee+SyvwKFze749/bgWgBsQTWGxp2rRnTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xsV7xWyH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t2Rk949eAeCCOBlpYtlZyv/W/1/JDMZPfrZDt22RPwCMjg4bXMrwa3u5EhxcBB8PpI6W/RG7BcqBIMWc1xuvxsnxZqOLeRa1qe0crwEK2iYkK6QBhgE35BPiSBPxWIUU/Je2yAYZqI6SZxyjoPecTxLCoXC42ZL1F+VHMbGeRzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mufBDwcw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsV7xWyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47451F000FF;
-	Wed, 30 Sep 2026 17:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mufBDwcw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A006F1F000FF;
+	Wed, 30 Sep 2026 17:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788903;
-	bh=dz9zRl29W6SRaqjkP5Xw/bfi1zuXhfA7WydrPy25Oh0=;
+	s=korg; t=1790788906;
+	bh=l9W2ThgcWDV+ZcopilYnHsR7JR3PXwv6M9EJ7LPT8Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xsV7xWyH5yvkcb/J2qmWjOYI+HWq3CK+L7UIhV15u92ag2K3Eh8kzzFFjrscohWnH
-	 +bZkXCuytpziGNMydkTznSFL6QPw9fViJXXhOqcD9y+5/e7rQMNwN9glwuNnkDu02w
-	 QgaEuPpejHp5WDbal4n7fdcgpPVMcWj0RSjXzAnc=
+	b=mufBDwcwgkDubeg73ivp03gi8JJ+0xiBb5s7UPpcH9fMjANQ5LZVcDqD/amIYzLPV
+	 e3xqF2Z0j1gHnqa7l4O1a/nxSEWX/520NMNM8vLbG+Dn1KNAwo8ZfuC8+aMfQ9GSse
+	 1cR1hlFgL4WuUWlt8gx1o2qnUK/HmCzrlnTfooY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Itai Handler <itai.handler@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 288/877] spi: spi-zynqmp-gqspi: stop the controller on shutdown
-Date: Wed, 30 Sep 2026 17:19:59 +0200
-Message-ID: <20260930152420.925424290@linuxfoundation.org>
+Subject: [PATCH 6.12 289/877] smb: client: fix busy dentry warning on unmount after DIO
+Date: Wed, 30 Sep 2026 17:20:00 +0200
+Message-ID: <20260930152420.946853085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,114 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Itai Handler <itai.handler@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-commit e922bad8b2d5028c51a096d083fea41cd0987154 upstream.
+[ Upstream commit 75f5c412fa867efa0bf9b646bffe0d912109e84a ]
 
-The driver has no ->shutdown, and platform_drv_shutdown() has no
-fallback of its own.  Unlike pci_device_shutdown(), which clears bus
-mastering when kexec_in_progress, nothing on the platform bus disarms a
-device that can still write to memory.  The normal kexec path never
-calls ->suspend either, so the quiesce in zynqmp_qspi_suspend() is not
-reached.
+Commit c68337442f03 ("cifs: Fix busy dentry used after unmounting") fixed
+the issue in cifs where deferred close of a file led to a dentry reference
+count not being released in umount, by flushing deferredclose_wq in
+cifs_kill_sb() to solve it.
 
-A controller that is still executing a DMA read may therefore keep
-writing to memory across a kexec.  QSPIDMA_DST_ADDR still points at
-memory owned by the kernel that called kexec, DST_SIZE is non-zero and
-the flash is still clocked, so data can keep landing in RAM while the
-new kernel is being relocated, and after it has started executing.
+However, the cifs DIO path suffers from the same busy-dentry problem caused
+by a delayed dentry reference-count release:
 
-That destination is a physical address which means nothing to the new
-kernel, so the writes can corrupt whatever now occupies it: kernel text
-or data, page tables, or the initrd.  Nothing reports an error and the
-resulting behaviour is undefined.
+	[dio]			[cifsd]			[close + umount]
+netfs_unbuffered_write_iter_locked
+...
+				cifs_demultiplex_thread
+ netfs_unbuffered_write
+  cifs_issue_write
+  netfs_wait_for_in_progress_stream [1]
+				...
+				 netfs_write_subrequest_terminated
+				  netfs_subreq_clear_in_progress
+				   netfs_wake_collector // wake [1]
+				  netfs_put_subrequest
+ netfs_put_request
+  queue_work(system_dfl_wq, xxx) [2]
+ // dio write return					cifs_close
+							 _cifsFileInfo_put
+							  // cfile->count 2->1
+							  --cfile->count [3]
 
-This can be observed by reading GQSPI_EN (offset 0x114) and
-QSPIDMA_DST_ADDR/SIZE/STS/CTRL (offsets 0x800 to 0x80c) early in the new
-kernel, before the driver probes: without this patch GQSPI_EN reads 1
-and QSPIDMA_DST_ADDR still points into the previous kernel's memory.
+							// umount
+							cifs_kill_sb
+							 kill_anon_super
+							  // warning triggered!
+							  shrink_dcache_for_umount [4]
+[system_dfl_wq] [5]
+netfs_free_request
+ ...
+ _cifsFileInfo_put
+  // cfile->count 1->0
+  --cfile->count
+  queue_work(fileinfo_put_wq, xxx)
 
-Add a ->shutdown that stops the controller the way zynqmp_qspi_suspend()
-already does.  spi_controller_suspend() stops the queue, waits for a
-message that is already executing and makes any later transfer fail with
--ESHUTDOWN, so nothing can be cut short by the register write that
-follows.  It may sleep, which is fine here: device_shutdown() runs in
-process context.  Unlike ->suspend this cannot abort on error, because a
-controller left mastering the bus is worse than a truncated transfer, so
-a failure to drain is only logged.
+[fileinfo_put_wq] [6]
+cifsFileInfo_put_work
+ cifsFileInfo_put_final
+  dput
 
-GQSPI_EN_OFST is then cleared, as zynqmp_qspi_remove() and
-zynqmp_qspi_suspend() already do.  Skip that write only when
-pm_runtime_get_if_in_use() returns 0, i.e. runtime suspended: the clocks
-are gated, so the registers are unreachable and the controller cannot be
-mastering the bus.  A negative return is not the same thing - it is what
-the CONFIG_PM=n stub always returns, and there probe() has enabled pclk
-and refclk for good, so the controller is running and must be stopped.
+If the umount path is triggered before [5], it results warning:
+BUG: Dentry 00000000eab1f070{i=9a917b66ae404fec,n=test}  still in use (1)
+[unmount of cifs cifs]
 
-Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
-Link: https://patch.msgid.link/20260910174832.873352-1-itai.handler@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ itai: context only - the platform_driver callback is still spelled
-  .remove_new in this tree, renamed back to .remove upstream by commit
-  494c3dc46776 ("spi: Switch back to struct platform_driver::remove()") ]
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
+The existing per-inode ictx->io_count wait in cifs_evict_inode() does not
+help: it lives in the inode eviction path, which runs after
+shrink_dcache_for_umount() has already warned about the busy dentries.
+
+Fix it by adding a per-superblock outstanding-rreq counter that is
+incremented in cifs_init_request() and decremented in cifs_free_request().
+In cifs_kill_sb(), before kill_anon_super(), wait for this counter to reach
+0 - which guarantees that all cleanup_work for this sb have run and thus
+all relevant cfile puts are queued on fileinfo_put_wq or serverclose_wq.
+Then drain the workqueue so the dentry refs are dropped.
+
+This is a targeted wait, not a flush of the system-wide system_dfl_wq.
+
+Fixes: 340cea84f691c ("cifs: open files should not hold ref on superblock")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ fs/smb/client/cifs_fs_sb.h |  1 +
+ fs/smb/client/cifsfs.c     | 12 ++++++++++++
+ fs/smb/client/connect.c    |  1 +
+ fs/smb/client/file.c       |  5 +++++
+ 4 files changed, 19 insertions(+)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 143c572b263e2..4fa68b11709b3 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1385,11 +1385,45 @@ static void zynqmp_qspi_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(xqspi->pclk);
+diff --git a/fs/smb/client/cifs_fs_sb.h b/fs/smb/client/cifs_fs_sb.h
+index 6517591922801..2b4850566f15b 100644
+--- a/fs/smb/client/cifs_fs_sb.h
++++ b/fs/smb/client/cifs_fs_sb.h
+@@ -55,6 +55,7 @@ struct cifs_sb_info {
+ 	struct smb3_fs_context *ctx;
+ 	atomic_t active;
+ 	unsigned int mnt_cifs_flags;
++	atomic_t outstanding_rreq;	/* nr of rreqs not yet fully deinitialized */
+ 	struct delayed_work prune_tlinks;
+ 	struct rcu_head rcu;
+ 
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index a14f24f8d4a51..f22c79179a23a 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -302,6 +302,18 @@ static void cifs_kill_sb(struct super_block *sb)
+ 		/* Wait for all opened files to release */
+ 		flush_workqueue(deferredclose_wq);
+ 
++		/*
++		 * Wait for all in-flight netfs I/O requests to finish their
++		 * cleanup_work so that any cifsFileInfo final puts they queue
++		 * to fileinfo_put_wq/serverclose_wq have been queued, then
++		 * drain the workqueue so the cfile dentry refs are dropped to
++		 * avoid the busy dentry warning.
++		 */
++		wait_var_event(&cifs_sb->outstanding_rreq,
++			       !atomic_read(&cifs_sb->outstanding_rreq));
++		flush_workqueue(serverclose_wq);
++		flush_workqueue(fileinfo_put_wq);
++
+ 		/* finally release root dentry */
+ 		dput(cifs_sb->root);
+ 		cifs_sb->root = NULL;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 026c1a30816c4..a7261fb38379f 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -3399,6 +3399,7 @@ int cifs_setup_cifs_sb(struct cifs_sb_info *cifs_sb)
+ 
+ 	spin_lock_init(&cifs_sb->tlink_tree_lock);
+ 	cifs_sb->tlink_tree = RB_ROOT;
++	atomic_set(&cifs_sb->outstanding_rreq, 0);
+ 
+ 	cifs_dbg(FYI, "file mode: %04ho  dir mode: %04ho\n",
+ 		 ctx->file_mode, ctx->dir_mode);
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 339346a82ecff..79cf5829411c2 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -276,6 +276,7 @@ static int cifs_init_request(struct netfs_io_request *rreq, struct file *file)
+ 		return -EIO;
+ 	}
+ 
++	atomic_inc(&cifs_sb->outstanding_rreq);
+ 	return 0;
  }
  
-+static void zynqmp_qspi_shutdown(struct platform_device *pdev)
-+{
-+	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
-+	int ret;
-+
-+	/*
-+	 * Stop the queue and reject any later transfer first, so the write
-+	 * below cannot cut into a message that is still being executed.
-+	 * Unlike ->suspend this cannot abort on error: a controller left
-+	 * mastering the bus is worse than a truncated transfer.
-+	 */
-+	ret = spi_controller_suspend(xqspi->ctlr);
-+	if (ret)
-+		dev_warn(&pdev->dev, "could not stop the queue: %d\n", ret);
-+
-+	/*
-+	 * Only a runtime suspended controller can be left alone: its clocks
-+	 * are gated, so it cannot be mastering the bus, and its registers
-+	 * must not be accessed either.  Any other answer means it may be
-+	 * running and has to be stopped.  In particular, on a kernel built
-+	 * without runtime PM this returns -EINVAL, and there the clocks
-+	 * enabled in probe() are never gated at all.
-+	 */
-+	ret = pm_runtime_get_if_in_use(&pdev->dev);
-+	if (!ret)
-+		return;
-+
-+	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
-+
-+	if (ret > 0)
-+		pm_runtime_put_noidle(&pdev->dev);
-+}
-+
- MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
+@@ -297,9 +298,13 @@ static void cifs_rreq_done(struct netfs_io_request *rreq)
+ static void cifs_free_request(struct netfs_io_request *rreq)
+ {
+ 	struct cifs_io_request *req = container_of(rreq, struct cifs_io_request, rreq);
++	struct cifs_sb_info *cifs_sb = CIFS_SB(rreq->inode->i_sb);
  
- static struct platform_driver zynqmp_qspi_driver = {
- 	.probe = zynqmp_qspi_probe,
- 	.remove_new = zynqmp_qspi_remove,
-+	.shutdown = zynqmp_qspi_shutdown,
- 	.driver = {
- 		.name = "zynqmp-qspi",
- 		.of_match_table = zynqmp_qspi_of_match,
+ 	if (req->cfile)
+ 		cifsFileInfo_put(req->cfile);
++
++	if (atomic_dec_and_test(&cifs_sb->outstanding_rreq))
++		wake_up_var(&cifs_sb->outstanding_rreq);
+ }
+ 
+ static void cifs_free_subrequest(struct netfs_io_subrequest *subreq)
 -- 
 2.53.0
 
