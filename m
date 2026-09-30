@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744D84C4F58;
-	Wed, 30 Sep 2026 15:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464045013AB;
+	Wed, 30 Sep 2026 15:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783396; cv=none; b=e3/oh/JBAqO8q+AOhgfpMtXfTJSm2OaYk6N1RoCsN2tWbs3u+hRsSieHxtC1HlceMVyf6/H24kKxjA8F20xHuZVlzgd5xhapZg8HdRtDeXZ83a2bFFsXp+jQcpALqDEPMBRgTLlDjrQXRPmgevagtw+lYeYDxxsTT/7lo210SSY=
+	t=1790783397; cv=none; b=kIe8rqvPe91E3+8T9g6CAYe6bIdzPYO+4vO+522p+bJ0L9QItPmsOl0D8wFGVtu/fMfCRq26+Eo4273k8eVy7WywRzjhEfSKAr2Ca2a4JOWIlvV/rEQ9UeqMQC/+OFY4l9L1Kn0sbi1G0a7zF/ngbcF25SxKs0scpFXxoUjuRbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783396; c=relaxed/simple;
-	bh=w3aPBmYsyH6NR+fwIJC9gMogkhOcrk1fPmbluRRGgGg=;
+	s=arc-20240116; t=1790783397; c=relaxed/simple;
+	bh=0JMAfXxVieGTiRaqDUVciXYkrZjYiSvGaKUhDvsSrUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4LQ0YDnXrwNrcOjsAnJjZD/dknbVICMKyeaLkEX8TSjpP9Ku8FOL6wl9KEDXuMw3nrIdwVtLiqT2L9KM3olHaYqWTFVyRg1CcUdfSwdxpyQCvLjeZKjQM0a2Zw7d7caQ8R8KIv5cP51JNPjrMMGi1kPoOEF9HCWOT0vLK1CU7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pV/Fm81H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZRfPcmsG6Rjdrw04YnMjd6jJ5ZU96x1VrdoTgipWN5U0FdqIg5xnvv6xoLRcWi4QV5+4eOfi5WrIRW4GwKOujHn79bd6IkRC8w+VOu+Vd/7pTViyYj3KYy5zNbYqgJbCCeOqIjU7k5qQI9uZENCrtWu/0c7dz+h/1xsUhHC9StM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8/8LfoM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pV/Fm81H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF1F1F000FF;
-	Wed, 30 Sep 2026 15:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8/8LfoM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948D81F00893;
+	Wed, 30 Sep 2026 15:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783390;
-	bh=+VD7UQwrMjvPENG8FhktW3ocV7M29KKwryuAC/OqKoc=;
+	s=korg; t=1790783393;
+	bh=VGmE5mHX145YUIDUphFPEj/54j/dEjm/LLa2w3SnWbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pV/Fm81Hxp04UhQPzQVMCoqB3Cq62l6uXlm9VrD2XNyhqtfHNyOGGqv7WU0cfJMmq
-	 sIpzMSMmkKBjmXXd8SwXCH3v08MREwGzx6rv8XD9EmriysqzCIW6D3c3Zdhk1uYUH6
-	 42xfKJE+gVgISfSnDdaVvTIVVrXTL6GyW3MkHakc=
+	b=s8/8LfoMMIvzQ+f+f04WSBEkVrZY4LhwUBD2M7Gm2GR9nHsuzhvq+xQc9c6UFaJ8O
+	 pCdaoIEYU8cv9mSEukLWSCIoPiCuSxhc1u3EeON9Dm5ts3w3jlSC5jm1Dmtc1AlAho
+	 3mYPbpuIn7afs3VJ6R0h2YZ8J/vbNzmlX7oX5zm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Shivank Garg <shivankg@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+1a797e1c81be78a2ace7@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 381/595] dmaengine: wait for RCU readers before releasing dma_device
-Date: Wed, 30 Sep 2026 17:24:34 +0200
-Message-ID: <20260930152355.872226550@linuxfoundation.org>
+Subject: [PATCH 5.10 382/595] wifi: cfg80211: only group hidden BSSes with beacon entries
+Date: Wed, 30 Sep 2026 17:24:35 +0200
+Message-ID: <20260930152355.893266612@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,59 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivank Garg <shivankg@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit dc750422170a563c7a81f6e49d36bb02c62ae37f ]
+[ Upstream commit 068843ed0902c552a13860c5ec6b2ca65b57a065 ]
 
-dma_issue_pending_all() walks the dma_device_list with
-list_for_each_entry_rcu() under rcu_read_lock(). dma_device_release()
-unlinks the device with list_del_rcu() and then calls
-device->device_release() (which in many drivers, such as plx_dma.c,
-directly calls kfree()).
+When a probe response for an unknown BSS comes in, __cfg80211_bss_update()
+looks for an existing entry with the same BSSID and a hidden (zero-length
+or NUL-filled) SSID, and if it finds one it groups them, using the beacon
+IEs from the existing entry.
 
-Because there is no grace period between unlinking the device and
-freeing it, concurrent RCU readers in dma_issue_pending_all() can
-access the device after it has been freed.
+But that could find another entry without a beacon, if it was also from a
+probe response (with SSID), so there's a group without beacon elements.
 
-The lockless walk originally relied on clients holding a dmaengine
-reference to pin the provider module, and therefore the device, for as
-long as they might traverse the list. Commit 8ad342a86359 ("dmaengine:
-Add reference counting to dma_device struct") decoupled the dma_device
-lifetime from the module reference, so the device can now be released
-while a reader is still walking the list.
+If a beacon with a hidden SSID for that BSSID arrives later,
+cfg80211_combine_bsses() goes looking for the probe response entries that
+belong to it - i.e. entries with the same BSSID and channel that have no
+beacon IEs - and finds those two. They are already grouped with each
+other, so it hits its
 
-Add synchronize_rcu() before the device is freed, so RCU readers are
-guaranteed to have finished. Keep it unconditional: providers that do
-not implement device_release() free the device themselves once
-dma_async_device_unregister() returns. This call will delay for a grace
-period with dma_list_mutex held, which is safe and only teardown path is
-delayed.
+  WARN_ON_ONCE(bss->pub.hidden_beacon_bss)
+  WARN_ON_ONCE(!list_empty(&bss->hidden_list))
 
-Fixes: 2ba05622b8b1 ("dmaengine: provide a common 'issue_pending_all' implementation")
-Suggested-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260526-dmaengine-kref-fix-v2-0-3df60afac01d@amd.com
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Shivank Garg <shivankg@amd.com>
-Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-4-d4a4ee47d927@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+which are there because an entry without beacon elements is not supposed
+to be part of a group yet.
+
+Only combine entries when a beacon was already received, ones that are
+kept separate will be combined when a beacon arrives.
+
+Assisted-by: LLM
+Fixes: 4593c4cbe1c9 ("cfg80211: fix BSS list hidden SSID lookup")
+Reported-by: syzbot+1a797e1c81be78a2ace7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1a797e1c81be78a2ace7
+Link: https://patch.msgid.link/20260904165614.bcfa64715745.Iad740347c86de56d4ff4f96a95f3c3afc47c42de@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/scan.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index ae4121a26c651..41a677a82ed41 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -426,6 +426,7 @@ static void dma_device_release(struct kref *ref)
- 
- 	list_del_rcu(&device->global_node);
- 	dma_channel_rebalance();
-+	synchronize_rcu();
- 
- 	if (device->device_release)
- 		device->device_release(device);
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 7d0ddc467232a..a277c6ddf94ea 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1860,6 +1860,13 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
+ 			if (!hidden)
+ 				hidden = rb_find_bss(rdev, tmp,
+ 						     BSS_CMP_HIDE_NUL);
++			/*
++			 * Only group with an entry with beacon data, otherwise
++			 * beacon data can never be filled/updated.
++			 */
++			if (hidden &&
++			    !rcu_access_pointer(hidden->pub.beacon_ies))
++				hidden = NULL;
+ 			if (hidden) {
+ 				new->pub.hidden_beacon_bss = &hidden->pub;
+ 				list_add(&new->hidden_list,
 -- 
 2.53.0
 
