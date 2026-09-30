@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B355350EC15;
-	Wed, 30 Sep 2026 16:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3948750E5B3;
+	Wed, 30 Sep 2026 16:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785961; cv=none; b=gXJD/W7ziyOZpMpjLcQ9vZsuvj1Pr/4YYR6g2GxgeLUJNrIFh6+kIyNafoWhpJPIxSsBdeOA7jLR831+j9QyrkUynn31OnihdFPQU8rUy3BbT0Leag8kQIio1VIA108Gns9tmhjc3PtQDi3UsAbOA4uOsNVJdJRBmTJGz8aXmr8=
+	t=1790785964; cv=none; b=sJoPyhoRTA451L2rU9p26Bjk/GQpUf9mbs8clGg4ixUYQvAAf9VibuLTVmArVJjV2vcLwGO2p2E/6XoGPAZTqOBZwSeq45Xwrng8fszRPfa5gsSJ4WpGWd6QibmyfgkE4plSt7gysOpHJb7g5WsvUUmYs6Div97xiotQyTpp5wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785961; c=relaxed/simple;
-	bh=3CJ1rR2MD5Vg10aait0Y/kqWXSp9je5H1G8FJ/v5ukU=;
+	s=arc-20240116; t=1790785964; c=relaxed/simple;
+	bh=q+fQpMnVrooLwufd3AgYInQyPn3Jx16d9a0zrAiUYrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUTtnmzzuiWsh6Z2Z5jkU2vCEH0u5V6svoE5yPDmYtqo0XwtVNFm5FpjpTTXFkgNrU5NsTGvFa+f4G+EayqBb/ZR3nfmnZUp0jq0jzbc+y0oq1Ore6w4C5OfsaR2hbqM3bXQzm06FdfMmYDVjN4WcDMH0cUcTfGtOJNiDnsmqWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLSYX/FP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kiQxr+aON40PY9WwIOYc1F06bGMO2v9M9fJytXi5+VR/ie71XF9Lpy4bEOEgi6hIcYuCbRI+nV4fGjJyXM9BXTBZt4Z0lrBnFZW8iRKAYWi8QANlKjJwdI565T1+YHLuzSkuN8CYqSgVD9LAprEu8PKJR88fhOLbqBnkkJeNwCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rb4AAqPN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLSYX/FP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22EA1F000FF;
-	Wed, 30 Sep 2026 16:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rb4AAqPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9575F1F000FF;
+	Wed, 30 Sep 2026 16:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785960;
-	bh=6dU/buvqTF5JkagJMs8/D7XTfLjGUNjbXFILouzwsRU=;
+	s=korg; t=1790785963;
+	bh=FdIj1EzyACKOPWwJNIuwJY+E1m46MdYDegZ0GfS2WlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OLSYX/FPHJPa8WpcGzBVDcJwIIqW166E8EBe+HCtK+ToH41fMEEfjZ9igBugtUQYG
-	 /QUgejiReBPIcQfr/vihiyTiKoJKi2hWGlyAips8+DHIgtyLBv+vqkD63jT3HCqP3p
-	 NnX/8mNEfGobUR0tBOAkpZHdWiS3om+B3ehemQzM=
+	b=Rb4AAqPN0TtAg9dSNMY6iAyvTZoGhfmK4giolYiPS4NIrqKMrbeGNbMRg1AmPfjgL
+	 vUdDgQ7GkvvyFT/HQPbqqa1PAQOFnjbR2i9QB/l+svRu0tWz5sYZu/WDDCcF2rRU37
+	 6AbMliHZNcLHBRya/bJDC/EULmC+gHK/rx4ltP9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jungwoo Lee <jwlee2217@gmail.com>,
-	Wongi Lee <qw3rtyp0@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 686/982] net: lock the socket in sock_gettstamp()
-Date: Wed, 30 Sep 2026 17:23:42 +0200
-Message-ID: <20260930152431.497285102@linuxfoundation.org>
+	Jeremy Nyberg <SlickStretch3.0@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 695/982] Input: xpad - fix PDP Marvel Xbox 360 controller
+Date: Wed, 30 Sep 2026 17:23:51 +0200
+Message-ID: <20260930152431.687634270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,88 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jeremy Nyberg <slickstretch3.0@gmail.com>
 
-[ Upstream commit 9ed55f3dbef4f4adfe65eb03b0c35c53229a8490 ]
+commit 7bc369cb3d3f3656eb77285628ee264264d28ad4 upstream.
 
-sk->sk_flags must only be changed while holding the socket lock,
-because sock_set_flag() and sock_reset_flag() use non atomic
-operations (__set_bit() and __clear_bit()).
+The PDP Marvel Xbox 360 controller with USB ID 0e6f:0147 is
+incorrectly classified as an Xbox One controller.
 
-sock_gettstamp() is one of the last places where a bit of sk->sk_flags
-is changed from a syscall without owning the socket lock, through
-sock_enable_timestamp(sk, SOCK_TIMESTAMP).
+With the current XTYPE_XBOXONE classification, the controller is
+detected but produces no input, while its four player LEDs continue
+blinking indefinitely.
 
-sk_set_memalloc() and sk_clear_memalloc() also change sk->sk_flags
-without the socket lock, but their callers (nbd, iscsi_tcp, nvme-tcp,
-sunrpc, wireguard) need a careful audit, this will be addressed in a
-separate patch.
+Classify USB ID 0e6f:0147 as an Xbox 360 controller instead.
 
-Jungwoo Lee and Wongi Lee reported an UDP socket use-after-free
-caused by this bug: a SIOCGSTAMPNS_NEW ioctl racing with bind()
-can cancel the SOCK_RCU_FREE bit that udp_lib_get_port() just set,
-because both threads perform a read-modify-write on the same word.
+Tested on a PDP Marvel Xbox 360 controller with USB ID 0e6f:0147.
+All inputs register correctly and the player LED indicates the
+current player.
 
-  CPU 0 (bind)                        CPU 1 (SIOCGSTAMPNS_NEW)
-  --------------------------------    ----------------------------
-  read sk_flags = F                   read sk_flags = F
-  compute F | BIT(SOCK_RCU_FREE)      compute F | BIT(SOCK_TIMESTAMP)
-  store F | BIT(SOCK_RCU_FREE)
-  sk_add_node_rcu(sk, ...)
-                                      store F | BIT(SOCK_TIMESTAMP)
-
-After the lost update, SOCK_RCU_FREE is clear while the socket is
-visible to lockless UDP receive lookups. sk_destruct() then frees
-the socket immediately instead of waiting for a RCU grace period,
-while the receive path still holds a reference-less pointer to it:
-
- BUG: KASAN: slab-use-after-free in ipv4_pktinfo_prepare+0x30/0x410
- Read of size 8 at addr ffff888008806610 by task exploit/207
- CPU: 0 UID: 1000 PID: 207 Comm: exploit Not tainted 6.12.95+ #1
-  ipv4_pktinfo_prepare+0x30/0x410
-  udp_queue_rcv_one_skb+0x51c/0x1180
-  udp_unicast_rcv_skb+0x109/0x350
-  ip_protocol_deliver_rcu+0x14b/0x310
-  ip_local_deliver_finish+0x29d/0x390
-  ip_local_deliver+0x24d/0x2a0
-
-Only grab the socket lock when SOCK_TIMESTAMP has to be set,
-to keep the common case lockless.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Jungwoo Lee <jwlee2217@gmail.com>
-Reported-by: Wongi Lee <qw3rtyp0@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915043055.3441600-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c225370e01b8 ("Input: xpad - sync supported devices with 360Controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeremy Nyberg <SlickStretch3.0@gmail.com>
+Link: https://patch.msgid.link/20260910071627.236014-1-SlickStretch3.0@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/sock.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 64f9d77bfaec7..899ddf069940f 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3569,7 +3569,14 @@ int sock_gettstamp(struct socket *sock, void __user *userstamp,
- 	struct sock *sk = sock->sk;
- 	struct timespec64 ts;
- 
--	sock_enable_timestamp(sk, SOCK_TIMESTAMP);
-+	/* sk->sk_flags must only be changed under the socket lock,
-+	 * because sock_set_flag() uses non atomic operations.
-+	 */
-+	if (!sock_flag(sk, SOCK_TIMESTAMP)) {
-+		lock_sock(sk);
-+		sock_enable_timestamp(sk, SOCK_TIMESTAMP);
-+		release_sock(sk);
-+	}
- 	ts = ktime_to_timespec64(sock_read_timestamp(sk));
- 	if (ts.tv_sec == -1)
- 		return -ENOENT;
--- 
-2.53.0
-
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -229,7 +229,7 @@ static const struct xpad_device {
+ 	{ 0x0e6f, 0x0139, "Afterglow Prismatic Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x013a, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
+-	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
++	{ 0x0e6f, 0x0147, "PDP Marvel Xbox 360 Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0162, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
 
 
