@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43064FDE56;
-	Wed, 30 Sep 2026 16:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0013B2BEFEF;
+	Wed, 30 Sep 2026 16:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786886; cv=none; b=nB8g3CY5kZhWLuYJAo5Z6IPzLJqH73yyo6gezNg7VO27EOOyz4xBo2duKFwqhSpb4JxLTIURZZdGWSDTm65hKgn4c7RTMy3RECviJF5hyCM978MAQSfkUEMrGgKoQHzlOoKF6evFeY4FeVokN4RV6K6Emjn/Ll5pjW4BrJ0MAPs=
+	t=1790786889; cv=none; b=NUZeErSINlXFrtTUQxFtGCu/g5R+MTKI6BygTyk+asdsnY1Rewx/2+9LtJmM6WZQIpF+KKgi5ebJ7DAs2T4hyNLbw4CErdPRpSeIv413Xxow9kyTa0c3nFbrPS2YGBPv1tLsyHAWQIM2GKFRrRmmr0WL+LW+Vw/Df09i6SV1Bdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786886; c=relaxed/simple;
-	bh=A8vd1iT16BjOuYF1+8wmvRJk8wcePt7VRjf6uUi9fM4=;
+	s=arc-20240116; t=1790786889; c=relaxed/simple;
+	bh=D0W5YiU50itAhutnZHpVDL1/DYnxCKyHmBwLW/FEZf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HiggJU61NhRLeoS/Y3Bru/xSGxYJpkmUuOocQ4CZALiLHCmlBP0Gk7rAupOfTV4ESDFtrJZYMo07mkR5kdCli1r+bqzmRdbRrsG4kddDhtx+A9WXJgGwgqz4GQ+9QrTXdTHjZC50eQWfJ4qam2+BcPdNcxGiYM8y0zhThhPkggA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9x1iNCl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FsUYRaTuExEveYllsuBl7cB5i+bQGEQNQZ8PK5iGRoVKzNXJYA5mYyYMtWJ38rCkuj0U/ChDRSrJHVwm3OtHVBMw+lMslBh7vBeK43+XAQX9r9lujuzR6WOvAI/x/gKxj6ufxeuEG249u3kBOg0zmnpM4CnZz8tjVsDln6hXPQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYxBKcew; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9x1iNCl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4442F1F000FF;
-	Wed, 30 Sep 2026 16:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYxBKcew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCF41F000FF;
+	Wed, 30 Sep 2026 16:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786884;
-	bh=M0FrIr+Ublaf9S6i3I1+Wz+KAQmHOzUeHY+EH4ShTrE=;
+	s=korg; t=1790786887;
+	bh=QiYMZO4zHA3ACTJi5ElOLiJxPNifeM15G165bqlGYrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9x1iNClYXD0XRIYsxQH+NBfWXHS1MVeDA0Aasn8ctFVqni+q/yeXbRWYn10rJf33
-	 oe/Wvao7o/mr0BhUYwYM96WqIOfpixEuD0i4tS9rSqOdtCNozBQ6hT4FNInpkQd3MT
-	 eV7PSxwjgZfQr2xzsWg1/OjrcMdWD8AfMWygy6s4=
+	b=ZYxBKcew6Km5Euu9MW5MTcZGE9l2xN3WU5Vr6R0c1yCx3LZqF4CwrPyyl/UnWXNf1
+	 zr++iS0oHmWUNslc3qM//WQNYVEhfa/cl4XD6swq/d4cc9GunLNFB69dDl9dItKa+Q
+	 oYfKXEYiqeZzVPoNFlRpsc7BG8a+GGTEn44GDNtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yang.yicong@picoheart.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
 	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 036/457] RISC-V: KVM: Fix the conversion between vsip and hvip
-Date: Wed, 30 Sep 2026 17:22:21 +0200
-Message-ID: <20260930152346.815642038@linuxfoundation.org>
+Subject: [PATCH 7.2 037/457] KVM: riscv: Fix NACL hfence entry update order
+Date: Wed, 30 Sep 2026 17:22:22 +0200
+Message-ID: <20260930152346.836285735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,140 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Yang <yang.yicong@picoheart.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit 52c6b7d20d3e791a9e75aa2be2a467990154c7cd ]
+[ Upstream commit b3d346838ec65fac7fd83f5dbcedd13cadfffddb ]
 
-Per AIA spec 1.0 Section 6.3.2, the interrupt numbers 13-63
-shares same bit position between related VS shadow CSRs and
-hypervisor CSRs. So there's a shift only for SSI, STI and
-SEI interrupt.
+The SBI v3.0 specification (section 15.1.2) requires a nested HFENCE
+entry to be populated as follows:
+1) find an unused entry with Config.Pending == 0
+2) update the Page_Number and Page_Count words
+3) update the Config word with Config.Pending set
 
-Currently the KVM always does a shift for all the interrupts
-(include LCOFI with number 13) when doing the conversion
-between vsip and hvip. Fix this by only doing shift the SSI,
-STI and SEI. Add wrappers for doing the conversion between
-vsip and hvip.
+__kvm_riscv_nacl_hfence() writes the Config word first, so the SBI
+implementation (or NACL hardware) can observe a pending entry with
+pnum/pcount values left over from the previous use of that entry,
+resulting in incorrect TLB flush ranges.
 
-Fixes: 16b0bde9a37c ("RISC-V: KVM: Add perf sampling support for guests")
-Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Write pnum and pcount first and the Config word last. Since the
+consumer is an external agent on coherent shared memory, use
+WRITE_ONCE() to stop the compiler from reordering the stores and
+smp_wmb() to make the parameter words globally visible before the
+Pending bit is set.
+
+Fixes: d466c19cead5 ("RISC-V: KVM: Add common nested acceleration support")
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
 Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260804134018.85497-1-yang.yicong@picoheart.com
+Link: https://lore.kernel.org/r/20260826075009.68952-1-min_halo@163.com
 Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/csr.h       | 20 ++++++++++++++++----
- arch/riscv/kvm/vcpu.c              |  3 +--
- arch/riscv/kvm/vcpu_onereg.c       |  8 +++-----
- tools/arch/riscv/include/asm/csr.h | 20 ++++++++++++++++----
- 4 files changed, 36 insertions(+), 15 deletions(-)
+ arch/riscv/kvm/nacl.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/include/asm/csr.h b/arch/riscv/include/asm/csr.h
-index 31b8988f4488d..72ff259154e9b 100644
---- a/arch/riscv/include/asm/csr.h
-+++ b/arch/riscv/include/asm/csr.h
-@@ -183,12 +183,24 @@
- #define HGATP_MODE_SHIFT	HGATP32_MODE_SHIFT
- #endif
+diff --git a/arch/riscv/kvm/nacl.c b/arch/riscv/kvm/nacl.c
+index 6f9f8963e9ddc..0a2a50c6ce035 100644
+--- a/arch/riscv/kvm/nacl.c
++++ b/arch/riscv/kvm/nacl.c
+@@ -42,12 +42,24 @@ void __kvm_riscv_nacl_hfence(void *shmem,
+ 		}
+ 	}
  
--/* VSIP & HVIP relation */
-+/*
-+ * VSIP & HVIP relation
-+ *
-+ * The bit positions are same between VSIP and HVIP for interrupt
-+ * numbers 13-63, where there's a shift for the SSI, STI and SEI.
-+ */
- #define VSIP_TO_HVIP_SHIFT	(IRQ_VS_SOFT - IRQ_S_SOFT)
--#define VSIP_VALID_MASK		((_AC(1, UL) << IRQ_S_SOFT) | \
-+#define VSIP_BIAS_MASK		((_AC(1, UL) << IRQ_S_SOFT) | \
- 				 (_AC(1, UL) << IRQ_S_TIMER) | \
--				 (_AC(1, UL) << IRQ_S_EXT) | \
--				 (_AC(1, UL) << IRQ_PMU_OVF))
-+				 (_AC(1, UL) << IRQ_S_EXT))
-+#define VSIP_NO_BIAS_MASK	(_AC(1, UL) << IRQ_PMU_OVF)
-+#define VSIP_VALID_MASK		(VSIP_BIAS_MASK | VSIP_NO_BIAS_MASK)
-+#define vsip_to_hvip(_vsip)	((((_vsip) & VSIP_BIAS_MASK) << \
-+				  VSIP_TO_HVIP_SHIFT) | \
-+				 ((_vsip) & VSIP_NO_BIAS_MASK))
-+#define hvip_to_vsip(_hvip)	((((_hvip) >> VSIP_TO_HVIP_SHIFT) & \
-+				  VSIP_BIAS_MASK) | \
-+				 ((_hvip) & VSIP_NO_BIAS_MASK))
+-	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_CONFIG(i);
+-	*entp = cpu_to_lelong(control);
++	/*
++	 * Per SBI v3.0 section 15.1.2, the Page_Number and Page_Count
++	 * words must be updated before the Config word with its Pending
++	 * bit set. WRITE_ONCE() stops the compiler from reordering the
++	 * stores and smp_wmb() makes the parameter words globally
++	 * visible to the SBI implementation (or NACL hardware) before
++	 * the Pending bit is set.
++	 */
+ 	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_PNUM(i);
+-	*entp = cpu_to_lelong(page_num);
++	WRITE_ONCE(*entp, cpu_to_lelong(page_num));
+ 	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_PCOUNT(i);
+-	*entp = cpu_to_lelong(page_count);
++	WRITE_ONCE(*entp, cpu_to_lelong(page_count));
++
++	/* Ensure the parameter words are visible before the Pending bit */
++	smp_wmb();
++
++	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_CONFIG(i);
++	WRITE_ONCE(*entp, cpu_to_lelong(control));
+ }
  
- /* AIA CSR bits */
- #define TOPI_IID_SHIFT		16
-diff --git a/arch/riscv/kvm/vcpu.c b/arch/riscv/kvm/vcpu.c
-index 977e36ab83d3f..468918309dff3 100644
---- a/arch/riscv/kvm/vcpu.c
-+++ b/arch/riscv/kvm/vcpu.c
-@@ -475,8 +475,7 @@ bool kvm_riscv_vcpu_has_interrupts(struct kvm_vcpu *vcpu, u64 mask)
- 	bool ret;
- 
- 	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
--	ie = ((vcpu->arch.guest_csr.vsie & VSIP_VALID_MASK)
--		<< VSIP_TO_HVIP_SHIFT) & (unsigned long)mask;
-+	ie = vsip_to_hvip(vcpu->arch.guest_csr.vsie) & (unsigned long)mask;
- 	ie |= vcpu->arch.guest_csr.vsie & ~IRQ_LOCAL_MASK &
- 		(unsigned long)mask;
- 	ret = vcpu->arch.irqs_pending[0] & ie;
-diff --git a/arch/riscv/kvm/vcpu_onereg.c b/arch/riscv/kvm/vcpu_onereg.c
-index 99b9107b1ac18..9fe829eed1781 100644
---- a/arch/riscv/kvm/vcpu_onereg.c
-+++ b/arch/riscv/kvm/vcpu_onereg.c
-@@ -272,7 +272,7 @@ static int kvm_riscv_vcpu_general_get_csr(struct kvm_vcpu *vcpu,
- 
- 	if (reg_num == KVM_REG_RISCV_CSR_REG(sip)) {
- 		kvm_riscv_vcpu_flush_interrupts(vcpu);
--		*out_val = (csr->hvip >> VSIP_TO_HVIP_SHIFT) & VSIP_VALID_MASK;
-+		*out_val = hvip_to_vsip(csr->hvip);
- 		*out_val |= csr->hvip & ~IRQ_LOCAL_MASK;
- 	} else
- 		*out_val = ((unsigned long *)csr)[reg_num];
-@@ -293,10 +293,8 @@ static int kvm_riscv_vcpu_general_set_csr(struct kvm_vcpu *vcpu,
- 
- 	reg_num = array_index_nospec(reg_num, regs_max);
- 
--	if (reg_num == KVM_REG_RISCV_CSR_REG(sip)) {
--		reg_val &= VSIP_VALID_MASK;
--		reg_val <<= VSIP_TO_HVIP_SHIFT;
--	}
-+	if (reg_num == KVM_REG_RISCV_CSR_REG(sip))
-+		reg_val = vsip_to_hvip(reg_val);
- 
- 	((unsigned long *)csr)[reg_num] = reg_val;
- 
-diff --git a/tools/arch/riscv/include/asm/csr.h b/tools/arch/riscv/include/asm/csr.h
-index 21d8cee046383..8df64314d6131 100644
---- a/tools/arch/riscv/include/asm/csr.h
-+++ b/tools/arch/riscv/include/asm/csr.h
-@@ -163,12 +163,24 @@
- #define HGATP_MODE_SHIFT	HGATP32_MODE_SHIFT
- #endif
- 
--/* VSIP & HVIP relation */
-+/*
-+ * VSIP & HVIP relation
-+ *
-+ * The bit positions are same between VSIP and HVIP for interrupt
-+ * numbers 13-63, where there's a shift for the SSI, STI and SEI.
-+ */
- #define VSIP_TO_HVIP_SHIFT	(IRQ_VS_SOFT - IRQ_S_SOFT)
--#define VSIP_VALID_MASK		((_AC(1, UL) << IRQ_S_SOFT) | \
-+#define VSIP_BIAS_MASK		((_AC(1, UL) << IRQ_S_SOFT) | \
- 				 (_AC(1, UL) << IRQ_S_TIMER) | \
--				 (_AC(1, UL) << IRQ_S_EXT) | \
--				 (_AC(1, UL) << IRQ_PMU_OVF))
-+				 (_AC(1, UL) << IRQ_S_EXT))
-+#define VSIP_NO_BIAS_MASK	(_AC(1, UL) << IRQ_PMU_OVF)
-+#define VSIP_VALID_MASK		(VSIP_BIAS_MASK | VSIP_NO_BIAS_MASK)
-+#define vsip_to_hvip(_vsip)	((((_vsip) & VSIP_BIAS_MASK) << \
-+				  VSIP_TO_HVIP_SHIFT) | \
-+				 ((_vsip) & VSIP_NO_BIAS_MASK))
-+#define hvip_to_vsip(_hvip)	((((_hvip) >> VSIP_TO_HVIP_SHIFT) & \
-+				  VSIP_BIAS_MASK) | \
-+				 ((_hvip) & VSIP_NO_BIAS_MASK))
- 
- /* AIA CSR bits */
- #define TOPI_IID_SHIFT		16
+ int kvm_riscv_nacl_enable(void)
 -- 
 2.53.0
 
