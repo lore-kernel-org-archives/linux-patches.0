@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FE33B2FDC;
-	Wed, 30 Sep 2026 17:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F57501285;
+	Wed, 30 Sep 2026 17:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789589; cv=none; b=WleBoZNbAvtHFgopVwIfiRYA8c+3wGpBXItd0DH4pp4gEVAU73McPLXIfLq7hVYHaq1dGb7q2zb7BjI1+ZU+kg8QwKC2LLmVVWsuIaU79n41ozAawaRErjmLdanI9pt9s6S5Loj2WdMOg928gy7begZwykWIqkBAUipJKWu0sw8=
+	t=1790789591; cv=none; b=l2pb0vh3lrkthiytZPBuXL1LvGcZCFFo+KMn/JFcFuOZ19Dct+tHRbNH5S3hnXISAajRPib9aTOKSuWuo/5s0VowHKhQwoxYIYVRteKt9Mx0qxKNUcxrLS4PuLaJgYJsC1G048kpYGr+ErT+4grFcH7YSi9MU+2aLxH67hqi3ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789589; c=relaxed/simple;
-	bh=UEMsO4QO8DuBdr9oQiAvRKpAyzf4bzyBN8olyoVGYQs=;
+	s=arc-20240116; t=1790789591; c=relaxed/simple;
+	bh=65vyu11+pn3miFZiVUW6cOUXcAxNlZa+wTEa4bDJjnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FCeUZ7DtGBw6sHBxUONtigwE4UZxpyBxI8IXLpM5si1cGlTmodu6JcrPv0vfbqSczD0mAL/UX5hFgi6GoqKcRhd3egWs+GdsYt9ZU0gJyS+QxMn6ls6bg4/SShuFO3tcbmctG3vLandkCp3aRRQbuHoPI7mPQKZDPRI12fdQTN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmOJOc3O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MlgM0iPSGiWvA7vJtRslPMhKa4oGdZnItbtg+wVsGGkD9qcSE9hl3YSs2oGaFFzHDySm+8m1WoRTFuFaFnkl03AOXKPHXv3Ezx0L6Km36RbaEHJ7MAbzP2yrTXn252ozT/Cp7ddHr22njC6GKQ6hjQcJ+VuoIJo/xVwcB0EACWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oi38X4Du; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmOJOc3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFAA1F000FF;
-	Wed, 30 Sep 2026 17:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oi38X4Du"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44DB1F000FF;
+	Wed, 30 Sep 2026 17:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789587;
-	bh=Jo09KlRL/qU27aC3Eybqf2+T7dcqxwnHSY07jRgRMQE=;
+	s=korg; t=1790789590;
+	bh=kn6n0oA5eaBWKD29N9eAITRCalLha2sYSR20QyqU89c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmOJOc3OuMiBS+2+ydZeZZ84eluP3vHv7HrlU6V2Apz4OoB3vCyHyQy4MsaVh5Jne
-	 XX07YkC/d3EZu5DFuiU5PmdVlrsfGFUuUzJAePwwnIWBF6fFwS/7l9rg5YdOoIfA9B
-	 R2DBIxV34EkdXqGPPLfZ0f1G/qDzTpph1esyTVxU=
+	b=Oi38X4DuV4PsEic3BSUIiz2M1DxudCS+3FsdWqtprITjF9lbpK4LpJch5DdhFXiLQ
+	 4EXkJGJvxuPI8JNMmHM++TqH1gOI1oQfsRqtBn34twzfTUoc6x//6n2vChbwJQ3MM+
+	 vkL4i6eJofbhVztkoeSL9ZItwvxsLKHUmTczRZSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
 	Peter Oberparleiter <oberpar@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 529/877] s390/cio: Fix NULL pointer dereference in ccw_device_get_util_str()
-Date: Wed, 30 Sep 2026 17:24:00 +0200
-Message-ID: <20260930152426.061237188@linuxfoundation.org>
+Subject: [PATCH 6.12 530/877] s390/cmf: Fix virtual vs physical address confusion
+Date: Wed, 30 Sep 2026 17:24:01 +0200
+Message-ID: <20260930152426.082607465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,36 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit 5b76268dac968612f7283d59b539036de955b7d9 upstream.
+commit f4d04425e66af2ecee9d1a49ae0484436f3c2fd1 upstream.
 
-The channel path registry entry associated with a CHPID may be removed
-while the subchannel's PMCW still references that CHPID. In this case,
-chpid_to_chp() can return NULL, leading to a NULL pointer dereference.
+The measurement block address is an absolute address. Define the
+associated schib_config and schib fields as dma64_t to enable automatic
+detection of incorrect assignments. Also add the missing virt_to_dma64()
+translation.
 
-Add the missing NULL check before dereferencing the returned pointer.
+Without this fix, a wrong address will be used by firmware when storing
+extended format channel measurement data on kernels built with
+CONFIG_RANDOMIZE_IDENTITY_BASE=y.
 
-Fixes: 199652309a4d ("s390/cio: add helper to query utility strings per given ccw device")
+Fixes: 14edd0d73bfe ("s390/cmf: fix virtual vs physical address confusion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/device_ops.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/cio/cio.h |    5 +++--
+ drivers/s390/cio/cmf.c |    2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/cio/device_ops.c
-+++ b/drivers/s390/cio/device_ops.c
-@@ -517,6 +517,8 @@ u8 *ccw_device_get_util_str(struct ccw_d
- 	chp_id_init(&chpid);
- 	chpid.id = sch->schib.pmcw.chpid[chp_idx];
- 	chp = chpid_to_chp(chpid);
-+	if (!chp)
-+		return NULL;
+--- a/drivers/s390/cio/cio.h
++++ b/drivers/s390/cio/cio.h
+@@ -7,6 +7,7 @@
+ #include <linux/mod_devicetable.h>
+ #include <asm/chpid.h>
+ #include <asm/cio.h>
++#include <asm/dma-types.h>
+ #include <asm/fcx.h>
+ #include <asm/schid.h>
+ #include <asm/tpi.h>
+@@ -49,7 +50,7 @@ struct pmcw {
  
- 	util_str = kmalloc(sizeof(chp->desc_fmt3.util_str), GFP_KERNEL);
- 	if (!util_str)
+ /* Target SCHIB configuration. */
+ struct schib_config {
+-	u64 mba;
++	dma64_t mba;
+ 	u32 intparm;
+ 	u16 mbi;
+ 	u32 isc:3;
+@@ -66,7 +67,7 @@ struct schib_config {
+ struct schib {
+ 	struct pmcw pmcw;	 /* path management control word */
+ 	union scsw scsw;	 /* subchannel status word */
+-	__u64 mba;               /* measurement block address */
++	dma64_t mba;		 /* measurement block address */
+ 	__u8 mda[4];		 /* model dependent area */
+ } __attribute__ ((packed,aligned(4)));
+ 
+--- a/drivers/s390/cio/cmf.c
++++ b/drivers/s390/cio/cmf.c
+@@ -184,7 +184,7 @@ static int set_schib(struct ccw_device *
+ 	sch->config.mbfc = mbfc;
+ 	/* address can be either a block address or a block index */
+ 	if (mbfc)
+-		sch->config.mba = address;
++		sch->config.mba = address ? virt_to_dma64((void *)address) : 0;
+ 	else
+ 		sch->config.mbi = address;
+ 
 
 
