@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F30D4E36DC;
-	Wed, 30 Sep 2026 16:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F455509F0D;
+	Wed, 30 Sep 2026 16:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786694; cv=none; b=lL0ltcrs6jrPoujsNT7KzaHD+tT8OrdNb6DQ4SZevuK4qd2A2xkH+KjmZoKR+9k3Ia+qG+5o7fG/+zf0qj5fVHrIDqzKT9vI2Nzy77ftzar+D4Octp72I/BFzJQfAfqhPESUIPqD6eQW1QTGTpuIFa267s+nysRhX71Dmc6nCdk=
+	t=1790786697; cv=none; b=hvgoNACLEF9PZdJ0MAycc7JfsRWZJnnm3Y7SNzL+tfub87akYZ2TfADnyc62WMC4ym8Nhx1x1khkY15CFy/4K72fvxymH8jJuR71jbvanti7ceAzy4LXIohpuTCC8bXXPMhuC5L22eOL06werKx08GXxTY1SHgYsrpMpTedFWmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786694; c=relaxed/simple;
-	bh=JFJvYQwRjzW2J8JkTtrVuVDC+NrNINgxC0IjknCh78g=;
+	s=arc-20240116; t=1790786697; c=relaxed/simple;
+	bh=3iJ1+8lN5A5MG4lRUf0qzCTtPm/A1xKZGXQgvlC+KXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwhxk/BF45Id/TIaPkxEhPk4hfxs2xSEBpSCFlSHxvwRau8OKYGbGRA/oXgDDG8k9w2goHDt4xPV2tkVGaq+e/ZGavsArGEDC/+xftWIOTEP4C6r9UVKBKDL++aluc/U4u/nAfUVxCxeJ2/4pCBXcf2DOdS/5JtjQ1f5o9fEGBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSblqmru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hcCqcMkNLnHVtrUXM53qP7RL1EjC1ALwBgXxugbh5vl7g7zb6vDWtel8anqbhma/4TbiUnLIecpctCjJnBDpukDhvy1zFZqYqqD6DgJx03a5eyiiR4Q9Oe6HGPNEZkfaTZQl1UsWwViIXJcdTpF+TrusIfV4Y4/VKtWNfXCJ83Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hJx3Thx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSblqmru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CA41F000FF;
-	Wed, 30 Sep 2026 16:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hJx3Thx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FE31F00893;
+	Wed, 30 Sep 2026 16:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786693;
-	bh=O8abhiHwIMJezg28AOp7DEKBSaqBbI4gYbM6+oXicJw=;
+	s=korg; t=1790786696;
+	bh=1I6D9dvXFlnIbwa22/5CGH+Md7AVPWQX1N0vQK/Fb6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vSblqmruxcfT0LQ0wHp13gsLIks18hGpmkdNOj7rjuRRcHtXlgHfURQjgObeEtKlY
-	 KelibuyoENvviirIOm3LAnBYI+bIx8nNgNhKflNh9XJz16JpPGRcPoPWqMQtLelhDP
-	 K/Ne/g//1+bm021JrMKpR9QXKCazIv5VOMPLLj28=
+	b=1hJx3ThxR8P90zCmyEDKefDGObWxx8m7g57rcnTJWetnAkZLI8ntUUA3pC9dr1UyA
+	 i9k0xt2ZLxICqCFsgJo+m/xYBIbkZy1yy/UcRgfZZ5oLBH3jGJe7aeJU7HV//ybTMZ
+	 51qN3/zMkKt/YuIgQnebM0BeyhGZDnvS3J7bDWI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zijie Huang <milkory@outlook.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 952/982] net/sched: reject IDR error pointers when deleting actions
-Date: Wed, 30 Sep 2026 17:28:08 +0200
-Message-ID: <20260930152437.184146333@linuxfoundation.org>
+Subject: [PATCH 6.1 953/982] net: arp: terminate device name before lookup
+Date: Wed, 30 Sep 2026 17:28:09 +0200
+Message-ID: <20260930152437.204056189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,61 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Zijie Huang <milkory@outlook.com>
 
-commit c82b797abe668d0b668601a93ba2c0b071a63574 upstream.
+commit d8b6529e80bcb4fb8177121404cbb3377acaebd2 upstream.
 
-tcf_action_delete() drops the reference held by its lookup before calling
-tcf_idr_delete_index() with the saved action index.  An unlocked
-classifier can remove that action and reserve the same IDR slot with
-ERR_PTR(-EBUSY) in between.
+The ARP ioctl copies a user-provided struct arpreq into a stack object. Its
+arp_dev field may contain IFNAMSIZ bytes without a NUL terminator.
 
-tcf_idr_delete_index() only checks the lookup result for NULL.  It
-therefore treats the reservation as a tc_action and dereferences
-tcfa_bindcnt.  A hardware execution breakpoint was used to schedule the
-interleaving without changing the kernel source.  KASAN reported this
-decoded trace:
+Such input is passed to dev_get_by_name_rcu() or __dev_get_by_name(), where
+strcmp() can read past the end of the stack object when a matching
+alternative interface name exists.
 
-  BUG: KASAN: null-ptr-deref in tca_action_gd+0x5b9/0x1010
-  Read of size 4 at addr 0000000000000010 by task poc/150
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002
-  RIP: tca_action_gd+0x5c0/0x1010:
-    arch_atomic_read at arch/x86/include/asm/atomic.h:23
-    raw_atomic_read at include/linux/atomic/atomic-arch-fallback.h:457
-    atomic_read at include/linux/atomic/atomic-instrumented.h:33
-    tcf_idr_delete_index at net/sched/act_api.c:766
-    tcf_action_delete at net/sched/act_api.c:1859
-    tcf_del_notify at net/sched/act_api.c:2014
-    tca_action_gd at net/sched/act_api.c:2064
-  R13: 0000000000000010 R15: fffffffffffffff0
-  Kernel panic - not syncing: Fatal exception
+Terminate the field before the lookup to prevent the out-of-bounds read.
 
-R15 contains ERR_PTR(-EBUSY), and adding the tcfa_bindcnt offset produces
-the address in R13.  With the guard applied, the same reproducer returned
--ENOENT without a KASAN report or panic.  Treat error pointers as absent
-and return -ENOENT.
-
-Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
+Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
 Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260914065123.4109709-2-bestswngs@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zijie Huang <milkory@outlook.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/fabf02a70787d17299e4b3153eadffaf20d154b3.1789910973.git.milkory@outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/arp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -712,7 +712,7 @@ static int tcf_idr_delete_index(struct t
- 
- 	mutex_lock(&idrinfo->lock);
- 	p = idr_find(&idrinfo->action_idr, index);
--	if (!p) {
-+	if (IS_ERR_OR_NULL(p)) {
- 		mutex_unlock(&idrinfo->lock);
- 		return -ENOENT;
- 	}
+--- a/net/ipv4/arp.c
++++ b/net/ipv4/arp.c
+@@ -1222,6 +1222,7 @@ int arp_ioctl(struct net *net, unsigned
+ 		err = copy_from_user(&r, arg, sizeof(struct arpreq));
+ 		if (err)
+ 			return -EFAULT;
++		r.arp_dev[IFNAMSIZ - 1] = '\0';
+ 		break;
+ 	default:
+ 		return -EINVAL;
 
 
