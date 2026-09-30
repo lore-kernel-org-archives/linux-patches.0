@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DD251121D;
-	Wed, 30 Sep 2026 16:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41C5514779;
+	Wed, 30 Sep 2026 16:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786638; cv=none; b=cLzAgtjnEUy+7u8meUrRV8A7TLIqXdqlhpMa9FofQI0DrJsyriPAj2TxwDyEmZMZPNoW4L42szBRge2/ckOptbc5nHyNn429JOloGP0JgnnGSTi7sZn3lyMckkdrMj32nAI6r3qXlwhBw/2Bo47YurHSm1dAGerddlXpI5m7b/I=
+	t=1790786641; cv=none; b=LGlcPYvgCFWDUsa3J1iMaW65HEnZ73UnHXzA8I1F3O9HhaNIvNy0hwW+lrWZvdixAicKC0hMfMuplinr0m/pWQdq9M805h4UdcU1QAmMliUMHGPx21MNVVqmec47hWKCFy6wJsr1tFwhgvv//V6nCos7F58k1+Q6LvGNdHlz4mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786638; c=relaxed/simple;
-	bh=JNIaxLiqlFtBJJSolNrEL+oF5fagvqSBFd4j/wjhdh4=;
+	s=arc-20240116; t=1790786641; c=relaxed/simple;
+	bh=wf28rDCEPY6omuCxIsym7+iCB/gcuwSkqE63JsFuuew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4A6PBnc3CrFUoIfhjxJMvnjkOqIGEhYNfbVH6YHU/cD4pN4ctkcIVwU9u+DX311ChsGHwmKZMJ26Ic+6F4Sb+aIASpSseXvPyf4/qLgUKh3IzTJlYyJXkS/xkzkIZ3w9hcLERB+dc5KWXDomXaa/VA7tJYF/mtrngHzBVWgvwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAa/n+7W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iY8BK2JgXi/D2tHCsBv9TxOUN1Ykn6dsXfMYmsDPIs1CN8NvweEu5pEryIM5hb/t873smwuiOs8dWJDjfcZLvUgS4HA7s0CPJVZ9iwqWDFlnhiunI+e4exmB+xTu9a9Rm4SRHAwcmEqK886C81mJhyPRetd/GLflKBzza75x1+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvvnyVok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAa/n+7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134501F00893;
-	Wed, 30 Sep 2026 16:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvvnyVok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4181F000FF;
+	Wed, 30 Sep 2026 16:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786636;
-	bh=4ZfZRruLPclRenGl7RYFxHfOxBVXCjzH7UbwePEef+0=;
+	s=korg; t=1790786639;
+	bh=OkfZd74oHNTXzetAG5OPdjp7hRKv4wWxUAwG98DJcw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OAa/n+7WUZ9VBQmFZufT2SDT16iIYbxs+XG0s/mkgnBr/4W7LyudYuQoMdtcBz3Bc
-	 LAOZxmHdBJllxgbhvyNjrVngh3MTeIAqWTH7etbIUTSqdFjU7Wcn9RCc9CndWn8drM
-	 iC0LEwb2Qlle05zVjPsTAZv6H4pCC64hcFzh9CAg=
+	b=cvvnyVokgFwIxqQOQSH4or3bjT5VJJdP9WaE4TyzpsGTYBBuw6t8W8cbGoNl4+Su9
+	 P9xZ2qZhTd4at7vOMPHXW86oWWL8sffrptJxX/1WibSkSORebCKD5y7awBXiP7vpQo
+	 o3ZIjEc0D6r4wcg5hqyZvLSLjT1reRd+zIDhRztM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Zhu <zhulei@kylinos.cn>,
-	David Heidelberg <david@ixit.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 877/982] selftests: nci: Correct pthread_create return value check
-Date: Wed, 30 Sep 2026 17:26:53 +0200
-Message-ID: <20260930152435.588486574@linuxfoundation.org>
+	Xin Long <lucien.xin@gmail.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 926/982] sctp: discard the rest of the packet on a stale-cookie error
+Date: Wed, 30 Sep 2026 17:27:42 +0200
+Message-ID: <20260930152436.632993534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,82 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei Zhu <zhulei@kylinos.cn>
+From: Aohan Mei <henrymei@tencent.com>
 
-[ Upstream commit 3d8afc5243ea2ee803d98e69eb4a01748167ac1b ]
+commit 4498467a8af06cfa3d71cb04bd7c4170dec8f449 upstream.
 
-The pthread_create() functions returns 0 on success and a positive value on
-failure. Modify the return value check to correctly detect failure cases.
+When an association is in COOKIE-ECHOED state and the peer sends a
+bundled [ERROR(Stale Cookie)][DATA] packet from one of its non-primary
+addresses, processing the ERROR chunk takes the non-fatal stale-cookie
+retry path sctp_sf_do_5_2_6_stale(), which queues
+SCTP_CMD_DEL_NON_PRIMARY while keeping the association alive.
+sctp_cmd_del_non_primary() removes every non-primary transport -
+including the very transport this packet arrived on, which is still
+referenced by the receive lookup and shared by all chunks of the
+packet via chunk->transport.
 
-Fixes: 72696bd8a09d ("selftests: nci: Extract the start/stop discovery function")
-Signed-off-by: Lei Zhu <zhulei@kylinos.cn>
-Link: https://patch.msgid.link/20260729072426.303484-1-zhulei_szu@163.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+sctp_assoc_rm_peer() does redirect asoc->peer.last_data_from away from
+the removed transport, but right afterwards the bundled DATA chunk
+makes sctp_assoc_bh_rcv() re-register
+asoc->peer.last_data_from = chunk->transport unconditionally, undoing
+the redirection with the just-removed transport.
+
+Once the packet is done, the receive reference is dropped and the
+transport is RCU-freed, while the surviving association keeps the
+dangling last_data_from.  A later FWD-TSN (or the delayed SACK timer)
+makes sctp_gen_sack() dereference it (->param_flags and friends), and
+sctp_make_sack()/sctp_outq_select_transport() may write to the freed
+object and link it into the live transport list.  This is a
+use-after-free triggerable by any malicious SCTP peer (or a local
+unprivileged user acting as one) with no capabilities required:
+
+  BUG: KASAN: slab-use-after-free in sctp_do_sm+0x498a/0x5660
+  Read of size 4 at addr ffff88800e1e356c by task poc/115
+  Call Trace: sctp_do_sm <- sctp_assoc_bh_rcv <- sctp_inq_push <-
+              sctp_rcv <- ip_protocol_deliver_rcu <- ip_rcv
+  Allocated: sctp_transport_new <- sctp_assoc_add_peer <-
+             sctp_process_init (INIT-ACK processing)
+  Freed: kfree <- sctp_transport_destroy_rcu <- rcu_core
+         (call_rcu queued by sctp_transport_put at end of sctp_rcv)
+  The buggy address is located 364 bytes inside of freed 1024-byte
+  region [ffff88800e1e3400, ffff88800e1e3800), cache kmalloc-1k
+
+Note that commit 03a9d10ecf71 ("sctp: drop a chunk if its transport
+was removed") only covers the window between the receive lookup and
+the chunk processing (e.g. an ASCONF DEL-IP racing the socket backlog);
+here the transport is removed *while* the packet is being processed,
+by an earlier chunk of the same packet, so the drop in sctp_inq_push()
+does not reach this path.  Verified with the bundled [ERROR(Stale
+Cookie)][DATA] + FWD-TSN reproducer: the KASAN report above still
+fires with that commit applied, and is gone with this patch on top.
+
+Fix it by discarding the rest of the packet on this path, as suggested
+by Xin.  After the stale-cookie ERROR has sent the association back to
+COOKIE-WAIT and removed the non-primary transports, the remaining
+chunks of the packet can only run against the restarted handshake
+while referencing the removed arrival transport through
+chunk->transport: besides the last_data_from registration above,
+sctp_cmd_setup_t2() and the sctp_make_*() reply builders would also
+copy that pointer into association-lifetime state that
+sctp_assoc_rm_peer() has already sanitized.  Let the peer retransmit
+them, in line with what sctp_inq_push() does for chunks whose
+transport was removed before processing.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260921093707.1432184-1-ljp1205831794@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/nci/nci_dev.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/sctp/sm_statefuns.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
-index 162c41e9bcae8..6f571e3c21c09 100644
---- a/tools/testing/selftests/nci/nci_dev.c
-+++ b/tools/testing/selftests/nci/nci_dev.c
-@@ -438,7 +438,7 @@ FIXTURE_SETUP(NCI)
- 	else
- 		rc = pthread_create(&thread_t, NULL, virtual_dev_open,
- 				    (void *)&self->virtual_nci_fd);
--	ASSERT_GT(rc, -1);
-+	ASSERT_EQ(rc, 0);
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -2625,6 +2625,8 @@ static enum sctp_disposition sctp_sf_do_
  
- 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
- 			       NFC_CMD_DEV_UP, self->dev_idex);
-@@ -509,7 +509,7 @@ FIXTURE_TEARDOWN(NCI)
- 			rc = pthread_create(&thread_t, NULL, virtual_deinit,
- 					    (void *)&self->virtual_nci_fd);
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
  
--		ASSERT_GT(rc, -1);
-+		ASSERT_EQ(rc, 0);
- 		rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
- 				       NFC_CMD_DEV_DOWN, self->dev_idex);
- 		EXPECT_EQ(rc, 0);
-@@ -590,7 +590,7 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
++	sctp_add_cmd_sf(commands, SCTP_CMD_DISCARD_PACKET, SCTP_NULL());
++
+ 	return SCTP_DISPOSITION_CONSUME;
  
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
- 			    (void *)&virtual_fd);
--	if (rc < 0)
-+	if (rc)
- 		return rc;
- 
- 	rc = send_cmd_mt_nla(sd, fid, pid, NFC_CMD_START_POLL, 2, nla_start_poll_type,
-@@ -610,7 +610,7 @@ int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
- 			    (void *)&virtual_fd);
--	if (rc < 0)
-+	if (rc)
- 		return rc;
- 
- 	rc = send_cmd_with_idx(sd, fid, pid,
-@@ -830,6 +830,8 @@ int disconnect_tag(int nfc_sock, int virtual_fd)
- 
- 	status = pthread_create(&thread_t, NULL, virtual_deactivate_proc,
- 				(void *)&virtual_fd);
-+	if (status)
-+		return status;
- 
- 	close(nfc_sock);
- 	pthread_join(thread_t, (void **)&status);
-@@ -874,7 +876,7 @@ TEST_F(NCI, deinit)
- 	else
- 		rc = pthread_create(&thread_t, NULL, virtual_deinit,
- 				    (void *)&self->virtual_nci_fd);
--	ASSERT_GT(rc, -1);
-+	ASSERT_EQ(rc, 0);
- 
- 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
- 			       NFC_CMD_DEV_DOWN, self->dev_idex);
--- 
-2.53.0
-
+ nomem:
 
 
