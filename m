@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0997502560;
-	Wed, 30 Sep 2026 17:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BCD50B437;
+	Wed, 30 Sep 2026 17:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788881; cv=none; b=aVBZjIh125eX01L2YNN7ZVtkJOBqJD+x5k2iKAbxQyaMIlFk0ovxnWnYkIDyqB84D7CqtXwFtkTcPyY028bL/5LlB70yHYF4YKAT73Jc4oiVkN6Y+8149pTrn4EXGmUjXTaxC+mD2XZmIrgAcpR9VV00Gyn5xXNkGJN1oLzVQB4=
+	t=1790788884; cv=none; b=ObalXEcNvsiikPporAt4CjXVmZU+P3Wvi78vVJaqL8RgkXNlYcfXazL3OGC5/0PynjsuJ4W4KobV2/hexxQpy2tbVvuj78Nsf4LpjEGrVuCY32lJdHJr2pWlgc5viJvRKjedqhGhWhj31UVUV5ab/MEXJ+K+YiKvnQEu37/BdVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788881; c=relaxed/simple;
-	bh=rhdAe/zOYUaWS1ovGEWKL1fXFxH3KZdo0IfS2ieUrL0=;
+	s=arc-20240116; t=1790788884; c=relaxed/simple;
+	bh=AFuNR2aLHRQP1GbcRf7kC1h6AYnYR2/85YQEsofiQOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YHRirkqBEsCCbCowh98j0oh+k3jXYziIrlSeoDtuJ+mjOxv3oAAPCQEfZ7GdKA6t3AW6wnPEDPg5DuRxgq5hMVUp3QKIQKrKX9BtDAcCxFKXvRuv1yqJgzb+aJDaBmhkAkgLjGtdNISJD2mnKpETa9y3ugr9HThoUyjrDIfnqXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pplCfpxH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tD5slRlF6uvbSVESsUVGdoaWV2PqyAFwLK/6MunMD3/xROI/mHhNukD9iIKe3sGsd8Sio9Xt9I/LQ0KIyKFxtYc1Kvb2oAZGq3tWcDQAZrHi8vGjz6gf8v4qSlj/rvNprrprmoW2ocn1RHVKkUaYpi+bCa9A7JwbDsdLagpd06Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb2hjs7T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pplCfpxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167A61F00898;
-	Wed, 30 Sep 2026 17:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb2hjs7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C1E1F00898;
+	Wed, 30 Sep 2026 17:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788880;
-	bh=wBboBP0rtFrIUXzMOsAfYfUN9JXYIeRCdhFRzBQEjMs=;
+	s=korg; t=1790788883;
+	bh=tkh2Rj1iLCfGtYYRX1HsrWFnD2Q4GaHYM2U4aSigzaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pplCfpxH1TzrmTCdC5DZluCodGmJPnLlJw7M1Fk6Lp8szvuLnMvZwbQunTLrUaJSH
-	 l6tqSxPzOkyoIW8SKTOSpGniMACzv8Ch79gizN5Qha/gc427ICWdiI7uF4XwAhGHRO
-	 1286Upb5ofrkppS9nb+XaBkx7iVwn6cWGdT+cYMo=
+	b=Sb2hjs7TzkUlC3gisWJLFVNF5JfZAJRZNDl45Z0raI9txcLBzH7weCMMqPwDSQWX5
+	 +FhPzvXYrTG+ldfcHpwPm3Tf2aRxXwe5zvKKgKUSXb+FjCvPs3CsKcova+boKMouTe
+	 1GTqCcWdcFwMS4EwE/XW3wxl1aWVK5PaZvo+v3/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Sorenson <sorenson@redhat.com>,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 281/877] smb: client: fix next_buffer UAF and NextCommand bounds in compound PDUs
-Date: Wed, 30 Sep 2026 17:19:52 +0200
-Message-ID: <20260930152420.781516600@linuxfoundation.org>
+Subject: [PATCH 6.12 282/877] smb: client: fix potential OOB read in smb3_enum_snapshots()
+Date: Wed, 30 Sep 2026 17:19:53 +0200
+Message-ID: <20260930152420.802163421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,66 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-commit 05762c5bc1cfdcac36747994fde2c04387a457f1 upstream.
+commit 4775c3b7a597907e0b97556c7986fda238a377ae upstream.
 
-Fix several related bounds checking and pointer lifecycle issues in
-receive_encrypted_standard()'s handling of compound encrypted frames:
+If snapshot_array_size is smaller than GMT_TOKEN_SIZE,
+smb3_enum_snapshots() sets ret_data_len to
+sizeof(struct smb_snapshot_array) without verifying the actual length
+of the server's reply.
 
-- Clear next_buffer after assigning it to server->bigbuf. A stale
-  next_buffer pointer can lead to a use-after-free on subsequent
-  error paths.
-- Update pdu_length to the decrypted plaintext size (buf_size). Using
-  the pre-decryption length allows NextCommand to point into stale
-  ciphertext residue.
-- Reject next_cmd values smaller than MID_HEADER_SIZE(server).
-- Fix an integer overflow in the upper bound check by verifying
-  pdu_length - next_cmd < MID_HEADER_SIZE(server), ensuring the
-  trailing slice is large enough for a header.
+Because SMB2_ioctl() places no lower bound on the server-supplied
+OutputCount and allocates retbuf to exactly that length, a short reply
+results in ret_data_len exceeding the size of retbuf. The subsequent
+copy_to_user() then reads past the end of retbuf, leaking adjacent slab
+memory to userspace.  The subsequent clamp check is ineffective as it
+only reduces ret_data_len.
 
-Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
+Fix this by rejecting replies shorter than
+sizeof(struct smb_snapshot_array) with -EIO. Note that the bound is set
+to the 12-byte struct size rather than the 16-byte
+MIN_SNAPSHOT_ARRAY_SIZE defined in MS-SMB2 3.3.5.15.1, because 12 bytes
+is exactly what copy_to_user() attempts to read.
+
+Fixes: e02789a53d71 ("smb3: enumerating snapshots was leaving part of the data off end")
 Cc: stable@vger.kernel.org
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
 Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 --- a/fs/smb/client/smb2ops.c
 +++ b/fs/smb/client/smb2ops.c
-@@ -5237,6 +5237,7 @@ receive_encrypted_standard(struct TCP_Se
- 	length = decrypt_raw_data(server, buf, buf_size, NULL, false);
- 	if (length)
- 		return length;
-+	pdu_length = buf_size;
- 
- 	next_is_large = server->large_buf;
- one_more:
-@@ -5249,8 +5250,15 @@ one_more:
- 	}
- 
- 	if (next_cmd) {
--		if (WARN_ON_ONCE(next_cmd > pdu_length))
-+		if (next_cmd < MID_HEADER_SIZE(server) ||
-+		    next_cmd > pdu_length ||
-+		    pdu_length - next_cmd < MID_HEADER_SIZE(server)) {
-+			unsigned int max_next = pdu_length > (unsigned int)MID_HEADER_SIZE(server) ?
-+					pdu_length - (unsigned int)MID_HEADER_SIZE(server) : 0;
-+			cifs_server_dbg(VFS, "invalid NextCommand offset %u out of range [%zu, %u]\n",
-+					next_cmd, MID_HEADER_SIZE(server), max_next);
- 			return -1;
+@@ -2422,8 +2422,14 @@ smb3_enum_snapshots(const unsigned int x
+ 		 * and retry the ioctl again with larger array size sufficient
+ 		 * to hold all of the snapshot GMT tokens on the second try.
+ 		 */
+-		if (snapshot_in.snapshot_array_size < GMT_TOKEN_SIZE)
++		if (snapshot_in.snapshot_array_size < GMT_TOKEN_SIZE) {
++			if (ret_data_len < sizeof(struct smb_snapshot_array)) {
++				rc = -EIO;
++				kfree(retbuf);
++				return rc;
++			}
+ 			ret_data_len = sizeof(struct smb_snapshot_array);
 +		}
- 		if (next_is_large)
- 			next_buffer = (char *)cifs_buf_get();
- 		else
-@@ -5286,6 +5294,7 @@ one_more:
- 			server->bigbuf = buf = next_buffer;
- 		else
- 			server->smallbuf = buf = next_buffer;
-+		next_buffer = NULL;
- 		goto one_more;
- 	} else if (ret != 0) {
+ 
  		/*
+ 		 * We return struct SRV_SNAPSHOT_ARRAY, followed by
 
 
