@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347035038FE;
-	Wed, 30 Sep 2026 15:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FED14E3229;
+	Wed, 30 Sep 2026 15:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783417; cv=none; b=U6ePFNVoDWzUeM9O2pNw/1XCtiyV/iyZ7vqEofYX46Ym/q6UHRy4ln9u07EbGTR53H0mLD+o5ldDqP6P69d7FRQptq1RDr6RftMdgwR080O+eRi3ab1HsqxjiVlxFfCsIjy33vV1lFM4KAou8OI10chLVA2yux8uoNHK0Zns77o=
+	t=1790783421; cv=none; b=o7WzjU64LHNkRAvwrD/YvC+3c+HQzxon5S+pV3MwNQ3tmV3XtERKAI/lInzeFPurtftwUtCveIAzelNR2Fsx5lwjcDh7F60Es/jfzC3dWen2W5A9EZSPcF9a1MVv45uuwlHuLoQAtjONs7340yq3UNd0Zx0GO32ohnIKT55IPfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783417; c=relaxed/simple;
-	bh=usSABi4LVvIF5wEZFNWe2T+2XhblR1FrdAf4vLrkr6I=;
+	s=arc-20240116; t=1790783421; c=relaxed/simple;
+	bh=ols5mxPTZw/eTntJqiHAEGjJFz6Rkyv50z92+kSZeec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=otzj24Y83tfzj0QKEzU2Ocm4gD54vLHMR1irDHNX7Fioh9kWaZ+/XNNZKN1Rj/GzAFmYhf9hJFxJi87WlxqAwkLFOR1seDLjiqYXzgD5cEQY8s4Tc4BaNbrmHoPRB6Zjf3t+sOQri6pDULykMNZLe4MTuLcCSvirYVATFrExRNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knNxrj5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IHp9/lP7vCqdvHGWDl3naNViha4cSzFhkEDbXQrk+Epcyi0pM9ADouw0bP0tNOb+OB5fdp1clFlFwJ3Tgmf46gFIbn3kC3k3UxWL4jZqmtvoLkaGGB0caBQKBYNlAl8t9vbKNHcNQ9hjHM20TIe1zFfr+Ys8IQCk1yl9SmmIqjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KO54JJPr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knNxrj5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684A41F00898;
-	Wed, 30 Sep 2026 15:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KO54JJPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212F51F00893;
+	Wed, 30 Sep 2026 15:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783412;
-	bh=wtA5nGZhAwhuQYMC7DU0QuXsZMibLhZqfWWKjpWaj3s=;
+	s=korg; t=1790783418;
+	bh=4RQ82h5RLX4TvD1u2dqUsnlx0PhWBadha4TuaKalqKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knNxrj5qv4BaMPVGu2RZUi/THLTHiyAqs4OqiSLaZE37Qow2nsD074UBEjC4S5uQO
-	 Rt2OwcTSyzjhJVZkwCXfLHGKEOFRwfuIi8YO1BnJ698s/JIn9EIESzBIDLy8Ecmc7U
-	 34jctHQWZ15wKI2mCBFnXSdoavdN5+c8Hu9uWeZM=
+	b=KO54JJPrWcjb1ubQHykUpWpPzb4qJCyCIJsXvZokEHwrf1LLLa/ai/kpZEEa2XfEr
+	 3Y3+/YhlmKsHwKU1YHc2gugULmW6Z86hor7lUWjIEUFXVH3EXdh/JWYI0HbSdrw5LI
+	 c9WcHzLNFVdhvcwN0SJS/B8xyAxwVCwCdAKN+kcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 389/595] RDMA/siw: Bound fragmented header copies by the remaining length
-Date: Wed, 30 Sep 2026 17:24:42 +0200
-Message-ID: <20260930152356.040595275@linuxfoundation.org>
+Subject: [PATCH 5.10 355/595] firmware: arm_scpi: reject DVFS OPP count above MAX_DVFS_OPPS
+Date: Wed, 30 Sep 2026 17:24:08 +0200
+Message-ID: <20260930152355.313226115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -46,52 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 9ff797e516dbc1ecb73701ec4c24055712d44411 ]
+[ Upstream commit 32471d84a487c7fd74532bc96be56f8028cf4a3f ]
 
-siw_get_hdr() can receive an extended DDP/RDMAP header across more than
-one TCP callback. The first callback may receive most of the header,
-while the next one still limits the copy to hdrlen - MIN_DDP_HDR instead
-of the number of missing bytes. This makes the destination move past the
-end of the header and overwrite the receive state, including
-fpdu_part_rcvd. A later callback can then use a negative fpdu_part_rcvd
-value as a copy offset, which creates an OOB write.
+scpi_dvfs_get_info() already rejected a zero opp_count, but still trusted
+any larger value from the SCP firmware. The shared-memory reply only holds
+MAX_DVFS_OPPS entries in buf.opps[]; a bigger count over-reads that array
+and then sizes the allocated OPP table incorrectly (garbage OPPs / OOB).
+The missing upper bound dates back to the original SCPI DVFS support.
 
-Use the number of header bytes already received when calculating the
-next copy length.
+Reject zero and out-of-range counts in one check and return -EINVAL.
 
-Fixes: 754209850df8 ("RDMA/siw: Always consume all skbuf data in sk_data_ready() upcall.")
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260908085520.1746329-1-Jeremy.Jean@oss.cyber.gouv.fr
-Assisted-by: Codex:gpt-6
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Link: https://patch.msgid.link/022802f0b38f.v2.1785200642.git.liuxixin@kylinos.cn
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_scpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_rx.c b/drivers/infiniband/sw/siw/siw_qp_rx.c
-index 743ffb3754e80..d608ecc67dd9d 100644
---- a/drivers/infiniband/sw/siw/siw_qp_rx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
-@@ -1095,7 +1095,7 @@ static int siw_get_hdr(struct siw_rx_stream *srx)
- 	if (iwarp_pktinfo[opcode].hdr_len > sizeof(struct iwarp_ctrl_tagged)) {
- 		int hdrlen = iwarp_pktinfo[opcode].hdr_len;
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 3a1d77b882f7e..1ff0e759c6be8 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -627,8 +627,8 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
--		bytes = min_t(int, hdrlen - MIN_DDP_HDR, srx->skb_new);
-+		bytes = min_t(int, hdrlen - srx->fpdu_part_rcvd, srx->skb_new);
+-	if (!buf.opp_count)
+-		return ERR_PTR(-ENOENT);
++	if (!buf.opp_count || buf.opp_count > MAX_DVFS_OPPS)
++		return ERR_PTR(-EINVAL);
  
- 		skb_copy_bits(skb, srx->skb_offset,
- 			      (char *)c_hdr + srx->fpdu_part_rcvd, bytes);
+ 	info = kmalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info)
 -- 
 2.53.0
 
