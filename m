@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4BB50C29A;
-	Wed, 30 Sep 2026 15:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A1E50B8A1;
+	Wed, 30 Sep 2026 15:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782398; cv=none; b=MHkBtn+EGuQ8+kSgmlIXevx/r5Jmea10Wna/mCANaLXPEk0aAj7C1a3A+dl8N8Fp2OQLkMj1JUTWCfYzBdZu9jLFO0NztQKj269tfaCV8+oHPKkayK8awwEH1L/af+TbSY7moCBy/z2o9pYOtOiwHS4X6fVDRevCMJL773etKrs=
+	t=1790782396; cv=none; b=i2+iQpQ0bT3Blwce42t/gnjKjdeTwYJdaGmwFKI+Kp9ucgDEAfOYFQFqtqJkWmZ+PJ0RA1x13IY3hoXwBz3r9fDDFrgiC+Krho4KW6bSGrHJOWd8JGLhr/3Ljs7lriLy1DTNEjRAr1kZPvsMATCNRhhOGvboYnJydhHX8Mqx2D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782398; c=relaxed/simple;
-	bh=W8qiF8KPva+FIei9mgqq+EpdNTAxQC6O0e04N7bzsIY=;
+	s=arc-20240116; t=1790782396; c=relaxed/simple;
+	bh=4BEh88bT4RCcyTfi0qxNDynPELQ4NrZ63NieHog+zu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TzIOO8lSOtFvhAuY/FEqsqeSnLIoqxf52FDw/iAUSLwTx2dDdPlMkkwLb9yqn2lF/lx4fqp4hh4krnMX3PF7aZ72DHWoe1vpLL4gqrrUcNJq0YNMzkw1MFU3XP30xffzrZVZVVC+O3+7rcg04AJPKjNxJIS2C6VgO9A13uXnv0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQc6eJWF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CaoolDsGvq5bZR6cEc3vVt1nB8H1fYHftpVuCeirX6uLYQEFyaj3RJ6KEjOTtOKsoVUFkk8FTQ5bqKgLCiNIwGO5uuh8MelOz3EcsT/cWF6KqoL1lYJWYT68QMkTnkEknCZ5I3ntPeg0Z59bPn8EgbaLdB3ySuWo+FtAaXoRNeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pguDezRN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQc6eJWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9F01F000FF;
-	Wed, 30 Sep 2026 15:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pguDezRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFB01F0089C;
+	Wed, 30 Sep 2026 15:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782388;
-	bh=BthUSRel+c51EZDcxV1pnNGtO25csjiYqqZ+voeucxE=;
+	s=korg; t=1790782382;
+	bh=u9A0QQYoKFG50vMqID7Gc38X7omSZcpLyCqswiDJZCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hQc6eJWFtUnJLoYq7LGvHTuzG1+8/TRAl4WRlRjm/UQ485U+L0oSm5ImHgbLVdpcu
-	 KPyi+p7+hxxFsn/37DpQZf7KJpNpXkvGKQ/57T2CIjQT8oIhWXF4D6kj5GVQ7syfX2
-	 KDsNgLW0lHUBazj2xWCl22J0yiIttSjgqKSBhXoI=
+	b=pguDezRNyHBO4JhrVUrYW53AwtIuGV4Xxt3FYsCM+TglYqMmqjRBbgv3ElFtVynBD
+	 w1GBTH8rR0yH9OT5sWFkhKYi9b4wnXKz+ayxsl+TwqHj+desoYjLsgjmzMeuFtmj3l
+	 ZasRbhRvIeyTCT4D4STrkpsLGkgQ6oJwcOUETyD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joonwon Kang <joonwonkang@google.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Alessandro Baldi <baldovic@virgilio.it>,
+	Sean Young <sean@mess.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/595] mailbox: Make mbox_send_message() return error code when tx fails
-Date: Wed, 30 Sep 2026 17:18:43 +0200
-Message-ID: <20260930152348.376800336@linuxfoundation.org>
+Subject: [PATCH 5.10 028/595] media: imon: Add iMON VFD HID OEM v1.2 key mappings
+Date: Wed, 30 Sep 2026 17:18:41 +0200
+Message-ID: <20260930152348.333928084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,75 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonwon Kang <joonwonkang@google.com>
+From: Alessandro Baldi <baldovic@virgilio.it>
 
-[ Upstream commit 96a3d2f3167f5644b30e60171898e67123c3c2c6 ]
+[ Upstream commit d97d13c24d7893abcfb80d38630ce74daaa1434c ]
 
-When the mailbox controller failed transmitting message, the error code
-was only passed to the client's tx done handler and not to
-mbox_send_message() in blocking mode. For this reason, the function could
-return a false success. This commit resolves the issue by introducing the
-tx status and checking it before mbox_send_message() returns.
+Add Vol+/Vol-/Mute panel button mappings for iMON VFD HID OEM v1.2.
+This version differs in the codes that generate the
+KEY_VOLUMEUP, KEY_VOLUMEDOWN and KEY_MUTE events.
 
-This commit works with the premise that the multi-threads' access to a
-channel in blocking mode is serialized by clients, not by the mailbox
-APIs, since the current mbox_send_message() in blocking mode does not
-support multi-threads.
-
-Signed-off-by: Joonwon Kang <joonwonkang@google.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Alessandro Baldi <baldovic@virgilio.it>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c          | 6 +++++-
- include/linux/mailbox_controller.h | 2 ++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/rc/imon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 363eaf3c962ec..1dda26c98d759 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -110,8 +110,10 @@ static void tx_tick(struct mbox_chan *chan, int r)
- 	if (chan->cl->tx_done)
- 		chan->cl->tx_done(chan->cl, mssg, r);
- 
--	if (r != -ETIME && chan->cl->tx_block)
-+	if (r != -ETIME && chan->cl->tx_block) {
-+		chan->tx_status = r;
- 		complete(&chan->tx_complete);
-+	}
- }
- 
- static enum hrtimer_restart txdone_hrtimer(struct hrtimer *hrtimer)
-@@ -281,6 +283,8 @@ int mbox_send_message(struct mbox_chan *chan, void *mssg)
- 		if (ret == 0) {
- 			t = -ETIME;
- 			tx_tick(chan, t);
-+		} else if (chan->tx_status < 0) {
-+			t = chan->tx_status;
- 		}
- 	}
- 
-diff --git a/include/linux/mailbox_controller.h b/include/linux/mailbox_controller.h
-index 6fee33cb52f58..02e54ac37a6c0 100644
---- a/include/linux/mailbox_controller.h
-+++ b/include/linux/mailbox_controller.h
-@@ -108,6 +108,7 @@ struct mbox_controller {
-  * @txdone_method:	Way to detect TXDone chosen by the API
-  * @cl:			Pointer to the current owner of this channel
-  * @tx_complete:	Transmission completion
-+ * @tx_status:		Transmission status
-  * @active_req:		Currently active request hook
-  * @msg_count:		No. of mssg currently queued
-  * @msg_free:		Index of next available mssg slot
-@@ -120,6 +121,7 @@ struct mbox_chan {
- 	unsigned txdone_method;
- 	struct mbox_client *cl;
- 	struct completion tx_complete;
-+	int tx_status;
- 	void *active_req;
- 	unsigned msg_count, msg_free;
- 	void *msg_data[MBOX_TX_QUEUE_LEN];
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 565826cff0db4..dcdccfe5a7318 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -295,6 +295,10 @@ static const struct imon_usb_dev_descr imon_OEM_VFD = {
+ 		{ 0x000100000000ffeell, KEY_VOLUMEUP },
+ 		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
+ 		{ 0x000000000100ffeell, KEY_MUTE },
++		/* iMON VFD HID OEM v1.2 */
++		{ 0x000000000a00ffeell, KEY_VOLUMEUP },
++		{ 0x000000000b00ffeell, KEY_VOLUMEDOWN },
++		{ 0x000000000c00ffeell, KEY_MUTE },
+ 		/* 0xffdc iMON MCE VFD */
+ 		{ 0x00010000ffffffeell, KEY_VOLUMEUP },
+ 		{ 0x01000000ffffffeell, KEY_VOLUMEDOWN },
 -- 
 2.53.0
 
