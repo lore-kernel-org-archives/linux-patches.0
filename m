@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FD13D45F7;
-	Wed, 30 Sep 2026 18:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1131C3D47C0;
+	Wed, 30 Sep 2026 18:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794215; cv=none; b=M68CR/61qbNRsH4xiehCkvMjGWr/HcZFodflSvg7MiEhksjbZOvbTkb2rxfu7rapc5fVeOAqWUIMmj741bkhgVMKBsHrf9sSfjwXfKKGiBzGWoRF8Rmasf715rFjnj3HHfndoVaCccVd+9WsryG/HFwnDQS4EXT+QEuJt5Qimhk=
+	t=1790794218; cv=none; b=teT0wnwJ5nk3jgjSH5rXFy0tqVu7StKcLCuFTWuQsWdwPLjWsEL30Kyn2xcEZNVupUHDit631K/JlKq9VFYGiT7v1uzSNGq0WJx2xaCLFxeM86gqaoazlUlTDMmkUGtFefA5xeeZICLuFXzJikUk4HJrgSWbPoS9HAFWgQT5Vbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794215; c=relaxed/simple;
-	bh=kH4UKTrXAfSCeo95sM0mJu9J82S/P/M68huz4XeYLHA=;
+	s=arc-20240116; t=1790794218; c=relaxed/simple;
+	bh=54WbmKv761tT6KMvDKZLztUk7nA3euBo5LzUB6gMbm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0HaRbOzDBrcyCjDERgnsIWpYa7KSq3EQi7LY+mtVPB5X7k84BU6spq7/W5G9O/O1mf01PVpvvYkQ6v2RcoMCUwlWoSXClO9Z5HDQUCnTw0XUnptZ3rbc5YpwIPRVAlmcurWgeRVTxP6PphydYnzkjQGi4ENg0+AL9JahRizxgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPLd6Gaq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WBE7Et/y8yJXELl1jG7Mb2XdcG+sFWAiztTFeuNi/g4YB7t16a9Gi8W70okhn6zpPzCq3MkqNMxcLDlnZ9UbRxHKOdxxekmjWrYttjouCH1x7BkMFNupXy4TF8yiG5GoWwFWqPBXsxAMUN2SVYHAvbNfa2ClLkXATouZomAEuYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHi3Lcau; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPLd6Gaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A53E1F00898;
-	Wed, 30 Sep 2026 18:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHi3Lcau"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696E91F00898;
+	Wed, 30 Sep 2026 18:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794214;
-	bh=HZTYgcR9lbPdKohhcVTinKCgkWoafxaERLX4kJskGNI=;
+	s=korg; t=1790794217;
+	bh=jvDaUdizGzDLNgTxX3dDpAGx7GsCI1jS6jVQLjg3iUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nPLd6Gaq0r3K3QqvomtAprTr7T3Rk/qaEJKQRo1HVH4QakgWUkhxQvaYgr0ywhoFV
-	 haOvApGVJuh9SPsb6lxTEauUhahHyUdLtyeWLCSZIvwchLkuugh3180cy3thonGkB2
-	 y7GcJUZJBEZcP+susTFJOd8izHFW4Gq0mupGNmXA=
+	b=YHi3Lcau57+Lr1kA1X9i2zqBClaoBHKTR86A7g7GeOzZSjbkpzUo9J6UpqlYurPxr
+	 WgUtnz4mDTJxT3IBDJfzljaq3wrWGE6UgC2WcUKnnWIUnh/js//71+IiQjPinsj83m
+	 7PQShgNHN8LiNNdR9nsNIblEKKU5sE1aC8+UycFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0131/1193] hfs: rework hfsplus_readdir() logic
-Date: Wed, 30 Sep 2026 17:13:35 +0200
-Message-ID: <20260930152437.124862606@linuxfoundation.org>
+Subject: [PATCH 6.6 0132/1193] pinctrl: renesas: rzv2m: Use -ENOTSUPP instead of -EOPNOTSUPP
+Date: Wed, 30 Sep 2026 17:13:36 +0200
+Message-ID: <20260930152437.145218220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,192 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 7fde7e806657fbe0d33f489521b488eed94f9b39 ]
+[ Upstream commit 01f94d53947df35ba77cdb3992a4e3ef9d9dc1ad ]
 
-The xfstests' test-case generic/637 fails with error:
+The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
+code. One such example is gpio_set_config_with_argument_optional(), which
+returns success when gpio_set_config_with_argument() returns -ENOTSUPP, but
+reports failure for all other error codes.
 
-FSTYP -- hfs
-PLATFORM -- Linux/x86_64 kvm-xfstests 6.15.0-rc4-xfstests-g00b827f0cffa #1 SMP PREEMPT_DYNAMIC Fri May 25
-MKFS_OPTIONS -- /dev/vdc
-MOUNT_OPTIONS -- /dev/vdc /vdc
+Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
+operation may lead to boot failures when pinctrl drivers implements
+struct gpio_chip::set_config, the system uses GPIO hogs, and the
+struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
+unsupported operations.
 
-QA output created by 637
-entries 7 and 8 have duplicate d_off 8
-Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
+Currently, the driver does not implement struct gpio_chip::set_config().
+To avoid future failures, return -ENOTSUPP from
+rzv2m_pinctrl_pinconf_set().
 
-Likewise HFS+, currently, HFS has very complicated and
-fragile logic of rd->file->f_pos correction in hfs_delete_cat().
-This patch removes this logic and it stores the current
-pos into hfs_readdir_data. Finally, if rd->pos == ctx->pos
-then hfs_readdir() tries to find the position in
-b-tree's node by means of hfs_cat_key. This position is
-used to re-start the folder's content traversal.
+rzv2m_pinctrl_pinconf_group_get() is used when dumping pinctrl
+configuration. pinconf_generic_dump_one(), which calls it, makes
+exceptions for the -EINVAL and -ENOTSUPP error codes. The documentation
+for struct pinconf_ops::pin_config_group_get states that it "should
+return -ENOTSUPP and -EINVAL using the same rules as pin_config_get()".
+The documentation for struct pinconf_ops::pin_config_get states:
 
-sudo ./check generic/637
-FSTYP         -- hfs
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #55 SMP PREEMPT_DYNAMIC Tue May 19 15:18:02 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+"get the config of a certain pin, if the requested config is not available
+on this controller this should return -ENOTSUPP and if it is available but
+disabled it should return -EINVAL".
 
-generic/637  32s ...  31s
-Ran: generic/637
-Passed all 1 tests
+Return -ENOTSUPP for the unsupported pinctrl operation.
 
-Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/65
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260519222811.1311071-2-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260522105717.1727837-1-claudiu.beznea@kernel.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/catalog.c |  9 ---------
- fs/hfs/dir.c     | 28 +++++++++++-----------------
- fs/hfs/hfs.h     |  3 +--
- fs/hfs/hfs_fs.h  |  2 --
- fs/hfs/inode.c   |  4 ----
- 5 files changed, 12 insertions(+), 34 deletions(-)
+ drivers/pinctrl/renesas/pinctrl-rzv2m.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/hfs/catalog.c b/fs/hfs/catalog.c
-index 632c226a3972c..26b75c35be76d 100644
---- a/fs/hfs/catalog.c
-+++ b/fs/hfs/catalog.c
-@@ -222,7 +222,6 @@ int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str)
- {
- 	struct super_block *sb;
- 	struct hfs_find_data fd;
--	struct hfs_readdir_data *rd;
- 	int res, type;
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
+index b89ae65e71b0e..0b1f6ce522d9e 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
+@@ -665,7 +665,7 @@ static int rzv2m_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
+ 		}
  
- 	hfs_dbg(CAT_MOD, "delete_cat: %s,%u\n", str ? str->name : NULL, cnid);
-@@ -248,14 +247,6 @@ int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str)
+ 		default:
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
  		}
  	}
  
--	/* we only need to take spinlock for exclusion with ->release() */
--	spin_lock(&HFS_I(dir)->open_dir_lock);
--	list_for_each_entry(rd, &HFS_I(dir)->open_dir_list, list) {
--		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
--			rd->file->f_pos--;
--	}
--	spin_unlock(&HFS_I(dir)->open_dir_lock);
--
- 	res = hfs_brec_remove(&fd);
- 	if (res)
- 		goto out;
-diff --git a/fs/hfs/dir.c b/fs/hfs/dir.c
-index b75c26045df49..abb5f58ac1254 100644
---- a/fs/hfs/dir.c
-+++ b/fs/hfs/dir.c
-@@ -97,7 +97,15 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+@@ -714,7 +714,7 @@ static int rzv2m_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
+ 
+ 		/* Check config matches previous pins */
+ 		if (i && prev_config != *config)
+-			return -EOPNOTSUPP;
++			return -ENOTSUPP;
+ 
+ 		prev_config = *config;
  	}
- 	if (ctx->pos >= inode->i_size)
- 		goto out;
--	err = hfs_brec_goto(&fd, ctx->pos - 1);
-+	rd = file->private_data;
-+	if (rd && rd->pos == ctx->pos) {
-+		memcpy(fd.search_key, &rd->key, sizeof(struct hfs_cat_key));
-+		err = hfs_brec_find(&fd);
-+		if (err == -ENOENT)
-+			err = hfs_brec_goto(&fd, 1);
-+	} else {
-+		err = hfs_brec_goto(&fd, ctx->pos - 1);
-+	}
- 	if (err)
- 		goto out;
- 
-@@ -146,7 +154,6 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
- 		if (err)
- 			goto out;
- 	}
--	rd = file->private_data;
- 	if (!rd) {
- 		rd = kmalloc(sizeof(struct hfs_readdir_data), GFP_KERNEL);
- 		if (!rd) {
-@@ -154,15 +161,8 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
- 			goto out;
- 		}
- 		file->private_data = rd;
--		rd->file = file;
--		spin_lock(&HFS_I(inode)->open_dir_lock);
--		list_add(&rd->list, &HFS_I(inode)->open_dir_list);
--		spin_unlock(&HFS_I(inode)->open_dir_lock);
- 	}
--	/*
--	 * Can be done after the list insertion; exclusion with
--	 * hfs_delete_cat() is provided by directory lock.
--	 */
-+	rd->pos = ctx->pos;
- 	memcpy(&rd->key, &fd.key->cat, sizeof(struct hfs_cat_key));
- out:
- 	hfs_find_exit(&fd);
-@@ -171,13 +171,7 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
- 
- static int hfs_dir_release(struct inode *inode, struct file *file)
- {
--	struct hfs_readdir_data *rd = file->private_data;
--	if (rd) {
--		spin_lock(&HFS_I(inode)->open_dir_lock);
--		list_del(&rd->list);
--		spin_unlock(&HFS_I(inode)->open_dir_lock);
--		kfree(rd);
--	}
-+	kfree(file->private_data);
- 	return 0;
- }
- 
-diff --git a/fs/hfs/hfs.h b/fs/hfs/hfs.h
-index 6f194d0768b6f..f46d12ce04a3f 100644
---- a/fs/hfs/hfs.h
-+++ b/fs/hfs/hfs.h
-@@ -281,8 +281,7 @@ struct hfs_mdb {
- /*======== Data structures kept in memory ========*/
- 
- struct hfs_readdir_data {
--	struct list_head list;
--	struct file *file;
-+	loff_t pos;
- 	struct hfs_cat_key key;
- };
- 
-diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
-index acd69a3db8858..17a855c0640d8 100644
---- a/fs/hfs/hfs_fs.h
-+++ b/fs/hfs/hfs_fs.h
-@@ -68,8 +68,6 @@ struct hfs_inode_info {
- 
- 	struct hfs_cat_key cat_key;
- 
--	struct list_head open_dir_list;
--	spinlock_t open_dir_lock;
- 	struct inode *rsrc_inode;
- 
- 	struct mutex extents_lock;
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index 3a3994616fa54..a2976fe330575 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -193,8 +193,6 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 		return NULL;
- 
- 	mutex_init(&HFS_I(inode)->extents_lock);
--	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
--	spin_lock_init(&HFS_I(inode)->open_dir_lock);
- 	hfs_cat_build_key(sb, (btree_key *)&HFS_I(inode)->cat_key, dir->i_ino, name);
- 	inode->i_ino = HFS_SB(sb)->next_id++;
- 	inode->i_mode = mode;
-@@ -328,8 +326,6 @@ static int hfs_read_inode(struct inode *inode, void *data)
- 	HFS_I(inode)->flags = 0;
- 	HFS_I(inode)->rsrc_inode = NULL;
- 	mutex_init(&HFS_I(inode)->extents_lock);
--	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
--	spin_lock_init(&HFS_I(inode)->open_dir_lock);
- 
- 	/* Initialize the inode */
- 	inode->i_uid = hsb->s_uid;
 -- 
 2.53.0
 
