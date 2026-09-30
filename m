@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0D85218B1;
-	Wed, 30 Sep 2026 17:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ECCA5237AC;
+	Wed, 30 Sep 2026 17:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790631; cv=none; b=tXsQphgwN6a/RfNUlqdSQKIjs/NBHlGc5Jv8b6MGSVf7/Omp+8a29Wz9NQFx6J4NfUQxhd6qI+lQO5M3SjZYk0mwU9fok6d9yvTrzskr8vFlDDaIYpAApocS3+C/iN9IJ2JDqTpfsK8zEDTiXZFZHQKUglECka6IhvZdq1p5zrc=
+	t=1790790634; cv=none; b=NAJ10k/ZXthXN/GdVeO5FimgEop4sgFFudjuEDpG8kDUMf1ULHCWD+f/l12kFzBHnHQpAdUunVI+zYsxLxNTATU7HOMoVySzYTkqoHUv0igjsEAOKUfLKCSTH8Tmx8mFV55LV5++3xFSfE8rZ3s0ySIEvSFeZ3E2YMDwZ652xZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790631; c=relaxed/simple;
-	bh=16pgzUWCGYskSh/ZbI7r8/EoGlfv20iqpGZRJyXfLlU=;
+	s=arc-20240116; t=1790790634; c=relaxed/simple;
+	bh=JoH6MEHDubLQkdAi/7cpIjVyIVOVY5Bpqmg9cHl08sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CbSLlYX7+HtL6rmw7S48xmwnflfH0DYKXQkbDskdlnSk3QtFHunP3Lbf71jtUMiznxkvE26g2iWi0+bplRuGhGUrjOB0BnaMR9QBeVoGcRdpHJnyT9rQ0+WREe0DWxRvj164rr1wypworOs+wGyhAwq8EyUbEPyfsbwrEPHDon8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZt6R4B2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RckHYrPeqiwgcTc7prsMB3BsQ+Pw47F6xW24tLo5+8WLCj+cmo8C8JrUdmJbKBQ65qVcfyPmxxt6/NcyaqC+uwxs8yAJSkKh/vX8OqCMlC0eWiwYJJbI2NEuMSyLL2K+Y4Y0MrDEgcufvQYQupFfZesucq+X/vzDVAT85YNVVJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQALTAdv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZt6R4B2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1272A1F000FF;
-	Wed, 30 Sep 2026 17:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQALTAdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42E01F000FF;
+	Wed, 30 Sep 2026 17:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790630;
-	bh=96m6Byi7qLfxOzXdBg9Pe3yxktgCrBtawcv4aBhj1n4=;
+	s=korg; t=1790790633;
+	bh=9JMjHWjBELGm+9fAlIp/BunWuB1qbSoNDpkku3KDBr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BZt6R4B2+Tne3socHLmaqgXuls4zmrhKF9r6nnLDB01aU4pqJMgoJsdhJuUtEhlV3
-	 xMD4a5TqkbxlL8vUWlxp9o05mg9hSMgvlk4AHVrJZk7AXOgIKbLdCtYHP9qRjV5tXK
-	 8LR2ScR8+Sdpyk1r2GpUeofcIOhx4buVgvHd4ETI=
+	b=TQALTAdvDlzgK+9Yh1EPrFZ5kOEbNQVe0g5DJwfvWkE3J4Y9xnXSNCrhD+lRMZ0EN
+	 Na91mxmVTMG6HG2upXRtCraIU4Vh/zDPdu2/i0zhjlwNu2kRWbcoxVxp4Mir2cnNnF
+	 X0Gnyy9mhd+3pYfHYIWYAn1ArNYVb0qbClkKabW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/752] ALSA: usb-audio: Propagate write errors in generic mixer put callbacks
-Date: Wed, 30 Sep 2026 17:17:52 +0200
-Message-ID: <20260930152358.192823600@linuxfoundation.org>
+Subject: [PATCH 5.15 020/752] media: em28xx-video: fix missing res_free() on init_usb_xfer failure
+Date: Wed, 30 Sep 2026 17:18:10 +0200
+Message-ID: <20260930152358.587229474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -45,84 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit 87a6f2fa6e6c69bb649fa327635a0bd977724603 ]
+[ Upstream commit cc20e81da6d99926f94fad7af21f75c07e865769 ]
 
-mixer_ctl_feature_put(), mixer_ctl_procunit_put(), and
-mixer_ctl_selector_put() ignore failures from their SET_CUR helper
-routines and report the control as changed whenever the requested
-value differs from the current one.
+res_get() is called before em28xx_init_usb_xfer(), but the error
+path of em28xx_init_usb_xfer() does not release the resource,
+leading to a persistent busy state.
 
-If the device rejects the write, userspace still sees success although
-the hardware state did not change. Propagate write failures instead,
-using filter_error() so ignore_ctl_error keeps the same semantics as
-the existing get paths.
-
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-1-5a3bd4a673ae@gmail.com
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/media/usb/em28xx/em28xx-video.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 85759bf58209b..fa2c740249e33 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1453,7 +1453,10 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
- 				return -EINVAL;
- 			val = get_abs_value(cval, val);
- 			if (oval != val) {
--				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
-+				err = snd_usb_set_cur_mix_value(cval, c + 1,
-+								cnt, val);
-+				if (err < 0)
-+					return filter_error(cval, err);
- 				changed = 1;
- 			}
- 			cnt++;
-@@ -1468,7 +1471,9 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
- 			return -EINVAL;
- 		val = get_abs_value(cval, val);
- 		if (val != oval) {
--			snd_usb_set_cur_mix_value(cval, 0, 0, val);
-+			err = snd_usb_set_cur_mix_value(cval, 0, 0, val);
-+			if (err < 0)
-+				return filter_error(cval, err);
- 			changed = 1;
- 		}
- 	}
-@@ -2335,7 +2340,9 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
- 		return -EINVAL;
- 	val = get_abs_value(cval, val);
- 	if (val != oval) {
--		set_cur_ctl_value(cval, cval->control << 8, val);
-+		err = set_cur_ctl_value(cval, cval->control << 8, val);
-+		if (err < 0)
-+			return filter_error(cval, err);
- 		return 1;
- 	}
- 	return 0;
-@@ -2699,7 +2706,9 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
- 		return -EINVAL;
- 	val = get_abs_value(cval, val);
- 	if (val != oval) {
--		set_cur_ctl_value(cval, cval->control << 8, val);
-+		err = set_cur_ctl_value(cval, cval->control << 8, val);
-+		if (err < 0)
-+			return filter_error(cval, err);
- 		return 1;
- 	}
- 	return 0;
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index b086b2abf082e..ffc7ae1ee3a9b 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -1115,8 +1115,10 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
+ 					  dev->max_pkt_size,
+ 					  dev->packet_multiplier,
+ 					  em28xx_urb_data_copy);
+-		if (rc < 0)
++		if (rc < 0) {
++			res_free(dev, vq->type);
+ 			return rc;
++		}
+ 
+ 		/*
+ 		 * djh: it's not clear whether this code is still needed.  I'm
 -- 
 2.53.0
 
