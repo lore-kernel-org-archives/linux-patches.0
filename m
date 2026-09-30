@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1675650E4;
-	Wed, 30 Sep 2026 17:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C915563FD9;
+	Wed, 30 Sep 2026 17:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790447; cv=none; b=jV/zGsj503ACzhTWPzB1DNJYXAB8EWFwCJW5nzzrG+yAiXs6qltp14qfpxYxN6XxLoiWpkt3sVqle4RRM+Bm3Vr9bV0ulTYAgs2oQcWMWPKnssK3OinyoD67w1cKECpA3aPp1xj3fLBpZT3fqA2q2OUI2Y1I3z/5xAj8+z4JTD8=
+	t=1790790450; cv=none; b=JyeTh3hLtZwyE93WZSnJEoyYwAUaAKsJ8AvqzGrK8cAwdiYqKpbv/60roqAVRUxqwZyHej3SzJNiaoihrNcX/oIm/7DE5B9wo5JxTYu9q68JqSc6zEq5/JSyriEhXST11N76xzR9aQzpYPDoBQos5WW0zKFki+gAwqCnviJMCDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790447; c=relaxed/simple;
-	bh=U8CvwmzTlgHDd/Bw4iQYpQ8kSx45AhCFnbmIe5oW/j4=;
+	s=arc-20240116; t=1790790450; c=relaxed/simple;
+	bh=V6VGJl2TSVkRkKuwczIRLadwLebajzdojII3dAv81hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PsxXq35C895ufkkFvLADAikuyOXlcQinJGOm5bnLCfWIk2qiSs+QS6oHVWP2aZB33hb4bdL5D24mZO5BByxtMJ3PFom6I/jA84Wk8Fg01uSAYKJBcngzWHpxrvEeV8fapjn9DZ/tIBniYmArs1Y0rfClSFPNhc9gi4o8c8xaHjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0y+eQPH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EbgAa7Bl1wrMpoiV8oX9GTWpeqPiIyEZXsCl2t1pyo/nVs6W7HKnRbh2vCtieLOkzrj9/4ZLAk4Pg2cnCIeTg2M8X2hWwxGBGPKKuSGoE3eBVsXTYvlLUUSq8eL76qVEhTBlXK+5JgvnCqam25fB+VEGugvhgm3wOgT9CxVFWZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chWaPyjq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0y+eQPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D9F1F000FF;
-	Wed, 30 Sep 2026 17:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chWaPyjq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60721F000FF;
+	Wed, 30 Sep 2026 17:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790446;
-	bh=xSmr1blbC80JvRpBGIi7E8BheQ7r7+/PL0gvc8ZvhSM=;
+	s=korg; t=1790790449;
+	bh=0KDpQoa+kr8rGqidrqavcct4qNXS8TjDMR/xeRpuQ7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z0y+eQPHF0YiHqBoIdqmHfBSCDrb3Zy0ojJfoBHQgp9ToppeQx35TXl3ubB1B61hv
-	 cbqfaanIY5mkPekrAlBqDHzWP6zxP5OfcmvHefePiIpygluzkaQc883U2EO2XdFEQ4
-	 RzG6BJtQds2XbX183G0TtXNcXFlkIe3oLBxc79Pw=
+	b=chWaPyjqwPqIWAeW7aJ4xEy5Mg5ZjWhrgnPxRx2mhpPo0YLMNAuvWI6ppXWUsz+A4
+	 zJUMDlJt6aCBOY6hi+b5nLYZUU9qg8mf7EoPpw9SKRN9BeMbEiLDn104CML6EVqQ3/
+	 SGgeeSMRbSQZIn+oSVlTSBrldBucHt4GLyKRNk1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Ahmed Naseef <naseefkm@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 788/877] swiotlb: use the adjusted address for the highmem page lookup
-Date: Wed, 30 Sep 2026 17:28:19 +0200
-Message-ID: <20260930152431.717895088@linuxfoundation.org>
+Subject: [PATCH 6.12 789/877] net: phy: mediatek: do not report link and per-speed LED rules together
+Date: Wed, 30 Sep 2026 17:28:20 +0200
+Message-ID: <20260930152431.740478064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,64 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Ahmed Naseef <naseefkm@gmail.com>
 
-[ Upstream commit b7d7914a9ae3097e63d113007e4fb44d33d515b1 ]
+[ Upstream commit bde5212360bd44506edec073ebbd6d0c72f75820 ]
 
-swiotlb_bounce() reads the page frame number from the slot's recorded
-orig_addr, then advances orig_addr by tlb_offset to reach the address
-the caller asked about. The highmem branch mixes the two: the offset
-within the page comes from the adjusted address, the page from the value
-before it.
+mtk_phy_led_hw_ctrl_get() reports TRIGGER_NETDEV_LINK whenever any of the
+speed bits in on_set is on, and in addition reports every individual
+TRIGGER_NETDEV_LINK_* bit that is set. The netdev trigger refuses that
+combination: netdev_led_attr_store() rejects TRIGGER_NETDEV_LINK together
+with any per-speed rule, and it validates the whole resulting mode rather
+than just the bit being written. Once the hardware has any link bit
+programmed, every write to the trigger attributes of that LED therefore
+fails with -EINVAL and the LED can no longer be configured.
 
-Once the adjustment crosses a page boundary the pair no longer describes
-one location, and the whole copy lands one page below the intended one
-for a positive tlb_offset, one above for a negative one. DMA_FROM_DEVICE
-writes the device data over the wrong page and leaves the intended one
-stale, DMA_TO_DEVICE feeds the device from a page the mapping may not
-cover. Partial syncs through dma_sync_single_range_for_*() are what make
-tlb_offset non-zero.
+The rules are also fed back into the hardware: the trigger stores what is
+read back, and a later write of device_name programs it again, expanding
+TRIGGER_NETDEV_LINK to every speed in on_set. An LED configured for a
+single speed is thereby silently widened to "on at any link speed".
 
-The branch test is picked the same way, so a slot recorded in lowmem can
-be adjusted into highmem and the lowmem path then hands a highmem
-address to phys_to_virt().
+Both are easy to see on the EcoNet EN7528, whose four PHYs share one LED
+block. The first LED programs the block correctly, the second reads those
+rules back and rewrites them widened, and the remaining two then read the
+widened value, so an LED configured for "link_10 link_100" ends up lit on a
+1000 Mbps link.
 
-Take both from orig_addr once it is final and keep pfn in the branch
-that uses it. PhysHighMem() asks the question straight from the address,
-as dma-debug already does.
+on_set holds every speed the LED can indicate and is exactly what
+mtk_phy_led_hw_ctrl_set() programs for TRIGGER_NETDEV_LINK, so report the
+speed independent rule only when all of them are on, and the individual
+speeds otherwise. The mapping is then the inverse of the one used when
+programming the LED and round trips without changing the register.
 
-Fixes: 5f89468e2f06 ("swiotlb: manipulate orig_addr when tlb_addr has offset")
+Fixes: c66937b0f8db ("net: phy: mediatek-ge-soc: support PHY LEDs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20260905084210.148255-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-[ replaced unavailable PhysHighMem(orig_addr) with PageHighMem(pfn_to_page(PFN_DOWN(orig_addr))). ]
+Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260912134306.3544329-1-naseefkm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted the LED helper changes to the existing gigabit-only implementation in mtk-ge-soc.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/swiotlb.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/mediatek/mtk-ge-soc.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -869,7 +869,6 @@ static void swiotlb_bounce(struct device
- 	int index = (tlb_addr - mem->start) >> IO_TLB_SHIFT;
- 	phys_addr_t orig_addr = mem->slots[index].orig_addr;
- 	size_t alloc_size = mem->slots[index].alloc_size;
--	unsigned long pfn = PFN_DOWN(orig_addr);
- 	unsigned char *vaddr = mem->vaddr + tlb_addr - mem->start;
- 	int tlb_offset;
+--- a/drivers/net/phy/mediatek/mtk-ge-soc.c
++++ b/drivers/net/phy/mediatek/mtk-ge-soc.c
+@@ -1276,17 +1276,24 @@ static int mt798x_phy_led_hw_control_get
+ 	if (!rules)
+ 		return 0;
  
-@@ -899,7 +898,8 @@ static void swiotlb_bounce(struct device
- 		size = alloc_size;
- 	}
+-	if (on & MTK_PHY_LED_ON_LINK)
++	/* TRIGGER_NETDEV_LINK must not be reported together with any of the
++	 * per-speed rules, the netdev trigger rejects that combination.
++	 * MTK_PHY_LED_ON_LINK holds every speed this LED can indicate and is what
++	 * mt798x_phy_led_hw_control_set() programs for TRIGGER_NETDEV_LINK, so
++	 * report the speed independent rule only when they are all on.
++	 */
++	if ((on & MTK_PHY_LED_ON_LINK) == MTK_PHY_LED_ON_LINK) {
+ 		*rules |= BIT(TRIGGER_NETDEV_LINK);
++	} else {
++		if (on & MTK_PHY_LED_ON_LINK10)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_10);
  
--	if (PageHighMem(pfn_to_page(pfn))) {
-+	if (PageHighMem(pfn_to_page(PFN_DOWN(orig_addr)))) {
-+		unsigned long pfn = PFN_DOWN(orig_addr);
- 		unsigned int offset = orig_addr & ~PAGE_MASK;
- 		struct page *page;
- 		unsigned int sz = 0;
+-	if (on & MTK_PHY_LED_ON_LINK10)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_10);
++		if (on & MTK_PHY_LED_ON_LINK100)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_100);
+ 
+-	if (on & MTK_PHY_LED_ON_LINK100)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_100);
+-
+-	if (on & MTK_PHY_LED_ON_LINK1000)
+-		*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
++		if (on & MTK_PHY_LED_ON_LINK1000)
++			*rules |= BIT(TRIGGER_NETDEV_LINK_1000);
++	}
+ 
+ 	if (on & MTK_PHY_LED_ON_FDX)
+ 		*rules |= BIT(TRIGGER_NETDEV_FULL_DUPLEX);
 
 
