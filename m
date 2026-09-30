@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D493F7AA8;
-	Wed, 30 Sep 2026 19:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB213FE359;
+	Wed, 30 Sep 2026 19:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795181; cv=none; b=BUkPjA5GgIVmqrCQ4HosxvT1TfzsdIPmZHPptESlnmr2XRGHHNEmZgMbSndYzwC2sXs2ouRjAybUn8LWj9bCCYCwWzuxBCNKyW3/xWYLo54O2Hw6F0VPl0BjPjrCizYFL788HZnAobUrXpesxwNXe39bUHblWI2qbp2ZNohhmS4=
+	t=1790795184; cv=none; b=e9GXwZhtEiKuV1Z6Vdj0soLVM0nUVqtSa0a4fHw9vvU0ozsTVKHbr3Ac/Q1NVeBTS/gXg3va5oCYs8u40l2LORrMwo16JcAb+XDhLyg+B9I9QQBRhfCMAGchDYyudcWYXsRQ053CWzNo4Epdi8RHFrKZLR/UoGrGLv4dJVLH+G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795181; c=relaxed/simple;
-	bh=9z4Yd+o+SCkmRz8wFwILs74Kr0WgzCEL0XTUuWz82Vc=;
+	s=arc-20240116; t=1790795184; c=relaxed/simple;
+	bh=MSrZeKYol6bXkCGpHca7j9U32kSebs54rqek/b6OxTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eAjFxrHErCRVs2bC5ehh4dIEY2/2EzlVd88SB7U+XVFtxrp4HfMsAVnvnTAUA/Wi0avnaBO5UR+hzlEH3f08zVornjEWGHs29hrz3FkcFNkasbnTIiHFTX3xDbvL9kgNUngfXDI9rhfI4VhD0t/5TuIbQFXVMKY/oFODESk0mBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bQBsHvZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=py9Wv0GIT6qzay6k1CmEz6Ca1Ab6z5Cn8h+XkNuwaJhQ4yMkJG74PzxMVmOP/N7A2owe3SbhgQMbAYFNn2cbevRLA3XF+gMrSmuQoz+N+0SbZPSpTLQKRwPNfNCXcLEtvDGSr2AFl+taRcUWYWa3pXwDeMJ9CNB0q8dcdOx3n+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6Wya8EL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bQBsHvZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B51F000FF;
-	Wed, 30 Sep 2026 19:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6Wya8EL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACE61F0089A;
+	Wed, 30 Sep 2026 19:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795179;
-	bh=0v2tJeZeQqG8MWkp1p4fsqpnnbyaFsHL2aOcWB8UOyg=;
+	s=korg; t=1790795182;
+	bh=EnB9pa/wb059ERZCSl/eDQsN3m4X8ClWGlj3RNvJW1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bQBsHvZPvnDyVkMyQs4oA1a9OtXddPA9jM4uU9nlL15sXbwbpJq7j0P4k6Y7lY52
-	 DnDVAF7TYk2cHzuVf0TE9sVXtGgDzVpNvVsn2nVUPypr6q/5DKQTHsDQQG/fIkJ2rb
-	 wKHp8VL+KCutxlJs3OstxjrSoTdJ2uLSNn9pdAJI=
+	b=A6Wya8EL5svLDWOQmXkplfSuh3bLAkjZ5EiofqbVXLIpS6USshFYQD02JS2xfm8bY
+	 4HHTKNcc119uFIAbewX3F9A9c0x88RQ2IR0oAUWcMsm3VGaCZ+Wd1hlSvPkmd4JKfw
+	 i+clwyi361OntXlpB/SukULvvtAk2Er/rmbN1jf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Davide Caratti <dcaratti@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0426/1193] ppp: ppp_async: simplify tty disc_data access
-Date: Wed, 30 Sep 2026 17:18:30 +0200
-Message-ID: <20260930152443.665421819@linuxfoundation.org>
+Subject: [PATCH 6.6 0427/1193] ip6_gre: check tunnel info before xmit in ip6gre_tunnel_xmit
+Date: Wed, 30 Sep 2026 17:18:31 +0200
+Message-ID: <20260930152443.685855150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,216 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9feb069e5ed03582fbf6272539f1caa2a17dc6d5 ]
+[ Upstream commit 97cc84dad1d7f68a36b71b69b361d88482707673 ]
 
-tty_ldisc_hangup() invokes the hangup callback while holding only a read
-lock on tty->ldisc_sem, so it can run concurrently with other line
-discipline callbacks. This currently forces async PPP to maintain
-separate lifetime protection around tty->disc_data.
+Shuangpeng Bai reported a KASAN slab-use-after-free in
+ip6gre_tunnel_xmit().
 
-Line discipline close is called under the write lock during hangup
-processing. Remove the hangup callback and rely on close for teardown,
-as done for SLIP by commit 23c53269f2ba ("slip: remove slip_hangup() to
-fix use-after-free in slip_receive_buf()"). This serializes teardown
-with all other line discipline operations.
+The precise KASAN bug was caused by ip6_tnl_xmit() consuming the
+skb during headroom expansion and returning an error, while
+ip6gre_tunnel_xmit() still held the stale pointer and called
+skb_tunnel_info_txcheck(skb) at tx_err. That specific bug was fixed by
+commit 87f21b59ddc6 ("ip6_tunnel: use skb_cow_head() in ip6_tnl_xmit()").
 
-disc_data_lock, refcount and completion are redundant with that
-serialization. Remove them and access tty->disc_data directly.
+However, calling skb_tunnel_info_txcheck(skb) at the tx_err label
+after the transmission attempt remains problematic:
 
-This also eliminates a lockdep warning reported by syzbot. The warning
-does not indicate a real deadlock because the write side runs only in
-process context with hardirqs disabled.
+Downstream helpers like ip6_tnl_xmit() call skb_scrub_packet(),
+which drops the skb's metadata_dst before transmission. If an error
+occurs later during transmit, inspecting skb at tx_err sees a scrubbed
+dst and misclassifies tx_errors vs tx_dropped.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/0000000000002fbad30611e25849@google.com/
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828073245.126804-1-qingfang.deng@linux.dev
+Commit e5f7e211b6aa ("ip6gre: avoid tx_error when sending MLD/DAD on
+external tunnels") already handled this correctly in
+ip6erspan_tunnel_xmit() by checking and caching tun_info before
+transmit.
+
+Align ip6gre_tunnel_xmit() with ip6erspan_tunnel_xmit() by caching
+tun_info before xmit and checking it at tx_err.
+
+Fixes: e5f7e211b6aa ("ip6gre: avoid tx_error when sending MLD/DAD on external tunnels")
+Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260819062224.3197349-1-shuangpeng.kernel@gmail.com/
+Cc: Davide Caratti <dcaratti@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828103731.1951815-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 82 ++++---------------------------------
- 1 file changed, 7 insertions(+), 75 deletions(-)
+ net/ipv6/ip6_gre.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index b5216ee61016e..7c31009452c53 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -65,8 +65,6 @@ struct asyncppp {
- 
- 	struct tasklet_struct tsk;
- 
--	refcount_t	refcnt;
--	struct completion dead;
- 	struct ppp_channel chan;	/* interface to generic ppp layer */
- 	unsigned char	obuf[OBUFSIZE];
- };
-@@ -115,38 +113,6 @@ static const struct ppp_channel_ops async_ops = {
-  * Routines implementing the PPP line discipline.
-  */
- 
--/*
-- * We have a potential race on dereferencing tty->disc_data,
-- * because the tty layer provides no locking at all - thus one
-- * cpu could be running ppp_asynctty_receive while another
-- * calls ppp_asynctty_close, which zeroes tty->disc_data and
-- * frees the memory that ppp_asynctty_receive is using.  The best
-- * way to fix this is to use a rwlock in the tty struct, but for now
-- * we use a single global rwlock for all ttys in ppp line discipline.
-- *
-- * FIXME: this is no longer true. The _close path for the ldisc is
-- * now guaranteed to be sane.
-- */
--static DEFINE_RWLOCK(disc_data_lock);
--
--static struct asyncppp *ap_get(struct tty_struct *tty)
--{
--	struct asyncppp *ap;
--
--	read_lock(&disc_data_lock);
--	ap = tty->disc_data;
--	if (ap != NULL)
--		refcount_inc(&ap->refcnt);
--	read_unlock(&disc_data_lock);
--	return ap;
--}
--
--static void ap_put(struct asyncppp *ap)
--{
--	if (refcount_dec_and_test(&ap->refcnt))
--		complete(&ap->dead);
--}
--
- /*
-  * Called when a tty is put into PPP line discipline. Called in process
-  * context.
-@@ -181,9 +147,6 @@ ppp_asynctty_open(struct tty_struct *tty)
- 	skb_queue_head_init(&ap->rqueue);
- 	tasklet_setup(&ap->tsk, ppp_async_process);
- 
--	refcount_set(&ap->refcnt, 1);
--	init_completion(&ap->dead);
--
- 	ap->chan.private = ap;
- 	ap->chan.ops = &async_ops;
- 	ap->chan.mtu = PPP_MRU;
-@@ -204,34 +167,18 @@ ppp_asynctty_open(struct tty_struct *tty)
- }
- 
- /*
-- * Called when the tty is put into another line discipline
-- * or it hangs up.  We have to wait for any cpu currently
-- * executing in any of the other ppp_asynctty_* routines to
-- * finish before we can call ppp_unregister_channel and free
-- * the asyncppp struct.  This routine must be called from
-- * process context, not interrupt or softirq context.
-+ * Called when the tty is put into another line discipline or it hangs up.
-+ * This call is serialized against other ldisc functions.
-  */
- static void
- ppp_asynctty_close(struct tty_struct *tty)
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index ef94bce1d2d55..54fd270edc810 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -897,6 +897,7 @@ static int ip6gre_xmit_other(struct sk_buff *skb, struct net_device *dev)
+ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
+ 	struct net_device *dev)
  {
--	struct asyncppp *ap;
-+	struct asyncppp *ap = tty->disc_data;
++	struct ip_tunnel_info *tun_info = NULL;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+ 	__be16 payload_protocol;
+ 	int ret;
+@@ -907,6 +908,9 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
+ 	if (!ip6_tnl_xmit_ctl(t, &t->parms.laddr, &t->parms.raddr))
+ 		goto tx_err;
  
--	write_lock_irq(&disc_data_lock);
--	ap = tty->disc_data;
--	tty->disc_data = NULL;
--	write_unlock_irq(&disc_data_lock);
- 	if (!ap)
- 		return;
++	if (t->parms.collect_md)
++		tun_info = skb_tunnel_info_txcheck(skb);
++
+ 	payload_protocol = skb_protocol(skb, true);
+ 	switch (payload_protocol) {
+ 	case htons(ETH_P_IP):
+@@ -926,7 +930,7 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
  
--	/*
--	 * We have now ensured that nobody can start using ap from now
--	 * on, but we have to wait for all existing users to finish.
--	 * Note that ppp_unregister_channel ensures that no calls to
--	 * our channel ops (i.e. ppp_async_send/ioctl) are in progress
--	 * by the time it returns.
--	 */
--	if (!refcount_dec_and_test(&ap->refcnt))
--		wait_for_completion(&ap->dead);
-+	tty->disc_data = NULL;
- 	tasklet_kill(&ap->tsk);
- 
- 	ppp_unregister_channel(&ap->chan);
-@@ -241,17 +188,6 @@ ppp_asynctty_close(struct tty_struct *tty)
- 	kfree(ap);
- }
- 
--/*
-- * Called on tty hangup in process context.
-- *
-- * Wait for I/O to driver to complete and unregister PPP channel.
-- * This is already done by the close routine, so just call that.
-- */
--static void ppp_asynctty_hangup(struct tty_struct *tty)
--{
--	ppp_asynctty_close(tty);
--}
--
- /*
-  * Read does nothing - no data is ever available this way.
-  * Pppd reads and writes packets via /dev/ppp instead.
-@@ -282,7 +218,7 @@ ppp_asynctty_write(struct tty_struct *tty, struct file *file, const u8 *buf,
- static int
- ppp_asynctty_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	int err, val;
- 	int __user *p = (int __user *)arg;
- 
-@@ -323,7 +259,6 @@ ppp_asynctty_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
- 		err = tty_mode_ioctl(tty, cmd, arg);
- 	}
- 
--	ap_put(ap);
- 	return err;
- }
- 
-@@ -332,7 +267,7 @@ static void
- ppp_asynctty_receive(struct tty_struct *tty, const u8 *buf, const u8 *cflags,
- 		     size_t count)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	unsigned long flags;
- 
- 	if (!ap)
-@@ -342,21 +277,19 @@ ppp_asynctty_receive(struct tty_struct *tty, const u8 *buf, const u8 *cflags,
- 	spin_unlock_irqrestore(&ap->recv_lock, flags);
- 	if (!skb_queue_empty(&ap->rqueue))
- 		tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- 	tty_unthrottle(tty);
- }
- 
- static void
- ppp_asynctty_wakeup(struct tty_struct *tty)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
- 	if (!ap)
- 		return;
- 	set_bit(XMIT_WAKEUP, &ap->xmit_flags);
- 	tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- }
- 
- 
-@@ -366,7 +299,6 @@ static struct tty_ldisc_ops ppp_ldisc = {
- 	.name	= "ppp",
- 	.open	= ppp_asynctty_open,
- 	.close	= ppp_asynctty_close,
--	.hangup	= ppp_asynctty_hangup,
- 	.read	= ppp_asynctty_read,
- 	.write	= ppp_asynctty_write,
- 	.ioctl	= ppp_asynctty_ioctl,
+ tx_err:
+-	if (!t->parms.collect_md || !IS_ERR(skb_tunnel_info_txcheck(skb)))
++	if (!IS_ERR(tun_info))
+ 		DEV_STATS_INC(dev, tx_errors);
+ 	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
 -- 
 2.53.0
 
