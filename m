@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE04E36DC;
-	Wed, 30 Sep 2026 16:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1905374A16;
+	Wed, 30 Sep 2026 16:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786533; cv=none; b=JAs+UWifJBYGsyS3q0mTTr4HCW1kFfn2gX5t727GoiErgwfcl81MyuGmk9fwanda8LEWzs7p32ETobRm3GVqSkU/CsJuze30GQkj/mE991Sxi6EVxgmUnEoWQ3dCP40wb4X3uK1GWhyCk4sE8P1894E3lHNthH4x1y4Ua000BWE=
+	t=1790786536; cv=none; b=mJJeMQoHpGgHOANytcUDViP9W0N9gwwHnAekluogG+VNjVT1J8ggHr+gmLPypKrg+akzH4efYu/aNgBdGRht/D1mskNnztWgpULGBxzu+wuKJg1INdhUR1eW1L3PyVseOoXIydGs+SfJ/Nq2XYCSXP0N5iGRPgccXDmD5VXxtVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786533; c=relaxed/simple;
-	bh=VndLL43CWqdvAiSFT3Dq+pBLnUjIq7aoJBJG8VZkicU=;
+	s=arc-20240116; t=1790786536; c=relaxed/simple;
+	bh=ukWlX6zqiDgQBf3NCAidxxTiQ6ghLvUKMJMPrwETtAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sG0fHbsRt99Mf143GZuGBWviDKE3LKVpuPpfbAYmxWYc8Pa2Aj25L9bcVIfo0IuoQyOdg0/TM86d2QgWfPCqxOMXGBgDvB8ahl2eoRXGuLSEFkVxBs4tSRrqicQgHxDGbkLkB/Un+LnA9V2EqcyDGTNyzKlXKyDrUl+PygEeIlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOdAhrH6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EFLuYoYNQRNT9H3tJb7sa5Kp/TZoKA2vlZUESuqmgKsHX69BWsq/RCnD/S0zEwyMHPNZgT/X6CuUZjhMahSLGKsEytBW4Y16FLQXmcJC239Y1qzHkHVIkRZNCcWqE0Zng8E2gnpHI0+S8TC4wHICFzEZBDgF+wZARJ3X7bAQE7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DF9GXtuy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOdAhrH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF601F000FF;
-	Wed, 30 Sep 2026 16:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DF9GXtuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2384B1F000FF;
+	Wed, 30 Sep 2026 16:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786531;
-	bh=DqaUavhp9zMt5aUcLghAgFZMlsIGCQ579rrPv27FuEY=;
+	s=korg; t=1790786534;
+	bh=by7PykH+v67y8PmycJpbesPGfiKG1U56Qr/ICGVSNos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cOdAhrH6k2QMrX67/D7NZgaw9J3n1Sy7kaTu08O6YzT50DHFVnfMl2i6Z/Vb9xwRv
-	 kNdx7ptvdJSrAhDSHxcEGHVY/nEpIlm5vGXMuNH0oGarx0tfjml3lbHtlpFYFBJDaT
-	 jkmIUt6LJcFNhVF/c6WIwAxQrrLFB6ifwt5lJh6s=
+	b=DF9GXtuyUd25Omz0oArIN61dk8Bi+EiR3DbDrmO8gbKE+d/aMnygVhpyZyi+aN8kz
+	 lpSy1EFEBXxy8IwfqgnSNgwowd0xEoOHt6F707rvLaoMT8mwe9WQqVJ1QI9midAfO0
+	 81RMJ9kC5yR3hQu/UP8Ydl8jyq9Mjiws/kYbOleM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	=?UTF-8?q?H=C3=A9l=C3=A8ne=20Vulquin?= <oss@helene.moe>,
-	Mark Brown <broonie@kernel.org>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 896/982] driver core: Add device probe log helper dev_warn_probe()
-Date: Wed, 30 Sep 2026 17:27:12 +0200
-Message-ID: <20260930152435.990568867@linuxfoundation.org>
+Subject: [PATCH 6.1 879/982] selftests: nci: Fix uninitialized family ID on missing attribute
+Date: Wed, 30 Sep 2026 17:26:55 +0200
+Message-ID: <20260930152435.630332746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,223 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit 36e69b160705b65bf136c2fb6a1194447eeb8478 ]
+[ Upstream commit eda518d2cdb6074a0bcdfa06af291616bcb5c421 ]
 
-Some drivers can still provide their functionality to a certain extent
-even when some of their resource acquisitions eventually fail.  In such
-cases, emitting errors isn't the desired action, but warnings should be
-emitted instead.
+get_family_id() walks the generic netlink CTRL_CMD_GETFAMILY reply
+looking for the CTRL_ATTR_FAMILY_ID attribute and returns the parsed
+value in the local variable "id". If the reply does not carry that
+attribute, the parsing loop never assigns "id" and the function returns
+an indeterminate stack value, which the caller stores in self->fid and
+uses for subsequent netlink requests.
 
-To solve this, introduce dev_warn_probe() as a new device probe log helper,
-which behaves identically as the already existing dev_err_probe(), while it
-produces warnings instead of errors.  The intended use is with the resources
-that are actually optional for a particular driver.
+Initialize "id" to 0 so a missing attribute yields a deterministic
+(invalid) family ID instead of a garbage value.
 
-While there, copyedit the kerneldoc for dev_err_probe() a bit, to simplify
-its wording a bit, and reuse it as the kerneldoc for dev_warn_probe(), with
-the necessary wording adjustments, of course.
-
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Tested-by: Hélène Vulquin <oss@helene.moe>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2be0a28538bb2a3d1bcc91e2ca1f2d0dc09146d9.1727601608.git.dsimic@manjaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 4eb3f195ef08 ("tg3: use random MAC address when tg3_get_device_address fails")
+Fixes: f595cf1242f3 ("selftests: Add nci suite")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260901070618.3299012-1-nagachaithanya9911@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c        | 129 +++++++++++++++++++++++++++++--------
- include/linux/dev_printk.h |   1 +
- 2 files changed, 102 insertions(+), 28 deletions(-)
+ tools/testing/selftests/nci/nci_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index fde08c9660a31..00737fc051575 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -5018,6 +5018,49 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
+index 6f571e3c21c09..87262f8d0c101 100644
+--- a/tools/testing/selftests/nci/nci_dev.c
++++ b/tools/testing/selftests/nci/nci_dev.c
+@@ -182,7 +182,7 @@ static int get_family_id(int sd, __u32 pid, __u32 *event_group)
+ 	} ans;
+ 	struct nlattr *na;
+ 	int resp_len;
+-	__u16 id;
++	__u16 id = 0;
+ 	int len;
+ 	int rc;
  
- #endif
- 
-+static void __dev_probe_failed(const struct device *dev, int err, bool fatal,
-+			       const char *fmt, va_list vargsp)
-+{
-+	struct va_format vaf;
-+	va_list vargs;
-+
-+	/*
-+	 * On x86_64 and possibly on other architectures, va_list is actually a
-+	 * size-1 array containing a structure.  As a result, function parameter
-+	 * vargsp decays from T[1] to T*, and &vargsp has type T** rather than
-+	 * T(*)[1], which is expected by its assignment to vaf.va below.
-+	 *
-+	 * One standard way to solve this mess is by creating a copy in a local
-+	 * variable of type va_list and then using a pointer to that local copy
-+	 * instead, which is the approach employed here.
-+	 */
-+	va_copy(vargs, vargsp);
-+
-+	vaf.fmt = fmt;
-+	vaf.va = &vargs;
-+
-+	switch (err) {
-+	case -EPROBE_DEFER:
-+		device_set_deferred_probe_reason(dev, &vaf);
-+		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
-+		break;
-+
-+	case -ENOMEM:
-+		/* Don't print anything on -ENOMEM, there's already enough output */
-+		break;
-+
-+	default:
-+		/* Log fatal final failures as errors, otherwise produce warnings */
-+		if (fatal)
-+			dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
-+		else
-+			dev_warn(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
-+		break;
-+	}
-+
-+	va_end(vargs);
-+}
-+
- /**
-  * dev_err_probe - probe error check and log helper
-  * @dev: the pointer to the struct device
-@@ -5030,7 +5073,7 @@ define_dev_printk_level(_dev_info, KERN_INFO);
-  * -EPROBE_DEFER and propagate error upwards.
-  * In case of -EPROBE_DEFER it sets also defer probe reason, which can be
-  * checked later by reading devices_deferred debugfs attribute.
-- * It replaces code sequence::
-+ * It replaces the following code sequence::
-  *
-  * 	if (err != -EPROBE_DEFER)
-  * 		dev_err(dev, ...);
-@@ -5042,47 +5085,77 @@ define_dev_printk_level(_dev_info, KERN_INFO);
-  *
-  * 	return dev_err_probe(dev, err, ...);
-  *
-- * Using this helper in your probe function is totally fine even if @err is
-- * known to never be -EPROBE_DEFER.
-+ * Using this helper in your probe function is totally fine even if @err
-+ * is known to never be -EPROBE_DEFER.
-  * The benefit compared to a normal dev_err() is the standardized format
-- * of the error code, it being emitted symbolically (i.e. you get "EAGAIN"
-- * instead of "-35") and the fact that the error code is returned which allows
-- * more compact error paths.
-+ * of the error code, which is emitted symbolically (i.e. you get "EAGAIN"
-+ * instead of "-35"), and having the error code returned allows more
-+ * compact error paths.
-  *
-  * Returns @err.
-  */
- int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
- {
--	struct va_format vaf;
--	va_list args;
-+	va_list vargs;
- 
--	va_start(args, fmt);
--	vaf.fmt = fmt;
--	vaf.va = &args;
-+	va_start(vargs, fmt);
- 
--	switch (err) {
--	case -EPROBE_DEFER:
--		device_set_deferred_probe_reason(dev, &vaf);
--		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
--		break;
-+	/* Use dev_err() for logging when err doesn't equal -EPROBE_DEFER */
-+	__dev_probe_failed(dev, err, true, fmt, vargs);
- 
--	case -ENOMEM:
--		/*
--		 * We don't print anything on -ENOMEM, there is already enough
--		 * output.
--		 */
--		break;
-+	va_end(vargs);
- 
--	default:
--		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
--		break;
--	}
-+	return err;
-+}
-+EXPORT_SYMBOL_GPL(dev_err_probe);
- 
--	va_end(args);
-+/**
-+ * dev_warn_probe - probe error check and log helper
-+ * @dev: the pointer to the struct device
-+ * @err: error value to test
-+ * @fmt: printf-style format string
-+ * @...: arguments as specified in the format string
-+ *
-+ * This helper implements common pattern present in probe functions for error
-+ * checking: print debug or warning message depending if the error value is
-+ * -EPROBE_DEFER and propagate error upwards.
-+ * In case of -EPROBE_DEFER it sets also defer probe reason, which can be
-+ * checked later by reading devices_deferred debugfs attribute.
-+ * It replaces the following code sequence::
-+ *
-+ * 	if (err != -EPROBE_DEFER)
-+ * 		dev_warn(dev, ...);
-+ * 	else
-+ * 		dev_dbg(dev, ...);
-+ * 	return err;
-+ *
-+ * with::
-+ *
-+ * 	return dev_warn_probe(dev, err, ...);
-+ *
-+ * Using this helper in your probe function is totally fine even if @err
-+ * is known to never be -EPROBE_DEFER.
-+ * The benefit compared to a normal dev_warn() is the standardized format
-+ * of the error code, which is emitted symbolically (i.e. you get "EAGAIN"
-+ * instead of "-35"), and having the error code returned allows more
-+ * compact error paths.
-+ *
-+ * Returns @err.
-+ */
-+int dev_warn_probe(const struct device *dev, int err, const char *fmt, ...)
-+{
-+	va_list vargs;
-+
-+	va_start(vargs, fmt);
-+
-+	/* Use dev_warn() for logging when err doesn't equal -EPROBE_DEFER */
-+	__dev_probe_failed(dev, err, false, fmt, vargs);
-+
-+	va_end(vargs);
- 
- 	return err;
- }
--EXPORT_SYMBOL_GPL(dev_err_probe);
-+EXPORT_SYMBOL_GPL(dev_warn_probe);
- 
- static inline bool fwnode_is_primary(struct fwnode_handle *fwnode)
- {
-diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
-index ca32b5bb28eb5..eb2094e43050c 100644
---- a/include/linux/dev_printk.h
-+++ b/include/linux/dev_printk.h
-@@ -276,6 +276,7 @@ do {									\
- 			dev_driver_string(dev), dev_name(dev), ## arg)
- 
- __printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
-+__printf(3, 4) int dev_warn_probe(const struct device *dev, int err, const char *fmt, ...);
- 
- /* Simple helper for dev_err_probe() when ERR_PTR() is to be returned. */
- #define dev_err_ptr_probe(dev, ___err, fmt, ...) \
 -- 
 2.53.0
 
