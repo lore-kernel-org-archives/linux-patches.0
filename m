@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6133C50EC0F;
-	Wed, 30 Sep 2026 16:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F7E515961;
+	Wed, 30 Sep 2026 16:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784603; cv=none; b=FTFeh65Mzw1VxMvXGyQtvVbaureSV1fRubdqY9KJK6wT5Yge0Emgy2iPwg8HHrGiD2GETqkW5nGL18orc7BzpeTGy6DZzZhKVhTBz6571/hGVAfxtQQrz8mcPtiJPGCofjIQxaNsOepNEY+brH5Wn0jYCUI4a/yBtA4CL64fxJw=
+	t=1790784607; cv=none; b=nxqK2MHLSWyTcbT1HU+jAYazIVOM6tQVDWJQpOxNl3nXDcU1EiZXPZ6D0u9p6UgI74+osPUdddfCBWfpB0SVbWKRdfEWMrnoncdvafa2wPPgoEzskxtLV4HWTt576cPAy3guC1T/f5MsNsYGTfB0HDHEmMlPxpW1Sh4UBKPDg1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784603; c=relaxed/simple;
-	bh=rCrVWCL7C6BpSc+DT1qUl5pngCdbau7J68iKA5MKd9Y=;
+	s=arc-20240116; t=1790784607; c=relaxed/simple;
+	bh=ehxApt84hdlRyeSUZIcaOsGTg5IMG/so2AjH004XZ/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5REJwze8iaLsvhTfiklt8s6xwNSgoCIpofyYJpDrfVREkH7vEBEuKU47vEJE9+Eoc31hFb221aFWNPL1ei2i3qwmIV6zL1np7hhQZlV6XVmAN0S42D4RtbPHuE/2050y5TWu6LZTr4kF9iwF4tSPXX1o2DyncSPATX/6TF0qSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFKx4RXn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cljKTLcoRDKUbol3j/Gp7DFM07DIWDEy1d9EZ8itzfP4g4K6ZkLl0muAh64qo7o8BRXggdxW1SDc+LdmaF3Fm4ALTYO17t4XJrk3ebndNZIMq6ylYckrdxHDLq2bM0VPILTcO/xav6d8VoVeOeMluZTZcaXAE1825K7jaUZ0tx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkgW934E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFKx4RXn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90111F000FF;
-	Wed, 30 Sep 2026 16:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkgW934E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB571F00893;
+	Wed, 30 Sep 2026 16:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784598;
-	bh=vCjcXQpGpwjW3tttdKWbiNUIrbwatIcETvPb443+aQ0=;
+	s=korg; t=1790784601;
+	bh=OZqFZmJP6W0AoYTGRM6YIALjKgXW635PLXeTll3CvvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cFKx4RXnx2OZWNrfkRiZm4yEsPC31VDuT6jW528mELZlTHthUUn4ikLEh/duRv3th
-	 rQP6Sx7Y6N8GU/vmKnCDPkc1x6eyW4WU9bZoG9+f0xUiAmDNcO3JlYPU3W1hZf0kyC
-	 /RA0USf3NS1Y+7w1Wy5JDlJsA/4PIswO4mGuPTV8=
+	b=EkgW934EbcYE38vO51lb8G5mS9w8WqvrNYqRlwpRt2MzwmRakV2BTT4lw7TL+yrsh
+	 wuOBkoKt/oPQftwywQv6qy1gRzmEZqsxnCwtSElCK9L4Ao+JbL2tUboRGqmstPiOki
+	 QXUFYn4XWjDTtqSCG5zmiYBTnWbdYIe8p1UaR2vU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/982] leds: uleds: Return -EFAULT on copy_to_user() failure
-Date: Wed, 30 Sep 2026 17:15:41 +0200
-Message-ID: <20260930152421.214523156@linuxfoundation.org>
+Subject: [PATCH 6.1 214/982] md/raid5: let stripe batch bm_seq comparison wrap-safe
+Date: Wed, 30 Sep 2026 17:15:50 +0200
+Message-ID: <20260930152421.405783320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,47 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit 61ed78f55a46e12afd4b464c4ba736f55ff33c5e ]
+[ Upstream commit 00e93faf4cea9e8802ac5dfee0952d84fc95c40f ]
 
-uleds_read() copies the current brightness value to userspace but
-ignores copy_to_user() failures. It then clears the pending update and
-reports a successful full read even when no data was copied.
+Once the 32-bit seq wraps, a newer bm_seq can look smaller
+than old, so .. covert to wrap-safe calculate way.
 
-Return -EFAULT when the copy fails and leave the update pending so a
-later read can retry.
-
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260521181205.15130-1-alhouseenyousef@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Link: https://patch.msgid.link/20260618025735.915113-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/uleds.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/md/raid5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/uleds.c b/drivers/leds/uleds.c
-index 90e54370fe7ea..3e47cb74f49ab 100644
---- a/drivers/leds/uleds.c
-+++ b/drivers/leds/uleds.c
-@@ -148,10 +148,13 @@ static ssize_t uleds_read(struct file *file, char __user *buffer, size_t count,
- 		} else if (!udev->new_data && (file->f_flags & O_NONBLOCK)) {
- 			retval = -EAGAIN;
- 		} else if (udev->new_data) {
--			retval = copy_to_user(buffer, &udev->brightness,
--					      sizeof(udev->brightness));
--			udev->new_data = false;
--			retval = sizeof(udev->brightness);
-+			if (copy_to_user(buffer, &udev->brightness,
-+					 sizeof(udev->brightness))) {
-+				retval = -EFAULT;
-+			} else {
-+				udev->new_data = false;
-+				retval = sizeof(udev->brightness);
-+			}
- 		}
- 
- 		mutex_unlock(&udev->mutex);
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 664aa8c0781e9..dd0864df1d8cf 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -992,7 +992,7 @@ static void stripe_add_to_batch_list(struct r5conf *conf,
+ 	if (test_and_clear_bit(STRIPE_BIT_DELAY, &sh->state)) {
+ 		int seq = sh->bm_seq;
+ 		if (test_bit(STRIPE_BIT_DELAY, &sh->batch_head->state) &&
+-		    sh->batch_head->bm_seq > seq)
++		    sh->batch_head->bm_seq - seq > 0)
+ 			seq = sh->batch_head->bm_seq;
+ 		set_bit(STRIPE_BIT_DELAY, &sh->batch_head->state);
+ 		sh->batch_head->bm_seq = seq;
 -- 
 2.53.0
 
