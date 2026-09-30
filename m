@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72372515961;
-	Wed, 30 Sep 2026 17:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432033750CF;
+	Wed, 30 Sep 2026 17:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788247; cv=none; b=K85j8EHlDynAnS3Y3vx3Ebdd+D1o0s6dhT4RlKTgaB2QN9ftVEyrthcBWY99N9ri0A5toUFsCa4MnjYkmfMONh4CD/njovDy8zyrhRb12FMbut5/mGNTkcltKwAGHlE5Kbwe8AH4f2SUKvtPsRwmS2mX/Af+ngM/e2/bNW5rdK0=
+	t=1790788250; cv=none; b=mrdcfqdXC/+Z7+V51bx6WiBxBxdrnWNDgGWyaeZcgTiDcoL/Z1W5aXn3Eky65BVV6ANdxriy8BjSaHSPdh2Lmzo8dn1FMhc8cK5T1IkXlR8/gHy0+l+t3hpdkFCHNWpli0tGJBUBKJiTr2CFF3NToFRbuMNbITlaADoPlTOrn+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788247; c=relaxed/simple;
-	bh=RzpZruPyCyCUCi16SkwUKEPWTE1/2a+UDwbllhkkBwk=;
+	s=arc-20240116; t=1790788250; c=relaxed/simple;
+	bh=rrNaG3zSf1j8z6xwk50te6ZbRL2+sGBqb9qki/U6EUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+PT38ED1HBVjgEmQ2YhDV7Uy9QdN6+4kYXBunEWCGQf2t7tFvxgzwjNFLhjDqwhadrCqicWyjnUz2OvJAr/Fimz0NDuY+/3pAZ2d+V671sG4HzK8/uO4B3WqtqyZHswMTQMXIBm0TvuV+IFoDPj6tceelOQooOqfxq45hLf0Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVU5WuLT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aqfk8QgO+X6Ki1ipGe7COJ2UPXW3AcDQxcAex3sdG6c1S00R+h7+UmB8dqbQFbaxyC/tE/jXkCGNEW8FO9ZrXinsPjNSi3DlXwFOVSeuT3Xh2MPHG7Jo4A9tED7ZC8VdbqE2LKUxsfylVH6UgDofjt3o9DztV0YvM6S5bYNjXiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7oGUCMz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVU5WuLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3261F000FF;
-	Wed, 30 Sep 2026 17:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7oGUCMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7E11F00898;
+	Wed, 30 Sep 2026 17:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788246;
-	bh=O4xN01a6zlt1Eg3c67xuAD437UPLALZhEih7N4eroAw=;
+	s=korg; t=1790788249;
+	bh=xAUkqPgszdbaTQBc18rYphDitDUeShDlrtHo9wnWw8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SVU5WuLTfXKwV6yjZ5mRKvKfTfCFpSYYhUALZaESBsrQ5Upte7vxHIypHOPuZ5ywn
-	 1fzTRDpdxcy+4qxl9rf7bih5ONsr4QjNmvx7bcYmdBUVbF7ZhncP8vjhb3qGYWbCO7
-	 Qo4OrEFydhp0rGe+ActkUQME7SIIw5IPSPvhg+h0=
+	b=Q7oGUCMzzuqB3FjHUFnhptEwueisqQ9Fq4LXPhnXH+ZbPMEPkXmr2eCCsg4fLiZQC
+	 W/7s75aWga8/PjF4mLHqssXM8+zu8MBCKxpeePIdoL87RLHI5tCAK77OGX3JLxyYnx
+	 5ElVh09smC0IWO+6xJu4vFuPTWufqeTHJm3EIRus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1a797e1c81be78a2ace7@syzkaller.appspotmail.com,
+	syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/877] wifi: cfg80211: only group hidden BSSes with beacon entries
-Date: Wed, 30 Sep 2026 17:16:06 +0200
-Message-ID: <20260930152415.934159743@linuxfoundation.org>
+Subject: [PATCH 6.12 056/877] wifi: cfg80211: dont filter by BSS type when removing stale entries
+Date: Wed, 30 Sep 2026 17:16:07 +0200
+Message-ID: <20260930152415.955321687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,60 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 068843ed0902c552a13860c5ec6b2ca65b57a065 ]
+[ Upstream commit b377e1000d963e7182a987082b4b06580bd7ac84 ]
 
-When a probe response for an unknown BSS comes in, __cfg80211_bss_update()
-looks for an existing entry with the same BSSID and a hidden (zero-length
-or NUL-filled) SSID, and if it finds one it groups them, using the beacon
-IEs from the existing entry.
+When an assoc AP switches to a channel that already has a BSS entry,
+cfg80211_update_assoc_bss_entry() removes that entry before rehashing
+the real one, since the two would otherwise collide in the BSS rbtree.
 
-But that could find another entry without a beacon, if it was also from a
-probe response (with SSID), so there's a group without beacon elements.
+The lookup for that entry also required it to match the connection's BSS
+type, so an entry advertising e.g. the IBSS capability bit was left in
+place, and the following cfg80211_rehash_bss() then ran into it:
 
-If a beacon with a hidden SSID for that BSSID arrives later,
-cfg80211_combine_bsses() goes looking for the probe response entries that
-belong to it - i.e. entries with the same BSSID and channel that have no
-beacon IEs - and finds those two. They are already grouped with each
-other, so it hits its
+  WARN_ON(!cmp)
 
-  WARN_ON_ONCE(bss->pub.hidden_beacon_bss)
-  WARN_ON_ONCE(!list_empty(&bss->hidden_list))
-
-which are there because an entry without beacon elements is not supposed
-to be part of a group yet.
-
-Only combine entries when a beacon was already received, ones that are
-kept separate will be combined when a beacon arrives.
+Changing the type shouldn't really happen, but can be triggered by a
+rogue AP/device, so drop the check and remove any entries matching
+the comparison.
 
 Assisted-by: LLM
-Fixes: 4593c4cbe1c9 ("cfg80211: fix BSS list hidden SSID lookup")
-Reported-by: syzbot+1a797e1c81be78a2ace7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1a797e1c81be78a2ace7
-Link: https://patch.msgid.link/20260904165614.bcfa64715745.Iad740347c86de56d4ff4f96a95f3c3afc47c42de@changeid
+Fixes: 0afd425b1b64 ("cfg80211: fix duplicated scan entries after channel switch")
+Reported-by: syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dc6f4dce0d707900cdea
+Link: https://patch.msgid.link/20260904165614.1f05dae1c546.Ib52d57b57caa912efee020f9d4a033a5160617ce@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/wireless/scan.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 3c439841578c4..f3b9e7a519ff9 100644
+index f3b9e7a519ff9..9d21667641a50 100644
 --- a/net/wireless/scan.c
 +++ b/net/wireless/scan.c
-@@ -1960,6 +1960,13 @@ __cfg80211_bss_update(struct cfg80211_registered_device *rdev,
- 			if (!hidden)
- 				hidden = rb_find_bss(rdev, tmp,
- 						     BSS_CMP_HIDE_NUL);
-+			/*
-+			 * Only group with an entry with beacon data, otherwise
-+			 * beacon data can never be filled/updated.
-+			 */
-+			if (hidden &&
-+			    !rcu_access_pointer(hidden->pub.beacon_ies))
-+				hidden = NULL;
- 			if (hidden) {
- 				new->pub.hidden_beacon_bss = &hidden->pub;
- 				list_add(&new->hidden_list,
+@@ -3398,11 +3398,6 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
+ 	cbss->pub.channel = chan;
+ 
+ 	list_for_each_entry(bss, &rdev->bss_list, list) {
+-		if (!cfg80211_bss_type_match(bss->pub.capability,
+-					     bss->pub.channel->band,
+-					     wdev->conn_bss_type))
+-			continue;
+-
+ 		if (bss == cbss)
+ 			continue;
+ 
 -- 
 2.53.0
 
