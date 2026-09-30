@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CE938399B;
-	Wed, 30 Sep 2026 15:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A08385D97;
+	Wed, 30 Sep 2026 15:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783149; cv=none; b=QYKTQ/hUd3ztnbP07r8Xgwv1IFFln2EsJrfuwNtavgPM3iQnmqwOSjNKAHXS8CE/x2ZGNR+CArua2Obmoox4ohWgveVWFJVv6RhAGaFoWnuDqjNxAPyp04aapTC6kxMS0twd7y1wrhJstVO284ky8NfkJjsUU4bBjHt/0fJboPc=
+	t=1790783150; cv=none; b=SfPctVbcsfeSRZnUhD8x8jtFv0EkU22IxSyNtzG5iBQdOizwYNADaRKhjxzG3aYkls+jPmlRcW4HIEy8HiujXaiIVj+/V7HynSAg4TQOyUkYTgl1pB10e0HGmLoxB3+E+mHQIVATyxAtdso3L7cMaEdNEvd3jqyPmgpzsJGSU90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783149; c=relaxed/simple;
-	bh=3HpjIMuLT46kKq8/xotx92QHEYg1IzeGE1f4djkUlNY=;
+	s=arc-20240116; t=1790783150; c=relaxed/simple;
+	bh=NgJrgScMf6JGBV3j/0HnKsuOy4oWswdp2hHKf/kIeJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMOv6RF0xbctHYrwp5GGbqU9iIm5JD2qHwBhu/brKKvYdcod2anBDCaKkDS8yLDixJAIZWEIsBPGY8Xty2RsUDnyU8XEEmKgPsBWuunkuZk678ZhLwpQW2kWi9BF3O/T4VRz13yX6gQbMvIt9+xojUS/Yc5o6bz/4aXMNtBi/y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BP8Up4Rm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hDk+Jn7eQv/k+BKn3G9N3ZPUeRTuz5zY8NIJiJ4S6ZKYxYd1+nTodD3lYXaQ9k9QTRitxJo9+bN6zm5D2kYR4U3pMQqnUrJ7pSJYX1P6YuMnKGjYbq/o0+4sFomO0/J7dVpop6LWmYKwv3XOyXxB5XlZ1s0k3t3IruVoGrn1z5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqJHUc4k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BP8Up4Rm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5141F00898;
-	Wed, 30 Sep 2026 15:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqJHUc4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600681F00899;
+	Wed, 30 Sep 2026 15:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783143;
-	bh=3YR6L9r1OEmnEVU6lqtTyBBlpiILuqFGAnW5YgB4A90=;
+	s=korg; t=1790783145;
+	bh=Vo1GNVA91fH9nroQYCepwCUMzM0WiV2Jyxhzs379H9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BP8Up4RmUKql4/F8xTUilpubOx3qGFRasKMayXGnf8oo4P6xJm4Ak7/pNIFDyC+mW
-	 I6Z/G7WmDuKqhAXmFA2jOKvpTe1hwPm35o25I524d3Xh0bBLiRze+eV8fkdDNo4Stv
-	 rDoY/1HajkkQxXclHoOjUU+vCfRpvkukT8SvW3pM=
+	b=ZqJHUc4kmCCvRPzraVVyt3Xgmxm6de0qH2B/cKG/BcIby1+lV2PleBa5wvjjk7yTA
+	 mUT6lZJ/zpjefZHcH9mVkLX/JIjwpi+DN16sMFvd63fNc6xE1sbbEc7F+L5x+/VYh3
+	 +SIUwIKSTLN2Q0tBcs0eAcnWce1LRmYwNBjS/Wec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laika Price <laikabcprice@gmail.com>,
-	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
-	Charles Bordet <rough.rock3059@datachamp.fr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 294/595] tunnels: Drop stale dst when building an ICMP error for PMTUD
-Date: Wed, 30 Sep 2026 17:23:07 +0200
-Message-ID: <20260930152354.018468403@linuxfoundation.org>
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 259/595] netfilter: nfnetlink_log: cope with concurrent instance destruction
+Date: Wed, 30 Sep 2026 17:22:32 +0200
+Message-ID: <20260930152353.278672596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -56,93 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit b58d749633203d92c265317b45fccee555090352 upstream.
+[ Upstream commit 387d744fa7e499d2c3748a4e60e02ebb24e7fb16 ]
 
-Bridged UDP tunnels such as VXLAN and GENEVE build an ICMP error packet
-around an overlay packet if the packet is going to exceed the underlay
-path MTU. The ICMP error packet is then injected back into the Rx path
-with the source and destination addresses swapped, so that it will be
-delivered to the overlay source.
+Instances are refcounted. However, only memory release happens on the
+1 -> 0 transition; the unlink from hashes can occur with any refcount.
 
-If the overlay packet was routed to the UDP tunnel or locally generated,
-then it is already carrying a valid dst entry and this entry is not
-dropped when transforming the packet to an ICMP error packet. This
-causes the IP layer to reuse the dst entry, leading to the ICMP error
-packet being dropped or routed out of the UDP tunnel interface in case
-of forwarding.
+Uncooperative userspace can force a situation where a queue is pending
+for destruction from netlink event while a different socket with same
+portid processes an UNBIND request.
 
-Prior to the blamed commit this could not happen, as
-skb_tunnel_check_pmtu() did not build ICMP errors for PACKET_HOST
-packets. Such packets were instead encapsulated and, unless the DF bit
-was set in the outer header, fragmented by the underlay.
+With right timing, this will unhash the instance again:
 
-Fix this by making sure that the ICMP error packet does not have a valid
-dst entry, thereby forcing the IP layer to perform a route lookup.
+Oops: general protection fault, [..]
+Call Trace:
+ <TASK>
+ nfulnl_recv_config+0x31a/0xd50
+ nfnetlink_rcv_msg+0x7c2/0xeb0
 
-Adjust the bridged PMTU exception selftests accordingly. When the
-local sender in ns_a pings the overlay destination with a deadline
-(-w), ping exits on the first socket error before any reply is
-received and returns a non-zero exit code. The test therefore only
-passed because the ICMP error was never delivered. Use a packet count
-(-c) like the ns_c line above it, so that the ICMP error counts
-against the packet budget and the exit code depends on whether echo
-replies were received. This passes with and without the fix.
-
-Fixes: 8930424777e4 ("tunnels: Accept PACKET_HOST in skb_tunnel_check_pmtu().")
-Cc: stable@vger.kernel.org
-Reported-by: Laika Price <laikabcprice@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260614-master-v3-1-9f5060ba1ed1@gmail.com/
-Reported-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260901081825.287173-1-aroslavdudkov622@gmail.com/
-Reported-by: Charles Bordet <rough.rock3059@datachamp.fr>
-Closes: https://lore.kernel.org/netdev/aHVhQLPJIhq-SYPM@eldamar.lan/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20260902190112.4126199-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0597f2680d66 ("[NETFILTER]: Add new "nfnetlink_log" userspace packet logging facility")
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c           |    6 ++++++
- tools/testing/selftests/net/pmtu.sh |    2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ net/netfilter/nfnetlink_log.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -250,6 +250,9 @@ static int iptunnel_pmtud_build_icmp(str
- 	eth_header(skb, skb->dev, htons(eh.h_proto), eh.h_source, eh.h_dest, 0);
- 	skb_reset_mac_header(skb);
- 
-+	if (skb_valid_dst(skb))
-+		skb_dst_drop(skb);
+diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
+index 8c967bd772ec3..042d417eb5ec0 100644
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -213,13 +213,18 @@ static void __nfulnl_flush(struct nfulnl_instance *inst);
+ static void
+ __instance_destroy(struct nfulnl_instance *inst)
+ {
++	spin_lock(&inst->lock);
++	if (inst->copy_mode == NFULNL_COPY_DISABLED) {
++		/* attempt to UNBIND a queue already pending
++		 * destruction via netlink close event. Ignore.
++		 */
++		spin_unlock(&inst->lock);
++		return;
++	}
 +
- 	return skb->len;
- }
+ 	/* first pull it out of the global list */
+ 	hlist_del_rcu(&inst->hlist);
  
-@@ -353,6 +356,9 @@ static int iptunnel_pmtud_build_icmpv6(s
- 	eth_header(skb, skb->dev, htons(eh.h_proto), eh.h_source, eh.h_dest, 0);
- 	skb_reset_mac_header(skb);
+-	/* then flush all pending packets from skb */
+-
+-	spin_lock(&inst->lock);
+-
+ 	/* lockless readers wont be able to use us */
+ 	inst->copy_mode = NFULNL_COPY_DISABLED;
  
-+	if (skb_valid_dst(skb))
-+		skb_dst_drop(skb);
-+
- 	return skb->len;
- }
- 
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1105,7 +1105,7 @@ test_pmtu_ipvX_over_bridged_vxlanY_or_ge
- 	mtu "${ns_b}" ${type}_b $((${ll_mtu} + 1000))
- 
- 	run_cmd ${ns_c} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
--	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -w 1  -s $((${ll_mtu} + 500)) ${dst} || return 1
-+	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
- 
- 	# Check that exceptions were created
- 	pmtu="$(route_get_dst_pmtu_from_exception "${ns_c}" ${dst})"
+-- 
+2.53.0
+
 
 
