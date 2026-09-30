@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB47A51121D;
-	Wed, 30 Sep 2026 16:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EFF4E4306;
+	Wed, 30 Sep 2026 16:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786196; cv=none; b=RXg/x7ngpGEa01sWbqRga9NkLFcqu5T+wVPtBt4eJXj0mVrd0U6IkPo2Zj0y3w4XM8zybH8rDDn7obkHOaMFtOq8WjJ1y3jJUMjXiCk7NRvfjAdyvgdi9BiVINjLCo68EXV3OgVAl076AaavaWxZiTqcxj9/3r79baynfLpT2U8=
+	t=1790786198; cv=none; b=NewYr6Ls4EYPJsh73cBjOy5oXUfGPRo7CZk14WDMwO3WhYSK8UkLYrUZ8tQIgSJ4veTKYPY2oi+tEV33nnE1vPRA91Z0W+x54nEaOAa4QryfBdLBRi2ju2RHiEWnWvbDP/fOkpZo0qdXqQ7KGCr+/F920qLazYYT7LYuoOa+Dho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786196; c=relaxed/simple;
-	bh=FYh8SORPNCdBCIYaegM7qTQnkL1O2pctH6PSmXxTGQU=;
+	s=arc-20240116; t=1790786198; c=relaxed/simple;
+	bh=FBWvkbaA8hcUf61SCsi2QbsqKeJYrjysnE5OQyvv1mA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKY+qftrYwHkM7w+Ch5Nkag0KiQ21vhq4bLj67xoncDWd9zjcYiG0lsSRjv3/qm7yRdiAnldOhDU3VXppxxJv3Nnw6Qn1yslQUUbLobLBz/rjOaHK+w/ZWwRczFVI8WCGFVpXaDF8336HB/HQHB5YIHrPWVs5hrg6rkevuFoGNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYkAznI8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oVCx9miqTF2deF1reiqIKlcIXrbF0S1VLEcBStMnw7YmjZt2B+CWTKUN2w2BcHrnU/uIgiXH8VkwVzWbYXyTCHbUsHL3YOp9Rg6Fuo2Qek/+D/YqWu8bQTKO3YSY8HvDAwrOSuDDoOEzDIFv4wq5CvBEWlcqu6gaCiHLJmRwQyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxIPVUKC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYkAznI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BCD1F000FF;
-	Wed, 30 Sep 2026 16:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxIPVUKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE9A1F000FF;
+	Wed, 30 Sep 2026 16:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786194;
-	bh=XeR61XDsqz0fEBiFpPSPokOCDivsIRuK2sMWt2HA/SY=;
+	s=korg; t=1790786197;
+	bh=hTExEzn4nqQ3c2GsuW0hl3R8TAo189XF0lfoLf8Idss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MYkAznI8SzKQ7ATTVii+PPGkJc1Hga2EM3S9FfY87b6v4iIXBEitmaWBRdt4UIoW0
-	 Gs4KnPSs6oKy5lJcXFciNtM/2OyRpo3/htI4uBOragdEn68mtF/Gcj28ABpv/cjVkV
-	 2NswFFx4WKmQBnzrIrGBIxCCJSC6yaQjK4rUuaB8=
+	b=TxIPVUKC/B3EVyKktlFb2RK7D/7Yq2LiX3Hgsh299kooJ6ZAvekDFvg2k1X0Clxme
+	 c3OpMTJ1KzsW7vQRCQWOaLD3ayseoKu3HwtARmbsfyV5mGa35EGD2PpvQpIPioO6VR
+	 ZBwB2kqNOaW8Sz/B3KpJvuOVD9MrRaxX+a2rj+Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.1 774/982] drm/msm/hdmi_phy: fix runtime PM cleanup on probe failure
-Date: Wed, 30 Sep 2026 17:25:10 +0200
-Message-ID: <20260930152433.378811718@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.1 775/982] smb: client: reject short Next offsets in parse_server_interfaces()
+Date: Wed, 30 Sep 2026 17:25:11 +0200
+Message-ID: <20260930152433.399641424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,64 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit f4fae975db08a9aeec0b15e145c7d4d0fe02a0ec upstream.
+commit 1b3221bb121079ad79a1f3c3aa360ba649832e7a upstream.
 
-msm_hdmi_phy_probe() enables runtime PM before enabling the PHY
-resources and initializing the PLL, but failures from either operation
-return without calling the matching pm_runtime_disable().
+In parse_server_interfaces(), the server-supplied Next offset is
+validated against bytes_left, but not against the size of the interface
+structure itself.
 
-The remove path disables runtime PM, but it is not called when probe
-fails. As a result, runtime PM remains enabled after an unsuccessful
-probe.
+A small, non-zero Next value can pass the bounds check but advance the
+pointer by less than sizeof(*p). This causes the next iteration of the
+loop to read misaligned, overlapping structure fields.
 
-Route failures after pm_runtime_enable() through a common error path
-and disable runtime PM before returning.
+Fix this by ensuring the Next offset is at least sizeof(*p).
 
-This issue was found by manual code inspection.
-
-Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Fixes: 7d34ec36abb8 ("smb3: fix for slab out of bounds on mount to ksmbd")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/753043/
-Link: https://lore.kernel.org/r/20260913085814.1509352-1-lgs201920130244@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -160,13 +160,13 @@ static int msm_hdmi_phy_probe(struct pla
- 
- 	ret = msm_hdmi_phy_resource_enable(phy);
- 	if (ret)
--		return ret;
-+		goto err_pm_disable;
- 
- 	ret = msm_hdmi_phy_pll_init(pdev, phy->cfg->type);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "couldn't init PLL\n");
- 		msm_hdmi_phy_resource_disable(phy);
--		return ret;
-+		goto err_pm_disable;
- 	}
- 
- 	msm_hdmi_phy_resource_disable(phy);
-@@ -174,6 +174,10 @@ static int msm_hdmi_phy_probe(struct pla
- 	platform_set_drvdata(pdev, phy);
- 
- 	return 0;
-+
-+err_pm_disable:
-+	pm_runtime_disable(dev);
-+	return ret;
- }
- 
- static int msm_hdmi_phy_remove(struct platform_device *pdev)
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -736,9 +736,9 @@ next_iface:
+ 			break;
+ 		}
+ 		/* Validate that Next doesn't point beyond the buffer */
+-		if (next > bytes_left) {
+-			cifs_dbg(VFS, "%s: invalid Next pointer %zu > %zd\n",
+-				 __func__, next, bytes_left);
++		if (next < sizeof(*p) || next > bytes_left) {
++			cifs_dbg(VFS, "%s: invalid Next pointer %zu out of range [%zu, %zd]\n",
++				 __func__, next, sizeof(*p), bytes_left);
+ 			rc = -EINVAL;
+ 			goto out;
+ 		}
 
 
