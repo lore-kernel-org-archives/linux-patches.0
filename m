@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAC5367B9C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6133C50EC0F;
 	Wed, 30 Sep 2026 16:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784602; cv=none; b=SWqBJ8kPu1CWz4lwfT8ghfR0zGtT5QXCd0UQspRwVDX3j6j9lAmQGyV/9IWZRwAtKp/rQ2CmTR3Aq9Bwx3JyHPWk/wy/4NEKy5xnLATi0wCWrUItzyIJ2SQulBe9pw4AirZ9yaGUYE8DsHG0/eGOrjzXiqSheYl3/Z/roY4sTx4=
+	t=1790784603; cv=none; b=FTFeh65Mzw1VxMvXGyQtvVbaureSV1fRubdqY9KJK6wT5Yge0Emgy2iPwg8HHrGiD2GETqkW5nGL18orc7BzpeTGy6DZzZhKVhTBz6571/hGVAfxtQQrz8mcPtiJPGCofjIQxaNsOepNEY+brH5Wn0jYCUI4a/yBtA4CL64fxJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784602; c=relaxed/simple;
-	bh=N5CtXZ9gqzIzmynzdmVUQUGU/cw17ibUa0tvOy6IT7M=;
+	s=arc-20240116; t=1790784603; c=relaxed/simple;
+	bh=rCrVWCL7C6BpSc+DT1qUl5pngCdbau7J68iKA5MKd9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pcw3kelo6rEEtRsU5vvqUS2LK/5EI6QNi69WCjKmEPJZOQ1OE+3wCprexTfhsBTpmfLqkMPDyY3gvlfewvoxdPzE9y74UEJQSd7BW+LckdcjdaKWZwcfnjNmgrxz6NwoDt+L22Hpt6SmBrzf7eBm1alEA0iddiPVNaFPnTd6t54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOVNBd4B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G5REJwze8iaLsvhTfiklt8s6xwNSgoCIpofyYJpDrfVREkH7vEBEuKU47vEJE9+Eoc31hFb221aFWNPL1ei2i3qwmIV6zL1np7hhQZlV6XVmAN0S42D4RtbPHuE/2050y5TWu6LZTr4kF9iwF4tSPXX1o2DyncSPATX/6TF0qSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFKx4RXn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOVNBd4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7421F00898;
-	Wed, 30 Sep 2026 16:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFKx4RXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90111F000FF;
+	Wed, 30 Sep 2026 16:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784595;
-	bh=PoxF6EFMR+gF/z5t16GkRrZB2wuPza/2ppvGMFq0tCw=;
+	s=korg; t=1790784598;
+	bh=vCjcXQpGpwjW3tttdKWbiNUIrbwatIcETvPb443+aQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZOVNBd4BwVFLDWCfScSfLRWcf0AuY1ZjjQhb2stlMUx2bsenDkmJ1FnBuEU83qC52
-	 ki7vij7JQdvecyYIbnDUchmZeUene4ywmjrn0L7VSCbWv8j//EQVGDiHj84PvLigwI
-	 Ev41ehSxzdaNUp0uP9UkrnGPUKDoancCdwf4N9+Q=
+	b=cFKx4RXnx2OZWNrfkRiZm4yEsPC31VDuT6jW528mELZlTHthUUn4ikLEh/duRv3th
+	 rQP6Sx7Y6N8GU/vmKnCDPkc1x6eyW4WU9bZoG9+f0xUiAmDNcO3JlYPU3W1hZf0kyC
+	 /RA0USf3NS1Y+7w1Wy5JDlJsA/4PIswO4mGuPTV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien DESBRIERES <aurelien@hackers.camp>,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/982] RDMA/rtrs-srv: Fix integer underflow in process_read and process_write
-Date: Wed, 30 Sep 2026 17:15:01 +0200
-Message-ID: <20260930152420.354636437@linuxfoundation.org>
+Subject: [PATCH 6.1 205/982] leds: uleds: Return -EFAULT on copy_to_user() failure
+Date: Wed, 30 Sep 2026 17:15:41 +0200
+Message-ID: <20260930152421.214523156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,77 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien DESBRIERES <aurelien@hackers.camp>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 54bf38b27afc08a0eb6b732f9c14eb8a4bcb66b5 ]
+[ Upstream commit 61ed78f55a46e12afd4b464c4ba736f55ff33c5e ]
 
-usr_len is read from a network-supplied message field (le16_to_cpu)
-and used to compute data_len = off - usr_len without validating that
-usr_len <= off. A malicious RDMA client can send usr_len > off causing
-an integer underflow, resulting in data_len wrapping to a huge size_t
-value which is then passed to the rdma_ev callback as a memory length,
-leading to out-of-bounds memory access.
+uleds_read() copies the current brightness value to userspace but
+ignores copy_to_user() failures. It then clears the pending update and
+reports a successful full read even when no data was copied.
 
-Fix by reading and validating usr_len <= off before rtrs_srv_get_ops_ids()
-in both process_read() and process_write(), ensuring the early return
-path acquires no reference and has no resource leak.
+Return -EFAULT when the copy fails and leave the update pending so a
+later read can retry.
 
-Link: https://patch.msgid.link/r/20260608134802.5019-1-aurelien@hackers.camp
-Reported-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Assisted-by: Claude <claude-sonnet-4-6>
-Acked-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Link: https://patch.msgid.link/20260521181205.15130-1-alhouseenyousef@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/leds/uleds.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 086dba6b97c64..a7c0b7e513fea 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1040,6 +1040,11 @@ static void process_read(struct rtrs_srv_con *con,
- 			    "Processing read request failed, invalid message\n");
- 		return;
- 	}
-+	usr_len = le16_to_cpu(msg->usr_len);
-+	if (usr_len > off) {
-+		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
-+		return;
-+	}
- 	rtrs_srv_get_ops_ids(srv_path);
- 	rtrs_srv_update_rdma_stats(srv_path->stats, off, READ);
- 	id = srv_path->ops_ids[buf_id];
-@@ -1047,7 +1052,6 @@ static void process_read(struct rtrs_srv_con *con,
- 	id->dir		= READ;
- 	id->msg_id	= buf_id;
- 	id->rd_msg	= msg;
--	usr_len = le16_to_cpu(msg->usr_len);
- 	data_len = off - usr_len;
- 	data = page_address(srv->chunks[buf_id]);
- 	ret = ctx->ops.rdma_ev(srv->priv, id, data, data_len,
-@@ -1093,6 +1097,11 @@ static void process_write(struct rtrs_srv_con *con,
- 			     rtrs_srv_state_str(srv_path->state));
- 		return;
- 	}
-+	usr_len = le16_to_cpu(req->usr_len);
-+	if (usr_len > off) {
-+		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
-+		return;
-+	}
- 	rtrs_srv_get_ops_ids(srv_path);
- 	rtrs_srv_update_rdma_stats(srv_path->stats, off, WRITE);
- 	id = srv_path->ops_ids[buf_id];
-@@ -1100,7 +1109,6 @@ static void process_write(struct rtrs_srv_con *con,
- 	id->dir    = WRITE;
- 	id->msg_id = buf_id;
+diff --git a/drivers/leds/uleds.c b/drivers/leds/uleds.c
+index 90e54370fe7ea..3e47cb74f49ab 100644
+--- a/drivers/leds/uleds.c
++++ b/drivers/leds/uleds.c
+@@ -148,10 +148,13 @@ static ssize_t uleds_read(struct file *file, char __user *buffer, size_t count,
+ 		} else if (!udev->new_data && (file->f_flags & O_NONBLOCK)) {
+ 			retval = -EAGAIN;
+ 		} else if (udev->new_data) {
+-			retval = copy_to_user(buffer, &udev->brightness,
+-					      sizeof(udev->brightness));
+-			udev->new_data = false;
+-			retval = sizeof(udev->brightness);
++			if (copy_to_user(buffer, &udev->brightness,
++					 sizeof(udev->brightness))) {
++				retval = -EFAULT;
++			} else {
++				udev->new_data = false;
++				retval = sizeof(udev->brightness);
++			}
+ 		}
  
--	usr_len = le16_to_cpu(req->usr_len);
- 	data_len = off - usr_len;
- 	data = page_address(srv->chunks[buf_id]);
- 	ret = ctx->ops.rdma_ev(srv->priv, id, data, data_len,
+ 		mutex_unlock(&udev->mutex);
 -- 
 2.53.0
 
