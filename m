@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622D9449B17;
-	Wed, 30 Sep 2026 19:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D253C1986;
+	Wed, 30 Sep 2026 19:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797237; cv=none; b=KYdOY2mhJtEwzsrTAunZR+TmLIveaHiU8W9wFjTrhwRFFAlsUnjRjWGRaOl4CmWQBE7l8j798XaSnfoXnAQId7HeF2HZbLuNVFp7zz2Dohsc280lpTtnbijrZ79AwfluhrFnDtiPlxKjucduC5wYAid7i0G4vmSqiNhOM5qmxw4=
+	t=1790797240; cv=none; b=OLo/bDwM0F+GqCIwuYgf7CFPr1XlD8GGoNWxEbOASloGOFRyn8tWrMNyxZhZkzJuIWQTcnv7CwNOLn7hTq+Xbjituxc1EhU6M9ccLzw2Jl9a+Obryael2ZpoHA+z+WTYdIVHvWHf0haAusYsf6IVq7FweJqjBHh0ysLVo5bvM9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797237; c=relaxed/simple;
-	bh=UZaWcTc/tjUf+PfaqBnxpLHeaiDz1thDYLbZJjZVWMw=;
+	s=arc-20240116; t=1790797240; c=relaxed/simple;
+	bh=4SisvzF6elWtSHzQdvDXTjFtJwgXU7botYarojiB8vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d69KYcjbbutgpT3csNSu63XWhlByjgk0XMfliA2NqOBZuY0BXpZuZutNkFo65UNFwxJBwzyXrEAgURtMSwYwmwbhR52faCOy7vj2vZ8ih3Y9zWucz9YcnlpbnqILSOfWeEGugtIEaUNYajDfSNfGyF28jmzKtiBR809d/f551Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqgZt784; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=chROj5e3EfgqWuM2gK+zr5mJhEjNV9/2Y6AVU8IXYybm94x7T2Z45adGJDvpjP6pV6fWgUxpOOWPUNA3Yo9v7eDtPyVa8p0viebsJXHoaOgUHvzEcwx+erh0p0BGpP2hlRpSkW0ZsvaLcR7cTjqmaIKiCkS8KzaCL7oJQO29JAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYUgvsY/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqgZt784"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC141F000FF;
-	Wed, 30 Sep 2026 19:40:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYUgvsY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6765E1F000FF;
+	Wed, 30 Sep 2026 19:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797236;
-	bh=7R0vpeV2N/Iuzrw43dQED/DOlCRE4dnEkW/J5bU5XYA=;
+	s=korg; t=1790797238;
+	bh=cidXOTfwi320N3nmxytHBNIMelnxfXw01FLoXUuCmSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BqgZt784MN7FxIwp5zB4rmg2A/QPJ5lLwyA7uPNo+FJf4hYxTCXudy08P5ty/ZPF4
-	 6g96RRB+06s20rcl3js7AaaAubavNC4Q9JDve9vVJ5uKI0oxGd5lQBEC0V1SQM46JD
-	 3JSE39YDjIKU0gm0/CeTxgiQVqpvEs4tZ9nppOlM=
+	b=JYUgvsY/82JrfQGQvLHMxSFn3EiuPzEx6eHrjuvtRgn16qRTI+mHLoxsRKA/dUXBv
+	 Dl7+0luBbxDQOazWVXvbTs8wV7VzrNaGfVw0nUfihC4N2IsAO4/fYsnVGubu3WWKyG
+	 FhI4BQ7ukYWTcD0xydSMZj2fmTnPirAG9dCp8TDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 1150/1193] Bluetooth: mgmt: fix race in read_unconf_index_list()
-Date: Wed, 30 Sep 2026 17:30:34 +0200
-Message-ID: <20260930152459.789483899@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.6 1141/1193] pinctrl: single: free the IRQ on domain creation failure
+Date: Wed, 30 Sep 2026 17:30:25 +0200
+Message-ID: <20260930152459.588813234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit b5dbb41b212c50c095a4dbee3017a84fe94f033b upstream.
+commit 1d9bb9c870632adea249cfdec49ac37e6f069164 upstream.
 
-read_unconf_index_list() counts unconfigured controllers before allocating
-its response, then checks the device flags again while filling it.
+pcs_irq_init_chained_handler() requests a shared IRQ on affected SoCs, but
+its domain creation failure path only removes a chained handler. That does
+not release the action installed by request_irq(). The probe can continue
+without interrupt support while leaving the shared IRQ action registered.
 
-hci_dev_list_lock stabilizes list membership, but it does not serialize the
-per-device flags. During asynchronous controller setup, the worker can set
-HCI_UNCONFIGURED and clear HCI_SETUP between the two passes. A controller
-omitted from the allocation count can then become eligible for the fill
-pass, causing an out-of-bounds write to rp->index[].
+Use pcs_irq_free() to undo the appropriate type of handler registration.
+At this point pcs->domain is NULL, so the helper only releases the parent
+IRQ handler. Then mark the IRQ invalid, as the other initialization error
+paths already do, to prevent another release from a later probe unwind or
+remove.
 
-Allocate space for every device on hci_dev_list. Since list membership
-cannot change while hci_dev_list_lock is held, the response remains large
-enough regardless of flag transitions. The reported count and response
-length still include only eligible unconfigured controllers.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: 73d1df2a7a10 ("Bluetooth: Add support for Read Unconfigured Index List command")
+Fixes: 3e6cee1786a1 ("pinctrl: single: Add support for wake-up interrupts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/pinctrl/pinctrl-single.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -499,13 +499,9 @@ static int read_unconf_index_list(struct
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1630,7 +1630,8 @@ static int pcs_irq_init_chained_handler(
+ 					    &pcs_irqdomain_ops,
+ 					    pcs_soc);
+ 	if (!pcs->domain) {
+-		irq_set_chained_handler(pcs_soc->irq, NULL);
++		pcs_irq_free(pcs);
++		pcs_soc->irq = -1;
+ 		return -EINVAL;
+ 	}
  
- 	read_lock(&hci_dev_list_lock);
- 
--	count = 0;
--	list_for_each_entry(d, &hci_dev_list, list) {
--		if (hci_dev_test_flag(d, HCI_UNCONFIGURED))
--			count++;
--	}
-+	count = list_count_nodes(&hci_dev_list);
- 
--	rp_len = sizeof(*rp) + (2 * count);
-+	rp_len = sizeof(*rp) + (sizeof(__le16) * count);
- 	rp = kmalloc(rp_len, GFP_ATOMIC);
- 	if (!rp) {
- 		read_unlock(&hci_dev_list_lock);
 
 
