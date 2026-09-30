@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E89651DAEB;
-	Wed, 30 Sep 2026 17:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6E351DB0E;
+	Wed, 30 Sep 2026 17:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790831; cv=none; b=T+XoOBnD3NLzLhXZSvgltcPpvsuOoCKDwYOOOXcyRKiils5EirRvNFkEVAROjEyk3CZUwczm/cDWlLEe0udtL52rx8QTymtbI7aG9UUbmyS7OMIYhleRfXOaFenxWlPJZJzBk1uGdMXwXuLICJq54fFUlEwO8VVvg/WqPbHFOMI=
+	t=1790790834; cv=none; b=SBL5YLqu8usQrC9XRznsWwPO3zJj5QQiaObvHUqcg2EtG3KKeSeOPO9y7w/Ch9vSKcqJt0n3gQamgNjkpBxKOPNMD1X/S7kcATBRU+D3tGO/Wr3UMeJoLokfD1zIrtf0r7uJc6+mYiMsFhWFEMl4sn7QkyhZz/94S/4Z0+lgGZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790831; c=relaxed/simple;
-	bh=M8hm9bzws1xqTKFu/APiLnC9fgtoiV1tmUOezohDbH4=;
+	s=arc-20240116; t=1790790834; c=relaxed/simple;
+	bh=I6OnQWWc3st+y7EXRiOAtkhk0sriYnbmWjnlwypb4p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABWjxuwKrJjUYRkEhSAaUZSEPAxgS6BoWKh4P3Ryj+QS1R61yn0fR4eNdDPHnAfiUxvth9xjlkuar2n8TEGIYDgLpWMfJmZoBiRFn57BM9kAByuem55i8xKXe0mdHlK6j3rp0hheMubW2tcHp8BlCj8v6qtSh6Vwl8bn8VkD8Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwvejTYE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WHgMiCJRKJKhcl0iu1YfDcGmyOjEMZSs0pO6C31ILJnUGfz4qOIkN6cPbe3qPdiocLZTrSRR83ihHuCrSyphAih4Q8XcFi9pPte9/xRz4OJ9BmXB4HS++dDoJQxZFrI4hCvXroCQAIKYZdcujJpqT7dtEAgLgG2RIwxfsc28Ny8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwkBNhVg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwvejTYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCE31F00898;
-	Wed, 30 Sep 2026 17:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwkBNhVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652E01F000FF;
+	Wed, 30 Sep 2026 17:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790830;
-	bh=IsnztH4PjhLBy6REjXSY0WwjW0xAdOM+LiuKZI/iIHA=;
+	s=korg; t=1790790832;
+	bh=RJzVFTXGFUryUaRc4MWieDu5wNVH7NiNWxJU+ZXDNb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwvejTYEZTEHl7bANsZlhexLY4w53KPM9BF1PBSiGVbutrqWUqzyxGILRf691aDPk
-	 H4qxLNmy25pA10SWos0X6qsU0vvE9SZ0uS6RtM/xpPDN6hFsn9+C1D+AKpVsTKpmzM
-	 jXGwHGsdWi0exrKHAi7svV1sPHSzFd9kjKSgBCWY=
+	b=KwkBNhVgJInNatzXldGrRiLHEmNe78H778xAIZnKKDWs2/ZXruGsJx4lFGZbs4dTK
+	 W0oresGI/GzL6OnuAp7cR46Tyx/PXfkQppqeIFl/R73kxXFQJXP7Lha8wf1aCE5wK7
+	 17ZKH3fOUPhQOlA+sxZOODLgISuSFz3a9azzcGis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shayderrr <darknessshayder@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 090/752] host1x: bus: Fix missing ops null check in error teardown
-Date: Wed, 30 Sep 2026 17:19:20 +0200
-Message-ID: <20260930152400.116065211@linuxfoundation.org>
+Subject: [PATCH 5.15 091/752] scripts: modpost: detect and report truncated buf_printf() output
+Date: Wed, 30 Sep 2026 17:19:21 +0200
+Message-ID: <20260930152400.139338524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,48 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shayderrr <darknessshayder@gmail.com>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit 71d25f668bc5c0f36ea843462e12307dea45aaa3 ]
+[ Upstream commit d7231d8cb262b1e350c00271bf53d54414b4f3b1 ]
 
-In host1x_device_init(), the error teardown paths do not check
-client->ops before dereferencing it, unlike the forward init paths
-which correctly guard with 'client->ops &&'. This can result in a
-NULL pointer dereference if client->ops is NULL.
+buf_printf() uses a fixed-size stack buffer. vsnprintf() returns the
+number of bytes that *would* have been written to that buffer, which can
+be larger than the size of said buffer if the formatted string is too
+long.
 
-Fix by adding the missing client->ops check in both the teardown
-and teardown_late labels.
+The problem is that whenever this happens buf_printf() currently passes
+this length, unchecked, to buf_write(), which silently reads past the
+stack buffer and copies invalid data into the output buffer.
 
-Signed-off-by: shayderrr <darknessshayder@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260517170456.84927-1-darknessshayder@gmail.com
+Fix this by detecting vsnprintf() failures and truncations before
+appending to the output buffer, and report a fatal error instead of
+producing corrupt symbol names.
+
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20260527-nova-exports-v2-1-06de4c556d55@nvidia.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/bus.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/mod/modpost.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
-index 481022c463935..168b77a143184 100644
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -225,7 +225,7 @@ int host1x_device_init(struct host1x_device *device)
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 2fa333fca1f7b..c846928c2a74e 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -2088,8 +2088,17 @@ void __attribute__((format(printf, 2, 3))) buf_printf(struct buffer *buf,
  
- teardown:
- 	list_for_each_entry_continue_reverse(client, &device->clients, list)
--		if (client->ops->exit)
-+		if (client->ops && client->ops->exit)
- 			client->ops->exit(client);
+ 	va_start(ap, fmt);
+ 	len = vsnprintf(tmp, SZ, fmt, ap);
+-	buf_write(buf, tmp, len);
+ 	va_end(ap);
++
++	if (len < 0) {
++		perror("vsnprintf failed");
++		exit(1);
++	}
++	if (len >= SZ)
++		fatal("buf_printf output truncated for string %s: %d bytes needed, %d available\n",
++		      tmp, len + 1, SZ);
++
++	buf_write(buf, tmp, len);
+ }
  
- 	/* reset client to end of list for late teardown */
-@@ -233,7 +233,7 @@ int host1x_device_init(struct host1x_device *device)
- 
- teardown_late:
- 	list_for_each_entry_continue_reverse(client, &device->clients, list)
--		if (client->ops->late_exit)
-+		if (client->ops && client->ops->late_exit)
- 			client->ops->late_exit(client);
- 
- 	mutex_unlock(&device->clients_lock);
+ void buf_write(struct buffer *buf, const char *s, int len)
 -- 
 2.53.0
 
