@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161893CAE8D;
-	Wed, 30 Sep 2026 19:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014083D9DBF;
+	Wed, 30 Sep 2026 19:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795303; cv=none; b=ChNrmXWSPyNrpgZxNoQtPBOiv0HQ30m1AroTSQvtr1RcLGPYkwULH2pKhIYHeQi+ti9SkJ4Qb1QRG2R4lLJ5xmY5FFurk2zwflfMxFEgrlRhN3uPo0i384WPyeIWr44t+3ktTcAVoEObPtpELcNw6D3FMQ4x5Z9y6ebHEfV2TXs=
+	t=1790795306; cv=none; b=H8fg9pRt1bDEcY6ENIpTYpL5bxP7yxMa7dVy3tGUZJ60Cnt+lSlPh78yMrr8lVQXAl/QvVpGVwH0Tb3Wr0R3lWcdk7f2mWd5decrKIK5xuXjjSASsytMJ0AZblU/TKM509ZWw1LsYE0YYhlGageDQKLbf2jox8eI4q3Hn8u60ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795303; c=relaxed/simple;
-	bh=3hSoDV5VNIqwBKH8cCUrVvdwV3uvhQsxrQUBQqlCe2I=;
+	s=arc-20240116; t=1790795306; c=relaxed/simple;
+	bh=ktmtNQ4+ODapEoPwgEwdnW9wBZjbjNXPkScY2LMfpSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ojZIFc5fOSmiNRBHlRglRTvn8nh+4lbyaFLNz9gy3+2Pk1P7g9RsmsaTq9nn0S6gpM1Vkj0PJMw2oXVBX0wimePf2DopiKw4feAim3SKM2FugW88qYbl4j20MJLy1dubsJnunFezxPJ2eTfvZCszgJDevecah450NCnZwMJy6Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEVjyDaY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=keBVX1EGr9sk5A+ehz2EoCASNPIKZPFdKvEGwvkigKQ2SJqo7ldlmxQiGKIT5XrCZGiVtGnXHXyr+FfpGFDJs7v7m7G8KPsyw5cSk+WF1WjrfOCad9SsVH/GtrCGjA2DJ2TzqSZkJ5kZyTrdJ2RabcGHZrJzOOQNF+lvhzWD7LQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xowttYib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEVjyDaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750DC1F000FF;
-	Wed, 30 Sep 2026 19:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xowttYib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539FC1F000FF;
+	Wed, 30 Sep 2026 19:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795302;
-	bh=/wsS6dZjRyvc7ROHvjltokX2hXhCoI648khqnAAXnqU=;
+	s=korg; t=1790795304;
+	bh=etugZ8agjeQqPVlGyOT7JDj6PMJiEFwtcEquGVBKZCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fEVjyDaYQnWvwIfNO2allwKEq+Mu0ATG6Oi9I87EJN+qj+ckHMLXWytOBnkn0i3Qb
-	 gYweCG/4six2tUA6D0yxL31WXU9fQxEFILCG1zE/D1zonObHj+KpUyS+Jv3eeKvxeF
-	 +Gp4FPupXciuNf1fk4Y87psMlBl0nKoihK18M4mg=
+	b=xowttYibaajkrfayUPPQbcbT12rcFc5tNkAOrk4pvbqnSSYEXaU1fbvgioEoecZVg
+	 3oe0PoNS/D5HiANGFU5wKS+9npNFzy8V0eOHG+hyV41zwy4+NAdtIGJkH/xM9CSi33
+	 dcKZSevc3URH95ILYpsxLBqEP5BslAJxfQAYY2BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Allen Pais <allen.lkml@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0512/1193] net/sched: ets: clamp quantum in parse and fallback paths
-Date: Wed, 30 Sep 2026 17:19:56 +0200
-Message-ID: <20260930152445.542699528@linuxfoundation.org>
+Subject: [PATCH 6.6 0513/1193] workqueue: Introduce from_work() helper for cleaner callback declarations
+Date: Wed, 30 Sep 2026 17:19:57 +0200
+Message-ID: <20260930152445.564692490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -48,76 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Allen Pais <apais@linux.microsoft.com>
 
-[ Upstream commit 1c38487f46b243bfeefec0c0c86023a3904f2214 ]
+[ Upstream commit 60b2ebf48526567b53e0188dbd1a4df8e646bcc1 ]
 
-ets_qdisc_change() falls back to psched_mtu() with no floor for bands
-without an explicit quantum. With a crafted size table qdisc_pkt_len
-reaches ~2 GiB, so a zero psched_mtu on a headerless device makes the
-deficit-refill loop spin under the qdisc lock.
+To streamline the transition from tasklets to worqueues, a new helper
+function, from_work(), is introduced. This helper, inspired by existing
+from_() patterns, utilizes container_of() and eliminates the redundancy
+of declaring variable types, leading to more concise and readable code.
 
-Move the floor into ets_quantum_parse() so explicitly configured quanta
-are also clamped to [256, 1<<20], not just the fallback path.
+The modified code snippet demonstrates the enhanced clarity achieved
+with from_wq():
 
-Conditions to recreate the bug:
-  CONFIG_NET_SCH_ETS=y. Requires CAP_NET_ADMIN (namespace-local via
-  unshare -Urn suffices).
+  void callback(struct work_struct *w)
+   {
+     - struct some_data_structure *local = container_of(w,
+						       struct some_data_structure,
+						       work);
+     + struct some_data_structure *local = from_work(local, w, work);
 
-  tc qdisc add dev dummy0 root ets bands 3 strict 2 quanta 1 1
+This change aims to facilitate a smoother transition and uphold code
+quality standards.
 
-Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.9
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Based on:
+  git://git.kernel.org/pub/scm/linux/kernel/git/tj/wq.git disable_work-v3
+
+Signed-off-by: Allen Pais <allen.lkml@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 38b6be101006 ("net: macb: fix NULL pointer dereference on unbind with fixed-link")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_ets.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ include/linux/workqueue.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index 0a5768d98acac..2f1e8a5d5b37b 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -83,11 +83,7 @@ static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
- 			     unsigned int *quantum,
- 			     struct netlink_ext_ack *extack)
- {
--	*quantum = nla_get_u32(attr);
--	if (!*quantum) {
--		NL_SET_ERR_MSG(extack, "ETS quantum cannot be zero");
--		return -EINVAL;
--	}
-+	*quantum = clamp_t(u32, nla_get_u32(attr), 256, 1 << 20);
- 	return 0;
- }
+diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
+index 0abbc3b67d29b..c01adbc2910ec 100644
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -487,6 +487,9 @@ alloc_workqueue(const char *fmt, unsigned int flags, int max_active, ...);
+ #define create_singlethread_workqueue(name)				\
+ 	alloc_ordered_workqueue("%s", __WQ_LEGACY | WQ_MEM_RECLAIM, name)
  
-@@ -634,11 +630,13 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 			return err;
- 	}
- 	/* If there are more bands than strict + quanta provided, the remaining
--	 * ones are ETS with quantum of MTU. Initialize the missing values here.
-+	 * ones are ETS with quantum of max(MTU, 256). Initialize the missing
-+	 * values here.
- 	 */
- 	for (i = nstrict; i < nbands; i++) {
- 		if (!quanta[i])
--			quanta[i] = psched_mtu(qdisc_dev(sch));
-+			quanta[i] = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)),
-+					    256, 1 << 20);
- 	}
++#define from_work(var, callback_work, work_fieldname)	\
++	container_of(callback_work, typeof(*var), work_fieldname)
++
+ extern void destroy_workqueue(struct workqueue_struct *wq);
  
- 	/* Before commit, make sure we can allocate all new qdiscs */
+ struct workqueue_attrs *alloc_workqueue_attrs(void);
 -- 
 2.53.0
 
