@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F025C4DDB23;
-	Wed, 30 Sep 2026 16:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3137374A16;
+	Wed, 30 Sep 2026 16:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786974; cv=none; b=CyA1g57W6NFbuAB4scUaA//nh27gdKld0jIeMABqEspm4bdCYyLWcQZmKaCvS/XUbZmVQE/siwiOGLFFYJuHgu3AVOuji8VIyU5Czxqxp5V0UB8+1IAKastspKequ/c1VOKffH9lilzz2SPx3/ASAcXAd0yMA0Dk2Mpjpwd7PyM=
+	t=1790786976; cv=none; b=qYkVFPO0RGopS6qbGhu0W6hYIaOeh6v9D36cgKT+1QG8Jiby4irRz9iRKpK0EaxCFyIq8bFEFBhJiAjlS0IuN0LsazL6aPwQwN7/jUfMI9Zh6kIOXWeH6KKyv7yRCN+Cz2bJvsSM7KPpeGckwfIhXEMT/yZXIlnPc+LwrpX9ZyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786974; c=relaxed/simple;
-	bh=4rT0ccW0f2/YueHMzAWY/UlF5PU31EwvtTRog0XW9vE=;
+	s=arc-20240116; t=1790786976; c=relaxed/simple;
+	bh=OxQaKm2xFgj2quSswcm07V4IS2zwlwsPUWRAX6vAaBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MCya5JyESLpYp+N8q2cu0kqtbZDng1A+LYe+eP4BcO2me0Mg5pl60piosb+T2nchCjTx5PbrrocAd+W7tIuNcrdbBid88XxUWi6SX4VTSue4aSmOjlW0c+FZeWIsRC0Xk1scozfu3Wigoq3O5xvfZFOaX3aQDUANmR6nbxfrImA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bivl45Ya; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A64Kf2+Lrhn00n3QiKaIncXJYBQz0tzMLqzuxxk20j3jrttCxBamkHnhaUWA2qyWUt+91bEhRGaJa1YMAvi9GwWkRx/zr3MiaYs5uykIg3QYHrZeyVi+Is2c7KiAD0JikNTHlCc+BDndpf2YM7qByQyskbhyDmh6qMu01is7TQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iUFDrCM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bivl45Ya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8381F000FF;
-	Wed, 30 Sep 2026 16:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iUFDrCM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCF41F00893;
+	Wed, 30 Sep 2026 16:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786972;
-	bh=Ht+SdO4S82wteH1fdPWVQOGuVPdQuuUQhDFcpCW6jSk=;
+	s=korg; t=1790786975;
+	bh=mjdy9n4xvYAD7k5BjW6HP2hcBvhAVPd1sJnTZbzuq4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bivl45YaDs+VArNtSC3sFMxnFIGcRmm0p6kgEgsE156+UOfakP7Pd2qZtNN9vXaph
-	 RTyXOAwVSj1i0bUGIuAkEUA//ZPNxW6KXmONuIZTkEWkOP4rS0jziF9b5qjUcoiwuW
-	 qHvJHN8QL+0RuJhV4+8JMyQZpawLKr9ZuM3MkoQs=
+	b=2iUFDrCMxY7TnGfHfFdazKUBEXWBDl8LcmFSteq7ljL9s5+AkzRKrXBGtvz8hudGp
+	 mxLu7kqxbJFHUMCSUKQhIv1G0eoOx6tPTseltVwag6WDh00GtviZ5lZVWdKOFrhwUb
+	 4mKtI9skK/nvLngD7lLpI0fqaBMBj6+OfzX5ldGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 068/457] eth: fbnic: Fix payload page pool error cleanup
-Date: Wed, 30 Sep 2026 17:22:53 +0200
-Message-ID: <20260930152347.514756150@linuxfoundation.org>
+Subject: [PATCH 7.2 069/457] net/sched: cls_u32: fix manual hash table handle IDR aliasing
+Date: Wed, 30 Sep 2026 17:22:54 +0200
+Message-ID: <20260930152347.538866579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -47,50 +49,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@kernel.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 8e0b235bd918d06f54ba8fddd2c3ddc36ca59c15 ]
+[ Upstream commit 0a5f5d9e94dead312d32c366b917c64e552b72f7 ]
 
-The payload page pool pointer contains an error pointer when its
-allocation fails. The cleanup path passes that error pointer to
-page_pool_destroy() instead of destroying the header page pool. This
-can dereference the error pointer and leave the header page pool
-allocated.
+A u32 hash table created with an explicit handle ('tc filter add ...
+handle 801: u32 divisor N') keys its IDR entry on the raw handle, while
+the destroy paths free it under handle2id(handle). The two key domains
+disagree for handles in the 0x800..0xFFF htid range:
+handle2id() folds them back into the auto-allocated id space (1..0x7FF).
 
-Destroy the header page pool instead.
+A manual table therefore leaves its raw-keyed IDR entry unreachable on
+delete (a permanent leak), and its delete can drop the idr entry of an
+unrelated live auto table. A later auto allocation can then hand out a
+handle that aliases the live manual table; u32_lookup_ht() first-match
+routes lookups and TCA_U32_LINK for that htid to the wrong table.
 
-Fixes: 8a11010fdd96 ("eth: fbnic: allocate unreadable page pool for the payloads")
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Link: https://lore.kernel.org/netdev/178915061000.219967.7726187707862333281@kernel.org/
-Signed-off-by: Björn Töpel <bjorn@kernel.org>
+Key the divisor-path alloc on handle2id(handle) so allocation and
+removal share one key domain. A manual handle that maps onto an id
+already in use is rejected with -ENOSPC, and auto allocation skips ids
+held by live manual tables.
+
+Conditions to recreate:
+  ip link add test0 type dummy
+  tc qdisc add dev test0 clsact
+  tc filter add dev test0 ingress protocol ip pref 1 \
+          handle 801: u32 divisor 16
+  tc filter add dev test0 ingress protocol ip pref 2 u32 divisor 16
+  tc -d filter show dev test0 ingress | grep 'fh 801:'
+  # unpatched: two live tables with handle 0x80100000 (the pref 2 root
+  # hnode is auto-allocated id 1); patched: the auto hnode takes id 2.
+
+Also tested with a poc with a live u32 table on the block, add/delete a manual
+table 'handle 901: u32 divisor 1' twice; unpatched, the re-add fails with
+-ENOSPC because the raw key leaked on the first delete.
+
+Fixes: 73af53d82076 ("net: sched: cls_u32: Fix u32's systematic failure to free IDR entries for hnodes.")
+Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260822222049.114526-1-jhs@mojatatu.com
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915104917.3978113-1-bjorn@kernel.org
+Link: https://patch.msgid.link/QDISC-LQFE.v1.20260911041746.1@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_u32.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-index e7918d3f6aba9..661dee1661afe 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
-@@ -1622,7 +1622,7 @@ fbnic_alloc_qt_page_pools(struct fbnic_net *fbn, struct fbnic_q_triad *qt,
- 	return 0;
- 
- err_destroy_sub0:
--	page_pool_destroy(pp);
-+	page_pool_destroy(qt->sub0.page_pool);
- 	return PTR_ERR(pp);
- }
- 
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index a3e65c8cf29ef..76ce2d124079d 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1003,8 +1003,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 				return -ENOMEM;
+ 			}
+ 		} else {
+-			err = idr_alloc_u32(&tp_c->handle_idr, ht, &handle,
+-					    handle, GFP_KERNEL);
++			/* The IDR is keyed on the mapped id, and that is
++			 * what the destroy paths remove. Ask for it here,
++			 * so a manual handle colliding with the
++			 * auto-allocated id space is rejected (-ENOSPC)
++			 * instead of aliasing a future auto id.
++			 */
++			u32 id = handle2id(handle);
++
++			err = idr_alloc_u32(&tp_c->handle_idr, ht, &id, id,
++					    GFP_KERNEL);
+ 			if (err) {
+ 				kfree(ht);
+ 				return err;
 -- 
 2.53.0
 
