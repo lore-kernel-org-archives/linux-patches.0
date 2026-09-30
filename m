@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C05208CB;
-	Wed, 30 Sep 2026 17:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B4452121D;
+	Wed, 30 Sep 2026 17:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789708; cv=none; b=T79I6DUScx7zaLux7HhXcxGY9YyQyHbxj8ZoUQIFMgr5YVxAnEde43h5bxyYad1J0dNZDrKZ631knOUtfExyeZ8AYK4xzMFH+dCTnxYRjivIzKuuaOtaovhoMNEDAAKktNcViVFEckEf+Hh1+qVQVW+VcGUr63lGVy527aHwKF8=
+	t=1790789711; cv=none; b=rs13aGMcaMeKfVUgHsoDjfCHraj9lgfM0lr0Yy0umq6wjQNhrg9LH6/iEL0pRp6M8p4yfLZrvgRUPWtGUo8kKPMrV7WwWeeeShhzJiG/7hHUvd2VmCRe61+LcYNjVmxifcm15Bu9aNET8ZdavBKS+Syf/sO+5IABmIsyEdqTqKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789708; c=relaxed/simple;
-	bh=CHL7xBVC7bEwUy9140StotKpM2hyWlCfZwpBhMQY/bU=;
+	s=arc-20240116; t=1790789711; c=relaxed/simple;
+	bh=laylgCym/vgYzM3zrnyH0fhyVxgMaKHLpxU2oRotCD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NuaGspfMWR0E0Cmdpjc3vVVzq2LHQWwHBy7JMBX14C0xOqNc9n5BWnAku3YUErJbJXU5lTSHzhhRq5ffUADHfD/w6RCcGtyf04DiNGLi1mmtSzoeQ+gBa+wYd6o7rE7Fq8kC0N9z2s9oDPbMc93CHU/QZ9TmtVj220BUP6OI2bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNjUCAhk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jM8g1YPMXm15l633Zk93GrrsjwS6xsCBuFLtc9E4D9oLLIBVRxh/zhqzGyghqFa2GzOlQLBuWe74TT51Xx3OE/SJ1NS5eiBRHvcaG65mj4flEWETxhC7t6uO6yp9rEifMfRlnTn+6PsfeuKmRnIJlnlL/5nplL3KhjwO4S9YcwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYiZnsOg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNjUCAhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A321F00899;
-	Wed, 30 Sep 2026 17:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYiZnsOg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED2371F000FF;
+	Wed, 30 Sep 2026 17:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789706;
-	bh=qUPJ5v4G1nCIPS8+sNUguhJ86Kor73U6nhp4LnVZS/U=;
+	s=korg; t=1790789709;
+	bh=YSpCdcc1ryljwwl0Qt7uNxq1fg8Nb/gEiLE6LtW41sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GNjUCAhk+xg0oFZZXPnyD8OoRsaWE9I8VRjqYTqk5pM9EdItbhBT225mbY9kClKEf
-	 GL8N4BFT0WlktAZo2NOeuiQkOmcVhTuK5jHv1gDL1u4HQ+jlxHVuEdPVpkGthFcuAz
-	 9bLkTuDXeBBOiGkWSQR3dwHj+oJxii+1yNix4K6g=
+	b=xYiZnsOg5QB3KE+Spfze1ag4QutvVFADkp68Xez5WJ5bhyIOB54K/g/V1TJqR94r4
+	 wv/nAe4p6AV2kteOyLalTCdwRZ15rkF02aigzdNRfsqFHW8Yax5/T2/aWOuTE9Pu6b
+	 jNJG+Vt1O4Q1ff5ZiJ10JIUhOZAdPNJDAjT31TG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 545/877] smb: client: clean up failed cached directory opens
-Date: Wed, 30 Sep 2026 17:24:16 +0200
-Message-ID: <20260930152426.401381891@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 572/877] power: supply: ab8500_fg: fix use-after-free on remove
+Date: Wed, 30 Sep 2026 17:24:43 +0200
+Message-ID: <20260930152426.984784152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,101 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit d2ff5fb93ea83034025850266b5eed391f96b825 upstream.
+[ Upstream commit 75b1e88d34254f4fb7753345e21bfee47abddd7f ]
 
-open_cached_dir() sends CREATE and QUERY_INFO as a compound request. If
-the CREATE succeeds but a later command returns an error, the function
-must retain the CREATE FID so common cleanup can issue SMB2_close(). It
-also must not treat a response error as a valid CREATE.
+ab8500_fg_remove() destroys the driver workqueue while the threaded
+interrupt handlers are still armed; they are devm-managed and freed
+only after ->remove() returns, so a handler that fires in that
+window queues work on the freed workqueue.
 
-Validate the CREATE response before using its fields, record the FIDs, and
-mark the handle open before handling errors from later compound commands.
-Move the -EREMCHG reconnect handling before response validation so a
-missing response does not hide the reconnect request. Count the handle
-when it is marked open; confirmed close responses decrement the counter,
-while existing close retry behavior remains best effort on transport
-failures.
+Tear the workqueue down through devm instead, registering its cleanup
+after the power supply and before the interrupt requests.  devm then
+frees the interrupts first, so the handlers can no longer queue work,
+before disabling the delayed and plain work items and destroying the
+workqueue.  Disabling the items, rather than cancelling them, keeps
+them disabled so no producer (including the power-supply
+external_power_changed callback) can requeue them.
 
-Fixes: b0f6df737a1c ("cifs: cache FILE_ALL_INFO for the shared root handle")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Tested-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Found by an in-house static analysis tool.
+
+Fixes: 13151631b5bd ("ab8500-fg: A8500 fuel gauge driver")
+Cc: stable@vger.kernel.org # v6.10+
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260802020316.417757-1-fanwu01@zju.edu.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ drivers/power/supply/ab8500_fg.c |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -8,6 +8,7 @@
- #include <linux/namei.h>
- #include "cifsglob.h"
- #include "cifsproto.h"
-+#include "../common/smb2status.h"
- #include "cifs_debug.h"
- #include "smb2proto.h"
- #include "cached_dir.h"
-@@ -294,25 +295,37 @@ replay_again:
- 	rc = compound_send_recv(xid, ses, server,
- 				flags, 2, rqst,
- 				resp_buftype, rsp_iov);
--	if (rc) {
--		if (rc == -EREMCHG) {
--			tcon->need_reconnect = true;
--			pr_warn_once("server share %s deleted\n",
--				     tcon->tree_name);
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -3055,6 +3055,20 @@ static void ab8500_fg_unbind(struct devi
+ 	flush_workqueue(di->fg_wq);
+ }
+ 
++/* Disable, not cancel: works stay disabled so nothing can re-arm them. */
++static void ab8500_fg_destroy_workqueue(void *data)
++{
++	struct ab8500_fg *di = data;
++
++	disable_work_sync(&di->fg_acc_cur_work);
++	disable_work_sync(&di->fg_work);
++	disable_delayed_work_sync(&di->fg_reinit_work);
++	disable_delayed_work_sync(&di->fg_low_bat_work);
++	disable_delayed_work_sync(&di->fg_check_hw_failure_work);
++	disable_delayed_work_sync(&di->fg_periodic_work);
++	destroy_workqueue(di->fg_wq);
++}
++
+ static const struct component_ops ab8500_fg_component_ops = {
+ 	.bind = ab8500_fg_bind,
+ 	.unbind = ab8500_fg_unbind,
+@@ -3156,6 +3170,11 @@ static int ab8500_fg_probe(struct platfo
+ 		return PTR_ERR(di->fg_psy);
+ 	}
+ 
++	/* Registered after fg_psy, before the IRQs: devm frees IRQ -> workqueue -> fg_psy. */
++	ret = devm_add_action_or_reset(dev, ab8500_fg_destroy_workqueue, di);
++	if (ret)
++		return ret;
++
+ 	di->fg_samples = SEC_TO_SAMPLE(di->bm->fg_params->init_timer);
+ 
+ 	/*
+@@ -3168,20 +3187,16 @@ static int ab8500_fg_probe(struct platfo
+ 	/* Register primary interrupt handlers */
+ 	for (i = 0; i < ARRAY_SIZE(ab8500_fg_irq); i++) {
+ 		irq = platform_get_irq_byname(pdev, ab8500_fg_irq[i].name);
+-		if (irq < 0) {
+-			destroy_workqueue(di->fg_wq);
++		if (irq < 0)
+ 			return irq;
 -		}
--		goto oshr_free;
-+	if (rc == -EREMCHG) {
-+		tcon->need_reconnect = true;
-+		pr_warn_once("server share %s deleted\n",
-+			     tcon->tree_name);
+ 
+ 		ret = devm_request_threaded_irq(dev, irq, NULL,
+ 				  ab8500_fg_irq[i].isr,
+ 				  IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
+ 				  ab8500_fg_irq[i].name, di);
+ 
+-		if (ret != 0) {
+-			destroy_workqueue(di->fg_wq);
++		if (ret != 0)
+ 			return ret;
+-		}
+ 		dev_dbg(dev, "Requested %s IRQ %d: %d\n",
+ 			ab8500_fg_irq[i].name, irq, ret);
  	}
--	cfid->is_open = true;
- 
--	spin_lock(&cfids->cfid_list_lock);
-+	if (!rsp_iov[0].iov_base || rsp_iov[0].iov_len < sizeof(*o_rsp)) {
-+		if (!rc)
-+			rc = -EIO;
-+		goto oshr_free;
-+	}
- 
- 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
-+	if (o_rsp->hdr.Status != STATUS_SUCCESS) {
-+		if (!rc)
-+			rc = -EIO;
-+		goto oshr_free;
-+	}
-+
- 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
- 	oparms.fid->volatile_fid = o_rsp->VolatileFileId;
- #ifdef CONFIG_CIFS_DEBUG2
- 	oparms.fid->mid = le64_to_cpu(o_rsp->hdr.MessageId);
- #endif /* CIFS_DEBUG2 */
-+	cfid->is_open = true;
-+	atomic_inc(&tcon->num_remote_opens);
- 
-+	if (rc)
-+		goto oshr_free;
-+
-+	spin_lock(&cfids->cfid_list_lock);
- 
- 	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE) {
- 		spin_unlock(&cfids->cfid_list_lock);
-@@ -378,7 +391,6 @@ out:
- 		close_cached_dir(cfid);
- 	} else {
- 		*ret_cfid = cfid;
--		atomic_inc(&tcon->num_remote_opens);
+@@ -3195,7 +3210,6 @@ static int ab8500_fg_probe(struct platfo
+ 	ret = ab8500_fg_sysfs_init(di);
+ 	if (ret) {
+ 		dev_err(dev, "failed to create sysfs entry\n");
+-		destroy_workqueue(di->fg_wq);
+ 		return ret;
  	}
- 	kfree(utf16_path);
  
+@@ -3203,7 +3217,6 @@ static int ab8500_fg_probe(struct platfo
+ 	if (ret) {
+ 		dev_err(dev, "failed to create FG psy\n");
+ 		ab8500_fg_sysfs_exit(di);
+-		destroy_workqueue(di->fg_wq);
+ 		return ret;
+ 	}
+ 
+@@ -3223,7 +3236,6 @@ static void ab8500_fg_remove(struct plat
+ {
+ 	struct ab8500_fg *di = platform_get_drvdata(pdev);
+ 
+-	destroy_workqueue(di->fg_wq);
+ 	component_del(&pdev->dev, &ab8500_fg_component_ops);
+ 	list_del(&di->node);
+ 	ab8500_fg_sysfs_exit(di);
 
 
