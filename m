@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFD641D4F7;
-	Wed, 30 Sep 2026 19:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A50C4FD27B;
+	Wed, 30 Sep 2026 19:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797138; cv=none; b=JlgqwejNSyJdkp4Pj2Yek8YjPRCAjWSTN+LpesV3AuzZluQoMlEnDhOoQCXDh9cVLCfiZqcdOG60ngI6HGNrLkAxawuRf2bT1k5fuexC2deXwT9lMGLtk6ElvKuGSPRjeVHuCw7Alf+obnASKDFlZ0VcMQcUPH15mChsIDmCpck=
+	t=1790797141; cv=none; b=iu1d2xLLtKkC6g5hTbyA3UCw10lVJZug4HGdBoJotJIJNFzuvmmWlnqGd8/mBAWoqqySDMhQ93a7GXYkxyA1cB+E1M/c1/+sykXHwuZU09svSr6tUMkUK+ZJevL76m9keBIyLg33A1Xx6LPkTmFyzHv1PYdAyT3GJ7BvBu0WhAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797138; c=relaxed/simple;
-	bh=YuVG21/c1MWC3K3ExrC6QgtkAip/V9kEkiKPeQ3ceYI=;
+	s=arc-20240116; t=1790797141; c=relaxed/simple;
+	bh=90MSyW55OpB9PNxp8cPwDKgYNPeypPrwRKqH301IsoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlZmPakt/JKejr06fTCYQoLbkzoA/gfajwpLukMUDbpYC/YXZj61j2P6sMyOFArl1RfGlfL2gf4vUVuUoT1c/aXq1nDhD0uKkpBVstUPuz+NRWuRgi5ATyP4X3lUtJl7/T5D9d8heVPlalm/NT6k2aVMAlMjg7QBP50lNnckz5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD1AMu0N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ml2+rPqH0GZC5hpBJXR93GRhQtXPXGaTSe6PFuOyo87+Sxuc5FdK+LqJPeiCu0RW4nB2kbMQ4yDOAl+JgEvFJoNj9ESkVQVvfhZ6QT0GN5FHYCR1rulukYivgXhSHGx+ay2hmcoR0A7qhH0bi9v/2/uFNdnqafyhnAOiv7xaUCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCDtQ8cu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD1AMu0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544D01F0089A;
-	Wed, 30 Sep 2026 19:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCDtQ8cu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCE51F000FF;
+	Wed, 30 Sep 2026 19:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797136;
-	bh=a2GrFL7Mk/NNK0NeTKoXB8f/a8kfmwltFcRqpPE/IcU=;
+	s=korg; t=1790797139;
+	bh=OUbDWzvhK9zV39xK16fHX7IEsNaJe9yRNA5CqJ9+2cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gD1AMu0NEtOJfge+XVzPmAQIcfv6+Vnlg8hK/StNx+1DZj35xyBmzgMnJCM5odUMq
-	 VNcn948vHvE8S+ZGsGLN3Xrwv1t//sKevLriyj7BnkVTbyKzUYQVdCfVNkjlPKUrOl
-	 /uPnkL1BvViIO5S0fGW+mW9cIRMekCmqnJaTEKiE=
+	b=iCDtQ8cuMBDfsqtmKDNy0a2lR4TD+IHKDY7XJDnk9GclHODo4p2kDehD9gdR6FLcw
+	 ApBk3t9pJXjmZVvtjssdXYlAzpvbVA33sZ8ml4hPa2ttF0t6yVhPMlkk4y799/wuZj
+	 n8q0Ni1laYGv9myzm3Eqg0k/HKZgf2YxPb2O1Rgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 6.6 1143/1193] RISC-V: KVM: Synchronize hrtimer callback during teardown
-Date: Wed, 30 Sep 2026 17:30:27 +0200
-Message-ID: <20260930152459.632078345@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Allen Pan <allen.pan@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Artem Dinaburg <artem@trailofbits.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1161/1193] drm/amd/display: Add a dc_state NULL check in dc_state_release
+Date: Wed, 30 Sep 2026 17:30:45 +0200
+Message-ID: <20260930152500.040206249@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,81 +56,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Allen Pan <allen.pan@amd.com>
 
-commit aaad136d56d91252517272b68cd533e5714698d5 upstream.
+[ Upstream commit 334b56cea5d9df5989be6cf1a5898114fa70ad98 ]
 
-The non-Sstc hrtimer callback clears next_set before its final uses of
-the enclosing vCPU.  If teardown observes next_set as false while the
-callback is still running, kvm_riscv_vcpu_timer_cancel() skips
-hrtimer_cancel() and kvm_destroy_vcpus() can free the vCPU before the
-callback enters kvm_riscv_vcpu_set_interrupt().
+[How]
+Check wheather state is NULL before releasing it.
 
-A guest can arm the timer with SBI TIME and request shutdown with SBI
-legacy shutdown or SRST.  A VMM that honors KVM_EXIT_SYSTEM_EVENT and
-destroys the VM supplies the teardown side of the race; no post-launch
-host ioctl is needed to arm or request teardown.
+[ Backport to 6.6.y: implemented the same guard in older
+  dc_release_state() in dc.c rather than dc_state_release() in
+  dc_state.c. ]
 
-On upstream master 62cc90241548, generic KASAN reported:
-
-  BUG: KASAN: slab-use-after-free in do_raw_spin_lock
-  Write of size 4 at addr ff60000005e58898
-
-  kvm_riscv_vcpu_set_interrupt
-  kvm_riscv_vcpu_hrtimer_expired
-  __hrtimer_run_queues
-  hrtimer_interrupt
-
-The object was allocated by KVM_CREATE_VCPU and freed concurrently by:
-
-  kvm_destroy_vcpus
-  kvm_arch_destroy_vm
-  kvm_destroy_vm
-  __fput
-
-For deterministic validation, I added mdelay(1000) immediately after
-the existing next_set = false assignment.  This only widens the
-existing post-clear callback window.  A no-delay trace build naturally
-reached the callback-after-teardown-start/before-deinit ordering in 12
-of 200 runs, but 1,500 stock-kernel stress iterations did not produce a
-KASAN report, so natural reproduction is timing-sensitive.
-
-Always invoke hrtimer_cancel() for an initialized timer.  Preserve the
-existing -EINVAL result when the timer is no longer set, but only after
-synchronizing with a running callback.
-
-With this patch, hrtimer_cancel() blocked for the full widened callback
-window before vCPU destruction.  KASAN reported no error in 100
-fixed-and-widened runs or 200 fix-only timing-sweep runs.
-
-Fixes: 3a9f66cb25e1 ("RISC-V: KVM: Add timer functionality")
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Assisted-by: OpenAI:GPT-5.6
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260731163550.46991-1-mhun512@gmail.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Allen Pan <allen.pan@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_timer.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kvm/vcpu_timer.c
-+++ b/arch/riscv/kvm/vcpu_timer.c
-@@ -60,10 +60,13 @@ static enum hrtimer_restart kvm_riscv_vc
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 50b860c07ae01..50df677d509dc 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2302,7 +2302,8 @@ static void dc_state_free(struct kref *kref)
  
- static int kvm_riscv_vcpu_timer_cancel(struct kvm_vcpu_timer *t)
+ void dc_release_state(struct dc_state *context)
  {
--	if (!t->init_done || !t->next_set)
-+	if (!t->init_done)
- 		return -EINVAL;
+-	kref_put(&context->refcount, dc_state_free);
++	if (context != NULL)
++		kref_put(&context->refcount, dc_state_free);
+ }
  
- 	hrtimer_cancel(&t->hrt);
-+
-+	if (!t->next_set)
-+		return -EINVAL;
- 	t->next_set = false;
- 
- 	return 0;
+ bool dc_set_generic_gpio_for_stereo(bool enable,
+-- 
+2.53.0
+
 
 
