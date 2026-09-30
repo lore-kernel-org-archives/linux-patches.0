@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB99D51DAF2;
-	Wed, 30 Sep 2026 18:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B1051DDF3;
+	Wed, 30 Sep 2026 18:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792825; cv=none; b=VF6/ulZ3ycR0e1FodVtjA7K9Fg6Kn8RUIo76TStoi7ciQQeEu0hzvYKH38iy2WDjT1eVg60HWbNU41llvS04MCyQjeTP4ABAdoQ8DejkKGvU6zviLpF6Oa020j2AFY/qpoxaCrzSs5jOtK7W5tedcjSPGFSyKf8MS55OcasJS9E=
+	t=1790792827; cv=none; b=DTindIH9A0OxUycogjxJbjFHKzqc0AupKCv2Xdsc9bQD4wIrIApPaNiQvxTpdmPE0+QAYXSUX6LjYQik7UcER5nD/qOi5qRcolKODcxSVwfZIudbAkWAaa/nsheHzTpMLJTWwnOQ+yUjuz4pST404pXwMdbxhzhMeGviVr8zS+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792825; c=relaxed/simple;
-	bh=neCXbSDjmhrCsgnGVOYuNUYyCq8Gdhv/7egDuScyEL0=;
+	s=arc-20240116; t=1790792827; c=relaxed/simple;
+	bh=UeHgNtTP8xC4oR/brHlV2FnPA6tOG66OuLazH28itFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szze6E4KVArUa79yQotMpzvV67wrOsDm9SmGckfVoAiN0S4nTQT/895/PFL70KoOXkrW39wM5PFrMbQPr6WAwu0tRZwS9q+s9QOJtcaiTyWqJRdNOXYifCpgttEkhz0xcr7LDIvwAAZzJOn9aXXa19qB9eVwAB03j9pEX0qN42A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9wbO+af; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KsX1XKjRj3vHwEKpTi+ci54tP5XCI+JGt7cKSl0iyxc6oiDHgNNn/nd7zB802uyihwRPyXEhmV279EUVcwgnW8CjO8BxNqGzFP64hcoHLnbxvgCSugALEl5GzazZDnUIF6A7MMQEsbGSSArf4BksCmuc+vXIMMIrxQfDhvdzYx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylk1oEru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9wbO+af"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207231F000FF;
-	Wed, 30 Sep 2026 18:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylk1oEru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE69A1F000FF;
+	Wed, 30 Sep 2026 18:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792823;
-	bh=h/76ZZi8E/5XXK3Y0pLQedc3mTco1N/PPjraagnx55s=;
+	s=korg; t=1790792826;
+	bh=Ze8djU0sXop8JOb76jRz6TmfZSzctUtiRgKLugMTDqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I9wbO+afcYTZGTUkfl6yeMcdIkWfX0shU7lvlvdGsTQ2hq34VrX7a1OqHoMNVXfex
-	 JkNrpaB/QPKW08C+8dnxd7udijDjMJObKZymbNUPc+EP6IJVHQeRApfTnlfRnKgbWI
-	 ExGXy/zLUutigwBT8wF4HR+Rk9CNo8FUsR3UKuFA=
+	b=ylk1oEruCkRCdVE8FcPNM1E4FPm5sgWIimKn3sa2/976issVYlGOBTvWthD4HiG5h
+	 xav3vuJ/cNyVQh+Q6DfkC73JsFzEMBCBL8qjE5zT3ne2rLDQteaUSfTZELDd7aJST6
+	 4+1GkStBTN3rpOhb5DolDIFGNG/OE3Rqlvt0xY6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Steffen Eiden <seiden@linux.ibm.com>,
 	Fuad Tabba <fuad.tabba@linux.dev>,
 	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/395] KVM: arm64: Derive GUEST_HAS_SVE from the SVE feature bit at EL2
-Date: Wed, 30 Sep 2026 17:25:01 +0200
-Message-ID: <20260930152341.475336790@linuxfoundation.org>
+Subject: [PATCH 6.18 040/395] KVM: arm64: Return -EINVAL for an empty SMCCC filter range at base 0
+Date: Wed, 30 Sep 2026 17:25:02 +0200
+Message-ID: <20260930152341.497286506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,59 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 4f16c5fc8dc4c5596e3777ab9f449a54e3f85fd5 ]
+[ Upstream commit 64dc6f1db7e620f2e9337bb181f305fb0561da79 ]
 
-pkvm_init_features_from_host() takes KVM_ARCH_FLAG_GUEST_HAS_SVE and
-KVM_ARM_VCPU_SVE from the host separately, but pkvm_vcpu_init_sve()
-tests the bit while vcpu_has_sve() reads the flag. A host that sets the
-flag without the bit gets a vCPU with a NULL sve_state that the world
-switch loads the guest's SVE state from.
+kvm_smccc_set_filter() only rejects a range if its inclusive end,
+base + nr_functions - 1, is below base. That catches an empty range
+(nr_functions == 0) at every nonzero base, but at base 0 the end wraps
+to U32_MAX and KVM tries to insert [0, U32_MAX], which overlaps the
+reserved Arm Architecture Calls ranges. KVM_ARM_VM_SMCCC_FILTER then
+returns -EEXIST instead of the -EINVAL that the smccc_filter selftest
+expects for an empty range.
 
-Derive the flag from the bit, and drop the protected path's copy of the
-host's flag, which is dead code since protected VMs are not allowed SVE.
+Reject a zero function count explicitly.
 
-Fixes: 41d6028e28bd ("KVM: arm64: Convert the SVE guest vcpu flag to a vm flag")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260825085948.1674721-5-fuad.tabba@linux.dev
+Tested with a userspace reproducer on an arm64 VHE host under QEMU TCG:
+EEXIST before, EINVAL after.
+
+Fixes: 821d935c87bc ("KVM: arm64: Introduce support for userspace SMCCC filtering")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20260829054856.70549-2-kmehltretter@gmail.com
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/nvhe/pkvm.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm64/kvm/hypercalls.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index 43195083fe7d0..6eade6babbbd4 100644
---- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-+++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -353,7 +353,7 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
- 		if (test_bit(KVM_ARCH_FLAG_WRITABLE_IMP_ID_REGS, &host_arch_flags))
- 			hyp_vm->kvm.arch.midr_el1 = host_kvm->arch.midr_el1;
+diff --git a/arch/arm64/kvm/hypercalls.c b/arch/arm64/kvm/hypercalls.c
+index 58c5fe7d75727..ccbfe847f78b9 100644
+--- a/arch/arm64/kvm/hypercalls.c
++++ b/arch/arm64/kvm/hypercalls.c
+@@ -185,7 +185,8 @@ static int kvm_smccc_set_filter(struct kvm *kvm, struct kvm_smccc_filter __user
+ 	start = filter.base;
+ 	end = start + filter.nr_functions - 1;
  
--		return;
-+		goto out;
- 	}
+-	if (end < start || filter.action >= NR_SMCCC_FILTER_ACTIONS)
++	if (!filter.nr_functions || end < start ||
++	    filter.action >= NR_SMCCC_FILTER_ACTIONS)
+ 		return -EINVAL;
  
- 	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_MTE))
-@@ -372,13 +372,14 @@ static void pkvm_init_features_from_host(struct pkvm_hyp_vm *hyp_vm, const struc
- 	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_PTRAUTH_GENERIC))
- 		set_bit(KVM_ARM_VCPU_PTRAUTH_GENERIC, allowed_features);
- 
--	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_SVE)) {
-+	if (kvm_pkvm_ext_allowed(kvm, KVM_CAP_ARM_SVE))
- 		set_bit(KVM_ARM_VCPU_SVE, allowed_features);
--		kvm->arch.flags |= host_arch_flags & BIT(KVM_ARCH_FLAG_GUEST_HAS_SVE);
--	}
- 
- 	bitmap_and(kvm->arch.vcpu_features, host_kvm->arch.vcpu_features,
- 		   allowed_features, KVM_VCPU_MAX_FEATURES);
-+out:
-+	__assign_bit(KVM_ARCH_FLAG_GUEST_HAS_SVE, &kvm->arch.flags,
-+		     kvm_vcpu_has_feature(kvm, KVM_ARM_VCPU_SVE));
- }
- 
- static void unpin_host_vcpu(struct kvm_vcpu *host_vcpu)
+ 	mutex_lock(&kvm->arch.config_lock);
 -- 
 2.53.0
 
