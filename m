@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9015678C3;
-	Wed, 30 Sep 2026 17:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE3F5678C7;
+	Wed, 30 Sep 2026 17:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790501; cv=none; b=PkBBiQ9cFWGr4El8DisKAHt8i2V4Wk3a8rxNBFmoeId/15URM9ry70OaPhOqldR25uWqFBSwulFysgcuYKTm7EGXLOXI9NVHabhKJRVwz2r5bySc1F6SdGImfqVFBr6hIoOWeiK5KhlOgDGSmW7Ieq2j5o+G69ildqbVaoGGk0A=
+	t=1790790504; cv=none; b=jIkWqKXAyJWJ0As76xCWOaTcScU1SbqtjD5k8wMXHm7Id1UTqSJBFraZIxUvJsCkSzpCCownLhdqmJm47IAiN3eLdi3/iqnJOexK6fvhXtcD8youzrpgs8z25Tmx3wAQ5YkGcwThOJfxotIRrCWKjSfLj+zYdyQUmyoRkeTR27Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790501; c=relaxed/simple;
-	bh=ULuG8gT8U221VzuSF9n3Uf2t0X1QmUGVq488cdwPlvo=;
+	s=arc-20240116; t=1790790504; c=relaxed/simple;
+	bh=b7KND2295Bn82tiNNciI41cDCMcoJk2N4KGTnie66e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ7fpAE91U+G0E9nje12yoDCj58XEIWu358nO73yH0IYGzjicGvog1WssOLYNt7C8FYE3HcOewmlWQ451qC3Fd9Ux//gOC5DkrFvpx+922wNwUyTjMsOK45/i+nf3Id+jqFWh5c2DChPs2iI1nbbcRjnUkBLXP4B7NCIM4awIcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGFN37wH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rqh7RMaMh66fsV4FQP56SV/3GUWRwya2sGOhPA892z5Z/2AjhxEZLE9LXffIz0XTA/SXqxmUff/i7shqKmwSUrioemwFBspTbDCr3DUJAZwPDQVEwanVQNqO3ZJiphgzkdC1RYce0w46hDV8Wj+FeA9qUDV+xxS9vufceywthCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18CHiTn+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGFN37wH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F1E1F00898;
-	Wed, 30 Sep 2026 17:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18CHiTn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54E71F000FF;
+	Wed, 30 Sep 2026 17:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790500;
-	bh=dcKE19HaO6jQ/X0RaAF8KAe3pVzr1OLZIp1IITABT3w=;
+	s=korg; t=1790790503;
+	bh=p2z9Tzsbb4VlLup+1V+ydXnY8CoQ7IZoULO3SsXOvTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jGFN37wH75a8sK4F5tGq1ijR0fC+78FpaAu0kAY1S52IbvXfmAshms4KgW8tQzy9e
-	 O9D+V+l84A7q934dAc3Xjx2dColjCRR6nvBhWhwNhHlNbW+8DtxveHSKN112TD1J1h
-	 wn3zcrPyEaN53QQSeDdb6Bw6EI56qlq2dsLV7sBU=
+	b=18CHiTn+Go9kGbMlazYvjZ6f1xM13rjFD32waSk3QIip0UbkZb5rh75R8VGyFR1mb
+	 rBF4amSK9boMbw91NG4fH98Ks946kz4nw6s9My+j6mxA24UDAXlnSgmD4OE9X8fn4/
+	 h77/Khf2bmVXmq8UPzfCFHp52JRw++oMlvF6dBRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
+	Jiakai Xu <jiakaiPeanut@gmail.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 851/877] perf/x86/intel: Fix GRT PEBS load/store direction for latency events, to fix sample classification
-Date: Wed, 30 Sep 2026 17:29:22 +0200
-Message-ID: <20260930152433.104013491@linuxfoundation.org>
+Subject: [PATCH 6.12 852/877] RISC-V: KVM: Fix null pointer dereference in kvm_riscv_aia_imsic_rw_attr()
+Date: Wed, 30 Sep 2026 17:29:23 +0200
+Message-ID: <20260930152433.126537259@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,79 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Jiakai Xu <jiakaipeanut@gmail.com>
 
-[ Upstream commit 89dc568e8c0be60e05e5fcd0b528c79077d7b84b ]
+[ Upstream commit aeb1d17d1af5924f7357d7204a293bd8fc06ea13 ]
 
-On Gracemont, intel_grt_pebs_event_constraints[] applies LAT_CONSTRAINT
-constraints to MEM_UOPS_RETIRED.{LOAD,STORE}_LATENCY, but does not set
-explicit LOAD/STORE flags for those events.
+Add a null pointer check for imsic_state before dereferencing it in
+kvm_riscv_aia_imsic_rw_attr(). While the function checks that the
+vcpu exists, it doesn't verify that the vcpu's imsic_state has been
+initialized, leading to a null pointer dereference when accessed.
 
-The PEBS latency path (pebs_latency_data(), via __grt_latency_data())
-uses the event flags to determine memory operation direction. Without an
-explicit STORE flag, samples from MEM_UOPS_RETIRED.STORE_LATENCY can be
-misclassified as LOADs.
+The crash manifests as:
+  Unable to handle kernel paging request at virtual address
+  dfffffff00000006
+  ...
+  kvm_riscv_aia_imsic_rw_attr+0x2d8/0x854 arch/riscv/kvm/aia_imsic.c:958
+  aia_set_attr+0x2ee/0x1726 arch/riscv/kvm/aia_device.c:354
+  kvm_device_ioctl_attr virt/kvm/kvm_main.c:4744 [inline]
+  kvm_device_ioctl+0x296/0x374 virt/kvm/kvm_main.c:4761
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  ...
 
-Set explicit LOAD/STORE flags in intel_grt_pebs_event_constraints[] for:
+The fix adds a check to return -ENODEV if imsic_state is NULL and moves
+isel assignment after imsic_state NULL check.
 
-- MEM_UOPS_RETIRED.LOAD_LATENCY
-- MEM_UOPS_RETIRED.STORE_LATENCY
-
-Also update __grt_latency_data() to explicitly interpret these flags when
-assigning the sampled memory operation direction.
-
-This fixes incorrect STORE sample classification.
-
-Fixes: 39a41278f041 ("perf/x86/intel: Fix PEBS memory access info encoding for ADL")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@vger.kernel.org> # v7.2+
-Link: https://patch.msgid.link/20260917015234.981153-2-dapeng1.mi@linux.intel.com
+Fixes: 5463091a51cfaa ("RISC-V: KVM: Expose IMSIC registers as attributes of AIA irqchip")
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Jiakai Xu <jiakaiPeanut@gmail.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260127072219.3366607-1-xujiakai2025@iscas.ac.cn
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Stable-dep-of: 8ae12ccaec6e ("RISC-V: KVM: Serialize IMSIC attributes with vCPU migration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/riscv/kvm/aia_imsic.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -303,6 +303,7 @@ static inline void pebs_set_tlb_lock(u64
- static u64 __grt_latency_data(struct perf_event *event, u64 status,
- 			       u8 dse, bool tlb, bool lock, bool blk)
- {
-+	union perf_mem_data_src src;
- 	u64 val;
+--- a/arch/riscv/kvm/aia_imsic.c
++++ b/arch/riscv/kvm/aia_imsic.c
+@@ -895,8 +895,10 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
+ 	if (!vcpu)
+ 		return -ENODEV;
  
- 	WARN_ON_ONCE(is_hybrid() &&
-@@ -318,7 +319,16 @@ static u64 __grt_latency_data(struct per
- 	else
- 		val |= P(BLK, NA);
+-	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
+ 	imsic = vcpu->arch.aia_context.imsic_state;
++	if (!imsic)
++		return -ENODEV;
++	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
  
--	return val;
-+	src.val = val;
-+
-+	if (event->hw.flags &
-+	    (PERF_X86_EVENT_PEBS_LDLAT | PERF_X86_EVENT_PEBS_LD_HSW))
-+		src.mem_op = P(OP, LOAD);
-+	if (event->hw.flags &
-+	    (PERF_X86_EVENT_PEBS_STLAT | PERF_X86_EVENT_PEBS_ST_HSW))
-+		src.mem_op = P(OP, STORE);
-+
-+	return src.val;
- }
- 
- u64 grt_latency_data(struct perf_event *event, u64 status)
-@@ -985,8 +995,8 @@ struct event_constraint intel_glm_pebs_e
- 
- struct event_constraint intel_grt_pebs_event_constraints[] = {
- 	/* Allow all events as PEBS with no flags */
--	INTEL_HYBRID_LAT_CONSTRAINT(0x5d0, 0x3),
--	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0x3f),
-+	INTEL_HYBRID_LDLAT_CONSTRAINT(0x5d0, 0x3),
-+	INTEL_HYBRID_STLAT_CONSTRAINT(0x6d0, 0x3f),
- 	EVENT_CONSTRAINT_END
- };
+ 	read_lock_irqsave(&imsic->vsfile_lock, flags);
  
 
 
