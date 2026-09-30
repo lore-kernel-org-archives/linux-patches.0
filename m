@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F6A5326C6;
-	Wed, 30 Sep 2026 17:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EC95328AC;
+	Wed, 30 Sep 2026 17:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790000; cv=none; b=ifgHJ4Gw5bDzubL/hFLCoY/gxNmThyz4FU8F9ZPja/KzxBSSIuwuGScQv4EXEFot8BQVwmoVPVN4JPzS3vF4uleZAPQEYOXe1LKDWNAjPRTohLNxBYu5qeQEFyaQ8157pvMiiEATH1vtZ/CSWE/ANy0XpkMZKfOVPdp4srZaRKI=
+	t=1790790003; cv=none; b=Ogtd5rGoV8wNi15aoUYbrP/AC8Qc3c5zQERN4XzEQRvtvjO2biVoCtLnmVfk/euB5WXncvZW1rdXrY8hTawVXOVS/fm70lVexQtgjhUg0lLe0cKlIKTsT9qAVG9/UUqCrNLUKITvEyPtlYetwsQEzQRzb0cROYFneENT79T+AGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790000; c=relaxed/simple;
-	bh=bpdjPfbGAB2vq+tEkzB5uxG88kiLCzRg+VeDZNyZ6As=;
+	s=arc-20240116; t=1790790003; c=relaxed/simple;
+	bh=AJAUY5a9mTIekdc8+9/bhvHq2IbnbeoZ3cNTf8b80Qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SN8vq/4xzmqEya74vt3UlQetPGtHJqauU9lv/DxzG2sRTn+0o7QC6kY5+74mojGnXNKiZwUzXOqZUM7Jg1WXBrG4TkVMuwAXs2uKAGdrZPG2uzQhEUhATEq5Fm4/U8hfq2QPfam51+rvR6koL1osPQvPo2MlMePZDKRYZDSxqEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1WKCvHx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+xK1uqE2BXG7npDf4L3rwoQ758PDV/Qr7l+uo7TBZD5EnRsLPjjOtyUpqb54uxojUNDjXZ1fUJXRdqjX4C73FN4UBif7sB+BK9XqlcNgYz9zWSIm35HVV/LKs8pTEDfcq1Kbk5EZYQNHho4BaRyaNqjF+8BserXFXw+ms/HRro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bN7mly5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1WKCvHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43431F00899;
-	Wed, 30 Sep 2026 17:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bN7mly5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D931F000FF;
+	Wed, 30 Sep 2026 17:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789999;
-	bh=I/UgrWJuCvRyoXI+p81WHc+T85vwnOzfnJZf727xuTw=;
+	s=korg; t=1790790002;
+	bh=KaWboywJLhiwXy+ATmOvw3hcq2LHNxhqM4anykuUb1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j1WKCvHxAMQbc2p9X/9XTGbe0dRcMoAqaww6lLBiQnMsWa4Az72PmEVGVtG425v69
-	 Qs00X839bYl2a8WkYDfugFPKd0EkkiZKv8kC/to1rHSlgxI8LYLZoEHt92GBAq4gq2
-	 70hdWSHy+Mnj4CHauWLXNWVjPTe7URQEkypi0ngY=
+	b=2bN7mly5I4GVby+TC8giTtwruv8yoA+DylcMPwOoDb+ko1mmZAqif7bworE4xlzEz
+	 xAzbKioa5T1kpIxxcfHLKEz8q+rZ8JMNKc8p09a1YEHNQkgZ9zCjxJLZzFs0XkBveP
+	 2WKAL+P8mXY/4TG76au5k1jI3XwZM+oyCxgtuJ/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 674/877] scsi: qla2xxx: Null out freed pointers in qla2x00_mem_alloc() error path
-Date: Wed, 30 Sep 2026 17:26:25 +0200
-Message-ID: <20260930152429.215609816@linuxfoundation.org>
+Subject: [PATCH 6.12 675/877] scsi: qla2xxx: Bound VP index against VP_CTRL IOCB bitmap size
+Date: Wed, 30 Sep 2026 17:26:26 +0200
+Message-ID: <20260930152429.236715877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,74 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 6d90f0feb929f6c0f3010f9af4747c7230b75993 ]
+[ Upstream commit 878613ecb5a36db26859c4fd83daf9283a334fa2 ]
 
-When qla2x00_mem_alloc() fails, qla2x00_probe_one() jumps to
-probe_hw_failed and calls qla2x00_mem_free(). Several error labels in
-qla2x00_mem_alloc() freed adapter members (elsrej.c, purex_dma_pool,
-flt, sfp_data, loop_id_map, async_pd, sf_init_cb, ex_init_cb, npiv_info)
-but left the pointers dangling. qla2x00_mem_free() then freed them a
-second time. Worse, for the dma_pool members it issued
-dma_pool_free(ha->s_dma_pool, ...) after s_dma_pool had already been
-destroyed and set to NULL at fail_s_dma_pool, dereferencing a NULL pool.
+The VP control IOCB selects its target virtual port by setting one bit
+in vp_idx_map, a fixed 16-byte (128-bit) array in both
+vp_ctrl_entry_24xx and vp_ctrl_entry_24xx_ext. qla25xx_ctrlvp_iocb()
+computes map = (vp_index - 1) / 8 and writes vce->vp_idx_map[map]
+without checking that map stays within the array.
 
-Clear each freed pointer (and its DMA handle) in the error labels so the
-subsequent qla2x00_mem_free() skips them.
+max_npiv_vports is taken from firmware and only sanitized to a
+MIN_MULTI_ID_FABRIC-aligned boundary, so it can legitimately be 191 or
+255, and qla24xx_control_vp() only rejects vp_index >= max_npiv_vports.
+A vp_index above 128 therefore yields map >= 16 and an out-of-bounds
+write of up to 16 bytes past vp_idx_map, corrupting the trailing IOCB
+fields (or the adjacent request-ring slot on the 64-byte layout).
 
+Reject a vp_index that cannot be represented in the IOCB bitmap in
+qla24xx_control_vp(), and add a defensive ARRAY_SIZE() guard in
+qla25xx_ctrlvp_iocb() before the write. Adapters that report the usual
+63 or 127 NPIV vports are unaffected.
+
+Fixes: 2853192e154b ("scsi: qla2xxx: Use IOCB path to submit Control VP MBX command")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-13-njavali@marvell.com
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-49-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ adjusted cleanup context for the missing fail_flt_data block. ]
+[ Adjusted guard placement in qla25xx_ctrlvp_iocb() to match the older initialization order. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/scsi/qla2xxx/qla_iocb.c |    6 ++++++
+ drivers/scsi/qla2xxx/qla_mid.c  |    8 ++++++++
+ 2 files changed, 14 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -4482,25 +4482,40 @@ qla2x00_mem_alloc(struct qla_hw_data *ha
- fail_lsrjt:
- 	dma_free_coherent(&ha->pdev->dev, ha->elsrej.size,
- 			  ha->elsrej.c, ha->elsrej.cdma);
-+	ha->elsrej.c = NULL;
-+	ha->elsrej.cdma = 0;
- fail_elsrej:
- 	dma_pool_destroy(ha->purex_dma_pool);
-+	ha->purex_dma_pool = NULL;
- fail_flt:
- 	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
- 	    ha->flt, ha->flt_dma);
-+	ha->flt = NULL;
-+	ha->flt_dma = 0;
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -3828,6 +3828,12 @@ qla25xx_ctrlvp_iocb(srb_t *sp, struct vp
+ 	 */
+ 	map = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) / 8;
+ 	pos = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) & 7;
++	if (map >= ARRAY_SIZE(vce->vp_idx_map)) {
++		ql_log(ql_log_warn, sp->vha, 0x307c,
++		       "ctrlvp: vp_index %u exceeds vp_idx_map capacity\n",
++		       sp->u.iocb_cmd.u.ctrlvp.vp_index);
++		return;
++	}
+ 	vce->vp_idx_map[map] |= 1 << pos;
+ }
  
- fail_flt_buffer:
- 	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
- 	    ha->sfp_data, ha->sfp_data_dma);
-+	ha->sfp_data = NULL;
-+	ha->sfp_data_dma = 0;
- fail_sfp_data:
- 	kfree(ha->loop_id_map);
-+	ha->loop_id_map = NULL;
- fail_loop_id_map:
- 	dma_pool_free(ha->s_dma_pool, ha->async_pd, ha->async_pd_dma);
-+	ha->async_pd = NULL;
-+	ha->async_pd_dma = 0;
- fail_async_pd:
- 	dma_pool_free(ha->s_dma_pool, ha->sf_init_cb, ha->sf_init_cb_dma);
-+	ha->sf_init_cb = NULL;
-+	ha->sf_init_cb_dma = 0;
- fail_sf_init_cb:
- 	dma_pool_free(ha->s_dma_pool, ha->ex_init_cb, ha->ex_init_cb_dma);
-+	ha->ex_init_cb = NULL;
-+	ha->ex_init_cb_dma = 0;
- fail_ex_init_cb:
- 	kfree(ha->npiv_info);
-+	ha->npiv_info = NULL;
- fail_npiv_info:
- 	dma_free_coherent(&ha->pdev->dev, ((*rsp)->length + 1) *
- 		sizeof(response_t), (*rsp)->ring, (*rsp)->dma);
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -962,6 +962,14 @@ int qla24xx_control_vp(scsi_qla_host_t *
+ 	if (vp_index == 0 || vp_index >= ha->max_npiv_vports)
+ 		return QLA_PARAMETER_ERROR;
+ 
++	/*
++	 * The VP_CTRL IOCB selects the target VP through a fixed 128-bit
++	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
++	 * if firmware advertises more NPIV vports.
++	 */
++	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
++		return QLA_PARAMETER_ERROR;
++
+ 	/* ref: INIT */
+ 	sp = qla2x00_get_sp(base_vha, NULL, GFP_KERNEL);
+ 	if (!sp)
 
 
