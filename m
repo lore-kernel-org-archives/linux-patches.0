@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89A64D6C3F;
-	Wed, 30 Sep 2026 16:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A344D37B0;
+	Wed, 30 Sep 2026 16:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785533; cv=none; b=GZ91IutLdDOuN4xrXZ2pkhbmRde36M2YHLtL/r+lvxnAE1vco/hWPb5CdJfzbG6QYnBYUUXU1uk1HmNYJccwM+742TOMHTubb0TvirOEBHO0b+r+AoFEY68wZz6deTNy03TDGN4M6dvjRVaBFMZ7JuoQLleVlwWraE5DsAOyjks=
+	t=1790785538; cv=none; b=XNReOs1wlURAmwg+Ip7iNsTIkQRI6QJnWDXgiIuOMoR8jRumEp/uFtQqIdLPkeee5SnZ/WVRUZgQZRZ5dwuvYet1UIDDs0XaGEgR51o7rlZYf91LYQBYgpeKJF0putc2NL1WgH523CEZTx26An373Q6/QaMA897Nsh/9b0A5/wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785533; c=relaxed/simple;
-	bh=rB+2ke2CPvl2d2GpB6q7sagbWeQI4UWATiz33YDOMDs=;
+	s=arc-20240116; t=1790785538; c=relaxed/simple;
+	bh=jMxl8qHwLvx3DnmYFyJ3UbdrK+J9frQw8pNXDlP0TAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrCMefg3Eh2K3aB5nMGHwCGer3Vl9rc3m6Lod92shz/xBWA3sSstOtgFTCVQ3V+DbMx6A9G2EsJxHJvwivPzJScTKb7j6z1PlLrbYuaEBXJn+CeAp/wslf2KQ5Scq+HDQKfVgVBdZ9HjbYq2eVCcFkvsKq8qlXFT/LQ+9ndmUWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tor0PYKe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gqf3Wtb6NKV1o+HUPAS6exDS3Vy0tzI3AuynyhsvGiPD/b8OX/X9OQQdfygBxgiKfSZqwvXO003b+/tTxwAu8kvWXLbn8Id81LCk/Qe4KNk1P5+It20l7RhhIBQzLk7S8t5PxK0BTf/MW+9RnKRg46leg1bv67KmHDpXpxaBtzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eApILOJm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tor0PYKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85D11F00899;
-	Wed, 30 Sep 2026 16:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eApILOJm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F761F000FF;
+	Wed, 30 Sep 2026 16:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785523;
-	bh=NLPyBPLuQXMoqh3kd51Mdz+N4ECzQvjaBhN8EsQgarI=;
+	s=korg; t=1790785529;
+	bh=NJ2VM9GkEaANNUo3yH/WKqE+lpaYkKwOsBeDgRt3LAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tor0PYKe0eWXj2rxb3cVG1IWFQsBCwLBuIDFkZUEoXhFbON8b4vKiM8dPGmrHazbX
-	 riNZjbwtWuQ0vmo7opvSfX3KCAk94FhqrVRDU9ssxDBoJ94+cvVQZDzrnrGG/QeZuD
-	 HZsIu+pZOXYB3G0J4os3M7uyDqUG7D8101xVkhs0=
+	b=eApILOJmbSPbiV1KQ8lkXnQIQn7+XYkzblQkVMuD46V8HLHNVYH9SnNdds0VV0ClE
+	 z0BLkgHfjOd2tcc13MoHBz4foothUcrd8AmyQrXwB9RyrZWRHvUO7RuBwnK6LDS/+X
+	 UmYV2twv7GOSwz5BxjZuensFwFaqHD/FjnKnwHJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 537/982] media: v4l2-ctrls: validate HEVC tile counts
-Date: Wed, 30 Sep 2026 17:21:13 +0200
-Message-ID: <20260930152428.305447767@linuxfoundation.org>
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 539/982] bnxt_en: Handle buffer allocation failure in bnxt_rx_ring_reset()
+Date: Wed, 30 Sep 2026 17:21:15 +0200
+Message-ID: <20260930152428.348324175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,48 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Joe Damato <joe@dama.to>
 
-commit dc694a9929f7cb9c88ef91e45eb982b7bbe5a477 upstream.
+commit 961e2a17c5e3559b3f8654d2daabdd25a42e770a upstream.
 
-The stateless HEVC decoders read num_tile_columns_minus1 + 1 entries from
-column_width_minus1[] and num_tile_rows_minus1 + 1 from row_height_minus1[]
-and use them as tile-loop bounds, but std_validate_compound() does not
-bound these u8 counts. Reject a V4L2_CTRL_TYPE_HEVC_PPS with tiling
-enabled whose tile counts exceed the uAPI array capacity, mirroring the
-existing compound-control range checks.
+bnxt_rx_ring_reset() frees the ring buffers and then reallocates them,
+ignoring the result.
 
-Fixes: 256fa3920874 ("media: v4l: Add definitions for HEVC stateless decoding")
-Assisted-by: Claude:claude-opus-4-8
+bnxt_alloc_one_rx_ring() can fail in bnxt_alloc_one_tpa_info_data(), which
+returns -ENOMEM on the first failed allocation and leaves the remaining
+rxr->rx_tpa[] entries zeroed.
+
+The error isn't propagated up, so the loop in bnxt_rx_ring_reset
+continues and at the end the code re-enables TPA with partially
+unallocated rx_tpa array.
+
+This means that when the agg_id from hardware is mapped to a SW index in
+rxr->rx_tpa[], an uninitialized slot can be chosen which would hand a
+zero DMA address to the device.
+
+Fix this by falling back to a global reset, which is what the existing
+code already does when other functions fail, but unlike the other
+failure cases this particular failure has to return because TPA can't
+be re-enabled since the allocation failed.
+
+Fixes: 8fbf58e17dce ("bnxt_en: Implement RX ring reset in response to buffer errors.")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260902015652.2421609-5-joe@dama.to
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -837,6 +837,18 @@ static int std_validate_compound(const s
- 
- 			p_hevc_pps->flags &=
- 				~V4L2_HEVC_PPS_FLAG_LOOP_FILTER_ACROSS_TILES_ENABLED;
-+		} else {
-+			/*
-+			 * These count the entries the stateless HEVC drivers
-+			 * read from column_width_minus1[] / row_height_minus1[]
-+			 * and use as tile-loop bounds.
-+			 */
-+			if (p_hevc_pps->num_tile_columns_minus1 >=
-+			    ARRAY_SIZE(p_hevc_pps->column_width_minus1))
-+				return -EINVAL;
-+			if (p_hevc_pps->num_tile_rows_minus1 >=
-+			    ARRAY_SIZE(p_hevc_pps->row_height_minus1))
-+				return -EINVAL;
- 		}
- 
- 		if (p_hevc_pps->flags &
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -11827,7 +11827,14 @@ static void bnxt_rx_ring_reset(struct bn
+ 		rxr->rx_sw_agg_prod = 0;
+ 		rxr->rx_next_cons = 0;
+ 		rxr->bnapi->in_reset = false;
+-		bnxt_alloc_one_rx_ring(bp, i);
++		rc = bnxt_alloc_one_rx_ring(bp, i);
++		if (rc) {
++			netdev_warn(bp->dev, "RX ring reset failed to allocate buffers, rc = %d, falling back to global reset\n",
++				    rc);
++			bnxt_reset_task(bp, true);
++			bnxt_rtnl_unlock_sp(bp);
++			return;
++		}
+ 		cpr = &rxr->bnapi->cp_ring;
+ 		cpr->sw_stats.rx.rx_resets++;
+ 		if (bp->flags & BNXT_FLAG_AGG_RINGS)
 
 
