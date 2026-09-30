@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AC0515989;
-	Wed, 30 Sep 2026 17:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B143521895;
+	Wed, 30 Sep 2026 17:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789552; cv=none; b=ab4RjG3KB+61KMZnhGcl7tOu+abfh6Za6ozD08QrmkIl3yDAPN1fC+B7EpNqicRTc8p/frxZGeuNcKKUSnY6AfrW/nqG2pF4zygaZWkEVrwE63rFzoTXFcMQ1cFBai+Ok8VEc/DK0511GWLQgVXh5NX+fqvFvZCdTo5xRyOSZeA=
+	t=1790789554; cv=none; b=WZu3S7hHlL9/5lqfE16ggRtZe+eZTSm/8lP8FAUlnsRqE+xdnycXUDnCnapmpzLMMgjvpiK+BuJiAWcfJoa/ZoXDr3QJtAtQPLToYzNTMVI8+oSs+hnKGQ6MiCxB4Ed3jXvRWisvM/VTyTaaFqH9QOWcLmLn9ILJQPiOPQu/7AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789552; c=relaxed/simple;
-	bh=seuaedByeuWS0y5QaHvwF4NXwqnhFpaBH7x/QBPloC4=;
+	s=arc-20240116; t=1790789554; c=relaxed/simple;
+	bh=AMK9SK/r8vTeIWbRXijnXMftJKhHqDxJmn3zWiPxJjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pt8yYhaMmmthTg/aGgzKVGDJ0kJTBbXl4wxPelZLuypT0W+wHm1GiINtfkPFcaAm9Kmc5rRJYZ6Y4/41JRmYwRNLQ3itzpb75B3AUif7tfzdqTFU2eKrxsegIL61SO/JL74gIBMBwWWeYgJwiI3DMdqrjZYfsh7YULLfQy1REH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpJtDd+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kAwTZlvCWD6aCXqW3TWxQs7wbJ/1djO1s/ofbvtcKjZvbXvLlR0mr9qiUiUSaiELvonv4InrZj6C0a43w4SBS5+5znFgywSUIb2M1XMasTlBx/kEPU+y0Bkm/4somwmlHjNjRv2+ShgGVkcqKCE55jehnGEjpqZG+Ugc6WirmR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqTZ5Gmr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpJtDd+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8E01F000FF;
-	Wed, 30 Sep 2026 17:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqTZ5Gmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA8C1F000FF;
+	Wed, 30 Sep 2026 17:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789550;
-	bh=aFMvfMa1iJtHuN3jWn+l4ChMNlUYb4Q1lopAKvKykeQ=;
+	s=korg; t=1790789553;
+	bh=XUqxKcrA+Qk5OvZ+VAIPW2y+pS4oTKm1XA0JOvDTkWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpJtDd+zfAs+Ly3fcmr7tnEPssUapf6WaSoDoyVkjj8ai3OUoEuLB2MF0zm13Ob8V
-	 QN9hVzcPQxGyPgXmXm94SgtfoxddtjDN4NghSeRYHi3DS+LUvzw/dvKTHxtlUNjAtd
-	 OdZghyYlq9jfPUa0TQ0l3LdUmHbkBQiCT5e7/uLU=
+	b=GqTZ5GmrBhdaaFX6pGWzG2lOg+virB8hVvXhApk8c0jDdWMvA0JHhEm3khoYp7apz
+	 NJUBxQtSujx/ozFKZ0lV1lwW6JK2J2DKMxw4jABNK9xY4Mo12MdP+V4i2Ddik5NuJg
+	 L5pdIaqj9AmtOj9eUHPl8SFpFeup3L+cMnJI3jWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 517/877] net: usb: lan78xx: Fix URB reference leak in lan78xx_submit_deferred_urbs()
-Date: Wed, 30 Sep 2026 17:23:48 +0200
-Message-ID: <20260930152425.809561467@linuxfoundation.org>
+	co+459f67f4d8af8ce6@bugs.sh,
+	Florian Westphal <fw@strlen.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 518/877] netfilter: ip6t_rpfilter: reject routes without inet6_dev
+Date: Wed, 30 Sep 2026 17:23:49 +0200
+Message-ID: <20260930152425.830997844@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,41 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 17741334d00bf5ebd37f8c1c36bc9c146a351deb upstream.
+commit 1b9b5323725e458906c7620a3bc10398b51ad954 upstream.
 
-usb_get_from_anchor() hands over a reference to the URB, which the caller
-must release. lan78xx_submit_deferred_urbs() never does, so every deferred
-Tx URB keeps an extra reference: the counter grows on each suspend/resume
-cycle and the URBs are never freed when the buffers are released. Drop
-the reference after submitting, and on the path that drops the packet
-instead of submitting it.
+ip6_route_lookup() can return an error-free route whose rt6i_idev is
+NULL. Lowering an external nexthop device's MTU below IPV6_MIN_MTU tears
+down its inet6_dev while fib6_ifdown() leaves routes using nexthop objects
+in the FIB. An unprivileged user can construct this state with rtnetlink
+in a private user and network namespace, then trigger a NULL dereference
+through an IPv6 rpfilter lookup:
 
-Fixes: 5f4cc6e25148 ("lan78xx: Fix race conditions in suspend/resume handling")
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000000
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: rpfilter_mt (net/ipv6/netfilter/ip6t_rpfilter.c:75)
+  Call Trace:
+  ip6t_do_table (net/ipv6/netfilter/ip6_tables.c:316)
+  nf_hook_slow (net/netfilter/core.c:619)
+  ipv6_rcv (net/ipv6/ip6_input.c:351)
+  __netif_receive_skb_one_core (net/core/dev.c:6216)
+  process_backlog (net/core/dev.c:6680)
+  __napi_poll (net/core/dev.c:7739)
+  net_rx_action (net/core/dev.c:7959)
+  handle_softirqs (kernel/softirq.c:622)
+  do_softirq.part.0 (kernel/softirq.c:523)
+  __local_bh_enable_ip (kernel/softirq.c:450)
+  __dev_queue_xmit (net/core/dev.c:4913)
+  packet_sendmsg (net/packet/af_packet.c:3139)
+  __sys_sendto (net/socket.c:2252)
+  __x64_sys_sendto (net/socket.c:2259)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Reject routes without an inet6_dev immediately after lookup. Such routes
+are not eligible for reverse-path filtering, and the check protects all
+later rt6i_idev dereferences.
+
+Fixes: e26f9a480fb6 ("netfilter: add ipv6 reverse path filter match")
+Reported-by: co+459f67f4d8af8ce6@bugs.sh
+Closes: https://lore.kernel.org/all/VtWUkE8QzJt5CroTj2V2v3ZQ0gwbXZ7nq7I3@bugs.sh/
+Suggested-by: Florian Westphal <fw@strlen.de>
+Assisted-by: Claude:gpt-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917115811.2150119-1-vulab@iscas.ac.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/netfilter/ip6t_rpfilter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -4932,10 +4932,12 @@ static bool lan78xx_submit_deferred_urbs
- 		    !netif_carrier_ok(dev->net) ||
- 		    pipe_halted) {
- 			lan78xx_release_tx_buf(dev, skb);
-+			usb_put_urb(urb);
- 			continue;
- 		}
+--- a/net/ipv6/netfilter/ip6t_rpfilter.c
++++ b/net/ipv6/netfilter/ip6t_rpfilter.c
+@@ -61,7 +61,7 @@ static bool rpfilter_lookup_reverse6(str
+ 		fl6.flowi6_oif = dev->ifindex;
  
- 		ret = usb_submit_urb(urb, GFP_ATOMIC);
-+		usb_put_urb(urb);
+ 	rt = (void *)ip6_route_lookup(net, &fl6, skb, lookup_flags);
+-	if (rt->dst.error)
++	if (rt->dst.error || !rt->rt6i_idev)
+ 		goto out;
  
- 		if (ret == 0) {
- 			netif_trans_update(dev->net);
+ 	if (rt->rt6i_flags & (RTF_REJECT|RTF_ANYCAST))
 
 
