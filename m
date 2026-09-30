@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE144DDB2D;
-	Wed, 30 Sep 2026 19:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AABE42668E;
+	Wed, 30 Sep 2026 19:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797124; cv=none; b=qwOW17HOQg0nMWAANtP73eubGRUw7sWwLt6hZNmvxyB5SBTjk9ko+gl9vcvLF0SDN/AcoGE9dXU3cq1DcO+YA+iX4v0svjyQpXWxa3qgWLdvsCTERWUfS6Du/BEsPBa0w120Yc/fx0TCOCv3sDNbG6fV+uDgtDyhaPon1lDJ804=
+	t=1790797126; cv=none; b=nhtqhwLdrLavpDpbCkDvFtVzPG501PoS9+cVjUBoncToPqHHQXuf8PeVoKl1zHV8spelLlcDbaOrt6geadVRhvr5HPHHWM229ftGYeQabd8VH2d7PkHOtnrlCg49AmNxRS0xuAId0xH8Ju/WERt1CNJ2Ge+cO1CZ11r7jTW8RrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797124; c=relaxed/simple;
-	bh=ijaObzvHU8QF0GAcWLnv6hqYxbyTqo4rWwpqOk/nqhE=;
+	s=arc-20240116; t=1790797126; c=relaxed/simple;
+	bh=qDojRZh8PsjFGw34o3DTAg64qi3iAuNnHztvxl/rrFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVvxEYOSI1xq+gbMvGJAldq93WsTu7Z60DzcGYinauszbw4fWsAB24SMZyBnJE5kyp29hkM6UUJbm8C6I1rbPgPQ+yaDCKsOLIWRgjqaSM96JRC0fAd+qEOuPnEQ5uuHjCGpz5i0QwFhhOGLBgMFlL1N8bemvO4HKuOiaWWpWUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x00ipWkP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JGcBP4kjhYRLTKKNYBqkuSTlLvG933eEi0c5ll2Z6nZO5WlDSGsKhHfQ9+YQ5xZYQghpM9L76jQGo9Z1relqJBBGu2Z9HWTMxYvd2LnwYgsfudNE5EUnj50Dvb9H5aFXte/E6X1ShzZyBq4Te/G0GFqdsnXtnypRMHFlBJY5VAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wa9tnN7V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x00ipWkP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3783F1F000FF;
-	Wed, 30 Sep 2026 19:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wa9tnN7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4431F000FF;
+	Wed, 30 Sep 2026 19:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797122;
-	bh=YoImEpCXj1I9y5mcYBFWa0Dyh3yx4vvomDNHZDY52Ig=;
+	s=korg; t=1790797125;
+	bh=ePX5qH5AeG8Qpe/azc14hrP/HBBhy4TJyJsQznn06sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x00ipWkPWeiYu97tJaZ8AwINKl1JbVZlnMfPa3O+FQs27aXTea5DBmbdNJ8ZTHR8R
-	 TTbc/tx+HTvVG2YPASsmN61uBMlG2nH1UK/BznTvZpmNLblYhhUiJF2mdUHl7YGeSB
-	 kZv5zPUTpp1LQ2M5CWnkIskqflIreaErYbQt7eC0=
+	b=wa9tnN7VPghcY/oWRmUb9LMT97c8HM9eso45BrYriTIAw9IXWWKinSJTPGao78I4q
+	 7NrqVI8qvKQ1cW4r7+ZEyU9t6gIxvcWA9xKOveXFDAQIV0TtQzh6YqCZRxH/FEV/46
+	 yq62ro0COdFRLQHRsw7/Ai7ymYfH8qSR2Lq/WDUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Li Ming <ming4.li@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1156/1193] bpf: Defer work in bpf_timer_cancel_and_free
-Date: Wed, 30 Sep 2026 17:30:40 +0200
-Message-ID: <20260930152459.926773328@linuxfoundation.org>
+Subject: [PATCH 6.6 1157/1193] cxl/mem: Fix no cxl_nvd during pmem region auto-assembling
+Date: Wed, 30 Sep 2026 17:30:41 +0200
+Message-ID: <20260930152459.948558608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,152 +55,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Li Ming <ming4.li@intel.com>
 
-[ Upstream commit a6fcd19d7eac1335eb76bc16b6a66b7f574d1d69 ]
+[ Upstream commit 84ec985944ef34a34a1605b93ce401aa8737af96 ]
 
-Currently, the same case as previous patch (two timer callbacks trying
-to cancel each other) can be invoked through bpf_map_update_elem as
-well, or more precisely, freeing map elements containing timers. Since
-this relies on hrtimer_cancel as well, it is prone to the same deadlock
-situation as the previous patch.
+When CXL subsystem is auto-assembling a pmem region during cxl
+endpoint port probing, always hit below calltrace.
 
-It would be sufficient to use hrtimer_try_to_cancel to fix this problem,
-as the timer cannot be enqueued after async_cancel_and_free. Once
-async_cancel_and_free has been done, the timer must be reinitialized
-before it can be armed again. The callback running in parallel trying to
-arm the timer will fail, and freeing bpf_hrtimer without waiting is
-sufficient (given kfree_rcu), and bpf_timer_cb will return
-HRTIMER_NORESTART, preventing the timer from being rearmed again.
+ BUG: kernel NULL pointer dereference, address: 0000000000000078
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ RIP: 0010:cxl_pmem_region_probe+0x22e/0x360 [cxl_pmem]
+ Call Trace:
+  <TASK>
+  ? __die+0x24/0x70
+  ? page_fault_oops+0x82/0x160
+  ? do_user_addr_fault+0x65/0x6b0
+  ? exc_page_fault+0x7d/0x170
+  ? asm_exc_page_fault+0x26/0x30
+  ? cxl_pmem_region_probe+0x22e/0x360 [cxl_pmem]
+  ? cxl_pmem_region_probe+0x1ac/0x360 [cxl_pmem]
+  cxl_bus_probe+0x1b/0x60 [cxl_core]
+  really_probe+0x173/0x410
+  ? __pfx___device_attach_driver+0x10/0x10
+  __driver_probe_device+0x80/0x170
+  driver_probe_device+0x1e/0x90
+  __device_attach_driver+0x90/0x120
+  bus_for_each_drv+0x84/0xe0
+  __device_attach+0xbc/0x1f0
+  bus_probe_device+0x90/0xa0
+  device_add+0x51c/0x710
+  devm_cxl_add_pmem_region+0x1b5/0x380 [cxl_core]
+  cxl_bus_probe+0x1b/0x60 [cxl_core]
 
-However, there exists a UAF scenario where the callback arms the timer
-before entering this function, such that if cancellation fails (due to
-timer callback invoking this routine, or the target timer callback
-running concurrently). In such a case, if the timer expiration is
-significantly far in the future, the RCU grace period expiration
-happening before it will free the bpf_hrtimer state and along with it
-the struct hrtimer, that is enqueued.
+The cxl_nvd of the memdev needs to be available during the pmem region
+probe. Currently the cxl_nvd is registered after the endpoint port probe.
+The endpoint probe, in the case of autoassembly of regions, can cause a
+pmem region probe requiring the not yet available cxl_nvd. Adjust the
+sequence so this dependency is met.
 
-Hence, it is clear cancellation needs to occur after
-async_cancel_and_free, and yet it cannot be done inline due to deadlock
-issues. We thus modify bpf_timer_cancel_and_free to defer work to the
-global workqueue, adding a work_struct alongside rcu_head (both used at
-_different_ points of time, so can share space).
+This requires adding a port parameter to cxl_find_nvdimm_bridge() that
+can be used to query the ancestor root port. The endpoint port is not
+yet available, but will share a common ancestor with its parent, so
+start the query from there instead.
 
-Update existing code comments to reflect the new state of affairs.
+[ Backport to 6.6.y: mapped find_cxl_root() and reference handling to the
+  older struct cxl_port and put_device() APIs. The new early error return
+  explicitly drops parent_port because 6.6.y lacks the scoped cleanup later
+  added by upstream commit dd2617ebd2a6 ("cxl/port: Use __free() to drop
+  put_device() for cxl_port"). ]
 
-[ Backport to 6.6.y: mapped deferred deletion to the older bpf_async_cb
-  layout while retaining the work and RCU lifetime ordering. ]
-
-Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20240709185440.1104957-3-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f17b558d6663 ("cxl/pmem: Refactor nvdimm device registration, delete the workqueue")
+Co-developed-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Li Ming <ming4.li@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20240612064423.2567625-1-ming4.li@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 58 +++++++++++++++++++++++++++++++++++---------
- 1 file changed, 46 insertions(+), 12 deletions(-)
+ drivers/cxl/core/pmem.c   | 21 ++++++++++++++-------
+ drivers/cxl/core/region.c |  2 +-
+ drivers/cxl/cxl.h         |  4 ++--
+ drivers/cxl/mem.c         | 18 ++++++++++--------
+ 4 files changed, 27 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 419e49946cbdb..1fa140915b0c0 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -1104,7 +1104,10 @@ struct bpf_async_cb {
- 	struct bpf_prog *prog;
- 	void __rcu *callback_fn;
- 	void *value;
--	struct rcu_head rcu;
-+	union {
-+		struct rcu_head rcu;
-+		struct work_struct delete_work;
-+	};
- 	u64 flags;
- };
- 
-@@ -1188,6 +1191,22 @@ static enum hrtimer_restart bpf_timer_cb(struct hrtimer *hrtimer)
- 	return HRTIMER_NORESTART;
+diff --git a/drivers/cxl/core/pmem.c b/drivers/cxl/core/pmem.c
+index 317b2fbbef668..1f87ce9191a74 100644
+--- a/drivers/cxl/core/pmem.c
++++ b/drivers/cxl/core/pmem.c
+@@ -62,16 +62,21 @@ static int match_nvdimm_bridge(struct device *dev, void *data)
+ 	return is_cxl_nvdimm_bridge(dev);
  }
  
-+static void bpf_timer_delete_work(struct work_struct *work)
-+{
-+	struct bpf_hrtimer *t = container_of(work, struct bpf_hrtimer,
-+					     cb.delete_work);
-+
-+	/* Cancel the timer and wait for callback to complete if it was running.
-+	 * If hrtimer_cancel() can be safely called it's safe to call
-+	 * kfree_rcu(t) right after for both preallocated and non-preallocated
-+	 * maps. The timer->timer = NULL was already done and no code path can see
-+	 * address 't' anymore. A timer armed before bpf_timer_cancel_and_free()
-+	 * will have been cancelled.
-+	 */
-+	hrtimer_cancel(&t->timer);
-+	kfree_rcu(t, cb.rcu);
-+}
-+
- static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u64 flags,
- 			    enum bpf_async_type type)
+-struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_memdev *cxlmd)
++/**
++ * cxl_find_nvdimm_bridge() - find a bridge device relative to a port
++ * @port: any descendant port of an nvdimm-bridge associated
++ *        root-cxl-port
++ */
++struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_port *port)
  {
-@@ -1230,6 +1249,7 @@ static int __bpf_async_init(struct bpf_async_kern *async, struct bpf_map *map, u
- 		t = (struct bpf_hrtimer *)cb;
+-	struct cxl_port *port = find_cxl_root(cxlmd->endpoint);
++	struct cxl_port *root = find_cxl_root(port);
+ 	struct device *dev;
  
- 		atomic_set(&t->cancelling, 0);
-+		INIT_WORK(&t->cb.delete_work, bpf_timer_delete_work);
- 		hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
- 		t->timer.function = bpf_timer_cb;
- 		cb->value = (void *)async - map->record->timer_off;
-@@ -1484,14 +1504,8 @@ void bpf_timer_cancel_and_free(void *val)
- 	__bpf_spin_unlock_irqrestore(&timer->lock);
- 	if (!t)
- 		return;
--	/* Cancel the timer and wait for callback to complete if it was running.
--	 * If hrtimer_cancel() can be safely called it's safe to call kfree(t)
--	 * right after for both preallocated and non-preallocated maps.
--	 * The timer->timer = NULL was already done and no code path can
--	 * see address 't' anymore.
--	 *
--	 * Check that bpf_map_delete/update_elem() wasn't called from timer
--	 * callback_fn. In such case don't call hrtimer_cancel() (since it will
-+	/* We check that bpf_map_delete/update_elem() was called from timer
-+	 * callback_fn. In such case we don't call hrtimer_cancel() (since it
- 	 * deadlock) and don't call hrtimer_try_to_cancel() (since it will just
- 	 * return -1). Though callback_fn is still running on this cpu it's
- 	 * safe to do kfree(t) because bpf_timer_cb() read everything it needed
-@@ -1499,10 +1513,30 @@ void bpf_timer_cancel_and_free(void *val)
- 	 * since timer->timer = NULL was already done. The timer will be
- 	 * effectively cancelled because bpf_timer_cb() will return
- 	 * HRTIMER_NORESTART.
-+	 *
-+	 * However, it is possible the timer callback_fn calling us armed the
-+	 * timer _before_ calling us, such that failing to cancel it here will
-+	 * cause it to possibly use struct hrtimer after freeing bpf_hrtimer.
-+	 * Therefore, we _need_ to cancel any outstanding timers before we do
-+	 * kfree_rcu, even though no more timers can be armed.
-+	 *
-+	 * Moreover, we need to schedule work even if timer does not belong to
-+	 * the calling callback_fn, as on two different CPUs, we can end up in a
-+	 * situation where both sides run in parallel, try to cancel one
-+	 * another, and we end up waiting on both sides in hrtimer_cancel
-+	 * without making forward progress, since timer1 depends on timer2
-+	 * callback to finish, and vice versa.
-+	 *
-+	 *  CPU 1 (timer1_cb)			CPU 2 (timer2_cb)
-+	 *  bpf_timer_cancel_and_free(timer2)	bpf_timer_cancel_and_free(timer1)
-+	 *
-+	 * To avoid these issues, punt to workqueue context when we are in a
-+	 * timer callback.
- 	 */
--	if (this_cpu_read(hrtimer_running) != t)
--		hrtimer_cancel(&t->timer);
--	kfree_rcu(t, cb.rcu);
-+	if (this_cpu_read(hrtimer_running))
-+		queue_work(system_unbound_wq, &t->cb.delete_work);
-+	else
-+		bpf_timer_delete_work(&t->cb.delete_work);
- }
+-	if (!port)
++	if (!root)
+ 		return NULL;
  
- BPF_CALL_2(bpf_kptr_xchg, void *, map_value, void *, ptr)
+-	dev = device_find_child(&port->dev, NULL, match_nvdimm_bridge);
+-	put_device(&port->dev);
++	dev = device_find_child(&root->dev, NULL, match_nvdimm_bridge);
++	put_device(&root->dev);
+ 
+ 	if (!dev)
+ 		return NULL;
+@@ -244,18 +249,20 @@ static void cxlmd_release_nvdimm(void *_cxlmd)
+ 
+ /**
+  * devm_cxl_add_nvdimm() - add a bridge between a cxl_memdev and an nvdimm
++ * @parent_port: parent port for the (to be added) @cxlmd endpoint port
+  * @cxlmd: cxl_memdev instance that will perform LIBNVDIMM operations
+  *
+  * Return: 0 on success negative error code on failure.
+  */
+-int devm_cxl_add_nvdimm(struct cxl_memdev *cxlmd)
++int devm_cxl_add_nvdimm(struct cxl_port *parent_port,
++			struct cxl_memdev *cxlmd)
+ {
+ 	struct cxl_nvdimm_bridge *cxl_nvb;
+ 	struct cxl_nvdimm *cxl_nvd;
+ 	struct device *dev;
+ 	int rc;
+ 
+-	cxl_nvb = cxl_find_nvdimm_bridge(cxlmd);
++	cxl_nvb = cxl_find_nvdimm_bridge(parent_port);
+ 	if (!cxl_nvb)
+ 		return -ENODEV;
+ 
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index af4f8bbe63c44..97e4a4755ab2f 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -2682,7 +2682,7 @@ static struct cxl_pmem_region *cxl_pmem_region_alloc(struct cxl_region *cxlr)
+ 		 * bridge for one device is the same for all.
+ 		 */
+ 		if (i == 0) {
+-			cxl_nvb = cxl_find_nvdimm_bridge(cxlmd);
++			cxl_nvb = cxl_find_nvdimm_bridge(cxlmd->endpoint);
+ 			if (!cxl_nvb) {
+ 				kfree(cxlr_pmem);
+ 				cxlr_pmem = ERR_PTR(-ENODEV);
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index a7a1b71626de4..59e963e39d31b 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -795,8 +795,8 @@ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+ struct cxl_nvdimm *to_cxl_nvdimm(struct device *dev);
+ bool is_cxl_nvdimm(struct device *dev);
+ bool is_cxl_nvdimm_bridge(struct device *dev);
+-int devm_cxl_add_nvdimm(struct cxl_memdev *cxlmd);
+-struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_memdev *cxlmd);
++int devm_cxl_add_nvdimm(struct cxl_port *parent_port, struct cxl_memdev *cxlmd);
++struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_port *port);
+ 
+ #ifdef CONFIG_CXL_REGION
+ bool is_cxl_pmem_region(struct device *dev);
+diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
+index 317c7548e4e9b..3400d2f2a5ff9 100644
+--- a/drivers/cxl/mem.c
++++ b/drivers/cxl/mem.c
+@@ -153,6 +153,16 @@ static int cxl_mem_probe(struct device *dev)
+ 		return -ENXIO;
+ 	}
+ 
++	if (resource_size(&cxlds->pmem_res) && IS_ENABLED(CONFIG_CXL_PMEM)) {
++		rc = devm_cxl_add_nvdimm(parent_port, cxlmd);
++		if (rc) {
++			if (rc == -ENODEV)
++				dev_info(dev, "PMEM disabled by platform\n");
++			put_device(&parent_port->dev);
++			return rc;
++		}
++	}
++
+ 	if (dport->rch)
+ 		endpoint_parent = parent_port->uport_dev;
+ 	else
+@@ -173,14 +183,6 @@ static int cxl_mem_probe(struct device *dev)
+ 	if (rc)
+ 		return rc;
+ 
+-	if (resource_size(&cxlds->pmem_res) && IS_ENABLED(CONFIG_CXL_PMEM)) {
+-		rc = devm_cxl_add_nvdimm(cxlmd);
+-		if (rc == -ENODEV)
+-			dev_info(dev, "PMEM disabled by platform\n");
+-		else
+-			return rc;
+-	}
+-
+ 	/*
+ 	 * The kernel may be operating out of CXL memory on this device,
+ 	 * there is no spec defined way to determine whether this device
 -- 
 2.53.0
 
