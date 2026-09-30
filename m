@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CA451354E;
-	Wed, 30 Sep 2026 16:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B964DDB20;
+	Wed, 30 Sep 2026 16:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784716; cv=none; b=Ic6O8TWKrXSEcD2p4Y6gm/ghNqiW3U1NjPQbYgA4Rysc7DqHIprRaF1Ey1oCwG8x7s57z1Bho1CSD2Dzt2IAPKS2DhieNf2wvmkp8L0X8aAnP8Rbppvcoma1IJ2wBd5/6MuOO5R7t45pgCeqxkdLrumeyvlc406Sadvj7nTo7es=
+	t=1790784717; cv=none; b=jWhz3zxRKM1SONAPOBqoVMpNkHd3hIu4HXsMy/tNGNcZmO9sNaYwHaiapVl4mTKQE8yNSW6QZIuXkmACWAiW+Rte5SJS6vhEW944HV4lTXCtNKJdKp/IeWo4KyPW1cCFnOCxbBsWTZcejqjmy01bSJfZBvO/jpDtZty8UFY4ZZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784716; c=relaxed/simple;
-	bh=BJLY61JRmmHr6K0fD/H60IRE8PQvQiqwKZ3hKz3Ded4=;
+	s=arc-20240116; t=1790784717; c=relaxed/simple;
+	bh=mubmwMI3/M7X4vXEoiKEtYpm7Xp00hfTIzLpyHyip+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qerh0l6499KwYeBVcXxGZhH5zM3Fp38DTnO8Vb45CMVWm1UvvFt4CWkUr8tZ3mmmIlPZXQNr+0eRlg7PsceE0gYfgoKoMukvRjzHEbWRc9ntLg1anjcLYCVqR02AqNJ/JA9iQFGmAGXNB99IPAB9lcuB3aJrwjLb7Hy/zRvt6Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+D3Veny; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pFzq4JE8+U/gZyIeMCRP6jnjXRwTcs5FauzgVJMiB74B1Q4/C2yc6D4PxX2EABsct/P8JNoz3vwnnGjISSBiucQtZmpxNwl/pMMuxiuAKc23XQcZMvbkcl0fOvSC8ARqkOrX1WC+GvtVjLYyHTUpnN33eiZqfxGR/0j0SyHbQ84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjStzuW/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+D3Veny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F891F00898;
-	Wed, 30 Sep 2026 16:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjStzuW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8C91F0089B;
+	Wed, 30 Sep 2026 16:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784711;
-	bh=cGz5dVQPyGPEdfARzZAKUU1E2s9VqILkMrEOa03RYls=;
+	s=korg; t=1790784708;
+	bh=m87B6NNNRmNijsmXDCiLOvTja78hhIQeMhuc9MsYFzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O+D3Venyf3Y2HjUXzQyA2XsfVgXd3/q40AdOflVDwStXScjeMQoWN4OyAlZe4+Ov2
-	 U7Gsh7KUFbA11eq2kRIxU2gb7eJcqfBg3aq69fsKAGomZwrTCPNBfbB88LDLI74o/+
-	 Mblki3W1wjVQcZLGxQWYCmKBNcDBKLlUf58EOE5s=
+	b=wjStzuW/BKrNz047Knqh8oiwTTh7rl4zdWh2TO+YhkIBfPrTyzPnfxB7SHWNyxC4v
+	 NDXN/jP+MR/ycCiEIFVRk27/o6D25fNE63qDKFM15LNtUsEwLPmtl9cZ1BG6FWc7CV
+	 R1VshnvjuPzhnEuAhk+FXRzhzirNwOcMW2HngafE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 250/982] wifi: libertas: reject short monitor TX frames
-Date: Wed, 30 Sep 2026 17:16:26 +0200
-Message-ID: <20260930152422.164621291@linuxfoundation.org>
+Subject: [PATCH 6.1 249/982] wifi: rsi: avoid reading TKIP MIC keys for non-TKIP ciphers
+Date: Wed, 30 Sep 2026 17:16:25 +0200
+Message-ID: <20260930152422.141984303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,43 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 13ff543e0b2c713aedeaadadde686686e949dc78 ]
+[ Upstream commit 843fe9bc583b7686ca68312ac9319c9240a73c03 ]
 
-In monitor mode, lbs_hard_start_xmit() casts skb->data to a
-radiotap TX header, skips that header, and then copies the 802.11
-destination address from offset 4 in the remaining frame.  The
-generic length check only rejects zero-length and oversized skbs, so
-a short monitor frame can be read past the end of the skb data.
+rsi_hal_load_key() copies tx_mic_key and rx_mic_key from data[16] and
+data[24] whenever key data is present. Those offsets are only part of
+the 32-byte TKIP key layout. Shorter keys used by other ciphers, such as
+CCMP, do not provide those bytes, so the unconditional copies can read
+past the supplied key buffer.
 
-Require enough bytes for the radiotap TX header and the destination
-address field before using the monitor-mode header layout.
+Only copy the MIC keys for TKIP, and reject malformed TKIP keys that are
+shorter than the expected 32-byte layout.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704011140.37639-1-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260701053414.34015-1-pengpeng@iscas.ac.cn
+[drop useless length check]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/tx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/rsi/rsi_91x_mgmt.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/tx.c b/drivers/net/wireless/marvell/libertas/tx.c
-index 27304a98787d6..13d08022e4141 100644
---- a/drivers/net/wireless/marvell/libertas/tx.c
-+++ b/drivers/net/wireless/marvell/libertas/tx.c
-@@ -117,6 +117,13 @@ netdev_tx_t lbs_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
- 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
- 
-+		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
-+			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
-+			dev->stats.tx_dropped++;
-+			dev->stats.tx_errors++;
-+			goto free;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_mgmt.c b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
+index 1b309e47a1f11..195d7394ab775 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
++++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
+@@ -848,8 +848,10 @@ int rsi_hal_load_key(struct rsi_common *common,
+ 		} else {
+ 			memcpy(&set_key->key[0][0], data, key_len);
+ 		}
+-		memcpy(set_key->tx_mic_key, &data[16], 8);
+-		memcpy(set_key->rx_mic_key, &data[24], 8);
++		if (cipher == WLAN_CIPHER_SUITE_TKIP) {
++			memcpy(set_key->tx_mic_key, &data[16], 8);
++			memcpy(set_key->rx_mic_key, &data[24], 8);
 +		}
-+
- 		/* set txpd fields from the radiotap header */
- 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
- 
+ 	} else {
+ 		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
+ 	}
 -- 
 2.53.0
 
