@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B95C51B196;
-	Wed, 30 Sep 2026 18:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2365B51A73A;
+	Wed, 30 Sep 2026 18:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793097; cv=none; b=VarXIoiNkLXZcn+HL6srBexR7Fp+qA7q03qrRV/7Rkbmaot9j9WWRII25RvL9RPP2YmdQWhT+B6SqRTJNCTllpjRlEAEOOaWc6tXa/Hx+/dji+DZvH1nWGpJ3yf0AX2AeWTKGEvQVXUnrfKWGDNHxOT6u1JKHgDniacAgBN1iY0=
+	t=1790793100; cv=none; b=XhCw2s5//4nXaz4uITVOFNC+7wBTTUKxvCJUuv3aetOS4VcWsIUrJYlHpFObtDlsqt2KFKTWeL9K6acafPfBu3pZnMIruVmNn869eIu6pZz1nVsD6A5F3tVpYNGqonT++EUSTuYcgOPptiRMPtgIcGJ57s1FGHSSRjTFXo66qBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793097; c=relaxed/simple;
-	bh=EVcCxavDYqOp+GCMPej9PwjGthypybBIDnAuv9+kO4k=;
+	s=arc-20240116; t=1790793100; c=relaxed/simple;
+	bh=pbSto1cYtplMyk7Tez69RBYjpnxP8CnEiJyWvSTCkMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fz7A665INhKrdJKl6ilxhjyZoiBsIuPoGnr9EnzvpqwjU5V5ri4Dr7At8sIz/u6Jp7eEIN7gMAMHVRUh017pbgMMZnvS6NBZu6Oy200JrgoCtnH/FEYe9FMbJYg1pvY+d8ziVibFj9LMnoz8VzHO+dJAHvTtFKgLqL0wp5dtonY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfVWP3yo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J10L9u6Pc1pRHSZKFVW5M7Ln4T65gyFwOspxQop0aVGNwIMrU1vFrR+Z7dy3r5PFdG2K3pnjra4VWyfxADgyf3nvqH/C5oAwjeXwMTpRwEXpYXkwMtvh+TraqtKywlY6x2xJUKlDotHSeGa/Z9s8zBRASxp2rEmI/bhE1WcgEAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xIMfwaC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfVWP3yo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593BD1F000FF;
-	Wed, 30 Sep 2026 18:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xIMfwaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C851F000FF;
+	Wed, 30 Sep 2026 18:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793095;
-	bh=JQrfal/bhXnblXSOo0ENWxe8Rai57O3GbzP2AiVVfXU=;
+	s=korg; t=1790793098;
+	bh=J81xPg/B8iRG76Jd9Aao/KVKrbkRm5NmRj47a0wCsOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AfVWP3yoxgqOSpBW1M0sgX6tJ6+bxhuWaVpDzDbQwN8ZTdEAVT1yYu4kT6MPp3BJK
-	 7pPH+EuMC6JOjnjN+I5+9a0j3L2xFpgFm8PJ78NnVTQ61uc0hIXMzM56CYMt6MLTb7
-	 6CFsDA5zZSPymY6Zr7/2UvLPTnkwI+lDD1DVxFa8=
+	b=1xIMfwaC1BRtr9ZySF1HhgRJZjXyuySa5dFLU9TyIncd7vt3FNvRIchWGESIfhYMg
+	 rHXHoBhEybw6MEGLZ77DZC4DPIUfyWrzZ1D4vW7N0vWNTGCghtuaiNFeDOMY98kxv2
+	 g79lBQhOIr+fuQuO46oI+CFwVhTx1gF3dbjO2KvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
 	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 135/395] net: stmmac: selftests: Capture all packets for vlan checks
-Date: Wed, 30 Sep 2026 17:26:37 +0200
-Message-ID: <20260930152343.574083033@linuxfoundation.org>
+Subject: [PATCH 6.18 136/395] net: stmmac: dwmac4: Use the correct bufzise when the len is exactly 8K
+Date: Wed, 30 Sep 2026 17:26:38 +0200
+Message-ID: <20260930152343.596101843@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,108 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 960db6f65788c21249ea04a947d5c01e38d19294 ]
+[ Upstream commit b42e7012773a0e81e97a2dda6ef907f5147a6658 ]
 
-While we use vlan_vid_add to trigger the tag filtering machinery
-in the driver, there's no netdev associated to the VLAN. This causes the
-skb to arrive with empty skb->vlan_tci fields, as the packet is marked
-OTHERHOST in __netif_receive_skb_core(), and we fail our validation.
+DMA bufsize selection isn't made on the MTU but the actual frame length,
+so including the L2 header. On DWMAC4, if the len is exactly BUF_SIZE_8KiB,
+the next larger size is incorrectly selected.
 
-Let's use the proxy mechanism introduced for DSA, that registers a
-ETH_P_ALL packet handler that runs earlier, before the vlan netdev
-lookup, then filters for the correct ethertype before passing an skb
-clone to our validation function.
+Lets fix the comparison and while at it, rename the parameter from len
+to mtu.
 
-As we may receive external frames with the right tag from the outside,
-let's move the address check in the vlan validation function earlier.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Fixes: c3efed5ad1b0 ("net: stmmac: Enable dwmac4 jumbo frame more than 8KiB").
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260917215339.2022523-5-maxime.chevallier@bootlin.com
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260917215339.2022523-6-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c | 4 ++--
+ drivers/net/ethernet/stmicro/stmmac/hwif.h         | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/ring_mode.c    | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 71455457b0f3c..bd92d5b051953 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -242,6 +242,7 @@ struct stmmac_test_priv {
- 	__be16 packet_type;
- 	int (*func)(struct sk_buff *skb, struct net_device *ndev,
- 		    struct packet_type *pt, struct net_device *orig_ndev);
-+	bool capture_all;
- 	int double_vlan;
- 	int vlan_id;
- 	int ok;
-@@ -344,13 +345,15 @@ static void stmmac_sft_add_pack(struct packet_type *pt)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+index aac68dc28dc19..2c63229bfb1a8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
+@@ -496,11 +496,11 @@ static void dwmac4_set_sarc(struct dma_desc *p, u32 sarc_type)
+ 	p->des3 |= cpu_to_le32(sarc_type & TDES3_SA_INSERT_CTRL_MASK);
+ }
+ 
+-static int set_16kib_bfsize(int mtu)
++static int set_16kib_bfsize(int len)
  {
- 	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
+ 	int ret = 0;
  
--	if (netdev_uses_dsa(tpriv->pt.dev)) {
-+	if (netdev_uses_dsa(tpriv->pt.dev) || tpriv->capture_all) {
- 		tpriv->packet_type = tpriv->pt.type;
- 		tpriv->func = tpriv->pt.func;
+-	if (unlikely(mtu >= BUF_SIZE_8KiB))
++	if (unlikely(len > BUF_SIZE_8KiB))
+ 		ret = BUF_SIZE_16KiB;
+ 	return ret;
+ }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index 75e915e86c789..ba36f1aa8c8a4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -536,7 +536,7 @@ struct stmmac_mode_ops {
+ 	unsigned int (*is_jumbo_frm) (int len, int ehn_desc);
+ 	int (*jumbo_frm)(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
+ 			 int csum);
+-	int (*set_16kib_bfsize)(int mtu);
++	int (*set_16kib_bfsize)(int len);
+ 	void (*init_desc3)(struct dma_desc *p);
+ 	void (*refill_desc3)(struct stmmac_rx_queue *rx_q, struct dma_desc *p);
+ 	void (*clean_desc3)(struct stmmac_tx_queue *tx_q, struct dma_desc *p);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+index 45c14c1bb0eaa..88a8d22812f5d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+@@ -128,10 +128,10 @@ static void clean_desc3(struct stmmac_tx_queue *tx_q, struct dma_desc *p)
+ 		p->des3 = 0;
+ }
  
- 		/* DSA conduit will report ETH_P_XDSA, so our packet handler
- 		 * won't match. Let's register a ETH_P_ALL match and filter
--		 * manually in stmmac_sft_filter.
-+		 * manually in stmmac_sft_filter. This is also useful for
-+		 * VLAN tests, to capture packets otherwise marked as
-+		 * OTHERHOST.
- 		 */
- 		tpriv->pt.type = htons(ETH_P_ALL);
- 		tpriv->pt.func = stmmac_sft_filter;
-@@ -923,6 +926,11 @@ static int stmmac_test_vlan_validate(struct sk_buff *skb,
- 		goto out;
- 	if (skb_headlen(skb) < (STMMAC_TEST_PKT_SIZE - ETH_HLEN))
- 		goto out;
-+
-+	ehdr = (struct ethhdr *)skb_mac_header(skb);
-+	if (!ether_addr_equal_unaligned(ehdr->h_dest, tpriv->packet->dst))
-+		goto out;
-+
- 	if (tpriv->vlan_id) {
- 		if (skb->vlan_proto != htons(proto))
- 			goto out;
-@@ -934,10 +942,6 @@ static int stmmac_test_vlan_validate(struct sk_buff *skb,
- 		}
- 	}
- 
--	ehdr = (struct ethhdr *)skb_mac_header(skb);
--	if (!ether_addr_equal_unaligned(ehdr->h_dest, tpriv->packet->dst))
--		goto out;
--
- 	ihdr = ip_hdr(skb);
- 	if (tpriv->double_vlan)
- 		ihdr = (struct iphdr *)(skb_network_header(skb) + 4);
-@@ -979,6 +983,7 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
-+	tpriv->capture_all = true;
- 
- 	/*
- 	 * As we use HASH filtering, false positives may appear. This is a
-@@ -1075,6 +1080,7 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
-+	tpriv->capture_all = true;
- 
- 	/*
- 	 * As we use HASH filtering, false positives may appear. This is a
-@@ -1355,6 +1361,7 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
- 	tpriv->vlan_id = 0x123;
-+	tpriv->capture_all = true;
- 
- 	ret = vlan_vid_add(priv->dev, htons(proto), tpriv->vlan_id);
- 	if (ret)
+-static int set_16kib_bfsize(int mtu)
++static int set_16kib_bfsize(int len)
+ {
+ 	int ret = 0;
+-	if (unlikely(mtu > BUF_SIZE_8KiB))
++	if (unlikely(len > BUF_SIZE_8KiB))
+ 		ret = BUF_SIZE_16KiB;
+ 	return ret;
+ }
 -- 
 2.53.0
 
