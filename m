@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDBF379EC4;
-	Wed, 30 Sep 2026 15:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B814E430E;
+	Wed, 30 Sep 2026 15:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783874; cv=none; b=GdPxLYHBM83pZTr0P2FyXjZchRevDv3TaJUMxHQHR3xet3UycuoH1mY+Ayg1XbodJ1vQR6VDkXbxHxxB2sA/vWI9lj0629ObdMDu7NPc9dkI/BCpV4YykEB9cdoPjxNvt2btRCMymf0/ULLR+co4hD3b1EKRrWLdPinIj/XTfXA=
+	t=1790783878; cv=none; b=buh8KMavAOrVVgsMNNwontnO7MS2HKPb7+41Q7Dyn/a0VgGaxKjwZTgC41aRmUYYr6yGzZdBhO5H7ta38dAGJtZd28UZ04HYD3FIBUuQXxkizrqJV6UxBtgrYbmaTrU9cznLkElRIzdgIrRop7bULVBNoK4uXe/yORXAx4WfdmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783874; c=relaxed/simple;
-	bh=CUBR2YB/6gA0lp27MsAsDGsc+ftpyVq2lchxbWjhVHw=;
+	s=arc-20240116; t=1790783878; c=relaxed/simple;
+	bh=aC74gipAZDDnDxXHAe/EVoTh0Kk9mw5Cw5SD3dmcjQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4SWCO5gTYIxiZ0S6v9M7fDJ+2ho81MLvlbCFsAbmuKIabpofXpZNlgTvEetNWbim9ZPOK2xjbFVz9LGpgh0YlJzgtyL8FM55CMDdCEB1C6xsAhjKowopT/Jc8WNvPkq+zdzwUqItlBP/9aqYOImMm43IznpZiR28jezfzHDpEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoFWpRwy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ppgragXpJRqR1fwMmVYh1ksBoXJwFigIW/89IXf7Q9m2lT4E4cEhl+r9y6t4T9e8rbi+2HblVqclcpcgMZ/4/07yzBioJoBbrixVTXQEfn3J7OdoZyWdYPM7r6DbZHGC2xPn1FmuUF56KeihTrB3lSBUXIfntJHnCyUMtz7gUDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kZU1Agu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoFWpRwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FFB1F00893;
-	Wed, 30 Sep 2026 15:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kZU1Agu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C3D1F000FF;
+	Wed, 30 Sep 2026 15:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783866;
-	bh=RzruEeZqubsMxXLlTKpC2bIsPe427wInJbDAs81eyCM=;
+	s=korg; t=1790783875;
+	bh=t1V3oEZwuQYvyVtbLZlN6gtlDah64WMeprzn7idWZ4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WoFWpRwy/+cQqjaquK64Py4HfG94E8hkRkBchFDoyZtjaQryw76m8KUIDKtm7e7gq
-	 2hKb4fMi6aphfYw4w0wf18Dbzy0JvODDBuH19AyGHksj+HJ4fIZYrd61YDSZT8gvbh
-	 KKp9CkxgFHcRDd4VEaVra/rrDzinOxKRuimHAdo0=
+	b=1kZU1AguAoxlZVHvSW1MA88fMdtpouSe046SEXcDjxMDGnX+6lnOTSuvAaqz6Cqvp
+	 mohPRmQrQn9+ryiL3JhcSTsfEz/n2rGABCmNW5zIwDpXmEZx1KVtfvTOtlXo/S0YBD
+	 iPWOxtMNj6Tm9PQrHQVe60dU+GsZn/6aWRYON0sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Scott Mitchell <scott.k.mitch1@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 495/595] netfilter: nfnetlink_queue: nfqnl_instance GFP_ATOMIC -> GFP_KERNEL_ACCOUNT allocation
-Date: Wed, 30 Sep 2026 17:26:28 +0200
-Message-ID: <20260930152358.341654688@linuxfoundation.org>
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 554/595] af_packet: fix integer overflow in prb_calc_retire_blk_tmo()
+Date: Wed, 30 Sep 2026 17:27:27 +0200
+Message-ID: <20260930152359.633409785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,175 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mitchell <scott.k.mitch1@gmail.com>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-[ Upstream commit a4400a5b343d1bc4aa8f685608515413238e7ee2 ]
+commit 56d82862a0a243ac14ba11b6d7b57ddc2d064b95 upstream.
 
-Currently, instance_create() uses GFP_ATOMIC because it's called while
-holding instances_lock spinlock. This makes allocation more likely to
-fail under memory pressure.
+prb_calc_retire_blk_tmo() computes in 32-bit int arithmetic:
 
-Refactor nfqnl_recv_config() to drop RCU lock after instance_lookup()
-and peer_portid verification. A socket cannot simultaneously send a
-message and close, so the queue owned by the sending socket cannot be
-destroyed while processing its CONFIG message. This allows
-instance_create() to allocate with GFP_KERNEL_ACCOUNT before taking
-the spinlock.
+        mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
 
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Scott Mitchell <scott.k.mitch1@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 9461613afc59 ("netfilter: nfnetlink_queue: hold nfnl mutex in event notifier")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If I'm reading the validation right, tp_block_size is user
+controlled and packet_set_ring() only rejects values that are <= 0
+as int or not page aligned, so a 256MiB block goes right through
+(and alloc_one_pg_vec_page() even has a vzalloc fallback for it).
+0x10000000 * 8 wraps to INT_MIN, and on a NIC reporting 1 Gbps
+(div == 1) the function ends up returning -2047.
+
+The condition is actually (8 * size) mod 2^32 >= 2^31 && div == 1,
+so the trigger set is [256,512), [768,1024), [1280,1536) and
+[1792,2048) MiB. Other sizes wrap to non-negative values and faster
+links divide the unsigned value back below 2^31, which is why this
+doesn't blow up for everyone.
+
+What makes it fatal is what happens next in init_prb_bdqc():
+
+        p1->interval_ktime = ms_to_ktime(prb_calc_retire_blk_tmo(...));
+        hrtimer_start(&p1->retire_blk_timer, p1->interval_ktime,
+                      HRTIMER_MODE_REL_SOFT);
+
+A negative relative timeout expires immediately. The callback
+unconditionally returns HRTIMER_RESTART, and hrtimer_forward() turns
+the negative interval into hrtimer_resolution:
+
+        if (interval < hrtimer_resolution)
+                interval = hrtimer_resolution;
+
+So the SOFT timer re-fires at the maximum rate forever, holding
+sk_receive_queue.lock each pass. One CPU spins in softirq until the
+socket is closed. Repeat with more rings and the machine is gone.
+
+The overflow itself is ancient - it was introduced together with
+TPACKET_V3 in f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer
+implementation."). Its effect prior to f7460d2989fa ("net:
+af_packet: Use hrtimer to do the retire operation", v6.18) was not
+as clear-cut, though: the return value was stored into an unsigned
+short retire_blk_tov, so a negative result was truncated, and a
+0-jiffy delay loop could be programmed as well. Neither is nearly
+as detrimental as the immediate maximum-rate spin the hrtimer
+conversion turned it into.
+
+(Unrelated to CVE-2019-20812 - that one was the ethtool failure path
+returning 0, which now returns DEFAULT_PRB_RETIRE_TOV.)
+
+Reproducer, needs CAP_NET_RAW (a --network host container has it by
+default) and a 1 Gbps NIC (QEMU e1000 works):
+
+        int fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+        bind(fd, ...);
+        int v = TPACKET_V3;
+        setsockopt(fd, SOL_PACKET, PACKET_VERSION, &v, sizeof(v));
+        struct tpacket_req3 req = {
+                .tp_block_size = 0x10000000,
+                .tp_block_nr = 1,
+                .tp_frame_size = 2048,
+                .tp_frame_nr = 0x10000000 / 2048,
+                .tp_retire_blk_tov = 0,
+        };
+        setsockopt(fd, SOL_PACKET, PACKET_RX_RING, &req, sizeof(req));
+
+Compute in 64 bits instead. The operands are already bounded by the
+existing validation, so nothing else changes. If you'd prefer a
+different fix, just say so and I'll respin.
+
+Fixes: f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer implementation.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260923050101.1510064-1-zhangdairui@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nfnetlink_queue.c | 75 +++++++++++++++------------------
- 1 file changed, 34 insertions(+), 41 deletions(-)
+ net/packet/af_packet.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index f91cc1b8804d1..5936eab2a9415 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -119,17 +119,9 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 	unsigned int h;
- 	int err;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -599,7 +599,7 @@ static int prb_calc_retire_blk_tmo(struc
+ 		return DEFAULT_PRB_RETIRE_TOV;
  
--	spin_lock(&q->instances_lock);
--	if (instance_lookup(q, queue_num)) {
--		err = -EEXIST;
--		goto out_unlock;
--	}
--
--	inst = kzalloc(sizeof(*inst), GFP_ATOMIC);
--	if (!inst) {
--		err = -ENOMEM;
--		goto out_unlock;
--	}
-+	inst = kzalloc(sizeof(*inst), GFP_KERNEL_ACCOUNT);
-+	if (!inst)
-+		return ERR_PTR(-ENOMEM);
+ 	div = ecmd.base.speed / 1000;
+-	mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
++	mbits = (u64)blk_size_in_bytes * 8 / (1024 * 1024);
  
- 	inst->queue_num = queue_num;
- 	inst->peer_portid = portid;
-@@ -139,9 +131,15 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 	spin_lock_init(&inst->lock);
- 	INIT_LIST_HEAD(&inst->queue_list);
- 
-+	spin_lock(&q->instances_lock);
-+	if (instance_lookup(q, queue_num)) {
-+		err = -EEXIST;
-+		goto out_unlock;
-+	}
-+
- 	if (!try_module_get(THIS_MODULE)) {
- 		err = -EAGAIN;
--		goto out_free;
-+		goto out_unlock;
- 	}
- 
- 	h = instance_hashfn(queue_num);
-@@ -151,10 +149,9 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 
- 	return inst;
- 
--out_free:
--	kfree(inst);
- out_unlock:
- 	spin_unlock(&q->instances_lock);
-+	kfree(inst);
- 	return ERR_PTR(err);
- }
- 
-@@ -1271,7 +1268,8 @@ static int nfqnl_recv_config(struct net *net, struct sock *ctnl,
- 	struct nfqnl_msg_config_cmd *cmd = NULL;
- 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
- 	__u32 flags = 0, mask = 0;
--	int ret = 0;
-+
-+	WARN_ON_ONCE(!lockdep_nfnl_is_held(NFNL_SUBSYS_QUEUE));
- 
- 	if (nfqa[NFQA_CFG_CMD]) {
- 		cmd = nla_data(nfqa[NFQA_CFG_CMD]);
-@@ -1317,47 +1315,44 @@ static int nfqnl_recv_config(struct net *net, struct sock *ctnl,
- 		}
- 	}
- 
-+	/* Lookup queue under RCU. After peer_portid check (or for new queue
-+	 * in BIND case), the queue is owned by the socket sending this message.
-+	 * A socket cannot simultaneously send a message and close, so while
-+	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
-+	 * socket close) cannot destroy this queue. Safe to use without RCU.
-+	 */
- 	rcu_read_lock();
- 	queue = instance_lookup(q, queue_num);
- 	if (queue && queue->peer_portid != NETLINK_CB(skb).portid) {
--		ret = -EPERM;
--		goto err_out_unlock;
-+		rcu_read_unlock();
-+		return -EPERM;
- 	}
-+	rcu_read_unlock();
- 
- 	if (cmd != NULL) {
- 		switch (cmd->command) {
- 		case NFQNL_CFG_CMD_BIND:
--			if (queue) {
--				ret = -EBUSY;
--				goto err_out_unlock;
--			}
--			queue = instance_create(q, queue_num,
--						NETLINK_CB(skb).portid);
--			if (IS_ERR(queue)) {
--				ret = PTR_ERR(queue);
--				goto err_out_unlock;
--			}
-+			if (queue)
-+				return -EBUSY;
-+			queue = instance_create(q, queue_num, NETLINK_CB(skb).portid);
-+			if (IS_ERR(queue))
-+				return PTR_ERR(queue);
- 			break;
- 		case NFQNL_CFG_CMD_UNBIND:
--			if (!queue) {
--				ret = -ENODEV;
--				goto err_out_unlock;
--			}
-+			if (!queue)
-+				return -ENODEV;
- 			instance_destroy(q, queue);
--			goto err_out_unlock;
-+			return 0;
- 		case NFQNL_CFG_CMD_PF_BIND:
- 		case NFQNL_CFG_CMD_PF_UNBIND:
- 			break;
- 		default:
--			ret = -ENOTSUPP;
--			goto err_out_unlock;
-+			return -EOPNOTSUPP;
- 		}
- 	}
- 
--	if (!queue) {
--		ret = -ENODEV;
--		goto err_out_unlock;
--	}
-+	if (!queue)
-+		return -ENODEV;
- 
- 	if (nfqa[NFQA_CFG_PARAMS]) {
- 		struct nfqnl_msg_config_params *params =
-@@ -1382,9 +1377,7 @@ static int nfqnl_recv_config(struct net *net, struct sock *ctnl,
- 		spin_unlock_bh(&queue->lock);
- 	}
- 
--err_out_unlock:
--	rcu_read_unlock();
--	return ret;
-+	return 0;
- }
- 
- static const struct nfnl_callback nfqnl_cb[NFQNL_MSG_MAX] = {
--- 
-2.53.0
-
+ 	if (div)
+ 		mbits /= div;
 
 
