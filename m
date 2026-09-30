@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3743AFB11;
-	Wed, 30 Sep 2026 16:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B355350EC15;
+	Wed, 30 Sep 2026 16:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785958; cv=none; b=nlrSMPzwTTp25BAPcN0Ss4leOJbzazHIGTXu8vbYNMcKG2CtMbs9WsroRpP16TOoh50DG8+u3hPK7wuQHJ+OUEOVuDi9pZbVjV4zRSnoO88572HgZmN/+zQrx2MK6X5rgndk2Do1l9zbgMA2q6Au7jNYqu7Ch2iCQ3ZvfeIIQmc=
+	t=1790785961; cv=none; b=gXJD/W7ziyOZpMpjLcQ9vZsuvj1Pr/4YYR6g2GxgeLUJNrIFh6+kIyNafoWhpJPIxSsBdeOA7jLR831+j9QyrkUynn31OnihdFPQU8rUy3BbT0Leag8kQIio1VIA108Gns9tmhjc3PtQDi3UsAbOA4uOsNVJdJRBmTJGz8aXmr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785958; c=relaxed/simple;
-	bh=k1BCEW52ZFI37lpD6drrDWywBm+7qwmqWo1KVzOvrXs=;
+	s=arc-20240116; t=1790785961; c=relaxed/simple;
+	bh=3CJ1rR2MD5Vg10aait0Y/kqWXSp9je5H1G8FJ/v5ukU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R9IBs+n6nON13k5YPTQUqWPm1MjKnRNd4jNhU0gzvcwRdskpdVmhyDV17+qwzTr+4yROTDqZ0IeKgTSAO+phprCClXUXn2JHGGzI6nrEL+YWe1HMVsymT79rDYg1iFY21iKwCVLCoDVVXptucp88SQPQCq4CdH31583hfNNiINA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iU0+jzzS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fUTtnmzzuiWsh6Z2Z5jkU2vCEH0u5V6svoE5yPDmYtqo0XwtVNFm5FpjpTTXFkgNrU5NsTGvFa+f4G+EayqBb/ZR3nfmnZUp0jq0jzbc+y0oq1Ore6w4C5OfsaR2hbqM3bXQzm06FdfMmYDVjN4WcDMH0cUcTfGtOJNiDnsmqWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLSYX/FP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iU0+jzzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADA21F000FF;
-	Wed, 30 Sep 2026 16:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLSYX/FP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22EA1F000FF;
+	Wed, 30 Sep 2026 16:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785957;
-	bh=lAazn9WUYo6Wu9nmMXa7OYdK4JncrSKE7OCnw8DLBaA=;
+	s=korg; t=1790785960;
+	bh=6dU/buvqTF5JkagJMs8/D7XTfLjGUNjbXFILouzwsRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iU0+jzzSC4vqgcPTVDtdJAr3/I0alVNs4qj6YwtGt3IBYBENyyEDq2IhyG1g8SXRk
-	 jc2YhnaIAse2r6fdjylBDiZDVJczi21zs6xoXa31DBdDTcPCbJ58+KqjxKauuCbDtd
-	 IPJtn65Hk4WR30B7DriHnSxlYpwuEG8V6XyG/rpE=
+	b=OLSYX/FPHJPa8WpcGzBVDcJwIIqW166E8EBe+HCtK+ToH41fMEEfjZ9igBugtUQYG
+	 /QUgejiReBPIcQfr/vihiyTiKoJKi2hWGlyAips8+DHIgtyLBv+vqkD63jT3HCqP3p
+	 NnX/8mNEfGobUR0tBOAkpZHdWiS3om+B3ehemQzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jungwoo Lee <jwlee2217@gmail.com>,
+	Wongi Lee <qw3rtyp0@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 637/982] wifi: mac80211: dont access the TSF of a down interface
-Date: Wed, 30 Sep 2026 17:22:53 +0200
-Message-ID: <20260930152430.451286054@linuxfoundation.org>
+Subject: [PATCH 6.1 686/982] net: lock the socket in sock_gettstamp()
+Date: Wed, 30 Sep 2026 17:23:42 +0200
+Message-ID: <20260930152431.497285102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,50 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0b1de9feeb8651f7a3bb53ed7c9006e3b5298c01 ]
+[ Upstream commit 9ed55f3dbef4f4adfe65eb03b0c35c53229a8490 ]
 
-The tsf debugfs files call the driver even if the interface
-isn't up, tgriggering check-sdata-in-driver warnings.
+sk->sk_flags must only be changed while holding the socket lock,
+because sock_set_flag() and sock_reset_flag() use non atomic
+operations (__set_bit() and __clear_bit()).
 
-Reject the access in that case.
+sock_gettstamp() is one of the last places where a bit of sk->sk_flags
+is changed from a syscall without owning the socket lock, through
+sock_enable_timestamp(sk, SOCK_TIMESTAMP).
 
-Assisted-by: LLM
-Fixes: 37a41b4affa3 ("mac80211: add ieee80211_vif param to tsf functions")
-Reported-by: syzbot+1c8c45017f784e646b47@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1c8c45017f784e646b47
-Link: https://patch.msgid.link/20260908122838.201719-18-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+sk_set_memalloc() and sk_clear_memalloc() also change sk->sk_flags
+without the socket lock, but their callers (nbd, iscsi_tcp, nvme-tcp,
+sunrpc, wireguard) need a careful audit, this will be addressed in a
+separate patch.
+
+Jungwoo Lee and Wongi Lee reported an UDP socket use-after-free
+caused by this bug: a SIOCGSTAMPNS_NEW ioctl racing with bind()
+can cancel the SOCK_RCU_FREE bit that udp_lib_get_port() just set,
+because both threads perform a read-modify-write on the same word.
+
+  CPU 0 (bind)                        CPU 1 (SIOCGSTAMPNS_NEW)
+  --------------------------------    ----------------------------
+  read sk_flags = F                   read sk_flags = F
+  compute F | BIT(SOCK_RCU_FREE)      compute F | BIT(SOCK_TIMESTAMP)
+  store F | BIT(SOCK_RCU_FREE)
+  sk_add_node_rcu(sk, ...)
+                                      store F | BIT(SOCK_TIMESTAMP)
+
+After the lost update, SOCK_RCU_FREE is clear while the socket is
+visible to lockless UDP receive lookups. sk_destruct() then frees
+the socket immediately instead of waiting for a RCU grace period,
+while the receive path still holds a reference-less pointer to it:
+
+ BUG: KASAN: slab-use-after-free in ipv4_pktinfo_prepare+0x30/0x410
+ Read of size 8 at addr ffff888008806610 by task exploit/207
+ CPU: 0 UID: 1000 PID: 207 Comm: exploit Not tainted 6.12.95+ #1
+  ipv4_pktinfo_prepare+0x30/0x410
+  udp_queue_rcv_one_skb+0x51c/0x1180
+  udp_unicast_rcv_skb+0x109/0x350
+  ip_protocol_deliver_rcu+0x14b/0x310
+  ip_local_deliver_finish+0x29d/0x390
+  ip_local_deliver+0x24d/0x2a0
+
+Only grab the socket lock when SOCK_TIMESTAMP has to be set,
+to keep the common case lockless.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Jungwoo Lee <jwlee2217@gmail.com>
+Reported-by: Wongi Lee <qw3rtyp0@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260915043055.3441600-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs_netdev.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/sock.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
-index 6b4b5e0a19570..cb82b7966d374 100644
---- a/net/mac80211/debugfs_netdev.c
-+++ b/net/mac80211/debugfs_netdev.c
-@@ -519,6 +519,9 @@ static ssize_t ieee80211_if_fmt_tsf(
- 	struct ieee80211_local *local = sdata->local;
- 	u64 tsf;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 64f9d77bfaec7..899ddf069940f 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3569,7 +3569,14 @@ int sock_gettstamp(struct socket *sock, void __user *userstamp,
+ 	struct sock *sk = sock->sk;
+ 	struct timespec64 ts;
  
-+	if (!ieee80211_sdata_running((struct ieee80211_sub_if_data *)sdata))
-+		return -ENETDOWN;
-+
- 	tsf = drv_get_tsf(local, (struct ieee80211_sub_if_data *)sdata);
- 
- 	return scnprintf(buf, buflen, "0x%016llx\n", (unsigned long long) tsf);
-@@ -532,6 +535,9 @@ static ssize_t ieee80211_if_parse_tsf(
- 	int ret;
- 	int tsf_is_delta = 0;
- 
-+	if (!ieee80211_sdata_running(sdata))
-+		return -ENETDOWN;
-+
- 	if (strncmp(buf, "reset", 5) == 0) {
- 		if (local->ops->reset_tsf) {
- 			drv_reset_tsf(local, sdata);
+-	sock_enable_timestamp(sk, SOCK_TIMESTAMP);
++	/* sk->sk_flags must only be changed under the socket lock,
++	 * because sock_set_flag() uses non atomic operations.
++	 */
++	if (!sock_flag(sk, SOCK_TIMESTAMP)) {
++		lock_sock(sk);
++		sock_enable_timestamp(sk, SOCK_TIMESTAMP);
++		release_sock(sk);
++	}
+ 	ts = ktime_to_timespec64(sock_read_timestamp(sk));
+ 	if (ts.tv_sec == -1)
+ 		return -ENOENT;
 -- 
 2.53.0
 
