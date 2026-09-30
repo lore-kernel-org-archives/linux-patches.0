@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1B73DAC02;
-	Wed, 30 Sep 2026 19:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6B33C3F58;
+	Wed, 30 Sep 2026 19:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795283; cv=none; b=bQ+/Crq8XiP8EyOTNcKUGwLIKuE8MDuDLMWdvFb0qwb/vZ+jxIP04u2E0POOKLFt909nYoImNL+dEPKDxGeQ9L+I3DbE4KxSJjGyiQmWRcYUElqcRX6SXlKQS8nmTqmYK9IVkB29cwPupXyXQcXKPUILH8oF1uwyCx5uajSj9vM=
+	t=1790795286; cv=none; b=cQtfaSpwIjh/S4TY+sYF1ZLgPxge+FAobAXJjVa3GijbGw/utvdiAOvXX1hJNWgwtfhX3QQYtUERFutD3krl0dr1y77ajdG+dnM/0paxB6RzlS6U7Rodybbj973hBzoE5kZUW8wEcVgpTzNwojttCTOyB8tMb+aQjpmulNbF/Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795283; c=relaxed/simple;
-	bh=x/uU2QH2HbLOguDBn87dMZGui9vQsbLz1u6A/fj/OFQ=;
+	s=arc-20240116; t=1790795286; c=relaxed/simple;
+	bh=flqnDiRNcEhNtX8txiXUTV5/6rbZvBDHqUfP0CAUg14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLXXOOnCXeriNhwz4H6Ravl/okD0/9hnTmKfLsEW3YJW+oi9LucnrxBpAN7doLy+nJ0hsz1yEPsHSlig4AYy7GRXvGCaZtbxbTs9LEGnTgeOiO8My3PW8ud1bTxxgHEvL19uD0/+K0OPSLM26BIOsksVKOJyHp2Uk1GyMTfRD7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heJQ7UJZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iJvB/Mu6ZFLxckEUbB2tHxQDKbhA9mW2RXCG8aN0J5PE2X7C4CnCxIesnruoV2PQsm/CYbMKzLOCTAuiD1t2NZy7xARNVW88J/oIaIxG7+f6tWHMlHDcis2e0L2BXxMiyOrA+W8hTiJAzTIaxXSPrxP9wuis1iUEJ7WsGuohWBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExwJ5A4A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heJQ7UJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EC41F000FF;
-	Wed, 30 Sep 2026 19:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExwJ5A4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EFF1F000FF;
+	Wed, 30 Sep 2026 19:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795282;
-	bh=jqQB8MZmhDyVNUPffy8qsGpfLLFsytcn4NwZMAU31Cw=;
+	s=korg; t=1790795285;
+	bh=4Yhl91NGs5rOx9K3tcq8cQhcEpOFf0DZ6Fd8hANNepE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=heJQ7UJZYjWZcs4rkQsSEUpZgk3S9q9YEkCRMnFS/++10ZHD8eqSgFVh03TEZKVVD
-	 w+6AcBv1nWxKeU/3h8kjz/27tkrUxVy/WQPFweqJ8K0rzazF9CfYfo9eE/PLCRVlVk
-	 65OIQ082GaiweYP5hPS9ZCv4rh+FwZ55EsdNN8UI=
+	b=ExwJ5A4ACdyJMbwdFXrV3nSDHTTS9ErFZwYjHFF6y6yi5ejLyZSr/8RE7zJY8UGWA
+	 9amjD9NJk02CQXk6Bdjb4uogz16isN8KxIFxhoWhqBR9WL+m1h798N2DlZ66wFjP1N
+	 V5RmpnY/9+cNmSg+kIaUT0uoHCXaOerIr/0cKyfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Gerd Rausch <gerd.rausch@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0506/1193] net_sched: sch_fq_pie: implement lockless fq_pie_dump()
-Date: Wed, 30 Sep 2026 17:19:50 +0200
-Message-ID: <20260930152445.407065343@linuxfoundation.org>
+Subject: [PATCH 6.6 0471/1193] net/rds: tcp: dont force RDS_CONN_RESETTING over a concurrent shutdown
+Date: Wed, 30 Sep 2026 17:19:15 +0200
+Message-ID: <20260930152444.629573862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,132 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gerd Rausch <gerd.rausch@oracle.com>
 
-[ Upstream commit 13a9965de32457d59aa3162d657aa4c5e512c146 ]
+[ Upstream commit e8e60d74fec49ccae2aea9b04a6eb162feb8d9af ]
 
-Instead of relying on RTNL, fq_pie_dump() can use READ_ONCE()
-annotations, paired with WRITE_ONCE() ones in fq_pie_change().
+rds_tcp_reset_callbacks() resolves a duelling SYN by storing
+RDS_CONN_RESETTING into cp_state unconditionally.  Nothing serializes
+that store against the shutdown path: rds_tcp_accept_one() checks
+for RDS_CONN_CONNECTING or RDS_CONN_ERROR under t_conn_path_lock, but
+neither rds_conn_path_drop(), which forces RDS_CONN_ERROR, nor
+rds_conn_shutdown(), which moves the path to RDS_CONN_DISCONNECTING
+under cp_cm_lock, takes that lock.  The store can therefore land on
+top of a shutdown that is already in progress, or that gets queued
+right after the accept-side check.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 4864f58c53eb ("net/sched: fq_pie: clamp quantum in change path")
+When it does, the shutdown worker's final DISCONNECTING -> DOWN
+transition fails and the path goes through rds_conn_path_error() and
+a second drop/shutdown cycle instead of a clean reconnect, tearing
+down the socket the accept path has just installed.  Before commit
+ad22d24be635 ("net/rds: No shortcut out of RDS_CONN_ERROR") a path
+found in RDS_CONN_RESETTING even made rds_conn_shutdown() bail out
+altogether.
+
+Make the transition conditional: move CONNECTING -> RESETTING (or
+stay in RESETTING from an earlier duel), and drop the path in any
+other state.  The drop has side effects of its own: it replaces the
+shutdown's RDS_CONN_DISCONNECTING (or RDS_CONN_ERROR) with
+RDS_CONN_ERROR and queues one more cp_down_w run.  The difference is
+that rds_conn_shutdown() accepts RDS_CONN_ERROR in its final
+transition to RDS_CONN_DOWN, so the shutdown in flight completes
+normally instead of through rds_conn_path_error(); the extra
+down-work pass then finds the path already down and falls through to
+the reconnect check, or catches a reconnect that has already started
+and restarts it.  The accept path still installs the new socket,
+rds_connect_path_complete() then fails its RESETTING -> UP transition
+and drops it: the raced socket ends up torn down as it does today.
+The comment at that call site, which promised that
+rds_connect_path_complete() marks the path RDS_CONN_UP, is updated to
+name this outcome as well.
+
+The state can change again between the failed transitions and the
+drop.  That is inherent to rds_conn_path_drop(), which the socket
+state-change callbacks also call unconditionally, and costs at most
+one extra drop/reconnect cycle.
+
+Based on Oracle UEK commit "net/rds: Don't force state
+RDS_CONN_RESETTING" by Gerd Rausch.
+
+Fixes: 9c79440e2c5e ("RDS: TCP: fix race windows in send-path quiescence by rds_tcp_accept_one()")
+Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+[achender: port to net-next: use the two-argument
+ rds_conn_path_transition()/rds_conn_path_drop() and rewrite the
+ changelog for the upstream shutdown path]
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260828223921.202913-5-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 61 +++++++++++++++++++++++-------------------
- 1 file changed, 34 insertions(+), 27 deletions(-)
+ net/rds/tcp.c        | 17 +++++++++++++++--
+ net/rds/tcp_listen.c |  6 +++++-
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index fc57b1daa235a..f8fb1d1af6abb 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -298,8 +298,8 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (tb[TCA_FQ_PIE_LIMIT]) {
- 		u32 limit = nla_get_u32(tb[TCA_FQ_PIE_LIMIT]);
- 
--		q->p_params.limit = limit;
--		sch->limit = limit;
-+		WRITE_ONCE(q->p_params.limit, limit);
-+		WRITE_ONCE(sch->limit, limit);
- 	}
- 	if (tb[TCA_FQ_PIE_FLOWS]) {
- 		if (q->flows) {
-@@ -321,39 +321,45 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 		u32 target = nla_get_u32(tb[TCA_FQ_PIE_TARGET]);
- 
- 		/* convert to pschedtime */
--		q->p_params.target =
--			PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC);
-+		WRITE_ONCE(q->p_params.target,
-+			   PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC));
- 	}
- 
- 	/* tupdate is in jiffies */
- 	if (tb[TCA_FQ_PIE_TUPDATE])
--		q->p_params.tupdate =
--			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE]));
-+		WRITE_ONCE(q->p_params.tupdate,
-+			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE])));
- 
- 	if (tb[TCA_FQ_PIE_ALPHA])
--		q->p_params.alpha = nla_get_u32(tb[TCA_FQ_PIE_ALPHA]);
-+		WRITE_ONCE(q->p_params.alpha,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ALPHA]));
- 
- 	if (tb[TCA_FQ_PIE_BETA])
--		q->p_params.beta = nla_get_u32(tb[TCA_FQ_PIE_BETA]);
-+		WRITE_ONCE(q->p_params.beta,
-+			   nla_get_u32(tb[TCA_FQ_PIE_BETA]));
- 
- 	if (tb[TCA_FQ_PIE_QUANTUM])
--		q->quantum = nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]);
-+		WRITE_ONCE(q->quantum, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]));
- 
- 	if (tb[TCA_FQ_PIE_MEMORY_LIMIT])
--		q->memory_limit = nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]);
-+		WRITE_ONCE(q->memory_limit,
-+			   nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]));
- 
- 	if (tb[TCA_FQ_PIE_ECN_PROB])
--		q->ecn_prob = nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]);
-+		WRITE_ONCE(q->ecn_prob,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]));
- 
- 	if (tb[TCA_FQ_PIE_ECN])
--		q->p_params.ecn = nla_get_u32(tb[TCA_FQ_PIE_ECN]);
-+		WRITE_ONCE(q->p_params.ecn,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ECN]));
- 
- 	if (tb[TCA_FQ_PIE_BYTEMODE])
--		q->p_params.bytemode = nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]);
-+		WRITE_ONCE(q->p_params.bytemode,
-+			   nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]));
- 
- 	if (tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR])
--		q->p_params.dq_rate_estimator =
--			nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]);
-+		WRITE_ONCE(q->p_params.dq_rate_estimator,
-+			   nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]));
- 
- 	/* Drop excess packets if new limit is lower */
- 	while (sch->q.qlen > sch->limit) {
-@@ -471,22 +477,23 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
- 		return -EMSGSIZE;
- 
- 	/* convert target from pschedtime to us */
--	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, sch->limit) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, q->flows_cnt) ||
-+	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, READ_ONCE(sch->limit)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, READ_ONCE(q->flows_cnt)) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_TARGET,
--			((u32)PSCHED_TICKS2NS(q->p_params.target)) /
-+			((u32)PSCHED_TICKS2NS(READ_ONCE(q->p_params.target))) /
- 			NSEC_PER_USEC) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_TUPDATE,
--			jiffies_to_usecs(q->p_params.tupdate)) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, q->p_params.alpha) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_BETA, q->p_params.beta) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, q->quantum) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT, q->memory_limit) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, q->ecn_prob) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ECN, q->p_params.ecn) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, q->p_params.bytemode) ||
-+			jiffies_to_usecs(READ_ONCE(q->p_params.tupdate))) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, READ_ONCE(q->p_params.alpha)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_BETA, READ_ONCE(q->p_params.beta)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, READ_ONCE(q->quantum)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT,
-+			READ_ONCE(q->memory_limit)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, READ_ONCE(q->ecn_prob)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ECN, READ_ONCE(q->p_params.ecn)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, READ_ONCE(q->p_params.bytemode)) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_DQ_RATE_ESTIMATOR,
--			q->p_params.dq_rate_estimator))
-+			READ_ONCE(q->p_params.dq_rate_estimator)))
- 		goto nla_put_failure;
- 
- 	return nla_nest_end(skb, opts);
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 007800472e3f7..f8e08269e7573 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -149,9 +149,22 @@ void rds_tcp_reset_callbacks(struct socket *sock,
+ 	 * end up deadlocking with tcp_sendmsg(), and the RDS_IN_XMIT
+ 	 * would not get set. As a result, we set c_state to
+ 	 * RDS_CONN_RESETTTING, to ensure that rds_tcp_state_change
+-	 * cannot mark rds_conn_path_up() in the window before lock_sock()
++	 * cannot mark rds_conn_path_up() in the window before lock_sock().
++	 *
++	 * Only make that transition if the path is still connecting
++	 * (or already resetting from an earlier duel).  A path in any
++	 * other state - typically RDS_CONN_DISCONNECTING or
++	 * RDS_CONN_ERROR with a shutdown in flight - is dropped
++	 * instead.  That still replaces its state, with RDS_CONN_ERROR,
++	 * and queues one more shutdown pass, but rds_conn_shutdown()
++	 * accepts RDS_CONN_ERROR in its final transition to
++	 * RDS_CONN_DOWN, so the shutdown in flight completes normally.
+ 	 */
+-	atomic_set(&cp->cp_state, RDS_CONN_RESETTING);
++	if (!rds_conn_path_transition(cp, RDS_CONN_CONNECTING,
++				      RDS_CONN_RESETTING) &&
++	    !rds_conn_path_transition(cp, RDS_CONN_RESETTING,
++				      RDS_CONN_RESETTING))
++		rds_conn_path_drop(cp, 0);
+ 	wait_event(cp->cp_waitq, !test_bit(RDS_IN_XMIT, &cp->cp_flags));
+ 	/* reset receive side state for rds_tcp_data_recv() for osock  */
+ 	cancel_delayed_work_sync(&cp->cp_send_w);
+diff --git a/net/rds/tcp_listen.c b/net/rds/tcp_listen.c
+index 2e2f1a6750496..fae3d2965cb10 100644
+--- a/net/rds/tcp_listen.c
++++ b/net/rds/tcp_listen.c
+@@ -197,7 +197,11 @@ int rds_tcp_accept_one(struct socket *sock)
+ 	if (rs_tcp->t_sock) {
+ 		/* Duelling SYN has been handled in rds_tcp_accept_one() */
+ 		rds_tcp_reset_callbacks(new_sock, cp);
+-		/* rds_connect_path_complete() marks RDS_CONN_UP */
++		/* rds_connect_path_complete() marks RDS_CONN_UP, or,
++		 * if a concurrent shutdown won the duel, drops the
++		 * path again and the pass that drop queues reaps the
++		 * socket installed above.
++		 */
+ 		rds_connect_path_complete(cp, RDS_CONN_RESETTING);
+ 	} else {
+ 		rds_tcp_set_callbacks(new_sock, cp);
 -- 
 2.53.0
 
