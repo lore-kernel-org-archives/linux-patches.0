@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6A34F68C3;
-	Wed, 30 Sep 2026 15:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F624F93CC;
+	Wed, 30 Sep 2026 15:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783093; cv=none; b=W6b9tBZDlWXHIFEpGGp4KihGVkPs9A1o6KU4I9CtAespl91NvMduwye9nTQ6PqileqS5dYcnBkd72Bp+4einr0jQ2t7uB6A1vK/fcvuIqeELM1FpTkMtmwDPxv3mDr3Kn3vvisZUYZO4hzdgakA/TruzxMgMWsBuvKu3PjJE60Q=
+	t=1790783096; cv=none; b=YfWHVqRbhitgxGjurtn//d0JVabldyNomlnDQgK0cMfyhnjUSCdnGEwBsuj+K6M/wIMcnsb1fO9WfviBXDro67YcFaZG/uXq+fEE92GQr5YglSHKX6e6A509v9Xtx05pYpOOCPpG6lUghoI0k6C9w6/qTsI1sev/5Mmx487wCfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783093; c=relaxed/simple;
-	bh=QBrupBZy0X7wCYd99cbH29Y2Qfbd5I5tueCxfxxauhY=;
+	s=arc-20240116; t=1790783096; c=relaxed/simple;
+	bh=5bXtDQEvdg0t79Z+YAtch/ib5MZIKU7v+wMvyEf480w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejk/7mwU7MjPyxmhogZKzEuF78Jzu4q4XerNQ5FOj/wKOuH0FDN/rotbMs7hLKuh9loe5WVOSgEFq9NCSsWKMR4r38eKAnje2sRltvx0JL/qo5/Jp/Xh6dYarkbOwdGi8MUBbwuRlcfbJdLKP17pSHVn0awxU8RT2h3/NNg7WgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2rhfqx1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XYaZpvNEs+NXYJe0sOWUYVO2wNOdPTDzEpLPgkADHdMEWqrCIfo8/LEem7dmKgww7zoBi3mliIruj9ZKDSXdXFwVP1rZbJvtgSMrHorur+zyCLzTIuufzDTz8CWmk/VCquzh/MFPvOQv7jW0l7fodcNVkfnL5TLpbox0oy9Ma1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9mCz1su; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2rhfqx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C271F000FF;
-	Wed, 30 Sep 2026 15:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9mCz1su"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C70E1F00899;
+	Wed, 30 Sep 2026 15:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783086;
-	bh=zm6nWgsLDJSqCH0lE4PO4J4paHvxiz95XzAjjNrHWY0=;
+	s=korg; t=1790783089;
+	bh=XLRtlx79XabNfpggjRnswEXfM9srb7FPfpaPQfWClaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s2rhfqx1M6Qw0y34WISfOwAbcoBcLmDbDmZ9CBfasu4Jp0jrabrsHywvlrVm7WiZZ
-	 aRQGW5gf6+sXbIwNgX5W1Jxp7Q3xI/Jo2gGgsqNPmyn8MPKZMZWMcDyCMsFIYUHfOD
-	 WaMqs6dM4o5SKZrHCq34HTZrTnDxWMkL3j105roE=
+	b=N9mCz1sufI+J3E8DfQHdBomBjc5B7ZwhPXuoX1/XC1ZhKXzhnLxVe8qWjrkIl3MqB
+	 S4/n/Ll02V+C9TCAIk9Tx5FkfpOqsYQS80vtijkmbTGD/Go3FJcATfNqNpdZsYcxB6
+	 PuIyWu13IuPji19CGMIEW1VkTQtQRTfxwHFnmbhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	hybris@mojatatu.ai,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 275/595] net/sched: cls_route: free emptied bucket on filter move
-Date: Wed, 30 Sep 2026 17:22:48 +0200
-Message-ID: <20260930152353.623663590@linuxfoundation.org>
+Subject: [PATCH 5.10 276/595] net/sched: cls_api: Dont replay RTM_GETCHAIN in tc_ctl_chain().
+Date: Wed, 30 Sep 2026 17:22:49 +0200
+Message-ID: <20260930152353.643831814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,162 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1853f30cf5c84971f99788a76207c6f745380896 ]
+[ Upstream commit dff39930ad5e53d202bfdfb14687d1d2fd753b4d ]
 
-route4_change can move an existing filter to a different top-level
-bucket: route4_set_parms recomputes the handle from TCA_ROUTE4_TO/
-FROM/IIF, and the handle-mismatch check is gated on the 'new' flag, so
-for an existing filter the new handle may differ from the old one and
-land in a different bucket. When this happens, the filter is unlinked
-from the old bucket, but the bucket itself is never freed once it goes
-empty. The stale empty bucket remains in head->table[], causing
-route4_delete to report *last=false even after the last live filter is
-gone. That pins the empty tcf_proto and causes a leak.
+If a netlink socket sends RTM_GETCHAIN requests repeatedly
+without recv()ing the responses, tc_ctl_chain() hogs CPU and
+triggers Hung Task splat. [0]
 
-Fix this by refcounting the filters linked to a bucket and freeing the
-bucket when the count drops to zero. The existing scan in route4_delete
-goes away with it.
+As caught in the stack trace, netlink_attachskb() could confuse
+tc_ctl_chain() by returning -EAGAIN when the userspace netlink
+socket's receive buffer is full.
 
-The count is updated at all sites that link or unlink a filter during add,
-change and delete, and the bucket is dropped from head->table[] as soon as
-it reaches zero.
+The replay: label exists since commit 32a4f5ecd738 ("net: sched:
+introduce chain object to uapi") but was not used initially.
 
-Conditions to recreate the bug:
-  CONFIG_NET_CLS_ROUTE4=y, CONFIG_NET_SCH_INGRESS=y, CONFIG_NET_CLS_ACT=y.
+Since commit 9f407f1768d3 ("net: sched: introduce chain templates"),
+the label is needed for RTM_NEWCHAIN because tcf_proto_lookup_ops()
+may release RTNL to call request_module().
 
-  tc qdisc replace dev lo clsact
-  tc filter add dev lo ingress protocol ip pref 100 route from 1 to 1
-  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
-    route from 1 to 2
-  tc filter del dev lo ingress protocol ip pref 100 handle 0x10002 \
-    route from 1 to 2
-  tc filter show dev lo ingress | grep -c 'pref 100 route chain 0 '
+However, the replay logic is unnecessary for RTM_GETCHAIN.
 
-Fixes: 1e052be69d04 ("net_sched: destroy proto tp when all filters are gone")
-Reported-by: Vega <vega@nebusec.ai>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260907192133.2639067-2-victor@mojatatu.com
+Let's apply the replay logic only for RTM_NEWCHAIN.
+
+[0]:
+INFO: task repro:1018 is blocked on a mutex likely owned by task repro:1022.
+task:repro           state:R  running task     stack:14096 pid:1022  tgid:1014  ppid:961    task_flags:0x400040 flags:0x00080000
+Call Trace:
+ <TASK>
+ ? clockevents_program_event (kernel/time/clockevents.c:372)
+ ? pskb_expand_head (net/core/skbuff.c:615)
+ ? skb_release_data (net/core/skbuff.c:1122)
+ ? netlink_attachskb (./include/linux/skbuff.h:1323 ./include/linux/skbuff.h:1332 net/netlink/af_netlink.c:1232)
+ ? __netlink_lookup (./include/linux/rcupdate.h:882 ./include/linux/rhashtable.h:711 net/netlink/af_netlink.c:499)
+ ? tc_chain_notify (net/sched/cls_api.c:3045)
+ ? tc_chain_notify (./include/linux/skbuff.h:1384 net/sched/cls_api.c:3041)
+ ? netlink_unicast (net/netlink/af_netlink.c:1335)
+ ? rtnl_unicast (./include/net/netlink.h:1198 net/core/rtnetlink.c:985)
+ ? tc_ctl_chain (net/sched/cls_api.c:3242)
+ ? rtnetlink_rcv_msg (net/core/rtnetlink.c:7146)
+ ? netlink_unicast (net/netlink/af_netlink.c:1354)
+ ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:7177)
+ ? netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ ? netlink_unicast (net/netlink/af_netlink.c:1319)
+ ? netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ? __sock_sendmsg (net/socket.c:800)
+ ? __sys_sendto (net/socket.c:2281)
+ ? __x64_sys_sendto (net/socket.c:2288 net/socket.c:2284 net/socket.c:2284)
+ ? do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ ? entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
+
+Fixes: 2ed9db3074fc ("net: sched: cls_api: fix dead code in switch")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: hybris@mojatatu.ai
+Link: https://patch.msgid.link/20260908205537.863484-1-kuniyu@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 45 +++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 23 deletions(-)
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 695c91961e33b..e30bcd3734e1e 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -11,6 +11,7 @@
- #include <linux/kernel.h>
- #include <linux/string.h>
- #include <linux/errno.h>
-+#include <linux/refcount.h>
- #include <linux/skbuff.h>
- #include <net/dst.h>
- #include <net/route.h>
-@@ -40,6 +41,7 @@ struct route4_head {
- struct route4_bucket {
- 	/* 16 FROM buckets + 16 IIF buckets + 1 wildcard bucket */
- 	struct route4_filter __rcu	*ht[16 + 16 + 1];
-+	refcount_t			filters_ref;
- 	struct rcu_head			rcu;
- };
- 
-@@ -334,7 +336,7 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
- 	struct route4_filter *nf;
- 	struct route4_bucket *b;
- 	unsigned int h = 0;
--	int i, h1;
-+	int h1;
- 
- 	if (!head || !f)
- 		return -EINVAL;
-@@ -360,23 +362,14 @@ static int route4_delete(struct tcf_proto *tp, void *arg, bool *last,
- 			tcf_exts_get_net(&f->exts);
- 			tcf_queue_work(&f->rwork, route4_delete_filter_work);
- 
--			/* Strip RTNL protected tree */
--			for (i = 0; i <= 32; i++) {
--				struct route4_filter *rt;
--
--				rt = rtnl_dereference(b->ht[i]);
--				if (rt)
--					goto out;
-+			if (refcount_dec_and_test(&b->filters_ref)) {
-+				RCU_INIT_POINTER(head->table[to_hash(h)], NULL);
-+				kfree_rcu(b, rcu);
- 			}
--
--			/* OK, session has no flows */
--			RCU_INIT_POINTER(head->table[to_hash(h)], NULL);
--			kfree_rcu(b, rcu);
- 			break;
- 		}
- 	}
- 
--out:
- 	*last = true;
- 	for (h1 = 0; h1 <= 256; h1++) {
- 		if (rcu_access_pointer(head->table[h1])) {
-@@ -453,6 +446,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		if (b == NULL)
- 			return -ENOBUFS;
- 
-+		refcount_set(&b->filters_ref, 1);
- 		rcu_assign_pointer(head->table[h1], b);
- 	} else {
- 		unsigned int h2 = from_hash(nhandle >> 16);
-@@ -462,6 +456,8 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		     fp = rtnl_dereference(fp->next))
- 			if (fp->handle == f->handle)
- 				return -EEXIST;
-+
-+		refcount_inc(&b->filters_ref);
- 	}
- 
- 	if (tb[TCA_ROUTE4_TO])
-@@ -495,7 +491,7 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	struct route4_bucket *b;
- 	struct nlattr *opt = tca[TCA_OPTIONS];
- 	struct nlattr *tb[TCA_ROUTE4_MAX + 1];
--	unsigned int h, th;
-+	unsigned int h;
- 	int err;
- 	bool new = true;
- 
-@@ -553,17 +549,20 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	rcu_assign_pointer(*fp, f);
- 
- 	if (fold) {
--		th = to_hash(fold->handle);
-+		b = fold->bkt;
- 		h = from_hash(fold->handle >> 16);
--		b = rtnl_dereference(head->table[th]);
--		if (b) {
--			fp = &b->ht[h];
--			for (pfp = rtnl_dereference(*fp); pfp;
--			     fp = &pfp->next, pfp = rtnl_dereference(*fp)) {
--				if (pfp == fold) {
--					rcu_assign_pointer(*fp, fold->next);
--					break;
-+		fp = &b->ht[h];
-+		for (pfp = rtnl_dereference(*fp); pfp;
-+		     fp = &pfp->next, pfp = rtnl_dereference(*fp)) {
-+			if (pfp == fold) {
-+				rcu_assign_pointer(*fp, fold->next);
-+				if (refcount_dec_and_test(&b->filters_ref)) {
-+					unsigned int th = to_hash(fold->handle);
-+
-+					RCU_INIT_POINTER(head->table[th], NULL);
-+					kfree_rcu(b, rcu);
- 				}
-+				break;
- 			}
- 		}
- 	}
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 27847fae053d3..81ebfcdf00bd5 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -2927,7 +2927,7 @@ static int tc_ctl_chain(struct sk_buff *skb, struct nlmsghdr *n,
+ 	tcf_chain_put(chain);
+ errout_block:
+ 	tcf_block_release(q, block, true);
+-	if (err == -EAGAIN)
++	if (err == -EAGAIN && n->nlmsg_type == RTM_NEWCHAIN)
+ 		/* Replay the request. */
+ 		goto replay;
+ 	return err;
 -- 
 2.53.0
 
