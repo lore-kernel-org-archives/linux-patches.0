@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FDA3749F6;
-	Wed, 30 Sep 2026 16:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DFA51CF6E;
+	Wed, 30 Sep 2026 16:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784535; cv=none; b=Y+iJs3eDbRFAlFHSEKD6T4xWEJ+BhjQCdW+H9W/4Z11ZALc4vX2zOQlHB//sikP0Zk1RQwqXdmLzhrO7Pf3bQ1gIkjAr8jGXYziACoXJgUuvCw991t5vSm1OUl7T6aLcC8pm7KuKM8LejOubsZYrjQIJlG8gA3t9JUx6APtoP4U=
+	t=1790784539; cv=none; b=qpyXjxDbUJ2Y2I5IvFsWmYufAnnHzSA16r6FjWdXjFFTFBv1eXhvF2ObaiT7FOIYsHT7p0bT/Q5ac4MGbO4iQ2vh6lB0OijXwF77Cgsm6eMVKHOkzqjk3JTnrxt1QKsbuWu3ECus3ZBxwa3y3D/vtePCWfPrq+/l0Dt5ZkL8EJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784535; c=relaxed/simple;
-	bh=oZdhMNdko12BN0QDAfpPZzHOwMXHzjFXd9GfbMjq+4w=;
+	s=arc-20240116; t=1790784539; c=relaxed/simple;
+	bh=F6giKY6sqNXd9qiIPZUrwAjXuO/aZGOciv8/vSliXaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jTQzxgiTXdXhuCcow+GLAvfQeWxVERDqPADDV2RSV41AD0S5dAioiI/+v6HaPuKkSwpqhmTHlfaNwbDfI5cPkIEz+SEJBLCZTxH2qEmeHR0vxeBIc03/PAzKJcubyU8lERXWgcoiwWtijXTzIn8B/kZOQkhGOkpfErKNwBfdK9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmrC35FE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S67C+jhve69n5ao+2L8HDqmQq6OgeqnSdoGp7x+NYWuw6V1lWi4TGPfp2K5hoNnuuknMkQPaEt2ZgIjlaH4e+ge9rJfbViBSz+ilI0cP4DEhXcOrDXYiNW1xq49jJYDWHoriDDmfGkWvke3sgOmwO1CHnBbNM/aOZhVso5Ic3bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZxeUWKH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmrC35FE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C461F00893;
-	Wed, 30 Sep 2026 16:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZxeUWKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE961F000FF;
+	Wed, 30 Sep 2026 16:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784530;
-	bh=Ga1ARxAqHMd7SeGKyDLIHWlKXf4hrzZmXrN0SZrc8dg=;
+	s=korg; t=1790784533;
+	bh=9C7QxQYCRWHs6pNXvTTcSewpP25W76ZcYsI85zKDd+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmrC35FETcL/fbWx80ylSj0g4s2JQcOA1b5ywKNUoH2ZTqryKkHLsPiKgHEADXk7w
-	 u7qk1Hox2MtUqpkoQcpeRte6bjOKN1HnAwEtm9RRcyYmZZk5HZod7QuxTfhWwSD7yT
-	 r/oAlaqO2LKk4eNqAmxWsXiS7w837jnzbKHb5yo0=
+	b=HZxeUWKHPj0+Aoxb/5gFZtpjuEbWllaanjIIWW6Ro0mfStj6EU2vO5q5GFBGDqMn7
+	 aIJ+Qn6pl0QtOwKoxo7ZSEFiNfkzX/8v/V8gBRCwqlQWI5Dc3ay/U+4ZKrejHynvWL
+	 aTnS60J47ThqpjdZg2x/4cXDAqfeV7CrJGUzKUyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/982] sparc64: uprobes: add missing break
-Date: Wed, 30 Sep 2026 17:15:24 +0200
-Message-ID: <20260930152420.854612063@linuxfoundation.org>
+Subject: [PATCH 6.1 189/982] net: stmmac: xgmac2: disable RBUE in default RX interrupt mask
+Date: Wed, 30 Sep 2026 17:15:25 +0200
+Message-ID: <20260930152420.876817513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,41 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-[ Upstream commit 5b0eee4cd812bd6547eea393cb9b5c0322f26c88 ]
+[ Upstream commit d3265c19b35d036bba327b36b5366bee76b0157c ]
 
-Missing fallthrough causes failure with newer compilers:
+Enabling the RX Buffer Unavailable (RBUE) interrupt is counterproductive
+and can trigger a MAC interrupt storm under heavy RX pressure. When the
+DMA runs out of RX descriptors it fires RBUE continuously until software
+refills the ring.
 
-arch/sparc/kernel/uprobes.c:284:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
-  284 |         default:
-      |         ^
-arch/sparc/kernel/uprobes.c:284:2: note: insert 'break;' to avoid fall-through
-  284 |         default:
-      |         ^
-      |         break;
+However, RBUE is redundant: the normal RX completion interrupt (RIE)
+already triggers NAPI, which processes completed descriptors and refills
+the ring, causing the DMA to resume. The RBUE handler itself only sets
+handle_rx - the same outcome as RIE.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+On Agilex5 under heavy RX pressure, the MAC interrupt (which includes
+RBUE) was observed firing 1,821,811,555 times against only 2,618,627
+actual RX completions - a ~695x ratio - confirming the severity of the
+storm.
+
+RBUE does not provide OOM recovery. If page_pool is exhausted,
+stmmac_rx_refill() cannot advance the DMA tail pointer, the DMA stays
+suspended, and RBUE fires again on the next NAPI completion - a storm
+with no forward progress. This patch trades that storm for a clean
+stall with the same RX outcome. Proper OOM recovery is a pre-existing
+gap outside the scope of this fix.
+
+Note: as a consequence of disabling RBUE, the rx_buf_unav_irq ethtool
+counter will always read 0 on XGMAC2 devices. This behaviour is already
+inconsistent across DWMAC core versions.
+
+Remove RBUE from XGMAC_DMA_INT_DEFAULT_EN and XGMAC_DMA_INT_DEFAULT_RX
+to prevent the interrupt storm while keeping normal RX handling intact.
+
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260609121703.9736-1-muhammad.nazim.amirul.nazle.asmade@altera.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/kernel/uprobes.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/sparc/kernel/uprobes.c b/arch/sparc/kernel/uprobes.c
-index 1a0600206bf5c..dbc51dc2bb4f4 100644
---- a/arch/sparc/kernel/uprobes.c
-+++ b/arch/sparc/kernel/uprobes.c
-@@ -278,6 +278,7 @@ int arch_uprobe_exception_notify(struct notifier_block *self,
- 	case DIE_SSTEP:
- 		if (uprobe_post_sstep_notifier(args->regs))
- 			ret = NOTIFY_STOP;
-+		break;
- 
- 	default:
- 		break;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
+index 8748c37e9dac9..f9110e6164843 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
+@@ -398,9 +398,9 @@
+ #define XGMAC_RIE			BIT(6)
+ #define XGMAC_TBUE			BIT(2)
+ #define XGMAC_TIE			BIT(0)
+-#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | XGMAC_RBUE | \
++#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | \
+ 					XGMAC_RIE | XGMAC_TIE)
+-#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RBUE | XGMAC_RIE)
++#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RIE)
+ #define XGMAC_DMA_INT_DEFAULT_TX	(XGMAC_TIE)
+ #define XGMAC_DMA_CH_Rx_WATCHDOG(x)	(0x0000313c + (0x80 * (x)))
+ #define XGMAC_RWT			GENMASK(7, 0)
 -- 
 2.53.0
 
