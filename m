@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5C351A726;
-	Wed, 30 Sep 2026 16:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788F84FDA73;
+	Wed, 30 Sep 2026 16:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784644; cv=none; b=g1WdZHKVW86P8B3dtlXmZZMMbTwHp27nNkvTl+uvZYKf3p3XyslxVALG8E6bkeP7jdu9/12v3guaQBMlPkg3pIMK6A6537g67ScepwQ4ecYsIxLfYvbyHPaa3v6vlHJFt5AlxEXtQiessRiehgNZ/2jE8ltsAxI1fM9H637zxWY=
+	t=1790784648; cv=none; b=dsd+WQ7eOHKoPziCRNLgom0FQSjLDxlF6mh5Gn0b5hpKmhNc/lvx+Q9m4bJpxxA+7PlT3sR24NrXX2H9YWyivBY6lioCYe/AeEdIKBQ8ASSTk+f8Z1DYgYNvx/G0omYhXmefrOwGmKjpe4hZ55mCKcYeqhVosI/CxUIW7Y/RF1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784644; c=relaxed/simple;
-	bh=JruK9yMofr/VGfKociByES2vJJL951XcCfrTE17grT8=;
+	s=arc-20240116; t=1790784648; c=relaxed/simple;
+	bh=pzCNfjKRS6lEtDZpJAnYLNi5Q2fOsVKSuV955jKam6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=no4LaxFl2HgteBTIOrYH50msiEBgcbdDukTm5uTBsOTaqzcniQ0QT9sv4qswgW0PzYqbYVXkPLrFoBZIScz5rgEfaC3jI5/UVCZsV1PnMgbszU2u1GM0k+u8XVxjeO5ZATqWI7kIFUSDtek3XsFXk0AEINUkjT8OQm1sWtwQV5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOZGJgCG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G5MhQS0pqYxly5y3KGEeEyU2X3Y/j9FR7lYNTZfKiGxRANNGb+0UyWQJ/thBFuaw2T4xDcUuHUcFp7xTHUuSLIlkeIxrQf6gaqKgI6ENDwltpYNx+j5ChzyfEobPbzdhytNnBuIyar7wlhTvULdo3TyiLuyj1/oXtZChpQsByO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyyeO/qB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOZGJgCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BE31F00898;
-	Wed, 30 Sep 2026 16:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyyeO/qB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DEE1F00893;
+	Wed, 30 Sep 2026 16:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784640;
-	bh=z+J2CF3AiytDjkhU4hXVpQdRZTXRhLS4rJ4iAs7BtXc=;
+	s=korg; t=1790784643;
+	bh=e4c//EmWjvjK42zuUiT7QlHUlAK2nhIMn+R02db4wcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vOZGJgCGd/CALr7WSTtuNXPJKnklxXOBj7OClpx9VcRIlqvXmv6c3ebP71RXjob1g
-	 t+PtoQd97tNfS6tSQI/fHIZgz9kulLRjaaDMO8Qde0sXOqp/idykTDX/y2Rv3G4Tko
-	 6RMAonG/q+JVgGkCSBjOhJQoYna73b+3gGBN1MdI=
+	b=GyyeO/qB+3XspI1OD6uUyBnDxvOetfyhOS8SGZLQthnHp5TJq50zJkJlHyazlBk4K
+	 JZ7yRGANTmWjKsVEezYwX16rPp+cr/USE/eSiItA//H63Opvr0mfc+iddoUBjkQ1nC
+	 A7fBV0qMeAhW3iPm+rD9lEzGQP4ckpLbIXWJiI54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fygo.io>,
-	Jens Axboe <axboe@kernel.dk>,
+	Adriana Stancu <adriana@arista.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/982] blk-cgroup: protect iterating blkgs with blkcg->lock in blkcg_print_stat()
-Date: Wed, 30 Sep 2026 17:16:03 +0200
-Message-ID: <20260930152421.675802937@linuxfoundation.org>
+Subject: [PATCH 6.1 228/982] rtc: bq32000: add delay between RTC reads
+Date: Wed, 30 Sep 2026 17:16:04 +0200
+Message-ID: <20260930152421.696035387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,53 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Adriana Stancu <adriana@arista.com>
 
-[ Upstream commit 25656304dabd26198ec69460c594a19d086ef099 ]
+[ Upstream commit d4992b7050a10079bc760bdc5b8688e05a09dfc2 ]
 
-blkcg_print_one_stat() will be called for each blkg:
-- access blkg->iostat, which is freed from rcu callback
-  blkg_free_workfn();
-- access policy data from pd_stat_fn(), which is freed from
-  pd_free_fn(), while pd_free_fn() can be called by removing blkcg or
-  deactivating policy;
+When the RTC is used on systems without a interrupt line, userspace
+tools like `hwclock` fall back to a frequent polling loop to synchronize
+with the edge of the next second.
 
-Take blkcg->lock while iterating so the blkgs stay online and both
-blkg->iostat and policy data for activated policies stay valid.  Use
-irq-safe locking because blkcg->lock can be nested under q->queue_lock,
-which is used from IRQ completion paths.
+On the BQ32000, this aggressive polling can temporarly lock the register
+refresh cycle, because the continuous transfers prevent the hardware from
+updating the buffer. This results in stale data reads or select() timeouts
+in userspace.
 
-Prepare to convert protecting blkgs from request_queue with mutex.
+This patch introduces a delay before reading the RTC registers in order to
+provide a sufficient idle time for the hardware to sync with the register
+buffer.
 
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e162959d7cc.1780621988.git.yukuai@fygo.io
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Adriana Stancu <adriana@arista.com>
+Link: https://patch.msgid.link/20260416142151.3385827-1-adriana@arista.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/rtc/rtc-bq32k.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index e88e493457519..c02292b0bd694 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1003,13 +1003,10 @@ static int blkcg_print_stat(struct seq_file *sf, void *v)
- 	else
- 		cgroup_rstat_flush(blkcg->css.cgroup);
+diff --git a/drivers/rtc/rtc-bq32k.c b/drivers/rtc/rtc-bq32k.c
+index 6d6a55efb9cc7..4522bec54d3ff 100644
+--- a/drivers/rtc/rtc-bq32k.c
++++ b/drivers/rtc/rtc-bq32k.c
+@@ -15,6 +15,7 @@
+ #include <linux/init.h>
+ #include <linux/errno.h>
+ #include <linux/bcd.h>
++#include <linux/delay.h>
  
--	rcu_read_lock();
--	hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
--		spin_lock_irq(&blkg->q->queue_lock);
-+	guard(spinlock_irq)(&blkcg->lock);
-+	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node)
- 		blkcg_print_one_stat(blkg, sf);
--		spin_unlock_irq(&blkg->q->queue_lock);
--	}
--	rcu_read_unlock();
+ #define BQ32K_SECONDS		0x00	/* Seconds register address */
+ #define BQ32K_SECONDS_MASK	0x7F	/* Mask over seconds value */
+@@ -88,9 +89,17 @@ static int bq32k_write(struct device *dev, void *data, uint8_t off, uint8_t len)
+ 
+ static int bq32k_rtc_read_time(struct device *dev, struct rtc_time *tm)
+ {
++	struct i2c_client *client = to_i2c_client(dev);
+ 	struct bq32k_regs regs;
+ 	int error;
+ 
++	/*
++	 * When the device doesn't have the interrupt connected, prevent
++	 * userpace from polling the RTC registers too frequently.
++	 */
++	if (client->irq <= 0)
++		usleep_range(2000, 2500);
 +
- 	return 0;
- }
- 
+ 	error = bq32k_read(dev, &regs, 0, sizeof(regs));
+ 	if (error)
+ 		return error;
 -- 
 2.53.0
 
