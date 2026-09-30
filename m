@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845CF51B16C;
-	Wed, 30 Sep 2026 17:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54146511E61;
+	Wed, 30 Sep 2026 17:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790808; cv=none; b=Qq3nxoHDz1KuI9tZMD0bcNkpGC1+z2MhwPYRJsEmviKIcJ/ZoT3KTLQnt3YzP01X5dZArisdUHMJzfcJWIakKP2u6nM4TTS933ixmzCfGr3DWbLqQpaukGR3X+iLowAF2zlFmDfeHQ91RnjzUNEP0cNodHe3KD+Dyz6ZGItX694=
+	t=1790790811; cv=none; b=h2we/xQH8Z62p87L7RtSVLXEzpOG9ruGRJDbF2c6yyoX4W4Pqqba5RdXgg5tcwA87nzwL4pUX6ttlWxJrymHGfEGZKooyS7feaUdtNDq63yhV4lNzqTuxThHSqg/nnB/l1RXZT9e/w21FT5pPPYRN48/fTBveC1Vlv0EP7gJl/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790808; c=relaxed/simple;
-	bh=5sRYrsKB0XgWgPpCuyE6Yx5wG8l9upMWpZVbDbV+fNA=;
+	s=arc-20240116; t=1790790811; c=relaxed/simple;
+	bh=Th9ue6y4CKsuy+FgEgDYmE23BMajK5mb4x6H4P/cInU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0/N/e55DANSsyXzCc6ES9m0lO+8TygE8cGr7cmkSm5v5t3yzuch5qjN3dr2h9iYTBAEjC6ElYb4iihwYKZ+DZr/Mi4Sx/ebLwiUBlkY2J0puQBW0Y9ll+AISk51D96U0Gv6eRcysnfrtFGbbzWaUrtSwQmukBhytSCeB+6BH24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm6zn8//; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FVOA2t5AvRoT456orWIHdzgw1fhQP316ffbwuLxogW55PnCSOemssujkR6qISUnD1PgiIhleJaeOL20v2tK5Mthorjq1xvWOYSVoEQTDDww1XJbbAW8yZTE+SszaE2IIB7J8J65i+Mk8zICq/kPivPx/avJulMLA/F1CfxFulQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnhIk9v9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm6zn8//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39FE1F00898;
-	Wed, 30 Sep 2026 17:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnhIk9v9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9BF1F000FF;
+	Wed, 30 Sep 2026 17:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790807;
-	bh=gCmmpQ4LETg/W+yrqky9bs89y6Tvo0cxwDG39aRn5b0=;
+	s=korg; t=1790790810;
+	bh=jqrDkGLUr5ahag4zYz4C1bthMV16qMhQaRY5Ski9VAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mm6zn8//TEXms/JnfM+qHsE8mfg+NjIeFE8icKltcpn2Z3/y/MGQDoWWAAhr2t35k
-	 ArOkH6vnuvAkdqSY7fh5FkGhfOX6d77vHq2hNW/Y9jIj5x5dJnWxZzoG/2Kbfe2wuh
-	 KOfcxJtf63JBX/eWDC8YWUveoAPrCEu+cWsacVKQ=
+	b=YnhIk9v9onx5EHs2xjVRBJlMMDZ2eYI3yR7z+jGhDpTjMuWGyA4tB8yUVi2V50lJc
+	 cd1FnJEGMf83PqJ/WOcSHOsB/lOadP+6Ep/vbwXbH1NBCjyHU4v0f5RBtCFoQD6c2m
+	 wLQXvEdIaMdcJY+bUUoimDYvKSgHgatujblcKVVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joonwon Kang <joonwonkang@google.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/752] mailbox: Make mbox_send_message() return error code when tx fails
-Date: Wed, 30 Sep 2026 17:18:26 +0200
-Message-ID: <20260930152358.935056755@linuxfoundation.org>
+Subject: [PATCH 5.15 027/752] hfsplus: rework hfsplus_readdir() logic
+Date: Wed, 30 Sep 2026 17:18:17 +0200
+Message-ID: <20260930152358.738183187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,75 +53,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonwon Kang <joonwonkang@google.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 96a3d2f3167f5644b30e60171898e67123c3c2c6 ]
+[ Upstream commit 4b0496432844628ad05a5b1efce329a3340174d2 ]
 
-When the mailbox controller failed transmitting message, the error code
-was only passed to the client's tx done handler and not to
-mbox_send_message() in blocking mode. For this reason, the function could
-return a false success. This commit resolves the issue by introducing the
-tx status and checking it before mbox_send_message() returns.
+The xfstests' test-case generic/637 fails with error:
 
-This commit works with the premise that the multi-threads' access to a
-channel in blocking mode is serialized by clients, not by the mailbox
-APIs, since the current mbox_send_message() in blocking mode does not
-support multi-threads.
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc4+ #8 SMP PREEMPT_DYNAMIC Thu May 1 16:43:22 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Signed-off-by: Joonwon Kang <joonwonkang@google.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+QA output created by 637
+entries 7 and 8 have duplicate d_off 8
+Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
+
+Debugging of the hfsplus_readdir() logic showed this:
+
+hfsplus: hfsplus_readdir(): 163 ctx->pos 0
+hfsplus: hfsplus_readdir(): 189 ctx->pos 1
+hfsplus: hfsplus_readdir(): 264 ctx->pos 2, ino 18
+hfsplus: hfsplus_readdir(): 264 ctx->pos 3, ino 19
+hfsplus: hfsplus_readdir(): 264 ctx->pos 4, ino 28
+hfsplus: hfsplus_readdir(): 264 ctx->pos 5, ino 118
+hfsplus: hfsplus_readdir(): 264 ctx->pos 6, ino 29
+hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 30
+hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 31
+hfsplus: hfsplus_readdir(): 304 ctx->pos 8
+hfsplus: hfsplus_unlink():420 dir->i_ino 17, inode->i_ino 28
+hfsplus: hfsplus_readdir(): 141 ctx->pos 7
+hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 31
+hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 32
+hfsplus: hfsplus_readdir(): 264 ctx->pos 9, ino 33
+
+It means that hfsplus_readdir() stopped the processing of
+folder's items on ctx->pos 8, then, item with ino 28 has
+been deleted and hfsplus_readdir() re-started the logic
+from ctx->pos 7. As a result, previous and new sets of
+folder's items have overlapping values for the case of
+d_off 8.
+
+Currently, HFS+ has very complicated and fragile logic
+of rd->file->f_pos correction in hfsplus_delete_cat().
+This patch removes this logic and it stores the current
+pos into hfsplus_readdir_data. Finally, if rd->pos == ctx->pos
+then hfsplus_readdir() tries to find the position in
+b-tree's node by means of hfsplus_cat_key. This position is
+used to re-start the folder's content traversal.
+
+sudo ./check generic/637
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #44 SMP PREEMPT_DYNAMIC Mon May  4 15:58:45 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/637  22s ...  22s
+Ran: generic/637
+Passed all 1 tests
+
+Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/198
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260505220051.2854696-2-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c          | 6 +++++-
- include/linux/mailbox_controller.h | 2 ++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ fs/hfsplus/catalog.c    | 11 -----------
+ fs/hfsplus/dir.c        | 28 +++++++++++-----------------
+ fs/hfsplus/hfsplus_fs.h |  5 +----
+ fs/hfsplus/inode.c      |  2 --
+ fs/hfsplus/super.c      |  2 --
+ 5 files changed, 12 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 363eaf3c962ec..1dda26c98d759 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -110,8 +110,10 @@ static void tx_tick(struct mbox_chan *chan, int r)
- 	if (chan->cl->tx_done)
- 		chan->cl->tx_done(chan->cl, mssg, r);
+diff --git a/fs/hfsplus/catalog.c b/fs/hfsplus/catalog.c
+index 9a82bdf4caf24..2db185c67b2c3 100644
+--- a/fs/hfsplus/catalog.c
++++ b/fs/hfsplus/catalog.c
+@@ -332,7 +332,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
+ 	struct super_block *sb = dir->i_sb;
+ 	struct hfs_find_data fd;
+ 	struct hfsplus_fork_raw fork;
+-	struct list_head *pos;
+ 	int err, off;
+ 	u16 type;
  
--	if (r != -ETIME && chan->cl->tx_block)
-+	if (r != -ETIME && chan->cl->tx_block) {
-+		chan->tx_status = r;
- 		complete(&chan->tx_complete);
-+	}
- }
- 
- static enum hrtimer_restart txdone_hrtimer(struct hrtimer *hrtimer)
-@@ -281,6 +283,8 @@ int mbox_send_message(struct mbox_chan *chan, void *mssg)
- 		if (ret == 0) {
- 			t = -ETIME;
- 			tx_tick(chan, t);
-+		} else if (chan->tx_status < 0) {
-+			t = chan->tx_status;
- 		}
+@@ -390,16 +389,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
+ 		hfsplus_free_fork(sb, cnid, &fork, HFSPLUS_TYPE_RSRC);
  	}
  
-diff --git a/include/linux/mailbox_controller.h b/include/linux/mailbox_controller.h
-index 6fee33cb52f58..02e54ac37a6c0 100644
---- a/include/linux/mailbox_controller.h
-+++ b/include/linux/mailbox_controller.h
-@@ -108,6 +108,7 @@ struct mbox_controller {
-  * @txdone_method:	Way to detect TXDone chosen by the API
-  * @cl:			Pointer to the current owner of this channel
-  * @tx_complete:	Transmission completion
-+ * @tx_status:		Transmission status
-  * @active_req:		Currently active request hook
-  * @msg_count:		No. of mssg currently queued
-  * @msg_free:		Index of next available mssg slot
-@@ -120,6 +121,7 @@ struct mbox_chan {
- 	unsigned txdone_method;
- 	struct mbox_client *cl;
- 	struct completion tx_complete;
-+	int tx_status;
- 	void *active_req;
- 	unsigned msg_count, msg_free;
- 	void *msg_data[MBOX_TX_QUEUE_LEN];
+-	/* we only need to take spinlock for exclusion with ->release() */
+-	spin_lock(&HFSPLUS_I(dir)->open_dir_lock);
+-	list_for_each(pos, &HFSPLUS_I(dir)->open_dir_list) {
+-		struct hfsplus_readdir_data *rd =
+-			list_entry(pos, struct hfsplus_readdir_data, list);
+-		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
+-			rd->file->f_pos--;
+-	}
+-	spin_unlock(&HFSPLUS_I(dir)->open_dir_lock);
+-
+ 	err = hfs_brec_remove(&fd);
+ 	if (err)
+ 		goto out;
+diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
+index 578da2528bee8..0d6f42d91e55e 100644
+--- a/fs/hfsplus/dir.c
++++ b/fs/hfsplus/dir.c
+@@ -185,7 +185,15 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 	}
+ 	if (ctx->pos >= inode->i_size)
+ 		goto out;
+-	err = hfs_brec_goto(&fd, ctx->pos - 1);
++	rd = file->private_data;
++	if (rd && rd->pos == ctx->pos) {
++		memcpy(fd.search_key, &rd->key, sizeof(struct hfsplus_cat_key));
++		err = hfs_brec_find(&fd, hfs_find_rec_by_key);
++		if (err == -ENOENT)
++			err = hfs_brec_goto(&fd, 1);
++	} else {
++		err = hfs_brec_goto(&fd, ctx->pos - 1);
++	}
+ 	if (err)
+ 		goto out;
+ 	for (;;) {
+@@ -261,7 +269,6 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 		if (err)
+ 			goto out;
+ 	}
+-	rd = file->private_data;
+ 	if (!rd) {
+ 		rd = kmalloc(sizeof(struct hfsplus_readdir_data), GFP_KERNEL);
+ 		if (!rd) {
+@@ -269,15 +276,8 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 			goto out;
+ 		}
+ 		file->private_data = rd;
+-		rd->file = file;
+-		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
+-		list_add(&rd->list, &HFSPLUS_I(inode)->open_dir_list);
+-		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
+ 	}
+-	/*
+-	 * Can be done after the list insertion; exclusion with
+-	 * hfsplus_delete_cat() is provided by directory lock.
+-	 */
++	rd->pos = ctx->pos;
+ 	memcpy(&rd->key, fd.key, sizeof(struct hfsplus_cat_key));
+ out:
+ 	kfree(strbuf);
+@@ -287,13 +287,7 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 
+ static int hfsplus_dir_release(struct inode *inode, struct file *file)
+ {
+-	struct hfsplus_readdir_data *rd = file->private_data;
+-	if (rd) {
+-		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
+-		list_del(&rd->list);
+-		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
+-		kfree(rd);
+-	}
++	kfree(file->private_data);
+ 	return 0;
+ }
+ 
+diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
+index 1a8231dfb0353..72ec8fd6fad34 100644
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -246,8 +246,6 @@ struct hfsplus_inode_info {
+ 	sector_t fs_blocks;
+ 	u8 userflags;		/* BSD user file flags */
+ 	u32 subfolders;		/* Subfolder count (HFSX only) */
+-	struct list_head open_dir_list;
+-	spinlock_t open_dir_lock;
+ 	loff_t phys_size;
+ 
+ 	struct inode vfs_inode;
+@@ -297,8 +295,7 @@ struct hfs_find_data {
+ };
+ 
+ struct hfsplus_readdir_data {
+-	struct list_head list;
+-	struct file *file;
++	loff_t pos;
+ 	struct hfsplus_cat_key key;
+ };
+ 
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 840729acb9bcc..93e1602742d7a 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -447,8 +447,6 @@ struct inode *hfsplus_new_inode(struct super_block *sb, struct inode *dir,
+ 	inode->i_mtime = inode->i_atime = inode->i_ctime = current_time(inode);
+ 
+ 	hip = HFSPLUS_I(inode);
+-	INIT_LIST_HEAD(&hip->open_dir_list);
+-	spin_lock_init(&hip->open_dir_lock);
+ 	mutex_init(&hip->extents_lock);
+ 	atomic_set(&hip->opencnt, 0);
+ 	hip->extent_state = 0;
+diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
+index 9646cde02010b..adf0ddbe84328 100644
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -90,8 +90,6 @@ struct inode *hfsplus_iget(struct super_block *sb, unsigned long ino)
+ 	HFSPLUS_I(inode)->fs_blocks = 0;
+ 	HFSPLUS_I(inode)->userflags = 0;
+ 	HFSPLUS_I(inode)->subfolders = 0;
+-	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
+ 	HFSPLUS_I(inode)->phys_size = 0;
+ 
+ 	if (inode->i_ino >= HFSPLUS_FIRSTUSER_CNID ||
 -- 
 2.53.0
 
