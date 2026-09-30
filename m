@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BC151993C;
-	Wed, 30 Sep 2026 18:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C0951993C;
+	Wed, 30 Sep 2026 18:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793081; cv=none; b=tr4AhDWESVjqhV2l2I/t8Iw6qpDdrR5KZu+vjvSZeBoYy4SuCemGuLQzuqxAcTDPvKCW/UPok28Sv2K9TqrYt+rmYHqveWlq7nJl+/wpJ2yZYn3YtSu6GyMM6p+ZmTVte/OyB0pntPZBwa6qjiMo1rkUQY0hIDFScbpwkOt81No=
+	t=1790793083; cv=none; b=r5Ek4Wcwston2EEN8/Uspm6zOXtknHi1NAhVSF5htEtmBELu8WjgA90Dt2zJ6fZx1pAutfReSXJs05gcLNPbEcQifP8BZvjftjxI4UWjvYe1d1/cNNcdWmRXVpvwhStLZOcAIZ2bBUpH9b5vrU9lwNtRJ4+4dmCbpWNSI94oNrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793081; c=relaxed/simple;
-	bh=aBMEVfgTj5FH0UAtMFkdkHv4LrzGd4x6HTGtuRLcXro=;
+	s=arc-20240116; t=1790793083; c=relaxed/simple;
+	bh=884BI1B5AwGAE98D6aLSihMnPHaVvI2vuc6wda1Yufw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BagAIljFFuMnZkYCHecFkhMtqEFgyaY4PM0oz1MxIgsohZndtZH4AG4NNXYesfnV8zkqGZ9KXnFurwjqGrtyoqIks2ezCy2Q4I8RxPpm81S/1dQnYYMoiE7UZfFcsGoNcwXNRlx+Gk/oMlxHD789p6FOXsD5rsoPP12AZogO2AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gI3/X/k0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oKJiED9lxGoTmkhg21IUvhUhDyAC56eggm7l+M9NVsVq2xZVK9tHAvhLadqt8C53ibLjMzm318dSdHx8QiFOt0otEH8+MiuxBqx/zNV1NXfq+pyTteP3bqdIKO9xtZrWPVCmR3TOfLe6oNSRocmNLtNHd7Sd6W7Z32SuW5bWG7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmU1WB2P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gI3/X/k0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7719A1F000FF;
-	Wed, 30 Sep 2026 18:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmU1WB2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4552F1F00898;
+	Wed, 30 Sep 2026 18:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793079;
-	bh=ztO2dMBDeAtnYT/4j9Qo4YVsLu6WULtuKA+ETsjY9jI=;
+	s=korg; t=1790793081;
+	bh=lZsNiEAluoC+c9PmSrehaxtThUe/yrfEAPABu9UYDXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gI3/X/k09o3ElP3Tr1R6ZFgMiD6AKe69HU6wEEV6oOImo7QTyOTqd9wgQTQHEfVZt
-	 2wvVVb0FdA+BfgCPFpJH3gH+fqIbY/jnFgyMI3NG3Ekwbkxiv55o7aI2kN1YC6sibF
-	 3IiDhRW0p4kV7zMxvNWdjRPak/UH1VpJ7zqvQOD8=
+	b=pmU1WB2Psnyy50jd3KL2UPkJpFaH5W4LRbhuWhZlT6b8Vpmss7qpmagiVdVRhOw2X
+	 oIWfyoa4uqfrfaCaC9ruy32kfvU09/IDwhSySiCPe+UI/vx1zqFeMxSuglnzTQyrgo
+	 KsTxF9vHYARPNo6i5VPe/WSoL157TvQEAl5HZSWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <mohsin.bashr@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Francesco Magazzu <postadelmaga@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/395] eth: fbnic: Reuse RX mailbox pages
-Date: Wed, 30 Sep 2026 17:25:45 +0200
-Message-ID: <20260930152342.439245738@linuxfoundation.org>
+Subject: [PATCH 6.18 074/395] drm/nouveau/clk: dont clobber reclock status when restoring volt/fan
+Date: Wed, 30 Sep 2026 17:25:36 +0200
+Message-ID: <20260930152342.242379662@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,84 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohsin Bashir <mohsin.bashr@gmail.com>
+From: Francesco Magazzu <postadelmaga@gmail.com>
 
-[ Upstream commit 301ae0d5391a19d9897c342c874240b36f7bc85f ]
+[ Upstream commit e5cccdafc855cd5f96f4b51d38114a0360b075d7 ]
 
-Currently, the RX mailbox frees and reallocates a page for each received
-message. Since FW Rx messages are processed synchronously, and nothing
-hold these pages (unlike skbs which we hand over to the stack), reuse
-the pages and put them back on the Rx ring. Now that we ensure the ring
-is always fully populated we don't have to worry about filling it up
-after partial population during init, either. Update
-fbnic_mbx_process_rx_msgs() to recycle pages after message processing.
+nvkm_cstate_prog() reuses 'ret' for the voltage and fan-speed restore
+calls it makes after reprogramming the clocks.  Those calls almost always
+succeed, so the status of the reclock itself is overwritten and the
+function reports success even when clk->func->calc() or clk->func->prog()
+failed.  The converse is also true: a successful reclock is reported as an
+error if the final restore call fails, even though that failure is only
+logged and otherwise ignored.
 
-Signed-off-by: Mohsin Bashir <mohsin.bashr@gmail.com>
-Link: https://patch.msgid.link/20260115003353.4150771-4-mohsin.bashr@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1b97a269a5bd ("eth: fbnic: Handle FW mailbox completions flagged with an error")
+The only consumer of the return value is the error message in
+nvkm_pstate_work(), so in practice a failing reclock is simply never
+reported.  Nothing else changes, but a function that returns success on
+failure is a trap for the next caller.
+
+Keep the calc/prog status in 'ret' and use a separate local for the
+restore calls.
+
+Fixes: 3eca809b3c05 ("drm/nouveau/clk: cosmetic changes")
+Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260918131620.405133-5-postadelmaga@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_fw.c | 25 ++++++++++++++--------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-index 9e5de01698fc4..6edd01e58bf06 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-@@ -1598,7 +1598,7 @@ static const struct fbnic_tlv_parser fbnic_fw_tlv_parser[] = {
- static void fbnic_mbx_process_rx_msgs(struct fbnic_dev *fbd)
- {
- 	struct fbnic_fw_mbx *rx_mbx = &fbd->mbx[FBNIC_IPC_MBX_RX_IDX];
--	u8 head = rx_mbx->head;
-+	u8 head = rx_mbx->head, tail = rx_mbx->tail;
- 	u64 desc, length;
- 
- 	while (head != rx_mbx->tail) {
-@@ -1609,8 +1609,8 @@ static void fbnic_mbx_process_rx_msgs(struct fbnic_dev *fbd)
- 		if (!(desc & FBNIC_IPC_MBX_DESC_FW_CMPL))
- 			break;
- 
--		dma_unmap_single(fbd->dev, rx_mbx->buf_info[head].addr,
--				 PAGE_SIZE, DMA_FROM_DEVICE);
-+		dma_sync_single_for_cpu(fbd->dev, rx_mbx->buf_info[head].addr,
-+					FBNIC_RX_PAGE_SIZE, DMA_FROM_DEVICE);
- 
- 		msg = rx_mbx->buf_info[head].msg;
- 
-@@ -1643,19 +1643,26 @@ static void fbnic_mbx_process_rx_msgs(struct fbnic_dev *fbd)
- 
- 		dev_dbg(fbd->dev, "Parsed msg type %d\n", msg->hdr.type);
- next_page:
-+		fw_wr32(fbd, FBNIC_IPC_MBX(FBNIC_IPC_MBX_RX_IDX, head), 0);
- 
--		free_page((unsigned long)rx_mbx->buf_info[head].msg);
-+		rx_mbx->buf_info[tail] = rx_mbx->buf_info[head];
- 		rx_mbx->buf_info[head].msg = NULL;
-+		rx_mbx->buf_info[head].addr = 0;
- 
--		head++;
--		head %= FBNIC_IPC_MBX_DESC_LEN;
-+		__fbnic_mbx_wr_desc(fbd, FBNIC_IPC_MBX_RX_IDX, tail,
-+				    FIELD_PREP(FBNIC_IPC_MBX_DESC_LEN_MASK,
-+					       FBNIC_RX_PAGE_SIZE) |
-+				    (rx_mbx->buf_info[tail].addr &
-+				     FBNIC_IPC_MBX_DESC_ADDR_MASK) |
-+				    FBNIC_IPC_MBX_DESC_HOST_CMPL);
-+
-+		head = (head + 1) & (FBNIC_IPC_MBX_DESC_LEN - 1);
-+		tail = (tail + 1) & (FBNIC_IPC_MBX_DESC_LEN - 1);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
+index 8d1874dc3d7f2..ecde72a4f2ee1 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
+@@ -199,16 +199,18 @@ nvkm_cstate_prog(struct nvkm_clk *clk, struct nvkm_pstate *pstate, int cstatei)
  	}
  
- 	/* Record head for next interrupt */
- 	rx_mbx->head = head;
--
--	/* Make sure we have at least one page for the FW to write to */
--	fbnic_mbx_alloc_rx_msgs(fbd);
-+	rx_mbx->tail = tail;
- }
+ 	if (volt) {
+-		ret = nvkm_volt_set_id(volt, cstate->voltage,
+-				       pstate->base.voltage, clk->temp, -1);
+-		if (ret && ret != -ENODEV)
+-			nvkm_error(subdev, "failed to lower voltage: %d\n", ret);
++		int err = nvkm_volt_set_id(volt, cstate->voltage,
++					   pstate->base.voltage, clk->temp, -1);
++
++		if (err && err != -ENODEV)
++			nvkm_error(subdev, "failed to lower voltage: %d\n", err);
+ 	}
  
- void fbnic_mbx_poll(struct fbnic_dev *fbd)
+ 	if (therm) {
+-		ret = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
+-		if (ret && ret != -ENODEV)
+-			nvkm_error(subdev, "failed to lower fan speed: %d\n", ret);
++		int err = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
++
++		if (err && err != -ENODEV)
++			nvkm_error(subdev, "failed to lower fan speed: %d\n", err);
+ 	}
+ 
+ 	return ret;
 -- 
 2.53.0
 
