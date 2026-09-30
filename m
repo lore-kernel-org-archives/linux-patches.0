@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354BD51FCA3;
-	Wed, 30 Sep 2026 17:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8A1515989;
+	Wed, 30 Sep 2026 17:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789685; cv=none; b=eahV0pcRO8Oh3csKV7gSUTVJaV3i86QUU43hcPPJjh/ZaDqoGAOCXwqlTWxC1etrupr3EGpMhAziFVPE6nvw5tUGj0Pj2je+AzuouwCTvRru5LUz76O3lE1egAOBce5+ZRuRgIs54+eKQtwmFFQAmQpxvpD6fROuxEBcLp+qnFg=
+	t=1790789688; cv=none; b=QVMGmsbtGBVp5F8gGQrauvgwtasWDGMg5R06Vfe+3B9c/dvgihyNOtKHmi+RoCyy8F1aqY/jLesuyWwuNPzu5594eZJG70Dc+FD6/zPJiJfOUC37kZzMR7Ux/VBg/v2a9HLNfwyThIVIRAWB9wpketLLVlTKn2yZwl6KBKsZ6oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789685; c=relaxed/simple;
-	bh=2VBDBCB7Xvi9He+ER+1dBU085CzIlTwv47ef0QMqXKE=;
+	s=arc-20240116; t=1790789688; c=relaxed/simple;
+	bh=d78cQNATTXmPs63QEeWTJUKG1wnZ0TfrEX3UBSlO4os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bOqlcfhuhv99It8NZ6rVAL+yczPg3fMRC6eEJPmGbDnAz+XFZBnVio8aR0KE0n1H7bdTLUsmjtw9hrqsAk59dhAPuoRbJ2O11HxCEek/jD5vtnaVC7MVQdmtmH79xvFgRijMI8yA1ru4kqyI0oWG3Lap5eTGS9MrH3AnlZ+lF68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZ/vvl1Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AAlQgyuaRH/+M5bBuRFvjLuyVi1CHWXWyhDU4o3BKy+sRz5xsunY3tNcLMzr+s9eLXnVX4LC0BSCpggso1WXHBsFIbDqIOo4lXbN2JCWSr0kkSRseHjBj32WmUzf0iZEwOwLCzTcEG1s9pNPw3dMqwTToTuZlI6bjfh9Xcx/CRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjkOBzVu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZ/vvl1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4281F000FF;
-	Wed, 30 Sep 2026 17:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjkOBzVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1EF1F00898;
+	Wed, 30 Sep 2026 17:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789684;
-	bh=/Radd82tW+JsfFDEbi+2+Be1NXh2TjW3z+AL2uDGIGY=;
+	s=korg; t=1790789686;
+	bh=DP0C154ZhGIaOlPpzOHGS/P6IMWztTm6cXTG3m2xCCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZ/vvl1Y8a8QJRk7m8kpaPDDjJy32NyRILrj9pCtDlOQliBLJPjmOKW4xIFaAuCZz
-	 HocUyUPlz3DyPnyt5wo7pX+F8cFUghPiBcodj2Qn3Ue3fB2aaySrXKzNCCRaI5Q0r3
-	 sG3YLwFIXKhdlod/BigHZaTZMuxQ90lFn8HaFj4c=
+	b=cjkOBzVu5tOoUQ2MFMrhv5NuZ4v1sD6yCI2ShMLhxntZlhLIH1ir1Rq6VbLh00AxC
+	 kJArZDDvEq0gxye968BqDv5oCy6URYkyOrb/ymy5DDxxsICLwvFhAAPg5JDK2A4k0S
+	 raUlKn2xgg5grEXvPbWNVFAaadQrnQzyu/Fo1ppw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <csokas.bence@prolan.hu>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 564/877] ring-buffer: Make cpu_buffer::free_page a buffer_data_read_page
-Date: Wed, 30 Sep 2026 17:24:35 +0200
-Message-ID: <20260930152426.813818140@linuxfoundation.org>
+Subject: [PATCH 6.12 565/877] dmaengine: Add devm_dma_request_chan()
+Date: Wed, 30 Sep 2026 17:24:36 +0200
+Message-ID: <20260930152426.835124010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,103 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-[ Upstream commit 7a1fb95de5404134f8758c1295ce88986bdf117c ]
+[ Upstream commit 08bf1663c21a3e815eda28fa242d84c945ca3b94 ]
 
-Discarding a cached reader page after a concurrent ring buffer resize
-uses the new global subbuf_order for the free_pages() call. This
-mismatched order may crashes the kernel or leaks memory because the cached
-page was allocated under the old size.
+Expand the arsenal of devm functions for DMA devices, this time for
+requesting channels.
 
-Save the actual free_page order alongside the page address to ensure we
-always refer to the correct value and do not rely on the potentially
-stalled cpu_buffer->subbuf_order value. The simplest is to make
-free_page a buffer_data_read_page which already covers exactly what we
-need: a page address and a page order.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813131152.3589632-4-vdonnefort@google.com
-Fixes: 8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their allocation order")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ Changed upstream’s dpage variable to bpage in ring_buffer_free_read_page(). ]
+Signed-off-by: Bence Csókás <csokas.bence@prolan.hu>
+Link: https://lore.kernel.org/r/20250610082256.400492-2-csokas.bence@prolan.hu
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 777979e62711 ("i2c: mxs: fix DMA channel leak on probe error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/dma/dmaengine.c   |   30 ++++++++++++++++++++++++++++++
+ include/linux/dmaengine.h |    7 +++++++
+ 2 files changed, 37 insertions(+)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -507,7 +507,7 @@ struct ring_buffer_per_cpu {
- 	raw_spinlock_t			reader_lock;	/* serialize readers */
- 	arch_spinlock_t			lock;
- 	struct lock_class_key		lock_key;
--	struct buffer_data_page		*free_page;
-+	struct buffer_data_read_page	free_page;
- 	unsigned long			nr_pages;
- 	unsigned int			current_context;
- 	struct list_head		*pages;
-@@ -2376,7 +2376,7 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
- 	}
- 
--	free_pages((unsigned long)cpu_buffer->free_page, cpu_buffer->buffer->subbuf_order);
-+	free_pages((unsigned long)cpu_buffer->free_page.data, cpu_buffer->free_page.order);
- 
- 	kfree(cpu_buffer);
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -933,6 +933,36 @@ void dma_release_channel(struct dma_chan
  }
-@@ -6422,9 +6422,9 @@ ring_buffer_alloc_read_page(struct trace
- 	local_irq_save(flags);
- 	arch_spin_lock(&cpu_buffer->lock);
+ EXPORT_SYMBOL_GPL(dma_release_channel);
  
--	if (cpu_buffer->free_page) {
--		bpage->data = cpu_buffer->free_page;
--		cpu_buffer->free_page = NULL;
-+	if (cpu_buffer->free_page.data) {
-+		*bpage = cpu_buffer->free_page;
-+		cpu_buffer->free_page.data = NULL;
- 	}
++static void dmaenginem_release_channel(void *chan)
++{
++	dma_release_channel(chan);
++}
++
++/**
++ * devm_dma_request_chan - try to allocate an exclusive slave channel
++ * @dev:	pointer to client device structure
++ * @name:	slave channel name
++ *
++ * Returns pointer to appropriate DMA channel on success or an error pointer.
++ *
++ * The operation is managed and will be undone on driver detach.
++ */
++
++struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
++{
++	struct dma_chan *chan = dma_request_chan(dev, name);
++	int ret = 0;
++
++	if (!IS_ERR(chan))
++		ret = devm_add_action_or_reset(dev, dmaenginem_release_channel, chan);
++
++	if (ret)
++		return ERR_PTR(ret);
++
++	return chan;
++}
++EXPORT_SYMBOL_GPL(devm_dma_request_chan);
++
+ /**
+  * dmaengine_get - register interest in dma_channels
+  */
+--- a/include/linux/dmaengine.h
++++ b/include/linux/dmaengine.h
+@@ -1521,6 +1521,7 @@ struct dma_chan *__dma_request_channel(c
  
- 	arch_spin_unlock(&cpu_buffer->lock);
-@@ -6476,8 +6476,8 @@ void ring_buffer_free_read_page(struct t
- 	local_irq_save(flags);
- 	arch_spin_lock(&cpu_buffer->lock);
+ struct dma_chan *dma_request_chan(struct device *dev, const char *name);
+ struct dma_chan *dma_request_chan_by_mask(const dma_cap_mask_t *mask);
++struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name);
  
--	if (!cpu_buffer->free_page) {
--		cpu_buffer->free_page = bpage;
-+	if (!cpu_buffer->free_page.data) {
-+		cpu_buffer->free_page = *data_page;
- 		bpage = NULL;
- 	}
- 
-@@ -6838,7 +6838,7 @@ int ring_buffer_subbuf_order_set(struct
- 	}
- 
- 	for_each_buffer_cpu(buffer, cpu) {
--		struct buffer_data_page *old_free_data_page;
-+		struct buffer_data_read_page old_free_data_page;
- 		struct list_head old_pages;
- 		unsigned long flags;
- 
-@@ -6881,7 +6881,7 @@ int ring_buffer_subbuf_order_set(struct
- 
- 		arch_spin_lock(&cpu_buffer->lock);
- 		old_free_data_page = cpu_buffer->free_page;
--		cpu_buffer->free_page = NULL;
-+		cpu_buffer->free_page.data = NULL;
- 		arch_spin_unlock(&cpu_buffer->lock);
- 
- 		rb_head_page_activate(cpu_buffer);
-@@ -6893,7 +6893,7 @@ int ring_buffer_subbuf_order_set(struct
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
- 		}
--		free_pages((unsigned long)old_free_data_page, old_order);
-+		free_pages((unsigned long)old_free_data_page.data, old_free_data_page.order);
- 
- 		rb_check_pages(cpu_buffer);
- 	}
+ void dma_release_channel(struct dma_chan *chan);
+ int dma_get_slave_caps(struct dma_chan *chan, struct dma_slave_caps *caps);
+@@ -1557,6 +1558,12 @@ static inline struct dma_chan *dma_reque
+ {
+ 	return ERR_PTR(-ENODEV);
+ }
++
++static inline struct dma_chan *devm_dma_request_chan(struct device *dev, const char *name)
++{
++	return ERR_PTR(-ENODEV);
++}
++
+ static inline void dma_release_channel(struct dma_chan *chan)
+ {
+ }
 
 
