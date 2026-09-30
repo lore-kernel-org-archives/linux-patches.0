@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835E0509EF9;
-	Wed, 30 Sep 2026 17:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F7B51A720;
+	Wed, 30 Sep 2026 17:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788141; cv=none; b=W+h6G3gcl53QFOSpSzDG6eQKmexot2axU6Wk8eajqpXNiYIGZA1nZytCCUGEcfkPjjTo2tEbIudTmlGCPRWm55I/51JYy/dU/Iw207gcKhwCHd4ormmh/YmD+IcfKknDnLfTBbmM2hKjgbjxtxOpyDWq10F0zlhxkebmn6nD59c=
+	t=1790788147; cv=none; b=jeRvAf3VA5znJvOFfeqj177hj32V12h5p810RvICVXXw7UDNZqE5C/rABXS28EFdnZPI2B9B/ITBwCYiR6i7+5v7ukpZQzXt43QY8wh9lqEIplN6bwYcHmG737uIAACliEGVFdzCf/7iltbpW+dYm4b8Z65U4jbYntE3/b6Xt/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788141; c=relaxed/simple;
-	bh=CgZ2FrKLZbY7U2Sn8WaMM/ZpPVT+OcaNIywIer5Yyvk=;
+	s=arc-20240116; t=1790788147; c=relaxed/simple;
+	bh=xyn1eIOQFpKSR7aFcl2yGqCC6XAep5bhQ6g0Ksb/gXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uB+HlQFs9gAqoej9/K15UOc35cp0nOD1CdUzbHuYfBheqe+Se64n3IVDnTeQKqEeRZ3OcXqlVkrDyGOADlPHfmCstnHg6GBeQ69jaD3/XWinluEDYZDdEZw6QYuXH8wANKD9cg8VnJK1v33sLEZ1UowczFejZO+JZfw354Boyy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJmxATPn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K4dfHNCGw1Ptqc0Fx3Wt6XFOd50Z9UZl2MybDdnHeBiad76q1W05RbJI07UuAK0j+ROfH1FmNBj9orV0Z3g62Zg+hcHw4kt+yOrxwlX/sI49Tya19L/sSQWZhC9jSlSL4MJED55qv9bQrMlziaXNmsZOkopikVM8NIrq//LYZVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dg7AppsO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJmxATPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1E91F000FF;
-	Wed, 30 Sep 2026 17:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dg7AppsO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CAD31F000FF;
+	Wed, 30 Sep 2026 17:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788140;
-	bh=nvdKeqi2NuFc1T7SI2Ij9LYUnaSAkuKSpzjo0i8n78Q=;
+	s=korg; t=1790788146;
+	bh=egZJmGEIzm1zkxkznED+GyZ5alXxz26gnbS1urjF7P4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJmxATPnzLOXhDFczOrWBxCfeOJ9GP39X0ReNzIZKGQw11Lhsl8GbgszrfKAvyJef
-	 fVsNRhGCJwwYtBcJEYsivc7eoqKJZmW9lJc2WtqgFe+hxKeppB1PHwQ7tiEBJ3fz15
-	 8ux5GIF78nqziClO5ko2vkSaZNmuAeapEo4waiZg=
+	b=dg7AppsO5GCB9fbqm7zaBjYZKXlw3NIVphNBz7HY3UgkPPmHv0YT6jZK+/tqpZBDm
+	 JluGlzXg3Lh6BXHfYZ7+WYNLmvrMng9XgNHiS5vGDmolI7yTI4egzV/Tacn3P1l40S
+	 PVcgZbJcOoRPUlJlOFfZISaWONbK225jjpNRT8j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/877] s390/boot: Avoid IPL parameter append past command line
-Date: Wed, 30 Sep 2026 17:15:20 +0200
-Message-ID: <20260930152414.946814908@linuxfoundation.org>
+Subject: [PATCH 6.12 015/877] ipv6: mcast: Dont hold RTNL for IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.
+Date: Wed, 30 Sep 2026 17:15:26 +0200
+Message-ID: <20260930152415.073963410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,93 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d76181dfabdaa720703167393704efacba343442 ]
+[ Upstream commit 1767bb2d47b715a106287a8f963d9ec6cbab4e69 ]
 
-A command line may occupy all but the terminating byte of
-COMMAND_LINE_SIZE. In that case append_ipl_block_parm() passes a zero size
-to the IPL parameter conversion helpers and points the destination one
-byte past early_command_line. The helpers subtract one from the unsigned
-size and write the converted parameter outside the command line buffer.
+In __ipv6_sock_mc_join(), per-socket mld data is protected by lock_sock(),
+and only __dev_get_by_index() requires RTNL.
 
-Convert the IPL parameter in the command line parsing buffer first. A
-parameter beginning with '=' can then replace the existing command line
-regardless of its length, while other parameters are appended only when
-space remains.
+Let's use dev_get_by_index() and drop RTNL for IPV6_ADD_MEMBERSHIP and
+MCAST_JOIN_GROUP.
 
-Fixes: 5ecb2da660ab ("s390: support command lines longer than 896 bytes")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Note that we must call rt6_lookup() and dev_hold() under RCU.
+
+If rt6_lookup() returns an entry from the exception table, dst_dev_put()
+could change rt->dev.dst to loopback concurrently, and the original device
+could lose the refcount before dev_hold() and unblock device registration.
+
+dst_dev_put() is called from NETDEV_UNREGISTER and synchronize_net() follows
+it, so as long as rt6_lookup() and dev_hold() are called within the same
+RCU critical section, the dev is alive.
+
+Even if the race happens, they are synchronised by idev->dead and mcast
+addresses are cleaned up.
+
+For the racy access to rt->dst.dev, we use dst_dev().
+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250702230210.3115355-7-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/ipl_parm.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ net/ipv6/ipv6_sockglue.c |  2 --
+ net/ipv6/mcast.c         | 24 +++++++++++++-----------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/arch/s390/boot/ipl_parm.c b/arch/s390/boot/ipl_parm.c
-index 557462e62cd73..6c77afb3b8a11 100644
---- a/arch/s390/boot/ipl_parm.c
-+++ b/arch/s390/boot/ipl_parm.c
-@@ -21,6 +21,7 @@ struct parmarea parmarea __section(".parmarea") = {
- };
- 
- char __bootdata(early_command_line)[COMMAND_LINE_SIZE];
-+static char command_line_buf[COMMAND_LINE_SIZE];
- 
- unsigned int __bootdata_preserved(zlib_dfltcc_support) = ZLIB_DFLTCC_FULL;
- struct ipl_parameter_block __bootdata_preserved(ipl_block);
-@@ -148,31 +149,29 @@ static size_t ipl_block_get_ascii_scpdata(char *dest, size_t size,
- 
- static void append_ipl_block_parm(void)
+diff --git a/net/ipv6/ipv6_sockglue.c b/net/ipv6/ipv6_sockglue.c
+index c2ea92c0f9166..385321a43a19b 100644
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -121,11 +121,9 @@ static bool setsockopt_needs_rtnl(int optname)
  {
--	char *parm, *delim;
--	size_t len, rc = 0;
-+	size_t len, extra = 0;
-+	char *delim;
+ 	switch (optname) {
+ 	case IPV6_ADDRFORM:
+-	case IPV6_ADD_MEMBERSHIP:
+ 	case IPV6_DROP_MEMBERSHIP:
+ 	case IPV6_JOIN_ANYCAST:
+ 	case IPV6_LEAVE_ANYCAST:
+-	case MCAST_JOIN_GROUP:
+ 	case MCAST_LEAVE_GROUP:
+ 	case MCAST_JOIN_SOURCE_GROUP:
+ 	case MCAST_LEAVE_SOURCE_GROUP:
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 212c2d8efe0f5..61046543302d4 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -172,14 +172,12 @@ static int unsolicited_report_interval(struct inet6_dev *idev)
+ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
+ 			       const struct in6_addr *addr, unsigned int mode)
+ {
+-	struct net_device *dev = NULL;
+-	struct ipv6_mc_socklist *mc_lst;
+ 	struct ipv6_pinfo *np = inet6_sk(sk);
++	struct ipv6_mc_socklist *mc_lst;
+ 	struct net *net = sock_net(sk);
++	struct net_device *dev = NULL;
+ 	int err;
  
- 	len = strlen(early_command_line);
+-	ASSERT_RTNL();
 -
--	delim = early_command_line + len;    /* '\0' character position */
--	parm = early_command_line + len + 1; /* append right after '\0' */
-+	delim = early_command_line + len; /* '\0' character position */
+ 	if (!ipv6_addr_is_multicast(addr))
+ 		return -EINVAL;
  
- 	switch (ipl_block.pb0_hdr.pbt) {
- 	case IPL_PBT_CCW:
--		rc = ipl_block_get_ascii_vmparm(
--			parm, COMMAND_LINE_SIZE - len - 1, &ipl_block);
-+		extra = ipl_block_get_ascii_vmparm(command_line_buf, sizeof(command_line_buf), &ipl_block);
- 		break;
- 	case IPL_PBT_FCP:
- 	case IPL_PBT_NVME:
- 	case IPL_PBT_ECKD:
--		rc = ipl_block_get_ascii_scpdata(
--			parm, COMMAND_LINE_SIZE - len - 1, &ipl_block);
-+		extra = ipl_block_get_ascii_scpdata(command_line_buf, sizeof(command_line_buf), &ipl_block);
- 		break;
- 	}
--	if (rc) {
--		if (*parm == '=')
--			memmove(early_command_line, parm + 1, rc);
--		else
-+	if (extra) {
-+		if (command_line_buf[0] == '=') {
-+			memmove(early_command_line, command_line_buf + 1, extra);
-+		} else if (len < COMMAND_LINE_SIZE - 2) {
- 			*delim = ' '; /* replace '\0' with space */
-+			sized_strscpy(delim + 1, command_line_buf, COMMAND_LINE_SIZE - len - 1);
-+		}
- 	}
- }
+@@ -199,13 +197,18 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
  
-@@ -258,7 +257,6 @@ static void modify_fac_list(char *str)
- 	check_cleared_facilities();
- }
+ 	if (ifindex == 0) {
+ 		struct rt6_info *rt;
++
++		rcu_read_lock();
+ 		rt = rt6_lookup(net, addr, NULL, 0, NULL, 0);
+ 		if (rt) {
+-			dev = rt->dst.dev;
++			dev = dst_dev(&rt->dst);
++			dev_hold(dev);
+ 			ip6_rt_put(rt);
+ 		}
+-	} else
+-		dev = __dev_get_by_index(net, ifindex);
++		rcu_read_unlock();
++	} else {
++		dev = dev_get_by_index(net, ifindex);
++	}
  
--static char command_line_buf[COMMAND_LINE_SIZE];
- void parse_boot_command_line(void)
- {
- 	char *param, *val;
+ 	if (!dev) {
+ 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
+@@ -216,12 +219,11 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
+ 	mc_lst->sfmode = mode;
+ 	RCU_INIT_POINTER(mc_lst->sflist, NULL);
+ 
+-	/*
+-	 *	now add/increase the group membership on the device
+-	 */
+-
++	/* now add/increase the group membership on the device */
+ 	err = __ipv6_dev_mc_inc(dev, addr, mode);
+ 
++	dev_put(dev);
++
+ 	if (err) {
+ 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
+ 		return err;
 -- 
 2.53.0
 
