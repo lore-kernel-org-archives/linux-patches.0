@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743DF3CB56A;
-	Wed, 30 Sep 2026 19:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562DE3D9526;
+	Wed, 30 Sep 2026 19:18:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795925; cv=none; b=Ql59lufvS/z7adzr68PP5JKCmSKrlK3PgccbRnShl1iek554GytUFeG5zuKenbK5AEzeetRGI/OBgObnPXfhjPUx6SyGVKeURrwB6iipzGb30blv3jwa9R93NjC4LBJIGpUdgNQuIn2A0jlDwhH5Rp+/wHs/fauFVkUFdOZdG2k=
+	t=1790795928; cv=none; b=e/pmLYOQummk4U1QIXmZygr6b4PaZ2dwTVy3vkRKC+hIUFAUJ4nf6AjVh1u/nynnWK9EWz/G8WzIlUZWKlS33vAvKKdpeHCuO5PzWbfFx+YU8y8WaotUzdeJelnlYGFS9S1154IMims6OCB/6TJhSV3AChcqvTZwxrvs2e2UiWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795925; c=relaxed/simple;
-	bh=csF0MsW4/ALrXjGIR8IoCJbXoc+n1LiT2PxeuYPx8N4=;
+	s=arc-20240116; t=1790795928; c=relaxed/simple;
+	bh=BqVlQGXvWj/+V6B4CcRFB9UFujXRRrjg8Ve87k/O5Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTrsZXUzxR0DJL4p8mGmjJ3W96l0QTKQQ21bnnycaKs61g9cjWV5lz9Vvpb1VzbOhZaJ1VzaoU3kvz0nhBhMNjBGl16mkOtR/nxAENQ0lZ/weqpd94djJ9l2YvDZoYSAZhXTRyWNPBwogx7Huom/IzzXI/mSj4+um/dLwHgOm2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVcnCuDj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cF3bRh0Ysjz7zdIKiiIXp2X9xqAeDlcx2d9E0eQrHc5ZkTkgSwvMQDveRgUB58hnWUgz6LbkgBNBfm2uskOEdxrOtbO8plDgGtJ04gqJreD5bLBEHuuE7TxDV/s2FHZfaLNT5KyWhF2AzbspiMxFrL27z6JQytv5KH+rFJcExQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqI6i/Bc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVcnCuDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D034A1F000FF;
-	Wed, 30 Sep 2026 19:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqI6i/Bc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90E11F000FF;
+	Wed, 30 Sep 2026 19:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795924;
-	bh=Hk9NxgYFTd9l8Ds58yfDZjVCYv1MGokEjS2R52WzPcE=;
+	s=korg; t=1790795927;
+	bh=sDeMD8fVSaEoY8VsCKcvVoG/UPeLUTq7AqNDBP1nvZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mVcnCuDjZvE2JzPngjS8PLni1FIauqQwi7qN31FqtrHZWNv8sKfEqbi0uMt3stn3Q
-	 MJIqk7Z0BSK/Hbp13CeFOhv2qmf8RzYyhCD4AoNBZOVRX82bKoWKWp5LEBhRj9fX6d
-	 wP988KeX8qAjmP1bGzfJwpHPJDBtiSfFFOQ00BZc=
+	b=kqI6i/BcympKdaoYNz/EoMTv6ooLpPJPux37yd7x3J9TyiRveefN0TJfOxbHr0ujf
+	 2RTc0axU+QHKSzt8Qinl0gj6CpEgCMyvFlhLehVszyZ0KxsshWc9/GgBznaMyMvUc5
+	 9jdjXegHzhZaSiKARhPUl8vT3hUTw8my5W1yfqHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0732/1193] RDMA/rxe: insert mcg into mcg_tree only after rxe_mcast_add() succeeds
-Date: Wed, 30 Sep 2026 17:23:36 +0200
-Message-ID: <20260930152450.516724376@linuxfoundation.org>
+Subject: [PATCH 6.6 0733/1193] net: convert dev->reg_state to u8
+Date: Wed, 30 Sep 2026 17:23:37 +0200
+Message-ID: <20260930152450.539214704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,137 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1caceeb2d74bbe88223aea55eb8626b4c5f076fd ]
+[ Upstream commit 4d42b37def70327b2bb19f823d42289aed2cd7c7 ]
 
-rxe_get_mcg() publishes a newly allocated multicast group in
-rxe->mcg_tree before programming the backing Ethernet multicast address
-with rxe_mcast_add(), which runs outside mcg_lock. A local userspace
-RDMA client reaches this path with ATTACH_MCAST on a UD QP; if
-rxe_mcast_add() then returns an error (for example -ENODEV when the
-backing netdev has been removed, or a propagated dev_mc_add() error),
-the unwind frees the published group without removing it from the tree.
-A later lookup of the same MGID dereferences the freed struct rxe_mcg
-from __rxe_lookup_mcg().
+Prepares things so that dev->reg_state reads can be lockless,
+by adding WRITE_ONCE() on write side.
 
-Fix this by keeping the new mcg private until rxe_mcast_add() succeeds.
-Split the tree publication into __rxe_publish_mcg(), call rxe_mcast_add()
-before taking the tree reference, and free the still-private mcg on
-failure. Because the group is never visible in mcg_tree until the
-multicast address is programmed, no concurrent caller can look it up or
-attach a QP to a group that is about to be torn down, so the error path
-needs no conditional unwind. If another caller publishes the same MGID
-while the address is being programmed, the post-add re-check under
-mcg_lock finds the winner; this caller then drops its private object and
-balances its own rxe_mcast_add() with rxe_mcast_del() before returning
-the winner.
+READ_ONCE()/WRITE_ONCE() do not support bitfields.
 
-Reproduced by forcing the rxe_mcast_add() error return under KASAN:
-without the change the next attach to the same MGID reports a
-slab-use-after-free in __rxe_lookup_mcg(); with it the forced failure
-returns cleanly. A no-injection attach/detach regression, including a
-two-QP shared join/leave and re-attach, stays KASAN- and leak-clean.
-
-Fixes: a926a903b7dc ("RDMA/rxe: Do not call  dev_mc_add/del() under a spinlock")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260617022728.2770116-1-michael.bommarito@gmail.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ef9fbe1b93f3 ("RDMA/core: Reject unregistering netdevs in ib_get_eth_speed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mcast.c | 50 +++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ include/linux/netdevice.h | 23 ++++++++++++++---------
+ net/core/dev.c            |  8 ++++----
+ 2 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mcast.c b/drivers/infiniband/sw/rxe/rxe_mcast.c
-index 07ff47bae31df..c14680c9a5362 100644
---- a/drivers/infiniband/sw/rxe/rxe_mcast.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mcast.c
-@@ -175,7 +175,9 @@ struct rxe_mcg *rxe_lookup_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
-  * @mgid: multicast address as a gid
-  * @mcg: new mcg object
-  *
-- * Context: caller should hold rxe->mcg lock
-+ * Initializes the mcg fields. The mcg is private and not yet visible in
-+ * mcg_tree, so this may run without rxe->mcg_lock; __rxe_publish_mcg()
-+ * makes it visible under the lock once it is ready.
-  */
- static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
- 			   struct rxe_mcg *mcg)
-@@ -184,13 +186,22 @@ static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
- 	memcpy(&mcg->mgid, mgid, sizeof(mcg->mgid));
- 	INIT_LIST_HEAD(&mcg->qp_list);
- 	mcg->rxe = rxe;
-+}
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index b6e63bcfff30a..fdd3ae0a506ea 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1795,6 +1795,15 @@ enum netdev_stat_type {
+ 	NETDEV_PCPU_STAT_DSTATS, /* struct pcpu_dstats */
+ };
  
--	/* caller holds a ref on mcg but that will be
--	 * dropped when mcg goes out of scope. We need to take a ref
--	 * on the pointer that will be saved in the red-black tree
--	 * by __rxe_insert_mcg and used to lookup mcg from mgid later.
--	 * Inserting mcg makes it visible to outside so this should
--	 * be done last after the object is ready.
-+/**
-+ * __rxe_publish_mcg - make a fully initialized mcg visible in mcg_tree
-+ * @mcg: the mcg object
-+ *
-+ * Context: caller must hold rxe->mcg_lock and a reference on mcg
-+ */
-+static void __rxe_publish_mcg(struct rxe_mcg *mcg)
-+{
-+	/* caller holds a ref on mcg but that will be dropped when mcg goes
-+	 * out of scope. We need to take a ref on the pointer that will be
-+	 * saved in the red-black tree by __rxe_insert_mcg and used to lookup
-+	 * mcg from mgid later. Inserting mcg makes it visible to outside so
-+	 * this is done last after the object is ready and the multicast
-+	 * address has been programmed.
- 	 */
- 	kref_get(&mcg->ref_cnt);
- 	__rxe_insert_mcg(mcg);
-@@ -228,26 +239,37 @@ static struct rxe_mcg *rxe_get_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
- 		err = -ENOMEM;
- 		goto err_dec;
- 	}
-+	__rxe_init_mcg(rxe, mgid, mcg);
++enum netdev_reg_state {
++	NETREG_UNINITIALIZED = 0,
++	NETREG_REGISTERED,	/* completed register_netdevice */
++	NETREG_UNREGISTERING,	/* called unregister_netdevice */
++	NETREG_UNREGISTERED,	/* completed unregister todo */
++	NETREG_RELEASED,	/* called free_netdev */
++	NETREG_DUMMY,		/* dummy device for NAPI poll */
++};
 +
-+	/* program the multicast address while mcg is still private, before
-+	 * it is inserted into mcg_tree. dev_mc_add() may sleep so this must
-+	 * run outside mcg_lock. On failure mcg was never published, so a
-+	 * plain free is correct and the tree is untouched.
-+	 */
-+	err = rxe_mcast_add(rxe, mgid);
-+	if (err) {
-+		kfree(mcg);
-+		goto err_dec;
-+	}
+ /**
+  *	struct net_device - The DEVICE structure.
+  *
+@@ -2325,13 +2334,7 @@ struct net_device {
  
- 	spin_lock_bh(&rxe->mcg_lock);
--	/* re-check to see if someone else just added it */
-+	/* re-check to see if someone else just added it while we were adding
-+	 * the multicast address; if so use theirs and drop ours
-+	 */
- 	tmp = __rxe_lookup_mcg(rxe, mgid);
- 	if (tmp) {
- 		spin_unlock_bh(&rxe->mcg_lock);
-+		rxe_mcast_del(rxe, mgid);
- 		atomic_dec(&rxe->mcg_num);
- 		kfree(mcg);
- 		return tmp;
+ 	struct list_head	link_watch_list;
+ 
+-	enum { NETREG_UNINITIALIZED=0,
+-	       NETREG_REGISTERED,	/* completed register_netdevice */
+-	       NETREG_UNREGISTERING,	/* called unregister_netdevice */
+-	       NETREG_UNREGISTERED,	/* completed unregister todo */
+-	       NETREG_RELEASED,		/* called free_netdev */
+-	       NETREG_DUMMY,		/* dummy device for NAPI poll */
+-	} reg_state:8;
++	u8 reg_state;
+ 
+ 	bool dismantle;
+ 
+@@ -5277,7 +5280,9 @@ static inline const char *netdev_name(const struct net_device *dev)
+ 
+ static inline const char *netdev_reg_state(const struct net_device *dev)
+ {
+-	switch (dev->reg_state) {
++	u8 reg_state = READ_ONCE(dev->reg_state);
++
++	switch (reg_state) {
+ 	case NETREG_UNINITIALIZED: return " (uninitialized)";
+ 	case NETREG_REGISTERED: return "";
+ 	case NETREG_UNREGISTERING: return " (unregistering)";
+@@ -5286,7 +5291,7 @@ static inline const char *netdev_reg_state(const struct net_device *dev)
+ 	case NETREG_DUMMY: return " (dummy)";
  	}
  
--	__rxe_init_mcg(rxe, mgid, mcg);
-+	__rxe_publish_mcg(mcg);
- 	spin_unlock_bh(&rxe->mcg_lock);
+-	WARN_ONCE(1, "%s: unknown reg_state %d\n", dev->name, dev->reg_state);
++	WARN_ONCE(1, "%s: unknown reg_state %d\n", dev->name, reg_state);
+ 	return " (unknown)";
+ }
  
--	/* add mcast address outside of lock */
--	err = rxe_mcast_add(rxe, mgid);
--	if (!err)
--		return mcg;
-+	return mcg;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 290fb19c5dd76..36a6d621c10a7 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10341,7 +10341,7 @@ int register_netdevice(struct net_device *dev)
  
--	kfree(mcg);
- err_dec:
- 	atomic_dec(&rxe->mcg_num);
- 	return ERR_PTR(err);
+ 	ret = netdev_register_kobject(dev);
+ 	write_lock(&dev_base_lock);
+-	dev->reg_state = ret ? NETREG_UNREGISTERED : NETREG_REGISTERED;
++	WRITE_ONCE(dev->reg_state, ret ? NETREG_UNREGISTERED : NETREG_REGISTERED);
+ 	write_unlock(&dev_base_lock);
+ 	if (ret)
+ 		goto err_uninit_notify;
+@@ -10634,7 +10634,7 @@ void netdev_run_todo(void)
+ 		}
+ 
+ 		write_lock(&dev_base_lock);
+-		dev->reg_state = NETREG_UNREGISTERED;
++		WRITE_ONCE(dev->reg_state, NETREG_UNREGISTERED);
+ 		write_unlock(&dev_base_lock);
+ 		linkwatch_forget_dev(dev);
+ 	}
+@@ -11049,7 +11049,7 @@ void free_netdev(struct net_device *dev)
+ 	}
+ 
+ 	BUG_ON(dev->reg_state != NETREG_UNREGISTERED);
+-	dev->reg_state = NETREG_RELEASED;
++	WRITE_ONCE(dev->reg_state, NETREG_RELEASED);
+ 
+ 	/* will free via device release */
+ 	put_device(&dev->dev);
+@@ -11138,7 +11138,7 @@ void unregister_netdevice_many_notify(struct list_head *head,
+ 		/* And unlink it from device chain. */
+ 		write_lock(&dev_base_lock);
+ 		unlist_netdevice(dev, false);
+-		dev->reg_state = NETREG_UNREGISTERING;
++		WRITE_ONCE(dev->reg_state, NETREG_UNREGISTERING);
+ 		write_unlock(&dev_base_lock);
+ 	}
+ 	flush_all_backlogs();
 -- 
 2.53.0
 
