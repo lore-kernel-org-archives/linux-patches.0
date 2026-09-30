@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38995187DE;
-	Wed, 30 Sep 2026 16:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661B46D559;
+	Wed, 30 Sep 2026 16:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787361; cv=none; b=MHYEmyfQSXg5gwtiE2E5PJi3SP8CiKNl4ouECaAwp0cwbTb74/ZFFUavDZjjuKtg6MK88ZR8mwerqJEPUX9mYl5RSrYNq/3WojFxsIiyni28Vp9sucCqY0PWxxynsiknVhTFliBCsjYe0WMcpr2ShictZ/SB8sNpKZPQoKSHoSc=
+	t=1790787364; cv=none; b=Txick4lCSXHpB62DA2wWQI/1BsrGkS7AX3al5acdpkEyFG4AavwmgeiObjLmYxNlXJ2csFbOLTxRu4FAZzkALPYZZb+8Xk8VxajAYuYcgk3T99nJy50F8/w1n7oPVtXcQng6LAkl4Zhe+/BRHwXPvApMWHiFw6veDdAL2JXeo5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787361; c=relaxed/simple;
-	bh=ahqH3Ek2QNr3ONTcDDa6AZ16a9mJFUyP/f3ulTTEB94=;
+	s=arc-20240116; t=1790787364; c=relaxed/simple;
+	bh=KU4VXf4DOILTCHI9heLcZuadEPLu0PJV+4KSp4sz0w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JB7Tn4ZQTsgI8cFSTmp737K4HojFrBPzAXuIsAZULs96UY80mPwRlzKq9EBN+Pn6u5T6pugVjik4s5ASbuTMVJ96WVfz1/oAhANmo5iPHQUYLqICOYe1nO1aZ03R+ImOvric4LVLKnQDe3FxhGEfObK2nylsvpcQaonuWRgu0XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O76wqsRR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c1ha50uVMaTSiNiRaYqHgcAg9Rt8VebnMvIadqusjgWaBqSYqq+YtIgt23MzInQ3QW/apmGVi//kSlPB+9gX3rnLEjBDFbEvh4YEqcSvRktUUwyZagTfgqjuLqzIIoAfGUNaDpGXaU6xLJZ8wr7wgvBxhXy9oqYnvYNs8vMU67o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2xuxJnA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O76wqsRR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2E81F000FF;
-	Wed, 30 Sep 2026 16:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2xuxJnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAE41F000FF;
+	Wed, 30 Sep 2026 16:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787359;
-	bh=KMSnIwsEQ8UR/5NTlIM3xoSBOcpu8IG3FnWU1oOVhuM=;
+	s=korg; t=1790787362;
+	bh=+KgkdhjUlUU9Noa69p2Eo0LFuinqouobZIZVBs8zCGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O76wqsRRunK5n/N+JcLrwDLcCN2/aJeemgd1FtJYBUaHMcvwAQwBY/qXJBKxt8w26
-	 YFkgCnKiyM82TRiLizAQqY5Y9t6n7xtuTjir4L6N4/IulImcQstTOPxppqZJuGYmip
-	 Cpss6GpDZGD82HdMCu8gPv8VImVmufpkx+Q9efmQ=
+	b=J2xuxJnA3RSCemLaAL5eczc+VWHmnU6BsnOaqKr6TDf03GUvCB98rZi0tHcsKvfeh
+	 BbkcZTpMZ98YBaPSPtKZtVxleB/kEvfqt7HCE/bKQOeEPhtJTqaIAAo6r4AU7fkUv+
+	 fcqez7YlIquKozADw6xfnk0Vd09zejh3fT35amS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 158/457] net: stmmac: selftests: Validate EEE based on the actual LPI timer value
-Date: Wed, 30 Sep 2026 17:24:23 +0200
-Message-ID: <20260930152349.460142430@linuxfoundation.org>
+Subject: [PATCH 7.2 159/457] net: stmmac: selftests: Check the dev->features for S-TAG offload testing
+Date: Wed, 30 Sep 2026 17:24:24 +0200
+Message-ID: <20260930152349.480848069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,145 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit c8c1795aa8106293020a836d01e127e98f442925 ]
+[ Upstream commit ba804b23d76d278ee475b8427fa7c5623ce5e270 ]
 
-The EEE selftest is a 2-step test :
- - It validates that we enter in LPI mode with the
-   irq_tx_path_in_lpi_mode_n counter
- - It then validates that we exit LPI when sending a frame, with the
-   irq_tx_path_exit_lpi_mode_n counter.
+The S-TAG offload insertion incorrectly checks the dvlan (double vlan)
+DMA cap, which is different than S-TAG support. Use
+NETIF_F_HW_VLAN_STAG_TX to check if the feature is supported instead.
 
-The current state of the test lacks 2 main things :
-
- - We don't know exactly when was the previous frame sent (it's from the
-   previous selftest)
-
- - The timeout is hardcoded, while the LPI is entered after a
-   user-configurable delay. On top of that, the timeout loop uses a
-   pre-decrement iterator (--retries) that actually only iterate nine
-   times, so 900ms while the default LPI value is 1 second.
-
-Let's therefore make it more deterministic :
-
- - Send a frame at the beginning of the test
- - Wait for more than the lpi timer value, we timeout after about twice
-   the value,
- - Then send another frame, and verify that we do go out of LPI, also
-   with a timeout.
-
-As LPI timer can get pretty high, bail out if LPI timer is over 5
-seconds.
-
-Note that the test's goal isn't to validate the LPI timer value itself,
-only that we enter/leave LPI mode.
+Note that this flag isn't set in stmmac yet, but contrary to ARP
+offload, this is a feature that has a chance to get there eventually so
+let's leave the selftest here for now. It'll report -EOPNOTSUPP in the
+meantime.
 
 Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260917215339.2022523-3-maxime.chevallier@bootlin.com
+Link: https://patch.msgid.link/20260917215339.2022523-4-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 44 ++++++++++++++++---
- 1 file changed, 37 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index a65eac55323af..045d644ae50b5 100644
+index 045d644ae50b5..53bb911b69ffb 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -31,6 +31,7 @@ struct stmmachdr {
- 			      sizeof(struct stmmachdr))
- #define STMMAC_TEST_PKT_MAGIC	0xdeadcafecafedeadULL
- #define STMMAC_LB_TIMEOUT	msecs_to_jiffies(200)
-+#define STMMAC_SFT_MAX_LPI	(5 * USEC_PER_SEC)
+@@ -1435,7 +1435,7 @@ static int stmmac_test_vlanoff(struct stmmac_priv *priv)
  
- struct stmmac_packet_attrs {
- 	int vlan;
-@@ -482,12 +483,16 @@ static int stmmac_test_mmc(struct stmmac_priv *priv)
- static int stmmac_test_eee(struct stmmac_priv *priv)
+ static int stmmac_test_svlanoff(struct stmmac_priv *priv)
  {
- 	struct stmmac_extra_stats *initial, *final;
--	int retries = 10;
-+	unsigned long timeout, max_duration;
- 	int ret;
- 
- 	if (!priv->dma_cap.eee || !priv->eee_active)
+-	if (!priv->dma_cap.dvlan)
++	if (!(priv->dev->features & NETIF_F_HW_VLAN_STAG_TX))
  		return -EOPNOTSUPP;
- 
-+	/* Bail out if the configured LPI timer is too long */
-+	if (priv->tx_lpi_timer > STMMAC_SFT_MAX_LPI)
-+		return -EOPNOTSUPP;
-+
- 	initial = kzalloc_obj(*initial);
- 	if (!initial)
- 		return -ENOMEM;
-@@ -498,14 +503,21 @@ static int stmmac_test_eee(struct stmmac_priv *priv)
- 		goto out_free_initial;
- 	}
- 
-+	/* Snapshot stats, we want to count the in_lpi events. We may enter
-+	 * LPI just after the packet was sent.
-+	 */
- 	memcpy(initial, &priv->xstats, sizeof(*initial));
- 
-+	/* Send a frame, then wait to enter LPI */
- 	ret = stmmac_test_mac_loopback(priv);
- 	if (ret)
- 		goto out_free_final;
- 
-+	max_duration = usecs_to_jiffies(2 * priv->tx_lpi_timer);
-+
- 	/* We have no traffic in the line so, sooner or later it will go LPI */
--	while (--retries) {
-+	timeout = jiffies + max_duration;
-+	while (!time_after(jiffies, timeout)) {
- 		memcpy(final, &priv->xstats, sizeof(*final));
- 
- 		if (final->irq_tx_path_in_lpi_mode_n >
-@@ -514,20 +526,38 @@ static int stmmac_test_eee(struct stmmac_priv *priv)
- 		msleep(100);
- 	}
- 
--	if (!retries) {
-+	memcpy(final, &priv->xstats, sizeof(*final));
-+	if (final->irq_tx_path_in_lpi_mode_n <=
-+	    initial->irq_tx_path_in_lpi_mode_n) {
- 		ret = -ETIMEDOUT;
- 		goto out_free_final;
- 	}
- 
--	if (final->irq_tx_path_in_lpi_mode_n <=
--	    initial->irq_tx_path_in_lpi_mode_n) {
--		ret = -EINVAL;
-+	/* Re-snapshot, as we want to measure exit_lpi events. We should be
-+	 * in LPI right now.
-+	 */
-+	memcpy(initial, &priv->xstats, sizeof(*initial));
-+
-+	/* TX something so we go out of LPI */
-+	ret = stmmac_test_mac_loopback(priv);
-+	if (ret)
- 		goto out_free_final;
-+
-+	/* Wait for the exit LPI interrupt */
-+	timeout = jiffies + max_duration;
-+	while (!time_after(jiffies, timeout)) {
-+		memcpy(final, &priv->xstats, sizeof(*final));
-+
-+		if (final->irq_tx_path_exit_lpi_mode_n >
-+		    initial->irq_tx_path_exit_lpi_mode_n)
-+			break;
-+		msleep(100);
- 	}
- 
-+	memcpy(final, &priv->xstats, sizeof(*final));
- 	if (final->irq_tx_path_exit_lpi_mode_n <=
- 	    initial->irq_tx_path_exit_lpi_mode_n) {
--		ret = -EINVAL;
-+		ret = -ETIMEDOUT;
- 		goto out_free_final;
- 	}
- 
+ 	return stmmac_test_vlanoff_common(priv, true);
+ }
 -- 
 2.53.0
 
