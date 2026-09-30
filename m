@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149EB5221C6;
-	Wed, 30 Sep 2026 17:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E059D52ED21;
+	Wed, 30 Sep 2026 17:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790592; cv=none; b=ohqYgsxV5AoDxyi43rANjlZdO4avm+qJVxNELck8f48a0xRJkCqP8DIIlCiK6fllN6aRgNNAok/aQzmkWe+fLRo0vcyrU9jm6h8TpMktt2bkgXGXBZAY0QKO/32U+jNeKWdQV6JElGdMuO1eU7v1o9Cod5hoD6xeJtle+jlOHDk=
+	t=1790790595; cv=none; b=nPlB26UOMFM0ZSX2MvxYRGXmIOy0AC9pFz8CuiTL4dy7qdLm7/ZChBBPn5QwabiuRz0q9sJF2FCPD1k6BKSK104eTzKELWR1nljp8CflukgBcM4fd/TEEGSMGlp2YXTJxkqIxLHxnCAB4ntoPt7HxcXGNKpUyF7VB1gjfHErQIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790592; c=relaxed/simple;
-	bh=lSxOb62fHIHqUo4S4kBmx2CEZeA+JzZWo67SJN2CXwg=;
+	s=arc-20240116; t=1790790595; c=relaxed/simple;
+	bh=XkMlMF+LJ/uYGUZrc1M172Fof8v2HzdluntJClAG+kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9KC3gh07WTvE9y5t++LuXtbsfp9NwHwiOSApJgUBgZSxsyIjb3KICjpHlPkw0Y9wuHpGftMb9SZndZCb4LvYGZ5WBMTyp7VeX9OCKNe3feo7hP0yMrFvQqqiJfPx+4sb/9YFDgQmoTy8Bshx8OlGik0+D8IhWTOOYrVEOUiY3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJVNX/ja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QPw/2gQp8pv7IE46rZJZXs5C1wz7vaumu6Pkqn02N4sysKy1yBvP4GwwboCsJhocMDOQBD7oOTzRw+Wj285vsKs249r8FZRKDpVro+RYoxlGiNtsxURgBVR492/GLCCyUVDbLhbBvc2XpAtaYeFMZ/6Rwq9FRz50LHJb6GrWsk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHSk8VbU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJVNX/ja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9851F000FF;
-	Wed, 30 Sep 2026 17:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHSk8VbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1211F000FF;
+	Wed, 30 Sep 2026 17:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790591;
-	bh=KFuOTjCBZfzxdE+1mxR6mKAnkuPq5HKl9wxr+iM+naw=;
+	s=korg; t=1790790593;
+	bh=/S0rBlHAbnCUiZJIc4AnPh3QeaXekzDJtaR1j8RwBeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NJVNX/jaDGPX2tw+9u7p1jDXe6kIMxrPnR1u6U+Tiokdf7RhwpHV5o9jPZduhG22f
-	 Wf9TLQ6MxvZFNlzmGIhsxkgkXzhgZNn0WOpupOZChbBA3aPOsXiiY3WTn+seU4MgjR
-	 09gBRFAZ7/9XiK6TsUhyrolSFzVTcEM4qb2oZKSk=
+	b=YHSk8VbURAa6RYDyxhKptfAoFBRP0Hvmki2MG85JGFkM1YsfwbrtuwzUlZxel85yw
+	 wg1H5OBU0ovZan7ZRadhPJwkf99v7PaPqUbr17ovQXViuq7B8Smr4kMeoRl1LaZo6L
+	 aSPGb5PMeBCXavj9yK3q5eq8UkqfHmX1udxQ+mos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 876/877] bpf: Reject key-less BTF for hash maps
-Date: Wed, 30 Sep 2026 17:29:47 +0200
-Message-ID: <20260930152433.635764056@linuxfoundation.org>
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 877/877] mm/hugetlb: keep max_huge_pages when dissolving surplus folios
+Date: Wed, 30 Sep 2026 17:29:48 +0200
+Message-ID: <20260930152433.658484329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,80 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-commit 0895a0c0734703be5532f3883c42db95615fd98b upstream.
+commit 267bede12d3b108ca29997ce280e927a570ec97f upstream.
 
-map_check_btf() allows a key-less BTF (btf_key_type_id == 0) only for
-maps that have a ->map_check_btf callback, and leaves the actual
-decision to that callback. Hash maps used to have no ->map_check_btf,
-so a key-less BTF was rejected outright.
+dissolve_free_hugetlb_folio() can remove a free folio as surplus when its
+node has surplus pages.  In that case remove_hugetlb_folio() decrements
+both nr_huge_pages and surplus_huge_pages, leaving the persistent pool
+size unchanged.
 
-That changed when htab and rhtab gained a ->map_check_btf to register a
-dtor - htab in commit 1df97a7453ee ("bpf: Register dtor for freeing
-special fields") and rhtab in commit 6905f8601298 ("bpf: Allow special
-fields in resizable hashtab"). Neither looks at the key, so a key-less
-hash map now passes map_check_btf() and gets created. Reading it back
-through bpffs feeds the key type_id 0 into btf_type_seq_show();
-btf_type_by_id() returns the void type, kind_ops[BTF_KIND_UNKN] is NULL,
-and btf_type_show() dereferences it:
+Updating max_huge_pages as if a persistent folio had been removed can
+therefore corrupt the persistent pool target and underflow it when
+max_huge_pages is zero.  Keep max_huge_pages unchanged for surplus folios,
+including the vmemmap restoration rollback path.
 
-RIP: 0010:btf_type_show+0x223/0x2e0 kernel/bpf/btf.c:8232
-RSP: 0018:ffffc9000399f868 EFLAGS: 00010206
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000028
-RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
-R10: ffffc9000399f970 R11: 0000000000000001 R12: ffffffff9b96b140
-R13: ffffc9000399f8e0 R14: ffff88803d393c00 R15: 0000000000000003
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000200000000000 CR3: 000000003d213000 CR4: 0000000000352ef0
-DR0: 0000000039ae8f55 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- btf_type_seq_show_flags+0xca/0x120 kernel/bpf/btf.c:8250
- htab_map_seq_show_elem+0x12e/0x350 kernel/bpf/hashtab.c:1669
- map_seq_show+0x13d/0x1e0 kernel/bpf/inode.c:293
- traverse.part.0.constprop.0+0x107/0x650 fs/seq_file.c:112
- traverse fs/seq_file.c:99 [inline]
- seq_read_iter+0x93f/0x1270 fs/seq_file.c:196
- seq_read+0x344/0x4d0 fs/seq_file.c:163
- vfs_read+0x1e4/0xb40 fs/read_write.c:572
- ksys_pread64 fs/read_write.c:764 [inline]
- __do_sys_pread64 fs/read_write.c:772 [inline]
- __se_sys_pread64 fs/read_write.c:769 [inline]
- __x64_sys_pread64+0x1eb/0x250 fs/read_write.c:769
- do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
- do_syscall_64+0x123/0x790 arch/x86/entry/syscall_64.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Reject a key-less BTF in htab_map_check_btf() and rhtab_map_check_btf(),
-restoring the previous behavior.
-
-Fixes: 1df97a7453ee ("bpf: Register dtor for freeing special fields")
-Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
-Reported-by: syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a8f4e88.27659fcc.2ceef7.0008.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260901104924.346187-2-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/20260814083027.1419487-1-xialonglong2025@163.com
+Fixes: cb402bbdabca ("mm/hugetlb: fix surplus pages in dissolve_free_huge_page()")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Longlong Xia <xialonglong@kylinos.cn>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/hashtab.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/hugetlb.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -546,6 +546,9 @@ static int htab_map_check_btf(const stru
- {
- 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2248,7 +2248,8 @@ retry:
+ 		if (h->surplus_huge_pages_node[folio_nid(folio)])
+ 			adjust_surplus = true;
+ 		remove_hugetlb_folio(h, folio, adjust_surplus);
+-		h->max_huge_pages--;
++		if (!adjust_surplus)
++			h->max_huge_pages--;
+ 		spin_unlock_irq(&hugetlb_lock);
  
-+	if (btf_type_is_void(key_type))
-+		return -EINVAL;
-+
- 	if (htab_is_prealloc(htab))
- 		return 0;
- 	/*
+ 		/*
+@@ -2268,7 +2269,8 @@ retry:
+ 			if (rc) {
+ 				spin_lock_irq(&hugetlb_lock);
+ 				add_hugetlb_folio(h, folio, adjust_surplus);
+-				h->max_huge_pages++;
++				if (!adjust_surplus)
++					h->max_huge_pages++;
+ 				goto out;
+ 			}
+ 		} else
 
 
