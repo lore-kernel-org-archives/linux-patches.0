@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1EE47A0DD;
-	Wed, 30 Sep 2026 17:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5831355819;
+	Wed, 30 Sep 2026 17:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790783; cv=none; b=b7SCzFornkNd++Gxa9ZaNaeZR1+gVHJwjII69vXbxDSuHvBqz1cM6f48nZtMngh418kQ/Xk7q6kYhr1iWwUBTGexq5WXTamkyd/EH94pjLPwKHC7X3Kd2DPt1r3hUTd7EmOCANAS2kt0IsZQTxzGo7Wa+P75sC1anN0n6cGY8eE=
+	t=1790790785; cv=none; b=WgoJo1b5PeJaJbYbgWStCUcy5lFR/EWrgMIAHDkKAbkeA2EB9vWaZgGQ4XAb9au9MrOGFbUnQ8hnbkAi5c38F6RPYe98JbqEDfbVG2v5YYmyN5qgGLaSDFSVgv6VipVsA7y7a23Bsx7RiAlkGor7aRe4Eqa5tob7fsbZR492Ic8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790783; c=relaxed/simple;
-	bh=seNHZsx+2ofDP2CLVj3VdW0l76C3L8E3xOUH7DYhxpA=;
+	s=arc-20240116; t=1790790785; c=relaxed/simple;
+	bh=+NyECYwY20a6WG3YfvxNdsz3gHasUe56RwmoAC3/fzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7pUHcuMzGqEoAmPGZLH5YO3L/KfYJIk/6kNjkQ/C+1JyA0FTQwxhGmmNCfzVs07ROgCnAbMe/8RbOP8hX5uNiQS+y9oUD9Va+94wJOGdAlMuyidOf686cWo697ih8gh+IqXLN+BFvJAniFVcmAqvPOKHh6HaEnBa5xl5Ewj22c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ez/JF0GI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qBqk+z7h7DV46/bmd9HmAP0lvI1Qo4PcLt1YcdHJG5XI9ZR1CIDPWKC/z+IG5O8EEuD2oSKtdqLB06d9BaOHb6m0zcavqzpvd3Ah3PjHiw74yQreqhyzJxPvEHv2kZBF17vT/4yPIkzADErJVQELqt7CG+yDeE+SZMZqRPmdztU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d329CjoT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ez/JF0GI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C691F000FF;
-	Wed, 30 Sep 2026 17:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d329CjoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A41A1F000FF;
+	Wed, 30 Sep 2026 17:53:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790781;
-	bh=Tz+I1N7AA3IRSq5x0cKdQ2Z0hkTSotD3oRjuS9z5y6c=;
+	s=korg; t=1790790784;
+	bh=Z8YTnmuKqL6B4xx7oACPeD4Az+GRb3x7lz81lFKti1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ez/JF0GIiR3+sg5reLgjx+wgT47nkNKYQZ+m/n4USE+9Zff1P/6YSADV+y6r6B5+Q
-	 RKW2R7l00o7uY8Xb5L0gdHlWO47+boctgDc/jEgzruXbfLZtg92sUS2oO6aCPQa9A4
-	 iuO/0XriQDh4rZ6Zl2xoKsxBUxWtxFZuSCAWBYGE=
+	b=d329CjoTj6cS/28S5a7uE3T36PIoshPtOtNbx4SalgUyWlHA7Xt9CmYienYARh4/W
+	 lxCB0lsWG5RVDTMC0N6lIwcay97RgBog/yspbyHRtPp+4aV6T//SG2JMVJ+1BOsgh2
+	 tdxdtB9y18WAM5rM2/CWLGkYUYR73AO1N7bLc0X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/752] mips: cps: Assemble jr.hb with an R2 ISA level
-Date: Wed, 30 Sep 2026 17:19:00 +0200
-Message-ID: <20260930152359.680124092@linuxfoundation.org>
+Subject: [PATCH 5.15 071/752] iio: adc: qcom-spmi-iadc: balance enable_irq_wake() on driver unbind
+Date: Wed, 30 Sep 2026 17:19:01 +0200
+Message-ID: <20260930152359.701449471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,67 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit e5d64f868e484da06f5c141c18c32c01c269625e ]
+[ Upstream commit 929fec2964f71d4b1ac664ee963d8226c5cf01c6 ]
 
-A MIPS allmodconfig built with LLVM can select CPU_MIPS32_R1 together
-with MIPS_MT_SMP. In that configuration clang invokes the integrated
-assembler with -march=mips32, and the MIPS MT path in cps-vec.S fails
-to assemble two jr.hb instructions:
+iadc_probe() calls enable_irq_wake() after a successful
+devm_request_irq(), but the driver has no remove callback or
+matching disable_irq_wake(), so the wake reference count on the
+IRQ is leaked on module unload or driver unbind.
 
-  arch/mips/kernel/cps-vec.S:376:2: error: instruction requires
-  a CPU feature not currently enabled
+Check the IRQ request error first, then register a devm action
+that calls disable_irq_wake() so the wake reference is released
+in the same scope as the enable. While here, drop the inverted
+"if (!ret) ... else return ret" in favour of the standard
+"if (ret) return ret;" pattern.
 
-  arch/mips/kernel/cps-vec.S:490:4: error: instruction requires
-  a CPU feature not currently enabled
-
-The earlier jr.hb in the same file is already assembled inside a .set
-MIPS_ISA_LEVEL_RAW scope. The two failing sites are reached after
-popping back to the file's base ISA level, so LLVM correctly rejects
-them for an R1 target.
-
-Wrap those jr.hb instructions in the same ISA-level push/pop used by
-the working site. This keeps the MT code unchanged while making the
-required R2 hazard-branch encoding explicit to the assembler.
-
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/cps-vec.S | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/adc/qcom-spmi-iadc.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/kernel/cps-vec.S b/arch/mips/kernel/cps-vec.S
-index 9753432401487..156abad9c3249 100644
---- a/arch/mips/kernel/cps-vec.S
-+++ b/arch/mips/kernel/cps-vec.S
-@@ -394,8 +394,11 @@ LEAF(mips_cps_boot_vpes)
- 	.set	pop
+diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
+index acbda6636dc58..c57c50aeeffd7 100644
+--- a/drivers/iio/adc/qcom-spmi-iadc.c
++++ b/drivers/iio/adc/qcom-spmi-iadc.c
+@@ -482,6 +482,11 @@ static const struct iio_chan_spec iadc_channels[] = {
+ 	},
+ };
  
- 	PTR_LA	t1, 1f
-+	.set	push
-+	.set	MIPS_ISA_LEVEL_RAW
- 	jr.hb	t1
- 	 nop
-+	.set	pop
- 1:	mfc0	t1, CP0_MVPCONTROL
- 	ori	t1, t1, MVPCONTROL_VPC
- 	mtc0	t1, CP0_MVPCONTROL
-@@ -508,8 +511,11 @@ LEAF(mips_cps_boot_vpes)
- 	li	t0, TCHALT_H
- 	mtc0	t0, CP0_TCHALT
- 	PTR_LA	t0, 1f
-+	.set	push
-+	.set	MIPS_ISA_LEVEL_RAW
- 1:	jr.hb	t0
- 	 nop
-+	.set	pop
- 
- 2:
- 
++static void iadc_disable_irq_wake(void *data)
++{
++	disable_irq_wake((unsigned long)data);
++}
++
+ static int iadc_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+@@ -539,9 +544,16 @@ static int iadc_probe(struct platform_device *pdev)
+ 	if (!iadc->poll_eoc) {
+ 		ret = devm_request_irq(dev, irq_eoc, iadc_isr, 0,
+ 					"spmi-iadc", iadc);
+-		if (!ret)
+-			enable_irq_wake(irq_eoc);
+-		else
++		if (ret)
++			return ret;
++
++		ret = enable_irq_wake(irq_eoc);
++		if (ret)
++			return ret;
++
++		ret = devm_add_action_or_reset(dev, iadc_disable_irq_wake,
++					       (void *)(unsigned long)irq_eoc);
++		if (ret)
+ 			return ret;
+ 	} else {
+ 		device_init_wakeup(iadc->dev, 1);
 -- 
 2.53.0
 
