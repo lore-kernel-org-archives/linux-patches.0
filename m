@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DA53E1230;
-	Wed, 30 Sep 2026 19:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019553E1230;
+	Wed, 30 Sep 2026 19:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795320; cv=none; b=BZ6MAeFmW3TaxCL0+7EYLOJE5WQ2P/ptgtl4s4gR8/VL+0s3/5gkLoEavaJOq9JSAFdzK0KTGiBspWk4z7p+Hh/AuACZazQ3IVCHAkHrg1GTL+6KDP6xCOmkxbHNXnO+clDy41P50nQnRbKRWw3mZFw7LMsjtKwcTBFvKb/YRrE=
+	t=1790795323; cv=none; b=lZKAoBWlCAdpfzs3ohpEd93uVqYjuQbiGz2M2qqqygixc0+zNUeBJSetYX/Wu++JEHB3J/vGv7wWiKzO/tpYq/ZLbL+Ll1txjpp9b+kaXYr8hajISUHl7IvaD39sU9y1pJ5daWCneRY031t76qciNtzzAjPRl2aJMQft3CDut7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795320; c=relaxed/simple;
-	bh=fq4O/cXzqWcmfpLrOc4X+StZMvUSkNkRGzhW5t3jIRQ=;
+	s=arc-20240116; t=1790795323; c=relaxed/simple;
+	bh=0c0qEBy9QPphUi0INf4xbs0CLuVmx48rJ4S9PCPizq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYq8tgHiD28bl/iwNMr1lGKHY3YmbZgJCA23RJPTajgBID3iJakEq2WGAogdIHIcYQ+273uShnCnl4rGUIRK2tECYGNs2upBnfDFguiMu6lo29OcFlBxZjT3NlZ5XuFnw9/0Yfc+zVNjdicjXcx+M+PsYJzOdmhxDET2a6AsaN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qw6wB4T2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SkfOf7rbFSte9HxwL4vRTj/U6lePLIomIxzuUwM0x5csBT9m11B6jZIkIR/v2f/iGEersprucVqrHAylxNrBxL/uTVhl9NfCwYTqSAEgsNQtDla+XlmYACn7cVY7QtyVPeSMD+4AX8G880X8OuB8IADKdCUVhmANPBfMuDUJJYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IbOIODP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qw6wB4T2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803321F00898;
-	Wed, 30 Sep 2026 19:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IbOIODP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8D61F000FF;
+	Wed, 30 Sep 2026 19:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795319;
-	bh=ufXtj5XuwtUnwKvUyWEbQsyqkR3juOQk822WbVoHORg=;
+	s=korg; t=1790795321;
+	bh=IHHO3Y2VMwgY0Zp3V9WSBz5EanqVLaAmLaMp4zZqy/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qw6wB4T2PfaXZBRolntGj9zTgwLpJVPcDcuA0ml00FA5gER6kNKoqK7Pf45S1HR0N
-	 wnY0ssCURY2NTVi8w/fahlve12pKKpJ2jLLOOXNKUbSGUBCgHYaGvBnaZ/ThmbLTj5
-	 ph1Hq0ktgZxO/Tp6wzpP/VhAKcUBqFMv+DqsUq4A=
+	b=1IbOIODP31M8KyhGbp4dolngAEkhwFV8SC91g7jha6OagE2GzvR7qCOxe0PSOF5nJ
+	 Avql7Xo3G/KLKQUnHq7AIEy5ekrTg0Dhkn7KgRsKUUuNfsLRlrMbfDr8/ByWK86sGw
+	 A6pmGyMGHnPjNf+nEr0Nida2ERJom9gaxa6o7NSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0475/1193] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
-Date: Wed, 30 Sep 2026 17:19:19 +0200
-Message-ID: <20260930152444.715200779@linuxfoundation.org>
+Subject: [PATCH 6.6 0476/1193] selftests/alsa: Fix the step check for INTEGER controls
+Date: Wed, 30 Sep 2026 17:19:20 +0200
+Message-ID: <20260930152444.738026801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
+[ Upstream commit 8efd5f623c63584c2e284a837a7795d95a0491cb ]
 
-The core software reset issued in stmmac_init_dma_engine() during
-ndo_open() callback clears the MTL RX packet parser registers, but
-stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
-After an ifdown/ifup cycle the hardware therefore runs with the default
-all-pass table while priv->tc_entries still reports the filters as
-installed. Re-apply the RX packet parser table from priv->tc_entries in
-stmmac_hw_setup(), right after the software reset, so the filters are
-restored when the interface is brought up again.
+The modulo sits inside the subtraction, so the check evaluates
+int_val - (min % step) rather than (int_val - min) % step. The
+INTEGER64 branch below it is parenthesised correctly.
 
-Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The written form passes only when the value equals min % step, and such
+a value is always on a step boundary, so it never misses a real
+violation. It only reports valid values as invalid.
+
+snd-aloop declares step 1 on four controls, so every non-zero value on
+them is reported. Before:
+
+  # PCM Rate Shift 100000.0 value 100000 invalid for step 1 minimum 80000
+  # Totals: pass:660 fail:101 xfail:0 xpass:0 skip:296 error:0
+
+After, same card, nothing else changed:
+
+  # Totals: pass:740 fail:21 xfail:0 xpass:0 skip:296 error:0
+
+Eighteen files under sound/ declare a non-zero step.
+
+Fixes: 5aaf9efffc57 ("kselftest: alsa: Add simplistic test for ALSA mixer controls kselftest")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Link: https://patch.msgid.link/20260903123832.97377-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/alsa/mixer-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 2fc0a87534c72..2bdaa35a05282 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3330,6 +3330,14 @@ static int stmmac_hw_setup(struct net_device *dev, bool ptp_register)
- 	/* Initialize MTL*/
- 	stmmac_mtl_configuration(priv);
+diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
+index 6fe4be43072fb..c43774056670d 100644
+--- a/tools/testing/selftests/alsa/mixer-test.c
++++ b/tools/testing/selftests/alsa/mixer-test.c
+@@ -299,8 +299,8 @@ static bool ctl_value_index_valid(struct ctl_data *ctl,
  
-+	/* Apply the RX packet parser table */
-+	if (priv->tc_entries) {
-+		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
-+					priv->tc_entries_max);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	/* Initialize Safety Features */
- 	stmmac_safety_feat_configuration(priv);
- 
+ 		/* Only check step size if there is one and we're in bounds */
+ 		if (snd_ctl_elem_info_get_step(ctl->info) &&
+-		    (int_val - snd_ctl_elem_info_get_min(ctl->info) %
+-		     snd_ctl_elem_info_get_step(ctl->info))) {
++		    (int_val - snd_ctl_elem_info_get_min(ctl->info)) %
++		    snd_ctl_elem_info_get_step(ctl->info)) {
+ 			ksft_print_msg("%s.%d value %ld invalid for step %ld minimum %ld\n",
+ 				       ctl->name, index, int_val,
+ 				       snd_ctl_elem_info_get_step(ctl->info),
 -- 
 2.53.0
 
