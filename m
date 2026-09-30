@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801AD314A86;
-	Wed, 30 Sep 2026 17:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531FA4FB9AF;
+	Wed, 30 Sep 2026 17:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788805; cv=none; b=d8m4pcsLBSqUdcCJRqJQkp8KebX2JbCh2o4mbwJ2jzRxKfEOL3zxx8QHrZ01eo1D9M4L9ZWN4JZ3mqNSzK2yCQQyO+ewZ0tRqu+pn86zuslAAxospyZV7U/4xq3/5U7fOqqMAvXLySxfq6mDZ6c/a+6THHCQuqA71Jdwx+WvYvY=
+	t=1790788808; cv=none; b=FKCi8SBPgBQOk//yrk38QsuBxE1SJ2NhauMxedlfuMpJkTNFhqmSOXc2McmCTxOyfKmZAQRCCA0V8tCQGh+JBbRjV6pc8qsul7OmD82vZV3aMLq9AMKmAwoSvP/PCLzDF9ZLDSZhrS4NeehfQRtCz/6Q+TXVs0MASJnE+HLkoFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788805; c=relaxed/simple;
-	bh=x2IPiA2EIlB72U36PK0WXuMdCBHQmG3AnxN2ssxmHMM=;
+	s=arc-20240116; t=1790788808; c=relaxed/simple;
+	bh=fum4KmtJqgfGopKGhciFzytDLiBM828yEBoWV4yKsOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AdYZ90in8Zka73IEajcgJd+0oDkmmbgaDZ1ZIVa10sLTBj+C9R1KegyO/xlpNZULS8Lx6OHzf8llpyq9C6jXU0Bhx38D1ALTFINrwbjNguLSOej2OVtHWLsdDVVeTkxeAPnLgprV4du+vtGDbidahe23wG5ikDKk0lAMN4bs4W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3qkXZcp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FnqNO6TeePhp/SQrbcUzAuxCuz8wnsJ1Q+BxLKgh09V/kz5JFi9uv1vKPBUuBJl77Ti/dgAKGVvV/wrKBp44VI/s37q6GfZWNE9EGw4TRW8zbMyk0KpbUjPtYfpKx0sgAjBmyTQz6X5WaIhHDVdUMSeltqKVChCZXTK3iU/ohwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GlslozET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3qkXZcp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAAC1F000FF;
-	Wed, 30 Sep 2026 17:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlslozET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF46A1F000FF;
+	Wed, 30 Sep 2026 17:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788804;
-	bh=uMeYj1Km/Puz/vUZ8m5O0GbcFXjzKRt/0ciSi3mOpmE=;
+	s=korg; t=1790788807;
+	bh=cOLalUygLwzFPafH5wPf/EOXqM6b+2FSr5nSMDigZ+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3qkXZcp4Bk3QYCysIznO15UtfT3ZLoNp6Iv4+uHV/0IpTyTpiSk+0fkQbZPklu8w
-	 gRimn7z0GDYqzMTZ0EPA2Gm2iabW9Uk1x99YoNItXyK2pytGUUzug6xgcHEIj5u7zl
-	 uExqu8S02wkMos8hSqRuPiw9teC07rZ+sHE7k0P0=
+	b=GlslozETwhXgO7iU+hFAq9NeYGSEkeEL7SrNqWh2pGpA0j+S6THk/xIgqF5j+iUH4
+	 w2aKa9qz6een+h+0alwoQBD5rBiqIX5oo2WqL3VapZpuEtOhq4p7FmtvXRplzExeIe
+	 4bP23HJ+OV2EWEab/nygDOaGiLkmMt4rXhb+VkAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <lijun01@kylinos.cn>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Baruch Siach <baruch@tkos.co.il>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 252/877] watchdog: da9063: fix suspend/resume handling of HW_RUNNING watchdog
-Date: Wed, 30 Sep 2026 17:19:23 +0200
-Message-ID: <20260930152420.159364493@linuxfoundation.org>
+Subject: [PATCH 6.12 253/877] watchdog: digicolor: Avoid division by zero
+Date: Wed, 30 Sep 2026 17:19:24 +0200
+Message-ID: <20260930152420.181911876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -44,55 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Jun <lijun01@kylinos.cn>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 7cb575b71ab98194d2e040bded3a7281e089c5ed upstream.
+commit 400cb663ca019bae6eb878f06f1094ddf7c0b0df upstream.
 
-da9063_wdt_suspend() and da9063_wdt_resume() only check watchdog_active(),
-when the watchdog is left running by the driver sets
-WDOG_HW_RUNNING in da9063_wdt_probe() but userspace never opens the
-device, so WDOG_ACTIVE remains cleared, the wdt_disable() will not be
-executed in da9063_wdt_suspend. In this case, the suspend callback is
-a no-op and the watchdog keeps counting during system suspend,
-leading to an unexpected system reset.
-Check WDOG_HW_RUNNING and wdd，can fix this issue.
+clk_get_rate() could return 0.  Avoid a division by zero panic.
 
-Fixes: a7ceca4398bc8 ("watchdog: da9063: optionally disable watchdog during suspend")
+Since get_timeleft() cannot propagate errors, check the clock rate early
+in probe() and cache the rate in the driver data as it is unlikely to
+change at runtime.
+
+Fixes: 336694a01dae ("watchdog: digicolor: driver for Conexant Digicolor CX92755 SoC")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Jun <lijun01@kylinos.cn>
-Link: https://patch.msgid.link/20260917013710.2754679-1-lijun01@kylinos.cn
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Acked-by: Baruch Siach <baruch@tkos.co.il>
+Link: https://patch.msgid.link/20260913064851.8239-2-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/da9063_wdt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/watchdog/digicolor_wdt.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/watchdog/da9063_wdt.c
-+++ b/drivers/watchdog/da9063_wdt.c
-@@ -271,7 +271,7 @@ static int __maybe_unused da9063_wdt_sus
- 	if (!use_sw_pm)
- 		return 0;
+--- a/drivers/watchdog/digicolor_wdt.c
++++ b/drivers/watchdog/digicolor_wdt.c
+@@ -25,6 +25,7 @@ struct dc_wdt {
+ 	void __iomem		*base;
+ 	struct clk		*clk;
+ 	spinlock_t		lock;
++	unsigned long		rate;
+ };
  
--	if (watchdog_active(wdd))
-+	if (watchdog_active(wdd) || watchdog_hw_running(wdd))
- 		return da9063_wdt_stop(wdd);
+ static unsigned timeout;
+@@ -61,7 +62,7 @@ static int dc_wdt_start(struct watchdog_
+ {
+ 	struct dc_wdt *wdt = watchdog_get_drvdata(wdog);
  
- 	return 0;
-@@ -284,7 +284,7 @@ static int __maybe_unused da9063_wdt_res
- 	if (!use_sw_pm)
- 		return 0;
- 
--	if (watchdog_active(wdd))
-+	if (watchdog_active(wdd) || watchdog_hw_running(wdd))
- 		return da9063_wdt_start(wdd);
+-	dc_wdt_set(wdt, wdog->timeout * clk_get_rate(wdt->clk));
++	dc_wdt_set(wdt, wdog->timeout * wdt->rate);
  
  	return 0;
+ }
+@@ -79,7 +80,7 @@ static int dc_wdt_set_timeout(struct wat
+ {
+ 	struct dc_wdt *wdt = watchdog_get_drvdata(wdog);
+ 
+-	dc_wdt_set(wdt, t * clk_get_rate(wdt->clk));
++	dc_wdt_set(wdt, t * wdt->rate);
+ 	wdog->timeout = t;
+ 
+ 	return 0;
+@@ -90,7 +91,7 @@ static unsigned int dc_wdt_get_timeleft(
+ 	struct dc_wdt *wdt = watchdog_get_drvdata(wdog);
+ 	uint32_t count = readl_relaxed(wdt->base + TIMER_A_COUNT);
+ 
+-	return count / clk_get_rate(wdt->clk);
++	return count / wdt->rate;
+ }
+ 
+ static const struct watchdog_ops dc_wdt_ops = {
+@@ -130,7 +131,11 @@ static int dc_wdt_probe(struct platform_
+ 	wdt->clk = devm_clk_get(dev, NULL);
+ 	if (IS_ERR(wdt->clk))
+ 		return PTR_ERR(wdt->clk);
+-	dc_wdt_wdd.max_timeout = U32_MAX / clk_get_rate(wdt->clk);
++
++	wdt->rate = clk_get_rate(wdt->clk);
++	if (!wdt->rate)
++		return -EINVAL;
++	dc_wdt_wdd.max_timeout = U32_MAX / wdt->rate;
+ 	dc_wdt_wdd.timeout = dc_wdt_wdd.max_timeout;
+ 	dc_wdt_wdd.parent = dev;
+ 
 
 
