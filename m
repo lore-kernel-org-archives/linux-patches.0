@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54B04FD27C;
-	Wed, 30 Sep 2026 18:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851AD51CF6E;
+	Wed, 30 Sep 2026 18:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793820; cv=none; b=UYUL8BxYsV9si2h/WVLPe7oLGGD8o7fxc1Qr8a5uaDWm7Kj7IKL/Z7JHG3xD/fDFyA8dlOE9yUdfHD1HCBH9gFCQ9Yv3Ku2Uuf+CS34gkQhPm07IMlPbWNIV2c/2n4Keo/dpdb1uBNlqphZ+jzPg18/M573KtS/jjXP0PZp/kVg=
+	t=1790793822; cv=none; b=JEZZ5We+nFwN97urttIxlorbgNaZy0aUZooNpRPqDnKzTxQvSzMDwyXF4ISa0/XRinzJf3ds5cMh3khbI+8G/5xrB1+45f+hc8urjERmRa92emZgyDPXJThcLabUosd+90sPzJte/yPTkRx7vBSKfdu0Pt8Iq56lnaSPDD+VukY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793820; c=relaxed/simple;
-	bh=5JScWejfdwUweCxQ6NeJcO66M0V5hD13PNpefLBly+I=;
+	s=arc-20240116; t=1790793822; c=relaxed/simple;
+	bh=kZ3iBR6n+f8D9buwOzZ+fPonTpOOAJxMs1+Rkp3nz4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATJhaWdOHNqvmRm5akslfNce4pCM0ipmq000hl1522Ungwdk7bj+mZ54i7P4rpPNhIqGtS0Xb3yKyo0QbKLxyTq13XjcXdXouLrBVgbJLFf/pYI6HbnUz25nvfZCgvN91cW4mwjKcUnvao2A7NXl4JQLHGJWcMQH/FfS9xbjibI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mV0Kcs1m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZEhYJV10BMa++AFfmKMYYZtiUYHQTdO0nBztDg9TbEcte7a25COpYYdbDBCW8DOjC7HgDETZQ5xxV3AHVEGBM2nzc5lHRe5Dn/lHrG54N75q7XjilQZ8NyDR4Vq6wp3H8brQQM/KYdQ/OaexXOEVtfpiEF1WIdlue/jD1vyQIuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGik3obF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mV0Kcs1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CA11F000FF;
-	Wed, 30 Sep 2026 18:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGik3obF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BAC1F000FF;
+	Wed, 30 Sep 2026 18:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793818;
-	bh=XWub4BQj6xEd2P0rxNYK52PZ9BgS7BnVPeCjyA4FC30=;
+	s=korg; t=1790793821;
+	bh=7mjumrNQRxt9/hrh/R3Ev8OtYptCV6QlPaoekcmpQeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mV0Kcs1mKz4PUNdQEkwWmimf/9Eo8LP9pdoyos4FbMFiDgWa1gvJxwPiqxtQdwoRe
-	 jsvWek8eGI5sj9TL7P8xLnrjaC6ZuNUu7mOPGUd0f6Grjk0Hu7yN2OXqQMx5k+6vJr
-	 jRDP3K6OSfx3Rierklr9cej8hx3nngMujtUwo6/U=
+	b=eGik3obF7wt4dLdAYIiYUk7ketyIGjYIPmUEbOplwK2X4d7Nd17CSjW5XUmDWBJZS
+	 N+1SYTSoAHtSjKSVE3uf7DHVNT0crpGd/9trRbaof+Hn5/AIF9D/BEys+wZ1qjXOVC
+	 RXL4NWMOGzOks5AS+W0if8iw0iWpmYbTmJL8m4Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Artem Martynenko <amartynenko140@gmail.com>
-Subject: [PATCH 6.18 389/395] hfsplus: avoid double unload_nls() on mount failure
-Date: Wed, 30 Sep 2026 17:30:51 +0200
-Message-ID: <20260930152349.144017941@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 390/395] sched_ext: Derive SCX_RQ_IN_WAKEUP from the core enqueue flags
+Date: Wed, 30 Sep 2026 17:30:52 +0200
+Message-ID: <20260930152349.164627586@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,47 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardulsb08@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit ebebb04baefdace1e0dc17f7779e5549063ca592 upstream.
+[ Upstream commit df5cdc2c832ca4e8a6d774596b9005558761a403 ]
 
-The recent commit "hfsplus: ensure sb->s_fs_info is always cleaned up"
-[1] introduced a custom ->kill_sb() handler (hfsplus_kill_super) that
-cleans up the s_fs_info structure (including the NLS table) on
-superblock destruction.
+schedule_deferred_locked() skips scheduling a deferred action while
+SCX_RQ_IN_WAKEUP is set and relies on the task_woken_scx() call that follows
+a wakeup enqueue to run it. enqueue_task_scx() sets the flag from the merged
+enqueue flags, which include the flags stashed for a remote activation.
+move_remote_task_to_local_dsq() thus sets SCX_RQ_IN_WAKEUP on the
+destination rq when the moved task was woken up, although no
+task_woken_scx() follows that activation.
 
-However, the error handling path in hfsplus_fill_super() still calls
-unload_nls() before returning an error. Since the VFS layer calls
-->kill_sb() when fill_super fails, this results in unload_nls() being
-called twice for the same sbi->nls pointer: once in hfsplus_fill_super()
-and again in hfsplus_kill_super() (via delayed_free).
+An IMMED insert into a busy destination requests a local reenqueue during
+that enqueue. The request gets linked but not scheduled and stays pending
+until an unrelated wakeup or preemption on that CPU runs the deferred
+actions. The IMMED task sits behind the running task in the meantime. If
+nothing runs them before the scheduler is disabled, the request outlives the
+scheduler and points into its freed per-cpu area, which the next scheduler
+dereferences from run_deferred().
 
-Remove the explicit unload_nls() call from the error path in
-hfsplus_fill_super() to rely solely on the cleanup in ->kill_sb().
+Test the core enqueue flags for the wakeup bit. Only the core's wakeup path
+is followed by task_woken_scx().
 
-[1] https://lore.kernel.org/r/20251201222843.82310-3-mehdi.benhadjkhelifa@gmail.com/
-
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://lore.kernel.org/r/20260203043806.GF3183987@ZenIV/
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Link: https://lore.kernel.org/r/20260204170440.1337261-1-shardul.b@mpiricsoftware.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 57ccf5ccdc56 ("sched_ext: Fix enqueue_task_scx() truncation of upper enqueue flags")
+Cc: stable@vger.kernel.org # v7.1+
+Reported-by: Andrea Righi <arighi@nvidia.com>
+Link: https://lore.kernel.org/all/20260916145807.3250167-1-arighi@nvidia.com/
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+[ Retargeted the patch to kernel/sched/ext.c with its older extra_enq_flags context. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Signed-off-by: Artem Martynenko <amartynenko140@gmail.com>
----
- fs/hfsplus/super.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/sched/ext.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -652,7 +652,6 @@ out_free_vhdr:
- 	kfree(sbi->s_vhdr_buf);
- 	kfree(sbi->s_backup_vhdr_buf);
- out_unload_nls:
--	unload_nls(sbi->nls);
- 	unload_nls(nls);
- 	return err;
- }
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1382,7 +1382,12 @@ static void enqueue_task_scx(struct rq *
+ 	int sticky_cpu = p->scx.sticky_cpu;
+ 	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
+ 
+-	if (enq_flags & ENQUEUE_WAKEUP)
++	/*
++	 * SCX_RQ_IN_WAKEUP promises a task_woken_scx() call once this enqueue
++	 * returns. Only the core's wakeup path delivers one. The flags stashed
++	 * for a remote activation may carry the wakeup bit without it.
++	 */
++	if (core_enq_flags & ENQUEUE_WAKEUP)
+ 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
+ 
+ 	if (sticky_cpu >= 0)
 
 
