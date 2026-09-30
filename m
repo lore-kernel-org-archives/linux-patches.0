@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22A23C0A01;
-	Wed, 30 Sep 2026 19:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE06C3C10BF;
+	Wed, 30 Sep 2026 19:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794894; cv=none; b=VemzYpf2P2J1o6OhBOe9WtjZCfyArqLn6pmU4t7L+rA56uEoEz8FJ0N70NF+53x+31N2Pw9N0PEnFVDEap/oESAwbsx/W02hoMNPSY5CGBcenoONKNFVLsiQySya+viKHpV4IQGCdHXT3BRsJcUCRTmunIofEtBlV0ZIbSCJgrw=
+	t=1790794896; cv=none; b=fPAdjOuAbfAM356yhgzIeFLwulMnT+B45qGFCfm9EM22IFAMuqtMeV4VzozTCtF5CYrOSKndorXofy0L8KsbAUYBOqJW/qLKcUv0p0xJ/FLNRmxroqQj4ZPmw1Kx4HcXPBirn9C+BwY3dejdQW1kD2fKlfEff8gGLLWpSoRtfmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794894; c=relaxed/simple;
-	bh=WgUpCqNOxd8gVL2N4Y34TFXNYWNPzHAS/L3C6fkPu60=;
+	s=arc-20240116; t=1790794896; c=relaxed/simple;
+	bh=PSFrj+W+JbE+uoqz09A1VBQJ5Ve8wpeU7q8qJK2e/Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PxlY3fpuTLpPYqHHM+ARpP07Edj7QhW/XePX4u+N4Q3E9QuOjozuCaWd/xE7U95fzPnCNXPvcnZpYZ1oPkd1NRm81vL/FpRg0PA8GxV1pWG5oR1S5ROIWRXQoEY033d7IRt4zhdIv0xwQg2X4YZZr05j5s0K6EIA6+jpA78+tg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqBIWOZJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cUGsP0mL095gD4OzEMRgIENoDrKlzt2dKaOcK72E5P1HkH6GxIyG7OVs9r3lM5+3eWDMu15gxGqcDGTyLS6K7J2VavxsEvL3v2e9aokZ4gus57RKQZYzg5qLwvImGsfkzD5uaXw+k4W+YU6PQTtv27Yk4b08OmhhttdSAh6fZAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYo1i35Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqBIWOZJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EEA1F000FF;
-	Wed, 30 Sep 2026 19:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYo1i35Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028551F00898;
+	Wed, 30 Sep 2026 19:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794892;
-	bh=6YLYTuE3ur46ZXUzImRCnIgV40U966UO0bVooARqLFQ=;
+	s=korg; t=1790794895;
+	bh=UG2Q5rT1BuA+j6K3MjsgRJ7VnkcwYAKXisIIA5mZkBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqBIWOZJRTn2DpZgSjvMlEo4hw/I6scct1Copq+0IUHs6wqmok00Cy1z/+dDsiaJd
-	 Kxe7Qtzuv21TlWG2WHql5TGnNUve5jcHA7Skg0IOXUVrpr5WuYaUQmrDYWLLca8K1p
-	 zkCXG5UzTngkeUYwpfvlYowPeA5D2O4ZwRUKALlI=
+	b=IYo1i35QQjq+l9uRQo9i9sM6DKxIYSd7zrfOgpSwiBohQRuf6oYi5nCDAoO8Yo8A3
+	 NuHCjAeAazH1C4bTc3MnJJ7GjWlz9gCJRpeBP5aXR9OUITVe1i1AQgdq5RuxQrVqsI
+	 BP3ZjIR95S/cX4kliqRFUDgCN8EbaZlNaAfe0W14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0368/1193] mm/damon/core: avoid infinite kdamond_merge_regions() internal loop
-Date: Wed, 30 Sep 2026 17:17:32 +0200
-Message-ID: <20260930152442.353943116@linuxfoundation.org>
+Subject: [PATCH 6.6 0369/1193] Revert "Bluetooth: btusb: Add ASUS USB-BT600 for Realtek 8761CU"
+Date: Wed, 30 Sep 2026 17:17:33 +0200
+Message-ID: <20260930152442.376982798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,95 +49,26 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+This reverts commit 0725f93b395f731a9d014235816f5312c21ba4ea.
 
-commit 123e4619ab6c8ab1c4cb1d7a58311a2af13929cd upstream.
-
-Patch series "mm/damon: unurgent fixes for infinite loop, NULL de-ref and
-races", v1.1.
-
-Sashiko found a few issues in DAMON that could cause infinite loop, NULL
-dereference and monitoring results degradation.  The first two sounds
-scary but the infinite loop happens only under unreasonable user setup.
-The NULL dereference is only in a unit test.  Monitoring results
-degradation is trivial since it is only best-effort, and those happens
-from only unlikely races.  Still those are bugs that better to fix if
-possible.  Fix those.
-
-This patch (of 6):
-
-Due to online parameter update like events, the number of DAMON regions
-could be higher than the user-set upper limit.  kdamond_merge_regions()
-repeats merge regions until the number meets the limit, while doubling the
-merge threshold up to the theoretical maximum threshold.  It is tried only
-up to the theoretical maximum threshold because even the aggressive
-merging can fail from reducing the number of regions under the
-user-defined upper limit.  For example, there could be many user-defined
-non-contiguous regions that cannot be merged.
-
-The threshold based loop break condition is evaluated by comparing the
-threshold for the next merging try against the theoretical maximum
-threshold.  If max_thres is larger than UINT_MAX / 2, doubling the
-threshold could make it overflow, and bypass the loop break condition.  In
-the case, if the number of regions cannot be reduced under the upper limit
-like explained above, the loop will run infinitely.
-
-Prevent the case by doing the break condition check before doubling the
-threshold.  Also, prevent the threshold exceeding the maximum threshold,
-as it could overflow and apply the wrong merge threshold.
-
-This issue is unlikely to occur in real world, since having the max_thres
-higher than UINT_MAX / 2 require unrealistically large aggregation
-intervals compared to the sampling interval.  Also, it requires an
-unrealistically large number of uncontiguous regions setup.  Nonetheless,
-the consequence is bad and the fix is simple.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260715031002.108504-1-sj@kernel.org
-Link: https://lore.kernel.org/20260715031002.108504-2-sj@kernel.org
-Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [1]
-Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.10.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btusb.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 0713fda22682c..fe91b296f4c66 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1240,7 +1240,7 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index d1f3306172df0..872c3b473f039 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -756,8 +756,6 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Additional Realtek 8761CU Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x1bef), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+-	{ USB_DEVICE(0x0b05, 0x1d70), .driver_info = BTUSB_REALTEK |
+-						     BTUSB_WIDEBAND_SPEECH },
  
- 	max_thres = c->attrs.aggr_interval /
- 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
--	do {
-+	while (true) {
- 		nr_regions = 0;
- 		damon_for_each_target(t, c) {
- 			damon_merge_regions_of(t, threshold, sz_limit,
-@@ -1248,9 +1248,14 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
- 			nr_regions += damon_nr_regions(t);
- 		}
- 		count_age = false;
--		threshold = max(1, threshold * 2);
--	} while (nr_regions > c->attrs.max_nr_regions &&
--			threshold / 2 < max_thres);
-+		if (nr_regions <= c->attrs.max_nr_regions ||
-+				max_thres <= threshold)
-+			break;
-+		if (threshold < max_thres / 2)
-+			threshold = max(1, threshold * 2);
-+		else
-+			threshold = max_thres;
-+	}
- }
- 
- /*
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
 -- 
 2.53.0
 
