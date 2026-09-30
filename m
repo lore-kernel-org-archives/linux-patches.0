@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04965516148;
-	Wed, 30 Sep 2026 16:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA2D51596E;
+	Wed, 30 Sep 2026 16:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786854; cv=none; b=He7IXREL5Yel24KVu1x1MSMG3HxyAxTsIvj+2TooiWVyhyhxtQ2Fgn+fzK1wHL0g3Mdfbc9PQM3fddIJr4k02H9It1+x9wqXxHEj2/3vAY9vFE+UXnV6t7+5sPRCvSbeojwenzMFNoFHsGCIrhrdmTQeGH8gWXAWh4occRsN9Ww=
+	t=1790786857; cv=none; b=p9dMhf4AyzBMjp44x1MFgt1xYFsjECgmYvCPLhVpYG47HgnHHXRCRpoUI5DCLmw57lTDMASMVk2FI4bZtTwL6bbNkQHabInaillJkBsNp6S5lOSAJe1CC7bH+jEplx66+EPnUIm405bXExnFHufm6yUaqu5C/8I6bqx8afV8/+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786854; c=relaxed/simple;
-	bh=EHePmHe7vqbQR9PooRowVrO/nRv2lZLw74r2kAeBJb8=;
+	s=arc-20240116; t=1790786857; c=relaxed/simple;
+	bh=UHTnWI0VThCA+ArUDQxa6MgVqI7rt0RPZgz+1XqqHLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAid6vepDiozpaLt1S2utcAhyx9zeLUf4MhHnKjdz50VIdhezAaXqd0Um1m/X4V6d9NiK9MnpMhLqRiX7Wew/8jgewuurXwbhKdE338PtMG/0ZwrMqX7pn6SV1B0ozcGVKhOdqT15AG3a/pEDjNHiX+QZlAoKsoioTqU19Zyviw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjbqsvKX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gfpdBQSse7l5+Kle2p/lKSN6akMKGFWiXc9AL8MeISG1F5K0SLEfvinYU9bgKtpzwql87HOdgqwnX872vEXTBXZzYMSiIR6F94laLjRCQnE+DdQ8Papi3J0N28EGtXdHHl36JJhUSpxScxjpNZVyV4tKPaI0behhQZDDObOs0nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm/BTgO6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjbqsvKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60EE31F000FF;
-	Wed, 30 Sep 2026 16:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm/BTgO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3199B1F000FF;
+	Wed, 30 Sep 2026 16:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786852;
-	bh=R8uCMkgShzY7pkZF6//otl4sGyM/hH7sgSUfqaktUyw=;
+	s=korg; t=1790786855;
+	bh=Ck0KRVwn4u+GJzfdgqGXJAvz0KHM8XTZ6TZw49ToCVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CjbqsvKXjB6Fr8dwH1wgf6Co8G4sK8JwHicifvk0HSbFlH1XRPzsAiYuuhHCSXQrz
-	 ePQvku5rIkwCu3mtbre/qZFPQ5F1ZpI1rcoc5zLIK0nSzMlaqfLeyTDxgpv0TqHHCy
-	 Zn4XyzrluEB31ExY2/YaciYMjYOCAoXY+1RtDnq8=
+	b=Fm/BTgO6qtujXvvrJ8y5bfEdQgUaLCaFTx6yVv2CCktVpxJN66BrUQGh/t1a3690t
+	 SacoQ687FLuT6K/nCLuAf6E6C8AbatOJBwj0efpCtofYyIW0g8W56yhbFUqN3KISUc
+	 qi2XFS/WtOFpVqHG7MOlsTXoSEYhWvoQQG02hpsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Josef Bacik <josef@toxicpanda.com>,
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 026/457] bpf: Avoid soft lockup in __htab_map_lookup_and_delete_batch()
-Date: Wed, 30 Sep 2026 17:22:11 +0200
-Message-ID: <20260930152346.595896089@linuxfoundation.org>
+Subject: [PATCH 7.2 027/457] bpf: Fix out-of-bounds read of rtt_min in sock_ops
+Date: Wed, 30 Sep 2026 17:22:12 +0200
+Message-ID: <20260930152346.618106006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,128 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 85136bf22404474a815fc0ed26ec0d1cbc1bc3f9 ]
+[ Upstream commit 75f8cf22463d82bb1fb0239a3d485fc8f4c8ef03 ]
 
-__htab_map_lookup_and_delete_batch() has no rescheduling point. The
-batch count bounds how many entries are copied out, not how many
-buckets are visited, so one BPF_MAP_LOOKUP_BATCH call can walk the
-map end to end. The empty-bucket fast path is worse: it stays inside
-a single rcu_read_lock() / bpf_disable_instrumentation() section for
-any run of consecutive empty buckets.
+A sockops prog reading skops->rtt_min never checks the sk type: on the
+tcp_conn_request() path sock_ops->sk is a request_sock (non-full), and the
+ctx rewrite casts it to a tcp_sock (full) and reads rtt_min past the end of
+the request_sock, returning dirty adjacent memory.
 
-That holds up on small maps, but it falls apart at scale. On a
-144-CPU arm64 host running a CONFIG_PREEMPT_NONE kernel, periodic
-BPF_MAP_LOOKUP_BATCH calls against an LRU hash map with 16,777,216
-buckets held a CPU inside the batch op for 77+ seconds and triggered
-the soft lockup watchdog.
+	SEC("sockops")
+	int prog(struct bpf_sock_ops *skops)
+	{
+		switch (skops->op) {
+		case BPF_SOCK_OPS_RWND_INIT:
+			leak = skops->rtt_min;   /* reads the request_sock OOB */
+		...
+		}
+	}
 
-Commit 75134f16e7dd ("bpf: Add schedule points in batch ops") fixed this
-same problem in the generic batch ops, but not in this htab-native path,
-which every htab-based hash map variant uses for its lookup[_and_delete]
-batch ops.
+For instance one such read returned rtt_min=0xffff8881, the high half of a
+leaked kernel pointer.
 
-Complete that fix here. Leave the critical section after 64 consecutive
-empty buckets, call cond_resched_tasks_rcu_qs(), and resume at the saved
-bucket cursor. No locks are held at that point, and resuming from the
-cursor is already the function's behavior for non-empty buckets. Add the
-same call to the per-bucket loop after copy_to_user(), where every lock
-has been dropped. cond_resched_rcu() is not enough here: sleeping with
-bpf_prog_active elevated makes tracing programs on that CPU silently
-skip their invocations.
+Guarding that cast is exactly what SOCK_OPS_GET_FIELD() does -- it checks
+is_locked_tcp_sock and returns 0 when sock_ops->sk is not a locked full
+socket. Every other tcp_sock field in sock_ops goes through it; rtt_min is
+the only one open-coded, so it skips the check.
 
-Plain cond_resched() is not enough either. It is a no-op under PREEMPT
-and PREEMPT_LAZY, the only models arm64 and x86 have offered since
-commit 7dadeaa6e851 ("sched: Further restrict the preemption modes").
-It is also never a Tasks RCU quiescent state, in any model: the
-reschedule counts as a preemption. The walking task stays a holdout and
-stalls every synchronize_rcu_tasks() caller, ftrace and BPF trampoline
-teardown included, until the syscall returns [1].
-cond_resched_tasks_rcu_qs() is the usual tool for that [2]. It reports
-the quiescent state at each yield and still reschedules as
-cond_resched() does on PREEMPT_NONE and PREEMPT_VOLUNTARY kernels.
+Read rtt_min through SOCK_OPS_GET_FIELD() too. rtt_min is a bit special:
+it is a struct minmax and we only want the current min, so pass
+rtt_min.s[0].v. That is equivalent to the old hand-computed offset
 
-Fixes: 057996380a42 ("bpf: Add batch ops to all htab bpf map")
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/bpf/20260715215314.44423f47@fangorn/ [1]
-Link: https://lore.kernel.org/bpf/9d444098-7c03-4163-af12-bd0a79a51443@paulmck-laptop/ [2]
-Assisted-by: LLM
-Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/r/20260909-b4-htab-batch-resched-v2-1-0cb529d8f95a@toxicpanda.com
+	offsetof(struct tcp_sock, rtt_min) + sizeof_field(struct minmax_sample, t)
+
+(s[0] sits at rtt_min + 0 and .v at + sizeof(.t), i.e. what minmax_get()
+returns), so the loaded field is unchanged and only the full-sock guard is
+added. The two BUILD_BUG_ON()s that protected the hand-computed offset
+are no longer needed.
+
+Before patch:
+
+	0: r1 = *(u64 *)(r1 +0)      ; r1 = skops->sk
+	1: r1 = *(u32 *)(r1 +2324)   ; ((tcp_sock *)sk)->rtt_min.s[0].v
+
+After patch:
+
+	0: *(u64 *)(r1 +56) = r9
+	1: r9 = *(u8 *)(r1 +50)      ; is_locked_tcp_sock
+	2: if r9 == 0 goto pc+4      ; not a locked full sock -> 0
+	3: r9 = *(u64 *)(r1 +56)
+	4: r1 = *(u64 *)(r1 +0)      ; r1 = skops->sk
+	5: r1 = *(u32 *)(r1 +2324)   ; rtt_min.s[0].v
+	6: goto pc+2
+	7: r9 = *(u64 *)(r1 +56)
+	8: r1 = 0
+
+Fixes: 44f0e43037d3 ("bpf: Add support for reading sk_state and more")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/r/20260903100921.113374-1-jiayuan.chen@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ net/core/filter.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 59406da06424d..419692f41ffde 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -1773,6 +1773,12 @@ static int htab_lru_percpu_map_lookup_and_delete_elem(struct bpf_map *map,
- 						 flags);
- }
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 5769fd10227f3..70f19ef093ee1 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -10943,18 +10943,7 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 		break;
  
-+/*
-+ * Max consecutive empty buckets to walk in one RCU +
-+ * instrumentation-disabled section before rescheduling.
-+ */
-+#define HTAB_BATCH_EMPTY_RESCHED 64
-+
- static int
- __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 				   const union bpf_attr *attr,
-@@ -1794,6 +1800,7 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	unsigned long flags = 0;
- 	bool locked = false;
- 	struct htab_elem *l;
-+	u32 empty_cnt = 0;
- 	struct bucket *b;
- 	int ret = 0;
+ 	case offsetof(struct bpf_sock_ops, rtt_min):
+-		BUILD_BUG_ON(sizeof_field(struct tcp_sock, rtt_min) !=
+-			     sizeof(struct minmax));
+-		BUILD_BUG_ON(sizeof(struct minmax) <
+-			     sizeof(struct minmax_sample));
+-
+-		*insn++ = BPF_LDX_MEM(BPF_FIELD_SIZEOF(
+-						struct bpf_sock_ops_kern, sk),
+-				      si->dst_reg, si->src_reg,
+-				      offsetof(struct bpf_sock_ops_kern, sk));
+-		*insn++ = BPF_LDX_MEM(BPF_W, si->dst_reg, si->dst_reg,
+-				      offsetof(struct tcp_sock, rtt_min) +
+-				      sizeof_field(struct minmax_sample, t));
++		SOCK_OPS_GET_FIELD(rtt_min, rtt_min.s[0].v, struct tcp_sock);
+ 		break;
  
-@@ -1972,12 +1979,21 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	}
- 
- next_batch:
--	/* If we are not copying data, we can go to next bucket and avoid
--	 * unlocking the rcu.
-+	/*
-+	 * If we are not copying data, we can go to next bucket and avoid
-+	 * unlocking the rcu. Bound the walk though: after
-+	 * HTAB_BATCH_EMPTY_RESCHED consecutive empty buckets, fully exit
-+	 * the critical section (no locks are held here) and reschedule.
- 	 */
- 	if (!bucket_cnt && (batch + 1 < htab->n_buckets)) {
- 		batch++;
--		goto again_nocopy;
-+		if (++empty_cnt < HTAB_BATCH_EMPTY_RESCHED)
-+			goto again_nocopy;
-+		empty_cnt = 0;
-+		rcu_read_unlock();
-+		bpf_enable_instrumentation();
-+		cond_resched_tasks_rcu_qs();
-+		goto again;
- 	}
- 
- 	rcu_read_unlock();
-@@ -1991,11 +2007,13 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
- 	}
- 
- 	total += bucket_cnt;
-+	empty_cnt = 0;
- 	batch++;
- 	if (batch >= htab->n_buckets) {
- 		ret = -ENOENT;
- 		goto after_loop;
- 	}
-+	cond_resched_tasks_rcu_qs();
- 	goto again;
- 
- after_loop:
+ 	case offsetof(struct bpf_sock_ops, bpf_sock_ops_cb_flags):
 -- 
 2.53.0
 
