@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A105111B7;
-	Wed, 30 Sep 2026 16:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AA1519DF2;
+	Wed, 30 Sep 2026 16:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784634; cv=none; b=Ho7DDyYEvH2+s4uTkKifHKwHoQ9VZUS/jr4qV/GkJKclLTqPBYzsBXzvbJjUbFKAqn5vXS/7HxG4VjGROlduStOxiz0tU3W6LKcYU36vh7Ma1JxY+FHKQ59yQd1UWG4de+YaK4UbrLd289fzjYNGy48JXsjnj/XEcOIqZuo12G8=
+	t=1790784634; cv=none; b=EnvJ0r0GFMHt0WvR3ObZp7keEheaG04rkjdCWCaSixmEGasWiEwTDX1t5156pzZ8mBMK7La6zZyFv4wGdLST3yxjS8GnEmJZNmoTx/yqLANZRHjTssYFg2KdcarQZXg19SFJcjvyeAN9S9pSZ/0+LLKFsLJCCN7bWrRqWSRX788=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784634; c=relaxed/simple;
-	bh=zG0qRkN1p/9od+lEMDtoYzPTv18+TGTZkbcQJHAE9Fo=;
+	bh=GDNf+o/PZVt2Ay930QQWHyxQJL99J4VvOPaA9nTqg38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZr0P6ag/w3/DHvxg9WMRO/HVEKp6ke8ZDLuQIwbzjwS4dFblU1mTblVtFsA1c7oX6rShpsGYyFxAuk0LvfmnOYP1mmOfWvKET/p6704Kimp5vBSfIg+cJDLuFNqdSBcumy+Bmj/KkrxdXKa9G6qKaO19nam/gGZz34ouf1FHxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rFbQB0A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VI7onvCQp9BtM6KCjS/s/Ew2QNy/CFyUdhp2Fd6clSe6+X8tWNEuxcQjSkhTmczeTM2I2sxZ7pug9s1QrJlKDzV+h04ZsXH8wbXZbsIIqrA+0OiXpuQQErlK8T+gYF9OQfHmrK/WFVaq/EJsBdFR7qKF2Om87tI7OuRVhYGqprw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDg5jrjw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rFbQB0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9F61F0089B;
-	Wed, 30 Sep 2026 16:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDg5jrjw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19DB1F00898;
+	Wed, 30 Sep 2026 16:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784629;
-	bh=VfO+bOTb5/E7govTw41iL1JL2kWW/eM5nzDPoiXO2Ug=;
+	s=korg; t=1790784626;
+	bh=q2KHmVpAghKsu70wvnndZ+EAebnuEGMDa8NaUG4grDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1rFbQB0AxVQykKhyQ9HmVCWzBenU2ov/pQSrOUdpN4nP2iWugHDIgfKz+000FHUN+
-	 n8T/bzew5pOtPN37wuFrna2xoctnUsYJWUPibJ6gdQNNEvBeji8Le07zKPWtCztdWA
-	 zwdeEG169x1/yPM8q0ITs+2u16CZyzLMDMigLZaE=
+	b=FDg5jrjwwFTNA0DRdVcuUr60/VrJCGEdQCm3WrXsPzrG2ogd2IYPkF/cb5+YAyIMx
+	 n94J76Vu3UukeQSw5JFdNA/5ktq7CWWGdTC3paxHnyTowjKtXUqxrkh4kifUS/W2Ub
+	 /gsbSlDR53Asfrjw2SyRHeLmZ5k4ArVKVbCzT4dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Lee Jones <lee@kernel.org>,
+	Shuan He <heshuan@bytedance.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/982] leds: pca9532: Dont stop blinking for non-zero brightness
-Date: Wed, 30 Sep 2026 17:15:42 +0200
-Message-ID: <20260930152421.234758710@linuxfoundation.org>
+Subject: [PATCH 6.1 223/982] PCI/proc: Fix race between pci_proc_init() and pci_bus_add_device()
+Date: Wed, 30 Sep 2026 17:15:59 +0200
+Message-ID: <20260930152421.590094788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,63 +46,195 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tobias Deiminger <tobias.deiminger@linutronix.de>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
+[ Upstream commit 8857f6578b001bcf5f53c8c6a3936647f05291a8 ]
 
-pca9532 unexpectedly stopped blinking when changing brightness to a
-non-zero value. To reproduce:
+pci_proc_attach_device() creates procfs entries for PCI devices and is
+called from pci_bus_add_device().  It lazily creates the per-bus procfs
+directory (bus->procdir) via proc_mkdir() on first use, and returns early
+if proc_initialized is not yet set.
 
- echo timer > /sys/class/leds/led-1/trigger   # blinks
- echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
- cat /sys/class/leds/led-1/trigger            # still claims [timer]
+On x86 with ACPI, PCI enumeration occurs at subsys_initcall, before
+pci_proc_init() sets proc_initialized at device_initcall.  The
+for_each_pci_dev() loop in pci_proc_init() then creates procfs entries for
+these already-enumerated devices, but runs without holding
+pci_rescan_remove_lock.
 
-According to Documentation/leds/leds-class.rst, only brightness = 0
-shall be a stop condition:
+On ARM64 with devicetree, PCI host bridges probe at device_initcall.  With
+async probing enabled, pci_bus_add_device() can run concurrently with
+pci_proc_init(), and both may call pci_proc_attach_device() for the same
+device or for different devices on the same bus.  As pci_host_probe() holds
+pci_rescan_remove_lock while pci_proc_init() does not, there is no
+serialisation between the two paths.
 
-> You can change the brightness value of a LED independently of the
-> timer trigger. However, if you set the brightness value to LED_OFF it
-> will also disable the timer trigger.
+When two threads concurrently call pci_proc_attach_device() for devices on
+the same bus, both observe bus->procdir as NULL and both call proc_mkdir().
+The proc filesystem serialises directory creation internally, so only one
+caller succeeds.  The other results in a warning like:
 
-Therefore add a guard to continue blinking when brightness != LED_OFF,
-similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
-HW blink support").
+  proc_dir_entry '000c:00/00.0' already registered
 
-Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+The caller receives NULL (duplicate entry) and unconditionally stores it to
+bus->procdir, corrupting the valid pointer set by the first caller.
+
+Serialise access to proc_initialized, proc_bus_pci_dir, bus->procdir and
+dev->procent with a new mutex local to drivers/pci/proc.c, and store the
+created entries to bus->procdir and dev->procent only on success, so a
+failed creation can never overwrite a valid pointer.
+
+Additionally, wrap the for_each_pci_dev() loop in pci_proc_init() with
+pci_lock_rescan_remove() to serialise against concurrent PCI bus
+operations, add an early return in pci_proc_attach_device() when
+dev->procent is already set to make the function idempotent, and clear
+bus->procdir in pci_proc_detach_bus() to prevent use of a dangling pointer
+after proc_remove().
+
+Reported-by: Shuan He <heshuan@bytedance.com>
+Closes: https://lore.kernel.org/linux-pci/20250702155112.40124-2-heshuan@bytedance.com/
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20260611150543.511422-1-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pci/proc.c | 79 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 56 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 40abb7eb033b9..b518b40099677 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -177,11 +177,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
- 	int err = 0;
- 	struct pca9532_led *led = ldev_to_led(led_cdev);
+diff --git a/drivers/pci/proc.c b/drivers/pci/proc.c
+index ac3c105fcf8fc..2967e4d2918dc 100644
+--- a/drivers/pci/proc.c
++++ b/drivers/pci/proc.c
+@@ -20,6 +20,7 @@
+ #include "pci.h"
  
--	if (value == LED_OFF)
-+	if (value == LED_OFF) {
- 		led->state = PCA9532_OFF;
--	else if (value == LED_FULL)
-+	} else if (led->state == PCA9532_PWM1) {
-+		return 0; /* Non-zero brightness shall not stop HW blinking */
-+	} else if (value == LED_FULL) {
- 		led->state = PCA9532_ON;
--	else {
-+	} else {
- 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
- 		err = pca9532_calcpwm(led->client, 0, 0, value);
- 		if (err)
+ static int proc_initialized;	/* = 0 */
++static DEFINE_MUTEX(pci_proc_lock);
+ 
+ static loff_t proc_bus_pci_lseek(struct file *file, loff_t off, int whence)
+ {
+@@ -426,40 +427,64 @@ static const struct seq_operations proc_bus_pci_devices_op = {
+ 
+ static struct proc_dir_entry *proc_bus_pci_dir;
+ 
+-int pci_proc_attach_device(struct pci_dev *dev)
++static int __pci_proc_attach_bus(struct pci_bus *bus)
+ {
+-	struct pci_bus *bus = dev->bus;
+-	struct proc_dir_entry *e;
++	struct proc_dir_entry *dir;
+ 	char name[16];
+ 
++	lockdep_assert_held(&pci_proc_lock);
++
+ 	if (!proc_initialized)
+ 		return -EACCES;
+ 
+-	if (!bus->procdir) {
+-		if (pci_proc_domain(bus)) {
+-			sprintf(name, "%04x:%02x", pci_domain_nr(bus),
+-					bus->number);
+-		} else {
+-			sprintf(name, "%02x", bus->number);
+-		}
+-		bus->procdir = proc_mkdir(name, proc_bus_pci_dir);
+-		if (!bus->procdir)
+-			return -ENOMEM;
+-	}
++	if (bus->procdir)
++		return 0;
++
++	if (pci_proc_domain(bus))
++		sprintf(name, "%04x:%02x", pci_domain_nr(bus), bus->number);
++	else
++		sprintf(name, "%02x", bus->number);
++
++	dir = proc_mkdir(name, proc_bus_pci_dir);
++	if (!dir)
++		return -ENOMEM;
++
++	bus->procdir = dir;
++
++	return 0;
++}
++
++int pci_proc_attach_device(struct pci_dev *dev)
++{
++	struct pci_bus *bus = dev->bus;
++	struct proc_dir_entry *entry;
++	char name[16];
++	int ret;
++
++	guard(mutex)(&pci_proc_lock);
++
++	if (dev->procent)
++		return 0;
++
++	ret = __pci_proc_attach_bus(bus);
++	if (ret)
++		return ret;
+ 
+ 	sprintf(name, "%02x.%x", PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
+-	e = proc_create_data(name, S_IFREG | S_IRUGO | S_IWUSR, bus->procdir,
+-			     &proc_bus_pci_ops, dev);
+-	if (!e)
++	entry = proc_create_data(name, S_IFREG | S_IRUGO | S_IWUSR,
++				 bus->procdir, &proc_bus_pci_ops, dev);
++	if (!entry)
+ 		return -ENOMEM;
+-	proc_set_size(e, dev->cfg_size);
+-	dev->procent = e;
++
++	proc_set_size(entry, dev->cfg_size);
++	dev->procent = entry;
+ 
+ 	return 0;
+ }
+ 
+ int pci_proc_detach_device(struct pci_dev *dev)
+ {
++	guard(mutex)(&pci_proc_lock);
+ 	proc_remove(dev->procent);
+ 	dev->procent = NULL;
+ 	return 0;
+@@ -467,19 +492,27 @@ int pci_proc_detach_device(struct pci_dev *dev)
+ 
+ int pci_proc_detach_bus(struct pci_bus *bus)
+ {
++	guard(mutex)(&pci_proc_lock);
+ 	proc_remove(bus->procdir);
++	bus->procdir = NULL;
+ 	return 0;
+ }
+ 
+ static int __init pci_proc_init(void)
+ {
+ 	struct pci_dev *dev = NULL;
+-	proc_bus_pci_dir = proc_mkdir("bus/pci", NULL);
+-	proc_create_seq("devices", 0, proc_bus_pci_dir,
+-		    &proc_bus_pci_devices_op);
+-	proc_initialized = 1;
++
++	scoped_guard(mutex, &pci_proc_lock) {
++		proc_bus_pci_dir = proc_mkdir("bus/pci", NULL);
++		proc_create_seq("devices", 0, proc_bus_pci_dir,
++				&proc_bus_pci_devices_op);
++		proc_initialized = 1;
++	}
++
++	pci_lock_rescan_remove();
+ 	for_each_pci_dev(dev)
+ 		pci_proc_attach_device(dev);
++	pci_unlock_rescan_remove();
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
