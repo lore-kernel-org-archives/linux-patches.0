@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B75D35CB91;
-	Wed, 30 Sep 2026 15:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706CA502568;
+	Wed, 30 Sep 2026 15:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783647; cv=none; b=BhaCStSvYBDeTV5ZB2Vbkahh4Cq7G9uIRoJjSw9JLnnzohrbBzll1UvOxn1V5FrTr2gGu1Z2Z6+S4Xecl/F5NgswaxqwyaIjZ0VCkX7ZXNLc6eTbOmaICk1reCPwKcB6cwfYkweIHHejdRqIwvay6NIw20FPELNCSJiB0sZ3XGg=
+	t=1790783649; cv=none; b=dPL+oLk+DVh18BSPE1z094iz45z8In/LLCU8Cj69t0pm4AGO758NC3XzsRNFyBPH8jK2Fotr7IPLRRLDzmVTUdN2HpVtRVkkLV5LHW7n0DOOV0/ewp+1SgmuM4+MnQLoHMMLQC++Vs7en6DUfCUYth0KDy3dNbyav35URPsr+Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783647; c=relaxed/simple;
-	bh=MT7s1HoZHUoa8FpvOMht4u7W4BnrcQC4urdYGR5kvvs=;
+	s=arc-20240116; t=1790783649; c=relaxed/simple;
+	bh=TsKser2z+uIOFaYYh46bWMR+zJlhX+avF4XOrN2Ejdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjm+ojXH50czRAYpPzkCdA9AQiBdTMYnhcfscsxCAMvZSFs+B6FHcppIlD67wRfHm6bGVO4Lwrw6iaoQvSNgkcfY4IDI8FCCSNH2A8JBYIsBQvtAR68LZVEpk9uVmW6bV0a/q25QHxTJK4An5NLp/L1x2xqmlLwyR509Xgc8QoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pO0CPFmM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eWETJGgilansMWD/zbTLC2Eu/PGGVGS4CCv9BquW8dXu21N2iM//G4+Fi2aB3d9L1cYd6hfwT+RMPJ8CKVwZu6/EyKxAGh0Bpl41Q0fd8Vcp3X1fVOhDB0wUtjm61y5ThqsG8g5yggOz6QtTuE/l1Oamcg+59eexcZd682SBD6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4b5Tdej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pO0CPFmM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEEC1F000FF;
-	Wed, 30 Sep 2026 15:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4b5Tdej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70C81F00893;
+	Wed, 30 Sep 2026 15:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783642;
-	bh=4p8afCCb8NMdL9Q7+mONCjyMX6bYYZVuLXAauA9/qQ8=;
+	s=korg; t=1790783645;
+	bh=VzC65+DLbYIszRmg2dAvumxnQu6dpNhq1zJuida2fjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pO0CPFmM/sLhnK5xmQ1Rk9MyFkPWCA14mpjPN/PZGcTy7tAwR91k1zXt2kVK8jp4X
-	 CzVPC2zYtq5t5Se6vdLbSe8FGEt3MLMtg48mT85hsmXMSGiAFXwd2sj7+1n0USnPk8
-	 Hcgbf5HzemC2dJZ7mH/OwQo0uLM/IdfZSgq5AHWU=
+	b=M4b5TdejjI+dGa3xCW5MjU8APllszoMqAy4ioXHjJ2jpo+DcWJiDCjcBWToObCifi
+	 cFwS0qDcOpijrPJwRbX8tlwxHpS/VhUJRTGfpptdPz7a5rJFLOpc/Bjsjs+td78l+v
+	 2kDC6DhHdCk5pl0lpvjCi65NFYqRB48JEt6X4Mck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Brian Norris <briannorris@chromium.org>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 471/595] wifi: mwifiex: validate scan response extents
-Date: Wed, 30 Sep 2026 17:26:04 +0200
-Message-ID: <20260930152357.809609120@linuxfoundation.org>
+Subject: [PATCH 5.10 472/595] wifi: mwifiex: validate action frame fixed fields
+Date: Wed, 30 Sep 2026 17:26:05 +0200
+Message-ID: <20260930152357.832344075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,90 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-commit 3687d7d48070838cc2953431b3a27717cab0aaf6 upstream.
+commit 1c25bfad93e69ce13f744a2fb919f02ea396a985 upstream.
 
-mwifiex_ret_802_11_scan() subtracts the fixed response fields and the
-firmware-provided BSS length from resp->size without first proving that
-either extent fits. A short response or oversized BSS length can
-therefore underflow tlv_buf_size and make the TLV parser walk beyond the
-command response.
+mwifiex_process_mgmt_packet() accepts an rx_pkt_length as small as a
+four-address struct ieee80211_hdr plus the two-byte firmware length prefix.
+After stripping the prefix, mwifiex_parse_mgmt_packet() can receive a
+frame equal to sizeof(struct ieee80211_hdr).
 
-Compute the fixed extent from the selected normal or background scan
-response. Validate that the fixed fields and BSS data fit before deriving
-the TLV extent and entering the parser.
+For action frames, the parser reads the category byte immediately after
+that header and, for a public action frame, reads the following action
+code byte without verifying that either field is present. A truncated frame
+can therefore make the parser consume up to two bytes past the
+firmware-declared frame length. If those bytes look like a TDLS discovery
+response, the malformed frame can spuriously update peer signal state.
 
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
+Require the category and public action-code fields before reading them.
+Use sizeof(*ieee_hdr) so the checks and field accesses directly match the
+firmware four-address layout being parsed before address4 is removed.
+
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Suggested-by: Brian Norris <briannorris@chromium.org>
+Fixes: 72e5aa8d2a6d ("mwifiex: support for parsing TDLS discovery frames")
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/66f148d83eb9f0970b9abbccc85d1b61244e54ad.camel@sipsolutions.net/
+Link: https://lore.kernel.org/all/20260708195911.84365-8-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/20260723011013.76968-1-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/20260723202257.688-1-enderaoelyther@gmail.com/
+Link: https://lore.kernel.org/all/anuWyiPQja6_5vly@google.com/
 Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260815135227.50392-1-pengpeng@iscas.ac.cn
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260825112523.95774-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/scan.c |   29 ++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/util.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/scan.c
-+++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -2143,6 +2143,7 @@ int mwifiex_ret_802_11_scan(struct mwifi
- 	u32 bytes_left;
- 	u32 idx;
- 	u32 tlv_buf_size;
-+	size_t fixed_size;
- 	struct mwifiex_ie_types_chan_band_list_param_set *chan_band_tlv;
- 	struct chan_band_param_set *chan_band;
- 	u8 is_bgscan_resp;
-@@ -2158,6 +2159,14 @@ int mwifiex_ret_802_11_scan(struct mwifi
- 	else
- 		scan_rsp = &resp->params.scan_resp;
+--- a/drivers/net/wireless/marvell/mwifiex/util.c
++++ b/drivers/net/wireless/marvell/mwifiex/util.c
+@@ -347,10 +347,16 @@ mwifiex_parse_mgmt_packet(struct mwifiex
  
-+	scan_resp_size = le16_to_cpu(resp->size);
-+	fixed_size = scan_rsp->bss_desc_and_tlv_buffer - (u8 *)resp;
-+	if (scan_resp_size < fixed_size) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "SCAN_RESP: response is too short\n");
-+		ret = -1;
-+		goto check_next_scan;
-+	}
- 
- 	if (scan_rsp->number_of_sets > MWIFIEX_MAX_AP) {
- 		mwifiex_dbg(adapter, ERROR,
-@@ -2175,8 +2184,6 @@ int mwifiex_ret_802_11_scan(struct mwifi
- 		    "info: SCAN_RESP: bss_descript_size %d\n",
- 		    bytes_left);
- 
--	scan_resp_size = le16_to_cpu(resp->size);
--
- 	mwifiex_dbg(adapter, INFO,
- 		    "info: SCAN_RESP: returned %d APs before parsing\n",
- 		    scan_rsp->number_of_sets);
-@@ -2184,15 +2191,17 @@ int mwifiex_ret_802_11_scan(struct mwifi
- 	bss_info = scan_rsp->bss_desc_and_tlv_buffer;
- 
- 	/*
--	 * The size of the TLV buffer is equal to the entire command response
--	 *   size (scan_resp_size) minus the fixed fields (sizeof()'s), the
--	 *   BSS Descriptions (bss_descript_size as bytesLef) and the command
--	 *   response header (S_DS_GEN)
-+	 * The TLV buffer follows the command-specific fixed fields and the BSS
-+	 * descriptions. Background-scan responses have an additional fixed
-+	 * field before scan_rsp, which is included in fixed_size.
- 	 */
--	tlv_buf_size = scan_resp_size - (bytes_left
--					 + sizeof(scan_rsp->bss_descript_size)
--					 + sizeof(scan_rsp->number_of_sets)
--					 + S_DS_GEN);
-+	if (bytes_left > scan_resp_size - fixed_size) {
-+		mwifiex_dbg(adapter, ERROR,
-+			    "SCAN_RESP: BSS data exceeds response\n");
-+		ret = -1;
-+		goto check_next_scan;
-+	}
-+	tlv_buf_size = scan_resp_size - fixed_size - bytes_left;
- 
- 	tlv_data = (struct mwifiex_ie_types_data *) (scan_rsp->
- 						 bss_desc_and_tlv_buffer +
+ 	switch (stype) {
+ 	case IEEE80211_STYPE_ACTION:
+-		category = *(payload + sizeof(struct ieee80211_hdr));
++		if (len < sizeof(*ieee_hdr) + 1)
++			return -1;
++
++		category = *(payload + sizeof(*ieee_hdr));
+ 		switch (category) {
+ 		case WLAN_CATEGORY_PUBLIC:
+-			action_code = *(payload + sizeof(struct ieee80211_hdr)
++			if (len < sizeof(*ieee_hdr) + 2)
++				return -1;
++
++			action_code = *(payload + sizeof(*ieee_hdr)
+ 					+ 1);
+ 			if (action_code == WLAN_PUB_ACTION_TDLS_DISCOVER_RES) {
+ 				addr2 = ieee_hdr->addr2;
 
 
