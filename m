@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CFD37F738;
-	Wed, 30 Sep 2026 16:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EB34E06FC;
+	Wed, 30 Sep 2026 16:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785427; cv=none; b=e6DpAhxxzNCuhKyWEtg9ewLffh38Olms84cp+5kE87k8WDWD/xokEgdlladOERSxfP5Hd8EUvTn/QVUG7u4H0aO/5WBgkW8fBD1Fd/ib3VTX1N5WMJQ2X/N0KorFfSln1NEWfmWPhklL+CXmJrUfY5qaiedj3ZBbUan47FyJAoQ=
+	t=1790785430; cv=none; b=LXdbJak6NuhMSMVr6Wgyzq+LcnRhUwT7Mnea0sTLjgMeYE2qOOPcD/QTGC5xEho5Htcv3SCTM8p3MOqUS1rWLRiPCyX3eqq/5egj1jQ7V48MziOfxaJw8eG38xGJofl4ZEi/AEDYJskcfsDtEZjDg0IrgZ7/6SuxyN7M7UPtsWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785427; c=relaxed/simple;
-	bh=TWacqBfMmL/rE6dg85UPcSwMkVtnZN1by25uuo2McvA=;
+	s=arc-20240116; t=1790785430; c=relaxed/simple;
+	bh=0PlLre5WrN3MKw3qSvcxcCNBgNhXpRx/JrAPyq67VRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XblVOS1Gx/mOC3GVeSNdOqCReKDGWNUIwElNROqofK6BpHU78Gy/8REJz/tRsFZpSKtf+KzEf8rwGaLVYGiDxEhjtbwWG1fC2zJRrI2QKggDyjKsduldXibe2y9+iiRPeaATwTxYAmLv+iaLvkfbLalMvOI2pst/ASMlj1bXNdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJGcJwN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TNBL4HuglsOg1+zmZlFMu5N5ydZLUukAPTLhFENf/Yy7/oDCR9zC9RBhUwx0PcfvGmfhBmIJym8vhC/BHkJ0+mifCQ73w8SEwXkytPmz0QFh8egAWngijhGlSp76KYscHIKf+Ll80wtVBF9xh+YET7/CaKl7pzWP3ymZSHrH2+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdUW8j/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJGcJwN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8275A1F000FF;
-	Wed, 30 Sep 2026 16:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdUW8j/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544BC1F00893;
+	Wed, 30 Sep 2026 16:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785424;
-	bh=1nQNxg47X1VNyKMCbKrx7pw/tT49A4P1syXPEZRaZ4s=;
+	s=korg; t=1790785426;
+	bh=qwEBBVXYJmOwYck88r8iFU9BnMdJJahNI++svsIK1ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJGcJwN09gRajZUj5T6mFzy1gpR05nudFcVyY39iAlV4PvvrOwuTFtmVdpBMBBET9
-	 2QJdydXsC6LsDFervW2Y9heniGvCnt0Ydjr5aO9GYq2YoirMKXRphP4yvXlR7HajQJ
-	 SFmDuKfMrQFQ1nBJXblMsJP7t/vIunM4e++W7K7g=
+	b=gdUW8j/+HuMnJNMPpAAWy0eDtpGn82WHD7vhqj00yfSZW+MG5v3qGaWmC9TwNv8nP
+	 t1bWP5Ezd2yurY9DOg3VSX34HxRq9w6fVOzt6Z27kF1kwt6HohQMJl99gYTtFJlc75
+	 xy+Q7UXSx3xT7EtsvmASKRi0oGYvcdS6RvwUoEKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laika Price <laikabcprice@gmail.com>,
-	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
-	Charles Bordet <rough.rock3059@datachamp.fr>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 505/982] tunnels: Drop stale dst when building an ICMP error for PMTUD
-Date: Wed, 30 Sep 2026 17:20:41 +0200
-Message-ID: <20260930152427.626557722@linuxfoundation.org>
+	=?UTF-8?q?=E6=9C=B1=E6=81=BA=E4=B9=BE?= <zhukaiqian@xiaomi.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Bradley Morgan <brads@mainlining.org>,
+	=?UTF-8?q?=E5=88=98=E6=9C=AF=E9=AB=98?= <liushugao@xiaomi.com>
+Subject: [PATCH 6.1 506/982] tick/broadcast: Plug clockevents replacement race
+Date: Wed, 30 Sep 2026 17:20:42 +0200
+Message-ID: <20260930152427.646991654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,99 +47,207 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit b58d749633203d92c265317b45fccee555090352 upstream.
+commit 113a9796effe3376d2ec5aabcca1fef4fef4cd62 upstream.
 
-Bridged UDP tunnels such as VXLAN and GENEVE build an ICMP error packet
-around an overlay packet if the packet is going to exceed the underlay
-path MTU. The ICMP error packet is then injected back into the Rx path
-with the source and destination addresses swapped, so that it will be
-delivered to the overlay source.
+朱恺乾 reported and decoded the following race condition when a broadcast
+device is replaced:
 
-If the overlay packet was routed to the UDP tunnel or locally generated,
-then it is already carrying a valid dst entry and this entry is not
-dropped when transforming the packet to an ICMP error packet. This
-causes the IP layer to reuse the dst entry, leading to the ICMP error
-packet being dropped or routed out of the UDP tunnel interface in case
-of forwarding.
+CPUA					CPUB
+ __tick_broadcast_oneshot_control()
+   bc = tick_broadcast_device.evtdev;
+					tick_install_broadcast_device(dev)
+        				clockevents_exchange_device(cur, dev)
+					   shutdown(cur);
+					   detach(cur);
+					   cur->handler = noop;
+					   tick_broadcast_device.evtdev = dev;
 
-Prior to the blamed commit this could not happen, as
-skb_tunnel_check_pmtu() did not build ICMP errors for PACKET_HOST
-packets. Such packets were instead encapsulated and, unless the DF bit
-was set in the outer header, fragmented by the underlay.
+  tick_broadcast_set_event(bc, next_event); <- FAIL: arms a detached device.
 
-Fix this by making sure that the ICMP error packet does not have a valid
-dst entry, thereby forcing the IP layer to perform a route lookup.
+If the original broadcast device has a restricted interrupt affinity mask
+and the last CPU in that mask goes offline then the BUG() in
+tick_cleanup_dead_cpu() triggers because the clockevent device is not in
+detached state.
 
-Adjust the bridged PMTU exception selftests accordingly. When the
-local sender in ns_a pings the overlay destination with a deadline
-(-w), ping exits on the first socket error before any reply is
-received and returns a non-zero exit code. The test therefore only
-passed because the ICMP error was never delivered. Use a packet count
-(-c) like the ns_c line above it, so that the ICMP error counts
-against the packet budget and the exit code depends on whether echo
-replies were received. This passes with and without the fix.
+The reason for this is that tick_install_broadcast_device() is not
+serialized vs. tick broadcast operations.
 
-Fixes: 8930424777e4 ("tunnels: Accept PACKET_HOST in skb_tunnel_check_pmtu().")
+The obvious cure is to serialize tick_install_broadcast_device() with
+tick_broadcast_lock against a concurrent tick broadcast operation.
+
+That requires to split clockevents_exchange_device() into two parts, one
+which does the exchange, shutdown and detach operation and the other which
+drops the module reference count. This is required because the module
+reference cannot be dropped while holding tick_broadcast_lock.
+
+Let clockevents_exchange_device() do both operations as before, but let the
+broadcast device code take the two step approach and do the device
+exchange under tick_broadcast_lock and drop the module reference count
+after releasing it.
+
+Fixes: f8381cba04ba ("[PATCH] tick-management: broadcast functionality")
+Reported-by: 朱恺乾 <zhukaiqian@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Tested-by: 刘术高 <liushugao@xiaomi.com>
 Cc: stable@vger.kernel.org
-Reported-by: Laika Price <laikabcprice@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260614-master-v3-1-9f5060ba1ed1@gmail.com/
-Reported-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260901081825.287173-1-aroslavdudkov622@gmail.com/
-Reported-by: Charles Bordet <rough.rock3059@datachamp.fr>
-Closes: https://lore.kernel.org/netdev/aHVhQLPJIhq-SYPM@eldamar.lan/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Tested-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20260902190112.4126199-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/87cymdsu0r.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ip_tunnel_core.c           |    6 ++++++
- tools/testing/selftests/net/pmtu.sh |    2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ kernel/time/clockevents.c    |   33 ++++++++++++++++++++-------------
+ kernel/time/tick-broadcast.c |   36 ++++++++++++++++++++++--------------
+ kernel/time/tick-internal.h  |    2 ++
+ 3 files changed, 44 insertions(+), 27 deletions(-)
 
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -250,6 +250,9 @@ static int iptunnel_pmtud_build_icmp(str
- 	eth_header(skb, skb->dev, ntohs(eh.h_proto), eh.h_source, eh.h_dest, 0);
- 	skb_reset_mac_header(skb);
- 
-+	if (skb_valid_dst(skb))
-+		skb_dst_drop(skb);
-+
- 	return skb->len;
+--- a/kernel/time/clockevents.c
++++ b/kernel/time/clockevents.c
+@@ -557,34 +557,41 @@ void clockevents_handle_noop(struct cloc
+ {
  }
  
-@@ -353,6 +356,9 @@ static int iptunnel_pmtud_build_icmpv6(s
- 	eth_header(skb, skb->dev, ntohs(eh.h_proto), eh.h_source, eh.h_dest, 0);
- 	skb_reset_mac_header(skb);
+-/**
+- * clockevents_exchange_device - release and request clock devices
+- * @old:	device to release (can be NULL)
+- * @new:	device to request (can be NULL)
+- *
+- * Called from various tick functions with clockevents_lock held and
+- * interrupts disabled.
+- */
+-void clockevents_exchange_device(struct clock_event_device *old,
+-				 struct clock_event_device *new)
++void __clockevents_exchange_device(struct clock_event_device *old,
++				   struct clock_event_device *new)
+ {
+ 	/*
+ 	 * Caller releases a clock event device. We queue it into the
+ 	 * released list and do a notify add later.
+ 	 */
+ 	if (old) {
+-		module_put(old->owner);
+ 		clockevents_switch_state(old, CLOCK_EVT_STATE_DETACHED);
+ 		list_move(&old->list, &clockevents_released);
+ 	}
  
-+	if (skb_valid_dst(skb))
-+		skb_dst_drop(skb);
-+
- 	return skb->len;
+ 	if (new) {
+-		BUG_ON(!clockevent_state_detached(new));
++		WARN_ON(!clockevent_state_detached(new));
+ 		clockevents_shutdown(new);
+ 	}
  }
  
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1369,7 +1369,7 @@ test_pmtu_ipvX_over_bridged_vxlanY_or_ge
- 	mtu "${ns_b}" ${type}_b $((${ll_mtu} + 1000))
+ /**
++ * clockevents_exchange_device - release and request clock devices
++ * @old:	device to release (can be NULL)
++ * @new:	device to request (can be NULL)
++ *
++ * Called from various tick functions with clockevents_lock held and
++ * interrupts disabled.
++ */
++void clockevents_exchange_device(struct clock_event_device *old,
++				 struct clock_event_device *new)
++{
++	__clockevents_exchange_device(old, new);
++	if (old)
++		module_put(old->owner);
++}
++
++/**
+  * clockevents_suspend - suspend clock devices
+  */
+ void clockevents_suspend(void)
+@@ -650,7 +657,7 @@ void tick_cleanup_dead_cpu(int cpu)
+ 		if (cpumask_test_cpu(cpu, dev->cpumask) &&
+ 		    cpumask_weight(dev->cpumask) == 1 &&
+ 		    !tick_is_broadcast_device(dev)) {
+-			BUG_ON(!clockevent_state_detached(dev));
++			WARN_ON(!clockevent_state_detached(dev));
+ 			list_del(&dev->list);
+ 		}
+ 	}
+--- a/kernel/time/tick-broadcast.c
++++ b/kernel/time/tick-broadcast.c
+@@ -162,23 +162,31 @@ static bool tick_set_oneshot_wakeup_devi
+  */
+ void tick_install_broadcast_device(struct clock_event_device *dev, int cpu)
+ {
+-	struct clock_event_device *cur = tick_broadcast_device.evtdev;
++	struct clock_event_device *cur;
  
- 	run_cmd ${ns_c} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
--	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -w 1  -s $((${ll_mtu} + 500)) ${dst} || return 1
-+	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
+-	if (tick_set_oneshot_wakeup_device(dev, cpu))
+-		return;
++	scoped_guard(raw_spinlock_irqsave, &tick_broadcast_lock) {
  
- 	# Check that exceptions were created
- 	pmtu="$(route_get_dst_pmtu_from_exception "${ns_c}" ${dst})"
+-	if (!tick_check_broadcast_device(cur, dev))
+-		return;
++		if (tick_set_oneshot_wakeup_device(dev, cpu))
++			return;
+ 
+-	if (!try_module_get(dev->owner))
+-		return;
++		cur = tick_broadcast_device.evtdev;
++		if (!tick_check_broadcast_device(cur, dev))
++			return;
+ 
+-	clockevents_exchange_device(cur, dev);
++		if (!try_module_get(dev->owner))
++			return;
++
++		__clockevents_exchange_device(cur, dev);
++		if (cur)
++			cur->event_handler = clockevents_handle_noop;
++		WRITE_ONCE(tick_broadcast_device.evtdev, dev);
++		if (!cpumask_empty(tick_broadcast_mask))
++			tick_broadcast_start_periodic(dev);
++	}
++
++	/* Module release must be outside of the lock */
+ 	if (cur)
+-		cur->event_handler = clockevents_handle_noop;
+-	tick_broadcast_device.evtdev = dev;
+-	if (!cpumask_empty(tick_broadcast_mask))
+-		tick_broadcast_start_periodic(dev);
++		module_put(cur->owner);
+ 
+ 	if (!(dev->features & CLOCK_EVT_FEAT_ONESHOT))
+ 		return;
+@@ -1205,7 +1213,7 @@ int tick_broadcast_oneshot_active(void)
+  */
+ bool tick_broadcast_oneshot_available(void)
+ {
+-	struct clock_event_device *bc = tick_broadcast_device.evtdev;
++	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
+ 
+ 	return bc ? bc->features & CLOCK_EVT_FEAT_ONESHOT : false;
+ }
+@@ -1213,7 +1221,7 @@ bool tick_broadcast_oneshot_available(vo
+ #else
+ int __tick_broadcast_oneshot_control(enum tick_broadcast_state state)
+ {
+-	struct clock_event_device *bc = tick_broadcast_device.evtdev;
++	struct clock_event_device *bc = READ_ONCE(tick_broadcast_device.evtdev);
+ 
+ 	if (!bc || (bc->features & CLOCK_EVT_FEAT_HRTIMER))
+ 		return -EBUSY;
+--- a/kernel/time/tick-internal.h
++++ b/kernel/time/tick-internal.h
+@@ -48,6 +48,8 @@ static inline void clockevent_set_state(
+ }
+ 
+ extern void clockevents_shutdown(struct clock_event_device *dev);
++extern void __clockevents_exchange_device(struct clock_event_device *old,
++					  struct clock_event_device *new);
+ extern void clockevents_exchange_device(struct clock_event_device *old,
+ 					struct clock_event_device *new);
+ extern void clockevents_switch_state(struct clock_event_device *dev,
 
 
