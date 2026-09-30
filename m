@@ -1,212 +1,98 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6097746EF77;
-	Wed, 30 Sep 2026 19:40:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E494483A9
+	for <patches@lists.linux.dev>; Wed, 30 Sep 2026 20:31:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797254; cv=none; b=pnEdU40gWCwvLAE7HCHYJxFRTBBr3JCXEPmbOCGayBp8HzRra+tvTdCx/WItgjEudAEBqYqv/5PVjMv/3u4jRfcTRjPkubsuaSpCcGJe3vJMrSPutM/LXYlL5NUz0eNd5oyD7jJm8zoZgIX68swKnioD435ZvenJdL9KnZTLAh8=
+	t=1790800320; cv=none; b=O2hTwGASafgMW8Wb9HAgTX7TQOBwced8JTPK0NAiZYYYrgWskvsqDJQhZWvzK1gbQF2cCE5OcF59ybU6Asz82PNJABM4yhjmSEvuVbx7QaS0go4oNk8O1BAEw2TvULgV3KVvwIRHjhYm5GSWAe+NY+Uosu2ATz4fAmm+PtuWRG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797254; c=relaxed/simple;
-	bh=8OsbC9F5MXipLjRk8yRlM0P2zc6SYTZ959Q46VMrPgU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QuGMbctu/detbUqGDTSqeZKvVrSQGIaMKyCmi51RpLoV5Z3bWpjKFG/5rfMFDreTlmv3wY2fdYRUvZtR3YNWosGJb6Qs+7nN5KsMFYj6ui37LEW526Xo3boXjRKDo260JuCNQVBByAJ86PQi6cHmTKggGyKDkPovEQpow3wHs4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9Z5Hn2D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790800320; c=relaxed/simple;
+	bh=EKlcz5CBEcnRCHzlR10r/eowVg5c846H0vKVV3ugVE4=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=HclTlNF7agcjMvoGJBGkwWyNc9NKM0SgsOCihEYp0u95IkX54W/ZkuW3M2g7VTFqIsVr3/HcKy5zykFoVV+9sw5xK96jan1nW0AKquUliB4CylsMlkQeWgUzQE2Cyt1j2vtQBeDZ0uvqI8uw3iS+zaRptzoUpZHAIPl4TwMtOzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qP/O9/2h; arc=none smtp.client-ip=74.125.230.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9Z5Hn2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B942F1F000FF;
-	Wed, 30 Sep 2026 19:40:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797253;
-	bh=jNLSFed2Pvr6tXJ4XUbFIb/E4hxzzIdrekFBV/csdRo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9Z5Hn2D7Lz6GERZ9NjwivRNd7zXab65P6/qJczN0/ftjuof3CzFrYSzlWPs3vUqo
-	 bEBBVDHJjE1dW/Hb2eJgWwrTntTlqnyUABktbtQW3XbJtyvDpiRSVjk7Yo7OqhzRS/
-	 dyBHchX28Ld8bB9gYeDHT6+wstjAnhNbyi68bnaQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1189/1193] netfilter: nft_set_rbtree: Remove unused variable nft_net
-Date: Wed, 30 Sep 2026 17:31:13 +0200
-Message-ID: <20260930152500.662536974@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
-References: <20260930152434.301151190@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qP/O9/2h"
+Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-939109fafd7so458738185a.2
+        for <patches@lists.linux.dev>; Wed, 30 Sep 2026 13:31:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790800317; x=1791405117; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bzhRivw0MBLgjbe/iyV7ysat9gpf94TLhhGWQJh7iRM=;
+        b=qP/O9/2h1dQ3bu04uY1jkr5SBKuxMgDLlWCyQu2fHBs3KMrroASLFGMNgSHDvW7k2u
+         nZ5IXnnqmd+VLwOrNukc5rBb5lybPHWTkVu+gwEFdZK7GvAmF+dnPuqqO/L1cUC2njH4
+         1yJlznBmusDmdfMeVIyCAcBqDElBCL10d2Hrrus+kBb6r8E5Asj2vgCCgcKpjP0dJbYE
+         3UkaOOQ1myrtAJlOm7vsavTFbBZmzVv6riAn2i2r31/CesYwHxYj9FnRj5iuTZf5u9ii
+         RYQzDye2Tni+62B1aUefAbW0VhD7wUNsVOBkTGk1549sFPMuaEKBeHtbfXkG1KqICH9F
+         3yoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790800317; x=1791405117;
+        h=content-transfer-encoding:content-type:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bzhRivw0MBLgjbe/iyV7ysat9gpf94TLhhGWQJh7iRM=;
+        b=AWVYaQQH6l9fMK1KcHkmKMSHI+kck6MU2TI1K+cjRCift3zsBYjo1p/M3/cR5udkeo
+         Rwvoiyk+UQwO0ppprF3Ptvdm6zmJlH0pqMkriScc5BL1it4kKgRMZ5DtOX1Lpc36u60B
+         QdHKf6aZymP5CQR/XaRcOB/fPo2o7Vidzb3tNaArPBnT+vpA0DeM7ofxCcVkM8Exhiua
+         SQUrokX3hbQNZK5mhUzV7yAsyh+Q9o86c9YaDhU+Jq0+z/0K+CL7zuVUAOUVj4/GR+jC
+         hQWoiL8yYbfsL++ZBDWUOKXSSu26rIfVw+NhOkfGonLTIMbCH+5LpEcAOFGQ/dFttUlu
+         mFjQ==
+X-Gm-Message-State: AFuF++m8N5J/EllKefsgsDHDvJKZfeMrOkbsdMEdeDIjqPeWuv8/3e2i
+	LTuyBpWnN2WZ4TgLrBs25lLVjuy8Bg60ukT7B9D0PDOW+18gCt0KuB4=
+X-Gm-Gg: AYBFou3Jmb3yeBGC87XMA0ndCuuV1MiwVtm0LUnGgKiiHU3SEBku9q3GCUUqc+wuJ3C
+	aKUR6WLdqVglUnHuIHRDm6I3pB4cejrbU0mL2PYyz2hwDcLddSE5joneYRoIyuUXZN7xpAMyjPV
+	F6VA7oC/YtrhXNJKSp1KPm6GUCyfC/6zAACNT3Az+nqNRp2p/r71bTyG5MzdXXI0XpNVzL+a+DC
+	o/SWgBV1SEWx5NAd3kNQ+jq8zQNVUsDH7IRdAGYTaCI26Rcc72uel6W/7vizvKHnWU/OmNQVo4V
+	/6tFkzvheOQsv8NxrGNpDB5W/O2RVWN3sEYFBXVE5h6ZtWtSFW6URwZNSSjRrd6/56RMYLPahOP
+	nBc6PMEQhn9NqeQ86RKXgErj4C8rqFFYhU/e3odcCMBeF4QUalWZ2phNbocdG1uCrSX62mg5xJI
+	vadoHX2lGfm+m0k0rtMUDV/tV3kx+LDTVo8TWwpHO3+zBl0NWT8bPr8MXcozQNqdjeZ7qPyhhFF
+	znFllBWb4TzJJREXoFovrZSIFc=
+X-Received: by 2002:a05:620a:43a9:b0:93c:771e:b672 with SMTP id af79cd13be357-93ca9899d69mr494177385a.54.1790800317375;
+        Wed, 30 Sep 2026 13:31:57 -0700 (PDT)
+Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93cb8826b52sm16187185a.1.2026.09.30.13.31.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Sep 2026 13:31:57 -0700 (PDT)
+Subject: Re: [PATCH 5.10 000/595] 5.10.271-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260930152347.700140858@linuxfoundation.org>
+From: Woody Suwalski <terraluna977@gmail.com>
+Message-ID: <6eaeba9d-7778-88ec-d5ad-5433bd18d507@gmail.com>
+Date: Wed, 30 Sep 2026 16:31:54 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101
+ Firefox/140.0 SeaMonkey/2.53.24
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.271 release.
+> There are 595 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+>
+Built a i386 kernel and installed on a 32-bit EeePC.
+No new problems noticed.
 
-------------------
-
-From: Yang Li <yang.lee@linux.alibaba.com>
-
-[ Upstream commit 67059b61597c004e23b074547b40604222bee3a0 ]
-
-The code that uses nft_net has been removed, and the nft_pernet function
-is merely obtaining a reference to shared data through the net pointer.
-The content of the net pointer is not modified or changed, so both of
-them should be removed.
-
-silence the warning:
-net/netfilter/nft_set_rbtree.c:627:26: warning: variable ‘nft_net’ set but not used
-
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=7103
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 7904b94768e9 ("netfilter: nf_tables: don't queue packet path object notifications")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/netfilter/nf_tables_api.c  |   28 +++++++++++++++-------------
- net/netfilter/nft_set_rbtree.c |    2 --
- 2 files changed, 15 insertions(+), 15 deletions(-)
-
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -922,11 +922,11 @@ nf_tables_chain_type_lookup(struct net *
- 	return ERR_PTR(-ENOENT);
- }
- 
--static __be16 nft_base_seq(const struct net *net)
-+static unsigned int nft_base_seq(const struct net *net)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 
--	return htons(nft_net->base_seq & 0xffff);
-+	return READ_ONCE(nft_net->base_seq);
- }
- 
- static const struct nla_policy nft_table_policy[NFTA_TABLE_MAX + 1] = {
-@@ -946,7 +946,7 @@ static int nf_tables_fill_table_info(str
- 
- 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
--			   NFNETLINK_V0, nft_base_seq(net));
-+			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -1789,7 +1789,7 @@ static int nf_tables_fill_chain_info(str
- 
- 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
--			   NFNETLINK_V0, nft_base_seq(net));
-+			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -3398,7 +3398,7 @@ static int nf_tables_fill_rule_info(stru
- 	u16 type = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 
- 	nlh = nfnl_msg_put(skb, portid, seq, type, flags, family, NFNETLINK_V0,
--			   nft_base_seq(net));
-+			   htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -4593,7 +4593,8 @@ static int nf_tables_fill_set(struct sk_
- 
- 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, ctx->family,
--			   NFNETLINK_V0, nft_base_seq(ctx->net));
-+			   NFNETLINK_V0,
-+			   htons(nft_base_seq(ctx->net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -5938,7 +5939,8 @@ static int nf_tables_dump_set(struct sk_
- 	seq    = cb->nlh->nlmsg_seq;
- 
- 	nlh = nfnl_msg_put(skb, portid, seq, event, NLM_F_MULTI,
--			   table->family, NFNETLINK_V0, nft_base_seq(net));
-+			   table->family, NFNETLINK_V0,
-+			   htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -6018,7 +6020,8 @@ static int nf_tables_fill_setelem_info(s
- 
- 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, ctx->family,
--			   NFNETLINK_V0, nft_base_seq(ctx->net));
-+			   NFNETLINK_V0,
-+			   htons(nft_base_seq(ctx->net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -7838,7 +7841,7 @@ static int nf_tables_fill_obj_info(struc
- 
- 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
--			   NFNETLINK_V0, nft_base_seq(net));
-+			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -8205,9 +8208,8 @@ void nft_obj_notify(struct net *net, con
- 		    struct nft_object *obj, u32 portid, u32 seq, int event,
- 		    u16 flags, int family, int report, gfp_t gfp)
- {
--	struct nftables_pernet *nft_net = nft_pernet(net);
- 	char *buf = kasprintf(gfp, "%s:%u",
--			      table->name, nft_net->base_seq);
-+			      table->name, nft_base_seq(net));
- 
- 	audit_log_nfcfg(buf,
- 			family,
-@@ -8872,7 +8874,7 @@ static int nf_tables_fill_flowtable_info
- 
- 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
- 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
--			   NFNETLINK_V0, nft_base_seq(net));
-+			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
-@@ -9119,7 +9121,7 @@ static int nf_tables_fill_gen_info(struc
- 	int event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, NFT_MSG_NEWGEN);
- 
- 	nlh = nfnl_msg_put(skb, portid, seq, event, 0, AF_UNSPEC,
--			   NFNETLINK_V0, nft_base_seq(net));
-+			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
- 	if (!nlh)
- 		goto nla_put_failure;
- 
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -653,7 +653,6 @@ static void nft_rbtree_gc(struct nft_set
- {
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	struct nft_rbtree_elem *rbe, *rbe_end = NULL;
--	struct nftables_pernet *nft_net;
- 	struct net *net = read_pnet(&set->net);
- 	u64 tstamp = nft_net_tstamp(net);
- 	struct rb_node *node, *next;
-@@ -661,7 +660,6 @@ static void nft_rbtree_gc(struct nft_set
- 
- 	set  = nft_set_container_of(priv);
- 	net  = read_pnet(&set->net);
--	nft_net = nft_pernet(net);
- 
- 	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
- 	if (!gc)
-
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
 
