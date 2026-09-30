@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569D3519E1E;
-	Wed, 30 Sep 2026 17:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE44151A14E;
+	Wed, 30 Sep 2026 17:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789029; cv=none; b=FLogjqASVJbLlDOrQYHSVpjjsuqNJctRYSPkbfJLSANUsY8wVaXND3eSTXuGwCqG+Z15fU1Iws23WRMaqmdRCEyl2psdBxDkfrUiMVcfnW2c+gCgPG+6LhhrvXuW074EYAkTZ4e0WAJGjfJQDohylVornj86EWJjfO+Pmdsgors=
+	t=1790789032; cv=none; b=eWrCfP8EHX4pXd55+jc5oproPRIaeX7b3dpiZbIjJEXGIDQdSb0vNLVCoTbspHSiz5uT1Ji6sOJBqhgTvf078wYGzlIWVj1D//bSGMPgZ1Ob7hBXc9mjdy0o8W+I0Q7W2g5JMyXGQGke0JTtPuaPMZfNohNrWe+nt1Idi91Do4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789029; c=relaxed/simple;
-	bh=qgwe3sXyl6vidIQ1L8sEeydbzZXPeCA4oqvRmbb92FQ=;
+	s=arc-20240116; t=1790789032; c=relaxed/simple;
+	bh=rUiHDEhQZz1LNUaqUNLpaaeJXP4Jx8xmCnaG1AQPtQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o622TI0E91aaGpR6E6tXmJDbxsBpHvN6mEbEdvx2nMXH32rGWI7HL0CWkJEz+rwbAV0GLctr9JCpt/DBgl78bFYtR8THj/isIzHDi12dBYZkpwx93IPPLoEqaRTMGbHpucUACeQOqV0ovxfpv+J79LzZJ+Flhl9WkVRawqdpjMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHxCGKk5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DYIjqToAqAgbwV44aVS9+e055OSJj2vjouPw0U/q8TB3EjJZBZmSek/n7xm7awNQ7BEtD6i+Vs356oRtqvUZH1yRaDYGzLXHU0kBfvM5IwgmFYHFKSHnl5RLGFP2dt4HjEnGY8VuqLmcdDI3rp5VeLXhRL2H7Gf68IxywhebJpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIuICZSZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHxCGKk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746D91F000FF;
-	Wed, 30 Sep 2026 17:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIuICZSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539DE1F00899;
+	Wed, 30 Sep 2026 17:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789028;
-	bh=g3xqXWETGNIHIwZzQyCP374QVF3LXWgiocTFWkzMiVA=;
+	s=korg; t=1790789030;
+	bh=Q3itECM5Tp/NQtA6MuXmS9LPMR8DcsMUI+MaBFb1C84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHxCGKk5VpNrRN9eRy6bLw0HdVv4GdG1cR8MGTu/CHH92K0xhxFN9XnVVW4WAF9u+
-	 63rQV8QSLYl2CC3k8xz5Trx3NVuUzlPWJUftXgWW7ikTvkwh1nnTIWwiT6HuBsdcow
-	 s+8csuenqA8/9L68dPqyscphPqFLYIGX/TxQB98s=
+	b=cIuICZSZQy6uj2sL7E87aiClmlSVhQZUkkWVYdfOpuLhAaX9y28Cuzql0nWF7q6Tf
+	 HtCH5Fj1PoyRUwE9QGbLexUgi9iXwpz+W7ZY9v6HhtyaDxh68J08rjnnXRo8X+TCQW
+	 C58F8u1N002p9ZSHzxtQnAuTVxNMjpHHY7nnFBdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	James Houghton <jthoughton@google.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/877] tcp: Skip cond_resched() in inet_csk_listen_stop() under BPF context
-Date: Wed, 30 Sep 2026 17:20:17 +0200
-Message-ID: <20260930152421.301405907@linuxfoundation.org>
+Subject: [PATCH 6.12 333/877] cgroup: selftests: Move memcontrol specific helpers out of common cgroup_util.c
+Date: Wed, 30 Sep 2026 17:20:44 +0200
+Message-ID: <20260930152421.861944300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,86 +46,258 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit eaab8cab451b9502ce224cd202550375b894a467 ]
+[ Upstream commit 3a7f9e518c6a83d54c84c101e23ffc8aa12df139 ]
 
-bpf_sock_destroy() runs from the tcp iterator, under rcu_read_lock(). If
-the sock is a listener that still has children in its accept queue,
-tcp_abort() ends up in inet_csk_listen_stop() and the cond_resched()
-there trips the debug check:
+Move a handful of helpers out of cgroup_util.c and into test_memcontrol.c
+that have nothing to with cgroups in general, in anticipation of making
+cgroup_util.c a generic library that can be used by other selftests.
 
-BUG: sleeping function called from invalid context at net/ipv4/inet_connection_sock.c:1523
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 628, name: test_progs
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-locks held by test_progs/628: 3, last CPU#3:
- #0: ffff8881158cee18 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x56/0x1210
- #1: ffff8881106bb858 (sk_lock-AF_INET6){+.+.}-{0:0}, at: bpf_iter_tcp_seq_show+0x32b/0x4b0
- #2: ffffffffb435af20 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x46b/0xde0
-CPU: 3 UID: 0 PID: 628 Comm: test_progs Tainted: G        W           7.2.0+ #65 PREEMPT
-Tainted: [W]=WARN
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc1/0xf0
- dump_stack+0x10/0x20
- __might_resched+0x3d2/0x610
- inet_csk_listen_stop+0x7b/0xbf0
- tcp_abort+0x23b/0x3b0
- bpf_sock_destroy+0xfc/0x140
- bpf_prog_448133d24601754f_iter_tcp6_server+0x81/0x8a
- bpf_iter_run_prog+0x538/0xde0
- bpf_iter_tcp_seq_show+0x26b/0x4b0
- bpf_seq_read+0x424/0x1210
- vfs_read+0x197/0xe40
- ksys_read+0x119/0x240
- __x64_sys_read+0x72/0xc0
- x64_sys_call+0x647/0x27e0
- do_syscall_64+0xe5/0x610
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fad39b28aca
-RSP: 002b:00007ffc381c61c0 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-RAX: ffffffffffffffda RBX: 00007ffc381c6a88 RCX: 00007fad39b28aca
-RDX: 0000000000000032 RSI: 00007ffc381c6250 RDI: 0000000000000014
-RBP: 00007ffc381c61e0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-R13: 0000000000000000 R14: 000055f077c1bbb0 R15: 00007fad3a0f3000
- </TASK>
+Make read_text() and write_text() non-static so test_memcontrol.c can
+use them.
 
-The commit that added the kfunc already guards lock_sock() in tcp_abort()
-and udp_abort() with has_current_bpf_ctx(), but missed the listener path.
-Do the same for the cond_resched(). The loop runs inside the iterator's
-rcu_read_lock(), it must not reschedule or report a quiescent state there.
-
-Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260910112736.153710-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: James Houghton <jthoughton@google.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/r/20250508184649.2576210-4-jthoughton@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: c774ec8f0a5d ("selftests: cgroup: give the O_TMPFILE open in get_temp_fd() a mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/cgroup/cgroup_util.c  | 82 +------------------
+ tools/testing/selftests/cgroup/cgroup_util.h  |  8 +-
+ .../selftests/cgroup/test_memcontrol.c        | 78 ++++++++++++++++++
+ 3 files changed, 83 insertions(+), 85 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 117a424d1fee3..632434743683e 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1541,7 +1541,8 @@ void inet_csk_listen_stop(struct sock *sk)
- 		local_bh_enable();
- 		sock_put(child);
+diff --git a/tools/testing/selftests/cgroup/cgroup_util.c b/tools/testing/selftests/cgroup/cgroup_util.c
+index 1e2d46636a0ca..0ef3b8b8d7f74 100644
+--- a/tools/testing/selftests/cgroup/cgroup_util.c
++++ b/tools/testing/selftests/cgroup/cgroup_util.c
+@@ -20,7 +20,7 @@
+ #include "../clone3/clone3_selftests.h"
  
--		cond_resched();
-+		if (!has_current_bpf_ctx())
-+			cond_resched();
- 	}
- 	if (queue->fastopenq.rskq_rst_head) {
- 		/* Free all the reqs queued in rskq_rst_head. */
+ /* Returns read len on success, or -errno on failure. */
+-static ssize_t read_text(const char *path, char *buf, size_t max_len)
++ssize_t read_text(const char *path, char *buf, size_t max_len)
+ {
+ 	ssize_t len;
+ 	int fd;
+@@ -39,7 +39,7 @@ static ssize_t read_text(const char *path, char *buf, size_t max_len)
+ }
+ 
+ /* Returns written len on success, or -errno on failure. */
+-static ssize_t write_text(const char *path, char *buf, ssize_t len)
++ssize_t write_text(const char *path, char *buf, ssize_t len)
+ {
+ 	int fd;
+ 
+@@ -488,84 +488,6 @@ int cg_run_nowait(const char *cgroup,
+ 	return pid;
+ }
+ 
+-int get_temp_fd(void)
+-{
+-	return open(".", O_TMPFILE | O_RDWR | O_EXCL);
+-}
+-
+-int alloc_pagecache(int fd, size_t size)
+-{
+-	char buf[PAGE_SIZE];
+-	struct stat st;
+-	int i;
+-
+-	if (fstat(fd, &st))
+-		goto cleanup;
+-
+-	size += st.st_size;
+-
+-	if (ftruncate(fd, size))
+-		goto cleanup;
+-
+-	for (i = 0; i < size; i += sizeof(buf))
+-		read(fd, buf, sizeof(buf));
+-
+-	return 0;
+-
+-cleanup:
+-	return -1;
+-}
+-
+-int alloc_anon(const char *cgroup, void *arg)
+-{
+-	size_t size = (unsigned long)arg;
+-	char *buf, *ptr;
+-
+-	buf = malloc(size);
+-	for (ptr = buf; ptr < buf + size; ptr += PAGE_SIZE)
+-		*ptr = 0;
+-
+-	free(buf);
+-	return 0;
+-}
+-
+-int is_swap_enabled(void)
+-{
+-	char buf[PAGE_SIZE];
+-	const char delim[] = "\n";
+-	int cnt = 0;
+-	char *line;
+-
+-	if (read_text("/proc/swaps", buf, sizeof(buf)) <= 0)
+-		return -1;
+-
+-	for (line = strtok(buf, delim); line; line = strtok(NULL, delim))
+-		cnt++;
+-
+-	return cnt > 1;
+-}
+-
+-int set_oom_adj_score(int pid, int score)
+-{
+-	char path[PATH_MAX];
+-	int fd, len;
+-
+-	sprintf(path, "/proc/%d/oom_score_adj", pid);
+-
+-	fd = open(path, O_WRONLY | O_APPEND);
+-	if (fd < 0)
+-		return fd;
+-
+-	len = dprintf(fd, "%d", score);
+-	if (len < 0) {
+-		close(fd);
+-		return len;
+-	}
+-
+-	close(fd);
+-	return 0;
+-}
+-
+ int proc_mount_contains(const char *option)
+ {
+ 	char buf[4 * PAGE_SIZE];
+diff --git a/tools/testing/selftests/cgroup/cgroup_util.h b/tools/testing/selftests/cgroup/cgroup_util.h
+index 19b131ee77072..139c870ecc285 100644
+--- a/tools/testing/selftests/cgroup/cgroup_util.h
++++ b/tools/testing/selftests/cgroup/cgroup_util.h
+@@ -21,6 +21,9 @@ static inline int values_close(long a, long b, int err)
+ 	return labs(a - b) <= (a + b) / 100 * err;
+ }
+ 
++extern ssize_t read_text(const char *path, char *buf, size_t max_len);
++extern ssize_t write_text(const char *path, char *buf, ssize_t len);
++
+ extern int cg_find_unified_root(char *root, size_t len, bool *nsdelegate);
+ extern char *cg_name(const char *root, const char *name);
+ extern char *cg_name_indexed(const char *root, const char *name, int index);
+@@ -49,11 +52,6 @@ extern int cg_enter_current_thread(const char *cgroup);
+ extern int cg_run_nowait(const char *cgroup,
+ 			 int (*fn)(const char *cgroup, void *arg),
+ 			 void *arg);
+-extern int get_temp_fd(void);
+-extern int alloc_pagecache(int fd, size_t size);
+-extern int alloc_anon(const char *cgroup, void *arg);
+-extern int is_swap_enabled(void);
+-extern int set_oom_adj_score(int pid, int score);
+ extern int cg_wait_for_proc_count(const char *cgroup, int count);
+ extern int cg_killall(const char *cgroup);
+ int proc_mount_contains(const char *option);
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index 7a44d221b8c4b..44baef99fdb0e 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -24,6 +24,84 @@
+ static bool has_localevents;
+ static bool has_recursiveprot;
+ 
++int get_temp_fd(void)
++{
++	return open(".", O_TMPFILE | O_RDWR | O_EXCL);
++}
++
++int alloc_pagecache(int fd, size_t size)
++{
++	char buf[PAGE_SIZE];
++	struct stat st;
++	int i;
++
++	if (fstat(fd, &st))
++		goto cleanup;
++
++	size += st.st_size;
++
++	if (ftruncate(fd, size))
++		goto cleanup;
++
++	for (i = 0; i < size; i += sizeof(buf))
++		read(fd, buf, sizeof(buf));
++
++	return 0;
++
++cleanup:
++	return -1;
++}
++
++int alloc_anon(const char *cgroup, void *arg)
++{
++	size_t size = (unsigned long)arg;
++	char *buf, *ptr;
++
++	buf = malloc(size);
++	for (ptr = buf; ptr < buf + size; ptr += PAGE_SIZE)
++		*ptr = 0;
++
++	free(buf);
++	return 0;
++}
++
++int is_swap_enabled(void)
++{
++	char buf[PAGE_SIZE];
++	const char delim[] = "\n";
++	int cnt = 0;
++	char *line;
++
++	if (read_text("/proc/swaps", buf, sizeof(buf)) <= 0)
++		return -1;
++
++	for (line = strtok(buf, delim); line; line = strtok(NULL, delim))
++		cnt++;
++
++	return cnt > 1;
++}
++
++int set_oom_adj_score(int pid, int score)
++{
++	char path[PATH_MAX];
++	int fd, len;
++
++	sprintf(path, "/proc/%d/oom_score_adj", pid);
++
++	fd = open(path, O_WRONLY | O_APPEND);
++	if (fd < 0)
++		return fd;
++
++	len = dprintf(fd, "%d", score);
++	if (len < 0) {
++		close(fd);
++		return len;
++	}
++
++	close(fd);
++	return 0;
++}
++
+ /*
+  * This test creates two nested cgroups with and without enabling
+  * the memory controller.
 -- 
 2.53.0
 
