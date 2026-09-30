@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1E43CBE6E;
-	Wed, 30 Sep 2026 19:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56867357CE0;
+	Wed, 30 Sep 2026 19:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795726; cv=none; b=lqnAyuzqyu5VxFbbDP2nel7XwP0PMBMuGubT2WE0fQBsDcK7EFqN4OGlPApgdR+uEr5zBp0FIvfK5IS9w/KnpzlouAMfAoEclCQYdV/YoN3z/u8ynsl2tq6MJUMg5R2PstFFHikTdiIAoKVqqbw5ETwLAc+NUVZ6OYiu+cPCLm0=
+	t=1790795729; cv=none; b=uON3qKeOjx87yqZL1wMZLYtK9SzqZl55AHaj6fuq/fMiqOeOgoG09N5Um9Z2W2x8TXnNdb4VUpx3UsyrQc40EF0VPTI8jUO1WkpxszndqD8KA5nBvfb3g+cD2fJa4BqTwdokgxg+0GeTCMispWmNp0LjBhLWhFD0GXne9m03EJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795726; c=relaxed/simple;
-	bh=dUXWTGiU2tGRH/d44SN/d2cE7wwwJcAJBEB06VQTS94=;
+	s=arc-20240116; t=1790795729; c=relaxed/simple;
+	bh=4OzYuZEv/vh9R75kgNVZbt8Qdr6e/hl2knZiu+VRPzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZJHD2+97XKGFc+SmG6ucWZdG3tbIr+eZP6kI43RBtgzHAIysocn91lrGE5Ku4M5gK4d6R1mqjNcUzZWuUVPwKOCx2tqSIcPRGYMSIer4Y5DN8Tq8361STcH7LL7IrOHDjPcEQHHzF8q1Cp+jHhDzWZfooHVrwYXlg9dyrmy6Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFQSUce2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tjv4yytvOO6dstDB0hBN/o57RP230ZTa5b4NzxhXORB8ZHVrPLDKDB3BYBAjukIDA4q8zHvV5cMABQy9mRSHTweA9WtY+CLG9xrbKnj2R4tE8zq7ztSzMVFMJ4sK4R3M2m2n/mk3IXTUBnPVPZAue82ghawCpW5OgriJfHWsMOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUxftjJf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFQSUce2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE451F000FF;
-	Wed, 30 Sep 2026 19:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUxftjJf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7A41F000FF;
+	Wed, 30 Sep 2026 19:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795725;
-	bh=+eUBD0lfXCoRftPrf8vw4bXwvsMzICmNPPn5GifXMMk=;
+	s=korg; t=1790795728;
+	bh=gj4WFcFOa2GKehTaQSh5P1b96mI/0TfCC9YtHanUoRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aFQSUce2AezFlkhTYzqqFPGSm/+KQRkc65JCkXRm4TwPse05sDCAOLSHJvIBb6DBu
-	 W/4BcZR8td1FHaqZaMSfcATIlUznNxMFL65DT1iSdvuibAyAxfuIe8nmSjiFe00sp+
-	 j445jOyU2RRD1Yq7sm1UCSkxJanh7xV4dVDQgfY8=
+	b=KUxftjJfDsZ4suVD/wXZJ3l3YpdRPJ/BXoFZn3fipYHFLmWTY31X3dEHeULipCyvw
+	 b4aJfXAuIWkOABrHWUJZlsg5Z/k6Sw7NigdHdNVkUPTH+yjfgWPKiZqM1Wqnmf/Ab3
+	 OZ/k17fHCVVTAO1d7MmA2KseU3AtbnzcgrxKC08s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 0616/1193] tracing: Keep the entry count when the histogram stats allocation fails
-Date: Wed, 30 Sep 2026 17:21:40 +0200
-Message-ID: <20260930152447.931626741@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 0617/1193] ASoC: sprd: validate compress buffer sizes against fixed allocations
+Date: Wed, 30 Sep 2026 17:21:41 +0200
+Message-ID: <20260930152447.954361576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,106 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 06f5634ec5584954177f9a22e36b3bfb398a971b upstream.
+commit 7a4ce92d150b9e7ecf1a710a34d8cdeb590d3751 upstream.
 
-print_entries() uses n_entries both as the number of sort entries and as
-its own return value, so the -ENOMEM it stores when the stats allocation
-fails overwrites the count that the cleanup still needs:
+sprd_platform_compr_open() allocates the stage 0 IRAM buffer (32K data
+area) and the stage 1 DDR buffer (2M data area) with fixed sizes, but
+sprd_platform_compr_copy() derives all copy lengths from the user
+controlled runtime->fragment_size and the write() count, never
+comparing them against the physical buffer sizes. The compress core
+only checks fragment_size * fragments for an u32 overflow in
+snd_compress_check_input(), so a local user can configure a logical
+buffer of up to ~4GB via SNDRV_COMPRESS_SET_PARAMS, far exceeding the
+fixed allocations.
 
-	n_entries = tracing_map_sort_entries(map, ...);
-	if (n_entries < 0)
-		return n_entries;
-	...
-			if (!stats) {
-				n_entries = -ENOMEM;
-				goto out;
-			}
-	...
- out:
-	tracing_map_destroy_sort_entries(sort_entries, n_entries);
+A fragment_size larger than the 32K IRAM data area makes the stage 0
+copy_from_user() overflow past the IRAM allocation, and a buffer_size
+larger than the 2M DDR buffer makes the wrapping copy at the end of
+sprd_platform_compr_copy() write fully user controlled data past the
+buffer. No SNDRV_PCM_TRIGGER_START is needed, a write() in SETUP
+state reaches the copy callback directly.
 
-tracing_map_destroy_sort_entries() takes an unsigned int and loops up to
-it, so -ENOMEM arrives as 4294967284. It walks an array of at most
-map->max_elts pointers and calls destroy_sort_entry(), which dereferences
-and frees, on whatever lies past the end.
+Reject parameters that do not fit into the fixed buffers in
+set_params(), and fix the advertised max fragment size: 128K never
+fitted into the 32K IRAM buffer. The caps values may have been carried over
+from the qdsp6 driver, which allocates its buffers according to the
+advertised maxima, unlike this driver. With 32K as max fragment size
+the advertised limits are self-consistent: 32K * 64 = 2M equals the
+DDR buffer size.
 
-Reading the hist file of a trigger with a .percent value, with that
-allocation forced to fail:
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-  BUG: KASAN: vmalloc-out-of-bounds in tracing_map_destroy_sort_entries+0xa0/0xb0
-  Read of size 8 at addr ffffc90000045000 by task init/1
-   tracing_map_destroy_sort_entries+0xa0/0xb0
-   hist_show+0x6f7/0x1df0
-   seq_read_iter+0x2b8/0x1190
-   vfs_read+0x176/0xa40
-  The buggy address belongs to a 4-page vmalloc region starting at
-  ffffc90000041000 allocated at tracing_map_sort_entries+0x5c/0xd50
-
-A few pages further the fault is fatal. The registers at the oops confirm
-the bound: the loop's end pointer less the array start, over the pointer
-size, is 4294967284.
-
-Return the error in a separate variable and leave n_entries holding the
-count, the way tracing_map_sort_entries() does on its own error path.
-
-The stats block is only entered for a value carrying .percent or .graph,
-which __create_val_field() has rejected since v6.3, so this cannot be
-reached in mainline as it stands. It becomes reachable again with
-"tracing: hist: let values keep the percent and graph modifiers", so it
-should be applied first.
-
+Fixes: cce1396936ef ("ASoC: sprd: Add Spreadtrum audio compress offload support")
 Cc: stable@vger.kernel.org
-Fixes: abaa5258ce5e ("tracing: Add .percent suffix option to histogram values")
-Link: https://patch.msgid.link/20260907060323.480728-1-donggeunyoo.kernel@gmail.com
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260907053113.1CED91F00A3A@smtp.kernel.org/
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/4386bc53631b052c1866a91061715b009d98b04f@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/sprd/sprd-pcm-compress.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5638,7 +5638,7 @@ static int print_entries(struct seq_file
- {
- 	struct tracing_map_sort_entry **sort_entries = NULL;
- 	struct tracing_map *map = hist_data->map;
--	int i, j, n_entries;
-+	int i, j, n_entries, ret;
- 	struct hist_val_stat *stats = NULL;
- 	u64 val;
+--- a/sound/soc/sprd/sprd-pcm-compress.c
++++ b/sound/soc/sprd/sprd-pcm-compress.c
+@@ -17,7 +17,7 @@
  
-@@ -5648,6 +5648,8 @@ static int print_entries(struct seq_file
- 	if (n_entries < 0)
- 		return n_entries;
+ /* Default values if userspace does not set */
+ #define SPRD_COMPR_MIN_FRAGMENT_SIZE	SZ_8K
+-#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_128K
++#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_32K
+ #define SPRD_COMPR_MIN_NUM_FRAGMENTS	4
+ #define SPRD_COMPR_MAX_NUM_FRAGMENTS	64
  
-+	ret = n_entries;
+@@ -272,6 +272,19 @@ static int sprd_platform_compr_set_param
+ 	int ret;
+ 
+ 	/*
++	 * The stage 0 IRAM buffer and the stage 1 DDR buffer are allocated
++	 * with fixed sizes at open time, so the requested fragment size and
++	 * fragments must fit into them, otherwise sprd_platform_compr_copy()
++	 * would overflow the buffers. Note the compress core only checks the
++	 * fragment size and fragments against an u32 overflow, not against
++	 * the buffer sizes advertised by get_caps.
++	 */
++	if (params->buffer.fragment_size > SPRD_COMPR_IRAM_BUF_SIZE ||
++	    (u64)params->buffer.fragment_size * params->buffer.fragments >
++	    SPRD_COMPR_AREA_BUF_SIZE)
++		return -EINVAL;
 +
- 	/* Calculate the max and the total for each field if needed. */
- 	for (j = 0; j < hist_data->n_vals; j++) {
- 		if (!(hist_data->fields[j]->flags &
-@@ -5657,7 +5659,7 @@ static int print_entries(struct seq_file
- 			stats = kcalloc(hist_data->n_vals, sizeof(*stats),
- 				       GFP_KERNEL);
- 			if (!stats) {
--				n_entries = -ENOMEM;
-+				ret = -ENOMEM;
- 				goto out;
- 			}
- 		}
-@@ -5678,7 +5680,7 @@ static int print_entries(struct seq_file
- out:
- 	tracing_map_destroy_sort_entries(sort_entries, n_entries);
- 
--	return n_entries;
-+	return ret;
- }
- 
- static void hist_trigger_show(struct seq_file *m,
++	/*
+ 	 * Configure the DMA engine 2-stage transfer mode. Channel 1 set as the
+ 	 * destination channel, and channel 0 set as the source channel, that
+ 	 * means once the source channel's transaction is done, it will trigger
 
 
