@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FBA4DEC1B;
-	Wed, 30 Sep 2026 16:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F69364028;
+	Wed, 30 Sep 2026 16:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785483; cv=none; b=h2wHHk5cIH2uBCLRdhSNP97LMW0NJyhxobdoquGivNfZIeABrCvCHpNzClylW/v08ezAouf1038TBuJ0mUYefcVBxF1Q1h3RRDejAPDg+A/YrT4ut06pr+KALwaoDX5JvUZT4jqHE8b8/XbXQESWEhxWxKCPU9K03dzH0kTfo8k=
+	t=1790785486; cv=none; b=aqoFYft8Td0sY536oMZBwLlAmY1QV2rMaonOa8+eF5CUMyD4rGrMl6DLQfRImDTZpkK5KU8k93h5RIUXChK5CB7BMfL/TWzMQv8nkBuWuaS2NYRQYZgzyeFvWkeDWequo5MNQDG7qaYqFB5bcyQHKcIgTrIIyAQBbOE9CRnvOgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785483; c=relaxed/simple;
-	bh=tANrSEKbsUMsaN28ugbBFUxoeoDOwD8+oOrKIE/4HFg=;
+	s=arc-20240116; t=1790785486; c=relaxed/simple;
+	bh=XIrv+lRAUArQfMfhw+uGr/u4AsJaDYrvBfZaHI/4UVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nw+n4K0D07aatDJkIM09BJuB2SX5pxDpU7Nz6a+CC/frawFuoq1iYRVtZTEznZwqpoczQbj6/nOYDtC6ctzL/5BhwDxe5aLhe2BZXQjOtZyn0ZEQyd7Tps6i5ZFaq0VKMOwKy9c6IzEiuY7kjl8qmqVC9xhneVDhNdSES4mlfHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S47hz5pH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9LtN+BPwRDvO6rgMxlIiWfO25/B+W5uiJf0mQYD+VL14XIMMnmZgPhWIbNTQ44NgjNYcrd7PM7T5CM/RO2/Zp7XUAfk2Dqd7ek65+wV1NFyP3bUYevQk9icaf4NV7KL7l/RGXZFvxQhzDoCRbIUK6I4n9u0g1T0dL5azWTBlGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOUmEbY7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S47hz5pH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB581F00898;
-	Wed, 30 Sep 2026 16:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOUmEbY7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D701F00899;
+	Wed, 30 Sep 2026 16:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785475;
-	bh=snov//ytzTXhmGpzjLg66K88O4vnjzLqPK/kZdMuBE4=;
+	s=korg; t=1790785478;
+	bh=ut6iQ0EDo4YKFBH8qUqfEL7kJgDRlJr8ZITOfHKUEkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S47hz5pHqN8/tvV7d5CZ5Xn3G7+8cGkbZpSKblk7gmRhuzfogIZz+bUYLC5PC/UqP
-	 VM7H8fYyrjZPWgjKD/bNPmwRTTaxddmi9kPKLND+s1i7sMdbYGucKujRfNGooXOMYF
-	 GR2S9wCX5wlYp8VzaXe8SCBzVxAgi6GBgD+Sd474=
+	b=uOUmEbY78nWDFKg1BvFu1IpCX+istbYEZCbWnLdo0NfuG6FBGohRKDvgOkxknnDqK
+	 FCVQ05kAiZLv2JojxN0GvNLFuVigoXtcYEX4oTGfafZ1HbewEaCsQWxggH2glKSk5V
+	 Mv7xHMsleS72DDywpsT6LuHPim8NDsEUQmQEGzSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Miguel Gazquez <miguel.gazquez@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 495/982] net: dst: introduce dst->dev_rcu
-Date: Wed, 30 Sep 2026 17:20:31 +0200
-Message-ID: <20260930152427.413673500@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 522/982] netfilter: nf_log: unregister loggers before per-net teardown
+Date: Wed, 30 Sep 2026 17:20:58 +0200
+Message-ID: <20260930152427.989990419@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,111 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit caedcc5b6df1b2e2b5f39079e3369c1d4d5c5f50 ]
+commit 2c018cc4842c33f0c732962e2ab58635e8ae5823 upstream.
 
-Followup of commit 88fe14253e18 ("net: dst: add four helpers
-to annotate data-races around dst->dev").
+nf_log_syslog and nfnetlink_log unregister their per-network namespace
+operations before unregistering their global logger backends. This
+leaves a window where a sysctl or netlink writer can rebind the still-
+registered logger after the per-net pre-exit callback cleared the old
+selection.
 
-We want to gradually add explicit RCU protection to dst->dev,
-including lockdep support.
+The race looks like this:
 
-Add an union to alias dst->dev_rcu and dst->dev.
+  CPU 0                                 CPU 1
+  ----                                  ----
+  unregister_pernet_subsys()
+    nf_log_unset(net, logger)
+      net->nf.nf_loggers[pf] = NULL
 
-Add dst_dev_net_rcu() helper.
+                                        lock nf_log_mutex
+                                        find logger in loggers[][]
+                                        net->nf.nf_loggers[pf] = logger
+                                        unlock nf_log_mutex
 
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Miguel Gazquez <miguel.gazquez@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  nf_log_unregister(logger)
+    lock nf_log_mutex
+    loggers[pf][type] = NULL
+    unlock nf_log_mutex
+    synchronize_rcu()
+  module exit returns
+  module core frees backend memory
+
+Later, a sysctl read or packet logging operation can dereference the
+stale per-net logger pointer.
+
+Fix this by unregistering the global logger backends before tearing down
+per-net state. Once the global registrations are gone, later writers can
+no longer rebind the logger. unregister_pernet_subsys() already waits
+for an RCU grace period after the pre-exit callback clears the per-net
+selection, while nf_log_unregister() continues to cover readers of the
+global logger table.
+
+Apply this ordering fix to both nf_log backends that combine per-net
+teardown with global logger registration.
+
+Fixes: 5b023fc8d8e0 ("netfilter: enable per netns support for nf_loggers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst.h | 16 +++++++++++-----
- net/core/dst.c    |  2 +-
- net/ipv4/route.c  |  4 ++--
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ net/netfilter/nf_log_syslog.c |    2 +-
+ net/netfilter/nfnetlink_log.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 7c0cf856154de..96dd65a941c51 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -23,7 +23,10 @@
- struct sk_buff;
+--- a/net/netfilter/nf_log_syslog.c
++++ b/net/netfilter/nf_log_syslog.c
+@@ -1063,12 +1063,12 @@ err1:
  
- struct dst_entry {
--	struct net_device       *dev;
-+	union {
-+		struct net_device       *dev;
-+		struct net_device __rcu *dev_rcu;
-+	};
- 	struct  dst_ops	        *ops;
- 	unsigned long		_metrics;
- 	unsigned long           expires;
-@@ -562,9 +565,12 @@ static inline struct net_device *dst_dev(const struct dst_entry *dst)
- 
- static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
+ static void __exit nf_log_syslog_exit(void)
  {
--	/* In the future, use rcu_dereference(dst->dev) */
--	WARN_ON_ONCE(!rcu_read_lock_held());
--	return READ_ONCE(dst->dev);
-+	return rcu_dereference(dst->dev_rcu);
-+}
-+
-+static inline struct net *dst_dev_net_rcu(const struct dst_entry *dst)
-+{
-+	return dev_net_rcu(dst_dev_rcu(dst));
+-	unregister_pernet_subsys(&nf_log_syslog_net_ops);
+ 	nf_log_unregister(&nf_ip_logger);
+ 	nf_log_unregister(&nf_arp_logger);
+ 	nf_log_unregister(&nf_ip6_logger);
+ 	nf_log_unregister(&nf_netdev_logger);
+ 	nf_log_unregister(&nf_bridge_logger);
++	unregister_pernet_subsys(&nf_log_syslog_net_ops);
  }
  
- static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
-@@ -584,7 +590,7 @@ static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
- 
- static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+ module_init(nf_log_syslog_init);
+--- a/net/netfilter/nfnetlink_log.c
++++ b/net/netfilter/nfnetlink_log.c
+@@ -1197,8 +1197,8 @@ static void __exit nfnetlink_log_fini(vo
  {
--	return dev_net_rcu(skb_dst_dev(skb));
-+	return dev_net_rcu(skb_dst_dev_rcu(skb));
+ 	nfnetlink_subsys_unregister(&nfulnl_subsys);
+ 	netlink_unregister_notifier(&nfulnl_rtnl_notifier);
+-	unregister_pernet_subsys(&nfnl_log_net_ops);
+ 	nf_log_unregister(&nfulnl_logger);
++	unregister_pernet_subsys(&nfnl_log_net_ops);
  }
  
- struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
-diff --git a/net/core/dst.c b/net/core/dst.c
-index 24a1cc3d2a084..cbb6888aa32ba 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -151,7 +151,7 @@ void dst_dev_put(struct dst_entry *dst)
- 		dst->ops->ifdown(dst, dev, true);
- 	dst->input = dst_discard;
- 	dst->output = dst_discard_out;
--	WRITE_ONCE(dst->dev, blackhole_netdev);
-+	rcu_assign_pointer(dst->dev_rcu, blackhole_netdev);
- 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
- 			   GFP_ATOMIC);
- }
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index a2985265c7929..e3cce307e0e9c 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1069,7 +1069,7 @@ static void __ip_rt_update_pmtu(struct rtable *rt, struct flowi4 *fl4, u32 mtu)
- 		return;
- 
- 	rcu_read_lock();
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
- 	if (mtu < net->ipv4.ip_rt_min_pmtu) {
- 		lock = true;
- 		mtu = min(old_mtu, net->ipv4.ip_rt_min_pmtu);
-@@ -1367,7 +1367,7 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
- 	struct net *net;
- 
- 	rcu_read_lock();
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
- 	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
- 				   net->ipv4.ip_rt_min_advmss);
- 	rcu_read_unlock();
--- 
-2.53.0
-
+ MODULE_DESCRIPTION("netfilter userspace logging");
 
 
