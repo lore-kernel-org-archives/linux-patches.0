@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9143AEF2E;
-	Wed, 30 Sep 2026 18:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418223515DC;
+	Wed, 30 Sep 2026 18:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793148; cv=none; b=aWhlq15jITvdiitz0DgXZlURqXXL554o24WeOUYgHUq/mPwh6L4g4a1bPPdF2JdbP6eMN8da4UkV0VjO+iQD9vyBLKyBSZEp3XKHk7jetw3qxYQDAFL/wQm9klib0h6qw1qNvtqTKcYRFS9G2CcQ1kLm02EpSsa0plPo1HtwGS8=
+	t=1790793151; cv=none; b=l2V8UEdAka55nOS9EjJ64jJSOcG8wQvkX2/lwNUBcG8aYwz16wcv9Mn+T5M7mrSwn4YoSX3M9hZerYH9tVVYc6wCjOdYa3aBf4HUwWupUUQQzeS+UWdmnFHWeQmBp2IMEZSJDgAgbtlb2k9AfEfNgun2w164N4ubyquGrWdWZNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793148; c=relaxed/simple;
-	bh=kv4McdVRnmHilhDXF6g/itqf4GRIVOci9pgPqhdTrYM=;
+	s=arc-20240116; t=1790793151; c=relaxed/simple;
+	bh=vW6SVQdg2dqt2DQXZzlhrhGHR7BN1CYuwJPsE5Xw93I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBMisrW5Dy3p+sOZ5NxudN9AyEHYYO8IrMh8nkii7nhX/Ed0PW1qC2Uo3JBYmiSp9SHgQt+qJ5c9/tIbvg1rybKEEkI5ME5SeK8qA9PWIVY4T1NgcjkYd9o2dcpellcMT67kF3mM7OS/rmCZPlgtA+MlnUtL7AKTnjdE7f3uxzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGzrNyVU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OE686TMe9/IWeQ9389foqqcMQlsxg5c8lWK1zPjq4zg2DNssQeHIjPgsgw1lbb2rFnoE3dUprcDZL7M376WlT9ZpdIDQv0ncGmjlnDwH082z/en/VQBdIYuxqer9/TBKCz3mjQ5i1oZseLCdk+cAestiO3A5X6ygiZFLXYZh2ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B27Eiuev; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGzrNyVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5931F000FF;
-	Wed, 30 Sep 2026 18:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B27Eiuev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A4C1F000FF;
+	Wed, 30 Sep 2026 18:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793147;
-	bh=VQ/fLVGeQ9fX0QLXH8uIV7h0yeewVBem38HSKcsrYiI=;
+	s=korg; t=1790793149;
+	bh=bXn9iSx/72FQz+pKUYUBb+Ib3jw7LbOKzHv55qhtIzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGzrNyVUC2ml4GwvUZBhqZLIBtIShM0a5V22wmkJgREsrB6nPzZ4kmjYeu0Xz/P4m
-	 tp6R5WwUdZmY3p8kw5unccnaudQxOnE19wgn5V5j2CUYd00jx4sqMk5tRmVMUeqPZV
-	 bjru0xzAtlO1wopmgrd6GH4y7ZJFjzUGjwsr3G7o=
+	b=B27EiuevxT1ng1i1tagK2QgmO4AmqhLwCb2Zr761RipadsO7tKQ2AZYLp6Bq/6i0Z
+	 GLuGarMfhFJQDfJpTQB4PcBoOYgTKmRqIbZzhzjgrtty70bC8NU09n2ziG3e2Cv188
+	 sdDlsrEyUzt5MbWMLLR9bgWKnIMjafBOIwXMCCkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coia Prant <coiaprant@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/395] net: pcs: xpcs: fix clock reference leak on xpcs_init_clks failure
-Date: Wed, 30 Sep 2026 17:26:27 +0200
-Message-ID: <20260930152343.356132598@linuxfoundation.org>
+Subject: [PATCH 6.18 152/395] nfc: llcp: fix WKS SAP hijacking via prefix match in nfc_llcp_wks_sap()
+Date: Wed, 30 Sep 2026 17:26:54 +0200
+Message-ID: <20260930152343.941141270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -46,54 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Coia Prant <coiaprant@gmail.com>
+From: Ömer Mete Kaya <omermetekaya0@gmail.com>
 
-[ Upstream commit 9892d71cf0ce3ff3d4fed2d9a3968fd4feb1c918 ]
+[ Upstream commit 408cff6bd60636df201274d320edfdfde9ed41db ]
 
-xpcs_init_clks() takes references with clk_bulk_get_optional() and then
-enables them with clk_bulk_prepare_enable(). If the enable step fails,
-the function returns without dropping the references.
+nfc_llcp_wks_sap() compares only service_name_len bytes, so a short
+service_name like "u" matches longer WKS strings like "urn:nfc:sn:snep".
+Fix by requiring exact length match before strncmp().
 
-xpcs_create() handles the failure through out_free_data, which calls
-xpcs_free_data() but never xpcs_clear_clks(), so the clk references are
-leaked.
-
-Add the missing clk_bulk_put() on the enable failure path. The
-prepare/enable side is already rolled back by
-clk_bulk_prepare_enable() itself.
-
-Fixes: f6bb3e9d98c2 ("net: pcs: xpcs: Add Synopsys DW xPCS platform device driver")
-Signed-off-by: Coia Prant <coiaprant@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260919172021.2336748-1-coiaprant@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
+Link: https://patch.msgid.link/20260909121437.33744-1-omermetekaya0@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pcs/pcs-xpcs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/nfc/llcp_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index 14c4b10fee74c..495068c3642c6 100644
---- a/drivers/net/pcs/pcs-xpcs.c
-+++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -1430,8 +1430,10 @@ static int xpcs_init_clks(struct dw_xpcs *xpcs)
- 		return dev_err_probe(dev, ret, "Failed to get clocks\n");
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index 856b3d1710020..db729dc9def5a 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -369,7 +369,8 @@ static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
+ 		if (wks[sap] == NULL)
+ 			continue;
  
- 	ret = clk_bulk_prepare_enable(DW_XPCS_NUM_CLKS, xpcs->clks);
--	if (ret)
-+	if (ret) {
-+		clk_bulk_put(DW_XPCS_NUM_CLKS, xpcs->clks);
- 		return dev_err_probe(dev, ret, "Failed to enable clocks\n");
-+	}
+-		if (strncmp(wks[sap], service_name, service_name_len) == 0)
++		if (strlen(wks[sap]) == service_name_len &&
++		    !strncmp(wks[sap], service_name, service_name_len))
+ 			return sap;
+ 	}
  
- 	return 0;
- }
 -- 
 2.53.0
 
