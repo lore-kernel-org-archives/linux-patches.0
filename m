@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9187C4EA39A;
-	Wed, 30 Sep 2026 15:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F69389104;
+	Wed, 30 Sep 2026 15:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783191; cv=none; b=C2TuAp0B+T2WmbGyLRHhHm6SqmqvHpjXiWm7W0c/p3wbFofhPBTNmpywR7undFSl44Rl6p79c0U5IhplrsCHUJy8bINdkbLNw3+xuPT4cD9wlzOr6HPx2MODclduVnP1A8AmFlbh+voSFx/lS25tjwMrFnIhVhhq7UV9mE1FxVI=
+	t=1790783191; cv=none; b=J1KR/7gZr0+ujkEnbL8BQ56YR4iP7gglpIKH6bZ8+kOlOEba2oLzFbfmQc1UfmcC5fewafdqgwd77Dm29f1enOazjTO6Ec378EsTsyWGVFry1ZS1vaNMPWujRMFGWJ2C6yZgT3d2vz4i8w5woMo8QxRgMRAjukL2rC3eRXLVP3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790783191; c=relaxed/simple;
-	bh=5Id1ku92l8c4xMEeWESgPNdI5nmPDZB+Bfy9AdGtAWg=;
+	bh=sfuIVDXX7ttTMofsLbvhgnV+UaUdVDZlupm7mNBjd2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lJy7QfX0BII+DTLuM+MbuwrsAhaOHGj4iQA28s0tfQ7l8oZ6uFhLSARV2ZPcenAkyjbNs9jR88QUfHn60jH2D5TXp757qJj03DFuBwSYyI80fYmZC2pG/6k5AOoc9RAwmlE/ux1pJlAQQ/qWrLbFmLHI8N05EUPnU9ZtAvmGOEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+QpajBf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZyKIpGRcLLHuiAEegNpPWlqIIWj5NPo9OB7TdQYr8pzBoDVOkPe08Ov6L9EzM+ZzW1tzDzfydCdhacqKvW4cFcaD7V+cC3N1aoKawXqYiEhl2mryiEu87UE3m/t+wPz+V4kcWxaofdUXtCuQXi4B4XfoEYC2xc+8PFMrsHNd1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSVDTRJS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+QpajBf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0561F00893;
-	Wed, 30 Sep 2026 15:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSVDTRJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170B01F000FF;
+	Wed, 30 Sep 2026 15:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783185;
-	bh=Vqa8fe6hqyOWygkxmxG4aZYaV9ierh08Il8YYUyXkPY=;
+	s=korg; t=1790783188;
+	bh=+guF1GQSJK1Tb39+zKg/pgNAF0QNf8JRwJGYQv86g5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t+QpajBfMkmHIu3ScO35Qv9rhmh522C/lLRSVyWgbJ196qdz2zDllVD62QqwT1sak
-	 f/cTIyJgJk0FRMmO5ghoM94Bf3/Ii25FfbJseaQ2VCd8Z343YGSA13ytd5sK/OFFhH
-	 HA2uGteBnFUfJYN57gAOzVss83RPx8IXMx5QzmT8=
+	b=SSVDTRJSlE70HQb5A4JaxEEuGg8UnuekYyZghe8br9P5UxN18bwiS5yqqzE4J9GyX
+	 uSbVEKlnIfSiTmmU1V8NBhh9KV5Oo9Zi0Lmclmt3QK2T/gm04MK8DLRrZxwPb1STjH
+	 b3Wgb1LC5qljJpp9MxMm7rHnO7oY+XuM2tXprNV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/595] net/sched: ets: clamp quantum in parse and fallback paths
-Date: Wed, 30 Sep 2026 17:22:28 +0200
-Message-ID: <20260930152353.196739632@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 304/595] net: openvswitch: fix use-after-free of the flow table mask array
+Date: Wed, 30 Sep 2026 17:23:17 +0200
+Message-ID: <20260930152354.229204872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -48,78 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 1c38487f46b243bfeefec0c0c86023a3904f2214 ]
+commit ba4ba11ed6eb8972c69070417fc27b48deb002e8 upstream.
 
-ets_qdisc_change() falls back to psched_mtu() with no floor for bands
-without an explicit quantum. With a crafted size table qdisc_pkt_len
-reaches ~2 GiB, so a zero psched_mtu on a headerless device makes the
-deficit-refill loop spin under the qdisc lock.
+tbl_mask_array_realloc() retires the old mask_array before it stops being
+reachable:
 
-Move the floor into ets_quantum_parse() so explicitly configured quanta
-are also clamped to [256, 1<<20], not just the fallback path.
+	old = ovsl_dereference(tbl->mask_array);
+	if (old) {
+		...
+		call_rcu(&old->rcu, mask_array_rcu_cb);
+	}
 
-Conditions to recreate the bug:
-  CONFIG_NET_SCH_ETS=y. Requires CAP_NET_ADMIN (namespace-local via
-  unshare -Urn suffices).
+	rcu_assign_pointer(tbl->mask_array, new);
 
-  tc qdisc add dev dummy0 root ets bands 3 strict 2 quanta 1 1
+call_rcu() only waits for read-side critical sections already in flight.
+tbl->mask_array still points at old between the call_rcu() and the
+rcu_assign_pointer(), so a reader entering ovs_flow_tbl_lookup_stats() in
+that window picks up old in a fresh critical section that the pending
+grace period does not cover.
 
-Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
-Reported-by: Vega <vega@nebusec.ai>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.9
+tbl_mask_array_realloc() runs in process context under ovs_mutex, so the
+window is preemptible and can outlast the grace period. Then
+mask_array_rcu_cb() frees old before the swap runs:
+
+  BUG: KASAN: slab-use-after-free in flow_lookup.constprop.0+0x2bf/0x2f0
+  Read of size 8 at addr ffff888020b3e018 by task poc/741
+   flow_lookup.constprop.0+0x2bf/0x2f0
+   ovs_flow_tbl_lookup_stats+0x4a3/0x5c0
+   ovs_dp_process_packet+0x19c/0x710
+   ovs_vport_receive+0x243/0x390
+   internal_dev_xmit+0x81/0x170
+  Freed by task 728:
+   kfree+0x16a/0x4e0
+   rcu_core+0x853/0x1030
+
+Publish the new array before retiring the old one. The kfree_rcu() that
+call_rcu() replaced ran after the swap.
+
+Fixes: eac87c413bf9 ("net: openvswitch: reorder masks array based on usage")
+Cc: stable@vger.kernel.org
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Eelco Chaudron echaudro@redhat.com
+Link: https://patch.msgid.link/DE115F9C-2545-423E-A702-986FC952FD62@doyensec.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_ets.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ net/openvswitch/flow_table.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index cecd7209a86c9..0c2349c08f8c2 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -83,11 +83,7 @@ static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
- 			     unsigned int *quantum,
- 			     struct netlink_ext_ack *extack)
- {
--	*quantum = nla_get_u32(attr);
--	if (!*quantum) {
--		NL_SET_ERR_MSG(extack, "ETS quantum cannot be zero");
--		return -EINVAL;
--	}
-+	*quantum = clamp_t(u32, nla_get_u32(attr), 256, 1 << 20);
+--- a/net/openvswitch/flow_table.c
++++ b/net/openvswitch/flow_table.c
+@@ -261,11 +261,13 @@ static int tbl_mask_array_realloc(struct
+ 			if (ovsl_dereference(old->masks[i]))
+ 				new->masks[new->count++] = old->masks[i];
+ 		}
+-		call_rcu(&old->rcu, mask_array_rcu_cb);
+ 	}
+ 
+ 	rcu_assign_pointer(tbl->mask_array, new);
+ 
++	if (old)
++		call_rcu(&old->rcu, mask_array_rcu_cb);
++
  	return 0;
  }
  
-@@ -647,11 +643,13 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
- 			return err;
- 	}
- 	/* If there are more bands than strict + quanta provided, the remaining
--	 * ones are ETS with quantum of MTU. Initialize the missing values here.
-+	 * ones are ETS with quantum of max(MTU, 256). Initialize the missing
-+	 * values here.
- 	 */
- 	for (i = nstrict; i < nbands; i++) {
- 		if (!quanta[i])
--			quanta[i] = psched_mtu(qdisc_dev(sch));
-+			quanta[i] = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)),
-+					    256, 1 << 20);
- 	}
- 
- 	/* Before commit, make sure we can allocate all new qdiscs */
--- 
-2.53.0
-
 
 
