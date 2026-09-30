@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE67834D916;
-	Wed, 30 Sep 2026 16:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1175172C1;
+	Wed, 30 Sep 2026 16:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785159; cv=none; b=HaB/7SRE8Z3AhZw+bK3H0VzxHc67IHQ3AIYbqjaTHgwQaQGKUoj8XBYoYuzqZCW/a2JW8fut0MDUDxr5HZp+nlWjuhJ4/Jt5e+mjdDOBtunsRu5b2rv2TNcW/La2vIet7vdBO333VIQQmpMJg3mEp6fF0KDS3rWc3mm/2Y4AxZ0=
+	t=1790785164; cv=none; b=U+cHN5pqPE0mEfA6y3u7hi6xl10t91LEX+jwqhEOAeY0l9WTlTjS1jUQok1CoRuVD4bDcYQOOI5b/D8hlpMj+9eLstKLyiZcGhW7IH/wLJOKQ2ABJvYxQlpUQ9uZshN812Mz4UvJvKkUvQXJPO7v8SSjPxu0yUIOHqeawrGylzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785159; c=relaxed/simple;
-	bh=ds7XhIlCLAKQU7E03nKzvbe2KRND4rOZVWjCCgMfm54=;
+	s=arc-20240116; t=1790785164; c=relaxed/simple;
+	bh=EMvVBP08RlbrmZxlV7ThXSNJGOZ3QMu/jZWR7gqN2l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/DCG6D7xjQLpI9QAe5cKV/TaZ5UClJd/fEcyQByRST3LCkmxt+uCQuG6bb0WgYq9ETgRcjzGN/vYncutYawNIXAhtCrp3c8X2kT7T8TScHrGujnf41us6EEbw5fKab63WkyaSr4gj3wKjzVjJTYddGr0PLugHzuOHC+zQPEs24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAeo0IP9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TRIxto5X8voi6pEXJuw4v3RALYIRR/qUntFwORODW4fxlt5pCwHfIJZMfcMTUMSWRIhtFI1bbiGk16+6onXOeolxIO7Qiv1SXCYOSP8pnADiqMj26iS62L3W2ZmUFkyKE0y7WupJdMWU0nuUmmGyM+mYt1whNK4gqosk8U/yq68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rn9v+aOL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAeo0IP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE021F0089A;
-	Wed, 30 Sep 2026 16:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rn9v+aOL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46451F000FF;
+	Wed, 30 Sep 2026 16:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785152;
-	bh=TMXL1axo+9MLkW4KiyxdwNfk3KmBq3uRTVfWVGazk5U=;
+	s=korg; t=1790785158;
+	bh=Zl+PUe7KFdPvJQsz5YBYZHDoMTERSvofD/1wrfV7k9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZAeo0IP9JLjROc6bO2BdVEszW5+aCNUQocvi1A6jJ5haABAE7NMsUftih9jDYWb1Z
-	 gRN8ZkpTOFzDuPu14m3vQSeoDSIbJ6hfiQRGa8Yrj6fcJvcfU+5HpiMi3KyV6DVhSP
-	 7UrcfWMHhcYW0QMUOTY3olzAd1UwDJRC76mnKcUU=
+	b=rn9v+aOLKMlO1hxXrMPVqdM4zqP/wz3T/PKw/oOSq9B4NHFh0Ba3ijXNk0tJQJqjI
+	 sNxW8qiCIl5jhFg/Knp59Uqr9jrgIESxtCcP6wzhdZqghmj28/10oy0EQzRmdZO0hI
+	 JW2qlaOFiGuYF3Tz3X5Kr8eh0FZfrWDzl9sMQ6FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 409/982] bonding: use skb_cow_head() in bond_do_alb_xmit() and rlb_arp_xmit()
-Date: Wed, 30 Sep 2026 17:19:05 +0200
-Message-ID: <20260930152425.592593057@linuxfoundation.org>
+Subject: [PATCH 6.1 411/982] net: dsa: mv88e6xxx: bound the policy rule dump by the callers buffer size
+Date: Wed, 30 Sep 2026 17:19:07 +0200
+Message-ID: <20260930152425.635341032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,97 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 1746ef2e2df2ad71c66eca56364d56bde284523b ]
+[ Upstream commit b1fffc273112e7284c5b705e186b43b5770cd3d5 ]
 
-In bond_do_alb_xmit() and rlb_arp_xmit(), make sure to unclone
-skb head via skb_cow_head() before modifying the source MAC address
-(Ethernet header and ARP payload) to avoid silent corruption if
-the skb is shared or cloned. Avoid caching the header pointers
-across skb_cow_head().
+mv88e6xxx_get_rxnfc() uses rxnfc->rule_cnt as the write index while
+dumping the policy IDR, clobbering the input value before it has been
+looked at.  That input is the number of entries the caller had room for.
+ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN and the ioctl sizes the
+buffer from the rule_cnt userspace passes in, so once an admin has
+installed policy rules any user can ask for fewer slots than there are
+rules and run off the end of the allocation.  A rule_cnt of 0 leaves the
+buffer pointer NULL and the walk dereferences it.
 
-In rlb_arp_xmit(), only modify arp->mac_src if it differs from
-tx_slave->dev->dev_addr to avoid an unnecessary copy and head
-reallocation.
+Count into a local so the caller's limit survives the walk, and stop with
+-EMSGSIZE once it is reached.
 
-Also, we should not assume mac header is set in output path.
-
-Use skb_eth_hdr() instead of eth_hdr() to fix the issue,
-and remove now redundant skb_reset_mac_header() calls.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260903143940.1180513-1-edumazet@google.com
+Fixes: da7dc8755304 ("net: dsa: mv88e6xxx: add RXNFC support")
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260903032611.3000029-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_alb.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index 8930652efe321..db2278e7b1330 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -678,9 +678,15 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
- 	if (arp->op_code == htons(ARPOP_REPLY)) {
- 		/* the arp must be sent on the selected rx channel */
- 		tx_slave = rlb_choose_channel(skb, bond, arp);
--		if (tx_slave)
-+		if (tx_slave &&
-+		    !ether_addr_equal_64bits(arp->mac_src,
-+					     tx_slave->dev->dev_addr)) {
-+			if (unlikely(skb_cow_head(skb, 0)))
-+				return NULL;
-+			arp = (struct arp_pkt *)skb_network_header(skb);
- 			bond_hw_addr_copy(arp->mac_src, tx_slave->dev->dev_addr,
- 					  tx_slave->dev->addr_len);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 17390a004c0e9..9ccf9b7cb6256 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -2361,6 +2361,7 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
+ 	struct ethtool_rx_flow_spec *fs = &rxnfc->fs;
+ 	struct mv88e6xxx_chip *chip = ds->priv;
+ 	struct mv88e6xxx_policy *policy;
++	u32 cnt = 0;
+ 	int err;
+ 	int id;
+ 
+@@ -2386,11 +2387,18 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
+ 		break;
+ 	case ETHTOOL_GRXCLSRLALL:
+ 		rxnfc->data = 0;
+-		rxnfc->rule_cnt = 0;
+-		idr_for_each_entry(&chip->policies, policy, id)
+-			if (policy->port == port)
+-				rule_locs[rxnfc->rule_cnt++] = id;
+ 		err = 0;
++		idr_for_each_entry(&chip->policies, policy, id) {
++			if (policy->port != port)
++				continue;
++			if (cnt == rxnfc->rule_cnt) {
++				err = -EMSGSIZE;
++				break;
++			}
++			rule_locs[cnt++] = id;
 +		}
- 		netdev_dbg(bond->dev, "(slave %s): Server sent ARP Reply packet\n",
- 			   tx_slave ? tx_slave->dev->name : "NULL");
- 	} else if (arp->op_code == htons(ARPOP_REQUEST)) {
-@@ -1341,7 +1347,6 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
- 				    struct slave *tx_slave)
- {
- 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
--	struct ethhdr *eth_data = eth_hdr(skb);
- 
- 	if (!tx_slave) {
- 		/* unbalanced or unassigned, send through primary */
-@@ -1352,7 +1357,9 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
- 
- 	if (tx_slave && bond_slave_can_tx(tx_slave)) {
- 		if (tx_slave != rcu_access_pointer(bond->curr_active_slave)) {
--			ether_addr_copy(eth_data->h_source,
-+			if (unlikely(skb_cow_head(skb, 0)))
-+				return bond_tx_drop(bond->dev, skb);
-+			ether_addr_copy(skb_eth_hdr(skb)->h_source,
- 					tx_slave->dev->dev_addr);
- 		}
- 
-@@ -1376,8 +1383,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
- 	struct ethhdr *eth_data;
- 	u32 hash_index;
- 
--	skb_reset_mac_header(skb);
--	eth_data = eth_hdr(skb);
-+	eth_data = skb_eth_hdr(skb);
- 
- 	/* Do not TX balance any multicast or broadcast */
- 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
-@@ -1429,8 +1435,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
- 	u32 hash_index = 0;
- 	int hash_size = 0;
- 
--	skb_reset_mac_header(skb);
--	eth_data = eth_hdr(skb);
-+	eth_data = skb_eth_hdr(skb);
- 
- 	switch (ntohs(skb->protocol)) {
- 	case ETH_P_IP: {
++		if (!err)
++			rxnfc->rule_cnt = cnt;
+ 		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
 -- 
 2.53.0
 
