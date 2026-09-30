@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EF73DB328;
-	Wed, 30 Sep 2026 18:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291AE3E0750;
+	Wed, 30 Sep 2026 18:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794158; cv=none; b=F2nGGm5F+7Q0jod82F4ivvs3KFrdSzGx+OAImA0IY0D0Y0HkR3R5Zr6UallBRllqFLPDB5lNECsURg0iwrTbfQ1Lx9M0nmAtkySR3icWWbJ9ls5vs7jt57dPu1b/XcwcPvAml5tUuNjXs/fbyB+pvpe7c5xvEjcTKdzSI8tkPKw=
+	t=1790794161; cv=none; b=PNWABAHS4atLZX5ftOkflRUUMf12g2wSBj07ykjnACg/UhTKEBXhEVlGEBEOfKVyqs1OMh09JNB708y2MJW7ZObTgoC1A5+oGyEO4Ta7MjM4A10AcH4OvxuS38kxHgK6E4PO/F++ChR+ZIJ3K1691CjpogygHkc/N4lCPGU64hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794158; c=relaxed/simple;
-	bh=pn4Yr8eN1UykFr/hLULnQVk869FofN6lc7lehENabIo=;
+	s=arc-20240116; t=1790794161; c=relaxed/simple;
+	bh=6JJVvfGRIqmFgtnvlYRjAhQn9f4PvE7/gE5vEjHAO+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOIhm4nr3+LwcZV0QoyqM5ULrFEhOpHsUpL9AJOS72zds2egXv+e2GQuQUk2V/OXPs4oggl4Mm45ooWUJo9fVurK637PG3bXRevOjEioA5LJr1sRg3Ewgb3JXZllZiAmEKzSCq/mx2L1DEtOBDP7k9OttCs4YgXJhZDJEoaybts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzyfRygx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FAC+96ac6BFdLBPaSgK+TjLKHA+Kfry8jJ2H879Fno7qCj70sfpddjc8aJBVwtEPV9OOMylq1GKCyDZZ6L4FrAuVncXL2fMy3gQ+kTUlStKOa6ekgaShXWEGmO8KvAjWDvI2jE0eFjPrUNwTdGu/UihmYIz9HFTk9fjKPeojV+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tu1A7avN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzyfRygx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E7D1F000FF;
-	Wed, 30 Sep 2026 18:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tu1A7avN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B111F000FF;
+	Wed, 30 Sep 2026 18:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794157;
-	bh=Wl8oSkNI69pp7tQHtvj1wMkCeocqx768IgRjd8Whp5Q=;
+	s=korg; t=1790794160;
+	bh=D8q40A9fHPMoK8kwAYNDKHIKdd4KmX603dFJ7+kDMig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JzyfRygx5bCyP4XGHh8yD7AHy9d4HA4HC/AMlK6kecVUsh2KODEHf+YDh695kU8n2
-	 p8JrEUXYnCgZX9kum5fMgaeBcTNmlvAl0ElCPrgu2WUkZr/nJY5hUjO/SJvMdxUCoh
-	 ESb2XAsmW/q3TyU6iOBJberjF48jLg54BHo8cWao=
+	b=tu1A7avNYsRfp1QFaOU/urpSNEzjcZU7ojBYh0nhiFPlSrI4Rwb0jMFx1jbr4aSdN
+	 AlwTvzdB5xOHXRo1tGmJOMYZy7SMNFjpxPtUpuUqjRhzjOgL/jJ1QY2dAeDQOlVeV6
+	 JLQtLnfMpIBoJ2/bk/lNk3mHGQxDe/XRYpl8OqoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
+	=?UTF-8?q?=C5=81ukasz=20Stelmach?= <steelman@post.pl>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0113/1193] net: hsr: require valid EOT supervision TLV
-Date: Wed, 30 Sep 2026 17:13:17 +0200
-Message-ID: <20260930152436.736102063@linuxfoundation.org>
+Subject: [PATCH 6.6 0114/1193] ipv6: addrconf: fix temp address generation after prefix deprecation
+Date: Wed, 30 Sep 2026 17:13:18 +0200
+Message-ID: <20260930152436.758453032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -46,45 +47,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 46d111a3ef3b5972804dcdce0833767143a12192 ]
+[ Upstream commit e20d8922aa8fe441d291364c96c2179a005b79ea ]
 
-Supervision frames are only valid if terminated with a zero-length EOT
-TLV. The current check fails to reject non-EOT entries as the terminal
-TLV, potentially allowing malformed supervision traffic.
+When a router temporarily deprecates an IPv6 prefix (either by sending a
+Router Advertisement with Preferred Lifetime = 0 or by letting the
+lifetime expire) and later restores it, the kernel permanently loses its
+ability to generate temporary privacy addresses (RFC 8981) for that
+prefix.
 
-Fix this by strictly requiring the terminal TLV to be HSR_TLV_EOT with
-a length of zero.
+This happens because the address worker attempts to generate a
+replacement temporary address when the current one nears expiration. As
+the base prefix is deprecated already, the generation fails after
+marking the temporary address as already having spawned a replacement
+(ifp->regen_count++).
 
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260523130420.62144-1-luka.gejak@linux.dev
+When the router eventually restores the prefix, the temporary address
+becomes active again. However, once it naturally expires, the address
+worker sees this temporary address already tried to generate one and
+skips the regeneration.
+
+Fix the issue by resetting the regen_count check of the latest temp
+address generated for the prefix updated by the incoming RA.
+
+Reported-by: Łukasz Stelmach <steelman@post.pl>
+Closes: https://lore.kernel.org/netdev/87340td30q.fsf%25steelman@post.pl/
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260523103811.3790-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_forward.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/addrconf.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 2a6df958292c8..c66728d7d285e 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -110,7 +110,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 048ce7fb57fd5..d7a592bd32d19 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1177,6 +1177,7 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
+ 	ipv6_link_dev_addr(idev, ifa);
+ 
+ 	if (ifa->flags&IFA_F_TEMPORARY) {
++		/* manage_tempaddrs() relies on addresses being added to the head */
+ 		list_add(&ifa->tmp_list, &idev->tempaddr_list);
+ 		in6_ifa_hold(ifa);
  	}
+@@ -2577,8 +2578,10 @@ static void manage_tempaddrs(struct inet6_dev *idev,
+ 			     __u32 valid_lft, __u32 prefered_lft,
+ 			     bool create, unsigned long now)
+ {
+-	u32 flags;
++	u32 orig_prefered_lft = prefered_lft;
+ 	struct inet6_ifaddr *ift;
++	bool reset_done = false;
++	u32 flags;
  
- 	/* end of tlvs must follow at the end */
--	if (hsr_sup_tlv->HSR_TLV_type == HSR_TLV_EOT &&
-+	if (hsr_sup_tlv->HSR_TLV_type != HSR_TLV_EOT ||
- 	    hsr_sup_tlv->HSR_TLV_length != 0)
- 		return false;
+ 	read_lock_bh(&idev->lock);
+ 	/* update all temporary addresses in the list */
+@@ -2613,6 +2616,11 @@ static void manage_tempaddrs(struct inet6_dev *idev,
+ 			prefered_lft = max_prefered;
  
+ 		spin_lock(&ift->lock);
++		/* the first match is the most recent temp address */
++		if (!reset_done && orig_prefered_lft > 0) {
++			ift->regen_count = 0;
++			reset_done = true;
++		}
+ 		flags = ift->flags;
+ 		ift->valid_lft = valid_lft;
+ 		ift->prefered_lft = prefered_lft;
 -- 
 2.53.0
 
