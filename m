@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F07A3C10B9;
-	Wed, 30 Sep 2026 19:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FF23502A8;
+	Wed, 30 Sep 2026 19:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795035; cv=none; b=Z+DmPmLpMHUzOl0yqpdScsshpO4asafiyQKW1OU14zVaAemE7f6GinWnLo10wL7ZUGAeP6d9q/JhaIsMVhPamdsGcU+OV1K+WTMsRqSsWDxK6oX3oTMkuL9TEDPYSDKWAPmPNnPI98nX+WrmVqm9soz/PUzZIPQdU9J3w8M9LYo=
+	t=1790795038; cv=none; b=qt4qczpb+WfTnZcpifzPsH4bRmCm4Q9Lp3V7vYclLcaBu/GVKlDn/N/LazTMzBJT6f3E8nfnzEnD88RdHhPfnMYelyHHOTum20eenf/WyWAcxbiw5r6tjDNEnUKUl0YVHRbCV+iMQc2tVlnJjLDsniBaSZCI2Srooa0JUc2hQEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795035; c=relaxed/simple;
-	bh=0jariqycOyMMiU4Dc6x8jzdKbWJEWzfXehtTPAmH0Is=;
+	s=arc-20240116; t=1790795038; c=relaxed/simple;
+	bh=youebiGsB6WqzvTnwtrWoAWM/3unJZ/KFpFWuMc7Irk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXP1OAoGP/1qUQJ2AXmOtGC1mCuJvZ5zrGWQX/cWGEkk/+kMkQeMN74llFQSaOUxv38Er3EdnOh491xG+nyE8QxXF/K3Iyg07dI4Qdx+XnI6Jvxyv/7Wly+8BAXkNAEK0ItF3NHQ+G3TdyMdXZrtNytGZPmkRhzu00N/envqL3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgQSR1HP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ISJOJG2lCqDC5O+t/2W6iYIc+GDmfuXL5An6uEL4na/UrAO3jL2wAZP2/1ewx0FOdgB+NHRqOV2oFtP2Ddc5lzQq4VZO6LluEE3PfCq3wI1M87+9qq0oA/wZiSjT3FmBQ9V29EQ3WAVIg5+bEEEHAAEHCkXUu8JFAm5yfXO5oYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDmTOv+a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgQSR1HP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E164E1F000FF;
-	Wed, 30 Sep 2026 19:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDmTOv+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF861F000FF;
+	Wed, 30 Sep 2026 19:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795034;
-	bh=gMAB8vpHfXTpo0llDsFaX8C4h57WtwGW+TKrn58owck=;
+	s=korg; t=1790795037;
+	bh=o8SxvaPR3Hf4HFatV/JhMEyNEARBm7GdHXED1Y+2NSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jgQSR1HPkyoJw0TZT2axTK8PwQlL91ZB41Ng7s+l/T2Hqrsw9nerDpTwvPnmcjmV+
-	 hw0Lv1YSwRE0JXQc/ENm6djsAK2EMaeXBWinwWD6XlEoot4uNZeUJNPWTfIeeQ5cys
-	 edf5CuN0Fde6E51Ixzxfi9JpFWqCsmHSev7MrxVQ=
+	b=YDmTOv+a5PPbdSRS8G5ktyeQ2noWq+78zLnajfBBsphOLgKN1c4kY5tewlJEPcxsV
+	 p/biSl60tjjGH1rMPD7i4XdJD5OIEKjhyrhhOihgs0dKEXB2xifYwrJcS7tMP1A2Sf
+	 WNF6YGJ17ugZpz3baHm8wvusxJ8iLswiqANmbEv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jad Keskes <inasj268@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0418/1193] Bluetooth: L2CAP: fix chan mode for LE_CONN_REQ + EXT_FLOWCTL pchan
-Date: Wed, 30 Sep 2026 17:18:22 +0200
-Message-ID: <20260930152443.489624227@linuxfoundation.org>
+Subject: [PATCH 6.6 0376/1193] EDAC/device_sysfs: Use kstrtouint() for poll_msec to prevent truncation
+Date: Wed, 30 Sep 2026 17:17:40 +0200
+Message-ID: <20260930152442.532187930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,66 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Jad Keskes <inasj268@gmail.com>
 
-[ Upstream commit 4ef05db5b08b176a551b4a6287372045998806b0 ]
+[ Upstream commit 66cc9dec919dd63d8e4b3d386f7aed3ae684e645 ]
 
-l2cap_new_connection() sets default value of channel mode to match the
-parent channel.  l2cap_le_connect_req() left this at the default, and
-created L2CAP_MODE_EXT_FLOWCTL channels if listening pchan has that
-mode.  This causes FLAG_DEFER_SETUP channels to reply to
-L2CAP_LE_CONN_REQ with L2CAP_ECRED_CONN_RSP, which is incorrect.
+The poll_msec sysfs store file uses simple_strtoul() which accepts an unsigned
+long, but the target field (poll_msec) is unsigned int. On 64-bit systems,
+a value > UINT_MAX is silently truncated when stored.
 
-It can also result to stack OOB write (of l2cap_alloc_cid determined
-values) in l2cap_ecred_rsp_defer(), as l2cap_le_connect_req() does not
-limit maximum number of deferred channels or check for duplicate ident.
+Fix the mismatch by using kstrtouint() instead. This rejects values larger
+than UINT_MAX at parse time, making truncation impossible. Also add a check
+for value < 1 to reject the 0-delay case, which would cause the poll work to
+spin without delay and consume 100% CPU.
 
-Fix by setting chan->mode correctly in l2cap_le_connect_req().
-
-Also check channel mode in l2cap_ecred_rsp_defer(), and do WARN_ON_ONCE
-instead of OOB write to make it less brittle.
-
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Signed-off-by: Jad Keskes <inasj268@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260730145549.148229-1-inasj268@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/edac/edac_device_sysfs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 0f2fe83215cf3..6a4b22ae9570a 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3841,6 +3841,9 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
+diff --git a/drivers/edac/edac_device_sysfs.c b/drivers/edac/edac_device_sysfs.c
+index 010c26be58464..c10f0094b5b86 100644
+--- a/drivers/edac/edac_device_sysfs.c
++++ b/drivers/edac/edac_device_sysfs.c
+@@ -90,14 +90,21 @@ static ssize_t edac_device_ctl_poll_msec_store(struct edac_device_ctl_info
+ 					*ctl_info, const char *data,
+ 					size_t count)
  {
- 	struct l2cap_ecred_rsp_data *rsp = data;
+-	unsigned long value;
++	unsigned int value;
++	int ret;
  
-+	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-+		return;
-+
- 	/* Check if channel for outgoing connection or if it wasn't deferred
- 	 * since in those cases it must be skipped.
+ 	/* get the value and enforce that it is non-zero, must be at least
+ 	 * one millisecond for the delay period, between scans
+ 	 * Then cancel last outstanding delay for the work request
+ 	 * and set a new one.
  	 */
-@@ -3851,6 +3854,10 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	/* Reset ident so only one response is sent */
- 	chan->ident = 0;
- 
-+	/* Unreachable, check in l2cap_ecred_conn_req. If reached, drop rest */
-+	if (WARN_ON_ONCE(rsp->count >= ARRAY_SIZE(rsp->pdu.scid)))
-+		rsp->pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_NO_MEM);
+-	value = simple_strtoul(data, NULL, 0);
++	ret = kstrtouint(data, 0, &value);
++	if (ret < 0)
++		return ret;
 +
- 	/* Include all channels pending with the same ident */
- 	if (!rsp->pdu.rsp.result)
- 		rsp->pdu.rsp.dcid[rsp->count++] = cpu_to_le16(chan->scid);
-@@ -4995,6 +5002,7 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
++	if (value < 1)
++		return -EINVAL;
++
+ 	edac_device_reset_delay_period(ctl_info, value);
  
- 	chan->ident = cmd->ident;
-+	chan->mode = L2CAP_MODE_LE_FLOWCTL;
- 
- 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 		l2cap_state_change(chan, BT_CONNECT2);
+ 	return count;
 -- 
 2.53.0
 
