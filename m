@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543A24BFE6D;
-	Wed, 30 Sep 2026 15:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FC64E3245;
+	Wed, 30 Sep 2026 15:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783067; cv=none; b=O47Giv2gpMWoF6iHGjZ8alzYp0A+wIt1NY40zm00I/wBnu4HPmBEU/vESajiMQ7t/c9efE4x/3ZwxPu2aG1s1oL4Tw9l7mrwtGSnWXngSGGUIHTtwwRJ6hZxTewo+zftq+2yCTVzKCybCk9rFpSKZKe1MSarYRrorfvFFGd2YiA=
+	t=1790783071; cv=none; b=pxkCHT1gKkz8EXu0Q1roxx3R5U4wc5nNh9BvvDiA223LRT4HXJxGitpsKqGN59I97p/xmaHoV9nVRFBBtSSOfldgJwPPAcO492/lpUIux6WjO40S4OsmHBUJ/PTXTvtPtRxhV4raspwmEuBOVHFes34LpbV+u4nYjwdN+MFoqDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783067; c=relaxed/simple;
-	bh=OH3w0iENuQBreJl6Wl71sBKAuRSTEsO0Dqmb1ttC18s=;
+	s=arc-20240116; t=1790783071; c=relaxed/simple;
+	bh=hQxr6qwKPTH03K5TZ3gRe2zIYoaiaBywsToE2wTXu20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XD5JM9gHbYh5Z01i0TmA0BzjEg+4vJB8/dXNn4Pnr9GY8BGZKx8OHN9bu4J28RMsJRChxucltO7gP58ciampr/4zWXwP6bfwLYI2QRfpqH5okWjHLZk+pUATgV+4yu6CU+EJLGiMoa+VkU8LuncpX2BD9BA0BI2h6AO5Ls3UjYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGauZQpI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CqeWx52Fg6JPS0NkmmJt1NTe6aX2pVXi/6MMQbROThAYkip2l6Q9iPZiRBPglARUA0RTnR1d9bkqzV3B0FMmuatRECBR1tIrX5C6hK9wSMnoT8VgLdiegSYO3Tjuopet2GxmhLAiD79StBhgKk70pY/LZ4m7ioEXm2pSM8ZsElM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymGo+WbU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGauZQpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BEF1F00898;
-	Wed, 30 Sep 2026 15:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymGo+WbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB481F0089B;
+	Wed, 30 Sep 2026 15:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783063;
-	bh=PYNw4rbnA/k//djbxeUSNjtCyKPtTQX9ytx7LBaMf48=;
+	s=korg; t=1790783060;
+	bh=2aqZWt8eYdH5SzLpUsOZo75sosXW4yKQ9wRmYZPWQGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qGauZQpInAnNZAcGAT26qvyoF+gdlI4WE9IJpdKqdhuzpUcKgKhWvI6sU24ItVgBC
-	 HbMBI9wc/XxEJWihZRZkmThw8aFEj5AGCMdDMNn30XMDLkNsGxuAdEAagD7t22cOHb
-	 rAVsxX02QUptP/n9Cy2rk0n+4B6JYQsfO23dAxL8=
+	b=ymGo+WbUnZStbLH2Zk2PUSI/u0yHaBVE+bZ7WLTX+gQWOqhVSUgCfj1VWD0gl+dLS
+	 crf0S7lL7zDx5wWNxQophd+COkpJ2hJqa7kzXsIoITvgBIJlTinXZXXC6dm/CLQ2Rg
+	 tAqNZuHDmWPqxeilNrM0YExH3tX8FiJ9FkLviybA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Joe Damato <joe@dama.to>,
 	Linus Walleij <linusw@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 268/595] net: ethernet: cortina: Count dropped frames as NAPI work
-Date: Wed, 30 Sep 2026 17:22:41 +0200
-Message-ID: <20260930152353.473618581@linuxfoundation.org>
+Subject: [PATCH 5.10 267/595] net: ethernet: cortina: Finish RX updates before NAPI completion
+Date: Wed, 30 Sep 2026 17:22:40 +0200
+Message-ID: <20260930152353.451222855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,74 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit b856c552f556bc0341c1dbe0bf88e630fd1dc4b7 ]
+[ Upstream commit baa26841cb9a2cdc7e0e99d6854a4e3359bf7393 ]
 
-The RX loop only consumes budget when it successfully delivers a frame.
-Error paths keep consuming descriptors without reducing the budget, so a
-stream of bad frames can process the entire receive ring in one poll.
+napi_complete_done() releases ownership of the NAPI instance, but the
+Gemini poll keeps the RX statistics writer section open and updates the
+free queue after calling it. A new poll can therefore start while the old
+writer is still active.
 
-Move the budget accounting to a common end-of-frame path. This counts
-each completed frame as NAPI work whether it was delivered or dropped,
-matching the behavior of the vendor driver.
+Finish the statistics and free queue updates before releasing ownership.
+Only re-enable RX interrupts when napi_complete_done() reports successful
+completion.
 
 Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Suggested-by: Joe Damato <joe@dama.to>
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-3-2bbbd598ca6e@kernel.org
+Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-2-2bbbd598ca6e@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 96a899625288c..87be7b9f803be 100644
+index 658705a11afc2..96a899625288c 100644
 --- a/drivers/net/ethernet/cortina/gemini.c
 +++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1471,7 +1471,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 				skb = NULL;
- 				frag_nr = 0;
- 			}
--			continue;
-+			goto next_desc;
- 		}
- 		page = gpage->page;
+@@ -1551,12 +1551,10 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 	u64_stats_update_begin(&port->rx_stats_syncp);
  
-@@ -1493,7 +1493,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 
- 		} else if (!skb) {
- 			put_page(page);
--			continue;
-+			goto next_desc;
- 		}
- 
- 		if (word3.bits32 & EOF_BIT)
-@@ -1516,10 +1516,8 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
- 			frag_nr = 0;
--			budget--;
--			received++;
- 		}
--		continue;
-+		goto next_desc;
- 
- err_drop:
- 		if (skb) {
-@@ -1532,6 +1530,13 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			put_page(page);
- 
- 		port->stats.rx_dropped++;
+ 	received = gmac_rx(napi->dev, budget);
+-	if (received < budget) {
+-		napi_gro_flush(napi, false);
+-		napi_complete_done(napi, received);
+-		gmac_enable_rx_irq(napi->dev, 1);
++	if (received < budget)
+ 		++port->rx_napi_exits;
+-	}
 +
-+next_desc:
-+		/* Final or single-descriptor fragment, advance things */
-+		if (word3.bits32 & EOF_BIT) {
-+			budget--;
-+			received++;
-+		}
++	u64_stats_update_end(&port->rx_stats_syncp);
+ 
+ 	port->freeq_refill += received;
+ 	if (port->freeq_refill > freeq_threshold) {
+@@ -1564,7 +1562,9 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 		geth_fill_freeq(geth, true);
  	}
  
- 	port->rx_skb = skb;
+-	u64_stats_update_end(&port->rx_stats_syncp);
++	if (received < budget && napi_complete_done(napi, received))
++		gmac_enable_rx_irq(napi->dev, 1);
++
+ 	return received;
+ }
+ 
 -- 
 2.53.0
 
