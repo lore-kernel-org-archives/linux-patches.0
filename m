@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E55013CE;
-	Wed, 30 Sep 2026 15:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63538514752;
+	Wed, 30 Sep 2026 15:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782369; cv=none; b=MXz1/2z8kOYUbqnhFs/Ur/ZttIEA6mJPZl+2WhJOmyFOrPPKWD+fTFVq6W9h2c+dnilgHdcb+nvT+cvOp7rdHLrwNicm1whx2fw2IvTZL0r1yOtWmei5+vBX8p9AU4puALPV9tps5GQiTqmGIKxUoQJ3IgS4sK0ApXy1xk6Vx4s=
+	t=1790782376; cv=none; b=QeZDhKjonPiNK8zFoZnIv8N3vNZ4pmdD23TC3zGuGdfzMV47+fRbM2XwadP0u3Ll1V0F4+UVzp2MVsgBvuAqUHREdCCzH37H3ab4puIWzG2f+fGXwpOBTa9aTGDjnyT30aPg1CKHR+1/zgvlLBWTTOUFqLyW5P52MeIaKXjH3dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782369; c=relaxed/simple;
-	bh=jAteyNSoEqZII2pwr1zGp/e3IY8Y0sT916fBf8TNMj8=;
+	s=arc-20240116; t=1790782376; c=relaxed/simple;
+	bh=mKBhryRaxhVAEIpSvWJ9XOazaCAEUMrsIGNveTSpxHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEtyY1GPKM1qFbxE7x/MVqPplpIkAypDeKmo1tnt8tOGFjIflazjvn+AP0NpZgKe1iK72RfHkIQBe00IexbsnMvrKtvrO1mPwN6sAhEC2KXoNvDKGiD60sI1r10h0bGcRS4oru5P0C4LJza3g4b62hhOCq0ywzUUKYBN90oXaK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8N6PLVM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jNc65gT7Wfx0ufa9CVL7Hlts/OcapjzcWpXWC6sRZAdcfN0yDtpaH9WcaS/JM6O03AoIHYZSFFum2uW6TF8dRc/c/EBIvRtUxxbagWUv4YEFc9TSoXvBw7rcepZcZb5mTH6DMcnt/HwP62U4X31CTLSiuGUuv/7ymScPQQLy62U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqWgbZsU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8N6PLVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970DD1F000FF;
-	Wed, 30 Sep 2026 15:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqWgbZsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9B71F00893;
+	Wed, 30 Sep 2026 15:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782357;
-	bh=fMeFodaZr3SePOifRqEs7LTW2oWPr292YrxupEMi3eM=;
+	s=korg; t=1790782362;
+	bh=SdUF09x99x/bpULr7TWJ0pBQXaEMPsVZOivFW02xb+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i8N6PLVM9J6RIhW97D6f3e+CHmYiRmGWgjIOX1mRnarF771RjcbP8tDtL92u/w36w
-	 Lk/mWogSVV/tSbcdCTrWwUBofSULalfG54iOC8pjdsj+otVmYJxWOoSD5pKCV8SuV/
-	 7qrCGwiIcNtwF43nts5pODvAZJ865rZVaNqbjMmg=
+	b=XqWgbZsUdU0wcvEREWaqOrxSE4EdTJAzdJHbf05ERDut8DJ/JkXUz/01Qf7cYW75B
+	 jFUJTxGb91Q6/6Bl/fRlYBE2yZ/fb+ptO28H7k7UYmUkII8Bng0WQ/Vuwq8vdEXsJl
+	 BqD2pG4pkBu8urRrEJors97daQS0ILvonieqU8Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/595] hfsplus: fix issue of direct writes beyond end-of-file
-Date: Wed, 30 Sep 2026 17:18:19 +0200
-Message-ID: <20260930152347.853177797@linuxfoundation.org>
+Subject: [PATCH 5.10 008/595] kcsan: Silence -Wmaybe-uninitialized when calling __kcsan_check_access()
+Date: Wed, 30 Sep 2026 17:18:21 +0200
+Message-ID: <20260930152347.896458962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,113 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 5f63ac80aef2ee6bb58eab62e98c264774872da6 ]
+[ Upstream commit 07a1a6562ce29e2e0c134a57882d6e52e8758492 ]
 
-The xfstests' test-case generic/729 fails with error:
+Some subsystems enable -Wmaybe-uninitialized [1], which can trigger
+false positives when KCSAN is enabled. Specifically, passing an
+uninitialized variable to functions that instrument accesses (e.g.,
+copy_from_user()) results in calls to __kcsan_check_access().
 
-sudo ./check generic/729
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #36 SMP PREEMPT_DYNAMIC Fri Apr 17 12:40:51 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+Because __kcsan_check_access() takes a `const volatile void *ptr`, GCC
+infers that the function may only read the memory location, and thus
+warns if the passed variable is uninitialized.
 
-generic/729  23s ... [failed, exit status 1]- output mismatch
+However, KCSAN is a dynamic analysis tool for data race detection; while
+it does read the memory location to detect concurrent modifications, the
+"initialized'ness" of the memory location is irrelevant for its analysis.
 
-mmap-rw-fault: /mnt/test/mmap-rw-fault.tmp: Input/output error
+Use absolute_pointer() in __kcsan_check_write(), kcsan_check_write(),
+and kcsan_check_atomic_write() to hide the pointer from the compiler,
+preventing it from concluding that the pointer passed points to
+uninitialized memory.
 
-The hfsplus_get_block() only allows creating the next
-sequential block. It returns -EIO for direct writes
-beyond EOF. This patch waits for any in-flight DIO on the inode
-to finish. Then, it extends the file by calling
-generic_cont_expand_simple() with the goal to guarantee
-that blockdev_direct_IO() finds all needed blocks
-already reachable sequentially. And, finally, it flushes and
-invalidates the DIO range again so the page cache is clean
-before the direct write begins.
+This fixes warnings like:
 
-sudo ./check generic/729
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #40 SMP PREEMPT_DYNAMIC Thu Apr 16 15:41:03 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+|   CC      fs/ntfs3/file.o
+| In file included from include/asm-generic/rwonce.h:27,
+|                  from arch/arm64/include/asm/rwonce.h:81,
+|                  from include/linux/compiler.h:369,
+|                  from include/linux/array_size.h:5,
+|                  from include/linux/kernel.h:16,
+|                  from include/linux/backing-dev.h:12,
+|                  from fs/ntfs3/file.c:10:
+| In function 'instrument_copy_from_user_before',
+|     inlined from '_inline_copy_from_user' at include/linux/uaccess.h:184:2,
+|     inlined from 'copy_from_user' at include/linux/uaccess.h:221:9,
+|     inlined from 'ntfs_ioctl_fitrim' at fs/ntfs3/file.c:77:6,
+|     inlined from 'ntfs_ioctl' at fs/ntfs3/file.c:164:10:
+| include/linux/kcsan-checks.h:220:28: error: 'range' may be used uninitialized [-Werror=maybe-uninitialized]
+|   220 | #define kcsan_check_access __kcsan_check_access
+|       |                            ^
+| include/linux/kcsan-checks.h:311:9: note: in expansion of macro 'kcsan_check_access'
+|   311 |         kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
+|       |         ^~~~~~~~~~~~~~~~~~
+| include/linux/instrumented.h:147:9: note: in expansion of macro 'kcsan_check_write'
+|   147 |         kcsan_check_write(to, n);
+|       |         ^~~~~~~~~~~~~~~~~
+| include/linux/kcsan-checks.h: In function 'ntfs_ioctl':
+| include/linux/kcsan-checks.h:37:6: note: by argument 1 of type 'const volatile void *' to '__kcsan_check_access' declared here
+|    37 | void __kcsan_check_access(const volatile void *ptr, size_t size, int type);
+|       |      ^~~~~~~~~~~~~~~~~~~~
+| fs/ntfs3/file.c:65:29: note: 'range' declared here
+|    65 |         struct fstrim_range range;
+|       |                             ^~~~~
 
-generic/729  23s ...  32s
-Ran: generic/729
-Passed all 1 tests
-
-Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/210
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260417214940.2735557-2-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/all/5da10cca-875b-418d-b54e-6be3ea32c266@app.fastmail.com/ [1]
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Marco Elver <elver@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/inode.c | 38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ include/linux/kcsan-checks.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index 57123b206877c..46ec102e5f393 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -128,9 +128,44 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- 	struct file *file = iocb->ki_filp;
- 	struct address_space *mapping = file->f_mapping;
- 	struct inode *inode = mapping->host;
-+	loff_t isize;
- 	size_t count = iov_iter_count(iter);
-+	loff_t end = iocb->ki_pos + count;
- 	ssize_t ret;
+diff --git a/include/linux/kcsan-checks.h b/include/linux/kcsan-checks.h
+index cf14840609ce5..d941147053b2a 100644
+--- a/include/linux/kcsan-checks.h
++++ b/include/linux/kcsan-checks.h
+@@ -196,7 +196,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define __kcsan_check_write(ptr, size)                                         \
+-	__kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	__kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
-+	/*
-+	 * The hfsplus_get_block() only allows creating the next sequential block.
-+	 * For direct writes beyond EOF, expand the file first.
-+	 */
-+	if (iov_iter_rw(iter) == WRITE && iocb->ki_pos > i_size_read(inode)) {
-+		loff_t start_off, end_off;
-+		loff_t start_page, end_page;
-+
-+		isize = i_size_read(inode);
-+
-+		/*
-+		 * Wait for any in-flight DIO on this inode to finish before
-+		 * calling generic_cont_expand_simple().
-+		 */
-+		inode_dio_wait(inode);
-+
-+		ret = generic_cont_expand_simple(inode, iocb->ki_pos);
-+		if (ret)
-+			return ret;
-+
-+		start_off = isize;
-+		end_off = (end > 0) ? end - 1 : end;
-+
-+		ret = filemap_write_and_wait_range(mapping, start_off, end_off);
-+		if (ret)
-+			return ret;
-+
-+		start_page = start_off >> PAGE_SHIFT;
-+		end_page = end_off >> PAGE_SHIFT;
-+
-+		invalidate_inode_pages2_range(mapping, start_page, end_page);
-+	}
-+
- 	ret = blockdev_direct_IO(iocb, inode, iter, hfsplus_get_block);
+ /**
+  * __kcsan_check_read_write - check regular read-write access for races
+@@ -222,7 +222,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define kcsan_check_write(ptr, size)                                           \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
- 	/*
-@@ -138,8 +173,7 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
- 	 * blocks outside i_size. Trim these off again.
- 	 */
- 	if (unlikely(iov_iter_rw(iter) == WRITE && ret < 0)) {
--		loff_t isize = i_size_read(inode);
--		loff_t end = iocb->ki_pos + count;
-+		isize = i_size_read(inode);
- 
- 		if (end > isize)
- 			hfsplus_write_failed(mapping, end);
+ /**
+  * kcsan_check_read_write - check regular read-write access for races
+@@ -245,7 +245,7 @@ static inline void __kcsan_disable_current(void) { }
+ #define kcsan_check_atomic_read(ptr, size)                                     \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC)
+ #define kcsan_check_atomic_write(ptr, size)                                    \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
+ #define kcsan_check_atomic_read_write(ptr, size)                               \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE | KCSAN_ACCESS_COMPOUND)
+ #endif
 -- 
 2.53.0
 
