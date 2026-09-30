@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655253B1016;
-	Wed, 30 Sep 2026 18:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4030233DEF9;
+	Wed, 30 Sep 2026 18:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792150; cv=none; b=a0OhRdkDR7THRBi4Y3i3Tn/6Q0MdUeXoivjB64kSAy6XVu30vrOEPF0AHI8qSRD15eXHzQRFBlnMyjCNAWp8+NGaHQCs4H9e3NIOJA2OHParweOpkWs3OqlMX/qJ0T7PwW59DogIbNflcnDdY7XT1X7uSz4UsbwfBz7AzzQ72jw=
+	t=1790792153; cv=none; b=WrDr7br151bdpDKb/+hdZx+9QQIrc7YvDZOjVci63qxp+/DVS/5N7RthBgCEnNzswVIW1XcNuLHUP9HYahVj2iV+QTCG72BodIV8NTT95gJLgCuKkqqJASCn6ZcMudeVGTp5+Ek+IDgsM6gLYHmuW4Zs6MwYRvWtv/9ftutRbVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792150; c=relaxed/simple;
-	bh=zBzsfwxTJScSAe26PzG0rKmWKJBmRk8hct6bVAEwQzU=;
+	s=arc-20240116; t=1790792153; c=relaxed/simple;
+	bh=444PwRGSZhRAWDk5TV2n4cDQPb55PSIPqlxjQDG5zM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QF9rx8duAt1HfKGzIvo0+O4vIcaIIMxOwp9h3KtQnKmvmEZNK8nigdD24q+btOSnUwTctT/lZbYDZk/umpPCwWzGlP3ssh7LChkYwKwMU5GXzNqDv9DvoHut+xi2oisdAvzgPhSSqjoe/f38A9gXk9Zm83Ik+iFeAifJ2h37Qb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Povib56X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZ24Pqzf63I1EnQQXk9TgJXSMJ4zPrEqE0gZXUIRQKW4hNOV6SV7dWeUtxYeqJduzAV6x5tN1pvCNnwbK+3Ix5BuhBfd9EXPfVbUsS4BV1purokNC83n2NbsXHEwH6g+5O5iDtSAmkEMoDw7Y8JJwszzH74irOldRBTvEEsmvwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRZhhsYv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Povib56X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BF01F000FF;
-	Wed, 30 Sep 2026 18:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRZhhsYv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935811F000FF;
+	Wed, 30 Sep 2026 18:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792149;
-	bh=97wPyHP7s+n0RTNOcoJNviT4iY4xDe8BnBiCMoY8kTo=;
+	s=korg; t=1790792152;
+	bh=Tq8Xh3mrL+EsuSgLO8g1yCdg0CGpPcr2kFCCeN/Yc3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Povib56XOrbd7ZxJYui6wmigx+eSVrJQj1PzQRfAjY1hxUR/ApoDqOCPYWl/MaLus
-	 EOg6Aep8UfwlN5+/7n4tMnLut/Z8bHDMNIfauW3afjTl2qcrpvHL2a+n8DnwfKvDVA
-	 N9kgWxst7fXvGI9gbvHlb1+d1CqDdWrA/8ZhgoZA=
+	b=RRZhhsYv1CRbDoWeodZO2vttuBIDTiPPzCfoqQKVvm2oZOoRT9ebJyLXcdrpPGnsB
+	 PlId9Sj0roGWeD69kz+zUXVrlEJmpyL32OyOut1PzU+sCDEXl8Yh9sa0lwYsRfyhUE
+	 R5KAtWG5evbUwfNvAKDctqVUCIKCFPLYv6HZ7UoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	"Diogo Ivo (Schneider Electric)" <diogo.ivo@bootlin.com>,
+	Judith Mendez <jm@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 551/752] mmc: spi: reset bytes_xfered before retrying CRC failures
-Date: Wed, 30 Sep 2026 17:27:01 +0200
-Message-ID: <20260930152410.166642905@linuxfoundation.org>
+Subject: [PATCH 5.15 552/752] mmc: sdhci_am654: Reset command and data lines on failed tuning
+Date: Wed, 30 Sep 2026 17:27:02 +0200
+Message-ID: <20260930152410.189218600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,53 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
 
-commit 8b0cc8707f65e0f51912e764e1b309b2559db1ec upstream.
+commit 7197d9107d9545730153b82ea5a411c5208b443f upstream.
 
-mmc_spi_data_do() updates data->bytes_xfered after each block has been
-transferred successfully.  If a later block in the same data request
-fails with a CRC error, data->bytes_xfered may therefore contain the
-number of bytes completed before the failing block.
+The CMD/DATA reset after tuning should be performed regardless of
+whether tuning succeeded or failed, since tuning data may remain in
+the buffer in either case. Move the error return after the reset so
+that the controller is always cleaned up.
 
-mmc_spi_request() has a private recovery path for such CRC failures.  It
-sends STOP_TRANSMISSION, clears data->error and jumps back to
-crc_recover to issue the same command and data request again.  However,
-it does not clear data->bytes_xfered before the retry.
-
-If the retry succeeds, the request is completed with the bytes from the
-failed attempt still included in data->bytes_xfered.  For a multi-block
-request this can make the completed request report more bytes than were
-transferred by the successful retry, and can even exceed the request size
-when most blocks completed before the CRC error.
-
-This is most likely to be observed on MMC-over-SPI systems where long
-multi-block transfers occasionally hit a data CRC error but the
-mmc_spi-internal retry succeeds.  The data itself is retried, but the
-completion accounting is not.
-
-Clear data->bytes_xfered together with data->error before repeating the
-request so the final completion reports only the bytes transferred by the
-successful attempt.
-
-Fixes: 061c6c847eeb ("mmc_spi: Recover from CRC errors for r/w operation over SPI.")
+Fixes: de31f6ab68a3 ("mmc: sdhci_am654: Reset Command and Data line after tuning")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Diogo Ivo (Schneider Electric) <diogo.ivo@bootlin.com>
+Reviewed-by: Judith Mendez <jm@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmc_spi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci_am654.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -958,6 +958,7 @@ crc_recover:
- 			status = mmc_spi_command_send(host, mrq, &stop, 0);
- 			crc_retry--;
- 			mrq->data->error = 0;
-+			mrq->data->bytes_xfered = 0;
- 			goto crc_recover;
- 		}
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -415,15 +415,13 @@ static int sdhci_am654_execute_tuning(st
+ 	struct sdhci_host *host = mmc_priv(mmc);
+ 	int err = sdhci_execute_tuning(mmc, opcode);
  
+-	if (err)
+-		return err;
+ 	/*
+ 	 * Tuning data remains in the buffer after tuning.
+ 	 * Do a command and data reset to get rid of it
+ 	 */
+ 	sdhci_reset(host, SDHCI_RESET_CMD | SDHCI_RESET_DATA);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static u32 sdhci_am654_cqhci_irq(struct sdhci_host *host, u32 intmask)
 
 
