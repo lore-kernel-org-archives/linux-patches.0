@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222A151A747;
-	Wed, 30 Sep 2026 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20FA46C4CC;
+	Wed, 30 Sep 2026 17:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789631; cv=none; b=oXsJjKdoMy5XoLRqj2idNpktjAcXSyW4Cs5LK1PFBwUALKPBgPQlwJkaTttFv6PJPJBU+1+rSZUw/kLAAR411Tc6u8Ud98iPsA0VH5aRj5ay7k6N5K8rtqgcLjXhUuJfFi0tL6VeWHEeXxztVfX9y686voVYZEAURDK45As2iEg=
+	t=1790789634; cv=none; b=HCmmvA8boWTFwrMb0BCrYSPIp3+F5P0MQ8MhsheI6RA4B2X23UdEjS3u6FE8nA61b2X2eO+r8cAH5uje2PHZdYLL9YYfy2F7kPzuIB9J09fwNnvL2IGYcGXzshmkhKWzraeZ7ulUkqtQlykZXUOyY5jYchGVPD+nzfl9unvnoNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789631; c=relaxed/simple;
-	bh=RxvX9vtUN/0rP5NJWr4sxpCbJy1tVAoYaPD347wxwp8=;
+	s=arc-20240116; t=1790789634; c=relaxed/simple;
+	bh=Lln5LrrwP4bMYhLycWTbAWS/ik51w/RFn19zhBoB8ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8SU6ZaVyyiepFYMA/cfBNHaVqcuvNEZz4ec+DiHsvHjC+2W0+NA+Zef6dV5SSkAYJdzPhVjNkWVzmt+vEdHLd+QwXdNuGz1nBp680U2y0xqlzboqGh0hvj013ueMv2kmUGLyT+C89zzA17YGHj1fStnmU6xY+dByPHR+AB4zYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STLW3Z7S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bIQtSpFXXK0e4a79ZprY706m/qYqRGbTKRiVXbQPaHXAfAPI2l27mUPWgMiIcT8hFUIvjmZeoX4gOG81LkmpebxDYAt7MXmFbcBHC+hSN28y2E4CB8dljSUMb6QPuz40ObGlu+iWzxOo+p3e6Ka3RnjQHtHeiiYTu/iY55NU5X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQ6m38FN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STLW3Z7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7B91F000FF;
-	Wed, 30 Sep 2026 17:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQ6m38FN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D481F000FF;
+	Wed, 30 Sep 2026 17:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789630;
-	bh=adL329oC+vJeqgGbyrSrKkv4rAFsCLlvOhnSJwi4Ukg=;
+	s=korg; t=1790789632;
+	bh=nUxu9+mVhjGaTAkksS5p+IjRiHnytMljlsQRF7qLMNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=STLW3Z7SIB04mJ8ON6hFvEQEcebgKFKBFM7HfYtVYKMSur0rRpduom9QGBOp6iP5n
-	 ppbV/S4kj21gc7ZXQw4Ld/557a8FtQHXjl/K5P4J6toneZIaG1s/+f0H8Iu3mTMgME
-	 THk/XgJ0wCE6WcPAzNpQQw3moeJCfFbqW8/fj398=
+	b=VQ6m38FNuK9NngSayhAt0DPLAwdOQq4mwhjeI8TShy5WXIbxpfadYxAzOnUYTw5bp
+	 p0qyyvRFUekBmi6Nl99rJDT5M2rE+mG3fh4Cc5Cb/CoXutH2K60C20zuCGNVXfKIPs
+	 XUOD+FVQRSluAgjsb6rUFT8wne+8VgvDPUs/6H64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angel J <iamanaws@httpd.dev>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.12 500/877] PCI: of_property: Omit bus properties without a subordinate bus
-Date: Wed, 30 Sep 2026 17:23:31 +0200
-Message-ID: <20260930152425.452722014@linuxfoundation.org>
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 501/877] HID: alps: fix use-after-free on input2 registration failure
+Date: Wed, 30 Sep 2026 17:23:32 +0200
+Message-ID: <20260930152425.474453262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,67 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angel J <iamanaws@httpd.dev>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-commit 8805840aad73df7146778be243a196d48b4f6430 upstream.
+commit d3aba3442798ce4a4c8ce3104d7b286d61e605f9 upstream.
 
-A bridge (a device with a Type 1 header) may not have a secondary bus
-allocated (pdev->subordinate), e.g., if there are no available bus numbers
-or the bridge secondary/subordinate bus numbers are not writable.
+alps_input_configured() stores data->input2 before calling
+input_register_device().  If registration fails, input_free_device()
+frees the input device but data->input2 still points to the freed memory.
+alps_input_configured() calls hid_hw_open() before allocating input2, so
+URBs are already active and raw_event can fire during the failure window.
+A U1_SP_ABSOLUTE_REPORT_ID report arriving then causes u1_raw_event()
+to dereference the freed data->input2 -> use-after-free.
 
-The dynamic OF helpers of_pci_prop_bus_range() and of_pci_prop_intr_map()
-dereference pdev->subordinate without checking it.  When
-CONFIG_PCI_DYNAMIC_OF_NODES is enabled, this can cause a NULL pointer
-dereference and early boot hang.
+Fix by only storing input2 into drvdata after successful registration
+and adding a NULL guard in the raw_event path.
 
-Generate 'bus-range' and 'interrupt-map' properties only when a subordinate
-bus exists.  Keep the node and its remaining properties for bridges without
-one.
-
-The problem was latent since 407d1a51921e ("PCI: Create device tree node
-for bridge"), but wasn't reachable until 1f340724419e ("PCI: of: Create
-device tree PCI host bridge node"), which appeared in v6.15.  Before
-1f340724419e, of_pci_make_dev_node() returned early because the parent OF
-node was missing.
-
-Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
-Signed-off-by: Angel J <iamanaws@httpd.dev>
-[bhelgaas: move pdev->subordinate test to callees, commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org	# v6.6+
-Link: https://patch.msgid.link/20260918195540.GA1187209@bhelgaas
+Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/of_property.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/hid/hid-alps.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/of_property.c
-+++ b/drivers/pci/of_property.c
-@@ -91,9 +91,13 @@ static int of_pci_prop_bus_range(struct
- 				 struct of_changeset *ocs,
- 				 struct device_node *np)
- {
--	u32 bus_range[] = { pdev->subordinate->busn_res.start,
--			    pdev->subordinate->busn_res.end };
-+	u32 bus_range[2];
+--- a/drivers/hid/hid-alps.c
++++ b/drivers/hid/hid-alps.c
+@@ -407,6 +407,8 @@ static int u1_raw_event(struct alps_dev
+ 		return 1;
  
-+	if (!pdev->subordinate)
-+		return 0;
-+
-+	bus_range[0] = pdev->subordinate->busn_res.start;
-+	bus_range[1] = pdev->subordinate->busn_res.end;
- 	return of_changeset_add_prop_u32_array(ocs, np, "bus-range", bus_range,
- 					       ARRAY_SIZE(bus_range));
- }
-@@ -216,6 +220,9 @@ static int of_pci_prop_intr_map(struct p
- 	int ret;
- 	u8 pin;
+ 	case U1_SP_ABSOLUTE_REPORT_ID:
++		if (!hdata->input2)
++			return 0;
+ 		sp_x = get_unaligned_le16(data+2);
+ 		sp_y = get_unaligned_le16(data+4);
  
-+	if (!pdev->subordinate)
-+		return 0;
-+
- 	pnode = pci_device_to_OF_node(pdev->bus->self);
- 	if (!pnode)
- 		pnode = pci_bus_to_OF_node(pdev->bus);
+@@ -738,7 +740,6 @@ static int alps_input_configured(struct
+ 			goto exit;
+ 		}
+ 
+-		data->input2 = input2;
+ 		input2->phys = input->phys;
+ 		input2->name = "DualPoint Stick";
+ 		input2->id.bustype = BUS_I2C;
+@@ -762,11 +763,12 @@ static int alps_input_configured(struct
+ 		__set_bit(INPUT_PROP_POINTER, input2->propbit);
+ 		__set_bit(INPUT_PROP_POINTING_STICK, input2->propbit);
+ 
+-		if (input_register_device(data->input2)) {
++		if (input_register_device(input2)) {
+ 			input_free_device(input2);
+ 			ret = -ENOENT;
+ 			goto exit;
+ 		}
++		data->input2 = input2;
+ 	}
+ 
+ exit:
 
 
