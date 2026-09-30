@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8E6528423;
-	Wed, 30 Sep 2026 17:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F376526AB8;
+	Wed, 30 Sep 2026 17:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791066; cv=none; b=sZcde1wHpc2itdQ/eVGe5NMsXdcB/LVhOrtkPm8mrJKbDkkNN7TNIlF9Mq+44QwylwiQm5LCjwN5CKb4DGa9KyDvn0OrlyGNzEKN/JCwhsEa27Rg3sxTKfX4xTflIrsOIUphL7obN+wZ2c8+xsywToFRpCEKZu1Y7neJtgTToPE=
+	t=1790791069; cv=none; b=NSaUuEMFQTfTze2zHIWiCF/k7Nj8xn/e/l+IXEDLujE00MpaIwpxBzXKb5j15P119B2gnZtFg0DO1UeEs6iUAilHtVBm61sLP+QYmAUrwew3pCobLZk4PHh+mIz64jE3FOwQt3UVAdHGrjT0z8EgYH+ZSM5jPt2L4GdCnhCllh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791066; c=relaxed/simple;
-	bh=EZ1ZFwKu5KFFPIzAiISgl5DOQ1tRYJtDmMGuu6oA+/g=;
+	s=arc-20240116; t=1790791069; c=relaxed/simple;
+	bh=oOdvgcygGMbG3Ue5bJytWUoulNB9GnbOoI7GsoYevU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Usl9vkvqGZD4x1L/LABLn0R4VDotA7HbwRjHCNkp1/fHzMdhwN8Ri5T7mm+Oe+RuA8387AYNecTxodAbUX/kgKe7d9I1+VcVXtF0nGwimLAMvMbRwVY8K7fD8AIaOHYsSQYZ2DVFCgeklJW5NsCyLNLkN5BY3uhpZ3lQWohOqvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4+bimW+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mEKhxvDXBmBUFi1eH3ljfJbzmDMovAhlD2cdjCM/Uyjw9ykeHeISBmgOmx8L0/8ph3lN1RdVuDDQBPYVzX4HVEKo+UUFeJinmRtTk1JWXkMqgRqatV+c8F6E7ks3PntyEHIZPwIacGFTsh6AwhZVcCfv62NNxgjtMrQU79iLGbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hv6a0a2/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4+bimW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156581F000FF;
-	Wed, 30 Sep 2026 17:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hv6a0a2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96F91F000FF;
+	Wed, 30 Sep 2026 17:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791065;
-	bh=NNzdaXF76TQ73AD5vJYsLR6o2YALFNeWE4yKhTo6LLY=;
+	s=korg; t=1790791068;
+	bh=i4ttN8f84pe2Y0yhW8+AqpEAxV2SZjFnxsFDm530/zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f4+bimW+Yedxe1xjXiv8UbFgQ2J89cn0xsUKPHDPguqBPVDAJHBkyPFjqzVyg+TIR
-	 YvSwYJfXvfxIyQyu9GwplkpWavPG0hRmuU9/MYGHU9uvV+TTyX4bfVjFqoMph40O0Q
-	 hgviJmIH1XAHEf/eaHf6g47pgYHOENkNL0wurCCA=
+	b=Hv6a0a2/ty90ZfOoyvNeTP16ixjj2mxWR1dxFwMBOxpM2bHUVI4ETSDH5WUS3N5Wb
+	 HjfctuBuC0fSB23xZMhKgH0P+9CmrXwZI39ELiIFGNXrlozsw2+U+yfo1W8vnzjs9l
+	 bg6GocF5x4jJ9xDz/uS8heCovZD3FGUgKN3B5qL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommy Huang <tommy_huang@aspeedtech.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 170/752] rtc: aspeed: add AST2700 compatible
-Date: Wed, 30 Sep 2026 17:20:40 +0200
-Message-ID: <20260930152401.881188998@linuxfoundation.org>
+Subject: [PATCH 5.15 171/752] ksmbd: use connection ClientGUID for lease lookup
+Date: Wed, 30 Sep 2026 17:20:41 +0200
+Message-ID: <20260930152401.902155970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,35 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommy Huang <tommy_huang@aspeedtech.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3319cfeeb8c4047026f84df045c438f7bbd338a6 ]
+[ Upstream commit fa111daae1a02dbff5693dfc12f368bccd9eb5f4 ]
 
-Add support for matching the RTC controller on ASPEED AST2700 SoCs.
+MS-SMB2 defines the lease table lookup key as Connection.ClientGuid.
+Use the connection ClientGUID consistently when checking for same-client
+leases and duplicate lease keys.
 
-The AST2700 RTC controller is compatible with the existing ASPEED
-RTC driver implementation.
+Also preserve directory and parent lease metadata when copying an existing
+lease state to a new open.
 
-Signed-off-by: Tommy Huang <tommy_huang@aspeedtech.com>
-Link: https://patch.msgid.link/20260601-ast2700-rtc-v1-2-15d4ca46500a@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-aspeed.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ksmbd/oplock.c  | 16 +++++++++-------
+ fs/ksmbd/oplock.h  |  2 +-
+ fs/ksmbd/smb2pdu.c |  2 +-
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/rtc/rtc-aspeed.c b/drivers/rtc/rtc-aspeed.c
-index a93352ed3aec9..4f5935b7f4a60 100644
---- a/drivers/rtc/rtc-aspeed.c
-+++ b/drivers/rtc/rtc-aspeed.c
-@@ -111,6 +111,7 @@ static const struct of_device_id aspeed_rtc_match[] = {
- 	{ .compatible = "aspeed,ast2400-rtc", },
- 	{ .compatible = "aspeed,ast2500-rtc", },
- 	{ .compatible = "aspeed,ast2600-rtc", },
-+	{ .compatible = "aspeed,ast2700-rtc", },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, aspeed_rtc_match);
+diff --git a/fs/ksmbd/oplock.c b/fs/ksmbd/oplock.c
+index 78d73deb54443..e938921d20085 100644
+--- a/fs/ksmbd/oplock.c
++++ b/fs/ksmbd/oplock.c
+@@ -510,7 +510,7 @@ static inline int compare_guid_key(struct oplock_info *opinfo,
+  * Return:      oplock(lease) object on success, otherwise NULL
+  */
+ static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
+-						 char *client_guid,
++						 const char *client_guid,
+ 						 struct lease_ctx_info *lctx)
+ {
+ 	int ret;
+@@ -981,7 +981,7 @@ void destroy_lease_table(struct ksmbd_conn *conn)
+ 	write_unlock(&lease_list_lock);
+ }
+ 
+-int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx)
+ {
+ 	struct oplock_info *opinfo;
+@@ -998,7 +998,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 	}
+ 
+ 	list_for_each_entry(lb, &lease_table_list, l_entry) {
+-		if (!memcmp(lb->client_guid, sess->ClientGUID,
++		if (!memcmp(lb->client_guid, conn->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE))
+ 			goto found;
+ 	}
+@@ -1014,7 +1014,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 		rcu_read_unlock();
+ 		if (opinfo->o_fp->f_ci == ci)
+ 			goto op_next;
+-		err = compare_guid_key(opinfo, sess->ClientGUID,
++		err = compare_guid_key(opinfo, conn->ClientGUID,
+ 				       lctx->lease_key);
+ 		if (err) {
+ 			err = -EINVAL;
+@@ -1047,6 +1047,9 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
+ 	lease2->flags = lease1->flags;
+ 	lease2->epoch = lease1->epoch;
+ 	lease2->version = lease1->version;
++	lease2->is_dir = lease1->is_dir;
++	memcpy(lease2->parent_lease_key, lease1->parent_lease_key,
++	       SMB2_LEASE_KEY_SIZE);
+ }
+ 
+ static int add_lease_global_list(struct oplock_info *opinfo)
+@@ -1195,7 +1198,6 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 		     struct ksmbd_file *fp, __u16 tid,
+ 		     struct lease_ctx_info *lctx, int share_ret)
+ {
+-	struct ksmbd_session *sess = work->sess;
+ 	int err = 0;
+ 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
+@@ -1235,12 +1237,12 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 		struct oplock_info *m_opinfo;
+ 
+ 		/* is lease already granted ? */
+-		m_opinfo = same_client_has_lease(ci, sess->ClientGUID,
++		m_opinfo = same_client_has_lease(ci, work->conn->ClientGUID,
+ 						 lctx);
+ 		if (m_opinfo) {
+ 			copy_lease(m_opinfo, opinfo);
+ 			if (atomic_read(&m_opinfo->breaking_cnt))
+-				opinfo->o_lease->flags =
++				opinfo->o_lease->flags |=
+ 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
+ 			opinfo_put(m_opinfo);
+ 			goto out;
+diff --git a/fs/ksmbd/oplock.h b/fs/ksmbd/oplock.h
+index 5b93ea9196c01..0e2b1d63ca26b 100644
+--- a/fs/ksmbd/oplock.h
++++ b/fs/ksmbd/oplock.h
+@@ -124,7 +124,7 @@ void create_posix_rsp_buf(char *cc, struct ksmbd_file *fp);
+ struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len);
+ struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
+ 					  char *lease_key);
+-int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx);
+ void destroy_lease_table(struct ksmbd_conn *conn);
+ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 31b198b3f01df..12ca40e0f8bcd 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -3269,7 +3269,7 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "lease req for(%s) req oplock state 0x%x, lease state 0x%x\n",
+ 				    name, req_op_level, lc->req_state);
+-			rc = find_same_lease_key(sess, fp->f_ci, lc);
++			rc = find_same_lease_key(conn, fp->f_ci, lc);
+ 			if (rc)
+ 				goto err_out1;
+ 		} else if (open_flags == O_RDONLY &&
 -- 
 2.53.0
 
