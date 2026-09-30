@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0488F51EE0F;
-	Wed, 30 Sep 2026 18:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A550551B163;
+	Wed, 30 Sep 2026 18:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793868; cv=none; b=gbaAxuayjKabt7C5ilqS3LtFuh4AU+KWojf689+FVKizXYVTtIw0+cG+4Kty6jtAHZ5xA7f3pap3cWRc6l3tQN3UISOuljKJurfx3ioIoyucg4n4S1Vj2DxjjdDxej8k3LFLbnP0m1UZASledBeACQVgRLiJt1mEOEIwB2tDm1I=
+	t=1790793870; cv=none; b=iMcOD0bNXuSA34oUx/lCzv3ESjrXeyEmEZWeJX6Cc5E1jiqXNgZOFWtvReM8g3DOK13MyrKQXXuM1Gz+2Gcgy9JWU/f5+Q3us9nEnZdWV1nDLCRg2QiB/LXg3TROAnzs5DVUODtErqKg+UjNPGqrcPE4NNHU7aef4mpdSrvcQto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793868; c=relaxed/simple;
-	bh=iDRXeIzddgxhIy5OAVAsbGhnHOWnTmFmAV1axx+GhAA=;
+	s=arc-20240116; t=1790793870; c=relaxed/simple;
+	bh=JWc4j9l4T1IVnTgSPa+GtNaxwBvH5QeiJ0E4i/DT/so=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYI3uXYEFozCOvRg4PFOcAAXKtaMlU7IGmmQ5y0asMWWYPAuKHvIXhJ40l3+yWTy5IgNiJqzx4AkjqQNZG8a4VCu5CHL+gX7M/1eZtV1viB733LO1XnL1rpBcxi1GFGmZmnFEsI3rBdaLzrBwOrN5IjWULth2oAqr+6yLOb5KZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvXFv40G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gWK/n+Wd6CPK9Bkl4u738Y4BmB1tyyuCd5WspBF5HrPWWgwsQMi13B9ozc9rsYZVmtFAGf1takE7ii9Ifou7V7RUPDPOQI3ueBsYKOf1zwvOSFf1P8kcGcmDDpjfDQNnK7OGgqVWb4gM/49a+U7yECIa6FKZ+3N9OASgsJD/eFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ciyp0Tg1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvXFv40G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3699C1F000FF;
-	Wed, 30 Sep 2026 18:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ciyp0Tg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5B51F000FF;
+	Wed, 30 Sep 2026 18:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793866;
-	bh=zZYbDLHtV5El3lGUa93nFjGcRpHMb07Rhq3UMJGjCso=;
+	s=korg; t=1790793869;
+	bh=UVqbFp6/zKI+f8luGNzjw8m97aIZ24yG87aJAwsdrg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SvXFv40GmZ5tMgo0paPP426uWiifsxWe64bSGqgY7pB6UFmjXol3/CjU8coSRMUk/
-	 Sy3ktif/n1/cle9HjPn8FkOAeaLMCox4cH0B7aFCqsxS+yQL3OwM+1Jfe9KqOQeD4B
-	 f9fQpNuLhBlAGhcADNaZpIdWRsNbGpDBfkNLQEzo=
+	b=Ciyp0Tg1MdodnG45QaJH8yhvA8HeUzFwWqqpSbmYpJGW32SziNG04chl3vcegTxIH
+	 PCxnoO7GDtg7Woy2Vd+2ijl7ASb5Uq4bPfhAPOsPJG6BZtjcpstQEkiEAX8mA2ng55
+	 RhjWpYQUdbYYAQr70/tOe2DpXYnFDq2dTIN06S1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Dominik Kaszewski <dominik.kaszewski@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0003/1193] bus: fsl-mc: wait for the MC firmware to complete its boot
-Date: Wed, 30 Sep 2026 17:11:27 +0200
-Message-ID: <20260930152434.384756774@linuxfoundation.org>
+Subject: [PATCH 6.6 0004/1193] drm/amd/display: Fix DPMS using partially updated pipe context
+Date: Wed, 30 Sep 2026 17:11:28 +0200
+Message-ID: <20260930152434.406782815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,102 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Dominik Kaszewski <dominik.kaszewski@amd.com>
 
-[ Upstream commit 208858b1b48eba83d073542372329cf8ed606526 ]
+[ Upstream commit 6fd45b5d8955bbc362ac3dfe181529f7b1cfd224 ]
 
-There are use cases in which the Management Complex firmware boot
-process is started by the bootloader which does not wait for the boot to
-complete. This is mainly done in order to reduce the overall boot time
-of a DPAA2 based SoC.
+[Why & How]
+DPMS functions should not use partially updated pipe context passed
+as argument of commit_planes_do_stream_update, and instead use the
+one in current_state, which is guaranteed to be the most recently
+programmed HW config.
 
-In this kind of circumstance, the fsl-mc bus driver needs to make sure
-that the MC firmware boot process is finished before proceeding to the
-usual operations such as interrogating the firmware to gather all
-existent DPAA2 objects, creating the fsl-mc devices on the bus etc.
-
-Add this kind of check early in the boot process of the fsl-mc bus and
-defer the probe in case the firmware is still in its boot process.
-
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20260401144508.3062019-1-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Dominik Kaszewski <dominik.kaszewski@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c | 46 +++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
-index 56f5c24c367c0..b5a1daed1ea41 100644
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -66,6 +66,13 @@ struct fsl_mc_addr_translation_range {
- #define GCR1_P1_STOP	BIT(31)
- #define GCR1_P2_STOP	BIT(30)
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index bea18f450ac9c..50b860c07ae01 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -3225,27 +3225,34 @@ static void commit_planes_do_stream_update(struct dc *dc,
+ 					stream->test_pattern.cust_pattern_size);
+ 			}
  
-+#define FSL_MC_GSR		0x8
-+#define FSL_MC_GSR_BOOT_DONE	BIT(0)
-+#define FSL_MC_GSR_MCS_MASK	GENMASK(7, 0)
-+#define FSL_MC_GSR_MCS_ERR_MASK	GENMASK(7, 1)
-+#define FSL_MC_GSR_BC_MASK	GENMASK(15, 8)
-+#define FSL_MC_GSR_BC_SHIFT	8
++			// DPMS should not use partially updated pipe context
++			struct pipe_ctx *dpms_pipe_ctx = &dc->current_state->res_ctx.pipe_ctx[j];
 +
- #define FSL_MC_FAPR	0x28
- #define MC_FAPR_PL	BIT(18)
- #define MC_FAPR_BMT	BIT(17)
-@@ -1035,6 +1042,41 @@ static int get_mc_addr_translation_ranges(struct device *dev,
- 	return 0;
- }
+ 			if (stream_update->dpms_off) {
+ 				if (*stream_update->dpms_off) {
+-					dc->link_srv->set_dpms_off(pipe_ctx);
++					dc->link_srv->set_dpms_off(dpms_pipe_ctx);
+ 					/* for dpms, keep acquired resources*/
+-					if (pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only)
+-						pipe_ctx->stream_res.audio->funcs->az_disable(pipe_ctx->stream_res.audio);
++					if (dpms_pipe_ctx->stream_res.audio && !dc->debug.az_endpoint_mute_only) {
++						struct audio *audio = dpms_pipe_ctx->stream_res.audio;
++
++						audio->funcs->az_disable(audio);
++					}
  
-+static u32 fsl_mc_read_gsr(struct fsl_mc *mc)
-+{
-+	return readl(mc->fsl_mc_regs + FSL_MC_GSR);
-+}
-+
-+static int fsl_mc_firmware_check(struct platform_device *pdev)
-+{
-+	struct fsl_mc *mc = platform_get_drvdata(pdev);
-+	u32 gsr, boot_done, boot_code, mcs;
-+
-+	gsr = fsl_mc_read_gsr(mc);
-+	boot_code = (gsr & FSL_MC_GSR_BC_MASK) >> FSL_MC_GSR_BC_SHIFT;
-+	if (boot_code == 0xDD) {
-+		dev_err(&pdev->dev,
-+			"fsl-mc: DPL processing was not started, DPAA2 will not work!\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	boot_done = gsr & FSL_MC_GSR_BOOT_DONE;
-+	if (!boot_done) {
-+		dev_dbg(&pdev->dev,
-+			"fsl-mc: DPL processing in progress, defer probe\n");
-+		return -EPROBE_DEFER;
-+	}
-+
-+	mcs = gsr & FSL_MC_GSR_MCS_MASK;
-+	if (mcs & FSL_MC_GSR_MCS_ERR_MASK) {
-+		dev_err(&pdev->dev,
-+			"fsl-mc: MC boot completed with error 0x%x\n", mcs);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * fsl_mc_bus_probe - callback invoked when the root MC bus is being
-  * added
-@@ -1099,6 +1141,10 @@ static int fsl_mc_bus_probe(struct platform_device *pdev)
- 		       mc->fsl_mc_regs + FSL_MC_GCR1);
- 	}
+ 					dc->optimized_required = true;
  
-+	error = fsl_mc_firmware_check(pdev);
-+	if (error)
-+		return error;
-+
- 	/*
- 	 * Get physical address of MC portal for the root DPRC:
- 	 */
+ 				} else {
+ 					if (get_seamless_boot_stream_count(context) == 0)
+ 						dc->hwss.prepare_bandwidth(dc, dc->current_state);
+-					dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
++					dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
+ 				}
+-			} else if (pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change && stream_update->output_color_space
+-					&& !stream->dpms_off && dc_is_dp_signal(pipe_ctx->stream->signal)) {
++			} else if (dpms_pipe_ctx->stream->link->wa_flags.blank_stream_on_ocs_change &&
++					stream_update->output_color_space &&
++					!stream->dpms_off && dc_is_dp_signal(dpms_pipe_ctx->stream->signal)) {
+ 				/*
+ 				 * Workaround for firmware issue in some receivers where they don't pick up
+ 				 * correct output color space unless DP link is disabled/re-enabled
+ 				 */
+-				dc->link_srv->set_dpms_on(dc->current_state, pipe_ctx);
++				dc->link_srv->set_dpms_on(dc->current_state, dpms_pipe_ctx);
+ 			}
+ 
+ 			if (stream_update->abm_level && pipe_ctx->stream_res.abm) {
 -- 
 2.53.0
 
