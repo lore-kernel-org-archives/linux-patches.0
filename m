@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3583B05A4;
-	Wed, 30 Sep 2026 18:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDF73B05A4;
+	Wed, 30 Sep 2026 18:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794652; cv=none; b=YjBzjCE+vJ1YpR43G9gp5RDvIP92fpJM9/GEGsdDfHVhypwNB7muY0DYxPwdK/trMpPlvHRWuafIwnnWJJHDIlcGi3WqzAjiy+axNUq5BTBJo7aQM7Ne812MFu21HvmzbqO7GU5E1G0WSW7Osj8Mi5n8tELWHn06BTikPnOfKf4=
+	t=1790794655; cv=none; b=ZObkuTngh0mJwMJj86cRYLJfNXFO6jbB0vnCnPkO+0Xpa8Ln1BYUtMBylT6rkL+sereoKa9csyoBxrl7iuzQAymD9qLuDskWsvN5rJf+cqy0LvEzGqYP1wnhrEK905nETGyvwS5AK2pGtoM7J2L+18LJG4HMF6eXE6xNHJjda6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794652; c=relaxed/simple;
-	bh=wI8AJXWR4OtV5LeKwIh78BOZRoxHpLOMDYYHreaQoaU=;
+	s=arc-20240116; t=1790794655; c=relaxed/simple;
+	bh=Zng0+gsH3j6Y4HBwk5XhrT4aSYmOWPNhluik08760eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kn1uCNWC0yp7fxu1lg0T67HyvNENCuz2cPoS5v2FFKrvjlohKqlqL86PIHzmgFKR9UXKL9FaXBazBDWxxr4HsvDPgb0GTMRmJvkqVO7v0ry4hvnejGGBLfX+7agTYb5xNv/KY98aSQwwjPYZ7iixsv39KW+aNF+77L42gSOx1m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4nB62YK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FehSsdZIYsTwdslTEfXA22Tbe3s7pSqXwmwMegyVZ5+U9bE6j2L4yFFvtJIh4WxiQ9+M3nugLSdIQVGLi1E6bZM98d7JPfYajklgR2JKnWMsDDv5AEXz7drUTO2xvgQkyERC8FhoG/VGdt6tFl4+MPMbGgpkpHQ6nndI2j555m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSZzccNv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4nB62YK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DDF1F000FF;
-	Wed, 30 Sep 2026 18:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSZzccNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B604A1F000FF;
+	Wed, 30 Sep 2026 18:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794651;
-	bh=WbGurcfOZ7Pqe+pJokJvKeU2G057su/YS5tYkTKnChY=;
+	s=korg; t=1790794654;
+	bh=gkvg+YMccGcFlJ/etZrAf2QaqIefvu/lf7O4lbqxyM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4nB62YK8U0fynyj9sWesxBpjzEXO5C2vWH7ng2Det9NOy7TtOJjXInyD1FZe4daE
-	 iE8qkGvdVvzGFqIMvvyotEBLG+vKd7GwqPInLajH5tXqhlUGlhCXSr5HSU5Pe7s0u0
-	 q4U/WPWt/6jLXw1gP0XVG12nJm0avZmrDhaZveCY=
+	b=DSZzccNvnEMfbQBqgHYAyetZeU/c8nNXnEJJPiNqI7t6SQut8mVwpgnITjY75GpkC
+	 IV0vhSUErN2/O/4U16iNECXRcjbbmgvNpHq1g5Azejbehpf9LoHTkzuDW0CqO4537N
+	 WlN4ADCHgVKbmgKUnMZPx6EEsIb6SsfA6Ytx43WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0287/1193] wifi: mac80211: validate deauth frame length before reason access
-Date: Wed, 30 Sep 2026 17:16:11 +0200
-Message-ID: <20260930152440.541650720@linuxfoundation.org>
+Subject: [PATCH 6.6 0288/1193] wifi: rsi: avoid reading TKIP MIC keys for non-TKIP ciphers
+Date: Wed, 30 Sep 2026 17:16:12 +0200
+Message-ID: <20260930152440.563691713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,48 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4a360c6e18dfa9d70006c7247a6a8cc8dfe0d60f ]
+[ Upstream commit 843fe9bc583b7686ca68312ac9319c9240a73c03 ]
 
-ieee80211_rx_mgmt_deauth() reads the deauth reason code before checking
-that the fixed field is actually present in the received frame.
+rsi_hal_load_key() copies tx_mic_key and rx_mic_key from data[16] and
+data[24] whenever key data is present. Those offsets are only part of
+the 32-byte TKIP key layout. Shorter keys used by other ciphers, such as
+CCMP, do not provide those bytes, so the unconditional copies can read
+past the supplied key buffer.
 
-Validate the deauth frame length first and only then read the reason
-code.
+Only copy the MIC keys for TKIP, and reject malformed TKIP keys that are
+shorter than the expected 32-byte layout.
 
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612185042.66260-6-enderaoelyther@gmail.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260701053414.34015-1-pengpeng@iscas.ac.cn
+[drop useless length check]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 6 ++++--
+ drivers/net/wireless/rsi/rsi_91x_mgmt.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 496f2b36a0bed..ac3c2c3334fdf 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -3826,13 +3826,15 @@ static void ieee80211_rx_mgmt_deauth(struct ieee80211_sub_if_data *sdata,
- 				     struct ieee80211_mgmt *mgmt, size_t len)
- {
- 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
--	u16 reason_code = le16_to_cpu(mgmt->u.deauth.reason_code);
-+	u16 reason_code;
- 
- 	sdata_assert_lock(sdata);
- 
--	if (len < 24 + 2)
-+	if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
- 		return;
- 
-+	reason_code = le16_to_cpu(mgmt->u.deauth.reason_code);
-+
- 	if (!ether_addr_equal(mgmt->bssid, mgmt->sa)) {
- 		ieee80211_tdls_handle_disconnect(sdata, mgmt->sa, reason_code);
- 		return;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_mgmt.c b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
+index 7f2c1608f2ce3..2ddf4d158bfe3 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
++++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
+@@ -848,8 +848,10 @@ int rsi_hal_load_key(struct rsi_common *common,
+ 		} else {
+ 			memcpy(&set_key->key[0][0], data, key_len);
+ 		}
+-		memcpy(set_key->tx_mic_key, &data[16], 8);
+-		memcpy(set_key->rx_mic_key, &data[24], 8);
++		if (cipher == WLAN_CIPHER_SUITE_TKIP) {
++			memcpy(set_key->tx_mic_key, &data[16], 8);
++			memcpy(set_key->rx_mic_key, &data[24], 8);
++		}
+ 	} else {
+ 		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
+ 	}
 -- 
 2.53.0
 
