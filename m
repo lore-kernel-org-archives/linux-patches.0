@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AF83DDAFC;
-	Wed, 30 Sep 2026 19:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6446537647E;
+	Wed, 30 Sep 2026 19:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796404; cv=none; b=LRtsebgmVpX/j5J3A6nYa/wnyZAtgshXJu2aUnJYMkKfWv6m9fhjjEE2kcPpJzfeAs6rx1sTZsi7NUKYJ8WHNLUyPyuP2STUQPeNjeK/RlKn5xuihY3p5XMAUh7JM64ZLJsYrXSwZFu3FgjvtRJ4OhHK7yRkkff5H2zhIj54qcY=
+	t=1790796407; cv=none; b=PIncsNL057ARom+eTq81hJ3vOmzKTQldjB+nowQbmMbeOam9/fVHkKNrco4EGOSJplErtiqU43K5KhEWPr/j6CA3q5HtbiBGEZLfBbB+bNx2+Hrs8XI7FQZ21IsNI9NufYEpuMyYaq5yZy4TDnFTzxKdZd9W6/Jmm9p2RT4pIv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796404; c=relaxed/simple;
-	bh=rloTJWQyGEK1H+BsWqoIVU9S5GhaRRrzf9pf4ML6pZ0=;
+	s=arc-20240116; t=1790796407; c=relaxed/simple;
+	bh=86hjL9TxCjtuad+HuWcZ49HMEDRSdB1z8jzR0IVCpF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hvj/mVerYXPM9RnRhMfM4O4WMkNl1FjYFvk6BPEhqlMJsjZJyMat3QkKdRFO+g8Pb8mk+gZfX2OV/wAqLQGEeXMT0pM1T37IIiDqR2DWU70Yz2R/GpRxGBtDMmdOHLEarXgsfRjf374E0qOsZV76YTDrl601XC3U+cN253vPPbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlYkd7ue; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VIsMGwqGKPGg8vpkfMsWkt1xXA1qCGWM5gx8zkQ1qop2njvFJdsyZSE1gsl7OCHvsL5ldW+zOJGT9ubqhk8BIhtePAljHvJ8q0cHaEFhQ55Rg2fL8qtrBttu45sdgQ4GLBvHDLmZuZubHE+ELjuMKYpKJF/1/DPkCJIBQR6cFX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOvqiCzK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlYkd7ue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864911F000FF;
-	Wed, 30 Sep 2026 19:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOvqiCzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6356D1F000FF;
+	Wed, 30 Sep 2026 19:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796403;
-	bh=PjIn43Bj3S0MSYysRYH8qKl1StjKBKpd/TKWlcH1R+k=;
+	s=korg; t=1790796405;
+	bh=FUsJhs0po7BuIGHQd1ZWjFPQ6RkWzCa+L6HdBhwK7a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DlYkd7ueLxv5+QlwhpEwYejK/gvgSaq5DWKxOqM2k8mIEa8wR9V1cTOuKHIsNBNly
-	 75Odlz5KD57DQud8YpNudQ5S7dPOb805HSozhmhvXzEPx4XScDvAml2GuEkM+98plH
-	 ylkQEDV3dZO68n2pgpsauM09IYTGrw5o5kDZ7Qos=
+	b=wOvqiCzKLbowa7+9tQOjJg/giCcHjqoEk7+KNQNGZ9f4uPOsGPrggp1sdweU2qItV
+	 Cx6F05Yd9Hk2GCn4ZgLrnBPd4f8Ml79VAMThiFOVgsC2DvuQr7/k8habnOS7Xygmi3
+	 mx7Cuj58NXBdp1T3n692jG6V5/spqQa5Xzn7SO2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Lebedev <lsa.uz@pm.me>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0899/1193] Input: soc_button_array - fix MS Surface Pro 11 probe failure
-Date: Wed, 30 Sep 2026 17:26:23 +0200
-Message-ID: <20260930152454.214311732@linuxfoundation.org>
+	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 0857/1193] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
+Date: Wed, 30 Sep 2026 17:25:41 +0200
+Message-ID: <20260930152453.274867124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,77 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 
-commit ed22ad5fdbdbf9b4cb4ad3003f60314b5a5eb89d upstream.
+commit 9096bdc8d930147f7c39a493a859acbd3a8485d8 upstream.
 
-On the MS Surface Pro 11 soc_button_array probing races with the GPIO
-driver probing. If soc_button_array wins the race then gpiod_get() returns
-EPROBE_DEFER, which should normally take care of retrying later, but
-the soc_button_array code deliberately ignores EPROBE_DEFER causing it
-to fail its probe() which causes the volume and power buttons to now work.
+sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
+descriptor for a given cookie, before checking whether the pointer
+vd is NULL:
 
-The ignoring of EPROBE_DEFER is there to deal with a problem specific to
-older Bay Trail (BYT) and Cherry Trail (CHT) tablets which often use this
-driver. Modify the error handling to only ignore EPROBE_DEFER on BYT and
-CHT platforms and propagate EPROBE_DEFER normally on other platforms.
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
 
-Fixes: bcf059578980 ("Input: soc_button_array - partial revert of support for newer surface devices")
+    if (vd) {
+        for (lli = txd->v_lli; ...)
+
+vchan_find_desc() returns NULL when the descriptor has already been
+completed or is in-flight on a physical channel and no longer present
+in the virtual channel's descriptor list. When vd is NULL,
+to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
+check, which is undefined behaviour. Move the call inside the if (vd)
+guard to ensure it is only reached with a valid pointer.
+
+    vd = vchan_find_desc(&vchan->vc, cookie);
+    if (vd) {
+        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+        for (lli = txd->v_lli; ...)
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
 Cc: stable@vger.kernel.org
-Reported-by: Sergey Lebedev <lsa.uz@pm.me>
-Closes: https://lore.kernel.org/lkml/20260830141355.55898-1-lsa.uz@pm.me/
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Tested-by: Sergey Lebedev <lsa.uz@pm.me>
-Link: https://patch.msgid.link/20260909093934.29411-1-johannes.goede@oss.qualcomm.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260817135723.12807-3-christian.lugnberg@soundtrack.io
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/soc_button_array.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/dma/sun6i-dma.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/input/misc/soc_button_array.c
-+++ b/drivers/input/misc/soc_button_array.c
-@@ -16,6 +16,7 @@
- #include <linux/gpio/consumer.h>
- #include <linux/gpio_keys.h>
- #include <linux/gpio.h>
-+#include <linux/platform_data/x86/soc.h>
- #include <linux/platform_device.h>
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -970,7 +970,6 @@ static enum dma_status sun6i_dma_tx_stat
+ 	struct sun6i_pchan *pchan = vchan->phy;
+ 	struct sun6i_dma_lli *lli;
+ 	struct virt_dma_desc *vd;
+-	struct sun6i_desc *txd;
+ 	enum dma_status ret;
+ 	unsigned long flags;
+ 	size_t bytes = 0;
+@@ -982,9 +981,9 @@ static enum dma_status sun6i_dma_tx_stat
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
  
- static bool use_low_level_irq;
-@@ -160,7 +161,7 @@ soc_button_device_create(struct platform
- 	struct gpio_keys_platform_data *gpio_keys_pdata;
- 	const struct dmi_system_id *dmi_id;
- 	int invalid_acpi_index = -1;
--	int error, gpio, irq;
-+	int error, gpio, irq = 0;
- 	int n_buttons = 0;
+ 	vd = vchan_find_desc(&vchan->vc, cookie);
+-	txd = to_sun6i_desc(&vd->tx);
  
- 	for (info = button_info; info->name; info++)
-@@ -191,8 +192,9 @@ soc_button_device_create(struct platform
- 		error = soc_button_lookup_gpio(&pdev->dev, info->acpi_index, &gpio, &irq);
- 		if (error || irq < 0) {
- 			/*
--			 * Skip GPIO if not present. Note we deliberately
--			 * ignore -EPROBE_DEFER errors here. On some devices
-+			 * Propagate -EPROBE_DEFER, skip button on other errors.
-+			 *
-+			 * -EPROBE_DEFER is ignored on Bay & Cherry Trail. Here
- 			 * Intel is using so called virtual GPIOs which are not
- 			 * GPIOs at all but some way for AML code to check some
- 			 * random status bits without need a custom opregion.
-@@ -201,6 +203,12 @@ soc_button_device_create(struct platform
- 			 * we do not have a driver for these so they will never
- 			 * show up, therefore we ignore -EPROBE_DEFER.
- 			 */
-+			if ((error == -EPROBE_DEFER || irq == -EPROBE_DEFER) &&
-+			    !(soc_intel_is_byt() || soc_intel_is_cht())) {
-+				error = -EPROBE_DEFER;
-+				goto err_free_mem;
-+			}
-+
- 			continue;
- 		}
- 
+ 	if (vd) {
++		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+ 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
+ 			bytes += lli->len;
+ 	} else if (!pchan || !pchan->desc) {
 
 
