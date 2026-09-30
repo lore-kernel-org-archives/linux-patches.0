@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C274E01E3;
-	Wed, 30 Sep 2026 16:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2061E0DD8;
+	Wed, 30 Sep 2026 16:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787369; cv=none; b=qDMOFdQfb2MUMCkIUj5EDWdnqtqh1z4pTai8HZZ1hzJwcEMF8mMIbzOFPMdpz31JB32F1M/At1qdmGzjzsq8Usyw/Vu0tfZbdRhp2gNB2GtBhxV4TU5nDrVeJ6Ui9lC9Dwf+TQRtPst70B/IyrNIqo3KNkhfB00brIOPrbRKt80=
+	t=1790787372; cv=none; b=MOf+S5hzQJlCUKm3mgNwam31wlwIWkkVZydgNhrCHW/AMO6SKTJm7Mda3lsQlvhDOGcT05D4nvafdZI0NoIYqKG+L9DYCnvfSjDPw3XWT8RtQkHQsHb/GpTj7jJT5iJNazKYtT36/SLTTm1FcM8WhO5Cm0iE/7Ry8zgo6zQz4Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787369; c=relaxed/simple;
-	bh=tDUTmq5Ji9Om++c4a0yqAd1Dv7dGtR2WFB4wTLhmO+s=;
+	s=arc-20240116; t=1790787372; c=relaxed/simple;
+	bh=1Ad9Nn//2Prxe9VIPAyBr5n6Aoz+t5KnrivL6CLzUXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chHIMxQKFyOlAQf/2C16hJ9rQYtef5qdKM93fMT4jKJVqs2xbuwMEEVLkxDSIMCIO4gbzYGqKsiSTEsytt6vUtyqgSIlU8iR/YYdrOqgwHucZ8xLw/aZGyw0aIuoI4XXFBCVTugq3XASEEA+DPvaXGQk3LuqEVOVuyln3fB7YWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Irkjaj1q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WgTKN5pUbxNKqnRP2xTkh1ZRZkAzZ08+Vz4SRCqtdXrxbL+HqZRd9RLCujBjkuJ/xAaVfKxiMiQACQl4RO0NlZtczVWdg5ytsUUJUBEXa/2Roe9l+RPaPovHqzo3fevglJWBg8o3iUOiGSWvDWLpN48eohLxm6I80hEL+MOqPSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLBSzpj6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Irkjaj1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50341F000FF;
-	Wed, 30 Sep 2026 16:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLBSzpj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6D31F000FF;
+	Wed, 30 Sep 2026 16:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787368;
-	bh=b7/eI7yeHE1BSaZSaNrDKOIBrQ16oOZscaRZ6eJo3aE=;
+	s=korg; t=1790787371;
+	bh=O4AheYDsF+SZN5rWz8mY6QO1gr19no9+sGz76q0Uw74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Irkjaj1qNAKSJvib/y00T1T8sthI7AGoE9yiOKJU0V+PxPPVIMKzjNAdAsF3Q8h47
-	 PhbKFMDil2KxuYoguYtxPso8daOrRoUS813xhP2V8iPvJVQJrI9DlVSccoogf8Crp4
-	 Bm9QArR4gBurkilm3sadKfr40v7aIU1LiK1iE/ak=
+	b=LLBSzpj6J3haJPdn12D7G9cokdt0vuz9TgOBSwOHDUCEBRsXqdsiLboUBbFesKXQZ
+	 N/prSeQg8kblzuBq0UI80lBN4wuqqhN8OGj1Q8U0g/R5YtfoX9mqlE0KBb/bBXWURZ
+	 wtfiuexitZeepng9oEqEclcE12r8ndq4n9Un6lsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 161/457] net: stmmac: dwmac4: Use the correct bufzise when the len is exactly 8K
-Date: Wed, 30 Sep 2026 17:24:26 +0200
-Message-ID: <20260930152349.523881152@linuxfoundation.org>
+Subject: [PATCH 7.2 162/457] net: stmmac: size the RX buffers from the frame length, not the MTU
+Date: Wed, 30 Sep 2026 17:24:27 +0200
+Message-ID: <20260930152349.547030659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,75 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit b42e7012773a0e81e97a2dda6ef907f5147a6658 ]
+[ Upstream commit b8a26d46c0a4254f8bfe143681adb9d18d020299 ]
 
-DMA bufsize selection isn't made on the MTU but the actual frame length,
-so including the L2 header. On DWMAC4, if the len is exactly BUF_SIZE_8KiB,
-the next larger size is incorrectly selected.
+When picking the buffsize to use based on the MTU, we shouldn't check
+only the MTU value, but also :
+ - ETH_HLEN for the L2 header,
+ - up to 2 VLAN tags,
+ - the FCS,
 
-Lets fix the comparison and while at it, rename the parameter from len
-to mtu.
+The default bufsize is 1536 bytes, which is enough to contain all the
+above so this hasn't surfaced before, but the addition of NET_IP_ALIGN
+to the start of buffer address tripped the Jumbo selftest, leading to
+this discovery.
 
-Fixes: c3efed5ad1b0 ("net: stmmac: Enable dwmac4 jumbo frame more than 8KiB").
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+With that, we don't need the '>=' checks on the buffer len, we can use
+more consistent comparison operators in stmmac_set_bfsize.
+
+Fixes: 286a83721720 ("stmmac: add CHAINED descriptor mode support (V4)")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260917215339.2022523-6-maxime.chevallier@bootlin.com
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260917215339.2022523-7-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c | 4 ++--
- drivers/net/ethernet/stmicro/stmmac/hwif.h         | 2 +-
- drivers/net/ethernet/stmicro/stmmac/ring_mode.c    | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-index 2994df41ec2c4..c6a8f8d735015 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-@@ -474,11 +474,11 @@ static void dwmac4_set_sarc(struct dma_desc *p, u32 sarc_type)
- 					  sarc_type));
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 5f717f02c3c01..9c4d92a19f2c0 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1536,17 +1536,17 @@ static unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
+ 	return NET_SKB_PAD + NET_IP_ALIGN;
  }
  
--static int set_16kib_bfsize(int mtu)
-+static int set_16kib_bfsize(int len)
+-static int stmmac_set_bfsize(int mtu)
++static int stmmac_set_bfsize(int len)
  {
- 	int ret = 0;
+ 	int ret;
  
--	if (unlikely(mtu >= BUF_SIZE_8KiB))
-+	if (unlikely(len > BUF_SIZE_8KiB))
+-	if (mtu >= BUF_SIZE_8KiB)
++	if (len > BUF_SIZE_8KiB)
  		ret = BUF_SIZE_16KiB;
- 	return ret;
- }
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index 9314bcb85c221..857f7562c6c6d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -540,7 +540,7 @@ struct stmmac_mode_ops {
- 	bool (*is_jumbo_frm)(unsigned int len, bool enh_desc);
- 	int (*jumbo_frm)(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 			 int csum);
--	int (*set_16kib_bfsize)(int mtu);
-+	int (*set_16kib_bfsize)(int len);
- 	void (*init_desc3)(struct dma_desc *p);
- 	void (*refill_desc3)(struct stmmac_rx_queue *rx_q, struct dma_desc *p);
- 	void (*clean_desc3)(struct stmmac_tx_queue *tx_q, struct dma_desc *p);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-index 78fc6aa5bbe95..dd796cb74419e 100644
---- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-@@ -123,10 +123,10 @@ static void clean_desc3(struct stmmac_tx_queue *tx_q, struct dma_desc *p)
- 		p->des3 = 0;
- }
- 
--static int set_16kib_bfsize(int mtu)
-+static int set_16kib_bfsize(int len)
+-	else if (mtu >= BUF_SIZE_4KiB)
++	else if (len > BUF_SIZE_4KiB)
+ 		ret = BUF_SIZE_8KiB;
+-	else if (mtu >= BUF_SIZE_2KiB)
++	else if (len > BUF_SIZE_2KiB)
+ 		ret = BUF_SIZE_4KiB;
+-	else if (mtu > DEFAULT_BUFSIZE)
++	else if (len > DEFAULT_BUFSIZE)
+ 		ret = BUF_SIZE_2KiB;
+ 	else
+ 		ret = DEFAULT_BUFSIZE;
+@@ -4063,7 +4063,7 @@ static struct stmmac_dma_conf *
+ stmmac_setup_dma_desc(struct stmmac_priv *priv, unsigned int mtu)
  {
- 	int ret = 0;
--	if (unlikely(mtu > BUF_SIZE_8KiB))
-+	if (unlikely(len > BUF_SIZE_8KiB))
- 		ret = BUF_SIZE_16KiB;
- 	return ret;
- }
+ 	struct stmmac_dma_conf *dma_conf;
+-	int bfsize, ret;
++	int bfsize, len, ret;
+ 	u8 chan;
+ 
+ 	dma_conf = kzalloc_obj(*dma_conf);
+@@ -4073,13 +4073,15 @@ stmmac_setup_dma_desc(struct stmmac_priv *priv, unsigned int mtu)
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+-	/* Returns 0 or BUF_SIZE_16KiB if mtu > 8KiB and dwmac4 or ring mode */
+-	bfsize = stmmac_set_16kib_bfsize(priv, mtu);
++	len = mtu + ETH_HLEN + 2 * VLAN_HLEN + ETH_FCS_LEN;
++
++	/* Returns 0 or BUF_SIZE_16KiB if len > 8KiB and dwmac4 or ring mode */
++	bfsize = stmmac_set_16kib_bfsize(priv, len);
+ 	if (bfsize < 0)
+ 		bfsize = 0;
+ 
+ 	if (bfsize < BUF_SIZE_16KiB)
+-		bfsize = stmmac_set_bfsize(mtu);
++		bfsize = stmmac_set_bfsize(len);
+ 
+ 	dma_conf->dma_buf_sz = bfsize;
+ 	/* Chose the tx/rx size from the already defined one in the
 -- 
 2.53.0
 
