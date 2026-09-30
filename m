@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885C451E450;
-	Wed, 30 Sep 2026 18:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DD551EE10;
+	Wed, 30 Sep 2026 18:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793190; cv=none; b=H9C9RbuaqH/gEHAnGHSceEgKoe0dCb0rcv7jkIVR6bRe8uNiK26SOKTfvROcsLPv+7Dcc6AG4F0Hr2aFsq0EjAZMmlNrpNR9N5w2tAWLWb9Z5L/klSQBXcDbgd8JxLpgwxBDYGbBMHmer8lq9tf5/aetgrvLkaWQPGeK9rxR1V4=
+	t=1790793193; cv=none; b=jHJWG99/UgiDXnpFoXYHie5TWbowTlYlCoFPAXk/6wFh95Ez4LZHOrgb87Kxit+ZQhNOOJyTsj9y7ZAjoBhy+RxiKERX0QzIUb8vev6FryGsM40D82pbTCV1sRLbVHr6FQIMrnQgCcSAqU5FbbhMJ7ba8z1B8o0ikrMEtZg6GVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793190; c=relaxed/simple;
-	bh=ZkY7rS9KZtI7L3lTZn8Q9JKCl01SHzKFjiIcQPWBnxY=;
+	s=arc-20240116; t=1790793193; c=relaxed/simple;
+	bh=5F/hsVH2VOYSL2tm0Pon63zp2zifwH+W0ACde6xSZHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrjnCB1kG9AzP2ESJ7IHVmIDLKLUlf+5R9cr4mLwQ9d/s0PoursqCdJo57IY0DkSzaxwpGabxyOEZuWQYGIgb8N9YkGNdGpItJVSEzsI80EowuqR791squdReF5VhQq32o4Z7J0NZeEIDgY0lTnYfd1p8IbSIV6JGw0vdAyiMJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAYPpMi0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dY7Kws1dJbM+0zUrX7ZC0wUW/aVzWC4JdJoDuM/jchCV8KqAtypjAyjUQE4sNT+WW3ZfJzH6Ms7FeOMCGfo+kGRzfuv1qDGAHBMN8wC8LnzOzkpx+De9eg3rjz78KmD16u5Thd6lAQ0QJMOsoo1f1bOiGNet9sfbzNx5lS/3jZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAsh2tFJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAYPpMi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EE71F000FF;
-	Wed, 30 Sep 2026 18:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAsh2tFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDECC1F000FF;
+	Wed, 30 Sep 2026 18:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793189;
-	bh=+RUgK/IzMQqNZwDXx8NsSsP4zWtJhjm6uqTG2iqyF6o=;
+	s=korg; t=1790793192;
+	bh=GAZ/3bLRr4yCak28QJ9r3GMxaOm8Ihziken+O513ZZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yAYPpMi0WcM8pBCYxz0vea9Pz53PzWC7dGGP68tkqjX7ST4nai5eTBAFYBoaRbjUV
-	 +VbdwduURg4Ejnxp2+C6wVAeUYgnPS+RuWrE41bpZ305F5BYsmiuDaPS5IjthAjLGg
-	 OGCUMtvd81bHsSGTBksTIEDD2gOHAEwK6Toguteo=
+	b=XAsh2tFJzCdwDbwDE/lunSnqtKxoVrbFU9Vi8+c8PVwvRRit4a0m6cHFV8W1VnNY1
+	 ZzYsrATVhHQRAQD3TKe+67tHN+f9EjFSaYGvNbXEBKtgZ9GVAwZ9j6a/cb9p+q4H/A
+	 VCc/4zudjU7CPKR0yPfS+8JwVmSPnu8aTj4dCsu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 165/395] net: bcmgenet: initialize u64 stats seq counter for all queues
-Date: Wed, 30 Sep 2026 17:27:07 +0200
-Message-ID: <20260930152344.228600055@linuxfoundation.org>
+Subject: [PATCH 6.18 166/395] net: bcmgenet: do not skip WoL power up on GENET V1
+Date: Wed, 30 Sep 2026 17:27:08 +0200
+Message-ID: <20260930152344.249482400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,48 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 3aeaa609fda19c09d5298c9fedaaa3b6229601b5 ]
+[ Upstream commit cbbc1aee7776c7fa1d89e6cb963a23e58c495dca ]
 
-bcmgenet_gstrings_stats statically defines ethtool statistics for queues
-0 through GENET_MAX_MQ_CNT (4). However, bcmgenet_probe() only initialized
-the u64_stats_sync seq counter up to priv->hw_params->rx_queues and
-priv->hw_params->tx_queues.
+bcmgenet_power_up() had an early check for bcmgenet_has_ext(priv) before
+dispatching by power mode. GENET V1 does not have the EXT block (unlike
+GENET V2+), which causes bcmgenet_power_up() to immediately return 0.
 
-Since priv->hw_params->rx_queues is 0 across all hardware versions (and
-priv->hw_params->tx_queues is 0 on GENET V1), rings 1..4 have uninitialized
-u64_stats_sync structures. When ethtool -S is run on 32-bit kernels,
-bcmgenet_get_ethtool_stats() reads stats from rx_rings[1..4], causing
-lockdep warnings due to the uninitialized sequence counters.
+As a consequence, when waking up from GENET_POWER_WOL_MAGIC on GENET V1,
+bcmgenet_wol_power_up_cfg() is never invoked to disable the WoL clock,
+clear wake event masks, and restore normal PHY and MAC operations.
 
-Initialize the sequence counters for all GENET_MAX_MQ_CNT + 1 queues.
+Move the bcmgenet_has_ext() checks to the GENET_POWER_PASSIVE and
+GENET_POWER_CABLE_SENSE cases where the EXT registers are actually
+accessed, allowing GENET_POWER_WOL_MAGIC cleanup to execute on all
+hardware versions.
 
-Fixes: ffc2c8c4a714 ("net: bcmgenet: Initialize u64 stats seq counter")
+Fixes: c3ae64ae0c08 ("net: bcmgenet: handle GENET_POWER_WOL_MAGIC")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260921220021.281418-3-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20260921220021.281418-4-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 0e6c89988d1c1..5050712166aa9 100644
+index 5050712166aa9..96308c85899f7 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -4140,10 +4140,10 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
+@@ -1758,13 +1758,12 @@ static int bcmgenet_power_up(struct bcmgenet_priv *priv,
+ 	int ret = 0;
+ 	u32 reg;
  
- 	/* Initialize u64 stats seq counter for 32bit machines */
--	for (i = 0; i <= priv->hw_params->rx_queues; i++)
-+	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
- 		u64_stats_init(&priv->rx_rings[i].stats64.syncp);
--	for (i = 0; i <= priv->hw_params->tx_queues; i++)
- 		u64_stats_init(&priv->tx_rings[i].stats64.syncp);
-+	}
+-	if (!bcmgenet_has_ext(priv))
+-		return ret;
+-
+-	reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
+-
+ 	switch (mode) {
+ 	case GENET_POWER_PASSIVE:
++		if (!bcmgenet_has_ext(priv))
++			break;
++
++		reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
+ 		reg &= ~(EXT_PWR_DOWN_DLL | EXT_PWR_DOWN_BIAS |
+ 			 EXT_ENERGY_DET_MASK);
+ 		if (GENET_IS_V5(priv) && !bcmgenet_has_ephy_16nm(priv)) {
+@@ -1788,8 +1787,12 @@ static int bcmgenet_power_up(struct bcmgenet_priv *priv,
+ 		break;
  
- 	/* libphy will determine the link state */
- 	netif_carrier_off(dev);
+ 	case GENET_POWER_CABLE_SENSE:
++		if (!bcmgenet_has_ext(priv))
++			break;
++
+ 		/* enable APD */
+ 		if (!GENET_IS_V5(priv)) {
++			reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
+ 			reg |= EXT_PWR_DN_EN_LD;
+ 			bcmgenet_ext_writel(priv, reg, EXT_EXT_PWR_MGMT);
+ 		}
 -- 
 2.53.0
 
