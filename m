@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AD8348C6B;
-	Wed, 30 Sep 2026 19:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2F43E0C44;
+	Wed, 30 Sep 2026 19:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796288; cv=none; b=N9AVC+9q85tBaicziTArsrUkPYLM7FdD8S7WtwXbAJFkppmURjCnb8o4iMAxhRgjcPqhjafGtqQPXURXgxtN4rxWX2GxID9DTZF7snaHFWs5Hk4NWgQBS5jbr0N7W2i2tPDUAjziAURj9SDFZMCPii5BeK9fhDh7gmgQzbwCh+k=
+	t=1790796292; cv=none; b=FIodbLUxeyB8sS/D4TrGT75ya0k1qadLurNwf50gtXY4TWPeJ2VAsS3Lg/4+O3xrJmpskFo0yQjXbPodNB76UtcG30DE+UchQjZ4494nqoql9uWchW8BOJc6cRMn5O1rTk4sOLlj23zYRDp3YV98eeVhIBCSVk1Dc/2JJM6cKhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796288; c=relaxed/simple;
-	bh=Cfv0l2MMUdw4x6OX0DDgEFOzKYD2VKBeL9QR4Q+gq0k=;
+	s=arc-20240116; t=1790796292; c=relaxed/simple;
+	bh=owrId1J81sTGk7gMtvsJOmSDPT6RSzPeiOAJwz0cQwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6J/PnAogh88CJ5eczF6wdVXuHFmu42mx8vLB1OC9lvtFGAXYrtbI1GswTfjSOOnvC8GtEgDLriJ3Yej6ZmwhZUWlavuOS7qR9gWxWwjmZD0F68gudzJFT6p6H9cjEFikwSVVpcf6sMFt96d+QANhrr0v8eBjg8AJnPwrQjU5ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDQ+3M4k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jAhVOVjBWXKPygV8F44UI+qH684V1BDJq23+QxVrjwyMMx8Vguh/LbELy/jdaLguyZGX/mKppSQ9rXxGesHC3lWy5Bnv5fUNf99PwA1pZa5NfMIg8TrHjjYDUakm7y2ZxRNULNaWT+hyoj3ONU3T2SRjEotIm3z1bO54MiIw9qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+VzxY02; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDQ+3M4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59951F000FF;
-	Wed, 30 Sep 2026 19:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+VzxY02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1401F000FF;
+	Wed, 30 Sep 2026 19:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796287;
-	bh=7Z8OI6RjPFkxc1hCrBsmK9VV0yvjEDV+uPBPNH7T//Q=;
+	s=korg; t=1790796290;
+	bh=r1nLa6U1bzKbAwM3dLbszY68f/U/FFLhc07835yi1h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FDQ+3M4kDO6cxQ2Dds5+8vFFMHdxlcF68UzX40CrwQd5BXOEA2fAnovBExsO2qSc1
-	 OWxTvZLeTJftuDgLVCdbBMBasZQElqyVVL+AT45ecoj14vd2kEoMlL9Qk/g8W//EGp
-	 RiPaczzciUmlJs268QDpT1gznnj4UytHxHV3ahgs=
+	b=E+VzxY024l95BJxl9OuQwguID5Fi6e/L/u5D6yw06pBwQeaKEsDagoNKBu2SVPukw
+	 oimnlb/7Vk+TPHqwtRcdyopNV3G/70auB+A7S2SWEkAosSmldQ0EcKFJlKA/41MIsG
+	 cmHto1q94wzzMxdR3HSwa6aPYexhm4mKm3ArUfqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0853/1193] Bluetooth: eir: validate service data length before reading UUID
-Date: Wed, 30 Sep 2026 17:25:37 +0200
-Message-ID: <20260930152453.186798873@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0862/1193] net: wwan: mhi_wwan_mbim: guard against a cyclic NDP chain
+Date: Wed, 30 Sep 2026 17:25:46 +0200
+Message-ID: <20260930152453.384249857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,52 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-commit e8241766794cf551d787fa3a77c0d54bbea6f6aa upstream.
+commit 5d063822ac5184939c1ed377a339a01d8ae814e8 upstream.
 
-eir_get_service_data() reads a 16-bit UUID from the service data using
-get_unaligned_le16() without first checking that the data is long enough
-to hold a UUID16 (2 bytes). If a malformed EIR entry has a service data
-field with only 1 byte of payload (field_len=2), eir_get_data() returns
-dlen=1. The subsequent get_unaligned_le16() then reads 1 byte past the
-field boundary.
+The NDP traversal in mhi_mbim_rx() only stops when wNextNdpIndex is
+zero.  Nothing requires the offsets to advance, so a modem that
+points an NDP at itself, or at an earlier NDP, keeps the loop
+spinning forever on one CPU.
 
-Additionally, if the corrupted UUID happens to match, the length
-calculation "dlen - 2" underflows to SIZE_MAX since dlen is size_t.
-Current callers either pass NULL for the length parameter or bounds-check
-the returned length, but future callers may not.
+Break out when the next NDP offset is not larger than the current
+one.
 
-Add a check that dlen >= sizeof(u16) and skip fields that are too short
-to contain a valid UUID16.
-
-Fixes: 8f9ae5b3ae80 ("Bluetooth: eir: Add helpers for managing service data")
+Fixes: aa730a9905b7 ("net: wwan: Add MHI MBIM network driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Suggested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/bluetooth/eir.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/eir.c
-+++ b/net/bluetooth/eir.c
-@@ -370,7 +370,15 @@ void *eir_get_service_data(u8 *eir, size
- 	size_t dlen;
+Verified in a QEMU guest with a fault injector feeding the driver's
+receive callback an NTB whose single NDP points at itself: the
+unpatched driver spins in mhi_mbim_rx() with one CPU pinned at 100%
+and the thread never returns.  With this check the loop terminates
+within one iteration.
+
+Changes in v2: move the non-increasing check to the wNextNdpIndex
+retrieval site, as suggested by Loic Poulain, instead of tracking
+the previous offset in a separate variable.
+
+Link: https://patch.msgid.link/20260911021734.1396599-1-zhugl3@xiaopeng.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ drivers/net/wwan/mhi_wwan_mbim.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+--- a/drivers/net/wwan/mhi_wwan_mbim.c
++++ b/drivers/net/wwan/mhi_wwan_mbim.c
+@@ -338,9 +338,13 @@ static void mhi_mbim_rx(struct mhi_mbim_
+ unlock:
+ 		rcu_read_unlock();
+ next_ndp:
+-		/* Other NDP to process? */
+-		ndpoffset = (int)le16_to_cpu(ndp16.wNextNdpIndex);
+-		if (!ndpoffset)
++		/* Other NDP to process?  The offsets must advance, or a
++		 * self-referencing NDP keeps the loop spinning forever.
++		 */
++		n = (int)le16_to_cpu(ndp16.wNextNdpIndex);
++		if (n > ndpoffset)
++			ndpoffset = n;
++		else
+ 			break;
+ 	}
  
- 	while ((eir = eir_get_data(eir, eir_len, EIR_SERVICE_DATA, &dlen))) {
--		u16 value = get_unaligned_le16(eir);
-+		u16 value;
-+
-+		if (dlen < sizeof(value)) {
-+			eir += dlen;
-+			eir_len = eir_end - eir;
-+			continue;
-+		}
-+
-+		value = get_unaligned_le16(eir);
- 
- 		if (uuid == value) {
- 			if (len)
 
 
