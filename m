@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7EA3EA976;
-	Wed, 30 Sep 2026 18:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604603B2FDC;
+	Wed, 30 Sep 2026 18:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791512; cv=none; b=jPiTvxExZOJi9XZF0CbQDxFVE6rkA+5ZzBUVS0PoaGIRHw4JJVwrNDtJD7AMjKNiVEkHbS9/S/AyUacoZUEaThuFUd1TnjkpoOcd5mnTiNBQ80hMQUx41Yv8SsNFzOaTaiXdWXjer3SDV2U3ZvizrOqIJ1aKjZwRpwnayrBTUqA=
+	t=1790791515; cv=none; b=oIYT91D1GoOBDOqFBi/Lz0WqDVnwZ2EVuXF5n5mqA3trQtSBtB5lxCq4dszy5MHORhE73n9/bs0R72Hg71weL/JTI3K0cpVT0Kg9kjHiwgzqd8DB96ZGdeXcY7hAr2l/aMKro3Qdh89r8Y/XUyw1TGamcreE5Y6Q0GSCQA2cxYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791512; c=relaxed/simple;
-	bh=N5tGh7s/xK1sk6oZpgsRGjUa4nio8S2wJUEuYvYLKq0=;
+	s=arc-20240116; t=1790791515; c=relaxed/simple;
+	bh=kBJm7rbl/f3t/QUGs/uzRSeKt+IQMvMWzeZSXeujuAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/CMc//I5T6d3BNcSgDFkpdu3rLPGVYbyqMGjGj6+7YBr+5+ZeHpvwJjd1ia3dqn6OyDEMh8J7Hj9+OfuHJ3+LNVKyMEcYuZCaXwMLk82mNEc4onJ7SY2M/CXRn2YiAhAr/YWCTYZFC2YbJyvE/iZGfFjop184Rb+iDojOZfBYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7BSt+l/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uLAyz8XX70f1qDBSlWLGJpzKV326dKi9Ka/xwJCukEGGAi0Fr8YJj1qxaK/WH/K+A/sl4rQf76a9YhxRHSqIanN33oKCkoxbOf3jg5pN6oAdI/BYGfGq6eLvmKOvYq4uL4BCI5fCHIoW0N22c10hs+DvRcrrbcfzoRcW1oNNXVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTMTh7OS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7BSt+l/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85EB1F000FF;
-	Wed, 30 Sep 2026 18:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTMTh7OS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D331F000FF;
+	Wed, 30 Sep 2026 18:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791511;
-	bh=BSH8GZ+NOxbvPGZXyoymuqIgJaWSLlCVbQHBmbqSThM=;
+	s=korg; t=1790791514;
+	bh=g2HBQ2zlEz7QeU4k3nybiQoAdPhT98TnxCwhdLfW3nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W7BSt+l/WH8HYVQ3tOijg1FEEUelS7trRHiPVEHqdm1IHvpi5zNCNOyCCDAySF3Ro
-	 RqHXff43TgSkQdkCl/oDRZoXjoHxQY5lVx1ZTkJy16aNPJk0PpIDf/iagHkWlYQj7f
-	 03CNWkJvzoFg09InSXHiP5PxGojEZE6ZoIB8akSQ=
+	b=TTMTh7OSOzHEdtgqOanVfxBbX66IcgOnxWtjjr1RG1QAnQrFDpjMMCjRk41nyzWxs
+	 AxAe2SkCCM+vipUoNLOQIeHuilTCxtHmrXtOKaz9BrAddZfKvv113TWOCTaN3dLYFE
+	 L22Drra98H1G10Od08cu4woJrMQMKjAjWStrEzCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
+	Yu Zhang <yuz08559@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/752] virtio_console: do not free control-out buffers on remove
-Date: Wed, 30 Sep 2026 17:23:19 +0200
-Message-ID: <20260930152405.415547332@linuxfoundation.org>
+Subject: [PATCH 5.15 330/752] vhost-vdpa: dont install the eventfd_ctx_fdget() error in config_ctx
+Date: Wed, 30 Sep 2026 17:23:20 +0200
+Message-ID: <20260930152405.437665632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,75 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit 894f98e73983f37354214a89a3a7fd35bf9e3072 ]
+[ Upstream commit e74a9fa50749b9940b4fb13199652325e08d3c4a ]
 
-__send_control_msg() publishes &portdev->cpkt as the control-out
-virtqueue cookie. remove_vqs() walks every virtqueue and passes leftover
-cookies to free_buf(), which treats them as struct port_buffer and
-reads sgpages.
+vhost_vdpa_set_config_call() swaps the eventfd_ctx_fdget() return value
+into v->config_ctx before checking it, so on failure the field briefly
+holds an ERR_PTR:
 
-If a control message is still on c_ovq when the device is unbound,
-free_buf() reads past the ports_device object.
+	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
+	swap(ctx, v->config_ctx);
 
-KASAN reported slab-out-of-bounds in free_buf():
+	if (!IS_ERR_OR_NULL(ctx))
+		eventfd_ctx_put(ctx);
 
-	free_buf
-	remove_vqs
-	virtcons_remove
-	unbind_store
+	if (IS_ERR(v->config_ctx)) {
+		long ret = PTR_ERR(v->config_ctx);
 
-The object was the ports_device allocated in virtcons_probe().
+		v->config_ctx = NULL;
+		return ret;
+	}
 
-Drain c_ovq without freeing. The packet lives in portdev and is released
-with it.
+Commit 0bde59c1723a ("vhost-vdpa: set v->config_ctx to NULL if
+eventfd_ctx_fdget() fails") added that clearing, and spelled out the
+invariant the rest of the file relies on: "we consider 'v->config_ctx'
+valid if it is not NULL".  The window between the swap and the clearing
+still breaks it.  vhost_vdpa_config_cb() only tests for NULL, so a config
+interrupt delivered inside the window hands the ERR_PTR to
+eventfd_signal().
 
-Fixes: a7a69ec0d8e4 ("virtio_console: free buffers after reset")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Check the fd before installing it instead.  That closes the window and
+matches how vhost_vring_ioctl() handles the same failure for the vq call
+fd.
+
+It also stops a rejected fd from tearing down a config interrupt that was
+working: until now the swap replaced the live context and put it, so
+after an EBADF the device silently stopped delivering config interrupts
+until userspace installed a new fd.
+
+Fixes: 776f395004d8 ("vhost_vdpa: Support config interrupt in vdpa")
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260819021230.292696-1-physicalmtea@gmail.com>
+Message-ID: <20260807100025.19750-2-yuz08559@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/virtio_console.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/vhost/vdpa.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
-index df48e5e906f85..dadd31a5dbf99 100644
---- a/drivers/char/virtio_console.c
-+++ b/drivers/char/virtio_console.c
-@@ -1933,13 +1933,28 @@ static const struct file_operations portdev_fops = {
- static void remove_vqs(struct ports_device *portdev)
- {
- 	struct virtqueue *vq;
-+	bool multiport = use_multiport(portdev);
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index 080413757eea3..08aaaaf488199 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -326,18 +326,14 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
+ 		return  -EFAULT;
  
- 	virtio_device_for_each_vq(portdev->vdev, vq) {
- 		struct port_buffer *buf;
-+		unsigned int len;
+ 	ctx = fd == VHOST_FILE_UNBIND ? NULL : eventfd_ctx_fdget(fd);
++	if (IS_ERR(ctx))
++		return PTR_ERR(ctx);
++
+ 	swap(ctx, v->config_ctx);
  
--		flush_bufs(vq, true);
--		while ((buf = virtqueue_detach_unused_buf(vq)))
--			free_buf(buf, true);
-+		/*
-+		 * c_ovq cookies are &portdev->cpkt, not port_buffer.
-+		 * Detach them but do not free_buf().
-+		 */
-+		if (multiport && vq == portdev->c_ovq) {
-+			spin_lock(&portdev->c_ovq_lock);
-+			while (virtqueue_get_buf(vq, &len))
-+				;
-+			while (virtqueue_detach_unused_buf(vq))
-+				;
-+			spin_unlock(&portdev->c_ovq_lock);
-+		} else {
-+			flush_bufs(vq, true);
-+			while ((buf = virtqueue_detach_unused_buf(vq)))
-+				free_buf(buf, true);
-+		}
- 		cond_resched();
- 	}
- 	portdev->vdev->config->del_vqs(portdev->vdev);
+-	if (!IS_ERR_OR_NULL(ctx))
++	if (ctx)
+ 		eventfd_ctx_put(ctx);
+ 
+-	if (IS_ERR(v->config_ctx)) {
+-		long ret = PTR_ERR(v->config_ctx);
+-
+-		v->config_ctx = NULL;
+-		return ret;
+-	}
+-
+ 	v->vdpa->config->set_config_cb(v->vdpa, &cb);
+ 
+ 	return 0;
 -- 
 2.53.0
 
