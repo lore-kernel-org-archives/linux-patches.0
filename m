@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE6E3FD137;
-	Wed, 30 Sep 2026 19:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474F8371049;
+	Wed, 30 Sep 2026 19:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796795; cv=none; b=Hy6uoyEJ5EJIOco3lk70x3rFKFCHmAuaenjylPBfCDLJ3g0VoZtIe6Br4KnHpVx79K38MHyqsZ0yOFcFAkmmBQv1BJUJvu4YvOrBCx1QXALRIDyh0wYN8XfiHvojxAyBapA9ZNSNZNLd38Sa4qfj52VKagZX1rICC0ZQLG+tiLo=
+	t=1790796798; cv=none; b=c5aM5UdCHu28S5SlAR+FyUGKb7RINnfe9JjWvYvrStioLa0jeT2ZBdpCnabbOOWyBDkn8O8qGQ0szK65t5wBbhJN6kXjYy/Y/DpFmc7lYuyhyaDzgzQ9XM1HxjIAb2xYfJ2J0i5Uo2N5g8C3ptpq+xGiRTGtemVXMfAV8rb0AQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796795; c=relaxed/simple;
-	bh=sxkqyNq7k8cgWGGoM7r3CpWARwnmUyE9GMPMPHfw1hU=;
+	s=arc-20240116; t=1790796798; c=relaxed/simple;
+	bh=GYyOAC5AX0OyvVTwYW3a0RfnAxvEMATU9K32z5UwDoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OR9hZUafVPSiCjcERO4uW+NEk4Q7mrWHCTjhwl9QzFccK1sTHRXpbOYd1z5LtrTVKPzRTJgaVN4K7dJb66rnLDSXDaAPAKFJORhVkTUmSTZoyw3BQ6Ba0mSbrGbBzUal0N1gSLuZ95n5xOs9vGjsLPNYO15NtRbK9eJrMB1iO+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnV3ItRQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c0808Yay/74h/HNkXv2heWW7ccVqTVJRa60ncwYBSrfsg+UyWA4t0kNXHMOKoN25Yy0WFmwmmflaNY52YNlp2YOwNSsubfYTgJ7rbdco76FcJeWSGlgRxUiR9qRUvAe6sFyL2RF3XCU3kJ/uo/2Otga+d9PzFtWrdr02a45YNDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeznrPHZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnV3ItRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A091F000FF;
-	Wed, 30 Sep 2026 19:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeznrPHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56B61F000FF;
+	Wed, 30 Sep 2026 19:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796794;
-	bh=PnxtlWwxXLiH3CW1xpMgv674nBDpWb9dztvzH/W+zt8=;
+	s=korg; t=1790796797;
+	bh=cM2FboIlb6xjWRpBCLIGgnW6RpE1TzjP5g9cGMAE2g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qnV3ItRQeDRJ1eIsNl/2zRaaB9J+7ZwmlwblJNDeb6IzZLxZe3mk9npoFCUc4hOtS
-	 4fBch7qb5ATD+oZPj/HTcGklZSWEEGxZlk44SVLwmqKmjJcE4YP4mO3HlfGdGFQ0ce
-	 PGBVbWPBsQRC1DRpTJaoHmpM6XCTsSQIgaW/LC8o=
+	b=MeznrPHZrwOg6uZMM5fna4BBsSKnXbAKkpOT90Si6D+L2C6/tQ48Qud/BbQXhj23l
+	 QSWA3ctAP2zvM08eMtVGqN/hiA9uHkONuED4XHFd7mG+5/NcbFexhKuAjIkqvTXWPr
+	 +ojFQVnbAOl3WRgkBw4vuu89YhPVT8+ISIIAe6EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1037/1193] nfc: nfcmrvl: validate helper command length before pull
-Date: Wed, 30 Sep 2026 17:28:41 +0200
-Message-ID: <20260930152457.263473196@linuxfoundation.org>
+Subject: [PATCH 6.6 1038/1193] nfc: st21nfca: validate received frame size
+Date: Wed, 30 Sep 2026 17:28:42 +0200
+Message-ID: <20260930152457.285910905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,47 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 686f942332b1667f13f3b8d6a2f50bcfbf42e277 ]
+[ Upstream commit a653c01ce447f10c36b901646888c0330363af4f ]
 
-The firmware download receive path removes the NCI data header and
-reads the helper command before validating the remaining packet length.
-A short frame can therefore reach the data access before the malformed
-packet is rejected.
+st21nfca_hci_i2c_repack() trims a received frame at its EOF marker
+before removing byte stuffing.  It then assumes the truncated frame
+contains the LLC header and two CRC bytes, and it unconditionally reads
+the byte after an escape marker.
 
-Validate the complete helper command length before stripping the NCI
-data header.
+A malformed frame can place EOF immediately after the start marker or can
+end its data portion with an escape marker.  The former leaves too few
+bytes for check_crc(), while the latter makes the unstuffing loop read past
+the current skb length.
 
-Fixes: 3194c6870158 ("NFC: nfcmrvl: add firmware download support")
+Require the minimum framing bytes both before and after unstuffing.  Use
+separate input and output cursors while removing byte stuffing, and reject
+an escape marker without its encoded byte.  This keeps malformed frames
+within the received frame boundary before CRC processing.
+
+Fixes: 3096e25a3e40 ("NFC: st21nfca: Fix incorrect byte stuffing revocation")
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260715084325.40276-1-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260715084405.41546-1-pengpeng@iscas.ac.cn
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nfcmrvl/fw_dnld.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/nfc/st21nfca/i2c.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/nfc/nfcmrvl/fw_dnld.c b/drivers/nfc/nfcmrvl/fw_dnld.c
-index e83f65596a88a..f7191954db4f6 100644
---- a/drivers/nfc/nfcmrvl/fw_dnld.c
-+++ b/drivers/nfc/nfcmrvl/fw_dnld.c
-@@ -262,9 +262,14 @@ static int process_state_fw_dnld(struct nfcmrvl_private *priv,
- 		 * B8..N: payload
- 		 */
+diff --git a/drivers/nfc/st21nfca/i2c.c b/drivers/nfc/st21nfca/i2c.c
+index 064a63db288bd..3fbf39be23b9c 100644
+--- a/drivers/nfc/st21nfca/i2c.c
++++ b/drivers/nfc/st21nfca/i2c.c
+@@ -290,27 +290,36 @@ static int check_crc(u8 *buf, int buflen)
+  */
+ static int st21nfca_hci_i2c_repack(struct sk_buff *skb)
+ {
+-	int i, j, r, size;
++	int read, write, r, size;
  
--		/* Remove NCI HDR */
--		skb_pull(skb, 3);
--		if (skb->data[0] != HELPER_CMD_PACKET_FORMAT || skb->len != 5) {
-+		if (skb->len != NCI_DATA_HDR_SIZE + 5) {
-+			nfc_err(priv->dev, "bad command");
-+			return -EINVAL;
-+		}
+-	if (skb->len < 1 || (skb->len > 1 && skb->data[1] != 0))
++	if (skb->len < ST21NFCA_FRAME_HEADROOM ||
++	    !IS_START_OF_FRAME(skb->data))
+ 		return -EBADMSG;
+ 
+ 	size = get_frame_size(skb->data, skb->len);
+ 	if (size > 0) {
++		if (size < ST21NFCA_FRAME_HEADROOM + 2)
++			return -EBADMSG;
 +
-+		/* Remove NCI header */
-+		skb_pull(skb, NCI_DATA_HDR_SIZE);
-+		if (skb->data[0] != HELPER_CMD_PACKET_FORMAT) {
- 			nfc_err(priv->dev, "bad command");
- 			return -EINVAL;
+ 		skb_trim(skb, size);
+ 		/* remove ST21NFCA byte stuffing for upper layer */
+-		for (i = 1, j = 0; i < skb->len; i++) {
+-			if (skb->data[i + j] ==
++		for (read = 1, write = 1; read < skb->len;) {
++			if (skb->data[read] ==
+ 					(u8) ST21NFCA_ESCAPE_BYTE_STUFFING) {
+-				skb->data[i] = skb->data[i + j + 1]
+-						| ST21NFCA_BYTE_STUFFING_MASK;
+-				i++;
+-				j++;
++				if (read + 1 == skb->len)
++					return -EBADMSG;
++
++				skb->data[write++] = skb->data[read + 1]
++						     | ST21NFCA_BYTE_STUFFING_MASK;
++				read += 2;
++			} else {
++				skb->data[write++] = skb->data[read++];
+ 			}
+-			skb->data[i] = skb->data[i + j];
  		}
+ 		/* remove byte stuffing useless byte */
+-		skb_trim(skb, i - j);
++		skb_trim(skb, write);
++		if (skb->len < ST21NFCA_FRAME_HEADROOM + 2)
++			return -EBADMSG;
+ 		/* remove ST21NFCA_SOF_EOF from head */
+ 		skb_pull(skb, 1);
+ 
 -- 
 2.53.0
 
