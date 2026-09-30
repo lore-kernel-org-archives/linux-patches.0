@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F424F7CDC;
-	Wed, 30 Sep 2026 16:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FF22D9484;
+	Wed, 30 Sep 2026 16:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785774; cv=none; b=FGneOIxHdhqY2NiDG61aUOTWYewg6B7hY+TcF+7s6ePQAoRWbZdhmO1fNXHkl+CWtdcynWxDAik+bgaDq09AqcL/duvC5LTM8sK4ud+bx9HZg4dR6JKqbFxWJOKyKPxTgK72ND8HGUVaKqafbECjf1sV+p1i198/elVT1hRSHW0=
+	t=1790785777; cv=none; b=fswYvmOO6TAyreGhdwIlsWZVbhcjjs+KabLgN7qhhKJE5d9qr83B11cJiUMUerzIaXuj+gTL2iePbcYQkksYUxTWpH/zeskALHFtECPFU49Rb7s7ckQGjKa1TJdqLDYJb3ujgzIfyzhjxcUDXVeR1E1fC6S5gMUUnxp7X2uyu4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785774; c=relaxed/simple;
-	bh=J5O2sjhi+QORZhXbKcNFxuhKnpO395EElkLH3fvEH7g=;
+	s=arc-20240116; t=1790785777; c=relaxed/simple;
+	bh=UgjHajMJj5e9v55jzqVKUfvCHuNE6t0mU2rTO0wtGOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGzGPpqKXGNQdH+D+ZAeEnT9rrHz7qw84hYwln+jsgzy7ak6brS0JYhr/AdgXSkQowFqfIj6WJSp0ioKav1eoPknBf7NI/cdWNismoZBGjfDvRdYY6mdoL6jKoxS9J5cO7eEwNzKFgr8EpS0hWRPacK8aUh2RWeYQOCtKW/TwR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REoDYK2N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ah8SmMuCg8es4yPbvFQmJqI+OPOd0M5cFw28W+dLdttrn3SPIYzws9uejDTrTmCECb9QLocaGKnqJsx/kNovQ31KBAN/jzGmk6K7CP9AjxdSJbecsW+5DpemyaTMjr9Y+YQl5IE4rN91fuv2Q2g+VJKS7k3OpvvJOr97HKVJvUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRLYuvPh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REoDYK2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABDF1F000FF;
-	Wed, 30 Sep 2026 16:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRLYuvPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8231F000FF;
+	Wed, 30 Sep 2026 16:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785773;
-	bh=ZFFAm6k/QTA2BVkDHtKZ0AFSHfW7KkD3x93JEaofc7g=;
+	s=korg; t=1790785775;
+	bh=HlkuwTFBqkZoSwoifKIvWbt0a/XBdN1wfGZVpInrbs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REoDYK2N50T3Z2plKM9+P6FsJWaGpoq8rRPfadFxgdu9Kg/gh2qtd9/QVeHyzCU7M
-	 2EkRhnTIVY2t+f+NfYJ7EIcpT+fqjw/Na48KB2FWJOV9t+e65NwCFy2+eU/mV/Zzb1
-	 z9Om7kz6SLE/q135aVJmo4Iju/9VljqTL0V91aaA=
+	b=lRLYuvPhkarDMJ3Qxehp2fi0tP9HY66Uyhp/E6ggTdjROxT5mza/3+gOlnwkKQst9
+	 3PFPy4CyWAu3TtNLTudnsom2rLo7o4a79gapNkNh+9qqSsDCsghU7g1wLak6lMGiqK
+	 VRKnwr8e+k5+WHBC8m3d0Zycng3jTktt7EojZFk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com,
+	syzbot+56a1a45a9a2c04d425ff@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 626/982] wifi: cfg80211: dont filter by BSS type when removing stale entries
-Date: Wed, 30 Sep 2026 17:22:42 +0200
-Message-ID: <20260930152430.219354690@linuxfoundation.org>
+Subject: [PATCH 6.1 627/982] wifi: mac80211: suppress chanctx warning for debugfs reset
+Date: Wed, 30 Sep 2026 17:22:43 +0200
+Message-ID: <20260930152430.241013851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,49 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b377e1000d963e7182a987082b4b06580bd7ac84 ]
+[ Upstream commit bf29d085e0eba92388518719d044f4702a8c6644 ]
 
-When an assoc AP switches to a channel that already has a BSS entry,
-cfg80211_update_assoc_bss_entry() removes that entry before rehashing
-the real one, since the two would otherwise collide in the BSS rbtree.
-
-The lookup for that entry also required it to match the connection's BSS
-type, so an entry advertising e.g. the IBSS capability bit was left in
-place, and the following cfg80211_rehash_bss() then ran into it:
-
-  WARN_ON(!cmp)
-
-Changing the type shouldn't really happen, but can be triggered by a
-rogue AP/device, so drop the check and remove any entries matching
-the comparison.
+Before suspend all the channel contexts should removed, so the
+warning makes sense and should be there, but during reset the
+same code is called without first removing. Limit the check to
+the real suspend case.
 
 Assisted-by: LLM
-Fixes: 0afd425b1b64 ("cfg80211: fix duplicated scan entries after channel switch")
-Reported-by: syzbot+dc6f4dce0d707900cdea@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dc6f4dce0d707900cdea
-Link: https://patch.msgid.link/20260904165614.1f05dae1c546.Ib52d57b57caa912efee020f9d4a033a5160617ce@changeid
+Fixes: 12e7f517029d ("mac80211: cleanup generic suspend/resume procedures")
+Reported-by: syzbot+56a1a45a9a2c04d425ff@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56a1a45a9a2c04d425ff
+Link: https://patch.msgid.link/20260904165722.fe46395e310b.Ic4aaa95bd9d0ceb6a3cd7d84c425afee7d7d3dd7@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/mac80211/cfg.c         | 2 +-
+ net/mac80211/debugfs.c     | 2 +-
+ net/mac80211/ieee80211_i.h | 2 +-
+ net/mac80211/pm.c          | 8 +++++---
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 829b78eba6b10..ecf9021219380 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2684,11 +2684,6 @@ void cfg80211_update_assoc_bss_entry(struct wireless_dev *wdev,
- 	cbss->pub.channel = chan;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 0d5ddd3d2c5fc..0b425f97977be 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2725,7 +2725,7 @@ static int ieee80211_set_txq_params(struct wiphy *wiphy,
+ static int ieee80211_suspend(struct wiphy *wiphy,
+ 			     struct cfg80211_wowlan *wowlan)
+ {
+-	return __ieee80211_suspend(wiphy_priv(wiphy), wowlan);
++	return __ieee80211_suspend(wiphy_priv(wiphy), wowlan, false);
+ }
  
- 	list_for_each_entry(bss, &rdev->bss_list, list) {
--		if (!cfg80211_bss_type_match(bss->pub.capability,
--					     bss->pub.channel->band,
--					     wdev->conn_bss_type))
--			continue;
--
- 		if (bss == cbss)
- 			continue;
+ static int ieee80211_resume(struct wiphy *wiphy)
+diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
+index 175669aa8e744..f345c61cfd62f 100644
+--- a/net/mac80211/debugfs.c
++++ b/net/mac80211/debugfs.c
+@@ -417,7 +417,7 @@ static ssize_t reset_write(struct file *file, const char __user *user_buf,
  
+ 	rtnl_lock();
+ 	wiphy_lock(local->hw.wiphy);
+-	__ieee80211_suspend(&local->hw, NULL);
++	__ieee80211_suspend(&local->hw, NULL, true);
+ 	ret = __ieee80211_resume(&local->hw);
+ 	wiphy_unlock(local->hw.wiphy);
+ 
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index e94a370da4c4b..2f437ddd8f1ed 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -2161,7 +2161,7 @@ int ieee80211_reconfig(struct ieee80211_local *local);
+ void ieee80211_stop_device(struct ieee80211_local *local);
+ 
+ int __ieee80211_suspend(struct ieee80211_hw *hw,
+-			struct cfg80211_wowlan *wowlan);
++			struct cfg80211_wowlan *wowlan, bool reset);
+ 
+ static inline int __ieee80211_resume(struct ieee80211_hw *hw)
+ {
+diff --git a/net/mac80211/pm.c b/net/mac80211/pm.c
+index 0ccb5701c7f39..65e0c7bd33b23 100644
+--- a/net/mac80211/pm.c
++++ b/net/mac80211/pm.c
+@@ -18,7 +18,8 @@ static void ieee80211_sched_scan_cancel(struct ieee80211_local *local)
+ 	cfg80211_sched_scan_stopped_locked(local->hw.wiphy, 0);
+ }
+ 
+-int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
++int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan,
++			bool reset)
+ {
+ 	struct ieee80211_local *local = hw_to_local(hw);
+ 	struct ieee80211_sub_if_data *sdata;
+@@ -167,9 +168,10 @@ int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
+ 
+ 	/*
+ 	 * We disconnected on all interfaces before suspend, all channel
+-	 * contexts should be released.
++	 * contexts should be released, but on 'reset' debugfs that's
++	 * not true so don't check there.
+ 	 */
+-	WARN_ON(!list_empty(&local->chanctx_list));
++	WARN_ON(!reset && !list_empty(&local->chanctx_list));
+ 
+ 	/* stop hardware - this must stop RX */
+ 	ieee80211_stop_device(local);
 -- 
 2.53.0
 
