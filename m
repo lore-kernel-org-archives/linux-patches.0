@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 049D22DB785;
-	Wed, 30 Sep 2026 18:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285CD3515C5;
+	Wed, 30 Sep 2026 18:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794346; cv=none; b=r1Y+NJ2YP3hc7Eh+3IRMRy26NbjVoMnzDhkcEy8rTfFiZUR1KPdFFl7ue8vxOND0TtCeBUG3lJaeYPYHKM3neihKHWqzS/+/WeCoGME6xjx4Cq81ALhq8JZnkf+taXmA6geHPDDG5Ax2IsdilYR0DyKvCsq4aA9Hh76XSFZuJeU=
+	t=1790794349; cv=none; b=kdmSShabmOOyhQnkQVdiimG1HVRmsqfEKYL2apilcjCzs0rmjChFMuMgFBXy/0M9VIfUtq8/B3OtYUFQ1tl0S3jtmHQITeSSZMvAx+sa5E+BL1j40L0VQm/rNV1/k5SkSGsfrgkbp7GxwcoM9gw6uQWbsM+eVMWG28oH/wQN4QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794346; c=relaxed/simple;
-	bh=k+zOTw0mgiYPbNTt2rlcAYQyR4MJUudyImS4NcsXsA4=;
+	s=arc-20240116; t=1790794349; c=relaxed/simple;
+	bh=vATFhYFvRF5+gjYLTRYOd6Mcw1Q1sytSItfQiKqIVxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=riHXj5tMeHpdIMAy4BEEpMvacSuR17r405acg7W6JICtwtI9lYyZhBYkw3aBzaCrXqVn0ytLZ1IdOKhI6MKsUFSqDW///gVze2/rUqagolc4t5/o1HM8Ufy2pPXO1WVnHvrA9v/h8iZdew6l/XjhKPoH8AzfIrmZ5KZA1Sy55oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omSAomlK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sOB/iqlrn+2xzyo0K4U2BOCeNbs95JPhKCJjt0ePjn+ebGXz9HsgLf+k6ZY+WSzPFdPDpwTUTtpkEBXZoKFlAoVzHXYWzl137EJMEzSF4/ZyBpecbUvECBzKlJxCmUWINY+z4ewf6MkamJ+LvHymQLRanjwlDaKJ8tJQluih74M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQAIpRCL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omSAomlK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612371F000FF;
-	Wed, 30 Sep 2026 18:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQAIpRCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4B11F00898;
+	Wed, 30 Sep 2026 18:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794344;
-	bh=+29GRE/DWMQ6ibYJ2vK7Cm/S1zKmW8P1AcdCooGjAzo=;
+	s=korg; t=1790794347;
+	bh=rC4BzrayuBsNFoex5hr7sCwwILOL1wswzqn6+Dntqe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omSAomlKB9bNS4VDqXSTY+jxS6ZmObaXVZq1j3JI8Ide5+Atc5ybK5Scgzxo4C7vH
-	 k3ihhGU1xwjLBSrFqPF+Zuuz6htCD14kRDmnUt2tG20o9gLAOaMoO4wGqZBuUw60Az
-	 KihojYUbu0iLR4PDPDrJMy20FGF314o7aruCEQZw=
+	b=rQAIpRCL2l7C92V6FjtMVujVdSkvWJzHs1+iJwn8om5+Xn+gwxO1+cHlikpVwM7nk
+	 dFut7kG5F0/w/rzg0dJSlPRdwAXLjOdWitanCu2YHbfSqZ72SO/pqSJ6E8KmnIsY6S
+	 1uPbxsjKh0UU8e6cPWnBzO4RP4qsv5QxiO39RMBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0178/1193] wifi: nl80211: Increase ie_len size to prevent truncated IEs in new peer notifications
-Date: Wed, 30 Sep 2026 17:14:22 +0200
-Message-ID: <20260930152438.151485219@linuxfoundation.org>
+Subject: [PATCH 6.6 0152/1193] ASoC: codecs: pcm3168a: Drop CONFIG_PM-conditional preproc directive
+Date: Wed, 30 Sep 2026 17:13:56 +0200
+Message-ID: <20260930152437.584513302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,53 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit dfb67ae569bf0726187725b1ef8d89377778861e ]
+[ Upstream commit eb7107264da8545ba7381a76818bae553e1fd1e4 ]
 
-Currently, ie_len in cfg80211_notify_new_peer_candidate is defined as
-1-byte field, capping the maximum IE list size at 255 bytes. When a
-large beacon is received, the IE list is truncated, passing incomplete
-data to wpa_supplicant. This causes supplicant to fail parsing the IEs.
+Revert changes done in commit 489db5d94150 ("ASoC: pcm3168a:
+Don't disable pcm3168a when CONFIG_PM defined") and add
+pm_runtime_status_suspended() check.
 
-Increasing the size of ie_len to allow the full length of the IE list to
-be forwarded properly.
+The suspended-check addresses regulator's "unbalanced disables"
+warning during driver removal even when CONFIG_PM is enabled.
 
-Signed-off-by: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
-Link: https://patch.msgid.link/20260605054307.427874-1-thiyagarajan@aerlync.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260525201801.1336936-4-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 2 +-
- net/wireless/nl80211.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/pcm3168a.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 5b3a63c377d60..cda0b2907f329 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -7383,7 +7383,7 @@ void cfg80211_ibss_joined(struct net_device *dev, const u8 *bssid,
-  * cfg80211 then sends a notification to userspace.
-  */
- void cfg80211_notify_new_peer_candidate(struct net_device *dev,
--		const u8 *macaddr, const u8 *ie, u8 ie_len,
-+		const u8 *macaddr, const u8 *ie, size_t ie_len,
- 		int sig_dbm, gfp_t gfp);
- 
- /**
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 79c3c065ab0c2..e4cd5503ae119 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -18502,7 +18502,7 @@ void nl80211_send_ibss_bssid(struct cfg80211_registered_device *rdev,
+diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
+index 329549936bd5c..e5ac1146588cc 100644
+--- a/sound/soc/codecs/pcm3168a.c
++++ b/sound/soc/codecs/pcm3168a.c
+@@ -820,15 +820,6 @@ int pcm3168a_probe(struct device *dev, struct regmap *regmap)
  }
+ EXPORT_SYMBOL_GPL(pcm3168a_probe);
  
- void cfg80211_notify_new_peer_candidate(struct net_device *dev, const u8 *addr,
--					const u8 *ie, u8 ie_len,
-+					const u8 *ie, size_t ie_len,
- 					int sig_dbm, gfp_t gfp)
+-static void pcm3168a_disable(struct device *dev)
+-{
+-	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
+-
+-	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies),
+-			       pcm3168a->supplies);
+-	clk_disable_unprepare(pcm3168a->scki);
+-}
+-
+ void pcm3168a_remove(struct device *dev)
  {
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
+ 	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
+@@ -840,10 +831,12 @@ void pcm3168a_remove(struct device *dev)
+ 	 * The asserted level of GPIO_ACTIVE_LOW is LOW.
+ 	 */
+ 	gpiod_set_value_cansleep(pcm3168a->gpio_rst, 1);
++
+ 	pm_runtime_disable(dev);
+-#ifndef CONFIG_PM
+-	pcm3168a_disable(dev);
+-#endif
++	if (!pm_runtime_status_suspended(dev)) {
++		regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
++		clk_disable_unprepare(pcm3168a->scki);
++	}
+ }
+ EXPORT_SYMBOL_GPL(pcm3168a_remove);
+ 
+@@ -899,7 +892,8 @@ static int pcm3168a_rt_suspend(struct device *dev)
+ 
+ 	regcache_cache_only(pcm3168a->regmap, true);
+ 
+-	pcm3168a_disable(dev);
++	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
++	clk_disable_unprepare(pcm3168a->scki);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
