@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC83357D11;
-	Wed, 30 Sep 2026 16:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388254E06CC;
+	Wed, 30 Sep 2026 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786948; cv=none; b=ZgK1HrkD52DKqActBJcyj2lq5rWeXoLqBiiDlsJrWoDvqG0yI6gHLuyLB/DIzdEKpnGf3xxPHxwdDLdSk2psgA3t30sJ3Ly276bV9EhK0p9BQBJnKK2xnKuo/7aDyVosY6NDnbkSippZiFRFdMtDt9D+aiVomfQkZUXjGlnR/Vk=
+	t=1790786951; cv=none; b=qY5T/SCKFTnoBIPBPGYh0eO/hwP5Dq3S65aLOxbA5nKDhbIvGFSeQZtg/XP1juwq8nMiGbYm+MwloHVognCz69MtCTzvfBxuoZDNbGeOKqEjU74r3pxkwaUUN6vVA0XHUZ5qaUS6MktGaqUY8XMCaiElDOMiga2SRKVCxN2xY8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786948; c=relaxed/simple;
-	bh=9orYnatfFa5MtnLOU2Q8eNG98V98AGjwxNq50vEegrA=;
+	s=arc-20240116; t=1790786951; c=relaxed/simple;
+	bh=23WU42OW7V9ITO4EeMlMhXFbUwT0FVFbxSxwhZnu2dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfXybSnDlI1FpwSWwd+3Kv3ftX8LCpIzfUa4+NU0mjFxgr6dU9rPtB86mYXo7pGJ3fJ93GOgHP41ZSf99sl62HPnQEiZ/DrxtAZrqYbSkZ3MGeu4d1W8++TYVvyKQpEMe5XC63c3KDxDKzqJeqNCMP34SsYI+kJGCtmJBqUmZAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlP2zE/g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YGJIs9uIge3zE7HlcNcWvHsBNls6pp71aNaJP24RFuSC7S5PQXvzFAWWfDKp66uMYy0S6j+12Q3IMmS5KNDwtVrGv+Z1BBfIn+3xGfL4A9+/uX/ewJWH5cjOgWPjmatYG/HBaWzZ/0edZPtTCDHMvxHnqmxC2zxFmk3WSbGU4W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3r/Vk68; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlP2zE/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72C21F000FF;
-	Wed, 30 Sep 2026 16:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3r/Vk68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9325A1F000FF;
+	Wed, 30 Sep 2026 16:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786947;
-	bh=CR3XAQxkNAO1unBpi7apvn6Bgohs45PLCDiJfqeLyGk=;
+	s=korg; t=1790786950;
+	bh=hBW2zjIbLl+qiTsXhoAgiEAP3HRTsR101lfYx906ezI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZlP2zE/gJ+1T4TJO2aexMEbuj+a3bdvy50jT0KQtWI5XVP3joeU4TzUQW6cVZSwGX
-	 nMDNcTK/cEGsLs0pvk0Li8JSLbZ7CjKKFCt+x8rTNSkEGwBcj5q7IwGfhYtgCHxtSO
-	 kJa6SHJO2MBeyAJ+YQ0ltnUk13s7+8rTA7hGC5YI=
+	b=B3r/Vk68CqT8csY38vgUblWNa7J/Ivt//CkNUwaOp2lp3/lfkRvL6irBPGzuybFQs
+	 rN/DIYTz41Owz/wOv3Zcz6nEbO9hYX/guC3L5bFYLNrVYquPh8OOSpiXrNIK59vrUM
+	 hZv33TX4fGl/rWqkk+C/TGVsC24hXefpluauZp7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 056/457] Bluetooth: mgmt: Dequeue pending mesh_send_sync entries on cancel
-Date: Wed, 30 Sep 2026 17:22:41 +0200
-Message-ID: <20260930152347.247523125@linuxfoundation.org>
+Subject: [PATCH 7.2 057/457] selftests: cgroup: give the O_TMPFILE open in get_temp_fd() a mode
+Date: Wed, 30 Sep 2026 17:22:42 +0200
+Message-ID: <20260930152347.269399872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,85 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
 
-[ Upstream commit 71af682ba4692c2ed9ace4c3d4ca462ae368c029 ]
+[ Upstream commit c774ec8f0a5d02a06d34c27f5a7de7e333b91265 ]
 
-In send_cancel(), pending mesh_tx objects are removed from the
-hdev->mesh_pending list and freed via mesh_send_complete().  However, if
-a mesh transmission was already queued onto hdev->cmd_sync_work_list via
-mesh_next(), the queued entry retains a raw pointer to mesh_tx.
+O_TMPFILE, like O_CREAT, needs the third argument. Without it glibc
+refuses the call at compile time as soon as fortification is on:
 
-When hci_cmd_sync_work later processes the entry, it attempts to execute
-mesh_send_sync and its destroy callback mesh_send_start_complete using
-the already freed mesh_tx pointer, leading to a use-after-free.
+  In function 'open',
+      inlined from 'get_temp_fd' at test_memcontrol.c:33:9:
+  /usr/include/bits/fcntl2.h:52:11: error: call to '__open_missing_mode'
+    declared with attribute error: open with O_CREAT or O_TMPFILE in
+    second argument needs 3 arguments
 
-Fix this by invoking hci_cmd_sync_dequeue() for mesh_send_sync on the
-target mesh_tx before completing it.  If the entry is found and dequeued,
-its destroy callback will complete and free the object; otherwise,
-mesh_send_complete() is called directly.
+The fortify checks take effect only once the compiler optimises, and
+cgroup/Makefile builds with "-Wall -pthread" alone, so this goes
+unnoticed in a plain build. Building the tests with the flags
+distributions commonly use, -O2 -D_FORTIFY_SOURCE=3, loses
+test_memcontrol entirely.
 
-Additionally, ensure the transmission queue advances after cancellation
-or errors.  In mesh_send_start_complete(), call mesh_next() on error
-unless err is -ECANCELED, because hci_cmd_sync_dequeue() holds
-hdev->cmd_sync_work_lock and calling mesh_next() synchronously would
-deadlock.  Instead, advance the queue in send_cancel() once the lock is
-released and if no transmission is in progress.
-
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 84092dbcf901 ("selftests: cgroup: add memory controller self-tests")
+Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ tools/testing/selftests/cgroup/test_memcontrol.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index deced8a5bc2d6..9bcc35de08899 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2310,6 +2310,8 @@ static void mesh_send_start_complete(struct hci_dev *hdev, void *data, int err)
- 		hci_dev_clear_flag(hdev, HCI_MESH_SENDING);
- 		/* Send Complete Error Code for handle */
- 		mesh_send_complete(hdev, mesh_tx, false);
-+		if (err != -ECANCELED)
-+			mesh_next(hdev, NULL, 0);
- 		return;
- 	}
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index 3a84d068fbf36..0ed82347044ed 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -30,7 +30,7 @@ static int page_size;
  
-@@ -2419,19 +2421,28 @@ static int send_cancel(struct hci_dev *hdev, void *data)
- 		do {
- 			mesh_tx = mgmt_mesh_next(hdev, cmd->sk);
- 
--			if (mesh_tx)
--				mesh_send_complete(hdev, mesh_tx, false);
-+			if (mesh_tx) {
-+				if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
-+							  mesh_tx, NULL))
-+					mesh_send_complete(hdev, mesh_tx, false);
-+			}
- 		} while (mesh_tx);
- 	} else {
- 		mesh_tx = mgmt_mesh_find(hdev, cancel->handle);
- 
--		if (mesh_tx && mesh_tx->sk == cmd->sk)
--			mesh_send_complete(hdev, mesh_tx, false);
-+		if (mesh_tx && mesh_tx->sk == cmd->sk) {
-+			if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
-+						  mesh_tx, NULL))
-+				mesh_send_complete(hdev, mesh_tx, false);
-+		}
- 	}
- 
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
- 			  0, NULL, 0);
- 
-+	if (!hci_dev_test_flag(hdev, HCI_MESH_SENDING))
-+		mesh_next(hdev, NULL, 0);
-+
- 	return 0;
+ int get_temp_fd(void)
+ {
+-	return open(".", O_TMPFILE | O_RDWR | O_EXCL);
++	return open(".", O_TMPFILE | O_RDWR | O_EXCL, 0600);
  }
  
+ int alloc_pagecache(int fd, size_t size)
 -- 
 2.53.0
 
