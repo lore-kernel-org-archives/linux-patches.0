@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5C23C0A0C;
-	Wed, 30 Sep 2026 19:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFBD3D333C;
+	Wed, 30 Sep 2026 19:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795255; cv=none; b=WERCRJudX8L89kZtPRFu5g3+T6YR5kNE8eUso5p5A+bJAfcFZZwf/bbq5UB6CFk2O0ebbDDj+LYUS4PDXwSxAovR7dHpm7P16unpY6KVHWohEd+LC/q/66uMOPrasIfVQcNkoizDJ3qEkg3CT+D3Tbz2JMF/qV+HYYoXhZeC1dQ=
+	t=1790795258; cv=none; b=FEg12basnDT0Sb3xXX0zqk3z1kztgf0+UTBTRc+V3DJH718TUuOLoCu/NUTqPP/P7jbEsqmgp+v5WrPh+b7RnxXFLLQ3dtrr3MU3ZvwdohpOijlWzosE7T83txQSHdI5gvzNF4BMj+9Qtkf8YJ+VH0o0jKGt/02PCVetGb7C4s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795255; c=relaxed/simple;
-	bh=EaRWyunlLqz1gWt0chAsuhSZGbSA+wlnJMEltTM2i+k=;
+	s=arc-20240116; t=1790795258; c=relaxed/simple;
+	bh=TokjPVy+1j4zqw1317GxnJzhAzcpcpYfsJaSOM02u8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmBauOTKWvQGA+pVUZyX3nRoQ1MJJq9REoSBfpxwjb8EXR/QxpLUTR+/gKc9RO6pPYmCOn9T7FWAXI251lrIbixHiPNy8oE3U5o72SX1yy/UMb+DWY3MHy1R7J7dioE+e453Cam1rW64s46B9Aau6utfMxCUzJ94cwHG7GSutEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYOcYUix; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uxApnYq8eYnYV+0wDxmFwcUpfz8tXjnPk9NyTIQiM2DlniTuaD7mWDzt4PP6nETiBmrSIkn5+sOmnkohgy9A7oOAI/2mwgSSpBRiOVjBMJToCHuTV2RLD0saYupuOzsvRGQCmad4gi6cDDwhbTi22vULLm3rBI3Zc6Oeeegcr8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB0Y7qBJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYOcYUix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FC31F00898;
-	Wed, 30 Sep 2026 19:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB0Y7qBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D351F000FF;
+	Wed, 30 Sep 2026 19:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795253;
-	bh=LFTpOF3sW6u9IfFoWb8wUvkWtExebddm9Az583gwlsE=;
+	s=korg; t=1790795256;
+	bh=uRbK87y5GuMKGeWxM2QleCEe7cHSyf3YPwQ44wGy50E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYOcYUixldEft7B1U3qeSoHR1XXFrdtXglsCPzmw+GB0WUpWHXkfWwcFBs9/6qf9G
-	 Dm+oh4S2NUrbGuzr+mb+bh0kzKK7Wyq6+ez8DGxYp7XcfFHxsBvlan2UD9cINkgg55
-	 rF2sLeisU/MDyxW9XgcGM4xwv6Sm/NBz/A4xwxUw=
+	b=EB0Y7qBJ4W0NoYfH5Z9uBFwDfIvjpqNz+Xgf32DTxY6dNL49XBqeP6hUaoQ4O+kYE
+	 Bgu/08vXJuWKG8Z6Upq2t+bJhNq/nPdWp3llQLgFGIn4ss4v48vt5LnNEpGkKsUYWu
+	 XengWm0PZyV/Z5mRizoRWZPQZMgVUxfQ6CbMwbiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0470/1193] net/rds: clear cp_flags bits individually in rds_conn_path_reset()
-Date: Wed, 30 Sep 2026 17:19:14 +0200
-Message-ID: <20260930152444.608993130@linuxfoundation.org>
+Subject: [PATCH 6.6 0497/1193] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
+Date: Wed, 30 Sep 2026 17:19:41 +0200
+Message-ID: <20260930152445.196045839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,74 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 103c4b13c4f50322910078d1c02f29334a574122 ]
+[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
 
-rds_conn_path_reset() wipes the whole flag word with a plain
-cp->cp_flags = 0 store.  Every other accessor of that word uses
-atomic bitops, and some of them can run concurrently with the reset:
-RDS_LL_SEND_FULL is set from rds_send_xmit() and cleared from the
-transport completion paths, neither of which holds anything that
-excludes the shutdown worker.  A plain store racing an atomic
-read-modify-write on the same word is a data race, and whichever
-side loses has its update silently discarded.
+Several subsystems allocate ring buffers sized by dev->tx_queue_len
+with no upper bound. An unprivileged user (via unshare -Urn) can set a
+huge tx_queue_len and exhaust global memory with ring allocations:
 
-Clear the two bits the reset is actually responsible for instead.
-RDS_IN_XMIT and RDS_RECV_REFILL need no store at all here: they
-belong to the caller, rds_conn_shutdown(), which waits for both to be
-clear before calling the transport shutdown and this reset.
+- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
+  allocate 3 skb_array rings of tx_queue_len entries each.
+- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
+  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
+- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
+  ptr_rings to tx_queue_len on the same notifier.
 
-This also gives every bit in cp_flags a single well-defined writer
-discipline, which the following patches rely on when they turn
-RDS_IN_XMIT and RDS_RECV_REFILL into bit locks held across the
-teardown: a blanket store mid-teardown would destroy lock ownership
-that an atomic clear preserves.
+netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
+sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
+there so the oversized value is rejected at set time. This takes
+effect whether the device is up or down, before dev->tx_queue_len is
+written, before any notifier fires, and before any ring is allocated.
+The "> S16_MAX" check also subsumes the previous unsigned-long
+truncation test, and a negative ifr_qlen from the ioctl lands far
+above the cap after conversion, so both old failure modes are covered
+by the one comparison.
 
-Oracle UEK carries the same conversion ("net/rds: Preserve essential
-connection state flags"), motivated by its asynchronous shutdown
-state machine, whose progress and destroy flags must survive the
-reset.  UEK's variant also clears RDS_IN_XMIT and RDS_RECV_REFILL
-because there the reset runs as the final step of a teardown that
-owns both bits, making those clears its unlock.  Upstream that
-release belongs in rds_conn_shutdown(): once a later patch in this
-series turns the two bits into locks held across the teardown, ending
-ownership needs release semantics and a wake-up that a plain clear
-inside the reset would not provide.
+tx_queue_len is ambigious: both a per-ring sizing multiplier and a
+default queue-length/limit knob for consumers that allocate
+nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
+direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
+value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
+policy in patch 2/3 while staying a legitimate queue length on
+high-BDP paths; the ring-memory trade-off of a shared knob is
+disclosed below.
 
-Based on Oracle UEK commit "net/rds: Preserve essential connection
-state flags" by Gerd Rausch.
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
+- Unprivileged user in a fresh user+net namespace (unshare -Urn).
+- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
+  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
+- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
+  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
+  512MB guest.
+- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
+- On the fixed kernel the oversized tx_queue_len is rejected with
+  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
+  create, sysfs, ioctl - the latter two via this check, the former
+  two via this check and the 2/3 parse policy respectively).
 
-Fixes: 00e0f34c6166 ("RDS: Connection handling")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-4-achender@kernel.org
+Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index beecd408e93ab..9e0c89b7bc4cd 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -119,7 +119,15 @@ static void rds_conn_path_reset(struct rds_conn_path *cp)
+diff --git a/net/core/dev.c b/net/core/dev.c
+index f2c7bb0fc7f9c..290fb19c5dd76 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -8925,7 +8925,7 @@ int dev_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
+ 	unsigned int orig_len = dev->tx_queue_len;
+ 	int res;
  
- 	rds_stats_inc(s_conn_reset);
- 	rds_send_path_reset(cp);
--	cp->cp_flags = 0;
-+
-+	/* Clear the bits the reset is responsible for individually: a
-+	 * blanket cp_flags = 0 is a plain store that can clobber a
-+	 * concurrent atomic read-modify-write on the same word.
-+	 * RDS_IN_XMIT and RDS_RECV_REFILL belong to the caller,
-+	 * rds_conn_shutdown(), and are left alone here.
-+	 */
-+	clear_bit(RDS_LL_SEND_FULL, &cp->cp_flags);
-+	clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
+-	if (new_len != (unsigned int)new_len)
++	if (new_len > S16_MAX)
+ 		return -ERANGE;
  
- 	/* Do not clear next_rx_seq here, else we cannot distinguish
- 	 * retransmitted packets from new packets, and will hand all
+ 	if (new_len != orig_len) {
 -- 
 2.53.0
 
