@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDAF51C33B;
-	Wed, 30 Sep 2026 17:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AEB4F7CCF;
+	Wed, 30 Sep 2026 17:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789151; cv=none; b=EXaSZo8ClnUUPsqmhf83WMGNDFCpgNJ5kxWKguNmoa8O8OhHK55Wo9y2qSNYXPkAVecFJP2B+5VeHTZPi5RlLqd83U8hG8aqWhhZaD5SuR+w7pjAnMTB0IGwNAcq3VBiGFSdXGJHhXruU4WyZmQ7LoovpPhPlDox4vWxCEcjiGE=
+	t=1790789154; cv=none; b=gyPaIpm0axZ9nOeF27gIXbOD1Yh9D3sgTHBOotDAah426PuelsvJ6MJuysH1z1pp6mmR7ELu476HbKF4X6MTuQ+Bk7rLb+UvH7phlHlJ1Nku7DIGsp1RhjZXr5th6elEgqR8IQNQ0Tx4ag87n7ktZuhFKITYIdTMZW7Mr/gDw/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789151; c=relaxed/simple;
-	bh=ztZJUlcReDpaONv0NnVHDZCbTbE2WBHXLoMQvjXo+fc=;
+	s=arc-20240116; t=1790789154; c=relaxed/simple;
+	bh=CpQ0ibhcS/B8FFDj5+MkOAF/x8FVZL0b0nraZAkylsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tD3BHq9LE52FNX2IAXzf3FvhuU8+B0pa5HCb2XSG+Y54mxDdZo79uvjru86GEY1DLLQ+1UZyZAN3WkwleRQIAEPgdbfwvHjG8y+IuLmXma2LhLR3N56ab5iopczTga4PZfR6+eyjvi/iGnD2k9kFeOmcFhdUy14GjqUDu2skCu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHTP7YmT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gxyd4CKcgcxpJZZB7WMKjtWwXopfq1dMjIdv64v3M/YZ+ECweJFX0hHsZCPhe209U9QOfvqGskF09lW5Y4SN67omJ4RmIpTIUEqc9WrLoYDWJpCEz7+n3EWBqKw2hMS6/xfoxgE7tN0nE6wirWEkE8fCOrm4YJ5K7FlTAzrJeOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJNhylLT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHTP7YmT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB43D1F000FF;
-	Wed, 30 Sep 2026 17:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJNhylLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2741F000FF;
+	Wed, 30 Sep 2026 17:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789150;
-	bh=5y7ectrQT4T86W76OGJy1qhJTi7YLnJj/LOiktsE3xI=;
+	s=korg; t=1790789153;
+	bh=ZbiMC4sXeTOfxkmpEgqDDZcOUlQZyHwuhCF3fmyY7sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gHTP7YmTNVjzWOktLVr+v+bzOOTepQFYq5pZXjmDrEFavi1JXrnaleDCKFK76IFAa
-	 9VvphO8GI1g3IX1iqZoQiJOWzatd6WMEdLGDp/N9ktVtzDYGDPcw0Vve1b7y6XuYs8
-	 8c/ChkvqEWO53sUscWsLScb5jXsLQLjzVvoUvL8A=
+	b=sJNhylLTQbWS9B74T/j/yRSu3AFOrEqNFid6PnEOQtSZCfswoL/OaVX7XXcSkivD0
+	 S80elq6OAQ27ch5q4hW5EHBoKOdFBK91vQWZJX6L2azEGsWEalw6ybRab0G2/Zy+Q/
+	 bw0l2mcZB6423iC9LE3isZ4LDXAz41cIm9Vvkgzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 376/877] Bluetooth: RFCOMM: Reject short EA=0 frames in rfcomm_recv_frame()
-Date: Wed, 30 Sep 2026 17:21:27 +0200
-Message-ID: <20260930152422.788594691@linuxfoundation.org>
+Subject: [PATCH 6.12 377/877] octeontx2-af: Fix memory scaling limitation in SR-IOV mode
+Date: Wed, 30 Sep 2026 17:21:28 +0200
+Message-ID: <20260930152422.810569866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,51 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 6d91041bb38b97e2feb625123cc0529d7b83a0e1 ]
+[ Upstream commit d06f2ebf67ff2962fe00d687e4f0d4703eb41a12 ]
 
-While rfcomm_recv_frame() verifies that skb->len is at least
-sizeof(*hdr) + 1 (4 bytes: 3-byte header + 1-byte FCS), an RFCOMM frame
-with an extended 2-byte length field (!__test_ea(hdr->len)) has a 4-byte
-header plus a 1-byte FCS (5 bytes minimum, sizeof(*hdr) + 2).
+The original code used DMA_ATTR_FORCE_CONTIGUOUS, which could exhaust
+the CMA pool when a large number of VFs were requested.
 
-When a 4-byte RFCOMM frame with EA == 0 arrives:
-1. The initial skb->len < sizeof(*hdr) + 1 check passes (4 < 4 is false).
-2. Trimming the FCS byte decrements skb->len to 3.
-3. If __check_fcs() succeeds, skb_pull(skb, 4) fails (4 > 3) and returns
-   NULL without advancing skb->data.
-4. Because the return value of skb_pull() is ignored, the un-pulled
-   3-byte struct rfcomm_hdr remains at skb->data and is either queued as
-   application payload via rfcomm_recv_data() or parsed as a multiplexer
-   control command via rfcomm_recv_mcc() on DLCI 0.
+Fix this by switching to the DMA streaming API. This is equivalent on
+Octeon platforms, which provide full I/O coherency via the SMMU.
 
-Fix this by extending the length check in rfcomm_recv_frame() to also
-require skb->len >= sizeof(*hdr) + 2 when !__test_ea(hdr->len).
-
-Fixes: b230e5bf501c ("Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame")
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Fixes: 73d33dbc0723 ("octeontx2-af: Use DMA_ATTR_FORCE_CONTIGUOUS attribute in DMA alloc")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Leon Romanovsky <leon@kernel.org>
+Link: https://patch.msgid.link/20260916022111.1083017-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../ethernet/marvell/octeontx2/af/common.h    | 45 ++++++++++++++++---
+ 1 file changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 5dc575833371a..6c57f5a766c17 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1817,7 +1817,8 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
- 		return s;
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/common.h b/drivers/net/ethernet/marvell/octeontx2/af/common.h
+index 2436c1ff9ba4c..680cbee17ca6f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/common.h
+@@ -7,6 +7,10 @@
+ #ifndef COMMON_H
+ #define COMMON_H
  
--	if (skb->len < sizeof(*hdr) + 1) {
-+	if (skb->len < sizeof(*hdr) + 1 ||
-+	    (!__test_ea(hdr->len) && skb->len < sizeof(*hdr) + 2)) {
- 		kfree_skb(skb);
- 		return s;
- 	}
++#include <linux/dma-mapping.h>
++#include <linux/gfp.h>
++#include <linux/mm.h>
++
+ #include "rvu_struct.h"
+ 
+ #define OTX2_ALIGN			128  /* Align to cacheline */
+@@ -44,6 +48,33 @@ struct qmem {
+ 	u32		qsize;
+ };
+ 
++static inline void *otx2_dma_alloc_coherent(struct device *dev, size_t size,
++					    dma_addr_t *dma_handle)
++{
++	dma_addr_t dma_addr;
++	void *vaddr;
++
++	vaddr = kzalloc(size, GFP_KERNEL);
++	if (!vaddr)
++		return NULL;
++
++	dma_addr = dma_map_single(dev, vaddr, size, DMA_BIDIRECTIONAL);
++	if (dma_mapping_error(dev, dma_addr)) {
++		kfree(vaddr);
++		return NULL;
++	}
++
++	*dma_handle = dma_addr;
++	return vaddr;
++}
++
++static inline void otx2_dma_free_coherent(struct device *dev, size_t size,
++					  void *vaddr, dma_addr_t dma_handle)
++{
++	dma_unmap_single(dev, dma_handle, size, DMA_BIDIRECTIONAL);
++	kfree(vaddr);
++}
++
+ static inline int qmem_alloc(struct device *dev, struct qmem **q,
+ 			     int qsize, int entry_sz)
+ {
+@@ -60,8 +91,11 @@ static inline int qmem_alloc(struct device *dev, struct qmem **q,
+ 
+ 	qmem->entry_sz = entry_sz;
+ 	qmem->alloc_sz = (qsize * entry_sz) + OTX2_ALIGN;
+-	qmem->base = dma_alloc_attrs(dev, qmem->alloc_sz, &qmem->iova,
+-				     GFP_KERNEL, DMA_ATTR_FORCE_CONTIGUOUS);
++
++	if (get_order(PAGE_ALIGN(qmem->alloc_sz)) > MAX_PAGE_ORDER)
++		return -ENOMEM;
++
++	qmem->base = otx2_dma_alloc_coherent(dev, qmem->alloc_sz, &qmem->iova);
+ 	if (!qmem->base)
+ 		return -ENOMEM;
+ 
+@@ -80,10 +114,9 @@ static inline void qmem_free(struct device *dev, struct qmem *qmem)
+ 		return;
+ 
+ 	if (qmem->base)
+-		dma_free_attrs(dev, qmem->alloc_sz,
+-			       qmem->base - qmem->align,
+-			       qmem->iova - qmem->align,
+-			       DMA_ATTR_FORCE_CONTIGUOUS);
++		otx2_dma_free_coherent(dev, qmem->alloc_sz,
++				       qmem->base - qmem->align,
++				       qmem->iova - qmem->align);
+ 	devm_kfree(dev, qmem);
+ }
+ 
 -- 
 2.53.0
 
