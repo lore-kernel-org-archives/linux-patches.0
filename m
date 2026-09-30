@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5033B3BF2;
-	Wed, 30 Sep 2026 19:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8855734E75A;
+	Wed, 30 Sep 2026 19:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795539; cv=none; b=qdFZ/eA2BH/WmGInKoVB7FiuDfNwjuX9ynUQ8pW8E6T1ScdETrKEXJheckIfhrA+0Q4CHqmtRcZr4bZfoxmp2jVNpLwa7OfHeHbl3Q0gpZC3lYWvF2SYiAYBsuM8ZMVEDrOaGfmW1qs9SvFqdHinoqhvqNJj5m3asQISrnZr41o=
+	t=1790795541; cv=none; b=gL0tGcP5R2hGGafUcU8SUkVmmnzfjemlKdXGPmLcOkTZ3Hv9SE0Gf9q3obbLpaJw60cSNcQq+/4qhtUO92LgzOeRWHArI+zw+sEqVFKXpEv26KcuWhTO+T+K6APNET4UVIn8hXoyZQhUPskjakYNnK/D1HPWQ8uJaIfVGbRLTuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795539; c=relaxed/simple;
-	bh=EYsS4eI600KvoaHeKtoR/861w+qND1ThzxvBXaqpeJ0=;
+	s=arc-20240116; t=1790795541; c=relaxed/simple;
+	bh=rtvqPBtqkrRQvsYPAH4D3Wk5z0mgIViKqT7Vlt+ZL6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+GqY7Tgss2Bx0Jvgs1YuYFzCac/GbjsS35aze0brFiRHVsAQGu6KzdYEUFY1/Ws4+KUhSRDV5ubfwlZxUGpv4omEoLAGPKN7bL+fkNlN6FWExTS/ZfVSqBIUpon2hr1+JZRGykJ5dq3HaTJgXVhMCLajrEdKojx0eRzRsVqUnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzI/AN53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AZZy9cwFOwpUP63If1QvktupEbqhOVhJLIJtp8IHOhaR/vH3wXZwYD5iYrTP8Bfjk0guvTtunNpaXOJBph+dEFwabhnBG+tQhsk2xFPYKcff/px0+47sw2qjEWQZQ/Ise84901CKx5EGGLtMfkT4dja/PPjuT1vqJml3ZkDE8Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOa03gXY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzI/AN53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B4C1F00898;
-	Wed, 30 Sep 2026 19:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOa03gXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F1A1F000FF;
+	Wed, 30 Sep 2026 19:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795537;
-	bh=ENwRsANJ74pPKCU4C1220rdmv4KoNsIHrHRrHdYmo2Q=;
+	s=korg; t=1790795540;
+	bh=0HZDTY0euGNmK7vuSQQ3BOHw93TUpT16ZDOby+wS/qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pzI/AN53p48GBX0kRCXQ9N8DHFJQuqPnKp9vhhdp6bg7yfyQWMcae2S8myQl1wRCy
-	 yxkoygB0CnfoiMM2AyU0Q792XjnPjqRg0GfuX6izHVc3k/oc1xfbME31NOa+b0mwSI
-	 OT9zab0vWNAnyZjnakBJwa7jyH4VsTgh+U44/UKU=
+	b=eOa03gXYd9VJ9dQsnaVG34ubWfkfeV6/pHXm4E1uCl9JnYAWtVUvvH+44xlJCh4Lp
+	 suhUgLutwx5g1UOuLnU4POt/2uAW35C2c2W9IK5UhcZI7/Nf0sDpMniB0NsWjrU9xq
+	 oVqDI3Yf0SfMkEnCw8FerMsjgKuTpP60eMYM3HAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanishka De Silva <kpskanna1915@gmail.com>,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0595/1193] ksmbd: prevent out-of-bounds reads in share config responses
-Date: Wed, 30 Sep 2026 17:21:19 +0200
-Message-ID: <20260930152447.464619496@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 0596/1193] powerpc/ps3: Fix repository.c build failure
+Date: Wed, 30 Sep 2026 17:21:20 +0200
+Message-ID: <20260930152447.485366508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -46,152 +44,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit f25e93768fcc5d8287e50b1ec52a42e4c276df34 ]
+commit 5ba79d37403d86082ab4083b0f51ec3008a942cb upstream.
 
-Validate IPC share configuration payload sizes before consuming
-variable-length fields. Bound veto list parsing and account for
-the separator byte when deriving the path length.
+GCC fails to build ps3_defconfig with the following errors:
 
-Fixes: a677ebd8ca2f ("ksmbd: validate payload size in ipc response")
-Reported-by: Kanishka De Silva <kpskanna1915@gmail.com>
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  arch/powerpc/platforms/ps3/repository.c: In function ‘make_first_field.constprop’:
+  arch/powerpc/platforms/ps3/repository.c:78:9: error: ‘strnlen’ specified bound 8 exceeds source size 3 [-Werror=stringop-overread]
+     78 |         memcpy((char *)&n, text, strnlen(text, sizeof(n)));
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  arch/powerpc/platforms/ps3/repository.c: In function ‘make_first_field.constprop’:
+  arch/powerpc/platforms/ps3/repository.c:78:9: error: ‘strnlen’ specified bound 8 exceeds source size 4 [-Werror=stringop-overread]
+     78 |         memcpy((char *)&n, text, strnlen(text, sizeof(n)));
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The current use of strnlen(text, sizeof(n)) triggers -Wstringop-overread
+when text is a short string literal that is smaller than sizeof(n), such
+as "bi" or "bus". Use strlen(text) instead and clamp the copy length to
+sizeof(n) before memcpy().
+
+Drop the redundant char * cast while at it.
+
+Fixes: f94a84a09148 ("powerpc/ps3: refactor strncpy usage")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260703165834.137242-2-thorsten.blum@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/share_config.c | 38 +++++++++++++++++++++++--------
- fs/smb/server/transport_ipc.c     | 21 +++++++++++------
- 2 files changed, 42 insertions(+), 17 deletions(-)
+ arch/powerpc/platforms/ps3/repository.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index d8d03070ae44b..7db7345f1af94 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -88,9 +88,9 @@ static struct ksmbd_share_config *__share_lookup(const char *name)
+diff --git a/arch/powerpc/platforms/ps3/repository.c b/arch/powerpc/platforms/ps3/repository.c
+index b8c030eab138..0cc755ac3e7f 100644
+--- a/arch/powerpc/platforms/ps3/repository.c
++++ b/arch/powerpc/platforms/ps3/repository.c
+@@ -6,6 +6,8 @@
+  *  Copyright 2006 Sony Corp.
+  */
  
- static int parse_veto_list(struct ksmbd_share_config *share,
- 			   char *veto_list,
--			   int veto_list_sz)
-+			   size_t veto_list_sz)
++#include <linux/minmax.h>
++
+ #include <asm/lv1call.h>
+ 
+ #include "platform.h"
+@@ -74,8 +76,9 @@ static void _dump_node(unsigned int lpar_id, u64 n1, u64 n2, u64 n3, u64 n4,
+ static u64 make_first_field(const char *text, u64 index)
  {
--	int sz = 0;
-+	size_t sz;
+ 	u64 n = 0;
++	size_t len = min(strlen(text), sizeof(n));
  
- 	if (!veto_list_sz)
- 		return 0;
-@@ -98,7 +98,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 	while (veto_list_sz > 0) {
- 		struct ksmbd_veto_pattern *p;
+-	memcpy((char *)&n, text, strnlen(text, sizeof(n)));
++	memcpy(&n, text, len);
+ 	return PS3_VENDOR_ID_NONE + (n >> 32) + index;
+ }
  
--		sz = strlen(veto_list);
-+		sz = strnlen(veto_list, veto_list_sz);
- 		if (!sz)
- 			break;
- 
-@@ -106,7 +106,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 		if (!p)
- 			return -ENOMEM;
- 
--		p->pattern = kstrdup(veto_list, GFP_KERNEL);
-+		p->pattern = kstrndup(veto_list, sz, GFP_KERNEL);
- 		if (!p->pattern) {
- 			kfree(p);
- 			return -ENOMEM;
-@@ -114,6 +114,9 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 
- 		list_add(&p->list, &share->veto_list);
- 
-+		if (sz == veto_list_sz)
-+			break;
-+
- 		veto_list += sz + 1;
- 		veto_list_sz -= (sz + 1);
- 	}
-@@ -160,13 +163,27 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 	share->name = kstrdup(name, GFP_KERNEL);
- 
- 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
--		int path_len = PATH_MAX;
-+		size_t path_len;
- 
--		if (resp->payload_sz)
-+		if (resp->payload_sz <= resp->veto_list_sz) {
-+			ret = -EINVAL;
-+		} else {
- 			path_len = resp->payload_sz - resp->veto_list_sz;
--
--		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
--				      GFP_KERNEL);
-+			if (resp->veto_list_sz)
-+				path_len--;
-+
-+			if (!path_len) {
-+				ret = -EINVAL;
-+			} else {
-+				share->path = kstrndup(
-+					ksmbd_share_config_path(resp),
-+					path_len, GFP_KERNEL);
-+				if (!share->path)
-+					ret = -ENOMEM;
-+				else
-+					ret = 0;
-+			}
-+		}
- 		if (share->path) {
- 			share->path_sz = strlen(share->path);
- 			while (share->path_sz > 1 &&
-@@ -179,7 +196,8 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 		share->force_directory_mode = resp->force_directory_mode;
- 		share->force_uid = resp->force_uid;
- 		share->force_gid = resp->force_gid;
--		ret = parse_veto_list(share,
-+		if (!ret)
-+			ret = parse_veto_list(share,
- 				      KSMBD_SHARE_CONFIG_VETO_LIST(resp),
- 				      resp->veto_list_sz);
- 		if (!ret && share->path) {
-diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
-index bbe039a05b1c3..80fd1316d176b 100644
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -524,14 +524,21 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
- 			return -EINVAL;
- 
--		if (resp->payload_sz) {
--			if (resp->payload_sz < resp->veto_list_sz)
--				return -EINVAL;
-+		if (strnlen(resp->share_name, sizeof(resp->share_name)) ==
-+		    sizeof(resp->share_name))
-+			return -EINVAL;
- 
--			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
--					       resp->payload_sz, &msg_sz))
--				return -EINVAL;
--		}
-+		if (resp->veto_list_sz > resp->payload_sz)
-+			return -EINVAL;
-+
-+		if (resp->flags != KSMBD_SHARE_FLAG_INVALID &&
-+		    !(resp->flags & KSMBD_SHARE_FLAG_PIPE) &&
-+		    resp->payload_sz <= resp->veto_list_sz)
-+			return -EINVAL;
-+
-+		if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 		break;
- 	}
- 	case KSMBD_EVENT_LOGIN_REQUEST_EXT:
 -- 
-2.53.0
+2.55.0
 
 
 
