@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE8138E8CE;
-	Wed, 30 Sep 2026 18:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FBA38E8CE;
+	Wed, 30 Sep 2026 18:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791367; cv=none; b=T0Xjqo1GtvSa902S5ddg5FKonLhjKbXoCIxroZdkJ0QWXecn50uzdxy+D3bWMMHoLsyXIRP/z8uwz3ljLIrurrYH3qtB/tzAycWIokXSPEOLaxkSgHInJuu7UBIHjm12ot4n7XH82QRnZvuuK3mNuibeJ5VTKWAo16Ein6JIIm4=
+	t=1790791370; cv=none; b=ajuID2ezug9G/JA9tpwuBPODiFehdMk4xRjhHLARATsTAYmpD06hd7ogwTd4l4Dr58R4ciHz0zL3iXybSIbUuR33g3hNN6FNQssKgS3L9gwOfH9YxbcDIflu4k70eBmEq+vmR66gnffka4tiEDgd6FdyvoZi0PJCTQnq83egpnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791367; c=relaxed/simple;
-	bh=tB7eyQBwktjdMVdppjEoc5JnZzWAEum8eDsKOVZnP/A=;
+	s=arc-20240116; t=1790791370; c=relaxed/simple;
+	bh=D6xzqgtAladrUSa4m3QwJnU7qAAV8NQGI+6YwcHmbUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwpdJdjZyeAsoW5YDRD9vj+WLBf52Jx/5UdspR0c9mYLPziaFz9gHmXO3YixUXlYCJlVL5iCfRZDbEv1W755oAyrbRPGJqQXjbXP+EVo/2j7ZnKjmfF2jBvv+QzNAS4etbiROnGc1f6fUKgDuF3P7gXvB8ikfz+lAQvZJDxaMko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm+f4V+O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lHFUhBZCE0EIWCdUKcI009DxE5w9rAUvp4yqaWovqD2GCB2a5Ea6QjGu1U7nmhOtd35gEGwb1Ek+brTeRyReBPVNvFrSRM80o1WHRXeNt7+CILQKtZ2WSviy289o/uE2XiNfUYGTVVTDKz+gqfRdBO05Bc5E9Uo5PVEKmRHz4Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGs1FFYT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm+f4V+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F021F000FF;
-	Wed, 30 Sep 2026 18:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGs1FFYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D08E1F000FF;
+	Wed, 30 Sep 2026 18:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791366;
-	bh=5dk8sCKJ65K2yqEL7+bJ185nK1v+Gst0vaPiztkrHZg=;
+	s=korg; t=1790791369;
+	bh=1Y4CE4j19fniuBsmrC7YPjmey4nljY9AdTlnca4pXVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qm+f4V+OLw1CL1huonb3kR/ZcKpCm8u5Cef5sz42bFtWFWUCsJqGguhtV0y7i/XcP
-	 HxO8/PpzEF9t+tElQ1WRhqU+FHGiYMJg0zP51AYZy4t7XsC7IeazsDLJ8FkvUJllXW
-	 pd+wnwGH68scFz3myNWP+vw0PwYECtBLceY7+Rhs=
+	b=dGs1FFYTYU98NsM2SqsV0VqaaRKD8v9i3Gs19xG5r67MhGVV3Mg/1OoXzKaz14CbN
+	 6hSNMu7nOsNQX1GRnMbjiOs85kQ1OduNLcBFjPwrmSpBXQ33MxMrcznd3iNDEsgB6/
+	 Ak71iAg7U3HNf3hyyMjGOEjdrPOzNO7jhy753hno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitesh Narayan Lal <nitesh@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sreekanth Reddy <sreekanth.reddy@broadcom.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 270/752] scsi: mpt3sas: Use irq_set_affinity_and_hint()
-Date: Wed, 30 Sep 2026 17:22:20 +0200
-Message-ID: <20260930152404.126807841@linuxfoundation.org>
+Subject: [PATCH 5.15 279/752] ASoC: ux500: Propagate MSP setup errors
+Date: Wed, 30 Sep 2026 17:22:29 +0200
+Message-ID: <20260930152404.327491756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,102 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitesh Narayan Lal <nitesh@redhat.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit fdb8ed13a77270c8e6e05b3ff9f4cb2f57e16d6a ]
+[ Upstream commit 3415421a2b0bc4e32bb5a9df24ed7863512d47a7 ]
 
-The driver uses irq_set_affinity_hint() specifically for the high IOPS
-queue interrupts for two purposes:
+The prepare callback continues with a partly initialized configuration
+when format setup fails. Probe likewise tests the allocated pointer
+instead of the return value, so an MMIO resource or mapping failure can
+be ignored after allocation succeeds.
 
- - To set the affinity_hint which is consumed by the userspace for
-   distributing the interrupts
+Return configuration failures from prepare and test the MSP
+initialization result directly.
 
- - To apply an affinity that it provides
-
-The driver enforces its own affinity to bind the high IOPS queue interrupts
-to the local NUMA node. However, irq_set_affinity_hint() applying the
-provided cpumask as an affinity (if not NULL) for the interrupt is an
-undocumented side effect.
-
-To remove this side effect irq_set_affinity_hint() has been marked
-as deprecated and new interfaces have been introduced. Hence, replace the
-irq_set_affinity_hint() with the new interface irq_set_affinity_and_hint()
-where the provided mask needs to be applied as the affinity and
-affinity_hint pointer needs to be set and replace with
-irq_update_affinity_hint() where only affinity_hint needs to be updated.
-
-Signed-off-by: Nitesh Narayan Lal <nitesh@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Sreekanth Reddy <sreekanth.reddy@broadcom.com>
-Link: https://lore.kernel.org/r/20210903152430.244937-6-nitesh@redhat.com
-Stable-dep-of: e0d26fe176a8 ("scsi: mpt3sas: Avoid out-of-bounds cpumask_of_node() call in _base_assign_reply_queues()")
+Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-2-4b60b002d55a@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ sound/soc/ux500/ux500_msp_dai.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
-index 32c8f5728d4cb..80c12b5a468cf 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -3114,6 +3114,7 @@ _base_check_enable_msix(struct MPT3SAS_ADAPTER *ioc)
- void
- mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
- {
-+	unsigned int irq;
- 	struct adapter_reply_queue *reply_q, *next;
+diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
+index 8d57ee06c46d6..6e71615c3b840 100644
+--- a/sound/soc/ux500/ux500_msp_dai.c
++++ b/sound/soc/ux500/ux500_msp_dai.c
+@@ -470,7 +470,9 @@ static int ux500_msp_dai_prepare(struct snd_pcm_substream *substream,
+ 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter (rate = %d).\n", __func__,
+ 		dai->id, snd_pcm_stream_str(substream), runtime->rate);
  
- 	if (list_empty(&ioc->reply_queue_list))
-@@ -3126,9 +3127,10 @@ mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
- 			continue;
- 		}
+-	setup_msp_config(substream, dai, &msp_config);
++	ret = setup_msp_config(substream, dai, &msp_config);
++	if (ret)
++		return ret;
  
--		if (ioc->smp_affinity_enable)
--			irq_set_affinity_hint(pci_irq_vector(ioc->pdev,
--			    reply_q->msix_index), NULL);
-+		if (ioc->smp_affinity_enable) {
-+			irq = pci_irq_vector(ioc->pdev, reply_q->msix_index);
-+			irq_update_affinity_hint(irq, NULL);
-+		}
- 		free_irq(pci_irq_vector(ioc->pdev, reply_q->msix_index),
- 			 reply_q);
- 		kfree(reply_q);
-@@ -3195,18 +3197,15 @@ _base_request_irq(struct MPT3SAS_ADAPTER *ioc, u8 index)
-  * @ioc: per adapter object
-  *
-  * The enduser would need to set the affinity via /proc/irq/#/smp_affinity
-- *
-- * It would nice if we could call irq_set_affinity, however it is not
-- * an exported symbol
-  */
- static void
- _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
- {
--	unsigned int cpu, nr_cpus, nr_msix, index = 0;
-+	unsigned int cpu, nr_cpus, nr_msix, index = 0, irq;
- 	struct adapter_reply_queue *reply_q;
--	int local_numa_node;
- 	int iopoll_q_count = ioc->reply_queue_count -
- 	    ioc->iopoll_q_start_index;
-+	const struct cpumask *mask;
+ 	ret = ux500_msp_i2s_open(drvdata->msp, &msp_config);
+ 	if (ret < 0) {
+@@ -765,7 +767,7 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
+ 	}
  
- 	if (!_base_is_controller_msix_enabled(ioc))
- 		return;
-@@ -3229,11 +3228,11 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
- 		 * corresponding to high iops queues.
- 		 */
- 		if (ioc->high_iops_queues) {
--			local_numa_node = dev_to_node(&ioc->pdev->dev);
-+			mask = cpumask_of_node(dev_to_node(&ioc->pdev->dev));
- 			for (index = 0; index < ioc->high_iops_queues;
- 			    index++) {
--				irq_set_affinity_hint(pci_irq_vector(ioc->pdev,
--				    index), cpumask_of_node(local_numa_node));
-+				irq = pci_irq_vector(ioc->pdev, index);
-+				irq_set_affinity_and_hint(irq, mask);
- 			}
- 		}
- 
+ 	ret = ux500_msp_i2s_init_msp(pdev, &drvdata->msp);
+-	if (!drvdata->msp) {
++	if (ret) {
+ 		dev_err(&pdev->dev,
+ 			"%s: ERROR: Failed to init MSP-struct (%d)!",
+ 			__func__, ret);
 -- 
 2.53.0
 
