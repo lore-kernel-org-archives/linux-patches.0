@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3546502D5A;
-	Wed, 30 Sep 2026 18:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAAB4ABBA5;
+	Wed, 30 Sep 2026 18:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792195; cv=none; b=hJtrz+iK+i3cMPef4V+mR4VHPukOrIRYjykGK8oxExhvX9IXLpJlt2Dp3vrofD9f2N56eWn99eSMGnmuWNCWq0AEATYs2EiQSEErzoQCpWY1SdPnuYn7T33Nhi4+IoTlVSopWONOA/KBdsw+PREIwcjD4bKaSXt9hoPdEp/qg08=
+	t=1790792198; cv=none; b=eVVdTZCv5jA9yyO1rXSZG5P2sLZxxFiNKxLEUozfsuC0nVQ9z4TB0gBk1wBaGeim5jHtj+4+TszYsPj+ltt8kOK7/EiKKVMeIKvuEsNXUcZoNUbXV6XU7UK/cfC2J/lfD2dpHn4bfAD9V+NKOXW6crjTtxWqLVLm16yPvY7FoME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792195; c=relaxed/simple;
-	bh=2gQjPXC6QQSZ66qA3AYNqoqaW7m3/SUbGq8tb+c2W1c=;
+	s=arc-20240116; t=1790792198; c=relaxed/simple;
+	bh=FZemDMBa79d2hJxdGxYdPnSj+CMfXeM09vgOUZyQIs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VNq7nuNCeaze8ffnJ2bpTXdZFJ0y5mx2FWScjc8vIeJyOuyIbKP6pA2sEUWkbH56Bw0B9Up46Zz+0ltVXXFv1OZFcFb4M85PPE3YnLM8nrbMVhS0GpHVU0lG2y8/bMjkCKEEp27ukcf9Yv8HXdGPvOckqkkRPt7u8YHeec2X55E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQPVh56X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VeUa3pXznEDyN2mCP+AOEznAowEqrLbUt5H0J1qbzOaYZuE8+4eeb8wQG6oN8xXhliMF2AeZLFBxyS/nuF1nA5FhVUgsE5yJgD17Et0AVrzClzUvPRPSqPUbvXHPs+d8yIhbIlanUhWGQ+bemzXrZlMDK9vxggSJw/zqHrTgOwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjMg5Yhx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQPVh56X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105FB1F000FF;
-	Wed, 30 Sep 2026 18:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjMg5Yhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90381F000FF;
+	Wed, 30 Sep 2026 18:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792194;
-	bh=g9R7LLaCIPfGibyLjEod7B6CMD/MWBOoSfTx+E373mk=;
+	s=korg; t=1790792197;
+	bh=9V2bZuX60Yr+04TerbhUdBP0RiwaJ5BjT/6ktBwKkKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vQPVh56XCFs+ayC/POX969ko0HKuEPleP7Sxy0Gi7dfsma4YF0Rm4HiuOwm0NEF9t
-	 Iv90m+GUsFn64FBXpk4GKTtrPW6elXk7X8ujOfpQ8o3jbC6IXhOx9KeZFBfeCjtTZc
-	 Q+SwL2qZ4cEC8h9UNodyAdFLWWNuZ+Zqv420050Y=
+	b=qjMg5Yhxsctjy6e7wQ4ayxuicqiuLMA2AOjDz1DpGDdo8YuFW1SeyxppNKDbxZSz5
+	 +sfCUkPjw5f9XaEQcrOc90riIsbgQeiNwrnAliVwWmBTHeMAMrmLOl4fTS93zpo7mM
+	 xNz7ncPyavhL3IWMz/nkybTid4ON/A0n5C3usCXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 570/752] wifi: brcmsmac: fix UAF in brcms_free_timer()
-Date: Wed, 30 Sep 2026 17:27:20 +0200
-Message-ID: <20260930152410.568590475@linuxfoundation.org>
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Martin-=C3=89ric=20Racine?= <martin-eric.racine+kernel-bugzilla@iki.fi>
+Subject: [PATCH 5.15 571/752] wifi: iwlegacy: fix broadcast stations deallocation
+Date: Wed, 30 Sep 2026 17:27:21 +0200
+Message-ID: <20260930152410.589645539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -45,49 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-commit 1eeca1d5e0920fbdad6449768fd2d4364e714180 upstream.
+commit b5526b780f8b297a76030410b96ba29153afb98f upstream.
 
-brcms_free_timer() calls brcms_del_timer() which uses the non-synchronous
-cancel_delayed_work() to cancel the timer's underlying delayed work.  If
-the work callback (_brcms_timer) is already running, cancel_delayed_work()
-returns false without waiting, and brcms_free_timer() proceeds to kfree(t)
-while the callback still accesses t through container_of().
+On the error path of __il4965_up(), il_dealloc_bcast_stations() clears
+only IL_STA_UCODE_ACTIVE, leaving IL_STA_BCAST set. This causes the
+same broadcast stations to be deallocated again by __il4965_down().
 
-Add an explicit cancel_delayed_work_sync() after brcms_del_timer() to
-guarantee that any in-flight callback has completed before the timer
-structure is freed.
+This can occur when RF_KILL is toggled during driver startup.
 
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260815121043.938414-1-yijiangshan@kylinos.cn
+To fix clear the entire 'used' field, since we will not do any
+other operations on the station.
+
+Reported-and-tested-by: Martin-Éric Racine <martin-eric.racine+kernel-bugzilla@iki.fi>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221733
+Fixes: c2fd34469d16 ("iwl4965: Fix a memory leak in error handling code of __il4965_up")
+Cc: <stable@vger.kernel.org> # 7.1.x: 57aa1718d595 wifi: iwlegacy: replace BUG_ON() with WARN_ON() on num_stations check
+Cc: <stable@vger.kernel.org> # 6.x.x: 57aa1718d595 wifi: iwlegacy: replace BUG_ON() with WARN_ON() on num_stations check
+Cc: <stable@vger.kernel.org> # 5.x.x: 57aa1718d595 wifi: iwlegacy: replace BUG_ON() with WARN_ON() on num_stations check
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260820093059.18779-1-stf_xl@wp.pl
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/intel/iwlegacy/common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/mac80211_if.c
-@@ -1567,6 +1567,10 @@ void brcms_free_timer(struct brcms_timer
+--- a/drivers/net/wireless/intel/iwlegacy/common.c
++++ b/drivers/net/wireless/intel/iwlegacy/common.c
+@@ -2324,7 +2324,7 @@ il_dealloc_bcast_stations(struct il_priv
+ 		if (!(il->stations[i].used & IL_STA_BCAST))
+ 			continue;
  
- 	/* delete the timer in case it is active */
- 	brcms_del_timer(t);
-+	/* Ensure the callback has finished before freeing the timer
-+	 * structure, since brcms_del_timer() uses non-synchronous cancel.
-+	 */
-+	cancel_delayed_work_sync(&t->dly_wrk);
- 
- 	if (wl->timers == t) {
- 		wl->timers = wl->timers->next;
+-		il->stations[i].used &= ~IL_STA_UCODE_ACTIVE;
++		il->stations[i].used = 0;
+ 		il->num_stations--;
+ 		BUG_ON(il->num_stations < 0);
+ 		kfree(il->stations[i].lq);
 
 
