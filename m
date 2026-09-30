@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E4B522F1F;
-	Wed, 30 Sep 2026 18:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909DC52CCC1;
+	Wed, 30 Sep 2026 18:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793711; cv=none; b=VCLc+Q8RZITQ/tXp1HGrFcd5+nyxpaVSkkrm3nDWhDOa03PYmOyH2ogfySXYh+yVrrwTvnXAauRADHkGZYAlmi9TAYdEqPA9QSPVTtEC0p3LtDVjPixutju2+VI3WsXZwhaZ+zKtUUweSavdKTvAihw8PLVP3FvXiTbzr8F2OnA=
+	t=1790793714; cv=none; b=KKZWWFy2jzDvDg4zha7NVWLCF3BRPr9gtmd4+qMxeUsOM8F20qiDj/IUXVJruUJSBqCEegXs83xGkC1Vyw1mnaPm93OFunrWc4JrpWetiWInibbgPrWToK452fajYNXQRBUObxGI+64k2Kpxxax+l658p/5Hq28juPUTh3uuN90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793711; c=relaxed/simple;
-	bh=CCJUnRXlnp6+vpn+0oVQ4cbsL1y7xpbdiFqyJPBpBzM=;
+	s=arc-20240116; t=1790793714; c=relaxed/simple;
+	bh=1tsmnu1/Zeqb6bbsRkGcYZyKp5u+EJgmJYSLfqyKclw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blYFiyrYbqmEiU3bn4JAPGfmKEifQsWIfYjoJsqiZ1Op9NBZ7K0+qgB23W4HEtYzNx7+Orzm4jbaN0KexAqppnn+UkakblKPu9nZBi80aejBNlU18Zgx0PgiJPqufAByFLoV1JRZRpLuNfkTzZqmhXFQgyoqzsnDYSelwaj8gQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kR6DJXms; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oLHpTeWgsl3gXnKj3QM8pFGYcOa6wgRKbyI7VzW3ZpchYHpGz06OsMVKsncSkb1cV3B+CCGVE8L/6d6fb3kKWqiXkUaTTJGtrbLoar9uA4/2057H5vR2bbQvZfdK0Bx+NZC/e/qyF1eWUWJzT+WsArrLRkj//6cNOweYZ+cPE+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACARQwID; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kR6DJXms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7EC1F000FF;
-	Wed, 30 Sep 2026 18:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACARQwID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6081F000FF;
+	Wed, 30 Sep 2026 18:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793710;
-	bh=OJLYolqMiMPGGeQcJKNQhcQNdv5E0WXh3wjOBgKBfT4=;
+	s=korg; t=1790793713;
+	bh=KDniQbgFQC7Ps+DHy5QPRc/G5OYeKq4yRVO80jftccw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kR6DJXms6QXVP1TtPEog+M9Is0X6JMUSz0dU07hI9zo1eHnbnztqJ/WNcC8SRE6lv
-	 KCKrO+O9ztjFHJWwJU2yKCaFZOwyA7FlFEMOWy9uFNG+3jWsouJ0hmBnb1Ctb1Qy/w
-	 g+MZCIpK8AD/gjTLf51YCyLYqVFyIfIcKlxb8aPk=
+	b=ACARQwID/RkmmVmrmJ1IbNwT1Sa7AJeMJLmAOSNanVhIcWos+xV+xj93CR8W5p+Br
+	 OSGQI9UHIahIjBQ0ec+0aVx2SNFqp+G2dOLxyabOv+3VI12B13J4GxXjNN1EH4qxF+
+	 TUHxhFIO0vVgEY2fwXNGrxZF0yn1DgA/l+elEsOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
+	Guopeng Zhang <guopeng.zhang@linux.dev>,
+	Hui Peng <benquike@gmail.com>,
 	Waiman Long <longman@redhat.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 350/395] cgroup/cpuset: Ensure domain isolated CPUs stay in root or isolated partition
-Date: Wed, 30 Sep 2026 17:30:12 +0200
-Message-ID: <20260930152348.271832016@linuxfoundation.org>
+Subject: [PATCH 6.18 351/395] cgroup/cpuset: Return PERR_NOCPUS in remote_partition_enable() on subpartitions_cpus conflict
+Date: Wed, 30 Sep 2026 17:30:13 +0200
+Message-ID: <20260930152348.295391568@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,85 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit b1034a690129acd8995137bf4462470b4a2aa690 ]
+[ Upstream commit 31c88350b7dd1522792f726f79607f31bb55c50f ]
 
-Commit 4a74e418881f ("cgroup/cpuset: Check partition conflict with
-housekeeping setup") is supposed to ensure that domain isolated CPUs
-designated by the "isolcpus" boot command line option stay either in
-root partition or in isolated partitions. However, the required check
-wasn't implemented when a remote partition was created or when an
-existing partition changed type from "root" to "isolated".
+When a remote partition is created underneath an existing local partition
+via a non-partition (PRS_MEMBER) intermediate cgroup, update_prstate() sees
+parent->partition_root_state == PRS_MEMBER and calls
+remote_partition_enable().
 
-Even though this is a relatively minor issue, we still need to add the
-required prstate_housekeeping_conflict() call in the right places to
-ensure that the rule is strictly followed.
+Commit 86888c7bd117 ("cgroup/cpuset: Add warnings to catch inconsistency
+in exclusive CPUs") replaced the cpumask_intersects(tmp->new_cpus,
+subpartitions_cpus) error check in remote_partition_enable() with
+WARN_ON_ONCE(). As a result, remote_partition_enable() emits a warning
+and proceeds to enable the remote partition on CPUs that are already
+owned by the ancestor local partition in subpartitions_cpus.
 
-The following steps can be used to reproduce the problem before this
-fix.
+This can be reproduced on Linux 7.3.0-rc3 with:
 
-  # fmt -1 /proc/cmdline | grep isolcpus
-  isolcpus=9
-  # cd /sys/fs/cgroup/
-  # echo +cpuset > cgroup.subtree_control
-  # mkdir test
-  # echo 9 > test/cpuset.cpus
-  # echo isolated > test/cpuset.cpus.partition
-  # cat test/cpuset.cpus.partition
-  isolated
-  # cat test/cpuset.cpus.effective
-  9
-  # echo root > test/cpuset.cpus.partition
-  # cat test/cpuset.cpus.effective
-  9
-  # cat test/cpuset.cpus.partition
-  root
+  mkdir -p /tmp/cg1
+  mount -t cgroup2 none /tmp/cg1
+  echo "+cpuset" > /tmp/cg1/cgroup.subtree_control
 
-With this fix, the last few steps will become:
+  mkdir /tmp/cg1/A
+  echo 1 > /tmp/cg1/A/cpuset.cpus
+  echo 1 > /tmp/cg1/A/cpuset.cpus.exclusive
+  echo root > /tmp/cg1/A/cpuset.cpus.partition
+  echo "+cpuset" > /tmp/cg1/A/cgroup.subtree_control
 
-  # echo root > test/cpuset.cpus.partition
-  # cat test/cpuset.cpus.effective
-  0-8,10-95
-  # cat test/cpuset.cpus.partition
-  root invalid (partition config conflicts with housekeeping setup)
+  mkdir /tmp/cg1/A/B
+  echo 1 > /tmp/cg1/A/B/cpuset.cpus
+  echo 1 > /tmp/cg1/A/B/cpuset.cpus.exclusive
+  echo "+cpuset" > /tmp/cg1/A/B/cgroup.subtree_control
 
-Reported-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Chen Ridong <chenridong@huawei.com>
+  mkdir /tmp/cg1/A/B/D
+  echo 1 > /tmp/cg1/A/B/D/cpuset.cpus
+  echo 1 > /tmp/cg1/A/B/D/cpuset.cpus.exclusive
+  echo root > /tmp/cg1/A/B/D/cpuset.cpus.partition
+
+which triggers:
+
+  WARNING: kernel/cgroup/cpuset.c:1594 at remote_partition_enable+0x1c1/0x300
+
+and leaves both /tmp/cg1/A and /tmp/cg1/A/B/D as active root partitions
+claiming exclusive CPU 1.
+
+Fix this by returning PERR_NOCPUS when tmp->new_cpus intersects
+subpartitions_cpus in remote_partition_enable(), matching the error code
+used by remote_cpus_update() for the same subpartitions_cpus conflict, and
+add a regression test case to
+tools/testing/selftests/cgroup/test_cpuset_prs.sh.
+
+Tested in QEMU on Linux 7.3.0-rc3 using the reproducer above and
+tools/testing/selftests/cgroup/test_cpuset_prs.sh.
+
+Fixes: 86888c7bd117 ("cgroup/cpuset: Add warnings to catch inconsistency in exclusive CPUs")
+Suggested-by: Guopeng Zhang <guopeng.zhang@linux.dev>
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: 31c88350b7dd ("cgroup/cpuset: Return PERR_NOCPUS in remote_partition_enable() on subpartitions_cpus conflict")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/cgroup/cpuset.c                            |    3 ++-
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh |    2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
 --- a/kernel/cgroup/cpuset.c
 +++ b/kernel/cgroup/cpuset.c
-@@ -1627,8 +1627,9 @@ static int remote_partition_enable(struc
+@@ -1623,10 +1623,11 @@ static int remote_partition_enable(struc
+ 	 * above it or remote partition root underneath it is not allowed.
+ 	 */
+ 	compute_excpus(cs, tmp->new_cpus);
+-	WARN_ON_ONCE(cpumask_intersects(tmp->new_cpus, subpartitions_cpus));
  	if (!cpumask_intersects(tmp->new_cpus, cpu_active_mask) ||
  	    cpumask_subset(top_cpuset.effective_cpus, tmp->new_cpus))
  		return PERR_INVCPUS;
--	if ((new_prs == PRS_ISOLATED) &&
--	    !isolated_cpus_can_update(tmp->new_cpus, NULL))
-+	if (((new_prs == PRS_ISOLATED) &&
-+	     !isolated_cpus_can_update(tmp->new_cpus, NULL)) ||
-+	    prstate_housekeeping_conflict(new_prs, tmp->new_cpus))
- 		return PERR_HKEEPING;
++	if (cpumask_intersects(tmp->new_cpus, subpartitions_cpus))
++		return PERR_NOCPUS;
+ 	if (((new_prs == PRS_ISOLATED) &&
+ 	     !isolated_cpus_can_update(tmp->new_cpus, NULL)) ||
+ 	    prstate_housekeeping_conflict(new_prs, tmp->new_cpus))
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -297,6 +297,8 @@ TEST_MATRIX=(
+ 	" C0-4:X2-4:S+ C1-4:X2-4:S+:P2 C2-4:X4:P1 \
+ 				   .      .      .      X1      .    0 A1:0-1|A2:2-4|A3:2-4 \
+ 								       A1:P0|A2:P2|A3:P-1 2-4"
++	" CX1-3:P1 CX1-3  CX1-3    .      .      .      P1      .    0 A1:1-3|A2:1-3|A3:1-3 \
++								       A1:P1|A2:P0|A3:P-1"
  
- 	spin_lock_irq(&callback_lock);
-@@ -3109,8 +3110,9 @@ static int update_prstate(struct cpuset
- 		 * A change in load balance state only, no change in cpumasks.
- 		 * Need to update isolated_cpus.
- 		 */
--		if ((new_prs == PRS_ISOLATED) &&
--		    !isolated_cpus_can_update(cs->effective_xcpus, NULL))
-+		if (((new_prs == PRS_ISOLATED) &&
-+		     !isolated_cpus_can_update(cs->effective_xcpus, NULL)) ||
-+		    prstate_housekeeping_conflict(new_prs, cs->effective_xcpus))
- 			err = PERR_HKEEPING;
- 		else
- 			isolcpus_updated = true;
+ 	# Remote partition offline tests
+ 	" C0-3:S+ C1-3:S+ C2-3     .    X2-3   X2-3 X2-3:P2:O2=0 .   0 A1:0-1|A2:1|A3:3 A1:P0|A3:P2 2-3"
 
 
