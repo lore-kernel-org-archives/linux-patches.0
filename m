@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F338E51C33F;
-	Wed, 30 Sep 2026 18:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A7551DE0A;
+	Wed, 30 Sep 2026 18:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792839; cv=none; b=HX3JzXTS/c8Y176hGB8MwyGSyBu3An7BpNvujiiOHlxVSKDOcHrfO09j8jplZ7Q2LTUlQT7kp70mf3zHR4EQmUiVr0EFhkf116BZ3NLRHywrYdwIIAQry58K5Y9/7M3GpI7OhD+W2397y54l3+QQt58UYVd0VWVmjTkdXWABVB0=
+	t=1790792842; cv=none; b=GaLbBpZ946RtvxUKMvH75pA6n5qSuWTtDtAA/9MRei1LY1XP3LWNra2YzpXlFY09WLTnpYa6W6bBmQDZxMt677C/T8zGy480BPbjmKqJGmauFYgLgAlLvAFJoAMCR8gDELyZpyE9Ca8GPzdEQyrmStHDvtko17THXJJE2XNX++U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792839; c=relaxed/simple;
-	bh=8I1lVdAY+t17qKd8L3JIaCS1T6MMnVVxI3nyWRcMJnI=;
+	s=arc-20240116; t=1790792842; c=relaxed/simple;
+	bh=8j+fc1pfBm+ThVfM9OJom6rdY1XhpX9tkwQh+bLH7xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkIo5RAnd3B7mVUoW7fJktx4i1h7XG7SCV9qYL61URCQ7Ujh59aqJpVSBrAeA94tbUExKpv9dGpBd3YYme5feHp3VECbIP3F5fRzE/XOr/lCzybdT6R8O3QZvtKhMHcaOXV0D1a8yDBLxFCcrfsuBzQr7vw3m0ydksXvnrjgdmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpJHDWEX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FC2YAGGZ3GRaVNIRuDHZKCFPJ58XhkyHtNmBmFXxF56CK2smlvbzqqK+bo95+k8KA4YDdUownwoeb82NIDR2I7n1nVciZWQV6XsgVhWoee+yV0yc83Jcod3PRNlCrs6CKyzIWBTpyjZo6X4MrYq+OxlHGDP1MywkPdj3U7Ax1ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ0S7rHO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpJHDWEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8E61F000FF;
-	Wed, 30 Sep 2026 18:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ0S7rHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C65F1F000FF;
+	Wed, 30 Sep 2026 18:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792837;
-	bh=Vd1ifGz73KHejsee56MUbZRAzSJaA0I82w0SYSK0d8c=;
+	s=korg; t=1790792840;
+	bh=1XHHa+jJmkk+55cFGt9lGD/APZYZGORGWMcpIcQ13Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jpJHDWEXAxbu/TiG5PedkUJtT/HU/oSSH5RJb7roy8xx4HFaK+StM53VMN5MSMpUX
-	 1UZAiEcHLuV7qBPu0xmR/YQspD7GvH6LEOCk/wfy/CVIjY/XhAAoB/EbULY9iKrQ3p
-	 7aoivJ4JMQsrABeiaGd0bhWSWbaup5GeGBYC07wA=
+	b=sZ0S7rHOXAYm9vI5wCFLAFqzAjDIHOdCXgJrNLnUyTNQ1Wr89PHpadYwyYN3sKVFt
+	 LUfrVEhgL21GgGs1RT0l/h8JiMsjZBQ07zs9iXVePUMtFaye9imKieid/CanoUBoOh
+	 el2Y4uboiHqsj6P0Sd1kx2maEuu3Vw49iR7q/FsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Per Larsson <per@palvencia.se>,
-	Juan Manuel Lopez Carrillo <juanmanuellopezcarrillo@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Christiano Amora <christiano.amora@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/395] pinctrl: sunxi: A523: fix voltage withstand encoding
-Date: Wed, 30 Sep 2026 17:25:06 +0200
-Message-ID: <20260930152341.585924001@linuxfoundation.org>
+Subject: [PATCH 6.18 045/395] Bluetooth: SMP: reject Security Request over BR/EDR
+Date: Wed, 30 Sep 2026 17:25:07 +0200
+Message-ID: <20260930152341.609921350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,110 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Christiano Amora <christiano.amora@gmail.com>
 
-[ Upstream commit ef56085dfd1df3a53ecce8a4ff440cf6d67f430d ]
+[ Upstream commit f033482d76a9f18080c7a40c5f9c678bd7adc8f3 ]
 
-The Allwinner A523 uses the same GPIO voltage "withstand" programming
-(setting the input level voltage thresholds) as the previous SoCs, but
-for some odd reason inverts the encoding of 1.8V vs. 3.3V.
+Bose QC Ultra Headphones (dual-mode, same public address on both
+transports) occasionally send an SMP Security Request on the BR/EDR
+SMP fixed channel right after the ACL link is encrypted. The kernel
+handles it as if it were an LE link: smp_cmd_security_req() has no
+transport check, smp_ltk_encrypt() looks up an LTK with the ACL
+connection's dst_type, and hci_find_ltk() matches the peer's LE LTK
+because the LE public address type is stored as ADDR_LE_DEV_PUBLIC (0),
+the same value as BDADDR_BREDR. HCI_OP_LE_START_ENC is then issued on
+the ACL handle, the controller rejects it with Invalid HCI Command
+Parameters, and hci_cs_le_start_enc() disconnects the link with
+HCI_ERROR_AUTH_FAILURE. The headphones drop within a second of
+connecting, before any profile is up; a manual reconnect works.
 
-Add a new bias voltage type to note this difference, and select it for
-the A523. At the same time also use the newer "CTL" version, which in
-addition allows to turn off the withstand programming for I/O voltages
-other than exact 1.8V or 3.3V (for instance for 2.5V sometimes used for
-Ethernet PHYs). The A523 has that enable register, but didn't use it
-so far.
+btmon (MediaTek MT7922, kernel 7.0.12):
 
-This fixes eMMC and reportedly Ethernet operation on some A523 boards.
+  > HCI Event: Encryption Change (0x08) plen 4
+        Status: Success (0x00)
+        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
+        Encryption: Enabled with AES-CCM (0x02)
+  > ACL Data RX: Handle 50 flags 0x02 dlen 6
+        BR/EDR SMP: Security Request (0x0b) len 1
+        Authentication requirement: No bonding, No MITM, SC (0x08)
+  < HCI Command: LE Start Encryption (0x08|0x0019) plen 28
+        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
+  > HCI Event: Command Status (0x0f) plen 4
+        LE Start Encryption (0x08|0x0019) ncmd 1
+        Status: Invalid HCI Command Parameters (0x12)
+  < HCI Command: Disconnect (0x01|0x0006) plen 3
+        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
+        Reason: Authentication Failure (0x05)
 
-Fixes: 648be4cd9517 ("pinctrl: sunxi: Add support for the Allwinner A523")
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Tested-by: Per Larsson <per@palvencia.se>
-Tested-by: Juan Manuel Lopez Carrillo <juanmanuellopezcarrillo@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Tested-by: Chen-Yu Tsai <wens@kernel.org> # Fixes eMMC on Orange Pi 4A
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+SMP over BR/EDR is limited to cross-transport key derivation; the
+Security Request procedure (Core Specification Vol 3, Part H, Section
+2.4.6, PDU in Section 3.6.7) has no BR/EDR counterpart. Reply with
+Pairing Failed / Command Not Supported on a non-LE link, before the PDU
+is parsed, and keep the connection. The reply is sent directly rather
+than through smp_failure(): rejecting a command on the wrong transport
+is not an authentication failure, and MGMT_EV_AUTH_FAILED would make
+bluetoothd disconnect the device.
+
+Tested on the affected host (kernel 7.0.12, MediaTek MT7922, Bose QC
+Ultra) with the patched module built out of tree: 7 days and 49
+reconnects without a drop, against 2 drops in the 3 days before the
+patch. Every disconnect in that week had a userspace or remote reason.
+
+Fixes: b5ae344d4c0f ("Bluetooth: Add full SMP BR/EDR support")
+Assisted-by: LLM
+Signed-off-by: Christiano Amora <christiano.amora@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c | 2 +-
- drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c   | 2 +-
- drivers/pinctrl/sunxi/pinctrl-sunxi.c         | 6 ++++++
- drivers/pinctrl/sunxi/pinctrl-sunxi.h         | 2 ++
- 4 files changed, 10 insertions(+), 2 deletions(-)
+ net/bluetooth/smp.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c
-index 462aa1c4a5fa6..e27e4945def26 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523-r.c
-@@ -26,7 +26,7 @@ static const u8 a523_r_irq_bank_muxes[SUNXI_PINCTRL_MAX_BANKS] =
- static struct sunxi_pinctrl_desc a523_r_pinctrl_data = {
- 	.irq_banks = ARRAY_SIZE(a523_r_irq_bank_map),
- 	.irq_bank_map = a523_r_irq_bank_map,
--	.io_bias_cfg_variant = BIAS_VOLTAGE_PIO_POW_MODE_SEL,
-+	.io_bias_cfg_variant = BIAS_VOLTAGE_PIO_POW_MODE_CTL_INV,
- 	.pin_base = PL_BASE,
- };
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 1172df9b7004d..51e0545a9e240 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2301,6 +2301,23 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
  
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c
-index b6f78f1f30ac4..88d8acd5bc245 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sun55i-a523.c
-@@ -26,7 +26,7 @@ static const u8 a523_irq_bank_muxes[SUNXI_PINCTRL_MAX_BANKS] =
- static struct sunxi_pinctrl_desc a523_pinctrl_data = {
- 	.irq_banks = ARRAY_SIZE(a523_irq_bank_map),
- 	.irq_bank_map = a523_irq_bank_map,
--	.io_bias_cfg_variant = BIAS_VOLTAGE_PIO_POW_MODE_SEL,
-+	.io_bias_cfg_variant = BIAS_VOLTAGE_PIO_POW_MODE_CTL_INV,
- };
+ 	bt_dev_dbg(hdev, "conn %p", conn);
  
- static int a523_pinctrl_probe(struct platform_device *pdev)
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.c b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-index 93e396041456a..6099ae93e1536 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.c
-@@ -699,6 +699,7 @@ static int sunxi_pinctrl_set_io_bias_cfg(struct sunxi_pinctrl *pctl,
- {
- 	unsigned short bank;
- 	unsigned long flags;
-+	bool inverted = false;
- 	u32 val, reg;
- 	int uV;
++	/* SMP over BR/EDR only covers cross-transport key derivation; the
++	 * Security Request procedure has no BR/EDR counterpart. Reject it
++	 * here, otherwise smp_ltk_encrypt() finds the peer's LE LTK
++	 * (ADDR_LE_DEV_PUBLIC and BDADDR_BREDR are both 0) and issues
++	 * HCI_OP_LE_START_ENC on the ACL handle, which the controller
++	 * rejects and hci_cs_le_start_enc() turns into a disconnect. Reply
++	 * without smp_failure(): this is not an authentication failure, and
++	 * MGMT_EV_AUTH_FAILED would make bluetoothd drop the device.
++	 */
++	if (hcon->type != LE_LINK) {
++		u8 reason = SMP_CMD_NOTSUPP;
++
++		smp_send_cmd(conn, SMP_CMD_PAIRING_FAIL, sizeof(reason),
++			     &reason);
++		return 0;
++	}
++
+ 	if (skb->len < sizeof(*rp))
+ 		return SMP_INVALID_PARAMS;
  
-@@ -737,6 +738,9 @@ static int sunxi_pinctrl_set_io_bias_cfg(struct sunxi_pinctrl *pctl,
- 		reg &= ~IO_BIAS_MASK;
- 		writel(reg | val, pctl->membase + sunxi_grp_config_reg(pin));
- 		return 0;
-+	case BIAS_VOLTAGE_PIO_POW_MODE_CTL_INV:
-+		inverted = true;
-+		fallthrough;
- 	case BIAS_VOLTAGE_PIO_POW_MODE_CTL:
- 		val = uV > 1800000 && uV <= 2500000 ? BIT(bank) : 0;
- 
-@@ -751,6 +755,8 @@ static int sunxi_pinctrl_set_io_bias_cfg(struct sunxi_pinctrl *pctl,
- 		fallthrough;
- 	case BIAS_VOLTAGE_PIO_POW_MODE_SEL:
- 		val = uV <= 1800000 ? 1 : 0;
-+		if (inverted)
-+			val = !val;
- 
- 		raw_spin_lock_irqsave(&pctl->lock, flags);
- 		reg = readl(pctl->membase + pctl->pow_mod_sel_offset);
-diff --git a/drivers/pinctrl/sunxi/pinctrl-sunxi.h b/drivers/pinctrl/sunxi/pinctrl-sunxi.h
-index ad26e4de16a85..418c0508eb18a 100644
---- a/drivers/pinctrl/sunxi/pinctrl-sunxi.h
-+++ b/drivers/pinctrl/sunxi/pinctrl-sunxi.h
-@@ -114,8 +114,10 @@ enum sunxi_desc_bias_voltage {
- 	 * Bias voltage is set through PIO_POW_MOD_SEL_REG
- 	 * and PIO_POW_MOD_CTL_REG register, as seen on
- 	 * A100 and D1 SoC, for example.
-+	 * Some SoCs invert the encoding for 1.8V vs. 3.3V.
- 	 */
- 	BIAS_VOLTAGE_PIO_POW_MODE_CTL,
-+	BIAS_VOLTAGE_PIO_POW_MODE_CTL_INV,
- };
- 
- struct sunxi_desc_function {
 -- 
 2.53.0
 
