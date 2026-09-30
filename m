@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876863749EB;
-	Wed, 30 Sep 2026 17:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9414E73B2;
+	Wed, 30 Sep 2026 17:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788584; cv=none; b=Cgdcpv9gZWpeobLTJkZl4Pq2sVTmJ3KMYorgRkdkilMBfbwmS4wTVAYyW+PCqcMFO7LhMewe67aqpCVGTQ5LBnWd3cYpGPSYs4zIGbH3XJkrhLQJ3CeyA6mP23MeMb4pZro8B8mGN7L20MWIfXMKXb4+OWIsnZ4+OeEsIZxCLwk=
+	t=1790788587; cv=none; b=kA07B5D7ftIknEzdOozT5cOsz/OBceDffoxqt7yEUczPSbwWz5+Gu+LoAlqwLaM8Q0U2axA4I1WkcxOnYZ9rYnLSxg5TvMLc0MkGP9V+kuLlnuPj32hkU7NYs0Uz9PS/dPOqmO4NsuFp1jwrjmmqvtg0f1K96hHOEnL9YvVHhEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788584; c=relaxed/simple;
-	bh=3M9iXope4jrpWB+GWR3i8Fikt+LsCeQAje58AmeOa8w=;
+	s=arc-20240116; t=1790788587; c=relaxed/simple;
+	bh=RQ0KKr0ODAd0hZ987o/hhG++5500AGieYGycKaHQG8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYuKEZ31AiqMQ/ROZM32pG33o5xWOcbygzshwI96NR6d5GXm8tfSEqRqxks9waBl62II48Csz2CObTFCWBNYnh7kX5htvyo1HlnKCwMcGwCnxnNgVWa6MA/uKHv6fpmCkRm3mpT/jxL6HQOvilVK9u8tB+B5KA6btAQjj8ngE5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mp/rk77M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UJsvFO75VXjUSroxnDavG6kxR/HUB47DUAeOC+AOnM9wZDGhRZZlvSnFNvxo6NWfD0ESx09hVUUhOHEGjI3ENHiPF6H5GjHNJyFcAnOQ+5s98otMNHcVRkvFFgU7pPFwrGdrxlOU7YUSBFC2o9N8dN01kK2a2OmdAhwELLwLmr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9rCrJVt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mp/rk77M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E801F000FF;
-	Wed, 30 Sep 2026 17:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9rCrJVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5F31F000FF;
+	Wed, 30 Sep 2026 17:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788583;
-	bh=0KbY86g1crQjS5R/Yxrt2ECPsRveajP2r/HHUPyeEnM=;
+	s=korg; t=1790788586;
+	bh=mjxarR23pBwyOURrZwesAA8QbpsJ5xb/cFoepjesXLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mp/rk77M/iIVnEOhv1GhsEkzv5EXXH6Ad+I1LyKU9H6F5B5aCuOD5ukFI6D35rSfx
-	 hdXADLcr9dva8Yn0ANOhRteGx9dnK4r1JTtH09tJrMiYVGPPkHe0BNbTuNdVhvB/BY
-	 IG/8mP2tTiDPQGSJJeTrajW2H/KWiRTqMQqX0zsM=
+	b=q9rCrJVtXGhBBrrqnCJLfSzjTAuDHuMZeGSSNTRyhH8VcIrEn8qHi8mMlRKWnKz8j
+	 QxdpjjepajQgTkGeKsTLz0hipFYZqYx4BIJydArS9tlhC1y31Uc+BSjr7OET58sCal
+	 +A5KIJqr/hNR/dYih9dt236lEW4wA9kt2WnDR2/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Wyatt Feng <wf.kernel.dev@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.12 177/877] net: xfrm: reject unrepresentable espintcp transport headers
-Date: Wed, 30 Sep 2026 17:18:08 +0200
-Message-ID: <20260930152418.548589302@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 160/877] wifi: rtw88: Fix the random "error beacon valid" messages for USB
+Date: Wed, 30 Sep 2026 17:17:51 +0200
+Message-ID: <20260930152418.172061535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,43 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <wf.kernel.dev@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 96f01b53c2d05e003b040892256de54a586e8529 upstream.
+[ Upstream commit f24d0d8c3cd7e4237f802c4d2f3bd4ac04572948 ]
 
-ESP-in-TCP can hand xfrm packets whose transport header offset no longer
-fits after the stream parser trims the TCP envelope. The plain transport
-header reset truncates that offset and triggers the skb warning path.
+All the USB devices have a problem in AP mode: uploading the updated
+beacon to the chip's reserved page can randomly fail:
 
-Use the careful transport-header helper and drop the skb through the
-existing XFRM error path when the offset cannot be represented.
+[34996.474304] rtw88_8723du 1-2:1.2: error beacon valid
+[34996.474788] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
+[34999.956369] rtw88_8723du 1-2:1.2: error beacon valid
+[34999.956846] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
+[34999.956855] rtw88_8723du 1-2:1.2: failed to download beacon
+[35017.978296] rtw88_8723du 1-2:1.2: error beacon valid
+[35017.978805] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
+[35017.978823] rtw88_8723du 1-2:1.2: failed to download beacon
+[35023.200395] rtw88_8723du 1-2:1.2: error beacon valid
+[35023.200869] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
+[35023.200875] rtw88_8723du 1-2:1.2: failed to download beacon
+[35478.680547] rtw88_8723du 1-2:1.2: error beacon valid
+[35478.681023] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Wyatt Feng <wf.kernel.dev@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Disable some beacon-related hardware functions before uploading the
+beacon and enable them again after.
+
+Tested with RTL8723DU, RTL8812BU, RTL8822CE.
+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/c248c40a-d432-47ed-90e0-d81ee6c32464@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/espintcp.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/fw.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -33,7 +33,11 @@ static void handle_esp(struct sk_buff *s
+diff --git a/drivers/net/wireless/realtek/rtw88/fw.c b/drivers/net/wireless/realtek/rtw88/fw.c
+index 43e3df6a48369..fd3bcb4466209 100644
+--- a/drivers/net/wireless/realtek/rtw88/fw.c
++++ b/drivers/net/wireless/realtek/rtw88/fw.c
+@@ -1446,7 +1446,7 @@ void rtw_add_rsvd_page_sta(struct rtw_dev *rtwdev,
+ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
+ 				u8 *buf, u32 size)
  {
- 	struct tcp_skb_cb *tcp_cb = (struct tcp_skb_cb *)skb->cb;
+-	u8 bckp[2];
++	u8 bckp[3];
+ 	u8 val;
+ 	u16 rsvd_pg_head;
+ 	u32 bcn_valid_addr;
+@@ -1458,6 +1458,8 @@ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
+ 	if (!size)
+ 		return -EINVAL;
  
--	skb_reset_transport_header(skb);
-+	if (!skb_reset_transport_header_careful(skb)) {
-+		XFRM_INC_STATS(sock_net(sk), LINUX_MIB_XFRMINERROR);
-+		kfree_skb(skb);
-+		return;
-+	}
++	bckp[2] = rtw_read8(rtwdev, REG_BCN_CTRL);
++
+ 	if (rtw_chip_wcpu_11n(rtwdev)) {
+ 		rtw_write32_set(rtwdev, REG_DWBCN0_CTRL, BIT_BCN_VALID);
+ 	} else {
+@@ -1471,6 +1473,9 @@ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
+ 	val |= BIT_ENSWBCN >> 8;
+ 	rtw_write8(rtwdev, REG_CR + 1, val);
  
- 	/* restore IP CB, we need at least IP6CB->nhoff */
- 	memmove(skb->cb, &tcp_cb->header, sizeof(tcp_cb->header));
++	rtw_write8(rtwdev, REG_BCN_CTRL,
++		   (bckp[2] & ~BIT_EN_BCN_FUNCTION) | BIT_DIS_TSF_UDT);
++
+ 	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE) {
+ 		val = rtw_read8(rtwdev, REG_FWHW_TXQ_CTRL + 2);
+ 		bckp[1] = val;
+@@ -1501,6 +1506,7 @@ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
+ 	rsvd_pg_head = rtwdev->fifo.rsvd_boundary;
+ 	rtw_write16(rtwdev, REG_FIFOPAGE_CTRL_2,
+ 		    rsvd_pg_head | BIT_BCN_VALID_V1);
++	rtw_write8(rtwdev, REG_BCN_CTRL, bckp[2]);
+ 	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE)
+ 		rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, bckp[1]);
+ 	rtw_write8(rtwdev, REG_CR + 1, bckp[0]);
+-- 
+2.53.0
+
 
 
