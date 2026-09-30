@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EF9531603;
-	Wed, 30 Sep 2026 17:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD9E51C048;
+	Wed, 30 Sep 2026 17:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790017; cv=none; b=FouwBa07T4gWlrnkgV+CDqCYfYjS/cThOrhJuiZHqFWRLdTCklWTJD+OcatB3xpySQl2RubBDJqanZSBU3HHshEGuGQtbPmU6EFCEfecJXNaDE64SIX8QZQPAPr/EauzdcskZo0G7/YqG/zxsQ33H0M8qZwAW3CrQw6LldgsqmA=
+	t=1790790020; cv=none; b=s+Aeu9tY/1MhPXOHGQLEC+TMp6x/fIWRAqGBjlwpUY6V7HSV5t7n4rAUX/j8ZK2hEssBkGROkFGcy2MFA1w5hJ+nHY1NGcJ3VzSY/gvLHdzVJlv0RaidcH1mw5o2r0GZVypJqMUk7KOM2cyMLcTFVmthjf/lVPzOVNd0XFoW+fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790017; c=relaxed/simple;
-	bh=3yXNLFktrGnMGW3Df8sF76Gs6qMfrKnxF5sFG9WeFS4=;
+	s=arc-20240116; t=1790790020; c=relaxed/simple;
+	bh=yal3gO8UvEGhliqtr+eFwiTWLL9MOpsaInce81DFsDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fj4toCs9HY90xALIWtYfsOZtz48NzhmtROmGFTM9VDBSl29sYGNmuGS+6WAWrQI7AAVG76lTCnVYxhw+pde+luSGvkOLa3nCQBp4gd63PwDtK/uLReJEsCvx8HpDqhI+TV7PP6BDC4sdvKNCNu1Wu9wPvG5epFJvh2p7edtoYFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+Ki/+rh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r/ky1Hz9MJkNRqZ5ztHfHLqbBjchs+vhNzXYabRx47Gdhu4/cOKpz6acd60e8ogJLVTq7kSk98HEdzJNKR7nYVuMGD7jw/EVU0fA9kPqKmYgShGwXQGpGyeLrzmlWiEJ/lmODnNSWgKnoKYu/4w/IRUAZh7U1UqI2lHKIwOjeHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4ZiOGzF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+Ki/+rh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56971F000FF;
-	Wed, 30 Sep 2026 17:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4ZiOGzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FC31F000FF;
+	Wed, 30 Sep 2026 17:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790016;
-	bh=igew2ucAZBkqfWyhdNdmP0vOE29TXkWiFQ8W1GL4Hl0=;
+	s=korg; t=1790790019;
+	bh=XRro8EBuVsm9Ba+/pySUIK4nnuNaMS5ARE2N+d+nWfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U+Ki/+rh8pI3SyDKEl51i/flJA/3kOCQS9HmAm5SMsUW59Cz7ekkQ32BvWXwoHprT
-	 B1j8c9JigiONvPeW9f7/wjmIsGzVbOWMpuOQ0mVHW5fVHCEqHC7zJPA8EUhrn5Fv+z
-	 vghpX/EosjJ+wGolWj5Z3O4qywLcOI9Mki8w5VAs=
+	b=V4ZiOGzF6UQYp7wAsInOj51FKLjHQWdKbiltateuwV4GuqOeZz+NKJG23v2I9Ir88
+	 5Jc10GLl79dUKaX0rtQOs6NTc/hcPjwgiZmjnB/sVBmPCSwsClPOhZqabCFgg/k+KV
+	 imhmR4mhYvI1CQ9U5tFWQKjjArguOLbj4LurjoMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 679/877] scsi: qla2xxx: Fix 64G link speed reporting in get_data_rate
-Date: Wed, 30 Sep 2026 17:26:30 +0200
-Message-ID: <20260930152429.327966382@linuxfoundation.org>
+Subject: [PATCH 6.12 680/877] scsi: qla2xxx: Skip vport under deletion in report ID acquisition
+Date: Wed, 30 Sep 2026 17:26:31 +0200
+Message-ID: <20260930152429.349396038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,52 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 52fba32317ee631faa878725b2f7cd5c08acacd3 ]
+[ Upstream commit 23582731afa35031c94fadb71a4f3b4afd094649 ]
 
-qla2x00_get_data_rate() skips updating ha->link_data_rate when the
-firmware returns mcp->mb[1] == 0x7.  That value was a legacy sentinel
-from before 64G hardware existed, but PORT_SPEED_64GB is now defined as
-0x07 and ha->link_data_rate is decoded with the PORT_SPEED_* encoding.
-On a 64G-capable adapter a genuine 64G link is therefore dropped, and
-the port speed is misreported (port_speed sysfs, fc_host speed, FDMI).
+qla24xx_report_id_acquisition() format-1 handling walks ha->vp_list under
+vport_slock, takes a vref_count on the matching vport and calls
+qla_update_host_map() to register its port id.
 
-Only 28xx and 29xx support 64G, so accept 0x07 on those adapters while
-keeping the legacy filter for older ones.  Also drop the duplicate copy
-of the check at the end of the success branch; it repeated the first
-assignment with no intervening change.
+A vport teardown via qla24xx_vport_delete() sets VPORT_DELETE, then
+qla24xx_disable_vp() removes the vport from the host_map btree and zeroes
+vha->d_id (RESET_AL_PA). The vport is only unlinked from vp_list later,
+in qla24xx_deallocate_vp_id(), which clears vp_map[idx] (RESET_VP_IDX)
+but does not touch host_map. In the window in between, report ID
+acquisition can still find the vport on vp_list and call
+qla_update_host_map(); with d_id already zeroed it takes the
+btree_insert32() path and re-inserts the dying vport into host_map.
+Nothing cleans that entry afterwards, so once scsi_host_put() frees the
+vha a later host_map lookup dereferences freed memory.
 
-Fixes: ecc89f25e225 ("scsi: qla2xxx: Add Device ID for ISP28XX")
+Skip a vport that has VPORT_DELETE set before taking the reference, so it
+is neither re-registered nor scheduled for DPC re-registration. This
+mirrors the existing guard in qla2x00_alert_all_vps().
+
+Fixes: 41dc529a4602 ("qla2xxx: Improve RSCN handling in driver")
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-46-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-22-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ Omitted IS_QLA29XX() checks because this branch lacks 29xx adapter support. ]
+[ Adjusted context to use rptid_entry->vp_idx instead of the missing local vp_idx variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/scsi/qla2xxx/qla_mbx.c
 +++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -5658,7 +5658,7 @@ qla2x00_get_data_rate(scsi_qla_host_t *v
- 		ql_dbg(ql_dbg_mbx, vha, 0x1107,
- 		    "Failed=%x mb[0]=%x.\n", rval, mcp->mb[0]);
- 	} else {
--		if (mcp->mb[1] != 0x7)
-+		if (mcp->mb[1] != 0x7 || IS_QLA28XX(ha))
- 			ha->link_data_rate = mcp->mb[1];
- 
- 		if (IS_QLA83XX(ha) || IS_QLA27XX(ha) || IS_QLA28XX(ha)) {
-@@ -5669,8 +5669,6 @@ qla2x00_get_data_rate(scsi_qla_host_t *v
- 
- 		ql_dbg(ql_dbg_mbx + ql_dbg_verbose, vha, 0x1108,
- 		    "Done %s.\n", __func__);
--		if (mcp->mb[1] != 0x7)
--			ha->link_data_rate = mcp->mb[1];
- 	}
- 
- 	return rval;
+@@ -4147,6 +4147,8 @@ qla24xx_report_id_acquisition(scsi_qla_h
+ 			spin_lock_irqsave(&ha->vport_slock, flags);
+ 			list_for_each_entry(vp, &ha->vp_list, list) {
+ 				if (rptid_entry->vp_idx == vp->vp_idx) {
++					if (test_bit(VPORT_DELETE, &vp->dpc_flags))
++						break;
+ 					found = 1;
+ 					atomic_inc(&vp->vref_count);
+ 					break;
 
 
