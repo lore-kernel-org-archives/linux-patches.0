@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D117551D503;
-	Wed, 30 Sep 2026 18:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A486E51D524;
+	Wed, 30 Sep 2026 18:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793342; cv=none; b=F1N7Nv5Zxa5QKY6KiMNlRYhf+pxk5VJd7gREABZ683S+O25PhHxTa2R867NKtTvvIf3cmy8Vc3FCrSdorzozJV0Wq7bg0EfIlYPOJaQT4ha+C4tAzc0CLqpV//EQphOIjKQXSQRkTYZ5E9/irvSXCqy4OY0/GnfXLTOap6yk2bw=
+	t=1790793345; cv=none; b=BYOo+zIiMbDlblO6SJmpf29Ge4te0Xswby7g+yGyTg2wLyaJ67uGqjbRMVmIXluwtocvacjhTN90JDXo6pAJh8od7hcNADrTgIu9y6Y3AGPXVJgGjCxf4IjC4RRdouU7cUlV3nQSzmG4WgWrcY4OKW5tU87rv2enTZ/lTtsRav0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793342; c=relaxed/simple;
-	bh=+GIKawiJovFfYIRHowCbKiKCy59ul9EuX8c/8yJ1pqU=;
+	s=arc-20240116; t=1790793345; c=relaxed/simple;
+	bh=8GNnfbRtoUDNhMtuPQGR191fAptQd765RkIn9/pIDTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SXSnEndcF0u0PvtN4okVFfX5PsHJRDX5hIVinQMIsPjX3Gxjkjsa3aYkAp2NFhJ0vx0P9aeQ9gt9p2gsj+DwdtxAJjeG4YM21HxkaJGEkZhHPsZC02R0rYHUz1cajh2h6vXKYolNnkt5B6tgOd/0XuV1cpBxZ+eXE8Dvj49VW7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl0oHA/F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nP65N4xrUc3M4Y7mo1MUQEYDwwZvnAfwx3hH0eRDn4+rfHmdI2GGWXULyOyRMORw50aYumOwan3DU1s9KVPsWAngHpJVAdg4AP4/TAzmFd9Kts/EpMaqoa0YJjBVE+eTxoxGQuKSCpOOL9YY5kXKDeQgC9wcgF/c/2s5pFwavdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7s7kFDD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl0oHA/F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373CF1F000FF;
-	Wed, 30 Sep 2026 18:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7s7kFDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1BF1F000FF;
+	Wed, 30 Sep 2026 18:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793341;
-	bh=u8jK0cFRBDY6Fc4vuoLzal4bIv47XdEUzZLlM1zH7k4=;
+	s=korg; t=1790793344;
+	bh=r4b3otQMxq08He+QI6DyfnUtlOsdI99cRQAJ2Tn4bg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nl0oHA/FG8afSq+SCrF3zleBr+RIZWcx1aitYq38w0gmrtZe3WshQw/MEDhRbxrPs
-	 VXlAL0DFKemoP74kWL17yddwEPcxkbdKTNd9vWqAz5PDO46g/gazXN1HyPuQBinn3q
-	 bLgSfuS62hR4YOTzyXDlKSSefmEWxqCfVxh4mfnY=
+	b=u7s7kFDDRkmze2bXVqLk29S4WCjKPfN5tOiu+STaPdwPCRoWfuaj8uPoYCWOqK/u1
+	 4rFNJmY2HhePuMz9/dwftyvAr/ZCuzw3eLYAy0GG2ZgI2GiYoxNhmmEgdj2ujF+qR7
+	 Kd9Hc97B032NWrVoTAdMm0AtGJUJ4GRniduNZZts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksei Sviridkin <f@lex.la>,
+	Kimi Security Team <bug-report@moonshot.ai>,
+	Weiming Shi <shiweiming@moonshot.ai>,
+	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 176/395] net: dsa: mt7530: leave the MDIO IRQ mappings to regmap-irq
-Date: Wed, 30 Sep 2026 17:27:18 +0200
-Message-ID: <20260930152344.468066926@linuxfoundation.org>
+Subject: [PATCH 6.18 177/395] tcp: fix use-after-free of retransmit_skb_hint in tcp_send_synack()
+Date: Wed, 30 Sep 2026 17:27:19 +0200
+Message-ID: <20260930152344.489563452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,49 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksei Sviridkin <f@lex.la>
+From: Yilin Zhang <yilinzhang@moonshot.ai>
 
-[ Upstream commit 0d80ba0a204c6a16bd7778b50de578dff107c0fe ]
+[ Upstream commit fe99bbeee5c5dbd3abc30721a8079ced59649d97 ]
 
-mt7530_remove_common() disposes the per-PHY interrupt mappings from
-.remove, but the regmap-irq chip that owns the domain is devm-registered,
-so its parent interrupt is only freed once .remove has returned. The
-switch's own regmap-irq thread can therefore still dispatch on a mapping
-that is already gone: irq_find_mapping() returns 0, irq_to_desc() returns
-NULL and handle_nested_irq() locks desc->lock without checking it. The
-attached PHYs have not given those interrupts back yet either, which the
-kernel warns about a moment before the fault.
+When tcp_send_synack() replaces the cloned SYN skb at the head of the
+retransmit queue with a copy, it frees the original with
+tcp_rtx_queue_unlink_and_free() and only repairs tp->highest_sack.
+tp->retransmit_skb_hint keeps pointing at the freed
+skbuff_fclone_cache object.
 
-regmap_del_irq_chip() disposes the same mappings itself, after freeing the
-parent interrupt and before removing the domain, so there is nothing left
-for the driver to do here. Until it runs the descriptors stay alive, and a
-late dispatch on one of them is harmless: dsa_unregister_switch() has freed
-the PHY handlers by then, so handle_nested_irq() finds no action and
-returns.
+The dangling hint is read in tcp_verify_retransmit_hint() and used as
+the root of the rbtree walk in tcp_xmit_retransmit_queue().  An
+unprivileged TFO client (sendmsg(MSG_FASTOPEN)) can arm the hint with
+an attacker-supplied ICMP fragmentation-needed message, after which a
+simultaneous open frees the armed SYN skb:
 
-Fixes: 254f6b272e3b ("dsa: mt7530: Utilize REGMAP_IRQ for interrupt handling")
-Signed-off-by: Aleksei Sviridkin <f@lex.la>
-Link: https://patch.msgid.link/20260918015020.2518315-3-f@lex.la
+  BUG: KASAN: slab-use-after-free in tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
+  Read of size 4 at addr ffff88800604d928 by task swapper/1/0
+  Call Trace:
+   tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
+   tcp_simple_retransmit (net/ipv4/tcp_input.c:3158)
+   tcp_v4_err (net/ipv4/tcp_ipv4.c:587)
+
+Sync the hint to the copy.
+
+Fixes: c31b70c9968f ("tcp: Add logic to check for SYN w/ data in tcp_simple_retransmit")
+Reported-by: Kimi Security Team <bug-report@moonshot.ai>
+Tested-by: Weiming Shi <shiweiming@moonshot.ai>
+Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/8a9dff4063a2745653b7e88ceb745d75efa16e68.1790224474.git.yilinzhang@moonshot.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/ipv4/tcp_output.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index d7ebb7b8ee72c..4001779a91591 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -3446,9 +3446,6 @@ EXPORT_SYMBOL_GPL(mt7530_probe_common);
- void
- mt7530_remove_common(struct mt7530_priv *priv)
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 0cd46896e7983..3f9e11a43f35f 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3821,6 +3821,7 @@ void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason)
+  */
+ int tcp_send_synack(struct sock *sk)
  {
--	if (priv->irq_domain)
--		mt7530_free_mdio_irq(priv);
--
- 	dsa_unregister_switch(priv->ds);
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	struct sk_buff *skb;
  
- 	mutex_destroy(&priv->reg_mutex);
+ 	skb = tcp_rtx_queue_head(sk);
+@@ -3838,6 +3839,8 @@ int tcp_send_synack(struct sock *sk)
+ 			if (!nskb)
+ 				return -ENOMEM;
+ 			INIT_LIST_HEAD(&nskb->tcp_tsorted_anchor);
++			if (skb == tp->retransmit_skb_hint)
++				tp->retransmit_skb_hint = nskb;
+ 			tcp_highest_sack_replace(sk, skb, nskb);
+ 			tcp_rtx_queue_unlink_and_free(skb, sk);
+ 			__skb_header_release(nskb);
 -- 
 2.53.0
 
