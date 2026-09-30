@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2742D3C81AD;
-	Wed, 30 Sep 2026 19:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBF838C42F;
+	Wed, 30 Sep 2026 19:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794956; cv=none; b=F5zyAD6Dtz/8rtHtJ0F7bScnY6Vh+IRjRI0YozpNXHjcOxjpNdFeOW2lDeFnOxE3aWB7nWrBdAQOkV43/sCYMsbaFtxrWIAaD/neoi1ggvoCSzMEzt37jHD3PEYYlOzxDYHOeMoknfAbnvCvSfwLiPViXD9yIysEaLMkeI6nRUs=
+	t=1790794959; cv=none; b=T85viUpiJqz9R4dXLfs2zsPTvuVKe/V7zngzq18rQfCi9dbiYR9suTRFbkBx8SBwTqKkuyqBRlR4szDGVKr+M//Fu37ODh6D0H8KqpdEcIWFVtVjnMBbGbFL8It0QGrmR/qCaIBADbug4H4bpVXmw852E4sIdo37NmIbAT5pKg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794956; c=relaxed/simple;
-	bh=MGgX1QNXi31wvv4sdvV8n6rgY9emCWCP9HrjsWoybNo=;
+	s=arc-20240116; t=1790794959; c=relaxed/simple;
+	bh=WjsAsNbqu/eo1QESBQ3pr7QanryENQt9PCsdZE+4wpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5wXzx0TBwhkUAajaILujwF/PQxn1nPBMvvNU8Cg8CJkgvbWMqN1dFTIXRF8jsCHni55BSkESRHK0Gvw7oYa4E4cqBQ1MMvLtQkH8EyW4fVnNGRx9lpVcC2ASXH+xAtQCK531tnTb6+RP24bAvU97VwZK3Rg31lomUuulEoMxQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCy9JbRm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTz/sN29nhn84YFuUTbU/q6hpfNC9mRwFQwsBg9bHgAtqhh0zk4wc1fUY+6+Q7RIa166Kcql/KOXvKR0q5PMqUaL1WhQ+QfC6sOFCsnftBq1KCkdB9VC5KQct78JozPvH8jyMcUKa6LaLwtEhaVtyjrSHG/TQ1Pu+Ny1m5JsZXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mzCpg+b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCy9JbRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804261F000FF;
-	Wed, 30 Sep 2026 19:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mzCpg+b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CF71F000FF;
+	Wed, 30 Sep 2026 19:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794955;
-	bh=ulkIUdQO9OerFG82VjLLlGQzZUF3D2yjvbCJiLj7X3I=;
+	s=korg; t=1790794957;
+	bh=1Y6G9TinPrc0sHkgVqd1a9kpjoaRMCRLkQdEY2999nA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BCy9JbRmPd1wFAu0HqE1XBurYjHVUjw/qWlD6awdvDuUcxPW1ptOcHuq/w99KFGHn
-	 HWEZRAy8dHhFqmgZIBw7VymeD5c7sPMF0O0SWMzHNELw7fitO79Qb3Pa6QxCh2RmvV
-	 HIKjD/4RkU5N29xNUb1seLCeoviu+FflYG2IrKx4=
+	b=1mzCpg+bI49TvsJbOgmEUxELY03Dqc5HYAnFUyf2bVv4cpCo8yklziGm8zDgAOvuU
+	 fmV5sjpetuNHsbqkr03EmDBEgRoxpP+/1K0N38oN7EOWEc3a5CWESRwS3gWTyorsjE
+	 2CfuahaLsDE62CuIfwObX8qFW3GFej++8AsROo3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Pedro Tammela <pctammela@mojatatu.com>,
-	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0392/1193] net/sched: act_api: conditional notification of events
-Date: Wed, 30 Sep 2026 17:17:56 +0200
-Message-ID: <20260930152442.896421259@linuxfoundation.org>
+Subject: [PATCH 6.6 0393/1193] net/sched: act_api: fix skb sizing and action leak on reoffload delete
+Date: Wed, 30 Sep 2026 17:17:57 +0200
+Message-ID: <20260930152442.919332038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,193 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 8d4390f51920c1edb2d09d44d918c7940ac51e54 ]
+[ Upstream commit 251367a0a3319fa565daf7468b0afd933b1f5ab1 ]
 
-As of today tc-action events are unconditionally built and sent to
-RTNLGRP_TC. As with the introduction of rtnl_notify_needed we can check
-before-hand if they are really needed.
+tcf_reoffload_del_notify_msg() sizes the RTM_DELACTION skb with
+tcf_action_fill_size(action) alone.  Unlike every other notification path
+it never wraps that in tcf_action_full_attrs_size(), so the nlmsg_put()
+header, struct tcamsg and the TCA_ACT_TAB nest that tca_get_fill() emits -
+24 bytes on x86_64 - are not budgeted.  As long as the single action stays
+well under NLMSG_GOODSIZE the floor in alloc_skb() hides this, but once its
+fill size crosses NLMSG_GOODSIZE the allocation is exactly 24 bytes short
+and tca_get_fill() runs out of tailroom.  That is now easy to reach for an
+offloadable act_pedit with a large tcfp_nkeys, which commit 8e2efb3f45a5
+("net/sched: add get_fill_size callbacks for actions missing them") started
+accounting for properly.
 
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231208192847.714940-6-pctammela@mojatatu.com
+When that happens tcf_reoffload_del_notify() returns early, before
+tcf_idr_release_unsafe(), and tcf_action_reoffload_cb() discards the return
+value:
+
+	if (tc_act_skip_sw(p->tcfa_flags) && !tc_act_in_hw(p))
+		tcf_reoffload_del_notify(net, p);
+
+The action has just lost its last hardware instance and is skip_sw, so it
+is left installed while processing no packets, and with no notification to
+tell userspace about it.  An -ENOBUFS from alloc_skb() gets the same
+treatment.
+
+Fix this by budgeting the message header the way the add and delete paths
+do, and release the action even when the notification cannot be built -
+dropping the notification is strictly better than leaking a dead action,
+and there is no caller left to report the error to.
+
+Fixes: 13926d19a11e ("flow_offload: add reoffload process to update hw_count")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Link: https://patch.msgid.link/20260824153903.4143642-4-victor@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 251367a0a331 ("net/sched: act_api: fix skb sizing and action leak on reoffload delete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 98 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 75 insertions(+), 23 deletions(-)
+ net/sched/act_api.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 59b86962f000a..138cd6e4bc8eb 100644
+index 138cd6e4bc8eb..2459fb8abcb9d 100644
 --- a/net/sched/act_api.c
 +++ b/net/sched/act_api.c
-@@ -1831,30 +1831,45 @@ static int tcf_action_delete(struct net *net, struct tc_action *actions[])
- 	return 0;
- }
- 
--static int
--tcf_reoffload_del_notify(struct net *net, struct tc_action *action)
-+static struct sk_buff *tcf_reoffload_del_notify_msg(struct net *net,
-+						    struct tc_action *action)
+@@ -1834,11 +1834,13 @@ static int tcf_action_delete(struct net *net, struct tc_action *actions[])
+ static struct sk_buff *tcf_reoffload_del_notify_msg(struct net *net,
+ 						    struct tc_action *action)
  {
- 	size_t attr_size = tcf_action_fill_size(action);
+-	size_t attr_size = tcf_action_fill_size(action);
  	struct tc_action *actions[TCA_ACT_MAX_PRIO] = {
  		[0] = action,
  	};
--	const struct tc_action_ops *ops = action->ops;
  	struct sk_buff *skb;
--	int ret;
++	size_t attr_size;
++
++	attr_size = tcf_action_full_attrs_size(tcf_action_fill_size(action));
  
  	skb = alloc_skb(max(attr_size, NLMSG_GOODSIZE), GFP_KERNEL);
  	if (!skb)
--		return -ENOBUFS;
-+		return ERR_PTR(-ENOBUFS);
+@@ -1855,15 +1857,18 @@ static struct sk_buff *tcf_reoffload_del_notify_msg(struct net *net,
+ static int tcf_reoffload_del_notify(struct net *net, struct tc_action *action)
+ {
+ 	const struct tc_action_ops *ops = action->ops;
+-	struct sk_buff *skb;
++	struct sk_buff *skb = NULL;
+ 	int ret;
  
- 	if (tca_get_fill(skb, actions, 0, 0, 0, RTM_DELACTION, 0, 1, NULL) <= 0) {
- 		kfree_skb(skb);
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	return skb;
-+}
-+
-+static int tcf_reoffload_del_notify(struct net *net, struct tc_action *action)
-+{
-+	const struct tc_action_ops *ops = action->ops;
-+	struct sk_buff *skb;
-+	int ret;
-+
-+	if (!rtnl_notify_needed(net, 0, RTNLGRP_TC)) {
-+		skb = NULL;
-+	} else {
-+		skb = tcf_reoffload_del_notify_msg(net, action);
-+		if (IS_ERR(skb))
-+			return PTR_ERR(skb);
+-	if (!rtnl_notify_needed(net, 0, RTNLGRP_TC)) {
+-		skb = NULL;
+-	} else {
++	if (rtnl_notify_needed(net, 0, RTNLGRP_TC)) {
+ 		skb = tcf_reoffload_del_notify_msg(net, action);
++		/* The action has already lost its hardware instance and is
++		 * skip_sw, so it must be released whether or not the
++		 * notification can be built.  Drop the notification rather
++		 * than leave an action behind that processes no packets.
++		 */
+ 		if (IS_ERR(skb))
+-			return PTR_ERR(skb);
++			skb = NULL;
  	}
  
  	ret = tcf_idr_release_unsafe(action);
- 	if (ret == ACT_P_DELETED) {
- 		module_put(ops->owner);
--		ret = rtnetlink_send(skb, net, 0, RTNLGRP_TC, 0);
-+		ret = rtnetlink_maybe_send(skb, net, 0, RTNLGRP_TC, 0);
- 	} else {
- 		kfree_skb(skb);
- 	}
-@@ -1920,22 +1935,41 @@ int tcf_action_reoffload_cb(flow_indr_block_bind_cb_t *cb,
- 	return 0;
- }
- 
--static int
--tcf_del_notify(struct net *net, struct nlmsghdr *n, struct tc_action *actions[],
--	       u32 portid, size_t attr_size, struct netlink_ext_ack *extack)
-+static struct sk_buff *tcf_del_notify_msg(struct net *net, struct nlmsghdr *n,
-+					  struct tc_action *actions[],
-+					  u32 portid, size_t attr_size,
-+					  struct netlink_ext_ack *extack)
- {
--	int ret;
- 	struct sk_buff *skb;
- 
- 	skb = alloc_skb(max(attr_size, NLMSG_GOODSIZE), GFP_KERNEL);
- 	if (!skb)
--		return -ENOBUFS;
-+		return ERR_PTR(-ENOBUFS);
- 
- 	if (tca_get_fill(skb, actions, portid, n->nlmsg_seq, 0, RTM_DELACTION,
- 			 0, 2, extack) <= 0) {
- 		NL_SET_ERR_MSG(extack, "Failed to fill netlink TC action attributes");
- 		kfree_skb(skb);
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	return skb;
-+}
-+
-+static int tcf_del_notify(struct net *net, struct nlmsghdr *n,
-+			  struct tc_action *actions[], u32 portid,
-+			  size_t attr_size, struct netlink_ext_ack *extack)
-+{
-+	struct sk_buff *skb;
-+	int ret;
-+
-+	if (!rtnl_notify_needed(net, n->nlmsg_flags, RTNLGRP_TC)) {
-+		skb = NULL;
-+	} else {
-+		skb = tcf_del_notify_msg(net, n, actions, portid, attr_size,
-+					 extack);
-+		if (IS_ERR(skb))
-+			return PTR_ERR(skb);
- 	}
- 
- 	/* now do the delete */
-@@ -1946,9 +1980,8 @@ tcf_del_notify(struct net *net, struct nlmsghdr *n, struct tc_action *actions[],
- 		return ret;
- 	}
- 
--	ret = rtnetlink_send(skb, net, portid, RTNLGRP_TC,
--			     n->nlmsg_flags & NLM_F_ECHO);
--	return ret;
-+	return rtnetlink_maybe_send(skb, net, portid, RTNLGRP_TC,
-+				    n->nlmsg_flags & NLM_F_ECHO);
- }
- 
- static int
-@@ -2000,25 +2033,44 @@ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
- 	return ret;
- }
- 
--static int
--tcf_add_notify(struct net *net, struct nlmsghdr *n, struct tc_action *actions[],
--	       u32 portid, size_t attr_size, struct netlink_ext_ack *extack)
-+static struct sk_buff *tcf_add_notify_msg(struct net *net, struct nlmsghdr *n,
-+					  struct tc_action *actions[],
-+					  u32 portid, size_t attr_size,
-+					  struct netlink_ext_ack *extack)
- {
- 	struct sk_buff *skb;
- 
- 	skb = alloc_skb(max(attr_size, NLMSG_GOODSIZE), GFP_KERNEL);
- 	if (!skb)
--		return -ENOBUFS;
-+		return ERR_PTR(-ENOBUFS);
- 
- 	if (tca_get_fill(skb, actions, portid, n->nlmsg_seq, n->nlmsg_flags,
- 			 RTM_NEWACTION, 0, 0, extack) <= 0) {
- 		NL_SET_ERR_MSG(extack, "Failed to fill netlink attributes while adding TC action");
- 		kfree_skb(skb);
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	return skb;
-+}
-+
-+static int tcf_add_notify(struct net *net, struct nlmsghdr *n,
-+			  struct tc_action *actions[], u32 portid,
-+			  size_t attr_size, struct netlink_ext_ack *extack)
-+{
-+	struct sk_buff *skb;
-+
-+	if (!rtnl_notify_needed(net, n->nlmsg_flags, RTNLGRP_TC)) {
-+		skb = NULL;
-+	} else {
-+		skb = tcf_add_notify_msg(net, n, actions, portid, attr_size,
-+					 extack);
-+		if (IS_ERR(skb))
-+			return PTR_ERR(skb);
- 	}
- 
--	return rtnetlink_send(skb, net, portid, RTNLGRP_TC,
--			      n->nlmsg_flags & NLM_F_ECHO);
-+	return rtnetlink_maybe_send(skb, net, portid, RTNLGRP_TC,
-+				    n->nlmsg_flags & NLM_F_ECHO);
- }
- 
- static int tcf_action_add(struct net *net, struct nlattr *nla,
 -- 
 2.53.0
 
