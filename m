@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A70364028;
-	Wed, 30 Sep 2026 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334373815D8;
+	Wed, 30 Sep 2026 16:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784237; cv=none; b=WfI5hxg5iJGELK14ugxf9eS65HBXOmSfv5eTNCyeHx8Jb7bdUkXpKiSV3wnlQMQIMtiWRLKqduevuomGOpJRqNJq1J6b3YWT38VxrQ0SBXqSuTnAG7AuMQrQ2agfv3domvuAO92c94AQj9zilJGlh/ANqGABmixvcbNiqFDg0b8=
+	t=1790784240; cv=none; b=desqADjQ/Ndx1vdTFI5XnUDSiPVx7BpQV2MxuPHHl+/lb56mBgPnu5OTPUNcHqqCLE78snesYSaXgQS6d7jeBZY8rHIioDfEY/jbMDxSVsTC5yN+Iy6hM9PnMhNZzk1N91lndtZjkkl7DL3NIimCOgUfU674MeeuBk/OS0vIHz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784237; c=relaxed/simple;
-	bh=CJXLGeerWBHd+vHW5vh753h+fr//V+F7LHkwJpwdZqc=;
+	s=arc-20240116; t=1790784240; c=relaxed/simple;
+	bh=vbVWZrA1yXFZI2DOS+mga+qdGLVYNtzdW4npvjtB8cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OcVnf23b9LIwC+hW8i1frbRCp6i0dPdU19SuYiDqOpwnlJe1kMwstmsGC4dv3VEoazD5T6+mwvMk2ukXFNFGu6gn2nv2e1+qejGuN51yshRHpgILLcBhQychiWJ77qGKGT1i8tRSmvanbS1IM1AZRju+GK81f2CmdqKkyMphijg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bW6/1oB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=et9jBxHEuKMMoyuEyRaU3FZcSmn2R5jJr190pgSn/pum5LFyzpCy6THomtETM78BJIeR/rb8R1ebrXZEvTZzOVQCcXLT7Eb0vN5UY2U7G9twYJSzUMemmVIwm1YqXmuRozpDcXyAVieEAARPoz2mPeC72f6wHkUi090LtN0hKyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kF5dGDWv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bW6/1oB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA231F000FF;
-	Wed, 30 Sep 2026 16:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kF5dGDWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118771F00893;
+	Wed, 30 Sep 2026 16:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784232;
-	bh=S+NaywJQ9AVkdbn894z2iWShwqE3F3C+4DM63O9jF8M=;
+	s=korg; t=1790784235;
+	bh=smysiKcgjIREOYneW6XAm/AHAn4evpSebcDWDLAd4gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1bW6/1oB+gQekBswfI2MZ1JMXT75RMzZ7tVDebU0VX1SfUCFKml5dHi3w2INN24TS
-	 z28QnXjoP4KbwdIRNkCtCqP3I/3XCik9B7ugW1ghhdjmV7/OuDw2IhyDSwnM1C+l3Q
-	 +Yo2Ygx85vryrJ67W92G7JKGfxNuwqbEEu7IkttI=
+	b=kF5dGDWvm87FnYyQXewqu+Lrxis4QatlAkCA8bppjOSkYuETprZ13021e4UuS2qQZ
+	 GWPU5tsfCnZEpXhoaPmhyOMe7hvqPAYaAwiYsuUvdxBjlhxpWXknJWB3YZ47zTWhY+
+	 tVD4sNY8NWiVP3AMnMbLigbJ2/Hv/pQL4ygYLiVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dian-Syuan Yang <dian_syuan0116@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Paul Moore <paul@paul-moore.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/982] wifi: rtw89: pci: enable LTR based on pcie control register
-Date: Wed, 30 Sep 2026 17:13:40 +0200
-Message-ID: <20260930152418.614691311@linuxfoundation.org>
+Subject: [PATCH 6.1 085/982] netlabel: fix IPv6 unlabeled address add error handling
+Date: Wed, 30 Sep 2026 17:13:41 +0200
+Message-ID: <20260930152418.635396090@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,68 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dian-Syuan Yang <dian_syuan0116@realtek.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 779bbe1902f29d0ef131249ddd42a8dfbe21d0fb ]
+[ Upstream commit 56872b930feee7ae07b9720ca950dd9fa65596ee ]
 
-Originally, driver always transmits LTR (Latency Tolerance Reporting) to
-pcie host, but it may cause pcie link down on some platforms because
-LTR is not supported. As a result, driver will check the control
-register of LTR setting to decide whether to enable LTR feature.
+netlbl_unlhsh_add_addr6() always returned zero after
+netlbl_af6list_add(), masking failures such as duplicate
+IPv6 static label entries.
 
-This applies to Wi-Fi 6 chips only. For Wi-Fi 7 chips, although the
-driver still issues LTR, the hardware has its own internal logic
-to determine whether to actually transmit it to pcie host.
-
-Signed-off-by: Dian-Syuan Yang <dian_syuan0116@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260515014433.16168-5-pkshih@realtek.com
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20260522022910.398416-1-zhaochenguang@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/pci.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ net/netlabel/netlabel_unlabeled.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index cc553ca287d62..ac76697dc4627 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -2432,6 +2432,17 @@ static int rtw89_pci_mode_op(struct rtw89_dev *rtwdev)
- 	return 0;
+diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
+index 6007cb000da67..c9684ddc2395d 100644
+--- a/net/netlabel/netlabel_unlabeled.c
++++ b/net/netlabel/netlabel_unlabeled.c
+@@ -295,7 +295,7 @@ static int netlbl_unlhsh_add_addr6(struct netlbl_unlhsh_iface *iface,
+ 
+ 	if (ret_val != 0)
+ 		kfree(entry);
+-	return 0;
++	return ret_val;
  }
+ #endif /* IPv6 */
  
-+static bool rtw89_pci_dev_ltr_enabled(struct rtw89_dev *rtwdev)
-+{
-+	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
-+	struct pci_dev *pdev = rtwpci->pdev;
-+	u16 cap;
-+
-+	pcie_capability_read_word(pdev, PCI_EXP_DEVCTL2, &cap);
-+
-+	return !!(cap & PCI_EXP_DEVCTL2_LTR_EN);
-+}
-+
- static int rtw89_pci_ops_deinit(struct rtw89_dev *rtwdev)
- {
- 	const struct rtw89_pci_info *info = rtwdev->pci_info;
-@@ -2526,7 +2537,7 @@ int rtw89_pci_ltr_set(struct rtw89_dev *rtwdev, bool en)
- {
- 	u32 val;
- 
--	if (!en)
-+	if (!en || !rtw89_pci_dev_ltr_enabled(rtwdev))
- 		return 0;
- 
- 	val = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
-@@ -2562,6 +2573,9 @@ int rtw89_pci_ltr_set_v1(struct rtw89_dev *rtwdev, bool en)
- 	u32 dec_ctrl;
- 	u32 val32;
- 
-+	if (!rtw89_pci_dev_ltr_enabled(rtwdev))
-+		return 0;
-+
- 	val32 = rtw89_read32(rtwdev, R_AX_LTR_CTRL_0);
- 	if (rtw89_pci_ltr_is_err_reg_val(val32))
- 		return -EINVAL;
 -- 
 2.53.0
 
