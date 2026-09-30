@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C45433E345;
-	Wed, 30 Sep 2026 16:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2184F7CCF;
+	Wed, 30 Sep 2026 16:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786020; cv=none; b=QDxb94LdbncwckV83yAHEg7uV0az1HTkPBe7Ljc4/ZjI0rhvDXuAiWIh4PTi8HBGTbc8tyGaIUHYhl4f8k+/esr5uO4M4prS8Rh0Ik2u/3NqTWK5Xf6oOoALmSuja2UmAgi+ZfiAPqKD4wK2X+0RzH4dZvH49V2NGVf0P7QYHT8=
+	t=1790786023; cv=none; b=nnNt8ccqQAkVhqkQ2jgJAdep4o4yMG9hShSNfKAR2O8qm7hZ8WOU1ykfLoAXnoN9b0usdR6QMxIrVrZ0OUZAm4j8tG5O0bT5Tp7HxybGw2Sk9LRDxRN64tSJWuNBpPPiA4sapva3nGUMD0xDadr3U+l3f8P3Q8P5xjXW1roku3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786020; c=relaxed/simple;
-	bh=bk7kAAgwzi2AFMXte6ANZNwFfGEbU0XWJpd7kQ2rX1k=;
+	s=arc-20240116; t=1790786023; c=relaxed/simple;
+	bh=f/KPGg8a+cqFuMblBrzwl+uK03vml+nQU1A1TqmspPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AdoKvbFqI56SNcGKVWGaA9971GzrCpw0CdFKL/9AD/rOYWhoid8KkOy2Lyk/eDTG1N6E8MdNkHTx/YjujeBQEIxkiTnzXbPMm3a7wGZ7qstEL+VIKjYdNTgV1riXkYf1hG990YZjZKIqjg8RT2FuPpTrOVQglUoSNRtPa0GjszA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1G1DRW5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WIoxm3vQB9CXlXyqooOiGk0/yxHrtXkg81V5GTlHeJuEkMzy0JLWjKjY33ihCkq8zQN/w/LJsqJ1yFSRCEN72SMUyKrMS2pf0IqCSPar8ydOYdULxGeCPr5VKnAyvzlhml8C6NDynZ6sCH8bQ8/pZzJ3BdqlDYzkbPxlW3JHO+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUHyiUMz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1G1DRW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FC01F000FF;
-	Wed, 30 Sep 2026 16:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUHyiUMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37D01F000FF;
+	Wed, 30 Sep 2026 16:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786019;
-	bh=P1LLImcZMbYATnBfiKsum4hJvsMZ6uCgJYVO3ty1X/w=;
+	s=korg; t=1790786022;
+	bh=C9QjeU6K52p9OKwe7Iry0wSE6Bq4VhhugvaMhij157w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f1G1DRW5odQdMH8pAfmSd8GR9f7ws2N87qS0Id/v92donXcKJp4gZlGkuhPCiu7Ez
-	 gzRygcQsqnEjlI3rmQl5bMpQTGETyvIv82PYj0renDxwRjyR0h/uKlrdNpCQRGEnCs
-	 TWfx+cMYypaPb2Id6EW2aKYMCPdr5yfk2D76fv+c=
+	b=DUHyiUMzpZ1agXMCdHZ/oEVNP9n0x842F7CdHtWgvhgrXQ3XlqHQ7PG9v7jiB2U5m
+	 WiOaVQqTg2WFWUaLehnQjc0M9wff57QIFkH+hE5u+DBht6xLOaDrivZc2oDXUz0s17
+	 D5NKHuJ10o9nbfuqUuQCow4NztoR5BlTD+OV7VLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 714/982] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
-Date: Wed, 30 Sep 2026 17:24:10 +0200
-Message-ID: <20260930152432.091215382@linuxfoundation.org>
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	James Clark <jjc@jclark.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 688/982] net: macb: fix ordering around PTP timestamp read
+Date: Wed, 30 Sep 2026 17:23:44 +0200
+Message-ID: <20260930152431.540242973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,70 +47,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+From: James Clark <jjc@jclark.com>
 
-commit 9096bdc8d930147f7c39a493a859acbd3a8485d8 upstream.
+[ Upstream commit 9ca4ba24259183ce15665be86b2956cd896c4687 ]
 
-sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
-descriptor for a given cookie, before checking whether the pointer
-vd is NULL:
+PTP_SYS_OFFSET_EXTENDED returns system timestamps that do not correctly
+bracket the PHC register read on MACB/GEM. On a Raspberry Pi 5, the
+returned interval can be as short as 37 ns, while an ordered register
+read takes approximately 1 us. This biases the midpoint used by phc2sys,
+causing CLOCK_REALTIME to run approximately 0.5 us ahead when synchronized
+to the PHC.
 
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
+gem_tsu_get_time() reads the nanoseconds register using the driver's
+relaxed MMIO accessor. On weakly ordered systems, the subsequent system
+timestamp can be taken before the register read completes. The internal
+smp_rmb() in the pre-timestamp path also does not guarantee ordering
+against the subsequent MMIO read.
 
-    if (vd) {
-        for (lli = txd->v_lli; ...)
+Add rmb() before and after the bracketed nanoseconds read in both the
+normal and seconds rollover paths so the system timestamps bracket the
+PHC read. Adding the post-read barrier increases the minimum interval on
+the same Raspberry Pi 5 to approximately 1 us.
 
-vchan_find_desc() returns NULL when the descriptor has already been
-completed or is in-flight on a physical channel and no longer present
-in the virtual channel's descriptor list. When vd is NULL,
-to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
-check, which is undefined behaviour. Move the call inside the if (vd)
-guard to ensure it is only reached with a valid pointer.
-
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    if (vd) {
-        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-        for (lli = txd->v_lli; ...)
-
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260817135723.12807-3-christian.lugnberg@soundtrack.io
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e51bb5c2784c ("net: macb: ptp: Switch to gettimex64() interface")
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # Raspberry Pi CM5, min bracket 37 ns -> 981 ns
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Assisted-by: LLM
+Signed-off-by: James Clark <jjc@jclark.com>
+Link: https://patch.msgid.link/20260915045823.76100-1-jjc@jclark.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/cadence/macb_ptp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -969,7 +969,6 @@ static enum dma_status sun6i_dma_tx_stat
- 	struct sun6i_pchan *pchan = vchan->phy;
- 	struct sun6i_dma_lli *lli;
- 	struct virt_dma_desc *vd;
--	struct sun6i_desc *txd;
- 	enum dma_status ret;
- 	unsigned long flags;
- 	size_t bytes = 0;
-@@ -981,9 +980,9 @@ static enum dma_status sun6i_dma_tx_stat
- 	spin_lock_irqsave(&vchan->vc.lock, flags);
+diff --git a/drivers/net/ethernet/cadence/macb_ptp.c b/drivers/net/ethernet/cadence/macb_ptp.c
+index b1b02b8faa8bd..84ba09bfdd303 100644
+--- a/drivers/net/ethernet/cadence/macb_ptp.c
++++ b/drivers/net/ethernet/cadence/macb_ptp.c
+@@ -48,7 +48,12 @@ static int gem_tsu_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts,
  
- 	vd = vchan_find_desc(&vchan->vc, cookie);
--	txd = to_sun6i_desc(&vd->tx);
- 
- 	if (vd) {
-+		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
- 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
- 			bytes += lli->len;
- 	} else if (!pchan || !pchan->desc) {
+ 	spin_lock_irqsave(&bp->tsu_clk_lock, flags);
+ 	ptp_read_system_prets(sts);
++	/* explicit barriers are needed because gem_readl() is relaxed */
++	if (sts)
++		rmb();
+ 	first = gem_readl(bp, TN);
++	if (sts)
++		rmb();
+ 	ptp_read_system_postts(sts);
+ 	secl = gem_readl(bp, TSL);
+ 	sech = gem_readl(bp, TSH);
+@@ -60,7 +65,11 @@ static int gem_tsu_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts,
+ 		 * (assume all done within 1s)
+ 		 */
+ 		ptp_read_system_prets(sts);
++		if (sts)
++			rmb();
+ 		ts->tv_nsec = gem_readl(bp, TN);
++		if (sts)
++			rmb();
+ 		ptp_read_system_postts(sts);
+ 		secl = gem_readl(bp, TSL);
+ 		sech = gem_readl(bp, TSH);
+-- 
+2.53.0
+
 
 
