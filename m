@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37AF4F85CB;
-	Wed, 30 Sep 2026 16:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E58C463B8B;
+	Wed, 30 Sep 2026 16:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785069; cv=none; b=LXHCZSCs345z7+QGUM3CB0NiPok9sGMxZ2vAa+NVgfy4+6sLMY3tbH6ADfVn/IPAqYmy0/H4CUUGl0P0zYY4uuzQfXTkVrH5vdJLqeaboZ1/1CRLx26gW6fV2veSR3RuYzuYBR2iswBWvmoeMMUsWzI0xCBbl4FIe3Be3084jzU=
+	t=1790785072; cv=none; b=ooJjxg8E305pOWOdMupH4JdXx2UYoCdnUEKEmMarv7dvHEIxsU00DoB05WZR6c7SbWa185sJwESpO62/x1XyBzUaKFvHB/56yGYkY6MIbTj/HUJjPxFzXmHTL3MAi286fpLT9vRlyjQnNFNQF+U1CfN9MijYS/ZhaPX17T73PIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785069; c=relaxed/simple;
-	bh=chfhGX2+NtIGIb0y90s76KF6MEQxg5A4Y78CSCZ7R7E=;
+	s=arc-20240116; t=1790785072; c=relaxed/simple;
+	bh=WaDqJCK89Ivakqw7ChHwsSigHEUmrjN+WALUeDp7LVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaMpW9iwqazWtO0wXRwhQBk+DQ5JTdKtYYZ/j0neOr3eu809dR6QSpWxa2VKEzaIqRnMI4DYC7mgjlM/PZLIJn+4TS4+ZhDF2+IKgxdnuxcCIVqt6bIoaHxgDYCMaxQb26mml6qorLy7pmJIqHk16esA3uFyMOH4hZ0DLTc42aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCIOw/4d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MRKPFajbtAArcziaHzXhnzQNUxb9ko6INb+gCNCy1ZHrPqOqWY9RuCbqnfGlbS/UJKaiwvB25nQPX/6CpJFRsGr9neOgxlyQDV7UUWAyu4W2Z4Xqv02uWVivEvlC7XjRL78aDD8WOcrl46BXctW+QEq0IehcIgFOenDLShVhaQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKK+iR2x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCIOw/4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D071F000FF;
-	Wed, 30 Sep 2026 16:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKK+iR2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539E51F00893;
+	Wed, 30 Sep 2026 16:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785065;
-	bh=JgJt7mJsrqMW8IvVEybxmtT/4YeF2O38sCFvsdVkTqQ=;
+	s=korg; t=1790785067;
+	bh=6x23ckIckSKdUt66biaw7fcghlMnoRywvLlVCgCV7e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XCIOw/4dqykSQQ6zzbPvtH4lHgRbcW7o9LX7mY2OzMllLgqQoTi5X6UjOQ9Z23iCA
-	 Sc0RTiUDmc9Q1QuNT9t5Yj25hn6utcrJajn5X4cFaOPaGV0+iTL//WAmqgH7EiliU1
-	 Hckgl9NQKee3hx1MNvhdmT3tUDc1uIC+elv3c5x8=
+	b=DKK+iR2xgeznFcnj7uWtAH3IzyS8JbXV0w1GTE+0FDWS/KhlmNgCw+hQBtWPtSGHE
+	 WdGoJ+rkMiqDR/tqYys03kuQc52kBnGiZNevRiPLFDPANRYwCK5O0qPKRfcQlcJJG4
+	 lrQOtuAFOTFt5ywYtsQgWxBmVC4K5IYRNZ5j4Aw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
-	Lee Jones <lee@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 377/982] mfd: db8500-prcmu: Remove unused inline functions
-Date: Wed, 30 Sep 2026 17:18:33 +0200
-Message-ID: <20260930152424.909221146@linuxfoundation.org>
+Subject: [PATCH 6.1 351/982] ASoC: ab8500: Correct digital interface format setup
+Date: Wed, 30 Sep 2026 17:18:07 +0200
+Message-ID: <20260930152424.353224869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,59 +51,288 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 2dfe293bcde2d302c045d0cd536ccb15f86385d2 ]
+[ Upstream commit f98785adf004db6b1c9f4cea9dadae7b800db72f ]
 
-Since commit b0e846248de5 ("mfd: db8500-prcmu: Remove dead code for a non-existing config")
-these inline helpers also no need any more.
+The codec programs I2S as an undelayed left-aligned format, although the
+hardware manual defines delayed left-aligned as I2S compatible. It also
+enables the master generator when the codec is a clock consumer, changes
+registers before the complete format has been validated, and discards
+register I/O errors.
 
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20230720143738.13996-1-yuehaibing@huawei.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 66ec63e7a90b ("ASoC: ux500: Deassert the MSP reset during probe")
+Build all three interface register values before writing them, use the
+required one-bit I2S delay, only run the master generator for a provider
+configuration, and propagate write failures.
+
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-3-f85024e717e3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mfd/dbx500-prcmu.h | 21 ---------------------
- 1 file changed, 21 deletions(-)
+ sound/soc/codecs/ab8500-codec.c | 175 ++++++++++++--------------------
+ 1 file changed, 64 insertions(+), 111 deletions(-)
 
-diff --git a/include/linux/mfd/dbx500-prcmu.h b/include/linux/mfd/dbx500-prcmu.h
-index e7a7e70fdb385..dd0fc891b2289 100644
---- a/include/linux/mfd/dbx500-prcmu.h
-+++ b/include/linux/mfd/dbx500-prcmu.h
-@@ -556,16 +556,6 @@ static inline void prcmu_clear(unsigned int reg, u32 bits)
- #define PRCMU_QOS_ARM_OPP 3
- #define PRCMU_QOS_DEFAULT_VALUE -1
- 
--static inline unsigned long prcmu_qos_get_cpufreq_opp_delay(void)
--{
--	return 0;
--}
--
--static inline int prcmu_qos_requirement(int prcmu_qos_class)
--{
--	return 0;
--}
--
- static inline int prcmu_qos_add_requirement(int prcmu_qos_class,
- 					    char *name, s32 value)
- {
-@@ -582,15 +572,4 @@ static inline void prcmu_qos_remove_requirement(int prcmu_qos_class, char *name)
- {
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index c40e1a47e6eee..7d6a90ee337c6 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -2016,149 +2016,91 @@ static int ab8500_audio_set_ear_cmv(struct snd_soc_component *component,
+ 	return 0;
  }
  
--static inline int prcmu_qos_add_notifier(int prcmu_qos_class,
--					 struct notifier_block *notifier)
+-static int ab8500_audio_set_bit_delay(struct snd_soc_dai *dai,
+-				unsigned int delay)
 -{
--	return 0;
--}
--static inline int prcmu_qos_remove_notifier(int prcmu_qos_class,
--					    struct notifier_block *notifier)
--{
+-	unsigned int mask, val;
+-	struct snd_soc_component *component = dai->component;
+-
+-	mask = BIT(AB8500_DIGIFCONF2_IF0DEL);
+-	val = 0;
+-
+-	switch (delay) {
+-	case 0:
+-		break;
+-	case 1:
+-		val |= BIT(AB8500_DIGIFCONF2_IF0DEL);
+-		break;
+-	default:
+-		dev_err(dai->component->dev,
+-			"%s: ERROR: Unsupported bit-delay (0x%x)!\n",
+-			__func__, delay);
+-		return -EINVAL;
+-	}
+-
+-	dev_dbg(dai->component->dev, "%s: IF0 Bit-delay: %d bits.\n",
+-		__func__, delay);
+-	snd_soc_component_update_bits(component, AB8500_DIGIFCONF2, mask, val);
+-
 -	return 0;
 -}
 -
- #endif /* __MACH_PRCMU_H */
+-/* Gates clocking according format mask */
+-static int ab8500_codec_set_dai_clock_gate(struct snd_soc_component *component,
+-					unsigned int fmt)
+-{
+-	unsigned int mask;
+-	unsigned int val;
+-
+-	mask = BIT(AB8500_DIGIFCONF1_ENMASTGEN) |
+-			BIT(AB8500_DIGIFCONF1_ENFSBITCLK0);
+-
+-	val = BIT(AB8500_DIGIFCONF1_ENMASTGEN);
+-
+-	switch (fmt & SND_SOC_DAIFMT_CLOCK_MASK) {
+-	case SND_SOC_DAIFMT_CONT: /* continuous clock */
+-		dev_dbg(component->dev, "%s: IF0 Clock is continuous.\n",
+-			__func__);
+-		val |= BIT(AB8500_DIGIFCONF1_ENFSBITCLK0);
+-		break;
+-	case SND_SOC_DAIFMT_GATED: /* clock is gated */
+-		dev_dbg(component->dev, "%s: IF0 Clock is gated.\n",
+-			__func__);
+-		break;
+-	default:
+-		dev_err(component->dev,
+-			"%s: ERROR: Unsupported clock mask (0x%x)!\n",
+-			__func__, fmt & SND_SOC_DAIFMT_CLOCK_MASK);
+-		return -EINVAL;
+-	}
+-
+-	snd_soc_component_update_bits(component, AB8500_DIGIFCONF1, mask, val);
+-
+-	return 0;
+-}
+-
+ static int ab8500_codec_set_dai_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ {
+-	unsigned int mask;
+-	unsigned int val;
+ 	struct snd_soc_component *component = dai->component;
+-	int status;
++	unsigned int conf1_mask, conf1_val = 0;
++	unsigned int conf2_mask, conf2_val = 0;
++	unsigned int conf3_mask, conf3_val = 0;
++	bool provider = false;
++	int ret;
+ 
+ 	dev_dbg(component->dev, "%s: Enter (fmt = 0x%x)\n", __func__, fmt);
+ 
+-	mask = BIT(AB8500_DIGIFCONF3_IF1DATOIF0AD) |
++	conf3_mask = BIT(AB8500_DIGIFCONF3_IF1DATOIF0AD) |
+ 			BIT(AB8500_DIGIFCONF3_IF1CLKTOIF0CLK) |
+ 			BIT(AB8500_DIGIFCONF3_IF0BFIFOEN) |
+ 			BIT(AB8500_DIGIFCONF3_IF0MASTER);
+-	val = 0;
+ 
+ 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
+ 	case SND_SOC_DAIFMT_CBP_CFP:
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0 Master-mode: AB8500 provider.\n", __func__);
+-		val |= BIT(AB8500_DIGIFCONF3_IF0MASTER);
++		conf3_val |= BIT(AB8500_DIGIFCONF3_IF0MASTER);
++		provider = true;
+ 		break;
+ 	case SND_SOC_DAIFMT_CBC_CFC:
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0 Master-mode: AB8500 consumer.\n", __func__);
+ 		break;
+ 	case SND_SOC_DAIFMT_CBC_CFP:
+ 	case SND_SOC_DAIFMT_CBP_CFC:
+-		dev_err(dai->component->dev,
++		dev_err(component->dev,
+ 			"%s: ERROR: The device is either a provider or a consumer.\n",
+ 			__func__);
+ 		fallthrough;
+ 	default:
+-		dev_err(dai->component->dev,
+-			"%s: ERROR: Unsupporter clocking mask 0x%x\n",
++		dev_err(component->dev,
++			"%s: ERROR: Unsupported clocking mask 0x%x\n",
+ 			__func__, fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK);
+ 		return -EINVAL;
+ 	}
+ 
+-	snd_soc_component_update_bits(component, AB8500_DIGIFCONF3, mask, val);
+-
+-	/* Set clock gating */
+-	status = ab8500_codec_set_dai_clock_gate(component, fmt);
+-	if (status) {
+-		dev_err(dai->component->dev,
+-			"%s: ERROR: Failed to set clock gate (%d).\n",
+-			__func__, status);
+-		return status;
++	conf1_mask = BIT(AB8500_DIGIFCONF1_ENMASTGEN) |
++		     BIT(AB8500_DIGIFCONF1_ENFSBITCLK0);
++	switch (fmt & SND_SOC_DAIFMT_CLOCK_MASK) {
++	case SND_SOC_DAIFMT_CONT:
++		if (provider)
++			conf1_val = conf1_mask;
++		break;
++	case SND_SOC_DAIFMT_GATED:
++		if (provider)
++			conf1_val = BIT(AB8500_DIGIFCONF1_ENMASTGEN);
++		break;
++	default:
++		dev_err(component->dev, "%s: Unsupported clock mask 0x%x\n",
++			__func__, fmt & SND_SOC_DAIFMT_CLOCK_MASK);
++		return -EINVAL;
+ 	}
+ 
+-	/* Setting data transfer format */
+-
+-	mask = BIT(AB8500_DIGIFCONF2_IF0FORMAT0) |
+-		BIT(AB8500_DIGIFCONF2_IF0FORMAT1) |
+-		BIT(AB8500_DIGIFCONF2_FSYNC0P) |
+-		BIT(AB8500_DIGIFCONF2_BITCLK0P);
+-	val = 0;
++	conf2_mask = BIT(AB8500_DIGIFCONF2_IF0FORMAT0) |
++		     BIT(AB8500_DIGIFCONF2_IF0FORMAT1) |
++		     BIT(AB8500_DIGIFCONF2_IF0DEL) |
++		     BIT(AB8500_DIGIFCONF2_FSYNC0P) |
++		     BIT(AB8500_DIGIFCONF2_BITCLK0P);
+ 
+ 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
+ 	case SND_SOC_DAIFMT_I2S: /* I2S mode */
+-		dev_dbg(dai->component->dev, "%s: IF0 Protocol: I2S\n", __func__);
+-		val |= BIT(AB8500_DIGIFCONF2_IF0FORMAT1);
+-		ab8500_audio_set_bit_delay(dai, 0);
++		dev_dbg(component->dev, "%s: IF0 Protocol: I2S\n", __func__);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0FORMAT1) |
++			     BIT(AB8500_DIGIFCONF2_IF0DEL);
+ 		break;
+ 
+ 	case SND_SOC_DAIFMT_DSP_A: /* L data MSB after FRM LRC */
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0 Protocol: DSP A (TDM)\n", __func__);
+-		val |= BIT(AB8500_DIGIFCONF2_IF0FORMAT0);
+-		ab8500_audio_set_bit_delay(dai, 1);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0FORMAT0) |
++			     BIT(AB8500_DIGIFCONF2_IF0DEL);
+ 		break;
+ 
+ 	case SND_SOC_DAIFMT_DSP_B: /* L data MSB during FRM LRC */
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0 Protocol: DSP B (TDM)\n", __func__);
+-		val |= BIT(AB8500_DIGIFCONF2_IF0FORMAT0);
+-		ab8500_audio_set_bit_delay(dai, 0);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0FORMAT0);
+ 		break;
+ 
+ 	default:
+-		dev_err(dai->component->dev,
++		dev_err(component->dev,
+ 			"%s: ERROR: Unsupported format (0x%x)!\n",
+ 			__func__, fmt & SND_SOC_DAIFMT_FORMAT_MASK);
+ 		return -EINVAL;
+@@ -2166,39 +2108,50 @@ static int ab8500_codec_set_dai_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ 
+ 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+ 	case SND_SOC_DAIFMT_NB_NF: /* normal bit clock + frame */
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0: Normal bit clock, normal frame\n",
+ 			__func__);
+ 		break;
+ 	case SND_SOC_DAIFMT_NB_IF: /* normal BCLK + inv FRM */
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0: Normal bit clock, inverted frame\n",
+ 			__func__);
+-		val |= BIT(AB8500_DIGIFCONF2_FSYNC0P);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_FSYNC0P);
+ 		break;
+ 	case SND_SOC_DAIFMT_IB_NF: /* invert BCLK + nor FRM */
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0: Inverted bit clock, normal frame\n",
+ 			__func__);
+-		val |= BIT(AB8500_DIGIFCONF2_BITCLK0P);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_BITCLK0P);
+ 		break;
+ 	case SND_SOC_DAIFMT_IB_IF: /* invert BCLK + FRM */
+-		dev_dbg(dai->component->dev,
++		dev_dbg(component->dev,
+ 			"%s: IF0: Inverted bit clock, inverted frame\n",
+ 			__func__);
+-		val |= BIT(AB8500_DIGIFCONF2_FSYNC0P);
+-		val |= BIT(AB8500_DIGIFCONF2_BITCLK0P);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_FSYNC0P) |
++			     BIT(AB8500_DIGIFCONF2_BITCLK0P);
+ 		break;
+ 	default:
+-		dev_err(dai->component->dev,
++		dev_err(component->dev,
+ 			"%s: ERROR: Unsupported INV mask 0x%x\n",
+ 			__func__, fmt & SND_SOC_DAIFMT_INV_MASK);
+ 		return -EINVAL;
+ 	}
+ 
+-	snd_soc_component_update_bits(component, AB8500_DIGIFCONF2, mask, val);
++	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF3,
++					    conf3_mask, conf3_val);
++	if (ret < 0)
++		return ret;
+ 
+-	return 0;
++	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF1,
++					    conf1_mask, conf1_val);
++	if (ret < 0)
++		return ret;
++
++	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF2,
++					    conf2_mask, conf2_val);
++
++	return ret < 0 ? ret : 0;
+ }
+ 
+ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
 -- 
 2.53.0
 
