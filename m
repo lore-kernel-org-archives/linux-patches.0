@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18C54E73B2;
-	Wed, 30 Sep 2026 17:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876BE3A784F;
+	Wed, 30 Sep 2026 17:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788652; cv=none; b=XM1pyScLsAYe4aher6zM5ITTSHF99Byo/x7nkQLzsbNDqm7iFlqPCeinJhU4AP4csEANZZ73TJYME9j9DUbv232n529RcAdAVZNk2abq8KO3HmxZ3F3L++t3PscoNoC+N95wOHP7Ch7Dmim6KTThBiFlPGN4f1PJ9Uy+jTYTHjU=
+	t=1790788655; cv=none; b=rpI8krOOLGrbE4sNPFcvCF46GMkYjeIz/AwZsTtfns1YWUZxUmRotA8TM33i5F9YQB4fVf3UPYYv9qtQqHbF95cB7cNizg53qW+qq7sDlKTtVj7vHmG4RNm7H6zH5bqnaC7VuVluOoNi7pdC8npOX1AUcjAC2qhYTgAXiAxcgz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788652; c=relaxed/simple;
-	bh=bO+FuFrct4gNvQvt54X/vs1jzI1hCMQlBEl94rt1WXM=;
+	s=arc-20240116; t=1790788655; c=relaxed/simple;
+	bh=al14RSCx5kTpJhJkqTRBrsahncPk+iwAUbK70YMJ548=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEdd9kTJyJHodqn0lx3LdEXz4hrHfsQaACpveMFY/QNe7kWr+hUFrZyxU7fcH+jsPDPpoRsUWODOpIWPGrjrH786T1fTJTcJB2r35EdClzaKw75rtJQR/02ShId0Q+mEDJSgwPl20YMBcwnb2+G4D6mXIT60+FT9I7FqyvxdIB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8VTMll7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D9o+MrvC0HeejK5b+dVBmPpOrokjeKMj0qyOD8zWS9K8oLIBPEKQQofXIb0pFTkTMn1GRW75/kGmW+AnMnFJhoAcKZiYezEoNexD0wlRReGFEQ4ym+XzDM/c9PUkPkQhhTZygGqTCgvoVn+qwXmalEzgG1jdKyDYIWju2FtfyjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTbuXlvD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8VTMll7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29841F000FF;
-	Wed, 30 Sep 2026 17:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTbuXlvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1601F00898;
+	Wed, 30 Sep 2026 17:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788651;
-	bh=CHcYbBe2qklzrBRko0pKL2Cs35uFdd6IcpvmXFGyH5Q=;
+	s=korg; t=1790788654;
+	bh=q9u4CgHsOC3pRBfPrNBiiPs/DZq+slCggzDhgfxc71Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8VTMll7pM1PHSH4qER8LAcABQW203tadb6o1t9anD4B/xC6TcQgSkWKD5eIeV+JB
-	 Ar/kQmw4WMEKXbpCVv2fpLO5+EyXnAuxqx4xbXpgxXBFvkJj87h/rjFWeGd5yoYbIa
-	 oDELknTTOinp8N/gBzPn6ARpjDjgZ0ZHJxPR0D5U=
+	b=mTbuXlvD8Ye0G5gH14K94TYORfLmxzRWcguETuERo7KEUtd2nXUUMwKMQYYJvRYXz
+	 BZF5DprZCbz3RpcFjkGu+JHgHYLh0YFjlnFuFtiDiJt3x0LrdTrBmNhEsN5RA8JjpC
+	 4f1cV7+3zHOi5+ozxHaGTYnnWKaR3ngf89GhJWNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Amirkan <markdamirkan@gmail.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 198/877] net/packet: clear RX owner on VNET header error
-Date: Wed, 30 Sep 2026 17:18:29 +0200
-Message-ID: <20260930152418.996535005@linuxfoundation.org>
+Subject: [PATCH 6.12 199/877] net/packet: avoid truncating TPACKET_V3 private size
+Date: Wed, 30 Sep 2026 17:18:30 +0200
+Message-ID: <20260930152419.018259493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,42 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Amirkan <markdamirkan@gmail.com>
 
-commit 33ff111d7ba3beb86e28938d6382bb5beabd865a upstream.
+commit 37213e61120297920ae4c937fcb326a360da5084 upstream.
 
-Commit 61fad6816fc1 ("net/packet: tpacket_rcv: avoid a producer race
-condition") added rx_owner_map and made tpacket_rcv() claim a V1 or V2
-ring slot before converting the virtio-net header.  If the conversion
-fails, the drop path leaves the slot claimed.
+tpacket_req3.tp_sizeof_priv is an unsigned int, and packet_set_ring()
+validates the full value against the block size.  init_prb_bdqc() then
+stores it in the unsigned short blk_sizeof_priv field.
 
-With a one-frame TPACKET_V2 ring, an unsupported UDP GSO packet leaves
-the only slot unavailable, so the ring also drops the next valid packet.
+Commit 2b6867c2ce76 ("net/packet: fix overflow in check for priv area
+size") fixed the validation arithmetic, but an accepted value above
+USHRT_MAX still narrows when it is stored.
 
-Clear the ownership bit on this error path.  TPACKET_V3 already clears
-its block state here.
+For a 131072-byte block, tp_sizeof_priv=65536 is valid.  The narrowing
+makes offset_to_first_pkt 48 instead of 65584, so packet records can be
+placed in the private area that userspace asked the kernel to preserve.
 
-Fixes: 61fad6816fc1 ("net/packet: tpacket_rcv: avoid a producer race condition")
+blk_sizeof_priv is internal state, so widen it to hold the validated
+UAPI value.
+
+Fixes: f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer implementation.")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260913-b4-send-packet-vnet-v1-1-5545ffb528ae@gmail.com
+Link: https://patch.msgid.link/20260913-b4-send-packet-private-v1-1-925eab2cd388@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/packet/internal.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2436,7 +2436,9 @@ static int tpacket_rcv(struct sk_buff *s
- 	    virtio_net_hdr_from_skb(skb, h.raw + macoff -
- 				    sizeof(struct virtio_net_hdr),
- 				    vio_le(), true, 0)) {
--		if (po->tp_version == TPACKET_V3)
-+		if (po->tp_version <= TPACKET_V2)
-+			__clear_bit(slot_id, po->rx_ring.rx_owner_map);
-+		else
- 			prb_clear_blk_fill_status(&po->rx_ring);
- 		goto drop_n_account;
- 	}
+--- a/net/packet/internal.h
++++ b/net/packet/internal.h
+@@ -21,7 +21,7 @@ struct tpacket_kbdq_core {
+ 	unsigned char	reset_pending_on_curr_blk;
+ 	unsigned char   delete_blk_timer;
+ 	unsigned short	kactive_blk_num;
+-	unsigned short	blk_sizeof_priv;
++	unsigned int	blk_sizeof_priv;
+ 
+ 	/* last_kactive_blk_num:
+ 	 * trick to see if user-space has caught up
 
 
