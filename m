@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1AF4EDCB0;
-	Wed, 30 Sep 2026 15:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30319379C35;
+	Wed, 30 Sep 2026 15:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783266; cv=none; b=cVW5KQDuulVvi7RCwgZgRGDIzE1iGW0giqUB/E3+C3AbLDhkJiG1GXCqpq3/TSwEyzMSgkolqXD1PsTqeikey3JdsKSKY/dX6cr3imLq61pefUf8TR0AdmpUeSVLeeNEWMaWy/TRoFDzt37NnBD4zWwhWGr5PUHAWAROskU9aU0=
+	t=1790783270; cv=none; b=O+LudcxErhGUx7/TNuAwM2CpNoOToptT4Z9zALP9YbDA0+oe9HZFkLmMOHqSWILflEKhCKOUTme49RyS3s7jfIY+8m+yERkHTRfuS1bGGXO3HZHB5z/bENO5CrzLn2w218DpBVU3gvfYPOAT/NddtfQ5nZW6FPYEkXyp18XDMq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783266; c=relaxed/simple;
-	bh=m8bSsSnQoaZ3t0Hh5i7Bi6MAvaFVbrTAJgwVdTLruDQ=;
+	s=arc-20240116; t=1790783270; c=relaxed/simple;
+	bh=msANotqugGzkk6VeI0It/RV0KJPwh0jYiXZnL2NBF8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8Tq5pwJ1KrOSM5buvl8vv9ak5v/QEjsDO58K0Ix0hfjaD4k+FOlnOGgxgXpuw1DQU5cwNu8QCI0S9MJbCQpmhntQGTN8taNIxNlNnUdcJif/x+A/a9QXgbD7JOshSKYf7QOMkggwQrty9ZzeLQrPh6uSxjlE9M/GHYEz7KPVG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwEgaxhf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IBT6SO8nbyTI0teKAEF/YN96j1yFR114G4EE86n2/BgiGu9yDLVQu7YUigHP7uzekt6L84ETr9szFoQ20gFw1WR9UrxHFrXEgv8+3RLEik9LG30ROMFUePEdjGfc9ylnKGarcgOCPlSmX8BXnlG6NUc2sE0IcseYZ9ic1hLuJFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iK/QHat+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwEgaxhf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1608C1F0089C;
-	Wed, 30 Sep 2026 15:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iK/QHat+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16131F000FF;
+	Wed, 30 Sep 2026 15:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783262;
-	bh=rzuA1bmiT/MuuEr17/JrbSZuDQRS8SLcRqhmmZYp1o4=;
+	s=korg; t=1790783265;
+	bh=e2egO/s2C08PQzyLfiP9jZXp7r7kwjTmdd9ApftRIic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DwEgaxhfjpu26i4/Xlzi+JBA6OWLSbLIiuoSI+0iLNeWkhHc12wavVp/nw1lH7dOS
-	 aeqafBvCEPiQEuQ9RIlv0lCjDxFMa8cRkWPFovJIk1J7C4uDPBMHv/swzhzDtME/+Z
-	 p4R311jgFRVsqKJXBgy8ZRMI3lQNcvmdd0od2/mo=
+	b=iK/QHat+o+fwpvSKv1APYXZ45Blzh0VEptE5Y1eSwNDvXr4CLvfveWnWpcJnW3/bV
+	 Qb0euYQx2+cOtokU5GqjKSfC/0c8vM2jrNlTGaz9JBuppucgosUen1rGV2pI70BbfP
+	 t5S139Mt/nx/o2ik5IHIjWOZW1RUDS/Mz/Fmrn8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Yadi.hu" <yadi.hu@windriver.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Stian Halseth <stian@itx.no>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 336/595] ARM: ensure interrupts are enabled in __do_user_fault()
-Date: Wed, 30 Sep 2026 17:23:49 +0200
-Message-ID: <20260930152354.908472344@linuxfoundation.org>
+Subject: [PATCH 5.10 337/595] sunvdc: fix -EIO issue due to lack of retries
+Date: Wed, 30 Sep 2026 17:23:50 +0200
+Message-ID: <20260930152354.929045725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,59 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 59e4f3b45b96a24fc9b7a89e5f8a2168b30f95af ]
+[ Upstream commit 5067d4ba713961d8ccea1e06cd4c453793f3121e ]
 
-__do_user_fault() may be called from fault handling paths where the
-interrupts are enabled or disabled. E.g. do_page_fault() calls this
-with interrupts enabled, whereas do_sect_fault()->do_bad_area()
-will call this with interrupts disabled. Since this is a userspace
-fault, we know that interrupts were enabled in the parent context,
-so call local_irq_enable() here to give a consistent interrupt state.
+John reports that since commit:
 
-This is necessary for force_sig_info() when PREEMPT_RT is enabled.
+a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
 
-Reported-by: Yadi.hu <yadi.hu@windriver.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+users of Linux inside Solaris ldom see occasional -EIO errors because
+the request send loop now times out. The current loop does 10 retries,
+and inside vio_ldc_send() a further 1000 1usec retries are done as well.
+Even with 10.5 msec of busy loop retries that's apparently not enough to
+always succeed.
+
+Rather than introduce continued busy looping, requeue the request and
+have the delayed queue kicking retry the request after another 10ms.
+This obviously isn't ideal, but there's seemingly no way to wait for
+this type of event. And if 10ms of busy looping was not enough to make
+progress, then presumably this is an edge condition and we just need to
+guarantee to make forward progress at some later point in time. That's
+more suitably done through letting the CPU tend to other work, rather
+than sitting in a tight loop retrying.
+
+[stian: rebased on top of the cookie-unmap fix, without which every
+ requeued attempt leaks LDC map table entries; tested on an
+ UltraSPARC T4 LDOM where the vdc_tx_trigger failure condition was
+ reproduced and absorbed by the requeue with no I/O error]
+
+Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/all/20251006100226.4246-2-glaubitz@physik.fu-berlin.de/
+Link: https://lore.kernel.org/all/418310b3-2b77-4534-b2fd-27dcc11e333c@kernel.dk/
+Signed-off-by: Stian Halseth <stian@itx.no>
+Link: https://patch.msgid.link/20260901173947.3292110-3-stian@itx.no
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/block/sunvdc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index b186a31b3cf72..7ac46e1b85a61 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -137,7 +137,8 @@ __do_kernel_fault(struct mm_struct *mm, unsigned long addr, unsigned int fsr,
+diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
+index fe52b716f8442..9f81ceee649cb 100644
+--- a/drivers/block/sunvdc.c
++++ b/drivers/block/sunvdc.c
+@@ -555,6 +555,7 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	struct vdc_port *port = hctx->queue->queuedata;
+ 	struct vio_dring_state *dr;
+ 	unsigned long flags;
++	int ret;
  
- /*
-  * Something tried to access memory that isn't in our memory map..
-- * User mode accesses just cause a SIGSEGV
-+ * User mode accesses just cause a SIGSEGV. Ensure interrupts are enabled
-+ * for preempt RT.
-  */
- static void
- __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
-@@ -145,6 +146,8 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- {
- 	struct task_struct *tsk = current;
+ 	dr = &port->vio.drings[VIO_DRIVER_TX_RING];
  
-+	local_irq_enable();
-+
- #ifdef CONFIG_DEBUG_USER
- 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
- 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
-@@ -254,6 +257,7 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
- 		 * should not be faulting in kernel space, which includes the
- 		 * vector/khelper page. Handle the branch predictor hardening
- 		 * while interrupts are still disabled, then send a SIGSEGV.
-+		 * Note that __do_user_fault() will enable interrupts.
- 		 */
- 		harden_branch_predictor();
- 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
+@@ -576,7 +577,13 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 		return BLK_STS_DEV_RESOURCE;
+ 	}
+ 
+-	if (__send_request(bd->rq) < 0) {
++	ret = __send_request(bd->rq);
++	if (ret == -EAGAIN) {
++		spin_unlock_irqrestore(&port->vio.lock, flags);
++		/* already spun for 10msec, defer 10msec and retry */
++		blk_mq_delay_kick_requeue_list(hctx->queue, 10);
++		return BLK_STS_DEV_RESOURCE;
++	} else if (ret < 0) {
+ 		spin_unlock_irqrestore(&port->vio.lock, flags);
+ 		return BLK_STS_IOERR;
+ 	}
 -- 
 2.53.0
 
