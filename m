@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187C851B179;
-	Wed, 30 Sep 2026 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401BD4F7CCF;
+	Wed, 30 Sep 2026 17:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789296; cv=none; b=q+sI/AeskdXDRkNFmhIbdAy3QjEN2bJgWkMY5apF1S91QSaMqaPPX1lqqDlLjO6J34yINoDx2FUw2sNmbZeYvuvG4xL2w6yGLsA1eWYl1nlO4jxwrSfAH6uXk5lB0u+kVDyoO6ALcA7Q73rNFUySYI3d9HK9raFXNlsYAlz3sgI=
+	t=1790789299; cv=none; b=q7Gdvpw/s3dBPoQuwqTDRsPCMMGMFenhVTqJa3335UmBGMKHA4m8huVc2+nRaELuS7Ew95Z746+crJuRpl+8QIbEJ6kssimlDqFVqZUH23GjHD5CriXPK4CCDL2FH1G0FOIrv55G8cRLQUjJNb9IwcX/C6ARmXPn8X5Or0/rVMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789296; c=relaxed/simple;
-	bh=Gik76wGx77zl1LUrF4iSTFwMWz0rrZT/4QWAeCK3aH4=;
+	s=arc-20240116; t=1790789299; c=relaxed/simple;
+	bh=bVotDYIO9o/KjPbW5ABHJ0IbytWj0w19FN9MNq0yuR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kP0HmNOjFc/rs4xlMe55A68xX3jahnTBcdP6W+7GZyQBPXwFggljOD50ocz4WZAsjrAF0OggnjzSYPLQoR2fIGCYfjWrMcVKxi9t9N4qylgqNrTQozRBO++3+gU9s8UPqQhTUtF6vsGlOLs1J7t0NImo0EObMKyj79bYoNrAkaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=butYcx76; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HOIYxapBWsIb+PBPY+gt142jqzLqyMO4oupPRApqKJA2voYqVvqrJTTSVGu7UJGtQ41/aIEEaP7cJZSFjqWeyp2NVds8shYcwyG0+/62TnX5aayecEs4yrJb5G+3laP27uaCmHMvpum78BnYPvfg31Bt6Vb/e4xn2Ma+fNmc70Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2or0HP1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="butYcx76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F821F000FF;
-	Wed, 30 Sep 2026 17:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2or0HP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483DF1F000FF;
+	Wed, 30 Sep 2026 17:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789295;
-	bh=XOrPgq08VbQOvrlZHzws4hguo3UixVlXEafIZPyci2Y=;
+	s=korg; t=1790789297;
+	bh=1RpqeyNobUJkqFLIbrosLrYwopfUxYRATDqzoidSL/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=butYcx76hvUikNEskWxgo097jS8MLxmpK96vevkxvtwqHEsoE9gO9KZ1kQJOy8z9W
-	 swXAxEkNFd2UogT2+YRCCJd2RQnDpwzlzw+w21KjTeo0W5Do743n3sqlq6lF8WdZk6
-	 uROfccDxhuxFPhht0kRcuVIQnHtbBhSVcPsoLiYQ=
+	b=F2or0HP1EC9hinZESLXCE1+A4vnVHS9sZV5+dxU+H9z/sUkJLYrJuvlpLQ7zXM3XK
+	 wZaQq7T8nX4T7HDghFfJwB/82ixQkDfNCh/R1eMvI0MdpsY8ArM/EreGAv2HVfE6I4
+	 ElKEWkuowXbUF03hJMNOywo8/MzP2hyOdRSTvtA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/877] net: bcmgenet: do not skip WoL power up on GENET V1
-Date: Wed, 30 Sep 2026 17:22:18 +0200
-Message-ID: <20260930152423.903538995@linuxfoundation.org>
+Subject: [PATCH 6.12 428/877] net: bcmgenet: validate Ethernet address in bcmgenet_set_mac_addr
+Date: Wed, 30 Sep 2026 17:22:19 +0200
+Message-ID: <20260930152423.924347990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,66 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit cbbc1aee7776c7fa1d89e6cb963a23e58c495dca ]
+[ Upstream commit 273941c85fc2632cd3e56ddff737b9245de7697d ]
 
-bcmgenet_power_up() had an early check for bcmgenet_has_ext(priv) before
-dispatching by power mode. GENET V1 does not have the EXT block (unlike
-GENET V2+), which causes bcmgenet_power_up() to immediately return 0.
+bcmgenet_set_mac_addr() did not check whether the provided MAC address is a
+valid Ethernet address before applying it. Userspace could configure an
+invalid address (such as all zeroes or a multicast address) while the
+interface is down.
 
-As a consequence, when waking up from GENET_POWER_WOL_MAGIC on GENET V1,
-bcmgenet_wol_power_up_cfg() is never invoked to disable the WoL clock,
-clear wake event masks, and restore normal PHY and MAC operations.
+Add a call to is_valid_ether_addr() and return -EADDRNOTAVAIL if the MAC
+address is not valid.
 
-Move the bcmgenet_has_ext() checks to the GENET_POWER_PASSIVE and
-GENET_POWER_CABLE_SENSE cases where the EXT registers are actually
-accessed, allowing GENET_POWER_WOL_MAGIC cleanup to execute on all
-hardware versions.
-
-Fixes: c3ae64ae0c08 ("net: bcmgenet: handle GENET_POWER_WOL_MAGIC")
+Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260921220021.281418-4-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20260921220021.281418-5-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index fc1d4cef3ad81..dad5adfadb76d 100644
+index dad5adfadb76d..a326ee63c1b7c 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1699,13 +1699,12 @@ static int bcmgenet_power_up(struct bcmgenet_priv *priv,
- 	int ret = 0;
- 	u32 reg;
+@@ -3562,6 +3562,9 @@ static int bcmgenet_set_mac_addr(struct net_device *dev, void *p)
+ 	if (netif_running(dev))
+ 		return -EBUSY;
  
--	if (!bcmgenet_has_ext(priv))
--		return ret;
--
--	reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
--
- 	switch (mode) {
- 	case GENET_POWER_PASSIVE:
-+		if (!bcmgenet_has_ext(priv))
-+			break;
++	if (!is_valid_ether_addr(addr->sa_data))
++		return -EADDRNOTAVAIL;
 +
-+		reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
- 		reg &= ~(EXT_PWR_DOWN_DLL | EXT_PWR_DOWN_BIAS |
- 			 EXT_ENERGY_DET_MASK);
- 		if (GENET_IS_V5(priv) && !bcmgenet_has_ephy_16nm(priv)) {
-@@ -1729,8 +1728,12 @@ static int bcmgenet_power_up(struct bcmgenet_priv *priv,
- 		break;
+ 	eth_hw_addr_set(dev, addr->sa_data);
  
- 	case GENET_POWER_CABLE_SENSE:
-+		if (!bcmgenet_has_ext(priv))
-+			break;
-+
- 		/* enable APD */
- 		if (!GENET_IS_V5(priv)) {
-+			reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
- 			reg |= EXT_PWR_DN_EN_LD;
- 			bcmgenet_ext_writel(priv, reg, EXT_EXT_PWR_MGMT);
- 		}
+ 	return 0;
 -- 
 2.53.0
 
