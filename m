@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349274DB540;
-	Wed, 30 Sep 2026 16:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1275833E345;
+	Wed, 30 Sep 2026 16:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786040; cv=none; b=Q6nRFTSO5dGIsmsayxjM9OkT7ABf57uBoTvwFuu98SeiQ0mltUIh1sC7iRERnPhzOU4F4iL7UXckdqPQKpjUM/xnKb0yKPnSmZv9nkS0Z/SgcO5bf0Spdash7asVS9bnG+yWTol5uiqFLPwYcxemL+wdXWYSmxQNSwdSKSEfZl0=
+	t=1790786043; cv=none; b=uLI5Vz1sZqq8AckLxxAYK+Xs+0ytWqmIiLQEW+L08EDUg6IiofloQ3vvrWLy7Fb2cCugPEsaLwF2/teLtO8ZHWyNMEp4GcxHTWoVblilSiuKFv/MyhYVqIk9Fqy9mCWDrRDHK9+Qt+U2fDgqR0si6+uM6jWvlWgBtCqiGDJkNq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786040; c=relaxed/simple;
-	bh=/UtBSBOO6NIY+rWM6g/FFPAd6N8dF1A//as3o53uJCw=;
+	s=arc-20240116; t=1790786043; c=relaxed/simple;
+	bh=ChseyufvV94A2Kh/ZYUJNn7JnGBfISyW7hCwCt4zn/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pR3IpRCrauEkcr97g4bNH/YrNC3OcRPPNq8RfiH39t6fUT/KujThqdO92XVSoLtgBPTgSiFtZOQR670gZup6BmMJBurpdF4jPQQDZMyg6NAhSBLNNcmN33i1Zj7w2XOW9L5GWG5I1UHesxgjDvz1mf46r0WSiLlNPw0mcgN1rkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itDaVybG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eqkAoKo//6fjbkjP9ftc3h6g6OSpwZhq27+wQus21CvoEuOAexwXlx0La00lgZDmW3oybLZcqyJdUsppYtR1VX7adpuTRcIV4dePwnMFUrJqfGC6Da90Co3RM8s8aZLsuYN41YoX7Q9/00kd1pPpQnHKvjpHjJKzMk69i63SvFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBIbO4Dj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itDaVybG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9528E1F000FF;
-	Wed, 30 Sep 2026 16:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBIbO4Dj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2851F000FF;
+	Wed, 30 Sep 2026 16:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786039;
-	bh=zhVCUW6hsJ3msPysU9plOeqOiX7Zv9niNYdIMeUjK/Y=;
+	s=korg; t=1790786042;
+	bh=U/nItmGAqWmufb/kDOWS79yDom4L9NoKbcHpsA9+G5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itDaVybGmFnRVSavFYXSbxwQCDn21rpiY0J7Y6oDuUzmFzJP3zCp0Vfp2rkWD1q33
-	 gau79P1tG5N95j4M72krpPgzbcx4X26sM/A4sBd4gSt1biBWH2WLA2FvrLXwQ++nug
-	 K844Z13WEaFfEQRXfrypHy5Rv6VGwL7W1zdcV88U=
+	b=uBIbO4DjVNC3JPQH85z/cM7OCzhdDaNEmtwUoq2PuxAhcilZ6pWHTXfOL4zxBBc7V
+	 KO3iXnp+gGJOkNvhRlVNLGkGJST3ce1Oo3cBCq5fliHzZEtU9n+epDj08qKKm62bIg
+	 SVJqFHUxAkTf2HF3YJKNZTZ7xwLK1ANrtQQLXDFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 720/982] net/sched: hhf: cap hh_flows_limit at change time
-Date: Wed, 30 Sep 2026 17:24:16 +0200
-Message-ID: <20260930152432.218551926@linuxfoundation.org>
+	Mark Amirkan <markdamirkan@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 721/982] net/packet: clear RX owner on VNET header error
+Date: Wed, 30 Sep 2026 17:24:17 +0200
+Message-ID: <20260930152432.238722833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,91 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-commit 2cef2588c995722a901368def30befeef9ae55c6 upstream.
+commit 33ff111d7ba3beb86e28938d6382bb5beabd865a upstream.
 
-hhf_change() stores TCA_HHF_HH_FLOWS_LIMIT with no upper bound. A huge
-hh_flows_limit lets each new heavy-hitter flow pass the
-hh_flows_current_cnt check in alloc_new_hh() and forces a fixed-size
-kzalloc(GFP_ATOMIC) per flow under spoofed traffic, for unbounded memory
-growth.
+Commit 61fad6816fc1 ("net/packet: tpacket_rcv: avoid a producer race
+condition") added rx_owner_map and made tpacket_rcv() claim a V1 or V2
+ring slot before converting the virtio-net header.  If the conversion
+fails, the drop path leaves the slot claimed.
 
-Bound the attribute with NLA_POLICY_MAX() at 2*HH_FLOWS_CNT (the
-hhf_init() default) and report the rejected value via extack. The
-deprecated nested parse is kept: legacy tc does not set NLA_F_NESTED on
-TCA_OPTIONS. Configs relying on hh_limit above the default were relying
-on unbounded, unsafe behaviour and are not supported going forward.
+With a one-frame TPACKET_V2 ring, an unsupported UDP GSO packet leaves
+the only slot unavailable, so the ring also drops the next valid packet.
 
-hhf_init() also ran hhf_change() before setting the default
-hh_flows_limit, so a user-supplied hh_limit at add time was clobbered
-back to 2048. Set the default before hhf_change() so the configured
-value sticks.
+Clear the ownership bit on this error path.  TPACKET_V3 already clears
+its block state here.
 
-This is a follow-up to commit eb56a495f59b ("net/sched: hhf: clamp
-quantum in change and init paths"), which bounded the quantum of the
-same qdisc; the hh_flows_limit bound is the remaining unbounded knob of
-that series' scope.
-
-Conditions to recreate the bug: CAP_NET_ADMIN in a user namespace;
-tc qdisc change dev X root hhf hh_limit 4294967295 succeeds and the
-value is echoed by tc qdisc show, unbounding heavy-hitter flow
-allocations; also tc qdisc add dev X root hhf hh_limit 500 stores 2048
-instead of 500.
-
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Fixes: 61fad6816fc1 ("net/packet: tpacket_rcv: avoid a producer race condition")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260822195509.112717-1-jhs@mojatatu.com
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Tested-by: hybris <hybris@mojatatu.ai>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-B855.v1.20260911153152@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260913-b4-send-packet-vnet-v1-1-5545ffb528ae@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_hhf.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/packet/af_packet.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -526,7 +526,7 @@ static void hhf_destroy(struct Qdisc *sc
- static const struct nla_policy hhf_policy[TCA_HHF_MAX + 1] = {
- 	[TCA_HHF_BACKLOG_LIMIT]	 = { .type = NLA_U32 },
- 	[TCA_HHF_QUANTUM]	 = { .type = NLA_U32 },
--	[TCA_HHF_HH_FLOWS_LIMIT] = { .type = NLA_U32 },
-+	[TCA_HHF_HH_FLOWS_LIMIT] = NLA_POLICY_MAX(NLA_U32, 2 * HH_FLOWS_CNT),
- 	[TCA_HHF_RESET_TIMEOUT]	 = { .type = NLA_U32 },
- 	[TCA_HHF_ADMIT_BYTES]	 = { .type = NLA_U32 },
- 	[TCA_HHF_EVICT_TIMEOUT]	 = { .type = NLA_U32 },
-@@ -545,7 +545,7 @@ static int hhf_change(struct Qdisc *sch,
- 	u32 new_hhf_non_hh_weight = q->hhf_non_hh_weight;
- 
- 	err = nla_parse_nested_deprecated(tb, TCA_HHF_MAX, opt, hhf_policy,
--					  NULL);
-+					  extack);
- 	if (err < 0)
- 		return err;
- 
-@@ -617,6 +617,9 @@ static int hhf_init(struct Qdisc *sch, s
- 	q->hhf_evict_timeout = HZ;      /* 1  sec */
- 	q->hhf_non_hh_weight = 2;
- 
-+	/* Cap max active HHs at twice len of hh_flows table. */
-+	q->hh_flows_limit = 2 * HH_FLOWS_CNT;
-+
- 	if (opt) {
- 		int err = hhf_change(sch, opt, extack);
- 
-@@ -633,8 +636,6 @@ static int hhf_init(struct Qdisc *sch, s
- 		for (i = 0; i < HH_FLOWS_CNT; i++)
- 			INIT_LIST_HEAD(&q->hh_flows[i]);
- 
--		/* Cap max active HHs at twice len of hh_flows table. */
--		q->hh_flows_limit = 2 * HH_FLOWS_CNT;
- 		q->hh_flows_overlimit = 0;
- 		q->hh_flows_total_cnt = 0;
- 		q->hh_flows_current_cnt = 0;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2440,7 +2440,9 @@ static int tpacket_rcv(struct sk_buff *s
+ 	    virtio_net_hdr_from_skb(skb, h.raw + macoff -
+ 				    sizeof(struct virtio_net_hdr),
+ 				    vio_le(), true, 0)) {
+-		if (po->tp_version == TPACKET_V3)
++		if (po->tp_version <= TPACKET_V2)
++			__clear_bit(slot_id, po->rx_ring.rx_owner_map);
++		else
+ 			prb_clear_blk_fill_status(&po->rx_ring);
+ 		goto drop_n_account;
+ 	}
 
 
