@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE76379C35;
-	Wed, 30 Sep 2026 15:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FB34E56E3;
+	Wed, 30 Sep 2026 15:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783829; cv=none; b=nE7xnfUVzjOe7rH760GvL0xStF3KpU8v0XwT4CIhfaVO6pnju0X72/disOlayyM3iA1k67pjimqMxLiyBL64KOzh1fhkx3aurQ5TyY8EeGeleW6onbhS5W4mnAig/ADEuabzEgbDrFcNplstVm0zyMIwOLblwa+G375O7dysMFQ=
+	t=1790783831; cv=none; b=rtsukxLaP08AwjJUMvPWB8+Kpo8KA0DPLQrqdhnUI3G7JvJOLwecoaJZ6tbyiQWRq3e2K67hekgL1R3q1sj+2TvLIyK3UBhxdP38db29kSpA6+/GbZ9ZVAjKeYVPHAOGsr/oA2m34VOnDCNhSX/B7AQ9p4dSYVySP4ZblQt9Q6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783829; c=relaxed/simple;
-	bh=wu+0PuOyE7zH733FtLvzRLOmjmaJDh8KQNkQ1x168lo=;
+	s=arc-20240116; t=1790783831; c=relaxed/simple;
+	bh=kkcR7uZqv6eUBpAyBNpK5KQa0SLoYwn8NMgruTbIjRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFpuBc3HUZew5AS32Mv9iIFzMtdLk2NXqtKWqwv1x/xwcClonnqmDF27jK6Xc4bSgueQSZ0qjHGX4+RHh+Eq/IHuor7hUD2ZSU9tUs2tpjZA1wgar80TQFLXBP5vvmFveLUhSosrQ/ulHTEA5bUleoPT+hmSwhoLNP3GVxldX+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6d6ESOR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=opLiw17rRBDjpODOOiH1FbQ1EUYm2erE7ANSZGmHhG8/N++HUDn9rF7eIaozFd5o4VG+ZKTyxK9FVfmAVxdkr/NzdVB64IWYRW5jmNiadowDeuU846NHPPwGI86VOPGs7fpfOkadclpZJ5J1axNqkohnyoSePPXyXtuZpu44JyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEeoIbaM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6d6ESOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA301F00893;
-	Wed, 30 Sep 2026 15:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEeoIbaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759551F000FF;
+	Wed, 30 Sep 2026 15:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783824;
-	bh=ZvfSmXqC3YZ8rv9Avv6SzqgMIIt76vRIeOfxObWdpUs=;
+	s=korg; t=1790783827;
+	bh=gAwFmOM+AA6goyxNwk1nY6K2nT9/YwNrs9z4jKcHq0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U6d6ESORy0e4TZu1VMyEfOkhT82aHhMIGNAgv/Ci6ZzucPrRT6z9ClaLOrv85jaSd
-	 y0WTSJSv/26zh6n1OdKMBwTARUY5SeglBiti0JCn7UQ1vViy4Lv1Bp+9kEr8YhoP8H
-	 CSRThMVluzzw1KcpMzaz2DFPS04QfyOuMIAfE6E0=
+	b=iEeoIbaMZx3c8lBN1EGJdCAZagO8bj2w9abTGuZ1R3OcKowCVuO9hwUCgK5bV4xoM
+	 EugdhUWG8/1GtOfs2f80pkJnBM9P+bvLfEjzqROrwKNz6iVdHfEB9Lkw2f2Pk6yAXj
+	 HEznhPoroB+4fPN8N2KC0Xx3psivfsveuId4Bgs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 534/595] hrtimers: Introduce hrtimer_setup() to replace hrtimer_init()
-Date: Wed, 30 Sep 2026 17:27:07 +0200
-Message-ID: <20260930152359.193155183@linuxfoundation.org>
+Subject: [PATCH 5.10 499/595] ocfs2: make ocfs2_calc_xattr_init() return void
+Date: Wed, 30 Sep 2026 17:26:32 +0200
+Message-ID: <20260930152358.429903519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,108 +58,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 908a1d775422ba2e27a5e33d0c130b522419e121 ]
+[ Upstream commit 525c0edc032b3297d0c1056cf1fa20cf1f9e6184 ]
 
-To initialize hrtimer, hrtimer_init() needs to be called and also
-hrtimer::function must be set. This is error-prone and awkward to use.
+ocfs2_calc_xattr_init() used to read the default ACL off the parent inode
+itself, so it could return an error from ocfs2_xattr_get_nolock().  Commit
+bd7c05fb4a47 ("ocfs2: fix circular locking dependency in
+ocfs2_init_acl()") moved that lookup before the transaction starts and
+deleted the error path, but left the now vestigial 'int ret = 0'
+declaration and both 'return ret' statements behind, along with an
+unreachable error branch in ocfs2_mknod().
 
-Introduce hrtimer_setup() which does both of these things, so that users of
-hrtimer can be simplified.
+Drop the leftover variable and convert the return type to void, so the
+callee states that it always succeeds and the caller no longer carries a
+check that can never trigger.
 
-The new setup function also has a sanity check for the provided function
-pointer. If NULL, a warning is emitted and a dummy callback installed.
+No functional change.
 
-hrtimer_init() will be removed as soon as all of its users have been
-converted to the new function.
-
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/5057c1ddbfd4b92033cd93d37fe38e6b069d5ba6.1730386209.git.namcao@linutronix.de
-Stable-dep-of: cfa165cbfbed ("net/sched: act_gate: budget the per-entry list in get_fill_size")
+Link: https://lore.kernel.org/20260904023751.3703334-1-joseph.qi@linux.alibaba.com
+Fixes: bd7c05fb4a47 ("ocfs2: fix circular locking dependency in ocfs2_init_acl()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609040247.8B3lmoqX-lkp@intel.com/
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hrtimer.h |  2 ++
- kernel/time/hrtimer.c   | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ fs/ocfs2/namei.c |  9 ++-------
+ fs/ocfs2/xattr.c | 13 +++++--------
+ fs/ocfs2/xattr.h |  8 ++++----
+ 3 files changed, 11 insertions(+), 19 deletions(-)
 
-diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
-index 2623294e25fbd..88b5348596fbe 100644
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -372,6 +372,8 @@ static inline void hrtimer_cancel_wait_running(struct hrtimer *timer)
- /* Initialize timers: */
- extern void hrtimer_init(struct hrtimer *timer, clockid_t which_clock,
- 			 enum hrtimer_mode mode);
-+extern void hrtimer_setup(struct hrtimer *timer, enum hrtimer_restart (*function)(struct hrtimer *),
-+			  clockid_t clock_id, enum hrtimer_mode mode);
- extern void hrtimer_init_on_stack(struct hrtimer *timer, clockid_t which_clock,
- 				  enum hrtimer_mode mode);
- extern void hrtimer_init_sleeper_on_stack(struct hrtimer_sleeper *sl,
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 51cea4af249ee..cf6c62cb6b9b0 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1432,6 +1432,11 @@ static inline int hrtimer_clockid_to_base(clockid_t clock_id)
- 	return HRTIMER_BASE_MONOTONIC;
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index db6ea2ebc9688..118e368ec76be 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -332,13 +332,8 @@ static int ocfs2_mknod(struct inode *dir,
+ 		goto leave;
+ 
+ 	/* calculate meta data/clusters for setting security and acl xattr */
+-	status = ocfs2_calc_xattr_init(dir, mode, &si, &want_clusters,
+-				       &xattr_credits, &want_meta,
+-				       &acl_state);
+-	if (status < 0) {
+-		mlog_errno(status);
+-		goto leave;
+-	}
++	ocfs2_calc_xattr_init(dir, mode, &si, &want_clusters, &xattr_credits,
++			      &want_meta, &acl_state);
+ 
+ 	/* Reserve a cluster if creating an extent based directory. */
+ 	if (S_ISDIR(mode) && !ocfs2_supports_inline_data(osb)) {
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 967a210225138..0f8fdb29d53b1 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -613,12 +613,11 @@ int ocfs2_calc_security_init(struct inode *dir,
+ 	return ret;
  }
  
-+static enum hrtimer_restart hrtimer_dummy_timeout(struct hrtimer *unused)
-+{
-+	return HRTIMER_NORESTART;
-+}
-+
- static void __hrtimer_init(struct hrtimer *timer, clockid_t clock_id,
- 			   enum hrtimer_mode mode)
+-int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+-			  struct ocfs2_security_xattr_info *si,
+-			  int *want_clusters, int *xattr_credits,
+-			  int *want_meta, struct ocfs2_acl_state *acl_state)
++void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
++			   struct ocfs2_security_xattr_info *si,
++			   int *want_clusters, int *xattr_credits,
++			   int *want_meta, struct ocfs2_acl_state *acl_state)
  {
-@@ -1468,6 +1473,18 @@ static void __hrtimer_init(struct hrtimer *timer, clockid_t clock_id,
- 	timerqueue_init(&timer->node);
+-	int ret = 0;
+ 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
+ 	int s_size = 0, a_size = 0, acl_len = 0, new_clusters;
+ 
+@@ -640,7 +639,7 @@ int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+ 	}
+ 
+ 	if (!(s_size + a_size))
+-		return ret;
++		return;
+ 
+ 	/*
+ 	 * The max space of security xattr taken inline is
+@@ -706,8 +705,6 @@ int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+ 			}
+ 		}
+ 	}
+-
+-	return ret;
  }
  
-+static void __hrtimer_setup(struct hrtimer *timer,
-+			    enum hrtimer_restart (*function)(struct hrtimer *),
-+			    clockid_t clock_id, enum hrtimer_mode mode)
-+{
-+	__hrtimer_init(timer, clock_id, mode);
-+
-+	if (WARN_ON_ONCE(!function))
-+		timer->function = hrtimer_dummy_timeout;
-+	else
-+		timer->function = function;
-+}
-+
- /**
-  * hrtimer_init - initialize a timer to the given clock
-  * @timer:	the timer to be initialized
-@@ -1488,6 +1505,27 @@ void hrtimer_init(struct hrtimer *timer, clockid_t clock_id,
- }
- EXPORT_SYMBOL_GPL(hrtimer_init);
+ static int ocfs2_xattr_extend_allocation(struct inode *inode,
+diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
+index e3e2476efe1a9..c78bf7e99f1e2 100644
+--- a/fs/ocfs2/xattr.h
++++ b/fs/ocfs2/xattr.h
+@@ -59,10 +59,10 @@ int ocfs2_calc_security_init(struct inode *,
+ 			     int *, int *, struct ocfs2_alloc_context **);
  
-+/**
-+ * hrtimer_setup - initialize a timer to the given clock
-+ * @timer:	the timer to be initialized
-+ * @function:	the callback function
-+ * @clock_id:	the clock to be used
-+ * @mode:       The modes which are relevant for initialization:
-+ *              HRTIMER_MODE_ABS, HRTIMER_MODE_REL, HRTIMER_MODE_ABS_SOFT,
-+ *              HRTIMER_MODE_REL_SOFT
-+ *
-+ *              The PINNED variants of the above can be handed in,
-+ *              but the PINNED bit is ignored as pinning happens
-+ *              when the hrtimer is started
-+ */
-+void hrtimer_setup(struct hrtimer *timer, enum hrtimer_restart (*function)(struct hrtimer *),
-+		   clockid_t clock_id, enum hrtimer_mode mode)
-+{
-+	debug_init(timer, clock_id, mode);
-+	__hrtimer_setup(timer, function, clock_id, mode);
-+}
-+EXPORT_SYMBOL_GPL(hrtimer_setup);
-+
- /**
-  * hrtimer_init_on_stack - initialize a timer in stack memory
-  * @timer:	The timer to be initialized
+ struct ocfs2_acl_state;
+-int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+-			  struct ocfs2_security_xattr_info *si,
+-			  int *want_clusters, int *xattr_credits,
+-			  int *want_meta, struct ocfs2_acl_state *acl_state);
++void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
++			   struct ocfs2_security_xattr_info *si,
++			   int *want_clusters, int *xattr_credits,
++			   int *want_meta, struct ocfs2_acl_state *acl_state);
+ 
+ /*
+  * xattrs can live inside an inode, as part of an external xattr block,
 -- 
 2.53.0
 
