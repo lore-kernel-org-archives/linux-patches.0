@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4EA51FCA9;
-	Wed, 30 Sep 2026 17:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31FE51FCA6;
+	Wed, 30 Sep 2026 17:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790905; cv=none; b=Kfay/OD5e73QPi9679pN/4K8XXwhV5X1LeYqSUmuAZJFopmm1aaBVeYelWZSCtCGE3SxYZbH9bXALQCpCjO9WCQPqUGV+Wym/u6vASJCr68dJXMz47T0XslASnm7MTMDvGzgbYrh9BlKP/HY+NoHBxmXeYhsvqAsbjtGaH3+tRU=
+	t=1790790907; cv=none; b=lOU1le8pWRGAzkZ1VHG96XsnvjjGRw78R1RVy/cb4mQ0wC/S7qfVi0qIdu/u4ivdKN/kPASUgUvL1laSfjjZmzOlYUf+8UYHNCbVMBEDcpvsea+KfB8KL+irRBIR6tCdFdoFKcUVF0C93ZgOCvolkcXgtga1UclyQ9XrIBM2I7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790905; c=relaxed/simple;
-	bh=rLVbCR8wtOBgjfRYflbBitmnm8CjDN6xgMalR/wt7x8=;
+	s=arc-20240116; t=1790790907; c=relaxed/simple;
+	bh=7M3JbQfdqqqpwdky4RSEZUSri+JxaNfWfuzCuj3Nu2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DfUXhAubWJpDzAElsnIViSBrTl1WjP3cfICLGYh962qXyuCEdXqhTeNAdY3Wb17TRBv21Ja+IWzKu82NfgYKTuFLqn1wHRMHC9pWGT5niZJZlXa+wu87VFFgy5oE3BDRYARiLaBXkyPoUBJoKO4hh9JIRsg1OEFeDSGl7UkZaYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEYprScn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N5VmHisRyZFIGRy/EPH9YRi3Tq/c+jrm2f2XXl9qHoYe/RCbBasVwyZ7TRisjBmjC5xYNW8TfXoF4qKkNlBuQjceuQzaRaHD2FAQh+bCfGj9iX8cTs3xzIQTtPl2A2fkHoVV1vuXYzNo/LaUHi6umwSqco8JpWNjQ6Cd0UWUyhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmtQr55f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEYprScn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4CA1F000FF;
-	Wed, 30 Sep 2026 17:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmtQr55f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084231F000FF;
+	Wed, 30 Sep 2026 17:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790903;
-	bh=boxOFu7icq/QV2F+KLxu72vZ9gA9hfsffeD9aB8jFB4=;
+	s=korg; t=1790790906;
+	bh=KUWWg3VlkEXnRiL4okmekn4pBk0Pmf3x01j5IdUIBfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEYprScno8EawEch7BhyW4m9t8jBIEsbzAZmODvxqVMPiqI9tvy+MPOSmdoeBtx4L
-	 UXrskghlli6NxMzrJgZTMB0/RTQv4MfMYjz/ipNzrkVZhmRNTagSnH0VAZ48ADqe5W
-	 T+Ydr2kBV/mXLGsf60kJROnfNzu4f5bf6/6vc1YI=
+	b=OmtQr55fqK+tbVR4VT/05eD3GyjA8nJ3MGspqb0F0UJQbAVheMHoNTxKg62S0SOZY
+	 mConYIHvKrj9LdfnYyXaTNswE0fEb4d6ZR+/3CGr/2JZI/9F5cnd30GDy85Nq0+iTl
+	 HjsWMRt7TqkTfyb3Zm75oAh1adYJVEzB3tGd1oqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/752] dpaa2-switch: fix handling of NAPI on the remove path
-Date: Wed, 30 Sep 2026 17:19:44 +0200
-Message-ID: <20260930152400.639887470@linuxfoundation.org>
+Subject: [PATCH 5.15 079/752] ACPICA: validate byte_count in acpi_ps_get_next_package_length()
+Date: Wed, 30 Sep 2026 17:19:09 +0200
+Message-ID: <20260930152359.875702816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,65 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit e23d7c8c1d4ba435c457d7ffb2669175ec819b07 ]
+[ Upstream commit d49c6ee08365a8596f639da46eb7e71752b0cd42 ]
 
-All the NAPI instances for a DPSW device are attached to the first
-switch port's net_device but shared by all ports. The NAPI instances get
-disabled only once the last port goes down.
+Validate package length reading in acpi_ps_get_next_package_length().
 
-This causes an issue on the .remove() path where each port is
-unregistered and freed one at a time, causing the NAPI instances to be
-deleted even though they are not disabled.
-
-In order to avoid this, split up the unregister_netdev() calls from the
-free_netdev() so that we make sure all ports go down before we attempt
-a deletion of NAPI instances. Also, make the netif_napi_del() explicit
-as it is on the .probe() path.
-
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260528173452.1953102-6-ioana.ciornei@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/acpica/acpica/commit/40e03f9941e2
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3616255.QJadu78ljV@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa2/dpaa2-switch.c   | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 811b9e4eef372..d29286ecfe2fb 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -3273,7 +3273,6 @@ static void dpaa2_switch_teardown(struct fsl_mc_device *sw_dev)
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index a4e2349f43323..f348e644f8b03 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -48,6 +48,7 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	u32 package_length = 0;
+ 	u32 byte_count;
+ 	u8 byte_zero_mask = 0x3F;	/* Default [0:5] */
++	u32 remaining;
  
- static int dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
- {
--	struct ethsw_port_priv *port_priv;
- 	struct ethsw_core *ethsw;
- 	struct device *dev;
- 	int i;
-@@ -3285,11 +3284,17 @@ static int dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
+ 	ACPI_FUNCTION_TRACE(ps_get_next_package_length);
  
- 	dpsw_disable(ethsw->mc_io, 0, ethsw->dpsw_handle);
- 
--	for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
--		port_priv = ethsw->ports[i];
--		unregister_netdev(port_priv->netdev);
-+	/* Unregister all the netdevs so that they are brought down and the
-+	 * shared NAPI instances gets disabled.
-+	 */
-+	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
-+		unregister_netdev(ethsw->ports[i]->netdev);
+@@ -55,7 +56,23 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state)
+ 	 * Byte 0 bits [6:7] contain the number of additional bytes
+ 	 * used to encode the package length, either 0,1,2, or 3
+ 	 */
 +
-+	for (i = 0; i < DPAA2_SWITCH_RX_NUM_FQS; i++)
-+		netif_napi_del(&ethsw->fq[i].napi);
++	/* Check if we have at least one byte to read */
++	remaining = (u32)ACPI_PTR_DIFF(parser_state->aml_end, aml);
++	if (remaining == 0) {
++		return_UINT32(0);
++	}
 +
-+	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
- 		dpaa2_switch_remove_port(ethsw, i);
--	}
+ 	byte_count = (aml[0] >> 6);
++
++	/* Validate byte_count and ensure we have enough bytes to read */
++	if (byte_count >= remaining) {
++
++		/* Clamp to available bytes and advance to end */
++		parser_state->aml = parser_state->aml_end;
++		return_UINT32(0);
++	}
++
+ 	parser_state->aml += ((acpi_size)byte_count + 1);
  
- 	kfree(ethsw->fdbs);
- 	kfree(ethsw->filter_blocks);
+ 	/* Get bytes 3, 2, 1 as needed */
 -- 
 2.53.0
 
