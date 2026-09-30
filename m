@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717B84F93B9;
-	Wed, 30 Sep 2026 16:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CF636F8F5;
+	Wed, 30 Sep 2026 16:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784089; cv=none; b=bqO+V31LM7NgxMsrHHM2LjhchKN0/9JCIA+FVFhuT9WbD7YsiQdtntDjeg9YRrKKIJKcquvawBdEghybsXh4g5SFlVuFTgdbly6L9zFFqo5Qw4OV70k7+zqN8TEEurzjH698fAOPD/lJQWk7xGkct+fHHdXUZUtSWAL3xYQqboc=
+	t=1790784093; cv=none; b=NQr0rhmEx0hwnm3Q3FNYdQC7wSNv1hKrXnJDRH5lfHkFYlzyP9XA7Lbthw7Bifc7XK+hQLXFfN2R8FNi56EVOclfuu7g3ktC9vGAsocW1d0hyGtadKBlKUErW1t0d/DXtePesxANffisKi+B9ziG4WCkWJ2Eh0juhtM/fiVwZgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784089; c=relaxed/simple;
-	bh=khQSi/WnZrQuOY4RiDi0yq03J4ursUVgrqOH9ZtPzXw=;
+	s=arc-20240116; t=1790784093; c=relaxed/simple;
+	bh=bkKdxPYtWu/7FpWYb/hDvOVcXKd/bjC6JbWoSEoJyVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkUVb323OGbHz6i1pXT1xuY8asRBaMzibABhcjZSxEtZnxkzoigQaRxU+XUYltSrntqEWNZozpbpUHxcNU/vHxzLbtpr8qquZsCsuomam0xsQ9H8V0MAK4pWzsCsjbMd2XS80QgTOAW4NWyusVX/9+vzUDJpAFDvsoVxqCVVC+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpJswYpc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B70+z+CgeqDoHXjRdGscaMbugG45blYKvhzqUp3VwnSwN9/VYx3Pt0pIEUHWWExisnXqdze8edphlTCiGwnN3xQ8gaPXKFN47xs/bbvXy/EdKK26t/b2BdxRiE06HyOb7Y8/if8WCyFbx82nJA0UrQjez+XzEBsZC7zVF64zpks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0mBhtLO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpJswYpc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B131F000FF;
-	Wed, 30 Sep 2026 16:01:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0mBhtLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BD61F00899;
+	Wed, 30 Sep 2026 16:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784080;
-	bh=dmIfKUMNiLjwtc/PWLtxI1JdL9RNlvBF9AANkGdZUMw=;
+	s=korg; t=1790784088;
+	bh=XO6/pSPh8nkTt8e0vTeiB4PdY9fqTRlJe8UR7RRAWCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tpJswYpcLm9+9owd2Rm3cOvQ3DpBS2yFqXcttQdH9Upd3Arrpivc14yaoDSvWoKoO
-	 JNJcE9JBSXAmOd70KPbqONslnY13QVVHZLrsfhEErwJJTmPPxZuF0/+P46WrazkRTZ
-	 /bhH09hHm/d4jWKu1qxMMSlQkrrSllxYYSVxMrc0=
+	b=l0mBhtLOtNuoBDyWfGkZwEzi24glEC9YQn5+QLvnunb1A2qiq8UQjepZtsGNm2oaA
+	 mAREON2GKtiEl5Fk6oGJcYbII7041Xn4cJbef0yU+UVCv7z4LsIPAxVOcC3FkKTOsi
+	 rXLbHoWjjYyYm7HBEiFHsb+PiEKjdK96plnsx7mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/982] clk: renesas: cpg-mssr: Add number of clock cells check
-Date: Wed, 30 Sep 2026 17:12:46 +0200
-Message-ID: <20260930152417.443464723@linuxfoundation.org>
+Subject: [PATCH 6.1 033/982] mmc: core: Add validation for host-provided max_segs
+Date: Wed, 30 Sep 2026 17:12:49 +0200
+Message-ID: <20260930152417.507096696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,35 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 7f0c422c7fbfd9294ff9321ada0c63561e5c6ea0 ]
+[ Upstream commit 3e0483e93a8be320f70a1ff68d835f7f015af311 ]
 
-The number of clock cells is not validated in the clock provider's
-clk_src_get() callback.  Add the missing check.
+The max_segs field is of type unsigned short, and if a host driver
+sets an excessively large value, it may be truncated to zero. This
+can cause mmc_alloc_sg() to call kmalloc_objs() with a zero size
+allocation request, which leads to undefined behavior.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/46e010659ffdffd5e3541369f3b65d43ebe236ec.1777562043.git.geert+renesas@glider.be
+Under the SLUB allocator, kmalloc(0) returns a special pointer
+(ZERO_SIZE_PTR). The subsequent 'if (sg)' check will evaluate to
+true, and sg_init_table() will then attempt to access invalid memory,
+resulting in a crash:
+
+dwmmc_rockchip 2a310000.mmc: Successfully tuned phase to 133
+mmc1: new UHS-I speed SDR104 SDHC card at address aaaa
+Unable to handle kernel paging request at virtual address 0000001ffffffff0
+Mem abort info:
+ESR = 0x0000000096000004
+EC = 0x25: DABT (current EL), IL = 32 bits
+SET = 0, FnV = 0
+EA = 0, S1PTW = 0
+FSC = 0x04: level 0 translation fault
+Data abort info:
+ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+user pgtable: 4k pages, 48-bit VAs, pgdp=0000000102c88000
+[0000001ffffffff0] pgd=0000000000000000, p4d=0000000000000000
+Internal error: Oops: 0000000096000004 [#1] SMP
+Modules linked in:
+CPU: 2 UID: 0 PID: 102 Comm: kworker/2:1 Not tainted 7.0.0-rc6-next-20260331-00013-g4d93c25963c5-dirty #80 PREEMPT
+Hardware name: Rockchip RK3576 EVB V10 Board (DT)
+Workqueue: events_freezable mmc_rescan
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : sg_init_table+0x2c/0x50
+lr : sg_init_table+0x24/0x50
+sp : ffff8000837db710
+x29: ffff8000837db710 x28: 000000000000c000 x27: 0000000000000300
+x26: 0000000000000000 x25: 0000000000000040 x24: ffff0000c46a0000
+x23: 0000000000000000 x22: ffff0000c0c73c00 x21: 0000000000000010
+x20: 0000000000000010 x19: 0000000000000000 x18: 000000000000002c
+x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
+x14: 0000000000000400 x13: ffff8000837dc000 x12: 0000000000000000
+x11: ffff0000c0c73ca0 x10: 0000000000000040 x9 : 459ec1f0abbdbb00
+x8 : 0000001fffffffe0 x7 : 0000000000000000 x6 : 000000000000003f
+x5 : 0000000000035579 x4 : 0000000000000901 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000010
+Call trace:
+sg_init_table+0x2c/0x50 (P)
+mmc_mq_init_request+0x64/0x90
+blk_mq_alloc_map_and_rqs+0x3ac/0x480
+blk_mq_alloc_set_map_and_rqs+0x98/0x1e0
+blk_mq_alloc_tag_set+0x1c0/0x290
+mmc_init_queue+0x120/0x370
+mmc_blk_alloc_req+0x150/0x420
+
+To prevent this, add a validation check in mmc_mq_init_request() to
+detect when sg_len (derived from max_segs) is zero. If sg_len is zero,
+we return an error and print an error message, allowing host driver
+developers to identify and fix incorrect max_segs configuration.
+
+This is a defensive measure that ensures the MMC core fails gracefully
+when host drivers provide invalid max_segs values, rather than crashing
+with a page fault.
+
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/core/queue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index d6137379510c1..77365962a15a9 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -285,6 +285,9 @@ struct clk *cpg_mssr_clk_src_twocell_get(struct of_phandle_args *clkspec,
- 	struct clk *clk;
- 	int range_check;
+diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
+index b396e39007177..5f05d997a6af9 100644
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -207,8 +207,14 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
+ 	struct mmc_queue *mq = set->driver_data;
+ 	struct mmc_card *card = mq->card;
+ 	struct mmc_host *host = card->host;
++	u16 sg_len = mmc_get_max_segments(host);
  
-+	if (clkspec->args_count != 2)
-+		return ERR_PTR(-EINVAL);
+-	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
++	if (!sg_len) {
++		dev_err(mmc_dev(host), "Wrong max_segs assigned\n");
++		return -EINVAL;
++	}
 +
- 	switch (clkspec->args[0]) {
- 	case CPG_CORE:
- 		type = "core";
++	mq_rq->sg = mmc_alloc_sg(sg_len, GFP_KERNEL);
+ 	if (!mq_rq->sg)
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
