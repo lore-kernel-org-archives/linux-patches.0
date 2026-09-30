@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE3D51357D;
-	Wed, 30 Sep 2026 16:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2084F85CA;
+	Wed, 30 Sep 2026 16:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786609; cv=none; b=W9z//9h0kx2D9/PEJ838E1x4M2eWUHoYVWLpVV0gXKHBKvWvITkponKFnaMf7BLbbZ74eTcmisIH6b4RLQ5ksr6WGh96Ug5ogtlduQ2922bW7nYErOwGPdKnV82A3WKxGHUMVwJO94+/W71Vrx68KHxz9OQ6L4ZfAhrHS9t2Al0=
+	t=1790786612; cv=none; b=n4BcgtUrBbHdgvTyWIQ8ivaQc7TgCtZah/NV77QbQUNUvkk3G+CuQM/YJwerRPBRxxaHNRqOveBiEkE+p4Qo5NuDuFBFOdndIt2XxHfDeaUxVjbM1hiVgZAcdz6gAg0FAW1miXibQCOryfr2ps2FGtn/6yR+g+kJIxJxT7Uahog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786609; c=relaxed/simple;
-	bh=XsC1NlziM1Y0+N6X95JEVatFqvecxZf9PMavJLcsstg=;
+	s=arc-20240116; t=1790786612; c=relaxed/simple;
+	bh=M5jslpU3ioOlmAyxkgBd3myrGvYoyhwraWsWWDEH6ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YR5ZGv5XxXlIVI110/vQIpRfz3ud7Ig0Zt8fJ9gOZ8wB6DMlEfsMuDoZRY4k/CIhepyR766RPfHPoDYnpyYOIGx9AgNHLsUVm12hrkGBZVvxWH3Hc1ZLoF+tOhVKfXaUHae38DAr0XTtNEmc3vDhFNztHwLZipxb9faSCmvf7oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HygJ15Dx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tPMSw68O8QTzFPwatLTW+2NXpEJ9qgfccoZa2BJU+NftLBldFCqvo2MqT7p/9cDQ/xOpzHhe/EYiSypIPXm2cemnTZtH6gM6natel7b03b108bXIr8iAWnzRA+CxJEcxKlTmpr1AT11IdeFq0liKl+aFHCzjThMk4/4JzL8jAjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyjq3V5O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HygJ15Dx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BFC1F000FF;
-	Wed, 30 Sep 2026 16:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyjq3V5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF031F000FF;
+	Wed, 30 Sep 2026 16:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786608;
-	bh=7BgCwzMlXi8XTqP2akOjAyN30zp7vfIudpwNV5R5mHo=;
+	s=korg; t=1790786611;
+	bh=uJchV06so6bQ/fkd0wjAZgzeT5CQoQg0GliiEypBoV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HygJ15DxAULxI8+jXNzxyVVGyg/qEe99Brc5cSIFpuIbFh5j45MqxPkzeCJUG3ojB
-	 LpuA2VpHjq6DWYQPeoAbfthtLJQKIc1/uF7KHeP43J20NYd+U2DmEtWxXchQTXcvcV
-	 jtveFPMczerrfZOpGpw4o1m4xh4f4ytZXY9cLMEU=
+	b=xyjq3V5OrbdFsEZTcnKqbY/S2zrkEW1GtkNx5GccRxuck7AN//V7GgfYIfwPIYndj
+	 OXZIzLGEsWa4ByCuwzaDr2cYtVSrWWXnWSMVfHGHD5TVfqDdAdfU0HMAkOqBR9sXGz
+	 aeIwyj7NZwvVU1o1RMETUmx34GvWZdrtweQiGHQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	"Benjamin Robin (Schneider Electric)" <benjamin.robin@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 920/982] rculist: add list_splice_rcu() for private lists
-Date: Wed, 30 Sep 2026 17:27:36 +0200
-Message-ID: <20260930152436.502540914@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	"Benjamin Robin (Schneider Electric)" <benjamin.robin@bootlin.com>
+Subject: [PATCH 6.1 921/982] netfilter: nf_tables: join hook list via splice_list_rcu() in commit phase
+Date: Wed, 30 Sep 2026 17:27:37 +0200
+Message-ID: <20260930152436.524009078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,75 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit f902877b635551513729bdf9a8d1422c4aab7741 ]
+[ Upstream commit a6134e62dba2ea4f760b29d5226907f447c92400 ]
 
-This patch adds a helper function, list_splice_rcu(), to safely splice
-a private (non-RCU-protected) list into an RCU-protected list.
+Publish new hooks in the list into the basechain/flowtable using
+splice_list_rcu() to ensure netlink dump list traversal via rcu is safe
+while concurrent ruleset update is going on.
 
-The function ensures that only the pointer visible to RCU readers
-(prev->next) is updated using rcu_assign_pointer(), while the rest of
-the list manipulations are performed with regular assignments, as the
-source list is private and not visible to concurrent RCU readers.
-
-This is useful for moving elements from a private list into a global
-RCU-protected list, ensuring safe publication for RCU readers.
-Subsystems with some sort of batching mechanism from userspace can
-benefit from this new function.
-
-The function __list_splice_rcu() has been added for clarity and to
-follow the same pattern as in the existing list_splice*() interfaces,
-where there is a check to ensure that the list to splice is not
-empty. Note that __list_splice_rcu() has no documentation for this
-reason.
-
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: 78d9f48f7f44 ("netfilter: nf_tables: add devices to existing flowtable")
+Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Benjamin Robin (Schneider Electric) <benjamin.robin@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rculist.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ net/netfilter/nf_tables_api.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/rculist.h b/include/linux/rculist.h
-index d29740be4833e..ad37c0584c23b 100644
---- a/include/linux/rculist.h
-+++ b/include/linux/rculist.h
-@@ -204,6 +204,35 @@ static inline void list_replace_rcu(struct list_head *old,
- 	old->prev = LIST_POISON2;
- }
- 
-+static inline void __list_splice_rcu(struct list_head *list,
-+				     struct list_head *prev,
-+				     struct list_head *next)
-+{
-+	struct list_head *first = list->next;
-+	struct list_head *last = list->prev;
-+
-+	last->next = next;
-+	first->prev = prev;
-+	next->prev = last;
-+	rcu_assign_pointer(list_next_rcu(prev), first);
-+}
-+
-+/**
-+ * list_splice_rcu - splice a non-RCU list into an RCU-protected list,
-+ *                   designed for stacks.
-+ * @list:	the non RCU-protected list to splice
-+ * @head:	the place in the existing RCU-protected list to splice
-+ *
-+ * The list pointed to by @head can be RCU-read traversed concurrently with
-+ * this function.
-+ */
-+static inline void list_splice_rcu(struct list_head *list,
-+				   struct list_head *head)
-+{
-+	if (!list_empty(list))
-+		__list_splice_rcu(list, head, head->next);
-+}
-+
- /**
-  * __list_splice_init_rcu - join an RCU-protected list into an existing list.
-  * @list:	the RCU-protected list to splice
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 96b0638c220a7..a373a0969e994 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9995,8 +9995,8 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 							   nft_trans_flowtable(trans),
+ 							   &nft_trans_flowtable_hooks(trans),
+ 							   NFT_MSG_NEWFLOWTABLE);
+-				list_splice(&nft_trans_flowtable_hooks(trans),
+-					    &nft_trans_flowtable(trans)->hook_list);
++				list_splice_rcu(&nft_trans_flowtable_hooks(trans),
++						&nft_trans_flowtable(trans)->hook_list);
+ 			} else {
+ 				nft_clear(net, nft_trans_flowtable(trans));
+ 				nf_tables_flowtable_notify(&trans->ctx,
 -- 
 2.53.0
 
