@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BDF2EEE63;
-	Wed, 30 Sep 2026 17:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251CC51121F;
+	Wed, 30 Sep 2026 17:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790342; cv=none; b=Bnw/b1Ax4lslA7l74PzhrHwcQUGtaH2nf4gMqel4ti3QD5ZD2a+xtm7EjYhfFNAAiYCdGbZnPdwgdZ+PBCMSxf6OGaxilsK4MUzJcorfr9zNoOgH3JEP5cyHVQz8B7MeZkNeLDiaLjOtO/MCuhn9MyHa2Wa3oxAP3uHlwV8KtZ4=
+	t=1790790345; cv=none; b=UMZbis/asu777IIhFclMAsE3Z76o2o30s/ED8TJr7NApfNTggzNyUbHjmh4yMzGLPaodZ1AeFmwM3j4EMqSAVkuU0QfWsmSrEZXNunYUr66mydyiWXQGgiGMfVOcKi53rs5H1iYD1+LmLZhzVtof3UpS8zYUmCeGxxAOU9DcI6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790342; c=relaxed/simple;
-	bh=NR07a4m4uSgRYyV++aIStVodlLnIxHxLYDnpaubk93w=;
+	s=arc-20240116; t=1790790345; c=relaxed/simple;
+	bh=xAGgz95mOn2/5jRhUPTAahKvyzccwNXIvdN+IH3xgKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nKeVegm9pTt0MNxxBqOI4wB0BlELi6JEFz2BSiQTxozj1nOHo9kWl5h3o1RNqf5uSPfClbeQ8/yfdcPnwZqSJhshOaKRe4w+V7W720Wc+HP5zQxsjScwPNL6zhAr9wYpE+G0btu0oACHCb4exOQgqtK+vYH8Z3VoRiCxFbPuw2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQCCfzW7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0Mg+w4cXEmh2a87ZDEPVeqhaDkMvnD/2IJVy/S6+Ix31RFHN1JDnFFCYpPgosDmyyDu+Qq1BXXEjG+PzejEfB6t9aASYG8A7b+9yFJn3LFNpD+FHkjDs+CnVRv8CoAowBPXQMXZgwUUx3qchN0mIUfrH/Q8iqX4S/cuorfNoeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yolde4Mz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQCCfzW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD02B1F000FF;
-	Wed, 30 Sep 2026 17:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yolde4Mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB3F1F000FF;
+	Wed, 30 Sep 2026 17:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790341;
-	bh=vAGj67uVWbR7o4MPf7zuXgTGo5LkpL1TYzpmyjBIRSM=;
+	s=korg; t=1790790344;
+	bh=nFjHtzPc2oHKdC1BRUKZDoxGjk6aqGBINDA2BgqV7kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQCCfzW7M/uUfRv3DWOiQUA67G1/Kn2ogDir1MGqekxdOI+g3d41CqjC2u7naCILt
-	 GWpAP0r5vK9cmAfC1gKpiWvrrshCPW+0qkBf9pBb9FC47d1dcCAFeikB0UVqbefnJn
-	 pkW4Bp+xb5Gr93qidQm9lvhQvsvu/0Eg6jamOw5M=
+	b=yolde4Mz6q6onlZgirF098rDPABHhvo8GBiHGdiwqkac/VuhMg+2g5RbNb0iUYcTl
+	 mF7gGTgpvQLm9xWigF1JtiS1FCckxinPGLg4Yli5ohjQtYS1N72CWmn+Xtfog/oeg/
+	 DBWISSJMnbKN5QLi4YonAtyzvql8ZsE/UW5mahps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sesidhar Baddela <sebaddel@cisco.com>,
-	Arulprabhu Ponnusamy <arulponn@cisco.com>,
-	Gian Carlo Boffa <gcboffa@cisco.com>,
-	Karan Tilak Kumar <kartilak@cisco.com>,
-	Arun Easi <aeasi@cisco.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Helge Deller <deller@gmx.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 796/877] scsi: fnic: Fix missed link-up when critical IRQ targets offline CPU
-Date: Wed, 30 Sep 2026 17:28:27 +0200
-Message-ID: <20260930152431.893825109@linuxfoundation.org>
+Subject: [PATCH 6.12 797/877] Input: hp_sdc - shut down kicker timer on module exit
+Date: Wed, 30 Sep 2026 17:28:28 +0200
+Message-ID: <20260930152431.914647033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,138 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arun Easi <aeasi@cisco.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 0cb1fd924126f1f581621a5e804df98a02be9dff ]
+[ Upstream commit 309731e95917125bbd13626a7a5600490a5bf44f ]
 
-When CPU Hyper Threading is disabled, sibling CPUs remain present but
-are reported offline. Managed MSI-X IRQs can still receive affinity
-masks that include those offline CPUs. If a driver-critical vector is
-managed, it can be parked on an offline CPU and the driver may miss
-critical events such as link-up.
+hp_sdc_kicker() rearms hp_sdc.kicker with mod_timer() after scheduling the
+tasklet.  The module exit path uses timer_delete_sync().  That waits for a
+callback already running but can still leave the timer rearmed.
 
-Keep driver-critical vectors unmanaged so they can be migrated by the
-IRQ core when their target CPU is offlined.
+A callback can therefore leave the timer pending while hp_sdc_exit() tears
+down the driver, allowing timer activity to access dismantled driver state.
 
-Since HWQ-0 is unmanaged now, in some queue combinations there can be no
-mappings to it in mq_map. So without the blk-mq fix mentioned below,
-system may crash during cpu offline/online tests.
+Use timer_shutdown_sync() for final teardown.  It waits for a running
+callback and prevents rearming after module exit begins.
 
-Fixes: 8a8449ca5e33 ("scsi: fnic: Modify ISRs to support multiqueue (MQ)")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Depends-on: commit 10845a105bbc ("blk-mq: skip CPU offline notify on unmapped hctx")
-Reviewed-by: Sesidhar Baddela <sebaddel@cisco.com>
-Reviewed-by: Arulprabhu Ponnusamy <arulponn@cisco.com>
-Reviewed-by: Gian Carlo Boffa <gcboffa@cisco.com>
-Reviewed-by: Karan Tilak Kumar <kartilak@cisco.com>
-Signed-off-by: Arun Easi <aeasi@cisco.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
-Link: https://patch.msgid.link/20260903175547.57971-1-aeasi@cisco.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ inlined upstream’s queue-mapping initialization helper into the existing fnic mapping function. ]
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Helge Deller <deller@gmx.de>
+Link: https://patch.msgid.link/20260902154004.3595416-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ adjusted the removal hunk to match del_timer_sync() instead of timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/fnic/fnic.h      |    2 +-
- drivers/scsi/fnic/fnic_isr.c  |   13 ++++++++++---
- drivers/scsi/fnic/fnic_main.c |   33 ++++++++++++++++++++++++++++++++-
- 3 files changed, 43 insertions(+), 5 deletions(-)
+ drivers/input/serio/hp_sdc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/fnic/fnic.h
-+++ b/drivers/scsi/fnic/fnic.h
-@@ -27,7 +27,7 @@
+--- a/drivers/input/serio/hp_sdc.c
++++ b/drivers/input/serio/hp_sdc.c
+@@ -980,7 +980,7 @@ static void hp_sdc_exit(void)
+ 	free_irq(hp_sdc.irq, &hp_sdc);
+ 	write_unlock_irq(&hp_sdc.lock);
  
- #define DRV_NAME		"fnic"
- #define DRV_DESCRIPTION		"Cisco FCoE HBA Driver"
--#define DRV_VERSION		"1.7.0.0"
-+#define DRV_VERSION		"1.7.0.1"
- #define PFX			DRV_NAME ": "
- #define DFX                     DRV_NAME "%d: "
+-	del_timer_sync(&hp_sdc.kicker);
++	timer_shutdown_sync(&hp_sdc.kicker);
  
---- a/drivers/scsi/fnic/fnic_isr.c
-+++ b/drivers/scsi/fnic/fnic_isr.c
-@@ -245,7 +245,14 @@ int fnic_set_intr_mode_msix(struct fnic
- 	unsigned int m = ARRAY_SIZE(fnic->wq);
- 	unsigned int o = ARRAY_SIZE(fnic->hw_copy_wq);
- 	unsigned int min_irqs = n + m + 1 + 1; /*rq, raw wq, wq, err*/
--
-+	/*
-+	 * Make driver critical vectors unmanaged, or else it can get tied
-+	 * to an offline CPU. This can happen when hyper-threading is off.
-+	 */
-+	struct irq_affinity affd = {
-+		.pre_vectors = n + m + 1, /* rq, raw wq, 1 ioq */
-+		.post_vectors = 1, /* err */
-+	};
- 	/*
- 	 * We need n RQs, m WQs, o Copy WQs, n+m+o CQs, and n+m+o+1 INTRs
- 	 * (last INTR is used for WQ/RQ errors and notification area)
-@@ -263,8 +270,8 @@ int fnic_set_intr_mode_msix(struct fnic
- 		int vec_count = 0;
- 		int vecs = fnic->rq_count + fnic->raw_wq_count + fnic->wq_copy_count + 1;
+ 	tasklet_kill(&hp_sdc.task);
  
--		vec_count = pci_alloc_irq_vectors(fnic->pdev, min_irqs, vecs,
--					PCI_IRQ_MSIX | PCI_IRQ_AFFINITY);
-+		vec_count = pci_alloc_irq_vectors_affinity(fnic->pdev, min_irqs,
-+			    vecs, PCI_IRQ_MSIX|PCI_IRQ_AFFINITY, &affd);
- 		FNIC_ISR_DBG(KERN_INFO, fnic->lport->host, fnic->fnic_num,
- 					"allocated %d MSI-X vectors\n",
- 					vec_count);
---- a/drivers/scsi/fnic/fnic_main.c
-+++ b/drivers/scsi/fnic/fnic_main.c
-@@ -579,6 +579,8 @@ static int fnic_scsi_drv_init(struct fni
- 
- void fnic_mq_map_queues_cpus(struct Scsi_Host *host)
- {
-+	const struct cpumask *mask;
-+	unsigned int queue, cpu;
- 	struct fc_lport *lp = shost_priv(host);
- 	struct fnic *fnic = lport_priv(lp);
- 	struct pci_dev *l_pdev = fnic->pdev;
-@@ -600,7 +602,36 @@ void fnic_mq_map_queues_cpus(struct Scsi
- 		return;
- 	}
- 
--	blk_mq_map_hw_queues(qmap, &l_pdev->dev, FNIC_PCI_OFFSET);
-+	for_each_possible_cpu(cpu)
-+		qmap->mq_map[cpu] = 0;
-+
-+	/*
-+	 * Setup CPU to Queue mapping for all managed MSI-X IRQs.
-+	 * Q0 is driver critical and non-managed, hence start from Q1.
-+	 */
-+	for (queue = 1; queue < qmap->nr_queues; queue++) {
-+		int irq_num = pci_irq_vector(fnic->pdev,
-+					     queue + FNIC_PCI_OFFSET);
-+
-+		if (irq_num < 0)
-+			continue;
-+
-+		mask = pci_irq_get_affinity(fnic->pdev,
-+					    queue + FNIC_PCI_OFFSET);
-+		if (!mask) {
-+			shost_printk(KERN_ERR, host,
-+				"failed to get irq_affinity map for queue:%d\n", irq_num);
-+			continue;
-+		}
-+		FNIC_MAIN_DBG(KERN_INFO, fnic->lport->host, fnic->fnic_num,
-+				"got irq_affinity map for %d:\n", irq_num);
-+		for_each_cpu(cpu, mask) {
-+			qmap->mq_map[cpu] = qmap->queue_offset + queue;
-+			FNIC_MAIN_DBG(KERN_INFO, fnic->lport->host, fnic->fnic_num,
-+				      "[Q%d] cpu:%d <=> irq:%d\n",
-+				      queue, cpu, irq_num);
-+		}
-+	}
- }
- 
- static int fnic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 
