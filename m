@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897CF4F7CBF;
-	Wed, 30 Sep 2026 17:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6A25187CA;
+	Wed, 30 Sep 2026 17:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788056; cv=none; b=gwrqy5xdBih5mb00m4ibXToZB+7WVYNgW0H1YACAYydZBUbI9vyJqQ/nQTwMZNEbqA3flMvbrUNwOKxOKXfGB2Eq9r6BYT0s2Q5KFfctmLkykRMQJ4IHzC7QFoZn4UWK68CNvD837QZ1122zq0wU/H3/LyPpPlOuMCt+B3xIXCE=
+	t=1790788059; cv=none; b=D5fIyYJkgue8wz3qk5LZd5n6gwed7JV+Jnaim7SzbQHykRNQ7bLcJaKYZr8S7sLH2FLjUA1wmhROiQA8GhyzOaaFC6MujXVnAx1L1W0dbSLSV+q2O9uVjpOLDB2YCyBi0Mh0o04i21WaW274oVpamXUzvclAJQugG/SDM5BCBz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788056; c=relaxed/simple;
-	bh=AOoMY7Y5XMIQ4YvV/XKkEnOBnhwfPbwX3DOcclJRn/4=;
+	s=arc-20240116; t=1790788059; c=relaxed/simple;
+	bh=ILcJR5B3G5cpoHSpsqlOxkC44WMmT9Orj91rB8FENic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYZzhtKJ6uCttErkl35sVuXW9BJMp+Zsuz0M1Pq/u9J34RsF1A2DsMfgClufyJzMI+onynC6ha3Zkey5/dxWjA76v5LYCm6t3lkWmFSJ8L2NF2JFepbwa3exnYYA5HuUJC89+DnDvwpEFS7anynO/gPCW0NA8qD67OgNFCCdrBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jparjmQk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z2LsyElFYTgmkYh1rInS8drpquQFB/TlgNmwhSwOS/f2SvPLy1+HsIQ+TLXPFRNnfxJX3bPBmBTWxUhPG32Ty+W3bAa88ZxYDQo4Qh9CfVHtWqxEfaCfHvUSPqG6LVfJOTwkvsf0OqgCZJCCIUXH9I0XUL7YFGFrV2jiEvC6hCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abiMqTfh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jparjmQk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CB51F000FF;
-	Wed, 30 Sep 2026 17:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abiMqTfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1021F000FF;
+	Wed, 30 Sep 2026 17:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788055;
-	bh=wJwV+eVig+ka6reRxAl1gwOiW38UsBE/Ow2E2DteRBk=;
+	s=korg; t=1790788058;
+	bh=gkLO7zo8dr/Sb/1XTMOw+Vxz6S58GUKd4lFgfEM/pb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jparjmQkH+JlyNug5z+3sjCK3x2inZmGLP0xhS/c0doIlrMZu6+nMMxYAOmEI3DLk
-	 yWShgMcQqQbbJXdzV/5SJCqRwJOW5wHN7beKFxykj7P0GWLV1pdTYZ/apsOQhWi4+k
-	 l/KrkegM2ZxU23KQVxV/BqBw28THqhSBVFFRQquo=
+	b=abiMqTfhnWzW9nztmnTUMEQM0yPfj6O/GcONBolIuGFacedw1t6YFk1HbkvjFWRRb
+	 t/ZGlKvL8wjClbxkldub8ut36tV1QtyUzWx/TdobT8+37vF9bLXkQRRuGhItoDAPUr
+	 OSl28v5ieuiB9dKmQT0T7fJosZ7SCmoocgdCXE2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 403/457] Bluetooth: ISO: balance the parent hold in hci_bind_bis()
-Date: Wed, 30 Sep 2026 17:28:28 +0200
-Message-ID: <20260930152354.690924073@linuxfoundation.org>
+	Xie Bo <xb@ultrarisc.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 7.2 394/457] RISC-V: KVM: Release unused page after MMU invalidation
+Date: Wed, 30 Sep 2026 17:28:19 +0200
+Message-ID: <20260930152354.500146082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,49 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Xie Bo <xb@ultrarisc.com>
 
-commit 4c94557dd02569efa6c1072a0439addaef9a5224 upstream.
+commit ed54fdb460a6e81d5f8f38388d1f10b385dd4a58 upstream.
 
-hci_conn_link() takes a lifetime reference to its parent with
-hci_conn_get(), but only takes an operational hold on the child.
-hci_conn_unlink() later balances both a hold and a reference on the
-parent.
+If an MMU invalidation races with a G-stage fault, the fault handler skips
+installing the page but leaves ret set to zero. As a result,
+kvm_release_faultin_page() treats the page as used and can unnecessarily
+mark it dirty.
 
-The SCO and CIS paths pass a parent acquired from a connect helper, so
-it already has a hold. For an additional BIS, hci_bind_bis() obtains the
-parent from hci_conn_hash_lookup_big(), which returns a bare pointer.
-Unlinking the child then drops the parent's existing hold and can
-schedule it for disconnection while its socket is still using it.
+Track the invalidation retry separately and release the page as unused,
+while preserving the existing return value so that the vCPU retries the
+fault.
 
-Take a hold on the parent before linking it and drop that hold if linking
-fails. A successful link transfers the hold to hci_conn_unlink().
-
-Fixes: fa224d0c094a ("Bluetooth: ISO: Reassociate a socket with an active BIS")
+Fixes: 2ed90cb0938a ("KVM: RISC-V: Retry fault if vma_lookup() results become invalid")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260810051544.3953925-2-xb@ultrarisc.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/mmu.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2375,10 +2375,13 @@ struct hci_conn *hci_bind_bis(struct hci
- 	parent = hci_conn_hash_lookup_big(hdev,
- 					  conn->iso_qos.bcast.big);
- 	if (parent && parent != conn) {
-+		hci_conn_hold(parent);
- 		link = hci_conn_link(parent, conn);
- 		hci_conn_drop(conn);
--		if (!link)
-+		if (!link) {
-+			hci_conn_drop(parent);
- 			return ERR_PTR(-ENOLINK);
-+		}
- 	}
+--- a/arch/riscv/kvm/mmu.c
++++ b/arch/riscv/kvm/mmu.c
+@@ -540,6 +540,7 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *v
+ 	int ret;
+ 	kvm_pfn_t hfn;
+ 	bool is_hugetlb;
++	bool unused = false;
+ 	bool writable;
+ 	short vma_pageshift;
+ 	gfn_t gfn = gpa >> PAGE_SHIFT;
+@@ -632,8 +633,10 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *v
  
- 	return conn;
+ 	write_lock(&kvm->mmu_lock);
+ 
+-	if (mmu_invalidate_retry(kvm, mmu_seq))
++	if (mmu_invalidate_retry(kvm, mmu_seq)) {
++		unused = true;
+ 		goto out_unlock;
++	}
+ 
+ 	/*
+ 	 * Check if we are backed by a THP and thus use block mapping if
+@@ -656,7 +659,8 @@ int kvm_riscv_mmu_map(struct kvm_vcpu *v
+ 		kvm_err("Failed to map in G-stage\n");
+ 
+ out_unlock:
+-	kvm_release_faultin_page(kvm, page, ret && ret != -EEXIST, writable);
++	kvm_release_faultin_page(kvm, page,
++				 unused || (ret && ret != -EEXIST), writable);
+ 	write_unlock(&kvm->mmu_lock);
+ 	return ret;
+ }
 
 
