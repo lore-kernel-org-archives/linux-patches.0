@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65F84F30C3;
-	Wed, 30 Sep 2026 15:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EA9514752;
+	Wed, 30 Sep 2026 15:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782445; cv=none; b=sTFTJ0NfFNQqvzGjMC4FCLE0wUHnLPAuaJJ5ifVxm3pXk9P56E10g0dGu7XBtype5cezBCqd8O4muzuaYSLf6Kq5u/o/QggnCkuZLD2kpWJu7LxPAeiE+ezg78NGglZRCy/fQ9L5fSFDob3En7QxciTggDtG3mJKg0ao1yQu/9Q=
+	t=1790782445; cv=none; b=hAQ+cfQV60Qk/l5j6wUCvlkL4t/MgRwmYO9K4ns+QKHcQumrSKsQdaVJ/PfNmlCSxlTZUGHO1+81A3Drrz99HtoPwAr95MNOaBPtT5SKxAaQdfekFDqgVFxvulWhBsXJIVSPK8ITvyyKMeGOAv2vguAeAAHfN1hzyZGUK213aUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782445; c=relaxed/simple;
-	bh=WIhv1A0QhvF3xs05QBIBAm6Rh/pFTc83/u5+mvuIz7A=;
+	bh=qF/eSYXKH/vU64bcmpksBYpj8OKvvXQSWZBrvhZujmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQI/z6Mu1KPRyVmoF62JHqyNgwTIO+aSthgmk7GgaChK0Wq5NCM+JkmMkwyU+OrXn69gyc/+z2N6CbUY/MlIi4D8G+KmXhoLmN30Vuv9djK2A771wwOf8m+VGbqBjxprfugSvW5u9oBPNkQBAAWaVh3txU4xdeOmoi6wcZucmXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbXr0gK3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jpi2Kqzwlbo14BA2/NFqdaAf0+udos/tgRziJQL1ZCqNmVv7at0nX7F61oAeuM/wdTWAopiDdqLoQaV4mqK3oVwRl41XxHZ1buNjjPmg/2QfLbX+xNoV8w/WoEH3yd4UC/d92eYLgJG+6GdfpdkUeE8fDVAQAyMwsH22r53y8XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LD/MVza5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbXr0gK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC941F00899;
-	Wed, 30 Sep 2026 15:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LD/MVza5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A78D1F0089B;
+	Wed, 30 Sep 2026 15:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782436;
-	bh=D9qBHnvpdAOTpQ1VKV8cLd6czdkkpkVZBZuML/8pfao=;
+	s=korg; t=1790782433;
+	bh=++9Ly87OkmpqI0y0Ymf4ruhBTwt9AGamxThf+62m/kQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DbXr0gK3hsk/Ns+aU/Cpv0Rnqz8ho8/IbocI5uihQoaG/l5H+V+eYIhC7kl10Tu0w
-	 a5s5VC8cxKEPhC3nvrkfiyMziUe/9JUF7cdCkU/hB3AwtuMxot7tPoodDjHfH9k4UN
-	 8LeRlLfCMnSOUFSKsdxbV//l/bCZupyA3YuCME9M=
+	b=LD/MVza5TD5vODZZIEjqCXvJlDRh/rwx6oAVTy5fyDkReIAT7o2rJpjfX2652vhfp
+	 KaSbSU1FtEfeUUCzOVO2z0WQ03r4o6AjIeGpPwr6sF15lzzIhGIksrcwkmacxIctlU
+	 Hhxb7Xi9y83EWnzTTSLeBQng6c0h160dg06txHN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Anders Larsen <al@alarsen.net>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/595] qnx4: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:18:58 +0200
-Message-ID: <20260930152348.699236606@linuxfoundation.org>
+Subject: [PATCH 5.10 018/595] media: em28xx-video: fix missing res_free() on init_usb_xfer failure
+Date: Wed, 30 Sep 2026 17:18:31 +0200
+Message-ID: <20260930152348.114713603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit c7d911ea1cc9a63b07e52f5e75b263be0615b289 ]
+[ Upstream commit cc20e81da6d99926f94fad7af21f75c07e865769 ]
 
-qnx4 uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting will hit the
+res_get() is called before em28xx_init_usb_xfer(), but the error
+path of em28xx_init_usb_xfer() does not release the resource,
+leading to a persistent busy state.
 
-        BUG_ON(offset >= folio_size(folio));
-
-in folio_set_bh on the first __bread_gfp call.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-4-hch@lst.de
-Acked-by: Anders Larsen <al@alarsen.net>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/qnx4/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/em28xx/em28xx-video.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/qnx4/inode.c b/fs/qnx4/inode.c
-index 3fb7fc819b4fc..73eeb22d0f505 100644
---- a/fs/qnx4/inode.c
-+++ b/fs/qnx4/inode.c
-@@ -195,7 +195,8 @@ static int qnx4_fill_super(struct super_block *s, void *data, int silent)
- 		return -ENOMEM;
- 	s->s_fs_info = qs;
+diff --git a/drivers/media/usb/em28xx/em28xx-video.c b/drivers/media/usb/em28xx/em28xx-video.c
+index b086b2abf082e..ffc7ae1ee3a9b 100644
+--- a/drivers/media/usb/em28xx/em28xx-video.c
++++ b/drivers/media/usb/em28xx/em28xx-video.c
+@@ -1115,8 +1115,10 @@ int em28xx_start_analog_streaming(struct vb2_queue *vq, unsigned int count)
+ 					  dev->max_pkt_size,
+ 					  dev->packet_multiplier,
+ 					  em28xx_urb_data_copy);
+-		if (rc < 0)
++		if (rc < 0) {
++			res_free(dev, vq->type);
+ 			return rc;
++		}
  
--	sb_set_blocksize(s, QNX4_BLOCK_SIZE);
-+	if (!sb_set_blocksize(s, QNX4_BLOCK_SIZE))
-+		return -EINVAL;
- 
- 	s->s_op = &qnx4_sops;
- 	s->s_magic = QNX4_SUPER_MAGIC;
+ 		/*
+ 		 * djh: it's not clear whether this code is still needed.  I'm
 -- 
 2.53.0
 
