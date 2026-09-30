@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4256F50AC0E;
-	Wed, 30 Sep 2026 17:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B0450AC0E;
+	Wed, 30 Sep 2026 17:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788859; cv=none; b=ovXyJiHmu8xT/IJPTevYEgHlV/64SnzB/IIHo/zVAMskL4y/+K/Zbzrb+lW7O+eugwNvR/Uwb5s/WDzn2QLPNudvVeleoyaz+s7YmB71AUJQRVetnmUzYLR7MwaSnpoTNQevCYW9qDaNmpfsMJvl+aZMxOWtYowkcPuodzuS8RA=
+	t=1790788862; cv=none; b=p3r0ecgEdfkOxcmOBqfzmAlI+X4MAyOE8yeihxxXDJUD2PRCX8Qa7tjyLaSwyixwCT4WDhFKQ8LNxJFGSZrOcU/scXN2jxFRz48H2NqRaEK/UdZeRWQYZSxIigA4x8Yd1+m1GLoyNlNjuzJ3fJprpWyoMb7YarT+0GwJAyePVWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788859; c=relaxed/simple;
-	bh=4ToJB+Ax3ZrskcL9bSj/TIm89Brj3VwteiDMGW1Wick=;
+	s=arc-20240116; t=1790788862; c=relaxed/simple;
+	bh=AO3nDtjw8Bf5x+ozCtVbwotiIdttZ5tXFF0gU3h5JBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViLiau5Sk2alxSvYUR1MmJxDyp8D9aw3glxEg1t/s/vHHpoCoQoBlyVHhRYNK2lEvLaKw/pBLmVkiyEdD8rxdB0DGwosB47Kr5EOeCfPyFxh1bokgKyovSzWTHaZIAEo44VG/MEBs3VaHvJ7Zf9BZDR6ZHV7HNE000FofCssSZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUS5yrjx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qvfRc1hnu9T/yOt2nxYY1arbUVMKpNvjtd3tcdFUkjxawY44eVQjw2EJje7f1FRdZ98I+gET58OpWgqqilUIXI+ZBR/y1jPXA+4D1+kQhrFIjbyeMBAVnZ+9AP1T/LeRZwvct26r5l0JuKDrUJBKR6tGiqhHNlSjzy4eTiRwOM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Hb5+x1g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUS5yrjx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDCD1F000FF;
-	Wed, 30 Sep 2026 17:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Hb5+x1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860131F000FF;
+	Wed, 30 Sep 2026 17:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788858;
-	bh=44DGZNf/FOtgvMu0+8zLeG+Koy0NjwrkNvV6ju154Jo=;
+	s=korg; t=1790788860;
+	bh=awYyaB7RfB3rpjjayq60RELA3MNff2bNKe9diOqSCuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUS5yrjx2Et2qqCkxvUxeGoiyqMGzk/Ujr13+2DuNonw7CYvK1+t52JcB/cY3WovQ
-	 fO88YsTqhseRpKHssuzVKthMkzFML2Lte+4epSoYzm916cVj5bbKyokLtJsV/uoZ27
-	 Pe9KNl7tibA+JGUdsmDD5SKii2MWnEH0eLR0EJiM=
+	b=0Hb5+x1gwR1Pv+DuImYQqtlZWMd9beejmQHIpMIvf2ZITZ4NQMjIhHbdZnbyog5Bv
+	 t/wqzANVCMcdGB39zdMDs7hQ2pvSzA5rsz/WWZFCqK9bkMbL1UK8lbhZBv7mZFmTR5
+	 ZvWNYf1JBnIsfWdzBTVoFUh234U79I2+Sx3Er1so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.12 274/877] drm/msm/adreno: fix autosuspend cleanup during teardown
-Date: Wed, 30 Sep 2026 17:19:45 +0200
-Message-ID: <20260930152420.634313565@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 257/877] watchdog: sp5100_tco: Fix pci_dev reference leak in sp5100_tco_init()
+Date: Wed, 30 Sep 2026 17:19:28 +0200
+Message-ID: <20260930152420.266665172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,52 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 6fbbf1e152f34ad3913e4a6476680aba672c5068 upstream.
+commit 88f113634028ca90a857031837d8061d1a9e1a7b upstream.
 
-adreno_gpu_init() calls pm_runtime_use_autosuspend(), but
-adreno_gpu_cleanup() does not call the matching
-pm_runtime_dont_use_autosuspend() during teardown.
+sp5100_tco_init() stores the PCI device matched by for_each_pci_dev()
+in the global sp5100_tco_pci and keeps its reference for the lifetime
+of the driver, but neither sp5100_tco_exit() nor the error paths of
+sp5100_tco_init() call pci_dev_put(), leaking the reference on driver
+registration failure and on every module load/unload cycle.
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
+Drop the reference when the platform driver or device registration
+fails and when the module is unloaded.
 
-The documentation for pm_runtime_use_autosuspend() also notes that it
-is important to undo it with pm_runtime_dont_use_autosuspend() at
-driver exit time, unless runtime PM was initially enabled with
-devm_pm_runtime_enable().
-
-Add the missing pm_runtime_dont_use_autosuspend() call to
-adreno_gpu_cleanup().
-
-This issue was found by manual code inspection.
-
-Fixes: eeb754746b14 ("drm/msm/gpu: use pm-runtime")
+Fixes: 15e28bf13008 ("watchdog: Add support for sp5100 chipset TCO")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/745110/
-Link: https://lore.kernel.org/r/20260808131624.2854412-1-lgs201920130244@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260916170511.2086199-1-vulab@iscas.ac.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/watchdog/sp5100_tco.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -1141,6 +1141,8 @@ void adreno_gpu_cleanup(struct adreno_gp
- 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
- 		release_firmware(adreno_gpu->fw[i]);
+--- a/drivers/watchdog/sp5100_tco.c
++++ b/drivers/watchdog/sp5100_tco.c
+@@ -605,8 +605,10 @@ static int __init sp5100_tco_init(void)
+ 	pr_info("SP5100/SB800 TCO WatchDog Timer Driver\n");
  
-+	pm_runtime_dont_use_autosuspend(&gpu->pdev->dev);
-+
- 	if (priv && pm_runtime_enabled(&priv->gpu_pdev->dev))
- 		pm_runtime_disable(&priv->gpu_pdev->dev);
+ 	err = platform_driver_register(&sp5100_tco_driver);
+-	if (err)
++	if (err) {
++		pci_dev_put(sp5100_tco_pci);
+ 		return err;
++	}
  
+ 	sp5100_tco_platform_device =
+ 		platform_device_register_simple(TCO_DRIVER_NAME, -1, NULL, 0);
+@@ -619,6 +621,7 @@ static int __init sp5100_tco_init(void)
+ 
+ unreg_platform_driver:
+ 	platform_driver_unregister(&sp5100_tco_driver);
++	pci_dev_put(sp5100_tco_pci);
+ 	return err;
+ }
+ 
+@@ -626,6 +629,7 @@ static void __exit sp5100_tco_exit(void)
+ {
+ 	platform_device_unregister(sp5100_tco_platform_device);
+ 	platform_driver_unregister(&sp5100_tco_driver);
++	pci_dev_put(sp5100_tco_pci);
+ }
+ 
+ module_init(sp5100_tco_init);
 
 
