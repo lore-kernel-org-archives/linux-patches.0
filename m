@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5D2501285;
-	Wed, 30 Sep 2026 18:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BCD509F06;
+	Wed, 30 Sep 2026 18:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791319; cv=none; b=RfWXXaROTsSbXhby6qcmySu4ziW4TJkD7T9Kx8Md9waWQGhPlql0/X+PCZ5eAVAYlA6qnkgFFvsgSWssrxDJQTdo3S1axmUtZ5+eB+fIASO6ZUYZC0xWe57/0GDs5E+aQ77ZCF8KnZtgAOZTMbgddIBumOpPM7MHBR1Nq3VUBxk=
+	t=1790791323; cv=none; b=OddDE/0BthiM9WrfI37isAuj9Y9LZcqr69Il3pH3hhSAJyRXl+b8GYLwxCSS4ufIIBoWCaQCy4NpoDXx/K2H3J0lZPNPbeLKBhxnoqEmJf+c4AijDVrtjz4LCYdGnXUcfVKamBxDAzGN4cZu8qpMK9RdU2AjOHKAsHdzcb2jYB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791319; c=relaxed/simple;
-	bh=wwxjw4Pak6hAvHaUZ7u3yadQ+se3EBpPE2pMXBF2eBo=;
+	s=arc-20240116; t=1790791323; c=relaxed/simple;
+	bh=wC/+1A3tTSskH3aIJfw70zm30LS1GHOLNS/byGP1uP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBLiewhhhKxsK61jWEZgkyD5RzC6N6NNew3wkLyrsJ13ptUHYDCbUWUDf5dZ0xd8/iOUKpKYaOA05jgsLlVFZpW3n7xNFkFlvbN4D7YgpkIbm2kJpo9zJjAO4T8CBPVxvxbSmJjh5qm2TktTHRJAVrxhh//c+TXgArPm4MGtnXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6Iznmbd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CF8yjzbsrlANZazmNx18wCgfZZo8qnqAHtlNOG9UuaLlwlb9z/7ahqRPdqTVW+qMEYsB0Ja4HaOO1bbtkOhQSfETAQnRTr6fr9lRMYgtURr36WeLBuYLVuoD485G2O3xZNI6BIMun9i7YTwLebWKjFz1eIDKaiemR69DrNEYAOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKfhsu87; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6Iznmbd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1E71F000FF;
-	Wed, 30 Sep 2026 18:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKfhsu87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8216C1F000FF;
+	Wed, 30 Sep 2026 18:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791318;
-	bh=eyqx6rU0+BjJ3JzjSZVfvylHmHcYAfrK0dtAVqPV/gw=;
+	s=korg; t=1790791321;
+	bh=T5QnPPYWeC0zldFME7XMBiXmr30Iq8J3FqFod9+VKEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c6IznmbdiXz3lA+S6gDmjuTBhw5BR+FcK1W8QHYIJl4Wwhc21Bj6ITFksNx12Qnl4
-	 KMN9naqPwInJNF4KZpStBI4U5AWdr4sQITD3CtqEGxUs+4RuEozHkJ5RevOrU92kAX
-	 /AhC+vyR9fdpmj0J3gdhSwR9TTJQhVHOC1vHBhFA=
+	b=OKfhsu87VT9ix+SFBpUSW6LMGlN0e5y4LiXgayhiUIMIq3uSf0Pj3emvKiKgQvEcS
+	 u/LVXXp5E2Fa9Bs9tIZGt99v0MExIJ2oJLAjHztXfIMcMU84whFnSwd4qxeL53DyyY
+	 SbbJ4uGNKWBhE3enu5p0U1LtJhmEP+kn+RYunN2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Wolfgang Grandegger <wg@grandegger.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paul Mackerras <paulus@samba.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 259/752] ASoC: ab8500: Validate and program TDM slots correctly
-Date: Wed, 30 Sep 2026 17:22:09 +0200
-Message-ID: <20260930152403.886251695@linuxfoundation.org>
+Subject: [PATCH 5.15 260/752] tty: make tty_ldisc_ops::hangup return void
+Date: Wed, 30 Sep 2026 17:22:10 +0200
+Message-ID: <20260930152403.908601402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,301 +61,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 85cef7e2004ef5c1a715feaddb55d3f3d27bac0a ]
+[ Upstream commit 28f194da4a2c4d431552025a4386edaffab181bd ]
 
-The interface clock ratio is selected from the slot count alone, ffs()
-and fls() produce one-based hardware slot numbers, eight-channel mode
-does not program any mappings, and all register errors are ignored.
-Invalid masks can also leave a partially programmed interface.
+The documentation says that the return value of tty_ldisc_ops::hangup
+hook is ignored. And it really is, so there is no point for its return
+type to be int. Switch it to void and all the hooks too.
 
-Validate the complete configuration first, derive the supported BCLK
-ratio from slots times slot width, use zero-based slot indices, program
-deterministic eight-channel maps, and propagate register failures.
-
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-4-f85024e717e3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Wolfgang Grandegger <wg@grandegger.com>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20210914091134.17426-4-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9feb069e5ed0 ("ppp: ppp_async: simplify tty disc_data access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 216 ++++++++++++++++++--------------
- 1 file changed, 123 insertions(+), 93 deletions(-)
+ Documentation/driver-api/serial/tty.rst | 2 +-
+ drivers/input/serio/serport.c           | 3 +--
+ drivers/net/can/slcan.c                 | 3 +--
+ drivers/net/ppp/ppp_async.c             | 3 +--
+ drivers/net/ppp/ppp_synctty.c           | 3 +--
+ drivers/net/slip/slip.c                 | 3 +--
+ include/linux/tty_ldisc.h               | 2 +-
+ sound/soc/codecs/cx20442.c              | 3 +--
+ sound/soc/ti/ams-delta.c                | 3 +--
+ 9 files changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index a07659a84aaa5..a7695fc1cb623 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -2161,23 +2161,27 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 		int slots, int slot_width)
+diff --git a/Documentation/driver-api/serial/tty.rst b/Documentation/driver-api/serial/tty.rst
+index dd972caacf3ee..4b709f392713d 100644
+--- a/Documentation/driver-api/serial/tty.rst
++++ b/Documentation/driver-api/serial/tty.rst
+@@ -58,7 +58,7 @@ close()			This is called on a terminal when the line
+ hangup()		Called when the tty line is hung up.
+ 			The line discipline should cease I/O to the tty.
+ 			No further calls into the ldisc code will occur.
+-			The return value is ignored. Can sleep.
++			Can sleep.
+ 
+ read()			(optional) A process requests reading data from
+ 			the line. Multiple read calls may occur in parallel
+diff --git a/drivers/input/serio/serport.c b/drivers/input/serio/serport.c
+index 7fbbe00e3553c..17eb8f2aa48dd 100644
+--- a/drivers/input/serio/serport.c
++++ b/drivers/input/serio/serport.c
+@@ -244,7 +244,7 @@ static int serport_ldisc_compat_ioctl(struct tty_struct *tty,
+ }
+ #endif
+ 
+-static int serport_ldisc_hangup(struct tty_struct *tty)
++static void serport_ldisc_hangup(struct tty_struct *tty)
  {
- 	struct snd_soc_component *component = dai->component;
--	unsigned int val, mask, slot, slots_active;
-+	unsigned int active_mask, clock_ratio, slot, value, ad_out, reg;
-+	unsigned int tx_active, rx_active;
-+	unsigned int conf1_val, conf2_val;
-+	unsigned int mask;
-+	int channel, ret;
+ 	struct serport *serport = (struct serport *) tty->disc_data;
+ 	unsigned long flags;
+@@ -254,7 +254,6 @@ static int serport_ldisc_hangup(struct tty_struct *tty)
+ 	spin_unlock_irqrestore(&serport->lock, flags);
  
- 	mask = BIT(AB8500_DIGIFCONF2_IF0WL0) |
- 		BIT(AB8500_DIGIFCONF2_IF0WL1);
--	val = 0;
-+	conf2_val = 0;
+ 	wake_up_interruptible(&serport->wait);
+-	return 0;
+ }
  
- 	switch (slot_width) {
- 	case 16:
- 		break;
- 	case 20:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
- 		break;
- 	case 24:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
- 		break;
- 	case 32:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
- 			BIT(AB8500_DIGIFCONF2_IF0WL0);
- 		break;
- 	default:
-@@ -2186,27 +2190,11 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 		return -EINVAL;
- 	}
+ static void serport_ldisc_write_wakeup(struct tty_struct * tty)
+diff --git a/drivers/net/can/slcan.c b/drivers/net/can/slcan.c
+index 2ace2b735c202..0b2403e9853e7 100644
+--- a/drivers/net/can/slcan.c
++++ b/drivers/net/can/slcan.c
+@@ -663,10 +663,9 @@ static void slcan_close(struct tty_struct *tty)
+ 	/* This will complete via sl_free_netdev */
+ }
  
--	dev_dbg(dai->component->dev, "%s: IF0 slot-width: %d bits.\n",
--		__func__, slot_width);
--	snd_soc_component_update_bits(component, AB8500_DIGIFCONF2, mask, val);
--
--	/* Setup TDM clocking according to slot count */
--	dev_dbg(dai->component->dev, "%s: Slots, total: %d\n", __func__, slots);
--	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
--			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 	switch (slots) {
- 	case 2:
--		val = AB8500_MASK_NONE;
--		break;
- 	case 4:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
--		break;
- 	case 8:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
--		break;
- 	case 16:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
--			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
- 	default:
- 		dev_err(dai->component->dev,
-@@ -2214,92 +2202,134 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 			__func__, slots);
- 		return -EINVAL;
- 	}
--	snd_soc_component_update_bits(component, AB8500_DIGIFCONF1, mask, val);
--
--	/* Setup TDM DA according to active tx slots */
+-static int slcan_hangup(struct tty_struct *tty)
++static void slcan_hangup(struct tty_struct *tty)
+ {
+ 	slcan_close(tty);
+-	return 0;
+ }
  
--	if (tx_mask & ~0xff)
--		return -EINVAL;
--
--	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
--	tx_mask = tx_mask << AB8500_DA_DATA0_OFFSET;
--	slots_active = hweight32(tx_mask);
--
--	dev_dbg(dai->component->dev, "%s: Slots, active, TX: %d\n", __func__,
--		slots_active);
--
--	switch (slots_active) {
--	case 0:
-+	clock_ratio = slots * slot_width;
-+	switch (clock_ratio) {
-+	case 32:
-+		conf1_val = 0;
- 		break;
--	case 1:
--		slot = ffs(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
-+	case 64:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
- 		break;
--	case 2:
--		slot = ffs(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
--		slot = fls(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
-+	case 128:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
--	case 8:
--		dev_dbg(dai->component->dev,
--			"%s: In 8-channel mode DA-from-slot mapping is set manually.",
--			__func__);
-+	case 256:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
-+			    BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
- 	default:
--		dev_err(dai->component->dev,
--			"%s: Unsupported number of active TX-slots (%d)!\n",
--			__func__, slots_active);
-+		dev_err(component->dev, "%s: Unsupported BCLK ratio (%u)!\n",
-+			__func__, clock_ratio);
- 		return -EINVAL;
- 	}
+ /* Perform I/O control on an active SLCAN channel. */
+diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
+index 61da58e1775e2..ff3e71e2b0651 100644
+--- a/drivers/net/ppp/ppp_async.c
++++ b/drivers/net/ppp/ppp_async.c
+@@ -247,10 +247,9 @@ ppp_asynctty_close(struct tty_struct *tty)
+  * Wait for I/O to driver to complete and unregister PPP channel.
+  * This is already done by the close routine, so just call that.
+  */
+-static int ppp_asynctty_hangup(struct tty_struct *tty)
++static void ppp_asynctty_hangup(struct tty_struct *tty)
+ {
+ 	ppp_asynctty_close(tty);
+-	return 0;
+ }
  
--	/* Setup TDM AD according to active RX-slots */
-+	active_mask = GENMASK(min(slots, 8) - 1, 0);
-+	if ((tx_mask | rx_mask) & ~active_mask) {
-+		dev_err(component->dev, "%s: Slot mask exceeds slot count\n",
-+			__func__);
-+		return -EINVAL;
-+	}
+ /*
+diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
+index c8d9c580ed503..480cafcaa964a 100644
+--- a/drivers/net/ppp/ppp_synctty.c
++++ b/drivers/net/ppp/ppp_synctty.c
+@@ -245,10 +245,9 @@ ppp_sync_close(struct tty_struct *tty)
+  * Wait for I/O to driver to complete and unregister PPP channel.
+  * This is already done by the close routine, so just call that.
+  */
+-static int ppp_sync_hangup(struct tty_struct *tty)
++static void ppp_sync_hangup(struct tty_struct *tty)
+ {
+ 	ppp_sync_close(tty);
+-	return 0;
+ }
  
--	if (rx_mask & ~0xff)
-+	tx_active = hweight32(tx_mask);
-+	rx_active = hweight32(rx_mask);
-+	if (tx_active != 0 && tx_active != 1 && tx_active != 2 &&
-+	    tx_active != 8) {
-+		dev_err(component->dev, "%s: Unsupported active TX slots (%u)!\n",
-+			__func__, tx_active);
-+		return -EINVAL;
-+	}
-+	if (rx_active != 0 && rx_active != 1 && rx_active != 2 &&
-+	    rx_active != 8) {
-+		dev_err(component->dev, "%s: Unsupported active RX slots (%u)!\n",
-+			__func__, rx_active);
- 		return -EINVAL;
-+	}
-+
-+	dev_dbg(component->dev,
-+		"%s: %d slots of %d bits, TX active: %u, RX active: %u\n",
-+		__func__, slots, slot_width, tx_active, rx_active);
+ /*
+diff --git a/drivers/net/slip/slip.c b/drivers/net/slip/slip.c
+index 4139f43b2ad03..c3ab564295f72 100644
+--- a/drivers/net/slip/slip.c
++++ b/drivers/net/slip/slip.c
+@@ -916,10 +916,9 @@ static void slip_close(struct tty_struct *tty)
+ 	/* sl_uninit() has dropped the slip_devs[] entry by now */
+ }
  
--	rx_mask = rx_mask << AB8500_AD_DATA0_OFFSET;
--	slots_active = hweight32(rx_mask);
-+	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF2,
-+					    mask, conf2_val);
-+	if (ret < 0)
-+		return ret;
+-static int slip_hangup(struct tty_struct *tty)
++static void slip_hangup(struct tty_struct *tty)
+ {
+ 	slip_close(tty);
+-	return 0;
+ }
+  /************************************************************************
+   *			STANDARD SLIP ENCAPSULATION		  	 *
+diff --git a/include/linux/tty_ldisc.h b/include/linux/tty_ldisc.h
+index b1d812e902aad..3f77761232825 100644
+--- a/include/linux/tty_ldisc.h
++++ b/include/linux/tty_ldisc.h
+@@ -200,7 +200,7 @@ struct tty_ldisc_ops {
+ 	void	(*set_termios)(struct tty_struct *tty, struct ktermios *old);
+ 	__poll_t (*poll)(struct tty_struct *, struct file *,
+ 			     struct poll_table_struct *);
+-	int	(*hangup)(struct tty_struct *tty);
++	void	(*hangup)(struct tty_struct *tty);
  
--	dev_dbg(dai->component->dev, "%s: Slots, active, RX: %d\n", __func__,
--		slots_active);
-+	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
-+	       BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
-+	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF1,
-+					    mask, conf1_val);
-+	if (ret < 0)
-+		return ret;
+ 	/*
+ 	 * The following routines are called from below.
+diff --git a/sound/soc/codecs/cx20442.c b/sound/soc/codecs/cx20442.c
+index 13258f3ca9aae..1af0bf5f1e2f5 100644
+--- a/sound/soc/codecs/cx20442.c
++++ b/sound/soc/codecs/cx20442.c
+@@ -252,10 +252,9 @@ static void v253_close(struct tty_struct *tty)
+ }
  
--	switch (slots_active) {
--	case 0:
--		break;
--	case 1:
--		slot = ffs(rx_mask);
--		snd_soc_component_update_bits(component, AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
--		break;
--	case 2:
--		slot = ffs(rx_mask);
--		snd_soc_component_update_bits(component,
--				AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
--		slot = fls(rx_mask);
--		snd_soc_component_update_bits(component,
--				AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2, slot));
--		break;
--	case 8:
--		dev_dbg(dai->component->dev,
--			"%s: In 8-channel mode AD-to-slot mapping is set manually.",
--			__func__);
--		break;
--	default:
--		dev_err(dai->component->dev,
--			"%s: Unsupported number of active RX-slots (%d)!\n",
--			__func__, slots_active);
--		return -EINVAL;
-+	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
-+	if (tx_active == 1 || tx_active == 2) {
-+		slot = __ffs(tx_mask) + AB8500_DA_DATA0_OFFSET;
-+		reg = AB8500_DASLOTCONF1;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+		reg = AB8500_DASLOTCONF3;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (tx_active == 2)
-+			slot = __fls(tx_mask) + AB8500_DA_DATA0_OFFSET;
-+		reg = AB8500_DASLOTCONF2;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+		reg = AB8500_DASLOTCONF4;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+	} else if (tx_active == 8) {
-+		channel = 0;
-+		for (slot = 0; slot < 8; slot++) {
-+			if (!(tx_mask & BIT(slot)))
-+				continue;
-+			reg = AB8500_DASLOTCONF1 + channel++;
-+			value = slot + AB8500_DA_DATA0_OFFSET;
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
-+	}
-+
-+	if (rx_active == 1 || rx_active == 2) {
-+		slot = __ffs(rx_mask) + AB8500_AD_DATA0_OFFSET;
-+		value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3,
-+							 slot);
-+		reg = AB8500_ADSLOTSEL(slot);
-+		mask = AB8500_MASK_SLOT(slot);
-+		ret = snd_soc_component_update_bits(component, reg, mask, value);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (rx_active == 2) {
-+			slot = __fls(rx_mask) + AB8500_AD_DATA0_OFFSET;
-+			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2,
-+								 slot);
-+			reg = AB8500_ADSLOTSEL(slot);
-+			mask = AB8500_MASK_SLOT(slot);
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
-+	} else if (rx_active == 8) {
-+		channel = 0;
-+		for (slot = 0; slot < 8; slot++) {
-+			if (!(rx_mask & BIT(slot)))
-+				continue;
-+			ad_out = AB8500_AD_OUT1 + channel++;
-+			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(ad_out, slot);
-+			reg = AB8500_ADSLOTSEL(slot);
-+			mask = AB8500_MASK_SLOT(slot);
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
+ /* Line discipline .hangup() */
+-static int v253_hangup(struct tty_struct *tty)
++static void v253_hangup(struct tty_struct *tty)
+ {
+ 	v253_close(tty);
+-	return 0;
+ }
  
- 	return 0;
+ /* Line discipline .receive_buf() */
+diff --git a/sound/soc/ti/ams-delta.c b/sound/soc/ti/ams-delta.c
+index 4537ef1b676f5..648a475e54e54 100644
+--- a/sound/soc/ti/ams-delta.c
++++ b/sound/soc/ti/ams-delta.c
+@@ -332,10 +332,9 @@ static void cx81801_close(struct tty_struct *tty)
+ }
+ 
+ /* Line discipline .hangup() */
+-static int cx81801_hangup(struct tty_struct *tty)
++static void cx81801_hangup(struct tty_struct *tty)
+ {
+ 	cx81801_close(tty);
+-	return 0;
+ }
+ 
+ /* Line discipline .receive_buf() */
 -- 
 2.53.0
 
