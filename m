@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A985221DC;
-	Wed, 30 Sep 2026 17:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F9A5221E0;
+	Wed, 30 Sep 2026 17:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790956; cv=none; b=CgY/eAbgX1XuK5Iy6C5G66MTxiBmTAW3QrUtdYCdhsQ/6Ahc0sIpX1QHzpOvb/myMPx7zz8CgwE1X35Cm7j2T5JsCk+glMf3TgLZe7MxiFF8YIj7rTiYBqou/A5aEF3KJAl3BeYK5dtz79c3pUpog/RJXubjJGA4JgzeXibG4DU=
+	t=1790790959; cv=none; b=t52ENzyJHJTQ2/1Wkt83PD9Km+M7sYJSXPDLNnFzODi/uipvZR2QB2JFKJbxKKibR1WEcgN4nStolrxws2XmgqMACXl33e39tADVonB+oQrUSu+u9PRtHQLWKaSssMQTkK7in1EcEbv9qmyrb5/NDcfiYJb0tGTbs9GYX324OBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790956; c=relaxed/simple;
-	bh=UUNEdMnZ7XL6sq7O7hi3RhXBKGutCX0hW4ipBpUBg58=;
+	s=arc-20240116; t=1790790959; c=relaxed/simple;
+	bh=Kn9uiabDUtE1nDNmvkQzGF27lGageMqDk50g9QDSOGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L14oonhY5ZSmAGu1eVqM8odL6uOzxicSb+Vfitv06Lz9pulNrCbNCccJFQNAec4HrfZxFYgGjSqtqRHjNR0enfzzLLOSb1uPdubqVOfhjEVEhW5wXJlDLfVpwBul3/u8ltI8bsniOg4hGtXozP6nfQgsntm8r2D1eym8uMPKpvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8oz8a3c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=spLy/uRp48loymfWpaEKQ4xDD9MOzaLfMyrcVcoxVPQJkB5UL88BST5nMp+beMdcTS2rhnf0b/KCTa+YK6bvxJVLFdARg/vgASg75wh6dlLXIKvTiduw0APlfoO1WcPl8QPnyhID8Z+3dig/Irhj+kUW9jg9U0J9ZPnl8VyKFws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DV/Mls3Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8oz8a3c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC511F000FF;
-	Wed, 30 Sep 2026 17:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DV/Mls3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566661F000FF;
+	Wed, 30 Sep 2026 17:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790955;
-	bh=XGQ1d/Lb0dN54vKv7mnFg8OIJyveh0YHISMgc/29+iY=;
+	s=korg; t=1790790957;
+	bh=fotyLroRjX8QK0RwNw0i90+wSUUBYl0F14gr6bO4owE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8oz8a3cs8jew9Z5jlBVIYhWslfTlQru4yK0dFAfTRVl9bDtpaQwku26ys6ZMg3rh
-	 mxQqHq0x56sk+W4+Uv5dW3fZ3yY5rYTFwroyKT3YLRXdyWwnXlbLDf3ybA07nEvU7o
-	 FZCgi+pVnK+bMTEgx5Rgg7Y625NtwOGE5jJCwW6M=
+	b=DV/Mls3QWZBb0Oc0pUtez7sWMC/0yWOtGMAHUod1fP/g9DlyQ9yiXLdnlpXcKaDkx
+	 LJuOnrz3MAOJPR0KsW1nhmvO0EIlEwXdbSInuFaI07FExuizw/F5gSMI6XQFg49+W+
+	 tFxKICAmGS7pU/Nl1ucZtbgRXWS9Z+bnV808e2GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/752] netfilter: nf_conntrack: use get_unaligned_be32() in tcp_sack()
-Date: Wed, 30 Sep 2026 17:19:56 +0200
-Message-ID: <20260930152400.906119182@linuxfoundation.org>
+Subject: [PATCH 5.15 127/752] btrfs: balance: fix potential bg lookup failure in btrfs_may_alloc_data_chunk()
+Date: Wed, 30 Sep 2026 17:19:57 +0200
+Message-ID: <20260930152400.927711142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,49 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit d3bf9eae486490832bd08fd62ab0ac601f346bd4 ]
+[ Upstream commit 18d32b0013efba19f7ad3e5b08d7aee813d604a6 ]
 
-The timestamp-only fast path dereferences the option stream as
-*(__be32 *)ptr, which assumes 4-byte alignment that the TCP option
-stream does not guarantee. Use get_unaligned_be32() instead, which
-reads the value safely and already returns host byte order, so the
-htonl() on the comparison constant can be dropped.
+[BUG]
+Running btrfs balance can trigger a null-ptr-deref before relocating a
+data chunk when metadata corruption leaves a chunk in the chunk tree
+without a corresponding block group in the in-memory cache:
 
-This matches the existing get_unaligned_be32() use later in the same
-function.
+  KASAN: null-ptr-deref in range [0x0000000000000088-0x000000000000008f]
+  RIP: 0010:btrfs_may_alloc_data_chunk+0x40/0x1c0 fs/btrfs/volumes.c:3601
+  Call Trace:
+    __btrfs_balance fs/btrfs/volumes.c:4217 [inline]
+    btrfs_balance+0x2516/0x42b0 fs/btrfs/volumes.c:4604
+    btrfs_ioctl_balance fs/btrfs/ioctl.c:3577 [inline]
+    btrfs_ioctl+0x25cf/0x5b90 fs/btrfs/ioctl.c:5313
+    ...
 
-Assisted-by: Claude:Opus-4.7
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[CAUSE]
+__btrfs_balance() iterates the on-disk chunk tree and passes the chunk
+logical bytenr to btrfs_may_alloc_data_chunk() before relocating a data
+chunk. That helper then queries the in-memory block group cache:
+
+  cache = btrfs_lookup_block_group(fs_info, chunk_offset);
+  chunk_type = cache->flags;   /* cache may be NULL */
+
+A corrupt image can contain a chunk item whose matching block group
+item is missing, so no block group is ever inserted into the cache. In
+that case btrfs_lookup_block_group() returns NULL.
+
+The code only guards this with ASSERT(cache), which becomes a no-op when
+CONFIG_BTRFS_ASSERT is disabled. The subsequent dereference of
+cache->flags therefore crashes the kernel.
+
+[FIX]
+Add a NULL check after btrfs_lookup_block_group() in
+btrfs_may_alloc_data_chunk() and print and error message for clarity.
+
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/volumes.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 7c8012f4c8dee..60e3b3217f9ab 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -399,11 +399,11 @@ static void tcp_sack(const struct sk_buff *skb, unsigned int dataoff,
- 		return;
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 9ab226814cfde..459dd6da41af5 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3476,7 +3476,11 @@ static int btrfs_may_alloc_data_chunk(struct btrfs_fs_info *fs_info,
+ 	u64 chunk_type;
  
- 	/* Fast path for timestamp-only option */
--	if (length == TCPOLEN_TSTAMP_ALIGNED
--	    && *(__be32 *)ptr == htonl((TCPOPT_NOP << 24)
--				       | (TCPOPT_NOP << 16)
--				       | (TCPOPT_TIMESTAMP << 8)
--				       | TCPOLEN_TIMESTAMP))
-+	if (length == TCPOLEN_TSTAMP_ALIGNED &&
-+	    get_unaligned_be32(ptr) == ((TCPOPT_NOP << 24) |
-+					(TCPOPT_NOP << 16) |
-+					(TCPOPT_TIMESTAMP << 8) |
-+					TCPOLEN_TIMESTAMP))
- 		return;
+ 	cache = btrfs_lookup_block_group(fs_info, chunk_offset);
+-	ASSERT(cache);
++	if (unlikely(!cache)) {
++		btrfs_err(fs_info, "balance: chunk at bytenr %llu has no corresponding block group",
++			  chunk_offset);
++		return -EUCLEAN;
++	}
+ 	chunk_type = cache->flags;
+ 	btrfs_put_block_group(cache);
  
- 	while (length > 0) {
 -- 
 2.53.0
 
