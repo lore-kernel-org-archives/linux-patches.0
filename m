@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24035013A9;
-	Wed, 30 Sep 2026 16:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0724DEC03;
+	Wed, 30 Sep 2026 16:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784161; cv=none; b=jdu8qw/6rJ6UFX5BdbhxF/u36CEyRFQTPllfLTUhK7yDq2wW3CNJlc6JQbQDJq80EBBcjEUoCeNoI/rdyOpiGJjlwN2vOKJs4xXeUNUBtObkd5jTT+gysa+5nqkkivM7/0MX4Rnp4qjEIsB9Za6sTWMy2gJMuJ82WAPxJe+ZAeE=
+	t=1790784163; cv=none; b=RvimzkLLzBoH8jjHYvH55a2sJfO5KUD2OlJSZWe20Er9rTCUzn1kkHGnptvBFuX+58iaPo9E+QMWVD3kuQMFKRLV9rDSBGiXXOK/86mHTCzNf20cXQ+VqO6F5mkdMcwGhyusok+iBWIseWFlpx2YyFUg4lxYPLXyM7fUi5DAriM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784161; c=relaxed/simple;
-	bh=loUhV+ShbVCBEEj3R7SCmhdkIYBes8Rl37zfbGr36Us=;
+	s=arc-20240116; t=1790784163; c=relaxed/simple;
+	bh=OdPaOx9ReqxR+ew6EBbmbKrVHplgg3+6wcRyTazi064=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XLk58llplhLWeekRLJj1j6KbtgNPADEmL3wx9724hIN1nqeQ5dZIH9eUq4RJ31i7/R18s8Cb9XfELungwFuIWT0V1g7kPumY13Lnx4eaPK0G3abO8n9700abdZorpQHC++Kz6jyZqfLdfHzr2mGunRlKMdFn8kjmpTSr+8s+ST0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPenczV/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PCQEs1hXzXDaprKKZ0RZrY+UWsLe2xuNTwYJmEgTOknKMvMfcl0QPeUZSUYWUcicN0pDDvlQqmPVPqJrvD5hoGg2R/2/Q92iBJ8VEDe7BoP1AaooyLDpUJZOqr5aym9UVBpdTAENlOdd1WiBThCWeSj9DbdiQitNiyvOz6JDbco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6LEmhiA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPenczV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8C91F00898;
-	Wed, 30 Sep 2026 16:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6LEmhiA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DD81F000FF;
+	Wed, 30 Sep 2026 16:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784156;
-	bh=gntYyzF8vDgpvuBAxmMGxYAfNGKAL05ak/Rm4kFunrc=;
+	s=korg; t=1790784159;
+	bh=c/nLEmMD+9AcM6gWRy+za15ZTm2UZg84eKG1++XvLRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPenczV//YAUsjTSFFqhRHtlgn/NfvSkRCi1yDSTWPHir4+7+sL7Vw0lu0h28/3oe
-	 6tVHSVxFCGP7awWGpv495k9OwnR/CYVYYHO9dHi2lWAldi7Uh55AhuDIn+LQa694Px
-	 EXz16FaPPOxI2hTwd4yGdGvFYYNjqOs9C6jwv4I0=
+	b=w6LEmhiABHvfyCPqah2LJHIKEiyS6g80h2FeVJdXkAPu2LNbmD8D2JEyeC7AJqJeV
+	 r8g/PE6fvRIXCFhEkP0tM0VhhSmuWxAyT+Bu3OSHkDhiCI7juXww8dc9xjUxHfJ3C+
+	 i7e5XSJYngQ8xAyrAbPZ6U5JEWyzlVDnow6G2rPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Leonardo Bras <leo.bras@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Pierre Barre <pierre@barre.sh>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/982] arm64/daifflags: Make local_daif_*() helpers __always_inline
-Date: Wed, 30 Sep 2026 17:13:11 +0200
-Message-ID: <20260930152417.975086555@linuxfoundation.org>
+Subject: [PATCH 6.1 056/982] 9p: use kvzalloc for readdir buffer
+Date: Wed, 30 Sep 2026 17:13:12 +0200
+Message-ID: <20260930152417.995672596@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,68 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonardo Bras <leo.bras@arm.com>
+From: Pierre Barre <pierre@barre.sh>
 
-[ Upstream commit 827ce94e0897a70241abf810b1d3d7d083053a39 ]
+[ Upstream commit b4d71bea144550ff4a0917f8c4b06d4063eb27a6 ]
 
-Make sure those helpers are always inlined and instrumentation safe.
+The readdir buffer is sized to msize, so kzalloc() can fail under
+fragmentation with a page allocation failure in v9fs_alloc_rdir_buf()
+/ v9fs_dir_readdir_dotl().
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Leonardo Bras <leo.bras@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+The buffer is only a response sink and is never pack_sg_list()'d,
+so kvzalloc() is safe for all transports, unlike the fcall buffers
+fixed in e21d451a82f3 ("9p: Use kvmalloc for message buffers on
+supported transports").
+
+Signed-off-by: Pierre Barre <pierre@barre.sh>
+Message-ID: <20260512132032.369281-1-pierre@barre.sh>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/daifflags.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/9p/vfs_dir.c | 2 +-
+ net/9p/client.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/daifflags.h b/arch/arm64/include/asm/daifflags.h
-index 55f57dfa8e2fe..e2ad84c2f32bc 100644
---- a/arch/arm64/include/asm/daifflags.h
-+++ b/arch/arm64/include/asm/daifflags.h
-@@ -19,7 +19,7 @@
+diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
+index dd36dce582839..3be09b94a8e24 100644
+--- a/fs/9p/vfs_dir.c
++++ b/fs/9p/vfs_dir.c
+@@ -74,7 +74,7 @@ static struct p9_rdir *v9fs_alloc_rdir_buf(struct file *filp, int buflen)
+ 	struct p9_fid *fid = filp->private_data;
  
- 
- /* mask/save/unmask/restore all exceptions, including interrupts. */
--static inline void local_daif_mask(void)
-+static __always_inline void local_daif_mask(void)
- {
- 	WARN_ON(system_has_prio_mask_debugging() &&
- 		(read_sysreg_s(SYS_ICC_PMR_EL1) == (GIC_PRIO_IRQOFF |
-@@ -38,7 +38,7 @@ static inline void local_daif_mask(void)
- 	trace_hardirqs_off();
+ 	if (!fid->rdir)
+-		fid->rdir = kzalloc(sizeof(struct p9_rdir) + buflen, GFP_KERNEL);
++		fid->rdir = kvzalloc(sizeof(struct p9_rdir) + buflen, GFP_KERNEL);
+ 	return fid->rdir;
  }
  
--static inline unsigned long local_daif_save_flags(void)
-+static __always_inline unsigned long local_daif_save_flags(void)
- {
- 	unsigned long flags;
- 
-@@ -53,7 +53,7 @@ static inline unsigned long local_daif_save_flags(void)
- 	return flags;
+diff --git a/net/9p/client.c b/net/9p/client.c
+index 70c2cf23128fb..1a65c51636188 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -880,7 +880,7 @@ static void p9_fid_destroy(struct p9_fid *fid)
+ 	spin_lock_irqsave(&clnt->lock, flags);
+ 	idr_remove(&clnt->fids, fid->fid);
+ 	spin_unlock_irqrestore(&clnt->lock, flags);
+-	kfree(fid->rdir);
++	kvfree(fid->rdir);
+ 	kfree(fid);
  }
- 
--static inline unsigned long local_daif_save(void)
-+static __always_inline unsigned long local_daif_save(void)
- {
- 	unsigned long flags;
- 
-@@ -64,7 +64,7 @@ static inline unsigned long local_daif_save(void)
- 	return flags;
- }
- 
--static inline void local_daif_restore(unsigned long flags)
-+static __always_inline void local_daif_restore(unsigned long flags)
- {
- 	bool irq_disabled = flags & PSR_I_BIT;
- 
-@@ -124,7 +124,7 @@ static inline void local_daif_restore(unsigned long flags)
-  * Called by synchronous exception handlers to restore the DAIF bits that were
-  * modified by taking an exception.
-  */
--static inline void local_daif_inherit(struct pt_regs *regs)
-+static __always_inline void local_daif_inherit(struct pt_regs *regs)
- {
- 	unsigned long flags = regs->pstate & DAIF_MASK;
  
 -- 
 2.53.0
