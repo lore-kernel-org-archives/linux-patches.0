@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096BD51DDF3;
-	Wed, 30 Sep 2026 18:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C5351DDF3;
+	Wed, 30 Sep 2026 18:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793649; cv=none; b=bNB9cHNag4o8Ymyt5TOB+f8E/m8YuIcvpLdG7Vw1pRLJxxUA+9hBiWrGUpYrUAioiyMohnM2CR+mx8Hu7zkuodtq6YMW4U3UMaU06KGFviLE/KQ/J+RYtMgK1dz+r1YTjtKtSLRfrh2aFbP8+143Xfje1HYsG7KdY3Bq7X6qnws=
+	t=1790793652; cv=none; b=jRGrJFQMSm5ErEJRYXVO+92mmWG19Wsm7GMfiFUG09dS98sP0RsYp+n+WX08GYD3Jv+5TY35eg6Y66B9uDOkQv+YEde6mqe5wnP2TQgcgCYOsBMnbzTWoN72NHC6eU6ABz5AgMevrjVzeqCqLJ+HYf2E70SN4g/Ho3OFJTkvB5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793649; c=relaxed/simple;
-	bh=14f3TTCF3nU8w3XYO5El6Lul/0s8meT7tamshX6CpcI=;
+	s=arc-20240116; t=1790793652; c=relaxed/simple;
+	bh=0azoUUaqZiWKW/YfvHAfDEQ1FHtCzi1vM9k1U6baZDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvFMQUvnXepuQAm5GMKBNJjQPFMkew2r9CbsCK9vzniKBtOZVl3ancSS8Vpyc2ZETpVNxBjF81kTHBNiPvuaMAhRuKutgxXtqERM6qVuW+k97EuZADg4EgJqkWpgSLHpGkh5H+bRLcK3VavArt5mGeqevxoIDxzoBN8miZVogqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdaj+Thp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JX3BGxFyWC9T6GeDMzsNNz3Yc5Fn0mZV/XsTnCTPKrhDPG5hNwmAKg5/DXIWdW1ANM3hssbhAHV1P2FCF9USEj+/fjK7ynvr0Zg4LAsk4U1OMP/T8TtZKwYmv9PFyUJOx6xqkg6XodCW94vuqhSivzKL6WoAbmeVXH/DIw1KChU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCjTl0A1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdaj+Thp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686FD1F000FF;
-	Wed, 30 Sep 2026 18:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCjTl0A1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDC01F000FF;
+	Wed, 30 Sep 2026 18:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793647;
-	bh=X4u82akU6RZKdeayAkjmsEUHjSWRCrzJJDEC+1gJUAU=;
+	s=korg; t=1790793650;
+	bh=RiCIb4tt4WvvT5Vl9Vo4K9TjLHZ/Mw4c85K9Kse3MEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zdaj+ThphDB6wA0icrOczf+7flfoTkYLK+riWLMvQ6ILNKlld4emouKPiaR+E7N6h
-	 KTsXVcRGtz2FW98+aRSoKsiBmNqA6oMxZrZewpAp/8ndGFTO3mh50z+NjDrSXfbSiG
-	 7tf/21GetMlDoaM8vqs/asH/KU9HcrCYQK+0BIj0=
+	b=pCjTl0A1J3+YahCFx0gtvKbAGEW6D8bwH8kG+1IA+SAWV4DHq96z6RV/s8xRRVoS9
+	 +vDHdkktAlSIlMBtFHOhUwV3MsLb/gCc6n5ww2uj0TRsYQUa2Gyizjq1/P4WLVGUDf
+	 3J4ZySpjdk6J4+N+TvUw4wz/vDP2xUEzN+5f79Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zihan Xi <zihanx@nebusec.ai>,
 	Frank Sorenson <sorenson@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.18 330/395] smb: client: clean up failed cached directory opens
-Date: Wed, 30 Sep 2026 17:29:52 +0200
-Message-ID: <20260930152347.820331760@linuxfoundation.org>
+Subject: [PATCH 6.18 331/395] smb: client: preserve create-context parsing errors
+Date: Wed, 30 Sep 2026 17:29:53 +0200
+Message-ID: <20260930152347.841027425@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -55,22 +55,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Zihan Xi <zihanx@nebusec.ai>
 
-commit d2ff5fb93ea83034025850266b5eed391f96b825 upstream.
+commit 2e828035d5d736d904c238ae7ec3f77c0d6270bf upstream.
 
-open_cached_dir() sends CREATE and QUERY_INFO as a compound request. If
-the CREATE succeeds but a later command returns an error, the function
-must retain the CREATE FID so common cleanup can issue SMB2_close(). It
-also must not treat a response error as a valid CREATE.
+smb2_compound_op() saves the result from compound_send_recv() in
+tmp_rc. For SMB2_OP_OPEN_QUERY it then parses the CREATE contexts, but
+the final assignment of rc from tmp_rc discards a parsing error. A
+malformed create-context response can therefore be reported as
+successful to smb2_query_path_info().
 
-Validate the CREATE response before using its fields, record the FIDs, and
-mark the handle open before handling errors from later compound commands.
-Move the -EREMCHG reconnect handling before response validation so a
-missing response does not hide the reconnect request. Count the handle
-when it is marked open; confirmed close responses decrement the counter,
-while existing close retry behavior remains best effort on transport
-failures.
+Keep a create-context parsing error in tmp_rc so it survives per-command
+response processing and is returned to the caller.
 
-Fixes: b0f6df737a1c ("cifs: cache FILE_ALL_INFO for the shared root handle")
+Fixes: b07687edee99 ("cifs: Improve SMB2+ stat() to work also without FILE_READ_ATTRIBUTES")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
 Assisted-by: LLM
@@ -81,73 +77,22 @@ Tested-by: Frank Sorenson <sorenson@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ fs/smb/client/smb2inode.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -8,6 +8,7 @@
- #include <linux/namei.h>
- #include "cifsglob.h"
- #include "cifsproto.h"
-+#include "../common/smb2status.h"
- #include "cifs_debug.h"
- #include "smb2proto.h"
- #include "cached_dir.h"
-@@ -319,25 +320,37 @@ replay_again:
- 	rc = compound_send_recv(xid, ses, server,
- 				flags, 2, rqst,
- 				resp_buftype, rsp_iov);
--	if (rc) {
--		if (rc == -EREMCHG) {
--			tcon->need_reconnect = true;
--			pr_warn_once("server share %s deleted\n",
--				     tcon->tree_name);
--		}
--		goto oshr_free;
-+	if (rc == -EREMCHG) {
-+		tcon->need_reconnect = true;
-+		pr_warn_once("server share %s deleted\n",
-+			     tcon->tree_name);
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -696,8 +696,10 @@ finished:
+ 		/* smb2_parse_contexts() fills idata->fi.IndexNumber */
+ 		rc = smb2_parse_contexts(server, &rsp_iov[0], &oparms->fid->epoch,
+ 					 oparms->fid->lease_key, &oplock, &idata->fi, NULL);
+-		if (rc)
++		if (rc) {
+ 			cifs_dbg(VFS, "rc: %d parsing context of compound op\n", rc);
++			tmp_rc = rc;
++		}
  	}
--	cfid->is_open = true;
  
--	spin_lock(&cfids->cfid_list_lock);
-+	if (!rsp_iov[0].iov_base || rsp_iov[0].iov_len < sizeof(*o_rsp)) {
-+		if (!rc)
-+			rc = -EIO;
-+		goto oshr_free;
-+	}
- 
- 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
-+	if (o_rsp->hdr.Status != STATUS_SUCCESS) {
-+		if (!rc)
-+			rc = -EIO;
-+		goto oshr_free;
-+	}
-+
- 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
- 	oparms.fid->volatile_fid = o_rsp->VolatileFileId;
- #ifdef CONFIG_CIFS_DEBUG2
- 	oparms.fid->mid = le64_to_cpu(o_rsp->hdr.MessageId);
- #endif /* CIFS_DEBUG2 */
-+	cfid->is_open = true;
-+	atomic_inc(&tcon->num_remote_opens);
- 
-+	if (rc)
-+		goto oshr_free;
-+
-+	spin_lock(&cfids->cfid_list_lock);
- 
- 	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE) {
- 		spin_unlock(&cfids->cfid_list_lock);
-@@ -404,7 +417,6 @@ out:
- 		close_cached_dir(cfid);
- 	} else {
- 		*ret_cfid = cfid;
--		atomic_inc(&tcon->num_remote_opens);
- 	}
- 	kfree(utf16_path);
- 
+ 	for (i = 0; i < num_cmds; i++) {
 
 
