@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD25187C6;
-	Wed, 30 Sep 2026 17:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B2D521887;
+	Wed, 30 Sep 2026 17:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791007; cv=none; b=DUZHvUKOYszeH/LNwJcnj8HJEDUB2VkCNepSfJddKa8H0S4vI55Bi/G4Xo5u7G6x5XxoiqwvNCI5R47iQToh0Kcle4+oQx3vKAESULqkkCaeSN6ihq2CR6CXZZ2ij+BJZ210WikqmXlRsYpFvch2cG3B6v/aQYZm4HR1Q2mJ+0M=
+	t=1790791010; cv=none; b=eaFM4M3RHg64BHGF0pYZyGEzBbY/V36kFdeZagKH7+gZVuIKbbJwNQ33olx4PEQXX9NmJjVvjCs3IRr/3NSBzeXY41UUpnDWJty1A2YBESKQyv7po3CuWa506H8nv2PM0eA3sqHex6iA+16Kj5erBv/PbYkH+i5Immmq+54fTLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791007; c=relaxed/simple;
-	bh=SYyN9NWdnt42dZLICWO+huysr5zVOvSNuFvxCNsXfEM=;
+	s=arc-20240116; t=1790791010; c=relaxed/simple;
+	bh=VMxTaw1wcYCLQCaYoxxgMcHxM54eycFw1gCTAmFpEEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkLhfs7GLs8p+DOi1tfbLL/wqfXwyzYDOWV63sNnaqKEAkR2VDGWE2KihxKbQQHw8iTa+LCGLuDCY4F13xccc8O0bGdccrMOkqD7iH8N5YqDEdFIf0bQDnWhdDAL3eQ8ORZC35a+v/FZ2HuVsA2sWHJbb/YMZn+a86+Qv9UoBhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D30EhFFy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=leT9OXMBOEnq2TUkvlXlrZmBdde6MO/dEajDu5NeR+idTKjHqfU3j6i2qDfRPlaJem00Hny+s+yfnBIwPsr0IQLxEndTfStvQzp1QWmq8DGTBdXh6SSdKWArAxHgmaV5yjDjx12HOTKgn6+g7rgvWqwyDzzSYYzRN4lPcg94szs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sy94Ds2U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D30EhFFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CC11F000FF;
-	Wed, 30 Sep 2026 17:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sy94Ds2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383CC1F000FF;
+	Wed, 30 Sep 2026 17:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791005;
-	bh=E9cedTrb1wwWR4D8uwS5ZX+sljGDd8kVlDaxiOBvGW0=;
+	s=korg; t=1790791008;
+	bh=nExnxs6Ax3aduHazPUUoLacVgfWb8G+Po9gDh5/Ud8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D30EhFFyp4KfmBFcsJ51DyJz7fb0FEk3C47ktqA7v+MfOvaTJSRUQ3prkhLee/f9I
-	 zkVSdUqe/4zbz8yVaxkIFZh4ftr2PYsTnMhqnu1dYclo4hU02Z5W6Gy4wq8TLtNEet
-	 jrxWCzPYQBCK7ZNHHZ9KwY7DpekCNn8EEHPr1mSA=
+	b=sy94Ds2UqcOITu5IT85b325JdaAk/xUWeKdISIRHWLO9NlQzpLW39Zxec8mC2WxFC
+	 0lA+B1bvwkFdnApOUC2aL98NKg0tSA5rK3iAdVVumaJihUccOo1gJJ22YkBf/XQCo0
+	 nhBsQaXcmf+e6kIpvJ6U/dVemnSbNEe+bF8+0K4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Mikityanska <alice@isovalent.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/752] net/sched: act_csum: dont mangle UDP tunnel GSO packets
-Date: Wed, 30 Sep 2026 17:20:21 +0200
-Message-ID: <20260930152401.452513942@linuxfoundation.org>
+Subject: [PATCH 5.15 152/752] i3c: mipi-i3c-hci: Tolerate i3c_master_add_i3c_dev_locked() failures in DAA
+Date: Wed, 30 Sep 2026 17:20:22 +0200
+Message-ID: <20260930152401.476006574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,57 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Mikityanska <alice@isovalent.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 9bcb30b389ec5888590cb6ec58c7a3b80fe49a11 ]
+[ Upstream commit c236563c8a84239d31a1e6ec4444887a7b5ed98f ]
 
-Similar to commit add641e7dee3 ("sched: act_csum: don't mangle TCP and
-UDP GSO packets"), UDP tunnel GSO packets going through act_csum
-shouldn't have their checksum calculated at this point, because it will
-be done after segmentation. Setting the checksum in act_csum modifies
-skb->ip_summed and prevents inner IP csum offload from kicking in,
-resulting in a packet with a bad checksum.
+i3c_master_add_i3c_dev_locked() no longer leaves the address marked as
+free on failure, so aborting the DAA sequence on its error is unnecessary.
 
-Add UDP tunnel GSO packets to the exceptions, and also add UDP GSO
-(SKB_GSO_UDP_L4), as the same logic as in the commit mentioned above
-applies to UDP GSO too.
+Failure to register a discovered device does not invalidate the entire
+Dynamic Address Assignment (DAA) procedure.  Align with the behavior of
+other I3C master drivers by ignoring errors from
+i3c_master_add_i3c_dev_locked() and continuing enumeration.
 
-Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-Reviewed-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260611192955.604661-2-alice.kernel@fastmail.im
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260612080107.11606-5-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_csum.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/cmd_v1.c | 4 +---
+ drivers/i3c/master/mipi-i3c-hci/cmd_v2.c | 4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
-index 277f6a93cc66e..fb6f49ce1ee00 100644
---- a/net/sched/act_csum.c
-+++ b/net/sched/act_csum.c
-@@ -257,7 +257,9 @@ static int tcf_csum_ipv4_udp(struct sk_buff *skb, unsigned int ihl,
- 	const struct iphdr *iph;
- 	u16 ul;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
+index 61e34ed8ca533..3be836e859234 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
+@@ -359,9 +359,7 @@ static int hci_cmd_v1_daa(struct i3c_hci *hci)
+ 		 * TODO: Extend the subsystem layer to allow for registering
+ 		 * new device and provide BCR/DCR/PID at the same time.
+ 		 */
+-		ret = i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+-		if (ret)
+-			break;
++		i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+ 	}
  
--	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
-+	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
-+	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
-+	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
- 		return 1;
+ 	if (dat_idx >= 0)
+diff --git a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
+index 3d33bfe937a6a..3ab51aaf63dc1 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
+@@ -299,9 +299,7 @@ static int hci_cmd_v2_daa(struct i3c_hci *hci)
+ 		 * TODO: Extend the subsystem layer to allow for registering
+ 		 * new device and provide BCR/DCR/PID at the same time.
+ 		 */
+-		ret = i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+-		if (ret)
+-			break;
++		i3c_master_add_i3c_dev_locked(&hci->master, next_addr);
+ 	}
  
- 	/*
-@@ -313,7 +315,9 @@ static int tcf_csum_ipv6_udp(struct sk_buff *skb, unsigned int ihl,
- 	const struct ipv6hdr *ip6h;
- 	u16 ul;
- 
--	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
-+	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
-+	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
-+	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
- 		return 1;
- 
- 	/*
+ 	hci_free_xfer(xfer, 2);
 -- 
 2.53.0
 
