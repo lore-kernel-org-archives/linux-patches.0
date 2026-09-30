@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746AB509F0D;
-	Wed, 30 Sep 2026 16:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F30D4E36DC;
+	Wed, 30 Sep 2026 16:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786691; cv=none; b=aIpNX6WDJzul9yajqqO3eDglvabcIu5EXklE+ZxGftBhcsOMngd9ICHaSMqARab9XYUKUnkeQ152ZI96rjclFeSMcH4JH1+QRpwJg4zauUc6V2GStoCkZLaRIXLZmw8KCW3LS8bkyTD5SnmBe7KOwedb32Ebeqm4YV7leKLmbBM=
+	t=1790786694; cv=none; b=lL0ltcrs6jrPoujsNT7KzaHD+tT8OrdNb6DQ4SZevuK4qd2A2xkH+KjmZoKR+9k3Ia+qG+5o7fG/+zf0qj5fVHrIDqzKT9vI2Nzy77ftzar+D4Octp72I/BFzJQfAfqhPESUIPqD6eQW1QTGTpuIFa267s+nysRhX71Dmc6nCdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786691; c=relaxed/simple;
-	bh=hUfNCzPhnwMJVJc2FwLHaG/hjWdXCYCeu6MavZSiEiE=;
+	s=arc-20240116; t=1790786694; c=relaxed/simple;
+	bh=JFJvYQwRjzW2J8JkTtrVuVDC+NrNINgxC0IjknCh78g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5y7Z4wLmCsx/0KUvCeI/b3jAhcpAlq8WkqMCk0zH1Pj3gTM7x5EVWOyL1DZNLBIDo/MTCULQy4gE0wGflVj+rQNgjwt8M9VqDodGidd0lirRiB3Xp2Hud01J9BxZA3JCCRYTYnWLVgNda3OHTs5iFFuIbD256BNyv4LpTNliqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yb1h5ADA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iwhxk/BF45Id/TIaPkxEhPk4hfxs2xSEBpSCFlSHxvwRau8OKYGbGRA/oXgDDG8k9w2goHDt4xPV2tkVGaq+e/ZGavsArGEDC/+xftWIOTEP4C6r9UVKBKDL++aluc/U4u/nAfUVxCxeJ2/4pCBXcf2DOdS/5JtjQ1f5o9fEGBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSblqmru; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yb1h5ADA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED271F000FF;
-	Wed, 30 Sep 2026 16:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSblqmru"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CA41F000FF;
+	Wed, 30 Sep 2026 16:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786690;
-	bh=V4rfNIe6DTHJBBD8atutlDWJCW4TOoHEsvpkfCzOucI=;
+	s=korg; t=1790786693;
+	bh=O8abhiHwIMJezg28AOp7DEKBSaqBbI4gYbM6+oXicJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yb1h5ADASSlZMF8lULp6Zhojk6Fx/fb9Bbp9gdbNYIPzVbTlqDc/wwvvfC6cBly+e
-	 NXW22w6tzN5O1hPTEX1Rpl8p+xnWdrhb3in37url3u6KGvFWocC5DwJlVQ6ArXFk40
-	 ty6iLA4JHAODNuNi3BskYpMijhBVXK59BMsnjXlY=
+	b=vSblqmruxcfT0LQ0wHp13gsLIks18hGpmkdNOj7rjuRRcHtXlgHfURQjgObeEtKlY
+	 KelibuyoENvviirIOm3LAnBYI+bIx8nNgNhKflNh9XJz16JpPGRcPoPWqMQtLelhDP
+	 K/Ne/g//1+bm021JrMKpR9QXKCazIv5VOMPLLj28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 951/982] net/mlx5: Fix rev_entry reference leak in mlx5_tc_ct_shared_counter_get()
-Date: Wed, 30 Sep 2026 17:28:07 +0200
-Message-ID: <20260930152437.163133883@linuxfoundation.org>
+Subject: [PATCH 6.1 952/982] net/sched: reject IDR error pointers when deleting actions
+Date: Wed, 30 Sep 2026 17:28:08 +0200
+Message-ID: <20260930152437.184146333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,38 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 0bf6bb567f0edaa771e7dd208ef98da50e6a4485 upstream.
+commit c82b797abe668d0b668601a93ba2c0b071a63574 upstream.
 
-When the reverse entry is found but its counter is already being
-released, refcount_inc_not_zero() fails and the reference taken by
-mlx5_tc_ct_entry_get() is never dropped before falling through to
-create_counter.  Drop it so the reverse entry is not kept alive forever
-by a shared counter lookup that did not use it.
+tcf_action_delete() drops the reference held by its lookup before calling
+tcf_idr_delete_index() with the saved action index.  An unlocked
+classifier can remove that action and reserve the same IDR slot with
+ERR_PTR(-EBUSY) in between.
 
-Fixes: 1edae2335adf ("net/mlx5e: CT: Use the same counter for both directions")
+tcf_idr_delete_index() only checks the lookup result for NULL.  It
+therefore treats the reservation as a tc_action and dereferences
+tcfa_bindcnt.  A hardware execution breakpoint was used to schedule the
+interleaving without changing the kernel source.  KASAN reported this
+decoded trace:
+
+  BUG: KASAN: null-ptr-deref in tca_action_gd+0x5b9/0x1010
+  Read of size 4 at addr 0000000000000010 by task poc/150
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002
+  RIP: tca_action_gd+0x5c0/0x1010:
+    arch_atomic_read at arch/x86/include/asm/atomic.h:23
+    raw_atomic_read at include/linux/atomic/atomic-arch-fallback.h:457
+    atomic_read at include/linux/atomic/atomic-instrumented.h:33
+    tcf_idr_delete_index at net/sched/act_api.c:766
+    tcf_action_delete at net/sched/act_api.c:1859
+    tcf_del_notify at net/sched/act_api.c:2014
+    tca_action_gd at net/sched/act_api.c:2064
+  R13: 0000000000000010 R15: fffffffffffffff0
+  Kernel panic - not syncing: Fatal exception
+
+R15 contains ERR_PTR(-EBUSY), and adding the tcfa_bindcnt offset produces
+the address in R13.  With the guard applied, the same reproducer returned
+-ENOENT without a KASAN report or panic.  Treat error pointers as absent
+and return -ENOENT.
+
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260917113131.2149024-1-vulab@iscas.ac.cn
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260914065123.4109709-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
-@@ -1016,6 +1016,9 @@ mlx5_tc_ct_shared_counter_get(struct mlx
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -712,7 +712,7 @@ static int tcf_idr_delete_index(struct t
  
- 	spin_unlock_bh(&ct_priv->ht_lock);
- 
-+	if (rev_entry)
-+		mlx5_tc_ct_entry_put(rev_entry);
-+
- create_counter:
- 
- 	shared_counter = mlx5_tc_ct_counter_create(ct_priv);
+ 	mutex_lock(&idrinfo->lock);
+ 	p = idr_find(&idrinfo->action_idr, index);
+-	if (!p) {
++	if (IS_ERR_OR_NULL(p)) {
+ 		mutex_unlock(&idrinfo->lock);
+ 		return -ENOENT;
+ 	}
 
 
