@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A189A515961;
-	Wed, 30 Sep 2026 17:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D28518128;
+	Wed, 30 Sep 2026 17:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788016; cv=none; b=psQpHB/uWHMyLBJVcFPJlaOdvQspQwqT1sMbL9ygYvvO3nyctQ1Q1f1NkUorS7SUhb7QG9DzeU574qFCq8VZ/+Vhy4l2Q/P7Ysk64FQ3Z+Aj7bbepIzR5xmAsVowtQE0u9e9ww2yPqea7TjdpTT2lUx2l9jQTXOhmH07FlaNV3g=
+	t=1790788020; cv=none; b=cKRnCVXoL1+BOXufD0oJKVg6aLijMh2PqS/6jYUiBWoj8+AtAkyn3Qei7oXCnysCz1GP25Ib+mE8STY1wd2PfV4aY+InSeac1HeOC5VuJf7IpQxXOvxuytd3amQI7IDykinv4HZGd5rxQRRfUAsynuXVsGjorfhzLlGTXohHSYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788016; c=relaxed/simple;
-	bh=cb5IZxXL0sYbZuJaHiF/uIThXLysFhXpCF43iCpt6ME=;
+	s=arc-20240116; t=1790788020; c=relaxed/simple;
+	bh=NWej7O0aE9Vol+Uk/V3Od0RnXy9Hyl6grdYpAGhOY1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3setzC/S2K7kXhGv42r6YN5zjrmr+VONQwRnrknEozFJbqloZ5HytYG8ooSSy5knvgvDjzdNPwtm9h7Cj4cY0LzZ2bncXHlqEKkZKtJT8PFKMzNSrxQWGnbVTFZy9bVKgcBb3kFRrnCgUU5cZ0noG91N3Y9fxwRr2BEzqoNvUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFZUJ90H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XSuHEx6W9Xm/D9vuuzq73vFxLHlIPsLEdMu/QApNOvqjOF5qNtdxcCC6HkYMC6AuA6oWKiHoZV4En0yotdzFqvMwF+dfeMulrh96rYldpi7VKTAJh81Yro/TOhQ0l/i4Qvg2dXJi1aMdlHugNDXjszZ+AlUGSXY0A/yRpGQ9OAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8Pv6cC+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFZUJ90H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067981F000FF;
-	Wed, 30 Sep 2026 17:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8Pv6cC+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43311F000FF;
+	Wed, 30 Sep 2026 17:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788015;
-	bh=Sus4rI8TPAAft4BKs3cQuSi5zuC3kWYZOL50SoYwgko=;
+	s=korg; t=1790788018;
+	bh=o5CmTnmYbLn+gR4Rv+Htk4Z0KzwHh2qPH0aC+uWVAxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFZUJ90HqAdfWun7v6YlgzMvCiy1TH6E/+vHpMmS2QT6Qd3EcFfOq+hgbvIu/54wy
-	 LK85rWuWtifbHN2rEJR36Tmlt4vWw83CYYggGZKDjtygy9GyCNpfxfDAwgoKUWlu9O
-	 doQPNBdGmhLrzReGPfirfoCogv5zflsbl6fiRRro=
+	b=g8Pv6cC+ymZW+j/F6GOml/04hbzC4jmBD3XbARFtettxfBZo+r8gcyw+IKOQlpYbF
+	 4zJse32UIODS9iMajcpMfPIobc8MvCZ/ExXfvKwg2dXtqlQ9Fv7O5uFFOg7pG3VbNt
+	 xfoI+xCa6Fe5+Ax4ojOE+3/WYi7SG484KYO5y5WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 433/457] xfs: fix cursor and pointer handling when recovering iunlink buckets
-Date: Wed, 30 Sep 2026 17:28:58 +0200
-Message-ID: <20260930152355.337202633@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 7.2 398/457] sched/cache: Decouple sched_cache_group from mm to fix UAF
+Date: Wed, 30 Sep 2026 17:28:23 +0200
+Message-ID: <20260930152354.584044345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,95 +55,549 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Tim Chen <tim.c.chen@linux.intel.com>
 
-commit 65f39d09d73718611cee40399179323b5d4ead00 upstream.
+commit 28f9c0e0a0b94c5d3e1b634db545f6e1f94858c5 upstream.
 
-LOLLM pointed out a bug in xlog_recover_iunlink_bucket:
+Currently the sched cache grouping is by mm and the scheduling statistics
+sched_cache_stat lives in the mm structure.  This ties the life cycle
+of scheduling stats with mm.
 
-1. We don't null out prev_ip after releasing it, which can lead to UAF
-   problems if the inodegc flush call in the loop fails.
+In account_mm_sched(), the scheduling stats are accessed by
+task->mm->sc_stat.  However, a task may be switching mm on one CPU when
+another CPU is running account_mm_sched(), and possibly accessing the
+old mm that was freed.  This problem was found when running tests with
+KASAN by Hyunwoo:
 
-at which point I noticed even more bugs:
+  https://lore.kernel.org/lkml/apPb-Dr4nPYuHQOK@v4bel/
 
-2. If the inodegc flush inside the loop fails, we also leak @ip.
+Instead of serializing the mm access by introducing extra acquisition of
+rq lock in the mm free path, extract sched_cache_stat from mm_struct,
+rename it as sched_cache_group and manage its life cycle apart from
+mm_struct with its own ref counting.  This allows us in the next patch
+access sched_cache_group directly from task, and add a refcount
+on sched_cache_group when a task links to it. This prevents the use
+after free issue when accessing stale and released old mm and its
+sched cache stat a task switches to a new mm while account_mm_sched()
+is done elsewhere.
 
-3. We set prev_agino to agino having already advanced agino, which
-   results in inodes with i_prev_unlinked set to itself.
+The other benefit of this restructure is in the future, the grouping of
+tasks to a LLC would have the flexibility to be associated with a user
+defined grouping, or cgroup, cookie group, numa_group or others instead
+of just with a single mm address space.
 
-4. If we exit the bottom of the loop with prev_ip set, then prev_ip
-   aliases ip and we also set its i_prev_unlinked to itself.
+Rename sched_cache_stat to sched_cache_group and turn it into a refcounted
+object allocated from mm_struct.  The mm_struct now holds a pointer
+(sched_cache_grp) to this object instead of embedding it.
 
-Bugs 3 and 4 introduce loops into the unlinked list, though these loops
-don't surface because we immediately flush each unlinked inode after
-loading it.
-
-Fix all of these issues.
-
-Cc: stable@vger.kernel.org # v6.0
-Fixes: 04755d2e5821b3 ("xfs: refactor xlog_recover_process_iunlinks()")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: df0d98475954 ("sched/cache: Introduce infrastructure for cache-aware load balancing")
+Closes: https://lore.kernel.org/lkml/apPb-Dr4nPYuHQOK@v4bel/
+Closes: https://lore.kernel.org/all/343a7e07-7fad-4979-9c9b-82ec038c293c@linux.dev/
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reported-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Co-developed-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: <stable@kernel.org> #7.2.x
+Link: https://patch.msgid.link/91fd1e3266707c865bc9abecfb3e17bc676712df.1790035273.git.tim.c.chen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log_recover.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ include/linux/mm_types.h |   15 +---
+ include/linux/sched.h    |    6 +
+ kernel/exit.c            |   11 ++
+ kernel/sched/fair.c      |  173 ++++++++++++++++++++++++++++++++++-------------
+ 4 files changed, 144 insertions(+), 61 deletions(-)
 
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2736,12 +2736,13 @@ xlog_recover_iunlink_bucket(
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -1211,7 +1211,7 @@ struct mm_struct {
+ 		struct mm_mm_cid mm_cid;
+ 
+ 		/* sched_cache related statistics */
+-		struct sched_cache_stat sc_stat;
++		struct sched_cache_group *sched_cache_grp;
+ #ifdef CONFIG_MMU
+ 		atomic_long_t pgtables_bytes;	/* size of all page tables */
+ #endif
+@@ -1609,8 +1609,9 @@ static inline unsigned int mm_cid_size(v
+ #endif /* CONFIG_SCHED_MM_CID */
+ 
+ #ifdef CONFIG_SCHED_CACHE
+-void mm_init_sched(struct mm_struct *mm,
+-		   struct sched_cache_time __percpu *pcpu_sched);
++int mm_init_sched(struct mm_struct *mm,
++		  struct sched_cache_time __percpu *pcpu_sched);
++void mm_destroy_sched(struct mm_struct *mm);
+ 
+ static inline int mm_alloc_sched_noprof(struct mm_struct *mm)
  {
- 	struct xfs_mount	*mp = pag_mount(pag);
- 	struct xfs_inode	*prev_ip = NULL;
--	struct xfs_inode	*ip;
- 	xfs_agino_t		prev_agino, agino;
- 	int			error = 0;
+@@ -1620,17 +1621,11 @@ static inline int mm_alloc_sched_noprof(
+ 	if (!pcpu_sched)
+ 		return -ENOMEM;
  
- 	agino = be32_to_cpu(agi->agi_unlinked[bucket]);
- 	while (agino != NULLAGINO) {
-+		struct xfs_inode	*ip;
+-	mm_init_sched(mm, pcpu_sched);
+-	return 0;
++	return mm_init_sched(mm, pcpu_sched);
+ }
+ 
+ #define mm_alloc_sched(...)	alloc_hooks(mm_alloc_sched_noprof(__VA_ARGS__))
+ 
+-static inline void mm_destroy_sched(struct mm_struct *mm)
+-{
+-	free_percpu(mm->sc_stat.pcpu_sched);
+-	mm->sc_stat.pcpu_sched = NULL;
+-}
+ #else /* !CONFIG_SCHED_CACHE */
+ 
+ static inline int mm_alloc_sched(struct mm_struct *mm) { return 0; }
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -2398,7 +2398,7 @@ struct sched_cache_time {
+ 	unsigned long epoch;
+ };
+ 
+-struct sched_cache_stat {
++struct sched_cache_group {
+ 	struct sched_cache_time __percpu *pcpu_sched;
+ 	raw_spinlock_t lock;
+ 	unsigned long epoch;
+@@ -2406,11 +2406,13 @@ struct sched_cache_stat {
+ 	unsigned long next_scan;
+ 	unsigned long footprint;
+ 	int cpu;
++	refcount_t refcnt;
++	struct rcu_head rcu;
+ } ____cacheline_aligned_in_smp;
+ 
+ #else
+ 
+-struct sched_cache_stat { };
++struct sched_cache_group { };
+ 
+ #endif
+ 
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -559,18 +559,23 @@ void mm_update_next_owner(struct mm_stru
+  */
+ static void exit_mm_sched_cache(struct mm_struct *mm)
+ {
++	struct sched_cache_group *grp;
+ 	unsigned long fp, sub;
+ 
+ 	if (!current->total_numa_faults)
+ 		return;
+ 	/*
+ 	 * No lock protection due to performance considerations.
+-	 * Make sure mm->sc_stat.footprint does not become
++	 * Make sure the group footprint does not become
+ 	 * negative.
+ 	 */
+-	fp = READ_ONCE(mm->sc_stat.footprint);
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp)
++		return;
 +
- 		error = xfs_iget(mp, NULL, xfs_agino_to_ino(pag, agino), 0, 0,
- 				&ip);
- 		if (error)
-@@ -2750,11 +2751,11 @@ xlog_recover_iunlink_bucket(
- 		ASSERT(VFS_I(ip)->i_nlink == 0);
- 		ASSERT(VFS_I(ip)->i_mode != 0);
- 		xfs_iflags_clear(ip, XFS_IRECOVERY);
--		agino = ip->i_next_unlinked;
++	fp = READ_ONCE(grp->footprint);
+ 	sub = min(fp, current->total_numa_faults);
+-	WRITE_ONCE(mm->sc_stat.footprint, fp - sub);
++	WRITE_ONCE(grp->footprint, fp - sub);
+ }
+ #else
+ static inline void exit_mm_sched_cache(struct mm_struct *mm)
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -1453,12 +1453,17 @@ static bool exceed_llc_capacity(struct m
+ 		return true;
  
- 		if (prev_ip) {
- 			ip->i_prev_unlinked = prev_agino;
- 			xfs_irele(prev_ip);
-+			prev_ip = NULL;
+ 	if (static_branch_likely(&sched_numa_balancing)) {
++		struct sched_cache_group *grp = READ_ONCE(mm->sched_cache_grp);
++
++		if (!grp)
++			return true;
++
+ 		/*
+ 		 * TBD: RDT exclusive LLC ways reserved should be
+ 		 * excluded.
+ 		 */
+ 		llc = sd->llc_bytes;
+-		footprint = READ_ONCE(mm->sc_stat.footprint);
++		footprint = READ_ONCE(grp->footprint);
  
- 			/*
- 			 * Ensure the inode is removed from the unlinked list
-@@ -2766,18 +2767,20 @@ xlog_recover_iunlink_bucket(
- 			 * complete.
- 			 */
- 			error = xfs_inodegc_flush(mp);
--			if (error)
--				break;
-+			if (error) {
-+				xfs_irele(ip);
-+				return error;
-+			}
- 		}
+ 		/*
+ 		 * Scale the LLC size by 256*llc_aggr_tolerance
+@@ -1490,6 +1495,7 @@ static bool exceed_llc_capacity(struct m
+ static bool invalid_llc_nr(struct mm_struct *mm, struct task_struct *p,
+ 			   int cpu)
+ {
++	struct sched_cache_group *grp;
+ 	int scale;
  
- 		prev_agino = agino;
-+		agino = ip->i_next_unlinked;
- 		prev_ip = ip;
+ 	if (get_nr_threads(p) <= 1)
+@@ -1503,7 +1509,11 @@ static bool invalid_llc_nr(struct mm_str
+ 	if (scale == INT_MAX)
+ 		return false;
+ 
+-	return !fits_capacity((mm->sc_stat.nr_running_avg * cpu_smt_num_threads),
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp)
++		return true;
++
++	return !fits_capacity((READ_ONCE(grp->nr_running_avg) * cpu_smt_num_threads),
+ 			(scale * per_cpu(sd_llc_size, cpu)));
+ }
+ 
+@@ -1580,12 +1590,20 @@ static void account_llc_dequeue(struct r
+ 	}
+ }
+ 
+-void mm_init_sched(struct mm_struct *mm,
+-		   struct sched_cache_time __percpu *_pcpu_sched)
++int mm_init_sched(struct mm_struct *mm,
++		  struct sched_cache_time __percpu *_pcpu_sched)
+ {
++	struct sched_cache_group *grp;
+ 	unsigned long epoch = 0;
+ 	int i;
+ 
++	grp = kzalloc_obj(*grp);
++	if (!grp) {
++		free_percpu(_pcpu_sched);
++		mm->sched_cache_grp = NULL;
++		return -ENOMEM;
++	}
++
+ 	for_each_possible_cpu(i) {
+ 		struct sched_cache_time *pcpu_sched = per_cpu_ptr(_pcpu_sched, i);
+ 		struct rq *rq = cpu_rq(i);
+@@ -1596,18 +1614,51 @@ void mm_init_sched(struct mm_struct *mm,
+ 		epoch = rq->cpu_epoch;
  	}
  
- 	if (prev_ip) {
- 		int	error2;
+-	raw_spin_lock_init(&mm->sc_stat.lock);
+-	mm->sc_stat.epoch = epoch;
+-	mm->sc_stat.cpu = -1;
+-	mm->sc_stat.next_scan = jiffies;
+-	mm->sc_stat.nr_running_avg = 0;
+-	mm->sc_stat.footprint = 0;
++	raw_spin_lock_init(&grp->lock);
++	grp->epoch = epoch;
++	grp->cpu = -1;
++	grp->next_scan = jiffies;
++	grp->nr_running_avg = 0;
++	grp->footprint = 0;
++	refcount_set(&grp->refcnt, 1);
+ 	/*
+-	 * The update to mm->sc_stat should not be reordered
+-	 * before initialization to mm's other fields, in case
++	 * The update to grp->pcpu_sched should not be reordered
++	 * before initialization to grp's other fields, in case
+ 	 * the readers may get invalid mm_sched_epoch, etc.
+ 	 */
+-	smp_store_release(&mm->sc_stat.pcpu_sched, _pcpu_sched);
++	smp_store_release(&grp->pcpu_sched, _pcpu_sched);
++	/*
++	 * Publish the group last.  Not every reader qualifies it by
++	 * grp->pcpu_sched - can_migrate_llc_task() only checks that the
++	 * pointer is non-NULL before reading grp->footprint and
++	 * grp->nr_running_avg - so a reachable group must already be
++	 * fully initialized.
++	 */
++	smp_store_release(&mm->sched_cache_grp, grp);
++	return 0;
++}
++
++static void sched_cache_group_free_rcu(struct rcu_head *rcu)
++{
++	struct sched_cache_group *grp =
++		container_of(rcu, struct sched_cache_group, rcu);
++
++	free_percpu(grp->pcpu_sched);
++	kfree(grp);
++}
++
++static void sched_cache_group_put(struct sched_cache_group *grp)
++{
++	if (!grp || !refcount_dec_and_test(&grp->refcnt))
++		return;
++
++	call_rcu(&grp->rcu, sched_cache_group_free_rcu);
++}
++
++void mm_destroy_sched(struct mm_struct *mm)
++{
++	sched_cache_group_put(mm->sched_cache_grp);
++	mm->sched_cache_grp = NULL;
+ }
  
--		ip->i_prev_unlinked = prev_agino;
- 		xfs_irele(prev_ip);
+ /* because why would C be fully specified */
+@@ -1661,11 +1712,16 @@ static unsigned long fraction_mm_sched(s
+ static int get_pref_llc(struct task_struct *p, struct mm_struct *mm)
+ {
+ 	int mm_sched_llc = -1, mm_sched_cpu;
++	struct sched_cache_group *grp;
  
- 		error2 = xfs_inodegc_flush(mp);
+ 	if (!mm)
+ 		return -1;
+ 
+-	mm_sched_cpu = READ_ONCE(mm->sc_stat.cpu);
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp)
++		return -1;
++
++	mm_sched_cpu = READ_ONCE(grp->cpu);
+ 	if (mm_sched_cpu != -1) {
+ 		mm_sched_llc = llc_id(mm_sched_cpu);
+ 
+@@ -1696,6 +1752,7 @@ static inline
+ void account_mm_sched(struct rq *rq, struct task_struct *p, s64 delta_exec)
+ {
+ 	struct sched_cache_time *pcpu_sched;
++	struct sched_cache_group *grp;
+ 	struct mm_struct *mm = p->mm;
+ 	int mm_sched_llc = -1;
+ 	unsigned long epoch;
+@@ -1709,10 +1766,14 @@ void account_mm_sched(struct rq *rq, str
+ 	 * init_task, kthreads and user thread created
+ 	 * by user_mode_thread() don't have mm.
+ 	 */
+-	if (!mm || !mm->sc_stat.pcpu_sched)
++	if (!mm)
++		return;
++
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp || !grp->pcpu_sched)
+ 		return;
+ 
+-	pcpu_sched = per_cpu_ptr(mm->sc_stat.pcpu_sched, cpu_of(rq));
++	pcpu_sched = per_cpu_ptr(grp->pcpu_sched, cpu_of(rq));
+ 
+ 	scoped_guard (raw_spinlock, &rq->cpu_epoch_lock) {
+ 		__update_mm_sched(rq, pcpu_sched);
+@@ -1725,11 +1786,11 @@ void account_mm_sched(struct rq *rq, str
+ 	 * If this process hasn't hit task_cache_work() for a while invalidate
+ 	 * its preferred state.
+ 	 */
+-	if ((long)(epoch - READ_ONCE(mm->sc_stat.epoch)) > llc_epoch_affinity_timeout ||
++	if ((long)(epoch - READ_ONCE(grp->epoch)) > llc_epoch_affinity_timeout ||
+ 	    invalid_llc_nr(mm, p, cpu_of(rq)) ||
+ 	    exceed_llc_capacity(mm, cpu_of(rq))) {
+-		if (READ_ONCE(mm->sc_stat.cpu) != -1)
+-			WRITE_ONCE(mm->sc_stat.cpu, -1);
++		if (READ_ONCE(grp->cpu) != -1)
++			WRITE_ONCE(grp->cpu, -1);
+ 	}
+ 
+ 	mm_sched_llc = get_pref_llc(p, mm);
+@@ -1746,30 +1807,35 @@ void account_mm_sched(struct rq *rq, str
+ static void task_tick_cache(struct rq *rq, struct task_struct *p)
+ {
+ 	struct callback_head *work = &p->cache_work;
++	struct sched_cache_group *grp;
+ 	struct mm_struct *mm = p->mm;
+ 	unsigned long epoch;
+ 
+ 	if (!sched_cache_enabled())
+ 		return;
+ 
+-	if (!mm || p->flags & PF_KTHREAD ||
+-	    !mm->sc_stat.pcpu_sched)
++	if (!mm || p->flags & PF_KTHREAD)
++		return;
++
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp || !grp->pcpu_sched)
+ 		return;
+ 
+ 	epoch = rq->cpu_epoch;
+ 	/* avoid moving backwards */
+-	if (time_after_eq(mm->sc_stat.epoch, epoch))
++	if (time_after_eq(grp->epoch, epoch))
+ 		return;
+ 
+-	guard(raw_spinlock)(&mm->sc_stat.lock);
++	guard(raw_spinlock)(&grp->lock);
+ 
+ 	if (work->next == work) {
+ 		task_work_add(p, work, TWA_RESUME);
+-		WRITE_ONCE(mm->sc_stat.epoch, epoch);
++		WRITE_ONCE(grp->epoch, epoch);
+ 	}
+ }
+ 
+-static void get_scan_cpumasks(cpumask_var_t cpus, struct task_struct *p)
++static void get_scan_cpumasks(cpumask_var_t cpus, struct task_struct *p,
++			      struct sched_cache_group *grp)
+ {
+ #ifdef CONFIG_NUMA_BALANCING
+ 	int cpu, curr_cpu, nid, pref_nid;
+@@ -1777,7 +1843,7 @@ static void get_scan_cpumasks(cpumask_va
+ 	if (!static_branch_likely(&sched_numa_balancing))
+ 		goto out;
+ 
+-	cpu = READ_ONCE(p->mm->sc_stat.cpu);
++	cpu = READ_ONCE(grp->cpu);
+ 	if (cpu != -1)
+ 		nid = cpu_to_node(cpu);
+ 	curr_cpu = task_cpu(p);
+@@ -1838,6 +1904,7 @@ static void task_cache_work(struct callb
+ 	unsigned long next_scan, now = jiffies;
+ 	struct task_struct *p = current, *cur;
+ 	unsigned long curr_m_a_occ = 0;
++	struct sched_cache_group *grp;
+ 	struct mm_struct *mm = p->mm;
+ 	unsigned long m_a_occ = 0;
+ 	cpumask_var_t cpus;
+@@ -1849,12 +1916,16 @@ static void task_cache_work(struct callb
+ 	if (p->flags & PF_EXITING)
+ 		return;
+ 
+-	next_scan = READ_ONCE(mm->sc_stat.next_scan);
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp)
++		return;
++
++	next_scan = READ_ONCE(grp->next_scan);
+ 	if (time_before(now, next_scan))
+ 		return;
+ 
+ 	/* only 1 thread is allowed to scan */
+-	if (!try_cmpxchg(&mm->sc_stat.next_scan, &next_scan,
++	if (!try_cmpxchg(&grp->next_scan, &next_scan,
+ 			 now + max_t(unsigned long,
+ 				     READ_ONCE(llc_epoch_period), 1)))
+ 		return;
+@@ -1862,8 +1933,8 @@ static void task_cache_work(struct callb
+ 	curr_cpu = task_cpu(p);
+ 	if (invalid_llc_nr(mm, p, curr_cpu) ||
+ 	    exceed_llc_capacity(mm, curr_cpu)) {
+-		if (READ_ONCE(mm->sc_stat.cpu) != -1)
+-			WRITE_ONCE(mm->sc_stat.cpu, -1);
++		if (READ_ONCE(grp->cpu) != -1)
++			WRITE_ONCE(grp->cpu, -1);
+ 
+ 		return;
+ 	}
+@@ -1874,7 +1945,7 @@ static void task_cache_work(struct callb
+ 	scoped_guard (cpus_read_lock) {
+ 		guard(rcu)();
+ 
+-		get_scan_cpumasks(cpus, p);
++		get_scan_cpumasks(cpus, p, grp);
+ 
+ 		for_each_cpu(cpu, cpus) {
+ 			/* XXX sched_cluster_active */
+@@ -1887,7 +1958,7 @@ static void task_cache_work(struct callb
+ 
+ 			for_each_cpu(i, sched_domain_span(sd)) {
+ 				occ = fraction_mm_sched(cpu_rq(i),
+-							per_cpu_ptr(mm->sc_stat.pcpu_sched, i));
++							per_cpu_ptr(grp->pcpu_sched, i));
+ 				a_occ += occ;
+ 				if (occ > m_occ) {
+ 					m_occ = occ;
+@@ -1920,7 +1991,7 @@ static void task_cache_work(struct callb
+ 				m_a_cpu = m_cpu;
+ 			}
+ 
+-			if (llc_id(cpu) == llc_id(READ_ONCE(mm->sc_stat.cpu)))
++			if (llc_id(cpu) == llc_id(READ_ONCE(grp->cpu)))
+ 				curr_m_a_occ = a_occ;
+ 
+ 			cpumask_andnot(cpus, cpus, sched_domain_span(sd));
+@@ -1929,7 +2000,7 @@ static void task_cache_work(struct callb
+ 
+ 	if (m_a_occ > (2 * curr_m_a_occ)) {
+ 		/*
+-		 * Avoid switching sc_stat.cpu too fast.
++		 * Avoid switching sched_cache_grp->cpu too fast.
+ 		 * The reason to choose 2X is because:
+ 		 * 1. It is better to keep the preferred LLC stable,
+ 		 *    rather than changing it frequently and cause migrations
+@@ -1938,10 +2009,10 @@ static void task_cache_work(struct callb
+ 		 * 3. 2X is chosen based on test results, as it delivers
+ 		 *    the optimal performance gain so far.
+ 		 */
+-		WRITE_ONCE(mm->sc_stat.cpu, m_a_cpu);
++		WRITE_ONCE(grp->cpu, m_a_cpu);
+ 	}
+ 
+-	update_avg_scale(&mm->sc_stat.nr_running_avg, nr_running);
++	update_avg_scale(&grp->nr_running_avg, nr_running);
+ 	free_cpumask_var(cpus);
+ }
+ 
+@@ -3647,6 +3718,7 @@ static int preferred_group_nid(struct ta
+ static void task_numa_placement(struct task_struct *p)
+ 	__context_unsafe(/* conditional locking */)
+ {
++	struct sched_cache_group __maybe_unused *grp;
+ 	int seq, nid, max_nid = NUMA_NO_NODE;
+ 	unsigned long max_faults = 0;
+ 	unsigned long fault_types[2] = { 0, 0 };
+@@ -3739,19 +3811,23 @@ static void task_numa_placement(struct t
+ 			 * heuristic and occasional lost updates are tolerable.
+ 			 *
+ 			 * If a task exits, its corresponding footprint must
+-			 * be subtracted from the mm->sc_stat.footprint, otherwise
+-			 * the mm->sc_stat.footprint will not converge:
+-			 * the exiting thread's footprint remains unchanged/undecayed
+-			 * in mm->sc_stat.footprint. See exit_mm().
++			 * be subtracted from the mm->sched_cache_grp->footprint,
++			 * otherwise the mm->sched_cache_grp->footprint will not
++			 * converge: the exiting thread's footprint remains
++			 * unchanged/undecayed in mm->sched_cache_grp->footprint.
++			 * See exit_mm().
+ 			 *
+ 			 * Lost updates and unsynchronized subtraction
+ 			 * in exit_mm() can cause footprint + diff to
+ 			 * go negative. Clamp to zero to prevent the
+ 			 * unsigned footprint from wrapping.
+ 			 */
+-			new_fp = (long)READ_ONCE(p->mm->sc_stat.footprint) + diff;
+-			WRITE_ONCE(p->mm->sc_stat.footprint,
+-				   max(new_fp, 0L));
++			grp = READ_ONCE(p->mm->sched_cache_grp);
++			if (!grp)
++				continue;
++
++			new_fp = (long)READ_ONCE(grp->footprint) + diff;
++			WRITE_ONCE(grp->footprint, max(new_fp, 0L));
+ #endif
+ 		}
+ 
+@@ -10582,6 +10658,7 @@ static enum llc_mig can_migrate_llc(int
+ static enum llc_mig can_migrate_llc_task(int src_cpu, int dst_cpu,
+ 					 struct task_struct *p)
+ {
++	struct sched_cache_group *grp;
+ 	struct mm_struct *mm;
+ 	bool to_pref;
+ 	int cpu;
+@@ -10590,15 +10667,19 @@ static enum llc_mig can_migrate_llc_task
+ 	if (!mm)
+ 		return mig_unrestricted;
+ 
+-	cpu = READ_ONCE(mm->sc_stat.cpu);
++	grp = READ_ONCE(mm->sched_cache_grp);
++	if (!grp)
++		return mig_unrestricted;
++
++	cpu = READ_ONCE(grp->cpu);
+ 	if (cpu < 0 || cpus_share_cache(src_cpu, dst_cpu))
+ 		return mig_unrestricted;
+ 
+ 	/* skip cache aware load balance for too many threads */
+ 	if (invalid_llc_nr(mm, p, dst_cpu) ||
+ 	    exceed_llc_capacity(mm, dst_cpu)) {
+-		if (READ_ONCE(mm->sc_stat.cpu) != -1)
+-			WRITE_ONCE(mm->sc_stat.cpu, -1);
++		if (READ_ONCE(grp->cpu) != -1)
++			WRITE_ONCE(grp->cpu, -1);
+ 		return mig_unrestricted;
+ 	}
+ 
 
 
