@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E090A5187DE;
-	Wed, 30 Sep 2026 17:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5214F3EAB;
+	Wed, 30 Sep 2026 17:52:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790766; cv=none; b=uurkahWqzdGSRFwT/BEPMaundHpKUHmedzjUTDWSolcAX5dm6hyEEk6B+tn9vp20fTYWlDplD9j/Z2Jv5/miMKsaOnEs3R8aiwftQiSlKCK1/QuYhnPtTMbBTSaEz4ZaGXM1gNd1zFGPOjoqmMqaKS0Vz+zJ6wP2PgS2WhNTrwU=
+	t=1790790769; cv=none; b=ufet2FgIbgKLTtzVsjT2qMf+vnyZECUbgB2Gc9FX+cyjCi2FAr1FNtq1/aA2Bn3mADGnAkx0dvMBcmyoHBeZCrzqaGRKuBW/rTA6c4jFLJDeAFY2Sq1O1NzB+lCJWK0Oc4AIyhlQ0as5BVTo3V+euT6qxyhyXk721C5ZNcrFqc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790766; c=relaxed/simple;
-	bh=uFtFnyMeCpePzbjFrkcBK3YlCRXYTfWIhMrQyMjQlng=;
+	s=arc-20240116; t=1790790769; c=relaxed/simple;
+	bh=6mCmZ7OoIVAFM/JkzZG03XnztgD4EK6+zzuA9InRGHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tnfs3poysKMyyERviKJ5jIVZWhMjO6ApoG8o/FsKY3uwdF8cxEt23SmaSFM0QU3oEpMB35vEpMSmg0DUK9FKwpBvRRedhpqwy3IR3iP11IpV8sIMtvzaq7gwdN5KBsPevkd2mfPKrFq6ueOTIbitOG/ZGFdhNb60PJgeuXs0Rac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A92qtJIm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ol3zvokhJOCSSH6TIEDikPgtkvbdI3U25x32OLAcTMFU0U27pm7rdxGUS/AKD8/xvrvXeQZkew4wOkK+FfoToWWeFfZ5if9UW6npoEH9pEP9MCWWh/qcpddq8mk7lO7CEO4/X7x9ELLah4NqMfbPO5FeMQLebueEPjgdCtzVbqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHvNUnL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A92qtJIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4869D1F000FF;
-	Wed, 30 Sep 2026 17:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHvNUnL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB9A1F000FF;
+	Wed, 30 Sep 2026 17:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790764;
-	bh=cTX7nZYKchaz3h2bir9uC9lZhuANjBDRqUwB5hdCDYM=;
+	s=korg; t=1790790767;
+	bh=ZUkZ8Qog8abMP/04T/a5sjQ5a5EyUrmw55wmleca/UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A92qtJImZKVY/XEWlzg+mQDdscuS03ezCL5JzDh1/kOxz3CYksu5V8LjJy58UTZh7
-	 bHvjxCdp8d7Joo4b1tORxVgewUWSb7v9EBbBWGZejqnAu0/Tu7l3H0AYfE8QTytTqf
-	 DXTAQmTFjwBgc16toy9r7ifnr0iyrqNix1QA8S6o=
+	b=DHvNUnL0ENVtXZC4df2nZMvsLJG2I0mCCzzpl34bL8fzr7d5UZzGSJ9q+yHGOviR6
+	 87r/9oTbtkVt6mDd5pez+t0CbmM+zhFeEdwC9FoNc3svXPUkX1RLF0Sbv/LO8eBd3d
+	 /HGojZ7vpecBkDsXfOF98xMjoQorZEvfweOPp2R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fbf3648ae7f5bdb05c59@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/752] rds: annotate data-race around rs_seen_congestion
-Date: Wed, 30 Sep 2026 17:18:55 +0200
-Message-ID: <20260930152359.568996800@linuxfoundation.org>
+Subject: [PATCH 5.15 066/752] s390/zcore: Removed unused variables
+Date: Wed, 30 Sep 2026 17:18:56 +0200
+Message-ID: <20260930152359.593050724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -47,69 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 67636cab273ed0c0b0f2adab6c9369a471cb7966 ]
+[ Upstream commit 0a2aa995c0a1d363b5f0803862e84834e3876ae2 ]
 
-rs_seen_congestion is read in rds_poll() and written in rds_sendmsg()
-and rds_poll() without any lock.  Use READ_ONCE()/WRITE_ONCE() to
-annotate these lockless accesses and silence KCSAN.
+allmodconfig with clang W=1 points out unused global variables:
 
-Reported-by: syzbot+fbf3648ae7f5bdb05c59@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a0f8d94.050a0220.6b33c.0000.GAE@google.com/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Allison Henderson <achender@kernel.org> 
-Tested-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260522011621.304470-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+drivers/s390/char/zcore.c:49:23: error: variable
+ 'zcore_reipl_file' set but not used [-Werror,-Wunused-but-set-global]
+drivers/s390/char/zcore.c:50:23: error: variable
+ 'zcore_hsa_file' set but not used [-Werror,-Wunused-but-set-global]
+
+Remove both of them, since there is no point in keeping them.
+
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/af_rds.c | 4 ++--
- net/rds/send.c   | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/s390/char/zcore.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
-index 9165d054e8e35..5fc38d2b411d5 100644
---- a/net/rds/af_rds.c
-+++ b/net/rds/af_rds.c
-@@ -217,7 +217,7 @@ static __poll_t rds_poll(struct file *file, struct socket *sock,
+diff --git a/drivers/s390/char/zcore.c b/drivers/s390/char/zcore.c
+index 92b32ce645b95..535ef707b8587 100644
+--- a/drivers/s390/char/zcore.c
++++ b/drivers/s390/char/zcore.c
+@@ -46,8 +46,6 @@ struct ipib_info {
+ static struct debug_info *zcore_dbf;
+ static int hsa_available;
+ static struct dentry *zcore_dir;
+-static struct dentry *zcore_reipl_file;
+-static struct dentry *zcore_hsa_file;
+ static struct ipl_parameter_block *zcore_ipl_block;
  
- 	poll_wait(file, sk_sleep(sk), wait);
+ static DEFINE_MUTEX(hsa_buf_mutex);
+@@ -325,10 +323,8 @@ static int __init zcore_init(void)
+ 		goto fail;
  
--	if (rs->rs_seen_congestion)
-+	if (READ_ONCE(rs->rs_seen_congestion))
- 		poll_wait(file, &rds_poll_waitq, wait);
+ 	zcore_dir = debugfs_create_dir("zcore" , NULL);
+-	zcore_reipl_file = debugfs_create_file("reipl", S_IRUSR, zcore_dir,
+-						NULL, &zcore_reipl_fops);
+-	zcore_hsa_file = debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir,
+-					     NULL, &zcore_hsa_fops);
++	debugfs_create_file("reipl", S_IRUSR, zcore_dir, NULL, &zcore_reipl_fops);
++	debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir, NULL, &zcore_hsa_fops);
  
- 	read_lock_irqsave(&rs->rs_recv_lock, flags);
-@@ -245,7 +245,7 @@ static __poll_t rds_poll(struct file *file, struct socket *sock,
- 
- 	/* clear state any time we wake a seen-congested socket */
- 	if (mask)
--		rs->rs_seen_congestion = 0;
-+		WRITE_ONCE(rs->rs_seen_congestion, 0);
- 
- 	return mask;
- }
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 9a23f8f2bcfa7..22b41745c6eb5 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -1340,7 +1340,7 @@ int rds_sendmsg(struct socket *sock, struct msghdr *msg, size_t payload_len)
- 
- 	ret = rds_cong_wait(conn->c_fcong, dport, nonblock, rs);
- 	if (ret) {
--		rs->rs_seen_congestion = 1;
-+		WRITE_ONCE(rs->rs_seen_congestion, 1);
- 		goto out;
- 	}
- 	while (!rds_send_queue_rm(rs, conn, cpath, rm, rs->rs_bound_port,
+ 	register_reboot_notifier(&zcore_reboot_notifier);
+ 	atomic_notifier_chain_register(&panic_notifier_list, &zcore_on_panic_notifier);
 -- 
 2.53.0
 
