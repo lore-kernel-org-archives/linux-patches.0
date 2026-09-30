@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3163C3450;
-	Wed, 30 Sep 2026 19:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859373C063A;
+	Wed, 30 Sep 2026 19:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795053; cv=none; b=PlChM5U/B8O/HTgD5p+FqZaLurs8nur2gg/xmplgBOdy2j+jzWaFhXWbGqNZU4qqXLfBYqPX4vuKHaxskis5Q+DeVLyfSJBuhKphHiUF0gqd0vq55dvDPvpx8GDXhBZ0iPLVCeYPrtP21h6lyPJ6AjlU3NX1Zqd4jdqTdfXbKdk=
+	t=1790795055; cv=none; b=QXCmVHyszM0EgYE9Wq3snFHfsCQE9ONhDmEoazAzvu3UrV+BsTRbmcCw4jThSyeeav5o2gyIG1FtP00VF5xhyUfewp6jvG0iYm2AEokZ8D+Vn0lkRQglXy1d9e5JU2hwJ/us2/grzvylybjmvtI0dgURG0IFhdkhzZQbBtVhtRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795053; c=relaxed/simple;
-	bh=Dxck+I8LPiEJuf21xNq9vZ+oUx3VyxHPw9oQ7hzKQdE=;
+	s=arc-20240116; t=1790795055; c=relaxed/simple;
+	bh=I2SnVoBjphIvZ7Yx3GYvOPy+6LFgMbC/toRvA906JPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bls+XrkTrkMdjjnjdqoAVRYqp1F+8G7pQhqlcK6jseVG97Mg8muwSypirO3Op/YrhHeYjnAU/vHwQOiqs3bJlas0pQoD6W0o3jjv1nHDHsP696MeWKAxyyxKSaDO+ap1JGaQ/WWqqrf3VjGGAI8vN0Ie9Otk0OMuE+WM0sKauCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImBT2A/Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CdKsG3bSxE3nII2kMR43PNGahaEs8Fwf+RD/EW4n3KkVx3+gG9S+UQbd24cjU1mPJ7+/Wbdt7pA5C6+I7iT0myPXoipgKwwr7PcwOeBWudurAfQP/YghB8hPq47XucLkFQ374udiYcuQnQPNlFPGKvjPUt7QK90aQAT34IwkmXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUxpQs6R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImBT2A/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE6A1F000FF;
-	Wed, 30 Sep 2026 19:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUxpQs6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01791F000FF;
+	Wed, 30 Sep 2026 19:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795051;
-	bh=27ok7Z8UMeYs5Dvwrl9cJkuH7avA+yKJH7lwEXkTcxc=;
+	s=korg; t=1790795054;
+	bh=Y2B5OZNHpygPLNMSasiZWV56Rj+viZOSQBodyl+GDrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ImBT2A/YcNj7pUGBk6yYMqJnKmAk0gD4jDT4vJRBW8UUlwxn3dwf5aOcFuSCexIDm
-	 qwrmELqNg6B+DF1RbavXZ/tEI7VNLIBd31I24jkytvqOYkTfik3hMc3uPQNKUk0E2E
-	 Fy6akCyAO2tSJjXcGzHvdIOtEdD3DXT/8K1MX6ag=
+	b=qUxpQs6RKtJjwEVUQThGs13I4euN7R1XiL1636XveteA0oh62cqhNzHoXXcYXKWev
+	 lQUMv0m8eLV+J6Mib/fr3OIzNXs7deaJhfkcQ8TLMj4XJ2eaVrV7HcBkpLrlWfoz3R
+	 Al3ewve6vUU08govNgm/79ADDISpqnRunsYP1+Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Linus Walleij <linusw@kernel.org>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Gongwei Li <ligongwei@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0371/1193] ARM: 9484/1: enable interrupts when unhandled user faults are triggered
-Date: Wed, 30 Sep 2026 17:17:35 +0200
-Message-ID: <20260930152442.422373399@linuxfoundation.org>
+Subject: [PATCH 6.6 0420/1193] Bluetooth: hci_mrvl: Fix wrong return value check of wait_on_bit_timeout()
+Date: Wed, 30 Sep 2026 17:18:24 +0200
+Message-ID: <20260930152443.535002869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,59 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Gongwei Li <ligongwei@kylinos.cn>
 
-[ Upstream commit e79ca91165d4fd18549c536abdb86101e889052f ]
+[ Upstream commit 2deb76c21b81e42b3282224f7dd2046fe73fd1e0 ]
 
-PREEMPT_RT requires interrupts to be enabled when sending signals.
+wait_on_bit_timeout() returns 0 if the bit was cleared, -EINTR if the
+process received a signal and the mode permitted wake up on that signal,
+or -EAGAIN if the timeout elapsed.  It never returns 1.
 
-When do_DataAbort()/do_PrefetchAbort() triggers unhandled user faults,
-that is `inf->fn()` return a non-zero value, and the interrupts are not
-enabled within the hook function, force_sig_fault() will be called
-with interrupts disabled.
+Hence the check "err == 1" in mrvl_load_firmware() is dead code: when
+the waiting task is interrupted by a signal (-EINTR), the code falls
+into the "else if (err)" branch and misreports it as "Firmware request
+timeout" with -ETIMEDOUT instead of propagating -EINTR.
 
-This can be triggered by user programs executing the bkpt instruction,
-with kernel config CONFIG_PERF_EVENTS=n.
+Fix this by testing for -EINTR so that an interrupted firmware load is
+properly detected and reported.
 
-Enable interrupts in do_DataAbort()/do_PrefetchAbort() when unhandled
-user faults are triggered to fix the issue.
-
-Fixes: c6e61c06d606 ("ARM: 9463/1: Allow to enable RT")
-Link: https://lore.kernel.org/20260629123349.134224-1-xieyuanbin1@huawei.com
-Suggested-by: Russell King <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: 162f812f23ba ("Bluetooth: hci_uart: Add Marvell support")
+Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/bluetooth/hci_mrvl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index d6e3121c6a3fe..24114877b8e1f 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -587,6 +587,9 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
- 		return;
- 
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
-+
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
-@@ -625,6 +628,9 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
- 		return;
- 
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
-+
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, ifsr, addr);
+diff --git a/drivers/bluetooth/hci_mrvl.c b/drivers/bluetooth/hci_mrvl.c
+index e08222395772d..b4edaac2032e8 100644
+--- a/drivers/bluetooth/hci_mrvl.c
++++ b/drivers/bluetooth/hci_mrvl.c
+@@ -307,9 +307,8 @@ static int mrvl_load_firmware(struct hci_dev *hdev, const char *name)
+ 		err = wait_on_bit_timeout(&mrvl->flags, STATE_FW_REQ_PENDING,
+ 					  TASK_INTERRUPTIBLE,
+ 					  msecs_to_jiffies(2000));
+-		if (err == 1) {
++		if (err == -EINTR) {
+ 			bt_dev_err(hdev, "Firmware load interrupted");
+-			err = -EINTR;
+ 			break;
+ 		} else if (err) {
+ 			bt_dev_err(hdev, "Firmware request timeout");
 -- 
 2.53.0
 
