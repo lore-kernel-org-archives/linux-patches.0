@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26BE515976;
-	Wed, 30 Sep 2026 17:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FEF501291;
+	Wed, 30 Sep 2026 17:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790186; cv=none; b=GNIkj3ztYsOkmBDB5z8mDUON0K0ixZvFbllflNZSYSr69+g4NgHu+jApVWUjB/FbM0eIE9Wnm87GLRzYlg1TnSPUCvEx3dEPVc2QCdk+L54wfE3k5DFwkNnGaCgwkQQKmYUVnbdPZ584P75bmeqOeJXx4WFXhrVjcnGmjlA/P5Q=
+	t=1790790188; cv=none; b=GEffRzJ3UlDYeiS1bCVKsj6KJfb9a/4odnCoODwtNTqKrGvMOsH8YME2/oYJwalU2TXrU/eg58epmP8agyaob0qxm2nwVVTO8Yj5G7Ok7Ec5FL8Vw6KjPYKe0xHyHQkt9rljXCA5IUBIzDQnE0c3idy4xcLbfX3Pgjxx58hgJbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790186; c=relaxed/simple;
-	bh=Duga2fRLKC0hl1DDICMTgY5MY1+AxG5U85S4Me2xkK8=;
+	s=arc-20240116; t=1790790188; c=relaxed/simple;
+	bh=N7/3tlqOqFN5UxA4Z2vNjQ/ujS56bjw6382mzzSfTzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCWsofI7fZD+GNurjCNxam/BoGb6jXAYVsdteqK2nHiQrQpyhROtiAkD+yR433UR5BkIiW9+vESW7VXyw6ctLmXLetIunbHIriLQWt1WW4XBe2h0LF3sWHWPSD/EHnKZrgkc8vIhpgxPsB+CvlAaEMAa8ZLgze2/aPgRCswPJug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sodL24D+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HDJB+VE5H0lkVwJ5cBEMJqQyPJ7uvwOxmk6XqaCQcIYlbaAeBzUfCD0p6nHu6DmtZJQdSgzsUDScg6ulcsaF7CbQaER7xTLXzwd8x5Z5oApF2IbtfuCHajoRKvnjjPxnjn6iO8qFPzgZkqUtpwfyNaBZapMFxjPiFBS4rMzSets=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxYYPNpD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sodL24D+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B201F000FF;
-	Wed, 30 Sep 2026 17:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxYYPNpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C221F000FF;
+	Wed, 30 Sep 2026 17:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790184;
-	bh=c9WrdLOyHQf/VnMb7XH7QOY9wF2XLBFXYnExTsUsuQ0=;
+	s=korg; t=1790790187;
+	bh=9Q6T6nTNdj11K5pcgUziskONh7FlcbVF9c9efQl9zs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sodL24D+ZMU9d/omnzefHfUeyeQTqCrAVeR8ddsEoAjebeEjFCyizioZo/9fe4mL0
-	 gceFQZkc+APG367fhi6R7gUDlv+qZn4LrNjlqhYa9eyDrAdftyeSz0a+2KIvnaWm0Q
-	 80+1MizC8fp0qQx8odpz1iiUyY13iAqAynpOen0M=
+	b=uxYYPNpDjDwB9qFiR9ID+B22o7BJWNzQPdrWql4uMb946EVGIk4bT2HkHvM9HCZnj
+	 OPGWTdTIjQ+LUfvDzH3oYyWkk2LYcJgQwYQIXuQ57YtZzLQWwylQGWrgiamTUXkIRy
+	 3Al78vyxS3KcrwYFY1fIPBq+RCokJfSTKLGCk+64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 733/877] bootconfig: Fix integer overflow in initrd size check
-Date: Wed, 30 Sep 2026 17:27:24 +0200
-Message-ID: <20260930152430.506731042@linuxfoundation.org>
+Subject: [PATCH 6.12 742/877] erofs: add sysfs feature entry for xattr prefixes
+Date: Wed, 30 Sep 2026 17:27:33 +0200
+Message-ID: <20260930152430.705132953@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,104 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit 7812d6dab0698001e50e8c2f901e17da3eb6f429 ]
+[ Upstream commit 839f075aabdf5c21048f9801b87c0b841dd3d064 ]
 
-Sashiko reported that in get_boot_config_from_initrd(), a crafted initrd
-with a huge bootconfig size (such as 0xFFFFFFFF) can cause the pointer
-arithmetic:
+Let /sys/fs/erofs/features/xattr_prefixes advertise that this kernel
+supports the EROFS_FEATURE_INCOMPAT_XATTR_PREFIXES on-disk format.
 
-    data = ((void *)hdr) - size;
-
-to wrap around on 32-bit systems (or when pointer subtraction overflows).
-Because data wraps around, the subsequent bounds check:
-
-    if ((unsigned long)data < initrd_start)
-
-evaluates to false, bypassing the check. The kernel then calls
-xbc_calc_checksum(data, size), which attempts to read 4GB of memory,
-hitting unmapped pages and triggering a fatal kernel page fault during
-early boot. Furthermore, on 64-bit systems with an initrd > 4.29 GB, an
-unbounded 32-bit size can similarly bypass the initrd_start check.
-
-Fix this by:
-1. Ensuring the initrd is at least large enough to contain the bootconfig
-   footer and verifying hdr is within the initrd bounds.
-2. Checking that size does not exceed XBC_DATA_MAX and does not exceed
-   the available space between initrd_start and hdr before performing
-   pointer subtraction.
-
-Link: https://lore.kernel.org/all/178905333479.213925.1358412668943562406.stgit@devnote2/
-
-Fixes: de462e5f1071 ("bootconfig: Fix to remove bootconfig data from initrd while boot")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.8-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-[ Adjusted context to preserve the existing u32 *hdr pointer and le32_to_cpu() header reads. ]
+Fixes: 6a318ccd7e08 ("erofs: enable long extended attribute name prefixes")
+Cc: stable@vger.kernel.org # 6.4+
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
+[ adjusted feature-list context for missing 48bit and metabox entries while retaining zero_padding. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/main.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ Documentation/ABI/testing/sysfs-fs-erofs |    2 +-
+ fs/erofs/sysfs.c                         |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/init/main.c
-+++ b/init/main.c
-@@ -270,7 +270,8 @@ static void * __init get_boot_config_fro
- 	u32 *hdr;
- 	int i;
+--- a/Documentation/ABI/testing/sysfs-fs-erofs
++++ b/Documentation/ABI/testing/sysfs-fs-erofs
+@@ -5,7 +5,7 @@ Description:	Shows all enabled kernel fe
+ 		Supported features:
+ 		zero_padding, compr_cfgs, big_pcluster, chunked_file,
+ 		device_table, compr_head2, sb_chksum, ztailpacking,
+-		dedupe, fragments.
++		dedupe, fragments, xattr_prefixes.
  
--	if (!initrd_end)
-+	if (!initrd_end || initrd_end < initrd_start ||
-+	    initrd_end - initrd_start < BOOTCONFIG_MAGIC_LEN + 8)
- 		return NULL;
+ What:		/sys/fs/erofs/<disk>/sync_decompress
+ Date:		November 2021
+--- a/fs/erofs/sysfs.c
++++ b/fs/erofs/sysfs.c
+@@ -81,6 +81,7 @@ EROFS_ATTR_FEATURE(sb_chksum);
+ EROFS_ATTR_FEATURE(ztailpacking);
+ EROFS_ATTR_FEATURE(fragments);
+ EROFS_ATTR_FEATURE(dedupe);
++EROFS_ATTR_FEATURE(xattr_prefixes);
  
- 	data = (char *)initrd_end - BOOTCONFIG_MAGIC_LEN;
-@@ -287,16 +288,26 @@ static void * __init get_boot_config_fro
- 
- found:
- 	hdr = (u32 *)(data - 8);
-+	if ((unsigned long)hdr < initrd_start)
-+		return NULL;
-+
- 	size = le32_to_cpu(hdr[0]);
- 	csum = le32_to_cpu(hdr[1]);
- 
--	data = ((void *)hdr) - size;
--	if ((unsigned long)data < initrd_start) {
--		pr_err("bootconfig size %d is greater than initrd size %ld\n",
-+	if (size > XBC_DATA_MAX) {
-+		pr_err("bootconfig size %u is greater than max size %d\n",
-+			size, XBC_DATA_MAX);
-+		return NULL;
-+	}
-+
-+	if (size > ((unsigned long)hdr - initrd_start)) {
-+		pr_err("bootconfig size %u is greater than initrd size %lu\n",
- 			size, initrd_end - initrd_start);
- 		return NULL;
- 	}
- 
-+	data = ((void *)hdr) - size;
-+
- 	if (xbc_calc_checksum(data, size) != csum) {
- 		pr_err("bootconfig checksum failed\n");
- 		return NULL;
-@@ -399,12 +410,6 @@ static void __init setup_boot_config(voi
- 		return;
- 	}
- 
--	if (size >= XBC_DATA_MAX) {
--		pr_err("bootconfig size %ld greater than max size %d\n",
--			(long)size, XBC_DATA_MAX);
--		return;
--	}
--
- 	ret = xbc_init(data, size, &msg, &pos);
- 	if (ret < 0) {
- 		if (pos < 0)
+ static struct attribute *erofs_feat_attrs[] = {
+ 	ATTR_LIST(zero_padding),
+@@ -93,6 +94,7 @@ static struct attribute *erofs_feat_attr
+ 	ATTR_LIST(ztailpacking),
+ 	ATTR_LIST(fragments),
+ 	ATTR_LIST(dedupe),
++	ATTR_LIST(xattr_prefixes),
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(erofs_feat);
 
 
