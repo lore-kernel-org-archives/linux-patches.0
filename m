@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F1E5038F7;
-	Wed, 30 Sep 2026 16:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308092D9484;
+	Wed, 30 Sep 2026 16:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785658; cv=none; b=pyL8uBondmWIulcrl0kv0QA+JpNiI5F777XcUiHvLI/qtmgWmijs1i/wbQm8E9B0FxUC7mVRuoBh6a7DqnUSNl13m05ODFC8dWg30d4CSxHlE3HGShJzwHkzuFmgLDeB9rEF+6wVvTFQ4tN6HzxaKisEb7rcBNWD6hm7j5SCcA4=
+	t=1790785660; cv=none; b=jQV7lvsxb0HlmgHjeQOAAVA34aAUtUM2bcF6ycnvODlnH+7PQUech81RL56Mbms0jfj2Vq2JSVk4XlEw6v/SoZQ0T0K1xvlEe+RQ04cmBXMR84DXiAJlnk0kQAGrubHJUzX2wuVOFohtvg/FCqNdClmo6db1xuJZHg3xe9nlG+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785658; c=relaxed/simple;
-	bh=2b1kuQvwAVVrEM8qeSGEfLwJC0WjwAs8jVbvLMM/88A=;
+	s=arc-20240116; t=1790785660; c=relaxed/simple;
+	bh=SX0ppuzpJ60Ja7kJHRIrSAc/H6egwpu5javpwi2x1UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trRn1vMf32EugQazIksXE0BNTQgv81CB3FB81QkQA3zKEtIkDXA0qFCA6Z/MiB2XttL92+KguJ5oEjRlyjicT+U924URtOgLP4TR8bR3Fxm59mgSNLcgp9SI21rAjVk796Zio2gn1C5gUM5NFn6YamgHVPGEXNoj6bqn6SXy74U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMu8m4ql; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hsBBpyd+wPSdDUDmYtz+G8khSswv1IX5UylgLlUtzazgulqXnnIpUFuGbWPe018hJOnNs/TOXc/kodgzBZWs3CrUtSgtRDOAuS2m4gmhrBXmj7DaKposVf7SulGIxgaXtGgm8fmd8nJdYoigXhSWaXYdCQgbVo2SPXbzuX5OUo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqNwBAM1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMu8m4ql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 922BE1F000FF;
-	Wed, 30 Sep 2026 16:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqNwBAM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653521F00893;
+	Wed, 30 Sep 2026 16:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785654;
-	bh=613PTElfDtyGz9+5HydwLOhuQj+P6ClMs5qrRVRPRWg=;
+	s=korg; t=1790785656;
+	bh=+bPmvkX7RWmv5SdAQBStnovU3XIuEiqPvLb+JHyR5TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eMu8m4qlnTWD2/MAimmrMxOx61p6Ya3MVUZY40yr1Dy3AhbodF+F7LhmtoNx+AMSh
-	 RAo3Cg8ydqxsIZQnuAyGqZE2OhXyrvZ6+tVWNwgrvdEpJu/U2EsR3BbM9VzM41ZlYr
-	 8SwaqXC7huIupm6Us+me2ywtx6iHVyBZpKkDOSQY=
+	b=tqNwBAM1LXGtfWWyr/Kn392xUlhteBQ4FB173ydmU/godx0O7qeQGgZ4+vqOhUEy4
+	 KZujZ+lYKyaJ6DZZBFXwz5L7a/Hs1j7sl++xWQeeHJuaOkAMNbRtt3d12egkWpaR7I
+	 iSGF9exkFXOZRxwnYUCUwFh3z+v/tX+zxcbmJyNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Stian Halseth <stian@itx.no>,
-	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 583/982] sunvdc: fix -EIO issue due to lack of retries
-Date: Wed, 30 Sep 2026 17:21:59 +0200
-Message-ID: <20260930152429.301452497@linuxfoundation.org>
+Subject: [PATCH 6.1 584/982] Revert "perf cs-etm: Avoid truncating AUX buffer sizes to int"
+Date: Wed, 30 Sep 2026 17:22:00 +0200
+Message-ID: <20260930152429.324791328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,72 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+This reverts commit 9ccb4d7bd325012505d2d5d2456cad199417be57.
 
-[ Upstream commit 5067d4ba713961d8ccea1e06cd4c453793f3121e ]
-
-John reports that since commit:
-
-a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
-
-users of Linux inside Solaris ldom see occasional -EIO errors because
-the request send loop now times out. The current loop does 10 retries,
-and inside vio_ldc_send() a further 1000 1usec retries are done as well.
-Even with 10.5 msec of busy loop retries that's apparently not enough to
-always succeed.
-
-Rather than introduce continued busy looping, requeue the request and
-have the delayed queue kicking retry the request after another 10ms.
-This obviously isn't ideal, but there's seemingly no way to wait for
-this type of event. And if 10ms of busy looping was not enough to make
-progress, then presumably this is an edge condition and we just need to
-guarantee to make forward progress at some later point in time. That's
-more suitably done through letting the CPU tend to other work, rather
-than sitting in a tight loop retrying.
-
-[stian: rebased on top of the cookie-unmap fix, without which every
- requeued attempt leaks LDC map table entries; tested on an
- UltraSPARC T4 LDOM where the vdc_tx_trigger failure condition was
- reproduced and absorbed by the requeue with no I/O error]
-
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/all/20251006100226.4246-2-glaubitz@physik.fu-berlin.de/
-Link: https://lore.kernel.org/all/418310b3-2b77-4534-b2fd-27dcc11e333c@kernel.dk/
-Signed-off-by: Stian Halseth <stian@itx.no>
-Link: https://patch.msgid.link/20260901173947.3292110-3-stian@itx.no
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ tools/perf/util/cs-etm.c | 46 +++++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index f03bf77da8c4d..11bdbf5b2f963 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -557,6 +557,7 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	struct vdc_port *port = hctx->queue->queuedata;
- 	struct vio_dring_state *dr;
- 	unsigned long flags;
-+	int ret;
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index 10e9657ee58c1..361b75b0882c4 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -1087,7 +1087,8 @@ cs_etm__get_trace(struct cs_etm_queue *etmq)
+ 	etmq->buf_used = 0;
+ 	etmq->buf_len = aux_buffer->size;
+ 	etmq->buf = aux_buffer->data;
+-	return 0;
++
++	return etmq->buf_len;
+ }
  
- 	dr = &port->vio.drings[VIO_DRIVER_TX_RING];
+ static void cs_etm__set_pid_tid_cpu(struct cs_etm_auxtrace *etm,
+@@ -1684,33 +1685,26 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
+ {
+ 	int ret;
  
-@@ -578,7 +579,13 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
- 		return BLK_STS_DEV_RESOURCE;
- 	}
+-	/* The current block is not finished */
+-	if (etmq->buf_len)
+-		return 1;
+-
+-	ret = cs_etm__get_trace(etmq);
+-	if (ret < 0)
+-		return ret;
+-
+-	/* No more buffer to read */
+-	if (!etmq->buf_len)
+-		return 0;
+-
+-	/*
+-	 * We cannot assume consecutive blocks in the data file
+-	 * are contiguous, reset the decoder to force re-sync.
+-	 */
+-	ret = cs_etm_decoder__reset(etmq->decoder);
+-	if (ret)
+-		return ret;
++	if (!etmq->buf_len) {
++		ret = cs_etm__get_trace(etmq);
++		if (ret <= 0)
++			return ret;
++		/*
++		 * We cannot assume consecutive blocks in the data file
++		 * are contiguous, reset the decoder to force re-sync.
++		 */
++		ret = cs_etm_decoder__reset(etmq->decoder);
++		if (ret)
++			return ret;
  
--	if (__send_request(bd->rq) < 0) {
-+	ret = __send_request(bd->rq);
-+	if (ret == -EAGAIN) {
-+		spin_unlock_irqrestore(&port->vio.lock, flags);
-+		/* already spun for 10msec, defer 10msec and retry */
-+		blk_mq_delay_kick_requeue_list(hctx->queue, 10);
-+		return BLK_STS_DEV_RESOURCE;
-+	} else if (ret < 0) {
- 		spin_unlock_irqrestore(&port->vio.lock, flags);
- 		return BLK_STS_IOERR;
- 	}
+-	/*
+-	 * Since the decoder is reset, this causes a global trace
+-	 * discontinuity. Flush all thread stacks.
+-	 */
+-	cs_etm__flush_all_stack(etmq);
++		/*
++		 * Since the decoder is reset, this causes a global trace
++		 * discontinuity. Flush all thread stacks.
++		 */
++		cs_etm__flush_all_stack(etmq);
++	}
+ 
+-	return 1;
++	return etmq->buf_len;
+ }
+ 
+ static bool cs_etm__is_svc_instr(struct cs_etm_queue *etmq, u8 trace_chan_id,
 -- 
 2.53.0
 
