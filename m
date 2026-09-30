@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C260E403B1B;
-	Wed, 30 Sep 2026 19:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFECD3B443F;
+	Wed, 30 Sep 2026 19:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796933; cv=none; b=X1kxRHqLYml71Oyz8MXAq6mrT3MVxjegpSL3dMZZ6go1EB5xL6qqZWkkKOXW1YexNn8mSmIvTLI2NRCSXbgzhCahgJqYxfNQML7udadwPgp4aN5DN/Wot32mUx3VQt2+j+6NiKGTuHnCbeJl/nTU4BNz7M8MH+6srxoFuV2H7cc=
+	t=1790796936; cv=none; b=UN6vM47bfFtWKfQngI+uf+aR7ZpIB0lnSLXmJH9fnqbYxYqacv+1EU29FKeRcVWADwztPWOEiVnfWfVHaNnw/2KFDPHvRNuDNV0AttBCHRx29lYAp8fTKiIp08l0koU2hdCRSZsPhKRKREszvi4b0HzZsANeLJE03zfup2h3Dh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796933; c=relaxed/simple;
-	bh=2A+6lh9tzd+nL5WRbi2xC7/bS0Ai1hMW9FMS52m7new=;
+	s=arc-20240116; t=1790796936; c=relaxed/simple;
+	bh=mE1IxBFka41NUuSk974nWmNqcA1UwCEwqo9OEIHDzV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSTxzNpRZYHwUBWxylDca+LPRMn2SVOS1WVRNjHMxwtMVOQwLI+I+qQ+fTqiWp8JLgSfrDczTsvlRg11Dw48plr3zBHhs2lURjR6pfhb+IMeM/ibFwtUcqFdTEDetDh+C1w4nyfELZs6YQlzGHRRDbAHomr67SE1aypAnG/n2dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pgw1fRxm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XXs2vRwBIV5wfvUuPt6mpiQg4AR9vqyPrUP0qz68rcX8ZcSXybTaRM6kJF1O75eWs2yg6oAIb3QbyHLe+t+P/0OfQm2HFjXt9XjlAVvhYIDUUvjFdqmEv6VFDesdVoN0aJhPmfGO0gryUBxjonANwpQ0mROl5eYhDkPbX51BUpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7DWsdfm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pgw1fRxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FACD1F000FF;
-	Wed, 30 Sep 2026 19:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7DWsdfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0434E1F00898;
+	Wed, 30 Sep 2026 19:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796932;
-	bh=4FTkGmGnDSPyFyvA400Lzxs4CfAons3OZH/k0NlQT2E=;
+	s=korg; t=1790796935;
+	bh=gQOkUEDt6bkdOAmS86zYkolCUYiW6O8j6wh4Xh6qpfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pgw1fRxm+9gChz/3uNIA11DIVMsuaAymo5q9yneSkS+KPsWuxUZShPU9FFEylYeNz
-	 PthBphlhtdWQxNk2FtxenulcC/Um5SYCdMkRxoBd54nf7Uozd/GrI4xZzYsSuyHV7K
-	 KeAz+xpN+PUOIPjqp1Quf0VJjvlY03JdzZ5Fh0Jg=
+	b=C7DWsdfmi8rIopnnRy+d9Tqza0VLRGRaDIDdhQgX83AnaITwWia16RAOv7qZmfqV6
+	 4vJPW7sLjguEM0lHwwMVZz7k7aNOwkAU6I4ZyuF0MZ8TcfYeQcRduEUH6WH4vQrWbk
+	 xZeNCpc9ivx3O5rWAcmAf20zyFJQku7OC22TM28A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jim Mattson <jmattson@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Mark Amirkan <markdamirkan@gmail.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1086/1193] perf/x86/intel: Make @data a mandatory param for intel_guest_get_msrs()
-Date: Wed, 30 Sep 2026 17:29:30 +0200
-Message-ID: <20260930152458.361061657@linuxfoundation.org>
+Subject: [PATCH 6.6 1087/1193] mptcp: return sk_wait_data() errors from recvmsg()
+Date: Wed, 30 Sep 2026 17:29:31 +0200
+Message-ID: <20260930152458.384255881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,48 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-[ Upstream commit a391618e1d563f099e4c2a704f45d08329ccdf7c ]
+[ Upstream commit 60404266ef3e0a1cd8f7a164060e0c83efb72f4b ]
 
-Drop "support" for passing a NULL @data/@kvm_pmu param when getting guest
-MSRs.  KVM, the only in-tree user, unconditionally passes a non-NULL
-pointer, and carrying code that suggests @data may be NULL is confusing,
-e.g. incorrectly implies that there are scenarios where KVM doesn't pass
-a PMU context.
+Commit 581302298524 ("mptcp: error out earlier on disconnect") made
+mptcp_recvmsg() stop when sk_wait_data() returns an error.  The error is
+stored in err, but the function then jumps to a path which returns
+copied.  When no data was copied, recvmsg() therefore returns zero and
+reports a false EOF.
 
-Fixes: 8183a538cd95 ("KVM: x86/pmu: Add IA32_DS_AREA MSR emulation to support guest DS")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260921191418.950933-5-seanjc@google.com
+Store the result in copied, which is the value returned by the function.
+This also keeps the usual partial-read result when data was copied before
+the error.
+
+A recvmsg() blocked in one thread reproduces the issue when another
+thread disconnects the same MPTCP socket with connect(AF_UNSPEC).
+Before this change recvmsg() returns zero; afterwards it returns -EPIPE.
+
+Fixes: 581302298524 ("mptcp: error out earlier on disconnect")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260913-b4-send-mptcp-recv-error-v1-1-4eaa3684a8b8@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 98f92c366cb57..db5ad012dd40a 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4191,11 +4191,11 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index cd76b2d742d3e..48b6e9ed04ee9 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2327,7 +2327,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ 		mptcp_cleanup_rbuf(msk, copied);
+ 		err = sk_wait_data(sk, &timeo, NULL);
+ 		if (err < 0) {
+-			err = copied ? : err;
++			copied = copied ? : err;
+ 			goto out_err;
+ 		}
  	}
- 
- 	/*
--	 * If the guest won't use PEBS or the CPU doesn't support PEBS in the
--	 * guest, then there's nothing more to do as disabling PMCs via
--	 * PERF_GLOBAL_CTRL is sufficient on CPUs with guest/host isolation.
-+	 * If the CPU doesn't support PEBS in the guest, then there's nothing
-+	 * more to do as disabling PMCs via PERF_GLOBAL_CTRL is sufficient on
-+	 * CPUs with guest/host isolation.
- 	 */
--	if (!kvm_pmu || !x86_pmu.pebs_ept)
-+	if (!x86_pmu.pebs_ept)
- 		return arr;
- 
- 	/*
 -- 
 2.53.0
 
