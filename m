@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D71379C35;
-	Wed, 30 Sep 2026 15:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCA04E780D;
+	Wed, 30 Sep 2026 15:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783835; cv=none; b=qpCryiuIpsR/kb7Wv8DPz+a7FT4oochNa3YWg+JlGhwoJKYsJY4W+yltgXK92iMZxY2LZVEgG5N5iRFBAhgKXlWxZ/EKplWpOWjA23x3fq+4IPVLu2TYsDKaARJQxqZ3TW80akunM935Bl7NP2tgdf7VPoW6tZVAyPzS1RDFiFI=
+	t=1790783838; cv=none; b=Y20qO6Oq9yD4mgp7yyH/zeBWIWJeTxhgI53FgNgQ6HxWLpgIShwxh3hDm1vx5lblEHdX/ajTqKmOsS7QivJteHKwSBgS9WqiPD6BctoBU4EVZriI+5PS6VgfcaB0vEHshM7z3OAKvsxWm73K1KG7COb6Mt8pk+i97re3xllRAY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783835; c=relaxed/simple;
-	bh=uIBIeDwOl2JjWdO2hN8fFhiX4HfQbplBqzOiQLXE9Kg=;
+	s=arc-20240116; t=1790783838; c=relaxed/simple;
+	bh=sLDrOljFGNWVY2bW5Tk7Vgxgu5MrQans81UvWhE0BKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIDy60K6g13YDSYlpBJLHV5Xevu+U0N7nyRvre2IgxU/iJUyxaW0DpCshTzslYMGiwbvwkVw2ZN9f0hiy7Y+Pg3K94lbip7bnUH5FGL/A8tPUq79uotwY5DfSaMzx5XomikUKU/L/4CMaXoskk2hGFJx7G8Lu6HIjb2O6sQ39Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+yc2qjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WZDGTkyVfApqAH9JEFC6zloDFQOmymv+srOGKcJgp71iLKRZVSpEcpHNfrfIeihyyguBch01s5pJfTVa/NjGUW6s5HsLXTV+M0oc62RigeubKMPrRjVRl/kQmW1hqmD7JjSNYUS4kTuRLInbwV0Uum5zV3FzqmRX5mudZg5xf44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdqnLjkv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+yc2qjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461191F00898;
-	Wed, 30 Sep 2026 15:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdqnLjkv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F6F1F000FF;
+	Wed, 30 Sep 2026 15:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783829;
-	bh=jMhDuH5gmzk7gzKFmc8MNYHck6E1vxR33Xy/5v/K0yo=;
+	s=korg; t=1790783832;
+	bh=pFYaay2l/xEwqyuZ2iaw0vHKkCn2OmrRaRcKtRD1+E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e+yc2qjYjYlOU4cqPhOHl5YBvLNa288KzXtLkEUj/8wwcaEsP1nnEGlDgvk1jeIxy
-	 112p3pNDnVEhGTKAdWwrxLnC0PgNBf4pLAsAP1nLl6Ti17oqt6xRyZJCObQzuwLPpi
-	 k4UsllQ/0bcp8bVNtlg5pTuHP8YPJ8NZpW44t5Kc=
+	b=bdqnLjkv+YQ+/lNozQgS9qGf2mv0tIRk1WHRvLrV8L79nFeK+DuzmUCeZHuVYnJHO
+	 APNDlmU3uTIwKp+8RKaevkGAuncxmFhX14SVYeDA4EeHr011qc4Cs+T9p6Wmwgja9q
+	 2P108yT6X3TrYIa/73erkuUnVqPIoYc7ILujX8I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Shihuang Liu <shlomojune6@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 535/595] net/sched: act_gate: budget the per-entry list in get_fill_size
-Date: Wed, 30 Sep 2026 17:27:08 +0200
-Message-ID: <20260930152359.215010398@linuxfoundation.org>
+Subject: [PATCH 5.10 536/595] net: skbuff: fix pull-bound underflow in skb_checksum_setup_ipv6()
+Date: Wed, 30 Sep 2026 17:27:09 +0200
+Message-ID: <20260930152359.235454335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,89 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Shihuang Liu <shlomojune6@gmail.com>
 
-[ Upstream commit cfa165cbfbed9d0f4bbc22fef4309f595a3ab187 ]
+[ Upstream commit 3b4e0b0c008a8c1b474730248cd5b873026c74bd ]
 
-tcf_gate_get_fill_size returns only the TCA_GATE_PARMS size, but
-tcf_gate_dump also emits three 64-bit timestamps, the clock id, flags,
-priority and the variable-length TCA_GATE_ENTRY_LIST nest. The per-entry
-nest is unbounded: parse_gate_list places no cap on the number of
-sched-entries, so a gate with many entries can push the real dump well
-past the skb that tca_get_fill allocates from this size.
+skb_maybe_pull_tail() subtracts skb_headlen(skb) from the unsigned max
+argument and passes the result to __pskb_pull_tail() as a signed int.  The
+function does not ensure that max is at least skb_headlen(skb).
 
-RTM_NEWACTION then fails the add-notify with -EINVAL while the action is
-already committed to the IDR, and a subsequent RTM_GETACTION on the
-installed gate also returns -EINVAL because its dump no longer fits.
+This can happen while parsing IPv6 extension headers when an skb already
+has a linear area larger than MAX_IPV6_HDR_LEN.  Once the parser needs data
+beyond the linear area, max - skb_headlen(skb) wraps and is converted to a
+negative delta.  __pskb_pull_tail() then passes that negative length to
+skb_copy_bits(), where it can become a very large copy length.
 
-Fix this by accounting for the missing fields in tcf_gate_get_fill_size
-along with all elements in the entries list.
+Pass the requested length itself as the pull bound at the three
+extension-header call sites, so the delta can no longer go negative.
 
-Note that sizing the reply from the action lets an oversized gate
-install cleanly for the first time: with the input unbounded by
-parse_gate_list, the sized skb can now grow well above
-NLMSG_GOODSIZE per netlink request (a transient GFP_KERNEL allocation
-reachable only with namespace-local CAP_NET_ADMIN). Overload from a
-malicious netns admin is hardening material, not net, per the
-discussion at
-https://lore.kernel.org/netdev/20260914191108.55a1a4f1@kernel.org/;
-a follow-up patch for net-next will cap the sched-entry count.
-
-Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824153903.4143642-1-victor@mojatatu.com
-Tested-by: hybris <hybris@mojatatu.ai>
-Co-developed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-3BLH.v1.20260914203033@mojatatu.com
+Fixes: 1431fb31ecba ("xen-netback: fix fragment detection in checksum setup")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
+Link: https://patch.msgid.link/20260919133604.50948-1-shlomojune6@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_gate.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ net/core/skbuff.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/act_gate.c b/net/sched/act_gate.c
-index 30bd6eefb4619..21ebfdec77988 100644
---- a/net/sched/act_gate.c
-+++ b/net/sched/act_gate.c
-@@ -700,7 +700,35 @@ static int tcf_gate_search(struct net *net, struct tc_action **a, u32 index)
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 0e678ba405d0c..6a8e10db11b77 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5104,7 +5104,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
+ 			err = skb_maybe_pull_tail(skb,
+ 						  off +
+ 						  sizeof(struct ipv6_opt_hdr),
+-						  MAX_IPV6_HDR_LEN);
++						  off +
++						  sizeof(struct ipv6_opt_hdr));
+ 			if (err < 0)
+ 				goto out;
  
- static size_t tcf_gate_get_fill_size(const struct tc_action *act)
- {
--	return nla_total_size(sizeof(struct tc_gate));
-+	struct tcf_gate *gact = to_gate(act);
-+	const struct tcf_gate_params *p;
-+	struct tcfg_gate_entry *entry;
-+	size_t size = nla_total_size(sizeof(struct tc_gate)) /* TCA_GATE_PARMS */
-+		+ 3 * nla_total_size_64bit(sizeof(u64)) /* TCA_GATE_BASE_TIME
-+							 * TCA_GATE_CYCLE_TIME
-+							 * TCA_GATE_CYCLE_TIME_EXT
-+							 */
-+		+ nla_total_size(sizeof(s32)) /* TCA_GATE_CLOCKID */
-+		+ nla_total_size(sizeof(u32)) /* TCA_GATE_FLAGS */
-+		+ nla_total_size(sizeof(s32)) /* TCA_GATE_PRIORITY */
-+		+ nla_total_size(0); /* TCA_GATE_ENTRY_LIST */
-+	/* TCA_GATE_TM is budgeted by tcf_action_shared_attrs_size() */
-+
-+	rcu_read_lock();
-+	p = rcu_dereference(gact->param);
-+	if (p) {
-+		list_for_each_entry_rcu(entry, &p->entries, list)
-+			/* TCA_GATE_ONE_ENTRY nest and its attributes */
-+			size += nla_total_size(0)
-+				+ nla_total_size(sizeof(u32)) /* TCA_GATE_ENTRY_INDEX */
-+				+ nla_total_size(0) /* TCA_GATE_ENTRY_GATE */
-+				+ nla_total_size(sizeof(u32)) /* TCA_GATE_ENTRY_INTERVAL */
-+				+ nla_total_size(sizeof(s32)) /* TCA_GATE_ENTRY_MAX_OCTETS */
-+				+ nla_total_size(sizeof(s32)); /* TCA_GATE_ENTRY_IPV */
-+	}
-+	rcu_read_unlock();
-+
-+	return size;
- }
+@@ -5119,7 +5120,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
+ 			err = skb_maybe_pull_tail(skb,
+ 						  off +
+ 						  sizeof(struct ip_auth_hdr),
+-						  MAX_IPV6_HDR_LEN);
++						  off +
++						  sizeof(struct ip_auth_hdr));
+ 			if (err < 0)
+ 				goto out;
  
- static struct tc_action_ops act_gate_ops = {
+@@ -5134,7 +5136,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
+ 			err = skb_maybe_pull_tail(skb,
+ 						  off +
+ 						  sizeof(struct frag_hdr),
+-						  MAX_IPV6_HDR_LEN);
++						  off +
++						  sizeof(struct frag_hdr));
+ 			if (err < 0)
+ 				goto out;
+ 
 -- 
 2.53.0
 
