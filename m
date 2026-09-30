@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA71454854D;
-	Wed, 30 Sep 2026 17:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C662E50B8A8;
+	Wed, 30 Sep 2026 17:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790114; cv=none; b=OsMio71sgw0yl61ZBmEnfI6fjKiu1rxfxG65n/NLVT4quU2v4n84/9X+G6Kq9bKZ5WOocmYpNaPk112sFWro6dI7WGOLSRFE37UVUYAyFtMiuKnuzFUdFapzENSZa4KPPzNU2R/wi5rog2xsgTg+D+dWWh8YNl8a+db74s67N+U=
+	t=1790790117; cv=none; b=YVt+uwe8ZQtS5TgC7yi+U2ym1x05vfp06hCcJUgirX7IzGYdBHNdqFTbWFt/LwbtRTBW7hKwyP+ciUsPvL0SI9vpaYA4II4ZU6fLxpoV5En0mSJJg2VJA6wiBx0Xz9Ig2CSWNRkW4pZy5Ua7UaxpLxnxNDgGouDf21yuXFdbL58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790114; c=relaxed/simple;
-	bh=h4JuP0WkvTNtxsxpc/SVdBkK5eMxyQ+a6+mDK6OvDp8=;
+	s=arc-20240116; t=1790790117; c=relaxed/simple;
+	bh=5CgpsjbL7IAleEMGVbWW/BYxghmV8rHlHIoAOMpmBKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKdsIyzqB5CzVi4gIPCqHUxoLN1ntqmqNp47CBvGRHQfJQwISC5Q42P9sf7Fl315v7votYPbBDcycAcUVFfj6Rvs2CNs/0EGSi8yzbDn039pU8TDX6wTnXaz4bMA12+qvAnlPfQzZMk50nHCt6lHxnx6ZBOhlyTk2hqWtOy8slw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpvaWF9J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=afr9sXJteTCeJBojoTgASrA64XFRRUkr5/2nJ/sO6GYzyIYpP7aBArb7Zj81fBSuam8hviIgJPqTzgC+2rePsM+TQaoZ8JdLx/lH7Ut9PQwgg4q2BgzGGScBptecJOKzVyBT3mlvQAuaQCOFeAuWGiYyw6h7FmBqt9uVjxNBcMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJT1bhxF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpvaWF9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508AB1F000FF;
-	Wed, 30 Sep 2026 17:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJT1bhxF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8391F000FF;
+	Wed, 30 Sep 2026 17:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790112;
-	bh=ssGs20TMIDKi6Ju8Zjb4nZZnbMody5CMpLe0lLg+3nY=;
+	s=korg; t=1790790115;
+	bh=lozs/1ZNZTsJNfsfaLA/6XTw8EzHmmv1CHilJh5basQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XpvaWF9J7TQV0677BpF1LFO4DdMZWReI5ED9OUjXpmXq9aIdnZsCa/fPW46b7uu4u
-	 3ez466UCThS0sI9+UAfI64pfjQP/H2UXujYa5V85Yf4b58fDVSFBXK2m4wmm9xaCaI
-	 1+GCSLRiUi+a+rvSXwe1FVdvBusaXqlPZv3E701A=
+	b=HJT1bhxFg3yQvMhM9CmtdEr2Fukd8pYOBOHg5Wsl+hN9Kr7Ecpx5RIa3823i9pR3T
+	 mhVTSiENnmnDN6g7m9LzIcF0siGGWwJCOGSTg9XxO7Jsm5PYff+3Ch8XrQOVvXp/tn
+	 QgoAMzk6Ht7kKKaAHADjgd17AGlPtsHH2w7gbU4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangzijie <wangzijie1@honor.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com,
+	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 688/877] f2fs: dont allow unaligned truncation to smaller/equal size on pinned file
-Date: Wed, 30 Sep 2026 17:26:39 +0200
-Message-ID: <20260930152429.524601953@linuxfoundation.org>
+Subject: [PATCH 6.12 715/877] configfs: unhash the dentry before dropping the item in rmdir
+Date: Wed, 30 Sep 2026 17:27:06 +0200
+Message-ID: <20260930152430.115317258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,45 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangzijie <wangzijie1@honor.com>
+From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 
-[ Upstream commit d738f708564764ed591cb6ab50d55489f87c726a ]
+[ Upstream commit f06c2d26d1999d37e93299db0ecead04ca7d0b9f ]
 
-To prevent scattered pin block generation, don't allow non-section aligned truncation
-to smaller or equal size on pinned file. But for truncation to larger size, after
-commit 3fdd89b452c2("f2fs: prevent writing without fallocate() for pinned files"),
-we only support overwrite IO to pinned file, so we don't need to consider
-attr->ia_size > i_size case.
+configfs_get_config_item() treats a hashed dentry as proof that
+sd->s_element is a live config_item.  configfs_rmdir() breaks that:
+simple_rmdir() leaves the dentry hashed, the last reference to the item is
+dropped right after, and the dentry is only unhashed by d_delete() once
+->rmdir() has returned.  configfs_symlink() resolves its target holding no
+lock on it, so get_target() can land in that window:
 
-Signed-off-by: wangzijie <wangzijie1@honor.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: d0a481fad5c7 ("f2fs: fix to avoid potential section-unaligned pinfile")
+  BUG: KASAN: slab-use-after-free in config_item_get+0x26/0x90
+   get_target fs/configfs/symlink.c:128 [inline]
+   configfs_symlink+0x4ab/0x1030 fs/configfs/symlink.c:185
+
+Unhash in configfs_remove_dir(), while the item is still guaranteed to be
+there.  A reference obtained just before that stays harmless, as
+create_link() rechecks CONFIGFS_USET_DROPPING, already set by
+configfs_detach_prep().  Both configfs_unregister_subsystem() paths
+d_drop() after detaching, so this only makes rmdir match them.
+
+Reported-by: syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6b16e3d085833cbf3e25
+Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+Tested-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260730093435.195441-3-vasilisalmpanis@gmail.com
+Signed-off-by: Breno Leitao <leitao@debian.org>
+[ adapted the configfs_remove_dir() change to the older remove_dir() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/configfs/dir.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1097,6 +1097,17 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 			!IS_ALIGNED(attr->ia_size,
- 			F2FS_BLK_TO_BYTES(fi->i_cluster_size)))
- 			return -EINVAL;
-+		/*
-+		 * To prevent scattered pin block generation, we don't allow
-+		 * smaller/equal size unaligned truncation for pinned file.
-+		 * We only support overwrite IO to pinned file, so don't
-+		 * care about larger size truncation.
-+		 */
-+		if (f2fs_is_pinned_file(inode) &&
-+			attr->ia_size <= i_size_read(inode) &&
-+			!IS_ALIGNED(attr->ia_size,
-+			F2FS_BLK_TO_BYTES(CAP_BLKS_PER_SEC(sbi))))
-+			return -EINVAL;
- 	}
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -395,8 +395,17 @@ static void remove_dir(struct dentry * d
  
- 	if (is_quota_modification(idmap, inode, attr)) {
+ 	configfs_remove_dirent(d);
+ 
+-	if (d_really_is_positive(d))
+-		simple_rmdir(d_inode(parent),d);
++	if (d_really_is_positive(d)) {
++		if (!simple_rmdir(d_inode(parent), d))
++			/*
++			 * configfs_get_config_item() takes a hashed dentry as
++			 * proof that ->s_element is still alive.  Our caller
++			 * is about to drop the last reference to the item and
++			 * the VFS will not unhash until after we return, so
++			 * unhash it here.
++			 */
++			d_drop(d);
++	}
+ 
+ 	pr_debug(" o %pd removing done (%d)\n", d, d_count(d));
+ 
 
 
