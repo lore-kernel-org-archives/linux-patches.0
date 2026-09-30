@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61D42BEFEF;
-	Wed, 30 Sep 2026 16:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4213511E9B;
+	Wed, 30 Sep 2026 16:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787572; cv=none; b=OwmnpQn7fKGxXoHpMAXaUSqphL05V6S41K1e0oULNI0feXyamu30QyjG6mfoVDY+Dnx7Wq91HCzQI47tbwuwkk4FZsvwnwflIWS/q4HHyQViHVcLjVX53s83vzRb9p1MMV7HR+RzjA54ysnmbO6FjG4mU65lbjEK7qR7u4Skpl4=
+	t=1790787575; cv=none; b=GzObp/00fVQoSp73ejvkrWhNR9f+a0/0+Ux9LpoEWzNVesix/oWcv88bS0yMhp3FB7Lj3H9Jqt6Ztu+sfGsW0Qw34Vhx6yx3I0CzmciJvWS1SlmmQNgYV9HnuSRLRVjBojybgESLb+dPKwMrd3QoQvxKbUCmWh7BXUhybBk+42w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787572; c=relaxed/simple;
-	bh=2GjTA956b7HEKfBOXA2IDeiDuEkJAF7FwubEdj9g7lM=;
+	s=arc-20240116; t=1790787575; c=relaxed/simple;
+	bh=j2WBadRXZ9MIdAG4vXBOKLGJ8wLF6tr6jAmhGn2SLmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rcR4HHbvCQR5jVc/nnWJs6iJBja1WdmpfStFkmRY+4h/4nn0Vd+K7rzj/Zx6ksTbhgx4gIk0JXCcEp77HZYEML6uKJ760PntnxcuL1EjC/csjhCwRio3k6R6Hiu86rG7hzcQ6Db3XBxXkvwjqk32M+1RvrN6n6k0oL/UMIiZb/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yp+y8PI2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sciXiGg51WGURDArpUDt8kkMwr6ElHjNvIteVGbpC7k9FxvVwhcA43K+mTbxqIC0f1C2wQGwaJ87YisIHVQ5xQrRGlaNsrxuJ2OZ6RlycYtCc+LMI35QNBN3A1FHLqqclihFlj4V4z4jRN//4b88qMz1h2MB+AGs8tPU9dVXWNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAEZ6865; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yp+y8PI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B6C1F000FF;
-	Wed, 30 Sep 2026 16:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAEZ6865"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2141F000FF;
+	Wed, 30 Sep 2026 16:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787570;
-	bh=rRpL326ehHAVQl/uITqkrQbsTE01s5itrbq97E8rcFo=;
+	s=korg; t=1790787573;
+	bh=rVP7GtNXgD7s+OHRTAgp+xJO2OcgVu2Db293iKsWT3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yp+y8PI2+uOSHi7PLynNIp3RdmFagjw3f+uNvnjslO5v3BTMg37Vlrtc6mQltxxT8
-	 9/xexNdJaxFUAlrltXXOyUQPJMLHACbZr2c16Hgacqp6Wgl0qEJP6BErg7HYSkk/9L
-	 /1RDsdLnaFDVx0ehx9pIe/tMkoa/1TRy0+zYVUS8=
+	b=zAEZ68657OqlkG8QgtTtrVthKnji4lSpK0P3Afk5qG2I/fGttJWK4Gl9Yw5GKlUsz
+	 DYHB8q8pbqmipVi8TbA2tNOILo75gT0L1jMpYJgb8QG1Mex/aKATa9lPa6oiuDXgBL
+	 c/c5052a9EeBkFSm+P7O/A2B/FWAZxHVwCJw5U0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Dadu <alexandru.dadu@imgtec.com>,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Brajesh Gupta <brajesh.gupta@imgtec.com>
-Subject: [PATCH 7.2 277/457] drm/imagination: Fix page count for page table for map() interface
-Date: Wed, 30 Sep 2026 17:26:22 +0200
-Message-ID: <20260930152352.014624405@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 7.2 278/457] drm/i915: fix incorrect RCU teardown order
+Date: Wed, 30 Sep 2026 17:26:23 +0200
+Message-ID: <20260930152352.036584777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -45,113 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brajesh Gupta <brajesh.gupta@imgtec.com>
+From: Christian König <ckoenig.leichtzumerken@gmail.com>
 
-commit 0a8224058a5835297dcf4a46bbcd16f77a9fe424 upstream.
+commit d2da6696e0c4e60414706e607029d0bb0330c67e upstream.
 
-The GPU virtual start address wasn't included in the calculation for the
-amount of page tables required for mapping a BO object in map() interface.
-It resulted in map failure later due to not enough pages at L0/L1 level.
-Update pvr_mmu_op_context_create() interface to pass device address as well
-to allow correct calculation for page table memory.
+i915_gem_busy_ioctl uses dma_resv_for_each_fence_unlocked() to iterate
+over the fences in an GEM object without holding a reference but only
+the RCU read side lock.
 
-If L0 tables cover 2MB (0x200000), the range defined by device address
-0x80001ff000 (general heap at 2MB - 4KB) and size 0x2000 (two 4KB pages)
-requires two L0 pages to be mapped, but without the base
-address a range of 0x2000 computes to a single L0 page which is not enough.
+What can happen here is that the GEM object is destroyed concurrently
+while i915_gem_busy_ioctl is still running. This won't free the GEM
+objects memory, but still drops all the dma_fence references.
 
-Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
-Reviewed-by: Alexandru Dadu <alexandru.dadu@imgtec.com>
-Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260922-mmu_fix-v4-2-12f1a871456a@imgtec.com
-Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Now when dma_resv_for_each_fence_unlocked() sees a destroyed dma_fence it
+assumes that a new fence list was installed and re-starts the loop.
+
+But in the case of a destroyed GEM object a new fence list is never
+installed, only the old one freed and therefore the iteration never
+finishes resulting in an endless loop.
+
+The solution is to drop the fence references only after the RCU grace
+period.
+
+The fixes tag is not necessary the patch introducing the problem, but the
+one making it so worse that we need to address it.
+
+This problem was pointed out by Sashiko-bot.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 912ff2ebd695 ("drm/i915: use the new iterator in i915_gem_busy_ioctl v2")
+CC: stable@vger.kernel.org
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260903113621.54660-1-christian.koenig@amd.com
+(cherry picked from commit 5113479556025093bf8133bb2dcaa33be2d50921)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_mmu.c |   14 ++++++++------
- drivers/gpu/drm/imagination/pvr_mmu.h |    2 +-
- drivers/gpu/drm/imagination/pvr_vm.c  |    4 ++--
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_object.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/imagination/pvr_mmu.c
-+++ b/drivers/gpu/drm/imagination/pvr_mmu.c
-@@ -2336,6 +2336,7 @@ void pvr_mmu_op_context_destroy(struct p
-  * pvr_mmu_op_context_create() - Create an MMU op context.
-  * @ctx: MMU context associated with owning VM context.
-  * @sgt: Scatter gather table containing pages pinned for use by this context.
-+ * @device_addr: Virtual device address at the start of the requested mapping.
-  * @sgt_offset: Start offset of the requested device-virtual memory mapping.
-  * @size: Size in bytes of the requested device-virtual memory mapping. For an
-  * unmapping, this should be zero so that no page tables are allocated.
-@@ -2347,8 +2348,9 @@ void pvr_mmu_op_context_destroy(struct p
-  */
- struct pvr_mmu_op_context *
- pvr_mmu_op_context_create(struct pvr_mmu_context *ctx, struct sg_table *sgt,
--			  u64 sgt_offset, u64 size)
-+			  u64 device_addr, u64 sgt_offset, u64 size)
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+@@ -89,6 +89,7 @@ struct drm_i915_gem_object *i915_gem_obj
+ 
+ void i915_gem_object_free(struct drm_i915_gem_object *obj)
  {
-+	u64 start_addr = device_addr + sgt_offset;
- 	int err;
++	dma_resv_fini(&obj->base._resv);
+ 	return kmem_cache_free(slab_objects, obj);
+ }
  
- 	struct pvr_mmu_op_context *op_ctx = kzalloc_obj(*op_ctx);
-@@ -2364,16 +2366,16 @@ pvr_mmu_op_context_create(struct pvr_mmu
- 	if (size) {
- 		/*
- 		 * The number of page table objects we need to prealloc is
--		 * indicated by the mapping size, start offset and the sizes
-+		 * indicated by the mapping size, start address and the sizes
- 		 * of the areas mapped per PT or PD. The range calculation is
- 		 * identical to that for the index into a table for a device
- 		 * address, so we reuse those functions here.
- 		 */
--		const u32 l1_start_idx = pvr_page_table_l2_idx(sgt_offset);
--		const u32 l1_end_idx = pvr_page_table_l2_idx(sgt_offset + size);
-+		const u32 l1_start_idx = pvr_page_table_l2_idx(start_addr);
-+		const u32 l1_end_idx = pvr_page_table_l2_idx(start_addr + size);
- 		const u32 l1_count = l1_end_idx - l1_start_idx + 1;
--		const u32 l0_start_idx = pvr_page_table_l1_idx(sgt_offset);
--		const u32 l0_end_idx = pvr_page_table_l1_idx(sgt_offset + size);
-+		const u32 l0_start_idx = pvr_page_table_l1_idx(start_addr);
-+		const u32 l0_end_idx = pvr_page_table_l1_idx(start_addr + size);
- 		const u32 l0_count = l0_end_idx - l0_start_idx + 1;
+@@ -144,7 +145,6 @@ void __i915_gem_object_fini(struct drm_i
+ {
+ 	mutex_destroy(&obj->mm.get_page.lock);
+ 	mutex_destroy(&obj->mm.get_dma_page.lock);
+-	dma_resv_fini(&obj->base._resv);
+ }
  
- 		/*
---- a/drivers/gpu/drm/imagination/pvr_mmu.h
-+++ b/drivers/gpu/drm/imagination/pvr_mmu.h
-@@ -99,7 +99,7 @@ dma_addr_t pvr_mmu_get_root_table_dma_ad
- void pvr_mmu_op_context_destroy(struct pvr_mmu_op_context *op_ctx);
- struct pvr_mmu_op_context *
- pvr_mmu_op_context_create(struct pvr_mmu_context *ctx,
--			  struct sg_table *sgt, u64 sgt_offset, u64 size);
-+			  struct sg_table *sgt, u64 device_addr, u64 sgt_offset, u64 size);
- 
- int pvr_mmu_map(struct pvr_mmu_op_context *op_ctx, u64 size, u64 flags,
- 		u64 device_addr);
---- a/drivers/gpu/drm/imagination/pvr_vm.c
-+++ b/drivers/gpu/drm/imagination/pvr_vm.c
-@@ -276,7 +276,7 @@ pvr_vm_bind_op_map_init(struct pvr_vm_bi
- 		goto err_bind_op_fini;
- 
- 	bind_op->mmu_op_ctx =
--		pvr_mmu_op_context_create(vm_ctx->mmu_ctx, sgt, offset, size);
-+		pvr_mmu_op_context_create(vm_ctx->mmu_ctx, sgt, device_addr, offset, size);
- 	err = PTR_ERR_OR_ZERO(bind_op->mmu_op_ctx);
- 	if (err) {
- 		bind_op->mmu_op_ctx = NULL;
-@@ -318,7 +318,7 @@ pvr_vm_bind_op_unmap_init(struct pvr_vm_
- 	}
- 
- 	bind_op->mmu_op_ctx =
--		pvr_mmu_op_context_create(vm_ctx->mmu_ctx, NULL, 0, 0);
-+		pvr_mmu_op_context_create(vm_ctx->mmu_ctx, NULL, device_addr, 0, 0);
- 	err = PTR_ERR_OR_ZERO(bind_op->mmu_op_ctx);
- 	if (err) {
- 		bind_op->mmu_op_ctx = NULL;
+ /**
 
 
