@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358E136921B;
-	Wed, 30 Sep 2026 16:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B2F5038F7;
+	Wed, 30 Sep 2026 16:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785354; cv=none; b=NfsMUY+yz8viyIDW2I15m2HHAglVeVfIEomW3y9MTUgdwT/t2XJV/nTjQQ2qaMo7Mw2Yrkomvbc9IOJARhPEdjOhV6gn9C5w00DsyvwId1bV58ll5tN4IV4K58kyBzTci3K9f7Oj13r2k6fHVyRR5FGjNj5GDbJ+f1XXUyXrE8Y=
+	t=1790785356; cv=none; b=UcoTDR6l1UCKkgPQP7+hnnaXwv5dQhg6yMf2fzlj6AfheOUB33d38+GXCS4Ut6sfpvsoxUt4aTJJn6n2drSruvm1ccmsTb6sVKIkGaPQsLA9zI2R8Xy/QFTy4tY+4pNg4cBfrFPqU507cf3vvNQWv18zUrdafqO+bvo6LdDmZYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785354; c=relaxed/simple;
-	bh=c07YMjkuuX5gX8WCnXLdOTxr59VUTe5nWNRKhoXlYB8=;
+	s=arc-20240116; t=1790785356; c=relaxed/simple;
+	bh=E0C4Mz25NtfnLlL8EQpjnmhwaz4J9AtsrpGJyaU2sH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIpghFFWHdimp48ZJUzuJq6wH0ZsZyXzPUuFWeMuuZINVjO6N8Uypr7edTXGpKQ5UoVSvfAcN8oN9D8S49xa3frTx+/YdK/GAsdwviryaNIiGgCMHOz+XyvITWPYAX08KPlYRjY6M/EhobLQDbuFiT1ZaTj315WvVVnTK/1ZHVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLIU86SH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pm1Uww5eF/LHOvVrT/qfmYjBX3xkfloOG7iellvA6dzWP1baSfASAFB81v8oRTFglWCaYWanvtXNjtB9FYOH5ysteioeTvdrVW3zqfOQ5qpMhEs7MAKFypITFRNs9KoD2wiCnjNDzRbrJNsVlP9LNfLOSU1a1CRDWtg/SAEiTI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkB3bIVi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLIU86SH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054AB1F00893;
-	Wed, 30 Sep 2026 16:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkB3bIVi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A84C1F000FF;
+	Wed, 30 Sep 2026 16:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785350;
-	bh=AbR4eZKGc4B3l5itfMLyROtZGDeAQMMkKQ7RNcaj0zo=;
+	s=korg; t=1790785347;
+	bh=l4PtEH7EpF5iOfYMc1EwsSUx7YjQ+JfC9YSvYSBy0Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLIU86SHDN5HVmCGI/s93Gm6qzyd/yOkYzYHISkKAJIaHvWaVRJC83XZ6Vs63PHj5
-	 C69F+SVYhpt7HculMA7wSz1yXqxHmFbzTH/N3dx0FbePjpjN32cfNWPERdHqW5FT5h
-	 6aPcdu0fL7sLYDMzdY+w6lDrgchU9MyKBa4ujhY4=
+	b=HkB3bIVi0Zf6ovpOhFCSHRdBAy9xrUJXRTFDwuRBY7Uu4N5cIKFAcuAJVOlv8ipiL
+	 rwuiF8YcE+F6ST5uU+kd/6xKC41n+OoPkfs+BElkRxHR2JaSkWr9tQCQS1EH1BDWR8
+	 u9PwSGBdWtHv6YpiCEFC1B+MsKujal2nnjNbS9dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 477/982] vxlan: initialize _md in vxlan_xmit_one()
-Date: Wed, 30 Sep 2026 17:20:13 +0200
-Message-ID: <20260930152427.027492357@linuxfoundation.org>
+Subject: [PATCH 6.1 476/982] vxlan: Pull inner IP header in vxlan_xmit_one().
+Date: Wed, 30 Sep 2026 17:20:12 +0200
+Message-ID: <20260930152427.006736633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,70 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit be83178bfc44588f6e3adb827ed874c683193466 ]
+[ Upstream commit 31392048f55f98cb01ca709d32d06d926ab9760a ]
 
-If a VXLAN device is configured with both VXLAN_F_COLLECT_METADATA and
-VXLAN_F_GBP, and a packet is transmitted through it using an external
-ip_tunnel_info that lacks the IP_TUNNEL_VXLAN_OPT_BIT flag, md is left
-pointing to the uninitialized _md stack variable:
+Ensure the inner IP header is part of the skb's linear data before
+setting old_iph. Otherwise, on a non-linear skb, old_iph could point
+outside of the packet data.
 
-                if (test_bit(IP_TUNNEL_VXLAN_OPT_BIT, info->key.tun_flags)) {
-                        if (info->options_len < sizeof(*md))
-                                goto drop;
-                        md = ip_tunnel_info_opts(info);
-                }
+Unlike classical VXLAN, which always encapsulates Ethernet packets,
+VXLAN-GPE can transport IP packets directly. In that case, we need to
+look at skb->protocol to figure out if an Ethernet header is present.
 
-Because IP_TUNNEL_VXLAN_OPT_BIT is not set, md is not updated and remains
-pointing to _md. Later, vxlan_build_skb() is called with md, which
-eventually calls vxlan_build_gbp_hdr():
-
-        if (vxflags & VXLAN_F_GBP)
-                vxlan_build_gbp_hdr(vxh, md);
-
-Inside vxlan_build_gbp_hdr(), md->gbp is read:
-
-        if (!md->gbp)
-                return;
-        gbp = (struct vxlanhdr_gbp *)vxh;
-        ...
-        if (md->gbp & VXLAN_GBP_DONT_LEARN)
-                gbp->dont_learn = 1;
-
-If the stack contains garbage, this causes:
-1) VXLAN_HF_GBP flag to be spuriously set in the VXLAN header.
-2) gbp->dont_learn and gbp->policy_applied to be set from stack bits.
-3) gbp->policy_id to receive 16 bits of uninitialized kernel stack data,
-   leaking it onto the wire.
-
-Fix this by zero-initializing _md. If IP_TUNNEL_VXLAN_OPT_BIT is not
-present, md->gbp remains 0, and vxlan_build_gbp_hdr() returns early
-without modifying the VXLAN header.
-
-Fixes: ee122c79d422 ("vxlan: Flow based tunneling")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260906180111.1973188-2-edumazet@google.com
+Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/2aa75f6fa62ac9dbe4f16ad5ba75dd04a51d4b99.1718804000.git.gnault@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: be83178bfc44 ("vxlan: initialize _md in vxlan_xmit_one()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/vxlan/vxlan_core.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 6659a7df23a17..9327b38fb6fde 100644
+index 34cdc9b4221bc..6659a7df23a17 100644
 --- a/drivers/net/vxlan/vxlan_core.c
 +++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2440,7 +2440,7 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+@@ -2439,7 +2439,7 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	struct ip_tunnel_key *pkey;
  	struct ip_tunnel_key key;
  	struct vxlan_dev *vxlan = netdev_priv(dev);
- 	const struct iphdr *old_iph;
--	struct vxlan_metadata _md;
-+	struct vxlan_metadata _md = {};
+-	const struct iphdr *old_iph = ip_hdr(skb);
++	const struct iphdr *old_iph;
+ 	struct vxlan_metadata _md;
  	struct vxlan_metadata *md = &_md;
  	unsigned int pkt_len = skb->len;
- 	__be16 src_port = 0, dst_port;
+@@ -2453,8 +2453,15 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 	bool use_cache;
+ 	bool udp_sum = false;
+ 	bool xnet = !net_eq(vxlan->net, dev_net(vxlan->dev));
++	bool no_eth_encap;
+ 	__be32 vni = 0;
+ 
++	no_eth_encap = flags & VXLAN_F_GPE && skb->protocol != htons(ETH_P_TEB);
++	if (!skb_vlan_inet_prepare(skb, no_eth_encap))
++		goto drop;
++
++	old_iph = ip_hdr(skb);
++
+ 	info = skb_tunnel_info(skb);
+ 	use_cache = ip_tunnel_dst_cache_usable(skb, info);
+ 
 -- 
 2.53.0
 
