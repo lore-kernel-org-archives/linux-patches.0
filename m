@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D7A51CF6D;
-	Wed, 30 Sep 2026 18:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FA34CC63A;
+	Wed, 30 Sep 2026 18:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792776; cv=none; b=Er6o3vbqXecwJHC5fr1cL5HtxPa4S9f+z7he0smVpE7+k2EKi/a/Bc9st1vkxjzeFZRBB7azsE6VaZCh/NsL238bGpt9Zf0Giymenba9iw2yhYp4PUDi5vUUwE0M9w5LoJ8YPl71gUsTDGogghT60pb0UgMcqXRvD94dKmssFO0=
+	t=1790792779; cv=none; b=W/f3BaSNIz1VSuGFLQkuNhvaJ7Eechke30tTteYga6U7VYJJzHHHtuflRf22nLWmg2/NZGPxnfhdPdPZy1HzSrCph85A6uu16RPCeyQRxFQK2QO9UCahRHueHXf8otcSL6auiYSni4thqG42QvluwoCQva9d963WBYyRW/uahCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792776; c=relaxed/simple;
-	bh=U0Y8RMdMHo9Gva1i4bdQrGG3Cwd6VlM7E2myIQ9nfkc=;
+	s=arc-20240116; t=1790792779; c=relaxed/simple;
+	bh=+WylPMYPiZ/fr6uxcCrv65VdVdqMANEiB5bg66Oi6Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMUUiGcyYC68jfDT/TdBwGDNsmaWWM5L0hs4MS+gBldYvnQ/KBbZVwzvN1ZqEOe12mNMtGIG4OOCGoDGQ4W9t6jumBGRZb3QatTBBIiNu1+UqJc4ucFufrgD4tnyFRlRQo6K1dvxp0ogM3sUd09SbZ33ok4hGeMJffvOb59FUzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udpDGttt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jATWo7ym7MP4pRT6qRQJSl9fWN/GwEBbrnGjOARSo8HLmDnA4QEhHtRrm3PjCNndPDcm0SLeVWib40QIhjyQvcbz/olldf/qo5wotqc6CNgNHoOQwo8i9jVx2mz3np7paEsaXQVlWljPC0cL3Vmb3+zxOfCcloK61VonJK9hfDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=quTjvdzf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udpDGttt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC391F000FF;
-	Wed, 30 Sep 2026 18:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="quTjvdzf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B9C1F000FF;
+	Wed, 30 Sep 2026 18:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792775;
-	bh=ZRqvazFonJiYBut/oBYrr06f0xFP7O6+FNuClEltv8k=;
+	s=korg; t=1790792777;
+	bh=MHrXQTP8kVRAqLyJO1qzwvMpAXMR+sAuTC5itTMEB3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=udpDGttt5fs9jeRh5ri5AQeThJtzDDBXjXivX0eiU1f+XBgmL6NKjNQo+4XRjlak9
-	 Z8Jpn5xFMw5kRaYT+fzlxsn5r0oPG2IA7AIepwpx8Dm81OwbwDhEpM2JYe5E2T4zet
-	 Nr6X8rZVJiyNk9ykeUBdQLBLJFW7hbavWG0mgvPw=
+	b=quTjvdzffWnnzuPjuajEdtfBxfUHH/dkBJeDz5IaFoybHQjmPLC77iAB9BndSovyy
+	 NAgrSx3tp2LWnJv3+AI2O46k6IwL7VU8kEFLzPnOv5wdz1UdXiA2bV6wDBL48MSa0O
+	 blkb2RpYEX3tA1gMMNrQRP7+QQULYT5rkTaAkq7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexei Starovoitov <ast@kernel.org>,
-	syzbot@syzkaller.appspotmail.com,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Pu Lehui <pulehui@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 021/395] bpf: Register dtor for freeing special fields
-Date: Wed, 30 Sep 2026 17:24:43 +0200
-Message-ID: <20260930152341.077880629@linuxfoundation.org>
+Subject: [PATCH 6.18 022/395] bpf: Fix UAF due to concurrent consumption of ttrace lists in alloc_bulk
+Date: Wed, 30 Sep 2026 17:24:44 +0200
+Message-ID: <20260930152341.099019639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,339 +52,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 1df97a7453eec80c1912c2d0360290a3970a7671 ]
+[ Upstream commit 1c21452d02eec2f008e2c5535820f85adbd7587a ]
 
-There is a race window where BPF hash map elements can leak special
-fields if the program with access to the map value recreates these
-special fields between the check_and_free_fields done on the map value
-and its eventual return to the memory allocator.
+Syzkaller repeatedly triggered UAF splats related to nodes in
+waiting_for_gp_ttrace within the bpf memalloc:
 
-Several ways were explored prior to this patch, most notably [0] tried
-to use a poison value to reject attempts to recreate special fields for
-map values that have been logically deleted but still accessible to BPF
-programs (either while sitting in the free list or when reused). While
-this approach works well for task work, timers, wq, etc., it is harder
-to apply the idea to kptrs, which have a similar race and failure mode.
+BUG: KASAN: slab-use-after-free in llist_del_first+0x85/0x110 lib/llist.c:61
+Read of size 8 at addr ffff8881572cd080 by task syz.4.470/5112
+ ...
+ llist_del_first+0x85/0x110 lib/llist.c:61
+ alloc_bulk+0x193/0x460 kernel/bpf/memalloc.c:229
+ bpf_mem_refill+0x386/0x560 kernel/bpf/memalloc.c:436
 
-Instead, we change bpf_mem_alloc to allow registering destructor for
-allocated elements, such that when they are returned to the allocator,
-any special fields created while they were accessible to programs in the
-mean time will be freed. If these values get reused, we do not free the
-fields again before handing the element back. The special fields thus
-may remain initialized while the map value sits in a free list.
+Freed by task 14:
+ ...
+ __free_rcu kernel/bpf/memalloc.c:281 [inline]
+ __free_rcu_tasks_trace+0x48/0xd0 kernel/bpf/memalloc.c:291
+ rcu_tasks_invoke_cbs+0x1ec/0x3e0 kernel/rcu/tasks.h:571
+ rcu_tasks_one_gp+0x13d/0x220 kernel/rcu/tasks.h:621
+ rcu_tasks_kthread+0xf3/0x120 kernel/rcu/tasks.h:651
 
-When bpf_mem_alloc is retired in the future, a similar concept can be
-introduced to kmalloc_nolock-backed kmem_cache, paired with the existing
-idea of a constructor.
+The reason is that the UAF occurs after the RCU Tasks Trace GP expires:
+when the __free_rcu() callback runs, there is no synchronization
+protecting llist_del_all() against concurrent alloc_bulk() operating on
+waiting_for_gp_ttrace, leading to the race condition below:
 
-Note that the destructor registration happens in map_check_btf, after
-the BTF record is populated and (at that point) avaiable for inspection
-and duplication. Duplication is necessary since the freeing of embedded
-bpf_mem_alloc can be decoupled from actual map lifetime due to logic
-introduced to reduce the cost of rcu_barrier()s in mem alloc free path in
-9f2c6e96c65e ("bpf: Optimize rcu_barrier usage between hash map and bpf_mem_alloc.").
+CPU0                                           CPU1
+                                               __free_rcu (RCU Tasks Trace callback)
+alloc_bulk
+  llist_del_first(&c->waiting_for_gp_ttrace)
+    entry = smp_load_acquire(&head->first);
+    do {
+      if (entry == NULL)
+        return NULL;
+                                               free_all(llist_del_all(&c->waiting_for_gp_ttrace))
+                                                 llist_for_each_safe(pos, t, llnode)
+                                                   free_one(pos);
+      next = READ_ONCE(entry->next); <-- trigger UAF
+    } while (!try_cmpxchg(&head->first, &entry, next));
 
-As such, once all callbacks are done, we must also free the duplicated
-record. To remove dependency on the bpf_map itself, also stash the key
-size of the map to obtain value from htab_elem long after the map is
-gone.
+In addition, there is also a theoretical race condition on the
+free_by_rcu_ttrace list. This race requires two preconditions: an
+in-flight Tasks Trace GP keeping c->call_rcu_ttrace_in_progress == 1,
+and concurrent cross-CPU frees repopulating c->free_by_rcu_ttrace with
+new nodes. Under these conditions, the following scenario triggers UAF:
 
-  [0]: https://lore.kernel.org/bpf/20260216131341.1285427-1-mykyta.yatsenko5@gmail.com
+// CPU0
+// irq work is still busy (on PREEMPT_RT)
+alloc_bulk()
+  llist_del_first(&c->free_by_rcu_ttrace)
+    entry = smp_load_acquire(&head->first);
+    do {
+      if (entry == NULL)
+        return NULL;
 
-Fixes: 14a324f6a67e ("bpf: Wire up freeing of referenced kptr")
-Fixes: 1bfbc267ec91 ("bpf: Enable bpf_timer and bpf_wq in any context")
-Reported-by: Alexei Starovoitov <ast@kernel.org>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260227224806.646888-2-memxor@gmail.com
+        // CPU1
+        bpf_mem_alloc_destroy()
+          WRITE_ONCE(c->draining, true)
+          // wait for CPU0
+          irq_work_sync()
+
+                // CPU2
+                do_call_rcu_ttrace(tgt(CPU0))
+                  if (c->draining) {
+                    llist_del_all(&c->free_by_rcu_ttrace)
+                    free_all()
+                  }
+
+// CPU0 continue
+      next = READ_ONCE(entry->next); <-- trigger UAF
+    while (!try_cmpxchg(&head->first, &entry, next));
+
+Fix this by introducing a raw spinlock to synchronize the concurrent
+consumption on waiting_for_gp_ttrace and free_by_rcu_ttrace.
+
+Fixes: 04fabf00b4d3 ("bpf: Allow reuse from waiting_for_gp_ttrace list.")
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Suggested-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Acked-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20260905021139.4116529-1-pulehui@huaweicloud.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 1c21452d02ee ("bpf: Fix UAF due to concurrent consumption of ttrace lists in alloc_bulk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_mem_alloc.h |  6 +++
- kernel/bpf/hashtab.c          | 87 +++++++++++++++++++++++++++++++++++
- kernel/bpf/memalloc.c         | 58 ++++++++++++++++++-----
- 3 files changed, 140 insertions(+), 11 deletions(-)
+ kernel/bpf/memalloc.c | 50 ++++++++++++++++++++++++-------------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/include/linux/bpf_mem_alloc.h b/include/linux/bpf_mem_alloc.h
-index e45162ef59bb1..4ce0d27f8ea26 100644
---- a/include/linux/bpf_mem_alloc.h
-+++ b/include/linux/bpf_mem_alloc.h
-@@ -14,6 +14,8 @@ struct bpf_mem_alloc {
- 	struct obj_cgroup *objcg;
- 	bool percpu;
- 	struct work_struct work;
-+	void (*dtor_ctx_free)(void *ctx);
-+	void *dtor_ctx;
- };
- 
- /* 'size != 0' is for bpf_mem_alloc which manages fixed-size objects.
-@@ -32,6 +34,10 @@ int bpf_mem_alloc_percpu_init(struct bpf_mem_alloc *ma, struct obj_cgroup *objcg
- /* The percpu allocation with a specific unit size. */
- int bpf_mem_alloc_percpu_unit_init(struct bpf_mem_alloc *ma, int size);
- void bpf_mem_alloc_destroy(struct bpf_mem_alloc *ma);
-+void bpf_mem_alloc_set_dtor(struct bpf_mem_alloc *ma,
-+			    void (*dtor)(void *obj, void *ctx),
-+			    void (*dtor_ctx_free)(void *ctx),
-+			    void *ctx);
- 
- /* Check the allocation size for kmalloc equivalent allocator */
- int bpf_mem_alloc_check_size(bool percpu, size_t size);
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 070ac56d47e99..38da7f8657ef2 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -128,6 +128,11 @@ struct htab_elem {
- 	char key[] __aligned(8);
- };
- 
-+struct htab_btf_record {
-+	struct btf_record *record;
-+	u32 key_size;
-+};
-+
- static inline bool htab_is_prealloc(const struct bpf_htab *htab)
- {
- 	return !(htab->map.map_flags & BPF_F_NO_PREALLOC);
-@@ -472,6 +477,84 @@ static int htab_map_alloc_check(union bpf_attr *attr)
- 	return 0;
- }
- 
-+static void htab_mem_dtor(void *obj, void *ctx)
-+{
-+	struct htab_btf_record *hrec = ctx;
-+	struct htab_elem *elem = obj;
-+	void *map_value;
-+
-+	if (IS_ERR_OR_NULL(hrec->record))
-+		return;
-+
-+	map_value = htab_elem_value(elem, hrec->key_size);
-+	bpf_obj_free_fields(hrec->record, map_value);
-+}
-+
-+static void htab_pcpu_mem_dtor(void *obj, void *ctx)
-+{
-+	void __percpu *pptr = *(void __percpu **)obj;
-+	struct htab_btf_record *hrec = ctx;
-+	int cpu;
-+
-+	if (IS_ERR_OR_NULL(hrec->record))
-+		return;
-+
-+	for_each_possible_cpu(cpu)
-+		bpf_obj_free_fields(hrec->record, per_cpu_ptr(pptr, cpu));
-+}
-+
-+static void htab_dtor_ctx_free(void *ctx)
-+{
-+	struct htab_btf_record *hrec = ctx;
-+
-+	btf_record_free(hrec->record);
-+	kfree(ctx);
-+}
-+
-+static int htab_set_dtor(const struct bpf_htab *htab, void (*dtor)(void *, void *))
-+{
-+	u32 key_size = htab->map.key_size;
-+	const struct bpf_mem_alloc *ma;
-+	struct htab_btf_record *hrec;
-+	int err;
-+
-+	/* No need for dtors. */
-+	if (IS_ERR_OR_NULL(htab->map.record))
-+		return 0;
-+
-+	hrec = kzalloc(sizeof(*hrec), GFP_KERNEL);
-+	if (!hrec)
-+		return -ENOMEM;
-+	hrec->key_size = key_size;
-+	hrec->record = btf_record_dup(htab->map.record);
-+	if (IS_ERR(hrec->record)) {
-+		err = PTR_ERR(hrec->record);
-+		kfree(hrec);
-+		return err;
-+	}
-+	ma = htab_is_percpu(htab) ? &htab->pcpu_ma : &htab->ma;
-+	/* Kinda sad, but cast away const-ness since we change ma->dtor. */
-+	bpf_mem_alloc_set_dtor((struct bpf_mem_alloc *)ma, dtor, htab_dtor_ctx_free, hrec);
-+	return 0;
-+}
-+
-+static int htab_map_check_btf(const struct bpf_map *map, const struct btf *btf,
-+			      const struct btf_type *key_type, const struct btf_type *value_type)
-+{
-+	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
-+
-+	if (htab_is_prealloc(htab))
-+		return 0;
-+	/*
-+	 * We must set the dtor using this callback, as map's BTF record is not
-+	 * populated in htab_map_alloc(), so it will always appear as NULL.
-+	 */
-+	if (htab_is_percpu(htab))
-+		return htab_set_dtor(htab, htab_pcpu_mem_dtor);
-+	else
-+		return htab_set_dtor(htab, htab_mem_dtor);
-+}
-+
- static struct bpf_map *htab_map_alloc(union bpf_attr *attr)
- {
- 	bool percpu = (attr->map_type == BPF_MAP_TYPE_PERCPU_HASH ||
-@@ -2284,6 +2367,7 @@ const struct bpf_map_ops htab_map_ops = {
- 	.map_seq_show_elem = htab_map_seq_show_elem,
- 	.map_set_for_each_callback_args = map_set_for_each_callback_args,
- 	.map_for_each_callback = bpf_for_each_hash_elem,
-+	.map_check_btf = htab_map_check_btf,
- 	.map_mem_usage = htab_map_mem_usage,
- 	BATCH_OPS(htab),
- 	.map_btf_id = &htab_map_btf_ids[0],
-@@ -2306,6 +2390,7 @@ const struct bpf_map_ops htab_lru_map_ops = {
- 	.map_seq_show_elem = htab_map_seq_show_elem,
- 	.map_set_for_each_callback_args = map_set_for_each_callback_args,
- 	.map_for_each_callback = bpf_for_each_hash_elem,
-+	.map_check_btf = htab_map_check_btf,
- 	.map_mem_usage = htab_map_mem_usage,
- 	BATCH_OPS(htab_lru),
- 	.map_btf_id = &htab_map_btf_ids[0],
-@@ -2479,6 +2564,7 @@ const struct bpf_map_ops htab_percpu_map_ops = {
- 	.map_seq_show_elem = htab_percpu_map_seq_show_elem,
- 	.map_set_for_each_callback_args = map_set_for_each_callback_args,
- 	.map_for_each_callback = bpf_for_each_hash_elem,
-+	.map_check_btf = htab_map_check_btf,
- 	.map_mem_usage = htab_map_mem_usage,
- 	BATCH_OPS(htab_percpu),
- 	.map_btf_id = &htab_map_btf_ids[0],
-@@ -2499,6 +2585,7 @@ const struct bpf_map_ops htab_lru_percpu_map_ops = {
- 	.map_seq_show_elem = htab_percpu_map_seq_show_elem,
- 	.map_set_for_each_callback_args = map_set_for_each_callback_args,
- 	.map_for_each_callback = bpf_for_each_hash_elem,
-+	.map_check_btf = htab_map_check_btf,
- 	.map_mem_usage = htab_map_mem_usage,
- 	BATCH_OPS(htab_lru_percpu),
- 	.map_btf_id = &htab_map_btf_ids[0],
 diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
-index bd45dda9dc354..682a9f34214bd 100644
+index 682a9f34214bd..ed69c895cf865 100644
 --- a/kernel/bpf/memalloc.c
 +++ b/kernel/bpf/memalloc.c
-@@ -102,6 +102,8 @@ struct bpf_mem_cache {
- 	int percpu_size;
- 	bool draining;
- 	struct bpf_mem_cache *tgt;
-+	void (*dtor)(void *obj, void *ctx);
-+	void *dtor_ctx;
+@@ -119,6 +119,7 @@ struct bpf_mem_cache {
+ 	struct llist_head waiting_for_gp_ttrace;
+ 	struct rcu_head rcu_ttrace;
+ 	atomic_t call_rcu_ttrace_in_progress;
++	raw_spinlock_t lock;
+ };
  
- 	/* list of objects to be freed after RCU GP */
- 	struct llist_head free_by_rcu;
-@@ -260,12 +262,14 @@ static void free_one(void *obj, bool percpu)
- 	kfree(obj);
- }
+ struct bpf_mem_caches {
+@@ -214,25 +215,24 @@ static void alloc_bulk(struct bpf_mem_cache *c, int cnt, int node, bool atomic)
+ 	gfp = __GFP_NOWARN | __GFP_ACCOUNT;
+ 	gfp |= atomic ? GFP_NOWAIT : GFP_KERNEL;
  
--static int free_all(struct llist_node *llnode, bool percpu)
-+static int free_all(struct bpf_mem_cache *c, struct llist_node *llnode, bool percpu)
- {
- 	struct llist_node *pos, *t;
- 	int cnt = 0;
+-	for (i = 0; i < cnt; i++) {
+-		/*
+-		 * For every 'c' llist_del_first(&c->free_by_rcu_ttrace); is
+-		 * done only by one CPU == current CPU. Other CPUs might
+-		 * llist_add() and llist_del_all() in parallel.
+-		 */
+-		obj = llist_del_first(&c->free_by_rcu_ttrace);
+-		if (!obj)
+-			break;
+-		add_obj_to_free_list(c, obj);
+-	}
+-	if (i >= cnt)
+-		return;
++	/*
++	 * c->lock serializes concurrent llist_del_first() against
++	 * llist_del_all() in __free_rcu() and do_call_rcu_ttrace().
++	 */
++	scoped_guard(raw_spinlock_irqsave, &c->lock) {
++		for (i = 0; i < cnt; i++) {
++			obj = llist_del_first(&c->free_by_rcu_ttrace);
++			if (!obj)
++				break;
++			add_obj_to_free_list(c, obj);
++		}
  
- 	llist_for_each_safe(pos, t, llnode) {
-+		if (c->dtor)
-+			c->dtor((void *)pos + LLIST_NODE_SZ, c->dtor_ctx);
- 		free_one(pos, percpu);
- 		cnt++;
+-	for (; i < cnt; i++) {
+-		obj = llist_del_first(&c->waiting_for_gp_ttrace);
+-		if (!obj)
+-			break;
+-		add_obj_to_free_list(c, obj);
++		for (; i < cnt; i++) {
++			obj = llist_del_first(&c->waiting_for_gp_ttrace);
++			if (!obj)
++				break;
++			add_obj_to_free_list(c, obj);
++		}
  	}
-@@ -276,7 +280,7 @@ static void __free_rcu(struct rcu_head *head)
+ 	if (i >= cnt)
+ 		return;
+@@ -279,8 +279,12 @@ static int free_all(struct bpf_mem_cache *c, struct llist_node *llnode, bool per
+ static void __free_rcu(struct rcu_head *head)
  {
  	struct bpf_mem_cache *c = container_of(head, struct bpf_mem_cache, rcu_ttrace);
++	struct llist_node *llnode;
++
++	scoped_guard(raw_spinlock_irqsave, &c->lock)
++		llnode = llist_del_all(&c->waiting_for_gp_ttrace);
  
--	free_all(llist_del_all(&c->waiting_for_gp_ttrace), !!c->percpu_size);
-+	free_all(c, llist_del_all(&c->waiting_for_gp_ttrace), !!c->percpu_size);
+-	free_all(c, llist_del_all(&c->waiting_for_gp_ttrace), !!c->percpu_size);
++	free_all(c, llnode, !!c->percpu_size);
  	atomic_set(&c->call_rcu_ttrace_in_progress, 0);
  }
  
-@@ -308,7 +312,7 @@ static void do_call_rcu_ttrace(struct bpf_mem_cache *c)
+@@ -311,7 +315,8 @@ static void do_call_rcu_ttrace(struct bpf_mem_cache *c)
+ 
  	if (atomic_xchg(&c->call_rcu_ttrace_in_progress, 1)) {
  		if (unlikely(READ_ONCE(c->draining))) {
- 			llnode = llist_del_all(&c->free_by_rcu_ttrace);
--			free_all(llnode, !!c->percpu_size);
-+			free_all(c, llnode, !!c->percpu_size);
+-			llnode = llist_del_all(&c->free_by_rcu_ttrace);
++			scoped_guard(raw_spinlock_irqsave, &c->lock)
++				llnode = llist_del_all(&c->free_by_rcu_ttrace);
+ 			free_all(c, llnode, !!c->percpu_size);
  		}
  		return;
+@@ -546,6 +551,7 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 			c->objcg = objcg;
+ 			c->percpu_size = percpu_size;
+ 			c->tgt = c;
++			raw_spin_lock_init(&c->lock);
+ 			init_refill_work(c);
+ 			prefill_mem_cache(c, cpu);
+ 		}
+@@ -568,7 +574,7 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
+ 			c->objcg = objcg;
+ 			c->percpu_size = percpu_size;
+ 			c->tgt = c;
+-
++			raw_spin_lock_init(&c->lock);
+ 			init_refill_work(c);
+ 			prefill_mem_cache(c, cpu);
+ 		}
+@@ -620,7 +626,7 @@ int bpf_mem_alloc_percpu_unit_init(struct bpf_mem_alloc *ma, int size)
+ 		c->objcg = objcg;
+ 		c->percpu_size = percpu_size;
+ 		c->tgt = c;
+-
++		raw_spin_lock_init(&c->lock);
+ 		init_refill_work(c);
+ 		prefill_mem_cache(c, cpu);
  	}
-@@ -417,7 +421,7 @@ static void check_free_by_rcu(struct bpf_mem_cache *c)
- 	dec_active(c, &flags);
- 
- 	if (unlikely(READ_ONCE(c->draining))) {
--		free_all(llist_del_all(&c->waiting_for_gp), !!c->percpu_size);
-+		free_all(c, llist_del_all(&c->waiting_for_gp), !!c->percpu_size);
- 		atomic_set(&c->call_rcu_in_progress, 0);
- 	} else {
- 		call_rcu_hurry(&c->rcu, __free_by_rcu);
-@@ -635,13 +639,13 @@ static void drain_mem_cache(struct bpf_mem_cache *c)
- 	 * Except for waiting_for_gp_ttrace list, there are no concurrent operations
- 	 * on these lists, so it is safe to use __llist_del_all().
- 	 */
--	free_all(llist_del_all(&c->free_by_rcu_ttrace), percpu);
--	free_all(llist_del_all(&c->waiting_for_gp_ttrace), percpu);
--	free_all(__llist_del_all(&c->free_llist), percpu);
--	free_all(__llist_del_all(&c->free_llist_extra), percpu);
--	free_all(__llist_del_all(&c->free_by_rcu), percpu);
--	free_all(__llist_del_all(&c->free_llist_extra_rcu), percpu);
--	free_all(llist_del_all(&c->waiting_for_gp), percpu);
-+	free_all(c, llist_del_all(&c->free_by_rcu_ttrace), percpu);
-+	free_all(c, llist_del_all(&c->waiting_for_gp_ttrace), percpu);
-+	free_all(c, __llist_del_all(&c->free_llist), percpu);
-+	free_all(c, __llist_del_all(&c->free_llist_extra), percpu);
-+	free_all(c, __llist_del_all(&c->free_by_rcu), percpu);
-+	free_all(c, __llist_del_all(&c->free_llist_extra_rcu), percpu);
-+	free_all(c, llist_del_all(&c->waiting_for_gp), percpu);
- }
- 
- static void check_mem_cache(struct bpf_mem_cache *c)
-@@ -680,6 +684,9 @@ static void check_leaked_objs(struct bpf_mem_alloc *ma)
- 
- static void free_mem_alloc_no_barrier(struct bpf_mem_alloc *ma)
- {
-+	/* We can free dtor ctx only once all callbacks are done using it. */
-+	if (ma->dtor_ctx_free)
-+		ma->dtor_ctx_free(ma->dtor_ctx);
- 	check_leaked_objs(ma);
- 	free_percpu(ma->cache);
- 	free_percpu(ma->caches);
-@@ -1014,3 +1021,32 @@ int bpf_mem_alloc_check_size(bool percpu, size_t size)
- 
- 	return 0;
- }
-+
-+void bpf_mem_alloc_set_dtor(struct bpf_mem_alloc *ma, void (*dtor)(void *obj, void *ctx),
-+			    void (*dtor_ctx_free)(void *ctx), void *ctx)
-+{
-+	struct bpf_mem_caches *cc;
-+	struct bpf_mem_cache *c;
-+	int cpu, i;
-+
-+	ma->dtor_ctx_free = dtor_ctx_free;
-+	ma->dtor_ctx = ctx;
-+
-+	if (ma->cache) {
-+		for_each_possible_cpu(cpu) {
-+			c = per_cpu_ptr(ma->cache, cpu);
-+			c->dtor = dtor;
-+			c->dtor_ctx = ctx;
-+		}
-+	}
-+	if (ma->caches) {
-+		for_each_possible_cpu(cpu) {
-+			cc = per_cpu_ptr(ma->caches, cpu);
-+			for (i = 0; i < NUM_CACHES; i++) {
-+				c = &cc->cache[i];
-+				c->dtor = dtor;
-+				c->dtor_ctx = ctx;
-+			}
-+		}
-+	}
-+}
 -- 
 2.53.0
 
