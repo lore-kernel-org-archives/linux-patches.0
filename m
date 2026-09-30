@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BC23B3894;
-	Wed, 30 Sep 2026 19:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802DB3BA246;
+	Wed, 30 Sep 2026 19:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795521; cv=none; b=ABWOKqN4B5fOn0VtZ3ntHAaOLINtSP2cJYBP5z+jQlAsDrn6/xoFkBXySB7b7BcSkA3QBEBXNTJ8Rebpl/wJa5q3WjNS5oy0Lns6ArBnugPJjLhMu84CoRnsdZA37L/f5lEWaT2Y7HHuWUULLQH4FwA1I490RSyAY8ZFnLaSKHA=
+	t=1790795524; cv=none; b=mlKP6rq+U4gs4eOC4RfELMa+yNL1DNTjQwwf17FCj/xDx7NW6Eg4lAiz8Bcnl+Jx754/sd1U9g8sPfnS8gWx8IpVui0paLUiv0nvWlpwnbIGOkuFatBte4BDDAFVA9ZExb1e3DphXyq8oJkNQMhZQHH6hJcsXFTMhBCIsy90fw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795521; c=relaxed/simple;
-	bh=0j/jQDtbhwbRa65wewViLMLhoehq8FJzEQUW4mllAAY=;
+	s=arc-20240116; t=1790795524; c=relaxed/simple;
+	bh=NoaThQwgNuWmhBuCCMbizWYld7oL2MT4rHucNO1MT3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKLT6kG7Cu0yXdaRl++B4vCilyEx1an55xcFHc7Vy4QjaXQiW3aIqV4RnCxRfDwUuaSALoWUACqgdvxfHkAyA0D7zmFTtftuEZR9CpdY5xheSuy/f5GlK06A01q5A3PiQCbN0BQb1H2agKvN0WIbCqQeG+wURYt61hsomIvOXak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXFaclMb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AS5Dc2eBOJGMjqX812ZPuDHrTK1BeU2tBrcCg860MczSY+8SOpSUwBVPEETx6CKLIYO9Ak40yCsdofw1x8NZWPsfbey0AclLZGtxvae4VxwDRKGjW3/RiYKGYsZ5+0hk8ovi0DuKZ1ksnngr4Rr7OrOdU50c0eLM/7ubznz8Rro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zS4MfAdV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXFaclMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB8E1F000FF;
-	Wed, 30 Sep 2026 19:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zS4MfAdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D027C1F000FF;
+	Wed, 30 Sep 2026 19:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795520;
-	bh=nmvOY0GORlsL29607q1jgY36GVJuqzxxcCzMrndBjG0=;
+	s=korg; t=1790795523;
+	bh=LkycRJo0+DzUB34sni94b479pl43JgOGvmxxzVlQAM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GXFaclMbtZS9cgIoxhjIfvSOTMNn8q6GZ1FSivJVu1lqUUdc3xq0b4ZYaoJb9XZkQ
-	 unEcIIAu4JzmS9dDnxZ3L98PsPkUnWLagm2PYRqu3O5DOOP8XGLWHw2dC8MzMrYbsP
-	 nlJJXDppg0UtmDErIipsnsIR5DpmHQ10AD9u5hOQ=
+	b=zS4MfAdVNayM4iM5ggdWArXZtGxBCYMCD0Qr6XRWQgo4W37hb4iEGKQyX+T2rtZYO
+	 dWKYSbw8xZ+xd1CeV00ZFpTXyiKbV304Ahyrti/EUUtIvopgwIBBD1W92EprZlgkfa
+	 pks1ZR1PoJX9oUPH/9OQ5B+DaC2cLnfuV1CNgSZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Greg Marsden <greg.marsden@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0590/1193] octeontx2-af: fix PF/CGX debugfs PCI bus lookup
-Date: Wed, 30 Sep 2026 17:21:14 +0200
-Message-ID: <20260930152447.353688349@linuxfoundation.org>
+Subject: [PATCH 6.6 0591/1193] net/rds: fix tcp stream corruption with large pages
+Date: Wed, 30 Sep 2026 17:21:15 +0200
+Message-ID: <20260930152447.375394990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,62 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Greg Marsden <greg.marsden@oracle.com>
 
-[ Upstream commit 4f4b743c2d2bbc336cb164d9d3d2ed6956ad8437 ]
+[ Upstream commit 2ac09b5353fe6858411fdc8c6efa60d832e20f13 ]
 
-rvu_dbg_rvu_pf_cgx_map_display() locates each RVU PF PCI device via
-pci_get_domain_bus_and_slot() when printing the PF-to-CGX map. It
-assumed PF0 always sits on PCI bus 1 and derived other PF bus numbers
-as pf + 1, but the AF device can be enumerated on a different bus.
+rds_message_map_pages() assigns PAGE_SIZE bytes to every
+scatterlist entry, even when total_len ends in a partial page. The RDS
+congestion map is defined as 8192 bytes, so on systems with PAGE_SIZE
+greater than 8192 the scatterlist maps bytes beyond the end of the
+congestion map.  RDS-TCP transmits the SG contents according to those
+lengths, so the extra bytes become part of the TCP RDS stream and are
+interpreted as subsequent RDS message headers, corrupting the stream.
 
-Use rvu->pdev->bus->number as the base bus instead, so each PF lookup
-uses pf + start on systems where RVU functions are on contiguous buses
-but do not start at bus 1.
+Limit the final scatterlist mapping to the number of bytes remaining.
+This has no effect on systems with a 4K page size and allows RDS-TCP to
+be used on systems with 16K and larger page sizes.
 
-Fixes: e2fb373038654 ("octeontx2-af: Display CGX, NIX and PF map in debugfs.")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904085114.3385530-1-rkannoth@marvell.com
+The RDS selftest, which previously hung on 16K pages, now passes.
+
+Fixes: 7875e18e0996 ("RDS: Message parsing")
+Signed-off-by: Greg Marsden <greg.marsden@oracle.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/apxJjxvStibPI0AS@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c    | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/rds/message.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index 285ae29396342..5502f7452236f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -852,19 +852,25 @@ static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
- 	int pf, domain, blkid;
- 	u8 cgx_id, lmac_id;
- 	u16 pcifunc;
-+	u8 start;
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 9824e79e057f4..5d9286da53c9a 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -365,7 +365,9 @@ struct rds_message *rds_message_map_pages(unsigned long *page_addrs, unsigned in
+ 	for (i = 0; i < rm->data.op_nents; ++i) {
+ 		sg_set_page(&rm->data.op_sg[i],
+ 				virt_to_page((void *)page_addrs[i]),
+-				PAGE_SIZE, 0);
++				i == rm->data.op_nents - 1
++					? total_len - (i * PAGE_SIZE)
++					: PAGE_SIZE, 0);
+ 	}
  
--	domain = 2;
-+	domain = pci_domain_nr(rvu->pdev->bus);
- 	mac_ops = get_mac_ops(rvu_first_cgx_pdata(rvu));
- 	/* There can be no CGX devices at all */
- 	if (!mac_ops)
- 		return 0;
- 	seq_printf(filp, "PCI dev\t\tRVU PF Func\tNIX block\t%s\tLMAC\n",
- 		   mac_ops->name);
-+
-+	/* All the PF devices are on contiguous PCI bus numbers, but the PF0(AF)
-+	 * may not start from 1 always. Hence get domain and bus from PCI device.
-+	 */
-+	start = rvu->pdev->bus->number;
- 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
- 		if (!is_pf_cgxmapped(rvu, pf))
- 			continue;
- 
--		pdev =  pci_get_domain_bus_and_slot(domain, pf + 1, 0);
-+		pdev =  pci_get_domain_bus_and_slot(domain, pf + start, 0);
- 		if (!pdev)
- 			continue;
- 
+ 	return rm;
 -- 
 2.53.0
 
