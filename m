@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBC451DAEF;
-	Wed, 30 Sep 2026 17:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC74D515972;
+	Wed, 30 Sep 2026 17:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789835; cv=none; b=LBhNVt4wKXnG0CQcrjonRZidXUEgmWjJ4rnuSMG+TggxSH4Dar2PrgBIFQNq1yuDPFgb0oe6y67DOgpxFC4paP/QXzB2x9ewAD50b6iUMioKfLmKE19xNqo9carIyTlM5cTYAteidohDMJcWFinWS9KPITA1WzB2rEndCcGXD10=
+	t=1790789838; cv=none; b=hoXXlLe3wNQN8AAw7ytcIQAlEzUP6vxtFfHdY29iQZPBlfVnq9o/fB1YIm8zh3clxcw49MTjzU9tQG6qfouyCpz4qC9jQAj/j55RVRNl9eE8DNEWLf/UsS1+d2sAmpp3jpRiB9rQTU7UwgfYGR9iaEIRbqyhP9GN99hDi+2Dwsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789835; c=relaxed/simple;
-	bh=8uTEHwA0wTV2s3xxkDK51BSiL6bm+UEnJaKQXbQcc00=;
+	s=arc-20240116; t=1790789838; c=relaxed/simple;
+	bh=n+2fh9t+y3eOTm4Ufvk2CSpKNfkjk3IJ9gfV/fTmbXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUFlNbjD+bu7IriY6gKA0xleflxIDjYzt8JBC2yWPAF6YUaqIqvAMgXBxe59vumBZXozDnPjYGZnWSq3R/sp8Tnd1Dy9m5N5zpNsEIFBcdYZwq++Pd/F8wgNwvTx3AewCAsgs0QZDk0F+HEEBnV+O6EfEcawJg826iHWyBj0o34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdiBi1TH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WA1ipc/VrcgorR51TBUpbInOcWFCqQozpTNxPCuBJJBwpX9ijI/nb2SmHrYFwoEcfLjTUMlJD0vK1cLv9vZ76O3s/NokI7MoNNkgjgteKSg+BFl/C1x0KoZCnOdhEaBH4WyQHvn6waiznnWeQDDrmTuUt8cCc3S37MQmUuy7b/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxDlvawi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdiBi1TH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070E61F000FF;
-	Wed, 30 Sep 2026 17:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxDlvawi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AAE1F00899;
+	Wed, 30 Sep 2026 17:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789834;
-	bh=9xGuKNjdI5zqkAs7H5hgF58pvxUxd0ZUL6OzXQjpqz8=;
+	s=korg; t=1790789837;
+	bh=w3RmqIziagv12Quu7DAhKXWO6VWWrA1NpVu85B/Y2gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cdiBi1THI6lOSl/jQI32kR2iG3sr4J/wu9QIq8LQIyvJt5P+PNMowaQUbvNMBF/Av
-	 ru2J8h9Rr/9XxSbo9HmNqzIFsUTajh8MyKCAehskXzZb99UsAwm9W4c/iJNQIQMq1T
-	 JH3l2keeyD0kzrebkpNg97djXYuiNghvfmXtfMv4=
+	b=wxDlvawiOMIXnPUEaXLJj+g4E47kkGHVRqEqDiOCzbJ+Bs8k1RCdANKtSz2n213iO
+	 5MR8jZL9Nft2Kcbk+IlyX9tjfld9TSYQkdbg/1k98dxXvUW34azxGjSKEOCVYnSUls
+	 eLqvgwsT3kPAYCDkAMNLTiiiq0g1F5riz4+TgD7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Felix Fietkau <nbd@nbd.name>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 617/877] wifi: mt76: mt7996: bound the device EEPROM address before the EFUSE copy
-Date: Wed, 30 Sep 2026 17:25:28 +0200
-Message-ID: <20260930152427.966567362@linuxfoundation.org>
+Subject: [PATCH 6.12 618/877] xhci: Cleanup Candence controller PCI device and vendor ID usage
+Date: Wed, 30 Sep 2026 17:25:29 +0200
+Message-ID: <20260930152427.988336838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,50 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 13b3c29a782033ce4a230be9e5618032813dbcd4 ]
+[ Upstream commit f28a7d7db247af8b9f1090bd6b1ca1fa48a3f0e4 ]
 
-mt7996_mcu_get_eeprom() derives the destination of the EFUSE/EXT block
-copy from the address reported by the MCU response (event->addr, a
-device-controlled __le32) and clamps only the copy length, never the
-destination offset into dev->mt76.eeprom.data. A malicious or
-malfunctioning device can report an arbitrary address and drive an
-out-of-bounds write of up to MT7996_EXT_EEPROM_BLOCK_SIZE bytes past
-eeprom.data.
+Use predefined PCI vendor ID constant for Cadence controller in pci_ids.h
+Rename the Candence device ID to match the pattern other PCI vendor and
+device IDs use
 
-Reject a response whose address would place the copy outside eeprom.data
-before deriving the destination pointer. Devices that echo the requested
-in-bounds offset are unaffected.
-
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260625-b4-disp-16f99062-v1-2-aee52ecf61b9@proton.me
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-[ adapted mt7996_mcu_get_eeprom() changes to the older fixed 16-byte EFUSE implementation. ]
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/linux-usb/ZuMOfHp9j_6_3-WC@surfacebook.localdomain
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241106101459.775897-5-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: eae6460f6173 ("usb: cdnsp: fix wakeup from S3 after controller context loss")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -3586,7 +3586,13 @@ int mt7996_mcu_get_eeprom(struct mt7996_
- 	valid = le32_to_cpu(*(__le32 *)(skb->data + 16));
- 	if (valid) {
- 		u32 addr = le32_to_cpu(*(__le32 *)(skb->data + 12));
--		u8 *buf = (u8 *)dev->mt76.eeprom.data + addr;
-+		u8 *buf;
-+
-+		if (addr > dev->mt76.eeprom.size - MT7996_EEPROM_BLOCK_SIZE) {
-+			dev_kfree_skb(skb);
-+			return -EINVAL;
-+		}
-+		buf = (u8 *)dev->mt76.eeprom.data + addr;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -94,8 +94,7 @@
+ #define PCI_DEVICE_ID_ASMEDIA_3042_XHCI			0x3042
+ #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
  
- 		skb_pull(skb, 48);
- 		memcpy(buf, skb->data, MT7996_EEPROM_BLOCK_SIZE);
+-#define PCI_DEVICE_ID_CADENCE				0x17CD
+-#define PCI_DEVICE_ID_CADENCE_SSP			0x0200
++#define PCI_DEVICE_ID_CDNS_SSP				0x0200
+ 
+ static const char hcd_name[] = "xhci_hcd";
+ 
+@@ -508,9 +507,8 @@ static void xhci_pci_quirks(struct devic
+ 		if (pdev->device == 0x9203)
+ 			xhci->quirks |= XHCI_TRB_OVERFETCH;
+ 	}
+-
+-	if (pdev->vendor == PCI_DEVICE_ID_CADENCE &&
+-	    pdev->device == PCI_DEVICE_ID_CADENCE_SSP)
++	if (pdev->vendor == PCI_VENDOR_ID_CDNS &&
++	    pdev->device == PCI_DEVICE_ID_CDNS_SSP)
+ 		xhci->quirks |= XHCI_CDNS_SCTX_QUIRK;
+ 
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
 
 
