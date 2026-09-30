@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539893AFAE2;
-	Wed, 30 Sep 2026 18:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774813B42C0;
+	Wed, 30 Sep 2026 18:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794377; cv=none; b=S8Ppj5qbU8hSQH5M1Io09aj77wbm7pJNZov90hzLEOhvx3TQhff64Wx35Iudg3p+y+TQwZ1iffbxGyqoobcap0gBI0ESfU0cY2nBFi42QFoqkunKZ/I6FRgy9UX9UGC9UpOpbmZBJC2RxOai+p/E+cjWZ1aOmiwVM2BkfaW5LTg=
+	t=1790794380; cv=none; b=n5RkN35RwHTkCs8GKuSH18F28lHEhPXSXxMGOOUYGK95ypSDeTF6WGJKToEauo0ZA8WLDMYg+ElvlQNkUPYugHCQ0GHnJg1G4Ke5B52dgjVXNEi0D/cnZpXpBZP/krAtbFC3zmi1OEItT2zYbi8dKWHNZ2lWHXpfM4QNDWejsD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794377; c=relaxed/simple;
-	bh=fkW8C9MNjtUGMps+ph0SPefGFaJNYyW28OhkThaJLHI=;
+	s=arc-20240116; t=1790794380; c=relaxed/simple;
+	bh=kWmK3rq3+yTItz1HdS7sJOO59MfBd3YSbwh0YnlwcAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mseNuIh4iI6r+cBWo2C16Oo0ynAe39AvjbaxJdU0JRRni1EkuUf5yphPwv3U9J0i0wMcGlAzGh9sZZbF16UPsPiHv0Y5EYElIVC2hWtx3+TCjMUsd9tGxYGK98ICfYeEgYn2/KghSjRd5/vmS4qJwN0nL0sVnyD4nDC0MVz6Y8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJK/UrHg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=siHqACstBZCT15kBvXZwH11URj3OeW/VQXiggrsKe0eh+ey16LGl/xAC8qdLb9sU8d/0CluIa5H8Ll6Z3yiHjSEPBoHmIZklehmZdeDncJc1GjtcOGsGSUTSaADj4h+SNV5I3vjQff2Lq5ubg+gzukVt5o4jxIvH57H4gRViPPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+P3Uq/K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJK/UrHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E6B1F000FF;
-	Wed, 30 Sep 2026 18:52:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+P3Uq/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABAF1F000FF;
+	Wed, 30 Sep 2026 18:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794376;
-	bh=zkkEknWE+QDWAIJB0L5/Pv6g+PymsntZdVHqA6/znpY=;
+	s=korg; t=1790794379;
+	bh=gKzPlvXeMG/jhrO/n4todmMOb5NEh9wSer+eV9AkOLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HJK/UrHgBZ9JhtkwfOFa0NMTJS0qjso3ODz/teWgd1+BUbgMSMshkaKtnbF7U0RZN
-	 5CA9ywgJ61DN5PnslVpDuBT3wgxz+e1keUkKDCKo2HgW5ELGtcYLJP3J428ogP1g3o
-	 J/O8N8iBD/VIul9HB+HA5FeSIflJAf3acT8IY9D4=
+	b=N+P3Uq/K4RPs8LiA/9Pz+McAzzshDehZjLYKXq8GLgONeoZihrMzvqERr5rLsEOz3
+	 NPDoZWgB+5+qHmtspKtMGniYm9b5AxadVLMud3qtgVNJtvM3N7MYRehOGEH7v/MGnp
+	 I99MlTPce1cEtYzeLoQfgUcM3sQt87MjkJ6L9E2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	liyouhong <liyouhong@kylinos.cn>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0188/1193] btrfs: tree-checker: validate names in ROOT_REF and ROOT_BACKREF
-Date: Wed, 30 Sep 2026 17:14:32 +0200
-Message-ID: <20260930152438.372884258@linuxfoundation.org>
+Subject: [PATCH 6.6 0153/1193] ata: ahci: fail probe if BAR too small for claimed ports
+Date: Wed, 30 Sep 2026 17:13:57 +0200
+Message-ID: <20260930152437.606924431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,125 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: liyouhong <liyouhong@kylinos.cn>
 
-[ Upstream commit 0af37c217edf15fa21dac1c40822086df356c6bb ]
+[ Upstream commit c4086c6e1af757e1ff26fa2d2926b3ec0195de79 ]
 
-ROOT_REF and ROOT_BACKREF items contain a struct btrfs_root_ref followed
-by the subvolume name. Several readers assume that this layout is already
-valid and then use the on-disk name length directly. A corrupted item can
-therefore make those readers address bytes outside the item, and
-BTRFS_IOC_GET_SUBVOL_INFO can copy too many bytes into its fixed-size UAPI
-name buffer.
+When an AHCI controller is disabled in BIOS, its HOST_CAP register may
+contain a bogus value, e.g. 0xFFFFFFFF.
 
-Validate ROOT_REF and ROOT_BACKREF items in tree-checker before any reader
-uses them. Reject records that do not contain a non-empty name, whose
-name_len does not exactly describe the remaining item payload, or whose
-name exceeds BTRFS_NAME_LEN.
+Since CAP.NP (Number of Ports) is a zeroes based 5-bit register field,
+a value of 0x1f means 32 ports. If CAP.NP claims more ports than can
+physically fit within the mapped BAR region, accessing port registers
+beyond the BAR boundary causes a kernel panic.
 
-For BTRFS_IOC_GET_SUBVOL_INFO, copy only the validated on-disk name_len
-instead of deriving the copy length from the item size. The ioctl result is
-zeroed when allocated. That leaves the existing trailing zero byte
-untouched.
+Add validation in ahci_init_one() to check that the BAR size is
+sufficient for the number of ports claimed in CAP.NP. The check
+calculates the required MMIO size as:
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  required_size = 0x100 (global registers) + max_ports * 0x80
+
+If required_size exceeds the actual BAR size, the probe fails with
+-ENODEV, preventing the panic and providing a clear error message.
+
+Reported-by: liyouhong <liyouhong@kylinos.cn>
+Closes: https://lore.kernel.org/all/20260422080322.1006592-1-dayou5941@163.com/
+Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+Suggested-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: liyouhong <liyouhong@kylinos.cn>
+[cassel: commit log]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c        | 11 +++++------
- fs/btrfs/tree-checker.c | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 6 deletions(-)
+ drivers/ata/ahci.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index d17d1eff8eff4..506db4586b0f7 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -2167,7 +2167,6 @@ static int btrfs_ioctl_get_subvol_info(struct inode *inode, void __user *argp)
- 	struct btrfs_root_ref *rref;
- 	struct extent_buffer *leaf;
- 	unsigned long item_off;
--	unsigned long item_len;
- 	int slot;
- 	int ret = 0;
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 2d43307eddf95..1a4468a2d02e3 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1852,6 +1852,24 @@ static ssize_t remapped_nvme_show(struct device *dev,
  
-@@ -2242,17 +2241,17 @@ static int btrfs_ioctl_get_subvol_info(struct inode *inode, void __user *argp)
- 		btrfs_item_key_to_cpu(leaf, &key, slot);
- 		if (key.objectid == subvol_info->treeid &&
- 		    key.type == BTRFS_ROOT_BACKREF_KEY) {
-+			u16 name_len;
-+
- 			subvol_info->parent_id = key.offset;
+ static DEVICE_ATTR_RO(remapped_nvme);
  
- 			rref = btrfs_item_ptr(leaf, slot, struct btrfs_root_ref);
-+			name_len = btrfs_root_ref_name_len(leaf, rref);
- 			subvol_info->dirid = btrfs_root_ref_dirid(leaf, rref);
- 
--			item_off = btrfs_item_ptr_offset(leaf, slot)
--					+ sizeof(struct btrfs_root_ref);
--			item_len = btrfs_item_size(leaf, slot)
--					- sizeof(struct btrfs_root_ref);
-+			item_off = btrfs_item_ptr_offset(leaf, slot) + sizeof(*rref);
- 			read_extent_buffer(leaf, subvol_info->name,
--					   item_off, item_len);
-+					   item_off, name_len);
- 		} else {
- 			ret = -ENOENT;
- 			goto out;
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 0689bd3832f8c..89380c41ca6cb 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1252,6 +1252,37 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
- 	return 0;
- }
- 
-+static int check_root_ref(struct extent_buffer *leaf, struct btrfs_key *key, int slot)
++static int ahci_validate_bar_size(struct pci_dev *pdev, int bar,
++				  struct ahci_host_priv *hpriv)
 +{
-+	struct btrfs_root_ref *rref;
-+	u32 item_size = btrfs_item_size(leaf, slot);
-+	u32 name_len;
++	u32 cap = readl(hpriv->mmio + HOST_CAP);
++	unsigned int max_ports = ahci_nr_ports(cap);
++	u32 last_port_end = 0x100 + (max_ports * 0x80);
++	resource_size_t bar_size = pci_resource_len(pdev, bar);
 +
-+	if (unlikely(item_size <= sizeof(*rref))) {
-+		generic_err(leaf, slot,
-+			    "invalid root ref item size for key type %u, have %u expect > %zu",
-+			    key->type, item_size, sizeof(*rref));
-+		return -EUCLEAN;
-+	}
-+
-+	rref = btrfs_item_ptr(leaf, slot, struct btrfs_root_ref);
-+	name_len = btrfs_root_ref_name_len(leaf, rref);
-+	if (unlikely(name_len > BTRFS_NAME_LEN)) {
-+		generic_err(leaf, slot,
-+			    "root ref name too long for key type %u, have %u max %u",
-+			    key->type, name_len, BTRFS_NAME_LEN);
-+		return -EUCLEAN;
-+	}
-+	if (unlikely(item_size != sizeof(*rref) + name_len)) {
-+		generic_err(leaf, slot,
-+			    "invalid root ref item size for key type %u, have %u expect %zu",
-+			    key->type, item_size, sizeof(*rref) + name_len);
-+		return -EUCLEAN;
++	if (last_port_end > bar_size) {
++		dev_warn(&pdev->dev,
++			 "BAR%d too small for %u ports (last port ends at %#x, BAR %pa)\n",
++			 bar, max_ports, last_port_end, &bar_size);
++		return -ENODEV;
 +	}
 +
 +	return 0;
 +}
 +
- __printf(3,4)
- __cold
- static void extent_err(const struct extent_buffer *eb, int slot,
-@@ -1871,6 +1902,10 @@ static enum btrfs_tree_block_status check_leaf_item(struct extent_buffer *leaf,
- 	case BTRFS_ROOT_ITEM_KEY:
- 		ret = check_root_item(leaf, key, slot);
- 		break;
-+	case BTRFS_ROOT_REF_KEY:
-+	case BTRFS_ROOT_BACKREF_KEY:
-+		ret = check_root_ref(leaf, key, slot);
-+		break;
- 	case BTRFS_EXTENT_ITEM_KEY:
- 	case BTRFS_METADATA_ITEM_KEY:
- 		ret = check_extent_item(leaf, key, slot, prev_key);
+ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ {
+ 	unsigned int board_id = ent->driver_data;
+@@ -1954,6 +1972,10 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ 	hpriv->mmio = pcim_iomap_table(pdev)[ahci_pci_bar];
+ 
++	rc = ahci_validate_bar_size(pdev, ahci_pci_bar, hpriv);
++	if (rc)
++		return rc;
++
+ 	/* detect remapped nvme devices */
+ 	ahci_remap_check(pdev, ahci_pci_bar, hpriv);
+ 
 -- 
 2.53.0
 
