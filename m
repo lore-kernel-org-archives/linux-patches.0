@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849F751AFFB;
-	Wed, 30 Sep 2026 17:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C25B51A148;
+	Wed, 30 Sep 2026 17:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788406; cv=none; b=RJhe4/KrMSfoDdJhVor/5OkGVi688En1MrW6B//MNrBDEetDe6yRfXxfE6gzZ610OnsXsNqkwiB1g7w9m6HqhUa6KMofKJzdxuXYGQQnO/8H0Ampd7EHF7BCqp+w1TN8+vRMqtZHpipv5CFnmh4OcccNy1EM+GTgtu3qQbp2w3g=
+	t=1790788409; cv=none; b=MtfNoBwuxNpiTODtH18ugd4OEutMwPgJsWJ8ykybrLiW4VuZOSh5vclcCqvdCo+ciAjxU5oswSLlDUY2nb74htxfOsJCdolLM32okVJouHEboUoeQndqjT0sbqWM1a1PhCySiVR8+hvHR0po2elSpaT4Ycx3gudprTcKsSGWqdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788406; c=relaxed/simple;
-	bh=DpkEIXQ6+Z8WQrOFyciXV8QYFtGLjciBc6Ch3EV/18A=;
+	s=arc-20240116; t=1790788409; c=relaxed/simple;
+	bh=JIPF6OO/fH5Rmjqp/yw1W/lo0u2AJ4O03uNEAnixl8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGVcpZ67eFIx78FCrK+FPVGUycgaX6OCUE6ENjiTJHqZkjWx8RMG4HdolUtmSZLZCO+okryFC4NoyPkkDN9hNfgrHlYSwUsfc5pw/JnAx5nx2qmh6WGNogiIpx5YvDskdB1vVvxvokMUlqgotzyJTtxcYYxTV+RfjyJegOFvUkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEqamEyF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nwsCxlKATwY12sB7rWs9oIsUKAGgIg0rntQx1CENX3+ogcfZytgdGEfLPrV4Kkk0Qkf6Ic8m18jLazcGV8g6Y2U44ajibRjd0fraCtbSCDP/foU+cmph70ZECg+ulpD9PMNBrX9Zl8OEwB+CZyVBzQeGSViqbluCy/c47HNUeFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pI72BsEw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEqamEyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6991F000FF;
-	Wed, 30 Sep 2026 17:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pI72BsEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4EC1F000FF;
+	Wed, 30 Sep 2026 17:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788405;
-	bh=voxJrtO3ohuhji+Hzhs2x5VD6aFf5IJVBg/oBBiBolM=;
+	s=korg; t=1790788408;
+	bh=Cf7Rvev/BGhQQOw2k19FuZGw3wb2aDgjeYsGZ/esE4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iEqamEyFgVxsXKkByn20F2LqObqoMtOwnEk+HllHJj+rzavttx5bgFBkt8Kn+0Z/s
-	 QFL3OeUhlBbkFsD2LIFrxtgaAESaocLdvahz1AmVBrrmakdr3sbe6yjwcwArngayGE
-	 WQ9SSmDCBCTchcPQk3ufGyqhFMr3KWyFzmPNX5Z4=
+	b=pI72BsEwL0qCjVQ/Jjt+gHvEZCWElexUv1BgMVv/Sbz3UxFAx6I3ZWz2EhaOFuiJw
+	 /GSvHRac0fEOxfp2JNlKnd0bH3MkPQinrhA5YrDn8rxtBawVs66hJ/x91s5nvELl2P
+	 qDgLbGKZnwhpME+gMS8bHEa4BmR+ZzMX7veNKCyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	syzbot+435fdb053cf98bfa5778@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/877] wifi: cfg80211: expose cfg80211_chandef_get_width()
-Date: Wed, 30 Sep 2026 17:16:19 +0200
-Message-ID: <20260930152416.207325841@linuxfoundation.org>
+Subject: [PATCH 6.12 069/877] wifi: mac80211: dont allow injecting frames wider than the chanctx
+Date: Wed, 30 Sep 2026 17:16:20 +0200
+Message-ID: <20260930152416.228476288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,83 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b5c1622762f0937a66b69b7f15466c28fe85dcf1 ]
+[ Upstream commit e14bf37bb2b3853012ff160131d1c6233f7a9cc9 ]
 
-This can be just a trivial inline, to simplify some code.
-Expose it, and also use it in util.c where it wasn't
-previously available.
+Frames injected on a monitor interface can carry a radiotap
+field requesting a bandwidth, which mac80211 passes down to
+the driver regardless of the the actual operational bandwidth.
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250311122534.c5c3b4af9a74.Ib25cf60f634dc359961182113214e5cdc3504e9c@changeid
+If the bandwidth requested is too wide, that triggers a warning
+in hwsim:
+
+  WARN_ON(hwsim_get_chanwidth(bw) > hwsim_get_chanwidth(confbw))
+
+Drop such frames entirely instead since they cannot be sent.
+
+Assisted-by: LLM
+Fixes: 646e76bb5daf ("mac80211: parse VHT info in injected frames")
+Reported-by: syzbot+435fdb053cf98bfa5778@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=435fdb053cf98bfa5778
+Link: https://patch.msgid.link/20260908122838.201719-13-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: e14bf37bb2b3 ("wifi: mac80211: don't allow injecting frames wider than the chanctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 11 +++++++++++
- net/wireless/chan.c    |  5 -----
- net/wireless/util.c    |  4 ++--
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ include/net/mac80211.h |  5 ++++-
+ net/mac80211/iface.c   |  2 +-
+ net/mac80211/tx.c      | 28 ++++++++++++++++++++++++++--
+ 3 files changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index f3915118c15d7..ede91e4709ee5 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -1008,6 +1008,17 @@ cfg80211_chandef_compatible(const struct cfg80211_chan_def *chandef1,
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 7d71a4149cdf9..41ae682015fc0 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -7228,11 +7228,14 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+  *
+  * @skb: packet injected by userspace
+  * @dev: the &struct device of this 802.11 device
++ * @chandef: the channel definition the frame will be transmitted on, or
++ *	%NULL to skip the bandwidth checks
+  *
+  * Return: %true if the radiotap header was parsed, %false otherwise
   */
- int nl80211_chan_width_to_mhz(enum nl80211_chan_width chan_width);
+ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+-				 struct net_device *dev);
++				 struct net_device *dev,
++				 const struct cfg80211_chan_def *chandef);
  
-+/**
-+ * cfg80211_chandef_get_width - return chandef width in MHz
-+ * @c: chandef to return bandwidth for
-+ * Return: channel width in MHz for the given chandef; note that it returns
-+ *	80 for 80+80 configurations
-+ */
-+static inline int cfg80211_chandef_get_width(const struct cfg80211_chan_def *c)
+ /**
+  * struct ieee80211_noa_data - holds temporary data for tracking P2P NoA state
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index ac0a7374d721a..3726dded1959a 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -929,7 +929,7 @@ static u16 ieee80211_monitor_select_queue(struct net_device *dev,
+ 	/* reset flags and info before parsing radiotap header */
+ 	memset(info, 0, sizeof(*info));
+ 
+-	if (!ieee80211_parse_tx_radiotap(skb, dev))
++	if (!ieee80211_parse_tx_radiotap(skb, dev, NULL))
+ 		return 0; /* doesn't matter, frame will be dropped */
+ 
+ 	len_rthdr = ieee80211_get_radiotap_len(skb->data);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 9bc1a80e80570..e78e71cb92f7f 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2084,8 +2084,29 @@ static bool ieee80211_validate_radiotap_len(struct sk_buff *skb)
+ 	return true;
+ }
+ 
++static bool ieee80211_rate_bw_usable(u16 rate_flags,
++				     const struct cfg80211_chan_def *chandef)
 +{
-+	return nl80211_chan_width_to_mhz(c->width);
++	int width;
++
++	if (!chandef)
++		return true;
++
++	if (rate_flags & IEEE80211_TX_RC_160_MHZ_WIDTH)
++		width = 160;
++	else if (rate_flags & IEEE80211_TX_RC_80_MHZ_WIDTH)
++		width = 80;
++	else if (rate_flags & IEEE80211_TX_RC_40_MHZ_WIDTH)
++		width = 40;
++	else
++		return true;
++
++	return width <= cfg80211_chandef_get_width(chandef);
 +}
 +
- /**
-  * cfg80211_chandef_valid - check if a channel definition is valid
-  * @chandef: the channel definition to check
-diff --git a/net/wireless/chan.c b/net/wireless/chan.c
-index b1a8d17baa62a..6f4b4770bf50b 100644
---- a/net/wireless/chan.c
-+++ b/net/wireless/chan.c
-@@ -55,11 +55,6 @@ void cfg80211_chandef_create(struct cfg80211_chan_def *chandef,
- }
- EXPORT_SYMBOL(cfg80211_chandef_create);
- 
--static int cfg80211_chandef_get_width(const struct cfg80211_chan_def *c)
--{
--	return nl80211_chan_width_to_mhz(c->width);
--}
--
- static u32 cfg80211_get_start_freq(const struct cfg80211_chan_def *chandef,
- 				   u32 cf)
+ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+-				 struct net_device *dev)
++				 struct net_device *dev,
++				 const struct cfg80211_chan_def *chandef)
  {
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 8cc205b9f105c..66f95044adb2a 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -5,7 +5,7 @@
-  * Copyright 2007-2009	Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright 2017	Intel Deutschland GmbH
-- * Copyright (C) 2018-2023 Intel Corporation
-+ * Copyright (C) 2018-2023, 2025 Intel Corporation
-  */
- #include <linux/export.h>
- #include <linux/bitops.h>
-@@ -2954,7 +2954,7 @@ bool cfg80211_radio_chandef_valid(const struct wiphy_radio *radio,
- 	u32 freq, width;
+ 	struct ieee80211_local *local = wdev_priv(dev->ieee80211_ptr);
+ 	struct ieee80211_radiotap_iterator iterator;
+@@ -2259,6 +2280,9 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+ 		struct ieee80211_supported_band *sband =
+ 			local->hw.wiphy->bands[info->band];
  
- 	freq = ieee80211_chandef_to_khz(chandef);
--	width = nl80211_chan_width_to_mhz(chandef->width);
-+	width = cfg80211_chandef_get_width(chandef);
- 	if (!ieee80211_radio_freq_range_valid(radio, freq, width))
- 		return false;
++		if (!ieee80211_rate_bw_usable(rate_flags, chandef))
++			return false;
++
+ 		info->control.flags |= IEEE80211_TX_CTRL_RATE_INJECT;
  
+ 		for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
+@@ -2448,7 +2472,7 @@ netdev_tx_t ieee80211_monitor_start_xmit(struct sk_buff *skb,
+ 	 * selected chandef above to accurately set injection rates and
+ 	 * retransmissions.
+ 	 */
+-	if (!ieee80211_parse_tx_radiotap(skb, dev))
++	if (!ieee80211_parse_tx_radiotap(skb, dev, chandef))
+ 		goto fail_rcu;
+ 
+ 	/* remove the injection radiotap header */
 -- 
 2.53.0
 
