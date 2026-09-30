@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6C151CF6D;
-	Wed, 30 Sep 2026 17:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1A951CF6E;
+	Wed, 30 Sep 2026 17:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789794; cv=none; b=V4ucd7fYQbiD0Hd3iDTbPtRMwczVZQK0H4OGy3oaoZv7e6umA8nQul+kzQNA9Ng6O1FJ/G7m3ZGPRSh2LQECLyoH3S99wOieeUU6NcN9vzkb1aYeZiZHbQhm+M7GDUsZSTClULl/D4AjHyKsX9s5ieIqYvQmwLqN4OZp9Jesgz8=
+	t=1790789796; cv=none; b=qT3AJbRvfc/T6MmeGKCvHHjb7jU9uQ4D49Q2g18YuLdE9sAqtwp4IzrDp33gai36Oe8ktUpaPmeDIc5qGCLUuwJb+Q6NUel4FMqOJdi7zh3ppvkFN6yHzQs+SX9hMjX4S3WDzVwY6aS5+5hl7NMMuLe2v6JFUJITHD77pzc8Xa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789794; c=relaxed/simple;
-	bh=MnRQ3rFYuk3zG/H5QHFz5N2U12PS/6w9KFDZWYt8dnM=;
+	s=arc-20240116; t=1790789796; c=relaxed/simple;
+	bh=n52TnoBOhoAVkCKesNeg/VJNmWFBSGffVy4x+h3KzuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3jhL5o9n45PVGzhDd45UhzxnJVmc/REV7cMP1xPTZP0zHe/rr5BF27AU8xiG5YO4y1s3oBNxfqcvVKtY2e5OsgUzQoN/mRFVohwZ+in7G58ZHSxX5YDldI9e7jG4YIqNq6n83rAYLvtKuFO1srXh6TykjvNtS+1K/J3ScVvw3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeZLIH9D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bYrO9SxaNHqN/iZ9cxNCf7ffbcsYGNOqucQ+M3CK5myNqgyAchMKeY3/R6hRdE+X6p1PUVzm11pEmSzCKrzisecULoZmCCFEJwZM1zfZcGXrGVNXQ4cVwGHli+3pCLlnn8naaxnXYAuFMWguTvTQNFENaqzZWbsx5jz4CMevlNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCFJiAb2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeZLIH9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EC51F000FF;
-	Wed, 30 Sep 2026 17:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCFJiAb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526721F00898;
+	Wed, 30 Sep 2026 17:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789792;
-	bh=dICqExFyzkroRQuqHpqVNe/iky+HCno7VwV7ZGPNMv4=;
+	s=korg; t=1790789794;
+	bh=RtCnzjGNwMY6lg2LRf6oa8rQ0mVid8IcrnGY8NxQjro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aeZLIH9DkiSOauC8emzunkRh/lZBs4qdFydrbVL/gnkUomPIzIKjSie/nPda1rpeR
-	 1nTJs9Nrz8DcPO7X/g9+nMYyPdhpN/pbB4Yccn6NxpQqMqXD441VkoLsHkPNcVr00B
-	 8PmMWCFJJ7T9ZSBstqX7qeJN6GVIDc+vUqkQuaPo=
+	b=uCFJiAb2VRPUkvEiiKuqBpRNPYguJ9WiU3MiyCPSyiRG8w1QwGBrj4tB4csrmCC85
+	 yL15FQobrvzOLXZojgsp9HacRlT0QOIyx8vMpFmX8XOU6OngalfpISs/LQAhJYja4z
+	 C+GOIlF1cFhQANTZ1kRTUCIuA20MDbf5xw3+LH/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 603/877] hwrng: stm32 - Fix runtime PM cleanup on registration failure
-Date: Wed, 30 Sep 2026 17:25:14 +0200
-Message-ID: <20260930152427.669362112@linuxfoundation.org>
+Subject: [PATCH 6.12 604/877] i3c: master: Do not treat master device as a duplicate target
+Date: Wed, 30 Sep 2026 17:25:15 +0200
+Message-ID: <20260930152427.690891227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,79 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 1163a476a568f6c0f852d469c8e4c5a5f805adac ]
+[ Upstream commit 4dc1b3eeba7991905a5b5b8129ebea51be7d87b7 ]
 
-stm32_rng_probe() enables autosuspend and runtime PM before registering the
-hwrng. If devm_hwrng_register() fails, probe returns with runtime PM left
-enabled and autosuspend still selected.
+i3c_master_search_i3c_dev_duplicate() searches the bus for another I3C
+device with the same PID as the reference device.  The search can match
+master->this, causing the controller itself to be returned as a
+duplicate.
 
-The remove callback also only disables runtime PM and does not undo
-pm_runtime_use_autosuspend().
+Since the controller is not a target device, it cannot be a duplicate of
+one.  Exclude master->this from matching so that the function only
+returns real duplicate target devices.
 
-Use devm_pm_runtime_enable() so runtime PM is unwound automatically on
-probe failure and driver detach. Since the managed cleanup also disables
-runtime PM,drop the remove callback.
-
-Fixes: c6a97c42e399 ("hwrng: stm32 - add support for STM32 HW RNG")
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ added the missing int ret declaration in stm32_rng_probe(). ]
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260807145638.168865-4-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+[ adjusted the duplicate-device comparison to match the older branch’s PID handling without nonzero-PID checks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/stm32-rng.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/i3c/master.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/char/hw_random/stm32-rng.c
-+++ b/drivers/char/hw_random/stm32-rng.c
-@@ -366,11 +366,6 @@ static int stm32_rng_init(struct hwrng *
- 	return 0;
- }
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2024,7 +2024,8 @@ i3c_master_search_i3c_dev_duplicate(stru
+ 	struct i3c_dev_desc *i3cdev;
  
--static void stm32_rng_remove(struct platform_device *ofdev)
--{
--	pm_runtime_disable(&ofdev->dev);
--}
--
- static int __maybe_unused stm32_rng_runtime_suspend(struct device *dev)
- {
- 	struct stm32_rng_private *priv = dev_get_drvdata(dev);
-@@ -516,6 +511,7 @@ static int stm32_rng_probe(struct platfo
- 	struct device_node *np = ofdev->dev.of_node;
- 	struct stm32_rng_private *priv;
- 	struct resource *res;
-+	int ret;
+ 	i3c_bus_for_each_i3cdev(&master->bus, i3cdev) {
+-		if (i3cdev != refdev && i3cdev->info.pid == refdev->info.pid)
++		if (i3cdev != refdev && i3cdev->info.pid == refdev->info.pid &&
++		    i3cdev != master->this)
+ 			return i3cdev;
+ 	}
  
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
-@@ -553,7 +549,9 @@ static int stm32_rng_probe(struct platfo
- 
- 	pm_runtime_set_autosuspend_delay(dev, 100);
- 	pm_runtime_use_autosuspend(dev);
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
- 
- 	return devm_hwrng_register(dev, &priv->rng);
- }
-@@ -565,7 +563,6 @@ static struct platform_driver stm32_rng_
- 		.of_match_table = stm32_rng_match,
- 	},
- 	.probe = stm32_rng_probe,
--	.remove = stm32_rng_remove,
- };
- 
- module_platform_driver(stm32_rng_driver);
 
 
