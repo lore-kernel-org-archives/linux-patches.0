@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3558509EF9;
-	Wed, 30 Sep 2026 17:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770543750CF;
+	Wed, 30 Sep 2026 17:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788211; cv=none; b=Am6pjMhRQyifzx2804JVeMIap8mt3xJ7kabzdTjhS2+EomGg8V5b+Cpw5PUYxJN94T6herlxSshP0KnYs5NV/yoU+fAoQIOqY0wlJb5IgkamouIQjb1lDZVsLOxU3v5RX8xt9lco8eGhFwv5C5X3wO1/wUSxHP7t8dDYeDkuOTM=
+	t=1790788213; cv=none; b=B6qrMTNCtQI5c5FGIRrSvoVGYHAy7GV0WM0HC+sEz6kMjFa/UHYUvyzFFSsTKC4fJRiCmaS4DLaIFmX63jFX9sdK/jQvGdlM7+vfxRJLg9FhTNlAdNqiATH1OPzQt1oRfxKZzzkEXx/+o+c+zO4PFKbl3/yDcsDve2YJZxMhf7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788211; c=relaxed/simple;
-	bh=QRoMLVEfHbLjzVLvF3sFB7eYdhgD86Q6kaz2pJx+Ntk=;
+	s=arc-20240116; t=1790788213; c=relaxed/simple;
+	bh=F5VSXDo3rxrZoJIVduT0YAhVur1D/xNt9vIpbOaWK1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kj3gySfGdODSuSdDY3pnxVRSXwaMQVwxYoMcEPJeL3CrnAKMXl45TUm+T3Wf8md2P1OuD//AQIvejIguu5Wvqagsqtwn8GIRucOog9WWOt50/eFLRel/ehoTI7qzctvBudxZjtWMZj4Eizxk7VUXeP3zZpNFINcLSR8c/8iPs4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6sZXcrv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gsGZ7sIARiXlfQAO2TDT5C+TJXwmWkm+kMrlA8aVNL2e/UBAe1FhTvsDWzIkiXpVbU2ZSZB7/7niSLv1Y7cM1VLsRNMtxF701YhKcN3RgaB4tCBkTbirA6nQ3okh3IszjRUtsiG1oLsprKiEVROxKxuL8EO5rrKfQzqUHIrD5kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVJJC8fY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6sZXcrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D391F000FF;
-	Wed, 30 Sep 2026 17:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVJJC8fY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C066E1F0089B;
+	Wed, 30 Sep 2026 17:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788209;
-	bh=eTtzi6sUpLZSxbc+R0P9YjB4aod5D3bPNnzUeZ/e4vA=;
+	s=korg; t=1790788212;
+	bh=TIxadgbk5KDIrMbwDRcQxikB5GhNeeyPy+2YJcW0r3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6sZXcrvl6ieo7CYe47NYMyeXq8X4b6PXhoM5j9GyxJHblPjIAOBuAxHHhSD3+afI
-	 o1nmi/huVcKfKnY4PnVGY8iqgDRv7mbsbQZvXBz0J4axCi22zO3K7+PqQMfNdJJYCB
-	 FHHJCm54LpGtsMlgK/yNSO+wp/VVv+IWfUXAg8kY=
+	b=SVJJC8fYYOvlxmVCVwMaqDReBbNsghHXxW4msHD2X8uUTBGzsh0i7q3YHrrWnPBcD
+	 A89b9jORm0jDfnIuuhcmxeSfcoPwcM1uG6NZbI0WnhUO2AiVzoFpC+tOyfmvItI9lg
+	 wBI1Ii1N9eUjehHdmyERBo4uQwfR5n5O6zrshfdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shmulik Cohen <anuk909@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/877] ipv6: mcast: Dont hold RTNL for MCAST_ socket options.
-Date: Wed, 30 Sep 2026 17:15:28 +0200
-Message-ID: <20260930152415.118030655@linuxfoundation.org>
+Subject: [PATCH 6.12 044/877] wifi: libipw: reject too-short association responses
+Date: Wed, 30 Sep 2026 17:15:55 +0200
+Message-ID: <20260930152415.697960556@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,231 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Shmulik Cohen <anuk909@gmail.com>
 
-[ Upstream commit e6e14d582dd2cbee362c48a1865f8d03ca0a5611 ]
+[ Upstream commit adb7118b7d2cfd7e8213c17d7d2829f353017754 ]
 
-In ip6_mc_source() and ip6_mc_msfilter(), per-socket mld data is
-protected by lock_sock() and inet6_dev->mc_lock is also held for
-some per-interface functions.
+libipw_handle_assoc_resp() reads the capability, status and aid fields
+of the 30-byte association response prefix and then computes the
+information element length as
 
-ip6_mc_find_dev_rtnl() only depends on RTNL.  If we want to remove
-it, we need to check inet6_dev->dead under mc_lock to close the race
-with addrconf_ifdown(), as mentioned earlier.
+	stats->len - sizeof(*frame)
 
-Let's do that and drop RTNL for the rest of MCAST_ socket options.
+stats->len is a u16 and sizeof() has type size_t, so the subtraction is
+evaluated as size_t and wraps instead of going negative.  Truncating
+that to the u16 length parameter of libipw_parse_info_param() turns a
+frame shorter than the fixed fields into a length near 64 KiB, and the
+parser then reads past the receive buffer.
 
-Note that ip6_mc_msfilter() has unnecessary lock dances and they
-are integrated into one to avoid the last-minute error and simplify
-the error handling.
+Both the ipw2100 and ipw2200 management receive paths reach this
+function having established only that the frame carries the generic
+24-byte three-address header.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250702230210.3115355-10-kuni1840@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reject the frame before any fixed field is touched.
+
+Found by an AI-assisted review of length arithmetic in management frame
+parsers.  Verified with a KUnit case under Generic KASAN on arm64 under
+QEMU; I do not have the hardware, so it is not tested on a real device.
+
+Fixes: 9e8571affd1c ("[PATCH] ieee80211: Add QoS (WME) support to the ieee80211 subsystem")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Shmulik Cohen <anuk909@gmail.com>
+Link: https://patch.msgid.link/20260812190412.18333-3-anuk909@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ipv6_sockglue.c |  5 ---
- net/ipv6/mcast.c         | 74 ++++++++++++++++++++++++----------------
- 2 files changed, 45 insertions(+), 34 deletions(-)
+ drivers/net/wireless/intel/ipw2x00/libipw_rx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/ipv6_sockglue.c b/net/ipv6/ipv6_sockglue.c
-index ab6987e72e3a7..0f1242138d176 100644
---- a/net/ipv6/ipv6_sockglue.c
-+++ b/net/ipv6/ipv6_sockglue.c
-@@ -123,11 +123,6 @@ static bool setsockopt_needs_rtnl(int optname)
- 	case IPV6_ADDRFORM:
- 	case IPV6_JOIN_ANYCAST:
- 	case IPV6_LEAVE_ANYCAST:
--	case MCAST_JOIN_SOURCE_GROUP:
--	case MCAST_LEAVE_SOURCE_GROUP:
--	case MCAST_BLOCK_SOURCE:
--	case MCAST_UNBLOCK_SOURCE:
--	case MCAST_MSFILTER:
- 		return true;
- 	}
- 	return false;
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 2f485e58a7d49..02919944d5570 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -299,31 +299,36 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
- }
- EXPORT_SYMBOL(ipv6_sock_mc_drop);
+diff --git a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
+index 33f5dbe274c74..762ed2704bf65 100644
+--- a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
++++ b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
+@@ -1302,6 +1302,9 @@ static int libipw_handle_assoc_resp(struct libipw_device *ieee, struct libipw_as
+ 	struct libipw_network *network = &network_resp;
+ 	struct net_device *dev = ieee->dev;
  
--static struct inet6_dev *ip6_mc_find_dev_rtnl(struct net *net,
--					      const struct in6_addr *group,
--					      int ifindex)
-+static struct inet6_dev *ip6_mc_find_dev(struct net *net,
-+					 const struct in6_addr *group,
-+					 int ifindex)
- {
- 	struct net_device *dev = NULL;
--	struct inet6_dev *idev = NULL;
-+	struct inet6_dev *idev;
- 
- 	if (ifindex == 0) {
--		struct rt6_info *rt = rt6_lookup(net, group, NULL, 0, NULL, 0);
-+		struct rt6_info *rt;
- 
-+		rcu_read_lock();
-+		rt = rt6_lookup(net, group, NULL, 0, NULL, 0);
- 		if (rt) {
--			dev = rt->dst.dev;
-+			dev = dst_dev(&rt->dst);
-+			dev_hold(dev);
- 			ip6_rt_put(rt);
- 		}
-+		rcu_read_unlock();
- 	} else {
--		dev = __dev_get_by_index(net, ifindex);
-+		dev = dev_get_by_index(net, ifindex);
- 	}
--
- 	if (!dev)
- 		return NULL;
--	idev = __in6_dev_get(dev);
++	if (stats->len < sizeof(*frame))
++		return 1;
 +
-+	idev = in6_dev_get(dev);
-+	dev_put(dev);
-+
- 	if (!idev)
- 		return NULL;
--	if (idev->dead)
--		return NULL;
-+
- 	return idev;
- }
- 
-@@ -371,16 +376,16 @@ void ipv6_sock_mc_close(struct sock *sk)
- }
- 
- int ip6_mc_source(int add, int omode, struct sock *sk,
--	struct group_source_req *pgsr)
-+		  struct group_source_req *pgsr)
- {
-+	struct ipv6_pinfo *inet6 = inet6_sk(sk);
- 	struct in6_addr *source, *group;
-+	struct net *net = sock_net(sk);
- 	struct ipv6_mc_socklist *pmc;
--	struct inet6_dev *idev;
--	struct ipv6_pinfo *inet6 = inet6_sk(sk);
- 	struct ip6_sf_socklist *psl;
--	struct net *net = sock_net(sk);
--	int i, j, rv;
-+	struct inet6_dev *idev;
- 	int leavegroup = 0;
-+	int i, j, rv;
- 	int err;
- 
- 	source = &((struct sockaddr_in6 *)&pgsr->gsr_source)->sin6_addr;
-@@ -389,13 +394,19 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 	if (!ipv6_addr_is_multicast(group))
- 		return -EINVAL;
- 
--	idev = ip6_mc_find_dev_rtnl(net, group, pgsr->gsr_interface);
-+	idev = ip6_mc_find_dev(net, group, pgsr->gsr_interface);
- 	if (!idev)
- 		return -ENODEV;
- 
-+	mutex_lock(&idev->mc_lock);
-+
-+	if (idev->dead) {
-+		err = -ENODEV;
-+		goto done;
-+	}
-+
- 	err = -EADDRNOTAVAIL;
- 
--	mutex_lock(&idev->mc_lock);
- 	for_each_pmc_socklock(inet6, sk, pmc) {
- 		if (pgsr->gsr_interface && pmc->ifindex != pgsr->gsr_interface)
- 			continue;
-@@ -492,6 +503,7 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 	ip6_mc_add_src(idev, group, omode, 1, source, 1);
- done:
- 	mutex_unlock(&idev->mc_lock);
-+	in6_dev_put(idev);
- 	if (leavegroup)
- 		err = ipv6_sock_mc_drop(sk, pgsr->gsr_interface, group);
- 	return err;
-@@ -500,12 +512,12 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- int ip6_mc_msfilter(struct sock *sk, struct group_filter *gsf,
- 		    struct sockaddr_storage *list)
- {
--	const struct in6_addr *group;
--	struct ipv6_mc_socklist *pmc;
--	struct inet6_dev *idev;
- 	struct ipv6_pinfo *inet6 = inet6_sk(sk);
- 	struct ip6_sf_socklist *newpsl, *psl;
- 	struct net *net = sock_net(sk);
-+	const struct in6_addr *group;
-+	struct ipv6_mc_socklist *pmc;
-+	struct inet6_dev *idev;
- 	int leavegroup = 0;
- 	int i, err;
- 
-@@ -517,10 +529,17 @@ int ip6_mc_msfilter(struct sock *sk, struct group_filter *gsf,
- 	    gsf->gf_fmode != MCAST_EXCLUDE)
- 		return -EINVAL;
- 
--	idev = ip6_mc_find_dev_rtnl(net, group, gsf->gf_interface);
-+	idev = ip6_mc_find_dev(net, group, gsf->gf_interface);
- 	if (!idev)
- 		return -ENODEV;
- 
-+	mutex_lock(&idev->mc_lock);
-+
-+	if (idev->dead) {
-+		err = -ENODEV;
-+		goto done;
-+	}
-+
- 	err = 0;
- 
- 	if (gsf->gf_fmode == MCAST_INCLUDE && gsf->gf_numsrc == 0) {
-@@ -553,24 +572,19 @@ int ip6_mc_msfilter(struct sock *sk, struct group_filter *gsf,
- 			psin6 = (struct sockaddr_in6 *)list;
- 			newpsl->sl_addr[i] = psin6->sin6_addr;
- 		}
--		mutex_lock(&idev->mc_lock);
-+
- 		err = ip6_mc_add_src(idev, group, gsf->gf_fmode,
- 				     newpsl->sl_count, newpsl->sl_addr, 0);
- 		if (err) {
--			mutex_unlock(&idev->mc_lock);
- 			sock_kfree_s(sk, newpsl, struct_size(newpsl, sl_addr,
- 							     newpsl->sl_max));
- 			goto done;
- 		}
--		mutex_unlock(&idev->mc_lock);
- 	} else {
- 		newpsl = NULL;
--		mutex_lock(&idev->mc_lock);
- 		ip6_mc_add_src(idev, group, gsf->gf_fmode, 0, NULL, 0);
--		mutex_unlock(&idev->mc_lock);
- 	}
- 
--	mutex_lock(&idev->mc_lock);
- 	psl = sock_dereference(pmc->sflist, sk);
- 	if (psl) {
- 		ip6_mc_del_src(idev, group, pmc->sfmode,
-@@ -580,12 +594,14 @@ int ip6_mc_msfilter(struct sock *sk, struct group_filter *gsf,
- 	} else {
- 		ip6_mc_del_src(idev, group, pmc->sfmode, 0, NULL, 0);
- 	}
-+
- 	rcu_assign_pointer(pmc->sflist, newpsl);
--	mutex_unlock(&idev->mc_lock);
- 	kfree_rcu(psl, rcu);
- 	pmc->sfmode = gsf->gf_fmode;
- 	err = 0;
- done:
-+	mutex_unlock(&idev->mc_lock);
-+	in6_dev_put(idev);
- 	if (leavegroup)
- 		err = ipv6_sock_mc_drop(sk, gsf->gf_interface, group);
- 	return err;
+ 	network->flags = 0;
+ 	network->qos_data.active = 0;
+ 	network->qos_data.supported = 0;
 -- 
 2.53.0
 
