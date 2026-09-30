@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714DE5383F2;
-	Wed, 30 Sep 2026 17:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E3752B1DE;
+	Wed, 30 Sep 2026 17:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790044; cv=none; b=F+V1gYAYlPJw8z4xGYCphCJ4mIUqlFTuE/wFqOOnfU2RfO7yqS3obhEom8I+kwga9NtsIeBGqx+L718Pm3p6wbp3iccag3okuaUafv89WV1ANTFsK7oDieHeQN4Usnfg5jVNaej0RvA6zoOWDUDun8DD4a3ylNrAAfH8YXE7kNk=
+	t=1790790046; cv=none; b=JljPqphHOdxHZk8gv/r3Gj587hkI8DryqXYWbu1xYTLHjmdlb+ZjSYeWqjQ9SwHcTIJVgzM7VqwPPB4W+ZDkZGXY2mac1DNMZjz6IOJ7r499rIkkxbfT3gLzqmhuehIKDr/2xk49nMNxkvFaBNXjfiergfg+hUfS1Q/bHbCm4R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790044; c=relaxed/simple;
-	bh=q6clitCg08pgrR+LtqTjLlTy8aUQAswKMTAz27A18fs=;
+	s=arc-20240116; t=1790790046; c=relaxed/simple;
+	bh=gCBq5ZfZiNBjsGECyjWYPA5/W9OZ8Bxt0yqsVrEoSOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyA3zVSqzKQt56roxQ/+YGFXZJEI+sfHbIJiN1nmpqHJl9/D0ak74fFzqpXUU+tVNxeR66maDhoVBpmX5zPj7+FyVNRvy1WTxiYgq6rTPcdeBRfZt2NYritKmjH0AQVz002ci+IUEcl5WIPiTiSoDESDNgxxj9t1SRVJo90mCz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMIxP2nl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GkXefuVgKL6LVRT4zeuh1l8x/Ki6nozdW9q0LtYYfutu5xsFgyVYpest4TesnL0M5lesiDwVOFq0cwCBT5NgmeBaHHAqrjKy1hMKwPIgKoLyciNlEUng5MyFbcwFPoCdkxuEaEywSTmjNibYKgGANhGHUDRYvy2ZSTuk8wPZ3G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KaPqIb2B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMIxP2nl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D98E1F000FF;
-	Wed, 30 Sep 2026 17:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaPqIb2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6431F000FF;
+	Wed, 30 Sep 2026 17:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790042;
-	bh=vpJNPIU3X6Frv+jVaSxbFfdFoZR7yIScoK2g8ziW/zw=;
+	s=korg; t=1790790045;
+	bh=lSSIbT/+48HRGU5P/zRsbehWUTtGGj4UEPUMEd1MTCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DMIxP2nlDn3s5j9P77/DYTdXRIFZPQ8pl/mmcusBYqIfzJ64uybn2w9jbtOsJwdgM
-	 BCh1Tjlge5fvADPSlRavgvuQr7l8jjFYAESppmdaIdvJGy3JGaatuuqiXmLc0AOCrw
-	 /aLfH1oUvRgwMPxzoi3kkrzsFIa0arNYfcgNXTWA=
+	b=KaPqIb2BXwB2azmUV683O+FcaPQMq+h5PFmXhLP0ES2iZs0zJp9bxu4plNrlb6hs5
+	 dBQbMoKGJimJfrnsEvDjItpIyr2hoyGIzKge9m92XHxHEZZchtF3pYWi1GgqIYOZPd
+	 UP+iGQjnXDTyVwluzJysewWUmezcFCkNBwyskAW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chao Shi <coshi036@gmail.com>,
+	Anthony Krowiak <akrowiak@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 645/877] nvme: skip the zoned limits update if the zone info query failed
-Date: Wed, 30 Sep 2026 17:25:56 +0200
-Message-ID: <20260930152428.577831771@linuxfoundation.org>
+Subject: [PATCH 6.12 646/877] s390/vfio-ap: Fix missing lock required to access list of ap_matrix_mdev objects
+Date: Wed, 30 Sep 2026 17:25:57 +0200
+Message-ID: <20260930152428.599389600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,101 +52,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
 
-[ Upstream commit 3838e80fcfb32e62baffb63c6dc0a60153665a4d ]
+[ Upstream commit 7fa61c29850d05e40ca9ed41bfdf57673023f581 ]
 
-nvme_query_zone_info() returns either a negative errno or a positive
-NVMe status code, but nvme_update_ns_info_block() only tests for the
-negative case:
+In order to traverse or add/remove ap_matrix_mdev objects in the
+matrix_dev->mdev_list, the matrix_dev->guests_lock mutex must be held.
+There are two functions that access the list without holding the mutex:
 
-	ret = nvme_query_zone_info(ns, lbaf, &zi);
-	if (ret < 0)
-		goto out;
+vfio_ap_mdev_probe function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The vfio_ap_mdev_probe function uses the matrix_dev->mdevs_lock
+mutex to guard the add of a newly created ap_matrix_mdev object to the
+matrix_dev->mdev_list. This mutex does not protect list access; its purpose
+is to guard against concurrent access to fields contained in an
+ap_matrix_mdev object. This could lead to kernel memory corruption or
+use-after-free if another mdev is created or removed concurrently.
 
-If the device fails the Identify Namespace (I/O Command Set specific)
-command, or the Identify Controller command issued by
-nvme_set_max_append(), the positive status falls through and setup
-continues with the zero-initialized zone info.  nvme_update_zone_info()
-then marks the queue zoned with chunk_sectors and ns->head->zsze set to
-zero.
+The adding of an ap_matrix_mdev object to matrix_dev->mdev_list
+is now guarded by the matrix_dev->guests_lock which is the correct
+way to protect against concurrent mdev_list access.
 
-blk_validate_zoned_limits() does not check chunk_sectors, so the limits
-commit succeeds.  blk_revalidate_disk_zones() does reject the zero zone
-size, but by then the limits are live and nothing rolls them back, so
-I/O keeps being submitted to a zoned queue with a zero zone size and
-disk_zone_no() shifts by ilog2(0):
+Also removed the following two lines of code because the matrix_mdev is
+allocated via vfio_alloc_device macro which uses kzalloc, so req_trigger
+and cfg_chg_trigger are already zero-initialised when the struct is
+allocated before the call to vfio_register_emulated_iommu_dev. This
+prevents a window whereby these triggers are set to NULL after
+the device is exposed to userspace.
 
-  nvme0n1: Invalid non power of two zone size (0)
-  UBSAN: shift-out-of-bounds in include/linux/blkdev.h:747:16
-  shift exponent -1 is negative
-   disk_zone_no include/linux/blkdev.h:747 [inline]
-   bio_straddles_zones include/linux/blkdev.h:1058 [inline]
-   blk_zone_wplug_handle_write block/blk-zoned.c:1423 [inline]
-   blk_zone_plug_bio.cold+0x25/0x1c8 block/blk-zoned.c:1605
-   blk_mq_submit_bio+0x18fb/0x2870 block/blk-mq.c:3196
-   submit_bh_wbc+0x575/0x740 fs/buffer.c:2824
-   __block_write_full_folio+0x728/0xdd0 fs/buffer.c:1933
+matrix_mdev->req_trigger = NULL;
+matrix_mdev->cfg_chg_trigger = NULL;
 
-Any device, firmware or NVMe-oF target that fails this one command
-reaches this.
+vfio_ap_mdev_for_queue function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The status_show function that supports display of the status attribute of
+the devices in /sys/bus/ap/devices calls the vfio_ap_mdev_for_queue
+function which iterates the matrix_dev->mdev_list to find the object
+representing the queue device whose status is to be displayed. In order to
+traverse this list, the matrix_dev->guests_lock mutex must be held.
 
-Skip the zoned limits update in that case, and log which of the two
-things happened: during a revalidation the queue keeps the zone
-geometry it was last validated with, and on a first scan the namespace
-is registered without zoned limits, so that it is still available as a
-handle for admin commands.  Neither of the paths in
-nvme_query_zone_info() that return a positive status logs anything, so
-the failure would otherwise be silent.
+To fix this, the guests_lock mutex is taken prior to taking the
+matrix_dev->mdevs_lock mutex in the status_show function. It is taken
+there rather than the vfio_ap_mdev_for_queue function - where it is
+needed - because it must be taken prior to the mdevs_lock mutex in order to
+adhere to the proper locking order and prevent a lockdep splat; also
+because the mdevs_lock is needed there to access fields within
+the matrix_mdev object in that function.
 
-zi.zone_size is an exact indicator: every path that returns a positive
-status returns before it is assigned, and after that the only failure
-left is -ENODEV, which the caller already handles.
+See the vfio-ap-locking.rst in the linux kernel tree.
 
-Found by FuzzNvme.
-Fixes: c85c9ab926a5 ("nvme: split nvme_update_zone_info")
+Fixes: 2c1ee8983aa3 ("s390/vfio-ap: prepare for dynamic update of guest's APCB on queue probe/remove")
 Cc: stable@vger.kernel.org
-Cc: Weidong Zhu <weizhu@fiu.edu>
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+[ Omitted deletion of cfg_chg_trigger initialization because the field is absent in Linux 6.12. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c |   26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2206,9 +2206,26 @@ static int nvme_update_ns_info_block(str
- 	if (!valid)
- 		capacity = 0;
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -786,11 +786,17 @@ static int vfio_ap_mdev_probe(struct mde
+ 	ret = vfio_register_emulated_iommu_dev(&matrix_mdev->vdev);
+ 	if (ret)
+ 		goto err_put_vdev;
+-	matrix_mdev->req_trigger = NULL;
++
++	/*
++	 * Take the matrix_dev->guests_lock mutex before adding the matrix_mdev
++	 * to the mdev_list. All functions that traverse the list must also hold
++	 * this lock to guard against additions to or removals from the list
++	 * while it is being traversed.
++	 */
++	mutex_lock(&matrix_dev->guests_lock);
+ 	dev_set_drvdata(&mdev->dev, matrix_mdev);
+-	mutex_lock(&matrix_dev->mdevs_lock);
+ 	list_add(&matrix_mdev->node, &matrix_dev->mdev_list);
+-	mutex_unlock(&matrix_dev->mdevs_lock);
++	mutex_unlock(&matrix_dev->guests_lock);
+ 	return 0;
+ 
+ err_put_vdev:
+@@ -2247,6 +2253,8 @@ static struct ap_matrix_mdev *vfio_ap_md
+ 	unsigned long apid = AP_QID_CARD(q->apqn);
+ 	unsigned long apqi = AP_QID_QUEUE(q->apqn);
+ 
++	lockdep_assert_held(&matrix_dev->guests_lock);
++
+ 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+ 		if (test_bit_inv(apid, matrix_mdev->matrix.apm) &&
+ 		    test_bit_inv(apqi, matrix_mdev->matrix.aqm))
+@@ -2266,6 +2274,7 @@ static ssize_t status_show(struct device
+ 	struct ap_matrix_mdev *matrix_mdev;
+ 	struct ap_device *apdev = to_ap_dev(dev);
+ 
++	mutex_lock(&matrix_dev->guests_lock);
+ 	mutex_lock(&matrix_dev->mdevs_lock);
+ 	q = dev_get_drvdata(&apdev->device);
+ 
+@@ -2314,6 +2323,7 @@ static ssize_t status_show(struct device
+ 
+ done:
+ 	mutex_unlock(&matrix_dev->mdevs_lock);
++	mutex_unlock(&matrix_dev->guests_lock);
+ 
+ 	return nchars;
+ }
+@@ -2746,6 +2756,12 @@ static void vfio_ap_mdev_cfg_add(unsigne
+ 
+ 	vfio_ap_filter_apid_by_qtype(apm_add, aqm_add);
  
 +	/*
-+	 * A failed zone info query leaves zi zero-initialized, so skip the
-+	 * zoned limits update instead of configuring the queue from it.
-+	 * During a revalidation that keeps the zone geometry the queue was
-+	 * last validated with; on a first scan the namespace is registered
-+	 * without zoned limits, so that it is still available as a handle
-+	 * for admin commands.
++	 * It is safe to traverse this list here because the
++	 * required guard - matrix_dev->guests_lock - is taken in the
++	 * vfio_ap_on_cfg_changed function prior to this function getting
++	 * called.
 +	 */
- 	if (IS_ENABLED(CONFIG_BLK_DEV_ZONED) &&
--	    ns->head->ids.csi == NVME_CSI_ZNS)
--		nvme_update_zone_info(ns, &lim, &zi);
-+	    ns->head->ids.csi == NVME_CSI_ZNS) {
-+		if (zi.zone_size)
-+			nvme_update_zone_info(ns, &lim, &zi);
-+		else
-+			dev_warn(ns->ctrl->device,
-+				 "zone info query failed for nsid %u, %s\n",
-+				 ns->head->ns_id,
-+				 blk_queue_is_zoned(ns->disk->queue) ?
-+				 "keeping the previous zone limits" :
-+				 "not enabling zoned mode");
-+	}
+ 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
+ 		/*
+ 		 * The mdevs_lock must be held in order to access fields
+@@ -2813,6 +2829,10 @@ void vfio_ap_on_cfg_changed(struct ap_co
+ 	if (!cur_cfg_info || !prev_cfg_info)
+ 		return;
  
- 	if (ns->ctrl->vwc & NVME_CTRL_VWC_PRESENT)
- 		lim.features |= BLK_FEAT_WRITE_CACHE | BLK_FEAT_FUA;
++	/*
++	 * Take the guests_lock mutex here to guard access to the
++	 * matrix_dev->mdev_list in the two functions called below.
++	 */
+ 	mutex_lock(&matrix_dev->guests_lock);
+ 
+ 	vfio_ap_mdev_on_cfg_remove(cur_cfg_info, prev_cfg_info);
 
 
