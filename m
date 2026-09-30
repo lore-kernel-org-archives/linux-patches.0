@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D424E0B66;
-	Wed, 30 Sep 2026 16:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1C437CD22;
+	Wed, 30 Sep 2026 16:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786113; cv=none; b=CQLooi1Hjg73fZQ2xl0oPuFMgie4b/TTH4Iyz9wA9W7m4ZvbmgTwj7tMnHwYnltvOelvRdCBUxBO/vICr9y+qyZi/xMaygfK0N7N6oRe2w8gro7mKeJnMv6/fqZ20ZomR5OJsXtp5x1k0Dy2Hy2gwuS3duqo917PQt48eA+GqOQ=
+	t=1790786116; cv=none; b=lwvVpPNSAxXqed+NIaRMcuDASBopIt0FgDxnMyzDfp5rXtjKEc0plP9tHCcoxXmZo94fJ3yCN6yRXv/4aD5mKIr+vzAPxmmqzqgGfKRCyCddmO/3hMcTG5/ONftuYazeigPcN73WCo9/X5Ov5eAXxT6X6efR2TEeASg/a/Hc7U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786113; c=relaxed/simple;
-	bh=jGkRBDRybdB3hZp+5nIGQUTmq2Zh6AkyP90CxbhaSMI=;
+	s=arc-20240116; t=1790786116; c=relaxed/simple;
+	bh=ACiYXIQm0//2ueVRssr1aaI2nqZKWO2zMk8w/3qaw4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tjb+Krd+sdjv3SZYO6jjw7cHXBJft95DtenqiAET4Gaoy2YVAsYQQ6r4rf1DgcsAOLLkorH7VDGRj4HjQrqpSBAix3hRqsNdEmY+Caqn+DBuIv8nfbOLETR9rCFb1Lkx9qiibmEyQLZAEL60Wt6CrEAFqiUBzFL1bzA6+68v7as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuY4plCe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=m2j7WT7/PePpGg3vRo3iSqHFwnnQlOGcWha+5k/3J1z9OBvWyKKmvv0J4bvLJnxzT2foNRG7yzFpu4d2Bb+GhY9rZKf7DOfgHUXblTjjqfjmAmECXlGgR/TfefbqAh8fl/7pvL6dOvqPiQ9L3MaPASWsxtPVykTXE+cL32d0b0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kINfP+9k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuY4plCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA9F1F000FF;
-	Wed, 30 Sep 2026 16:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kINfP+9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F871F000FF;
+	Wed, 30 Sep 2026 16:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786112;
-	bh=Yk8Ygv+Gs/NQxFAnU8QMQ1b2XFp83gAFJMtsi/xZMUw=;
+	s=korg; t=1790786115;
+	bh=8oE9XsUO2T5/ZHLkRPmOVmvgMpMw5pft1rNsG56WVno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BuY4plCe+34Z+1bA8B+v0RtTMUpmn/l/Vn2jg4Pnt3q3/3dtqSKTNeVa/SMoJl1Ta
-	 pTyT7XlDh1HcUlDPcBn7uS0Nl9HuerDysrcKl43UgbFUwATak48n9bXG7ejY8rGfis
-	 Sexma7R+XCydAyOvPsCYWAbexvRzPtt7CWfGUw4M=
+	b=kINfP+9k1JYbzUcSDsMzn9cwvTiOxkif1NbVgKHVt5XZllWIVdfzSS15cDMvdfLqg
+	 QFQwJThbaz1xwjGTShOdVmhgcrIou1Vk9PaQFyBCg+hQR8shIza1htPRLh/WSpOYzL
+	 YG3coov2Ws8r5PLom+2xfhjAki3PJDpXPSkmDWIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 748/982] Input: zero ff_effect before compat copy in input_ff_effect_from_user
-Date: Wed, 30 Sep 2026 17:24:44 +0200
-Message-ID: <20260930152432.822593187@linuxfoundation.org>
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 749/982] hwmon: (pmbus/core) increase number of phases and add new mask
+Date: Wed, 30 Sep 2026 17:24:45 +0200
+Message-ID: <20260930152432.843903494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,49 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit f84819ef8d66931ee3998fee3c4f03230f4cb6cc upstream.
+commit 06bd6794b5fd2163880ac3bfe973d4cc61f359f3 upstream.
 
-In the compat path input_ff_effect_from_user() aliases the caller's
-native struct ff_effect with the smaller struct ff_effect_compat and
-copies only the compat sized prefix:
+Increase the number of phases to 16 as a new upcoming device supports
+such a number.
 
-	compat_effect = (struct ff_effect_compat *)effect;
+While at it, add a new mask for controlling the source of the output
+voltage.
 
-	if (copy_from_user(compat_effect, buffer,
-			   sizeof(struct ff_effect_compat)))
+Note (groeck):
 
-The tail of the native structure is never written. Callers pass an
-uninitialized on-stack object, for example evdev_do_ioctl() for
-EVIOCSFF, so those bytes keep their previous stack contents.
-input_ff_upload() then stores the full native structure in
-ff->effects[id], from where a uinput based force feedback daemon can
-read it back via UI_BEGIN_FF_UPLOAD, disclosing kernel stack memory to
-userspace.
+This patch was meant to prepare for support of MAX20826 and compatible
+devices, which support more than 10 phases per page. However, Sashiko
+reports that the mp2975 driver already supports up to 14 phases, and the
+mp2856 driver supports up to 12 phases. This already has the potential for
+out-of-bounds writes when probing the affected chips, making this patch a
+bug fix.
 
-Zero the effect before the compat copy.
-
-Fixes: 2d56f3a32c0e ("Input: refactor evdev 32bit compat to be shareable with uinput")
+Fixes: 2c6fcbb21149 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2975 controller")
+Fixes: f9e5f289b686 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2856/mp2857 controller")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260911-hwmon-max20826-support-v2-1-5e30cbd97d84@analog.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
-Link: https://patch.msgid.link/20260901130629.24078-3-ivanrwcm25@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/input-compat.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/pmbus.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/input/input-compat.c
-+++ b/drivers/input/input-compat.c
-@@ -75,6 +75,8 @@ int input_ff_effect_from_user(const char
- 		 */
- 		compat_effect = (struct ff_effect_compat *)effect;
+--- a/drivers/hwmon/pmbus/pmbus.h
++++ b/drivers/hwmon/pmbus/pmbus.h
+@@ -241,6 +241,7 @@ enum pmbus_regs {
+ /*
+  * OPERATION
+  */
++#define PB_OPERATION_CONTROL_V_SRC	GENMASK(5, 4)
+ #define PB_OPERATION_CONTROL_ON		BIT(7)
  
-+		memset(effect, 0, sizeof(*effect));
-+
- 		if (copy_from_user(compat_effect, buffer,
- 				   sizeof(struct ff_effect_compat)))
- 			return -EFAULT;
+ /*
+@@ -376,7 +377,7 @@ enum pmbus_sensor_classes {
+ };
+ 
+ #define PMBUS_PAGES	32	/* Per PMBus specification */
+-#define PMBUS_PHASES	10	/* Maximum number of phases per page */
++#define PMBUS_PHASES	16	/* Maximum number of phases per page */
+ 
+ /* Functionality bit mask */
+ #define PMBUS_HAVE_VIN		BIT(0)
 
 
