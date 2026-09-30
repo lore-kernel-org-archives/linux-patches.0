@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318A751DE1D;
-	Wed, 30 Sep 2026 16:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C8351DDE9;
+	Wed, 30 Sep 2026 16:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784755; cv=none; b=QYt+y8qSUmr+JQJG6MiHN3MFA3qC3jbOPjS6UGmv9BBoPBNkJUPsANPH+KTSRkT08dQqZRA1vUmx/isFRt1A+JYFp04YSQeqxUBxdxKDdckpoMfoRGsWtR2GyNjmwEup+DdxOTAWl3bjaem165Py1ax2x0sEsAlxAigjng+BA9A=
+	t=1790784759; cv=none; b=quckgBmrRuy2jl9aZkp/XgcE2+mUYtwkc3nJ+xECTVbJP4I+FwkNIGoF1E8lqnC1rfvvgTimkvRfYQpwCksaLjL+d1yj5oPcL+tmEiDF5uKaVbIhGloTaq8BaxqhO2lVP235Td6JiLolOIl39fsmH9JKO7UCKQ1fCO1U4EFecv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784755; c=relaxed/simple;
-	bh=yEiuq4ChdZEmcqeFQo1m6zJWCGsgtIxGBePfwWIt/jo=;
+	s=arc-20240116; t=1790784759; c=relaxed/simple;
+	bh=jLmbTZ+f9hFfk2SVl0GKjbNiCCNQ2NJwdKzMV6/efh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1PJ4m/rAVab8cfxZAYRrijuZQFvjDFQ+pzzXMfF9y1A7bm/o/4XinEdxDId8j4YIX8d8etsC+NKa6jtCLQe5v8piViQWlu14j/07MJ3h4M02j8lHCrtE3jLe/a8qVfs0SWGejs2s/UQjSsTCpgttv0bNYkINXsa1kV7XhkNmc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtpiEBRM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nf1gojLD2V3zbfX6AYsblHpQWqw7SMcWjJIFDgl6JBSjtv7XZJSVzerWz42tQynwRJbP/XaAW0hQcI+CkXXGGfKnljtJepB73pC26PFqGd85wAuqwW0gVc0hh2OUdABVMD5kikLNTJNSzdSiZiy1/elPDtcuRrDXTg0oNooFcv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuiKH6pR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtpiEBRM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E091F00893;
-	Wed, 30 Sep 2026 16:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuiKH6pR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871F21F00899;
+	Wed, 30 Sep 2026 16:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784748;
-	bh=82j5j9K2A/chbEID6lUAeYQMoOyZdD/ccbONYIorb1M=;
+	s=korg; t=1790784754;
+	bh=1bkPtTWr+G8FWwIgjILTZEho4R2vTUOQUytTQSs2vvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gtpiEBRMw6v71XzvK00x4ZIzZh1qEms1nu+WmYGClekdvZ9dvxLte1VBs5889p60S
-	 n8gKeHhJEHGujS0eKlDM5rTj0q6oXPnA3cedyWXk0kiglSQVJMtHEqjBtBxI4GYPSR
-	 lXilXhno5WwP1tOFjXggyuChl7ONj5hUyU7cSsmg=
+	b=HuiKH6pREnnFBV71m429rwjq2LJk8aaAZY6Ko4kBKaBaTwUH/NS3Mm/CaXizBYJvL
+	 fOuCsAyZPpDcIlIwDZjCO1KHGdfWvyj9VO7zccaaMom7IuK/wfMWx5iyJeiC8MNGpf
+	 9rYuZyenXWF/XoqZg5LysGmlg+ZWfebyc8EKLHoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Tejun Heo <tj@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 266/982] wifi: iwlwifi: mvm: fix sched scan IE sizing
-Date: Wed, 30 Sep 2026 17:16:42 +0200
-Message-ID: <20260930152422.516559119@linuxfoundation.org>
+Subject: [PATCH 6.1 268/982] blk-cgroup: fix leaks and online flag on radix_tree_insert failure
+Date: Wed, 30 Sep 2026 17:16:44 +0200
+Message-ID: <20260930152422.559790310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,72 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 4f155d262b31b9b17e0f9856bdabe0968eb4930f ]
+[ Upstream commit dbbca20764382b4d411ec2918f4e278ffe547acc ]
 
-Scheduled scan built the probe request before iwl_mvm_scan_fits(),
-so oversized IEs could be copied into the fixed preq buffer before
-length validation. Move iwl_mvm_build_scan_probe() after the fits
-check.
+When radix_tree_insert() fails in blkg_create(), the error path has two
+issues:
 
-Also advertise max_sched_scan_ie_len using iwl_mvm_max_scan_ie_len()
-so userspace limits account for driver-inserted DS/TPC bytes.
+1. blkg->online is set to true unconditionally, even when the blkg was
+   never fully inserted.  Move the assignment inside the success block.
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Link: https://patch.msgid.link/20260714141909.53d2722c79e7.Iebb922efa6173c92f14cd8aa8b4e7f372c0a0fb7@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+2. The error path calls blkg_put() without first calling
+   percpu_ref_kill().  Because the refcount is still in percpu mode,
+   percpu_ref_put() only does this_cpu_sub() without checking for zero,
+   so blkg_release() is never triggered.  This permanently leaks the
+   blkg memory, its percpu iostat, policy data, the parent blkg
+   reference, and the cgroup css reference — the latter preventing the
+   cgroup from ever being destroyed.
+
+Fix by replacing blkg_put() with percpu_ref_kill(), matching the pattern
+used in blkg_destroy().
+
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Link: https://patch.msgid.link/20260715132407.1469777-1-cui.tao@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 4 +---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c     | 4 ++--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ block/blk-cgroup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 184de7b3ebbec..20a9dd6182173 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -495,9 +495,7 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
- 	hw->wiphy->max_sched_scan_reqs = 1;
- 	hw->wiphy->max_sched_scan_ssids = PROBE_OPTION_MAX;
- 	hw->wiphy->max_match_sets = iwl_umac_scan_get_max_profiles(mvm->fw);
--	/* we create the 802.11 header and zero length SSID IE. */
--	hw->wiphy->max_sched_scan_ie_len =
--		SCAN_OFFLOAD_PROBE_REQ_SIZE - 24 - 2;
-+	hw->wiphy->max_sched_scan_ie_len = iwl_mvm_max_scan_ie_len(mvm);
- 	hw->wiphy->max_sched_scan_plans = IWL_MAX_SCHED_SCAN_PLANS;
- 	hw->wiphy->max_sched_scan_plan_interval = U16_MAX;
- 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 1d9798775f8a9..1785e021c66b9 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -2906,8 +2906,6 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 	if (ret)
- 		return ret;
- 
--	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
--
- 	/* for 6 GHZ band only PSC channels need to be added */
- 	for (i = 0; i < params.n_channels; i++) {
- 		struct ieee80211_channel *channel = params.channels[i];
-@@ -2941,6 +2939,8 @@ int iwl_mvm_sched_scan_start(struct iwl_mvm *mvm,
- 		goto out;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index c02292b0bd694..7d7c99d93bdb8 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -334,15 +334,15 @@ static struct blkcg_gq *blkg_create(struct blkcg *blkcg, struct gendisk *disk,
+ 				blkg->pd[i]->online = true;
+ 			}
+ 		}
++		blkg->online = true;
  	}
+-	blkg->online = true;
+ 	spin_unlock(&blkcg->lock);
  
-+	iwl_mvm_build_scan_probe(mvm, vif, ies, &params);
-+
- 	uid = iwl_mvm_build_scan_cmd(mvm, vif, &hcmd, &params, type);
- 	if (uid < 0) {
- 		ret = uid;
+ 	if (!ret)
+ 		return blkg;
+ 
+ 	/* @blkg failed fully initialized, use the usual release path */
+-	blkg_put(blkg);
++	percpu_ref_kill(&blkg->refcnt);
+ 	return ERR_PTR(ret);
+ 
+ err_put_css:
 -- 
 2.53.0
 
