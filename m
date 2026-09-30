@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4924FECCF;
-	Wed, 30 Sep 2026 17:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C23B4FD27C;
+	Wed, 30 Sep 2026 17:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787710; cv=none; b=pDolgKLo+5PD5p2XfqngakJz7BHp5OmTqO2158dzxyMvNhZ4C6dLYvzijvQqGs6clE6iq84+JhEiqaro6m/GTXVYXO0zmCb6j+y04QQH2F9C10U119BDZwJ7k/4a9F+EI49C0in3OET4YQ2N7GV2eM/wwIPRllr2cXbRWmU5vkY=
+	t=1790787713; cv=none; b=ESDXtthnLQz2xOm55+yNlE2kdOro5FfbXi6M87n0Y8ulQ+rnjihqsoeSwTLrP/+F/8k7f08UP1MN6jlLMHP6Wf/JiFdGyjWoO6CFdPKA0KX30nQK021/gju9p6/UCbnJIvxgjnmH1kwVm3IJjG49OruYAx6L32puaUVjPDrMEd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787710; c=relaxed/simple;
-	bh=OxgdNchicilbfe0epVf7w+lTP0d4D810ECcGwR7m3uk=;
+	s=arc-20240116; t=1790787713; c=relaxed/simple;
+	bh=UjBuAiOVU4sdFpMOBODiPP/vwJmRxc2F8I2IQ3ByZOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVVZR2cnlwhrWq80yuaXScfxYLKoHgmA3BF5fkhCsaFzq4dHruH+zDK4LTtmkVGEvY7RZn0GSx2LyR8h+4DQUcU0vskCAsrmIfI0uTfFtntFlpIXE/S2i2Wl49bdPPBGCzCmsO7cdXE6wmF2z5znP8o4z3RbBQ6muBMY/52UG2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nag60cBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hnLt2DXvgo4HP8OQCZH5R/G8qImaHRPlldqbfh4eABX1Al++fZJdOz2t8mpj/VE6rIDV9M27VNOr9SNzTcZeWfqA525bppcdS5hPKfVokKfyjSuaTvjOQDJn9Jip6PBV/HEb+PH2lLWBfZ24FD7Rl03KvrGWyhmz3yYXLREbXYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBAXgiZ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nag60cBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118FF1F000FF;
-	Wed, 30 Sep 2026 17:01:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBAXgiZ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94961F000FF;
+	Wed, 30 Sep 2026 17:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787709;
-	bh=uBOGgJBrF66bp/IubAVCldM5XmF6P/HdrQUXUxY1Mcw=;
+	s=korg; t=1790787712;
+	bh=53MCLgAA63eLpNFfnx7Mf9Ml6kOhAu8HzQk6qrXEXOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nag60cBGsTkukhFLKK+piSmIzJzjYcPeoPZnXL+i+OChETiWmdVUupfND2eby+knC
-	 C7+YYkO465QPS3k0rAuLKiLR9bURFd5DtOsy4eY6NGyOHnN2o5ctmHwH7kauU1raY6
-	 UzrfrxJjLUK15ebdD3mjn7YrDBk19hl5D3As2k6Y=
+	b=ZBAXgiZ0Nc47SrQISi4mdZM0HYjx3PkstT/63HU5bs0kC6lj09hmwT7VJT1WPgvc7
+	 +yhEgPk9N4v9egGpAhwv1uy32qcIt3iJkfVVNt0b0PNBzK+czGJqfXLueXrH4tj2vZ
+	 DXbM3aJ3NbEeZqku74AA4WRsQKo2mIk4Njv0D/YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <killertofu@gmail.com>,
-	Wei Jie Law <98lawweijie@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 326/457] HID: wacom: fix OOB read in wacom_wac_pen_serial_enforce()
-Date: Wed, 30 Sep 2026 17:27:11 +0200
-Message-ID: <20260930152353.057126346@linuxfoundation.org>
+	"Jonghyuk Kim(MalHyuk)" <malhyuk97@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 7.2 300/457] drm/nouveau: RCU-free the scheduler-containing nouveau_sched
+Date: Wed, 30 Sep 2026 17:26:45 +0200
+Message-ID: <20260930152352.506025474@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,62 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie LAW <98lawweijie@gmail.com>
+From: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
 
-commit 9aa237cf66495b2426ddde8532e9b08a0ed83aaa upstream.
+commit f7eae6d8d768fabd6b59779ca7da79e02c74e113 upstream.
 
-The 'wacom_wac_pen_serial_enforce()' function may calculate and pass an
-invalid offset to hid_field_extract(), resulting in memory reads at
-incorrect addresses -- possibly beyond the end of the report.  If a
-field in the HID descriptor lists more usages than its Report Count
-actually reserves space for, the function's inner 'j' will walk past
-the end of the field:
+struct nouveau_sched embeds a struct drm_gpu_scheduler (base).
+nouveau_sched_destroy() calls nouveau_sched_fini() (which does
+drm_sched_fini(&sched->base)) and then frees the object with plain
+kfree(sched).
 
-	for (i = 0; i < report->maxfield; i++) {
-		for (j = 0; j < report->field[i]->maxusage; j++) {
-			...
-			value = hid_field_extract(hdev, raw_data + 1,
-						  offset + j * size, size);
+drm_sched_fence_get_timeline_name() returns fence->sched->name, and the
+scheduler fence keeps a .release callback so it is not ops-detached on
+signalling.  A finished fence exported to userspace via drm_syncobj /
+sync_file therefore keeps pointing at &sched->base after nouveau_sched_destroy(),
+and a later get_timeline_name() -- reachable unprivileged through
+SYNC_IOC_FILE_INFO -- dereferences freed memory (KASAN slab-use-after-free
+read).
 
-A descriptor listing 12288 usages against Report Count 1 has the loop
-extract the usage at index 12287 from bit offset 98296 -- about 12 KB
-past a 2-byte received report.  The value is stored in
-wacom_wac->serial[0] and can reach userspace as an MSC_SERIAL event,
-making this an information disclosure.
+Per the dma-fence lifetime contract the exporter must keep the data backing a
+signalled fence alive for an RCU grace period.  Free the scheduler-containing
+object with kfree_rcu() instead of kfree().
 
-Clamp the loop to field->report_count, the number of value slots the
-report holds.  Value slots past the last declared usage are still
-scanned; they reuse that usage (HID 1.11, 6.2.2.8).
-
-Verified on v6.12.105 with a UHID reproducer: a 2-byte report from
-such a descriptor trips KASAN before the patch and not after it.
-
-Fixes: 83417206427b ("HID: wacom: Queue events with missing type/serial data for later processing")
-Suggested-by: Jason Gerecke <killertofu@gmail.com>
+Fixes: 5f03a507b29e ("drm/nouveau: implement 1:1 scheduler - entity relationship")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Assisted-by: GLM:glm-5.3
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Jonghyuk Kim(MalHyuk) <malhyuk97@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260902012717.880724-1-malhyuk97@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_sched.c |    2 +-
+ drivers/gpu/drm/nouveau/nouveau_sched.h |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -113,8 +113,9 @@ static int wacom_wac_pen_serial_enforce(
+--- a/drivers/gpu/drm/nouveau/nouveau_sched.c
++++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
+@@ -517,7 +517,7 @@ nouveau_sched_destroy(struct nouveau_sch
+ 	struct nouveau_sched *sched = *psched;
  
- 	/* Queue events which have invalid tool type or serial number */
- 	for (i = 0; i < report->maxfield; i++) {
--		for (j = 0; j < report->field[i]->maxusage; j++) {
--			struct hid_field *field = report->field[i];
-+		struct hid_field *field = report->field[i];
-+
-+		for (j = 0; j < field->report_count; j++) {
- 			struct hid_usage *usage = &field->usage[j];
- 			unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 			unsigned int offset;
+ 	nouveau_sched_fini(sched);
+-	kfree(sched);
++	kfree_rcu(sched, rcu);
+ 
+ 	*psched = NULL;
+ }
+--- a/drivers/gpu/drm/nouveau/nouveau_sched.h
++++ b/drivers/gpu/drm/nouveau/nouveau_sched.h
+@@ -98,6 +98,7 @@ void nouveau_job_free(struct nouveau_job
+ 
+ struct nouveau_sched {
+ 	struct drm_gpu_scheduler base;
++	struct rcu_head rcu;
+ 	struct drm_sched_entity entity;
+ 	struct workqueue_struct *wq;
+ 	struct mutex mutex;
 
 
