@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C3151B196;
-	Wed, 30 Sep 2026 18:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525A851FCC1;
+	Wed, 30 Sep 2026 18:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792685; cv=none; b=t+XbshvzrdEolRJJjDdyulYwjXSESGPbJbcmqphizTEC2wXrEtHpTLDD3WAWuFgJxRUOh8W1lvuVrjDNXCE4M1jNRTG7s/MpYSFHZ4poZU/2DOdtINyUqQ940Ef61JKumKUsW3BLLbiJHFSgvNEny+hPDqLzm3PutzGq7PzfAHM=
+	t=1790792688; cv=none; b=Qa8TMyP3jvrsjKxWyyVWBehSpddN0yWR9fwKR7gBkyLpcg7FiA+xedUfaTgqprt54nEmtOccVpcxtkshdTthgkk15KxJip974QPbHHltzo87IHVQo8NNjfclcjp9zigg+S/gv+6wf0SJD2jjzyzyteSur+KAI7qrTY6Bn+htu/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792685; c=relaxed/simple;
-	bh=Sin/bEF/pjH41odPr/wgDLoujeE9elZzT4HTyJDlUX8=;
+	s=arc-20240116; t=1790792688; c=relaxed/simple;
+	bh=g4HIqiGGp8Z8+gMXprx8SyHdkUyfD7IQArIlK5XGy/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbPPjoSXiwv04N2wqfcB+S2Ij3e1GlTtGW5YUSFv+CP3yXeMnc4i2DAs+iXFvo6wzx78+h/Ugv+4wUW/jagAwPQm6d+QF/DyiOCL7Sz6AxIivWwv86vOJu7Wqj7XjYYTVGltRxInuZbL9iz35XBcacsE4aUbNFWvsxZcAjWqE/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2V6WmX7h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AFTFS+3WYDenwhoXJNvMcJy085Sd8us52sfFRHurpoTf1hu8mpyFUfb4qrLfCXZ+2LP/qXTEsSZOE0hUNsVAstj99yJtfOzwehCdiyqweH5X5p4s/Upk0thLpeb10AWj0Tmwz5ZXuJjpuV7dUnN1M6f5FVtHkzBWBVQzPAlRcdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjbMw56c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2V6WmX7h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26701F000FF;
-	Wed, 30 Sep 2026 18:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjbMw56c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C2C1F000FF;
+	Wed, 30 Sep 2026 18:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792684;
-	bh=4q8MY8vhbUnyCICzMXQ2IDMaeoLJuv98RqPKMTIA0Lg=;
+	s=korg; t=1790792687;
+	bh=Zq3rB7KQrRPmOz8peSHH3TPAQt5Zasu0duPTnF5Aj0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2V6WmX7hnoXiPvyAaKEkyoHWe1SgmYzdwyFpkxT4733fDz6f4KkTjXoI8lq9ffPoX
-	 an1I3tbdsaJjYAA+QmZA7EYQQctmucX01uMT6kKECyy1otEWbd4pfr6XeJCRyB9EwT
-	 pNHd3Qm76bOQgku/SGfE08LxtL49S92uJs+3EmMI=
+	b=xjbMw56cw89Xp+Dqd7RCwekq9f56/PC6HT3qliBjTcv566wUNFmaUr7CG6liSVsB+
+	 lNzE1GBHHY0NACBoIux8FNkqxVnrrIxVEuH+v2qThY25lKok+65XZ+Rc517biM4zpD
+	 mKYukEFCvnpKgTeRlmtxATYtosm24eiXwD/2zD3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 5.15 705/752] gpio: zynq: fix runtime PM leak on request error path
-Date: Wed, 30 Sep 2026 17:29:35 +0200
-Message-ID: <20260930152413.487899189@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 741/752] eventpoll: use hlist_is_singular_node() in __ep_remove()
+Date: Wed, 30 Sep 2026 17:30:11 +0200
+Message-ID: <20260930152414.252707028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,49 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit e9438ab5328a177c9c0e5df87eb92a7162841e98 upstream.
+[ Upstream commit 3d9fd0abc94d8cd430cc7cd7d37ce5e5aae2cd2b ]
 
-pm_runtime_get_sync() leaves the usage counter incremented even when it
-fails, and zynq_gpio_request() returns the error without dropping it.
+Replace the open-coded "epi is the only entry in file->f_ep" check
+with hlist_is_singular_node(). Same semantics, and the helper avoids
+the head-cacheline access in the common false case.
 
-gpiolib does not call ->free() when ->request() fails, so zynq_gpio_free(),
-which holds the only matching pm_runtime_put(), never runs. The reference
-is leaked and the controller can no longer runtime-suspend, so its clock
-stays enabled.
-
-Switch to pm_runtime_resume_and_get(), which only increments the usage
-counter on success.
-
-Fixes: 3242ba117e9b ("gpio: Add driver for Zynq GPIO controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260922092102.1053513-1-khurana.ridham222@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-1-2470f9eec0f5@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Stable-dep-of: a6dc643c6931 ("eventpoll: fix ep_remove struct eventpoll / struct file UAF")
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit 605963b245b2c436803cbbefddf5ee5cb326ceaa)
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zynq.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ fs/eventpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-zynq.c
-+++ b/drivers/gpio/gpio-zynq.c
-@@ -789,15 +789,7 @@ static int __maybe_unused zynq_gpio_runt
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 9e63923196fc5..4a39ed132c3db 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -738,7 +738,7 @@ static bool __ep_remove(struct eventpoll *ep, struct epitem *epi, bool force)
  
- static int zynq_gpio_request(struct gpio_chip *chip, unsigned int offset)
- {
--	int ret;
--
--	ret = pm_runtime_get_sync(chip->parent);
--
--	/*
--	 * If the device is already active pm_runtime_get() will return 1 on
--	 * success, but gpio_request still needs to return 0.
--	 */
--	return ret < 0 ? ret : 0;
-+	return pm_runtime_resume_and_get(chip->parent);
- }
- 
- static void zynq_gpio_free(struct gpio_chip *chip, unsigned int offset)
+ 	to_free = NULL;
+ 	head = file->f_ep;
+-	if (head->first == &epi->fllink && !epi->fllink.next) {
++	if (hlist_is_singular_node(&epi->fllink, head)) {
+ 		/* See eventpoll_release() for details. */
+ 		WRITE_ONCE(file->f_ep, NULL);
+ 		if (!is_file_epoll(file)) {
+-- 
+2.53.0
+
 
 
