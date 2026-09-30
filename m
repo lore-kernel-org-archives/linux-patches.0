@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B496519DF2;
-	Wed, 30 Sep 2026 17:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09721516157;
+	Wed, 30 Sep 2026 17:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788811; cv=none; b=nAD8QALArMBI0n0ZA7on0XcawkI0g6gT4nclCPjN/47VG1+aRMk59S6GI8zdz3+TZLVWR7STdAHWFbewRg6nfWayoIXR3awJITsDoselXt24W7szxyewrm+XApizJnVVU3s4/C3rCJXa54toqRqv6+FE+PzoHURbeGc8zJVyE+A=
+	t=1790788814; cv=none; b=E86Pr1vmb2n0LyVAq8thH5jHP1zd9HfsUfOWvOKW+6PdIyEFQf85yKDV3jqgkYkDohCO129ZB0uuDB3LWtTcWavjQK77WwUlo5kVj0UpqykubFb/vXs/OTDaeQNwR7gAf1/bn9RZ26h/RIiHxlk4XpCsiyyc5Zify/2Zyp6iots=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788811; c=relaxed/simple;
-	bh=oHVyqUsuc2Ns+nsY3rEs9yVPwYDSyb6hiUVdw6jNYow=;
+	s=arc-20240116; t=1790788814; c=relaxed/simple;
+	bh=r2OqPfeFHuwCs4nk/TAHVu8RJybFUaA0NVkpmwfI9eM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0K+G1RIijxg36kxqTfihm4rq7VPpxE3PnHpcIdvKTpoY1/fwwhmD2NIhVGLqXMq1+x8SLy2YZGftkHfopWjoogx56f9HIxSaontVa/LowFWrK+tjkj01jswO8Eb97zt99fhdE65P3QrOpyx0euezjzHP/0ASGl686hDoeIR9+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRm3nQdI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mi03clTZv+S8fEW9N+XWqQPrWuIWSLln7+7evv/ypTHhVoYDf2uKpi1oYMkHrjOlQm25X0zCdZUuzcHJv3b5aDBbt6WseuHPupnbICsS93anuX7/NhX0YIlIfNpBp7ZKzhwEC3G4jXEfO9b9pnycQzFnrlWu7/KXaqg9/OgoAyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNmDlDfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRm3nQdI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C281F000FF;
-	Wed, 30 Sep 2026 17:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNmDlDfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629C01F000FF;
+	Wed, 30 Sep 2026 17:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788810;
-	bh=NPULQL+EZKT+NhuacoNEwXoWTEIZyltIUmTQpy7dzgU=;
+	s=korg; t=1790788812;
+	bh=GCC7NoADvdOV/gMLQNBe4qJe+MULzuyQA+7kuwnXGCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xRm3nQdIpt6Nkh2j7SWH37UOZEaM92LpdGHFGxLHB0w211ixgsTKkjP3qmJGIlIcC
-	 yNJEv3xBDm48I+bn2nOepNlp9JE9UVpaeICOFCT+X66giZm7hN2UcLXQY+Ka7WJSji
-	 2Z+Y5BG3dqcid/ac+3nI7lu0EmXF4fXeVPjXiGBg=
+	b=iNmDlDfKAOE5sPbVrEMZyYL6mh8HUYW8DNRLgSEQOUCyhbB2NzHPz9on693OHEuCH
+	 3HB3CQTA7OQV7KEvqJiJG1LD8qKr0ziIS36UvyPpRlMYJdEJC8iGBh8qEf23EW88Fg
+	 MJnBMZ7JI6JG1L6IDpQ8sLhAd5pOKOIcMvtn6GxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 254/877] watchdog: msc313e: Fix premature reset during timeout update
-Date: Wed, 30 Sep 2026 17:19:25 +0200
-Message-ID: <20260930152420.203012889@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 211/877] i2c: imx: disable autosuspend on remove
+Date: Wed, 30 Sep 2026 17:18:42 +0200
+Message-ID: <20260930152419.281753758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,48 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 22737cfced627ffcb4b5c36d63bb3d4476f63213 upstream.
+commit e0c3e9d76adbe522dd420a766ce42d03ce887c29 upstream.
 
-Updating the 32-bit hardware timeout requires writing to two 16-bit
-registers sequentially.  If the watchdog is actively running, this
-non-atomic update might trigger a premature system reset.
+i2c_imx_probe() enables runtime PM autosuspend with
+pm_runtime_use_autosuspend(). The probe error path correctly undoes
+this setting with pm_runtime_dont_use_autosuspend(), but the normal
+remove path only disables runtime PM.
 
-Clear the watchdog counter before updating the registers to prevent the
-timer from timing out prematurely against an intermediate threshold.
+The runtime PM API requires pm_runtime_use_autosuspend() to be undone
+with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
+was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
+set therefore leaves the runtime PM state incompletely cleaned up after
+the driver is unbound.
 
-Fixes: e9800b799464 ("watchdog: Add Mstar MSC313e WDT driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260913065126.8350-1-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Add the missing pm_runtime_dont_use_autosuspend() call to the remove
+path.
+
+This issue was found by manual code inspection.
+
+Fixes: 588eb93ea49f ("i2c: imx: add runtime pm support to improve the performance")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Cc: <stable@vger.kernel.org> # v4.5+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260914091544.1667137-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/msc313e_wdt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/i2c/busses/i2c-imx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -47,6 +47,9 @@ static void msc313e_wdt_set_hw_timeout(s
- {
- 	u32 t = timeout * clk_get_rate(priv->clk);
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1599,6 +1599,7 @@ static void i2c_imx_remove(struct platfo
  
-+	/* Clear before to prevent premature reset during non-atomic updates. */
-+	writew(1, priv->base + REG_WDT_CLR);
-+
- 	writew(t & 0xffff, priv->base + REG_WDT_MAX_PRD_L);
- 	writew((t >> 16) & 0xffff, priv->base + REG_WDT_MAX_PRD_H);
- 	writew(1, priv->base + REG_WDT_CLR);
-@@ -77,6 +80,9 @@ static int msc313e_wdt_stop(struct watch
- {
- 	struct msc313e_wdt_priv *priv = watchdog_get_drvdata(wdev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ }
  
-+	/* Clear before to prevent premature reset during non-atomic updates. */
-+	writew(1, priv->base + REG_WDT_CLR);
-+
- 	writew(0, priv->base + REG_WDT_MAX_PRD_L);
- 	writew(0, priv->base + REG_WDT_MAX_PRD_H);
- 	writew(0, priv->base + REG_WDT_CLR);
+ static int i2c_imx_runtime_suspend(struct device *dev)
 
 
