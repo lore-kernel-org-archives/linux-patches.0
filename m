@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36BB5349AC;
-	Wed, 30 Sep 2026 17:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48935349B2;
+	Wed, 30 Sep 2026 17:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790692; cv=none; b=FHyVptovMS9E4v3G9f4tmuAiHPvhl1gu6+hBjECCJUtJzYiezcVhuHe4wNm7LhoRvOelJV5zkYBkhwtOXeZpGrX7R8Mmhyau01jju24IbN+7TWCmPDIZ1ZY21H4vOv2hwU+dnJH+Y0DD+4znRSX8yRPY6Vq5JoR/BT3DWfIgSxU=
+	t=1790790694; cv=none; b=dZlhZugVqRuVWi2Jmh7v4bBSei0h3Vm6j0x3cr36sOSRvW73/DUEdQcK9pru8YNlcMqP3Z038SGOQMcLWX12BJgwYbFwbM/xZRGrBl8KOwSEF2UtgPAeW6EstocQn8enKKepewc6dxDhV/e2YkMjZ6t/8be81B0Winbf6eMWHtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790692; c=relaxed/simple;
-	bh=lg5vLjXdjnc9JSg/qHBWJiONE1flNpU+aOL9hgqTXJQ=;
+	s=arc-20240116; t=1790790694; c=relaxed/simple;
+	bh=SevGltsNGjF5DTI5HbV5gYkmdQBr+VUeS08JcqWEKbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ep1tKxWwfY/QbMzSADad60KoYiXjuLOuhau6V12hBirE894yV8JUDFYycvPBc3HkOg16mZiD0MKni9YqHkQVN7DuVSu1v5aOghAQ+NzdWh6MplNmhDOZ41wer1YkpFlUVv52q/BIb25yx6IeY5hhymslk/WT42+FJvtPbIcGnL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1PKypkR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DeaP5RCGHYbZLURenEz1Sky65yXx0pyg9A8n5AnMZgtlbV/SA8KWexZZ+I58lNXEJ1p4vzoCqXncCQdgd+CiupQf6cSsL4ziC2DPaRKzoifmHEN4huEkoJXwwMRGzOAETAeedqUNZ9EeOtVF7RogNpoQZlR6+iLh1na/S9xAQKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8hxSXSC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1PKypkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2B11F000FF;
-	Wed, 30 Sep 2026 17:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8hxSXSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A511F000FF;
+	Wed, 30 Sep 2026 17:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790690;
-	bh=PFU7zJgfvUrVruS3jwiu2eGFZMFzY6pwdRaVREHZ08w=;
+	s=korg; t=1790790693;
+	bh=H5tS6Pmi8OBRP/0ZWP5mwT+4mgFBtZxZ0Rl3XoOOlmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p1PKypkRuH6NyUV58pdwpCHLYGA3dWqYaJZyFKO2+aFJySacldt7hsZ8TjjzLiheo
-	 vSwNPLK0rCND7g3H8Vm/cfFR6ahrSrqXt7h5UESDWUCj8R09yWxBf8pRYZIqdD2i69
-	 2h/c6QlaVS/C24Ss2Qe+mGPiw/MuiDUkWpnUV+aE=
+	b=n8hxSXSCKl/KIwjC/pK6NmJyL/S8iRVHd246nLn57htiEKI3xzjWRjo9+8K7UvpLX
+	 fMhc03dOJuGFXyHUKEJV8WG/+GDygDLgNTPK0LUiRneDRlX9K9I5w95+1Fjdf/Dgb3
+	 RTnS/+5NF3BAMADsl1cpzSYve3fLBPKpT/Tc9Cv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 041/752] firmware: arm_scmi: Validate BASE_ERROR_EVENT payload size
-Date: Wed, 30 Sep 2026 17:18:31 +0200
-Message-ID: <20260930152359.041377994@linuxfoundation.org>
+Subject: [PATCH 5.15 042/752] wifi: mac80211: dont call ieee80211_handle_reconfig_failure when not needed
+Date: Wed, 30 Sep 2026 17:18:32 +0200
+Message-ID: <20260930152359.062670895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,59 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 56e7e64cdd0e7209a58c8ec66028d63387402919 ]
+[ Upstream commit 7a8a3ff2815501f78f494808355ddf37e08647d0 ]
 
-BASE_ERROR_EVENT carries a variable number of message reports,
-with the count encoded in error_status. The notification parser used
-that count without checking whether the received payload contained all
-reported entries.
+In case reconfiguration of NAN fails, we call
+ieee80211_handle_reconfig_failure, that marks all interfaces as not in
+the driver.
+Then, at the error path of the reconfig, cfg80211_shutdown_all_interfaces
+is called to destroy all the interfaces.
 
-Reject truncated payloads before copying the report array.
+If we have any other interface but the NAN one, for example a BSS
+station, then when its state (links, stations) will be removed, we
+won't tell the driver about this, because we will think that the
+interfaces are not in the driver, and then drivers might remain with
+dangling pointers to objects like stations and links (at least for
+iwlwifi this is the case).
 
-Link: https://patch.msgid.link/20260517-scmi_fixes-v1-2-d86daec4defd@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+ieee80211_handle_reconfig_failure is meant to be called after we cleaned
+up the state in the driver, there is no reason to call it for NAN
+reconfiguration failure.
+
+Fix the code to just warn in such a case, as we do in other error paths
+in reconfig where it is too complicated to rewind.
+
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260513182548.6a25f3a0a6ec.I83d1f2a7eed20200a78a62757c6b193e3bab892b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/base.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/mac80211/util.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/base.c b/drivers/firmware/arm_scmi/base.c
-index 3fe172c03c247..40bc608ded142 100644
---- a/drivers/firmware/arm_scmi/base.c
-+++ b/drivers/firmware/arm_scmi/base.c
-@@ -292,6 +292,8 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
- 					  void *report, u32 *src_id)
- {
- 	int i;
-+	u32 error_status;
-+	size_t expected_sz;
- 	const struct scmi_base_error_notify_payld *p = payld;
- 	struct scmi_base_error_report *r = report;
- 
-@@ -305,10 +307,19 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
- 	if (evt_id != SCMI_EVENT_BASE_ERROR_EVENT || sizeof(*p) < payld_sz)
- 		return NULL;
- 
-+	expected_sz = offsetof(typeof(*p), msg_reports);
-+	if (payld_sz < expected_sz)
-+		return NULL;
-+
- 	r->timestamp = timestamp;
- 	r->agent_id = le32_to_cpu(p->agent_id);
--	r->fatal = IS_FATAL_ERROR(le32_to_cpu(p->error_status));
--	r->cmd_count = ERROR_CMD_COUNT(le32_to_cpu(p->error_status));
-+	error_status = le32_to_cpu(p->error_status);
-+	r->fatal = IS_FATAL_ERROR(error_status);
-+	r->cmd_count = ERROR_CMD_COUNT(error_status);
-+	expected_sz += r->cmd_count * sizeof(p->msg_reports[0]);
-+	if (payld_sz < expected_sz)
-+		return NULL;
-+
- 	for (i = 0; i < r->cmd_count; i++)
- 		r->reports[i] = le64_to_cpu(p->msg_reports[i]);
- 	*src_id = 0;
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 5b1799dfa6757..30185e82ed433 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2543,11 +2543,7 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 			}
+ 			break;
+ 		case NL80211_IFTYPE_NAN:
+-			res = ieee80211_reconfig_nan(sdata);
+-			if (res < 0) {
+-				ieee80211_handle_reconfig_failure(local);
+-				return res;
+-			}
++			WARN_ON(ieee80211_reconfig_nan(sdata));
+ 			break;
+ 		case NL80211_IFTYPE_AP_VLAN:
+ 		case NL80211_IFTYPE_MONITOR:
 -- 
 2.53.0
 
