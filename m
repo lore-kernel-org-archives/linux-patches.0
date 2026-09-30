@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2FC46F48B;
-	Wed, 30 Sep 2026 18:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F443AE1A9;
+	Wed, 30 Sep 2026 18:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794170; cv=none; b=tfGvUIaB4rvZlgHwElCvwG4JR1KN3Yr6UPWhZx+kEyMrTyxOG8e4iXapE0Cso3q9Xv8+9xZAzzi7jlBuj3Y4FM/4Qh7dRVHo2Mr204lPxAQbPFa2jdwY7wTadXyr+w3Wuf5SJ3rOx163z3LssZ8NHoag3jXC/dvpLOvXithUrUM=
+	t=1790794173; cv=none; b=BKa3Q+IU3+A18JWhtS4jaTRikumnJYWQo47rBC4KgEyVr1QsBEF6q39QzbDXx5G9sVY9P62mC+8nwf++ZFDMM38GNeovRLcDmaZ7xdUSZ1KVsA+eEeSb+rrxxnqETcGsrMlPfzBLlPs3gOtuW81+sfshxV8vanRWYocxDj/GcaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794170; c=relaxed/simple;
-	bh=cl6lnZqq4ggz6U5TVxH8TWIfeeG6AOs5LAsoYd16Zok=;
+	s=arc-20240116; t=1790794173; c=relaxed/simple;
+	bh=yw3YH70TPe+e83GuLuxmj+81z54/DvYK84nw3ZpLpQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKyaQ4tebUBOmaWSLSKDHN65nWMXTsFhRmnnc1sVVSCHPOQQQ9vP1y9GUkQbwnzfYsTgsLn4bLFWoFdK9Mxkfwc126A0LC1fQ1PbVgW1t5N3TNddtAbRB9FdPTSLL89FCslCh/2eCuTSkrAwqBttLcxwNVbOZjlHvMyJNDr653A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMMYM0T5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EaG3/pkXaLDR7C9d04czZdeJ+uZ41S+Jmxl0VrogKuoNkoNIjRP5XSn9O4DGu0leZsx2y75ASFqni2GYlmvgW5APVbhpiz0f5xK/bRDp63d2SyxKAOybdWOW/qrvFPUV53WFkIMb73uud3km2HEpeIzb9Vxp8XaNnNVji7C28j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IHi9PdOO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMMYM0T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087C21F000FF;
-	Wed, 30 Sep 2026 18:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IHi9PdOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74A81F0089A;
+	Wed, 30 Sep 2026 18:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794168;
-	bh=oQRgTTb3QtQZwsBfnKectZunsI84L+UMQLee6OBJxqI=;
+	s=korg; t=1790794171;
+	bh=XEuhgMtX/QrAvBPDjo19S8KbfW44DzBN/NgbkZSRP/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMMYM0T54wkp9FwlpBg1D8tc28IiTY+6+0ISER448+y4WibF9jB0eNNr0xPy9dcT4
-	 k3yFtVOj7R+eqBtLPPBGRqoiMVtLuiZ5R7T1HtZp9eQ1lDbh1+3cWhM4qGuB6kGHWL
-	 QfHOECpx+T1WSQjwZqYAHVs1bktV9zEAjHIidfTc=
+	b=IHi9PdOOSx7RmHsSaBuTfnU2F8bI3JrECCQ5R8SlbeybJU6hMEaLtMdTODDEnL+pK
+	 EAD9kd+K/90Eh74eGMS9aLzIDPhkzUNE2zrCUutrdWINnPp5Rrcm9Tf9okBMkQxiKu
+	 UzaZD4MjwpQUXXS6oAOXWpUMVmwQgw8OAw+zGQNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0117/1193] ACPICA: Fix condition check in acpi_ps_parse_loop()
-Date: Wed, 30 Sep 2026 17:13:21 +0200
-Message-ID: <20260930152436.825150093@linuxfoundation.org>
+Subject: [PATCH 6.6 0118/1193] ACPICA: Fix use-after-free in acpi_ds_terminate_control_method()
+Date: Wed, 30 Sep 2026 17:13:22 +0200
+Message-ID: <20260930152436.846910105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,36 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 8de27e2d83c0d07ae9443c6304575b0609394bfd ]
+[ Upstream commit 945e87267cfd90937b3c637f87324cbb56998b72 ]
 
-Fix condition check for AML_ELSE_OP in acpi_ps_parse_loop() to prevent
-out-of-bounds access.
+Fix use-after-free issue in acpi_ds_terminate_control_method() by
+clearing references to method locals and arguments.
 
-Link: https://github.com/acpica/acpica/commit/3b537b92336e
+Link: https://github.com/acpica/acpica/commit/36f22a94cb1b
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/1959692.tdWV9SEqCh@rafael.j.wysocki
+Link: https://patch.msgid.link/8730924.NyiUUSuA9g@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psloop.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/dsmethod.c | 43 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/acpi/acpica/psloop.c b/drivers/acpi/acpica/psloop.c
-index d0fd556361297..ceab76e3bcb82 100644
---- a/drivers/acpi/acpica/psloop.c
-+++ b/drivers/acpi/acpica/psloop.c
-@@ -425,7 +425,10 @@ acpi_status acpi_ps_parse_loop(struct acpi_walk_state *walk_state)
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index 6168597a96e6f..d0096425468cb 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -698,6 +698,8 @@ void
+ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
+ 				 struct acpi_walk_state *walk_state)
+ {
++	u32 i;
++	struct acpi_namespace_node *ref_node;
  
- 					ACPI_ERROR((AE_INFO,
- 						    "Skipping While/If block"));
--					if (*walk_state->aml == AML_ELSE_OP) {
-+					if ((walk_state->aml <
-+					     parser_state->aml_end)
-+					    && (*walk_state->aml ==
-+						AML_ELSE_OP)) {
- 						ACPI_ERROR((AE_INFO,
- 							    "Skipping Else block"));
- 						walk_state->parser_state.aml =
+ 	ACPI_FUNCTION_TRACE_PTR(ds_terminate_control_method, walk_state);
+ 
+@@ -708,6 +710,47 @@ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
+ 	}
+ 
+ 	if (walk_state) {
++		/*
++		 * Check if the return value is a ref_of reference to a method local
++		 * or argument. If so, clear the reference to avoid use-after-free
++		 * when the walk state is deleted.
++		 */
++		if (walk_state->return_desc &&
++		    (walk_state->return_desc->common.type ==
++		     ACPI_TYPE_LOCAL_REFERENCE)
++		    && (walk_state->return_desc->reference.class ==
++			ACPI_REFCLASS_REFOF)) {
++			ref_node = walk_state->return_desc->reference.object;
++			if (ref_node) {
++
++				/* Check against method locals */
++				for (i = 0; i < ACPI_METHOD_NUM_LOCALS; i++) {
++					if (ref_node ==
++					    &walk_state->local_variables[i]) {
++						acpi_ut_remove_reference
++						    (walk_state->return_desc);
++						walk_state->return_desc = NULL;
++						break;
++					}
++				}
++
++				/* Check against method arguments if not already cleared */
++				if (walk_state->return_desc) {
++					for (i = 0; i < ACPI_METHOD_NUM_ARGS;
++					     i++) {
++						if (ref_node ==
++						    &walk_state->arguments[i]) {
++							acpi_ut_remove_reference
++							    (walk_state->
++							     return_desc);
++							walk_state->
++							    return_desc = NULL;
++							break;
++						}
++					}
++				}
++			}
++		}
+ 
+ 		/* Delete all arguments and locals */
+ 
 -- 
 2.53.0
 
