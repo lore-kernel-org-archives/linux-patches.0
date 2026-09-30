@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EAE5013A9;
-	Wed, 30 Sep 2026 16:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0CE30BF70;
+	Wed, 30 Sep 2026 16:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784190; cv=none; b=bP1ui8iKqw/fVxdaM3kPfHtkSlc7m78yGCZLrhZCoOGCSWuuEpxDB1gduW9J1PQcCeYsUOqpsLjbOm1jNIa4d0s+EduA0LvjJTrI57A1dFtlgBduINpPbGynDAK74wn/85Nop8nf0TwJP9mGB9Pjx4fJcplVhCNHrc1GQfUKFo4=
+	t=1790784195; cv=none; b=aLke3OUJUa8nsl8Hh9XBW9dPBu7aHq35yP+O9hfgqF+Wer3B59+DtKqIc75tBJIbCtUM6cdN/uk3FIJBs/agSxFvd/rouZ4kcfcL4z4OxhtQLOPhjAC0PnKajtjTJXR40dkN3kvTkqbXvcKRT6UaaNvcNukIUXPB9R5Jkq5QH0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784190; c=relaxed/simple;
-	bh=lsUJuRzDfn/e7midZMYI+LWMD0BKcfg09OyA5Q3uPPI=;
+	s=arc-20240116; t=1790784195; c=relaxed/simple;
+	bh=TPEdTGufO5IAKWGOYdwEWRnnaIR4rh0W6rD+g2Gw84k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdYUurs3EvKQI26uCdVykqxP/tc5P59AQy0pAw6iSObps1lr3zHeV7kW4gRgEqm6UXFuSp1wb5wSfguv35VLrGRSivql/T5zgiHrJayYWN+U+cbxrORNOHc6CGQq1mW5tOMAr8rhweGT0QdTw0YMleDDBl88gT3pYC0aMEGT2OY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F01mkDFN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TY46VA5Tp+B2nuhjcwCBQtb6CTEAqe4mUJFbN9gfGbX4DP3ZUmX3Nc4yAPt4+o3TL34C4DHNCrwi/qbicLChmVRemLRyLVqgurHu2YIylYHF7GGWQcbrV6tEM5VGAl9HddInjt7r93SfErSlfSDVn4BLoOjJwvkaKaYgEk4ZocE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnYZROBx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F01mkDFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2CE1F00898;
-	Wed, 30 Sep 2026 16:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnYZROBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1331F000FF;
+	Wed, 30 Sep 2026 16:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784187;
-	bh=N4svd4HrpOiglEBD80WeiMaKV8yu2jGR74LfHaFEXrE=;
+	s=korg; t=1790784190;
+	bh=DLv8PJWCIV8P+cmMUgBOpON4Z/YBBxl5qGXCaLIWbPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F01mkDFNG/kCyeV5Yy1Qp2ekT8O1aE24i+efY72C1FK9VIIAa97gzy86xDkeaf+CB
-	 rmCl7WGS/tM/FgLdorZBs9lOE9oy35lOgm3l/+GWrAmyeu4Y2xQVtLV9ijIH2pJqoA
-	 86nleduFk+DOI+4Vg91NQktlsQEdC2Ka8L3PJZnA=
+	b=AnYZROBxiRqliQgZy1D2aZcGJQVvKi8fFblCOJ3OlDz2ZCKAz0iZVcx3xqtT2zv4j
+	 3jOCOgq/FrqdMw8hU8X7zA1WKTk7jLPJ2WEycePK63TWseC2pfxriSDPfLqdWSV0Tt
+	 DXtuUUe38+hq/tJNcjlBW/RUGS7tL7dEJW4yNC7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/982] net/rds: Dont sleep inside rds_ib_conn_path_shutdown
-Date: Wed, 30 Sep 2026 17:13:21 +0200
-Message-ID: <20260930152418.193754897@linuxfoundation.org>
+Subject: [PATCH 6.1 066/982] befs: handle set_blocksize failures
+Date: Wed, 30 Sep 2026 17:13:22 +0200
+Message-ID: <20260930152418.217374079@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,67 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 16f48efaeb6991193fb7775c577f06f5b20b0c90 ]
+[ Upstream commit 7597d42a25332617a3dfe596758d780ec6c028d7 ]
 
-New rds rdma self tests exposed a hang when tearing down
-the ib network configs.  This is caused by the shutdown worker
-thread sleeping on the wait_event call, which blocks other work
-items in the queue. Fix this by changing wait_event to
-wait_event timeout, and looping until the wait check succeeds.
+befs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting we will hit the
 
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260518012443.2629206-2-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+        BUG_ON(offset >= folio_size(folio));
+
+in folio_set_bh on the first __bread_gfp call.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-6-hch@lst.de
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_cm.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ fs/befs/linuxvfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
-index e50e01abb0799..d9b6c9d2f6791 100644
---- a/net/rds/ib_cm.c
-+++ b/net/rds/ib_cm.c
-@@ -1043,6 +1043,19 @@ int rds_ib_conn_path_connect(struct rds_conn_path *cp)
- 	return ret;
- }
- 
-+static unsigned long rds_ib_conn_path_shutdown_check_wait(struct rds_conn_path *cp)
-+{
-+	struct rds_connection *conn = cp->cp_conn;
-+	struct rds_ib_connection *ic = conn->c_transport_data;
-+
-+	return (!ic->i_cm_id ||
-+		(rds_ib_ring_empty(&ic->i_recv_ring) &&
-+		 (atomic_read(&ic->i_signaled_sends) == 0) &&
-+		 (atomic_read(&ic->i_fastreg_inuse_count)) == 0 &&
-+		 (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR))) ? 0
-+		: msecs_to_jiffies(1000);
-+}
-+
- /*
-  * This is so careful about only cleaning up resources that were built up
-  * so that it can be called at any point during startup.  In fact it
-@@ -1083,11 +1096,13 @@ void rds_ib_conn_path_shutdown(struct rds_conn_path *cp)
- 		 * sends to complete we're ensured that there will be no
- 		 * more tx processing.
- 		 */
--		wait_event(rds_ib_ring_empty_wait,
--			   rds_ib_ring_empty(&ic->i_recv_ring) &&
--			   (atomic_read(&ic->i_signaled_sends) == 0) &&
--			   (atomic_read(&ic->i_fastreg_inuse_count) == 0) &&
--			   (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR));
-+		while (!wait_event_timeout(rds_ib_ring_empty_wait,
-+					   rds_ib_conn_path_shutdown_check_wait(cp) == 0,
-+					   msecs_to_jiffies(1000))) {
-+			tasklet_schedule(&ic->i_send_tasklet);
-+			tasklet_schedule(&ic->i_recv_tasklet);
-+		}
-+
- 		tasklet_kill(&ic->i_send_tasklet);
- 		tasklet_kill(&ic->i_recv_tasklet);
- 
+diff --git a/fs/befs/linuxvfs.c b/fs/befs/linuxvfs.c
+index 32749fcee090a..3646d82271474 100644
+--- a/fs/befs/linuxvfs.c
++++ b/fs/befs/linuxvfs.c
+@@ -890,7 +890,8 @@ befs_fill_super(struct super_block *sb, void *data, int silent)
+ 	 */
+ 	sb->s_magic = BEFS_SUPER_MAGIC;
+ 	/* Set real blocksize of fs */
+-	sb_set_blocksize(sb, (ulong) befs_sb->block_size);
++	if (!sb_set_blocksize(sb, (ulong) befs_sb->block_size))
++		goto unacquire_priv_sbp;
+ 	sb->s_op = &befs_sops;
+ 	sb->s_export_op = &befs_export_operations;
+ 	sb->s_time_min = 0;
 -- 
 2.53.0
 
