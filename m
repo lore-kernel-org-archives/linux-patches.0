@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1D050EC01;
-	Wed, 30 Sep 2026 16:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C01243956;
+	Wed, 30 Sep 2026 16:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785817; cv=none; b=PFl4BFHuY0RGBrHBlZs2Hi/h4RKTJ59a7fRDK3DsqkAVcoWajaBhxCu08+GyyJOL2kJo7VwZfobxMqUxDWRLsCYtRuTjXJLb2FBKuz4wt7BLds8tVs0mrxUwhQP0DrscMp/u5TsYmk8Ov8sd6BSvz/QeYaJw+T2fRJf+jC9gEAo=
+	t=1790785820; cv=none; b=SnOcFVumC1EVettjy+F8nOppGxPRxdW3rQjAEe2jI8GxEmd+qwLmSDfXsvrwOxvVk4dc9wW2b8s1SwTCfbV2OQ3aXkof2/Nn2GcIQiDIy/nvwDz0PbLYX7VMRpGzYueJz6tlKw92B6YETe+OhSv3axT6a31zLNKuHFguDiAHszw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785817; c=relaxed/simple;
-	bh=ZRIrClhb6TWXvxWFPm57MjKnF/TBtTzOh9yb4O1OluE=;
+	s=arc-20240116; t=1790785820; c=relaxed/simple;
+	bh=ypQ07eamezpUscTUlt2yy955hGTD/1qbaowdipf85+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hrt2vrS0v8KFd/5YDJRRGmafwwaG3ZtCmCxIOQWNLTRogYa0Njs555Xs129vlI8H2iF+VtNvFRMhSvualsUIc+eI++02l17Qh0s3OUkY1s6SyWIn7C+R3lvx6VpJJvNrAKhgY+17f/kwN3uMIRRrOPE0ZSeva0DxYEi+O82htrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzM+CKs3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T/86jZIKRY6/2tN1G7AiQaFtu/LqPe8jf5RzU/8Dl2egOq9DHhrRKfrBz7GCSNP2u1pokDNovslqAHOWzfHhaWAu+423jQGqW+Xqh0MaOudXkEnVZ/I5EDBQ4Laa3pzuu7U7g+Z8QoS8VnnqYR8fr4GVvHcieGEHwgydc2e1z6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd2flWKL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzM+CKs3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889CA1F000FF;
-	Wed, 30 Sep 2026 16:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd2flWKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600621F000FF;
+	Wed, 30 Sep 2026 16:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785816;
-	bh=nYRBOanoW6kLR6y9XW23JmRhXwxz3Y/cbGA37C+1N3Q=;
+	s=korg; t=1790785818;
+	bh=kER1VtXTAl0Y1OKLxrYkJKnGx86m8BKwfUJdchvyFhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzM+CKs3TUtj6qGco5yBtu/LzS43Xbns7K8zmJvxLiQpxf8DqkAbVCfw+sMDSLDW0
-	 vv5LnUN0RtFsypM32UakZlF3A6WF7jPUsPERcsPgg6rF0AXAy4edJUB8QGSykwhA27
-	 Aql3MD7z6AqLXo49SeTkV/hilrtk4+CjzyWfiCrs=
+	b=Sd2flWKLYltvYyoatFEibUZdET0R7VZcN59pq4palKN41MDvMDnqSD2fzazp7ioFR
+	 hN8kiUPxVZh3YS+UoIramKFDpkqAFSjqi22lhGF3+/xZGKK+vGV6eZ8XU86F5fow4k
+	 pkVoa5gbuUPeVDk2wTaCjRBIZ7TOcHO2MVGOO0sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xixin Liu <liuxixin@kylinos.cn>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 597/982] firmware: arm_scpi: reject DVFS OPP count above MAX_DVFS_OPPS
-Date: Wed, 30 Sep 2026 17:22:13 +0200
-Message-ID: <20260930152429.604927395@linuxfoundation.org>
+Subject: [PATCH 6.1 598/982] clk: scpi: bound-check DVFS index in scpi_dvfs_recalc_rate
+Date: Wed, 30 Sep 2026 17:22:14 +0200
+Message-ID: <20260930152429.625975819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,40 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit 32471d84a487c7fd74532bc96be56f8028cf4a3f ]
+[ Upstream commit 70f4b78d560e592cbf3325b162424737d032fc1d ]
 
-scpi_dvfs_get_info() already rejected a zero opp_count, but still trusted
-any larger value from the SCP firmware. The shared-memory reply only holds
-MAX_DVFS_OPPS entries in buf.opps[]; a bigger count over-reads that array
-and then sizes the allocated OPP table incorrectly (garbage OPPs / OOB).
-The missing upper bound dates back to the original SCPI DVFS support.
+dvfs_get_idx() may return an out-of-range index if the SCP firmware is
+buggy or returns a stale value. Only negative indexes were rejected, so a
+large index walked past info->opps and could treat garbage as a clock rate
+(KASAN OOB / wrong frequency to consumers). The missing upper bound dates
+back to the original SCPI clock driver.
 
-Reject zero and out-of-range counts in one check and return -EINVAL.
+Treat indexes >= opp count as invalid and return 0, same as idx < 0.
 
-Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
+Fixes: cd52c2a4b5c4 ("clk: add support for clocks provided by SCP(System Control Processor)")
 Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/022802f0b38f.v2.1785200642.git.liuxixin@kylinos.cn
+Link: https://patch.msgid.link/04f9ab766e07.v2.1785200642.git.liuxixin@kylinos.cn
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scpi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/clk-scpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
-index 2d85e783ae267..aa27eb5278520 100644
---- a/drivers/firmware/arm_scpi.c
-+++ b/drivers/firmware/arm_scpi.c
-@@ -628,8 +628,8 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
- 	if (ret)
- 		return ERR_PTR(ret);
+diff --git a/drivers/clk/clk-scpi.c b/drivers/clk/clk-scpi.c
+index a39af7616b13c..c019b9ee4865e 100644
+--- a/drivers/clk/clk-scpi.c
++++ b/drivers/clk/clk-scpi.c
+@@ -86,7 +86,7 @@ static unsigned long scpi_dvfs_recalc_rate(struct clk_hw *hw,
+ 	int idx = clk->scpi_ops->dvfs_get_idx(clk->id);
+ 	const struct scpi_opp *opp;
  
--	if (!buf.opp_count)
--		return ERR_PTR(-ENOENT);
-+	if (!buf.opp_count || buf.opp_count > MAX_DVFS_OPPS)
-+		return ERR_PTR(-EINVAL);
+-	if (idx < 0)
++	if (idx < 0 || idx >= clk->info->count)
+ 		return 0;
  
- 	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
+ 	opp = clk->info->opps + idx;
 -- 
 2.53.0
 
