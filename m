@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4372051CF6E;
-	Wed, 30 Sep 2026 18:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7337C36A033;
+	Wed, 30 Sep 2026 18:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793320; cv=none; b=dyX4nPSndsQYzMdsqmlIi0hAr4Ck517QcntqvApu+iYcsCLT7WcmA/uz3aAHPtOMHMFH1Q1ENJtXfw+vk3mECHEKM7Ng6m3DsZgyU90gCQnGbkX1wU1KSNT+R6XRwUkHHwiTo71XAZxhSK/fBvPKM4s0Uvl2BK6BuvsfPVQnnlo=
+	t=1790793323; cv=none; b=e4tbWLnJThE2uA9VgWnDM7LvVibnUUgFCLjPpsK25wh3yWHTj11HuD7B5EeoMKCJv2FXS9ye7jJ6Uk1CUOCwrhXuaZ0FBc6gVs785HVp0S+UfdqAiGNwFyepnFFdmBclFx12MZyI4jPgjKNL0EyngHG4i9bRhiQwxUNB48awPB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793320; c=relaxed/simple;
-	bh=EL+ByQDUN3a9ezklP64GqBEOcxgyuNWPG90NilRXlfY=;
+	s=arc-20240116; t=1790793323; c=relaxed/simple;
+	bh=WlaY2W4vimLrBiThcNg9pCPXIc4/ZxCCLNzEdPUtDi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arCouRTE9ezdQ5HWCsHVdIZmmfKUMdQnHQ9805z3rWSPOaoWXJw48XP6NCaHCPy+JOAHGwcxDrat7YL2mA9ZCuAYWFV3kKr3asWqsrdzqtEM8ULpV43TfCcN4IlM2CHRIHBkJQI8f5VwOSeEsN/x8Dsy+0+O1VLqwWtiLNxhIPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiTeGC7L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ciAsAklYoNsSCtr3PrajKnz0zPdfStwaJ6LBuRUwuM8r66trtJUMswI3fAVvjFdgk9MY/AcOopfgDnylkJ9BVLJQRaSkgfpRDLGxRkSvd9xAUDDfnYB7CGsOAww9Zv1ug7VkSMcC8C+e3jWEXOmGYvmwgSfsP6cEO6Gdj0XBg7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPXmTOSg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiTeGC7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958011F000FF;
-	Wed, 30 Sep 2026 18:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPXmTOSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735801F000FF;
+	Wed, 30 Sep 2026 18:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793319;
-	bh=WEd5SKiSk3A84P6Np4qHMiQeEAjMmhUUeUoztOJw5c8=;
+	s=korg; t=1790793322;
+	bh=THeqjRWQk5uOHpl03tvcPZM9m3J9x0A3DU3Kj+ETRJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SiTeGC7LhiFKq5P/5Ccj6mjhDjAMwXYcGldaQLeMIuTYVWyLXmcv/xwSQfteDXNtF
-	 Fgo3l7ZWMP89ZGl9Vo9KXHUekOLr2L+Ry3tzFvmv+IplEUmvaeYSRYEzldW8gsBXIL
-	 8Y5+aOeGn9e1teVaAYBunzKPO2KzEiFP9oj5V8i8=
+	b=jPXmTOSgi8fZIvqS9UR+fQQoyisQzfCKfOlHeQHK31kwUKEk0Ax2JxngIhBzqZ1Nx
+	 6hRENzD9Ql5kP9Rlam+4x3r1pAkRycWlhktFLL8dPWb0C9o9qm+ZCoj4B7DWEcJhy0
+	 WhIzzA/UeBKkmKpp9YNSLb3vv5jpG8PwQLU+cKaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 211/395] sctp: discard the rest of the packet on a stale-cookie error
-Date: Wed, 30 Sep 2026 17:27:53 +0200
-Message-ID: <20260930152345.232257939@linuxfoundation.org>
+Subject: [PATCH 6.18 212/395] af_packet: fix integer overflow in prb_calc_retire_blk_tmo()
+Date: Wed, 30 Sep 2026 17:27:54 +0200
+Message-ID: <20260930152345.253647264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,90 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-commit 4498467a8af06cfa3d71cb04bd7c4170dec8f449 upstream.
+commit 56d82862a0a243ac14ba11b6d7b57ddc2d064b95 upstream.
 
-When an association is in COOKIE-ECHOED state and the peer sends a
-bundled [ERROR(Stale Cookie)][DATA] packet from one of its non-primary
-addresses, processing the ERROR chunk takes the non-fatal stale-cookie
-retry path sctp_sf_do_5_2_6_stale(), which queues
-SCTP_CMD_DEL_NON_PRIMARY while keeping the association alive.
-sctp_cmd_del_non_primary() removes every non-primary transport -
-including the very transport this packet arrived on, which is still
-referenced by the receive lookup and shared by all chunks of the
-packet via chunk->transport.
+prb_calc_retire_blk_tmo() computes in 32-bit int arithmetic:
 
-sctp_assoc_rm_peer() does redirect asoc->peer.last_data_from away from
-the removed transport, but right afterwards the bundled DATA chunk
-makes sctp_assoc_bh_rcv() re-register
-asoc->peer.last_data_from = chunk->transport unconditionally, undoing
-the redirection with the just-removed transport.
+        mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
 
-Once the packet is done, the receive reference is dropped and the
-transport is RCU-freed, while the surviving association keeps the
-dangling last_data_from.  A later FWD-TSN (or the delayed SACK timer)
-makes sctp_gen_sack() dereference it (->param_flags and friends), and
-sctp_make_sack()/sctp_outq_select_transport() may write to the freed
-object and link it into the live transport list.  This is a
-use-after-free triggerable by any malicious SCTP peer (or a local
-unprivileged user acting as one) with no capabilities required:
+If I'm reading the validation right, tp_block_size is user
+controlled and packet_set_ring() only rejects values that are <= 0
+as int or not page aligned, so a 256MiB block goes right through
+(and alloc_one_pg_vec_page() even has a vzalloc fallback for it).
+0x10000000 * 8 wraps to INT_MIN, and on a NIC reporting 1 Gbps
+(div == 1) the function ends up returning -2047.
 
-  BUG: KASAN: slab-use-after-free in sctp_do_sm+0x498a/0x5660
-  Read of size 4 at addr ffff88800e1e356c by task poc/115
-  Call Trace: sctp_do_sm <- sctp_assoc_bh_rcv <- sctp_inq_push <-
-              sctp_rcv <- ip_protocol_deliver_rcu <- ip_rcv
-  Allocated: sctp_transport_new <- sctp_assoc_add_peer <-
-             sctp_process_init (INIT-ACK processing)
-  Freed: kfree <- sctp_transport_destroy_rcu <- rcu_core
-         (call_rcu queued by sctp_transport_put at end of sctp_rcv)
-  The buggy address is located 364 bytes inside of freed 1024-byte
-  region [ffff88800e1e3400, ffff88800e1e3800), cache kmalloc-1k
+The condition is actually (8 * size) mod 2^32 >= 2^31 && div == 1,
+so the trigger set is [256,512), [768,1024), [1280,1536) and
+[1792,2048) MiB. Other sizes wrap to non-negative values and faster
+links divide the unsigned value back below 2^31, which is why this
+doesn't blow up for everyone.
 
-Note that commit 03a9d10ecf71 ("sctp: drop a chunk if its transport
-was removed") only covers the window between the receive lookup and
-the chunk processing (e.g. an ASCONF DEL-IP racing the socket backlog);
-here the transport is removed *while* the packet is being processed,
-by an earlier chunk of the same packet, so the drop in sctp_inq_push()
-does not reach this path.  Verified with the bundled [ERROR(Stale
-Cookie)][DATA] + FWD-TSN reproducer: the KASAN report above still
-fires with that commit applied, and is gone with this patch on top.
+What makes it fatal is what happens next in init_prb_bdqc():
 
-Fix it by discarding the rest of the packet on this path, as suggested
-by Xin.  After the stale-cookie ERROR has sent the association back to
-COOKIE-WAIT and removed the non-primary transports, the remaining
-chunks of the packet can only run against the restarted handshake
-while referencing the removed arrival transport through
-chunk->transport: besides the last_data_from registration above,
-sctp_cmd_setup_t2() and the sctp_make_*() reply builders would also
-copy that pointer into association-lifetime state that
-sctp_assoc_rm_peer() has already sanitized.  Let the peer retransmit
-them, in line with what sctp_inq_push() does for chunks whose
-transport was removed before processing.
+        p1->interval_ktime = ms_to_ktime(prb_calc_retire_blk_tmo(...));
+        hrtimer_start(&p1->retire_blk_timer, p1->interval_ktime,
+                      HRTIMER_MODE_REL_SOFT);
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+A negative relative timeout expires immediately. The callback
+unconditionally returns HRTIMER_RESTART, and hrtimer_forward() turns
+the negative interval into hrtimer_resolution:
+
+        if (interval < hrtimer_resolution)
+                interval = hrtimer_resolution;
+
+So the SOFT timer re-fires at the maximum rate forever, holding
+sk_receive_queue.lock each pass. One CPU spins in softirq until the
+socket is closed. Repeat with more rings and the machine is gone.
+
+The overflow itself is ancient - it was introduced together with
+TPACKET_V3 in f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer
+implementation."). Its effect prior to f7460d2989fa ("net:
+af_packet: Use hrtimer to do the retire operation", v6.18) was not
+as clear-cut, though: the return value was stored into an unsigned
+short retire_blk_tov, so a negative result was truncated, and a
+0-jiffy delay loop could be programmed as well. Neither is nearly
+as detrimental as the immediate maximum-rate spin the hrtimer
+conversion turned it into.
+
+(Unrelated to CVE-2019-20812 - that one was the ethtool failure path
+returning 0, which now returns DEFAULT_PRB_RETIRE_TOV.)
+
+Reproducer, needs CAP_NET_RAW (a --network host container has it by
+default) and a 1 Gbps NIC (QEMU e1000 works):
+
+        int fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+        bind(fd, ...);
+        int v = TPACKET_V3;
+        setsockopt(fd, SOL_PACKET, PACKET_VERSION, &v, sizeof(v));
+        struct tpacket_req3 req = {
+                .tp_block_size = 0x10000000,
+                .tp_block_nr = 1,
+                .tp_frame_size = 2048,
+                .tp_frame_nr = 0x10000000 / 2048,
+                .tp_retire_blk_tov = 0,
+        };
+        setsockopt(fd, SOL_PACKET, PACKET_RX_RING, &req, sizeof(req));
+
+Compute in 64 bits instead. The operands are already bounded by the
+existing validation, so nothing else changes. If you'd prefer a
+different fix, just say so and I'll respin.
+
+Fixes: f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer implementation.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260921093707.1432184-1-ljp1205831794@gmail.com
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260923050101.1510064-1-zhangdairui@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_statefuns.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/packet/af_packet.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -2654,6 +2654,8 @@ static enum sctp_disposition sctp_sf_do_
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -615,7 +615,7 @@ static int prb_calc_retire_blk_tmo(struc
+ 		return DEFAULT_PRB_RETIRE_TOV;
  
- 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
+ 	div = ecmd.base.speed / 1000;
+-	mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
++	mbits = (u64)blk_size_in_bytes * 8 / (1024 * 1024);
  
-+	sctp_add_cmd_sf(commands, SCTP_CMD_DISCARD_PACKET, SCTP_NULL());
-+
- 	return SCTP_DISPOSITION_CONSUME;
- 
- nomem:
+ 	if (div)
+ 		mbits /= div;
 
 
