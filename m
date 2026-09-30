@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2456E3C3F56;
-	Wed, 30 Sep 2026 19:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59933D25B2;
+	Wed, 30 Sep 2026 19:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795806; cv=none; b=R7jDc3GakUQqpebyt7rCODvGZ5Cmwe24l5ilned1djBqf4T6qaMlcdGQEgGzMO11lBNBS+3QOjekxoGkW7MHqzbjNbiA1bAp1Cu3L86zVXJYRe9DNdGWh/9kKKi55gbkTHuOF0MMhmdlieWkL8xh9FaLgvg42MjjZqFVSGstgTg=
+	t=1790795809; cv=none; b=YaezhhJDwOVyY0RHnllA2LFBbg82uQg+0IL7Dj6RIgrxRYrEy+MuGOzUNpj0e/kN8ZKGu9wCjnwhbVb0E8u3vS0P2fZHykT3/kmDu7mmUMDKbPbudqV1TvmpuZS4nMM0PnCWjsg2PQaMqLje0AcgHBZq57BugUgZQJVux4QizS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795806; c=relaxed/simple;
-	bh=xSgE8QhzfxTsOUTaXULk1cGfdYx6vCbvxnoESgk0Res=;
+	s=arc-20240116; t=1790795809; c=relaxed/simple;
+	bh=h7pyC+iDbOqmz5SwKZxan47rDFE/ny4HmcWARRpZ8/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0EkGXmIu5hZE7hz08wZiAHSftFIFSR6ZC0nksC11DUFNGU86Vc1wghjOjcrCmYUx+ayhkNkkmdpHr3FvoRH0DxzyQE5//gI/UnvunmFO2lGd9xbpZtUyFMEkSCsJ+FnGlZVTkEJbqf4OCXPhchibSl2JtoQNW2KWQ6hQGzTuV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=li8m+ZFR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WXKkzWdVJO0pBwmdareY++sHX/wOpj2YMz2zqISHYO9KJO/OUJRnnExzV6Vp0JOu1PObhfy8DPh3JmjfKjDv2PF0EWsa+3hXDWOqaSNqVUmi2dMNkWobTXhh5wkunZvrmqqG7aBf4RXM3IW1SlVO2WlZMH5ghDEnYkdUotGy2cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ww8DlQ4v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="li8m+ZFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789A61F000FF;
-	Wed, 30 Sep 2026 19:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ww8DlQ4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BB31F000FF;
+	Wed, 30 Sep 2026 19:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795805;
-	bh=s8DsR01ElrClg+EMkyDtL2/yI+BAOYAdAm8bOYnknZI=;
+	s=korg; t=1790795807;
+	bh=zXitmCQXBk6Sh1VuZUT5TVnR6XRz4gnL5y2MFNsVBUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=li8m+ZFRhfNgZIm99B3lRl7JV1v9vKJ0ZBtdKs9ynnFN30hcH94mJ9LYnq0DJvr9H
-	 zHgi72doQ8azCCd/s/twvE6WH9OkKNBsWyOpgat/7Z/SLz7XOUzdZxbZDCbQ+Jh0fC
-	 tEkXYuf2h1YimMB5ODc0u2uAsaGHE9atn8bF0gR8=
+	b=ww8DlQ4vTWNyrTMnKUcyPnXOlLfNBjFCAjzrqZOMFqkVQ9VOQ5FjxBiz+Tx9lrjik
+	 BSXNQN06LjRXsBg1lmBSW32518JMIgd5BfLkzIxF79QFXeaGhSTPRmiVbOWb0zP9KL
+	 umsFB0Eyzdqpy+nH6Z8xJb1UYnYfTsA6w6aZgUJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0663/1193] smb: client: reject userspace cifs.idmap descriptions
-Date: Wed, 30 Sep 2026 17:22:27 +0200
-Message-ID: <20260930152448.967734497@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Weilin Wang <weilin.wang@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0690/1193] perf evsel: Add per-thread warning for EOPNOTSUPP open failues
+Date: Wed, 30 Sep 2026 17:22:54 +0200
+Message-ID: <20260930152449.576581510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,66 +61,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Ian Rogers <irogers@google.com>
 
-commit d9d7eeb0cea5b55b82888f443622fd8d4ee064f3 upstream.
+[ Upstream commit f0869f31562bde2ed9131665f8f76ef7a3983383 ]
 
-cifs.idmap key descriptions carry authority-bearing fields (owner and
-group SIDs and uid/gid values in "os:"/"gs:"/"oi:"/"gi:" form) that the
-cifs.idmap upcall helper treats as kernel-originating inputs.  Unlike
-its sibling cifs.spnego, the cifs.idmap key type has no vet_description
-hook, so userspace can create keys of this type through
-request_key(2)/add_key(2) and supply those fields without CIFS origin.
-A request_key(2) call with a non-NULL callout then drives a root
-usermodehelper upcall (/sbin/request-key -> cifs.idmap) that consumes
-the unvetted description in root context.
+The mrvl_ddr_pmu will return EOPNOTSUPP if opened in per-thread
+mode. Give a warning for this similar to EINVAL.
 
-Only accept cifs.idmap descriptions while CIFS is using its private
-root_cred to request the key.  id_to_sid()/sid_to_id() already run
-under override_creds(root_cred), so the kernel-originated path is
-unaffected.
+Doing this better supports metric testing with limited permissions when
+the mrvl_ddr_pmu is present, as the failure to open causes the test to
+skip and not fail.
 
-This mirrors commit 3da1fdf4efbc ("smb: client: reject userspace
-cifs.spnego descriptions"), which applied the same restriction to
-cifs.spnego.
-
-Fixes: 4d79dba0e007 ("cifs: Add idmap key and related data structures and functions (try #17 repost)")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Acked-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Weilin Wang <weilin.wang@intel.com>
+Link: https://lore.kernel.org/r/20250412004704.2297939-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ tools/perf/util/evsel.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -101,8 +101,23 @@ cifs_idmap_key_destroy(struct key *key)
- 		kfree(key->payload.data[0]);
- }
- 
-+static int
-+cifs_idmap_key_vet_description(const char *description)
-+{
-+	/*
-+	 * cifs.idmap descriptions are authority-bearing inputs to the
-+	 * cifs.idmap upcall helper.  Only allow the kernel to create this
-+	 * type of key using the private root_cred installed in
-+	 * init_cifs_idmap; reject userspace request_key(2)/add_key(2).
-+	 */
-+	if (current_cred() != root_cred)
-+		return -EPERM;
-+	return 0;
-+}
-+
- static struct key_type cifs_idmap_key_type = {
- 	.name        = "cifs.idmap",
-+	.vet_description = cifs_idmap_key_vet_description,
- 	.instantiate = cifs_idmap_key_instantiate,
- 	.destroy     = cifs_idmap_key_destroy,
- 	.describe    = user_describe,
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 6d1327f8c6043..ff9ad7637562a 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -3047,6 +3047,10 @@ int evsel__open_strerror(struct evsel *evsel, struct target *target,
+ 			return scnprintf(msg, size, "%s",
+ 	"No hardware sampling interrupt available.\n");
+ #endif
++		if (!target__has_cpu(target))
++			return scnprintf(msg, size,
++	"Unsupported event (%s) in per-thread mode, enable system wide with '-a'.",
++					evsel__name(evsel));
+ 		break;
+ 	case EBUSY:
+ 		if (find_process("oprofiled"))
+-- 
+2.53.0
+
 
 
