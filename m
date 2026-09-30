@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C510138C42F;
-	Wed, 30 Sep 2026 19:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16AF3D333C;
+	Wed, 30 Sep 2026 19:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795362; cv=none; b=CBhg3UdVNX2vuIzXMCaBjN8Qn5J8b6PtXtTeNVRhHIIHxKvyINc2HCJPNYCJoaZ6htcgYDWneuiXaflSLri6t9T0dlCJ+uIZ/Q4N9l/pd15Xr1fBvaDiNW0frb0rb1OOsQJQvxDPv2uygNoAtyFo0XABRVgBKr/7oBMruT70Jn0=
+	t=1790795365; cv=none; b=h60fz/tb5KnEiUW2GfuKdrwSjGsEDAzdcrlNZmowtFB/Ghdqx6T7vrJU7GE0QlDDtCS//xaOoFXTc42dVFqFTJQ33vZABF+i/u3iK7/BDEOI2reBptWIlKwhvZbzzUNrXwJzBhjYfjNFx5ncOlQGHRGhlI64a2gxtJjGedmvsLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795362; c=relaxed/simple;
-	bh=oZOkNMn0qwDm+YqjYE6bcTobE1UVeOmH5SrPRPR9zl0=;
+	s=arc-20240116; t=1790795365; c=relaxed/simple;
+	bh=QIKK1xl5cOlfun/xI5UQHFRedUhpA0wBRr3yZTMXU2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPVj6h4GgzbxJPwyzq7jYRt9Ck87Xhox5DivG+PR5C4/x4HXeFRALTiyibxIneI932bmJdXybaEA1B5xL8ivrydTbsqG92615dnMuyFeKLjOPSwlk9ZKXJbyvTdtoOsjm6CRgAQHOSP6Cit+cUOEn8nvrqlewgvmG3khufuCwaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djw/K2Nk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hTQXOIimRd0otB8rZ9Gqgus+W6CuYVVOPkhKOABHE1aBT2qCq6Rh5X5ApA39xAoF4WmiGRQY8rWDOUEpVk2+0oEjHza5ooAa2sLo4Je7U4qC/d1R0OGK902N5PgHlSpocg05Bf4Z0+Ln6J9/uZz89WxMfKk5x9syTyEfVO7uctY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KcBsy45; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djw/K2Nk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5451F000FF;
-	Wed, 30 Sep 2026 19:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KcBsy45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E6B1F000FF;
+	Wed, 30 Sep 2026 19:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795361;
-	bh=90zi3hYEMNMs0E/38uNAA3RFMn0FJLXYTeGs7LEu+0Y=;
+	s=korg; t=1790795364;
+	bh=Q1i/fccSSmcdZTarYCR8AOby66FzDVc+famaaVGlZhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=djw/K2NkRZ1CLzDk0hYile0w7YOJQNFIgWZ6bCK5xo1t5b/TtPFTbPXueWTlJbKed
-	 S93DuuV1ZPzh+ALrwUWJnJ3wkGV2c6EcZeJtjohrQvX9oDHIy5PjmS78tuixR15094
-	 OshV9u58Snv578naVds14fbL1Zd3e37pi5wux8QM=
+	b=0KcBsy4503skDTx4s4wHkkfqSbXAm3WnmxKW4wAV8xBRphvF64y9KDPmNP16Z30QT
+	 KQfTZ1mkw4B3U+YYqbpf9l+ZNFTieRgh0qHwnuv3wQtmHrbR0MlK5uSaI3Symn2Kth
+	 9h9DnK/sZ2L6nNPrmLz4igCbgyxRKMaqXQReWAlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiong Weimin <xiongweimin@kylinos.cn>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0535/1193] virtio_input: reset device if input_register_device() fails
-Date: Wed, 30 Sep 2026 17:20:19 +0200
-Message-ID: <20260930152446.099049657@linuxfoundation.org>
+Subject: [PATCH 6.6 0536/1193] virtio_input: stop callbacks before unregistering input device
+Date: Wed, 30 Sep 2026 17:20:20 +0200
+Message-ID: <20260930152446.122246705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,39 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiong Weimin <xiongweimin@kylinos.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 81489b32a21c9360f8750d1fb600155d27452e19 ]
+[ Upstream commit d7808b37da0a619cf1fa541c2384e783fecc2480 ]
 
-Probe marks the device DRIVER_OK with virtio_device_ready() before
-calling input_register_device(). If registration fails, the error path
-cleared vi->ready and called del_vqs() while the device was still live,
-so the device could keep DMA to queues that were already torn down.
+virtinput_remove() unregisters the input device before resetting the
+virtio device. virtinput_recv_events() drops vi->lock around input_event(),
+so clearing vi->ready does not stop a callback that passed the entry check.
+It can still use vi->idev, requeue buffers and kick the queue.
 
-Match remove/freeze: call virtio_reset_device() on that path before
-tearing down the virtqueues.
+Reset first, as virtinput_freeze() already does. With the preceding core
+change, reset waits for callbacks before input_unregister_device() can
+free vi->idev. Recheck vi->ready after taking the lock again: keep draining
+completed events so an input packet is not truncated, but stop requeueing
+buffers and kicking the queue.
+
+With evdev attached, input_unregister_handle() currently waits for an RCU
+grace period, which also waits out IRQ callbacks. This masks the lifetime
+bug on PCI and MMIO, but does not protect sleepable callbacks on other
+transports.
 
 Fixes: 271c865161c5 ("Add virtio-input driver.")
-Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260805032931.1606652-1-xiongweimin@kylinos.cn>
+Message-ID: <20260905152059.89560-3-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_input.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/virtio/virtio_input.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/virtio/virtio_input.c b/drivers/virtio/virtio_input.c
-index 3aa46703872dc..54d90006e598f 100644
+index 54d90006e598f..cf8f179c896b8 100644
 --- a/drivers/virtio/virtio_input.c
 +++ b/drivers/virtio/virtio_input.c
-@@ -327,6 +327,7 @@ static int virtinput_probe(struct virtio_device *vdev)
- 	spin_lock_irqsave(&vi->lock, flags);
+@@ -46,9 +46,12 @@ static void virtinput_recv_events(struct virtqueue *vq)
+ 				    le16_to_cpu(event->code),
+ 				    le32_to_cpu(event->value));
+ 			spin_lock_irqsave(&vi->lock, flags);
++			if (!vi->ready)
++				continue;
+ 			virtinput_queue_evtbuf(vi, event);
+ 		}
+-		virtqueue_kick(vq);
++		if (vi->ready)
++			virtqueue_kick(vq);
+ 	}
+ 	spin_unlock_irqrestore(&vi->lock, flags);
+ }
+@@ -347,8 +350,9 @@ static void virtinput_remove(struct virtio_device *vdev)
  	vi->ready = false;
  	spin_unlock_irqrestore(&vi->lock, flags);
-+	virtio_reset_device(vdev);
- err_mt_init_slots:
- 	input_free_device(vi->idev);
- err_input_alloc:
+ 
+-	input_unregister_device(vi->idev);
++	/* Callbacks use vi->idev. */
+ 	virtio_reset_device(vdev);
++	input_unregister_device(vi->idev);
+ 	while ((buf = virtqueue_detach_unused_buf(vi->sts)) != NULL)
+ 		kfree(buf);
+ 	vdev->config->del_vqs(vdev);
 -- 
 2.53.0
 
