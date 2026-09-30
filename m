@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0252E1A683D;
-	Wed, 30 Sep 2026 18:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56A52D12EE;
+	Wed, 30 Sep 2026 18:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794039; cv=none; b=ACkxrEV2hHjpn7uHgA3DRAsMAxem+u1d/hKQK9wgRXx5CRNwHqNg+tSd3V4qYD2NOJlf8GGsgAUGUXUA8BT/DS0y8pG0XjJCeh09mU1+9WRXmkTqiP2JnasZLQZAe8lxg7N+U0UzxCTxpLrFLdLqdTzj6CJkHDNqtdcPg90XbXg=
+	t=1790794041; cv=none; b=eal7q3RGLxy2yzFgSbn6CstuXtFAMXpz0ybMWV88nwxYnb3lN7BfYXKEWorT7TgzeORcDn00hnvDgY+YWmrAPH18ed/238pLqZuc64r4jJ1n93O/2715fwq21+DSwv7yJ0D51LOJk++KaVLeR6d5CVEHB1V/GLKFbI9ChKxu7fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794039; c=relaxed/simple;
-	bh=OnHjkdweaaErofczsPzePEtgwbv/YBiB8MIEf2JumI4=;
+	s=arc-20240116; t=1790794041; c=relaxed/simple;
+	bh=7UVRQyzAn8gIZLwM4FAiOWru6w4wwMxYpz+I0vVkfug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRfrR/3ghA/Hhc1uKemHGFEDxLZnyZJ09FDUxSrt6ni/ASShBCuMsyQASBi0tWiHiYKzcK/eTrh5pB8iarGIj1KGIJ5xa3pH+jrSOQvR1aZWwKtti6VSdKfD1rSdz8gB9v2bveZssqSFTrJGJdFTkVGe1SMX3S4mubd2iEcaTRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXsNPFIB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tvKDYpMunS2f6UzTBLMtrszc7ADltqnlnTgUwhw4cKTm5RdaV0wDslWrLU4jsn/NShgjrxXeosQxOk7nYBJ6HD7jzYt0yVp8uuqURZuF99w1h8a3FtGv2niTKjLQCug5LjMwf7tVvkuWeN/rlWNzWqw3GdxQitTF54xg7qLVMp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/c0l0RM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXsNPFIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D731F000FF;
-	Wed, 30 Sep 2026 18:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/c0l0RM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE531F000FF;
+	Wed, 30 Sep 2026 18:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794037;
-	bh=f1B71cE5E50CI9MKXev6gx0GTspMDiuJEOoE1tqtG5c=;
+	s=korg; t=1790794040;
+	bh=urtu//AMVWYTu2f7uWFYkSt5ckOs8Iyiy6vJgL2y2l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXsNPFIBVKFIgfCGrnJ77oZSO0l4ZaZNKr3UhCBcSlZN4wZd4iNzFkeDL0t+rSGnm
-	 uonuLGGORF3HgrNI+txjMaxN/umqYBRQPqOEB0RWY2VAeengOLvCW7cx7sB10D7TZk
-	 TNiWwVEs4mGbgxo64f98hspLwaRnUu8zMSfv2eFE=
+	b=o/c0l0RMdtN3Rw73LIbHmmni7W6cauMgXk0/3NupWiwufQXdEeQailIjBHcpAGH1/
+	 LNUwnl2+h0FvTZ8tXPR/nyglnL9uVsNHx5L7TmLglZ8lBiXM0N8AdnYI4dEzzFXXE6
+	 y9DytuUUXKqq+GsZJFPOtncVNthY/XpYFgSj16Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0071/1193] thunderbolt: Improve multi-display DisplayPort tunnel allocation
-Date: Wed, 30 Sep 2026 17:12:35 +0200
-Message-ID: <20260930152435.843964230@linuxfoundation.org>
+Subject: [PATCH 6.6 0072/1193] firmware: arm_scmi: Validate SENSOR_UPDATE payload size
+Date: Wed, 30 Sep 2026 17:12:36 +0200
+Message-ID: <20260930152435.866077402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,42 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit afe9021d63b46233f5c87d52b820fa26e7f562cd ]
+[ Upstream commit 32bc5496b48174dbca1f187f710955ee4d9527a1 ]
 
-When 3 monitors are connected through Thunderbolt dock to the system at
-once, one of the monitors might fail to establish DisplayPort tunnel.
-This happens during DP bandwidth negotiation - each monitor takes
-maximum bandwidth that is supported and there might not be enough for
-3rd display. In this case Thunderbolt driver drops DP tunnel and
-'forgets' about it but with DP bandwidth allocation mode, that comes in
-later, some bandwidth might be freed.
+SENSOR_UPDATE carries one or more sensor readings after the fixed
+notification header. The parser derives the expected reading count
+from the sensor description, but it did not verify that the received
+payload contains those entries before parsing them.
 
-Make Thunderbolt driver check again if DP tunnel can be established
-after DP bandwidth consumption changed.
+Reject truncated update notifications before reading the variable
+array.
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-3-d86daec4defd@kernel.org
+Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/tb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/arm_scmi/sensors.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
-index dc9b7aac45682..9a7208f1a2835 100644
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -2543,6 +2543,9 @@ static void tb_handle_dp_bandwidth_request(struct work_struct *work)
+diff --git a/drivers/firmware/arm_scmi/sensors.c b/drivers/firmware/arm_scmi/sensors.c
+index 4e3e937cb92c1..900ee86a2c662 100644
+--- a/drivers/firmware/arm_scmi/sensors.c
++++ b/drivers/firmware/arm_scmi/sensors.c
+@@ -1037,12 +1037,15 @@ scmi_sensor_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 	case SCMI_EVENT_SENSOR_UPDATE:
+ 	{
+ 		int i;
++		size_t expected_sz;
+ 		struct scmi_sensor_info *s;
+ 		const struct scmi_sensor_update_notify_payld *p = payld;
+ 		struct scmi_sensor_update_report *r = report;
+ 		struct sensors_info *sinfo = ph->get_priv(ph);
  
- 		/* Update other clients about the allocation change */
- 		tb_recalc_estimated_bandwidth(tb);
+-		/* payld_sz is variable for this event */
++		if (payld_sz < sizeof(*p))
++			break;
 +
-+		tb_dbg(tb, "checking if more DP tunnels can be established now\n");
-+		tb_tunnel_dp(tb);
- 	}
- 
- put_sw:
+ 		r->sensor_id = le32_to_cpu(p->sensor_id);
+ 		if (r->sensor_id >= sinfo->num_sensors)
+ 			break;
+@@ -1056,6 +1059,11 @@ scmi_sensor_fill_custom_report(const struct scmi_protocol_handle *ph,
+ 		 * readings defined for this sensor or 1 for scalar sensors.
+ 		 */
+ 		r->readings_count = s->num_axis ?: 1;
++		expected_sz = sizeof(*p) + r->readings_count *
++			      sizeof(p->readings[0]);
++		if (payld_sz < expected_sz)
++			break;
++
+ 		for (i = 0; i < r->readings_count; i++)
+ 			scmi_parse_sensor_readings(&r->readings[i],
+ 						   &p->readings[i]);
 -- 
 2.53.0
 
