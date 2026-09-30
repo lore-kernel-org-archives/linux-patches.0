@@ -1,45 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AE2A59;
-	Wed, 30 Sep 2026 18:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122BD3B2D1A;
+	Wed, 30 Sep 2026 18:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791787; cv=none; b=s+zhXJ6t52j6fj84RLP5BtwbTeD6kJ6zbbGLxwlK7LJn2bN2mbUGfxBcrFl7l8Di8oSg5mGGhE9k/33NnBotqjTPG/E9ycWp5ikxnsuShsj6SGjB7eVP/uKo6Ok5HVkozvvd9djGdIZmDHh7dB2hlpcmKvY7WOLYbyqwOzIJams=
+	t=1790791790; cv=none; b=unD0S9hKSb2TKGy9ejH2ctG/KPzF8TqB+ypXwE/xzHzK3e/m45BQmBggAnsASlOS9Hoz/8hYK9HBpSamZ1xAZOJNsLxYgevGEa93DYriPEwfc2mP4Bu1i+DoYhzasLzJDV/rPOY4xNuNmWgXU6bH3Yacz+0gdCPDg8+eltE8Afs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791787; c=relaxed/simple;
-	bh=0V11+BuJJNdhtNQd8oY5l6tTeaV4iTzpeSUNvejFdY8=;
+	s=arc-20240116; t=1790791790; c=relaxed/simple;
+	bh=zfwZyvLWRDK9u05onvXlM7hmY7vzwH9bD9Bu/TMEudY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ANFddh14rLEDAL5OK44ZivwRQeet2qe9uE6weV0eJiEVnlHe2WlWMLE1SDucJtfNgX/ig50s3cEHQ8r5fPTdPOVuU9IdtSMaaQjFrXEHkdbete2aGAo9kGmEvyFbgT+1/ncuzkxrP0xu1Kkwj12wMPqbfkb+ydnC6A/Zb8lKmgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taLCLgOm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WOXQzx14dph34+HhqH4lfthZAhMTUIUqHU6qL7xDOzvaSG1Yx/GfluIXhyB6O0d/gVEUwgVeg0PcsIMNXU1g8XfK+RfjsTS8tudN5eycPHYvLbiYN8pfh6U0Ct8X7UAu2N/edbqhutlctBqFE+nzc0YQxmpdmLkvGq7MGXObcm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjCwOHa3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taLCLgOm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935D11F000FF;
-	Wed, 30 Sep 2026 18:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjCwOHa3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DCCF1F000FF;
+	Wed, 30 Sep 2026 18:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791786;
-	bh=U99KvTH9nHIRQYz4+aktnr2YoDbSkkGirAhLZl100xc=;
+	s=korg; t=1790791789;
+	bh=BTzSJGE8qaeMjiuH1NEblQszLbfOeSyG/rHj3ATi9hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=taLCLgOmFf3oMdGPIzCi6ilI8BefarZxRLTST4C0LN6MP450iXpGS358Sk8w7J10+
-	 vk3e8v+q1VvY6uqYRaFBr9qtZPT8D/hc71hYM1eKHViVk2c6IplhfMtIxY9JzHBoWl
-	 eKQCakTWVX2cjD7A4o3pJLADMxWvvmYUdOEheexI=
+	b=yjCwOHa37j6W+n8ucX9d/URmoWSM1uhT4mtSMkWieUGwKBn0prNcrDgzAn2q04aiR
+	 2z05/ObLy+fPaYzOkSf0SYh3Esf04FiS5gKGhkCCJkS6gQLfW4cSuNBZS4QrnlFWvy
+	 vCxyz4amngrwujYiPW5nRCVWCgCI7KOe873kkosE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	James Morris <jmorris@namei.org>,
-	Kentaro Takeda <takedakn@nttdata.co.jp>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	John Johansen <john.johansen@canonical.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 426/752] landlock: Require LANDLOCK_ACCESS_FS_MAKE_REG for whiteout creation
-Date: Wed, 30 Sep 2026 17:24:56 +0200
-Message-ID: <20260930152407.504210285@linuxfoundation.org>
+Subject: [PATCH 5.15 427/752] Revert "alpha: dont leak hardware-fabricated FP exception bits to user space"
+Date: Wed, 30 Sep 2026 17:24:57 +0200
+Message-ID: <20260930152407.525171778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,315 +43,182 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Günther Noack <gnoack@google.com>
+This reverts commit f55e039ce84f2bb01c6efca1029998f4dc7a83d8.
 
-[ Upstream commit 672fa082d48b21e1fb62cdb184fee41513e53421 ]
-
-Whiteout objects are used in the upper layer of an OverlayFS to
-indicate that the file with this name does not exist in the unified
-view, even if it is present in one of the lower layer file systems.
-
-For the userspace implementations of OverlayFS (fuse-overlayfs),
-whiteout objects can be created from userspace as well:
-
-* mknod(2) with S_IFCHR and makedev(0, 0)
-* renameat2(2) with RENAME_WHITEOUT,
-  creating the whiteout in the old place of the moved file.
-
-This commit guards whiteout creation in both of these cases with
-LANDLOCK_ACCESS_FS_MAKE_REG.  Whiteout objects are *not* considered
-character devices and are not bound to a driver.
-
-LANDLOCK_ACCESS_FS_MAKE_REG describes the same permission class as a
-whiteout object: creating one is the only S_IFCHR creation that the VFS
-exempts from CAP_MKNOD, so it is as unprivileged as creating a regular
-file, while LANDLOCK_ACCESS_FS_MAKE_CHAR and
-LANDLOCK_ACCESS_FS_MAKE_BLOCK keep meaning the creation of devices that
-expose a kernel interface [1].
-
-For the mknod(2) case, introduce a Landlock erratum.  The creation of
-whiteout objects through mknod(2) was previously guarded using
-LANDLOCK_ACCESS_FS_MAKE_CHAR, and it is now guarded using
-LANDLOCK_ACCESS_FS_MAKE_REG.
-
-For the renameat2(2) case, fix a bug: Before this commit, renameat2(2)
-with RENAME_WHITEOUT would create a directory entry even when all
-LANDLOCK_ACCESS_FS_MAKE_* rights were denied.
-
-This does not affect normal renames within layered OverlayFS mounts:
-When doing a regular rename() on a mounted fuse-overlayfs, it is the
-fuse-overlayfs daemon that exercises renameat2() with RENAME_WHITEOUT,
-and only the Landlock domain of that daemon is checked there.
-
-Suggested-by: Christian Brauner <brauner@kernel.org>
-Suggested-by: Mickaël Salaün <mic@digikod.net>
-Cc: stable@vger.kernel.org
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Signed-off-by: Günther Noack <gnoack@google.com>
-Link: https://patch.msgid.link/20260720.chow9ohYie5b@digikod.net [1]
-Link: https://patch.msgid.link/20260813093157.1436894-3-gnoack@google.com
-[mic: Record why LANDLOCK_ACCESS_FS_MAKE_REG is the matching right, and
-add link(2) to the user doc]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[mic: Backport: partially backport 100f59d96405 ("LSM: Remove double
-path_rename hook calls for RENAME_EXCHANGE") to propagate rename flags,
-adapt to ABI 1, and omit the unavailable REFER and context-only
-documentation dependencies]
-Cc: James Morris <jmorris@namei.org>
-Cc: Kentaro Takeda <takedakn@nttdata.co.jp>
-Cc: Serge E. Hallyn <serge@hallyn.com>
-Cc: John Johansen <john.johansen@canonical.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Cc: Paul Moore <paul@paul-moore.com>
-Link: https://lore.kernel.org/r/20220506161102.525323-7-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/lsm_hook_defs.h    |  2 +-
- include/linux/lsm_hooks.h        |  1 +
- include/uapi/linux/landlock.h    |  1 +
- security/apparmor/lsm.c          |  7 ++++--
- security/landlock/errata/abi-1.h | 24 +++++++++++++++++++
- security/landlock/fs.c           | 40 ++++++++++++++++++++++++--------
- security/security.c              |  4 ++--
- security/tomoyo/tomoyo.c         |  4 +++-
- 8 files changed, 67 insertions(+), 16 deletions(-)
- create mode 100644 security/landlock/errata/abi-1.h
+ arch/alpha/kernel/traps.c  |  6 +--
+ arch/alpha/math-emu/math.c | 88 +++++---------------------------------
+ 2 files changed, 14 insertions(+), 80 deletions(-)
 
-diff --git a/include/linux/lsm_hook_defs.h b/include/linux/lsm_hook_defs.h
-index 2ef89b872716e..da79e7ef1ca6f 100644
---- a/include/linux/lsm_hook_defs.h
-+++ b/include/linux/lsm_hook_defs.h
-@@ -101,7 +101,7 @@ LSM_HOOK(int, 0, path_link, struct dentry *old_dentry,
- 	 const struct path *new_dir, struct dentry *new_dentry)
- LSM_HOOK(int, 0, path_rename, const struct path *old_dir,
- 	 struct dentry *old_dentry, const struct path *new_dir,
--	 struct dentry *new_dentry)
-+	 struct dentry *new_dentry, unsigned int flags)
- LSM_HOOK(int, 0, path_chmod, const struct path *path, umode_t mode)
- LSM_HOOK(int, 0, path_chown, const struct path *path, kuid_t uid, kgid_t gid)
- LSM_HOOK(int, 0, path_chroot, const struct path *path)
-diff --git a/include/linux/lsm_hooks.h b/include/linux/lsm_hooks.h
-index 9ccfc8fbbe0be..8eec3bdaee323 100644
---- a/include/linux/lsm_hooks.h
-+++ b/include/linux/lsm_hooks.h
-@@ -357,6 +357,7 @@
-  *	@old_dentry contains the dentry structure of the old link.
-  *	@new_dir contains the path structure for parent of the new link.
-  *	@new_dentry contains the dentry structure of the new link.
-+ *	@flags may contain rename options such as RENAME_EXCHANGE.
-  *	Return 0 if permission is granted.
-  * @path_chmod:
-  *	Check for permission to change a mode of the file @path. The new
-diff --git a/include/uapi/linux/landlock.h b/include/uapi/linux/landlock.h
-index d00621d4d52d3..0fb097510fcf0 100644
---- a/include/uapi/linux/landlock.h
-+++ b/include/uapi/linux/landlock.h
-@@ -109,6 +109,7 @@ struct landlock_path_beneath_attr {
-  *   device.
-  * - %LANDLOCK_ACCESS_FS_MAKE_DIR: Create (or rename) a directory.
-  * - %LANDLOCK_ACCESS_FS_MAKE_REG: Create (or rename or link) a regular file.
-+ *   This also guards the creation of whiteout objects as used in OverlayFS.
-  * - %LANDLOCK_ACCESS_FS_MAKE_SOCK: Create (or rename or link) a UNIX domain
-  *   socket.
-  * - %LANDLOCK_ACCESS_FS_MAKE_FIFO: Create (or rename or link) a named pipe.
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index afa19da694360..f63db47d57e76 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -353,8 +353,11 @@ static int apparmor_path_link(struct dentry *old_dentry, const struct path *new_
- 	return error;
- }
+diff --git a/arch/alpha/kernel/traps.c b/arch/alpha/kernel/traps.c
+index 8629b8ccb8b2f..a78e93256ecb1 100644
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -200,12 +200,12 @@ static long dummy_emul(void) { return 0; }
+ long (*alpha_fp_emul_imprecise)(struct pt_regs *regs, unsigned long writemask)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul_imprecise);
+-long (*alpha_fp_emul) (unsigned long pc, unsigned long summary)
++long (*alpha_fp_emul) (unsigned long pc)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul);
+ #else
+ long alpha_fp_emul_imprecise(struct pt_regs *regs, unsigned long writemask);
+-long alpha_fp_emul (unsigned long pc, unsigned long summary);
++long alpha_fp_emul (unsigned long pc);
+ #endif
  
--static int apparmor_path_rename(const struct path *old_dir, struct dentry *old_dentry,
--				const struct path *new_dir, struct dentry *new_dentry)
-+static int apparmor_path_rename(const struct path *old_dir,
-+				struct dentry *old_dentry,
-+				const struct path *new_dir,
-+				struct dentry *new_dentry,
-+				const unsigned int flags)
+ asmlinkage void
+@@ -219,7 +219,7 @@ do_entArith(unsigned long summary, unsigned long write_mask,
+ 		   emulate the instruction.  If the processor supports
+ 		   precise exceptions, we don't have to search.  */
+ 		if (!amask(AMASK_PRECISE_TRAP))
+-			si_code = alpha_fp_emul(regs->pc - 4, summary);
++			si_code = alpha_fp_emul(regs->pc - 4);
+ 		else
+ 			si_code = alpha_fp_emul_imprecise(regs, write_mask);
+ 		if (si_code == 0)
+diff --git a/arch/alpha/math-emu/math.c b/arch/alpha/math-emu/math.c
+index 14b0bc325914d..4212258f3cfdc 100644
+--- a/arch/alpha/math-emu/math.c
++++ b/arch/alpha/math-emu/math.c
+@@ -57,13 +57,13 @@ MODULE_DESCRIPTION("FP Software completion module");
+ MODULE_LICENSE("GPL v2");
+ 
+ extern long (*alpha_fp_emul_imprecise)(struct pt_regs *, unsigned long);
+-extern long (*alpha_fp_emul) (unsigned long pc, unsigned long summary);
++extern long (*alpha_fp_emul) (unsigned long pc);
+ 
+ static long (*save_emul_imprecise)(struct pt_regs *, unsigned long);
+-static long (*save_emul) (unsigned long pc, unsigned long summary);
++static long (*save_emul) (unsigned long pc);
+ 
+ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
+-long do_alpha_fp_emul(unsigned long, unsigned long);
++long do_alpha_fp_emul(unsigned long);
+ 
+ static int alpha_fp_emul_init_module(void)
  {
- 	struct aa_label *label;
- 	int error = 0;
-diff --git a/security/landlock/errata/abi-1.h b/security/landlock/errata/abi-1.h
-new file mode 100644
-index 0000000000000..53c96c2057fa0
---- /dev/null
-+++ b/security/landlock/errata/abi-1.h
-@@ -0,0 +1,24 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+/**
-+ * DOC: erratum_4
-+ *
-+ * Erratum 4: Creation of whiteout objects
-+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ *
-+ * This fix changes the access rights required for the creation of whiteout
-+ * objects through :manpage:`mknod(2)`, :manpage:`renameat2(2)`, or
-+ * :manpage:`link(2)`.  Creating whiteout objects is now guarded by
-+ * ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
-+ *
-+ * Whiteout objects are used in OverlayFS to mark the absence of a file in an
-+ * upper file system.  Despite being created with ``S_IFCHR``, whiteout objects
-+ * do not count as character devices.
-+ *
-+ * Impact:
-+ *
-+ * Sandboxed programs that create OverlayFS whiteouts (such as fuse-overlayfs)
-+ * now require ``LANDLOCK_ACCESS_FS_MAKE_REG`` instead of
-+ * ``LANDLOCK_ACCESS_FS_MAKE_CHAR``.
-+ */
-+LANDLOCK_ERRATUM(4)
-diff --git a/security/landlock/fs.c b/security/landlock/fs.c
-index a3d99bba5f1e7..51d095f078903 100644
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -14,6 +14,7 @@
- #include <linux/err.h>
- #include <linux/fs.h>
- #include <linux/init.h>
-+#include <linux/kdev_t.h>
- #include <linux/kernel.h>
- #include <linux/limits.h>
- #include <linux/list.h>
-@@ -365,7 +366,7 @@ static inline int current_check_access_path(const struct path *const path,
- 	return check_access_path(dom, path, access_request);
- }
+@@ -91,22 +91,7 @@ module_exit(alpha_fp_emul_cleanup_module);
  
--static inline access_mask_t get_mode_access(const umode_t mode)
-+static inline access_mask_t get_mode_access(const umode_t mode, const dev_t dev)
- {
- 	switch (mode & S_IFMT) {
- 	case S_IFLNK:
-@@ -373,6 +374,9 @@ static inline access_mask_t get_mode_access(const umode_t mode)
- 	case S_IFDIR:
- 		return LANDLOCK_ACCESS_FS_MAKE_DIR;
- 	case S_IFCHR:
-+		/* Whiteout objects are guarded with MAKE_REG. */
-+		if (dev == WHITEOUT_DEV)
-+			return LANDLOCK_ACCESS_FS_MAKE_REG;
- 		return LANDLOCK_ACCESS_FS_MAKE_CHAR;
- 	case S_IFBLK:
- 		return LANDLOCK_ACCESS_FS_MAKE_BLOCK;
-@@ -389,6 +393,13 @@ static inline access_mask_t get_mode_access(const umode_t mode)
- 	}
- }
  
-+static inline access_mask_t get_dentry_access(const struct dentry *const dentry)
-+{
-+	const struct inode *const inode = d_backing_inode(dentry);
-+
-+	return get_mode_access(inode->i_mode, inode->i_rdev);
-+}
-+
- static inline access_mask_t maybe_remove(const struct dentry *const dentry)
- {
- 	if (d_is_negative(dentry))
-@@ -613,18 +624,18 @@ static int hook_path_link(struct dentry *const old_dentry,
- 		return -EXDEV;
- 	if (unlikely(d_is_negative(old_dentry)))
- 		return -ENOENT;
--	return check_access_path(
--		dom, new_dir,
--		get_mode_access(d_backing_inode(old_dentry)->i_mode));
-+	return check_access_path(dom, new_dir, get_dentry_access(old_dentry));
- }
- 
- static int hook_path_rename(const struct path *const old_dir,
- 			    struct dentry *const old_dentry,
- 			    const struct path *const new_dir,
--			    struct dentry *const new_dentry)
-+			    struct dentry *const new_dentry,
-+			    const unsigned int flags)
- {
- 	const struct landlock_ruleset *const dom =
- 		landlock_get_current_domain();
-+	access_mask_t access_request;
- 
- 	if (!dom)
- 		return 0;
-@@ -635,10 +646,18 @@ static int hook_path_rename(const struct path *const old_dir,
- 	if (unlikely(d_is_negative(old_dentry)))
- 		return -ENOENT;
- 	/* RENAME_EXCHANGE is handled because directories are the same. */
--	return check_access_path(
--		dom, old_dir,
--		maybe_remove(old_dentry) | maybe_remove(new_dentry) |
--			get_mode_access(d_backing_inode(old_dentry)->i_mode));
-+	access_request = maybe_remove(old_dentry) | maybe_remove(new_dentry) |
-+			 get_dentry_access(old_dentry);
-+	/*
-+	 * In case of renameat2(2) with RENAME_WHITEOUT, a whiteout object is
-+	 * created in the source location, so we require an additional access
-+	 * right there.
-+	 */
-+	if (flags & RENAME_WHITEOUT)
-+		access_request |=
-+			get_mode_access(S_IFCHR | WHITEOUT_MODE, WHITEOUT_DEV);
-+
-+	return check_access_path(dom, old_dir, access_request);
- }
- 
- static int hook_path_mkdir(const struct path *const dir,
-@@ -656,7 +675,8 @@ static int hook_path_mknod(const struct path *const dir,
- 
- 	if (!dom)
- 		return 0;
--	return check_access_path(dom, dir, get_mode_access(mode));
-+	return check_access_path(dom, dir,
-+				 get_mode_access(mode, new_decode_dev(dev)));
- }
- 
- static int hook_path_symlink(const struct path *const dir,
-diff --git a/security/security.c b/security/security.c
-index 1daea0a94626e..e8bd6701a415c 100644
---- a/security/security.c
-+++ b/security/security.c
-@@ -1247,13 +1247,13 @@ int security_path_rename(const struct path *old_dir, struct dentry *old_dentry,
- 
- 	if (flags & RENAME_EXCHANGE) {
- 		int err = call_int_hook(path_rename, new_dir, new_dentry,
--					old_dir, old_dentry);
-+					old_dir, old_dentry, flags);
- 		if (err)
- 			return err;
- 	}
- 
- 	return call_int_hook(path_rename, old_dir, old_dentry, new_dir,
--				new_dentry);
-+			     new_dentry, flags);
- }
- EXPORT_SYMBOL(security_path_rename);
- 
-diff --git a/security/tomoyo/tomoyo.c b/security/tomoyo/tomoyo.c
-index 1be96e2ce9f1a..f2103b0c4c7a2 100644
---- a/security/tomoyo/tomoyo.c
-+++ b/security/tomoyo/tomoyo.c
-@@ -264,13 +264,15 @@ static int tomoyo_path_link(struct dentry *old_dentry, const struct path *new_di
-  * @old_dentry: Pointer to "struct dentry".
-  * @new_parent: Pointer to "struct path".
-  * @new_dentry: Pointer to "struct dentry".
-+ * @flags: Rename options.
+ /*
+- * Exception bits of the exception summary register (EXC_SUM).  Bit 0 is the
+- * software completion bit; bits 1 through 5 report the exceptions the
+- * hardware attributed to the trapping instruction, and lie at the same
+- * positions as the corresponding IEEE_TRAP_ENABLE_* bits.
+- */
+-#define EXC_SUM_INV	(1UL << 1)
+-#define EXC_SUM_DZE	(1UL << 2)
+-#define EXC_SUM_OVF	(1UL << 3)
+-#define EXC_SUM_UNF	(1UL << 4)
+-#define EXC_SUM_INE	(1UL << 5)
+-#define EXC_SUM_MASK	(EXC_SUM_INV | EXC_SUM_DZE | EXC_SUM_OVF	\
+-			 | EXC_SUM_UNF | EXC_SUM_INE)
+-
+-/*
+- * Emulate the floating point instruction at address PC.  SUMMARY is the
+- * exception summary register the trap was delivered with.  Returns -1 if the
++ * Emulate the floating point instruction at address PC.  Returns -1 if the
+  * instruction to be emulated is illegal (such as with the opDEC trap), else
+  * the SI_CODE for a SIGFPE signal, else 0 if everything's ok.
   *
-  * Returns 0 on success, negative value otherwise.
+@@ -115,7 +100,7 @@ module_exit(alpha_fp_emul_cleanup_module);
+  * stick the result of the operation into the appropriate register.
   */
- static int tomoyo_path_rename(const struct path *old_parent,
- 			      struct dentry *old_dentry,
- 			      const struct path *new_parent,
--			      struct dentry *new_dentry)
-+			      struct dentry *new_dentry,
-+			      const unsigned int flags)
+ long
+-alpha_fp_emul (unsigned long pc, unsigned long summary)
++alpha_fp_emul (unsigned long pc)
  {
- 	struct path path1 = { .mnt = old_parent->mnt, .dentry = old_dentry };
- 	struct path path2 = { .mnt = new_parent->mnt, .dentry = new_dentry };
+ 	FP_DECL_EX;
+ 	FP_DECL_S(SA); FP_DECL_S(SB); FP_DECL_S(SR);
+@@ -320,56 +305,12 @@ alpha_fp_emul (unsigned long pc, unsigned long summary)
+ 		swcr |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+ 		current_thread_info()->ieee_state
+ 		  |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+-	}
+ 
+-	/*
+-	 * EV6 records exception status bits in the FPCR before delivering the
+-	 * software completion trap, and swcr_update_status() above merged them
+-	 * into SWCR.  Some can be wrong for the instruction we just emulated:
+-	 * a CVTTS of a value exactly representable as a subnormal sets FPCR_UNF
+-	 * even though the result is exact.  Clear the exceptions the trap
+-	 * reported but that soft-fp did not raise.
+-	 */
+-	if (implver() == IMPLVER_EV6) {
+-		unsigned long spurious = summary & EXC_SUM_MASK;
+-
+-		if (spurious & (EXC_SUM_UNF | EXC_SUM_OVF)) {
+-			/*
+-			 * EXC_SUM reports only the underflow or overflow,
+-			 * but the hardware sets INE alongside it in the FPCR.
+-			 */
+-			spurious |= EXC_SUM_INE;
+-		} else if (!spurious) {
+-			/*
+-			 * No exception reported, so this was a denormal
+-			 * operand trap, for which INE and UNF can be
+-			 * fabricated as well.
+-			 */
+-			spurious = EXC_SUM_INE | EXC_SUM_UNF;
+-		}
++		/* Update hardware control register.  */
++		fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
++		fpcr |= ieee_swcr_to_fpcr(swcr);
++		wrfpcr(fpcr);
+ 
+-		/*
+-		 * Never clear an exception software has confirmed.  Every
+-		 * instruction that genuinely raises one traps for software
+-		 * completion and is recorded in ieee_state above, so a bit
+-		 * found there -- including one just set from _fex -- belongs
+-		 * to this or an earlier instruction and must survive.
+-		 */
+-		spurious &= ~(current_thread_info()->ieee_state
+-			      >> IEEE_STATUS_TO_EXCSUM_SHIFT);
+-
+-		swcr &= ~(spurious << IEEE_STATUS_TO_EXCSUM_SHIFT);
+-	}
+-
+-	/*
+-	 * Update hardware control register.  This has to happen even when
+-	 * soft-fp raised nothing, to clear any fabricated bits.
+-	 */
+-	fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
+-	fpcr |= ieee_swcr_to_fpcr(swcr);
+-	wrfpcr(fpcr);
+-
+-	if (_fex) {
+ 		/* Do we generate a signal?  */
+ 		_fex = _fex & swcr & IEEE_TRAP_ENABLE_MASK;
+ 		si_code = 0;
+@@ -451,16 +392,9 @@ alpha_fp_emul_imprecise (struct pt_regs *regs, unsigned long write_mask)
+ 			break;
+ 		}
+ 		if (!write_mask) {
+-			/*
+-			 * Re-execute insns in the trap-shadow.  Pass no
+-			 * exception summary: it describes the trap, which
+-			 * was taken anywhere in the shadow, and so is not
+-			 * attribution for this instruction.  Nothing is
+-			 * lost, since only EV6 -- which traps precisely and
+-			 * never comes this way -- needs it.
+-			 */
++			/* Re-execute insns in the trap-shadow.  */
+ 			regs->pc = trigger_pc + 4;
+-			si_code = alpha_fp_emul(trigger_pc, 0);
++			si_code = alpha_fp_emul(trigger_pc);
+ 			goto egress;
+ 		}
+ 		trigger_pc -= 4;
 -- 
 2.53.0
 
