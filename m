@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F0D3CC7EB;
-	Wed, 30 Sep 2026 19:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A38B3DDAE9;
+	Wed, 30 Sep 2026 19:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796172; cv=none; b=hh67XWRioYblSnaPuwWfwPcW6G7f6kCxQHPAR15qUAB50P2+x5x9P5CNJxPVlOwLEz4xKXh8YNJsmJRI6+ZluFqeSOgBuD4oOiz9aXOV+G6PCKn6WnYBESI6Ywo82p724jQZjg7rAEOPE2VBGoG0N4xA01YARkTZtpXzOROHVAk=
+	t=1790796175; cv=none; b=IvZHHI7Ec4V8yY7arK8BBFlzzLcSFAgFJP170xrY4uLmK/Zg2Wi/8pZzD587qttc1siGU7r/2b5ClURJtBoU/ak2mziMxk/ecA4TlE9AagFKpNEMSj6/RvVawLoiHLfHZxtdcbPT1dpi1HIsuer7Kbn4Y2I3WuhlaMI3FsOjCOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796172; c=relaxed/simple;
-	bh=VMdfaXvqk8PRR7IxYK9df10BJE5TttE+a2eFVb9/IGc=;
+	s=arc-20240116; t=1790796175; c=relaxed/simple;
+	bh=HF1zfquIkDI/kvPuxlwfMMkjtgv0rcQwd1SbhEUDdcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3KUkqed8jwi6ZzeMpLE5bUhqapckSVQz+M1ckfPiF2jHUqa8PBULF7KrhBKWrR+QWucUZBwmudAOYuuzxOnmUW8JLTFLkQDcOshHrM4BU6+fpHIW3P0OiYMODv8DTWXeGJs9CULWlQt9mV5blQmDDV2RBscD4zIUGTtlg6QRyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHDBAf4d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=u5PYBvWcFBeD+jaV8pYKsGy63MAcdZLZ4XCaqFhMAYRdSw+lMkr42uy7cSt21AD0dnT1j0nPhwVIUnDIDYZk4M3kwuvSaVCVSkM//kP2Q4KUWRPWtVg2RQlX7fDY13X1dGqfv6XmmRzGe3OpjrZZTtj01hmj9YcTq3RE3tNtgZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qCYs9Bep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHDBAf4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964691F000FF;
-	Wed, 30 Sep 2026 19:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qCYs9Bep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1881F000FF;
+	Wed, 30 Sep 2026 19:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796171;
-	bh=SYatFjA4t2DGjXIKiwumNTS5sWr4PdKic4xF0z9iSy0=;
+	s=korg; t=1790796174;
+	bh=+tKURYkmM4uGGmHfW+ssT5eUvCyQdQBcSZuIhhP5cBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sHDBAf4daRZMRVp4h5rfaK/oiam6/URJq9vlYxP7KMp5b4rx5hU9XN1mHFZ10H1mb
-	 uMxgjDtGrfnTLJEDr35XHYqAP5Ym2mqVwW8XRRch3ruZ5nB885qzH1CD+zVuxH1R0Y
-	 a83EFN6r7SnDAnz1waZrGYbs/01kqJhpU7yWwAV4=
+	b=qCYs9Bepire70+JeEi6VvtBgcd71pB7B1SGYf6xBVcW9ggU3H+hITW/a1KL6ONdUh
+	 CAF5bkgVn60wGQn928VrwY+fmTz7siTG2HZwn6vu3toMygmEe71OzodszhrzebUPvu
+	 9TqXvA0sDo9vqlqu9nx+gRIXbsaq5XOJPf60mj5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	James Clark <jjc@jclark.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0820/1193] net: ethernet: cortina: Ack RX overrun interrupt correctly
-Date: Wed, 30 Sep 2026 17:25:04 +0200
-Message-ID: <20260930152452.464699110@linuxfoundation.org>
+Subject: [PATCH 6.6 0821/1193] net: macb: fix ordering around PTP timestamp read
+Date: Wed, 30 Sep 2026 17:25:05 +0200
+Message-ID: <20260930152452.485557058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,45 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
+[ Upstream commit 9ca4ba24259183ce15665be86b2956cd896c4687 ]
 
-The RX overrun interrupt is reported in interrupt status register 4, but
-gmac_irq() acknowledges it using the RX descriptor error bit from status
-register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
-the shift leaves no bit in the 32-bit register.
+PTP_SYS_OFFSET_EXTENDED returns system timestamps that do not correctly
+bracket the PHC register read on MACB/GEM. On a Raspberry Pi 5, the
+returned interval can be as short as 37 ns, while an ordered register
+read takes approximately 1 us. This biases the midpoint used by phc2sys,
+causing CLOCK_REALTIME to run approximately 0.5 us ahead when synchronized
+to the PHC.
 
-Acknowledge the same per-port RX overrun bit that was detected.
+gem_tsu_get_time() reads the nanoseconds register using the driver's
+relaxed MMIO accessor. On weakly ordered systems, the subsequent system
+timestamp can be taken before the register read completes. The internal
+smp_rmb() in the pre-timestamp path also does not guarantee ordering
+against the subsequent MMIO read.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add rmb() before and after the bracketed nanoseconds read in both the
+normal and seconds rollover paths so the system timestamps bracket the
+PHC read. Adding the post-read barrier increases the minimum interval on
+the same Raspberry Pi 5 to approximately 1 us.
+
+Fixes: e51bb5c2784c ("net: macb: ptp: Switch to gettimex64() interface")
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # Raspberry Pi CM5, min bracket 37 ns -> 981 ns
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Assisted-by: LLM
+Signed-off-by: James Clark <jjc@jclark.com>
+Link: https://patch.msgid.link/20260915045823.76100-1-jjc@jclark.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/cadence/macb_ptp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 96b8e3209bbd5..df279b360ac1d 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1803,7 +1803,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
+diff --git a/drivers/net/ethernet/cadence/macb_ptp.c b/drivers/net/ethernet/cadence/macb_ptp.c
+index 874d9577fc290..702397469c3cf 100644
+--- a/drivers/net/ethernet/cadence/macb_ptp.c
++++ b/drivers/net/ethernet/cadence/macb_ptp.c
+@@ -48,7 +48,12 @@ static int gem_tsu_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts,
  
- 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
- 		spin_lock(&geth->irq_lock);
--		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
-+		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
- 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
- 		u64_stats_update_begin(&port->ir_stats_syncp);
- 		++port->stats.rx_fifo_errors;
+ 	spin_lock_irqsave(&bp->tsu_clk_lock, flags);
+ 	ptp_read_system_prets(sts);
++	/* explicit barriers are needed because gem_readl() is relaxed */
++	if (sts)
++		rmb();
+ 	first = gem_readl(bp, TN);
++	if (sts)
++		rmb();
+ 	ptp_read_system_postts(sts);
+ 	secl = gem_readl(bp, TSL);
+ 	sech = gem_readl(bp, TSH);
+@@ -60,7 +65,11 @@ static int gem_tsu_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts,
+ 		 * (assume all done within 1s)
+ 		 */
+ 		ptp_read_system_prets(sts);
++		if (sts)
++			rmb();
+ 		ts->tv_nsec = gem_readl(bp, TN);
++		if (sts)
++			rmb();
+ 		ptp_read_system_postts(sts);
+ 		secl = gem_readl(bp, TSL);
+ 		sech = gem_readl(bp, TSH);
 -- 
 2.53.0
 
