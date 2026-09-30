@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502BF50B8A8;
-	Wed, 30 Sep 2026 17:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B32251993B;
+	Wed, 30 Sep 2026 17:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790109; cv=none; b=Qlf0V/b/iCnLt/J/q6fgC/l2mqbkm4CFGDbXfGK9nvb8Y9HHGGDCFoby6RDUgEKM7JOb7uIYhu5etfbH3B7uIp0nA0/uoE1rzeD2tzi5jUVf81krDsFzp2XSP7VEF6L9SODA47Io9FuCi0sMmg/zQCI8MKHcH2ATO33dqLja/5o=
+	t=1790790111; cv=none; b=RAyoG2yoYjMjluZXucfNQrJZ1FGKW0HM4lLvgABsq3azTEO4WEW9OcpToJUyBC6W5VH2Fcg6gekvVz2IOD8Cc8Q2neKfneympi50IusNy+7IqYHg8ZnIp0xSaPdimeNGJfCdi8Crp8AGg4BUoF8mi7CfqxsVB9jTp+p5R65SbAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790109; c=relaxed/simple;
-	bh=Buy7sJmOTZczjaoaMnVMCZpNw2qq3965nbOLV0v655k=;
+	s=arc-20240116; t=1790790111; c=relaxed/simple;
+	bh=bkNjFMThCQczQ3mavv2Aa0zhKvGvm67TvioVFzmdCCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mW2MwWtdF62PNUnHHUHldXQzaNHqQU38APtSleMZASSGgb/7FdfP4In52VksqCZZrmBi9bQrzO/JwSOVnE4Ms2M5d/gifV8CAPPXqRpM0BhBgotj/ZETnps9YIGLSiudtTdDYqaqDIZUBPANvbNNvnq8tS+0e0sgntEiX0zPOVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJx9rpVA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aOgV54n1pFltQjmqS9TkbzmxcsinOvVHyp8NN29WvOUMMLdnCFoQZFoZJV8PrwczmoP3H4IldgtA7SHMQBOvlIh4PEPlab2HeEU7FBIHYmMzh3Iuhhj1Vz+UrGuzx+PHSUK7EQLcJWOeu3z5l4EwX6KPJ3E1Wi+WM+3Ou2oRHjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzArnOW3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJx9rpVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4E21F000FF;
-	Wed, 30 Sep 2026 17:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzArnOW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B91A1F000FF;
+	Wed, 30 Sep 2026 17:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790107;
-	bh=RNdh/yHeTUYlI2W/AM5F2m911Vc40e0wy6ZTJhmx+h0=;
+	s=korg; t=1790790110;
+	bh=iSz3sPs2fss7XK561FgbVH3krBVSUYGfOG7qfmb6TQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJx9rpVAlfwk8gDAsKqCNF2ZYnv7Y8hee+sRpwaDtG0Cv+4Y+++9XT1vn1RxhYE4u
-	 kyi4fXG0GnQnxerxpEPUwKx/PLCQu23v7MZG14dRQSMlHTpGCB6SXLTvkQxwS4rX9Q
-	 9tJckYQw4dpiYONSd+vcXqmEJlXedNzDQHv7I5qc=
+	b=HzArnOW3YRLV9LR5eAEoBI68wbOD1rx8gkrghWAtJJYPyU9D5MYwKlHv6xZb/j7YL
+	 kptZTWKTOyiwm0pstEhQr1gv2kEzjezRNPnUjI6Kl566jn+k44q+TOfIl1wG6uT34d
+	 mUFq2y+5PYr128Jzj1NGS/Z2ml3adY67PCf4i3bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Alexey Gladkov <legion@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	Mateusz Guzik <mjguzik@gmail.com>,
 	Bradley Morgan <include@grrlz.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Joel Granados <joel.granados@kernel.org>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 713/877] sysctl: move the "cad_pid" entry from pid_table[] to kern_reboot_table[]
-Date: Wed, 30 Sep 2026 17:27:04 +0200
-Message-ID: <20260930152430.071476132@linuxfoundation.org>
+Subject: [PATCH 6.12 714/877] reboot: fix cad_pid use-after-free race
+Date: Wed, 30 Sep 2026 17:27:05 +0200
+Message-ID: <20260930152430.094261002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,242 +57,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: "Cen Zhang (Microsoft)" <blbllhy@gmail.com>
 
-[ Upstream commit 7170ca01623b399c97f2ae9d3e228badc1f25ea3 ]
+[ Upstream commit 5a88f78df753993469dab4d1831f8fb4256a9468 ]
 
-cad_pid is global, and kill_cad_pid() is only used in the root namespace.
+cad_pid is a single kernel-wide struct pid pointer. proc_do_cad_pid()
+reads it and passes it to pid_vnr() without protecting the lifetime of
+the referenced struct pid. A concurrent writer can replace cad_pid and
+drop the final reference to the old struct pid after the reader has
+loaded the pointer but before pid_vnr() has finished dereferencing it,
+causing a use-after-free.
 
-However, due to pid_table_root_permissions(), a non-root user can unshare
-pid/user namespaces and modify it from the child namespace. This makes no
-sense and is simply wrong.
+kill_cad_pid() has the same lifetime race when it passes cad_pid to
+kill_pid().
 
-Move it to kern_reboot_table[] where it logically belongs; this ensures
-that only GLOBAL_ROOT_UID can read/modify this sysctl.
+At the time this issue was reported, an unprivileged user could reach the
+sysctl through user and PID namespaces because cad_pid was registered in
+pid_table[]. Moving cad_pid back to the global reboot sysctl table
+corrected that namespace and permission mismatch, but did not fix the
+underlying lifetime race.
 
-Note that this patch doesn't preserve "#ifdef CONFIG_PROC_SYSCTL" around
-the "cad_pid"; CONFIG_PROC_SYSCTL selects CONFIG_SYSCTL, so it is always
-set when kern_reboot_table[] is compiled.
+Fix this by treating cad_pid as an RCU-protected pointer at both read
+sites and by waiting for a grace period before dropping the old reference
+on the write side.
 
+call_rcu(&old_pid->rcu, ...) cannot be used here because free_pid()
+also queues pid->rcu; queueing the same rcu_head twice can corrupt the
+RCU callback list.
+
+Original KASAN crash stack:
+  kernel/pid.c:545 pid_nr_ns()        # reads freed pid->level
+  kernel/pid.c:556 pid_vnr()          # calls pid_nr_ns()
+  kernel/pid.c:775 proc_do_cad_pid()  # calls pid_vnr(cad_pid)
+
+Fixes: 9ec52099e4b8 ("[PATCH] replace cad_pid by a struct pid")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/20260717210143.4734-1-blbllhy@gmail.com/
+Link: https://lore.kernel.org/all/alz5ZYLE4kaq_v2P@redhat.com/
+Link: https://lore.kernel.org/all/al4ICz9biJKtdZc4@redhat.com/
+Suggested-by: Mateusz Guzik <mjguzik@gmail.com>
+Suggested-by: Bradley Morgan <include@grrlz.net>
+Suggested-by: Oleg Nesterov <oleg@redhat.com>
+Suggested-by: Eric W. Biederman <ebiederm@xmission.com>
+Suggested-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
 Cc: stable@vger.kernel.org
-Fixes: e054bcbe7e7a ("sysctl: move cad_pid into kernel/pid.c")
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Alexey Gladkov <legion@kernel.org>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Link: https://patch.msgid.link/20260814040944.16561-1-blbllhy@gmail.com
 Reviewed-by: Bradley Morgan <include@grrlz.net>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
 Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Joel Granados <joel.granados@kernel.org>
-
-[6.12 dependency adaptation]
-The stable tree still keeps cad_pid in the global kernel/sysctl.c table;
-it does not have the upstream per-PID-namespace table. Move the existing
-handler and entry directly from kernel/sysctl.c to kernel/reboot.c, using
-proc_dointvec() with a local table copy because __do_proc_dointvec() is
-private to sysctl.c. Leave kernel/pid.c unchanged and retain the mutable
-ctl_table required by the stable registration API.
-
-Make the existing kernel_reboot_sysctls_init() an independent late initcall
-outside CONFIG_SYSFS so cad_pid remains available with PROC_SYSCTL=y and
-SYSFS=n, and does not depend on sysfs object allocation succeeding.
-
-Prepare context for 5a88f78df753 without importing newer scheduler or timer
-implementations: move the existing kick_process() declaration/stub before
-cad_pid and expand the empty stub, and guard the existing POSIX-only
-sigqueue helpers with CONFIG_POSIX_TIMERS using the upstream comment.
-No new functions are introduced, and the target's RCU fix is left for the
-target commit.
-
-[ sashal: Reduced backport -- upstream 7170ca01623b3 touches 2 file(s), this
-  backport carries 4. Not backported here:
-  kernel/pid.c
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
-
-Stable-dep-of: 5a88f78df753 ("reboot: fix cad_pid use-after-free race")
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched.h |   14 ++++++++------
- kernel/reboot.c       |   40 +++++++++++++++++++++++++++++++++++-----
- kernel/signal.c       |   12 +++++-------
- kernel/sysctl.c       |   31 -------------------------------
- 4 files changed, 48 insertions(+), 49 deletions(-)
+ include/linux/sched.h        |    2 +-
+ include/linux/sched/signal.h |    5 +----
+ init/main.c                  |    2 +-
+ kernel/reboot.c              |   19 +++++++++++++++----
+ kernel/signal.c              |   12 ++++++++++++
+ 5 files changed, 30 insertions(+), 10 deletions(-)
 
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -1675,6 +1675,14 @@ static inline char task_state_to_char(st
- 	return task_index_to_char(task_state_index(tsk));
+@@ -1683,7 +1683,7 @@ static inline void kick_process(struct t
  }
+ #endif
  
-+#ifdef CONFIG_SMP
-+extern void kick_process(struct task_struct *tsk);
-+#else
-+static inline void kick_process(struct task_struct *tsk)
-+{
-+}
-+#endif
-+
- extern struct pid *cad_pid;
+-extern struct pid *cad_pid;
++extern struct pid __rcu *cad_pid;
  
  /*
-@@ -1953,12 +1961,6 @@ extern int wake_up_state(struct task_str
- extern int wake_up_process(struct task_struct *tsk);
- extern void wake_up_new_task(struct task_struct *tsk);
+  * Per process flags
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -558,10 +558,7 @@ static inline sigset_t *sigmask_to_save(
+ 	return res;
+ }
  
--#ifdef CONFIG_SMP
--extern void kick_process(struct task_struct *tsk);
--#else
--static inline void kick_process(struct task_struct *tsk) { }
--#endif
--
- extern void __set_task_comm(struct task_struct *tsk, const char *from, bool exec);
+-static inline int kill_cad_pid(int sig, int priv)
+-{
+-	return kill_pid(cad_pid, sig, priv);
+-}
++int kill_cad_pid(int sig, int priv);
  
- static inline void set_task_comm(struct task_struct *tsk, const char *from)
+ /* These can be the second arg to send_sig_info/send_group_sig_info.  */
+ #define SEND_SIG_NOINFO ((struct kernel_siginfo *) 0)
+--- a/init/main.c
++++ b/init/main.c
+@@ -1523,7 +1523,7 @@ static noinline void __init kernel_init_
+ 	 */
+ 	set_mems_allowed(node_states[N_MEMORY]);
+ 
+-	cad_pid = get_pid(task_pid(current));
++	rcu_assign_pointer(cad_pid, get_pid(task_pid(current)));
+ 
+ 	smp_prepare_cpus(setup_max_cpus);
+ 
 --- a/kernel/reboot.c
 +++ b/kernel/reboot.c
-@@ -1280,7 +1280,32 @@ static struct attribute *reboot_attrs[]
- 	NULL,
- };
+@@ -13,7 +13,9 @@
+ #include <linux/kexec.h>
+ #include <linux/kmod.h>
+ #include <linux/kmsg_dump.h>
++#include <linux/rcupdate.h>
+ #include <linux/reboot.h>
++#include <linux/sched/signal.h>
+ #include <linux/suspend.h>
+ #include <linux/syscalls.h>
+ #include <linux/syscore_ops.h>
+@@ -24,8 +26,7 @@
+  */
  
-+#endif /* CONFIG_SYSFS */
-+
- #ifdef CONFIG_SYSCTL
-+static int proc_do_cad_pid(const struct ctl_table *table, int write, void *buffer,
-+			   size_t *lenp, loff_t *ppos)
-+{
-+	struct ctl_table tmp_table = *table;
-+	struct pid *new_pid;
-+	pid_t tmp_pid;
-+	int r;
-+
-+	tmp_pid = pid_vnr(cad_pid);
-+	tmp_table.data = &tmp_pid;
-+
-+	r = proc_dointvec(&tmp_table, write, buffer, lenp, ppos);
-+	if (r || !write)
-+		return r;
-+
-+	new_pid = find_get_pid(tmp_pid);
-+	if (!new_pid)
-+		return -ESRCH;
-+
-+	put_pid(xchg(&cad_pid, new_pid));
-+	return 0;
-+}
-+
- static struct ctl_table kern_reboot_table[] = {
- 	{
- 		.procname       = "poweroff_cmd",
-@@ -1296,16 +1321,23 @@ static struct ctl_table kern_reboot_tabl
- 		.mode           = 0644,
- 		.proc_handler   = proc_dointvec,
- 	},
-+	{
-+		.procname	= "cad_pid",
-+		.maxlen		= sizeof(int),
-+		.mode		= 0600,
-+		.proc_handler	= proc_do_cad_pid,
-+	},
- };
+ static int C_A_D = 1;
+-struct pid *cad_pid;
+-EXPORT_SYMBOL(cad_pid);
++struct pid __rcu *cad_pid;
  
--static void __init kernel_reboot_sysctls_init(void)
-+static int __init kernel_reboot_sysctls_init(void)
+ #if defined(CONFIG_ARM)
+ #define DEFAULT_REBOOT_MODE		= REBOOT_HARD
+@@ -1288,10 +1289,14 @@ static int proc_do_cad_pid(const struct
  {
- 	register_sysctl_init("kernel", kern_reboot_table);
-+	return 0;
- }
--#else
--#define kernel_reboot_sysctls_init() do { } while (0)
-+late_initcall(kernel_reboot_sysctls_init);
- #endif /* CONFIG_SYSCTL */
+ 	struct ctl_table tmp_table = *table;
+ 	struct pid *new_pid;
++	struct pid *old_pid;
+ 	pid_t tmp_pid;
+ 	int r;
  
-+#ifdef CONFIG_SYSFS
- static const struct attribute_group reboot_attr_group = {
- 	.attrs = reboot_attrs,
- };
-@@ -1325,8 +1357,6 @@ static int __init reboot_ksysfs_init(voi
- 		return ret;
- 	}
+-	tmp_pid = pid_vnr(cad_pid);
++	rcu_read_lock();
++	tmp_pid = pid_vnr(rcu_dereference(cad_pid));
++	rcu_read_unlock();
++
+ 	tmp_table.data = &tmp_pid;
  
--	kernel_reboot_sysctls_init();
--
+ 	r = proc_dointvec(&tmp_table, write, buffer, lenp, ppos);
+@@ -1302,7 +1307,13 @@ static int proc_do_cad_pid(const struct
+ 	if (!new_pid)
+ 		return -ESRCH;
+ 
+-	put_pid(xchg(&cad_pid, new_pid));
++	old_pid = unrcu_pointer(xchg(&cad_pid, RCU_INITIALIZER(new_pid)));
++	/*
++	 * Wait for cad_pid readers before put_pid().  We cannot use
++	 * call_rcu() here because free_pid() already owns pid->rcu.
++	 */
++	synchronize_rcu();
++	put_pid(old_pid);
  	return 0;
  }
- late_initcall(reboot_ksysfs_init);
+ 
 --- a/kernel/signal.c
 +++ b/kernel/signal.c
-@@ -1936,14 +1936,10 @@ int kill_pid(struct pid *pid, int sig, i
+@@ -1936,6 +1936,18 @@ int kill_pid(struct pid *pid, int sig, i
  }
  EXPORT_SYMBOL(kill_pid);
  
-+#ifdef CONFIG_POSIX_TIMERS
- /*
-- * These functions support sending signals using preallocated sigqueue
-- * structures.  This is needed "because realtime applications cannot
-- * afford to lose notifications of asynchronous events, like timer
-- * expirations or I/O completions".  In the case of POSIX Timers
-- * we allocate the sigqueue structure from the timer_create.  If this
-- * allocation fails we are able to report the failure to the application
-- * with an EAGAIN error.
-+ * These functions handle POSIX timer signals. POSIX timers use
-+ * preallocated sigqueue structs for sending signals.
-  */
- struct sigqueue *sigqueue_alloc(void)
- {
-@@ -2043,6 +2039,8 @@ ret:
- 	return ret;
- }
- 
-+#endif /* CONFIG_POSIX_TIMERS */
++int kill_cad_pid(int sig, int priv)
++{
++	int ret;
 +
- void do_notify_pidfd(struct task_struct *task)
- {
- 	struct pid *pid = task_pid(task);
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -1322,28 +1322,6 @@ int proc_dointvec_ms_jiffies(const struc
- 				do_proc_dointvec_ms_jiffies_conv, NULL);
- }
- 
--static int proc_do_cad_pid(const struct ctl_table *table, int write, void *buffer,
--		size_t *lenp, loff_t *ppos)
--{
--	struct pid *new_pid;
--	pid_t tmp;
--	int r;
--
--	tmp = pid_vnr(cad_pid);
--
--	r = __do_proc_dointvec(&tmp, table, write, buffer,
--			       lenp, ppos, NULL, NULL);
--	if (r || !write)
--		return r;
--
--	new_pid = find_get_pid(tmp);
--	if (!new_pid)
--		return -ESRCH;
--
--	put_pid(xchg(&cad_pid, new_pid));
--	return 0;
--}
--
- /**
-  * proc_do_large_bitmap - read/write from/to a large bitmap
-  * @table: the sysctl table
-@@ -1761,15 +1739,6 @@ static struct ctl_table kern_table[] = {
- 		.proc_handler	= sysrq_sysctl_handler,
- 	},
- #endif
--#ifdef CONFIG_PROC_SYSCTL
--	{
--		.procname	= "cad_pid",
--		.data		= NULL,
--		.maxlen		= sizeof (int),
--		.mode		= 0600,
--		.proc_handler	= proc_do_cad_pid,
--	},
--#endif
- 	{
- 		.procname	= "threads-max",
- 		.data		= NULL,
++	rcu_read_lock();
++	ret = kill_pid(rcu_dereference(cad_pid), sig, priv);
++	rcu_read_unlock();
++
++	return ret;
++}
++EXPORT_SYMBOL(kill_cad_pid);
++
+ #ifdef CONFIG_POSIX_TIMERS
+ /*
+  * These functions handle POSIX timer signals. POSIX timers use
 
 
