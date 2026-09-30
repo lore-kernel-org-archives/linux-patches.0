@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFC03B9DBF;
-	Wed, 30 Sep 2026 18:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B9E3B776D;
+	Wed, 30 Sep 2026 18:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794058; cv=none; b=t+xDnBb21b5UTi2ZiBMtq/AoVaPlsklGMVSlhKEE9Rbw7Ojgu9HDopUGYtcUjNPOjjJ0p83Xb35wcJ4a+jhCLZeFiEly2Ndn5dPdIIFluMdr8frynABpXRNmNxM/5pO0AGyGWZ0F87+JJV2jCpmP+AAtefdeo/apSRb/lHpu27M=
+	t=1790794061; cv=none; b=Mhl7i3ohR2tHhrt8bpJ8rSPiDPSKxHgG2DqFk107yVJhM0CZBYUkzczXMPJplNVq8rOWi9splZ12/JWY9lPANB27VesS+OBXK7ZuXyIGbWgGDqwoTbpiESjzQbVLjq33IAwgQVT460c5fC2QhcalEhEwwyeezAEejzHeGA3tiiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794058; c=relaxed/simple;
-	bh=sGy2v7j8vKZrl0ogEhPWWDN0jqdYVXGUJ3rw7qkFQ3w=;
+	s=arc-20240116; t=1790794061; c=relaxed/simple;
+	bh=78s/xvHMZJblSpkoJinMICCGTc1KRlSejMfrzXxk0fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sH+Nv/WNA1fwchjIOq9ul+5i5nILutzvj4hN8zdud/J/q+JGSPxr5HucxPIlcuyS7uu8AGElBSCsJkWK0pD1ZX74LVN1EqkRhvEMCf9X5mbNk0Rr1f9ZN1MtkqnKt+sxLw+lGvomwbw392uNs7T0U39O8bPYKlEWd5JcQQ8USxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6yHJihq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LKB4GbUlTdAHQwxrFEcl4IcipUZjEH1YJv0DOg10MFnA47M40rdFoivKmPeyMERp7N0iNzGmvn/33dFwXVzjcK3x5mrsB7x3FLVbvSEaMonLXo2gZ53hy2HjzNqVJdtQWdrVMQsGjJre3J+8IoOLV8ClOWrWD9O27cOZ2w2hqOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okH0OdwL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6yHJihq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8751F00899;
-	Wed, 30 Sep 2026 18:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okH0OdwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB521F000FF;
+	Wed, 30 Sep 2026 18:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794057;
-	bh=vtbwjQT8KDX14zCs5nINJIrDx1OASfI2cRtUOz0nQ0s=;
+	s=korg; t=1790794060;
+	bh=6qWOGJVUrrl5DAfGuCGfLgidZPhSI089Lx6uAPCyAYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6yHJihq8VM6Jc4w1K+zAX6qMef7KKU5cvMcsVkzAY34bz0Scv1rQN6V5DmcBILj7
-	 XklrRtw8C8JnctrhXjS2/fx7U6ldb70HyzWcSpJwGfXxMXqSpaJT9N9rSS7VfiDCrl
-	 bcn4MYZLLVPwbJTQkdS+6AsVv9z9V9/+068H31HU=
+	b=okH0OdwLm7W4ElFKQgB40lIZ4FWNrn0Q5pzUpcY8Nj6w+n+9SodhtTylpHjOOZP4W
+	 O0bS8YFa4oyW5XH/TBqCTbT0CB9/uzFbehZOr4+LKzRtFoE5XkEw9jc85bIL23JXGX
+	 sd5iGwwvSdwIMDRg40seSgNOrfLhAC0vuTFpyYxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Daniel Wagner <dwagner@suse.de>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Jan Volckaert <janvolck@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0077/1193] nvme-core: align fabrics_q teardown with admin_q in nvme_free_ctrl
-Date: Wed, 30 Sep 2026 17:12:41 +0200
-Message-ID: <20260930152435.968572340@linuxfoundation.org>
+Subject: [PATCH 6.6 0078/1193] net: usb: qmi_wwan: add MeiG SRM813Q
+Date: Wed, 30 Sep 2026 17:12:42 +0200
+Message-ID: <20260930152435.989009016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,56 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Jan Volckaert <janvolck@gmail.com>
 
-[ Upstream commit f702badaf7d31dc3dea6c66da92b5f35fadd89dc ]
+[ Upstream commit 9758c11fc6c138a79a28a5659feeaa3abde7aa6a ]
 
-Currently, the final reference for the fabrics admin queue (fabrics_q)
-is dropped inside nvme_remove_admin_tag_set(). However, the primary admin
-queue (admin_q) defers dropping its final reference until
-nvme_free_ctrl().
+Add support for the Qualcomm Technology Snapdragon X35-based MeiG SRM813Q
+module.
 
-Move the blk_put_queue() call for fabrics_q from
-nvme_remove_admin_tag_set() to nvme_free_ctrl(). This aligns the
-lifecycle management of both admin queues, ensuring they are freed
-symmetrically when the controller is finally torn down.
+The module can be put in different modes via AT commands
+to enable/disable GPS functionality:
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+MODEM - PPP mode(2dee:4d63): AT+SER=1,1
+
+If#= 0: RMNET
+If#= 1: DIAG/ADB
+If#= 2: MODEM
+If#= 3: AT
+
+P:  Vendor=2dee ProdID=4d63 Rev=05.15
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=1bd51f0e
+C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+
+NMEA mode(2dee:4d64): AT+SER=51,1
+
+If#= 0: RMNET
+If#= 1: DIAG/ADB
+If#= 2: NMEA
+If#= 3: AT
+
+P:  Vendor=2dee ProdID=4d64 Rev=05.15
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=1bd51f0e
+C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+
+Signed-off-by: Jan Volckaert <janvolck@gmail.com>
+Link: https://patch.msgid.link/20260517153237.55995-2-janvolck@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 7b8de361046d8..d02ca033db439 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4325,10 +4325,8 @@ EXPORT_SYMBOL_GPL(nvme_alloc_admin_tag_set);
- void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
- {
- 	blk_mq_destroy_queue(ctrl->admin_q);
--	if (ctrl->ops->flags & NVME_F_FABRICS) {
-+	if (ctrl->fabrics_q)
- 		blk_mq_destroy_queue(ctrl->fabrics_q);
--		blk_put_queue(ctrl->fabrics_q);
--	}
- 	blk_mq_free_tag_set(ctrl->admin_tagset);
- }
- EXPORT_SYMBOL_GPL(nvme_remove_admin_tag_set);
-@@ -4471,6 +4469,8 @@ static void nvme_free_ctrl(struct device *dev)
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 01202cf700a6e..ad8ed2816a98f 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1457,6 +1457,8 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+ 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
+ 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
++	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
++	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
  
- 	if (ctrl->admin_q)
- 		blk_put_queue(ctrl->admin_q);
-+	if (ctrl->fabrics_q)
-+		blk_put_queue(ctrl->fabrics_q);
- 	if (!subsys || ctrl->instance != subsys->instance)
- 		ida_free(&nvme_instance_ida, ctrl->instance);
- 
+ 	/* 4. Gobi 1000 devices */
+ 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
 -- 
 2.53.0
 
