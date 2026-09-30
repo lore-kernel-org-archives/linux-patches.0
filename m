@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF973438A1;
-	Wed, 30 Sep 2026 18:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623F53B2D1A;
+	Wed, 30 Sep 2026 18:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791668; cv=none; b=ZO4nxKwYGGaY8roep0HTyz7rjYDnUHWmMlyF32MIajMRERBu8oFBIVetyjFTJzKd/9a1O+4MoGk88SlRHS316iRbS/7Wc4Ukr/BB0cqa4k1XMAxVBS7rrQFao5m8+lFordvRbMihlABbGtiWS6RMKgW11iWaJVv9G3I13H9qeoI=
+	t=1790791671; cv=none; b=bxbtY+AJnqCztzoksUcvJGiEsKBrSUefSNWGqpoa8rxof6BYeVrQ1ECyTJlvQuAdsagnSigQHodnU4VG4kwAWE4xk4Kxxtaf7zq5X1tQOMHlpSwro+n5SbrwLX0mv03aDa0XSQHgtTjEF3ka4p+46ojuum6LRCNJ3I20eewP/gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791668; c=relaxed/simple;
-	bh=sINnrK/ykBGQK5O57KWBz1KOcpOhu+N9VirrUFI6yyk=;
+	s=arc-20240116; t=1790791671; c=relaxed/simple;
+	bh=UXMoihERcrzpIyu62MZS5S8nk1in5LRmgxDLCm642ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1dkBKc5qEdbcBfjiVD4T+qe8cUBv0PtFjBiOZWWQhWGk4NVzLo9t8ZwOlGL0aBdtY3DFS+l3OFxacER6aOiHzruKAskc0lJ6gryF0m/6vaxRLZTqb3h5SUE6c9YvWUsA4euWS1NcheblWsZWy8vyA0jmDQdg02czJumpkJ+ifM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8zgs27F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fAgyK6NfO8CKZCl1O5O0rrASXl7AlwPUKL/SyFjEp8bY5Z4TkhWuSNHef8LtrAgP95Uu4CL30gJZg7E3d+inzqyAbYaDacIDpkbl3XSOfylilqoaF/ZIMF+uEKYtccTcmRxB8wNti8uw6qQtcGkc8DbEt87BNQ82XO6xJ+CL/so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isyHjqee; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8zgs27F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA2F1F000FF;
-	Wed, 30 Sep 2026 18:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isyHjqee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C50A1F00898;
+	Wed, 30 Sep 2026 18:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791667;
-	bh=Xzl+7nwzG0ZWdRSaq9Hezr7Puh5z0xNrRdjJTace77I=;
+	s=korg; t=1790791670;
+	bh=RTLuXAi1IXWC6cH47xIT54B71oMfad6CZGm5V118fg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8zgs27FQtvHtIIVxnRgIv5UJKt3Gro6kLcOuOp8o/oWQ9S6eyW2Upam/8LnH62WW
-	 4JH1qblCSgFyYm7LvmlK0MRU5pg2pTI9CBraExzckLcXr42alOANPfj41RtpiLCoin
-	 rlOguM1QIpXpipUsML64f3ZpAYEyuSa2bj8PRv0Y=
+	b=isyHjqeePF0jU4Jgq3kgYXDIN+umgAsJaOhKSxjbf+S9hO79mCAKhqgyv4AYa0PAN
+	 h+PbM80yMbofbX4oMOmPmP5PyGfjX8Trg6SyTTnSxC3yTs5S4o5t5ThBszTwzo+gPh
+	 qAq1UbzrUfuorV83xsNLgHqMQFg2JHIBXq3+os20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Peterson <benjamin@locrian.net>,
-	Jann Horn <jannh@google.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.15 384/752] exec: do_close_on_exec() before taking exec_update_lock
-Date: Wed, 30 Sep 2026 17:24:14 +0200
-Message-ID: <20260930152406.585504866@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 367/752] Revert "scsi: smartpqi: Switch to attribute groups"
+Date: Wed, 30 Sep 2026 17:23:57 +0200
+Message-ID: <20260930152406.222384648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,80 +49,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+This reverts commit e3789fa42d068f0c0c5c24063a1f941c8c4a8627.
 
-commit e780259b54e618ceb4763fbc21314acf3565e813 upstream.
-
-do_close_on_exec() currently happens while holding the exec_update_lock,
-which is used in a lot of places that access process state to
-synchronize access checks.
-I recently added another such use of exec_update_lock, causing a
-regression.
-
-do_close_on_exec() can block waiting for a reply from a filesystem.
-That means a hung filesystem can block codepaths that use
-exec_update_lock; and it also means that a FUSE filesystem which
-attempts to inspect the calling process can deadlock.
-
-To avoid such problems, move do_close_on_exec() before the
-exec_update_lock is taken, but after the FD table has been copied if
-necessary.
-
-I have looked through all the calls between the old and new position of
-the do_close_on_exec() call; there seems to be no file descriptor table
-access in between.
-
-Reported-by: Benjamin Peterson <benjamin@locrian.net>
-Closes: https://lore.kernel.org/r/f5e8166a-88be-46c5-8939-1e5227ffe4c2@app.fastmail.com
-Fixes: 6650527444da ("proc: protect ptrace_may_access() with exec_update_lock (part 1)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260907-cloexec-before-exec-update-lock-v1-1-8018c201a7df@google.com
-Tested-by: Benjamin Peterson <benjamin@locrian.net>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 46 ++++++++++++---------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1273,6 +1273,20 @@ int begin_new_exec(struct linux_binprm *
- 		goto out;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index 6ecc56fb9fb25..f1ba5087e0eed 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -6664,22 +6664,20 @@ static DEVICE_ATTR(enable_r5_writes, 0644,
+ static DEVICE_ATTR(enable_r6_writes, 0644,
+ 	pqi_host_enable_r6_writes_show, pqi_host_enable_r6_writes_store);
  
- 	/*
-+	 * We have to apply CLOEXEC before we change whether the process is
-+	 * dumpable (in setup_new_exec) to avoid a race with a process in userspace
-+	 * trying to access the should-be-closed file descriptors of a process
-+	 * undergoing exec(2).
-+	 *
-+	 * This can block on filesystem ->flush() handlers, including waiting
-+	 * for FUSE daemons, so do it before exec_mmap takes the
-+	 * exec_update_lock.
-+	 * This must happen after the point of no return, and after unsharing
-+	 * the FD table.
-+	 */
-+	do_close_on_exec(me->files);
-+
-+	/*
- 	 * Must be called _before_ exec_mmap() as bprm->mm is
- 	 * not visibile until then. This also enables the update
- 	 * to be lockless.
-@@ -1324,14 +1338,6 @@ int begin_new_exec(struct linux_binprm *
+-static struct attribute *pqi_shost_attrs[] = {
+-	&dev_attr_driver_version.attr,
+-	&dev_attr_firmware_version.attr,
+-	&dev_attr_model.attr,
+-	&dev_attr_serial_number.attr,
+-	&dev_attr_vendor.attr,
+-	&dev_attr_rescan.attr,
+-	&dev_attr_lockup_action.attr,
+-	&dev_attr_enable_stream_detection.attr,
+-	&dev_attr_enable_r5_writes.attr,
+-	&dev_attr_enable_r6_writes.attr,
++static struct device_attribute *pqi_shost_attrs[] = {
++	&dev_attr_driver_version,
++	&dev_attr_firmware_version,
++	&dev_attr_model,
++	&dev_attr_serial_number,
++	&dev_attr_vendor,
++	&dev_attr_rescan,
++	&dev_attr_lockup_action,
++	&dev_attr_enable_stream_detection,
++	&dev_attr_enable_r5_writes,
++	&dev_attr_enable_r6_writes,
+ 	NULL
+ };
  
- 	clear_syscall_work_syscall_user_dispatch(me);
- 
--	/*
--	 * We have to apply CLOEXEC before we change whether the process is
--	 * dumpable (in setup_new_exec) to avoid a race with a process in userspace
--	 * trying to access the should-be-closed file descriptors of a process
--	 * undergoing exec(2).
--	 */
--	do_close_on_exec(me->files);
+-ATTRIBUTE_GROUPS(pqi_shost);
 -
- 	if (bprm->secureexec) {
- 		/* Make sure parent cannot signal privileged process. */
- 		me->pdeath_signal = 0;
+ static ssize_t pqi_unique_id_show(struct device *dev,
+ 	struct device_attribute *attr, char *buffer)
+ {
+@@ -6950,19 +6948,17 @@ static DEVICE_ATTR(ssd_smart_path_enabled, 0444, pqi_ssd_smart_path_enabled_show
+ static DEVICE_ATTR(raid_level, 0444, pqi_raid_level_show, NULL);
+ static DEVICE_ATTR(raid_bypass_cnt, 0444, pqi_raid_bypass_cnt_show, NULL);
+ 
+-static struct attribute *pqi_sdev_attrs[] = {
+-	&dev_attr_lunid.attr,
+-	&dev_attr_unique_id.attr,
+-	&dev_attr_path_info.attr,
+-	&dev_attr_sas_address.attr,
+-	&dev_attr_ssd_smart_path_enabled.attr,
+-	&dev_attr_raid_level.attr,
+-	&dev_attr_raid_bypass_cnt.attr,
++static struct device_attribute *pqi_sdev_attrs[] = {
++	&dev_attr_lunid,
++	&dev_attr_unique_id,
++	&dev_attr_path_info,
++	&dev_attr_sas_address,
++	&dev_attr_ssd_smart_path_enabled,
++	&dev_attr_raid_level,
++	&dev_attr_raid_bypass_cnt,
+ 	NULL
+ };
+ 
+-ATTRIBUTE_GROUPS(pqi_sdev);
+-
+ static struct scsi_host_template pqi_driver_template = {
+ 	.module = THIS_MODULE,
+ 	.name = DRIVER_NAME_SHORT,
+@@ -6977,8 +6973,8 @@ static struct scsi_host_template pqi_driver_template = {
+ 	.slave_configure = pqi_slave_configure,
+ 	.slave_destroy = pqi_slave_destroy,
+ 	.map_queues = pqi_map_queues,
+-	.sdev_groups = pqi_sdev_groups,
+-	.shost_groups = pqi_shost_groups,
++	.sdev_attrs = pqi_sdev_attrs,
++	.shost_attrs = pqi_shost_attrs,
+ };
+ 
+ static int pqi_register_scsi(struct pqi_ctrl_info *ctrl_info)
+-- 
+2.53.0
+
 
 
