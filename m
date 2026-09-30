@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E574D1784;
-	Wed, 30 Sep 2026 17:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719103624BF;
+	Wed, 30 Sep 2026 17:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788626; cv=none; b=kt5+oUc3/ZjZMe+moXXswH5KgtYj6SOdnBklePLWmFcc57Dyn5/Jn+67xo/4KQXK+QvRQOdaFklXbKGbIcvQ2jO/pTH4gmuMoP6giivlauZIMZFQ9qOoi7bvmU8BPd9VpYPljxubmGw3ktZWcU6YdQuAzZaMMesBPHCgdOKjA40=
+	t=1790788629; cv=none; b=cQBapAydaNbnFommalH8TgMcDe4ZDnKOWvSTgmOfmm0lD47AIvsO59jQOxZctIq+Wi9STO9H1yKD3cZjcdHhCyDGjiFrFOs1L8oY42Uwdx/O2xt9nJZ+Oci094og6HVmXbtR/FLbaMAvhviXNbX8I76OHSlTDe8MfEjDbe7e7ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788626; c=relaxed/simple;
-	bh=H/oaBMf/WfhKaF09kPHQPy8Wc9V05XBAzokd8MEwm6A=;
+	s=arc-20240116; t=1790788629; c=relaxed/simple;
+	bh=RxvNolrVr46SeykX76sLwPs/0MNgBiNuaS0I1GVVyoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2MC423Phs745fuNg8YXjCk8hCVESmXejNgQajllIgm6T5KGmls4zcTQGkrWcOsDY3gg5M0b/6Vr4uxJx/kqU8b+9bd8gkMcUAoIyXzVQyQsykbc31QGUN3LINsP/U8mH5n33oavyH7P2ER5cZYZ/vD8J3O3hIK6YE9jbw/CMUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gdjki2kl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tpkTVO6cSG85E+cuBnZTkwOOxMHQWAIVWZXW0GWMDucRRQ4NHFUundna8ULT01lGPTJn3drObP+tXCzGk6HMwqWI34ZL7zmGQMK+NxZglEQ0h+5/oqLaHstQwqX4G4f95C72dhjgZxpykRQt9mXuOqDuBAYXzFsY2m3t7+wih+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZOwSRam; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gdjki2kl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDD21F000FF;
-	Wed, 30 Sep 2026 17:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZOwSRam"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDD91F000FF;
+	Wed, 30 Sep 2026 17:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788625;
-	bh=fluWE4NPQIDyLFuRpYlKTw71gW5sIrc4sUeztT4w4BA=;
+	s=korg; t=1790788628;
+	bh=a+xjn5kVRYIhuyI6X2H/IeiBXvd/LsB5KFyvtn1hrTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gdjki2kl1kM1b0OdNpnIfzQVkZBetAXOs31NhDBvGXOx4GSNkV3O7zi1kqHZGhrY7
-	 LehbyrCm47buhWZFn4cP+N5WzUWJlYblKi44Ce16FUlCWsUchdshx7+2/Is7SQaBu4
-	 25hmz2Sp6/gACkxSH9A3avG5e+6MQyEo7DTNMwxk=
+	b=YZOwSRam6ZM9nRO7BRmnyW3oDhS2cYhubCDN/YWqvozE3LuranaNdwsgPLFd7eluz
+	 li2D17Nsn7QcoswBsZ1sI8VpN+4/L5sjwUZYOhQOgV+4cP9oRoYKsL+OPh0jx/0qbI
+	 Oogj8hk/4oU9NhE8YTQ+XwVs5z2c4LDez+FraJ6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 190/877] dmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_rx_chn()
-Date: Wed, 30 Sep 2026 17:18:21 +0200
-Message-ID: <20260930152418.827508863@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.12 191/877] ipv6: xfrm: use full sockets in local error paths
+Date: Wed, 30 Sep 2026 17:18:22 +0200
+Message-ID: <20260930152418.849526923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,44 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 0294b6dd515256c03ea2dbf508ddd3826d788579 upstream.
+commit 6973a21ee73c5567f883813c8ef414774b45892f upstream.
 
-If devm_kcalloc() for rx_chn->flows fails in a channel request function,
-the error path calls k3_udma_glue_release_rx_chn(), which dereferences
-the NULL rx_chn->flows pointer in k3_udma_glue_release_rx_flow().
+xfrm6_local_rxpmtu() and xfrm6_local_error() dereference skb->sk as if it
+always pointed at a full IPv6 socket.
 
-Skip the flow release loop in k3_udma_glue_release_rx_chn() when
-rx_chn->flows is not allocated.
+That is not guaranteed. TCP SYN-ACK skbs can be owned by a
+TCP_NEW_SYN_RECV request_sock while the output path itself is driven by the
+full listener. If rerouting selects an IPv6 XFRM tunnel route with a lower
+MTU, the local PMTU/error handling path can reach these callbacks with that
+mini-socket still attached to the skb.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The callbacks then miscast the request socket as a full inet/IPv6 socket and
+can read beyond the request_sock allocation when they access inet_sock or
+ipv6_pinfo state.
 
-Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
+Resolve the owner with skb_to_full_sk() in both callbacks and bail out when
+no full socket is attached. This matches the surrounding XFRM IPv6 PMTU/error
+logic, which already reasons about full sockets with skb_to_full_sk().
+
+Fixes: dd767856a36e ("xfrm6: Don't call icmpv6_send on local error")
 Cc: stable@vger.kernel.org
-Reported-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Signed-off-by: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-udma-glue.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv6/xfrm6_output.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/ti/k3-udma-glue.c
-+++ b/drivers/dma/ti/k3-udma-glue.c
-@@ -1236,8 +1236,9 @@ void k3_udma_glue_release_rx_chn(struct
- 		rx_chn->psil_paired = false;
- 	}
+--- a/net/ipv6/xfrm6_output.c
++++ b/net/ipv6/xfrm6_output.c
+@@ -19,7 +19,10 @@
+ void xfrm6_local_rxpmtu(struct sk_buff *skb, u32 mtu)
+ {
+ 	struct flowi6 fl6;
+-	struct sock *sk = skb->sk;
++	struct sock *sk = skb_to_full_sk(skb);
++
++	if (!sk)
++		return;
  
--	for (i = 0; i < rx_chn->flow_num; i++)
--		k3_udma_glue_release_rx_flow(rx_chn, i);
-+	if (rx_chn->flows)
-+		for (i = 0; i < rx_chn->flow_num; i++)
-+			k3_udma_glue_release_rx_flow(rx_chn, i);
+ 	fl6.flowi6_oif = sk->sk_bound_dev_if;
+ 	fl6.daddr = ipv6_hdr(skb)->daddr;
+@@ -31,7 +34,10 @@ void xfrm6_local_error(struct sk_buff *s
+ {
+ 	struct flowi6 fl6;
+ 	const struct ipv6hdr *hdr;
+-	struct sock *sk = skb->sk;
++	struct sock *sk = skb_to_full_sk(skb);
++
++	if (!sk)
++		return;
  
- 	if (xudma_rflow_is_gp(rx_chn->common.udmax, rx_chn->flow_id_base))
- 		xudma_free_gp_rflow_range(rx_chn->common.udmax,
+ 	hdr = skb->encapsulation ? inner_ipv6_hdr(skb) : ipv6_hdr(skb);
+ 	fl6.fl6_dport = inet_sk(sk)->inet_dport;
 
 
