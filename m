@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE5C355F42;
-	Wed, 30 Sep 2026 15:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAB04EDCC3;
+	Wed, 30 Sep 2026 15:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783246; cv=none; b=MJLJcAnacWmmYSQEuNtQ5G9bPmJennfDAyFa2O4xGRM/J8U0ZlPv4MzKSxkRF9Bu+xmpwFe5v4NqLcYd48KqVDgfTduaM9CeoHtqQ77E/PPChwQ3yH/OOADsp0hVSJdE3NpVlcIz0MUc9jFAY/8u7PFB8ZKW0ZXZpdDXuIhR++o=
+	t=1790783249; cv=none; b=EnQGCLFozA0bP7CKFd+9jOkOJlZMR3VYf9P2h9cQBJD1BBZk/Yp0X8rpH5aUmr37gjYIwsAtfkpSxiZIXrf4hqQIka4CvLHr6ZUjC7nRJwzHgkjmibfWZXFnHZ9IpFNz/IhcqEbdXTJAuDiEIDISUJ+k8hIJG1VwJMTH0+DApJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783246; c=relaxed/simple;
-	bh=LZo30F41h5NYy0KUhVhQ9/38NrHgxAnBs0hQuzhhWPQ=;
+	s=arc-20240116; t=1790783249; c=relaxed/simple;
+	bh=Q9QQs51Q1fX1gwX7SDw19a6tAyC3KlOtsSrPQq8ghJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jv+LqZBlfGCwJSo/SXIS0sXXHgoCcP++8xtdxal0Is6z9q/AjREGAlWGUHCDLlcJ884lRS5l4DRAfyyu2edzVudLSJSULjgjFrY3GrBP+7AlavBNV1Kp4+LbnhQJocdq/T+Xwy0Len9C4XgbEfuwrlWMM0o4Os0vvajSPIG55PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHfv6MVH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NdF8Vr9zpL+tC9edvqh4+so0mhZx9FJulf+6a8QUz1pw8eeTuwsL4tDi4/kEu5x5ZB63s8hKQMopWNbE6pup2w7Tqz9NabBF0RWOCRgCg2DwVRvUSlKkGM9AHeoT2YZN7iJ+JN3AwUXR9fEeSYroW3MD0h2Z1gCC45GfVqK3E1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpuH6y9k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHfv6MVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461D91F000FF;
-	Wed, 30 Sep 2026 15:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpuH6y9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4AF1F00893;
+	Wed, 30 Sep 2026 15:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783242;
-	bh=i76DWxkbzi/s/1STldtwXoP0XTMb32liXNMlg50XJdg=;
+	s=korg; t=1790783245;
+	bh=tQ/fMkpO4SRAsz5Z6ZywKbIk8uVS0bX30QiKEl3a29M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qHfv6MVHYUC96qaL+FCNEneBh/WmBVkwM5ENKB6IFYRG3i2nDeGjrITXK8pPCytT5
-	 5nExuUw6Yhrr0fc4tZ9iA7GP8sUgWPlSbJQscU+t04u0/sgUA99wIRUtipiFGkpLbe
-	 s+0Ega4rAWrJWQZow5hjVuTOB+ak0Kfw+PUbk4xI=
+	b=NpuH6y9kHA/754sjWFhLd/w7/DDlWw06PLytW5U0L/K5wbl2RtYRMWnzVxscEEzpN
+	 bv5bwJWMvT5CU2vC7HwoeZNWJhHyG+I8dSrvvDHcGiaojNkIE9LS2me9wLYMX0L2rI
+	 xgadJw5tldlMCqE260Dq+5fYbg4hO5x1fdNPszgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Xinyang Ge <xinyang@anthropic.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 330/595] mptcp: close race between scheduler and state change
-Date: Wed, 30 Sep 2026 17:23:43 +0200
-Message-ID: <20260930152354.782072936@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 331/595] iomap: iomap: fix memory corruption when recording errors during writeback
+Date: Wed, 30 Sep 2026 17:23:44 +0200
+Message-ID: <20260930152354.803514019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,54 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 42064de57fb83231fcc89663a94885f228a1ee53 upstream.
+[ Upstream commit 3d5f3ba1ac28059bdf7000cae2403e4e984308d2 ]
 
-The mptcp scheduler may race with subflow sockets state change: data
-transmission on the selected socket may fail and a later release could
-try to use mss_now reset to 0 for a divide operation.
+Every now and then I see this crash on arm64:
 
-Address the issue by explicitly checking for the critical scenario.
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000f8
+Buffer I/O error on dev dm-0, logical block 8733687, async page read
+Mem abort info:
+  ESR = 0x0000000096000006
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x06: level 2 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000006
+  CM = 0, WnR = 0
+user pgtable: 64k pages, 42-bit VAs, pgdp=0000000139750000
+[00000000000000f8] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000, pmd=0000000000000000
+Internal error: Oops: 96000006 [#1] PREEMPT SMP
+Buffer I/O error on dev dm-0, logical block 8733688, async page read
+Dumping ftrace buffer:
+Buffer I/O error on dev dm-0, logical block 8733689, async page read
+   (ftrace buffer empty)
+XFS (dm-0): log I/O error -5
+Modules linked in: dm_thin_pool dm_persistent_data
+XFS (dm-0): Metadata I/O Error (0x1) detected at xfs_trans_read_buf_map+0x1ec/0x590 [xfs] (fs/xfs/xfs_trans_buf.c:296).
+ dm_bio_prison
+XFS (dm-0): Please unmount the filesystem and rectify the problem(s)
+XFS (dm-0): xfs_imap_lookup: xfs_ialloc_read_agi() returned error -5, agno 0
+ dm_bufio dm_log_writes xfs nft_chain_nat xt_REDIRECT nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip6t_REJECT
+potentially unexpected fatal signal 6.
+ nf_reject_ipv6
+potentially unexpected fatal signal 6.
+ ipt_REJECT nf_reject_ipv4
+CPU: 1 PID: 122166 Comm: fsstress Tainted: G        W          6.0.0-rc5-djwa #rc5 3004c9f1de887ebae86015f2677638ce51ee7
+ rpcsec_gss_krb5 auth_rpcgss xt_tcpudp ip_set_hash_ip ip_set_hash_net xt_set nft_compat ip_set_hash_mac ip_set nf_tables
+Hardware name: QEMU KVM Virtual Machine, BIOS 1.5.1 06/16/2021
+pstate: 60001000 (nZCv daif -PAN -UAO -TCO -DIT +SSBS BTYPE=--)
+ ip_tables
+pc : 000003fd6d7df200
+ x_tables
+lr : 000003fd6d7df1ec
+ overlay nfsv4
+CPU: 0 PID: 54031 Comm: u4:3 Tainted: G        W          6.0.0-rc5-djwa #rc5 3004c9f1de887ebae86015f2677638ce51ee7405
+Hardware name: QEMU KVM Virtual Machine, BIOS 1.5.1 06/16/2021
+Workqueue: writeback wb_workfn
+sp : 000003ffd9522fd0
+ (flush-253:0)
+pstate: 60401005 (nZCv daif +PAN -UAO -TCO -DIT +SSBS BTYPE=--)
+pc : errseq_set+0x1c/0x100
+x29: 000003ffd9522fd0 x28: 0000000000000023 x27: 000002acefeb6780
+x26: 0000000000000005 x25: 0000000000000001 x24: 0000000000000000
+x23: 00000000ffffffff x22: 0000000000000005
+lr : __filemap_set_wb_err+0x24/0xe0
+ x21: 0000000000000006
+sp : fffffe000f80f760
+x29: fffffe000f80f760 x28: 0000000000000003 x27: fffffe000f80f9f8
+x26: 0000000002523000 x25: 00000000fffffffb x24: fffffe000f80f868
+x23: fffffe000f80fbb0 x22: fffffc0180c26a78 x21: 0000000002530000
+x20: 0000000000000000 x19: 0000000000000000 x18: 0000000000000000
 
-Fixes: c886d70286bf ("mptcp: do not queue data on closed subflows")
-Cc: stable@vger.kernel.org
-Reported-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reported-by: Xinyang Ge <xinyang@anthropic.com>
-Closes: https://lore.kernel.org/20260525194828.1137119-1-shardul.b@mpiricsoftware.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260917-net-mptcp-misc-fixes-7-3-rc4-v2-2-0cf5c72667c8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Note: moved the mss_now check in previous places before commit
-  d9ca1de8c0cd ("mptcp: move page frag allocation in mptcp_sendmsg()")
-  which is not in this version. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000001 x13: 0000000000470af3 x12: fffffc0058f70000
+x11: 0000000000000040 x10: 0000000000001b20 x9 : fffffe000836b288
+x8 : fffffc00eb9fd480 x7 : 0000000000f83659 x6 : 0000000000000000
+x5 : 0000000000000869 x4 : 0000000000000005 x3 : 00000000000000f8
+x20: 000003fd6d740020 x19: 000000000001dd36 x18: 0000000000000001
+x17: 000003fd6d78704c x16: 0000000000000001 x15: 000002acfac87668
+x2 : 0000000000000ffa x1 : 00000000fffffffb x0 : 00000000000000f8
+Call trace:
+ errseq_set+0x1c/0x100
+ __filemap_set_wb_err+0x24/0xe0
+ iomap_do_writepage+0x5e4/0xd5c
+ write_cache_pages+0x208/0x674
+ iomap_writepages+0x34/0x60
+ xfs_vm_writepages+0x8c/0xcc [xfs 7a861f39c43631f15d3a5884246ba5035d4ca78b]
+x14: 0000000000000000 x13: 2064656e72757465 x12: 0000000000002180
+x11: 000003fd6d8a82d0 x10: 0000000000000000 x9 : 000003fd6d8ae288
+x8 : 0000000000000083 x7 : 00000000ffffffff x6 : 00000000ffffffee
+x5 : 00000000fbad2887 x4 : 000003fd6d9abb58 x3 : 000003fd6d740020
+x2 : 0000000000000006 x1 : 000000000001dd36 x0 : 0000000000000000
+CPU: 1 PID: 122167 Comm: fsstress Tainted: G        W          6.0.0-rc5-djwa #rc5 3004c9f1de887ebae86015f2677638ce51ee7
+ do_writepages+0x90/0x1c4
+ __writeback_single_inode+0x4c/0x4ac
+Hardware name: QEMU KVM Virtual Machine, BIOS 1.5.1 06/16/2021
+ writeback_sb_inodes+0x214/0x4ac
+ wb_writeback+0xf4/0x3b0
+pstate: 60001000 (nZCv daif -PAN -UAO -TCO -DIT +SSBS BTYPE=--)
+ wb_workfn+0xfc/0x580
+ process_one_work+0x1e8/0x480
+pc : 000003fd6d7df200
+ worker_thread+0x78/0x430
+
+This crash is a result of iomap_writepage_map encountering some sort of
+error during writeback and wanting to set that error code in the file
+mapping so that fsync will report it.  Unfortunately, the code
+dereferences folio->mapping after unlocking the folio, which means that
+another thread could have removed the page from the page cache
+(writeback doesn't hold the invalidation lock) and give it to somebody
+else.
+
+At best we crash the system like above; at worst, we corrupt memory or
+set an error on some other unsuspecting file while failing to record the
+problems with *this* file.  Regardless, fix the problem by reporting the
+error to the inode mapping.
+
+NOTE: Commit 598ecfbaa742 lifted the XFS writeback code to iomap, so
+this fix should be backported to XFS in the 4.6-5.4 kernels in addition
+to iomap in the 5.5-5.19 kernels.
+
+Fixes: e735c0079465 ("iomap: Convert iomap_add_to_ioend() to take a folio") # 5.17 onward
+Fixes: 598ecfbaa742 ("iomap: lift the xfs writeback code to iomap") # 5.5-5.16, needs backporting
+Fixes: 150d5be09ce4 ("xfs: remove xfs_cancel_ioend") # 4.6-5.4, needs backporting
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/iomap/buffered-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1381,7 +1381,7 @@ restart:
- 	}
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 5ad3bf906b35a..d0a141816f125 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1434,7 +1434,7 @@ iomap_writepage_map(struct iomap_writepage_ctx *wpc,
+ 	if (!count)
+ 		end_page_writeback(page);
+ done:
+-	mapping_set_error(page->mapping, error);
++	mapping_set_error(inode->i_mapping, error);
+ 	return error;
+ }
  
- 	mptcp_set_timeout(sk, ssk);
--	if (copied) {
-+	if (copied && mss_now) {
- 		tcp_push(ssk, msg->msg_flags, mss_now, tcp_sk(ssk)->nonagle,
- 			 size_goal);
- 
-@@ -1891,7 +1891,7 @@ static void mptcp_worker(struct work_str
- 		if (!mptcp_ext_cache_refill(msk))
- 			break;
- 	}
--	if (copied) {
-+	if (copied && mss_now) {
- 		tcp_push(ssk, msg.msg_flags, mss_now, tcp_sk(ssk)->nonagle,
- 			 size_goal);
- 		WRITE_ONCE(msk->allow_infinite_fallback, false);
+-- 
+2.53.0
+
 
 
