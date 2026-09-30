@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD71519DEA;
-	Wed, 30 Sep 2026 18:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0124F5E18;
+	Wed, 30 Sep 2026 18:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792518; cv=none; b=ghFQ0W4XbbxyP4aNs3natNekoKNcpLuv4gdhvicdJ5EMYiafKPyGm5XLZoxxeO5UxeQMCw14jFCjQxK/H9/bpJle3iUadK9miTbRtv+IBrVTYcL1lNJtoEjrleXp52bbU1URWfCkiDphfP1wZhH3CUR4l3ps+iCEEM9HEkJHAqY=
+	t=1790792521; cv=none; b=fpqC2bLPx4tC1uul1i4kUbynYO0RVCU8fJkjGN/WvDrcgS/5RCdE3hFGtIVcbQTZiVdXza6I48/j2AgBoZUgeraBY/Dd0l2T0Fg9pjLHol08yrb1UUA5loCuQ0EjuNrim+mQm/FOQgpvB8RhpRZqCRHADGg+fDke5NpOvqmQcvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792518; c=relaxed/simple;
-	bh=9T/9gUsX9MzZdze4GHICXPn0imTPoCmszhJr4SHmHAg=;
+	s=arc-20240116; t=1790792521; c=relaxed/simple;
+	bh=m4X+RPpxUqbi67UGHGks6gbympC3rOInyx7qaI7cmQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iimKrd0ZkZrMsckNxuSXiWwDedaGuKr/Xr1LksoGdP5C/UIjczcxpyCz8eX8rX9I4gwIeEBHkzLub55rZkZBd/3Qc9GSNqLRB+41gKlBjFOYs8aEWqxAvHFFKcYI5auca7LJBTLW9zvik6Y5TxCXm7vqVeTiFg48nYpppbdr/q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uhf9CfCW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dE3dhvdBAfdyC1dhj0aA3rt/9goOwwMVQ2B6YaKQwmS/Nti4GsHx1Q76SH5smsKNfJ/xNoZdWsSI0JSgv9GTGtTDxT/oN5q/Em7agHA8HaVkHebfUQC31uoRBsV5jiCauvXBiZtQbKYYyR6rbj2Z6ldu/F2fXYnolloYoWSI7lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VpC1R49f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uhf9CfCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DB81F000FF;
-	Wed, 30 Sep 2026 18:21:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpC1R49f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717C71F000FF;
+	Wed, 30 Sep 2026 18:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792517;
-	bh=4ohemlVBR7pAQJBznpc8pABERnxMvxxAkSk2WL0KnhY=;
+	s=korg; t=1790792520;
+	bh=Ut8wABXSfRD42yZiExnBcPLQl7lrCI3IGFi8wOw7s9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uhf9CfCWjjYDcsTEUkSDMJABYTF0dPl2vWNFB7WNm1s1DvQd/tXkrcaTN9Q5Qr65+
-	 0D55BhajCSsInGECDlRSCEyatwfo2gSvu7FbA5CKpNvOy7GLEDJIbRZ55WjZCoX/QL
-	 ySk0ThvGRTg7fyBbc4WH1IA26r5T1JL++1TqmvzM=
+	b=VpC1R49fCQrayIwDaelT6N93Vru/BVrfpWfjITXhmtjJ9ry8y6xkMwRZM1ihHfTe8
+	 XgId7W+AeyvUnzgj+3mNXpVyMf/95L3V7qefLI43KjVzrBNbGEsbKiiBlXUU0b1/Tq
+	 K+CFn1D/rt7TY/tZBnXeXaZ2/NigCbyelXZiyPbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	David Matlack <dmatlack@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Kenta Akagi <k@mgml.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 682/752] KVM: x86/mmu: Stop passing "direct" to mmu_alloc_root()
-Date: Wed, 30 Sep 2026 17:29:12 +0200
-Message-ID: <20260930152413.002470031@linuxfoundation.org>
+Subject: [PATCH 5.15 683/752] KVM: MMU: update comment on the number of page role combinations
+Date: Wed, 30 Sep 2026 17:29:13 +0200
+Message-ID: <20260930152413.022808590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,75 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Matlack <dmatlack@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 86938ab6925b8fe174ca6abf397e6ea9d3c054a4 upstream.
+commit dc1ce45575b3401102568dd60ba8894849d1d64b upstream.
 
-The "direct" argument is vcpu->arch.mmu->root_role.direct,
-because unlike non-root page tables, it's impossible to have
-a direct root in an indirect MMU.  So just use that.
+Fix the number of bits in the role, and simplify the explanation of
+why several bits or combinations of bits are redundant.
 
-Suggested-by: Lai Jiangshan <jiangshanlai@gmail.com>
-Signed-off-by: David Matlack <dmatlack@google.com>
-Message-Id: <20220516232138.1783324-4-dmatlack@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Kenta Akagi <k@mgml.me>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/kvm_host.h | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index f5cfbf973e859..9f193b1620a95 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -3439,8 +3439,9 @@ static int mmu_check_root(struct kvm_vcpu *vcpu, gfn_t root_gfn)
- }
- 
- static hpa_t mmu_alloc_root(struct kvm_vcpu *vcpu, gfn_t gfn, gva_t gva,
--			    u8 level, bool direct)
-+			    u8 level)
- {
-+	bool direct = vcpu->arch.mmu->mmu_role.base.direct;
- 	struct kvm_mmu_page *sp;
- 
- 	sp = kvm_mmu_get_page(vcpu, gfn, gva, level, direct, ACC_ALL);
-@@ -3466,7 +3467,7 @@ static int mmu_alloc_direct_roots(struct kvm_vcpu *vcpu)
- 		root = kvm_tdp_mmu_get_vcpu_root_hpa(vcpu);
- 		mmu->root_hpa = root;
- 	} else if (shadow_root_level >= PT64_ROOT_4LEVEL) {
--		root = mmu_alloc_root(vcpu, 0, 0, shadow_root_level, true);
-+		root = mmu_alloc_root(vcpu, 0, 0, shadow_root_level);
- 		mmu->root_hpa = root;
- 	} else if (shadow_root_level == PT32E_ROOT_LEVEL) {
- 		if (WARN_ON_ONCE(!mmu->pae_root)) {
-@@ -3478,7 +3479,7 @@ static int mmu_alloc_direct_roots(struct kvm_vcpu *vcpu)
- 			WARN_ON_ONCE(IS_VALID_PAE_ROOT(mmu->pae_root[i]));
- 
- 			root = mmu_alloc_root(vcpu, i << (30 - PAGE_SHIFT),
--					      i << 30, PT32_ROOT_LEVEL, true);
-+					      i << 30, PT32_ROOT_LEVEL);
- 			mmu->pae_root[i] = root | PT_PRESENT_MASK |
- 					   shadow_me_mask;
- 		}
-@@ -3541,7 +3542,7 @@ static int mmu_alloc_shadow_roots(struct kvm_vcpu *vcpu)
- 	 */
- 	if (mmu->root_level >= PT64_ROOT_4LEVEL) {
- 		root = mmu_alloc_root(vcpu, root_gfn, 0,
--				      mmu->shadow_root_level, false);
-+				      mmu->shadow_root_level);
- 		mmu->root_hpa = root;
- 		goto set_root_pgd;
- 	}
-@@ -3587,7 +3588,7 @@ static int mmu_alloc_shadow_roots(struct kvm_vcpu *vcpu)
- 		}
- 
- 		root = mmu_alloc_root(vcpu, root_gfn, i << 30,
--				      PT32_ROOT_LEVEL, false);
-+				      PT32_ROOT_LEVEL);
- 		mmu->pae_root[i] = root | pm_mask;
- 	}
- 
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 710c9c87cdf2e..2c378064a1db9 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -292,19 +292,25 @@ struct kvm_kernel_irq_routing_entry;
+  * the number of unique SPs that can theoretically be created is 2^n, where n
+  * is the number of bits that are used to compute the role.
+  *
+- * But, even though there are 18 bits in the mask below, not all combinations
+- * of modes and flags are possible.  The maximum number of possible upper-level
+- * shadow pages for a single gfn is in the neighborhood of 2^13.
++ * But, even though there are 19 bits in the mask below, not all combinations
++ * of modes and flags are possible:
+  *
+- *   - invalid shadow pages are not accounted.
+- *   - level is effectively limited to four combinations, not 16 as the number
+- *     bits would imply, as 4k SPs are not tracked (allowed to go unsync).
+- *   - level is effectively unused for non-PAE paging because there is exactly
+- *     one upper level (see 4k SP exception above).
+- *   - quadrant is used only for non-PAE paging and is exclusive with
+- *     gpte_is_8_bytes.
+- *   - execonly and ad_disabled are used only for nested EPT, which makes it
+- *     exclusive with quadrant.
++ *   - invalid shadow pages are not accounted, so the bits are effectively 18
++ *
++ *   - quadrant will only be used if gpte_is_8_bytes=0 (non-PAE paging);
++ *     execonly and ad_disabled are only used for nested EPT which has
++ *     gpte_is_8_bytes=1.  Therefore, 2 bits are always unused.
++ *
++ *   - the 4 bits of level are effectively limited to the values 2/3/4/5,
++ *     as 4k SPs are not tracked (allowed to go unsync).  In addition non-PAE
++ *     paging has exactly one upper level, making level completely redundant
++ *     when gpte_is_8_bytes=0.
++ *
++ *   - on top of this, smep_andnot_wp and smap_andnot_wp are only set if
++ *     cr0_wp=0, therefore these three bits only give rise to 5 possibilities.
++ *
++ * Therefore, the maximum number of possible upper-level shadow pages for a
++ * single gfn is a bit less than 2^13.
+  */
+ union kvm_mmu_page_role {
+ 	u32 word;
 -- 
 2.53.0
 
