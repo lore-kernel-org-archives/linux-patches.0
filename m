@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5128E50254F;
-	Wed, 30 Sep 2026 16:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785AA4F93A8;
+	Wed, 30 Sep 2026 16:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786286; cv=none; b=gJBBw1jVoBCluWsRlth+Sl71JjD5cgTyn92cwgztuEB+8zLbxM2ZpBFlUi+rhRdcBdx6EZ4E4YfS+/6TvX72/jCuokbYM2cX1ELXnguTsfRsb6FKZWI5zmJ2g4adD9EgVK64D11SfpR1UqbxfpSG8oY1SYLzfPkAP9VU3hewJdI=
+	t=1790786289; cv=none; b=kNgsxVyuL7EIPMw6zRkA5G7Z+xsffyT/ajYgQQOjQf7byiOx1Sf5sx3KEHSNzz0J/HgFLVqNalpIvpl1Kuh7cznCFp7qs8n4yA5tPUGaTQ+qxGJzpBupIbo8AYKGfvEpRoQg1oEe6JNEy0fUjzz/VOd31JHNpkNvzeVhMDR7JNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786286; c=relaxed/simple;
-	bh=5iMLWOUSsvXXy2fpux1jdMFma2ixnPfcZgtK2ofndXc=;
+	s=arc-20240116; t=1790786289; c=relaxed/simple;
+	bh=a94Q2Ph3JfVTQOqOT6iL0mQhxK8fo8PBjoTQQV+O5jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBWN5aNJitsbydJfnXW2ZUr9qFIvglntLSB/CpQuEbDmHruRDU+M4+ICn9N1NkkBwxAdelNkXT7M/4vnKqlahuF+yw6zO+ZDGX3rXfraYCT9lg8JBm4kQdBgCSizTFwLIlUUVRs219RQqPN70N13dOsCTKPZe7Yc/FcykyE3Jw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+CzjCk6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=giP+BYCaNlh/L5Bjs1XpQHdWjAT4y5X33j+wizl+7wNB+EaBtpKvgUR//lM6GCOHCXQIe+VpESS0TGXM7eWsidu31Z31+4UoFzaTJo4jqiEbLWz7lk8ZJb9He8s2CHJQRmLD38iSvfbzC15VL2gXxlW7PHM51Ia2hhoIDUGaOAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZA+Usq/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+CzjCk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B318D1F000FF;
-	Wed, 30 Sep 2026 16:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZA+Usq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894491F000FF;
+	Wed, 30 Sep 2026 16:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786285;
-	bh=hO4YRhSbP0Kz7+1a5p/MZMcAd5tRnn4QYpq3JBCzD7k=;
+	s=korg; t=1790786288;
+	bh=EdsR6A1f1+ydrT1btePyRy/ATjZ8NeGgy0GvYKoJIMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+CzjCk6rpMH6zJx7VrgJvFAIkaav2gNfqiMnzIBha6QvqwkVSvOuAB2LYJu18brY
-	 gvz2UdshbNA02X0EgzyaoF/2EtjbD5yykMriHz4FYXutWx+rJOOVwVWxB1lYrpmx+Z
-	 lcO20XGTAcTkbPM9tZ+GSf+Eku8kvsPKpU0WAgb4=
+	b=0ZA+Usq/5o51RqdTFx2vW4eoLhn/Kk2aAdDTY3Cuzh489LS48IKNl9FrhcFIH3K9C
+	 Cv+h8+m0SVpxWO/LwGHajbP3hYrVMPAYwf7PSuvR962HU8Hr1la8vFMUaJ9SAY/7Lb
+	 sfFQkJcbExLgC6FtXFAXyktHynh9ddiCCcMROGZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+adfca3e91be95776@bugs.sh,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 808/982] bpf: Disallow bpf_skb_pull_data() for LWT_SEG6LOCAL
-Date: Wed, 30 Sep 2026 17:25:44 +0200
-Message-ID: <20260930152434.113579560@linuxfoundation.org>
+Subject: [PATCH 6.1 809/982] selftests/ftrace: Fix unique symbol check in kprobe_non_uniq_symbol.tc
+Date: Wed, 30 Sep 2026 17:25:45 +0200
+Message-ID: <20260930152434.134426852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,46 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit e4a62833adff6ef0fe7c0b90393204fe3c26b5c5 ]
+[ Upstream commit d22c3e0088e85be8131f7a9283f759cdbb20726d ]
 
-An LWT_SEG6LOCAL program can invalidate its cached SRH with
-bpf_lwt_seg6_adjust_srh() and then call bpf_skb_pull_data(). The latter
-may reallocate skb->head, leaving the per-CPU SRH pointer dangling.
-Post-program SRH validation then writes through that pointer.
+The current regex also matches symbols in modules, which makes the
+test fail on s390 where name_show is present only once in the kernel,
+but also multiple times in modules:
 
-Disallow bpf_skb_pull_data() for LWT_SEG6LOCAL programs so the verifier
-rejects this unsafe helper combination. Other LWT program types continue
-to expose the helper through lwt_out_func_proto().
+000001b1401cdc20 t name_show
+000001b0c05e6c40 t name_show    [mdev]
+000001b0c0495f30 t name_show    [i2c_core]
 
-Fixes: 004d4b274e2a ("ipv6: sr: Add seg6local action End.BPF")
-Reported-by: co+adfca3e91be95776@bugs.sh
-Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Closes: https://lore.kernel.org/all/GCy0KRM2IcQGoJQTjJEU9D0maBxXzEDHuQpq@bugs.sh/
-Link: https://lore.kernel.org/bpf/DL9COXZQXX4V.1FN45QO2Q77ZH@gmail.com/
-Link: https://lore.kernel.org/bpf/20260909040807.3885815-2-bestswngs@gmail.com
+Fix this by changing the regular expression to only match the function
+name.
+
+Link: https://lore.kernel.org/all/20260909092954.2200558-1-svens@linux.ibm.com/
+
+Fixes: 03b80ff8023a ("selftests/ftrace: Add new test case which checks non unique symbol")
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index fe6d963d340bf..bb86d9db3731d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -8535,6 +8535,8 @@ static const struct bpf_func_proto *
- lwt_seg6local_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
- {
- 	switch (func_id) {
-+	case BPF_FUNC_skb_pull_data:
-+		return NULL;
- #if IS_ENABLED(CONFIG_IPV6_SEG6_BPF)
- 	case BPF_FUNC_lwt_seg6_store_bytes:
- 		return &bpf_lwt_seg6_store_bytes_proto;
+diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+index bc9514428dbaf..07b1177c16344 100644
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+@@ -6,7 +6,7 @@
+ SYMBOL='name_show'
+ 
+ # We skip this test on kernel where SYMBOL is unique or does not exist.
+-if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}" /proc/kallsyms)" -le '1' ]; then
++if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
+ 	exit_unsupported
+ fi
+ 
 -- 
 2.53.0
 
