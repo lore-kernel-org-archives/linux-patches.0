@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3154FE2EB;
-	Wed, 30 Sep 2026 15:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B71503BF7;
+	Wed, 30 Sep 2026 15:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782407; cv=none; b=ZJk/OlEHOEZ3e3U1SxX1zVPeUqfAvEBTIuyr3Jb85f+eEo1KpG0pD/8PMKAcf2EXj70IIXZfPdSAIbBcCKbwAwL5cz6lJUlTzT2HuZ4Wy91OdAsLi3MlEBlY4OGGp73v1EOIXXD2sgTVmFGaBaOe4Y+Ttsqxz44fDIjmHfUnC68=
+	t=1790782410; cv=none; b=DCPNFopjubBPqPAxQlVlbHrAtlM+gtaVlQy/WgSCOE6GvBz/VvhG3/Az42O3eqaOWcx/N0IXvAGqgVyiAu/BYUrDthTA1KkbQdQWCB76SbUtj8hFgxNH3rbCrkHTvigfThB/F5ZByGdOOnyYKpNSXULSppdOwWskePuJwfdb7b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782407; c=relaxed/simple;
-	bh=hZAZR0V0Nv4RX5cWJLi2bYpQ7r/mevuoxt+5RMx/e0A=;
+	s=arc-20240116; t=1790782410; c=relaxed/simple;
+	bh=LyHXrXzQxKwIzc7rYB3KPXxm2XrXTMkcYX4pidGAoy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N80JiJBZACEyvKX39N1GRP3n+WZPyQQgHr192IvPU20RqwBQ1wRnM1piZpFvGIFR5XpTk6TFD5e5lBLby+xHRYToG1CGh9s0j1jINebQL6RkPXkdroaBiykLI84IK4XgB5nwuDIdGEUFYuc043aq3w4HQnMhqgn6aqCdnZ+2y08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06I7vtH3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SHZAEN2AYNtR91tt5omLHznQauuGhpPH1b0MAGknMUPzKQQRsEiQRHYkU35s3WGLstFadJ7/GpxZAYTzabwpKfnvgmRGHL7POysZ9gH9aY/V5swZ4ftMVO5sl5A8Cg7K2J6D+Kjn688s/dyp5WKFGI/N+0mdhX5upglFrMJBZLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdPfjZyY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06I7vtH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94FB51F0089E;
-	Wed, 30 Sep 2026 15:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdPfjZyY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B2A1F000FF;
+	Wed, 30 Sep 2026 15:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782397;
-	bh=RkOX2HLD6movHvY5srbAoG1Mt4XaNcOiXE38nN0sTpc=;
+	s=korg; t=1790782399;
+	bh=l5OLZvawuv8/SVKWyY/ui4uhyX3BOwS6WqoptvYBg1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=06I7vtH3362zxPX2M9GvdegF6kGi7y3NbnE8oSakN9Upmf/1qy2qTywiH04Y8obpS
-	 HrTvrzdVJ9Ggy9m2ueAftMBlYv3mZMe7irGkzU+wt+81HaiW9Dgo0+1JpLEPCrl0o/
-	 EAHshtwR4qsTSJqAfh3Xgs6xjYxtEN3/zQO2L3Ck=
+	b=VdPfjZyYHodNdvQ9zt3jb8cE8yK6eTLZR1OQ0lqnjJpX5BYmyomVp/uOJYB6Mz5mU
+	 /dRMp3mGxPW9Sdeb06iFzZxGCI3Kw7IT83deNeoauYu5kXpJUraqTUsbZkTxjlKeTa
+	 4+aTKEIU0nai8fvXuJZcUWjJknncmYs5xlhvFslA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Leonardo Bras <leo.bras@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/595] arm64/daifflags: Make local_daif_*() helpers __always_inline
-Date: Wed, 30 Sep 2026 17:18:46 +0200
-Message-ID: <20260930152348.439103575@linuxfoundation.org>
+Subject: [PATCH 5.10 034/595] firmware: arm_scmi: Validate BASE_ERROR_EVENT payload size
+Date: Wed, 30 Sep 2026 17:18:47 +0200
+Message-ID: <20260930152348.460921454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,69 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonardo Bras <leo.bras@arm.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 827ce94e0897a70241abf810b1d3d7d083053a39 ]
+[ Upstream commit 56e7e64cdd0e7209a58c8ec66028d63387402919 ]
 
-Make sure those helpers are always inlined and instrumentation safe.
+BASE_ERROR_EVENT carries a variable number of message reports,
+with the count encoded in error_status. The notification parser used
+that count without checking whether the received payload contained all
+reported entries.
 
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Leonardo Bras <leo.bras@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reject truncated payloads before copying the report array.
+
+Link: https://patch.msgid.link/20260517-scmi_fixes-v1-2-d86daec4defd@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/daifflags.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/firmware/arm_scmi/base.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/daifflags.h b/arch/arm64/include/asm/daifflags.h
-index cfdde3a568059..fc74d5c7275bf 100644
---- a/arch/arm64/include/asm/daifflags.h
-+++ b/arch/arm64/include/asm/daifflags.h
-@@ -19,7 +19,7 @@
- 
- 
- /* mask/save/unmask/restore all exceptions, including interrupts. */
--static inline void local_daif_mask(void)
-+static __always_inline void local_daif_mask(void)
+diff --git a/drivers/firmware/arm_scmi/base.c b/drivers/firmware/arm_scmi/base.c
+index e51d28ba2833d..9cb95ebda50eb 100644
+--- a/drivers/firmware/arm_scmi/base.c
++++ b/drivers/firmware/arm_scmi/base.c
+@@ -280,6 +280,8 @@ static void *scmi_base_fill_custom_report(const struct scmi_handle *handle,
+ 					  void *report, u32 *src_id)
  {
- 	WARN_ON(system_has_prio_mask_debugging() &&
- 		(read_sysreg_s(SYS_ICC_PMR_EL1) == (GIC_PRIO_IRQOFF |
-@@ -38,7 +38,7 @@ static inline void local_daif_mask(void)
- 	trace_hardirqs_off();
- }
+ 	int i;
++	u32 error_status;
++	size_t expected_sz;
+ 	const struct scmi_base_error_notify_payld *p = payld;
+ 	struct scmi_base_error_report *r = report;
  
--static inline unsigned long local_daif_save_flags(void)
-+static __always_inline unsigned long local_daif_save_flags(void)
- {
- 	unsigned long flags;
+@@ -293,10 +295,19 @@ static void *scmi_base_fill_custom_report(const struct scmi_handle *handle,
+ 	if (evt_id != SCMI_EVENT_BASE_ERROR_EVENT || sizeof(*p) < payld_sz)
+ 		return NULL;
  
-@@ -53,7 +53,7 @@ static inline unsigned long local_daif_save_flags(void)
- 	return flags;
- }
- 
--static inline unsigned long local_daif_save(void)
-+static __always_inline unsigned long local_daif_save(void)
- {
- 	unsigned long flags;
- 
-@@ -64,7 +64,7 @@ static inline unsigned long local_daif_save(void)
- 	return flags;
- }
- 
--static inline void local_daif_restore(unsigned long flags)
-+static __always_inline void local_daif_restore(unsigned long flags)
- {
- 	bool irq_disabled = flags & PSR_I_BIT;
- 
-@@ -124,7 +124,7 @@ static inline void local_daif_restore(unsigned long flags)
-  * Called by synchronous exception handlers to restore the DAIF bits that were
-  * modified by taking an exception.
-  */
--static inline void local_daif_inherit(struct pt_regs *regs)
-+static __always_inline void local_daif_inherit(struct pt_regs *regs)
- {
- 	unsigned long flags = regs->pstate & DAIF_MASK;
- 
++	expected_sz = offsetof(typeof(*p), msg_reports);
++	if (payld_sz < expected_sz)
++		return NULL;
++
+ 	r->timestamp = timestamp;
+ 	r->agent_id = le32_to_cpu(p->agent_id);
+-	r->fatal = IS_FATAL_ERROR(le32_to_cpu(p->error_status));
+-	r->cmd_count = ERROR_CMD_COUNT(le32_to_cpu(p->error_status));
++	error_status = le32_to_cpu(p->error_status);
++	r->fatal = IS_FATAL_ERROR(error_status);
++	r->cmd_count = ERROR_CMD_COUNT(error_status);
++	expected_sz += r->cmd_count * sizeof(p->msg_reports[0]);
++	if (payld_sz < expected_sz)
++		return NULL;
++
+ 	for (i = 0; i < r->cmd_count; i++)
+ 		r->reports[i] = le64_to_cpu(p->msg_reports[i]);
+ 	*src_id = 0;
 -- 
 2.53.0
 
