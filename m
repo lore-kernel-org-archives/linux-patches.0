@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D825383C86;
-	Wed, 30 Sep 2026 18:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC724A8430;
+	Wed, 30 Sep 2026 18:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791866; cv=none; b=qRCKv2LGzzQnFYt0dIOF401ooNyfr5pBHUKQZcwCFO+DlM2ScQgOdbUUOYykN7/hw9yXWP75x+6XURqxLYi+8ZUZ7QlzhelS6GNWlQ6Ia4+1InFfFlmKboYIPqn4iDanMwM/RqccNQKI97Pp/4UcJ+HfifoLu5c+ItJuQVhwmbE=
+	t=1790791869; cv=none; b=XvYsB+3jdf7W1qI4RjHlYE6BHY84fP6wLC3pGFvhtoyplKcZSJ1FmTXD8VKSFUFU2raho2AIKA5eNsiFQIBR5Gg9IiWhsrE7Zo1KirUhHCoI4WiBJkNgrspcJEeDeV2eIFCqSl6ZEQR2HZh0nAz8Lcd2yDAyjqhVv7aISU/HZQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791866; c=relaxed/simple;
-	bh=a4Pa6QVEBhFZ78c1qM5dKkT40ucB8M/f/swMcYYobfs=;
+	s=arc-20240116; t=1790791869; c=relaxed/simple;
+	bh=IqdHX/LWxB5As4AtYgt0zS9UFunWNjCoCRo5fhAC/Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzX3uUroJHqOSiZ1c4H1/bJwREukdBl3Oz3aTtS5FP4+J5Qp61sXItbDK/V/vXPdFpb0IFyIgLvgdGxLUNgZ8yTpwYvshAmts6RBtEMob5ZGuTp83vwl47xErF7h2NnBOvoeN+RsZ4xoTgv8zgBjzYPIXyuv9dSc3fTG1CNb1QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBKo9H7y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PtVw3Oi5pr7NY0XbrDvNXRJHe6EJz46QmVGaDmwLFrI4+QR8e/tGdyrZj0t9rLxWTt8hrWy8W9C7hkXDN0wmWK4qPoJzBOs25kgVEBZDlAWIx/x7dgnh4Zjbh/Ee1WlO2695AMQu7teTfgFvauh7RSwFimV3vRcJdt0x3PW8OEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=horUBsxR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBKo9H7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5671F000FF;
-	Wed, 30 Sep 2026 18:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="horUBsxR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970FD1F000FF;
+	Wed, 30 Sep 2026 18:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791865;
-	bh=FXpXqx8Vp8xCkcb32NOtadz9wRiXMG3ym6DWMwstVJA=;
+	s=korg; t=1790791868;
+	bh=5Tq4wpsVgTFWf+9mYhD4vgseSTNm8ZG8Tc0GOJTvJKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oBKo9H7yYPqKddjFUp8Ucw2fh1HDK7xZNOzosJmakk7m7DJS7kGWwR4xMDawa2O9O
-	 siqUQClD91uwLP3aaAlPCDROIeOSixNlPTNY43dq7ecUdl18B0cqJ1MwBdGQbCjsG0
-	 yyXm3WD9mgRJP9rbSYDUIMIbVic2PAL7IwsgUa20=
+	b=horUBsxRxfLTfx8kBX0WmiI/reDgUoIzbvkzHn4K8T/AP2xz5XscDMYGZp1l4BGH3
+	 IPnHnXwHFwW4Rf0XrqEpTUuPvydZMx+n+sZZfUPqIz5U/OcLIOyNUBWvTSd5JlZ2VG
+	 wCrhYwF4xa4RHgI4lsnw6areNhS/c73L06+8sSMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Gorenko <sergeygo@nvidia.com>,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 452/752] IB/iser: Use iser_fr_desc as registration context
-Date: Wed, 30 Sep 2026 17:25:22 +0200
-Message-ID: <20260930152408.057705008@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 417/752] netfilter: nft_set_pipapo_avx2: add missing vzeroupper
+Date: Wed, 30 Sep 2026 17:24:47 +0200
+Message-ID: <20260930152407.305400822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,117 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Gurtovoy <mgurtovoy@nvidia.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit ee4efeaea8837bb7018d188a9eb8837c7ff79561 ]
+commit 55dd20f0f4b1be5c9c8a0275d8d763c86563eac2 upstream.
 
-After removing the FMR support in iSER, there is only one type of
-registration context. Replace the void pointer with the explicit structure
-for registration (struct iser_fr_desc).
+Since pipapo_get_avx2() uses YMM registers, execute vzeroupper before
+returning from it.  This is needed to avoid degrading the performance of
+any later SSE code that may happen to be executed.
 
-Link: https://lore.kernel.org/r/20220308145546.8372-3-mgurtovoy@nvidia.com
-Reviewed-by: Sergey Gorenko <sergeygo@nvidia.com>
-Signed-off-by: Max Gurtovoy <mgurtovoy@nvidia.com>
-Acked-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: d85f0f0a7c85 ("IB/iser: reject a remote invalidation of an unregistered direction")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7400b063969b ("nft_set_pipapo: Introduce AVX2-based lookup implementation")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/iser/iscsi_iser.h     | 8 ++++----
- drivers/infiniband/ulp/iser/iser_initiator.c | 4 ++--
- drivers/infiniband/ulp/iser/iser_memory.c    | 8 ++++----
- drivers/infiniband/ulp/iser/iser_verbs.c     | 2 +-
- 4 files changed, 11 insertions(+), 11 deletions(-)
+ net/netfilter/nft_set_pipapo_avx2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/ulp/iser/iscsi_iser.h b/drivers/infiniband/ulp/iser/iscsi_iser.h
-index 35cc0a57e6975..d5ada4dbf728d 100644
---- a/drivers/infiniband/ulp/iser/iscsi_iser.h
-+++ b/drivers/infiniband/ulp/iser/iscsi_iser.h
-@@ -207,12 +207,12 @@ struct iser_reg_resources;
-  *
-  * @sge:          memory region sg element
-  * @rkey:         memory region remote key
-- * @mem_h:        pointer to registration context (FMR/Fastreg)
-+ * @desc:         pointer to fast registration context
-  */
- struct iser_mem_reg {
--	struct ib_sge	 sge;
--	u32		 rkey;
--	void		*mem_h;
-+	struct ib_sge sge;
-+	u32 rkey;
-+	struct iser_fr_desc *desc;
- };
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -1263,6 +1263,7 @@ next_match:
+ out:
+ 	if (i % 2)
+ 		scratch->map_index = !map_index;
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ 	local_bh_enable();
  
- enum iser_desc_type {
-diff --git a/drivers/infiniband/ulp/iser/iser_initiator.c b/drivers/infiniband/ulp/iser/iser_initiator.c
-index f5ae000db7f3d..351f1db394f1c 100644
---- a/drivers/infiniband/ulp/iser/iser_initiator.c
-+++ b/drivers/infiniband/ulp/iser/iser_initiator.c
-@@ -625,13 +625,13 @@ static int iser_check_remote_inv(struct iser_conn *iser_conn, struct ib_wc *wc,
- 			struct iser_fr_desc *desc;
- 
- 			if (iser_task->dir[ISER_DIR_IN]) {
--				desc = iser_task->rdma_reg[ISER_DIR_IN].mem_h;
-+				desc = iser_task->rdma_reg[ISER_DIR_IN].desc;
- 				if (unlikely(iser_inv_desc(desc, rkey)))
- 					return -EINVAL;
- 			}
- 
- 			if (iser_task->dir[ISER_DIR_OUT]) {
--				desc = iser_task->rdma_reg[ISER_DIR_OUT].mem_h;
-+				desc = iser_task->rdma_reg[ISER_DIR_OUT].desc;
- 				if (unlikely(iser_inv_desc(desc, rkey)))
- 					return -EINVAL;
- 			}
-diff --git a/drivers/infiniband/ulp/iser/iser_memory.c b/drivers/infiniband/ulp/iser/iser_memory.c
-index 25382d91b891e..ecf1bea1505a9 100644
---- a/drivers/infiniband/ulp/iser/iser_memory.c
-+++ b/drivers/infiniband/ulp/iser/iser_memory.c
-@@ -130,7 +130,7 @@ void iser_unreg_mem_fastreg(struct iscsi_iser_task *iser_task,
- 	struct iser_fr_desc *desc;
- 	struct ib_mr_status mr_status;
- 
--	desc = reg->mem_h;
-+	desc = reg->desc;
- 	if (!desc)
- 		return;
- 
-@@ -147,8 +147,8 @@ void iser_unreg_mem_fastreg(struct iscsi_iser_task *iser_task,
- 		ib_check_mr_status(desc->rsc.sig_mr, IB_MR_CHECK_SIG_STATUS,
- 				   &mr_status);
- 	}
--	iser_reg_desc_put_fr(&iser_task->iser_conn->ib_conn, reg->mem_h);
--	reg->mem_h = NULL;
-+	iser_reg_desc_put_fr(&iser_task->iser_conn->ib_conn, reg->desc);
-+	reg->desc = NULL;
- }
- 
- static void iser_set_dif_domain(struct scsi_cmnd *sc,
-@@ -358,7 +358,7 @@ int iser_reg_mem_fastreg(struct iscsi_iser_task *task,
- 		desc->sig_protected = true;
- 	}
- 
--	reg->mem_h = desc;
-+	reg->desc = desc;
- 
- 	return 0;
- 
-diff --git a/drivers/infiniband/ulp/iser/iser_verbs.c b/drivers/infiniband/ulp/iser/iser_verbs.c
-index cd82f5e0f6023..5f0306bd28c6c 100644
---- a/drivers/infiniband/ulp/iser/iser_verbs.c
-+++ b/drivers/infiniband/ulp/iser/iser_verbs.c
-@@ -924,7 +924,7 @@ u8 iser_check_task_pi_status(struct iscsi_iser_task *iser_task,
- 			     enum iser_data_dir cmd_dir, sector_t *sector)
- {
- 	struct iser_mem_reg *reg = &iser_task->rdma_reg[cmd_dir];
--	struct iser_fr_desc *desc = reg->mem_h;
-+	struct iser_fr_desc *desc = reg->desc;
- 	unsigned long sector_size = iser_task->sc->device->sector_size;
- 	struct ib_mr_status mr_status;
- 	int ret;
--- 
-2.53.0
-
 
 
