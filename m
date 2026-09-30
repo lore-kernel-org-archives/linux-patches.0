@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BF83A1687;
-	Wed, 30 Sep 2026 16:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D41511E9B;
+	Wed, 30 Sep 2026 16:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786490; cv=none; b=GJxYi5kHNfhyPaiGzuGMCx+k0siMPCrCGdlUGu676PHvcID+wGiYvEpJtzy4zmMO8jdIG/xYe8UCJvrjSxsIDabQHqdJBMg7NngiMeBaRXEaPejeJ/Sy5Smp39MoHYBjlVQokegLT5Tu1UBjiRjlpUoROe2byxcU7Ns0B8s69ZA=
+	t=1790786493; cv=none; b=lod8PdPlZpCO0vQFxhla9ltEAeC+HeBguvlHD72lbm0vSkP2gSJVCKim54iA/nsFdHiWee4RqmvWue6JuCET4CP94TCt/E1ENuWvV+jmCWRArqMrTnARg4vv+9uesvklPac0aN9ePp4OZYl9T/KLNbIAQWenhORslBghzXTJ7ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786490; c=relaxed/simple;
-	bh=bSJn3fEeWp5qOVSM9Lc8CVVv+LnPXqXBP4i5VonmPCk=;
+	s=arc-20240116; t=1790786493; c=relaxed/simple;
+	bh=TXhvgQwW4TCZTnSF9m+VYnD1x80FwrQMqzC9cWJhYRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jf+0KN/kWibubZNrGUSL9J9WOyx+sVsUWprhu+zVYRfrlfBfbjs4iwOcta+58kZqhU8bo1suFobWyiVANRxV0i99ol0Zd7PD5CDDY8CIJfc9T/MOCqdakefRVMXkjPqsy4lPAQzMU+JIyQ2SED7clw1A/o2i/8J2b4Ro8wiKhiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsHmU1HP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgEiPkazHrdfooqk2TxBg01NZVmExWngveAC775T7MXmZpeImZ3Lz4ugY1D+xQ2Tcf75snzBzRelr68KR0WVkPqchDZ5IOKyREA478gQgEBIM9ZxXyw/U7Fw3UoX8sNnvYt6myBE2JeE8g9CNNCDCGag1mOx9E2bux+fgTGRNSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTxcp5u6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsHmU1HP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4A31F000FF;
-	Wed, 30 Sep 2026 16:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTxcp5u6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0D11F000FF;
+	Wed, 30 Sep 2026 16:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786489;
-	bh=J+0YHAWCm0xm5l8vkPRcq85XvhhYsqI6vRK1ULKPsTs=;
+	s=korg; t=1790786492;
+	bh=TWaisB0y6WLk9Fx06b+Y9kkInEszsujgD3UjfReEFJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsHmU1HP8y6cvMaVfjP7zZ8fUYkyE+UjG4yoVac+swIA0kMTjj3DuA+t8FoiwLpBe
-	 PnwN6VdyR/gLW63/PCfMBaQgjfLEE7TP6aqeMstZaSoGCd4pwtrSWGIZ0PlpaiNB5n
-	 XSEtyY9k6y2D3BHxUYwyYUm4r+WSBQby3u2mdHEE=
+	b=VTxcp5u6cay0SO7nZStN0pL3rlfKjGOVxRGdRi9V4aABnVXKH3tOU/5GsOIUEulmn
+	 aoHX/I8komEW1GEDYnBc1aLkxiKfmHNDZFHcL6MrvJOspEX5ClabgOP0/z9lmMdKgn
+	 8tTDJASwNIhQGhms4S/5PS1bjBECheJ+QUFYxe3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 836/982] netfilter: nft_synproxy: use the family-aware checksum helper
-Date: Wed, 30 Sep 2026 17:26:12 +0200
-Message-ID: <20260930152434.709395909@linuxfoundation.org>
+Subject: [PATCH 6.1 837/982] ipvs: revalidate ihl before icmp_send
+Date: Wed, 30 Sep 2026 17:26:13 +0200
+Message-ID: <20260930152434.731536031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,50 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit a311a898172743558b82f6035ef2aa8c310a4223 ]
+[ Upstream commit e290145564886d6a3038810c621f738c1fe9fa51 ]
 
-nft_synproxy_do_eval() verifies the TCP checksum before it switches on
-skb->protocol.  It uses nf_ip_checksum(), which constructs an IPv4
-pseudo header and relies on the IPv4 header checksum when folding the
-whole skb.  Neither operation is valid for an IPv6 packet.
+While the outer IP header is already pulled into the skb head, we must
+be careful and revalidate the embedded headers after reading them from
+the skb frags to prevent possible out-of-bounds access.
 
-A correctly checksummed IPv6 segment can therefore fail verification
-when it reaches the hook as CHECKSUM_NONE or, at NF_INET_LOCAL_IN,
-CHECKSUM_COMPLETE.  nft_synproxy_do_eval() returns NF_DROP before
-nft_synproxy_eval_v6() can send a SYN-ACK.
+One such place reported by Sashiko is ip_vs_in_icmp() where local
+process can change the ihl field and after pskb_may_pull() we can see
+larger value. Even if icmp_send() has checks to prevent out-of-bounds
+access, play safe and add check to drop the packet if the ihl field is
+changed.  As the outer headers are pulled, make sure the transport
+header is updated too, it was used before commit 7fcc2fe39fed ("net:
+icmp: avoid invalid transport header access in icmp_send tracepoint")
 
-nft_synproxy_validate() deliberately admits NFPROTO_IPV6 and
-NFPROTO_INET, and the xtables counterpart ip6t_SYNPROXY.c already calls
-nf_ip6_checksum().
-
-Use nf_checksum() with nft_pf() so the checksum helper dispatches to the
-packet family's implementation.
-
-Fixes: ad49d86e07a4 ("netfilter: nf_tables: Add synproxy support")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
+Link: https://sashiko.dev/#/patchset/20260806105211.34622-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_synproxy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
-index 75416f9344116..3c674137eb81a 100644
---- a/net/netfilter/nft_synproxy.c
-+++ b/net/netfilter/nft_synproxy.c
-@@ -117,7 +117,8 @@ static void nft_synproxy_do_eval(const struct nft_synproxy *priv,
- 		return;
- 	}
- 
--	if (nf_ip_checksum(skb, nft_hook(pkt), thoff, IPPROTO_TCP)) {
-+	if (nf_checksum(skb, nft_hook(pkt), thoff, IPPROTO_TCP,
-+			nft_pf(pkt))) {
- 		regs->verdict.code = NF_DROP;
- 		return;
- 	}
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index e417fe52fef8f..41f09e29d221b 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1781,6 +1781,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		/* Ensure the IP header is present in headroom */
+ 		if (!pskb_may_pull(skb, hlen_orig))
+ 			goto ignore_tunnel;
++		skb_set_transport_header(skb, hlen_orig);
++		/* Before now we may used ihl from skb frag, revalidate it after
++		 * copying it into skb head to prevent out-of-bounds access
++		 */
++		if (ip_hdr(skb)->ihl * 4 != hlen_orig)
++			goto ignore_tunnel;
+ 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
+ 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
+ 			type, code, ntohl(info));
 -- 
 2.53.0
 
