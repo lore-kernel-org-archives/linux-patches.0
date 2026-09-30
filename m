@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEE23AEF2E;
-	Wed, 30 Sep 2026 18:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F97511235;
+	Wed, 30 Sep 2026 18:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793009; cv=none; b=ck1QbIDFFT6jqw1bHBEtSnt6pTIDBL0ILv1iCS9oMvVeNObpZXB6c3Wmz7KRVX1W1HO0mbZ3ncQIKr18WYry7dRQX+c5NaBEd9RPHcaAURxUYs1cftsorJWeqCADt0R9/pNbWBaew39KPL+2ho6YKK/nSVZA/eIOrKz0SkhF3TU=
+	t=1790793011; cv=none; b=ZlKKeRQMVRLhKLnM2KMNA4z1eS4NFS2/ol7yD0/5YbLgd0idVonwHtyeDFZ4yjYvWa2CnxPSnJ911odiL2d63vAyCwDmRMrb+X5M2Iua4lQs6wTehwieV5BXhch3JEnwx9rx+omcRUfgfvpXY1l6XhoM7Avtj8aiNsZ979TnDB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793009; c=relaxed/simple;
-	bh=xtoqGBFKniLFnaAydSmsE6tq9WIWFXSYFRs7xQvwDsg=;
+	s=arc-20240116; t=1790793011; c=relaxed/simple;
+	bh=70Bb+ZiPic3EjeusXHqzqWYPwNIL/PSOc3WqmLphETE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBKa2/zXb2a3ZgNedrQc4bJcLIDJVqYil8yjmvIgQ3iB9czajaBuv9e/mKyIcKl8Nikfjme5Ernn/3YsvM+k4EW6tOv8qLL3q2ocoeQNALPUmOBGt4IhRcBPXrKblZktbqK4pbPGKqfR9A3lXhhaJ3+HjZI3n9TID1rbMoAi788=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldL+sOug; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Xs6RvzSg1BKBGEjvKdiX6swBfJa44qw5ih4VgwnSEUztLnz1WU2t017jDVl0Bf725CxzXRn5sd4XMANHZCaXkEhyeikS7RoarfgTD9hd+a8YIaObUKK+9IOIb/46nkkx5ymABAjLN2g8w66nzqMafyAfFc9jx5GBkCgjTksPa8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iq1Ng2y9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldL+sOug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449BC1F000FF;
-	Wed, 30 Sep 2026 18:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iq1Ng2y9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199431F000FF;
+	Wed, 30 Sep 2026 18:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793007;
-	bh=bVtdepO+CsWv9P4bIGMRPusiV+GUZ+yZghyueoF/Weg=;
+	s=korg; t=1790793010;
+	bh=25Izg1A0DuPQ6JuCIwQXQR6JCpCNKsLjtfBJn/c45oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ldL+sOugnhAI9le5BOKjsqHsTu2YCVU6GBq8bPMxjxvazV4kzjBsheceo5dRpk/rQ
-	 lHuvqaACukrX3+yFQLSO1X2ehJSIeLYqo0PiPvXvcJLqxG1tbQclU+c9dwLmZ6+MJp
-	 m8dpB6t2AzuggULYctTY6Tpjcbe01Ay9P0kIPzL0=
+	b=iq1Ng2y9TK/abYgbl9V4U3UvbtozBYmqnbg5GQpiXf5MnIQzlj4gJ/70YGgUKG8by
+	 AHvLX+dPDtDWvbfURlm04cjLFnAjJdbCTkR7+f25F47JtNw6K8MNKllED0GSh5ckKZ
+	 k2NcEx9q2Sx7ub4UYmrzxpkx1NPIaPEni6nttHJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralf Lici <ralf@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/395] ovpn: replace bind when clearing stale local source
-Date: Wed, 30 Sep 2026 17:26:05 +0200
-Message-ID: <20260930152342.870067526@linuxfoundation.org>
+Subject: [PATCH 6.18 077/395] net: gue: reject invalid REMCSUM offsets
+Date: Wed, 30 Sep 2026 17:25:39 +0200
+Message-ID: <20260930152342.311343716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -45,185 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ralf Lici <ralf@mandelbit.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 7d8104988f423572df1f3347ce578037b1043f34 ]
+[ Upstream commit 2566866fc30965d915d0b52b5c3323b362619f0e ]
 
-The UDP output fallback clears bind->local in place when the remembered
-source address is no longer usable. The bind is RCU-published and read
-locklessly by concurrent TX, so an IPv6 reader can observe a torn
-address.
+The REMCSUM option carries an absolute checksum start and checksum field
+offset. gue_remcsum() passes them to skb_remcsum_process(), whose
+partial path stores offset - start in the u16 skb->csum_offset variable.
+If offset is less than start, this underflows.
 
-Retry the route lookup with source address autoselection without
-modifying the bind. After a successful lookup, revalidate the bind and
-route key under peer->lock, reset the dst cache, and best-effort publish
-a replacement bind with a wildcard local address.
+A forwarded packet can retain CHECKSUM_PARTIAL and reach a NETIF_F_HW_CSUM
+driver which trusts the metadata, leading skb_copy_and_csum_dev() to write
+two bytes about 64 KiB beyond the destination buffer.
 
-Do not cache the resolved dst when clearing the local source. Replacing
-the source invalidates all per-CPU cache entries, while
-dst_cache_set_ip4 and dst_cache_set_ip6 update only the current CPU
-slot. The current packet can still use the resolved route; if bind
-allocation fails, a later cache miss retries the repair.
+Reject reversed tuples in validate_gue_flags(), after the existing length
+validation, so all GUE parsers enforce the ordering in one place.
 
-Fixes: 08857b5ec5d9 ("ovpn: implement basic TX path (UDP)")
-Signed-off-by: Ralf Lici <ralf@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Fixes: fe881ef11cf0 ("gue: Use checksum partial with remote checksum offload")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260915124806.2852293-2-Jeremy.Jean@oss.cyber.gouv.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/udp.c | 81 +++++++++++++++++++++++++++++-------------
- 1 file changed, 56 insertions(+), 25 deletions(-)
+ include/net/gue.h | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ovpn/udp.c b/drivers/net/ovpn/udp.c
-index 6ca482144dc4f..0b620c6cc64dd 100644
---- a/drivers/net/ovpn/udp.c
-+++ b/drivers/net/ovpn/udp.c
-@@ -186,7 +186,7 @@ static void ovpn_dst_cache_check_key(struct ovpn_peer *peer,
-  * to detect whether the bind was replaced while the route lookup was running.
-  *
-  * Return: true if the lookup result still matches the current peer state and
-- * may update the dst cache.
-+ * may update the dst cache or replace the bind.
+diff --git a/include/net/gue.h b/include/net/gue.h
+index caefd6da86939..d377155fd0b31 100644
+--- a/include/net/gue.h
++++ b/include/net/gue.h
+@@ -84,8 +84,9 @@ static inline size_t guehdr_priv_flags_len(__be32 flags)
+ }
+ 
+ /* Validate standard and private flags. Returns non-zero (meaning invalid)
+- * if there is an unknown standard or private flags, or the options length for
+- * the flags exceeds the options length specific in hlen of the GUE header.
++ * if there is an unknown standard or private flags, if the options length for
++ * the flags exceeds the options length specified in hlen of the GUE header, or
++ * if a private option contains invalid data.
   */
- static bool ovpn_dst_cache_current(const struct ovpn_peer *peer,
- 				   const struct ovpn_bind *bind,
-@@ -219,6 +219,9 @@ static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 			    struct sk_buff *skb,
- 			    const struct ovpn_route_key *key)
+ static inline int validate_gue_flags(struct guehdr *guehdr, size_t optlen)
  {
-+	struct sockaddr_storage remote;
-+	struct in_addr local = {};
-+	bool reset_local = false;
- 	struct rtable *rt;
- 	struct flowi4 fl = {
- 		.saddr = bind->local.ipv4.s_addr,
-@@ -237,24 +240,17 @@ static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 
- 	if (fl.saddr && unlikely(!inet_confirm_addr(sock_net(sk), NULL, 0,
- 						    fl.saddr, RT_SCOPE_HOST))) {
--		/* we may end up here when the cached address is not usable
--		 * anymore. In this case we reset address/cache and perform a
--		 * new look up
-+		/* The learned local address is not usable anymore.
-+		 * Retry with source address autoselection.
+@@ -103,8 +104,8 @@ static inline int validate_gue_flags(struct guehdr *guehdr, size_t optlen)
+ 		/* Private flags are last four bytes accounted in
+ 		 * guehdr_flags_len
  		 */
- 		fl.saddr = 0;
--		spin_lock_bh(&peer->lock);
--		bind->local.ipv4.s_addr = 0;
--		spin_unlock_bh(&peer->lock);
--		dst_cache_reset(cache);
-+		reset_local = true;
- 	}
+-		__be32 pflags = *(__be32 *)((void *)&guehdr[1] +
+-					    len - GUE_LEN_PRIV);
++		void *data = (void *)&guehdr[1] + len;
++		__be32 pflags = *(__be32 *)(data - GUE_LEN_PRIV);
  
- 	rt = ip_route_output_flow(sock_net(sk), &fl, sk);
- 	if (IS_ERR(rt) && PTR_ERR(rt) == -EINVAL) {
- 		fl.saddr = 0;
--		spin_lock_bh(&peer->lock);
--		bind->local.ipv4.s_addr = 0;
--		spin_unlock_bh(&peer->lock);
--		dst_cache_reset(cache);
-+		reset_local = true;
- 
- 		rt = ip_route_output_flow(sock_net(sk), &fl, sk);
- 	}
-@@ -268,10 +264,28 @@ static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 		goto err;
- 	}
- 
--	/* avoid storing a stale cache */
-+	/* avoid storing a stale cache or local address */
- 	spin_lock_bh(&peer->lock);
--	if (likely(ovpn_dst_cache_current(peer, bind, key)))
--		dst_cache_set_ip4(cache, &rt->dst, fl.saddr);
-+	if (likely(ovpn_dst_cache_current(peer, bind, key))) {
-+		if (!reset_local) {
-+			dst_cache_set_ip4(cache, &rt->dst, fl.saddr);
-+			spin_unlock_bh(&peer->lock);
-+			goto transmit;
+ 		if (pflags & ~GUE_PFLAGS_ALL)
+ 			return 1;
+@@ -112,6 +113,16 @@ static inline int validate_gue_flags(struct guehdr *guehdr, size_t optlen)
+ 		len += guehdr_priv_flags_len(pflags);
+ 		if (len > optlen)
+ 			return 1;
++
++		if (pflags & GUE_PFLAG_REMCSUM) {
++			__be16 *pd = data;
++
++			/* The field offset pd[1] must not be less
++			 * than the start pd[0].
++			 */
++			if (ntohs(pd[1]) < ntohs(pd[0]))
++				return 1;
 +		}
-+
-+		/* invalidate per-CPU dst entries that may still carry
-+		 * the stale source
-+		 */
-+		dst_cache_reset(cache);
-+
-+		/* preserve the current remote */
-+		memcpy(&remote, &bind->remote, sizeof(struct sockaddr_in));
-+		/* The current packet already has a valid wildcard-source route.
-+		 * If replacing the bind fails, leave the stale local in place;
-+		 * a later cache miss will retry the repair.
-+		 */
-+		ovpn_peer_reset_sockaddr(peer, &remote, &local);
-+	}
- 	spin_unlock_bh(&peer->lock);
- 
- transmit:
-@@ -301,6 +315,9 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 			    struct sk_buff *skb,
- 			    const struct ovpn_route_key *key)
- {
-+	struct in6_addr local = in6addr_any;
-+	struct sockaddr_storage remote;
-+	bool reset_local = false;
- 	struct dst_entry *dst;
- 	int ret;
- 
-@@ -321,15 +338,11 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 
- 	if (!ipv6_addr_any(&fl.saddr) &&
- 	    unlikely(!ipv6_chk_addr(sock_net(sk), &fl.saddr, NULL, 0))) {
--		/* we may end up here when the cached address is not usable
--		 * anymore. In this case we reset address/cache and perform a
--		 * new look up
-+		/* The learned local address is not usable anymore.
-+		 * Retry with source address autoselection.
- 		 */
- 		fl.saddr = in6addr_any;
--		spin_lock_bh(&peer->lock);
--		bind->local.ipv6 = in6addr_any;
--		spin_unlock_bh(&peer->lock);
--		dst_cache_reset(cache);
-+		reset_local = true;
  	}
  
- 	dst = ipv6_stub->ipv6_dst_lookup_flow(sock_net(sk), sk, &fl, NULL);
-@@ -341,10 +354,28 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 		goto err;
- 	}
- 
--	/* avoid storing a stale cache */
-+	/* avoid storing a stale cache or local address */
- 	spin_lock_bh(&peer->lock);
--	if (likely(ovpn_dst_cache_current(peer, bind, key)))
--		dst_cache_set_ip6(cache, dst, &fl.saddr);
-+	if (likely(ovpn_dst_cache_current(peer, bind, key))) {
-+		if (!reset_local) {
-+			dst_cache_set_ip6(cache, dst, &fl.saddr);
-+			spin_unlock_bh(&peer->lock);
-+			goto transmit;
-+		}
-+
-+		/* invalidate per-CPU dst entries that may still carry
-+		 * the stale source
-+		 */
-+		dst_cache_reset(cache);
-+
-+		/* preserve the current remote */
-+		memcpy(&remote, &bind->remote, sizeof(struct sockaddr_in6));
-+		/* The current packet already has a valid wildcard-source route.
-+		 * If replacing the bind fails, leave the stale local in place;
-+		 * a later cache miss will retry the repair.
-+		 */
-+		ovpn_peer_reset_sockaddr(peer, &remote, &local);
-+	}
- 	spin_unlock_bh(&peer->lock);
- 
- transmit:
+ 	return 0;
 -- 
 2.53.0
 
