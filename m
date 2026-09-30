@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B6D4FECE1;
-	Wed, 30 Sep 2026 15:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2064F4D7D2D;
+	Wed, 30 Sep 2026 15:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783999; cv=none; b=WMu8/kvEC6ZkbRADJPLBuaAU8KpeNq6RrhPeWJB3DqCQCLeLlhY5Jhqinucj1wvDHJ/4AUhLJy/YvSNeoBDVG1si0jIpLQEpEgZiMR4J/CVrWBMaVINh7HPUC93AbRAUtdxvvn/bFDl7o3hJaMtT25Wz1efsC9HhK9/uSzXfvCc=
+	t=1790784001; cv=none; b=j8At3TqXwiOV5GePK8YTI+2GJUwmm8WErJtZ0iU9cDcRb+h3afeZNxckO/kDEYEw99bJPztA6ETRi4lJ4+6/+jqjlsF1o0KWQnI1sE3nrslcTa/v5wkdIPp0PWhAE/WLBvtsawL64Dxiu9ROGfl7BDRDJDWxytRHrBh9tKNZgf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783999; c=relaxed/simple;
-	bh=8+El5h8h+MPIejCPIiV7SefBEI/n4Aia57+JaZ+u0Cs=;
+	s=arc-20240116; t=1790784001; c=relaxed/simple;
+	bh=696rfdTUkcaBEeujfiDwIjtIP5MYF4RsavpwtGHmAwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cb5kaikeQFmaTt50VBlVdmWmpl1EMjVfJqb0X3dsTilpOmwpozkFrf5JDzgwgYpkRqdioRueBjGUlMdWO8sB8JZBYPSpim/lyxxgRarjzROVXzkBHuHSN36d+qpng8SEnnL5XzzhrrKVgzgJpbFv2r3sMRW9wWrJZHhpeO4J3pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3ArRKW2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GID39RBfR7JwwtoBQ9fnoxiVpFBImO6gmXhsuqo7UAA/lceS9Z/djBAWJuL3XaH7MO9VUS2LmxJU7EXyv2vKGdq/2iR52IwS/2lJlmDk/VbLgYfmge2/OyGnBj0Sb+j8P76si+tO2SUUGqJpN2D+OE8ODNWWXcFk1D0/b86YCqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/O9smqH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3ArRKW2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2855B1F00893;
-	Wed, 30 Sep 2026 15:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/O9smqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6461F000FF;
+	Wed, 30 Sep 2026 15:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783994;
-	bh=tVOePGsD2aZTBFvdoiU/sq/igZ4eD1oG3+B16CFGPUA=;
+	s=korg; t=1790783997;
+	bh=cPgiWZ2IG/VRnLmXVVIHLKJeP4R9WzMfSi+WF8UhDVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3ArRKW2JbkXm30ldGGoMpCkQT9Wsoov8Oe/DMW3MKtiv982FwmY2fPMEWGKeilKY
-	 J6AFl3wHmVMxTJYfTpwKznb52HMHT1K2inJ7EOU0uugUOdt6aZ1TotiYdCars6PZ7W
-	 4Oe7j+8EmMW6ELEEl7FENlY1Qdu5ISmWUFaXGQrs=
+	b=m/O9smqHlLXbZTcjMqctldnH7INWb52VxBohyh9VXWc63arnG0SyX9O7aFBeO9mMS
+	 Op3ISUlxctH5V2P+piVecUHnDjs++vKvSoHr2UF572buLNpN3LapMIqss9J7n5sKPQ
+	 QBKGD01TdxPOCUaiz4mdfJWFXIWnC7ZImRxzRHEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Marco Elver <elver@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 550/595] net: preserve skb_end_offset() in skb_unclone_keeptruesize()
-Date: Wed, 30 Sep 2026 17:27:23 +0200
-Message-ID: <20260930152359.544611168@linuxfoundation.org>
+	Mikael Etienne <mikael1022bzh@gmail.com>,
+	Arthur Husband <artmoty@gmail.com>,
+	Alvin Lim <alvinwylim@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	John Smith <imjohnsmith4000@gmail.com>,
+	Lennert Buytenhek <kernel@wantstofly.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Roland Waltersson <roland.waltersson@netinsight.net>
+Subject: [PATCH 5.10 551/595] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
+Date: Wed, 30 Sep 2026 17:27:24 +0200
+Message-ID: <20260930152359.567357250@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,174 +58,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 2b88cba55883eaafbc9b7cbff0b2c7cdba71ed01 upstream.
+commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
 
-syzbot found another way to trigger the infamous WARN_ON_ONCE(delta < len)
-in skb_try_coalesce() [1]
+Multiple users report data corruption during 64-bit DMA transfers on
+systems with AMD NBIO 7.7 and 7.11 controllers.
 
-I was able to root cause the issue to kfence.
+This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
+Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
+corrupted.
 
-When kfence is in action, the following assertion is no longer true:
+Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
 
-int size = xxxx;
-void *ptr1 = kmalloc(size, gfp);
-void *ptr2 = kmalloc(size, gfp);
-
-if (ptr1 && ptr2)
-	ASSERT(ksize(ptr1) == ksize(ptr2));
-
-We attempted to fix these issues in the blamed commits, but forgot
-that TCP was possibly shifting data after skb_unclone_keeptruesize()
-has been used, notably from tcp_retrans_try_collapse().
-
-So we not only need to keep same skb->truesize value,
-we also need to make sure TCP wont fill new tailroom
-that pskb_expand_head() was able to get from a
-addr = kmalloc(...) followed by ksize(addr)
-
-Split skb_unclone_keeptruesize() into two parts:
-
-1) Inline skb_unclone_keeptruesize() for the common case,
-   when skb is not cloned.
-
-2) Out of line __skb_unclone_keeptruesize() for the 'slow path'.
-
-WARNING: CPU: 1 PID: 6490 at net/core/skbuff.c:5295 skb_try_coalesce+0x1235/0x1560 net/core/skbuff.c:5295
-Modules linked in:
-CPU: 1 PID: 6490 Comm: syz-executor161 Not tainted 5.17.0-rc4-syzkaller-00229-g4f12b742eb2b #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-RIP: 0010:skb_try_coalesce+0x1235/0x1560 net/core/skbuff.c:5295
-Code: bf 01 00 00 00 0f b7 c0 89 c6 89 44 24 20 e8 62 24 4e fa 8b 44 24 20 83 e8 01 0f 85 e5 f0 ff ff e9 87 f4 ff ff e8 cb 20 4e fa <0f> 0b e9 06 f9 ff ff e8 af b2 95 fa e9 69 f0 ff ff e8 95 b2 95 fa
-RSP: 0018:ffffc900063af268 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 00000000ffffffd5 RCX: 0000000000000000
-RDX: ffff88806fc05700 RSI: ffffffff872abd55 RDI: 0000000000000003
-RBP: ffff88806e675500 R08: 00000000ffffffd5 R09: 0000000000000000
-R10: ffffffff872ab659 R11: 0000000000000000 R12: ffff88806dd554e8
-R13: ffff88806dd9bac0 R14: ffff88806dd9a2c0 R15: 0000000000000155
-FS:  00007f18014f9700(0000) GS:ffff8880b9c00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020002000 CR3: 000000006be7a000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- tcp_try_coalesce net/ipv4/tcp_input.c:4651 [inline]
- tcp_try_coalesce+0x393/0x920 net/ipv4/tcp_input.c:4630
- tcp_queue_rcv+0x8a/0x6e0 net/ipv4/tcp_input.c:4914
- tcp_data_queue+0x11fd/0x4bb0 net/ipv4/tcp_input.c:5025
- tcp_rcv_established+0x81e/0x1ff0 net/ipv4/tcp_input.c:5947
- tcp_v4_do_rcv+0x65e/0x980 net/ipv4/tcp_ipv4.c:1719
- sk_backlog_rcv include/net/sock.h:1037 [inline]
- __release_sock+0x134/0x3b0 net/core/sock.c:2779
- release_sock+0x54/0x1b0 net/core/sock.c:3311
- sk_wait_data+0x177/0x450 net/core/sock.c:2821
- tcp_recvmsg_locked+0xe28/0x1fd0 net/ipv4/tcp.c:2457
- tcp_recvmsg+0x137/0x610 net/ipv4/tcp.c:2572
- inet_recvmsg+0x11b/0x5e0 net/ipv4/af_inet.c:850
- sock_recvmsg_nosec net/socket.c:948 [inline]
- sock_recvmsg net/socket.c:966 [inline]
- sock_recvmsg net/socket.c:962 [inline]
- ____sys_recvmsg+0x2c4/0x600 net/socket.c:2632
- ___sys_recvmsg+0x127/0x200 net/socket.c:2674
- __sys_recvmsg+0xe2/0x1a0 net/socket.c:2704
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-Fixes: c4777efa751d ("net: add and use skb_unclone_keeptruesize() helper")
-Fixes: 097b9146c0e2 ("net: fix up truesize of cloned skb in skb_prepare_for_shift()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marco Elver <elver@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
+Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
+Reported-by: Arthur Husband <artmoty@gmail.com>
+Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
+Reported-by: Alvin Lim <alvinwylim@gmail.com>
+Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: commit log, s/IOVA/DMA/ in comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Cc: David Laight <david.laight.linux@gmail.com>
+Cc: John Smith <imjohnsmith4000@gmail.com>
+Cc: Lennert Buytenhek <kernel@wantstofly.org>
+Cc: Niklas Cassel <cassel@kernel.org>
+Cc: Roland Waltersson <roland.waltersson@netinsight.net>
+Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 18 +++++++++---------
- net/core/skbuff.c      | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+), 9 deletions(-)
+ arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 34b6a7e3af8d8..0a7b1a7f1ae10 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1655,19 +1655,19 @@ static inline int skb_unclone(struct sk_buff *skb, gfp_t pri)
- 	return 0;
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -844,4 +844,103 @@ static void quirk_clear_strap_no_soft_re
+ 	}
  }
- 
--/* This variant of skb_unclone() makes sure skb->truesize is not changed */
-+/* This variant of skb_unclone() makes sure skb->truesize
-+ * and skb_end_offset() are not changed, whenever a new skb->head is needed.
-+ *
-+ * Indeed there is no guarantee that ksize(kmalloc(X)) == ksize(kmalloc(X))
-+ * when various debugging features are in place.
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
++
++/*
++ * Enhanced atomic operations can cause corruption with 64-bit DMA
++ * on these devices.
 + */
-+int __skb_unclone_keeptruesize(struct sk_buff *skb, gfp_t pri);
- static inline int skb_unclone_keeptruesize(struct sk_buff *skb, gfp_t pri)
- {
- 	might_sleep_if(gfpflags_allow_blocking(pri));
- 
--	if (skb_cloned(skb)) {
--		unsigned int save = skb->truesize;
--		int res;
--
--		res = pskb_expand_head(skb, 0, 0, pri);
--		skb->truesize = save;
--		return res;
--	}
-+	if (skb_cloned(skb))
-+		return __skb_unclone_keeptruesize(skb, pri);
- 	return 0;
- }
- 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 39ecb52f507c9..224348001368c 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1737,6 +1737,38 @@ struct sk_buff *skb_realloc_headroom(struct sk_buff *skb, unsigned int headroom)
- }
- EXPORT_SYMBOL(skb_realloc_headroom);
- 
-+int __skb_unclone_keeptruesize(struct sk_buff *skb, gfp_t pri)
++#define RX_ENH_ATOMIC_EN		BIT(8)
++
++static const u32 nbio_7_7_pcie_smn_addrs[] = {
++	0x111401d0,
++	0x111411d0,
++	0x111421d0,
++	0x111431d0,
++	0x111441d0,
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x114401d0,
++};
++
++static const u32 nbio_7_11_pcie_smn_addrs[] = {
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x113411d0,
++	0x113421d0,
++	0x113431d0,
++	0x113441d0,
++	0x113451d0,
++};
++
++static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
++					   const u32 *smn_addrs,
++					   size_t nr_smn_addrs)
 +{
-+	unsigned int saved_end_offset, saved_truesize;
-+	struct skb_shared_info *shinfo;
-+	int res;
++	bool changed = false;
++	size_t i;
++	u32 data;
++	int ret;
 +
-+	saved_end_offset = skb_end_offset(skb);
-+	saved_truesize = skb->truesize;
++	for (i = 0; i < nr_smn_addrs; i++) {
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (!(data & RX_ENH_ATOMIC_EN))
++			continue;
++		data = data & ~RX_ENH_ATOMIC_EN;
++		ret = amd_smn_write(0, smn_addrs[i], data);
++		if (ret)
++			continue;
++		if (changed)
++			continue;
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (data & RX_ENH_ATOMIC_EN)
++			continue;
++		changed = true;
++	}
 +
-+	res = pskb_expand_head(skb, 0, 0, pri);
-+	if (res)
-+		return res;
-+
-+	skb->truesize = saved_truesize;
-+
-+	if (likely(skb_end_offset(skb) == saved_end_offset))
-+		return 0;
-+
-+	shinfo = skb_shinfo(skb);
-+
-+	/* We are about to change back skb->end,
-+	 * we need to move skb_shinfo() to its new location.
-+	 */
-+	memmove(skb->head + saved_end_offset,
-+		shinfo,
-+		offsetof(struct skb_shared_info, frags[shinfo->nr_frags]));
-+
-+	skb_set_end_offset(skb, saved_end_offset);
-+
-+	return 0;
++	if (changed)
++		pci_info(host_bridge, "enhanced atomics disabled\n");
 +}
 +
- /**
-  *	skb_expand_head - reallocate header of &sk_buff
-  *	@skb: buffer to reallocate
--- 
-2.53.0
-
++static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
++}
++
++static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
++}
++
++/* Phoenix, Hawk Point (NBIO 7.7) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++
++/* Strix, Krackan, Strix Halo (NBIO 7.11) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++
+ #endif
 
 
