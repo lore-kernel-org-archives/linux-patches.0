@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FDE511208;
-	Wed, 30 Sep 2026 16:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282A251121F;
+	Wed, 30 Sep 2026 16:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784475; cv=none; b=XwyS8Sjj274yWV1boAFjia7iw3PnnM6pyoe+kVUmZI558bzemis6etetKpmUsRu8NnWlPhupZC9Z8OHIUbB3/Bdn1ybquWck0JOrLPPRBpo467qss0ZKC2aXRIiAh1hkL8VoSRW1cgyo732JV1DNQB2TasjcMKpP4eEPMfLCZIE=
+	t=1790784481; cv=none; b=iuYZvJIUtR+xOvy41rY1Ery7w8MhrFBYXAMqo1uxiM42p3RMXbid69hK9Sf7MpvWMN6vScgGN7LuRBGHC4WbS5IfiCQ1qr02TPaEkRwtjynsKygahcMAkGypI2aI3uibyEl+nhlArluK8Pew8cQr/vvdidWsxoeT7EGN0KuFYHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784475; c=relaxed/simple;
-	bh=LDPuw+s4OOG1SAscbFlsUYC7rq1JAZsDWIQZgw53T/0=;
+	s=arc-20240116; t=1790784481; c=relaxed/simple;
+	bh=CRMtHlIWh9044ONkGKDEmNvVHrZk4ilLpE/kVe2nJ4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTQ3zxqzYWMLqyB7gw72694UDb4wPXMZ1ZfgCF1vvubuzBh4qKuALHuNBUqRG8QtvJCxBPfXIqcKV3hj3nknPrvlhzIZ9dY4hbFGQA+jMZSWgjmZSCCJWWlB9RBYUWpgudgzC7r3LBG4Vyjoch4fvLZ5G27Pwxa5EgYS3RWom84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kgg497IV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QlZa5QePzTuxTWD5D4aCIZp/9KIX+qvGe68gvV7YpvvpwCeK3wQr20JXP59DsU2G/beFLMYIPSK3HGFMJdDrYMKRpZ7ZGRTE9f0ZklUm0Wh+I8WrpGOv0iMsgfFv/LfneCnIUsUyHBN4+Nwnil9sPH+eEdYpV+sUeA38YTokg0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gr4D0MXE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kgg497IV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E341F008A2;
-	Wed, 30 Sep 2026 16:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gr4D0MXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BA41F000FF;
+	Wed, 30 Sep 2026 16:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784462;
-	bh=9p1D6b4d4P2gNd1dj16o75x15lns9Td7BG8uV8KuENk=;
+	s=korg; t=1790784470;
+	bh=PW5yu55q1aZdtaqC919gXDLtkhiTkQ+RUDv1zB1OnZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kgg497IVR8A9aY42snK82S1j8NXYiYfphFybJc69IrBr5KlMKh+fpKRwjCCa0OIPn
-	 I5iEhMAFjezbU9npLMixMnM/U1S3MT3MiDgan1hogGyF2Th3crCaHs7msFcVWiuTO8
-	 r48ioYI8VFfjeUMyDx9RbsNtms8cLNYNOQ4kdaqQ=
+	b=gr4D0MXE8dW/j9h9NDsBvy+3cAAed3UwV/vgvsAt5KFOoly7UgWsx5DJmRsjQmwlR
+	 DHLV7ILYzww0m86FZsYG17M+bRtafwpnc3vfnXkIYbjvMsnRfH4mXMkpDy6jcnDt57
+	 d1LzreXfkWcbawwFmdG5N/Jz/PIUnHXMOZQNG0HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/982] btrfs: balance: fix potential bg lookup failure in btrfs_may_alloc_data_chunk()
-Date: Wed, 30 Sep 2026 17:14:58 +0200
-Message-ID: <20260930152420.289923152@linuxfoundation.org>
+Subject: [PATCH 6.1 122/982] mmc: davinci: fix mmc_add_host order in probe
+Date: Wed, 30 Sep 2026 17:14:18 +0200
+Message-ID: <20260930152419.438173423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,69 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-[ Upstream commit 18d32b0013efba19f7ad3e5b08d7aee813d604a6 ]
+[ Upstream commit d04e0151d316edbdb4f0397a9b92a1936e4a1421 ]
 
-[BUG]
-Running btrfs balance can trigger a null-ptr-deref before relocating a
-data chunk when metadata corruption leaves a chunk in the chunk tree
-without a corresponding block group in the in-memory cache:
+mmc_add_host() makes the host visible to the MMC core. Register the
+interrupt handlers and advertise MMC_CAP_SDIO_IRQ before that, so the
+core cannot start using the host before IRQ handling is set up.
 
-  KASAN: null-ptr-deref in range [0x0000000000000088-0x000000000000008f]
-  RIP: 0010:btrfs_may_alloc_data_chunk+0x40/0x1c0 fs/btrfs/volumes.c:3601
-  Call Trace:
-    __btrfs_balance fs/btrfs/volumes.c:4217 [inline]
-    btrfs_balance+0x2516/0x42b0 fs/btrfs/volumes.c:4604
-    btrfs_ioctl_balance fs/btrfs/ioctl.c:3577 [inline]
-    btrfs_ioctl+0x25cf/0x5b90 fs/btrfs/ioctl.c:5313
-    ...
-
-[CAUSE]
-__btrfs_balance() iterates the on-disk chunk tree and passes the chunk
-logical bytenr to btrfs_may_alloc_data_chunk() before relocating a data
-chunk. That helper then queries the in-memory block group cache:
-
-  cache = btrfs_lookup_block_group(fs_info, chunk_offset);
-  chunk_type = cache->flags;   /* cache may be NULL */
-
-A corrupt image can contain a chunk item whose matching block group
-item is missing, so no block group is ever inserted into the cache. In
-that case btrfs_lookup_block_group() returns NULL.
-
-The code only guards this with ASSERT(cache), which becomes a no-op when
-CONFIG_BTRFS_ASSERT is disabled. The subsequent dereference of
-cache->flags therefore crashes the kernel.
-
-[FIX]
-Add a NULL check after btrfs_lookup_block_group() in
-btrfs_may_alloc_data_chunk() and print and error message for clarity.
-
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mmc/host/davinci_mmc.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 9f5d5f5c53131..e0a310bd0421f 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -3495,7 +3495,11 @@ static int btrfs_may_alloc_data_chunk(struct btrfs_fs_info *fs_info,
- 	u64 chunk_type;
+diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
+index b744651f3b625..62e75df6b6b00 100644
+--- a/drivers/mmc/host/davinci_mmc.c
++++ b/drivers/mmc/host/davinci_mmc.c
+@@ -1303,14 +1303,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
+ 		goto cpu_freq_fail;
+ 	}
  
- 	cache = btrfs_lookup_block_group(fs_info, chunk_offset);
--	ASSERT(cache);
-+	if (unlikely(!cache)) {
-+		btrfs_err(fs_info, "balance: chunk at bytenr %llu has no corresponding block group",
-+			  chunk_offset);
-+		return -EUCLEAN;
-+	}
- 	chunk_type = cache->flags;
- 	btrfs_put_block_group(cache);
+-	ret = mmc_add_host(mmc);
+-	if (ret < 0)
+-		goto mmc_add_host_fail;
+-
+ 	ret = devm_request_irq(&pdev->dev, irq, mmc_davinci_irq, 0,
+ 			       mmc_hostname(mmc), host);
+ 	if (ret)
+-		goto request_irq_fail;
++		goto mmc_add_host_fail;
  
+ 	if (host->sdio_irq >= 0) {
+ 		ret = devm_request_irq(&pdev->dev, host->sdio_irq,
+@@ -1320,6 +1316,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
+ 			mmc->caps |= MMC_CAP_SDIO_IRQ;
+ 	}
+ 
++	ret = mmc_add_host(mmc);
++	if (ret < 0)
++		goto mmc_add_host_fail;
++
+ 	rename_region(mem, mmc_hostname(mmc));
+ 
+ 	dev_info(mmc_dev(host->mmc), "Using %s, %d-bit mode\n",
+@@ -1328,8 +1328,6 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
+-request_irq_fail:
+-	mmc_remove_host(mmc);
+ mmc_add_host_fail:
+ 	mmc_davinci_cpufreq_deregister(host);
+ cpu_freq_fail:
 -- 
 2.53.0
 
