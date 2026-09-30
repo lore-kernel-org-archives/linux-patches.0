@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21584BD348;
-	Wed, 30 Sep 2026 16:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942865172E3;
+	Wed, 30 Sep 2026 16:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784843; cv=none; b=BsYfvkWyOPWYzS9EaQDwrIm31h7AT048JtKY4NVwcwTuOUcw54MIf86qLOdgn0FEWWxjvuM+hiaHl91xVpGvJW0iipjLknHvxxhymH5LsfKfVROIW/CphxjHRKeGR60umDkT+lhSZfJjJP0rnwa5U3YzLmFF7joj+Zxvo6BQskE=
+	t=1790784846; cv=none; b=LqkgbozDOLdM2UMAHcedyWwNVz+h/zLbUdlnWYXBKOmQlYxK6cpUM4J/CWjC1kSihGxvnHR8Ho1BEHAgwCyJiG0mkoa9HQ4b7q9VKJEojEnqmsCFAPPT8YlNa9JBYh+6cTh/vX7fyxCE6BwloZ0aekX4WWaS+TXJmMZPTHF3fLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784843; c=relaxed/simple;
-	bh=lRsIUl1V5Bu8EbpSBU4a0XuBXpcgjkOE+mV1hPSCe6w=;
+	s=arc-20240116; t=1790784846; c=relaxed/simple;
+	bh=Yp+FseEHpvvQmgCSK0O0JikXj5531af8YYLeHumGglQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ev+pCRDflG+L7Chq7TD4m9p6RW/STdKK5QgQAtZ/vMwsI1slXl+dsvfgeEUagYbWfIlmZtaIlb+LfDkmc7m6evRj3/3jf50OHVzv4QiBoxOw1ql9eRsiFoXmGpR8rkmY5HilsvuDk+A0BtJjR1Cma7aga4gvtKBJue4SQHsbUjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVoH6Vhh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HUvBy0mthiA/OTcjUDoWnpCDMTqaTRhf3axAOGAIc1uCyeUB+s87+Sav+8muqTX0TBBZ71JEnIceFkQxpCs3dA0xoDiBMSB5hEo7QSQI8I131T8wqDues3qPSGfBw4u1mwEX2uNWbbc92Tk1JLm1xY6ySBaahvWUQ8m05B7N9dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPaAt2RX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVoH6Vhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A4A1F000FF;
-	Wed, 30 Sep 2026 16:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPaAt2RX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB16B1F000FF;
+	Wed, 30 Sep 2026 16:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784838;
-	bh=ArfxEwyRvSxh1CwdEtZqF3wjVTTQ42CbTj7gKmNoe5M=;
+	s=korg; t=1790784844;
+	bh=C5o6oS9RWFeFo8dMENUP7miIdILEEGKS3YyiVpwUJtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sVoH6Vhh1MdMzXQt/cP32fm7I1uCM+SW/Kb1bU5WQEh3D37y2f0lYqZU/l2X35lrw
-	 91dInaTAuHIO/4c9GNwbZDRibKjLg3IVnkOlbrWjzkXItCbRCGUuLgvQEFLWnLjpFa
-	 joSNRVP9TN4Olg9wHJFvXK1/fesJR5RWj7xzc8zY=
+	b=KPaAt2RXk4HOYx9m8kY4HFzuzDFkjVJ2SSj/neXMp1/1CjT56z01aK451Qnah5AmV
+	 x0E27ycc2eJS35KJ4a916C41Tdb1FXFDEPq0Dx5cMn4lI0lsEs4Df6gCzc7V9lnkyr
+	 8c6s7eDxcQCRnfBE+QrxS+pOPmyxkk65p1kvHxqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/982] ksmbd: remove stale channels from all sessions on teardown
-Date: Wed, 30 Sep 2026 17:17:11 +0200
-Message-ID: <20260930152423.142975736@linuxfoundation.org>
+Subject: [PATCH 6.1 297/982] clk: at91: pmc: #undef field_{get,prep}() before definition
+Date: Wed, 30 Sep 2026 17:17:13 +0200
+Message-ID: <20260930152423.185484262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,88 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b10665730fbf6b5e45fe422badcbbc3f0df96ef5 ]
+[ Upstream commit dbfe51513aae6bace00cc390e11cb486a64a63d2 ]
 
-ksmbd_sessions_deregister() removes a connection's channels from other
-sessions' channel lists only while conn->binding is still set:
+Prepare for the advent of globally available common field_get() and
+field_prep() macros by undefining the symbols before defining local
+variants.  This prevents redefinition warnings from the C preprocessor
+when introducing the common macros later.
 
-	if (conn->binding) {
-		hash_for_each_safe(sessions_table, ...)
-			ksmbd_chann_del(conn, sess);
-	}
-
-conn->binding is a transient flag: it is cleared once a binding
-SESSION_SETUP completes, and also by a subsequent non-binding
-SESSION_SETUP on the same connection (a reauthentication on a bound
-channel, or a new SessionId==0 setup). A connection that has bound a
-channel into another session's ksmbd_chann_list and then clears
-conn->binding leaves that channel behind when it disconnects: the
-channel, whose chann->conn points at the now freed struct ksmbd_conn,
-stays on the owner session's list.
-
-When the owning connection later tears down, the second loop
-dereferences the stale channel:
-
-	xa_for_each(&sess->ksmbd_chann_list, chann_id, chann)
-		if (chann->conn != conn)
-			ksmbd_conn_set_exiting(chann->conn);   /* freed */
-
-which is a use-after-free write into the freed ksmbd_conn (the same
-stale channel is also walked by show_proc_session() through /proc). The
-session is leaked as well, because its channel list never empties.
-
-Remove the conn->binding gate so a connection always removes its
-channels from every session on teardown.
-
-Fixes: faf8578c77f3 ("ksmbd: find bound sessions during reauthentication")
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Suggested-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Acked-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/clk/at91/pmc.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 08eeca8ab0042..605e17c7b2a17 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -232,22 +232,19 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
- {
- 	struct ksmbd_session *sess;
- 	unsigned long id;
-+	struct hlist_node *tmp;
-+	int bkt;
+diff --git a/drivers/clk/at91/pmc.h b/drivers/clk/at91/pmc.h
+index efe4975bddc3b..7509fd83b7bac 100644
+--- a/drivers/clk/at91/pmc.h
++++ b/drivers/clk/at91/pmc.h
+@@ -114,7 +114,9 @@ struct at91_clk_pms {
+ 	unsigned int parent;
+ };
  
- 	down_write(&sessions_table_lock);
--	if (conn->binding) {
--		int bkt;
--		struct hlist_node *tmp;
--
--		hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
--			if (!ksmbd_chann_del(conn, sess) &&
--			    xa_empty(&sess->ksmbd_chann_list)) {
--				hash_del(&sess->hlist);
--				down_write(&conn->session_lock);
--				xa_erase(&conn->sessions, sess->id);
--				up_write(&conn->session_lock);
--				if (atomic_dec_and_test(&sess->refcnt))
--					ksmbd_session_destroy(sess);
--			}
-+	hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
-+		if (!ksmbd_chann_del(conn, sess) &&
-+		    xa_empty(&sess->ksmbd_chann_list)) {
-+			hash_del(&sess->hlist);
-+			down_write(&conn->session_lock);
-+			xa_erase(&conn->sessions, sess->id);
-+			up_write(&conn->session_lock);
-+			if (atomic_dec_and_test(&sess->refcnt))
-+				ksmbd_session_destroy(sess);
- 		}
- 	}
++#undef field_get
+ #define field_get(_mask, _reg) (((_reg) & (_mask)) >> (ffs(_mask) - 1))
++#undef field_prep
+ #define field_prep(_mask, _val) (((_val) << (ffs(_mask) - 1)) & (_mask))
  
+ #define ndck(a, s) (a[s - 1].id + 1)
 -- 
 2.53.0
 
