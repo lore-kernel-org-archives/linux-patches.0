@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1AF25B099;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8F64F4758;
 	Wed, 30 Sep 2026 15:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782918; cv=none; b=tLUVU9Gxr8KIE5Lpt39hQWtsHQNA4hozyvcNUeNfzKjdh3iKrlB15WTGhrgNThx0H7aITmLvQIe4BHfOmH9+nw1Iv5GUewFS3MdzbEzZGgRPSOc66AsExpm+Le34kpugrfuyMGU+EdrH8LbKfERIddM2OM1ima6XY7bjNr2Jg5w=
+	t=1790782917; cv=none; b=L9nFx/EcsY1gnhnPD/p+P8ACCWfjH3q0/q1W/oMpRJogWqYZU/WH58rmqruRKVTObuYMCMLSEGrlWjdOxXw+koCyCJTTogwKSBdsMmZnLOhdICkC4yRd2d82rLEzqL1ghTsmQjH6YO5B2uMcMG//BYsN1Mnv+dccfLE27Z9p2+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782918; c=relaxed/simple;
-	bh=YUQ1rb1cyiODMUny11s4rN1NtKvqn7S48P7PMgLvsDk=;
+	s=arc-20240116; t=1790782917; c=relaxed/simple;
+	bh=MuESxLhvvFqtOtSPjcmPN/RKbJA/l1Oq+qCH+z+RfmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcOsQwoJHPj2qCRkUFJYGmjWp2+0FOZf1K4szFmfFbYDTVSjU51iFE3yUdUu/FJe3/jjzh4ra22TfD05Hh8+ZdFfLdFxhlvn9Bh98Afy/REvcQA0zn8IfgXh6WBEG4YeIoEud/WRXdrCWHy9rQj+NVzZA5zE1hgv4HnjW3mp+1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFJz9Pab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rmHL3dj1MiYUEWz3s+3/ne5H0UEbSYRb/H3RFIBYeLd3h9aza2DpkY69bIcTc1w2rCVqxpmMTpgxEZhCb8U2zkrn34SsduR/C590/167C0bxmpoZ3Yneshra1atB2zRy5eYQJ43ehl3+SLbOkJjWObCYv1bfjLaFCQJM3jRCAps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUJrgC7f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFJz9Pab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654BD1F00893;
-	Wed, 30 Sep 2026 15:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUJrgC7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E751F00898;
+	Wed, 30 Sep 2026 15:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782910;
-	bh=yXDktGdMyxjSTApaz+Y7590fNQxPhl1YuRSokuF49As=;
+	s=korg; t=1790782913;
+	bh=XapiHeS9UbmTC9bLOG/xogL3s6SoDthaoFrkw/PoyvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bFJz9PabYmkQ2UPkZQsr2tqvUHYHNjsXHBFUd+nG9i9qGCKNLwCNWecCEWOEW1WHq
-	 lnIZVTtsWxrtyKwLZcme9EGKA7R7NxLPU07znque2zyD1XeVGrbIlZ6jPruOYlHh0d
-	 8zEWYn7/hBAt7BshOisO9VzpOYxxeetSsBShxGuw=
+	b=XUJrgC7flk8MMUco+bTNOHmLGpZZWpjACYRa6L18XOVnojaR4qZZQ9vSCbg+FLkss
+	 4Sz03gbL3XV6ZBH7b+LX5J2qYY3K6aDDL3McB2vGFxD0ngoLxekWevrK3yXuZ7Qq3o
+	 f3/lA5omUSJTenz8eGDONtiK7Fp7Sdeg5gsTYGlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Hu <hupu@transsion.com>,
-	Hongyan Xia <hongyan.xia@transsion.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Liang Hao <haohlliang@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/595] arm64: kprobes: Allow reentering kprobes while single-stepping
-Date: Wed, 30 Sep 2026 17:21:01 +0200
-Message-ID: <20260930152351.353410564@linuxfoundation.org>
+Subject: [PATCH 5.10 159/595] gpio: dwapb: Mask interrupts at hardware initialization
+Date: Wed, 30 Sep 2026 17:20:52 +0200
+Message-ID: <20260930152351.156698628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,118 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Hu <hupu@transsion.com>
+From: Liang Hao <haohlliang@gmail.com>
 
-[ Upstream commit 23f851ac0078a908bf3422d6467ebc1db5828c46 ]
+[ Upstream commit aaf7766ba3b99a3834319e7cf939838afc705574 ]
 
-A kprobe can be hit while another kprobe is in KPROBE_HIT_SS state. This
-can happen when tracing or perf code runs from the debug exception path
-while the first kprobe is preparing or executing its out-of-line
-single-step instruction.
+GPIO interrupts may retain stale state across warm reboots when
+peripherals remain powered. If a GPIO line is not explicitly
+configured for interrupts, this can result in interrupt storms
+due to missing handlers.
 
-Currently arm64 treats a kprobe hit in KPROBE_HIT_SS as unrecoverable,
-the same as a hit in KPROBE_REENTER. This is too strict. A hit in
-KPROBE_HIT_SS is still a one-level reentry and can be handled by saving
-the current kprobe state and setting up single-step for the new probe,
-just like reentry from KPROBE_HIT_ACTIVE or KPROBE_HIT_SSDONE.
+Fix this by ensuring all interrupts are masked and disabled at
+hardware initialization time via the init_hw() callback. Pending
+interrupts are also cleared to start from a known-safe state.
 
-The truly unrecoverable case is hitting another kprobe while already in
-KPROBE_REENTER, because the reentry save area has already been consumed.
+Interrupts will be unmasked only when explicitly configured by
+userspace or kernel drivers.
 
-Move KPROBE_HIT_SS to the recoverable reentry cases and leave
-KPROBE_REENTER as the unrecoverable nested reentry case.
-
-This change also requires saving saved_irqflag in struct prev_kprobe.
-When a nested kprobe calls kprobes_save_local_irqflag(), it overwrites
-kcb->saved_irqflag with the currently masked DAIF value, losing the
-outer kprobe's original DAIF state. Without this fix, when the outer
-kprobe's single-step finishes, kprobes_restore_local_irqflag() applies
-the wrong DAIF mask and leaves interrupts permanently disabled.
-
-Extend struct prev_kprobe with a saved_irqflag field and save/restore it
-alongside kp and status. This ensures the outer kprobe's original
-interrupt state is preserved across reentry.
-
-This mirrors the x86 fix in commit 6a5022a56ac3
-("kprobes/x86: Allow to handle reentered kprobe on single-stepping").
-
-Signed-off-by: Pu Hu <hupu@transsion.com>
-Signed-off-by: Hongyan Xia <hongyan.xia@transsion.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Liang Hao <haohlliang@gmail.com>
+Link: https://patch.msgid.link/20260705074759.47863-1-haohlliang@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kprobes.h   |  6 ++++++
- arch/arm64/kernel/probes/kprobes.c | 23 ++++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-dwapb.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kprobes.h b/arch/arm64/include/asm/kprobes.h
-index 8699ce30f587e..0a15d23296273 100644
---- a/arch/arm64/include/asm/kprobes.h
-+++ b/arch/arm64/include/asm/kprobes.h
-@@ -26,6 +26,12 @@
- struct prev_kprobe {
- 	struct kprobe *kp;
- 	unsigned int status;
-+
-+	/*
-+	 * The original DAIF state of the outer kprobe, saved here before
-+	 * a nested kprobe overwrites kcb->saved_irqflag during reentry.
-+	 */
-+	unsigned long saved_irqflag;
- };
- 
- /* Single step context for kprobe */
-diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
-index 798c3e78b84bb..412afe22257d9 100644
---- a/arch/arm64/kernel/probes/kprobes.c
-+++ b/arch/arm64/kernel/probes/kprobes.c
-@@ -145,12 +145,27 @@ static void __kprobes save_previous_kprobe(struct kprobe_ctlblk *kcb)
- {
- 	kcb->prev_kprobe.kp = kprobe_running();
- 	kcb->prev_kprobe.status = kcb->kprobe_status;
-+
-+	/*
-+	 * Save the outer kprobe's original DAIF flags before the nested
-+	 * kprobe calls kprobes_save_local_irqflag() and overwrites
-+	 * kcb->saved_irqflag. Without this, the outer kprobe will restore
-+	 * the wrong DAIF state and leave interrupts permanently masked.
-+	 */
-+	kcb->prev_kprobe.saved_irqflag = kcb->saved_irqflag;
+diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
+index ea2e2618b7945..d6240ae0f87ca 100644
+--- a/drivers/gpio/gpio-dwapb.c
++++ b/drivers/gpio/gpio-dwapb.c
+@@ -189,6 +189,22 @@ static void dwapb_toggle_trigger(struct dwapb_gpio *gpio, unsigned int offs)
+ 	dwapb_write(gpio, GPIO_INT_POLARITY, pol);
  }
  
- static void __kprobes restore_previous_kprobe(struct kprobe_ctlblk *kcb)
- {
- 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
- 	kcb->kprobe_status = kcb->prev_kprobe.status;
++static int dwapb_irq_init_hw(struct gpio_chip *gc)
++{
++	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
 +
 +	/*
-+	 * Restore the outer kprobe's saved_irqflag so that when its
-+	 * single-step completes, kprobes_restore_local_irqflag() uses
-+	 * the correct original DAIF value.
++	 * GPIO interrupts may retain stale state across warm reboots when
++	 * peripherals stay powered. Force a known-safe state before the GPIO
++	 * irqchip and irq domain are set up.
 +	 */
-+	kcb->saved_irqflag = kcb->prev_kprobe.saved_irqflag;
- }
++	dwapb_write(gpio, GPIO_INTEN, 0);
++	dwapb_write(gpio, GPIO_INTMASK, 0xffffffff);
++	dwapb_write(gpio, GPIO_PORTA_EOI, 0xffffffff);
++
++	return 0;
++}
++
+ static u32 dwapb_do_irq(struct dwapb_gpio *gpio)
+ {
+ 	struct gpio_chip *gc = &gpio->ports[0].gc;
+@@ -428,6 +444,7 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
+ 	girq = &gc->irq;
+ 	girq->handler = handle_bad_irq;
+ 	girq->default_type = IRQ_TYPE_NONE;
++	girq->init_hw = dwapb_irq_init_hw;
  
- static void __kprobes set_current_kprobe(struct kprobe *p)
-@@ -225,10 +240,16 @@ static int __kprobes reenter_kprobe(struct kprobe *p,
- 	switch (kcb->kprobe_status) {
- 	case KPROBE_HIT_SSDONE:
- 	case KPROBE_HIT_ACTIVE:
-+	case KPROBE_HIT_SS:
-+		/*
-+		 * A probe can be hit while another kprobe is preparing or
-+		 * executing its XOL single-step instruction. This is still a
-+		 * recoverable one-level reentry, so handle it in the same way as
-+		 * reentry from KPROBE_HIT_ACTIVE or KPROBE_HIT_SSDONE.
-+		 */
- 		kprobes_inc_nmissed_count(p);
- 		setup_singlestep(p, regs, kcb, 1);
- 		break;
--	case KPROBE_HIT_SS:
- 	case KPROBE_REENTER:
- 		pr_warn("Unrecoverable kprobe detected.\n");
- 		dump_kprobe(p);
+ 	port->pirq = pirq;
+ 	pirq->irqchip.name = DWAPB_DRIVER_NAME;
 -- 
 2.53.0
 
