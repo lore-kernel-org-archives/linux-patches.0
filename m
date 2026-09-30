@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4CF518133;
-	Wed, 30 Sep 2026 16:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A105111B7;
+	Wed, 30 Sep 2026 16:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784629; cv=none; b=TROmymomewcl09FwEbpcKzC+iKPtvKMPUOJqL23oH8gTdzVKgVPGTAdwloufMSSfUPWZVD7Do+vEFE6kl3BkO5ZDnIBbcj2XKRcIBf/AJQVWPATq5nLZRMqhJQ/rtXI9AEq7HK3l+eiVGkFyMOeZJN6sYCkPtOsVOMoe36TcwRw=
+	t=1790784634; cv=none; b=Ho7DDyYEvH2+s4uTkKifHKwHoQ9VZUS/jr4qV/GkJKclLTqPBYzsBXzvbJjUbFKAqn5vXS/7HxG4VjGROlduStOxiz0tU3W6LKcYU36vh7Ma1JxY+FHKQ59yQd1UWG4de+YaK4UbrLd289fzjYNGy48JXsjnj/XEcOIqZuo12G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784629; c=relaxed/simple;
-	bh=tHNFcKB1cyDrYPmInQkcME2Do94EEDBi+3CFseC/SJA=;
+	s=arc-20240116; t=1790784634; c=relaxed/simple;
+	bh=zG0qRkN1p/9od+lEMDtoYzPTv18+TGTZkbcQJHAE9Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MlQAFOtXgz19g/cX5AFZY1g9cp9ItQN3zeynNgnvGZtZ7gR4LuS73NoNdhdgYSvaAkpY76pQKva8Jlv0IS6Jz/ack/yHYx8tCJ90JNlu88mMB9n0XDEskfC1F94IrcCkb7azCvDlUj32FNMmS6kDNPenFBfNk+5/zJscbhyKalU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8HnyqxW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZZr0P6ag/w3/DHvxg9WMRO/HVEKp6ke8ZDLuQIwbzjwS4dFblU1mTblVtFsA1c7oX6rShpsGYyFxAuk0LvfmnOYP1mmOfWvKET/p6704Kimp5vBSfIg+cJDLuFNqdSBcumy+Bmj/KkrxdXKa9G6qKaO19nam/gGZz34ouf1FHxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rFbQB0A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8HnyqxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8C61F000FF;
-	Wed, 30 Sep 2026 16:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rFbQB0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9F61F0089B;
+	Wed, 30 Sep 2026 16:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784620;
-	bh=9okC6m329XxuN89Kvy2oQ+672yoEPcBNUDT+u9ITVB8=;
+	s=korg; t=1790784629;
+	bh=VfO+bOTb5/E7govTw41iL1JL2kWW/eM5nzDPoiXO2Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b8HnyqxWXelMoDJnJ1B2syt2yz5MiVUenSa4VrkjNpmnRAQKXyxXHSOS8IE6WI3gZ
-	 eT/8Kp4poWFUZYtj0VRMvyHQk5WUnhIkoHDz3ylGBsahLsZRb7RUx8p+BkitmQQ/Wn
-	 YnOvugXyFdN1bJVS1OZQxIcIw2oMekghGNwIIcn8=
+	b=1rFbQB0AxVQykKhyQ9HmVCWzBenU2ov/pQSrOUdpN4nP2iWugHDIgfKz+000FHUN+
+	 n8T/bzew5pOtPN37wuFrna2xoctnUsYJWUPibJ6gdQNNEvBeji8Le07zKPWtCztdWA
+	 zwdeEG169x1/yPM8q0ITs+2u16CZyzLMDMigLZaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 221/982] ksmbd: start file id allocation at 1
-Date: Wed, 30 Sep 2026 17:15:57 +0200
-Message-ID: <20260930152421.548984019@linuxfoundation.org>
+Subject: [PATCH 6.1 206/982] leds: pca9532: Dont stop blinking for non-zero brightness
+Date: Wed, 30 Sep 2026 17:15:42 +0200
+Message-ID: <20260930152421.234758710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,66 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tobias Deiminger <tobias.deiminger@linutronix.de>
 
-[ Upstream commit 6b375be0b4e1be89e9a817880515311503a19114 ]
+[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
 
-ksmbd allocates both the volatile id (per-session file table) and the
-persistent id (global file table) with idr_alloc_cyclic() starting at 0.
-The first open after the module loads therefore gets volatile id 0 and
-persistent id 0, and ksmbd returns an SMB2 FileId of {0, 0} in the create
-response.
+pca9532 unexpectedly stopped blinking when changing brightness to a
+non-zero value. To reproduce:
 
-Clients treat an all-zero FileId as a null handle. smbtorture's
-smb2_util_handle_empty() considers {0, 0} empty, so tests that guard the
-close with it (e.g. smb2.oplock.statopen1, smb2.lease.statopen*) never
-close that first handle. The leaked open keeps the inode's oplock count
-non-zero, so a later batch oplock request on the same file is downgraded
-to level II and the test fails.
+ echo timer > /sys/class/leds/led-1/trigger   # blinks
+ echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
+ cat /sys/class/leds/led-1/trigger            # still claims [timer]
 
-Start the id allocation at 1 (KSMBD_START_FID) so no handle is ever
-assigned a {0, 0} FileId, matching the behaviour of other SMB servers.
+According to Documentation/leds/leds-class.rst, only brightness = 0
+shall be a stop condition:
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+> You can change the brightness value of a LED independently of the
+> timer trigger. However, if you set the brightness value to LED_OFF it
+> will also disable the timer trigger.
+
+Therefore add a guard to continue blinking when brightness != LED_OFF,
+similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
+HW blink support").
+
+Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 3 ++-
- fs/smb/server/vfs_cache.h | 7 ++++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/leds/leds-pca9532.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 5b3a55bd700dc..9eb9f892ac2b5 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -556,7 +556,8 @@ static int __open_id(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
+index 40abb7eb033b9..b518b40099677 100644
+--- a/drivers/leds/leds-pca9532.c
++++ b/drivers/leds/leds-pca9532.c
+@@ -177,11 +177,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
+ 	int err = 0;
+ 	struct pca9532_led *led = ldev_to_led(led_cdev);
  
- 	idr_preload(GFP_KERNEL);
- 	write_lock(&ft->lock);
--	ret = idr_alloc_cyclic(ft->idr, fp, 0, INT_MAX - 1, GFP_NOWAIT);
-+	ret = idr_alloc_cyclic(ft->idr, fp, KSMBD_START_FID, INT_MAX - 1,
-+			       GFP_NOWAIT);
- 	if (ret >= 0) {
- 		id = ret;
- 		ret = 0;
-diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index 8d1bf34eb4a18..ffa2737e279af 100644
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -22,7 +22,12 @@
- #define	FILE_GENERIC_WRITE	0x120116
- #define	FILE_GENERIC_EXECUTE	0X1200a0
- 
--#define KSMBD_START_FID		0
-+/*
-+ * Start volatile/persistent file id allocation at 1. A file id of 0 yields an
-+ * SMB2 FileId of {0, 0}, which clients (e.g. Windows, Samba) treat as a null
-+ * handle and never close, leaking the open on the server.
-+ */
-+#define KSMBD_START_FID		1
- #define KSMBD_NO_FID		(INT_MAX)
- #define SMB2_NO_FID		(0xFFFFFFFFFFFFFFFFULL)
- 
+-	if (value == LED_OFF)
++	if (value == LED_OFF) {
+ 		led->state = PCA9532_OFF;
+-	else if (value == LED_FULL)
++	} else if (led->state == PCA9532_PWM1) {
++		return 0; /* Non-zero brightness shall not stop HW blinking */
++	} else if (value == LED_FULL) {
+ 		led->state = PCA9532_ON;
+-	else {
++	} else {
+ 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
+ 		err = pca9532_calcpwm(led->client, 0, 0, value);
+ 		if (err)
 -- 
 2.53.0
 
