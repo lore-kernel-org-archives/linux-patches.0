@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F95638944D;
-	Wed, 30 Sep 2026 17:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A9A5172E0;
+	Wed, 30 Sep 2026 17:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787860; cv=none; b=b85kEaK65zeWXGDqLOjfVUIHNhnQAfhwYwXrK8O8g677dmVvsyL4P3O4YDMXDoiT9D+awd8SkWQFZwvdIlAsKjDmUKvsf/V1nt4+a32qtLSQbo0aPoWeRuwujLlk3m6KwimJCSDmqX7TLOe5vL0yoQSQqxTpuuypM6JVBR86UNI=
+	t=1790787866; cv=none; b=OFtoY4yeSUyS0NSGrk1WSSPdrePcVNVfnL6X7zV2XdGAvf/vKQI9oqs/LtUUJOKuDQhi6n5QG3VSPSBmSd0A/QmdFYjkiwkSEVuiGIFIh4ntsRqWMYp/xykUygpS2FPQKISaw4KR4hid4kqeFw8XEMWS8T1yPpokRIVGd6Cu+nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787860; c=relaxed/simple;
-	bh=R0XpC7E3sABECc50wXU+cTzoHdllTbo3Du7cwZBwT7s=;
+	s=arc-20240116; t=1790787866; c=relaxed/simple;
+	bh=+WpFUA/JE9ICKZvBJpdy2BXExo3Rz2f5lnIFmQihXnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWQaCrw3MUO2SlFmJwoG5JaqU3lJ9Kq8MT7Vm8voSr0J2byG8wJxrQB/27mpMY6uiv9IZ30iTRc+taK72Qv6GlDc87adAMdxj2qGaHPa5BLDgPBNRw37gJV/RbS1GjmOUAbwtd5w0V1uLqP4VWV+xeJELIg/x87smHTpBhGkppc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BaaCqmBx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBUFlhC2nIcIAf2MZpdpbwW29DuQs168VeOG9xO90w71HpKeOl9+GkOTDNoCW+F7E1hxIbYdXBrOX/GPmO3mPtLL/5Ry+B9Zk0E+ydSyobbIksgzUoGoDjebf1jr8X1EuLYLEtH3fbfmbxAsIarMcxc3Wlleo0aGdJjs5ubkHCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rygj/uqy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaaCqmBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1C21F000FF;
-	Wed, 30 Sep 2026 17:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rygj/uqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7991F00898;
+	Wed, 30 Sep 2026 17:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787859;
-	bh=4n1XJ1/sFU+IknEy3zBW/qiRv+tfBUVVTXLaed2JFQs=;
+	s=korg; t=1790787865;
+	bh=HJi/8ATxl+e0Uc5gbKi2h9uz5jGUnQQQwGZZaCVsIYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BaaCqmBxKUcHYHo9gRQ3rLiYrRy7kGKyAqGr8mL0DEdYV260C8Kn3gbIUH9X9TWmt
-	 y0ldedlVj8KGwzn/e3MMH6WsCFxBfEilShAK08fPcZIq2LvlIucPh4QMSRHldfCtWx
-	 OvweHRTEdq/ReHzRpR8pv+zXEVUfRcckVfUkswWg=
+	b=rygj/uqyx/+hEVDyPLAZLLTZvBSIKNRF5IJw5HxYZF4kKs9Bvc04gGxo8qsKC5Bcz
+	 bsxgI+KNrprMrRjkynWXGMR62To5umzBakKNw7XcoT7isrtOsbwmZOjIVZKarnFo+x
+	 GzSCoRROldPk0nGvfkWRTqrrcpxK3Fmws7vMnBE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benjamin Block <bblock@linux.ibm.com>,
 	Farhan Ali <alifm@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 7.2 378/457] s390/pci: Fix leak of struct pci_dev reference in zpci_report_status()
-Date: Wed, 30 Sep 2026 17:28:03 +0200
-Message-ID: <20260930152354.160499737@linuxfoundation.org>
+Subject: [PATCH 7.2 380/457] s390/pci: Report SCLP status on error events when no pdev is associated
+Date: Wed, 30 Sep 2026 17:28:05 +0200
+Message-ID: <20260930152354.201391787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,19 +54,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 09b7040a1b79f4f61cdad6d9af972e045bb7c498 upstream.
+commit a1120bea9bc8ea9d9ab2f9904a63b9a228bf2ffc upstream.
 
-In zpci_report_status(), a reference to the pdev associated with the
-zdev being reported about is acquired using pci_get_slot(). This
-reference needs to be dropped with pci_dev_put(), but this call is
-missing, thus leaking the reference. On subsequent hot unplug, this will
-cause the struct pci_dev to not be released, leaking memory and
-preventing reattach.
-
-At the same time, the only existing caller already holds a pdev
-reference. So instead of reacquiring and then dropping another reference,
-simply pass the existing pdev pointer to zpci_report_status(). This gets
-rid of the need for pci_get_slot() as well as the zdev->zbus check.
+With commit 4ec6054e7321 ("s390/pci: Report PCI error recovery results
+via SCLP") SCLP reports are generated when recovery is performed in
+response to an error event. If such an error event arrives but no pdev
+is currently associated with the zdev, e.g. because it was removed or
+not yet probed, no report is generated. Fix this by generating a report
+specific to an error event for a zdev without an associated pdev.
 
 Cc: stable@vger.kernel.org
 Fixes: 4ec6054e7321 ("s390/pci: Report PCI error recovery results via SCLP")
@@ -76,76 +71,22 @@ Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_event.c  |    2 +-
- arch/s390/pci/pci_report.c |   11 +++++------
- arch/s390/pci/pci_report.h |    4 +++-
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ arch/s390/pci/pci_event.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/arch/s390/pci/pci_event.c
 +++ b/arch/s390/pci/pci_event.c
-@@ -257,7 +257,7 @@ static pci_ers_result_t zpci_event_attem
- 	pci_uevent_ers(pdev, PCI_ERS_RESULT_RECOVERED);
- out_unlock:
- 	device_unlock(&pdev->dev);
--	zpci_report_status(zdev, "recovery", status_str);
-+	zpci_report_status(zdev, pdev, "recovery", status_str);
+@@ -320,8 +320,10 @@ static void __zpci_event_error(struct zp
+ 	pr_err("%s: Event 0x%x reports an error for PCI function 0x%x\n",
+ 	       pdev ? pci_name(pdev) : "n/a", ccdf->pec, ccdf->fid);
  
- 	return ers_res;
- }
---- a/arch/s390/pci/pci_report.c
-+++ b/arch/s390/pci/pci_report.c
-@@ -89,7 +89,8 @@ static struct debug_view debug_log_view
+-	if (!pdev)
++	if (!pdev) {
++		zpci_report_status(zdev, NULL, "error event", "no pdev bound");
+ 		goto no_pdev;
++	}
  
- /**
-  * zpci_report_status - Report the status of operations on a PCI device
-- * @zdev:	The PCI device for which to report status
-+ * @zdev:	The zPCI device for which to report status
-+ * @pdev:	The PCI device associated with the zdev if any, NULL otherwise
-  * @operation:	A string representing the operation reported
-  * @status:	A string representing the status of the operation
-  *
-@@ -103,15 +104,15 @@ static struct debug_view debug_log_view
-  *
-  * Return: 0 on success an error code < 0 otherwise.
-  */
--int zpci_report_status(struct zpci_dev *zdev, const char *operation, const char *status)
-+int zpci_report_status(struct zpci_dev *zdev, struct pci_dev *pdev,
-+		       const char *operation, const char *status)
- {
- 	struct zpci_report_error *report;
- 	struct pci_driver *driver = NULL;
--	struct pci_dev *pdev = NULL;
- 	char *buf, *end;
- 	int ret;
- 
--	if (!zdev || !zdev->zbus)
-+	if (!zdev)
- 		return -ENODEV;
- 
- 	/* Protected virtualization hosts get nothing from us */
-@@ -121,8 +122,6 @@ int zpci_report_status(struct zpci_dev *
- 	report = (void *)get_zeroed_page(GFP_KERNEL);
- 	if (!report)
- 		return -ENOMEM;
--	if (zdev->zbus->bus)
--		pdev = pci_get_slot(zdev->zbus->bus, zdev->devfn);
- 	if (pdev)
- 		driver = to_pci_driver(pdev->dev.driver);
- 
---- a/arch/s390/pci/pci_report.h
-+++ b/arch/s390/pci/pci_report.h
-@@ -8,9 +8,11 @@
-  */
- #ifndef __S390_PCI_REPORT_H
- #define __S390_PCI_REPORT_H
-+#include <linux/pci.h>
- 
- struct zpci_dev;
- 
--int zpci_report_status(struct zpci_dev *zdev, const char *operation, const char *status);
-+int zpci_report_status(struct zpci_dev *zdev, struct pci_dev *pdev,
-+		       const char *operation, const char *status);
- 
- #endif /* __S390_PCI_REPORT_H */
+ 	switch (ccdf->pec) {
+ 	case 0x002a: /* Error event concerns FMB */
 
 
