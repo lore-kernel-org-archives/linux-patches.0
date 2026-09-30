@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B017A37A825;
-	Wed, 30 Sep 2026 17:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D61E51D520;
+	Wed, 30 Sep 2026 17:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791154; cv=none; b=NX3epHmGEt8MxrTYfmr1TX1lSmKZiLdBHWlBdRPuisqgeaMSp9NGzV2rA/Q9Hehrc2CcP3rit9gUe2CMb1vhZBy9OlMSpqJLBdled5/I35Ve1PusRt+zSuCw3OdfF4JqOufMEhyFGKqllZI8sn0I1ReWFMnqZz47qWIsCdWDmNM=
+	t=1790791157; cv=none; b=BAM/6SLoOQwEbYmIBmcyFLDh1E8aLOxsfU+3JoUtpEL2bT4IzQd6TEFfdHZzKLRf2D9QasXsvw5+GRPisEiunSv84a5qoE1F4F5FPCHLyyVs5qDVx43qlUexRyXD2UW1NCh0MFAziFFZHVIv3tQ2ritLDysUY2I031Gv6dKl2Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791154; c=relaxed/simple;
-	bh=uWs9/OdgaEECdxVVlT0uoAzzk6ajlDLEtSFIpX8LJ1w=;
+	s=arc-20240116; t=1790791157; c=relaxed/simple;
+	bh=lOQD4bqJy5BG9eJ9YYnSlzKRnof+2vxPbtEf69vXmz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3l9hcGMahDOLxIYEDUaKR1AJ+xIP3MGFXe1Ed6n23byOria9fXTFBbfbBHj9o+X1OxS/G9DhQocxoHoY2RT7BmBIFc17oG9MRjbDlvJLyg+danP6dAydFPEs7s7cGPirzgoRfMaTaEAgwSLC3Tv1g5KHDPV/vTGzbc8lyyOv4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNm4ibab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GsYom/it4CbxLw9bMWhCHNA0fIlk5lvjcIrMWO3jk4Z1JpUOFMyyDS3BeoDjoCNUqSRKp4OLidIqXSl8JSch6mHQ5BFuQ0vG+3Axk+ejMuCf/Pb7fC2QmjZ2EbrliByG6oqlorD5BqI5Wk9jQE4tGYE5e8I5gjbDIqxCsv+i1is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arpWRCWV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNm4ibab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139611F000FF;
-	Wed, 30 Sep 2026 17:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arpWRCWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5321F000FF;
+	Wed, 30 Sep 2026 17:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791153;
-	bh=3keyY2qccTF9pO4C9m8Pq0WpdxNsRNqn9NlVrZBiGOs=;
+	s=korg; t=1790791156;
+	bh=bJfaeuFJDJUHIwsjlhpUeueWZyRcZwfrnq+K9TGbQbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qNm4ibabWPzXNamfQ5/NwTrlXW2kFDJ8xLgJPeu7CZHYvCew+dRGM6izpByYFA36L
-	 jYba/iVgMIkx8EYyc+uW41+GLnBGLjow0zYVa4+LBzlMfg1fYv942tdUkWIxRhT76w
-	 cN8fvqGXzSqxWBRgpQH6eGLhwvWieF6fB9QZEkoc=
+	b=arpWRCWVg+SyLv/PqvU4+6SEnTHEoZvYASehzIFbc3124Pcpj+E6HsaDhLkFuLcPn
+	 +vtzGdQcg5ZM3GKthYNgZdB7Ih6aBuu7VxHnxjHsSVbpXm2N4m3rcxkh7A8fu7zJA3
+	 LCriUIuhya8rgK6AWHyqA1G4bnVZBketEDfvCbek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Dave Chen <davechen@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 176/752] net: au1000: move free_irq out of the close-time spinlocked section
-Date: Wed, 30 Sep 2026 17:20:46 +0200
-Message-ID: <20260930152402.012133136@linuxfoundation.org>
+Subject: [PATCH 5.15 203/752] btrfs: only account delalloc bytes for regular file inodes in btrfs_getattr()
+Date: Wed, 30 Sep 2026 17:21:13 +0200
+Message-ID: <20260930152402.617880718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,55 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Dave Chen <davechen@synology.com>
 
-[ Upstream commit f48763beab4eea41fc480c9702ec6eebe8d75e4f ]
+[ Upstream commit 9411aafdf352b8d72668732af5a37dcb27383e25 ]
 
-au1000_close() calls free_irq() while aup->lock is still held with
-spin_lock_irqsave(). free_irq() can sleep because it takes the IRQ
-descriptor request mutex, so it does not belong inside the close-time
-spinlocked section.
+btrfs_getattr() unconditionally reads BTRFS_I(inode)->new_delalloc_bytes
+and adds it (sector-aligned) to stat->blocks for every inode type.
+However, new_delalloc_bytes lives in a union with last_dir_index_offset:
 
-This was found by our static analysis tool and then confirmed by manual
-review of the in-tree au1000_close() .ndo_stop path. The reviewed path
-keeps aup->lock held across the MAC reset, queue stop and
-free_irq(dev->irq, dev).
+    union {
+        u64 new_delalloc_bytes;     /* files only */
+        u64 last_dir_index_offset;  /* directories only */
+    };
 
-A directed runtime validation kept that ndo_stop carrier and the same
-free_irq(dev->irq, dev) operation under the driver lock. Lockdep reported
-"BUG: sleeping function called from invalid context" and "Invalid wait
-context" while free_irq() was taking desc->request_mutex, with
-au1000_close() and free_irq() on the stack.
+For a directory inode this memory holds last_dir_index_offset, which is
+set during directory logging (e.g. flush_dir_items_batch()) to the
+offset of the last logged BTRFS_DIR_INDEX_KEY.  That offset grows with
+the number of entries ever created in the directory (dir indexes are
+monotonic and never reused), so it can be arbitrarily large.
 
-Drop aup->lock before freeing the IRQ. The protected close-time work still
-stops the device and queue before IRQ teardown, but the sleepable IRQ core
-path now runs outside the spinlocked section.
+As a result, after a directory has been logged (e.g. via an fsync that
+triggers directory logging), btrfs_getattr() reports inflated st_blocks
+for that directory.  The inflation is purely in-core and disappears
+after the inode is evicted and reloaded (btrfs_alloc_inode() zeroes the
+union), e.g. after a remount.
 
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reproducer (on a btrfs filesystem):
+
+    D=/mnt/btrfs/d
+    mkdir -p $D
+    for i in $(seq 1 20000); do touch $D/f$i; done
+    sync                      # commit, push dir index high
+    touch $D/trigger          # dirty the dir in a new transaction
+    xfs_io -c fsync $D        # log the directory -> sets last_dir_index_offset
+    stat -c '%b' $D           # st_blocks is now inflated (e.g. 40)
+    # umount + mount -> st_blocks drops back to the correct value
+
+The evict path already knows this union is type-dependent and guards the
+corresponding WARN_ON with !S_ISDIR() in btrfs_destroy_inode(); only
+btrfs_getattr() was missing the equivalent check.
+
+Only read new_delalloc_bytes for regular files, which are the only
+inodes that ever set it.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dave Chen <davechen@synology.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/au1000_eth.c | 3 ++-
+ fs/btrfs/inode.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/au1000_eth.c b/drivers/net/ethernet/amd/au1000_eth.c
-index 9c1636222b99c..3232e9d5f5c3b 100644
---- a/drivers/net/ethernet/amd/au1000_eth.c
-+++ b/drivers/net/ethernet/amd/au1000_eth.c
-@@ -943,9 +943,10 @@ static int au1000_close(struct net_device *dev)
- 	/* stop the device */
- 	netif_stop_queue(dev);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 1f8e8cd49c12a..6ea8ba9f7f423 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -9550,7 +9550,8 @@ static int btrfs_getattr(struct user_namespace *mnt_userns,
+ 	stat->dev = BTRFS_I(inode)->root->anon_dev;
  
-+	spin_unlock_irqrestore(&aup->lock, flags);
-+
- 	/* disable the interrupt */
- 	free_irq(dev->irq, dev);
--	spin_unlock_irqrestore(&aup->lock, flags);
- 
- 	return 0;
- }
+ 	spin_lock(&BTRFS_I(inode)->lock);
+-	delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
++	delalloc_bytes = S_ISREG(inode->i_mode) ?
++			 BTRFS_I(inode)->new_delalloc_bytes : 0;
+ 	inode_bytes = inode_get_bytes(inode);
+ 	spin_unlock(&BTRFS_I(inode)->lock);
+ 	stat->blocks = (ALIGN(inode_bytes, blocksize) +
 -- 
 2.53.0
 
