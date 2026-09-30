@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F2950B43C;
-	Wed, 30 Sep 2026 17:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370013AE1BD;
+	Wed, 30 Sep 2026 17:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790845; cv=none; b=i9mxl0L7kkUIt1IZniP15MCaAiIjodnev2+S5/ODPkZ82R/NkZaF+j5SXK2Fj4rDGp3jiQz8V7B2uPV5tj9BFoomI7AZJG8WMq4sTA8VB9ynLKxdmgu2zOBxQYg/2iUIbdz70Rads4z5OCuj6zC3N67yuBzu/VMmKDWn93wWOrM=
+	t=1790790848; cv=none; b=NgLuacg24599feHW8PmPNr4qnWBHfGNLigvEyJCfaf0/fGcYZhHrqTCt5gM5ixUyLS1U6yqGOFfC8BkDiWPqkRxp6ttIiFcGajjHPwk5+oFwZIdo+6g/RuFL4sevXoVCRVpmMtPtyW+vMUu7BoGXqgU4ttBAUhNIZyFkRUQ0i/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790845; c=relaxed/simple;
-	bh=uZ3VBo2aOFZ88UH0XmgW049B53EpQnmLapq6gCJQRsk=;
+	s=arc-20240116; t=1790790848; c=relaxed/simple;
+	bh=W3pm/78LsnNW2jdTnYT8kDvkwv4p83KSKpSA31Nb3d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaygHPi3ARGuwhQXCGR18urwSM82ibc0nVTWG8v/51JCa2C5trLOK8J+IZRAadl9cE5dFYMghYUBw3jfNhnA00ydnelACi4Ur4o/UmN9gEc7KW1IeYRE76yS+rWE6pMIdGFbVHfCXzkeJBu/5VnuO/8umF6HEUDKptzIvmSqvmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQABRURC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCisvsG/zk35j0SR69vq5mnDpN7Q1efD7Ki2UsqbzepbLGOlp5pKa7t5YJc73tD/S3PFeISoJhUfv5MLlhAsgn9Ruc5EyIfpcMZDBkwrtpBwdVdHlynvz6eNP2i+mMq//GrGaaqUcCLK/ashNt5185R0BfFe8w5Yh8ZCYX4C7zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MENcWRQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQABRURC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA4C1F000FF;
-	Wed, 30 Sep 2026 17:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MENcWRQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809141F000FF;
+	Wed, 30 Sep 2026 17:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790844;
-	bh=qSlrAYhFXwkHy9ctoe4tkHu5bnvtTVvfPlld34LoOrY=;
+	s=korg; t=1790790847;
+	bh=HP0HhlsN7z8i+eqnEreVpYIVmbn4Xf6uZcm/rZ8Bd/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQABRURC9n9Y6OqC/KigFX3Vtja20c4Iexhp2PMijH/cR6/ju2zVy6kA8B5NyetWd
-	 1ixAFdwUHOJTWWfZ/+YDWtBTOZflMat+5F8ARXSIFB8cW8fJGCP5e4iNeMg10mL+9r
-	 bttL2JqtRTE4NvriEkNU2G5G1q+MVw3/pPUk+dDI=
+	b=MENcWRQlBkirlIxTsJBKpSaJB3uOwanqzdm30xvDjeyUO9daSipHOve9/Uh/6D0vq
+	 aloCqMXvr2fIxz/9jNa3L9FuG9qzeDHeUH4XI187lxySe5Zr6jLax4oBmOPfnFlSKf
+	 O5Utqa25YtNRYYUeG3hfd8OSKloapylk9KvZ8TI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/752] ACPICA: Fix use-after-free in acpi_ds_terminate_control_method()
-Date: Wed, 30 Sep 2026 17:19:07 +0200
-Message-ID: <20260930152359.832169372@linuxfoundation.org>
+Subject: [PATCH 5.15 095/752] mmc: renesas_sdhi: Add OF entry for RZ/G2N SoC
+Date: Wed, 30 Sep 2026 17:19:25 +0200
+Message-ID: <20260930152400.224250538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,83 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 945e87267cfd90937b3c637f87324cbb56998b72 ]
+[ Upstream commit 5ce500d31a1625d8fe7ede950201b8df076bdd48 ]
 
-Fix use-after-free issue in acpi_ds_terminate_control_method() by
-clearing references to method locals and arguments.
+The RZ/G2N (R8A774B1) SoC was previously handled via the generic
+"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
+the SDHI IP on RZ/G2N is identical with the R-Car M3-N (R8A77965), it
+requires the specific quirks and configuration defined in
+`of_r8a77965_compatible` rather than the generic Gen3 data.
 
-Link: https://github.com/acpica/acpica/commit/36f22a94cb1b
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/8730924.NyiUUSuA9g@rafael.j.wysocki
+Add the explicit "renesas,sdhi-r8a774b1" match entry to map it correctly.
+Note that the DT binding file renesas,sdhi.yaml does not need an update
+as the entry for this SoC is already present.
+
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 43 ++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/mmc/host/renesas_sdhi_internal_dmac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index f97286c6cb176..7986c74a55376 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -698,6 +698,8 @@ void
- acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
- 				 struct acpi_walk_state *walk_state)
- {
-+	u32 i;
-+	struct acpi_namespace_node *ref_node;
- 
- 	ACPI_FUNCTION_TRACE_PTR(ds_terminate_control_method, walk_state);
- 
-@@ -708,6 +710,47 @@ acpi_ds_terminate_control_method(union acpi_operand_object *method_desc,
- 	}
- 
- 	if (walk_state) {
-+		/*
-+		 * Check if the return value is a ref_of reference to a method local
-+		 * or argument. If so, clear the reference to avoid use-after-free
-+		 * when the walk state is deleted.
-+		 */
-+		if (walk_state->return_desc &&
-+		    (walk_state->return_desc->common.type ==
-+		     ACPI_TYPE_LOCAL_REFERENCE)
-+		    && (walk_state->return_desc->reference.class ==
-+			ACPI_REFCLASS_REFOF)) {
-+			ref_node = walk_state->return_desc->reference.object;
-+			if (ref_node) {
-+
-+				/* Check against method locals */
-+				for (i = 0; i < ACPI_METHOD_NUM_LOCALS; i++) {
-+					if (ref_node ==
-+					    &walk_state->local_variables[i]) {
-+						acpi_ut_remove_reference
-+						    (walk_state->return_desc);
-+						walk_state->return_desc = NULL;
-+						break;
-+					}
-+				}
-+
-+				/* Check against method arguments if not already cleared */
-+				if (walk_state->return_desc) {
-+					for (i = 0; i < ACPI_METHOD_NUM_ARGS;
-+					     i++) {
-+						if (ref_node ==
-+						    &walk_state->arguments[i]) {
-+							acpi_ut_remove_reference
-+							    (walk_state->
-+							     return_desc);
-+							walk_state->
-+							    return_desc = NULL;
-+							break;
-+						}
-+					}
-+				}
-+			}
-+		}
- 
- 		/* Delete all arguments and locals */
- 
+diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+index 6bd8478f412e2..f7acd22ec0479 100644
+--- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
++++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+@@ -231,6 +231,7 @@ static const struct renesas_sdhi_of_data_with_quirks of_rcar_gen3_compatible = {
+ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
+ 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
+ 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
++	{ .compatible = "renesas,sdhi-r8a774b1", .data = &of_r8a77965_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7796", .data = &of_rcar_gen3_compatible, },
 -- 
 2.53.0
 
