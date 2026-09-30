@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9252D51D521;
-	Wed, 30 Sep 2026 18:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A4A4ABBA5;
+	Wed, 30 Sep 2026 18:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792645; cv=none; b=O8FQ4ZVKxuU1v9JgXQjOVbmU+y4+jWmuW+qFUFl5+lerl6hCqB/YJe6bGICHY1jZF8nfMcVbSVavFYc5L9JiWFBZmQq+J8F4yarjCvZBBDgBMqkAVwaHv6zi0UIEDNhmS/jq2rOAXX63jZJ1Yi96sr118HSV3rNT67My3ZL1G0o=
+	t=1790792648; cv=none; b=GF11Lq3pLtkuzaRpPvF3KcBHuleMupQd/vP6EJP/mwLqsq6n/oA/4lMXuTPmWbOnWDS6IPQhxO1v1vpqqavTo2u+iIPjb1k8Ff3inihXE0YPyxr4eR6Q3tBKmGBMH4J9Pqv/slyZOWqKj8VlwMjUPSSc/vpbcQbX1Crg0sdh2+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792645; c=relaxed/simple;
-	bh=6qiSUM+eDaPFkw5Mfp2wHMW8UzUsmP7CLRJ6fiPOrS4=;
+	s=arc-20240116; t=1790792648; c=relaxed/simple;
+	bh=8Joa8uNYP55aFKujixPYUMRi8ml7SR9PhSJokZLavn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSNBqu7AoJ5SubnTDYTCzi9dwH3jiYV2ETBGZnYmYxlZDZpFTkmNXAbeYuFBpKdvH48AqIuO13+7JU4JIL+ZIZmoywRFBDDUrtn4Fx+d9sR5g4eHJMUDNv84wmfW70KP/lZQxncVajDPAG7cLK1plV9yfdCmtc8Svg1A1KBvFgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izVDltW0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZMgIpUcSw+TUAA5MUJHQk/3QsQHpccmEVYRUg0Kluw770O/isMIq5NFOH3mQGoIU2g9FdjVWrBUyfRNsXi89uVfJ4AjpTPa2N2ojTGv9qvb3iUdX2BAkHQogM6S6D97dwPkb0HoFlhOMaC9cPLLBctWcalikkhcnwDeFtUiBdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzPTnaeG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izVDltW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40B01F000FF;
-	Wed, 30 Sep 2026 18:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzPTnaeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C481F00899;
+	Wed, 30 Sep 2026 18:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792644;
-	bh=Bs3+1nO93OgiwuGg/d5PVnZJNZca1KOFCYEeMqgGNpk=;
+	s=korg; t=1790792647;
+	bh=l7vStYZ5V9GktHdVN/sP/AoNKaZeEQYAnE3rScrfcuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=izVDltW0gMmdri2SF1FWj2Viqq+TFLMInYumQ/8xCr5FMqige8UM/h9DVdzeEzEo9
-	 WQGI4d04dIyOJ/he/dd3UXqR40Y+vO3nHS7uk8eJUVRNDb/1psDnWrhIDxficBiPhK
-	 c39pGqdYWe78cP8XQ3lYdomLEo88HpyY6KKD3evY=
+	b=nzPTnaeGlabNiAupLvrCRiTwdhsAdLuqk65YEPwASjI3uuHI/7jnXs1F8qHYc4fd+
+	 4nASrq+6XgLSH/bCXtkXL2r8RDcdBR4zc8nHuCWFTnrMW/JvcCwO0lyq4+RgzO9sBa
+	 KD6bMOw3TSU2fVgHo7J5pxwIf8Vkj8ymuC2S7oWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
 	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 5.15 728/752] nfc: llcp: drop truncated I/RR/RNR PDUs in nfc_llcp_recv_hdlc()
-Date: Wed, 30 Sep 2026 17:29:58 +0200
-Message-ID: <20260930152413.970382126@linuxfoundation.org>
+Subject: [PATCH 5.15 729/752] nfc: port100: reject frames whose declared length exceeds the received data
+Date: Wed, 30 Sep 2026 17:29:59 +0200
+Message-ID: <20260930152413.991724722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,49 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 273f9d667cde649f8de9d72b1303cc2f4b658c50 upstream.
+commit 092c6a605cbd6414ef499834c2e0da69c2c3388e upstream.
 
-nfc_llcp_recv_hdlc() reads the sequence byte skb->data[2], via
-nfc_llcp_ns()/nfc_llcp_nr(), before any length check. The receive path
-only guarantees the two-byte LLCP header -- __nfc_llcp_recv() checks it
-with pskb_may_pull() and nfc_llcp_recv_agf() admits two-byte inner PDUs
--- so a two-byte I, RR or RNR PDU reads one byte of uninitialised skb
-tailroom. The byte becomes N(R)/N(S); a peer can already set those with
-a well-formed PDU, so this is acting on uninitialised memory, not new
-peer control.
+port100_recv_response() passes the URB transfer buffer to
+port100_rx_frame_is_valid(), which checksums le16_to_cpu(frame->datalen)
+bytes of frame->data. datalen is a 16-bit field supplied by the device
+and is never checked against the number of bytes actually received
+(urb->actual_length), so a device reporting a datalen larger than the
+received frame makes port100_data_checksum() read out of bounds past the
+transfer buffer.
 
-Guard the read with pskb_may_pull(), as commit 95674f506c63 ("nfc: llcp:
-reject PDUs shorter than the LLCP header") did for the two-byte header,
-so the sequence byte is present and linear before it is read. RR and RNR
-PDUs are LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE bytes and an I PDU is
-longer, so no valid frame is rejected; a truncated PDU is malformed, so
-return without a DM reply.
+Reject a response whose declared frame size does not fit the received
+length before validating it.
 
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing bound is evident from source. Compile-tested.
+
+Fixes: 562d4d59b8a1 ("NFC: Sony Port-100 Series driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/AS8P251MB0001789BBF04B72745C7D96BC8BA2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
+Link: https://patch.msgid.link/20260711123651.32595-1-doruk@0sec.ai
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nfc/port100.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1108,6 +1108,9 @@ static void nfc_llcp_recv_hdlc(struct nf
- 	struct sock *sk;
- 	u8 dsap, ssap, ptype, ns, nr;
+--- a/drivers/nfc/port100.c
++++ b/drivers/nfc/port100.c
+@@ -636,6 +636,13 @@ static void port100_recv_response(struct
  
-+	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE))
-+		return;
+ 	in_frame = dev->in_urb->transfer_buffer;
+ 
++	if (urb->actual_length < PORT100_FRAME_HEADER_LEN ||
++	    urb->actual_length < port100_rx_frame_size(in_frame)) {
++		nfc_err(&dev->interface->dev, "Received a truncated frame\n");
++		cmd->status = -EIO;
++		goto sched_wq;
++	}
 +
- 	ptype = nfc_llcp_ptype(skb);
- 	dsap = nfc_llcp_dsap(skb);
- 	ssap = nfc_llcp_ssap(skb);
+ 	if (!port100_rx_frame_is_valid(in_frame)) {
+ 		nfc_err(&dev->interface->dev, "Received an invalid frame\n");
+ 		cmd->status = -EIO;
 
 
