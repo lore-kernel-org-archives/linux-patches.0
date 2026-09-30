@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7176515961;
-	Wed, 30 Sep 2026 17:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B8B4BFE95;
+	Wed, 30 Sep 2026 17:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788242; cv=none; b=GBIkTqxK2OG57iKmMc7otGEP0ykRgoEgSifd1xqrvy9D+SQ1QdODydyLMgfd8ia/jsrGoQEi/fpFoMUJlN5eqdrLZlLNg81Hipy37Maw8Um30KPanusPhfc6TbyWrlOPKCE9W6weBcxVJ/YfUSU/wkl4aqTeQFpjlmDC5+BKwXs=
+	t=1790788245; cv=none; b=jZkiivaz6TibRilqbg3X+fHw/dgENskh2Gs+mblo4zsUZBv5seIO3MeuTuvXdgA1+Y2C2/1UuOGWKLC2pmODI+n+J+IBYob4wGxagFzQ0iw24LiGvbz8hrjtqLCjIHipvX5CLlMyKet2NACDLwYA6XzhTw77oQK13PM7QRbLcMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788242; c=relaxed/simple;
-	bh=AVha5KeQFpOi3wZ0PM5YCvSWDcSpxv5BgvL4zCoJcRw=;
+	s=arc-20240116; t=1790788245; c=relaxed/simple;
+	bh=IP2cxIbOr4zPuzIUUJ+WR8fMAYnI5z82d7UXvoIAfrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rlt14duU3eU8UI20/er8GvolyzKSb85xbG0Ql/bPNfMRUykxgmZzP4YJQEqmNC0aCfD3iAllMUVkgP2tBwuQdBcg9LJ9cNnRHBjFOijM27bCCywIkye2c5Reus7I2fgapowLMP4Sqh5PoxmkzMkedfgJe6VEwmpEUXI1T95Mfes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7ASiEp6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hEOp+mF1EUPyf58z9q0CxMRd8tSJ7x+IBRGe6EJJ/KsodcLR35yhL8pjowQ5+ktJUDIdeAquQ3kydnquRUk8XaaESoZ44rnBprTy6fO5ipBX7y5Jbb2/O/66c3VYcZUEmHJxxcyPpnBRtZljAW3rJini24RIO09QDHEnxc2UK9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoH/6Pgz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7ASiEp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB521F000FF;
-	Wed, 30 Sep 2026 17:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoH/6Pgz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067131F000FF;
+	Wed, 30 Sep 2026 17:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788240;
-	bh=JR7F8V6Vqo0ECMMTQhF1yiaBsDcV5m2Og+/8tQMO1Ao=;
+	s=korg; t=1790788243;
+	bh=uPYpWLYoTBGrd43hGPTUK0a3hleHHshCOlNfwlc9Jps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q7ASiEp6567WUw8i/zclM+IENvvWRbTptNMVS5vTzyblS17Z+yukezVtkfwkLSAwO
-	 2V0fwrcth0m3oAwYo8lgB9UUuf8bL35/eisBgaqW4KLbEMtVyKu7sY4xtyxomX8m9D
-	 oDBl98xdAz5wh7eHnKvlkD+KT4ba2UAv8olIk7x0=
+	b=PoH/6Pgz02/1f7qLlAEhFKg4lHgmUDcUcG58m6JFyog3GWfBx1jmrbOfCLhTy8TUK
+	 o4MWpgx2YLqq4ayFyCEV20H+4m1DIj+kiEW2Uh8DKM6Ha++FVYPZ8aKvj8GwaWihUS
+	 FJAnSyLTTy/SF3JmrnyP5vjUCzchZ1yOUhEO+1AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Shivank Garg <shivankg@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/877] ipv6: mcast: use copy-on-write RCU updates in ip6_mc_source()
-Date: Wed, 30 Sep 2026 17:15:29 +0200
-Message-ID: <20260930152415.138927191@linuxfoundation.org>
+Subject: [PATCH 6.12 054/877] dmaengine: wait for RCU readers before releasing dma_device
+Date: Wed, 30 Sep 2026 17:16:05 +0200
+Message-ID: <20260930152415.912840462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,202 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shivank Garg <shivankg@amd.com>
 
-[ Upstream commit c073d1b070f171d206b19c98d71739a97f15b3f1 ]
+[ Upstream commit dc750422170a563c7a81f6e49d36bb02c62ae37f ]
 
-pmc->sflist is read locklessly under rcu_read_lock() by
-inet6_mc_check() during packet reception in the UDP and RAW
-multicast receive paths.
+dma_issue_pending_all() walks the dma_device_list with
+list_for_each_entry_rcu() under rcu_read_lock(). dma_device_release()
+unlinks the device with list_del_rcu() and then calls
+device->device_release() (which in many drivers, such as plx_dma.c,
+directly calls kfree()).
 
-ip6_mc_source() mutated psl->sl_addr and psl->sl_count in-place
-when adding or removing a source filter. Additionally, when expanding
-the filter buffer, newpsl was published via rcu_assign_pointer()
-before writing the new source into the array.
+Because there is no grace period between unlinking the device and
+freeing it, concurrent RCU readers in dma_issue_pending_all() can
+access the device after it has been freed.
 
-Because 16-byte struct in6_addr writes are not atomic and array
-shifting is not synchronized with RCU readers, concurrent readers in
-inet6_mc_check() could read torn IPv6 addresses or observe
-duplicated/missed source entries.
+The lockless walk originally relied on clients holding a dmaengine
+reference to pin the provider module, and therefore the device, for as
+long as they might traverse the list. Commit 8ad342a86359 ("dmaengine:
+Add reference counting to dma_device struct") decoupled the dma_device
+lifetime from the module reference, so the device can now be released
+while a reader is still walking the list.
 
-Fix this by switching ip6_mc_source() to copy-on-write RCU updates:
-allocate and fully populate newpsl before publishing it via
-rcu_assign_pointer(), and reclaim the old filter via kfree_rcu(),
-matching ip6_mc_msfilter().
+Add synchronize_rcu() before the device is freed, so RCU readers are
+guaranteed to have finished. Keep it unconditional: providers that do
+not implement device_release() free the device themselves once
+dma_async_device_unregister() returns. This call will delay for a grace
+period with dma_list_mutex held, which is safe and only teardown path is
+delayed.
 
-Also remove the now unused IP6_SFBLOCK macro.
-
-Fixes: 882ba1f73c06 ("mld: convert ipv6_mc_socklist->sflist to RCU")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260828084531.1826790-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2ba05622b8b1 ("dmaengine: provide a common 'issue_pending_all' implementation")
+Suggested-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260526-dmaengine-kref-fix-v2-0-3df60afac01d@amd.com
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Shivank Garg <shivankg@amd.com>
+Link: https://patch.msgid.link/20260822-dmaengine-kref-fix-v5-4-d4a4ee47d927@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/if_inet6.h |  2 -
- net/ipv6/mcast.c       | 98 ++++++++++++++++++++++++------------------
- 2 files changed, 56 insertions(+), 44 deletions(-)
+ drivers/dma/dmaengine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/if_inet6.h b/include/net/if_inet6.h
-index 238ad3349456a..795fb41b45f5d 100644
---- a/include/net/if_inet6.h
-+++ b/include/net/if_inet6.h
-@@ -88,8 +88,6 @@ struct ip6_sf_socklist {
- 	struct in6_addr		sl_addr[] __counted_by(sl_max);
- };
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index d6a4e914018da..9a591bc15a36b 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -426,6 +426,7 @@ static void dma_device_release(struct kref *ref)
  
--#define IP6_SFBLOCK	10	/* allocate this many at once */
--
- struct ipv6_mc_socklist {
- 	struct in6_addr		addr;
- 	int			ifindex;
-diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 02919944d5570..d0eefadea5c33 100644
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -380,12 +380,12 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- {
- 	struct ipv6_pinfo *inet6 = inet6_sk(sk);
- 	struct in6_addr *source, *group;
-+	struct ip6_sf_socklist *newpsl, *psl;
- 	struct net *net = sock_net(sk);
- 	struct ipv6_mc_socklist *pmc;
--	struct ip6_sf_socklist *psl;
- 	struct inet6_dev *idev;
- 	int leavegroup = 0;
--	int i, j, rv;
-+	int i, j;
- 	int err;
+ 	list_del_rcu(&device->global_node);
+ 	dma_channel_rebalance();
++	synchronize_rcu();
  
- 	source = &((struct sockaddr_in6 *)&pgsr->gsr_source)->sin6_addr;
-@@ -434,13 +434,11 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 	if (!add) {
- 		if (!psl)
- 			goto done;	/* err = -EADDRNOTAVAIL */
--		rv = !0;
- 		for (i = 0; i < psl->sl_count; i++) {
--			rv = !ipv6_addr_equal(&psl->sl_addr[i], source);
--			if (rv == 0)
-+			if (ipv6_addr_equal(&psl->sl_addr[i], source))
- 				break;
- 		}
--		if (rv)		/* source not found */
-+		if (i == psl->sl_count)		/* source not found */
- 			goto done;	/* err = -EADDRNOTAVAIL */
- 
- 		/* special case - (INCLUDE, empty) == LEAVE_GROUP */
-@@ -449,58 +447,74 @@ int ip6_mc_source(int add, int omode, struct sock *sk,
- 			goto done;
- 		}
- 
-+		atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
-+			   &sk->sk_omem_alloc);
-+
-+		if (psl->sl_count == 1) {
-+			newpsl = NULL;
-+		} else {
-+			newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr,
-+							      psl->sl_count - 1),
-+					      GFP_KERNEL);
-+			if (!newpsl) {
-+				atomic_add(struct_size(psl, sl_addr, psl->sl_max),
-+					   &sk->sk_omem_alloc);
-+				err = -ENOBUFS;
-+				goto done;
-+			}
-+			newpsl->sl_max = psl->sl_count - 1;
-+			newpsl->sl_count = psl->sl_count - 1;
-+			for (j = 0; j < i; j++)
-+				newpsl->sl_addr[j] = psl->sl_addr[j];
-+			for (j = i + 1; j < psl->sl_count; j++)
-+				newpsl->sl_addr[j - 1] = psl->sl_addr[j];
-+		}
-+
- 		/* update the interface filter */
- 		ip6_mc_del_src(idev, group, omode, 1, source, 1);
- 
--		for (j = i+1; j < psl->sl_count; j++)
--			psl->sl_addr[j-1] = psl->sl_addr[j];
--		psl->sl_count--;
-+		rcu_assign_pointer(pmc->sflist, newpsl);
-+		kfree_rcu(psl, rcu);
- 		err = 0;
- 		goto done;
- 	}
- 	/* else, add a new source to the filter */
- 
--	if (psl && psl->sl_count >= sysctl_mld_max_msf) {
-+	if (psl && psl->sl_count >= READ_ONCE(sysctl_mld_max_msf)) {
- 		err = -ENOBUFS;
- 		goto done;
- 	}
--	if (!psl || psl->sl_count == psl->sl_max) {
--		struct ip6_sf_socklist *newpsl;
--		int count = IP6_SFBLOCK;
--
--		if (psl)
--			count += psl->sl_max;
--		newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr, count),
--				      GFP_KERNEL);
--		if (!newpsl) {
--			err = -ENOBUFS;
--			goto done;
--		}
--		newpsl->sl_max = count;
--		newpsl->sl_count = count - IP6_SFBLOCK;
--		if (psl) {
--			for (i = 0; i < psl->sl_count; i++)
--				newpsl->sl_addr[i] = psl->sl_addr[i];
--			atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
--				   &sk->sk_omem_alloc);
-+	if (psl) {
-+		for (i = 0; i < psl->sl_count; i++) {
-+			if (ipv6_addr_equal(&psl->sl_addr[i], source))
-+				goto done; /* err = -EADDRNOTAVAIL */
- 		}
--		rcu_assign_pointer(pmc->sflist, newpsl);
--		kfree_rcu(psl, rcu);
--		psl = newpsl;
- 	}
--	rv = 1;	/* > 0 for insert logic below if sl_count is 0 */
--	for (i = 0; i < psl->sl_count; i++) {
--		rv = !ipv6_addr_equal(&psl->sl_addr[i], source);
--		if (rv == 0) /* There is an error in the address. */
--			goto done;
-+
-+	i = psl ? psl->sl_count + 1 : 1;
-+	newpsl = sock_kmalloc(sk, struct_size(newpsl, sl_addr, i),
-+			      GFP_KERNEL);
-+	if (!newpsl) {
-+		err = -ENOBUFS;
-+		goto done;
- 	}
--	for (j = psl->sl_count-1; j >= i; j--)
--		psl->sl_addr[j+1] = psl->sl_addr[j];
--	psl->sl_addr[i] = *source;
--	psl->sl_count++;
--	err = 0;
-+	newpsl->sl_max = i;
-+	newpsl->sl_count = i;
-+	if (psl) {
-+		for (j = 0; j < psl->sl_count; j++)
-+			newpsl->sl_addr[j] = psl->sl_addr[j];
-+	}
-+	newpsl->sl_addr[i - 1] = *source;
-+
- 	/* update the interface list */
- 	ip6_mc_add_src(idev, group, omode, 1, source, 1);
-+
-+	if (psl)
-+		atomic_sub(struct_size(psl, sl_addr, psl->sl_max),
-+			   &sk->sk_omem_alloc);
-+	rcu_assign_pointer(pmc->sflist, newpsl);
-+	kfree_rcu(psl, rcu);
-+	err = 0;
- done:
- 	mutex_unlock(&idev->mc_lock);
- 	in6_dev_put(idev);
+ 	if (device->device_release)
+ 		device->device_release(device);
 -- 
 2.53.0
 
