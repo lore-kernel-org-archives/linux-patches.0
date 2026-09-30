@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CC251DAFE;
-	Wed, 30 Sep 2026 18:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD2151CF41;
+	Wed, 30 Sep 2026 18:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792651; cv=none; b=IRd/h+QBLPXsVEL5f1pPVG3/nh3IBETxT9pNq3AGqLiFC+CP3jvou4ggD2UhpWH+mo15uCmiNSY0o5FuSVzFRwzxEqDZID/lsQ2p4uK3WMzgufbs3MCETQd9QCsoSj0hIQKNLbWW498HS7qTXdh00N5sDiLAEgcgjbkoDCDU1Dg=
+	t=1790792654; cv=none; b=rp8lknTxJMVJ3O65VNBgMAmKY1/Sfc+oJj2e+9jOrFRp+1CwJ3wFz+jqeE99D2HAsvGxMFs5lyJwmRdRELdajSxCVPREh1ud3q+TebKurnlC0rCUrrBw/oa8hllf0Zp3bKm2Kt85TuhJzRTzubTsFo52yYHzpTTZvz29BB6xm/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792651; c=relaxed/simple;
-	bh=WVFjh7OfgXSbolrxcqmmUpVbkbLI0Tk+mckhBKYj9Q0=;
+	s=arc-20240116; t=1790792654; c=relaxed/simple;
+	bh=cSuWolIEY266re1+AQUOn2Fgv8pdxQn/jMqgILoTIos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrJfHCBjXInbnBsV3agA0B1zJOztAnDjxt6i8hPv6+VDHn2vYwNhx8rrUtpZJZN2zAhy6PtV8JCGPrEVZVgPPvlrDQXJYiNrbrYjdrzlC0VuueCfYvjMHy0Dl/OfRFWGVyC/lnYjlp+ZqbdH6+OQaxfxYRbnDEAG3iR6ISzany8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cfo1zx/u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SqKjc/+qbCKLl18yh2sCwUleBQOrn045bFD1522OfuuOm/otyRvJgVgdUzkwuFwfxWhy2RhOlavR18EB4mkExZDHdc3+Gq9/Lg3vcu7/j34hoWoT0X0g70tF4Y5Mwj9baaG3FNWi2iStwMteRPj5mgvT9ES2uzCyKmbXhH//K3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8RxxFG1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cfo1zx/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1031F00899;
-	Wed, 30 Sep 2026 18:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8RxxFG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7587A1F000FF;
+	Wed, 30 Sep 2026 18:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792650;
-	bh=pko7/HF/bOfSwCaYJj0OjadibP4SV342j7N7RkzDX7g=;
+	s=korg; t=1790792653;
+	bh=MgWPQ1xgZmJhpzIn12CJNP/XtA+MD+QgEjszg2X48Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cfo1zx/uUAp9REweemGvNKaHwB0REcRsAi83yOrjVMkEuKCjnKgZJMkInPoFOjzVt
-	 gyHR6o5J1iNqRlWuP/2G8zIRmeN9EbmMXWWKLIuOqeYXVEIrHR0giX/ARwmVW8VHBF
-	 AQCkMtmBl3DFJbZ6eQ0Eb1i46qCKy0XpC7z9iYyA=
+	b=s8RxxFG1UJEh9rnEsX4LRxNEAInmXXizbVekgo7Yc4Y84hMziXZhImHjiWnrM/lpE
+	 Rm4+nXm3s9rR7dmv27/46vmmu8ofzQ9XCptslh2Vp9rked/2G3GdYu6BgBh+CYFTvA
+	 Cfh5KYXYZjMOLCk2z9URSB6z7+1eLIppUYVwqPh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.15 730/752] scsi: libiscsi_tcp: Check the data direction of a Data-In PDU
-Date: Wed, 30 Sep 2026 17:30:00 +0200
-Message-ID: <20260930152414.013210833@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 5.15 704/752] gpio: arizona: Fix runtime PM leak in arizona_gpio_direction_out()
+Date: Wed, 30 Sep 2026 17:29:34 +0200
+Message-ID: <20260930152413.466651826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit bce07e2f37b5e4a427d36fd6b1c14067b27591db upstream.
+commit e9d810279f84b30738f7790c0ed15f8dd5b9024a upstream.
 
-The Data-In branch of iscsi_tcp_hdr_dissect() resolves the ITT to a task
-and copies the PDU's data segment into that command's scatterlist without
-asking whether the command was reading. iscsi_tcp_r2t_rsp() in the same
-file does ask, and rejects an R2T for a command that is not DMA_TO_DEVICE.
+Switching a persistent GPIO line from input to output acquires a
+runtime PM reference on the parent device, but if the subsequent
+regmap_update_bits() fails the reference is never dropped and no later
+direction_in() can balance it since the direction was never changed.
+Drop the reference on the update failure path.
 
-A target that answers a WRITE command's ITT with a Data-In therefore has
-the initiator write target-supplied bytes into the pages that write was
-about to send. Those are the caller's own pinned pages for an O_DIRECT
-write, and page cache pages for a buffered one.
-
-Observed against a test target that emits one 512-byte Data-In naming a 128
-KB write's ITT, after the R2T for that write. With O_DIRECT the caller's
-buffer ends up holding 512 bytes of the target's data while pwrite()
-returns 131072. Buffered is quieter: pwrite() and fsync() both succeed,
-nothing is logged, and reading those blocks back returns the target's bytes
-out of the page cache without a command going on the wire.
-
-Check the direction before using the scatterlist, the way the R2T path
-already does.
-
+Fixes: 27a49ed17e22 ("gpio: arizona: Add support for GPIOs that need to be maintained")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260801133635.1986706-1-yhlee@isslab.korea.ac.kr
-Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260916094701.2007509-1-vulab@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libiscsi_tcp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpio-arizona.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/libiscsi_tcp.c
-+++ b/drivers/scsi/libiscsi_tcp.c
-@@ -491,6 +491,9 @@ static int iscsi_tcp_data_in(struct iscs
- 	int datasn = be32_to_cpu(rhdr->datasn);
- 	unsigned total_in_length = task->sc->sdb.length;
+--- a/drivers/gpio/gpio-arizona.c
++++ b/drivers/gpio/gpio-arizona.c
+@@ -118,8 +118,12 @@ static int arizona_gpio_direction_out(st
+ 	if (value)
+ 		value = ARIZONA_GPN_LVL;
  
-+	if (task->sc->sc_data_direction != DMA_FROM_DEVICE)
-+		return ISCSI_ERR_PROTO;
+-	return regmap_update_bits(arizona->regmap, ARIZONA_GPIO1_CTRL + offset,
+-				  ARIZONA_GPN_DIR | ARIZONA_GPN_LVL, value);
++	ret = regmap_update_bits(arizona->regmap, ARIZONA_GPIO1_CTRL + offset,
++				 ARIZONA_GPN_DIR | ARIZONA_GPN_LVL, value);
++	if (ret < 0 && (val & ARIZONA_GPN_DIR) && persistent)
++		pm_runtime_put_autosuspend(chip->parent);
 +
- 	/*
- 	 * lib iscsi will update this in the completion handling if there
- 	 * is status.
++	return ret;
+ }
+ 
+ static void arizona_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
 
 
