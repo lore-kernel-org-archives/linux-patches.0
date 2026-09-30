@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4277C3CAE8F;
-	Wed, 30 Sep 2026 18:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FF151DB19;
+	Wed, 30 Sep 2026 18:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794073; cv=none; b=WHSwWv4usGAd7aeEv6sLm8tj2RypN4aIiGPph8YSKkx50OeBeVTaKBf+gyB7bASfrY97V6+fquvvYDaBfpr1HIxuHqU9bDSfSYoWG82qdk70Efz5sUvbNCwxUt4EXm/HAwbcjTQMEiI5ZyvGw4m3oueJtDBHTnU0YEV++n+9kVI=
+	t=1790794076; cv=none; b=XfEX4OnP748h5gI/gMOLGAMBLp9/59SS1f/DlshnYJDxr/PbD2xwHDaXzPXtFPJ4Qgi+WA2CdIaNm4Nwnxr/Kclc75KZ4I3Rn/0A4xLcynl9rujRcz5rHwdysHaYvsPEYAUs2fJo6Xph82v9pRVuzBKEg8gK1h/ZKjORhbc5/EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794073; c=relaxed/simple;
-	bh=BWJuIexAtT3CJF5T6EanNJNWRtZtK/4NqBl264HLXRU=;
+	s=arc-20240116; t=1790794076; c=relaxed/simple;
+	bh=xNsSysLrnH5g2N/8vOH5LAe5ubj821gcKLMepwmwYBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enuTx8SYOUqgZTgoMuipW9HxQgo21wPR6wfhHfVnT9a9re3V2KcTZqs8b4gcUNI9CxyMmi3g7c3fYZ57OLn1oe6CcUXTLNSNu7tY4V6LCpHH/SNL/fCBCikmznMg6Wue4Q5b7WdsmgNH/a3B8mz/CwOxEDWO3TTrNTr5Gtzb+9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+DQC+qn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nXGdYF8p1S2hayFNzDDsYQ9UdzMWPtXAaRssKwMY2k86vq8NeI9Wx8G4t71B2AonTqBsSQ7ypeyHJKCBpJk0rJWdbfJGw2b6UmKDHDIcVuBLjC1thrsYoSrWOOW0w4S7w6brWLt2fy8i01qpIUq8Epo7KbuLkvIAXjLFmHlo2jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLZQKY2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+DQC+qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA251F000FF;
-	Wed, 30 Sep 2026 18:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLZQKY2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4790F1F000FF;
+	Wed, 30 Sep 2026 18:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794072;
-	bh=YT5jPes/MXz4gfpumBUoMSsdB1OFfZ/I/DMCL2dVuh4=;
+	s=korg; t=1790794074;
+	bh=UDOyFy6YInScH7/f50RGPwpdg0VlC3lh+JuBprNKGlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+DQC+qn+mPDDcJCIzAGOOHkpKrLJ/ggpeVhtFLFRkmGN+QiJK5fzrEoHXxij7+an
-	 D717yJFivWugG8as8B9WwmUr8OYyRdYg2VgsfGKlsWvRyxrKh+mEP+BySEaWBf2Gyq
-	 LALks2zc8rWbMpN4cr3EVLCN3IJ4rPba3dukZRSA=
+	b=vLZQKY2SSN2S0jecKqvkamQGW0I6i3cRxiK6QV0YoQisWRzBE/ge4X5gGwnRhkMMM
+	 CXLAjqB6HcNPSzwHaSphX4cegj/9oWrNGMb+RJzoJPFIjMHnbebXkBQ3pb+LEg+kdR
+	 FPO1HlHQkhDslGW0eNhwK9ZO2Ju1LKFCxj5D+Q+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0082/1193] befs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:12:46 +0200
-Message-ID: <20260930152436.073163043@linuxfoundation.org>
+Subject: [PATCH 6.6 0056/1193] crypto: atmel-ecc - add support for atecc608b
+Date: Wed, 30 Sep 2026 17:12:20 +0200
+Message-ID: <20260930152435.524929304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,39 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 7597d42a25332617a3dfe596758d780ec6c028d7 ]
+[ Upstream commit b668edaf8dcc8d09f6f1e71797422b44d4bd22a3 ]
 
-befs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+Tested on hardware with an ATECC608B at 0x60. The device binds
+successfully, passes the driver's sanity check, and registers the
+ecdh-nist-p256 KPP algorithm.
 
-        BUG_ON(offset >= folio_size(folio));
+The hardware ECDH path was also exercised using a minimal KPP test
+module, covering private key generation, public key derivation, and
+shared secret computation.
 
-in folio_set_bh on the first __bread_gfp call.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-6-hch@lst.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/befs/linuxvfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/atmel-ecc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/befs/linuxvfs.c b/fs/befs/linuxvfs.c
-index 9a16a51fbb88d..ec0d42b32094e 100644
---- a/fs/befs/linuxvfs.c
-+++ b/fs/befs/linuxvfs.c
-@@ -890,7 +890,8 @@ befs_fill_super(struct super_block *sb, void *data, int silent)
- 	 */
- 	sb->s_magic = BEFS_SUPER_MAGIC;
- 	/* Set real blocksize of fs */
--	sb_set_blocksize(sb, (ulong) befs_sb->block_size);
-+	if (!sb_set_blocksize(sb, (ulong) befs_sb->block_size))
-+		goto unacquire_priv_sbp;
- 	sb->s_op = &befs_sops;
- 	sb->s_export_op = &befs_export_operations;
- 	sb->s_time_min = 0;
+diff --git a/drivers/crypto/atmel-ecc.c b/drivers/crypto/atmel-ecc.c
+index c64431380d303..9a4b8fa9ef7de 100644
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -365,6 +365,8 @@ static void atmel_ecc_remove(struct i2c_client *client)
+ static const struct of_device_id atmel_ecc_dt_ids[] = {
+ 	{
+ 		.compatible = "atmel,atecc508a",
++	}, {
++		.compatible = "atmel,atecc608b",
+ 	}, {
+ 		/* sentinel */
+ 	}
+@@ -374,6 +376,7 @@ MODULE_DEVICE_TABLE(of, atmel_ecc_dt_ids);
+ 
+ static const struct i2c_device_id atmel_ecc_id[] = {
+ 	{ "atecc508a" },
++	{ "atecc608b" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, atmel_ecc_id);
 -- 
 2.53.0
 
