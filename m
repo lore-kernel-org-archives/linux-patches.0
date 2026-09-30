@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B527327BEC;
-	Wed, 30 Sep 2026 18:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B13323ABBE;
+	Wed, 30 Sep 2026 18:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794502; cv=none; b=KBtLF6SZhsrD9uFMy61c9ZYsy1ewqTqA2lTdvZz/Iuhbg/5Inc/m7/AQKk47SeIj5mbx5v/4wRE4OfA+Ns6Rz//wI6f7kLKQA83oG86G8jXfiRvKki8gUAWI6dT2MXtnJiKE27caIEcmchZHn1SXL/ta8WCsBgw3l+9c0bQXTLg=
+	t=1790794505; cv=none; b=iYyuk81aS6UG1QmV7pBWDyFQtI5hLj17rCjxvcAg5EmEeY6jbjx4g44Arbfx2pjk6FRRSRMktD5UbN3uTuwzqxIV496PRF6y3Hp3fQmiYT+tE3WTeSunHJL8M5fBilq9O9kW4kpmfXXiNbj5PqO4G19SUOr7xmOe4rMCASzusL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794502; c=relaxed/simple;
-	bh=McGehtSIEdeLSZy/53Orim8Foso3QuTe4ZWlIkjeUjg=;
+	s=arc-20240116; t=1790794505; c=relaxed/simple;
+	bh=wo4SebzrI38hcgqEhvu55i+xRoCx3k3EHELIZVrfz64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+c7lv48ReGCxQedHZUggXG5KDyansvfCVTc21ns3I8jeSoJiGzWI584rTsDWdgdVtLW1hr+rUMbjNBDvWg1HNhDdnx59BXa7LDDbpJBsbgABtdDWpdCfuxTcg2BbgvETFLx2oAGXoana09jG3XCGKrX2+kA5kXmlU6rOZOSZdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoKNe4md; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rUnHI+5wQzU4EeDIA0f8Qshox9Ec6BHsUaGvtHi+LDhWk8C5IdSMRBIvWh5RjjEYiChJCKhd25pXJGyzezmUIaqNLgtKrEwnBImy89gLb5SsJQbnCsZK1oUnbbyU958SNu915ioPqGG8ap7SYIkH7AzV5cNEoJuIg9ODrIOJ6PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1Jz8M7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoKNe4md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914CC1F000FF;
-	Wed, 30 Sep 2026 18:55:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1Jz8M7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F51C1F000FF;
+	Wed, 30 Sep 2026 18:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794500;
-	bh=65PvnagmNk9HR5rlsZ4OpxRslnLtTAh3pClcutEdKHw=;
+	s=korg; t=1790794503;
+	bh=lMqoKANcsWDyWesg7jM3uka6b6JXDCqaaapqY0S5B3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xoKNe4mdde/xtxLNGPMo46k+oYTcaldMdNnn4x1JOJZ3mBeZZBryAr2aJA/Auvw69
-	 qyVpO6qfznNtSYVdwBA1wE72jBOfRkuZgIQE8fAqzgKno8a/ztKP2+ZVj17zhaKjN0
-	 K8x45c7k8AsTsaZ6iD/mavHcnISyXDSsKzUJoVMg=
+	b=V1Jz8M7nuJkWED68b8AlbKbBVnGACippMmSUsKOkKK+vemVvj4CHaWR42DCr4WzjG
+	 Kra0KG7YRYE3Pu3pk+F2ln4lcXPfPibjy2xSoHj+4pyrHk2xHb6ymH+UkpmPb0T/XZ
+	 Vyi1d8PLKv8YWNClfn5ttmk5mZY5InMeUHdzZX+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	George Moussalem <george.moussalem@outlook.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aurelien DESBRIERES <aurelien@hackers.camp>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0199/1193] net: dsa: qca8k: Add support for force mode for fixed link topology
-Date: Wed, 30 Sep 2026 17:14:43 +0200
-Message-ID: <20260930152438.628078188@linuxfoundation.org>
+Subject: [PATCH 6.6 0190/1193] RDMA/rtrs-srv: Fix integer underflow in process_read and process_write
+Date: Wed, 30 Sep 2026 17:14:34 +0200
+Message-ID: <20260930152438.419360728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,77 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Moussalem <george.moussalem@outlook.com>
+From: Aurelien DESBRIERES <aurelien@hackers.camp>
 
-[ Upstream commit e0a77b1ed9001bdd0c73b99c67abb90f4bd7d7f5 ]
+[ Upstream commit 54bf38b27afc08a0eb6b732f9c14eb8a4bcb66b5 ]
 
-A fixed link topology is commonly used to connect this switch (on port
-0 or 6) to a SoC's MAC over SGMII. When inband negotiation is not used,
-the switch needs to be configured to operate in force mode. As such,
-enable support for force mode.
+usr_len is read from a network-supplied message field (le16_to_cpu)
+and used to compute data_len = off - usr_len without validating that
+usr_len <= off. A malicious RDMA client can send usr_len > off causing
+an integer underflow, resulting in data_len wrapping to a huge size_t
+value which is then passed to the rdma_ev callback as a memory length,
+leading to out-of-bounds memory access.
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
-Link: https://patch.msgid.link/20260605-qca8337-force-mode-v2-1-d9a6b6545bfa@outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix by reading and validating usr_len <= off before rtrs_srv_get_ops_ids()
+in both process_read() and process_write(), ensuring the early return
+path acquires no reference and has no resource leak.
+
+Link: https://patch.msgid.link/r/20260608134802.5019-1-aurelien@hackers.camp
+Reported-by: Aurelien DESBRIERES <aurelien@hackers.camp>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
+Assisted-by: Claude <claude-sonnet-4-6>
+Acked-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 22 ++++++++++++++++------
- drivers/net/dsa/qca/qca8k.h      |  1 +
- 2 files changed, 17 insertions(+), 6 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index 384ae32c05b1c..872ae4aaae53b 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -1526,7 +1526,7 @@ static int qca8k_pcs_config(struct phylink_pcs *pcs, unsigned int neg_mode,
- {
- 	struct qca8k_priv *priv = pcs_to_qca8k_pcs(pcs)->priv;
- 	int cpu_port_index, ret, port;
--	u32 reg, val;
-+	u32 mask, reg, val;
- 
- 	port = pcs_to_qca8k_pcs(pcs)->port;
- 	switch (port) {
-@@ -1599,11 +1599,21 @@ static int qca8k_pcs_config(struct phylink_pcs *pcs, unsigned int neg_mode,
- 	if (priv->ports_config.sgmii_tx_clk_falling_edge)
- 		val |= QCA8K_PORT0_PAD_SGMII_TXCLK_FALLING_EDGE;
- 
--	if (val)
--		ret = qca8k_rmw(priv, reg,
--				QCA8K_PORT0_PAD_SGMII_RXCLK_FALLING_EDGE |
--				QCA8K_PORT0_PAD_SGMII_TXCLK_FALLING_EDGE,
--				val);
-+	mask = (val) ? (QCA8K_PORT0_PAD_SGMII_RXCLK_FALLING_EDGE |
-+			QCA8K_PORT0_PAD_SGMII_TXCLK_FALLING_EDGE) : 0;
-+
-+	/*
-+	 * (Un)set force mode on QCA8337 only, don't include it in the mask for
-+	 * others. It is written to the PORT0 PAD register for both port 0 and 6.
-+	 */
-+	if (priv->switch_id == QCA8K_ID_QCA8337) {
-+		if (neg_mode == PHYLINK_PCS_NEG_OUTBAND)
-+			val |= QCA8K_PORT_PAD_SGMII_FORCE_MODE;
-+		mask |= QCA8K_PORT_PAD_SGMII_FORCE_MODE;
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index 10061b2187580..2d74e7beb2748 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -1042,6 +1042,11 @@ static void process_read(struct rtrs_srv_con *con,
+ 			    "Processing read request failed, invalid message\n");
+ 		return;
+ 	}
++	usr_len = le16_to_cpu(msg->usr_len);
++	if (usr_len > off) {
++		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
++		return;
 +	}
-+
-+	if (mask)
-+		ret = qca8k_rmw(priv, reg, mask, val);
+ 	rtrs_srv_get_ops_ids(srv_path);
+ 	rtrs_srv_update_rdma_stats(srv_path->stats, off, READ);
+ 	id = srv_path->ops_ids[buf_id];
+@@ -1049,7 +1054,6 @@ static void process_read(struct rtrs_srv_con *con,
+ 	id->dir		= READ;
+ 	id->msg_id	= buf_id;
+ 	id->rd_msg	= msg;
+-	usr_len = le16_to_cpu(msg->usr_len);
+ 	data_len = off - usr_len;
+ 	data = page_address(srv->chunks[buf_id]);
+ 	ret = ctx->ops.rdma_ev(srv->priv, id, data, data_len,
+@@ -1095,6 +1099,11 @@ static void process_write(struct rtrs_srv_con *con,
+ 			     rtrs_srv_state_str(srv_path->state));
+ 		return;
+ 	}
++	usr_len = le16_to_cpu(req->usr_len);
++	if (usr_len > off) {
++		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
++		return;
++	}
+ 	rtrs_srv_get_ops_ids(srv_path);
+ 	rtrs_srv_update_rdma_stats(srv_path->stats, off, WRITE);
+ 	id = srv_path->ops_ids[buf_id];
+@@ -1102,7 +1111,6 @@ static void process_write(struct rtrs_srv_con *con,
+ 	id->dir    = WRITE;
+ 	id->msg_id = buf_id;
  
- 	return 0;
- }
-diff --git a/drivers/net/dsa/qca/qca8k.h b/drivers/net/dsa/qca/qca8k.h
-index 8f88b7db384d0..65ba0b2f9ee42 100644
---- a/drivers/net/dsa/qca/qca8k.h
-+++ b/drivers/net/dsa/qca/qca8k.h
-@@ -58,6 +58,7 @@
- #define	  QCA8K_PORT_PAD_RGMII_TX_DELAY_EN		BIT(25)
- #define   QCA8K_PORT_PAD_RGMII_RX_DELAY_EN		BIT(24)
- #define   QCA8K_PORT_PAD_SGMII_EN			BIT(7)
-+#define   QCA8K_PORT_PAD_SGMII_FORCE_MODE		BIT(3)
- #define QCA8K_REG_PWS					0x010
- #define   QCA8K_PWS_POWER_ON_SEL			BIT(31)
- /* This reg is only valid for QCA832x and toggle the package
+-	usr_len = le16_to_cpu(req->usr_len);
+ 	data_len = off - usr_len;
+ 	data = page_address(srv->chunks[buf_id]);
+ 	ret = ctx->ops.rdma_ev(srv->priv, id, data, data_len,
 -- 
 2.53.0
 
