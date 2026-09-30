@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D982AEEB;
-	Wed, 30 Sep 2026 15:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D788379C35;
+	Wed, 30 Sep 2026 15:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783851; cv=none; b=GVIFTT26PxtrAJqClN7b+i51Mk1QTze9hLhct+qKxPwNdJTblVkP5iDyHtTBni7f+V64N6C25JSC1DOYhaYJMHu+EXNQR+TQE0UWdsmJhLCRyvfVgmFz0tGNxnTZhMWt92bmOs9EDaB+Eo9njHrZmGPd+xAD391/MU2cjATaSfw=
+	t=1790783855; cv=none; b=ew62pvZP4tfArNmn0I9beah7NxICvf+/fHP23Fu6Z9zMOhXUNPd/3uAHstEtILG+JyVssfiGOBdt4usoUskOpzH0cpb94Q67Avy3qxlZXwqoHZ81oT3ikz/xYKtAnLj7F8FcH2y+TskrCkRVTe/CDW+dYq/vowqnOK7rY4hFE+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783851; c=relaxed/simple;
-	bh=4r38ndvo9nmftH4x9vPhOxVVwfmTCXzSHo7SroiZTEI=;
+	s=arc-20240116; t=1790783855; c=relaxed/simple;
+	bh=HapMWFBAR7qo+jfd8f/UTxxtElO/SeWM2BIau6J/DUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XPp5M6Z2PwhWF0B1KHxr3XkQl/rUPiZpQ2i1V3bBzYvdq3zO88YfZ0y/95JUDSEaOaHYKIvuVRGB8/1GyIvdF223GYr9R/PqQeos0LFkW6Z4xn9Y/UVYpwPPw0pmpg2BfjMrRA5NdYm+LEMuvU1uG5i8LkLTHM7XgrLBRrPFjNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJT0urDx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y8pRx6pPeSVSWQGdWG52XOD7pdn55WGnGNg1uCwc8qNxdo0HnmveMrh03Vj14XnHf6AQ5poRj+4782Or5XXkf7Tf15VyS0Q5jlBSSuLk4VAy1JC2F8ADOZxYAfDqloFIYiahqbpFUqBv0lQrzwQsFz/L4jPVHd49/Fi001whKBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cshYvoZn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJT0urDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FD01F00898;
-	Wed, 30 Sep 2026 15:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cshYvoZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374121F000FF;
+	Wed, 30 Sep 2026 15:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783846;
-	bh=zJbbHeT4X0qnsvi2LICZLziSJyW2j4/eH7Gtg3kGFik=;
+	s=korg; t=1790783849;
+	bh=oE6t4NjpSUOFP+Q6odz1hZkb+P2TT2DcMgkFl4GvnvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJT0urDxWjtk0VwVMweiiIhrWxevPR8AC2kcjhC5GxTBmDcRHJjsafukDqp++aggP
-	 miXFTW7MHeem2QvmfLis5qE6sdSQZHQppGHI3BmQhljfkzsWF+5XagiX6z+g3gNDDu
-	 kdkkaJPlFm7cqSRdU99CaMWV0jpcXAS01v9qFXbk=
+	b=cshYvoZna8gkd5IRat0X63IrXyKogOxIUEiHbfhtSG/gF0+0d2G8M+LbGjVvW78dg
+	 9qbOzBsZPwNOxWCMcUrvXuGR+tTrSByUajI+QMhxmbBNudB10P/uKCQzRut30SKlGO
+	 avSq60M5/LfEsTNON6t0VSIM/GQUXbxdGBxm2evk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	bridge@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 541/595] llc: fix skb UAF and leaks on llc_mac_hdr_init() failure
-Date: Wed, 30 Sep 2026 17:27:14 +0200
-Message-ID: <20260930152359.346854516@linuxfoundation.org>
+Subject: [PATCH 5.10 542/595] bridge: check llc_mac_hdr_init() return value in br_send_bpdu()
+Date: Wed, 30 Sep 2026 17:27:15 +0200
+Message-ID: <20260930152359.367811442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,64 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 72f9dd522f8d6c5a00be9695c7bb74631eb5069e ]
+[ Upstream commit ac704ff08e511c87643799c385f55ecd69b85e03 ]
 
-In llc_conn_ac_resend_i_xxx_x_set_0_or_send_rr(), if llc_mac_hdr_init()
-fails, kfree_skb(skb) is called instead of kfree_skb(nskb). This leaks
-the newly allocated nskb, reads from the freed skb via LLC_I_GET_NR(pdu),
-and double-frees skb when llc_conn_state_process() drops its reference.
-
-In llc_sap_action_send_xid_r() and llc_sap_action_send_test_r(), nskb is
-leaked if llc_mac_hdr_init() returns an error.
-
-Free nskb in all three error paths.
+If llc_mac_hdr_init() fails (for instance if the port device type does
+not support LLC or dev_hard_header() fails), br_send_bpdu() should drop
+the skb instead of resetting the mac header to the LLC payload and
+transmitting a malformed frame.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Closes: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: bridge@lists.linux.dev
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260924082951.1599377-2-edumazet@google.com
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260924082951.1599377-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/llc/llc_c_ac.c | 2 +-
- net/llc/llc_s_ac.c | 4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/bridge/br_stp_bpdu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/llc/llc_c_ac.c b/net/llc/llc_c_ac.c
-index 647c0554d04cd..8e18b264408ad 100644
---- a/net/llc/llc_c_ac.c
-+++ b/net/llc/llc_c_ac.c
-@@ -443,7 +443,7 @@ int llc_conn_ac_resend_i_xxx_x_set_0_or_send_rr(struct sock *sk,
- 		if (likely(!rc))
- 			llc_conn_send_pdu(sk, nskb);
- 		else
--			kfree_skb(skb);
-+			kfree_skb(nskb);
- 	}
- 	if (rc) {
- 		nr = LLC_I_GET_NR(pdu);
-diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
-index 942ace4af18d8..188d8f92b0243 100644
---- a/net/llc/llc_s_ac.c
-+++ b/net/llc/llc_s_ac.c
-@@ -127,6 +127,8 @@ int llc_sap_action_send_xid_r(struct llc_sap *sap, struct sk_buff *skb)
- 	rc = llc_mac_hdr_init(nskb, mac_sa, mac_da);
- 	if (likely(!rc))
- 		rc = dev_queue_xmit(nskb);
-+	else
-+		kfree_skb(nskb);
- out:
- 	return rc;
- }
-@@ -176,6 +178,8 @@ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
- 	rc = llc_mac_hdr_init(nskb, mac_sa, mac_da);
- 	if (likely(!rc))
- 		rc = dev_queue_xmit(nskb);
-+	else
-+		kfree_skb(nskb);
- out:
- 	return rc;
- }
+diff --git a/net/bridge/br_stp_bpdu.c b/net/bridge/br_stp_bpdu.c
+index 0e4572f313307..1917d11411d72 100644
+--- a/net/bridge/br_stp_bpdu.c
++++ b/net/bridge/br_stp_bpdu.c
+@@ -52,7 +52,10 @@ static void br_send_bpdu(struct net_bridge_port *p,
+ 			    LLC_SAP_BSPAN, LLC_PDU_CMD);
+ 	llc_pdu_init_as_ui_cmd(skb);
+ 
+-	llc_mac_hdr_init(skb, p->dev->dev_addr, p->br->group_addr);
++	if (llc_mac_hdr_init(skb, p->dev->dev_addr, p->br->group_addr)) {
++		kfree_skb(skb);
++		return;
++	}
+ 
+ 	skb_reset_mac_header(skb);
+ 
 -- 
 2.53.0
 
