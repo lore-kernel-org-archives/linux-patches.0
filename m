@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFFD36D4E1;
-	Wed, 30 Sep 2026 18:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3B32D9484;
+	Wed, 30 Sep 2026 18:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792034; cv=none; b=Thy1662XKZW8MHWSiFDX0tbj+Nql2LhUSb3XJ+0rN5gi3Z//lwKwoRcjsOtIziSRjXwE+JLaA0m+XdgTmsfWX8fZ/Kap1BIiNkhwuA4m0WNxLkX0A6+yh07vpJMu0sxsLWICqfvIKlIZVp/B1TlndGOpLoSeLehuG4CRsUyarw0=
+	t=1790792037; cv=none; b=iBmuLDqiNVUNsEevRortmkv7zqXBcqHpLBRZO0iBa1LfHN5Djk29ZESEHR12kifJ9BveFn/WiaxYLB48C8U/BSuxbOS+Czajty35buVs5/oDUrM88rojIGOr4CMSJR8M2IkLxEZcHdoq1FmWgUanoo4Ytpqp6x5py9L9zA5kcEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792034; c=relaxed/simple;
-	bh=aOQHByEvUhka+v7NZaS7N+vMUFfpDOil6XTAluTFU9w=;
+	s=arc-20240116; t=1790792037; c=relaxed/simple;
+	bh=UKSF6qpvJqpQ8/s39HRtzM6vWF1/QqsGWitP2dXoj+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mg96Z7zMhlGWRMTLyF9VTWhB9/M2Xs2V48FDgADETnQc7otzQjz23+6dni8Z81jUO7yn9i8w3Po20ik0ou1I1PDKDQ0fd/9XSxj18tSnVRQlW00E01C4Q7ZXSGN6EKG+VHwA046mcN5W8YW7W9zqo1+yErGVUhh3S6F6pGJayEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKRBvpYy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I9U5J1hSR5un+N4KUnqvn3PDRwJ2ZkkJldC8sfj12u91QsCPngt5Km7zlUkrDZlIOIyMU7UcFOer9f3iO9aHj2L4BUs+jXmzJuJhvIEZj7wAPZPA7CnIotv0y/zrHiUSUoQnqEnk7XbAfByYB2bfD3FS3uhux1e388X0DcfF3cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX3doSEZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKRBvpYy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757DB1F000FF;
-	Wed, 30 Sep 2026 18:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX3doSEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451061F000FF;
+	Wed, 30 Sep 2026 18:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792033;
-	bh=9MlNy18toDEAeEmBka0o6Uq+8X4Povm6NCVbR1GUmOk=;
+	s=korg; t=1790792035;
+	bh=KsI92E+y402bhcKqF7oDFFffF+rZ5AQvDJktzUEv2XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PKRBvpYySm6ZKgnkfx1jFfEQO1+0eRIEo/QI9zIiKZlnMF9USPm8f7XAmUl99D6mm
-	 Hf3HpOFoKMJKddi0Alds9iVdt0XLp4O9e6SX/+Bajpv9VheZDJEY/g7G/oC0XSTNXZ
-	 yTiDUZZfQSncy8OZ1J7S+IZZw8Xe9/3715M5eQa4=
+	b=mX3doSEZuHrcmL1iq3pDvTw6vHR5axyFFTGvg451h4yJ48unSTi4al2HIpV/QIfhy
+	 xqIj/vb/9K70wdjCsIxCz3fUAkAAo4wDbMtcdiUKwBxE7S8YDzH2AiDlmDxtsWC+27
+	 uqtTWN8C7QLNkN5HhGYnapATBvqL6sNhxkc0fu/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orgad Shaneh <orgads@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 467/752] MIPS: Octeon: apply USB FDT fixups also when USB is modular
-Date: Wed, 30 Sep 2026 17:25:37 +0200
-Message-ID: <20260930152408.378437362@linuxfoundation.org>
+Subject: [PATCH 5.15 468/752] dma-coherent: Warn if OF reserved memory is beyond current coherent DMA mask
+Date: Wed, 30 Sep 2026 17:25:38 +0200
+Message-ID: <20260930152408.400250383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,51 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Orgad Shaneh <orgads@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 126f16e0a1b353c2ba5c7e2c8626cfa865934f9f ]
+[ Upstream commit 89461db349cc00816c01d55507d511466b3b7151 ]
 
-The uctl/usbn device-tree fixups in octeon_prune_device_tree() - which
-set the board's USB reference-clock frequency and type from
-__cvmx_helper_board_usb_get_clock_type() - are guarded by
-"#ifdef CONFIG_USB", which is false when USB is built as a module. The
-fixups then silently disappear and octeon-hcd sees whatever default the
-DTS carries (12MHz crystal in octeon_3xxx.dts), leaving the PHY dead or
-the bus erroring on boards with a different reference clock.
+When a reserved memory region described in the device tree is attached
+to a device, it is expected that the device's limitations are correctly
+included in that description.
 
-Use IS_ENABLED() so USB=m gets the same fixups as USB=y.
+However, if the device driver failed to implement DMA address masking
+or addressing beyond the default 32 bits (on arm64), then bad things
+could happen because the DMA address was truncated, such as playing
+back audio with no actual audio coming out, or DMA overwriting random
+blocks of kernel memory.
 
-Fixes: 7fd57ab9d9cf ("MIPS: Octeon: Fix compile error when USB is not enabled.")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Check against the coherent DMA mask when the memory regions are attached
+to the device. Give a warning when the memory region can not be covered
+by the mask.
+
+A warning instead of a hard error was chosen, because it is possible
+that existing drivers could be working fine even if they forgot to
+extend the coherent DMA mask.
+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20250421083930.374173-1-wenst@chromium.org
+Stable-dep-of: 504981db4f69 ("dma-coherent: report a failed reserved memory assignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cavium-octeon/octeon-platform.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/dma/coherent.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/cavium-octeon/octeon-platform.c b/arch/mips/cavium-octeon/octeon-platform.c
-index ce05c0dd3acd7..5faea06737145 100644
---- a/arch/mips/cavium-octeon/octeon-platform.c
-+++ b/arch/mips/cavium-octeon/octeon-platform.c
-@@ -15,7 +15,7 @@
- #include <asm/octeon/octeon.h>
- #include <asm/octeon/cvmx-helper-board.h>
+diff --git a/kernel/dma/coherent.c b/kernel/dma/coherent.c
+index 2df824fa40ef2..3144974c3075a 100644
+--- a/kernel/dma/coherent.c
++++ b/kernel/dma/coherent.c
+@@ -336,16 +336,22 @@ static struct reserved_mem *dma_reserved_default_memory __initdata;
  
--#ifdef CONFIG_USB
-+#if IS_ENABLED(CONFIG_USB)
- #include <linux/usb/ehci_def.h>
- #include <linux/usb/ehci_pdriver.h>
- #include <linux/usb/ohci_pdriver.h>
-@@ -1079,7 +1079,7 @@ int __init octeon_prune_device_tree(void)
- 		;
+ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
+ {
+-	if (!rmem->priv) {
+-		struct dma_coherent_mem *mem;
++	struct dma_coherent_mem *mem = rmem->priv;
+ 
++	if (!mem) {
+ 		mem = dma_init_coherent_memory(rmem->base, rmem->base,
+ 					       rmem->size, true);
+ 		if (IS_ERR(mem))
+ 			return PTR_ERR(mem);
+ 		rmem->priv = mem;
  	}
+-	dma_assign_coherent_memory(dev, rmem->priv);
++
++	/* Warn if the device potentially can't use the reserved memory */
++	if (mem->device_base + rmem->size - 1 >
++	    min_not_zero(dev->coherent_dma_mask, dev->bus_dma_limit))
++		dev_warn(dev, "reserved memory is beyond device's set DMA address range\n");
++
++	dma_assign_coherent_memory(dev, mem);
+ 	return 0;
+ }
  
--#ifdef CONFIG_USB
-+#if IS_ENABLED(CONFIG_USB)
- 	/* OHCI/UHCI USB */
- 	alias_prop = fdt_getprop(initial_boot_params, aliases,
- 				 "uctl", NULL);
 -- 
 2.53.0
 
