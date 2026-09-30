@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AF84FECC4;
-	Wed, 30 Sep 2026 15:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE21355F42;
+	Wed, 30 Sep 2026 15:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783753; cv=none; b=kqH+NYEJkcHboXEryb/wlt6YeSafzEhJ1pTJkbbDGq6F4WRx3/F6b8e7nhRgV45KvfxI0qSG+6TkHuSWJ+KzHhABtPNVozMAsXm5PVmNL2b5cZQic71OxbwFvdPL8Rv20RR4LfSjn5rGCEss8t5VqCNwxzZWL+3maEROAfOD3BA=
+	t=1790783755; cv=none; b=WZiavfBx3sjSCZRP5RgmQid3HHRR6udGbayt/XcofI9rKh7ZH68lYTEWwa+I29SSyvxvpIavVcwvR8tLL/Zm8pcLCLW6kJvi1Ydfc0R6pESxZcQpeaaC9aT1tvS8xPtxrWgDFiEVZMrpK1W+p1AlFvqkiHxGUp+//6fTjI2DWNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783753; c=relaxed/simple;
-	bh=4E+jwEG7HE/N5TM5NdmTbeurh6TDLM6+IQ+DCaY26w8=;
+	s=arc-20240116; t=1790783755; c=relaxed/simple;
+	bh=jesUk6eEKQ3mJ+/kFBK7fHC0zToO2ipvAGEXgwpCoBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b01xGLfU3rk3TYGBZi0ArPdWkjpV4OVcZ1i99rQH4ckIstcf59GLPPTwCF8i1q/l2FMNbH1mzj10dpaUwomvOnEoTnjbKvAXC/GbYaex8WQXy1TYweHV09TXFvBFgGRNxcy7jQdGE2skiZUTXze+3GondnoDZqfxyvceD36AC+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDc9Xu1K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nR8gmBLfuxe18Qo8BcravWYfvDVkLSjvCex/NYSnqc7xQypWPOZrMtzCvsI/xsFquwpS0o2x7B7A3Nhfr+bKi9I0CrM5FWMH43yfKw4HmBFU2qqnalD0+uSR2CBccCs+2NTtw8KCxifMbXWC4+x/Ltox6Yg+uK3ax4ev65YL16Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZqrBv9H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDc9Xu1K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11D11F00893;
-	Wed, 30 Sep 2026 15:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZqrBv9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE22D1F000FF;
+	Wed, 30 Sep 2026 15:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783747;
-	bh=XBsSZlI+CtiSmHFxZ50rVsQpcl3b/GfS/Iyki31MNS4=;
+	s=korg; t=1790783750;
+	bh=VtV00VhfxB7rQj+kwOXY8NyfaKZJlqpbHTI7FCwCahM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QDc9Xu1Kw8Bh7I0VIvBouYEGZeCpu3lzNWAZAGjbcqtLPlQUx6lw5TcEA8Up9vB4+
-	 RpGH1AgwuIH+LyjsqZt0edl1zTvJugJI+qOlEoL8K/ekCQiJ4V85gTnOWV9UAMH+Zr
-	 kJ3sydeZ+NjocT8NrkrzAOj4YFrq+XaPQy/vzwTU=
+	b=TZqrBv9Hpxy54Nv0SzA14ewdkHvFh+FuVStc8UShdjxIIpOP0dJFxX1zZymss8R+/
+	 0OXNdRNx7T8pjD5duNhnSUzu0XnvGCqL8eoWgFEz7PQB3oXzsPru+TiqcHOh+hDqrv
+	 WcmHoUi8dbUgE0u+iumRsGstibetpP0eXv/I/P7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Hui Peng <benquike@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 509/595] drm/virtio: fix object leak in virtio_gpu_resource_create_ioctl()
-Date: Wed, 30 Sep 2026 17:26:42 +0200
-Message-ID: <20260930152358.648987765@linuxfoundation.org>
+Subject: [PATCH 5.10 510/595] Bluetooth: bnep: fix out-of-bounds reads on short RX/TX frames and control fallthrough
+Date: Wed, 30 Sep 2026 17:26:43 +0200
+Message-ID: <20260930152358.672872235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,41 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit 477bc3068fc3777b9d8ffd79e265b0dfdf2d3a6b ]
+[ Upstream commit f0ca020cbb9bb7f3f4ea8ba1dfcf30a282aec91e ]
 
-virtio_gpu_resource_create_ioctl() calls drm_gem_object_release() on the
-drm_gem_handle_create() error path instead of dropping the reference it
-owns, so obj->funcs->free() never runs and the virtio_gpu_object, its
-pages and sg table, the resource id and the host-side resource are
-leaked.
+Fix multiple out-of-bounds reads in Bluetooth BNEP frame processing:
 
-Use drm_gem_object_put() instead.
+1. In bnep_rx_frame() and bnep_ctrl_frame() (net/bluetooth/bnep/core.c),
+   use pskb_may_pull() to verify the BNEP header, control type byte,
+   filter count, and extension headers exist before reading them, and
+   return 0 after handling BNEP_CONTROL instead of falling through to
+   Ethernet frame submission when no extension headers follow.
+2. In bnep_net_xmit() (net/bluetooth/bnep/netdev.c), verify skb->len >=
+   ETH_HLEN with pskb_may_pull() before reading the 14-byte Ethernet
+   header to prevent an out-of-bounds heap read and infoleak on short
+   AF_PACKET TX frames.
 
-Fixes: 62fb7a5e1096 ("virtio-gpu: add 3d/virgl support")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260915-fixes-v2-2-a0d799e4db66@outlook.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/bnep/core.c   | 17 ++++++++++++++++-
+ net/bluetooth/bnep/netdev.c |  8 +++++++-
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-index 36efa273155df..8a445c8519605 100644
---- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-@@ -276,7 +276,7 @@ static int virtio_gpu_resource_create_ioctl(struct drm_device *dev, void *data,
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index b34e4bb0e750c..96d41267f14a3 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -268,9 +268,14 @@ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
  
- 	ret = drm_gem_handle_create(file, obj, &handle);
- 	if (ret) {
--		drm_gem_object_release(obj);
-+		drm_gem_object_put(obj);
- 		return ret;
+ 		BT_DBG("type 0x%x len %d", h->type, h->len);
+ 
++		if (skb->len < h->len) {
++			err = -EILSEQ;
++			break;
++		}
++
+ 		switch (h->type & BNEP_TYPE_MASK) {
+ 		case BNEP_EXT_CONTROL:
+-			bnep_rx_control(s, skb->data, skb->len);
++			bnep_rx_control(s, skb->data, h->len);
+ 			break;
+ 
+ 		default:
+@@ -354,6 +359,11 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 			goto badframe;
  	}
  
++	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
++		kfree_skb(skb);
++		return 0;
++	}
++
+ 	/* Strip 802.1p header */
+ 	if (ntohs(s->eh.h_proto) == ETH_P_8021Q) {
+ 		if (!skb_pull(skb, 4))
+@@ -432,6 +442,11 @@ static int bnep_tx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 		goto send;
+ 	}
+ 
++	if (skb->len < ETH_HLEN) {
++		kfree_skb(skb);
++		return 0;
++	}
++
+ 	iv[il++] = (struct kvec) { &type, 1 };
+ 	len++;
+ 
+diff --git a/net/bluetooth/bnep/netdev.c b/net/bluetooth/bnep/netdev.c
+index cc1cff63194f0..5d9d851db926f 100644
+--- a/net/bluetooth/bnep/netdev.c
++++ b/net/bluetooth/bnep/netdev.c
+@@ -169,6 +169,12 @@ static netdev_tx_t bnep_net_xmit(struct sk_buff *skb,
+ 
+ 	BT_DBG("skb %p, dev %p", skb, dev);
+ 
++	if (!pskb_may_pull(skb, ETH_HLEN)) {
++		dev->stats.tx_dropped++;
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
++
+ #ifdef CONFIG_BT_BNEP_MC_FILTER
+ 	if (bnep_net_mc_filter(skb, s)) {
+ 		kfree_skb(skb);
+@@ -221,7 +227,7 @@ void bnep_net_setup(struct net_device *dev)
+ 	dev->addr_len = ETH_ALEN;
+ 
+ 	ether_setup(dev);
+-	dev->min_mtu = 0;
++	dev->min_mtu = ETH_MIN_MTU;
+ 	dev->max_mtu = ETH_MAX_MTU;
+ 	dev->priv_flags &= ~IFF_TX_SKB_SHARING;
+ 	dev->netdev_ops = &bnep_netdev_ops;
 -- 
 2.53.0
 
