@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F5830D401;
-	Wed, 30 Sep 2026 19:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0465430FC27;
+	Wed, 30 Sep 2026 19:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796387; cv=none; b=nw83s7M3v+fzIGFkQj9O+rPUJpEiPMOB/aGH5XDorJPS7GEZCssBznTraIAX0/pWU9ggkX88GUxgdvf8+F4B5CWeqCXipWLj1skPa44+03F7/zA6bny7O6M6P3xJWSXLeuM+E8MX5mD70WO1KTYMfRUVYT3iSUzi/h0M3ScN/Ik=
+	t=1790796390; cv=none; b=Ap2SC83HBw9Ii2EgDKnX5rfSSWJbI/zjOkfRHUtaQVOcrlYhuCAnWKHinTckgVk6RuQ6ZB7gXvt9ofmeEV0DOr0weNM1JOQL21aogJhrruvQwgLzda2F3txv9IKrNmh4ljJFGwe8V99RjaHI1KEofPHbJ3ieoOTWslPmdUQF9tQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796387; c=relaxed/simple;
-	bh=QAvy74FN7IAjSO9/jnE9FQzhKD8lLRA+q+1Fi2V03TA=;
+	s=arc-20240116; t=1790796390; c=relaxed/simple;
+	bh=LknOEFKFTr+gZ4E5Znpxfpflv2e7J7pp1JNtuD0kXYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r/HYw/JYziQ3XLrQdqp6hJosl2teMEVgnJgXpaPALzbKrec0BFH6L2oqPnCtM53XSxUuo12OLv29gKrUX/lazM60saTN7gY61rJWGKLr7+DaWOC86qS72ZwXzHxZvVDJi8/dos1nFEjSmFgHkzKhOQTRrN7y5gOZif58q7MPepU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Br4nJTeT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kx5XqoxmS7cwLSrVmuZM8VYrUFUf2U8B+2e08GWEvBdBfmT9UlgbdFYF4OuoPHX8difyURivZNqnGPCPpN508JqGxGIC3WqW6dKjO6s06UAxxaL7+YKVPy+s0cPZ0fcigPwAW8fur1m/1USB62EhFQAjzGNBWUmW9EBPSWkh+Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upcsaLo/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Br4nJTeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863081F000FF;
-	Wed, 30 Sep 2026 19:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upcsaLo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3FB1F000FF;
+	Wed, 30 Sep 2026 19:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796386;
-	bh=LyhJvUNQNBeLnaJOaNEiM0DL9RpyZ/ED7qJD1o4+sWg=;
+	s=korg; t=1790796388;
+	bh=lWOrYZzzVoqPCDD4u/2bjC1VslLexKJ8JQgChQlKQ+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Br4nJTeTkmHZCRVuLu3u0ZXVV1zQ8c80GMJZzg9cyDi447aZugkosKWfrHnYAc7Ld
-	 l5uf4XpZ3PSuS6zMFdARo0SyrXqwFlQlYHwrRSM7nQneaSEF7KuOrECMaCrALIbPR1
-	 Nj9xJeP7+OvjsL1MNAbVbTCushAoMGVD5Wvd7l6M=
+	b=upcsaLo/IbGRz8VNPG7wFDg9ypTgvgzwt/OIMKMhqOrqKfk/qG22QWEfPb+hpdv1Q
+	 dU0iLfANI2iXIcUlIW9HTs4PHeS2VoBwJBKKNE95Of93Zop8HPdmszyGTzsVql/FI8
+	 WylcuX+LKOXy/zks/DzQtQXMcYkBvf4OPF/3/t7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Alexei Turtanov <9alexei9@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0893/1193] Input: adp5588-keys - cache GPIO state before registering the gpiochip
-Date: Wed, 30 Sep 2026 17:26:17 +0200
-Message-ID: <20260930152454.083582638@linuxfoundation.org>
+Subject: [PATCH 6.6 0894/1193] Input: atkbd - skip deactivate for Xiaomi Redmi Book Pro 16 2026
+Date: Wed, 30 Sep 2026 17:26:18 +0200
+Message-ID: <20260930152454.106116150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,68 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alvin.sipraga@analog.com>
+From: Alexei Turtanov <9alexei9@gmail.com>
 
-commit 21efadc62272cabee9bec27777ae75d84a9ca8a8 upstream.
+commit aefbda23eeba234c3ff0f135dc5be6e294bd25a6 upstream.
 
-So as not to clobber any pre-programmed GPIO state in the execution
-of its gpiochip ops, the driver caches things during probe time.
-However, since those ops can be called both during and immediately after
-the call to devm_gpiochip_add_data(), it is imperative that things are
-cached before that. That's not the case right now, so reorder the two
-steps to prevent any clobbering.
+The internal keyboard of the Xiaomi Redmi Book Pro 16 2026 (board TM2425)
+does not work: atkbd_probe() succeeds and every command is ACKed, but no
+scancodes ever arrive afterwards.
 
-In the concrete example which motivated this change, a bootloader was
-preconfiguring an important GPIO output to HIGH before booting the
-kernel. Linux would then inadvertently set that output to LOW while
-configuring a GPIO hog on a discrete GPIO line within the same 8-bit
-bank (because the cached value was 0=LOW).
+Testing on the hardware through serio_raw shows that ATKBD_CMD_RESET_DIS
+(0xF5) is the culprit. After 0xF5 the embedded controller keeps ACKing
+commands but stops delivering scancodes, and neither ATKBD_CMD_ENABLE
+(0xF4) nor ATKBD_CMD_RESET_BAT (0xFF) bring them back. Only re-enabling
+the keyboard interface at the controller level (i8042 command 0xAE, or
+rewriting the command byte as i8042_port_close() does) revives it.
+Running the init sequence without 0xF5 (0xED 0x00, 0xF3 0x00, 0xF4)
+keeps the keyboard working.
 
-Fixes: ba9f507a1bea ("Input: adp5588-keys - export unused GPIO pins")
-Signed-off-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260818-adp5588-gpio-cache-v1-1-650a2674fc0d@analog.com
+'i8042.dumbkbd=1' also works around this, but then the driver never
+writes to the keyboard and the LEDs cannot be controlled. Use the
+existing atkbd_deactivate_fixup quirk instead, as done for the sibling
+TM2424 by commit 3a046db33bb9 ("Input: atkbd - skip deactivate for
+Xiaomi Book Pro 14's internal keyboard"). Tested on v7.2: keyboard,
+Caps Lock LED and s2idle suspend/resume all work.
+
+DMI: XIAOMI REDMI Book Pro 16 2026/TM2425, BIOS RMAPT6B0P0909 05/22/2026
+
+Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
 Cc: stable@vger.kernel.org
+Signed-off-by: Alexei Turtanov <9alexei9@gmail.com>
+Link: https://patch.msgid.link/20260828112239.18081-1-9alexei9@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/adp5588-keys.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/input/keyboard/atkbd.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/input/keyboard/adp5588-keys.c
-+++ b/drivers/input/keyboard/adp5588-keys.c
-@@ -453,12 +453,6 @@ static int adp5588_gpio_add(struct adp55
- 
- 	mutex_init(&kpad->gpio_lock);
- 
--	error = devm_gpiochip_add_data(dev, &kpad->gc, kpad);
--	if (error) {
--		dev_err(dev, "gpiochip_add failed: %d\n", error);
--		return error;
--	}
--
- 	for (i = 0; i <= ADP5588_BANK(ADP5588_MAXGPIO); i++) {
- 		kpad->dat_out[i] = adp5588_read(kpad->client,
- 						GPIO_DAT_OUT1 + i);
-@@ -466,6 +460,12 @@ static int adp5588_gpio_add(struct adp55
- 		kpad->pull_dis[i] = adp5588_read(kpad->client, GPIO_PULL1 + i);
- 	}
- 
-+	error = devm_gpiochip_add_data(dev, &kpad->gc, kpad);
-+	if (error) {
-+		dev_err(dev, "gpiochip_add failed: %d\n", error);
-+		return error;
-+	}
-+
- 	return 0;
- }
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -1982,6 +1982,14 @@ static const struct dmi_system_id atkbd_
+ 		},
+ 		.callback = atkbd_deactivate_fixup,
+ 	},
++	{
++		/* Xiaomi Redmi Book Pro 16 2026 (TM2425) */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "REDMI Book Pro 16 2026"),
++		},
++		.callback = atkbd_deactivate_fixup,
++	},
+ 	{ }
+ };
  
 
 
