@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A774E06CC;
-	Wed, 30 Sep 2026 16:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB10515992;
+	Wed, 30 Sep 2026 16:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786840; cv=none; b=I/bnzp+MPvUgt9wzDFNBSoZcla/VDEIMhbdpVwtPIRFryBCfrQ0DfVq/EARkgvurpt9Ita0DkDbzvDPTKYgq6oOY/frt5dLVL+qDmmpwOYE0H918OCC47Okc2/oXJZCNfT3q7h+V9dKsTNzutAfTTBhN4qu0XHzKcWNdXgFSTZA=
+	t=1790786843; cv=none; b=XwiHfp+GjfMtMATj9W71a3JcCbnI8xnUvljreCiBfI1XLWxNM9tt5xTqX4NZXvf701cMDPZ7e13GVinD8A+6vfENSZKooaqjLiY90gkBYlkw5Jzun0KAZPEyRb1ecQTdDJi9iuTorikP4cWqB5tooO6fe6clCLL8pgIE5EzSEAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786840; c=relaxed/simple;
-	bh=coWN77ZOFCQxlYfmnjrMIWzvZ0KVONY2Qm7E0Dlclt4=;
+	s=arc-20240116; t=1790786843; c=relaxed/simple;
+	bh=uTgHUkBePddTwTRHZiRf2dG2bhXv1TZu2eEQWBUVsWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwIF9f+AHHs8H+LGWuEsmu7nTK2+sbL9JxbBeQwTi5HP38DsGxPQTV/PPToEsPvgdcbfXiOaumubbYnfxmYk5LO4zs6llAaprs5kXovAscvwcSVww7pYWEzF3NyNEzb5dlkKxNXNnNyE+vOKy7XOnz8RxTc/HDHdu8XU4hYNVRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1zIL8Y6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mQl/3D2Gk1RnRNdQQz5j8XTMj5Jm8VFiDBT4m4AD30NcYMffloa449BhC+kt0wvjUJvfEB+7nL+CRAktWP3bGtMMq/Sb7onQYlVRZFAZ0SC78EmxK+5TV8Udo50A675NxfD0fNlNxtHajGux36/pFAC2MICPgALY8YOahaoNhOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRqIdDa7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1zIL8Y6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A48B1F000FF;
-	Wed, 30 Sep 2026 16:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRqIdDa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051491F000FF;
+	Wed, 30 Sep 2026 16:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786838;
-	bh=7eZW4HLaiwbZtKeZCQvlXtkW/0Kkgzn23LGd6ToZbm8=;
+	s=korg; t=1790786841;
+	bh=R93B6cefVeEEOAL+/Ca1r9CyYbAowWCX/IAodck9Q6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1zIL8Y6iwBYo6B79XUcQcnb9+sTQtbekncC3XcqfOJXuNeBZ/eIcNdp9Ij4cGyDi
-	 2vPbcojXg7f4YQXG1RE6s2rDBuwjFvdK0e7xhX6+qe6qUqpRFdTsSFm+grNdFKWSLQ
-	 Vg388Kq6dd8vq8mFsN1KXyHhvBu7d4tjQ1F3I+f8=
+	b=QRqIdDa7hrnaQzQgywvZ+nmEHZzjxzyjY/8Z2M/E/VppexVPei1xU27CHGKtUUwF/
+	 Zy5wQeoWIm46wBkgOp3lW7g7BsXYL0pDlhWKDE/OXZ0T9MFPokunzAxqwDDTbxOgjc
+	 HI2tGtqx7FGswPuttfqpm8NV8PF2M6xfzHMkXbTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lovekesh Solanki <lovekeshsolanki00@gmail.com>,
-	mayhemandcoffee <mayhemandcoffee@gmail.com>,
+	=?UTF-8?q?Ren=C3=A9=20Onier?= <f3nr1l@me.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 021/457] HID: multitouch: Add report ID mismatch quirk for ASUS ROG Z13 Folio
-Date: Wed, 30 Sep 2026 17:22:06 +0200
-Message-ID: <20260930152346.485609349@linuxfoundation.org>
+Subject: [PATCH 7.2 022/457] HID: winwing: fix use-after-free in force feedback teardown
+Date: Wed, 30 Sep 2026 17:22:07 +0200
+Message-ID: <20260930152346.508759837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -46,129 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
+From: René Onier <f3nr1l@me.com>
 
-[ Upstream commit aaaea79efba5a27cb9e0a5a628046d829d3f2cbb ]
+[ Upstream commit a1a5ad37e50ceb192c07ac7e2d7143638cd4d110 ]
 
-Commit e716edafedad ("HID: multitouch: Check to ensure report
-responses match the request") introduced validating GET_FEATURE
-responses return the requested report ID.
+winwing_init_ff() passes the driver's private data, allocated with
+devm_kzalloc() in winwing_probe(), as the effect context to
+input_ff_create_memless(). The memoryless force-feedback core takes
+ownership of that pointer and frees it with kfree() from
+input_ff_destroy() (ml_ff_destroy()) when the input device is
+destroyed.
 
-ASUS ROG Z13 Flow (2025) GZ302EA touchpad (USB 0b05:1a30) returns
-a different report ID for Win8 feature request. Before this check,
-the response was still processed and allowed device to switch into
-its full Touchpad Precision mode.
+Freeing a devm-managed allocation with kfree() is an invalid free, and
+the same object is then released again by devres when the HID device is
+torn down, a double free. As the allocation also embeds the LED class
+devices, their timers and work item live on freed memory and the slab
+gets corrupted. This triggers on unbind, rmmod, hot-unplug and on system
+suspend, where the firmware cache walks the now-corrupt devres list.
+KASAN reports:
 
-After the validation, the response is discarded before
-hid_report_raw_event() processes it and device remains in fallback
-mode and no longer exposes ABS_MT_SLOT, ABS_MT_TOOL_TYPE or the
-multi-finger BTN_TOOL_* capabilities for palm rejection.
+  BUG: KASAN: invalid-free in input_ff_destroy
+  Allocated by task N:
+    winwing_probe
 
-Add a device quirk to allow the known firmware behavior for
-this device while preserving report ID validation for all other
-devices.
+Pass NULL as the memless context instead and fetch the driver data from
+the input device in winwing_play_effect(): the HID core already stores
+the hid_device as the input device's drvdata. The force-feedback core
+then owns nothing that it must not free.
 
-The device previously matched the generic MT_CLS_WIN_8 entry, so
-base the new class on MT_CLS_WIN_8 to keep it on the same quirk set
-as before the regression.  MT_QUIRK_CONFIDENCE must be set
-explicitly: it is normally enabled by the class name check in
-mt_touch_input_mapping(), which only matches the MT_CLS_WIN_8*
-names, and it is what makes ABS_MT_TOOL_TYPE available for
-touchpads.
-
-Fixes: e716edafedad ("HID: multitouch: Check to ensure report responses match the request")
-
-Signed-off-by: Lovekesh Solanki <lovekeshsolanki00@gmail.com>
-Reported-by: mayhemandcoffee <mayhemandcoffee@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221774
-Tested-by: mayhemandcoffee <mayhemandcoffee@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221774
+Fixes: 42d020b54edc ("HID: winwing: Enable rumble effects")
+Signed-off-by: René Onier <f3nr1l@me.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ drivers/hid/hid-winwing.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 571166a769b90..e9da59e4bf795 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -79,6 +79,7 @@ MODULE_LICENSE("GPL");
- #define MT_QUIRK_APPLE_TOUCHBAR		BIT(23)
- #define MT_QUIRK_YOGABOOK9I		BIT(24)
- #define MT_QUIRK_KEEP_LATENCY_ON_CLOSE	BIT(25)
-+#define MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH	BIT(26)
- 
- #define MT_INPUTMODE_TOUCHSCREEN	0x02
- #define MT_INPUTMODE_TOUCHPAD		0x03
-@@ -235,6 +236,7 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app);
- #define MT_CLS_APPLE_TOUCHBAR			0x0114
- #define MT_CLS_YOGABOOK9I			0x0115
- #define MT_CLS_EGALAX_P80H84			0x0116
-+#define MT_CLS_ASUS_ROG_Z13_FOLIO		0x0117
- #define MT_CLS_SIS				0x0457
- 
- #define MT_DEFAULT_MAXCONTACT	10
-@@ -405,6 +407,16 @@ static const struct mt_class mt_classes[] = {
- 		.quirks = MT_QUIRK_ALWAYS_VALID |
- 			MT_QUIRK_CONTACT_CNT_ACCURATE |
- 			MT_QUIRK_ASUS_CUSTOM_UP },
-+	{ .name = MT_CLS_ASUS_ROG_Z13_FOLIO,
-+		.quirks = MT_QUIRK_ALWAYS_VALID |
-+			MT_QUIRK_IGNORE_DUPLICATES |
-+			MT_QUIRK_HOVERING |
-+			MT_QUIRK_CONTACT_CNT_ACCURATE |
-+			MT_QUIRK_STICKY_FINGERS |
-+			MT_QUIRK_WIN8_PTP_BUTTONS |
-+			MT_QUIRK_CONFIDENCE |
-+			MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH,
-+		.export_all_inputs = true },
- 	{ .name = MT_CLS_VTL,
- 		.quirks = MT_QUIRK_ALWAYS_VALID |
- 			MT_QUIRK_CONTACT_CNT_ACCURATE |
-@@ -507,6 +519,7 @@ static const struct attribute_group mt_attribute_group = {
- 
- static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+diff --git a/drivers/hid/hid-winwing.c b/drivers/hid/hid-winwing.c
+index 9cd25a77999e6..19b92c2c6579a 100644
+--- a/drivers/hid/hid-winwing.c
++++ b/drivers/hid/hid-winwing.c
+@@ -315,7 +315,8 @@ static void winwing_haptic_rumble_cb(struct work_struct *work)
+ static int winwing_play_effect(struct input_dev *dev, void *context,
+ 		struct ff_effect *effect)
  {
-+	struct mt_device *td = hid_get_drvdata(hdev);
- 	int ret;
- 	u32 size = hid_report_len(report);
- 	u8 *buf;
-@@ -528,8 +541,14 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
- 			 report->id);
- 	} else {
--		/* The report ID in the request and the response should match */
--		if (report->id != buf[0]) {
-+		/*
-+		 * The report ID in the request and the response should match.
-+		 * Some firmware (e.g. the ASUS ROG Z13 Folio
-+		 * touchpad) returns a mismatched ID on this specific fetch;
-+		 * tolerate it only for devices explicitly flagged as such.
-+		 */
-+		if (report->id != buf[0] &&
-+		    !(td->mtclass.quirks & MT_QUIRK_IGNORE_FEATURE_ID_MISMATCH)) {
- 			hid_err(hdev, "Returned feature report did not match the request\n");
- 			goto free;
- 		}
-@@ -2726,6 +2745,12 @@ static const struct hid_device_id mt_devices[] = {
- 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
- 			   I2C_VENDOR_ID_HANTICK, I2C_PRODUCT_ID_HANTICK_5288) },
+-	struct winwing_drv_data *data = (struct winwing_drv_data *) context;
++	struct hid_device *hdev = input_get_drvdata(dev);
++	struct winwing_drv_data *data = hid_get_drvdata(hdev);
  
-+	/* Asus ROG Flow Z13 (2025) GZ302EA keyboard-cover touchpad */
-+	{ .driver_data = MT_CLS_ASUS_ROG_Z13_FOLIO,
-+		HID_DEVICE(BUS_USB, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_ASUSTEK,
-+			USB_DEVICE_ID_ASUSTEK_ROG_Z13_FOLIO) },
-+
- 	/* Generic MT device */
- 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_MULTITOUCH, HID_ANY_ID, HID_ANY_ID) },
+ 	if (effect->type != FF_RUMBLE)
+ 		return 0;
+@@ -342,7 +343,12 @@ static int winwing_init_ff(struct hid_device *hdev, struct hid_input *hidinput)
+ 
+ 	input_set_capability(hidinput->input, EV_FF, FF_RUMBLE);
+ 
+-	return input_ff_create_memless(hidinput->input, data,
++	/*
++	 * input_ff_create_memless() takes ownership of the context pointer
++	 * and frees it on teardown; do not hand it the devm-managed drvdata.
++	 * winwing_play_effect() fetches it from the input device instead.
++	 */
++	return input_ff_create_memless(hidinput->input, NULL,
+ 			winwing_play_effect);
+ }
  
 -- 
 2.53.0
