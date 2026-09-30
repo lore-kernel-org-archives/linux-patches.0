@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E833850EC11;
-	Wed, 30 Sep 2026 16:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CA41E5B9A;
+	Wed, 30 Sep 2026 16:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786732; cv=none; b=MeKRCCargD/UHECiob3eQGAvcNpw3P/kPw8RWMpavnhx9rVgnZSIq/bwJy3azIftMSGpwj7dLIv0Hj4ZbGNan2KOsxgMNeqiuhBtjJdS1vvXvEV5K7JZ4mAQ6amiyN2Lh8SAZV7esf3e4lxRi7mW+FWxa8Ep0D5ZKkcmyzjHZPA=
+	t=1790786734; cv=none; b=IwfmWRhgDbe1Rvo+r0SX7LSJs0Okb5RznL/f6nVLDxroiS+9e8Wk1LrYSCHw472NWy4nnO1ExpntFiUkIeSn5q2WW/u1wGrMEAkZtJo1g1xYNduKiiq9ho087VfZNcedk4zQhhufBCqXgnA9MD3/v8gCio5iZUNwmYFO06UE//g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786732; c=relaxed/simple;
-	bh=ym4gLbWaAgwgDn/FlBlb41Y4PcayGIErcyWyX229eeM=;
+	s=arc-20240116; t=1790786734; c=relaxed/simple;
+	bh=uQ+rPuqo0N4Gjk4Dj0uKt8gxq5TS6Rb2Vg6KUpLy0Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oqr0My6ZHoKH9o8KBmfpc+br4fuc828np9gUhgLXx5mDJg7OmkEJ2Qc7TSUsk8gpyKRBCMDotu8lTCNwTDXiNeROuJOWvQPqY9OetWmnWbNy3cyLDa8w1HP4RRZ8uI4LFyzjID6OrNVRpao+tmcYkHB6GFPK6yVr13mrpRhG6yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtToSe8O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sxGj6/z82olrrdBJUbOjwo2lc5AltMHpogShrTFOCISq2twB8k46fNR2fIjYN5Up+IJtdUTYM7w7w+AADHHyq1EcFYCXL6fplbKjDahaPlGZ7dTHIXG7up12FSliL+vk3kLFHBHKhE0xWCsPS6rWqtZtEHd52ZqOoFJ3RpC2EYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx3vBQ+8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtToSe8O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66ED1F000FF;
-	Wed, 30 Sep 2026 16:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx3vBQ+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09101F000FF;
+	Wed, 30 Sep 2026 16:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786730;
-	bh=fsSY42XUiFUhMSzktWN4JojPZ3fRMylz1YNdU7MbaDA=;
+	s=korg; t=1790786733;
+	bh=SUqmb8AXV3hxN3391QwQX4HPSAMrchGpwMMjGRZ+gPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RtToSe8OLh9QCknr4/Jpa9f01lzWx7nq4NOVN0zTGEX6UqSw//ZTOepnhuTJoUotD
-	 GKDcysX02n2JJHVnDfMkBmz28B6EbL9ci89sfqQmMkFw1T6rV0jrZKzgPIztxJVqaz
-	 MwNFi7WhIdGTApFXLsXmI/VuRcndOkHsT4AUgqGs=
+	b=Sx3vBQ+875iw8/gqlgHY97f52j62qzO+9XFX4srjZeNS6dwr3K/PA7WrcKZQC0gr6
+	 a6HMwt+9D2YcFpVF2sQEzgE6Ldht8HiraSU0/fEdsY3k+7pSkfi/whDn7W4pqD0u0q
+	 9C+2N/42IgtvsZca4IOFgnXpEDsHt2dtwQ35X4Fo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.1 964/982] nfc: llcp: drop truncated I/RR/RNR PDUs in nfc_llcp_recv_hdlc()
-Date: Wed, 30 Sep 2026 17:28:20 +0200
-Message-ID: <20260930152437.449232217@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Patrick Lu (Anthropic)" <perf.patrick.lu@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.1 929/982] writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes
+Date: Wed, 30 Sep 2026 17:27:45 +0200
+Message-ID: <20260930152436.695631785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,49 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Patrick Lu (Anthropic) <perf.patrick.lu@gmail.com>
 
-commit 273f9d667cde649f8de9d72b1303cc2f4b658c50 upstream.
+commit f6988c90671e83db79df1b7b9d6fdb0e5947fd84 upstream.
 
-nfc_llcp_recv_hdlc() reads the sequence byte skb->data[2], via
-nfc_llcp_ns()/nfc_llcp_nr(), before any length check. The receive path
-only guarantees the two-byte LLCP header -- __nfc_llcp_recv() checks it
-with pskb_may_pull() and nfc_llcp_recv_agf() admits two-byte inner PDUs
--- so a two-byte I, RR or RNR PDU reads one byte of uninitialised skb
-tailroom. The byte becomes N(R)/N(S); a peer can already set those with
-a well-formed PDU, so this is acting on uninitialised memory, not new
-peer control.
+cleanup_offline_cgwb() prepares at most WB_MAX_INODES_PER_ISW inodes
+per call and is called again until the dying wb is drained, but every
+call walks wb->b_attached and then wb->b_dirty_time from the same end.
+Inodes already prepared (they stay on the list with I_WB_SWITCH set
+until the switch worker runs) and inodes that cannot be switched
+(I_FREEING, I_WILL_FREE, !SB_ACTIVE, DAX, already on the target wb)
+stay where they are, so each pass rescans a growing run of them under
+wb->list_lock and a full drain is quadratic in the number of inodes on
+the list. With ~17M inodes attached to one dying cgwb we saw this end
+in soft lockups, with CPUs reported stuck for 21-48s.
 
-Guard the read with pskb_may_pull(), as commit 95674f506c63 ("nfc: llcp:
-reject PDUs shorter than the LLCP header") did for the two-byte header,
-so the sequence byte is present and linear before it is read. RR and RNR
-PDUs are LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE bytes and an I PDU is
-longer, so no valid frame is rejected; a truncated PDU is malformed, so
-return without a DM reply.
+Walk both lists from the oldest end and move every scanned inode to
+the newest end, so the next pass starts where the previous one stopped
+and the drain becomes linear. b_attached is unordered, so nobody sees
+the reorder there. b_dirty_time is ordered by dirtied_when, but the
+oldest unscanned inode stays at the end move_expired_inodes() picks
+from, sync takes the whole list regardless of order, and prepared
+inodes leave the list as soon as the switch work runs and get a new
+dirtied_time_when on the new wb anyway, so the only inodes left out of
+order are the ones that can never switch (DAX), and only on the dying
+wb.
 
-Fixes: d646960f7986 ("NFC: Initial LLCP support")
+Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/AS8P251MB0001789BBF04B72745C7D96BC8BA2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Acked-by: Tejun Heo <tj@kernel.org>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Signed-off-by: Patrick Lu (Anthropic) <perf.patrick.lu@gmail.com>
+Link: https://patch.msgid.link/20260911-wb-cgwb-rotate-v2-1-a9ab253a1295@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/llcp_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/fs-writeback.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1099,6 +1099,9 @@ static void nfc_llcp_recv_hdlc(struct nf
- 	struct sock *sk;
- 	u8 dsap, ssap, ptype, ns, nr;
- 
-+	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE))
-+		return;
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -667,19 +667,34 @@ static bool isw_prepare_wbs_switch(struc
+ 				   struct inode_switch_wbs_context *isw,
+ 				   struct list_head *list, int *nr)
+ {
+-	struct inode *inode;
++	struct inode *inode, *tmp;
++	LIST_HEAD(scanned);
++	bool full = false;
 +
- 	ptype = nfc_llcp_ptype(skb);
- 	dsap = nfc_llcp_dsap(skb);
- 	ssap = nfc_llcp_ssap(skb);
++	/*
++	 * Walk from the oldest end and move scanned inodes to the newest
++	 * end, so the next scan resumes at unscanned inodes instead of
++	 * re-walking an ever-growing run of prepared and skipped ones.
++	 * For b_dirty_time this keeps the oldest unscanned inode at the
++	 * end move_expired_inodes() picks from; b_attached is unordered.
++	 */
++	list_for_each_entry_safe_reverse(inode, tmp, list, i_io_list) {
++		list_move(&inode->i_io_list, &scanned);
+ 
+-	list_for_each_entry(inode, list, i_io_list) {
+ 		if (!inode_prepare_wbs_switch(inode, new_wb))
+ 			continue;
+ 
+ 		isw->inodes[*nr] = inode;
+ 		(*nr)++;
+ 
+-		if (*nr >= WB_MAX_INODES_PER_ISW - 1)
+-			return true;
++		if (*nr >= WB_MAX_INODES_PER_ISW - 1) {
++			full = true;
++			break;
++		}
+ 	}
+-	return false;
++	list_splice(&scanned, list);
++
++	return full;
+ }
+ 
+ /**
 
 
