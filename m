@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC793B3C01;
-	Wed, 30 Sep 2026 18:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33833AF674;
+	Wed, 30 Sep 2026 18:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794661; cv=none; b=GJV4v2mRZgiCQiiR8egveFaspqUji3UHDidTYoZDR3jD0PrYvycAMZ58YWtAq39QfLP8in9i8Gjof2I9zTJKjMmUhFO/PvzbFiszbBNwLK7dXjBXyRmC/Si3WsKaXqhpDidLd8rm2SMSocwEMlYKJeE7X9+PYlJFkkgCe4yHOqQ=
+	t=1790794663; cv=none; b=iZbbCPCMJCNbcgu8vfA1nnXAGBzbRhSFEX5qR7jD/LoKTQ7M4LvtdyL7XemAq3hWy7JFTyHV2xn6FSUya3JCfSaJRaCtTOosRllvM2/eltDp6ouq4uBpezEEdWEP443eTu/SeusRTRSF1Yx0J0gb0j7RR/JeWklBtxGkj8LZQcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794661; c=relaxed/simple;
-	bh=jwmN8ItKqjMPSLoQ12Hdbi4ee09oesK7FzsN+L2adEM=;
+	s=arc-20240116; t=1790794663; c=relaxed/simple;
+	bh=R0ZcxA9jJtqlex0y7J3uo93FMka8nCSHAWINPaTp0ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQ2zoN6m0PbC+9XFF47yG6an8v9IrmVLGzot3f/yY0jn60YCS8wYEdsEpX/l6VUs2e8fEiPePepO/QS5bcxYdI4Wnm0BZP1LI5So+AfwGv3K/GBACaJdSReur7+ZJQt40owqv9h58iLu1it1ASCo+O99ofNkPMTHHobLSAPbvfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CThhfB2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HVYI/DotJDMsLgCKtCRBpDjJM3hlVk6en5VVNQuQ8/l6JMrwmHtyxGu7bm0w5i0kz3uC3osqFB8NtQ7nY4avgEwQaodNC/qdkg2uzVp9RfRYGR84vKv6ZG6Jbjy/L8QOkxn/oZh+62gKpvqIF9lDigmYwt7EW7HVIGQqCgShBY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/hdNB3u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CThhfB2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D851F00899;
-	Wed, 30 Sep 2026 18:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/hdNB3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0671F000FF;
+	Wed, 30 Sep 2026 18:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794660;
-	bh=JZbq6USmlqGFBDrdnrQnwo17ytsmVqC9hn7IysesqB4=;
+	s=korg; t=1790794662;
+	bh=9o5MjXpS4nVN5Www6M5JTmKtxs4eMHsXqBQ/htQRVo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CThhfB2JghKICZL55J2pNcG+zIhILvoG94eds5pWMYoP1Yls55+oWytVixyxXkerm
-	 yU7ubh4Gk8IEg0Ht4aCnPYVifGovGeCQhQ+97SSkcpbfDVd8Y388TOjlIUUO7vb2Zs
-	 jKnfcGAD+UwXwWgyFMhhUkTo3LxzTFCeJoxctuAs=
+	b=m/hdNB3urEecKEGzkFj7qRbkfuKQ76hFJUIWH5pDssc7Ojm755sUcyR4vxL23A0Te
+	 u6NhVVmgVJS91Ym98QxtwHEKWDyIw25QfO4K6o+/twcVqYqA7f1SPr/UwE0FD9TkmI
+	 R8f3esn6TfK0IAeJ4FKsf1iqxLqZcMfXt7QOWDhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0290/1193] wifi: cfg80211: validate assoc response length before status and IE access
-Date: Wed, 30 Sep 2026 17:16:14 +0200
-Message-ID: <20260930152440.606100219@linuxfoundation.org>
+Subject: [PATCH 6.6 0291/1193] ksmbd: find bound sessions during reauthentication
+Date: Wed, 30 Sep 2026 17:16:15 +0200
+Message-ID: <20260930152440.626725829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,127 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b760113aeca2e9362d56bf9e9263373ffe6c8eb3 ]
+[ Upstream commit faf8578c77f3d846aca9cd882c293e03eafcc6df ]
 
-cfg80211_rx_assoc_resp() initialises the status and response-IE fields
-of cfg80211_connect_resp_params from the management frame before
-proving that the frame is long enough for those offsets. S1G and
-regular association responses also have different IE offsets, but the
-S1G path only patched resp_ie after the unsafe initialiser had already
-run.
+A session bound to an additional connection is stored in the session
+channel list, but it is not added to that connection's local session table.
+After the binding exchange completes, conn->binding is cleared.
 
-Defer resp_ie, resp_ie_len, and status to after the link-iteration
-loop. Use a bool to remember whether the frame is S1G, then validate
-the appropriate minimum length and set all three fields in a single
-if/else block. Funnel short-frame and SME-reject cleanup through a
-shared free_bss label for the abandon paths.
+A later SESSION_SETUP reauthentication on the bound channel only searches
+the local session table. It fails to find the session and returns
+STATUS_USER_SESSION_DELETED instead of processing authentication and
+returning STATUS_LOGON_FAILURE for invalid credentials.
 
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260707025336.22557-2-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+If the local lookup fails, look up the session globally and accept it only
+when the current connection is registered in its channel list. This keeps
+unbound connections from using the session while allowing reauthentication
+on an established channel.
+
+This fixes smb2.session.bind_invalid_auth.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 56 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 35 insertions(+), 21 deletions(-)
+ fs/smb/server/smb2pdu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index 3d631f8073f06..6fbcc9f70b6d0 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -32,14 +32,10 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
- 		.timeout_reason = NL80211_TIMEOUT_UNSPECIFIED,
- 		.req_ie = data->req_ies,
- 		.req_ie_len = data->req_ies_len,
--		.resp_ie = mgmt->u.assoc_resp.variable,
--		.resp_ie_len = data->len -
--			       offsetof(struct ieee80211_mgmt,
--					u.assoc_resp.variable),
--		.status = le16_to_cpu(mgmt->u.assoc_resp.status_code),
- 		.ap_mld_addr = data->ap_mld_addr,
- 	};
- 	unsigned int link_id;
-+	bool is_s1g = false;
- 
- 	for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
- 		cr.links[link_id].status = data->links[link_id].status;
-@@ -60,16 +56,32 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
- 
- 		if (cr.links[link_id].bss->channel->band == NL80211_BAND_S1GHZ) {
- 			WARN_ON(link_id);
--			cr.resp_ie = (u8 *)&mgmt->u.s1g_assoc_resp.variable;
--			cr.resp_ie_len = data->len -
--					 offsetof(struct ieee80211_mgmt,
--						  u.s1g_assoc_resp.variable);
-+			is_s1g = true;
- 		}
- 
- 		if (cr.ap_mld_addr)
- 			cr.valid_links |= BIT(link_id);
- 	}
- 
-+	if (is_s1g) {
-+		if (data->len < offsetof(struct ieee80211_mgmt,
-+					 u.s1g_assoc_resp.variable))
-+			goto free_bss;
-+		cr.resp_ie = (u8 *)&mgmt->u.s1g_assoc_resp.variable;
-+		cr.resp_ie_len = data->len -
-+				 offsetof(struct ieee80211_mgmt,
-+					  u.s1g_assoc_resp.variable);
-+	} else {
-+		if (data->len < offsetof(struct ieee80211_mgmt,
-+					 u.assoc_resp.variable))
-+			goto free_bss;
-+		cr.resp_ie = mgmt->u.assoc_resp.variable;
-+		cr.resp_ie_len = data->len -
-+				 offsetof(struct ieee80211_mgmt,
-+					  u.assoc_resp.variable);
-+	}
-+	cr.status = le16_to_cpu(mgmt->u.assoc_resp.status_code);
-+
- 	trace_cfg80211_send_rx_assoc(dev, data);
- 
- 	/*
-@@ -78,22 +90,24 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
- 	 * and got a reject -- we only try again with an assoc
- 	 * frame instead of reassoc.
- 	 */
--	if (cfg80211_sme_rx_assoc_resp(wdev, cr.status)) {
--		for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
--			struct cfg80211_bss *bss = data->links[link_id].bss;
--
--			if (!bss)
--				continue;
--
--			cfg80211_unhold_bss(bss_from_pub(bss));
--			cfg80211_put_bss(wiphy, bss);
--		}
--		return;
--	}
-+	if (cfg80211_sme_rx_assoc_resp(wdev, cr.status))
-+		goto free_bss;
- 
- 	nl80211_send_rx_assoc(rdev, dev, data);
- 	/* update current_bss etc., consumes the bss reference */
- 	__cfg80211_connect_result(dev, &cr, cr.status == WLAN_STATUS_SUCCESS);
-+	return;
-+
-+free_bss:
-+	for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
-+		struct cfg80211_bss *bss = data->links[link_id].bss;
-+
-+		if (!bss)
-+			continue;
-+
-+		cfg80211_unhold_bss(bss_from_pub(bss));
-+		cfg80211_put_bss(wiphy, bss);
-+	}
- }
- EXPORT_SYMBOL(cfg80211_rx_assoc_resp);
- 
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e9a3fed457c38..293ebee718912 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1784,6 +1784,13 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	} else {
+ 		sess = ksmbd_session_lookup(conn,
+ 					    le64_to_cpu(req->hdr.SessionId));
++		if (!sess) {
++			sess = ksmbd_session_lookup_slowpath(le64_to_cpu(req->hdr.SessionId));
++			if (sess && !lookup_chann_list(sess, conn)) {
++				ksmbd_user_session_put(sess);
++				sess = NULL;
++			}
++		}
+ 		if (!sess) {
+ 			rc = -ENOENT;
+ 			goto out_err;
 -- 
 2.53.0
 
