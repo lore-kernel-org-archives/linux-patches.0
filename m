@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E044B51C060;
-	Wed, 30 Sep 2026 17:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845CF51B16C;
+	Wed, 30 Sep 2026 17:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790806; cv=none; b=CSw/pvb3loq5imW5bkK9vHtXrGIJ+/glpH9MH7x20NuV6g/75Zdmh8eE5Y+ESQPWhP8Qvtnj/uoYKIrwoRkp9q7UKgSMzIrX2iG2kqeNGPHQWXfevf+N9qAjGbZW5BJfrap25ck9eD8ySCewbj+xaUyDRn6sxRz6Y82+/Ed4cN8=
+	t=1790790808; cv=none; b=Qq3nxoHDz1KuI9tZMD0bcNkpGC1+z2MhwPYRJsEmviKIcJ/ZoT3KTLQnt3YzP01X5dZArisdUHMJzfcJWIakKP2u6nM4TTS933ixmzCfGr3DWbLqQpaukGR3X+iLowAF2zlFmDfeHQ91RnjzUNEP0cNodHe3KD+Dyz6ZGItX694=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790806; c=relaxed/simple;
-	bh=iQKdUieLyLE9DraIE1faQZkIqktLpE+fEwu5pgdALT4=;
+	s=arc-20240116; t=1790790808; c=relaxed/simple;
+	bh=5sRYrsKB0XgWgPpCuyE6Yx5wG8l9upMWpZVbDbV+fNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6qi0uqL0+TCCInDsPZ22vOY7NEux9BkAsG3AXltbFrDx/9W2ZXo0w7xTbGQCtAqpbx2CT0NbOqUcvC8ULrl6OvWGJ2dCG1xvYla3/sWosjMO2CAJ6qxkedqoTIk6Xkdo6cRKI8r49Ro8Ggs5GqgGOx/lITYtBrerPfcdHwAiqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3RFIydk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n0/N/e55DANSsyXzCc6ES9m0lO+8TygE8cGr7cmkSm5v5t3yzuch5qjN3dr2h9iYTBAEjC6ElYb4iihwYKZ+DZr/Mi4Sx/ebLwiUBlkY2J0puQBW0Y9ll+AISk51D96U0Gv6eRcysnfrtFGbbzWaUrtSwQmukBhytSCeB+6BH24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm6zn8//; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3RFIydk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B5E1F000FF;
-	Wed, 30 Sep 2026 17:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm6zn8//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39FE1F00898;
+	Wed, 30 Sep 2026 17:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790804;
-	bh=g8+qNm/0b/GRCFJftsB+PDVw6zMT47EK4p4xOzJZELE=;
+	s=korg; t=1790790807;
+	bh=gCmmpQ4LETg/W+yrqky9bs89y6Tvo0cxwDG39aRn5b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3RFIydkt50/yVaRy7PgnKEkFoLJbuslTQrlBLgXIg9Pb8FieSbPpS3yMmh8IOEkz
-	 5/77dtNptDr0PqohQbjEbZenNLu2MIXoSHgedUCKrfH74NODbjTUzwHWdqizuTVhsZ
-	 3PZFUD5ShztGiMmbPUq9iLBDkZFjpHcRm8nV5nho=
+	b=mm6zn8//TEXms/JnfM+qHsE8mfg+NjIeFE8icKltcpn2Z3/y/MGQDoWWAAhr2t35k
+	 ArOkH6vnuvAkdqSY7fh5FkGhfOX6d77vHq2hNW/Y9jIj5x5dJnWxZzoG/2Kbfe2wuh
+	 KOfcxJtf63JBX/eWDC8YWUveoAPrCEu+cWsacVKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Joonwon Kang <joonwonkang@google.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/752] RDMA/mlx5: Use QP port when decoding responder CQEs
-Date: Wed, 30 Sep 2026 17:18:25 +0200
-Message-ID: <20260930152358.911904804@linuxfoundation.org>
+Subject: [PATCH 5.15 036/752] mailbox: Make mbox_send_message() return error code when tx fails
+Date: Wed, 30 Sep 2026 17:18:26 +0200
+Message-ID: <20260930152358.935056755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,37 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Joonwon Kang <joonwonkang@google.com>
 
-[ Upstream commit 194762e6e436acde0f8f6aef44200b0058c36791 ]
+[ Upstream commit 96a3d2f3167f5644b30e60171898e67123c3c2c6 ]
 
-The responder CQE path determines the link layer via
-rdma_port_get_link_layer(). Use qp->port instead of
-hardcoding port 1, which can mis-decode completions on
-multi-port devices.
+When the mailbox controller failed transmitting message, the error code
+was only passed to the client's tx done handler and not to
+mbox_send_message() in blocking mode. For this reason, the function could
+return a false success. This commit resolves the issue by introducing the
+tx status and checking it before mbox_send_message() returns.
 
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Link: https://patch.msgid.link/20260410074046.2044595-1-zhaochenguang@kylinos.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This commit works with the premise that the multi-threads' access to a
+channel in blocking mode is serialized by clients, not by the mailbox
+APIs, since the current mbox_send_message() in blocking mode does not
+support multi-threads.
+
+Signed-off-by: Joonwon Kang <joonwonkang@google.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mailbox/mailbox.c          | 6 +++++-
+ include/linux/mailbox_controller.h | 2 ++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index f3becb506125e..305c1640fde66 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -166,7 +166,8 @@ enum {
- static void handle_responder(struct ib_wc *wc, struct mlx5_cqe64 *cqe,
- 			     struct mlx5_ib_qp *qp)
- {
--	enum rdma_link_layer ll = rdma_port_get_link_layer(qp->ibqp.device, 1);
-+	enum rdma_link_layer ll =
-+		rdma_port_get_link_layer(qp->ibqp.device, qp->port);
- 	struct mlx5_ib_dev *dev = to_mdev(qp->ibqp.device);
- 	struct mlx5_ib_srq *srq = NULL;
- 	struct mlx5_ib_wq *wq;
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index 363eaf3c962ec..1dda26c98d759 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -110,8 +110,10 @@ static void tx_tick(struct mbox_chan *chan, int r)
+ 	if (chan->cl->tx_done)
+ 		chan->cl->tx_done(chan->cl, mssg, r);
+ 
+-	if (r != -ETIME && chan->cl->tx_block)
++	if (r != -ETIME && chan->cl->tx_block) {
++		chan->tx_status = r;
+ 		complete(&chan->tx_complete);
++	}
+ }
+ 
+ static enum hrtimer_restart txdone_hrtimer(struct hrtimer *hrtimer)
+@@ -281,6 +283,8 @@ int mbox_send_message(struct mbox_chan *chan, void *mssg)
+ 		if (ret == 0) {
+ 			t = -ETIME;
+ 			tx_tick(chan, t);
++		} else if (chan->tx_status < 0) {
++			t = chan->tx_status;
+ 		}
+ 	}
+ 
+diff --git a/include/linux/mailbox_controller.h b/include/linux/mailbox_controller.h
+index 6fee33cb52f58..02e54ac37a6c0 100644
+--- a/include/linux/mailbox_controller.h
++++ b/include/linux/mailbox_controller.h
+@@ -108,6 +108,7 @@ struct mbox_controller {
+  * @txdone_method:	Way to detect TXDone chosen by the API
+  * @cl:			Pointer to the current owner of this channel
+  * @tx_complete:	Transmission completion
++ * @tx_status:		Transmission status
+  * @active_req:		Currently active request hook
+  * @msg_count:		No. of mssg currently queued
+  * @msg_free:		Index of next available mssg slot
+@@ -120,6 +121,7 @@ struct mbox_chan {
+ 	unsigned txdone_method;
+ 	struct mbox_client *cl;
+ 	struct completion tx_complete;
++	int tx_status;
+ 	void *active_req;
+ 	unsigned msg_count, msg_free;
+ 	void *msg_data[MBOX_TX_QUEUE_LEN];
 -- 
 2.53.0
 
