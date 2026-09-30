@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF3C51991A;
-	Wed, 30 Sep 2026 17:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ED6518137;
+	Wed, 30 Sep 2026 17:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787909; cv=none; b=ntsx8lBwFXivZnE0XbJCvbhyetebwWQ7JKH9vkEt3QqQ66y+xRTZ5BJ7lz3XW9d3gYktkDSUSWmFxiMOPxPewQSeMRt/EmLcRA/g4ppXoDCaHjFgQbNBiiOIFAdIbGQQNaQ1Sdo4lFoVdKnCg38hRjCvkRiH5FC2lVJz7Z3GDcA=
+	t=1790787911; cv=none; b=byrtDH0JXVpKg4qKpY4K4wUiyTQ/LhczaselAP4idZY76aQ9WK6CrSkCT4U+FmRCOQj+CJElyrTiwprBTxRO7b51qSgqS1d//CO6BnvbPs1xV2ZdCGU8FP4wg4iCnXTangyH2G6Bkx6QmoV9gQdDhwRaHojsiZv4aetYlVj+zTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787909; c=relaxed/simple;
-	bh=EO5gPyt5z7K59qvZfz1P43CPDilSb6Q1B0ab0iyVKU0=;
+	s=arc-20240116; t=1790787911; c=relaxed/simple;
+	bh=+YtQNSWXvjocaoGwc6r7Jn9TiFiiZWufJc16XZikGGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuXdrmjSE1mtMaSMZf6eRultvMsJfL8IIlto5rpMyYVpkJSI4H1+O9HvFjUJ/1daCL7hKI8Sw8mymaOGclRqMZFrAERTXj5EBLpE+3ebITw9HiASZi5zWDBYoSaXLVJzySCbA2QRt+VLhOKRNz+0tquEEj3ejf1m6D5+zap3KnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNIwbXhY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ie/u8LKvjWB+mjDfqoUPZVgimSb7608m3npvzBQSRP8HyYTKgG200tIHt/3uFKdYibpw5DNF9Xs1PMeXhxeLjJoG+u1XWuJxxXOKyOFb09GHUZ7cXomY4Q+KS5uPbSGwaKb3jNs5jd0T0ROemyBkaHVn1bEMqUSWqBgGgpFV0Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBJ2YWJM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNIwbXhY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E7A1F000FF;
-	Wed, 30 Sep 2026 17:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBJ2YWJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6631F000FF;
+	Wed, 30 Sep 2026 17:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787907;
-	bh=lJIrYSK1nvUyffdMUXxcyxYsOpDAYKLFybDyZyGU5yE=;
+	s=korg; t=1790787910;
+	bh=EHHMV3YHiSxGe+eNLcX+Y3qUp8p6cTfopUekisTLa/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNIwbXhY70DPcs020T4qycrAydR5Mh3hAZTUSAAZTOpMfxT3SaB7hm47w4jYhqwSL
-	 lcDgNtzxTA5KPr3gjh3VSpga9zMLEnuA+fjdMjkmEPzDQZfqL3uqpjOt1fPToPfvTl
-	 n1osg6JnhUgUxsqrS/1ViOg5K/VmxYoMpZqc3bis=
+	b=aBJ2YWJMOwAq7L/cAsH2MDnMqCcMLYIbXt6UrMTp8CxNabfLm6cYdubXwlDQgretv
+	 /cdl450c4Cf2tDigbDISsaZ2vFzyiLRlJl81ZZE00Fw02zQDt1TQ+/+zMKZ/btBJeD
+	 4e3nXPUOnCJEbju/j+83Q5vcD2OxUkyhS3hwOOLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+459f67f4d8af8ce6@bugs.sh,
+	Vega <vega@nebusec.ai>,
 	Florian Westphal <fw@strlen.de>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 7.2 350/457] netfilter: ip6t_rpfilter: reject routes without inet6_dev
-Date: Wed, 30 Sep 2026 17:27:35 +0200
-Message-ID: <20260930152353.566176528@linuxfoundation.org>
+Subject: [PATCH 7.2 351/457] netfilter: ip6t_rt: fix zero-address non-strict match out-of-bounds read
+Date: Wed, 30 Sep 2026 17:27:36 +0200
+Message-ID: <20260930152353.587203360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,67 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Luxiao Xu <rakukuip@gmail.com>
 
-commit 1b9b5323725e458906c7620a3bc10398b51ad954 upstream.
+commit 82313c169eddc02b1bf5ba6b427803e272d3ec42 upstream.
 
-ip6_route_lookup() can return an error-free route whose rt6i_idev is
-NULL. Lowering an external nexthop device's MTU below IPV6_MIN_MTU tears
-down its inet6_dev while fib6_ifdown() leaves routes using nexthop objects
-in the FIB. An unprivileged user can construct this state with rtnetlink
-in a private user and network namespace, then trigger a NULL dereference
-through an IPv6 rpfilter lookup:
+rt_mt6_check() permits rules to be configured with rtinfo->addrnr == 0
+even when address matching (IP6T_RT_FST_MASK) is requested.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000000
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: rpfilter_mt (net/ipv6/netfilter/ip6t_rpfilter.c:75)
-  Call Trace:
-  ip6t_do_table (net/ipv6/netfilter/ip6_tables.c:316)
-  nf_hook_slow (net/netfilter/core.c:619)
-  ipv6_rcv (net/ipv6/ip6_input.c:351)
-  __netif_receive_skb_one_core (net/core/dev.c:6216)
-  process_backlog (net/core/dev.c:6680)
-  __napi_poll (net/core/dev.c:7739)
-  net_rx_action (net/core/dev.c:7959)
-  handle_softirqs (kernel/softirq.c:622)
-  do_softirq.part.0 (kernel/softirq.c:523)
-  __local_bh_enable_ip (kernel/softirq.c:450)
-  __dev_queue_xmit (net/core/dev.c:4913)
-  packet_sendmsg (net/packet/af_packet.c:3139)
-  __sys_sendto (net/socket.c:2252)
-  __x64_sys_sendto (net/socket.c:2259)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-  Kernel panic - not syncing: Fatal exception in interrupt
+In the IP6T_RT_FST_NSTRICT path, rt_mt6() evaluates packet routing
+addresses against rtinfo->addrs[i] and terminates backwards at the bottom
+of the loop:
 
-Reject routes without an inet6_dev immediately after lookup. Such routes
-are not eligible for reverse-path filtering, and the check protects all
-later rt6i_idev dereferences.
+    if (ipv6_addr_equal(ap, &rtinfo->addrs[i])) {
+        i++;
+    }
+    if (i == rtinfo->addrnr)
+        break;
 
-Fixes: e26f9a480fb6 ("netfilter: add ipv6 reverse path filter match")
-Reported-by: co+459f67f4d8af8ce6@bugs.sh
-Closes: https://lore.kernel.org/all/VtWUkE8QzJt5CroTj2V2v3ZQ0gwbXZ7nq7I3@bugs.sh/
-Suggested-by: Florian Westphal <fw@strlen.de>
-Assisted-by: Claude:gpt-5
+When addrnr is 0, if the first packet address matches rtinfo->addrs[0],
+i is incremented to 1. Because i is now strictly greater than addrnr (0),
+the loop termination condition (i == rtinfo->addrnr) is bypassed and will
+never be satisfied.
+
+If a crafted IPv6 packet contains matching routing addresses, i will
+advance past IP6T_RT_HOPS (16). The subsequent call to ipv6_addr_equal()
+reads beyond struct ip6t_rt, triggering UBSAN/KASAN out-of-bounds warnings
+or kernel panics.
+
+Fix this by:
+1. Rejecting rules in rt_mt6_check() where IP6T_RT_FST_MASK is set but
+   rtinfo->addrnr is zero.
+2. In rt_mt6(), moving the termination condition (i < rtinfo->addrnr)
+   into the for-loop header condition and removing the backwards break
+   at the end of the loop body.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Assisted-by: LLM
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/netfilter/ip6t_rpfilter.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/ip6t_rt.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/ipv6/netfilter/ip6t_rpfilter.c
-+++ b/net/ipv6/netfilter/ip6t_rpfilter.c
-@@ -61,7 +61,7 @@ static bool rpfilter_lookup_reverse6(str
- 		fl6.flowi6_oif = dev->ifindex;
+--- a/net/ipv6/netfilter/ip6t_rt.c
++++ b/net/ipv6/netfilter/ip6t_rt.c
+@@ -96,7 +96,8 @@ static bool rt_mt6(const struct sk_buff
+ 			unsigned int i = 0;
  
- 	rt = (void *)ip6_route_lookup(net, &fl6, skb, lookup_flags);
--	if (rt->dst.error)
-+	if (rt->dst.error || !rt->rt6i_idev)
- 		goto out;
+ 			for (temp = 0;
+-			     temp < (unsigned int)((hdrlen - 8) / 16);
++			     temp < (unsigned int)((hdrlen - 8) / 16) &&
++			     i < rtinfo->addrnr;
+ 			     temp++) {
+ 				ap = skb_header_pointer(skb,
+ 							ptr
+@@ -112,8 +113,6 @@ static bool rt_mt6(const struct sk_buff
  
- 	if (rt->rt6i_flags & (RTF_REJECT|RTF_ANYCAST))
+ 				if (ipv6_addr_equal(ap, &rtinfo->addrs[i]))
+ 					i++;
+-				if (i == rtinfo->addrnr)
+-					break;
+ 			}
+ 			if (i == rtinfo->addrnr)
+ 				return ret;
+@@ -162,6 +161,12 @@ static int rt_mt6_check(const struct xt_
+ 		pr_debug("too many addresses specified\n");
+ 		return -EINVAL;
+ 	}
++
++	if ((rtinfo->flags & IP6T_RT_FST_MASK) && !rtinfo->addrnr) {
++		pr_info_ratelimited("address list match requested but addrnr is 0\n");
++		return -EINVAL;
++	}
++
+ 	if ((rtinfo->flags & (IP6T_RT_RES | IP6T_RT_FST_MASK)) &&
+ 	    (!(rtinfo->flags & IP6T_RT_TYP) ||
+ 	     (rtinfo->rt_type != 0) ||
 
 
