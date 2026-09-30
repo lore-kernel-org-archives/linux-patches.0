@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3309F50C287;
-	Wed, 30 Sep 2026 18:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B547D3BE642;
+	Wed, 30 Sep 2026 18:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792422; cv=none; b=VuMdl0+R1BGA7UD9x1n+LhU0nd+OnCJQ7+l8yWfisjkOUiItij7UcDTrv5iDHIRib457mbi+H35NXjlzcda2oWaPhHAg+2KKP20xF1xE6/zWJjmJgp/VjQxR2Ze3ohIb6DyNBq1I5P9oCoBUo7MSmZfhFW0928JFuX3cBttuLC4=
+	t=1790792424; cv=none; b=tkV1N92cTJtCQNZy412J6JqgwAfjp/LqRqHKXs7zXNgVHBx4vtMn17pr5sHf8IF7E7PpIvtrZC76XNca3zHlTLjFM8O5GjjnmFsD1BWhOzZDBzVAssHaNRWH7UEIxLUMguQlOeQdrENHhxuLvVEOqUTm6sgTgkF9OV7fdZ1DBb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792422; c=relaxed/simple;
-	bh=4HJCBkx2KwFlLnvLx1vvRRqAFan/DndL39SCaJIokXA=;
+	s=arc-20240116; t=1790792424; c=relaxed/simple;
+	bh=gq8RfWTqIwf/RFLZslrQHPz8WCcJRrLq55k3HUBqsvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=khExhmQUBJ5UP7bxF5bSIcjeaAJdsO5cGaQs6HnxXjLU+43Ddr0f9HVVf9ABwif+LntzmXKrfynxhkraLhCbmzUYCuUnRU5Nckm49+FgyIEcB25varIjfo3DdXgGlmijg/LYEeLn0RIbCe+6VA1egp/SkLpvQ5znLbDnOa7GlMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3ifmGCS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rIAOwoWZNP4I3ewEYfUjUeujqRlDGNfxk+uxHbrZ8GLMPQ05CH65dUbTJ7/dhqqvUC31Bl2h1cKQ5HENGMf9No1MnZCeXR00NFd8Ia90HNfGofeJEWqoaGzoCKvxnclNqVNH78UXE1EnkQ2+GO+xEy9kh7K+9Q2N3i9+gs4w//Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwQdhdwd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3ifmGCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BD71F000FF;
-	Wed, 30 Sep 2026 18:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwQdhdwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBD11F000FF;
+	Wed, 30 Sep 2026 18:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792420;
-	bh=+5voJshCaefnaepv7WwdFHSjtrDtpzxgRtTm69bqqGc=;
+	s=korg; t=1790792423;
+	bh=UXum8n40GFlgwGpbjdFk1jhtvf5mM/QUWn87xZGkLAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S3ifmGCSzqtV9K3w/eORK6ECDl1cKaZ5MVKtSNoWtOqREu2oxBI0TvNF96V9gkIEH
-	 CZcNXD/cWfbGdPxT+TlcnXlRwNQ1Q/E3OO0VGnC8fYUE31BktMDmGnV9UYviTa6b3Z
-	 0cRaeHlAzGLZHwtLdr1Zi4bSlKo3s7zE8cRfGy80=
+	b=CwQdhdwdjcx4SYoiA4wRTL0Bz1xNfLyPX//NJeDuLNvKHeQOgDGN7Nbd35mvCx1FT
+	 miqStSnJhF3Izn82RTaUdPAxNvG/aP1r2IFdiyKKoLaQn0PUKkk57NpYvhPgJpy+9o
+	 Miaorkl5JwkwgWvUOqfNFPOXKj+xqb/uvjaa2cMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 647/752] net: stmmac: dwmac4: Use the correct bufzise when the len is exactly 8K
-Date: Wed, 30 Sep 2026 17:28:37 +0200
-Message-ID: <20260930152412.263786733@linuxfoundation.org>
+Subject: [PATCH 5.15 648/752] nfc: nfcmrvl: validate helper command length before pull
+Date: Wed, 30 Sep 2026 17:28:38 +0200
+Message-ID: <20260930152412.284267746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,77 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b42e7012773a0e81e97a2dda6ef907f5147a6658 ]
+[ Upstream commit 686f942332b1667f13f3b8d6a2f50bcfbf42e277 ]
 
-DMA bufsize selection isn't made on the MTU but the actual frame length,
-so including the L2 header. On DWMAC4, if the len is exactly BUF_SIZE_8KiB,
-the next larger size is incorrectly selected.
+The firmware download receive path removes the NCI data header and
+reads the helper command before validating the remaining packet length.
+A short frame can therefore reach the data access before the malformed
+packet is rejected.
 
-Lets fix the comparison and while at it, rename the parameter from len
-to mtu.
+Validate the complete helper command length before stripping the NCI
+data header.
 
-Fixes: c3efed5ad1b0 ("net: stmmac: Enable dwmac4 jumbo frame more than 8KiB").
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260917215339.2022523-6-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3194c6870158 ("NFC: nfcmrvl: add firmware download support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260715084325.40276-1-pengpeng@iscas.ac.cn
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c | 4 ++--
- drivers/net/ethernet/stmicro/stmmac/hwif.h         | 2 +-
- drivers/net/ethernet/stmicro/stmmac/ring_mode.c    | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/nfc/nfcmrvl/fw_dnld.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-index 90917445000fd..3e57061d3a887 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-@@ -486,11 +486,11 @@ static void dwmac4_set_sarc(struct dma_desc *p, u32 sarc_type)
- 	p->des3 |= cpu_to_le32(sarc_type & TDES3_SA_INSERT_CTRL_MASK);
- }
+diff --git a/drivers/nfc/nfcmrvl/fw_dnld.c b/drivers/nfc/nfcmrvl/fw_dnld.c
+index edac56b01fd13..bb4ed02a618f0 100644
+--- a/drivers/nfc/nfcmrvl/fw_dnld.c
++++ b/drivers/nfc/nfcmrvl/fw_dnld.c
+@@ -264,9 +264,14 @@ static int process_state_fw_dnld(struct nfcmrvl_private *priv,
+ 		 * B8..N: payload
+ 		 */
  
--static int set_16kib_bfsize(int mtu)
-+static int set_16kib_bfsize(int len)
- {
- 	int ret = 0;
- 
--	if (unlikely(mtu >= BUF_SIZE_8KiB))
-+	if (unlikely(len > BUF_SIZE_8KiB))
- 		ret = BUF_SIZE_16KiB;
- 	return ret;
- }
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index 3c9d7c3d36d0f..d4121b19372a1 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -555,7 +555,7 @@ struct stmmac_mode_ops {
- 	unsigned int (*is_jumbo_frm) (int len, int ehn_desc);
- 	int (*jumbo_frm)(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 			 int csum);
--	int (*set_16kib_bfsize)(int mtu);
-+	int (*set_16kib_bfsize)(int len);
- 	void (*init_desc3)(struct dma_desc *p);
- 	void (*refill_desc3)(struct stmmac_rx_queue *rx_q, struct dma_desc *p);
- 	void (*clean_desc3)(struct stmmac_tx_queue *tx_q, struct dma_desc *p);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-index c6c0e4a5e467c..275b638bbc0f4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-@@ -128,10 +128,10 @@ static void clean_desc3(struct stmmac_tx_queue *tx_q, struct dma_desc *p)
- 		p->des3 = 0;
- }
- 
--static int set_16kib_bfsize(int mtu)
-+static int set_16kib_bfsize(int len)
- {
- 	int ret = 0;
--	if (unlikely(mtu > BUF_SIZE_8KiB))
-+	if (unlikely(len > BUF_SIZE_8KiB))
- 		ret = BUF_SIZE_16KiB;
- 	return ret;
- }
+-		/* Remove NCI HDR */
+-		skb_pull(skb, 3);
+-		if (skb->data[0] != HELPER_CMD_PACKET_FORMAT || skb->len != 5) {
++		if (skb->len != NCI_DATA_HDR_SIZE + 5) {
++			nfc_err(priv->dev, "bad command");
++			return -EINVAL;
++		}
++
++		/* Remove NCI header */
++		skb_pull(skb, NCI_DATA_HDR_SIZE);
++		if (skb->data[0] != HELPER_CMD_PACKET_FORMAT) {
+ 			nfc_err(priv->dev, "bad command");
+ 			return -EINVAL;
+ 		}
 -- 
 2.53.0
 
