@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5373B51AFED;
-	Wed, 30 Sep 2026 18:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D285172D4;
+	Wed, 30 Sep 2026 18:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792504; cv=none; b=tU2jnLIz2B2HwXwL9uzezKoxCrem/1bmc3PiFf1ZC1STE8M/STbitDeC8pNuEvz3CLHbc9WTVIYEcz23XJEOTrn0jX/lwMwpitkO0WKpzQmqZ5J1SfUQziNVNurCIKbe4siTqFBpz/5Wbud9qDqGfxOebChTEqlCSnqqyJaoxgI=
+	t=1790792507; cv=none; b=sPyouJhGULKD6dNaaoOkLrNE6hsAADHXiHo1/4MO9zTL2P83rWDOdsi6Um+yIf8cGFTkwLwNFLAyS7XPcPKFWpwcElXcBiZp9fvfDg+4kP9mwF+IX7O0ixH6B2OjHf6w/tdJZLMfRt0ix8sonzWCFlEWyIySbTTjo1JlbMcIM5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792504; c=relaxed/simple;
-	bh=9i+sLPbFpj2pa1LGUu9NhUegYoxDEmzkVt/L+pcjrR0=;
+	s=arc-20240116; t=1790792507; c=relaxed/simple;
+	bh=EP/3B4r/RO4NaDh1bsnIGW3rCHohl4I4osd+wYmjKHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYQY+5mTLMbl1RrTe5ltLsvDiBAelZV2j35XqlNlVo70YhmecIZ44WqglOZSl7lQAVMy59JEnaDDgYEcfFAQy+aviLl+Vrg/A2DA2U9jx4CrwtbkMOAJkYeDAILhRVdvhpiXp2q8gVaS21u+xuTxhrxYjrULctJtC1DY5xTjMAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMmV5eRT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iuRi+5EMPWTHo3yrofSxJBCxj8RpOKpLi4Oca6IsX9mZ+QdymR7V93kwxgkEnfTzOwRB/2BsbBeOBwaI1v1oHVVJZSLTYMZi3FP1AOH9fKdyAD50gUGJuRrhOVC5+DEk+P/eVRTnKxkYL391GCRCt0Im0XQK0s4ly0q2W7lIxg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFHrKgrC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMmV5eRT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8F01F00898;
-	Wed, 30 Sep 2026 18:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFHrKgrC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1141F000FF;
+	Wed, 30 Sep 2026 18:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792502;
-	bh=ZBylIlB2Dtkn+VB6DIk0Pco/WbrLb6Umf9yL++F/COY=;
+	s=korg; t=1790792505;
+	bh=RteQ/z6vlNxwZ/o1nv1osKwnuy7YCkus6hr6A4uh254=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lMmV5eRTQcDtuj5b9hiscXMSoadOSPdpFlEa2PEdeo3UnE6MQZL0wqtMchxJhFUrV
-	 r4PimWwxJtX5Z0om55KDPxHXMrQKcwa3OMq5yI0sc6Y2ib0QWzksN/SBI1AkSH3+jA
-	 m2X04SxzEyq4taoq1L8ZZ9DXsgJ133W9lSPF3oWQ=
+	b=cFHrKgrCOHRbV0m2sIE1fyoZBX2znv4grIx9+doAaKb+up+hLIxCvjkrPGZFrR50F
+	 s9wdwz+RB0PhLKnnpCB24FqLwA6DRdj3SUGkzze9VoGIDoIzIk/ouJcuZGSQ/GrQS9
+	 BmJqcxf811qjxt+Dati6GWUmpbaXAPwsz6c+R7N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Benjamin Robin (Schneider Electric)" <benjamin.robin@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 678/752] autofs: fix sbi->pipe file reference leak in autofs_kill_sb()
-Date: Wed, 30 Sep 2026 17:29:08 +0200
-Message-ID: <20260930152412.918068352@linuxfoundation.org>
+Subject: [PATCH 5.15 679/752] rculist: add list_splice_rcu() for private lists
+Date: Wed, 30 Sep 2026 17:29:09 +0200
+Message-ID: <20260930152412.938745339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,46 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit aa5e44b29ffe4eaa08cc2237fd65bc2596bc023e ]
+[ Upstream commit f902877b635551513729bdf9a8d1422c4aab7741 ]
 
-When autofs_fill_super() fails before clearing AUTOFS_SBI_CATATONIC (for
-example, when find_get_pid() fails on an invalid pgrp mount option, or
-when an fs_context is closed before mounting), deactivate_locked_super()
-invokes autofs_kill_sb() -> autofs_catatonic_mode(sbi).
+This patch adds a helper function, list_splice_rcu(), to safely splice
+a private (non-RCU-protected) list into an RCU-protected list.
 
-Because AUTOFS_SBI_CATATONIC is still set in sbi->flags,
-autofs_catatonic_mode() returns early without calling fput(sbi->pipe),
-permanently leaking the pipe struct file reference.
+The function ensures that only the pointer visible to RCU readers
+(prev->next) is updated using rcu_assign_pointer(), while the rest of
+the list manipulations are performed with regular assignments, as the
+source list is private and not visible to concurrent RCU readers.
 
-Explicitly release sbi->pipe in autofs_kill_sb() if it is still non-NULL
-after autofs_catatonic_mode().
+This is useful for moving elements from a private list into a global
+RCU-protected list, ensuring safe publication for RCU readers.
+Subsystems with some sort of batching mechanism from userspace can
+benefit from this new function.
 
-Fixes: ebc921ca9b92 ("autofs: copy autofs4 to autofs")
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Link: https://patch.msgid.link/20260919204808.2812930-1-benquike@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+The function __list_splice_rcu() has been added for clarity and to
+follow the same pattern as in the existing list_splice*() interfaces,
+where there is a check to ensure that the list to splice is not
+empty. Note that __list_splice_rcu() has no documentation for this
+reason.
+
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Benjamin Robin (Schneider Electric) <benjamin.robin@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/autofs/inode.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/rculist.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/fs/autofs/inode.c b/fs/autofs/inode.c
-index 9edf243713eb6..94870bdb4cb20 100644
---- a/fs/autofs/inode.c
-+++ b/fs/autofs/inode.c
-@@ -49,6 +49,10 @@ void autofs_kill_sb(struct super_block *sb)
- 	if (sbi) {
- 		/* Free wait queues, close pipe */
- 		autofs_catatonic_mode(sbi);
-+		if (sbi->pipe) {
-+			fput(sbi->pipe);
-+			sbi->pipe = NULL;
-+		}
- 		put_pid(sbi->oz_pgrp);
- 	}
+diff --git a/include/linux/rculist.h b/include/linux/rculist.h
+index d29740be4833e..ad37c0584c23b 100644
+--- a/include/linux/rculist.h
++++ b/include/linux/rculist.h
+@@ -204,6 +204,35 @@ static inline void list_replace_rcu(struct list_head *old,
+ 	old->prev = LIST_POISON2;
+ }
  
++static inline void __list_splice_rcu(struct list_head *list,
++				     struct list_head *prev,
++				     struct list_head *next)
++{
++	struct list_head *first = list->next;
++	struct list_head *last = list->prev;
++
++	last->next = next;
++	first->prev = prev;
++	next->prev = last;
++	rcu_assign_pointer(list_next_rcu(prev), first);
++}
++
++/**
++ * list_splice_rcu - splice a non-RCU list into an RCU-protected list,
++ *                   designed for stacks.
++ * @list:	the non RCU-protected list to splice
++ * @head:	the place in the existing RCU-protected list to splice
++ *
++ * The list pointed to by @head can be RCU-read traversed concurrently with
++ * this function.
++ */
++static inline void list_splice_rcu(struct list_head *list,
++				   struct list_head *head)
++{
++	if (!list_empty(list))
++		__list_splice_rcu(list, head, head->next);
++}
++
+ /**
+  * __list_splice_init_rcu - join an RCU-protected list into an existing list.
+  * @list:	the RCU-protected list to splice
 -- 
 2.53.0
 
