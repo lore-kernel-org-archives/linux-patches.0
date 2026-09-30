@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAED4FD27C;
-	Wed, 30 Sep 2026 15:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5392502568;
+	Wed, 30 Sep 2026 15:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782734; cv=none; b=Hwq2vWVmvy8PY1tTjXdUv3t3NNC92DYcOjLEgIiA3lkUWSFxoSIamkxIm6HJxEHlx5raIap6aW3ZRE1eml5fUyfxcwVLQectU6VSVRS4AnFMjMvfO9x++KGszzYsyRYgafTLHwyBwvCFWQeH5VAx0rnwLyPichkfF3gWizKBCA8=
+	t=1790782737; cv=none; b=ile21fp433CtU5/fyRffiAmm/m2jqt9HzAmlSwUCmDmMlq8vibiE2cYeG4Og8dD88wvXir7488qBYr45WyFeMGfym+pWaHQJt9jLywzKCFnTIEj88MUpRrEAAZLHRRqBHK4XbHyJN8l2tBii2Fzx4rpdE/9ZXC7dI+WtLWVpCFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782734; c=relaxed/simple;
-	bh=jmvdI2REYyxb9HEyVJmh4OtD5oE6gzTGUH/V/mF+W2Y=;
+	s=arc-20240116; t=1790782737; c=relaxed/simple;
+	bh=anhpjOEmyAuz1Wtfmb/uboPq9cfoptc6zBF5Iq/6fG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uc+enllBHKkjfGFGHiVKxHn/1xVQVNR1hMPFSCPeE1g8GwZAp62E0mG6l+pHdFyAbxC4tWYpuQV2UwOICCfqcvekLJOns7e08loFQ5RujI8c4ZFF60ZDwcnxIVTbPMAEaXLSvtDrLMUESX9qxDooQVggAgYuOjqNVszPPtMbDuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQhugDNL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=btcXCI7Y6W3+x9vDDnNUYYCA5lSZ6kxAswROnMyuho6yeCTxSJUhNpzDzfjAg9+x9FMBmSfcPrg1E1UzZbuMwa8/FHZxnaCizKCm6Ix3jmELTOXaDLt08jB+PfMyso0zo5ZyOTLhkFHrv+NisqaiIGL0aqfaD8IzfhVeETNm5dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/mXqiWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQhugDNL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBC41F00898;
-	Wed, 30 Sep 2026 15:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/mXqiWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FF11F000FF;
+	Wed, 30 Sep 2026 15:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782729;
-	bh=4mJQ9k6j4njzoB+MRVs9UqfS+ELrNknojZPovNuO5EU=;
+	s=korg; t=1790782732;
+	bh=pd3kcSQl9Fzw0HQ2EY6JgcOvp7dDRFME2NBCx1YVVEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gQhugDNLNyKKpo3ePP9+ycwB2+EtNARwYtXE6YwJ0cEPf2GC+UevBkxL7dokjaDMH
-	 h58fPR8sCeSOSViJUwC/gz39xg8lCSSmQvhShPY//L90llhrbCINzrAZqB9u5eiIXd
-	 cbphlcGlwC1vYx8owg2h8nP3p67ydIKK0+QiAFnY=
+	b=Q/mXqiWD2ByFKGi1nfdi5UGohclUPo4XoJnbgcZ+tLdIUUf7QdAoNFdH0CpnljE9v
+	 cJJk/ekG1CKbkP70XojoiPSeiYAv640N+Mr9lq87yS8QoKAKHeTSKmlUgNdLdygSCu
+	 MgB2vFpCcAfADqm27KFe8S1XgGnUVZzS7szR40AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/595] drm/arm/malidp: use clk_bulk API in runtime PM resume and suspend
-Date: Wed, 30 Sep 2026 17:20:41 +0200
-Message-ID: <20260930152350.919246140@linuxfoundation.org>
+Subject: [PATCH 5.10 149/595] netfilter: nf_conntrack_expect: zero at allocation time
+Date: Wed, 30 Sep 2026 17:20:42 +0200
+Message-ID: <20260930152350.939517048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,86 +44,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 46f715a16989f4e7bbbc2eb41447051874b027f3 ]
+[ Upstream commit 241ccd2fed9051db443aadce248fc0ab30f55e97 ]
 
-malidp_runtime_pm_resume() calls clk_prepare_enable() three times
-without checking the return value. If any clock fails to enable, the
-driver silently proceeds with unclocked hardware, leading to undefined
-behavior.
+There are occasional LLM hints wrt. leaking uninitialized data to
+userspace via ctnetlink.  Just zero at allocation time,
+expectations are not frequently used these days.
 
-Convert both the resume and suspend paths to use the clk_bulk API:
-clk_bulk_prepare_enable() in resume checks the return value and rolls
-back any successfully enabled clocks on failure;
-clk_bulk_disable_unprepare() in suspend keeps the two paths symmetric.
+Intentionally keeps _init as-is because we could theoretically
+support re-init, so add the missing exp->dir there.
 
-This issue was found by code review without access to Mali DP hardware.
-
-Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/malidp_drv.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ net/netfilter/nf_conntrack_expect.c  |  3 ++-
+ net/netfilter/nf_conntrack_netlink.c | 11 +----------
+ 2 files changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
-index 69fee05c256cb..c547d13002080 100644
---- a/drivers/gpu/drm/arm/malidp_drv.c
-+++ b/drivers/gpu/drm/arm/malidp_drv.c
-@@ -670,6 +670,11 @@ static int malidp_runtime_pm_suspend(struct device *dev)
- 	struct drm_device *drm = dev_get_drvdata(dev);
- 	struct malidp_drm *malidp = drm->dev_private;
- 	struct malidp_hw_device *hwdev = malidp->dev;
-+	struct clk_bulk_data clks[] = {
-+		{ .clk = hwdev->pclk },
-+		{ .clk = hwdev->aclk },
-+		{ .clk = hwdev->mclk },
-+	};
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 516a9f05a87a7..3ea601a090e5d 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -283,7 +283,7 @@ struct nf_conntrack_expect *nf_ct_expect_alloc(struct nf_conn *me)
+ {
+ 	struct nf_conntrack_expect *new;
  
- 	/* we can only suspend if the hardware is in config mode */
- 	WARN_ON(!hwdev->hw->in_config_mode(hwdev));
-@@ -677,9 +682,7 @@ static int malidp_runtime_pm_suspend(struct device *dev)
- 	malidp_se_irq_fini(hwdev);
- 	malidp_de_irq_fini(hwdev);
- 	hwdev->pm_suspended = true;
--	clk_disable_unprepare(hwdev->mclk);
--	clk_disable_unprepare(hwdev->aclk);
--	clk_disable_unprepare(hwdev->pclk);
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(clks), clks);
+-	new = kmem_cache_alloc(nf_ct_expect_cachep, GFP_ATOMIC);
++	new = kmem_cache_zalloc(nf_ct_expect_cachep, GFP_ATOMIC);
+ 	if (!new)
+ 		return NULL;
  
- 	return 0;
+@@ -347,6 +347,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
+ #if IS_ENABLED(CONFIG_NF_NAT)
+ 	memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
+ 	memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
++	exp->dir = 0;
+ #endif
  }
-@@ -689,10 +692,17 @@ static int malidp_runtime_pm_resume(struct device *dev)
- 	struct drm_device *drm = dev_get_drvdata(dev);
- 	struct malidp_drm *malidp = drm->dev_private;
- 	struct malidp_hw_device *hwdev = malidp->dev;
-+	struct clk_bulk_data clks[] = {
-+		{ .clk = hwdev->pclk },
-+		{ .clk = hwdev->aclk },
-+		{ .clk = hwdev->mclk },
-+	};
-+	int err;
-+
-+	err = clk_bulk_prepare_enable(ARRAY_SIZE(clks), clks);
-+	if (err)
-+		return err;
+ EXPORT_SYMBOL_GPL(nf_ct_expect_init);
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 46bdc38081164..2acfdf019bf0b 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3540,8 +3540,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 	if (cda[CTA_EXPECT_FLAGS]) {
+ 		exp->flags = ntohl(nla_get_be32(cda[CTA_EXPECT_FLAGS]));
+ 		exp->flags &= ~NF_CT_EXPECT_USERSPACE;
+-	} else {
+-		exp->flags = 0;
+ 	}
+ 	if (cda[CTA_EXPECT_FN]) {
+ 		const char *name = nla_data(cda[CTA_EXPECT_FN]);
+@@ -3553,8 +3551,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 			goto err_out;
+ 		}
+ 		exp->expectfn = expfn->expectfn;
+-	} else
+-		exp->expectfn = NULL;
++	}
  
--	clk_prepare_enable(hwdev->pclk);
--	clk_prepare_enable(hwdev->aclk);
--	clk_prepare_enable(hwdev->mclk);
- 	hwdev->pm_suspended = false;
- 	malidp_de_irq_hw_init(hwdev);
- 	malidp_se_irq_hw_init(hwdev);
+ 	exp->class = class;
+ 	exp->master = ct;
+@@ -3568,12 +3565,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 						 exp, nf_ct_l3num(ct));
+ 		if (err < 0)
+ 			goto err_out;
+-#if IS_ENABLED(CONFIG_NF_NAT)
+-	} else {
+-		memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
+-		memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
+-		exp->dir = 0;
+-#endif
+ 	}
+ 	return exp;
+ err_out:
 -- 
 2.53.0
 
