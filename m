@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BCD3DEFE7;
-	Wed, 30 Sep 2026 19:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFF63FD137;
+	Wed, 30 Sep 2026 19:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796736; cv=none; b=lSGgr80FnBHJpI4kutW4T2YOj5zd7eDhxxbdlIh/cYSdhLSqz2kq0tWQwp5L6CjDUiAgjm1fy0fo3A8h+mLStjgiEQYittuuomt6kvq2lOvKU/bliIJ3YoDNpN6Jo320uzvR6oz0YhuNkkwuEys9zkR0sM2RP3t6twp237X0oA4=
+	t=1790796739; cv=none; b=Q4dYZq3AifqtuKLENG4conjWYhAOwxchL3ok2ppsaO72SJ8LBBFRbboHapCcj+jpLxxqfDAS1s4JtVGIUOBgD54bRwCRN69EJSAS8TaPzj5wF9WFkmuIzW43jwc8869GVi/X1wi576dkKzCZ+Klab7aZpSSvOwrhdislZH/y/kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796736; c=relaxed/simple;
-	bh=rCQcoxab5k2S/PVQl/9TxTT3qjy163KxdMH2lfsSljg=;
+	s=arc-20240116; t=1790796739; c=relaxed/simple;
+	bh=DoscHxveYmAadIKGggxBKCPBcN6fGR11eiPzQqXDsLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rw7PpESxw5NZQhrSXm5OJwAI4cHSf3FYiZPSz7oL5/LPLi/SlrXQdu6dbDquyZI80sEDDcK3lqz8oyTsXOsJ/wXrbLMGz9Z5wONOMQ49QNX8yEy/vMchSeagxFt0iUw5Tndz5CkILWjPBidUJD+bWzvSF1De6XJAOzWoBqi3n8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0UvG2nO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aRxuq6gaV4CpMKbNgCiw0+3VGme6t+uMkoEB+2GkHGNyk4oJpt/xjAK4VRY+m0PVtUo1wgykl4GKfww21JTW3QyEBSJX1XFyW3pHYk65kIy84upErVdIpi790vck+aIzPtigwAaedqEi0t9/N9JXrK54/7RhAEZBV+aYyO5ue30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7KjKx7j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0UvG2nO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9849C1F000FF;
-	Wed, 30 Sep 2026 19:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7KjKx7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A24E1F000FF;
+	Wed, 30 Sep 2026 19:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796735;
-	bh=+MNVacrRT//6uaL/uYXu8SFZYIgryEc52+0T6OiqnjA=;
+	s=korg; t=1790796737;
+	bh=zgp2M4GbCUNT8jRvk4pHj/j56Bk8gjYuLmFUnr3DDgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0UvG2nOXjlOMCDx99VjB2bb6AMBPekHoPufYhIcm7Dgx6Egk0VK+MZs4PxDrbPm3
-	 UoEbaBfIkvU340NFU/D7igfTtEhBwyaGhEVY6G+2anqfe7ySoyliMV/DVaScAdwk5V
-	 TBtfWsPmFVGNwHkYLDkvQBsOngUmu3WPsuW1Eb8E=
+	b=P7KjKx7jOKWuql5tuovZvErCu2EW0gkbbajEdppvwoqA62lFc2xr+ioT2cotr82Tq
+	 VdddqSmXZvRdLokH0oc54sQOaS9fZ2Nh3lAcjD83o4xBXvZ+rMXr3JQu7yivm+Y4PM
+	 57TiHS2eKuIWP3CwCQsXusMgV0sj+YqBWOGSR9dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hui Peng <benquike@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1018/1193] Bluetooth: bnep: fix out-of-bounds reads on short RX/TX frames and control fallthrough
-Date: Wed, 30 Sep 2026 17:28:22 +0200
-Message-ID: <20260930152456.857101598@linuxfoundation.org>
+Subject: [PATCH 6.6 1019/1193] Bluetooth: RFCOMM: Reject short EA=0 frames in rfcomm_recv_frame()
+Date: Wed, 30 Sep 2026 17:28:23 +0200
+Message-ID: <20260930152456.877958825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,100 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit f0ca020cbb9bb7f3f4ea8ba1dfcf30a282aec91e ]
+[ Upstream commit 6d91041bb38b97e2feb625123cc0529d7b83a0e1 ]
 
-Fix multiple out-of-bounds reads in Bluetooth BNEP frame processing:
+While rfcomm_recv_frame() verifies that skb->len is at least
+sizeof(*hdr) + 1 (4 bytes: 3-byte header + 1-byte FCS), an RFCOMM frame
+with an extended 2-byte length field (!__test_ea(hdr->len)) has a 4-byte
+header plus a 1-byte FCS (5 bytes minimum, sizeof(*hdr) + 2).
 
-1. In bnep_rx_frame() and bnep_ctrl_frame() (net/bluetooth/bnep/core.c),
-   use pskb_may_pull() to verify the BNEP header, control type byte,
-   filter count, and extension headers exist before reading them, and
-   return 0 after handling BNEP_CONTROL instead of falling through to
-   Ethernet frame submission when no extension headers follow.
-2. In bnep_net_xmit() (net/bluetooth/bnep/netdev.c), verify skb->len >=
-   ETH_HLEN with pskb_may_pull() before reading the 14-byte Ethernet
-   header to prevent an out-of-bounds heap read and infoleak on short
-   AF_PACKET TX frames.
+When a 4-byte RFCOMM frame with EA == 0 arrives:
+1. The initial skb->len < sizeof(*hdr) + 1 check passes (4 < 4 is false).
+2. Trimming the FCS byte decrements skb->len to 3.
+3. If __check_fcs() succeeds, skb_pull(skb, 4) fails (4 > 3) and returns
+   NULL without advancing skb->data.
+4. Because the return value of skb_pull() is ignored, the un-pulled
+   3-byte struct rfcomm_hdr remains at skb->data and is either queued as
+   application payload via rfcomm_recv_data() or parsed as a multiplexer
+   control command via rfcomm_recv_mcc() on DLCI 0.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fix this by extending the length check in rfcomm_recv_frame() to also
+require skb->len >= sizeof(*hdr) + 2 when !__test_ea(hdr->len).
+
+Fixes: b230e5bf501c ("Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame")
 Assisted-by: LLM
 Signed-off-by: Hui Peng <benquike@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c   | 17 ++++++++++++++++-
- net/bluetooth/bnep/netdev.c |  8 +++++++-
- 2 files changed, 23 insertions(+), 2 deletions(-)
+ net/bluetooth/rfcomm/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index a691d228f66c5..d6f69b6710623 100644
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -273,9 +273,14 @@ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
- 
- 		BT_DBG("type 0x%x len %u", h->type, h->len);
- 
-+		if (skb->len < h->len) {
-+			err = -EILSEQ;
-+			break;
-+		}
-+
- 		switch (h->type & BNEP_TYPE_MASK) {
- 		case BNEP_EXT_CONTROL:
--			bnep_rx_control(s, skb->data, skb->len);
-+			bnep_rx_control(s, skb->data, h->len);
- 			break;
- 
- 		default:
-@@ -376,6 +381,11 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
- 			goto badframe;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 9801e236c307f..791283d1c1f7e 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1817,7 +1817,8 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
+ 		return s;
  	}
  
-+	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
-+		kfree_skb(skb);
-+		return 0;
-+	}
-+
- 	/* Strip 802.1p header */
- 	if (ntohs(s->eh.h_proto) == ETH_P_8021Q) {
- 		if (!skb_pull(skb, 4))
-@@ -454,6 +464,11 @@ static int bnep_tx_frame(struct bnep_session *s, struct sk_buff *skb)
- 		goto send;
- 	}
- 
-+	if (skb->len < ETH_HLEN) {
-+		kfree_skb(skb);
-+		return 0;
-+	}
-+
- 	iv[il++] = (struct kvec) { &type, 1 };
- 	len++;
- 
-diff --git a/net/bluetooth/bnep/netdev.c b/net/bluetooth/bnep/netdev.c
-index cc1cff63194f0..5d9d851db926f 100644
---- a/net/bluetooth/bnep/netdev.c
-+++ b/net/bluetooth/bnep/netdev.c
-@@ -169,6 +169,12 @@ static netdev_tx_t bnep_net_xmit(struct sk_buff *skb,
- 
- 	BT_DBG("skb %p, dev %p", skb, dev);
- 
-+	if (!pskb_may_pull(skb, ETH_HLEN)) {
-+		dev->stats.tx_dropped++;
-+		kfree_skb(skb);
-+		return NETDEV_TX_OK;
-+	}
-+
- #ifdef CONFIG_BT_BNEP_MC_FILTER
- 	if (bnep_net_mc_filter(skb, s)) {
+-	if (skb->len < sizeof(*hdr) + 1) {
++	if (skb->len < sizeof(*hdr) + 1 ||
++	    (!__test_ea(hdr->len) && skb->len < sizeof(*hdr) + 2)) {
  		kfree_skb(skb);
-@@ -221,7 +227,7 @@ void bnep_net_setup(struct net_device *dev)
- 	dev->addr_len = ETH_ALEN;
- 
- 	ether_setup(dev);
--	dev->min_mtu = 0;
-+	dev->min_mtu = ETH_MIN_MTU;
- 	dev->max_mtu = ETH_MAX_MTU;
- 	dev->priv_flags &= ~IFF_TX_SKB_SHARING;
- 	dev->netdev_ops = &bnep_netdev_ops;
+ 		return s;
+ 	}
 -- 
 2.53.0
 
