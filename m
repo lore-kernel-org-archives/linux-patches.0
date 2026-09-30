@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9342937A825;
-	Wed, 30 Sep 2026 16:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF9B50EBFC;
+	Wed, 30 Sep 2026 16:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785989; cv=none; b=K1jGp2FqVzHdrRw5QkqNnLnl8euqj3xSC5AEb/ENkLkIIxtXyOmVbPzbPw00i9NDRDKqxocsmHeae2hKr42m47eNI3mMhs1hXA5WwwyrYdnL2m65hgoVmBxX105Zf61HsgYuTWtxycJab6JPo28Cb/wV/xYWQp74EMy1RoEdD1E=
+	t=1790785992; cv=none; b=P+in1iErpBNYK/KoAIHlHFrr0UmzrZs5BVYMIkDR6ahWr/FfJa1lBuow3OMOTmcxBYp4fvz/mHczXyjVx/5BsBYrTpvDrtRc+RUvDnMLZqtc6TQtHP6qChJE3lOH0TIyUSjUhCNfxrr2h4WLvkVfUfZ6dJzMzOeBtaH+J71h5TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785989; c=relaxed/simple;
-	bh=TKkjWmE4wv9yxuG3rYiRRAmC4uFyUtDlyVbbPKxetnw=;
+	s=arc-20240116; t=1790785992; c=relaxed/simple;
+	bh=owUoaluVTL5YSWmqKcTNtDTNr2Cqbsqnu+X58K+EgCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhrLPTJGZpAS+C5V+MV+CUjr9od0e2lu+AtrKJnD6LU7UPLOIXLVAtQIUngrC5qOyRO5zxWeROmCxYMHq03Pu3t/o4+OpwIb8xa7Slrv6BNm4dvhJKyDebrGXfKM8oYlrwtBnyuy34HpSw34sYMclpJiWI4q1d+TGmCN9JKnp3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KB5TunJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=atNFOh4R48pYZbZDW4MJN09FkIzBlDupUfc2xFTnn0JRG+LgFbvj9bl5lWSX4UHG6sAOkdv1xElPa51r2kt+i4BwPWwANpzjLJdmp038QUCSzv0HBYludTD6GGZPyEyQF1sc5H0dJe3MNeWNgU0BWI6i5Ht9CKc6qwnE9H7IIPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiydgBep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KB5TunJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB1A1F000FF;
-	Wed, 30 Sep 2026 16:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiydgBep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA88A1F000FF;
+	Wed, 30 Sep 2026 16:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785988;
-	bh=CWtkHpbx/8P+/x73Ct4n37N0s2q29r6jnWLh7Th3vBE=;
+	s=korg; t=1790785991;
+	bh=AgBiiQluIJBJWgzab3iK2Nse/OeZG6daSqo8491RUnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KB5TunJSmO9ilIZgM/U0Nj7MQyJArcfzAoLQMMFPEt+nWeUR+5fopr50S2MjhvtyS
-	 mhqcfg2UlkbigCMRJj5hI9oTZHi4Irs0q1Sy3S6GYF3GZrV6KA1gwo37CY35Gi3cUR
-	 Uaw10pSNt1auTQQkNSSwwBo+iw2KXqMl/6tJsqhU=
+	b=KiydgBepIn3YYGgDm9Qh7KRsqilu27BbsOXYH42dm6jv1fb+oLyJq48LZ7vWjWyju
+	 VsPTMiVFuI+5PsusZLR+pUb6WkgltbTu/dAHjqjOybLGIyPmid7w51InP4JRgZ6K4a
+	 7jwk5puH4+Lei7Gfr9bC7bBYZ+TWwmfOYl5LYfkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 704/982] kselftest/arm64: Fix size of thread_data values for pthread_join()
-Date: Wed, 30 Sep 2026 17:24:00 +0200
-Message-ID: <20260930152431.879437569@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 687/982] net: ethernet: cortina: Ack RX overrun interrupt correctly
+Date: Wed, 30 Sep 2026 17:23:43 +0200
+Message-ID: <20260930152431.519092986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,39 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Linus Walleij <linusw@kernel.org>
 
-commit 3d1ba5cbfb622025690c218d8f20da92a9ecb383 upstream.
+[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
 
-pthread_join() stores the thread's return value (a "void *", i.e.
-8 bytes on 64 bit computers) into the address that is passed as second
-parameter. However, the entries of thread_data are only normal "int"s,
-i.e. only 4 bytes. The additional 4 bytes of the return value clobber
-whatever is adjacent on the stack, i.e. other members of the thread_data
-array (which will be re-written in the next iteration of the for-loop,
-so that nobody noticed this problem), or another other local variable
-on the stack for the last iteration. Use "intptr_t" to declare the
-thread_data array entries with the correct size.
+The RX overrun interrupt is reported in interrupt status register 4, but
+gmac_irq() acknowledges it using the RX descriptor error bit from status
+register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
+the shift leaves no bit in the 32-bit register.
 
-Fixes: 29f080881601c ("kselftest/arm64: check GCR_EL1 after context switch")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acknowledge the same per-port RX overrun bit that was detected.
+
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c |    2 +-
+ drivers/net/ethernet/cortina/gemini.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-+++ b/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-@@ -69,7 +69,7 @@ fail:
- int execute_test(pid_t pid)
- {
- 	pthread_t thread_id[MAX_THREADS];
--	int thread_data[MAX_THREADS];
-+	intptr_t thread_data[MAX_THREADS];
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index fcc6018067226..58189d46b9fb1 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1803,7 +1803,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
  
- 	for (int i = 0; i < MAX_THREADS; i++)
- 		pthread_create(&thread_id[i], NULL,
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
+ 		spin_lock(&geth->irq_lock);
+-		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
++		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
+-- 
+2.53.0
+
 
 
