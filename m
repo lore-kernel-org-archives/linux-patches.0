@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71134F4047;
-	Wed, 30 Sep 2026 15:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCC04FDA5D;
+	Wed, 30 Sep 2026 15:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783447; cv=none; b=LVsLpZpJhYMP5ZgbuyCcQawYrVF8Av7I2TWNZQFmRQc2+n6vKXBzeAFGC9uo1xzoK7LvjAzzVwSqMfrzj9rT38R3crsCYkG4fjosu1GxzAqrGUzo5Bm1x17b+3vBjq158CLJpCCqSiqBASm6DgLLt4084Qc1yiTnlLA4lvkYq/Y=
+	t=1790783450; cv=none; b=V05lg5UkwDOR1w/OMrxBA1F5iKnfh5Hb3raDZZEKa4aglZlUL4cdo2SelwT3H8BH4ZV1949oZV7eQTyFU0pCS/XeFcJjdcxDvfTom9OJQZX9UEa4yX8J8VJ8HUl5ypNyPFzgWWWb5z6/egUv30VhmxyGP6P7nSn+XpWQ3aDt7vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783447; c=relaxed/simple;
-	bh=UoZJj7OA2H9uzhhcS3hbWq0TCQXjiLh0KSFvqz6A5TI=;
+	s=arc-20240116; t=1790783450; c=relaxed/simple;
+	bh=IjuZhBGedg+EiKjA9E3DC7Zvcd1C3DFhLEIZqw4MaHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HOGINpri6ce/mIDZHVL2DM7dgfdNtgez2gUBM+Nxzesi5rnYG+woVhJyYuLTxaWQ8TWlWLg+IuWKOrXrnl4H4+ivXblzlcoI1asDkRnrbHOxUtR6i2NQEuuTEEWOVJkTBAkr/cRdw1uCFtvxsbPkYuhyaHavyGfo0veuWWTsFa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdm5GVB2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rf6PB/UZGZ88FM9pTQCs3o6+Szp8FYDwueTISBD0iK6RgBGb7tY10SngaxGapLrlbAhTlNED+lwAvMOaZDhW3axyCApiyMk6zR3vi8cv5qsUTT7eMSfljarQsHWW09g0JTR1xEm+nUvvOauPIXjhGpfz2arRIv1Qm0Z0+X8PAoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBNgSYL6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdm5GVB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01EF1F00898;
-	Wed, 30 Sep 2026 15:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBNgSYL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA501F00893;
+	Wed, 30 Sep 2026 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783441;
-	bh=NQgRkNveAt4Y6Dg8F7DW0yEu0Ic7SilP2Ync5GuJU9w=;
+	s=korg; t=1790783444;
+	bh=uN8ubNmN2XJBM721n6U0+x5WG61J3eALwC8H3NzoQkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mdm5GVB2D1bQC7wJabeH8bKTJvuJ5Pnyrx2DMA8gPVq2TE4Mls75YkZS4hss0wH9q
-	 yWsv+37YsqsLFdLPQqxy7s3yLe/pgy5tY8/1/eAhyjaIy0qZgf6d5qBTgxZrwhxb8R
-	 zlNzWqsXdel3G8RwK8zUZbPay1ypANSiH1eY3xvw=
+	b=hBNgSYL61KlbZxr0aRipxbe/CpT0LW2ZvEWSpPBlefR2jHY/fyWb5sAQCwoYOdKlC
+	 tMiRKQU3ItwUVGig263u6lIT62D9sUDM4v53xcyBIROCGcjtqmQsgHqIDKlakYQuHO
+	 9yjYLg4AEKhYEy7mRspY/LOT2OFHqDAXpVS5BRiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Xixin Liu <liuxixin@kylinos.cn>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 398/595] btrfs: tree-checker: print dev extent offset in error message
-Date: Wed, 30 Sep 2026 17:24:51 +0200
-Message-ID: <20260930152356.233953337@linuxfoundation.org>
+Subject: [PATCH 5.10 356/595] clk: scpi: bound-check DVFS index in scpi_dvfs_recalc_rate
+Date: Wed, 30 Sep 2026 17:24:09 +0200
+Message-ID: <20260930152355.335782512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,37 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Xixin Liu <liuxixin@kylinos.cn>
 
-[ Upstream commit a1167d9420474ab9ed9efca99d86aeb6217c0265 ]
+[ Upstream commit 70f4b78d560e592cbf3325b162424737d032fc1d ]
 
-If a dev extent's offset is not sector size aligned, the error message is
-printing the dev extent's objectid instead of the offset. This is a copy
-paste error, as before this check we check the objectid field.
+dvfs_get_idx() may return an out-of-range index if the SCP firmware is
+buggy or returns a stale value. Only negative indexes were rejected, so a
+large index walked past info->opps and could treat garbage as a clock rate
+(KASAN OOB / wrong frequency to consumers). The missing upper bound dates
+back to the original SCPI clock driver.
 
-Fixes: 008e2512dc56 ("btrfs: tree-checker: add dev extent item checks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Treat indexes >= opp count as invalid and return 0, same as idx < 0.
+
+Fixes: cd52c2a4b5c4 ("clk: add support for clocks provided by SCP(System Control Processor)")
+Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Link: https://patch.msgid.link/04f9ab766e07.v2.1785200642.git.liuxixin@kylinos.cn
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 2 +-
+ drivers/clk/clk-scpi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index dd27fdb9521a8..48f8172bb15f8 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1608,7 +1608,7 @@ static int check_dev_extent_item(const struct extent_buffer *leaf,
- 				 sectorsize))) {
- 		generic_err(leaf, slot,
- 			    "invalid dev extent chunk offset, has %llu not aligned to %u",
--			    btrfs_dev_extent_chunk_objectid(leaf, de),
-+			    btrfs_dev_extent_chunk_offset(leaf, de),
- 			    sectorsize);
- 		return -EUCLEAN;
- 	}
+diff --git a/drivers/clk/clk-scpi.c b/drivers/clk/clk-scpi.c
+index 5a9b140dd8c80..41feac548b6ce 100644
+--- a/drivers/clk/clk-scpi.c
++++ b/drivers/clk/clk-scpi.c
+@@ -86,7 +86,7 @@ static unsigned long scpi_dvfs_recalc_rate(struct clk_hw *hw,
+ 	int idx = clk->scpi_ops->dvfs_get_idx(clk->id);
+ 	const struct scpi_opp *opp;
+ 
+-	if (idx < 0)
++	if (idx < 0 || idx >= clk->info->count)
+ 		return 0;
+ 
+ 	opp = clk->info->opps + idx;
 -- 
 2.53.0
 
