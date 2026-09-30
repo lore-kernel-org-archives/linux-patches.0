@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351993644C1;
-	Wed, 30 Sep 2026 17:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6D93644C1;
+	Wed, 30 Sep 2026 17:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788842; cv=none; b=m5iG0/wO/52TsCsLYBC1kOidSxxbUxa/BRcC0rvIll4olLht0T3nx6Y3ds4mL2SwKIxVileN5AXYIn6NR4dG7zS3cZ0foek1Ky/Bzb5DBKovSDTQCc9hQRMVS+PacxkKUBovKw7KaFeO6KBgUQAEp/ZjEMcGJjgopzF+4ofiGR0=
+	t=1790788848; cv=none; b=hixa2mWaamKyAgNGcwTDlvwu2HryO3+PVhehRciJnMV6UMhISxZDKymfz2XKIHBxuSCcBcTidJMEPVdEOp92Oskx8TI+Kmky2RcKqILQDC/ivafCBahzL8c+5daLEPbVXPt1pYE/sRjWR9evF9fXkNYBFL7c2urxPYDYGw6nIJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788842; c=relaxed/simple;
-	bh=KunNLt3n8vXxb6JMwVS5VnhwiyJCQQz6MDjCcLaJn78=;
+	s=arc-20240116; t=1790788848; c=relaxed/simple;
+	bh=LbrkFPc3jJz9fwuUJ1VJ1kRXYmgeIb62Jqz5zkbzMMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aez0/k9ORPBEK9GYlEbwLXRLSlIr85vpBwzftQGAomF2vTfdhxEf7TOsllGNdigJE83EnRG8cGOikjQ98JWQ3nk9D9PMtZvh6PRf7YEktS38Vvmmoy0yh//T+7asx6BTdwMrzvbuS7sWQw3iHcQD+1W6NA8DG3C8wocBTae1j84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdp8rKVM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EHWvBa9bdznwU8XEXO0oLhynGecRFtSUieOd1/zxdNrayuNl9Q0pnNk2+04v5RyuqrJJz+7a86zUTsPJaoNg+a4c0kgl4rijFWa7PxZ21ei6gcUZT2dDV0kSOppRAkPDPjUUR0v5GOO9c09bmjSpkmiXJeyQvygo7qing9HYnAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHsMhR3B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdp8rKVM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FEC1F000FF;
-	Wed, 30 Sep 2026 17:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHsMhR3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C551F00898;
+	Wed, 30 Sep 2026 17:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788841;
-	bh=eOOHr079yeGEENy/javcdXi3cvkhFhllTCIY+Z8bIuw=;
+	s=korg; t=1790788846;
+	bh=YNloYsKz9DFQK+FwNzPACoyfSPH3pfBbFF7jX5HccaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tdp8rKVMa7wt9o5bVz5H5KVTFOXj2hpyxI7lYxBE456/1GWdjvHI+Jmhy9aO3i8f0
-	 pXo+tf8KRjU5Yjjq19SoLHIeE7BYpxtXAV+nhnhrIEb+7/sK+I3npUNI0j4gqto6mi
-	 P0gEA+4SZSFsTIevoWL0jG/U9VCeOHjEpifL792M=
+	b=UHsMhR3BCGP5nXRyRB+LCUus25F82ZcIbsTcPA9dt5B0A18djK0fN4DwBFSUhdKYF
+	 G2kRb3RrzVqRM++kD3LgPgpTet7UsuBMPVia7eJcmm6hv7JYzKCBy8bW+nCbOtHbCg
+	 vVJgKgY6sKtpggilD9TBDdR6KjBnky1BPdoEPoPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 268/877] wifi: mwifiex: bound the pairwise-cipher OUI walk to the IE length
-Date: Wed, 30 Sep 2026 17:19:39 +0200
-Message-ID: <20260930152420.506814547@linuxfoundation.org>
+Subject: [PATCH 6.12 270/877] wifi: mwifiex: prevent authentication frame length truncation
+Date: Wed, 30 Sep 2026 17:19:41 +0200
+Message-ID: <20260930152420.550036674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,98 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit e667aee1c192d67d27c803007bfa9c6e0873e959 upstream.
+commit fa00193eb991f92b007aefe7afb6a7566976dacf upstream.
 
-mwifiex_search_oui_in_ie() reads a pairwise-cipher (PTK) count from a
-beacon/probe-response RSN or WPA information element and then walks that
-many 4-byte OUIs, comparing each with memcmp(). The count comes straight
-from the (attacker-supplied) IE and is never checked against the
-element's own length, and the callers admit the element on element_id
-alone (has_ieee_hdr() / has_vendor_hdr(), no length check). A crafted
-RSN/WPA IE with a large pairwise count therefore makes the walk read up
-to 255 * 4 bytes past the element -- an out-of-bounds read of the
-kmemdup()'d beacon buffer, reachable from any AP whose beacon/probe
-response is processed during scan-result parsing.
+mwifiex_cfg80211_authenticate() derives the authentication frame length
+from req->ie_len and req->auth_data_len, both of type size_t, but stores
+it in a u16.
 
-Pass the number of IE bytes available at the OUI list and bound the walk
-to the element. Keep the length signed and reject a negative value
-before any unsigned arithmetic, so a small or zero IE length cannot
-underflow to a large size_t and defeat the bound.
+NL80211_ATTR_AUTH_DATA only has a minimum length policy. Since nla_len is
+a u16, a single attribute can carry up to 65531 bytes of payload, so the
+sum can exceed U16_MAX before it is assigned to pkt_len. The truncated
+pkt_len determines the skb frame area, while the copy length remains
+req->auth_data_len - 4, resulting in a heap buffer overflow.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+For example, with auth_data_len equal to 65510 and no IEs, the sum is
+65546. It is truncated to 10 and then reduced by four to 6. The driver
+appends only six bytes to the skb with skb_put(), but then copies 65506
+user-provided bytes into the authentication body.
 
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
-Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260814134704.85902-1-doruk@0sec.ai
+Reaching this path requires CAP_NET_ADMIN in the user namespace owning
+the network namespace, an up station netdev, and a suitable BSS/SAE
+authentication request.
+
+Compute the length in size_t, reject values that cannot be represented by
+the firmware's u16 frame length field, and only then assign it to pkt_len.
+
+Fixes: 36995892c271 ("wifi: mwifiex: add host mlme for client mode")
+Cc: stable@vger.kernel.org # 6.12+
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260820062155.3981976-1-lilinmao@kylinos.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/scan.c |   25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/cfg80211.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/scan.c
-+++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -104,12 +104,24 @@ has_vendor_hdr(struct ieee_types_vendor_
-  * a given oui in PTK.
-  */
- static u8
--mwifiex_search_oui_in_ie(struct ie_body *iebody, u8 *oui)
-+mwifiex_search_oui_in_ie(struct ie_body *iebody, u8 *oui, int ie_len)
- {
-+	const size_t ptk_body_offset = offsetof(struct ie_body, ptk_body);
- 	u8 count;
+--- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
++++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
+@@ -4278,6 +4278,7 @@ mwifiex_cfg80211_authenticate(struct wip
+ 	struct mwifiex_adapter *adapter = priv->adapter;
+ 	struct sk_buff *skb;
+ 	u16 pkt_len, auth_alg;
++	size_t frame_len;
+ 	int ret;
+ 	struct mwifiex_ieee80211_mgmt *mgmt;
+ 	struct mwifiex_txinfo *tx_info;
+@@ -4350,10 +4351,17 @@ mwifiex_cfg80211_authenticate(struct wip
  
-+	/* ie_len is the number of bytes available at iebody. Keep it signed
-+	 * and reject a negative (underflowed) length before the unsigned
-+	 * comparisons below, so a small or zero IE length cannot wrap.
-+	 */
-+	if (ie_len < 0 || (size_t)ie_len < ptk_body_offset)
-+		return MWIFIEX_OUI_NOT_PRESENT;
-+
- 	count = iebody->ptk_cnt[0];
+ 	mwifiex_cancel_scan(adapter);
  
-+	/* Reject an OUI count whose list would run past the element. */
-+	if (ptk_body_offset + count * sizeof(iebody->ptk_body) > (size_t)ie_len)
-+		return MWIFIEX_OUI_NOT_PRESENT;
+-	pkt_len = (u16)req->ie_len + req->auth_data_len +
++	frame_len = req->ie_len + req->auth_data_len +
+ 		MWIFIEX_MGMT_HEADER_LEN + MWIFIEX_AUTH_BODY_LEN;
+ 	if (req->auth_data_len >= 4)
+-		pkt_len -= 4;
++		frame_len -= 4;
 +
- 	/* There could be multiple OUIs for PTK hence
- 	   1) Take the length.
- 	   2) Check all the OUIs for AES.
-@@ -143,11 +155,14 @@ mwifiex_is_rsn_oui_present(struct mwifie
- 	u8 ret = MWIFIEX_OUI_NOT_PRESENT;
++	if (frame_len > U16_MAX) {
++		mwifiex_dbg(priv->adapter, ERROR,
++			    "auth frame too long: %zu bytes\n", frame_len);
++		return -EINVAL;
++	}
++	pkt_len = frame_len;
  
- 	if (has_ieee_hdr(bss_desc->bcn_rsn_ie, WLAN_EID_RSN)) {
-+		int ie_len = (int)bss_desc->bcn_rsn_ie->ieee_hdr.len -
-+			RSN_GTK_OUI_OFFSET;
-+
- 		iebody = (struct ie_body *)
- 			 (((u8 *) bss_desc->bcn_rsn_ie->data) +
- 			  RSN_GTK_OUI_OFFSET);
- 		oui = &mwifiex_rsn_oui[cipher][0];
--		ret = mwifiex_search_oui_in_ie(iebody, oui);
-+		ret = mwifiex_search_oui_in_ie(iebody, oui, ie_len);
- 		if (ret)
- 			return ret;
- 	}
-@@ -169,10 +184,14 @@ mwifiex_is_wpa_oui_present(struct mwifie
- 	u8 ret = MWIFIEX_OUI_NOT_PRESENT;
- 
- 	if (has_vendor_hdr(bss_desc->bcn_wpa_ie, WLAN_EID_VENDOR_SPECIFIC)) {
-+		int ie_len = (int)bss_desc->bcn_wpa_ie->vend_hdr.len -
-+			(int)sizeof(bss_desc->bcn_wpa_ie->vend_hdr.oui) -
-+			WPA_GTK_OUI_OFFSET;
-+
- 		iebody = (struct ie_body *)((u8 *)bss_desc->bcn_wpa_ie->data +
- 					    WPA_GTK_OUI_OFFSET);
- 		oui = &mwifiex_wpa_oui[cipher][0];
--		ret = mwifiex_search_oui_in_ie(iebody, oui);
-+		ret = mwifiex_search_oui_in_ie(iebody, oui, ie_len);
- 		if (ret)
- 			return ret;
- 	}
+ 	skb = dev_alloc_skb(MWIFIEX_MIN_DATA_HEADER_LEN +
+ 			    MWIFIEX_MGMT_FRAME_HEADER_SIZE +
 
 
