@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113A04ABBA5;
-	Wed, 30 Sep 2026 18:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90F34D6C2E;
+	Wed, 30 Sep 2026 18:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792071; cv=none; b=Wnb7QZe4wp3s9gsjGTbBUlNAo/k9FO5zXc2wHjZCkXQ2QI7/OsAaK5H/lFxSZfIZJjMCi8IDCd1CI7glMGN3k09t3SXxD59ZSayv8PeFZRBDgvLAUEQGKaobiDZ2Js274KbVkXLnRfVw/p36XosE6LUlUgg+MoK5hdLECxZqYOA=
+	t=1790792074; cv=none; b=hNmVAwaNTiaJYOc4p5gJF86rAFKU3uDHnXGNkwOH1Cme+fccrOri9m3b31rhA/5VIbNGoAYyocWY1acWW9bar2V4HHSaFJApMvzqmi28Ni3HIdUf7CpS1qdUVFdrOLht22vGKltmV+qzQOPsJvtQxJhIXVSkuPVKsBWPSf8oqMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792071; c=relaxed/simple;
-	bh=qfO73dGxZtMnP3x6OPUJEdGx1++L9H3SPWgvWxszFlA=;
+	s=arc-20240116; t=1790792074; c=relaxed/simple;
+	bh=8hkYwjE1N7tg5xckr+KQiErwAZgkq3rjYUeR27FxNU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0Eg3rDqZZ8aw8DIiLyWzv5eriCB5hpR7KpyOhYg64oi5FU/iySNf3JfV9lPI27rFqtaSDglGcEopdD5uUo3bH99juG/k1kq+nHJcz2ieMEo5ODcX8rY6v4i/BmPQTC47Z0VqLOHzGvfRxPRBRkg+trD0CiHH7j5NZmVxSQ6cJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seV5cLd1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UOZ+OZsjmEr0ydTymdxTeMllavtfv1sJZqyNEiEcR4CVGiQikmM72plC6dh4kb6UTg46PnRhrFmdyjapCRsIBqanTVCbcXMIPGewUkGmX9eGqiBTrIL3N4yJqPtvuAd5O+DyPw19ZxVHLy0dKDIbZclG1NeOOJFs9qsYLSticBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XftGIsnB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seV5cLd1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600E01F000FF;
-	Wed, 30 Sep 2026 18:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XftGIsnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8AD1F000FF;
+	Wed, 30 Sep 2026 18:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792069;
-	bh=3v9kBVLv38hav1j6P5T418ept7EFSmsdqlHP3CtpXhY=;
+	s=korg; t=1790792072;
+	bh=ovy++ktEg8eYY00d9jICEfWhb0Yqssv+jzOQDQEyrHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seV5cLd1wIuo5Og2IphtyyiLgBrVPM8M+P7q8kb7O7RI/MyJN0eJzqKdDBiK087Sb
-	 CrXWtR7vAk4sZNBjnz02KdPuLLvd6yfuMIdzAmt0eU7ad3WUK0xxrzeiBaibP8X8M6
-	 bBIacfARqjNTPej/vB1RPSJpVtK5bfx/Ou6W8KlY=
+	b=XftGIsnBYmWTPdWrX193LfYJ3nwffevEzlTVbSNhVOW4QCkoosDDAdkaI6t5mi2TM
+	 9ItLn+tQWxHTd6+hO2sSIKiWdz/vW+jcET+v728NqrAoWNoi9eWwHl+ONmTgkYpHGc
+	 Inz/XAtvNhK4JT8QMvpqs8iabQY6L9afrufyexhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 526/752] kselftest/arm64: Fix size of thread_data values for pthread_join()
-Date: Wed, 30 Sep 2026 17:26:36 +0200
-Message-ID: <20260930152409.635277817@linuxfoundation.org>
+	David Laight <david.laight.linux@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"Christopher Lameter (Ampere)" <cl@gentwo.org>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+Subject: [PATCH 5.15 527/752] arm64: percpu: Fix this_cpu_write() casting
+Date: Wed, 30 Sep 2026 17:26:37 +0200
+Message-ID: <20260930152409.656787724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,39 +63,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 3d1ba5cbfb622025690c218d8f20da92a9ecb383 upstream.
+commit 885bff055a0f251a51a0d4fd4f0a7b525582a3de upstream.
 
-pthread_join() stores the thread's return value (a "void *", i.e.
-8 bytes on 64 bit computers) into the address that is passed as second
-parameter. However, the entries of thread_data are only normal "int"s,
-i.e. only 4 bytes. The additional 4 bytes of the return value clobber
-whatever is adjacent on the stack, i.e. other members of the thread_data
-array (which will be re-written in the next iteration of the for-loop,
-so that nobody noticed this problem), or another other local variable
-on the stack for the last iteration. Use "intptr_t" to declare the
-thread_data array entries with the correct size.
+The arm64 implementation of this_cpu_write() casts 'val' to unsigned
+long. This is necessary to handle cases where 'val' is a pointer type,
+and to avoid spurious compiler warnings for the (unreachable!) cases
+where the pointer type would be cast to a smaller integer type.
 
-Fixes: 29f080881601c ("kselftest/arm64: check GCR_EL1 after context switch")
+Unfortunately, the cast is applied to 'val' rather than '(val)', which
+won't always generate the expected value when 'val' is an expression.
+
+For example, for this_cpu_write(pcp, zero - 1), where 'pcp' is a u64 and
+'zero' is a u32:
+
+* 'zero'                      ===> (u32) 0x00000000
+* 'zero - 1'                  ===> (u32) 0xffffffff
+* '(unsigned long)zero - 1'   ===> (u64) 0xffffffffffffffff
+* '(unsigned long)(zero - 1)' ===> (u64) 0x00000000ffffffff
+
+Fix this by adding brackets around 'val'.
+
+Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
+Reported-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: David Laight <david.laight.linux@gmail.com>
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Acked-by: Christopher Lameter (Ampere) <cl@gentwo.org>
+Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Vladimir Murzin <vladimir.murzin@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Yang Shi <yang@os.amperecomputing.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/percpu.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-+++ b/tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-@@ -80,7 +80,7 @@ fail:
- int execute_test(pid_t pid)
- {
- 	pthread_t thread_id[MAX_THREADS];
--	int thread_data[MAX_THREADS];
-+	intptr_t thread_data[MAX_THREADS];
+--- a/arch/arm64/include/asm/percpu.h
++++ b/arch/arm64/include/asm/percpu.h
+@@ -177,13 +177,13 @@ PERCPU_RET_OP(add, add, ldadd)
+ 	_pcp_protect_return(__percpu_read_64, pcp)
  
- 	for (int i = 0; i < MAX_THREADS; i++)
- 		pthread_create(&thread_id[i], NULL,
+ #define this_cpu_write_1(pcp, val)	\
+-	_pcp_protect(__percpu_write_8, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_8, pcp, (unsigned long)(val))
+ #define this_cpu_write_2(pcp, val)	\
+-	_pcp_protect(__percpu_write_16, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_16, pcp, (unsigned long)(val))
+ #define this_cpu_write_4(pcp, val)	\
+-	_pcp_protect(__percpu_write_32, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_32, pcp, (unsigned long)(val))
+ #define this_cpu_write_8(pcp, val)	\
+-	_pcp_protect(__percpu_write_64, pcp, (unsigned long)val)
++	_pcp_protect(__percpu_write_64, pcp, (unsigned long)(val))
+ 
+ #define this_cpu_add_1(pcp, val)	\
+ 	_pcp_protect(__percpu_add_case_8, pcp, val)
 
 
