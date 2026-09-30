@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2CB4E77FD;
-	Wed, 30 Sep 2026 18:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959464EA39A;
+	Wed, 30 Sep 2026 18:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792589; cv=none; b=VPgIWR8CpvJDS6R54Yq8wcNJZj7Cj/FZMTznXDWVRBJc581gBacaf0d2HG80Ie/oGG64VTTqdasu9n6uo4iQO+lRtyfO6Nu9kTpTeYyUjTqctYp5oNXsC2qdKsxYdrUq0ea3Olm1NlZ8x2xj7XttNUm8/vCwSD+G73mreVkIRBc=
+	t=1790792591; cv=none; b=OLTWdUsEWZ7E/JvPzi0yA0E6uIY42qxPkLKw5XkpttNYQDKj0WycTIvmdvAlBF5kyM3V8PxXRA344xrMyUAnEwEZw2nAo4hJ1mCla5yYdceEy2JkQ57jgCQhOQIV2pPIsdtGJfY8NGjt5fHkzPdbrmGOdx1TjHmAp+osBspGHH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792589; c=relaxed/simple;
-	bh=XEodgNSIsmpmZb7j8j5KZPzFoUoWTkixJ6dC8Ysmro0=;
+	s=arc-20240116; t=1790792591; c=relaxed/simple;
+	bh=oeU9jK0HowzyDYBrrEeaOBVoQya+4bMrsxwpKFfIg7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADQywmFrk+CIpA/vlZvEocetwmQri8vTh46PxAQikjwbMvfkgCFLXyi3frNm2/yv1lyM/jyar/AhJaSiFk9y+26W5ICd0xjQBWJnbZj6nmYT05UGnYuM5G1ZfpM0Lr3se6tRhzs6VGDxzrFMOPCymTh3BDcZO4fFdywjYlH4CkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4QN5aD6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzjwDZNfgPw/oTSugi0QAA+LJJN2xkOLiX/0hk7PT4mszzGo/oNtx8CWf0ZuqhSPGSopxOvYDbDyMPbk+aZ/AHqP7LXYkYPUP6CR5pcL72jdCCXmsW3d8OTN8Xm7zAVGZ62KjiSqVobh+AMM9DhQWbt57rn3YVtTQzOhuu7SFso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jNNe8SY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4QN5aD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2435F1F000FF;
-	Wed, 30 Sep 2026 18:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jNNe8SY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23F61F000FF;
+	Wed, 30 Sep 2026 18:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792587;
-	bh=BDYyJJxtrLumwZE8vai1dNL2DQgGunoVkX0ui7C4qzo=;
+	s=korg; t=1790792590;
+	bh=dE7HzwGd0SzW3QXzNGYUgGckPQFZWsBCutKoC25nGU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K4QN5aD6SGwCFw83E00XoB41oLy2vt1TFWjNrGxK8iRww4vSBTrqRL+mT4mfUeIV7
-	 dh7CRCM7OCz+vZBtjss7PiyXVGoM3brNVkA27TzE2lQfuncsIIGAlIhFZhfN7gEpUy
-	 DS3oRGNBU2hFvNA0YAWNZjUCAQhjeNw6m6z9dTQ4=
+	b=2jNNe8SYwktsBG6UvlC2zYW08tw3fS18VcTt9TuV09vKuNqZ20vwgSCqewO8HKbXb
+	 wRF55FvFRsO4s2Tf4tow2G5oKoZDMNB5J7R6dowVLO409wD+bdaZjez+RhKUQ+gEk9
+	 1UKl/aAO3F2tpi/YG/+Io/EFCxMy945Ueg9GtDuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lei Zhu <zhulei@kylinos.cn>,
-	David Heidelberg <david@ixit.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 652/752] selftests: nci: Correct pthread_create return value check
-Date: Wed, 30 Sep 2026 17:28:42 +0200
-Message-ID: <20260930152412.368843846@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 702/752] ipv6: do not let ipv6_find_hdr() return an offset past the packet end
+Date: Wed, 30 Sep 2026 17:29:32 +0200
+Message-ID: <20260930152413.424535799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,82 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lei Zhu <zhulei@kylinos.cn>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 3d8afc5243ea2ee803d98e69eb4a01748167ac1b ]
+commit ee319bd3a0e976af5087cbe59ebc50a66f31d202 upstream.
 
-The pthread_create() functions returns 0 on success and a positive value on
-failure. Modify the return value check to correctly detect failure cases.
+ipv6_find_hdr() walks the extension header chain, skipping each header by
+the length that header itself declares.  ipv6_optlen() returns up to 2048,
+and the skip is never checked against skb->len, so the offset stored in
+*offset can point past the end of the packet.
 
-Fixes: 72696bd8a09d ("selftests: nci: Extract the start/stop discovery function")
-Signed-off-by: Lei Zhu <zhulei@kylinos.cn>
-Link: https://patch.msgid.link/20260729072426.303484-1-zhulei_szu@163.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+openvswitch installs that offset as the transport header, and
+update_ipv6_checksum() then reads and writes the transport checksum field
+out of bounds:
+
+  BUG: KASAN: slab-use-after-free in inet_proto_csum_replace16+0x445/0x470
+  Read of size 2 at addr ffff88810b754b06 by task ovs_ipv6_oob/629
+  CPU: 4 UID: 1000 PID: 629 Comm: ovs_ipv6_oob Tainted: G N 7.3.0-rc3+ #348
+  Call Trace:
+   inet_proto_csum_replace16+0x445/0x470
+   set_ipv6_addr+0x3dd/0x460
+   do_execute_actions+0x6a3d/0x7c40
+   ovs_execute_actions+0xfd/0x480
+   ovs_packet_cmd_execute+0xc38/0xf20
+   genl_rcv_msg+0x59e/0x870
+   netlink_rcv_skb+0x18b/0x450
+   genl_rcv+0x2d/0x40
+   netlink_unicast+0x6bc/0xa20
+
+  The buggy address belongs to the object at ffff88810b754980
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 390 bytes inside of
+   freed 704-byte region [ffff88810b754980, ffff88810b754c40)
+
+Other callers use that offset too, so bound it here rather than in one
+caller.
+
+Reject a header whose declared length does not fit in the packet.
+ipv6_find_hdr() already fails with -EBADMSG on a malformed chain, so this
+adds no new failure mode.
+
+Fixes: f8f626754ebe ("ipv6: Move ipv6_find_hdr() out of Netfilter code.")
+Suggested-by: Ilya Maximets <i.maximets@ovn.org>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/8F80BA1A-DDFD-432D-9075-242A3435FEB5@doyensec.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/nci/nci_dev.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/ipv6/exthdrs_core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
-index 162c41e9bcae8..6f571e3c21c09 100644
---- a/tools/testing/selftests/nci/nci_dev.c
-+++ b/tools/testing/selftests/nci/nci_dev.c
-@@ -438,7 +438,7 @@ FIXTURE_SETUP(NCI)
- 	else
- 		rc = pthread_create(&thread_t, NULL, virtual_dev_open,
- 				    (void *)&self->virtual_nci_fd);
--	ASSERT_GT(rc, -1);
-+	ASSERT_EQ(rc, 0);
+--- a/net/ipv6/exthdrs_core.c
++++ b/net/ipv6/exthdrs_core.c
+@@ -271,6 +271,9 @@ int ipv6_find_hdr(const struct sk_buff *
+ 			hdrlen = ipv6_optlen(hp);
  
- 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
- 			       NFC_CMD_DEV_UP, self->dev_idex);
-@@ -509,7 +509,7 @@ FIXTURE_TEARDOWN(NCI)
- 			rc = pthread_create(&thread_t, NULL, virtual_deinit,
- 					    (void *)&self->virtual_nci_fd);
- 
--		ASSERT_GT(rc, -1);
-+		ASSERT_EQ(rc, 0);
- 		rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
- 				       NFC_CMD_DEV_DOWN, self->dev_idex);
- 		EXPECT_EQ(rc, 0);
-@@ -590,7 +590,7 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
- 			    (void *)&virtual_fd);
--	if (rc < 0)
-+	if (rc)
- 		return rc;
- 
- 	rc = send_cmd_mt_nla(sd, fid, pid, NFC_CMD_START_POLL, 2, nla_start_poll_type,
-@@ -610,7 +610,7 @@ int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
- 			    (void *)&virtual_fd);
--	if (rc < 0)
-+	if (rc)
- 		return rc;
- 
- 	rc = send_cmd_with_idx(sd, fid, pid,
-@@ -830,6 +830,8 @@ int disconnect_tag(int nfc_sock, int virtual_fd)
- 
- 	status = pthread_create(&thread_t, NULL, virtual_deactivate_proc,
- 				(void *)&virtual_fd);
-+	if (status)
-+		return status;
- 
- 	close(nfc_sock);
- 	pthread_join(thread_t, (void **)&status);
-@@ -874,7 +876,7 @@ TEST_F(NCI, deinit)
- 	else
- 		rc = pthread_create(&thread_t, NULL, virtual_deinit,
- 				    (void *)&self->virtual_nci_fd);
--	ASSERT_GT(rc, -1);
-+	ASSERT_EQ(rc, 0);
- 
- 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
- 			       NFC_CMD_DEV_DOWN, self->dev_idex);
--- 
-2.53.0
-
+ 		if (!found) {
++			if (skb->len - start < hdrlen)
++				return -EBADMSG;
++
+ 			nexthdr = hp->nexthdr;
+ 			start += hdrlen;
+ 		}
 
 
