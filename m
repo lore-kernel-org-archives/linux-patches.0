@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E4351B17E;
-	Wed, 30 Sep 2026 17:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90FB3264C2;
+	Wed, 30 Sep 2026 17:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790612; cv=none; b=o4e0nifrVN40QBLMToGk1+K11shOzXUEkb2AzCNrhIYoM8H2TzESI0wcf93rR2PVk61uPExBWm/kQSo2vMiytY4O9+f6swYtmWv08xC7H7+07Rmj10nmRgx4jwE2rcGCF1yzt8SmN6Nu13mViPtGuMmes7DJPpzs47Z9u3Q8qPQ=
+	t=1790790615; cv=none; b=q5Oszm47PhTeDTJr7i4CEgL1EfSdr9cx3koq+SDrDTZ9ipdwzk2yKUAyQTSVUJCgoPHP27aAupaHzsQIrPg/0ZFe8aacyjaLEautVRvl2zZRTcBpuk5/ogCPpKCTOuuSpIjb4M3PogkbZMg7z0YtZM9DvUfzfVK2NDKEwX2mJmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790612; c=relaxed/simple;
-	bh=EV9DElkPkLxX661zyOlc9BgiGNJRPiqayZcFc8mhorU=;
+	s=arc-20240116; t=1790790615; c=relaxed/simple;
+	bh=EDdIM6Itr/TJbxqBKYrFno96C1iMIAv6x0IRJEcDQYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KPZ3vx55F46DLhvm+GXONBn/qeMcVvaIVvrilZM89JGOE/BIfpdR15TAoxmH0x4SXT7lil3RzU6FvDbuze5cMXo9n4RQeXs8gXJTOR9Vlyn1mz2Mk+oHIzs82Zu/Uj1MZhbSnMrd5xtEMl1wPBFLGJEEjCABCe4TwS9KeOUgJxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIcBxlex; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wfa99pKta5vZ9Wga/BLxVzSEpygan12pbchHvZ7NCF0BuOM4Vw8kDpu17k4IjHGmbr5OFrrq2SA2VKHFlRbv5LCE8ZpFu6lv6DO3ZvNULWwbGuEhljHV42utRd9SGUxuhTHk6lAD9hi4NWi3umdCZh7wkb+sfx+jovVf+P+zZc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFJCeUYm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIcBxlex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1ED1F000FF;
-	Wed, 30 Sep 2026 17:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFJCeUYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DB21F000FF;
+	Wed, 30 Sep 2026 17:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790610;
-	bh=Qnjermaab9z6wcgExb77wklw4fUj2v2AYy0hquaKmoQ=;
+	s=korg; t=1790790613;
+	bh=w/xlqYoivuEdSyMKP/JkhzvRV1gQ7qaoUF3dgnYw29M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iIcBxlexCNKgdntmgiZPnHMivXGDTeUo++ypI5Ec5qxoRGqiiR8ze44iO3ohQykOz
-	 COeMeTZItyNyWtw1JEJJLBInbqgAsMB0Lxo33PvTldxKVWgPcoANrq3rPgvf1/Pr9c
-	 EAk0Mv1HRWhQW2bR5hjU2dr4FQ90st75Fvikvxho=
+	b=rFJCeUYmv83joO76wKESCVgLVR9z2vcErdPoQAEW/Cu4H1uNHcEG+nVOyv47J0nHS
+	 yRrqav5JKR5EAEbtN3flL0552HhtXIiXJp6GF58JC1TyIc8BARRiJj9sbX/ZsODNye
+	 fkphT7reHrDdt3y9JrNebLYx01sY3jQ/kPxOWeRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/752] thunderbolt: Release request if tb_cfg_request() fails in __tb_xdomain_response()
-Date: Wed, 30 Sep 2026 17:18:03 +0200
-Message-ID: <20260930152358.434260567@linuxfoundation.org>
+Subject: [PATCH 5.15 014/752] thunderbolt: Keep the domain reference while processing hotplug
+Date: Wed, 30 Sep 2026 17:18:04 +0200
+Message-ID: <20260930152358.455729743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 4c63f29872cb444b33665348bbd2f45cab06afcd ]
+[ Upstream commit 138ec65b2c761f065b19d115aed2b8246fc272f5 ]
 
-If tb_cfg_request() fails setting up the request (for example the
-control channel is shut down already) it returns an error without
-calling the callback. To avoid leaking that memory, call
-tb_cfg_request_put() if tb_cfg_request() fails.
+We process hotplug events in a workqueue that may run after the domain
+has been removed by tb_domain_remove(). For example if user unloads the
+driver while at the same time plugging  a device router we may have
+scheduled tb_handle_hotplug() to run. Avoid possible UAF in this case by
+taking the domain reference before scheduling the hotplug handler in
+tb_queue_hotplug().
 
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/xdomain.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/tb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index b31c4e439f278..b5dad78c6b230 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -112,6 +112,7 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
- 				 size_t size, enum tb_cfg_pkg_type type)
- {
- 	struct tb_cfg_request *req;
-+	int ret;
+diff --git a/drivers/thunderbolt/tb.c b/drivers/thunderbolt/tb.c
+index 5b2a74a1bec36..ed001dfd2cb4e 100644
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -59,7 +59,7 @@ static void tb_queue_hotplug(struct tb *tb, u64 route, u8 port, bool unplug)
+ 	if (!ev)
+ 		return;
  
- 	req = tb_cfg_request_alloc();
- 	if (!req)
-@@ -123,7 +124,11 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
- 	req->request_size = size;
- 	req->request_type = type;
+-	ev->tb = tb;
++	ev->tb = tb_domain_get(tb);
+ 	ev->route = route;
+ 	ev->port = port;
+ 	ev->unplug = unplug;
+@@ -1315,6 +1315,9 @@ static void tb_handle_hotplug(struct work_struct *work)
+ 	pm_runtime_mark_last_busy(&tb->dev);
+ 	pm_runtime_put_autosuspend(&tb->dev);
  
--	return tb_cfg_request(ctl, req, response_ready, req);
-+	ret = tb_cfg_request(ctl, req, response_ready, req);
-+	if (ret)
-+		tb_cfg_request_put(req);
++	/* Undo the refcount increased in tb_queue_hotplug() */
++	tb_domain_put(tb);
 +
-+	return ret;
+ 	kfree(ev);
  }
  
- /**
 -- 
 2.53.0
 
