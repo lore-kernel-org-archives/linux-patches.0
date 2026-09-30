@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9D33C3F58;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDC03C4551;
 	Wed, 30 Sep 2026 19:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794884; cv=none; b=Pc6NGZB2pmK00KtUyhgvC+YpE+S2a5K/O///ugDd9lF/ftbjdnKb6Ag/NghJO66L7J6fke02rHbjdi6ZT9NO26HAXFhPMu3B3899oNtDZ8j5s+1zrcKryQDSvEab0elMVHM72GreW4xrJxDdwGrCiHw9MA0X97948isSMobt31A=
+	t=1790794884; cv=none; b=gz0IZmcbz3DKy+v8GkZ/yw2RAj/SjMDjJE1C3FFtX1OZmTU7Rm7VpQBRCK6wWpGBkzyLnL2rmulRIyk8MKtepiIl4cpgl2GsX5tcKE/Vls1Yu+Jxl0BhuKPj4j1WfFo+pjNXhSil7fTKDS39LUyc2a30OVcOnFzhN5o9E10HkFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790794884; c=relaxed/simple;
-	bh=4YsEfTkx7DWrZibdMRHag6vuZbA/FaQauJZHdYF7k3Y=;
+	bh=zoTLzRqNm/HzhctIIKkLHYcT0kXCOykYvEvww2mEF/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suxZyX3nROBG4UBpyovfc0VY/4wUNSYwg1adV80CxUO46PGsK2yuP8PC3DvWVDjmciuZ2mLusrkClB6DRg3JrP2orYej2J9idTjYeCC0KmRgYtLxE2pR28y2Pp//9FlDUn/BW15AjnSd277QUVHQYgIvKALX0229unCkH1H7sys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTnt0P5g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jVeALzHZyfrWWGEzdwDemopU7kqyhYEUPj8/cwt7PhVT8/NvXIPNmXczRANVWOiDlbirgt8duc6RxqczHUO41q8iWb+0ki92I8EmxqN0biDLBWR0q7eJdq1ILBOxWXpwIVm6wE3mu2FQiACFZSFOgMZwiLaF0Dg+wQ6AvLi3qB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhQ346OS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTnt0P5g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B821F008A4;
-	Wed, 30 Sep 2026 19:01:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhQ346OS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41951F008A6;
+	Wed, 30 Sep 2026 19:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794875;
-	bh=P1BO/efWmEV77FiVhi3buySHdiQ3fL/HzcCTDMkWdgQ=;
+	s=korg; t=1790794878;
+	bh=Jh5pf/3PXDzYR9x9DAl/bQD16Hqc64V3L2N7FoRMiaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTnt0P5gxcoXmFmMq9wgflmLJSrGAxf7ZSVcP5/cEOtx537gmk0g3lAqaRzvStvwf
-	 RRpuyns4YH31Px/wnRBv096LUsTB1U9D2XUkvOJ7ljOITD9KYvNz5Sh9CJstbeqlME
-	 GxG9Nw8AWEJ267xw2esr5DTYwy+OhKdCpLDD3Tv8=
+	b=HhQ346OSRV/80Vy3C7N1nDyeqos2R5MLqttDWD1ryNf4XsvBxYiuKkR1lTRcYJDeC
+	 XruT27qBZC/ky9PzYKorlNxvVHoilLDbzhM27uK1qarvJpTiZnmb4nwHgp7zSRaIHs
+	 OQ9+Hwr16vds1t5zXVxbwRkuR8owmR68rZFYARpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0327/1193] drm/gma500: return errors from Oaktrail HDMI I2C reads
-Date: Wed, 30 Sep 2026 17:16:51 +0200
-Message-ID: <20260930152441.404612713@linuxfoundation.org>
+Subject: [PATCH 6.6 0363/1193] ASoC: topology: Check PCM and DAI name strings before use
+Date: Wed, 30 Sep 2026 17:17:27 +0200
+Message-ID: <20260930152442.241444186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,95 +45,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 9b5ce5c496efd20c1c662cedba88465d39ec1f93 ]
+[ Upstream commit b7e44d1986d6671342c19b82192189ca5db5dab7 ]
 
-xfer_read() waits for the HDMI I2C transaction to reach
-I2C_TRANSACTION_DONE, but it ignores both timeout and signal returns from
-wait_for_completion_interruptible_timeout().  If the interrupt never
-advances the transaction state, the loop can wait forever.
+Topology objects store several PCM and DAI names in fixed-size UAPI
+arrays. Other topology parser paths validate these fields with bounded
+strnlen() checks before using them as C strings, but the PCM and DAI
+paths still pass some fixed-size arrays directly to strlen(),
+devm_kstrdup(), DAI lookup, and diagnostic prints.
 
-Return -ETIMEDOUT when the completion wait expires, propagate interrupted
-waits, and make the I2C master_xfer callback return the first transfer
-error instead of reporting a successful message count.
+A malformed topology blob with a non-NUL-terminated PCM, DAI, or stream
+capability name can therefore make the parser read past the end of the
+fixed-size field.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patch.msgid.link/20260625003240.6923-1-pengpeng@iscas.ac.cn
+Reject unterminated PCM and DAI name fields before consuming them as C
+strings.
+
+Fixes: 64527e8a3529 ("ASoC: topology: Add FE DAIs dynamically")
+Fixes: acfc7d46cddc ("ASoC: topology: Add FE DAI links dynamically")
+Fixes: 0038be9a84dc ("ASoC: topology: Add support for configuring existing BE DAIs")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260604-asoc-topology-check-pcm-dai-names-v1-1-e1b0f6f7c2ce@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ sound/soc/soc-topology.c | 37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c b/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
-index fc9a34ed58bd1..48a2adba94879 100644
---- a/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
-+++ b/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
-@@ -95,6 +95,7 @@ static int xfer_read(struct i2c_adapter *adap, struct i2c_msg *pmsg)
- 	struct oaktrail_hdmi_dev *hdmi_dev = i2c_get_adapdata(adap);
- 	struct hdmi_i2c_dev *i2c_dev = hdmi_dev->i2c_dev;
- 	u32 temp;
-+	int ret;
- 
- 	i2c_dev->status = I2C_STAT_INIT;
- 	i2c_dev->msg = pmsg;
-@@ -106,9 +107,14 @@ static int xfer_read(struct i2c_adapter *adap, struct i2c_msg *pmsg)
- 	HDMI_WRITE(HDMI_HI2CHCR, temp);
- 	HDMI_READ(HDMI_HI2CHCR);
- 
--	while (i2c_dev->status != I2C_TRANSACTION_DONE)
--		wait_for_completion_interruptible_timeout(&i2c_dev->complete,
-+	while (i2c_dev->status != I2C_TRANSACTION_DONE) {
-+		ret = wait_for_completion_interruptible_timeout(&i2c_dev->complete,
- 								10 * HZ);
-+		if (ret < 0)
-+			return ret;
-+		if (!ret)
-+			return -ETIMEDOUT;
-+	}
- 
- 	return 0;
+diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
+index a643ef654b9d7..ff6c9de25b968 100644
+--- a/sound/soc/soc-topology.c
++++ b/sound/soc/soc-topology.c
+@@ -1523,9 +1523,24 @@ static int soc_tplg_dapm_complete(struct soc_tplg *tplg)
+ 	return ret;
  }
-@@ -127,7 +133,7 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
+ 
++static int soc_tplg_check_name(const char *name)
++{
++	if (strnlen(name, SNDRV_CTL_ELEM_ID_NAME_MAXLEN) ==
++	    SNDRV_CTL_ELEM_ID_NAME_MAXLEN)
++		return -EINVAL;
++
++	return 0;
++}
++
+ static int set_stream_info(struct soc_tplg *tplg, struct snd_soc_pcm_stream *stream,
+ 			   struct snd_soc_tplg_stream_caps *caps)
  {
- 	struct oaktrail_hdmi_dev *hdmi_dev = i2c_get_adapdata(adap);
- 	struct hdmi_i2c_dev *i2c_dev = hdmi_dev->i2c_dev;
--	int i;
-+	int i, ret = 0;
- 
- 	mutex_lock(&i2c_dev->i2c_lock);
- 
-@@ -139,9 +145,11 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
- 	for (i = 0; i < num; i++) {
- 		if (pmsg->len && pmsg->buf) {
- 			if (pmsg->flags & I2C_M_RD)
--				xfer_read(adap, pmsg);
-+				ret = xfer_read(adap, pmsg);
- 			else
--				xfer_write(adap, pmsg);
-+				ret = xfer_write(adap, pmsg);
-+			if (ret)
-+				break;
- 		}
- 		pmsg++;         /* next message */
- 	}
-@@ -151,6 +159,9 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
- 
- 	mutex_unlock(&i2c_dev->i2c_lock);
- 
++	int ret;
++
++	ret = soc_tplg_check_name(caps->name);
 +	if (ret)
 +		return ret;
 +
- 	return i;
- }
+ 	stream->stream_name = devm_kstrdup(tplg->dev, caps->name, GFP_KERNEL);
+ 	if (!stream->stream_name)
+ 		return -ENOMEM;
+@@ -1578,7 +1593,11 @@ static int soc_tplg_dai_create(struct soc_tplg *tplg,
+ 	if (dai_drv == NULL)
+ 		return -ENOMEM;
  
+-	if (strlen(pcm->dai_name)) {
++	ret = soc_tplg_check_name(pcm->dai_name);
++	if (ret)
++		goto err;
++
++	if (pcm->dai_name[0]) {
+ 		dai_drv->name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
+ 		if (!dai_drv->name) {
+ 			ret = -ENOMEM;
+@@ -1684,7 +1703,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
+ 	if (tplg->ops)
+ 		link->dobj.unload = tplg->ops->link_unload;
+ 
+-	if (strlen(pcm->pcm_name)) {
++	ret = soc_tplg_check_name(pcm->pcm_name);
++	if (ret)
++		goto err;
++
++	if (pcm->pcm_name[0]) {
+ 		link->name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
+ 		link->stream_name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
+ 		if (!link->name || !link->stream_name) {
+@@ -1694,7 +1717,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
+ 	}
+ 	link->id = le32_to_cpu(pcm->pcm_id);
+ 
+-	if (strlen(pcm->dai_name)) {
++	ret = soc_tplg_check_name(pcm->dai_name);
++	if (ret)
++		goto err;
++
++	if (pcm->dai_name[0]) {
+ 		link->cpus->dai_name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
+ 		if (!link->cpus->dai_name) {
+ 			ret = -ENOMEM;
+@@ -2188,6 +2215,10 @@ static int soc_tplg_dai_config(struct soc_tplg *tplg,
+ 
+ 	memset(&dai_component, 0, sizeof(dai_component));
+ 
++	ret = soc_tplg_check_name(d->dai_name);
++	if (ret)
++		return ret;
++
+ 	dai_component.dai_name = d->dai_name;
+ 	dai = snd_soc_find_dai(&dai_component);
+ 	if (!dai) {
 -- 
 2.53.0
 
