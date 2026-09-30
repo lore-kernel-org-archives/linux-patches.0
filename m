@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723EB4D4888;
-	Wed, 30 Sep 2026 16:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF8344E67E;
+	Wed, 30 Sep 2026 16:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785794; cv=none; b=ayf3HKyTnNmtSXcjEnhPAeopeGclaNsQrwJp5yCsUDB17i6WasupDc7PD8KXdoL2HGqSKNucAFMjhamHx5nfh5DkRI7P+chsniB41G61OWpfp3meuGE/uUqLJocZh7bRz7pR6VxLZtswJAIf8AhBnbyjDUjOCstHNRLJWcYkqk4=
+	t=1790785797; cv=none; b=mhARJJn8q9z2qI8tr+Og/3PHMebtMQBxY0tsy46sN1S2adIbD2291NOIPt3YL/k5UmXtEHi6aWmFZP3Zt8oggRCv8HpUVZKONVXS0o2m6Z7OaEF1HOfXMBRQ/neA4AtAsHrKxikAA3uHQ3E2BwbGyr7xXiiuomSF/bjqKU8px/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785794; c=relaxed/simple;
-	bh=4OGNailipLHkX+o3tYoyeCA05BNUiO96UCRZH9uN/5M=;
+	s=arc-20240116; t=1790785797; c=relaxed/simple;
+	bh=7a2V6+R4GUBDFc8UCtByFY6YMxARijAsht9HnSV2gWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/CbM9toqDQE64qhPTXLecnq1kMOupFotdEKf63hR9hz19YwAAORFUJD/vpIkTH7V5lzFrTdI7PHQOVPWXD8C86nHZp7uDit+ktAEoe7kgGK7vb7be/DU5/9dMmn17AcCTOA99NRUsvfLNZcau2l+poEt/HV0X4CiTrD3eRpDhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMctQwy1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y8yDBs/uY1eofbKfOTzhTQaIR3qrWJ5ar2N5CVCGXX71GLtfHFP3cZr8c+YtEzEY/BXR70TsTVyowDmgGZHk5l3auSF6tYYsfLBaoaJNGR9f9b3Lni2RPqPRagIn9JIvlmCf46z0qFk3q1zXe/fuaSWZU1QhQTOYOchiSy3I5sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gO8iZ/86; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMctQwy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89CD51F000FF;
-	Wed, 30 Sep 2026 16:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gO8iZ/86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6877F1F000FF;
+	Wed, 30 Sep 2026 16:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785793;
-	bh=XUz+wzZFiQVqUuk3So37gnobmyzs8eN5WA5M6N9iO40=;
+	s=korg; t=1790785796;
+	bh=v32qrFd8D9yKrAAxQ2XpLWnXT0jeh/XyowY+aLeY2I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YMctQwy1ThNqeN8y4FSIZNzXcu5zhD2zjRoe2zOErfx/xumjsUu9ZJO4DFynJeVtG
-	 tGQDJ7voQxzXePMPxVvnURDRWq8mvRgVwFW5t7bcsUI1koAAApVMR7b05H57bQj/oH
-	 Uo1avQd+oHuMNqs2tAIQ8rr8Eg/7XSY9LvF3/RkE=
+	b=gO8iZ/86k41w0pynaGWCh7O63jLoCklc2XAOtdGhnJ55450selOh4KdCF9e7agosE
+	 qqoNrqXEyPiSe/ha1MJ5ORrjJQT3SVdranduDr2ZlRi+6jzq1PcfZ5Jcr7PBglzlKp
+	 vWSeO39NE6mycdkyfIPKZYg/xhVhNCSVUEk4nQws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 632/982] wifi: cfg80211: make TDLS management link-aware
-Date: Wed, 30 Sep 2026 17:22:48 +0200
-Message-ID: <20260930152430.345940128@linuxfoundation.org>
+Subject: [PATCH 6.1 633/982] wifi: mac80211: handle TDLS negotiation with MLO
+Date: Wed, 30 Sep 2026 17:22:49 +0200
+Message-ID: <20260930152430.367043434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,224 +55,589 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 
-[ Upstream commit c6112046b1a9c130c455ab0bbe74c3f41138693c ]
+[ Upstream commit 78a7ea370d5f0eb6f3e774e7f6afece1c3a6860f ]
 
-For multi-link operation(MLO) TDLS management
-frames need to be transmitted on a specific link.
-The TDLS setup request will add BSSID along with
-peer address and userspace will pass the link-id
-based on BSSID value to the driver(or mac80211).
+Userspace can now select the link to use for TDLS management
+frames (indicating e.g. which BSSID should be used), use the
+link_id received from cfg80211 to build the frames.
 
 Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230616094948.cb3d87c22812.Ia3d15ac4a9a182145bf2d418bcb3ddf4539cd0a7@changeid
+Link: https://lore.kernel.org/r/20230616094948.ce1fc230b505.Ie773c5679805001f5a52680d68d9ce0232c57648@changeid
+[Benjamin fixed some locking]
+Co-developed-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+[fix sta mutex locking too]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: 038e1d126304 ("wifi: mac80211: require a peer station for TDLS setup confirm")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |  8 ++++----
- include/net/cfg80211.h                          |  7 ++++---
- net/mac80211/ieee80211_i.h                      |  8 ++++----
- net/mac80211/tdls.c                             | 10 +++++-----
- net/wireless/nl80211.c                          |  7 +++++--
- net/wireless/rdev-ops.h                         | 15 ++++++++-------
- net/wireless/trace.h                            | 13 ++++++++-----
- 7 files changed, 38 insertions(+), 30 deletions(-)
+ net/mac80211/tdls.c | 163 +++++++++++++++++++++++++-------------------
+ 1 file changed, 91 insertions(+), 72 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/cfg80211.c b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-index 3b9b75eb4cdb8..8744a9a3eb6b5 100644
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -3756,10 +3756,10 @@ static int mwifiex_cfg80211_set_coalesce(struct wiphy *wiphy,
-  */
- static int
- mwifiex_cfg80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
--			   const u8 *peer, u8 action_code, u8 dialog_token,
--			   u16 status_code, u32 peer_capability,
--			   bool initiator, const u8 *extra_ies,
--			   size_t extra_ies_len)
-+			   const u8 *peer, int link_id, u8 action_code,
-+			   u8 dialog_token, u16 status_code,
-+			   u32 peer_capability, bool initiator,
-+			   const u8 *extra_ies, size_t extra_ies_len)
- {
- 	struct mwifiex_private *priv = mwifiex_netdev_get_priv(dev);
- 	int ret;
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 90aad35cccc10..297a88a4e14e6 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -4544,9 +4544,10 @@ struct cfg80211_ops {
- 				  struct cfg80211_gtk_rekey_data *data);
- 
- 	int	(*tdls_mgmt)(struct wiphy *wiphy, struct net_device *dev,
--			     const u8 *peer, u8 action_code,  u8 dialog_token,
--			     u16 status_code, u32 peer_capability,
--			     bool initiator, const u8 *buf, size_t len);
-+			     const u8 *peer, int link_id,
-+			     u8 action_code, u8 dialog_token, u16 status_code,
-+			     u32 peer_capability, bool initiator,
-+			     const u8 *buf, size_t len);
- 	int	(*tdls_oper)(struct wiphy *wiphy, struct net_device *dev,
- 			     const u8 *peer, enum nl80211_tdls_operation oper);
- 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 2f437ddd8f1ed..5c3993f611625 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -2519,10 +2519,10 @@ void ieee80211_recalc_chanctx_chantype(struct ieee80211_local *local,
- 
- /* TDLS */
- int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
--			const u8 *peer, u8 action_code, u8 dialog_token,
--			u16 status_code, u32 peer_capability,
--			bool initiator, const u8 *extra_ies,
--			size_t extra_ies_len);
-+			const u8 *peer, int link_id,
-+			u8 action_code, u8 dialog_token, u16 status_code,
-+			u32 peer_capability, bool initiator,
-+			const u8 *extra_ies, size_t extra_ies_len);
- int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
- 			const u8 *peer, enum nl80211_tdls_operation oper);
- void ieee80211_tdls_peer_del_work(struct wiphy *wiphy, struct wiphy_work *wk);
 diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
-index 57bd4fc8d2375..e54442471c45a 100644
+index e54442471c45a..708e7fb1b218a 100644
 --- a/net/mac80211/tdls.c
 +++ b/net/mac80211/tdls.c
-@@ -6,7 +6,7 @@
-  * Copyright 2014, Intel Corporation
-  * Copyright 2014  Intel Mobile Communications GmbH
-  * Copyright 2015 - 2016 Intel Deutschland GmbH
-- * Copyright (C) 2019, 2021-2022 Intel Corporation
-+ * Copyright (C) 2019, 2021-2023 Intel Corporation
-  */
- 
- #include <linux/ieee80211.h>
-@@ -1186,10 +1186,10 @@ ieee80211_tdls_mgmt_teardown(struct wiphy *wiphy, struct net_device *dev,
+@@ -39,9 +39,10 @@ void ieee80211_tdls_peer_del_work(struct wiphy *wiphy, struct wiphy_work *wk)
+ 	mutex_unlock(&local->mtx);
  }
  
- int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
--			const u8 *peer, u8 action_code, u8 dialog_token,
--			u16 status_code, u32 peer_capability,
--			bool initiator, const u8 *extra_ies,
--			size_t extra_ies_len)
-+			const u8 *peer, int link_id,
-+			u8 action_code, u8 dialog_token, u16 status_code,
-+			u32 peer_capability, bool initiator,
-+			const u8 *extra_ies, size_t extra_ies_len)
+-static void ieee80211_tdls_add_ext_capab(struct ieee80211_sub_if_data *sdata,
++static void ieee80211_tdls_add_ext_capab(struct ieee80211_link_data *link,
+ 					 struct sk_buff *skb)
+ {
++	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
+ 	bool chan_switch = local->hw.wiphy->features &
+@@ -50,7 +51,7 @@ static void ieee80211_tdls_add_ext_capab(struct ieee80211_sub_if_data *sdata,
+ 			  !ifmgd->tdls_wider_bw_prohibited;
+ 	bool buffer_sta = ieee80211_hw_check(&local->hw,
+ 					     SUPPORTS_TDLS_BUFFER_STA);
+-	struct ieee80211_supported_band *sband = ieee80211_get_sband(sdata);
++	struct ieee80211_supported_band *sband = ieee80211_get_link_sband(link);
+ 	bool vht = sband && sband->vht_cap.vht_supported;
+ 	u8 *pos = skb_put(skb, 10);
+ 
+@@ -152,13 +153,13 @@ ieee80211_tdls_add_supp_channels(struct ieee80211_sub_if_data *sdata,
+ 	*pos = 2 * subband_cnt;
+ }
+ 
+-static void ieee80211_tdls_add_oper_classes(struct ieee80211_sub_if_data *sdata,
++static void ieee80211_tdls_add_oper_classes(struct ieee80211_link_data *link,
+ 					    struct sk_buff *skb)
+ {
+ 	u8 *pos;
+ 	u8 op_class;
+ 
+-	if (!ieee80211_chandef_to_operating_class(&sdata->vif.bss_conf.chandef,
++	if (!ieee80211_chandef_to_operating_class(&link->conf->chandef,
+ 						  &op_class))
+ 		return;
+ 
+@@ -180,7 +181,7 @@ static void ieee80211_tdls_add_bss_coex_ie(struct sk_buff *skb)
+ 	*pos++ = WLAN_BSS_COEX_INFORMATION_REQUEST;
+ }
+ 
+-static u16 ieee80211_get_tdls_sta_capab(struct ieee80211_sub_if_data *sdata,
++static u16 ieee80211_get_tdls_sta_capab(struct ieee80211_link_data *link,
+ 					u16 status_code)
+ {
+ 	struct ieee80211_supported_band *sband;
+@@ -189,7 +190,8 @@ static u16 ieee80211_get_tdls_sta_capab(struct ieee80211_sub_if_data *sdata,
+ 	if (status_code != 0)
+ 		return 0;
+ 
+-	sband = ieee80211_get_sband(sdata);
++	sband = ieee80211_get_link_sband(link);
++
+ 	if (sband && sband->band == NL80211_BAND_2GHZ) {
+ 		return WLAN_CAPABILITY_SHORT_SLOT_TIME |
+ 		       WLAN_CAPABILITY_SHORT_PREAMBLE;
+@@ -198,10 +200,11 @@ static u16 ieee80211_get_tdls_sta_capab(struct ieee80211_sub_if_data *sdata,
+ 	return 0;
+ }
+ 
+-static void ieee80211_tdls_add_link_ie(struct ieee80211_sub_if_data *sdata,
++static void ieee80211_tdls_add_link_ie(struct ieee80211_link_data *link,
+ 				       struct sk_buff *skb, const u8 *peer,
+ 				       bool initiator)
+ {
++	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_tdls_lnkie *lnkid;
+ 	const u8 *init_addr, *rsp_addr;
+ 
+@@ -218,7 +221,7 @@ static void ieee80211_tdls_add_link_ie(struct ieee80211_sub_if_data *sdata,
+ 	lnkid->ie_type = WLAN_EID_LINK_ID;
+ 	lnkid->ie_len = sizeof(struct ieee80211_tdls_lnkie) - 2;
+ 
+-	memcpy(lnkid->bssid, sdata->deflink.u.mgd.bssid, ETH_ALEN);
++	memcpy(lnkid->bssid, link->u.mgd.bssid, ETH_ALEN);
+ 	memcpy(lnkid->init_sta, init_addr, ETH_ALEN);
+ 	memcpy(lnkid->resp_sta, rsp_addr, ETH_ALEN);
+ }
+@@ -359,11 +362,12 @@ ieee80211_tdls_chandef_vht_upgrade(struct ieee80211_sub_if_data *sdata,
+ }
+ 
+ static void
+-ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
++ieee80211_tdls_add_setup_start_ies(struct ieee80211_link_data *link,
+ 				   struct sk_buff *skb, const u8 *peer,
+ 				   u8 action_code, bool initiator,
+ 				   const u8 *extra_ies, size_t extra_ies_len)
+ {
++	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct ieee80211_sta_ht_cap ht_cap;
+@@ -372,8 +376,8 @@ ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
+ 	size_t offset = 0, noffset;
+ 	u8 *pos;
+ 
+-	sband = ieee80211_get_sband(sdata);
+-	if (!sband)
++	sband = ieee80211_get_link_sband(link);
++	if (WARN_ON_ONCE(!sband))
+ 		return;
+ 
+ 	ieee80211_add_srates_ie(sdata, skb, false, sband->band);
+@@ -397,7 +401,7 @@ ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
+ 		offset = noffset;
+ 	}
+ 
+-	ieee80211_tdls_add_ext_capab(sdata, skb);
++	ieee80211_tdls_add_ext_capab(link, skb);
+ 
+ 	/* add the QoS element if we support it */
+ 	if (local->hw.queues >= IEEE80211_NUM_ACS &&
+@@ -426,20 +430,16 @@ ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
+ 		offset = noffset;
+ 	}
+ 
+-	mutex_lock(&local->sta_mtx);
+-
+ 	/* we should have the peer STA if we're already responding */
+ 	if (action_code == WLAN_TDLS_SETUP_RESPONSE) {
+ 		sta = sta_info_get(sdata, peer);
+-		if (WARN_ON_ONCE(!sta)) {
+-			mutex_unlock(&local->sta_mtx);
++		if (WARN_ON_ONCE(!sta))
+ 			return;
+-		}
+ 
+-		sta->tdls_chandef = sdata->vif.bss_conf.chandef;
++		sta->tdls_chandef = link->conf->chandef;
+ 	}
+ 
+-	ieee80211_tdls_add_oper_classes(sdata, skb);
++	ieee80211_tdls_add_oper_classes(link, skb);
+ 
+ 	/*
+ 	 * with TDLS we can switch channels, and HT-caps are not necessarily
+@@ -472,7 +472,7 @@ ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
+ 	    (ht_cap.cap & IEEE80211_HT_CAP_SUP_WIDTH_20_40))
+ 		ieee80211_tdls_add_bss_coex_ie(skb);
+ 
+-	ieee80211_tdls_add_link_ie(sdata, skb, peer, initiator);
++	ieee80211_tdls_add_link_ie(link, skb, peer, initiator);
+ 
+ 	/* add any custom IEs that go before VHT capabilities */
+ 	if (extra_ies_len) {
+@@ -529,8 +529,6 @@ ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
+ 			ieee80211_tdls_chandef_vht_upgrade(sdata, sta);
+ 	}
+ 
+-	mutex_unlock(&local->sta_mtx);
+-
+ 	/* add any remaining IEs */
+ 	if (extra_ies_len) {
+ 		noffset = extra_ies_len;
+@@ -540,31 +538,29 @@ ieee80211_tdls_add_setup_start_ies(struct ieee80211_sub_if_data *sdata,
+ }
+ 
+ static void
+-ieee80211_tdls_add_setup_cfm_ies(struct ieee80211_sub_if_data *sdata,
++ieee80211_tdls_add_setup_cfm_ies(struct ieee80211_link_data *link,
+ 				 struct sk_buff *skb, const u8 *peer,
+ 				 bool initiator, const u8 *extra_ies,
+ 				 size_t extra_ies_len)
+ {
++	struct ieee80211_sub_if_data *sdata = link->sdata;
+ 	struct ieee80211_local *local = sdata->local;
+ 	size_t offset = 0, noffset;
+ 	struct sta_info *sta, *ap_sta;
+ 	struct ieee80211_supported_band *sband;
+ 	u8 *pos;
+ 
+-	sband = ieee80211_get_sband(sdata);
+-	if (!sband)
++	sband = ieee80211_get_link_sband(link);
++	if (WARN_ON_ONCE(!sband))
+ 		return;
+ 
+-	mutex_lock(&local->sta_mtx);
+-
+ 	sta = sta_info_get(sdata, peer);
+-	ap_sta = sta_info_get(sdata, sdata->deflink.u.mgd.bssid);
+-	if (WARN_ON_ONCE(!sta || !ap_sta)) {
+-		mutex_unlock(&local->sta_mtx);
++	ap_sta = sta_info_get(sdata, sdata->vif.cfg.ap_addr);
++
++	if (WARN_ON_ONCE(!sta || !ap_sta))
+ 		return;
+-	}
+ 
+-	sta->tdls_chandef = sdata->vif.bss_conf.chandef;
++	sta->tdls_chandef = link->conf->chandef;
+ 
+ 	/* add any custom IEs that go before the QoS IE */
+ 	if (extra_ies_len) {
+@@ -610,11 +606,11 @@ ieee80211_tdls_add_setup_cfm_ies(struct ieee80211_sub_if_data *sdata,
+ 
+ 		pos = skb_put(skb, 2 + sizeof(struct ieee80211_ht_operation));
+ 		ieee80211_ie_build_ht_oper(pos, &sta->sta.deflink.ht_cap,
+-					   &sdata->vif.bss_conf.chandef, prot,
++					   &link->conf->chandef, prot,
+ 					   true);
+ 	}
+ 
+-	ieee80211_tdls_add_link_ie(sdata, skb, peer, initiator);
++	ieee80211_tdls_add_link_ie(link, skb, peer, initiator);
+ 
+ 	/* only include VHT-operation if not on the 2.4GHz band */
+ 	if (sband->band != NL80211_BAND_2GHZ &&
+@@ -631,8 +627,6 @@ ieee80211_tdls_add_setup_cfm_ies(struct ieee80211_sub_if_data *sdata,
+ 					    &sta->tdls_chandef);
+ 	}
+ 
+-	mutex_unlock(&local->sta_mtx);
+-
+ 	/* add any remaining IEs */
+ 	if (extra_ies_len) {
+ 		noffset = extra_ies_len;
+@@ -641,7 +635,7 @@ ieee80211_tdls_add_setup_cfm_ies(struct ieee80211_sub_if_data *sdata,
+ }
+ 
+ static void
+-ieee80211_tdls_add_chan_switch_req_ies(struct ieee80211_sub_if_data *sdata,
++ieee80211_tdls_add_chan_switch_req_ies(struct ieee80211_link_data *link,
+ 				       struct sk_buff *skb, const u8 *peer,
+ 				       bool initiator, const u8 *extra_ies,
+ 				       size_t extra_ies_len, u8 oper_class,
+@@ -670,7 +664,7 @@ ieee80211_tdls_add_chan_switch_req_ies(struct ieee80211_sub_if_data *sdata,
+ 		offset = noffset;
+ 	}
+ 
+-	ieee80211_tdls_add_link_ie(sdata, skb, peer, initiator);
++	ieee80211_tdls_add_link_ie(link, skb, peer, initiator);
+ 
+ 	/* add any remaining IEs */
+ 	if (extra_ies_len) {
+@@ -680,20 +674,20 @@ ieee80211_tdls_add_chan_switch_req_ies(struct ieee80211_sub_if_data *sdata,
+ }
+ 
+ static void
+-ieee80211_tdls_add_chan_switch_resp_ies(struct ieee80211_sub_if_data *sdata,
++ieee80211_tdls_add_chan_switch_resp_ies(struct ieee80211_link_data *link,
+ 					struct sk_buff *skb, const u8 *peer,
+ 					u16 status_code, bool initiator,
+ 					const u8 *extra_ies,
+ 					size_t extra_ies_len)
+ {
+ 	if (status_code == 0)
+-		ieee80211_tdls_add_link_ie(sdata, skb, peer, initiator);
++		ieee80211_tdls_add_link_ie(link, skb, peer, initiator);
+ 
+ 	if (extra_ies_len)
+ 		skb_put_data(skb, extra_ies, extra_ies_len);
+ }
+ 
+-static void ieee80211_tdls_add_ies(struct ieee80211_sub_if_data *sdata,
++static void ieee80211_tdls_add_ies(struct ieee80211_link_data *link,
+ 				   struct sk_buff *skb, const u8 *peer,
+ 				   u8 action_code, u16 status_code,
+ 				   bool initiator, const u8 *extra_ies,
+@@ -705,7 +699,8 @@ static void ieee80211_tdls_add_ies(struct ieee80211_sub_if_data *sdata,
+ 	case WLAN_TDLS_SETUP_RESPONSE:
+ 	case WLAN_PUB_ACTION_TDLS_DISCOVER_RES:
+ 		if (status_code == 0)
+-			ieee80211_tdls_add_setup_start_ies(sdata, skb, peer,
++			ieee80211_tdls_add_setup_start_ies(link,
++							   skb, peer,
+ 							   action_code,
+ 							   initiator,
+ 							   extra_ies,
+@@ -713,7 +708,7 @@ static void ieee80211_tdls_add_ies(struct ieee80211_sub_if_data *sdata,
+ 		break;
+ 	case WLAN_TDLS_SETUP_CONFIRM:
+ 		if (status_code == 0)
+-			ieee80211_tdls_add_setup_cfm_ies(sdata, skb, peer,
++			ieee80211_tdls_add_setup_cfm_ies(link, skb, peer,
+ 							 initiator, extra_ies,
+ 							 extra_ies_len);
+ 		break;
+@@ -722,16 +717,17 @@ static void ieee80211_tdls_add_ies(struct ieee80211_sub_if_data *sdata,
+ 		if (extra_ies_len)
+ 			skb_put_data(skb, extra_ies, extra_ies_len);
+ 		if (status_code == 0 || action_code == WLAN_TDLS_TEARDOWN)
+-			ieee80211_tdls_add_link_ie(sdata, skb, peer, initiator);
++			ieee80211_tdls_add_link_ie(link, skb,
++						   peer, initiator);
+ 		break;
+ 	case WLAN_TDLS_CHANNEL_SWITCH_REQUEST:
+-		ieee80211_tdls_add_chan_switch_req_ies(sdata, skb, peer,
++		ieee80211_tdls_add_chan_switch_req_ies(link, skb, peer,
+ 						       initiator, extra_ies,
+ 						       extra_ies_len,
+ 						       oper_class, chandef);
+ 		break;
+ 	case WLAN_TDLS_CHANNEL_SWITCH_RESPONSE:
+-		ieee80211_tdls_add_chan_switch_resp_ies(sdata, skb, peer,
++		ieee80211_tdls_add_chan_switch_resp_ies(link, skb, peer,
+ 							status_code,
+ 							initiator, extra_ies,
+ 							extra_ies_len);
+@@ -742,6 +738,7 @@ static void ieee80211_tdls_add_ies(struct ieee80211_sub_if_data *sdata,
+ 
+ static int
+ ieee80211_prep_tdls_encap_data(struct wiphy *wiphy, struct net_device *dev,
++			       struct ieee80211_link_data *link,
+ 			       const u8 *peer, u8 action_code, u8 dialog_token,
+ 			       u16 status_code, struct sk_buff *skb)
+ {
+@@ -766,7 +763,7 @@ ieee80211_prep_tdls_encap_data(struct wiphy *wiphy, struct net_device *dev,
+ 		skb_put(skb, sizeof(tf->u.setup_req));
+ 		tf->u.setup_req.dialog_token = dialog_token;
+ 		tf->u.setup_req.capability =
+-			cpu_to_le16(ieee80211_get_tdls_sta_capab(sdata,
++			cpu_to_le16(ieee80211_get_tdls_sta_capab(link,
+ 								 status_code));
+ 		break;
+ 	case WLAN_TDLS_SETUP_RESPONSE:
+@@ -777,7 +774,7 @@ ieee80211_prep_tdls_encap_data(struct wiphy *wiphy, struct net_device *dev,
+ 		tf->u.setup_resp.status_code = cpu_to_le16(status_code);
+ 		tf->u.setup_resp.dialog_token = dialog_token;
+ 		tf->u.setup_resp.capability =
+-			cpu_to_le16(ieee80211_get_tdls_sta_capab(sdata,
++			cpu_to_le16(ieee80211_get_tdls_sta_capab(link,
+ 								 status_code));
+ 		break;
+ 	case WLAN_TDLS_SETUP_CONFIRM:
+@@ -824,7 +821,8 @@ ieee80211_prep_tdls_encap_data(struct wiphy *wiphy, struct net_device *dev,
+ 
+ static int
+ ieee80211_prep_tdls_direct(struct wiphy *wiphy, struct net_device *dev,
+-			   const u8 *peer, u8 action_code, u8 dialog_token,
++			   const u8 *peer, struct ieee80211_link_data *link,
++			   u8 action_code, u8 dialog_token,
+ 			   u16 status_code, struct sk_buff *skb)
  {
  	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
- 	int ret;
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index aa85e2e063bbc..d749fa91f399b 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -12221,6 +12221,7 @@ static int nl80211_tdls_mgmt(struct sk_buff *skb, struct genl_info *info)
- 	u32 peer_capability = 0;
- 	u16 status_code;
- 	u8 *peer;
-+	int link_id;
- 	bool initiator;
+@@ -833,8 +831,7 @@ ieee80211_prep_tdls_direct(struct wiphy *wiphy, struct net_device *dev,
+ 	mgmt = skb_put_zero(skb, 24);
+ 	memcpy(mgmt->da, peer, ETH_ALEN);
+ 	memcpy(mgmt->sa, sdata->vif.addr, ETH_ALEN);
+-	memcpy(mgmt->bssid, sdata->deflink.u.mgd.bssid, ETH_ALEN);
+-
++	memcpy(mgmt->bssid, link->u.mgd.bssid, ETH_ALEN);
+ 	mgmt->frame_control = cpu_to_le16(IEEE80211_FTYPE_MGMT |
+ 					  IEEE80211_STYPE_ACTION);
  
- 	if (!(rdev->wiphy.flags & WIPHY_FLAG_SUPPORTS_TDLS) ||
-@@ -12242,8 +12243,9 @@ static int nl80211_tdls_mgmt(struct sk_buff *skb, struct genl_info *info)
- 	if (info->attrs[NL80211_ATTR_TDLS_PEER_CAPABILITY])
- 		peer_capability =
- 			nla_get_u32(info->attrs[NL80211_ATTR_TDLS_PEER_CAPABILITY]);
-+	link_id = nl80211_link_id_or_invalid(info->attrs);
+@@ -847,7 +844,7 @@ ieee80211_prep_tdls_direct(struct wiphy *wiphy, struct net_device *dev,
+ 		mgmt->u.action.u.tdls_discover_resp.dialog_token =
+ 			dialog_token;
+ 		mgmt->u.action.u.tdls_discover_resp.capability =
+-			cpu_to_le16(ieee80211_get_tdls_sta_capab(sdata,
++			cpu_to_le16(ieee80211_get_tdls_sta_capab(link,
+ 								 status_code));
+ 		break;
+ 	default:
+@@ -859,15 +856,23 @@ ieee80211_prep_tdls_direct(struct wiphy *wiphy, struct net_device *dev,
  
--	return rdev_tdls_mgmt(rdev, dev, peer, action_code,
-+	return rdev_tdls_mgmt(rdev, dev, peer, link_id, action_code,
- 			      dialog_token, status_code, peer_capability,
- 			      initiator,
- 			      nla_data(info->attrs[NL80211_ATTR_IE]),
-@@ -17118,7 +17120,8 @@ static const struct genl_small_ops nl80211_small_ops[] = {
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = nl80211_tdls_mgmt,
- 		.flags = GENL_UNS_ADMIN_PERM,
--		.internal_flags = IFLAGS(NL80211_FLAG_NEED_NETDEV_UP),
-+		.internal_flags = IFLAGS(NL80211_FLAG_NEED_NETDEV_UP |
-+					 NL80211_FLAG_MLO_VALID_LINK_ID),
- 	},
- 	{
- 		.cmd = NL80211_CMD_TDLS_OPER,
-diff --git a/net/wireless/rdev-ops.h b/net/wireless/rdev-ops.h
-index df7f88ca0db38..db6d91c905603 100644
---- a/net/wireless/rdev-ops.h
-+++ b/net/wireless/rdev-ops.h
-@@ -903,17 +903,18 @@ static inline int rdev_set_rekey_data(struct cfg80211_registered_device *rdev,
- 
- static inline int rdev_tdls_mgmt(struct cfg80211_registered_device *rdev,
- 				 struct net_device *dev, u8 *peer,
--				 u8 action_code, u8 dialog_token,
--				 u16 status_code, u32 peer_capability,
--				 bool initiator, const u8 *buf, size_t len)
-+				 int link_id, u8 action_code,
-+				 u8 dialog_token, u16 status_code,
-+				 u32 peer_capability, bool initiator,
-+				 const u8 *buf, size_t len)
+ static struct sk_buff *
+ ieee80211_tdls_build_mgmt_packet_data(struct ieee80211_sub_if_data *sdata,
+-				      const u8 *peer, u8 action_code,
+-				      u8 dialog_token, u16 status_code,
+-				      bool initiator, const u8 *extra_ies,
+-				      size_t extra_ies_len, u8 oper_class,
++				      const u8 *peer, int link_id,
++				      u8 action_code, u8 dialog_token,
++				      u16 status_code, bool initiator,
++				      const u8 *extra_ies, size_t extra_ies_len,
++				      u8 oper_class,
+ 				      struct cfg80211_chan_def *chandef)
  {
+ 	struct ieee80211_local *local = sdata->local;
+ 	struct sk_buff *skb;
  	int ret;
--	trace_rdev_tdls_mgmt(&rdev->wiphy, dev, peer, action_code,
-+	trace_rdev_tdls_mgmt(&rdev->wiphy, dev, peer, link_id, action_code,
- 			     dialog_token, status_code, peer_capability,
- 			     initiator, buf, len);
--	ret = rdev->ops->tdls_mgmt(&rdev->wiphy, dev, peer, action_code,
--				   dialog_token, status_code, peer_capability,
--				   initiator, buf, len);
-+	ret = rdev->ops->tdls_mgmt(&rdev->wiphy, dev, peer, link_id,
-+				   action_code, dialog_token, status_code,
-+				   peer_capability, initiator, buf, len);
- 	trace_rdev_return_int(&rdev->wiphy, ret);
++	struct ieee80211_link_data *link;
++
++	link_id = link_id >= 0 ? link_id : 0;
++	rcu_read_lock();
++	link = rcu_dereference(sdata->link[link_id]);
++	if (WARN_ON(!link))
++		goto unlock;
+ 
+ 	skb = netdev_alloc_skb(sdata->dev,
+ 			       local->hw.extra_tx_headroom +
+@@ -887,7 +892,7 @@ ieee80211_tdls_build_mgmt_packet_data(struct ieee80211_sub_if_data *sdata,
+ 			       extra_ies_len +
+ 			       sizeof(struct ieee80211_tdls_lnkie));
+ 	if (!skb)
+-		return NULL;
++		goto unlock;
+ 
+ 	skb_reserve(skb, local->hw.extra_tx_headroom);
+ 
+@@ -900,13 +905,13 @@ ieee80211_tdls_build_mgmt_packet_data(struct ieee80211_sub_if_data *sdata,
+ 	case WLAN_TDLS_CHANNEL_SWITCH_REQUEST:
+ 	case WLAN_TDLS_CHANNEL_SWITCH_RESPONSE:
+ 		ret = ieee80211_prep_tdls_encap_data(local->hw.wiphy,
+-						     sdata->dev, peer,
++						     sdata->dev, link, peer,
+ 						     action_code, dialog_token,
+ 						     status_code, skb);
+ 		break;
+ 	case WLAN_PUB_ACTION_TDLS_DISCOVER_RES:
+ 		ret = ieee80211_prep_tdls_direct(local->hw.wiphy, sdata->dev,
+-						 peer, action_code,
++						 peer, link, action_code,
+ 						 dialog_token, status_code,
+ 						 skb);
+ 		break;
+@@ -918,19 +923,23 @@ ieee80211_tdls_build_mgmt_packet_data(struct ieee80211_sub_if_data *sdata,
+ 	if (ret < 0)
+ 		goto fail;
+ 
+-	ieee80211_tdls_add_ies(sdata, skb, peer, action_code, status_code,
++	ieee80211_tdls_add_ies(link, skb, peer, action_code, status_code,
+ 			       initiator, extra_ies, extra_ies_len, oper_class,
+ 			       chandef);
++	rcu_read_unlock();
+ 	return skb;
+ 
+ fail:
+ 	dev_kfree_skb(skb);
++unlock:
++	rcu_read_unlock();
+ 	return NULL;
+ }
+ 
+ static int
+ ieee80211_tdls_prep_mgmt_packet(struct wiphy *wiphy, struct net_device *dev,
+-				const u8 *peer, u8 action_code, u8 dialog_token,
++				const u8 *peer, int link_id,
++				u8 action_code, u8 dialog_token,
+ 				u16 status_code, u32 peer_capability,
+ 				bool initiator, const u8 *extra_ies,
+ 				size_t extra_ies_len, u8 oper_class,
+@@ -988,7 +997,8 @@ ieee80211_tdls_prep_mgmt_packet(struct wiphy *wiphy, struct net_device *dev,
+ 	if (ret < 0)
+ 		goto fail;
+ 
+-	skb = ieee80211_tdls_build_mgmt_packet_data(sdata, peer, action_code,
++	skb = ieee80211_tdls_build_mgmt_packet_data(sdata, peer,
++						    link_id, action_code,
+ 						    dialog_token, status_code,
+ 						    initiator, extra_ies,
+ 						    extra_ies_len, oper_class,
+@@ -999,7 +1009,7 @@ ieee80211_tdls_prep_mgmt_packet(struct wiphy *wiphy, struct net_device *dev,
+ 	}
+ 
+ 	if (action_code == WLAN_PUB_ACTION_TDLS_DISCOVER_RES) {
+-		ieee80211_tx_skb(sdata, skb);
++		ieee80211_tx_skb_tid(sdata, skb, 7, link_id);
+ 		return 0;
+ 	}
+ 
+@@ -1067,7 +1077,8 @@ ieee80211_tdls_prep_mgmt_packet(struct wiphy *wiphy, struct net_device *dev,
+ 
+ static int
+ ieee80211_tdls_mgmt_setup(struct wiphy *wiphy, struct net_device *dev,
+-			  const u8 *peer, u8 action_code, u8 dialog_token,
++			  const u8 *peer, int link_id,
++			  u8 action_code, u8 dialog_token,
+ 			  u16 status_code, u32 peer_capability, bool initiator,
+ 			  const u8 *extra_ies, size_t extra_ies_len)
+ {
+@@ -1116,7 +1127,8 @@ ieee80211_tdls_mgmt_setup(struct wiphy *wiphy, struct net_device *dev,
+ 	mutex_unlock(&local->mtx);
+ 
+ 	/* we cannot take the mutex while preparing the setup packet */
+-	ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer, action_code,
++	ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer,
++					      link_id, action_code,
+ 					      dialog_token, status_code,
+ 					      peer_capability, initiator,
+ 					      extra_ies, extra_ies_len, 0,
+@@ -1140,7 +1152,8 @@ ieee80211_tdls_mgmt_setup(struct wiphy *wiphy, struct net_device *dev,
+ 
+ static int
+ ieee80211_tdls_mgmt_teardown(struct wiphy *wiphy, struct net_device *dev,
+-			     const u8 *peer, u8 action_code, u8 dialog_token,
++			     const u8 *peer, int link_id,
++			     u8 action_code, u8 dialog_token,
+ 			     u16 status_code, u32 peer_capability,
+ 			     bool initiator, const u8 *extra_ies,
+ 			     size_t extra_ies_len)
+@@ -1160,7 +1173,8 @@ ieee80211_tdls_mgmt_teardown(struct wiphy *wiphy, struct net_device *dev,
+ 				  IEEE80211_QUEUE_STOP_REASON_TDLS_TEARDOWN);
+ 	ieee80211_flush_queues(local, sdata, false);
+ 
+-	ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer, action_code,
++	ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer,
++					      link_id, action_code,
+ 					      dialog_token, status_code,
+ 					      peer_capability, initiator,
+ 					      extra_ies, extra_ies_len, 0,
+@@ -1205,13 +1219,14 @@ int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
+ 	switch (action_code) {
+ 	case WLAN_TDLS_SETUP_REQUEST:
+ 	case WLAN_TDLS_SETUP_RESPONSE:
+-		ret = ieee80211_tdls_mgmt_setup(wiphy, dev, peer, action_code,
++		ret = ieee80211_tdls_mgmt_setup(wiphy, dev, peer,
++						link_id, action_code,
+ 						dialog_token, status_code,
+ 						peer_capability, initiator,
+ 						extra_ies, extra_ies_len);
+ 		break;
+ 	case WLAN_TDLS_TEARDOWN:
+-		ret = ieee80211_tdls_mgmt_teardown(wiphy, dev, peer,
++		ret = ieee80211_tdls_mgmt_teardown(wiphy, dev, peer, link_id,
+ 						   action_code, dialog_token,
+ 						   status_code,
+ 						   peer_capability, initiator,
+@@ -1229,7 +1244,7 @@ int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
+ 	case WLAN_PUB_ACTION_TDLS_DISCOVER_RES:
+ 		/* no special handling */
+ 		ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer,
+-						      action_code,
++						      link_id, action_code,
+ 						      dialog_token,
+ 						      status_code,
+ 						      peer_capability,
+@@ -1241,8 +1256,8 @@ int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
+ 		break;
+ 	}
+ 
+-	tdls_dbg(sdata, "TDLS mgmt action %d peer %pM status %d\n",
+-		 action_code, peer, ret);
++	tdls_dbg(sdata, "TDLS mgmt action %d peer %pM link_id %d status %d\n",
++		 action_code, peer, link_id, ret);
  	return ret;
  }
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index da03b6ff71b2a..73e388cd32fee 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -1779,15 +1779,16 @@ DEFINE_EVENT(wiphy_netdev_id_evt, rdev_sched_scan_stop,
  
- TRACE_EVENT(rdev_tdls_mgmt,
- 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev,
--		 u8 *peer, u8 action_code, u8 dialog_token,
-+		 u8 *peer, int link_id, u8 action_code, u8 dialog_token,
- 		 u16 status_code, u32 peer_capability,
- 		 bool initiator, const u8 *buf, size_t len),
--	TP_ARGS(wiphy, netdev, peer, action_code, dialog_token, status_code,
--		peer_capability, initiator, buf, len),
-+	TP_ARGS(wiphy, netdev, peer, link_id, action_code, dialog_token,
-+		status_code, peer_capability, initiator, buf, len),
- 	TP_STRUCT__entry(
- 		WIPHY_ENTRY
- 		NETDEV_ENTRY
- 		MAC_ENTRY(peer)
-+		__field(int, link_id)
- 		__field(u8, action_code)
- 		__field(u8, dialog_token)
- 		__field(u16, status_code)
-@@ -1799,6 +1800,7 @@ TRACE_EVENT(rdev_tdls_mgmt,
- 		WIPHY_ASSIGN;
- 		NETDEV_ASSIGN;
- 		MAC_ASSIGN(peer, peer);
-+		__entry->link_id = link_id;
- 		__entry->action_code = action_code;
- 		__entry->dialog_token = dialog_token;
- 		__entry->status_code = status_code;
-@@ -1806,11 +1808,12 @@ TRACE_EVENT(rdev_tdls_mgmt,
- 		__entry->initiator = initiator;
- 		memcpy(__get_dynamic_array(buf), buf, len);
- 	),
--	TP_printk(WIPHY_PR_FMT ", " NETDEV_PR_FMT ", %pM, action_code: %u, "
-+	TP_printk(WIPHY_PR_FMT ", " NETDEV_PR_FMT ", %pM"
-+		  ", link_id: %d, action_code: %u "
- 		  "dialog_token: %u, status_code: %u, peer_capability: %u "
- 		  "initiator: %s buf: %#.2x ",
- 		  WIPHY_PR_ARG, NETDEV_PR_ARG, __entry->peer,
--		  __entry->action_code, __entry->dialog_token,
-+		  __entry->link_id, __entry->action_code, __entry->dialog_token,
- 		  __entry->status_code, __entry->peer_capability,
- 		  BOOL_TO_STR(__entry->initiator),
- 		  ((u8 *)__get_dynamic_array(buf))[0])
+@@ -1499,6 +1514,7 @@ ieee80211_tdls_ch_sw_tmpl_get(struct sta_info *sta, u8 oper_class,
+ 	int extra_ies_len = 2 + sizeof(struct ieee80211_ch_switch_timing);
+ 	u8 *pos = extra_ies;
+ 	struct sk_buff *skb;
++	int link_id = sta->sta.valid_links ? ffs(sta->sta.valid_links) - 1 : 0;
+ 
+ 	/*
+ 	 * if chandef points to a wide channel add a Secondary-Channel
+@@ -1526,6 +1542,7 @@ ieee80211_tdls_ch_sw_tmpl_get(struct sta_info *sta, u8 oper_class,
+ 	iee80211_tdls_add_ch_switch_timing(pos, 0, 0);
+ 
+ 	skb = ieee80211_tdls_build_mgmt_packet_data(sdata, sta->sta.addr,
++					      link_id,
+ 					      WLAN_TDLS_CHANNEL_SWITCH_REQUEST,
+ 					      0, 0, !sta->sta.tdls_initiator,
+ 					      extra_ies, extra_ies_len,
+@@ -1646,11 +1663,13 @@ ieee80211_tdls_ch_sw_resp_tmpl_get(struct sta_info *sta,
+ 	struct ieee80211_sub_if_data *sdata = sta->sdata;
+ 	struct sk_buff *skb;
+ 	u8 extra_ies[2 + sizeof(struct ieee80211_ch_switch_timing)];
++	int link_id = sta->sta.valid_links ? ffs(sta->sta.valid_links) - 1 : 0;
+ 
+ 	/* initial timing are always zero in the template */
+ 	iee80211_tdls_add_ch_switch_timing(extra_ies, 0, 0);
+ 
+ 	skb = ieee80211_tdls_build_mgmt_packet_data(sdata, sta->sta.addr,
++					link_id,
+ 					WLAN_TDLS_CHANNEL_SWITCH_RESPONSE,
+ 					0, 0, !sta->sta.tdls_initiator,
+ 					extra_ies, sizeof(extra_ies), 0, NULL);
 -- 
 2.53.0
 
