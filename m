@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0213AF674;
-	Wed, 30 Sep 2026 18:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC793B3C01;
+	Wed, 30 Sep 2026 18:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794658; cv=none; b=Kee2lpXtGQdrd+BAWwIiMzr6BLrz38go0joi2mpJB/monbYm6T8clf2Ac+hVwmQ6wa6KH1HA3dQZcddyMN85SMhVeHLG0hNLLliAKXOqnCL57TLM3eH1rUAtTRYEyHqmx74PXG7fPEhxYR2hdq7XR2kytlJ0+Xd21rWGYw2M//0=
+	t=1790794661; cv=none; b=GJV4v2mRZgiCQiiR8egveFaspqUji3UHDidTYoZDR3jD0PrYvycAMZ58YWtAq39QfLP8in9i8Gjof2I9zTJKjMmUhFO/PvzbFiszbBNwLK7dXjBXyRmC/Si3WsKaXqhpDidLd8rm2SMSocwEMlYKJeE7X9+PYlJFkkgCe4yHOqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794658; c=relaxed/simple;
-	bh=VelkpAIZ8U60XOBn4TlCJoFhMBGA8gW84GBV0T0XfUA=;
+	s=arc-20240116; t=1790794661; c=relaxed/simple;
+	bh=jwmN8ItKqjMPSLoQ12Hdbi4ee09oesK7FzsN+L2adEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxf3dlsDpX1s8Diu0wtmIkhAixWqhhvBE1H/6sklbFDq62KSmNpZLddOgircCTgHjdhgod9lL3TFveEUYtsPneTXbPL9745+b0RafHmYTpIE8o7KLF8uZvBQr6iCMy4gzolrA7J25W8UZCUmG6GplZVJihWLvcTZ1yhdDK3ZYRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYHC2yYX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQ2zoN6m0PbC+9XFF47yG6an8v9IrmVLGzot3f/yY0jn60YCS8wYEdsEpX/l6VUs2e8fEiPePepO/QS5bcxYdI4Wnm0BZP1LI5So+AfwGv3K/GBACaJdSReur7+ZJQt40owqv9h58iLu1it1ASCo+O99ofNkPMTHHobLSAPbvfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CThhfB2J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYHC2yYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906D71F000FF;
-	Wed, 30 Sep 2026 18:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CThhfB2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D851F00899;
+	Wed, 30 Sep 2026 18:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794657;
-	bh=WOQSjqN6Gix090TxV6PgNlWWLz0L/5VTJoasm4CaVb4=;
+	s=korg; t=1790794660;
+	bh=JZbq6USmlqGFBDrdnrQnwo17ytsmVqC9hn7IysesqB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fYHC2yYXsHIUHpN2Z+HjIemAvl8JO1w5RdeUbj2M8jiiNZ81tqEgf/+BhXazwBkmh
-	 2F+Kcl5/idKQkEUert5kYG5QqJ/cat7YBX9mF8dr011ysuVO6QDrF+q3g9mTwolKGw
-	 opYlu+FqIkTT5mFa2BY0L8I531VlCOig/pX8c2EI=
+	b=CThhfB2JghKICZL55J2pNcG+zIhILvoG94eds5pWMYoP1Yls55+oWytVixyxXkerm
+	 yU7ubh4Gk8IEg0Ht4aCnPYVifGovGeCQhQ+97SSkcpbfDVd8Y388TOjlIUUO7vb2Zs
+	 jKnfcGAD+UwXwWgyFMhhUkTo3LxzTFCeJoxctuAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0289/1193] wifi: libertas: reject short monitor TX frames
-Date: Wed, 30 Sep 2026 17:16:13 +0200
-Message-ID: <20260930152440.584832977@linuxfoundation.org>
+Subject: [PATCH 6.6 0290/1193] wifi: cfg80211: validate assoc response length before status and IE access
+Date: Wed, 30 Sep 2026 17:16:14 +0200
+Message-ID: <20260930152440.606100219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,44 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 13ff543e0b2c713aedeaadadde686686e949dc78 ]
+[ Upstream commit b760113aeca2e9362d56bf9e9263373ffe6c8eb3 ]
 
-In monitor mode, lbs_hard_start_xmit() casts skb->data to a
-radiotap TX header, skips that header, and then copies the 802.11
-destination address from offset 4 in the remaining frame.  The
-generic length check only rejects zero-length and oversized skbs, so
-a short monitor frame can be read past the end of the skb data.
+cfg80211_rx_assoc_resp() initialises the status and response-IE fields
+of cfg80211_connect_resp_params from the management frame before
+proving that the frame is long enough for those offsets. S1G and
+regular association responses also have different IE offsets, but the
+S1G path only patched resp_ie after the unsafe initialiser had already
+run.
 
-Require enough bytes for the radiotap TX header and the destination
-address field before using the monitor-mode header layout.
+Defer resp_ie, resp_ie_len, and status to after the link-iteration
+loop. Use a bool to remember whether the frame is S1G, then validate
+the appropriate minimum length and set all three fields in a single
+if/else block. Funnel short-frame and SME-reject cleanup through a
+shared free_bss label for the abandon paths.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704011140.37639-1-pengpeng@iscas.ac.cn
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260707025336.22557-2-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/tx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/wireless/mlme.c | 56 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 35 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/libertas/tx.c b/drivers/net/wireless/marvell/libertas/tx.c
-index 27304a98787d6..13d08022e4141 100644
---- a/drivers/net/wireless/marvell/libertas/tx.c
-+++ b/drivers/net/wireless/marvell/libertas/tx.c
-@@ -117,6 +117,13 @@ netdev_tx_t lbs_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
- 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
+diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
+index 3d631f8073f06..6fbcc9f70b6d0 100644
+--- a/net/wireless/mlme.c
++++ b/net/wireless/mlme.c
+@@ -32,14 +32,10 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
+ 		.timeout_reason = NL80211_TIMEOUT_UNSPECIFIED,
+ 		.req_ie = data->req_ies,
+ 		.req_ie_len = data->req_ies_len,
+-		.resp_ie = mgmt->u.assoc_resp.variable,
+-		.resp_ie_len = data->len -
+-			       offsetof(struct ieee80211_mgmt,
+-					u.assoc_resp.variable),
+-		.status = le16_to_cpu(mgmt->u.assoc_resp.status_code),
+ 		.ap_mld_addr = data->ap_mld_addr,
+ 	};
+ 	unsigned int link_id;
++	bool is_s1g = false;
  
-+		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
-+			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
-+			dev->stats.tx_dropped++;
-+			dev->stats.tx_errors++;
-+			goto free;
-+		}
+ 	for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
+ 		cr.links[link_id].status = data->links[link_id].status;
+@@ -60,16 +56,32 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
+ 
+ 		if (cr.links[link_id].bss->channel->band == NL80211_BAND_S1GHZ) {
+ 			WARN_ON(link_id);
+-			cr.resp_ie = (u8 *)&mgmt->u.s1g_assoc_resp.variable;
+-			cr.resp_ie_len = data->len -
+-					 offsetof(struct ieee80211_mgmt,
+-						  u.s1g_assoc_resp.variable);
++			is_s1g = true;
+ 		}
+ 
+ 		if (cr.ap_mld_addr)
+ 			cr.valid_links |= BIT(link_id);
+ 	}
+ 
++	if (is_s1g) {
++		if (data->len < offsetof(struct ieee80211_mgmt,
++					 u.s1g_assoc_resp.variable))
++			goto free_bss;
++		cr.resp_ie = (u8 *)&mgmt->u.s1g_assoc_resp.variable;
++		cr.resp_ie_len = data->len -
++				 offsetof(struct ieee80211_mgmt,
++					  u.s1g_assoc_resp.variable);
++	} else {
++		if (data->len < offsetof(struct ieee80211_mgmt,
++					 u.assoc_resp.variable))
++			goto free_bss;
++		cr.resp_ie = mgmt->u.assoc_resp.variable;
++		cr.resp_ie_len = data->len -
++				 offsetof(struct ieee80211_mgmt,
++					  u.assoc_resp.variable);
++	}
++	cr.status = le16_to_cpu(mgmt->u.assoc_resp.status_code);
 +
- 		/* set txpd fields from the radiotap header */
- 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
+ 	trace_cfg80211_send_rx_assoc(dev, data);
+ 
+ 	/*
+@@ -78,22 +90,24 @@ void cfg80211_rx_assoc_resp(struct net_device *dev,
+ 	 * and got a reject -- we only try again with an assoc
+ 	 * frame instead of reassoc.
+ 	 */
+-	if (cfg80211_sme_rx_assoc_resp(wdev, cr.status)) {
+-		for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
+-			struct cfg80211_bss *bss = data->links[link_id].bss;
+-
+-			if (!bss)
+-				continue;
+-
+-			cfg80211_unhold_bss(bss_from_pub(bss));
+-			cfg80211_put_bss(wiphy, bss);
+-		}
+-		return;
+-	}
++	if (cfg80211_sme_rx_assoc_resp(wdev, cr.status))
++		goto free_bss;
+ 
+ 	nl80211_send_rx_assoc(rdev, dev, data);
+ 	/* update current_bss etc., consumes the bss reference */
+ 	__cfg80211_connect_result(dev, &cr, cr.status == WLAN_STATUS_SUCCESS);
++	return;
++
++free_bss:
++	for (link_id = 0; link_id < ARRAY_SIZE(data->links); link_id++) {
++		struct cfg80211_bss *bss = data->links[link_id].bss;
++
++		if (!bss)
++			continue;
++
++		cfg80211_unhold_bss(bss_from_pub(bss));
++		cfg80211_put_bss(wiphy, bss);
++	}
+ }
+ EXPORT_SYMBOL(cfg80211_rx_assoc_resp);
  
 -- 
 2.53.0
