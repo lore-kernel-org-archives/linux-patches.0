@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04D052FE58;
-	Wed, 30 Sep 2026 17:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC26A52842A;
+	Wed, 30 Sep 2026 17:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789975; cv=none; b=f2fTwEp8JVTdx+sBJOBDu/HM+uUfemg9HHhbFwrIpdQ85jAl0rfa8M3/B5HrNOHPGyPPXDFGfifPLzH2zV1IPePpGB4NwHhz91BmS8FXX4ieSZuldGn9LpeKK420siWJBQ3xOzN7BjSAREIEnEBA0H6HdaEAlkxbYgb/bjwsLRI=
+	t=1790789978; cv=none; b=egGSfozmslH18XUrIo+Olo3aozQSln8LktbjOODLHAPi7GGlwKpu1DUC3uiRNBBYf03AQ4yAmDZKWIZqGunwvbsr8OQjWw4eBQJ21yF2E1u3Vs4Yu6WzuNa2J4RVR8MUNgppDIZFhGUG1YgF5g1pSrSoVtgpZMTMw8Heuv20UyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789975; c=relaxed/simple;
-	bh=/i6SlHRH/A8zG/aFVmFX45/5Fx6I7d5XoayzbZUvGHE=;
+	s=arc-20240116; t=1790789978; c=relaxed/simple;
+	bh=Q1xgj2pSqUJFuHuJqtKw3AEvOgQGwBfiSPSravkyF9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cjr+2jXpGJtrJ9gudAqmfVpg346XNj/h/x2lO/Og4MYfLeR+mZIe5kgRA9wOEOyq0An5MjL+rRPMQZ4DeoM00uZfcuVog/gBSyJq5ex/4/BNDB+cgG1E/TZakTIYM+b0U27RbocivTUgTlv1TxumevJD7V/R/ia/26efoNkwzpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vebiDs+6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HVHeFs6qLlIeiSEgjgqimPKb4XZlWXcgAAoNRLb0bmHu5yuYgq7J9dIgcU07ZIWnIy6y2yP3BiaM528Oa7gLI41XabKbpKrGxC5ppfJnEVuBG519cnxIr91bSBreN7ViNCQdjDA0TgK/pHs5SAuAIR9UiYo0d6ueltDLnKRtNyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgPhI9/K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vebiDs+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559871F000FF;
-	Wed, 30 Sep 2026 17:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgPhI9/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBB31F000FF;
+	Wed, 30 Sep 2026 17:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789973;
-	bh=Lhx0dX+GA8h04NDOFPGwjPxqupsAUJKhW1Og6Cetjgc=;
+	s=korg; t=1790789976;
+	bh=TxEL7zDXnspZvsrWG2KozArp5TxteBQlsBR/yfQQ2d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vebiDs+6N5RrcXXkILei9qi1FrinHcl4p8SQsl1w7NDGYBFH7ZfdujQO8ORLFsP1A
-	 AktD7nkx1yniBbfkSKCwiYQ92esdxyTthL7XZ3HR/qPvfqotEP09BPBtuvoHqjvDyy
-	 gIQiwLDRoS5jHtHd4pUp1df8VCdqtOFyMc728AnI=
+	b=EgPhI9/KHu2WNxAe+BlbDYdJ8d8+ox1NCPbzJx/Od9+4ntm5YmNv8dNyG/qBclQNC
+	 sHli5XOrhrNG/sOzwzbka9xxVgfWMbK+QODXQCQFdmhjZO8/zmICLm1ur3eOb+E5+N
+	 jXcjg7fgkJttc5xwtkF1evNm0PVijJfsFP8scP5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 666/877] media: i2c: imx355: Replace client->dev usage
-Date: Wed, 30 Sep 2026 17:26:17 +0200
-Message-ID: <20260930152429.036346463@linuxfoundation.org>
+Subject: [PATCH 6.12 640/877] ring-buffer: Allow splice reads on static buffers
+Date: Wed, 30 Sep 2026 17:25:51 +0200
+Message-ID: <20260930152428.464010708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,277 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 49c6ac166cf77cd53eeda69e8ccdcbe4a57a4fdf ]
+[ Upstream commit 6365c44a824ff138e7926413932bb5c2e28a4c8c ]
 
-The driver needs to access the struct device in many places, and
-retrieves it from the i2c_client itself retrieved with
-v4l2_get_subdevdata(). Store it as a pointer in struct imx355 and access
-it from there instead, to simplify the driver.
+ring_buffer_read_page() rejects splice (full=1) reads on static buffers
+(that is user-mapped, persistent or remote) because !read check assumes
+unread pages must be swapped. However for those buffers we have no other
+choice than memcpy the data.
 
-While at it, fix a mistake in the sort order of include statements.
+For the memcpy case, only return an error when the writer is still on
+the reader page for the splice interface to wait.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Mehdi Djait <mehdi.djait@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Stable-dep-of: ee737bc3ccae ("media: imx355: Avoid calling imx355_power_off twice in error path")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260901155445.1475405-2-vdonnefort@google.com
+Fixes: 117c39200d9d ("ring-buffer: Introducing ring-buffer mapping functions")
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx355.c |   61 ++++++++++++++++++++++-----------------------
- 1 file changed, 30 insertions(+), 31 deletions(-)
+ kernel/trace/ring_buffer.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/drivers/media/i2c/imx355.c
-+++ b/drivers/media/i2c/imx355.c
-@@ -1,11 +1,12 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (C) 2018 Intel Corporation
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -6591,15 +6591,8 @@ int ring_buffer_read_page(struct trace_b
+ 		unsigned int event_size;
+ 		unsigned int flags = 0;
  
--#include <linux/unaligned.h>
- #include <linux/acpi.h>
- #include <linux/i2c.h>
- #include <linux/module.h>
- #include <linux/pm_runtime.h>
-+#include <linux/unaligned.h>
-+
- #include <media/v4l2-ctrls.h>
- #include <media/v4l2-device.h>
- #include <media/v4l2-event.h>
-@@ -97,6 +98,8 @@ struct imx355_hwcfg {
- };
+-		/*
+-		 * If a full page is expected, this can still be returned
+-		 * if there's been a previous partial read and the
+-		 * rest of the page can be read and the commit page is off
+-		 * the reader page.
+-		 */
+-		if (full &&
+-		    (!read || (len < (size - read)) ||
+-		     cpu_buffer->reader_page == cpu_buffer->commit_page))
++		/* If a full page is requested, it cannot be the commit page */
++		if (full && cpu_buffer->reader_page == cpu_buffer->commit_page)
+ 			return -1;
  
- struct imx355 {
-+	struct device *dev;
-+
- 	struct v4l2_subdev sd;
- 	struct media_pad pad;
- 
-@@ -1136,14 +1139,13 @@ static int imx355_write_reg(struct imx35
- static int imx355_write_regs(struct imx355 *imx355,
- 			     const struct imx355_reg *regs, u32 len)
- {
--	struct i2c_client *client = v4l2_get_subdevdata(&imx355->sd);
- 	int ret;
- 	u32 i;
- 
- 	for (i = 0; i < len; i++) {
- 		ret = imx355_write_reg(imx355, regs[i].address, 1, regs[i].val);
- 		if (ret) {
--			dev_err_ratelimited(&client->dev,
-+			dev_err_ratelimited(imx355->dev,
- 					    "write reg 0x%4.4x return err %d",
- 					    regs[i].address, ret);
- 
-@@ -1178,7 +1180,6 @@ static int imx355_set_ctrl(struct v4l2_c
- {
- 	struct imx355 *imx355 = container_of(ctrl->handler,
- 					     struct imx355, ctrl_handler);
--	struct i2c_client *client = v4l2_get_subdevdata(&imx355->sd);
- 	s64 max;
- 	int ret;
- 
-@@ -1197,7 +1198,7 @@ static int imx355_set_ctrl(struct v4l2_c
- 	 * Applying V4L2 control value only happens
- 	 * when power is up for streaming
- 	 */
--	if (!pm_runtime_get_if_in_use(&client->dev))
-+	if (!pm_runtime_get_if_in_use(imx355->dev))
- 		return 0;
- 
- 	switch (ctrl->id) {
-@@ -1231,12 +1232,12 @@ static int imx355_set_ctrl(struct v4l2_c
- 		break;
- 	default:
- 		ret = -EINVAL;
--		dev_info(&client->dev, "ctrl(id:0x%x,val:0x%x) is not handled",
-+		dev_info(imx355->dev, "ctrl(id:0x%x,val:0x%x) is not handled",
- 			 ctrl->id, ctrl->val);
- 		break;
- 	}
- 
--	pm_runtime_put(&client->dev);
-+	pm_runtime_put(imx355->dev);
- 
- 	return ret;
- }
-@@ -1385,7 +1386,6 @@ imx355_set_pad_format(struct v4l2_subdev
- /* Start streaming */
- static int imx355_start_streaming(struct imx355 *imx355)
- {
--	struct i2c_client *client = v4l2_get_subdevdata(&imx355->sd);
- 	const struct imx355_reg_list *reg_list;
- 	int ret;
- 
-@@ -1393,7 +1393,7 @@ static int imx355_start_streaming(struct
- 	reg_list = &imx355_global_setting;
- 	ret = imx355_write_regs(imx355, reg_list->regs, reg_list->num_of_regs);
- 	if (ret) {
--		dev_err(&client->dev, "failed to set global settings");
-+		dev_err(imx355->dev, "failed to set global settings");
- 		return ret;
- 	}
- 
-@@ -1401,7 +1401,7 @@ static int imx355_start_streaming(struct
- 	reg_list = &imx355->cur_mode->reg_list;
- 	ret = imx355_write_regs(imx355, reg_list->regs, reg_list->num_of_regs);
- 	if (ret) {
--		dev_err(&client->dev, "failed to set mode");
-+		dev_err(imx355->dev, "failed to set mode");
- 		return ret;
- 	}
- 
-@@ -1429,13 +1429,12 @@ static int imx355_stop_streaming(struct
- static int imx355_set_stream(struct v4l2_subdev *sd, int enable)
- {
- 	struct imx355 *imx355 = to_imx355(sd);
--	struct i2c_client *client = v4l2_get_subdevdata(sd);
- 	int ret = 0;
- 
- 	mutex_lock(&imx355->mutex);
- 
- 	if (enable) {
--		ret = pm_runtime_resume_and_get(&client->dev);
-+		ret = pm_runtime_resume_and_get(imx355->dev);
- 		if (ret < 0)
- 			goto err_unlock;
- 
-@@ -1448,7 +1447,7 @@ static int imx355_set_stream(struct v4l2
- 			goto err_rpm_put;
- 	} else {
- 		imx355_stop_streaming(imx355);
--		pm_runtime_put(&client->dev);
-+		pm_runtime_put(imx355->dev);
- 	}
- 
- 	/* vflip and hflip cannot change during streaming */
-@@ -1460,7 +1459,7 @@ static int imx355_set_stream(struct v4l2
- 	return ret;
- 
- err_rpm_put:
--	pm_runtime_put(&client->dev);
-+	pm_runtime_put(imx355->dev);
- err_unlock:
- 	mutex_unlock(&imx355->mutex);
- 
-@@ -1470,7 +1469,6 @@ err_unlock:
- /* Verify chip ID */
- static int imx355_identify_module(struct imx355 *imx355)
- {
--	struct i2c_client *client = v4l2_get_subdevdata(&imx355->sd);
- 	int ret;
- 	u32 val;
- 
-@@ -1479,7 +1477,7 @@ static int imx355_identify_module(struct
- 		return ret;
- 
- 	if (val != IMX355_CHIP_ID) {
--		dev_err(&client->dev, "chip id mismatch: %x!=%x",
-+		dev_err(imx355->dev, "chip id mismatch: %x!=%x",
- 			IMX355_CHIP_ID, val);
- 		return -EIO;
- 	}
-@@ -1519,7 +1517,6 @@ static const struct v4l2_subdev_internal
- /* Initialize control handlers */
- static int imx355_init_controls(struct imx355 *imx355)
- {
--	struct i2c_client *client = v4l2_get_subdevdata(&imx355->sd);
- 	struct v4l2_fwnode_device_properties props;
- 	struct v4l2_ctrl_handler *ctrl_hdlr;
- 	s64 exposure_max;
-@@ -1600,11 +1597,11 @@ static int imx355_init_controls(struct i
- 				     0, 0, imx355_test_pattern_menu);
- 	if (ctrl_hdlr->error) {
- 		ret = ctrl_hdlr->error;
--		dev_err(&client->dev, "control init failed: %d", ret);
-+		dev_err(imx355->dev, "control init failed: %d", ret);
- 		goto error;
- 	}
- 
--	ret = v4l2_fwnode_device_parse(&client->dev, &props);
-+	ret = v4l2_fwnode_device_parse(imx355->dev, &props);
- 	if (ret)
- 		goto error;
- 
-@@ -1689,6 +1686,8 @@ static int imx355_probe(struct i2c_clien
- 	if (!imx355)
- 		return -ENOMEM;
- 
-+	imx355->dev = &client->dev;
-+
- 	mutex_init(&imx355->mutex);
- 
- 	/* Initialize subdev */
-@@ -1697,13 +1696,13 @@ static int imx355_probe(struct i2c_clien
- 	/* Check module identity */
- 	ret = imx355_identify_module(imx355);
- 	if (ret) {
--		dev_err(&client->dev, "failed to find sensor: %d", ret);
-+		dev_err(imx355->dev, "failed to find sensor: %d", ret);
- 		goto error_probe;
- 	}
- 
--	imx355->hwcfg = imx355_get_hwcfg(&client->dev);
-+	imx355->hwcfg = imx355_get_hwcfg(imx355->dev);
- 	if (!imx355->hwcfg) {
--		dev_err(&client->dev, "failed to get hwcfg");
-+		dev_err(imx355->dev, "failed to get hwcfg");
- 		ret = -ENODEV;
- 		goto error_probe;
- 	}
-@@ -1713,7 +1712,7 @@ static int imx355_probe(struct i2c_clien
- 
- 	ret = imx355_init_controls(imx355);
- 	if (ret) {
--		dev_err(&client->dev, "failed to init controls: %d", ret);
-+		dev_err(imx355->dev, "failed to init controls: %d", ret);
- 		goto error_probe;
- 	}
- 
-@@ -1728,7 +1727,7 @@ static int imx355_probe(struct i2c_clien
- 	imx355->pad.flags = MEDIA_PAD_FL_SOURCE;
- 	ret = media_entity_pads_init(&imx355->sd.entity, 1, &imx355->pad);
- 	if (ret) {
--		dev_err(&client->dev, "failed to init entity pads: %d", ret);
-+		dev_err(imx355->dev, "failed to init entity pads: %d", ret);
- 		goto error_handler_free;
- 	}
- 
-@@ -1736,9 +1735,9 @@ static int imx355_probe(struct i2c_clien
- 	 * Device is already turned on by i2c-core with ACPI domain PM.
- 	 * Enable runtime PM and turn off the device.
- 	 */
--	pm_runtime_set_active(&client->dev);
--	pm_runtime_enable(&client->dev);
--	pm_runtime_idle(&client->dev);
-+	pm_runtime_set_active(imx355->dev);
-+	pm_runtime_enable(imx355->dev);
-+	pm_runtime_idle(imx355->dev);
- 
- 	ret = v4l2_async_register_subdev_sensor(&imx355->sd);
- 	if (ret < 0)
-@@ -1747,8 +1746,8 @@ static int imx355_probe(struct i2c_clien
- 	return 0;
- 
- error_media_entity_runtime_pm:
--	pm_runtime_disable(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+	pm_runtime_disable(imx355->dev);
-+	pm_runtime_set_suspended(imx355->dev);
- 	media_entity_cleanup(&imx355->sd.entity);
- 
- error_handler_free:
-@@ -1769,8 +1768,8 @@ static void imx355_remove(struct i2c_cli
- 	media_entity_cleanup(&sd->entity);
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
- 
--	pm_runtime_disable(&client->dev);
--	pm_runtime_set_suspended(&client->dev);
-+	pm_runtime_disable(imx355->dev);
-+	pm_runtime_set_suspended(imx355->dev);
- 
- 	mutex_destroy(&imx355->mutex);
- }
+ 		if (len > (size - read))
 
 
