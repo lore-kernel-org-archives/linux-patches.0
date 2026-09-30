@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D054CEE53;
-	Wed, 30 Sep 2026 17:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362D851476F;
+	Wed, 30 Sep 2026 17:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789097; cv=none; b=L4vihHO2zNiGo4JYUtgO4dOD7YKMC5yy06O3DNOeqzjCjKKF5OTGD6XZPKd44MgVcfHiXQ3Ml8Cq8TQy8MbYsINGXzIU3zmDaAw8M6YIyBdAsWYbS60cc1jvwwdEDNwYoxm6Mqd5RATy8EsZNXQQlqGeFUx6q1Li7SSZsrtWmbQ=
+	t=1790789100; cv=none; b=HSzPClMqTKysiHhIYimdsb0rsXsAgICIogOCAhmIdSIyjzY5sQwkoXos4u2nwDurkrZEYMmyVb5MTPXSWJFx/4Y+SqQnpfx1itliFgv+lmI5Ahk3/9UmK0+wxk85rV23U0l1mBeadEMGEt9v9PZDJ1+POA9z0fIYzJwE0p89BlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789097; c=relaxed/simple;
-	bh=Py6qiZrJTCqVoORHfnJebZQ0NZns5udgT0KP9pNU6nI=;
+	s=arc-20240116; t=1790789100; c=relaxed/simple;
+	bh=/+bhkBZ8vwvF2Md+vHy6IlQk9NcP0vg1CowHXOyV6tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJVFFT3Xqmm5R/liJEuGZO5Eq+0wWkLuh2XMNqRszoJUrhGTgjiSxZhGfn5GgZZ7uAjNc6SIZVDxzN47ivpIDNffS0B6Vh0ULCisg3ulMtcdVZ1gbQeRNE45OcrWDTuA6TIh91rav/T4ixFJl0yacRQjeOfa3R3UtfUMGzCTcwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyVvEOGS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DqFvt/3YPoMAyEKj/o1LOlKIsX+vi//bmMDK20kBNcCazoS9m3N1DiePG4nNsngFV5gZ46bC89+4g188RhjTEokmFbKJBo7OtITiwpvG7O6lhDtnSxYlNrL44lPp1jh2YM57Dg5GihgF9J1qflcaHB4vkksCf3q9FATM4RxVAb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtEl7Iwh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyVvEOGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB7F1F000FF;
-	Wed, 30 Sep 2026 17:24:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtEl7Iwh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B52A1F000FF;
+	Wed, 30 Sep 2026 17:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789096;
-	bh=LbwEC+/WOS984t+gs6m+rtRFWfNDuJJ5b6HzOlfHQaM=;
+	s=korg; t=1790789098;
+	bh=2+UZFkZ6U0j8eEpMGEZEX/Y61PGqp2oVYhOCSqzUFK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyVvEOGS46LO7nA5qg8UPtAdmCwLPfZpPbTQyU4nn4qjs6xO91T7jBCYUWDcrhYXY
-	 TMnVyrdTvPCaKM0gLb7NCuadSiowfVOdvo0My8uP9Bss9MG/idGI1Ji3A3GIjmY38p
-	 /O9/MrQkOX5HlaNDPj7o/K6bw8WgxM1kM84Bd9Uw=
+	b=GtEl7IwhDEZIVZDd30yTgJkQ4eVYWBcuulZQb7sCCFGkfxDRG/jlNxmifjmZH7gLC
+	 mCRsrQnzNqEtJWoJFqaLOxb2I78jqeHKagKkhggQcKXKx5J93eKU1+RuVu9vuQJMwp
+	 SCRxlcmpCcMWI0RS9hYqSJr2+08U6GmW7GW/VXU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 303/877] selftests/ftrace: Fix unique symbol check in kprobe_non_uniq_symbol.tc
-Date: Wed, 30 Sep 2026 17:20:14 +0200
-Message-ID: <20260930152421.238250850@linuxfoundation.org>
+Subject: [PATCH 6.12 351/877] ipvs: revalidate ihl before icmp_send
+Date: Wed, 30 Sep 2026 17:21:02 +0200
+Message-ID: <20260930152422.246996629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,45 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit d22c3e0088e85be8131f7a9283f759cdbb20726d ]
+[ Upstream commit e290145564886d6a3038810c621f738c1fe9fa51 ]
 
-The current regex also matches symbols in modules, which makes the
-test fail on s390 where name_show is present only once in the kernel,
-but also multiple times in modules:
+While the outer IP header is already pulled into the skb head, we must
+be careful and revalidate the embedded headers after reading them from
+the skb frags to prevent possible out-of-bounds access.
 
-000001b1401cdc20 t name_show
-000001b0c05e6c40 t name_show    [mdev]
-000001b0c0495f30 t name_show    [i2c_core]
+One such place reported by Sashiko is ip_vs_in_icmp() where local
+process can change the ihl field and after pskb_may_pull() we can see
+larger value. Even if icmp_send() has checks to prevent out-of-bounds
+access, play safe and add check to drop the packet if the ihl field is
+changed.  As the outer headers are pulled, make sure the transport
+header is updated too, it was used before commit 7fcc2fe39fed ("net:
+icmp: avoid invalid transport header access in icmp_send tracepoint")
 
-Fix this by changing the regular expression to only match the function
-name.
-
-Link: https://lore.kernel.org/all/20260909092954.2200558-1-svens@linux.ibm.com/
-
-Fixes: 03b80ff8023a ("selftests/ftrace: Add new test case which checks non unique symbol")
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
+Link: https://sashiko.dev/#/patchset/20260806105211.34622-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc    | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-index bc9514428dbaf..07b1177c16344 100644
---- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-+++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
-@@ -6,7 +6,7 @@
- SYMBOL='name_show'
- 
- # We skip this test on kernel where SYMBOL is unique or does not exist.
--if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}" /proc/kallsyms)" -le '1' ]; then
-+if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
- 	exit_unsupported
- fi
- 
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 1f62ca2f73309..4e30a903f4bdc 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -1776,6 +1776,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 		/* Ensure the IP header is present in headroom */
+ 		if (!pskb_may_pull(skb, hlen_orig))
+ 			goto ignore_tunnel;
++		skb_set_transport_header(skb, hlen_orig);
++		/* Before now we may used ihl from skb frag, revalidate it after
++		 * copying it into skb head to prevent out-of-bounds access
++		 */
++		if (ip_hdr(skb)->ihl * 4 != hlen_orig)
++			goto ignore_tunnel;
+ 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
+ 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
+ 			type, code, ntohl(info));
 -- 
 2.53.0
 
