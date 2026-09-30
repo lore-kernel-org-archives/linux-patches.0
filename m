@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBDF5013C9;
-	Wed, 30 Sep 2026 16:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A092364028;
+	Wed, 30 Sep 2026 16:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785175; cv=none; b=n3DkC/A3F5V+zJGfXewx1iPBgzvi7mYyC1MQZUPJ4RBF8S/39soQSj+noYQ/H/yWh2UYOhAIK9dfjPB05pnQ7cw8Kk3tah1vXueAacKVDvEtQWPCmIWSLmovPLwIQ4/pgIGDZu1vMCgMuDrf5yCWu66IK9cqENsMweXxmy9wl04=
+	t=1790785173; cv=none; b=Gh75twbrZ50Ph+j/XZfF2N1x2gKChfQgSA1h9uc52jFr24XRy/yaiTcTmoF1D7UqR6G6coTZkVAxJzNU6C89MDP1BD8WcjUvRNZEpKgyR/i0Irhoir1fPBGCc8a2cmDTiHFfpQIedTWpys97WSxwqOls1wOQzsVLxBVhtwRrClo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785175; c=relaxed/simple;
-	bh=BPIUs1+hmQBreDYwo2P7sAsSbIFxpqSdWEGQM5Bho+E=;
+	s=arc-20240116; t=1790785173; c=relaxed/simple;
+	bh=HF7pfQFJacRVN+0feQoAVSw+1UO/7em9P+wz4B5+kBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OwQO3FizfAaoGSysbcJ6VH9S8VhowG5jx2OYiFelnRog06g0PC6wb9ONQXe09KGoXh/jokOjnlwTw5g3WNfpi1MQpS/lMscG8H6SYlOV+nLsrM/qCHnKOluRuuy1LdqkdUFN3ezPO82z3FCWJa5mWV0Lw1LEg87lXEkqgH8ZZXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zsp9SJU7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RwQAVX1Qx6OqDJLFzIDOKer+wLTZ9vtbXcEzL0n7+QcZnlB7SoISnTFamu9lHpydG/xaCTunoR9QgS9AEFZDsGP/Oi7Qwcn81N2b3yasbS2qSR+KDfcFz9cwm4xlUQNl63IV/LghZ8hXRNaPez0eN2MljaYO6ACL5ARpGGmQvxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqyjlpkT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zsp9SJU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43B71F000FF;
-	Wed, 30 Sep 2026 16:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqyjlpkT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230051F00893;
+	Wed, 30 Sep 2026 16:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785172;
-	bh=0QeE8PwO0Ag0tmTSQG2CeAVhgk6T43Jq3pavVzJUI8g=;
+	s=korg; t=1790785169;
+	bh=AN1olQAkUtOrz3fEs1ffXSwKTEf/OAkMrhS5qS5gUzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zsp9SJU71X5a78BQOW9Z976+/l99CGDl/amYl3BE8eGGI1JZflaVjqbjdA1lLgDl7
-	 sS4PfgG9ebkz7eZxrG1VLG7tMfMT4aLDOQXAcofhVRCa9bR8eHFIQdLmSvlMrM0IwQ
-	 h9lRtoKhl2iEjPfbGNUM5acXsWqd0MJP3fp0BVt4=
+	b=FqyjlpkTgokOAQVgLJZ+peH3sLVQDWULgi3ReOZREje5rjg0V/TYSZjtAjsMCJ0ox
+	 2lPwuIftlkXxTEQ5rvfvQ3xHrpU6qqauXj4fYC+Nlsd8MbiE9OrthdndrkInvsCy29
+	 y95HKyzVtt14wIjKIHPwVJ4Wpr6A9WwDwA0zddJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vega <vega@nebusec.ai>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 398/982] selftests/alsa: Fix the step check for INTEGER controls
-Date: Wed, 30 Sep 2026 17:18:54 +0200
-Message-ID: <20260930152425.357673149@linuxfoundation.org>
+Subject: [PATCH 6.1 415/982] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
+Date: Wed, 30 Sep 2026 17:19:11 +0200
+Message-ID: <20260930152425.718565584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,55 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 8efd5f623c63584c2e284a837a7795d95a0491cb ]
+[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
 
-The modulo sits inside the subtraction, so the check evaluates
-int_val - (min % step) rather than (int_val - min) % step. The
-INTEGER64 branch below it is parenthesised correctly.
+Several subsystems allocate ring buffers sized by dev->tx_queue_len
+with no upper bound. An unprivileged user (via unshare -Urn) can set a
+huge tx_queue_len and exhaust global memory with ring allocations:
 
-The written form passes only when the value equals min % step, and such
-a value is always on a step boundary, so it never misses a real
-violation. It only reports valid values as invalid.
+- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
+  allocate 3 skb_array rings of tx_queue_len entries each.
+- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
+  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
+- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
+  ptr_rings to tx_queue_len on the same notifier.
 
-snd-aloop declares step 1 on four controls, so every non-zero value on
-them is reported. Before:
+netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
+sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
+there so the oversized value is rejected at set time. This takes
+effect whether the device is up or down, before dev->tx_queue_len is
+written, before any notifier fires, and before any ring is allocated.
+The "> S16_MAX" check also subsumes the previous unsigned-long
+truncation test, and a negative ifr_qlen from the ioctl lands far
+above the cap after conversion, so both old failure modes are covered
+by the one comparison.
 
-  # PCM Rate Shift 100000.0 value 100000 invalid for step 1 minimum 80000
-  # Totals: pass:660 fail:101 xfail:0 xpass:0 skip:296 error:0
+tx_queue_len is ambigious: both a per-ring sizing multiplier and a
+default queue-length/limit knob for consumers that allocate
+nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
+direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
+value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
+policy in patch 2/3 while staying a legitimate queue length on
+high-BDP paths; the ring-memory trade-off of a shared knob is
+disclosed below.
 
-After, same card, nothing else changed:
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
+- Unprivileged user in a fresh user+net namespace (unshare -Urn).
+- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
+  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
+- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
+  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
+  512MB guest.
+- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
+- On the fixed kernel the oversized tx_queue_len is rejected with
+  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
+  create, sysfs, ioctl - the latter two via this check, the former
+  two via this check and the 2/3 parse policy respectively).
 
-  # Totals: pass:740 fail:21 xfail:0 xpass:0 skip:296 error:0
-
-Eighteen files under sound/ declare a non-zero step.
-
-Fixes: 5aaf9efffc57 ("kselftest: alsa: Add simplistic test for ALSA mixer controls kselftest")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Link: https://patch.msgid.link/20260903123832.97377-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/mixer-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
-index 960b137789d25..a3fb3f708f9e7 100644
---- a/tools/testing/selftests/alsa/mixer-test.c
-+++ b/tools/testing/selftests/alsa/mixer-test.c
-@@ -338,8 +338,8 @@ static bool ctl_value_index_valid(struct ctl_data *ctl,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 87a252b13c5cf..270689c9f351a 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -8854,7 +8854,7 @@ int dev_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
+ 	unsigned int orig_len = dev->tx_queue_len;
+ 	int res;
  
- 		/* Only check step size if there is one and we're in bounds */
- 		if (snd_ctl_elem_info_get_step(ctl->info) &&
--		    (int_val - snd_ctl_elem_info_get_min(ctl->info) %
--		     snd_ctl_elem_info_get_step(ctl->info))) {
-+		    (int_val - snd_ctl_elem_info_get_min(ctl->info)) %
-+		    snd_ctl_elem_info_get_step(ctl->info)) {
- 			ksft_print_msg("%s.%d value %ld invalid for step %ld minimum %ld\n",
- 				       ctl->name, index, int_val,
- 				       snd_ctl_elem_info_get_step(ctl->info),
+-	if (new_len != (unsigned int)new_len)
++	if (new_len > S16_MAX)
+ 		return -ERANGE;
+ 
+ 	if (new_len != orig_len) {
 -- 
 2.53.0
 
