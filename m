@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07A4501285;
-	Wed, 30 Sep 2026 16:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746AB509F0D;
+	Wed, 30 Sep 2026 16:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786688; cv=none; b=KSABKIw2ASPYXO/kE6b7TLyIB8K0B9BWNWhmgfPnRZlA9zV8cMFZr6yn+2/6+eWygJujEoeRyPY+gk/KVxKj4qdWfTpPzdwo2n2uzVk/g9qEUOUzEkvVfpldkkSTGa3LSZq8IILiwZNBzPqw5BzFN5q5TEffAnHin1S3AGvoygs=
+	t=1790786691; cv=none; b=aIpNX6WDJzul9yajqqO3eDglvabcIu5EXklE+ZxGftBhcsOMngd9ICHaSMqARab9XYUKUnkeQ152ZI96rjclFeSMcH4JH1+QRpwJg4zauUc6V2GStoCkZLaRIXLZmw8KCW3LS8bkyTD5SnmBe7KOwedb32Ebeqm4YV7leKLmbBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786688; c=relaxed/simple;
-	bh=n3Iyc1KR4Y7aPOKIaxEahb6KLeqwv+kbrVlxc27LdbI=;
+	s=arc-20240116; t=1790786691; c=relaxed/simple;
+	bh=hUfNCzPhnwMJVJc2FwLHaG/hjWdXCYCeu6MavZSiEiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnaZ5T2OnljLMGAhx/s0PVJA0eGOJ4FsExyRdBnM9bPFPDQrZpkQDvSiJXvAAQPtgv0TjFNSiB4zuOpLlBBnovseIbBswZE2PPrJuFPBsSC1j8GexgZsGi/h2/5zt3COoUS5MuRni/8NNpmCVGZxhIGq07URaIVDfGsHSnOWv5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KicXugeF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e5y7Z4wLmCsx/0KUvCeI/b3jAhcpAlq8WkqMCk0zH1Pj3gTM7x5EVWOyL1DZNLBIDo/MTCULQy4gE0wGflVj+rQNgjwt8M9VqDodGidd0lirRiB3Xp2Hud01J9BxZA3JCCRYTYnWLVgNda3OHTs5iFFuIbD256BNyv4LpTNliqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yb1h5ADA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KicXugeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014801F000FF;
-	Wed, 30 Sep 2026 16:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yb1h5ADA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED271F000FF;
+	Wed, 30 Sep 2026 16:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786687;
-	bh=6vHqhl9m8J8fiHwkkZ+A7LYedzMAJFS7WCqsir0rsh8=;
+	s=korg; t=1790786690;
+	bh=V4rfNIe6DTHJBBD8atutlDWJCW4TOoHEsvpkfCzOucI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KicXugeF95qPr2pmSr2+upcUKpBs/mvtLtt9eINjwcRbtolIw1acCQMa61QN+5AFV
-	 r2dfFvCg2Rk6IZr/xz6eYm6BKTG4yWfu8tBJC3vclJ8+NEzlcB3tpdXSM6PNsQCAoB
-	 zZE4STsAfjrbUeGOAAOa8UGjbyW9YxDxW5d7Z3xk=
+	b=yb1h5ADASSlZMF8lULp6Zhojk6Fx/fb9Bbp9gdbNYIPzVbTlqDc/wwvvfC6cBly+e
+	 NXW22w6tzN5O1hPTEX1Rpl8p+xnWdrhb3in37url3u6KGvFWocC5DwJlVQ6ArXFk40
+	 ty6iLA4JHAODNuNi3BskYpMijhBVXK59BMsnjXlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <killertofu@gmail.com>,
-	Wei Jie Law <98lawweijie@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 950/982] HID: wacom: fix OOB read in wacom_wac_pen_serial_enforce()
-Date: Wed, 30 Sep 2026 17:28:06 +0200
-Message-ID: <20260930152437.142023256@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 951/982] net/mlx5: Fix rev_entry reference leak in mlx5_tc_ct_shared_counter_get()
+Date: Wed, 30 Sep 2026 17:28:07 +0200
+Message-ID: <20260930152437.163133883@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,62 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Jie LAW <98lawweijie@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 9aa237cf66495b2426ddde8532e9b08a0ed83aaa upstream.
+commit 0bf6bb567f0edaa771e7dd208ef98da50e6a4485 upstream.
 
-The 'wacom_wac_pen_serial_enforce()' function may calculate and pass an
-invalid offset to hid_field_extract(), resulting in memory reads at
-incorrect addresses -- possibly beyond the end of the report.  If a
-field in the HID descriptor lists more usages than its Report Count
-actually reserves space for, the function's inner 'j' will walk past
-the end of the field:
+When the reverse entry is found but its counter is already being
+released, refcount_inc_not_zero() fails and the reference taken by
+mlx5_tc_ct_entry_get() is never dropped before falling through to
+create_counter.  Drop it so the reverse entry is not kept alive forever
+by a shared counter lookup that did not use it.
 
-	for (i = 0; i < report->maxfield; i++) {
-		for (j = 0; j < report->field[i]->maxusage; j++) {
-			...
-			value = hid_field_extract(hdev, raw_data + 1,
-						  offset + j * size, size);
-
-A descriptor listing 12288 usages against Report Count 1 has the loop
-extract the usage at index 12287 from bit offset 98296 -- about 12 KB
-past a 2-byte received report.  The value is stored in
-wacom_wac->serial[0] and can reach userspace as an MSC_SERIAL event,
-making this an information disclosure.
-
-Clamp the loop to field->report_count, the number of value slots the
-report holds.  Value slots past the last declared usage are still
-scanned; they reuse that usage (HID 1.11, 6.2.2.8).
-
-Verified on v6.12.105 with a UHID reproducer: a 2-byte report from
-such a descriptor trips KASAN before the patch and not after it.
-
-Fixes: 83417206427b ("HID: wacom: Queue events with missing type/serial data for later processing")
-Suggested-by: Jason Gerecke <killertofu@gmail.com>
+Fixes: 1edae2335adf ("net/mlx5e: CT: Use the same counter for both directions")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Assisted-by: GLM:glm-5.3
-Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
-Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260917113131.2149024-1-vulab@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -97,8 +97,9 @@ static int wacom_wac_pen_serial_enforce(
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
+@@ -1016,6 +1016,9 @@ mlx5_tc_ct_shared_counter_get(struct mlx
  
- 	/* Queue events which have invalid tool type or serial number */
- 	for (i = 0; i < report->maxfield; i++) {
--		for (j = 0; j < report->field[i]->maxusage; j++) {
--			struct hid_field *field = report->field[i];
-+		struct hid_field *field = report->field[i];
+ 	spin_unlock_bh(&ct_priv->ht_lock);
+ 
++	if (rev_entry)
++		mlx5_tc_ct_entry_put(rev_entry);
 +
-+		for (j = 0; j < field->report_count; j++) {
- 			struct hid_usage *usage = &field->usage[j];
- 			unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 			unsigned int offset;
+ create_counter:
+ 
+ 	shared_counter = mlx5_tc_ct_counter_create(ct_priv);
 
 
