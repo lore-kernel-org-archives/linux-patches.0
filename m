@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CFD33D6FD;
-	Wed, 30 Sep 2026 16:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E630E3AFB11;
+	Wed, 30 Sep 2026 16:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785936; cv=none; b=Yds7ew5PyXqbPnmMnhjdtjrHDiQMxGVZ1qta7T8A0CJcYKzHCippvdWFzccWHuh8qeZIuxE7fZYdr+mReOCRkClOAxeV9iHX3jT2xGQF6ZeNgAld7tDqJ5d2dGK96XR2sS22JuWVR0cy1gQyPwFrlLctQPZJ5pQ+sQVaF2dY8vM=
+	t=1790785939; cv=none; b=OVjSCKeFvwlYCI+uUeY2UcJPStnL+sRLwqynYhbtuJTLfU/y8Jxm01KtmA6EMdwyrKCz2laPKV2wGycBiugpQru9bTAptg398S0oDzVpp+O5E+Ee+8CINML2CAHmR14eyRHyawEZsuhkcO4DlUq97HjxEeHgBcKogywXof0hsH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785936; c=relaxed/simple;
-	bh=yVDsb5LcneYwzEl0A/w1x/k/GAOBO2MSaWIKz3DSGFw=;
+	s=arc-20240116; t=1790785939; c=relaxed/simple;
+	bh=vfZ1w4TNNp9nwNiqJnwFKYmNB9/JcuiUi3GPVjQy94U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=beDG6TN70BSPDDXW4ULMhJXNiJ+9RhbtWvSQuBb4ftJiFuFul+UqN1w2FiUgD1v6wuNwsAAI3CGxkSNtGvaaxS4LJnJiwnOEeZLjby6c8I1+G7RHdxBT8zkCXdrOQsEIoCvhOdyMjUodIjeIRTZZnLfzZ4sWj+ZT7s4xLjqhV1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Exo30jkV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VtycQLDBJuAazoT8UTnJ5da9LvP7dfNEuihkD1Y2Lf2Yak6fw6yEDnmOLcgiHiVAOkiU3Qv+1+YS9XksF2RvC7yiiU9LJjl+B3gtYmG9Vm8gq+dgReq26PrplGNxUg3mgzTsJfh5axv8CY9jfu0ieqx0eZlKzPfR+b9g1JFGAjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2U38JumY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Exo30jkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9BB1F000FF;
-	Wed, 30 Sep 2026 16:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2U38JumY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5C31F000FF;
+	Wed, 30 Sep 2026 16:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785935;
-	bh=d4lELuISYm+8GkEIGGNeSSeBNH2V209hZbmtIhPewUc=;
+	s=korg; t=1790785937;
+	bh=nDE8cM9a4feISK2qtgMA5QknqCmXS0IW2SNacQU+fLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Exo30jkVvwMB6ol0kSb1j1zoUofwj3u6VRkzI6MIZRzoIeusgQ3pBJMvYd9TqGErS
-	 wvQpwSqU/ECDTuJcT/l91bk6LfYbbmb7OngLPExleKl+V7RBkDBV9mBzw4R8phU5gf
-	 DsCj7jjM9EohsLINwvqX5U5aAFj0B9Td7AUkHGcc=
+	b=2U38JumYqbJoJUEOuMOu4ebJAEFyPv5jzw5FwZimn2u7nrzpTxWrHuY2kcftRbYgt
+	 t6osZ01fnA3AzeTjklER4G+rdv87IJn4dqjbxPVV4Kubu23lcTFpDScyQHO8N4cfBO
+	 i8XyOANbfZmAvvPSHt/FbTYknnYYyn80VsSkVrbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	R Nageswara Sastry <rnsastry@linux.ibm.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 682/982] powerpc/iommu: Fix the overflow validation in iommu_tce_check_ioba
-Date: Wed, 30 Sep 2026 17:23:38 +0200
-Message-ID: <20260930152431.412045597@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 683/982] ASoC: ux500: Parenthesize MSP_{RX,TX}_CLKPOL_BIT() arguments
+Date: Wed, 30 Sep 2026 17:23:39 +0200
+Message-ID: <20260930152431.433591477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,45 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+[ Upstream commit 11fc0048a6930f4fca44fe3bd16a0023e78846a2 ]
 
-[ Upstream commit 0b271f7d7f5ed45bc498a03ce0aa9cfd8402fc71 ]
+arm allmodconfig fails to build with gcc:
 
-The commit b1af23d836f8 ("KVM: PPC: iommu: Unify TCE checking") unified
-IOBA parameter checking across KVM and VFIO into iommu_tce_check_ioba().
-While doing so, the passed in argument npages is ignored and constant
-value '1' is used leaving out a possible overflow as the callers can
-legitimately be using npages > 1 for H_STUFF_TCE or H_PUT_TCE_INDIRECT
-cases.
+  In file included from sound/soc/ux500/ux500_msp_i2s.c:20:
+  sound/soc/ux500/ux500_msp_i2s.h:151:38: error: suggest parentheses
+  around arithmetic in operand of '^' [-Werror=parentheses]
+  sound/soc/ux500/ux500_msp_i2s.c:204:21: note: in expansion of macro
+  'MSP_TX_CLKPOL_BIT'
+  cc1: all warnings being treated as errors
 
-Fix this by accounting for 'npages', checking for arithmetic overflow,
-and verifying that the entire requested range (ioba - offset + npages)
-does not exceed the table capacity 'size'.
+The macros never parenthesized their argument:
 
-Fixes: b1af23d836f8 ("KVM: PPC: iommu: Unify TCE checking")
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+  #define MSP_TX_CLKPOL_BIT(n)  ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
+
+That went unnoticed while every caller passed a plain variable, but
+configure_protocol() now passes an XOR expression, which binds as
+"a ^ (b & MASK)" rather than "(a ^ b) & MASK", and gcc rightly
+complains.
+
+No functional change: tx_clk_pol and rx_clk_pol only ever hold
+MSP_FALLING_EDGE (0) or MSP_RISING_EDGE (1), and bclk_inverted is a
+bool, so masking before or after the XOR gives the same 0/1 result.
+Parenthesize the argument anyway - it fixes the build and stops the
+macros from silently mis-evaluating a future composite argument.
+
+Fixes: 9ccbacf5a012 ("ASoC: ux500: Validate MSP DAI configuration")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609051547.G9SJp8UQ-lkp@intel.com/
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260913173132.1172003-1-sashal@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/ux500/ux500_msp_i2s.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index a612abe4bfd57..81bd60c8094c1 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1055,7 +1055,7 @@ int iommu_tce_check_ioba(unsigned long page_shift,
- 	if (ioba < offset)
- 		return -EINVAL;
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 2bf2699bdc49f..c66ef455e1380 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -147,8 +147,8 @@ enum msp_direction {
+ #define RCKPOL_MASK		BIT(0)
+ #define TCKPOL_MASK		BIT(0)
+ #define SPICKM_MASK		(BIT(1) | BIT(0))
+-#define MSP_RX_CLKPOL_BIT(n)     ((n & RCKPOL_MASK) << RCKPOL_SHIFT)
+-#define MSP_TX_CLKPOL_BIT(n)     ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
++#define MSP_RX_CLKPOL_BIT(n)     (((n) & RCKPOL_MASK) << RCKPOL_SHIFT)
++#define MSP_TX_CLKPOL_BIT(n)     (((n) & TCKPOL_MASK) << TCKPOL_SHIFT)
  
--	if ((ioba + 1) > (offset + size))
-+	if ((ioba + npages < ioba) || (ioba - offset + npages > size))
- 		return -EINVAL;
- 
- 	return 0;
+ #define P1ELEN_SHIFT		0
+ #define P1FLEN_SHIFT		3
 -- 
 2.53.0
 
