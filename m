@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2E93AF674;
-	Wed, 30 Sep 2026 18:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9071D3BC68E;
+	Wed, 30 Sep 2026 18:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794710; cv=none; b=cVOvRZatkmyFXrZE9p6f5KWGhbiE2frAW+K59UpLTG3ADuitBQL3Iw/PRJi1YHQhy3swVYOWDHeS3Z4Omk1dExzlBkJiP7w89xSPds1rQdBDrXh0vag3eqm2CHeEHzpbqZ1EvbAo/mSLcUq3WIx+8B7JKuyNDGRU0El5wZG7NCI=
+	t=1790794712; cv=none; b=pFnwaECP1xEJW35IF5zIclM3aisIlNwxo8IpeaL3utk9OHsDC449co/+Oc2pDHQ0qJ6cZOuZsHQi2fNmfQDxZoA3HR7yY5n5pOh3ROIRLqMqnK32drWK9J8nN3j9iNm1uhFbEUMf9kwOdvY2ov95Y26dNGLCTByV78r3fJMZ9GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794710; c=relaxed/simple;
-	bh=4KJHFzNhYPcxhrDxlbJVrKjoGN5X/IO8S7P0uZroBx0=;
+	s=arc-20240116; t=1790794712; c=relaxed/simple;
+	bh=2F28nfcatLDeIrcQ+pFb/EUiBigp1A0kmdLvac7PBMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNsHntfu4EDeZTywwLYw1ZYIxpQ+48A0ysbNup1WRdQvpE0KiXSrF455MuteQtVihBZt2Fh5J5miAAtFtIAI01q4etpiKMQpQlQIbysyGaXkKIgFsVkBEFJA/9j1IJhaLy3Ki9Ij54+xY9wPLW4uOCguI0mdwecqAzvmt0Z7SfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKBEgPIU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gKHD9viTwjX3xfvyaPmQnVW/UyAn7POdbItmkzQiCC2EtlSeEoCU1/TJ0av58F+YffnYQP3sEEJS1M5Mj2eEUAyFFzmpB++uF8U39g6ZcIGBtdljitbYqiuVACUDOfS9WdLxrMp92Qdov2PsYUxvrvPmbqZp1NWDvH1SRIog2Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3/j/vCy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKBEgPIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF981F00898;
-	Wed, 30 Sep 2026 18:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3/j/vCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6BBF1F000FF;
+	Wed, 30 Sep 2026 18:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794708;
-	bh=7VQBStHBzAtRMDMCWjZUMhovJAUNYJBTiRl1zZW/AM0=;
+	s=korg; t=1790794711;
+	bh=gZeWXyLYzxMHhq7BTjZId6Q2NGBBOLR87xwYJGLP4NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XKBEgPIUM/ymTRcGnyn3O+jAhqDGkAka3pCGTpDBc8sUd3M67rq5v7yeprBl8q//6
-	 GbJSfPf6uRndbIw212d7jGKWAqqnwcdjidLsfEFaZv5SY/eFlsSJ4dZl3rKZmc6oof
-	 jziec1WMydajO1923m8Ue03fwbeXSAnDXhawInt0=
+	b=R3/j/vCyxyxWjAgH4319kvBDkVoeiC1oJ8gr5DUzJK+iQAwlicE4Mh0cZ10RkZp3H
+	 eHNer/Y3fLWL9WBumK4MoRDI3SMB1MhR6bNQyhqRvzmWCcLQIuYNf9v7s+fwtLPTQ3
+	 ZIhiHq3SoNNvTwt+z8NTb542wkBRPY1GmKVgrvXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0305/1193] btrfs: fix reloc root cleanup in merge_reloc_roots()
-Date: Wed, 30 Sep 2026 17:16:29 +0200
-Message-ID: <20260930152440.927079683@linuxfoundation.org>
+Subject: [PATCH 6.6 0306/1193] wifi: iwlwifi: mvm: fix an off-by-1 boundary check
+Date: Wed, 30 Sep 2026 17:16:30 +0200
+Message-ID: <20260930152440.947817091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,49 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit b78fe9563e2d5ae47805f1e5dc722c91fd30e1f8 ]
+[ Upstream commit d77aff138c9ec6c8562f4c2c9f262d3d9c4b4cb8 ]
 
-If the root we got has zero root refs in its root item, we are resetting
-the root's ->reloc_root without using barriers like we do everywhere else.
-Sashiko complained about this while reviewing another patch, and it's
-correct (see the Link tag below).
+Before looking at the 11th byte, check the length is big enough.
 
-Also, we should not clear BTRFS_ROOT_DEAD_RELOC_TREE from the root unless
-the root points to the reloc root we have.
-
-Fix this by using clear_reloc_root(), which issues the memory barrier
-after setting the root's ->reloc_root to NULL and before clearing the bit
-BTRFS_ROOT_DEAD_RELOC_TREE from the root.
-
-Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Link: https://patch.msgid.link/20260714141909.d22bf52a18d0.If0ef6612a67cca671428b06dbdeec68549e50ae6@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/relocation.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 95fc3df73f4f2..fd9e674c13463 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -2030,11 +2030,10 @@ void merge_reloc_roots(struct reloc_control *rc)
- 		} else {
- 			if (!IS_ERR(root)) {
- 				if (root->reloc_root == reloc_root) {
--					root->reloc_root = NULL;
-+					clear_reloc_root(root);
-+					/* Drop the ref for root->reloc_root. */
- 					btrfs_put_root(reloc_root);
- 				}
--				clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE,
--					  &root->state);
- 				btrfs_put_root(root);
- 			}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 2d35a8865d00b..9f7dc8c33bd7c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -3423,7 +3423,7 @@ static void iwl_mvm_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
+ 	elem = cfg80211_find_elem(WLAN_EID_EXT_CAPABILITY, ies->data,
+ 				  ies->len);
  
+-	if (!elem || elem->datalen < 10 ||
++	if (!elem || elem->datalen < 11 ||
+ 	    !(elem->data[10] &
+ 	      WLAN_EXT_CAPA10_OBSS_NARROW_BW_RU_TOLERANCE_SUPPORT)) {
+ 		data->tolerated = false;
 -- 
 2.53.0
 
