@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F144C50254F;
-	Wed, 30 Sep 2026 16:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D3F4E3245;
+	Wed, 30 Sep 2026 16:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786794; cv=none; b=GeYgHT6Z04o71RAhRt7ctW58jirKB/5MjHzmotBbLyLd4oWM9x5HPKnluIQ1b8KE8Zci2dmOiuERFKiiiiSL6uCWA8bvQ+F3l8fPtgudfNCNOTUqvzJfJvootDenrnc6CORwR3O14QzFK4C/kWz2szAmIJz6Jws5DZSMqJ+Ho8I=
+	t=1790786797; cv=none; b=NJ0sXLH+lqrmf2QWkqJRIH+B7yewdUhnFlqH44rEGuNO+cOyZQf+zGEfFyXhHtpLKDUKKRG6EU/JxWNXsvM0A/ayY5GpT75Y1R+ulNqZAqEGda9NSBlevRH0ihwe2FH5JFTacNWZ4ezbaFHhcl44GHuTrz5nU/VeRb9sp6Xgw0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786794; c=relaxed/simple;
-	bh=qTizyX5tTsGSdSQu02J0EgppfX8Km4RJKjBfzL4XSYc=;
+	s=arc-20240116; t=1790786797; c=relaxed/simple;
+	bh=d2X7ZeS5S7eaqVYddLSY//6JLX4jvwEeBms50+nsSTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I2BE6AZLnbhh6bBUfvjNNdS91ufc8dUrSNfcj36G9fVfoDRxvNC68y0UAZencYhvy0iuIE9TOcRedyZ+hsH2O1JoWtSoPZdLOKCg2HqpJMJyWRAsBw9SOg10BKr+HJcIvkUFmDQAeRTSVGz2XQU0BddgK7kGoBuB9gegr1P9ecY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LC9av96C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWUC+prBPtA9+0Fw7ZPAk1v9lE3aJqai7Xu4CwoFhko6+H+VKYTVgoD2CpnyJ/0rAGWJccR0dM43I8izL8rI1ehxDcmksNkCgW6jZ08ZcXBM2eNr3HoXVTFVMf6Xs5PIVOc+k1MaxEEtxXsajD7QRJ/3TfUOPAFP2xmyeXfckIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAr5NzA2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LC9av96C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FD61F00893;
-	Wed, 30 Sep 2026 16:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAr5NzA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3961A1F000FF;
+	Wed, 30 Sep 2026 16:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786792;
-	bh=FwbcKXKZVZhyaK7AvoO/K3U55EqppQSswgJliTPkii4=;
+	s=korg; t=1790786795;
+	bh=M+eIgC/Pof8+EXkD+dPwBVJEJQUKgPUMeQ99AcdeccI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LC9av96C8xyf72fbSixHeu6jGKVDPdE6PoRaz49LVW0qyw66uvncm3oYg6sESIkaP
-	 TouvBn8MIBftS3YlcW5jo1Z6z+YJN+95aoFC/lDQuTa5on8XbC0moOZx9RJA/3wU5J
-	 NNXpB8niWbjf6knQhy2Mt8RtscjhVWVCjOSIO5K8=
+	b=QAr5NzA2Ktak/MmP6+GAl/Lafcvg6gz6MHGI9WTyjuv6A+Dv21KkIQT6BggX6iEM/
+	 sZplmctalDeIG9fpf16yqR9BLd7ADcN2loU0cnlzw4aUz3BTFCpECpnggqRrNW0MSG
+	 ZM/RAcg2Mn6/FszN2lWke43W9VaJJ7yF+bZRO+nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Minh=20Ti=E1=BA=BFn=20Nguy=E1=BB=85n?= <zizuzacker@gmail.com>
-Subject: [PATCH 6.1 980/982] lan78xx: Enable Auto Speed and Auto Duplex configuration for LAN7801 if NO EEPROM is detected
-Date: Wed, 30 Sep 2026 17:28:36 +0200
-Message-ID: <20260930152437.794143331@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Roman Demidov <roman.demidov.nn@gmail.com>
+Subject: [PATCH 6.1 981/982] drm/amdgpu/atom: Check kcalloc() for WS buffer in amdgpu_atom_execute_table_locked()
+Date: Wed, 30 Sep 2026 17:28:37 +0200
+Message-ID: <20260930152437.815062742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,45 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 799f532de13601f91ecb9cc6169d45d6e6933b0f upstream.
+commit cc9a8e238e42c1f43b98c097995137d644b69245 upstream.
 
-Enabled ASD/ADD configuration for LAN7801 in the absence of EEPROM.
-After the lite reset these contents go back to defaults where ASD/
-ADD is disabled. The check is already available for LAN7800.
+kcalloc() may fail. When WS is non-zero and allocation fails, ectx.ws
+remains NULL while ectx.ws_size is set, leading to a potential NULL
+pointer dereference in atom_get_src_int() when accessing WS entries.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20240529140256.1849764-3-rengarajan.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Minh Tiến Nguyễn <zizuzacker@gmail.com>
+Return -ENOMEM on allocation failure to avoid the NULL dereference.
+
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ Roman: added parentheses to the 'if' statement, matching the upstream commit. ]
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/atom.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -3069,8 +3069,11 @@ static int lan78xx_reset(struct lan78xx_
- 		return ret;
- 
- 	/* LAN7801 only has RGMII mode */
--	if (dev->chipid == ID_REV_CHIP_ID_7801_)
-+	if (dev->chipid == ID_REV_CHIP_ID_7801_) {
- 		buf &= ~MAC_CR_GMII_EN_;
-+		/* Enable Auto Duplex and Auto speed */
-+		buf |= MAC_CR_AUTO_DUPLEX_ | MAC_CR_AUTO_SPEED_;
+--- a/drivers/gpu/drm/amd/amdgpu/atom.c
++++ b/drivers/gpu/drm/amd/amdgpu/atom.c
+@@ -1228,10 +1228,15 @@ static int amdgpu_atom_execute_table_loc
+ 	ectx.ps = params;
+ 	ectx.abort = false;
+ 	ectx.last_jump = 0;
+-	if (ws)
++	if (ws) {
+ 		ectx.ws = kcalloc(4, ws, GFP_KERNEL);
+-	else
++		if (!ectx.ws) {
++			ret = -ENOMEM;
++			goto free;
++		}
++	} else {
+ 		ectx.ws = NULL;
 +	}
  
- 	if (dev->chipid == ID_REV_CHIP_ID_7800_ ||
- 	    dev->chipid == ID_REV_CHIP_ID_7850_) {
+ 	debug_depth++;
+ 	while (1) {
 
 
