@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A0051AFF5;
-	Wed, 30 Sep 2026 18:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C8D3F5BFC;
+	Wed, 30 Sep 2026 18:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793171; cv=none; b=BRdMgZcGh3vuZ1cvfLTWIi5yZUiv3q9RNoq8U02c/jBF1PodYiTmwhoOkRJ18nkl8Hm83odn6StVDXtR/YIxJUdXdrMZrHyDfdbsX5a/sMY1cFllBgT2Wx+Nua1VmVIMegRE4NxoY+8/1mKmB1IRUjsfLJmx5sS4azzml29gesw=
+	t=1790793173; cv=none; b=J6VGDXgkXeU8hEZkP5dbygWuaRlYrZj5JooyKE9qdQjoMbJC4PbYgyjqGIq+Y+5lhQpLUYU6gc2cfR0vm4cxf6lBzoVPrQKosD3vJlMC7vF5+h+HIbDUrPdjwR8QnFoW8yjhZAQq8HZWEba3duis+qSCrugKL3A6SDAqrGV9qhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793171; c=relaxed/simple;
-	bh=9oxFT40XOUD6mPTLUl1RH6f2J92sGhiaDul4W/Xb4Zc=;
+	s=arc-20240116; t=1790793173; c=relaxed/simple;
+	bh=0v8gJCuRQnhKp65jZvaUZ2Co9UOFPOBVVsRygelFYlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fI8A0IfcXLR9kTBd+UJJSfktCxwl2Beq4bKhITf7LP6+Z3Eu9whmNOjkC18z6t/cV+1gpGSYXLCHLdOf7k54xjiCCHzBd15kbF50A+H+zfahe2WK7rACASYyhtO4rkTbV7bNJ9S9i2WgXiM+USQjDzMux1BwRpv4iZGYIik6QcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRjoCpcc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D5BiqtiK2nUVThG5p2i0GGzeHOmHbdQHdq4st/fjyvljvAD3shRMePODdxgx9pJB8bnuQq1hedWC8zSp1AmFjzACoRxQ1tCN5AOZzkNnpuRgWTbCR2E43zLt03xScjWgEneWPNgOaga8w/+CLnCfHOxFMfVkeCdqjy7mweJj+tA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3hfim/t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRjoCpcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6001F000FF;
-	Wed, 30 Sep 2026 18:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3hfim/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B24D1F000FF;
+	Wed, 30 Sep 2026 18:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793169;
-	bh=OCnfFKKskIT6BbZtNJuXbS16Y/WLyfDy9zQKTbYMTGo=;
+	s=korg; t=1790793172;
+	bh=IOPmq6iHjCuuiXaQV4buwqYh7pMo7lWFYVabfgu4SZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HRjoCpccKeWpI9xlxqu16VUGAdEiuI6igaFUEn/jxo7HEd9yTj9Ag0N+cns5XlsAs
-	 2QzGBOZ8xAYBfUd1pH33M/DoZEPBiVxZYRmfwhW3zylekOVj8ptIhjpFTqU6BQ1Kn9
-	 4umGRNhGwb++iuDnJX8OJpQNdNm9S/+fiA3FBHUI=
+	b=N3hfim/tFJ49AZUiqqIPzY2EjfjTK8DpyQ+QbL6RHWdgfuF/95YzrqPfqgEFMT3At
+	 n8qrztUFO4NaQ/cjknRF9bZLZm1/xv0PX60tW5g8lNSWVKUJNmLj9V+ImppKsvweCA
+	 D0mHpAkbYNaYPXDNgEE60N3fgtILWc1y6TwZD0U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Sasso <stesasso@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johan Almbladh <johan.almbladh@anyfinetworks.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 159/395] vrf: Stop corrupting skb->csum when capturing CHECKSUM_COMPLETE packets
-Date: Wed, 30 Sep 2026 17:27:01 +0200
-Message-ID: <20260930152344.094799661@linuxfoundation.org>
+Subject: [PATCH 6.18 160/395] bpf: Fix immediate JMP JEQ/JNE on MIPS32
+Date: Wed, 30 Sep 2026 17:27:02 +0200
+Message-ID: <20260930152344.118131692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -55,55 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Johan Almbladh <johan.almbladh@anyfinetworks.com>
 
-[ Upstream commit ab7aa05c06ae340e5c7530bb78fa8d23794e460b ]
+[ Upstream commit db762fd96be225bd06161c9631160c755d891693 ]
 
-The VRF device is an Ethernet device but it can have non-Ethernet ports
-such as IP tunnels. Before the cited commit, capturing packets from such
-ports on the VRF device resulted in these packets being detected as
-malformed since they lack an Ethernet header.
+An addu instruction was emitted instead of addiu, causing the immediate
+value 1 to be interpreted as register $at. This made the comparison
+result invalid when the immediate operand was negative. Note that $at
+is mapped to BPF_REG_AX, which is used for constant blinding.
 
-The cited commit fixed it by pushing a dummy Ethernet header to such
-packets before the capture and pulling it afterwards. In the case of
-CHECKSUM_COMPLETE packets it also updated skb->csum with the checksum of
-the dummy Ethernet header. This is wrong as skb->csum should not include
-the checksum of the Ethernet header ("checksum of the _whole_ packet as
-seen by netif_rx()").
+Fix the instruction to use the immediate form.
 
-This also means that L4 protocols receive a corrupted skb->csum and
-potentially drop the packet, as is the case with UDP packets whose
-checksum was completed by software.
+Found with test_bpf on MIPS32r1 emulated by QEMU.
 
-Fix by removing the unnecessary call to skb_postpush_rcsum().
-
-Fixes: 048939088220 ("vrf: add mac header for tunneled packets when sniffer is attached")
-Reported-by: Stefano Sasso <stesasso@gmail.com>
-Closes: https://lore.kernel.org/netdev/CALtE316UtL3x7LL6uxfXzx8rW6AbzYPeDOb478hqJCr_-dj=Wg@mail.gmail.com/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260922131239.2509494-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eb63cfcd2ee8 ("mips, bpf: Add eBPF JIT for 32-bit MIPS")
+Signed-off-by: Johan Almbladh <johan.almbladh@anyfinetworks.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260923105158.3514342-1-johan.almbladh@anyfinetworks.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/mips/net/bpf_jit_comp32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index 4b62b167650ea..7ac320da3ba20 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1225,8 +1225,6 @@ static int vrf_prepare_mac_header(struct sk_buff *skb,
- 	skb->protocol = eth->h_proto;
- 	skb->pkt_type = PACKET_HOST;
- 
--	skb_postpush_rcsum(skb, skb->data, ETH_HLEN);
--
- 	skb_pull_inline(skb, ETH_HLEN);
- 
- 	return 0;
+diff --git a/arch/mips/net/bpf_jit_comp32.c b/arch/mips/net/bpf_jit_comp32.c
+index 40a878b672f5d..15a2a153dc873 100644
+--- a/arch/mips/net/bpf_jit_comp32.c
++++ b/arch/mips/net/bpf_jit_comp32.c
+@@ -1111,7 +1111,7 @@ static void emit_jmp_i64(struct jit_context *ctx,
+ 			emit(ctx, xor, tmp, lo(dst), tmp);
+ 		}
+ 		if (imm < 0) { /* Compare sign extension */
+-			emit(ctx, addu, MIPS_R_T9, hi(dst), 1);
++			emit(ctx, addiu, MIPS_R_T9, hi(dst), 1);
+ 			emit(ctx, or, tmp, tmp, MIPS_R_T9);
+ 		} else {       /* Compare zero extension */
+ 			emit(ctx, or, tmp, tmp, hi(dst));
 -- 
 2.53.0
 
