@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101D2519DFC;
-	Wed, 30 Sep 2026 17:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B513B51AEEE;
+	Wed, 30 Sep 2026 17:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789333; cv=none; b=DF+exo5/9yEMhejlAEfIVRdZ9eh+hz5E0S43FRfw9HQJz9Kh4gyosiL2pp0PoAaVkRKhf/kARx8DNRksdjI5hqporEUxXfWkb6cfurOFmuzdohlVjYODuhwqaj2LEuKusfnR1zFQI1orzc7MJSA3r85Q6eXYeZWOhD5JdVDkHSg=
+	t=1790789335; cv=none; b=h1vOeYdNnjLet/XOWb3uUYoIC5d5lF7aJBQLqB5mFCUVjWkahs/UyWXGHELaVGVrqHcu2HElEQtGxHmyNtjbd62hNYBdoXmK1qrLyDZodEioZXpLnhMfRtERfyW2hukCEZpXdZ5icvZMmYeQ8bSd2wWZS8RyAbhs6GsatX64mFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789333; c=relaxed/simple;
-	bh=Q1uDR9uZ6w141nDYOZFkuUbknOcuOSR75R6dIvODTnQ=;
+	s=arc-20240116; t=1790789335; c=relaxed/simple;
+	bh=kNQDJgPM9XpLs/HnoIKBRM0FmvLvfANmkludSb9E+QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUvbnDQpxsSZrsFfH5UqYEJaC/1AUdP/vFjgT0wie2En05CYV8CAjA03PjX32WnQGyEMU9F6FaMndQ31x6vdnSCQWJn0rQFYbUIiSl0ZRQh1Vo/YtP0yaO4CUj3YIy8N76w1iNgzV55gL9VraGypuSVhjzY5OTXUjlg2/Nhbq2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfA+moO1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RnAxw56xLjDLy+WYUr9bECh/IGSGxfmBmP2FiZBEQxXyYBXXSoaUcN3SErl+9ALmgVpcjRMXpk42mp10+8u8AHGVGgYEi9CXXyo9ruYi7z4uJ1GWac8xAkj62VMJC9ImXDV2/O/svgGeLPnIaqScSRifrYL9YCWUuSr1MMPoTzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isuOUDLR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfA+moO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0A51F000FF;
-	Wed, 30 Sep 2026 17:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isuOUDLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A401F000FF;
+	Wed, 30 Sep 2026 17:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789331;
-	bh=RxcVbtPtGECSck/5MrcxaAnCMjcDGQVeSjhfVJZuv2I=;
+	s=korg; t=1790789334;
+	bh=kI4LICaH99Qv86SQRi7A0nXx4GjQKZCNDjhoEvX2twY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EfA+moO1xfhBt+exs5JPq25Vyak7tH3MaNLlDVT1rT7lKTqjDJMY56nUb+G5lLVqz
-	 6Okn7UWB2EFl6wF8PAhYa6qvzHts/XbYaP5B5oX86RumusQe0vhn9jH/iu4h7bJAp9
-	 ItjGl1a1+mHkCIjE3RQF6ijXwchpvTV/i9M+7yDA=
+	b=isuOUDLRjhm0WXjdY8CsP79pzZpXBpAyUdb0Yj6l1+E6RGlXHdBnNyJJIJnY4UPQS
+	 AGbUmBVNadQDRbDks7U4bhSp2mI7j9cO6dfY4fWuRGKQy34zk48GHY5Zb2qGRHlw3B
+	 7Uf47q/UD/H8Rgt00gQIQcG6O8E90IjqZAmRGlm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	David Heidelberg <david@ixit.cz>,
+	Kimi Security Team <bug-report@moonshot.ai>,
+	Weiming Shi <shiweiming@moonshot.ai>,
+	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 403/877] nfc: llcp: Fix list corruption / refcount desync in nfc_llcp_recv_dm()
-Date: Wed, 30 Sep 2026 17:21:54 +0200
-Message-ID: <20260930152423.385641166@linuxfoundation.org>
+Subject: [PATCH 6.12 439/877] tcp: fix use-after-free of retransmit_skb_hint in tcp_send_synack()
+Date: Wed, 30 Sep 2026 17:22:30 +0200
+Message-ID: <20260930152424.156921757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,107 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Yilin Zhang <yilinzhang@moonshot.ai>
 
-[ Upstream commit bf1460acdf8cf5a07c819f59785d40f20d113099 ]
+[ Upstream commit fe99bbeee5c5dbd3abc30721a8079ced59649d97 ]
 
-nfc_llcp_recv_dm() handles DM(NOBOUND)/DM(REJ) for a socket that is still
-linked on local->connecting_sockets: it looks the socket up with
-nfc_llcp_connecting_sock_get(), sets sk->sk_state = LLCP_CLOSED and
-returns, without taking the socket lock and without unlinking the socket
-from the connecting_sockets list.
+When tcp_send_synack() replaces the cloned SYN skb at the head of the
+retransmit queue with a copy, it frees the original with
+tcp_rtx_queue_unlink_and_free() and only repairs tp->highest_sack.
+tp->retransmit_skb_hint keeps pointing at the freed
+skbuff_fclone_cache object.
 
-llcp_sock_release() selects the list to unlink from by sk_state: a socket
-in LLCP_CONNECTING is unlinked from connecting_sockets, otherwise from the
-sockets list.  Because recv_dm left the socket physically on
-connecting_sockets but in the LLCP_CLOSED state, release() takes the else
-branch and calls nfc_llcp_sock_unlink(&local->sockets, sk).  That runs
-sk_del_node_init() while holding sockets.lock, i.e. it removes the socket
-from the connecting_sockets hlist under the wrong lock.  A concurrent
-connect() linking another socket onto connecting_sockets under
-connecting_sockets.lock then mutates the same hlist unserialized, which
-corrupts the list and desyncs the sk_add_node()/sk_del_node_init()
-sock_hold()/__sock_put() pairing.  An unprivileged local process holding
-LLCP sockets, with the DM supplied by the remote peer over an established
-LLCP link, can drive this to leak kernel sockets without bound (the
-mis-decrement goes through the non-freeing __sock_put() path, so the
-object is never released), leading to memory exhaustion / DoS.
+The dangling hint is read in tcp_verify_retransmit_hint() and used as
+the root of the rbtree walk in tcp_xmit_retransmit_queue().  An
+unprivileged TFO client (sendmsg(MSG_FASTOPEN)) can arm the hint with
+an attacker-supplied ICMP fragmentation-needed message, after which a
+simultaneous open frees the armed SYN skb:
 
-This is the same class of bug that was fixed in the sibling handler
-nfc_llcp_recv_cc() by commit b493ea2765cc ("nfc: llcp: Fix use-after-free
-race in nfc_llcp_recv_cc()"); recv_dm did not receive the equivalent fix.
+  BUG: KASAN: slab-use-after-free in tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
+  Read of size 4 at addr ffff88800604d928 by task swapper/1/0
+  Call Trace:
+   tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
+   tcp_simple_retransmit (net/ipv4/tcp_input.c:3158)
+   tcp_v4_err (net/ipv4/tcp_ipv4.c:587)
 
-Fix it the same way: take lock_sock(), re-check that the socket is still
-hashed (release() may have won the race), and for the NOBOUND/REJ case
-unlink it from connecting_sockets before moving it to LLCP_CLOSED.  The
-unlink drops the connecting_sockets membership reference via
-sk_del_node_init(), leaving the socket unhashed, so the later
-nfc_llcp_sock_unlink() in llcp_sock_release() becomes a no-op and no
-double put occurs.
+Sync the hint to the copy.
 
-Fixes: a69f32af86e3 ("NFC: Socket linked list")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Link: https://patch.msgid.link/20260716232657.203145-1-qwe.aldo@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: c31b70c9968f ("tcp: Add logic to check for SYN w/ data in tcp_simple_retransmit")
+Reported-by: Kimi Security Team <bug-report@moonshot.ai>
+Tested-by: Weiming Shi <shiweiming@moonshot.ai>
+Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/8a9dff4063a2745653b7e88ceb745d75efa16e68.1790224474.git.yilinzhang@moonshot.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ net/ipv4/tcp_output.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index 7b86faf3f4ce5..9ae9b4fde311e 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1249,6 +1249,7 @@ static void nfc_llcp_recv_dm(struct nfc_llcp_local *local,
- 	struct nfc_llcp_sock *llcp_sock;
- 	struct sock *sk;
- 	u8 dsap, ssap, reason;
-+	bool connecting = false;
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index a8c4801228677..aa00a9fb2506c 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3679,6 +3679,7 @@ void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason)
+  */
+ int tcp_send_synack(struct sock *sk)
+ {
++	struct tcp_sock *tp = tcp_sk(sk);
+ 	struct sk_buff *skb;
  
- 	dsap = nfc_llcp_dsap(skb);
- 	ssap = nfc_llcp_ssap(skb);
-@@ -1260,6 +1261,7 @@ static void nfc_llcp_recv_dm(struct nfc_llcp_local *local,
- 	case LLCP_DM_NOBOUND:
- 	case LLCP_DM_REJ:
- 		llcp_sock = nfc_llcp_connecting_sock_get(local, dsap);
-+		connecting = true;
- 		break;
- 
- 	default:
-@@ -1274,10 +1276,33 @@ static void nfc_llcp_recv_dm(struct nfc_llcp_local *local,
- 
- 	sk = &llcp_sock->sk;
- 
-+	lock_sock(sk);
-+
-+	/* Check if socket was destroyed whilst waiting for the lock */
-+	if (!sk_hashed(sk)) {
-+		release_sock(sk);
-+		nfc_llcp_sock_put(llcp_sock);
-+		return;
-+	}
-+
-+	/*
-+	 * For DM(NOBOUND)/DM(REJ) the socket is still linked on the
-+	 * connecting_sockets list.  Unlink it here, under the socket lock,
-+	 * before moving it to LLCP_CLOSED: llcp_sock_release() selects the
-+	 * list to unlink from by sk_state, so leaving a connecting socket
-+	 * in the CLOSED state would make it unlink from the wrong list and
-+	 * corrupt the connecting_sockets list / desync the socket refcount.
-+	 * This mirrors nfc_llcp_recv_cc().
-+	 */
-+	if (connecting)
-+		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
-+
- 	sk->sk_err = ENXIO;
- 	sk->sk_state = LLCP_CLOSED;
- 	sk->sk_state_change(sk);
- 
-+	release_sock(sk);
-+
- 	nfc_llcp_sock_put(llcp_sock);
- }
- 
+ 	skb = tcp_rtx_queue_head(sk);
+@@ -3696,6 +3697,8 @@ int tcp_send_synack(struct sock *sk)
+ 			if (!nskb)
+ 				return -ENOMEM;
+ 			INIT_LIST_HEAD(&nskb->tcp_tsorted_anchor);
++			if (skb == tp->retransmit_skb_hint)
++				tp->retransmit_skb_hint = nskb;
+ 			tcp_highest_sack_replace(sk, skb, nskb);
+ 			tcp_rtx_queue_unlink_and_free(skb, sk);
+ 			__skb_header_release(nskb);
 -- 
 2.53.0
 
