@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C5F50AC0D;
-	Wed, 30 Sep 2026 17:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4924FECCF;
+	Wed, 30 Sep 2026 17:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787708; cv=none; b=hfzPjm7YZNSGbn0x3s3D2q7nx9wvAyS8ltqdZg1+nZWrC5sG9Zdwo0q0ZKdPswS7QHUCubgn8oef8wuuus2N+scmXLNPD2hKihqnHTqSpEBudNGcw9Pw3SoYiD//X2rgeAzA2F+K5hL7yydME5Lm8UqdhDUwBa+ptRft7Gr1pws=
+	t=1790787710; cv=none; b=pDolgKLo+5PD5p2XfqngakJz7BHp5OmTqO2158dzxyMvNhZ4C6dLYvzijvQqGs6clE6iq84+JhEiqaro6m/GTXVYXO0zmCb6j+y04QQH2F9C10U119BDZwJ7k/4a9F+EI49C0in3OET4YQ2N7GV2eM/wwIPRllr2cXbRWmU5vkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787708; c=relaxed/simple;
-	bh=WzwKD81LkohQ4pnwGptFcKMexunDAqf+qpJzhRQTpHI=;
+	s=arc-20240116; t=1790787710; c=relaxed/simple;
+	bh=OxgdNchicilbfe0epVf7w+lTP0d4D810ECcGwR7m3uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu8GhlVinGoqBja+y0olKp8NyTtOyCm9085JrZWv2HczAmk7sF4heeBqJloJ3xdiA7l8OyNNgNNvjKkxI+JPbEKxrqdtrSEk9+I8HdrLFSNR8X1V631HBFXfMkP/Hg72UjgWlMEnpHSIwsLyFkBy93jqC9gCQkvrhyAN0ppCgPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gX7hZKYj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NVVZR2cnlwhrWq80yuaXScfxYLKoHgmA3BF5fkhCsaFzq4dHruH+zDK4LTtmkVGEvY7RZn0GSx2LyR8h+4DQUcU0vskCAsrmIfI0uTfFtntFlpIXE/S2i2Wl49bdPPBGCzCmsO7cdXE6wmF2z5znP8o4z3RbBQ6muBMY/52UG2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nag60cBG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gX7hZKYj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9CA1F000FF;
-	Wed, 30 Sep 2026 17:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nag60cBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118FF1F000FF;
+	Wed, 30 Sep 2026 17:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787706;
-	bh=ymvyXj4XeW3tG7mZbewi0cvd6G+ZzqMDz8tM01Fd7oM=;
+	s=korg; t=1790787709;
+	bh=uBOGgJBrF66bp/IubAVCldM5XmF6P/HdrQUXUxY1Mcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gX7hZKYj4L5awDfyw6N6DZdmKpWKwc2ETOWvcbLny7562Wz7M3WwMb78U5MT5JdRR
-	 K7hfgwR5Db85fCaSYlcb8lTrxrTJnHkTx7JfyaIIPMjpRWWVQbgX+j/z/KB+jLRVoA
-	 rNRU9VCzJavSOEyKdl44iS029OycmgehrLyw9hsA=
+	b=nag60cBGsTkukhFLKK+piSmIzJzjYcPeoPZnXL+i+OChETiWmdVUupfND2eby+knC
+	 C7+YYkO465QPS3k0rAuLKiLR9bURFd5DtOsy4eY6NGyOHnN2o5ctmHwH7kauU1raY6
+	 UzrfrxJjLUK15ebdD3mjn7YrDBk19hl5D3As2k6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Carvalho <marcocarvalho.web@gmail.com>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 7.2 325/457] HID: quirks: add ALWAYS_POLL quirk for SDINNOVATION gaming keyboard
-Date: Wed, 30 Sep 2026 17:27:10 +0200
-Message-ID: <20260930152353.034901987@linuxfoundation.org>
+	Jason Gerecke <killertofu@gmail.com>,
+	Wei Jie Law <98lawweijie@gmail.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.2 326/457] HID: wacom: fix OOB read in wacom_wac_pen_serial_enforce()
+Date: Wed, 30 Sep 2026 17:27:11 +0200
+Message-ID: <20260930152353.057126346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,50 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Wei Jie LAW <98lawweijie@gmail.com>
 
-commit cdb669a3b8f844aca71fc3224990157d61562165 upstream.
+commit 9aa237cf66495b2426ddde8532e9b08a0ed83aaa upstream.
 
-The SDINNOVATION gaming keyboard (USB ID 36ae:feab) stops reporting
-input events after its RGB lighting mode is switched about twice.
-Disabling USB autosuspend and unbinding the other HID interfaces make
-no difference; the issue does not occur on Windows.
+The 'wacom_wac_pen_serial_enforce()' function may calculate and pass an
+invalid offset to hid_field_extract(), resulting in memory reads at
+incorrect addresses -- possibly beyond the end of the report.  If a
+field in the HID descriptor lists more usages than its Report Count
+actually reserves space for, the function's inner 'j' will walk past
+the end of the field:
 
-HID_QUIRK_ALWAYS_POLL alone resolves it, verified on 7.1.8 via
-usbhid.quirks=0x36ae:0xfeab:0x400.
+	for (i = 0; i < report->maxfield; i++) {
+		for (j = 0; j < report->field[i]->maxusage; j++) {
+			...
+			value = hid_field_extract(hdev, raw_data + 1,
+						  offset + j * size, size);
 
-Reported-by: Marco Carvalho <marcocarvalho.web@gmail.com>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2514627
+A descriptor listing 12288 usages against Report Count 1 has the loop
+extract the usage at index 12287 from bit offset 98296 -- about 12 KB
+past a 2-byte received report.  The value is stored in
+wacom_wac->serial[0] and can reach userspace as an MSC_SERIAL event,
+making this an information disclosure.
+
+Clamp the loop to field->report_count, the number of value slots the
+report holds.  Value slots past the last declared usage are still
+scanned; they reuse that usage (HID 1.11, 6.2.2.8).
+
+Verified on v6.12.105 with a UHID reproducer: a 2-byte report from
+such a descriptor trips KASAN before the patch and not after it.
+
+Fixes: 83417206427b ("HID: wacom: Queue events with missing type/serial data for later processing")
+Suggested-by: Jason Gerecke <killertofu@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Assisted-by: GLM:glm-5.3
+Signed-off-by: Wei Jie Law <98lawweijie@gmail.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    3 +++
- drivers/hid/hid-quirks.c |    1 +
- 2 files changed, 4 insertions(+)
+ drivers/hid/wacom_sys.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1283,6 +1283,9 @@
- #define USB_DEVICE_ID_SAMSUNG_WIRELESS_UNIVERSAL_KBD	0xa006
- #define USB_DEVICE_ID_SAMSUNG_WIRELESS_MULTI_HOGP_KBD	0xa064
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -113,8 +113,9 @@ static int wacom_wac_pen_serial_enforce(
  
-+#define USB_VENDOR_ID_SDINNOVATION		0x36ae
-+#define USB_DEVICE_ID_SDINNOVATION_GAMING_KBD	0xfeab
+ 	/* Queue events which have invalid tool type or serial number */
+ 	for (i = 0; i < report->maxfield; i++) {
+-		for (j = 0; j < report->field[i]->maxusage; j++) {
+-			struct hid_field *field = report->field[i];
++		struct hid_field *field = report->field[i];
 +
- #define USB_VENDOR_ID_SEMICO			0x1a2c
- #define USB_DEVICE_ID_SEMICO_USB_KEYKOARD	0x0023
- #define USB_DEVICE_ID_SEMICO_USB_KEYKOARD2	0x0027
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -183,6 +183,7 @@ static const struct hid_device_id hid_qu
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X52_2), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X52_PRO), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SAITEK, USB_DEVICE_ID_SAITEK_X65), HID_QUIRK_INCREMENT_USAGE_ON_DUPLICATE },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_SDINNOVATION, USB_DEVICE_ID_SDINNOVATION_GAMING_KBD), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD2), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SENNHEISER, USB_DEVICE_ID_SENNHEISER_BTD500USB), HID_QUIRK_NOGET },
++		for (j = 0; j < field->report_count; j++) {
+ 			struct hid_usage *usage = &field->usage[j];
+ 			unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
+ 			unsigned int offset;
 
 
