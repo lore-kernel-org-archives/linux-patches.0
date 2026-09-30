@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16989357D11;
-	Wed, 30 Sep 2026 16:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DF15111B5;
+	Wed, 30 Sep 2026 16:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786275; cv=none; b=XKMz+zSzH20vNBeo8wnQ7jwGYvBZIFAacPT0cF3JmBLh4NslSkHo7FFpjieUjXrhKrcq20jG5wPYwad8u6J6M2ucPNhJ3LRbYK4jd/QGnxEz6tsoyi4hahQUziKR2s8g1cN1QRPLmSY9/ZLtwsMaZuTYlZKdhgbFD5d57krZums=
+	t=1790786278; cv=none; b=kdmKfIoYnJdAw4kkVQZKNRDHNKHalpMYy6r6XWu9k4jVBgXUl9wYk7kfEVdRXklMgnXWcgJTo2Mlho9LHXAXxns3DLNA9+woCh8e9flIzkhfhEn0SXzxPDfWIhaRkpU2LZlw/JztK7BwiB0qItWN44stQ/qXLhaNrTNNgQ2PL+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786275; c=relaxed/simple;
-	bh=US/KJkeDORJirn1Zo5GMABMq7BpqwHfib/gEl0IMV2M=;
+	s=arc-20240116; t=1790786278; c=relaxed/simple;
+	bh=bTrCvHgtJSyDn+FStcmlcv29mbmxg5I1y8cHfcpcELI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKvp2vkxYcgHhsjiIyQenQG9urXSxkZLLXRyiy8w02QrU24bKhojCn5rYBQjyJo5s6pYSx1OjP29aXOiHByMkihusr2v85GB3JCtGrpQUij0lK4E/yRCHQFMD6z9YqA8kxqsN0TlL+NTBeeTKkN1bzKQC+u/3WAfUnb/CsP3DsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0sQYSor; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JsLTpN1fNXXaVaOmFC0RxQMcGFwIgOJ5ezghU4ZDYaSNT5dvD1fEMUF6zm/rzAp9D7RT/7JUzhRCnqgD3fJnqjJLzpY59Lg6Ohg7OOjtk+atZf8sUjFOGZWXl69OE4JM1YF4TlrFiAxtrvBaeWd97Rnb9MilKTZswmjV0JYE8Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PejvviHo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0sQYSor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC221F000FF;
-	Wed, 30 Sep 2026 16:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PejvviHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A46F1F000FF;
+	Wed, 30 Sep 2026 16:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786274;
-	bh=1pXn/RD3t6lKXJjCRbtGBr7LNcxzq7OydFPxIfKqFsw=;
+	s=korg; t=1790786276;
+	bh=qMH67HbuwWoJSOVn86GTKvDHahWpsFzaQ3WVM2u+xW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0sQYSorlq7DnY5/5jLBQJiet/3RNST7T80JhHVaWZDj4Bpqpd0Z4w1kw6YiwKEfy
-	 XNCNYWLEea8MmLqw7/4DlY4P3JKgVgFYAaWkuewLhz0GctP3YcMyMljGOtpUkRKY0b
-	 S2pQTfHarxF7jv/LXie/Gd0mq09hSn8nubqgQyVI=
+	b=PejvviHoj9c1NeIs4jhr17l/3BWY/j2Bg29urPuI7hxGIruoEmp8VQxdCy1mp11Ir
+	 KEC2tCsKcqVdZ1/3RV4em+MFpzP87hUGs4GJWJ11iZxL+5r2zQYuxiQmbSKV4EoFWh
+	 lSGEEeLBAXkdYMMHA/P7qKqPizGtEHL6Lq8YVS4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 804/982] btrfs: insert tree mod log move in push_node_left
-Date: Wed, 30 Sep 2026 17:25:40 +0200
-Message-ID: <20260930152434.026430389@linuxfoundation.org>
+Subject: [PATCH 6.1 805/982] scsi: hisi_sas: Grab sas_dev lock when traversing the members of sas_dev.list
+Date: Wed, 30 Sep 2026 17:25:41 +0200
+Message-ID: <20260930152434.049990402@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,335 +53,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 5cead5422a0e3d13b0bcee986c0f5c4ebb94100b ]
+[ Upstream commit 71fb36b5ff113a7674710b9d6063241eada84ff7 ]
 
-There is a fairly unlikely race condition in tree mod log rewind that
-can result in a kernel panic which has the following trace:
+When freeing slots in function slot_complete_v3_hw(), it is possible that
+sas_dev.list is being traversed elsewhere, and it may trigger a NULL
+pointer exception, such as follows:
 
-  [530.569] BTRFS critical (device sda3): unable to find logical 0 length 4096
-  [530.585] BTRFS critical (device sda3): unable to find logical 0 length 4096
-  [530.602] BUG: kernel NULL pointer dereference, address: 0000000000000002
-  [530.618] #PF: supervisor read access in kernel mode
-  [530.629] #PF: error_code(0x0000) - not-present page
-  [530.641] PGD 0 P4D 0
-  [530.647] Oops: 0000 [#1] SMP
-  [530.654] CPU: 30 PID: 398973 Comm: below Kdump: loaded Tainted: G S         O  K   5.12.0-0_fbk13_clang_7455_gb24de3bdb045 #1
-  [530.680] Hardware name: Quanta Mono Lake-M.2 SATA 1HY9U9Z001G/Mono Lake-M.2 SATA, BIOS F20_3A15 08/16/2017
-  [530.703] RIP: 0010:__btrfs_map_block+0xaa/0xd00
-  [530.755] RSP: 0018:ffffc9002c2f7600 EFLAGS: 00010246
-  [530.767] RAX: ffffffffffffffea RBX: ffff888292e41000 RCX: f2702d8b8be15100
-  [530.784] RDX: ffff88885fda6fb8 RSI: ffff88885fd973c8 RDI: ffff88885fd973c8
-  [530.800] RBP: ffff888292e410d0 R08: ffffffff82fd7fd0 R09: 00000000fffeffff
-  [530.816] R10: ffffffff82e57fd0 R11: ffffffff82e57d70 R12: 0000000000000000
-  [530.832] R13: 0000000000001000 R14: 0000000000001000 R15: ffffc9002c2f76f0
-  [530.848] FS:  00007f38d64af000(0000) GS:ffff88885fd80000(0000) knlGS:0000000000000000
-  [530.866] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [530.880] CR2: 0000000000000002 CR3: 00000002b6770004 CR4: 00000000003706e0
-  [530.896] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  [530.912] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  [530.928] Call Trace:
-  [530.934]  ? btrfs_printk+0x13b/0x18c
-  [530.943]  ? btrfs_bio_counter_inc_blocked+0x3d/0x130
-  [530.955]  btrfs_map_bio+0x75/0x330
-  [530.963]  ? kmem_cache_alloc+0x12a/0x2d0
-  [530.973]  ? btrfs_submit_metadata_bio+0x63/0x100
-  [530.984]  btrfs_submit_metadata_bio+0xa4/0x100
-  [530.995]  submit_extent_page+0x30f/0x360
-  [531.004]  read_extent_buffer_pages+0x49e/0x6d0
-  [531.015]  ? submit_extent_page+0x360/0x360
-  [531.025]  btree_read_extent_buffer_pages+0x5f/0x150
-  [531.037]  read_tree_block+0x37/0x60
-  [531.046]  read_block_for_search+0x18b/0x410
-  [531.056]  btrfs_search_old_slot+0x198/0x2f0
-  [531.066]  resolve_indirect_ref+0xfe/0x6f0
-  [531.076]  ? ulist_alloc+0x31/0x60
-  [531.084]  ? kmem_cache_alloc_trace+0x12e/0x2b0
-  [531.095]  find_parent_nodes+0x720/0x1830
-  [531.105]  ? ulist_alloc+0x10/0x60
-  [531.113]  iterate_extent_inodes+0xea/0x370
-  [531.123]  ? btrfs_previous_extent_item+0x8f/0x110
-  [531.134]  ? btrfs_search_path_in_tree+0x240/0x240
-  [531.146]  iterate_inodes_from_logical+0x98/0xd0
-  [531.157]  ? btrfs_search_path_in_tree+0x240/0x240
-  [531.168]  btrfs_ioctl_logical_to_ino+0xd9/0x180
-  [531.179]  btrfs_ioctl+0xe2/0x2eb0
+==>cq thread                    ==>scsi_eh_6
 
-This occurs when logical inode resolution takes a tree mod log sequence
-number, and then while backref walking hits a rewind on a busy node
-which has the following sequence of tree mod log operations (numbers
-filled in from a specific example, but they are somewhat arbitrary)
+                                ==>scsi_error_handler()
+				  ==>sas_eh_handle_sas_errors()
+				    ==>sas_scsi_find_task()
+				      ==>lldd_abort_task()
+==>slot_complete_v3_hw()              ==>hisi_sas_abort_task()
+  ==>hisi_sas_slot_task_free()	        ==>dereg_device_v3_hw()
+    ==>list_del_init()        		  ==>list_for_each_entry_safe()
 
-  REMOVE_WHILE_FREEING slot 532
-  REMOVE_WHILE_FREEING slot 531
-  REMOVE_WHILE_FREEING slot 530
-  ...
-  REMOVE_WHILE_FREEING slot 0
-  REMOVE slot 455
-  REMOVE slot 454
-  REMOVE slot 453
-  ...
-  REMOVE slot 0
-  ADD slot 455
-  ADD slot 454
-  ADD slot 453
-  ...
-  ADD slot 0
-  MOVE src slot 0 -> dst slot 456 nritems 533
-  REMOVE slot 455
-  REMOVE slot 454
-  REMOVE slot 453
-  ...
-  REMOVE slot 0
+[ 7165.434918] sas: Enter sas_scsi_recover_host busy: 32 failed: 32
+[ 7165.434926] sas: trying to find task 0x00000000769b5ba5
+[ 7165.434927] sas: sas_scsi_find_task: aborting task 0x00000000769b5ba5
+[ 7165.434940] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(00000000769b5ba5) aborted
+[ 7165.434964] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(00000000c9f7aa07) ignored
+[ 7165.434965] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(00000000e2a1cf01) ignored
+[ 7165.434968] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[ 7165.434972] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(0000000022d52d93) ignored
+[ 7165.434975] hisi_sas_v3_hw 0000:b4:02.0: slot complete: task(0000000066a7516c) ignored
+[ 7165.434976] Mem abort info:
+[ 7165.434982]   ESR = 0x96000004
+[ 7165.434991]   Exception class = DABT (current EL), IL = 32 bits
+[ 7165.434992]   SET = 0, FnV = 0
+[ 7165.434993]   EA = 0, S1PTW = 0
+[ 7165.434994] Data abort info:
+[ 7165.434994]   ISV = 0, ISS = 0x00000004
+[ 7165.434995]   CM = 0, WnR = 0
+[ 7165.434997] user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000f29543f2
+[ 7165.434998] [0000000000000000] pgd=0000000000000000
+[ 7165.435003] Internal error: Oops: 96000004 [#1] SMP
+[ 7165.439863] Process scsi_eh_6 (pid: 4109, stack limit = 0x00000000c43818d5)
+[ 7165.468862] pstate: 00c00009 (nzcv daif +PAN +UAO)
+[ 7165.473637] pc : dereg_device_v3_hw+0x68/0xa8 [hisi_sas_v3_hw]
+[ 7165.479443] lr : dereg_device_v3_hw+0x2c/0xa8 [hisi_sas_v3_hw]
+[ 7165.485247] sp : ffff00001d623bc0
+[ 7165.488546] x29: ffff00001d623bc0 x28: ffffa027d03b9508
+[ 7165.493835] x27: ffff80278ed50af0 x26: ffffa027dd31e0a8
+[ 7165.499123] x25: ffffa027d9b27f88 x24: ffffa027d9b209f8
+[ 7165.504411] x23: ffffa027c45b0d60 x22: ffff80278ec07c00
+[ 7165.509700] x21: 0000000000000008 x20: ffffa027d9b209f8
+[ 7165.514988] x19: ffffa027d9b27f88 x18: ffffffffffffffff
+[ 7165.520276] x17: 0000000000000000 x16: 0000000000000000
+[ 7165.525564] x15: ffff0000091d9708 x14: ffff0000093b7dc8
+[ 7165.530852] x13: ffff0000093b7a23 x12: 6e7265746e692067
+[ 7165.536140] x11: 0000000000000000 x10: 0000000000000bb0
+[ 7165.541429] x9 : ffff00001d6238f0 x8 : ffffa027d877af00
+[ 7165.546718] x7 : ffffa027d6329600 x6 : ffff7e809f58ca00
+[ 7165.552006] x5 : 0000000000001f8a x4 : 000000000000088e
+[ 7165.557295] x3 : ffffa027d9b27fa8 x2 : 0000000000000000
+[ 7165.562583] x1 : 0000000000000000 x0 : 000000003000188e
+[ 7165.567872] Call trace:
+[ 7165.570309]  dereg_device_v3_hw+0x68/0xa8 [hisi_sas_v3_hw]
+[ 7165.575775]  hisi_sas_abort_task+0x248/0x358 [hisi_sas_main]
+[ 7165.581415]  sas_eh_handle_sas_errors+0x258/0x8e0 [libsas]
+[ 7165.586876]  sas_scsi_recover_host+0x134/0x458 [libsas]
+[ 7165.592082]  scsi_error_handler+0xb4/0x488
+[ 7165.596163]  kthread+0x134/0x138
+[ 7165.599380]  ret_from_fork+0x10/0x18
+[ 7165.602940] Code: d5033e9f b9000040 aa0103e2 eb03003f (f9400021)
+[ 7165.609004] kernel fault(0x1) notification starting on CPU 75
+[ 7165.700728] ---[ end trace fc042cbbea224efc ]---
+[ 7165.705326] Kernel panic - not syncing: Fatal exception
 
-When this sequence gets applied via btrfs_tree_mod_log_rewind, it
-allocates a fresh rewind eb, and first inserts the correct key info for
-the 533 elements, then overwrites the first 456 of them, then decrements
-the count by 456 via the add ops, then rewinds the move by doing a
-memmove from 456:988->0:532. We have never written anything past 532, so
-that memmove writes garbage into the 0:532 range. In practice, this
-results in a lot of fully 0 keys. The rewind then puts valid keys into
-slots 0:455 with the last removes, but 456:532 are still invalid.
+To fix the issue, grab sas_dev lock when traversing the members of
+sas_dev.list in dereg_device_v3_hw() and hisi_sas_release_tasks() to avoid
+concurrency of adding and deleting member. When function
+hisi_sas_release_tasks() calls hisi_sas_do_release_task() to free slot, the
+lock cannot be grabbed again in hisi_sas_slot_task_free(), then a bool
+parameter need_lock is added.
 
-When search_old_slot uses this eb, if it uses one of those invalid
-slots, it can then read the extent buffer and issue a bio for offset 0
-which ultimately panics looking up extent mappings.
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1679283265-115066-2-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 
-This bad tree mod log sequence gets generated when the node balancing
-code happens to do a balance_node_right followed by a push_node_left
-while logging in the tree mod log. Illustrated for ebs L and R (left and
-right):
-
-	L                 R
-  start:
-  [XXX|YYY|...]      [ZZZ|...|...]
-  balance_node_right:
-  [XXX|YYY|...]      [...|ZZZ|...] move Z to make room for Y
-  [XXX|...|...]      [YYY|ZZZ|...] copy Y from L to R
-  push_node_left:
-  [XXX|YYY|...]      [...|ZZZ|...] copy Y from R to L
-  [XXX|YYY|...]      [ZZZ|...|...] move Z into emptied space (NOT LOGGED!)
-
-This is because balance_node_right logs a move, but push_node_left
-explicitly doesn't. That is because logging the move would remove the
-overwritten src < dst range in the right eb, which was already logged
-when we called btrfs_tree_mod_log_eb_copy. The correct sequence would
-include a move from 456:988 to 0:532 after remove 0:455 and before
-removing 0:532. Reversing that sequence would entail creating keys for
-0:532, then moving those keys out to 456:988, then creating more keys
-for 0:455.
-
-i.e.,
-
-  REMOVE_WHILE_FREEING slot 532
-  REMOVE_WHILE_FREEING slot 531
-  REMOVE_WHILE_FREEING slot 530
-  ...
-  REMOVE_WHILE_FREEING slot 0
-  MOVE src slot 456 -> dst slot 0 nritems 533
-  REMOVE slot 455
-  REMOVE slot 454
-  REMOVE slot 453
-  ...
-  REMOVE slot 0
-  ADD slot 455
-  ADD slot 454
-  ADD slot 453
-  ...
-  ADD slot 0
-  MOVE src slot 0 -> dst slot 456 nritems 533
-  REMOVE slot 455
-  REMOVE slot 454
-  REMOVE slot 453
-  ...
-  REMOVE slot 0
-
-Fix this to log the move but avoid the double remove by putting all the
-logging logic in btrfs_tree_mod_log_eb_copy which has enough information
-to detect these cases and properly log moves, removes, and adds. Leave
-btrfs_tree_mod_log_insert_move to handle insert_ptr and delete_ptr's
-tree mod logging.
-
-(Un)fortunately, this is quite difficult to reproduce, and I was only
-able to reproduce it by adding sleeps in btrfs_search_old_slot that
-would encourage more log rewinding during ino_to_logical ioctls. I was
-able to hit the warning in the previous patch in the series without the
-fix quite quickly, but not after this patch.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-
-[ Backport to 6.1.y: retain the older btrfs_node_key_ptr_offset() call
-  signature and pass GFP_NOFS to alloc_tree_mod_elem(). The tree-mod-log
-  ordering change is otherwise identical to upstream. ]
+[ Backport to 6.1.y: omit the SATA NCQ-error call-site update because that
+  path does not call hisi_sas_do_release_task() in 6.1.y. The list locking
+  change is otherwise identical to upstream. ]
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c        | 10 +++---
- fs/btrfs/tree-mod-log.c | 73 ++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 70 insertions(+), 13 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas.h       |  3 ++-
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 23 +++++++++++++++--------
+ drivers/scsi/hisi_sas/hisi_sas_v1_hw.c |  2 +-
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c |  2 +-
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  4 +++-
+ 5 files changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 9620bf289f78a..36f54f0f21d83 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -2653,8 +2653,8 @@ static int push_node_left(struct btrfs_trans_handle *trans,
- 
- 	if (push_items < src_nritems) {
- 		/*
--		 * Don't call btrfs_tree_mod_log_insert_move() here, key removal
--		 * was already fully logged by btrfs_tree_mod_log_eb_copy() above.
-+		 * btrfs_tree_mod_log_eb_copy handles logging the move, so we
-+		 * don't need to do an explicit tree mod log operation for it.
- 		 */
- 		memmove_extent_buffer(src, btrfs_node_key_ptr_offset(0),
- 				      btrfs_node_key_ptr_offset(push_items),
-@@ -2715,8 +2715,10 @@ static int balance_node_right(struct btrfs_trans_handle *trans,
- 		btrfs_abort_transaction(trans, ret);
- 		return ret;
- 	}
--	ret = btrfs_tree_mod_log_insert_move(dst, push_items, 0, dst_nritems);
--	BUG_ON(ret < 0);
-+	/*
-+	 * btrfs_tree_mod_log_eb_copy handles logging the move, so we don't
-+	 * need to do an explicit tree mod log operation for it.
-+	 */
- 	memmove_extent_buffer(dst, btrfs_node_key_ptr_offset(push_items),
- 				      btrfs_node_key_ptr_offset(0),
- 				      (dst_nritems) *
-diff --git a/fs/btrfs/tree-mod-log.c b/fs/btrfs/tree-mod-log.c
-index 8a3a14686d3e7..2c190dcff5161 100644
---- a/fs/btrfs/tree-mod-log.c
-+++ b/fs/btrfs/tree-mod-log.c
-@@ -245,6 +245,26 @@ int btrfs_tree_mod_log_insert_key(struct extent_buffer *eb, int slot,
- 	return ret;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 9aebf4a26b132..2ecf97f7ae525 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -652,7 +652,8 @@ extern void hisi_sas_phy_down(struct hisi_hba *hisi_hba, int phy_no, int rdy,
+ extern void hisi_sas_phy_bcast(struct hisi_sas_phy *phy);
+ extern void hisi_sas_slot_task_free(struct hisi_hba *hisi_hba,
+ 				    struct sas_task *task,
+-				    struct hisi_sas_slot *slot);
++				    struct hisi_sas_slot *slot,
++				    bool need_lock);
+ extern void hisi_sas_init_mem(struct hisi_hba *hisi_hba);
+ extern void hisi_sas_rst_work_handler(struct work_struct *work);
+ extern void hisi_sas_sync_rst_work_handler(struct work_struct *work);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 10ea1d434c48d..290c9915fb9b2 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -205,7 +205,7 @@ static int hisi_sas_slot_index_alloc(struct hisi_hba *hisi_hba,
  }
  
-+static struct tree_mod_elem *tree_mod_log_alloc_move(struct extent_buffer *eb,
-+						     int dst_slot, int src_slot,
-+						     int nr_items)
-+{
-+	struct tree_mod_elem *tm;
-+
-+	tm = kzalloc(sizeof(*tm), GFP_NOFS);
-+	if (!tm)
-+		return ERR_PTR(-ENOMEM);
-+
-+	tm->logical = eb->start;
-+	tm->slot = src_slot;
-+	tm->move.dst_slot = dst_slot;
-+	tm->move.nr_items = nr_items;
-+	tm->op = BTRFS_MOD_LOG_MOVE_KEYS;
-+	RB_CLEAR_NODE(&tm->node);
-+
-+	return tm;
-+}
-+
- int btrfs_tree_mod_log_insert_move(struct extent_buffer *eb,
- 				   int dst_slot, int src_slot,
- 				   int nr_items)
-@@ -262,18 +282,13 @@ int btrfs_tree_mod_log_insert_move(struct extent_buffer *eb,
- 	if (!tm_list)
- 		return -ENOMEM;
- 
--	tm = kzalloc(sizeof(*tm), GFP_NOFS);
--	if (!tm) {
--		ret = -ENOMEM;
-+	tm = tree_mod_log_alloc_move(eb, dst_slot, src_slot, nr_items);
-+	if (IS_ERR(tm)) {
-+		ret = PTR_ERR(tm);
-+		tm = NULL;
- 		goto free_tms;
+ void hisi_sas_slot_task_free(struct hisi_hba *hisi_hba, struct sas_task *task,
+-			     struct hisi_sas_slot *slot)
++			     struct hisi_sas_slot *slot, bool need_lock)
+ {
+ 	int device_id = slot->device_id;
+ 	struct hisi_sas_device *sas_dev = &hisi_hba->devices[device_id];
+@@ -239,9 +239,13 @@ void hisi_sas_slot_task_free(struct hisi_hba *hisi_hba, struct sas_task *task,
+ 		}
  	}
  
--	tm->logical = eb->start;
--	tm->slot = src_slot;
--	tm->move.dst_slot = dst_slot;
--	tm->move.nr_items = nr_items;
--	tm->op = BTRFS_MOD_LOG_MOVE_KEYS;
--
- 	for (i = 0; i + dst_slot < src_slot && i < nr_items; i++) {
- 		tm_list[i] = alloc_tree_mod_elem(eb, i + dst_slot,
- 				BTRFS_MOD_LOG_KEY_REMOVE_WHILE_MOVING, GFP_NOFS);
-@@ -486,6 +501,10 @@ int btrfs_tree_mod_log_eb_copy(struct extent_buffer *dst,
- 	struct tree_mod_elem **tm_list_add, **tm_list_rem;
- 	int i;
- 	bool locked = false;
-+	struct tree_mod_elem *dst_move_tm = NULL;
-+	struct tree_mod_elem *src_move_tm = NULL;
-+	u32 dst_move_nr_items = btrfs_header_nritems(dst) - dst_offset;
-+	u32 src_move_nr_items = btrfs_header_nritems(src) - (src_offset + nr_items);
- 
- 	if (!tree_mod_need_log(fs_info, NULL))
- 		return 0;
-@@ -498,6 +517,26 @@ int btrfs_tree_mod_log_eb_copy(struct extent_buffer *dst,
- 	if (!tm_list)
- 		return -ENOMEM;
- 
-+	if (dst_move_nr_items) {
-+		dst_move_tm = tree_mod_log_alloc_move(dst, dst_offset + nr_items,
-+						      dst_offset, dst_move_nr_items);
-+		if (IS_ERR(dst_move_tm)) {
-+			ret = PTR_ERR(dst_move_tm);
-+			dst_move_tm = NULL;
-+			goto free_tms;
-+		}
+-	spin_lock(&sas_dev->lock);
+-	list_del_init(&slot->entry);
+-	spin_unlock(&sas_dev->lock);
++	if (need_lock) {
++		spin_lock(&sas_dev->lock);
++		list_del_init(&slot->entry);
++		spin_unlock(&sas_dev->lock);
++	} else {
++		list_del_init(&slot->entry);
 +	}
-+	if (src_move_nr_items) {
-+		src_move_tm = tree_mod_log_alloc_move(src, src_offset,
-+						      src_offset + nr_items,
-+						      src_move_nr_items);
-+		if (IS_ERR(src_move_tm)) {
-+			ret = PTR_ERR(src_move_tm);
-+			src_move_tm = NULL;
-+			goto free_tms;
-+		}
-+	}
-+
- 	tm_list_add = tm_list;
- 	tm_list_rem = tm_list + nr_items;
- 	for (i = 0; i < nr_items; i++) {
-@@ -520,6 +559,11 @@ int btrfs_tree_mod_log_eb_copy(struct extent_buffer *dst,
- 		goto free_tms;
- 	locked = true;
  
-+	if (dst_move_tm) {
-+		ret = tree_mod_log_insert(fs_info, dst_move_tm);
-+		if (ret)
-+			goto free_tms;
-+	}
- 	for (i = 0; i < nr_items; i++) {
- 		ret = tree_mod_log_insert(fs_info, tm_list_rem[i]);
- 		if (ret)
-@@ -528,6 +572,11 @@ int btrfs_tree_mod_log_eb_copy(struct extent_buffer *dst,
- 		if (ret)
- 			goto free_tms;
+ 	memset(slot, 0, offsetof(struct hisi_sas_slot, buf));
+ 
+@@ -1059,7 +1063,7 @@ static void hisi_sas_port_notify_formed(struct asd_sas_phy *sas_phy)
+ }
+ 
+ static void hisi_sas_do_release_task(struct hisi_hba *hisi_hba, struct sas_task *task,
+-				     struct hisi_sas_slot *slot)
++				     struct hisi_sas_slot *slot, bool need_lock)
+ {
+ 	if (task) {
+ 		unsigned long flags;
+@@ -1076,7 +1080,7 @@ static void hisi_sas_do_release_task(struct hisi_hba *hisi_hba, struct sas_task
+ 		spin_unlock_irqrestore(&task->task_state_lock, flags);
  	}
-+	if (src_move_tm) {
-+		ret = tree_mod_log_insert(fs_info, src_move_tm);
-+		if (ret)
-+			goto free_tms;
-+	}
  
- 	write_unlock(&fs_info->tree_mod_log_lock);
- 	kfree(tm_list);
-@@ -535,6 +584,12 @@ int btrfs_tree_mod_log_eb_copy(struct extent_buffer *dst,
- 	return 0;
+-	hisi_sas_slot_task_free(hisi_hba, task, slot);
++	hisi_sas_slot_task_free(hisi_hba, task, slot, need_lock);
+ }
  
- free_tms:
-+	if (dst_move_tm && !RB_EMPTY_NODE(&dst_move_tm->node))
-+		rb_erase(&dst_move_tm->node, &fs_info->tree_mod_log);
-+	kfree(dst_move_tm);
-+	if (src_move_tm && !RB_EMPTY_NODE(&src_move_tm->node))
-+		rb_erase(&src_move_tm->node, &fs_info->tree_mod_log);
-+	kfree(src_move_tm);
- 	for (i = 0; i < nr_items * 2; i++) {
- 		if (tm_list[i] && !RB_EMPTY_NODE(&tm_list[i]->node))
- 			rb_erase(&tm_list[i]->node, &fs_info->tree_mod_log);
+ static void hisi_sas_release_task(struct hisi_hba *hisi_hba,
+@@ -1085,8 +1089,11 @@ static void hisi_sas_release_task(struct hisi_hba *hisi_hba,
+ 	struct hisi_sas_slot *slot, *slot2;
+ 	struct hisi_sas_device *sas_dev = device->lldd_dev;
+ 
++	spin_lock(&sas_dev->lock);
+ 	list_for_each_entry_safe(slot, slot2, &sas_dev->list, entry)
+-		hisi_sas_do_release_task(hisi_hba, slot->task, slot);
++		hisi_sas_do_release_task(hisi_hba, slot->task, slot, false);
++
++	spin_unlock(&sas_dev->lock);
+ }
+ 
+ void hisi_sas_release_tasks(struct hisi_hba *hisi_hba)
+@@ -1620,7 +1627,7 @@ static int hisi_sas_abort_task(struct sas_task *task)
+ 		 */
+ 		if (rc == TMF_RESP_FUNC_COMPLETE && rc2 != TMF_RESP_FUNC_SUCC) {
+ 			if (task->lldd_task)
+-				hisi_sas_do_release_task(hisi_hba, task, slot);
++				hisi_sas_do_release_task(hisi_hba, task, slot, true);
+ 		}
+ 	} else if (task->task_proto & SAS_PROTOCOL_SATA ||
+ 		task->task_proto & SAS_PROTOCOL_STP) {
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
+index 70c24377c6a19..76176b1fc035d 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
+@@ -1310,7 +1310,7 @@ static void slot_complete_v1_hw(struct hisi_hba *hisi_hba,
+ 	}
+ 
+ out:
+-	hisi_sas_slot_task_free(hisi_hba, task, slot);
++	hisi_sas_slot_task_free(hisi_hba, task, slot, true);
+ 
+ 	if (task->task_done)
+ 		task->task_done(task);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index ae39f6b5dc9a8..1470d6bf3052b 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2473,7 +2473,7 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
+ 	}
+ 	task->task_state_flags |= SAS_TASK_STATE_DONE;
+ 	spin_unlock_irqrestore(&task->task_state_lock, flags);
+-	hisi_sas_slot_task_free(hisi_hba, task, slot);
++	hisi_sas_slot_task_free(hisi_hba, task, slot, true);
+ 
+ 	if (!is_internal && (task->task_proto != SAS_PROTOCOL_SMP)) {
+ 		spin_lock_irqsave(&device->done_lock, flags);
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index ccd52fc7d34a2..3db206c743831 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -873,6 +873,7 @@ static void dereg_device_v3_hw(struct hisi_hba *hisi_hba,
+ 
+ 	cfg_abt_set_query_iptt = hisi_sas_read32(hisi_hba,
+ 		CFG_ABT_SET_QUERY_IPTT);
++	spin_lock(&sas_dev->lock);
+ 	list_for_each_entry_safe(slot, slot2, &sas_dev->list, entry) {
+ 		cfg_abt_set_query_iptt &= ~CFG_SET_ABORTED_IPTT_MSK;
+ 		cfg_abt_set_query_iptt |= (1 << CFG_SET_ABORTED_EN_OFF) |
+@@ -880,6 +881,7 @@ static void dereg_device_v3_hw(struct hisi_hba *hisi_hba,
+ 		hisi_sas_write32(hisi_hba, CFG_ABT_SET_QUERY_IPTT,
+ 			cfg_abt_set_query_iptt);
+ 	}
++	spin_unlock(&sas_dev->lock);
+ 	cfg_abt_set_query_iptt &= ~(1 << CFG_SET_ABORTED_EN_OFF);
+ 	hisi_sas_write32(hisi_hba, CFG_ABT_SET_QUERY_IPTT,
+ 		cfg_abt_set_query_iptt);
+@@ -2364,7 +2366,7 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+ 	}
+ 	task->task_state_flags |= SAS_TASK_STATE_DONE;
+ 	spin_unlock_irqrestore(&task->task_state_lock, flags);
+-	hisi_sas_slot_task_free(hisi_hba, task, slot);
++	hisi_sas_slot_task_free(hisi_hba, task, slot, true);
+ 
+ 	if (!is_internal && (task->task_proto != SAS_PROTOCOL_SMP)) {
+ 		spin_lock_irqsave(&device->done_lock, flags);
 -- 
 2.53.0
 
