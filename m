@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E6B3EC69A;
-	Wed, 30 Sep 2026 19:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5343EC6A9;
+	Wed, 30 Sep 2026 19:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795164; cv=none; b=ImwvTSfFjiIP4FC3uDq5MIZMwcVSkPVOhnf+sZXF1aQ4biifZkTYeoRlJoBN7CpGhMJfWti4tT6y9akrRUP+FDkqjmZqWy1uCsm2jbDKz/4LBXuC9C3CUcTykYXUfKPNsBFqImsOcE/EFoDHAi3Sy5RogabuzU4CY1EaOp7HzD8=
+	t=1790795166; cv=none; b=LUxQPWFSAJGgGWd357foayuGlSBsSUPPwYTq6L6gTh4D7cmWhcdIHVOvffyrqvEk4gkz4PZS0r03/vhbt51YDtsFLCeSYBZHTczvK7l4rIu0spHY2Zci2oywUt6fWPeeQWvUsS+6EYctnJ0J8Lc7cQg2EMHJyZYjIUH8gfX75i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795164; c=relaxed/simple;
-	bh=9G3hvBLzRhyH/vCkyRWci6g5sTJMbf/7wISUGj+gsF4=;
+	s=arc-20240116; t=1790795166; c=relaxed/simple;
+	bh=QAHtdWFiNMVzAsc3MnP4c8H1/yXZ/yvd5q6Cv4iwNdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jc4YOAIjXiIWwX88wJETq7Q1ukuTdR+BeWWog754XmpXNUe0+RNSoC1KGRLzcDpbo+z9N7pzycp0nw8dRUm2MTjRLDIYOD1VU/L6PbqOccK1O5BREEFlsoWe7CFe6FzkuHsd1uPc3e7JHq8TtCOrw/D04nmiYunexiISscAzzWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n64h6p1e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tbe73gsyZQ5iTNGo9tTT/BY+dgPjRBYI6A8oUjweM9tNbNne4sNKe1Lz6yTTpgCzA6pGGlEj7eAYgIF5p6/4S5myjPdBMVoGktPE+qqvQAaqvAujcIBWm/4cgbdB8m+Bot0Kxt1UHNJjJoqur1vPDIgXHww4brvMz1oFZUD4WoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbeTgNm5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n64h6p1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677991F000FF;
-	Wed, 30 Sep 2026 19:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbeTgNm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A1E1F000FF;
+	Wed, 30 Sep 2026 19:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795162;
-	bh=hqUSVosXXWmMMYoPNLZApf3hr+u46F3FluvGor2hiVw=;
+	s=korg; t=1790795165;
+	bh=zUNb+K/6/JfAzvmq4FoKyjOYQTWXuBx3j2EeDPn/Hkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n64h6p1ezE5qaKjKZEURQoJP7Sc979ktkg6fgfrFIshKccIHQCfmFHpHrFi6bHig/
-	 +k3JFntzj9jTKYWbuYsc+jaRsOy1OXFWMDpJp5a9LDnO0772rndSirVdMpVrHz5FPX
-	 hhfBlEyPKG/VLHraPQN3KoqlfRA+aqrbT57tKM2E=
+	b=NbeTgNm5k34HgIkaDaurMuvZYGFGRkzvB1kC7m0zc5jnfmEiRh22RlOJPBjHPMS03
+	 RA9v/5jsS/Cv+dNH64JgPtr2/V8zZR4es/NOhmbopfhgk2n73kSlFoXzuHDEhElIqL
+	 akC7PAHYVoQNrXb4Rhw25Yj993CFkI1+HthkdelE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Julian Anastasov <ja@ssi.bg>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0463/1193] ipvs: fix reversed sequence option serialization
-Date: Wed, 30 Sep 2026 17:19:07 +0200
-Message-ID: <20260930152444.459527831@linuxfoundation.org>
+Subject: [PATCH 6.6 0464/1193] netfilter: nf_conntrack_sip: fix OOB read in sip_skip_whitespace()
+Date: Wed, 30 Sep 2026 17:19:08 +0200
+Message-ID: <20260930152444.481141343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,46 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit b04578b74f2d3755548fe9e829e3b2a6c6f966a1 ]
+[ Upstream commit e8f8231824b5815f57ce62cba116e511b10196de ]
 
-hton_seq() expects the host-order source first and the unaligned
-network-order destination second. The version 1 sync sender passes these
-arguments in reverse for both sequence blocks. This leaves 24 bytes of the
-kmalloc-backed message unwritten. It may disclose stale heap data and
-replace the live connection sequence state with values read from the
-buffer.
+sip_skip_whitespace() returns dptr unchanged when its own loop
+exhausts the buffer (dptr == limit), instead of NULL like its sibling
+sip_follow_continuation() returns on its own "no more data" path.
 
-Pass the connection sequence state as the source and the message payload as
-the destination for both blocks.
+ct_sip_get_header() only checks for NULL after calling it:
 
-Fixes: 986a07579533 ("IPVS: Backup, Change sending to Version 1 format")
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+  dptr = sip_skip_whitespace(dptr, limit);
+  if (dptr == NULL)
+          break;
+  if (*dptr != ':' || ++dptr >= limit)
+          break;
+
+so a recognized header name followed only by spaces/tabs running to
+the exact end of the SIP payload, with no colon, makes the very next
+statement read one byte past the buffer.
+
+Make both "no more data" outcomes return NULL, matching the
+convention sip_follow_continuation() already uses and that both
+existing callers already check for.
+
+Fixes: ea45f12a2766d ("[NETFILTER]: nf_conntrack_sip: parse SIP headers properly")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_sip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index 515346bf915ae..50d98f191b0c9 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -748,9 +748,9 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
- 		*(p++) = IPVS_OPT_SEQ_DATA;
- 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
--		hton_seq((struct ip_vs_seq *)p, &cp->in_seq);
-+		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
- 		p += sizeof(struct ip_vs_seq);
--		hton_seq((struct ip_vs_seq *)p, &cp->out_seq);
-+		hton_seq(&cp->out_seq, (struct ip_vs_seq *)p);
- 		p += sizeof(struct ip_vs_seq);
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 4f975b83c84f6..2b5f807436e2c 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -429,7 +429,7 @@ static const char *sip_skip_whitespace(const char *dptr, const char *limit)
+ 		dptr = sip_follow_continuation(dptr, limit);
+ 		break;
  	}
- 	/* Handle pe data */
+-	return dptr;
++	return dptr < limit ? dptr : NULL;
+ }
+ 
+ /* Search within a SIP header value, dealing with continuation lines */
 -- 
 2.53.0
 
