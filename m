@@ -1,92 +1,291 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5534E4CDDE6;
-	Wed, 30 Sep 2026 12:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245C64EB879;
+	Wed, 30 Sep 2026 15:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790769812; cv=none; b=VYtKELaXPnMexSGggMCclOTobwDHA2BWlpHpwaHCGN12Bpq02xEjoHDEGWyFdjH6YbnTdcRqF3ScpGJ2Amfi3eXdgSzohiZ5NDSbvG01KBScI4ukU+QpxTGKO4gJQGdMS4/I74w/LJ/W4QIo2n/nzzTZW4+l9wsRTMZCvtRdK3o=
+	t=1790782339; cv=none; b=r+XwR60pIkSVRClhM/09bm545/Th8ZQ5Razf0pMag/EWNLcQlhbcQ0St2aP8xLB02Dbnv04KRnvH1AyPcxu1+Iap8ruzJxsVp9SnOyZxdOkpt4jboyy8i7pFJBbZP8gjbFTXv9sl2mDYTKL6JZaJIC+xrvSLl4iNVmwbn1f4AZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790769812; c=relaxed/simple;
-	bh=6lbuV7NQgZFjl1ILQWUN4EDNHopI2RUwMC9WbbikSqE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lDDmLpypQnZ1P3I88hOmIQAgdMbEyafKslALZAv1djYoN0xjKm/lSWW3ugYDDQZ5Zw86G4+5ZGmXMSxuzOKbC34rtqybJmP0+xwDMViVYdBc3fChYObBiZcGVqluvmvrF2y6Z28N2WgEwnh95npQrsNQvWkZzep+Hyn2jvZf7cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph9oPahs; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790782339; c=relaxed/simple;
+	bh=pgMR7FNrOrhbR/34fR5KpN+DL0AmA3bfq8iMlkg19ZA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=M9HlvUYagJcKLhzvRccCAjfZZ07G4qTYW+y6LxKfuMQjPqa/V33+A69TeZzwZsMyugE+SCNKgpWryScR+4oUjwHA4L/qVeA/vR/IIroq+00k88cZc3gO8xB55ddEyPiDRKjJgxtTHM3Q8H51uS24GHDt1Ha2zFu4COfxtCxrrNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV3lUm/Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph9oPahs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634501F000FF;
-	Wed, 30 Sep 2026 12:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV3lUm/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AF01F000FF;
+	Wed, 30 Sep 2026 15:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790769810;
-	bh=BhAyzd9uTMpVYzVpHh6/1OjAKRboCVsQXnv3jAa2oYE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ph9oPahs4mfWZLa5gj+KoJ5Jo1gusei4vZ7+UW9pV5zt0CSy4LGiINv/z/EG2Sp6x
-	 J1TSqjebbNW/6v5i1+fkBFROUUrZGq8pvhRHaCmtAQO4HrgwZ4sud8K1KmEcVPHN0m
-	 7o+0gQFwEN4xVPByd5bEY+1sucP3iI9a4X790hdk=
-Date: Wed, 30 Sep 2026 14:03:24 +0200
+	s=korg; t=1790782328;
+	bh=Ccjxr8nzCrTJH5jPlTtHNHl7weWbGlWvn5/3gbxzh2A=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=PV3lUm/Zd4GHpA6mAP8gjlV2W9x4QJhc65PF5STxX0C5QcdYrIozx28el4oyPpa39
+	 Bc3yf0ZT4h5Z8E5WFUX24rGDFq0U5A+2CWwZyLdwKGusZpx+QOLgmMC91o60rrEYtJ
+	 nsCpQ08TmH3mgg5cjLwfsyc50GWXTnBVQL4dFbwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel Salmun <salmundani@gmail.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	=?iso-8859-1?Q?Rapha=EBl?= Larocque <rlarocque@disroot.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH 6.18 303/398] Input: synaptics - disable InterTouch on
- ThinkPad T440p (board id 2722)
-Message-ID: <2026093008-ricotta-dealer-ad24@gregkh>
-References: <20260923140643.441954610@linuxfoundation.org>
- <20260923140651.274430576@linuxfoundation.org>
- <5ed0ee13-9502-42f1-94b7-a99607ca2bea@gmail.com>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/595] batman-adv: dat: atomically update mac addresses
+Date: Wed, 30 Sep 2026 17:18:14 +0200
+Message-ID: <20260930152347.739510634@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
+References: <20260930152347.700140858@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5ed0ee13-9502-42f1-94b7-a99607ca2bea@gmail.com>
 
-On Sat, Sep 26, 2026 at 08:19:55PM -0300, Daniel Salmun wrote:
-> On 9/23/26 11:06, Greg Kroah-Hartman wrote:
-> > 6.18-stable review patch.  If anyone has any objections, please let
-> > me know.
-> > 
-> > ------------------
-> > 
-> > From: Raphaël Larocque <rlarocque@disroot.org>
-> > 
-> > commit 26eb3d92c7a4d7adb1ae1740ca6e8e100b11d1ec upstream.
-> > 
-> > The Lenovo ThinkPad T440p (PNP ID LEN0036, board id 2722) has a
-> > Synaptics touchpad whose SMBus companion is not ready at boot and
-> > takes roughly 200 seconds to appear.
-> [...]
-> > Disable SMBus InterTouch for board id 2722 so the touchpad and
-> > TrackPoint work immediately via PS/2 from boot.
-> 
-> I have a concern about this one. Board id 2722 isn't specific to the
-> T440p. My ThinkPad L440 has the same Synaptics board id, and this patch
-> would move it from SMBus/RMI4 to PS/2. I have never hit the issue this
-> commit fixes, and I haven't seen it reported on other potentially
-> affected models either.
-> 
-> I sent a patch [1] that limits the quirk to the T440p. Previous
-> attempts to move these touchpads to PS/2 were rejected [2], as
-> explained in that patch's commit message.
-> 
-> Could this be dropped from the stable queue until it's sorted out
-> upstream?
-> 
-> [1] https://lore.kernel.org/all/20260925230039.236786-1-
-> salmundani@gmail.com/
-> [2] https://lore.kernel.org/linux-
-> input/65C23A49-5A55-4CF4-9AFD-2DA504DAABF5@duggan.us/
-> 
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Let's just queue up whatever gets commited in Linus's tree to resolve
-this.
+------------------
 
-thanks,
+From: Sven Eckelmann <sven@narfation.org>
 
-greg k-h
+commit e6de568d3eda3e3c01c868fabd7a9535d5ee4a73 upstream.
+
+When a MAC address is updated in batadv_dat_entry_add(), it is done using a
+simple copy function. A parallel reader might only see parts of this
+update. In worst case, the reader is transporting the half updated MAC
+address over the network or is creating an ARP response using it -
+poisoning the ARP cache.
+
+atomic64_t can be used to store the 48 bit of a mac address. A reader will
+then either see the old mac address or the new one - never a mixture of
+both.
+
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+[ Context, integrate support for dat_cache debugfs file ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/batman-adv/distributed-arp-table.c | 65 ++++++++++++++++++--------
+ net/batman-adv/types.h                 |  2 +-
+ 2 files changed, 46 insertions(+), 21 deletions(-)
+
+diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+index 4277fd832f4d0..6ff856a803dd1 100644
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -377,18 +377,19 @@ batadv_dat_entry_hash_find(struct batadv_priv *bat_priv, __be32 ip,
+ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 				 u8 *mac_addr, unsigned short vid)
+ {
++	u64 u64_mac = ether_addr_to_u64(mac_addr);
+ 	struct batadv_dat_entry *dat_entry;
+ 	int hash_added;
+ 
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip, vid);
+ 	/* if this entry is already known, just update it */
+ 	if (dat_entry) {
+-		if (!batadv_compare_eth(dat_entry->mac_addr, mac_addr))
+-			ether_addr_copy(dat_entry->mac_addr, mac_addr);
++		atomic64_set(&dat_entry->mac_addr, u64_mac);
++
+ 		dat_entry->last_update = jiffies;
+ 		batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 			   "Entry updated: %pI4 %pM (vid: %d)\n",
+-			   &dat_entry->ip, dat_entry->mac_addr,
++			   &dat_entry->ip, mac_addr,
+ 			   batadv_print_vid(vid));
+ 		goto out;
+ 	}
+@@ -399,7 +400,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 
+ 	dat_entry->ip = ip;
+ 	dat_entry->vid = vid;
+-	ether_addr_copy(dat_entry->mac_addr, mac_addr);
++	atomic64_set(&dat_entry->mac_addr, u64_mac);
+ 	dat_entry->last_update = jiffies;
+ 	kref_init(&dat_entry->refcount);
+ 
+@@ -415,7 +416,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 	}
+ 
+ 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "New entry added: %pI4 %pM (vid: %d)\n",
+-		   &dat_entry->ip, dat_entry->mac_addr, batadv_print_vid(vid));
++		   &dat_entry->ip, mac_addr, batadv_print_vid(vid));
+ 
+ out:
+ 	if (dat_entry)
+@@ -876,6 +877,8 @@ int batadv_dat_cache_seq_print_text(struct seq_file *seq, void *offset)
+ 	struct hlist_head *head;
+ 	unsigned long last_seen_jiffies;
+ 	int last_seen_msecs, last_seen_secs, last_seen_mins;
++	u8 mac[ETH_ALEN] __aligned(2);
++	u64 u64_mac;
+ 	u32 i;
+ 
+ 	primary_if = batadv_seq_print_text_primary_if_get(seq);
+@@ -897,8 +900,11 @@ int batadv_dat_cache_seq_print_text(struct seq_file *seq, void *offset)
+ 			last_seen_msecs = last_seen_msecs % 60000;
+ 			last_seen_secs = last_seen_msecs / 1000;
+ 
++			u64_mac = atomic64_read(&dat_entry->mac_addr);
++			u64_to_ether_addr(u64_mac, mac);
++
+ 			seq_printf(seq, " * %15pI4 %pM %4i %6i:%02i\n",
+-				   &dat_entry->ip, dat_entry->mac_addr,
++				   &dat_entry->ip, mac,
+ 				   batadv_print_vid(dat_entry->vid),
+ 				   last_seen_mins, last_seen_secs);
+ 		}
+@@ -927,6 +933,8 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 			    struct netlink_callback *cb,
+ 			    struct batadv_dat_entry *dat_entry)
+ {
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int msecs;
+ 	void *hdr;
+ 
+@@ -939,11 +947,12 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 	genl_dump_check_consistent(cb, hdr);
+ 
+ 	msecs = jiffies_to_msecs(jiffies - dat_entry->last_update);
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
+ 
+ 	if (nla_put_in_addr(msg, BATADV_ATTR_DAT_CACHE_IP4ADDRESS,
+ 			    dat_entry->ip) ||
+-	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN,
+-		    dat_entry->mac_addr) ||
++	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN, mac) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_DAT_CACHE_VID, dat_entry->vid) ||
+ 	    nla_put_u32(msg, BATADV_ATTR_LAST_SEEN_MSECS, msecs)) {
+ 		genlmsg_cancel(msg, hdr);
+@@ -1220,6 +1229,8 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 	struct net_device *soft_iface = bat_priv->soft_iface;
+ 	int hdr_size = 0;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1247,6 +1258,9 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_dst, vid);
+ 	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
+ 		/* If the ARP request is destined for a local client the local
+ 		 * client will answer itself. DAT would only generate a
+ 		 * duplicate packet.
+@@ -1255,7 +1269,7 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * additional DAT answer may trigger kernel warnings about
+ 		 * a packet coming from the wrong port.
+ 		 */
+-		if (batadv_is_my_client(bat_priv, dat_entry->mac_addr, vid)) {
++		if (batadv_is_my_client(bat_priv, mac, vid)) {
+ 			ret = true;
+ 			goto out;
+ 		}
+@@ -1265,18 +1279,16 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * the backbone gws belonging to our backbone has claimed the
+ 		 * destination.
+ 		 */
+-		if (!batadv_bla_check_claim(bat_priv,
+-					    dat_entry->mac_addr, vid)) {
++		if (!batadv_bla_check_claim(bat_priv, mac, vid)) {
+ 			batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 				   "Device %pM claimed by another backbone gw. Don't send ARP reply!",
+-				   dat_entry->mac_addr);
++				   mac);
+ 			ret = true;
+ 			goto out;
+ 		}
+ 
+ 		skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-						      dat_entry->mac_addr,
+-						      hw_src, vid);
++						      mac, hw_src, vid);
+ 		if (!skb_new)
+ 			goto out;
+ 
+@@ -1319,6 +1331,8 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	struct batadv_dat_entry *dat_entry = NULL;
+ 	bool ret = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int err;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+@@ -1346,8 +1360,11 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	if (!dat_entry)
+ 		goto out;
+ 
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
++
+ 	skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-					      dat_entry->mac_addr, hw_src, vid);
++					      mac, hw_src, vid);
+ 	if (!skb_new)
+ 		goto out;
+ 
+@@ -1439,6 +1456,8 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	u8 *hw_src, *hw_dst;
+ 	bool dropped = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!atomic_read(&bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1467,11 +1486,17 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	 * this frame would lead to doubled receive of an ARP reply.
+ 	 */
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_src, vid);
+-	if (dat_entry && batadv_compare_eth(hw_src, dat_entry->mac_addr)) {
+-		batadv_dbg(BATADV_DBG_DAT, bat_priv, "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
+-			   hw_src, &ip_src, hw_dst, &ip_dst,
+-			   dat_entry->mac_addr,	&dat_entry->ip);
+-		dropped = true;
++	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
++		if (batadv_compare_eth(hw_src, mac)) {
++			batadv_dbg(BATADV_DBG_DAT, bat_priv,
++				   "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
++				   hw_src, &ip_src, hw_dst, &ip_dst,
++				   mac, &dat_entry->ip);
++			dropped = true;
++		}
+ 	}
+ 
+ 	/* Update our internal cache with both the IP addresses the node got
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index 790f62abfe030..49cef1a85639a 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -2387,7 +2387,7 @@ struct batadv_dat_entry {
+ 	__be32 ip;
+ 
+ 	/** @mac_addr: the MAC address associated to the stored IPv4 */
+-	u8 mac_addr[ETH_ALEN];
++	atomic64_t mac_addr;
+ 
+ 	/** @vid: the vlan ID associated to this entry */
+ 	unsigned short vid;
+-- 
+2.53.0
+
+
+
