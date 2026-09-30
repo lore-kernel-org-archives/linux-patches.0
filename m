@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB14946EF8D;
-	Wed, 30 Sep 2026 18:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907073AD539;
+	Wed, 30 Sep 2026 18:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793484; cv=none; b=HO0TDoIRDoEsGzK/7cDvRsMs+Ci6S3XPvfNrFVQ57nB/U0HBwucyEoykEjKjZFBxQwzjTPAfG7MiwPEkCj1jGBkCHR4ujMEkKqYa5NP98bez7w1Ml/msofzFj5z3KyoHyNv29lBHebrj47VTwKDTrtsJJPTPqIlLPX+546J0xDw=
+	t=1790793487; cv=none; b=rTgqdOMRMg/ERaMHZ8n9xfjJeJjhLIMjj9SQGUwebnLR5yvBq4t8WQNeAsbKZncQtmRfcFo1YxJ5SWM00WJ/d9ITPOn1yT/NuWC3P7NH+TspmWcT2u4nAlam4Gtb5ySyW6a7LHQV1gq/avDjzJ6IU7x4ECam+5FVzV8f9olBPLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793484; c=relaxed/simple;
-	bh=cuHu+XA5SAOYU5zd8oN0NafXmdCVbXBBImk+4YfQYHU=;
+	s=arc-20240116; t=1790793487; c=relaxed/simple;
+	bh=R/JuKjBM4JtDAvP5X6lSaWJrNtuV1FmjX7c48RL725o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXFbyZRjO+AIugLFoofiIIp0K8WAIhdb3kzBYQrxOlAksR2WZxaJ9Xxt7rCgEipd1ByAUOwtaayA0U4cSMpU8SXfr5bCCSzj3iZPg6zX18IzFHY+qtZCrydcXY+3F+V8f+RHfnyvhz4sowmaRHL7hhzTVSyqjPmeuvbZrQeC6Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4YT/+YZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tpRJHcCHvHrr/RvfIU3bMZA1cSKb/qcVWo1UWsoX9/aG3ZcXQE9hqFnPMcWMnYxvXXBVPU8K90fKLnTpFtodPZS/OhsvqF5J6dbxzaJF5ubc4JgPCTv1R4nCU+Dq2gGGW8j76Xud+3kNyWn9/6uiapSUiY0GpXcN0b4ueSTVT+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9Wx2MZV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4YT/+YZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178D31F000FF;
-	Wed, 30 Sep 2026 18:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9Wx2MZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FBD1F000FF;
+	Wed, 30 Sep 2026 18:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793483;
-	bh=rokcyKvLDbkO8FOIArGHXOe4w38D6sUxPM5QT4IW+HE=;
+	s=korg; t=1790793486;
+	bh=aNkTDCAu+EdlUZuXWU4TMjRlZXfo7297/60dNRM15kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4YT/+YZWD/wFsd9NBeSaUxIa1Fl7e7Yp52lmb175qOC1whfKWEUHMIUNUoYlWnrj
-	 s6D0bCDr9psLVn8rkMPkfIgSg13u8gvTIPes2Um02ty7oiyoMp0qGthvePK1pwfnDm
-	 USPKKsBEr0Kn+hGMPHCGQO/xEsuDWeuwr6fRaKhU=
+	b=n9Wx2MZVngOUJxIX95kd44FkwYWqoumOO3pQf00IMFfb1LpRBnITqC8wI1sB8NlkN
+	 0Jq2YfbGn4LNSqoVg8/gEOVVvbFgKd3NUb/epHS6DIzlFd0kOYQy62a+BsjbaMlV6G
+	 D7UzBIuOQgGm8SOLYFD24QBY81+ZM5qTaiCjUuGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fan Wu <wufan@kernel.org>
-Subject: [PATCH 6.18 226/395] ipe: fix use-after-free when auditing a newly loaded policy
-Date: Wed, 30 Sep 2026 17:28:08 +0200
-Message-ID: <20260930152345.565462197@linuxfoundation.org>
+Subject: [PATCH 6.18 227/395] ipe: protect the dm-verity root hash with RCU
+Date: Wed, 30 Sep 2026 17:28:09 +0200
+Message-ID: <20260930152345.586469960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,60 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <wufan@kernel.org>
 
-commit 9814077275eca36ebf8d510d2f076d235ff9f51a upstream.
+commit 2776e9c28513a1c855a94792b292cbcc533418c8 upstream.
 
-new_policy() audits the policy after ipe_new_policyfs_node() publishes it
-and drops the new directory's inode lock. A concurrent delete can free
-the policy while ipe_audit_policy_load() is still using it.
+ipe_bdev_setintegrity() frees the old root hash when dm-verity publishes
+a new one on ->preresume, while policy evaluation can still be
+dereferencing it.
 
-Audit the successful load under that lock.
+Protect the root hash with RCU. The evaluation path already runs under
+rcu_read_lock().
 
-Fixes: f44554b5067b ("audit,ipe: add IPE auditing support")
+Fixes: e155858dd995 ("ipe: add support for dm-verity as a trust provider")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 [FW: remove model name according to latest guideline]
 Signed-off-by: Fan Wu <wufan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/ipe/fs.c        |    8 +++-----
- security/ipe/policy_fs.c |    3 +++
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ security/ipe/eval.c  |   12 ++++++++----
+ security/ipe/eval.h  |    2 +-
+ security/ipe/hooks.c |   22 +++++++++++++++++-----
+ 3 files changed, 26 insertions(+), 10 deletions(-)
 
---- a/security/ipe/fs.c
-+++ b/security/ipe/fs.c
-@@ -159,18 +159,16 @@ static ssize_t new_policy(struct file *f
- 	}
- 
- 	rc = ipe_new_policyfs_node(p);
--	if (rc)
--		goto out;
- 
- out:
- 	kfree(copy);
- 	if (rc < 0) {
- 		ipe_free_policy(p);
- 		ipe_audit_policy_load(ERR_PTR(rc));
--	} else {
--		ipe_audit_policy_load(p);
-+		return rc;
- 	}
--	return (rc < 0) ? rc : len;
+--- a/security/ipe/eval.c
++++ b/security/ipe/eval.c
+@@ -134,10 +134,14 @@ static bool evaluate_boot_verified(const
+ static bool evaluate_dmv_roothash(const struct ipe_eval_ctx *const ctx,
+ 				  struct ipe_prop *p)
+ {
+-	return !!ctx->ipe_bdev &&
+-	       !!ctx->ipe_bdev->root_hash &&
+-	       ipe_digest_eval(p->value,
+-			       ctx->ipe_bdev->root_hash);
++	const struct digest_info *root_hash;
 +
-+	return len;
++	if (!ctx->ipe_bdev)
++		return false;
++
++	root_hash = rcu_dereference(ctx->ipe_bdev->root_hash);
++
++	return root_hash && ipe_digest_eval(p->value, root_hash);
+ }
+ #else
+ static bool evaluate_dmv_roothash(const struct ipe_eval_ctx *const ctx,
+--- a/security/ipe/eval.h
++++ b/security/ipe/eval.h
+@@ -27,7 +27,7 @@ struct ipe_bdev {
+ #ifdef CONFIG_IPE_PROP_DM_VERITY_SIGNATURE
+ 	bool dm_verity_signed;
+ #endif /* CONFIG_IPE_PROP_DM_VERITY_SIGNATURE */
+-	struct digest_info *root_hash;
++	struct digest_info __rcu *root_hash;
+ };
+ #endif /* CONFIG_IPE_PROP_DM_VERITY */
+ 
+--- a/security/ipe/hooks.c
++++ b/security/ipe/hooks.c
+@@ -9,6 +9,7 @@
+ #include <linux/binfmts.h>
+ #include <linux/mman.h>
+ #include <linux/blk_types.h>
++#include <linux/rcupdate.h>
+ 
+ #include "ipe.h"
+ #include "hooks.h"
+@@ -204,7 +205,20 @@ void ipe_bdev_free_security(struct block
+ {
+ 	struct ipe_bdev *blob = ipe_bdev(bdev);
+ 
+-	ipe_digest_free(blob->root_hash);
++	ipe_digest_free(rcu_access_pointer(blob->root_hash));
++}
++
++static void ipe_set_dmverity_roothash(struct ipe_bdev *blob,
++				      struct digest_info *info)
++{
++	struct digest_info *old;
++
++	/* Protected by device-mapper's md->suspend_lock */
++	old = rcu_replace_pointer(blob->root_hash, info, true);
++	if (old) {
++		synchronize_rcu();
++		ipe_digest_free(old);
++	}
  }
  
- static const struct file_operations np_fops = {
---- a/security/ipe/policy_fs.c
-+++ b/security/ipe/policy_fs.c
-@@ -481,6 +481,9 @@ int ipe_new_policyfs_node(struct ipe_pol
- 	inode_lock(root);
- 	p->policyfs = policyfs;
- 	root->i_private = p;
-+	/* Only audit signed policies from userspace */
-+	if (p->pkcs7)
-+		ipe_audit_policy_load(p);
- 	inode_unlock(root);
+ #ifdef CONFIG_IPE_PROP_DM_VERITY_SIGNATURE
+@@ -252,8 +266,7 @@ int ipe_bdev_setintegrity(struct block_d
+ 		return -EINVAL;
+ 
+ 	if (!value) {
+-		ipe_digest_free(blob->root_hash);
+-		blob->root_hash = NULL;
++		ipe_set_dmverity_roothash(blob, NULL);
+ 
+ 		return 0;
+ 	}
+@@ -273,8 +286,7 @@ int ipe_bdev_setintegrity(struct block_d
+ 
+ 	info->digest_len = digest->digest_len;
+ 
+-	ipe_digest_free(blob->root_hash);
+-	blob->root_hash = info;
++	ipe_set_dmverity_roothash(blob, info);
  
  	return 0;
+ err:
 
 
