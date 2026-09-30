@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C9E5616CC;
-	Wed, 30 Sep 2026 17:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9335616AC;
+	Wed, 30 Sep 2026 17:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790413; cv=none; b=s+NLDPo8hVybJAYt5ClURPpXSr091qaOtXgNlE9bvTAdqEnhZMxreCCIaYGLwRky3++FrsqYlGW3wp58KAg1VUVnBoSIDP0rhIVMwMJ3pIs55mvsl7HFUqwc9DXEPNRPQ69gOP97/dpaFyGFVMhqxiZhc38qmJA7C/0tUc3QQIY=
+	t=1790790417; cv=none; b=Dt6RYQ/YuH9HNi9pcZTfFd+Kg4jd4dcwbGHkX7i/jF9uFUWQ6l2ocP2L+0MfcmPYxLuqkGt4dy+aYjTVzS6/z/K26DANsiGMb9kd4RczBal7oQHk8zVehelYiiyMMiQKKKDnYo/V4PSwkhbxwEUIihxnO2qRaZ49g6MfOc5Rs2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790413; c=relaxed/simple;
-	bh=Pji2rvV6uTqjYOyBiOLtOdmb9+hoJSRXfWDp9+Eec30=;
+	s=arc-20240116; t=1790790417; c=relaxed/simple;
+	bh=3AFklLwYwuMGctkRPMW3PUse8U1N6qdKb1fJKZ3fTVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B34lFWW30ER0gp7Pm9gXog+8DSibD4L5/Zys8mQneiCN3bZvhogw9h8KgDxR53r6saUWruiUpyCHe+UfxG3gX88Xx8Dkrfxa2njv6Hz9cb4N5d3HkF1tmPyp+W50rQTqkDE9k42ZxHYQkBMFOBiT0rbfvT0edYw/BPcfEcjQBhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvA/tnhN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P0wgLlTKGJ+f3RBh4QBFxF8Qc7o8AVc5qvGtZ6Hn3NCCxd/0Ll+qjvKupO5RMEOQtNvkrc2ILZohmLpRSn0ZSLAOBgUkyW/hLmUtl85VOyKzpyq3/NmkzYJaDIb7ow8c2xw3ix6d0SOzATbkE6XsRe2Sls1WCrVJ4b6xYzj0y+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8N/9wmA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvA/tnhN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827BA1F000FF;
-	Wed, 30 Sep 2026 17:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8N/9wmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF6C1F00898;
+	Wed, 30 Sep 2026 17:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790412;
-	bh=RrJIrtNUKHR1qUbedMIED+Nt6tgHYwOa4F9dL6ccQpU=;
+	s=korg; t=1790790414;
+	bh=vRMu3mZotXpFGuNv/qJON8ZZjBt0+qb/5Td1kpHnHPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvA/tnhNVCU/uRbkjWGBjZU9A7wj+RVkzfTpd+KPCL9i/9l9A+cS2EzQNZYuL2vOM
-	 Q4LdxMUOlZvN71uqMzhYC8MemervFnEt9zFWh+tBc8OWe0sNL0K56bjHmCzwwsduU9
-	 jp9OappEot6X85dY9dlu8mGi/SasMDBzs80wr60I=
+	b=J8N/9wmAGfwBMun/rKLwd48b3VXbVdHFekXdqqaBjQY2qPmA0G4bZ2Ci8Cmf/qH+2
+	 r99Ayg7cJldLgnvyspkdhJmd1ZbUrgVhk20ok6u/hK9kBXyYE4f1/wZ6N44kHgXx3Q
+	 tlW4z/8OWwNTwKBzK9ucirdl8BMmgte0YF5FWdW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <wufan@kernel.org>,
+	Michael Mulqueen <mike@method-b.uk>,
+	David Howells <dhowells@redhat.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 819/877] ipe: fix use-after-free when auditing a newly loaded policy
-Date: Wed, 30 Sep 2026 17:28:50 +0200
-Message-ID: <20260930152432.401559026@linuxfoundation.org>
+Subject: [PATCH 6.12 784/877] 9p: Fix v9fs_issue_write() to update i_size and remote_i_size
+Date: Wed, 30 Sep 2026 17:28:15 +0200
+Message-ID: <20260930152431.632832608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,61 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <wufan@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 9814077275eca36ebf8d510d2f076d235ff9f51a ]
+[ Upstream commit c60ae98c5aa64021751b38ab1313b19d620bf640 ]
 
-new_policy() audits the policy after ipe_new_policyfs_node() publishes it
-and drops the new directory's inode lock. A concurrent delete can free
-the policy while ipe_audit_policy_load() is still using it.
+Fix v9fs_issue_write() to update i_size and remote_i_size to the new size
+of the server file if we made it larger, using the start fpos and the count
+returned by p9_client_write() to calculate the new minimum file size.
 
-Audit the successful load under that lock.
+This assumes that if the 9P server makes a short write (say it hits
+ENOSPC), a reduced count is returned.
 
-Fixes: f44554b5067b ("audit,ipe: add IPE auditing support")
+Fixes: 5fb70e7275a6 ("netfs, 9p: Implement helpers for new write code")
+Reported-by: Michael Mulqueen <mike@method-b.uk>
+Closes: https://lore.kernel.org/r/fbb9e395-1e07-4212-8f70-23f3cd498074@method-b.uk/
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-[FW: remove model name according to latest guideline]
-Signed-off-by: Fan Wu <wufan@kernel.org>
-[ adapted new_policy() changes to the older success-only auditing implementation. ]
+Signed-off-by: David Howells <dhowells@redhat.com>
+Message-ID: <2226525.1789118704@warthog.procyon.org.uk>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+[ replaced unavailable netfs_write_sizes() with i_size_write() and direct remote_i_size updates under inode->i_lock. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/ipe/fs.c        |    4 ----
- security/ipe/policy_fs.c |    4 ++++
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/9p/vfs_addr.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/security/ipe/fs.c
-+++ b/security/ipe/fs.c
-@@ -155,10 +155,6 @@ static ssize_t new_policy(struct file *f
- 	}
+--- a/fs/9p/vfs_addr.c
++++ b/fs/9p/vfs_addr.c
+@@ -54,9 +54,21 @@ static void v9fs_begin_writeback(struct
+ static void v9fs_issue_write(struct netfs_io_subrequest *subreq)
+ {
+ 	struct p9_fid *fid = subreq->rreq->netfs_priv;
++	struct inode *inode = subreq->rreq->inode;
++	struct netfs_inode *ictx = netfs_inode(inode);
+ 	int err, len;
  
- 	rc = ipe_new_policyfs_node(p);
--	if (rc)
--		goto out;
--
--	ipe_audit_policy_load(p);
+ 	len = p9_client_write(fid, subreq->start, &subreq->io_iter, &err);
++	if (len > 0) {
++		unsigned long long end = subreq->start + len;
++
++		spin_lock(&inode->i_lock);
++		if (end > i_size_read(inode))
++			i_size_write(inode, end);
++		if (end > ictx->remote_i_size)
++			ictx->remote_i_size = end;
++		spin_unlock(&inode->i_lock);
++	}
+ 	netfs_write_subrequest_terminated(subreq, len ?: err, false);
+ }
  
- out:
- 	if (rc < 0)
---- a/security/ipe/policy_fs.c
-+++ b/security/ipe/policy_fs.c
-@@ -12,6 +12,7 @@
- #include "policy.h"
- #include "eval.h"
- #include "fs.h"
-+#include "audit.h"
- 
- #define MAX_VERSION_SIZE ARRAY_SIZE("65535.65535.65535")
- 
-@@ -463,6 +464,9 @@ int ipe_new_policyfs_node(struct ipe_pol
- 	inode_lock(root);
- 	p->policyfs = policyfs;
- 	root->i_private = p;
-+	/* Only audit signed policies from userspace */
-+	if (p->pkcs7)
-+		ipe_audit_policy_load(p);
- 	inode_unlock(root);
- 
- 	return 0;
 
 
