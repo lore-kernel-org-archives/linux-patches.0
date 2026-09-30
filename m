@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6B934CFDE;
-	Wed, 30 Sep 2026 19:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673883C197C;
+	Wed, 30 Sep 2026 19:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794883; cv=none; b=UyMg55DZ7ifkspLcDlM0v9L2vvoAkMJx6S4gQlmaTwHmNxoj4lSmfBml4UCgyyVz28PHUmBiaces8NQxCAwoUkBK/Um9ygtp6ENY9ia0c9M7cWKNPCG7QjBhO6qJbbhYbJeZNYkspiFuATuVhiXmG3nlNEM1JheixT7BqOyujIY=
+	t=1790794883; cv=none; b=e+/mmUsYGgaBmqHQUZ1xUwa52LCmjRhqvnD1b2bxdKbS6shRAC5rLOaPnpzC8kS1SwjhkTS61QeA/dOOqctRFpq+rElTJmXuQ06gACcusNKRB1gVeHYmKAqLrQOZ64tSmhJZ9J7u/bYpHcXgB6p9JHxngMJTrTtkKwGiU7lsREQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790794883; c=relaxed/simple;
-	bh=lGW3UbL12eElusQewO8Nq0nrAUxMfLHQA3MyGCk9qxY=;
+	bh=3jjToTCXMeH1z/iJCzpS7cjRIIQM+x2TXy/bX7FjYxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EjnkqzX3WeIU/ou7ZEwicsBf7RKTFtzoXBNJjSYTlTlVL9UNigeVuwnM6d2rh+OXAjpMkyOE05RKnKs/rtNCIiyD0dC2EnQlj49P48nwwRvqYlY0R8YnH+jJQQM8yIlyOGQnQjUm3vFEoJSVmToStYYx3YoJ74+t7oyOxBJpA4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIZ7d7TT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OgkA1+fZaZ+NKkxPFOB5xX+so2wfxEsfbyTafEAuDv7vVWcxgb3Gp92PQuEA3M4r3oqK9FD/UdEOFNVvVxvs1qaj3TqUo7DFp+qow3TsrtgCXQqzOj7qA+U0/coqsLrfWLFAtLknYAgPYClUdLDfjoIM4y/hAlP3/D1WnfE1XN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUFITigl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIZ7d7TT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67EC1F0089D;
-	Wed, 30 Sep 2026 19:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUFITigl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DE31F008A2;
+	Wed, 30 Sep 2026 19:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794864;
-	bh=sOfuuIMI4Pys914rdv9NSDuUKwMZKedRTd6po4O2lkM=;
+	s=korg; t=1790794870;
+	bh=lUze5njO7FDX1TfSFhfOhsyfGWpp4CAyMtmpU4xYKug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIZ7d7TTQIshdu7mgq60ENGAdTxhcAm/mvYfgAD6wQsx/9w03UcDZqRD1NxpahY+p
-	 Ro84PyJ21tBvJx5uEkLOZ8m0wYpzo60+vhB1cWJi7/XTcW1Q+uiNN7Ls5KlK7ghCDP
-	 MKenY+gL1Lw/yWmCLnQqG483LRp/fC4Tpyj8Meys=
+	b=PUFITiglELfD82vShdDJIQYOpcgIHmEJi+f+/o48mI1zQjPKjfhYXIsg1i7kDbZqM
+	 72cqbft8+Pnlv0Hh9U/zcIxUGqYO77sM3zj+t/g34KljjoVtI8JuYr7g4UqwuBQw+4
+	 ifUVu7NzAZuOkddEmlVdrL7tQBZ4iJKx8PRrwZu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Gan <jie.gan@oss.qualcomm.com>,
-	James Clark <james.clark@linaro.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0359/1193] coresight: platform: defer connection counter increment until alloc succeeds
-Date: Wed, 30 Sep 2026 17:17:23 +0200
-Message-ID: <20260930152442.150907262@linuxfoundation.org>
+Subject: [PATCH 6.6 0361/1193] bpf: Guard __get_user acesss with access_ok for uprobe_multi data
+Date: Wed, 30 Sep 2026 17:17:25 +0200
+Message-ID: <20260930152442.196806105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,80 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Gan <jie.gan@oss.qualcomm.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 1563ae33dc4f5ebac96b93af2ef72e72aaaa31ae ]
+[ Upstream commit 4d87a251d45b4a95eb4c0abcfab809c9f231258a ]
 
-coresight_add_out_conn() increments nr_outconns before calling
-devm_krealloc_array() and again before devm_kmalloc(). If either
-allocation fails, the counter is already bumped while the corresponding
-array entry is NULL or uninitialized garbage.
+As reported by sashiko [1] we need to use access_ok to check the user
+space data bounds before we use __get-user to get it.
 
-coresight_add_in_conn() has the same problem with nr_inconns and
-devm_krealloc_array().
-
-In both cases the probe returns -ENOMEM, which causes
-coresight_get_platform_data() to call coresight_release_platform_data()
-for cleanup. That function iterates up to nr_outconns (or nr_inconns)
-entries and dereferences each pointer unconditionally, hitting the NULL
-or garbage entry and panicking instead of failing gracefully.
-
-Fix by moving the counter increments to after all allocations succeed,
-so the struct is always consistent on any error path.
-
-Fixes: 3d4ff657e454 ("coresight: Dynamically add connections")
-Fixes: e3f4e68797a9 ("coresight: Store in-connections as well as out-connections")
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260511-fix-ref-count-issue-v1-1-99d647810d3c@oss.qualcomm.com
+[1] https://lore.kernel.org/bpf/20260610145235.CB1441F00893@smtp.kernel.org/
+Fixes: 0b779b61f651 ("bpf: Add cookies support for uprobe_multi link")
+Fixes: 89ae89f53d20 ("bpf: Add multi uprobe link")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20260611114230.950379-2-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-platform.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/trace/bpf_trace.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 57a009552cc5c..5873ff5a61de5 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -45,9 +45,8 @@ coresight_add_out_conn(struct device *dev,
- 		}
- 	}
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index c50852022cca5..847f94443a0a6 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3199,6 +3199,7 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	unsigned long __user *uoffsets;
+ 	u64 __user *ucookies;
+ 	void __user *upath;
++	unsigned long size;
+ 	u32 flags, cnt, i;
+ 	struct path path;
+ 	char *name;
+@@ -3233,6 +3234,16 @@ int bpf_uprobe_multi_link_attach(const union bpf_attr *attr, struct bpf_prog *pr
+ 	uref_ctr_offsets = u64_to_user_ptr(attr->link_create.uprobe_multi.ref_ctr_offsets);
+ 	ucookies = u64_to_user_ptr(attr->link_create.uprobe_multi.cookies);
  
--	pdata->nr_outconns++;
- 	pdata->out_conns =
--		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns,
-+		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns + 1,
- 				    sizeof(*pdata->out_conns), GFP_KERNEL);
- 	if (!pdata->out_conns)
- 		return ERR_PTR(-ENOMEM);
-@@ -63,7 +62,8 @@ coresight_add_out_conn(struct device *dev,
- 	 * used right away.
- 	 */
- 	*conn = *new_conn;
--	pdata->out_conns[pdata->nr_outconns - 1] = conn;
-+	pdata->out_conns[pdata->nr_outconns] = conn;
-+	pdata->nr_outconns++;
- 	return conn;
- }
- EXPORT_SYMBOL_GPL(coresight_add_out_conn);
-@@ -86,13 +86,13 @@ int coresight_add_in_conn(struct coresight_connection *out_conn)
- 			return 0;
- 		}
- 
--	pdata->nr_inconns++;
- 	pdata->in_conns =
--		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns,
-+		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns + 1,
- 				    sizeof(*pdata->in_conns), GFP_KERNEL);
- 	if (!pdata->in_conns)
- 		return -ENOMEM;
--	pdata->in_conns[pdata->nr_inconns - 1] = out_conn;
-+	pdata->in_conns[pdata->nr_inconns] = out_conn;
-+	pdata->nr_inconns++;
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(coresight_add_in_conn);
++	/*
++	 * All uoffsets/uref_ctr_offsets/ucookies arrays have the same value
++	 * size, we need to check their address range is safe for __get_user
++	 * calls.
++	 */
++	size = sizeof(*uoffsets) * cnt;
++	if (!access_ok(uoffsets, size) || !access_ok(uref_ctr_offsets, size) ||
++	    !access_ok(ucookies, size))
++		return -EFAULT;
++
+ 	name = strndup_user(upath, PATH_MAX);
+ 	if (IS_ERR(name)) {
+ 		err = PTR_ERR(name);
 -- 
 2.53.0
 
