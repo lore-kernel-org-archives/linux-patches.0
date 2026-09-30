@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABE23C3BFE;
-	Wed, 30 Sep 2026 19:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196003BD224;
+	Wed, 30 Sep 2026 19:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795712; cv=none; b=YycO8fHPN9VnZPxgDQ6cmdc2KNLCNhKiKIGvVSAfwdtc3Ik1N/PEHwckDFZTbk37Y5D6yCc6C8DOKac1wcBA3TZksAysNnvRzz+QmAmnpyxnu/DiRtkwEg7/RHESfLbN7WHx175//gq+dld4P3Oli3JxpUnSeNKe5fZEuM06aTQ=
+	t=1790795715; cv=none; b=Uq5HQNyyPAbWVq7fIUvTVAhpq9ul69DUohbc5T4FypitH+wgJ54rOrOExLdz84O9nwcFkNjc1gsn1G/qfXcY+j0U/KDNr5oU/LVh5MnO9/dR+6d4s3UTDMecVkS9Q5eBpRLVCguoVwqbGkX1VWKDRfSvFbbp3SmRa8b/24wfLV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795712; c=relaxed/simple;
-	bh=ypQggIambqUPdRqyHPS/BpmwGerKNRgayGxg2ygmAKE=;
+	s=arc-20240116; t=1790795715; c=relaxed/simple;
+	bh=fl3i4FCsArZm0/INC0zK225ZtxFKiSby+a/XLg+3OFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNVBY9c5R5YFOgRfsKqKAUWdEUWVSb4kH+Hze7oCzjhCHb4I1oQa66gt8XCA7AcLay1HD2xfTIAXWyjVJ6o+cuCn9dS3MpUqKIfpNBgD1uR3CXb365GPKYVxNJDYEj1HfCo975YCuAjsJWQLm2mk3wZU81KaiGfghISgzL2vxE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU8Tw7X8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CLN2MjDqjcx8B1vSR0kcxu1DqZ8RwcLOp9z7wH64swyq1ZvH4eVC5dEqVpKUQo20niyMZ0eAMZHFJpraQjoyqIjMgefrO5VH9L7jnQ3c7VmSfn9Si5uxBqZkbaIM17sqJQyWhxfOh+wxKHVIaVCQ62wyjIveTqEs6ehIs8YxjYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mgi+zBYD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU8Tw7X8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0481F000FF;
-	Wed, 30 Sep 2026 19:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mgi+zBYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ADE1F000FF;
+	Wed, 30 Sep 2026 19:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795711;
-	bh=keO+dNGSrdeE9KSopqYo0n4cQDyQsPQAfvvNezUnU8Q=;
+	s=korg; t=1790795714;
+	bh=UDC2g5/rk1zf7YWBkMxJ9yFF3nNRmJUpSC84VqkTmbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nU8Tw7X82Ruhruv1dszf5uh46UXppIx9yCS7DgrznS5XNOMCjD65tIm4Lp4/oWpP0
-	 NfHpRN3GDsP5vRzZB/vZvEAJGPqyFAvtyeRtY9xq+xqjAqwCJs8OeGV/y1cgMv3ntB
-	 7O3NlNYA76x+De3bX8ScXjqiLmodvgNQFj7Q759o=
+	b=Mgi+zBYDYfbjiHI9AXWgLCSZvvoDsxl7OSuE2GpBFDCKlrsTw7qxE99u3gyAXBSC6
+	 yeDcF7QrEz8+6H10dOoAkNCPbpQpBwI/kW0lbhrWm3WlSYFaVBYrK1BK+eClN0EqME
+	 GjocgHn60NjYPpmBsalNHnLeVFV8xxqFVJkcYbk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0655/1193] media: v4l2-ctrls: validate AV1 tile counts
-Date: Wed, 30 Sep 2026 17:22:19 +0200
-Message-ID: <20260930152448.797953443@linuxfoundation.org>
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 0656/1193] bnxt_en: Only restore LRO if the device supports TPA
+Date: Wed, 30 Sep 2026 17:22:20 +0200
+Message-ID: <20260930152448.819407336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,63 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Joe Damato <joe@dama.to>
 
-commit 439058ced617fbb3febc017b9e93bb7387f309e0 upstream.
+commit 4e17b5007b6664559cdad2b2fe270526cf786b5b upstream.
 
-The stateless AV1 decoders use tile_info.tile_cols and tile_rows as loop
-bounds and as indices into the mi_*_starts[] and *_in_sbs_minus_1[]
-arrays, as the divisor for context_update_tile_id, and their product
-bounds the per-tile descriptor buffers, but std_validate_compound() does
-not bound these u8 fields. Reject a V4L2_CTRL_TYPE_AV1_FRAME whose
-tile_cols or tile_rows exceeds V4L2_AV1_MAX_TILE_COLS / _ROWS, or whose
-product exceeds V4L2_AV1_MAX_TILE_COUNT. A zero tile count is left to the
-consuming driver so the zero-initialised control that existing userspace
-submits is still accepted.
+With a P5+ device with firmware that reports max_aggs_supported == 0, it is
+possible to make LRO settable by attaching and detaching an XDP program
+even though the device does not support TPA.
 
-Fixes: 9de30f579980 ("media: Add AV1 uAPI")
-Assisted-by: Claude:claude-opus-4-8
+Fix this by testing BNXT_SUPPORTS_TPA before restoring the feature bit.
+
+Fixes: f0aa6a37a3db ("eth: bnxt: always recalculate features after XDP clearing, fix null-deref")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260902015652.2421609-2-joe@dama.to
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -705,10 +705,30 @@ static int validate_av1_film_grain(struc
- 	return 0;
- }
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -4045,7 +4045,8 @@ void bnxt_set_rx_skb_mode(struct bnxt *b
+ 		bnxt_get_max_rings(bp, &rx, &tx, true);
+ 		if (rx > 1) {
+ 			bp->flags &= ~BNXT_FLAG_NO_AGG_RINGS;
+-			bp->dev->hw_features |= NETIF_F_LRO;
++			if (BNXT_SUPPORTS_TPA(bp))
++				bp->dev->hw_features |= NETIF_F_LRO;
+ 		}
+ 	}
  
-+static int validate_av1_tile_info(struct v4l2_av1_tile_info *t)
-+{
-+	/*
-+	 * tile_cols and tile_rows index the per-tile descriptor arrays and
-+	 * bound the tile loops in the stateless AV1 drivers; the product
-+	 * bounds the total tile descriptor count.
-+	 */
-+	if (t->tile_cols > V4L2_AV1_MAX_TILE_COLS ||
-+	    t->tile_rows > V4L2_AV1_MAX_TILE_ROWS)
-+		return -EINVAL;
-+
-+	if ((u32)t->tile_cols * t->tile_rows > V4L2_AV1_MAX_TILE_COUNT)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- static int validate_av1_frame(struct v4l2_ctrl_av1_frame *f)
- {
- 	int ret = 0;
- 
-+	ret = validate_av1_tile_info(&f->tile_info);
-+	if (ret)
-+		return ret;
- 	ret = validate_av1_quantization(&f->quantization);
- 	if (ret)
- 		return ret;
 
 
