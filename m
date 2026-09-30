@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56867357CE0;
-	Wed, 30 Sep 2026 19:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108913BE642;
+	Wed, 30 Sep 2026 19:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795729; cv=none; b=uON3qKeOjx87yqZL1wMZLYtK9SzqZl55AHaj6fuq/fMiqOeOgoG09N5Um9Z2W2x8TXnNdb4VUpx3UsyrQc40EF0VPTI8jUO1WkpxszndqD8KA5nBvfb3g+cD2fJa4BqTwdokgxg+0GeTCMispWmNp0LjBhLWhFD0GXne9m03EJ4=
+	t=1790795732; cv=none; b=vEKJpD76BMDcd/7Vz7eN4I3P9jyM0oq2qSjW5M00FF5pCe51yubnIfOgUOAQ6x8PfLJMFjhaG6QRcNzwfB5Omkx7C+FlmKfyUMtVDHpykuCz5bKkEs3w3lVXcV7jL17OBA5tZzklxOExOZcMFCy7ApRcPZ+Bfr/GbNkDQriUs3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795729; c=relaxed/simple;
-	bh=4OzYuZEv/vh9R75kgNVZbt8Qdr6e/hl2knZiu+VRPzY=;
+	s=arc-20240116; t=1790795732; c=relaxed/simple;
+	bh=Ze1O8Gt3H+wP9bVEtVKRuGHTH8qG/mu/kgCWjrAEqWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjv4yytvOO6dstDB0hBN/o57RP230ZTa5b4NzxhXORB8ZHVrPLDKDB3BYBAjukIDA4q8zHvV5cMABQy9mRSHTweA9WtY+CLG9xrbKnj2R4tE8zq7ztSzMVFMJ4sK4R3M2m2n/mk3IXTUBnPVPZAue82ghawCpW5OgriJfHWsMOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUxftjJf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ccHFZyJOFe7F68O3EhGIVCZEULRM98egqLq084tphYRE0SX6zoqdUVigR6Y11ubXQcSChtYiOdQCPK5xUc5ZmjFnRhEVk0ci1sgaeDOCkcHQSqPj/SCnaXSM0eJ79x9dmaY8vdhCYJ1A06lIYgXL2ftwORX1UehsmbrnhaAY6Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRBHPgwo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUxftjJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7A41F000FF;
-	Wed, 30 Sep 2026 19:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRBHPgwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7D81F000FF;
+	Wed, 30 Sep 2026 19:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795728;
-	bh=gj4WFcFOa2GKehTaQSh5P1b96mI/0TfCC9YtHanUoRs=;
+	s=korg; t=1790795731;
+	bh=j9EhTAvNs3IrnyYXXscznv0ampGicPuOQXmS9tw47u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUxftjJfDsZ4suVD/wXZJ3l3YpdRPJ/BXoFZn3fipYHFLmWTY31X3dEHeULipCyvw
-	 b4aJfXAuIWkOABrHWUJZlsg5Z/k6Sw7NigdHdNVkUPTH+yjfgWPKiZqM1Wqnmf/Ab3
-	 OZ/k17fHCVVTAO1d7MmA2KseU3AtbnzcgrxKC08s=
+	b=LRBHPgwobSrjc2lDlw4Enm5hrzlEkoqxjQAm1l+CRjbqQ2MvOrJuf94hI1QsC0H1m
+	 G8PDVPkVy6Z9d9KzRZJVdu7S/9oaPQEQmt2lhTpcvQQ9qkuS8B33Ii5cGLrGH9ynLp
+	 /IcJ0xzCkD4ko9gQvvggwXE6rbWiSK+UY68gyaEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0617/1193] ASoC: sprd: validate compress buffer sizes against fixed allocations
-Date: Wed, 30 Sep 2026 17:21:41 +0200
-Message-ID: <20260930152447.954361576@linuxfoundation.org>
+Subject: [PATCH 6.6 0618/1193] ASoC: sti: initialize IRQ lock before requesting IRQ
+Date: Wed, 30 Sep 2026 17:21:42 +0200
+Message-ID: <20260930152447.976488007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,78 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 7a4ce92d150b9e7ecf1a710a34d8cdeb590d3751 upstream.
+commit 04405aeef4f8d7bcac6dcb1947acafdb4420c2c3 upstream.
 
-sprd_platform_compr_open() allocates the stage 0 IRAM buffer (32K data
-area) and the stage 1 DDR buffer (2M data area) with fixed sizes, but
-sprd_platform_compr_copy() derives all copy lengths from the user
-controlled runtime->fragment_size and the write() count, never
-comparing them against the physical buffer sizes. The compress core
-only checks fragment_size * fragments for an u32 overflow in
-snd_compress_check_input(), so a local user can configure a logical
-buffer of up to ~4GB via SNDRV_COMPRESS_SET_PARAMS, far exceeding the
-fixed allocations.
+uni_reader_init() registers the shared IRQ before initializing
+reader->irq_lock. A pending interrupt can invoke the handler while the
+lock is still uninitialized.
 
-A fragment_size larger than the 32K IRAM data area makes the stage 0
-copy_from_user() overflow past the IRAM allocation, and a buffer_size
-larger than the 2M DDR buffer makes the wrapping copy at the end of
-sprd_platform_compr_copy() write fully user controlled data past the
-buffer. No SNDRV_PCM_TRIGGER_START is needed, a write() in SETUP
-state reaches the copy callback directly.
+Initialize the lock before registering the IRQ so the interrupt path
+always sees valid lock state.
 
-Reject parameters that do not fit into the fixed buffers in
-set_params(), and fix the advertised max fragment size: 128K never
-fitted into the 32K IRAM buffer. The caps values may have been carried over
-from the qdsp6 driver, which allocates its buffers according to the
-advertised maxima, unlike this driver. With 32K as max fragment size
-the advertised limits are self-consistent: 32K * 64 = 2M equals the
-DDR buffer size.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: cce1396936ef ("ASoC: sprd: Add Spreadtrum audio compress offload support")
+Fixes: d05d862ead8e ("ASoC: STI: Fix null ptr deference in IRQ handler")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/4386bc53631b052c1866a91061715b009d98b04f@linux.dev
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260830142026.2666914-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sprd/sprd-pcm-compress.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/soc/sti/uniperif_reader.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/sprd/sprd-pcm-compress.c
-+++ b/sound/soc/sprd/sprd-pcm-compress.c
-@@ -17,7 +17,7 @@
+--- a/sound/soc/sti/uniperif_reader.c
++++ b/sound/soc/sti/uniperif_reader.c
+@@ -422,6 +422,8 @@ int uni_reader_init(struct platform_devi
+ 	else
+ 		reader->hw = &uni_reader_pcm_hw;
  
- /* Default values if userspace does not set */
- #define SPRD_COMPR_MIN_FRAGMENT_SIZE	SZ_8K
--#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_128K
-+#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_32K
- #define SPRD_COMPR_MIN_NUM_FRAGMENTS	4
- #define SPRD_COMPR_MAX_NUM_FRAGMENTS	64
- 
-@@ -272,6 +272,19 @@ static int sprd_platform_compr_set_param
- 	int ret;
- 
- 	/*
-+	 * The stage 0 IRAM buffer and the stage 1 DDR buffer are allocated
-+	 * with fixed sizes at open time, so the requested fragment size and
-+	 * fragments must fit into them, otherwise sprd_platform_compr_copy()
-+	 * would overflow the buffers. Note the compress core only checks the
-+	 * fragment size and fragments against an u32 overflow, not against
-+	 * the buffer sizes advertised by get_caps.
-+	 */
-+	if (params->buffer.fragment_size > SPRD_COMPR_IRAM_BUF_SIZE ||
-+	    (u64)params->buffer.fragment_size * params->buffer.fragments >
-+	    SPRD_COMPR_AREA_BUF_SIZE)
-+		return -EINVAL;
++	spin_lock_init(&reader->irq_lock);
 +
-+	/*
- 	 * Configure the DMA engine 2-stage transfer mode. Channel 1 set as the
- 	 * destination channel, and channel 0 set as the source channel, that
- 	 * means once the source channel's transaction is done, it will trigger
+ 	ret = devm_request_irq(&pdev->dev, reader->irq,
+ 			       uni_reader_irq_handler, IRQF_SHARED,
+ 			       dev_name(&pdev->dev), reader);
+@@ -430,8 +432,6 @@ int uni_reader_init(struct platform_devi
+ 		return -EBUSY;
+ 	}
+ 
+-	spin_lock_init(&reader->irq_lock);
+-
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(uni_reader_init);
 
 
