@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909CA51B165;
-	Wed, 30 Sep 2026 16:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CC84F3ED7;
+	Wed, 30 Sep 2026 16:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784678; cv=none; b=AnPmPbBkuZcADxQ7fVQ1LnpkfjXFGMdMXZo0hfMB739Uzb17QLyKHXMi6sRO9+5VhWwylhIeGm3YEwz8u12Dtc+vBQEMjnMAkI0InHkOHEq81kNWxeoZYRL4bsqxo4Gti3pnhsFYENWNFl4NTENxKBDczp7BYcsCnkbTqPUMQfw=
+	t=1790784680; cv=none; b=sXQ2CNqZq7DG2+BRje4WTevowoAzQl9hb27CkGXZJ5dDNiRllrryMwBfiZcmlngfK0HqcPPa6771ZonZoUQ9n1j2dsEv/AffrSL6MPmCBn7AmUz9kXPy1jqqjhSPZXAQDUl0X/UfEFjacb2M/WCrdsdV4JOS9i0UjwwYTGlJFFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784678; c=relaxed/simple;
-	bh=qU0+Xr6miFNn66DydSQxHMRBPywzQIf0ukPVbzXyxpE=;
+	s=arc-20240116; t=1790784680; c=relaxed/simple;
+	bh=ZgpdcXwnQCfpOWhE4wKssf8i5Vppn7KgAwYEAY3heSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aH8D95N8Krl0qeEiZkWHSzB4LBDhNh7dSccizXkmsIqUTWUTYBvIlP9kb09xVUGlbk7R8U0KeMa3/UWokhxyvy+YJeqlVttQ8k0y6jSW/Qvz16ijJFlfJgm+FF7QtM8vSRrNsgGVK2838RFoOISqEpQLCMBSosLRSvB5K3YrAjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6/x7QZW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pYKqUOoh/94Fl0Mi0ijZXDY+ALx3F82Gr3m9SZ1Nw9xxCCrcEUTzf6OtJgBOYm9lrivTul76EIy+0g+n9Py1Qx5+wMQFqOs6T8NJycNTXoXej2MIgmySLiZlsxuxV5qcbdqESY3xWCKtafAsroZ8pEWIh++0/hDWSsfcSPtdrOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDSs/YSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6/x7QZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880471F00893;
-	Wed, 30 Sep 2026 16:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDSs/YSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565ED1F00898;
+	Wed, 30 Sep 2026 16:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784672;
-	bh=Qsku0qYmxIc6n6rH04WfpotKSfxkCP5TB+hXJ2Eczys=;
+	s=korg; t=1790784674;
+	bh=ku1ZjEdICL324Odl6hLG/K1FpVhS+Dyj6hhrrOKKd6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6/x7QZWyijQ8CGnAO+9uoNoWpi/xPPlXVVl4CQrWfw87/hzVsU8VWJKfhZrUWnUs
-	 0JeyQnAiucXBf6Q2PQoLL/YJIbY3X5ZnIFaH62W0svFucVOOdcEJ7KeQm9Fq7Hb0A9
-	 P2QID2m5zxRT7pOYqVDY/29NBEZ25XU9AnuwlVQA=
+	b=nDSs/YSegQ0ACynzsQ7qMZh7Jlk8kDPI8vAfG8uG2ELf7DkLPQUdpjt2U/YAbxcUS
+	 x3UpzH2wMry5BNH24eLK5HzvGYcPpfZUhyZTzg193ruga3mgAfSrQy5Prkgt9fLTAL
+	 zc+hTrMU5dq2nXiMiMN0t2lorL3cCZ85JoFDzwKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 237/982] ksmbd: fix n.data memory leak in ksmbd_vfs_set_dos_attrib_xattr
-Date: Wed, 30 Sep 2026 17:16:13 +0200
-Message-ID: <20260930152421.887213698@linuxfoundation.org>
+Subject: [PATCH 6.1 238/982] ksmbd: Fix acl.sd_buf memory leak and invalid sd_size error handling
+Date: Wed, 30 Sep 2026 17:16:14 +0200
+Message-ID: <20260930152421.907601471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -55,10 +55,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiang Liu <liuqiang@kylinos.cn>
 
-[ Upstream commit 7ac657bb9c5c1b0f7bdf1fa6d3ad532f969be5cf ]
+[ Upstream commit d708a36634bb7b6f94d0e76d587d2ec50b2b93b5 ]
 
-Free ndr buffer data when ndr_encode_dos_attr() returns error
-to avoid memory leak.
+1. When ndr_decode_v4_ntacl() fails, the code jumped to free_n_data
+   which only freed n.data, skipping kfree(acl.sd_buf) and leaking
+   the buffer. Zero-initialize struct xattr_ntacl acl, reorder error
+   labels to out_free to release acl.sd_buf on all error paths.
+
+2. if (acl.sd_size < sizeof(struct smb_ntsd)) is true, original code
+   returned success without freeing sd_buf and left stale *pntsd.
+   Set rc = -EINVAL before jumping to out_free to return error code and
+   free buffer.
 
 Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
@@ -66,31 +73,48 @@ Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/smb/server/vfs.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 413071ce9633f..27a15c9d3cc22 100644
+index 27a15c9d3cc22..1da397999941a 100644
 --- a/fs/smb/server/vfs.c
 +++ b/fs/smb/server/vfs.c
-@@ -1613,14 +1613,15 @@ int ksmbd_vfs_set_dos_attrib_xattr(struct user_namespace *user_ns,
+@@ -1537,7 +1537,7 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
+ 	struct ndr n;
+ 	struct inode *inode = d_inode(dentry);
+ 	struct ndr acl_ndr = {0};
+-	struct xattr_ntacl acl;
++	struct xattr_ntacl acl = {0};
+ 	struct xattr_smb_acl *smb_acl = NULL, *def_smb_acl = NULL;
+ 	__u8 cmp_hash[XATTR_SD_HASH_SIZE] = {0};
  
- 	err = ndr_encode_dos_attr(&n, da);
- 	if (err)
--		return err;
-+		goto out;
+@@ -1548,7 +1548,7 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
+ 	n.length = rc;
+ 	rc = ndr_decode_v4_ntacl(&n, &acl);
+ 	if (rc)
+-		goto free_n_data;
++		goto out_free;
  
- 	err = ksmbd_vfs_setxattr(user_ns, path, XATTR_NAME_DOS_ATTRIBUTE,
- 				 (void *)n.data, n.offset, 0, get_write);
- 	if (err)
- 		ksmbd_debug(SMB, "failed to store dos attribute in xattr\n");
--	kfree(n.data);
+ 	smb_acl = ksmbd_vfs_make_xattr_posix_acl(user_ns, inode,
+ 						 ACL_TYPE_ACCESS);
+@@ -1578,6 +1578,7 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
+ 	*pntsd = acl.sd_buf;
+ 	if (acl.sd_size < sizeof(struct smb_ntsd)) {
+ 		pr_err("sd size is invalid\n");
++		rc = -EINVAL;
+ 		goto out_free;
+ 	}
  
-+out:
-+	kfree(n.data);
- 	return err;
+@@ -1597,8 +1598,6 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
+ 		kfree(acl.sd_buf);
+ 		*pntsd = NULL;
+ 	}
+-
+-free_n_data:
+ 	kfree(n.data);
+ 	return rc;
  }
- 
 -- 
 2.53.0
 
