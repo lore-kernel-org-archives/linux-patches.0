@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DEE4EB865;
-	Wed, 30 Sep 2026 15:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA1D503900;
+	Wed, 30 Sep 2026 15:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782730; cv=none; b=eP7GIhp/cU2PBCjkof9QUBn+0p38UJWJ2l5/ehHOXSi5iOMVfWwmq/uaEX0sp1aZXzm6rvyjRlWb+vXEXLja7YyfJCt38kwZ8toCjTqvPKqoOg6sw/Nj0Y/bg0+HokOYho7HDfnmoeNfx3kRmEIe8gkg1K2H5jzeLnTgdMNZncE=
+	t=1790782730; cv=none; b=ugZxZrpUtLCDWrat7iwcoVB9xkqTGUtC9W6vkHBto74pKurY8B9FbvT/ZA5D+gsn+kry+1hmI4LkzqbFMP+fNDrUUifAidDAjtbLoOfvmCdRy1bj/WAFRr62PTK2LOxNUuhDYuxa9fl2ScnS5bJ5VXomWZbihS1SRHO51hmmKV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782730; c=relaxed/simple;
-	bh=YZNQjsz12Y2Q3IYDpD6FTjHo088l/pgy5NRgUl9XTOY=;
+	bh=kms/fOXmilRhaTL/KG67UD4R0Uu4DraxmWgWLCsIz6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjiVeuss3tNSY2srdVO5Y4Y2PWtbI0ddmFZidO2P02MLzwB8aSJNKmoNpHeOWBS5bdArhfQG6lC5XyeVqGTBH4ZXFAMEpsHDY+zMbvFvl7Ai0mhGMtZXHIZTmSEjLAjQsAVZxu0WMeu8T6Uphu9buOBQjsij0vBsJNoiD2mK0kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzYQFNdJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nNjg0+QKfua41uGpnobFm7hCzAs3SwYkwJXUdg6Nks9R/6I11K4mQDm5VHu+m3ICYkW5SQ9ESN2v5/EjcC0BifvVWOa3hSbjdPbGRjxJ0ZN6mdDYLy+/a/rdLkkVKKvusr0VkTt7kjkwcXrEMy/XL14msdrndEBZDqt+nB94iP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAbp7xl2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzYQFNdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE92C1F00899;
-	Wed, 30 Sep 2026 15:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAbp7xl2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C761F000FF;
+	Wed, 30 Sep 2026 15:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782723;
-	bh=G1rcU4aTt5CSfp8m9YnZ12vTbPp0rQ3IT6OaVcMd2gc=;
+	s=korg; t=1790782726;
+	bh=ICcTfNDNUJbMqn2SpV29IGQhcKvObhfPl68kSDKRDOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XzYQFNdJ2dbh8CIKHwVWgQjpqkFTMpDPY7TqRO9LEqHbX0whLQuu0W7APCDHtSImc
-	 Mdboeiw1FrIqeYZ6NxZLsEgxsW3YhlFN/AkhW4eXVrU+4MZqxsc7yE9AAdHsum7azB
-	 wXmDsbPk9kqaEHElsKGlxeuZITKKS2R3WcSfXJBQ=
+	b=gAbp7xl2C5Sh4mSbAKfRq8cpbe/UtRWhYBGV6mq9looH1lI89nDuiFl35+argMZ8Q
+	 VeQPQ+y1Cz4wz2wd5cswaiam6H+0Qvh/gtl0YsucgfGbtDGONC/ZAPCDUx9ATwtTvY
+	 xgHUSME8BdNoyanlMAV6ywDCz4wsfTOZUa68SmMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adriana Stancu <adriana@arista.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/595] rtc: bq32000: add delay between RTC reads
-Date: Wed, 30 Sep 2026 17:20:39 +0200
-Message-ID: <20260930152350.873393336@linuxfoundation.org>
+Subject: [PATCH 5.10 147/595] fbdev: pm2fb: unwind WC setup on probe failure
+Date: Wed, 30 Sep 2026 17:20:40 +0200
+Message-ID: <20260930152350.895871966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,61 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adriana Stancu <adriana@arista.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit d4992b7050a10079bc760bdc5b8688e05a09dfc2 ]
+[ Upstream commit 16eb19f0c90af03bda6ba66586d7bb0e9cf85b43 ]
 
-When the RTC is used on systems without a interrupt line, userspace
-tools like `hwclock` fall back to a frequent polling loop to synchronize
-with the edge of the next second.
+Add arch_phys_wc_del() on error path to keep the
+write-combining setup balanced when later probe
+steps fail.
 
-On the BQ32000, this aggressive polling can temporarly lock the register
-refresh cycle, because the continuous transfers prevent the hardware from
-updating the buffer. This results in stale data reads or select() timeouts
-in userspace.
-
-This patch introduces a delay before reading the RTC registers in order to
-provide a sufficient idle time for the hardware to sync with the register
-buffer.
-
-Signed-off-by: Adriana Stancu <adriana@arista.com>
-Link: https://patch.msgid.link/20260416142151.3385827-1-adriana@arista.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-bq32k.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/video/fbdev/pm2fb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-bq32k.c b/drivers/rtc/rtc-bq32k.c
-index 933e4237237dd..70907aa1fea62 100644
---- a/drivers/rtc/rtc-bq32k.c
-+++ b/drivers/rtc/rtc-bq32k.c
-@@ -15,6 +15,7 @@
- #include <linux/init.h>
- #include <linux/errno.h>
- #include <linux/bcd.h>
-+#include <linux/delay.h>
- 
- #define BQ32K_SECONDS		0x00	/* Seconds register address */
- #define BQ32K_SECONDS_MASK	0x7F	/* Mask over seconds value */
-@@ -88,9 +89,17 @@ static int bq32k_write(struct device *dev, void *data, uint8_t off, uint8_t len)
- 
- static int bq32k_rtc_read_time(struct device *dev, struct rtc_time *tm)
- {
-+	struct i2c_client *client = to_i2c_client(dev);
- 	struct bq32k_regs regs;
- 	int error;
- 
-+	/*
-+	 * When the device doesn't have the interrupt connected, prevent
-+	 * userpace from polling the RTC registers too frequently.
-+	 */
-+	if (client->irq <= 0)
-+		usleep_range(2000, 2500);
-+
- 	error = bq32k_read(dev, &regs, 0, sizeof(regs));
- 	if (error)
- 		return error;
+diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
+index 87b6a929a6b39..d7145a6c73545 100644
+--- a/drivers/video/fbdev/pm2fb.c
++++ b/drivers/video/fbdev/pm2fb.c
+@@ -1706,6 +1706,7 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+  err_exit_both:
+ 	kfree(info->pixmap.addr);
+  err_exit_pixmap:
++	arch_phys_wc_del(default_par->wc_cookie);
+ 	iounmap(info->screen_base);
+ 	release_mem_region(pm2fb_fix.smem_start, pm2fb_fix.smem_len);
+  err_exit_mmio:
 -- 
 2.53.0
 
