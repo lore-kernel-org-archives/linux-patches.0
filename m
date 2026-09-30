@@ -1,46 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94FC518132;
-	Wed, 30 Sep 2026 17:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEAF511E61
+	for <patches@lists.linux.dev>; Wed, 30 Sep 2026 17:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788565; cv=none; b=NDwm2McnEh9ozAkQBdJIkJkLVa8GE//n7CHbbJY4H6sym1B/988fSBV+3CDFmaFIwamuNo9yYKpLJzaanTU7L8w5EpGV9/kL4aAsD+9pdVKeC7PIflpQ5qXzKjc84R9m/kWGJjZjqJLLrij22HpsUSWY//QkTgYtsdOSW5/b/rI=
+	t=1790788565; cv=none; b=PIrpAxOa+IeDjsMAap3p0UAdmgcP6Zsxdlf5co2zqMQLaHXFst3KT8p0hP30RKyTYSIDmVet2onGF8rYOhzorcukylYeSKNeZ0VLxdGFn/bcfR/Y6oPtf/w7gTCAd7thgQKRoHg1c+4LKAL/DZ9bwzDdM+q6L4N1ny48UErzG34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790788565; c=relaxed/simple;
-	bh=RiyEkMDOW1cuO4ANacxr0bW9TZj28vfXb7JpvSFxPYI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OiDtP25/6cpWF15TCnKk3sfOQGKTuOFZYe/RYD0bmW9MyQ9JSeoHMVo+4wyJV6F1MTzoQIKlplV8K7sCm+8Xx3iCilsJfJaHiFpdxdTCz4bHlIbqdk9O7nNLRN9ynhEaunePZz52gkUC5m9KZR7+rSZdp1Fx3haMDCVCQzumsDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEIloxCG; arc=none smtp.client-ip=100.103.45.18
+	bh=iQqYg2gIWvObcNdXFph7DquCiNeK2cbICZQT746Ie48=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FlROgh9GfBWSmPBf3TfeA7RYVvYmiUf3U0Wi6rA9lGnbQVMrfzJ04ZAkP6UbZy5RmSbHt/RFct2+K7mxXLME9sGFuY0lfkuQxOnqhJXEmjsJFs0nw9ufXBPWYUF7HY8TdWOozIgxUSck9d05TA5Rft6PIAwbBBHWF6h3/zCS8xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SESMTMMW; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEIloxCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0442B1F00898;
-	Wed, 30 Sep 2026 17:16:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788563;
-	bh=hNlEMyqIE5OFz4ocYYypVpILctoGQaBhulNk16IIALw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IEIloxCGF8UxmB0VciQ4+2NJgVrGushnsnuTG++phqGTI+n6QRnUS+Kj8cpQKiAo+
-	 CjjSmRsiWwh7QSHfGSyokiW+L6971Pau4y57HXutUuUBjb1Z2Jq9utYz6Bih+gz/AN
-	 1u7PzMC9Mk9jr/1hMTrXIKtxrdW5d/lNJvSZH+U4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SESMTMMW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790788563; x=1822324563;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=iQqYg2gIWvObcNdXFph7DquCiNeK2cbICZQT746Ie48=;
+  b=SESMTMMWdwvvyDoPAXOI+ILggpEkYyVYTU3z5kLqDgBgRBGytkUTQ76L
+   ijG3ZhGfxD2S/MhUzxAcVBQGkFTnyfJ9qjVL61cKGDkrUV/9nC9ro28a3
+   79fkUgy17Lr18EO6el3K8Z5kxqTLcr5qe+1OZ8BrjATMIDTS/SuT+KHFI
+   aW8YS/kRSbKqmGrCl4O/H/xsHPwA6CTFkultzNPN/UlJiPToE6ihICXFW
+   mMYhWD3XhaMFsh8AmvSfCCqa2vyi3HKbfjsVJIVPX0pbZPMwoDCPo+gZ9
+   6ZbkquZDMZ+/Po1yupvF94XufVQ/XWv9vXPiJ7uFJlmkmOJhS6fTdnpLH
+   A==;
+X-CSE-ConnectionGUID: CIGt45wyQSOj6lvmJWvSeg==
+X-CSE-MsgGUID: u/YLaQJyTJG0qcUbyM3JXQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11921"; a="90432414"
+X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
+   d="scan'208";a="90432414"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2026 10:16:02 -0700
+X-CSE-ConnectionGUID: iNxvPVVeT3GTpaZ27jcuzQ==
+X-CSE-MsgGUID: Svv/LUQwSPqFGobbVW4B4w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
+   d="scan'208";a="273552701"
+Received: from lstrano-mobl6.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.50])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2026 10:16:02 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Kijo Park <red993688@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 6.12 170/877] exec: Cleanup POSIX timers right after de_thread()
-Date: Wed, 30 Sep 2026 17:18:01 +0200
-Message-ID: <20260930152418.393058040@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v4] x86,fs/resctrl: Add event group descriptions for Intel Diamond Rapids
+Date: Wed, 30 Sep 2026 10:15:54 -0700
+Message-ID: <20260930171554.12794-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
-References: <20260930152414.738996857@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,132 +68,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+Intel Diamond Rapids exposes Application Energy Telemetry through two
+new PMT aggregator GUIDs: one covering the "energy" feature, and one
+covering the "perf" feature, both documented in the Intel-PMT XML
+repository [1].
 
-------------------
+The "perf" aggregator references two events not previously enumerated
+by resctrl: retired instructions (INST_RETIRED), and a count of
+unhalted core clock cycles perceived by hardware as contributing to
+instruction execution (PCNT).
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+Add definitions for both aggregators, and add the two new events to
+the resctrl filesystem so they can be exposed to user space.
 
-commit acb03d3881818581052924a9bbbe92b8741ed448 upstream.
-
-A per-thread CPU timer holds a reference to the PID of the thread it is
-attached to and, while it is armed, its node is queued in that thread's
-posix_cputimers. The task is looked up by that PID.
-
-When a non-leader thread exec()s, de_thread() changes which task owns
-that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
-but the node is still queued on tsk, which is alive. timer_lock_sighand()
-takes a failed lookup to mean that the node is already dequeued, so it
-has nothing to undo.
-
-begin_new_exec() calls posix_cpu_timers_exit(me) right after
-exec_task_namespaces() and that removes the leftover node, so the state
-normally stays invisible. But bprm->point_of_no_return is set before
-de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
-exec_task_namespaces() fails, the task dies before it gets there.
-exit_itimers() then frees the k_itimer while its node is still queued,
-and reaping tsk later erases that freed node from the rbtree.
-
-In short:
-
-      the non-leader thread B           the parent
-
-  timer_create(CLOCK_THREAD_CPUTIME_ID)
-  timer_settime()
-    arm_timer()            // the node is queued on B
-  execve()
-    de_thread(B)
-      exchange_tids(B, leader)  // B's PID now belongs to the leader
-      release_task(leader)
-        __exit_signal(leader)
-          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
-          __unhash_process(leader)  // that PID has no task anymore
-    exec_mmap()
-      mmap_read_lock_killable(old_mm)
-                                kill(B, SIGKILL)
-      // -EINTR
-  get_signal()
-    do_exit()
-      exit_itimers()
-        posix_timer_delete()
-          posix_cpu_timer_del()
-        posix_timer_unhash_and_free()  // freed while still queued
-                                wait4()
-                                  release_task(B)
-                                    posix_cpu_timers_exit(B)
-                                      cleanup_timerqueue()
-                                        timerqueue_del()  // use-after-free
-
-Move the POSIX timer cleanup right after de_thread() before any of the
-later failure conditions brings the task into do_exit().
-
-[ tglx: Move the cleanup right after de_thread() ]
-
-Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Kijo Park <red993688@gmail.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
-Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Link: https://github.com/intel/Intel-PMT # [1]
 ---
- fs/exec.c |   29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+v4:
+	Fix the place where I missed s/A/a/
+	Did a test build this time!
+---
+ include/linux/resctrl_types.h           |  2 ++
+ arch/x86/kernel/cpu/resctrl/intel_aet.c | 34 +++++++++++++++++++++++++
+ fs/resctrl/monitor.c                    |  2 ++
+ 3 files changed, 38 insertions(+)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1217,6 +1217,17 @@ void __set_task_comm(struct task_struct
- 	perf_event_comm(tsk, exec);
- }
+diff --git a/include/linux/resctrl_types.h b/include/linux/resctrl_types.h
+index a5f56faa18d2..e2e2cf3d9ff6 100644
+--- a/include/linux/resctrl_types.h
++++ b/include/linux/resctrl_types.h
+@@ -60,6 +60,8 @@ enum resctrl_event_id {
+ 	PMT_EVENT_AUTO_C6_RES,
+ 	PMT_EVENT_UNHALTED_REF_CYCLES,
+ 	PMT_EVENT_UOPS_RETIRED,
++	PMT_EVENT_INST_RETIRED,
++	PMT_EVENT_PCNT,
  
-+static void posixtimer_exec(struct task_struct *me)
-+{
-+#ifdef CONFIG_POSIX_TIMERS
-+	spin_lock_irq(&me->sighand->siglock);
-+	posix_cpu_timers_exit(me);
-+	spin_unlock_irq(&me->sighand->siglock);
-+	exit_itimers(me);
-+	flush_itimer_signals();
-+#endif
-+}
-+
- /*
-  * Calling this is the point of no return. None of the failures will be
-  * seen by userspace since either the process is already taking a fatal
-@@ -1250,6 +1261,16 @@ int begin_new_exec(struct linux_binprm *
- 	retval = de_thread(me);
- 	if (retval)
- 		goto out;
-+
-+	/*
-+	 * This must be done here to ensure that POSIX CPU timers which were
-+	 * armed on the current task are dequeued from me::posix_cputimers.
-+	 * Otherwise in case of a TID switch the deletion of the related POSIX
-+	 * timer would not remove an enqueued timer because the TID lookup
-+	 * of the old TID fails.
-+	 */
-+	posixtimer_exec(me);
-+
- 	/* see the comment in check_unsafe_exec() */
- 	current->fs->in_exec = 0;
- 	/*
-@@ -1304,14 +1325,6 @@ int begin_new_exec(struct linux_binprm *
- 	if (retval)
- 		goto out_unlock;
+ 	/* Must be the last */
+ 	QOS_NUM_EVENTS,
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index c22c3cf5167d..66cd8c2c7a51 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -125,9 +125,43 @@ static struct event_group perf_0x26557651 = {
+ 	}
+ };
  
--#ifdef CONFIG_POSIX_TIMERS
--	spin_lock_irq(&me->sighand->siglock);
--	posix_cpu_timers_exit(me);
--	spin_unlock_irq(&me->sighand->siglock);
--	exit_itimers(me);
--	flush_itimer_signals();
--#endif
--
- 	/*
- 	 * Make the signal table private.
- 	 */
-
++/*
++ * Link: https://github.com/intel/Intel-PMT/blob/main/xml/DMR/OOBMSM/RMID-ENERGY/dmr_aggregator.xml
++ */
++static struct event_group energy_0x47903099 = {
++	.pfname		= "energy",
++	.guid		= 0x47903099,
++	.num_rmid	= 256,
++	.mmio_size	= XML_MMIO_SIZE(256, 2, 3),
++	.num_events	= 2,
++	.evts		= {
++		EVT(PMT_EVENT_ENERGY, 0, 18),
++		EVT(PMT_EVENT_ACTIVITY, 1, 18),
++	}
++};
++
++/*
++ * Link: https://github.com/intel/Intel-PMT/blob/main/xml/DMR/OOBMSM/RMID-PERF/dmr_aggregator.xml
++ */
++static struct event_group perf_0x1415910a = {
++	.pfname		= "perf",
++	.guid		= 0x1415910a,
++	.num_rmid	= 256,
++	.mmio_size	= XML_MMIO_SIZE(256, 4, 3),
++	.num_events	= 4,
++	.evts		= {
++		EVT(PMT_EVENT_UNHALTED_REF_CYCLES, 0, 0),
++		EVT(PMT_EVENT_UNHALTED_CORE_CYCLES, 1, 0),
++		EVT(PMT_EVENT_INST_RETIRED, 2, 0),
++		EVT(PMT_EVENT_PCNT, 3, 0),
++	}
++};
++
+ static struct event_group *known_event_groups[] = {
+ 	&energy_0x26696143,
++	&energy_0x47903099,
+ 	&perf_0x26557651,
++	&perf_0x1415910a,
+ };
+ 
+ #define for_each_event_group(_peg)						\
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 73413cb128ea..04e4ea612b7c 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1041,6 +1041,8 @@ struct mon_evt mon_event_all[QOS_NUM_EVENTS] = {
+ 	MON_EVENT(PMT_EVENT_AUTO_C6_RES,		"c6_res",		RDT_RESOURCE_PERF_PKG,	false),
+ 	MON_EVENT(PMT_EVENT_UNHALTED_REF_CYCLES,	"unhalted_ref_cycles",	RDT_RESOURCE_PERF_PKG,	false),
+ 	MON_EVENT(PMT_EVENT_UOPS_RETIRED,		"uops_retired",		RDT_RESOURCE_PERF_PKG,	false),
++	MON_EVENT(PMT_EVENT_INST_RETIRED,		"inst_retired",		RDT_RESOURCE_PERF_PKG,	false),
++	MON_EVENT(PMT_EVENT_PCNT,			"pcnt",			RDT_RESOURCE_PERF_PKG,	false),
+ };
+ 
+ bool resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu,
+-- 
+2.55.0
 
