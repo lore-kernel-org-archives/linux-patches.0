@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362964F93A8;
-	Wed, 30 Sep 2026 16:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A98B513551;
+	Wed, 30 Sep 2026 16:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786320; cv=none; b=Q8nIv2YJTU3xFHFnc4KWfWSDcFmGubLm2y8E0e21TTx3mfsZe2uB7BWNevn6BBX0qYS+H1psL+WUtDtV4okkJU+oNMZVbZWLlG0HbvtgOCQs+Y2axwEPjT95garkRGKElvW0ryNt4rJ67BSky1xPZwKYQPnJPEgDOeJCURvj278=
+	t=1790786323; cv=none; b=ufxrNSto6FFUYdSLl4cQd5jXMJChbykc1dy8qBRaHYQLedOsfchuuxoIxGP3G23oDzWZ7Xu28aXXPBnLovGqa/kdq7nU497nQX+mPztukNO8wz++fxipF9ni/0rLluWcqe7uU3fWofpPGqQKfWeaSB86b2HCSjsuOunjTpAYvww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786320; c=relaxed/simple;
-	bh=0Wpa6TVsS4LEZDscYpLRaxEDMyEDgKBre9HsVMN5BNs=;
+	s=arc-20240116; t=1790786323; c=relaxed/simple;
+	bh=OsDIlG/5lrl8X2dBx31/TrKwCfKAmzy+ijlygh5yXcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjmmdNlB5w8dII1aB+akRSzJW9RldfWJ2bI3dTeJciiFd7BYMVi5Ksn1bAczDuaD2POdKxBf5dxi9tj4hkROobBKTFgpvXh6mINTp2KCY3gkOJP3Bg28fJIvuHiUMFzPR3rh/W9bMuleV7fHhROu/5JpZMRWxJQspHI7sDBEu8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFow70t9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qoi4Ufkx9Jyi09HW6M5ZfQEbcMZb3oMNClTmYhA1RZP6T9RnregO33/Ii7JsLwV8xDFg3T11PvHC6bWo52/j/MziYU4TXGj1NZ9v0lm19yrC98RyrXSVUm6pqY8BjBGcW0XYCV0yJhllNv95BgtVpR+T0Nw1pNA2P40roT7t6kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4R605FA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFow70t9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916791F000FF;
-	Wed, 30 Sep 2026 16:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4R605FA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643F01F000FF;
+	Wed, 30 Sep 2026 16:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786319;
-	bh=44b51n7Lv2GYrCOW1i6S+pBGhWC45osFg9sUnmng4nc=;
+	s=korg; t=1790786321;
+	bh=6Gklqe4OuX/5ljlx8jno8kDu/oa5m9xq9C6MHYEi0lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFow70t9xh/QPi9C5yz09YpNBXKFVorrjyWk3+bbtGYPODhUsoE+0TbyFvhsTNjmj
-	 +rQWVMDJTzJynM3EP5obboAJ6NOaLOYiJoMMn1i5e7SQ4oLQVRkptV4n0MaDorm/4l
-	 MJ1J+Y8DMzcOs8w2TThhSbUR5bmVMd7+5xi3ukdk=
+	b=W4R605FAzSyaSmeRp5EjPAbZLSWit8lij+t3aINdKy8U3xq2PwHqhLlLtu+ft4jts
+	 NoRipBpF0GT8jExz1ywt6r8AyFpH6qaO8KFiVe63HqWYq0jSJMDI/SxPgSQIFr4UJk
+	 UJXl3hpYeWFmSiZzDtoQ3Ar5O2uAoSLGnNvlSOF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christiano Amora <christiano.amora@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 819/982] Bluetooth: SMP: reject Security Request over BR/EDR
-Date: Wed, 30 Sep 2026 17:25:55 +0200
-Message-ID: <20260930152434.350683064@linuxfoundation.org>
+Subject: [PATCH 6.1 820/982] Bluetooth: mgmt: Dequeue pending mesh_send_sync entries on cancel
+Date: Wed, 30 Sep 2026 17:25:56 +0200
+Message-ID: <20260930152434.371932330@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,91 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christiano Amora <christiano.amora@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit f033482d76a9f18080c7a40c5f9c678bd7adc8f3 ]
+[ Upstream commit 71af682ba4692c2ed9ace4c3d4ca462ae368c029 ]
 
-Bose QC Ultra Headphones (dual-mode, same public address on both
-transports) occasionally send an SMP Security Request on the BR/EDR
-SMP fixed channel right after the ACL link is encrypted. The kernel
-handles it as if it were an LE link: smp_cmd_security_req() has no
-transport check, smp_ltk_encrypt() looks up an LTK with the ACL
-connection's dst_type, and hci_find_ltk() matches the peer's LE LTK
-because the LE public address type is stored as ADDR_LE_DEV_PUBLIC (0),
-the same value as BDADDR_BREDR. HCI_OP_LE_START_ENC is then issued on
-the ACL handle, the controller rejects it with Invalid HCI Command
-Parameters, and hci_cs_le_start_enc() disconnects the link with
-HCI_ERROR_AUTH_FAILURE. The headphones drop within a second of
-connecting, before any profile is up; a manual reconnect works.
+In send_cancel(), pending mesh_tx objects are removed from the
+hdev->mesh_pending list and freed via mesh_send_complete().  However, if
+a mesh transmission was already queued onto hdev->cmd_sync_work_list via
+mesh_next(), the queued entry retains a raw pointer to mesh_tx.
 
-btmon (MediaTek MT7922, kernel 7.0.12):
+When hci_cmd_sync_work later processes the entry, it attempts to execute
+mesh_send_sync and its destroy callback mesh_send_start_complete using
+the already freed mesh_tx pointer, leading to a use-after-free.
 
-  > HCI Event: Encryption Change (0x08) plen 4
-        Status: Success (0x00)
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-        Encryption: Enabled with AES-CCM (0x02)
-  > ACL Data RX: Handle 50 flags 0x02 dlen 6
-        BR/EDR SMP: Security Request (0x0b) len 1
-        Authentication requirement: No bonding, No MITM, SC (0x08)
-  < HCI Command: LE Start Encryption (0x08|0x0019) plen 28
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-  > HCI Event: Command Status (0x0f) plen 4
-        LE Start Encryption (0x08|0x0019) ncmd 1
-        Status: Invalid HCI Command Parameters (0x12)
-  < HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-        Reason: Authentication Failure (0x05)
+Fix this by invoking hci_cmd_sync_dequeue() for mesh_send_sync on the
+target mesh_tx before completing it.  If the entry is found and dequeued,
+its destroy callback will complete and free the object; otherwise,
+mesh_send_complete() is called directly.
 
-SMP over BR/EDR is limited to cross-transport key derivation; the
-Security Request procedure (Core Specification Vol 3, Part H, Section
-2.4.6, PDU in Section 3.6.7) has no BR/EDR counterpart. Reply with
-Pairing Failed / Command Not Supported on a non-LE link, before the PDU
-is parsed, and keep the connection. The reply is sent directly rather
-than through smp_failure(): rejecting a command on the wrong transport
-is not an authentication failure, and MGMT_EV_AUTH_FAILED would make
-bluetoothd disconnect the device.
+Additionally, ensure the transmission queue advances after cancellation
+or errors.  In mesh_send_start_complete(), call mesh_next() on error
+unless err is -ECANCELED, because hci_cmd_sync_dequeue() holds
+hdev->cmd_sync_work_lock and calling mesh_next() synchronously would
+deadlock.  Instead, advance the queue in send_cancel() once the lock is
+released and if no transmission is in progress.
 
-Tested on the affected host (kernel 7.0.12, MediaTek MT7922, Bose QC
-Ultra) with the patched module built out of tree: 7 days and 49
-reconnects without a drop, against 2 drops in the 3 days before the
-patch. Every disconnect in that week had a userspace or remote reason.
-
-Fixes: b5ae344d4c0f ("Bluetooth: Add full SMP BR/EDR support")
-Assisted-by: LLM
-Signed-off-by: Christiano Amora <christiano.amora@gmail.com>
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/bluetooth/mgmt.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index 1f8561112ec14..1700e295f14da 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2295,6 +2295,23 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 6a3f4afc9760a..251e0c0a062a7 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2217,6 +2217,8 @@ static void mesh_send_start_complete(struct hci_dev *hdev, void *data, int err)
+ 		hci_dev_clear_flag(hdev, HCI_MESH_SENDING);
+ 		/* Send Complete Error Code for handle */
+ 		mesh_send_complete(hdev, mesh_tx, false);
++		if (err != -ECANCELED)
++			mesh_next(hdev, NULL, 0);
+ 		return;
+ 	}
  
- 	bt_dev_dbg(hdev, "conn %p", conn);
+@@ -2326,19 +2328,28 @@ static int send_cancel(struct hci_dev *hdev, void *data)
+ 		do {
+ 			mesh_tx = mgmt_mesh_next(hdev, cmd->sk);
  
-+	/* SMP over BR/EDR only covers cross-transport key derivation; the
-+	 * Security Request procedure has no BR/EDR counterpart. Reject it
-+	 * here, otherwise smp_ltk_encrypt() finds the peer's LE LTK
-+	 * (ADDR_LE_DEV_PUBLIC and BDADDR_BREDR are both 0) and issues
-+	 * HCI_OP_LE_START_ENC on the ACL handle, which the controller
-+	 * rejects and hci_cs_le_start_enc() turns into a disconnect. Reply
-+	 * without smp_failure(): this is not an authentication failure, and
-+	 * MGMT_EV_AUTH_FAILED would make bluetoothd drop the device.
-+	 */
-+	if (hcon->type != LE_LINK) {
-+		u8 reason = SMP_CMD_NOTSUPP;
+-			if (mesh_tx)
+-				mesh_send_complete(hdev, mesh_tx, false);
++			if (mesh_tx) {
++				if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
++							  mesh_tx, NULL))
++					mesh_send_complete(hdev, mesh_tx, false);
++			}
+ 		} while (mesh_tx);
+ 	} else {
+ 		mesh_tx = mgmt_mesh_find(hdev, cancel->handle);
+ 
+-		if (mesh_tx && mesh_tx->sk == cmd->sk)
+-			mesh_send_complete(hdev, mesh_tx, false);
++		if (mesh_tx && mesh_tx->sk == cmd->sk) {
++			if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
++						  mesh_tx, NULL))
++				mesh_send_complete(hdev, mesh_tx, false);
++		}
+ 	}
+ 
+ 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
+ 			  0, NULL, 0);
+ 
++	if (!hci_dev_test_flag(hdev, HCI_MESH_SENDING))
++		mesh_next(hdev, NULL, 0);
 +
-+		smp_send_cmd(conn, SMP_CMD_PAIRING_FAIL, sizeof(reason),
-+			     &reason);
-+		return 0;
-+	}
-+
- 	if (skb->len < sizeof(*rp))
- 		return SMP_INVALID_PARAMS;
+ 	return 0;
+ }
  
 -- 
 2.53.0
