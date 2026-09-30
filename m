@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F734E50CF;
-	Wed, 30 Sep 2026 15:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD6A4F4D08;
+	Wed, 30 Sep 2026 15:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783621; cv=none; b=EYaRQK+kQn0qtP9IZYbCHqbGSZpL4PPlhCv1MXKck/EXM6hK7CXi2vrn2rD+AatyJDrUl38jihkU3QYOk2XPILha3BF77cYf3tZJCmVlZbrGWnhuR7SQCheUFeYUERGOtZmsGEqLG1rs2VsBcmZvL90bQdAqJ6NRh25YhWdQXIc=
+	t=1790783627; cv=none; b=P++orSZaAX/QYqXNpbJM/bE3xTM2D5L3ylJwflRbKcDITkxgiQoPwAg1WwuEwDRMSIWnKAhV5t9Gwjpc93jBj/WxhYaLVNxZC87FMp4thRl9SFF+P/cztS4UcuJ2RsjjVrBNX/2V7NmhtgNUzhB66ncl5xmUgZj29NQ/b4rLhhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783621; c=relaxed/simple;
-	bh=fgJfMjxG7zS59CSL3JXLV52q7Dn1k9GwVHQLn5ViDbE=;
+	s=arc-20240116; t=1790783627; c=relaxed/simple;
+	bh=MdcCh0yOI93cengOJ9wfOIaDXPJ0Pg1Qq61DqjzE70k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcB9M2b6eC9l377d1vj8zhHJPiajq3G16NYYCH8icdNfHWV9QWbkPRjQAjZMpxlSRXoO/FX2X7RVg4SvLuV82vtFCW9lIQXJigzQNIhhdhjp90yUo9qJf5xTqbBMr6nxavADjizjeUiKGncJzIhrSulg0J2oEDGjp6rAMmZcBE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTqlVNBS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qjOrteHFl5nAvHPCt7iy4zEj12OxRr0284kT7Wbph0Sbcm1VCX90BUeILHUDbFpZgNVdL1XBSqXN+034mmVcpK9JDlhW+U/PsW0jTPuqGqjaFUrNk+aCzcXyYBYv9HTp3JTkdF/Yqn4OkBJOyJbX3Jf24aBZW9ElcAxmWTcK59Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0KDReg/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTqlVNBS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906161F00893;
-	Wed, 30 Sep 2026 15:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0KDReg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4860F1F00893;
+	Wed, 30 Sep 2026 15:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783617;
-	bh=yFlhLmyKupB/oNjQnDaMqRkicofNOlyozMripXS5MyU=;
+	s=korg; t=1790783622;
+	bh=lXZqgg+M5orNxYI6NPVTvMY+Ffh5E4ZO8/a8aq/HjKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UTqlVNBS4NDhtuNOmL27UeB7Qn+BvaZKMzecg/EOA92gKE8EBv/vakmCqnKfQgVbH
-	 t2gARENPEOZQisS24zSAZM8egw19YKlZIlAbwu5eAMfg6YPe+WxdSgnDA5Rd7PUgXQ
-	 UJVNfdZKvlWj6ZmHIQxGd7g6ytzuzDJl8b6CELp0=
+	b=E0KDReg/ESnhIhAjV5NGrbe/B+sEjxkVgg59i/oPaEPuEtLXPZ5uB09+G8csDxUV8
+	 qWshl7mqfB3Jf2qZxOy0rCS4d2vqpTCo4yx741kXC6nDZuUHsZu6a2UqhoGQLcm0xB
+	 aKXxZIJ/jNlykbS2t8lNyKEKWICTYsmLwTfnPZb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 463/595] wifi: libertas_tf: fix UAF in lbtf_free_adapter()
-Date: Wed, 30 Sep 2026 17:25:56 +0200
-Message-ID: <20260930152357.641204812@linuxfoundation.org>
+Subject: [PATCH 5.10 465/595] wifi: wlcore: release runtime PM ref on regdomain config failure
+Date: Wed, 30 Sep 2026 17:25:58 +0200
+Message-ID: <20260930152357.682740568@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,41 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit bbb9a0ab96d44a64529aafc7a16de460a1712f6a upstream.
+commit 8a1f3cf89ddcc700e25afe42cfad333059adcc94 upstream.
 
-lbtf_free_adapter() calls lbtf_free_cmd_buffer() to free the command
-buffers before calling timer_delete_sync() to wait for the command
-timer callback.  If the timer callback (command_timer_fn) is already
-running when lbtf_free_cmd_buffer() frees the command array, the
-callback dereferences priv->cur_cmd->cmdbuf which points to freed
-memory.
+wlcore_regdomain_config() gets a runtime PM reference before sending
+the regulatory-domain command. When
+wlcore_cmd_regdomain_config_locked() fails, the function queues recovery
+and returns without dropping that reference.
 
-Swap the order so that timer_delete_sync() runs first, ensuring any
-in-flight callback has completed before the command buffers are freed.
+Release the reference after handling the command result so both success
+and failure paths balance the preceding
+pm_runtime_resume_and_get(). The recovery worker takes a separate
+runtime PM reference and cannot release the reference held here.
 
-Fixes: 06b16ae53192 ("libertas_tf: main.c, data paths and mac80211 handlers")
+Fixes: fa2648a34e73 ("wlcore: Add support for runtime PM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260815115724.920628-1-yijiangshan@kylinos.cn
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260820125126.12757-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas_tf/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ti/wlcore/main.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/net/wireless/marvell/libertas_tf/main.c
-+++ b/drivers/net/wireless/marvell/libertas_tf/main.c
-@@ -173,8 +173,8 @@ static int lbtf_init_adapter(struct lbtf
- static void lbtf_free_adapter(struct lbtf_private *priv)
- {
- 	lbtf_deb_enter(LBTF_DEB_MAIN);
--	lbtf_free_cmd_buffer(priv);
- 	timer_delete_sync(&priv->command_timer);
-+	lbtf_free_cmd_buffer(priv);
- 	lbtf_deb_leave(LBTF_DEB_MAIN);
- }
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -3666,10 +3666,8 @@ void wlcore_regdomain_config(struct wl12
+ 	}
  
+ 	ret = wlcore_cmd_regdomain_config_locked(wl);
+-	if (ret < 0) {
++	if (ret < 0)
+ 		wl12xx_queue_recovery_work(wl);
+-		goto out;
+-	}
+ 
+ 	pm_runtime_mark_last_busy(wl->dev);
+ 	pm_runtime_put_autosuspend(wl->dev);
 
 
