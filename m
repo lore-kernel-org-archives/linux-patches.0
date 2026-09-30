@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA2A3624BF;
-	Wed, 30 Sep 2026 16:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E887C4F55B6;
+	Wed, 30 Sep 2026 16:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787227; cv=none; b=l+1FX+Vs1Yr0X7UnvFUkyo8xmVLz+a0m8CLlteprS8lYmdTmnmA8s0A5fk44cTxN+tLD2LsHCw6/n+z18yDSp09EXlIimrN3yVzc1FuXzg6dUSfoCc36SshrXOkEHqEBszLxAAX/LQ6rTl16qDFXnnV0RIMYkwrwb1E/j8Rf5lE=
+	t=1790787230; cv=none; b=S5Nh8oVK7KVGA2uBPmmSpQZ6Xt9KNLuqxTJQYGCSuX94tEJbCeIig+zL8Hwrj4uy8hZW13/Eli15fUaeIba8kalnxjJjwR58/8J4lfwytibpf0yiCi8BojF7p41Y2wBmainYXDJm0EV+oicYJAE557heRdVEHKunRoD0a7iJySg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787227; c=relaxed/simple;
-	bh=wAkq6Y/sj+/seaCLNuyadaeX4GJhjSf0xw/R4wKQIgU=;
+	s=arc-20240116; t=1790787230; c=relaxed/simple;
+	bh=osiAwvJ79Fbu5JrcDqeUbJ63nTRDRIWs+ykEQ1UTFzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByRAhErEtSusXOmb+URRMGZtRYr4ZoFUK+VFESzfoU6TydvUlhVfZV5GRwiLZgSpZBChsZS35PprAfAOS6A+zmkw3qKS6xO2B3PnKDvCti1XpftictU4m4D6l48B/LW2nSlsc5AwAZqBkhvBgq+EeJcQULpAn8Y3fHDG2oxgl1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGfKJ42S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K6rJnu/+REFj3WLM/BVK9KnitPaps+EOs1Dq9kKxNZT1BDMQQmOpE97v2x87j+X/Zm4GqDyiC7vxGEFjdbMZxHz1i1uu4/o5m87S8GmZwwTCmpImS7ps1oEvm84vwZRDPey1jVHdmEyk5SPGLNhfXK4oUxXV+mxJzcA6kH8Sid8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GntHKoO2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGfKJ42S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758BC1F000FF;
-	Wed, 30 Sep 2026 16:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GntHKoO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500681F000FF;
+	Wed, 30 Sep 2026 16:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787226;
-	bh=W7Rx+cihMnB6ObMqX/tpXgcR2knGSLbXQZMO3b0p4Wk=;
+	s=korg; t=1790787228;
+	bh=hmBxNIWVxBG+pxn5R/72htLtc9XSku1msxbornzKQ/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KGfKJ42SB7J8xx4HYYvZELlN1X5aeW+p2Rfy/lYVE+eGDC5WPmErIiMhAsnx2UVHx
-	 hvsktBnhDd2aNC1pFt2je4c8gd2wt3Th9R/+VD6B0eXla6ta02qVfogRQVszN6dgjh
-	 uE3P5RX+KPeN07NY1vBQAwuBW9aI/A7nhgaTtmk0=
+	b=GntHKoO2gmMh4PqTsseeuY/ZDYDepFHnOL64uhJkni5lWmeaOo1W+6VYWsmn19bFV
+	 0B1o7ULZ5l1ZzKbBz5K+hLrB+Fg6LNxRrrPqODKepCGui8QJoUvKazkU3UOiR+OTOw
+	 u664qOP4rjw1I9JRGQZ8rPST3aXubsQ+RB8zZimc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
 	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Val Packett <val@invisiblethingslab.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 111/457] drm/virtio: release the GEM object on virtio_gpu_vram_create() errors
-Date: Wed, 30 Sep 2026 17:23:36 +0200
-Message-ID: <20260930152348.448287185@linuxfoundation.org>
+Subject: [PATCH 7.2 112/457] Revert "drm/virtio: Allow importing prime buffers when 3D is enabled"
+Date: Wed, 30 Sep 2026 17:23:37 +0200
+Message-ID: <20260930152348.470223622@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,66 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-[ Upstream commit 036d28db1818af2f9d80db771f5405da84d7732d ]
+[ Upstream commit 1e3b08de63274d0b009e99ef51cd6a9c0c6bf08c ]
 
-virtio_gpu_vram_create() frees the object with a bare kfree(vram) on
-both error paths after drm_gem_private_object_init() has run, and on the
-second one after drm_gem_create_mmap_offset() has linked obj->vma_node
-into the device's VMA offset manager. The freed object stays in that
-interval tree, so a later lookup or insertion walks freed memory, and
-the dma_resv and gpuva lock are never destroyed.
+Guest userspace may import udmabuf to vrend. Vrend doesn't support guest
+blobs, and thus, further 3d operations with the imported blob are failing.
+Typical scenario of the problem shown with mouse cursor RGBA image imported
+into virtio-gpu, which previously was rejected by virtio-gpu driver.
+Revert enabling guest blobs importing into vrend to fix the regression.
 
-Call drm_gem_object_release() before kfree() on both paths.
-
-Fixes: 16845c5d5409 ("drm/virtio: implement blob resources: implement vram object")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://gitlab.freedesktop.org/virgl/virglrenderer/-/work_items/674
+Fixes: df4dc947c46b ("drm/virtio: Allow importing prime buffers when 3D is enabled")
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260915-fixes-v2-4-a0d799e4db66@outlook.com
+Reviewed-by: Val Packett <val@invisiblethingslab.com>
+Link: https://patch.msgid.link/20260911144204.2089401-1-dmitry.osipenko@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_vram.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_prime.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_vram.c b/drivers/gpu/drm/virtio/virtgpu_vram.c
-index 4ae3cbc35dd36..683ea17454c2e 100644
---- a/drivers/gpu/drm/virtio/virtgpu_vram.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vram.c
-@@ -212,16 +212,12 @@ int virtio_gpu_vram_create(struct virtio_gpu_device *vgdev,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_prime.c b/drivers/gpu/drm/virtio/virtgpu_prime.c
+index 70b3b836e1c99..c2748378a8ad6 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_prime.c
++++ b/drivers/gpu/drm/virtio/virtgpu_prime.c
+@@ -310,7 +310,7 @@ struct drm_gem_object *virtgpu_gem_prime_import(struct drm_device *dev,
+ 		}
+ 	}
  
- 	/* Create fake offset */
- 	ret = drm_gem_create_mmap_offset(obj);
--	if (ret) {
--		kfree(vram);
--		return ret;
--	}
-+	if (ret)
-+		goto err_release_obj;
+-	if (!vgdev->has_resource_blob)
++	if (!vgdev->has_resource_blob || vgdev->has_virgl_3d)
+ 		return drm_gem_prime_import(dev, buf);
  
- 	ret = virtio_gpu_resource_id_get(vgdev, &vram->base.hw_res_handle);
--	if (ret) {
--		kfree(vram);
--		return ret;
--	}
-+	if (ret)
-+		goto err_release_obj;
- 
- 	virtio_gpu_cmd_resource_create_blob(vgdev, &vram->base, params, NULL,
- 					    0);
-@@ -237,6 +233,11 @@ int virtio_gpu_vram_create(struct virtio_gpu_device *vgdev,
- 
- 	*bo_ptr = &vram->base;
- 	return 0;
-+
-+err_release_obj:
-+	drm_gem_object_release(obj);
-+	kfree(vram);
-+	return ret;
- }
- 
- void virtio_gpu_vram_map_deferred(struct virtio_gpu_object_vram *vram)
+ 	bo = kzalloc_obj(*bo);
 -- 
 2.53.0
 
