@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79E33C3437;
-	Wed, 30 Sep 2026 19:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6B934CFDE;
+	Wed, 30 Sep 2026 19:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794882; cv=none; b=LYc+GjZJHNEt/wd3WYUwUzUlWrAXoWXVT5jf+gqQJ+fDnoWhNvnYdtSYWNJSdB/kWsSgsq68Kr6oeG4JOMU5ZFAScFRykG50l/VyXFFOvYleamd9+YvLyLHGclEouj6/XgXEn1pAZP4U1Bq91QJtWSccFY/sxEZqV6ynzUmYKzs=
+	t=1790794883; cv=none; b=UyMg55DZ7ifkspLcDlM0v9L2vvoAkMJx6S4gQlmaTwHmNxoj4lSmfBml4UCgyyVz28PHUmBiaces8NQxCAwoUkBK/Um9ygtp6ENY9ia0c9M7cWKNPCG7QjBhO6qJbbhYbJeZNYkspiFuATuVhiXmG3nlNEM1JheixT7BqOyujIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794882; c=relaxed/simple;
-	bh=M7Y0/GgDN4Df724cvJY2da5+kvB6hK+B93ceE+ft2vs=;
+	s=arc-20240116; t=1790794883; c=relaxed/simple;
+	bh=lGW3UbL12eElusQewO8Nq0nrAUxMfLHQA3MyGCk9qxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j4QP4RBCwDsG2FOouKY9LeX2wIg1pbkimSTR/n4D6LdyaGj9h3bnLtS/7289zunh1gP8TopWlwWt1xXQbE2Mw5jDvIr08Tzs1R5j677n07DQmTb8ZgQ6HyltcUCjLFh5gIVnvolvjMjdryAKaZhfpkN3FTREx4UYytBDO7SEt1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIkrI8Il; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjnkqzX3WeIU/ou7ZEwicsBf7RKTFtzoXBNJjSYTlTlVL9UNigeVuwnM6d2rh+OXAjpMkyOE05RKnKs/rtNCIiyD0dC2EnQlj49P48nwwRvqYlY0R8YnH+jJQQM8yIlyOGQnQjUm3vFEoJSVmToStYYx3YoJ74+t7oyOxBJpA4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIZ7d7TT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIkrI8Il"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB361F0089B;
-	Wed, 30 Sep 2026 19:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIZ7d7TT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67EC1F0089D;
+	Wed, 30 Sep 2026 19:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794858;
-	bh=+o7oV+l9qQGl6mkEpc+U0MJj2SLlm+zf0MGV6qsAjcc=;
+	s=korg; t=1790794864;
+	bh=sOfuuIMI4Pys914rdv9NSDuUKwMZKedRTd6po4O2lkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIkrI8Il/NKzs2e475bc7WCotvfdzlAsoriEGy/+tAhZ8D52MDR8pVlqgDVLm9cf4
-	 qPycRHUggO3ZXyuWOZD/GDj4o3QsExNR3jwABjzVCvgeaKI24w2bqlcTVA4dpJrE9x
-	 I2OpjKLzE0OlopGA9RLrSsJ9Ob3Bmdkh2FadcCJg=
+	b=SIZ7d7TTQIshdu7mgq60ENGAdTxhcAm/mvYfgAD6wQsx/9w03UcDZqRD1NxpahY+p
+	 Ro84PyJ21tBvJx5uEkLOZ8m0wYpzo60+vhB1cWJi7/XTcW1Q+uiNN7Ls5KlK7ghCDP
+	 MKenY+gL1Lw/yWmCLnQqG483LRp/fC4Tpyj8Meys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
+	James Clark <james.clark@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0357/1193] bpf: Mask pseudo pointer values in verifier logs
-Date: Wed, 30 Sep 2026 17:17:21 +0200
-Message-ID: <20260930152442.100133774@linuxfoundation.org>
+Subject: [PATCH 6.6 0359/1193] coresight: platform: defer connection counter increment until alloc succeeds
+Date: Wed, 30 Sep 2026 17:17:23 +0200
+Message-ID: <20260930152442.150907262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,46 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
 
-[ Upstream commit 72a85e9464a5332fb2cd7efd26d9295275ceda2d ]
+[ Upstream commit 1563ae33dc4f5ebac96b93af2ef72e72aaaa31ae ]
 
-print_bpf_insn() masks ldimm64 immediates for pointer-bearing pseudo
-sources when pointer leaks are not allowed, but the mask only covers
-BPF_PSEUDO_MAP_FD and BPF_PSEUDO_MAP_VALUE.
+coresight_add_out_conn() increments nr_outconns before calling
+devm_krealloc_array() and again before devm_kmalloc(). If either
+allocation fails, the counter is already bumped while the corresponding
+array entry is NULL or uninitialized garbage.
 
-BPF_PSEUDO_MAP_IDX, BPF_PSEUDO_MAP_IDX_VALUE, and BPF_PSEUDO_BTF_ID can
-also be resolved to kernel pointer values before the verifier log prints
-the instruction. Include them in the existing pointer classification so
-the log prints 0x0 instead of the rewritten address.
+coresight_add_in_conn() has the same problem with nr_inconns and
+devm_krealloc_array().
 
-Fixes: 4976b718c355 ("bpf: Introduce pseudo_btf_id")
-Fixes: 387544bfa291 ("bpf: Introduce fd_idx")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Link: https://lore.kernel.org/r/20260623-f01-13-pseudo-btf-id-cap-bpf-v2-1-a190ebb8f3e2@mails.tsinghua.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+In both cases the probe returns -ENOMEM, which causes
+coresight_get_platform_data() to call coresight_release_platform_data()
+for cleanup. That function iterates up to nr_outconns (or nr_inconns)
+entries and dereferences each pointer unconditionally, hitting the NULL
+or garbage entry and panicking instead of failing gracefully.
+
+Fix by moving the counter increments to after all allocations succeed,
+so the struct is always consistent on any error path.
+
+Fixes: 3d4ff657e454 ("coresight: Dynamically add connections")
+Fixes: e3f4e68797a9 ("coresight: Store in-connections as well as out-connections")
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260511-fix-ref-count-issue-v1-1-99d647810d3c@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/disasm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-platform.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/disasm.c b/kernel/bpf/disasm.c
-index 49940c26a2274..cc3c9792c4a61 100644
---- a/kernel/bpf/disasm.c
-+++ b/kernel/bpf/disasm.c
-@@ -287,7 +287,10 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
- 			 */
- 			u64 imm = ((u64)(insn + 1)->imm << 32) | (u32)insn->imm;
- 			bool is_ptr = insn->src_reg == BPF_PSEUDO_MAP_FD ||
--				      insn->src_reg == BPF_PSEUDO_MAP_VALUE;
-+				      insn->src_reg == BPF_PSEUDO_MAP_VALUE ||
-+				      insn->src_reg == BPF_PSEUDO_MAP_IDX ||
-+				      insn->src_reg == BPF_PSEUDO_MAP_IDX_VALUE ||
-+				      insn->src_reg == BPF_PSEUDO_BTF_ID;
- 			char tmp[64];
+diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+index 57a009552cc5c..5873ff5a61de5 100644
+--- a/drivers/hwtracing/coresight/coresight-platform.c
++++ b/drivers/hwtracing/coresight/coresight-platform.c
+@@ -45,9 +45,8 @@ coresight_add_out_conn(struct device *dev,
+ 		}
+ 	}
  
- 			if (is_ptr && !allow_ptr_leaks)
+-	pdata->nr_outconns++;
+ 	pdata->out_conns =
+-		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns,
++		devm_krealloc_array(dev, pdata->out_conns, pdata->nr_outconns + 1,
+ 				    sizeof(*pdata->out_conns), GFP_KERNEL);
+ 	if (!pdata->out_conns)
+ 		return ERR_PTR(-ENOMEM);
+@@ -63,7 +62,8 @@ coresight_add_out_conn(struct device *dev,
+ 	 * used right away.
+ 	 */
+ 	*conn = *new_conn;
+-	pdata->out_conns[pdata->nr_outconns - 1] = conn;
++	pdata->out_conns[pdata->nr_outconns] = conn;
++	pdata->nr_outconns++;
+ 	return conn;
+ }
+ EXPORT_SYMBOL_GPL(coresight_add_out_conn);
+@@ -86,13 +86,13 @@ int coresight_add_in_conn(struct coresight_connection *out_conn)
+ 			return 0;
+ 		}
+ 
+-	pdata->nr_inconns++;
+ 	pdata->in_conns =
+-		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns,
++		devm_krealloc_array(dev, pdata->in_conns, pdata->nr_inconns + 1,
+ 				    sizeof(*pdata->in_conns), GFP_KERNEL);
+ 	if (!pdata->in_conns)
+ 		return -ENOMEM;
+-	pdata->in_conns[pdata->nr_inconns - 1] = out_conn;
++	pdata->in_conns[pdata->nr_inconns] = out_conn;
++	pdata->nr_inconns++;
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(coresight_add_in_conn);
 -- 
 2.53.0
 
