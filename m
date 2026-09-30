@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBA31E1A17;
-	Wed, 30 Sep 2026 18:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA863B3C18;
+	Wed, 30 Sep 2026 18:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794050; cv=none; b=NpNZ3huIKOdA4aUnbhKqYAgEZyf/E7gCK275JY4y410sUHfndnKDtQdRHnLOH2FDmaM7p5Bo4mEQESDyp2m/f1Qu1+kyh4IYC7kLGMvi/gIRKuyyQE9EdnH/8cPbnHX3Lh3RWf6xKUuyP+OoG5h+oqXZLGR3VTHLb6oYlGo652g=
+	t=1790794053; cv=none; b=t6HcEtWIRmDuGe3Ic6/BEHGtXH0VnxchNn+0uM3ZkRyyAB1SkPLTNL0JHVRUh1Twvq5lFh3G+prag+6RZil64iRBipb67TBEXLOrhadXVD4JS85fV/H9VgU65OvNyBiiIerY7YXhCxe+sftcXtTxeUraJZPcn6ZZ3xA/k1X0Fdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794050; c=relaxed/simple;
-	bh=EgiYkw8sClak3JQ091T7/jTqSZwTchMbqOCTvqJ/Ps4=;
+	s=arc-20240116; t=1790794053; c=relaxed/simple;
+	bh=9KY/H6OUN0UxCyEf+FrX2bL0Nj+fg2+wm2ClHZxXgeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfvZIXZmPPw83+YHAD63i8AwBWK0O3ChyCuy2MBaNssTir7qd4PlA48HVczO9wE1/21HQjakLBlECnbRSSkiT6KOzELu2JQniw0t9EQDAb6DiJdDaI/2HKWbEEAmmSo7AK+ui03agBdivPLSe3rhYWBtyQbFLH4KTxdQlkXxf2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ynmSJIB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lxJ2zEm1B1E9qauquCDhnc/oLpzd6jWsU61BykY6mtFiuv6BN8PJv9rprML+7fftVND21uTBRuKH1FbjGy5tnFZ5bqyXuykMBNy2anKV/AHA6oMTvEpydqXWDS2sPRsYQ7Pv5dwgLXXrfLXeXJ10npDIWX1IPoHdPbCchwbOVEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVfAG2dA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ynmSJIB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CB81F000FF;
-	Wed, 30 Sep 2026 18:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVfAG2dA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688621F000FF;
+	Wed, 30 Sep 2026 18:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794049;
-	bh=/IIaf+HJxP9quKxVZSe9i3EM2z6gJB+wwofo5LfBWOo=;
+	s=korg; t=1790794051;
+	bh=y+iIgga/nTDed/iLlU1wNY80bxgBBg9HJYdc5mN38y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ynmSJIBScyTQeJTum8Doa8Qh5vM67H73NIgYFH92bqpaxxVWMIItab5xI0KWG5mR
-	 whBF/hjH3Qy8Mj/qPMl1NYGN6rHQ0n4ZMD0SY/MbYd9hU0F2Wll3wcXiM75aZIVEyI
-	 706QwOTKfTucZamLdepSh0yGIa/M3aKEPDEToGcQ=
+	b=vVfAG2dAr5pVayCGUoO59AZ++jXinIr0To6UUtCtPj871t+JNN/R6cYjCdpVe4t/5
+	 Gy6P3sXl9O6PUreXgsX6dgrDb9izbkuYGhwQFIgG42vpWqpR+i+PQJw1BU/C9WugsS
+	 ssqCk32fLMHG1lfgfCbagMKkRYtSroxMcxZDQcQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gil Fine <gil.fine@linux.intel.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0074/1193] thunderbolt: Increase timeout for Configuration Ready bit
-Date: Wed, 30 Sep 2026 17:12:38 +0200
-Message-ID: <20260930152435.906552517@linuxfoundation.org>
+Subject: [PATCH 6.6 0075/1193] thunderbolt: Verify Router Ready bit is set after router enumeration
+Date: Wed, 30 Sep 2026 17:12:39 +0200
+Message-ID: <20260930152435.927109954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,41 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Gil Fine <gil.fine@linux.intel.com>
 
-[ Upstream commit ba2cc385110129d03cd0f18a1b5969a430b67a18 ]
+[ Upstream commit 062023c4364ffdc72978ed2de1d1435e5d4eee43 ]
 
-After setting the Configuration Valid bit (ROUTER_CS_5.CV), the USB4
-Connection Manager guide specifies a 500 ms timeout for the router to
-set the Configuration Ready bit (ROUTER_CS_6.CR). The current timeout
-is shorter than specified. While there, fix the kernel-doc typo.
+The USB4 Connection Manager guide specifies that after enumerating a
+router, the Connection Manager shall verify that the Router Ready bit
+(ROUTER_CS_6.RR) has been set to ensure hardware configuration has completed.
+Currently, this step is missing from the enumeration sequence.
 
-Increase the timeout to match the CM guide recommendation.
+Add this check to follow the Connection Manager guide more closely.
 
 Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/usb4.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/tb_regs.h | 1 +
+ drivers/thunderbolt/usb4.c    | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/thunderbolt/tb_regs.h b/drivers/thunderbolt/tb_regs.h
+index 4419e274d2b4c..9b053cce3256f 100644
+--- a/drivers/thunderbolt/tb_regs.h
++++ b/drivers/thunderbolt/tb_regs.h
+@@ -216,6 +216,7 @@ struct tb_regs_switch_header {
+ #define ROUTER_CS_6_WOPS			BIT(2)
+ #define ROUTER_CS_6_WOUS			BIT(3)
+ #define ROUTER_CS_6_HCI				BIT(18)
++#define ROUTER_CS_6_RR				BIT(24)
+ #define ROUTER_CS_6_CR				BIT(25)
+ #define ROUTER_CS_7				0x07
+ #define ROUTER_CS_9				0x09
 diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
-index d4b4f58e717c1..254415920f57f 100644
+index 254415920f57f..9bddba6d01a2f 100644
 --- a/drivers/thunderbolt/usb4.c
 +++ b/drivers/thunderbolt/usb4.c
-@@ -303,7 +303,7 @@ int usb4_switch_setup(struct tb_switch *sw)
-  * Sets configuration valid bit for the router. Must be called before
-  * any tunnels can be set through the router and after
-  * usb4_switch_setup() has been called. Can be called to host and device
-- * routers (does nothing for the latter).
-+ * routers (does nothing for the former).
-  *
-  * Returns %0 in success and negative errno otherwise.
-  */
-@@ -326,7 +326,7 @@ int usb4_switch_configuration_valid(struct tb_switch *sw)
- 		return ret;
+@@ -293,7 +293,12 @@ int usb4_switch_setup(struct tb_switch *sw)
+ 	/* TBT3 supported by the CM */
+ 	val &= ~ROUTER_CS_5_CNS;
  
- 	return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_CR,
--				      ROUTER_CS_6_CR, 50);
-+				      ROUTER_CS_6_CR, 500);
+-	return tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
++	ret = tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
++	if (ret)
++		return ret;
++
++	return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_RR,
++				      ROUTER_CS_6_RR, 500);
  }
  
  /**
