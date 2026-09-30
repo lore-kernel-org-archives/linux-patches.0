@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6635187DE;
-	Wed, 30 Sep 2026 17:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB1D5187DE;
+	Wed, 30 Sep 2026 17:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788258; cv=none; b=OGWxm9Tz3kgnkV9AIUCztRJiGOalaWCKOtM8K6xppC1IQ5WjvD/UY4GYV8ezw7uCRePgz0WvnHBG1kiO9Y3IsvCFddMWnERyMCt93cMq8gJsPyZMbcwlsWUiFmVn8M1cnFddtic/tzeqrHegMwMHBOOhnt6eir0agE7rJwFJuF4=
+	t=1790788261; cv=none; b=tEcaes8DzG46+2nNIgUI803iYAWLjbEpS2wgEj+hFSBDKIx0BEbNxtqL8n+gD/QPw2ARDambIvmx38ThzSicMM+gi4lt2iOIW9UeuXRLx6+yH620lSC055mQIUrm0sJ1Dspc77d2jXf7UsxiLN5mvmll0xFaqQFQQABr6vQE39o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788258; c=relaxed/simple;
-	bh=vV/Q8+frWuxx5Irv80ZjLR5arhlOAKlyOccCUYIX/9Q=;
+	s=arc-20240116; t=1790788261; c=relaxed/simple;
+	bh=b8JFs6sZf9hiqLA5ctlMs9V5kGJ4MPsEyTPlAXSWrfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zoe4JkBHERW0F5LrBfsSKOFyMzhMtnp5sRW4o3y7mL31Pj2/suQ3SPwNl9VDTtiDm4QH/00Q83mp6lRqH7CstIhSFYpv2sO55e5dyEWJIeqv6piQdN8Bk0xQqukahr++i3V1ks9i5qwufEpUEfHUlTmVU8Q8fMgAmG1CkXBSA5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqLMQhap; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3zPSNYe+HZDbrsvFNyZjyqiucgM2T8/gqMxlsyxBD+2UV/D7iW3d+95VQj5pVohB8XtB/HtTgmdcnQpUhMOBgRFebQ4MZNjsStvb9d5m+0sqO4NuDsAgFRauEx5m8O2/lEu0aK/DfbK47NzEOZgeb9JsyXo2cTVdPux0r091so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7wCZ6RR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqLMQhap"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199621F000FF;
-	Wed, 30 Sep 2026 17:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7wCZ6RR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A261F000FF;
+	Wed, 30 Sep 2026 17:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788257;
-	bh=LnJ/r0+vsk/n/xH/+Up2xmMVsxW+Dv4Bh4wf2M1qxJk=;
+	s=korg; t=1790788260;
+	bh=4x+NtirnOmfA1Z5opVuMuaMuDXZNuMxAMgWi6GReM0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqLMQhapkLdRV5vyhEypvAUkPKne+j2rjFILp6Cx9xWXYwfunaOBa7YxWM46X1l40
-	 dHJS7g0C0dzApxVJOBguhmDfBpLYYbukIHP++ZegDTnBSyeDkYOXzEbVErNNB1xl8V
-	 KBcGiIyh6QKxutyceLkyhDgVpGqL/EUtmHldfRB4=
+	b=S7wCZ6RRNVogybD+ddQ+0KE2jRCdaaCgOAXqqazTmifPaSj8E0lpgIgzmMjaGOTA3
+	 QV5sVtsAzTy039PmrwXbburS5onQ/FOvKIGjI69eA6ivMoANqxAo51InWvWVZVvmsc
+	 dTqXuS1V1L/QLzumJv6vqZuOkRidgt+7Whh6nwpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	syzbot+1634c5399e29d8b66789@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/877] wifi: mac80211: use vif radio mask to limit ibss scan frequencies
-Date: Wed, 30 Sep 2026 17:16:10 +0200
-Message-ID: <20260930152416.018296965@linuxfoundation.org>
+Subject: [PATCH 6.12 060/877] wifi: mac80211: dont warn when an IBSS has no channel to scan
+Date: Wed, 30 Sep 2026 17:16:11 +0200
+Message-ID: <20260930152416.039177757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,93 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 32ee616a7f8c36fa3ab00985ebd038c3487e721f ]
+[ Upstream commit a7491b7efbd9136b120a12ed72af9c12121dd134 ]
 
-Reject frequencies not supported by any radio that the vif is allowed to
-use.
+ieee80211_request_ibss_scan() warns when regulatory leaves no
+allowed channel, but that can happen as the regdomain can change
+while IBSS is operating, and it can continue to operate briefly
+during the 60s grace period until it's shut down.
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/9d5c0b6b00a7ecef6a0ac6de765c0af00c8bb0e1.1728462320.git-series.nbd@nbd.name
+Just remove the warning in this case.
+
+Assisted-by: LLM
+Fixes: 34bcf7150241 ("mac80211: fix ibss scanning")
+Reported-by: syzbot+1634c5399e29d8b66789@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1634c5399e29d8b66789
+Link: https://patch.msgid.link/20260904165722.fe380c27fef4.I0e8bee2e12a40d240851a4bc724d47753af46159@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: a7491b7efbd9 ("wifi: mac80211: don't warn when an IBSS has no channel to scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/scan.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ net/mac80211/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 8675d2e99c564..07ce9cd35dab2 100644
+index 07ce9cd35dab2..19e374fa00795 100644
 --- a/net/mac80211/scan.c
 +++ b/net/mac80211/scan.c
-@@ -1180,14 +1180,14 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
- 				unsigned int n_channels)
- {
- 	struct ieee80211_local *local = sdata->local;
--	int ret = -EBUSY, i, n_ch = 0;
-+	int i, n_ch = 0;
- 	enum nl80211_band band;
- 
- 	lockdep_assert_wiphy(local->hw.wiphy);
- 
- 	/* busy scanning */
- 	if (local->scan_req)
--		goto unlock;
-+		return -EBUSY;
- 
- 	/* fill internal scan request */
- 	if (!channels) {
-@@ -1204,7 +1204,9 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
- 				    &local->hw.wiphy->bands[band]->channels[i];
- 
- 				if (tmp_ch->flags & (IEEE80211_CHAN_NO_IR |
--						     IEEE80211_CHAN_DISABLED))
-+						     IEEE80211_CHAN_DISABLED) ||
-+				    !cfg80211_wdev_channel_allowed(&sdata->wdev,
-+								   tmp_ch))
- 					continue;
- 
- 				local->int_scan_req->channels[n_ch] = tmp_ch;
-@@ -1213,21 +1215,23 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
- 		}
- 
- 		if (WARN_ON_ONCE(n_ch == 0))
--			goto unlock;
-+			return -EINVAL;
- 
- 		local->int_scan_req->n_channels = n_ch;
- 	} else {
- 		for (i = 0; i < n_channels; i++) {
- 			if (channels[i]->flags & (IEEE80211_CHAN_NO_IR |
--						  IEEE80211_CHAN_DISABLED))
-+						  IEEE80211_CHAN_DISABLED) ||
-+			    !cfg80211_wdev_channel_allowed(&sdata->wdev,
-+							   channels[i]))
- 				continue;
- 
- 			local->int_scan_req->channels[n_ch] = channels[i];
- 			n_ch++;
+@@ -1214,7 +1214,7 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
+ 			}
  		}
  
 -		if (WARN_ON_ONCE(n_ch == 0))
--			goto unlock;
 +		if (n_ch == 0)
-+			return -EINVAL;
+ 			return -EINVAL;
  
  		local->int_scan_req->n_channels = n_ch;
- 	}
-@@ -1237,9 +1241,7 @@ int ieee80211_request_ibss_scan(struct ieee80211_sub_if_data *sdata,
- 	memcpy(local->int_scan_req->ssids[0].ssid, ssid, IEEE80211_MAX_SSID_LEN);
- 	local->int_scan_req->ssids[0].ssid_len = ssid_len;
- 
--	ret = __ieee80211_start_scan(sdata, sdata->local->int_scan_req);
-- unlock:
--	return ret;
-+	return __ieee80211_start_scan(sdata, sdata->local->int_scan_req);
- }
- 
- void ieee80211_scan_cancel(struct ieee80211_local *local)
 -- 
 2.53.0
 
