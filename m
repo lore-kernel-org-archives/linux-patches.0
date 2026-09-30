@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587EE46EF77;
-	Wed, 30 Sep 2026 15:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D213DEFFE;
+	Wed, 30 Sep 2026 15:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783258; cv=none; b=rasKLFV39eJwr9pvn0I/Tmse81mC8BWu8sLDe2BRdE8BO3fO/eG4hdbiYsBzrL47IMrDui0zIBeFhjCqElswk2yPFhdDxYP8gy4oleh/awJUq39fQFM3CE2jk9o/wYkAiGRpykUnYKlFSphi30YlQMFeLxomxiuSYeT/Et57Nkc=
+	t=1790783261; cv=none; b=ScdKLcAPM0ECu+q/9A7tV4PvQbbME1l1ilomgHEq8RN5xfc4iR+hQ+WXSzUfKJOO609dt+l0G7KT6pUKSvTska7j6z51jdMrByTLp4RxoM889fYBrjnOOtf53K/qqYkDgAg1PjVAstBzVhCbt+uJPxnsl1SMUJ3L0/qSV2XN1t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783258; c=relaxed/simple;
-	bh=j4V/+7CtQndtb9sjiqn+T8QIXE4ErnlAPW6ba2nUP5I=;
+	s=arc-20240116; t=1790783261; c=relaxed/simple;
+	bh=Xas6/HTMSBRlxZLiEcEUxvjSCkwI/d9nYROzqacuA/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skSAp4q7P1QxJcUZFidux78gyeUrxDtSHxfMJF6N7/PyRnvAotQHNStJuFlyMRrPRvvIcNUeTBFIuErB/YZieXprKdrVhD4dwkMBe3MijjrROhLiEfLeAHBtdWfc3qUDwZ3OCqGXAaYu+5y/FJ/lpO0B2+Nsz3aEaU+Ylb6pp7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7ZRU+R3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gx0P/B+ZyUvLoWhkemiCJoz4AzE6+xoCjzgHnv77D/Rd0BeYKcrNAMm/+1H5fW1MzLae42W9Q+6KVzZx87KWmKYQ3F6xmhstuJ3tZWQQMOyVHg6V9tUd9wDLJSywo6EXwstGVwQfVs7lSLlMV/2t1am7RetXGBNZCWAz9ZsRtr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9bNFWkI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7ZRU+R3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23E81F000FF;
-	Wed, 30 Sep 2026 15:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9bNFWkI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB8C1F00893;
+	Wed, 30 Sep 2026 15:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783254;
-	bh=zx16DvXGRmgTSXwrjtVpx6TurAiK4KRzGWBFaIZWdlM=;
+	s=korg; t=1790783257;
+	bh=V0jC/j+gaEKN+ze0GFUkGg+0Z92Dhw3xhq2PM2l3YZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7ZRU+R3nChdwFiHjTN3iOLRlU+Di02RI8+9Z5aqppmpUztEcanfjCKNSUrYcIrr5
-	 /LaGuRju2wqw8XpeZmOJ9fUo9t6r7EZ7EeKh/7GyPSAMoDhRheRaRAsWdrVka3U5gh
-	 wJ9AqaNTCrRd577Ixcz9y5OQQxjNC9MZdTjcNBmM=
+	b=h9bNFWkInRhmjeHoYy+SLaWcZQ1XUe6WfxNYxBjx/XEpsleCoAWTQaQnw+4wSDJxb
+	 xGr9Ef5w2IMAArRnEhDdYw5tDhoULxDB5IS07qR/pjiJwykuUQ+xWJ+Eiz8fpBW689
+	 byB/tjHxEYKj3ERwMyTSAqsFx4HSBIJKz5He68MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 333/595] Bluetooth: L2CAP: Fix deadlock
-Date: Wed, 30 Sep 2026 17:23:46 +0200
-Message-ID: <20260930152354.844673481@linuxfoundation.org>
+Subject: [PATCH 5.10 334/595] ARM: fix hash_name() fault
+Date: Wed, 30 Sep 2026 17:23:47 +0200
+Message-ID: <20260930152354.866058680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,124 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit f1a8f402f13f94263cf349216c257b2985100927 ]
+[ Upstream commit 7733bc7d299d682f2723dc38fc7f370b9bf973e9 ]
 
-This fixes the following deadlock introduced by 39a92a55be13
-("bluetooth/l2cap: sync sock recv cb and release")
+Zizhi Wo reports:
 
-============================================
-WARNING: possible recursive locking detected
-6.10.0-rc3-g4029dba6b6f1 #6823 Not tainted
---------------------------------------------
-kworker/u5:0/35 is trying to acquire lock:
-ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
-l2cap_sock_recv_cb+0x44/0x1e0
+"During the execution of hash_name()->load_unaligned_zeropad(), a
+ potential memory access beyond the PAGE boundary may occur. For
+ example, when the filename length is near the PAGE_SIZE boundary.
+ This triggers a page fault, which leads to a call to
+ do_page_fault()->mmap_read_trylock(). If we can't acquire the lock,
+ we have to fall back to the mmap_read_lock() path, which calls
+ might_sleep(). This breaks RCU semantics because path lookup occurs
+ under an RCU read-side critical section."
 
-but task is already holding lock:
-ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
-l2cap_get_chan_by_scid+0xaf/0xd0
+This is seen with CONFIG_DEBUG_ATOMIC_SLEEP=y and CONFIG_KFENCE=y.
 
-other info that might help us debug this:
- Possible unsafe locking scenario:
+Kernel addresses (with the exception of the vectors/kuser helper
+page) do not have VMAs associated with them. If the vectors/kuser
+helper page faults, then there are two possibilities:
 
-       CPU0
-       ----
-  lock(&chan->lock#2/1);
-  lock(&chan->lock#2/1);
+1. if the fault happened while in kernel mode, then we're basically
+   dead, because the CPU won't be able to vector through this page
+   to handle the fault.
+2. if the fault happened while in user mode, that means the page was
+   protected from user access, and we want to fault anyway.
 
- *** DEADLOCK ***
+Thus, we can handle kernel addresses from any context entirely
+separately without going anywhere near the mmap lock. This gives us
+an entirely non-sleeping path for all kernel mode kernel address
+faults.
 
- May be due to missing lock nesting notation
+As we handle the kernel address faults before interrupts are enabled,
+this change has the side effect of improving the branch predictor
+hardening, but does not completely solve the issue.
 
-3 locks held by kworker/u5:0/35:
- #0: ffff888002b8a940 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
-process_one_work+0x750/0x930
- #1: ffff888002c67dd0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
-at: process_one_work+0x44e/0x930
- #2: ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
-l2cap_get_chan_by_scid+0xaf/0xd0
+[ Xie Yuanbin: At the upstream, the following patches are a patch set:
+  1. commit dea20281ac8822661576 ("ARM: group is_permission_fault() with
+     is_translation_fault()")
+  2. commit 40b466db1dffb41f0529 ("ARM: allow __do_kernel_fault() to
+     report execution of memory faults")
+  3. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault")
+  4. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening")
+  patch 1. and 2. is unneeded for 5.10.y and 5.15.y . This patch backports
+  patch 3. and simply adapts to the context differences. ]
 
-To fix the original problem this introduces l2cap_chan_lock at
-l2cap_conless_channel to ensure that l2cap_sock_recv_cb is called with
-chan->lock held.
-
-Fixes: 89e856e124f9 ("bluetooth/l2cap: sync sock recv cb and release")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Karl Mehltretter: only the l2cap_core.c and l2cap_sock.c hunks apply
-  to this tree. hci_sync.c and hci_sync.h do not exist here, and the
-  hci_core.c change is an unrelated conversion of hci_dev_cmd() off
-  the old hci_request API. The changes to both L2CAP files apply
-  unmodified.
-
-  The lock this adds to l2cap_conless_channel() is also the one that
-  commit c531e63871c0 ("Bluetooth: l2cap: always unlock channel in
-  l2cap_conless_channel()") was backported without, so it additionally
-  pairs the l2cap_chan_unlock() that function currently calls on a
-  mutex it never acquired. ]
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reported-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Reported-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Link: https://lore.kernel.org/r/20251126090505.3057219-1-wozizhi@huaweicloud.com
+Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |  3 +++
- net/bluetooth/l2cap_sock.c | 13 +------------
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ arch/arm/mm/fault.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index e974d8038dec8..cb883bd13286a 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -8055,6 +8055,8 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
- 
- 	BT_DBG("chan %p, len %d", chan, skb->len);
- 
-+	l2cap_chan_lock(chan);
-+
- 	if (chan->state != BT_BOUND && chan->state != BT_CONNECTED)
- 		goto drop;
- 
-@@ -8072,6 +8074,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
- 	}
- 
- drop:
-+	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- free_skb:
- 	kfree_skb(skb);
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 9d834f2254626..018b5a0c87ce9 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1548,18 +1548,9 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
- 	struct l2cap_pinfo *pi;
- 	int err;
- 
--	/* To avoid race with sock_release, a chan lock needs to be added here
--	 * to synchronize the sock.
--	 */
--	l2cap_chan_hold(chan);
--	l2cap_chan_lock(chan);
- 	sk = chan->data;
--
--	if (!sk) {
--		l2cap_chan_unlock(chan);
--		l2cap_chan_put(chan);
-+	if (!sk)
- 		return -ENXIO;
--	}
- 
- 	pi = l2cap_pi(sk);
- 	lock_sock(sk);
-@@ -1611,8 +1602,6 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
- 
- done:
- 	release_sock(sk);
--	l2cap_chan_unlock(chan);
--	l2cap_chan_put(chan);
- 
- 	return err;
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 622fa99e138f6..831fc426cda1f 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -247,6 +247,35 @@ __do_page_fault(struct mm_struct *mm, unsigned long addr, unsigned int fsr,
+ 	return fault;
  }
+ 
++static int __kprobes
++do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
++			     unsigned int fsr, struct pt_regs *regs)
++{
++	if (user_mode(regs)) {
++		/*
++		 * Fault from user mode for a kernel space address. User mode
++		 * should not be faulting in kernel space, which includes the
++		 * vector/khelper page. Send a SIGSEGV.
++		 */
++		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
++	} else {
++		/*
++		 * Fault from kernel mode. Enable interrupts if they were
++		 * enabled in the parent context. Section (upper page table)
++		 * translation faults are handled via do_translation_fault(),
++		 * so we will only get here for a non-present kernel space
++		 * PTE or PTE permission fault. This may happen in exceptional
++		 * circumstances and need the fixup tables to be walked.
++		 */
++		if (interrupts_enabled(regs))
++			local_irq_enable();
++
++		__do_kernel_fault(mm, addr, fsr, regs);
++	}
++
++	return 0;
++}
++
+ static int __kprobes
+ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ {
+@@ -261,6 +290,12 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 
+ 	tsk = current;
+ 	mm  = tsk->mm;
++	/*
++	 * Handle kernel addresses faults separately, which avoids touching
++	 * the mmap lock from contexts that are not able to sleep.
++	 */
++	if (addr >= TASK_SIZE)
++		return do_kernel_address_page_fault(mm, addr, fsr, regs);
+ 
+ 	/* Enable interrupts if they were enabled in the parent context. */
+ 	if (interrupts_enabled(regs))
 -- 
 2.53.0
 
