@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154B94F7CC3;
-	Wed, 30 Sep 2026 18:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978AF51A73A;
+	Wed, 30 Sep 2026 18:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791541; cv=none; b=lMB/M8irzAkLNIXQM6HKfzIzb5F+Fw789xxZ0OX8F0SnzZrHJQ03RS1ZFREeDrR3BdlI2vaPP0IevJR/MLfP526OUHhJvbxnFUqC+EOQpDx8m0HhDxi6bYqDGPnVS2GooHNzs0Tri+XBhkA72wL8EnifeXV+pueSlIOaJZuWWuY=
+	t=1790791543; cv=none; b=spC7eIVQVN1G59SqUB6/QNTjRJOoC4XQDO5DZ9P1HbdOeWd6CzYOmD/7acsUv83xi0a85seRD89FztRq3F/fNiu5OjGPfb1AI9g+/WVcvPEOk9tS8IK829z5hAq4UQcMM5WL/ueZwUO7nAfI4fDCM28T9O09K2nB8/gZr4wiHKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791541; c=relaxed/simple;
-	bh=rpceGRebnwOaE0F4Hhh3432/oU9S+T9HpL/9jZcCMB8=;
+	s=arc-20240116; t=1790791543; c=relaxed/simple;
+	bh=7cEGgVTxEF1Gktgp2bFDBfJJZz3IW+2lgDJjNGdWBHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCwqE0lb4HlrFt3wVc/O7nalb4ry27gTVJgrhhBg8wZSmPSi1rlwTZDDXRKPsL4bECm6ABiBDbDPPEq8P90tvSE421XNzREQZo2eQROg7VGgtJ5l88vpRkS9d395iqhWMn6fKjYXczY4DzRBlfkqWNZ3evKxuxMLUQ6DZQlQV6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+Z0Sc+X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LrthSpfw21iSh2GDw7y8yI9N2utsVCpRmk4IfSFKo6a5THlfetQGCqA6WlumKVLNFK1PeIoFDpCwigrCPW6jwa/2+X4UzG8AG1uf0zEMbEQWFjaC5DEZXnTXDInLEKNV438sWlQOLT2xYWEhC4zs9HFlRdS/ki5NfP9IOlO79sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArGzpPBy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+Z0Sc+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136DE1F000FF;
-	Wed, 30 Sep 2026 18:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArGzpPBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCF91F000FF;
+	Wed, 30 Sep 2026 18:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791539;
-	bh=IhM7pygD+w0QZT5CfcWnCm4ZUSgVvq9WfX4HcXrNZX4=;
+	s=korg; t=1790791542;
+	bh=wSwSHVXSbv/XPqtjGrfPi/71qVUhdlAnxR+EAEyJN4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+Z0Sc+Xq+FxHQcApbDUWrnj9SJzWbEbjqaL2E6Xtl9i0pSP/91tVYx/qqTbDBj5T
-	 IeTcU3MpgNY5QIlQO+hK1JV/GOgtlIe/oXb2aSy89MI7agKQ0QwCufjyp/0ojwSIXW
-	 IOTU6OPrPL1HiJs1CsW8wAxZVxs7dU05PF4BpVdM=
+	b=ArGzpPBypbKHg2ybClOrgpL1IEc8v03NxYnrhKhjR6QtK0y8wVNkxy4OG9He2tX+3
+	 w4IW7xMAtTCjjy98Fk/X87x+TCwCCMCs9D4MF1tnzmQWUSHTCt0Z9SQ5H8+qIKvkzw
+	 XTKnUcTnOs0FjQUJVNaJVXNg4wnDMUXH2ccymdLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/752] net: ethernet: cortina: Count dropped frames as NAPI work
-Date: Wed, 30 Sep 2026 17:23:28 +0200
-Message-ID: <20260930152405.604614446@linuxfoundation.org>
+Subject: [PATCH 5.15 339/752] net: ethernet: cortina: No mapping is a dropped rx
+Date: Wed, 30 Sep 2026 17:23:29 +0200
+Message-ID: <20260930152405.627787388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,74 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit b856c552f556bc0341c1dbe0bf88e630fd1dc4b7 ]
+[ Upstream commit 2cb156213093a62b80cf40b1ec71738e93491971 ]
 
-The RX loop only consumes budget when it successfully delivers a frame.
-Error paths keep consuming descriptors without reducing the budget, so a
-stream of bad frames can process the entire receive ring in one poll.
+Increase stats.rx_dropped++ even if this is the first fragment
+(skb == NULL) so we are doing proper accounting.
 
-Move the budget accounting to a common end-of-frame path. This counts
-each completed frame as NAPI work whether it was delivered or dropped,
-matching the behavior of the vendor driver.
-
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Assisted-by: LLM
+Fixes: b266bacba796 ("net: ethernet: cortina: Drop half-assembled SKB")
+Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-3-2bbbd598ca6e@kernel.org
+Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-1-6c5d20ddc35b@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 6520198c430c ("net: ethernet: cortina: Count RX drops once per frame")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index ea5f1df313d62..9b65d554196de 100644
+index 9b65d554196de..d5bf439777817 100644
 --- a/drivers/net/ethernet/cortina/gemini.c
 +++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1470,7 +1470,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+@@ -1464,9 +1464,9 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
+ 		if (!gpage) {
+ 			dev_err(geth->dev, "could not find mapping\n");
++			port->stats.rx_dropped++;
+ 			if (skb) {
+ 				napi_free_frags(&port->napi);
+-				port->stats.rx_dropped++;
  				skb = NULL;
  				frag_nr = 0;
  			}
--			continue;
-+			goto next_desc;
- 		}
- 		page = gpage->page;
- 
-@@ -1492,7 +1492,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 
- 		} else if (!skb) {
- 			put_page(page);
--			continue;
-+			goto next_desc;
- 		}
- 
- 		if (word3.bits32 & EOF_BIT)
-@@ -1515,10 +1515,8 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
- 			frag_nr = 0;
--			budget--;
--			received++;
- 		}
--		continue;
-+		goto next_desc;
- 
- err_drop:
- 		if (skb) {
-@@ -1531,6 +1529,13 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			put_page(page);
- 
- 		port->stats.rx_dropped++;
-+
-+next_desc:
-+		/* Final or single-descriptor fragment, advance things */
-+		if (word3.bits32 & EOF_BIT) {
-+			budget--;
-+			received++;
-+		}
- 	}
- 
- 	port->rx_skb = skb;
 -- 
 2.53.0
 
