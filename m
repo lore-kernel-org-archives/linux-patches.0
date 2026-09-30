@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22251E458;
-	Wed, 30 Sep 2026 17:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B429551EE1C;
+	Wed, 30 Sep 2026 17:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790302; cv=none; b=GuoX6ROjIxRlvYP+IvexauW1eCjdewvRHFM7Evjav8/F/BPYPLI2xJe9tcZonOqmZMzZsWVtuvU2mNXoVAgmigXEIrfaTIUFAaA5fOexJGd6PC3aR0b3EhDe6jyDMKBXxDWKmj/U2U1lO5erASAWbDIi/wHhbH00gNgG2cffQnc=
+	t=1790790306; cv=none; b=DP8dRmBnYgaKQQNoxn7AEmrH4i0NDQnrHLRbTKpF8pBl1iPLyv7XE2kHecQ6hr9ZFXx6a+BN9fSTF8QpI9q0ws18YfSaRPmxnGJM/e0sgvrei+1x6jfjrEE+WbWQkcb2bc+Qz89pjqpNnXhpP31/F5IUfTtKBTaoubAcsoLcee0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790302; c=relaxed/simple;
-	bh=E/F5JvdsTBb+SGFMWcKAfaMtCgOQRQhCFBeyiJIdJq0=;
+	s=arc-20240116; t=1790790306; c=relaxed/simple;
+	bh=z3lORglkpYoegzbSnejwdewgXwq6Mf7ZUY63GfD5Vr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ze/OcnNC0lk5JwP8L70nUw14R4zk7I2RBDoYBEDsDg4tGEHbwdXnEg0sZMymDwzJFT77kHAM0kstDtLdwND3U7Ay3ZWQtxiT5fnhSBOnokBhoJHM4t4L6n7G/7Z6HBm1leteRlTkZtMrSAJCc9BHbsV0I9xKWLVdCAt5IobFjP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqRM3yFs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bqweKRwzpVj8GN0cpWEWG5PI6h0FUe30CjjemKco2CWrwbEGM77zeLHgjERC3JyvqyudwL/FlDdiVaaOGf9rZPAyw9oZVIIlrpZd+BpyDS21+mmkdkKaF/4OTW5sXRZOSEQGSOh8D45vJNbSoay89cDHY1CyxLfb/y5fUK5yek8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ji9AwtzL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqRM3yFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F70A1F000FF;
-	Wed, 30 Sep 2026 17:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ji9AwtzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65C11F000FF;
+	Wed, 30 Sep 2026 17:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790301;
-	bh=YigR575OVIVZjFqbsDJ0VmpbE6uLKGAOI8366sN1rXA=;
+	s=korg; t=1790790304;
+	bh=6+XobdQDpXBUApBms3uxjSNImGM3Ux4yUl7ee2rELoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MqRM3yFs7EyfFQ4c+KTUeDVfSpbNHQxgmuptk5wjNMJluPmcwLbMw+su3hBWC/Pb4
-	 DJmXJkMd0tEB5FWav+Pi7/Po4i9dcd4JvvHFjcDTEVwKXMgvkr/q+nvVDORCsXJoqc
-	 0MpdZGLm7LwHyl/J2RH1/zXvysCDO1Gs5JREXbxs=
+	b=Ji9AwtzLewsk41BnT86j9Hz2UIWStRQ+pjmrbOpStTawg99fEvyLfmoMM0o7WMM6H
+	 rf0xNfKyVGlniQngwJNCWBndQ3pS8C+80WoJAoen+xZMVMXf/ablgjb97spfuI4knb
+	 JClsPRqpL3jaFuO+WGiUlJUy3rv7SnZG9nUHvHus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 779/877] xfs: strengthen the "is cow staging" helpers in scrub
-Date: Wed, 30 Sep 2026 17:28:10 +0200
-Message-ID: <20260930152431.524385368@linuxfoundation.org>
+Subject: [PATCH 6.12 737/877] netfilter: cttimeout: prevent UAF during module unload
+Date: Wed, 30 Sep 2026 17:27:28 +0200
+Message-ID: <20260930152430.594199742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,44 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 0d43368844a75ad13561a1198a3b027940730756 ]
+[ Upstream commit fec9b1de0d02de8dafa3cc344bcb91cf28660643 ]
 
-LOLLM pointed out a bug in both of the refcount scrub predicates that
-determine if a range of blocks is marked as CoW staging in the btree.
-While it compares blockcount < len, this isn't enough to determine that
-the CoW staging record is at least as large as the range passed into the
-helper.  Fix both of them.
+nf_ct_set_timeout() protects the timeout hook dereference and policy lookup
+with rcu_read_lock(). cttimeout_exit(), however, unregisters the per-net
+operations before it clears the hook.
 
-Cc: stable@vger.kernel.org # v4.16
-Fixes: f6d5fc21fdc713 ("xfs: cross-reference refcount btree during scrub")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ Omitted the rtrefcount.c hunk because Linux 6.12 lacks realtime refcount scrub support. ]
+This allows the following interleaving:
+
+  CPU 0                              CPU 1
+  cttimeout_exit()                   nf_ct_set_timeout()
+    unregister_pernet_subsys()         rcu_read_lock()
+      kfree(pernet)                     h = nf_ct_timeout_hook
+                                        h->timeout_find_get()
+                                          nfct_timeout_pernet()
+
+The hook still points to ctnl_timeout_find_get() when CPU 1 looks up the
+already freed per-net timeout list. KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in ctnl_timeout_find_get
+  Read of size 8 by task poc/90
+  Call Trace:
+   ctnl_timeout_find_get+0x271/0x2a0 [nfnetlink_cttimeout]
+   nf_ct_set_timeout+0x7b/0x3c0
+   xt_ct_tg_check+0x724/0xb20
+   xt_check_target+0x234/0xa90
+   do_ipt_set_ctl+0x570/0x1270
+  Allocated by task 89:
+   __kmalloc_noprof+0x16e/0x460
+   ops_init+0x6d/0x420
+   register_pernet_operations+0x2f6/0x670
+  Freed by task 91:
+   kfree+0x131/0x390
+   ops_undo_list+0x3d4/0x730
+   unregister_pernet_operations+0x232/0x490
+   unregister_pernet_subsys+0x1c/0x30
+   cttimeout_exit+0x52/0x970 [nfnetlink_cttimeout]
+
+Clear the hook and wait for existing readers before unregistering the
+per-net operations. This blocks new policy lookups and ensures readers that
+observed the hook finish before the per-net storage is freed.
+
+Fixes: ebfbe67568a7 ("netfilter: cttimeout: use net_generic infra")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/refcount.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/nfnetlink_cttimeout.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/refcount.c
-+++ b/fs/xfs/scrub/refcount.c
-@@ -581,8 +581,12 @@ xchk_xref_is_cow_staging(
- 	if (rc.rc_domain != XFS_REFC_DOMAIN_COW)
- 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+--- a/net/netfilter/nfnetlink_cttimeout.c
++++ b/net/netfilter/nfnetlink_cttimeout.c
+@@ -659,9 +659,9 @@ static void __exit cttimeout_exit(void)
+ {
+ 	nfnetlink_subsys_unregister(&cttimeout_subsys);
  
-+	/* Can't start after bno */
-+	if (rc.rc_startblock > agbno)
-+		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
-+
- 	/* Must be at least as long as what was passed in */
--	if (rc.rc_blockcount < len)
-+	if (rc.rc_startblock + rc.rc_blockcount < agbno + len)
- 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+-	unregister_pernet_subsys(&cttimeout_ops);
+ 	RCU_INIT_POINTER(nf_ct_timeout_hook, NULL);
+ 	synchronize_net();
++	unregister_pernet_subsys(&cttimeout_ops);
  }
  
+ module_init(cttimeout_init);
 
 
