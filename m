@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0352251A752;
-	Wed, 30 Sep 2026 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A70551A151;
+	Wed, 30 Sep 2026 17:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788449; cv=none; b=b2/ruMS9yMNBZqZ+FR9UIcyKiSxW/fusPRrWChLJmlgP8WqQQ6fN7XS7pEvvHevGiI8a+8jD0rVSwyvfdXrlpUgkiXlUQPPlJsTcUYm1PAEanMju9OqUg5CUem6ulPs/zJZQKOmLTgTWK67s8yS10jh3syNQ4iLFHV1mD39YVDA=
+	t=1790788452; cv=none; b=rq3pfBwPhTYpFv4LSryPUVkHeJKkRxSgDbx7HtVsxx+LbZS3R5Bwx9r/rlNuEvXyEHpLPwzwpEANXZvGeziK6Qvdiba3NBnAjWkxa0JnPkDrH32xA8V45nHHzRBSCf8UZSZ9zRo9BBfdPKx2t/WpIPlPnmawdY18FVnWZQnKWNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788449; c=relaxed/simple;
-	bh=KkfmCm4wMKbhWBiDK1IZ6OFWlwKLu5xxTqQd1Vq6dc4=;
+	s=arc-20240116; t=1790788452; c=relaxed/simple;
+	bh=QePlPW43HayHClLKaoR2+QZwBbWN5GHOHkvsBTnoopk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvRIZbAFhORcT6DD7mmAVepjI/+DUJ6XRsc5/JMTgFzhuG+Tq09nrPTbKUzLjs3fex6KvS04VzVatrI15LJlKqGmIB0/1A5d5/o5LUCaTUuk1+khclWbcTuZgi8qrpBeNZA9LTKdRLxyGryNAuivSoe6S7b1zhc1dY5eZK38QCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pR46iMCd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GfqCK7Qt1P6r2QhqnSQfkdV2CWXOLX4zKs6NVLAxi/qBWCdGYrhDONP+S+dQ4+aqA+5D+81KDJPg7MTgapG6CnWqKxwMvjqheUzxhFE4aM6Fq/ohcezR13JAeKhT/w8973N8banPczESUGdt2OjlIq547ICnyAaDL0yjqfNXpnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gwbhzz3r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pR46iMCd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230CC1F000FF;
-	Wed, 30 Sep 2026 17:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gwbhzz3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002651F000FF;
+	Wed, 30 Sep 2026 17:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788447;
-	bh=0gdU2stOEQahODt9O5B5J3JL/UTqonwcSPY/VxdYa2I=;
+	s=korg; t=1790788450;
+	bh=IuatbAjMeVJ8tDwm50Jc2loqx+1vGZEMrKGhTDx95dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pR46iMCdhFrZVpzeA2XdIs7QPZn04+DWEVUZoEMsuiQL1MFv+DvqNqtY/Qh9rvvl/
-	 7hf6YJPxyPTihnAzGHl3NJ7Mqw19e7tJNERKcoHJiYfzECEd3/f1k+fUhDMzGwWV03
-	 B0JS/L8KxtVlGDW8Zwgo5xgqvS9iLmy0mdZ3G/Yc=
+	b=Gwbhzz3rvAL49Lzydmtq9La9uvIAkjm6ccpSV/gM0oSCkVCipNCS8vlWIJblHVr+d
+	 VUntt2aojY6grIptcPLWbSdD1OIleZnS42wgR9Zf2UbPn5G+TOOOgXh+djyZWuHAZA
+	 RTrAWd6f8FRauZv7XiBAIsS+CRqilzwaMOVKcvfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baineng Shou <shoubaineng@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	co+855929c2df672879@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 129/877] dmaengine: mmp_pdma: fix wrong sg length in mmp_pdma_prep_slave_sg()
-Date: Wed, 30 Sep 2026 17:17:20 +0200
-Message-ID: <20260930152417.519879367@linuxfoundation.org>
+Subject: [PATCH 6.12 112/877] ALSA: 6fire: fix OOB write from device-reported iso length
+Date: Wed, 30 Sep 2026 17:17:03 +0200
+Message-ID: <20260930152417.154664375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,46 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 075bc7b1d3dde5ed43fbaabbc1a69f09b7fc3a47 ]
+[ Upstream commit 1589afe2d099d3e817873bc474676968d7080410 ]
 
-In mmp_pdma_prep_slave_sg(), for_each_sg() iterates the scatterlist
-putting each entry into 'sg', but the entry length is read from 'sgl'
-(the list head) instead of 'sg' (the current entry):
+usb6fire_pcm_in_urb_handler() sizes each outgoing isochronous packet as
+(actual_length - 4) / (in_n_analog << 2) * (out_n_analog << 2) + 4, where
+actual_length is the unsigned length the device reported for the matching
+IN packet.  A packet completed with status 0 and actual_length < 4 wraps
+the subtraction to 0x7fffffec; a zero-length isochronous packet is legal
+on the bus, and the preceding loop rejects only non-zero status.  The sum
+reaches memset() on out_urb->buffer, a 4832-byte object from
+kcalloc(PCM_MAX_PACKET_SIZE, PCM_N_PACKETS_PER_URB).
 
-    for_each_sg(sgl, sg, sg_len, i) {
-        addr = sg_dma_address(sg);
-        avail = sg_dma_len(sgl);   /* should be 'sg' */
+Even without the wrap the result is out of bounds: at 88.2/96 kHz the
+4-in/6-out scaling turns a full 420-byte IN packet into 628, so eight
+packets span 5024 bytes of that buffer.  usb_submit_urb() rejects an
+over-long descriptor only after the memset() and the
+usb6fire_pcm_playback() copy of user PCM data have run.
 
-Consequently 'avail' is always the length of the first entry. For
-multi-sg lists this causes out-of-bounds reads when a later entry is
-shorter than the first, and silent data loss when it is longer.
-Single-sg or uniformly-sized lists happen to mask the issue.
+Guard the subtraction as the sibling usb6fire_pcm_capture() already does,
+and limit the frame count to what fits in rt->out_packet_size, the OUT
+endpoint's wMaxPacketSize.  This bounds total_length by the buffer size
+while keeping each packet length aligned to a whole output frame.
 
-Fixes: c8acd6aa6bed3 ("dmaengine: mmp-pdma support")
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260910021652.1296640-1-shoubaineng@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+  BUG: KASAN: out-of-bounds in usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
+  Write of size 18446744073709551456 at addr ffff88802a3d0000 by task vhci_rx/5018
+  Call Trace:
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   kasan_check_range (mm/kasan/generic.c:186 mm/kasan/generic.c:200)
+   __asan_memset (mm/kasan/shadow.c:84)
+   usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
+   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
+   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107 drivers/usb/usbip/vhci_rx.c:242)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+
+  Allocated by task 10:
+   __kmalloc_cache_noprof (mm/slub.c:5563)
+   usb6fire_pcm_init (sound/usb/6fire/pcm.c:560 sound/usb/6fire/pcm.c:595)
+   usb6fire_chip_probe (sound/usb/6fire/chip.c:133)
+   usb_probe_interface (drivers/usb/core/driver.c:399)
+
+  The buggy address belongs to the object at ffff88802a3d0000
+   which belongs to the cache kmalloc-8k of size 8192
+  The buggy address is located 0 bytes inside of
+   4832-byte region [ffff88802a3d0000, ffff88802a3d12e0)
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
+Reported-by: co+855929c2df672879@bugs.sh
+Closes: https://lore.kernel.org/all/gisnub8aWGLbyZLcDCSc7zWsHonMWGcyRgt5%40bugs.sh/
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260914074324.3590843-1-xmei5@asu.edu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mmp_pdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/6fire/pcm.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index 852e6714d9f28..59227fbed9045 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -541,7 +541,7 @@ mmp_pdma_prep_slave_sg(struct dma_chan *dchan, struct scatterlist *sgl,
+diff --git a/sound/usb/6fire/pcm.c b/sound/usb/6fire/pcm.c
+index 9e8f4371e89ff..5f6a63f79990b 100644
+--- a/sound/usb/6fire/pcm.c
++++ b/sound/usb/6fire/pcm.c
+@@ -335,11 +335,19 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
  
- 	for_each_sg(sgl, sg, sg_len, i) {
- 		addr = sg_dma_address(sg);
--		avail = sg_dma_len(sgl);
-+		avail = sg_dma_len(sg);
- 
- 		do {
- 			len = min_t(size_t, avail, PDMA_MAX_DESC_BYTES);
+ 	/* setup out urb structure */
+ 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
++		unsigned int frames = 0;
++
+ 		isoc_out = &out_urb->instance->iso_frame_desc[i];
+ 		isoc_in = &in_urb->instance->iso_frame_desc[i];
++		if (isoc_in->actual_length > 4)
++			frames = (isoc_in->actual_length - 4)
++					/ (rt->in_n_analog << 2);
++		frames = min_t(unsigned int, frames,
++				       (rt->out_packet_size - 4)
++				       / (rt->out_n_analog << 2));
++
+ 		isoc_out->offset = total_length;
+-		isoc_out->length = (isoc_in->actual_length - 4) / (rt->in_n_analog << 2)
+-				* (rt->out_n_analog << 2) + 4;
++		isoc_out->length = frames * (rt->out_n_analog << 2) + 4;
+ 		isoc_out->status = 0;
+ 		total_length += isoc_out->length;
+ 	}
 -- 
 2.53.0
 
