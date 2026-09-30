@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D2951CF59;
-	Wed, 30 Sep 2026 18:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CF051CF71;
+	Wed, 30 Sep 2026 18:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793255; cv=none; b=XKG4+zNr/k7I91Sp0Olu/i49QZysQrkG/Sv0I0RYRGroYiZQ4uABKf4c6LHUdhqDQUttt3Jc7C4psOHT8d5hZhpAyzW0NAeIlL+7+cz595FUnaXBVFTui9w8Cdgb8WdkFpNWU+Q2iHOMc+d35Jc8vmmw1oc7szWksgB/7lkJ3M4=
+	t=1790793258; cv=none; b=pBCuZFYM1mig60gEEfTy/SI5YjaeSiMZioLLlLKpPTprDDtIvFOwmm3pxRPASoD+FZqTgIXELyrUdHVrLyTd0FPnW2YgfC5V5Th3w7HjdzUbrhgWsX3Ano7eUi+EEUApodHgCsSvMbzO+mOW2aUduuWUVuJsEXUaYPbA6dZWeww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793255; c=relaxed/simple;
-	bh=arbABNxUqLBOwp7b+AcjB7m9mQA+Ggm1Uz6hKYr+9ng=;
+	s=arc-20240116; t=1790793258; c=relaxed/simple;
+	bh=SHqIAwn9n1sFynYQjMjfzZHWmkDMRdbFvPbpzfV6rM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pps8mnNyQ5yb7uLfxa4HJliDDmqFzeKnxtX4j0TG6QGkZNF76NLYBZ6WeuHpZVioEkp6JPag7R0KpWn+YljmXnXKyWlqzE0mceh/BXe8rl5H90Adj8NbVFU/+NKWdFNCK5m2cAhmtzdM9PcF9so/d8f/XAV1W+POIWWjz+RiDNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxjbF4ip; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CdQRCs5P15GW5r15IssYRCn4TnGPSdw0d20BDAh4EiqNV0uQmRnFwtXv1BKID1dgvolA3CbxBV18GGw9P5paFBedQVpBY3ib9F6bpZlesERbodHH+58BJbjUnC/iNoJPywYEMf3PMZk+ndkgfi4DaBrVDBtX18dsP4AiOjQAGsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpWzkzst; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxjbF4ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D568B1F000FF;
-	Wed, 30 Sep 2026 18:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpWzkzst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A706D1F000FF;
+	Wed, 30 Sep 2026 18:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793254;
-	bh=pClUhAWuAJha7dpBM2vSiQQpXGgYkucL43WBwa0HbCg=;
+	s=korg; t=1790793257;
+	bh=rjY9ovyDfwPzyVXU4cq6HvaTA2H+J4jEHn5NbrWztLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OxjbF4ipVg5R8JfrNhUvyCQRswm2AIYyULbyl31rLL6hVchItoZG6AUPeDNRV8x6d
-	 NMrblSHgOXbiM9iTszv/5+52ZSRu/qrbY/ns7vxPI9T1hFMWnfQhEVFZGsr5iv52sO
-	 9CiG2nAqjwp8rvKYGaub31B0ZRo6kAvSTyXUroaE=
+	b=rpWzkzst/yIUJMDd0ARZjbKBeWXIH1zzX+G0xxpRg14SkD//dogAYj/SOk8e3cyg/
+	 0gOJbYFDWKM6hTdWPec1ONxJXAhQjhv6PdrhOWyMKXqG4prHxzsMLz04Pk96a+LH0y
+	 yDQTio2pQyCpo4wBfg+SqAQ9L4GY6lJGK6Q6uASc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie Phillips <eddiephillips@google.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Harshitha Ramamurthy <hramamurthy@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/395] gve: fix TX drop when GSO MSS is too small for hw
-Date: Wed, 30 Sep 2026 17:27:32 +0200
-Message-ID: <20260930152344.771811168@linuxfoundation.org>
+Subject: [PATCH 6.18 191/395] gve: DQO: reject TSO packets with an out of range MSS
+Date: Wed, 30 Sep 2026 17:27:33 +0200
+Message-ID: <20260930152344.793712582@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,67 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eddie Phillips <eddiephillips@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3b430ea6234087957b0d3cd181e3116722b59819 ]
+[ Upstream commit 296c83b5ccc808c080865eb20fd7a477b0355bb7 ]
 
-The device has a strict requirement that the minimum MSS
-(gso_size) for TSO/GSO packets must be at least 88 bytes. If a packet
-below this threshold is pushed to the hardware, it can cause
-hardware to silently drop the packet, leading to increased latency
-and retransmissions.
+gve_prep_tso() notes that the device requires the MSS to be <= 9728,
+but does not enforce it, assuming the 9K MTU enforced by the hypervisor
+and the 64KB limit on TSO sizes are enough.
 
-Currently, this is validated too late in the transmit pipeline
-(gve_prep_tso), leading to silent drops.
+This does not hold for packets that were not generated locally.
+A guest behind a tap, or any packet socket user, can provide an
+arbitrary gso_size in virtio_net_hdr. Layer 2 forwarding does not check
+the MTU for GSO packets (is_skb_forwardable()), and gso_features_check()
+only bounds skb->len and gso_segs, never gso_size.
 
-Fix this by moving the validation into the .ndo_features_check
-callback (gve_features_check_dqo). If we detect a GSO packet with
-a gso_size smaller than GVE_TX_MIN_TSO_MSS_DQO, we clear the GSO
-feature flags for this packet.
+Such a packet reaches gve_tx_fill_tso_ctx_desc(), which puts gso_size
+into the mss field of the TSO context descriptor. This field is 14 bits
+wide, so a gso_size of 16384 is silently turned into an MSS of zero.
+
+Drop these packets from gve_prep_tso(), and make sure that
+gve_features_check_dqo() leaves their GSO bits alone: skb_segment()
+splits at gso_size regardless of the MTU, so falling back to software
+segmentation would give the device non TSO packets bigger than the
+9728 bytes it supports.
+
+Note that the device can still be given oversized non TSO packets when
+the stack segments in software for other reasons, for instance after
+TSO has been disabled with ethtool. This is a generic issue, because
+the MTU check is skipped for GSO packets in the forwarding path, and
+is addressed separately.
 
 Fixes: a57e5de476be ("gve: DQO: Add TX path")
-Signed-off-by: Eddie Phillips <eddiephillips@google.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Link: https://patch.msgid.link/20260924004252.1196328-2-edumazet@google.com
+Link: https://patch.msgid.link/20260924004252.1196328-3-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_tx_dqo.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ .../net/ethernet/google/gve/gve_desc_dqo.h    |  5 ++++
+ drivers/net/ethernet/google/gve/gve_tx_dqo.c  | 26 ++++++++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/net/ethernet/google/gve/gve_desc_dqo.h b/drivers/net/ethernet/google/gve/gve_desc_dqo.h
+index f7786b03c7444..d2c86c8eeae2a 100644
+--- a/drivers/net/ethernet/google/gve/gve_desc_dqo.h
++++ b/drivers/net/ethernet/google/gve/gve_desc_dqo.h
+@@ -14,6 +14,11 @@
+ #define GVE_TX_MAX_HDR_SIZE_DQO 255
+ #define GVE_TX_MIN_TSO_MSS_DQO 88
+ 
++/* HW limit. This also has to fit in the 14 bits of the mss field of
++ * struct gve_tx_tso_context_desc_dqo.
++ */
++#define GVE_TX_MAX_TSO_MSS_DQO 9728
++
+ #ifndef __LITTLE_ENDIAN_BITFIELD
+ #error "Only little endian supported"
+ #endif
 diff --git a/drivers/net/ethernet/google/gve/gve_tx_dqo.c b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-index 49ed911957ec0..ba100f42fad93 100644
+index ba100f42fad93..b5565d0b197f0 100644
 --- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
 +++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-@@ -582,17 +582,6 @@ static int gve_prep_tso(struct sk_buff *skb)
+@@ -582,6 +582,20 @@ static int gve_prep_tso(struct sk_buff *skb)
  	int header_len;
  	int err;
  
--	/* Note: HW requires MSS (gso_size) to be <= 9728 and the total length
--	 * of the TSO to be <= 262143.
--	 *
--	 * However, we don't validate these because:
--	 * - Hypervisor enforces a limit of 9K MTU
--	 * - Kernel will not produce a TSO larger than 64k
--	 */
--
--	if (unlikely(shinfo->gso_size < GVE_TX_MIN_TSO_MSS_DQO))
--		return -1;
--
++	/* Note: HW requires the total length of the TSO to be <= 262143,
++	 * this is enforced by netif_set_tso_max_size().
++	 *
++	 * MSS (gso_size) can not be trusted: packets forwarded from a tap or
++	 * injected by a packet socket can carry an arbitrary value, while the
++	 * mss field of the TSO context descriptor is only 14 bits wide.
++	 *
++	 * A too big MSS is dropped here instead of being rejected from
++	 * gve_features_check_dqo(), because software segmentation would
++	 * produce packets larger than the device can send.
++	 */
++	if (unlikely(shinfo->gso_size > GVE_TX_MAX_TSO_MSS_DQO))
++		return -1;
++
  	/* Needed because we will modify header. */
  	err = skb_cow_head(skb, 0);
  	if (err < 0)
-@@ -930,6 +919,9 @@ static bool gve_can_send_tso(const struct sk_buff *skb)
- 	int header_len;
- 	int i;
- 
-+	if (unlikely(gso_size < GVE_TX_MIN_TSO_MSS_DQO))
-+		return false;
+@@ -969,7 +983,17 @@ netdev_features_t gve_features_check_dqo(struct sk_buff *skb,
+ 					 struct net_device *dev,
+ 					 netdev_features_t features)
+ {
+-	if (skb_is_gso(skb) && !gve_can_send_tso(skb))
++	if (!skb_is_gso(skb))
++		return features;
 +
- 	/* Must match the header length programmed by gve_prep_tso(). */
- 	if (skb_is_gso_tcp(skb))
- 		header_len = skb_tcp_all_headers(skb);
++	/* Keep the GSO bits for a too big MSS, so that gve_prep_tso() drops
++	 * the packet: software segmentation would give packets larger than
++	 * the device can send.
++	 */
++	if (skb_shinfo(skb)->gso_size > GVE_TX_MAX_TSO_MSS_DQO)
++		return features;
++
++	if (!gve_can_send_tso(skb))
+ 		return features & ~NETIF_F_GSO_MASK;
+ 
+ 	return features;
 -- 
 2.53.0
 
