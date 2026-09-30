@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A775172F8;
-	Wed, 30 Sep 2026 17:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A9B30FC27;
+	Wed, 30 Sep 2026 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787620; cv=none; b=KrEUwR7ohTbarUCC5xoYd4Yd1UkjqYvv5fTCNECDXM0ADfZ3nxMTHpx/1Ic24tPsQRXkuoLEGD36w6tLVWzrDEAQ2bjvZqQfvccNxS7CVHVSV9zp1l3OZsDpanb5JPuTYQdG3B2LZX25z1kVv8DjHVwbU5JEeOW34qnmt28O4Sc=
+	t=1790787623; cv=none; b=jK0l29K0+AmbNRM22l91NWrAdpYFlls7oV02e2kcktDjpO/bZpUHJJ8qYIYVYHzCE4RQUyFpk1UwzACnIRPgtkVFYJnGdrc44BMD50SolLwZKusYwa8zB6ipQy4MmIGUt8981pyDP2rE0LCe6DSefOrfUUI4Ce049PuwFswPrA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787620; c=relaxed/simple;
-	bh=hjP7c+1McOaw0NrBzfzpJzio+3avByMkSwApPd/0dw0=;
+	s=arc-20240116; t=1790787623; c=relaxed/simple;
+	bh=2MqgFV0xuDtk/WFc8Iyq+YWvs67/VHL/QE1lj5D41b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEulDUiF7O94Oem0gI1rkcK4MZP4C6XLlFmrFJxvdejGf3p1bVJACn00GYVR2W5h61m/TFbMXPYaC9g/Zd4cA1YzAsco9qTtNgR2YQSzJLmqLs/Od/t1993NgJ0r+LJDhm2VTbDBjUen6YnzoilJFra8XxNDj918jaucrXuulaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6w7b+in; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYYwlwdqDHAw5nleodX8/GQSv1/Bp6wW2oHL7LgWJrF7ZpInyQzY1BXNrOV5d5pWi8v+iWQCG13+7Vr6vEB49X+qObhSrGDUG1yJLpyFS2ubnZn34YKm63LuMtOKAhuoC2ab2JsOeuZwnUF8TQ2RjYFSzAkNifZ7mrnl0NSU5bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVWKLKk3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6w7b+in"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BD91F000FF;
-	Wed, 30 Sep 2026 17:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVWKLKk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEFEC1F000FF;
+	Wed, 30 Sep 2026 17:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787619;
-	bh=PtcSF4YF4ZqAnbNsFOxQftY0dARG96UTP7X/aa5+UNw=;
+	s=korg; t=1790787622;
+	bh=p6nMrCZgDLYM1KdNIANyKiLrNaQcyhhjHFRvPZVkXoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6w7b+inLBlwzgHHHP41e7cTeljS+ELiYFAI69feaoSjqTXYP+l7A8yAxXJORssRi
-	 KDL9StzW564E+TNJH1EQbbD5f4m2ZQcnU/bCcEFyhFfacjSiXRfo0JwRVSiDqTNtZq
-	 +MyRwTp8G1pmDJdiuStQklCbKEcW3BB5x5ZrX1AE=
+	b=XVWKLKk3q0hLyIz8mniAqwrePNC8JyniS0snbmXcJPUbbUYHtsz2mXnahiCdk2iQm
+	 2OO86H6XmjAnNaK/UH2UM8mgjwFduQ00xLnN0pMtxdfzFGAOiVBsY/TTVAC2nA/uqm
+	 V6+CJsfE08Ft9Yu/Wlm9jCiboSxbda5PZ+vPFiAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 292/457] drm/amdgpu: move userq fence wait out of signalling section
-Date: Wed, 30 Sep 2026 17:26:37 +0200
-Message-ID: <20260930152352.337326393@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 7.2 293/457] drm/nouveau/dmem: pin VRAM for the whole registered range
+Date: Wed, 30 Sep 2026 17:26:38 +0200
+Message-ID: <20260930152352.358237411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,73 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 3022bdfe3e6d776e9273d6892f7c193138ca0666 upstream.
+commit 64ca4cdd1031206424e6455f0ae4fb0560d8f46a upstream.
 
-The eviction fence suspend worker waits for every pending userq fence
-from inside a dma_fence_begin_signalling() critical section. Waiting on
-another DMA fence while responsible for signalling one violates the
-cross-driver fence contract and is reported by lockdep as a
-dma_fence_map dependency.
+Commit c32287471077 ("gpu/drm/nouveau: enable THP support for GPU memory
+migration") grew the device-private region that
+nouveau_dmem_chunk_alloc() registers from DMEM_CHUNK_SIZE to
+DMEM_CHUNK_SIZE * NR_CHUNKS, but left the VRAM buffer object backing that
+region at DMEM_CHUNK_SIZE.
 
-Move the wait before dma_fence_begin_signalling(). Keep userq_mutex held
-so queue lifetime remains stable while inspecting last_fence.
+nouveau_dmem_page_addr() returns chunk->bo->offset plus the page's offset
+within the registered region, so every page past the first chunk resolves
+to VRAM outside the buffer object.
 
-Fixes: fc61df151617 ("drm/amdgpu: annotate eviction fence signaling path")
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3bd4fbc5ed89621340b5cd249869092691a9c81f)
+Size the buffer object to the region it backs.
+
+Fixes: c32287471077 ("gpu/drm/nouveau: enable THP support for GPU memory migration")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260817-nouveau-fixes-v1-1-f518d0c735f3@outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_eviction_fence.c |    3 +++
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c          |    4 +---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h          |    1 +
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_dmem.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_eviction_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_eviction_fence.c
-@@ -68,6 +68,9 @@ amdgpu_eviction_fence_suspend_worker(str
+--- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
+@@ -339,8 +339,8 @@ nouveau_dmem_chunk_alloc(struct nouveau_
+ 	chunk->pagemap.ops = &nouveau_dmem_pagemap_ops;
+ 	chunk->pagemap.owner = drm->dev;
  
- 	mutex_lock(&uq_mgr->userq_mutex);
+-	ret = nouveau_bo_new_pin(&drm->client, NOUVEAU_GEM_DOMAIN_VRAM, DMEM_CHUNK_SIZE,
+-				 &chunk->bo);
++	ret = nouveau_bo_new_pin(&drm->client, NOUVEAU_GEM_DOMAIN_VRAM,
++				 DMEM_CHUNK_SIZE * NR_CHUNKS, &chunk->bo);
+ 	if (ret)
+ 		goto out_release;
  
-+	/* Fence waits are not allowed in a fence signalling critical section. */
-+	amdgpu_userq_wait_for_signal(uq_mgr);
-+
- 	/*
- 	 * This is intentionally after taking the userq_mutex since we do
- 	 * allocate memory while holding this lock, but only after ensuring that
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -1168,7 +1168,7 @@ amdgpu_userq_evict_all(struct amdgpu_use
- 	return ret;
- }
- 
--static void
-+void
- amdgpu_userq_wait_for_signal(struct amdgpu_userq_mgr *uq_mgr)
- {
- 	struct amdgpu_usermode_queue *queue;
-@@ -1187,8 +1187,6 @@ amdgpu_userq_wait_for_signal(struct amdg
- void
- amdgpu_userq_evict(struct amdgpu_userq_mgr *uq_mgr)
- {
--	/* Wait for any pending userqueue fence work to finish */
--	amdgpu_userq_wait_for_signal(uq_mgr);
- 	amdgpu_userq_evict_all(uq_mgr);
- }
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.h
-@@ -156,6 +156,7 @@ void amdgpu_userq_mgr_cancel_reset_work(
- void amdgpu_userq_mgr_cancel_resume(struct amdgpu_userq_mgr *userq_mgr);
- void amdgpu_userq_mgr_fini(struct amdgpu_userq_mgr *userq_mgr);
- 
-+void amdgpu_userq_wait_for_signal(struct amdgpu_userq_mgr *uq_mgr);
- void amdgpu_userq_evict(struct amdgpu_userq_mgr *uq_mgr);
- 
- void amdgpu_userq_ensure_ev_fence(struct amdgpu_userq_mgr *userq_mgr,
 
 
