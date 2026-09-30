@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CADF4F5E18;
-	Wed, 30 Sep 2026 18:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF8D52268C;
+	Wed, 30 Sep 2026 18:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792770; cv=none; b=mhX2lljMJ/A2siTZNxJb79X72oVuGonADfeCrOHrllvTp7vCWSbkGfsjhptRkJv4T6GpdXjPgA22D4ipWA1Nk68Oh7C1ENCmYU11Qnzrkw5K5T2C/8svAOjvRKNQ5ircuxb/Wxa7eaxqEVnO/jSGzdIO/70IfG6a5SiDMGtuAfY=
+	t=1790792773; cv=none; b=JYbe1v++MZujFhSHuRfQA3fmEsG8/wJTnvr2UCSiv551mOu82IbGX2D0mAYE2uDiRuoZcCfsF/hIWZtORzntmIWKN+/mh71usHe12PmR/wKPsWJK0lVsBsW0FboHfpYpURV3C4iHtNmXGTqc5C5T/YnX83pbs7RboQqGTu5+tCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792770; c=relaxed/simple;
-	bh=UsvlDECHIlnhplk2H6c1Qf2l3WRSvVimjRPYzc9sSyA=;
+	s=arc-20240116; t=1790792773; c=relaxed/simple;
+	bh=gueHxh0x0Tl0arMQfW2Xk3VpCUkInVvwvguvt5Z4Il8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GonDJ9cb5XBauDF0o2+37vsocBDZjXBu8Uo98Y7kIL4MPMrQtob5zndHtrCrQbkLTuaOk0TovyExh7WQ5c+XmjeHcn8fQr6+dJkhw3unijJkIxUpfJcUkTpB1hvYlJTzteiYEsWkTrahpA7PSAA3MdwDpCbxmAbaBpIExxjCrsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hUH4XKT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TE/GCYtEMNtmeqXxagLkFwK/68iwi3dXH+GLC1pluNkCJHu0z7EnuJUqUvD1y0sMHWonEcc6pkPfBs3VnnhfhtaX0ps7RUSsRd9Ba2QZzPJHyYPSnY32h73jqkNNa3530jkTl6ZUrBz6J3G9mZFmXOKR9K3neIHNvh9bDrDCbrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hylki0vO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hUH4XKT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B981F000FF;
-	Wed, 30 Sep 2026 18:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hylki0vO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991C81F000FF;
+	Wed, 30 Sep 2026 18:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792769;
-	bh=YDXNvZwScaAK6qVJC+8ATVP/S0kjcxo4/RtCHj3KUtc=;
+	s=korg; t=1790792772;
+	bh=I1tlAxg5XRL7gW1msagSu5iPuaCNMaw6ekkMOz6B5w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hUH4XKTlBfF8fXx8DcS83L5OnqVCWH/pavVebX4g+7mRpRnzuoyrz62VtvCKSj1w
-	 mO1VYHbEnKWsL227d6MH77kax8iJsM9JvB6nCaY+JfLLShqRSKxhV6sFXzLnmfs4c/
-	 m3QKafEjnWMd3oNMeDe229vD6P1QIv10Ys/fs76c=
+	b=Hylki0vOlCQzVa58t78Qr9n1R4fULgi+d3g8+KG/OD12NwoDTvvEk7q1a26biwx2Z
+	 jc2/KFi27/6yBjuTveK/pB0bb012NiHodpaVd06WcY/i8UiKyX1FGltSRLdGVglGyE
+	 RavY32WpOzZkrA/uU5Oi/mYtvkqNdehX0xyhCU0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenwu Hou <hwenwur@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/395] erofs: fix large folio race in erofs_fscache_req_complete
-Date: Wed, 30 Sep 2026 17:24:24 +0200
-Message-ID: <20260930152340.650826575@linuxfoundation.org>
+Subject: [PATCH 6.18 020/395] bpf: Fix out-of-bounds read of rtt_min in sock_ops
+Date: Wed, 30 Sep 2026 17:24:42 +0200
+Message-ID: <20260930152341.055990822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -45,108 +47,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenwu Hou <hwenwur@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-This patch is for stable only. Commit c37460cd9b2fc ("erofs: remove fscache
-backend entirely") upstream removed this code.
+[ Upstream commit 75f8cf22463d82bb1fb0239a3d485fc8f4c8ef03 ]
 
-xas_for_each() iteration can race with reclamation of an unlocked large
-folio and splitting of its replacement shadow entry. Fix this by
-advancing past the entire folio before unlocking it.
+A sockops prog reading skops->rtt_min never checks the sk type: on the
+tcp_conn_request() path sock_ops->sk is a request_sock (non-full), and the
+ctx rewrite casts it to a tcp_sock (full) and reads rtt_min past the end of
+the request_sock, returning dirty adjacent memory.
 
-For example:
-CPU A: EROFS completion               Other CPUs
-----------------------------------   -----------------------------------
-Find F at index 0.
-Mark F uptodate.
-Unlock F.
+	SEC("sockops")
+	int prog(struct bpf_sock_ops *skops)
+	{
+		switch (skops->op) {
+		case BPF_SOCK_OPS_RWND_INIT:
+			leak = skops->rtt_min;   /* reads the request_sock OOB */
+		...
+		}
+	}
 
-                                     Reclaim F.
-                                     Replace indices 0–3 with a
-                                     multi-index workingset shadow.
+For instance one such read returned rtt_min=0xffff8881, the high half of a
+leaked kernel pointer.
 
-                                     Another reader inserts a smaller
-                                     folio, e.g. order-0 at index 0.
-                                     Split the large shadow entry:
-                                       index 0: new folio
-                                       index 1: shadow
-                                       index 2: shadow
-                                       index 3: shadow
-Find a shadow at index 1.
-folio_mark_uptodate(folio).
+Guarding that cast is exactly what SOCK_OPS_GET_FIELD() does -- it checks
+is_locked_tcp_sock and returns 0 when sock_ops->sk is not a locked full
+socket. Every other tcp_sock field in sock_ops goes through it; rtt_min is
+the only one open-coded, so it skips the check.
 
-This can cause a kernel panic such as:
-[1030374.432778] [     C31] BUG: unable to handle page fault for address: 00001846af017b01
-[1030374.432971] [     C31] #PF: supervisor write access in kernel mode
-[1030374.432973] [     C31] #PF: error_code(0x0002) - not-present page
-[1030374.433543] [     C31] PGD 5a44f75067 P4D 5a44f75067 PUD 0
-[1030374.433546] [     C31] Oops: 0002 [#1] PREEMPT SMP NOPTI
-[1030374.433549] [     C31] CPU: 31 PID: 2425624 Comm: node Kdump: loaded Tainted: G           OE K    6.6.88-****
-[1030374.434154] [     C31] Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS ?-20260421_110423-CN.l65g09119.cloud.sqa.na131 04/01/2014
-[1030374.434156] [     C31] RIP: 0010:erofs_fscache_req_complete+0xc1/0x1a0 [erofs]
-[1030374.434764] [     C31] Code: 17 c5 c3 48 89 c7 48 85 c0 0f 84 af 00 00 00 48 81 ff 06 04 00 00 74 1b 48 81 ff 02 04 00 00 0f 84 b9 00 00 00 66 85 ed 75 04 <f0> 80 0f 08 e8 96 04 24 c3 48 8b 54 24 18 f6 c2 03 0f 95 c0 48 85
-[1030374.435044] [     C31] RSP: 0000:ffffb8f2fc973cc0 EFLAGS: 00010046
-[1030374.435641] [     C31]
-[1030374.435642] [     C31] RAX: 00001846af017b01 RBX: 000000000000000f RCX: 0000000000000001
-[1030374.436885] [     C31] RDX: 000000000000000c RSI: ffffa02ab337d468 RDI: 00001846af017b01
-[1030374.437127] [     C31] RBP: 0000000000000000 R08: ffffffffffffffc0 R09: 0000000000000002
-[1030374.437672] [     C31] R10: 0000000000000005 R11: 0000000000000191 R12: ffffa0060ec72300
-[1030374.437673] [     C31] R13: 0000000008000000 R14: ffffffffc11b1990 R15: 0000000000007000
-[1030374.437677] [     C31] FS:  00007f4928cdec80(0000) GS:ffffa07dc5f80000(0000) knlGS:0000000000000000
-[1030374.437678] [     C31] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[1030374.437680] [     C31] CR2: 00001846af017b01 CR3: 00000063d5356006 CR4: 0000000000770ee0
-[1030374.437681] [     C31] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[1030374.437682] [     C31] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[1030374.437684] [     C31] PKRU: 55555558
-[1030374.437684] [     C31] Call Trace:
-[1030374.437687] [     C31]  <TASK>
-[1030374.437692] [     C31]  erofs_fscache_req_put+0x27/0x40 [erofs]
-[1030374.438900] [     C31]  cachefiles_read_complete+0x48/0x110 [cachefiles]
-[1030374.440448] [     C31]  iomap_dio_bio_end_io+0x128/0x160
-[1030374.440456] [     C31]  ? __pfx_stripe_end_io+0x10/0x10 [dm_mod]
-[1030374.440950] [     C31]  clone_endio+0x123/0x1f0 [dm_mod]
-[1030374.441550] [     C31]  blk_mq_end_request_batch+0xf4/0x440
-[1030374.441556] [     C31]  ? nohz_balancer_kick+0x31/0x270
-[1030374.441561] [     C31]  ? dma_direct_unmap_sg+0x48/0x1d0
-[1030374.441565] [     C31]  ? dma_pool_free+0x22/0x60
-[1030374.441569] [     C31]  ? nvme_pci_complete_batch+0xaf/0xc0 [nvme]
-[1030374.442070] [     C31]  nvme_irq+0x6e/0x80 [nvme]
-[1030374.442422] [     C31]  ? __pfx_nvme_pci_complete_batch+0x10/0x10 [nvme]
-[1030374.442428] [     C31]  __handle_irq_event_percpu+0x46/0x1a0
-[1030374.442431] [     C31]  handle_irq_event+0x37/0x80
-[1030374.442433] [     C31]  handle_edge_irq+0x93/0x240
-[1030374.442436] [     C31]  __common_interrupt+0x3b/0xa0
-[1030374.442441] [     C31]  common_interrupt+0x3f/0xa0
-[1030374.442446] [     C31]  asm_common_interrupt+0x22/0x40
+Read rtt_min through SOCK_OPS_GET_FIELD() too. rtt_min is a bit special:
+it is a struct minmax and we only want the current min, so pass
+rtt_min.s[0].v. That is equivalent to the old hand-computed offset
 
-Fixes: d435d53228dd ("erofs: change to use asynchronous io for fscache readpage/readahead")
-Signed-off-by: Wenwu Hou <hwenwur@gmail.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
+	offsetof(struct tcp_sock, rtt_min) + sizeof_field(struct minmax_sample, t)
+
+(s[0] sits at rtt_min + 0 and .v at + sizeof(.t), i.e. what minmax_get()
+returns), so the loaded field is unchanged and only the full-sock guard is
+added. The two BUILD_BUG_ON()s that protected the hand-computed offset
+are no longer needed.
+
+Before patch:
+
+	0: r1 = *(u64 *)(r1 +0)      ; r1 = skops->sk
+	1: r1 = *(u32 *)(r1 +2324)   ; ((tcp_sock *)sk)->rtt_min.s[0].v
+
+After patch:
+
+	0: *(u64 *)(r1 +56) = r9
+	1: r9 = *(u8 *)(r1 +50)      ; is_locked_tcp_sock
+	2: if r9 == 0 goto pc+4      ; not a locked full sock -> 0
+	3: r9 = *(u64 *)(r1 +56)
+	4: r1 = *(u64 *)(r1 +0)      ; r1 = skops->sk
+	5: r1 = *(u32 *)(r1 +2324)   ; rtt_min.s[0].v
+	6: goto pc+2
+	7: r9 = *(u64 *)(r1 +56)
+	8: r1 = 0
+
+Fixes: 44f0e43037d3 ("bpf: Add support for reading sk_state and more")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/r/20260903100921.113374-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fscache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/filter.c | 13 +------------
+ 1 file changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
-index 7a346e20f7b7a..754f7d04488da 100644
---- a/fs/erofs/fscache.c
-+++ b/fs/erofs/fscache.c
-@@ -67,6 +67,8 @@ static void erofs_fscache_req_complete(struct erofs_fscache_rq *req)
- 			continue;
- 		if (!failed)
- 			folio_mark_uptodate(folio);
-+		/* Skip the entire folio before unlocking allows it to be split. */
-+		xas_advance(&xas, folio_next_index(folio) - 1);
- 		folio_unlock(folio);
- 	}
- 	rcu_read_unlock();
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 4f0a052d9aed1..dea8dd48d4aa6 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -10787,18 +10787,7 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 		break;
+ 
+ 	case offsetof(struct bpf_sock_ops, rtt_min):
+-		BUILD_BUG_ON(sizeof_field(struct tcp_sock, rtt_min) !=
+-			     sizeof(struct minmax));
+-		BUILD_BUG_ON(sizeof(struct minmax) <
+-			     sizeof(struct minmax_sample));
+-
+-		*insn++ = BPF_LDX_MEM(BPF_FIELD_SIZEOF(
+-						struct bpf_sock_ops_kern, sk),
+-				      si->dst_reg, si->src_reg,
+-				      offsetof(struct bpf_sock_ops_kern, sk));
+-		*insn++ = BPF_LDX_MEM(BPF_W, si->dst_reg, si->dst_reg,
+-				      offsetof(struct tcp_sock, rtt_min) +
+-				      sizeof_field(struct minmax_sample, t));
++		SOCK_OPS_GET_FIELD(rtt_min, rtt_min.s[0].v, struct tcp_sock);
+ 		break;
+ 
+ 	case offsetof(struct bpf_sock_ops, bpf_sock_ops_cb_flags):
 -- 
 2.53.0
 
