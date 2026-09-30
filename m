@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DFA51CF6E;
-	Wed, 30 Sep 2026 16:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4704B515995;
+	Wed, 30 Sep 2026 16:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784539; cv=none; b=qpyXjxDbUJ2Y2I5IvFsWmYufAnnHzSA16r6FjWdXjFFTFBv1eXhvF2ObaiT7FOIYsHT7p0bT/Q5ac4MGbO4iQ2vh6lB0OijXwF77Cgsm6eMVKHOkzqjk3JTnrxt1QKsbuWu3ECus3ZBxwa3y3D/vtePCWfPrq+/l0Dt5ZkL8EJA=
+	t=1790784540; cv=none; b=C9qcA4GkJe4rw/Nk1jm9iOLUWMlT4nQs6Jmw4ZDUp1FYOXWn3H2ZqTxKMftdaGOZmNnmZEeEuCRpeib71z+gGa3tzgNilCwSpQi27oiAxiEQlHvaVM+WBvcjKg6vdGucx4sJvp2TszFuf+1M2o4Vr7LsR2t4r6OoV3V9dsM3ihw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784539; c=relaxed/simple;
-	bh=F6giKY6sqNXd9qiIPZUrwAjXuO/aZGOciv8/vSliXaE=;
+	s=arc-20240116; t=1790784540; c=relaxed/simple;
+	bh=0iAKjbdw+PYYlHvPuJqnd7X8cjeK6PT771ktkKEtYHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S67C+jhve69n5ao+2L8HDqmQq6OgeqnSdoGp7x+NYWuw6V1lWi4TGPfp2K5hoNnuuknMkQPaEt2ZgIjlaH4e+ge9rJfbViBSz+ilI0cP4DEhXcOrDXYiNW1xq49jJYDWHoriDDmfGkWvke3sgOmwO1CHnBbNM/aOZhVso5Ic3bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZxeUWKH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dOvlHZNmz+tj9eDLO7GV1Pq4KEWOyDfs6VUwi+EGPIb9TYqdRHHpoHiBXHLRX8UsdCmP32NSclJi+Q3as0C0Bo1hZPOlAskwOiRhUojypp0Oo1+N0fqRlidDq5YkQG7f6DwauMSWl2hE/JLwpF47BQ4lz+q1zeuHVkpCE15eIT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1t0K0Of; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZxeUWKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE961F000FF;
-	Wed, 30 Sep 2026 16:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1t0K0Of"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650DF1F0089B;
+	Wed, 30 Sep 2026 16:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784533;
-	bh=9C7QxQYCRWHs6pNXvTTcSewpP25W76ZcYsI85zKDd+Q=;
+	s=korg; t=1790784535;
+	bh=h9Lrv7QB2ygiH7S8IGoNt4G3WHc5AOSjnk0a/lYqspE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HZxeUWKHPj0+Aoxb/5gFZtpjuEbWllaanjIIWW6Ro0mfStj6EU2vO5q5GFBGDqMn7
-	 aIJ+Qn6pl0QtOwKoxo7ZSEFiNfkzX/8v/V8gBRCwqlQWI5Dc3ay/U+4ZKrejHynvWL
-	 aTnS60J47ThqpjdZg2x/4cXDAqfeV7CrJGUzKUyU=
+	b=Y1t0K0Ofj0WGMSLM3UPxfrrBC0g1LSUFGC+afRJotqpYaRjF54oCD2lNZlkeUcNAK
+	 8o0xhMqtezNmMPxH50Cslo9jhRn+QC61SNrYU9zHhblCi64RkEj4qWAiXB/zisR6m0
+	 lVlPyrx3UkmfABeaUO8iAZjxB/TytyOYe+Zgx1x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
-	Simon Horman <horms@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/982] net: stmmac: xgmac2: disable RBUE in default RX interrupt mask
-Date: Wed, 30 Sep 2026 17:15:25 +0200
-Message-ID: <20260930152420.876817513@linuxfoundation.org>
+Subject: [PATCH 6.1 190/982] ptp: ocp: add shutdown callback
+Date: Wed, 30 Sep 2026 17:15:26 +0200
+Message-ID: <20260930152420.897898717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,65 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 
-[ Upstream commit d3265c19b35d036bba327b36b5366bee76b0157c ]
+[ Upstream commit f6f955cbf9d4e02deebe54ca91c118b53be9ffe6 ]
 
-Enabling the RX Buffer Unavailable (RBUE) interrupt is counterproductive
-and can trigger a MAC interrupt storm under heavy RX pressure. When the
-DMA runs out of RX descriptors it fires RBUE continuously until software
-refills the ring.
+The shutdown callback was never implemented for this driver, but it's
+needed because .remove() callback is never called during kexec/reboot
+process. That leaves HW with some interrupts enabled and may cause
+spurious interrupt while booting into a new kernel during with kexec.
+If it happens that I2C interrupt fires during kexec, the whole I2C bus
+is disabled leaving TimeCard with no devlink communication. The same
+happens if timestampers were enabled, leaving the card without
+timestamper interrupts until full reboot cycle.
 
-However, RBUE is redundant: the normal RX completion interrupt (RIE)
-already triggers NAPI, which processes completed descriptors and refills
-the ring, causing the DMA to resume. The RBUE handler itself only sets
-handle_rx - the same outcome as RIE.
+Implement .shutdown() callback with the same function as remove
+callback.
 
-On Agilex5 under heavy RX pressure, the MAC interrupt (which includes
-RBUE) was observed firing 1,821,811,555 times against only 2,618,627
-actual RX completions - a ~695x ratio - confirming the severity of the
-storm.
-
-RBUE does not provide OOM recovery. If page_pool is exhausted,
-stmmac_rx_refill() cannot advance the DMA tail pointer, the DMA stays
-suspended, and RBUE fires again on the next NAPI completion - a storm
-with no forward progress. This patch trades that storm for a clean
-stall with the same RX outcome. Proper OOM recovery is a pre-existing
-gap outside the scope of this fix.
-
-Note: as a consequence of disabling RBUE, the rx_buf_unav_irq ethtool
-counter will always read 0 on XGMAC2 devices. This behaviour is already
-inconsistent across DWMAC core versions.
-
-Remove RBUE from XGMAC_DMA_INT_DEFAULT_EN and XGMAC_DMA_INT_DEFAULT_RX
-to prevent the interrupt storm while keeping normal RX handling intact.
-
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260609121703.9736-1-muhammad.nazim.amirul.nazle.asmade@altera.com
+Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260611190333.787132-1-vadim.fedorenko@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ptp/ptp_ocp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-index 8748c37e9dac9..f9110e6164843 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -398,9 +398,9 @@
- #define XGMAC_RIE			BIT(6)
- #define XGMAC_TBUE			BIT(2)
- #define XGMAC_TIE			BIT(0)
--#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | XGMAC_RBUE | \
-+#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | \
- 					XGMAC_RIE | XGMAC_TIE)
--#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RBUE | XGMAC_RIE)
-+#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RIE)
- #define XGMAC_DMA_INT_DEFAULT_TX	(XGMAC_TIE)
- #define XGMAC_DMA_CH_Rx_WATCHDOG(x)	(0x0000313c + (0x80 * (x)))
- #define XGMAC_RWT			GENMASK(7, 0)
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index c4793bb13e3cb..f2332b954bcf0 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -3794,6 +3794,7 @@ static struct pci_driver ptp_ocp_driver = {
+ 	.id_table	= ptp_ocp_pcidev_id,
+ 	.probe		= ptp_ocp_probe,
+ 	.remove		= ptp_ocp_remove,
++	.shutdown	= ptp_ocp_remove,
+ };
+ 
+ static int
 -- 
 2.53.0
 
