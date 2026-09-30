@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00012D1F40;
-	Wed, 30 Sep 2026 18:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCABA3E2AD7;
+	Wed, 30 Sep 2026 18:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793906; cv=none; b=SPHk3SERGvLJaXljJuf7kzlsxKcKFujAW5TDVGAuvt62nR4lU2AbQ3gAQ87J2tUwpH03TKPjGEgkK95D5DvZj1r1ywpuy4Pd5ZKLym1bRv33m7Pv47/6qsgERZp6Ld1hzM9ZN55dUgvNn6FbR5/8Y/OGxSGPqPmK0tw9GMILIMA=
+	t=1790793909; cv=none; b=ZoZGuXFb/SBrtnGa8qfODt06Q7oo93GIAY3HBCF6a7w8L24+KV7PhEM/JkBHE7IAPpIROer6kADwjwGVL1flMB+r7fup433pPDGPh2yogCwKBajqs36RMVjgCCl9q1OKx/N7rTW74zKxunfy6UrDthpy+BdWnZ2ZiO4N+Jx7deQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793906; c=relaxed/simple;
-	bh=WeNVBLMzO+goDeBdrqeJYkjzlP3ohvue2fEtksMhxLk=;
+	s=arc-20240116; t=1790793909; c=relaxed/simple;
+	bh=LGKs7QXuPjM1PJ/jKP/YJZR0b4T4j1LDfUfraUcKMSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uvu1sauzvulqwvEe2+EKBAxYIAXll2Jj/DALCmxEOidjP9xkXXgj5qiOjtdPKwzgMp30T2XRsn3eKnNzAKtKNDZg0w+V+rEG5HV+osUZMCqHen6kODboOqvmn7iKaPhShIJgrDNhiwQJSLdXPM6pBPCzjyBjPduBpceBxQ8CFa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VoU49RP5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LrQYJSSbQtlYx4T/xNUHkAdJnivRXF2wVmwwuH9x8b/tCAzu9kaNzb1bke5vY257+jpDnk5kYYowo7Rw+Cf/papPRHgWfLuuzt9W3CXT11VeAipDk3DyWygs2z/U7ASn6Ne05CznRUp7L4pyiTe0vBFvfHiSQ96VAbkYANzZERU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcLHS3DV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoU49RP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21FA1F000FF;
-	Wed, 30 Sep 2026 18:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcLHS3DV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8982C1F000FF;
+	Wed, 30 Sep 2026 18:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793904;
-	bh=AER2x6i+g20Fw3vh3s6vzH5WOmenEQrlcYTXGoAIxgs=;
+	s=korg; t=1790793907;
+	bh=t9SsJzlCluhFRCKeXtpJGojxa2k6y3B/AOQc2806LCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VoU49RP5IsORqROWBrbatUD/ZlHxihsXJllWY5BLRQ+mgEbB7V0vbaKLhETjkhPYn
-	 8JgAj/kJotf2LLhRUVY0imYXYeas2Y2m9x5ag9EKFlVT6LsNWURdBGZnnat8Mg9vNm
-	 89LMZFGIRXVY7IEoHVh/PwTRer9G1Wvd2Zn7r8gc=
+	b=hcLHS3DVoG7dOOuW1HM9+8CMGARRerrJzz5JN9D4OflgammeZ+Kg6sI8AiZ1bUZmi
+	 aASeKXcbCgsycoHvo749T7uSeHMj+olefyhXROglbahZJ0nqLi/ITlkqaYeIJnetYE
+	 eB+VcJbqfTXfLtm7bXP+r8+/dlIngsiMIXJayME4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0024/1193] thunderbolt: Keep XDomain reference during the lifetime of a service
-Date: Wed, 30 Sep 2026 17:11:48 +0200
-Message-ID: <20260930152434.831330678@linuxfoundation.org>
+Subject: [PATCH 6.6 0007/1193] ALSA: usb-audio: Propagate write errors in generic mixer put callbacks
+Date: Wed, 30 Sep 2026 17:11:31 +0200
+Message-ID: <20260930152434.472345134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -44,46 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 8b4060998637f06975fceee9b73845d8672d411e ]
+[ Upstream commit 87a6f2fa6e6c69bb649fa327635a0bd977724603 ]
 
-This is needed because we release the service ID in tb_service_release()
-and the ID array is owned by the parent XDomain.
+mixer_ctl_feature_put(), mixer_ctl_procunit_put(), and
+mixer_ctl_selector_put() ignore failures from their SET_CUR helper
+routines and report the control as changed whenever the requested
+value differs from the current one.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+If the device rejects the write, userspace still sees success although
+the hardware state did not change. Propagate write failures instead,
+using filter_error() so ignore_ctl_error keeps the same semantics as
+the existing get paths.
+
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-1-5a3bd4a673ae@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/xdomain.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/mixer.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 99a3f4317b5ca..834fb56bde026 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1025,6 +1025,7 @@ static void tb_service_release(struct device *dev)
- 	ida_simple_remove(&xd->service_ids, svc->id);
- 	kfree(svc->key);
- 	kfree(svc);
-+	tb_xdomain_put(xd);
- }
- 
- struct device_type tb_service_type = {
-@@ -1133,7 +1134,7 @@ static void enumerate_services(struct tb_xdomain *xd)
- 		svc->id = id;
- 		svc->dev.bus = &tb_bus_type;
- 		svc->dev.type = &tb_service_type;
--		svc->dev.parent = &xd->dev;
-+		svc->dev.parent = get_device(&xd->dev);
- 		dev_set_name(&svc->dev, "%s.%d", dev_name(&xd->dev), svc->id);
- 
- 		tb_service_debugfs_init(svc);
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 8c4fb5be3dba9..0a729ec282179 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1463,7 +1463,10 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 				return -EINVAL;
+ 			val = get_abs_value(cval, val);
+ 			if (oval != val) {
+-				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
++				err = snd_usb_set_cur_mix_value(cval, c + 1,
++								cnt, val);
++				if (err < 0)
++					return filter_error(cval, err);
+ 				changed = 1;
+ 			}
+ 			cnt++;
+@@ -1478,7 +1481,9 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
+ 			return -EINVAL;
+ 		val = get_abs_value(cval, val);
+ 		if (val != oval) {
+-			snd_usb_set_cur_mix_value(cval, 0, 0, val);
++			err = snd_usb_set_cur_mix_value(cval, 0, 0, val);
++			if (err < 0)
++				return filter_error(cval, err);
+ 			changed = 1;
+ 		}
+ 	}
+@@ -2343,7 +2348,9 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
+ 		return -EINVAL;
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+-		set_cur_ctl_value(cval, cval->control << 8, val);
++		err = set_cur_ctl_value(cval, cval->control << 8, val);
++		if (err < 0)
++			return filter_error(cval, err);
+ 		return 1;
+ 	}
+ 	return 0;
+@@ -2707,7 +2714,9 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
+ 		return -EINVAL;
+ 	val = get_abs_value(cval, val);
+ 	if (val != oval) {
+-		set_cur_ctl_value(cval, cval->control << 8, val);
++		err = set_cur_ctl_value(cval, cval->control << 8, val);
++		if (err < 0)
++			return filter_error(cval, err);
+ 		return 1;
+ 	}
+ 	return 0;
 -- 
 2.53.0
 
