@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779074CE67E;
-	Wed, 30 Sep 2026 15:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3654ED1B1;
+	Wed, 30 Sep 2026 15:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782469; cv=none; b=rNrT942YpEDfARIR/Q0ROX8t96OGftu6I0YguD9CYqEnbV7590zZGWMxUqveDGe+JaUPssMgwH60gjrXUIAqZm4dg6hnxvGTO5blATEZy/yFd/4ZJvmd0j6i/FjeU2XZdPFzb9c+gjf0ufbh+7AhTLhzDTCBeQpd/NvjWcgknY0=
+	t=1790782472; cv=none; b=B52qAosAOqftePqE+Nmqk2CZfID1XmV/gkhEks2Yrm7zktQizoUPRovOzqSwX4ymapYFLhL3512ZeKzQAtUPjmUmODA2ZxP/q06brs8NCLMjjYAtVi0/xHKFOaOB0AVPTFripk2AiLBbS6MflnZZpdYunXOgTuqJuQrjDzgG45s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782469; c=relaxed/simple;
-	bh=PgMprE7oJ/jx6N0w9eYEhogd/mwvwc2WfKLd4lAjBGM=;
+	s=arc-20240116; t=1790782472; c=relaxed/simple;
+	bh=Cdps8yT0mjr5fB5eSozGFciDZ9DfjqMjHdzPy3Vj6Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RI3WAaRVXHykcAVOZYrvQvQ6nSh5v9heTZbNZKY2eQuRIQLpgWmi62MGI/vbf9SGaWNcJFr1S8RDtpxVX1siuI7kQleRHCeis5GqO+dWNjxyLtF8yTwbVH4bxBe54O6F8Ypi0OUWySBK5bQHvy6pztT3daBjsWRoo+Ql3z3nGMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBghxpqA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mP+h9pBCLSJspmg4I5HLkymT7JNuhOTy5ONvWara3uLlTlT/K8c0sdVlYpP0BJOAFN/h7KIyViunTYxwUjhGt7ka87lX33SRrdFf9qK/sARWmotWk9aWwCw9nddWz2SMYA54XmckcFy81vokv7TLPvjW4VhtXf6wsUq3I/4Y/Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q66H4zHO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBghxpqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A1A1F0089A;
-	Wed, 30 Sep 2026 15:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q66H4zHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0011F00893;
+	Wed, 30 Sep 2026 15:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782456;
-	bh=8AXbuc3tzqVXsIz5clMskkrfYTtp4iwmMkBK1NsG+iA=;
+	s=korg; t=1790782459;
+	bh=CDVqh6h/RmzvKvVejCvGmKe/xbc64BPrJwQdRL51pJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tBghxpqArPTfYCVM8S0+I9SXrmYkgC7fane7sxLWM1ob1GwD1Iav/9ZWeNIQC5mji
-	 SW92KfrVhiPYqLO/GgAE0/AJ+xDCpgdlHh2AdqfzwvL62dH31iKmmm+U8YwEz2pJxF
-	 mzcHvAvp9x516Fcl66zocYGZlIXcbZViwoK84FQI=
+	b=Q66H4zHOn6PbgnLR6KEYEDwPV0xvaPHGicR8DCyw1Ua3Ni7Bom+jv06HCSJMy3KUn
+	 mobjXH1K/PgZZZAb0+uY/HH+IWGG2JlXGrKwBlHMRmNOpQcjPhpQ7NiVGvMhVhH2zH
+	 uJ7jyvBqdknb8CgnWGtMNpjFjwCBjpkPlDBDMrCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/595] usb: gadget: goku_udc: avoid NULL deref of dev->driver in INT_USBRESET log
-Date: Wed, 30 Sep 2026 17:19:05 +0200
-Message-ID: <20260930152348.850388126@linuxfoundation.org>
+Subject: [PATCH 5.10 053/595] serial: 8250: fix possible ISR soft lockup
+Date: Wed, 30 Sep 2026 17:19:06 +0200
+Message-ID: <20260930152348.872265634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,66 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit 5bf5e3fba9bc7dfd69701521dbe9809f8ccbdb02 ]
+[ Upstream commit 0c6bf45e5a345cc3b9ffbeaf9083ecac3c2293eb ]
 
-goku_irq() handles a number of bus events under a single ep0 path.
-It already guards the gadget driver suspend/resume callbacks against a
-NULL ->driver:
+There are rare cases in which the host gets stuck in the ISR because it
+is flooded with messages during the startup phase.
 
-	if (dev->gadget.speed != USB_SPEED_UNKNOWN
-			&& dev->driver
-			&& dev->driver->resume) {
-		spin_unlock(&dev->lock);
-		dev->driver->resume(&dev->gadget);
-		...
-	}
+The reason for the soft lockup in the ISR is the missing FIFO error IRQ
+(FIFOE) handling. Not handling it and reporting IRQ_HANDLED triggers
+the IRQ immediately again.
 
-but the very next branch unconditionally dereferences dev->driver
-when an INT_USBRESET arrives:
+Fix this by adding a check for the FIFOE status and clearing the FIFO
+if no data is ready (DR).
 
-	if (stat & INT_USBRESET) {
-		ACK(INT_USBRESET);
-		INFO(dev, "USB reset done, gadget %s\n",
-			dev->driver->driver.name);
-	}
+This behavior was observed on an AM62L device which uses the OMAP 8250
+driver. Fix it for all 8250 drivers, since the OMAP driver's special
+IRQ setup handling may trigger this behavior more frequently, but it
+is not ensured that other 8250 drivers aren't affected.
 
-If the controller raises INT_USBRESET before any gadget driver has
-been bound (or after one has been unbound), dev->driver is NULL and
-the printk dereferences NULL.
-
-smatch flags the inconsistency:
-
-  drivers/usb/gadget/udc/goku_udc.c:1618 goku_irq() error:
-  we previously assumed 'dev->driver' could be null (see line 1607)
-
-Fall back to a placeholder when the gadget driver is not bound.
-
-No functional change while a gadget driver is bound.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Link: https://patch.msgid.link/20260509110636.19762-1-sozdayvek@gmail.com
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://patch.msgid.link/20260519-v7-1-topic-serial-8250-v1-1-56b04293a246@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/goku_udc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_port.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/goku_udc.c b/drivers/usb/gadget/udc/goku_udc.c
-index 3e1267d38774f..b9c4adb767efa 100644
---- a/drivers/usb/gadget/udc/goku_udc.c
-+++ b/drivers/usb/gadget/udc/goku_udc.c
-@@ -1615,7 +1615,8 @@ static irqreturn_t goku_irq(int irq, void *_dev)
- 		if (stat & INT_USBRESET) {		/* hub reset done */
- 			ACK(INT_USBRESET);
- 			INFO(dev, "USB reset done, gadget %s\n",
--				dev->driver->driver.name);
-+				dev->driver ? dev->driver->driver.name :
-+					      "<not bound>");
- 		}
- 		// and INT_ERR on some endpoint's crc/bitstuff/... problem
- 	}
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index 4b9c54ee00e8d..691b832951362 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1894,6 +1894,13 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
+ 
+ 	status = serial_port_in(port, UART_LSR);
+ 
++	/*
++	 * Recover from no-data-ready and FIFO error condition to avoid getting
++	 * stuck in the ISR.
++	 */
++	if (!(status & UART_LSR_DR) && (status & UART_LSR_FIFOE))
++		serial8250_clear_and_reinit_fifos(up);
++
+ 	/*
+ 	 * If port is stopped and there are no error conditions in the
+ 	 * FIFO, then don't drain the FIFO, as this may lead to TTY buffer
 -- 
 2.53.0
 
