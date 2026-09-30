@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F35377A93;
-	Wed, 30 Sep 2026 16:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511FB33D6FD;
+	Wed, 30 Sep 2026 16:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785865; cv=none; b=LmKNeXKITY3bTI2rMiZ0I994wNrLzbSOymhdow/w1p6kLDgto5aOMaEMhhsAP3Pszb9nEdl7/ngEJB3C7hz76XMZxvh5zdAN76bLNGe9xvA0Hr5v3lITxh/cD91vwImgB7gyV/Y54A08jYrPob936Xg15+TRyY4Mfe0hM7Q9wo8=
+	t=1790785868; cv=none; b=OrWgk7moQqRINWiEO9auugrREdVG46z+sw1doHekgHxUTIQbZcqE33gIt4XM8h2BklOxX0QG34yd2z5vN6GYmYp3zQY5yAjhLFEFI8qWAXF+uQt0wfzvvAAU59R2nuljn56dqgzDPCAKG0pgtdiN4lIWLH/OAdOfpcqUR9foK38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785865; c=relaxed/simple;
-	bh=tYlLss/JErYHHg0v3hE32JXhPukVJwIRCg6vnL6IaXM=;
+	s=arc-20240116; t=1790785868; c=relaxed/simple;
+	bh=tlDOGWFttC6uGRG6wSyb7XxwE79zW7O1KewlREc8l98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9Nee79GwVR9G9S+Nz0DJHr23zz1QNpeJYduNHTv1WnIrVsdT7cP24ULoJoi8BPUFmRVMY+cmWEN9V28zFe0DibL65jLAFrIlNz//gmfwdzZnX2XgdIqd1Spqe2nB0dLfMeFx98JjChnOCIbLijpFngLaHq6mqH5/Rnie+IWmlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p45O5per; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HAzommjPQnh+ER0Gmn3kkw1CclU+MxAKRaluBX7PqtEGz4P2VWhvfD3eoYOSS9w3mCTSxN76qN1QJWwCX00kNfPO8Mr25cVulMTPHFKuFcCtRFePA1J0H1z3rwBbN098qSSgb9DHWNPrewt7Gj06jTwqq1uKhfekH0QMvyMTLLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1DIbp5S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p45O5per"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31171F000FF;
-	Wed, 30 Sep 2026 16:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1DIbp5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE8A1F000FF;
+	Wed, 30 Sep 2026 16:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785864;
-	bh=RRZPnKlx99/c1BUVmV3e5iR8Y6gGsjR05ctaMmI3v54=;
+	s=korg; t=1790785867;
+	bh=2WkD8tu/GmY0pEI2V5NOtys9N73nbnQ7SbNkDR1imi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p45O5per5amWHyj3odt8v/rWAitKa9FyXNRU8XGE5Jw+se7NgsXUgkS3hLrphCPZE
-	 Q+hVdiw8BhReHSuHEeLOePnkr691eGdmDUKTD1T0W+3jPu1C3H7ednNzvTlkwsY63D
-	 JCzi5ldn4pLgz+i8xaaKyCA/2o9/Lk+3Bd0NXyhM=
+	b=j1DIbp5SlqR2lar+ROaGR5DFr3lDTRYdvqVVCzZqrHijP9nYuSpzsmgP+P6FI1WuB
+	 rrDSy4vh7j2MS26IvuCSFHWHHSt/068o8LZ7+ybc9w0U2YbhA3bDVwPQIMvwKly1GK
+	 yPP6ep5ZZ4srTuscAAkfCz6HVgFic2URgITnrjiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 659/982] wifi: virt_wifi: dont transfer operstate before register
-Date: Wed, 30 Sep 2026 17:23:15 +0200
-Message-ID: <20260930152430.918341231@linuxfoundation.org>
+Subject: [PATCH 6.1 660/982] drm/atomic-helper: Add atomic_enable plane-helper callback
+Date: Wed, 30 Sep 2026 17:23:16 +0200
+Message-ID: <20260930152430.940153762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,54 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit e5c8d7acd31b27057ea42cd405d0b3ece097bc89 ]
+[ Upstream commit 169b9182f192e8725c8de5d7d77f00f6ae6c7fd4 ]
 
-virt_wifi_newlink() calls netif_stacked_transfer_operstate() before
-register_netdevice(). If the lower device is dormant, that queues the
-new netdev on lweventlist while it is still uninitialized. If
-registration fails after that, for example because of an invalid name
-such as "bad/name", free_netdev() immediately frees the object. A
-later linkwatch_fire_event() then use-after-frees the list entry.
+Add atomic_enable to struct drm_plane_helper_funcs. It enables a
+plane independently from updating the plane's content. As such, it is
+the inverse of the atomic_disable plane helper. Useful for hardware
+where plane enable state is independent from plane content.
 
-Move the transfer to after netdev_upper_dev_link(), as macvlan and
-ipvlan already do.
-
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Link: https://patch.msgid.link/f5a832fb0ab228ce6e2b5a91fba4ca8b79198a2f.1788948455.git.zihanx@nebusec.ai
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230209154107.30680-2-tzimmermann@suse.de
+Stable-dep-of: 073a30d75f30 ("drm/vc4: Use managed KMS polling to fix UAF on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virt_wifi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_atomic_helper.c      | 20 ++++++++++++----
+ include/drm/drm_atomic_helper.h          | 26 +++++++++++++++++++++
+ include/drm/drm_modeset_helper_vtables.h | 29 +++++++++++++++++++++++-
+ 3 files changed, 70 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
-index 474451e8b5e16..dd2a74f7d06e6 100644
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -552,7 +552,6 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
- 	}
- 
- 	eth_hw_addr_inherit(dev, priv->lowerdev);
--	netif_stacked_transfer_operstate(priv->lowerdev, dev);
- 
- 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
- 
-@@ -578,6 +577,8 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
- 		goto unregister_netdev;
- 	}
- 
-+	netif_stacked_transfer_operstate(priv->lowerdev, dev);
+diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+index e737e45a3a702..9199695d42ddd 100644
+--- a/drivers/gpu/drm/drm_atomic_helper.c
++++ b/drivers/gpu/drm/drm_atomic_helper.c
+@@ -2743,6 +2743,11 @@ void drm_atomic_helper_commit_planes(struct drm_device *dev,
+ 			funcs->atomic_disable(plane, old_state);
+ 		} else if (new_plane_state->crtc || disabling) {
+ 			funcs->atomic_update(plane, old_state);
 +
- 	dev->priv_destructor = virt_wifi_net_device_destructor;
- 	priv->being_deleted = false;
- 	priv->is_connected = false;
++			if (!disabling && funcs->atomic_enable) {
++				if (drm_atomic_plane_enabling(old_plane_state, new_plane_state))
++					funcs->atomic_enable(plane, old_state);
++			}
+ 		}
+ 	}
+ 
+@@ -2803,6 +2808,7 @@ drm_atomic_helper_commit_planes_on_crtc(struct drm_crtc_state *old_crtc_state)
+ 		struct drm_plane_state *new_plane_state =
+ 			drm_atomic_get_new_plane_state(old_state, plane);
+ 		const struct drm_plane_helper_funcs *plane_funcs;
++		bool disabling;
+ 
+ 		plane_funcs = plane->helper_private;
+ 
+@@ -2812,12 +2818,18 @@ drm_atomic_helper_commit_planes_on_crtc(struct drm_crtc_state *old_crtc_state)
+ 		WARN_ON(new_plane_state->crtc &&
+ 			new_plane_state->crtc != crtc);
+ 
+-		if (drm_atomic_plane_disabling(old_plane_state, new_plane_state) &&
+-		    plane_funcs->atomic_disable)
++		disabling = drm_atomic_plane_disabling(old_plane_state, new_plane_state);
++
++		if (disabling && plane_funcs->atomic_disable) {
+ 			plane_funcs->atomic_disable(plane, old_state);
+-		else if (new_plane_state->crtc ||
+-			 drm_atomic_plane_disabling(old_plane_state, new_plane_state))
++		} else if (new_plane_state->crtc || disabling) {
+ 			plane_funcs->atomic_update(plane, old_state);
++
++			if (!disabling && plane_funcs->atomic_enable) {
++				if (drm_atomic_plane_enabling(old_plane_state, new_plane_state))
++					plane_funcs->atomic_enable(plane, old_state);
++			}
++		}
+ 	}
+ 
+ 	if (crtc_funcs && crtc_funcs->atomic_flush)
+diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
+index 06d8902a80972..8fc53d249c690 100644
+--- a/include/drm/drm_atomic_helper.h
++++ b/include/drm/drm_atomic_helper.h
+@@ -210,6 +210,32 @@ int drm_atomic_helper_page_flip_target(
+ 			      __drm_atomic_get_current_plane_state((crtc_state)->state, \
+ 								   plane)))
+ 
++/**
++ * drm_atomic_plane_enabling - check whether a plane is being enabled
++ * @old_plane_state: old atomic plane state
++ * @new_plane_state: new atomic plane state
++ *
++ * Checks the atomic state of a plane to determine whether it's being enabled
++ * or not. This also WARNs if it detects an invalid state (both CRTC and FB
++ * need to either both be NULL or both be non-NULL).
++ *
++ * RETURNS:
++ * True if the plane is being enabled, false otherwise.
++ */
++static inline bool drm_atomic_plane_enabling(struct drm_plane_state *old_plane_state,
++					     struct drm_plane_state *new_plane_state)
++{
++	/*
++	 * When enabling a plane, CRTC and FB should always be set together.
++	 * Anything else should be considered a bug in the atomic core, so we
++	 * gently warn about it.
++	 */
++	WARN_ON((!new_plane_state->crtc && new_plane_state->fb) ||
++		(new_plane_state->crtc && !new_plane_state->fb));
++
++	return !old_plane_state->crtc && new_plane_state->crtc;
++}
++
+ /**
+  * drm_atomic_plane_disabling - check whether a plane is being disabled
+  * @old_plane_state: old atomic plane state
+diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
+index 6f19cf5c210e5..f74745435894b 100644
+--- a/include/drm/drm_modeset_helper_vtables.h
++++ b/include/drm/drm_modeset_helper_vtables.h
+@@ -1267,6 +1267,32 @@ struct drm_plane_helper_funcs {
+ 	 */
+ 	void (*atomic_update)(struct drm_plane *plane,
+ 			      struct drm_atomic_state *state);
++
++	/**
++	 * @atomic_enable:
++	 *
++	 * Drivers should use this function to unconditionally enable a plane.
++	 * This hook is called in-between the &drm_crtc_helper_funcs.atomic_begin
++	 * and drm_crtc_helper_funcs.atomic_flush callbacks. It is called after
++	 * @atomic_update, which will be called for all enabled planes. Drivers
++	 * that use @atomic_enable should set up a plane in @atomic_update and
++	 * afterwards enable the plane in @atomic_enable. If a plane needs to be
++	 * enabled before installing the scanout buffer, drivers can still do
++	 * so in @atomic_update.
++	 *
++	 * Note that the power state of the display pipe when this function is
++	 * called depends upon the exact helpers and calling sequence the driver
++	 * has picked. See drm_atomic_helper_commit_planes() for a discussion of
++	 * the tradeoffs and variants of plane commit helpers.
++	 *
++	 * This callback is used by the atomic modeset helpers, but it is
++	 * optional. If implemented, @atomic_enable should be the inverse of
++	 * @atomic_disable. Drivers that don't want to use either can still
++	 * implement the complete plane update in @atomic_update.
++	 */
++	void (*atomic_enable)(struct drm_plane *plane,
++			      struct drm_atomic_state *state);
++
+ 	/**
+ 	 * @atomic_disable:
+ 	 *
+@@ -1287,7 +1313,8 @@ struct drm_plane_helper_funcs {
+ 	 * the tradeoffs and variants of plane commit helpers.
+ 	 *
+ 	 * This callback is used by the atomic modeset helpers and by the
+-	 * transitional plane helpers, but it is optional.
++	 * transitional plane helpers, but it is optional. It's intended to
++	 * reverse the effects of @atomic_enable.
+ 	 */
+ 	void (*atomic_disable)(struct drm_plane *plane,
+ 			       struct drm_atomic_state *state);
 -- 
 2.53.0
 
