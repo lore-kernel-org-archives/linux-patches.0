@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EC846EF8D;
-	Wed, 30 Sep 2026 18:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B09175A89;
+	Wed, 30 Sep 2026 18:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793527; cv=none; b=lBp6f3Wy/fB2Q23re0HvpT+UZshJNUO/aGNJVcBLmv1+WzYHEhEPe75ptNhjs8KUIp4grUqEfCHzQX9BRyMlhb/VkLlPEX4GUY52ZPT+y45anGtKzLciEysoRv+xTlk3NlVmtCURn/7Q8wGv9yOyijzyFS6rE1jmO2xeCPXfd7E=
+	t=1790793530; cv=none; b=LgR538YU0XsOWgeODVsCvhkHavbE+qXG9JrpyrCZQCenP69xAZcyf6L53j0nTspyU5NoeLV3DpuPeEVY3WAwaCNOZz0goJc5ehtiFrEriZFuF3WP4ODSU2ji7yKNqrLT8mvk5Ic+CRpO5ukCAN1kA4zOqu44FSM8Mef63OUGdVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793527; c=relaxed/simple;
-	bh=0hVzZW1ngyAqSJHGdztx35lyLVkWpMQ6VPbiIuZTwjc=;
+	s=arc-20240116; t=1790793530; c=relaxed/simple;
+	bh=EP1HkLBWxntcFZkCk8XsqAtwlbWdDaIvJb9lLZUzix0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cl2pn8Ky4BmB4xWV2qLsXkRVAZGTWfFsayBomfL4iPoPRUzqynSBOJTpI3qVKCAoaiXGyHv23U2h4cCrz69mvbsnOjg2RI6ssz+V2xlyXXWyeeVECzO8S33SayumrZHmPTdPiI3O3sW+5g7qT/ipf/ZbcRm6WC00cftM9DaAKaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PesuaeRV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbSl7T1VBcxvWpPOhDr0agOufwZzZ05/m0AGZSg7aceIkQ553wbMhXFe06jSv5HWUu8JxfUFrEUzCsB5e3r/vJ67h4z9AITlwJLeiDhdNqlSuZOaNzyeGTImsO6gAvPSn3zYUHwycm43UqNgbt/fsmRj4WkzggQevSIklIx2pCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCwQP2sR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PesuaeRV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1EB1F000FF;
-	Wed, 30 Sep 2026 18:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCwQP2sR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C4A1F000FF;
+	Wed, 30 Sep 2026 18:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793526;
-	bh=5yTOwbrAPSugGfzZDJO81T4PKliuelQzPcX1AZkxtTA=;
+	s=korg; t=1790793528;
+	bh=CE1eKZGW7JvC5rnreF2XvoJrND9lS1daYQ87DYCn3Qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PesuaeRVIl/sSzfjY23KS2z6EbgPdJSQajt5Gd5KW+6qp8wZaUKP1Ujy/+CRLk4ca
-	 u84oeXBFu7R3S4Cz7Lkk1bwKtMlnWiTGXGb5v08AcO9ciURhWZH3f9E0H9pD9BEsc3
-	 hBrQUVZ+vwgAs2f0RUgQrWJxE2ufkZhA0/Ro5RqQ=
+	b=wCwQP2sR12SNiidWE5+Iusy3HnSwj20iHdnTPeCsnqqL6EdllXMJWHYPh82xh7Wcw
+	 SSdbAdjlSpSXVlYMNex4pkjiFfverbsT64/sutbI8QjHCaioqRaW6hfi6eLe2p23cx
+	 ygTO49nKtbKN5+HKF89X2NTgTu/jGlxFacnvFoGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Ojha <abhishek.ojha@savoirfairelinux.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Zhang Yunfei <zhangyunfei1@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 286/395] net: phy: micrel: Advance register data pointer in write loop
-Date: Wed, 30 Sep 2026 17:29:08 +0200
-Message-ID: <20260930152346.864903387@linuxfoundation.org>
+Subject: [PATCH 6.18 287/395] net: txgbe: fix FDIR filter restore for VF rules
+Date: Wed, 30 Sep 2026 17:29:09 +0200
+Message-ID: <20260930152346.885469727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,40 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Ojha <abhishek.ojha@savoirfairelinux.com>
+From: Zhang Yunfei <zhangyunfei1@kylinos.cn>
 
-commit 95c4d54ed02283e9a09e8cd7360e384daa67a741 upstream.
+commit 651010592bdce7005c1179498327e51bfc4fe1a5 upstream.
 
-lanphy_write_reg_data() does not advance the data pointer while iterating
-over the register table. As a result, it writes the first entry num times
-and leaves the remaining errata registers unconfigured.
+txgbe_fdir_filter_restore() reprograms every filter from
+txgbe->fdir_filter_list after a reset. It extracts the ring part of
+filter->action with ethtool_get_flow_spec_ring() and maps it onto a
+PF rx ring, silently dropping the VF part of the cookie that
+txgbe_add_ethtool_fdir_entry() stores there (input->action =
+fsp->ring_cookie).
 
-Single-entry tables are unaffected, but tables with multiple entries
-leave every entry after the first unapplied.
+For a rule directed at a VF, restore therefore reprograms the filter
+to the PF queue with the same ring index: after any down/up or
+txgbe_reinit_locked(), traffic matching the rule is steered to the
+PF instead of the VF.
 
-Advance the data pointer after each successful write so every table entry
-is applied in order.
+Handle VF rules the same way txgbe_add_ethtool_fdir_entry() does:
+validate vf against wx->num_vfs and ring against
+wx->num_rx_queues_per_pool, and map the ring onto the absolute
+queue index ((vf - 1) * wx->num_rx_queues_per_pool) + ring.
 
-Fixes: c8732e933925 ("net: phy: micrel: lan8842 errata")
+Fixes: 7a91722e0dd4 ("net: txgbe: Support the FDIR rules assigned to VFs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abhishek Ojha <abhishek.ojha@savoirfairelinux.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260916231928.1336305-1-abhishek.ojha@savoirfairelinux.com
+Signed-off-by: Zhang Yunfei <zhangyunfei1@kylinos.cn>
+Link: https://patch.msgid.link/20260911091123.798931-1-zhangyunfei1@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/micrel.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_fdir.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -6034,6 +6034,7 @@ static int lanphy_write_reg_data(struct
- 					    data->val);
- 		if (ret)
- 			break;
-+		data++;
- 	}
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_fdir.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_fdir.c
+@@ -591,15 +591,24 @@ static void txgbe_fdir_filter_restore(st
+ 			queue = TXGBE_RDB_FDIR_DROP_QUEUE;
+ 		} else {
+ 			u32 ring = ethtool_get_flow_spec_ring(filter->action);
++			u8 vf = ethtool_get_flow_spec_ring_vf(filter->action);
  
- 	return ret;
+-			if (ring >= wx->num_rx_queues) {
++			if (!vf && ring >= wx->num_rx_queues) {
+ 				wx_err(wx, "FDIR restore failed, ring:%u\n",
+ 				       ring);
+ 				continue;
++			} else if (vf && (vf > wx->num_vfs ||
++				  ring >= wx->num_rx_queues_per_pool)) {
++				wx_err(wx, "FDIR restore failed, vf:%u, ring:%u\n",
++				       vf, ring);
++				continue;
+ 			}
+ 
+ 			/* Map the ring onto the absolute queue index */
+-			queue = wx->rx_ring[ring]->reg_idx;
++			if (!vf)
++				queue = wx->rx_ring[ring]->reg_idx;
++			else
++				queue = ((vf - 1) * wx->num_rx_queues_per_pool) + ring;
+ 		}
+ 
+ 		ret = txgbe_fdir_write_perfect_filter(wx,
 
 
