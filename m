@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFFB52F281;
-	Wed, 30 Sep 2026 17:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D00652F26F;
+	Wed, 30 Sep 2026 17:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790552; cv=none; b=TnSZbczRMWqXhnwqKT2qak63wYDbI1cCLYMHaCF6LZTooRmEaHaBmGRnRPZ9q1x851SeuAr9Ah698TQKKf/AW9J2Vm//jzSpKl4zYrVvFp4iOsKHj7nXRzJm1uH80CypqvlfXm7ssYMtfvOjKiVQkW9r9tN9uVLt8aEKIez5z74=
+	t=1790790555; cv=none; b=WO8Noz3lHH8eR8YFxNnA4C/h9nNgJrbGAencIUGwMD+KjSvhohFmeq1HdNuzz04SgsAWdh1BdDLVpz9Zew0S1MsGpj0sm/62usnlL1SqNI3oUaByNFX0fyXjOEQEflGQqR/NIUZiDFg1NR2K9yJ1PaBBFv5Oib5Xhp8tjFNf2lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790552; c=relaxed/simple;
-	bh=eQJq4LHWbJeQjjFoVU5EEGpZNEZ7ya2lAKpLRJ8jyAI=;
+	s=arc-20240116; t=1790790555; c=relaxed/simple;
+	bh=IToP67mrrPBzn3zjIL9Gs69OSRgHBd/PJxhYNCzQtU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQEdcX1flIWJQMH78jfdhNIAdnGPrLaSJysFaUR6pB0It1dfEe0gKxpSyZfBn8oi6JQzwHqFnmuYRwn15+IYXQJDtPwRR6+LoMA00kH1LGWufUon14WzAx7rbYx8caLaRAuDrXg8ISGwILcaqt7VQWX0ZcszLkQgkvtHhitwOH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/ZpaFWU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=haGbQ434zWWOdWUuRrtmAFh1MYZgfQE1M0+v9rbLH/N5qUFuHcW+pWACbb1WragsTYo+fArbvkdqhDMoJpSoosMQHY6dq8GdWQ5g/Q9D45QKyMDhXcXSgOZriiJGStRuUY0nm74eQltRLDhKMCYH02sxCryQNmChGix6GYBu3Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KG42okxk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/ZpaFWU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF07D1F000FF;
-	Wed, 30 Sep 2026 17:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KG42okxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7EF11F000FF;
+	Wed, 30 Sep 2026 17:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790551;
-	bh=m+PANuX7rRJJ/xT86HqA9ouEXc2lxJFetDFfmOlySLI=;
+	s=korg; t=1790790554;
+	bh=E9Dv6WIrGMLBkNk+Sn0LR6nucdr+xs0vmeSsFbQgsE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/ZpaFWUjnji6UH8gZM3M8Smfe96Ie1bEyNQ4EjBTVpbBdV2wHD7qtz23+Dc19RDu
-	 QcsDAR7xTu2gCuSLjqJUv+ZxFt43fDFne3KiBEDcNFZdzva/Qna/tscyFgrqHI3cgn
-	 AwuQLwIyIcjO11vLulwZs+Xv0ifafen+FyOc3BfY=
+	b=KG42okxk/7BHB10YyoPePQu9xvz4aq7f8X0HjwQiKX1Y4NJFwFPKxY3MvvNXVNtuP
+	 ILM1EsIanVTOY+ZyhURd7wxUgXhselULNHNoArpvNKHuHNrUhNRfo1ob07ZxdUYsVY
+	 yuamziYxScjl9oO/06WaisTDdPg5JQ/T+KPcJj04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.12 867/877] rose: clear neighbour pointer in rose_kill_by_device()
-Date: Wed, 30 Sep 2026 17:29:38 +0200
-Message-ID: <20260930152433.443440706@linuxfoundation.org>
+Subject: [PATCH 6.12 868/877] rose: dont free fd-owned sockets when reaping in the heartbeat
+Date: Wed, 30 Sep 2026 17:29:39 +0200
+Message-ID: <20260930152433.464717974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,42 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-commit 606e42d195b467480d4d405f8814c48d1651a76a upstream.
+commit 56576518920edd7b6c3479477d8d490fe2ebdaaa upstream.
 
-rose_kill_by_device() drops the neighbour reference but leaves
-rose->neighbour pointing at it, unlike every other rose_neigh_put() site
-(see "rose: clear neighbour pointer after rose_neigh_put() in state
-machines"). The heartbeat STATE_0 reaping path then puts the same
-neighbour a second time, causing a rose_neigh refcount underflow and a
-use-after-free.
+The heartbeat reaps orphaned ROSE sockets after their bound device goes
+down. A socket still attached to a struct socket (sk->sk_socket != NULL --
+e.g. an incoming connection an fpad client has accepted and kept open) is
+owned by that userspace fd: rose_release() frees it on close(). Freeing it
+from the heartbeat left the fd dangling, so the eventual close() touched
+freed memory -- slab-use-after-free in rose_release().
 
-Set rose->neighbour = NULL after the put, restoring the invariant.
+Reap only sockets with sk->sk_socket == NULL (unaccepted incoming
+connections and post-close orphans). For an fd-owned socket whose device
+went down, disconnect it and fall through to the switch so close() does
+the teardown. Also release the neighbour reference held by orphaned
+incoming sockets before tearing them down.
 
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/af_rose.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/rose/rose_timer.c |   57 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -216,8 +216,16 @@ start:
- 			 * looping forever in ROSE_STATE_0 with no owner.
- 			 */
- 			sock_set_flag(sk, SOCK_DESTROY);
--			if (rose->neighbour)
+--- a/net/rose/rose_timer.c
++++ b/net/rose/rose_timer.c
+@@ -126,13 +126,68 @@ static void rose_heartbeat_expiry(struct
+ 		sk_reset_timer(sk, &sk->sk_timer, jiffies + HZ/20);
+ 		goto out;
+ 	}
++
++	/* The bound device went down while we still hold a reference on it.
++	 * This catches the narrow race where rose_loopback_timer() created a
++	 * socket in the window after rose_kill_by_device()'s NETDEV_DOWN sweep
++	 * but before rose_insert_socket() -- leaving a STATE_3 socket that no
++	 * other branch reaps.  A down device means the link is dead, so tear
++	 * the socket down regardless of state.  rose_destroy_socket() releases
++	 * the held netdev reference (rose->device still set).
++	 */
++	if (rose->device && !netif_running(rose->device)) {
++		if (rose->neighbour) {
++			rose_neigh_put(rose->neighbour);
++			rose->neighbour = NULL;
++		}
++		rose_disconnect(sk, ENETDOWN, -1, -1);
++
++		/* Only reap the socket if userspace no longer holds it.  A socket
++		 * still attached to a struct socket (sk->sk_socket != NULL -- e.g.
++		 * a connection an fpad client has accepted and kept open) is owned
++		 * by that fd: rose_release() will destroy it on close().  Dropping
++		 * the last reference here leaves the open fd dangling, so the
++		 * eventual close() touches freed memory -> slab-use-after-free in
++		 * rose_release().  Unaccepted incoming sockets and post-close
++		 * orphans have sk->sk_socket == NULL and stay safe to reap here.
++		 */
++		if (!sk->sk_socket) {
++			sock_set_flag(sk, SOCK_DESTROY);
++			bh_unlock_sock(sk);
++			rose_destroy_socket(sk);
++			sock_put(sk);
++			return;
++		}
++
++		/* Owned by userspace: the link is down and the socket is now
++		 * disconnected (rose_disconnect() moved it to STATE_0).  Fall
++		 * through to the switch, which re-arms the heartbeat; the close()
++		 * will tear the socket down. */
++	}
++
+ 	switch (rose->state) {
+ 	case ROSE_STATE_0:
+ 		/* Destroy any orphaned STATE_0 socket: either explicitly
+ 		 * flagged SOCK_DESTROY, or SOCK_DEAD (covers both unaccepted
+ 		 * incoming connections and listening sockets whose link died).
+ 		 */
+-		if (sock_flag(sk, SOCK_DESTROY) || sock_flag(sk, SOCK_DEAD)) {
++		if ((sock_flag(sk, SOCK_DESTROY) || sock_flag(sk, SOCK_DEAD)) &&
++		    !sk->sk_socket) {
++			/* Reap only orphaned sockets (sk->sk_socket == NULL).  A
++			 * socket still owned by a userspace fd reaches here via the
++			 * STATE_2 device-gone branch, which sets SOCK_DESTROY without
++			 * knowing about the fd; freeing it would race rose_release()
++			 * at close() -> use-after-free.  Leave it for close().
++			 *
++			 * Orphaned incoming sockets (rose_rx_call_request) hold a
++			 * neighbour reference; release it before teardown, as the
++			 * STATE_2 and device-down branches do.  rose_destroy_socket()
++			 * does not drop it.
++			 */
 +			if (rose->neighbour) {
- 				rose_neigh_put(rose->neighbour);
-+				/* Clear the pointer after dropping the reference, as
-+				 * every other rose_neigh_put() site does.  Otherwise
-+				 * rose_heartbeat_expiry() (STATE_0 reaping) sees a stale
-+				 * rose->neighbour and puts it a second time -> rose_neigh
-+				 * refcount underflow / use-after-free.
-+				 */
++				rose_neigh_put(rose->neighbour);
 +				rose->neighbour = NULL;
 +			}
- 			netdev_put(rose->device, &rose->dev_tracker);
- 			rose->device = NULL;
- 		}
+ 			bh_unlock_sock(sk);
+ 			rose_destroy_socket(sk);
+ 			sock_put(sk);
 
 
