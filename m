@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60553BE642;
-	Wed, 30 Sep 2026 18:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BD8509F06;
+	Wed, 30 Sep 2026 18:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792439; cv=none; b=CyBmVdmK/be0AP6JaLdQGuAiyYy9HsHvBs1iubsucMdunF+Y04xfGRhNoTWxRNxgqZnAXWDhwpzRgwsNQCf1/qBDmc6MMvgm7CNf+u3mzLkeNCb0A1DlNjfeSAnW6RVE6Do7IzjcanTDAfRkahSs5dXnoQklgbqoXdoaiom2/og=
+	t=1790792441; cv=none; b=HXQff45NvjMP7Wik1T0fKaO139Y5Lf1sdQEuIf/SCxUsNspSFodR2wxcQrdxFpZEShw96HnDo2eDxJGq1bWUglhC7LmyyjTm3zjt1LXjIPLVWMW5dKBM1y7c3kdEme1hLq+qmZqVYOtKVZjVWKR+Oh+Wx2ZhCgfSPdCSE9+wNmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792439; c=relaxed/simple;
-	bh=JTbMHNc9wNhLT45t3uzrnukym47Z4S1HfPT1tdOPrWA=;
+	s=arc-20240116; t=1790792441; c=relaxed/simple;
+	bh=dUZY71A1DVYqkzBUCNuQygIrl4soSWe5KrMrZQdZq2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GesXYPOAFU5TOUarxC62MeQzHXjHHuM3Qk9J3umF8kZEvs2mGg8LQoiE6VOoI5rq70Olw5qMS8/tOv54qYO9cBHJQqtMDIfqeP+SW6yGAKjOFAyDK8OTkxTFiDIUYoB36TmRxVylDVQ8ZZTzz2GQfDOebOyitqse/F1E5Rkgccg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XY3zoaZ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mzyV1lgDRmCFl3XaojNlcw+Wk85BCzZoJVuxTV6WIuch/IPKS2cJtFMYSyk9p9exbfZu8yqBrlkNuIaO7Av1v8YPgzlptiXxcOSgD5ohOw2aML8AiETXpIXvtpKrf0UnIxIOr4P3kRSmkW7+NaM1W/JCpKwKnurpFWhYs6Z0tMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wn7+u9/e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XY3zoaZ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B951F000FF;
-	Wed, 30 Sep 2026 18:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wn7+u9/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139DD1F00898;
+	Wed, 30 Sep 2026 18:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792437;
-	bh=1AM3dBdukeK3I8rbLyDGz1+1Xf9oGWL0I+H8cexEwZE=;
+	s=korg; t=1790792440;
+	bh=i/keNME7tvjqVgyEKrIFQBLkcwQkbV+rXlULxD18unU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XY3zoaZ0GDIofvwti9qeKZJQzlFBED+8KPhrhzNbQg40vkQ9aKWrVt71Yx8psmuN3
-	 7UbEMlkSrJiydUVCSXUWkvnyskxsnquqHQ9XmEfCLJIMtR9729cxZeg7DBzCPgoyAT
-	 pNMtwY746gK+wk8q1aYDVblT0gE9xZ008UPDn7GU=
+	b=wn7+u9/eRg4hhhSu8U5CK5Jhb/bN5vIeLqlrsKG7mJE8tLP7QLugyOb2Xlqhsy9xt
+	 PKT74qmuk7moHcORlfUqHc/xIoyDGDz6ziYKdgpCjEsal+UUE1yMkDnXvHXmpQNkHv
+	 m7hvW98Ua/Nbbgt3gO9R4SB/89tu22JdpGCMSgkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 610/752] fs: avoid repeated scans in evict_inodes()
-Date: Wed, 30 Sep 2026 17:28:00 +0200
-Message-ID: <20260930152411.483612066@linuxfoundation.org>
+Subject: [PATCH 5.15 611/752] xsk: Use a 32-bit compare in xsk_map_gen_lookup
+Date: Wed, 30 Sep 2026 17:28:01 +0200
+Message-ID: <20260930152411.505364647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,107 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 7459c021874246c196f397686e100702f059b9e7 ]
+[ Upstream commit 70504de0bb627848667207bec7ccfd647deb8814 ]
 
-We observed hung tasks when users attempted to unmount a filesystem
-after its disk had been removed while still in use. During device
-removal, fs_bdev_mark_dead() calls evict_inodes() while holding s_umount.
+xsk_map_gen_lookup() loads a u32 key and compares it with max_entries
+using BPF_JMP_IMM. BPF immediates are sign-extended to 64 bits, so a
+max_entries value of 0x80000000 or higher becomes a threshold larger
+than every zero-extended 32-bit key. An out-of-range index then skips
+the bounds check and the generated lookup reads past xsk_map[].
 
-Each time evict_inodes() drops s_inode_list_lock to reschedule, it
-restarts the walk from the head of s_inodes. With many referenced inodes
-at the head of the list, these restarts repeatedly scan the same inodes
-without reclaiming them. This can keep s_umount held for a long time,
-blocking concurrent umount attempts and triggering hung-task reports.
+Compare with BPF_JMP32_IMM so the check stays in 32-bit unsigned range.
 
-Keep the current inode, already marked I_FREEING, out of the disposal
-batch until s_inode_list_lock is reacquired. Resume the walk from this
-inode and dispose of it in a later batch or at the end of the walk.
-
-The zero-refcount and state checks under i_lock allow this walker to
-claim the inode by setting I_FREEING and removing it from the LRU.
-Other reclaimers skip the inode, leaving this walker responsible for
-eviction. Only evict() removes it from s_inodes, so keeping it out of
-the disposal batch ensures that it remains on the list while the lock
-is dropped. After reacquiring the lock, reading its current next pointer
-accounts for concurrent removal of following inodes.
-
-The existing inode lifetime rules prohibit acquiring a reference to an
-inode marked I_FREEING or I_WILL_FREE. __iget() requires its caller to
-hold i_lock and establish that taking a reference is valid. Inode lookup
-and igrab() check these flags under i_lock when acquiring a reference
-from zero. ihold() requires an existing reference, which would keep
-i_count nonzero and prevent this walker from claiming the inode. These
-rules already allow iput_final() and the inode shrinker to release
-i_lock after setting I_FREEING and before eviction completes.
-
-A temporary __iget() reference would also keep the inode on the list,
-but its release must preserve last-reference handling. Another user can
-acquire a reference, update lazy timestamps and drop its reference while
-the pin is held. If the pin becomes the last reference, dropping it with
-atomic_dec_and_test() and evicting directly bypasses iput()'s lazytime
-handling and can lose those timestamp updates.
-
-Releasing the pin with iput() preserves that handling, but does not
-guarantee eviction. fs_bdev_mark_dead() runs with SB_ACTIVE set, so iput()
-may retain the inode in cache, whereas evict_inodes() must evict eligible
-zero-reference inodes. The inode may also have been freed when iput()
-returns, so the walker cannot then use it to force eviction. Using
-I_FREEING preserves the existing eviction behavior without introducing
-an additional last-reference transition.
-
-The xfstests auto group passed on ext4 and XFS with known unrelated
-failures excluded. No new issues were observed, and the previously
-reproducible hung task no longer occurs with this patch.
-
-Fixes: ac05fbb40062 ("inode: don't softlockup when evicting inodes")
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20260915044912.3183440-1-sunjunchao@bytedance.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: e65650f291ee ("bpf: Implement map_gen_lookup() callback for XSKMAP")
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://patch.msgid.link/7d2cb8e8dfaa9eb8fdff85156987a60960787dc3.1789056660.git.zhilinz@nebusec.ai
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/xdp/xskmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 0a3a14b9ee46f..c5825df1c5cc0 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -696,7 +696,6 @@ void evict_inodes(struct super_block *sb)
- 	struct inode *inode, *next;
- 	LIST_HEAD(dispose);
+diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
+index 08b5f17fe5265..1521f246a2b17 100644
+--- a/net/xdp/xskmap.c
++++ b/net/xdp/xskmap.c
+@@ -114,7 +114,7 @@ static int xsk_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
+ 	struct bpf_insn *insn = insn_buf;
  
--again:
- 	spin_lock(&sb->s_inode_list_lock);
- 	list_for_each_entry_safe(inode, next, &sb->s_inodes, i_sb_list) {
- 		if (atomic_read(&inode->i_count))
-@@ -715,19 +714,19 @@ void evict_inodes(struct super_block *sb)
- 		inode->i_state |= I_FREEING;
- 		inode_lru_list_del(inode);
- 		spin_unlock(&inode->i_lock);
--		list_add(&inode->i_lru, &dispose);
- 
- 		/*
--		 * We can have a ton of inodes to evict at unmount time given
--		 * enough memory, check to see if we need to go to sleep for a
--		 * bit so we don't livelock.
-+		 * Keep this inode out of dispose so it stays on s_inodes while
-+		 * the list lock is dropped. I_FREEING prevents new references
-+		 * and leaves eviction to us, so we can resume the walk from it.
- 		 */
- 		if (need_resched()) {
- 			spin_unlock(&sb->s_inode_list_lock);
- 			cond_resched();
- 			dispose_list(&dispose);
--			goto again;
-+			spin_lock(&sb->s_inode_list_lock);
- 		}
-+		list_add(&inode->i_lru, &dispose);
- 	}
- 	spin_unlock(&sb->s_inode_list_lock);
- 
+ 	*insn++ = BPF_LDX_MEM(BPF_W, ret, index, 0);
+-	*insn++ = BPF_JMP_IMM(BPF_JGE, ret, map->max_entries, 5);
++	*insn++ = BPF_JMP32_IMM(BPF_JGE, ret, map->max_entries, 5);
+ 	*insn++ = BPF_ALU64_IMM(BPF_LSH, ret, ilog2(sizeof(struct xsk_sock *)));
+ 	*insn++ = BPF_ALU64_IMM(BPF_ADD, mp, offsetof(struct xsk_map, xsk_map));
+ 	*insn++ = BPF_ALU64_REG(BPF_ADD, ret, mp);
 -- 
 2.53.0
 
