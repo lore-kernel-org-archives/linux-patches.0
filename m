@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EB02AEEB;
-	Wed, 30 Sep 2026 18:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6652AEEB;
+	Wed, 30 Sep 2026 18:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794786; cv=none; b=QDdbIX2PQaZOeSVZ4d94Oea3/nQW7IYtAjHFRqWx7HnVCGzvZinm62yJX9lONIQUh7X3I8BQPB3sgQLZghz322WEgiY9Gl36rAVPez0C7GzdIFFN2HttO+ZTf06rpLcK+HkbK2wsVrdwDQpigOGgCvjLpJ0FbNLF9ChVSu7H/fc=
+	t=1790794789; cv=none; b=J67qAF6kGgn8qMvq7JpDGRzu2MlXChXmMcyM4R3p0MBx2hqSKbr3q6xMPujiEYiXJ2VTR7Zqfl0mjLmNnLzj6Z+6ccWPeAVvVzw2jZy/wpqSKdHrS4voY+DLmyVa+uM2Pqf4q0chkwn+Y8akJjlca7Pjcf8QmeyBboWZWTYWRzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794786; c=relaxed/simple;
-	bh=4a/X0Bt6ntIHMjl97ca8HYgtrtq1+E7MqzHnXR04bJ8=;
+	s=arc-20240116; t=1790794789; c=relaxed/simple;
+	bh=gxMfFrYbPj7q8ytqju6XBGUgJTj9PO1vsA7jdP6SUjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwsGdNzLEx7a8Da2u47U/HCULqk4qB/uhhBn0bOo4HajWHnWtAX93I4qu0ws7/ogXptO9bXCQK64QW+uFqFeiH6dh6uEs1mwi8MH1HDgz1WrEzsRfxNSagHV/LTNYYSCcifis8BQsGTDusBdBm0wwjFFCl0r5eJwgv9vAebtp1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+4Hr9Zx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=exP40IHHAjM8QMpNHLZTO5dTF0LvUlrwCMHY+C7l7UZU0i5i2HwAWaSEYkB6RKhJfMkoL9NDmy+qeetsFHgxnrH71xass1usR7uwivzafOw0AsPBAIAkUa+6Z3IUnXC5kYfC8NeB3LwfcDt72v9A2buqkrpC/mrYCPazQiar3GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FjaN3rE6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+4Hr9Zx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846041F000FF;
-	Wed, 30 Sep 2026 18:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FjaN3rE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 555461F000FF;
+	Wed, 30 Sep 2026 18:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794785;
-	bh=oqLII+LcRDveKspSrguW2kiuHTT07nTZm5DuEEBaJQk=;
+	s=korg; t=1790794787;
+	bh=FSvTjwzDn9Vl1cAv8rnz3O7b5TQZQe2lJrnDTd2OQf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t+4Hr9ZxRhWW77/gmw2jIFexr3wsA+aMJeEf8dkOEpPs7n/85YjlJurArCjLTyx8f
-	 37IwScGO/tNM80ygCuFzmv1/sXSwHcjQrzsPjdN88hxoHneskWHysMi1K9PNDvVsDP
-	 2rhIJ4NdssUq0dCqxhBk7JcgYFUzt3BnDpyQ8nYE=
+	b=FjaN3rE66P/E4bUCthZNwR8qTf6ZsBUjjWs3eCcwfIlnH+gEJMPLRF5RnnH2YyA+x
+	 eTfeVBagaqxNO2EqHRBBm6m+soPGISAp9rCR5XKNflm6eXqBUb+TU49DxDV0dzQY+5
+	 gkjE+aKNNa0GvqYF39/i9AkStHSApMpeYqU3fuSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0334/1193] wifi: cfg80211: validate IEs in cfg80211_wext_siwgenie()
-Date: Wed, 30 Sep 2026 17:16:58 +0200
-Message-ID: <20260930152441.573733827@linuxfoundation.org>
+Subject: [PATCH 6.6 0335/1193] Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame
+Date: Wed, 30 Sep 2026 17:16:59 +0200
+Message-ID: <20260930152441.597021441@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,58 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit a2f5286ca4f304d3fd469f01b96b518608912a5c ]
+[ Upstream commit b230e5bf501c5edaf2eb0991cb862ac142031d4b ]
 
-The KASAN allocation trace shows that a malformed IE buffer is
-stored via SIOCSIWGENIE (cfg80211_wext_siwgenie()) without any
-validation. The crash trace shows that a subsequent SIOCSIWESSID
-triggers a connection attempt which calls cfg80211_sme_get_conn_ies()
-to process the stored IE buffer, causing:
+rfcomm_recv_frame() casts skb->data to struct rfcomm_hdr and dereferences
+hdr->addr and hdr->ctrl without validating skb->len first. A truncated
+frame with skb->len less than the minimum header size causes an
+out-of-bounds read of uninitialized memory. Additionally, a zero-length
+frame causes skb->len-- to underflow to UINT_MAX, making
+skb_tail_pointer() read far past the buffer.
 
- - An out-of-bounds read in skip_ie() which reads ies[pos+1]
-   (the length byte) past the end of the 1-byte buffer.
+Commit 23882b828c3c ("Bluetooth: RFCOMM: validate skb length in MCC
+handlers") fixed the same class of missing-length-check bugs in the MCC
+sub-handlers, but the top-level rfcomm_recv_frame() was left unfixed.
+KMSAN reports:
 
- - An integer underflow in the memcpy size argument when offs
-   returned by ieee80211_ie_split() exceeds ies_len, causing
-   unsigned subtraction to wrap to SIZE_MAX and triggering a
-   fortify panic.
+  BUG: KMSAN: uninit-value in rfcomm_run
+  ...
+  Uninit was created at:
+    __alloc_skb+0x474/0xb60
+    vhci_write+0xe9/0x870
 
-Fix this by validating the IE buffer in cfg80211_wext_siwgenie()
-before storing it.
+Fix this by rejecting frames smaller than sizeof(struct rfcomm_hdr) + 1
+(the minimum frame must have a 3-byte header and a 1-byte FCS).
 
-Reported-by: syzbot+cc867e537e4bd36f69bb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cc867e537e4bd36f69bb
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260725142028.32560-1-kartikey406@gmail.com
-[drop unnecessary ie_len check, update commit message]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/wext-sme.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/rfcomm/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/wireless/wext-sme.c b/net/wireless/wext-sme.c
-index f3eaa3388694a..cfa903eb0e82f 100644
---- a/net/wireless/wext-sme.c
-+++ b/net/wireless/wext-sme.c
-@@ -348,6 +348,15 @@ int cfg80211_wext_siwgenie(struct net_device *dev,
- 		goto out;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 390107643a76c..9801e236c307f 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1817,6 +1817,11 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
+ 		return s;
+ 	}
  
- 	if (ie_len) {
-+		const struct element *elem;
++	if (skb->len < sizeof(*hdr) + 1) {
++		kfree_skb(skb);
++		return s;
++	}
 +
-+		for_each_element(elem, extra, ie_len) {
-+			/* nothing */
-+		}
-+
-+		if (!for_each_element_completed(elem, extra, ie_len))
-+			return -EINVAL;
-+
- 		ie = kmemdup(extra, ie_len, GFP_KERNEL);
- 		if (!ie) {
- 			err = -ENOMEM;
+ 	dlci = __get_dlci(hdr->addr);
+ 	type = __get_type(hdr->ctrl);
+ 
 -- 
 2.53.0
 
