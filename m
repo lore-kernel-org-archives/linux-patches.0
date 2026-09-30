@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773EE4D2EFE;
-	Wed, 30 Sep 2026 16:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3977C364931;
+	Wed, 30 Sep 2026 16:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785414; cv=none; b=SMkdJ55bld1FbENcU7yjVkwxo9l3lIjJgW3Qn6dA8WKwSe+Y3LGmljsEm8F+mgkJ9UuG1wacwJZK0vaqR3j4rk//jpZ0kDff4fpfjfb5TxQgqx/yk1qgemuW6KhFu9Bn8PPVys0vF1rAyHv/4YkePn/UcbBeISnEDnyu7XEgA2k=
+	t=1790785418; cv=none; b=BkT0GQ81zSSpdKvN4lsjJpEbxBWWav+3BRBaaXpdlxocFVHFFPwQ4us6sTuQ/2nv0R5a5xUBSriSkajVb5wVf05o5xn+3k2NhHwE5aPVre9z0A0yIavMehhjAdrC+0H9d7P4GjB9vdxfNPsZzJ7tvzXFW01sFx/vySEUbZR+khc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785414; c=relaxed/simple;
-	bh=tfuCpeiAlb2DVWEKZyWgcywQRzZl6EvlewG8xJrGUgQ=;
+	s=arc-20240116; t=1790785418; c=relaxed/simple;
+	bh=vgwnrl/CxPEXtTMr4xp6UcgMwmJ/lkLIr52KE+M6FRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKBRC5OwTOpnNNmxski+WDSxVg7SIygA2pEz63qCg+QR3klRoUFYDrJL0T/xgWHdFxsUNiLRyb76HPrmvLDlISID0lDlrVM9VXP86P5BhBjxczNsFqQQwv0pvMqZq8E4B7Wo40miQJm3DdZwggoHFwEeE9DbA9TdOnhR8b8felk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKiTTqUA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=arAFoF/2yGoYYjjRiDETebO7hXRLZH9U5SZgyS/tLtlFKZGgkGwkYDXXWElCGRCZvFbFVghgXxDPrUvxuJ1UiVPtXrkKZE2PVRPOXOiNBj81zRIwqeLnM6fCKshsY9SYtuqmqvc6s2MR3zdYELxuIif1/DOT2hjXpqq9l1mTKOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck6ovErr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKiTTqUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7941F00893;
-	Wed, 30 Sep 2026 16:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck6ovErr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4381F00898;
+	Wed, 30 Sep 2026 16:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785404;
-	bh=4GhMKTG8WpB5DAHYv/T6qt0fxboL9PytAy/ihD4Y94E=;
+	s=korg; t=1790785412;
+	bh=GZE80gGDH8szRyMENmh1bzvE7QJ15KOPKAlU1aXBWfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKiTTqUAvp8DLXn/s32d0bWTKmaZ6WOoHfeF4QHFdiR+aU5hMhu4K7B7l0RJaIgbn
-	 /KXKLsYjMveEvGq+N5JhfqNN7dqV8mkabn2mM9Z6xF7l2gMQzsemYRNnZwzZZsAFA/
-	 4zWTfJCTJHVvJ0qKswogsxg4StuGTXDTkE5+LygY=
+	b=ck6ovErrT9F5ackxm3VS0OdXzX6aZp8JnBR4nOcybuImYlADrdlTV57b0vR3JRcFv
+	 kDygkQgZPSc0zG4aES5Caf1Vy3uuX3JeaRXXizADEWAExrNt8mvnicO4fPUAkGCoSu
+	 auHlZsamNX0HlGxUVopQF53hAZ54ytMywZfibt+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Miguel Gazquez <miguel.gazquez@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 452/982] net: ethernet: cortina: Count RX descriptors for freeq refill
-Date: Wed, 30 Sep 2026 17:19:48 +0200
-Message-ID: <20260930152426.501972131@linuxfoundation.org>
+Subject: [PATCH 6.1 493/982] net: dst: add four helpers to annotate data-races around dst->dev
+Date: Wed, 30 Sep 2026 17:20:29 +0200
+Message-ID: <20260930152427.369837432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,89 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e89e88ad41d9f31c829c2af39c48313e8e48d5b0 ]
+[ Upstream commit 88fe14253e181878c2ddb51a298ae8c468a63010 ]
 
-The software free queue provides one buffer fragment for every descriptor
-moved to an RX queue. The refill heuristic instead advances by NAPI work,
-which counts frames. A fragmented or discarded frame can consume several
-queue entries while adding only one to the refill count.
+dst->dev is read locklessly in many contexts,
+and written in dst_dev_put().
 
-Count the RX descriptors as they are consumed and report that separately
-from NAPI work. Use the descriptor count to drive free queue refills.
+Fixing all the races is going to need many changes.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Assisted-by: LLM
-Reviewed-by: Joe Damato <joe@dama.to>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-5-2bbbd598ca6e@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+We probably will have to add full RCU protection.
+
+Add three helpers to ease this painful process.
+
+static inline struct net_device *dst_dev(const struct dst_entry *dst)
+{
+       return READ_ONCE(dst->dev);
+}
+
+static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
+{
+       return dst_dev(skb_dst(skb));
+}
+
+static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+{
+       return dev_net(skb_dst_dev(skb));
+}
+
+static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+{
+       return dev_net_rcu(skb_dst_dev(skb));
+}
+
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250630121934.3399505-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ minor modifications to fix conflict ]
+Signed-off-by: Miguel Gazquez <miguel.gazquez@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ include/net/dst.h | 20 ++++++++++++++++++++
+ net/core/dst.c    |  4 ++--
+ net/core/sock.c   |  6 +++---
+ 3 files changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 03f8546bc224a..fcc6018067226 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1445,7 +1445,8 @@ static struct sk_buff *gmac_skb_if_good_frame(struct gemini_ethernet_port *port,
- 	return skb;
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 20a76e532afbb..7c0cf856154de 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -555,6 +555,11 @@ static inline void skb_dst_update_pmtu_no_confirm(struct sk_buff *skb, u32 mtu)
+ 		dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
  }
  
--static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
-+static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget,
-+			    unsigned int *freeq_consumed)
++static inline struct net_device *dst_dev(const struct dst_entry *dst)
++{
++	return READ_ONCE(dst->dev);
++}
++
+ static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
  {
- 	struct gemini_ethernet_port *port = netdev_priv(netdev);
- 	unsigned short m = (1 << port->rxq_order) - 1;
-@@ -1453,6 +1454,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	void __iomem *ptr_reg = port->rxq_rwptr;
- 	unsigned int frag_nr = port->rx_frag_nr;
- 	struct sk_buff *skb = port->rx_skb;
-+	unsigned int consumed = 0;
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
- 	struct gmac_queue_page *gpage;
-@@ -1488,6 +1490,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 
- 		r++;
- 		r &= m;
-+		consumed++;
- 
- 		frag_len = word0.bits.buffer_size;
- 		frame_len = word1.bits.byte_count;
-@@ -1580,6 +1583,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	port->rx_skb = skb;
- 	port->rx_frag_nr = frag_nr;
- 	port->rx_dropping = dropping;
-+	*freeq_consumed = consumed;
- 	writew(r, ptr_reg);
- 	return received;
+ 	/* In the future, use rcu_dereference(dst->dev) */
+@@ -562,11 +567,26 @@ static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
+ 	return READ_ONCE(dst->dev);
  }
-@@ -1589,18 +1593,19 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 	struct gemini_ethernet_port *port = netdev_priv(napi->dev);
- 	struct gemini_ethernet *geth = port->geth;
- 	unsigned int freeq_threshold;
-+	unsigned int freeq_consumed;
- 	unsigned int received;
  
- 	freeq_threshold = 1 << (geth->freeq_order - 1);
- 	u64_stats_update_begin(&port->rx_stats_syncp);
++static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
++{
++	return dst_dev(skb_dst(skb));
++}
++
+ static inline struct net_device *skb_dst_dev_rcu(const struct sk_buff *skb)
+ {
+ 	return dst_dev_rcu(skb_dst(skb));
+ }
  
--	received = gmac_rx(napi->dev, budget);
-+	received = gmac_rx(napi->dev, budget, &freeq_consumed);
- 	if (received < budget)
- 		++port->rx_napi_exits;
++static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
++{
++	return dev_net(skb_dst_dev(skb));
++}
++
++static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
++{
++	return dev_net_rcu(skb_dst_dev(skb));
++}
++
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+ void dst_blackhole_update_pmtu(struct dst_entry *dst, struct sock *sk,
+ 			       struct sk_buff *skb, u32 mtu, bool confirm_neigh);
+diff --git a/net/core/dst.c b/net/core/dst.c
+index 8db87258d1450..24a1cc3d2a084 100644
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -151,7 +151,7 @@ void dst_dev_put(struct dst_entry *dst)
+ 		dst->ops->ifdown(dst, dev, true);
+ 	dst->input = dst_discard;
+ 	dst->output = dst_discard_out;
+-	dst->dev = blackhole_netdev;
++	WRITE_ONCE(dst->dev, blackhole_netdev);
+ 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
+ 			   GFP_ATOMIC);
+ }
+@@ -272,7 +272,7 @@ unsigned int dst_blackhole_mtu(const struct dst_entry *dst)
+ {
+ 	unsigned int mtu = dst_metric_raw(dst, RTAX_MTU);
  
- 	u64_stats_update_end(&port->rx_stats_syncp);
+-	return mtu ? : dst->dev->mtu;
++	return mtu ? : dst_dev(dst)->mtu;
+ }
+ EXPORT_SYMBOL_GPL(dst_blackhole_mtu);
  
--	port->freeq_refill += received;
-+	port->freeq_refill += freeq_consumed;
- 	if (port->freeq_refill > freeq_threshold) {
- 		port->freeq_refill -= freeq_threshold;
- 		geth_fill_freeq(geth, true);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 2a701e0b052b7..64f9d77bfaec7 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2397,7 +2397,7 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
+ {
+ 	u32 max_segs = 1;
+ 
+-	sk->sk_route_caps = dst->dev->features;
++	sk->sk_route_caps = dst_dev(dst)->features;
+ 	if (sk_is_tcp(sk))
+ 		sk->sk_route_caps |= NETIF_F_GSO;
+ 	if (sk->sk_route_caps & NETIF_F_GSO)
+@@ -2410,11 +2410,11 @@ void sk_setup_caps(struct sock *sk, struct dst_entry *dst)
+ 		} else {
+ 			sk->sk_route_caps |= NETIF_F_SG | NETIF_F_HW_CSUM;
+ 			/* pairs with the WRITE_ONCE() in netif_set_gso_max_size() */
+-			sk->sk_gso_max_size = READ_ONCE(dst->dev->gso_max_size);
++			sk->sk_gso_max_size = READ_ONCE(dst_dev(dst)->gso_max_size);
+ 			sk_trim_gso_size(sk);
+ 			sk->sk_gso_max_size -= (MAX_TCP_HEADER + 1);
+ 			/* pairs with the WRITE_ONCE() in netif_set_gso_max_segs() */
+-			max_segs = max_t(u32, READ_ONCE(dst->dev->gso_max_segs), 1);
++			max_segs = max_t(u32, READ_ONCE(dst_dev(dst)->gso_max_segs), 1);
+ 		}
+ 	}
+ 	sk->sk_gso_max_segs = max_segs;
 -- 
 2.53.0
 
