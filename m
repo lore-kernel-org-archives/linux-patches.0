@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35D03DCDA4;
-	Wed, 30 Sep 2026 19:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDA4371049;
+	Wed, 30 Sep 2026 19:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796903; cv=none; b=muwm7Un+iZk0EgwYRS/MEbO93D8drJH2C1J3f0w8X0Hl5YwYTSWvHiLOwI5E42sfG2/azmROUtNG1K7vDD79li76USy8XMXSOZnfXHcZK1yBoWnZbWfC7BRPrdW/yWiYez1E97+8eMRHmcpDfQK6QgUVzL5/2aCGkchQbxVXUBs=
+	t=1790796905; cv=none; b=kS/xsSVO8ABTsrr0ihp9WzXTuhylRR3MqHYJ/CpvPQspx1yx8g2/yFOsXQBOf0psTzcEUAQ9ixak6MGOvRADGVQqDir4+0syFM+VFa/Jmj1SE5FDp199IGh7JHFBPOsBKdzhdSJSEYQz1hlmSvviwCXS0dSdUI8TLayi/5IBgCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796903; c=relaxed/simple;
-	bh=zMoUZCvEb1kgevSm1yqnjuO9zxfIq5cSNv3qKzADp+I=;
+	s=arc-20240116; t=1790796905; c=relaxed/simple;
+	bh=4KxO/cUhHwq8FXv3W3jpk3zw2HwHRQibEeFyA0Ta5IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9xOUHjES1RZaGuTxX8pLyZI8hlRQ9pNJsE+xONou+gkfQbdD1m3GJfOBxAViZSSAcs+mNs4IpYhBl3zIGlRUwIy3BDX1MRjn3SPrDkuF18JT+mClI/sBAmpfGn3UPx1MVJDUJ837lTQeSLaq7gQmfQbksqhpxNjD8/1DLyWCYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/W9B5tc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S3D22iNlMG9bNePOUVr88YKTUuUXjnmB49XUL8DDPAwJNUJc5mHsPsv8l9AQ/b+mdMA32tHr5rUcnpuhS3laKaINFxn/L/RlbDFyHrtVJ0vcmSITWXkZMnbSNMmaE4W1c2Py03B1ILWm1LS/Rak1vmaMpo87AA4pPVWq8hx6F/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbMkALUv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/W9B5tc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4827A1F000FF;
-	Wed, 30 Sep 2026 19:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbMkALUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FBC1F00898;
+	Wed, 30 Sep 2026 19:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796901;
-	bh=21y97hiJcL0padBRx+jnPMsQ0kiwrDoP/rL5pflmZok=;
+	s=korg; t=1790796904;
+	bh=PnrbIw06kD4ccxgRCqeCGCtnE5Lx3NnYw4B80cWB31s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n/W9B5tcCGkAIMpU1lwYlB1IFAVoa2dN7064EzRteknUVwPthEeg5zBgynbutmlVt
-	 k08CfspqAIErC1Thw+EaTGOozVEqL7aFsuKZLeSQqQqSM+iJsTPnW6VD8BW747kWZB
-	 HkWx1s/2BteUV34m2SgtzwOrLQDwY5LNUn7A8W9U=
+	b=DbMkALUvQhGbA64ca8/2G/IZNCUvJUK0mexxUydsyIW+bhLSPwdHFINeBRFn5Zi8q
+	 Zn6YjkJ2TlC+8g8My3I8A8xoDj2aMzJeXnVEYuLDlz44LrztZsleE6zoAMU/Kqi/Xy
+	 pQ3Z0RQNuHVGuld6NK0GpBAjrCF0ayKfXgTkWlxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Coia Prant <coiaprant@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1076/1193] tipc: Fix a data race on mon->peer_cnt in mon_timeout()
-Date: Wed, 30 Sep 2026 17:29:20 +0200
-Message-ID: <20260930152458.133514362@linuxfoundation.org>
+Subject: [PATCH 6.6 1077/1193] net: ethernet: stmmac: dwmac-rk: fix bulk clock leak when the PHY clock fails
+Date: Wed, 30 Sep 2026 17:29:21 +0200
+Message-ID: <20260930152458.156019873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,44 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Coia Prant <coiaprant@gmail.com>
 
-[ Upstream commit 8e1937fed6738460554ec123c64839e2445e7d53 ]
+[ Upstream commit 8db67bb6a1fffa4df68fbbc22e39943aeeff9178 ]
 
-mon_timeout() evaluates dom_size(mon->peer_cnt) before it takes mon->lock,
-while mon->peer_cnt is updated under that lock by tipc_mon_add_peer() and
-tipc_mon_remove_peer().  The value can therefore be stale, and the decision
-whether the local domain has to be recomputed can be based on an outdated
-member count.
+gmac_clk_enable() enables the bulk clocks first and then the optional
+PHY clock. If clk_prepare_enable() on the PHY clock fails, the function
+returns without rolling back the bulk clocks, and bsp_priv->clk_enabled
+stays false, so the later gmac_clk_enable(bsp_priv, false) becomes a
+no-op and the bulk clock references are leaked.
 
-Read mon->peer_cnt inside the write_lock_bh(&mon->lock) protected region.
+Add the missing clk_bulk_disable_unprepare() on that failure path.
 
-Fixes: 35c55c9877f8 ("tipc: add neighbor monitoring framework")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260922080909.21123-1-ginger.jzllee@gmail.com
+Fixes: ea449f7fa0bf ("net: ethernet: stmmac: dwmac-rk: rework optional clock handling")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Signed-off-by: Coia Prant <coiaprant@gmail.com>
+Link: https://patch.msgid.link/20260923123713.3137146-1-coiaprant@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/monitor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
-index ddc3e4e5e18d7..76606813c3052 100644
---- a/net/tipc/monitor.c
-+++ b/net/tipc/monitor.c
-@@ -632,9 +632,10 @@ static void mon_timeout(struct timer_list *t)
- {
- 	struct tipc_monitor *mon = from_timer(mon, t, timer);
- 	struct tipc_peer *self;
--	int best_member_cnt = dom_size(mon->peer_cnt) - 1;
-+	int best_member_cnt;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+index bab315517bad9..e5a6b46fdbb27 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -1553,8 +1553,11 @@ static int gmac_clk_enable(struct rk_priv_data *bsp_priv, bool enable)
+ 				return ret;
  
- 	write_lock_bh(&mon->lock);
-+	best_member_cnt = dom_size(mon->peer_cnt) - 1;
- 	self = mon->self;
- 	if (self && (best_member_cnt != self->applied)) {
- 		mon_update_local_domain(mon);
+ 			ret = clk_prepare_enable(bsp_priv->clk_phy);
+-			if (ret)
++			if (ret) {
++				clk_bulk_disable_unprepare(bsp_priv->num_clks,
++							   bsp_priv->clks);
+ 				return ret;
++			}
+ 
+ 			if (bsp_priv->ops && bsp_priv->ops->set_clock_selection)
+ 				bsp_priv->ops->set_clock_selection(bsp_priv,
 -- 
 2.53.0
 
