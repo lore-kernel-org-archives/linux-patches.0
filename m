@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6153CAA55;
-	Wed, 30 Sep 2026 19:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39D33D3CF5;
+	Wed, 30 Sep 2026 19:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795215; cv=none; b=PB8Y3sPgim3gWdhuh1c8UO1bPPbi5zfhQ/QhlqddRRV+v06jheoUbaOdCIUX5ef5uUYjTDyV+yeP4yhiO8MEczxREKzSbUvRFCAZlwBb6DxNs/pBGjqzm/hKBFaQOhv5AFD/Sq8beNieOLR1q13WQHuJXHMaIdBsroHxHEocXU8=
+	t=1790795217; cv=none; b=vFx5mK0zQc711N5ZDZFw6NluPvt5CZFTcDXbneMM+uFhNHmlI87qp0f3KeaH1PeQVQeB9sSvqF1XOcmSRmJj0Mes4w6ouUBp9/sxjosO+90UFJoNsmah/700P1MJgm+yJd5tbc087P4p91lI+Gge/zOINHyIRxx21/a/uZRTTPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795215; c=relaxed/simple;
-	bh=QpmQWiE9D1BmZgdEM4rBByk0ECA333CZj502luZWLjs=;
+	s=arc-20240116; t=1790795217; c=relaxed/simple;
+	bh=32jCyFWGKLjA//RCSWEvI9/R/AG3MqIc/ZRIgZiancU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3EHuEVh7WTUxG2y8PhBqURpSPXyumRi/snJ2p/iMUhshs7dFb8jg26jRQvvV5UZ0VfOPn99Inf1rDvywxoGeZLhtvzxowWaImdW+2U1HtaNoP5/nzBQrHj4wtyk1nIgfM7FfZ/rjFn+WxqKzEyG6/6scE84CrCrljlVBrnDXeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0ffLLxw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ec0xYCQH38eAj0ViCY1oVoBeK7p2bJGlNBTKndzAzOmYsvdHHBgZ3ocG33+WIR/JL9D0vimd1A4AvTqwM3UtH1r5YN2DWDJYQLBFSueIWEoXpEJ/nVivhhenO8Ods2sIA1j+YsV0JmXTNT0ZbEFpic2HB24kcwn0z4Y0CmUQC1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwiegYem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0ffLLxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573C61F00898;
-	Wed, 30 Sep 2026 19:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwiegYem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD2F1F000FF;
+	Wed, 30 Sep 2026 19:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795213;
-	bh=DDXq+oyzvASYnvdE7EEFtBxsg9146jEk+O8c0ef18bU=;
+	s=korg; t=1790795216;
+	bh=S9pCNa0AfvNCJTig3RTZt5eiErpnLkJgi8qkF3Bt28c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0ffLLxwiKOXYGoP+LqPYVeVncBp2hqfe3jAvvsPxVrI7N0R0emxpj8HnFPIVgarE
-	 AhvnvJN03NcHTCL7HtgRpiMRehiBwjrt/Dx1p6oYApnxT5KlPBsoIP9s1ABJLmjWn9
-	 G8Wc1t/p6hUEOThx/G8Th6aTc5hvQ7JbN9wRArnc=
+	b=lwiegYemKQDNseozwf6gmqBgRSu5yCXe00RlDVx40IDEAOJv4pLaSHCpDcheqmL+x
+	 wxxR8Vzdgz1RDki4WZKZL1A0XAogTFuErrbZc+CG77K/F3CNk04BtyeQ4lUX5nLyvv
+	 fcQGzKJM57C0rqCQqjiZvDsBRwlfjN9y68aAXWg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Danesh Petigara <danesh.petigara@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0484/1193] net: bcmasp: fix tx_spb_ring_full() checking same slot cnt times
-Date: Wed, 30 Sep 2026 17:19:28 +0200
-Message-ID: <20260930152444.909939854@linuxfoundation.org>
+Subject: [PATCH 6.6 0485/1193] bpf: Mark bpf_btf_find_by_name_kind() as sleepable
+Date: Wed, 30 Sep 2026 17:19:29 +0200
+Message-ID: <20260930152444.930273956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,43 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 0c5cf62e72d7a666ee4da757e122dc1600df1ecc ]
+[ Upstream commit 620614bf7672130c43b3cff375525a2202f61979 ]
 
-The loop initialised next_index from intf->tx_spb_index on every
-iteration, so incr_ring() always produced the same result and only
-one slot was ever tested.  Move the initialisation before the loop
-so each iteration advances next_index and the function correctly
-checks that cnt consecutive descriptor slots are available before
-allowing a new transmission.
+When bpf_btf_find_by_name_kind() finds a type in module BTF, it
+returns a new BTF object fd through __btf_new_fd(). This reaches
+anon_inode_getfd(), which can sleep while allocating or expanding the
+current task fd table.
 
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260831184235.4133351-3-danesh.petigara@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The helper prototype does not set might_sleep, so the verifier allows
+the helper in non-sleepable contexts such as BPF timer callbacks. The
+fd allocation can then sleep in softirq context and install the fd into
+the interrupted task.
+
+Mark the helper as sleepable. This preserves calls from the main body
+of a sleepable syscall program while rejecting calls from its
+non-sleepable regions.
+
+Fixes: 3d78417b60fb ("bpf: Add bpf_btf_find_by_name_kind() helper.")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/bpf/20260903155150.D57251F000E9@smtp.kernel.org
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260903214758.2727663-4-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/btf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index 7ed034389815b..407585420f4b7 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -147,8 +147,9 @@ static int tx_spb_ring_full(struct bcmasp_intf *intf, int cnt)
- 	int next_index, i;
- 
- 	/* Check if we have enough room for cnt descriptors */
-+	next_index = intf->tx_spb_index;
- 	for (i = 0; i < cnt; i++) {
--		next_index = incr_ring(intf->tx_spb_index, DESC_RING_COUNT);
-+		next_index = incr_ring(next_index, DESC_RING_COUNT);
- 		if (next_index == intf->tx_spb_clean_index)
- 			return 1;
- 	}
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 3ae36f9f6c303..1c9119f0dfd72 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -7594,6 +7594,7 @@ BPF_CALL_4(bpf_btf_find_by_name_kind, char *, name, int, name_sz, u32, kind, int
+ const struct bpf_func_proto bpf_btf_find_by_name_kind_proto = {
+ 	.func		= bpf_btf_find_by_name_kind,
+ 	.gpl_only	= false,
++	.might_sleep	= true,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
 -- 
 2.53.0
 
