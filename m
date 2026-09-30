@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C085A3C457D;
-	Wed, 30 Sep 2026 19:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4257341ADD;
+	Wed, 30 Sep 2026 19:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795774; cv=none; b=jgF6SLE2ArA0nElY7e62553443csvTM+phuKdvqF72UpMiahE+zOPC42KCAJOx7YiozS1crYQyCAMde84t/LGh82Ff6JlBVHsXrWQatjTp0ilabNlazhG9eawO9Tjf3k9shQ4zy/laYU5fw/3ZQYoBlxFzXeJNY2AS4DkUBh5ks=
+	t=1790795777; cv=none; b=UkTREv0n6fpx7Xn4ynGeSxgev7S4Vs15L0PQ2HqbKOIh/2DsKjNXqrBRMrFnDi/7JYvbrTrkgPwRlhh87RtAMqzze0COxc9p5y3k3beQ3YsN5SDN+AcFmKjEi+QaoIqqaGz36F0YWZ5Kl07NmAbk3UEHh5dajy1MZzQzc92adF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795774; c=relaxed/simple;
-	bh=Q5E9DtHbXsgSzXMpfAVTB7bJMTRL7MmdS1R2VZ8K31c=;
+	s=arc-20240116; t=1790795777; c=relaxed/simple;
+	bh=f16rKnZv3ppTJurdNLfhiuhxx9MguAbVFoSoaR5WBBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKBbr8HwGSOQ2ivRiGBZQRvLIiDfaM7nBLNtLyTavFJBDjFcjdk5FFAkZtK3kFKRRE49l2RJHc0kF86K4SyrJZWLlctRWJ/CrmKdlp1jPlfO4q7ykUUzFhBXYk4GvELpwqurBE0LxFV65OPrVU6J+2Dn/SnGljmvcfWnh9wv4VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGoLPJIM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WorXgSfjzZwDF4XhwmZ1pcrHN0mA5fZlEaSnnbMVApNnl01j5A86nb69cQgis+Fn/Tf3H1nU8rl5DWQJwRWuIeZen2fXSDa+TPPX8ntSRHSa5exhhMU38MArjlF9f9yRKZycdQlOetMxh60frCRVNHnKisf6AQz1A2pIlSHmGBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bBnph4R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGoLPJIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289411F000FF;
-	Wed, 30 Sep 2026 19:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bBnph4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38CE1F000FF;
+	Wed, 30 Sep 2026 19:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795773;
-	bh=iGTriz6iDtS/93wd2ONyQ3s8p2crIW9lQMjqw0Eja5U=;
+	s=korg; t=1790795776;
+	bh=BVaEBq+Clr5kVkvPf4V2fvmHd0tvgdkvzgmSBnxOT34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGoLPJIMxDbk8kQ2b+A7ns5E2xG/AyxOHggaNOYAa/rHUBsiTvtXWSXvjTGTRKu4z
-	 RSNDfJ9USkNnwc1L0UcQKVUBUYxsgS3LHbb4EsYLODgWZnhAiRHKozP4F381UeT4du
-	 ny00QyqQpSAaUkHrcbJwZDbpXUFUmR9xOmHuih7Y=
+	b=1bBnph4RHVTSTYKCoGKC6kOMeiYEuaJeRrXCtWFmnoglVip50vQJngGJf1dSIVNiN
+	 JL0LpkbUamsm8BSvhDScmvlglyBG28BmM0oVGYD4AQLRZVQsrgbp1RerrYHziuF2Zj
+	 PW8LuPYNT8v5gYXRagJi7euvZJBuS29FPKhrUFYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Gang Yan <yangang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0662/1193] selftests: mptcp: fix an UAF in mptcp_connect.c
-Date: Wed, 30 Sep 2026 17:22:26 +0200
-Message-ID: <20260930152448.944200093@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0680/1193] Revert "arm64: dts: qcom: sm8150: Fix the PCIe iommu-map entries"
+Date: Wed, 30 Sep 2026 17:22:44 +0200
+Message-ID: <20260930152449.352080977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,52 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+This reverts commit 796fcf46d75515f920d3efe4a33540fc6523d940.
 
-commit 730444f094b12052916ebd7e14fe57bc3d47bf38 upstream.
-
-At the end of 'sock_connect_mptcp()', it calls 'freeaddrinfo(addr)',
-the 'peer' pointer (which points into 'addr') remains. Later, the main
-loop uses this peer pointer for reconnection attempts. If the memory has
-been freed and reused, the address data could be overwritten, resulting
-in an invalid remote address.
-
-This patch keeps the addrinfo list allocated for the whole process
-lifetime so "peer" remains valid across reconnects; the memory will be
-released at exit() time.
-
-Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
-Cc: stable@vger.kernel.org
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-7-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -365,6 +365,9 @@ static int sock_connect_mptcp(const char
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index a506fcf4644f3..73ef228ff2689 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1865,8 +1865,8 @@ pcie0: pci@1c00000 {
+ 				      "slave_q2a",
+ 				      "tbu";
  
- 	hints.ai_family = pf;
+-			iommu-map = <0x0   &apps_smmu 0x1d80 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1d81 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
++				    <0x100 &apps_smmu 0x1d81 0x1>;
  
-+	/* Keep the resolved address alive for the whole execution: it is
-+	 * used again when reconnecting, and will be released at exit time.
-+	 */
- 	xgetaddrinfo(remoteaddr, port, &hints, &addr);
- 	for (a = addr; a; a = a->ai_next) {
- 		sock = socket(a->ai_family, a->ai_socktype, proto);
-@@ -408,7 +411,6 @@ static int sock_connect_mptcp(const char
- 		}
- 	}
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1967,8 +1967,8 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
  
--	freeaddrinfo(addr);
- 	if (sock != -1)
- 		SOCK_TEST_TCPULP(sock, proto);
- 	return sock;
+-			iommu-map = <0x0   &apps_smmu 0x1e00 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1e01 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
++				    <0x100 &apps_smmu 0x1e01 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>;
+ 			reset-names = "pci";
+-- 
+2.53.0
+
 
 
