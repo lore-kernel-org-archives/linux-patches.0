@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5146D36A37E;
-	Wed, 30 Sep 2026 17:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23749518132;
+	Wed, 30 Sep 2026 17:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788315; cv=none; b=iV3wvqpzb/x0XgFa9eh6IurgCaY4c4tDa07HVlWv61pKpkp2+dKwd/Og+NL6AX9HHV2hJ7EDWxB7Z8FsJlaMQEEOKK5bcU6AG+mZnR382EEjeYPNi6J9CCeAgLTD/K7EUeiLYEwmGamRcBVNyvmPh6IpBw/hEl/mZWByqC+YrcQ=
+	t=1790788318; cv=none; b=iHabfY7PjUOubMeq7OsMO6eWi6JyVUqhmnhUybHt4GrJ7QWuftP34b4RrP6weA6Xg+NusJSN9SucraEgSXBVlvKohEJcGee25M9IhhvwPSEsodJCeNUqWUF2sCCIi8AfvQ6+66M1qPTW+UwsW3d5z7lLmMyrXtvai7/qQ8cfNHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788315; c=relaxed/simple;
-	bh=D+QT3ToCTDjtQs53aYFB2KEYviQh03Lh7BhnDUyuJFA=;
+	s=arc-20240116; t=1790788318; c=relaxed/simple;
+	bh=MahgyvY93xTfca7sUS5ZmyYUZkJrEXJB8OWFsb1/GlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kkex4mi8ISNCrOt6Jog+phcKx64GOiH7NBJxaEo/ZL48VTD6cUdP/3JiZdDGgfs96bSPAwu7fXkZHnRjnE/OuUoWISse+hXCCyEoTerPJfMc30ercgyUwBogQBaq517XIr/lu3ebGn2L7Pi3noWT22qo3fb+rxvGVGWcUOuTASo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2gpsfvD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ayUDoLSfEFlVlyNrwiLe9U//SGs4RfAqwnNtLj+ODvIWkGEGaq8819HeVbLDjvUR/mjLo3RXK+rq0eUw+SY0qRg0hchR18FuaaLa7b1sgQRdQRZZAcoPyc5RZnvMyV1w7Gx9YwAzjp0zvEFKlGmEFipmSoIc3ZtkuPF09X0ara0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YX3gCxrG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2gpsfvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDBC1F000FF;
-	Wed, 30 Sep 2026 17:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YX3gCxrG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3BD1F000FF;
+	Wed, 30 Sep 2026 17:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788314;
-	bh=+rDE0E3k4efwr3eX5WcvtcBU8XJe+yHUUrBNaW6v/ws=;
+	s=korg; t=1790788317;
+	bh=2HWUkWhKIdKjwORu+6gVfageScnUiHOUw4wSfY+HTg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c2gpsfvDsxbEnrKbwr1c6brl0xNh/VP/k4QiiIsR8z2gHVWYhMSINaeESgCDRi0OW
-	 V9+mk6nd7dXYkqdw9sg+XIyP7oLOrn1Hw1PF/V/8+48OKpIF5TIEJVih6XxpL+nfDB
-	 96jcxgbC0I9kcDyDbrELE1hl25Rs9QgPYNODV0Zw=
+	b=YX3gCxrGogBivlHIediME6bwTr2COLJBmyJmrq0oCncG/ikgFxScplOCXMawlNnd+
+	 x0Cb8vCfkIBDeK5xhbhzJw/WFoTGAtNKAlkf+goCLHuBqEpePOgeENBOTmret9OlV7
+	 j+6NTGmxscPCPpZG6Z3sicB+eOwQ9sFsMzm3xYSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com,
-	syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alex Bereza <alex@bereza.email>,
+	Frank Li <Frank.Li@nxp.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/877] wifi: mac80211: reset state when starting AP fails
-Date: Wed, 30 Sep 2026 17:16:15 +0200
-Message-ID: <20260930152416.121691893@linuxfoundation.org>
+Subject: [PATCH 6.12 082/877] dmaengine: xilinx_dma: Fix hardware buffer descriptor chain after cyclic DMA
+Date: Wed, 30 Sep 2026 17:16:33 +0200
+Message-ID: <20260930152416.510398956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,63 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alex Bereza <alex@bereza.email>
 
-[ Upstream commit 3f28551d0241254a75626d868041c6340285088b ]
+[ Upstream commit 7ed1e3070c9b4bbd67d5519e14711038dd53ab13 ]
 
-ieee80211_start_ap() can set enable_beacon (and beacon_int) and fail
-later, leaving it set forever. Scanning can then attempt to restore
-beaconing on such an interface, leading to:
+Using the DMA in cyclic mode modifies the hardware buffer descriptor
+chain in xilinx_dma_prep_dma_cyclic so that the last descriptor used by
+the cyclic transfer points back to the first descriptor, but it never
+restores the original descriptor ring. This breaks using non-cyclic mode
+after cyclic mode with an error like:
 
-  Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:mac80211_hwsim_link_info_changed+0xca7/0xf00
-  Call Trace:
-   drv_link_info_changed+0x413/0x860 net/mac80211/driver-ops.c:495
-   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
-   ieee80211_offchannel_return+0x381/0x580 net/mac80211/offchannel.c:160
-   __ieee80211_scan_completed+0x993/0xe30 net/mac80211/scan.c:519
-   ieee80211_scan_work+0x472/0x2010 net/mac80211/scan.c:1193
-   cfg80211_wiphy_work+0x2b7/0x550 net/wireless/core.c:538
+  xilinx-vdma 86000000.dma: Channel 00000000354d5c8d has errors 100, cdr 6de40000 tdr 6de40400
 
-in hwsim. Also, cfg80211 then allows changing the interface type,
-and the off-channel path getgs confused about beaconing as well,
-leading to another warning:
+The only way to get out of this error state is to rebuild the hardware
+buffer descriptor ring by releasing and re-acquiring the channel.
 
-  WARNING: net/mac80211/driver-ops.c:468 at drv_link_info_changed+0x583/0x880
-   ieee80211_link_info_change_notify+0x24b/0x3c0 net/mac80211/main.c:427
-   ieee80211_offchannel_stop_vifs+0x328/0x5c0 net/mac80211/offchannel.c:122
-   ieee80211_start_sw_scan net/mac80211/scan.c:583 [inline]
-   __ieee80211_start_scan+0xfb6/0x1af0 net/mac80211/scan.c:882
+Fix using non-cyclic mode after cyclic mode by always restoring the
+original buffer descriptor ring in the same manner as it is set up by
+xilinx_dma_alloc_chan_resources().
 
-Reset the state on failures to always have it correct.
-
-Assisted-by: LLM
-Fixes: d6a83228823f ("mac80211: track enable_beacon explicitly")
-Reported-by: syzbot+ca7a2759caaa6cd4e3db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ca7a2759caaa6cd4e3db
-Reported-by: syzbot+c4686c3eb8b64032618f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c4686c3eb8b64032618f
-Link: https://patch.msgid.link/20260904165722.9629429a5221.I7f599412bfe12a09d41ea4901be9ad165d07d133@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
+Signed-off-by: Alex Bereza <alex@bereza.email>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
+Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-after-cyclic-mode-v1-1-1fe47e701d6c@bereza.email
+Link: https://patch.msgid.link/20260818-fix-hw-buf-desc-after-cyclic-mode-v2-1-530ff44c6a81@bereza.email
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/xilinx/xilinx_dma.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 73d7183c1ce59..71310d708dbc4 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1514,6 +1514,9 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
- 	return 0;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 29ff6c8082fb1..4a89ad8c90a34 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -753,15 +753,25 @@ xilinx_aximcdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
+ 	return segment;
+ }
  
- error:
-+	link_conf->enable_beacon = false;
-+	link_conf->beacon_int = prev_beacon_int;
-+	sdata->vif.cfg.ssid_len = 0;
- 	ieee80211_link_release_channel(link);
+-static void xilinx_dma_clean_hw_desc(struct xilinx_axidma_desc_hw *hw)
++static void xilinx_dma_clean_hw_desc(struct xilinx_dma_chan *chan,
++				     struct xilinx_axidma_tx_segment *segment)
+ {
+-	u32 next_desc = hw->next_desc;
+-	u32 next_desc_msb = hw->next_desc_msb;
++	dma_addr_t next;
++	u32 i;
  
- 	return err;
+-	memset(hw, 0, sizeof(struct xilinx_axidma_desc_hw));
++	/*
++	 * Restore the buffer descriptor's next descriptor pointer to the value
++	 * set up in xilinx_dma_alloc_chan_resources(). Otherwise using the DMA
++	 * in cyclic mode leaves the next descriptor pointer altered and
++	 * prevents subsequent non-cyclic transfers.
++	 */
++	i = segment - chan->seg_v;
++	next = chan->seg_p +
++	       sizeof(*chan->seg_v) * ((i + 1) % XILINX_DMA_NUM_DESCS);
+ 
+-	hw->next_desc = next_desc;
+-	hw->next_desc_msb = next_desc_msb;
++	memset(&segment->hw, 0, sizeof(segment->hw));
++	segment->hw.next_desc = lower_32_bits(next);
++	segment->hw.next_desc_msb = upper_32_bits(next);
+ }
+ 
+ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+@@ -783,7 +793,7 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+ static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
+ 				struct xilinx_axidma_tx_segment *segment)
+ {
+-	xilinx_dma_clean_hw_desc(&segment->hw);
++	xilinx_dma_clean_hw_desc(chan, segment);
+ 
+ 	list_add_tail(&segment->node, &chan->free_seg_list);
+ }
 -- 
 2.53.0
 
