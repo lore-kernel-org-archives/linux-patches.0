@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EF956329B;
-	Wed, 30 Sep 2026 17:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05FE56329B;
+	Wed, 30 Sep 2026 17:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790422; cv=none; b=mDVNq4WT6xt/RuOkpGc6BNQRXV8TdXrDij443cX5OjrY44TGIelAqeOgC6OySYqvhQnAWl4mU+cVQjZQrzkppn/xjYzo1tS5eCFbys6LSufekg9rx4+1VoD58tX6Dz96ujrrMxEsLD4BVgJK6bXxi3M9XFb+CaGNRL3Z9YeGTcc=
+	t=1790790424; cv=none; b=HqwyDxcKCk7gFrZ+HnFjNjE/x7N7/LukFR52pqW9iNVNwb+kpBHwchpeUviRPEqC8+S9wqgvtw+MRTrLVeqf2PuoL/zvWoEbwcUwY11gh08IsZXXXX0+rWOXqwTfuQLh++fbY38zO7ckAWQZh99V68jjPetcnovgVgrmszyMIZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790422; c=relaxed/simple;
-	bh=TJ9zYuFJOrLKDHv4HnYv+D7urMPIIgviPFAFMGDtVaE=;
+	s=arc-20240116; t=1790790424; c=relaxed/simple;
+	bh=D99Qv/H4UE2K93/ZJh7TJXMexGLateBNGEkQ1oAy9gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KoMg1uJOltwGde8Byv9/LoRIIBPxszte3X32t/JA1kurFFD6pYPT+5OUlEqoo7X5jUwdXqAco1Ou9NzecfPnfeCdnNV/5Zlw+GM76jURmISQS9kXD2BDN53Zw/lFC5QVb1/kJLr6TMIko1xyfShwy4Rxbo/x+EaNZx6DttMk53k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef3TaLSB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VoGSnsYD9AEgQ/UjMW1th6BpHHyonaD5SsB/EkP05qazN2GEKAZ2b03iq9ERWq++O8HpUwHuPex5sHm2SyHWCOboYVYy5Whry6v1+w7eUKl6qA1vknkbjhdGXK/PPm4pPCNMJRV3UiJCPoeseeK+ur+zoX+FLJZ6tpg/FLVW9U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytBQxuvv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef3TaLSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108001F000FF;
-	Wed, 30 Sep 2026 17:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytBQxuvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B691F000FF;
+	Wed, 30 Sep 2026 17:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790420;
-	bh=nQ4bOp2PmdNCHLISNTw7v1QbmGnbFcuLinMgiSI6xEk=;
+	s=korg; t=1790790423;
+	bh=LTJ047eb9tjWCMYl+2JymgSAt7Fy/Ph2QHU2LDLkCnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ef3TaLSBkWvbF8hUOlZ3hJRr2X780liWdLCvci22joCVMDhOMNe8y5A3Td2/UMLNp
-	 mtkKFtQnlAJ4gqCiRRRKnjFuVvg1bQ2loZfy6NqQr46xdsAI266wsLUAWejlbXDdcV
-	 AChWXu4MrDkBF3dNesDCLy+4rrFrHUWHl7MTtWBo=
+	b=ytBQxuvvlGD99qACFiAGpukVzb4OPsvGGbldMMx+I+20yP/qSYWUaq4wOJR8T0Yq6
+	 /Pggp9d5uqUtd+eIWJZceQofOtAlL3uA+UPN08DRQVsf3JTqhQrFhaLrdq89jKCSqK
+	 +kLx9osFPc9oDOcOQrNOvuHPnLzXNsjGMF4p75XE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 821/877] i2c: qcom-geni: Fix hardcoded clock index in SE_GENI_CLK_SEL
-Date: Wed, 30 Sep 2026 17:28:52 +0200
-Message-ID: <20260930152432.444233111@linuxfoundation.org>
+Subject: [PATCH 6.12 822/877] drm/amdgpu: Fix acpi device leak in amdgpu_acpi_enumerate_xcc()
+Date: Wed, 30 Sep 2026 17:28:53 +0200
+Message-ID: <20260930152432.466672512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,119 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit cb97bf3d4f91453b881acaf8e9f0cc47bb40b604 ]
+[ Upstream commit a997baa61179b450bd55c4810c7ccfed3b753a54 ]
 
-qcom_geni_i2c_conf() writes a hardcoded 0 to SE_GENI_CLK_SEL, which
-selects an index from the hardware clock performance table. This always
-picks the first table entry regardless of the actual source clock
-configuration. On platforms where the matching entry is not at index 0,
-the wrong source clock divider is active and the I2C bus runs at an
-incorrect frequency.
+amdgpu_acpi_enumerate_xcc() looks up each XCC ACPI device with
+acpi_dev_get_first_match_dev(), which takes a reference to the device.
+The reference is dropped with acpi_dev_put() after the XCC info is
+initialized, but if the kzalloc_obj() allocation of the XCC info fails
+the function returns -ENOMEM without releasing the reference, leaking
+the last reference to the ACPI device.
 
-Use geni_se_clk_freq_match() in geni_i2c_clk_map_idx() to find the
-performance table index for the source clock (32 MHz or 19.2 MHz). Store
-the resolved index in a new clk_idx field in geni_i2c_dev and write it
-to SE_GENI_CLK_SEL instead of the hardcoded 0.
+Drop the ACPI device reference on the allocation failure path before
+returning.
 
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Cc: <stable@vger.kernel.org> # v4.19+
-Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260921-i2c-fix-se-clk-conf-v2-1-8b5537ceff2d@oss.qualcomm.com
-[ adapted clock initialization to the older driver’s 19.2 MHz-only table and existing probe path. ]
+Fixes: 4d5275ab0b18 ("drm/amdgpu: Add parsing of acpi xcc objects")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9211ef48b31ec66999cf55e04d0cbc60cd855fd5)
+Cc: stable@vger.kernel.org
+[ adapted the hunk to the existing kzalloc() failure block with braces and DRM_ERROR() logging. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |   33 ++++++++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -77,6 +77,8 @@ enum geni_i2c_err_code {
- #define XFER_TIMEOUT		HZ
- #define RST_TIMEOUT		HZ
- 
-+#define GENI_SE_CLK_19P2MHZ	19200000UL
-+
- struct geni_i2c_dev {
- 	struct geni_se se;
- 	u32 tx_wm;
-@@ -91,6 +93,7 @@ struct geni_i2c_dev {
- 	struct clk *core_clk;
- 	u32 clk_freq_out;
- 	const struct geni_i2c_clk_fld *clk_fld;
-+	u32 clk_idx;
- 	int suspended;
- 	void *dma_buf;
- 	size_t xfer_len;
-@@ -157,13 +160,36 @@ static int geni_i2c_clk_map_idx(struct g
- {
- 	int i;
- 	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
-+	unsigned long res_freq;
-+
-+	/*
-+	 * Frequency counters are calibrated for a 19.2 MHz source clock
-+	 * and are not valid for any multiple of it (e.g. 38.4 MHz).
-+	 * Use exact=true and verify res_freq matches req_freq literally
-+	 * to reject harmonics that would produce an incorrect I2C frequency.
-+	 * ACPI systems have firmware-managed clocks and retain the default index.
-+	 */
-+	if (!has_acpi_companion(gi2c->se.dev) &&
-+	    (geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_19P2MHZ,
-+				    &gi2c->clk_idx, &res_freq, true) ||
-+	     res_freq != GENI_SE_CLK_19P2MHZ)) {
-+		dev_err(gi2c->se.dev,
-+			"Unsupported SE source clock: must be exactly 19.2 MHz\n");
-+		return -EINVAL;
-+	}
- 
- 	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
- 		if (itr->clk_freq_out == gi2c->clk_freq_out) {
- 			gi2c->clk_fld = itr;
-+			dev_dbg(gi2c->se.dev,
-+				"I2C clk selected: freq: %u Hz, clk_idx: %u\n",
-+				gi2c->clk_freq_out, gi2c->clk_idx);
- 			return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -1114,6 +1114,7 @@ static int amdgpu_acpi_enumerate_xcc(voi
+ 				   GFP_KERNEL);
+ 		if (!xcc_info) {
+ 			DRM_ERROR("Failed to allocate memory for xcc info\n");
++			acpi_dev_put(acpi_dev);
+ 			return -ENOMEM;
  		}
- 	}
-+
-+	dev_err(gi2c->se.dev, "Unsupported I2C output frequency %u Hz\n", gi2c->clk_freq_out);
-+
- 	return -EINVAL;
- }
  
-@@ -172,7 +198,7 @@ static void qcom_geni_i2c_conf(struct ge
- 	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
- 	u32 val;
- 
--	writel_relaxed(0, gi2c->se.base + SE_GENI_CLK_SEL);
-+	writel_relaxed(gi2c->clk_idx, gi2c->se.base + SE_GENI_CLK_SEL);
- 
- 	val = (itr->clk_div << CLK_DIV_SHFT) | SER_CLK_EN;
- 	writel_relaxed(val, gi2c->se.base + GENI_SER_M_CLK_CFG);
-@@ -809,11 +835,8 @@ static int geni_i2c_probe(struct platfor
- 		return gi2c->irq;
- 
- 	ret = geni_i2c_clk_map_idx(gi2c);
--	if (ret) {
--		dev_err(dev, "Invalid clk frequency %d Hz: %d\n",
--			gi2c->clk_freq_out, ret);
-+	if (ret)
- 		return ret;
--	}
- 
- 	gi2c->adap.algo = &geni_i2c_algo;
- 	init_completion(&gi2c->done);
 
 
