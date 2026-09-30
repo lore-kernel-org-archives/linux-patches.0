@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569611E0DD8;
-	Wed, 30 Sep 2026 16:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386524E4308;
+	Wed, 30 Sep 2026 16:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786054; cv=none; b=HyFS4cHeOt6DyUfHFjdqrAOo1Bqfr8jWaSNhksGImeBdwchX3d5mIUltY2U2e0xh+rfawEau4U8WFiMcSm+m84czUvWsSTYEwQbQIzRqy1HCqHfOQNQ10YcbyjwICH3nng3teMiKhK1eYAj3bjC7rrxqbb79Gwkzkllv6H7lvoM=
+	t=1790786057; cv=none; b=YwCAiqGMOoGDNXBueKIr+ZaIprpU0OYeCwHYjisqKoGdNsffzQpNKvVR6jrUxxuP7picKlv0Hl2ITyLamV4EQYWGQ0GwI4JZjtcc3+hU/txe7c6SEFOiSppewUCyfNCRB2pR9RmWuZJtnrCW9+byZq4j+c0C+xHUwF5U401Tuaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786054; c=relaxed/simple;
-	bh=Y+MWJ8FAGrq5rluqPgPNRhBqhVjtQv+MukKdfKzmhyE=;
+	s=arc-20240116; t=1790786057; c=relaxed/simple;
+	bh=Ggn8aQ+Fyg0j9bQ763f4q9gcmQ2PztpnAkbFur7z8P8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KAiZ3i41jExcuVdjVdO6McqYhcDM4Dn44lJoIDsp4yLLvjbHSOHN4xkY7Z36xsXuRRCps/3bZsP665WnJfpBAcu+Nm7P1w/1gn+O0O+28WhNUyve8Pb7imjEC6rd/mdViiJecbBjLiva35HMyoRKOnSPRdoqF5a3qMVMHOx6WVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbP5o/hd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I9HNlcncbWUX++g3TRO/tP6TL/A/Uf6L6P+O48rQZ1jkthnLuipeTZ0bUiXUduPniWVAAQm0U56ysIMSGtwo5tk12WWxL9QKJJ3Gf0UnGvvDrX8wREkP65H8Yj4qbCZF1wkNFqOkcBxCYmkHUIHNgrPHa55sNyCAVFrwVhLFPrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ik3E2Ye1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbP5o/hd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EDD1F000FF;
-	Wed, 30 Sep 2026 16:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ik3E2Ye1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9167A1F000FF;
+	Wed, 30 Sep 2026 16:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786053;
-	bh=qBrhQc9W6khTWGDVwBJXbxy4Jh3F4au/3j33rMJuL2E=;
+	s=korg; t=1790786056;
+	bh=o4J3kLy5l8AOTgyGobaidwWUa+oGx5Ngh89ejnGXJQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NbP5o/hdSOWuRSaRe4Rsethy5NlXnk1N26GBmSf/UUQcNNmicbvGBHUJ1d3PwuW+k
-	 XoyXbzojxmO/OCeQBo3eXHrxYqKfsOGUmZtARo0ZqUrigTS5yqwXpcAj0sSulHOcvG
-	 g1Ta3MUC4Ek0AYMgzku2s+Dm++VUmrP2EizlQRuw=
+	b=ik3E2Ye1VYNIcCcH2zCX4+G4Bnwy617JbJjBA4Ru+XU6i3zHbX+6iOiAbCrdxzNFG
+	 jS2M1xieZISvITF1vYCpvZnjlJyeXy27HVFdgJ0qUDelLs5QaYf3+mfIQfPZB2NMKb
+	 CfoLw02a/i1cdFVkDQMiARTvGwyNon44yqPr2Ymk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 689/982] net: mvpp2: prevent buffer overflow in page_pool allocation
-Date: Wed, 30 Sep 2026 17:23:45 +0200
-Message-ID: <20260930152431.561292819@linuxfoundation.org>
+	co+6a581c4284f721d4@bugs.sh,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.1 725/982] KEYS: trusted: Fix tpm2_load_cmd() boundary check
+Date: Wed, 30 Sep 2026 17:24:21 +0200
+Message-ID: <20260930152432.324243761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,61 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
+commit 114f00d738f15dd8c7318369edcdc53dd6d08763 upstream.
 
-The per‑processor buffering scheme is supported only if the
-number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
-This is already checked in mvpp2_probe() during the initial
-activation of percpu_pools.
+tpm2_load_cmd() does boundary checks against the ASN.1 size i.e.,
+payload->blob_len. Address this by passing the decoded blob size to
+tpm2_load_cmd(), and use it for the boundary checks.
 
-However, mvpp2_change_mtu() may later call
-mvpp2_bm_switch_buffers(priv, true) without this check, which can
-lead to an out-of-bounds access in the priv->page_pool array in
-mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
-entries, and mvpp2_get_nrxqs() may return exactly that value. The
-per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
-bounds.
-
-Check that the hardware version is MVPP22 or newer and that the
-number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
-before switching to per-CPU mode.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
-Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
-Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Reported-by: co+6a581c4284f721d4@bugs.sh
+Closes: https://bugs.sh/b/6a581c4284f721d4/
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Tested-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260901205809.2028454-1-jarkko@kernel.org
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/keys/trusted-keys/trusted_tpm2.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 675616142c4f4..d896d63682076 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -5075,7 +5075,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
- 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
- 			mvpp2_bm_switch_buffers(priv, false);
- 		}
--	} else {
-+	} else if (priv->hw_version >= MVPP22 &&
-+		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
- 		bool jumbo = false;
- 		int i;
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -108,7 +108,7 @@ struct tpm2_key_context {
  
--- 
-2.53.0
-
+ static int tpm2_key_decode(struct trusted_key_payload *payload,
+ 			   struct trusted_key_options *options,
+-			   u8 **buf)
++			   u8 **buf, unsigned int *blob_len)
+ {
+ 	int ret;
+ 	struct tpm2_key_context ctx;
+@@ -129,6 +129,7 @@ static int tpm2_key_decode(struct truste
+ 		return -ENOMEM;
+ 
+ 	*buf = blob;
++	*blob_len = ctx.priv_len + ctx.pub_len;
+ 	options->keyhandle = ctx.parent;
+ 
+ 	memcpy(blob, ctx.priv, ctx.priv_len);
+@@ -384,10 +385,11 @@ static int tpm2_load_cmd(struct tpm_chip
+ 	int rc;
+ 	u32 attrs;
+ 
+-	rc = tpm2_key_decode(payload, options, &blob);
++	rc = tpm2_key_decode(payload, options, &blob, &blob_len);
+ 	if (rc) {
+ 		/* old form */
+ 		blob = payload->blob;
++		blob_len = payload->blob_len;
+ 		payload->old_format = 1;
+ 	} else {
+ 		/* Bind for cleanup: */
+@@ -399,17 +401,17 @@ static int tpm2_load_cmd(struct tpm_chip
+ 		return -EINVAL;
+ 
+ 	/* must be big enough for at least the two be16 size counts */
+-	if (payload->blob_len < 4)
++	if (blob_len < 4)
+ 		return -EINVAL;
+ 
+ 	private_len = get_unaligned_be16(blob);
+ 
+ 	/* must be big enough for following public_len */
+-	if (private_len + 2 + 2 > (payload->blob_len))
++	if (private_len + 2 + 2 > blob_len)
+ 		return -E2BIG;
+ 
+ 	public_len = get_unaligned_be16(blob + 2 + private_len);
+-	if (private_len + 2 + public_len + 2 > payload->blob_len)
++	if (private_len + 2 + public_len + 2 > blob_len)
+ 		return -E2BIG;
+ 
+ 	pub = blob + 2 + private_len + 2;
 
 
