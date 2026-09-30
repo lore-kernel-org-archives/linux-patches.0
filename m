@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F8D51C044;
-	Wed, 30 Sep 2026 17:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F364FD7BD;
+	Wed, 30 Sep 2026 17:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790251; cv=none; b=U8xgU3sbnBN34qznKmsR7okYRyYS4zi4ct676xeyFeMxupbcFoCUoWcMsz9tRUWH0u1yPFKmOC0pLUhGrpPF3u7l12cCozJa8F66G5lSXc+FUS211C54qrLuNuFE0UqbUEH73th6KuO8XtASaUQTkdcS4X+G2equoxYnGd8n/0s=
+	t=1790790254; cv=none; b=SBqVZmrqZoO47UTVH8k+eOaYnz3J2p+r2A8RHqwwrwYnfO1RjCtiTgxEcG1bWUH2GjQ3rAB6erYkVc0xDeFXHM1PhVOCUHujuv7MxOx6LyG6gz4E4JEkuxz2OGbPCtwxWxK1++VodL2df9O31wiKoRniBR5AGq3FfqcqA8SNDbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790251; c=relaxed/simple;
-	bh=09cUmoJ33+4CQkLjILGuew54318ZVphoeZXmfDjoeIw=;
+	s=arc-20240116; t=1790790254; c=relaxed/simple;
+	bh=YKX6slhHqfi7IGA6jfVNnDPnVSkVRVJ+P22vV86S6b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuyuPmRWhLKbioCvG/rJAdsqk5+IbO5g4KfBw6/Jib71A+vDrG5z7muv8tRmOdqOEGlI3pPoPpxMk/ySqDERGRRk5IGL57vjDcupuhLuCZF8rKzOOs2xCiC5CM52JRWnURjDSgmJkbZ/K09XgCELdkXyNt2tRES5BoO88Z2X4Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JyraVJMS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UD7iciTsSa+Z7RnG9rt9hHl18YSh+pFeMB2aoOe40FKrpuOYijN7Z5rxZC5W2QRGG0acbLovxA8sVoFy+LbSN5hzYJbK11Ek5ljR9cfvgojvqcDgpbfsRNrRGwq5MDE/iM9d4QHevv1koiFkMxJM/6Dk8nOsYGlyGTbNfAcznh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1Aygj/9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JyraVJMS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8537F1F000FF;
-	Wed, 30 Sep 2026 17:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1Aygj/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580C71F0089C;
+	Wed, 30 Sep 2026 17:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790250;
-	bh=6QWyutPTjFfJj1Dic/WDzRcupkkVvcS74vKDF60QA0g=;
+	s=korg; t=1790790252;
+	bh=uspgmM4iaxRwVaI4dJekOmKsu+OtigH5ndN4ByC0vjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyraVJMSBU8pCHhDNjiNiOHlbSg1MRkbminCcpIQ89mdnPLttURPOr83oxJ+kf1m6
-	 uSxqqJzgh/woOthk+DGtrCgy67ZiiJvEFjMITvcvDgnQcK7eHbdzHzKCl9rZGTyBpP
-	 kNUMTKMDV/BYvswRtIE+0epSQQtyFBTH2ewLCFgY=
+	b=O1Aygj/9ydlUDfMUyMFzXbehU7wrAS93FJUyZS6n0ZfjTbZIgUpquFhb8MrooW8K4
+	 M5xEVDjJpAqG/zQ0AvwEikvSK/ilnYy3r9ZSJr2vTYr0tjqwQtWAnkvonmKC5JQhuo
+	 b6n8GXHheNAWShDAAff1HQH6+hvc+78+0PAEsb1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 762/877] mptcp: pm: userspace: fix address ID overflow
-Date: Wed, 30 Sep 2026 17:27:53 +0200
-Message-ID: <20260930152431.147061316@linuxfoundation.org>
+Subject: [PATCH 6.12 763/877] bnxt_en: Do not set EOP on RX AGG BDs on 5760X chips
+Date: Wed, 30 Sep 2026 17:27:54 +0200
+Message-ID: <20260930152431.168716711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,74 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit f9f0068e8813d8c10d016b030fc3a320d0b6767c ]
+[ Upstream commit 30f253f8d9a01d532fdb7ec6c8a9d4c15fe29241 ]
 
-When all MPTCP address IDs (1-255) are exhausted in the userspace PM,
-find_next_zero_bit() returns MPTCP_PM_MAX_ADDR_ID + 1 (256). This value
-overflows when stored in the u8 field e->addr.id, resulting in ID 0
-being stored and the entry being incorrectly added to the list.
+With End-of-Packet padding (EOP) set, the chip will disable Relaxed
+Ordering (RO) of TPA data packets.  A TPA segment with EOP set will be
+padded to the next cache boundary and can potentially overwrite the
+beginning bytes of the next TPA segment when RO is enabled on 5760X.
+To prevent that, the chip disables RO for TPA when EOP is set.
 
-ID 0 is reserved for the initial connection in MPTCP, so this overflow
-can cause address conflicts.
+To take advantge of RO and higher performance, do not set EOP on
+5760X chips when TPA is enabled.  Define a proper RX_BD_FLAGS_AGG_EOP
+constant to make it clear that we are setting EOP.
 
-Note: the in-kernel PM already has an 'endpoints == MPTCP_PM_MAX_ADDR_ID'
-check in mptcp_pm_nl_append_new_local_addr() that returns -ERANGE before
-reaching find_next_zero_bit(), preventing this overflow. So this fix only
-addresses the userspace PM path.
-
-Check the find_next_zero_bit() result against MPTCP_PM_MAX_ADDR_ID and
-return -ENOSPC if all IDs are truly exhausted. Move the ID allocation
-check before the memory allocation so that the error path does not need
-to free the allocated entry.
-
-Fixes: 4638de5aefe5 ("mptcp: handle local addrs announced by userspace PMs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-8-df1de70348b6@kernel.org
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20251126215648.1885936-6-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5ce7f36c334d ("bnxt_en: Don't free the live ring's TPA state on queue restart failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    9 ++++++++-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |    1 +
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -65,6 +65,19 @@ static int mptcp_userspace_pm_append_new
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -4300,7 +4300,14 @@ static void bnxt_init_one_rx_agg_ring_rx
+ 	ring->fw_ring_id = INVALID_HW_RING_ID;
+ 	if ((bp->flags & BNXT_FLAG_AGG_RINGS)) {
+ 		type = ((u32)BNXT_RX_PAGE_SIZE << RX_BD_LEN_SHIFT) |
+-			RX_BD_TYPE_RX_AGG_BD | RX_BD_FLAGS_SOP;
++			RX_BD_TYPE_RX_AGG_BD;
++
++		/* On P7, setting EOP will cause the chip to disable
++		 * Relaxed Ordering (RO) for TPA data.  Disable EOP for
++		 * potentially higher performance with RO.
++		 */
++		if (BNXT_CHIP_P5_AND_MINUS(bp) || !(bp->flags & BNXT_FLAG_TPA))
++			type |= RX_BD_FLAGS_AGG_EOP;
+ 
+ 		bnxt_init_rxbd_pages(ring, type);
  	}
- 
- 	if (!addr_match && !id_match) {
-+		unsigned int id;
-+
-+		if (!entry->addr.id && needs_id) {
-+			id = find_next_zero_bit(id_bitmap,
-+						MPTCP_PM_MAX_ADDR_ID + 1, 1);
-+			if (id > MPTCP_PM_MAX_ADDR_ID) {
-+				ret = -ENOSPC;
-+				goto append_err;
-+			}
-+		} else {
-+			id = entry->addr.id;
-+		}
-+
- 		/* Memory for the entry is allocated from the
- 		 * sock option buffer.
- 		 */
-@@ -74,10 +87,7 @@ static int mptcp_userspace_pm_append_new
- 			goto append_err;
- 		}
- 
--		if (!e->addr.id && needs_id)
--			e->addr.id = find_next_zero_bit(id_bitmap,
--							MPTCP_PM_MAX_ADDR_ID + 1,
--							1);
-+		e->addr.id = id;
- 		list_add_tail_rcu(&e->list, &msk->pm.userspace_pm_local_addr_list);
- 		msk->pm.local_addr_used++;
- 		ret = e->addr.id;
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -124,6 +124,7 @@ struct rx_bd {
+ 	 #define RX_BD_TYPE_48B_BD_SIZE				 (2 << 4)
+ 	 #define RX_BD_TYPE_64B_BD_SIZE				 (3 << 4)
+ 	#define RX_BD_FLAGS_SOP					(1 << 6)
++	#define RX_BD_FLAGS_AGG_EOP				(1 << 6)
+ 	#define RX_BD_FLAGS_EOP					(1 << 7)
+ 	#define RX_BD_FLAGS_BUFFERS				(3 << 8)
+ 	 #define RX_BD_FLAGS_1_BUFFER_PACKET			 (0 << 8)
 
 
