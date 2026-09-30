@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C26351993C;
-	Wed, 30 Sep 2026 17:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F8451588D;
+	Wed, 30 Sep 2026 17:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789202; cv=none; b=eyH/0CJcpe0dGVz29PmoVWjFgM4hAs3oQtMLXyEqV1IEY+FQzlPJkzrQ9jSRv3Mmm1h2vHzlG4GR+E4kyf0wSEHT+KBT7QEINI5ucqbt8GWcWBftANzpn06BBmq78RlrI6mNY7alOrfN0FJz4fk/qiH8HU4ZMPXInX5ITE8rOyI=
+	t=1790789205; cv=none; b=qX+m+MQpzlZ1PFfxvI82CiCjM62xR1/LcTJoOX5Br1b2UFDfvb/ev3ogDd92AuaqNj0MBBRV2bOEvvl1dIzfSuz2w5gkjxHzDGEAznXH0KTvNxA8pIGJxhGr4dPU3GtWSRf6wBWUFt62ZeraTW6VOPphk5E5p3R1z6FSzNCvNX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789202; c=relaxed/simple;
-	bh=BZBbt1MABniEo+WvOwrClNpDlry5uHiczvOmEJoU6vs=;
+	s=arc-20240116; t=1790789205; c=relaxed/simple;
+	bh=Zz+7Z46oWMZIaQuy8wd2BbsQT7TnWb5Rwnoi3Bf6QkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2uWfWPi1jrgP4M7rBg3QCEZYMD9RyFY5YkDM548Gau1btlFkEDUKWjNqhxQ0BXvbjHoj788gvfPrszHghKPoCG+omEI1zNTF2WAEt+IYAEOT9hVhAMSpHo6+K/E0ArVqewry2R9yPxPyblum+KNBMDraD2Wep9VRBFklc7xGUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4siYzHC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+n6DOW5S3L+Afg+HGgF1O9X4sbnRF+JtOqGKGj9Fu46t3lnHgXDKFUGUiY882WGKOmLANhVQP1SXTU+l3a7mMN7OT4rOILy1FAVb6zj6tkZY8tN7x17Ma0NswRgK9uVmx5QpcfRrxC/l5RQ8h8rpjZLzUeAFU4K3caVti2clOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEbgYsEQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4siYzHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E8B1F000FF;
-	Wed, 30 Sep 2026 17:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEbgYsEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05C91F0089D;
+	Wed, 30 Sep 2026 17:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789201;
-	bh=ZqO97dXsZLsJFtfFWE6NuA+JIPIUY1zxqXcfl1ziw+M=;
+	s=korg; t=1790789204;
+	bh=kEf7sUx/Z9ly9a6D4Hmy/ORv9q9TmHvXS/leM/X5ELI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J4siYzHCwf4B4lZpiNvjTWILB5ezJHLVv6Cwv24R2i30ats0WMJpW0zc8wIDJUzLR
-	 33JFobOUs0+N66L5VRR4eEQp8YjkHWWdjDwdSmSKFijcCUEasSFPFxtF7MMGQsNMQo
-	 9XUGL21NSWeYiuY44Nhb99CZYv0QA7FOaMXvlKGk=
+	b=ZEbgYsEQRU3KNH7KFoLYkL6BdPZXvr00wWNeN8UcKmNdoeYt9Qi9adc2nDw75rnto
+	 cqn1xRRc59g1TuuIA+knpWrkWC/0i/tnWwRbYpCMX3d5oWAEXe0T6+fBsnX0FT8BQ4
+	 XXshQdC4Kzbh2q8HuWQc6vQiXS4rQcHZMu7Sx5Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bernardo Soares <bsoares.it@gmail.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 392/877] bpf, sockmap: Reject max_entries > INT_MAX in sock_map_alloc
-Date: Wed, 30 Sep 2026 17:21:43 +0200
-Message-ID: <20260930152423.143674013@linuxfoundation.org>
+Subject: [PATCH 6.12 393/877] net/mlx5: Bridge, dont fail switchdev events of sibling eswitch ports
+Date: Wed, 30 Sep 2026 17:21:44 +0200
+Message-ID: <20260930152423.164281866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,73 +54,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
+From: Bernardo Soares <bsoares.it@gmail.com>
 
-[ Upstream commit 814a81c842bd88f6bd8a4ce550d560df071a5d03 ]
+[ Upstream commit 35e6f970f553954d92ba20afa885139a8e7dd0d7 ]
 
-sock_map_alloc() only rejects max_entries == 0 and otherwise allows any
-u32 value.  sock_map_free() then walks the sks[] array with a signed int
-iterator:
+mlx5 registers the bridge offload switchdev notifiers once per eswitch
+instance, but the notifier chains are global, so every instance sees
+every event and must filter out the ones that aren't its own. The
+existing filter, mlx5_esw_bridge_dev_same_hw(), only checks that the
+event netdevice sits on the same HCA - intentional for merged eswitch,
+where one bridge can span representors of several eswitches on one
+HCA - but same-HCA doesn't mean the instance actually has that port:
+peer ports are only created reactively from NETDEV_CHANGEUPPER, so an
+instance brought up after a sibling PF's port was already enslaved has
+none. The port object and attribute handlers claim the event anyway
+once same-HW passes, then fail the port lookup and return -EINVAL,
+which gets reported to user space even though the owning instance
+already handled it (e.g. "bridge vlan add ... RTNETLINK answers:
+Invalid argument"). Fix by filtering on the tracked port instead.
 
-	int i;
-	for (i = 0; i < stab->map.max_entries; i++)
-		struct sock **psk = &stab->sks[i];
+The same gap exists in the generic recursive lower-device walk used by
+attribute changes on a bridge with more than one representor enslaved
+directly: mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get() is entered
+with the bridge master netdevice, falls through to its generic
+netdev_for_each_lower_dev() loop, and returns as soon as the recursion
+into any one lower device yields a non-NULL rep - the underlying base
+case, mlx5_esw_bridge_rep_vport_num_vhca_id_get(), only checks
+mlx5_esw_bridge_dev_same_hw(), not ownership by the calling instance's
+br_offloads. mlx5_esw_bridge_lag_rep_get(), used for the LAG-master
+case, already filters on mlx5_esw_bridge_dev_same_esw() per candidate
+and so cannot select a sibling's rep; it is not the source of this bug.
+On a merged-eswitch HCA with a bridge spanning representors of more
+than one eswitch instance directly, the walk can return a sibling's rep
+instead of continuing to the one the calling instance actually owns, so
+the attribute change fails the same way as above. Fix by checking
+mlx5_esw_bridge_port_exists() at the point each rep is picked, same as
+the previous fix did for the notifier filter.
 
-When a SOCKMAP is created with max_entries = 0xffffffff (UINT_MAX), the
-allocation of 32 GiB can succeed on large-memory hosts.  During free the
-counter reaches 0x80000000, wraps to INT_MIN, is sign-extended by movslq
-and turned into a ~16 GiB negative offset from stab->sks, pointing far
-below the allocation.
-
-The faulting access is an xchg() write in sock_map_free().  Without
-KASAN, the same out-of-bounds write can fault on an unmapped vmalloc page
-or corrupt an unrelated allocation if that vmalloc address is populated.
-On a KASAN kernel with CONFIG_KASAN_VMALLOC=y, the shadow check for that
-address hits an unmapped shadow page and oopses first:
-
-  BUG: unable to handle page fault for address: fffff521b59c5a00
-  RIP: 0010:kasan_check_range+0x107/0x190
-  Call Trace:
-   sock_map_free+0x93/0x190
-   map_create+0x68d/0xb30
-   __sys_bpf+0x21e/0x2e70
-
-Vmcore confirmed stab->map.max_entries == 0xffffffff, stab->sks ==
-0xffffc911ace2d000, and the faulting address sks + (s64)INT_MIN * 8
-exactly at 0xffffc90dace2d000.  The same buggy path is reached on the
-normal close()/bpf_map_free_deferred() path whenever such a map is
-destroyed.
-
-sock_map_alloc() used to bound its allocation size through
-bpf_map_charge_init(), but the bound was dropped when rlimit-based memory
-accounting was removed.  Reject max_entries > INT_MAX at creation time so
-the signed iterator in sock_map_free() never sees a value that would
-overflow.
-
-Triggered by syzkaller and reproduced on both a 6.6-based KASAN kernel
-and the upstream v7.3-rc2 kernel.
-
-Fixes: 0d2c4f964050 ("bpf: Eliminate rlimit-based memory accounting for sockmap and sockhash maps")
-Signed-off-by: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260917121016.48171-1-zhaogongyi@bytedance.com
+Fixes: c358ea1741bc ("net/mlx5: Bridge, allow merged eswitch connectivity")
+Signed-off-by: Bernardo Soares <bsoares.it@gmail.com>
+Cc: Vlad Buslov <vladbu@nvidia.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20260918095931.29792-2-bsoares.it@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../mellanox/mlx5/core/en/rep/bridge.c        | 45 +++++++++++++++----
+ .../ethernet/mellanox/mlx5/core/esw/bridge.c  |  6 +++
+ .../ethernet/mellanox/mlx5/core/esw/bridge.h  |  2 +
+ 3 files changed, 44 insertions(+), 9 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 6440ce16fc621..be4a4f8f346cb 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -41,6 +41,7 @@ static struct bpf_map *sock_map_alloc(union bpf_attr *attr)
- 	struct bpf_stab *stab;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+index 0f5d7ea8956f7..d8658fa517e70 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+@@ -89,9 +89,16 @@ mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(struct net_device *dev, struct m
+ 	struct net_device *lower_dev;
+ 	struct list_head *iter;
  
- 	if (attr->max_entries == 0 ||
-+	    attr->max_entries > INT_MAX ||
- 	    attr->key_size    != 4 ||
- 	    (attr->value_size != sizeof(u32) &&
- 	     attr->value_size != sizeof(u64)) ||
+-	if (netif_is_lag_master(dev) || mlx5e_eswitch_rep(dev))
+-		return mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, esw, vport_num,
+-								 esw_owner_vhca_id);
++	if (netif_is_lag_master(dev) || mlx5e_eswitch_rep(dev)) {
++		struct net_device *rep;
++
++		rep = mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, esw, vport_num,
++								esw_owner_vhca_id);
++		if (rep && !mlx5_esw_bridge_port_exists(*vport_num, *esw_owner_vhca_id,
++							esw->br_offloads))
++			return NULL;
++		return rep;
++	}
+ 
+ 	netdev_for_each_lower_dev(dev, lower_dev, iter) {
+ 		struct net_device *rep;
+@@ -108,6 +115,28 @@ mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(struct net_device *dev, struct m
+ 	return NULL;
+ }
+ 
++static bool mlx5_esw_bridge_rep_port_lookup(struct net_device *dev,
++					    struct mlx5_esw_bridge_offloads *br_offloads,
++					    u16 *vport_num, u16 *esw_owner_vhca_id)
++{
++	if (!mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, br_offloads->esw, vport_num,
++						       esw_owner_vhca_id))
++		return false;
++
++	return mlx5_esw_bridge_port_exists(*vport_num, *esw_owner_vhca_id, br_offloads);
++}
++
++static bool mlx5_esw_bridge_lower_rep_port_lookup(struct net_device *dev,
++						  struct mlx5_esw_bridge_offloads *br_offloads,
++						  u16 *vport_num, u16 *esw_owner_vhca_id)
++{
++	if (!mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(dev, br_offloads->esw, vport_num,
++							     esw_owner_vhca_id))
++		return false;
++
++	return mlx5_esw_bridge_port_exists(*vport_num, *esw_owner_vhca_id, br_offloads);
++}
++
+ static bool mlx5_esw_bridge_is_local(struct net_device *dev, struct net_device *rep,
+ 				     struct mlx5_eswitch *esw)
+ {
+@@ -222,8 +251,7 @@ mlx5_esw_bridge_port_obj_add(struct net_device *dev,
+ 	u16 vport_num, esw_owner_vhca_id;
+ 	int err;
+ 
+-	if (!mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, br_offloads->esw, &vport_num,
+-						       &esw_owner_vhca_id))
++	if (!mlx5_esw_bridge_rep_port_lookup(dev, br_offloads, &vport_num, &esw_owner_vhca_id))
+ 		return 0;
+ 
+ 	port_obj_info->handled = true;
+@@ -255,8 +283,7 @@ mlx5_esw_bridge_port_obj_del(struct net_device *dev,
+ 	const struct switchdev_obj_port_mdb *mdb;
+ 	u16 vport_num, esw_owner_vhca_id;
+ 
+-	if (!mlx5_esw_bridge_rep_vport_num_vhca_id_get(dev, br_offloads->esw, &vport_num,
+-						       &esw_owner_vhca_id))
++	if (!mlx5_esw_bridge_rep_port_lookup(dev, br_offloads, &vport_num, &esw_owner_vhca_id))
+ 		return 0;
+ 
+ 	port_obj_info->handled = true;
+@@ -287,8 +314,8 @@ mlx5_esw_bridge_port_obj_attr_set(struct net_device *dev,
+ 	u16 vport_num, esw_owner_vhca_id;
+ 	int err = 0;
+ 
+-	if (!mlx5_esw_bridge_lower_rep_vport_num_vhca_id_get(dev, br_offloads->esw, &vport_num,
+-							     &esw_owner_vhca_id))
++	if (!mlx5_esw_bridge_lower_rep_port_lookup(dev, br_offloads, &vport_num,
++						   &esw_owner_vhca_id))
+ 		return 0;
+ 
+ 	port_attr_info->handled = true;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index 282cef59e6173..6104ae8e72410 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1683,6 +1683,12 @@ int mlx5_esw_bridge_vport_peer_unlink(struct net_device *br_netdev, u16 vport_nu
+ 					    extack);
+ }
+ 
++bool mlx5_esw_bridge_port_exists(u16 vport_num, u16 esw_owner_vhca_id,
++				 struct mlx5_esw_bridge_offloads *br_offloads)
++{
++	return mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
++}
++
+ int mlx5_esw_bridge_port_vlan_add(u16 vport_num, u16 esw_owner_vhca_id, u16 vid, u16 flags,
+ 				  struct mlx5_esw_bridge_offloads *br_offloads,
+ 				  struct netlink_ext_ack *extack)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h
+index d6f5391619930..a4e59cc210894 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.h
+@@ -80,6 +80,8 @@ int mlx5_esw_bridge_vlan_proto_set(u16 vport_num, u16 esw_owner_vhca_id, u16 pro
+ 				   struct mlx5_esw_bridge_offloads *br_offloads);
+ int mlx5_esw_bridge_mcast_set(u16 vport_num, u16 esw_owner_vhca_id, bool enable,
+ 			      struct mlx5_esw_bridge_offloads *br_offloads);
++bool mlx5_esw_bridge_port_exists(u16 vport_num, u16 esw_owner_vhca_id,
++				 struct mlx5_esw_bridge_offloads *br_offloads);
+ int mlx5_esw_bridge_port_vlan_add(u16 vport_num, u16 esw_owner_vhca_id, u16 vid, u16 flags,
+ 				  struct mlx5_esw_bridge_offloads *br_offloads,
+ 				  struct netlink_ext_ack *extack);
 -- 
 2.53.0
 
