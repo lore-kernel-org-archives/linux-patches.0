@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62ED4EE877;
-	Wed, 30 Sep 2026 18:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EBE3EA976;
+	Wed, 30 Sep 2026 18:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791432; cv=none; b=YbxX5TJYEZKQzly0gDGhI0vSXB/2JnLiB0R0VXaKulSVs/Z4gVoZKjfua9Ce0bblA253C6YJ/wAPi24L8UgnpaRhOwMm54qO6tuJWaIiJK+CNmqA6DzW0zbJkTjPIN+uNUausnOELii6trYq29p7GfKU6b13nXGXWSeNX/Gg75M=
+	t=1790791435; cv=none; b=ugfiegyIEbmkLE3JCUbngICN2WB1kxRt/+aBtuZOgNrQ9cIngvwmLXxjVXjzhvvnh5giTMhcYBwssa86pRbKaH6JZTSBHYzC637yLfNf9ksW41wAq90uhOpM/SwC49RXbMCZDqJiIy15cZ7gQoxPV9kYqbEp0jqKBD4fwIYX+78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791432; c=relaxed/simple;
-	bh=ANyXOg+uDukqGdWNwFtGbmxJo0KRqFia0v0Q1rMOkPw=;
+	s=arc-20240116; t=1790791435; c=relaxed/simple;
+	bh=Lw1LZgRMG+hxSJIIrcd3vIzvcIG9GcH2cIE29h+OV+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPs+w++fJR1j9Zk128XWm8LQEZHac5PVvF9KSI/+S0j0c1pMVnC4ZT6V3cs6dditfa89MCaGFiajsCN0yL4K3wAdmqNb1bXti8SbzCPq9ydFtD1XECxZ+Kc6oEGc0q+mheWcILqExaYEXuXcLnng78kpObVkmLR/eiTipMzN6aY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm7CcBEO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tfM7ZfwsJzm2BfO8ZT98nCv/sM9mfJ9C7Pnxg8qLaqXk0LSFcMjJCCJH4MgUOcPRv+66l3JW87Mk/7BjgIhVwXYGoK+XmgsGUe8mWYHrJJnVirGIeU1qKo7f448BLdwVNqXYepwENtYJjVSmO4Sa5hx04l+w5Vxe7GOplb9WsDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+hT7lkX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm7CcBEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2586A1F000FF;
-	Wed, 30 Sep 2026 18:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+hT7lkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD451F000FF;
+	Wed, 30 Sep 2026 18:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791431;
-	bh=ItF9vleld4DOiJ2O4aXL83XaDrk4nU2QrOiPNSmkAyE=;
+	s=korg; t=1790791434;
+	bh=oWC4XfR0gqvvu9R4UUhcAUsJ4spwvop2Q/OZm+uf4us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qm7CcBEOdMUSJr6IwqM5n9EWpVTh17KwhjR/FjKAs0TI51Pkb1GAWEWkTgKu8zTap
-	 JuW7oX0M8Dg2OKzZurGPeuSPARM8qMhdFd6Q8LN7I0HGIstxm0LihSYLvO4JbSvPxA
-	 gWzFAO/eJ/6IMtcFQt635Aal97vkpKltlvGLHKUA=
+	b=y+hT7lkXYok47GZ+rOdCGPrTavs55q4bOZR0Bxw+o5C1C0elJ4CNH6ohBhhNYz2in
+	 4zGIyTH0ak8N/2c5Xe5Plp/cfafxEzVlKCVZQYmhngAY99sxNCS57RINThrdtYBOEN
+	 p+WUa9LeX4Nt5mDH6mPQ+C5XSZMvmCkLqFNr/FdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 299/752] ALSA: caiaq: Fix potential double-free at error path
-Date: Wed, 30 Sep 2026 17:22:49 +0200
-Message-ID: <20260930152404.760198341@linuxfoundation.org>
+Subject: [PATCH 5.15 300/752] bpf: Fix NULL-ptr-deref when showing a void BTF type
+Date: Wed, 30 Sep 2026 17:22:50 +0200
+Message-ID: <20260930152404.781096350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,61 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
+[ Upstream commit 4ea508b9ebd78bce7f212166d2e2cba66b875f08 ]
 
-The fix for caiaq driver's resource management to handle the errors
-tries to release the resources in a common destructor call, but as a
-sashiko review for another patch suggested, some of the audio
-resources such as URBs have been already freed, and this may lead to a
-double-free.
+btf_modifier_show() resolves the modifier and then calls
+btf_type_ops(t)->show() unconditionally. For the void type (type_id 0,
+BTF_KIND_UNKN) kind_ops[] has no entry, so ->show is NULL.
 
-For addressing the double-free, call the common destructor function
-from each place, and assure that the resource pointers get cleared.
+A "const void" (a modifier resolving to void) cannot be a map key or
+value - map_check_btf() rejects it because void has no size - so the map
+dump path does not reach it. But bpf_snprintf_btf() takes a type_id
+straight from the BPF program, and passing such a "const void" from the
+vmlinux BTF NULL-derefs:
 
-Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+RIP: 0010:btf_modifier_show (kernel/bpf/btf.c:2914)
+Call Trace:
+ <TASK>
+ btf_type_show (kernel/bpf/btf.c:8251)
+ btf_type_snprintf_show (kernel/bpf/btf.c:8321)
+ bpf_snprintf_btf (kernel/trace/bpf_trace.c:1047)
+ bpf_prog_test_run_raw_tp (net/bpf/test_run.c:829)
+ __sys_bpf (kernel/bpf/syscall.c:4804)
+ do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+ entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
+
+Fall back to btf_df_show() when the resolved type has no show op; it
+emits the "<unsupported kind:N>" placeholder already used for kinds like
+FWD and FUNC. bpf_snprintf_btf() then returns the length as usual.
+
+Fixes: c4d0bfb45068 ("bpf: Add bpf_snprintf_btf helper")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/r/20260901104924.346187-3-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/audio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/bpf/btf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
-index 7a89872aa0cbd..11d959887de56 100644
---- a/sound/usb/caiaq/audio.c
-+++ b/sound/usb/caiaq/audio.c
-@@ -853,16 +853,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 5d87df80c4bd7..10ef0bcf8b680 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -2522,7 +2522,14 @@ static void btf_modifier_show(const struct btf *btf,
+ 	else
+ 		t = btf_type_skip_modifiers(btf, type_id, NULL);
  
- 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
- 
- 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
--		free_urbs(cdev->data_urbs_out);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
- 
-@@ -883,6 +880,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
- 
- 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
- 	free_urbs(cdev->data_urbs_in);
-+	cdev->data_urbs_in = NULL;
- 	free_urbs(cdev->data_urbs_out);
-+	cdev->data_urbs_out = NULL;
- 	kfree(cdev->data_cb_info);
-+	cdev->data_cb_info = NULL;
+-	btf_type_ops(t)->show(btf, t, type_id, data, bits_offset, show);
++	/*
++	 * A modifier can resolve to void, which has no show op; print a
++	 * placeholder rather than dereferencing NULL.
++	 */
++	if (!btf_type_ops(t))
++		btf_df_show(btf, t, type_id, data, bits_offset, show);
++	else
++		btf_type_ops(t)->show(btf, t, type_id, data, bits_offset, show);
  }
+ 
+ static void btf_var_show(const struct btf *btf, const struct btf_type *t,
 -- 
 2.53.0
 
