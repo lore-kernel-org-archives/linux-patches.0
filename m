@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0B751C06C;
-	Wed, 30 Sep 2026 18:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166B85304CD;
+	Wed, 30 Sep 2026 18:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793814; cv=none; b=OmgxSVHemqOxj+gUoLslJBjGrO+j0aNMaKVq2Xx4MKjGsvPpAZg0Am5vDjCjpu4k1FXfd7Z3R9DpmnCfHWQHDhhnSOJ5nVLAeaBEyokQ+O4e6UGjJcR99RUs3e1zgADxaFg4PLwuXE8IDsHP/61uX6VVxVApY98IEXNCdv95ss8=
+	t=1790793817; cv=none; b=VGT+7hii5Zap+Q5CDUe+OZn/pfqaftwyu3PYc/V0+ryGwKaXJ3SZBIYOg4b3D6hRvQw0cpnNZFm/kSc7JBWpyg7/ha8jppY3HmQIy3ZD3MVKsVmZhAzgao2Eq/itxUFmTGfX8lVvzCmQ14nwyhs/w+UXiPxck4faoAzJPTG3p1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793814; c=relaxed/simple;
-	bh=84vW5apAeRQbkqyx2eGK0VGE0Ahd5JfnNQp16SXhg3E=;
+	s=arc-20240116; t=1790793817; c=relaxed/simple;
+	bh=Z4wZuQs33fkpzsHB8wmqZbuNQJkF6Xi39dMpCn15/uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q5gC0UPF2FGznvhlZb99KjVTsi6NJyK5qKRaPYhffyurBMoc53GhWdSMQbcRduW2J9stcbgef8tPKQA6z4rmW3S7IgMSgOX0J9yrESE8fIXjY2AvJciK0J+r6bNhkp6ew9ZTJkrvHeZLUz5rzHJ93nYwl2hbbq3DIrGleGfr+Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZ/xc1XW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CPNVc+JltwGhUfK0Cr7Y8nRdaOs2tDkEWal1wbmQ97H+pmw2dY9lAAs52kb+SQqvjaPuiqrUlkPcz2RmvZ2LnGiBNEGWtz2/q/NoFftgxNH0v2Y86enCW2KwABQKABDecnBvsHXvBoIwzH63uRb9ImFHmlLEn7QIYW5IoAmm6Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxliht9o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZ/xc1XW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7311F000FF;
-	Wed, 30 Sep 2026 18:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxliht9o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F4F1F000FF;
+	Wed, 30 Sep 2026 18:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793812;
-	bh=+FxYuOcNuUsQjFAIy3dheGdNNwzhLn7av33A4Tp4zdI=;
+	s=korg; t=1790793815;
+	bh=mWRlK4BneErbt3yZ1wAdLlZJZP8kRPRGthIWGNbdGAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KZ/xc1XWg5oFOWdBHoNBoA6L1cvfclc0URkdzg/fIiv4CbPy734WXg0qJ9G1PadPg
-	 JOorUDd8uHANAZ9bPwAV585WUbYg5AG45mSA4itg0bR3qLXUtazsEPVS4Lh0azXFLs
-	 WsLAwT5wp3g3eOSx19V1+aLJW7tlq5JRqpoipzOk=
+	b=rxliht9oPDark0VccSf4yWapmzFSICQp3YY/kw69RwTSjzcYNZ3z4iwEgqKF+bvQx
+	 /TKlguz1eSvwQnvLylq93V4cjpGF/93d4LRKWQJN02b7HFjZ6gi4kHkj4dIdbUurWN
+	 DQEthpq+ci8erZqaq1nYJ2RhOrsK6Vsjdfg4WrIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunfeng Song <springbreeze@stu.pku.edu.cn>,
-	FUJITA Tomonori <fujita.tomonori@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 387/395] rust: net: phy: fix off-by-one bit positions in device status accessors
-Date: Wed, 30 Sep 2026 17:30:49 +0200
-Message-ID: <20260930152349.099330265@linuxfoundation.org>
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 388/395] mm/damon/core: fix unconditionally skip last region
+Date: Wed, 30 Sep 2026 17:30:50 +0200
+Message-ID: <20260930152349.121319390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,98 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunfeng Song <springbreeze@stu.pku.edu.cn>
+From: Liew Rui Yan <aethernet65535@gmail.com>
 
-commit 6fb0a9d9071f1ff0cc5cfc0782302d9c90d642cb upstream.
+commit b3723b596b548c837a766aae3553c14a7b15af2b upstream.
 
-The hand-written bitfield offsets in is_link_up(), is_autoneg_enabled()
-and is_autoneg_completed() were correct when the abstraction was
-merged: at that time autoneg, link, and autoneg_complete were at bits
-13, 14, and 15 of struct phy_device's first bitfield unit. Commit
-2796ff1e3dca ("net: phy: add flag is_genphy_driven to struct phy_device")
-later inserted is_genphy_driven just before autoneg, shifting the three
-fields up by one, so the accessors now read:
+Once quota set, the charge_{target,addr}_from unconditionally skips and
+resets at the last region of the tracked target, so the last region can be
+skipped even when it has not been processed.
 
-  is_link_up()           reads bit 14 = autoneg
-  is_autoneg_enabled()   reads bit 13 = is_genphy_driven
-  is_autoneg_completed() reads bit 15 = link
+Example:
 
-The official ax88796b Rust driver uses all three accessors in its
-read_status() implementation, so it inherits the bug.
-phy_attach_direct() sets is_genphy_driven only when it falls back to
-the generic driver, and ax88796b has a real driver, so
-is_genphy_driven stays 0. The broken is_autoneg_enabled() therefore
-reads bit 13 as 0, compares it against AUTONEG_ENABLE (1), and always
-returns false, so read_status() never reaches the
-resolve_aneg_linkmode() call.
+    1. Target has 2 regions: R1 (0-100 bytes) and R2 (100-200 bytes).
+    2. Quota is configured to process only 100 bytes per window.
+    3. Window 1: Processes R1 (0-100).  Quota is full.  charge_{target,
+       addr}_from is saved at (Target, 100).
+    4. Window 2: The loop reaches R2.  Because R2 is
+       damon_last_region(t), the old code unconditionally returns true,
+       skipping R2 entirely and resetting the charge_{target,addr}_from.
 
-The ordinary bindgen accessors take &self. Calling them through
-(*phydev).link() would create a shared reference to the complete
-bindings::phy_device, which is not appropriate for an object wrapped in
-Opaque.
+    Result: R2 is permanently skipped even though it has never been
+    processed.
 
-Use the bindgen-generated raw accessors (link_raw(), autoneg_raw(),
-and autoneg_complete_raw()) instead. They retain the bit positions and
-endianness handling generated from the C layout without creating a Rust
-reference to the complete phy_device. Drop the hand-written numbers
-together with the TODO comment that marked them as a stopgap.
+However, it is important to note that this is a very minor issue.  This is
+because it is triggered only when the previous window saved/kept
+charge_{target,addr}_from, and in the next window, all regions except the
+last region were skipped by damos_skip_charged_region().
 
-The raw accessors are only emitted by bindgen 0.71 and later, and were
-added at the Rust-for-Linux project's request, so this fix can only be
-backported to stable branches whose minimum bindgen version is at least
-that, hence the scope on the Cc: stable line below.
+Fix this by only resetting the charge_{target,addr}_from when last region
+is reached, only skipping when it is applied or cannot split.
 
-Found by a static equivalence audit (C2RustDrv, a C-to-Rust driver
-migration tool) that compares hand-written bitfield offsets against
-the bindgen layout of struct phy_device. Verified by building the
-bindings and checking the generated accessors; no runtime testing was
-possible without PHY hardware.
-
-Fixes: 2796ff1e3dca ("net: phy: add flag is_genphy_driven to struct phy_device")
-Cc: stable@vger.kernel.org # Only 7.1.y and later (requires bindgen's raw pointer accessors).
-Link: https://github.com/rust-lang/rust-bindgen/issues/2674
-Signed-off-by: Chunfeng Song <springbreeze@stu.pku.edu.cn>
-Reviewed-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-Link: https://patch.msgid.link/20260910055110.167110-1-springbreeze@stu.pku.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ For 6.18.y, re-do the commit manually adjusting the bit numbers to
-  make it work with the `bindgen` version available there as Chunfeng
-  mentions in [1]. - Miguel ]
-Link: https://lore.kernel.org/stable/SEWP216MB9770116738884C46F156A686FAF98D2@SEWP216MB977011.KORP216.PROD.OUTLOOK.COM/ [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://lore.kernel.org/20260908134739.96919-1-sj@kernel.org
+Fixes: 50585192bc2e ("mm/damon/schemes: skip already charged targets and regions")
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # v5.16.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/net/phy.rs |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/damon/core.c |   24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
---- a/rust/kernel/net/phy.rs
-+++ b/rust/kernel/net/phy.rs
-@@ -130,7 +130,7 @@ impl Device {
-         // SAFETY: The struct invariant ensures that we may access
-         // this field without additional synchronization.
-         let bit_field = unsafe { &(*self.0.get())._bitfield_1 };
--        bit_field.get(14, 1) == LINK_IS_UP
-+        bit_field.get(15, 1) == LINK_IS_UP
-     }
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1746,37 +1746,41 @@ static bool damos_skip_charged_region(st
+ 	struct damon_region *r = *rp;
+ 	struct damos_quota *quota = &s->quota;
+ 	unsigned long sz_to_skip;
++	bool skip = false;
  
-     /// Gets the current auto-negotiation configuration.
-@@ -142,7 +142,7 @@ impl Device {
-         // SAFETY: The struct invariant ensures that we may access
-         // this field without additional synchronization.
-         let bit_field = unsafe { &(*self.0.get())._bitfield_1 };
--        bit_field.get(13, 1) == u64::from(bindings::AUTONEG_ENABLE)
-+        bit_field.get(14, 1) == u64::from(bindings::AUTONEG_ENABLE)
-     }
+ 	/* Skip previously charged regions */
+ 	if (quota->charge_target_from) {
+ 		if (t != quota->charge_target_from)
+ 			return true;
+-		if (r == damon_last_region(t)) {
+-			quota->charge_target_from = NULL;
+-			quota->charge_addr_from = 0;
+-			return true;
+-		}
+ 		if (quota->charge_addr_from &&
+-				r->ar.end <= quota->charge_addr_from)
+-			return true;
++				r->ar.end <= quota->charge_addr_from) {
++			skip = true;
++			goto out;
++		}
  
-     /// Gets the current auto-negotiation state.
-@@ -155,7 +155,7 @@ impl Device {
-         // SAFETY: The struct invariant ensures that we may access
-         // this field without additional synchronization.
-         let bit_field = unsafe { &(*self.0.get())._bitfield_1 };
--        bit_field.get(15, 1) == AUTONEG_COMPLETED
-+        bit_field.get(16, 1) == AUTONEG_COMPLETED
-     }
+ 		if (quota->charge_addr_from && r->ar.start <
+ 				quota->charge_addr_from) {
+ 			sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
+ 					r->ar.start, min_sz_region);
+ 			if (!sz_to_skip) {
+-				if (damon_sz_region(r) <= min_sz_region)
+-					return true;
++				if (damon_sz_region(r) <= min_sz_region) {
++					skip = true;
++					goto out;
++				}
+ 				sz_to_skip = min_sz_region;
+ 			}
+ 			damon_split_region_at(t, r, sz_to_skip);
+ 			r = damon_next_region(r);
+ 			*rp = r;
++			skip = false;
+ 		}
++	}
++out:
++	if (r == damon_last_region(t)) {
+ 		quota->charge_target_from = NULL;
+ 		quota->charge_addr_from = 0;
+ 	}
+-	return false;
++	return skip;
+ }
  
-     /// Sets the speed of the PHY.
+ static void damos_update_stat(struct damos *s,
 
 
