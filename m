@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DFD519E1E;
-	Wed, 30 Sep 2026 17:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9943F4FECCF;
+	Wed, 30 Sep 2026 17:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788513; cv=none; b=dRbLAnTA/DIHiPxo8NSA66mkCif4nbNpFbAJ2u6s0f56nmb0uYOM1BLZzwrQMBOoIka6eLo3qjDVWblHuRFgxZgqLhhDFsCpyqLqFwfbc8JMhE16Ov9/YSHE9Jy7WdXv53woe6KEhQHi+ZN5fUwyJAiNayarYGj4ZraXqsyKwfA=
+	t=1790788516; cv=none; b=rKE3c0UgUa6scgeoEyxBfkRFnSsDHA+GSjJtDHoHp7WGYRw7K5MQSjvFHQoYGeYL6utqOcra6hQaWYVmJB0MiYQQlPPMeXtb8zn8wMQDMRCLH7vQ2RRbFzr1VS7rRdm+skpGisd2d4BLJVWfB3HQmaYKi4t8ni3bA07OOpbInIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788513; c=relaxed/simple;
-	bh=cPjnD4UeowAyMJj65wDlTCSWKRyxzR13D+NfMfIjigA=;
+	s=arc-20240116; t=1790788516; c=relaxed/simple;
+	bh=lGC5dhMFB5i0vd/WwQ5L/2JIEJt9ZysnZsCQk/2BYCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KZ6W3zGDLU42LD7X2EWAXLBNWuVZnlMGuKdGCJ5NRmpxoOL1B8d3IiASoCDE/zPRnm82NsQZjJqHPrRJg1rxckhvzmEKiOrFbgLFiyfT8CjZMwOhkNWkhSkUbTCLw+fSPVM4mcVz2XbGajgTjeIMOJ9+y+Uus/erljmuM/YAOrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOzR4qFb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rAhcPeSKCTKGiyVoXQcHmdp7V1Iy5RW2DszhM65Gx+ZoHH5yB//nGQ5HK3UWzE7lRz3ZTQVMQ0/yoA7yii2MFJpznRSXz+OJT4KGfeK1yZUozF4Ae985fT7FNXdNU7fXXCwJtjVmKOEjlYS7WiGmLnQF5FIIgqbhD3m1GhCbf3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFVZI2aD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOzR4qFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDE31F000FF;
-	Wed, 30 Sep 2026 17:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFVZI2aD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA85F1F000FF;
+	Wed, 30 Sep 2026 17:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788512;
-	bh=FIsTNPGbayekCVVw3/iZXKrkkkIiBOda5+UL6VegqTc=;
+	s=korg; t=1790788515;
+	bh=hDx/XoxvFIs3pHsQIyLojd+Q32U5zSt75i+r9Xmotvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EOzR4qFboxShK+DPYreJdojyCVCpHNQXPmP9fGxpPhmcdNOEa7l+gAoF5ijRXlTD7
-	 8pQzfV7r2W6p2wxLhnHVM5Tcv6cF+bAAKO8gXwKtEzEeqxBFcrRLVwmW2ho3zghVHh
-	 NWbJmnBjEhKUb9BHARNwaf+jP7a6xXdYC4/d8xTg=
+	b=EFVZI2aD+b66bGVkhU//FzV+hc/Ga52zIufzbaZUT6YGWcwtYdOA7DlCC242O28If
+	 eYLJnCwsMlT07PO9w+czebkHq4Vjy0waey+82K9k182yabSTPd9yriOBr7hc2xgm/a
+	 PM5xUlIeuo/EhVeJrt9pDhqdkBPYti9/fh7E4a1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/877] drm/vc4: Use managed KMS polling to fix UAF on unbind
-Date: Wed, 30 Sep 2026 17:17:05 +0200
-Message-ID: <20260930152417.196729015@linuxfoundation.org>
+Subject: [PATCH 6.12 150/877] net: ethernet: cortina: Ack RX overrun interrupt correctly
+Date: Wed, 30 Sep 2026 17:17:41 +0200
+Message-ID: <20260930152417.959080478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,55 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 073a30d75f309812ed61af134f24ffef4107b13a ]
+[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
 
-vc4_kms_load() calls drm_kms_helper_poll_init() but the driver provides
-no matching drm_kms_helper_poll_fini(). The output poll work stays
-scheduled after unbind and runs on the freed drm_device:
+The RX overrun interrupt is reported in interrupt status register 4, but
+gmac_irq() acknowledges it using the RX descriptor error bit from status
+register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
+the shift leaves no bit in the 32-bit register.
 
-  # modprobe vc4; rmmod vc4; sleep 10
-  BUG: KASAN: slab-use-after-free in delayed_work_timer_fn
-  BUG: KASAN: slab-use-after-free in drm_client_dev_hotplug [drm]
-  Workqueue: events output_poll_execute [drm_kms_helper]
-  Allocated by task 171: __devm_drm_dev_alloc
-  Freed by task 262 (rmmod): drm_dev_put / component_del
+Acknowledge the same per-port RX overrun bit that was detected.
 
-Use drmm_kms_helper_poll_init() so polling is finalized with the device,
-as other drivers do.
-
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260822143110.68594-1-kmehltretter@gmail.com
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_kms.c | 2 +-
+ drivers/net/ethernet/cortina/gemini.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_kms.c b/drivers/gpu/drm/vc4/vc4_kms.c
-index bddfcad109501..c5e28ff3931a7 100644
---- a/drivers/gpu/drm/vc4/vc4_kms.c
-+++ b/drivers/gpu/drm/vc4/vc4_kms.c
-@@ -1084,7 +1084,7 @@ int vc4_kms_load(struct drm_device *dev)
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 96fd27545b29b..1b81798914acc 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1798,7 +1798,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
  
- 	drm_mode_config_reset(dev);
- 
--	drm_kms_helper_poll_init(dev);
-+	drmm_kms_helper_poll_init(dev);
- 
- 	return 0;
- }
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
+ 		spin_lock(&geth->irq_lock);
+-		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
++		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
 -- 
 2.53.0
 
