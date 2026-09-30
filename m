@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EC93C060F;
-	Wed, 30 Sep 2026 19:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2313C060F;
+	Wed, 30 Sep 2026 19:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796654; cv=none; b=c2tosFrFVbrYGYROqxHeyeCyjnky/ivKn3EOWgHu6tfcW3NeUth9CUWlbPEwf5rE2vz7FUTdOODpeAVKFx7z8VQB7UV54WIQpbblVFsH3psjebWpd73OmOypBdsIoabRhuuV/f98deVt/lL25Wq6esuzJnr2lH9qk6ouwaieitM=
+	t=1790796656; cv=none; b=NKteZINsVMltGMUvf8iELqxl3SaLWp+/XrMSWYy4pIKsv9P6+umo6uutbmp7AJaJxpVrE+6N7a+wZhd/xI56ou7KS+7oYaGP1Z/SmsWHgwz4mwlMT01zfqxmx2kJvHpZLl+0B7wXfJpjdzj78z3GauPQ6whQUK6QWzEzf6BS5cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796654; c=relaxed/simple;
-	bh=iGQbuDThqh8jNWJgj3A9+nylmOiOVK2JqXNem3GEZMg=;
+	s=arc-20240116; t=1790796656; c=relaxed/simple;
+	bh=ySdlREK23G80kkjDtT9YhEm8CxZK+27driVAm6m5pZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ntosDI7w8Gr9GXLXtgDvX+BF+xBpje3u+q3/GCbqJ882BUeqGtuj2L6tQifhuuhsm4Tbd5R6rF/ZpVefkxnWsjRvz/e29SYlet8ZAQ/RhsYHSLV0tbPwYxVegysejSs5SUtS0LNSf1aR+UyM3HO1Ywm8snIbgHMr+YFKvPeIrOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPsRpMG4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmdeW8Dvab/azSwIttgeht6VgVaig8zF0/5BUeu6E199CYK4NO8Q4UzX9k+CsIqGjChZYrfQvXvtfNkLCU0K4w3+6rd3EFyvAMWqqXcAzrN2LfWIuXzoi/b9G+TYnCziAi5StT8G2gVzLk6aGG/Psf0BFIUL1ToVPVBQ1FK66Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wZTub4hs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPsRpMG4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385FA1F00898;
-	Wed, 30 Sep 2026 19:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZTub4hs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144261F000FF;
+	Wed, 30 Sep 2026 19:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796652;
-	bh=hEohtxNWMs8ik94UOqk0RUeD36MDI7jAcXSvsc2uSAo=;
+	s=korg; t=1790796655;
+	bh=SufST1glkbsoB4VVImycuuhdD81kC+/qVnkeNLMpTA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPsRpMG4UEyM4c/f3mvxFnPws1Pz8hM0vQEGBwGl20XaQfRsQKnbYV7DhbdDArIEB
-	 mg9pJBW6jG6f0YT8R6r/jL1QYEOYjxTV55EeKsMEvV9SfOrIbZksxLodE1xfVbN550
-	 Q8qX0pLIEln242sGHOVyxPVKPrRSyP/8jfG11bD0=
+	b=wZTub4hsl8Fa5v3F44in1PHFyMuxbfssXEKd7Gbi71t20uGA+uBew28NMRDhn8Mq5
+	 bgqSUlzdrw6J5bJL37uJeJBwaESlTpYnoqGFzZV15MZQt0d4j5nUuuwD6G76ZmMaf1
+	 DbdnrGynZjdIgKLdGwENpVDRIUKwNjVyC6Vu5xjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenwu Hou <hwenwur@gmail.com>,
-	Gao Xiang <xiang@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0952/1193] erofs: fix large folio race in erofs_fscache_req_complete
-Date: Wed, 30 Sep 2026 17:27:16 +0200
-Message-ID: <20260930152455.392548660@linuxfoundation.org>
+Subject: [PATCH 6.6 0988/1193] bpf: Skip unsettled links in link iterator
+Date: Wed, 30 Sep 2026 17:27:52 +0200
+Message-ID: <20260930152456.193647124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,108 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenwu Hou <hwenwur@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-This patch is for stable only. Commit c37460cd9b2fc ("erofs: remove fscache
-backend entirely") upstream removed this code.
+[ Upstream commit 50e80e2bb5e2be8515205b9c496b9640ddefa434 ]
 
-xas_for_each() iteration can race with reclamation of an unlocked large
-folio and splitting of its replacement shadow entry. Fix this by
-advancing past the entire folio before unlocking it.
+bpf_link_prime() inserts a link into link_idr before anon_inode_getfile()
+succeeds and before bpf_link_settle() publishes the ID in link->id.
+bpf_link_by_id() treats such an ID-zero link as unsettled, but the link
+iterator takes a reference without this check.
 
-For example:
-CPU A: EROFS completion               Other CPUs
-----------------------------------   -----------------------------------
-Find F at index 0.
-Mark F uptodate.
-Unlock F.
+If anon_inode_getfile() then fails, the creator removes the ID and frees
+its still-private link directly.  The iterator is left with a dangling
+reference and its next bpf_link_put() accesses freed memory.
 
-                                     Reclaim F.
-                                     Replace indices 0–3 with a
-                                     multi-index workingset shadow.
+Treat ID-zero entries as transient in bpf_link_get_curr_or_next(), just as
+bpf_link_by_id() does.
 
-                                     Another reader inserts a smaller
-                                     folio, e.g. order-0 at index 0.
-                                     Split the large shadow entry:
-                                       index 0: new folio
-                                       index 1: shadow
-                                       index 2: shadow
-                                       index 3: shadow
-Find a shadow at index 1.
-folio_mark_uptodate(folio).
+  BUG: KASAN: slab-use-after-free in bpf_link_put
+  Write of size 8 by task exp/384
+  Call Trace:
+  bpf_link_put                    kernel/bpf/syscall.c:3372
+  bpf_link_seq_next               kernel/bpf/link_iter.c:33
+  bpf_seq_read                    kernel/bpf/bpf_iter.c:158
+  vfs_read                        fs/read_write.c:572
+  ksys_read                       fs/read_write.c:716
+  do_syscall_64                   arch/x86/entry/syscall_64.c:84
+  entry_SYSCALL_64_after_hwframe  arch/x86/entry/entry_64.S:121
+  Kernel panic - not syncing: KASAN: panic_on_warn set ...
 
-This can cause a kernel panic such as:
-[1030374.432778] [     C31] BUG: unable to handle page fault for address: 00001846af017b01
-[1030374.432971] [     C31] #PF: supervisor write access in kernel mode
-[1030374.432973] [     C31] #PF: error_code(0x0002) - not-present page
-[1030374.433543] [     C31] PGD 5a44f75067 P4D 5a44f75067 PUD 0
-[1030374.433546] [     C31] Oops: 0002 [#1] PREEMPT SMP NOPTI
-[1030374.433549] [     C31] CPU: 31 PID: 2425624 Comm: node Kdump: loaded Tainted: G           OE K    6.6.88-****
-[1030374.434154] [     C31] Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS ?-20260421_110423-CN.l65g09119.cloud.sqa.na131 04/01/2014
-[1030374.434156] [     C31] RIP: 0010:erofs_fscache_req_complete+0xc1/0x1a0 [erofs]
-[1030374.434764] [     C31] Code: 17 c5 c3 48 89 c7 48 85 c0 0f 84 af 00 00 00 48 81 ff 06 04 00 00 74 1b 48 81 ff 02 04 00 00 0f 84 b9 00 00 00 66 85 ed 75 04 <f0> 80 0f 08 e8 96 04 24 c3 48 8b 54 24 18 f6 c2 03 0f 95 c0 48 85
-[1030374.435044] [     C31] RSP: 0000:ffffb8f2fc973cc0 EFLAGS: 00010046
-[1030374.435641] [     C31]
-[1030374.435642] [     C31] RAX: 00001846af017b01 RBX: 000000000000000f RCX: 0000000000000001
-[1030374.436885] [     C31] RDX: 000000000000000c RSI: ffffa02ab337d468 RDI: 00001846af017b01
-[1030374.437127] [     C31] RBP: 0000000000000000 R08: ffffffffffffffc0 R09: 0000000000000002
-[1030374.437672] [     C31] R10: 0000000000000005 R11: 0000000000000191 R12: ffffa0060ec72300
-[1030374.437673] [     C31] R13: 0000000008000000 R14: ffffffffc11b1990 R15: 0000000000007000
-[1030374.437677] [     C31] FS:  00007f4928cdec80(0000) GS:ffffa07dc5f80000(0000) knlGS:0000000000000000
-[1030374.437678] [     C31] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[1030374.437680] [     C31] CR2: 00001846af017b01 CR3: 00000063d5356006 CR4: 0000000000770ee0
-[1030374.437681] [     C31] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[1030374.437682] [     C31] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[1030374.437684] [     C31] PKRU: 55555558
-[1030374.437684] [     C31] Call Trace:
-[1030374.437687] [     C31]  <TASK>
-[1030374.437692] [     C31]  erofs_fscache_req_put+0x27/0x40 [erofs]
-[1030374.438900] [     C31]  cachefiles_read_complete+0x48/0x110 [cachefiles]
-[1030374.440448] [     C31]  iomap_dio_bio_end_io+0x128/0x160
-[1030374.440456] [     C31]  ? __pfx_stripe_end_io+0x10/0x10 [dm_mod]
-[1030374.440950] [     C31]  clone_endio+0x123/0x1f0 [dm_mod]
-[1030374.441550] [     C31]  blk_mq_end_request_batch+0xf4/0x440
-[1030374.441556] [     C31]  ? nohz_balancer_kick+0x31/0x270
-[1030374.441561] [     C31]  ? dma_direct_unmap_sg+0x48/0x1d0
-[1030374.441565] [     C31]  ? dma_pool_free+0x22/0x60
-[1030374.441569] [     C31]  ? nvme_pci_complete_batch+0xaf/0xc0 [nvme]
-[1030374.442070] [     C31]  nvme_irq+0x6e/0x80 [nvme]
-[1030374.442422] [     C31]  ? __pfx_nvme_pci_complete_batch+0x10/0x10 [nvme]
-[1030374.442428] [     C31]  __handle_irq_event_percpu+0x46/0x1a0
-[1030374.442431] [     C31]  handle_irq_event+0x37/0x80
-[1030374.442433] [     C31]  handle_edge_irq+0x93/0x240
-[1030374.442436] [     C31]  __common_interrupt+0x3b/0xa0
-[1030374.442441] [     C31]  common_interrupt+0x3f/0xa0
-[1030374.442446] [     C31]  asm_common_interrupt+0x22/0x40
-
-Fixes: d435d53228dd ("erofs: change to use asynchronous io for fscache readpage/readahead")
-Signed-off-by: Wenwu Hou <hwenwur@gmail.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
+Fixes: 9f8836127308 ("bpf: Add bpf_link iterator")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260914170206.170723-2-bestswngs@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fscache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/bpf/syscall.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
-index afc37c9029ce7..542c1cc3eba57 100644
---- a/fs/erofs/fscache.c
-+++ b/fs/erofs/fscache.c
-@@ -88,6 +88,8 @@ static void erofs_fscache_req_complete(struct erofs_fscache_request *req)
- 			continue;
- 		if (!failed)
- 			folio_mark_uptodate(folio);
-+		/* Skip the entire folio before unlocking allows it to be split. */
-+		xas_advance(&xas, folio_next_index(folio) - 1);
- 		folio_unlock(folio);
- 	}
- 	rcu_read_unlock();
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 163700efb5b38..1710391f386af 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -5269,7 +5269,10 @@ struct bpf_link *bpf_link_get_curr_or_next(u32 *id)
+ again:
+ 	link = idr_get_next(&link_idr, id);
+ 	if (link) {
+-		link = bpf_link_inc_not_zero(link);
++		if (link->id)
++			link = bpf_link_inc_not_zero(link);
++		else
++			link = ERR_PTR(-EAGAIN);
+ 		if (IS_ERR(link)) {
+ 			(*id)++;
+ 			goto again;
 -- 
 2.53.0
 
