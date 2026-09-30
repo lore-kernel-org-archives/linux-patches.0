@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265EF51A15D;
-	Wed, 30 Sep 2026 17:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EDB52844E;
+	Wed, 30 Sep 2026 17:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789989; cv=none; b=opZPcda0xhT17gBIE5kV/POcFUQkaBAgmkgx0FFGXPrMhYvb1o4/4t3jRb35kKHwORIIgayrF8hwTJCCmMoxQGB31ETu5k0ZE0Cy27451VygnPAtoADasTy8bLv/Nq8es8hFjz+VAONYKta0vnNhaVDc37pv0JbWqniG3pQqzkI=
+	t=1790789992; cv=none; b=tdlpHqpGyozuvWrKoQVGOQT9HCpgmF9hBGLsURg7nLKDPWc9LdI5YXfS/v6zOba6/eXCW5R0ymXprTKCRHleoH3mCEB6kXnO3zF62NPCojUUs+EXUcfMcV1CV90wQGBqWg95UC1gKVE0H67/Ftz8A7MfKzCKfgH/f/KNiLaWrgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789989; c=relaxed/simple;
-	bh=gxF4zqXfS0i+goBm1fWyh/8wQsIzeJ74jURD0Ykd71I=;
+	s=arc-20240116; t=1790789992; c=relaxed/simple;
+	bh=3losuV/8pXGxrEjLlPi6EJA8qdSp2ALW0n+HFTVRge8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGOWQ4vh0ATPlJZksKT454LhCzwUWGulsGR2IuZpbX1TX/2mDYHmql50wg4srK/QVGqrwylubXeEi/Y1V02u1pgyqQCp10utlA8dtPHk0zDIxt/1cPo++wvic8nBQDReIb5KWDUZNpvhbIcYgQ6ZhHpk8zfcf5g+UCHdQhkK/QQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xO3Qj211; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OgRLnTjQ83nHym5i9zmJGyg2zIcma/hceZO4RDpqderBS1wndck5QONYquvuJRP7/1r+XI7pnQi+BAd5ODySJRhLCJ0u/WcgclZ7pP1A3wRrBnLT4HqLLhwrVAIQG8vAWu6sR8TpFCg8DZj8A3CmLr3GnNPQ8OmN1/IoJbBgndI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kh4C7bul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xO3Qj211"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C261F000FF;
-	Wed, 30 Sep 2026 17:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kh4C7bul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A84B1F000FF;
+	Wed, 30 Sep 2026 17:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789988;
-	bh=LLlgXBAXAz+FtnsxyIXnrCEF4eyLJj2jwM2CkZMzy1g=;
+	s=korg; t=1790789990;
+	bh=s8jpiRg+rKC+mx3a6rjt4U8MeKCB+k0pPHUbrDn7imc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xO3Qj211Gld4PbEaI1E1YTF5o7LdqawfZqcEuAGnSBBn8TY8xgB0Tf4c7zWAFWbkf
-	 TIk6tWx3oRdk1cm4dIFO4uVy+u/tRvZkJcB9lBGHB76HcJmJx5GIyQhVebtJyjXyGC
-	 N77H5PjEQH03DTYxRSm4ITzaYRmZKG7xyw0Dp8OY=
+	b=Kh4C7bullH92gmpOauahwWUBwPhHkzoB5yEa2VH10YRIN4Sfjk4tdZBzZnHJC/uf3
+	 +b0iJ8juen0FCT5hMxwgM4ucAJFhNE/urafRPQ2vvJZ8O7MRuWTRkH2Nr9p1VstxyQ
+	 Lz75hybn5izp8OPGs6V/35HGD6KrT8AiLvzhw3iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 670/877] KVM: x86: Disallow EFER.LME and EFER.LMA if long mode is not supported
-Date: Wed, 30 Sep 2026 17:26:21 +0200
-Message-ID: <20260930152429.126417990@linuxfoundation.org>
+Subject: [PATCH 6.12 671/877] scsi: qla2xxx: Zero dport diagnostics buffer to avoid info leak
+Date: Wed, 30 Sep 2026 17:26:22 +0200
+Message-ID: <20260930152429.147899083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,65 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit e62392bf39ebfdf60d1d082799397fe1cbf8dfc5 ]
+[ Upstream commit a152edab3854f01dd2daf3eaf8f32cbabdb3834e ]
 
-Remove EFER.LME and EFER.LMA from EFER reserved bits only if long mode
-is actually supported. KVM does check long-mode support before allowing
-the bits for guest writes and userspace writes through KVM_SET_SREGS*
-(in __kvm_valid_efer()), but userspace writes through KVM_SET_MSRS only
-check reserved bits.
+qla2x00_do_dport_diagnostics() allocates the qla_dport_diag response
+buffer with kmalloc_obj() (non-zeroing) and, on success, copies the full
+sizeof(*dd) back to user space via sg_copy_from_buffer(). The inbound
+sg_copy_to_buffer() only fills as many bytes as the user request payload
+provides, and qla26xx_dport_diagnostics() zeroes only dd->buf. The
+options and unused[] fields are therefore copied out uninitialized,
+leaking kernel heap contents to user space.
 
-In practice, this doesn't really matter. The true motiviation is getting
-rid of the #ifdeffery when initializing efer_reserved_bits.
+Allocate with kzalloc_obj(), matching qla2x00_do_dport_diagnostics_v2().
 
+Fixes: ec89146215d1 ("qla2xxx: Add bsg interface to support D_Port Diagnostics.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260713181020.2735367-3-yosry@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ adapted EFER changes to x86.c, placing the capability check in kvm_x86_vendor_init() because kvm_setup_efer_caps() is absent. ]
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-54-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ Adapted kzalloc_obj(*dd) to kzalloc(sizeof(*dd), GFP_KERNEL) to match the branch’s allocation syntax. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -108,16 +108,8 @@ EXPORT_SYMBOL_GPL(kvm_host);
- #define emul_to_vcpu(ctxt) \
- 	((struct kvm_vcpu *)(ctxt)->vcpu)
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -2412,7 +2412,7 @@ qla2x00_do_dport_diagnostics(struct bsg_
+ 	    !IS_QLA28XX(vha->hw))
+ 		return -EPERM;
  
--/* EFER defaults:
-- * - enable syscall per default because its emulated by KVM
-- * - enable LME and LMA per default on 64 bit KVM
-- */
--#ifdef CONFIG_X86_64
--static
--u64 __read_mostly efer_reserved_bits = ~((u64)(EFER_SCE | EFER_LME | EFER_LMA));
--#else
-+/* Enable syscall by default because its emulated by KVM */
- static u64 __read_mostly efer_reserved_bits = ~((u64)EFER_SCE);
--#endif
- 
- static u64 __read_mostly cr4_reserved_bits = CR4_RESERVED_BITS;
- 
-@@ -9366,6 +9358,9 @@ int kvm_x86_vendor_init(struct kvm_x86_i
- 	if (r != 0)
- 		goto out_mmu_exit;
- 
-+	if (kvm_cpu_cap_has(X86_FEATURE_LM))
-+		kvm_enable_efer_bits(EFER_LME | EFER_LMA);
-+
- 	kvm_ops_update(ops);
- 
- 	for_each_online_cpu(cpu) {
+-	dd = kmalloc(sizeof(*dd), GFP_KERNEL);
++	dd = kzalloc(sizeof(*dd), GFP_KERNEL);
+ 	if (!dd) {
+ 		ql_log(ql_log_warn, vha, 0x70db,
+ 		    "Failed to allocate memory for dport.\n");
 
 
