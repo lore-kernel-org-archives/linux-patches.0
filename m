@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A9D50AC0D;
-	Wed, 30 Sep 2026 17:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106CC547074;
+	Wed, 30 Sep 2026 17:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787988; cv=none; b=NVJvSCJ/+oV/urgU/syiCKuLlyKwRQSWltUXp8NkUBvGMp5v07CEJcq1ozDZEpaGTGYyx1cvWo9F3EItlp95KTgYjddknp1XtU/CvHyczeYBu7oZqK+4LVu3wQSaOxd4RIX4+ZyLMdeR7yOSJE99L/Yr35xqBkMybs1wbYUq0Rw=
+	t=1790787991; cv=none; b=kmQ+Z5AdiWaOA19nVaB1BVALNUnS9F+2UiLn0NJsyF38vRJIpIaDmcDnNhQx1HLdRgZbXlUtc4xo/jvv9Dwf/ImOj0d21YBGNWJ2QfCQQwzcaSKV+MFZIFOny0anjs06u3spJLG6V4ZpEK4pI+5DIwqhQdFi3AOJzI+8s15MJhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787988; c=relaxed/simple;
-	bh=B4tErSwcaa7RC1bvrZJT/WXwfG/NahajxYZFLl/+w9A=;
+	s=arc-20240116; t=1790787991; c=relaxed/simple;
+	bh=BOiiKggib+sF8GH93vTX1u0lFokBJuzeYrFvji8RdX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzmLikXbyTrX96Y5Gr25mAc3Xc3bG5jP0P99ILiNgirktystJt/XrLT2BRsZYbRosTn+8WPP4gJ2Yl3q5IOWERRVcjjjCrYK5q/MgwhrLKReTOiuiFqdkkAaw4RxsCQ+YpzZtD/gQVBle1C301yvc2JcmN3JO2mVcStZODWEldk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4LjyGLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4bW32kGpS7aj+qxmrW+uVwNojqL585Gs/xJXTVY2b6lD+mXQ00P5yhozQ6TrMnqm3KnWIc6zhwKnif0el4mgO7P7V2IpXNgYFTfMDDqaxl0ZGO215HtvLq5oc2UAsODxEbNelRZLAm6dhtVwd8vn61dcK2yhyGYcXQTRVtB3Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3aORWqI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4LjyGLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF4A1F000FF;
-	Wed, 30 Sep 2026 17:06:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3aORWqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679931F000FF;
+	Wed, 30 Sep 2026 17:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787987;
-	bh=d2e+lmLNmHHks3cOw6XO4jvF0ExoLOL5j8tGGqhjoKg=;
+	s=korg; t=1790787990;
+	bh=1XPPQb0OCiNPH46wywAelR+G4DKdsCj0q2LX7EG+is8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4LjyGLzs2zUEINfYa7axR0E4aZvmhonqcM7EZDanP5r+ziF+UHp346mJnsv1L7G5
-	 QWWS0MXGG2q2p233UcWy+15+/9D/Hf3TUGL/YwNq5TVv3sSc7ihbIxNGcxYh1nc8eC
-	 SmbOmQp+nM6XiaslJXFJRzvnSafSR7vmAixSlgWU=
+	b=R3aORWqIyT4HuMOPJDi6vhcWCB6Z4RaHVxUs7hTSPYxbdeEBGx7JkbvCdIvd5M9KQ
+	 ZKxbMtJrZh8Pfk2H/ewc7reYyXopplXXJFHYoQuNsyXNgjy/+3wlUBr0ELW917hFHL
+	 rSxTwl16CjxZISIgNHh03ws3Co3il3xCL8rEvoe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.2 397/457] sched_ext: Derive SCX_RQ_IN_WAKEUP from the core enqueue flags
-Date: Wed, 30 Sep 2026 17:28:22 +0200
-Message-ID: <20260930152354.561461839@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.2 424/457] xfs: check di_forkoff correctly in scrub
+Date: Wed, 30 Sep 2026 17:28:49 +0200
+Message-ID: <20260930152355.137710826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit df5cdc2c832ca4e8a6d774596b9005558761a403 upstream.
+commit e9193f2f1ce32d02b9230094ffdbfab715ab6137 upstream.
 
-schedule_deferred_locked() skips scheduling a deferred action while
-SCX_RQ_IN_WAKEUP is set and relies on the task_woken_scx() call that follows
-a wakeup enqueue to run it. enqueue_task_scx() sets the flag from the merged
-enqueue flags, which include the flags stashed for a remote activation.
-move_remote_task_to_local_dsq() thus sets SCX_RQ_IN_WAKEUP on the
-destination rq when the moved task was woken up, although no
-task_woken_scx() follows that activation.
+The di_forkoff check in xchk_dinode is incorrect, according to LOLLM.
+XFS_DFORK_BOFF returns a byte count relative to the start of the literal
+area, not the start of the inode.  Therefore, this check won't flag
+di_forkoff values that are larger than the literal area but not the
+inode size itself.  Fix this check; sadly the old APTR code was correct.
 
-An IMMED insert into a busy destination requests a local reenqueue during
-that enqueue. The request gets linked but not scheduled and stays pending
-until an unrelated wakeup or preemption on that CPU runs the deferred
-actions. The IMMED task sits behind the running task in the meantime. If
-nothing runs them before the scheduler is disabled, the request outlives the
-scheduler and points into its freed per-cpu area, which the next scheduler
-dereferences from run_deferred().
-
-Test the core enqueue flags for the wakeup bit. Only the core's wakeup path
-is followed by task_woken_scx().
-
-Fixes: 57ccf5ccdc56 ("sched_ext: Fix enqueue_task_scx() truncation of upper enqueue flags")
-Cc: stable@vger.kernel.org # v7.1+
-Reported-by: Andrea Righi <arighi@nvidia.com>
-Link: https://lore.kernel.org/all/20260916145807.3250167-1-arighi@nvidia.com/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 6b5d917780219d ("xfs: dont cast to char * for XFS_DFORK_*PTR macros")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext/ext.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -2037,7 +2037,12 @@ static void enqueue_task_scx(struct rq *
- 	int sticky_cpu = p->scx.sticky_cpu;
- 	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
+--- a/fs/xfs/scrub/inode.c
++++ b/fs/xfs/scrub/inode.c
+@@ -607,7 +607,7 @@ xchk_dinode(
+ 	}
  
--	if (enq_flags & ENQUEUE_WAKEUP)
-+	/*
-+	 * SCX_RQ_IN_WAKEUP promises a task_woken_scx() call once this enqueue
-+	 * returns. Only the core's wakeup path delivers one. The flags stashed
-+	 * for a remote activation may carry the wakeup bit without it.
-+	 */
-+	if (core_enq_flags & ENQUEUE_WAKEUP)
- 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
- 
- 	/*
+ 	/* di_forkoff */
+-	if (XFS_DFORK_BOFF(dip) >= mp->m_sb.sb_inodesize)
++	if (dip->di_forkoff >= (XFS_LITINO(mp) >> 3))
+ 		xchk_ino_set_corrupt(sc, ino);
+ 	if (naextents != 0 && dip->di_forkoff == 0)
+ 		xchk_ino_set_corrupt(sc, ino);
 
 
