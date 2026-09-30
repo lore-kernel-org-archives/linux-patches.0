@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E96425F7A9;
-	Wed, 30 Sep 2026 16:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A1334D916;
+	Wed, 30 Sep 2026 16:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785662; cv=none; b=W1VBmKWOBHp6AJbDwgG0g+8gTK15n28y7CkrAiKm7ojzlge20TWH25lxmHqygqFi/W0rr00mPH9vbb9/uIb2f58dNMj+VWQYyjZB8koqd1kzrIeCfNwWWfi2Q2TB1/uT48pK4hVZ5LuhufI4m25C/66/AT4TFC/6qTETtTk4wgQ=
+	t=1790785663; cv=none; b=hQECsJsOTi5Vb4YHCX+k7/rGBVqbozj8pEHaY53vs30d8oFJSiqCwtWBh0xYJzECo66ENt1drFzs+1y0Wy/UC1Ff6XgBSW34Dqtm7gTRwI62sqkT7hy9gJ17KtbyF/MNT+MEHeX4rAL9yFJ0GyayGP/RQeRckwJTZ+TOMNEic54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785662; c=relaxed/simple;
-	bh=kHHjXZWXnyTpdLGaeiG7L68uHniLsDRBMd5zrwPhNHQ=;
+	s=arc-20240116; t=1790785663; c=relaxed/simple;
+	bh=j0+lVO5TUkHfZx+f8ZUf+EnccuGKvI1oJMMIRUC/B4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MQYx2u+ABWaoXhc9dSZXb8wOq9YFf6Sqqm7GEYb9aUINoxaq1MYxycFjGiEkOIs5KQ3pYSObkADaa+dsMphJq++Mz9gfRlD0+oSI5oXeYJKpSKikDk0jKFf9BWkiY7qAHI/pH59etp1psYm7Vfb69FCEuVPZCeFRJddfNnwZ0tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssJSgDy5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQmGF1MHYdTjRJZaSzy6r5GguNyrs6HbNZznFO3N4KWy9wjyt6iVDnB6a4KAde8js5xay7+gbsoQYf8RZfbfE2MEe7THxkslxIfy7aPGgk4pT+VIcDBoO1UXdPtpaGsx/kw5gudasejTK0nBEDv9ES7irH6Qj4Z9ssq/2rGHMU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1SPfrgZw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssJSgDy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B231F000FF;
-	Wed, 30 Sep 2026 16:27:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SPfrgZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158DF1F000FF;
+	Wed, 30 Sep 2026 16:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785659;
-	bh=2oi6RTTPSg5VMccwrTNUOLY/F6hs8XGFaSe3LpwNVRQ=;
+	s=korg; t=1790785662;
+	bh=JC04J8Kh1OVFnDRRYmqBHrke3pPX3Wl9YUqPnBLk29I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ssJSgDy50CE1Rd99IlNiGETWzIHMX99XRptyDHMoTKkKR+dnRLYxwwXpSBPVd8dJO
-	 M1HMybQRUAAJiM8M7V08HTOrkS9JT65foQVqgaJorhuLBCsvi5NO8p4LC9j2zIV+fi
-	 zW6lKeX14EqZpQRiJVA0AG8q4EJgn3mPHyPJUJ1M=
+	b=1SPfrgZw6xtdU45MUHpHeJq11VWEAgwV8n40zwmqX9mRuq3gRPSaGdoBAudcZebRQ
+	 KSZvPau+8g1gQhaNJaGsUtO0WM9Um0x8y/pn4oqgNuYWmHiqdODkAjTZHFACHfoqXy
+	 HzvbC9sA6YzDbpYiUJKiohTjvpDKji0sAzCM67Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arash Golgol <arash.golgol@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 585/982] Revert "perf cs-etm: Flush thread stacks after decoder reset"
-Date: Wed, 30 Sep 2026 17:22:01 +0200
-Message-ID: <20260930152429.347771010@linuxfoundation.org>
+Subject: [PATCH 6.1 586/982] media: video-i2c: fix buffer queue ordering
+Date: Wed, 30 Sep 2026 17:22:02 +0200
+Message-ID: <20260930152429.368794106@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -49,76 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 097df36140476ce86b23bfaa2fb9104a9c095752.
+From: Arash Golgol <arash.golgol@gmail.com>
 
+[ Upstream commit bc4574c265ed738849e46d942617100580fcedd2 ]
+
+Queued buffers are added to the tail of vid_cap_active in
+buffer_queue(), but the capture kthread also retrieves buffers from
+the tail of the list.
+
+This makes the queue behave as LIFO instead of FIFO when multiple
+buffers are queued.
+
+Fix this by retrieving buffers from the head of the list.
+
+Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 45 ----------------------------------------
- 1 file changed, 45 deletions(-)
+ drivers/media/i2c/video-i2c.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 361b75b0882c4..3b54baf79bd4a 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -1635,45 +1635,6 @@ static int cs_etm__end_block(struct cs_etm_queue *etmq,
+diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
+index 83a4fc95252fa..d6aecf07040b1 100644
+--- a/drivers/media/i2c/video-i2c.c
++++ b/drivers/media/i2c/video-i2c.c
+@@ -464,8 +464,9 @@ static int video_i2c_thread_vid_cap(void *priv)
+ 		spin_lock(&data->slock);
  
- 	return 0;
- }
--
--static int cs_etm__flush_stack_cb(struct thread *thread,
--				  void *data __maybe_unused)
--{
--	thread_stack__flush(thread);
--	return 0;
--}
--
--static void cs_etm__flush_machine_stack(struct cs_etm_queue *etmq, pid_t pid)
--{
--	struct machine *machine;
--
--	machine = machines__find(&etmq->etm->session->machines, pid);
--	if (machine)
--		machine__for_each_thread(machine, cs_etm__flush_stack_cb, NULL);
--}
--
--static void cs_etm__flush_all_stack(struct cs_etm_queue *etmq)
--{
--	enum cs_etm_pid_fmt pid_fmt = cs_etm__get_pid_fmt(etmq);
--
--	if (!etmq->etm->synth_opts.last_branch)
--		return;
--
--	switch (pid_fmt) {
--	case CS_ETM_PIDFMT_CTXTID2:
--		/* Clear the guest stack if virtualization is supported */
--		cs_etm__flush_machine_stack(etmq, DEFAULT_GUEST_KERNEL_ID);
--		fallthrough;
--	case CS_ETM_PIDFMT_CTXTID:
--		cs_etm__flush_machine_stack(etmq, HOST_KERNEL_ID);
--		break;
--	case CS_ETM_PIDFMT_NONE:
--	default:
--		break;
--
--	}
--}
--
- /*
-  * cs_etm__get_data_block: Fetch a block from the auxtrace_buffer queue
-  *			   if need be.
-@@ -1696,12 +1657,6 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
- 		ret = cs_etm_decoder__reset(etmq->decoder);
- 		if (ret)
- 			return ret;
--
--		/*
--		 * Since the decoder is reset, this causes a global trace
--		 * discontinuity. Flush all thread stacks.
--		 */
--		cs_etm__flush_all_stack(etmq);
- 	}
+ 		if (!list_empty(&data->vid_cap_active)) {
+-			vid_cap_buf = list_last_entry(&data->vid_cap_active,
+-						 struct video_i2c_buffer, list);
++			vid_cap_buf = list_first_entry(&data->vid_cap_active,
++						       struct video_i2c_buffer,
++						       list);
+ 			list_del(&vid_cap_buf->list);
+ 		}
  
- 	return etmq->buf_len;
 -- 
 2.53.0
 
