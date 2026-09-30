@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41B379EDA;
-	Wed, 30 Sep 2026 16:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C6036F8F5;
+	Wed, 30 Sep 2026 16:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784116; cv=none; b=KWAT/1fpiL3TZbSKMEG7w58LdgV1v0hJCa4qFVnx1+Jh3TYS6wTCHy1rXHoinGTME4b9m6S0BPdPyQXn9g6ADUBNUlMFzsrLiyXvDOX+Pk5RU3EScpbfOpxZvXbm+gHt6gU3GW1ocF/a2oqquLbrvt4K0R9CKd3ePjSGiEIH8ng=
+	t=1790784120; cv=none; b=T8Gn5nCs+oBDRodZFS/WKDPrwxphlcLfIYGc0q4faFchD9WRMAxu3LEN/Qb+jxv7HtqOfyPyTUU60u23EA+L+cFkwxyBzfgVCWGCz+ZiDsLjWBvLL/+NYMZv6t5PtWE1h5jYyon9gzUyKctPoWvVXpoFyat4hEP5wsFmhfkdTe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784116; c=relaxed/simple;
-	bh=+ULBmw3pD90wjqI1L6Z2E0WDqqTHM4/4hWPHC0jppKw=;
+	s=arc-20240116; t=1790784120; c=relaxed/simple;
+	bh=FEvO36pdokFba4kqyXTLg4kT4I49lPoDROa7P3iA4eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRO8HiJ7Ut9ZYPC23McVZvnSdGqkgSXf36b2lRcN/uesOSjhKYOVwoyIsc0MhWz3r82mJi0tmEYE9ERAgYPijUZ29q0+CdXjI2fbK/F46MEBtwsx30E5QwTK70TZp8l/eo8e7Apk/t8AEZcmNOs7wzyn/agh3ErcPAV1zSuAAb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPiAvUm5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hkqfPpRrGu1bnAywiZUKrfoYN+dmLslekLw3R21nfAsTWilkkiIGRLLvaiqsWlFgi3zi+2Foex3SasObuFZrb/ZRsDQkpS/Dc3PASmVNJ5wTsZNXxuTrvOgEmNgUmD0Nov1E/aqYI1a7Gng5aCou9ktd6Fg/8FM3rzfiigJq9cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qB/OkJiQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPiAvUm5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70FB1F00893;
-	Wed, 30 Sep 2026 16:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qB/OkJiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401331F00898;
+	Wed, 30 Sep 2026 16:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784111;
-	bh=g94CEvBADAerSQDrwzHIci64XzVoh3CK8W7yUIXEJU4=;
+	s=korg; t=1790784116;
+	bh=TWEg7mSbIpr/dh5lHjpRPpzev2pp7BLEFvwm6wxF9/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPiAvUm5Rcc8EqiXFjC7NL7JhpGp0rzycdSSdsNGzB+epX8Uapi75BisAGwEJV7V7
-	 AWyLJwv4NDneTBrHSgCcNSCXaPyNsgl09920wqVKJQrH7WYf3LPIgoKw4ag3c+3mCX
-	 i02zX4uV3ZWJgDXPaN/tNKQ3Vs+jUSqiTyKFTqiE=
+	b=qB/OkJiQFRTlNU9tZcbj4X6U+7hRZRBibSLk7ZWgea5F9rlwgKp0GS7x0/Me+cES8
+	 gsUeuaRaI+pvtGhyeowZawxVGhpUcxBs69ioFtSZpoFB+uuYY8eVR8Z74a3ZS1VPXJ
+	 YK5NPN8taEvm5iAlvvEzddqHHAnHzNZ1OMmWc1Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/982] net: dsa: realtek: rtl8365mb: add support for RTL8367SB
-Date: Wed, 30 Sep 2026 17:12:56 +0200
-Message-ID: <20260930152417.659076929@linuxfoundation.org>
+Subject: [PATCH 6.1 042/982] clk: samsung: exynos850: mark APM I3C clocks as critical
+Date: Wed, 30 Sep 2026 17:12:58 +0200
+Message-ID: <20260930152417.700280687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,50 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 28702a215c96917d85558ad6309a57ab224808c0 ]
+[ Upstream commit 44984aaf1aa727ff944dd4b72fcf069d08b0056d ]
 
-Add chip info entry for the Realtek RTL8367SB switch. This device has
-chip ID 0x6367 and version 0x0010. It exposes two external interfaces:
-port 6 supports MII, TMII, RMII, RGMII, SGMII and HSGMII, while port 7
-supports MII, TMII, RMII and RGMII. Use the existing 8365MB-VC jam table
-for initialization.
+The Exynos850 APM co-processor relies on the I3C bus to communicate with
+the PMIC. Currently, there is no dedicated PMIC consumer driver managing
+these clocks, so the clock subsystem automatically gates them during the
+initialisation. Once gated, any subsequent ACPM communication with APM
+results in timeouts.
 
-Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Link: https://patch.msgid.link/3c6d822b-0e85-4173-86ba-2badb140bbf1@yahoo.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As a temporary workaround (and let's hope it doesn't become permanent),
+mark both `gout_i3c_pclk` and `gout_i3c_sclk` as CLK_IS_CRITICAL ones to
+prevent the clock subsystem from disabling them. This makes the ACPM
+communication functional. This workaround should be reverted once a
+proper ACPM PMIC driver is implemented to manage these clocks.
+
+Cc: Sam Protsenko <semen.protsenko@linaro.org>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260430-exynos850-i3c-criticalclocks-v1-1-6e1fd8dfa21b@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/clk/samsung/clk-exynos850.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index 97673ccb7ac79..f622e724e01f6 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -539,6 +539,20 @@ static const struct rtl8365mb_chip_info rtl8365mb_chip_infos[] = {
- 		.jam_table = rtl8365mb_init_jam_8365mb_vc,
- 		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
- 	},
-+	{
-+		.name = "RTL8367SB",
-+		.chip_id = 0x6367,
-+		.chip_ver = 0x0010,
-+		.extints = {
-+			{ 6, 1, PHY_INTF(MII) | PHY_INTF(TMII) |
-+				PHY_INTF(RMII) | PHY_INTF(RGMII) |
-+				PHY_INTF(SGMII) | PHY_INTF(HSGMII) },
-+			{ 7, 2, PHY_INTF(MII) | PHY_INTF(TMII) |
-+				PHY_INTF(RMII) | PHY_INTF(RGMII) },
-+		},
-+		.jam_table = rtl8365mb_init_jam_8365mb_vc,
-+		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
-+	},
- 	{
- 		.name = "RTL8367RB-VB",
- 		.chip_id = 0x6367,
+diff --git a/drivers/clk/samsung/clk-exynos850.c b/drivers/clk/samsung/clk-exynos850.c
+index 87e463ad42741..8d1205de7fd9a 100644
+--- a/drivers/clk/samsung/clk-exynos850.c
++++ b/drivers/clk/samsung/clk-exynos850.c
+@@ -580,10 +580,11 @@ static const struct samsung_gate_clock apm_gate_clks[] __initconst = {
+ 	     CLK_CON_GAT_GOUT_APM_APBIF_RTC_PCLK, 21, 0, 0),
+ 	GATE(CLK_GOUT_TOP_RTC_PCLK, "gout_top_rtc_pclk", "dout_apm_bus",
+ 	     CLK_CON_GAT_GOUT_APM_APBIF_TOP_RTC_PCLK, 21, 0, 0),
++	/* TODO: Should be dealt with or enabled in PMIC ACPM driver */
+ 	GATE(CLK_GOUT_I3C_PCLK, "gout_i3c_pclk", "dout_apm_bus",
+-	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_PCLK, 21, 0, 0),
++	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_PCLK, 21, CLK_IS_CRITICAL, 0),
+ 	GATE(CLK_GOUT_I3C_SCLK, "gout_i3c_sclk", "mout_apm_i3c",
+-	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_SCLK, 21, 0, 0),
++	     CLK_CON_GAT_GOUT_APM_I3C_APM_PMIC_I_SCLK, 21, CLK_IS_CRITICAL, 0),
+ 	GATE(CLK_GOUT_SPEEDY_PCLK, "gout_speedy_pclk", "dout_apm_bus",
+ 	     CLK_CON_GAT_GOUT_APM_SPEEDY_APM_PCLK, 21, 0, 0),
+ 	/* TODO: Should be enabled in GPIO driver (or made CLK_IS_CRITICAL) */
 -- 
 2.53.0
 
