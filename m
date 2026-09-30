@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0743C1D66;
-	Wed, 30 Sep 2026 19:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D39E3C3C0F;
+	Wed, 30 Sep 2026 19:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794970; cv=none; b=ZPxtZple3JlKMlqnyF0ViWE5Hq+u70/Va9jXYEYhfCSngKkHr5AapdgPry668TDZDCxzFsqSzrCpOpwzTjhnW5o9WqVU2ZJrIcsVI3dqIL580HGOfWg+IYauu0XTaCMXsMgad9FZ2/2c/Asi/eHucOZT29bVuVxlbjp267ftJNg=
+	t=1790794973; cv=none; b=KhwQUHFhsRlFrVVAWxu/rbWBBumzvVZsUVv5hs8pBLh76otQzslEdfRPOqYPfXSAby8af00BxkJGTNUw9snQnsL2k+nD2rP8glXoXnkmgbS/pjKax5XLgj/GpdkTiVt36jRY100F7CoeBlfTcvfxND1pMKIWDyCExlbrleYU3Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794970; c=relaxed/simple;
-	bh=13h/WEAvM9q0V6ToiW1xSYSgcG195dnZvuHGuayozs8=;
+	s=arc-20240116; t=1790794973; c=relaxed/simple;
+	bh=g+ocqURIlLoOtpTDPNw2KQx3d0W+O621yjnCatdV6ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqYRPWJ5Wtv9fxneY0NUu1yl54SM4oCEmHP1NwevXm7PwNi/6JvjBQzCWa3twSh55jKwDQNvzupj2fdtvMXblshpKI6z2L1Ki0k8Nyck7P9pLnk9lBX6HxQoqBw9+1cvKcGrL4QEvpr60J6D1bSQfaXazd3bwYgn3jfkuJOOs2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpq0hlEp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=byOiEiOAilqHsFyT3NxU7IJ4VIXFjY7GdQEWM38XTjZPAFMVqNQPlV9eDcfmtjhUOzkjrwgGXqNm1jnJaRJMIlLKgjxv6aUoX5JlB5AbqC4kJPMoUNYphtukHsh9aCBO41euMAq3j9oIsj2nAMdZvdLwBBEBJQ40FulUn5vkKRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg7EmA0Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpq0hlEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E4B1F000FF;
-	Wed, 30 Sep 2026 19:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg7EmA0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A74C1F000FF;
+	Wed, 30 Sep 2026 19:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794969;
-	bh=a6DD5NpeQahvPihsg2Nb2M6ef866eJf6Uu53Tq6x7CM=;
+	s=korg; t=1790794972;
+	bh=RlhlNCC+17PcUDi8nSpW3o+9bFaXimpfV+UzJOuk/Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpq0hlEp1LbNk+4ghbQQzgotiKc68YjMksB3RRjSLEh6l0+JmQ0YLmcJtSpoIaOZ7
-	 1Wm42xTue4q4vuYMLv4AhRT6uY0Sq0Sy6Ck44oO6fYN4p0DdGHfuKdXRO5o8jBfmUS
-	 2Je8KsiuXMMmUGtMUys0OpzeTV9Z6eMYVyV3mr1Y=
+	b=Rg7EmA0QKnkAwh7xgXJjuwwk1zXcHbfkdWMq8hoXFmR8cuaydtQxsbdZw4At4zgeg
+	 KbT4XEeQ7wWILaFXjx4RRwhUrr8AgwddZDYDVYkWXAhuuKxYjWp5PIHPeyOX5AZxXy
+	 2y6zTJ24+0GVyYUkf+XbEvCqb+oeR+fERjN31FTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0397/1193] smb/client: mark file sparse before emulating insert range
-Date: Wed, 30 Sep 2026 17:18:01 +0200
-Message-ID: <20260930152443.008566688@linuxfoundation.org>
+Subject: [PATCH 6.6 0398/1193] smb: client: transport: Fix debug printing in __release_mid()
+Date: Wed, 30 Sep 2026 17:18:02 +0200
+Message-ID: <20260930152443.034612120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit cd03ce4950d80147ac8f20bc03c42b75b0352407 ]
+[ Upstream commit d83a21bb26015bfdd79b0440fe816b271b8bbab3 ]
 
-The SMB client emulates FALLOC_FL_INSERT_RANGE with SET_EOF, COPYCHUNK
-and SET_ZERO_DATA.
+Long time ago during upgrading printk():s to the respective pr_<level>()
+calls one misconversion happened and nobody has noticed that. So,
+previously printk(KERN_DEBUG) + printk() worked as one long debug print
+since the trailing '\n' is only present in the followup printk() format
+string. The culprit change missed that and split the message to two on
+the different levels. Restore the original behaviour to make users be
+less confused in the most likely never happen cases of partially getting
+that message.
 
-SET_ZERO_DATA creates a hole only when the file is sparse. On a
-non-sparse file, it clears the inserted range but leaves its blocks
-allocated, causing the extent count check in xfstests generic/064 to
-fail.
-
-Fix this by marking the file sparse before modifying it.
-
-This patch produces the expected sparse extents in xfstests generic/064
-only when the server-reported block size is compatible with the server's
-deallocation granularity.
-
-For ksmbd, the reported block size follows the backing filesystem,
-and the test passes. For Samba, the test passes with a block size
-matching the backend granularity, for example, 4 KiB on Btrfs, but not
-with the default 1 KiB value. For Windows Server 2022, 4 KiB inserts do
-not generate holes, while aligned inserts of 64 KiB or larger do.
-
-Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 0b456f04bcdf ("cifs: convert printk(LEVEL...) to pr_<level>")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/transport.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 956d1dc8bca39..f065f52cacacf 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3715,6 +3715,11 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
- 	count = old_eof - off;
- 	new_eof = old_eof + len;
- 
-+	/* SET_ZERO_DATA creates a hole only in a sparse file. */
-+	rc = smb2_set_sparse(xid, tcon, cfile, inode, true);
-+	if (rc)
-+		goto out;
-+
- 	filemap_invalidate_lock(inode->i_mapping);
- 	rc = filemap_write_and_wait_range(inode->i_mapping, off, new_eof - 1);
- 	if (rc < 0)
+diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
+index a47242a0f5c6d..8d28b594b4173 100644
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -143,12 +143,11 @@ void __release_mid(struct kref *refcount)
+ 		trace_smb3_slow_rsp(smb_cmd, midEntry->mid, midEntry->pid,
+ 			       midEntry->when_sent, midEntry->when_received);
+ 		if (cifsFYI & CIFS_TIMER) {
+-			pr_debug("slow rsp: cmd %d mid %llu",
+-				 midEntry->command, midEntry->mid);
+-			cifs_info("A: 0x%lx S: 0x%lx R: 0x%lx\n",
+-				  now - midEntry->when_alloc,
+-				  now - midEntry->when_sent,
+-				  now - midEntry->when_received);
++			pr_debug("slow rsp: cmd %d mid %llu A: 0x%lx S: 0x%lx R: 0x%lx\n",
++				 midEntry->command, midEntry->mid,
++				 now - midEntry->when_alloc,
++				 now - midEntry->when_sent,
++				 now - midEntry->when_received);
+ 		}
+ 	}
+ #endif
 -- 
 2.53.0
 
