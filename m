@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B854FECD8;
-	Wed, 30 Sep 2026 15:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D71509F0B;
+	Wed, 30 Sep 2026 15:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782846; cv=none; b=ucyhItnkcL8I8ye81S4nghWKgmPUE/qR9Fhc7KHZFFqSxuF2eMdMIWjq5gv19bJK9NV3luB3sVaB7UwBuyB+HNpC0CfVOuRNjmlDndUyz44Ay5xJ5I8BL/Lyfa53RwpK83F7+mp//IM3iN2Uo1s1qJXVmNMvcpQvkk7gw9ArXos=
+	t=1790782851; cv=none; b=ouzxtpt2N87nveLGB+D+X3LzuCx6ybeN1WMb4W5t44bPbpaH2j9CK4Lnf/5ZuniF2i4zMB2bX72YKZIaraYfFfMH8GiBhicfzjUFOK20pfVheoh0ew9l/LJ3fPgRh62akHz97C7KBnrEMwfFoZ4fgM6PaOJ6cfEpDuABe+sC0Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782846; c=relaxed/simple;
-	bh=Lxjg6toNZ708nocsbQSK7jZOKeJzDzVGVLIVN9cVlj4=;
+	s=arc-20240116; t=1790782851; c=relaxed/simple;
+	bh=2F6wL1kMiWfVsD0Zxv5XMIu7onMXw6SDnRFuMophoxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RLWX2lQoxMzFL4p8sWx6QQaCv49kNJmiJgpM+Ht5WoJHU4ZfZlt4OjAdSoqBh1yQA4UwyuU9PnWRcrd2PnM7j3MjZUIKQkhFmM1UMLd08kGKKgHEstDpMTSG6k4rw4byyLd4G00jzifj9VgcyWdXnUViwvU3o4eyUTNGQfWSh4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sf0192cJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FnpVGxQvhwu8R6R4nCJq1M0Q+TTBr4oxgY6CWrcVwj1PnXI3leL0hqzC8RANcjryaA3JYFM7kdR/qZF2AJN58SBXPzsGDPccexzVv4ZA86VqHL/WyuC1eZGJvdVKZ1ou+pM2YUvqkBT4APDe39IWfTVwyDRUIyTDT6KKMJNp/GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eM9L/wmD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sf0192cJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9263D1F00893;
-	Wed, 30 Sep 2026 15:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eM9L/wmD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB1A1F00898;
+	Wed, 30 Sep 2026 15:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782843;
-	bh=oc6ICIjzrovfmOKKAuFRCvobvIKoG7NC5utjISZ4CEU=;
+	s=korg; t=1790782845;
+	bh=iVrDlOgSMVAJ7HxCYlFRR0Mw/5GztM8cVN9oj/R5gvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sf0192cJG2sj+Jjl6MHR8hDuwLjvax6UQXFcFGxWFfVWEAFSeBW36l8JgKCcirUN3
-	 72Fu28WrDjbaKMDJBJAVju/UpKtQ6ZKFW0yy1/fKFRJNy/XOKUZjhyo7EmLstp88cL
-	 jCETtFyE+KeR3vYkEfcvty/M2aJaciWL0fhI4+Xo=
+	b=eM9L/wmDjSBai+TyXPW/QxDTsaSgqU9vUvbD8zpfzqprBTRLc/8ifVQTkQPaNNyQY
+	 pktkUff986fXYnSJVkjcnF76DHv44DfGiJb3EK7UXnKCuLqUrIFdUqstq82EQAirZc
+	 ANBpYryuT3S4kpHRIZEFsbO3SO2/GKgkVREkCFFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 162/595] wifi: rsi: validate beacon length before fixed buffer copy
-Date: Wed, 30 Sep 2026 17:20:55 +0200
-Message-ID: <20260930152351.219930050@linuxfoundation.org>
+Subject: [PATCH 5.10 189/595] ARM: 9484/1: enable interrupts when unhandled user faults are triggered
+Date: Wed, 30 Sep 2026 17:21:22 +0200
+Message-ID: <20260930152351.807223310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,52 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Xie Yuanbin <xieyuanbin1@huawei.com>
 
-[ Upstream commit 8ecdeb8b8a33b22c597299043c0dcfce50beb9ea ]
+[ Upstream commit e79ca91165d4fd18549c536abdb86101e889052f ]
 
-rsi_prepare_beacon() copies the mac80211 beacon frame after
-FRAME_DESC_SZ into a management skb whose usable tailroom may be smaller
-than MAX_MGMT_PKT_SIZE after alignment.
+PREEMPT_RT requires interrupts to be enabled when sending signals.
 
-Validate the beacon length against the actual tailroom before the copy
-and skb_put(). Leave ownership of the management skb with the caller on
-error, matching the existing rsi_send_beacon() cleanup path.
+When do_DataAbort()/do_PrefetchAbort() triggers unhandled user faults,
+that is `inf->fn()` return a non-zero value, and the interrupts are not
+enabled within the hook function, force_sig_fault() will be called
+with interrupts disabled.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260705084824.68105-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This can be triggered by user programs executing the bkpt instruction,
+with kernel config CONFIG_PERF_EVENTS=n.
+
+Enable interrupts in do_DataAbort()/do_PrefetchAbort() when unhandled
+user faults are triggered to fix the issue.
+
+Fixes: c6e61c06d606 ("ARM: 9463/1: Allow to enable RT")
+Link: https://lore.kernel.org/20260629123349.134224-1-xieyuanbin1@huawei.com
+Suggested-by: Russell King <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_hal.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm/mm/fault.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index 30d2eccbcadd5..62e36bbfecc48 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -434,6 +434,7 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	struct ieee80211_vif *vif;
- 	struct sk_buff *mac_bcn;
- 	u8 vap_id = 0, i;
-+	unsigned int tailroom;
- 	u16 tim_offset = 0;
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index c16d6a293b97c..622fa99e138f6 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -533,6 +533,9 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
+ 		return;
  
- 	for (i = 0; i < RSI_MAX_VIFS; i++) {
-@@ -483,6 +484,13 @@ int rsi_prepare_beacon(struct rsi_common *common, struct sk_buff *skb)
- 	if (mac_bcn->data[tim_offset + 2] == 0)
- 		bcn_frm->frame_info |= cpu_to_le16(RSI_DATA_DESC_DTIM_BEACON);
- 
-+	tailroom = skb_tailroom(skb);
-+	if (tailroom < FRAME_DESC_SZ ||
-+	    mac_bcn->len > tailroom - FRAME_DESC_SZ) {
-+		dev_kfree_skb(mac_bcn);
-+		return -EMSGSIZE;
-+	}
++	if (likely(user_mode(regs)))
++		local_irq_enable();
 +
- 	memcpy(&skb->data[FRAME_DESC_SZ], mac_bcn->data, mac_bcn->len);
- 	skb_put(skb, mac_bcn->len + FRAME_DESC_SZ);
+ 	pr_alert("8<--- cut here ---\n");
+ 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
+ 		inf->name, fsr, addr);
+@@ -571,6 +574,9 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
+ 	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
+ 		return;
  
++	if (likely(user_mode(regs)))
++		local_irq_enable();
++
+ 	pr_alert("8<--- cut here ---\n");
+ 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
+ 		inf->name, ifsr, addr);
 -- 
 2.53.0
 
