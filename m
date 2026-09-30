@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E9D50AC16;
-	Wed, 30 Sep 2026 15:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B28503905;
+	Wed, 30 Sep 2026 15:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783472; cv=none; b=ZEmE8/AsYuWZ78Ujb0180GhaMz4rgrLnveILv/8+XyZu1Psht+Uo9tgUc5V0xc1OFvdfWTtXOc92/quW3AhEO4q6LZOAoE8dZ79Y22qh/kp8eY/MPaSZJaIH2bhI8jsaQQGmF8dtrEhJ4qPJ8R/zy4dEzhgTvxuplzFSy0wWTRs=
+	t=1790783475; cv=none; b=GIV3ki9xDKvDX8motcsI/bX7BxpQKEN4rfXXlvN+N4Xs3gGV5vrPKCU2CNKoR81bBT/89VOSd3a4GbnZphVIpuibGm3TxIYCs4UJ3h40Z3MD5clQGBlnwH5ce5ugVcL0gj4il0TPhbMs5RaifdgoZWeTWP2zt+A2Wrh/6L0Ih0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783472; c=relaxed/simple;
-	bh=oaTTwQufGh+kTGAmMTVY5WqfPcDks3uGsoyMZtC+pEs=;
+	s=arc-20240116; t=1790783475; c=relaxed/simple;
+	bh=YpwJqu4RnSkFphr6zQinDGaRqCt4YnMAYrrRCbEle5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7FPx6tHBQVnsk1XH4mb2l7XlY2ZCYA0VD64w+dnPrIvfONwsYFvCfgVXhmRR0uPTFdbCk7Tx94LEgjyX9cRN4z6d7QmWmeyTqdC6doz2tVTgPLEJMcyVRjXmMrfbxFo/olXwTpE/7uZmuKkDWIfcqqrg9sflBgVK13X4Ii4sq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=os84E+f5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oYUo6Jo22UlM52NlB9ghp0F2R+E18AgTL5rPZ+CYWDVcTjraZpPCUcgZqLZ2YEk/qy12+7XuGyCAzjrm0Dac9+TVJiSCSUoLlgnMBcyvltGyriTzysMbZt1ByX3LSzjq3LRtcHEQ/LW+VNGmXxQtntGCd7+zlIHZqApSv1vmqHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQWAG2MO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="os84E+f5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795DF1F00898;
-	Wed, 30 Sep 2026 15:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQWAG2MO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BDD1F000FF;
+	Wed, 30 Sep 2026 15:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783467;
-	bh=ccwElL4w9QCle9M6CO2EGtbVxgSoQfT+F5VcECVhTYY=;
+	s=korg; t=1790783469;
+	bh=c4PeONNek0WN4/AuG9iTyP7QIYNGekbuFC/Jj6/08sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=os84E+f5Ngz+MmWSOlZBXehdbYbJquPyulG3Z8u1xMZxKD9/cJ9404rWZNBOq8KUD
-	 O+gLYMcGA32FvdXVcQ9uq9giAwRDrWRLv/LgrcDp1D6r99ffI0t4qlCFEmGNmY+mXr
-	 +VXwXGKmKdmGxbLkCnQEIQVhFI5FiNQ8xkdemAxk=
+	b=zQWAG2MOjxc8V87EGuakoVRKdaJtgVexU4HRy4KiWPN3us2WoBuQwv0waNCF9q+ti
+	 rabWLxdXnEdbpqVoL6bdHf/holKEw5U9b53phgiWn3N2wg94kupYddhaE91T5TiAPH
+	 NqtYgac60QvvKS/WLndydjqYkH5iRQWOnv8bhkYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 410/595] ASoC: ux500: Parenthesize MSP_{RX,TX}_CLKPOL_BIT() arguments
-Date: Wed, 30 Sep 2026 17:25:03 +0200
-Message-ID: <20260930152356.495509785@linuxfoundation.org>
+	Yige Jiang <yigejiang86@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 411/595] net: netsec: fix device_node reference leak on phy_np
+Date: Wed, 30 Sep 2026 17:25:04 +0200
+Message-ID: <20260930152356.517748435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,60 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 11fc0048a6930f4fca44fe3bd16a0023e78846a2 ]
+From: Yige Jiang <yigejiang86@gmail.com>
 
-arm allmodconfig fails to build with gcc:
+[ Upstream commit 5ae916fabca141b79b32e2e57f3c915c0f1e1b2e ]
 
-  In file included from sound/soc/ux500/ux500_msp_i2s.c:20:
-  sound/soc/ux500/ux500_msp_i2s.h:151:38: error: suggest parentheses
-  around arithmetic in operand of '^' [-Werror=parentheses]
-  sound/soc/ux500/ux500_msp_i2s.c:204:21: note: in expansion of macro
-  'MSP_TX_CLKPOL_BIT'
-  cc1: all warnings being treated as errors
+netsec_of_probe() takes a reference on the PHY device_node with
+of_parse_phandle() and stores it in priv->phy_np, but the driver never
+drops it.  One device_node reference is leaked per probe, on the success
+path as well as on every error path reached after netsec_of_probe().
 
-The macros never parenthesized their argument:
+Neither consumer takes ownership.  of_mdio_parse_addr() is a static
+inline taking a const struct device_node * that only reads the "reg"
+property.  of_phy_connect() borrows as well: of_phy_get_and_connect() in
+drivers/net/mdio/of_mdio.c brackets its own call with of_node_get() at
+:364 and of_node_put() at :373, which would be a double put if
+of_phy_connect() consumed the reference.
 
-  #define MSP_TX_CLKPOL_BIT(n)  ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
+The node is still in use at netsec_netdev_open() time, where it is
+passed to of_phy_connect(), so it has device lifetime.  Release it at
+the probe error label, which every failure path after the acquire
+funnels through, and in netsec_remove().  Both releases precede
+free_netdev(), since priv is netdev_priv(ndev).  The ACPI probe path
+leaves priv->phy_np NULL and of_node_put(NULL) is a no-op.
 
-That went unnoticed while every caller passed a plain variable, but
-configure_protocol() now passes an XOR expression, which binds as
-"a ^ (b & MASK)" rather than "(a ^ b) & MASK", and gcc rightly
-complains.
+There is no end-user visible symptom on currently supported platforms:
+a device_node is only freed once OF_DYNAMIC is enabled and the node has
+been detached, so on a static device tree the imbalance is inert.  It is
+observable as a refcount that grows across bind/unbind cycles, and would
+matter under device tree overlays.
 
-No functional change: tx_clk_pol and rx_clk_pol only ever hold
-MSP_FALLING_EDGE (0) or MSP_RISING_EDGE (1), and bclk_inverted is a
-bool, so masking before or after the XOR gives the same 0/1 result.
-Parenthesize the argument anyway - it fixes the build and stops the
-macros from silently mis-evaluating a future composite argument.
+Found by static analysis of reference acquire/release pairing rather
+than from a runtime report.  No reproducer was produced and the change
+has not been runtime tested; it is compile-tested only (arm64,
+CONFIG_SNI_NETSEC=m via COMPILE_TEST).
 
-Fixes: 9ccbacf5a012 ("ASoC: ux500: Validate MSP DAI configuration")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609051547.G9SJp8UQ-lkp@intel.com/
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260913173132.1172003-1-sashal@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
+Signed-off-by: Yige Jiang <yigejiang86@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260913064102.37452-1-yigejiang86@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_i2s.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/socionext/netsec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
-index 28a90207a4cb5..4e4f140912f9b 100644
---- a/sound/soc/ux500/ux500_msp_i2s.h
-+++ b/sound/soc/ux500/ux500_msp_i2s.h
-@@ -149,8 +149,8 @@ enum msp_direction {
- #define RCKPOL_MASK		BIT(0)
- #define TCKPOL_MASK		BIT(0)
- #define SPICKM_MASK		(BIT(1) | BIT(0))
--#define MSP_RX_CLKPOL_BIT(n)     ((n & RCKPOL_MASK) << RCKPOL_SHIFT)
--#define MSP_TX_CLKPOL_BIT(n)     ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
-+#define MSP_RX_CLKPOL_BIT(n)     (((n) & RCKPOL_MASK) << RCKPOL_SHIFT)
-+#define MSP_TX_CLKPOL_BIT(n)     (((n) & TCKPOL_MASK) << TCKPOL_SHIFT)
+diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
+index bb86315581818..c3bd0370cdfc2 100644
+--- a/drivers/net/ethernet/socionext/netsec.c
++++ b/drivers/net/ethernet/socionext/netsec.c
+@@ -2142,6 +2142,7 @@ static int netsec_probe(struct platform_device *pdev)
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ free_ndev:
++	of_node_put(priv->phy_np);
+ 	free_netdev(ndev);
+ 	dev_err(&pdev->dev, "init failed\n");
  
- #define P1ELEN_SHIFT		0
- #define P1FLEN_SHIFT		3
+@@ -2159,6 +2160,7 @@ static int netsec_remove(struct platform_device *pdev)
+ 	netif_napi_del(&priv->napi);
+ 
+ 	pm_runtime_disable(&pdev->dev);
++	of_node_put(priv->phy_np);
+ 	free_netdev(priv->ndev);
+ 
+ 	return 0;
 -- 
 2.53.0
 
