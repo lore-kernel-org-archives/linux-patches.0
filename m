@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD89C51588E;
-	Wed, 30 Sep 2026 16:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DD251121D;
+	Wed, 30 Sep 2026 16:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786635; cv=none; b=K4TmEWAY8o1CVUkt39/PQi2r+R6TLea3KPkYj+28qtWzQel0ZHAFtvJxUp7tLe4TEv4KnzSRNQQKw5rpHzh47DCatQPtMOZ7/WSesisMnsrbbiqkX7jdtMWy7GVoOxbhYjZYwV5fI9iKGJMKKAKB+LK3KfmWVTbBaL+ORuBbrMs=
+	t=1790786638; cv=none; b=cLzAgtjnEUy+7u8meUrRV8A7TLIqXdqlhpMa9FofQI0DrJsyriPAj2TxwDyEmZMZPNoW4L42szBRge2/ckOptbc5nHyNn429JOloGP0JgnnGSTi7sZn3lyMckkdrMj32nAI6r3qXlwhBw/2Bo47YurHSm1dAGerddlXpI5m7b/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786635; c=relaxed/simple;
-	bh=d+Gvf2zh2up+jTWyo7kG/3a85OrNdsb3gXrvErZFE9c=;
+	s=arc-20240116; t=1790786638; c=relaxed/simple;
+	bh=JNIaxLiqlFtBJJSolNrEL+oF5fagvqSBFd4j/wjhdh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/uoz+paGxSZddIRyAWRT5MftnbDMLvcHsEs9xFGXEeRy9oYZzR4n9MeoQ0PFiyEDgzx1qNaQ+XchQnqjAGSHP1U4p3GIE2acyRlQTJb3d3XBmZZMLHsI4v0tR8H70q1Owlutfjx2+3RxN1wi/LHW+xOPxrZ/op6eCSvXvB5JZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgHFSeK/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z4A6PBnc3CrFUoIfhjxJMvnjkOqIGEhYNfbVH6YHU/cD4pN4ctkcIVwU9u+DX311ChsGHwmKZMJ26Ic+6F4Sb+aIASpSseXvPyf4/qLgUKh3IzTJlYyJXkS/xkzkIZ3w9hcLERB+dc5KWXDomXaa/VA7tJYF/mtrngHzBVWgvwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAa/n+7W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgHFSeK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342E61F00898;
-	Wed, 30 Sep 2026 16:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAa/n+7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134501F00893;
+	Wed, 30 Sep 2026 16:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786633;
-	bh=0LoqIBU16FT8PWwUFvTGBxOYN6zbLNS0FyTkTVxGrlc=;
+	s=korg; t=1790786636;
+	bh=4ZfZRruLPclRenGl7RYFxHfOxBVXCjzH7UbwePEef+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BgHFSeK/2FKC/FlHI0YIxc7i7z+XUTZ/VeGwPZdQnT2NFEgb4Kc6kdVzVAZTWhV7Y
-	 ZScSuCnslGQ2qlem+/DFc+/mkKTt0O3Z2+VgvgvAIkffgCdV6YnRZjpU/vBo988/Ol
-	 Vn38tFLQ2eU5JgcVfls6Fg5z8Y4ZgfGugO7+HA+g=
+	b=OAa/n+7WUZ9VBQmFZufT2SDT16iIYbxs+XG0s/mkgnBr/4W7LyudYuQoMdtcBz3Bc
+	 LAOZxmHdBJllxgbhvyNjrVngh3MTeIAqWTH7etbIUTSqdFjU7Wcn9RCc9CndWn8drM
+	 iC0LEwb2Qlle05zVjPsTAZv6H4pCC64hcFzh9CAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1e3df0852e82c21ca418@syzkaller.appspotmail.com,
-	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	Lei Zhu <zhulei@kylinos.cn>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 886/982] nfc: llcp: fix slab-out-of-bounds reads when logging service names
-Date: Wed, 30 Sep 2026 17:27:02 +0200
-Message-ID: <20260930152435.778470113@linuxfoundation.org>
+Subject: [PATCH 6.1 877/982] selftests: nci: Correct pthread_create return value check
+Date: Wed, 30 Sep 2026 17:26:53 +0200
+Message-ID: <20260930152435.588486574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,66 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ömer Mete Kaya <omermetekaya0@gmail.com>
+From: Lei Zhu <zhulei@kylinos.cn>
 
-[ Upstream commit 7dcf371a35632f035baf77bcf2c129165f772ce4 ]
+[ Upstream commit 3d8afc5243ea2ee803d98e69eb4a01748167ac1b ]
 
-nfc_llcp_wks_sap() and nfc_llcp_build_sdreq_tlv() pass non-null-
-terminated strings to pr_debug() using the %s format specifier.
-The buffers are allocated via kmemdup() or come from netlink
-attributes and are not guaranteed to be null-terminated, causing
-__dynamic_pr_debug() to read beyond the allocated region:
+The pthread_create() functions returns 0 on success and a positive value on
+failure. Modify the return value check to correctly detect failure cases.
 
-  KASAN: slab-out-of-bounds Read in __dynamic_pr_debug
-
-Fix both call sites by using %.*s with the explicit length to limit
-the output to the actual length of the string.
-
-Fixes: d9b8d8e19b07 ("NFC: llcp: Service Name Lookup netlink interface")
-Reported-by: syzbot+1e3df0852e82c21ca418@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1e3df0852e82c21ca418
-Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
-Link: https://patch.msgid.link/20260908161952.731468-1-omermetekaya0@gmail.com
+Fixes: 72696bd8a09d ("selftests: nci: Extract the start/stop discovery function")
+Signed-off-by: Lei Zhu <zhulei@kylinos.cn>
+Link: https://patch.msgid.link/20260729072426.303484-1-zhulei_szu@163.com
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_commands.c | 2 +-
- net/nfc/llcp_core.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/nci/nci_dev.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/nfc/llcp_commands.c b/net/nfc/llcp_commands.c
-index a93bf0b43d504..2d9e0925b1cc7 100644
---- a/net/nfc/llcp_commands.c
-+++ b/net/nfc/llcp_commands.c
-@@ -135,7 +135,7 @@ struct nfc_llcp_sdp_tlv *nfc_llcp_build_sdreq_tlv(u8 tid, const char *uri,
- {
- 	struct nfc_llcp_sdp_tlv *sdreq;
+diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
+index 162c41e9bcae8..6f571e3c21c09 100644
+--- a/tools/testing/selftests/nci/nci_dev.c
++++ b/tools/testing/selftests/nci/nci_dev.c
+@@ -438,7 +438,7 @@ FIXTURE_SETUP(NCI)
+ 	else
+ 		rc = pthread_create(&thread_t, NULL, virtual_dev_open,
+ 				    (void *)&self->virtual_nci_fd);
+-	ASSERT_GT(rc, -1);
++	ASSERT_EQ(rc, 0);
  
--	pr_debug("uri: %s, len: %zu\n", uri, uri_len);
-+	pr_debug("uri: %.*s, len: %zu\n", (int)uri_len, uri, uri_len);
+ 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+ 			       NFC_CMD_DEV_UP, self->dev_idex);
+@@ -509,7 +509,7 @@ FIXTURE_TEARDOWN(NCI)
+ 			rc = pthread_create(&thread_t, NULL, virtual_deinit,
+ 					    (void *)&self->virtual_nci_fd);
  
- 	/* sdreq->tlv_len is u8, takes uri_len, + 3 for header, + 1 for NULL */
- 	if (WARN_ON_ONCE(uri_len > U8_MAX - 4))
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index 0b1a2755f58ac..49f7793ab0312 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -356,7 +356,7 @@ static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
- {
- 	int sap, num_wks;
+-		ASSERT_GT(rc, -1);
++		ASSERT_EQ(rc, 0);
+ 		rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+ 				       NFC_CMD_DEV_DOWN, self->dev_idex);
+ 		EXPECT_EQ(rc, 0);
+@@ -590,7 +590,7 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
  
--	pr_debug("%s\n", service_name);
-+	pr_debug("%.*s\n", (int)service_name_len, service_name);
+ 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
+ 			    (void *)&virtual_fd);
+-	if (rc < 0)
++	if (rc)
+ 		return rc;
  
- 	if (service_name == NULL)
- 		return -EINVAL;
+ 	rc = send_cmd_mt_nla(sd, fid, pid, NFC_CMD_START_POLL, 2, nla_start_poll_type,
+@@ -610,7 +610,7 @@ int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
+ 
+ 	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
+ 			    (void *)&virtual_fd);
+-	if (rc < 0)
++	if (rc)
+ 		return rc;
+ 
+ 	rc = send_cmd_with_idx(sd, fid, pid,
+@@ -830,6 +830,8 @@ int disconnect_tag(int nfc_sock, int virtual_fd)
+ 
+ 	status = pthread_create(&thread_t, NULL, virtual_deactivate_proc,
+ 				(void *)&virtual_fd);
++	if (status)
++		return status;
+ 
+ 	close(nfc_sock);
+ 	pthread_join(thread_t, (void **)&status);
+@@ -874,7 +876,7 @@ TEST_F(NCI, deinit)
+ 	else
+ 		rc = pthread_create(&thread_t, NULL, virtual_deinit,
+ 				    (void *)&self->virtual_nci_fd);
+-	ASSERT_GT(rc, -1);
++	ASSERT_EQ(rc, 0);
+ 
+ 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+ 			       NFC_CMD_DEV_DOWN, self->dev_idex);
 -- 
 2.53.0
 
