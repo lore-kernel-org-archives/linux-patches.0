@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C812F50C287;
-	Wed, 30 Sep 2026 18:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0204DEC26;
+	Wed, 30 Sep 2026 18:19:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792393; cv=none; b=eqfPhtkOclCVV/lFjBVFqMJW82ymtp94x0LKUNiA7NSjIQff11r3Qvvm7IXBaUZ/yKtpCfBpjEOYZV3/4QlgweF9OYWyUfaLpCAiO1gWgRSHMNFYCdXLvS7jlJgNzkYP6fM9vK2jWiRYQw2EfXSVtkdAis5bbJTa/DXA0ItBqeM=
+	t=1790792396; cv=none; b=P7SuHyjfuaL6No2Y17FAb9qa1puZyuaXtMUApshnYAXOE7lT5bjE4c6C8x0pwmle8XYErulFWEg1cEPGKfoPzNCwgS4IOkK/pmrHJia2ozWJsftObfQmeo6Ll+v9V+mzzB3OrJmMgG/GEh6woBvU+YDa6KmFb6fwOM9Pdsrh4P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792393; c=relaxed/simple;
-	bh=ptQAyGgvvPkOSrZ56oW1L9KWbIZ2M/IQh/SRxXvg6lY=;
+	s=arc-20240116; t=1790792396; c=relaxed/simple;
+	bh=Pau6dnPg9xt0sNgob+6gY6phI5CR35ZO1OCajbhte4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FB+T3CmqHZuwH4FMN2EGToE0P0vLTuD9EzfEeLIN7piSpQCuPsjCscHtyAmWngEcKfahNHYYRzR2etK5Zgapiu6kMVxClyoVvtQRQSb2zh7CiGbqxB+ziqWk2ATbkSf89eLdgvIJ9GigBJdk5ARBW04IS00aHklbLCINykxtzpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuKb0Qgt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C+Q+nqqId3p/xZ2ml5rr+6NMS/qTK6cHHtb2FXQZogg2tJaNb/j/uPZSv48QAipShn8sYwrJglAZwWxWrXrR98F/mJ8tIRT95xhRtjBjtf7mkehiHzVzUg/44u7rJ/bGvF3Qs4o3AnaQISt/bYt6Zy2SY3YPp+ZoUYShIrU0D+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUXATnSJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuKb0Qgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F94A1F000FF;
-	Wed, 30 Sep 2026 18:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUXATnSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC85D1F000FF;
+	Wed, 30 Sep 2026 18:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792392;
-	bh=tkYeO45//uDl/e+llmz5ViVEuO8KeSPVtvCkDxnG4gA=;
+	s=korg; t=1790792395;
+	bh=+hlE9bszGPJHJrREwBoYN13io/v0gAaQ1KlYWkfLJpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FuKb0Qgtkx9AtnxQCoImky764DEioBmrz7noRGfrJg3hQCS404VH3EBxKbqORLX4h
-	 /J27Xdp0BmSRMCnYMqtCG4qOf1MqnvTcI7uYapp71s5wzCm4VuYgXxZTNy1/c/Y59C
-	 51MuuOEXgva/c80YF5mWElmCmbQblSgk9kefhAII=
+	b=gUXATnSJSJXEjIzlPfWWFhWFIVEJPnRNSpa6QLHFZbIlN/ViKij2bnXkEpXUCuiGD
+	 h7Ep2QnTh1eyU4CA7v5lMhWKQgfF3H8EgqAhhMF8GU5jB0nXPe+Gs+gKOD4ycwKluU
+	 3rfGNI1nOhmBcMXBU1wGMX37Kg0yQwN2mb6TYXqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Zaslonko <zaslonko@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 638/752] s390/debug: Fix NULL pointer dereference in debug_info_copy()
-Date: Wed, 30 Sep 2026 17:28:28 +0200
-Message-ID: <20260930152412.072959128@linuxfoundation.org>
+Subject: [PATCH 5.15 639/752] net: ethernet: ti: netcp: fix pm_runtime usage counter leak on error
+Date: Wed, 30 Sep 2026 17:28:29 +0200
+Message-ID: <20260930152412.093293841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,42 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Zaslonko <zaslonko@linux.ibm.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 012bfcd5a51082d5a65f096dfb9ca652b5267965 ]
+[ Upstream commit ac4334522e4ba4a3b6710dd5d4cc98092824b8ca ]
 
-When debug_register_static() fails, it clears areas, active_pages and
-active_entries but leaves the area bounds unchanged. Copying such an
-area, either by opening its view file or via debug_dump(), makes
-debug_info_copy() dereference the NULL pointers.
+pm_runtime_get_sync() leaves the runtime PM usage counter incremented even
+when it fails, but the error path in netcp_probe() does not call
+pm_runtime_put_noidle() to balance it, leaking a reference each time
+resume fails.
 
-Skip the copy loop when the source has no areas.
+Use pm_runtime_resume_and_get() instead, which automatically drops the
+usage counter on failure, fixing the leak.
 
-Closes: https://lore.kernel.org/r/20260903132123.12F271F00A3F@smtp.kernel.org
-Fixes: d72541f94512 ("s390/debug: add early tracing support")
-Signed-off-by: Mikhail Zaslonko <zaslonko@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 84640e27f230 ("net: netcp: Add Keystone NetCP core ethernet driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260918042804.13101-1-phucduc.bui@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/debug.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/netcp_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index 6b0fe0c0d94c4..3bdb177685d46 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -345,7 +345,8 @@ static debug_info_t *debug_info_copy(debug_info_t *in, int mode)
- 		debug_info_free(rc);
- 	} while (1);
+diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
+index 08c6cb16532e5..948b0ada5011f 100644
+--- a/drivers/net/ethernet/ti/netcp_core.c
++++ b/drivers/net/ethernet/ti/netcp_core.c
+@@ -2167,7 +2167,7 @@ static int netcp_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
--	if (mode == NO_AREAS)
-+	/* debug_register_static() failure leaves areas NULL, bounds intact */
-+	if (mode == NO_AREAS || !in->areas)
- 		goto out;
- 
- 	for (i = 0; i < in->nr_areas; i++) {
+ 	pm_runtime_enable(&pdev->dev);
+-	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to enable NETCP power-domain\n");
+ 		pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
