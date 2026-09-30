@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FEA51E456;
-	Wed, 30 Sep 2026 18:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797D351EE15;
+	Wed, 30 Sep 2026 18:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791424; cv=none; b=rWQ70Zxc8f0Jo507iKfOC6PfXFWqRSwKBVXO9Zr/X8p9XPqbZh8cFL98Kxr1ofR0KcGfheWiVJWgkdjYyF3+opOmmp9e9rhS53VxJNUOhb30Jf/dJB5tnkDH+ywz0ekAq2P1h3RP8TcMgt8FrZZCFhD9RAQY0hEfsKVQUJaQgzI=
+	t=1790791427; cv=none; b=cOnTF6miiQy5WHxy8wHWhHi6eHyZW//i6x1fIoV5S8wc6WlLe0hKLiv4rGzB8SDqEBKgtOzDJiYSngVjqbsliPjT9ABv7edlD3e8vsfXkcNqSCahjKs1h8HqOQn2lw7/C9PK2fnHqTOzXUajnUjDtT1ijVB982SSwSMSQfkhJ7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791424; c=relaxed/simple;
-	bh=/07a29Pb88P/LEjCPHTaAJqQjoG8kPOQtpvCQcJJtXQ=;
+	s=arc-20240116; t=1790791427; c=relaxed/simple;
+	bh=tkjq+Hpjrm9gnmOrLtRERenJBsBv2SmQQbhA41eLKBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZm5Azs6t0xlU4YnBOmSxi/rLwLfCuLUVO8oEraSn7DB26+5RMQGqMaw2BBgU+H1LOGWiimPCr+HjnA4Z3G463/nEokoN1Y79PEgpHuBcQbRmNs8iC76ER2qqkle/G2z81yIZ0oSEgI90pZI4mrAk3VEbVI2CjDWVkf/U+SQNNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpOrQthd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oULFSGT/8xVKcOqvjMBJEUOgpfKE7K0r9khXO6LDft4ztLKh/WzP8/cFMgmflDft+Gwj2BArmuQTC0r7Bet8RvTraOdtlKX8HXgQ6nm8NVXBhvzOGQmpNBbhuh2Wulj2qZ/BBVaRv9eCeGPj8K+AAB1TLQRq+dKCvokytgncDMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOaqB+sI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpOrQthd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980A51F000FF;
-	Wed, 30 Sep 2026 18:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOaqB+sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D461F000FF;
+	Wed, 30 Sep 2026 18:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791423;
-	bh=frJfvRjxwGIznNjY4l10vMvmaCI1t0wMGhUrtCBxW2o=;
+	s=korg; t=1790791426;
+	bh=Hvptnxy/WOMKVjyOTBqSiVEpT4pyjSMmE+GFspeTYZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hpOrQthd9z9uPmUrYIOlUBbIuOKB6L+s90eHYf0fEyQ3Y2E6Et0+WGW/PwIzWG3Vn
-	 f2htioieSvkHfVfgnRtkbSRwH8HUAhczjW4NQewm43yY191INDS1CXJ5IqZkpjT98Q
-	 KdcNuIpZPej8PmgM/wHBvb/M9ICL7nWEzuG2u64k=
+	b=aOaqB+sIy3YVgNlv8vK7BpU72CkM8BUimbTZdyFqQy63La2LkMSlR6cqWq6EoY9zl
+	 RWoo4ugZuEfRSsItz9VvXhWSgxcvMuNh4uF4bNzFqs99srGxGHnlQLQMlV6IoKPlyq
+	 B55L2ITW42y4s5vdzRFYDxBOLK9MSrUackyoQMy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/752] net/rds: dont let rds_conn_shutdown() consume a concurrent drop
-Date: Wed, 30 Sep 2026 17:22:47 +0200
-Message-ID: <20260930152404.716838428@linuxfoundation.org>
+Subject: [PATCH 5.15 298/752] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
+Date: Wed, 30 Sep 2026 17:22:48 +0200
+Message-ID: <20260930152404.737944729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,158 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 260c6308fe2e19ad519389d44d582e292aecc3af ]
+[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
 
-rds_conn_shutdown() finishes by moving the path from
-RDS_CONN_DISCONNECTING to RDS_CONN_DOWN, and also accepts
-RDS_CONN_ERROR as the starting state of that final transition, so that
-a FIN processed in softirq context during the teardown does not derail
-the shutdown into a noisy error path.
+The core software reset issued in stmmac_init_dma_engine() during
+ndo_open() callback clears the MTL RX packet parser registers, but
+stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
+After an ifdown/ifup cycle the hardware therefore runs with the default
+all-pass table while priv->tc_entries still reports the filters as
+installed. Re-apply the RX packet parser table from priv->tc_entries in
+stmmac_hw_setup(), right after the software reset, so the filters are
+restored when the interface is brought up again.
 
-But consuming that RDS_CONN_ERROR also consumes the shutdown pass that
-came with it: rds_conn_path_drop() sets RDS_CONN_ERROR and then queues
-cp_down_w, and a pass that starts on a path already in RDS_CONN_DOWN
-is a no-op.  For the FIN case that is harmless - the socket the FIN
-arrived on is the very socket the teardown just released.  It is not
-harmless for a dropper that attached something to the path first.
-
-rds_tcp_accept_one() is such a dropper.  Its path claim in
-rds_tcp_accept_one_path() transitions RDS_CONN_DOWN ->
-RDS_CONN_CONNECTING, and a concurrent drop - a FIN on a previous
-socket in softirq context, an administrative reset - can put the path
-into RDS_CONN_ERROR between that claim and the state check that
-follows, which accepts RDS_CONN_ERROR.  The accept then installs the
-freshly accepted socket with rds_tcp_set_callbacks() while the queued
-teardown - which sampled tc->t_sock before this socket existed - is
-still running.  rds_connect_path_complete() fails its transition to
-RDS_CONN_UP and drops the path again, queueing the pass that should
-reap the socket it just installed.  If the in-flight shutdown's final
-transition consumes that drop's RDS_CONN_ERROR, the queued pass finds
-the path in RDS_CONN_DOWN and does nothing.  The installed socket is
-never torn down: it sits established with its callbacks armed and its
-rds_tcp_connection on rds_tcp_tc_list, the peer sees a connection that
-nothing ever reads, and the path is wedged in RDS_CONN_DOWN until some
-later event drops it again.  Reproduced with widened race windows as
-an ever-growing receive queue on a socket owned by a path stuck in
-RDS_CONN_DOWN, with the peer's send path wedged behind it.
-
-Make the final transition only DISCONNECTING -> DOWN.  If it fails
-because the path is in RDS_CONN_ERROR, a drop raced the teardown:
-cancel the reconnect timer and clear RDS_RECONNECT_PENDING - the one
-piece of the skipped tail that must not be left behind - and return,
-letting the pass the drop queued finish the job: it tears down
-whatever attached to the path in the meantime, completes the
-transition to RDS_CONN_DOWN, and re-arms the reconnect from its own
-tail.
-
-The timer quiesce in that branch matters because the racing drop does
-not always queue that pass: rds_conn_path_drop() returns without
-queueing when a destroy is pending - exactly the situation during a
-netns teardown or module unload, when a FIN on the dying socket is
-processed while rds_conn_path_destroy() flushes cp_down_w.  If the
-flushed pass is the one that takes this return, no later pass exists,
-and rds_conn_path_destroy() would find cp_conn_w still armed
-(WARN_ON) and then free a path whose reconnect timer can still fire.
-With the cancel in the branch, every exit of a shutdown pass leaves
-the timer quiesced no matter which pass completes the transition.
-
-The FIN case keeps making progress, one pass later and still without
-noisy logging.  Any other state keeps today's rds_conn_path_error()
-handling; no current cp_state writer can leave a DISCONNECTING path
-in anything but RDS_CONN_ERROR (every other writer is a cmpxchg from
-a non-DISCONNECTING state), so that branch is defensive.
-
-On kernels without the preceding patches the same hazard exists with
-the sample-based quiesce; the fix applies there equally.
-
-Fixes: e97656d03ca0 ("rds: tcp: allow progress of rds_conn_shutdown if the rds_connection is marked ERROR by an intervening FIN")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-8-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 43 ++++++++++++++++++++++++++++++++-----------
- net/rds/tcp.c        |  9 ++++++---
- 2 files changed, 38 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index 0a0542378f178..a273af94df2dd 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -433,19 +433,40 @@ void rds_conn_shutdown(struct rds_conn_path *cp)
- 		wake_up_all(&cp->cp_waitq);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index c9dda6cc2fa7a..496889d498832 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3317,6 +3317,14 @@ static int stmmac_hw_setup(struct net_device *dev, bool ptp_register)
+ 	/* Initialize MTL*/
+ 	stmmac_mtl_configuration(priv);
  
- 		if (!rds_conn_path_transition(cp, RDS_CONN_DISCONNECTING,
--					      RDS_CONN_DOWN) &&
--		    !rds_conn_path_transition(cp, RDS_CONN_ERROR,
- 					      RDS_CONN_DOWN)) {
--			/* This can happen - eg when we're in the middle of tearing
--			 * down the connection, and someone unloads the rds module.
--			 * Quite reproducible with loopback connections.
--			 * Mostly harmless.
-+			/* The path was dropped again while we tore it
-+			 * down: by a socket state-change callback in
-+			 * irq context on receipt of a FIN, or by an
-+			 * accept that claimed the path just before a
-+			 * drop put it back to RDS_CONN_ERROR and then
-+			 * installed a fresh socket on it.  Unless a
-+			 * pending destroy suppressed it, the drop also
-+			 * queued another shutdown pass, and that pass
-+			 * must run, because it is what tears down
-+			 * whatever attached to the path after the
-+			 * transport shutdown above sampled its state.
-+			 * Consuming the RDS_CONN_ERROR here would turn
-+			 * that pass into a no-op: leave the state
-+			 * alone, and let the pass finish the job.
- 			 *
--			 * Note that this also happens with rds-tcp because
--			 * we could have triggered rds_conn_path_drop in irq
--			 * mode from rds_tcp_state change on the receipt of
--			 * a FIN, thus we need to recheck for RDS_CONN_ERROR
--			 * here.
-+			 * Quiesce the reconnect timer before bailing
-+			 * out, though.  When a pending destroy did
-+			 * suppress the queue, no later pass runs, and
-+			 * rds_conn_path_destroy() is about to flush
-+			 * cp_down_w and free the path: it must not
-+			 * find cp_conn_w still armed.  A successor
-+			 * pass, when there is one, re-arms the
-+			 * reconnect from its own tail.
-+			 */
-+			cancel_delayed_work_sync(&cp->cp_conn_w);
-+			clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
++	/* Apply the RX packet parser table */
++	if (priv->tc_entries) {
++		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
++					priv->tc_entries_max);
++		if (ret)
++			return ret;
++	}
 +
-+			if (rds_conn_path_state(cp) == RDS_CONN_ERROR)
-+				return;
-+			/* No current cp_state writer leaves a
-+			 * DISCONNECTING path in any state but
-+			 * RDS_CONN_ERROR; report loudly if one ever
-+			 * does.
- 			 */
- 			rds_conn_path_error(cp, "%s: failed to transition "
- 					    "to state DOWN, current state "
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 175ff22d8b4c7..fba2c7a2210ba 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -164,9 +164,12 @@ void rds_tcp_reset_callbacks(struct socket *sock,
- 	 * other state - typically RDS_CONN_DISCONNECTING or
- 	 * RDS_CONN_ERROR with a shutdown in flight - is dropped
- 	 * instead.  That still replaces its state, with RDS_CONN_ERROR,
--	 * and queues one more shutdown pass, but rds_conn_shutdown()
--	 * accepts RDS_CONN_ERROR in its final transition to
--	 * RDS_CONN_DOWN, so the shutdown in flight completes normally.
-+	 * and, unless a pending destroy is about to reap the whole
-+	 * connection anyway, queues one more shutdown pass.  A shutdown
-+	 * already in flight leaves that RDS_CONN_ERROR alone when it
-+	 * finishes; the queued pass then completes the transition to
-+	 * RDS_CONN_DOWN and tears down anything that attached to the
-+	 * path in the meantime.
- 	 */
- 	if (!rds_conn_path_transition(cp, RDS_CONN_CONNECTING,
- 				      RDS_CONN_RESETTING) &&
+ 	/* Initialize Safety Features */
+ 	stmmac_safety_feat_configuration(priv);
+ 
 -- 
 2.53.0
 
