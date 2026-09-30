@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718553BE642;
-	Wed, 30 Sep 2026 18:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C58E46C4CC;
+	Wed, 30 Sep 2026 18:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793470; cv=none; b=ZnyUhpEnUOHCwkgwuYd7M5/qzS82CAa00SGPII+r2TfI6ifDYSVa+Ixtywfum0h86cARzMMPPrcX1fxvVKHG/n2U3w9mv0P1WT+ACm0pK7dRGFbcKms5rqsq6KYYJM2Qis6JMcQZ0HuQ869rWf/fAAIN3O8CyylmL6PGPM6a0t4=
+	t=1790793473; cv=none; b=SeCr9JRtgt9prgUgv0AH+4iUAfsgMShPTkPODvX3eZtS2Vi5+xHDtb9cTugZMrTLfDA9BptxrtFKB2u20kPIWXXe2UCot8P6QfIe4nymuiN2z+UHdzrp6JBAvyZWldOh1RwkzKiYrfd/yYd3jaoSNAOB18gpFAR7bZay3jYFXuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793470; c=relaxed/simple;
-	bh=rXKyIAl+tcyszmF65VXmOfIGimJEL6R+jKxs5OEpAts=;
+	s=arc-20240116; t=1790793473; c=relaxed/simple;
+	bh=kl0JtVQNvgBVKZ90dguvXbng2tt/tYjNWDtbD4xZ4hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQuZzr7BSVJmvuMa037YxglK+bhSToTvssakZjSXMJo5XE0IXUKStKhogdxrj/sMTewpJhJt6OwKCRcl0WIJuQWmLM/9qGyrv3Jn7r6fXVjwpn6FibwESeMs78u4AvXX8t3GWXwQvpT1gJmsZqxEDJQ6EtvT/8ku9oK1zz0hBYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmZWqSra; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I3yqLaEVpMn9qZxnpBvqutgjKg+42/+fi3N6AI5jyPlDWI/7sI/fQGvowxbKGJY0Bz9hCh/RfK9v34W3Qehn8mHtjJyB83MFteqbg3uH2Bu6N4dJHFZDYCgXzSe4sMlUUmanuM/wVaByZ/VrQl+7VodTGcKCUBTIzHSyCCOZE8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Vb8IAdL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmZWqSra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF6A1F000FF;
-	Wed, 30 Sep 2026 18:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Vb8IAdL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A631E1F000FF;
+	Wed, 30 Sep 2026 18:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793469;
-	bh=83kSPCZq8ViKJNxCnKuUBq+cVP0R1kmqrCWpi22Cgso=;
+	s=korg; t=1790793472;
+	bh=voPYZS/s+NtcAob8NH2eIc11VoS+f5vXkwEhuVCQ8uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qmZWqSra6TRQBmBVxbdgEPVkBowIy1nvp0gmvfcYv+vFtgLwf7Uz8q63eYfJ3B73W
-	 q8ANcASV2uEjvSY7smgQ6G14iSnnGkv6T5F4J300DhNlQLQvgkFFg1XofYXyCsskVk
-	 NYPGlkXqt5ElCWoUHfMjie31KLC7hGkW3KcfKaEs=
+	b=0Vb8IAdL4pF9YhblsDwoZNCKxdsrNwr7BJ1tENDV45ke0C7H9zsl4lqbYOhmXNhVB
+	 u3eikqYcrim49nsdcMC6NHmDnrOvrlAyzFisBzSs6F8R+bgNNUnRFv6iW9tfeuCAkF
+	 YTToSvGkJwRCLYi/WWJb3vH2f/MfBU9FOkO8I2iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 6.18 264/395] mm/damon/vaddr: avoid hw-driven pte updates during damon_hugetlb_mkold()
-Date: Wed, 30 Sep 2026 17:28:46 +0200
-Message-ID: <20260930152346.382571095@linuxfoundation.org>
+	Angel J <iamanaws@httpd.dev>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.18 265/395] PCI: of_property: Omit bus properties without a subordinate bus
+Date: Wed, 30 Sep 2026 17:28:47 +0200
+Message-ID: <20260930152346.403906320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,79 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Angel J <iamanaws@httpd.dev>
 
-commit 39c0ceedd54557bdc1542de08d22b2ed33e534e4 upstream.
+commit 8805840aad73df7146778be243a196d48b4f6430 upstream.
 
-damon_hugetlb_mkold() reads the page table entry into a local variable,
-unsets the accessed bit in the variable, and updates the page table entry
-with the updated variable value.  If hardware updates the same page table
-entry in parallel, the hw updates could be lost.  For example,
-hardware-updated dirty bits might be lost.
+A bridge (a device with a Type 1 header) may not have a secondary bus
+allocated (pdev->subordinate), e.g., if there are no available bus numbers
+or the bridge secondary/subordinate bus numbers are not writable.
 
-Avoid the parallel updates by clearing the page table entry when reading
-it together, using huge_ptep_get_and_clear().  If a parallel write to the
-memory is made after the clearing, the hw will see the page table entry is
-cleared, trigger page fault and wait until it is handled.  The page fault
-handling will wait for damon_hugetlb_mkold() due to the page table lock.
+The dynamic OF helpers of_pci_prop_bus_range() and of_pci_prop_intr_map()
+dereference pdev->subordinate without checking it.  When
+CONFIG_PCI_DYNAMIC_OF_NODES is enabled, this can cause a NULL pointer
+dereference and early boot hang.
 
-Because hugetlbfs is an in-memory file system and hugetlb pages cannot be
-reclaimed, no critical issue is expected to my best knowledge.  But
-definitely this is a nasty bug that should be fixed sooner rather than
-later.
+Generate 'bus-range' and 'interrupt-map' properties only when a subordinate
+bus exists.  Keep the node and its remaining properties for bridges without
+one.
 
-The issue was discovered [1] by Sashiko.
+The problem was latent since 407d1a51921e ("PCI: Create device tree node
+for bridge"), but wasn't reachable until 1f340724419e ("PCI: of: Create
+device tree PCI host bridge node"), which appeared in v6.15.  Before
+1f340724419e, of_pci_make_dev_node() returned early because the parent OF
+node was missing.
 
-Link: https://lore.kernel.org/20260907170358.100168-1-sj@kernel.org
-Link: https://lore.kernel.org/20260830160545.98969-1-sj@kernel.org [1]
-Fixes: 49f4203aae06 ("mm/damon: add access checking for hugetlb pages")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org> # 5.17.x
+Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
+Signed-off-by: Angel J <iamanaws@httpd.dev>
+[bhelgaas: move pdev->subordinate test to callees, commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v6.6+
+Link: https://patch.msgid.link/20260918195540.GA1187209@bhelgaas
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/vaddr.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/pci/of_property.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -339,22 +339,29 @@ out:
- }
- 
- #ifdef CONFIG_HUGETLB_PAGE
-+static bool damon_hugetlb_ptep_mkold(pte_t *pte, struct mm_struct *mm,
-+		struct vm_area_struct *vma, unsigned long addr, pte_t *entry)
-+{
-+	unsigned long psize = huge_page_size(hstate_vma(vma));
-+
-+	if (!pte_young(*entry))
-+		return false;
-+	*entry = huge_ptep_get_and_clear(mm, addr, pte, psize);
-+	*entry = pte_mkold(*entry);
-+	set_huge_pte_at(mm, addr, pte, *entry, psize);
-+	return true;
-+}
-+
- static void damon_hugetlb_mkold(pte_t *pte, struct mm_struct *mm,
- 				struct vm_area_struct *vma, unsigned long addr)
+--- a/drivers/pci/of_property.c
++++ b/drivers/pci/of_property.c
+@@ -95,9 +95,13 @@ static int of_pci_prop_bus_range(struct
+ 				 struct of_changeset *ocs,
+ 				 struct device_node *np)
  {
- 	bool referenced = false;
- 	pte_t entry = huge_ptep_get(mm, addr, pte);
- 	struct folio *folio = pfn_folio(pte_pfn(entry));
--	unsigned long psize = huge_page_size(hstate_vma(vma));
+-	u32 bus_range[] = { pdev->subordinate->busn_res.start,
+-			    pdev->subordinate->busn_res.end };
++	u32 bus_range[2];
  
- 	folio_get(folio);
++	if (!pdev->subordinate)
++		return 0;
++
++	bus_range[0] = pdev->subordinate->busn_res.start;
++	bus_range[1] = pdev->subordinate->busn_res.end;
+ 	return of_changeset_add_prop_u32_array(ocs, np, "bus-range", bus_range,
+ 					       ARRAY_SIZE(bus_range));
+ }
+@@ -220,6 +224,9 @@ static int of_pci_prop_intr_map(struct p
+ 	int ret;
+ 	u8 pin;
  
--	if (pte_young(entry)) {
--		referenced = true;
--		entry = pte_mkold(entry);
--		set_huge_pte_at(mm, addr, pte, entry, psize);
--	}
--
-+	referenced = damon_hugetlb_ptep_mkold(pte, mm, vma, addr, &entry);
- 	if (mmu_notifier_clear_young(mm, addr,
- 				     addr + huge_page_size(hstate_vma(vma))))
- 		referenced = true;
++	if (!pdev->subordinate)
++		return 0;
++
+ 	pnode = pci_device_to_OF_node(pdev->bus->self);
+ 	if (!pnode)
+ 		pnode = pci_bus_to_OF_node(pdev->bus);
 
 
