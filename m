@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC023CA481;
-	Wed, 30 Sep 2026 19:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A493C8728;
+	Wed, 30 Sep 2026 19:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795406; cv=none; b=JadDL+fiihgLiGEjT34XJAReOY37XMTc7tceWJPRYOO4QM+KhxkVLDKsIeL1bk5vyi6l+8lM/cN0WS7y8g7WYMiZEwWDlsO5j0zcpgXKQPbQqMlO4lU4rsWxvhTEgGjfcLrQ6c0HliGrpBvlfnv18Ya1LloX+bPc/y6D6Cyh5LA=
+	t=1790795408; cv=none; b=lQD/hMyIKC4BGJMFm9JISiSgIs8LPNw6q0cskx6bNjjUfzj5MFsjjghB3myugkPWe0z1TO+0y+xOgv7kKK7J0bJ4xVqG0G7/2LzVdCEA5SXzl+NAwp+ygIhXTjw27PZ5qx6BUlQejPVRQKreesPBppYx7YzseeYSbiiUTcnlU5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795406; c=relaxed/simple;
-	bh=ycWE/b3HaS2TwS1+YYXRTfsmheDB2K5cDNXAZXTZ5Xw=;
+	s=arc-20240116; t=1790795408; c=relaxed/simple;
+	bh=uoak8KW5gNTLnH1Nd+K+mHJkEH6p9MWNAKgAPLFvWqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGxRQg3rGbwnTeuCSD15F9ULByUBHHs9JcpIqyrHvLcz8KOM8qXuawNNpepdzsX4Lck4B3s5nP0uEe57q6zVhcrBu6aN2toMYUFhYvTpykjs72HAf4I1QQW+WyNQQSADFGnoYDJD2WlfCytPzbBCqDoczqA62lxH8u6fVByKEfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2yICJIQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTPTY7gMNSocCkLI6It8U+GFgsNrribW390aIN7sswJAugogPHTg3HZrbqr8Xj56NyW8T7gxd5JuBh5tDQtM55qM/J0YK1cZV64YzeadljzVWCkVBtNl12qNzgQv8Gi/obggJnp0RsTXCoOVIe80mJhRbNy4iph2D3051meEOJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNUNv1o6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2yICJIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490F11F000FF;
-	Wed, 30 Sep 2026 19:10:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNUNv1o6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D61E1F000FF;
+	Wed, 30 Sep 2026 19:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795404;
-	bh=97olkUKuWSwFCG3iaF/UmKyP08b+7D11GrT5Wn/Cbro=;
+	s=korg; t=1790795407;
+	bh=RCm/hMoGKCT+Mx82rpJ+UEULhHR1wv52VCHGadNevF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q2yICJIQGVduqkmfOLaxSQXSDaYNeiH77vmJHY+QaCCH+kARJl+xEymP+5Xw+wffa
-	 0PWTw0Ca5dahnJ9ZX8uET30CNvzf3Lt205GN74AR1tabhsNEuQs4jhQ07Bi2ncwxWP
-	 /WxbOsLtDGUAr82cd640OQ8T6vPMKuYJeEOKIbFA=
+	b=tNUNv1o6jucaH1lU5lPOMY2PBLkB7EQxfUB5F3cOFm0Y4t0C0N9mxm9D4lzcNEO/x
+	 Ss1ZcqTX4DguuGIyrXPU+tFRHaPie0YsVRITsUo90k0AKkHJRoXa6VzQpEY9Ezoo0f
+	 5dmaFrMQUj6GhIeDpAHNap7WTcTvOzI4JNFosVXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0549/1193] drm/logicvc: Drop the select of the nonexistent CONFIG_DRM_KMS_DMA_HELPER
-Date: Wed, 30 Sep 2026 17:20:33 +0200
-Message-ID: <20260930152446.433409919@linuxfoundation.org>
+Subject: [PATCH 6.6 0550/1193] ALSA: hda: Introduce auto cleanup macros for PM
+Date: Wed, 30 Sep 2026 17:20:34 +0200
+Message-ID: <20260930152446.455242029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,43 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f97802dd98b27e45c04293f9926f07642578b23f ]
+[ Upstream commit 5d8c9c987fbdd65677315198c2b1f35a440d7cdf ]
 
-CONFIG_DRM_KMS_CMA_HELPER was removed by commit 09717af7d13d ("drm:
-Remove CONFIG_DRM_KMS_CMA_HELPER option"). When commit 6bcfe8eaeef0
-("drm/fb: rename FB CMA helpers to FB DMA helpers") later renamed the
-select in this Kconfig to CONFIG_DRM_KMS_DMA_HELPER, no symbol of that
-name existed, and git log -S finds no Kconfig file that has defined one
-since. The select is silently ignored. The driver already selects
-CONFIG_DRM_GEM_DMA_HELPER, which is what it needs.
+The temporary power up/down of the codec via snd_hda_power_up() and
+_down() (or snd_hda_power_up_pm() and _down_pm()) is seen in various
+places.  This patch introduces simple auto-cleanup macros for those
+call patterns, so that the drivers don't have to call the
+corresponding power-down calls explicitly.
 
-Remove the dead line.
+Namely,
+	err = snd_hda_power_up(codec);
+	if (err < 0)
+		return err;
+	....
+	snd_power_down(codec);
 
-Fixes: 6bcfe8eaeef0 ("drm/fb: rename FB CMA helpers to FB DMA helpers")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260905080344.34077-1-kmehltretter@gmail.com
+can drop the *_down() call by replacing with
+	CLASS(snd_hda_power, pm)(codec);
+	if (pm.err < 0)
+		return pm.err;
+
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250827072916.31933-2-tiwai@suse.de
+Stable-dep-of: 728478874312 ("ALSA: hda: Report a change when only the channel status bytes move")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/logicvc/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ include/sound/hda_codec.h | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/gpu/drm/logicvc/Kconfig b/drivers/gpu/drm/logicvc/Kconfig
-index 1df22a852a23e..283dca51e4bdd 100644
---- a/drivers/gpu/drm/logicvc/Kconfig
-+++ b/drivers/gpu/drm/logicvc/Kconfig
-@@ -3,7 +3,6 @@ config DRM_LOGICVC
- 	depends on DRM
- 	depends on OF || COMPILE_TEST
- 	select DRM_KMS_HELPER
--	select DRM_KMS_DMA_HELPER
- 	select DRM_GEM_DMA_HELPER
- 	select REGMAP
- 	select REGMAP_MMIO
+diff --git a/include/sound/hda_codec.h b/include/sound/hda_codec.h
+index b58dc869cf77e..de9fdfe35447a 100644
+--- a/include/sound/hda_codec.h
++++ b/include/sound/hda_codec.h
+@@ -509,6 +509,36 @@ static inline bool hda_codec_need_resume(struct hda_codec *codec)
+ 	return !codec->relaxed_resume && codec->jacktbl.used;
+ }
+ 
++/*
++ * PM with auto-cleanup: call like CLASS(snd_hda_power, pm)(codec)
++ * If the error handling is needed, refer pm.err.
++ */
++struct __hda_power_obj {
++	struct hda_codec *codec;
++	int err;
++};
++
++static inline struct __hda_power_obj __snd_hda_power_up(struct hda_codec *codec)
++{
++	struct __hda_power_obj T = { .codec = codec };
++	T.err = snd_hda_power_up(codec);
++	return T;
++}
++
++static inline struct __hda_power_obj __snd_hda_power_up_pm(struct hda_codec *codec)
++{
++	struct __hda_power_obj T = { .codec = codec };
++	T.err = snd_hda_power_up_pm(codec);
++	return T;
++}
++
++DEFINE_CLASS(snd_hda_power, struct __hda_power_obj,
++	     snd_hda_power_down((_T).codec), __snd_hda_power_up(codec),
++	     struct hda_codec *codec)
++DEFINE_CLASS(snd_hda_power_pm, struct __hda_power_obj,
++	     snd_hda_power_down_pm((_T).codec), __snd_hda_power_up_pm(codec),
++	     struct hda_codec *codec)
++
+ #ifdef CONFIG_SND_HDA_PATCH_LOADER
+ /*
+  * patch firmware
 -- 
 2.53.0
 
