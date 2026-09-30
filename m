@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7B65013A9;
-	Wed, 30 Sep 2026 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C849503BF7;
+	Wed, 30 Sep 2026 16:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784105; cv=none; b=ShyG0K4trG8YbIrxZtzN1SAKVlS45j22tQLqUZZjeGQBU9+de+ssuFRmtAFYKxckb1TnDRYh/o6WZO3o8WMSCMrZWugGNqf7qOVUFHic4HmS7B4RIcfne/p0bBoIAvykfEBhbodJZzQ90VkGy9feHDAqlFU5vBjZYsnDGxm/Lgw=
+	t=1790784107; cv=none; b=bYPdvkpFjo59HKGxvA3ndABV2mvmH2P7si/rS30+erE+WVhVWpTJoFhuMGbRSpJfs3pzU14VH3ju0W4imSJqgBHKIz/xwPqT8Dfw+56w4lNzeZjoDrUE+GR93bwAHSGa1+/xyPNtczYQB/a+vby3hP0CVVMWp7f/3iVipV+RWBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784105; c=relaxed/simple;
-	bh=AwsdsWjo/5NdNZ/PMRPziSsu501V6nGNhKHZs5W3aLU=;
+	s=arc-20240116; t=1790784107; c=relaxed/simple;
+	bh=lkvJM3g1JD8OhmulrFysKDavs2gfCcz6mHo83QRSMis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WesbheVcIThd39LW7vbSF0XCUOpxWb/9PzqyoquBq/mSPK0edbiz/BCWt96nKvS2oUMoXo2aa5mVQN6WJiaQwj9uKbxnAkZ78O0lKNvIPk7ta8zuES8a9AtP0CP6CvjccOi+uAYFRXy2ct0f/yXaA7yvd2s92fFAqcTXPpy/8fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PkSpCPBO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elttEjwPtlsPDOWUYfvRkErXPU4jD2op2NwftlWz9pXZpCDieAb5uzDuVxAKf2Xnw2eH5dyvrJ+jKLTkDuHUTMWN/EQEQzznfibNRHsNVbVd7cSkQpHt+yA8C+lVgaOzsTmsSqaBcRe1tuz9YIjSiXmeS5l+VFP1x3249lga5Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suaBxwYj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PkSpCPBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6BB1F00899;
-	Wed, 30 Sep 2026 16:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suaBxwYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EC01F000FF;
+	Wed, 30 Sep 2026 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784099;
-	bh=nVHsFi/KQQiqPkFabqCS+aogjJ9c4ZwBaz1JRTmL5QE=;
+	s=korg; t=1790784102;
+	bh=hENNlrO+HylXRY4gSHHA5hZLuDEV1zHjkIWEHJoUlGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PkSpCPBORHCyou8I7k9zOXxSRXe49e1W6lTAa90Y9L5gxvTBUEiy0YK9NZhsO/rpl
-	 Ruow/xC6Jw1hd9V+KuSlggzi5FcdhTtkSHlWPUNHMRE3/44KCGc/sLc3dqNlG6rFUY
-	 LzY1AsuXFNULiwS7vRdNqw91tun4fbXq5eOZLZaU=
+	b=suaBxwYjiNWQ5RDp6jqenGqs0ppLaxNTA+Q6fUqOhIqw/oNZiwV+M84zsA+zbQf6/
+	 oDSe7GnPeyYyUeeRno81P7iMP1adSq4MqFGEADO61M4d0qj/Ldp+/E99vIXsuTFFOf
+	 CjPDNZZM1x+j2nmGhzxiIrctDOUYJ7dbUhv53Lq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Sophie D <patches@scd31.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/982] hfsplus: rework hfsplus_readdir() logic
-Date: Wed, 30 Sep 2026 17:12:53 +0200
-Message-ID: <20260930152417.593822822@linuxfoundation.org>
+Subject: [PATCH 6.1 038/982] drm/gud: Add RCade Display Adapter VID/PID pair
+Date: Wed, 30 Sep 2026 17:12:54 +0200
+Message-ID: <20260930152417.615558668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,219 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Sophie D <patches@scd31.com>
 
-[ Upstream commit 4b0496432844628ad05a5b1efce329a3340174d2 ]
+[ Upstream commit ac5ac0acf11df04295eb1811066097b7022d6c7f ]
 
-The xfstests' test-case generic/637 fails with error:
+The RCade Display Adapter is a hardware device that allows driving an
+Arcade CRT display via the GUD protocol. Currently it spoofs an
+existing GUD VID/PID pair. However, now that it has its own pair
+assigned, it makes sense to add this to the list of pairs that GUD
+supports natively.
 
-FSTYP -- hfsplus
-PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.15.0-rc4+ #8 SMP PREEMPT_DYNAMIC Thu May 1 16:43:22 PDT 2025
-MKFS_OPTIONS -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+More information can be found in the project repositories:
+https://gitlab.scd31.com/stephen/stm32-usb-vga-adapter-hardware
+https://gitlab.scd31.com/stephen/stm32-usb-vga-rcade-adapter
 
-QA output created by 637
-entries 7 and 8 have duplicate d_off 8
-Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
-
-Debugging of the hfsplus_readdir() logic showed this:
-
-hfsplus: hfsplus_readdir(): 163 ctx->pos 0
-hfsplus: hfsplus_readdir(): 189 ctx->pos 1
-hfsplus: hfsplus_readdir(): 264 ctx->pos 2, ino 18
-hfsplus: hfsplus_readdir(): 264 ctx->pos 3, ino 19
-hfsplus: hfsplus_readdir(): 264 ctx->pos 4, ino 28
-hfsplus: hfsplus_readdir(): 264 ctx->pos 5, ino 118
-hfsplus: hfsplus_readdir(): 264 ctx->pos 6, ino 29
-hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 30
-hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 31
-hfsplus: hfsplus_readdir(): 304 ctx->pos 8
-hfsplus: hfsplus_unlink():420 dir->i_ino 17, inode->i_ino 28
-hfsplus: hfsplus_readdir(): 141 ctx->pos 7
-hfsplus: hfsplus_readdir(): 264 ctx->pos 7, ino 31
-hfsplus: hfsplus_readdir(): 264 ctx->pos 8, ino 32
-hfsplus: hfsplus_readdir(): 264 ctx->pos 9, ino 33
-
-It means that hfsplus_readdir() stopped the processing of
-folder's items on ctx->pos 8, then, item with ino 28 has
-been deleted and hfsplus_readdir() re-started the logic
-from ctx->pos 7. As a result, previous and new sets of
-folder's items have overlapping values for the case of
-d_off 8.
-
-Currently, HFS+ has very complicated and fragile logic
-of rd->file->f_pos correction in hfsplus_delete_cat().
-This patch removes this logic and it stores the current
-pos into hfsplus_readdir_data. Finally, if rd->pos == ctx->pos
-then hfsplus_readdir() tries to find the position in
-b-tree's node by means of hfsplus_cat_key. This position is
-used to re-start the folder's content traversal.
-
-sudo ./check generic/637
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #44 SMP PREEMPT_DYNAMIC Mon May  4 15:58:45 PDT 2026
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/637  22s ...  22s
-Ran: generic/637
-Passed all 1 tests
-
-Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/198
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260505220051.2854696-2-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://pid.codes/1209/4FB3/
+Signed-off-by: Sophie D <patches@scd31.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260509025405.4143956-1-patches@scd31.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/catalog.c    | 11 -----------
- fs/hfsplus/dir.c        | 28 +++++++++++-----------------
- fs/hfsplus/hfsplus_fs.h |  5 +----
- fs/hfsplus/inode.c      |  2 --
- fs/hfsplus/super.c      |  2 --
- 5 files changed, 12 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/gud/gud_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/hfsplus/catalog.c b/fs/hfsplus/catalog.c
-index 9a82bdf4caf24..2db185c67b2c3 100644
---- a/fs/hfsplus/catalog.c
-+++ b/fs/hfsplus/catalog.c
-@@ -332,7 +332,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
- 	struct super_block *sb = dir->i_sb;
- 	struct hfs_find_data fd;
- 	struct hfsplus_fork_raw fork;
--	struct list_head *pos;
- 	int err, off;
- 	u16 type;
- 
-@@ -390,16 +389,6 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
- 		hfsplus_free_fork(sb, cnid, &fork, HFSPLUS_TYPE_RSRC);
- 	}
- 
--	/* we only need to take spinlock for exclusion with ->release() */
--	spin_lock(&HFSPLUS_I(dir)->open_dir_lock);
--	list_for_each(pos, &HFSPLUS_I(dir)->open_dir_list) {
--		struct hfsplus_readdir_data *rd =
--			list_entry(pos, struct hfsplus_readdir_data, list);
--		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
--			rd->file->f_pos--;
--	}
--	spin_unlock(&HFSPLUS_I(dir)->open_dir_lock);
--
- 	err = hfs_brec_remove(&fd);
- 	if (err)
- 		goto out;
-diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
-index 578da2528bee8..0d6f42d91e55e 100644
---- a/fs/hfsplus/dir.c
-+++ b/fs/hfsplus/dir.c
-@@ -185,7 +185,15 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 	}
- 	if (ctx->pos >= inode->i_size)
- 		goto out;
--	err = hfs_brec_goto(&fd, ctx->pos - 1);
-+	rd = file->private_data;
-+	if (rd && rd->pos == ctx->pos) {
-+		memcpy(fd.search_key, &rd->key, sizeof(struct hfsplus_cat_key));
-+		err = hfs_brec_find(&fd, hfs_find_rec_by_key);
-+		if (err == -ENOENT)
-+			err = hfs_brec_goto(&fd, 1);
-+	} else {
-+		err = hfs_brec_goto(&fd, ctx->pos - 1);
-+	}
- 	if (err)
- 		goto out;
- 	for (;;) {
-@@ -261,7 +269,6 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 		if (err)
- 			goto out;
- 	}
--	rd = file->private_data;
- 	if (!rd) {
- 		rd = kmalloc(sizeof(struct hfsplus_readdir_data), GFP_KERNEL);
- 		if (!rd) {
-@@ -269,15 +276,8 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 			goto out;
- 		}
- 		file->private_data = rd;
--		rd->file = file;
--		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
--		list_add(&rd->list, &HFSPLUS_I(inode)->open_dir_list);
--		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
- 	}
--	/*
--	 * Can be done after the list insertion; exclusion with
--	 * hfsplus_delete_cat() is provided by directory lock.
--	 */
-+	rd->pos = ctx->pos;
- 	memcpy(&rd->key, fd.key, sizeof(struct hfsplus_cat_key));
- out:
- 	kfree(strbuf);
-@@ -287,13 +287,7 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
- 
- static int hfsplus_dir_release(struct inode *inode, struct file *file)
- {
--	struct hfsplus_readdir_data *rd = file->private_data;
--	if (rd) {
--		spin_lock(&HFSPLUS_I(inode)->open_dir_lock);
--		list_del(&rd->list);
--		spin_unlock(&HFSPLUS_I(inode)->open_dir_lock);
--		kfree(rd);
--	}
-+	kfree(file->private_data);
- 	return 0;
- }
- 
-diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
-index 9192637ed739e..8c18b79c0056e 100644
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -246,8 +246,6 @@ struct hfsplus_inode_info {
- 	sector_t fs_blocks;
- 	u8 userflags;		/* BSD user file flags */
- 	u32 subfolders;		/* Subfolder count (HFSX only) */
--	struct list_head open_dir_list;
--	spinlock_t open_dir_lock;
- 	loff_t phys_size;
- 
- 	struct inode vfs_inode;
-@@ -297,8 +295,7 @@ struct hfs_find_data {
+diff --git a/drivers/gpu/drm/gud/gud_drv.c b/drivers/gpu/drm/gud/gud_drv.c
+index 8d1630b8edac1..2a382be27fd4c 100644
+--- a/drivers/gpu/drm/gud/gud_drv.c
++++ b/drivers/gpu/drm/gud/gud_drv.c
+@@ -668,6 +668,7 @@ static int gud_resume(struct usb_interface *intf)
+ static const struct usb_device_id gud_id_table[] = {
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1d50, 0x614d, USB_CLASS_VENDOR_SPEC) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x16d0, 0x10a9, USB_CLASS_VENDOR_SPEC) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1209, 0x4fb3, USB_CLASS_VENDOR_SPEC) },
+ 	{ }
  };
  
- struct hfsplus_readdir_data {
--	struct list_head list;
--	struct file *file;
-+	loff_t pos;
- 	struct hfsplus_cat_key key;
- };
- 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index caf36ed7f590a..a006db2699c4f 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -449,8 +449,6 @@ struct inode *hfsplus_new_inode(struct super_block *sb, struct inode *dir,
- 	inode->i_mtime = inode->i_atime = inode->i_ctime = current_time(inode);
- 
- 	hip = HFSPLUS_I(inode);
--	INIT_LIST_HEAD(&hip->open_dir_list);
--	spin_lock_init(&hip->open_dir_lock);
- 	mutex_init(&hip->extents_lock);
- 	atomic_set(&hip->opencnt, 0);
- 	hip->extent_state = 0;
-diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
-index 0d15e440d6869..1e4e5c3003de3 100644
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -90,8 +90,6 @@ struct inode *hfsplus_iget(struct super_block *sb, unsigned long ino)
- 	HFSPLUS_I(inode)->fs_blocks = 0;
- 	HFSPLUS_I(inode)->userflags = 0;
- 	HFSPLUS_I(inode)->subfolders = 0;
--	INIT_LIST_HEAD(&HFSPLUS_I(inode)->open_dir_list);
--	spin_lock_init(&HFSPLUS_I(inode)->open_dir_lock);
- 	HFSPLUS_I(inode)->phys_size = 0;
- 
- 	if (inode->i_ino >= HFSPLUS_FIRSTUSER_CNID ||
 -- 
 2.53.0
 
