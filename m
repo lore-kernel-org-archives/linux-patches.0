@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E866B51AFFB;
-	Wed, 30 Sep 2026 16:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F5151B188;
+	Wed, 30 Sep 2026 16:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784982; cv=none; b=ZXBLkq+RHow0GW3Q0ADTSvm/PN2DeyesfpYy4sdludwNalfIr8co01xDW3fhc2eZ2SfsMs71rBAz3ECE/xMq6Rj45YJWevw4vnB93KxRF3F/m/Iw6x0U/JuK/C2uMkZnf16SLX4LFj9Q1erC79sMLmO0x+kls/uoef7/qzQnrO0=
+	t=1790784986; cv=none; b=SQcw25P3CejkiSoAWq3qjK8Jd2VkQFeSaeIdoI72vXPLT6PhE9Haie6OVHCM3ytmJooBGLJQ7NWLj/Y6YpxYBS/bZUmvxlpksLea6DRn74llfXlrZww1Vn1K9naniWCctifF3eS9bfFqaXp4Jec4q0GPgdXFWURQDIqUP9rf33c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784982; c=relaxed/simple;
-	bh=r6m+I19PyDtaVLWliJLsFi7LXm5XleiynJh+JFehd4A=;
+	s=arc-20240116; t=1790784986; c=relaxed/simple;
+	bh=OffXtHFcTQ420UdORrMEfR//IwNWDjdk20GV85dY4IA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJSJsOj9YWD/kpMCJMkM8Wlu6U5HWRaAqCP4aHC+lLop5sWc62QV05ylvtnzGBexKoHOrKY88ZOWcLwbw0gcV08NmMhP9SKS4RbKheYlmkX4brDmgdPYhuRRTQJqOIMiV5SRmFN4MH6gk/swIGJGpRN7s/g/XYrWxU5c5H/Klnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHpkI+6h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f8g9I3WfI0+UXQliThUcmzXag0mJuf7H3N5ZUHvGPqqvltCh2ihpE0n+O//XjjzSnR3GCneevky412w+/Lj7zX7YYIaNJJ9dJtMbatRFEc75n0gbHhLzUOcsVOsNoAgL4u1q9I8l91Br7R/zyJ81i3Oyzg0ajOtScVfEGrbG0sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aq+gmQih; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHpkI+6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050EF1F00893;
-	Wed, 30 Sep 2026 16:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aq+gmQih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15811F000FF;
+	Wed, 30 Sep 2026 16:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784977;
-	bh=4vkyeh8cWS7cBPO14VjOU/FoazZreUk1FUGkViYrPck=;
+	s=korg; t=1790784980;
+	bh=N1aADv/RIAJze6bDqUZEc+BNTzIa0XOOmpge3TjiaBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHpkI+6hd/fbwragYOI1RFngClBZwNN20L1RQe/DsTn6iGr1H10/sRC5CXmleesnb
-	 Dp0/GvZ5wrp2gMbXtW/e2Rb+gTJpiYroYoHYMpUUA+FqQkaJcPPo+91ZeZfBjThzIm
-	 mylfLeDzGrZl5L3xkicWHpk25agk+jO45SYIFwyA=
+	b=Aq+gmQihAy0ngTvwcUGhKXnD5JRUyo367TRcPt6FQLgtEJy0r79nXQr/gHjL8z16h
+	 svb5qx9K11wEPakcpbgVWsRbAGW9/3yAtDt6+/vTfPfeLjObFCdVFgyNAeqTdz30Lz
+	 Il8G1cGG2oL2pyG1S+eE2txjE01VdBzimYDUvqq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Takashi Iwai <tiwai@suse.de>,
+	Cheryl Babcock <cheryl@renat.io>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 344/982] ALSA: pcm: Serialize PCM mmap with buffer reallocation to fix page UAF
-Date: Wed, 30 Sep 2026 17:18:00 +0200
-Message-ID: <20260930152424.205915865@linuxfoundation.org>
+Subject: [PATCH 6.1 345/982] ksmbd: rate limit unmapped SID errors
+Date: Wed, 30 Sep 2026 17:18:01 +0200
+Message-ID: <20260930152424.227119933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,105 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 9b110a9dcecc59516c77cb3c0caf1f492f75df2d ]
+[ Upstream commit feca5e70fc963b088377b20879e8cd8237c2fd7d ]
 
-snd_pcm_hw_params() and snd_pcm_hw_free() guard buffer reallocation
-with an mmap_count check performed under the PCM stream lock, but the
-lock is released long before the buffer is actually freed:
-snd_pcm_sync_stop(), constraint refinement and do_free_pages() all
-happen in between.  snd_pcm_mmap_data(), on the other hand, takes no
-lock at all: it validates against the old buffer's state and
-dma_bytes, remaps its pages into the VMA, and only then increments
-mmap_count.
+A client can include many structurally valid but unmapped SIDs in a DACL.
+Logging every mapping failure lets one request generate hundreds of kernel
+error messages.
 
-A concurrent mmap() can therefore slip in between the check and the
-free.  remap_pfn_range() installs writable PTEs for the old buffer's
-pages without taking page references, and the subsequent
-do_free_pages() returns those pages to the page allocator while the
-VMA still maps them.  This leaves a stale, writable mapping of freed
-pages: a page-level use-after-free that can be leveraged for local
-privilege escalation.
+Rate limit the message to prevent an authenticated client from flooding
+the kernel log.
 
-Make snd_pcm_mmap_data() participate in the buffer-access scheme
-introduced for hw_params/hw_free: acquire runtime->buffer_accessing
-before validating and remapping, and release it afterwards.  Buffer
-reallocation already fails with -EBUSY while accessors are active,
-and the mmap side now fails with -EBUSY while a reallocation is in
-progress, so the validate/remap sequence and the check/free sequence
-can no longer interleave.
-
-A reproducer that turns this race into a stale writable mapping of
-the freed DMA buffer pages is available on request.
-
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Fixes: 92ee3c60ec9f ("ALSA: pcm: Fix races among concurrent hw_params and hw_free calls")
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Link: https://patch.msgid.link/20260831045506.889070-1-yilinzhang@moonshot.ai
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Cheryl Babcock <cheryl@renat.io>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ fs/smb/server/smbacl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 87695490219e5..497521424ea71 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -3930,20 +3930,33 @@ int snd_pcm_mmap_data(struct snd_pcm_substream *substream, struct file *file,
- 			return -EINVAL;
- 	}
- 	runtime = substream->runtime;
--	if (runtime->state == SNDRV_PCM_STATE_OPEN)
--		return -EBADFD;
--	if (!(runtime->info & SNDRV_PCM_INFO_MMAP))
--		return -ENXIO;
-+	/* don't race with buffer reallocation in hw_params/hw_free */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
-+	if (runtime->state == SNDRV_PCM_STATE_OPEN) {
-+		err = -EBADFD;
-+		goto out;
-+	}
-+	if (!(runtime->info & SNDRV_PCM_INFO_MMAP)) {
-+		err = -ENXIO;
-+		goto out;
-+	}
- 	if (runtime->access == SNDRV_PCM_ACCESS_RW_INTERLEAVED ||
--	    runtime->access == SNDRV_PCM_ACCESS_RW_NONINTERLEAVED)
--		return -EINVAL;
-+	    runtime->access == SNDRV_PCM_ACCESS_RW_NONINTERLEAVED) {
-+		err = -EINVAL;
-+		goto out;
-+	}
- 	size = area->vm_end - area->vm_start;
- 	offset = area->vm_pgoff << PAGE_SHIFT;
- 	dma_bytes = PAGE_ALIGN(runtime->dma_bytes);
--	if ((size_t)size > dma_bytes)
--		return -EINVAL;
--	if (offset > dma_bytes - size)
--		return -EINVAL;
-+	if ((size_t)size > dma_bytes) {
-+		err = -EINVAL;
-+		goto out;
-+	}
-+	if (offset > dma_bytes - size) {
-+		err = -EINVAL;
-+		goto out;
-+	}
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 7a0396db6f1d2..5cb020fc01050 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -516,8 +516,8 @@ static void parse_dacl(struct user_namespace *user_ns,
+ 			temp_fattr.cf_uid = INVALID_UID;
+ 			ret = sid_to_id(user_ns, &ppace[i]->sid, SIDOWNER, &temp_fattr);
+ 			if (ret || uid_eq(temp_fattr.cf_uid, INVALID_UID)) {
+-				pr_err("%s: Error %d mapping Owner SID to uid\n",
+-				       __func__, ret);
++				pr_err_ratelimited("%s: Error %d mapping Owner SID to uid\n",
++						   __func__, ret);
+ 				continue;
+ 			}
  
- 	area->vm_ops = &snd_pcm_vm_ops_data;
- 	area->vm_private_data = substream;
-@@ -3953,6 +3966,8 @@ int snd_pcm_mmap_data(struct snd_pcm_substream *substream, struct file *file,
- 		err = snd_pcm_lib_default_mmap(substream, area);
- 	if (!err)
- 		atomic_inc(&substream->mmap_count);
-+out:
-+	atomic_dec(&runtime->buffer_accessing);
- 	return err;
- }
- EXPORT_SYMBOL(snd_pcm_mmap_data);
 -- 
 2.53.0
 
