@@ -1,50 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3F323D7FF;
-	Wed, 30 Sep 2026 18:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAEF3AD539;
+	Wed, 30 Sep 2026 18:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793479; cv=none; b=JfJeB0qOTSm8ynvZo1uCNmxO0wALfzhm85zFqRFlo/ALnmXCQwrXOdJDq89MDGowP338voQ0sptII3qE6fNI43Kje6CJb1xo4j5vnRivJ5MKiRUVjFtXlfd0gGqvFTl4oFf4v39xxWt/B/w038kIXgZ57f21n6Y6/04YqbO3IIo=
+	t=1790793481; cv=none; b=q5X2ZsT7enJgt+D8moa0Lo665xuz4q6EJlHdI5mTX+CxNe5PbJQ79qyaboFGb7Inn2/JmDhbHFCKfMtYuY/0WsCtAy3sAp2aH3uL9MQsmnhHU4fMj3wRae+um+GZx10uKQqAkGrper1ha3R4byr1GtFiRUBaAninqbzI33q0xgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793479; c=relaxed/simple;
-	bh=28FEwjs86rHiYUeQy8s1vkNomZtPKwrxxw10KRmN5dE=;
+	s=arc-20240116; t=1790793481; c=relaxed/simple;
+	bh=MuxARrRBuqIzMNjVMq2kGENRP+aGoPEVlYXcrPfXqjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTBj3zL8npwJsQXtmPFIXfmP9qG5l2EfSXRSGlGu7Mj+OwuecnaJs21GlG+ldooWM4Z6eDvqiZtpT5uOFzUTSlVSw8WWQWxX6iyuwOvuL42//7kt0C5qHPNNEWruL5ipSVXS4cIICvm1iPNCiPPkxvUxSeLRjfJpy9yO6P2DzGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7Uhajjc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aJPieHaungC9krvwtrTgs9UzjZHcyH+hfiQK5hn9QZBMX9qycnoTSI0rA9dHLEUA8Hs2HhfrwsJO8FoNOgvJe2wtEd5DGyA79CtdX7dsAWbzdtiyM76uY2XV1hrzaAiHYuWRYTtAuauyIkoj/WLjgPvf5Qce48Xj2fdU8jnhj2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSvNT1wo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7Uhajjc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8C81F000FF;
-	Wed, 30 Sep 2026 18:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSvNT1wo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3378A1F00898;
+	Wed, 30 Sep 2026 18:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793477;
-	bh=E0x1RI18GCektQEQtW9pCOBPM5z4ER/JgioW6INBHQ4=;
+	s=korg; t=1790793480;
+	bh=etc/h06m+oda1XaeTFCcrYGsAaeCXydnHI1GFJLJpQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7Uhajjc2psWquI9RNv6SBFdOIJVvEEB8Y+rKGwbsfRdEKbUeCuL94vK0P1/3FxjT
-	 bYHu0o6idJPijS6QEyuesQeBZVOeKGBML/HA4PPVIuFPLIaHD7xKPA1VFp4sBjDyaM
-	 n953wIHF76+c91NBRf6cRJaRkitJnlcbYe64Rxqw=
+	b=cSvNT1woMOUzSVC/XI+G1juLBwQOsTqpin1JKBdNNhOwuhvk1CHNxOOFT+gYCHOTe
+	 yBlMhNxQ6jITvUKLOBhiiHyikH3/jUio1GdBLRXdVM7vwaMjhJfXNTwJOtF26g3hJr
+	 Aa1vQvx4WBvzrSss+3M8p4NqqdQFUxZX+ZA8ig38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Tejun Heo <tj@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dennis Zhou <dennis@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	"Paul E . McKenney" <paulmck@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>
-Subject: [PATCH 6.18 224/395] writeback: report a Tasks-RCU quiescent state per cgwb drain pass
-Date: Wed, 30 Sep 2026 17:28:06 +0200
-Message-ID: <20260930152345.520659288@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 225/395] fsl/fman: Fix clk reference leak in read_dts_node()
+Date: Wed, 30 Sep 2026 17:28:07 +0200
+Message-ID: <20260930152345.541547381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -63,73 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 407a5d205179a4ab186571b0e16ec42725dc77bc upstream.
+commit a644f09b2090ad22a13fbcf9d141084f573108ef upstream.
 
-cleanup_offline_cgwbs_workfn() drains a dying cgwb by calling
-cleanup_offline_cgwb() until it returns false, with a cond_resched()
-between passes.  On a CONFIG_PREEMPTION kernel that cond_resched() does
-nothing: _cond_resched() is a plain "return 0", and under PREEMPT_DYNAMIC
-the full and lazy modes disable it.  Since commit 7dadeaa6e851 ("sched:
-Further restrict the preemption modes") those are the only two models on
-the architectures with PREEMPT_LAZY support, arm64 and x86 among them, so
-the drain loop never reports a Tasks-RCU quiescent state.
+of_clk_get() returns a clock with its reference count incremented, but
+read_dts_node() only uses it to read the rate and never calls clk_put().
+The clock is not stored anywhere, so the reference cannot be released
+later either.
 
-A worker draining a cgwb with millions of attached inodes runs for
-minutes.  On a 6.18 arm64 host in lazy mode the cgwb worker drained one
-dying cgroup's writeback domain for over 11 minutes.  A BPF program unlink
-(bpf_trampoline_unlink_prog -> bpf_trampoline_update ->
-unregister_ftrace_direct -> ftrace_shutdown -> synchronize_rcu_tasks())
-waited on that grace period while holding the trampoline mutex, 42 tasks
-queued behind it in D state, and the hung task detector fired at 614 s and
-panicked the host.  Any BPF or ftrace detach during a long drain inherits
-the drain's length.
+Release the clock once its rate has been read, which also covers the
+error path taken when the rate is zero.
 
-Fix this by calling cond_resched_tasks_rcu_qs() so we do not stall out
-anybody who calls sycnrhonize_rcu_tasks().  We put this in a do { } while
-loop because if we have many small cgroups cleanup_offline_cgwb() will
-return false and we will never call cond_resched_tasks_rcu_qs(), creating
-the same problem.
-
-Link: https://lore.kernel.org/20260909-cgwb-tasks-rcu-qs-v1-1-967a7754771f@toxicpanda.com
-Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/bpf/9d444098-7c03-4163-af12-bd0a79a51443@paulmck-laptop/
-Assisted-by: LLM
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dennis Zhou <dennis@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: "Paul E . McKenney" <paulmck@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 414fd46e7762 ("fsl/fman: Add FMan support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260917110135.2148068-1-vulab@iscas.ac.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/backing-dev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/fman/fman.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/backing-dev.c
-+++ b/mm/backing-dev.c
-@@ -910,8 +910,9 @@ static void cleanup_offline_cgwbs_workfn
- 			continue;
+--- a/drivers/net/ethernet/freescale/fman/fman.c
++++ b/drivers/net/ethernet/freescale/fman/fman.c
+@@ -2734,6 +2734,7 @@ static struct fman *read_dts_node(struct
+ 	}
  
- 		spin_unlock_irq(&cgwb_lock);
--		while (cleanup_offline_cgwb(wb))
--			cond_resched();
-+		do {
-+			cond_resched_tasks_rcu_qs();
-+		} while (cleanup_offline_cgwb(wb));
- 		spin_lock_irq(&cgwb_lock);
- 
- 		wb_put(wb);
+ 	clk_rate = clk_get_rate(clk);
++	clk_put(clk);
+ 	if (!clk_rate) {
+ 		err = -EINVAL;
+ 		dev_err(&of_dev->dev, "%s: Failed to determine FM%d clock rate\n",
 
 
