@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9506136D4E1;
-	Wed, 30 Sep 2026 18:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614062D9484;
+	Wed, 30 Sep 2026 18:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792042; cv=none; b=WMu7ZNjeIZBGfuyg1rdH5jZdUbZQynjilCGNeNIEU/wPtMkEY/SituIwgK8tUSi7frvtqiYRv5A+TrO8yaLZ3CFVbEVgGiL0a+DLwYXlYsQjmXUwrL6M5aSG4rIax7uQLdN91VjUl2K4/klbmsOkSg00VYau7lHuMBo6H49WTH8=
+	t=1790792045; cv=none; b=cVSs/16oUK5iI3rNf5lMarMb722olI8lASt1pd4FhqDWJPHZ5uuXm3Zo83VvcU9NjxxE4YQTMyXSd8WSRPSo47YzVUL7NHJ7g1wCzXqmO2RdNzbt2fTynou5QywwZGjXAkdKxxa1jfOECOqqzXC9PCVziIYTPEkP/sDEPGWD3sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792042; c=relaxed/simple;
-	bh=+dkVMS1Hg5DgvCA0GvhHjRZZifXnbVyZ+ix9VtjJCSo=;
+	s=arc-20240116; t=1790792045; c=relaxed/simple;
+	bh=AC60K/O7u67GrBeYxFV21fR9I+vAGjMSE6DRTnvod7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BmtavvY1EdWkXIgByFV0IjZ47U7WcH+0uyXkQAeuwnX6fVMqd56NkDpQfolh2bE2lSIiupRjD2FQQbuz8CbJCJMExwF8KjiYwItDY4ZQZ1rDsRZqW/4hXltu5Xy1dzV3y7qpuv4BcfeyxIOARcCzKCcvTXORijs53MmwPodXomM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XA3tfFYQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=agT2aSzxh1aq87kqYqYqL0DNtQBQ1R2+6/djjctd4cEBx8cgAdNOMVcwnsbLZOroZj0rlkAa/4eAKb9OZW6I9YVR6HYeBUtIX5oXCw/oMSYXSwaiqF6PSGeBP/bXLlRz1V1UAqZhJEISEDNF/I4UipSMhgODmIoINqpDdjou/wY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJ5dG3aw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XA3tfFYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0341F000FF;
-	Wed, 30 Sep 2026 18:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJ5dG3aw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F861F000FF;
+	Wed, 30 Sep 2026 18:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792041;
-	bh=noiKusiPi+1ZVf+kNgx/N9Xmi1ZRSHKbHm6AqkS2V1M=;
+	s=korg; t=1790792044;
+	bh=D+AnqENgTDhTxk7bPoG/kjzR93/q7iDpTHDDOtr3CsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XA3tfFYQn7zNoEvGk8vNn6I0f45pIy8VTC8Wm6JfxfBnGiqTXssX+vTRm+8YLle2w
-	 BzMIVaGK6zZBq6eiSEKIEzWZGM1wqWugmOLYiyhZbGVZUEAud+VIhi1QS05mkWJXYC
-	 yNtVn/6OMzMp9JP++jAAXfy5iHlv4h3b12MPtESE=
+	b=jJ5dG3awwW35/b9NzWleI5xjiAqhRVzRvd//Eb/9c/ta/eyZofXQcQE3aqkgJlPS4
+	 aLDD1VHOTiizY7DNr6dnj7k6fpLBxFL8pLQrcZyQyP616YZQ8Bnpfh6K6ahe5e68H/
+	 4eqvT+iJeZJksqhEK9FOrw0M8x9I9cpk5z2xHqfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mariano Baragiola <mbaragiola@linux.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 460/752] wifi: virt_wifi: free skb when disconnected
-Date: Wed, 30 Sep 2026 17:25:30 +0200
-Message-ID: <20260930152408.231177051@linuxfoundation.org>
+Subject: [PATCH 5.15 509/752] ASoC: hdmi-codec: Report a change when the channel status moves
+Date: Wed, 30 Sep 2026 17:26:19 +0200
+Message-ID: <20260930152409.271942797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,38 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mariano Baragiola <mbaragiola@linux.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit f9edf7cf63b96d2b776fca8d258d3c5256e40c8e ]
+[ Upstream commit c17ae8c26eac16ad244daef44044d714f68a2ddc ]
 
-When the simulated link is disconnected, virt_wifi_start_xmit() returns
-NET_XMIT_DROP without freeing the skb. dev_hard_start_xmit() treats this
-return value as consumed, so every packet sent while disconnected leaks its
-skb.
+The put() callback of "IEC958 Playback Default" stores all 24 channel
+status bytes and then returns 0. The core notifies userspace only on a
+positive return, so a write that changes what the get() callback hands
+back is never announced, and a mixer holding the control open keeps
+showing the old value.
 
-Free the skb before returning the drop status.
+Compare the stored bytes and return 1 when they move, the way
+snd_hda_spdif_default_put() does.
 
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Signed-off-by: Mariano Baragiola <mbaragiola@linux.com>
-Link: https://patch.msgid.link/20260809124947.3590270-1-mbaragiola@linux.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The same shape is in img-spdif-out and uniperif_player.
+
+No board with this codec was to hand. The change is a comparison of
+driver state with no hardware behaviour in it, and mixer-test counts the
+missing notification as event_missing.
+
+Fixes: 7a8e1d44211e ("ASoC: hdmi-codec: Add iec958 controls")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Link: https://patch.msgid.link/20260915092515.2638542-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virt_wifi.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/hdmi-codec.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
-index 4dca9827a4203..4302219d184d0 100644
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -430,6 +430,7 @@ static netdev_tx_t virt_wifi_start_xmit(struct sk_buff *skb,
- 	priv->tx_packets++;
- 	if (!priv->is_connected) {
- 		priv->tx_failed++;
-+		dev_kfree_skb_any(skb);
- 		return NET_XMIT_DROP;
- 	}
+diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
+index 5e326ae3b57ea..84b25dd9af31f 100644
+--- a/sound/soc/codecs/hdmi-codec.c
++++ b/sound/soc/codecs/hdmi-codec.c
+@@ -426,10 +426,14 @@ static int hdmi_codec_iec958_default_put(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
  
++	if (!memcmp(hcp->iec_status, ucontrol->value.iec958.status,
++		    sizeof(hcp->iec_status)))
++		return 0;
++
+ 	memcpy(hcp->iec_status, ucontrol->value.iec958.status,
+ 	       sizeof(hcp->iec_status));
+ 
+-	return 0;
++	return 1;
+ }
+ 
+ static int hdmi_codec_iec958_mask_get(struct snd_kcontrol *kcontrol,
 -- 
 2.53.0
 
