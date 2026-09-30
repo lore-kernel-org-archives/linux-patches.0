@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F455509F0D;
-	Wed, 30 Sep 2026 16:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140C74FB9C8;
+	Wed, 30 Sep 2026 16:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786697; cv=none; b=hvgoNACLEF9PZdJ0MAycc7JfsRWZJnnm3Y7SNzL+tfub87akYZ2TfADnyc62WMC4ym8Nhx1x1khkY15CFy/4K72fvxymH8jJuR71jbvanti7ceAzy4LXIohpuTCC8bXXPMhuC5L22eOL06werKx08GXxTY1SHgYsrpMpTedFWmc=
+	t=1790786700; cv=none; b=KAKYmJArHYEbRe3BuIcMX83/N4k/E8wNr0hlI+p7O6nvNrJCi5F+h6V+FtOS69i/FawO9J1ks68+ltEF/6IB6V+yq9ulW3TZDjENuLy55ycjZJd4PUnPZsQnZ/HScO1PnAq4REUVanRyU3cZbmmn2WDP2luHUqz5SXnylG01hx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786697; c=relaxed/simple;
-	bh=3iJ1+8lN5A5MG4lRUf0qzCTtPm/A1xKZGXQgvlC+KXE=;
+	s=arc-20240116; t=1790786700; c=relaxed/simple;
+	bh=bGnlVIBK2VDkqbbz2igQSYVivsUPd37ZNZAGsmHgU9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcCqcMkNLnHVtrUXM53qP7RL1EjC1ALwBgXxugbh5vl7g7zb6vDWtel8anqbhma/4TbiUnLIecpctCjJnBDpukDhvy1zFZqYqqD6DgJx03a5eyiiR4Q9Oe6HGPNEZkfaTZQl1UsWwViIXJcdTpF+TrusIfV4Y4/VKtWNfXCJ83Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hJx3Thx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DtznoYbJkIlN6tSxe5mc4XBxx9bBJREWpjxx9nwLJHwOwwWgG22vDFThZe/o0PyyNNW1VO2qJiiIuTqfVYOENrz+U32NWTIzbp2vjMO1B1yjwl5MBU69D+/EgGIAsUpF5kF8EZwr+DQJjkp3vhZ186ABd4cNw5nCWEiJusmO3AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgKpS0Eg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hJx3Thx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FE31F00893;
-	Wed, 30 Sep 2026 16:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgKpS0Eg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E42A1F000FF;
+	Wed, 30 Sep 2026 16:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786696;
-	bh=1I6D9dvXFlnIbwa22/5CGH+Md7AVPWQX1N0vQK/Fb6w=;
+	s=korg; t=1790786699;
+	bh=BB2P79rKjSG/hlRFPoTZwjPKH8s+u8KTpOQU3AIKOuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1hJx3ThxR8P90zCmyEDKefDGObWxx8m7g57rcnTJWetnAkZLI8ntUUA3pC9dr1UyA
-	 i9k0xt2ZLxICqCFsgJo+m/xYBIbkZy1yy/UcRgfZZ5oLBH3jGJe7aeJU7HV//ybTMZ
-	 51qN3/zMkKt/YuIgQnebM0BeyhGZDnvS3J7bDWI4=
+	b=mgKpS0Eg0hUqAFXSAq/E+l8GIpcs4ojW2NmExHGHsEIAutoeoU1ownERS4o4/WpRR
+	 kpXORGjWodziX1R6Bx0LcZ0omYnMDsMxtxmp11XBZmaLwYgt07V2f//JWwFqhQ/7D8
+	 J4GrShCA+4SYp6JRLrmb97tGLifwFJZDoi2aSdfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zijie Huang <milkory@outlook.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 953/982] net: arp: terminate device name before lookup
-Date: Wed, 30 Sep 2026 17:28:09 +0200
-Message-ID: <20260930152437.204056189@linuxfoundation.org>
+	=?UTF-8?q?Gajdos=20Tam=C3=A1s?= <tamas@rimpianto.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 954/982] net: atl1: fix soft lockup on out-of-range cmb_tpd_next_to_clean read
+Date: Wed, 30 Sep 2026 17:28:10 +0200
+Message-ID: <20260930152437.226156832@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -47,47 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijie Huang <milkory@outlook.com>
+From: Gajdos Tamás <tamas@rimpianto.com>
 
-commit d8b6529e80bcb4fb8177121404cbb3377acaebd2 upstream.
+commit 43e746821f5f5afbbf68e388bf9fbe221e03bfca upstream.
 
-The ARP ioctl copies a user-provided struct arpreq into a stack object. Its
-arp_dev field may contain IFNAMSIZ bytes without a NUL terminator.
+Same issue as atl1c (see the first commit in this series, "net:
+atl1c: fix soft lockup on out-of-range tpd_cons read"): the hardware
+can report an out-of-range cmb_tpd_next_to_clean (seen as 0xffff)
+while the PCIe link/MAC is resetting. An out-of-range value can
+never be reached and the loop below would spin forever. Treat it as
+"nothing new to clean" instead.
 
-Such input is passed to dev_get_by_name_rcu() or __dev_get_by_name(), where
-strcmp() can read past the end of the stack object when a matching
-alternative interface name exists.
-
-Terminate the field before the lookup to prevent the out-of-bounds read.
-
-Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
+Fixes: f3cc28c797604f ("Add Attansic L1 ethernet driver.")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zijie Huang <milkory@outlook.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/fabf02a70787d17299e4b3153eadffaf20d154b3.1789910973.git.milkory@outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gajdos Tamás <tamas@rimpianto.com>
+Link: https://patch.msgid.link/20260921091334.3571525-4-tamas@rimpianto.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/arp.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/atheros/atlx/atl1.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -1222,6 +1222,7 @@ int arp_ioctl(struct net *net, unsigned
- 		err = copy_from_user(&r, arg, sizeof(struct arpreq));
- 		if (err)
- 			return -EFAULT;
-+		r.arp_dev[IFNAMSIZ - 1] = '\0';
- 		break;
- 	default:
- 		return -EINVAL;
+--- a/drivers/net/ethernet/atheros/atlx/atl1.c
++++ b/drivers/net/ethernet/atheros/atlx/atl1.c
+@@ -2066,6 +2066,9 @@ static int atl1_intr_tx(struct atl1_adap
+ 	sw_tpd_next_to_clean = atomic_read(&tpd_ring->next_to_clean);
+ 	cmb_tpd_next_to_clean = le16_to_cpu(adapter->cmb.cmb->tpd_cons_idx);
+ 
++	if (unlikely(cmb_tpd_next_to_clean >= tpd_ring->count))
++		cmb_tpd_next_to_clean = sw_tpd_next_to_clean;
++
+ 	while (cmb_tpd_next_to_clean != sw_tpd_next_to_clean) {
+ 		buffer_info = &tpd_ring->buffer_info[sw_tpd_next_to_clean];
+ 		if (buffer_info->dma) {
 
 
