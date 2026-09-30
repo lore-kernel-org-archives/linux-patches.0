@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC1150C2A4;
-	Wed, 30 Sep 2026 17:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FD43750CF;
+	Wed, 30 Sep 2026 17:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788205; cv=none; b=gAbUa4mt75IqBa9Epatl3uhw0XIFJM7jDdNLb0ioJySJjQnofy/Gu1gefsW+GC1GKkeq6RSPWebHOVB1u50axBKP5uNuXVjEx/OlX29v6lYdc3MpjmWgq6H6qvFfvh++IwF2SFRGCW/QzfowNdhcQrtEztkR/xbC3W7DoTpp8l4=
+	t=1790788208; cv=none; b=eVw/+fxPixXLioiX1hMJkR8yb+bhlRlsusu98KYh3U62G00SSAdQ5TmdoLQtwVGFmFCWjwEu4C/IIjBZm5t3YopbVJXJMlWE+FKQDa597DHXyCtNf/460kRVrXx0kQj5YEZ3iRumX2ZBZ7S/zWRfDyUtbDFKhptp7ACFxAvBw1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788205; c=relaxed/simple;
-	bh=kQDYnRXV+8Q1KqJGQnWXWetmW6HSqdwPdL0E58uxsuI=;
+	s=arc-20240116; t=1790788208; c=relaxed/simple;
+	bh=BtEe/o98XrGRpJrHBu1PFpG2IgzxUpJQkQfWJDpRzWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8fIqqd847mmxLnJbNMa6AkRskQeYPe/m3EbffTQYhHIqyX6vpf5hfyzN6aE4vJj2+xkzUDjxoBVNfXgaD/w0xYf2m1Cy9up+IylO1m9klVUg3e77IAtfmhdK3SWevLEvkn9cY3S4avogQrg34tLx5pQLcgF9vibW8Bnu3GIjtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORG6XxXV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JDO7Hu3jjmOBtEqL0uecATmaJzAzaK7auI42adDPnYcovp1+W/wybgPvzvnqOCtRysxYQ+D2HLqC0V/sB86X45iD1u2XdpeRZtgT6t089H3etNw/dYSMO2T0SuH1QD0rW3w7yynQvePjp/eT/iehmC04Lv6BJfRCjDn0Qlh5KgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=la02holZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORG6XxXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACFA1F000FF;
-	Wed, 30 Sep 2026 17:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="la02holZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145FB1F000FF;
+	Wed, 30 Sep 2026 17:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788203;
-	bh=n+L9HGGPGtZAJKQHMl4H/EGvCmveiGHr3FrzZZUOmSM=;
+	s=korg; t=1790788206;
+	bh=MuB5gzJQMCZ3FSDyITWzSha4d+5sWTbI7pWJRwxLeLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ORG6XxXVAoBDs47DWXAOaQ+Ys1b6+PhaXkTesOgdcemcNLZVi86TrlkQQ5otTqW2q
-	 2jK89BMVmuo5ENsXNlBBuYJBBMBMfO8ICl6PXX82MfHLk2Kh/MERGo02Z2uGxc4Sxy
-	 Bsk/M56UKWB5oz42KiO6egwJGLBq92L97lE0Z/1g=
+	b=la02holZtJW2VMYtWTM8TgFwN0Apj3iime4aSmEygfxZb3WlAEyrbH6feQF5Duoq3
+	 1VGiUEKYYb1S2UNYouAaflwyMKzR8i8BPe3U5xX/F9rKg8okY9KKMpplXm8q8TzCZv
+	 vtrIthJORUaVCqBBvMnzCr9K3xV258vvBMyMcMOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Hao <flyingpeng@tencent.com>,
+	Shmulik Cohen <anuk909@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/877] wifi: mwifiex: fix IRQ leak using wrong index in MSI-X error path
-Date: Wed, 30 Sep 2026 17:15:53 +0200
-Message-ID: <20260930152415.654212470@linuxfoundation.org>
+Subject: [PATCH 6.12 043/877] wifi: libipw: reject too-short beacon and probe responses
+Date: Wed, 30 Sep 2026 17:15:54 +0200
+Message-ID: <20260930152415.676932963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,40 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Hao <flyingpenghao@gmail.com>
+From: Shmulik Cohen <anuk909@gmail.com>
 
-[ Upstream commit a3d722190cdef18da4878b5efc27c3c386dda248 ]
+[ Upstream commit 5ce5721e8cbe3e80db8f43851cc2a2a92485ef4b ]
 
-mwifiex_pcie_request_irq() registers each MSI-X vector with a per-index
-dev_id (&card->msix_ctx[i]). On a request_irq() failure the cleanup loop
-"for (j = 0; j < i; j++)" frees msix_entries[j].vector but passes the
-failed index's &card->msix_ctx[i] as the dev_id. free_irq() matches on
-(irq, dev_id), so it fails to find the action registered with
-&card->msix_ctx[j]: the already-requested IRQ j is not freed (leaked) and
-free_irq() warns about freeing a non-existent IRQ. Use &card->msix_ctx[j].
+libipw_process_probe_response() and the libipw_network_init() call it
+makes assume the frame contains the full 36-byte beacon and probe
+response prefix, but the ipw2100 and ipw2200 receive paths only
+establish that a management frame carries the generic 24-byte
+three-address header.
 
-Fixes: 99074fc1e67b ("mwifiex: enable pcie MSIx interrupt mode support")
-Signed-off-by: Peng Hao <flyingpeng@tencent.com>
-Link: https://patch.msgid.link/20260828111531.56723-1-flyingpeng@tencent.com
+libipw_network_init() then computes the information element length as
+
+	stats->len - sizeof(*beacon)
+
+stats->len is a u16 and sizeof() has type size_t, so the subtraction is
+evaluated as size_t and wraps instead of going negative.  Truncating
+that to the u16 length parameter of libipw_parse_info_param() yields
+65524 for a 24-byte beacon, and the parser then walks the receive
+buffer as if it held almost 64 KiB of information elements, reading
+past the allocation.
+
+Reject the frame before any fixed field is touched.
+
+Found by an AI-assisted review of length arithmetic in management frame
+parsers.  Verified with a KUnit case under Generic KASAN on arm64 under
+QEMU; I do not have the hardware, so it is not tested on a real device.
+
+Fixes: b453872c35cf ("[NET] ieee80211 subsystem")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Shmulik Cohen <anuk909@gmail.com>
+Link: https://patch.msgid.link/20260812190412.18333-2-anuk909@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/pcie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/ipw2x00/libipw_rx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/pcie.c b/drivers/net/wireless/marvell/mwifiex/pcie.c
-index 5f997becdbaa2..d36d431f53679 100644
---- a/drivers/net/wireless/marvell/mwifiex/pcie.c
-+++ b/drivers/net/wireless/marvell/mwifiex/pcie.c
-@@ -3068,7 +3068,7 @@ static int mwifiex_pcie_request_irq(struct mwifiex_adapter *adapter)
- 					    ret);
- 				for (j = 0; j < i; j++)
- 					free_irq(card->msix_entries[j].vector,
--						 &card->msix_ctx[i]);
-+						 &card->msix_ctx[j]);
- 				pci_disable_msix(pdev);
- 			} else {
- 				mwifiex_dbg(adapter, MSG, "MSIx enabled!");
+diff --git a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
+index 2220a9814c8a6..33f5dbe274c74 100644
+--- a/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
++++ b/drivers/net/wireless/intel/ipw2x00/libipw_rx.c
+@@ -1514,6 +1514,9 @@ static void libipw_process_probe_response(struct libipw_device
+ #endif
+ 	unsigned long flags;
+ 
++	if (stats->len < sizeof(*beacon))
++		return;
++
+ 	LIBIPW_DEBUG_SCAN("'%*pE' (%pM): %c%c%c%c %c%c%c%c-%c%c%c%c %c%c%c%c\n",
+ 		     info_element->len, info_element->data,
+ 		     beacon->header.addr3,
 -- 
 2.53.0
 
