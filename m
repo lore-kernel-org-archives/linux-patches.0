@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80895208C9;
-	Wed, 30 Sep 2026 17:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C7651AFF6;
+	Wed, 30 Sep 2026 17:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789186; cv=none; b=r+wyyhmrOFlALjDV4/1rVlU8jjFSGhJbjzfrOZAvCbBIymsYKvTcyNrNsqr0Rc//+nzlHaUWQBnlI1PW5xNkKBE92xmqoHIuKJpzflXWVZYl9R6BMle8KeVU6D2tYuSfNAh1eEI1Qmo8tpDi4DXMWWsfRmBwW5OJyV4lneN6xqk=
+	t=1790789188; cv=none; b=G1G/QndzOdHsabiVkYXxrtTnD/mr5jcqsnB7oet5UImAj7vAFu+I9xTx1JN24M0cJpsPe81a1ICfeDg9v9Bp6fIAD4YKJ6hwvbpXC36j8wNMGDkx/L5Kfr2An56RHpqSHJs9Hc/iC2X34Ocfz5KhkpJ6+i0lSlfmVPg8TMMD/q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789186; c=relaxed/simple;
-	bh=zENqPctALHpF5x1N1koeGDunLbJxyscODAyKFg9E/mo=;
+	s=arc-20240116; t=1790789188; c=relaxed/simple;
+	bh=Mc5JLrgD96pHsVvDiJoCnj8oefHjilZA+LiSdp8T2Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFMEMMxc88K1OT8r6T6BwNXVI6GeRJmcPfEWUWIph5gHm6pXurTygzZZUxp4JJHz3Wcda5BsNSbJlv7M7XK4IolvhIyF+FWRp4UYwcjo3eAvwZOqlEt2M65lnA8hFwvOWdVC79Ylr67MMu+uo0htlw3umoGkcR7C8iWUssByM54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CXrzjZB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sgm8gam6SICMX4Ngumd/uc+O8Pxr/57S9gSYRRPijvvEHF1+oBy0L4iCdQC6VeJU5fhUDs61ChgdjOqRl8LEZYLmHsdbKL4Vba19ghG4J0VaQFeU5xfGrQpoDhv8IYbzrPcozcMIRk7EasKHJsuAujkdFbBQO2EJDFTv7Kn95A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GK2L3u8O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CXrzjZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4B51F000FF;
-	Wed, 30 Sep 2026 17:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GK2L3u8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50031F000FF;
+	Wed, 30 Sep 2026 17:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789184;
-	bh=x9lk4vgkyGgeIuESDQgVR94EyCcDxYx9+Bs1TK6es7Q=;
+	s=korg; t=1790789187;
+	bh=/7Kxt99SLHJC1PBxTb8uU0kZmXV3NzAdqRuJYIqkPys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CXrzjZBwXKlkuAquPekW78BtaEXgGddpRL0zpFuHBU8UtqSzR87Ke0DB0BQcTblg
-	 1QxpUThTW1um2LEWH3DvFF+g3akw0xV4piHZ8EPahpJPNZBXUPfbsdVMeyfVHu9krk
-	 TPAMT9tPp0VN06YS9PI8cSLW5XmMAcep9FP7+0zw=
+	b=GK2L3u8OF6xF7nPadrT6sTxEKR2habb6qEHwkb9X6O1gnGXSZDNELUG7D+++TQsy7
+	 UxnBOzlTR3ZzIOYvtREAwHBu92mKUW4B+w8lvzgrbGk0YbKau2YpAug7sAk3Hnh+zL
+	 zpeEO4tucUggFvu5eFyLLFKvB4FRBSic31mxyM/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Coia Prant <coiaprant@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 387/877] genetlink: report the real command id for dump-only ops in policy dumps
-Date: Wed, 30 Sep 2026 17:21:38 +0200
-Message-ID: <20260930152423.034892692@linuxfoundation.org>
+Subject: [PATCH 6.12 388/877] net: pcs: xpcs: fix clock reference leak on xpcs_init_clks failure
+Date: Wed, 30 Sep 2026 17:21:39 +0200
+Message-ID: <20260930152423.055718973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,76 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Coia Prant <coiaprant@gmail.com>
 
-[ Upstream commit 261e8a37ecbaf462cdf9c336d2b2f5056088401a ]
+[ Upstream commit 9892d71cf0ce3ff3d4fed2d9a3968fd4feb1c918 ]
 
-The op-to-policy map a CTRL_CMD_GETPOLICY dump returns is the only way
-for userspace to find out which policy index belongs to which command.
-ctrl_dumppolicy_put_op() tags the nest with doit->cmd, but an op which
-only has a dumpit has no doit and every path which fills the split ops
-in zeroes it out, so those entries all claim to be command 0.  nlctrl's
-own CTRL_CMD_GETPOLICY and NETDEV_CMD_QSTATS_GET are both in that group:
+xpcs_init_clks() takes references with clk_bulk_get_optional() and then
+enables them with clk_bulk_prepare_enable(). If the enable step fails,
+the function returns without dropping the references.
 
-  [{'family-id': 16, 'op-policy': {'do': 0, 'dump': 0, 'op-id': 3}},
-   {'family-id': 16, 'op-policy': {'dump': 1, 'op-id': 0}},
+xpcs_create() handles the failure through out_free_data, which calls
+xpcs_free_data() but never xpcs_clear_clks(), so the clk references are
+leaked.
 
-ctrl_fill_info() gets this right - it uses the iterator's cmd for
-CTRL_ATTR_OP_ID - so the two introspection interfaces of the same family
-contradict each other today.
+Add the missing clk_bulk_put() on the enable failure path. The
+prepare/enable side is already rolled back by
+clk_bulk_prepare_enable() itself.
 
-Pass the command in rather than reconstructing it from
-doit->cmd | dumpit->cmd inside the helper, both callers already have it.
-
-Fixes: 26588edbef60 ("genetlink: support split policies in ctrl_dumppolicy_put_op()")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260918222949.4190284-1-kuba@kernel.org
+Fixes: f6bb3e9d98c2 ("net: pcs: xpcs: Add Synopsys DW xPCS platform device driver")
+Signed-off-by: Coia Prant <coiaprant@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260919172021.2336748-1-coiaprant@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/genetlink.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/pcs/pcs-xpcs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 3327d84518141..ecd5a0fd482a6 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1647,7 +1647,7 @@ static void *ctrl_dumppolicy_prep(struct sk_buff *skb,
+diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
+index 0152f820c1bbe..1a6576a116672 100644
+--- a/drivers/net/pcs/pcs-xpcs.c
++++ b/drivers/net/pcs/pcs-xpcs.c
+@@ -1393,8 +1393,10 @@ static int xpcs_init_clks(struct dw_xpcs *xpcs)
+ 		return dev_err_probe(dev, ret, "Failed to get clocks\n");
+ 
+ 	ret = clk_bulk_prepare_enable(DW_XPCS_NUM_CLKS, xpcs->clks);
+-	if (ret)
++	if (ret) {
++		clk_bulk_put(DW_XPCS_NUM_CLKS, xpcs->clks);
+ 		return dev_err_probe(dev, ret, "Failed to enable clocks\n");
++	}
+ 
+ 	return 0;
  }
- 
- static int ctrl_dumppolicy_put_op(struct sk_buff *skb,
--				  struct netlink_callback *cb,
-+				  struct netlink_callback *cb, u32 cmd,
- 				  struct genl_split_ops *doit,
- 				  struct genl_split_ops *dumpit)
- {
-@@ -1668,7 +1668,7 @@ static int ctrl_dumppolicy_put_op(struct sk_buff *skb,
- 	if (!nest_pol)
- 		goto err;
- 
--	nest_op = nla_nest_start(skb, doit->cmd);
-+	nest_op = nla_nest_start(skb, cmd);
- 	if (!nest_op)
- 		goto err;
- 
-@@ -1712,7 +1712,8 @@ static int ctrl_dumppolicy(struct sk_buff *skb, struct netlink_callback *cb)
- 						      &doit, &dumpit)))
- 				return -ENOENT;
- 
--			if (ctrl_dumppolicy_put_op(skb, cb, &doit, &dumpit))
-+			if (ctrl_dumppolicy_put_op(skb, cb, ctx->op,
-+						   &doit, &dumpit))
- 				return skb->len;
- 
- 			/* done with the per-op policy index list */
-@@ -1721,6 +1722,7 @@ static int ctrl_dumppolicy(struct sk_buff *skb, struct netlink_callback *cb)
- 
- 		while (ctx->dump_map) {
- 			if (ctrl_dumppolicy_put_op(skb, cb,
-+						   ctx->op_iter->cmd,
- 						   &ctx->op_iter->doit,
- 						   &ctx->op_iter->dumpit))
- 				return skb->len;
 -- 
 2.53.0
 
