@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23794F68A7;
-	Wed, 30 Sep 2026 15:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F902798F8;
+	Wed, 30 Sep 2026 15:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782808; cv=none; b=Ae7CCf9kGRFpQmoDAixJggK+IlL/zPKYUZ2Sw/IMcSd7BjEcelJNdHb/zvL5yvSdFoxy5KEsfdJBHLuGqWlI3y0cGA8D0ub08N6sQU8MOSa89g2GfxSvWx3VqFx6Dn/CYImThiIi/rynqV8D/yIxU4tDk4GuwgNLtjpI/luLs3E=
+	t=1790782812; cv=none; b=tyH9xiKhLn3GEblzrDqNEEp69XuaCSFDjfEcM5td/P3n/4fE4W4W0l4ENw1YSJbl58LQeT1uFtXxzgsyxK5qx2UYWKtSjoNm8YVOdYc2439mEJP3VH7//D34d+ZKqOw8VP0c2jl3nr1YmiC4OtGw0jaDwI0YQ/eMcYchxEuTYI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782808; c=relaxed/simple;
-	bh=v3qKhVq91mSaaT+rz4/kUPVrORHj/IkSIW4IrNuniB8=;
+	s=arc-20240116; t=1790782812; c=relaxed/simple;
+	bh=5R2xdsir/wMrN/5Ov8HkGM4zui6wDfyBX6M3qpq4Jrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I7zqswM/i4tciKOtGTO2zJeTekazUL/JQjBgNrOKNYinGBDQOVrLQly2uqMlUUPRw4+msLZQjI+4Kp2lhqhO26uOO0ZGgNElIHIIYR9enQ6gKLgLH4KxCr4JLgiasTJxGjFZb9rFKmGaOxumbRY0SutJZuIP2yxPw6bCSfpH7Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3npgKVY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YcoJ6fDjSYulYb2lswAKdMhhH8kSFRv5OMiMniw6eNBiCnO8MwnLpK4lUPPMy1vJKXTH6gP2shp6EJm9XGTaTxKL/RmyPfNloQ7NxxHi6LCWbr2dLuSanMnzodo1aPAkBJcD2i3Jg0cvftouIIxYMKLFTqjyJ9URRr7j761MlD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+7CQZGo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3npgKVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35D01F000FF;
-	Wed, 30 Sep 2026 15:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+7CQZGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2341F0089A;
+	Wed, 30 Sep 2026 15:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782803;
-	bh=UJyEvpSGBnWTmaiIDHu1rZKnDqFzzeX6W+3cijuecOY=;
+	s=korg; t=1790782809;
+	bh=UwFoPj50EGGIo0AqXKTJUHYpsfnoyE8IAqtIB97TTGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3npgKVYOplEO38PQUIby290o8yGM70NGv9r8hR0pQSYlkzRtRaQU996xhlhRQKkp
-	 VsaOZ0l+QEC0Qm97kx2vfDEpeLdnMe0uYbEKQF8rNZBVztA1QGMksj5O3YvMGK8k3+
-	 tzXgTwl/AhNN2bzNWa6SQyp0cQC1i0PLcLSq5TLE=
+	b=e+7CQZGovd3RtgDLIYItbhdAdLSkf9AVmgYho4tpY+xGlkUxbQYu0chS1NC9K0Bqo
+	 q48yQMH0nj/6jPEy67gw4xGcEyqWo0Dm8LNVnOZDECdwyIJ4KdPJkEoKquFoWqNY0E
+	 2UgVK6xc4wFL9jbH8o0xukZqI5gDLo9ss8ymE0Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 5.10 176/595] ice: pass the return value of skb_checksum_help()
-Date: Wed, 30 Sep 2026 17:21:09 +0200
-Message-ID: <20260930152351.525966592@linuxfoundation.org>
+	Li Qiang <liqiang01@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 178/595] cifs: validate idmap key payload length
+Date: Wed, 30 Sep 2026 17:21:11 +0200
+Message-ID: <20260930152351.569664913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,85 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 2d19302f628853742c4828381abbd668c1315598 ]
+[ Upstream commit 455488cd5054bcc59db40fa1cc2c004031a5b2a5 ]
 
-skb_checksum_help() can fail. Pass its return value back to the caller.
+The cifs.idmap key type stores its payload length in key->datalen, which
+is limited to U16_MAX.  Accepting a larger key payload truncates the
+recorded length and can make later users interpret the payload using
+inconsistent bounds.
 
-Commonize this software path in goto.
+Reject oversized preparsed payloads before allocating or copying them.
+This keeps key->datalen consistent with the stored data for both inline
+and separately allocated idmap payloads.
 
-Instead of just returning error try calculating software checksum first.
-There is a check for TSO in checksum_sw_fb.
-
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260717185340.3595286-4-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ fs/cifs/cifsacl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 7734264d570db..0d5568a36cdd9 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -1932,7 +1932,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 			ret = ipv6_skip_exthdr(skb, exthdr - skb->data,
- 					       &l4_proto, &frag_off);
- 			if (ret < 0)
--				return -1;
-+				goto checksum_sw_fb;
- 		}
+diff --git a/fs/cifs/cifsacl.c b/fs/cifs/cifsacl.c
+index c8a0a2edc6500..d7f08116c4d5f 100644
+--- a/fs/cifs/cifsacl.c
++++ b/fs/cifs/cifsacl.c
+@@ -76,6 +76,9 @@ cifs_idmap_key_instantiate(struct key *key, struct key_preparsed_payload *prep)
+ {
+ 	char *payload;
  
- 		/* define outer transport */
-@@ -1951,11 +1951,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 			l4.hdr = skb_inner_network_header(skb);
- 			break;
- 		default:
--			if (first->tx_flags & ICE_TX_FLAGS_TSO)
--				return -1;
--
--			skb_checksum_help(skb);
--			return 0;
-+			goto checksum_sw_fb;
- 		}
- 
- 		/* compute outer L3 header size */
-@@ -2014,7 +2010,7 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 			ipv6_skip_exthdr(skb, exthdr - skb->data, &l4_proto,
- 					 &frag_off);
- 	} else {
--		return -1;
-+		goto checksum_sw_fb;
- 	}
- 
- 	/* compute inner L3 header size */
-@@ -2043,15 +2039,17 @@ int ice_tx_csum(struct ice_tx_buf *first, struct ice_tx_offload_params *off)
- 		break;
- 
- 	default:
--		if (first->tx_flags & ICE_TX_FLAGS_TSO)
--			return -1;
--		skb_checksum_help(skb);
--		return 0;
-+		goto checksum_sw_fb;
- 	}
- 
- 	off->td_cmd |= cmd;
- 	off->td_offset |= offset;
- 	return 1;
++	if (prep->datalen > U16_MAX)
++		return -EINVAL;
 +
-+checksum_sw_fb:
-+	if (first->tx_flags & ICE_TX_FLAGS_TSO)
-+		return -1;
-+	return skb_checksum_help(skb);
- }
- 
- /**
+ 	/*
+ 	 * If the payload is less than or equal to the size of a pointer, then
+ 	 * an allocation here is wasteful. Just copy the data directly to the
 -- 
 2.53.0
 
