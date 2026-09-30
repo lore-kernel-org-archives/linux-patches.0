@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B99364931;
-	Wed, 30 Sep 2026 16:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53F8515899;
+	Wed, 30 Sep 2026 16:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786499; cv=none; b=WIEw1bBowBjbPpn1Nq+7om5dkTfjxxexzCdpe6UADo5Oo52aK+/WdPQ/8EabqUe3Euf+0VvZ4cTbhHgYTW1Sx2Kgz5Rbhn5AwUGfEBCbt4Yuubn0IwIvGhlwUSJKOnob3zxCeXROwUb15jWMPEW7taHVJ8+xMU75Y0Z18+tmDFo=
+	t=1790786502; cv=none; b=FwylVjTlJdTTE6ASILoSB03QOpUWVBPlowJhZZObHsw8HtBtjrIextAlJe7gCj43fZFx3s5Uh1gTERB9fC1rAHfleb3rQXf0KIxmxvOXsQmG4UhPelu5w6H6o+yaC72Lg5JnzqmYVTFmSYXbALxLvwOJiMMLslR+yKXzCKx4b14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786499; c=relaxed/simple;
-	bh=q8t2D8gSxTYGLVZ5hgEYVUZrr+Gz1XPYIjlIm0bA/Ro=;
+	s=arc-20240116; t=1790786502; c=relaxed/simple;
+	bh=7tzE6/BqOVTwLYiin3nYp/rLgP15DCE+CLu9J4tpRIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cUuXXOmV+EEmt6jxFeKwER868LyKP1zXs30D9r3jUhfmBRySKMa7de5TCWG36ObqhnBWZczWe2eG7b32s7B7OWCQ2yNFhISGHkG1Mf3qRLLlJgJq9UrjwXcfp2eiRYDwgHcXRjY9zeIlpb4NqgX/TxsEXf4n1dYPK5BG1t9gCgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWtqr3PZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OcmoplwHL+wmrzRp5zIsJXaHm6VGKfwsTfr4igsbWUmXGu/072xGCTpLcYbMUORv+7XdiVowlCCvhp2ZXOY8Tu/eTvr3VBu+WgcGSuOZAGcx6q8zG9T+KqHkYsP0dyCJoaAho7Q+ppuI8E2eB3gsmvX4zCkQ9xf07nEq2bbXJsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktZffNNg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWtqr3PZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6071F000FF;
-	Wed, 30 Sep 2026 16:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktZffNNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB141F00898;
+	Wed, 30 Sep 2026 16:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786497;
-	bh=2ASJyfqWMPYCsFoLDqT59jAR+5L2MJW3HoHp6xO7K54=;
+	s=korg; t=1790786500;
+	bh=tV4e9oOrdif4dINdzIljkZ8aGvhHWxDJDG0icFezJqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UWtqr3PZUVScSsdy9zsc8DBmZSBEyKAjXzYsHvZqlcMn1a4KDSSF/uUYVwh/Avrw/
-	 cV8wPomSLxtw0Y4jOtzWeUWLGfzcuJGrEh1pDwEfKf9uZ0GA7tMyuBB4+59vc8gmVz
-	 2JHliKLDznoQcFUHO6SmOb1uIy+UrgKKkCWKRFkE=
+	b=ktZffNNgeG3BD0DYg0u23YoHY0VLQGntrUKxAJhub00s5WiRVQogTlhtE4KaaCaOX
+	 F09huLo82GG4HBldYgj3uP7onN3VDiyDiNBHZUIa5cBJRN6Tlvn6vpKLo7OcGWx3WF
+	 1BlHIn++4Wznx9Wc3m+VmubpXiB7SqF8ttTXJ7rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	kernel test robot <lkp@intel.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
+	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 839/982] ocfs2: make ocfs2_calc_xattr_init() return void
-Date: Wed, 30 Sep 2026 17:26:15 +0200
-Message-ID: <20260930152434.773863716@linuxfoundation.org>
+Subject: [PATCH 6.1 830/982] net/sched: cls_u32: fix manual hash table handle IDR aliasing
+Date: Wed, 30 Sep 2026 17:26:06 +0200
+Message-ID: <20260930152434.585728230@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -58,121 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 525c0edc032b3297d0c1056cf1fa20cf1f9e6184 ]
+[ Upstream commit 0a5f5d9e94dead312d32c366b917c64e552b72f7 ]
 
-ocfs2_calc_xattr_init() used to read the default ACL off the parent inode
-itself, so it could return an error from ocfs2_xattr_get_nolock().  Commit
-bd7c05fb4a47 ("ocfs2: fix circular locking dependency in
-ocfs2_init_acl()") moved that lookup before the transaction starts and
-deleted the error path, but left the now vestigial 'int ret = 0'
-declaration and both 'return ret' statements behind, along with an
-unreachable error branch in ocfs2_mknod().
+A u32 hash table created with an explicit handle ('tc filter add ...
+handle 801: u32 divisor N') keys its IDR entry on the raw handle, while
+the destroy paths free it under handle2id(handle). The two key domains
+disagree for handles in the 0x800..0xFFF htid range:
+handle2id() folds them back into the auto-allocated id space (1..0x7FF).
 
-Drop the leftover variable and convert the return type to void, so the
-callee states that it always succeeds and the caller no longer carries a
-check that can never trigger.
+A manual table therefore leaves its raw-keyed IDR entry unreachable on
+delete (a permanent leak), and its delete can drop the idr entry of an
+unrelated live auto table. A later auto allocation can then hand out a
+handle that aliases the live manual table; u32_lookup_ht() first-match
+routes lookups and TCA_U32_LINK for that htid to the wrong table.
 
-No functional change.
+Key the divisor-path alloc on handle2id(handle) so allocation and
+removal share one key domain. A manual handle that maps onto an id
+already in use is rejected with -ENOSPC, and auto allocation skips ids
+held by live manual tables.
 
-Link: https://lore.kernel.org/20260904023751.3703334-1-joseph.qi@linux.alibaba.com
-Fixes: bd7c05fb4a47 ("ocfs2: fix circular locking dependency in ocfs2_init_acl()")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609040247.8B3lmoqX-lkp@intel.com/
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Conditions to recreate:
+  ip link add test0 type dummy
+  tc qdisc add dev test0 clsact
+  tc filter add dev test0 ingress protocol ip pref 1 \
+          handle 801: u32 divisor 16
+  tc filter add dev test0 ingress protocol ip pref 2 u32 divisor 16
+  tc -d filter show dev test0 ingress | grep 'fh 801:'
+  # unpatched: two live tables with handle 0x80100000 (the pref 2 root
+  # hnode is auto-allocated id 1); patched: the auto hnode takes id 2.
+
+Also tested with a poc with a live u32 table on the block, add/delete a manual
+table 'handle 901: u32 divisor 1' twice; unpatched, the re-add fails with
+-ENOSPC because the raw key leaked on the first delete.
+
+Fixes: 73af53d82076 ("net: sched: cls_u32: Fix u32's systematic failure to free IDR entries for hnodes.")
+Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260822222049.114526-1-jhs@mojatatu.com
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-LQFE.v1.20260911041746.1@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/namei.c |  9 ++-------
- fs/ocfs2/xattr.c | 13 +++++--------
- fs/ocfs2/xattr.h |  8 ++++----
- 3 files changed, 11 insertions(+), 19 deletions(-)
+ net/sched/cls_u32.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
-index c97c6fdb8cec2..62f9d976c8fb3 100644
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -332,13 +332,8 @@ static int ocfs2_mknod(struct user_namespace *mnt_userns,
- 		goto leave;
- 
- 	/* calculate meta data/clusters for setting security and acl xattr */
--	status = ocfs2_calc_xattr_init(dir, mode, &si, &want_clusters,
--				       &xattr_credits, &want_meta,
--				       &acl_state);
--	if (status < 0) {
--		mlog_errno(status);
--		goto leave;
--	}
-+	ocfs2_calc_xattr_init(dir, mode, &si, &want_clusters, &xattr_credits,
-+			      &want_meta, &acl_state);
- 
- 	/* Reserve a cluster if creating an extent based directory. */
- 	if (S_ISDIR(mode) && !ocfs2_supports_inline_data(osb)) {
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 3f6cf0259679b..62d6d73083642 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -611,12 +611,11 @@ int ocfs2_calc_security_init(struct inode *dir,
- 	return ret;
- }
- 
--int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
--			  struct ocfs2_security_xattr_info *si,
--			  int *want_clusters, int *xattr_credits,
--			  int *want_meta, struct ocfs2_acl_state *acl_state)
-+void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
-+			   struct ocfs2_security_xattr_info *si,
-+			   int *want_clusters, int *xattr_credits,
-+			   int *want_meta, struct ocfs2_acl_state *acl_state)
- {
--	int ret = 0;
- 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
- 	int s_size = 0, a_size = 0, acl_len = 0, new_clusters;
- 
-@@ -638,7 +637,7 @@ int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
- 	}
- 
- 	if (!(s_size + a_size))
--		return ret;
-+		return;
- 
- 	/*
- 	 * The max space of security xattr taken inline is
-@@ -704,8 +703,6 @@ int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 0c6b6f2aeb531..276ee95f65010 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -996,8 +996,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 				return -ENOMEM;
  			}
- 		}
- 	}
--
--	return ret;
- }
- 
- static int ocfs2_xattr_extend_allocation(struct inode *inode,
-diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
-index 5901f2095bc57..016374e9a147e 100644
---- a/fs/ocfs2/xattr.h
-+++ b/fs/ocfs2/xattr.h
-@@ -57,10 +57,10 @@ int ocfs2_calc_security_init(struct inode *,
- 			     int *, int *, struct ocfs2_alloc_context **);
- 
- struct ocfs2_acl_state;
--int ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
--			  struct ocfs2_security_xattr_info *si,
--			  int *want_clusters, int *xattr_credits,
--			  int *want_meta, struct ocfs2_acl_state *acl_state);
-+void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
-+			   struct ocfs2_security_xattr_info *si,
-+			   int *want_clusters, int *xattr_credits,
-+			   int *want_meta, struct ocfs2_acl_state *acl_state);
- 
- /*
-  * xattrs can live inside an inode, as part of an external xattr block,
+ 		} else {
+-			err = idr_alloc_u32(&tp_c->handle_idr, ht, &handle,
+-					    handle, GFP_KERNEL);
++			/* The IDR is keyed on the mapped id, and that is
++			 * what the destroy paths remove. Ask for it here,
++			 * so a manual handle colliding with the
++			 * auto-allocated id space is rejected (-ENOSPC)
++			 * instead of aliasing a future auto id.
++			 */
++			u32 id = handle2id(handle);
++
++			err = idr_alloc_u32(&tp_c->handle_idr, ht, &id, id,
++					    GFP_KERNEL);
+ 			if (err) {
+ 				kfree(ht);
+ 				return err;
 -- 
 2.53.0
 
