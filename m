@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385BC51A15C;
-	Wed, 30 Sep 2026 17:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C02C51C358;
+	Wed, 30 Sep 2026 17:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789276; cv=none; b=sxI7kqJTpEFaiQagOIi1SlqTifgvIGFbgmdWi4aifa1vfxBd5o1sp0LS4Ni3L9tnZrybAYtCNUFUtJI6utbzEK1wRpDx14ALaCAgKVQ5FGRcPbS5lRkxUwmYuDd+gC33PWbkdltEBV/hK2TKseflHtz02v2uz2cWsSrCNKncnRw=
+	t=1790789279; cv=none; b=C867Th2963QN9ogGolO93QhOppYwmouSAh6jMsJyD6PZBSw5HR8pun4eFOtVvZs3jHk7z9MWvY7cnmmH3s49D+Z4/SING++jJVzVbhhRqQdc5NDdaWwthJ7QYb4EANEdGbm+u5WlY8mh/d2CV9tF1q23jVlTjk3ffvyTxojGH0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789276; c=relaxed/simple;
-	bh=cIDTodDheYqOY6oE1qlzmTTpGb901u4IfqJ/M4V5/8g=;
+	s=arc-20240116; t=1790789279; c=relaxed/simple;
+	bh=DErAF0s02NsMDUapSP4rEXgjsTsFxeTUWIizEbzT6d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGTGZdjxuxnvE0ihExxJJJlD6Q5v3Z9lJvhH7jYJzkniHiBCR/o1hye+LWhDoWMlypxLzz5T5H9hjCZ92xq0ggHcp3W9IeIaxZfJFeD+3DIYIwHDt9N/efh6liN4E3v9oYGx7AHhPrf429WC5Kr8CHZSRD1XTFSpw6C/CPAppok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKmgaB2P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h1HmoI1qKV7/HOtpwGTQgHTYNtuP+g1Sb8MoS2rdAnvRS9mFJhweII6ZtY6L7or91VlyTckTExrSjhCsetw8aiBZjxuAYlg0zccbkVCrHLy4XbgeSu9pu4kZEjtz5zyF4gWx3Eq7IJ2IZiuk/lYynjlJrQ6+Thp0pqJuLCTT3Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1JaGnlw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKmgaB2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E961F000FF;
-	Wed, 30 Sep 2026 17:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1JaGnlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 745A41F000FF;
+	Wed, 30 Sep 2026 17:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789275;
-	bh=XGHXMs7vDQLqv6EXFCfbMV+Mbr1ZTFY0ju08kBiqyEQ=;
+	s=korg; t=1790789278;
+	bh=exgU/3ou+HwLfq7Gumqgd0BvEIpAqPOP/stAfco8+9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZKmgaB2PHcMlxIGMx58v4SZBj5ISELqv95oyggKEBv8/L9g4eJ8944+2Ke6XMX2uS
-	 8wm9rcwINxSsFSr4BdqMpPKFZ5Zs/lVgmyBTYxo0RllP+DEqxNXmjSvLcYJ3na14pV
-	 if9+lIggL9u3yTLVTDq8S4DxikB+xk3TfjME/8I8=
+	b=u1JaGnlwi+mDNgCAy/EDmsjYbxyafSp+CTtoF22T9p8Qti+9Bol/j8PUCX8Jp1SFe
+	 nV8uEnKPZPDJNFcxxfvmdOuAHUJYcpd4hKXn5evU4lv0vuUZmAHP42h7y7w7bsbz9Z
+	 NGoo70Klx3MrOGyFaYsl/7ieFI+4QzIPdKblzvTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Almbladh <johan.almbladh@anyfinetworks.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	=?UTF-8?q?H=C3=A9l=C3=A8ne=20Vulquin?= <oss@helene.moe>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 420/877] bpf: Fix BSWAP 32 and 16 on MIPS64
-Date: Wed, 30 Sep 2026 17:22:11 +0200
-Message-ID: <20260930152423.753487426@linuxfoundation.org>
+Subject: [PATCH 6.12 421/877] driver core: Add device probe log helper dev_warn_probe()
+Date: Wed, 30 Sep 2026 17:22:12 +0200
+Message-ID: <20260930152423.775206486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,48 +46,223 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Almbladh <johan.almbladh@anyfinetworks.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit 8110ba09777873443db286b3cbb89b0e6311c554 ]
+[ Upstream commit 36e69b160705b65bf136c2fb6a1194447eeb8478 ]
 
-The 16/32-bit byteswap implementations for MIPS64r1 and earlier do
-not have an explicit zero extension afterwards. The input is first
-sign-extended to 64 bits, and the byteswap sequence can then leave
-the result sign-extended depending on the value of the low bits.
+Some drivers can still provide their functionality to a certain extent
+even when some of their resource acquisitions eventually fail.  In such
+cases, emitting errors isn't the desired action, but warnings should be
+emitted instead.
 
-Add the missing zero-extension.
+To solve this, introduce dev_warn_probe() as a new device probe log helper,
+which behaves identically as the already existing dev_err_probe(), while it
+produces warnings instead of errors.  The intended use is with the resources
+that are actually optional for a particular driver.
 
-Found with test_bpf on MIPS64r1 emulated by QEMU.
+While there, copyedit the kerneldoc for dev_err_probe() a bit, to simplify
+its wording a bit, and reuse it as the kerneldoc for dev_warn_probe(), with
+the necessary wording adjustments, of course.
 
-Fixes: fbc802de6b10 ("mips, bpf: Add new eBPF JIT for 64-bit MIPS")
-Signed-off-by: Johan Almbladh <johan.almbladh@anyfinetworks.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260923105158.3514342-2-johan.almbladh@anyfinetworks.com
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Tested-by: Hélène Vulquin <oss@helene.moe>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2be0a28538bb2a3d1bcc91e2ca1f2d0dc09146d9.1727601608.git.dsimic@manjaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 4eb3f195ef08 ("tg3: use random MAC address when tg3_get_device_address fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/net/bpf_jit_comp64.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/base/core.c        | 129 +++++++++++++++++++++++++++++--------
+ include/linux/dev_printk.h |   1 +
+ 2 files changed, 102 insertions(+), 28 deletions(-)
 
-diff --git a/arch/mips/net/bpf_jit_comp64.c b/arch/mips/net/bpf_jit_comp64.c
-index fa7e9aa37f498..6681ccac9dd9e 100644
---- a/arch/mips/net/bpf_jit_comp64.c
-+++ b/arch/mips/net/bpf_jit_comp64.c
-@@ -305,8 +305,7 @@ static void emit_bswap_r64(struct jit_context *ctx, u8 dst, u32 width)
- 	case 16:
- 		emit_sext(ctx, dst, dst);
- 		emit_bswap_r(ctx, dst, width);
--		if (cpu_has_mips64r2 || cpu_has_mips64r6)
--			emit_zext(ctx, dst);
-+		emit_zext(ctx, dst);
- 		break;
- 	}
- 	clobber_reg(ctx, dst);
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 2e1cce6265e05..a6134a5e5e110 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -5112,6 +5112,49 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+ 
+ #endif
+ 
++static void __dev_probe_failed(const struct device *dev, int err, bool fatal,
++			       const char *fmt, va_list vargsp)
++{
++	struct va_format vaf;
++	va_list vargs;
++
++	/*
++	 * On x86_64 and possibly on other architectures, va_list is actually a
++	 * size-1 array containing a structure.  As a result, function parameter
++	 * vargsp decays from T[1] to T*, and &vargsp has type T** rather than
++	 * T(*)[1], which is expected by its assignment to vaf.va below.
++	 *
++	 * One standard way to solve this mess is by creating a copy in a local
++	 * variable of type va_list and then using a pointer to that local copy
++	 * instead, which is the approach employed here.
++	 */
++	va_copy(vargs, vargsp);
++
++	vaf.fmt = fmt;
++	vaf.va = &vargs;
++
++	switch (err) {
++	case -EPROBE_DEFER:
++		device_set_deferred_probe_reason(dev, &vaf);
++		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		break;
++
++	case -ENOMEM:
++		/* Don't print anything on -ENOMEM, there's already enough output */
++		break;
++
++	default:
++		/* Log fatal final failures as errors, otherwise produce warnings */
++		if (fatal)
++			dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		else
++			dev_warn(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		break;
++	}
++
++	va_end(vargs);
++}
++
+ /**
+  * dev_err_probe - probe error check and log helper
+  * @dev: the pointer to the struct device
+@@ -5124,7 +5167,7 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+  * -EPROBE_DEFER and propagate error upwards.
+  * In case of -EPROBE_DEFER it sets also defer probe reason, which can be
+  * checked later by reading devices_deferred debugfs attribute.
+- * It replaces code sequence::
++ * It replaces the following code sequence::
+  *
+  * 	if (err != -EPROBE_DEFER)
+  * 		dev_err(dev, ...);
+@@ -5136,47 +5179,77 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+  *
+  * 	return dev_err_probe(dev, err, ...);
+  *
+- * Using this helper in your probe function is totally fine even if @err is
+- * known to never be -EPROBE_DEFER.
++ * Using this helper in your probe function is totally fine even if @err
++ * is known to never be -EPROBE_DEFER.
+  * The benefit compared to a normal dev_err() is the standardized format
+- * of the error code, it being emitted symbolically (i.e. you get "EAGAIN"
+- * instead of "-35") and the fact that the error code is returned which allows
+- * more compact error paths.
++ * of the error code, which is emitted symbolically (i.e. you get "EAGAIN"
++ * instead of "-35"), and having the error code returned allows more
++ * compact error paths.
+  *
+  * Returns @err.
+  */
+ int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
+ {
+-	struct va_format vaf;
+-	va_list args;
++	va_list vargs;
+ 
+-	va_start(args, fmt);
+-	vaf.fmt = fmt;
+-	vaf.va = &args;
++	va_start(vargs, fmt);
+ 
+-	switch (err) {
+-	case -EPROBE_DEFER:
+-		device_set_deferred_probe_reason(dev, &vaf);
+-		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+-		break;
++	/* Use dev_err() for logging when err doesn't equal -EPROBE_DEFER */
++	__dev_probe_failed(dev, err, true, fmt, vargs);
+ 
+-	case -ENOMEM:
+-		/*
+-		 * We don't print anything on -ENOMEM, there is already enough
+-		 * output.
+-		 */
+-		break;
++	va_end(vargs);
+ 
+-	default:
+-		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+-		break;
+-	}
++	return err;
++}
++EXPORT_SYMBOL_GPL(dev_err_probe);
+ 
+-	va_end(args);
++/**
++ * dev_warn_probe - probe error check and log helper
++ * @dev: the pointer to the struct device
++ * @err: error value to test
++ * @fmt: printf-style format string
++ * @...: arguments as specified in the format string
++ *
++ * This helper implements common pattern present in probe functions for error
++ * checking: print debug or warning message depending if the error value is
++ * -EPROBE_DEFER and propagate error upwards.
++ * In case of -EPROBE_DEFER it sets also defer probe reason, which can be
++ * checked later by reading devices_deferred debugfs attribute.
++ * It replaces the following code sequence::
++ *
++ * 	if (err != -EPROBE_DEFER)
++ * 		dev_warn(dev, ...);
++ * 	else
++ * 		dev_dbg(dev, ...);
++ * 	return err;
++ *
++ * with::
++ *
++ * 	return dev_warn_probe(dev, err, ...);
++ *
++ * Using this helper in your probe function is totally fine even if @err
++ * is known to never be -EPROBE_DEFER.
++ * The benefit compared to a normal dev_warn() is the standardized format
++ * of the error code, which is emitted symbolically (i.e. you get "EAGAIN"
++ * instead of "-35"), and having the error code returned allows more
++ * compact error paths.
++ *
++ * Returns @err.
++ */
++int dev_warn_probe(const struct device *dev, int err, const char *fmt, ...)
++{
++	va_list vargs;
++
++	va_start(vargs, fmt);
++
++	/* Use dev_warn() for logging when err doesn't equal -EPROBE_DEFER */
++	__dev_probe_failed(dev, err, false, fmt, vargs);
++
++	va_end(vargs);
+ 
+ 	return err;
+ }
+-EXPORT_SYMBOL_GPL(dev_err_probe);
++EXPORT_SYMBOL_GPL(dev_warn_probe);
+ 
+ static inline bool fwnode_is_primary(struct fwnode_handle *fwnode)
+ {
+diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
+index ca32b5bb28eb5..eb2094e43050c 100644
+--- a/include/linux/dev_printk.h
++++ b/include/linux/dev_printk.h
+@@ -276,6 +276,7 @@ do {									\
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
+ 
+ __printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++__printf(3, 4) int dev_warn_probe(const struct device *dev, int err, const char *fmt, ...);
+ 
+ /* Simple helper for dev_err_probe() when ERR_PTR() is to be returned. */
+ #define dev_err_ptr_probe(dev, ___err, fmt, ...) \
 -- 
 2.53.0
 
