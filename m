@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45A502554;
-	Wed, 30 Sep 2026 15:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F1E50257E;
+	Wed, 30 Sep 2026 15:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782673; cv=none; b=djAz0lCs2eZjzQbyJQPwpxh0OcWdVCcfZZvUqlJXs3iqd+zUzJsYR1Zg8YxiGe4wmbkApLaWNzE4EoXgeAvH3mOrAM95mv0ICisPuuUWKdfuMM0Buc4vxo3iIax7qpIAcydZh8l7k9PnvZOHMdKmvJkgQHXWVjfz/yUNzir6DcE=
+	t=1790782675; cv=none; b=QSfwIhyuClK/+L74B6JiQ9BIUzBOMQCA2eaD1ELPQBfBr8xYQ6YdfPuvs3c44+vOi7QAdS2IMlDWeVS1sKDe4ijr3P2kN6Y9mKAJfYURRKY5dvSMfHYD3wxwmWe+wPiYIZ1K005YAuXnCPGuGWFPc6L8xMElBIPoBsbFRgdVyjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782673; c=relaxed/simple;
-	bh=pXaR+pXxigscULlfbD0CFr8Pj/xPbXxKSMkpdylfb+Y=;
+	s=arc-20240116; t=1790782675; c=relaxed/simple;
+	bh=yzYSpI064NLod9HmvEve2N5NRKv7Chhyic2/4COKiLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvmU+95VRtjyyRpiIlS0iGQ+wB+xHPzQVh/wrZvFezwiwaBQyqHfyUt6sgOawm0rLodIbmQ/AP9Z4Gglfx8uE2KGtMxdGRxabcPMcBfaZCdkm8RHNiYM4Y04ZYmoXy78sLTDtLmoFKcUanxAfvgbTk+1Gj4tJH7LY/3rEaft+d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0ehtTEV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D/dufH5IJ198FCMvofyRxEjjKvb+ODevjSLJGpNSf03pDHc2rR+BqHPiAJ9ok2JUpHHDyf6awgWOdAoNHEo7itMq+8H21WiMimXKXgt+kERS7A4OI/zdfQFZDom+k7G7DznpyH/OQt6AHdhKTlutWmYtQ4uOWBpmz3NFXNk2gss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzCsis3z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0ehtTEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A631F00898;
-	Wed, 30 Sep 2026 15:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzCsis3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B181F000FF;
+	Wed, 30 Sep 2026 15:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782660;
-	bh=M8Lbropj7gG2ll2A7wnTP/kJgPhBSWpvHaKDRazHsbA=;
+	s=korg; t=1790782666;
+	bh=f/l32nSlUFpu8jFjB/SjTrUkThOY355y2h/ijT+jtKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E0ehtTEVW+Gl1Vf/+ACVimZTCekhQLrNIYdOqpIdCf6uzL+shGa+ClgMXCVKw0jL0
-	 Kj2+jiMMh7oHZPSexsS4MSH6kpTHC0mO2p2+z18XESBFzdsVeQodj5yLLVo1gCdOVV
-	 2x1GypBGF1AR6sbQ7FL+4RB92PdiYkvFabwlAAOo=
+	b=fzCsis3zoqZOtvdNQyR4fbXloaWSr3NpegITz4lAlu/ZYflU+5njZ4wIg8iVp7gwK
+	 L6clKKa0oxdTFZajDi3lmI5qVX0wWI/AnEENfhpGNCWUGH+bL93r5susOjQYSe76mQ
+	 BkacodQF8tVek/db9Zs/9tFCaLlWbAI4eOAUzM8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Raf Dickson <rafdog35@gmail.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alice Mikityanska <alice@isovalent.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/595] vsock: use sk_acceptq_is_full() helper in all transports
-Date: Wed, 30 Sep 2026 17:20:19 +0200
-Message-ID: <20260930152350.449087366@linuxfoundation.org>
+Subject: [PATCH 5.10 128/595] net/sched: act_csum: dont mangle UDP tunnel GSO packets
+Date: Wed, 30 Sep 2026 17:20:21 +0200
+Message-ID: <20260930152350.492363604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,53 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raf Dickson <rafdog35@gmail.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 4ff2e84ff1b33d79fa0e3ae355ce4a334908ef9a ]
+[ Upstream commit 9bcb30b389ec5888590cb6ec58c7a3b80fe49a11 ]
 
-Replace the open-coded backlog check with sk_acceptq_is_full().
-The helper uses > instead of >=, which is the correct comparison
-per commit 64a146513f8f ("[NET]: Revert incorrect accept queue
-backlog changes."), and adds READ_ONCE() for proper memory ordering.
+Similar to commit add641e7dee3 ("sched: act_csum: don't mangle TCP and
+UDP GSO packets"), UDP tunnel GSO packets going through act_csum
+shouldn't have their checksum calculated at this point, because it will
+be done after segmentation. Setting the checksum in act_csum modifies
+skb->ip_summed and prevents inner IP csum offload from kicking in,
+resulting in a packet with a bad checksum.
 
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Raf Dickson <rafdog35@gmail.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260612045842.122207-1-rafdog35@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add UDP tunnel GSO packets to the exceptions, and also add UDP GSO
+(SKB_GSO_UDP_L4), as the same logic as in the commit mentioned above
+applies to UDP GSO too.
+
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260611192955.604661-2-alice.kernel@fastmail.im
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/hyperv_transport.c | 2 +-
- net/vmw_vsock/vmci_transport.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/sched/act_csum.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
-index 974a33015f37c..f0c6291d39243 100644
---- a/net/vmw_vsock/hyperv_transport.c
-+++ b/net/vmw_vsock/hyperv_transport.c
-@@ -314,7 +314,7 @@ static void hvs_open_connection(struct vmbus_channel *chan)
- 		goto out;
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 107dc690de051..39836a30867fa 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -257,7 +257,9 @@ static int tcf_csum_ipv4_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct iphdr *iph;
+ 	u16 ul;
  
- 	if (conn_from_host) {
--		if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog)
-+		if (sk_acceptq_is_full(sk))
- 			goto out;
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
  
- 		new = vsock_create_connected(sk);
-diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
-index aa6f2a1429666..4085163bb92dd 100644
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1004,7 +1004,7 @@ static int vmci_transport_recv_listen(struct sock *sk,
- 	 * reset.  Otherwise we create and initialize a child socket and reply
- 	 * with a connection negotiation.
- 	 */
--	if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog) {
-+	if (sk_acceptq_is_full(sk)) {
- 		vmci_transport_reply_reset(pkt);
- 		return -ECONNREFUSED;
- 	}
+ 	/*
+@@ -313,7 +315,9 @@ static int tcf_csum_ipv6_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct ipv6hdr *ip6h;
+ 	u16 ul;
+ 
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
+ 
+ 	/*
 -- 
 2.53.0
 
