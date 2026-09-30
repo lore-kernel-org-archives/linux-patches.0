@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251794F93DB;
-	Wed, 30 Sep 2026 16:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021B54F93DB;
+	Wed, 30 Sep 2026 16:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787150; cv=none; b=sQKV/PrgCDX7A+M6xW73G7AOIvqg66Z/wOaNgSqNwF10q2F7gNNJN+Uc+U1slbYrWv8TW3Om4vXruaExzzOjlF7Sub2LDHOUIlBSJXy1Muzk1aDQmqB5UpWjuFNeOcecgWdCKr1khuCVu+2/p+0P8pApL5Wz1dY+nl57Hihv+Ws=
+	t=1790787153; cv=none; b=TbaTc8OjIGcIw4DyxZ5Zocde+P4AmoBFqjAH0g7YhuTK/Ljvw0cLf/EohdIQhqxWjoEDMnAmUsd+3/WyqaacDMYqdTJmfhlAU2LI9eJGw59jnz4+qYeLYx++nySmB8bo7r4Ia5ORI+CaMZpqek9tmqKVqv2d9sKhCYtTRR1/wQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787150; c=relaxed/simple;
-	bh=t0W4WRYYEWuKNOXXP8aJgodMHDfCVSAKBEx3RiOSEsU=;
+	s=arc-20240116; t=1790787153; c=relaxed/simple;
+	bh=zjjrvxABX5PXpJivJFuB6LAS2MRCaAAAmhj0GmzLwY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4ImDTOclLF6SNX8NmnM7GUdEs1KgRgEYzhOlya7vG31tizBSHVFBj1714yneJC1Zdk0azJUauMAjPMz0FfhpfQMQ26y2WS03GEkVmSmji7Pofad/44auLJvoKhayztpm4FicIv1b4PAYSk8Rf5j9y0GAagXMSopdGA0SgE5PQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1TwVSoz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hvh3MsHSiLDJttn9tpikYoAx1MIMhG69wU1jB3FRhN+d2AgZdTmiUM+q7MDKUD7T2boRZi3oJ3nH1DnWtycCjxXk1p1Toz7C4GXUG8rYYMvqA3t1ZJld3ioJ7zpRkODUBGpAnIxZPzK0fINWw1XENftd+FwQr/jrkgrZwVuJ27c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVE39G0g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1TwVSoz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B0A1F0089B;
-	Wed, 30 Sep 2026 16:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVE39G0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BF01F000FF;
+	Wed, 30 Sep 2026 16:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787149;
-	bh=MemIH6Ia2lcLOMk1hKgQAdyoyqBhTqAOegD5W5lQ/hY=;
+	s=korg; t=1790787151;
+	bh=yh0suxmBeaOeSAnNzcHgcA8/ofIjRd2ot2QVPCJFvDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t1TwVSozgv3SFw3ZJMx1IXHKr3KZ0iJvhEQNDCvZDwj8e8q2g3b9YSOu2KvsvOmqh
-	 JAcor6g2SDqc1CEW8LL6SmdQAp0FwmgQJSkQTt2D2GZLvnmpuI5tz5frnL6Z0cROHc
-	 j8Z870Uxj3AkchsELJqnh5ZstY35pZv8F6rK0rl4=
+	b=yVE39G0gb2kwKcuQtwtS7jc86BnF+Ew60phoZhC/m13D5iWaUHcpIdW7abTXMDFlB
+	 962Jnxe4andWLnBjnCeY6YBg4IPrpW1omcWKkG1WEuLHlrbpC2H1oHX3DoLJVJcVnw
+	 jS1l/ylxjb+DOkNMfAwg9xE7w30P9I37KB7FpFGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Xu Yunxiang <xyx2021@mail.ustc.edu.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 129/457] Bluetooth: RFCOMM: Reject short EA=0 frames in rfcomm_recv_frame()
-Date: Wed, 30 Sep 2026 17:23:54 +0200
-Message-ID: <20260930152348.833280986@linuxfoundation.org>
+Subject: [PATCH 7.2 130/457] bpf: Reject non-negative offsets in stack_slot_obj_get_spi()
+Date: Wed, 30 Sep 2026 17:23:55 +0200
+Message-ID: <20260930152348.854636471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
 
-[ Upstream commit 6d91041bb38b97e2feb625123cc0529d7b83a0e1 ]
+[ Upstream commit 79a9172f3ab4ad8392c5e5c8944b9b7710ade620 ]
 
-While rfcomm_recv_frame() verifies that skb->len is at least
-sizeof(*hdr) + 1 (4 bytes: 3-byte header + 1-byte FCS), an RFCOMM frame
-with an extended 2-byte length field (!__test_ea(hdr->len)) has a 4-byte
-header plus a 1-byte FCS (5 bytes minimum, sizeof(*hdr) + 2).
+bpf_get_spi() computes (-off - 1) / BPF_REG_SIZE using C division,
+which truncates toward zero. For off == 0, this produces spi 0, the
+same index used by the valid stack slot at fp-8.
 
-When a 4-byte RFCOMM frame with EA == 0 arrives:
-1. The initial skb->len < sizeof(*hdr) + 1 check passes (4 < 4 is false).
-2. Trimming the FCS byte decrements skb->len to 3.
-3. If __check_fcs() succeeds, skb_pull(skb, 4) fails (4 > 3) and returns
-   NULL without advancing skb->data.
-4. Because the return value of skb_pull() is ignored, the un-pulled
-   3-byte struct rfcomm_hdr remains at skb->data and is either queued as
-   application payload via rfcomm_recv_data() or parsed as a multiplexer
-   control command via rfcomm_recv_mcc() on DLCI 0.
+stack_slot_obj_get_spi() currently checks alignment and the resulting
+spi bounds, but does not reject the non-negative offset itself. It can
+therefore validate a PTR_TO_STACK register holding fp+0 against an
+iterator stored at fp-8 even though the runtime receives the actual fp+0
+pointer. An effectful iterator kfunc can then interpret memory outside
+the BPF stack as iterator state.
 
-Fix this by extending the length check in rfcomm_recv_frame() to also
-require skb->len >= sizeof(*hdr) + 2 when !__test_ea(hdr->len).
+Reject non-negative offsets before converting the offset to an spi. All
+valid stack objects begin at a negative offset from the frame pointer.
 
-Fixes: b230e5bf501c ("Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame")
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 06accc8779c1 ("bpf: add support for open-coded iterator loops")
+Signed-off-by: Xu Yunxiang <xyx2021@mail.ustc.edu.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/bpf/20260920210423.345636-2-xyx2021@mail.ustc.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 63fa0f542ccf1..3f757198051a2 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1817,7 +1817,8 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
- 		return s;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index dc1a9ef32b78e..cb523cc5465dd 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -582,7 +582,7 @@ static int stack_slot_obj_get_spi(struct bpf_verifier_env *env, struct bpf_reg_s
  	}
  
--	if (skb->len < sizeof(*hdr) + 1) {
-+	if (skb->len < sizeof(*hdr) + 1 ||
-+	    (!__test_ea(hdr->len) && skb->len < sizeof(*hdr) + 2)) {
- 		kfree_skb(skb);
- 		return s;
+ 	off = reg->var_off.value;
+-	if (off % BPF_REG_SIZE) {
++	if (off >= 0 || off % BPF_REG_SIZE) {
+ 		verbose(env, "cannot pass in %s at an offset=%d\n", obj_kind, off);
+ 		return -EINVAL;
  	}
 -- 
 2.53.0
