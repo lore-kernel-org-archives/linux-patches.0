@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396965187C2;
-	Wed, 30 Sep 2026 16:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D602517BCB;
+	Wed, 30 Sep 2026 16:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784482; cv=none; b=nGCx0eiUkircXN5TYMj5kKOVaSrkX6jw2n2cSAI523sbxkJg2ed5QyRTFJga8IJ0pS9GwAOqb6pKrO4+RrPyipWDBT0mXE8bF9guaM1DVHabg4PAXBOyd2ZHdXdvNrFRJW4y56pslD+aQ47Xsk/9PSZTnUchU4FOeudWiSIS/hM=
+	t=1790784486; cv=none; b=d9KUOqZOH9kDJ7DuZOFYxsk3qhrhU4WCJl8Es5kX7Sww2UQhz2MrZuUIcirM+G0XJHeuyyZWRuh4w2HljLtu94nSqYlTNVhPLUey0PbRs5C1mNcOjGaKV9sFZCaw61lJ1b2XfZSlMj7GAsbCYOpFE4OsLh6gflFYhidAU3VCpk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784482; c=relaxed/simple;
-	bh=beQkbDkWY5ONwE7kJ+ENE8dPi+2dvOdQvBcPMRkFEac=;
+	s=arc-20240116; t=1790784486; c=relaxed/simple;
+	bh=b8OFyFtmV4YkyzK8x4IeXnH9IopNtLkx6bX4FqOU7bA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F/KuHLwQ7u9YK9zzLVmFPm84tuSZoQbgm6U0NO41twTUYDg112LLcQht7Tlazrx9Af4rz+4yWvs9Ilb8pSHdoy9/EbFU1l4y9XbxvCaqs/COLkDquQhWoLzhslXH9QD/ymkMA5LKWshjS6TmCgWS/oumdj4fu3CLqEtbg4FI+rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKQ2y+He; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BfhrQGT4c4ch1667NVRyJIPgsfW/CvHx8WHTxhmdFwvgnWYeq7h02v5Pl16UCgrHWF1nJ1KOeGDWwFXl7K5pXnduJQXOGcAIX8gn/FrlOeVHLuXdEgjtUdQtX/REvg6Hly2WYDiUwTbpNtTFi7x5DlawiVTtJcL9v/KJ7Y31cMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbwTfDsx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKQ2y+He"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CED1F0089B;
-	Wed, 30 Sep 2026 16:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbwTfDsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16EA1F000FF;
+	Wed, 30 Sep 2026 16:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784476;
-	bh=RVZieZayV5FUW/0lxsSU1R2yQxaOvQpfkOXEAyQiEwY=;
+	s=korg; t=1790784482;
+	bh=8aj/Z+BffbbeYx5wtOZNE8DL3fZv9izwSr0vjtGjJps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKQ2y+Hed1wG2GZKoOFpAQ4S0UI5D9rWOrQhGsrrraGBpzrY66c6awYD9oyDHMkm1
-	 uXk5a3bGdD5JzXJbJbPgvPV3gxZjd82uQ7G4ZUHquqRvEqQofSq4nFZmeYRMRMtEPZ
-	 jhI0c1bRND1DoNV4Sz9+u3+bf8Oj8ERLbbSpCVlE=
+	b=vbwTfDsxQnN2ty/T2xSK0KfbO3QUSPNAipi4Nuee1JvntkBo+aQaSNNYQ59yvWm0n
+	 oyKnp4jLSF/wHmdRqbxBRUUjnyqDF2LcXCbxqmUejI0JUQlM0PxWY7yH/3K2U17jCD
+	 Rnc9atdki7Nt6guf77I+ZkI8RYQaWYLbU35GUrFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/982] tracing: Disable KCOV instrumentation for trace_irqsoff.o
-Date: Wed, 30 Sep 2026 17:14:20 +0200
-Message-ID: <20260930152419.481276641@linuxfoundation.org>
+Subject: [PATCH 6.1 164/982] NFS: fix eof updates after NFSv4.2 fallocate/zero-range
+Date: Wed, 30 Sep 2026 17:15:00 +0200
+Message-ID: <20260930152420.333433611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,73 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 01046072880b654dbadf71be2f645aad4a7b5d87 ]
+[ Upstream commit 35168eb947f230aaa35fd8416a30563ef89f5421 ]
 
-When KCOV runs its boot selftest with whole-kernel instrumentation
-enabled, it sets current->kcov_mode to KCOV_MODE_TRACE_PC without
-installing a coverage area. Any instrumented code accepted as task-context
-coverage in that window dereferences current->kcov_area and crashes.
+Generic/075 reliably exposes a regression when the client holds an
+NFSv4 write delegation: ZERO_RANGE/ALLOCATE extends the file on the
+server, but the local inode keeps the old i_size. The test then fails
+with 'Size error' because the post-op attribute refresh refuses to
+touch i_size while a delegation is outstanding, and the cached EOF
+was never marked stale.
 
-On ARMv5 Versatile PB with CONFIG_KCOV_SELFTEST=y,
-CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y, boot hits a
-NULL pointer fault during the selftest:
+Update _nfs42_proc_fallocate() so that on success it:
 
-  kcov: running self test
-  Internal error: Oops: 5 [#1] ARM
-  PC is at __sanitizer_cov_trace_pc+0x4c/0x90
-  Kernel panic - not syncing: Fatal exception
+- bumps i_size when the operation extends the file, and
+- marks NFS_INO_INVALID_BLOCKS since the block count can also change
 
-A diagnostic run showed the unwanted coverage comes from the IRQs-off
-tracer callbacks reached from ARM IRQ entry before hardirq context is
-visible to KCOV:
+Tested with xfstests generic/075 over NFSv4.2.
 
-  __sanitizer_cov_trace_pc from tracer_hardirqs_off+0x18/0x1cc
-  tracer_hardirqs_off from trace_hardirqs_off+0x34/0x54
-  trace_hardirqs_off from __irq_svc+0x58/0xb0
-  __irq_svc from kcov_init+0x7c/0xdc
-
-and similarly through tracer_hardirqs_on().
-
-trace_preemptirq.o is already excluded because this tracing path can run
-from early interrupt code and produce coverage unrelated to syscall
-inputs. Exclude trace_irqsoff.o as well, instead of requiring users to
-turn off CONFIG_KCOV_INSTRUMENT_ALL=y, which is the default whole-kernel
-KCOV mode.
-
-With the exclusion in place, the same ARMv5 Versatile PB QEMU test boots
-through the KCOV selftest and reaches userspace.
-
-Tested on ARMv5 Versatile PB QEMU with CONFIG_KCOV_SELFTEST=y,
-CONFIG_KCOV_INSTRUMENT_ALL=y and CONFIG_IRQSOFF_TRACER=y.
-
-Link: https://patch.msgid.link/20260525170428.67211-1-kmehltretter@gmail.com
-Assisted-by: Codex:gpt-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfs/nfs42proc.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/trace/Makefile b/kernel/trace/Makefile
-index c6651e16b5572..7752b2b04396e 100644
---- a/kernel/trace/Makefile
-+++ b/kernel/trace/Makefile
-@@ -31,9 +31,10 @@ ifdef CONFIG_GCOV_PROFILE_FTRACE
- GCOV_PROFILE := y
- endif
- 
--# Functions in this file could be invoked from early interrupt
--# code and produce random code coverage.
-+# Functions in these files can run from IRQ entry before hardirq context
-+# is visible to KCOV, and produce coverage unrelated to syscall inputs.
- KCOV_INSTRUMENT_trace_preemptirq.o := n
-+KCOV_INSTRUMENT_trace_irqsoff.o := n
- 
- CFLAGS_bpf_trace.o := -I$(src)
- 
+diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
+index 923ccd3b540f5..ad0ab93c1bb04 100644
+--- a/fs/nfs/nfs42proc.c
++++ b/fs/nfs/nfs42proc.c
+@@ -79,12 +79,17 @@ static int _nfs42_proc_fallocate(struct rpc_message *msg, struct file *filep,
+ 	status = nfs4_call_sync(server->client, server, msg,
+ 				&args.seq_args, &res.seq_res, 0);
+ 	if (status == 0) {
+-		if (nfs_should_remove_suid(inode)) {
+-			spin_lock(&inode->i_lock);
++		loff_t newsize = offset + len;
++
++		spin_lock(&inode->i_lock);
++		if (newsize > i_size_read(inode))
++			i_size_write(inode, newsize);
++		nfs_set_cache_invalid(inode, NFS_INO_INVALID_BLOCKS);
++		if (nfs_should_remove_suid(inode))
+ 			nfs_set_cache_invalid(inode,
+-				NFS_INO_REVAL_FORCED | NFS_INO_INVALID_MODE);
+-			spin_unlock(&inode->i_lock);
+-		}
++					      NFS_INO_REVAL_FORCED |
++					      NFS_INO_INVALID_MODE);
++		spin_unlock(&inode->i_lock);
+ 		status = nfs_post_op_update_inode_force_wcc(inode,
+ 							    res.falloc_fattr);
+ 	}
 -- 
 2.53.0
 
