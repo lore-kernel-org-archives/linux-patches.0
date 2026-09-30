@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A7051AEF3;
-	Wed, 30 Sep 2026 18:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599103B1016;
+	Wed, 30 Sep 2026 18:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792136; cv=none; b=EpO0N5lTZjWZ65yfhJOA5d+SPlhIwjkmS/qx4Hz/E2f54LCd9b6osY8idtPm3OS1LLQawVMhqIs1pFd02qaNdgSuLBjlIBYV0t5FZzsW07j2UdwbrIUiGyNEmgwMVTlEmwi6xaS/EGklBZ4r1uzw4w2CyVquvDRr+2fJ7WnGx2k=
+	t=1790792139; cv=none; b=tzROTMD6JXfBAjFAXN6HB0pH2nh1eRDnuKDATlsfZuWz4mnNXtEpYWMylLYBgtQ2c2xrMvFvq5pX6mSgLyTcqQpkeJAoXcB/bu1grKYl0r+iOLgdsi5vRBDejRSfMDJ4TSC554CYR7ke5tYA5naobLhFaTy7WPqjPgYJEzoDo9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792136; c=relaxed/simple;
-	bh=wXSlpyPGIH/bpaE8h9TWWNq9SCJmaMBe08Cw/c7RwqI=;
+	s=arc-20240116; t=1790792139; c=relaxed/simple;
+	bh=7rQkfrffH0tQbAHi8SttRlOP39rhcImnWv+X9mCQiNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ay9qx/yu2u4uetdb8A0P5bkrbhmz7U6hyIxL/i4/E7B9fNIc6MQRrjzvUPmMPU+Xbmf4Aa0zPW0LV2I5NXA+hVfIJvRia9fDDiCTPMQCYCzGxNmDEHwSDYZsTrblZLuV2wMoxxcwu0BIY6kCy0DpH84J8PwYlISsRW+9OGf97PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFgyj8wO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwwGKH1r0hAIIhrZn/IhN6VYDnGg7i9XSUIKEXxzRUySFC2iNp0t2ULwTE5ZYGNTONwx5syG1/R1v9Nfz3HFcBSCQKbdrcSS3717847N/VsN53mggwcfq5ZodhTEtU/B+WHhaLmnZKrNXk09G0Er74G7f7Gk9VjYoz3VSmE6uBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLgLLWeK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFgyj8wO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725E11F000FF;
-	Wed, 30 Sep 2026 18:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLgLLWeK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9581F00898;
+	Wed, 30 Sep 2026 18:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792135;
-	bh=d+YBq0oTYYjvK37/lXJacvwMf2LhRYcsru8gn+dG37Q=;
+	s=korg; t=1790792137;
+	bh=Owsqw00wq1aKE0UY9xsuSoN8LXlbIAJdQGPtcIdcxTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sFgyj8wOqMfIYglWLtcS4dNiuFFzj+A27oVA7/hWH+uVkkMrmff52NwcsnLOH3Ex3
-	 eCyK6S3SggyIzHuycM91SXp/lb4nYlC5dSz6xaNsUulr+Shk0S9fUxrbgR60WreGY/
-	 Z233D1ivKFi/o+C85l6jwl6nkvqPWbZulsVs/5Wg=
+	b=lLgLLWeKIywbnm14WBa+nh3sSfcQNMMSypgs3l8DZhp5TPKpa3f5eCqfo0tClaLy2
+	 egQSP8SCdKwYdhMGsV9PYJq0sBJzPer94KsAA1At9vpdx/A18Pp0usFmx46iQQ473P
+	 2coO9vVep+hHM0hroHe6YPMbZ1HRmnjINTJt0oBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Maillard <florian.maillard@mailoo.org>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 5.15 547/752] mmc: rtsx_pci_sdmmc: ignore broken write-protect on ThinkPad X260
-Date: Wed, 30 Sep 2026 17:26:57 +0200
-Message-ID: <20260930152410.080367054@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 512/752] net: ethernet: cortina: Ack RX overrun interrupt correctly
+Date: Wed, 30 Sep 2026 17:26:22 +0200
+Message-ID: <20260930152409.337391506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,45 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Maillard <florian.maillard@mailoo.org>
+From: Linus Walleij <linusw@kernel.org>
 
-commit 9c182bc5d7817437a7d04ab96133f9191846d93d upstream.
+[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
 
-The Realtek RTS522A card reader in the Lenovo ThinkPad X260
-(subsystem 17aa:504a) incorrectly reports inserted SD cards as
-write-protected.
+The RX overrun interrupt is reported in interrupt status register 4, but
+gmac_irq() acknowledges it using the RX descriptor error bit from status
+register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
+the shift leaves no bit in the 32-bit register.
 
-This causes the MMC core to expose the card as read-only:
+Acknowledge the same per-port RX overrun bit that was detected.
 
-  mmcblk0: mmc0:aaaa SN256 238 GiB (ro)
-
-and /sys/block/mmcblk0/ro reports 1.
-
-Setting MMC_CAP2_NO_WRITE_PROTECT makes the card writable again.
-Limit the quirk to the affected Lenovo subsystem.
-
-Assisted-by: ChatGPT:GPT-5.6 Sol
-Signed-off-by: Florian Maillard <florian.maillard@mailoo.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/cortina/gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1488,6 +1488,11 @@ static void realtek_init_host(struct rea
- 		mmc->caps = mmc->caps | MMC_CAP_AGGRESSIVE_PM;
- 	mmc->caps2 = MMC_CAP2_NO_PRESCAN_POWERUP | MMC_CAP2_FULL_PWR_CYCLE |
- 		MMC_CAP2_NO_SDIO;
-+
-+	if (pcr->pci->device == 0x522a &&
-+	    pcr->pci->subsystem_vendor == PCI_VENDOR_ID_LENOVO &&
-+	    pcr->pci->subsystem_device == 0x504a)
-+		mmc->caps2 |= MMC_CAP2_NO_WRITE_PROTECT;
- 	mmc->max_current_330 = 400;
- 	mmc->max_current_180 = 800;
- 	mmc->ops = &realtek_pci_sdmmc_ops;
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 0067930a822e5..0bf2e17126163 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1767,7 +1767,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
+ 
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
+ 		spin_lock(&geth->irq_lock);
+-		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
++		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
+-- 
+2.53.0
+
 
 
