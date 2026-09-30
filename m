@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F8C519E12;
-	Wed, 30 Sep 2026 17:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5DE352003;
+	Wed, 30 Sep 2026 17:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790214; cv=none; b=UWA/HgXbnz/09/zbm6O83KFUGQifhTC8osDmEt5gX5tQEZu5U/DTLOppPBUYKGf9enjKrEU3xnCIU8V/BT+/sTG6VThkeolqsKntapDCrSG79P36JyYyT4nfSe7Ix2sDH1XWlcAcwOUF2qVR97Zu6Ad8mnUbqL12JVaFYP9QNAQ=
+	t=1790790217; cv=none; b=toKJx0laq7qfTi1fZ4OYTkCtDw8VkrvrP5zhkx92yMCf0zJ2A3N2mL9IdXelJzkKBfm+qf9vSd9Nr23xAQy1uMu5OJF9nx+kc42NgVb5xJbq+hrSYkqTvPlhuQXUpxE7rWXBAJJRvyKDGRi0E3VLyMF9wNKR0VnxzxcKpkxH9Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790214; c=relaxed/simple;
-	bh=H61tEpih1jj1xWJxUz9jMSPl7VKbuSdj4t1FI9M1eCM=;
+	s=arc-20240116; t=1790790217; c=relaxed/simple;
+	bh=bixulOeHZzA+7DLkHZCXKmHDehdIyj9fGRHk4LBBQic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAvOqHR382ddTi3TrqJr1a7kPicUUlGLId0m6KNW03sD7Uhfdozttumn3SFGn+WMo6aSWnVA6HdBzMMYHfYrGMLqp4e/ujOLKV/IYqDpCz0V2y+A6MWejgoVkhY7RKkr6+OfdFxJ2ejuzAc27NwCyFzfhQ6SYkLB+Yzjcy4P4B0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2xCG/Wh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ad8wvwe4BJUOo2f2O5galz2Q0K2hJCS+pHM15p+mjbxsTPCKeTeqvpdNY0s69wiiKeh8SlhbzRyk0O866TuneSEqz+SCSBIEp2uWQcQrQGKo8AU5p0/iq32tL2m3JS4d2eI2paazo2FV0sDNhLmXHixYGU5DVAZEbvC3Zhre2N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPtiKEac; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2xCG/Wh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04BF1F000FF;
-	Wed, 30 Sep 2026 17:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPtiKEac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873BD1F000FF;
+	Wed, 30 Sep 2026 17:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790213;
-	bh=I4sU1q3xJaa9Ppa30QX0f9dEE08E177KMl3tMqsElts=;
+	s=korg; t=1790790216;
+	bh=Phuxb4AnF/rheflXk2TucDf/ky5vB70xrwqLipaGMMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R2xCG/WhI2QTr3/sHDCNhYXsILz6QN+FplY1fKjmuiAta4dgUJrwhUJ/RAe2NS0FN
-	 Er1oXzzbNcaycmjoZiKF78h3d8UISNvKHjArecJjJBDCpHPsIsPXSj9X8mt0LI/VbQ
-	 NQ/HtvsPfsrgs7ik98kAtaUY4uYm6Iy0pl6VPMIU=
+	b=zPtiKEacBwtB4lWWuEssMQDOqB7C9rinlyXzpQ+2AuhcbHoN3OCNd++hwGU7xz/Qi
+	 0DhPwvqVM8hQTJtghpu9FHFjZxwsJ5yAeJkIonD2RJ8SqghdxofBEPhFJIq9gX/A5i
+	 iYSyozW5bVEIs03L38bLTkORkZ9Zg+OvcUiwW8oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Vega <vega@nebusec.ai>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Yilin Zhu <zylzyl2333@gmail.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 751/877] ipv6: Move ipv6_fl_list from ipv6_pinfo to inet_sock.
-Date: Wed, 30 Sep 2026 17:27:42 +0200
-Message-ID: <20260930152430.903498890@linuxfoundation.org>
+Subject: [PATCH 6.12 734/877] net: bridge: use option bits for CFM/MRP frame handlers
+Date: Wed, 30 Sep 2026 17:27:25 +0200
+Message-ID: <20260930152430.529392656@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,411 +54,280 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 1c17f4373d4db1e1f0ebd3ddcd8e7a642927a826 ]
+[ Upstream commit 7a49e6b16f36b8e085521699adbca3e321b6dd0c ]
 
-In {tcp6,udp6,raw6}_sock, struct ipv6_pinfo is always placed at
-the beginning of a new cache line because
+CFM and MRP register a global br_frame_type whose hlist_node is linked
+into the per-bridge frame_type_list when the first MEP/MRP instance is
+created. Enabling the protocol on multiple bridges therefore inserts the
+same node into multiple lists. Unregistering it on one bridge then
+corrupts list state belonging to another.
 
-  1. __alignof__(struct tcp_sock) is 64 due to ____cacheline_aligned
-     of __cacheline_group_begin(tcp_sock_write_tx)
+These handlers can only be installed once per bridge, and they are
+uncommon. Track their per-bridge enable state with net_bridge option
+bits, which already live on the Rx hot cache line, and dispatch the
+matching handler directly from the receive path. Check both bits
+together first as an unlikely case.
 
-  2. __alignof__(struct udp_sock) is 64 due to ____cacheline_aligned
-     of struct numa_drop_counters
+Remove the generic frame_type_list and br_frame_type helpers, which
+have had no other users since CFM and MRP were added. That shrinks
+struct net_bridge by 8 bytes and drops the list walk from the fast
+path. When neither protocol is compiled in, BR_CFM_MRP_OPTS is 0 and
+the compiler prunes the branch.
 
-  3. in raw6_sock, struct numa_drop_counters is placed before
-     struct ipv6_pinfo
-
-.  struct ipv6_pinfo is 136 bytes, but the last cache line is
-only used by ipv6_fl_list:
-
-  $ pahole -C ipv6_pinfo vmlinux
-  struct ipv6_pinfo {
-  ...
-  	/* --- cacheline 2 boundary (128 bytes) --- */
-  	struct ipv6_fl_socklist *  ipv6_fl_list;         /*   128     8 */
-
-  	/* size: 136, cachelines: 3, members: 23 */
-
-Let's move ipv6_fl_list from struct ipv6_pinfo to struct inet_sock
-to save a full cache line for {tcp6,udp6,raw6}_sock.
-
-Now, struct ipv6_pinfo is 128 bytes, and {tcp6,udp6,raw6}_sock have
-64 bytes less, while {tcp,udp,raw}_sock retain the same size.
-
-Before:
-
-  # grep -E "^(RAW|UDP[^L\-]|TCP)" /proc/slabinfo | awk '{print $1, "\t", $4}'
-  RAWv6 	 1408
-  UDPv6 	 1472
-  TCPv6 	 2560
-  RAW 		 1152
-  UDP	 	 1280
-  TCP 		 2368
-
-After:
-
-  # grep -E "^(RAW|UDP[^L\-]|TCP)" /proc/slabinfo | awk '{print $1, "\t", $4}'
-  RAWv6 	 1344
-  UDPv6 	 1408
-  TCPv6 	 2496
-  RAW 		 1152
-  UDP	 	 1280
-  TCP 		 2368
-
-Also, ipv6_fl_list and inet_flags (SNDFLOW bit) are placed in the
-same cache line.
-
-  $ pahole -C inet_sock vmlinux
-  ...
-  	/* --- cacheline 11 boundary (704 bytes) was 56 bytes ago --- */
-  	struct ipv6_pinfo *        pinet6;               /*   760     8 */
-  	/* --- cacheline 12 boundary (768 bytes) --- */
-  	struct ipv6_fl_socklist *  ipv6_fl_list;         /*   768     8 */
-  	unsigned long              inet_flags;           /*   776     8 */
-
-Doc churn is due to the insufficient Type column (only 1 space short).
-
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251014224210.2964778-1-kuniyu@google.com
+Fixes: 90c628dd47ff ("net: bridge: extend the process of special frames")
+Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
+Co-developed-by: Yilin Zhu <zylzyl2333@gmail.com>
+Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/0345b9d5aa60ba416f6738ff1b87140f0a749cb8.1788417901.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-
-Stable adaptation:
-
-Keep the stable TCP mapped-child initialization callback introduced by
-9ed654e340f4c ("tcp: fix potential race in tcp_v6_syn_recv_sock()") and
-reset the relocated flowlabel list in that existing helper. Update both
-DCCP child paths too, since DCCP is still present in this tree. Preserve
-the existing cacheline-documentation format and add only the new field.
-
-Name the existing unprivileged total limit in mem_check() and use it in
-an algebraically equivalent room check. This supplies the context needed
-by 8d6cd1885085 ("ipv6: flowlabel: cap duplicate leases per socket")
-without importing the later per-netns accounting or changing admission
-policy. No new functions are introduced by this dependency.
-
-Stable-dep-of: 8d6cd1885085 ("ipv6: flowlabel: cap duplicate leases per socket")
+[ Adjusted bridge option enum context because BROPT_MDB_OFFLOAD_FAIL_NOTIFICATION and BROPT_FDB_LOCAL_VLAN_0 are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/networking/net_cachelines/inet_sock.rst       |    1 
- drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c |    4 -
- include/linux/ipv6.h                                        |    1 
- include/net/inet_sock.h                                     |    1 
- net/dccp/ipv6.c                                             |    4 -
- net/ipv6/ip6_flowlabel.c                                    |   48 ++++++------
- net/ipv6/tcp_ipv6.c                                         |   10 +-
- net/sctp/ipv6.c                                             |    8 +-
- 8 files changed, 40 insertions(+), 37 deletions(-)
+ net/bridge/br_cfm.c     |   11 +++--------
+ net/bridge/br_device.c  |    1 -
+ net/bridge/br_input.c   |   35 ++++++++++++++---------------------
+ net/bridge/br_mrp.c     |   13 +++----------
+ net/bridge/br_private.h |   26 +++++++++++++++-----------
+ 5 files changed, 35 insertions(+), 51 deletions(-)
 
---- a/Documentation/networking/net_cachelines/inet_sock.rst
-+++ b/Documentation/networking/net_cachelines/inet_sock.rst
-@@ -9,6 +9,7 @@ Type                    Name
- ..struct                ..inet_sock                                                     
- struct_sock             sk                    read_mostly         read_mostly         tcp_init_buffer_space,tcp_init_transfer,tcp_finish_connect,tcp_connect,tcp_send_rcvq,tcp_send_syn_data
- struct_ipv6_pinfo*      pinet6                -                   -                   
-+struct_ipv6_fl_socklist* ipv6_fl_list         read_mostly         -                   tcp_v6_connect,__ip6_datagram_connect,udpv6_sendmsg,rawv6_sendmsg
- be16                    inet_sport            read_mostly         -                   __tcp_transmit_skb
- be32                    inet_daddr            read_mostly         -                   ip_select_ident_segs
- be32                    inet_rcv_saddr        -                   -                   
---- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-+++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
-@@ -1197,12 +1197,12 @@ static struct sock *chtls_recv_sock(stru
- 		struct ipv6_pinfo *newnp = inet6_sk(newsk);
- 		struct ipv6_pinfo *np = inet6_sk(lsk);
+--- a/net/bridge/br_cfm.c
++++ b/net/bridge/br_cfm.c
+@@ -367,7 +367,7 @@ static u32 ccm_tlv_extract(struct sk_buf
+ }
  
--		inet_sk(newsk)->pinet6 = &newtcp6sk->inet6;
-+		newinet->pinet6 = &newtcp6sk->inet6;
-+		newinet->ipv6_fl_list = NULL;
- 		memcpy(newnp, np, sizeof(struct ipv6_pinfo));
- 		newsk->sk_v6_daddr = treq->ir_v6_rmt_addr;
- 		newsk->sk_v6_rcv_saddr = treq->ir_v6_loc_addr;
- 		inet6_sk(newsk)->saddr = treq->ir_v6_loc_addr;
--		newnp->ipv6_fl_list = NULL;
- 		newnp->pktoptions = NULL;
- 		newsk->sk_bound_dev_if = treq->ir_iif;
- 		newinet->inet_opt = NULL;
---- a/include/linux/ipv6.h
-+++ b/include/linux/ipv6.h
-@@ -269,7 +269,6 @@ struct ipv6_pinfo {
+ /* note: already called with rcu_read_lock */
+-static int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
++int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
+ {
+ 	u32 mdlevel, interval, size, index, max;
+ 	const struct br_cfm_common_hdr *hdr;
+@@ -489,11 +489,6 @@ static int br_cfm_frame_rx(struct net_br
+ 	return 1;
+ }
  
- 	struct ipv6_mc_socklist	__rcu *ipv6_mc_list;
- 	struct ipv6_ac_socklist	*ipv6_ac_list;
--	struct ipv6_fl_socklist __rcu *ipv6_fl_list;
- };
+-static struct br_frame_type cfm_frame_type __read_mostly = {
+-	.type = cpu_to_be16(ETH_P_CFM),
+-	.frame_handler = br_cfm_frame_rx,
+-};
+-
+ int br_cfm_mep_create(struct net_bridge *br,
+ 		      const u32 instance,
+ 		      struct br_cfm_mep_create *const create,
+@@ -559,7 +554,7 @@ int br_cfm_mep_create(struct net_bridge
+ 	INIT_DELAYED_WORK(&mep->ccm_tx_dwork, ccm_tx_work_expired);
  
- /* We currently use available bits from inet_sk(sk)->inet_flags,
---- a/include/net/inet_sock.h
-+++ b/include/net/inet_sock.h
-@@ -212,6 +212,7 @@ struct inet_sock {
- 	struct sock		sk;
- #if IS_ENABLED(CONFIG_IPV6)
- 	struct ipv6_pinfo	*pinet6;
-+	struct ipv6_fl_socklist __rcu *ipv6_fl_list;
+ 	if (hlist_empty(&br->mep_list))
+-		br_add_frame(br, &cfm_frame_type);
++		br_opt_toggle(br, BROPT_CFM_ENABLED, true);
+ 
+ 	hlist_add_tail_rcu(&mep->head, &br->mep_list);
+ 
+@@ -588,7 +583,7 @@ static void mep_delete_implementation(st
+ 	kfree_rcu(mep, rcu);
+ 
+ 	if (hlist_empty(&br->mep_list))
+-		br_del_frame(br, &cfm_frame_type);
++		br_opt_toggle(br, BROPT_CFM_ENABLED, false);
+ }
+ 
+ int br_cfm_mep_delete(struct net_bridge *br,
+--- a/net/bridge/br_device.c
++++ b/net/bridge/br_device.c
+@@ -501,7 +501,6 @@ void br_dev_setup(struct net_device *dev
+ 	spin_lock_init(&br->lock);
+ 	INIT_LIST_HEAD(&br->port_list);
+ 	INIT_HLIST_HEAD(&br->fdb_list);
+-	INIT_HLIST_HEAD(&br->frame_type_list);
+ #if IS_ENABLED(CONFIG_BRIDGE_MRP)
+ 	INIT_HLIST_HEAD(&br->mrp_list);
  #endif
- 	/* Socket demultiplex comparisons on incoming packets. */
- #define inet_daddr		sk.__sk_common.skc_daddr
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -456,7 +456,7 @@ static struct sock *dccp_v6_request_recv
- 		newnp->opt	   = NULL;
- 		newnp->ipv6_mc_list = NULL;
- 		newnp->ipv6_ac_list = NULL;
--		newnp->ipv6_fl_list = NULL;
-+		newinet->ipv6_fl_list = NULL;
- 		newnp->mcast_oif   = inet_iif(skb);
- 		newnp->mcast_hops  = ip_hdr(skb)->ttl;
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -303,17 +303,25 @@ frame_finish:
+ 	return RX_HANDLER_CONSUMED;
+ }
  
-@@ -523,7 +523,7 @@ static struct sock *dccp_v6_request_recv
- 
- 	newnp->ipv6_mc_list = NULL;
- 	newnp->ipv6_ac_list = NULL;
--	newnp->ipv6_fl_list = NULL;
-+	newinet->ipv6_fl_list = NULL;
- 	newnp->pktoptions = NULL;
- 	newnp->opt	  = NULL;
- 	newnp->mcast_oif  = inet6_iif(skb);
---- a/net/ipv6/ip6_flowlabel.c
-+++ b/net/ipv6/ip6_flowlabel.c
-@@ -66,8 +66,8 @@ EXPORT_SYMBOL(ipv6_flowlabel_exclusive);
- 	     fl != NULL;					\
- 	     fl = rcu_dereference(fl->next))
- 
--#define for_each_sk_fl_rcu(np, sfl)				\
--	for (sfl = rcu_dereference(np->ipv6_fl_list);	\
-+#define for_each_sk_fl_rcu(sk, sfl)				\
-+	for (sfl = rcu_dereference(inet_sk(sk)->ipv6_fl_list);	\
- 	     sfl != NULL;					\
- 	     sfl = rcu_dereference(sfl->next))
- 
-@@ -257,12 +257,11 @@ static struct ip6_flowlabel *fl_intern(s
- struct ip6_flowlabel *__fl6_sock_lookup(struct sock *sk, __be32 label)
++#define BR_CFM_MRP_OPTS \
++	((IS_ENABLED(CONFIG_BRIDGE_CFM) ? BIT(BROPT_CFM_ENABLED) : 0UL) | \
++	 (IS_ENABLED(CONFIG_BRIDGE_MRP) ? BIT(BROPT_MRP_ENABLED) : 0UL))
++
+ /* Return 0 if the frame was not processed otherwise 1
+  * note: already called with rcu_read_lock
+  */
+ static int br_process_frame_type(struct net_bridge_port *p,
+ 				 struct sk_buff *skb)
  {
- 	struct ipv6_fl_socklist *sfl;
--	struct ipv6_pinfo *np = inet6_sk(sk);
+-	struct br_frame_type *tmp;
++	struct net_bridge *br = p->br;
  
- 	label &= IPV6_FLOWLABEL_MASK;
- 
- 	rcu_read_lock();
--	for_each_sk_fl_rcu(np, sfl) {
-+	for_each_sk_fl_rcu(sk, sfl) {
- 		struct ip6_flowlabel *fl = sfl->fl;
- 
- 		if (fl->label == label && atomic_inc_not_zero(&fl->users)) {
-@@ -278,16 +277,16 @@ EXPORT_SYMBOL_GPL(__fl6_sock_lookup);
- 
- void fl6_free_socklist(struct sock *sk)
- {
--	struct ipv6_pinfo *np = inet6_sk(sk);
-+	struct inet_sock *inet = inet_sk(sk);
- 	struct ipv6_fl_socklist *sfl;
- 
--	if (!rcu_access_pointer(np->ipv6_fl_list))
-+	if (!rcu_access_pointer(inet->ipv6_fl_list))
- 		return;
- 
- 	spin_lock_bh(&ip6_sk_fl_lock);
--	while ((sfl = rcu_dereference_protected(np->ipv6_fl_list,
-+	while ((sfl = rcu_dereference_protected(inet->ipv6_fl_list,
- 						lockdep_is_held(&ip6_sk_fl_lock))) != NULL) {
--		np->ipv6_fl_list = sfl->next;
-+		inet->ipv6_fl_list = sfl->next;
- 		spin_unlock_bh(&ip6_sk_fl_lock);
- 
- 		fl_release(sfl->fl);
-@@ -465,35 +464,38 @@ done:
- 
- static int mem_check(struct sock *sk)
- {
--	struct ipv6_pinfo *np = inet6_sk(sk);
--	struct ipv6_fl_socklist *sfl;
-+	const int unpriv_total_limit = FL_MAX_SIZE - (FL_MAX_SIZE / 4);
- 	int room = FL_MAX_SIZE - atomic_read(&fl_size);
-+	struct ipv6_fl_socklist *sfl;
- 	int count = 0;
- 
- 	if (room > FL_MAX_SIZE - FL_MAX_PER_SOCK)
- 		return 0;
- 
- 	rcu_read_lock();
--	for_each_sk_fl_rcu(np, sfl)
-+	for_each_sk_fl_rcu(sk, sfl)
- 		count++;
- 	rcu_read_unlock();
- 
- 	if (room <= 0 ||
- 	    ((count >= FL_MAX_PER_SOCK ||
--	      (count > 0 && room < FL_MAX_SIZE/2) || room < FL_MAX_SIZE/4) &&
-+	      (count > 0 && room < FL_MAX_SIZE / 2) ||
-+	      room < FL_MAX_SIZE - unpriv_total_limit) &&
- 	     !capable(CAP_NET_ADMIN)))
- 		return -ENOBUFS;
+-	hlist_for_each_entry_rcu(tmp, &p->br->frame_type_list, list)
+-		if (unlikely(tmp->type == skb->protocol))
+-			return tmp->frame_handler(p, skb);
++	if (skb->protocol == htons(ETH_P_CFM) &&
++	    br_opt_get(br, BROPT_CFM_ENABLED))
++		return br_cfm_frame_rx(p, skb);
++
++	if (skb->protocol == htons(ETH_P_MRP) &&
++	    br_opt_get(br, BROPT_MRP_ENABLED))
++		return br_mrp_process(p, skb);
  
  	return 0;
  }
- 
--static inline void fl_link(struct ipv6_pinfo *np, struct ipv6_fl_socklist *sfl,
--		struct ip6_flowlabel *fl)
-+static inline void fl_link(struct sock *sk, struct ipv6_fl_socklist *sfl,
-+			   struct ip6_flowlabel *fl)
- {
-+	struct inet_sock *inet = inet_sk(sk);
-+
- 	spin_lock_bh(&ip6_sk_fl_lock);
- 	sfl->fl = fl;
--	sfl->next = np->ipv6_fl_list;
--	rcu_assign_pointer(np->ipv6_fl_list, sfl);
-+	sfl->next = inet->ipv6_fl_list;
-+	rcu_assign_pointer(inet->ipv6_fl_list, sfl);
- 	spin_unlock_bh(&ip6_sk_fl_lock);
- }
- 
-@@ -515,7 +517,7 @@ int ipv6_flowlabel_opt_get(struct sock *
- 
- 	rcu_read_lock();
- 
--	for_each_sk_fl_rcu(np, sfl) {
-+	for_each_sk_fl_rcu(sk, sfl) {
- 		if (sfl->fl->label == (np->flow_label & IPV6_FLOWLABEL_MASK)) {
- 			spin_lock_bh(&ip6_fl_lock);
- 			freq->flr_label = sfl->fl->label;
-@@ -554,7 +556,7 @@ static int ipv6_flowlabel_put(struct soc
- 	}
- 
- 	spin_lock_bh(&ip6_sk_fl_lock);
--	for (sflp = &np->ipv6_fl_list;
-+	for (sflp = &inet_sk(sk)->ipv6_fl_list;
- 	     (sfl = socklist_dereference(*sflp)) != NULL;
- 	     sflp = &sfl->next) {
- 		if (sfl->fl->label == freq->flr_label)
-@@ -574,13 +576,12 @@ found:
- 
- static int ipv6_flowlabel_renew(struct sock *sk, struct in6_flowlabel_req *freq)
- {
--	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct net *net = sock_net(sk);
- 	struct ipv6_fl_socklist *sfl;
- 	int err;
- 
- 	rcu_read_lock();
--	for_each_sk_fl_rcu(np, sfl) {
-+	for_each_sk_fl_rcu(sk, sfl) {
- 		if (sfl->fl->label == freq->flr_label) {
- 			err = fl6_renew(sfl->fl, freq->flr_linger,
- 					freq->flr_expires);
-@@ -609,7 +610,6 @@ static int ipv6_flowlabel_get(struct soc
- {
- 	struct ipv6_fl_socklist *sfl, *sfl1 = NULL;
- 	struct ip6_flowlabel *fl, *fl1 = NULL;
--	struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct net *net = sock_net(sk);
- 	int err;
- 
-@@ -640,7 +640,7 @@ static int ipv6_flowlabel_get(struct soc
- 	if (freq->flr_label) {
- 		err = -EEXIST;
- 		rcu_read_lock();
--		for_each_sk_fl_rcu(np, sfl) {
-+		for_each_sk_fl_rcu(sk, sfl) {
- 			if (sfl->fl->label == freq->flr_label) {
- 				if (freq->flr_flags & IPV6_FL_F_EXCL) {
- 					rcu_read_unlock();
-@@ -677,7 +677,7 @@ recheck:
- 				fl1->linger = fl->linger;
- 			if ((long)(fl->expires - fl1->expires) > 0)
- 				fl1->expires = fl->expires;
--			fl_link(np, sfl1, fl1);
-+			fl_link(sk, sfl1, fl1);
- 			fl_free(fl);
- 			return 0;
- 
-@@ -711,7 +711,7 @@ release:
+@@ -407,7 +415,8 @@ static rx_handler_result_t br_handle_fra
  		}
  	}
  
--	fl_link(np, sfl1, fl);
-+	fl_link(sk, sfl1, fl);
- 	return 0;
- done:
- 	fl_free(fl);
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1349,6 +1349,7 @@ static void tcp_v6_mapped_child_init(str
- 	struct ipv6_pinfo *newnp;
+-	if (unlikely(br_process_frame_type(p, skb)))
++	if (unlikely((READ_ONCE(p->br->options) & BR_CFM_MRP_OPTS) &&
++		     br_process_frame_type(p, skb)))
+ 		return RX_HANDLER_PASS;
  
- 	newinet->pinet6 = newnp = tcp_inet6_sk(newsk);
-+	newinet->ipv6_fl_list = NULL;
+ forward:
+@@ -448,19 +457,3 @@ rx_handler_func_t *br_get_rx_handler(con
  
- 	memcpy(newnp, tcp_inet6_sk(sk), sizeof(struct ipv6_pinfo));
+ 	return br_handle_frame;
+ }
+-
+-void br_add_frame(struct net_bridge *br, struct br_frame_type *ft)
+-{
+-	hlist_add_head_rcu(&ft->list, &br->frame_type_list);
+-}
+-
+-void br_del_frame(struct net_bridge *br, struct br_frame_type *ft)
+-{
+-	struct br_frame_type *tmp;
+-
+-	hlist_for_each_entry(tmp, &br->frame_type_list, list)
+-		if (ft == tmp) {
+-			hlist_del_rcu(&ft->list);
+-			return;
+-		}
+-}
+--- a/net/bridge/br_mrp.c
++++ b/net/bridge/br_mrp.c
+@@ -6,13 +6,6 @@
+ static const u8 mrp_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x1 };
+ static const u8 mrp_in_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x3 };
  
-@@ -1364,7 +1365,6 @@ static void tcp_v6_mapped_child_init(str
+-static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
+-
+-static struct br_frame_type mrp_frame_type __read_mostly = {
+-	.type = cpu_to_be16(ETH_P_MRP),
+-	.frame_handler = br_mrp_process,
+-};
+-
+ static bool br_mrp_is_ring_port(struct net_bridge_port *p_port,
+ 				struct net_bridge_port *s_port,
+ 				struct net_bridge_port *port)
+@@ -486,7 +479,7 @@ static void br_mrp_del_impl(struct net_b
+ 	kfree_rcu(mrp, rcu);
  
- 	newnp->ipv6_mc_list = NULL;
- 	newnp->ipv6_ac_list = NULL;
--	newnp->ipv6_fl_list = NULL;
- 	newnp->pktoptions  = NULL;
- 	newnp->opt	   = NULL;
+ 	if (hlist_empty(&br->mrp_list))
+-		br_del_frame(br, &mrp_frame_type);
++		br_opt_toggle(br, BROPT_MRP_ENABLED, false);
+ }
  
-@@ -1427,10 +1427,12 @@ static struct sock *tcp_v6_syn_recv_sock
- 	newsk->sk_gso_type = SKB_GSO_TCPV6;
- 	inet6_sk_rx_dst_set(newsk, skb);
+ /* Adds a new MRP instance.
+@@ -536,7 +529,7 @@ int br_mrp_add(struct net_bridge *br, st
+ 	rcu_assign_pointer(mrp->s_port, p);
  
--	inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
-+	newinet = inet_sk(newsk);
-+	newinet->pinet6 = tcp_inet6_sk(newsk);
-+	newinet->ipv6_fl_list = NULL;
-+	newinet->inet_opt = NULL;
+ 	if (hlist_empty(&br->mrp_list))
+-		br_add_frame(br, &mrp_frame_type);
++		br_opt_toggle(br, BROPT_MRP_ENABLED, true);
  
- 	newtp = tcp_sk(newsk);
--	newinet = inet_sk(newsk);
- 	newnp = tcp_inet6_sk(newsk);
- 
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
-@@ -1446,10 +1448,8 @@ static struct sock *tcp_v6_syn_recv_sock
- 
- 	   First: no IPv4 options.
- 	 */
--	newinet->inet_opt = NULL;
- 	newnp->ipv6_mc_list = NULL;
- 	newnp->ipv6_ac_list = NULL;
--	newnp->ipv6_fl_list = NULL;
- 
- 	/* Clone RX bits */
- 	newnp->rxopt.all = np->rxopt.all;
---- a/net/sctp/ipv6.c
-+++ b/net/sctp/ipv6.c
-@@ -784,9 +784,10 @@ static struct sock *sctp_v6_create_accep
- 					     struct sctp_association *asoc,
- 					     bool kern)
+ 	INIT_DELAYED_WORK(&mrp->test_work, br_mrp_test_work_expired);
+ 	INIT_DELAYED_WORK(&mrp->in_test_work, br_mrp_in_test_work_expired);
+@@ -1241,7 +1234,7 @@ no_forward:
+  * normal forwarding.
+  * note: already called with rcu_read_lock
+  */
+-static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
++int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
  {
--	struct sock *newsk;
- 	struct ipv6_pinfo *newnp, *np = inet6_sk(sk);
- 	struct sctp6_sock *newsctp6sk;
-+	struct inet_sock *newinet;
-+	struct sock *newsk;
+ 	/* If there is no MRP instance do normal forwarding */
+ 	if (likely(!(p->flags & BR_MRP_AWARE)))
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -486,12 +486,13 @@ enum net_bridge_opts {
+ 	BROPT_VLAN_BRIDGE_BINDING,
+ 	BROPT_MCAST_VLAN_SNOOPING_ENABLED,
+ 	BROPT_MST_ENABLED,
++	BROPT_CFM_ENABLED,
++	BROPT_MRP_ENABLED,
+ };
  
- 	newsk = sk_alloc(sock_net(sk), PF_INET6, GFP_KERNEL, sk->sk_prot, kern);
- 	if (!newsk)
-@@ -798,7 +799,9 @@ static struct sock *sctp_v6_create_accep
- 	sock_reset_flag(sk, SOCK_ZAPPED);
+ struct net_bridge {
+ 	spinlock_t			lock;
+ 	spinlock_t			hash_lock;
+-	struct hlist_head		frame_type_list;
+ 	struct net_device		*dev;
+ 	unsigned long			options;
+ 	/* These fields are accessed on each packet */
+@@ -919,16 +920,6 @@ int nbp_backup_change(struct net_bridge_
+ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb);
+ rx_handler_func_t *br_get_rx_handler(const struct net_device *dev);
  
- 	newsctp6sk = (struct sctp6_sock *)newsk;
--	inet_sk(newsk)->pinet6 = &newsctp6sk->inet6;
-+	newinet = inet_sk(newsk);
-+	newinet->pinet6 = &newsctp6sk->inet6;
-+	newinet->ipv6_fl_list = NULL;
+-struct br_frame_type {
+-	__be16			type;
+-	int			(*frame_handler)(struct net_bridge_port *port,
+-						 struct sk_buff *skb);
+-	struct hlist_node	list;
+-};
+-
+-void br_add_frame(struct net_bridge *br, struct br_frame_type *ft);
+-void br_del_frame(struct net_bridge *br, struct br_frame_type *ft);
+-
+ static inline bool br_rx_handler_check_rcu(const struct net_device *dev)
+ {
+ 	return rcu_dereference(dev->rx_handler) == br_get_rx_handler(dev);
+@@ -2033,6 +2024,7 @@ int br_mrp_parse(struct net_bridge *br,
+ bool br_mrp_enabled(struct net_bridge *br);
+ void br_mrp_port_del(struct net_bridge *br, struct net_bridge_port *p);
+ int br_mrp_fill_info(struct sk_buff *skb, struct net_bridge *br);
++int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
+ #else
+ static inline int br_mrp_parse(struct net_bridge *br, struct net_bridge_port *p,
+ 			       struct nlattr *attr, int cmd,
+@@ -2056,6 +2048,11 @@ static inline int br_mrp_fill_info(struc
+ 	return 0;
+ }
  
- 	sctp_sk(newsk)->v4mapped = sctp_sk(sk)->v4mapped;
++static inline int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
++{
++	return 0;
++}
++
+ #endif
  
-@@ -807,7 +810,6 @@ static struct sock *sctp_v6_create_accep
- 	memcpy(newnp, np, sizeof(struct ipv6_pinfo));
- 	newnp->ipv6_mc_list = NULL;
- 	newnp->ipv6_ac_list = NULL;
--	newnp->ipv6_fl_list = NULL;
+ /* br_cfm.c */
+@@ -2064,6 +2061,7 @@ int br_cfm_parse(struct net_bridge *br,
+ 		 struct nlattr *attr, int cmd, struct netlink_ext_ack *extack);
+ bool br_cfm_created(struct net_bridge *br);
+ void br_cfm_port_del(struct net_bridge *br, struct net_bridge_port *p);
++int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb);
+ int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br);
+ int br_cfm_status_fill_info(struct sk_buff *skb,
+ 			    struct net_bridge *br,
+@@ -2088,6 +2086,12 @@ static inline void br_cfm_port_del(struc
+ {
+ }
  
- 	sctp_v6_copy_ip_options(sk, newsk);
- 
++static inline int br_cfm_frame_rx(struct net_bridge_port *port,
++				  struct sk_buff *skb)
++{
++	return 0;
++}
++
+ static inline int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br)
+ {
+ 	return -EOPNOTSUPP;
 
 
