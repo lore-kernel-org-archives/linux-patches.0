@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC89C518149;
-	Wed, 30 Sep 2026 17:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2433451A148;
+	Wed, 30 Sep 2026 17:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788108; cv=none; b=Bh8SSYtkXpxmFbf/cbMkMODUF+dPGAj44PIQLgHIBjoGflF494IVohkV/AcH1NrzlxBAvjLdc4Ezn7QxHV6h/R3hj8TbfvX8qQ74lUt1ym5iQwvLH+a3uaN1Bxw9/046rNZTTjE+a3Evo8XJOwwOQWGU1o1Sjnl7Y18wM9HF380=
+	t=1790788110; cv=none; b=dHgw3VPJmLH1G5s9usGDZbbYwEf4u+Inh913PMrG2sCdkcjfNYIyGn4lKOSAkj8sdGX5pPXxFiteyezaZIcfk2GE61H2vFSnQIvu/ruL3lqZkqM4UFizl0l8YTgslsrkCg/ZmAPZgON8LgpN82WvtF9WMFgSts7yNMEGXaqV35Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788108; c=relaxed/simple;
-	bh=6nc/7HeCMThogD9Ub2sH9M3/T+vkQgufVRoQ0pKoeLE=;
+	s=arc-20240116; t=1790788110; c=relaxed/simple;
+	bh=M4l9zikBX1hG5Q/rxYk28tcFlAti6tHhN1N3tlm312w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oM+0CKvWDdCgZS5h+Tdq98Vkecv0si2FbkFknG/V4QOgu/Fn/i4anLhjdn7Yl8GhsdWqpnCLio6nOAKOJAiKHjiVpYRQXPpIJBaM/dXImfxuxOY02PKQQDC+u/8L/Q+5T5zieYRYNYCAhP5813owRBSQM8c8QIeUr0sVmt00y0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uadeXfls; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KPykASUBfDIl0nwtLBYOw7H0+IrHBqgXrLrjR9XrTXLvU/nFR0IY9ZG1cEbngMuF0t0wqieOMY+N9hhVnaMoBU9q14c0fh1btHlYCdgFm/lw7uiCVJ+7r5FOZ2diuCrUcpyiaqb3j8AAYZR0d5K2XhOeFObb8M/vaThlguuCG14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KxPcrmm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uadeXfls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79401F000FF;
-	Wed, 30 Sep 2026 17:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KxPcrmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE771F00898;
+	Wed, 30 Sep 2026 17:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788103;
-	bh=Qj2LbzHEemP8yGoVQXdAAnE5Djcm/iCtiMWSGzs8Gf4=;
+	s=korg; t=1790788109;
+	bh=q8dLmjCUtTWtEu81zVhboYwQBRsS/aIi7IY3kHglSek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uadeXflsVG8R8yUTVcHXAU0IF4LYWCJQiJ0kdRPW961ruh2mR3tj+ZKx/1N7eaxGF
-	 MMASJ0lDMKOLb02ivXJ+d94Jd61/egK+fT1UsBS+BR+mMofjh2SB8SzjVTuxNKKX8m
-	 3hxRuaw4vKLjuQp6icQfs0AfCLrVJc92fJq1puUY=
+	b=2KxPcrmm5FRTGn40US/7TjUhbeDTutFPSuM8LUxbf2j1f3G4GXZ1C3GwEsUukVUv/
+	 pYI5iKxCQKaKMnWyY/ruXVRbaoh1mtMuPPB/AVqEjqU2/5XWHvEkQ4TqDIRSJLi/s7
+	 XaEfGnpVCvyml8YaB9X9aosjAhzWJ/TawwiQ4488=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 442/457] super: convert s_count to refcount_t s_passive
-Date: Wed, 30 Sep 2026 17:29:07 +0200
-Message-ID: <20260930152355.539332177@linuxfoundation.org>
+Subject: [PATCH 6.12 010/877] selftests/landlock: Add tests for whiteout object creation
+Date: Wed, 30 Sep 2026 17:15:21 +0200
+Message-ID: <20260930152414.968555561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
-References: <20260930152346.024115587@linuxfoundation.org>
+In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
+References: <20260930152414.738996857@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,133 +45,293 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.2-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 3ec9800c2d33c783dd3b27d4cc3bb22b9385f828 ]
+[ Upstream commit ee890889b30b22f9a21636061def7a04e4f89380 ]
 
-The superblock carries two counters: s_active, the active reference
-count that keeps the filesystem usable, and s_count, the passive
-reference count that merely keeps the structure itself alive. Turn the
-passive count into a refcount_t and rename it to s_passive to make the
-pairing with s_active obvious.
+Add tests to check that whiteout object creation is guarded by
+LANDLOCK_ACCESS_FS_MAKE_REG, in the cases where these are created from
+userspace:
 
-Everything is still serialized by sb_lock, so there is no functional
-change; the conversion buys the usual refcount_t saturation and
-underflow checking. The following patches start dropping passive
-references without holding sb_lock and make the device-to-superblock
-table hold one passive reference per registered entry, which a plain
-integer cannot support.
+* Conventional creation with mknod()
+* Linking or renaming an existing whiteout object
+* renameat2() with RENAME_WHITEOUT,
+  which creates a new whiteout object in the source location
+* renameat2() with RENAME_EXCHANGE,
+  with one of the renamed objects being a whiteout object
 
-Link: https://patch.msgid.link/20260616-work-super-bdev_holder_global-v2-2-7df6b864028e@kernel.org
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Stable-dep-of: 2d2a2d7aa987 ("super: make iterate_supers_type() deletion-safe")
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20260813093157.1436894-4-gnoack@google.com
+[mic: Update commit message as requested]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: adapt the tests to the older filesystem fixture and
+ruleset helper]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c                     |   18 +++++++++---------
- include/linux/fs/super_types.h |    2 +-
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ tools/testing/selftests/landlock/fs_test.c | 205 ++++++++++++++++++++-
+ 1 file changed, 203 insertions(+), 2 deletions(-)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -103,7 +103,7 @@ static bool super_flags(const struct sup
-  * creation will succeed and SB_BORN is set by vfs_get_tree() or we're
-  * woken and we'll see SB_DYING.
-  *
-- * The caller must have acquired a temporary reference on @sb->s_count.
-+ * The caller must have acquired a temporary reference on @sb->s_passive.
-  *
-  * Return: The function returns true if SB_BORN was set and with
-  *         s_umount held. The function returns false if SB_DYING was
-@@ -368,7 +368,7 @@ static struct super_block *alloc_super(s
- 	spin_lock_init(&s->s_inode_wblist_lock);
- 	fserror_mount(s);
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index 732ba5a92df56..ae96637ad40e9 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -85,6 +85,8 @@ static const char file1_s3d1[] = TMP_DIR "/s3d1/f1";
+ /* dir_s3d2 is a mount point. */
+ static const char dir_s3d2[] = TMP_DIR "/s3d1/s3d2";
+ static const char dir_s3d3[] = TMP_DIR "/s3d1/s3d2/s3d3";
++static const char file1_s3d3[] = TMP_DIR "/s3d1/s3d2/s3d3/f1";
++static const char file1_s3d4[] = TMP_DIR "/s3d1/s3d2/s3d4/f1";
  
--	s->s_count = 1;
-+	refcount_set(&s->s_passive, 1);
- 	atomic_set(&s->s_active, 1);
- 	mutex_init(&s->s_vfs_rename_mutex);
- 	lockdep_set_class(&s->s_vfs_rename_mutex, &type->s_vfs_rename_key);
-@@ -408,7 +408,7 @@ fail:
-  */
- static void __put_super(struct super_block *s)
+ /*
+  * layout1 hierarchy:
+@@ -358,7 +360,8 @@ static void create_layout1(struct __test_metadata *const _metadata)
+ 	ASSERT_EQ(0, mount_opt(&mnt_tmp, dir_s3d2));
+ 	clear_cap(_metadata, CAP_SYS_ADMIN);
+ 
+-	ASSERT_EQ(0, mkdir(dir_s3d3, 0700));
++	create_file(_metadata, file1_s3d3);
++	create_file(_metadata, file1_s3d4);
+ }
+ 
+ static void remove_layout1(struct __test_metadata *const _metadata)
+@@ -378,7 +381,8 @@ static void remove_layout1(struct __test_metadata *const _metadata)
+ 	EXPECT_EQ(0, remove_path(dir_s2d2));
+ 
+ 	EXPECT_EQ(0, remove_path(file1_s3d1));
+-	EXPECT_EQ(0, remove_path(dir_s3d3));
++	EXPECT_EQ(0, remove_path(file1_s3d3));
++	EXPECT_EQ(0, remove_path(file1_s3d4));
+ 	set_cap(_metadata, CAP_SYS_ADMIN);
+ 	umount(dir_s3d2);
+ 	clear_cap(_metadata, CAP_SYS_ADMIN);
+@@ -772,6 +776,27 @@ static int create_ruleset(struct __test_metadata *const _metadata,
+ 	return ruleset_fd;
+ }
+ 
++static void enforce_fs(struct __test_metadata *const _metadata,
++		       const __u64 access_fs, const struct rule rules[])
++{
++	int ruleset_fd;
++
++	if (rules) {
++		ruleset_fd = create_ruleset(_metadata, access_fs, rules);
++	} else {
++		const struct landlock_ruleset_attr ruleset_attr = {
++			.handled_access_fs = access_fs,
++		};
++
++		ruleset_fd = landlock_create_ruleset(&ruleset_attr,
++						     sizeof(ruleset_attr), 0);
++		ASSERT_LE(0, ruleset_fd);
++	}
++
++	enforce_ruleset(_metadata, ruleset_fd);
++	EXPECT_EQ(0, close(ruleset_fd));
++}
++
+ TEST_F_FORK(layout0, proc_nsfs)
  {
--	if (!--s->s_count) {
-+	if (refcount_dec_and_test(&s->s_passive)) {
- 		list_del_init(&s->s_list);
- 		WARN_ON(s->s_dentry_lru.node);
- 		WARN_ON(s->s_inode_lru.node);
-@@ -530,7 +530,7 @@ static bool grab_super(struct super_bloc
+ 	const struct rule rules[] = {
+@@ -2207,6 +2232,170 @@ TEST_F_FORK(layout1, rename_file)
+ 			       RENAME_EXCHANGE));
+ }
+ 
++TEST_F_FORK(layout1, rename_whiteout_denied)
++{
++	/* The affected file is a FIFO. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++
++	/* Deny MAKE_REG, but allow MAKE_FIFO. */
++	enforce_fs(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, NULL);
++
++	/*
++	 * Try to rename a file with RENAME_WHITEOUT.
++	 * file1_s3d3 is in dir_s3d2 (tmpfs), so it supports RENAME_WHITEOUT.
++	 * Denied, because whiteout creation is guarded with MAKE_REG.
++	 */
++	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
++				TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
++	EXPECT_EQ(EACCES, errno);
++}
++
++static bool is_whiteout(const char *const path)
++{
++	struct stat st;
++
++	if (stat(path, &st) == -1)
++		return false;
++
++	return S_ISCHR(st.st_mode) && st.st_rdev == makedev(0, 0);
++}
++
++static bool is_fifo(const char *const path)
++{
++	struct stat st;
++
++	return stat(path, &st) == 0 && S_ISFIFO(st.st_mode);
++}
++
++TEST_F_FORK(layout1, rename_whiteout_allowed)
++{
++	const struct rule rules[] = {
++		{
++			.path = dir_s3d3,
++			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
++		},
++		{},
++	};
++
++	/* The affected file is a FIFO. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++
++	/* Allow MAKE_REG below dir_s3d3. */
++	enforce_fs(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, rules);
++
++	/*
++	 * Rename a file with RENAME_WHITEOUT within the same directory.
++	 * Allowed, because MAKE_REG is granted for the whiteout object which
++	 * gets created in the source location.
++	 */
++	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
++			       TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
++
++	/* A whiteout object took the place of the moved FIFO. */
++	EXPECT_TRUE(is_whiteout(file1_s3d3));
++	EXPECT_TRUE(is_fifo(TMP_DIR "/s3d1/s3d2/s3d3/f2"));
++}
++
++TEST_F_FORK(layout1, rename_whiteout_reparenting)
++{
++	const struct rule rules[] = {
++		{
++			.path = dir_s3d2,
++			.access = LANDLOCK_ACCESS_FS_REFER,
++		},
++		{
++			.path = dir_s3d3,
++			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
++		},
++		{},
++	};
++
++	/* The moved files are FIFOs. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++	ASSERT_EQ(0, unlink(file1_s3d4));
++	ASSERT_EQ(0, mknod(file1_s3d4, S_IFIFO | 0600, 0));
++
++	/* Allow REFER below dir_s3d2, but MAKE_REG only below dir_s3d3. */
++	enforce_fs(_metadata,
++		   LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_REFER,
++		   rules);
++
++	/*
++	 * The whiteout object is created in the source directory: Moving the
++	 * FIFO out of dir_s3d4 is denied because MAKE_REG is not granted
++	 * there, even though it is granted in the destination directory
++	 * dir_s3d3.
++	 */
++	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d4, AT_FDCWD,
++				TMP_DIR "/s3d1/s3d2/s3d3/f2", RENAME_WHITEOUT));
++	EXPECT_EQ(EACCES, errno);
++
++	/*
++	 * Moving the FIFO out of dir_s3d3 is allowed, because MAKE_REG is
++	 * granted there for the created whiteout object.
++	 */
++	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD,
++			       TMP_DIR "/s3d1/s3d2/s3d4/f2", RENAME_WHITEOUT));
++
++	/* A whiteout object took the place of the moved FIFO. */
++	EXPECT_TRUE(is_whiteout(file1_s3d3));
++	EXPECT_TRUE(is_fifo(TMP_DIR "/s3d1/s3d2/s3d4/f2"));
++}
++
++TEST_F_FORK(layout1, rename_whiteout_exchange)
++{
++	const char *const whiteout_s3d3 = TMP_DIR "/s3d1/s3d2/s3d3/f2";
++	const struct rule rules[] = {
++		{
++			.path = dir_s3d2,
++			.access = LANDLOCK_ACCESS_FS_REFER,
++		},
++		{
++			.path = dir_s3d3,
++			.access = LANDLOCK_ACCESS_FS_MAKE_REG,
++		},
++		{},
++	};
++
++	/* The exchanged files are FIFOs and an existing whiteout object. */
++	ASSERT_EQ(0, unlink(file1_s3d3));
++	ASSERT_EQ(0, mknod(file1_s3d3, S_IFIFO | 0600, 0));
++	ASSERT_EQ(0, mknod(whiteout_s3d3, S_IFCHR | 0600, makedev(0, 0)));
++	ASSERT_EQ(0, unlink(file1_s3d4));
++	ASSERT_EQ(0, mknod(file1_s3d4, S_IFIFO | 0600, 0));
++
++	/* Allow REFER below dir_s3d2, but MAKE_REG only below dir_s3d3. */
++	enforce_fs(_metadata,
++		   LANDLOCK_ACCESS_FS_MAKE_REG | LANDLOCK_ACCESS_FS_REFER,
++		   rules);
++
++	/*
++	 * With RENAME_EXCHANGE, the whiteout object moves into the source
++	 * directory of the rename: Exchanging the FIFO in dir_s3d4 with the
++	 * whiteout object is denied because MAKE_REG is not granted in
++	 * dir_s3d4, even though it is granted in the whiteout object's own
++	 * directory dir_s3d3.
++	 */
++	EXPECT_EQ(-1, renameat2(AT_FDCWD, file1_s3d4, AT_FDCWD, whiteout_s3d3,
++				RENAME_EXCHANGE));
++	EXPECT_EQ(EACCES, errno);
++
++	/*
++	 * Exchanging the FIFO in dir_s3d3 with the whiteout object is
++	 * allowed, because MAKE_REG is granted in the directory into which
++	 * the whiteout object moves.
++	 */
++	EXPECT_EQ(0, renameat2(AT_FDCWD, file1_s3d3, AT_FDCWD, whiteout_s3d3,
++			       RENAME_EXCHANGE));
++
++	/* The FIFO and the whiteout object swapped places. */
++	EXPECT_TRUE(is_whiteout(file1_s3d3));
++	EXPECT_TRUE(is_fifo(whiteout_s3d3));
++}
++
+ TEST_F_FORK(layout1, rename_dir)
  {
- 	bool locked;
+ 	const struct rule rules[] = {
+@@ -3260,6 +3449,18 @@ TEST_F_FORK(layout1, make_char)
+ 		       makedev(1, 3));
+ }
  
--	sb->s_count++;
-+	refcount_inc(&sb->s_passive);
- 	spin_unlock(&sb_lock);
- 	locked = super_lock_excl(sb);
- 	if (locked) {
-@@ -557,7 +557,7 @@ static bool grab_super(struct super_bloc
-  *	lock held in read mode in case of success. On successful return,
-  *	the caller must drop the s_umount lock when done.
-  *
-- *	Note that unlike get_super() et.al. this one does *not* bump ->s_count.
-+ *	Note that unlike get_super() et.al. this one does *not* bump ->s_passive.
-  *	The reason why it's safe is that we are OK with doing trylock instead
-  *	of down_read().  There's a couple of places that are OK with that, but
-  *	it's very much not a general-purpose interface.
-@@ -859,7 +859,7 @@ static void __iterate_supers(void (*f)(s
- 	     sb = next_super(sb, flags)) {
- 		if (super_flags(sb, SB_DYING))
- 			continue;
--		sb->s_count++;
-+		refcount_inc(&sb->s_passive);
- 		spin_unlock(&sb_lock);
- 
- 		if (flags & SUPER_ITER_UNLOCKED) {
-@@ -904,7 +904,7 @@ void iterate_supers_type(struct file_sys
- 		if (super_flags(sb, SB_DYING))
- 			continue;
- 
--		sb->s_count++;
-+		refcount_inc(&sb->s_passive);
- 		spin_unlock(&sb_lock);
- 
- 		locked = super_lock_shared(sb);
-@@ -936,7 +936,7 @@ struct super_block *user_get_super(dev_t
- 		if (sb->s_dev != dev)
- 			continue;
- 
--		sb->s_count++;
-+		refcount_inc(&sb->s_passive);
- 		spin_unlock(&sb_lock);
- 
- 		locked = super_lock(sb, excl);
-@@ -1376,7 +1376,7 @@ static struct super_block *bdev_super_lo
- 
- 	/* Make sure sb doesn't go away from under us */
- 	spin_lock(&sb_lock);
--	sb->s_count++;
-+	refcount_inc(&sb->s_passive);
- 	spin_unlock(&sb_lock);
- 
- 	mutex_unlock(&bdev->bd_holder_lock);
---- a/include/linux/fs/super_types.h
-+++ b/include/linux/fs/super_types.h
-@@ -145,7 +145,7 @@ struct super_block {
- 	unsigned long				s_magic;
- 	struct dentry				*s_root;
- 	struct rw_semaphore			s_umount;
--	int					s_count;
-+	refcount_t				s_passive;
- 	atomic_t				s_active;
- #ifdef CONFIG_SECURITY
- 	void					*s_security;
++TEST_F_FORK(layout1, make_whiteout)
++{
++	/*
++	 * Creates a whiteout object (creation guarded by MAKE_REG).
++	 *
++	 * Contrary to the other character devices, this does not require
++	 * CAP_MKNOD, cf. vfs_mknod().
++	 */
++	test_make_file(_metadata, LANDLOCK_ACCESS_FS_MAKE_REG, S_IFCHR,
++		       makedev(0, 0));
++}
++
+ TEST_F_FORK(layout1, make_block)
+ {
+ 	/* Creates a /dev/loop0 device. */
+-- 
+2.53.0
+
 
 
