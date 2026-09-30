@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F7E515961;
-	Wed, 30 Sep 2026 16:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9DF514749;
+	Wed, 30 Sep 2026 16:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784607; cv=none; b=nxqK2MHLSWyTcbT1HU+jAYazIVOM6tQVDWJQpOxNl3nXDcU1EiZXPZ6D0u9p6UgI74+osPUdddfCBWfpB0SVbWKRdfEWMrnoncdvafa2wPPgoEzskxtLV4HWTt576cPAy3guC1T/f5MsNsYGTfB0HDHEmMlPxpW1Sh4UBKPDg1g=
+	t=1790784608; cv=none; b=nCYCd29ZbsVZ5Gu+5g/OqL3stfT4WINXmsb1kBApysiqDzqfKEDfPsNsoqYGDqc6cNwdM5vyJFDoUsChis6KseT43tIQpN0OCxhv3Wdg0s9Ee3ehi/+xKguAPQ6JJALFVimk3VOfnDWohH411XrYoMlOZuYlh9pw2FEVv20svFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784607; c=relaxed/simple;
-	bh=ehxApt84hdlRyeSUZIcaOsGTg5IMG/so2AjH004XZ/4=;
+	s=arc-20240116; t=1790784608; c=relaxed/simple;
+	bh=ao3FnrvVPbTIo7Ht1vU6k7BuunKH78NlrG9Dv+GTfUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cljKTLcoRDKUbol3j/Gp7DFM07DIWDEy1d9EZ8itzfP4g4K6ZkLl0muAh64qo7o8BRXggdxW1SDc+LdmaF3Fm4ALTYO17t4XJrk3ebndNZIMq6ylYckrdxHDLq2bM0VPILTcO/xav6d8VoVeOeMluZTZcaXAE1825K7jaUZ0tx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkgW934E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=utxYp9OjqcRLiA3F87xAA9ib4jZOoESxyT/UNETHuAZ2S8kIkBPAMb0eh+Ivpzx5p/S8Ole2ZYlvtoKVCqii3lDGsKOSoAhu15V1M6cjyJGkKyCCsSRvD/36cLbjBtw+4dxF7J7F+OpJq5wGPn0L40XHc5f6HaCjqQ5lYwrYpvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ql33o3Pc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkgW934E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB571F00893;
-	Wed, 30 Sep 2026 16:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ql33o3Pc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8834F1F000FF;
+	Wed, 30 Sep 2026 16:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784601;
-	bh=OZqFZmJP6W0AoYTGRM6YIALjKgXW635PLXeTll3CvvI=;
+	s=korg; t=1790784603;
+	bh=UeTkoDSXxILK62TUzmqIhp7IvzF03J+E2BIyvPX9JqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EkgW934EbcYE38vO51lb8G5mS9w8WqvrNYqRlwpRt2MzwmRakV2BTT4lw7TL+yrsh
-	 wuOBkoKt/oPQftwywQv6qy1gRzmEZqsxnCwtSElCK9L4Ao+JbL2tUboRGqmstPiOki
-	 QXUFYn4XWjDTtqSCG5zmiYBTnWbdYIe8p1UaR2vU=
+	b=Ql33o3PcyfYTik8ISk8zCtYr0e8+umCUFz/y6fiFiOso8ckkRehYASEiUBQDfPoxC
+	 /epaikBUOdYX19jR+2D6hcQ4s1OVC1kxav+5xdISTtssKb/z9h9dEZgXpuniqgIB0Z
+	 I7T6FqU1I0azktWAkgtijt6y4gCv6ksN0hUQggRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Samuel Moelius <samuel.moelius@trailofbits.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 214/982] md/raid5: let stripe batch bm_seq comparison wrap-safe
-Date: Wed, 30 Sep 2026 17:15:50 +0200
-Message-ID: <20260930152421.405783320@linuxfoundation.org>
+Subject: [PATCH 6.1 215/982] f2fs: validate inline dentry name lengths before conversion
+Date: Wed, 30 Sep 2026 17:15:51 +0200
+Message-ID: <20260930152421.426392926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,34 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Samuel Moelius <sam.moelius@trailofbits.com>
 
-[ Upstream commit 00e93faf4cea9e8802ac5dfee0952d84fc95c40f ]
+[ Upstream commit cfcd0e49a178b3dac2c0ece656079081dbf5da74 ]
 
-Once the 32-bit seq wraps, a newer bm_seq can look smaller
-than old, so .. covert to wrap-safe calculate way.
+Inline dentry conversion copies names out of the inline dentry area
+before checking that each recorded name length fits in the available
+filename slots.
 
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Link: https://patch.msgid.link/20260618025735.915113-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+A corrupted image can therefore make the conversion path read past
+the inline filename storage while building the regular dentry block.
+
+Validate each inline dentry name length against the inline filename
+area before copying it.
+
+Assisted-by: Codex:gpt-5.5-cyber-preview
+Signed-off-by: Samuel Moelius <samuel.moelius@trailofbits.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/inline.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 664aa8c0781e9..dd0864df1d8cf 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -992,7 +992,7 @@ static void stripe_add_to_batch_list(struct r5conf *conf,
- 	if (test_and_clear_bit(STRIPE_BIT_DELAY, &sh->state)) {
- 		int seq = sh->bm_seq;
- 		if (test_bit(STRIPE_BIT_DELAY, &sh->batch_head->state) &&
--		    sh->batch_head->bm_seq > seq)
-+		    sh->batch_head->bm_seq - seq > 0)
- 			seq = sh->batch_head->bm_seq;
- 		set_bit(STRIPE_BIT_DELAY, &sh->batch_head->state);
- 		sh->batch_head->bm_seq = seq;
+diff --git a/fs/f2fs/inline.c b/fs/f2fs/inline.c
+index 8e09832a0e692..e2dddced55afb 100644
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -490,6 +490,12 @@ static int f2fs_add_inline_entries(struct inode *dir, void *inline_dentry)
+ 			bit_pos++;
+ 			continue;
+ 		}
++		if (unlikely(le16_to_cpu(de->name_len) > F2FS_NAME_LEN ||
++			     bit_pos + GET_DENTRY_SLOTS(le16_to_cpu(de->name_len)) >
++			     d.max)) {
++			err = -EFSCORRUPTED;
++			goto punch_dentry_pages;
++		}
+ 
+ 		/*
+ 		 * We only need the disk_name and hash to move the dentry.
+@@ -510,6 +516,7 @@ static int f2fs_add_inline_entries(struct inode *dir, void *inline_dentry)
+ 		bit_pos += GET_DENTRY_SLOTS(le16_to_cpu(de->name_len));
+ 	}
+ 	return 0;
++
+ punch_dentry_pages:
+ 	truncate_inode_pages(&dir->i_data, 0);
+ 	f2fs_truncate_blocks(dir, 0, false);
 -- 
 2.53.0
 
