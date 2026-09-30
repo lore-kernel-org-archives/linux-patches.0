@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B283CC300;
-	Wed, 30 Sep 2026 19:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BC23B3894;
+	Wed, 30 Sep 2026 19:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795519; cv=none; b=dO2ISvubGjjXvth/acWrqbkpFdrxKZcYyAbOPivAMRpndeGAXefsv+Libw2rqtBZ9VhiV0M18OzT0JS2NQIRyUyAWCzCBeWr5jVQHWrFeo6/uCUML34jeSlhwmLs3MHZYTCeJ3heOIVNnkBpCfP0mWJDcHgnl6T0kN0KsRT7bM0=
+	t=1790795521; cv=none; b=ABWOKqN4B5fOn0VtZ3ntHAaOLINtSP2cJYBP5z+jQlAsDrn6/xoFkBXySB7b7BcSkA3QBEBXNTJ8Rebpl/wJa5q3WjNS5oy0Lns6ArBnugPJjLhMu84CoRnsdZA37L/f5lEWaT2Y7HHuWUULLQH4FwA1I490RSyAY8ZFnLaSKHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795519; c=relaxed/simple;
-	bh=5HkKDazfjGbLsVuOUQ6XyMC0LNDinJ1C4FxqlWuDcQQ=;
+	s=arc-20240116; t=1790795521; c=relaxed/simple;
+	bh=0j/jQDtbhwbRa65wewViLMLhoehq8FJzEQUW4mllAAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdmAohZFmWg5ONPp6b99ETuFFb0jurzsGf3RQrMVs3Az/tX33Hgs49CZUchTFpVoHqX/nKHAxOShxoxXD7jAr/m6fZ617Ao+Ti3d9tI+UtKDipKVi+bnr1Kjztz2+6Oa25vUpTYhsaFLmNHKvJxavV62DisKqW0i/E3hUSOgKEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsBMrOdf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lKLT6kG7Cu0yXdaRl++B4vCilyEx1an55xcFHc7Vy4QjaXQiW3aIqV4RnCxRfDwUuaSALoWUACqgdvxfHkAyA0D7zmFTtftuEZR9CpdY5xheSuy/f5GlK06A01q5A3PiQCbN0BQb1H2agKvN0WIbCqQeG+wURYt61hsomIvOXak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXFaclMb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsBMrOdf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131B61F000FF;
-	Wed, 30 Sep 2026 19:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXFaclMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB8E1F000FF;
+	Wed, 30 Sep 2026 19:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795517;
-	bh=vH2e9vm9aZBaA87Yz1EH6/QLbhCAIxyv0NMkReU6jsc=;
+	s=korg; t=1790795520;
+	bh=nmvOY0GORlsL29607q1jgY36GVJuqzxxcCzMrndBjG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TsBMrOdfYp0kssL0unQ88XWBOR9JvdRLgcZ6qZy/G0DefaTAR4he9oNGWiEM9jaUP
-	 ulWDsiZMXpfCduo/8NkOaPC4yo8BSCZ2vmh1JiKQwMP6OeSiAlz/46Ivsscrrf9ur3
-	 L9P10x9oyj7S/0+T2xfP7TqO2Z28OytwbV8MR+0w=
+	b=GXFaclMbtZS9cgIoxhjIfvSOTMNn8q6GZ1FSivJVu1lqUUdc3xq0b4ZYaoJb9XZkQ
+	 unEcIIAu4JzmS9dDnxZ3L98PsPkUnWLagm2PYRqu3O5DOOP8XGLWHw2dC8MzMrYbsP
+	 nlJJXDppg0UtmDErIipsnsIR5DpmHQ10AD9u5hOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0589/1193] net: hinic: fix mailbox segment buffer overflow
-Date: Wed, 30 Sep 2026 17:21:13 +0200
-Message-ID: <20260930152447.330994475@linuxfoundation.org>
+Subject: [PATCH 6.6 0590/1193] octeontx2-af: fix PF/CGX debugfs PCI bus lookup
+Date: Wed, 30 Sep 2026 17:21:14 +0200
+Message-ID: <20260930152447.353688349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,54 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 5d4d985957434867bbe85e4fa5e638f3e48ad522 ]
+[ Upstream commit 4f4b743c2d2bbc336cb164d9d3d2ed6956ad8437 ]
 
-check_mbox_seq_id_and_seg_len() validates that seq_id does not
-exceed SEQ_ID_MAX_VAL (42) and seg_len does not exceed
-MBOX_SEG_LEN (48).  However, this allows the last segment
-(seq_id=42) to carry a full 48-byte payload, writing to offset
-42*48=2016 for 48 bytes (ending at byte 2064).  The receive
-buffer is only MBOX_MAX_BUF_SZ (2048) bytes, resulting in a
-16-byte heap buffer overflow.
+rvu_dbg_rvu_pf_cgx_map_display() locates each RVU PF PCI device via
+pci_get_domain_bus_and_slot() when printing the PF-to-CGX map. It
+assumed PF0 always sits on PCI bus 1 and derived other PF bus numbers
+as pf + 1, but the AF device can be enumerated on a different bus.
 
-The hinic3 driver already handles this correctly by defining
-MBOX_LAST_SEG_MAX_LEN and rejecting the last segment when it
-exceeds the remaining buffer space.  Apply the same fix to the
-hinic driver.
+Use rvu->pdev->bus->number as the base bus instead, so each PF lookup
+uses pf + start on systems where RVU functions are on contiguous buses
+but do not start at bus 1.
 
-Fixes: a425b6e1c69b ("hinic: add mailbox function support")
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Link: https://patch.msgid.link/AS8P251MB0001AE870B09020B46B5D7DBC8B22@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e2fb373038654 ("octeontx2-af: Display CGX, NIX and PF map in debugfs.")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904085114.3385530-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c    | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-index 3f9c31d292158..420fb64460e10 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_hw_mbox.c
-@@ -128,6 +128,7 @@ enum hinic_mbox_tx_status {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index 285ae29396342..5502f7452236f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -852,19 +852,25 @@ static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
+ 	int pf, domain, blkid;
+ 	u8 cgx_id, lmac_id;
+ 	u16 pcifunc;
++	u8 start;
  
- #define SEQ_ID_START_VAL			0
- #define SEQ_ID_MAX_VAL				42
-+#define MBOX_LAST_SEG_MAX_LEN			(MBOX_MAX_BUF_SZ - SEQ_ID_MAX_VAL * MBOX_SEG_LEN)
+-	domain = 2;
++	domain = pci_domain_nr(rvu->pdev->bus);
+ 	mac_ops = get_mac_ops(rvu_first_cgx_pdata(rvu));
+ 	/* There can be no CGX devices at all */
+ 	if (!mac_ops)
+ 		return 0;
+ 	seq_printf(filp, "PCI dev\t\tRVU PF Func\tNIX block\t%s\tLMAC\n",
+ 		   mac_ops->name);
++
++	/* All the PF devices are on contiguous PCI bus numbers, but the PF0(AF)
++	 * may not start from 1 always. Hence get domain and bus from PCI device.
++	 */
++	start = rvu->pdev->bus->number;
+ 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
+ 		if (!is_pf_cgxmapped(rvu, pf))
+ 			continue;
  
- #define NO_DMA_ATTRIBUTE_VAL			0
+-		pdev =  pci_get_domain_bus_and_slot(domain, pf + 1, 0);
++		pdev =  pci_get_domain_bus_and_slot(domain, pf + start, 0);
+ 		if (!pdev)
+ 			continue;
  
-@@ -372,7 +373,8 @@ recv_pf_from_vf_mbox_handler(struct hinic_mbox_func_to_func *func_to_func,
- static bool check_mbox_seq_id_and_seg_len(struct hinic_recv_mbox *recv_mbox,
- 					  u8 seq_id, u8 seg_len)
- {
--	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN)
-+	if (seq_id > SEQ_ID_MAX_VAL || seg_len > MBOX_SEG_LEN ||
-+	    (seq_id == SEQ_ID_MAX_VAL && seg_len > MBOX_LAST_SEG_MAX_LEN))
- 		return false;
- 
- 	if (seq_id == 0) {
 -- 
 2.53.0
 
