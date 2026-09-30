@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFED50B433;
-	Wed, 30 Sep 2026 16:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38974FE2E6;
+	Wed, 30 Sep 2026 16:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784339; cv=none; b=DSHh7uyuY+D4VId2WRSFdf0ggIL2pqz28F26GVNkUZS6YQ89ThFL8lACzmxzBUsm7axQrwlQCJaRHZDxWV2mD9lIAjj++5b8CbCOUAlLTAqYBA32+sZbbzlbMD+aZosgOhQR1P6ov6mt8W9h8o3sQ9HMp5eJA4dMLpWOS8ZIjvE=
+	t=1790784343; cv=none; b=eCmT5IYPSHHNtKsNhGyc0+Yao/3HtyBRzTJiMk2h0jCvjH5DrEH2FymG7zHzoNYKkriQtPGV8FbAvbKLu5+ASQwyCXc2oh4NO0QHcgAUa6lyExH2rPoJhEXW6SY41FzBQSEk89aLxsxldFtrtFlv9ataSyihug6nD6uKlE19yFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784339; c=relaxed/simple;
-	bh=q1oBLPjfJJ+BhCiE9YIdaZAlwgWa+rAKQGRa3+wZVS8=;
+	s=arc-20240116; t=1790784343; c=relaxed/simple;
+	bh=CUz2QxZm4vsPENhsQ2sP+QUvfJuFoqD9K/TwEjJ4h78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqH/YrnzfAY9bnd5dfOa+YSY1Sy7U57nAZerqhpkWdEY7vNCt81HAQHcmABgdz8k4lY76RoiFn5JGZMOlBvb8HfaWS01XljoGe6QISVDlfJeUbyjPw8uVGFA3c6pZlsI3DX0n57yNmJvqD1KIH0/YzQ+30/8nEeaofSlO4u/+XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdf8RKOW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jeft/Rag//iQNQ/dhyV6s8FFatZQzau230xodH/is3wNmGxqrNIYCFLt7ctgCVSvVIA0uUGQ+9rw44GXv0GZTrSTgsCAK56LVa1G175pbvpdKDiCqCpfXMReTIb25ps8OMs1X/JZjb8GzaDCOKGGZwLXvHQwMy6YCb41q1Fvssw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6Tnsgpw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdf8RKOW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C3D1F00898;
-	Wed, 30 Sep 2026 16:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6Tnsgpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2251F000FF;
+	Wed, 30 Sep 2026 16:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784335;
-	bh=8NgaVTdnhpzlXzKPXYcmhO7PEOenIMJr1Mvp7ldGAoc=;
+	s=korg; t=1790784337;
+	bh=gmwI+NTxDvteIfsBbS1VLJ3PliiQ5o1/pEHLOGwZw18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdf8RKOWIezXVjLHPFGNh4pTSjgf876+ujPABClyCDnr2qjWbqtMBRL5Gvg2bFHVn
-	 5Nmlfnv6ocrD6CaA2BIeiJsvSp7UavH8VFvLUqR6PhueSW/g0+/6pL0h1M/oVoR553
-	 maQT8xN+QE68wGTaf1wpmbgYsAoxm9FKXf0DOrK8=
+	b=B6Tnsgpwqo+G80n28x8Km0SV5pQA/LFJBGccc7KnpjfTiZ0+DWxGzODWECYz4SmHx
+	 2rV8J9dxtfwXIC07LaNWdzewvGG8bfkXrbb3yukiqSogb4pUL6TKur/s3OlAkR3F2w
+	 B6wc2L7xKHjM/1FRqBcmpeeq4frwM72OtRVFLTAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Chatterjee <nikhilc1527@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Adrian Wowk <dev@adrianwowk.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/982] HID: bpf: Add Huion Inspiroy Frego M button quirk
-Date: Wed, 30 Sep 2026 17:13:31 +0200
-Message-ID: <20260930152418.417046546@linuxfoundation.org>
+Subject: [PATCH 6.1 076/982] usbip: vhci_hcd: fix NULL deref in status_show_vhci
+Date: Wed, 30 Sep 2026 17:13:32 +0200
+Message-ID: <20260930152418.438966558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,124 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Chatterjee <nikhilc1527@gmail.com>
+From: Adrian Wowk <dev@adrianwowk.com>
 
-[ Upstream commit 857e71cb0a538b1660743a4267a1e789575f7966 ]
+[ Upstream commit bc150783542ba2e7c1257d1299c6f3269bdba270 ]
 
-The Huion Inspiroy Frego M pen report descriptor exposes the second
-side button as Secondary Tip Switch instead of Secondary Barrel Switch.
-This makes userspace see the control as the wrong pen button.
+platform_get_drvdata() can return NULL if a VHCI host controller's
+probe failed (e.g. due to USB bus number exhaustion). status_show_vhci()
+checked for a NULL pdev but not for a NULL hcd returned by
+platform_get_drvdata(). Passing NULL to hcd_to_vhci_hcd() does not
+return NULL - it returns a pointer offset of 0x260, causing a NULL
+pointer dereference when that value is subsequently dereferenced.
 
-Add a HID-BPF report descriptor fixup for the Bluetooth 256c:8251
-device and USB 256c:2012 L610 variant. The fixup matches the expected
-pen descriptor and rewrites the offending usage from Secondary Tip
-Switch to Secondary Barrel Switch.
+Add a NULL check on hcd before calling hcd_to_vhci_hcd(). Move
+status_show_not_ready() above status_show_vhci() to make it callable
+from the new error path without a forward declaration.
 
-Tested by building the HID-BPF object with:
-
-  make -C drivers/hid/bpf/progs Huion__Inspiroy-Frego-M.bpf.o
-
-Signed-off-by: Nikhil Chatterjee <nikhilc1527@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Adrian Wowk <dev@adrianwowk.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20260414010050.158064-2-dev@adrianwowk.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/progs/Huion__Inspiroy-Frego-M.bpf.c   | 87 +++++++++++++++++++
- 1 file changed, 87 insertions(+)
- create mode 100644 drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c
+ drivers/usb/usbip/vhci_sysfs.c | 52 +++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c b/drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c
-new file mode 100644
-index 0000000000000..e6ba2295dc775
---- /dev/null
-+++ b/drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c
-@@ -0,0 +1,87 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include "vmlinux.h"
-+#include "hid_bpf.h"
-+#include "hid_bpf_helpers.h"
-+#include <bpf/bpf_tracing.h>
-+
-+/*
-+ * Huion Inspiroy Frego M Pen Tablet
-+ * Model L610
-+ * 256c:8251 (Bluetooth)
-+ * 256c:2012 (USB)
-+ */
-+#define VID_HUION			0x256C
-+#define PID_INSPIROY_FREGO_M		0x8251
-+#define PID_L610			0x2012
-+
-+#define PEN_RDESC_SIZE			125
-+#define SECONDARY_SWITCH_OFFSET		17
-+
-+HID_BPF_CONFIG(
-+	HID_DEVICE(BUS_BLUETOOTH, HID_GROUP_GENERIC, VID_HUION, PID_INSPIROY_FREGO_M),
-+	HID_DEVICE(BUS_USB, HID_GROUP_GENERIC, VID_HUION, PID_L610)
-+);
-+
-+/*
-+ * The pen descriptor reports the second side button as Secondary Tip Switch
-+ * instead of Secondary Barrel Switch.
-+ *
-+ * Relevant part of the original pen report descriptor:
-+ *
-+ * 0x09, 0x42,       // Usage (Tip Switch)                  12
-+ * 0x09, 0x44,       // Usage (Barrel Switch)               14
-+ * 0x09, 0x43,       // Usage (Secondary Tip Switch)        16 <- change to 0x5a
-+ * 0x09, 0x3c,       // Usage (Invert)                      18
-+ * 0x09, 0x45,       // Usage (Eraser)                      20
-+ * 0x15, 0x00,       // Logical Minimum (0)                 22
-+ * 0x25, 0x01,       // Logical Maximum (1)                 24
-+ */
-+SEC(HID_BPF_RDESC_FIXUP)
-+int BPF_PROG(fix_secondary_barrel_rdesc, struct hid_bpf_ctx *hctx)
+diff --git a/drivers/usb/usbip/vhci_sysfs.c b/drivers/usb/usbip/vhci_sysfs.c
+index e2847cd3e6e36..7dd6465ee4358 100644
+--- a/drivers/usb/usbip/vhci_sysfs.c
++++ b/drivers/usb/usbip/vhci_sysfs.c
+@@ -59,6 +59,29 @@ static void port_show_vhci(char **out, int hub, int port, struct vhci_device *vd
+ 	*out += sprintf(*out, "\n");
+ }
+ 
++static ssize_t status_show_not_ready(int pdev_nr, char *out)
 +{
-+	__u8 *data = hid_bpf_get_data(hctx, 0 /* offset */, HID_MAX_DESCRIPTOR_SIZE /* size */);
++	char *s = out;
++	int i = 0;
 +
-+	if (!data)
-+		return 0; /* EPERM check */
-+
-+	if (hctx->size != PEN_RDESC_SIZE)
-+		return 0;
-+
-+	if (data[0] != 0x05 || data[1] != 0x0d || /* Usage Page (Digitizers) */
-+	    data[2] != 0x09 || data[3] != 0x02 || /* Usage (Pen) */
-+	    data[16] != 0x09 ||
-+	    data[SECONDARY_SWITCH_OFFSET] != 0x43) /* Secondary Tip Switch */
-+		return 0;
-+
-+	data[SECONDARY_SWITCH_OFFSET] = 0x5a;
-+
-+	return 0;
-+}
-+
-+HID_BPF_OPS(fix_secondary_barrel) = {
-+	.hid_rdesc_fixup = (void *)fix_secondary_barrel_rdesc,
-+};
-+
-+SEC("syscall")
-+int probe(struct hid_bpf_probe_args *ctx)
-+{
-+	ctx->retval = ctx->rdesc_size != PEN_RDESC_SIZE;
-+	if (ctx->retval) {
-+		ctx->retval = -EINVAL;
-+		return 0;
++	for (i = 0; i < VHCI_HC_PORTS; i++) {
++		out += sprintf(out, "hs  %04u %03u ",
++				    (pdev_nr * VHCI_PORTS) + i,
++				    VDEV_ST_NOTASSIGNED);
++		out += sprintf(out, "000 00000000 0000000000000000 0-0");
++		out += sprintf(out, "\n");
 +	}
 +
-+	if (ctx->rdesc[0] != 0x05 || ctx->rdesc[1] != 0x0d || /* Usage Page (Digitizers) */
-+	    ctx->rdesc[2] != 0x09 || ctx->rdesc[3] != 0x02 || /* Usage (Pen) */
-+	    ctx->rdesc[16] != 0x09 ||
-+	    ctx->rdesc[SECONDARY_SWITCH_OFFSET] != 0x43) { /* Secondary Tip Switch */
-+		ctx->retval = -EINVAL;
-+		return 0;
++	for (i = 0; i < VHCI_HC_PORTS; i++) {
++		out += sprintf(out, "ss  %04u %03u ",
++				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
++				    VDEV_ST_NOTASSIGNED);
++		out += sprintf(out, "000 00000000 0000000000000000 0-0");
++		out += sprintf(out, "\n");
 +	}
-+
-+	ctx->retval = 0;
-+
-+	return 0;
++	return out - s;
 +}
 +
-+char _license[] SEC("license") = "GPL";
+ /* Sysfs entry to show port status */
+ static ssize_t status_show_vhci(int pdev_nr, char *out)
+ {
+@@ -76,6 +99,12 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
+ 	}
+ 
+ 	hcd = platform_get_drvdata(pdev);
++
++	if (!hcd) {
++		usbip_dbg_vhci_sysfs("show status error (hcd is NULL)\n");
++		return status_show_not_ready(pdev_nr, out);
++	}
++
+ 	vhci_hcd = hcd_to_vhci_hcd(hcd);
+ 	vhci = vhci_hcd->vhci;
+ 
+@@ -104,29 +133,6 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
+ 	return out - s;
+ }
+ 
+-static ssize_t status_show_not_ready(int pdev_nr, char *out)
+-{
+-	char *s = out;
+-	int i = 0;
+-
+-	for (i = 0; i < VHCI_HC_PORTS; i++) {
+-		out += sprintf(out, "hs  %04u %03u ",
+-				    (pdev_nr * VHCI_PORTS) + i,
+-				    VDEV_ST_NOTASSIGNED);
+-		out += sprintf(out, "000 00000000 0000000000000000 0-0");
+-		out += sprintf(out, "\n");
+-	}
+-
+-	for (i = 0; i < VHCI_HC_PORTS; i++) {
+-		out += sprintf(out, "ss  %04u %03u ",
+-				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
+-				    VDEV_ST_NOTASSIGNED);
+-		out += sprintf(out, "000 00000000 0000000000000000 0-0");
+-		out += sprintf(out, "\n");
+-	}
+-	return out - s;
+-}
+-
+ static int status_name_to_id(const char *name)
+ {
+ 	char *c;
 -- 
 2.53.0
 
