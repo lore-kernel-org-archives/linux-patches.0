@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA052509F18;
-	Wed, 30 Sep 2026 16:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3CE51C05A;
+	Wed, 30 Sep 2026 16:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784493; cv=none; b=extNRMC8X9K/7RyUWQPIu2p+zPmGRdqXbhfBfIsLZ5suDgQR0Gn1PeBZ4W35GYcUpZR8iUsqE0lxXnAELMrz2pmUg1vni+sj6tjNPw1UxpAaZ27NeO8c7C6KMUqlyAeYZ0yRRqptu7DAr6exjFT8Ou5N4PItjxIHVvQkLTYTGVg=
+	t=1790784498; cv=none; b=d1dm+XGmC1uwGPHqxkLW5wTQ6JA3dGyqemkTB+M6u/WWMZsifOWGVkE2BmLMKd0KJgumcPVTLDEs4UVcA7iJwY8VofovZuMgmIQRX299h2zA8SjeTYpogAUv6JGbqnCq8OjTWAU2frRo21aoB27z5AwWCHBChQdFIE1KmIoMlHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784493; c=relaxed/simple;
-	bh=hahoDA8ddi/338DdGRO9jdHDgdIhlsg0W8ALwViS80I=;
+	s=arc-20240116; t=1790784498; c=relaxed/simple;
+	bh=HC7fHh4bcGSzCrJhXz87Uj8hdbDCbAt6UaWmRc19pjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0fWEeAWO2xJ7inUFPtgrqUxwYBu+/T2eEIXcy4Zdv/kM9VMJOhSiTkVhVKZtCdr2S0Z2YoaYcAyp/ILKCjmYhQ8m4XNTSyiMmbqXUxCu7SaKrI19aUomo+Z58EDOspRa/dwwnkHA0MIzXMjBeZ4pStQJZOWEGfzqNI18ZWPZFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn6Rc8vX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aILdSBd4dAIpUAZ27sZ+hkjYs+PuggqoPLS8H1NOT1k96SvmWxjLvIf9F3L11Z488Uzf/u7mX5sJglnBNFFgH9hk5DO2Zpmwbz6kyz3EDzRYavbkgYcfnScPZlvNdLY4108MjUAnrGTtNNHAt0ZLEms/EuAQxz8K2ZMdl2sLZXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwzGUr/6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn6Rc8vX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C611F000FF;
-	Wed, 30 Sep 2026 16:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwzGUr/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351FC1F00893;
+	Wed, 30 Sep 2026 16:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784487;
-	bh=XAe9k7UFQZ1z8n+gFm5BRM1eLqGfVCrEK9rv+XsM3lY=;
+	s=korg; t=1790784490;
+	bh=9XJcMZv+KsR/tFmX2bhlk/LkoPz8taknZeUqz9Ogan4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gn6Rc8vXMI6zh3PIJea6NERI/YPpoKz0XoPyIOce/ZXyLc2A8X5WLtsfWn8qpty/4
-	 gF5SphzQm9q0HH5Me5nwHrDj9bdf2aJpZDYUOtfKoHTHBu9WQte17+FI1TIbEpSgor
-	 BRGpO6vxBtgqbRgj/MUmiffKFK9Lnrmp/3PUYxUE=
+	b=XwzGUr/6SVNRTGpkYYtOqNxX9VbpQRv9W70hC4VTYoBME4y9iysyeJVZzrc9VIZLY
+	 MT80BkrBe2nLj9ovKLXSDj1k48eHXJwe+RvvIpdCAIq+dGidvThAFsbNNizSAT41fI
+	 fortSelTAIBBRwd5H/eHu7mUEU1GL2zoX78D4u0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/982] xprtrdma: Add request-pool slack for delayed recycling
-Date: Wed, 30 Sep 2026 17:15:02 +0200
-Message-ID: <20260930152420.377448357@linuxfoundation.org>
+Subject: [PATCH 6.1 175/982] ata: libata-pmp: add JMicron JMS562 quirk
+Date: Wed, 30 Sep 2026 17:15:11 +0200
+Message-ID: <20260930152420.573995515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,95 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 64bf6892057b746c55bcc045b9492741b72d8d27 ]
+[ Upstream commit c62aff1174cf88e10716c7513702443c47551fc6 ]
 
-After the previous patch gates req recycling on Send completion,
-a completed RPC's rpcrdma_req can remain pinned by the sendctx
-ring until the next signaled Send completion releases it. The
-transmitted-RPC ceiling is unchanged: xprt_request_get_cong()
-gates Sends against xprt->cwnd, the RPC/RDMA credit window fed
-by server-granted credits and capped at re_max_requests. The
-req pool, however, must exceed max_reqs by enough that this
-recycle delay does not stall a slot allocation that the credit
-window would admit.
+JMicron JMS562, as used in QNAP QDA-A2AR RAID1 adapters, may
+keep the exported ATA device not ready while the array is rebuilding.
 
-The headroom is bounded. frwr_open() sets re_send_batch to
-re_max_requests >> 3 -- one in every eight Sends is signaled --
-so at most re_send_batch unsignaled Sends can be outstanding
-before the next signaled completion releases them. That equals
-max_reqs / 8 reqs in the worst case, with a one-slot floor for
-small max_reqs values where the right-shift rounds to zero.
+In this state, libata may repeatedly try to softreset and classify
+the fan-out link.  On the affected adapter, this can time out, make
+PMP/SCR access fail, and eventually disable the fan-out link before
+the RAID volume is exported.
 
-The sendctx ring and the hardware Send Queue are not enlarged
-to match. Both are sized in rpcrdma_sendctxs_create() and
-frwr_query_device() for re_max_requests in-flight Sends, which
-is the ceiling the credit window enforces. The pool slack does
-not raise that ceiling -- it only lets allocation keep pace
-with the credit window during the brief interval in which
-earlier reqs are pinned waiting for the next signaled
-completion. At any moment, at most re_send_batch sendctxes are
-held by unswept unsignaled Sends, leaving the rest of the ring
-available for newly admitted Sends.
+A failing boot shows the fan-out link failing SRST, PMP access
+timing out, SCR read failing, and the link being disabled:
 
-Allocate max_reqs + DIV_ROUND_UP(max_reqs, 8) request objects
-and name the slack calculation at the allocation site so the
-1/8 bound stays tied to the Send-signaling batch size.
+  ata4.00: softreset failed (device not ready)
+  ata4.15: qc timeout after 3000 msecs (cmd 0xe4)
+  ata4.00: failed to read SCR 0 (Emask=0x4)
+  ata4.00: failed to recover link after 3 tries, disabling
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+After that, the root filesystem on the exported RAID volume cannot
+be found.
+
+Add JMS562 to the existing JMicron PMP quirk that disables LPM,
+avoids softreset on fan-out links, and assumes an ATA device.  This
+prevents libata from dropping the exported RAID volume during rebuild
+recovery.
+
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/ata/libata-pmp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index a97f0b18ac429..34a3c08a82fba 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -1110,6 +1110,22 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
- 	spin_unlock(&buf->rb_lock);
- }
- 
-+static unsigned int rpcrdma_req_pool_slack(unsigned int max_reqs)
-+{
-+	/* The sendctx ring can hold up to one Send-signaling batch
-+	 * (re_send_batch, set by frwr_open() to re_max_requests >> 3)
-+	 * of unfinished Sends. Each pins its req until a signaled Send
-+	 * completion releases the sendctx. Size the pool above max_reqs
-+	 * by that batch so the recycle delay does not stall a slot
-+	 * allocation that the RPC/RDMA credit window would admit.
-+	 *
-+	 * Round up: re_max_requests >> 3 is zero when max_reqs < 8, but
-+	 * a single unsignaled Send is still enough to pin one req. One
-+	 * slack slot covers that case.
-+	 */
-+	return DIV_ROUND_UP(max_reqs, 8);
-+}
-+
- /**
-  * rpcrdma_buffer_create - Create initial set of req/rep objects
-  * @r_xprt: transport instance to (re)initialize
-@@ -1119,6 +1135,7 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
- int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
- {
- 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
-+	unsigned int max_reqs;
- 	int i, rc;
- 
- 	buf->rb_bc_srv_max_requests = 0;
-@@ -1132,7 +1149,9 @@ int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
- 	INIT_LIST_HEAD(&buf->rb_all_reps);
- 
- 	rc = -ENOMEM;
--	for (i = 0; i < r_xprt->rx_xprt.max_reqs; i++) {
-+	max_reqs = r_xprt->rx_xprt.max_reqs;
-+	max_reqs += rpcrdma_req_pool_slack(max_reqs);
-+	for (i = 0; i < max_reqs; i++) {
- 		struct rpcrdma_req *req;
- 
- 		req = rpcrdma_req_create(r_xprt,
+diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
+index e2e9cbd405fa0..97f9fe5f5fb02 100644
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -446,8 +446,13 @@ static void sata_pmp_quirks(struct ata_port *ap)
+ 		 * otherwise.  Don't try hard to recover it.
+ 		 */
+ 		ap->pmp_link[ap->nr_pmp_links - 1].flags |= ATA_LFLAG_NO_RETRY;
+-	} else if (vendor == 0x197b && (devid == 0x2352 || devid == 0x0325)) {
++	} else if (vendor == 0x197b &&
++		   (devid == 0x0562 || devid == 0x2352 || devid == 0x0325)) {
+ 		/*
++		 * 0x0562: JMicron JMS562, as used in QNAP QDA-A2AR RAID1
++		 *         adapters.  The exported device may stay not ready
++		 *         while the array is rebuilding, and SRST/classify can
++		 *         time out before the RAID volume is exported.
+ 		 * 0x2352: found in Thermaltake BlackX Duet, jmicron JMB350?
+ 		 * 0x0325: jmicron JMB394.
+ 		 */
 -- 
 2.53.0
 
