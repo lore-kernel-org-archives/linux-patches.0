@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38494409103;
-	Wed, 30 Sep 2026 19:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444553E0C44;
+	Wed, 30 Sep 2026 19:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796883; cv=none; b=P0UXZfHPt5dO9RBb72Pdb13AzgaY9E407kpu/Rf1/JF9Mp6He0+TNa6n7RoHIkNHXxgMifs5WH6RfVKnKJjqa6lbcBuFLbWBujaqA9MUrdKYlyG/mrRONnlXxg3OEm2yO+idRji5mqlOxCZhpPjtKV2vN9UmVXeZ4RIRacVMY+s=
+	t=1790796886; cv=none; b=fPH2SgAHHMr9l4FU8TVjqGsZrMFWwiyo4V2oGnyPpgs1VmK5mrbVkjpAO5zbYIKLIaYu+DdLSjOnIX/qrHLPQJGo84feV9GJn/IQrT/CUNFdc6BKGkMUa8nPf0CDcluyuNwF6PhEaRW4uh1hIQKlVXGi8uokOM03dhYtig3OyYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796883; c=relaxed/simple;
-	bh=fDlTjImGg3Hd0lgzXilFizicQTe0S7D2WopPVY2tBb0=;
+	s=arc-20240116; t=1790796886; c=relaxed/simple;
+	bh=I/NcLYGWb2hnbsqxiIXBRNf1pkXBEzTRcT2QBgnLqnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1dlf52+BRi1plwtBhMFhS/uwr0Ehn/RWh3NkK9DYoY+4jcF5xPnRjBEFM0cSA3SS3wypB6cX5w7SxN9Idb3J9HszM8skrFFyEzOloE2+lzPsUUZlXpJAcmp6j7THux7NdMqhLMQj2JlU7HcN4DAyCf0KpbLqVrNNFJKII1HQRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QbjI3fb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cmpE7w6easNa/PuAgIE1gNjfKtz63A94Ig18zVzmXZw55kyNlBRObgjS+TGj8Jm/bXLU/z3NLpkuJ4WH+vmadN+GU9mbflYdSHTKUw8p0so8iBPEjueBkW6tLrncdwnxw2JsqiXSZO5leer3OSryHFQHldlulAn5VI0qi6PsZIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHYEmEjY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QbjI3fb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919B81F000FF;
-	Wed, 30 Sep 2026 19:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHYEmEjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD451F000FF;
+	Wed, 30 Sep 2026 19:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796882;
-	bh=gdjFkAiAbP7P+PvIVJgPW8QqsxkSDpgYi/nAol2Vqb4=;
+	s=korg; t=1790796884;
+	bh=UqQO9+2LVwgoOJIufI6nJooN4G23Q1eXV4opr0ALOs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2QbjI3fb+ePcr6wERwVmqnmYNYpAdgdf0uNzZGCpZ7be/0GgmkCLYRjWIfw5/6XW3
-	 6jONTByKu2yQVSNQYLJ3FmqQbdRMp2E3xgqd/U/y4H5bmRaaeq8SKDFotlUTqWSDIB
-	 NiID4tSPsjFvpaZW3vOgN7GuY6vm7Q2wM2AJ4nKE=
+	b=GHYEmEjYnLtwrfUaoO/z3AMlzcTlg9msoCRqTjiDdZnc61rX+clkkdBN9OAX6vpwV
+	 fzWkl7Wehx8h4IkgtotmLOREMU8ABM6Dvn0o06FJobZgnvObzVxAMiwR075ts6yUzY
+	 HHkrk/Qvi3FcizQu8fH3jlPVnfmMT3uJfP9w/Odw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Dai <zdai@linux.ibm.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1070/1193] net: xps: reject an out of range traffic class
-Date: Wed, 30 Sep 2026 17:29:14 +0200
-Message-ID: <20260930152457.997881629@linuxfoundation.org>
+Subject: [PATCH 6.6 1071/1193] bonding: crypto offload enabled, non-offload slave failover, rekey failed
+Date: Wed, 30 Sep 2026 17:29:15 +0200
+Message-ID: <20260930152458.020098116@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,67 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: David Dai <zdai@linux.ibm.com>
 
-[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
+[ Upstream commit 00efbbd40bd5fd92c67b7cf1aab8904fa59a96f6 ]
 
-Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
-dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
-lowers dev->num_tc without touching either array.
+Create a bonding device (i.e. bond0) in active-backup mode, 2 slaves.
+Active slave: offload capable interface (i.e. eth1), primary interface.
+Backup slave: non-offload capable interface(i.e. eth2).
+Configure strongswan service swantl.conf child SA "hw_offload = crypto"
+Start strongswan service
+IPSec Crytpo Offload is enabled on top of bond0. i.e.
+ip xfrm state |grep offload
+        crypto offload parameters: dev bond0 dir out mode crypto
+	crypto offload parameters: dev bond0 dir in mode crypto
 
-netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
-netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
-entry is handed out as a traffic class >= dev->num_tc. Taking that
-class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
-negative one and indexes an XPS map sized for dev->num_tc classes:
+Active slave eth1 takes adavantage of IPSec Crypto Offload capability.
 
-	tci = j * num_tc + tc;
-	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
+If active slave eth1 is down for any reason (i.e. eth1 link down):
+ip link set down dev eth1
+non-offload capable interface eth2 failover to becomes active slave.
+The existing SAs can continue use software IPsec after failover.
+Traffic still keeps going properly.
 
-attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
-in the mask, so a class that is not below num_tc pushes tci past the end
-of the map for the last ids and the store overruns it.
+However if eth1 link had not recovered yet, strongswan service does
+new child SA rekey, or uses swanctl command to do new child SA rekey,
+it will fail because active slave eth2 doesn't support crypto offload.
+In bond_ipsec_add_sa routine, it returns -EINVAL now, which is
+treated as fatal error by xfrm_dev_state_add routine in kernel xfrm.
 
-Any caller that lowers num_tc leaves such entries behind, and
-mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
-netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
-still describe txq 1..7. The splat is from an XPS write to txq 2 on a
-veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
-j == 6 stores one past the end of the 88-byte map:
+To make the non-offload active slave survive the child SA rekey, need
+to make bond_ipsec_add_sa routine returns -EOPNOTSUPP instead when
+active slave doesn't support IPsec Crypto offload, the xfrm will
+gracefully fallback to create new SA using Software IPsec.
+Network traffic can keep going.
 
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
-  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
-   __netif_set_xps_queue (net/core/dev.c:2954)
-   xps_rxqs_store (net/core/net-sysfs.c:1880)
-   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
-  Allocated by task 634:
-   __kmalloc_noprof (mm/slub.c:5439)
-   __netif_set_xps_queue (net/core/dev.c:2937)
-  The buggy address is located 0 bytes to the right of
-   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
+After offload capable interface eth1 link is up, becomes active slave,
+next time strongswan child SA rekey will create a new SA which enables
+crypto offload again.
 
-Reject a class the map has no room for.
-
-Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
+Signed-off-by: David Dai <zdai@linux.ibm.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260918211155.1664493-1-zdai@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
+ drivers/net/bonding/bond_main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index b6e024356a831..2fdef07b7b93b 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2653,7 +2653,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
- 
- 		tc = netdev_txq_to_tc(dev, index);
--		if (tc < 0)
-+		if (tc < 0 || tc >= num_tc)
- 			return -EINVAL;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 9444982330823..e799791daa457 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -459,7 +459,7 @@ static int bond_ipsec_add_sa(struct xfrm_state *xs,
+ 	    !real_dev->xfrmdev_ops->xdo_dev_state_add ||
+ 	    netif_is_bond_master(real_dev)) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Slave does not support ipsec offload");
+-		err = -EINVAL;
++		err = -EOPNOTSUPP;
+ 		goto out;
  	}
  
 -- 
