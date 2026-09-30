@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCAF4CE681;
-	Wed, 30 Sep 2026 16:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEA250AC2B;
+	Wed, 30 Sep 2026 16:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785328; cv=none; b=Z1z1hvkf2O46PCmENzxacm1WgpDe0Oito8SIjfbxfhm0f/Hyr9/et8P6ZSKPL1ElcZUlCLne+yBle8Gqe/bzw1Jq4LVyNfhnpqphfMEoCzSwJSSQvcLZSQW8vU+bfkjOY8S/B+WEu1Y6/DKgaQ9/63NaVCgqUQMqFoGgr9TIs50=
+	t=1790785329; cv=none; b=kuvIZtBpWjT0XS7e5NAAtupIPrT6GQudKM4d8h/2hzoDcpD6vMAUSoziuGjMbIVNN2RTm9aHkM8W/itnC0uQ7VpWR6zwrEX2hViHkPA9U0hTSEWxhZY+nVHehLtuk+copwTG4GhSBBo5POly/fuh1m8+iqZHqi/XNmwSgzM/XR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785328; c=relaxed/simple;
-	bh=ZYyOBwpS3UPN/ln38eXsQ1tokYQ2bf3ncCu7KHWI7V8=;
+	s=arc-20240116; t=1790785329; c=relaxed/simple;
+	bh=S6/V4KbSmrqJkNTL8aQT1UxJ5mhcVU5B4HlXkIsodNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdHCM4LF8gP4c9r6FAMxZat2MBIVbA1DhfiXdNIlVreenaBXrWu3SPQhTJ16PgwXx3tMGgtBiqffhUpnxQVbSyG05XILei8za0JeBXPb6wzlYbXV2zL5zQPunvxe+bhsSE824MzfuCkKUx+OzqdYCWVsUHBOPPqSSGocKCxOi4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcUIP64k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KCMu7H2yJW/V+dVxAZbCMHe1Nn3/Fs98RtYUMcw0kxOkVmJ8Hvk1iezz1D/+J1MteYolq5PoEqS3xSQWRQv+ZvcX2M+mMdAAPzXRsMC2uITa2aM+LbmEwD+B3CCi3tgKoSeYC629moXhoRThU1fYxoTKsiIU/4/NRyyic8toxUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEN9RszP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcUIP64k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43C81F00898;
-	Wed, 30 Sep 2026 16:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEN9RszP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EDE1F00893;
+	Wed, 30 Sep 2026 16:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785319;
-	bh=gHE/omMi5yydyafVgKTBjknw0+A35dNDWc+rQtoyxjg=;
+	s=korg; t=1790785322;
+	bh=saYgQBkIUWOMarjVhf6aCXViviySepZ3haYKvB+pSus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DcUIP64kDH7mYh1U1vtX4KAAgmrASLOxKEprUBVrmE1f/MYHdtJ1L02GqdyVWBfrU
-	 AOOYpV6zQqKGSNKMxArlqJakkFtkT8ieIOrDBLytYSKoAdnFAqhPEIGS0g2Rddya+1
-	 UysrzpLoyAXiNENat+BClIxe9svkRq/4NyG/42Xw=
+	b=vEN9RszPh2yR4gmQ3K2NAX0PQbBVX6DmqDEAaxInO32x8v2z6hkGG96Ml8RrhyXso
+	 PxObzQQT050ejLbeu7C2GCK8/qEmHFyXk6bBXngl0hYicsAbbei/NdNKFmrwEEGeK6
+	 UiS3mCF/DL2GG0nFPmvtfSHl8UYOmdNEbMZItrOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Yicong Hui <yiconghui@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 467/982] watchdog: msc313e: Sync timeout value if WDT was running at boot
-Date: Wed, 30 Sep 2026 17:20:03 +0200
-Message-ID: <20260930152426.817316529@linuxfoundation.org>
+Subject: [PATCH 6.1 468/982] net/micrel: Fix typos in micrel driver code comments
+Date: Wed, 30 Sep 2026 17:20:04 +0200
+Message-ID: <20260930152426.837879795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,66 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Yicong Hui <yiconghui@gmail.com>
 
-[ Upstream commit 01504d14e47b34779911250dd308a03f6ef681c2 ]
+[ Upstream commit c2b733da93bf607d6c6f925b4d40598e6bb516be ]
 
-If WDT was running at boot, the hardware timeout might be set to values
-other than the final software timeout.
+Fix various typos and misspellings in code comments in the
+drivers/net/ethernet/micrel directory
 
-To be consistent, set the hardware timeout to match the final software
-timeout (i.e., after watchdog_init_timeout()) if WDT was running.
-
-Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-8-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Yicong Hui <yiconghui@gmail.com>
+Link: https://patch.msgid.link/20260118121001.136806-3-yiconghui@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 66ef5adb7544 ("net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/micrel/ks8842.c        | 4 ++--
+ drivers/net/ethernet/micrel/ks8851_common.c | 2 +-
+ drivers/net/ethernet/micrel/ks8851_spi.c    | 4 ++--
+ drivers/net/ethernet/micrel/ksz884x.c       | 4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 72620adec641a..eea26c6c95d84 100644
---- a/drivers/watchdog/msc313e_wdt.c
-+++ b/drivers/watchdog/msc313e_wdt.c
-@@ -145,12 +145,21 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
- 	priv->wdev.max_timeout = U32_MAX / rate;
- 	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
+diff --git a/drivers/net/ethernet/micrel/ks8842.c b/drivers/net/ethernet/micrel/ks8842.c
+index c11b118dc4158..de2ef3c1150d7 100644
+--- a/drivers/net/ethernet/micrel/ks8842.c
++++ b/drivers/net/ethernet/micrel/ks8842.c
+@@ -242,7 +242,7 @@ static void ks8842_reset(struct ks8842_adapter *adapter)
+ 		msleep(10);
+ 		iowrite16(0, adapter->hw_addr + REG_GRR);
+ 	} else {
+-		/* The KS8842 goes haywire when doing softare reset
++		/* The KS8842 goes haywire when doing software reset
+ 		* a work around in the timberdale IP is implemented to
+ 		* do a hardware reset instead
+ 		ks8842_write16(adapter, 3, 1, REG_GRR);
+@@ -312,7 +312,7 @@ static void ks8842_reset_hw(struct ks8842_adapter *adapter)
+ 	/* aggressive back off in half duplex */
+ 	ks8842_enable_bits(adapter, 32, 1 << 8, REG_SGCR1);
  
-+	watchdog_set_drvdata(&priv->wdev, priv);
-+	platform_set_drvdata(pdev, priv);
-+
-+	watchdog_init_timeout(&priv->wdev, timeout, dev);
-+	watchdog_stop_on_reboot(&priv->wdev);
-+	watchdog_stop_on_unregister(&priv->wdev);
-+	watchdog_stop_ping_on_suspend(&priv->wdev);
-+
- 	ret = clk_prepare_enable(priv->clk);
- 	if (ret)
- 		return ret;
+-	/* enable no excessive collison drop */
++	/* enable no excessive collision drop */
+ 	ks8842_enable_bits(adapter, 32, 1 << 3, REG_SGCR2);
  
- 	/* If the period is non-zero the WDT is running */
- 	if (msc313e_wdt_get_hw_timeout(priv)) {
-+		msc313e_wdt_set_hw_timeout(priv, priv->wdev.timeout);
- 		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
- 		/*
- 		 * Keep the clock enabled. The watchdog core will skip the next
-@@ -161,14 +170,6 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
- 		clk_disable_unprepare(priv->clk);
- 	}
+ 	/* Enable port 1 force flow control / back pressure / transmit / recv */
+diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
+index b1e9d1495c019..7c336e0a4b8ae 100644
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -493,7 +493,7 @@ static int ks8851_net_open(struct net_device *dev)
+  * ks8851_net_stop - close network device
+  * @dev: The device being closed.
+  *
+- * Called to close down a network device which has been active. Cancell any
++ * Called to close down a network device which has been active. Cancel any
+  * work, shutdown the RX and TX process and then place the chip into a low
+  * power state whilst it is not being used.
+  */
+diff --git a/drivers/net/ethernet/micrel/ks8851_spi.c b/drivers/net/ethernet/micrel/ks8851_spi.c
+index 50afe8c11178e..a1d0918b8edd4 100644
+--- a/drivers/net/ethernet/micrel/ks8851_spi.c
++++ b/drivers/net/ethernet/micrel/ks8851_spi.c
+@@ -41,7 +41,7 @@ static int msg_enable;
+  *
+  * The @lock ensures that the chip is protected when certain operations are
+  * in progress. When the read or write packet transfer is in progress, most
+- * of the chip registers are not ccessible until the transfer is finished and
++ * of the chip registers are not accessible until the transfer is finished and
+  * the DMA has been de-asserted.
+  */
+ struct ks8851_net_spi {
+@@ -298,7 +298,7 @@ static unsigned int calc_txlen(unsigned int len)
  
--	watchdog_set_drvdata(&priv->wdev, priv);
--	platform_set_drvdata(pdev, priv);
--
--	watchdog_init_timeout(&priv->wdev, timeout, dev);
--	watchdog_stop_on_reboot(&priv->wdev);
--	watchdog_stop_on_unregister(&priv->wdev);
--	watchdog_stop_ping_on_suspend(&priv->wdev);
--
- 	ret = devm_watchdog_register_device(dev, &priv->wdev);
+ /**
+  * ks8851_tx_work - process tx packet(s)
+- * @work: The work strucutre what was scheduled.
++ * @work: The work structure what was scheduled.
+  *
+  * This is called when a number of packets have been scheduled for
+  * transmission and need to be sent to the device.
+diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
+index e6acd1e7b263a..4b35b7f1e6ad3 100644
+--- a/drivers/net/ethernet/micrel/ksz884x.c
++++ b/drivers/net/ethernet/micrel/ksz884x.c
+@@ -1166,7 +1166,7 @@ struct ksz_port_info {
+  * @tx_cfg:		Cached transmit control settings.
+  * @rx_cfg:		Cached receive control settings.
+  * @intr_mask:		Current interrupt mask.
+- * @intr_set:		Current interrup set.
++ * @intr_set:		Current interrupt set.
+  * @intr_blocked:	Interrupt blocked.
+  * @rx_desc_info:	Receive descriptor information.
+  * @tx_desc_info:	Transmit descriptor information.
+@@ -2181,7 +2181,7 @@ static void sw_dis_prio_rate(struct ksz_hw *hw, int port)
+ }
  
- 	/* If the WDT is running and anything goes wrong, disable the clock. */
+ /**
+- * sw_init_prio_rate - initialize switch prioirty rate
++ * sw_init_prio_rate - initialize switch priority rate
+  * @hw: 	The hardware instance.
+  *
+  * This routine initializes the priority rate function of the switch.
 -- 
 2.53.0
 
