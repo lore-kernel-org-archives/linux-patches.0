@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8203368D7C;
-	Wed, 30 Sep 2026 16:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B580518C332;
+	Wed, 30 Sep 2026 16:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787438; cv=none; b=YMlqemuZ6+1bythIJdhLsZUxLNvtTFRt2Dt+AIyUj9Boe4D6lgyCG2XnPVp1ckbKz+7h7LcrxlTx8esZtvOrrtt3Fvm7GhKdo6A8RXHmzxw02rWkym8ka1VyajH6Ng1KC0rCEBcu+uy7RWqL9zhuSzQLkx506CvU2bWfdfWpARg=
+	t=1790787441; cv=none; b=UukbKhw1NMFN2Uxt+sgjbb2Qpc0pQ2shW7RL2qbvByB6rOhML2iPIlHy75Jtt5fza1G+QVSz/QBwC6TXnyFcyNobubkbLrqmJHCaPXiBGhQUdLekbm9MXqIBxoVPE7fqRT/cA4QtdEiVeEo5TUM5ziX6h0onCGmez70rzh1oakw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787438; c=relaxed/simple;
-	bh=baeVJXlcqAhqIF7doLoKrMS8avf80ZJ77VzedB7GcaI=;
+	s=arc-20240116; t=1790787441; c=relaxed/simple;
+	bh=L0U1O/neDWpdmA/LuYGDhTcy+G+/qX5AUq2mJwpYknE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxzcnauZq+l4ONGEyASl/V3U9QQqGkC38nfzieuux2DgWkaS6QRLXwnn5Ij8+m6/JowJTMlilRvVH2isZrI+CMKLFSM2qWpsixRK8HhViq2+CdDbEZpmwIWAb4kL62qizdXtGN7YOazv73e3ybcISpF2G/TAj++NeyNwE6IFGg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maW0Rf6C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/ND+V7DVCc3uuL8S7VRP5AKJWye7hAUX35v0o5e204pGndX97aFhErsf1hQejU9f4KnyRWyLawz0DKFeqRNE4Bj4VqOGoYgPfg5Yy9Z7ZjbD6JvRnPmY35LX0X2QV5YGj3daCZG12hs5x7LlCvZT982V3Oe8O5GWjZF45p1Brw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPCP9LMH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maW0Rf6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438A11F000FF;
-	Wed, 30 Sep 2026 16:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPCP9LMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119E51F000FF;
+	Wed, 30 Sep 2026 16:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787436;
-	bh=N1KjkO+3lvTx669cTdf9NPxjYG5MKe6nNIUo7R9DHOE=;
+	s=korg; t=1790787439;
+	bh=FON/TFk5E94bRtefWESFWdxFwh8cua9/KEcFoz+P5jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maW0Rf6CJACMUjy0pTOUjpO9MqDtThK4Lp5knogdrhfHO1H+BupebRdCJa5TvFd+K
-	 Jly7yp6hJs0zNaLEYbU6NvfUydhh705akBffu/U4Q9m9x5CU+mQTaXAqI/ravceoFl
-	 AMM5os/kjJtILqJfLLp9XgggT/Bhv1Z0w/0yfsNE=
+	b=TPCP9LMH3V/HQinc2a3SPpWBbVOOhoXyKnYkCfRcbYvqOHNB1cAmiborZhyE23GtS
+	 RZUCMTGSQ9qvSZNllukE4yxeTXbCgU8Q+t1HhtN2lVBcbTKN8CZFnqAy+p2u2CPxem
+	 qmV55fhC1CwkW0+U99xHR6j/iyqaXUwuqG5uvxmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jim Mattson <jmattson@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 230/457] perf/x86/intel: Dont pointlessly context switch DS_AREA (and PEBS config) if PEBS is unused
-Date: Wed, 30 Sep 2026 17:25:35 +0200
-Message-ID: <20260930152351.009658508@linuxfoundation.org>
+Subject: [PATCH 7.2 204/457] net/sched: act_ife: validate metadata length before decoding
+Date: Wed, 30 Sep 2026 17:25:09 +0200
+Message-ID: <20260930152350.457052298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,93 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-[ Upstream commit d06260e99eb93d2942b7af4ccd789eb8a6c829d3 ]
+[ Upstream commit d6ec384c87cc851cfd13bb18c99ce351ccee6192 ]
 
-When filling the list of MSRs to be loaded by KVM on VM-Enter and VM-Exit,
-load the guest values for DS_AREA and (conditionally) MSR_PEBS_DATA_CFG if
-and only if PEBS will be active in the guest, i.e. only if a PEBS record
-may be generated while running the guest.  As shown by the !pebs_ept path,
-it's perfectly safe to run with the host's DS_AREA, so long as PEBS-enabled
-counters are disabled via PERF_GLOBAL_CTRL.
+skbmark_decode(), skbprio_decode() and skbtcindex_decode() read fixed-size
+values from the TLV payload without validating its length.
 
-Omitting DS_AREA and MSR_PEBS_DATA_CFG when PEBS is unused saves two MSR
-writes per MSR on each VMX transition, i.e. eliminates two/four pointless
-MSR writes on each VMX roundtrip when PEBS isn't being used by the guest.
+A malformed IFE frame can declare a shorter payload, causing the decoders
+to consume bytes beyond the declared metadata value:
 
-Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260921191418.950933-4-seanjc@google.com
+[TLV type=IFE_META_SKBMARK len=4]
+-> dlen == 0, but decode reads 4 bytes
+
+The decoder may therefore set skb metadata from unintended input.
+
+Validate the payload length before decoding and return -EINVAL for
+invalid lengths. Read the values with get_unaligned_be32() and
+get_unaligned_be16(), as TLV payloads are not guaranteed to be
+aligned. Teach tcf_ife_decode() to log a decoder error separately
+from an unknown metaid; both are counted as overlimits and decoding
+continues with the remaining metadata.
+
+The metadata length issue was found by an automated audit of the IFE
+decode path at v6.18-rc7 and reproduced with a userspace sanitizer
+model of the decode path. Compile-tested on x86_64 with defconfig and
+NET_ACT_IFE=y: act_ife.o and the three act_meta_*.o build
+warning-free.
+
+Fixes: 084e2f6566d2 ("Support to encoding decoding skb mark on IFE action")
+Fixes: 200e10f46936 ("Support to encoding decoding skb prio on IFE action")
+Fixes: 408fbc22ef1e ("net sched ife action: Introduce skb tcindex metadata encap decap")
+Assisted-by: Hawkeye:GLM-5.3-flash
+Assisted-by: Qoder:Qwen3.8-Max
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
+Link: https://patch.msgid.link/20260921125441.81459-1-fangxy@xiaopeng.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 39 +++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ net/sched/act_ife.c             | 17 ++++++++++++-----
+ net/sched/act_meta_mark.c       |  6 ++++--
+ net/sched/act_meta_skbprio.c    |  6 ++++--
+ net/sched/act_meta_skbtcindex.c |  6 ++++--
+ 4 files changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index b927f0e88e7fc..b9d7fdf6c6585 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -5332,23 +5332,14 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
- 		return arr;
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index 9cea71fc1db3d..2afd68983ece4 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -737,6 +737,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 		u8 *curr_data;
+ 		u16 mtype;
+ 		u16 dlen;
++		int ret;
+ 
+ 		curr_data = ife_tlv_meta_decode(tlv_data, ifehdr_end, &mtype,
+ 						&dlen, NULL);
+@@ -745,13 +746,19 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 			return TC_ACT_SHOT;
+ 		}
+ 
+-		if (find_decode_metaid(skb, p, mtype, dlen, curr_data)) {
+-			/* abuse overlimits to count when we receive metadata
+-			 * but dont have an ops for it
++		ret = find_decode_metaid(skb, p, mtype, dlen, curr_data);
++		if (ret < 0) {
++			/* abuse overlimits to count metadata we cannot
++			 * decode: no ops for it, or the decoder rejected it
+ 			 */
+-			pr_info_ratelimited("Unknown metaid %d dlen %d\n",
+-					    mtype, dlen);
+ 			qstats_cpu_overlimit_inc(ife->common.cpu_qstats);
++
++			if (ret == -ENOENT)
++				pr_info_ratelimited("Unknown metaid %d dlen %d\n",
++						    mtype, dlen);
++			else
++				pr_info_ratelimited("Failed to decode metaid %d dlen %d err %d\n",
++						    mtype, dlen, ret);
+ 		}
  	}
  
-+	/*
-+	 * If the guest won't use PEBS or the CPU doesn't support PEBS in the
-+	 * guest, then there's nothing more to do as disabling PMCs via
-+	 * PERF_GLOBAL_CTRL is sufficient on CPUs with guest/host isolation.
-+	 */
- 	if (!kvm_pmu || !x86_pmu.pebs_ept)
- 		return arr;
+diff --git a/net/sched/act_meta_mark.c b/net/sched/act_meta_mark.c
+index ea0573cb8b2d6..e2f61b22bf0f8 100644
+--- a/net/sched/act_meta_mark.c
++++ b/net/sched/act_meta_mark.c
+@@ -10,6 +10,7 @@
+ #include <linux/string.h>
+ #include <linux/errno.h>
+ #include <linux/skbuff.h>
++#include <linux/unaligned.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+@@ -28,9 +29,10 @@ static int skbmark_encode(struct sk_buff *skb, void *skbdata,
  
--	arr[(*nr)++] = (struct perf_guest_switch_msr){
--		.msr = MSR_IA32_DS_AREA,
--		.host = (unsigned long)cpuc->ds,
--		.guest = kvm_pmu->ds_area,
--	};
--
--	if (x86_pmu.intel_cap.pebs_baseline) {
--		arr[(*nr)++] = (struct perf_guest_switch_msr){
--			.msr = MSR_PEBS_DATA_CFG,
--			.host = cpuc->active_pebs_data_cfg,
--			.guest = kvm_pmu->pebs_data_cfg,
--		};
--	}
--
- 	/*
- 	 * Restrict guest PEBS events to counters that (a) perf supports, (b)
- 	 * the guest wants to use for PEBS, (c) are not excluded from counting
-@@ -5375,6 +5366,26 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
- 	if (pebs_mask & ~cpuc->intel_ctrl_guest_mask)
- 		guest_pebs_mask = 0;
+ static int skbmark_decode(struct sk_buff *skb, void *data, u16 len)
+ {
+-	u32 ifemark = *(u32 *)data;
++	if (len != sizeof(u32))
++		return -EINVAL;
  
-+	/*
-+	 * Context switch DS_AREA and PEBS_DATA_CFG if and only if PEBS will be
-+	 * active in the guest; if no records will be generated while the guest
-+	 * is running, then simply keep the host values resident in hardware.
-+	 */
-+	arr[(*nr)++] = (struct perf_guest_switch_msr){
-+		.msr = MSR_IA32_DS_AREA,
-+		.host = (unsigned long)cpuc->ds,
-+		.guest = guest_pebs_mask ? kvm_pmu->ds_area : (unsigned long)cpuc->ds,
-+	};
-+
-+	if (x86_pmu.intel_cap.pebs_baseline) {
-+		arr[(*nr)++] = (struct perf_guest_switch_msr){
-+			.msr = MSR_PEBS_DATA_CFG,
-+			.host = cpuc->active_pebs_data_cfg,
-+			.guest = guest_pebs_mask ? kvm_pmu->pebs_data_cfg :
-+						   cpuc->active_pebs_data_cfg,
-+		};
-+	}
-+
- 	/*
- 	 * Do NOT mess with PEBS_ENABLED.  As above, disabling counters via
- 	 * PERF_GLOBAL_CTRL is sufficient, and loading a stale PEBS_ENABLED,
+-	skb->mark = ntohl(ifemark);
++	skb->mark = get_unaligned_be32(data);
+ 	return 0;
+ }
+ 
+diff --git a/net/sched/act_meta_skbprio.c b/net/sched/act_meta_skbprio.c
+index 2df3133ce5adc..5cdb57931eab4 100644
+--- a/net/sched/act_meta_skbprio.c
++++ b/net/sched/act_meta_skbprio.c
+@@ -10,6 +10,7 @@
+ #include <linux/string.h>
+ #include <linux/errno.h>
+ #include <linux/skbuff.h>
++#include <linux/unaligned.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+@@ -33,9 +34,10 @@ static int skbprio_encode(struct sk_buff *skb, void *skbdata,
+ 
+ static int skbprio_decode(struct sk_buff *skb, void *data, u16 len)
+ {
+-	u32 ifeprio = *(u32 *)data;
++	if (len != sizeof(u32))
++		return -EINVAL;
+ 
+-	skb->priority = ntohl(ifeprio);
++	skb->priority = get_unaligned_be32(data);
+ 	return 0;
+ }
+ 
+diff --git a/net/sched/act_meta_skbtcindex.c b/net/sched/act_meta_skbtcindex.c
+index 44547caead469..8803710c09058 100644
+--- a/net/sched/act_meta_skbtcindex.c
++++ b/net/sched/act_meta_skbtcindex.c
+@@ -10,6 +10,7 @@
+ #include <linux/string.h>
+ #include <linux/errno.h>
+ #include <linux/skbuff.h>
++#include <linux/unaligned.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+@@ -28,9 +29,10 @@ static int skbtcindex_encode(struct sk_buff *skb, void *skbdata,
+ 
+ static int skbtcindex_decode(struct sk_buff *skb, void *data, u16 len)
+ {
+-	u16 ifetc_index = *(u16 *)data;
++	if (len != sizeof(u16))
++		return -EINVAL;
+ 
+-	skb->tc_index = ntohs(ifetc_index);
++	skb->tc_index = get_unaligned_be16(data);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
