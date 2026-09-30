@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16FC51C33F;
-	Wed, 30 Sep 2026 16:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227B651CF4D;
+	Wed, 30 Sep 2026 16:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784707; cv=none; b=VBv/Qae2bSZJlwA37OlZyuCP1ouqTxWF5chIXSipVd6/IbbT1DF5QgtG9Nlx1bs0HHz/CLXhk2HOuvLzoOOor07O/WJ+w5A362f84+SubG6ZcjV6PbW0+BOoAYT1slGo105Q4IhR3OhZsrKDn6wLvV1HHr1PC5MJl3mGLWFEcFU=
+	t=1790784710; cv=none; b=b6Mb71DfA/Aitk4hdrWoSUkrdPPH37eyazzkiZBMSwlDn6jG5TQghDjjngKYv40X78CFcZxXBIF/BqBD/oSn8MLPeQ0xM+WP/s0Gg/p3+hpcU8hUGH5DPVsdNYqZrwf+l6UlGLtRT4Q969Gd22Vh6k2OJ0nw9wOtvAUCUoBmT5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784707; c=relaxed/simple;
-	bh=ioDXAk8mFMuofOf01nsxk3gAGR3zMoBoLMfj437MSGg=;
+	s=arc-20240116; t=1790784710; c=relaxed/simple;
+	bh=lX0cuBagaNboPcmxCjTHIlh84eEBjk+/A/IVVbPrpgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECw1efmf7PUaEGAF4biwQTLhwzcaUn0PEezjbRsny5fcMaB8N53P+tuZs/FBSM5D7QH8cMaRbgEUJbG59IbSwZe+caWPOGT5v1k9BaSiiGjvnpuQp+FyTU1AEq2ba5EcJllR6Mm87pOiUfMXAzlQlw6rRIKoLDHeaigJ1h+6Mbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMytMrup; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nETUE8XaSw/c1IbMlqnKMSRGl3/7Roq8AqFv3CREm+sjg5IHmUUeOLQCy6JxdtcXOOBPnFgkHVbgxmGPhA+WyUZKNn6zBXneQIGVGi2ce0kFPxkBHEIxJ2kxRG0/2EBThyG7iCX3tRb1chZGgOSgb/qdMdTmrz2nEWlXFi+AIEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3G4yJ5n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMytMrup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21AC1F000FF;
-	Wed, 30 Sep 2026 16:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3G4yJ5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4911F0089C;
+	Wed, 30 Sep 2026 16:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784700;
-	bh=XCWCyM/I+ExuDfaHS/qrsIq24lBBizlb5eD2A/hR0Fo=;
+	s=korg; t=1790784705;
+	bh=xMDJjkBU3MsQdRZwoalZFexbptX0ziFSgOo7jNc2dr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMytMrup4GI5M649ieFik7P3BUIn2dS5nfD/cXG1GECtM4MXCpPdaT8TX9CV2McDw
-	 ugmtDTQmR7NFKd2gmL7QODYOanECQ/R1NY/DESZjt6aAbWxCRAtzaU8n/avgf/wNdv
-	 bZ+thqSKkFZy+KseB0+xfUPvbEMPcp47Q+ahVsXE=
+	b=L3G4yJ5nV7RXAqjziOhvxMNmNIAnP8/wFghKBCP+AgFbJX/twHNo65/7aVnpeYHLS
+	 ELsp0CC1aD9Z03ThJeTWzz7/8PmKuQNwImGl594OxswKpWQsIX9GiZSJLTmIKVS7A5
+	 v6uW4o4QgZVK0VxA1Ma8nUSCF2xiPC1qiRJ8NFC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 246/982] ALSA: usb-audio: caiaq: validate EP1 reply lengths
-Date: Wed, 30 Sep 2026 17:16:22 +0200
-Message-ID: <20260930152422.078429105@linuxfoundation.org>
+Subject: [PATCH 6.1 248/982] wifi: mac80211: validate deauth frame length before reason access
+Date: Wed, 30 Sep 2026 17:16:24 +0200
+Message-ID: <20260930152422.121043330@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,110 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit aba30af07d4fe499b50209801eba9da8a815522f ]
+[ Upstream commit 4a360c6e18dfa9d70006c7247a6a8cc8dfe0d60f ]
 
-usb_ep1_command_reply_dispatch() uses buf[0] as a command byte and then
-reads command-specific fixed items from the same URB buffer. Several
-paths use buf + 1, buf[1], buf[2], or buf + 3 without first proving that
-urb->actual_length contains those bytes.
+ieee80211_rx_mgmt_deauth() reads the deauth reason code before checking
+that the fixed field is actually present in the received frame.
 
-Add per-command length checks, use a payload length derived from the
-bytes after the command byte for the control-state copy, and reject short
-analog input payloads before the input helper reads fixed offsets from
-the EP1 reply.
+Validate the deauth frame length first and only then read the reason
+code.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260705084601.56400-1-pengpeng@iscas.ac.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260612185042.66260-6-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c | 17 ++++++++++++++---
- sound/usb/caiaq/input.c  |  6 ++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ net/mac80211/mlme.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
-index 12f79e977c5a6..7ad64d23269fe 100644
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -134,14 +134,22 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 	struct device *dev = &urb->dev->dev;
- 	struct snd_usb_caiaqdev *cdev = urb->context;
- 	unsigned char *buf = urb->transfer_buffer;
-+	unsigned int payload_len;
-+	unsigned int copy_len;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index aa9aaa9cb42b6..32f24dca40ab5 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -3833,13 +3833,15 @@ static void ieee80211_rx_mgmt_deauth(struct ieee80211_sub_if_data *sdata,
+ 				     struct ieee80211_mgmt *mgmt, size_t len)
+ {
+ 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
+-	u16 reason_code = le16_to_cpu(mgmt->u.deauth.reason_code);
++	u16 reason_code;
  
- 	if (urb->status || !cdev) {
- 		dev_warn(dev, "received EP1 urb->status = %i\n", urb->status);
+ 	sdata_assert_lock(sdata);
+ 
+-	if (len < 24 + 2)
++	if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
  		return;
- 	}
-+	if (urb->actual_length < 1)
-+		return;
+ 
++	reason_code = le16_to_cpu(mgmt->u.deauth.reason_code);
 +
-+	payload_len = urb->actual_length - 1;
- 
- 	switch(buf[0]) {
- 	case EP1_CMD_GET_DEVICE_INFO:
-+		if (payload_len < sizeof(struct caiaq_device_spec))
-+			break;
- 	 	memcpy(&cdev->spec, buf+1, sizeof(struct caiaq_device_spec));
- 		cdev->spec.fw_version = le16_to_cpu(cdev->spec.fw_version);
- 		dev_dbg(dev, "device spec (firmware %d): audio: %d in, %d out, "
-@@ -157,18 +165,21 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 		wake_up(&cdev->ep1_wait_queue);
- 		break;
- 	case EP1_CMD_AUDIO_PARAMS:
-+		if (payload_len < 1)
-+			break;
- 		cdev->audio_parm_answer = buf[1];
- 		wake_up(&cdev->ep1_wait_queue);
- 		break;
- 	case EP1_CMD_MIDI_READ:
-+		if (urb->actual_length < 3 || urb->actual_length - 3 < buf[2])
-+			break;
- 		snd_usb_caiaq_midi_handle_input(cdev, buf[1], buf + 3, buf[2]);
- 		break;
- 	case EP1_CMD_READ_IO:
- 		if (cdev->chip.usb_id ==
- 			USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_AUDIO8DJ)) {
--			if (urb->actual_length > sizeof(cdev->control_state))
--				urb->actual_length = sizeof(cdev->control_state);
--			memcpy(cdev->control_state, buf + 1, urb->actual_length);
-+			copy_len = min_t(unsigned int, payload_len, sizeof(cdev->control_state));
-+			memcpy(cdev->control_state, buf + 1, copy_len);
- 			wake_up(&cdev->ep1_wait_queue);
- 			break;
- 		}
-diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
-index 2db4d1332df1c..c12eeb9710002 100644
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -203,6 +203,8 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
- 
- 	switch (cdev->chip.usb_id) {
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL2):
-+		if (len < 6)
-+			return;
- 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 2);
- 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 0);
- 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 1);
-@@ -210,11 +212,15 @@ static void snd_caiaq_input_read_analog(struct snd_usb_caiaqdev *cdev,
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_RIGKONTROL3):
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER):
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_KORECONTROLLER2):
-+		if (len < 6)
-+			return;
- 		snd_caiaq_input_report_abs(cdev, ABS_X, buf, 0);
- 		snd_caiaq_input_report_abs(cdev, ABS_Y, buf, 1);
- 		snd_caiaq_input_report_abs(cdev, ABS_Z, buf, 2);
- 		break;
- 	case USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_TRAKTORKONTROLX1):
-+		if (len < 16)
-+			return;
- 		snd_caiaq_input_report_abs(cdev, ABS_HAT0X, buf, 4);
- 		snd_caiaq_input_report_abs(cdev, ABS_HAT0Y, buf, 2);
- 		snd_caiaq_input_report_abs(cdev, ABS_HAT1X, buf, 6);
+ 	if (!ether_addr_equal(mgmt->bssid, mgmt->sa)) {
+ 		ieee80211_tdls_handle_disconnect(sdata, mgmt->sa, reason_code);
+ 		return;
 -- 
 2.53.0
 
