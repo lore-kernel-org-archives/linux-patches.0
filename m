@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEA34E1C76;
-	Wed, 30 Sep 2026 16:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391F447A0DD;
+	Wed, 30 Sep 2026 16:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785718; cv=none; b=E6KvXKq5l9KPcW0GDx0NfxrDx3oyvra4kMpjU23mXTlwHT5HltgUjRBv76qKOzF7pc8Iaf+iYyvQPpyoP7er94KzD0CMOSrj+Mn/ecKBe8c5DzwaNselRUcqjK7phl5OL+ZJCrG70Ds8j6EYaB8SBmuh3KzMgeax2CzeE7lcuCE=
+	t=1790785720; cv=none; b=RhlY3uqK+rw1iPkidfW3VDTj+4wqJT9SWoNIOcgBQ/w7RRu9sCYLn9KZJGxuKvAp8yJlnGhKjwYay9U0tb3oHGIRcz3uegty7gm5fodcFY1OCTBKsAFWa6VQjgJdn7QF3eUuJqa71HNbf4UpdMkH1tf1aYi5sfmHev6QScH8aHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785718; c=relaxed/simple;
-	bh=EeNIRMVV4NSz2zSyujNfXwx1HNjzJHtq32JPd6P0nZk=;
+	s=arc-20240116; t=1790785720; c=relaxed/simple;
+	bh=9jJd6SVmWkn+RKvs/bdhSoG8XBHrXVOt953E3oKcDW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgggC3pb+6CiMDAERBZGqgaHRkMV/o7zOz/Y3sd91JheM0zvh0YvCtj6S8NS4ySoCca+SenUWaRjGLLOZjRH0ifnsyTITidOZ8dhKxXzIWgsfKY4tMIzrdONLaMq5wQN9mwdO/gj0a8tHEzNKGhlMDZidKOv2A/7k54Ff8/COoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WStgEwNl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mLe+3emRWlJgF0daJnbeTh8UcKJjDOqJZkZA7Pxs2ZYoE1JVJpgcwAWf10KlKGX+M+q3fsv9wtRbRiqtWuETJ1CMrqHPcpNicEZxjNBerksQV/pEUMgPdE4+E9mTzTahbbtX/xAnO+mhmvmatngoqpR+FEI1n3y9cX58W9yRvN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkIJRWt4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WStgEwNl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1171F000FF;
-	Wed, 30 Sep 2026 16:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkIJRWt4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BD71F000FF;
+	Wed, 30 Sep 2026 16:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785716;
-	bh=ptD2TCqY8OH/cVHUMtgXDcfp77OuK+uPZvcg8XO+1oE=;
+	s=korg; t=1790785719;
+	bh=23wKD1eJQEgWuCVN8VA1DnJ2ClmdeyciwDh6ng/g/q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WStgEwNlKslfkRcePEtNmKLLOJ9Jt6QwBYvMixOuRf/W3u6wVnbXV++JyhcTPPaSi
-	 K5IgiLJcLlO29zRoQFsIjsElGhG25f2TZV1Bj9gxCa/etiHmnrMqyYJwQZUAvs46fK
-	 +isnVC0y4i0BRnF4syF6CIRcZH+sj8nHDOiA1P14=
+	b=xkIJRWt40HpJe2RNLhmmGKuAfFhE09YwI71N094+8lEIG0e/ZY5+n0BDaZP7P4cmD
+	 sFpXPSuY7FUtFiCby/YPk7WIpngoAfpUmtWoAIbfiL1YSrKbXe6ch3IixD98hYROJc
+	 cDOb3dBpHq9o1BWsbWBi/wxa2NC41HYdZ80iPnew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Liu Jian <liujian56@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 608/982] RDMA/mad: Fix receive buffer leak when PKey enforcement fails
-Date: Wed, 30 Sep 2026 17:22:24 +0200
-Message-ID: <20260930152429.838611178@linuxfoundation.org>
+Subject: [PATCH 6.1 591/982] xfrm: add missing rcu_read_lock(), skb_dst_force() and dev_hold() for xfrm_trans_reinject()
+Date: Wed, 30 Sep 2026 17:22:07 +0200
+Message-ID: <20260930152429.479803150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,56 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3476c28c9addfa253f505e6bd87f1f5598b961d0 ]
+[ Upstream commit d2f5082f9e84653fa1a9e8aebaaff23e688f5e19 ]
 
-ib_mad_complete_recv() initializes mad_recv_wc->rmpp_list and then runs
-ib_mad_enforce_security() before linking recv_buf onto that list.  On
-failure it calls ib_free_recv_mad(), which only walks rmpp_list and frees
-the ib_mad_private of every buffer found there.  As the list is still
-empty at that point, nothing is freed at all.
+syzbot reported a suspicious RCU usage warning in ip6_pkt_drop():
 
-The caller cannot clean up either: ib_mad_recv_done() sets recv to NULL
-right after ib_mad_complete_recv() returns, assuming the MAD layer took
-ownership of the buffer.  Every MAD that fails the PKey check therefore
-leaks one ib_mad_private (about 300 bytes per IB port MAD, ~2K for OPA),
-and a remote node can trigger this repeatedly by sending MADs with a
-wrong PKey.
+  WARNING: suspicious RCU usage in ip6_pkt_drop
+  include/net/addrconf.h:389 suspicious rcu_dereference_check() usage!
 
-Link recv_buf onto rmpp_list right after the list is initialized, so the
-error path has something to free.
+  Call Trace:
+   __in6_dev_get_safely include/net/addrconf.h:389 [inline]
+   ip6_pkt_drop+0x596/0x610 net/ipv6/route.c:4620
+   ip6_pkt_discard+0x1c/0x30 net/ipv6/route.c:4651
+   xfrm_trans_reinject+0x324/0x630 net/xfrm/xfrm_input.c:806
+   process_one_work kernel/workqueue.c:3322 [inline]
+   process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
+   worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
 
-Fixes: 47a2b338fe63 ("IB/core: Enforce security on management datagrams")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260826073216.2367-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+When commit 4f4920669d21 ("xfrm: Reinject transport-mode packets through
+workqueue") converted xfrm_trans_reinject from a tasklet to a workqueue,
+the reinjection loop ceased running in softirq context. Workqueue workers
+run in process context where local_bh_disable() does not enter an RCU
+read-side critical section under CONFIG_PREEMPT_RCU.
+
+Because finish callbacks (such as ip6_rcv_finish) expect to run under an
+RCU read lock (performing route lookups, l3mdev lookups, and accessing
+RCU-protected data structures), invoking them in workqueue context without
+rcu_read_lock() triggers RCU lockdep warnings.
+
+Furthermore, packets queued to the workqueue via xfrm_trans_queue_net()
+may carry non-refcounted (noref) dst entries (e.g. from ip_route_input_noref).
+Additionally, on netdevice unregistration, dst_dev_put() replaces dst->dev
+with blackhole_netdev, so dst entries do not keep skb->dev alive while
+queued in the workqueue.
+
+Fix these issues by:
+1. Calling skb_dst_force(skb) in xfrm_trans_queue_net() while still in the
+   caller's RCU section to ensure dst is reference-counted before queuing.
+2. Holding a reference on skb->dev via dev_hold()/dev_put() across workqueue
+   deferral so skb->dev remains valid during finish() callback processing.
+3. Acquiring rcu_read_lock() around the finish callback invocation loop in
+   xfrm_trans_reinject().
+
+Fixes: 4f4920669d21 ("xfrm: Reinject transport-mode packets through workqueue")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_input.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index bddb1c607aff6..4347b3af13119 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -1805,6 +1805,8 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 	int ret;
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index c3c909d9c8fab..de2e8b16b217a 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -757,12 +757,17 @@ static void xfrm_trans_reinject(struct work_struct *work)
+ 	spin_unlock_bh(&trans->queue_lock);
  
- 	INIT_LIST_HEAD(&mad_recv_wc->rmpp_list);
-+	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
-+
- 	ret = ib_mad_enforce_security(mad_agent_priv,
- 				      mad_recv_wc->wc->pkey_index);
- 	if (ret) {
-@@ -1813,7 +1815,6 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 		return;
+ 	local_bh_disable();
++	rcu_read_lock();
+ 	while ((skb = __skb_dequeue(&queue))) {
+ 		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
++		struct net_device *dev = skb->dev;
+ 
+ 		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
++		if (dev)
++			dev_put(dev);
+ 		put_net(net);
  	}
++	rcu_read_unlock();
+ 	local_bh_enable();
+ }
  
--	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
- 	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
- 		spin_lock_irqsave(&mad_agent_priv->lock, flags);
- 		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
+@@ -778,12 +783,18 @@ int xfrm_trans_queue_net(struct net *net, struct sk_buff *skb,
+ 	if (skb_queue_len(&trans->queue) >= READ_ONCE(netdev_max_backlog))
+ 		return -ENOBUFS;
+ 
++	if (skb_dst(skb) && !skb_dst_force(skb))
++		return -EHOSTUNREACH;
++
+ 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
+ 
+ 	hold_net = maybe_get_net(net);
+ 	if (!hold_net)
+ 		return -ENODEV;
+ 
++	if (skb->dev)
++		dev_hold(skb->dev);
++
+ 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
+ 	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
+ 	spin_lock_bh(&trans->queue_lock);
 -- 
 2.53.0
 
