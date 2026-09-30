@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A425172E0;
-	Wed, 30 Sep 2026 17:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBB650B433;
+	Wed, 30 Sep 2026 17:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787758; cv=none; b=ObmWDjjFRVq8GCvjnaZUFAAJ+e2c1pxOLiCmzgMY40eEnxk45JTF4Uj5FtDV20OytWGsPvIqARw9JT7eaF+xtDXseCbj3/Ta/9ZTc+GtxUsxnRgeTK35BdReArHH1DH3B9haFc+fThIxZyJRffWbANW2iuTxnENA1rFCNBEK82c=
+	t=1790787761; cv=none; b=o3R7sKLl1tIg/b2BCu4kQPkOUVHAj8EQZqkvfUa5yE3dDImLXG6fhM37qngoWiT8Dv5QBVrvfsc12TDlt/qO1wLZnW0Cmuq07Z7SVSvSgSBUzbeHYKECAuPfrwtweqTdwd54Rth5eZTck3V7Jqmw95Ed+Y+hZH4lXQzPkJ69Ulk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787758; c=relaxed/simple;
-	bh=TanuiWXGr/pogjj4qEjNTCV/HUQOiTsJU2wkQkHVMGY=;
+	s=arc-20240116; t=1790787761; c=relaxed/simple;
+	bh=NlwoyHCJzx3PMRmS1emTwACNk0rpDJNPpXvpJW3Waig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uwSfhwl5Z8V68SPJoEbuLXYaumymji4fXePpmYc0BLCuhypXH4p5PicNE9yO2wuy2M9UyVUsOZalxzySkgTVZ9cTnHkS0vwe7SzX6ptyEJ8Xj31SRM2C2BB0/48RB29rav7fOo3VFa18vdStTShbNwj4dDJ/WTyrzV0LYOwtr2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DsdWFu72; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rU2DTC7OsQ6jxStbybS9gbrlgY9NNbD8t+2Aa57Q5X3F2CunYBLwiuCedV7NUcsDerjQGhJvHH/wJPX1swTpGjBfy68Xhd/zklFIF4CvVxd3LaG5K9MNnWr+P7AZ6js9HZ/SW3IIHEhyE0sJedOQEcMOCViupGUSoTdrpruC8QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkBKTVca; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DsdWFu72"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F58B1F000FF;
-	Wed, 30 Sep 2026 17:02:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkBKTVca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99B81F000FF;
+	Wed, 30 Sep 2026 17:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787757;
-	bh=014AxjcoS4jFelwC87qJ5wXSYsn2IHLIzf7TGFGlJ/E=;
+	s=korg; t=1790787760;
+	bh=ON+i7tmOYz5QtSNshG3TRLs2QMcQL7WmdxN/t6KB3y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DsdWFu72CCGG1I97vbNu4JPMu2Jq0LVHS/jZSpLo8NQJ2QPKAfzrUlajnXwx4RJXu
-	 lftvSz/9a8yL8+HSiVZHRuWmK5Xtu7qtqLUyQK503IPNj5CG0a6loyb8UDH7MtzGCq
-	 XjWfGA/9pENtgEQXnG4aeA5bYZNqy4EdbPMsBjVo=
+	b=GkBKTVca9sNYlDaUxHBhyJLhaYqUIVrUfyHEv68SeuZInSF2Dh/STb6Tm3jzSA2Db
+	 PzJ/nrThzMe9+QYEu/lgWmaufjhfl6Tz1ZDnZssPF1a0ndlIV1+/5hc2rwQYEHpaqw
+	 TdJFTsIDvrSxFH7EbqcBwTWSNNl8ONl2cjZdkroI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gajdos=20Tam=C3=A1s?= <tamas@rimpianto.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 341/457] net: atl1e: fix soft lockup on out-of-range hw_next_to_clean read
-Date: Wed, 30 Sep 2026 17:27:26 +0200
-Message-ID: <20260930152353.374811847@linuxfoundation.org>
+	Fourie Zhang <fouriezhang@tencent.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 342/457] net: bridge: mdb: restart port group walk after deletion
+Date: Wed, 30 Sep 2026 17:27:27 +0200
+Message-ID: <20260930152353.397001834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -44,45 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gajdos Tamás <tamas@rimpianto.com>
+From: Fourie Zhang <littleddfu@gmail.com>
 
-commit 374bf9e4b90f979e052332c4faca2d745c491a12 upstream.
+commit ab1404ac81154a89fb61ac50ae9a04cd8d4834dc upstream.
 
-Same issue as atl1c (see the first commit in this series, "net:
-atl1c: fix soft lockup on out-of-range tpd_cons read"): the hardware
-can report an out-of-range hw_next_to_clean (seen as 0xffff) while
-the PCIe link/MAC is resetting. An out-of-range value can never be
-reached and the loop below would spin forever. Treat it as "nothing
-new to clean" instead.
+br_mdb_flush_pgs() keeps a pointer-to-pointer cursor while walking
+mp->ports. br_multicast_del_pg() can re-enter the same MDB entry through
+br_multicast_sg_del_exclude_ports() and unlink other port groups. If the
+cursor points into one of those groups, the next iteration dereferences a
+stale cursor and can leave mp->ports pointing at freed memory.
 
-Fixes: a6a5325239c202 ("atl1e: Atheros L1E Gigabit Ethernet driver")
+A following RTM_GETMDB exposes the dangling pointer:
+
+  BUG: KASAN: slab-use-after-free in br_mdb_dump
+  Read of size 8
+    br_mdb_dump
+    rtnl_mdb_dump
+    rtnl_dumpit
+    netlink_dump
+
+Reset the cursor to mp->ports after every deletion. The deletion removes at
+least the selected group, so the restarted walk always makes progress.
+
+Fixes: a6acb535afb2 ("bridge: mdb: Add MDB bulk deletion support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gajdos Tamás <tamas@rimpianto.com>
-Link: https://patch.msgid.link/20260921091334.3571525-3-tamas@rimpianto.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260920110852.60293-1-fouriezhang@tencent.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/atheros/atl1e/atl1e_main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/bridge/br_mdb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-+++ b/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-@@ -1234,6 +1234,9 @@ static bool atl1e_clean_tx_irq(struct at
- 	u16 hw_next_to_clean = AT_READ_REGW(&adapter->hw, REG_TPD_CONS_IDX);
- 	u16 next_to_clean = atomic_read(&tx_ring->next_to_clean);
+--- a/net/bridge/br_mdb.c
++++ b/net/bridge/br_mdb.c
+@@ -1523,6 +1523,8 @@ static void br_mdb_flush_pgs(struct net_
+ 		}
  
-+	if (unlikely(hw_next_to_clean >= tx_ring->count))
-+		hw_next_to_clean = next_to_clean;
-+
- 	while (next_to_clean != hw_next_to_clean) {
- 		tx_buffer = &tx_ring->tx_buffer[next_to_clean];
- 		if (tx_buffer->dma) {
+ 		br_multicast_del_pg(mp, p, pp);
++		/* br_multicast_del_pg() can remove other groups from this list. */
++		pp = &mp->ports;
+ 	}
+ }
+ 
 
 
