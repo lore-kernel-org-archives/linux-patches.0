@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9535D3BFAE7;
-	Wed, 30 Sep 2026 19:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E61F3C10AA;
+	Wed, 30 Sep 2026 19:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794883; cv=none; b=eM4n8yunqkyZ6aR2/HwxRv+mCWyRjPAujo5AqjXygRiO9qsPxuJjbd+Uum+CNyy098ydAWS0JvTucEvTC5zJX45p26YS6EXtTxTKd6x36hN8zwn+VVvV8eVZdDan/+w0Ldzf41XRQc3q9wFU1LqdVqg60H77LLFhAIT30VuBZEw=
+	t=1790794884; cv=none; b=pftmBd9YpRhIEdxrZJQshDhN/vYsSLRH7lI7BZGAJT5eeafWN8xXOrvKRBEvzr9xLeFdfJyMRujQmjHuyYc/kJkhPMqKklh4qcpqjl2Iijg7QMnePFxxNr2++vVIDNk8zlqpC7NVaRvmJXpLuiFjB5Qfes/hW5MiF4SFCpV2HwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794883; c=relaxed/simple;
-	bh=OJyds4PT+EpL9a5RmuYyPmTpkcFer8iQaVQa3B9nPCc=;
+	s=arc-20240116; t=1790794884; c=relaxed/simple;
+	bh=soyqY6XHnFVJz2LHEX1qR7OlsXV6AFY/x3iXsB8PY3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7jTSU8UqNhuNYt9r69dGNzCC0JiRFs+RU441mx+4z8JUQiApbDSRDuFWJpyS7feR3s1BTWtZG1R+fSc2yfnhCJLzaJFmdELP1lVYPYWp2r+9qHqaKykBLhn/ReDCZFFmbbnbMfWc4DhDpA5DCd626aPFjCw4pmKj91UCH+GcvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo8bhG/S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CpgWsm+Zq0b29kmvpY7sxq9prhifGoq01CIc4/VN8A7Oid0FtUHFNwG+hODUoUKwF4sR6aM+J1qGCyZ7amFXogxU+AyH7j1hp9AJpDlHvySjX/MwUGFmqAA4q6N/zW1ZqGuXWD5vgy598nYqgQZ1hnwKlhDd/uecA2MxXafGFos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwRT+/Xn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo8bhG/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2661F008A0;
-	Wed, 30 Sep 2026 19:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwRT+/Xn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548EB1F008A3;
+	Wed, 30 Sep 2026 19:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794867;
-	bh=Sbe53HpmAbyWg4xZrWvNmnlZ6aKiZr1R7L6BeGfB0vA=;
+	s=korg; t=1790794872;
+	bh=cgsGlWAED5JZhzHLTLM4v2t4ATZiF/doR9J6SROsfeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bo8bhG/Sulw0XtbJTZiBTUTa5ecX31joYm2olpvO4osCSAuoBF6Dyeu4XIv4b3R0s
-	 1xtFxB8xOs1XfFPraeWeNFJi5/IvgrqMao0nQ4gJM7CpaxDBwt+CjU6gNamHVgYjJV
-	 PSqFmaIW4G82NjiLOhF6pWDmDSoY8hRE6R8syz9I=
+	b=VwRT+/Xn9k5gZBtQ+XI/MH0e+krBIhlU72zs+1s52/dKtEXmGmpEgEB/Kl11ucxuU
+	 voQUtj0xUCroaeARJasW5zL5MXTRDKjRPu/fsunvKrHVt5mjvA12G7JaIUZy8XlNpY
+	 Ywe49c8VDu9lAV+f9Tfm0PaIHoSZbyXCP7UreQc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0360/1193] RDMA/bnxt_re: Proper rollback if the ioremap fails
-Date: Wed, 30 Sep 2026 17:17:24 +0200
-Message-ID: <20260930152442.172258560@linuxfoundation.org>
+Subject: [PATCH 6.6 0362/1193] ipv4: fib: Dont dump dying fib_info in fib_leaf_notify().
+Date: Wed, 30 Sep 2026 17:17:26 +0200
+Message-ID: <20260930152442.219149452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,57 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 87267803a8c824616eb147c5dad7030a5db6f878 ]
+[ Upstream commit 06b693d2eb6651a63ad85bad8673de3b7d4edd6d ]
 
-bnxt_qplib_alloc_dpi returns success even if ioremap fails.
-Add the proper rollback when the ioremap fails and return
--ENOMEM status.
+syzbot reported use-after-free in nsim_fib4_prepare_event(). [0]
 
-Fixes: 0ac20faf5d83 ("RDMA/bnxt_re: Reorg the bar mapping")
-Fixes: 360da60d6c6e ("RDMA/bnxt_re: Enable low latency push")
-Link: https://patch.msgid.link/r/20260615224751.232802-11-selvin.xavier@broadcom.com
-Reviewed-by: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+The problem is that the following functions call fib_info_hold() /
+refcount_inc() while dumping fib_info under RCU, which is unsafe.
+
+  * mlxsw_sp_router_fib4_event()
+  * rocker_router_fib_event()
+  * nsim_fib4_prepare_event()
+
+refcount_inc_not_zero() must be used, but it would be too late
+there.
+
+Let's guarantee the lifetime of fib_info in fib_leaf_notify().
+
+Note that IPv6 does not need the corresponding change since
+fib6_table_dump() holds fib6_table.tb6_lock.
+
+[0]:
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25, CPU#0: kworker/u8:15/3420
+Modules linked in:
+CPU: 0 UID: 0 PID: 3420 Comm: kworker/u8:15 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+Workqueue: netns cleanup_net
+RIP: 0010:refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25
+Code: eb 66 85 db 74 3e 83 fb 01 75 4c e8 1b f1 22 fd 48 8d 3d 84 cb f1 0a 67 48 0f b9 3a eb 4a e8 08 f1 22 fd 48 8d 3d 81 cb f1 0a <67> 48 0f b9 3a eb 37 e8 f5 f0 22 fd 48 8d 3d 7e cb f1 0a 67 48 0f
+RSP: 0018:ffffc9000f2c7270 EFLAGS: 00010293
+RAX: ffffffff84a18858 RBX: 0000000000000002 RCX: ffff888032ff9ec0
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff8f9353e0
+RBP: 0000000000000000 R08: ffff888032ff9ec0 R09: 0000000000000005
+R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880570cc000
+R13: dffffc0000000000 R14: ffff88802b40563c R15: ffff8880570cc000
+FS:  0000000000000000(0000) GS:ffff888126173000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb1f4d5d000 CR3: 000000006072a000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:-1 [inline]
+ __refcount_inc include/linux/refcount.h:366 [inline]
+ refcount_inc include/linux/refcount.h:383 [inline]
+ fib_info_hold include/net/ip_fib.h:629 [inline]
+ nsim_fib4_prepare_event drivers/net/netdevsim/fib.c:930 [inline]
+ nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1000 [inline]
+ nsim_fib_event_nb+0x1055/0x1240 drivers/net/netdevsim/fib.c:1043
+ call_fib_notifier+0x45/0x80 net/core/fib_notifier.c:25
+ call_fib_entry_notifier net/ipv4/fib_trie.c:90 [inline]
+ fib_leaf_notify net/ipv4/fib_trie.c:2176 [inline]
+ fib_table_notify net/ipv4/fib_trie.c:2194 [inline]
+ fib_notify+0x36b/0x5e0 net/ipv4/fib_trie.c:2217
+ fib_net_dump net/core/fib_notifier.c:70 [inline]
+ register_fib_notifier+0x184/0x360 net/core/fib_notifier.c:108
+ nsim_fib_create+0x85d/0x9f0 drivers/net/netdevsim/fib.c:1596
+ nsim_dev_reload_create drivers/net/netdevsim/dev.c:1604 [inline]
+ nsim_dev_reload_up+0x374/0x7c0 drivers/net/netdevsim/dev.c:1058
+ devlink_reload+0x501/0x8d0 net/devlink/dev.c:475
+ devlink_pernet_pre_exit+0x1ff/0x420 net/devlink/core.c:558
+ ops_pre_exit_list net/core/net_namespace.c:161 [inline]
+ ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
+ cleanup_net+0x56e/0x800 net/core/net_namespace.c:702
+ process_one_work kernel/workqueue.c:3314 [inline]
+ process_scheduled_works+0xb5d/0x1860 kernel/workqueue.c:3397
+ worker_thread+0xa53/0xfc0 kernel/workqueue.c:3478
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: 0ae3eb7b4611 ("netdevsim: fib: Perform the route programming in a non-atomic context")
+Fixes: c3852ef7f2f8 ("ipv4: fib: Replay events when registering FIB notifier")
+Reported-by: syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a290011.39669fcc.33b062.00b1.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/net/ip_fib.h | 5 +++++
+ net/ipv4/fib_trie.c  | 4 ++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 19cfadf3297bf..c360f70f1c8b9 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -737,9 +737,13 @@ int bnxt_qplib_alloc_dpi(struct bnxt_qplib_res *res,
- 		break;
- 	case BNXT_QPLIB_DPI_TYPE_WC:
- 		dpi->dbr = ioremap_wc(umaddr, PAGE_SIZE);
-+		if (!dpi->dbr)
-+			goto fail_ioremap;
- 		break;
- 	default:
- 		dpi->dbr = ioremap(umaddr, PAGE_SIZE);
-+		if (!dpi->dbr)
-+			goto fail_ioremap;
- 		break;
- 	}
- 
-@@ -747,6 +751,13 @@ int bnxt_qplib_alloc_dpi(struct bnxt_qplib_res *res,
- 	mutex_unlock(&res->dpi_tbl_lock);
- 	return 0;
- 
-+fail_ioremap:
-+	/* Roll back the bit we just claimed. */
-+	set_bit(bit_num, dpit->tbl);
-+	dpit->app_tbl[bit_num] = NULL;
-+	mutex_unlock(&res->dpi_tbl_lock);
-+	return -ENOMEM;
-+
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index b6fc9924ef7a0..a41e7c299af8d 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -576,6 +576,11 @@ static inline void fib_info_hold(struct fib_info *fi)
+ 	refcount_inc(&fi->fib_clntref);
  }
  
- int bnxt_qplib_dealloc_dpi(struct bnxt_qplib_res *res,
++static inline bool fib_info_hold_safe(struct fib_info *fi)
++{
++	return refcount_inc_not_zero(&fi->fib_clntref);
++}
++
+ static inline void fib_info_put(struct fib_info *fi)
+ {
+ 	if (refcount_dec_and_test(&fi->fib_clntref))
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 53e7664eeb0a2..f40a774686ebf 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -2178,10 +2178,14 @@ static int fib_leaf_notify(struct key_vector *l, struct fib_table *tb,
+ 		if (fa->fa_slen == last_slen)
+ 			continue;
+ 
++		if (!fib_info_hold_safe(fa->fa_info))
++			continue;
++
+ 		last_slen = fa->fa_slen;
+ 		err = call_fib_entry_notifier(nb, FIB_EVENT_ENTRY_REPLACE,
+ 					      l->key, KEYLENGTH - fa->fa_slen,
+ 					      fa, extack);
++		fib_info_put(fa->fa_info);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.53.0
 
