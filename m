@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC5C4F55B6;
-	Wed, 30 Sep 2026 16:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE14511E96;
+	Wed, 30 Sep 2026 16:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787107; cv=none; b=qad6puoPzGLhDA1RtDE1hibb78TSr4VwZfYrrqkNGa4xhm6HDRqZS7XF2WI7tefjdY7LnAMZPMJX93GGvK7CqfKBA8/zD+GJCeBJ8+7W0uaFVtNbj+oIepJFFmMmKm4hDBtvG+MfYxoeOmDcOcQfYQlSkiaIYAjNsqRmkG1RvXs=
+	t=1790787110; cv=none; b=Q+v89CQuzJ49Es9vwdhVoTAhJBCH2K/OXXM6sDWhPheFHL9BfoxsgB6bmGh31g69x9l1q/9iOQo384+LouyjtfZapIamZS2Hiz2zeDu5TKpOQ/myYMb7ZoLsiNhl30A4YZroLKMhovv6LCtBReevp3RFMJbBCXa7itx5rbLxZQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787107; c=relaxed/simple;
-	bh=iTCWlpaMJenXY0PtP46SAKbKTenDMmYTOOBCBKWDFNE=;
+	s=arc-20240116; t=1790787110; c=relaxed/simple;
+	bh=3KiHixsz5QDzv6fDyQNq+mnVMilsw2p+3Q6f6EA2kUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awxpYzSRLC02uApYQr75l14gnhbc0JZgZTCzi8qTrbuDrxop9aQ9VqIYK7DdYAFTwl5iyt+beQFgoay8O93Pds3m/IxM9DCe2S57wJSC73EBwibNU3QvuSYdzdfndDmbQnE9g4HQCwxq/lgizS8JfiljM6Xwv6UamlLeTvFiF0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0omg0gR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iGIvGxNFucRx31Wuwy0GceUhvQu1HfzkJjcpgwBU9xOA1kvZ+teXVf9Zo5YDYqYn/H6CpCJ4gztNIJDow05bCGmBNEN1sMsWULDVl/4afHQSKQJE0+vYwbTq33H6AqY3p5vn7x9IpXsODDx+Q1WUviiRF5HCJ3wmls92vAvOWy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1SiEoxgQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0omg0gR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BF01F00898;
-	Wed, 30 Sep 2026 16:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SiEoxgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE6E1F000FF;
+	Wed, 30 Sep 2026 16:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787106;
-	bh=HapPA/aykgD/49Y2wCIsSizCT8ecIpiRSMYCuQ4sI5k=;
+	s=korg; t=1790787109;
+	bh=cHdP6hMIl1dEL+GF4YghcEdLuMsjwNIC7OxEc01cxic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P0omg0gRzmI8/FVLOETAIKydQyg2cqLycLtpuQTxGnX4RGXGYVqbOvhfs4NlRb6YM
-	 mnte8CHb+3ghn65S+jJyPhR0BoVxMqCxhW6+Kk2Gmq8gEOkHcOJIwRRd5YC1iH7SBv
-	 R5xau6fvk1GNb/NHv1oBK22QntlyIVQ4BQaJnN9s=
+	b=1SiEoxgQZzcROjIFXyZTvO092P8tuhhXixDIeXW9Uy3aMqVLyefG577BorQ/+vOOw
+	 Y2pzAJO2zKJYYzV1FItIKWH98iul18+ijbwjimcw7oZ2ebjdPGw9tLXz8Dd/P3gt4w
+	 P2AvCOL0Jm9svMMGZHODjaNfPONMHSUPgEaAesqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Li Youhong <liyouhong@kylinos.cn>,
+	Ralf Lici <ralf@mandelbit.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 115/457] drm/bridge: samsung-dsim: fix TE GPIO lifetime for host attach
-Date: Wed, 30 Sep 2026 17:23:40 +0200
-Message-ID: <20260930152348.535285140@linuxfoundation.org>
+Subject: [PATCH 7.2 116/457] ovpn: preserve IPv6 scope id for netlink peer endpoints
+Date: Wed, 30 Sep 2026 17:23:41 +0200
+Message-ID: <20260930152348.555806002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,51 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit ada667890773e033d2f40dc94176e3beb930b516 ]
+[ Upstream commit 7a6d08ee0f0e30023d18779bb314db8fd9a3b6d4 ]
 
-When the Exynos DSI driver was generalized into samsung-dsim, the TE
-GPIO acquisition was switched from gpiod_get_optional() to
-devm_gpiod_get_optional() while keeping the matching gpiod_put() calls.
-That combination is wrong for a managed descriptor.
+ovpn accepts OVPN_A_PEER_REMOTE_IPV6_SCOPE_ID and reports
+bind->remote.in6.sin6_scope_id in peer dumps, but the netlink endpoint
+parser never copied the attribute into the sockaddr_in6 used to create or
+update the peer bind.
 
-However, dropping the puts and keeping the managed get is also wrong:
-samsung_dsim_register_te_irq() runs from the DSI host attach callback,
-and host detach/reattach can happen without destroying the device that
-owns the managed action. A second attach would then request the GPIO
-again without having released it.
+As a result, an IPv6 link-local remote endpoint configured through
+netlink loses its interface scope, unlike on the peer float path where
+ipv6_iface_scope_id populates the field. The UDPv6 output path then
+builds a flow with flowi6_oif set to zero and route lookup can fail or
+select the wrong interface.
 
-Switch back to a non-managed gpiod_get_optional() and keep the explicit
-gpiod_put() on the request_irq() error path and in
-samsung_dsim_unregister_te_irq().
+Copy the scope id when parsing non-v4-mapped IPv6 remote endpoints. The
+existing precheck already rejects the scope-id attribute for IPv4 and
+v4-mapped IPv6 remotes.
 
-Fixes: e7447128ca4a ("drm: bridge: Generalize Exynos-DSI driver into a Samsung DSIM bridge")
-Suggested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260904014958.1572918-1-dayou5941@163.com
-[Luca: remove unnecessary comment]
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 1d36a36f6d53 ("ovpn: implement peer add/get/dump/delete via netlink")
+Signed-off-by: Ralf Lici <ralf@mandelbit.com>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/samsung-dsim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ovpn/netlink.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-index 9ee0515074c78..7e320eac2e4ad 100644
---- a/drivers/gpu/drm/bridge/samsung-dsim.c
-+++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-@@ -1862,7 +1862,7 @@ static int samsung_dsim_register_te_irq(struct samsung_dsim *dsi, struct device
- 	int te_gpio_irq;
- 	int ret;
+diff --git a/drivers/net/ovpn/netlink.c b/drivers/net/ovpn/netlink.c
+index 4dad852941982..2ba762082acc1 100644
+--- a/drivers/net/ovpn/netlink.c
++++ b/drivers/net/ovpn/netlink.c
+@@ -100,6 +100,8 @@ static bool ovpn_nl_attr_sockaddr_remote(struct nlattr **attrs,
+ 	struct sockaddr_in6 *sin6;
+ 	struct sockaddr_in *sin;
+ 	struct in6_addr *in6;
++	struct nlattr *scope;
++	u32 scope_id = 0;
+ 	__be16 port = 0;
+ 	__be32 *in;
  
--	dsi->te_gpio = devm_gpiod_get_optional(dev, "te", GPIOD_IN);
-+	dsi->te_gpio = gpiod_get_optional(dev, "te", GPIOD_IN);
- 	if (!dsi->te_gpio)
- 		return 0;
- 	else if (IS_ERR(dsi->te_gpio))
+@@ -114,6 +116,9 @@ static bool ovpn_nl_attr_sockaddr_remote(struct nlattr **attrs,
+ 	} else if (attrs[OVPN_A_PEER_REMOTE_IPV6]) {
+ 		ss->ss_family = AF_INET6;
+ 		in6 = nla_data(attrs[OVPN_A_PEER_REMOTE_IPV6]);
++		scope = attrs[OVPN_A_PEER_REMOTE_IPV6_SCOPE_ID];
++		if (scope)
++			scope_id = nla_get_u32(scope);
+ 	} else {
+ 		return false;
+ 	}
+@@ -126,6 +131,7 @@ static bool ovpn_nl_attr_sockaddr_remote(struct nlattr **attrs,
+ 		if (!ipv6_addr_v4mapped(in6)) {
+ 			sin6 = (struct sockaddr_in6 *)ss;
+ 			sin6->sin6_port = port;
++			sin6->sin6_scope_id = scope_id;
+ 			memcpy(&sin6->sin6_addr, in6, sizeof(*in6));
+ 			break;
+ 		}
 -- 
 2.53.0
 
