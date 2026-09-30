@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD8550B437;
-	Wed, 30 Sep 2026 15:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225684D1787;
+	Wed, 30 Sep 2026 15:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783738; cv=none; b=TuIZ0sWynHrhUEE+WtM7adlKsebi7usW9OngvP5xjjtIPn0dUwCZDaOTNdY0uZuBnxc0EnwMH18wI/sUWy3Jd3MVRqGLjedlutRodwKK6KSgXHZGzshQJrigt1t86J5Q34EK1OrDnedpsiYgRg0tF74VWfRs9LFnPF+qQwYl7sQ=
+	t=1790783741; cv=none; b=brd8bbRf0lhPDINJd6Sfgxpbwwgw8xyu2kqG/JVVKE+pwlpnZTxSnmMPrZ8rdN0cnUd4fvFFr+tIPqdfxWhtWv+9VlvjbM52ban+7yBNyqBVGq0w8K28D1j6epIMA4l/S9nuejllFcm/J0rcUOweAjeLceQg8GUUaBlSOBroTLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783738; c=relaxed/simple;
-	bh=O1LM8T3hoxh1KBwlUyyPJkTRgV5XqwlSbairZkwzfd4=;
+	s=arc-20240116; t=1790783741; c=relaxed/simple;
+	bh=LfF5Pkj7MAcxBFc2eacVCFMAedi6cNVq7DL3b9/21rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJ0WYtV3MEJB1GjByNYo6J6MFV8EbrAIxL9UXkotwvzhW0n783Hej8w7HcCLN3fgJochpAsVQYQaJBe8v1l/aFxadMtV7m8WvNDh0jtMWtHL6Q93DsCJT/ngM2vLYFXQEf1YoKmpwOABmVFX870l8AMDLvoscvCSC3rpW/37sf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8DPL3pV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lvkO3R8emx3L9xCIYdOntsWX2Nl4Dr60p4VtZL6uz7SQmeW19Hw6SNY+qf0E6WRw4PfeooZc60KaJuaVovSb3Hzrltg4QoYRlYVGnGFfvAeGsztHLA/ZVj9vZmdthnoU6qUTsdCAzKw4MdEs1E0hkEFmZnLbyVRXMU3QKEau6Ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=csnz5eFG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8DPL3pV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57311F00893;
-	Wed, 30 Sep 2026 15:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csnz5eFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EA51F00898;
+	Wed, 30 Sep 2026 15:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783733;
-	bh=HtS/U6DIeAbpLpug5zrVwqRJLXD+32kuViABQALoLX4=;
+	s=korg; t=1790783736;
+	bh=kjJ52cNpi0VRfKNqVFE1pCCKbvGgmtUIRLff10h659I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8DPL3pVd7A6jemH041z9XirZJIzUgg4ZEEIDgTW469mMtJEWT/rdRiS3XNOD6e/j
-	 fEejpjjvzF5kuut7HUG2JPkaPnrvP1T6g3H3xx1InpJHZ2f0WnYAJgVtEieqwvHWLU
-	 koU+891coeVz4ZRZnb3ZWbNELGsVbvM3sIff1CHE=
+	b=csnz5eFGholFewVqHeoDhVC19du7g2y1hxlUTzSYGPF1BCftPFLTdoo4t/Tw4+UQd
+	 EUsfwxrgB5kyMgD2KfC3dNrEDiYrpv2T5/rap4c+mmepCOeNE1agef+Zt5jGPQQ8uD
+	 WRNZshE4tfCcjEdrvLIy51Lv8m9fn+PxBPxMonZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 496/595] netfilter: nfnetlink_queue: hold nfnl mutex in event notifier
-Date: Wed, 30 Sep 2026 17:26:29 +0200
-Message-ID: <20260930152358.362713568@linuxfoundation.org>
+Subject: [PATCH 5.10 505/595] sctp: avoid livelock while updating retransmit path
+Date: Wed, 30 Sep 2026 17:26:38 +0200
+Message-ID: <20260930152358.561772935@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,68 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Yiqi Sun <sunyiqixm@gmail.com>
 
-[ Upstream commit 9461613afc59acef44a0071b0dd5075f6e993ffe ]
+[ Upstream commit d2c31b837406395e576afeb25958c98e9938f3f6 ]
 
-We must serialize the release notifier and the config netlink function.
-A concurrent thread can issue close() which can call the release function
-while unrelated socket processes UNBIND request for same portid:
+sctp_assoc_update_retran_path() can loop forever when every remaining
+transport, including retran_path, is SCTP_UNCONFIRMED: the state check
+runs before the wraparound test, so the loop cannot observe that it has
+completed a full pass.
 
-Oops: general protection fault, [..]
-RIP: 0010:__instance_destroy+0x60/0x210 [nfnetlink_queue]
-Call Trace:
- nfqnl_recv_config+0x9b0/0xdc0 [nfnetlink_queue]
- nfnetlink_rcv_msg+0x7c2/0xeb0
- ? __pfx_nfnetlink_rcv_msg+0x10/0x10
+Fix this by considering a transport only when it is not UNCONFIRMED,
+then checking whether the walk has returned to retran_path. This makes
+the full-pass termination independent of the transport state while
+preserving the existing fallback selection semantics.
 
-After this, parallel UNBIND and URELEASE events are impossible.
+Also restore the NULL guard around the retran_path assignment. In the
+all-UNCONFIRMED case there is no eligible replacement transport, and
+installing NULL would leave later retransmit-path users and the debug
+print with a NULL path.
 
-This change isn't nice, but its the shortest fix given instances
-are not refcounted and the nfnetlink config callback drops the
-rcu read lock early due to need for sleeping allocations.
-
-Fixes: 7af4cc3fa158 ("[NETFILTER]: Add "nfnetlink_queue" netfilter queue handler over nfnetlink")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 4c47af4d5eb2 ("net: sctp: rework multihoming retransmission path selection to rfc4960")
+Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260915095017.942213-1-sunyiqixm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/sctp/associola.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 5936eab2a9415..8c40a934f0e44 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -984,6 +984,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
- 	if (event == NETLINK_URELEASE && n->protocol == NETLINK_NETFILTER) {
- 		int i;
- 
-+		nfnl_lock(NFNL_SUBSYS_QUEUE);
- 		/* destroy all instances for this portid */
- 		spin_lock(&q->instances_lock);
- 		for (i = 0; i < INSTANCE_BUCKETS; i++) {
-@@ -997,6 +998,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
- 			}
- 		}
- 		spin_unlock(&q->instances_lock);
-+		nfnl_unlock(NFNL_SUBSYS_QUEUE);
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index 8fc11f06ab238..ad1a7368f6ab0 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -1295,18 +1295,19 @@ void sctp_assoc_update_retran_path(struct sctp_association *asoc)
+ 		/* Manually skip the head element. */
+ 		if (&trans->transports == &asoc->peer.transport_addr_list)
+ 			continue;
+-		if (trans->state == SCTP_UNCONFIRMED)
+-			continue;
+-		trans_next = sctp_trans_elect_best(trans, trans_next);
+-		/* Active is good enough for immediate return. */
+-		if (trans_next->state == SCTP_ACTIVE)
+-			break;
++		if (trans->state != SCTP_UNCONFIRMED) {
++			trans_next = sctp_trans_elect_best(trans, trans_next);
++			/* Active is good enough for immediate return. */
++			if (trans_next->state == SCTP_ACTIVE)
++				break;
++		}
+ 		/* We've reached the end, time to update path. */
+ 		if (trans == asoc->peer.retran_path)
+ 			break;
  	}
- 	return NOTIFY_DONE;
- }
-@@ -1317,9 +1319,9 @@ static int nfqnl_recv_config(struct net *net, struct sock *ctnl,
  
- 	/* Lookup queue under RCU. After peer_portid check (or for new queue
- 	 * in BIND case), the queue is owned by the socket sending this message.
--	 * A socket cannot simultaneously send a message and close, so while
--	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
--	 * socket close) cannot destroy this queue. Safe to use without RCU.
-+	 * nfqnl_rcv_nl_event() will block on the nfnl subsys mutex that is
-+	 * held by the caller, so the queue cannot be destroyed in parallel,
-+	 * even after we drop the RCU read lock.
- 	 */
- 	rcu_read_lock();
- 	queue = instance_lookup(q, queue_num);
+-	asoc->peer.retran_path = trans_next;
++	if (trans_next)
++		asoc->peer.retran_path = trans_next;
+ 
+ 	pr_debug("%s: association:%p updated new path to addr:%pISpc\n",
+ 		 __func__, asoc, &asoc->peer.retran_path->ipaddr.sa);
 -- 
 2.53.0
 
