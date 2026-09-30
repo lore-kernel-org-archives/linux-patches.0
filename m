@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F663B3BE1;
-	Wed, 30 Sep 2026 18:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7B73A6B7F;
+	Wed, 30 Sep 2026 18:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794629; cv=none; b=Hn1CObUO+oI8BN3IPmGmOQTCx2QbBlrzJNWpkPsIQVHntzve9hAiLFA4BtJjeZe80GacOGq+hTNg+bqMixuf011ZWklYxdRGO95loRAV+SCropNQH2TJiFKQd5+i/YTNQgpgc4eO4HVSLpEWWVZMs+RBV9LrrmmxzF5hAvhzK6Q=
+	t=1790794632; cv=none; b=QzA7l7VZFz0vcbzs7ktBKwNA5OYNUJ5XgbfkMUCYubiPmu6cuzd7Z/4GuQuvtY6hbw0B8Q4KIzqG8q20ZncSPkHVCw+XGWGNFpsOKcmqDggkD0wzwMXWjcDXVr6DvvhtWsqyVBZ3FLzeI6JvaOhP0ek8f89EhFkwal1it1W+ciY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794629; c=relaxed/simple;
-	bh=8pv904TedvljtJPWnRGgz2i2ccJQhABMHjuNqkbu0xk=;
+	s=arc-20240116; t=1790794632; c=relaxed/simple;
+	bh=hoIDAKNjBFCC9Vln4rZHCR77heY2GGnlaQTa943lMhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KT+3e0hPLa061uuUvL0P+rJQgzF61rcGTkykkljqAc5TAi0tuchpAgC9CDqAu/g0Mzc7wLabsqDHIP/0rsSzarl3UDssHfOus1frS4zI9NAcPSkWU1W/Tyw3h45RHgenmROyLYKsmXoJ+waIheKp5qo9PJrhGDONKKygoLPqRis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7v8ZBIY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RMvkZ+ZFIOOOJB5yRXlRvf2c3FW8jaEkTDc8YMyS7llKwXPwcJQwDUweCaBAfuzjWLDSdkttbtNR4JCkh8aJWRP0S+KPXOyrTczuDNuietDBKrspIqygtApDIPKaVpLPIP1T/QUEPq9BqPUNbfL5qQrtURG0jrpyYnyvv+Wsg+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szk99kYc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7v8ZBIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBD81F000FF;
-	Wed, 30 Sep 2026 18:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szk99kYc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9A31F000FF;
+	Wed, 30 Sep 2026 18:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794628;
-	bh=Sq8BE21d0MQ3Z2tZxhS32lORtCu0B+2VIHjq8IltZTo=;
+	s=korg; t=1790794631;
+	bh=z/nv5lNJbhKyfyBQcRWgReb5P/nryYNC5T234wsYfPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7v8ZBIYyhftfRGVbCa80mz9xAm0OQQ+ZUd6iwDNivH4VjzxLjqwPQ0stGhZOm+Qc
-	 dzxDWyHMKekEPp82vdrLXXlmfd9qX7/1Yfpcpi02h03JyFXLCksPKEoIwJhi8lmZfv
-	 OBkxXABYr4lWo5EElBUtlwwYnss7yBQjcpsLU7NI=
+	b=szk99kYcur8FfDUkB1RdJGhpeMs3gxbK2jn1ouPihKwgx/jpg+2kah/O0jWCEbgOk
+	 IYmjKajLu6yqHoRElTs+8/ShZVTlwmiwQ1A5Zad3V5YfwNiI87eE+Fsr06qS4H1kzn
+	 BBG55R/Pz33nujt6+fr8ghB0BV2nDsY2Uj/m9Y84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0233/1193] ALSA: usb-audio: Add quirk flags for SC13A
-Date: Wed, 30 Sep 2026 17:15:17 +0200
-Message-ID: <20260930152439.371641989@linuxfoundation.org>
+Subject: [PATCH 6.6 0234/1193] tls: reject the combination of TLS and sockmap
+Date: Wed, 30 Sep 2026 17:15:18 +0200
+Message-ID: <20260930152439.393259437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,51 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8956950dab22fbaefe92ca1980728165c5da793d ]
+[ Upstream commit 460e6486617c17dd19abe8f3fc67d9a6fa25f8ca ]
 
-The SC13A ( VID 0x1ff7, PID 0x0f81) not support reading the current
-sample rate and results in an error message printed to kmsg. Set
-QUIRK_FLAG_GET_SAMPLE_RATE to skip the sample rate check.
+TLS and sockmap (BPF psock) integration hides a lot of latent bugs.
+Bugs which may be more or less relevant for real users but they
+are definitely exploitable.
 
-Quirky device sample:
-  usb 3-5.2.4.1: new high-speed USB device number 11 using xhci_hcd
-  usb 3-5.2.4.1: New USB device found, idVendor=1ff7, idProduct=0f81
-  usb 3-5.2.4.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-  usb 3-5.2.4.1: Product: SC13A
-  usb 3-5.2.4.1: Manufacturer: Linux Foundation
-  usb 3-5.2.4.1: SerialNumber: 000002
-  usb 3-5.2.4.1: Found UVC 1.50 device SC13A (1ff7:0f81)
-  usb 3-5.2.4.1: 3:1: cannot get freq at ep 0x86
-  usb 3-5.2.4.1: Warning! Unlikely big volume range (=4096),
-    cval->res is probably wrong.
-  usb 3-5.2.4.1: [5] FU [Mic Capture Volume] ch = 1, val = 0/4096/1
-  usbcore: registered new interface driver snd-usb-audio
-  usb 3-5.2.4.1: 3:1: cannot get freq at ep 0x86
-  usb 3-5.2.4.1: 3:1: cannot get freq at ep 0x86
+We could not find anyone actively using this integration so let's
+reject this config. Adding a TLS socket to a sockmap was already
+rejected by sk_psock_init() through the inet_csk_has_ulp() check.
+We need to reject the attempts to configure the TLS keys (rather
+than adding the ULP itself) because checking prior to the ULP
+installation is tricky without risking a race with sockmap getting
+added in parallel (sockmap does not hold the socket lock).
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Link: https://patch.msgid.link/20260617025234.3344935-1-aichao@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch is a minimal rejection of the feature. Subsequent patch
+in the series will do a light dead code removal. Full cleanup would
+require a major rewrite of the Tx path, we don't need skmsg any more.
+
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/tls/tls_main.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 8d77662d344f7..aaa3ea577a59b 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2225,6 +2225,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
- 	DEVICE_FLG(0x1bcf, 0x2283, /* NexiGo N930AF FHD Webcam */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
-+	DEVICE_FLG(0x1ff7, 0x0f81, /* SC13A Webcam */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x2040, 0x7200, /* Hauppauge HVR-950Q */
- 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
- 	DEVICE_FLG(0x2040, 0x7201, /* Hauppauge HVR-950Q-MXL */
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index c7ee44bd32064..d57336820ef0b 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -592,6 +592,17 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
+ 	int rc = 0;
+ 	int conf;
+ 
++	/* TLS and sockmap are mutually exclusive. A socket already in a
++	 * sockmap (i.e. with a psock attached) cannot be upgraded to TLS.
++	 * sockmap rejects TLS sockets already (see sk_psock_init()).
++	 */
++	rcu_read_lock();
++	if (sk_psock(sk)) {
++		rcu_read_unlock();
++		return -EINVAL;
++	}
++	rcu_read_unlock();
++
+ 	if (sockptr_is_null(optval) || (optlen < sizeof(*crypto_info)))
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
