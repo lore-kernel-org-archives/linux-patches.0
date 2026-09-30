@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD9D51B174;
-	Wed, 30 Sep 2026 18:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95DE31D366;
+	Wed, 30 Sep 2026 18:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791572; cv=none; b=VpVxIQ5d4DkLY+nBHbq5dWbdL2bPRgOlaQYmWXpk5ByGw0iRWyqvGFsLC0KBpcIZEjT4+0b+WKjwrXDBKFoJsYmrmLlAeS3Hbu6E70RV6z1Vp/vZSvlkVhmHOUbEQGadM7KfQVl3Blbhk4eI9dRV/M/Hd+wWSI38wgSU7ze3Pdo=
+	t=1790791574; cv=none; b=s8JAIVNn0jx5n2UzCx2mpOywFW14t+L6//0y7Jgk9LBtooEEBqMSgpsk0GMdMSy0YYjmdbOvxtmLFm3wcOtsqKv34sa/Z15GYpVI31G9GwlKMA+8zgbBvzYsZh9HO9LOLSjx3oXT0i+bxz5gidc7ItCUTwmoXw/rDvHsCy/S61E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791572; c=relaxed/simple;
-	bh=BUGnrgDF602cYd129UrD0xfpd9dJq742YtWSjvvopL8=;
+	s=arc-20240116; t=1790791574; c=relaxed/simple;
+	bh=quxQf83fTBfiY6JNe7rAHrz4VIzeaJW1XN+a/rV9TEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRPYWxkyFdurlrwi9qjMTJdffDbd4Y7IyMQh0kMPNrFxddIj2h9ACgLY3cr6bQcimtXJwo3ypNGrKhIFhkWNn8VpyJPJrNBvne9S4gJ/UdR0nEUZ6Dypjjn69pAJMipqoKma4AW4hQDsDhVSj9b3Rodb2SWOCt/OZ7Mat6opgok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGCIcSxa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=on1YapGOJ1pGIy4kTaj/aBu0awMmXhYzh5DuEUOM5SoHEvGOVXmBwQdaFwnSPe20uYbtC00k8TreAd4DZOqPRxZbPw3gKRGF2TycJhSAIxy125ybf6Mha9NwGOxGC2EvSxY5A0ItNukOZ9TGExNeqWfUTKkPbhXO4nQWVXN3i1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZ036Iv0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGCIcSxa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5871F000FF;
-	Wed, 30 Sep 2026 18:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZ036Iv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8781F000FF;
+	Wed, 30 Sep 2026 18:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791570;
-	bh=vpC2dqbhzNllEVbWV3eg0gWrIaqvPDY3EbOq6c6TtpI=;
+	s=korg; t=1790791573;
+	bh=EO392t9mvQieZ0H2QYQp6JFbSKFcd1WWdq//j5reApo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EGCIcSxaILJShv2LhN+VVK00WTjMNHXy5iq8taSeQUFJ8kZpW/wHPlB7bilnsunrF
-	 ZoHJ/Pi2a2BhMOUqagioZ6pflaQwdGttYPKMGntIpc4v7KJCFz9iHFB49g0Hsa+wz4
-	 K0vxIKzjZXydynOLAoJwVZfxOiQsRcWKmvbUF6F4=
+	b=NZ036Iv07RynDoqxkajFK7sCTsdIXUPHHvLf/dF4hgzMieqoiIThSaB3KlOyGRgDo
+	 B++hrXLds5JOwX1oh3Kz5qjt3O+doSsuzQ8rbN0lt2J3dcxvmuby1ffWtMOcdtVHo2
+	 fbUhg2zxkKTk11aUNEXaxfBTMmCjQcJE9JrTvMNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yannick Vignon <yannick.vignon@nxp.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 348/752] net: stmmac: optimize locking around PTP clock reads
-Date: Wed, 30 Sep 2026 17:23:38 +0200
-Message-ID: <20260930152405.819500131@linuxfoundation.org>
+Subject: [PATCH 5.15 349/752] net: stmmac: initialize ptp_lock at probe time
+Date: Wed, 30 Sep 2026 17:23:39 +0200
+Message-ID: <20260930152405.840276537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,187 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yannick Vignon <yannick.vignon@nxp.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 642436a1ad34a28c45bbc2bdc131640a73782356 ]
+[ Upstream commit 0338c68e22abd2ee509ec2e32508a50896618c32 ]
 
-Reading the PTP clock is a simple operation requiring only 3 register
-reads. Under a PREEMPT_RT kernel, protecting those reads by a spin_lock is
-counter-productive: if the 2nd task preempting the 1st has a higher prio
-but needs to read time as well, it will require 2 context switches, which
-will pretty much always be more costly than just disabling preemption for
-the duration of the reads. Moreover, with the code logic recently added
-to get_systime(), disabling preemption is not even required anymore:
-reads and writes just need to be protected from each other, to prevent a
-clock read while the clock is being updated.
+priv->ptp_lock is only initialized in stmmac_ptp_register(), which runs
+during __stmmac_open(). However, the lock is also used while the
+interface is down and has never been opened: tc_taprio_configure()
+invokes the PTP gettime64() callback to compute the EST base time when
+offloading a TAPRIO schedule, and stmmac_get_time() takes
+priv->ptp_lock. Using an uninitialized rwlock is undefined behaviour.
+Move the rwlock_init() to __stmmac_dvr_probe(), together with the other
+private locks, so that ptp_lock is always valid regardless of the
+interface state.
 
-Improve the above situation by replacing the PTP spinlock by a rwlock, and
-using read_lock for PTP clock reads so simultaneous reads do not block
-each other.
-
-Signed-off-by: Yannick Vignon <yannick.vignon@nxp.com>
-Link: https://lore.kernel.org/r/20220204135545.2770625-1-yannick.vignon@oss.nxp.com
+Fixes: b60189e0392f ("net: stmmac: Integrate EST with TAPRIO scheduler API")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260904-stmmac-fix-ptp-clock-init-v1-1-df70eb1eb04d@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0338c68e22ab ("net: stmmac: initialize ptp_lock at probe time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-intel.c |  4 ++--
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  2 +-
- .../ethernet/stmicro/stmmac/stmmac_hwtstamp.c |  4 ++--
- .../net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 22 +++++++++----------
- .../stmicro/stmmac/stmmac_selftests.c         |  8 +++----
- 5 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-index c9e88df9e8665..e6d01b10cf989 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-@@ -388,10 +388,10 @@ static int intel_crosststamp(ktime_t *device,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 496889d498832..73510737196f4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7221,6 +7221,7 @@ int stmmac_dvr_probe(struct device *device,
+ 	stmmac_napi_add(ndev);
  
- 	/* Repeat until the timestamps are from the FIFO last segment */
- 	for (i = 0; i < num_snapshot; i++) {
--		spin_lock_irqsave(&priv->ptp_lock, flags);
-+		read_lock_irqsave(&priv->ptp_lock, flags);
- 		stmmac_get_ptptime(priv, ptpaddr, &ptp_time);
- 		*device = ns_to_ktime(ptp_time);
--		spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+		read_unlock_irqrestore(&priv->ptp_lock, flags);
- 		get_arttime(priv->mii, intel_priv->mdio_adhoc_addr, &art_time);
- 		*system = convert_art_to_tsc(art_time);
- 	}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 5946e1decd9cc..9ca1a69b3a9cb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -266,7 +266,7 @@ struct stmmac_priv {
- 	u32 adv_ts;
- 	int use_riwt;
- 	int irq_wake;
--	spinlock_t ptp_lock;
-+	rwlock_t ptp_lock;
- 	/* Protects auxiliary snapshot registers from concurrent access. */
- 	struct mutex aux_ts_lock;
- 	wait_queue_head_t tstamp_busy_wait;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index 0d3d7874f0fc6..c0150c5d4781d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -206,9 +206,9 @@ static void timestamp_interrupt(struct stmmac_priv *priv)
- 	channel = ilog2(FIELD_GET(PTP_ACR_MASK, acr_value));
+ 	mutex_init(&priv->lock);
++	rwlock_init(&priv->ptp_lock);
  
- 	for (i = 0; i < num_snapshot; i++) {
--		spin_lock_irqsave(&priv->ptp_lock, flags);
-+		read_lock_irqsave(&priv->ptp_lock, flags);
- 		get_ptptime(priv->ptpaddr, &ptp_time);
--		spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+		read_unlock_irqrestore(&priv->ptp_lock, flags);
- 		event.type = PTP_CLOCK_EXTTS;
- 		event.index = channel;
- 		event.timestamp = ptp_time;
+ 	/* If a specific clk_csr value is passed from the platform
+ 	 * this means that the CSR Clock Range selection cannot be
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index e6221c33572d4..0ab5fca50b7bb 100644
+index 0ab5fca50b7bb..dd16755c216e0 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -39,9 +39,9 @@ static int stmmac_adjust_freq(struct ptp_clock_info *ptp, s32 ppb)
- 	diff = div_u64(adj, 1000000000ULL);
- 	addend = neg_adj ? (addend - diff) : (addend + diff);
- 
--	spin_lock_irqsave(&priv->ptp_lock, flags);
-+	write_lock_irqsave(&priv->ptp_lock, flags);
- 	stmmac_config_addend(priv, priv->ptpaddr, addend);
--	spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+	write_unlock_irqrestore(&priv->ptp_lock, flags);
- 
- 	return 0;
- }
-@@ -86,9 +86,9 @@ static int stmmac_adjust_time(struct ptp_clock_info *ptp, s64 delta)
- 		mutex_unlock(&priv->plat->est->lock);
- 	}
- 
--	spin_lock_irqsave(&priv->ptp_lock, flags);
-+	write_lock_irqsave(&priv->ptp_lock, flags);
- 	stmmac_adjust_systime(priv, priv->ptpaddr, sec, nsec, neg_adj, xmac);
--	spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+	write_unlock_irqrestore(&priv->ptp_lock, flags);
- 
- 	/* Caculate new basetime and re-configured EST after PTP time adjust. */
- 	if (est_rst) {
-@@ -137,9 +137,9 @@ static int stmmac_get_time(struct ptp_clock_info *ptp, struct timespec64 *ts)
- 	unsigned long flags;
- 	u64 ns = 0;
- 
--	spin_lock_irqsave(&priv->ptp_lock, flags);
-+	read_lock_irqsave(&priv->ptp_lock, flags);
- 	stmmac_get_systime(priv, priv->ptpaddr, &ns);
--	spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+	read_unlock_irqrestore(&priv->ptp_lock, flags);
- 
- 	*ts = ns_to_timespec64(ns);
- 
-@@ -162,9 +162,9 @@ static int stmmac_set_time(struct ptp_clock_info *ptp,
- 	    container_of(ptp, struct stmmac_priv, ptp_clock_ops);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&priv->ptp_lock, flags);
-+	write_lock_irqsave(&priv->ptp_lock, flags);
- 	stmmac_init_systime(priv, priv->ptpaddr, ts->tv_sec, ts->tv_nsec);
--	spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+	write_unlock_irqrestore(&priv->ptp_lock, flags);
- 
- 	return 0;
- }
-@@ -193,12 +193,12 @@ static int stmmac_enable(struct ptp_clock_info *ptp,
- 		cfg->period.tv_sec = rq->perout.period.sec;
- 		cfg->period.tv_nsec = rq->perout.period.nsec;
- 
--		spin_lock_irqsave(&priv->ptp_lock, flags);
-+		write_lock_irqsave(&priv->ptp_lock, flags);
- 		ret = stmmac_flex_pps_config(priv, priv->ioaddr,
- 					     rq->perout.index, cfg, on,
- 					     priv->sub_second_inc,
- 					     priv->systime_flags);
--		spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+		write_unlock_irqrestore(&priv->ptp_lock, flags);
- 		break;
- 	case PTP_CLK_REQ_EXTTS:
- 		priv->plat->ext_snapshot_en = on;
-@@ -302,7 +302,7 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+@@ -302,7 +302,6 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
  	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
  	stmmac_ptp_clock_ops.n_ext_ts = priv->dma_cap.aux_snapshot_n;
  
--	spin_lock_init(&priv->ptp_lock);
-+	rwlock_init(&priv->ptp_lock);
+-	rwlock_init(&priv->ptp_lock);
  	mutex_init(&priv->aux_ts_lock);
  	priv->ptp_clock_ops = stmmac_ptp_clock_ops;
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 4190d6c0d9e8e..f0259404077af 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -1803,9 +1803,9 @@ static int stmmac_test_tbs(struct stmmac_priv *priv)
- 	if (ret)
- 		return ret;
- 
--	spin_lock_irqsave(&priv->ptp_lock, flags);
-+	read_lock_irqsave(&priv->ptp_lock, flags);
- 	stmmac_get_systime(priv, priv->ptpaddr, &curr_time);
--	spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+	read_unlock_irqrestore(&priv->ptp_lock, flags);
- 
- 	if (!curr_time) {
- 		ret = -EOPNOTSUPP;
-@@ -1825,9 +1825,9 @@ static int stmmac_test_tbs(struct stmmac_priv *priv)
- 		goto fail_disable;
- 
- 	/* Check if expected time has elapsed */
--	spin_lock_irqsave(&priv->ptp_lock, flags);
-+	read_lock_irqsave(&priv->ptp_lock, flags);
- 	stmmac_get_systime(priv, priv->ptpaddr, &curr_time);
--	spin_unlock_irqrestore(&priv->ptp_lock, flags);
-+	read_unlock_irqrestore(&priv->ptp_lock, flags);
- 
- 	if ((curr_time - start_time) < STMMAC_TBS_LT_OFFSET)
- 		ret = -EINVAL;
 -- 
 2.53.0
 
