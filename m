@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435B63B05A4;
-	Wed, 30 Sep 2026 18:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2A13A9852;
+	Wed, 30 Sep 2026 18:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794638; cv=none; b=HZ7NVh/W3MGD2kBwRLEXjZsxQd7YjUZcB60k2rz2YMg/XZ1JfXM7Yq7gj5TGLt328CuIi7i5abmsM7fbAe/aILvNov2VeO/pCNCiVbtINw1aEt9bAxlF0KNrfvGhg3F+DGXH3IDL6tNNe69iML26ecAQK15zGzmvJ+GKNX0qU8g=
+	t=1790794641; cv=none; b=HQVn/iH/it/qG+hG4Kuu20p0vRw5M4PHTmASoai44+7yghoCG7C9KdQsKXDfdHvT6BCQyVkLjILTYOS+qRc4JClBZsQu9DovzoEhFv+49OyB6BksxNDsdPcIH9aOnVIJnzMTzJ1faEuI5LO1uTBTI1aS8m9gSK07XYiEA9/iinY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794638; c=relaxed/simple;
-	bh=sG/tgHSyx+L8DUEXu6SpJ1jw88v4iSk6Op0yOO/yuFw=;
+	s=arc-20240116; t=1790794641; c=relaxed/simple;
+	bh=v/4M3T8bKRmOdH384ykEYxVYGTHgnKyj8N8/jP/zOSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJJAcDpOqQWUUW+IoiMBAP9OAvgSqa85p5WfHquHbC//ticVuUZ+ER9dx5tOg8Nq4fIJRnLp3/4g0cJNzQPMJBGo/dBH10sTJigfTUc4T+AY2Plc6J6tDuOm9fjhsXk1uf84x2wrF0ywRe4npA9zN5gMH6orXRoprPTr+VOFO40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXPzzRv7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EFtt6etNfEabo8vi5ggbHiMa4IxcwDXJ+cngI8rTZSXkxTZAXzJsQWDos3tgop7sQ3wFshb5Z+9bGV9a7t9EKmgSHKliztA/sTg/XxnnieyaivMegmIYHRvZkE3RMFUpbMP5iVxmOqDaRkwjnmW959yUFxIRbKsGOIxVRb4ujiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvBOxO8D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXPzzRv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF961F000FF;
-	Wed, 30 Sep 2026 18:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvBOxO8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770DE1F000FF;
+	Wed, 30 Sep 2026 18:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794637;
-	bh=VDoUIMTOIb9nTkOv8qqLaX01ERdFdn/oJpkoeNu2R8E=;
+	s=korg; t=1790794640;
+	bh=4EX7JuHZXJZQbu25EFqoU7DV1KAgE2Yn0oTlUbk3s3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BXPzzRv7RQptrKRRlAqELRM4I3uNm48lMVhDIajS1Oy0RnRBRgTJZHzaLkyMfKaKX
-	 ifoI1swGHm8qr0W8VOoF7HAr2U6sg0vBgN5BkhxtPuTmw+TuhupTg1nPUd7mNfuWgB
-	 buUG4Xbo/F+7nE/0iybi6KKClItBTOT8DBgijNv4=
+	b=XvBOxO8DdHuoKRQcnn3U6ucHtVXs9pUQ/muo4Q8yT6Otojqsg5Fs0B7W0kq/iS1Ge
+	 zkAXrt78RFDQHsuE3JHA4MtcP4TTGF2enDlOwAuzlkU7/luS9jmkDds6SimtZQMQAu
+	 Q1IhL35I9MW4IswcaALs0oXe3kJrU8tfk61mQcmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Viktor Menshin <ripeeerr@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0236/1193] leds: uleds: Return -EFAULT on copy_to_user() failure
-Date: Wed, 30 Sep 2026 17:15:20 +0200
-Message-ID: <20260930152439.435733902@linuxfoundation.org>
+Subject: [PATCH 6.6 0227/1193] ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT
+Date: Wed, 30 Sep 2026 17:15:11 +0200
+Message-ID: <20260930152439.240247526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Viktor Menshin <ripeeerr@gmail.com>
 
-[ Upstream commit 61ed78f55a46e12afd4b464c4ba736f55ff33c5e ]
+[ Upstream commit 3a3e810e91080a5121170ee11554a55ed89a1c8b ]
 
-uleds_read() copies the current brightness value to userspace but
-ignores copy_to_user() failures. It then clears the pending update and
-reports a successful full read even when no data was copied.
+The Lenovo Xiaoxin 14 GT (Chinese market model, AMD Ryzen AI 9 365)
+produces constant electrical hissing and crackling noise from both
+internal speakers and 3.5mm headphone jack during audio playback.
+Audio works correctly on Windows.
 
-Return -EFAULT when the copy fails and leave the update pending so a
-later read can retry.
+The PCI SSID 17aa:3912 is not present in the quirk list. The device
+shares the same AMD platform and ALC287 codec as neighboring Lenovo
+14" AMD models (17aa:3911, 17aa:390d), so apply the same fixup.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260521181205.15130-1-alhouseenyousef@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Note: the fixup selection is based on similarity with neighboring
+models and has not been verified by testing a compiled kernel.
+Guidance from maintainers on the correct fixup is welcome.
+
+Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
+Link: https://patch.msgid.link/20260615092515.1082-1-ripeeerr@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/uleds.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/leds/uleds.c b/drivers/leds/uleds.c
-index d69e1febc79fa..d0b7d8c1fcf55 100644
---- a/drivers/leds/uleds.c
-+++ b/drivers/leds/uleds.c
-@@ -148,10 +148,13 @@ static ssize_t uleds_read(struct file *file, char __user *buffer, size_t count,
- 		} else if (!udev->new_data && (file->f_flags & O_NONBLOCK)) {
- 			retval = -EAGAIN;
- 		} else if (udev->new_data) {
--			retval = copy_to_user(buffer, &udev->brightness,
--					      sizeof(udev->brightness));
--			udev->new_data = false;
--			retval = sizeof(udev->brightness);
-+			if (copy_to_user(buffer, &udev->brightness,
-+					 sizeof(udev->brightness))) {
-+				retval = -EFAULT;
-+			} else {
-+				udev->new_data = false;
-+				retval = sizeof(udev->brightness);
-+			}
- 		}
- 
- 		mutex_unlock(&udev->mutex);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 816a7c500378e..300d78a4d8e58 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10600,6 +10600,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
 -- 
 2.53.0
 
