@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C373750B8DE;
-	Wed, 30 Sep 2026 16:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B068B50E59D;
+	Wed, 30 Sep 2026 16:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785289; cv=none; b=YAt1CtZmG/KZPUrLL6+NLut9+fw2OEapDbSXmgUs5J5R87oR8PdiXqNegrnMyQpaSS3v3xXSrpnQlv7QCVCKpTRWpTx8bJsuxsnwYwKFYG0oFXU1bAgkGdtlWid3jcZWRCtM9n5XBvoq2fpbdP+sUKEQayk+/ASN/L9LmIGB+88=
+	t=1790785289; cv=none; b=WLCoJYVavzfQ4RGWpv7Br8x0QjNo3WmIjXAze3ar4aMlLd/nBGk1F7Fsf+wEsVDtwTGosd/vR3cGo7If0JFvB0CrTV1IKdVQHIQq1QAyeG8+ZhclpHWt+BGNYyC+AkHq7UAxLvIPQ8XHszeTM/8kvEE4rJQmGpI7Jahmb8dW4+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790785289; c=relaxed/simple;
-	bh=FF+CC39D1Xeq1WmEE/nq/QBdOK4dKsp6ZWyborvZYl8=;
+	bh=jqBHHfKwvK5CvfHLhVa1Wsme/O4Pmi57NyYu3DT2bz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTRmPFxtzem3JADIJSauhiTQKWQRJfK1xiS49GNU0isMjVmrXwNyTPrXwFiTSqMyxlZiUWqal1h96RhsbyzXLXXQaqEGyjm3oI+r+/Mp9qXzPMV/S2nz3BmJBuRZYN3fBHrt05hdlUgODPy2pVJs2NTXzuwWRP41ZEJmrDD8p1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiKLCX7j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jtgldyz7VVHfP/TOgexFyBmB5DSWbwfmtvTx5FD48QAedHngDnvca4YKT1mlbOgqnOR2dQlq7LcMpJD5on+Vqr/L/8vHPj27vP1VUf8XBupgXqGdON4fkkKG7JRajmJEA7PLizspeaX5tEEKqq8Zqyh1VXg10s3z/vnxvdbP2m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AFbugKSI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiKLCX7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17E71F00893;
-	Wed, 30 Sep 2026 16:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AFbugKSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3101F00898;
+	Wed, 30 Sep 2026 16:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785282;
-	bh=if9ddG4VD/6/TcdOmItdSbQKSJ/iD1rEBozik10YHvQ=;
+	s=korg; t=1790785285;
+	bh=sQHbjDjHoN+VA5VE89EDlB6ZQT76yPrpcwmvlFLTGnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jiKLCX7jxwyDGIog3wj+j3LLL975nlUpZFpA74q49jsDhecbdcy+pt3oUNTgdGfls
-	 qMoL8tE+jWMhgrAmTMpKfKArZBHkIYk6th2F5UNV0+rPN5vDFzX03GjRVIYqWU9ZCk
-	 jSDJjHz5eieqIfG7onPFbsxrtIccZQhgvs1VhKko=
+	b=AFbugKSICtBB8A0xLzufK1mK5b/O2Glu8F5flzcF9fggzO2s0OSAWq8z35A1gTPHu
+	 0GjitPto5FoApyPghngFvu8pIMtI3AIx/I+NZzRGelm3O/QgLyTLD+4mPnXHqWd5CL
+	 hgHvZ0ybo2gbz+gmjI7CBz+x/XwxLYXD7FZDkp/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 455/982] ALSA: hda/common: Use cleanup macros for PM controls
-Date: Wed, 30 Sep 2026 17:19:51 +0200
-Message-ID: <20260930152426.563330081@linuxfoundation.org>
+Subject: [PATCH 6.1 456/982] ALSA: hda/common: Use guard() for mutex locks
+Date: Wed, 30 Sep 2026 17:19:52 +0200
+Message-ID: <20260930152426.584417584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,144 +52,518 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 8dad6b3dac2794c52d63b2336138392eddc17936 ]
+[ Upstream commit 62dd3851d2450a5fb2259da1f0391b5870e07577 ]
 
-The new macro CLASS(snd_hda_power_pm) can replace the manual
-snd_hda_power_up_pm() and _down() calls gracefully.
+Replace the manual mutex lock/unlock pairs with guard().
 
-A part of the code in codec_exec_verb() is factored out to a function,
-so that the auto-cleanup can be well scoped.
-
-Merely cleanups and no functional changes.
+Only code refactoring, and no behavior change.
 
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250827072916.31933-6-tiwai@suse.de
+Link: https://patch.msgid.link/20250827072916.31933-8-tiwai@suse.de
 Stable-dep-of: 728478874312 ("ALSA: hda: Report a change when only the channel status bytes move")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_codec.c | 30 +++++++++++++++++++-----------
- sound/pci/hda/hda_proc.c  |  4 +---
- sound/pci/hda/hda_sysfs.c | 11 ++++-------
- 3 files changed, 24 insertions(+), 21 deletions(-)
+ sound/pci/hda/hda_codec.c      | 89 ++++++++++++++--------------------
+ sound/pci/hda/hda_controller.c | 24 ++++-----
+ sound/pci/hda/hda_sysfs.c      | 66 ++++++++++---------------
+ 3 files changed, 74 insertions(+), 105 deletions(-)
 
 diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index aef60044cb8a2..360ffe6af5a42 100644
+index 360ffe6af5a42..600714881335b 100644
 --- a/sound/pci/hda/hda_codec.c
 +++ b/sound/pci/hda/hda_codec.c
-@@ -31,6 +31,23 @@
- #define codec_has_clkstop(codec) \
- 	((codec)->core.power_caps & AC_PWRST_CLKSTOP)
- 
-+static int call_exec_verb(struct hda_bus *bus, struct hda_codec *codec,
-+			  unsigned int cmd, unsigned int flags,
-+			  unsigned int *res)
-+{
-+	int err;
-+
-+	CLASS(snd_hda_power_pm, pm)(codec);
-+	mutex_lock(&bus->core.cmd_mutex);
-+	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
-+		bus->no_response_fallback = 1;
-+	err = snd_hdac_bus_exec_verb_unlocked(&bus->core, codec->core.addr,
-+					      cmd, res);
-+	bus->no_response_fallback = 0;
-+	mutex_unlock(&bus->core.cmd_mutex);
-+	return err;
-+}
-+
- /*
-  * Send and receive a verb - passed to exec_verb override for hdac_device
-  */
-@@ -45,15 +62,7 @@ static int codec_exec_verb(struct hdac_device *dev, unsigned int cmd,
- 		return -1;
- 
-  again:
--	snd_hda_power_up_pm(codec);
--	mutex_lock(&bus->core.cmd_mutex);
--	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
--		bus->no_response_fallback = 1;
--	err = snd_hdac_bus_exec_verb_unlocked(&bus->core, codec->core.addr,
--					      cmd, res);
--	bus->no_response_fallback = 0;
--	mutex_unlock(&bus->core.cmd_mutex);
--	snd_hda_power_down_pm(codec);
-+	err = call_exec_verb(bus, codec, cmd, flags, res);
- 	if (!codec_in_pm(codec) && res && err == -EAGAIN) {
- 		if (bus->response_reset) {
- 			codec_dbg(codec,
-@@ -645,12 +654,11 @@ static void hda_jackpoll_work(struct work_struct *work)
- 		return;
- 
- 	/* the power-up/down sequence triggers the runtime resume */
--	snd_hda_power_up(codec);
-+	CLASS(snd_hda_power, pm)(codec);
- 	/* update jacks manually if polling is required, too */
- 	snd_hda_jack_set_dirty_all(codec);
- 	snd_hda_jack_poll_all(codec);
- 	schedule_delayed_work(&codec->jackpoll_work, codec->jackpoll_interval);
--	snd_hda_power_down(codec);
- }
- 
- /* release all pincfg lists */
-diff --git a/sound/pci/hda/hda_proc.c b/sound/pci/hda/hda_proc.c
-index e8a4cf3c84d82..f7ad5a18c8797 100644
---- a/sound/pci/hda/hda_proc.c
-+++ b/sound/pci/hda/hda_proc.c
-@@ -782,7 +782,7 @@ static void print_codec_info(struct snd_info_entry *entry,
- 	fg = codec->core.afg;
- 	if (!fg)
- 		return;
--	snd_hda_power_up(codec);
-+	CLASS(snd_hda_power, pm)(codec);
- 	snd_iprintf(buffer, "Default PCM:\n");
- 	print_pcm_caps(buffer, codec, fg);
- 	snd_iprintf(buffer, "Default Amp-In caps: ");
-@@ -795,7 +795,6 @@ static void print_codec_info(struct snd_info_entry *entry,
- 	nodes = snd_hda_get_sub_nodes(codec, fg, &nid);
- 	if (! nid || nodes < 0) {
- 		snd_iprintf(buffer, "Invalid AFG subtree\n");
--		snd_hda_power_down(codec);
- 		return;
- 	}
- 
-@@ -932,7 +931,6 @@ static void print_codec_info(struct snd_info_entry *entry,
- 
- 		kfree(conn);
- 	}
--	snd_hda_power_down(codec);
- }
- 
- /*
-diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
-index 69ebc37a4d6f3..80359e518ee55 100644
---- a/sound/pci/hda/hda_sysfs.c
-+++ b/sound/pci/hda/hda_sysfs.c
-@@ -131,21 +131,18 @@ static int reconfig_codec(struct hda_codec *codec)
- {
+@@ -38,13 +38,12 @@ static int call_exec_verb(struct hda_bus *bus, struct hda_codec *codec,
  	int err;
  
--	snd_hda_power_up(codec);
-+	CLASS(snd_hda_power, pm)(codec);
- 	codec_info(codec, "hda-codec: reconfiguring\n");
- 	err = snd_hda_codec_reset(codec);
- 	if (err < 0) {
- 		codec_err(codec,
- 			   "The codec is being used, can't reconfigure.\n");
--		goto error;
-+		return err;
- 	}
- 	err = device_reprobe(hda_codec_dev(codec));
- 	if (err < 0)
--		goto error;
--	err = snd_card_register(codec->card);
-- error:
--	snd_hda_power_down(codec);
--	return err;
-+		return err;
-+	return snd_card_register(codec->card);
+ 	CLASS(snd_hda_power_pm, pm)(codec);
+-	mutex_lock(&bus->core.cmd_mutex);
++	guard(mutex)(&bus->core.cmd_mutex);
+ 	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
+ 		bus->no_response_fallback = 1;
+ 	err = snd_hdac_bus_exec_verb_unlocked(&bus->core, codec->core.addr,
+ 					      cmd, res);
+ 	bus->no_response_fallback = 0;
+-	mutex_unlock(&bus->core.cmd_mutex);
+ 	return err;
  }
  
- /*
+@@ -541,11 +540,11 @@ unsigned int snd_hda_codec_get_pincfg(struct hda_codec *codec, hda_nid_t nid)
+ #ifdef CONFIG_SND_HDA_RECONFIG
+ 	{
+ 		unsigned int cfg = 0;
+-		mutex_lock(&codec->user_mutex);
+-		pin = look_up_pincfg(codec, &codec->user_pins, nid);
+-		if (pin)
+-			cfg = pin->cfg;
+-		mutex_unlock(&codec->user_mutex);
++		scoped_guard(mutex, &codec->user_mutex) {
++			pin = look_up_pincfg(codec, &codec->user_pins, nid);
++			if (pin)
++				cfg = pin->cfg;
++		}
+ 		if (cfg)
+ 			return cfg;
+ 	}
+@@ -2213,13 +2212,12 @@ static int snd_hda_spdif_default_get(struct snd_kcontrol *kcontrol,
+ 
+ 	if (WARN_ON(codec->spdif_out.used <= idx))
+ 		return -EINVAL;
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	ucontrol->value.iec958.status[0] = spdif->status & 0xff;
+ 	ucontrol->value.iec958.status[1] = (spdif->status >> 8) & 0xff;
+ 	ucontrol->value.iec958.status[2] = (spdif->status >> 16) & 0xff;
+ 	ucontrol->value.iec958.status[3] = (spdif->status >> 24) & 0xff;
+-	mutex_unlock(&codec->spdif_mutex);
+ 
+ 	return 0;
+ }
+@@ -2322,7 +2320,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 
+ 	if (WARN_ON(codec->spdif_out.used <= idx))
+ 		return -EINVAL;
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	nid = spdif->nid;
+ 	spdif->status = ucontrol->value.iec958.status[0] |
+@@ -2335,7 +2333,6 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	spdif->ctls = val;
+ 	if (change && nid != (u16)-1)
+ 		set_dig_out_convert(codec, nid, val & 0xff, (val >> 8) & 0xff);
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return change;
+ }
+ 
+@@ -2350,10 +2347,9 @@ static int snd_hda_spdif_out_switch_get(struct snd_kcontrol *kcontrol,
+ 
+ 	if (WARN_ON(codec->spdif_out.used <= idx))
+ 		return -EINVAL;
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	ucontrol->value.integer.value[0] = spdif->ctls & AC_DIG1_ENABLE;
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return 0;
+ }
+ 
+@@ -2380,7 +2376,7 @@ static int snd_hda_spdif_out_switch_put(struct snd_kcontrol *kcontrol,
+ 
+ 	if (WARN_ON(codec->spdif_out.used <= idx))
+ 		return -EINVAL;
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	nid = spdif->nid;
+ 	val = spdif->ctls & ~AC_DIG1_ENABLE;
+@@ -2390,7 +2386,6 @@ static int snd_hda_spdif_out_switch_put(struct snd_kcontrol *kcontrol,
+ 	spdif->ctls = val;
+ 	if (change && nid != (u16)-1)
+ 		set_spdif_ctls(codec, nid, val & 0xff, -1);
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return change;
+ }
+ 
+@@ -2535,10 +2530,9 @@ void snd_hda_spdif_ctls_unassign(struct hda_codec *codec, int idx)
+ 
+ 	if (WARN_ON(codec->spdif_out.used <= idx))
+ 		return;
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	spdif->nid = (u16)-1;
+-	mutex_unlock(&codec->spdif_mutex);
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_spdif_ctls_unassign);
+ 
+@@ -2557,14 +2551,13 @@ void snd_hda_spdif_ctls_assign(struct hda_codec *codec, int idx, hda_nid_t nid)
+ 
+ 	if (WARN_ON(codec->spdif_out.used <= idx))
+ 		return;
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	if (spdif->nid != nid) {
+ 		spdif->nid = nid;
+ 		val = spdif->ctls;
+ 		set_spdif_ctls(codec, nid, val & 0xff, (val >> 8) & 0xff);
+ 	}
+-	mutex_unlock(&codec->spdif_mutex);
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_spdif_ctls_assign);
+ 
+@@ -2639,14 +2632,13 @@ static int snd_hda_spdif_in_switch_put(struct snd_kcontrol *kcontrol,
+ 	unsigned int val = !!ucontrol->value.integer.value[0];
+ 	int change;
+ 
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	change = codec->spdif_in_enable != val;
+ 	if (change) {
+ 		codec->spdif_in_enable = val;
+ 		snd_hdac_regmap_write(&codec->core, nid,
+ 				      AC_VERB_SET_DIGI_CONVERT_1, val);
+ 	}
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return change;
+ }
+ 
+@@ -3205,7 +3197,8 @@ int snd_hda_codec_prepare(struct hda_codec *codec,
+ 			  struct snd_pcm_substream *substream)
+ {
+ 	int ret;
+-	mutex_lock(&codec->bus->prepare_mutex);
++
++	guard(mutex)(&codec->bus->prepare_mutex);
+ 	if (hinfo->ops.prepare)
+ 		ret = hinfo->ops.prepare(hinfo, codec, stream, format,
+ 					 substream);
+@@ -3213,7 +3206,6 @@ int snd_hda_codec_prepare(struct hda_codec *codec,
+ 		ret = -ENODEV;
+ 	if (ret >= 0)
+ 		purify_inactive_streams(codec);
+-	mutex_unlock(&codec->bus->prepare_mutex);
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_codec_prepare);
+@@ -3230,10 +3222,9 @@ void snd_hda_codec_cleanup(struct hda_codec *codec,
+ 			   struct hda_pcm_stream *hinfo,
+ 			   struct snd_pcm_substream *substream)
+ {
+-	mutex_lock(&codec->bus->prepare_mutex);
++	guard(mutex)(&codec->bus->prepare_mutex);
+ 	if (hinfo->ops.cleanup)
+ 		hinfo->ops.cleanup(hinfo, codec, substream);
+-	mutex_unlock(&codec->bus->prepare_mutex);
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_codec_cleanup);
+ 
+@@ -3664,12 +3655,11 @@ static void cleanup_dig_out_stream(struct hda_codec *codec, hda_nid_t nid)
+ int snd_hda_multi_out_dig_open(struct hda_codec *codec,
+ 			       struct hda_multi_out *mout)
+ {
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	if (mout->dig_out_used == HDA_DIG_ANALOG_DUP)
+ 		/* already opened as analog dup; reset it once */
+ 		cleanup_dig_out_stream(codec, mout->dig_out_nid);
+ 	mout->dig_out_used = HDA_DIG_EXCLUSIVE;
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_multi_out_dig_open);
+@@ -3688,9 +3678,8 @@ int snd_hda_multi_out_dig_prepare(struct hda_codec *codec,
+ 				  unsigned int format,
+ 				  struct snd_pcm_substream *substream)
+ {
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	setup_dig_out_stream(codec, mout->dig_out_nid, stream_tag, format);
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_multi_out_dig_prepare);
+@@ -3703,9 +3692,8 @@ EXPORT_SYMBOL_GPL(snd_hda_multi_out_dig_prepare);
+ int snd_hda_multi_out_dig_cleanup(struct hda_codec *codec,
+ 				  struct hda_multi_out *mout)
+ {
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	cleanup_dig_out_stream(codec, mout->dig_out_nid);
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_multi_out_dig_cleanup);
+@@ -3718,9 +3706,8 @@ EXPORT_SYMBOL_GPL(snd_hda_multi_out_dig_cleanup);
+ int snd_hda_multi_out_dig_close(struct hda_codec *codec,
+ 				struct hda_multi_out *mout)
+ {
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	mout->dig_out_used = 0;
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_multi_out_dig_close);
+@@ -3759,7 +3746,7 @@ int snd_hda_multi_out_analog_open(struct hda_codec *codec,
+ 						    &mout->spdif_formats,
+ 						    &mout->spdif_maxbps);
+ 		}
+-		mutex_lock(&codec->spdif_mutex);
++		guard(mutex)(&codec->spdif_mutex);
+ 		if (mout->share_spdif) {
+ 			if ((runtime->hw.rates & mout->spdif_rates) &&
+ 			    (runtime->hw.formats & mout->spdif_formats)) {
+@@ -3772,7 +3759,6 @@ int snd_hda_multi_out_analog_open(struct hda_codec *codec,
+ 				/* FIXME: need notify? */
+ 			}
+ 		}
+-		mutex_unlock(&codec->spdif_mutex);
+ 	}
+ 	return snd_pcm_hw_constraint_step(substream->runtime, 0,
+ 					  SNDRV_PCM_HW_PARAM_CHANNELS, 2);
+@@ -3801,23 +3787,23 @@ int snd_hda_multi_out_analog_prepare(struct hda_codec *codec,
+ 	struct hda_spdif_out *spdif;
+ 	int i;
+ 
+-	mutex_lock(&codec->spdif_mutex);
+-	spdif = snd_hda_spdif_out_of_nid(codec, mout->dig_out_nid);
+-	if (mout->dig_out_nid && mout->share_spdif &&
+-	    mout->dig_out_used != HDA_DIG_EXCLUSIVE) {
+-		if (chs == 2 && spdif != NULL &&
+-		    snd_hda_is_supported_format(codec, mout->dig_out_nid,
+-						format) &&
+-		    !(spdif->status & IEC958_AES0_NONAUDIO)) {
+-			mout->dig_out_used = HDA_DIG_ANALOG_DUP;
+-			setup_dig_out_stream(codec, mout->dig_out_nid,
+-					     stream_tag, format);
+-		} else {
+-			mout->dig_out_used = 0;
+-			cleanup_dig_out_stream(codec, mout->dig_out_nid);
++	scoped_guard(mutex, &codec->spdif_mutex) {
++		spdif = snd_hda_spdif_out_of_nid(codec, mout->dig_out_nid);
++		if (mout->dig_out_nid && mout->share_spdif &&
++		    mout->dig_out_used != HDA_DIG_EXCLUSIVE) {
++			if (chs == 2 && spdif != NULL &&
++			    snd_hda_is_supported_format(codec, mout->dig_out_nid,
++							format) &&
++			    !(spdif->status & IEC958_AES0_NONAUDIO)) {
++				mout->dig_out_used = HDA_DIG_ANALOG_DUP;
++				setup_dig_out_stream(codec, mout->dig_out_nid,
++						     stream_tag, format);
++			} else {
++				mout->dig_out_used = 0;
++				cleanup_dig_out_stream(codec, mout->dig_out_nid);
++			}
+ 		}
+ 	}
+-	mutex_unlock(&codec->spdif_mutex);
+ 
+ 	/* front */
+ 	snd_hda_codec_setup_stream(codec, nids[HDA_FRONT], stream_tag,
+@@ -3884,12 +3870,11 @@ int snd_hda_multi_out_analog_cleanup(struct hda_codec *codec,
+ 		if (mout->extra_out_nid[i])
+ 			snd_hda_codec_cleanup_stream(codec,
+ 						     mout->extra_out_nid[i]);
+-	mutex_lock(&codec->spdif_mutex);
++	guard(mutex)(&codec->spdif_mutex);
+ 	if (mout->dig_out_nid && mout->dig_out_used == HDA_DIG_ANALOG_DUP) {
+ 		cleanup_dig_out_stream(codec, mout->dig_out_nid);
+ 		mout->dig_out_used = 0;
+ 	}
+-	mutex_unlock(&codec->spdif_mutex);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_multi_out_analog_cleanup);
+diff --git a/sound/pci/hda/hda_controller.c b/sound/pci/hda/hda_controller.c
+index 083df287c1a48..16ff8e510996b 100644
+--- a/sound/pci/hda/hda_controller.c
++++ b/sound/pci/hda/hda_controller.c
+@@ -92,12 +92,12 @@ static int azx_pcm_close(struct snd_pcm_substream *substream)
+ 	struct azx_dev *azx_dev = get_azx_dev(substream);
+ 
+ 	trace_azx_pcm_close(chip, azx_dev);
+-	mutex_lock(&chip->open_mutex);
+-	azx_release_device(azx_dev);
+-	if (hinfo->ops.close)
+-		hinfo->ops.close(hinfo, apcm->codec, substream);
+-	snd_hda_power_down(apcm->codec);
+-	mutex_unlock(&chip->open_mutex);
++	scoped_guard(mutex, &chip->open_mutex) {
++		azx_release_device(azx_dev);
++		if (hinfo->ops.close)
++			hinfo->ops.close(hinfo, apcm->codec, substream);
++		snd_hda_power_down(apcm->codec);
++	}
+ 	snd_hda_codec_pcm_put(apcm->info);
+ 	return 0;
+ }
+@@ -1132,12 +1132,12 @@ static int probe_codec(struct azx *chip, int addr)
+ 	int err;
+ 	unsigned int res = -1;
+ 
+-	mutex_lock(&bus->cmd_mutex);
+-	chip->probing = 1;
+-	azx_send_cmd(bus, cmd);
+-	err = azx_get_response(bus, addr, &res);
+-	chip->probing = 0;
+-	mutex_unlock(&bus->cmd_mutex);
++	scoped_guard(mutex, &bus->cmd_mutex) {
++		chip->probing = 1;
++		azx_send_cmd(bus, cmd);
++		err = azx_get_response(bus, addr, &res);
++		chip->probing = 0;
++	}
+ 	if (err < 0 || res == -1)
+ 		return -EIO;
+ 	dev_dbg(chip->card->dev, "codec #%d probed OK\n", addr);
+diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
+index 80359e518ee55..5d95f24135dc1 100644
+--- a/sound/pci/hda/hda_sysfs.c
++++ b/sound/pci/hda/hda_sysfs.c
+@@ -83,12 +83,12 @@ static ssize_t pin_configs_show(struct hda_codec *codec,
+ {
+ 	const struct hda_pincfg *pin;
+ 	int i, len = 0;
+-	mutex_lock(&codec->user_mutex);
++
++	guard(mutex)(&codec->user_mutex);
+ 	snd_array_for_each(list, i, pin) {
+ 		len += sysfs_emit_at(buf, len, "0x%02x 0x%08x\n",
+ 				     pin->nid, pin->cfg);
+ 	}
+-	mutex_unlock(&codec->user_mutex);
+ 	return len;
+ }
+ 
+@@ -217,12 +217,12 @@ static ssize_t init_verbs_show(struct device *dev,
+ 	struct hda_codec *codec = dev_get_drvdata(dev);
+ 	const struct hda_verb *v;
+ 	int i, len = 0;
+-	mutex_lock(&codec->user_mutex);
++
++	guard(mutex)(&codec->user_mutex);
+ 	snd_array_for_each(&codec->init_verbs, i, v) {
+ 		len += sysfs_emit_at(buf, len, "0x%02x 0x%03x 0x%04x\n",
+ 				     v->nid, v->verb, v->param);
+ 	}
+-	mutex_unlock(&codec->user_mutex);
+ 	return len;
+ }
+ 
+@@ -235,16 +235,13 @@ static int parse_init_verbs(struct hda_codec *codec, const char *buf)
+ 		return -EINVAL;
+ 	if (!nid || !verb)
+ 		return -EINVAL;
+-	mutex_lock(&codec->user_mutex);
++	guard(mutex)(&codec->user_mutex);
+ 	v = snd_array_new(&codec->init_verbs);
+-	if (!v) {
+-		mutex_unlock(&codec->user_mutex);
++	if (!v)
+ 		return -ENOMEM;
+-	}
+ 	v->nid = nid;
+ 	v->verb = verb;
+ 	v->param = param;
+-	mutex_unlock(&codec->user_mutex);
+ 	return 0;
+ }
+ 
+@@ -266,12 +263,12 @@ static ssize_t hints_show(struct device *dev,
+ 	struct hda_codec *codec = dev_get_drvdata(dev);
+ 	const struct hda_hint *hint;
+ 	int i, len = 0;
+-	mutex_lock(&codec->user_mutex);
++
++	guard(mutex)(&codec->user_mutex);
+ 	snd_array_for_each(&codec->hints, i, hint) {
+ 		len += sysfs_emit_at(buf, len, "%s = %s\n",
+ 				     hint->key, hint->val);
+ 	}
+-	mutex_unlock(&codec->user_mutex);
+ 	return len;
+ }
+ 
+@@ -326,7 +323,7 @@ static int parse_hints(struct hda_codec *codec, const char *buf)
+ 	val = skip_spaces(val);
+ 	remove_trail_spaces(key);
+ 	remove_trail_spaces(val);
+-	mutex_lock(&codec->user_mutex);
++	guard(mutex)(&codec->user_mutex);
+ 	hint = get_hint(codec, key);
+ 	if (hint) {
+ 		/* replace */
+@@ -347,7 +344,6 @@ static int parse_hints(struct hda_codec *codec, const char *buf)
+ 		err = -ENOMEM;
+ 	}
+  unlock:
+-	mutex_unlock(&codec->user_mutex);
+ 	if (err)
+ 		kfree(key);
+ 	return err;
+@@ -374,16 +370,14 @@ static ssize_t user_pin_configs_show(struct device *dev,
+ 
+ static int parse_user_pin_configs(struct hda_codec *codec, const char *buf)
+ {
+-	int nid, cfg, err;
++	int nid, cfg;
+ 
+ 	if (sscanf(buf, "%i %i", &nid, &cfg) != 2)
+ 		return -EINVAL;
+ 	if (!nid)
+ 		return -EINVAL;
+-	mutex_lock(&codec->user_mutex);
+-	err = snd_hda_add_pincfg(codec, &codec->user_pins, nid, cfg);
+-	mutex_unlock(&codec->user_mutex);
+-	return err;
++	guard(mutex)(&codec->user_mutex);
++	return snd_hda_add_pincfg(codec, &codec->user_pins, nid, cfg);
+ }
+ 
+ static ssize_t user_pin_configs_store(struct device *dev,
+@@ -431,26 +425,19 @@ EXPORT_SYMBOL_GPL(snd_hda_get_hint);
+ int snd_hda_get_bool_hint(struct hda_codec *codec, const char *key)
+ {
+ 	const char *p;
+-	int ret;
+ 
+-	mutex_lock(&codec->user_mutex);
++	guard(mutex)(&codec->user_mutex);
+ 	p = snd_hda_get_hint(codec, key);
+ 	if (!p || !*p)
+-		ret = -ENOENT;
+-	else {
+-		switch (toupper(*p)) {
+-		case 'T': /* true */
+-		case 'Y': /* yes */
+-		case '1':
+-			ret = 1;
+-			break;
+-		default:
+-			ret = 0;
+-			break;
+-		}
++		return -ENOENT;
++	switch (toupper(*p)) {
++	case 'T': /* true */
++	case 'Y': /* yes */
++	case '1':
++		return 1;
++	default:
++		return 0;
+ 	}
+-	mutex_unlock(&codec->user_mutex);
+-	return ret;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_get_bool_hint);
+ 
+@@ -468,20 +455,17 @@ int snd_hda_get_int_hint(struct hda_codec *codec, const char *key, int *valp)
+ {
+ 	const char *p;
+ 	unsigned long val;
+-	int ret;
+ 
+-	mutex_lock(&codec->user_mutex);
++	guard(mutex)(&codec->user_mutex);
+ 	p = snd_hda_get_hint(codec, key);
+ 	if (!p)
+-		ret = -ENOENT;
++		return -ENOENT;
+ 	else if (kstrtoul(p, 0, &val))
+-		ret = -EINVAL;
++		return -EINVAL;
+ 	else {
+ 		*valp = val;
+-		ret = 0;
++		return 0;
+ 	}
+-	mutex_unlock(&codec->user_mutex);
+-	return ret;
+ }
+ EXPORT_SYMBOL_GPL(snd_hda_get_int_hint);
+ #endif /* CONFIG_SND_HDA_RECONFIG */
 -- 
 2.53.0
 
