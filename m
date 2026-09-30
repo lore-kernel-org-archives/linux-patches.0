@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEDA327BEC;
-	Wed, 30 Sep 2026 18:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85B92DB785;
+	Wed, 30 Sep 2026 18:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794468; cv=none; b=HUcikc2XgZIORRVEx8LT7SncHng00zAdouBnzfe5n/lXoR2rLTFYBLjvM2erIbrBUYNSXXBODc5qLcfrMGEH56uFo6dwjInSLz1pNjJe2WIQtn09OAdsFgGNWfCY9/Ulcb0bbkg8ZKb7ukA3ux1phv2pyPlK8hNaR6//hevdp+I=
+	t=1790794471; cv=none; b=ToWJt88cNFDJmU8fgfU/1BdoCth2krtvCPe7pJs/ISifPpBs4GfehXbbvbqqzNNqq99ADwHBRR/FwrG0x7bRJeyOHuFdXDyGSBexO6znNOQBpCOUXV59jtihwIngkgDZ363YY2But2MZrdGo5N29akJ+W1gVKZ+VfWxAClUtNv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794468; c=relaxed/simple;
-	bh=fhPKWt62FdYRtblGgzKVnPXOtHzfucqe/gjHK/wYLcI=;
+	s=arc-20240116; t=1790794471; c=relaxed/simple;
+	bh=GwFuozxMFfLktI+75flSnoiZ831IYnw83HFiEkv3390=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMy7HOweUqIbt7Ya2zomMPu0b8zIar09cd5y2p2NAk486A+f+E3cLinl9gQGYrV2CZqHkwdwudKdnij5RkEt+wO9/rFxneTroil5sLBHKJFxx/3895xL7wkZAF+xLAaDSbv5Q5g6kCVtdAojtscwJj1Dtx4L9tZD5EpQd+X3X8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVA52/QC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z8TddtJtrQ+ppNpPmGgV0eNlBFgq38th32hum8brFu7Jb7I1ic4U6IzQN3FJM+4CNc7kYP5GWML0RehG9fhnFb1bFOIzOCoUN882i9U/JR5TQJaPcR7qauqHj0A0Lj7wbU01rWHQF/uDdeE9d6Ncbi/yu28VuDTMrGJCMJvQCOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+TXH5AR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVA52/QC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD401F000FF;
-	Wed, 30 Sep 2026 18:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+TXH5AR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC651F000FF;
+	Wed, 30 Sep 2026 18:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794466;
-	bh=i8gbbpjtNjWCPqd7Qg28QGz4T3HKHh96b4OdCf4uC80=;
+	s=korg; t=1790794469;
+	bh=001BQxZ84TlZK6+jhuIFqKd7jAr1OEqJFBc8W9F/100=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVA52/QCzboeAMhjU7K0H3ZpHwCT3sFlgfvvhvHT+Cku7N7YGPjbdfvMeuuowQSvP
-	 xS2zV8lOZfAJYXbTznIBPXenBUVvljcwsyg86woGwFzC0MJ+QvkYZOM8S7KjFIKEez
-	 pD+aFEpFRVXfzfSvORbFUHK3/fpAiccGhul2AfTs=
+	b=E+TXH5ARap8zFJVPKEA0HrhQY13z0kpRXc9Wqbyu0eO8qTjjMyv5ghreJQGYUsDV9
+	 1MRmKeizdIYq3/GBlOg5wyO8trvJnsNJvGxIU2rnGwyRc5cEUC6+h6E/9/Mq/6dau+
+	 7YWxMzihUjmMFissfJ3frMf0aJKS9iBEBz7X05oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Raf Dickson <rafdog35@gmail.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0220/1193] ptp: ocp: add shutdown callback
-Date: Wed, 30 Sep 2026 17:15:04 +0200
-Message-ID: <20260930152439.085952169@linuxfoundation.org>
+Subject: [PATCH 6.6 0221/1193] vsock: use sk_acceptq_is_full() helper in all transports
+Date: Wed, 30 Sep 2026 17:15:05 +0200
+Message-ID: <20260930152439.106869867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,42 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+From: Raf Dickson <rafdog35@gmail.com>
 
-[ Upstream commit f6f955cbf9d4e02deebe54ca91c118b53be9ffe6 ]
+[ Upstream commit 4ff2e84ff1b33d79fa0e3ae355ce4a334908ef9a ]
 
-The shutdown callback was never implemented for this driver, but it's
-needed because .remove() callback is never called during kexec/reboot
-process. That leaves HW with some interrupts enabled and may cause
-spurious interrupt while booting into a new kernel during with kexec.
-If it happens that I2C interrupt fires during kexec, the whole I2C bus
-is disabled leaving TimeCard with no devlink communication. The same
-happens if timestampers were enabled, leaving the card without
-timestamper interrupts until full reboot cycle.
+Replace the open-coded backlog check with sk_acceptq_is_full().
+The helper uses > instead of >=, which is the correct comparison
+per commit 64a146513f8f ("[NET]: Revert incorrect accept queue
+backlog changes."), and adds READ_ONCE() for proper memory ordering.
 
-Implement .shutdown() callback with the same function as remove
-callback.
-
-Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260611190333.787132-1-vadim.fedorenko@linux.dev
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Raf Dickson <rafdog35@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20260612045842.122207-1-rafdog35@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_ocp.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/vmw_vsock/hyperv_transport.c | 2 +-
+ net/vmw_vsock/vmci_transport.c   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
-index 2d21699586ce7..aa233a3010123 100644
---- a/drivers/ptp/ptp_ocp.c
-+++ b/drivers/ptp/ptp_ocp.c
-@@ -4264,6 +4264,7 @@ static struct pci_driver ptp_ocp_driver = {
- 	.id_table	= ptp_ocp_pcidev_id,
- 	.probe		= ptp_ocp_probe,
- 	.remove		= ptp_ocp_remove,
-+	.shutdown	= ptp_ocp_remove,
- };
+diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
+index 865e004ee286f..c73793615f706 100644
+--- a/net/vmw_vsock/hyperv_transport.c
++++ b/net/vmw_vsock/hyperv_transport.c
+@@ -323,7 +323,7 @@ static void hvs_open_connection(struct vmbus_channel *chan)
+ 		goto out;
  
- static int
+ 	if (conn_from_host) {
+-		if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog)
++		if (sk_acceptq_is_full(sk))
+ 			goto out;
+ 
+ 		new = vsock_create_connected(sk);
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index 75bf643ff6faf..4f02a6f269cdb 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1002,7 +1002,7 @@ static int vmci_transport_recv_listen(struct sock *sk,
+ 	 * reset.  Otherwise we create and initialize a child socket and reply
+ 	 * with a connection negotiation.
+ 	 */
+-	if (sk->sk_ack_backlog >= sk->sk_max_ack_backlog) {
++	if (sk_acceptq_is_full(sk)) {
+ 		vmci_transport_reply_reset(pkt);
+ 		return -ECONNREFUSED;
+ 	}
 -- 
 2.53.0
 
