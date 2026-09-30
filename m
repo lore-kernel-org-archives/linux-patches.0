@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0465430FC27;
-	Wed, 30 Sep 2026 19:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C533BB138;
+	Wed, 30 Sep 2026 19:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796390; cv=none; b=Ap2SC83HBw9Ii2EgDKnX5rfSSWJbI/zjOkfRHUtaQVOcrlYhuCAnWKHinTckgVk6RuQ6ZB7gXvt9ofmeEV0DOr0weNM1JOQL21aogJhrruvQwgLzda2F3txv9IKrNmh4ljJFGwe8V99RjaHI1KEofPHbJ3ieoOTWslPmdUQF9tQ=
+	t=1790796392; cv=none; b=t7xwlfAfZzg0rrnvpl4yOsnS+KbowwyCNhIbzFVGQmu4SRF9aUmawnrSx30AVg3xcbwnNPUik65nEfgcpyuGx4GWQTv3XZyUzDgCsipn0zQGBigVxNyPGzkoQB3UycJfB1CMovZLPQg1ilzIllSgKTxPpCDmU9+mONE8k2Z49WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796390; c=relaxed/simple;
-	bh=LknOEFKFTr+gZ4E5Znpxfpflv2e7J7pp1JNtuD0kXYY=;
+	s=arc-20240116; t=1790796392; c=relaxed/simple;
+	bh=0KF+XnfbGrSHLODfNUdYECAC0CbPIWsBG7394J9U0gU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kx5XqoxmS7cwLSrVmuZM8VYrUFUf2U8B+2e08GWEvBdBfmT9UlgbdFYF4OuoPHX8difyURivZNqnGPCPpN508JqGxGIC3WqW6dKjO6s06UAxxaL7+YKVPy+s0cPZ0fcigPwAW8fur1m/1USB62EhFQAjzGNBWUmW9EBPSWkh+Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=upcsaLo/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oW+7FreqAt0FDbrZhPHlkfVwH3SIjVdSIrZXI43Q9VddkzCP+m8HGgyUhqa6MG5xDlIuvqZ9G6zsumMvehWu6HTQFByCgT4Wftm0hk9SxAvaAQ0QQxm5s8tkABonqYQwwlR+0od+RLhKytYECuhEMRZzqaFBszm55LFbFgdsP5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnwGTqq6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="upcsaLo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3FB1F000FF;
-	Wed, 30 Sep 2026 19:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnwGTqq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375711F000FF;
+	Wed, 30 Sep 2026 19:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796388;
-	bh=lWOrYZzzVoqPCDD4u/2bjC1VslLexKJ8JQgChQlKQ+I=;
+	s=korg; t=1790796391;
+	bh=1r1i1Wf/BHE9tL+9BHpUrraIiW6AADR61mdRCL0pWPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upcsaLo/IbGRz8VNPG7wFDg9ypTgvgzwt/OIMKMhqOrqKfk/qG22QWEfPb+hpdv1Q
-	 dU0iLfANI2iXIcUlIW9HTs4PHeS2VoBwJBKKNE95Of93Zop8HPdmszyGTzsVql/FI8
-	 WylcuX+LKOXy/zks/DzQtQXMcYkBvf4OPF/3/t7U=
+	b=AnwGTqq6OqGdWKLARdk1jmVSBR+jl7ucpbLAKIhwQD+tUm2KyHA66OoheOHs7RpH7
+	 RdaVxKMDFEwyVRB8UEbaSI+MZLCqD0sV90aN4JiDQ91b0pzq5IWujDQysW3gSPfT5c
+	 moK6D/nxrcEyYsn1yiGre+6x2iFkoVYDpIYjVIh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Turtanov <9alexei9@gmail.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0894/1193] Input: atkbd - skip deactivate for Xiaomi Redmi Book Pro 16 2026
-Date: Wed, 30 Sep 2026 17:26:18 +0200
-Message-ID: <20260930152454.106116150@linuxfoundation.org>
+Subject: [PATCH 6.6 0895/1193] Input: cyttsp5 - clamp the HID report size before memcpy
+Date: Wed, 30 Sep 2026 17:26:19 +0200
+Message-ID: <20260930152454.127925636@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,58 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Turtanov <9alexei9@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-commit aefbda23eeba234c3ff0f135dc5be6e294bd25a6 upstream.
+commit 85f080fb87ed5cd3e46121be677f52c82f26a0ab upstream.
 
-The internal keyboard of the Xiaomi Redmi Book Pro 16 2026 (board TM2425)
-does not work: atkbd_probe() succeeds and every command is ACKed, but no
-scancodes ever arrive afterwards.
+The size field comes from the device and is used as the memcpy()
+length into response_buf, which is CY_MAX_INPUT bytes.
 
-Testing on the hardware through serio_raw shows that ATKBD_CMD_RESET_DIS
-(0xF5) is the culprit. After 0xF5 the embedded controller keeps ACKing
-commands but stops delivering scancodes, and neither ATKBD_CMD_ENABLE
-(0xF4) nor ATKBD_CMD_RESET_BAT (0xFF) bring them back. Only re-enabling
-the keyboard interface at the controller level (i8042 command 0xAE, or
-rewriting the command byte as i8042_port_close() does) revives it.
-Running the init sequence without 0xF5 (0xED 0x00, 0xF3 0x00, 0xF4)
-keeps the keyboard working.
-
-'i8042.dumbkbd=1' also works around this, but then the driver never
-writes to the keyboard and the LEDs cannot be controlled. Use the
-existing atkbd_deactivate_fixup quirk instead, as done for the sibling
-TM2424 by commit 3a046db33bb9 ("Input: atkbd - skip deactivate for
-Xiaomi Book Pro 14's internal keyboard"). Tested on v7.2: keyboard,
-Caps Lock LED and s2idle suspend/resume all work.
-
-DMI: XIAOMI REDMI Book Pro 16 2026/TM2425, BIOS RMAPT6B0P0909 05/22/2026
-
-Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+Fixes: 5b0c03e24a06 ("Input: Add driver for Cypress Generation 5 touchscreen")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260901122649.1173066-1-gonglinkai@kylinos.cn
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexei Turtanov <9alexei9@gmail.com>
-Link: https://patch.msgid.link/20260828112239.18081-1-9alexei9@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/touchscreen/cyttsp5.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1982,6 +1982,14 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		/* Xiaomi Redmi Book Pro 16 2026 (TM2425) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "REDMI Book Pro 16 2026"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/drivers/input/touchscreen/cyttsp5.c
++++ b/drivers/input/touchscreen/cyttsp5.c
+@@ -711,6 +711,7 @@ static irqreturn_t cyttsp5_handle_irq(in
+ 		size = 2;
+ 	} else {
+ 		report_id = ts->input_buf[2];
++		size = min(size, CY_MAX_INPUT);
+ 	}
  
+ 	switch (report_id) {
 
 
