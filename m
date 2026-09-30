@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DF45172CF;
-	Wed, 30 Sep 2026 17:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABD038944D;
+	Wed, 30 Sep 2026 17:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787843; cv=none; b=cJy3R6QvFunAf8IgonUn3DBZkx2vaX0PinQeYFzd3PtKMqMk/o50/f8f5/kVUDL5OdaMsTeN+V5oWhCoz19hD2omC/0ObKGFL/FRSv1ZQba8mur395R/peIMkKPc/redXTqaiwkNnXYU40Kv1sNCH3J1VC26PBqoRkaUIBeGq4k=
+	t=1790787846; cv=none; b=YxuI7oToKqH5uItvNIUMtlXOYK/g3glNpWxLG5E81+sixbezBKR4UTbqq4FogpKVBfiDesvROfz1P28S1/pWAvUFuQ7/DZoYSZKCz6OPS0yMDs1ZwjrXMYGkDhpocDXU01DDWnnZVYepVwKm9NgntMJxIhZYlV9PpXSlkVjZNqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787843; c=relaxed/simple;
-	bh=HA8afP0KxoO7j05z25dri4kXkzfnlPj9AjRWRo9klVE=;
+	s=arc-20240116; t=1790787846; c=relaxed/simple;
+	bh=k6zM5BuyGcZQzpv1CzW21vDwNm61izeftM506b5BMDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ma1dKRRV4LID+LXRW4XXHGQUwCadHU8OvCuO/ICe3rNvJ4BJgZDoTjOLOJTk6Jd/eZSkwgNu0ajKqvqIqN9ukIArdn+fy15/DZ8yyk2t5sySntREI1Um92Qlb/IpGUOtG78F/MKOQ6Kxhil9z8n2kcaRncvqaAn2l01dBkDHazE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnMqW/Lh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8LIQk/KGc703v1gOq4zK8sT+jY9kkTQgoU/gHIiiXZ+/qvxFvL/OM/fU0Sydjqotc6mSnytdwn6HuXWat7kSAFrfKtNyfLavPFg2PAiYVuV1zqEr67pmdNnImyuVTt4hr3yNBFF35DaOkRxZ4Pwh8u0kY5Wdf6QIOlsR8WRq7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nzt+1YyK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnMqW/Lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1626F1F000FF;
-	Wed, 30 Sep 2026 17:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nzt+1YyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67A01F000FF;
+	Wed, 30 Sep 2026 17:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787842;
-	bh=NzcX4xWLDTdQYBL5YMOolKoFcOeUo6QvnaNxQEWCgJ4=;
+	s=korg; t=1790787845;
+	bh=Xku1oS1I6fhpjiGjzTgMYNelk1IbR1tE4+9XUykp3oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZnMqW/LhhVyV/drNCYAmiNTrvd9vtpHJkRiLrLg+6JDluPcpY+zSMWC4M3qM9X+U2
-	 RQph/qBxKQB2D8XSkXl7wikjKHHZcyeK6ieYbyj94MhyjxxfXqBnwKA0dJhZ/gu3pS
-	 Fb7BIVazjRnDMReZAY2xSj+4zUKtKFqewd0SqdT8=
+	b=Nzt+1YyKQ0nw0c0W/TjwB2GpiQt45K9FEtSSMmUbYJqI3d7J6uO0K+I763Lk4vTQl
+	 9wjbh1CGjkwzGWgokwIuvqFbPyBtumZ/3Pz3a5GGS+A/Xix1dVjotMvv7wtbp1y1rw
+	 ePeIi86jUCREE6S+wELapYWeggiKZOlonBVsMuh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 7.2 373/457] pinctrl: qcom: nord: Split QUP1 SE2/SE3 into lane-pair functions
-Date: Wed, 30 Sep 2026 17:27:58 +0200
-Message-ID: <20260930152354.056601433@linuxfoundation.org>
+Subject: [PATCH 7.2 374/457] pinctrl: single: free the IRQ on domain creation failure
+Date: Wed, 30 Sep 2026 17:27:59 +0200
+Message-ID: <20260930152354.077669356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,148 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit b0be01f133aa36d2fd12d71c916cb8a47826b4ed upstream.
+commit 1d9bb9c870632adea249cfdec49ac37e6f069164 upstream.
 
-QUP1 SE2 and SE3 pack all four of their lanes pair-wise onto only two
-pins each: lanes 0/1 (I2C SDA/SCL) at mux value 2 and lanes 2/3 (UART
-TX/RX) at mux value 1, on gpio127/gpio128 and gpio129/gpio130
-respectively.
+pcs_irq_init_chained_handler() requests a shared IRQ on affected SoCs, but
+its domain creation failure path only removes a chained handler. That does
+not release the action installed by request_irq(). The probe can continue
+without interrupt support while leaving the shared IRQ action registered.
 
-Both mux values were named "qup1_se2" (respectively "qup1_se3"), so the
-two distinct lane pairs became indistinguishable. msm_pinmux_set_mux()
-stops at the first entry matching the requested function, which means
-mux value 1 was always selected and the I2C lanes could never be muxed
-out. In practice i2c9 and i2c10 got the UART lanes and did not work,
-while uart9 and uart10 happened to be muxed correctly.
+Use pcs_irq_free() to undo the appropriate type of handler registration.
+At this point pcs->domain is NULL, so the helper only releases the parent
+IRQ handler. Then mark the IRQ invalid, as the other initialization error
+paths already do, to prevent another release from a later probe unwind or
+remove.
 
-Give each lane pair its own function, following the _01/_23 naming
-already used for the same hardware arrangement by the shikra, eliza,
-hawi and maili TLMM drivers. Both functions still cover the full pin
-pair, so a single pinctrl state per protocol remains sufficient.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Drop gpio129/gpio130 from the SE2 group list, since those pins
-belong to SE3 and were never reachable through the SE2 function.
-
-Also rename QUP1 SE2/SE3 functions in the binding doc accordingly.
-
-While at it, add missing "gpio", "qup3_se0_mira" and "qup3_se0_mirb"
-to the binding function enum to get the list complete.
-
-Fixes: c24dd0826f06 ("pinctrl: qcom: add the TLMM driver for the Nord platforms")
+Fixes: 3e6cee1786a1 ("pinctrl: single: Add support for wake-up interrupts")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260830030201.135637-1-shengchao.guo@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../bindings/pinctrl/qcom,nord-tlmm.yaml      |  7 ++--
- drivers/pinctrl/qcom/pinctrl-nord.c           | 34 +++++++++++++------
- 2 files changed, 27 insertions(+), 14 deletions(-)
+ drivers/pinctrl/pinctrl-single.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,nord-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,nord-tlmm.yaml
-index 4bb511719f31..56758a85ead8 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,nord-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,nord-tlmm.yaml
-@@ -67,7 +67,7 @@ $defs:
-           Specify the alternative function to be configured for the specified
-           pins.
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1628,7 +1628,8 @@ static int pcs_irq_init_chained_handler(
+ 					       &pcs_irqdomain_ops,
+ 					       pcs_soc);
+ 	if (!pcs->domain) {
+-		irq_set_chained_handler(pcs_soc->irq, NULL);
++		pcs_irq_free(pcs);
++		pcs_soc->irq = -1;
+ 		return -EINVAL;
+ 	}
  
--        enum: [ aoss_cti, atest_char, atest_usb20, atest_usb21,
-+        enum: [ gpio, aoss_cti, atest_char, atest_usb20, atest_usb21,
-                 aud_intfc0_clk, aud_intfc0_data, aud_intfc0_ws,
-                 aud_intfc10_clk, aud_intfc10_data, aud_intfc10_ws,
-                 aud_intfc1_clk, aud_intfc1_data, aud_intfc1_ws,
-@@ -98,9 +98,10 @@ $defs:
-                 pcie3_clk_req_n, phase_flag, pll_bist_sync, pll_clk_aux,
-                 prng_rosc0, prng_rosc1, pwrbrk_i_n, qdss, qdss_cti, qspi,
-                 qup0_se0, qup0_se1, qup0_se2, qup0_se3, qup0_se4, qup0_se5,
--                qup1_se0, qup1_se1, qup1_se3, qup1_se2, qup1_se4, qup1_se5,
-+                qup1_se0, qup1_se1, qup1_se2_01, qup1_se2_23, qup1_se3_01,
-+                qup1_se3_23, qup1_se4, qup1_se5,
-                 qup1_se6, qup2_se0, qup2_se1, qup2_se2, qup2_se3, qup2_se4,
--                qup2_se5, qup2_se6,
-+                qup2_se5, qup2_se6, qup3_se0_mira, qup3_se0_mirb,
-                 sailss_ospi, sdc4_clk, sdc4_cmd, sdc4_data, smb_alert,
-                 smb_alert_n, smb_clk, smb_dat, tb_trig_sdc4, tmess_prng0,
-                 tmess_prng1, tsc_timer, tsense_pwm, usb0_hs,
-diff --git a/drivers/pinctrl/qcom/pinctrl-nord.c b/drivers/pinctrl/qcom/pinctrl-nord.c
-index 7c21306e77ff..7f37f8e819ba 100644
---- a/drivers/pinctrl/qcom/pinctrl-nord.c
-+++ b/drivers/pinctrl/qcom/pinctrl-nord.c
-@@ -570,8 +570,10 @@ enum nord_functions {
- 	msm_mux_qup0_se5,
- 	msm_mux_qup1_se0,
- 	msm_mux_qup1_se1,
--	msm_mux_qup1_se2,
--	msm_mux_qup1_se3,
-+	msm_mux_qup1_se2_01,
-+	msm_mux_qup1_se2_23,
-+	msm_mux_qup1_se3_01,
-+	msm_mux_qup1_se3_23,
- 	msm_mux_qup1_se4,
- 	msm_mux_qup1_se5,
- 	msm_mux_qup1_se6,
-@@ -1152,11 +1154,19 @@ static const char *const qup1_se1_groups[] = {
- 	"gpio123", "gpio124", "gpio125", "gpio126",
- };
- 
--static const char *const qup1_se2_groups[] = {
--	"gpio127", "gpio128", "gpio129", "gpio130",
-+static const char *const qup1_se2_01_groups[] = {
-+	"gpio127", "gpio128",
- };
- 
--static const char *const qup1_se3_groups[] = {
-+static const char *const qup1_se2_23_groups[] = {
-+	"gpio127", "gpio128",
-+};
-+
-+static const char *const qup1_se3_01_groups[] = {
-+	"gpio129", "gpio130",
-+};
-+
-+static const char *const qup1_se3_23_groups[] = {
- 	"gpio129", "gpio130",
- };
- 
-@@ -1428,8 +1438,10 @@ static const struct pinfunction nord_functions[] = {
- 	MSM_PIN_FUNCTION(qup0_se5),
- 	MSM_PIN_FUNCTION(qup1_se0),
- 	MSM_PIN_FUNCTION(qup1_se1),
--	MSM_PIN_FUNCTION(qup1_se2),
--	MSM_PIN_FUNCTION(qup1_se3),
-+	MSM_PIN_FUNCTION(qup1_se2_01),
-+	MSM_PIN_FUNCTION(qup1_se2_23),
-+	MSM_PIN_FUNCTION(qup1_se3_01),
-+	MSM_PIN_FUNCTION(qup1_se3_23),
- 	MSM_PIN_FUNCTION(qup1_se4),
- 	MSM_PIN_FUNCTION(qup1_se5),
- 	MSM_PIN_FUNCTION(qup1_se6),
-@@ -1633,13 +1645,13 @@ static const struct msm_pingroup nord_groups[] = {
- 			 _, _, _, _, _, _, _),
- 	[126] = PINGROUP(126, qup1_se1, qup1_se0, ccu_i2c_scl, mdp1_vsync_out,
- 			 _, atest_usb20, ddr_pxi, _, _, _, _),
--	[127] = PINGROUP(127, qup1_se2, qup1_se2, _, atest_usb21, ddr_pxi,
-+	[127] = PINGROUP(127, qup1_se2_23, qup1_se2_01, _, atest_usb21, ddr_pxi,
- 			 _, _, _, _, _, _),
--	[128] = PINGROUP(128, qup1_se2, qup1_se2, _, atest_usb20, ddr_pxi,
-+	[128] = PINGROUP(128, qup1_se2_23, qup1_se2_01, _, atest_usb20, ddr_pxi,
- 			 _, _, _, _, _, _),
--	[129] = PINGROUP(129, qup1_se3, qup1_se3, ccu_i2c_sda, mdp1_vsync_out,
-+	[129] = PINGROUP(129, qup1_se3_23, qup1_se3_01, ccu_i2c_sda, mdp1_vsync_out,
- 			 _, atest_usb21, ddr_pxi, _, _, _, _),
--	[130] = PINGROUP(130, qup1_se3, qup1_se3, ccu_i2c_scl, mdp1_vsync_out,
-+	[130] = PINGROUP(130, qup1_se3_23, qup1_se3_01, ccu_i2c_scl, mdp1_vsync_out,
- 			 _, atest_usb20, ddr_pxi, _, _, _, _),
- 	[131] = PINGROUP(131, qup1_se4, qup1_se6, ccu_i2c_sda, mdp1_vsync_out,
- 			 _, atest_usb21, ddr_pxi, _, _, _, _),
--- 
-2.55.0
-
 
 
