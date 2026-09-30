@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1136B3264C2;
-	Wed, 30 Sep 2026 18:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE79242C513;
+	Wed, 30 Sep 2026 18:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791248; cv=none; b=R57kKnhgmt8JVhfY05NNIplfn5hX29MPy5l2MlhzzmeqbeVxz3PbtFHSpxQoQgeIVm0tMqCi2YtftjsyyWS1zacJyym82cs1Kp7T+tNN3pzmF5M+aNpD5jy8qq2hI6MPo39mkZJzvEBIlU7e+Vs4Wb3CEOMt6hpbaq4GbbcWvyE=
+	t=1790791251; cv=none; b=LVX0UyPaI1xNVPXY3a68GUEmWbipIksRvO4F+3S3AMJ4pFtpilFtvisibSnq7zC55id0iYL7jqgV6AGnJrWuhFlAq6e2KmZS4e/0H3RNOZlfGUAsVDrIIz4J9yN/9VBo6VC6N1/yGADylMWdXQWm3e9KGDVfvzyLHcdCoQhyLqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791248; c=relaxed/simple;
-	bh=WL1P/2dKYSdDI6YMAEbb1pcGYwV3Ut/rYAVeKqOM7D4=;
+	s=arc-20240116; t=1790791251; c=relaxed/simple;
+	bh=Ylk0Hws5cVncCrte324t0QfaQY0Cm6+sZvSRuXlOy4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSs7AZ2yAAzO/dRFcT8P7UDTmcL/1TeeZe/J1R4WfPQZV1MarZDbo6zee4y4TCkQx+Vbef8TJA0sCfgz+fj6OMM8tvHBc3XRZ4zQrwnSvyM5WaBmpY4JcjATm8iXDXt7yeXxCJlNeYi8pBMIbZPe96S2FQ/crkBkyIQG/bSamc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zk+7h1lh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u9byd4kyihm6iDSghblK3u4d/mdwGysO0KDoThuQZjzPGBMn48piDYCOSy+l8VZZdYtsouiTywz3axQBbtaNmAcqKhQ1JPGwm/oxgQwBAvsbHZU+RA3vg7SlPK5xrTwO6RHL2mn9PiTozVEHfgy+ghz/p1/NtBeCRLwS0cVAlyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NG94JY75; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zk+7h1lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D39C1F000FF;
-	Wed, 30 Sep 2026 18:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NG94JY75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A741F000FF;
+	Wed, 30 Sep 2026 18:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791247;
-	bh=AQewhhKn/poVPlhqlUmqlTrtJrEXW59zuEWpbDOQP1M=;
+	s=korg; t=1790791249;
+	bh=W2jwsvYOmq35CgDZv1Z5OYUaLLrCfyFZy5arTfYruzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zk+7h1lh+qBu71By5RAxPPXV/i1tNEVkLRYrvNuGPSSfB0ltgfStG0mqaCtec/Bb1
-	 RELvg2t5w9KTy4oz4nSack3lwsjNUjMg7I0ujIeO+ysrbqbTAdY0FFdtaF2LiRdgnV
-	 MdF2FXucCMtyVSbabm0pjZbPtr6DBxqHb3mDqBsk=
+	b=NG94JY75VFNegmSHTQ932NFuvPtHcrLsx6iuwdPr2FzYYXQ+1jotMn/5jRFx47d8i
+	 Ec/lwJGYu6r5BGuajAej9dPb+OhOF1ppjSo3vThrRmgejsC62JqBiIW2ewbFEcYKaH
+	 MGNZ+LBX9Suobk40xvpr5wVB7xDS7SWbi7I6rl0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
 	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/752] EDAC/igen6: Fix channel selection hash
-Date: Wed, 30 Sep 2026 17:21:46 +0200
-Message-ID: <20260930152403.373056112@linuxfoundation.org>
+Subject: [PATCH 5.15 237/752] EDAC/igen6: Fix channel address decode for non-hash mode
+Date: Wed, 30 Sep 2026 17:21:47 +0200
+Message-ID: <20260930152403.395656866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,57 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 540b79536f3a89a66c5b6c490110298d43025618 ]
+[ Upstream commit 7b348d0d401d478f1923ba20a34a61681d1f7971 ]
 
-In channel selection hash mode, the hardware decoding logic always
-includes the channel interleave bit in XOR operations. However, the
-hash mask may or may not include this channel interleave bit. When
-the mask does include this bit, the current igen6_edac code performs
-XOR on the interleave bit twice, effectively ignoring it - which is
-incorrect.
+In non-hash mode, decode_channel_addr() and channel index extraction
+used a hardcoded interleave bit position 6 instead of the actual
+intlv_bit parameter, causing incorrect channel address decoding.
 
-Fix this issue by ensuring the hash mask always includes the interleave
-bit, so XOR is performed on the interleave bit exactly once.
+Fix this by using intlv_bit consistently in both hash and non-hash modes.
 
 Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
 Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260730024238.4096623-4-qiuxu.zhuo@intel.com
+Link: https://patch.msgid.link/20260730024238.4096623-5-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/edac/igen6_edac.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 8201e92714c68..d91b775173621 100644
+index d91b775173621..97468fbf17b74 100644
 --- a/drivers/edac/igen6_edac.c
 +++ b/drivers/edac/igen6_edac.c
-@@ -467,14 +467,22 @@ static enum mem_type get_memory_type(u32 mad_inter)
+@@ -507,13 +507,12 @@ static void decode_addr(u64 addr, u32 hash, u64 s_size, int l_map,
+ 		return;
+ 	}
  
- static int decode_chan_idx(u64 addr, u64 mask, int intlv_bit)
- {
--	u64 hash_addr = addr & mask, hash = 0;
--	u64 intlv = (addr >> intlv_bit) & 1;
-+	u64 hash_addr, hash = 0;
- 	int i;
- 
-+	/*
-+	 * In hash mode, the @intlv_bit is the lowest selected bit of @addr
-+	 * to be XORed. While @mask may or may not include this @intlv_bit,
-+	 * we enforce that @mask includes @intlv_bit to ensure @intlv_bit is
-+	 * XORed exactly once.
-+	 */
-+	mask |= 1 << intlv_bit;
-+	hash_addr = addr & mask;
+-	if (CHANNEL_HASH_MODE(hash)) {
+-		*sub_addr = decode_channel_addr(addr, intlv_bit);
++	*sub_addr = decode_channel_addr(addr, intlv_bit);
 +
- 	for (i = 6; i < 20; i++)
- 		hash ^= (hash_addr >> i) & 1;
- 
--	return (int)hash ^ intlv;
-+	return (int)hash;
++	if (CHANNEL_HASH_MODE(hash))
+ 		*idx = decode_chan_idx(addr, CHANNEL_HASH_MASK(hash), intlv_bit);
+-	} else {
+-		*sub_addr = decode_channel_addr(addr, 6);
+-		*idx = GET_BITFIELD(addr, 6, 6);
+-	}
++	else
++		*idx = GET_BITFIELD(addr, intlv_bit, intlv_bit);
  }
  
- static u64 decode_channel_addr(u64 addr, int intlv_bit)
+ static int igen6_decode(struct decoded_addr *res)
 -- 
 2.53.0
 
