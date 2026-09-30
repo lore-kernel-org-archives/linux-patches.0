@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FA323D7FF;
-	Wed, 30 Sep 2026 18:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3B63AD539;
+	Wed, 30 Sep 2026 18:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793462; cv=none; b=m8YTqDlHBbHDXU4rx0nMoJJTngQ9txSju6D+txCTFc++hb02Fzn13UoqRBqpdIJIsyWAdQgMWv+yG80YXxFIJNc1WkWvqHafeDHO2Y4qFDNIH20w7kQJgfasRfo4Hbyu5831QHixtRJKLbVZtT5z3jGQzfyZPHCsFeAy+Cgz1ns=
+	t=1790793464; cv=none; b=T9LfsubkY+h15kpnYCqtenNRCdD71f0tS5aLfvzaZqu/GRABpJlXAnhqhiF/wTUbwiPOx6GV1dGmRT/X1NJahbreqruL5NvNcxuz303xrUt/R5GLzOT0vbSv/bnFgI72RDlzB1RI96VvFhUxHblbuyEXikqGuL9u9Hj0PWqVgiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793462; c=relaxed/simple;
-	bh=KAnRaugQbwCYrO3JlVv0735E2nyQV4g72aeblK7WHfw=;
+	s=arc-20240116; t=1790793464; c=relaxed/simple;
+	bh=6+5fa7ID/bWUIiK9+tr1cvxXpCfo5VGrzf00f434gjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tNMkGAtz/dghK4Pz/QNFQW3R8NaNyEuQVCMWKT3S42bzFXCN6TQ0AQ2yujfgjObnNoNM1olHSEQwP7GaI2zTaKaK7oAUaYbdJfSsOHQtyDcayCO6eCaWgNLsDlTU2ibN3WmChhelpX7xGfJyLKxZzE9AT0QiXxeZmcefmTUkZ1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1bsCJjl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FUNZcTQkf0sa1Yj7BCt80JrCAYbN/ALrRHW3SALwTYTD2MK9WucHvtS6nax0vACOtL5k4Y6Olg4tCUywAPvlMX6qvzMXCwHK5wAnlToOVEwnm/ZBoG3qBztU3wM0y9ZhQ9k1Ibw2XuLTBfiXrnDZ5QUjtKO3wre1n/cxxCQKqQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwXnA9Qz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1bsCJjl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0B51F000FF;
-	Wed, 30 Sep 2026 18:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwXnA9Qz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311951F000FF;
+	Wed, 30 Sep 2026 18:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793460;
-	bh=lI/7TnIrPzHz/IVrSqK81WujUL0BhKT6z1G0X7kgZ0Y=;
+	s=korg; t=1790793463;
+	bh=cUux/DCScA2wT8C4gaaEnJbtaWV9+PUUTVIDt83Ij6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1bsCJjlMVWyc1BLYJxMayd4lNKuXWFJXeX4ymqCFToRFWOsPYT6rSJZhlT67gzs8
-	 RaJNsDYqsMspl4dScjfTDWkBrOfESifEW9MP5EepZlegV6LHaQ16ODY/nBUowR6okq
-	 HOnzxZwFY1+Sxx7+G7YBBUtntQXvwW0q/97IfMUI=
+	b=EwXnA9Qzxr3G84W2HcwpECjvrwug2qDnXA1v6a/RukUrOkzcSF3vb3bIfF4Ke91Xh
+	 RDd+DGsOWvL1ypWfClbADUE0niJEdsPKu4tsYwM0UgBP7Rkw7ptDkwD0wfxEtl+IoC
+	 uNg45O7f5Bs03Cd9Q68j6zzvmkYo6tOncVEq/UoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 261/395] gpio: tps65219: Use the variant-specific direction callback
-Date: Wed, 30 Sep 2026 17:28:43 +0200
-Message-ID: <20260930152346.317804310@linuxfoundation.org>
+Subject: [PATCH 6.18 262/395] gpio: tps65219: Fix TPS65214 GPIO direction programming
+Date: Wed, 30 Sep 2026 17:28:44 +0200
+Message-ID: <20260930152346.338965483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,56 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 93cf8cedeaaa05714f709b539cfb976e0b80c830 upstream.
+commit 270437f3fe62516f16482742a7762a075e7a9457 upstream.
 
-The TPS65214 template installs its own get_direction callback because
-its direction bit is in GENERAL_CONFIG. The shared get and direction
-callbacks nevertheless call tps65219_gpio_get_direction() directly and
-interpret the unrelated TPS65219 MFP bit.
+GPIO_LINE_DIRECTION_OUT and GPIO_LINE_DIRECTION_IN have the values 0
+and 1, respectively, while the TPS65214 GPIO_CONFIG field is BIT(1).
+regmap_update_bits() masks the supplied value, so passing either
+direction value clears the field and selects input mode.
 
-On TPS65214 this can reject reads from an input and skip the change from
-input to output. Call the callback selected by the gpio_chip template
-instead.
+Translate the GPIO direction to the register encoding used by
+tps65214_gpio_get_direction(), setting GPIO_CONFIG for output and
+clearing it for input.
 
 Fixes: 1b6ab07c0c80 ("gpio: tps65219: Add support for TI TPS65214 PMIC")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260919171100.90430-3-kmehltretter@gmail.com
+Link: https://patch.msgid.link/20260919171100.90430-4-kmehltretter@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-tps65219.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-tps65219.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpio/gpio-tps65219.c
 +++ b/drivers/gpio/gpio-tps65219.c
-@@ -87,7 +87,7 @@ static int tps65219_gpio_get(struct gpio
- 	 * status bit.
- 	 */
+@@ -158,8 +158,10 @@ static int tps65214_gpio_change_directio
+ 	if (ret)
+ 		dev_err(dev, "GPIO%d configured as VSEL, not GPIO\n", offset);
  
--	if (tps65219_gpio_get_direction(gc, offset) == GPIO_LINE_DIRECTION_OUT)
-+	if (gc->get_direction(gc, offset) == GPIO_LINE_DIRECTION_OUT)
- 		return -ENOTSUPP;
++	val = direction == GPIO_LINE_DIRECTION_OUT ?
++		TPS65214_GPIO0_DIR_MASK : 0;
+ 	ret = regmap_update_bits(gpio->tps->regmap, TPS65219_REG_GENERAL_CONFIG,
+-				 TPS65214_GPIO0_DIR_MASK, direction);
++				 TPS65214_GPIO0_DIR_MASK, val);
+ 	if (ret)
+ 		dev_err(dev, "Fail to change direction to %u for GPIO%d.\n", direction, offset);
  
- 	return ret;
-@@ -176,7 +176,7 @@ static int tps65219_gpio_direction_input
- 		return -ENOTSUPP;
- 	}
- 
--	if (tps65219_gpio_get_direction(gc, offset) == GPIO_LINE_DIRECTION_IN)
-+	if (gc->get_direction(gc, offset) == GPIO_LINE_DIRECTION_IN)
- 		return 0;
- 
- 	return gpio->change_dir(gc, offset, GPIO_LINE_DIRECTION_IN);
-@@ -190,7 +190,7 @@ static int tps65219_gpio_direction_outpu
- 	if (offset != TPS6521X_GPIO0_IDX)
- 		return 0;
- 
--	if (tps65219_gpio_get_direction(gc, offset) == GPIO_LINE_DIRECTION_OUT)
-+	if (gc->get_direction(gc, offset) == GPIO_LINE_DIRECTION_OUT)
- 		return 0;
- 
- 	return gpio->change_dir(gc, offset, GPIO_LINE_DIRECTION_OUT);
 
 
