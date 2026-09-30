@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FAA4E780D;
-	Wed, 30 Sep 2026 16:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3256A51121D;
+	Wed, 30 Sep 2026 16:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786595; cv=none; b=BWKB8YIB8DUbX/v/5iNJHKYl6wW5X2oSZTtp+lyf1e/j1L7P4sJndbWyPN2znfs9YHmoQYZqOPUtDQ+oaQt5c5MZ45BZF/piFfuJhiI0DyqKYbw/AFQlE6OR+o9C0d/23Inl7ebCjjwRhYhAXBTtJczY1hWWAiG0YgqilOBNbBM=
+	t=1790786598; cv=none; b=AaE7fTyr45UTofN+Y///kjIlHHijTN1R3RngAwAZSLLGiukAhXz0Czew0XWnL0Kgssfd4lzZDGb2eNP6rhh3iu7Z1V7LMMc3itDxEMZByoqDLd8CzNZjip3VhXbUDWlet7ndxvtd7DUOTcIBwyzHIPPGZLkn0lwsqxHawZFERso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786595; c=relaxed/simple;
-	bh=fuMiV5DpJdgI68Pk8lRljhFMS5rqugdJH5EGTcL8dPs=;
+	s=arc-20240116; t=1790786598; c=relaxed/simple;
+	bh=+O/opH0SGAA6YE29yVJkmJmS65HSNdPTy5eCW8YQojA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IG9cDHyl1Yyz7Of3l1GK69OXmZiRS+ytka+Stk5S+iZgCYx4YcqFrX9IhwG5rLXlKgGXzSGZUcOk53+jX/EnR2SoOUr7nfKVUnhmnoKrh7ATBctuzhgjPA1ZAGvgOMHJLZbvRu5nRFbu/u/gow3Jjza/wgpnMnDw4XwsqHoJ2fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZrPtCrg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iycw+QfSu6xvcrCpFkXHbqdYs5UhWmFPDlBw+6nMxtQVQHeaFFfI9ycLBTER/jUFgZmOIr81kYIM0HhZfaDaQmE381AFJsxWYU+Cy2swekUwJWLTe1C2vgKxGPYs2Y7SrSe5Iho42cK+BkqD15wNDx0579UwA/v/hma02tgL+mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09NH+Gfq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZrPtCrg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30541F000FF;
-	Wed, 30 Sep 2026 16:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09NH+Gfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C43A1F000FF;
+	Wed, 30 Sep 2026 16:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786594;
-	bh=4rnKuL5MGlGhDydi8v7klgc1UdO44PhXfPVx54qDFVs=;
+	s=korg; t=1790786597;
+	bh=CscmBSj2xN+VAkSWyh+OykMfuHsWZ8q1CWuMP00FbQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZrPtCrg5t/QxNoggXkjD5GJwm08E1Bo/fE13Ip38eEcwfEwFxF+OpZtPp+uxN7PW
-	 a54+yIYTWzqE0VTKCMxD37Q5zGacEiaf635dSTgmdxvPoY6MOPK4xigx1BBadwX2An
-	 pvsD3XL9od7iMkt9h4oy4Qk42i6LfoUUWYZbOQ8M=
+	b=09NH+GfqHAjYdIW7VilW8WPAPOzou1d9wjDXf+6wgHi5jrRWQiBEm6eS8ZGmeN659
+	 pSRi33HkbcGPmhk4EuwCyoxMaeiat2Ezo7JAPZhycCgjs+ohtCohvMhMcxtLaBeIl0
+	 HVbk4VkrZd2A7XaRYt+4Dm6k8lfK6hL8IrkqHDhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Chris Gellermann <christian.gellermann@codasip.com>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 916/982] autofs: fix sbi->pipe file reference leak in autofs_kill_sb()
-Date: Wed, 30 Sep 2026 17:27:32 +0200
-Message-ID: <20260930152436.414183810@linuxfoundation.org>
+Subject: [PATCH 6.1 881/982] nfc: virtual_ncidev: Add missing ioctl compat handler
+Date: Wed, 30 Sep 2026 17:26:57 +0200
+Message-ID: <20260930152435.672739970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,46 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Chris Gellermann <christian.gellermann@codasip.com>
 
-[ Upstream commit aa5e44b29ffe4eaa08cc2237fd65bc2596bc023e ]
+[ Upstream commit 51814683e28fc64eceb415962376956c3cfc75a7 ]
 
-When autofs_fill_super() fails before clearing AUTOFS_SBI_CATATONIC (for
-example, when find_get_pid() fails on an invalid pgrp mount option, or
-when an fs_context is closed before mounting), deactivate_locked_super()
-invokes autofs_kill_sb() -> autofs_catatonic_mode(sbi).
+The compat handler for ioctls to the virtual nci device is missing. So,
+nci-specific ioctls of a compat task return with -1 and errno set to
+ENOTTY. Add a handler.
 
-Because AUTOFS_SBI_CATATONIC is still set in sbi->flags,
-autofs_catatonic_mode() returns early without calling fput(sbi->pipe),
-permanently leaking the pipe struct file reference.
+The handling of an ioctl() call of a compat task to get the index of
+virtual nci device (IOCTL_GET_NCIDEV_IDX) lands in the default case of
+the ioctl compat handler (see fs/ioctl.c):
 
-Explicitly release sbi->pipe in autofs_kill_sb() if it is still non-NULL
-after autofs_catatonic_mode().
+COMPAT_SYSCALL_DEFINE3(ioctl, ...)
+{
+	...
+	default:
+       		error = do_vfs_ioctl(fd_file(f), fd, cmd, ...);
+		if (error != -ENOIOCTLCMD)
+			break;
 
-Fixes: ebc921ca9b92 ("autofs: copy autofs4 to autofs")
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Link: https://patch.msgid.link/20260919204808.2812930-1-benquike@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+		if (fd_file(f)->f_op->compat_ioctl)
+			error = fd_file(f)->f_op->compat_ioctl(fd_file(f), cmd, arg);
+		if (error == -ENOIOCTLCMD)
+			error = -ENOTTY;
+	...
+}
+
+There, do_vfs_ioctl() returns -ENOIOCTLCMD and compat_ioctl is not
+set for virtual_ncidev_fops, i.e. f_op->compat_ioctl == NULL. So, the
+ioctl() syscall returns with -1 and errno set to ENOTTY to the compat
+task.
+
+To fix this, use the compat_ptr_ioctl helper for compat handling here.
+It shall be used for ioctls that "either ignore the argument or pass a
+pointer to a compatible data type". The driver's sole ioctl takes a user
+void pointer and copies nfc_dev->idx to it, a 4-byte integer across all
+ABIs.
+
+This issue has been found by running the nci_dev kernel selftest as
+rv64 binary on top of a CHERI kernel, where the ioctl() ends up in
+the ioctl compat handler, similar to a 32-bit application on top of a
+64-bit kernel.
+
+Fixes: e624e6c3e777 ("nfc: Add a virtual nci device driver")
+Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904164252.18351-1-christian.gellermann@codasip.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/autofs/inode.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nfc/virtual_ncidev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/autofs/inode.c b/fs/autofs/inode.c
-index affa70360b1f8..47356259a1a68 100644
---- a/fs/autofs/inode.c
-+++ b/fs/autofs/inode.c
-@@ -50,6 +50,10 @@ void autofs_kill_sb(struct super_block *sb)
- 	if (sbi) {
- 		/* Free wait queues, close pipe */
- 		autofs_catatonic_mode(sbi);
-+		if (sbi->pipe) {
-+			fput(sbi->pipe);
-+			sbi->pipe = NULL;
-+		}
- 		put_pid(sbi->oz_pgrp);
- 	}
+diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
+index 85c06dbb2c449..1f9b3fb04e0ae 100644
+--- a/drivers/nfc/virtual_ncidev.c
++++ b/drivers/nfc/virtual_ncidev.c
+@@ -196,7 +196,8 @@ static const struct file_operations virtual_ncidev_fops = {
+ 	.write = virtual_ncidev_write,
+ 	.open = virtual_ncidev_open,
+ 	.release = virtual_ncidev_close,
+-	.unlocked_ioctl = virtual_ncidev_ioctl
++	.unlocked_ioctl = virtual_ncidev_ioctl,
++	.compat_ioctl = compat_ptr_ioctl,
+ };
  
+ static int __init virtual_ncidev_init(void)
 -- 
 2.53.0
 
