@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1943AD539;
-	Wed, 30 Sep 2026 18:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156703B777D;
+	Wed, 30 Sep 2026 18:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793303; cv=none; b=NPMNIXBZz3w1RvodvNaHrunmVxWX4O7eN4R9k5e7McNC+HhhGaG/Pgee7aw+KX64aLUslTshibkTbVWEpdE8O83iOz4PXUd3tDi21sCT5FPmhPEAHPEn24g+vrswZp3VmWOPBNcq2/TriL//xPGj3ZpvLHPz8OxFqOolK43zhE4=
+	t=1790793306; cv=none; b=FeGLNN7oXsPi9cBLXh+6fZqafgEAD4pf+cAV0C5gWrw1Dl334BFVAP85FOO+/k4SRMhKtQ7ZfBkVBp3NJpM8Dln7PUz2//hQIcRNQStuzUwmfBas190nGatXcOvm6l3krY9yC9+Th6wb52fbpxJBIvyIrEaAF3rE8AiDAUgTEsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793303; c=relaxed/simple;
-	bh=9SFRrXlv1NQiHbA6AlODlkoBh5aX5GAL83Hd2WqIjYw=;
+	s=arc-20240116; t=1790793306; c=relaxed/simple;
+	bh=8UrFMH6H9RS4T5Tqe02WhqkWg9yLSt2QzqFGFFJcQ8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4iBU24474TgsEBUPiSPfaJ6caWSAXH62sMQ6dWpdcdTtlhqrJ2Khs9GYvhd0b/zEvHH0nllXKDhCidniNz91MTdOwO/gvK0qejpLzgvBbWEUsCxzbvGL5uJJ0/nKYv3Amit+pWgSWI3YH0nR4h/VdnpWPuLFDkuiw4ff3aP6Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UemxkGbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XN9AjESaLd/lHMxk45Jof3YRHxI9iQr1NfQ7DM9/dV6TipFS/tWuT1dxWT/xoxtir3QxgMNpd1K8J/smFpt5Qxmkr4XiVXFBZXfIoNK50iexmJiMokfTqF8FHGDGaUi8u/3MyvJveO3kjpMVBGjw0GnfAS3BDHUmlnSeDq4aaUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUcFOFYd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UemxkGbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A8D1F000FF;
-	Wed, 30 Sep 2026 18:35:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUcFOFYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7501F000FF;
+	Wed, 30 Sep 2026 18:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793302;
-	bh=33EQwm/vXUqz/6RsaXIL2EaU6MkaV633cAgLcYGObOo=;
+	s=korg; t=1790793305;
+	bh=Cc1C9knvcza/0odn9VvTKvyYc8nGqgNOVmq1NN4NUS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UemxkGbAzcg6sxzxGcKS1yEBsj7P78ZkyZa+WUtWZX8OB/qqrmvvJhXKDHhoPgU5r
-	 Jaap1EWCb8ZDMbkjTIrgQD2wyIij8BJSPUgSz2WI0LlsgIOJYqBN0iBdA3UuehbhPv
-	 ydZ+QdXxTg3uuwnysJ8iFDzwo7AoIIcQ2HtnHfDY=
+	b=fUcFOFYdVgZwfsNwR6NHTxCTmdr/8QBvoqOcFpE/6PMt4z3msjk6czombdOCszOir
+	 iNyt62T9XiMImgpM6GaPTRsGtZttMk9i+F1E4UqiyX2EC6mxW7Yrou/Zb0bwnj7AFQ
+	 IhzKPXnEOYGDqqAT1M7RGS2d1/ycf1AZDGf+ISMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 206/395] x86/mce: Fix hardware debug register corruption on task migration
-Date: Wed, 30 Sep 2026 17:27:48 +0200
-Message-ID: <20260930152345.119224667@linuxfoundation.org>
+	Mikael Etienne <mikael1022bzh@gmail.com>,
+	Arthur Husband <artmoty@gmail.com>,
+	Alvin Lim <alvinwylim@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	David Laight <david.laight.linux@gmail.com>,
+	John Smith <imjohnsmith4000@gmail.com>,
+	Lennert Buytenhek <kernel@wantstofly.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Roland Waltersson <roland.waltersson@netinsight.net>
+Subject: [PATCH 6.18 207/395] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
+Date: Wed, 30 Sep 2026 17:27:49 +0200
+Message-ID: <20260930152345.141312481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,133 +58,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit b8d1d5b63a8ef532038eebd9d97d406860385668 upstream.
+commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
 
-In exc_machine_check_user(), local_db_save() and local_db_restore() are
-invoked in the outer entry stubs (DEFINE_IDTENTRY_MCE_USER,
-DEFINE_FREDENTRY_MCE, and DEFINE_IDTENTRY_RAW), surrounding
-exc_machine_check_user().
+Multiple users report data corruption during 64-bit DMA transfers on
+systems with AMD NBIO 7.7 and 7.11 controllers.
 
-However, exc_machine_check_user() calls irqentry_exit_to_user_mode(), which
-handles pending thread work and may schedule() if TIF_NEED_RESCHED is set. If
-the task migrates to another CPU during schedule(), local_db_restore() runs on
-the new CPU with the dr7 state saved from the old CPU. This corrupts the new
-CPU's DR7 hardware debug register and leaves the old CPU's DR7 disabled.  In
-short, local_db_save() and local_db_restore() pair must be run on the same
-CPU.
+This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
+Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
+corrupted.
 
-To fix this, move local_db_save() and local_db_restore() inside
-exc_machine_check_user() and exc_machine_check_kernel(). In
-exc_machine_check_user(), DR7 is saved and restored strictly around
-do_machine_check() to avoid schedule() during migration. In
-exc_machine_check_kernel(), local_db_save() is called at the entry point to
-prevent early memory accesses from triggering nested #DB exceptions, and
-restored on all exits.
+Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
 
-Fixes: cd840e424f27 ("x86/entry, mce: Disallow #DB during #MC")
-Assisted-by: LLM
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/179005109564.388919.3937970081044095776.stgit@devnote2
+Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
+Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
+Reported-by: Arthur Husband <artmoty@gmail.com>
+Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
+Reported-by: Alvin Lim <alvinwylim@gmail.com>
+Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: commit log, s/IOVA/DMA/ in comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Cc: David Laight <david.laight.linux@gmail.com>
+Cc: John Smith <imjohnsmith4000@gmail.com>
+Cc: Lennert Buytenhek <kernel@wantstofly.org>
+Cc: Niklas Cassel <cassel@kernel.org>
+Cc: Roland Waltersson <roland.waltersson@netinsight.net>
+Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/core.c |   27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -2078,6 +2078,9 @@ bool filter_mce(struct mce *m)
- static __always_inline void exc_machine_check_kernel(struct pt_regs *regs)
- {
- 	irqentry_state_t irq_state;
-+	unsigned long dr7;
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -886,6 +886,105 @@ static void quirk_clear_strap_no_soft_re
+ 	}
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
 +
-+	dr7 = local_db_save();
- 
- 	WARN_ON_ONCE(user_mode(regs));
- 
-@@ -2086,20 +2089,26 @@ static __always_inline void exc_machine_
- 	 * mce_check_crashing_cpu() for details.
- 	 */
- 	if (mca_cfg.initialized && mce_check_crashing_cpu())
--		return;
-+		goto out;
- 
- 	irq_state = irqentry_nmi_enter(regs);
- 
- 	do_machine_check(regs);
- 
- 	irqentry_nmi_exit(regs, irq_state);
-+out:
-+	local_db_restore(dr7);
- }
- 
- static __always_inline void exc_machine_check_user(struct pt_regs *regs)
- {
-+	unsigned long dr7;
++/*
++ * Enhanced atomic operations can cause corruption with 64-bit DMA
++ * on these devices.
++ */
++#define RX_ENH_ATOMIC_EN		BIT(8)
 +
- 	irqentry_enter_from_user_mode(regs);
- 
-+	dr7 = local_db_save();
- 	do_machine_check(regs);
-+	local_db_restore(dr7);
- 
- 	irqentry_exit_to_user_mode(regs);
- }
-@@ -2108,21 +2117,13 @@ static __always_inline void exc_machine_
- /* MCE hit kernel mode */
- DEFINE_IDTENTRY_MCE(exc_machine_check)
- {
--	unsigned long dr7;
--
--	dr7 = local_db_save();
- 	exc_machine_check_kernel(regs);
--	local_db_restore(dr7);
- }
- 
- /* The user mode variant. */
- DEFINE_IDTENTRY_MCE_USER(exc_machine_check)
- {
--	unsigned long dr7;
--
--	dr7 = local_db_save();
- 	exc_machine_check_user(regs);
--	local_db_restore(dr7);
- }
- 
- #ifdef CONFIG_X86_FRED
-@@ -2139,28 +2140,20 @@ DEFINE_IDTENTRY_MCE_USER(exc_machine_che
-  */
- DEFINE_FREDENTRY_MCE(exc_machine_check)
- {
--	unsigned long dr7;
--
--	dr7 = local_db_save();
- 	if (user_mode(regs))
- 		exc_machine_check_user(regs);
- 	else
- 		exc_machine_check_kernel(regs);
--	local_db_restore(dr7);
- }
++static const u32 nbio_7_7_pcie_smn_addrs[] = {
++	0x111401d0,
++	0x111411d0,
++	0x111421d0,
++	0x111431d0,
++	0x111441d0,
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x114401d0,
++};
++
++static const u32 nbio_7_11_pcie_smn_addrs[] = {
++	0x112401d0,
++	0x112411d0,
++	0x112421d0,
++	0x112431d0,
++	0x112441d0,
++	0x112451d0,
++	0x113401d0,
++	0x113411d0,
++	0x113421d0,
++	0x113431d0,
++	0x113441d0,
++	0x113451d0,
++};
++
++static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
++					   const u32 *smn_addrs,
++					   size_t nr_smn_addrs)
++{
++	bool changed = false;
++	size_t i;
++	u32 data;
++	int ret;
++
++	for (i = 0; i < nr_smn_addrs; i++) {
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (!(data & RX_ENH_ATOMIC_EN))
++			continue;
++		data = data & ~RX_ENH_ATOMIC_EN;
++		ret = amd_smn_write(0, smn_addrs[i], data);
++		if (ret)
++			continue;
++		if (changed)
++			continue;
++		ret = amd_smn_read(0, smn_addrs[i], &data);
++		if (ret)
++			continue;
++		if (data & RX_ENH_ATOMIC_EN)
++			continue;
++		changed = true;
++	}
++
++	if (changed)
++		pci_info(host_bridge, "enhanced atomics disabled\n");
++}
++
++static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
++}
++
++static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
++{
++	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
++				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
++}
++
++/* Phoenix, Hawk Point (NBIO 7.7) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
++			quirk_amd_nbio_7_7_disable_enhanced_atomic);
++
++/* Strix, Krackan, Strix Halo (NBIO 7.11) */
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
++			quirk_amd_nbio_7_11_disable_enhanced_atomic);
++
  #endif
- #else
- /* 32bit unified entry point */
- DEFINE_IDTENTRY_RAW(exc_machine_check)
- {
--	unsigned long dr7;
--
--	dr7 = local_db_save();
- 	if (user_mode(regs))
- 		exc_machine_check_user(regs);
- 	else
- 		exc_machine_check_kernel(regs);
--	local_db_restore(dr7);
- }
- #endif
  
+ /*
 
 
