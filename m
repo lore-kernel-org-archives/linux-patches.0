@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E599A5237AC;
-	Wed, 30 Sep 2026 17:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F6A5326C6;
+	Wed, 30 Sep 2026 17:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789998; cv=none; b=WCSPAcP86+qMDL/8uB8hOyVcbcAZvA9P3rMFrjNuKpeYwR+BlVBVKW7dmkiEoke+DJTrzn9MzokbmreAaCm3GdjRGhjKYmwdfSXPmwApJdVv55oOLB71xDcVAZuX6OohRjhs3Hk3hqgm4+o1T5y5eynXoOCGHdhhv9JsEIbWTw0=
+	t=1790790000; cv=none; b=ifgHJ4Gw5bDzubL/hFLCoY/gxNmThyz4FU8F9ZPja/KzxBSSIuwuGScQv4EXEFot8BQVwmoVPVN4JPzS3vF4uleZAPQEYOXe1LKDWNAjPRTohLNxBYu5qeQEFyaQ8157pvMiiEATH1vtZ/CSWE/ANy0XpkMZKfOVPdp4srZaRKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789998; c=relaxed/simple;
-	bh=TMnSwoE8GEoIaRR1oJRNBJytwtCqPKDFq5QjBISCLlw=;
+	s=arc-20240116; t=1790790000; c=relaxed/simple;
+	bh=bpdjPfbGAB2vq+tEkzB5uxG88kiLCzRg+VeDZNyZ6As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0cHjigySCpd13oCrgWUWGkvBAOjNWc9/0tPN5splWpgJNL3kETb6R6O8LLBinDkpAVmjrClRhXhuwMKGmNVwyLqWW5Y/iwkL2znP9av8C3WdqY151grh+g763ySpzFQXi3idIyvcthAwj+uZmDupbn4ZUCmjBzyNlMcSilNalQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibHq/k8u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SN8vq/4xzmqEya74vt3UlQetPGtHJqauU9lv/DxzG2sRTn+0o7QC6kY5+74mojGnXNKiZwUzXOqZUM7Jg1WXBrG4TkVMuwAXs2uKAGdrZPG2uzQhEUhATEq5Fm4/U8hfq2QPfam51+rvR6koL1osPQvPo2MlMePZDKRYZDSxqEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1WKCvHx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibHq/k8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A3B1F00898;
-	Wed, 30 Sep 2026 17:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1WKCvHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43431F00899;
+	Wed, 30 Sep 2026 17:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789996;
-	bh=oYVIJW9GpQHZvC2BCDij5P+4Ah/CHrCVJdQEI5xJXms=;
+	s=korg; t=1790789999;
+	bh=I/UgrWJuCvRyoXI+p81WHc+T85vwnOzfnJZf727xuTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ibHq/k8ur+YrLAEnTqaitwk1ttgkBJ0Ws6Ory/jTS4RvAYzIQahqTDvb7vZChQAvz
-	 07Cga1bm84EB0AZ4x1rFMVgrUJxUm8osyi+HLt/qgSVNfSb+EFyXUXngpQsB0wm+dp
-	 DRKenFQepi+mzIu9n9Cku+G3h5T1DusKVR7xYFmg=
+	b=j1WKCvHxAMQbc2p9X/9XTGbe0dRcMoAqaww6lLBiQnMsWa4Az72PmEVGVtG425v69
+	 Qs00X839bYl2a8WkYDfugFPKd0EkkiZKv8kC/to1rHSlgxI8LYLZoEHt92GBAq4gq2
+	 70hdWSHy+Mnj4CHauWLXNWVjPTe7URQEkypi0ngY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 673/877] scsi: qla2xxx: Fix use-after-free of qpair work on queue teardown
-Date: Wed, 30 Sep 2026 17:26:24 +0200
-Message-ID: <20260930152429.193155783@linuxfoundation.org>
+Subject: [PATCH 6.12 674/877] scsi: qla2xxx: Null out freed pointers in qla2x00_mem_alloc() error path
+Date: Wed, 30 Sep 2026 17:26:25 +0200
+Message-ID: <20260930152429.215609816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,52 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 19788a55cab61d78e33e0914a5a31d27843e8a4a ]
+[ Upstream commit 6d90f0feb929f6c0f3010f9af4747c7230b75993 ]
 
-The response queue MSI-X handler qla2xxx_msix_rsp_q() schedules
-qla_do_work() via queue_work(ha->wq, &qpair->q_work). qla_do_work()
-dereferences the qpair (vha, rsp) and takes qpair->qp_lock.
+When qla2x00_mem_alloc() fails, qla2x00_probe_one() jumps to
+probe_hw_failed and calls qla2x00_mem_free(). Several error labels in
+qla2x00_mem_alloc() freed adapter members (elsrej.c, purex_dma_pool,
+flt, sfp_data, loop_id_map, async_pd, sf_init_cb, ex_init_cb, npiv_info)
+but left the pointers dangling. qla2x00_mem_free() then freed them a
+second time. Worse, for the dma_pool members it issued
+dma_pool_free(ha->s_dma_pool, ...) after s_dma_pool had already been
+destroyed and set to NULL at fail_s_dma_pool, dereferencing a NULL pool.
 
-During teardown, qla2xxx_delete_qpair() deletes the response queue, which
-calls free_irq() in qla25xx_free_rsp_que(), and then frees the queue and
-the qpair. free_irq() waits for running hardirq handlers but does not
-cancel work already placed on ha->wq. A still-pending q_work then runs
-qla_do_work() against the freed qpair and response queue, causing a
-use-after-free. This is especially likely during full adapter teardown,
-where destroy_workqueue(ha->wq) forces pending work to run after the queue
-pairs have been freed.
+Clear each freed pointer (and its DMA handle) in the error labels so the
+subsequent qla2x00_mem_free() skips them.
 
-Flush the work item with cancel_work_sync() in qla25xx_free_rsp_que()
-after free_irq() has released the interrupt (so no new work can be
-queued) and before the response queue and qpair memory are freed (so the
-flushed handler still sees valid memory). Guard on rsp->qpair and ha->wq
-to match the INIT_WORK() condition and avoid operating on an
-uninitialized work_struct.
-
-Fixes: 68ca949cdb04 ("[SCSI] qla2xxx: Add CPU affinity support.")
-Reported-by: Sashiko <sashiko-dev@google.com>
 Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-5-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-13-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ adjusted cleanup context for the missing fail_flt_data block. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mid.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/qla2xxx/qla_os.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_mid.c
-+++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -606,6 +606,10 @@ qla25xx_free_rsp_que(struct scsi_qla_hos
- 		rsp->msix->handle = NULL;
- 	}
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4482,25 +4482,40 @@ qla2x00_mem_alloc(struct qla_hw_data *ha
+ fail_lsrjt:
+ 	dma_free_coherent(&ha->pdev->dev, ha->elsrej.size,
+ 			  ha->elsrej.c, ha->elsrej.cdma);
++	ha->elsrej.c = NULL;
++	ha->elsrej.cdma = 0;
+ fail_elsrej:
+ 	dma_pool_destroy(ha->purex_dma_pool);
++	ha->purex_dma_pool = NULL;
+ fail_flt:
+ 	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
+ 	    ha->flt, ha->flt_dma);
++	ha->flt = NULL;
++	ha->flt_dma = 0;
  
-+	/* Flush any queued response work before freeing the queue/qpair. */
-+	if (rsp->qpair && ha->wq)
-+		cancel_work_sync(&rsp->qpair->q_work);
-+
- 	if (rsp->ring)
- 		dma_free_coherent(&ha->pdev->dev,
- 				  (rsp->length + 1) * rsp_entry_size,
+ fail_flt_buffer:
+ 	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
+ 	    ha->sfp_data, ha->sfp_data_dma);
++	ha->sfp_data = NULL;
++	ha->sfp_data_dma = 0;
+ fail_sfp_data:
+ 	kfree(ha->loop_id_map);
++	ha->loop_id_map = NULL;
+ fail_loop_id_map:
+ 	dma_pool_free(ha->s_dma_pool, ha->async_pd, ha->async_pd_dma);
++	ha->async_pd = NULL;
++	ha->async_pd_dma = 0;
+ fail_async_pd:
+ 	dma_pool_free(ha->s_dma_pool, ha->sf_init_cb, ha->sf_init_cb_dma);
++	ha->sf_init_cb = NULL;
++	ha->sf_init_cb_dma = 0;
+ fail_sf_init_cb:
+ 	dma_pool_free(ha->s_dma_pool, ha->ex_init_cb, ha->ex_init_cb_dma);
++	ha->ex_init_cb = NULL;
++	ha->ex_init_cb_dma = 0;
+ fail_ex_init_cb:
+ 	kfree(ha->npiv_info);
++	ha->npiv_info = NULL;
+ fail_npiv_info:
+ 	dma_free_coherent(&ha->pdev->dev, ((*rsp)->length + 1) *
+ 		sizeof(response_t), (*rsp)->ring, (*rsp)->dma);
 
 
