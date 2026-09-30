@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9271E33A6F1;
-	Wed, 30 Sep 2026 19:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A44933A6F1;
+	Wed, 30 Sep 2026 19:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795175; cv=none; b=fIKuIP7ETxzTIVic++kkga92TiJsWqYeQXvqBim4RhjKj9N6VSOueX/kaWQx9PVs5zV9XVhEhGJGylpjGYzjIPwMuCnIYlbV3JO1CLd5+rAux+LR3LH8zsN+aW2PT9sIUQXOAAgvA0t6bKVDMWwbRvAyI0AscKAz5pyWGLnKra8=
+	t=1790795178; cv=none; b=Qs97G37VIWJXBYJgCZTUMQpGMQS0QQP6KaSzeHaQv9FRmgEjvQR5UQY3myHrt8apSmKfb1CH0WMymId3mgoIh30r+MxhxOlNlQ3zkM+nSkM+LMEyzJcTb8zBa2Js5pjIwanyiJy8o/fw3rXLWlny12YERiCdC73wKxZfug8oD6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795175; c=relaxed/simple;
-	bh=i76KtSq/B51f3iWUI5ODAv48gTzZItPY+MVSENhunTg=;
+	s=arc-20240116; t=1790795178; c=relaxed/simple;
+	bh=hhlST3axcRKZQD2e9lIHTBrhElmVerWlaw0Nqn5fL+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBHP1b7VTi+A2By0RrzIb1MJ5O1Gw4BNAm3aTcDuPgyknBX8TYTpyIzv6oJFRguoRU1Jyaj19hVRSz2KZbFHjQolCJYOE91WgBkF1CfbIZjDDXQ/bbXJN4niU0sAeJL3XPmI7/VOqDc+nBQXO3ch1ComfQEAZEtQ25dsmehSPl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhnchhVs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mM7QplmR/4djZTIMamaFs0bz/+IRvyEDLIrH8+R3NWMf4gcuHd7RUZ/xqJkg8ixKkvgGAkvSuTViLfCijDkbg0NQCyxjs9r+fZr20CWOvPpqdWhl7GocvPOspeAqQTuYZawBjqgQmCyRNfW5YOsTVKsmen6vFygckqGNBPlGx7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jICSyO2b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhnchhVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39C81F000FF;
-	Wed, 30 Sep 2026 19:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jICSyO2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778241F000FF;
+	Wed, 30 Sep 2026 19:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795174;
-	bh=PaekqqgZMG6xQ/kjfnA3LI5eMcQxamHpdcQcWDP6he4=;
+	s=korg; t=1790795177;
+	bh=+CF+IaCIQK2BlzytyOszZ2a0VhrFAiW3NaVu8FwDcaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhnchhVs81aOmxvlAYS31w+JJsJ46rejgV7x+zpD6z9XN3E2Ik28mI/gL5mHJkrip
-	 G6XxJbK53iHf8OpwKE0QRuQySH2camf4wbaxS789xwV02YvhmsJvXkb127yomoNJff
-	 Fy4oGcviU2319EMYTvrH6FNp4U6O/+kbQuF2QBwg=
+	b=jICSyO2bf83E97kMWlPDsnx+wL33EXCoHiIjLzB8eHtfPX2gqQcJZj8UwYEO5bup3
+	 AA0hf8350KSOc1GnEeNkI6M/zthchMkX/j4O5hljkuGsprfGnuvpyp9cXIuatnyA3I
+	 jBZFoJUMUkt+BRkzM4oBDHOCjX7TQ2JPPJ5ha3I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0424/1193] ASoC: ab8500: Validate and program TDM slots correctly
-Date: Wed, 30 Sep 2026 17:18:28 +0200
-Message-ID: <20260930152443.621776878@linuxfoundation.org>
+Subject: [PATCH 6.6 0425/1193] net/sched: cls_u32: fix duplicate handle when node ID pool is exhausted
+Date: Wed, 30 Sep 2026 17:18:29 +0200
+Message-ID: <20260930152443.642379943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,307 +47,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 85cef7e2004ef5c1a715feaddb55d3f3d27bac0a ]
+[ Upstream commit d7e7e98d23f42a92d9ab7e36302bd96bd9b33b5f ]
 
-The interface clock ratio is selected from the slot count alone, ffs()
-and fls() produce one-based hardware slot numbers, eight-channel mode
-does not program any mappings, and all register errors are ignored.
-Invalid masks can also leave a partially programmed interface.
+gen_new_kid() falls back to returning max (htid | 0xFFF) when both
+idr_alloc_u32() ranges are full, instead of reporting an error.
+u32_change() trusts that value and inserts a new knode with a handle
+that is already live in the hash table, breaking handle uniqueness
+within the table's node ID space.
 
-Validate the complete configuration first, derive the supported BCLK
-ratio from slots times slot width, use zero-based slot indices, program
-deterministic eight-channel maps, and propagate register failures.
+The handle was never reserved in ht->handle_idr, so every later error
+path that does idr_remove(&ht->handle_idr, handle) removes the
+reservation of a different, live knode, which is then reused — one
+failed add compounds into further duplicates.
 
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-4-f85024e717e3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The 4095 limit is per (table, bucket) — ht->handle_idr is per hash
+table and the range is derived from htid (bucketid), so a table with
+divisor 256 can legitimately hold 256*4095 knodes.
+
+The sibling helper gen_new_htid() has the same silent in-band failure:
+it returns 0 when the tp_c handle pool (1..0x7FF) is full, and
+u32_init() publishes the root hash table with handle 0 without
+checking.  Two root tables with handle 0 alias in u32_lookup_ht(),
+allowing cross-tcf_proto knode add/lookup/delete.  Add the same
+exhaustion check that the divisor path already has.
+
+Return an error so u32_change() fails with ENOSPC/ENOMEM when the
+node ID space is exhausted, and so u32_init() fails with -ENOMEM
+when the hash table ID space is exhausted.  The extack message
+distinguishes pool exhaustion (-ENOSPC) from a transient allocation
+failure (-ENOMEM).
+
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_CLS_U32=y (or =m with module loaded)
+- Create a clsact qdisc on a device, then add 4095 u32 filters with
+  auto-generated handles to fill the node ID space for the root hash
+  table (single bucket). The 4096th auto-handle filter add triggers
+  the duplicate handle (fh 800::fff reused). Reachable at Level 2
+  (unshare -Urn, namespace-local CAP_NET_ADMIN).
+- For gen_new_htid: create 2047 u32 proto entries on the same block
+  to fill the tp_c handle pool, then create one more. The root table
+  gets handle 0 and aliases with other handle-0 root tables.
+
+Fixes: 7801db8aec95 ("net_sched: avoid generating same handle for u32 filters")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260825081052.133898-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 216 ++++++++++++++++++--------------
- 1 file changed, 123 insertions(+), 93 deletions(-)
+ net/sched/cls_u32.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 7d6a90ee337c6..b6a74d2e6c290 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -2159,23 +2159,27 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 		int slots, int slot_width)
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index e0805fa99e647..d11224873952d 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -370,6 +370,10 @@ static int u32_init(struct tcf_proto *tp)
+ 
+ 	refcount_set(&root_ht->refcnt, 1);
+ 	root_ht->handle = tp_c ? gen_new_htid(tp_c, root_ht) : id2handle(0);
++	if (root_ht->handle == 0) {
++		kfree(root_ht);
++		return -ENOMEM;
++	}
+ 	root_ht->prio = tp->prio;
+ 	root_ht->is_root = true;
+ 	idr_init(&root_ht->handle_idr);
+@@ -695,21 +699,33 @@ static int u32_delete(struct tcf_proto *tp, void *arg, bool *last,
+ 	return ret;
+ }
+ 
+-static u32 gen_new_kid(struct tc_u_hnode *ht, u32 htid)
++static u32 gen_new_kid(struct tc_u_hnode *ht, u32 htid, int *err)
  {
- 	struct snd_soc_component *component = dai->component;
--	unsigned int val, mask, slot, slots_active;
-+	unsigned int active_mask, clock_ratio, slot, value, ad_out, reg;
-+	unsigned int tx_active, rx_active;
-+	unsigned int conf1_val, conf2_val;
-+	unsigned int mask;
-+	int channel, ret;
+ 	u32 index = htid | 0x800;
+ 	u32 max = htid | 0xFFF;
  
- 	mask = BIT(AB8500_DIGIFCONF2_IF0WL0) |
- 		BIT(AB8500_DIGIFCONF2_IF0WL1);
--	val = 0;
-+	conf2_val = 0;
- 
- 	switch (slot_width) {
- 	case 16:
- 		break;
- 	case 20:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
- 		break;
- 	case 24:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
- 		break;
- 	case 32:
--		val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
-+		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
- 			BIT(AB8500_DIGIFCONF2_IF0WL0);
- 		break;
- 	default:
-@@ -2184,27 +2188,11 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 		return -EINVAL;
++	*err = 0;
++
+ 	if (idr_alloc_u32(&ht->handle_idr, NULL, &index, max, GFP_KERNEL)) {
+ 		index = htid + 1;
+-		if (idr_alloc_u32(&ht->handle_idr, NULL, &index, max,
+-				 GFP_KERNEL))
+-			index = max;
++		*err = idr_alloc_u32(&ht->handle_idr, NULL, &index, max,
++				     GFP_KERNEL);
++		if (*err)
++			return 0;
  	}
  
--	dev_dbg(dai->component->dev, "%s: IF0 slot-width: %d bits.\n",
--		__func__, slot_width);
--	snd_soc_component_update_bits(component, AB8500_DIGIFCONF2, mask, val);
--
--	/* Setup TDM clocking according to slot count */
--	dev_dbg(dai->component->dev, "%s: Slots, total: %d\n", __func__, slots);
--	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
--			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 	switch (slots) {
- 	case 2:
--		val = AB8500_MASK_NONE;
--		break;
- 	case 4:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
--		break;
- 	case 8:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
--		break;
- 	case 16:
--		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
--			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
- 	default:
- 		dev_err(dai->component->dev,
-@@ -2212,92 +2200,134 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
- 			__func__, slots);
- 		return -EINVAL;
- 	}
--	snd_soc_component_update_bits(component, AB8500_DIGIFCONF1, mask, val);
--
--	/* Setup TDM DA according to active tx slots */
+ 	return index;
+ }
  
--	if (tx_mask & ~0xff)
--		return -EINVAL;
--
--	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
--	tx_mask = tx_mask << AB8500_DA_DATA0_OFFSET;
--	slots_active = hweight32(tx_mask);
--
--	dev_dbg(dai->component->dev, "%s: Slots, active, TX: %d\n", __func__,
--		slots_active);
--
--	switch (slots_active) {
--	case 0:
-+	clock_ratio = slots * slot_width;
-+	switch (clock_ratio) {
-+	case 32:
-+		conf1_val = 0;
- 		break;
--	case 1:
--		slot = ffs(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
-+	case 64:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
- 		break;
--	case 2:
--		slot = ffs(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
--		slot = fls(tx_mask);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
--		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
-+	case 128:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
--	case 8:
--		dev_dbg(dai->component->dev,
--			"%s: In 8-channel mode DA-from-slot mapping is set manually.",
--			__func__);
-+	case 256:
-+		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
-+			    BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
- 		break;
- 	default:
--		dev_err(dai->component->dev,
--			"%s: Unsupported number of active TX-slots (%d)!\n",
--			__func__, slots_active);
-+		dev_err(component->dev, "%s: Unsupported BCLK ratio (%u)!\n",
-+			__func__, clock_ratio);
- 		return -EINVAL;
++static int u32_kid_extack(int err, struct netlink_ext_ack *extack)
++{
++	if (err == -ENOSPC)
++		NL_SET_ERR_MSG_MOD(extack, "Hash table node ID pool exhausted");
++	else
++		NL_SET_ERR_MSG_MOD(extack, "Failed to allocate node ID");
++	return err;
++}
++
+ static const struct nla_policy u32_policy[TCA_U32_MAX + 1] = {
+ 	[TCA_U32_CLASSID]	= { .type = NLA_U32 },
+ 	[TCA_U32_HASH]		= { .type = NLA_U32 },
+@@ -1076,7 +1092,9 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		 * handle which is used to uniquely identify the match entry.
+ 		 */
+ 		if (!TC_U32_NODE(handle)) {
+-			handle = gen_new_kid(ht, htid);
++			handle = gen_new_kid(ht, htid, &err);
++			if (err)
++				return u32_kid_extack(err, extack);
+ 		} else {
+ 			handle = htid | TC_U32_NODE(handle);
+ 			err = idr_alloc_u32(&ht->handle_idr, NULL, &handle,
+@@ -1088,7 +1106,9 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		/* The user did not give us a handle; lets just generate one
+ 		 * from the table's pool of nodeids.
+ 		 */
+-		handle = gen_new_kid(ht, htid);
++		handle = gen_new_kid(ht, htid, &err);
++		if (err)
++			return u32_kid_extack(err, extack);
  	}
  
--	/* Setup TDM AD according to active RX-slots */
-+	active_mask = GENMASK(min(slots, 8) - 1, 0);
-+	if ((tx_mask | rx_mask) & ~active_mask) {
-+		dev_err(component->dev, "%s: Slot mask exceeds slot count\n",
-+			__func__);
-+		return -EINVAL;
-+	}
- 
--	if (rx_mask & ~0xff)
-+	tx_active = hweight32(tx_mask);
-+	rx_active = hweight32(rx_mask);
-+	if (tx_active != 0 && tx_active != 1 && tx_active != 2 &&
-+	    tx_active != 8) {
-+		dev_err(component->dev, "%s: Unsupported active TX slots (%u)!\n",
-+			__func__, tx_active);
-+		return -EINVAL;
-+	}
-+	if (rx_active != 0 && rx_active != 1 && rx_active != 2 &&
-+	    rx_active != 8) {
-+		dev_err(component->dev, "%s: Unsupported active RX slots (%u)!\n",
-+			__func__, rx_active);
- 		return -EINVAL;
-+	}
-+
-+	dev_dbg(component->dev,
-+		"%s: %d slots of %d bits, TX active: %u, RX active: %u\n",
-+		__func__, slots, slot_width, tx_active, rx_active);
- 
--	rx_mask = rx_mask << AB8500_AD_DATA0_OFFSET;
--	slots_active = hweight32(rx_mask);
-+	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF2,
-+					    mask, conf2_val);
-+	if (ret < 0)
-+		return ret;
- 
--	dev_dbg(dai->component->dev, "%s: Slots, active, RX: %d\n", __func__,
--		slots_active);
-+	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
-+	       BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
-+	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF1,
-+					    mask, conf1_val);
-+	if (ret < 0)
-+		return ret;
- 
--	switch (slots_active) {
--	case 0:
--		break;
--	case 1:
--		slot = ffs(rx_mask);
--		snd_soc_component_update_bits(component, AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
--		break;
--	case 2:
--		slot = ffs(rx_mask);
--		snd_soc_component_update_bits(component,
--				AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
--		slot = fls(rx_mask);
--		snd_soc_component_update_bits(component,
--				AB8500_ADSLOTSEL(slot),
--				AB8500_MASK_SLOT(slot),
--				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2, slot));
--		break;
--	case 8:
--		dev_dbg(dai->component->dev,
--			"%s: In 8-channel mode AD-to-slot mapping is set manually.",
--			__func__);
--		break;
--	default:
--		dev_err(dai->component->dev,
--			"%s: Unsupported number of active RX-slots (%d)!\n",
--			__func__, slots_active);
--		return -EINVAL;
-+	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
-+	if (tx_active == 1 || tx_active == 2) {
-+		slot = __ffs(tx_mask) + AB8500_DA_DATA0_OFFSET;
-+		reg = AB8500_DASLOTCONF1;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+		reg = AB8500_DASLOTCONF3;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (tx_active == 2)
-+			slot = __fls(tx_mask) + AB8500_DA_DATA0_OFFSET;
-+		reg = AB8500_DASLOTCONF2;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+		reg = AB8500_DASLOTCONF4;
-+		ret = snd_soc_component_update_bits(component, reg, mask, slot);
-+		if (ret < 0)
-+			return ret;
-+	} else if (tx_active == 8) {
-+		channel = 0;
-+		for (slot = 0; slot < 8; slot++) {
-+			if (!(tx_mask & BIT(slot)))
-+				continue;
-+			reg = AB8500_DASLOTCONF1 + channel++;
-+			value = slot + AB8500_DA_DATA0_OFFSET;
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
-+	}
-+
-+	if (rx_active == 1 || rx_active == 2) {
-+		slot = __ffs(rx_mask) + AB8500_AD_DATA0_OFFSET;
-+		value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3,
-+							 slot);
-+		reg = AB8500_ADSLOTSEL(slot);
-+		mask = AB8500_MASK_SLOT(slot);
-+		ret = snd_soc_component_update_bits(component, reg, mask, value);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (rx_active == 2) {
-+			slot = __fls(rx_mask) + AB8500_AD_DATA0_OFFSET;
-+			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2,
-+								 slot);
-+			reg = AB8500_ADSLOTSEL(slot);
-+			mask = AB8500_MASK_SLOT(slot);
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
-+	} else if (rx_active == 8) {
-+		channel = 0;
-+		for (slot = 0; slot < 8; slot++) {
-+			if (!(rx_mask & BIT(slot)))
-+				continue;
-+			ad_out = AB8500_AD_OUT1 + channel++;
-+			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(ad_out, slot);
-+			reg = AB8500_ADSLOTSEL(slot);
-+			mask = AB8500_MASK_SLOT(slot);
-+			ret = snd_soc_component_update_bits(component, reg, mask, value);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
- 
- 	return 0;
+ 	if (tb[TCA_U32_SEL] == NULL) {
 -- 
 2.53.0
 
