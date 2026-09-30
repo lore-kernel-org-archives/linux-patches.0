@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3A94C651B;
-	Wed, 30 Sep 2026 16:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49619503BF3;
+	Wed, 30 Sep 2026 16:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785632; cv=none; b=rNFx0AfB4pRd4tgrg7VeWoj3Xl5sSRrBngRlmMXu9NKO2tOoQe1X0bbLLfZvR+yXVyK/Ogi31Rx27iHA5Cd/6BjkelwyRVFIgGvjuIfUkWuh7uIhWnGL7UkRC2iGcaSSMxYM35L0xeQS/BfSSe0OSDNc/ILaZuylZ2+SgNHkNDY=
+	t=1790785636; cv=none; b=QIMdoB0jG3vyQJcfuCZtUJ6PeRvWz6+Djf0XA8IbIwqGbg25iwxL46D1Z4Qyr85T9N3ZNclAkYtDd7alg+YUD42t0zzYHdALPAdCLmVsOfxtL0jKgGL+k9V5aW7vbQenrdgJljsRZLzfruych7aqx6nj4YeZcmV6iPARqB+f3ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785632; c=relaxed/simple;
-	bh=YpJlVJ6J2nVKvuscwGlWiBkiZATpPNONdUFU570/ZW0=;
+	s=arc-20240116; t=1790785636; c=relaxed/simple;
+	bh=tXxl0oaZ3/6VXwMNt9Cs+k81DPdNLykcP+1pcLJvjoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3h+CeWhtVS+fZJW3eLmPRab3DJsc8E6LBuS+Wjop0kzsKo1uGMHseLvvniItIqbGYNjdiwUwegaf7IYhOtx/4keSsI2rTO2nscgooqD1BcbT1s5B+caHjNhOzvT9HQEzi529ivj4BWA6EgoGfMjkco1Om46Rq+B/o947Oa/qdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FmuiNb8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BWYvAEB+T/ZqmsgkWmhCI90iYFKeQrky6O07/UBbZ0chdS2ipqiAII7Sb+enTRcTou29mDohKmj6vWYtX3zbJfvmvRKFa5MS6A10RBdWw9/jngAOguuP3BSwhkb4y4WTSA0u10W3HkLmgKRhJwdBsA1yEYMBS+h0IurMUlme2vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh42N06K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FmuiNb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53EF1F000FF;
-	Wed, 30 Sep 2026 16:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh42N06K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B48D1F00898;
+	Wed, 30 Sep 2026 16:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785625;
-	bh=h9s4CyiqzgAv1LPYmeUaY7sp0dXb0ELCksbE2qYPTv4=;
+	s=korg; t=1790785631;
+	bh=r6dsx5aohK6F/UVsxr6OsNh3zxQNtUbKPJ/vIKT1jwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FmuiNb84b51ChLNGh0CFai66DSLrtlRPlr1+O+ffedBhwPl6Aur75dgBoAbDhb4p
-	 5S7dZQI2xtAvv1pCSR9L4MIQ7VmGoHAjsPG4Vor3vqpKTpGD/PS8518Nz8JSOClUcl
-	 4GTzqY8EE4LVnoyc0I2SikykmELWB6lc7B0qPA4k=
+	b=eh42N06K/lg8dWpKx93Z+Et9o6cOM8kNFlGVTR4c9RUfE/zdvoIZpdgntJEJbp+62
+	 OP6P9LIgUktHo/Hlpr5VlJL3l/QzAbIDHkEXPH2haiaDRwi/dhjczZRBkUWeA0/sEK
+	 zHSSpOxmew9TCWwM0qqE1cnabmIS5EgIin9ENH0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinyang Ge <xinyang@anthropic.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 574/982] mptcp: avoid unneeded actions on subflow reset
-Date: Wed, 30 Sep 2026 17:21:50 +0200
-Message-ID: <20260930152429.099967139@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Song Liu <song@kernel.org>,
+	Tingmao Wang <m@maowtm.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 576/982] landlock: Fix handling of disconnected directories
+Date: Wed, 30 Sep 2026 17:21:52 +0200
+Message-ID: <20260930152429.145032331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,117 +48,178 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit 2b0f561f21b27c40c91ea4975268a06092bd7e9c upstream.
+[ Upstream commit 49c9e09d961025b22e61ef9ad56aa1c21b6ce2f1 ]
 
-Once in a blue moon, the mptcp receive path can recursively call
-mptcp_data_ready() via state change under unlucky error conditions, and
-then try to hold the data lock again.
+Disconnected files or directories can appear when they are visible and
+opened from a bind mount, but have been renamed or moved from the source
+of the bind mount in a way that makes them inaccessible from the mount
+point (i.e. out of scope).
 
-Break the recursion loop explicitly checking for the exceptional
-condition.
+Previously, access rights tied to files or directories opened through a
+disconnected directory were collected by walking the related hierarchy
+down to the root of the filesystem, without taking into account the
+mount point because it couldn't be found. This could lead to
+inconsistent access results, potential access right widening, and
+hard-to-debug renames, especially since such paths cannot be printed.
 
-Add a new flag instead of using an existing one like 'closing', to exit
-early in subflow_state_change(), and explicitly flush the RX queue at
-reset time.
+For a sandboxed task to create a disconnected directory, it needs to
+have write access (i.e. FS_MAKE_REG, FS_REMOVE_FILE, and FS_REFER) to
+the underlying source of the bind mount, and read access to the related
+mount point.   Because a sandboxed task cannot acquire more access
+rights than those defined by its Landlock domain, this could lead to
+inconsistent access rights due to missing permissions that should be
+inherited from the mount point hierarchy, while inheriting permissions
+from the filesystem hierarchy hidden by this mount point instead.
 
-This avoids unneeded processing to check for available data -- calling
-get_mapping_status() and more on a dying subflow -- but also in error
-reporting and worker scheduling.
+Landlock now handles files and directories opened from disconnected
+directories by taking into account the filesystem hierarchy when the
+mount point is not found in the hierarchy walk, and also always taking
+into account the mount point from which these disconnected directories
+were opened.  This ensures that a rename is not allowed if it would
+widen access rights [1].
 
-Note that we must consume the currently peeked skb before invoking
-mptcp_dss_corruption to avoid consuming it again after the eventual
-reset has freed it.
+The rationale is that, even if disconnected hierarchies might not be
+visible or accessible to a sandboxed task, relying on the collected
+access rights from them improves the guarantee that access rights will
+not be widened during a rename because of the access right comparison
+between the source and the destination (see LANDLOCK_ACCESS_FS_REFER).
+It may look like this would grant more access on disconnected files and
+directories, but the security policies are always enforced for all the
+evaluated hierarchies.  This new behavior should be less surprising to
+users and safer from an access control perspective.
 
-Fixes: e32d262c89e2 ("mptcp: handle consistently DSS corruption")
-Cc: stable@vger.kernel.org
-Reported-by: Xinyang Ge <xinyang@anthropic.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260917-net-mptcp-misc-fixes-7-3-rc4-v2-1-0cf5c72667c8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Note: conflict in protocol.c, because commit e0ca4057e0ec ("mptcp:
-  micro-optimize __mptcp_move_skb()") is not in this version, and is
-  part of a consequent rx path refactor. The conflict is in the context,
-  and is easy to resolve, "done = true" can be moved along without
-  consequences.
-  Also a conflict in protocol.h, because __unused is at a different
-  number. Decrement the one from this version and add the new flag
-  above. The context is also a bit different with data_avail being an
-  enum, but that's without consequences here. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Remove a wrong WARN_ON_ONCE() canary in collect_domain_accesses() and
+fix the related comment.
+
+Because opened files have their access rights stored in the related file
+security properties, there is no impact for disconnected or unlinked
+files.
+
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Song Liu <song@kernel.org>
+Reported-by: Tingmao Wang <m@maowtm.org>
+Closes: https://lore.kernel.org/r/027d5190-b37a-40a8-84e9-4ccbc352bcdf@maowtm.org
+Closes: https://lore.kernel.org/r/09b24128f86973a6022e6aa8338945fcfb9a33e4.1749925391.git.m@maowtm.org
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Link: https://lore.kernel.org/r/b0f46246-f2c5-42ca-93ce-0d629702a987@maowtm.org [1]
+Reviewed-by: Tingmao Wang <m@maowtm.org>
+Link: https://lore.kernel.org/r/20251128172200.760753-2-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: adjust the filesystem walk and errata insertion context]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |    6 +++---
- net/mptcp/protocol.h |    3 ++-
- net/mptcp/subflow.c  |   11 +++++++++++
- 3 files changed, 16 insertions(+), 4 deletions(-)
+ security/landlock/errata/abi-1.h | 15 ++++++++++++
+ security/landlock/fs.c           | 40 +++++++++++++++++++++++---------
+ 2 files changed, 44 insertions(+), 11 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -754,13 +754,13 @@ static bool __mptcp_move_skbs_from_subfl
- 				mptcp_dss_corruption(msk, ssk);
- 			}
- 		} else {
-+			sk_eat_skb(ssk, skb);
-+			done = true;
+diff --git a/security/landlock/errata/abi-1.h b/security/landlock/errata/abi-1.h
+index 53c96c2057fa0..80930957e84d2 100644
+--- a/security/landlock/errata/abi-1.h
++++ b/security/landlock/errata/abi-1.h
+@@ -1,5 +1,20 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ 
++/**
++ * DOC: erratum_3
++ *
++ * Erratum 3: Disconnected directory handling
++ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ *
++ * This fix addresses an issue with disconnected directories that occur when a
++ * directory is moved outside the scope of a bind mount.  The change ensures
++ * that evaluated access rights include both those from the disconnected file
++ * hierarchy down to its filesystem root and those from the related mount point
++ * hierarchy.  This prevents access right widening through rename or link
++ * actions.
++ */
++LANDLOCK_ERRATUM(3)
 +
- 			if (unlikely(!fin)) {
- 				DEBUG_NET_WARN_ON_ONCE(1);
- 				mptcp_dss_corruption(msk, ssk);
+ /**
+  * DOC: erratum_4
+  *
+diff --git a/security/landlock/fs.c b/security/landlock/fs.c
+index dd7f0fd921cf6..8f20a146648cf 100644
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -607,19 +607,31 @@ static int check_access_path_dual(
+ 				break;
  			}
--
--			sk_eat_skb(ssk, skb);
--			done = true;
+ 		}
++
+ 		if (unlikely(IS_ROOT(walker_path.dentry))) {
++			if (likely(walker_path.mnt->mnt_flags & MNT_INTERNAL)) {
++				/*
++				 * Stops and allows access when reaching disconnected root
++				 * directories that are part of internal filesystems (e.g. nsfs,
++				 * which is reachable through /proc/<pid>/ns/<namespace>).
++				 */
++				allowed_parent1 = true;
++				allowed_parent2 = true;
++				break;
++			}
++
+ 			/*
+-			 * Stops at disconnected root directories.  Only allows
+-			 * access to internal filesystems (e.g. nsfs, which is
+-			 * reachable through /proc/<pid>/ns/<namespace>).
++			 * We reached a disconnected root directory from a bind mount.
++			 * Let's continue the walk with the mount point we missed.
+ 			 */
+-			allowed_parent1 = allowed_parent2 =
+-				!!(walker_path.mnt->mnt_flags & MNT_INTERNAL);
+-			break;
++			dput(walker_path.dentry);
++			walker_path.dentry = walker_path.mnt->mnt_root;
++			dget(walker_path.dentry);
++		} else {
++			parent_dentry = dget_parent(walker_path.dentry);
++			dput(walker_path.dentry);
++			walker_path.dentry = parent_dentry;
+ 		}
+-		parent_dentry = dget_parent(walker_path.dentry);
+-		dput(walker_path.dentry);
+-		walker_path.dentry = parent_dentry;
+ 	}
+ 	path_put(&walker_path);
+ 
+@@ -721,6 +733,9 @@ static inline access_mask_t maybe_remove(const struct dentry *const dentry)
+  * file.  While walking from @dir to @mnt_root, we record all the domain's
+  * allowed accesses in @layer_masks_dom.
+  *
++ * Because of disconnected directories, this walk may not reach @mnt_dir.  In
++ * this case, the walk will continue to @mnt_dir after this call.
++ *
+  * This is similar to check_access_path_dual() but much simpler because it only
+  * handles walking on the same mount point and only checks one set of accesses.
+  *
+@@ -759,8 +774,11 @@ static bool collect_domain_accesses(
+ 			break;
  		}
  
- 		WRITE_ONCE(tp->copied_seq, seq);
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -492,7 +492,8 @@ struct mptcp_subflow_context {
- 		stale : 1,	    /* unable to snd/rcv data, do not use for xmit */
- 		valid_csum_seen : 1,        /* at least one csum validated */
- 		close_event_done : 1,       /* has done the post-closed part */
--		__unused : 9;
-+		resetting : 1,	    /* subflow is resetting */
-+		__unused : 8;
- 	enum mptcp_data_avail data_avail;
- 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
- 	u32	remote_nonce;
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -379,6 +379,10 @@ void mptcp_subflow_reset(struct sock *ss
- 	/* must hold: tcp_done() could drop last reference on parent */
- 	sock_hold(sk);
+-		/* We should not reach a root other than @mnt_root. */
+-		if (dir == mnt_root || WARN_ON_ONCE(IS_ROOT(dir)))
++		/*
++		 * Stops at the mount point or the filesystem root for a disconnected
++		 * directory.
++		 */
++		if (dir == mnt_root || unlikely(IS_ROOT(dir)))
+ 			break;
  
-+	subflow->resetting = 1;
-+
-+	/* No need to delay the actual close for to-be discarded data. */
-+	__skb_queue_purge(&ssk->sk_receive_queue);
- 	tcp_send_active_reset(ssk, GFP_ATOMIC);
- 	tcp_done(ssk);
- 	if (!test_and_set_bit(MPTCP_WORK_CLOSE_SUBFLOW, &mptcp_sk(sk)->flags))
-@@ -1710,6 +1714,13 @@ static void subflow_state_change(struct
- 
- 	__subflow_state_change(sk);
- 
-+	/* Rx queue processing is unneeded, error reporting will take place at
-+	 * __mptcp_close_ssk() time and subflow reset can't happen in case of
-+	 * fallback: subflow_sched_work_if_closed() would be a no-op.
-+	 */
-+	if (subflow->resetting)
-+		return;
-+
- 	/* as recvmsg() does not acquire the subflow socket for ssk selection
- 	 * a fin packet carrying a DSS can be unnoticed if we don't trigger
- 	 * the data available machinery here.
+ 		parent_dentry = dget_parent(dir);
+-- 
+2.53.0
+
 
 
