@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362D851476F;
-	Wed, 30 Sep 2026 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C4451476F;
+	Wed, 30 Sep 2026 17:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789100; cv=none; b=HSzPClMqTKysiHhIYimdsb0rsXsAgICIogOCAhmIdSIyjzY5sQwkoXos4u2nwDurkrZEYMmyVb5MTPXSWJFx/4Y+SqQnpfx1itliFgv+lmI5Ahk3/9UmK0+wxk85rV23U0l1mBeadEMGEt9v9PZDJ1+POA9z0fIYzJwE0p89BlE=
+	t=1790789103; cv=none; b=vCm4vR75KVgWL4mLLAeZCcqALrKax9sMO2gx7l9C0bvwg7r1Tr6xBBs24Qu6LxdBObj0o970GgwW7UdwlVarczFHdPpX/8A0SFxhyBqo8r0Bm3psvRiBFlkkRpIJ9gmlr1LeAcbbGgyhGlWfojOt0ngm6mWdfFUDivF9fQUV1OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789100; c=relaxed/simple;
-	bh=/+bhkBZ8vwvF2Md+vHy6IlQk9NcP0vg1CowHXOyV6tU=;
+	s=arc-20240116; t=1790789103; c=relaxed/simple;
+	bh=OG2SNji3FO7Goa7K8+7dJws2cSJbyWKqymPP2fOO++A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqFvt/3YPoMAyEKj/o1LOlKIsX+vi//bmMDK20kBNcCazoS9m3N1DiePG4nNsngFV5gZ46bC89+4g188RhjTEokmFbKJBo7OtITiwpvG7O6lhDtnSxYlNrL44lPp1jh2YM57Dg5GihgF9J1qflcaHB4vkksCf3q9FATM4RxVAb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtEl7Iwh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SNHyZ3sF0MV/FRwN0OfRMyiFW9PC7+Ghtz6rmAAWA6mRgT3kVZyBCwTD3B5q2uy8kjcXwZNMFbuZMU7HBsZXuyEvKDghVFL7K0fqLxGIqGCBhlw/nK7Fx9Y1MpmVAgt7pNEk2yrAa4kQN/ppqtnv89k7vff/pFHOdlbJPo1kIJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mzk3z7qr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtEl7Iwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B52A1F000FF;
-	Wed, 30 Sep 2026 17:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mzk3z7qr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350B41F000FF;
+	Wed, 30 Sep 2026 17:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789098;
-	bh=2+UZFkZ6U0j8eEpMGEZEX/Y61PGqp2oVYhOCSqzUFK8=;
+	s=korg; t=1790789101;
+	bh=FbikhRpKPxflSxg+4qJK82lWf9NQOVP6lq4wkaZ16GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtEl7IwhDEZIVZDd30yTgJkQ4eVYWBcuulZQb7sCCFGkfxDRG/jlNxmifjmZH7gLC
-	 mCRsrQnzNqEtJWoJFqaLOxb2I78jqeHKagKkhggQcKXKx5J93eKU1+RuVu9vuQJMwp
-	 SCRxlcmpCcMWI0RS9hYqSJr2+08U6GmW7GW/VXU0=
+	b=Mzk3z7qrUD+xoUTjcFVQqIK/tUFhcCkrmT5267M927p/a7Hzk0mrQHh/FxkiudjPq
+	 o+6R/s0IuvweCD2sV4567uzRku6BsWl/vbdk1rVXaHeWM8OlQ99FIrBssDJHvnUJ9R
+	 4UBoC3K8vLRC7YR4vZc/VWRVTdq2qXWxiRsTkxYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 351/877] ipvs: revalidate ihl before icmp_send
-Date: Wed, 30 Sep 2026 17:21:02 +0200
-Message-ID: <20260930152422.246996629@linuxfoundation.org>
+Subject: [PATCH 6.12 360/877] net: ethernet: mtk_eth_soc: unregister net_devices in case of probe failure
+Date: Wed, 30 Sep 2026 17:21:11 +0200
+Message-ID: <20260930152422.446403448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,48 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit e290145564886d6a3038810c621f738c1fe9fa51 ]
+[ Upstream commit 310d1ac61a4d5a2ca8356a3a48d263acf54503ce ]
 
-While the outer IP header is already pulled into the skb head, we must
-be careful and revalidate the embedded headers after reading them from
-the skb frags to prevent possible out-of-bounds access.
+If register_netdev() fails for one of the MTK_MAX_DEVS devices in
+mtk_probe(), the error path jumps to err_deinit_ppe, skipping
+mtk_unreg_dev(). The previously registered net_devices are then freed by
+mtk_free_dev() while still in NETREG_REGISTERED state, hitting the
+BUG_ON(dev->reg_state != NETREG_UNREGISTERED).
 
-One such place reported by Sashiko is ip_vs_in_icmp() where local
-process can change the ihl field and after pskb_may_pull() we can see
-larger value. Even if icmp_send() has checks to prevent out-of-bounds
-access, play safe and add check to drop the packet if the ihl field is
-changed.  As the outer headers are pulled, make sure the transport
-header is updated too, it was used before commit 7fcc2fe39fed ("net:
-icmp: avoid invalid transport header access in icmp_send tracepoint")
+Route the register_netdev() failure to err_unreg_netdev so the net_devices
+registered so far are properly unregistered before being freed.
 
-Fixes: f2edb9f7706d ("ipvs: implement passive PMTUD for IPIP packets")
-Link: https://sashiko.dev/#/patchset/20260806105211.34622-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8a8a9e89f801 ("net: ethernet: mediatek: cleanup error path inside mtk_hw_init")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916-mtk_eth_soc-netdev-fix-v1-1-5dac50eb65b1@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 1f62ca2f73309..4e30a903f4bdc 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -1776,6 +1776,12 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 		/* Ensure the IP header is present in headroom */
- 		if (!pskb_may_pull(skb, hlen_orig))
- 			goto ignore_tunnel;
-+		skb_set_transport_header(skb, hlen_orig);
-+		/* Before now we may used ihl from skb frag, revalidate it after
-+		 * copying it into skb head to prevent out-of-bounds access
-+		 */
-+		if (ip_hdr(skb)->ihl * 4 != hlen_orig)
-+			goto ignore_tunnel;
- 		IP_VS_DBG(12, "Sending ICMP for %pI4->%pI4: t=%u, c=%u, i=%u\n",
- 			&ip_hdr(skb)->saddr, &ip_hdr(skb)->daddr,
- 			type, code, ntohl(info));
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 42a4f52ecdc2d..4c9ebbb1b4f18 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -4347,6 +4347,10 @@ static int mtk_unreg_dev(struct mtk_eth *eth)
+ 		mac = netdev_priv(eth->netdev[i]);
+ 		if (MTK_HAS_CAPS(eth->soc->caps, MTK_QDMA))
+ 			unregister_netdevice_notifier(&mac->device_notifier);
++
++		if (eth->netdev[i]->reg_state != NETREG_REGISTERED)
++			continue;
++
+ 		unregister_netdev(eth->netdev[i]);
+ 	}
+ 
+@@ -5128,7 +5132,7 @@ static int mtk_probe(struct platform_device *pdev)
+ 		err = register_netdev(eth->netdev[i]);
+ 		if (err) {
+ 			dev_err(eth->dev, "error bringing up device\n");
+-			goto err_deinit_ppe;
++			goto err_unreg_netdev;
+ 		} else
+ 			netif_info(eth, probe, eth->netdev[i],
+ 				   "mediatek frame engine at 0x%08lx, irq %d\n",
 -- 
 2.53.0
 
