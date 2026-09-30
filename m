@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3E951DAE2;
-	Wed, 30 Sep 2026 18:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD01951DDF3;
+	Wed, 30 Sep 2026 18:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793281; cv=none; b=FPTJ2AbwKTAGKd4nUZjEFBcyrWKcgdktZdD9yqLQCqQAhpuXl4kFPd04X/RhIuIffccCtjvB/ayynLO3Z7tQSsluiykgX4Mf1XiTyc+fFRO3etrzmS5l/sLEoJVqF6OSjRmzB58ZJNLwy91qKV1WCoEE8Cnox2a90XbOTNO6Iyg=
+	t=1790793283; cv=none; b=j/5+7T4WZBgbprmOMbDUicZSd6S9hDL2KdSeiI2KBnixiV/l4+n/yWUK3rQ8jeanSTPalEMg3wGls0ZxV8GvUTUWYLJmueRgh05+SDbQWb+segVy6WCyLoIBC+IdoArZEYEaKf2mMS17sMMHizJV7+MxpxTjm0ctrV/9Tn0I9x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793281; c=relaxed/simple;
-	bh=NU0JWkqy39IQKj1DO9nIKwndfEhe2p7+kjwMp8L24Rk=;
+	s=arc-20240116; t=1790793283; c=relaxed/simple;
+	bh=p9GwqNdFysU15MoVxw4bJWLlTh6Ou3Fhd69tqCpWnSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZrnIEsKaH4+SRUyupO13pTBarmmgq1Kr12kwlF7Od0lJbFV02bF3zM8+17Dxji6MP0VlEJICsaFyqw7MdSECXN7q58VIahwpm1GtFCMGhxC75A1ypSavCxOi6lUzX6poZh5D68l/yAdZbhT1q3RyIh/Gu8dHHDng0ibXh54hN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cT9XSM5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nxVcYtuS7yKZotcXb1rJ3GQvCJry5DQyjaFzm7D+sbKYlVobGCwTapyc3oDKR/9AWtf+c2SVs1Lu4ThGDMLl3xcrij1Un85uqAjc0xdwPZmwuzQQkS846foq2KHhDYnKQCj7qpQwJd50tvIf/yONkkwOEETfuztmPSA/ajzPOFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAV9YKbm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cT9XSM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D2E1F000FF;
-	Wed, 30 Sep 2026 18:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAV9YKbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1466E1F000FF;
+	Wed, 30 Sep 2026 18:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793279;
-	bh=qqeoEEo3lzfXV8ixC8r0dzAHZ4c5+mPi2/tUBSowB3k=;
+	s=korg; t=1790793282;
+	bh=+fjcml4ykN2G1bNRxFxl1rYvl0QHIALyIllFjHJr0lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0cT9XSM5CWzLVeafL88OUzd9osZoSL/jaFOEU2aIgbunaOXPS7gsmo6OxP3EmZzaf
-	 Nd03WRYf212wKryKRUFuERTZHuANpYrRFRoTO6r8FqzXtR6cue2H6QHijxLPvFSE2T
-	 ZybyN4VfYM1smurg+zJKUhWdzaji2pIylJX9wPQs=
+	b=JAV9YKbmM3jeJ1G+qCdMnf9YQDQ2ZGPoYcM2tgUpPbHOJLwR5IIlp4vkP/7r1Pxbk
+	 Fya1HYn9lGrcbtuR0sEwneJJZB7sPIcukuQ4Uc1SMm2W56iRzPTNz00Ivnaa/5zyMM
+	 4yFNqyoOskGw5vPQfsv/cJocKqWesCfd28iNyi7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jim Mattson <jmattson@google.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	David Dai <zdai@linux.ibm.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/395] perf/x86/intel: Dont pointlessly context switch DS_AREA (and PEBS config) if PEBS is unused
-Date: Wed, 30 Sep 2026 17:27:41 +0200
-Message-ID: <20260930152344.965957553@linuxfoundation.org>
+Subject: [PATCH 6.18 173/395] bonding: crypto offload enabled, non-offload slave failover, rekey failed
+Date: Wed, 30 Sep 2026 17:27:15 +0200
+Message-ID: <20260930152344.402119589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,93 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: David Dai <zdai@linux.ibm.com>
 
-[ Upstream commit d06260e99eb93d2942b7af4ccd789eb8a6c829d3 ]
+[ Upstream commit 00efbbd40bd5fd92c67b7cf1aab8904fa59a96f6 ]
 
-When filling the list of MSRs to be loaded by KVM on VM-Enter and VM-Exit,
-load the guest values for DS_AREA and (conditionally) MSR_PEBS_DATA_CFG if
-and only if PEBS will be active in the guest, i.e. only if a PEBS record
-may be generated while running the guest.  As shown by the !pebs_ept path,
-it's perfectly safe to run with the host's DS_AREA, so long as PEBS-enabled
-counters are disabled via PERF_GLOBAL_CTRL.
+Create a bonding device (i.e. bond0) in active-backup mode, 2 slaves.
+Active slave: offload capable interface (i.e. eth1), primary interface.
+Backup slave: non-offload capable interface(i.e. eth2).
+Configure strongswan service swantl.conf child SA "hw_offload = crypto"
+Start strongswan service
+IPSec Crytpo Offload is enabled on top of bond0. i.e.
+ip xfrm state |grep offload
+        crypto offload parameters: dev bond0 dir out mode crypto
+	crypto offload parameters: dev bond0 dir in mode crypto
 
-Omitting DS_AREA and MSR_PEBS_DATA_CFG when PEBS is unused saves two MSR
-writes per MSR on each VMX transition, i.e. eliminates two/four pointless
-MSR writes on each VMX roundtrip when PEBS isn't being used by the guest.
+Active slave eth1 takes adavantage of IPSec Crypto Offload capability.
 
-Fixes: c59a1f106f5c ("KVM: x86/pmu: Add IA32_PEBS_ENABLE MSR emulation for extended PEBS")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260921191418.950933-4-seanjc@google.com
+If active slave eth1 is down for any reason (i.e. eth1 link down):
+ip link set down dev eth1
+non-offload capable interface eth2 failover to becomes active slave.
+The existing SAs can continue use software IPsec after failover.
+Traffic still keeps going properly.
+
+However if eth1 link had not recovered yet, strongswan service does
+new child SA rekey, or uses swanctl command to do new child SA rekey,
+it will fail because active slave eth2 doesn't support crypto offload.
+In bond_ipsec_add_sa routine, it returns -EINVAL now, which is
+treated as fatal error by xfrm_dev_state_add routine in kernel xfrm.
+
+To make the non-offload active slave survive the child SA rekey, need
+to make bond_ipsec_add_sa routine returns -EOPNOTSUPP instead when
+active slave doesn't support IPsec Crypto offload, the xfrm will
+gracefully fallback to create new SA using Software IPsec.
+Network traffic can keep going.
+
+After offload capable interface eth1 link is up, becomes active slave,
+next time strongswan child SA rekey will create a new SA which enables
+crypto offload again.
+
+Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
+Signed-off-by: David Dai <zdai@linux.ibm.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260918211155.1664493-1-zdai@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 39 +++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 14 deletions(-)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index f530629a4215e..ae09839ae2fcb 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4665,23 +4665,14 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
- 		return arr;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 6b9509e939289..e555c5ce4bdfa 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -492,7 +492,7 @@ static int bond_ipsec_add_sa(struct net_device *bond_dev,
+ 	    !real_dev->xfrmdev_ops->xdo_dev_state_add ||
+ 	    netif_is_bond_master(real_dev)) {
+ 		NL_SET_ERR_MSG_MOD(extack, "Slave does not support ipsec offload");
+-		err = -EINVAL;
++		err = -EOPNOTSUPP;
+ 		goto out;
  	}
  
-+	/*
-+	 * If the guest won't use PEBS or the CPU doesn't support PEBS in the
-+	 * guest, then there's nothing more to do as disabling PMCs via
-+	 * PERF_GLOBAL_CTRL is sufficient on CPUs with guest/host isolation.
-+	 */
- 	if (!kvm_pmu || !x86_pmu.pebs_ept)
- 		return arr;
- 
--	arr[(*nr)++] = (struct perf_guest_switch_msr){
--		.msr = MSR_IA32_DS_AREA,
--		.host = (unsigned long)cpuc->ds,
--		.guest = kvm_pmu->ds_area,
--	};
--
--	if (x86_pmu.intel_cap.pebs_baseline) {
--		arr[(*nr)++] = (struct perf_guest_switch_msr){
--			.msr = MSR_PEBS_DATA_CFG,
--			.host = cpuc->active_pebs_data_cfg,
--			.guest = kvm_pmu->pebs_data_cfg,
--		};
--	}
--
- 	/*
- 	 * Restrict guest PEBS events to counters that (a) perf supports, (b)
- 	 * the guest wants to use for PEBS, (c) are not excluded from counting
-@@ -4708,6 +4699,26 @@ static struct perf_guest_switch_msr *intel_guest_get_msrs(int *nr, void *data)
- 	if (pebs_mask & ~cpuc->intel_ctrl_guest_mask)
- 		guest_pebs_mask = 0;
- 
-+	/*
-+	 * Context switch DS_AREA and PEBS_DATA_CFG if and only if PEBS will be
-+	 * active in the guest; if no records will be generated while the guest
-+	 * is running, then simply keep the host values resident in hardware.
-+	 */
-+	arr[(*nr)++] = (struct perf_guest_switch_msr){
-+		.msr = MSR_IA32_DS_AREA,
-+		.host = (unsigned long)cpuc->ds,
-+		.guest = guest_pebs_mask ? kvm_pmu->ds_area : (unsigned long)cpuc->ds,
-+	};
-+
-+	if (x86_pmu.intel_cap.pebs_baseline) {
-+		arr[(*nr)++] = (struct perf_guest_switch_msr){
-+			.msr = MSR_PEBS_DATA_CFG,
-+			.host = cpuc->active_pebs_data_cfg,
-+			.guest = guest_pebs_mask ? kvm_pmu->pebs_data_cfg :
-+						   cpuc->active_pebs_data_cfg,
-+		};
-+	}
-+
- 	/*
- 	 * Do NOT mess with PEBS_ENABLED.  As above, disabling counters via
- 	 * PERF_GLOBAL_CTRL is sufficient, and loading a stale PEBS_ENABLED,
 -- 
 2.53.0
 
