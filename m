@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA84FECCF;
-	Wed, 30 Sep 2026 17:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94FC518132;
+	Wed, 30 Sep 2026 17:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788562; cv=none; b=hntrpYIxw4tkX7hQ8G+36yjv23QJRK1VZkdSj6dsxN/s4J2WrfX692zI8C0xrJe6CMH3re4woDj0QiKSJNqs2PglYdSI6DQ6TBMXICzGup2/rdwn9Sj7kpxep5FFevSNcXay3jvXL1D/oEXmmgobBWg7jsGdnpsL2Cav5Z5jEbo=
+	t=1790788565; cv=none; b=NDwm2McnEh9ozAkQBdJIkJkLVa8GE//n7CHbbJY4H6sym1B/988fSBV+3CDFmaFIwamuNo9yYKpLJzaanTU7L8w5EpGV9/kL4aAsD+9pdVKeC7PIflpQ5qXzKjc84R9m/kWGJjZjqJLLrij22HpsUSWY//QkTgYtsdOSW5/b/rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788562; c=relaxed/simple;
-	bh=XIa0qmTbGvixQdVGiSflNs1VXm/viyYEe5IKehgoxcU=;
+	s=arc-20240116; t=1790788565; c=relaxed/simple;
+	bh=RiyEkMDOW1cuO4ANacxr0bW9TZj28vfXb7JpvSFxPYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZ17+mPxnWsLZGAD2DYvbhhFx/UDmmtxJeWQrID8eoh+8kFZCGtm1uoj4ejNRZBAQg+DCjaaQ0e6jjW2Mz/IMcUrLgpLhKXJpoo5iKl+wCyWN//kDdOVQZNuuSjjCvXsb+47YtVMMG7474LCcjUWYvorUkfzmnwGEdvoUZ00ZYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVBuXblz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OiDtP25/6cpWF15TCnKk3sfOQGKTuOFZYe/RYD0bmW9MyQ9JSeoHMVo+4wyJV6F1MTzoQIKlplV8K7sCm+8Xx3iCilsJfJaHiFpdxdTCz4bHlIbqdk9O7nNLRN9ynhEaunePZz52gkUC5m9KZR7+rSZdp1Fx3haMDCVCQzumsDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEIloxCG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVBuXblz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBDE1F000FF;
-	Wed, 30 Sep 2026 17:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEIloxCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0442B1F00898;
+	Wed, 30 Sep 2026 17:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788560;
-	bh=NToEyRDmuu8QiNhA2Fja2a/8gQGcxqvXdvZJrz/CVeE=;
+	s=korg; t=1790788563;
+	bh=hNlEMyqIE5OFz4ocYYypVpILctoGQaBhulNk16IIALw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jVBuXblzbLXtrERF5BAG5o7yaFHeVeczlCuSIB5jlLkdlvgjBk9sH0P36mUf464EE
-	 1N8Mpi7l6Akv+jSR9OGA5L0LQfZJubQOUnORe8+gubf0G6+nUdkBm//VqbsydJkO38
-	 CVDcFHdEEZslbEgWsysudDfI99b60X9qBlrigHN8=
+	b=IEIloxCGF8UxmB0VciQ4+2NJgVrGushnsnuTG++phqGTI+n6QRnUS+Kj8cpQKiAo+
+	 CjjSmRsiWwh7QSHfGSyokiW+L6971Pau4y57HXutUuUBjb1Z2Jq9utYz6Bih+gz/AN
+	 1u7PzMC9Mk9jr/1hMTrXIKtxrdW5d/lNJvSZH+U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 169/877] cifs: Fix server use-after-free in cifs_chan_skip_or_disable()
-Date: Wed, 30 Sep 2026 17:18:00 +0200
-Message-ID: <20260930152418.371091549@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Kijo Park <red993688@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 6.12 170/877] exec: Cleanup POSIX timers right after de_thread()
+Date: Wed, 30 Sep 2026 17:18:01 +0200
+Message-ID: <20260930152418.393058040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,60 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 717e0a25036b6c92cecace30913b2d874a4c22b8 upstream.
+commit acb03d3881818581052924a9bbbe92b8741ed448 upstream.
 
-When a secondary channel is no longer supported by the server,
-cifs_chan_skip_or_disable() drops the channel reference with
-cifs_put_tcp_session() and then continues to use the server pointer by
-calling cifs_signal_cifsd_for_reconnect() on it and reading its
-primary_server pointer. cifs_put_tcp_session() can drop the last
-reference of the channel and tear it down, so both the channel and the
-primary server (whose reference is also dropped by
-cifs_put_tcp_session()) can be freed before they are signaled for
-reconnect.
+A per-thread CPU timer holds a reference to the PID of the thread it is
+attached to and, while it is armed, its node is queued in that thread's
+posix_cputimers. The task is looked up by that PID.
 
-Signal the channel and the primary server and capture the primary
-server pointer before dropping the channel reference with
-cifs_put_tcp_session().
+When a non-leader thread exec()s, de_thread() changes which task owns
+that PID. pid_task(timer->it.cpu.pid, PIDTYPE_PID) then returns NULL,
+but the node is still queued on tsk, which is alive. timer_lock_sighand()
+takes a failed lookup to mean that the node is already dequeued, so it
+has nothing to undo.
 
-Fixes: f591062bdbf4 ("cifs: handle servers that still advertise multichannel after disabling")
+begin_new_exec() calls posix_cpu_timers_exit(me) right after
+exec_task_namespaces() and that removes the leftover node, so the state
+normally stays invisible. But bprm->point_of_no_return is set before
+de_thread(), so if unshare_files(), set_mm_exe_file(), exec_mmap() or
+exec_task_namespaces() fails, the task dies before it gets there.
+exit_itimers() then frees the k_itimer while its node is still queued,
+and reaping tsk later erases that freed node from the rbtree.
+
+In short:
+
+      the non-leader thread B           the parent
+
+  timer_create(CLOCK_THREAD_CPUTIME_ID)
+  timer_settime()
+    arm_timer()            // the node is queued on B
+  execve()
+    de_thread(B)
+      exchange_tids(B, leader)  // B's PID now belongs to the leader
+      release_task(leader)
+        __exit_signal(leader)
+          posix_cpu_timers_exit(leader)  // cleans leader's queue, not B's
+          __unhash_process(leader)  // that PID has no task anymore
+    exec_mmap()
+      mmap_read_lock_killable(old_mm)
+                                kill(B, SIGKILL)
+      // -EINTR
+  get_signal()
+    do_exit()
+      exit_itimers()
+        posix_timer_delete()
+          posix_cpu_timer_del()
+        posix_timer_unhash_and_free()  // freed while still queued
+                                wait4()
+                                  release_task(B)
+                                    posix_cpu_timers_exit(B)
+                                      cleanup_timerqueue()
+                                        timerqueue_del()  // use-after-free
+
+Move the POSIX timer cleanup right after de_thread() before any of the
+later failure conditions brings the task into do_exit().
+
+[ tglx: Move the cleanup right after de_thread() ]
+
+Fixes: 55e8c8eb2c7b ("posix-cpu-timers: Store a reference to a pid not a task")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Kijo Park <red993688@gmail.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Link: https://patch.msgid.link/ao7Q8miiuLAPVnWv@v4bel
+Link: https://patch.msgid.link/20260911090541.627712075@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/exec.c |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -188,18 +188,19 @@ cifs_chan_skip_or_disable(struct cifs_se
- 		spin_unlock(&ses->chan_lock);
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1217,6 +1217,17 @@ void __set_task_comm(struct task_struct
+ 	perf_event_comm(tsk, exec);
+ }
  
- 		/*
--		 * the above reference of server by channel
--		 * needs to be dropped without holding chan_lock
--		 * as cifs_put_tcp_session takes a higher lock
--		 * i.e. cifs_tcp_ses_lock
-+		 * signal the channel and its primary server to
-+		 * reconnect before dropping the above reference of
-+		 * server by channel, which is done without holding
-+		 * chan_lock as cifs_put_tcp_session takes a higher
-+		 * lock i.e. cifs_tcp_ses_lock
- 		 */
--		cifs_put_tcp_session(server, from_reconnect);
--
- 		cifs_signal_cifsd_for_reconnect(server, false);
- 
- 		/* mark primary server as needing reconnect */
- 		pserver = server->primary_server;
- 		cifs_signal_cifsd_for_reconnect(pserver, false);
++static void posixtimer_exec(struct task_struct *me)
++{
++#ifdef CONFIG_POSIX_TIMERS
++	spin_lock_irq(&me->sighand->siglock);
++	posix_cpu_timers_exit(me);
++	spin_unlock_irq(&me->sighand->siglock);
++	exit_itimers(me);
++	flush_itimer_signals();
++#endif
++}
 +
-+		cifs_put_tcp_session(server, from_reconnect);
- skip_terminate:
- 		return -EHOSTDOWN;
- 	}
+ /*
+  * Calling this is the point of no return. None of the failures will be
+  * seen by userspace since either the process is already taking a fatal
+@@ -1250,6 +1261,16 @@ int begin_new_exec(struct linux_binprm *
+ 	retval = de_thread(me);
+ 	if (retval)
+ 		goto out;
++
++	/*
++	 * This must be done here to ensure that POSIX CPU timers which were
++	 * armed on the current task are dequeued from me::posix_cputimers.
++	 * Otherwise in case of a TID switch the deletion of the related POSIX
++	 * timer would not remove an enqueued timer because the TID lookup
++	 * of the old TID fails.
++	 */
++	posixtimer_exec(me);
++
+ 	/* see the comment in check_unsafe_exec() */
+ 	current->fs->in_exec = 0;
+ 	/*
+@@ -1304,14 +1325,6 @@ int begin_new_exec(struct linux_binprm *
+ 	if (retval)
+ 		goto out_unlock;
+ 
+-#ifdef CONFIG_POSIX_TIMERS
+-	spin_lock_irq(&me->sighand->siglock);
+-	posix_cpu_timers_exit(me);
+-	spin_unlock_irq(&me->sighand->siglock);
+-	exit_itimers(me);
+-	flush_itimer_signals();
+-#endif
+-
+ 	/*
+ 	 * Make the signal table private.
+ 	 */
 
 
