@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEAF33A6F1;
-	Wed, 30 Sep 2026 19:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994A93CAA41;
+	Wed, 30 Sep 2026 19:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795561; cv=none; b=qwEUEfPvtuR12VhXYiEsGj6lkfP0cNtjD8hUQRajdJyw8KiCMRVpWYa1BX8ELcECNJZv3QIAz9SfNtV325DDZxmEC7dYpO0SHATWbC0nfODjrRMbO8bs83qkbgTuz78TbNyh6limVMh/gxrmsyY3BJwEWxINBnJudXcVmiCy1tY=
+	t=1790795564; cv=none; b=HM3RvqVvU+Tvcbx2Xe3QWcXxjhcalQl1UcSP1cSzPBgullyXHJZxqOY+2j/sZUUVPpTyXVTd/HPaAnC2MEa0kRtDH4abMaIBcyp3FK3PH9aYNJmfmNzn3FZlJXg4qPy8DdPF2BQERqJT+FM1QsQOHaFxYzBmf7HEpokcY3hHmVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795561; c=relaxed/simple;
-	bh=iMHypYcCGFZ75Ivv+U2+Z+9KaHjWc4XcD/dOXxBr3jg=;
+	s=arc-20240116; t=1790795564; c=relaxed/simple;
+	bh=O9jxsJAGFmBYM6xiG4XdS9L0cChTZbIBquqyW+jEM1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCmMfBH0YJIrrwZ4OZoSh98srzqydk3D5c6L6qkYnKZOEM8m9Kt55cKVfTSQaWWOvOjM9CsKlWkDQbwRnqS78byQI16VWwPy928tdk7tZeAPhvEf3BNMHXULez8o4IPIXzM+cR1QW6igXwgJBW7Ys7KmO0afeYxYqz3+wOzo5Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cl2hfX/i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WJodHQ4dcjn5Q/Gj/1LoUvg/1taa9q9HmJwjh+j/mE1hqR01ml8nvd1YrNeICoBWtJhQ9H7dFpJ+yjkLHVhx6sdigbYLSi+Uzv03gTcTdgkdwUEmSzqyHLCqNFsWK9KSTn8KeOT7WAAz5dIgpSBV5z288PchvPd9QbZuVp9dA70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WC4VlPhq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cl2hfX/i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B721F000FF;
-	Wed, 30 Sep 2026 19:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WC4VlPhq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67721F000FF;
+	Wed, 30 Sep 2026 19:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795560;
-	bh=bdbSqVksgxgo7Y7B/jf/xQ8ouEmwbujBmvlhGI6/dps=;
+	s=korg; t=1790795563;
+	bh=n4HauzlkWyVCRlEVm338eDxwq1jI9nKM6WfEAqO4GJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cl2hfX/i4RVfO8kY9iqLKPfemh9z3zqqT3UlkFkptFhk9UiZp6yEvkhPcb6z5xX00
-	 xhMFYglnSX3aW7Z4ErkqAZT7kCnMlmAdo0jXTh7uVGp1IpeEjgBPiVjeXIgFvEgPzV
-	 OyzOaRwJ+eOBAiUZRfDAWZHfjGCwaizPa4/RHTDk=
+	b=WC4VlPhqOrfm3d3g1/zE6JjOcV2ypp0EITuhacI/b4ZLf9iKeSKMWqP3ifJebqDgm
+	 xqYJV1pFQ+3DoJM+ffqP3P9AINvDBaoeycFzV8VZxobEUdJvYg3/l2R5VGmfQevOBC
+	 0UuUm64srhrlgUjJ9w0jl4sIshmMdKGlrDPdWgag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0567/1193] hwmon: (aspeed-pwm-tacho) Propagate reset deassert errors
-Date: Wed, 30 Sep 2026 17:20:51 +0200
-Message-ID: <20260930152446.838708608@linuxfoundation.org>
+	Roman Prucha <zorgan.roman@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 0603/1193] ALSA: ctxfi: Fix CA20K2 S/PDIF passthrough
+Date: Wed, 30 Sep 2026 17:21:27 +0200
+Message-ID: <20260930152447.642740134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,43 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Roman Prucha <zorgan.roman@gmail.com>
 
-[ Upstream commit 09a9e1746a87845d7d8e2b4e23bb613306effdff ]
+commit b26a7a80e6bbf8dd17dacb127d12435d79375cf2 upstream.
 
-aspeed_pwm_tacho_probe() installs its reset cleanup action and configures
-the
-controller after an unchecked reset deassertion.
+dao_rsc_init() encodes the DAIO configuration as
 
-Stop probing when the reset controller rejects the transition, before the
-hwmon device becomes visible.
+    conf = (desc->msr & 0x7) | (desc->passthru << 3);
 
-Fixes: 18c514cc0e02 ("hwmon: (aspeed-pwm-tacho) Deassert reset in probe")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830125044.97718-1-pengpeng@iscas.ac.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+S/PDIF passthrough uses msr=1 and passthru=1, resulting in
+conf=9.
+
+daio_mgr_dao_init() masks conf with 0xf, but handles only values
+1, 2, 4 and 8 when programming ATXCTL_NUC. As a result, conf=9
+falls through to the default case and leaves NUC at its previous
+setting.
+
+On a Creative X-Fi Titanium HD SB1270 (CA20K2), this breaks AC3
+IEC61937 passthrough when snd_ctxfi runs with
+reference_rate=48000,multiple=2. The receiver detects a non-audio
+stream but cannot decode the AC3 payload.
+
+With the unmodified driver, multiple=1 makes the same stream work.
+Handle conf=9 through the same NUC=0 path as conf=1.
+
+The change was runtime tested on the SB1270 with multiple=2 using
+IEC958 stereo PCM, pre-encoded AC3 IEC61937 passthrough and ALSA
+A52 live 5.1 encoding.
+
+Fixes: 26a9630c72eb ("ALSA: ctxfi: cthw20k2: fix mask on conf to allow 4 bits")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Roman Prucha <zorgan.roman@gmail.com>
+Link: https://patch.msgid.link/20260903-ctxfi-spdif-conf9-fix-v1-1-5e4e3e1f801c@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/aspeed-pwm-tacho.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/ctxfi/cthw20k2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/aspeed-pwm-tacho.c b/drivers/hwmon/aspeed-pwm-tacho.c
-index b2ae2176f11fe..3b314ce8dc956 100644
---- a/drivers/hwmon/aspeed-pwm-tacho.c
-+++ b/drivers/hwmon/aspeed-pwm-tacho.c
-@@ -921,7 +921,9 @@ static int aspeed_pwm_tacho_probe(struct platform_device *pdev)
- 			"missing or invalid reset controller device tree entry");
- 		return PTR_ERR(priv->rst);
- 	}
--	reset_control_deassert(priv->rst);
-+	ret = reset_control_deassert(priv->rst);
-+	if (ret)
-+		return ret;
- 
- 	ret = devm_add_action_or_reset(dev, aspeed_pwm_tacho_remove, priv);
- 	if (ret)
--- 
-2.53.0
-
+--- a/sound/pci/ctxfi/cthw20k2.c
++++ b/sound/pci/ctxfi/cthw20k2.c
+@@ -993,6 +993,7 @@ static int daio_mgr_dao_init(void *blk,
+ 		/* S/PDIF output */
+ 		switch ((conf & 0xf)) {
+ 		case 1:
++		case 9:
+ 			set_field(&ctl->txctl[idx], ATXCTL_NUC, 0);
+ 			break;
+ 		case 2:
 
 
