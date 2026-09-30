@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5203236A033;
-	Wed, 30 Sep 2026 16:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FA7503BF3;
+	Wed, 30 Sep 2026 16:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785011; cv=none; b=jUPw0mLnXmJTmHgP2G40H9FWJeUvTLTOB1KlPqYNuAjh4f0EvdrjEh1U83mZHL6ZF1PUjD0etmCsTF0eY15UpvxHRcghAZaNiXIjisqLbNx5XFXugEq2lFGS4YIwCkwwwfp4noGbe3wZjePX9ergYEvszuqIYLvXXczLM2pgF64=
+	t=1790785015; cv=none; b=rFYtPePRG3xd6oHveBW3SSa0Ije+hFwr/8SZ1Nmkpx24KRP12TmMXNyIjrvHYEcrMVJ0Wm0KRucW83fs9cirFfefKvHMkWXYaw7i73HDHkRRGYQi/fB7ZyoB3LdTYKgu4S1TJQ0uhfqp5CrGW+o7elEYHXS7CH6XJxQyQAlRnqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785011; c=relaxed/simple;
-	bh=8SKYhUIkEJcFU2R/kL5F5tHyD0v2zNd7nVjqY3iTv+4=;
+	s=arc-20240116; t=1790785015; c=relaxed/simple;
+	bh=5sn6ENefHojSch1bs9pIAwPUQCoxfOHS5DOedIoXJOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jv2BIgOKCCHKdhTbOz2kQ5c9jDXj+bU+IJ3UW65NM5UAZXjqtW2exZ/l9Je/KCT0Es105YImUtOMKMSgunBag+fY4FYcBBr58xR3da4CnawvUeCPTp6PYmkQ9+suh1okgN2jA2DnOffWQ2E7g6udRUpJkNmgZ/XgNw46Kbb2X44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1Jw/GjJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t57hfC0Tw4uyEeOeSKcleXBzIvN0TtKXEV2DxNcjO6yZ5HH4IVOVYEio5UQBg+SpzxRhwFFKCahhqsXd0XONHJo/E+tSOHfqP0vYltY+/rXR/C854IGPjOCa3IC6Jcj1ZzK51GBHL/w24FBAIhTVSczH+uYbO9CRVQOVa/3dY3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQL7pl5F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1Jw/GjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3DD1F00893;
-	Wed, 30 Sep 2026 16:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQL7pl5F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376AF1F00898;
+	Wed, 30 Sep 2026 16:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785005;
-	bh=NRdzvBOOP8vZsthQuLtR5h5yVdpUhiQ3+biFHiXDq3U=;
+	s=korg; t=1790785008;
+	bh=JWcY5xtYRSONDOUuirPLT3ruWVgHCCQ9G71E2oj6aJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1Jw/GjJk3P/vNFPAHl1rCsUSUHAe+uu4AxCIhWewJn9K2AXjaOvZfrFbFCBKr8g0
-	 saGp8uVqXfwCx9A7P+WsXpxpZekAgf0+keSowkSkr/wvuAKM5XQRKdzmKblTCp5VXw
-	 6itiUaQZKkoCH5W7CIM4OeveniX8EyMOCM68r/8M=
+	b=KQL7pl5FpOSA8XxYt3Vhrst2DbssplSYCfu940Kq37pW6g5Yl8myQWIkgX05upqgk
+	 caO/X8fuFSOMoplGg9fgM+uRfYE/05eXKtvj+tQ+pKm4y6BHdaVigQcNLTvy2KdCyy
+	 L8zuG4nB57rjkFsYp2ceNbA5N3wwid8Oec0VR4zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Fourie Zhang <fouriezhang@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/982] ASoC: ab8500: Reset the audio block before configuring it
-Date: Wed, 30 Sep 2026 17:18:05 +0200
-Message-ID: <20260930152424.311750425@linuxfoundation.org>
+Subject: [PATCH 6.1 358/982] ipv6: sr: restore network header before routing and forwarding
+Date: Wed, 30 Sep 2026 17:18:14 +0200
+Message-ID: <20260930152424.502314695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,84 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8e839bca7793a0b03c005f4b2b0825464290d425 ]
+[ Upstream commit 975b5b067f525a1b1338c4a3bee1c46545801518 ]
 
-ResetAudn is active low, but the codec probe only deasserts it. It also
-clears Clk32kOut2Dis despite claiming to disable that output, and writes
-codec registers before releasing reset.
+ipv6_srh_rcv() runs with skb->data at the Segment Routing Header (SRH)
+while skb_network_header() points at the IPv6 header.
 
-Pulse ResetAudn before the first audio-bank access and leave the unused
-32 kHz output disabled.
+When segments_left > 0, ipv6_srh_rcv() previously restored the skb->data
+position by pushing sizeof(struct ipv6hdr), assuming the SRH immediately
+followed the fixed IPv6 header. If another extension header (such as a
+Hop-by-Hop options header) precedes the SRH, skb_network_offset()
+remained negative.
 
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-1-f85024e717e3@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This led to two problems:
+1. During ip6_route_input(), fib6_rules_early_flow_dissect() invokes
+   __skb_flow_dissect() which passes the negative skb_network_offset()
+   to flow dissection, breaking BPF and C flow dissector logic.
+2. If forwarded via ip6_forward() or redirected via act_mirred, downstream
+   handlers (like sch_fragment() or neighbour output) pass the negative
+   offset as an unsigned length, triggering OOB memcpy or buffer overflows.
+
+Fix this by pushing -skb_network_offset(skb) before routing, ensuring
+skb_network_offset(skb) is 0 for route lookup / flow dissection as well as
+downstream forwarding. On the loopback path, pull skb_transport_offset(skb)
+to restore skb->data to the SRH before looping back.
+
+Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Reported-by: Jun Yang <junvyyang@tencent.com>
+Reported-by: Fourie Zhang <fouriezhang@tencent.com>
+Closes: https://lore.kernel.org/netdev/20260817104128.22681-1-juny24602@gmail.com/
+Closes: https://lore.kernel.org/netdev/20260827092345.2301937-1-fouriezhang@tencent.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828141727.2372570-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ net/ipv6/exthdrs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 42e448978c4a0..187250400613d 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -1917,18 +1917,18 @@ enum ab8500_filter {
- static int ab8500_audio_init_audioblock(struct snd_soc_component *component)
- {
- 	int status;
-+	u8 mask = AB8500_STW4500CTRL3_CLK32KOUT2DIS |
-+		  AB8500_STW4500CTRL3_RESETAUDN;
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 823d405069b7d..afed094c8ac02 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -462,7 +462,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 	hdr->segments_left--;
+ 	addr = hdr->segments + hdr->segments_left;
  
- 	dev_dbg(component->dev, "%s: Enter.\n", __func__);
+-	skb_push(skb, sizeof(struct ipv6hdr));
++	skb_push(skb, -skb_network_offset(skb));
  
--	/* Reset audio-registers and disable 32kHz-clock output 2 */
--	status = ab8500_sysctrl_write(AB8500_STW4500CTRL3,
--				AB8500_STW4500CTRL3_CLK32KOUT2DIS |
--					AB8500_STW4500CTRL3_RESETAUDN,
--				AB8500_STW4500CTRL3_RESETAUDN);
-+	/* Reset the audio registers and disable the unused 32 kHz output. */
-+	status = ab8500_sysctrl_write(AB8500_STW4500CTRL3, mask,
-+				      AB8500_STW4500CTRL3_CLK32KOUT2DIS);
- 	if (status < 0)
- 		return status;
+ 	if (skb->ip_summed == CHECKSUM_COMPLETE)
+ 		seg6_update_csum(skb);
+@@ -488,7 +488,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 		}
+ 		ipv6_hdr(skb)->hop_limit--;
  
--	return 0;
-+	return ab8500_sysctrl_write(AB8500_STW4500CTRL3, mask, mask);
- }
- 
- static int ab8500_audio_setup_mics(struct snd_soc_component *component,
-@@ -2461,6 +2461,13 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 
- 	ab8500_codec_of_probe(dev, np, &codec_pdata);
- 
-+	status = ab8500_audio_init_audioblock(component);
-+	if (status < 0) {
-+		dev_err(dev, "%s: failed to init audio-block (%d)!\n",
-+			__func__, status);
-+		return status;
-+	}
-+
- 	status = ab8500_audio_setup_mics(component, &codec_pdata.amics);
- 	if (status < 0) {
- 		pr_err("%s: Failed to setup mics (%d)!\n", __func__, status);
-@@ -2473,13 +2480,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 		return status;
+-		skb_pull(skb, sizeof(struct ipv6hdr));
++		skb_pull(skb, skb_transport_offset(skb));
+ 		goto looped_back;
  	}
  
--	status = ab8500_audio_init_audioblock(component);
--	if (status < 0) {
--		dev_err(dev, "%s: failed to init audio-block (%d)!\n",
--			__func__, status);
--		return status;
--	}
--
- 	/* Override HW-defaults */
- 	snd_soc_component_write(component, AB8500_ANACONF5,
- 		      BIT(AB8500_ANACONF5_HSAUTOEN));
 -- 
 2.53.0
 
