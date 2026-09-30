@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6366F50EC11;
-	Wed, 30 Sep 2026 16:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0245B1E0DD8;
+	Wed, 30 Sep 2026 16:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787566; cv=none; b=jAAkblPG6/YSCpYHsbCram361Pv9IPrB+VUYRmyA92BbA0ImJjYHoOa9hpsOA8dDljpJWxpTonGp3H7Ls7z6V4Ra6/0ifOvyEDiWnyDgBMywA4PLoBXztriiwKc3BpmLDkom/xGdrpvAcXerCMpfaEKy+lGCGX+cLKtJQIYONH8=
+	t=1790787569; cv=none; b=Mr4XQz5xcjxC/tgsb84jfWsJ5noqQLBaJcch//twbSGQalb9QelutTqvN3qpM8sl0jxz7HIgELcC/kH0x0deeyBa6iaPg+FYUnbEtGXFE9eC7dagOoGrxdOjQ4c4meq2/4Qsg94R4c2EQMTTUX1AQMY4Zw4+BWsxrrwzVTQGPp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787566; c=relaxed/simple;
-	bh=6n9b7+D/9Dd79s2ww5p0yU9Mt5IFCFnQxTTzsE/YjYA=;
+	s=arc-20240116; t=1790787569; c=relaxed/simple;
+	bh=5EHt2eze54wLlOxYeNN4pEhKAuGA4WSeb12+GdIlbB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbmNCSZr0XTKTVHHuCihpCY9AOnTSFE1EAbW/PLDdIrwCGAitpMRIl06bm6mD/yhajXwA2csDoc/mlK8fjQ5QXqqrc3nI17P26ZoVItQHZA0JSr7bKrxvKsG6myM/KekbZh5TNYGJ3cYyYTRjPNBZ6kwzc45O4vdASFXETQIL4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sancnGGO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r8tQ5Jtp5kPQQSxzgsDvRjM14iT95EnUFVc9PLbCzmwuwW6n7buc/7zY7xn1MMjBWzO49Qpuk4zTvf7TeAub7Gap7LwY6yd9oFw88FgFLgzHMv4NVZ8vgZFsVDM5coqiuvCavVZJ9CZuwEobZCW8wNvKY/3NBYo0cbO91/X0jyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ib2wPatP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sancnGGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2D31F000FF;
-	Wed, 30 Sep 2026 16:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ib2wPatP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499B01F000FF;
+	Wed, 30 Sep 2026 16:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787565;
-	bh=g56+c37K7irkCubrJmYxdJetyTNunoEo0O/xujF7qZ4=;
+	s=korg; t=1790787567;
+	bh=FGaVma6DC952hevv+owNC/61gkiR+NFkfkUAtumdI2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sancnGGOiX16O4GYOIEP3WZjLjM0iiw0BOFpJBJXmPzb1KIm4wTLg7R7BLAu0uL9n
-	 xraCpHnLLhkfUco8XcGIzlcYzog+5JAZBIlmpIMJXp/2r9wM9HY4vS9YWUrAR+9vBz
-	 H4MswRm0WRJHrnc0fxT5QdRxEXFFGuvPHeWwKYWk=
+	b=Ib2wPatPwUlLt4FmUqB7Zm1jwF9vb5svOQBsDlbfOGbbCNgUqwZYTfM1COouSY+np
+	 j9hkubrno7xPQT/T5xjAH66mNmNG0Te00ks2QduKBnFW4eAVeSPb5RXQ8YlkcimyPo
+	 3VmupoeYnl5bRKPAvDgVDrMxF+i7pmThF+hkG+to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shechenglong <shechenglong@xfusion.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 7.2 275/457] drm/client: fix restore of partially initialized client
-Date: Wed, 30 Sep 2026 17:26:20 +0200
-Message-ID: <20260930152351.972825003@linuxfoundation.org>
+	Alexandru Dadu <alexandru.dadu@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>
+Subject: [PATCH 7.2 276/457] drm/imagination: Propagate map failures correctly from pvr_mmu_map_sgl()
+Date: Wed, 30 Sep 2026 17:26:21 +0200
+Message-ID: <20260930152351.994209792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,100 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shechenglong <shechenglong@xfusion.com>
+From: Brajesh Gupta <brajesh.gupta@imgtec.com>
 
-commit 1fca688e9443003e33cf30453e7a7560367656c9 upstream.
+commit 7b824c293a6b56de8285a97984c507cba56bc4c4 upstream.
 
-I got a null-ptr-deref report when closing a DRM file descriptor:
+Map failure from pvr_mmu_map_sgl() interface was not returned correctly
+to pvr_mmu_map() interface. This resulted in pvr_mmu_map() interface to
+continue instead of returning an error to caller.
+Fix it by returning a proper error code from pvr_mmu_map_sgl() interface.
 
-WARNING: drivers/gpu/drm/drm_atomic.c:2031 at
-__drm_atomic_helper_set_config+0x18e/0x1b0 [drm]
+Call stack for crash:
+[ 1179.286237] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+[ 1179.295067] Mem abort info:
+[ 1179.297877]   ESR = 0x0000000096000004
+[ 1179.301656]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 1179.306987]   SET = 0, FnV = 0
+[ 1179.310048]   EA = 0, S1PTW = 0
+[ 1179.313198]   FSC = 0x04: level 0 translation fault
+[ 1179.318096] Data abort info:
+[ 1179.320993]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[ 1179.326483]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[ 1179.331546]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[ 1179.336895] user pgtable: 4k pages, 48-bit VAs, pgdp=000000009822a000
+[ 1179.343402] [0000000000000008] pgd=0000000000000000, p4d=0000000000000000
+[ 1179.350243] Internal error: Oops: 0000000096000004 [#2]  SMP
+[ 1179.355908] Modules linked in: powervr gpu_sched drm_shmem_helper drm_gpuvm drm_exec xhci_plat_hcd xhci_hcd dwc3 usbcore usb_common snd_soc_simple_card snd_soc_simple_card_utils dwc3_am62 at24 sa2ul sha512 libsha512 sha256 authenc sch_fq_codel fuse dm_mod ipv6
+[ 1179.378992] CPU: 1 UID: 1000 PID: 680 Comm: deqp-vk Tainted: G      D             6.17.0 #1 PREEMPT
+[ 1179.388120] Tainted: [D]=DIE
+[ 1179.390994] Hardware name: Texas Instruments AM625 SK (DT)
+[ 1179.396467] pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 1179.403415] pc : pvr_mmu_op_context_unmap_curr_page+0x6c/0x134 [powervr]
+[ 1179.410140] lr : pvr_mmu_op_context_unmap_curr_page+0x58/0x134 [powervr]
+[ 1179.416848] sp : ffff8000839ab8c0
+[ 1179.420153] x29: ffff8000839ab8c0 x28: 0000000000000001 x27: 000000008f386000
+[ 1179.427283] x26: ffff000016d1df98 x25: 0000000000247000 x24: 00000000000001e6
+[ 1179.434413] x23: 0000000000000002 x22: 000000000000ffff x21: 0000000000000247
+[ 1179.441540] x20: 0000000000000245 x19: ffff000016d1df60 x18: 0000000000000002
+[ 1179.448668] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
+[ 1179.455793] x14: 0000000000060810 x13: ffff80007fffffff x12: ffff000004190480
+[ 1179.462921] x11: ffff8000853f7000 x10: ffff8000811ae000 x9 : ffff0000041900b8
+[ 1179.470051] x8 : 0000000000000000 x7 : 00000000990c4001 x6 : 0000000000000007
+[ 1179.477177] x5 : ffff000016d1df60 x4 : 0000000000000000 x3 : ffff00000a7d8000
+[ 1179.484306] x2 : 00000000000001ff x1 : 0000000000000000 x0 : 0000000000000000
+[ 1179.491433] Call trace:
+[ 1179.493872]  pvr_mmu_op_context_unmap_curr_page+0x6c/0x134 [powervr] (P)
+[ 1179.500582]  pvr_mmu_map+0x31c/0x388 [powervr]
+[ 1179.505027]  pvr_vm_gpuva_map+0x40/0x88 [powervr]
+[ 1179.509732]  __drm_gpuvm_sm_map+0x250/0x44c [drm_gpuvm]
+[ 1179.514952]  drm_gpuvm_sm_map+0x48/0x5c [drm_gpuvm]
+[ 1179.519822]  pvr_vm_bind_op_exec+0x64/0x70 [powervr]
+[ 1179.524785]  pvr_vm_map+0x1f8/0x2a8 [powervr]
+[ 1179.529142]  pvr_ioctl_vm_map+0x12c/0x188 [powervr]
+[ 1179.534018]  drm_ioctl_kernel+0xb8/0x128
+[ 1179.537941]  drm_ioctl+0x21c/0x4ec
+[ 1179.541337]  __arm64_sys_ioctl+0xac/0x108
+[ 1179.545344]  invoke_syscall+0x44/0x100
+[ 1179.549091]  el0_svc_common.constprop.0+0x40/0xe0
+[ 1179.553790]  do_el0_svc+0x1c/0x28
+[ 1179.557106]  el0_svc+0x34/0xf0
+[ 1179.560159]  el0t_64_sync_handler+0xd0/0xe4
+[ 1179.564334]  el0t_64_sync+0x198/0x19c
+[ 1179.567996] Code: 54000300 35000360 f9402261 79409a62 (f9400421)
+[ 1179.574081] ---[ end trace 0000000000000000 ]---
 
-Call Trace:
-drm_client_modeset_commit_atomic+0x16b/0x220 [drm]
-drm_client_modeset_commit_locked+0x56/0x160 [drm]
-drm_client_modeset_commit+0x21/0x40 [drm]
-__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0x7b/0x80
-drm_fbdev_client_restore+0xe/0x20 [drm_client_lib]
-drm_client_dev_restore+0x9f/0xc0 [drm]
-drm_release+0xc5/0xe0 [drm]
-
-The warning is followed by a NULL pointer dereference:
-
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-
-RIP:
-__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0x41/0x80
-[drm_kms_helper]
-
-Call Trace:
-drm_fbdev_client_restore+0xe/0x20 [drm_client_lib]
-drm_client_dev_restore+0x9f/0xc0 [drm]
-drm_release+0xc5/0xe0 [drm]
-__fput+0xdc/0x2b0
-__x64_sys_close+0x39/0x80
-do_syscall_64+0x8d/0x460
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-drm_client_register() adds the DRM client to the device client list
-before invoking the initial hotplug callback. If the hotplug callback
-fails, the client remains registered.
-
-For the fbdev client, a failure during drm_fb_helper_initial_config()
-causes the partially initialized fbdev helper to be cleaned up.
-drm_fb_helper_fini() releases fb_helper->info and leaves it NULL.
-
-The fbdev client therefore remains registered even though there is no
-fully initialized framebuffer device.
-
-Later, when userspace closes the DRM file descriptor, drm_release()
-can invoke the restore callbacks of registered DRM clients:
-
-drm_release()
-drm_client_dev_restore()
-drm_fbdev_client_restore()
-drm_fb_helper_restore_fbdev_mode_unlocked()
-
-drm_fbdev_client_restore() currently restores the fbdev state
-unconditionally. For a partially initialized fbdev client this can
-submit an incomplete modeset state and subsequently access fbdev
-state which has not been initialized, resulting in the warning and
-NULL pointer dereference above.
-
-drm_fbdev_client_unregister() already uses fb_helper->info to
-distinguish a fully probed framebuffer device from a partially
-initialized client.
-
-Use the same condition in drm_fbdev_client_restore() and skip restore
-if no framebuffer device has been successfully initialized.
-
-Signed-off-by: shechenglong <shechenglong@xfusion.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 5d08c44e47b9 ("drm/fbdev: Add memory-agnostic fbdev client")
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: <stable@vger.kernel.org> # v6.13+
-Link: https://patch.msgid.link/20260907035147.1339-1-shechenglong@xfusion.com
+Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
+Reviewed-by: Alexandru Dadu <alexandru.dadu@imgtec.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260922-mmu_fix-v4-1-12f1a871456a@imgtec.com
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/clients/drm_fbdev_client.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/imagination/pvr_mmu.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/clients/drm_fbdev_client.c
-+++ b/drivers/gpu/drm/clients/drm_fbdev_client.c
-@@ -42,6 +42,14 @@ static int drm_fbdev_client_restore(stru
- {
- 	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
+--- a/drivers/gpu/drm/imagination/pvr_mmu.c
++++ b/drivers/gpu/drm/imagination/pvr_mmu.c
+@@ -12,6 +12,7 @@
+ #include "pvr_rogue_mmu_defs.h"
  
-+	/*
-+	 * The client is registered before the initial fbdev probe.
-+	 * If probing failed, the client remains registered but there
-+	 * is no valid fbdev framebuffer to restore.
-+	 */
-+	if (!fb_helper->info || !fb_helper->fb)
-+		return 0;
-+
- 	drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, force);
+ #include <drm/drm_drv.h>
++#include <drm/drm_print.h>
+ #include <linux/atomic.h>
+ #include <linux/bitops.h>
+ #include <linux/dma-mapping.h>
+@@ -2553,7 +2554,9 @@ pvr_mmu_map_sgl(struct pvr_mmu_op_contex
  
- 	return 0;
+ err_destroy_pages:
+ 	memcpy(&op_ctx->curr_page, &ptr_copy, sizeof(op_ctx->curr_page));
+-	err = pvr_mmu_op_context_unmap_curr_page(op_ctx, page);
++	if (pvr_mmu_op_context_unmap_curr_page(op_ctx, page))
++		drm_err(from_pvr_device(op_ctx->mmu_ctx->pvr_dev),
++			"%s : Failure in unmapping pages\n", __func__);
+ 
+ 	return err;
+ }
 
 
