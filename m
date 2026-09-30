@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0469451614B;
-	Wed, 30 Sep 2026 16:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55904515980;
+	Wed, 30 Sep 2026 16:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784803; cv=none; b=A3BWRTHFlqHef0WDrMqGn6IXzAKs7XxjFJ0aGBrBCdm1LBMxAar8pkLKY4hSe2d6Du9MhGVTyrU2lvoXZZJYuH7avFooCShEMBRtIvD82IP1oOPfYXI41SOJp+neL69AWjfaeh6IhnjYd73XKHSNLrIHqPbGiEvtBuA2FUK0kLw=
+	t=1790784804; cv=none; b=WtseVwEfQlPE4RYwXpWP7hofuWWubSAzZkLqPjE5EbdTrgPH2gJUHVxA13KKI21Rl8QJPJqVZYbUBGMFEphn6aLfxAX2EXI8qJqxcTgrEJOviDLsSXY+H7br/GkDncHkFLiS7L4McnQX00QJ3F4KfMfXX5hC5PldWtM1Dlqg+d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784803; c=relaxed/simple;
-	bh=xwH6NHyWOYm3/+XwPaffOt8K6KxguMLtHaMCm+e+wtM=;
+	s=arc-20240116; t=1790784804; c=relaxed/simple;
+	bh=ZqUx+1X9maS7NQV15Tcx83HYBWpXGEqGUBgBDpZqFiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwPropgwmv7F1xzHpRHbapiRSh3IoJljbB1fyBHcJsf9maHNJzgWcDeeDs7GgLZz8O6I1PVnbrz0chlQGQe/pwggUQSd8FXWnRy0GftxtlQHT5lx+cMK6cj+Z6uqTdf/Q/ZFLkkr8xj/xdyLvMtUbfLlgxC3BH7PHXHXC09v0ZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb3fu6o0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ITh7uc4cFI6h9ORTGwXyS6LJKygwHQLI5RAIJxvPrYm1Cn0uBrqVpcqE2B2cmOGaSbM3QTytHG3VfCDG6Ac2OSWoKcgBBOtT9HS5dc5LO3YJrgheEoGnJD1/lIu0aedRIzcRBHPvOaL6SqPJlrQTuwM14WJwnhGroS/A7WJUbN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8UveJlY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb3fu6o0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6091F000FF;
-	Wed, 30 Sep 2026 16:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8UveJlY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6271F00899;
+	Wed, 30 Sep 2026 16:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784796;
-	bh=xr5Gu9aRcyqWCOnKYw6B4HLv9zWiAz97sVq3+Ra+OgY=;
+	s=korg; t=1790784799;
+	bh=GBUwqrZCiIONuv09dd+nQ6bgmgiqRU11xXPeQOQwQkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cb3fu6o0/UAXh4cwpJgYKYNynm5WJfb8MPn+Xkn/fKtqA8CjWFBxahUsjn7TKd8HH
-	 56Ie1CuQaQiCel1u/1SgZ27g4XC5Hy6CKToiogpG7ad/VawtXh6kx64Th0yQev8VMB
-	 zNPTgMp9b8LVL/cDOizuh0M4ybR3dtbaipcsGHdw=
+	b=x8UveJlYjsNTkW+Wh/AF4/LcIQE47kBYIg7y2mVKiIc0FrGerqUUcC4E0+qvsWY7m
+	 6yVtDJU5MfAi+Gi0OiGr3GcSnN7cuHZMIIvTXzT6d17Zsv8gK6Pr4cUMbz0F5PfOOZ
+	 lH6lQoXSeoyMQ07zNBNFS99OmDlCuBwzMPXlQVTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Madhavender Singh <madhav@disroot.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 255/982] wifi: cfg80211: validate rx/tx MLME callback frame lengths before access
-Date: Wed, 30 Sep 2026 17:16:31 +0200
-Message-ID: <20260930152422.272963143@linuxfoundation.org>
+Subject: [PATCH 6.1 282/982] ALSA: hda/realtek: Add mute LED quirk for HP Laptop 14s-dr1xxx
+Date: Wed, 30 Sep 2026 17:16:58 +0200
+Message-ID: <20260930152422.856544002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,129 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Madhavender Singh <madhav@disroot.org>
 
-[ Upstream commit d5e4586546974179feca305a94e07fac3e9727fe ]
+[ Upstream commit bf4fc9f33ec21595143132a3e7fb8b5d2c2261cd ]
 
-cfg80211_rx_mlme_mgmt() and cfg80211_tx_mlme_mgmt() call tracepoints
-before rejecting frames shorter than the frame-control field. After
-that, they only require len >= 2 before dispatching into subtype
-handlers that assume their fixed fields are present.
+This laptop with an ALC236 codec requires the
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
+fixup for its mute LED to function correctly.
 
-The frames that trip this are not shorter than 2 bytes; they are short
-relative to their subtype. mwifiex is a concrete in-tree example on the
-length side: mwifiex_process_mgmt_packet() only requires a 4-address
-ieee80211_hdr plus the 2-byte firmware length prefix before handing the
-frame to cfg80211_rx_mlme_mgmt(). After stripping the length prefix and
-removing addr4, pkt_len can be exactly 24: a bare 3-address management
-header with no reason-code body. The existing WARN_ON(len < 2) does not
-fire on such a frame, and cfg80211_process_deauth() then reads
-u.deauth.reason_code as a two-byte access starting at offset 24,
-immediately past the 24-byte buffer.
+Add the subsystem ID 0x103c:0x86c8 to the quirk table to apply this
+fixup.
 
-Add a frame-control length gate, then validate each subtype's minimum
-frame size in an if/else-if chain that mirrors the dispatch logic. Trace
-only after the frame is known to be well-formed.
-
-Side effects of this change:
- - The WARN_ON(len < 2) is dropped. It only guarded the frame_control
-   read, never the subtype fixed fields, and it does not fire on the
-   frames that actually trigger the out-of-bounds read (which are >= 2).
-   The len >= 2 check is kept as the guard before dereferencing
-   frame_control, but without the warning: these are exported callbacks
-   and a malformed frame from a driver should be dropped silently rather
-   than backtraced.
- - cfg80211_tx_mlme_mgmt() previously routed every non-deauth subtype
-   through disassociation handling; it now silently ignores unrecognised
-   subtypes.
-
-Assisted-by: Codex:gpt-5.5
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260707025336.22557-1-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Madhavender Singh <madhav@disroot.org>
+Link: https://patch.msgid.link/20260723104736.23386-1-madhav@disroot.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/mlme.c | 45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index 4ba97fdbf724d..3cc0026f378be 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -158,19 +158,35 @@ void cfg80211_rx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len)
- {
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
- 	struct ieee80211_mgmt *mgmt = (void *)buf;
-+	__le16 fc;
- 
- 	ASSERT_WDEV_LOCK(wdev);
- 
--	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
-+	if (len < sizeof(fc))
-+		return;
-+
-+	fc = mgmt->frame_control;
- 
--	if (WARN_ON(len < 2))
-+	if (ieee80211_is_auth(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.auth.status_code))
-+			return;
-+	} else if (ieee80211_is_deauth(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
-+			return;
-+	} else if (ieee80211_is_disassoc(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
-+			return;
-+	} else {
- 		return;
-+	}
-+
-+	trace_cfg80211_rx_mlme_mgmt(dev, buf, len);
- 
--	if (ieee80211_is_auth(mgmt->frame_control))
-+	if (ieee80211_is_auth(fc))
- 		cfg80211_process_auth(wdev, buf, len);
--	else if (ieee80211_is_deauth(mgmt->frame_control))
-+	else if (ieee80211_is_deauth(fc))
- 		cfg80211_process_deauth(wdev, buf, len, false);
--	else if (ieee80211_is_disassoc(mgmt->frame_control))
-+	else
- 		cfg80211_process_disassoc(wdev, buf, len, false);
- }
- EXPORT_SYMBOL(cfg80211_rx_mlme_mgmt);
-@@ -223,15 +239,28 @@ void cfg80211_tx_mlme_mgmt(struct net_device *dev, const u8 *buf, size_t len,
- {
- 	struct wireless_dev *wdev = dev->ieee80211_ptr;
- 	struct ieee80211_mgmt *mgmt = (void *)buf;
-+	__le16 fc;
- 
- 	ASSERT_WDEV_LOCK(wdev);
- 
--	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
-+	if (len < sizeof(fc))
-+		return;
- 
--	if (WARN_ON(len < 2))
-+	fc = mgmt->frame_control;
-+
-+	if (ieee80211_is_deauth(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
-+			return;
-+	} else if (ieee80211_is_disassoc(fc)) {
-+		if (len < offsetofend(struct ieee80211_mgmt, u.disassoc.reason_code))
-+			return;
-+	} else {
- 		return;
-+	}
-+
-+	trace_cfg80211_tx_mlme_mgmt(dev, buf, len, reconnect);
- 
--	if (ieee80211_is_deauth(mgmt->frame_control))
-+	if (ieee80211_is_deauth(fc))
- 		cfg80211_process_deauth(wdev, buf, len, reconnect);
- 	else
- 		cfg80211_process_disassoc(wdev, buf, len, reconnect);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index c2b941bf338db..5382e6036cbb5 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9933,6 +9933,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
++	SND_PCI_QUIRK(0x103c, 0x86c8, "HP Laptop 14s-dr1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
 -- 
 2.53.0
 
