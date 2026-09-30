@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6158350AC0D;
-	Wed, 30 Sep 2026 17:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3789E5172CF;
+	Wed, 30 Sep 2026 17:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787968; cv=none; b=Mn+ZL0ZZYgE2v4+1jihBSm/n1ArSta8CocGU35qlJPh7157ss5//364k6bLK2CjUUvdDb2VaO3apJrGhrvNw8Xp7/Y2PJz8VwRR9bLuNoSuJSmo0uHEqOM4hRiDpIv84waaJwxP6RSV5gqkHtVxEZvsea2k/ZFsyyFDdp/7uZkI=
+	t=1790787971; cv=none; b=k5vefYKNkOi/5516KGy4nrYzWsraJgTKRhC1FJ1UtO85/84lqN/KgU9eaRCNaZbgVRF/6r33Fd7Q+lMlha8ORhxtBjbhYpNuPt8KvqraFgwukmY8h91EXHUm0dvjWxTTdLkzebeapJvf5rSmRQeU8gPXqVBOaOcTUeQ9DdnK+/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787968; c=relaxed/simple;
-	bh=YVRwFhnvXVOJwmiRCFBZaLArq2FC4tJRYMjPMtx2Hq8=;
+	s=arc-20240116; t=1790787971; c=relaxed/simple;
+	bh=TU75L2+nKl5TngsBxTk6Xjzys3uUa171SKkxbMX/ulk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfOop8skkEY7KCVPKxCRLeyA55GK1+FzcDB3Smiq3ZeRMBpMCYJbL2Ut9GgLwmDY9sruGbvm7io2vaHdXr1xpjlcDLDGZStDelPvfwB32tMWJBBQkRry7UJcSDljAHH3GZRcuGSBFXSDAp3bZV++H8O5Aba2AAGGk2YdY/Frj/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/Cm5UZ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABfCL0gvbadt97x87ia3EZhsTCJu/zLy8MUX6i4lKKugianSB7A60MDRjmxNdgkP0rfWfAfCyBeo4N1xEk/QDj8WuOaKEi0bSjYzhGwO7LIPkz5N5ERnTleosXG+nFGGGgm9rhtRFkwI4cdrvH9TI/tFqDt8bycxvaT6uaYh01M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThP5jAqX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/Cm5UZ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8A11F000FF;
-	Wed, 30 Sep 2026 17:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThP5jAqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913A61F000FF;
+	Wed, 30 Sep 2026 17:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787967;
-	bh=ecV1yhl/7Mo1aaWd7JCMbbBz2eNXYC5LuQXS7fD6fJ8=;
+	s=korg; t=1790787970;
+	bh=Ig7Wc0ZY7OkDYCNpz98LVm+dbEjxrl+5yKto2izpda0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/Cm5UZ32udkQsccrIn9pMqrxbgJXJHJLYTGR1usk+DFp4YYNmD+NWuumO7NCie0B
-	 /MeQdO26UFxlc39qg5KqL6s+WfUmD+d0WDQ+X4WlbaPwT+bK3iBn3jzrLVFL4AF+qB
-	 CGWNmZIO5AhiQ1O6c5KXMhhL1H6bCMMF54JUNHd8=
+	b=ThP5jAqXmxr7r5w0Rh+JeDCTp+nqxbBd1Pgx3cy3fv/RynBdPsAGd7M01mCGNl0y6
+	 pxHtp4W+haaITtOWUQi9UNoX41Egmm6FoNIHBOQgcDWjSqUYVrpV1xTyo4jYmpARyo
+	 Y++Hl+puoxNbrAO64GNB3TmjC2vjUEBpwZuhe4Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 417/457] xfs: fix attr fork block count checks in xrep_inode_blockcounts
-Date: Wed, 30 Sep 2026 17:28:42 +0200
-Message-ID: <20260930152354.985013167@linuxfoundation.org>
+Subject: [PATCH 7.2 418/457] xfs: release orphanage dir inode if chown fails
+Date: Wed, 30 Sep 2026 17:28:43 +0200
+Message-ID: <20260930152355.007152067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,36 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit bb991b7f79dd34cc5f24db0f736bf75630c970e7 upstream.
+commit 1c32cdc986467eaffeedb6c5334852809555b82d upstream.
 
-LOLLM points out that a file has an attr fork, it will call
-xchk_inode_count_blocks to set @ablocks to the number of fsblocks mapped
-by the attr fork; but then it'll compare @blocks (aka the count of
-fsblocks mapped by the data fork).  We already checked that and we never
-do anything with @acount, so I think this is clearly a bug.  Fix the
-comparison.
+LOLLM points out that we leak the igrab'd reference to the orphanage
+directory inode if chowning it fails.  Fix that.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: 2d295fe65776d1 ("xfs: repair inode records")
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 1e58a8ccf2597c ("xfs: move orphan files to the orphanage")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/inode_repair.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/orphanage.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/inode_repair.c
-+++ b/fs/xfs/scrub/inode_repair.c
-@@ -1702,7 +1702,7 @@ xrep_inode_blockcounts(
- 				&acount);
- 		if (error)
- 			return error;
--		if (count >= sc->mp->m_sb.sb_dblocks)
-+		if (acount >= sc->mp->m_sb.sb_dblocks)
- 			return -EFSCORRUPTED;
- 		error = xrep_ino_ensure_extent_count(sc, XFS_ATTR_FORK,
- 				nextents);
+--- a/fs/xfs/scrub/orphanage.c
++++ b/fs/xfs/scrub/orphanage.c
+@@ -192,12 +192,16 @@ xrep_orphanage_create(
+ 	/* Make sure the orphanage is owned by root. */
+ 	error = xrep_chown_orphanage(sc, XFS_I(orphanage_inode));
+ 	if (error)
+-		goto out_dput_orphanage;
++		goto out_rele_orphanage;
+ 
+ 	/* Stash the reference for later and bail out. */
+ 	sc->orphanage = XFS_I(orphanage_inode);
+ 	sc->orphanage_ilock_flags = 0;
++	orphanage_inode = NULL;
+ 
++out_rele_orphanage:
++	if (orphanage_inode)
++		xchk_irele(sc, XFS_I(orphanage_inode));
+ out_dput_orphanage:
+ 	end_creating(orphanage_dentry);
+ out_dput_root:
 
 
