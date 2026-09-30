@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B28503905;
-	Wed, 30 Sep 2026 15:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F01502D5B;
+	Wed, 30 Sep 2026 15:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783475; cv=none; b=GIV3ki9xDKvDX8motcsI/bX7BxpQKEN4rfXXlvN+N4Xs3gGV5vrPKCU2CNKoR81bBT/89VOSd3a4GbnZphVIpuibGm3TxIYCs4UJ3h40Z3MD5clQGBlnwH5ce5ugVcL0gj4il0TPhbMs5RaifdgoZWeTWP2zt+A2Wrh/6L0Ih0U=
+	t=1790783479; cv=none; b=YcDlMDA4WX0YZu/pVAGgUuudRnjaM8VQZQWcHuBFo3QbkEVG5C6b6vz1Tj4JzQnSOkTL2aRKYUZi6VYLocJ6c4yKLETkO//hgh+ucDoLpbhq1uP/aX+CRJVhu2ehcC43P4+YQuz766fzvrNpBd/LJio+wNn4XhuMOU4T8zr4PNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783475; c=relaxed/simple;
-	bh=YpwJqu4RnSkFphr6zQinDGaRqCt4YnMAYrrRCbEle5Y=;
+	s=arc-20240116; t=1790783479; c=relaxed/simple;
+	bh=MtHUqi2wgTv/j/cS+QoKDDLSWMdPqzukmSfdYVZ/uxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYUo6Jo22UlM52NlB9ghp0F2R+E18AgTL5rPZ+CYWDVcTjraZpPCUcgZqLZ2YEk/qy12+7XuGyCAzjrm0Dac9+TVJiSCSUoLlgnMBcyvltGyriTzysMbZt1ByX3LSzjq3LRtcHEQ/LW+VNGmXxQtntGCd7+zlIHZqApSv1vmqHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQWAG2MO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d8d4T6BWDr2RjEr92ZTAw8Uag4UpFf3fll1+DLhUqF5XzD5ERh+6sumHp0Zi+gi3bLIJGXT1Mj1ZtKpUGFW8RprWKxzwXoh1hHOh3aP7gcxR4L1wmtIS9euwlIDmJNUHzLh3dn0ZDle1tL8EEF+pGL53Mwa8OeYe4WpLz0fPlNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8AgLBg8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQWAG2MO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BDD1F000FF;
-	Wed, 30 Sep 2026 15:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8AgLBg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2CB1F00898;
+	Wed, 30 Sep 2026 15:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783469;
-	bh=c4PeONNek0WN4/AuG9iTyP7QIYNGekbuFC/Jj6/08sM=;
+	s=korg; t=1790783475;
+	bh=2tx8QPI0NfPSS0+Qr58P+WbrrS46TI3eo/+4719Rl3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zQWAG2MOjxc8V87EGuakoVRKdaJtgVexU4HRy4KiWPN3us2WoBuQwv0waNCF9q+ti
-	 rabWLxdXnEdbpqVoL6bdHf/holKEw5U9b53phgiWn3N2wg94kupYddhaE91T5TiAPH
-	 NqtYgac60QvvKS/WLndydjqYkH5iRQWOnv8bhkYM=
+	b=X8AgLBg8UMA3wijyYG6/OkDZ9PYS2Xe37wHR3YSiLXqcvhLzeAtSrbExUB/nDUc7q
+	 cwji+XTkxJClSoMCB8RsuVMIuGoNIsTUUIh1dwLJiuK554/1yEU6l915OuEa/xUDEf
+	 HWfF9twGKbTBiQzU52I2oyTjEi/IxkndDf0QA6eI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yige Jiang <yigejiang86@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 411/595] net: netsec: fix device_node reference leak on phy_np
-Date: Wed, 30 Sep 2026 17:25:04 +0200
-Message-ID: <20260930152356.517748435@linuxfoundation.org>
+Subject: [PATCH 5.10 413/595] net: ethernet: cortina: Ack RX overrun interrupt correctly
+Date: Wed, 30 Sep 2026 17:25:06 +0200
+Message-ID: <20260930152356.561513757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,70 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yige Jiang <yigejiang86@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 5ae916fabca141b79b32e2e57f3c915c0f1e1b2e ]
+[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
 
-netsec_of_probe() takes a reference on the PHY device_node with
-of_parse_phandle() and stores it in priv->phy_np, but the driver never
-drops it.  One device_node reference is leaked per probe, on the success
-path as well as on every error path reached after netsec_of_probe().
+The RX overrun interrupt is reported in interrupt status register 4, but
+gmac_irq() acknowledges it using the RX descriptor error bit from status
+register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
+the shift leaves no bit in the 32-bit register.
 
-Neither consumer takes ownership.  of_mdio_parse_addr() is a static
-inline taking a const struct device_node * that only reads the "reg"
-property.  of_phy_connect() borrows as well: of_phy_get_and_connect() in
-drivers/net/mdio/of_mdio.c brackets its own call with of_node_get() at
-:364 and of_node_put() at :373, which would be a double put if
-of_phy_connect() consumed the reference.
+Acknowledge the same per-port RX overrun bit that was detected.
 
-The node is still in use at netsec_netdev_open() time, where it is
-passed to of_phy_connect(), so it has device lifetime.  Release it at
-the probe error label, which every failure path after the acquire
-funnels through, and in netsec_remove().  Both releases precede
-free_netdev(), since priv is netdev_priv(ndev).  The ACPI probe path
-leaves priv->phy_np NULL and of_node_put(NULL) is a no-op.
-
-There is no end-user visible symptom on currently supported platforms:
-a device_node is only freed once OF_DYNAMIC is enabled and the node has
-been detached, so on a static device tree the imbalance is inert.  It is
-observable as a refcount that grows across bind/unbind cycles, and would
-matter under device tree overlays.
-
-Found by static analysis of reference acquire/release pairing rather
-than from a runtime report.  No reproducer was produced and the change
-has not been runtime tested; it is compile-tested only (arm64,
-CONFIG_SNI_NETSEC=m via COMPILE_TEST).
-
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Yige Jiang <yigejiang86@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260913064102.37452-1-yigejiang86@gmail.com
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/cortina/gemini.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index bb86315581818..c3bd0370cdfc2 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -2142,6 +2142,7 @@ static int netsec_probe(struct platform_device *pdev)
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- free_ndev:
-+	of_node_put(priv->phy_np);
- 	free_netdev(ndev);
- 	dev_err(&pdev->dev, "init failed\n");
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 0d7101b21f80f..c66d2ea4e5411 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1768,7 +1768,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
  
-@@ -2159,6 +2160,7 @@ static int netsec_remove(struct platform_device *pdev)
- 	netif_napi_del(&priv->napi);
- 
- 	pm_runtime_disable(&pdev->dev);
-+	of_node_put(priv->phy_np);
- 	free_netdev(priv->ndev);
- 
- 	return 0;
+ 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
+ 		spin_lock(&geth->irq_lock);
+-		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
++		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
+ 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
+ 		u64_stats_update_begin(&port->ir_stats_syncp);
+ 		++port->stats.rx_fifo_errors;
 -- 
 2.53.0
 
