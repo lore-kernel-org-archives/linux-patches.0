@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAA63C1986;
-	Wed, 30 Sep 2026 19:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9AE3C09F5;
+	Wed, 30 Sep 2026 19:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795072; cv=none; b=iouBgeN6OrRZLXv6sS98CCVa1IB1sFqCUk4VljSqpKKegbZy4uPtxbtKcZovyse83eiXr1VNWZNSvJxzAR4zj5tLZqKyzZmlH0nj6/BYlPS24YW3gBh4NwKmb+5fRiXTDBRtC9uzfET3kTq8tFIqyNKNffGjYeK4CO3uV0mMPTc=
+	t=1790795076; cv=none; b=uNjvOLLy7pM7xiSoF4FEOoawzkcT5qnCJwP17UVZiSPrmQ4RBp+GCuTHG81PSKdLn4FYWgG9ZTLnDC7nNS90e3NFjEK/C9iUkFNhfk+AzB/kJA8pLMVV5R15Vc1LiObzFdeRc8EEbp7DjIg2AOitZKCw3apxd2JrZQXELi0gv7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795072; c=relaxed/simple;
-	bh=wZcM03LOCCxFHkDh1yqpqWGUy+A1MhKu9uu8QiJsAiA=;
+	s=arc-20240116; t=1790795076; c=relaxed/simple;
+	bh=Ms3WaTg1MiF92IiMj4fu5mm/MFLOjPUe67VGckNJ10I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URAf5haXrt2bjSq8cHHySdDWyZdoRtzrHvcF3OoIAxtkG4Q9NkVmf3Op8/BQULyJz2DfbNRDzS+fczX53MA5NOCipEflQcgbZlTO8bdBQVzsDzZNugFPbRAGL8MBtJ1VCZ1xJMSASmAU/2qdXJD+dQbKsEFPnNu92eeYqyGMtvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zz+/Swvt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HSdg4+v1EyPwLz4mJRMWfC+MfLcOq3BycPgoe0B/NfyTCHiT2Jhv7t6ZHqJdbQC3mr6jvOHPYkwMgJ4y6G5m8F4ZPRRbEjv1Bc884BmbJN4pbBdH8EVo2pfqO4Fe+WGEyiZX6kmjHe4ZEbAKAxL8wEgbI/7clkzHZfKkcOIvO/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABbzgfno; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zz+/Swvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77921F00898;
-	Wed, 30 Sep 2026 19:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABbzgfno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C751F0089E;
+	Wed, 30 Sep 2026 19:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795071;
-	bh=e8KyPURpzVqT7T2uiLbUVcbEEpGCSmVz1ZATIMh0OLQ=;
+	s=korg; t=1790795074;
+	bh=xhvdAeYHom5c2XUGRLvO84yp6BDEjf0EkD5AGftCagw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zz+/Swvt8CGe5cQuObrjA802U2XGXsI7iwJ59j423L9R14issrDyUXOmwxsZkqZi2
-	 4FId3wrZ+RXmPGfMaalkF6LRipN5OYtTgF3ExaRMCmpbqIUu+znzWmrqN3Au2xm6xk
-	 RcZHL0WZCTONmcUE1Vy/jlbChrSJCCsc4mzIUxYM=
+	b=ABbzgfnoonUFM3goiBuh55Dq9Q1mRXGMalfW/YGd5PryGDBEYvrWdtzNP1mAgHQdK
+	 wWHvZe/xEsQ5GwmfripG/wskegMMymsWqrkXXbE0cuJCUkaFBPuRaQ4u6BO/dhfOPQ
+	 zIJQoTI9ksTzYC33aT4i47noio4bT11jiKtQKd7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0434/1193] s390/boot: Fix physical memory search range
-Date: Wed, 30 Sep 2026 17:18:38 +0200
-Message-ID: <20260930152443.833418666@linuxfoundation.org>
+Subject: [PATCH 6.6 0435/1193] ASoC: amd: renoir: fix disable_pdm_interrupts() to clear mask bits
+Date: Wed, 30 Sep 2026 17:18:39 +0200
+Message-ID: <20260930152443.854560229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit a0c798ed4103316c23938bdf625af364fbd38016 ]
+[ Upstream commit 0c06c4ce0206290c9a934a1e7196aaa86adfe018 ]
 
-search_mem_end() calculates the number of 1MB blocks with a signed int
-literal. CONFIG_MAX_PHYSMEM_BITS values of 51 and above either overflow
-the signed int or shift beyond its width. This produces an invalid search
-range when the binary-search memory detection fallback is used.
+disable_pdm_interrupts() uses |= ~PDM_DMA_INTR_MASK which sets all
+bits except the PDM DMA interrupt bit instead of clearing only the
+PDM DMA interrupt bit. Use &= ~PDM_DMA_INTR_MASK to clear only the
+target bit.
 
-Use an unsigned long literal so the full supported physical address range
-is represented.
-
-Fixes: 54c57795e848 ("s390/mem_detect: replace tprot loop with binary search")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: f621a3676d3f ("ASoC: amd: add ACP3x PDM platform driver")
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260824063507.483784-1-wangdich9700@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/physmem_info.c | 2 +-
+ sound/soc/amd/renoir/acp3x-pdm-dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/boot/physmem_info.c b/arch/s390/boot/physmem_info.c
-index 0cf79826eef99..8b78d30212867 100644
---- a/arch/s390/boot/physmem_info.c
-+++ b/arch/s390/boot/physmem_info.c
-@@ -140,7 +140,7 @@ static int tprot(unsigned long addr)
+diff --git a/sound/soc/amd/renoir/acp3x-pdm-dma.c b/sound/soc/amd/renoir/acp3x-pdm-dma.c
+index 39223ff37b14e..c7c4d0829564c 100644
+--- a/sound/soc/amd/renoir/acp3x-pdm-dma.c
++++ b/sound/soc/amd/renoir/acp3x-pdm-dma.c
+@@ -104,7 +104,7 @@ static void disable_pdm_interrupts(void __iomem *acp_base)
+ 	u32 ext_int_ctrl;
  
- static unsigned long search_mem_end(void)
- {
--	unsigned long range = 1 << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
-+	unsigned long range = 1UL << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
- 	unsigned long offset = 0;
- 	unsigned long pivot;
+ 	ext_int_ctrl = rn_readl(acp_base + ACP_EXTERNAL_INTR_CNTL);
+-	ext_int_ctrl |= ~PDM_DMA_INTR_MASK;
++	ext_int_ctrl &= ~PDM_DMA_INTR_MASK;
+ 	rn_writel(ext_int_ctrl, acp_base + ACP_EXTERNAL_INTR_CNTL);
+ }
  
 -- 
 2.53.0
