@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E236751EE0E;
-	Wed, 30 Sep 2026 18:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B805B51C056;
+	Wed, 30 Sep 2026 18:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792873; cv=none; b=pxibnnz6Fo38xvMA1jAES1pNai5obty8+67EcWjBIsSwGjWh74fxqFP4cXmHn9XBS4SArOBXQ8+ii6WCWWlyALCa+2QqEy3KOymC0Tska1iWq9HJIgdp5oc1W17aDFOf5UErun0jk6gxAYPajte7+NfFn+le1D0bS3T6uHPjsyw=
+	t=1790792875; cv=none; b=HV+0OsQHToH2jmXEe4pGzvVX/MjrKWrowDkdpOasaD11KNS90skryQFF7AWAPa4i4fmi1RSOPkQXJokZ0anNh0IBA3XR5U5foyY1rdFVdwBxXF6hx2yTmI8jG+r27guEDjMwPKUB59rDrEpgrcs2aolvEOSCtxKthTRs3iMFBVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792873; c=relaxed/simple;
-	bh=kKfYqoGO/Rfx/ZH4sG6k4AprDvlS0SgFhHflNPYTpB8=;
+	s=arc-20240116; t=1790792875; c=relaxed/simple;
+	bh=khaO9ifMdEq17+l7wnIlFzioe5/qN/gjmRpZMewph54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZO0EKHm+trDmZf2tHCvU893Vw1SQrYgRVREd95cdUbNlN5DOxB/a928DEdVVJg/apNz/7b/ZbQIlbKF0DKz88m8ujD11jRntNvlotG1CV/7slhZkGjYvffqtxXBOJILqzC891x3yti0jYLMWMTcOcaEmOIzXdiebwIxXtcyymg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9diufdr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e4tCA8h0Asq7uR2f22TKz7++PeZLb5zbIaKaEt9D5ZT8K4pBUPccBuXoqS/8vrIm20AvLNMXblXa8QIfSp13vUsrM4CcNhIuTGuOb48/qx4df8y9EoIpepFqoWw/KDsUmom9g5RZefv5vEhLe/vVwxACIBiChmvyNFt5CaEVW3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb9egTiD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9diufdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482951F000FF;
-	Wed, 30 Sep 2026 18:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb9egTiD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBDB1F000FF;
+	Wed, 30 Sep 2026 18:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792871;
-	bh=zIG3E3b4QcwWs0yyMN2+cZZJb75BfwLPIFwQuCEwySw=;
+	s=korg; t=1790792874;
+	bh=jXJGFlZgVHN73cdt00z+lV1W1F/z/0MIls+WImP4+qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p9diufdrlQxkWQ5zJjYWSpnUJD2cuYiwuNweLPRlRXEQpvKVjAOWVlSHHrydd+qhz
-	 8sLx7K6pxAZrO68QSxyeRZ84omcftwiL2SF6pK/HtUTGI5dDz0GOtjo7xU+YYBa3oR
-	 0JGpXBvozmW1CwZT50XM7pd2+54ELQqVN3FTSx8Y=
+	b=mb9egTiDPMt+F4a22D8wXmYvW/C/D7TCSKd/VYeqDRhKX6K/FUbezRvmOXg/a5znR
+	 fB7de+DBIQMXTMnRsrghm+CZl/lWAf6WM8gAOsM/CCDjOA3vrGfYkAAhFc39rbMYyA
+	 Y/kf9Iow0lcD51doHv+GlvfgsBAfXWBmUL/zM4AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 055/395] fs: avoid repeated scans in evict_inodes()
-Date: Wed, 30 Sep 2026 17:25:17 +0200
-Message-ID: <20260930152341.830093758@linuxfoundation.org>
+Subject: [PATCH 6.18 029/395] RISC-V: KVM: Preserve firmware counter value across stop/start
+Date: Wed, 30 Sep 2026 17:24:51 +0200
+Message-ID: <20260930152341.251058640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,107 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-[ Upstream commit 7459c021874246c196f397686e100702f059b9e7 ]
+[ Upstream commit 8b3fd1a8b305321171602bfa7c41212441cf69e4 ]
 
-We observed hung tasks when users attempted to unmount a filesystem
-after its disk had been removed while still in use. During device
-removal, fs_bdev_mark_dead() calls evict_inodes() while holding s_umount.
+Firmware events accumulate in kvpmu->fw_event[].value while running,
+but counter stop only clears fw_event[].started without saving the
+value back to pmc->counter_val. A subsequent counter start without
+SBI_PMU_START_FLAG_SET_INIT_VALUE reloads the stale counter_val into
+fw_event[].value, losing all events counted so far.
 
-Each time evict_inodes() drops s_inode_list_lock to reschedule, it
-restarts the walk from the head of s_inodes. With many referenced inodes
-at the head of the list, these restarts repeatedly scan the same inodes
-without reclaiming them. This can keep s_umount held for a long time,
-blocking concurrent umount attempts and triggering hung-task reports.
+Save fw_event[].value into counter_val when actually stopping a
+running counter, and remove the now redundant synchronization from
+the snapshot path.
 
-Keep the current inode, already marked I_FREEING, out of the disposal
-batch until s_inode_list_lock is reacquired. Resume the walk from this
-inode and dispose of it in a later batch or at the end of the walk.
-
-The zero-refcount and state checks under i_lock allow this walker to
-claim the inode by setting I_FREEING and removing it from the LRU.
-Other reclaimers skip the inode, leaving this walker responsible for
-eviction. Only evict() removes it from s_inodes, so keeping it out of
-the disposal batch ensures that it remains on the list while the lock
-is dropped. After reacquiring the lock, reading its current next pointer
-accounts for concurrent removal of following inodes.
-
-The existing inode lifetime rules prohibit acquiring a reference to an
-inode marked I_FREEING or I_WILL_FREE. __iget() requires its caller to
-hold i_lock and establish that taking a reference is valid. Inode lookup
-and igrab() check these flags under i_lock when acquiring a reference
-from zero. ihold() requires an existing reference, which would keep
-i_count nonzero and prevent this walker from claiming the inode. These
-rules already allow iput_final() and the inode shrinker to release
-i_lock after setting I_FREEING and before eviction completes.
-
-A temporary __iget() reference would also keep the inode on the list,
-but its release must preserve last-reference handling. Another user can
-acquire a reference, update lazy timestamps and drop its reference while
-the pin is held. If the pin becomes the last reference, dropping it with
-atomic_dec_and_test() and evicting directly bypasses iput()'s lazytime
-handling and can lose those timestamp updates.
-
-Releasing the pin with iput() preserves that handling, but does not
-guarantee eviction. fs_bdev_mark_dead() runs with SB_ACTIVE set, so iput()
-may retain the inode in cache, whereas evict_inodes() must evict eligible
-zero-reference inodes. The inode may also have been freed when iput()
-returns, so the walker cannot then use it to force eviction. Using
-I_FREEING preserves the existing eviction behavior without introducing
-an additional last-reference transition.
-
-The xfstests auto group passed on ext4 and XFS with known unrelated
-failures excluded. No new issues were observed, and the previously
-reproducible hung task no longer occurs with this patch.
-
-Fixes: ac05fbb40062 ("inode: don't softlockup when evicting inodes")
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20260915044912.3183440-1-sunjunchao@bytedance.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: badc386869e2c ("RISC-V: KVM: Support firmware events")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260825083719.643970-2-suunj1331@gmail.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ arch/riscv/kvm/vcpu_pmu.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index a931126398ced..44891fb7cd436 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -868,7 +868,6 @@ void evict_inodes(struct super_block *sb)
- 	struct inode *inode;
- 	LIST_HEAD(dispose);
+diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
+index ef55089c0c1a6..f3a8fd52d13a5 100644
+--- a/arch/riscv/kvm/vcpu_pmu.c
++++ b/arch/riscv/kvm/vcpu_pmu.c
+@@ -648,10 +648,12 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
+ 				goto out;
+ 			}
  
--again:
- 	spin_lock(&sb->s_inode_list_lock);
- 	list_for_each_entry(inode, &sb->s_inodes, i_sb_list) {
- 		if (icount_read(inode))
-@@ -887,19 +886,19 @@ void evict_inodes(struct super_block *sb)
- 		inode->i_state |= I_FREEING;
- 		inode_lru_list_del(inode);
- 		spin_unlock(&inode->i_lock);
--		list_add(&inode->i_lru, &dispose);
- 
- 		/*
--		 * We can have a ton of inodes to evict at unmount time given
--		 * enough memory, check to see if we need to go to sleep for a
--		 * bit so we don't livelock.
-+		 * Keep this inode out of dispose so it stays on s_inodes while
-+		 * the list lock is dropped. I_FREEING prevents new references
-+		 * and leaves eviction to us, so we can resume the walk from it.
- 		 */
- 		if (need_resched()) {
- 			spin_unlock(&sb->s_inode_list_lock);
- 			cond_resched();
- 			dispose_list(&dispose);
--			goto again;
-+			spin_lock(&sb->s_inode_list_lock);
+-			if (!kvpmu->fw_event[fevent_code].started)
++			if (!kvpmu->fw_event[fevent_code].started) {
+ 				sbiret = SBI_ERR_ALREADY_STOPPED;
+-
+-			kvpmu->fw_event[fevent_code].started = false;
++			} else {
++				kvpmu->fw_event[fevent_code].started = false;
++				pmc->counter_val = kvpmu->fw_event[fevent_code].value;
++			}
+ 		} else if (pmc->perf_event) {
+ 			if (pmc->started) {
+ 				/* Stop counting the counter */
+@@ -669,9 +671,7 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
  		}
-+		list_add(&inode->i_lru, &dispose);
- 	}
- 	spin_unlock(&sb->s_inode_list_lock);
  
+ 		if (snap_flag_set && !sbiret) {
+-			if (pmc->cinfo.type == SBI_PMU_CTR_TYPE_FW)
+-				pmc->counter_val = kvpmu->fw_event[fevent_code].value;
+-			else if (pmc->perf_event)
++			if (pmc->perf_event)
+ 				pmc->counter_val += perf_event_read_value(pmc->perf_event,
+ 									  &enabled, &running);
+ 			/*
 -- 
 2.53.0
 
