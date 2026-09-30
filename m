@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253AB5616CB;
-	Wed, 30 Sep 2026 17:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EF956329B;
+	Wed, 30 Sep 2026 17:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790419; cv=none; b=AYAlG5LrAn1E1M1DAJyuPySeC7Z84Tc5wJjwlC/jx3IBG7p3GtnbTW/1z2ISlp+E/MIXp3xTuwfZaw5jVCdHHdIB+d1Yq25QcAYGxvWfKwY9QjlLn8Q4/QUZj4Wy0nvVYUU/dDpACa19i4vhD1yQKy+ELIbXbxxoWxSoEohwfCw=
+	t=1790790422; cv=none; b=mDVNq4WT6xt/RuOkpGc6BNQRXV8TdXrDij443cX5OjrY44TGIelAqeOgC6OySYqvhQnAWl4mU+cVQjZQrzkppn/xjYzo1tS5eCFbys6LSufekg9rx4+1VoD58tX6Dz96ujrrMxEsLD4BVgJK6bXxi3M9XFb+CaGNRL3Z9YeGTcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790419; c=relaxed/simple;
-	bh=WNvyzw9XKajodiFYiE5pX6cTCGAvf9fGaWWlcuVSgOk=;
+	s=arc-20240116; t=1790790422; c=relaxed/simple;
+	bh=TJ9zYuFJOrLKDHv4HnYv+D7urMPIIgviPFAFMGDtVaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9FGqaMf76mExQsxWHHpV5K1C3lN35o/adF+VXQPM9g6EYFR/OSpAXS5zs2SdvJrHB/mVUEAOKkQ7Xz6snJ0vaf6Yn7xoFzqHVEzTUzhUVOTwfwvMojqXck3s7SI3/FhglErAZZMz1oDcuAVK9GgDDF9gtAkZoTwT5+DgXctlMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CW6p0ipw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KoMg1uJOltwGde8Byv9/LoRIIBPxszte3X32t/JA1kurFFD6pYPT+5OUlEqoo7X5jUwdXqAco1Ou9NzecfPnfeCdnNV/5Zlw+GM76jURmISQS9kXD2BDN53Zw/lFC5QVb1/kJLr6TMIko1xyfShwy4Rxbo/x+EaNZx6DttMk53k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef3TaLSB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CW6p0ipw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3391B1F000FF;
-	Wed, 30 Sep 2026 17:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef3TaLSB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108001F000FF;
+	Wed, 30 Sep 2026 17:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790417;
-	bh=L5azczJS5BZp0La/fpG9Dt80cbaCGDlk8+HpEP2HGyg=;
+	s=korg; t=1790790420;
+	bh=nQ4bOp2PmdNCHLISNTw7v1QbmGnbFcuLinMgiSI6xEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CW6p0ipwHb1fArJKiUqCE0ATs0RTrZCu+PuUUFyPWgDIJe0GHJyochwrEdRTphaXi
-	 4x2rHLz/fYxUeLjWmc2f1C3+Km1EiOPKsQBFCwAKNWvMfgLB/8KFmlb/Bx1tz4q2hv
-	 GksaoJVxcn8px+TLtojAKVRP8xkLKYyqmDW9a5TI=
+	b=ef3TaLSBkWvbF8hUOlZ3hJRr2X780liWdLCvci22joCVMDhOMNe8y5A3Td2/UMLNp
+	 mtkKFtQnlAJ4gqCiRRRKnjFuVvg1bQ2loZfy6NqQr46xdsAI266wsLUAWejlbXDdcV
+	 AChWXu4MrDkBF3dNesDCLy+4rrFrHUWHl7MTtWBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 820/877] bna: prevent IOC timer rearm during teardown
-Date: Wed, 30 Sep 2026 17:28:51 +0200
-Message-ID: <20260930152432.423354742@linuxfoundation.org>
+Subject: [PATCH 6.12 821/877] i2c: qcom-geni: Fix hardcoded clock index in SE_GENI_CLK_SEL
+Date: Wed, 30 Sep 2026 17:28:52 +0200
+Message-ID: <20260930152432.444233111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,82 +46,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit 77b1718e39e5c9f6956fb60807326af20baf889d ]
+[ Upstream commit cb97bf3d4f91453b881acaf8e9f0cc47bb40b604 ]
 
-bna: prevent IOC timer rearm during teardown
+qcom_geni_i2c_conf() writes a hardcoded 0 to SE_GENI_CLK_SEL, which
+selects an index from the hardware clock performance table. This always
+picks the first table entry regardless of the actual source clock
+configuration. On platforms where the matching entry is not at index 0,
+the wrong source clock divider is active and the I2C bus runs at an
+incorrect frequency.
 
-bnad_pci_remove() and the probe disable_ioceth path call
-timer_delete_sync() for ioc_timer, sem_timer and hb_timer, but not for
-iocpf_timer.  bnad_iocpf_timeout() then takes bnad->bna_lock after
-free_netdev() has freed the struct bnad.
+Use geni_se_clk_freq_match() in geni_i2c_clk_map_idx() to find the
+performance table index for the source clock (32 MHz or 19.2 MHz). Store
+the resolved index in a new clk_idx field in geni_i2c_dev and write it
+to SE_GENI_CLK_SEL instead of the hardcoded 0.
 
-Deleting iocpf_timer last does not fix this.  sem_timer and
-iocpf_timer rearm each other: bnad_iocpf_sem_timeout() can arm
-iocpf_timer, and bnad_iocpf_timeout() arms sem_timer from
-bfa_ioc_hw_sem_get() when the semaphore is busy.
-timer_delete_sync() only waits out its own callback.
-bnad_ioceth_disable() can time out and leave that callback live.
-
-Shut all four IOC timers down with timer_shutdown_sync() on both
-paths, so a later mod_timer() is ignored.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 1d32f7696286 ("bna: IOC failure auto recovery fix")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260922014605.588040-1-mhun512@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ inlined bnad_ioc_timers_shutdown() into the existing teardown functions. ]
+Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: <stable@vger.kernel.org> # v4.19+
+Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260921-i2c-fix-se-clk-conf-v2-1-8b5537ceff2d@oss.qualcomm.com
+[ adapted clock initialization to the older driver’s 19.2 MHz-only table and existing probe path. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/brocade/bna/bnad.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/i2c/busses/i2c-qcom-geni.c |   33 ++++++++++++++++++++++++++++-----
+ 1 file changed, 28 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/brocade/bna/bnad.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad.c
-@@ -3725,9 +3725,11 @@ probe_uninit:
- 	bnad_res_free(bnad, &bnad->mod_res_info[0], BNA_MOD_RES_T_MAX);
- disable_ioceth:
- 	bnad_ioceth_disable(bnad);
--	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	/* The IOC timers rearm one another.  Shut down all of them. */
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
- 	spin_lock_irqsave(&bnad->bna_lock, flags);
- 	bna_uninit(bna);
- 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
-@@ -3768,9 +3770,11 @@ bnad_pci_remove(struct pci_dev *pdev)
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -77,6 +77,8 @@ enum geni_i2c_err_code {
+ #define XFER_TIMEOUT		HZ
+ #define RST_TIMEOUT		HZ
  
- 	mutex_lock(&bnad->conf_mutex);
- 	bnad_ioceth_disable(bnad);
--	del_timer_sync(&bnad->bna.ioceth.ioc.ioc_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.sem_timer);
--	del_timer_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	/* The IOC timers rearm one another.  Shut down all of them. */
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.ioc_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.sem_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.hb_timer);
-+	timer_shutdown_sync(&bnad->bna.ioceth.ioc.iocpf_timer);
- 	spin_lock_irqsave(&bnad->bna_lock, flags);
- 	bna_uninit(bna);
- 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
++#define GENI_SE_CLK_19P2MHZ	19200000UL
++
+ struct geni_i2c_dev {
+ 	struct geni_se se;
+ 	u32 tx_wm;
+@@ -91,6 +93,7 @@ struct geni_i2c_dev {
+ 	struct clk *core_clk;
+ 	u32 clk_freq_out;
+ 	const struct geni_i2c_clk_fld *clk_fld;
++	u32 clk_idx;
+ 	int suspended;
+ 	void *dma_buf;
+ 	size_t xfer_len;
+@@ -157,13 +160,36 @@ static int geni_i2c_clk_map_idx(struct g
+ {
+ 	int i;
+ 	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
++	unsigned long res_freq;
++
++	/*
++	 * Frequency counters are calibrated for a 19.2 MHz source clock
++	 * and are not valid for any multiple of it (e.g. 38.4 MHz).
++	 * Use exact=true and verify res_freq matches req_freq literally
++	 * to reject harmonics that would produce an incorrect I2C frequency.
++	 * ACPI systems have firmware-managed clocks and retain the default index.
++	 */
++	if (!has_acpi_companion(gi2c->se.dev) &&
++	    (geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_19P2MHZ,
++				    &gi2c->clk_idx, &res_freq, true) ||
++	     res_freq != GENI_SE_CLK_19P2MHZ)) {
++		dev_err(gi2c->se.dev,
++			"Unsupported SE source clock: must be exactly 19.2 MHz\n");
++		return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
+ 		if (itr->clk_freq_out == gi2c->clk_freq_out) {
+ 			gi2c->clk_fld = itr;
++			dev_dbg(gi2c->se.dev,
++				"I2C clk selected: freq: %u Hz, clk_idx: %u\n",
++				gi2c->clk_freq_out, gi2c->clk_idx);
+ 			return 0;
+ 		}
+ 	}
++
++	dev_err(gi2c->se.dev, "Unsupported I2C output frequency %u Hz\n", gi2c->clk_freq_out);
++
+ 	return -EINVAL;
+ }
+ 
+@@ -172,7 +198,7 @@ static void qcom_geni_i2c_conf(struct ge
+ 	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
+ 	u32 val;
+ 
+-	writel_relaxed(0, gi2c->se.base + SE_GENI_CLK_SEL);
++	writel_relaxed(gi2c->clk_idx, gi2c->se.base + SE_GENI_CLK_SEL);
+ 
+ 	val = (itr->clk_div << CLK_DIV_SHFT) | SER_CLK_EN;
+ 	writel_relaxed(val, gi2c->se.base + GENI_SER_M_CLK_CFG);
+@@ -809,11 +835,8 @@ static int geni_i2c_probe(struct platfor
+ 		return gi2c->irq;
+ 
+ 	ret = geni_i2c_clk_map_idx(gi2c);
+-	if (ret) {
+-		dev_err(dev, "Invalid clk frequency %d Hz: %d\n",
+-			gi2c->clk_freq_out, ret);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	gi2c->adap.algo = &geni_i2c_algo;
+ 	init_completion(&gi2c->done);
 
 
