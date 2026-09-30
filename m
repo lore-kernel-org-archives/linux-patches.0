@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3DF3515D1;
-	Wed, 30 Sep 2026 16:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CB24A441D;
+	Wed, 30 Sep 2026 16:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785561; cv=none; b=a88btBGJ/LCGSBFxpvdVRzsQSSAx2YrljB20ms+pNsQ4j5JNYfthRDnzOtMVu8gZkaDSUVLnFLpRXr221FKHbDposgbgYeBUMbXh62JmS0x3KtECFhbScqZiTtYh7etDveRocRw6eDUKAU/hoQdqQ7yahu1w4syRoC6OF8NmybM=
+	t=1790785562; cv=none; b=BIhtOVYBXJu+0EgoGs/i3kFH8XkJ1sHAwlaXgTunWWJYH47yWvsj/nUxFDjTKaCS2bEAMVg85cEjlkD1si2IPp097wvYqTqiw9Gj7ayFDbtqOqeVevY9tYi/AbAK3siV/bT+BG3S3VX48XYIKO4FtMgESGMZKwlctiuqbne1A9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785561; c=relaxed/simple;
-	bh=VVhG8MaNtUraN+qHCOLWBQbSRndqDNnyMf8NHTo20HA=;
+	s=arc-20240116; t=1790785562; c=relaxed/simple;
+	bh=105kzi4c1D5WAuCOgd3+wDptwVXyu6eyxafvNGPOb90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmCF5STyhScCVdKCndRB5HLn0JvnhP9S2PUWVf2VDAqrlpjf3YP6l24YRQMcxk1+CFHWOKJCOlC1MkSyJhx5eyo1ovMo1meiucTTuAMi1pgoILFgdQzmcC5ksUlnbQ70i3LmupFSabMrs/n49cWBbtirGJbeT8dZompPJ+55cJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9QhxCkh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nRjLMxqximNdKpx6mJ0zMgdcTBYGnm4uYoewzlpTSwmawH0SnaECKGbf2/IKyZ/PWBd2Od0M7XNhzi61U61/tm+ZX679dSfiFsfMFptI12rdUqB5Uh8fI9HbAC8N0WFyXGCxyM2bH8ObUrG2ruFjHPw589UvPpMYwYP2eRtwSsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yru6iX+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9QhxCkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3572D1F00893;
-	Wed, 30 Sep 2026 16:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yru6iX+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50331F0089F;
+	Wed, 30 Sep 2026 16:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785551;
-	bh=KfOC5EweutJrLDhhIow//8sE+sQgc68NNTLDLy9MJXU=;
+	s=korg; t=1790785557;
+	bh=qUohdxzrN/jA1eRPdP+m9TaDcPsydJmkRG2r35u8MyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9QhxCkhTs5t7YravM3l0usL8cckr85IpmK495otZURm5k5FBphENPmKlXhudHLR0
-	 0/ba5zDwBS8L5xHyXXYapf1CyziyhShPezGu2XIbUFv5CGdx4eKawxB/gJ8xw/GsyV
-	 X6codkZiFenQE2tNDAZpL6/GRmNNaWjK+/PXAZ6s=
+	b=Yru6iX+moZY2LEtelqqoen9MeUUtm84ez423MIegUWx4Nl7V+zayH4DDYU28pG7hi
+	 fesYqg1T1jv+NuhgX3NUG1TCU2ZIrqZ5aJsSS9oUSDbB8+dVJzTftfAkbWZJjHM59x
+	 cg7MtSbIODO1WjSZpauo7q0r6BNKnRz5sOk0uH3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 550/982] Revert "arm64: dts: qcom: sm8450: Fix the PCIe iommu-map entries"
-Date: Wed, 30 Sep 2026 17:21:26 +0200
-Message-ID: <20260930152428.584794670@linuxfoundation.org>
+Subject: [PATCH 6.1 552/982] Revert "arm64: dts: qcom: sm8250: Fix the PCIe iommu-map entries"
+Date: Wed, 30 Sep 2026 17:21:28 +0200
+Message-ID: <20260930152428.628372049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -49,20 +49,20 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 2eec945bc94f35ae597e4ce49bc4f4b581ee82a0.
+This reverts commit 6a8666fc1c629863022899046f8c46f3bb45a68e.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 4911f2be3e7c7..653998706b7ff 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1759,8 +1759,8 @@ pcie0: pci@1c00000 {
- 				      "aggre0",
- 				      "aggre1";
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 7020f32e59d05..fbda1925f8e03 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1850,8 +1850,8 @@ pcie0: pci@1c00000 {
+ 				      "tbu",
+ 				      "ddrss_sf_tbu";
  
 -			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
 -				    <0x100 &apps_smmu 0x1c01 0x0 0x1>;
@@ -71,9 +71,9 @@ index 4911f2be3e7c7..653998706b7ff 100644
  
  			resets = <&gcc GCC_PCIE_0_BCR>;
  			reset-names = "pci";
-@@ -1865,8 +1865,8 @@ pcie1: pci@1c08000 {
- 				      "ddrss_sf_tbu",
- 				      "aggre1";
+@@ -1956,8 +1956,8 @@ pcie1: pci@1c08000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
  
 -			iommu-map = <0x0   &apps_smmu 0x1c80 0x0 0x1>,
 -				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
@@ -81,6 +81,17 @@ index 4911f2be3e7c7..653998706b7ff 100644
 +				    <0x100 &apps_smmu 0x1c81 0x1>;
  
  			resets = <&gcc GCC_PCIE_1_BCR>;
+ 			reset-names = "pci";
+@@ -2064,8 +2064,8 @@ pcie2: pci@1c10000 {
+ 			assigned-clocks = <&gcc GCC_PCIE_2_AUX_CLK>;
+ 			assigned-clock-rates = <19200000>;
+ 
+-			iommu-map = <0x0   &apps_smmu 0x1d00 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1d01 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1d00 0x1>,
++				    <0x100 &apps_smmu 0x1d01 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_2_BCR>;
  			reset-names = "pci";
 -- 
 2.53.0
