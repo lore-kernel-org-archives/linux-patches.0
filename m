@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCC851357D;
-	Wed, 30 Sep 2026 16:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC83357D11;
+	Wed, 30 Sep 2026 16:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786945; cv=none; b=o/KoOtN/qUY/+3ckqQJWoUyx0MIZk0N2XvGTGA4pG1WEsN3TmzkXXSCOzhsoUQBTkblEhYUyYzMGoACmBhVSnSZOo+TnZST4w4d/wk3zdT/teNhJjYxvl+/KyFMRsC3ZbZiSmLg9Wk3+pIH8z+vEZhnixalLrQpvn7ceVUqmUHg=
+	t=1790786948; cv=none; b=ZgK1HrkD52DKqActBJcyj2lq5rWeXoLqBiiDlsJrWoDvqG0yI6gHLuyLB/DIzdEKpnGf3xxPHxwdDLdSk2psgA3t30sJ3Ly276bV9EhK0p9BQBJnKK2xnKuo/7aDyVosY6NDnbkSippZiFRFdMtDt9D+aiVomfQkZUXjGlnR/Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786945; c=relaxed/simple;
-	bh=bt67hn2GbjNL8lFUNPAL9lmKF3gTRp6BsVfRCgofGx8=;
+	s=arc-20240116; t=1790786948; c=relaxed/simple;
+	bh=9orYnatfFa5MtnLOU2Q8eNG98V98AGjwxNq50vEegrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psjJCrdyke3X4GGKB1/Ns4u5+hzDB5TV6TBkXUL/81gWRGAUzcpP58u13EZphXLrN/uW7O5UdF7HQuvo71OwRsiSdaf389U+JZMBW4ayK39r5h0syAqqT2DzLxABIX4IkUCn80AtRzbgcYqlQ1GKoD8b5nVPg7qdf5fNmlPey1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7GmPGDF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AfXybSnDlI1FpwSWwd+3Kv3ftX8LCpIzfUa4+NU0mjFxgr6dU9rPtB86mYXo7pGJ3fJ93GOgHP41ZSf99sl62HPnQEiZ/DrxtAZrqYbSkZ3MGeu4d1W8++TYVvyKQpEMe5XC63c3KDxDKzqJeqNCMP34SsYI+kJGCtmJBqUmZAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlP2zE/g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7GmPGDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D441D1F000FF;
-	Wed, 30 Sep 2026 16:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlP2zE/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72C21F000FF;
+	Wed, 30 Sep 2026 16:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786944;
-	bh=Wf0DMQNh0fzKcaxz3f9cTHy5un/xE8GnWHOjbSesJmk=;
+	s=korg; t=1790786947;
+	bh=CR3XAQxkNAO1unBpi7apvn6Bgohs45PLCDiJfqeLyGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7GmPGDFqEfbxkiAb6FA1NCR8e3bPc8j8G9W6k12H/uAd2/YeK9k5tqgDlrbSOYRK
-	 2pY1T8+jAtw4B4inOw1NP4xKniDfIQodDSQ2dEBqKQ82jRO1B3bEVisHYi7L8fJGKq
-	 jHetmStmXFYbgiCpydvtKctmESgGR6FoJuhre8zU=
+	b=ZlP2zE/gJ+1T4TJO2aexMEbuj+a3bdvy50jT0KQtWI5XVP3joeU4TzUQW6cVZSwGX
+	 nMDNcTK/cEGsLs0pvk0Li8JSLbZ7CjKKFCt+x8rTNSkEGwBcj5q7IwGfhYtgCHxtSO
+	 kJa6SHJO2MBeyAJ+YQ0ltnUk13s7+8rTA7hGC5YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 055/457] Bluetooth: btnxpuart: Fix skb leak in nxp_process_fw_dump()
-Date: Wed, 30 Sep 2026 17:22:40 +0200
-Message-ID: <20260930152347.223597784@linuxfoundation.org>
+Subject: [PATCH 7.2 056/457] Bluetooth: mgmt: Dequeue pending mesh_send_sync entries on cancel
+Date: Wed, 30 Sep 2026 17:22:41 +0200
+Message-ID: <20260930152347.247523125@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,44 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit f2bbb36426581045a8bf7793da5419b9375e4348 ]
+[ Upstream commit 71af682ba4692c2ed9ace4c3d4ca462ae368c029 ]
 
-When CONFIG_DEV_COREDUMP=n, hci_devcd_append() returns -EOPNOTSUPP
-without freeing its skb argument. This leaks the cloned skb and also
-prevents nxp_set_ind_reset() from being called to perform recovery.
+In send_cancel(), pending mesh_tx objects are removed from the
+hdev->mesh_pending list and freed via mesh_send_complete().  However, if
+a mesh transmission was already queued onto hdev->cmd_sync_work_list via
+mesh_next(), the queued entry retains a raw pointer to mesh_tx.
 
-Fix by guarding the hci_devcd_append(hdev, skb_clone(skb, GFP_ATOMIC))
-call with IS_ENABLED(CONFIG_DEV_COREDUMP).
+When hci_cmd_sync_work later processes the entry, it attempts to execute
+mesh_send_sync and its destroy callback mesh_send_start_complete using
+the already freed mesh_tx pointer, leading to a use-after-free.
 
-Fixes: 998e447f443f ("Bluetooth: btnxpuart: Add support for HCI coredump feature")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Fix this by invoking hci_cmd_sync_dequeue() for mesh_send_sync on the
+target mesh_tx before completing it.  If the entry is found and dequeued,
+its destroy callback will complete and free the object; otherwise,
+mesh_send_complete() is called directly.
+
+Additionally, ensure the transmission queue advances after cancellation
+or errors.  In mesh_send_start_complete(), call mesh_next() on error
+unless err is -ECANCELED, because hci_cmd_sync_dequeue() holds
+hdev->cmd_sync_work_lock and calling mesh_next() synchronously would
+deadlock.  Instead, advance the queue in send_cancel() once the lock is
+released and if no transmission is in progress.
+
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/bluetooth/mgmt.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index e6c15bc6a30b9..73b319c7e1765 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1397,9 +1397,11 @@ static int nxp_process_fw_dump(struct hci_dev *hdev, struct sk_buff *skb)
- 				      msecs_to_jiffies(20000));
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index deced8a5bc2d6..9bcc35de08899 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2310,6 +2310,8 @@ static void mesh_send_start_complete(struct hci_dev *hdev, void *data, int err)
+ 		hci_dev_clear_flag(hdev, HCI_MESH_SENDING);
+ 		/* Send Complete Error Code for handle */
+ 		mesh_send_complete(hdev, mesh_tx, false);
++		if (err != -ECANCELED)
++			mesh_next(hdev, NULL, 0);
+ 		return;
  	}
  
--	err = hci_devcd_append(hdev, skb_clone(skb, GFP_ATOMIC));
--	if (err < 0)
--		goto free_skb;
-+	if (IS_ENABLED(CONFIG_DEV_COREDUMP)) {
-+		err = hci_devcd_append(hdev, skb_clone(skb, GFP_ATOMIC));
-+		if (err < 0)
-+			goto free_skb;
-+	}
+@@ -2419,19 +2421,28 @@ static int send_cancel(struct hci_dev *hdev, void *data)
+ 		do {
+ 			mesh_tx = mgmt_mesh_next(hdev, cmd->sk);
  
- 	if (buf_len == 0) {
- 		bt_dev_warn(hdev, "==== FW dump complete ===");
+-			if (mesh_tx)
+-				mesh_send_complete(hdev, mesh_tx, false);
++			if (mesh_tx) {
++				if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
++							  mesh_tx, NULL))
++					mesh_send_complete(hdev, mesh_tx, false);
++			}
+ 		} while (mesh_tx);
+ 	} else {
+ 		mesh_tx = mgmt_mesh_find(hdev, cancel->handle);
+ 
+-		if (mesh_tx && mesh_tx->sk == cmd->sk)
+-			mesh_send_complete(hdev, mesh_tx, false);
++		if (mesh_tx && mesh_tx->sk == cmd->sk) {
++			if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
++						  mesh_tx, NULL))
++				mesh_send_complete(hdev, mesh_tx, false);
++		}
+ 	}
+ 
+ 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
+ 			  0, NULL, 0);
+ 
++	if (!hci_dev_test_flag(hdev, HCI_MESH_SENDING))
++		mesh_next(hdev, NULL, 0);
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
