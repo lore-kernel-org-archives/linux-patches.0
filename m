@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515474E9C32;
-	Wed, 30 Sep 2026 17:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED27451DDE4;
+	Wed, 30 Sep 2026 17:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790280; cv=none; b=kLIW1qHL6ddflpn5L+Z1Zfp1PkCMnzwy1w1IedD+t5ptB4TPG4TTdBhoEY/jc3MJz60lUmTuzjGv02OeY83p68CLbvHaeGHPIcvOvzBaGhAKSCgocs69feFgd/0lVKCYbv2V6f/7GJF5mI2Q5FJ02enQwiTg9jtZpGYSj/Ws5Oc=
+	t=1790790283; cv=none; b=ujezaYF1DCpLGOUgPwX1+BgveUHsPVObd1g5Hh9gvrNQDU15I57wqS7h+/WFusGCLyu8XxKh56Bkd7JqonsQkanYB5ROnZ5TdbBAWE8l5STWyQrSzWM/JjscNaDR03ejrB0WqxrodOt/gCPcLhtnHhpvqnFG1MKd2uOMNXeEn70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790280; c=relaxed/simple;
-	bh=CstQUa87QRygbZdrL0PqyxPk0RZ7eA28pB4bqDfxrJM=;
+	s=arc-20240116; t=1790790283; c=relaxed/simple;
+	bh=DGWLgiz52ATVPHynPZQVra8LJ8OSqFCC+B7YsyHOVp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSxy9Rx+Mbe5McN8wMl+q1Obxx6RfteGmuZrokEerHpj3vPzzQfpqazLAwmGHNUCFZDF4wsF3gQdZgGnJVj523XVY9xI/4SZ/Dtiw0zgiUN28kLLTjnweh2XnJ8yXgPZwOb+vdlgti1IY8qTvS4W251fkrEZoZdfuxF2/VY7yKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXlq1m3l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qIhQ4mRAmsqx6u6sRnNO3StM9kb3NOQoXc+JDYbH9iIA9CvHlsoh6bS7M/GLH0fNyqDgaIs1jaaZsNJIkCOI2OYtoNFYGZ42DwL6EBJzUrbhNip4G+bDgIJGdvG1GIr8TVotF7EU2d/9unRh9iv/nLfMVbiLQ6jnYUVwNUp6oB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P56xBTHw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXlq1m3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8631F000FF;
-	Wed, 30 Sep 2026 17:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P56xBTHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465771F000FF;
+	Wed, 30 Sep 2026 17:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790279;
-	bh=qC1bOqBhGiTchNT9ViAMw3jWPt1NS3VxXIzn3sADz1g=;
+	s=korg; t=1790790281;
+	bh=9b1cl1XiwPGCxiLYDcgxmoH+MknYzhxst7X521lxmMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JXlq1m3ly3cjM4tqTYIC2fMgT4z+X14+o1RRxGx3KMoq3VGBqjONOU0Q6ZQ3ogVSy
-	 ds5tVEEI7hQSfQDnKqEeNMGyZ23Yr4hhIB/tDIGgxIm7ZYWas/PpwvLOEounpLpHG8
-	 emuqofEZiQNJvyzJpELuAvHOm1SH/OgrLywe8jao=
+	b=P56xBTHwis8nP7haxxtzqyJLykgB32eTfoGLFiAv+qt5Dkr2O3sbfA0vvcAkLc18J
+	 X6MzAc1kIy2cjFiSEeHnQc1rQXnAP9AOZoizQyJvvVlnRxZ+wbGDHfWfeFMg8ZRo/j
+	 Ml/m8Qml0EsEZknVVdfT50uNmpAa8ldOw0wNX2I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 736/877] netfilter: cttimeout: detach dataplane timeout policy and repurpose refcount
-Date: Wed, 30 Sep 2026 17:27:27 +0200
-Message-ID: <20260930152430.572856436@linuxfoundation.org>
+Subject: [PATCH 6.12 772/877] mptcp: do not reschedule the RTX timer for fallback sockets
+Date: Wed, 30 Sep 2026 17:28:03 +0200
+Message-ID: <20260930152431.373908540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,471 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 7d6a9cdb8d3a51d9cfe546a09a518ab3d2671549 ]
+[ Upstream commit e2ab913f68c7d11e2561b8a8ad0b87ffefcad667 ]
 
-Add a refcount for struct nf_ct_timeout which is used by ct extension to
-set the custom ct timeout policy, this tells us that the ct timeout is
-being used by a conntrack entry. When the last conntrack entry drops the
-refcount on the ct timeout, the ct timeout is released.
+On fallback socket the retrans timer is a quite convoluted no-op, but
+currently nothing prevents the MPTCP core to keep rescheduling it.
 
-Remove the refcount for control plane which controls if the ruleset
-refers to the timeout policy. After this update, it is possible to
-remove the ct timeout policy from nfnetlink_cttimeout immediately.
-This is for simplicity not to handle two refcounts on a single object.
+Additionally gate RTX timer reset to the msk not being fallen back to
+TCP yet. To avoid adding multiple tests in fast-path, use a new flags
+bit for such condition.
 
-Remove nf_queue_nf_hook_drop(): a packet sitting in nfqueue will just
-hold a reference to the nf_ct_timeout object until packet is reinjected,
-since this is part of the ct extension, this will be released by the
-time the conntrack is freed.
+The RTX enable bit is clear at close time and set before the msk could
+start retransmitting, with a couple of caveats:
 
-nf_ct_untimeout() is still called to clean up in a best effort basis:
-the ct timeout on existing entries gets removed when the ct timeout goes
-away, but as long as the iptables ruleset still refers to the ct timeout
-through a template, new conntracks may keep attaching it and extend its
-lifetime until the rule is removed.
+- passive sockets inherit the bit from the listener msk; set the bit on
+  such socket to avoid flipping it in the fast-path, even if the
+  listener will obviously never retransmit.
 
-nf_ct_untimeout() is not called anymore from module removal path, this
-is unlikely to find timeouts give module refcount is bumped, and the new
-refcount already tracks the ct timeout policy use so it is released when
-unused.
+- while fastopening (MPTFO), mptcp_sendmsg_fastopen still ends-up
+  calling mptcp_connect via tcp_sendmsg_fastopen ->
+  __inet_stream_connect(ssk->sk_socket), and the first subflow's
+  sk_socket points to the msk one.
 
-Fixes: 50978462300f ("netfilter: add cttimeout infrastructure for fine timeout tuning")
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: fec9b1de0d02 ("netfilter: cttimeout: prevent UAF during module unload")
+Fixes: b51f9b80c032 ("mptcp: introduce MPTCP retransmission timer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-1-df1de70348b6@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_conntrack_timeout.h |   27 ++++++
- net/netfilter/nf_conntrack_core.c            |    6 -
- net/netfilter/nf_conntrack_timeout.c         |   27 +++++-
- net/netfilter/nfnetlink_cttimeout.c          |  112 ++++++++++++---------------
- net/netfilter/nft_ct.c                       |    7 -
- net/netfilter/xt_CT.c                        |    2 
- 6 files changed, 107 insertions(+), 74 deletions(-)
+ net/mptcp/protocol.c |   13 ++++++++++---
+ net/mptcp/protocol.h |    1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/include/net/netfilter/nf_conntrack_timeout.h
-+++ b/include/net/netfilter/nf_conntrack_timeout.h
-@@ -12,6 +12,7 @@
- #define CTNL_TIMEOUT_NAME_MAX	32
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -82,6 +82,7 @@ bool __mptcp_try_fallback(struct mptcp_s
  
- struct nf_ct_timeout {
-+	refcount_t		refcnt;
- 	__u16			l3num;
- 	const struct nf_conntrack_l4proto *l4proto;
- 	struct rcu_head		rcu;
-@@ -22,6 +23,22 @@ struct nf_conn_timeout {
- 	struct nf_ct_timeout __rcu *timeout;
- };
+ 	msk->allow_subflows = false;
+ 	set_bit(MPTCP_FALLBACK_DONE, &msk->flags);
++	clear_bit(MPTCP_RTX_ENABLED, &msk->flags);
+ 	__MPTCP_INC_STATS(net, fb_mib);
+ 	spin_unlock_bh(&msk->fallback_lock);
+ 	return true;
+@@ -993,13 +994,14 @@ static bool mptcp_rtx_timer_pending(stru
  
-+static inline void nf_ct_timeout_put(const struct nf_conn *ct)
-+{
-+#ifdef CONFIG_NF_CONNTRACK_TIMEOUT
-+	struct nf_conn_timeout *timeout_ext;
-+	struct nf_ct_timeout *timeout;
-+
-+	timeout_ext = nf_ct_ext_find(ct, NF_CT_EXT_TIMEOUT);
-+	if (!timeout_ext)
-+		return;
-+
-+	timeout = rcu_dereference(timeout_ext->timeout);
-+	if (timeout && refcount_dec_and_test(&timeout->refcnt))
-+		kfree_rcu(timeout, rcu);
-+#endif
-+}
-+
- static inline unsigned int *
- nf_ct_timeout_data(const struct nf_conn_timeout *t)
+ static void mptcp_reset_rtx_timer(struct sock *sk)
  {
-@@ -56,8 +73,14 @@ struct nf_conn_timeout *nf_ct_timeout_ex
- #ifdef CONFIG_NF_CONNTRACK_TIMEOUT
- 	struct nf_conn_timeout *timeout_ext;
++	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	unsigned long tout;
  
-+	if (!timeout)
-+		return NULL;
-+
- 	timeout_ext = nf_ct_ext_add(ct, NF_CT_EXT_TIMEOUT, gfp);
--	if (timeout_ext == NULL)
-+	if (!timeout_ext || timeout_ext->timeout)
-+		return NULL;
-+
-+	if (!refcount_inc_not_zero(&timeout->refcnt))
- 		return NULL;
+-	/* prevent rescheduling on close */
+-	if (unlikely(inet_sk_state_load(sk) == TCP_CLOSE))
++	/* Prevent rescheduling on close and in case of fallback. */
++	if (!test_bit(MPTCP_RTX_ENABLED, &msk->flags))
+ 		return;
  
- 	rcu_assign_pointer(timeout_ext->timeout, timeout);
-@@ -75,7 +98,7 @@ static inline unsigned int *nf_ct_timeou
- 	struct nf_conn_timeout *timeout_ext;
- 
- 	timeout_ext = nf_ct_timeout_find(ct);
--	if (timeout_ext)
-+	if (timeout_ext && rcu_access_pointer(timeout_ext->timeout))
- 		timeouts = nf_ct_timeout_data(timeout_ext);
- #endif
- 	return timeouts;
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -1692,16 +1692,18 @@ void nf_conntrack_free(struct nf_conn *c
- 	 */
- 	WARN_ON(refcount_read(&ct->ct_general.use) != 0);
- 
-+	rcu_read_lock();
- 	if (ct->status & IPS_SRC_NAT_DONE) {
- 		const struct nf_nat_hook *nat_hook;
- 
--		rcu_read_lock();
- 		nat_hook = rcu_dereference(nf_nat_hook);
- 		if (nat_hook)
- 			nat_hook->remove_nat_bysrc(ct);
--		rcu_read_unlock();
- 	}
- 
-+	nf_ct_timeout_put(ct);
-+	rcu_read_unlock();
-+
- 	kfree(ct->ext);
- 	kmem_cache_free(nf_conntrack_cachep, ct);
- 	cnet = nf_ct_pernet(net);
---- a/net/netfilter/nf_conntrack_timeout.c
-+++ b/net/netfilter/nf_conntrack_timeout.c
-@@ -25,17 +25,32 @@
- const struct nf_ct_timeout_hooks __rcu *nf_ct_timeout_hook __read_mostly;
- EXPORT_SYMBOL_GPL(nf_ct_timeout_hook);
- 
-+/* nf_ct_iterate_cleanup() holds the conntrack lock. */
- static int untimeout(struct nf_conn *ct, void *timeout)
- {
- 	struct nf_conn_timeout *timeout_ext = nf_ct_timeout_find(ct);
- 
- 	if (timeout_ext) {
--		const struct nf_ct_timeout *t;
-+		struct nf_ct_timeout *t;
- 
--		t = rcu_access_pointer(timeout_ext->timeout);
-+		rcu_read_lock();
-+		t = rcu_dereference(timeout_ext->timeout);
-+		if (!t) {
-+			rcu_read_unlock();
-+			return 0;
-+		}
- 
--		if (!timeout || t == timeout)
-+		if (!timeout || t == timeout) {
- 			RCU_INIT_POINTER(timeout_ext->timeout, NULL);
-+
-+			/* No race with nf_conntrack_free() which is called
-+			 * only after the conntrack has been removed from
-+			 * the hashes.
-+			 */
-+			if (refcount_dec_and_test(&t->refcnt))
-+				kfree_rcu(t, rcu);
-+		}
-+		rcu_read_unlock();
- 	}
- 
- 	/* We are not intended to delete this conntrack. */
-@@ -70,6 +85,8 @@ int nf_ct_set_timeout(struct net *net, s
- 	const char *errmsg = NULL;
- 	int ret = 0;
- 
-+	WARN_ON_ONCE(!nf_ct_is_template(ct));
-+
- 	rcu_read_lock();
- 	h = rcu_dereference(nf_ct_timeout_hook);
- 	if (!h) {
-@@ -127,6 +144,8 @@ void nf_ct_destroy_timeout(struct nf_con
- 	struct nf_conn_timeout *timeout_ext;
- 	const struct nf_ct_timeout_hooks *h;
- 
-+	WARN_ON_ONCE(!nf_ct_is_template(ct));
-+
- 	rcu_read_lock();
- 	h = rcu_dereference(nf_ct_timeout_hook);
- 
-@@ -139,6 +158,8 @@ void nf_ct_destroy_timeout(struct nf_con
- 			if (t)
- 				h->timeout_put(t);
- 			RCU_INIT_POINTER(timeout_ext->timeout, NULL);
-+			if (t && refcount_dec_and_test(&t->refcnt))
-+				kfree_rcu(t, rcu);
- 		}
- 	}
- 	rcu_read_unlock();
---- a/net/netfilter/nfnetlink_cttimeout.c
-+++ b/net/netfilter/nfnetlink_cttimeout.c
-@@ -37,11 +37,8 @@ struct ctnl_timeout {
- 	struct list_head	head;
- 	struct list_head	free_head;
- 	struct rcu_head		rcu_head;
--	refcount_t		refcnt;
- 	char			name[CTNL_TIMEOUT_NAME_MAX];
--
--	/* must be at the end */
--	struct nf_ct_timeout	timeout;
-+	struct nf_ct_timeout	*timeout;
- };
- 
- struct nfct_timeout_pernet {
-@@ -133,12 +130,12 @@ static int cttimeout_new_timeout(struct
- 			/* You cannot replace one timeout policy by another of
- 			 * different kind, sorry.
- 			 */
--			if (matching->timeout.l3num != l3num ||
--			    matching->timeout.l4proto->l4proto != l4num)
-+			if (matching->timeout->l3num != l3num ||
-+			    matching->timeout->l4proto->l4proto != l4num)
- 				return -EINVAL;
- 
--			return ctnl_timeout_parse_policy(&matching->timeout.data,
--							 matching->timeout.l4proto,
-+			return ctnl_timeout_parse_policy(&matching->timeout->data,
-+							 matching->timeout->l4proto,
- 							 info->net,
- 							 cda[CTA_TIMEOUT_DATA]);
- 		}
-@@ -154,26 +151,35 @@ static int cttimeout_new_timeout(struct
- 		goto err_proto_put;
- 	}
- 
--	timeout = kzalloc(sizeof(struct ctnl_timeout) +
--			  l4proto->ctnl_timeout.obj_size, GFP_KERNEL);
-+	timeout = kzalloc(sizeof(*timeout), GFP_KERNEL);
- 	if (timeout == NULL) {
- 		ret = -ENOMEM;
- 		goto err_proto_put;
- 	}
- 
--	ret = ctnl_timeout_parse_policy(&timeout->timeout.data, l4proto,
-+	timeout->timeout = kzalloc(sizeof(*timeout->timeout) +
-+				   l4proto->ctnl_timeout.obj_size, GFP_KERNEL);
-+	if (!timeout->timeout) {
-+		ret = -ENOMEM;
-+		goto err;
-+	}
-+
-+	ret = ctnl_timeout_parse_policy(&timeout->timeout->data, l4proto,
- 					info->net, cda[CTA_TIMEOUT_DATA]);
- 	if (ret < 0)
--		goto err;
-+		goto err_free_timeout_policy;
- 
- 	strcpy(timeout->name, nla_data(cda[CTA_TIMEOUT_NAME]));
--	timeout->timeout.l3num = l3num;
--	timeout->timeout.l4proto = l4proto;
--	refcount_set(&timeout->refcnt, 1);
-+	timeout->timeout->l3num = l3num;
-+	timeout->timeout->l4proto = l4proto;
-+	refcount_set(&timeout->timeout->refcnt, 1);
- 	__module_get(THIS_MODULE);
- 	list_add_tail_rcu(&timeout->head, &pernet->nfct_timeout_list);
- 
- 	return 0;
-+
-+err_free_timeout_policy:
-+	kfree(timeout->timeout);
- err:
- 	kfree(timeout);
- err_proto_put:
-@@ -186,7 +192,7 @@ ctnl_timeout_fill_info(struct sk_buff *s
- {
- 	struct nlmsghdr *nlh;
- 	unsigned int flags = portid ? NLM_F_MULTI : 0;
--	const struct nf_conntrack_l4proto *l4proto = timeout->timeout.l4proto;
-+	const struct nf_conntrack_l4proto *l4proto = timeout->timeout->l4proto;
- 	struct nlattr *nest_parms;
- 	int ret;
- 
-@@ -198,17 +204,17 @@ ctnl_timeout_fill_info(struct sk_buff *s
- 
- 	if (nla_put_string(skb, CTA_TIMEOUT_NAME, timeout->name) ||
- 	    nla_put_be16(skb, CTA_TIMEOUT_L3PROTO,
--			 htons(timeout->timeout.l3num)) ||
-+			 htons(timeout->timeout->l3num)) ||
- 	    nla_put_u8(skb, CTA_TIMEOUT_L4PROTO, l4proto->l4proto) ||
- 	    nla_put_be32(skb, CTA_TIMEOUT_USE,
--			 htonl(refcount_read(&timeout->refcnt))))
-+			 htonl(refcount_read(&timeout->timeout->refcnt))))
- 		goto nla_put_failure;
- 
- 	nest_parms = nla_nest_start(skb, CTA_TIMEOUT_DATA);
- 	if (!nest_parms)
- 		goto nla_put_failure;
- 
--	ret = l4proto->ctnl_timeout.obj_to_nlattr(skb, &timeout->timeout.data);
-+	ret = l4proto->ctnl_timeout.obj_to_nlattr(skb, &timeout->timeout->data);
- 	if (ret < 0)
- 		goto nla_put_failure;
- 
-@@ -308,23 +314,17 @@ static int cttimeout_get_timeout(struct
- 	return ret;
+-	tout = mptcp_sk(sk)->timer_ival;
++	tout = msk->timer_ival;
+ 	sk_reset_timer(sk, &sk->mptcp_retransmit_timer, jiffies + tout);
  }
  
--/* try to delete object, fail if it is still in use. */
--static int ctnl_timeout_try_del(struct net *net, struct ctnl_timeout *timeout)
-+static void ctnl_timeout_del(struct net *net, struct ctnl_timeout *timeout)
- {
--	int ret = 0;
-+	/* We are protected by nfnl mutex. */
-+	list_del_rcu(&timeout->head);
-+	nf_ct_untimeout(net, timeout->timeout);
- 
--	/* We want to avoid races with ctnl_timeout_put. So only when the
--	 * current refcnt is 1, we decrease it to 0.
--	 */
--	if (refcount_dec_if_one(&timeout->refcnt)) {
--		/* We are protected by nfnl mutex. */
--		list_del_rcu(&timeout->head);
--		nf_ct_untimeout(net, &timeout->timeout);
--		kfree_rcu(timeout, rcu_head);
--	} else {
--		ret = -EBUSY;
--	}
--	return ret;
-+	if (refcount_dec_and_test(&timeout->timeout->refcnt))
-+		kfree_rcu(timeout->timeout, rcu);
-+
-+	kfree_rcu(timeout, rcu_head);
-+	module_put(THIS_MODULE);
- }
- 
- static int cttimeout_del_timeout(struct sk_buff *skb,
-@@ -339,7 +339,7 @@ static int cttimeout_del_timeout(struct
- 	if (!cda[CTA_TIMEOUT_NAME]) {
- 		list_for_each_entry_safe(cur, tmp, &pernet->nfct_timeout_list,
- 					 head)
--			ctnl_timeout_try_del(info->net, cur);
-+			ctnl_timeout_del(info->net, cur);
- 
- 		return 0;
- 	}
-@@ -349,10 +349,8 @@ static int cttimeout_del_timeout(struct
- 		if (strncmp(cur->name, name, CTNL_TIMEOUT_NAME_MAX) != 0)
- 			continue;
- 
--		ret = ctnl_timeout_try_del(info->net, cur);
--		if (ret < 0)
--			return ret;
--
-+		ctnl_timeout_del(info->net, cur);
-+		ret = 0;
+@@ -3121,6 +3123,9 @@ void mptcp_set_state(struct sock *sk, in
+ 		 * transition from TCP_SYN_RECV to TCP_CLOSE_WAIT.
+ 		 */
  		break;
- 	}
- 	return ret;
-@@ -518,24 +516,22 @@ static struct nf_ct_timeout *ctnl_timeou
- 		if (strncmp(timeout->name, name, CTNL_TIMEOUT_NAME_MAX) != 0)
- 			continue;
++	case TCP_CLOSE:
++		clear_bit(MPTCP_RTX_ENABLED, &mptcp_sk(sk)->flags);
++		fallthrough;
+ 	default:
+ 		if (oldstate == TCP_ESTABLISHED || oldstate == TCP_CLOSE_WAIT)
+ 			MPTCP_DEC_STATS(sock_net(sk), MPTCP_MIB_CURRESTAB);
+@@ -3944,6 +3949,7 @@ static int mptcp_connect(struct sock *sk
+ 	if (IS_ERR(ssk))
+ 		return PTR_ERR(ssk);
  
--		if (!refcount_inc_not_zero(&timeout->refcnt))
-+		if (!refcount_inc_not_zero(&timeout->timeout->refcnt))
- 			goto err;
- 		matching = timeout;
-+		__module_get(THIS_MODULE);
- 		break;
- 	}
- err:
--	return matching ? &matching->timeout : NULL;
-+	return matching ? matching->timeout : NULL;
- }
- 
--static void ctnl_timeout_put(struct nf_ct_timeout *t)
-+static void ctnl_timeout_put(struct nf_ct_timeout *timeout)
- {
--	struct ctnl_timeout *timeout =
--		container_of(t, struct ctnl_timeout, timeout);
-+	if (refcount_dec_and_test(&timeout->refcnt))
-+		kfree_rcu(timeout, rcu);
- 
--	if (refcount_dec_and_test(&timeout->refcnt)) {
--		kfree_rcu(timeout, rcu_head);
--		module_put(THIS_MODULE);
--	}
-+	module_put(THIS_MODULE);
- }
- 
- static const struct nfnl_callback cttimeout_cb[IPCTNL_MSG_TIMEOUT_MAX] = {
-@@ -616,8 +612,11 @@ static void __net_exit cttimeout_net_exi
- 	list_for_each_entry_safe(cur, tmp, &pernet->nfct_timeout_freelist, free_head) {
- 		list_del(&cur->free_head);
- 
--		if (refcount_dec_and_test(&cur->refcnt))
--			kfree_rcu(cur, rcu_head);
-+		if (refcount_dec_and_test(&cur->timeout->refcnt))
-+			kfree_rcu(cur->timeout, rcu);
-+
-+		kfree_rcu(cur, rcu_head);
-+		module_put(THIS_MODULE);
- 	}
- }
- 
-@@ -656,24 +655,13 @@ err_out:
- 	return ret;
- }
- 
--static int untimeout(struct nf_conn *ct, void *timeout)
--{
--	struct nf_conn_timeout *timeout_ext = nf_ct_timeout_find(ct);
--
--	if (timeout_ext)
--		RCU_INIT_POINTER(timeout_ext->timeout, NULL);
--
--	return 0;
--}
--
- static void __exit cttimeout_exit(void)
- {
- 	nfnetlink_subsys_unregister(&cttimeout_subsys);
- 
- 	unregister_pernet_subsys(&cttimeout_ops);
- 	RCU_INIT_POINTER(nf_ct_timeout_hook, NULL);
--
--	nf_ct_iterate_destroy(untimeout, NULL);
-+	synchronize_net();
- }
- 
- module_init(cttimeout_init);
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -879,8 +879,6 @@ static void nft_ct_timeout_obj_eval(stru
- 		}
++	set_bit(MPTCP_RTX_ENABLED, &msk->flags);
+ 	mptcp_set_state(sk, TCP_SYN_SENT);
+ 	subflow = mptcp_subflow_ctx(ssk);
+ #ifdef CONFIG_TCP_MD5SIG
+@@ -4092,6 +4098,7 @@ static int mptcp_listen(struct socket *s
+ 		goto unlock;
  	}
  
--	rcu_assign_pointer(timeout->timeout, priv->timeout);
--
- 	/* adjust the timeout as per 'new' state. ct is unconfirmed,
- 	 * so the current timestamp must not be added.
- 	 */
-@@ -931,6 +929,7 @@ static int nft_ct_timeout_obj_init(const
++	set_bit(MPTCP_RTX_ENABLED, &msk->flags);
+ 	mptcp_set_state(sk, TCP_LISTEN);
+ 	sock_set_flag(sk, SOCK_RCU_FREE);
  
- 	timeout->l3num = l3num;
- 	timeout->l4proto = l4proto;
-+	refcount_set(&timeout->refcnt, 1);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -116,6 +116,7 @@
+ #define MPTCP_WORK_RTX		1
+ #define MPTCP_FALLBACK_DONE	2
+ #define MPTCP_WORK_CLOSE_SUBFLOW 3
++#define MPTCP_RTX_ENABLED	4
  
- 	ret = nf_ct_netns_get(ctx->net, ctx->family);
- 	if (ret < 0)
-@@ -951,10 +950,10 @@ static void nft_ct_timeout_obj_destroy(c
- 	struct nft_ct_timeout_obj *priv = nft_obj_data(obj);
- 	struct nf_ct_timeout *timeout = priv->timeout;
- 
--	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
--	kfree_rcu(priv->timeout, rcu);
-+	if (refcount_dec_and_test(&timeout->refcnt))
-+		kfree_rcu(priv->timeout, rcu);
- }
- 
- static int nft_ct_timeout_obj_dump(struct sk_buff *skb,
---- a/net/netfilter/xt_CT.c
-+++ b/net/netfilter/xt_CT.c
-@@ -284,7 +284,7 @@ static void xt_ct_tg_destroy(const struc
- 	struct nf_conn_help *help;
- 
- 	if (ct) {
--		if (info->helper[0] || info->timeout[0])
-+		if (info->helper[0])
- 			nf_queue_nf_hook_drop(par->net);
- 
- 		help = nfct_help(ct);
+ /* MPTCP socket release cb flags */
+ #define MPTCP_PUSH_PENDING	1
 
 
