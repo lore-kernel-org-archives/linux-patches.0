@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BCD509F06;
-	Wed, 30 Sep 2026 18:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D9D515976;
+	Wed, 30 Sep 2026 18:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791323; cv=none; b=OddDE/0BthiM9WrfI37isAuj9Y9LZcqr69Il3pH3hhSAJyRXl+b8GYLwxCSS4ufIIBoWCaQCy4NpoDXx/K2H3J0lZPNPbeLKBhxnoqEmJf+c4AijDVrtjz4LCYdGnXUcfVKamBxDAzGN4cZu8qpMK9RdU2AjOHKAsHdzcb2jYB4=
+	t=1790791325; cv=none; b=l2GIaoDbcLJh6CZWWdkGFGMFG7lWsKZ98bLzleIXuf4UOTaNg6oHn5NxiTxYccwxw7n4MzYR12eQwhdyNBPwCRNKmuR57QTq0DIyFAZ4WP6h0MzyA41qLbYPUoLGSKzBzFOeMOGy8mZQL8B7iW/uIJiAvChbKkLaXVqUP/KfLyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791323; c=relaxed/simple;
-	bh=wC/+1A3tTSskH3aIJfw70zm30LS1GHOLNS/byGP1uP0=;
+	s=arc-20240116; t=1790791325; c=relaxed/simple;
+	bh=61PT2sh400HOSQe/msr1dN6GUmxoRSMS2mkg80Y81uE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CF8yjzbsrlANZazmNx18wCgfZZo8qnqAHtlNOG9UuaLlwlb9z/7ahqRPdqTVW+qMEYsB0Ja4HaOO1bbtkOhQSfETAQnRTr6fr9lRMYgtURr36WeLBuYLVuoD485G2O3xZNI6BIMun9i7YTwLebWKjFz1eIDKaiemR69DrNEYAOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKfhsu87; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X6FrMc9dMJVZhLJKet8YT1HOOqTcc8bxmt96HtwWLuK7oPQSm13OInmzO8aATno+v9HFPUJNBievnvkZSWg0n20kjhIyLKRKouEBMjOLgHzEAT+2Lg3kupdRmo0s8FPYJmFEoRW16gVfJ1E0d4WSCKILMwcl4B1kWcKGAtsU0Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNsaOwgm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKfhsu87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8216C1F000FF;
-	Wed, 30 Sep 2026 18:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNsaOwgm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C011F000FF;
+	Wed, 30 Sep 2026 18:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791321;
-	bh=T5QnPPYWeC0zldFME7XMBiXmr30Iq8J3FqFod9+VKEk=;
+	s=korg; t=1790791323;
+	bh=NVO0k+6HYwrIeaI9C0YWW3/NhoKVBlpQG5Z06kn6LY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OKfhsu87VT9ix+SFBpUSW6LMGlN0e5y4LiXgayhiUIMIq3uSf0Pj3emvKiKgQvEcS
-	 u/LVXXp5E2Fa9Bs9tIZGt99v0MExIJ2oJLAjHztXfIMcMU84whFnSwd4qxeL53DyyY
-	 SbbJ4uGNKWBhE3enu5p0U1LtJhmEP+kn+RYunN2w=
+	b=NNsaOwgmcA9eVzU8+tR6lKm9pEJrphiPpMLcR6LediRbFmcYE9lhNVmi+vDsuCaID
+	 1VDEgcfyP52CqXeBNuFKGtPabbLA1d08rHl/ng/ueFMhxLAVt1ayxgeyxmapnXMil1
+	 DMYuxZoFtGO0rA+Ej911JVsjh6HLev5Wbm9zHbXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Wolfgang Grandegger <wg@grandegger.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Jiri Slaby <jslaby@suse.cz>,
+	Robert Abrahamse <denobyte2@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 260/752] tty: make tty_ldisc_ops::hangup return void
-Date: Wed, 30 Sep 2026 17:22:10 +0200
-Message-ID: <20260930152403.908601402@linuxfoundation.org>
+Subject: [PATCH 5.15 225/752] ALSA: usb-audio: Add quirk for Corsair Virtuoso (later revision)
+Date: Wed, 30 Sep 2026 17:21:35 +0200
+Message-ID: <20260930152403.125011200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -61,188 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Robert Abrahamse <denobyte2@gmail.com>
 
-[ Upstream commit 28f194da4a2c4d431552025a4386edaffab181bd ]
+[ Upstream commit cee046679655b4822f76efc9658f19efee9ac979 ]
 
-The documentation says that the return value of tty_ldisc_ops::hangup
-hook is ignored. And it really is, so there is no point for its return
-type to be int. Switch it to void and all the hooks too.
+Add USB mixer mapping quirk for later revisions of the Corsair Virtuoso
+headset with USB IDs 0x1b1c:0x0a43 (wired) and 0x1b1c:0x0a44
+(wireless). These devices exhibit the same mixer label collision as
+earlier Virtuoso variants: all controls are labelled "Headset", causing
+applications like PulseAudio to move the sidetone control instead of
+the main playback volume.
 
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Wolfgang Grandegger <wg@grandegger.com>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20210914091134.17426-4-jslaby@suse.cz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 9feb069e5ed0 ("ppp: ppp_async: simplify tty disc_data access")
+Signed-off-by: Robert Abrahamse <denobyte2@gmail.com>
+Link: https://patch.msgid.link/20260728140314.11601-1-denobyte2@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/serial/tty.rst | 2 +-
- drivers/input/serio/serport.c           | 3 +--
- drivers/net/can/slcan.c                 | 3 +--
- drivers/net/ppp/ppp_async.c             | 3 +--
- drivers/net/ppp/ppp_synctty.c           | 3 +--
- drivers/net/slip/slip.c                 | 3 +--
- include/linux/tty_ldisc.h               | 2 +-
- sound/soc/codecs/cx20442.c              | 3 +--
- sound/soc/ti/ams-delta.c                | 3 +--
- 9 files changed, 9 insertions(+), 16 deletions(-)
+ sound/usb/mixer_maps.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/driver-api/serial/tty.rst b/Documentation/driver-api/serial/tty.rst
-index dd972caacf3ee..4b709f392713d 100644
---- a/Documentation/driver-api/serial/tty.rst
-+++ b/Documentation/driver-api/serial/tty.rst
-@@ -58,7 +58,7 @@ close()			This is called on a terminal when the line
- hangup()		Called when the tty line is hung up.
- 			The line discipline should cease I/O to the tty.
- 			No further calls into the ldisc code will occur.
--			The return value is ignored. Can sleep.
-+			Can sleep.
- 
- read()			(optional) A process requests reading data from
- 			the line. Multiple read calls may occur in parallel
-diff --git a/drivers/input/serio/serport.c b/drivers/input/serio/serport.c
-index 7fbbe00e3553c..17eb8f2aa48dd 100644
---- a/drivers/input/serio/serport.c
-+++ b/drivers/input/serio/serport.c
-@@ -244,7 +244,7 @@ static int serport_ldisc_compat_ioctl(struct tty_struct *tty,
- }
- #endif
- 
--static int serport_ldisc_hangup(struct tty_struct *tty)
-+static void serport_ldisc_hangup(struct tty_struct *tty)
- {
- 	struct serport *serport = (struct serport *) tty->disc_data;
- 	unsigned long flags;
-@@ -254,7 +254,6 @@ static int serport_ldisc_hangup(struct tty_struct *tty)
- 	spin_unlock_irqrestore(&serport->lock, flags);
- 
- 	wake_up_interruptible(&serport->wait);
--	return 0;
- }
- 
- static void serport_ldisc_write_wakeup(struct tty_struct * tty)
-diff --git a/drivers/net/can/slcan.c b/drivers/net/can/slcan.c
-index 2ace2b735c202..0b2403e9853e7 100644
---- a/drivers/net/can/slcan.c
-+++ b/drivers/net/can/slcan.c
-@@ -663,10 +663,9 @@ static void slcan_close(struct tty_struct *tty)
- 	/* This will complete via sl_free_netdev */
- }
- 
--static int slcan_hangup(struct tty_struct *tty)
-+static void slcan_hangup(struct tty_struct *tty)
- {
- 	slcan_close(tty);
--	return 0;
- }
- 
- /* Perform I/O control on an active SLCAN channel. */
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index 61da58e1775e2..ff3e71e2b0651 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -247,10 +247,9 @@ ppp_asynctty_close(struct tty_struct *tty)
-  * Wait for I/O to driver to complete and unregister PPP channel.
-  * This is already done by the close routine, so just call that.
-  */
--static int ppp_asynctty_hangup(struct tty_struct *tty)
-+static void ppp_asynctty_hangup(struct tty_struct *tty)
- {
- 	ppp_asynctty_close(tty);
--	return 0;
- }
- 
- /*
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index c8d9c580ed503..480cafcaa964a 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -245,10 +245,9 @@ ppp_sync_close(struct tty_struct *tty)
-  * Wait for I/O to driver to complete and unregister PPP channel.
-  * This is already done by the close routine, so just call that.
-  */
--static int ppp_sync_hangup(struct tty_struct *tty)
-+static void ppp_sync_hangup(struct tty_struct *tty)
- {
- 	ppp_sync_close(tty);
--	return 0;
- }
- 
- /*
-diff --git a/drivers/net/slip/slip.c b/drivers/net/slip/slip.c
-index 4139f43b2ad03..c3ab564295f72 100644
---- a/drivers/net/slip/slip.c
-+++ b/drivers/net/slip/slip.c
-@@ -916,10 +916,9 @@ static void slip_close(struct tty_struct *tty)
- 	/* sl_uninit() has dropped the slip_devs[] entry by now */
- }
- 
--static int slip_hangup(struct tty_struct *tty)
-+static void slip_hangup(struct tty_struct *tty)
- {
- 	slip_close(tty);
--	return 0;
- }
-  /************************************************************************
-   *			STANDARD SLIP ENCAPSULATION		  	 *
-diff --git a/include/linux/tty_ldisc.h b/include/linux/tty_ldisc.h
-index b1d812e902aad..3f77761232825 100644
---- a/include/linux/tty_ldisc.h
-+++ b/include/linux/tty_ldisc.h
-@@ -200,7 +200,7 @@ struct tty_ldisc_ops {
- 	void	(*set_termios)(struct tty_struct *tty, struct ktermios *old);
- 	__poll_t (*poll)(struct tty_struct *, struct file *,
- 			     struct poll_table_struct *);
--	int	(*hangup)(struct tty_struct *tty);
-+	void	(*hangup)(struct tty_struct *tty);
- 
- 	/*
- 	 * The following routines are called from below.
-diff --git a/sound/soc/codecs/cx20442.c b/sound/soc/codecs/cx20442.c
-index 13258f3ca9aae..1af0bf5f1e2f5 100644
---- a/sound/soc/codecs/cx20442.c
-+++ b/sound/soc/codecs/cx20442.c
-@@ -252,10 +252,9 @@ static void v253_close(struct tty_struct *tty)
- }
- 
- /* Line discipline .hangup() */
--static int v253_hangup(struct tty_struct *tty)
-+static void v253_hangup(struct tty_struct *tty)
- {
- 	v253_close(tty);
--	return 0;
- }
- 
- /* Line discipline .receive_buf() */
-diff --git a/sound/soc/ti/ams-delta.c b/sound/soc/ti/ams-delta.c
-index 4537ef1b676f5..648a475e54e54 100644
---- a/sound/soc/ti/ams-delta.c
-+++ b/sound/soc/ti/ams-delta.c
-@@ -332,10 +332,9 @@ static void cx81801_close(struct tty_struct *tty)
- }
- 
- /* Line discipline .hangup() */
--static int cx81801_hangup(struct tty_struct *tty)
-+static void cx81801_hangup(struct tty_struct *tty)
- {
- 	cx81801_close(tty);
--	return 0;
- }
- 
- /* Line discipline .receive_buf() */
+diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
+index c6fb2aa9f3702..dc2a5491e554c 100644
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -581,6 +581,16 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
+ 		.id = USB_ID(0x1b1c, 0x0a42),
+ 		.map = corsair_virtuoso_map,
+ 	},
++	{
++		/* Corsair Virtuoso (wired mode, later revision) */
++		.id = USB_ID(0x1b1c, 0x0a43),
++		.map = corsair_virtuoso_map,
++	},
++	{
++		/* Corsair Virtuoso (wireless mode, later revision) */
++		.id = USB_ID(0x1b1c, 0x0a44),
++		.map = corsair_virtuoso_map,
++	},
+ 	{
+ 		/* Corsair HS80 RGB Wireless (wired mode) */
+ 		.id = USB_ID(0x1b1c, 0x0a6a),
 -- 
 2.53.0
 
