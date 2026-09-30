@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1050C50B433;
-	Wed, 30 Sep 2026 16:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D602B5111B5;
+	Wed, 30 Sep 2026 16:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786258; cv=none; b=HXgXC0zTCNcQogegbtHGG2dM5Tdbt9qsGsg+Rx0MTd6dZ14EytHsfpwO/HXW2Oj6Ipqu0Xpuh3TGh5ZperGO73EtAffwOL69qKpDdhphgSJdip3KbARyltxgvMtFMeQozdj28MpoEAkfjdoOcZWwO71ZCXZdbvRCx5OnJZst7rM=
+	t=1790786261; cv=none; b=KPHtEhth1f1N2m6GzYrRrolvEmaH2Ob9Xc0CfNwKolVBFs4iKJg6eUkyXj+oBlpCsEJfOeMSHP7/2piZoP0W67hBSlh1ZB/f/KaH3fcsOloJ6P8fM5ak4nxAR5cA4AB1GxtR1huzm03Ddx+SWKCXY45wAr02O6rh6OFhToHcoEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786258; c=relaxed/simple;
-	bh=NnKZ/wOH7uBdCbcAeZAJwdthQKTP+blunBhXHqy9rMY=;
+	s=arc-20240116; t=1790786261; c=relaxed/simple;
+	bh=sveeHH9pAM+sUPuXrd7XH9QglO7+4+XI4KyBVctsOVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QF5mdPOxSTPYXYJuuCWUHu5eT0svw+L/aPcXsU6sG49J5dt8ow6SJ2mNYH1VokOJcsMLK3QUkIp08hqiBUwpvCBDNwfiEhYze3GqGu+OwsEqUxzwQYeuYaALyzYuMwvBkwb2QEl7NV48218fcvhOhstaXCdB0VG9wEY9rgZBbCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MchIvF0R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=prvkAXUs+xJ6LT00bOt09LT0SmFKojb/Ux7YdYGAy1JXxGLPUAa8TTfhduAzCJCknR0bnhSvLVIJbpjkQNhP64k/5zTamf+Z0jIZzIZ9mqYFlYBttKSOG6oPtrb2vnlpfh+iztvdUFwqSwgK+etxeucIh8+WkZkempnN66zZNAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NliXWLPF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MchIvF0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFB71F000FF;
-	Wed, 30 Sep 2026 16:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NliXWLPF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402851F000FF;
+	Wed, 30 Sep 2026 16:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786257;
-	bh=vEBOzGwK0CQORC++ZnveIzZGDyLi2cHpU0qA3CtRe4s=;
+	s=korg; t=1790786259;
+	bh=vHb2IOnkp5UgyzmnzeZIrYHDvOcikNBUkf9vvG9/Rz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MchIvF0RwZunKFrLZLWNR/KRG3tNwKUi0Xdk1WBQX7gUmhp5SD+Th+2s8ZUCCIoTA
-	 6yaRSE0itBGYuEydXvXdPkDt7lApqLIQebKYpB6vBXV6MRn4TgAjRn4mHK8eubnjDY
-	 qH6KLa5nHcfDJ6Qc3U8mbo3NP0v7pxvPSNTLgEeU=
+	b=NliXWLPFsWmIHsl2lz/cOqDn9aFUB1yWh14sGd8m6u1Rxutw3PQMq9w/6UNoV8zHV
+	 uNAJScqlXz+Em3PF0pBukbNNl0RbbdyBMWiyZp19EmCOEdTwLXTTwZ8FPFJTHvh+1K
+	 zf76kiaDj711F5djev4Y9alZdII5VdxAhAyEbgw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	=?UTF-8?q?Fabian=20W=C3=BCthrich?= <me@fabwu.ch>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Artem Dinaburg <artem@trailofbits.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 799/982] start_kernel: Add __no_stack_protector function attribute
-Date: Wed, 30 Sep 2026 17:25:35 +0200
-Message-ID: <20260930152433.917443719@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 800/982] media: ipu-bridge: Fix null pointer deref on SSDB/PLD parsing warnings
+Date: Wed, 30 Sep 2026 17:25:36 +0200
+Message-ID: <20260930152433.938810561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,103 +49,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ndesaulniers@google.com <ndesaulniers@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 514ca14ed5444b911de59ed3381dfd195d99fe4b ]
+[ Upstream commit 284be5693163343e1cf17c03917eecd1d6681bcf ]
 
-Back during the discussion of
-commit a9a3ed1eff36 ("x86: Fix early boot crash on gcc-10, third try")
-we discussed the need for a function attribute to control the omission
-of stack protectors on a per-function basis; at the time Clang had
-support for no_stack_protector but GCC did not. This was fixed in
-gcc-11. Now that the function attribute is available, let's start using
-it.
+When ipu_bridge_parse_rotation() and ipu_bridge_parse_orientation() run
+sensor->adev is not set yet.
 
-Callers of boot_init_stack_canary need to use this function attribute
-unless they're compiled with -fno-stack-protector, otherwise the canary
-stored in the stack slot of the caller will differ upon the call to
-boot_init_stack_canary. This will lead to a call to __stack_chk_fail()
-then panic.
+So if either of the dev_warn() calls about unknown values are hit this
+will lead to a NULL pointer deref.
 
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94722
-Link: https://lore.kernel.org/all/20200316130414.GC12561@hirez.programming.kicks-ass.net/
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20230412-no_stackp-v2-1-116f9fe4bbe7@google.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Set sensor->adev earlier, with a borrowed ref to avoid making unrolling
+on errors harder, to fix this.
 
-Signed-off-by: ndesaulniers@google.com <ndesaulniers@google.com>
+Fixes: 485aa3df0dff ("media: ipu3-cio2: Parse sensor orientation and rotation")
+Cc: Fabian Wüthrich <me@fabwu.ch>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 
-[ Backport to 6.1.y: retain this tree's start_kernel() signature, which
-  predates its upstream __noreturn annotation, and add
-  __no_stack_protector. ]
+[ Backport to 6.1.y: apply the sensor adev assignment in this tree's
+  older ipu3/cio2-bridge.c and cio2_bridge_connect_sensor(). ]
 Assisted-by: LLM
 Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/smp.c           |  1 +
- include/linux/compiler_attributes.h | 12 ++++++++++++
- init/main.c                         |  3 ++-
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/media/pci/intel/ipu3/cio2-bridge.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
-index 980f2bc832d98..fa17fdcc55a3d 100644
---- a/arch/powerpc/kernel/smp.c
-+++ b/arch/powerpc/kernel/smp.c
-@@ -1608,6 +1608,7 @@ static void add_cpu_to_masks(int cpu)
- }
+diff --git a/drivers/media/pci/intel/ipu3/cio2-bridge.c b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+index df6c94da2f6ad..e68b735a150a9 100644
+--- a/drivers/media/pci/intel/ipu3/cio2-bridge.c
++++ b/drivers/media/pci/intel/ipu3/cio2-bridge.c
+@@ -280,6 +280,11 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
+ 		}
  
- /* Activate a secondary processor. */
-+__no_stack_protector
- void start_secondary(void *unused)
- {
- 	unsigned int cpu = raw_smp_processor_id();
-diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
-index ab1fe28162b5e..b9778e13b0a08 100644
---- a/include/linux/compiler_attributes.h
-+++ b/include/linux/compiler_attributes.h
-@@ -277,6 +277,18 @@
-  */
- #define __noreturn                      __attribute__((__noreturn__))
+ 		sensor = &bridge->sensors[bridge->n_sensors];
++		/*
++		 * Borrow our adev ref to the sensor for now, on success
++		 * acpi_dev_get(adev) is done further below.
++		 */
++		sensor->adev = adev;
+ 		strscpy(sensor->name, cfg->hid, sizeof(sensor->name));
  
-+/*
-+ * Optional: only supported since GCC >= 11.1, clang >= 7.0.
-+ *
-+ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005fstack_005fprotector-function-attribute
-+ *   clang: https://clang.llvm.org/docs/AttributeReference.html#no-stack-protector-safebuffers
-+ */
-+#if __has_attribute(__no_stack_protector__)
-+# define __no_stack_protector		__attribute__((__no_stack_protector__))
-+#else
-+# define __no_stack_protector
-+#endif
-+
- /*
-  * Optional: not supported by gcc.
-  * Optional: not supported by icc.
-diff --git a/init/main.c b/init/main.c
-index 50b84f1f9ff38..6acfd5a78bd7a 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -908,7 +908,8 @@ static void __init print_unknown_bootoptions(void)
- 	memblock_free(unknown_options, len);
- }
- 
--asmlinkage __visible void __init __no_sanitize_address start_kernel(void)
-+asmlinkage __visible __init __no_sanitize_address __no_stack_protector
-+void start_kernel(void)
- {
- 	char *command_line;
- 	char *after_dashes;
+ 		ret = cio2_bridge_read_acpi_buffer(adev, "SSDB",
 -- 
 2.53.0
 
