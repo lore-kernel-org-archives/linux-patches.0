@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318B74F93CC;
-	Wed, 30 Sep 2026 15:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49B433DEDF;
+	Wed, 30 Sep 2026 15:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783009; cv=none; b=g1BwhRQ5Z32xI32oS1ZCYF7B5HX9hfkIbmLzz5nU3kyL/xalEUnjI5rjxNi9Cz/2hRpL7buimYb+JCN/UAuLMB1jGSfR3cFaM0IAl9tvZlTGwcGnBUjMEdmRKcwEOWXZMUlbIeU/Gp+y/+1ymvyXM/Y9QDcyJD3nlZ1KBfFt0e0=
+	t=1790783011; cv=none; b=N73UoQzuLtJmoSB/K8W5+y+vTrMhviDNsXTmxVuBAPjbF06xdteuhwssplKayoOrV1ful/WakagvhkZlBBjkpjJGkXb5izVW67XHaPOviskL0cuAboatmoe+n3eKc7rWDL+HHkOg1mWfO+SxGV0ufBrV8kwUJJhA2op9Kg9HkSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783009; c=relaxed/simple;
-	bh=sC4+khawGz7LIEBlSBPRJm0Wgs1NenYMvcu5s+PPW54=;
+	s=arc-20240116; t=1790783011; c=relaxed/simple;
+	bh=/jWiSYLW38zKyTBrWFxI0VqX8F75ys8mABIl7e654yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfrU1ZqqPFbKWIRdt58U8I7MtHBPFPzUtKt+OSNv/u5TDz1RKPyt0MKu/CS924dQelRmeqTkFScCDvPhlsxI56YtRQLEb4C/+ZAq4Yhiq4kD8x0c9Wq9J/WZMwpvTNSd+e3Ini4yFvCxDxwJCCtmkJ4vmEBJ2xsz/y8aAwb0fZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iFgwJqjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5LWhz99BbMUSMFF8+IAeViDPzBfGnvcxffrPTEM58ymo7CXVtIWoX7rJfA10xo0zyeIeCvybgiPGc59yDNPcqg262aqW6fAHNz3bZ89x9cghvL7VroYX+tHcau+9HKw45BorrnEZfIVZmYJ0MV5O5ltUIZ3MFRYn5mgG75kJyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dRfciLp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iFgwJqjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0087C1F00893;
-	Wed, 30 Sep 2026 15:43:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dRfciLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD43A1F000FF;
+	Wed, 30 Sep 2026 15:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783004;
-	bh=Fonyg0nqYMSae+n/kMfmVHAPK6ltO+Emy9USRmTNxjk=;
+	s=korg; t=1790783007;
+	bh=OG/uGDoLFiuVa3Gb/tswixDwjwqkOHhuw66qiAWG7qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iFgwJqjYKtXZjHJeCLop+6/cWkmlASUqq7k7dAL/NKlrgtqsqDu3zoxoq7iZSr6mR
-	 Vn5loE3oXJaybOcNaq1Zo9NiMA3AaXmmu9NQ1TzSytaVNAoXJmDl0Gzybez05GipdX
-	 x+KUAFNTL3aBJcNIRCckwmiQ7e538GJF6OB6uWIM=
+	b=0dRfciLpxcQfJS/7HRwUT1hrEVXjKkTpgT+atQopfvpkdroHzToHrurL600r1fMlU
+	 acSRGhBqK1cJv7a/hNy+d7JnWKRJS6hTfN/gY9he2KzF5q2dob0LHgZvV4H6tOG524
+	 jJMoeK85RxBY/Dc9pHIRdNF0zPY7XxV3xbtbPDGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 245/595] powerpc/kexec_file: Use inclusive range checks in add_usable_mem()
-Date: Wed, 30 Sep 2026 17:22:18 +0200
-Message-ID: <20260930152352.986393388@linuxfoundation.org>
+Subject: [PATCH 5.10 246/595] net/mlx5e: Fix setting RS FEC after remapping
+Date: Wed, 30 Sep 2026 17:22:19 +0200
+Message-ID: <20260930152353.008773981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,39 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit c6755be4838d6ccd641effbcdc3d917b82631ff9 ]
+[ Upstream commit b9d755c5a37519fb1354034db1dfeb30e1ba6856 ]
 
-add_usable_mem() adds usable memory ranges for the kdump kernel.
+When a user sets a FEC mode via ethtool, the driver maps the ethtool
+FEC type to the lowest mlx5 bit of that type. For RS FEC, this is
+MLX5E_FEC_RS_528_514 (bit 2). The driver then checks whether this
+bit is supported by at least one link mode by inspecting the
+fec_override_cap fields via mlx5e_fec_in_caps(), and returns
+-EOPNOTSUPP if not.
 
-The ranges are inclusive, but the partial overlap check uses exclusive
-comparisons. This skips ranges with base == loc_end or end == loc_base.
-Use inclusive comparisons instead.
+This check is incorrect. RS FEC has three supported hardware variants:
+RS_528_514 (bit 2), RS_544_514_INTERLEAVED_QUAD (bit 4), and
+RS_544_514 (bit 7). mlx5e_remap_fec_conf_mode() already remaps bit 2
+to the appropriate RS variant per link mode when writing the admin
+fields, but the early capability check is done against the raw
+unmapped bit. As a result, a device that supports RS_544_514 or
+RS_544_514_INTERLEAVED_QUAD but not RS_528_514 will incorrectly reject
+the user's RS FEC request.
 
-Fixes: 7c64e21a1c5a ("powerpc/kexec_file: Restrict memory usage of kdump kernel")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260809162403.18142-2-thorsten.blum@linux.dev
+Remove the early support check from mlx5e_set_fec_mode() and fold
+it into the existing write loop, checking caps against the remapped
+policy per link mode. Return -EOPNOTSUPP before the final register
+write if no link mode accepted the policy.
+
+Fixes: 2608a2f831c4 ("net/mlx5e: Fix return status when setting unsupported FEC mode")
+Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260902164634.3657606-3-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/file_load_64.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/port.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index 9b4fdb47b9ba6..61d8d143331dc 100644
---- a/arch/powerpc/kexec/file_load_64.c
-+++ b/arch/powerpc/kexec/file_load_64.c
-@@ -478,7 +478,7 @@ static int add_usable_mem(struct umem_info *um_info, u64 base, u64 end)
- 		loc_end = um_info->ranges[i].end;
- 		if (loc_base >= base && loc_end <= end)
- 			add = true;
--		else if (base < loc_end && end > loc_base) {
-+		else if (base <= loc_end && end >= loc_base) {
- 			if (loc_base < base)
- 				loc_base = base;
- 			if (loc_end > end)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
+index 89510cac46c22..0ac51c6d1900a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
+@@ -542,6 +542,7 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
+ 	u32 in[MLX5_ST_SZ_DW(pplm_reg)] = {};
+ 	int sz = MLX5_ST_SZ_BYTES(pplm_reg);
+ 	u16 fec_policy_auto = 0;
++	bool fec_set = false;
+ 	int err;
+ 	int i;
+ 
+@@ -554,9 +555,6 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
+ 	if (fec_policy >= (1 << MLX5E_FEC_LLRS_272_257_1) && !fec_50g_per_lane)
+ 		return -EOPNOTSUPP;
+ 
+-	if (fec_policy && !mlx5e_fec_in_caps(dev, fec_policy))
+-		return -EOPNOTSUPP;
+-
+ 	MLX5_SET(pplm_reg, in, local_port, 1);
+ 	err = mlx5_core_access_reg(dev, in, sz, out, sz, MLX5_REG_PPLM, 0, 0);
+ 	if (err)
+@@ -583,12 +581,17 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
+ 		mlx5e_get_fec_cap_field(out, &fec_caps, i);
+ 
+ 		/* policy supported for link speed */
+-		if (fec_caps & conf_fec)
++		if (fec_caps & conf_fec) {
+ 			mlx5e_fec_admin_field(out, &conf_fec, 1, i);
+-		else
+-			/* set FEC to auto*/
++			fec_set = true;
++		} else {
++			/* set FEC to auto */
+ 			mlx5e_fec_admin_field(out, &fec_policy_auto, 1, i);
++		}
+ 	}
+ 
++	if (fec_policy && !fec_set)
++		return -EOPNOTSUPP;
++
+ 	return mlx5_core_access_reg(dev, out, sz, out, sz, MLX5_REG_PPLM, 0, 1);
+ }
 -- 
 2.53.0
 
