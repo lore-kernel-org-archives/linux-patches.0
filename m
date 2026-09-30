@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056BE50EC15;
-	Wed, 30 Sep 2026 16:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE67834D916;
+	Wed, 30 Sep 2026 16:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785159; cv=none; b=CzEu8oJc8D1GXX65DsRpvH4HBwnUgf1EYuJ9XPdnEsE51819bRB68S27glSh0jqItGkaShHGMZsgm+0IekTlCCVzyqM2JJXjKiepVylK+Ql7yVSUT8GcDXaG6mDi6Ub8LVJd/D6m9nv0j+WBhozCY8cgNvRMBXBMj0bcmjkmMmI=
+	t=1790785159; cv=none; b=HaB/7SRE8Z3AhZw+bK3H0VzxHc67IHQ3AIYbqjaTHgwQaQGKUoj8XBYoYuzqZCW/a2JW8fut0MDUDxr5HZp+nlWjuhJ4/Jt5e+mjdDOBtunsRu5b2rv2TNcW/La2vIet7vdBO333VIQQmpMJg3mEp6fF0KDS3rWc3mm/2Y4AxZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790785159; c=relaxed/simple;
-	bh=+DqdGGaRTdSG9/w0Fk8sruKfUQd3S+4KfUo6MS3vw4Y=;
+	bh=ds7XhIlCLAKQU7E03nKzvbe2KRND4rOZVWjCCgMfm54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mrs+nDeQcLx6h0RBZTYLDZjDkQwJoHCnuqvI/blvbcLfBxKDliEa+yDOCMROtZXUe7V1Ttkkx9f2BKwePnXviTVxA23nzSwPsWs9irle0c43qpU/YOe1/DY2+xS1zyemusNJz5/xfu2GO44b2FqG9l+rylF5HIuzRvKzIQLKlTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1VIkROo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b/DCG6D7xjQLpI9QAe5cKV/TaZ5UClJd/fEcyQByRST3LCkmxt+uCQuG6bb0WgYq9ETgRcjzGN/vYncutYawNIXAhtCrp3c8X2kT7T8TScHrGujnf41us6EEbw5fKab63WkyaSr4gj3wKjzVjJTYddGr0PLugHzuOHC+zQPEs24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAeo0IP9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1VIkROo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E656A1F0089B;
-	Wed, 30 Sep 2026 16:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAeo0IP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE021F0089A;
+	Wed, 30 Sep 2026 16:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785155;
-	bh=2rZEA/j92GlvqlGS/xjkcZ84/kDB2tm09qbwKhQZYZE=;
+	s=korg; t=1790785152;
+	bh=TMXL1axo+9MLkW4KiyxdwNfk3KmBq3uRTVfWVGazk5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y1VIkROopkx9y7eSDRdtiXmcIlaYAYfTRm0mmwI7oFkM1YYfHP7FFL9aBFRfrFCfb
-	 KBas9nzU+3Fa83Ccafksp6qjDbGDBUgHCLtvPgdn59KDG1pKXsylcWH9c8zVIXfOzw
-	 rTbAFwoytfjzC2nC5WNbl+bm2w3ikgiQ7uPkjbGY=
+	b=ZAeo0IP9JLjROc6bO2BdVEszW5+aCNUQocvi1A6jJ5haABAE7NMsUftih9jDYWb1Z
+	 gRN8ZkpTOFzDuPu14m3vQSeoDSIbJ6hfiQRGa8Yrj6fcJvcfU+5HpiMi3KyV6DVhSP
+	 7UrcfWMHhcYW0QMUOTY3olzAd1UwDJRC76mnKcUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Joe Damato <joe@dama.to>,
+	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 410/982] net: dsa: bcm_sf2: bound the CFP rule dump by the callers buffer size
-Date: Wed, 30 Sep 2026 17:19:06 +0200
-Message-ID: <20260930152425.613647299@linuxfoundation.org>
+Subject: [PATCH 6.1 409/982] bonding: use skb_cow_head() in bond_do_alb_xmit() and rlb_arp_xmit()
+Date: Wed, 30 Sep 2026 17:19:05 +0200
+Message-ID: <20260930152425.592593057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,42 +54,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cdb719f4b8596d9ccee2d56d204c2c4dce982f46 ]
+[ Upstream commit 1746ef2e2df2ad71c66eca56364d56bde284523b ]
 
-bcm_sf2_cfp_rule_get_all() walks the whole cfp.unique bitmap into
-rule_locs[] without consulting nfc->rule_cnt, which is how many entries
-the caller had room for.  ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN
-and the ioctl sizes the buffer from the rule_cnt userspace passes in, so
-once an admin has installed CFP rules any user can ask for fewer slots
-than there are rules and run off the end of the allocation.  A rule_cnt
-of 0 leaves the buffer pointer NULL and the walk dereferences it.
+In bond_do_alb_xmit() and rlb_arp_xmit(), make sure to unclone
+skb head via skb_cow_head() before modifying the source MAC address
+(Ethernet header and ARP payload) to avoid silent corruption if
+the skb is shared or cloned. Avoid caching the header pointers
+across skb_cow_head().
 
-Fixes: 7318166cacad ("net: dsa: bcm_sf2: Add support for ethtool::rxnfc")
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260903032611.3000029-2-kuba@kernel.org
+In rlb_arp_xmit(), only modify arp->mac_src if it differs from
+tx_slave->dev->dev_addr to avoid an unnecessary copy and head
+reallocation.
+
+Also, we should not assume mac header is set in output path.
+
+Use skb_eth_hdr() instead of eth_hdr() to fix the issue,
+and remove now redundant skb_reset_mac_header() calls.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Cc: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260903143940.1180513-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/bcm_sf2_cfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/bonding/bond_alb.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/dsa/bcm_sf2_cfp.c b/drivers/net/dsa/bcm_sf2_cfp.c
-index c4010b7bf0899..f48ac7b021f37 100644
---- a/drivers/net/dsa/bcm_sf2_cfp.c
-+++ b/drivers/net/dsa/bcm_sf2_cfp.c
-@@ -1088,6 +1088,8 @@ static int bcm_sf2_cfp_rule_get_all(struct bcm_sf2_priv *priv,
- 	unsigned int index = 1, rules_cnt = 0;
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 8930652efe321..db2278e7b1330 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -678,9 +678,15 @@ static struct slave *rlb_arp_xmit(struct sk_buff *skb, struct bonding *bond)
+ 	if (arp->op_code == htons(ARPOP_REPLY)) {
+ 		/* the arp must be sent on the selected rx channel */
+ 		tx_slave = rlb_choose_channel(skb, bond, arp);
+-		if (tx_slave)
++		if (tx_slave &&
++		    !ether_addr_equal_64bits(arp->mac_src,
++					     tx_slave->dev->dev_addr)) {
++			if (unlikely(skb_cow_head(skb, 0)))
++				return NULL;
++			arp = (struct arp_pkt *)skb_network_header(skb);
+ 			bond_hw_addr_copy(arp->mac_src, tx_slave->dev->dev_addr,
+ 					  tx_slave->dev->addr_len);
++		}
+ 		netdev_dbg(bond->dev, "(slave %s): Server sent ARP Reply packet\n",
+ 			   tx_slave ? tx_slave->dev->name : "NULL");
+ 	} else if (arp->op_code == htons(ARPOP_REQUEST)) {
+@@ -1341,7 +1347,6 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
+ 				    struct slave *tx_slave)
+ {
+ 	struct alb_bond_info *bond_info = &(BOND_ALB_INFO(bond));
+-	struct ethhdr *eth_data = eth_hdr(skb);
  
- 	for_each_set_bit_from(index, priv->cfp.unique, priv->num_cfp_rules) {
-+		if (rules_cnt == nfc->rule_cnt)
-+			return -EMSGSIZE;
- 		rule_locs[rules_cnt] = index;
- 		rules_cnt++;
- 	}
+ 	if (!tx_slave) {
+ 		/* unbalanced or unassigned, send through primary */
+@@ -1352,7 +1357,9 @@ static netdev_tx_t bond_do_alb_xmit(struct sk_buff *skb, struct bonding *bond,
+ 
+ 	if (tx_slave && bond_slave_can_tx(tx_slave)) {
+ 		if (tx_slave != rcu_access_pointer(bond->curr_active_slave)) {
+-			ether_addr_copy(eth_data->h_source,
++			if (unlikely(skb_cow_head(skb, 0)))
++				return bond_tx_drop(bond->dev, skb);
++			ether_addr_copy(skb_eth_hdr(skb)->h_source,
+ 					tx_slave->dev->dev_addr);
+ 		}
+ 
+@@ -1376,8 +1383,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
+ 	struct ethhdr *eth_data;
+ 	u32 hash_index;
+ 
+-	skb_reset_mac_header(skb);
+-	eth_data = eth_hdr(skb);
++	eth_data = skb_eth_hdr(skb);
+ 
+ 	/* Do not TX balance any multicast or broadcast */
+ 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
+@@ -1429,8 +1435,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
+ 	u32 hash_index = 0;
+ 	int hash_size = 0;
+ 
+-	skb_reset_mac_header(skb);
+-	eth_data = eth_hdr(skb);
++	eth_data = skb_eth_hdr(skb);
+ 
+ 	switch (ntohs(skb->protocol)) {
+ 	case ETH_P_IP: {
 -- 
 2.53.0
 
