@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A63D4F7CBF;
-	Wed, 30 Sep 2026 17:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2EA5187C2;
+	Wed, 30 Sep 2026 17:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788042; cv=none; b=d1Ik/oqdvvwFvigtwmI9m3cFf1R6m06uZDdbeKkAqTYGHnFBs4mCY41PCjQQCM2OXfHWiD1MJeqdBRguEdTI6/y4pzt8kpNJiM3DtABO+9xOxtWSh7eMLC7//WwqH/RCaR92zHx1Lh5rZZ+tR+mj+Ht5k9PgpPs+2noZfxVqrmE=
+	t=1790788045; cv=none; b=tp4vjWbN3zUjfUCcgqcHkZhPOlqkTdTUTq1PiDUlZT+AZvyi8QKefH5dhyabcM6D01iD+2g2YcdLhK1DMHwws0HV6dRnoBh2tRIeGqGEedq7TYyMDrPWXmXnOJ+S4vow+R2YPSgZH2eeIJVy3S4hboCn7Bd1SaiCft29sS2Jxs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788042; c=relaxed/simple;
-	bh=h9scZS27IQHwd17asNXBCZPAeMZLmmk5NB3QRiAa1GU=;
+	s=arc-20240116; t=1790788045; c=relaxed/simple;
+	bh=Uxu8sVTDAprTV/oHMYV8PjT5LZMRnpPVjTJdFu4Cx0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZ7EpMax8cQBNSV02ptEyHL5kTqKobkxL8wzsqHgrAM3Mir2SGqZzXMOdSpmhTHxYOHi4M1rK9x9OJHq6ka0cjamqM+QKQqDSZDTExLi3TAi4qfgb+FAunAJzlpx9Q5tbhMO19vj1xM70xxKwG5IXf3O3tocgi4Ck+Oh0dLzRhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTNiT0Ob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b99qVJvS8Ulo8hbNUDh9iV5PqYhmg9+ct9VM7uCbf0d5uYU1ti8qNkf0EujrgGvEcP621B7yIOQUSYPyLVZsoKzZgwcujEpuZzmCF8LROwyruI3QTCzFeeiWUnfPexV6vf1vsra46YR6PWc3KqwMOvRmMM0my3LoJl2+PvZZy9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5OZoK+D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTNiT0Ob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32BB1F000FF;
-	Wed, 30 Sep 2026 17:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5OZoK+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8BB1F000FF;
+	Wed, 30 Sep 2026 17:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788041;
-	bh=0k/ArC3FRWZGlKg4A/Rz1l09PuqfieJ/Uh4TWioHvaI=;
+	s=korg; t=1790788044;
+	bh=6o/9WLqT47nt97sxzfZ3eqSsXQbAK/3g9KFI3eQKi8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTNiT0ObG9/QTsZ5Sg/xsBM4dxJja1ZFO/NbjeeMdrPmtowzWdNbmx4IYfqQdFMZ5
-	 ym3a74srrK+Z83gI2YIfq5x1Vxb7fyroqkOSKMiSqjVGEXfMDgokW9pi6/RGcrrkfZ
-	 C1Lzcpy5xIbuHrp9ODSLACM17L+eh20XE7WNSrPI=
+	b=F5OZoK+DlmeeWgsz4KLWNOhABcVW2UgQhDAUrBn1q7tobaJVYwueZynb4GYm2Gsqn
+	 6Tv82FZ1uo/tgmfdR2bqUqjaEagD/nkfLFmdbeolXwEqHZ1BKj1juhabhY0Y81XI9N
+	 xVUulwxlyubgslcS/MJkJP+hHGTf5vD6xCRAGxDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 441/457] i2c: qcom-geni: Fix hardcoded clock index in SE_GENI_CLK_SEL
-Date: Wed, 30 Sep 2026 17:29:06 +0200
-Message-ID: <20260930152355.516157693@linuxfoundation.org>
+	Davi Chaves Azevedo <davichazbh@gmail.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 7.2 399/457] sched/cache: Refresh LLC capacity across CPU hotplug, to fix capacity underestimation bug
+Date: Wed, 30 Sep 2026 17:28:24 +0200
+Message-ID: <20260930152354.606518028@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,119 +55,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Davi Chaves Azevedo <davichazbh@gmail.com>
 
-[ Upstream commit cb97bf3d4f91453b881acaf8e9f0cc47bb40b604 ]
+commit 3cb0243767fd033bdce95f4f1b5882172a2f8119 upstream.
 
-qcom_geni_i2c_conf() writes a hardcoded 0 to SE_GENI_CLK_SEL, which
-selects an index from the hardware clock performance table. This always
-picks the first table entry regardless of the actual source clock
-configuration. On platforms where the matching entry is not at index 0,
-the wrong source clock divider is active and the I2C bus runs at an
-incorrect frequency.
+The scheduler scales LLC capacity by the fraction of cache-sharing CPUs
+covered by a domain:
 
-Use geni_se_clk_freq_match() in geni_i2c_clk_map_idx() to find the
-performance table index for the source clock (32 MHz or 19.2 MHz). Store
-the resolved index in a new clk_idx field in geni_i2c_dev and write it
-to SE_GENI_CLK_SEL instead of the hardcoded 0.
+  llc_bytes = cache_size * span_weight / shared_weight
 
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Cc: <stable@vger.kernel.org> # v4.19+
-Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260921-i2c-fix-se-clk-conf-v2-1-8b5537ceff2d@oss.qualcomm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+During CPU teardown, sched_cpu_deactivate() rebuilds scheduler domains
+before cacheinfo_cpu_pre_down() removes the CPU from shared_cpu_map. The
+new domains therefore use the old sharing weight. The later call to
+sched_update_llc_bytes() looks up the departing CPU's sd_llc, which has
+already been detached, and returns without correcting the surviving CPUs.
+
+On a Ryzen 5 7535U with twelve logical CPUs sharing a 16 MiB LLC,
+offlining one SMT sibling left the remaining CPUs with:
+
+  llc_bytes = floor(16777216 * 11 / 12) = 15379114 bytes
+
+The correct capacity is still 16777216 bytes. On systems with active
+cache-aware scheduling, an underestimated capacity can cause
+exceed_llc_capacity() to reject aggregation for a process whose footprint
+would fit. Unchanged cpuset partitions sharing the physical cache can
+also retain stale capacity when a CPU comes online in another partition.
+
+Pass the cache-sharing mask already retained by cacheinfo to the
+scheduler update. Refresh every surviving CPU using its own LLC domain
+so that each partition receives the correct share. This also preserves
+the correction needed as cache-sharing maps grow during boot.
+
+Keep the existing CPU-hotplug and scheduler-domain synchronization. The
+update remains on the hotplug path; no steady-state scheduling operation
+or persistent allocation is added.
+
+Fixes: 7030513a0877 ("sched/cache: Calculate the LLC size and store it in sched_domain")
+Signed-off-by: Davi Chaves Azevedo <davichazbh@gmail.com>
+Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Tested-by: Chen Yu <yu.c.chen@intel.com>
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: <stable@kernel.org> # v7.2.x
+Link: https://patch.msgid.link/6751d93e15889e624796c74db0bfe66603d60b1b.1790035273.git.tim.c.chen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |   38 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 33 insertions(+), 5 deletions(-)
+ drivers/base/cacheinfo.c       | 11 ++++++-----
+ include/linux/sched/topology.h |  4 ++--
+ kernel/sched/topology.c        | 22 +++++++++++++---------
+ 3 files changed, 21 insertions(+), 16 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -77,6 +77,9 @@ enum geni_i2c_err_code {
- #define XFER_TIMEOUT		HZ
- #define RST_TIMEOUT		HZ
+diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
+index 9f9c72727a05..7a47a392568a 100644
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -1040,9 +1040,10 @@ static int cacheinfo_cpu_online(unsigned int cpu)
+ 	rc = cache_add_dev(cpu);
+ 	if (rc)
+ 		goto err;
+-	if (cpu_map_shared_cache(true, cpu, &cpu_map))
++	if (cpu_map_shared_cache(true, cpu, &cpu_map)) {
+ 		update_per_cpu_data_slice_size(true, cpu, cpu_map);
+-	sched_update_llc_bytes(cpu);
++		sched_update_llc_bytes(cpu_map);
++	}
+ 	return 0;
+ err:
+ 	free_cache_attributes(cpu);
+@@ -1059,10 +1060,10 @@ static int cacheinfo_cpu_pre_down(unsigned int cpu)
+ 		cpu_cache_sysfs_exit(cpu);
  
-+#define GENI_SE_CLK_32MHZ	(32 * HZ_PER_MHZ)
-+#define GENI_SE_CLK_19P2MHZ	19200000UL
-+
- struct geni_i2c_desc {
- 	bool no_dma_support;
- 	unsigned int tx_fifo_depth;
-@@ -114,6 +117,7 @@ struct geni_i2c_dev {
- 	spinlock_t lock;
- 	u32 clk_freq_out;
- 	const struct geni_i2c_clk_fld *clk_fld;
-+	u32 clk_idx;
- 	void *dma_buf;
- 	size_t xfer_len;
- 	dma_addr_t dma_addr;
-@@ -184,19 +188,44 @@ static const struct geni_i2c_clk_fld gen
- static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
- {
- 	const struct geni_i2c_clk_fld *itr;
-+	unsigned long res_freq;
- 
--	if (clk_get_rate(gi2c->se.clk) == 32 * HZ_PER_MHZ)
-+	/*
-+	 * Frequency counter tables are calibrated for a specific source
-+	 * clock frequency and are not valid for any multiple of it
-+	 * (e.g. 64 MHz, 128 MHz).
-+	 * Use exact=true and verify res_freq matches req_freq literally
-+	 * to reject harmonics: a 64 MHz clock that divides evenly to
-+	 * 32 MHz would pass exact matching but produce double the intended
-+	 * I2C frequency with these counter values.
-+	 */
-+	if (!geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_32MHZ,
-+				    &gi2c->clk_idx, &res_freq, true) &&
-+	    res_freq == GENI_SE_CLK_32MHZ) {
- 		itr = geni_i2c_clk_map_32mhz;
--	else
-+	} else if (!geni_se_clk_freq_match(&gi2c->se, GENI_SE_CLK_19P2MHZ,
-+					   &gi2c->clk_idx, &res_freq, true) &&
-+		   res_freq == GENI_SE_CLK_19P2MHZ) {
- 		itr = geni_i2c_clk_map_19p2mhz;
-+	} else {
-+		dev_err(gi2c->se.dev,
-+			"Unsupported SE source clock: must be exactly 32 MHz or 19.2 MHz\n");
-+		return -EINVAL;
+ 	free_cache_attributes(cpu);
+-	if (nr_shared > 1)
++	if (nr_shared > 1) {
+ 		update_per_cpu_data_slice_size(false, cpu, cpu_map);
+-
+-	sched_update_llc_bytes(cpu);
++		sched_update_llc_bytes(cpu_map);
 +	}
  
- 	while (itr->clk_freq_out != 0) {
- 		if (itr->clk_freq_out == gi2c->clk_freq_out) {
- 			gi2c->clk_fld = itr;
-+			dev_dbg(gi2c->se.dev,
-+				"I2C clk selected: freq: %u Hz, clk_idx: %u\n",
-+				gi2c->clk_freq_out, gi2c->clk_idx);
- 			return 0;
- 		}
- 		itr++;
- 	}
-+
-+	dev_err(gi2c->se.dev, "Unsupported I2C output frequency %u Hz\n", gi2c->clk_freq_out);
-+
- 	return -EINVAL;
+ 	return 0;
+ }
+diff --git a/include/linux/sched/topology.h b/include/linux/sched/topology.h
+index b5d9d7c2b8ad..f96812d71c51 100644
+--- a/include/linux/sched/topology.h
++++ b/include/linux/sched/topology.h
+@@ -281,9 +281,9 @@ static inline int task_node(const struct task_struct *p)
  }
  
-@@ -205,7 +234,7 @@ static void qcom_geni_i2c_conf(struct ge
- 	const struct geni_i2c_clk_fld *itr = gi2c->clk_fld;
- 	u32 val;
+ #ifdef CONFIG_SCHED_CACHE
+-extern void sched_update_llc_bytes(unsigned int cpu);
++extern void sched_update_llc_bytes(const struct cpumask *cpus);
+ #else
+-static inline void sched_update_llc_bytes(unsigned int cpu) { }
++static inline void sched_update_llc_bytes(const struct cpumask *cpus) { }
+ #endif
  
--	writel_relaxed(0, gi2c->se.base + SE_GENI_CLK_SEL);
-+	writel_relaxed(gi2c->clk_idx, gi2c->se.base + SE_GENI_CLK_SEL);
+ #endif /* _LINUX_SCHED_TOPOLOGY_H */
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index 0248227d983a..3dab0253976f 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -985,8 +985,8 @@ void sched_cache_active_set(void)
+ }
  
- 	val = (itr->clk_div << CLK_DIV_SHFT) | SER_CLK_EN;
- 	writel_relaxed(val, gi2c->se.base + GENI_SER_M_CLK_CFG);
-@@ -1055,8 +1084,7 @@ static int geni_i2c_resources_init(struc
+ /*
+- * Update the bottom sched_domain's llc_bytes for @cpu and all its
+- * LLC siblings. Called from cacheinfo_cpu_online() or
++ * Update the bottom sched_domain's llc_bytes for @cpus sharing a physical
++ * LLC. Called from cacheinfo_cpu_online() or
+  * cacheinfo_cpu_pre_down() with cpu hotplug lock held.
+  *
+  * Note: get_effective_llc_bytes() returns 0 on PowerPC.
+@@ -996,17 +996,13 @@ void sched_cache_active_set(void)
+  * and does not populates the per-CPU struct cpu_cacheinfo array
+  * that get_cpu_cacheinfo_llc() reads.
+  */
+-void sched_update_llc_bytes(unsigned int cpu)
++void sched_update_llc_bytes(const struct cpumask *cpus)
+ {
+ 	struct sched_domain *sd, *sdp;
+ 	unsigned int i;
  
- 	ret = geni_i2c_clk_map_idx(gi2c);
- 	if (ret)
--		return dev_err_probe(gi2c->se.dev, ret, "Invalid clk frequency %d Hz\n",
--				     gi2c->clk_freq_out);
-+		return ret;
+ 	sched_domains_mutex_lock();
  
- 	return geni_icc_set_bw_ab(&gi2c->se, GENI_DEFAULT_BW, GENI_DEFAULT_BW,
- 				  Bps_to_icc(gi2c->clk_freq_out));
+-	sdp = rcu_dereference_sched_domain(per_cpu(sd_llc, cpu));
+-	if (!sdp)
+-		goto unlock;
+-
+ 	/*
+ 	 * ci->shared_cpu_map is built incrementally as CPUs come
+ 	 * online, so the first CPU in an LLC initially sees
+@@ -1014,14 +1010,22 @@ void sched_update_llc_bytes(unsigned int cpu)
+ 	 * get_effective_llc_bytes().  Re-evaluating every LLC
+ 	 * sibling on each online event corrects this once the full
+ 	 * shared_cpu_map is known.
++	 *
++	 * The departing CPU's domains have already been detached when
++	 * cacheinfo removes it. Use the surviving cache siblings instead.
++	 * They may belong to different cpuset partitions, so use each CPU's
++	 * own LLC domain to scale its share of the physical cache.
+ 	 */
+-	for_each_cpu(i, sched_domain_span(sdp)) {
++	for_each_cpu(i, cpus) {
++		sdp = rcu_dereference_sched_domain(per_cpu(sd_llc, i));
++		if (!sdp)
++			continue;
++
+ 		sd = rcu_dereference_sched_domain(cpu_rq(i)->sd);
+ 		if (sd)
+ 			sd->llc_bytes = get_effective_llc_bytes(i, sdp);
+ 	}
+ 
+-unlock:
+ 	sched_domains_mutex_unlock();
+ }
+ 
+-- 
+2.55.0
+
 
 
