@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0173753C3DB;
-	Wed, 30 Sep 2026 17:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1F75275B5;
+	Wed, 30 Sep 2026 17:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790063; cv=none; b=tAlhKVHYu6uC2wBwrst0nBoJ62KZHVVJhpxxfqFJecHPgkG971m48khjWKPqOTeFvuN/yAGrE0ok2p+sqZn0Epo1nNPPs20sATeuF/yBRlWYV+6hoH77xYAgkF0vVjKAesRsleSCp9JHH95BcUh+ICkrE4syulhX4iNjnAsXC6A=
+	t=1790790066; cv=none; b=FJLBKjyTD6HklJzT7Q6pfnjBw6abYMu4oyWqtEdS243cqflG5fcO2qnr0xVxR23L9NEEE9TVVUnfh3DY06/uTOVe0TJyD9mCJ0/kIgE1x47mF6lhnNca2DoBo4X/wCbefeN1QPRBzIxNbLKw9DJLJX6v6SNuHZb5Kijp/pmFZo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790063; c=relaxed/simple;
-	bh=o4vxk0DrtNkcrmF3stgs0bHj23pBayD0GcSVN06ZwHM=;
+	s=arc-20240116; t=1790790066; c=relaxed/simple;
+	bh=DzetkklPVnuc3Fx61jzDVcpKCEnWe4NnLxz5XwOjn+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oo2GKwWW1O71+s/ftonp+wuvWBqSlSHvyX1ZPRXZ8pjAaCASBAPRljPLN0oS5U4X/iVlvPsEUmeLwjTrbuxBPR2zQpWJvumltdJpgTukcPyNIDeofDitQTe7NfEQpxKVd5CiT65eiVYcdtrYTVV61f0h0haA/eeWp9lF9Nv2gCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqOf+RxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TWCR26UH9drAtXsFe3BARPGh93mSA7LGCPsbDXGPbMjKB5Iyvtnio5Su1OS2PwJ6BbzZ6V1CRNmAVoHjW67B2rRgsU0zqqCinmdcjGb30FlUTX8k4U2tCv+I6twPzWzcDxzyQQgmh4/0Bf+ahau5kmvxUXsYjH21Vxw5EJoxKJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRrDlPeV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqOf+RxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB871F000FF;
-	Wed, 30 Sep 2026 17:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRrDlPeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DD11F000FF;
+	Wed, 30 Sep 2026 17:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790061;
-	bh=3sxRkYDNnFrIEAkB5dh7zvclq62apPWJ/pQbRop3/0c=;
+	s=korg; t=1790790064;
+	bh=RZ+MdMbTxEojBNQ+bb/0Ynps9sfAmIyl9g/75gqZvsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AqOf+RxQkrLRp+c9x3B7nix3Ca63F6AoS+pHHs0rKwaeCs/UyAWxWXFyMztycc5aX
-	 2RSVBV5h0fFtNwQ4C7qloDWCOAcENVa8Wl6Glxtc3e+dyaVUBaYNrHJ2W3rD9enqLo
-	 +f92rXOS6XBA+yViVs7sujA4bvG8/rjHOiw2OsyE=
+	b=MRrDlPeVEsMtHo1vavdICZXwJTUhbm/tG0AO8HQa26UeFnBl7K8/FUpVl1dfP7IZM
+	 7qgQOv7rS+M8PW0BhfiRtik3+RXZYnCK5mGDlXGYGF0iW0MvSp4sa6WSWhbnXrb2i4
+	 T+XYn4xHUwoD/p8Ql7nwm4PZfTSPCUa9QRNafHb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 698/877] drm/amdgpu: add a helper to calculate ring distance
-Date: Wed, 30 Sep 2026 17:26:49 +0200
-Message-ID: <20260930152429.740598766@linuxfoundation.org>
+Subject: [PATCH 6.12 699/877] drm/amdgpu: plumb timedout fence through to force completion
+Date: Wed, 30 Sep 2026 17:26:50 +0200
+Message-ID: <20260930152429.763251036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -53,59 +54,185 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 08e7d6c3cee880bd3ec3eb14c478f9fa805b0bdc ]
+[ Upstream commit c184df870db1e328691ea0fbb7d0e59efd9d3f9f ]
 
-Add a helper to calculate the distance in DWs between
-two wptrs.
+When we do a full adapter reset, if we know the timedout fence
+mark the fence with -ETIME rather than -ECANCELED so it
+gets properly handled by userspace.
 
-Reviewed-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+v2: rebase
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+
+Adapt this dependency to 6.12 without importing newer queue-reset
+infrastructure. Drop the SDMA/VCN/JPEG reset hunks and the adjacent
+ring-reset helper context because those functions do not exist here.
+Keep the two-argument force-completion API and its fence error handling.
+
+Use &job->hw_fence.base for this branch's embedded job fence, and update
+the additional per-ring timeout caller in amdgpu_job.c to pass that fence.
+Preserve the existing full-reset job-fence clearing and resubmission flow.
+The UVD resume caller now matches the context required by the target fix.
+No functions are added.
+
+The prerequisite ba038065655c also introduced a goto to the absent
+free_fence label in amdgpu_ib_schedule(). Restore the original return r:
+6.12 embeds job fences and allocates non-job fences later, in
+amdgpu_fence_emit(), so this VM-flush failure path has no new fence to
+free. This removes the pre-existing build failure without importing the
+newer fence allocation and cleanup infrastructure.
+
+[ sashal: Reduced backport -- upstream c184df870db1e touches 9 file(s), this
+  backport carries 7. Not backported here:
+  drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c
+  drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
+  drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
+  drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
+
 Stable-dep-of: 6760f5cb12d2 ("drm/amdgpu: avoid force-completing uninitialized UVD rings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c  |    6 +++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c   |   25 ++++++++++++++++++++++---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c      |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c     |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h    |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c     |    2 +-
+ 7 files changed, 33 insertions(+), 9 deletions(-)
 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -1962,7 +1962,7 @@ static int amdgpu_debugfs_ib_preempt(voi
+ 		/* swap out the old fences */
+ 		amdgpu_ib_preempt_fences_swap(ring, fences);
+ 
+-		amdgpu_fence_driver_force_completion(ring);
++		amdgpu_fence_driver_force_completion(ring, NULL);
+ 
+ 		/* resubmit unfinished jobs */
+ 		amdgpu_ib_preempt_job_recovery(&ring->sched);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5470,6 +5470,7 @@ int amdgpu_device_pre_asic_reset(struct
+ {
+ 	int i, r = 0;
+ 	struct amdgpu_job *job = NULL;
++	struct dma_fence *fence = NULL;
+ 	struct amdgpu_device *tmp_adev = reset_context->reset_req_dev;
+ 	bool need_full_reset =
+ 		test_bit(AMDGPU_NEED_FULL_RESET, &reset_context->flags);
+@@ -5482,6 +5483,9 @@ int amdgpu_device_pre_asic_reset(struct
+ 
+ 	amdgpu_fence_driver_isr_toggle(adev, true);
+ 
++	if (job)
++		fence = &job->hw_fence.base;
++
+ 	/* block all schedulers and reset given job's ring */
+ 	for (i = 0; i < AMDGPU_MAX_RINGS; ++i) {
+ 		struct amdgpu_ring *ring = adev->rings[i];
+@@ -5495,7 +5499,7 @@ int amdgpu_device_pre_asic_reset(struct
+ 		amdgpu_fence_driver_clear_job_fences(ring);
+ 
+ 		/* after all hw jobs are reset, hw fence is meaningless, so force_completion */
+-		amdgpu_fence_driver_force_completion(ring);
++		amdgpu_fence_driver_force_completion(ring, fence);
+ 	}
+ 
+ 	amdgpu_fence_driver_isr_toggle(adev, false);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+@@ -594,7 +594,7 @@ void amdgpu_fence_driver_hw_fini(struct
+ 			r = -ENODEV;
+ 		/* no need to trigger GPU reset as we are unloading */
+ 		if (r)
+-			amdgpu_fence_driver_force_completion(ring);
++			amdgpu_fence_driver_force_completion(ring, NULL);
+ 
+ 		if (!drm_dev_is_unplugged(adev_to_drm(adev)) &&
+ 		    ring->fence_drv.irq_src &&
+@@ -739,11 +739,30 @@ void amdgpu_fence_driver_set_error(struc
+  * amdgpu_fence_driver_force_completion - force signal latest fence of ring
+  *
+  * @ring: fence of the ring to signal
++ * @timedout_fence: fence of the timedout job
+  *
+  */
+-void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring)
++void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring,
++					  struct dma_fence *timedout_fence)
+ {
+-	amdgpu_fence_driver_set_error(ring, -ECANCELED);
++	struct amdgpu_fence_driver *drv = &ring->fence_drv;
++	unsigned long flags;
++
++	spin_lock_irqsave(&drv->lock, flags);
++	for (unsigned int i = 0; i <= drv->num_fences_mask; ++i) {
++		struct dma_fence *fence;
++
++		fence = rcu_dereference_protected(drv->fences[i],
++						  lockdep_is_held(&drv->lock));
++		if (fence && !dma_fence_is_signaled_locked(fence)) {
++			if (fence == timedout_fence)
++				dma_fence_set_error(fence, -ETIME);
++			else
++				dma_fence_set_error(fence, -ECANCELED);
++		}
++	}
++	spin_unlock_irqrestore(&drv->lock, flags);
++
+ 	amdgpu_fence_write(ring, ring->fence_drv.sync_seq);
+ 	amdgpu_fence_process(ring);
+ }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
+@@ -217,7 +217,7 @@ int amdgpu_ib_schedule(struct amdgpu_rin
+ 		r = amdgpu_vm_flush(ring, job, need_pipe_sync);
+ 		if (r) {
+ 			amdgpu_ring_undo(ring);
+-			goto free_fence;
++			return r;
+ 		}
+ 	}
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -148,7 +148,7 @@ static enum drm_gpu_sched_stat amdgpu_jo
+ 			if (amdgpu_ring_sched_ready(ring))
+ 				drm_sched_stop(&ring->sched, s_job);
+ 			atomic_inc(&ring->adev->gpu_reset_counter);
+-			amdgpu_fence_driver_force_completion(ring);
++			amdgpu_fence_driver_force_completion(ring, &job->hw_fence.base);
+ 			if (amdgpu_ring_sched_ready(ring))
+ 				drm_sched_start(&ring->sched);
+ 			goto exit;
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-@@ -431,6 +431,17 @@ static inline void amdgpu_ring_write_mul
- 	ring->count_dw -= count_dw;
- }
+@@ -146,7 +146,8 @@ extern const struct drm_sched_backend_op
  
-+static inline unsigned int amdgpu_ring_get_dw_distance(struct amdgpu_ring *ring,
-+						       u64 start_wptr, u64 end_wptr)
-+{
-+	unsigned int start = start_wptr & ring->buf_mask;
-+	unsigned int end = end_wptr & ring->buf_mask;
-+
-+	if (end < start)
-+		end += ring->ring_size >> 2;
-+	return end - start;
-+}
-+
- /**
-  * amdgpu_ring_patch_cond_exec - patch dw count of conditional execute
-  * @ring: amdgpu_ring structure
-@@ -441,18 +452,13 @@ static inline void amdgpu_ring_write_mul
- static inline void amdgpu_ring_patch_cond_exec(struct amdgpu_ring *ring,
- 					       unsigned int offset)
- {
--	unsigned cur;
--
- 	if (!ring->funcs->init_cond_exec)
- 		return;
+ void amdgpu_fence_driver_clear_job_fences(struct amdgpu_ring *ring);
+ void amdgpu_fence_driver_set_error(struct amdgpu_ring *ring, int error);
+-void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring);
++void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring,
++					  struct dma_fence *timedout_fence);
  
- 	WARN_ON(offset > ring->buf_mask);
- 	WARN_ON(ring->ring[offset] != 0);
- 
--	cur = (ring->wptr - 1) & ring->buf_mask;
--	if (cur < offset)
--		cur += ring->ring_size >> 2;
--	ring->ring[offset] = cur - offset;
-+	ring->ring[offset] = amdgpu_ring_get_dw_distance(ring, offset, ring->wptr - 1);
- }
- 
- #define amdgpu_mes_ctx_get_offs_gpu_addr(ring, offset)			\
+ int amdgpu_fence_driver_init_ring(struct amdgpu_ring *ring);
+ int amdgpu_fence_driver_start_ring(struct amdgpu_ring *ring,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -516,7 +516,7 @@ int amdgpu_uvd_resume(struct amdgpu_devi
+ 			}
+ 			memset_io(ptr, 0, size);
+ 			/* to restore uvd fence seq */
+-			amdgpu_fence_driver_force_completion(&adev->uvd.inst[i].ring);
++			amdgpu_fence_driver_force_completion(&adev->uvd.inst[i].ring, NULL);
+ 		}
+ 	}
+ 	return 0;
 
 
