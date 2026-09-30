@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D343CF688;
-	Wed, 30 Sep 2026 17:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57B34F7CBF;
+	Wed, 30 Sep 2026 17:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788321; cv=none; b=qpRP1eITfpuVVP0gRfz7U860+0kUzBwNq4X3p8/BKuCZAJBKYxgdi9E4mdmGc1AUE8Ls1qNL46haK9LsPh0ZDjywcDZaN62uGdnKvdtMG7+FduFMM7MaV53Y+OlSNJP3l9gT0z69JDyGC1j6Xo72ocQv/VbqfZOHhOrub+oJ8XE=
+	t=1790788324; cv=none; b=BzW0OEqRCnnthAbxIAZ4P3LEaExDgGHn07UowFgoRZof8yjJ8uC+BXogoVb1JeMgzAMCEfRCUAhjKw0uOjS6hJxM1p+oYA9R/ixiKdPUVncDSmJDid72V/+zykt5eSXndI59GD/v+WJjYCHRuuDgv1zo4/3Y49y0zbUy5lFVEyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788321; c=relaxed/simple;
-	bh=FGS0uwOXCohojdh+YrqrOp6ishlCXbPYCvP6fWwKcwY=;
+	s=arc-20240116; t=1790788324; c=relaxed/simple;
+	bh=I9wTnWPGaZD8HM8T1poo2Y5yDwHrwfk9AP0Xe8X7hJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkQr2NPRvut5zAQWEd8TbyqSFf4Lt67ax03bqZXvTtvLsPwUNNyIwnToulPKdyBx2LuUAJwZAT58fUzzKHgtJpjyTi+vknLKXNksyqB68hQKZiBepmc5vG6YiJvPjYdDDEyFCdXGICZdS9aIXDwgvix7SKjcmeI2l3yCHhloWHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiV5tqli; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QzxArM7IRpD/gfeOX0TEXpzlR1qM0KCYJreZiYh/OzOXzTxLH5zn8dEohxlF+Y+l0uOYGFis4750GwLhPonvEKBda30rkZSc1JPSA875AyFPwq1dbTqixcYn+katDKKWeP8SUI/jOflfUgD9As+bR24XWGmrmUPxN181oHEVDn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCwwl3lw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiV5tqli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C191F000FF;
-	Wed, 30 Sep 2026 17:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCwwl3lw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387D71F000FF;
+	Wed, 30 Sep 2026 17:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788319;
-	bh=lrONTkwqGvE+bJ9Yo981+3Rzwi+9j2fLVJysx7yLNsg=;
+	s=korg; t=1790788322;
+	bh=YZlZsf07Z4GyBISoHp22x/8Fzoe1otvuPCak6N6jBlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QiV5tqliE89GwUIPUPufpm7NRZm/La1csbzj2+XZLEtVfqHyX8SZ2gsV/4wBrlHU3
-	 HCjprTJEiNhB4xxlIkqglZBOBqd8LBHv/y4TJsZNJ/OSgRrJjLiICvAyTw5lM7TH8w
-	 IEaGCmGmyNuSWZIZbjw7FJ1in/TYCngR0VXaJxqI=
+	b=jCwwl3lwM/M1RCqBJHvMmxO60h53MiUK8PfQI55J3C6lrdFLlxX1YT51lQss+nqDJ
+	 v5CwwosY+KUFTjaPZg/beFnU+WlwKvckiVYdKVCDJGCegsEvB25gad2Ag9aXdovou1
+	 lJNakEvlh5KN4ufwu9ARoBAWJ/0iXisflwQrOGDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Margolin <mrgolin@amazon.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/877] RDMA/efa: Keep admin queues alive while IRQ is registered
-Date: Wed, 30 Sep 2026 17:16:34 +0200
-Message-ID: <20260930152416.532638217@linuxfoundation.org>
+Subject: [PATCH 6.12 084/877] RDMA/efa: Keep EQ resources alive while IRQ is registered
+Date: Wed, 30 Sep 2026 17:16:35 +0200
+Message-ID: <20260930152416.553334002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,92 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit e08aca85c02ff290f785f07acae758f0daf5f49e ]
+[ Upstream commit e22a3627b7151754f07f90ea3d1ab6e85f5d93f4 ]
 
-The management IRQ handler accesses both the admin completion queue and the
-async event queue. The driver registered the IRQ before constructing these
-queues and destroyed them before freeing the IRQ, so the handler's lifetime
-was not contained by the resources it accesses.
+The completion IRQ handler accesses the EQ state and DMA buffer. Its IRQ was
+registered before that state was initialized, while teardown released the
+buffer before free_irq() synchronized the handler.
 
-Initialize the queues with interrupts masked, request the IRQ, and then
-switch to interrupt mode. On removal, reset the device and free the IRQ
-before destroying the queues. Also reset the device before destroying the
-queues if IRQ registration fails, because the device already has their DMA
-addresses.
+Initialize the EQ without arming it, register the IRQ, and then arm it.
+Reverse the resource order during teardown by freeing the IRQ before
+destroying the EQ.
 
-Fixes: b7f5e880f377 ("RDMA/efa: Add the efa module")
-Link: https://patch.msgid.link/20260907-use-after-free-of-admin-queue-struct-v1-1-dd9d9267fbf4@nvidia.com
+Fixes: 2a152512a155 ("RDMA/efa: CQ notifications")
+Link: https://patch.msgid.link/20260907-use-after-free-of-admin-queue-struct-v1-2-dd9d9267fbf4@nvidia.com
 Reviewed-by: Michael Margolin <mrgolin@amazon.com>
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/efa/efa_com.c  |  4 +---
- drivers/infiniband/hw/efa/efa_main.c | 15 +++++++++------
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/efa/efa_com.c  |  3 +--
+ drivers/infiniband/hw/efa/efa_com.h  |  1 +
+ drivers/infiniband/hw/efa/efa_main.c | 18 ++++++++++--------
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
-index bafd210dd43e8..d6fb2edc96891 100644
+index d6fb2edc96891..00e339abc2c13 100644
 --- a/drivers/infiniband/hw/efa/efa_com.c
 +++ b/drivers/infiniband/hw/efa/efa_com.c
-@@ -743,7 +743,7 @@ int efa_com_admin_init(struct efa_com_dev *edev,
+@@ -1149,7 +1149,7 @@ static void efa_com_destroy_eq(struct efa_com_dev *edev,
+ 				      err);
+ }
  
- 	aq->dmadev = edev->dmadev;
- 	aq->efa_dev = edev->efa_dev;
--	set_bit(EFA_AQ_STATE_POLLING_BIT, &aq->state);
-+	efa_com_set_admin_polling_mode(edev, true);
+-static void efa_com_arm_eq(struct efa_com_dev *edev, struct efa_com_eq *eeq)
++void efa_com_arm_eq(struct efa_com_dev *edev, struct efa_com_eq *eeq)
+ {
+ 	u32 val = 0;
  
- 	sema_init(&aq->avail_cmds, aq->depth);
+@@ -1238,7 +1238,6 @@ int efa_com_eq_init(struct efa_com_dev *edev, struct efa_com_eq *eeq,
+ 	eeq->phase = 1;
+ 	eeq->depth = params.depth;
+ 	eeq->cb = cb;
+-	efa_com_arm_eq(edev, eeq);
  
-@@ -761,8 +761,6 @@ int efa_com_admin_init(struct efa_com_dev *edev,
- 	if (err)
- 		goto err_destroy_sq;
+ 	return 0;
  
--	efa_com_set_admin_polling_mode(edev, false);
--
- 	err = efa_com_admin_init_aenq(edev, aenq_handlers);
- 	if (err)
- 		goto err_destroy_cq;
+diff --git a/drivers/infiniband/hw/efa/efa_com.h b/drivers/infiniband/hw/efa/efa_com.h
+index 77282234ce686..29a9d087db5d9 100644
+--- a/drivers/infiniband/hw/efa/efa_com.h
++++ b/drivers/infiniband/hw/efa/efa_com.h
+@@ -157,6 +157,7 @@ int efa_com_admin_init(struct efa_com_dev *edev,
+ void efa_com_admin_destroy(struct efa_com_dev *edev);
+ int efa_com_eq_init(struct efa_com_dev *edev, struct efa_com_eq *eeq,
+ 		    efa_eqe_handler cb, u16 depth, u8 msix_vec);
++void efa_com_arm_eq(struct efa_com_dev *edev, struct efa_com_eq *eeq);
+ void efa_com_eq_destroy(struct efa_com_dev *edev, struct efa_com_eq *eeq);
+ int efa_com_dev_reset(struct efa_com_dev *edev,
+ 		      enum efa_regs_reset_reason_types reset_reason);
 diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
-index 45a4564c670c0..83323a7ad7120 100644
+index 83323a7ad7120..30cefd0bb4f56 100644
 --- a/drivers/infiniband/hw/efa/efa_main.c
 +++ b/drivers/infiniband/hw/efa/efa_main.c
-@@ -615,18 +615,21 @@ static struct efa_dev *efa_probe_device(struct pci_dev *pdev)
- 	edev->aq.msix_vector_idx = dev->admin_msix_vector_idx;
- 	edev->aenq.msix_vector_idx = dev->admin_msix_vector_idx;
+@@ -301,28 +301,30 @@ static void efa_set_host_info(struct efa_dev *dev)
  
--	err = efa_set_mgmnt_irq(dev);
-+	err = efa_com_admin_init(edev, &aenq_handlers);
- 	if (err)
- 		goto err_disable_msix;
+ static void efa_destroy_eq(struct efa_dev *dev, struct efa_eq *eq)
+ {
+-	efa_com_eq_destroy(&dev->edev, &eq->eeq);
+ 	efa_free_irq(dev, &eq->irq);
++	efa_com_eq_destroy(&dev->edev, &eq->eeq);
+ }
  
--	err = efa_com_admin_init(edev, &aenq_handlers);
-+	err = efa_set_mgmnt_irq(dev);
+ static int efa_create_eq(struct efa_dev *dev, struct efa_eq *eq, u8 msix_vec)
+ {
+ 	int err;
+ 
+-	efa_setup_comp_irq(dev, eq, msix_vec);
+-	err = efa_request_irq(dev, &eq->irq);
++	err = efa_com_eq_init(&dev->edev, &eq->eeq, efa_process_eqe,
++			      dev->dev_attr.max_eq_depth, msix_vec);
  	if (err)
--		goto err_free_mgmnt_irq;
-+		goto err_destroy_admin;
+ 		return err;
+ 
+-	err = efa_com_eq_init(&dev->edev, &eq->eeq, efa_process_eqe,
+-			      dev->dev_attr.max_eq_depth, msix_vec);
++	efa_setup_comp_irq(dev, eq, msix_vec);
++	err = efa_request_irq(dev, &eq->irq);
+ 	if (err)
+-		goto err_free_comp_irq;
++		goto err_destroy_eq;
 +
-+	efa_com_set_admin_polling_mode(edev, false);
++	efa_com_arm_eq(&dev->edev, &eq->eeq);
  
- 	return dev;
+ 	return 0;
  
--err_free_mgmnt_irq:
--	efa_free_irq(dev, &dev->admin_irq);
-+err_destroy_admin:
-+	efa_com_dev_reset(edev, EFA_REGS_RESET_INIT_ERR);
-+	efa_com_admin_destroy(edev);
- err_disable_msix:
- 	efa_disable_msix(dev);
- err_reg_read_destroy:
-@@ -650,8 +653,8 @@ static void efa_remove_device(struct pci_dev *pdev,
+-err_free_comp_irq:
+-	efa_free_irq(dev, &eq->irq);
++err_destroy_eq:
++	efa_com_eq_destroy(&dev->edev, &eq->eeq);
+ 	return err;
+ }
  
- 	edev = &dev->edev;
- 	efa_com_dev_reset(edev, reset_reason);
--	efa_com_admin_destroy(edev);
- 	efa_free_irq(dev, &dev->admin_irq);
-+	efa_com_admin_destroy(edev);
- 	efa_disable_msix(dev);
- 	efa_com_mmio_reg_read_destroy(edev);
- 	devm_iounmap(&pdev->dev, edev->reg_bar);
 -- 
 2.53.0
 
