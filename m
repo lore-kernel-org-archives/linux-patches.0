@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8071B4FECCF;
-	Wed, 30 Sep 2026 17:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6158350AC0D;
+	Wed, 30 Sep 2026 17:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787965; cv=none; b=XxVkI+kgmwj9CMUu6rfgpufYfWuXNxRB1l/OO9VY/C/nPln1N7AESzTJfIKpIXutRV4z06RAYvcq/eIFuqsdnxzQfolCsGkmX4W6stgnx4uk2zqDA+MBXkd9sUjpE3EZkU7dueJZ0RCqNmbqihZ5ZFIpddk9TEgE9RaaNXhT1G4=
+	t=1790787968; cv=none; b=Mn+ZL0ZZYgE2v4+1jihBSm/n1ArSta8CocGU35qlJPh7157ss5//364k6bLK2CjUUvdDb2VaO3apJrGhrvNw8Xp7/Y2PJz8VwRR9bLuNoSuJSmo0uHEqOM4hRiDpIv84waaJwxP6RSV5gqkHtVxEZvsea2k/ZFsyyFDdp/7uZkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787965; c=relaxed/simple;
-	bh=an5fgsehwBOCKWWkEmKT8vI+6VudUCBvmpX8lC2qrNk=;
+	s=arc-20240116; t=1790787968; c=relaxed/simple;
+	bh=YVRwFhnvXVOJwmiRCFBZaLArq2FC4tJRYMjPMtx2Hq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tvqquZNQ9XXs2b7FzgQgUGpNjWM+M0rVnEFQkSN/yDnVrMniyYwlQYZIiLHtFtlL/8BDmJyofxeBOJN1k5q7rFA+9HRF2NHvzv6o/e87XDPtrhd1QwctpfNcDtQAhQUq+9Wn1wqJ1BN/SK5yBsmJGVAjqmvVm3Y64b4s/wDeDvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQp7NaWC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hfOop8skkEY7KCVPKxCRLeyA55GK1+FzcDB3Smiq3ZeRMBpMCYJbL2Ut9GgLwmDY9sruGbvm7io2vaHdXr1xpjlcDLDGZStDelPvfwB32tMWJBBQkRry7UJcSDljAHH3GZRcuGSBFXSDAp3bZV++H8O5Aba2AAGGk2YdY/Frj/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/Cm5UZ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQp7NaWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A311F000FF;
-	Wed, 30 Sep 2026 17:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/Cm5UZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8A11F000FF;
+	Wed, 30 Sep 2026 17:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787964;
-	bh=6PmtxwJLPRaKGRcflssju/3/FHXVODoWFunXC/0cxzY=;
+	s=korg; t=1790787967;
+	bh=ecV1yhl/7Mo1aaWd7JCMbbBz2eNXYC5LuQXS7fD6fJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQp7NaWCXR8Oxdle0fYxqA2l4dG5YJbqrIBS7Gtw6M1HTSPw8EL/WAx0EgEmzFLzp
-	 r9e8KApbt5rqaHurswDuQFnC990fYCmVsFFW4xBSAkmxVS0ai4mM68kcbefy2c4dBn
-	 A+BLSDMZ6lsxplSi22qW78A2oxF2AqpUhbWZ5IrI=
+	b=Z/Cm5UZ32udkQsccrIn9pMqrxbgJXJHJLYTGR1usk+DFp4YYNmD+NWuumO7NCie0B
+	 /MeQdO26UFxlc39qg5KqL6s+WfUmD+d0WDQ+X4WlbaPwT+bK3iBn3jzrLVFL4AF+qB
+	 CGWNmZIO5AhiQ1O6c5KXMhhL1H6bCMMF54JUNHd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 416/457] xfs: dont assert when XFS_SCRUB_TYPE_HEALTHY scans return corruption
-Date: Wed, 30 Sep 2026 17:28:41 +0200
-Message-ID: <20260930152354.962469318@linuxfoundation.org>
+Subject: [PATCH 7.2 417/457] xfs: fix attr fork block count checks in xrep_inode_blockcounts
+Date: Wed, 30 Sep 2026 17:28:42 +0200
+Message-ID: <20260930152354.985013167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,46 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit afbccf99f7f82117cba9ad4b0b006692030f49e8 upstream.
+commit bb991b7f79dd34cc5f24db0f736bf75630c970e7 upstream.
 
-XFS_SCRUB_TYPE_HEALTHY is a synthentic scrub type so that xfs_scrub can
-tell the kernel "Hey, I finished a scan and saw no problems" and have
-the kernel forget that it saw indirect evidence of corruption.
+LOLLM points out that a file has an attr fork, it will call
+xchk_inode_count_blocks to set @ablocks to the number of fsblocks mapped
+by the attr fork; but then it'll compare @blocks (aka the count of
+fsblocks mapped by the data fork).  We already checked that and we never
+do anything with @acount, so I think this is clearly a bug.  Fix the
+comparison.
 
-Unfortunately, as LOLLM points out, it's possible for the health system
-to record a new corruption just before xfs_scrub gets to
-XFS_SCRUB_TYPE_HEALTHY.  In this case, the existing logic doesn't return
-early and instead wanders into unknown regions of type_to_health_flag
-and trips the assert because HEALTHY doesn't have a group assignment.
-
-Fix the logic so that we always return early for a HEALTHY scrub type,
-even if we decide not to call xchk_mark_all_healthy.
-
-Cc: stable@vger.kernel.org # v6.9
-Fixes: a1f3e0cca41036 ("xfs: update health status if we get a clean bill of health")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 2d295fe65776d1 ("xfs: repair inode records")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/health.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/xfs/scrub/inode_repair.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/health.c
-+++ b/fs/xfs/scrub/health.c
-@@ -202,9 +202,9 @@ xchk_update_health(
- 	 * there's no sick flag defined for it, so we branch here ahead of the
- 	 * mask check.
- 	 */
--	if (sc->sm->sm_type == XFS_SCRUB_TYPE_HEALTHY &&
--	    !(sc->sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT)) {
--		xchk_mark_all_healthy(sc->mp);
-+	if (sc->sm->sm_type == XFS_SCRUB_TYPE_HEALTHY) {
-+		if (!(sc->sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT))
-+			xchk_mark_all_healthy(sc->mp);
- 		return;
- 	}
- 
+--- a/fs/xfs/scrub/inode_repair.c
++++ b/fs/xfs/scrub/inode_repair.c
+@@ -1702,7 +1702,7 @@ xrep_inode_blockcounts(
+ 				&acount);
+ 		if (error)
+ 			return error;
+-		if (count >= sc->mp->m_sb.sb_dblocks)
++		if (acount >= sc->mp->m_sb.sb_dblocks)
+ 			return -EFSCORRUPTED;
+ 		error = xrep_ino_ensure_extent_count(sc, XFS_ATTR_FORK,
+ 				nextents);
 
 
