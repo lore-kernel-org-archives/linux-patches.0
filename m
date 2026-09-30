@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76E751357E;
-	Wed, 30 Sep 2026 16:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEC94E7802;
+	Wed, 30 Sep 2026 16:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787302; cv=none; b=OPxoaqmlFhsockw6y5+Tmix6wHe0T92Du80NOlGBg5MolFxo/ABXPruoolIiiSifHq8wVJO5rrdTUAjrzvselnxiVpmffQ8waKf/NriKFnyvTV882ntJx8vfgOePkTeYlR1JEPB5tp0Y3seaYFi0Rt7ILuiXybaXRdgaLHsPkvY=
+	t=1790787304; cv=none; b=RQ6/m2Rf4xRlFPjAU70K76gsqwIHJM+G0blNNjdb0TeCFpWxPA/rMIj+3BM8HTQsrR1Ljw5/O+N43UfrM4IPr9AIME3XEaqDFxb8A4kKfV0hsPNGNKomyQu5ROzEWEJNfyTauNdsEktb3+SsOrBhz8MmGtzIbvg4F+viz9ifQ5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787302; c=relaxed/simple;
-	bh=eWuXNUX0Ub4gqDNTEwAgbOMswS4iBngAEb/Wom1RIRo=;
+	s=arc-20240116; t=1790787304; c=relaxed/simple;
+	bh=VnkflrdjjX3HTVXUaaNzfodCMnJj1/zR3clX6aYrwKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1/ua1kn3PacsUR/Tg3WmSNt94B5X0KPpRSc/yabDWI4r274nYmd6b8OvLgu6Hs5ZN3VbZPFENWYVrL0SsR0KRsOLx5twSFxEbixdm+J/TjgAxcoov53hwwKX/lTRpGnpJbgm9KqtFMXkftt1+TVes9KEV/B0UHqi0/OAtfktvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNTQc9jJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RcuL3toiUwp1kfhWMtHwAYJUQvDAeSTBvnI4XFn3N7/Mgk7GfYow5gXKCzpBu/fs6SauCNzsskbIjebDQkZChnYMpZPjLKFB9TFLlLtDI2pLTjfG4xToEj8nLBojnS+T1MmxOjqqciLzOoFCG90RlBJyALVJbMuXGFdF4sujpfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GpKc5iE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNTQc9jJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5721F000FF;
-	Wed, 30 Sep 2026 16:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GpKc5iE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E981F000FF;
+	Wed, 30 Sep 2026 16:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787300;
-	bh=c7Nfnsdp14lgFmfTjp5/6zobhYIIgW7U1OiDxZdY8J8=;
+	s=korg; t=1790787302;
+	bh=k/fw73xOY7HlnBPWM9DuJZHlrcQ5PiVEgZm6A29e8Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oNTQc9jJ0n/eGIaK5X2YcH9U6AkcBVV/JnIWSFoerMnJitsv4xUscyvPZiIZS10FL
-	 o+fLRE5rt4tISSuz9XUStjjO8CGxnDerobHx+h5RX0voi5mOSZc0NinTEwJfJpo7EN
-	 mW2P7fl6a/z6bI2rtrt1ryTopZC2TyRZvsDOjLSU=
+	b=2GpKc5iEkhmNUaPMlCBbDtHIyrJSCCH+UFPFDRE6Ka62Kwg0QLB+BOmL6qkvbU7Vz
+	 OfQjQgwL3iAB+x1lTXeUVqRoYTS8GSL16RxGybWHZ13hsSrcAH20A5bEXJwG4e/xgJ
+	 2DxSnKsc4krQR2yBiyxG16ieYn+iq7dRblFzfDR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Tangxin Xie <xietangxin@h-partners.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 182/457] net: bcmgenet: stop Tx NAPI before disabling the queues
-Date: Wed, 30 Sep 2026 17:24:47 +0200
-Message-ID: <20260930152349.979181401@linuxfoundation.org>
+Subject: [PATCH 7.2 156/457] sctp: hold asoc or transport before mod_timer() in timer handlers
+Date: Wed, 30 Sep 2026 17:24:21 +0200
+Message-ID: <20260930152349.417758270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,77 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 7e87508b5c4d81210d0a736ed01962e52f5c4c56 ]
+[ Upstream commit cae23ae3f7887a1cf8a75da38edcebeef695040f ]
 
-bcmgenet_netif_stop() and the Wake-on-LAN branch of bcmgenet_suspend()
-both disable the Tx queues first and stop Tx NAPI several steps later. A
-completion in flight calls netif_tx_wake_queue() in between, and nothing
-stops the queue again, so a transmit can reach the rings after they have
-been freed.
+Take the association or transport reference before rearming a timer in the
+timer handlers.
 
-Close is safe because dev_deactivate_many() stops the qdisc first.
-bcmgenet_suspend() does not, so stop Tx NAPI before the queues on both
-paths.
+The existing code calls mod_timer() before taking the reference needed by
+the rearmed timer without holding the sock lock. This creates a race with
+timer cleanup: if the timer is deleted after mod_timer() returns but before
+the reference is taken, the cleanup path can drop the timer's reference and
+destroy the transport or association. The timer handler then takes a
+reference on the already freed object and eventually drops it, causing a
+refcount underflow.
 
-KASAN on a Raspberry Pi CM4, driven from an MTU change because suspend
-freezes user space before the callback runs:
+Hold the object before mod_timer() and drop the reference if mod_timer()
+reports that the timer was already pending in timer handlers. Apply the
+same ordering to the proto-unreachable path, which can rearm a transport
+timer outside the timer handlers without holding the sock lock.
 
-  BUG: KASAN: use-after-free in bcmgenet_xmit+0x17f8/0x2258
-  Write of size 8 at addr ffffff8055844a68 by task ksoftirqd/0/14
-   bcmgenet_xmit+0x17f8/0x2258
-   dev_hard_start_xmit+0x13c/0x588
-   sch_direct_xmit+0x108/0x340
-   __dev_queue_xmit+0x1190/0x3848
-
-Fixes: 254f3239dd07 ("net: bcmgenet: revise suspend/resume")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260922130639.1660797-1-nb@tipi-net.de
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Tangxin Xie <xietangxin@h-partners.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/c31b5e3ee2b7274e804f5eba2f21e2412e7eef7a.1790013825.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/sctp/input.c         |  7 ++++---
+ net/sctp/sm_sideeffect.c | 37 ++++++++++++++++++++++---------------
+ 2 files changed, 26 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index b916080f4ff17..ca62041efecd7 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3441,6 +3441,8 @@ static void bcmgenet_netif_stop(struct net_device *dev, bool stop_phy)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
+diff --git a/net/sctp/input.c b/net/sctp/input.c
+index 864741fae4187..9494cfa51106c 100644
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -436,9 +436,10 @@ void sctp_icmp_proto_unreachable(struct sock *sk,
+ 		if (timer_pending(&t->proto_unreach_timer))
+ 			return;
+ 		else {
+-			if (!mod_timer(&t->proto_unreach_timer,
+-						jiffies + (HZ/20)))
+-				sctp_transport_hold(t);
++			sctp_transport_hold(t);
++			if (mod_timer(&t->proto_unreach_timer,
++				      jiffies + (HZ / 20)))
++				sctp_transport_put(t);
+ 		}
+ 	} else {
+ 		struct net *net = sock_net(sk);
+diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
+index 0d99b7e8c082f..35f540fb15fc1 100644
+--- a/net/sctp/sm_sideeffect.c
++++ b/net/sctp/sm_sideeffect.c
+@@ -244,8 +244,9 @@ void sctp_generate_t3_rtx_event(struct timer_list *t)
+ 		pr_debug("%s: sock is busy\n", __func__);
  
-+	/* Stop completion polling before it can wake a stopped queue */
-+	bcmgenet_disable_tx_napi(priv);
- 	netif_tx_disable(dev);
+ 		/* Try again later.  */
+-		if (!mod_timer(&transport->T3_rtx_timer, jiffies + (HZ/20)))
+-			sctp_transport_hold(transport);
++		sctp_transport_hold(transport);
++		if (mod_timer(&transport->T3_rtx_timer, jiffies + (HZ / 20)))
++			sctp_transport_put(transport);
+ 		goto out_unlock;
+ 	}
  
- 	/* Disable MAC receive */
-@@ -3455,7 +3457,6 @@ static void bcmgenet_netif_stop(struct net_device *dev, bool stop_phy)
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
+@@ -280,8 +281,9 @@ static void sctp_generate_timeout_event(struct sctp_association *asoc,
+ 			 timeout_type);
  
--	bcmgenet_disable_tx_napi(priv);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
+ 		/* Try again later.  */
+-		if (!mod_timer(&asoc->timers[timeout_type], jiffies + (HZ/20)))
+-			sctp_association_hold(asoc);
++		sctp_association_hold(asoc);
++		if (mod_timer(&asoc->timers[timeout_type], jiffies + (HZ / 20)))
++			sctp_association_put(asoc);
+ 		goto out_unlock;
+ 	}
  
-@@ -4320,6 +4321,8 @@ static int bcmgenet_suspend(struct device *d)
- 	netif_device_detach(dev);
+@@ -378,8 +380,9 @@ void sctp_generate_heartbeat_event(struct timer_list *t)
+ 		pr_debug("%s: sock is busy\n", __func__);
  
- 	if (device_may_wakeup(d) && priv->wolopts) {
-+		/* Stop completion polling before it can wake a stopped queue */
-+		bcmgenet_disable_tx_napi(priv);
- 		netif_tx_disable(dev);
+ 		/* Try again later.  */
+-		if (!mod_timer(&transport->hb_timer, jiffies + (HZ/20)))
+-			sctp_transport_hold(transport);
++		sctp_transport_hold(transport);
++		if (mod_timer(&transport->hb_timer, jiffies + (HZ / 20)))
++			sctp_transport_put(transport);
+ 		goto out_unlock;
+ 	}
  
- 		/* Suspend non-wake Rx data flows */
-@@ -4348,7 +4351,6 @@ static int bcmgenet_suspend(struct device *d)
- 			netdev_warn(priv->dev,
- 				    "Timed out while disabling TX DMA\n");
+@@ -388,8 +391,9 @@ void sctp_generate_heartbeat_event(struct timer_list *t)
+ 	timeout = sctp_transport_timeout(transport);
+ 	if (elapsed < timeout) {
+ 		elapsed = timeout - elapsed;
+-		if (!mod_timer(&transport->hb_timer, jiffies + elapsed))
+-			sctp_transport_hold(transport);
++		sctp_transport_hold(transport);
++		if (mod_timer(&transport->hb_timer, jiffies + elapsed))
++			sctp_transport_put(transport);
+ 		goto out_unlock;
+ 	}
  
--		bcmgenet_disable_tx_napi(priv);
- 		bcmgenet_disable_rx_napi(priv);
- 		disable_irq(priv->irq1);
- 		bcmgenet_tx_reclaim_all(dev);
+@@ -422,9 +426,10 @@ void sctp_generate_proto_unreach_event(struct timer_list *t)
+ 		pr_debug("%s: sock is busy\n", __func__);
+ 
+ 		/* Try again later.  */
+-		if (!mod_timer(&transport->proto_unreach_timer,
+-				jiffies + (HZ/20)))
+-			sctp_transport_hold(transport);
++		sctp_transport_hold(transport);
++		if (mod_timer(&transport->proto_unreach_timer,
++			      jiffies + (HZ / 20)))
++			sctp_transport_put(transport);
+ 		goto out_unlock;
+ 	}
+ 
+@@ -458,8 +463,9 @@ void sctp_generate_reconf_event(struct timer_list *t)
+ 		pr_debug("%s: sock is busy\n", __func__);
+ 
+ 		/* Try again later.  */
+-		if (!mod_timer(&transport->reconf_timer, jiffies + (HZ / 20)))
+-			sctp_transport_hold(transport);
++		sctp_transport_hold(transport);
++		if (mod_timer(&transport->reconf_timer, jiffies + (HZ / 20)))
++			sctp_transport_put(transport);
+ 		goto out_unlock;
+ 	}
+ 
+@@ -495,8 +501,9 @@ void sctp_generate_probe_event(struct timer_list *t)
+ 		pr_debug("%s: sock is busy\n", __func__);
+ 
+ 		/* Try again later.  */
+-		if (!mod_timer(&transport->probe_timer, jiffies + (HZ / 20)))
+-			sctp_transport_hold(transport);
++		sctp_transport_hold(transport);
++		if (mod_timer(&transport->probe_timer, jiffies + (HZ / 20)))
++			sctp_transport_put(transport);
+ 		goto out_unlock;
+ 	}
+ 
 -- 
 2.53.0
 
