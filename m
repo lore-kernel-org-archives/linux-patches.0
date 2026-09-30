@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5447D5187DA;
-	Wed, 30 Sep 2026 17:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5E551A752;
+	Wed, 30 Sep 2026 17:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788440; cv=none; b=Y9f/4OJvoQupnPxf+9JRWvbG4Y88jhM5KrI/bqI+MHjKq1j6QYsqtBI7AVH/7pspiNGJ8gHjVo14aUKeeoUdOPqcBEO88UWZXziDBfas9++Tsyx7uBY6++JGXuQBS0oEIPzGFJOefD+bIXaPUpX6+8JyGgWhhoomkSbf1ABVg1I=
+	t=1790788443; cv=none; b=DZ7kgS8bcJQBYRa9a9SkzpdBz9KwwTgbSKLXv5ZVDX+kjNXEstd18szvzt5HMGlfTkFia6HMJwpITjZJHjClmwZkPMvSOKPAne1Iv9/oGRgBS+68OV1PVQlNBmdt5MRgWoXdlC3BXd4Ues6xWs49ZfzeQo0S58zOk/unfnPj3jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788440; c=relaxed/simple;
-	bh=DNU2vfhCCN/AXkbIBW2VpDjX+7shgmPQQIG254rSQg0=;
+	s=arc-20240116; t=1790788443; c=relaxed/simple;
+	bh=Yluq8jXkkvba7SIgd4Tj9oqkh241nOwSZw+cOmr86dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffWuSlsTN/s6XFUiu+LkLT9IzITPmDX389P5kOw9UKBo4TY9akrE/xH4ppP1AQtTciSEISYTCQAwn7/rkpIPMBec+IBWszZNJgI1F+pKXu0UWeHnGp6mtw55aosxX06Wd0bSeumBxDmQMxsbLBiqDJ1cvsrNasvKzi2uQqPT6cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAFhbFjT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cpYl8YjNDzxVjMm+PjoKiCBW+Kk5J1eWHTpC5mBHWvlDYXWCKWujJkhRh7jHC6GEaKiUiC7pLB/p4LVNwRVz93Qbfyq03z1IRiEyn5aypPnSn3CV3JmV4Jz2R4fjGGPvjC7mlm8/JslLib48ZhYT2uzobSbBWs52gaG9QGFc6sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzrceZjv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAFhbFjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF62C1F000FF;
-	Wed, 30 Sep 2026 17:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzrceZjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8571F000FF;
+	Wed, 30 Sep 2026 17:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788439;
-	bh=QxUWnvbgGdFteB8hLSNEHtZCA3cUj6+mxE2d6s6j8Ag=;
+	s=korg; t=1790788442;
+	bh=xNbYoPcBQmKlxSbWW+UXZBOqj6X8b95CVtNNga4IUhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAFhbFjTWfa4eIgAOUaWRPuPdrn4hzVxdDYd7YyXP6Jhki8lFjXhtIf9PB2ubRFRU
-	 2OsikhUdR21ykFChzmvDk3iPRWuaPivWUieeym23oOA5hXpDsozHcEpb9baAYwpt32
-	 oZtFwRJ1r0/CSuCRuxjx+X9piYhL8M6vrxZXRUPI=
+	b=uzrceZjvDkYfo0jeNkjFtuasTGP9ItsclQ0TMr84s81DCG+b098EIJ41uhQ6RuLB5
+	 +OEWLfWUJaNCG/ttnSdHpC8ZFAjIMnengpEZYduRw6Qo9ekCUOBTZCKLFF2pDHxMR4
+	 ounAAkzOZulNL9SsSFv50TYVHXVbp2gh8ajip0lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 126/877] ksmbd: return buffer overflow for partial filesystem info
-Date: Wed, 30 Sep 2026 17:17:17 +0200
-Message-ID: <20260930152417.457241536@linuxfoundation.org>
+Subject: [PATCH 6.12 127/877] ksmbd: fix partial file information responses
+Date: Wed, 30 Sep 2026 17:17:18 +0200
+Message-ID: <20260930152417.477832333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,181 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 0ecd35fac4b4f2828490689b46039744d201dcb0 ]
+[ Upstream commit 6b8b79226bc3e0ac3fdd4e91836241af712e8cd1 ]
 
-The query-info buffer check returns STATUS_INFO_LENGTH_MISMATCH for
-every output buffer smaller than the complete response. Variable-length
-filesystem information instead requires STATUS_BUFFER_OVERFLOW when the
-fixed portion fits but the complete data does not.
+Variable-length file information handlers use the client output length
+while constructing the response. FILE_ALL_INFORMATION can consequently
+return -EINVAL before the common buffer check, while stream information
+can stop building the complete result too early.
 
-Pass the fixed size for each filesystem information class to the buffer
-checker. Keep INFO_LENGTH_MISMATCH for buffers below that size, and
-return BUFFER_OVERFLOW with a response truncated to the requested length
-for larger partial buffers.
+Build the complete response within the available server response buffer
+and apply the client output length only when selecting the final status
+and transmitted length. Use the protocol-defined fixed sizes for all,
+alternate-name, and stream information to distinguish
+STATUS_INFO_LENGTH_MISMATCH from STATUS_BUFFER_OVERFLOW.
 
-This fixes smb2.getinfo.qfs_buffercheck.
+This fixes smb2.getinfo.qfile_buffercheck.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Stable-dep-of: 9fa26285ae70 ("ksmbd: keep compound responses on query info errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 37d8db4bbbaec..b12dad36bb574 100644
+index b12dad36bb574..af3178031c1ee 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -4648,21 +4648,30 @@ int smb2_query_dir(struct ksmbd_work *work)
- /**
-  * buffer_check_err() - helper function to check buffer errors
-  * @reqOutputBufferLength:	max buffer length expected in command response
-+ * @fixed_len:			minimum fixed response length
-  * @rsp:		query info response buffer contains output buffer length
-  * @rsp_org:		base response buffer pointer in case of chained response
-  *
-  * Return:	0 on success, otherwise error
-  */
- static int buffer_check_err(int reqOutputBufferLength,
-+			    unsigned int fixed_len,
- 			    struct smb2_query_info_rsp *rsp,
- 			    void *rsp_org)
- {
--	if (reqOutputBufferLength < le32_to_cpu(rsp->OutputBufferLength)) {
-+	unsigned int output_len = le32_to_cpu(rsp->OutputBufferLength);
-+
-+	if (reqOutputBufferLength < fixed_len) {
- 		pr_err("Invalid Buffer Size Requested\n");
- 		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
- 		*(__be32 *)rsp_org = cpu_to_be32(sizeof(struct smb2_hdr));
- 		return -EINVAL;
- 	}
-+
-+	if (reqOutputBufferLength < output_len) {
-+		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
-+		rsp->OutputBufferLength = cpu_to_le32(reqOutputBufferLength);
-+	}
- 	return 0;
- }
+@@ -5019,7 +5019,6 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 	char *filename;
+ 	u64 time;
+ 	int ret, buf_free_len, filename_len;
+-	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
  
-@@ -4725,11 +4734,13 @@ static int smb2_get_info_file_pipe(struct ksmbd_session *sess,
- 	case FILE_STANDARD_INFORMATION:
- 		get_standard_info_pipe(rsp, rsp_org);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+				      le32_to_cpu(rsp->OutputBufferLength),
- 				      rsp, rsp_org);
- 		break;
- 	case FILE_INTERNAL_INFORMATION:
- 		get_internal_info_pipe(rsp, id, rsp_org);
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+				      le32_to_cpu(rsp->OutputBufferLength),
- 				      rsp, rsp_org);
- 		break;
- 	default:
-@@ -5523,6 +5534,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
+ 		ksmbd_debug(SMB, "no right to read the attributes : 0x%x\n",
+@@ -5032,10 +5031,9 @@ static int get_file_all_info(struct ksmbd_work *work,
+ 		return PTR_ERR(filename);
+ 
+ 	filename_len = strlen(filename);
+-	buf_free_len = smb2_calc_max_out_buf_len(work,
++	buf_free_len = smb2_resp_buf_len(work,
+ 			offsetof(struct smb2_query_info_rsp, Buffer) +
+-			offsetof(struct smb2_file_all_info, FileName),
+-			le32_to_cpu(req->OutputBufferLength));
++			offsetof(struct smb2_file_all_info, FileName));
+ 	if (buf_free_len < (filename_len + 1) * 2) {
+ 		kfree(filename);
+ 		return -EINVAL;
+@@ -5120,7 +5118,6 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 	ssize_t xattr_list_len;
+ 	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
+ 	int buf_free_len;
+-	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
+ 	int ret;
+ 
+ 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
+@@ -5130,10 +5127,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 
+ 	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
+ 
+-	buf_free_len =
+-		smb2_calc_max_out_buf_len(work,
+-				offsetof(struct smb2_query_info_rsp, Buffer),
+-				le32_to_cpu(req->OutputBufferLength));
++	buf_free_len = smb2_resp_buf_len(work,
++			offsetof(struct smb2_query_info_rsp, Buffer));
+ 	if (buf_free_len < 0)
+ 		goto out;
+ 
+@@ -5429,6 +5424,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 	struct ksmbd_file *fp;
+ 	int fileinfoclass = 0;
+ 	int rc = 0;
++	unsigned int fixed_len;
+ 	unsigned int id = KSMBD_NO_FID, pid = KSMBD_NO_FID;
+ 
+ 	if (test_share_config_flag(work->tcon->share_conf,
+@@ -5532,10 +5528,23 @@ static int smb2_get_info_file(struct ksmbd_work *work,
+ 			    fileinfoclass);
+ 		rc = -EOPNOTSUPP;
  	}
- 	if (!rc)
+-	if (!rc)
++	if (!rc) {
++		fixed_len = le32_to_cpu(rsp->OutputBufferLength);
++		switch (fileinfoclass) {
++		case FILE_ALL_INFORMATION:
++			fixed_len = FILE_ALL_INFORMATION_SIZE;
++			break;
++		case FILE_ALTERNATE_NAME_INFORMATION:
++			fixed_len = FILE_ALTERNATE_NAME_INFORMATION_SIZE;
++			break;
++		case FILE_STREAM_INFORMATION:
++			fixed_len = FILE_STREAM_INFORMATION_SIZE;
++			break;
++		}
  		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+				      le32_to_cpu(rsp->OutputBufferLength),
+-				      le32_to_cpu(rsp->OutputBufferLength),
++				      fixed_len,
  				      rsp, work->response_buf);
++	}
  	ksmbd_fd_put(work, fp);
  
-@@ -5544,6 +5556,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 	struct kstatfs stfs;
- 	struct path path;
- 	int rc = 0, len;
-+	unsigned int fixed_len = 0;
- 
- 	if (!share->path)
- 		return -EIO;
-@@ -5578,6 +5591,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 			info->DeviceCharacteristics |=
- 				cpu_to_le32(FILE_READ_ONLY_DEVICE);
- 		rsp->OutputBufferLength = cpu_to_le32(8);
-+		fixed_len = 8;
- 		break;
- 	}
- 	case FS_ATTRIBUTE_INFORMATION:
-@@ -5606,6 +5620,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->FileSystemNameLen = cpu_to_le32(len);
- 		sz = sizeof(struct filesystem_attribute_info) + len;
- 		rsp->OutputBufferLength = cpu_to_le32(sz);
-+		fixed_len = 16;
- 		break;
- 	}
- 	case FS_VOLUME_INFORMATION:
-@@ -5632,6 +5647,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->Reserved = 0;
- 		sz = sizeof(struct filesystem_vol_info) + len;
- 		rsp->OutputBufferLength = cpu_to_le32(sz);
-+		fixed_len = 24;
- 		break;
- 	}
- 	case FS_SIZE_INFORMATION:
-@@ -5644,6 +5660,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->SectorsPerAllocationUnit = cpu_to_le32(1);
- 		info->BytesPerSector = cpu_to_le32(stfs.f_bsize);
- 		rsp->OutputBufferLength = cpu_to_le32(24);
-+		fixed_len = 24;
- 		break;
- 	}
- 	case FS_FULL_SIZE_INFORMATION:
-@@ -5659,6 +5676,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->SectorsPerAllocationUnit = cpu_to_le32(1);
- 		info->BytesPerSector = cpu_to_le32(stfs.f_bsize);
- 		rsp->OutputBufferLength = cpu_to_le32(32);
-+		fixed_len = 32;
- 		break;
- 	}
- 	case FS_OBJECT_ID_INFORMATION:
-@@ -5679,6 +5697,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->extended_info.rel_date = 0;
- 		memcpy(info->extended_info.version_string, "1.1.0", strlen("1.1.0"));
- 		rsp->OutputBufferLength = cpu_to_le32(64);
-+		fixed_len = 64;
- 		break;
- 	}
- 	case FS_SECTOR_SIZE_INFORMATION:
-@@ -5700,6 +5719,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->ByteOffsetForSectorAlignment = 0;
- 		info->ByteOffsetForPartitionAlignment = 0;
- 		rsp->OutputBufferLength = cpu_to_le32(28);
-+		fixed_len = 28;
- 		break;
- 	}
- 	case FS_CONTROL_INFORMATION:
-@@ -5720,6 +5740,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		info->DefaultQuotaLimit = cpu_to_le64(SMB2_NO_FID);
- 		info->Padding = 0;
- 		rsp->OutputBufferLength = cpu_to_le32(48);
-+		fixed_len = 48;
- 		break;
- 	}
- 	case FS_POSIX_INFORMATION:
-@@ -5740,6 +5761,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 			info->TotalFileNodes = cpu_to_le64(stfs.f_files);
- 			info->FreeFileNodes = cpu_to_le64(stfs.f_ffree);
- 			rsp->OutputBufferLength = cpu_to_le32(56);
-+			fixed_len = 56;
- 		}
- 		break;
- 	}
-@@ -5748,6 +5770,7 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 		return -EOPNOTSUPP;
- 	}
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+			      fixed_len,
- 			      rsp, work->response_buf);
- 	path_put(&path);
- 
-@@ -5862,6 +5885,7 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
- iov_pin:
- 	rsp->OutputBufferLength = cpu_to_le32(secdesclen);
- 	rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
-+			      le32_to_cpu(rsp->OutputBufferLength),
- 			      rsp, work->response_buf);
- 	if (rc)
- 		goto err_out;
+ iov_pin_out:
 -- 
 2.53.0
 
