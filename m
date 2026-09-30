@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A347E44F57F;
-	Wed, 30 Sep 2026 19:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AA546D092;
+	Wed, 30 Sep 2026 19:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797248; cv=none; b=h/zeHD3OXLKbGFS94yk3RCPA+RrxLy4RcKyr05aZZI93mfV+u6IfrhH1Q7n//ZlZeVU+WTWZa17D5qLiVFxKwOqPN7Ke55mDkFkhS4omUoySeKLIiMZhnoTkf5ZNqVYOwKJNLiI6qJyfgTn8oBpY3vTENN/HgL9PLPTPqKujcZc=
+	t=1790797251; cv=none; b=PWboNuvYXMNaxba+WaRCoUbhMN4pOdl5VzHO5C7zV8cGTNswf9JolCHMFgvI/WUT22Gjh2rnzTu0HkBxqfJ00qQJ8EF6aau6zEjZZNI2Ah4oyNVqFt2pRQGV2EUGW8HVviQIkvDwjspesf813zYqE0EDvbCUI0tfCdBgOH3kt/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797248; c=relaxed/simple;
-	bh=qYVH6CkLQSqYVYPkGYMZXQXPFJ/OLpd7zPJW8Owv8Mo=;
+	s=arc-20240116; t=1790797251; c=relaxed/simple;
+	bh=/cC+MaysGJRIbRgCGlQor74SfJ/G4d93QtBR5C530+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nu9xDWb5Wnl0YYda0+dx60I3U056wCIG6VZgDlCQdzCV0o8lNmULsD+e8nEEfAIbhMHi4T22TrZPvpCeOYZgjREPXCUZ6TF1GQZbxys1XU3htJUKz0dKLYHl6jKh1FOvew7nUAUilAFUX3dI9eQRblpb6o3CiT7oTAKTyRICfdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n84cJU4M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OSuf5QRoZ63mXNfVnyxA6zuevixV9aXbDetHz2+X5V3BE3nAsJBbZNOATotWd0vUs9XC9W4WvTczrXMzY2StpwlMWNXRjMmA4Zy0IoxcmcbZ/Y3zbTjzhfLiRg6Zx7vJjq9UcNbtNabefLJskNZJe5oWw9qW6OK1BCVs7lWPdUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIiFSZy+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n84cJU4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037E71F000FF;
-	Wed, 30 Sep 2026 19:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIiFSZy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FEC1F000FF;
+	Wed, 30 Sep 2026 19:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797247;
-	bh=hfQrMJP3Tr+8OtMu0+jNR5pNio+aHN8RGGjplJdxo9o=;
+	s=korg; t=1790797250;
+	bh=giDVT+iitzj7fMdqgcuAdsRy4pMjkDCeEHaO4sNEcDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n84cJU4Mh9nx8hAh6m4VvgZUJ1KDrvGBK06wkfAZYlwjiEDo+zBVj8oB2qMzGrZew
-	 pVE9wIDY/QL4HitulTV5ENABjjZhMubslKNu+fbjFTVCpgZdl3S6CNdFius18H9XXT
-	 EJD656GzU1z2cL0wC+i4RXg/lLtkdKgusUEAamXY=
+	b=tIiFSZy+y9/C3pLubujAIN4lQ6f55jUnj3b4ISeSlUhSQbkQW3Wt6d+wtMEvr7e8a
+	 k5IHcZEYsqPi8GDjpbTVE43RqP0qmRTccwjtf1ZGbACsDvwYKQdbA0PH8ALUBMEwh8
+	 XFPpsHjGdVohDZ1B6R5cR6n3+cib0OZf93IKDopI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1192/1193] crypto: atmel-ecc - avoid stale fallback key after set_secret failure
-Date: Wed, 30 Sep 2026 17:31:16 +0200
-Message-ID: <20260930152500.730465224@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 1193/1193] net: mediatek: Fix potential NULL pointer dereference in dummy net_device handling
+Date: Wed, 30 Sep 2026 17:31:17 +0200
+Message-ID: <20260930152500.753391726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,54 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f07a0d251db7606e4792d2610788fbcc7b2c0d12 ]
+commit 16f3a28cf5f876a7f3550d8f4c870a7b41bcfaef upstream.
 
-Clear ->do_fallback before decoding a new ECDH secret and enable it only
-after the software fallback accepts a caller-provided private key. This
-avoids using a stale fallback key should crypto_kpp_set_secret() fail.
+Move the freeing of the dummy net_device from mtk_free_dev() to
+mtk_remove().
 
-Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Previously, if alloc_netdev_dummy() failed in mtk_probe(),
+eth->dummy_dev would be NULL. The error path would then call
+mtk_free_dev(), which in turn called free_netdev() assuming dummy_dev
+was allocated (but it was not), potentially causing a NULL pointer
+dereference.
+
+By moving free_netdev() to mtk_remove(), we ensure it's only called when
+mtk_probe() has succeeded and dummy_dev is fully allocated. This
+addresses a potential NULL pointer dereference detected by Smatch[1].
+
+Fixes: b209bd6d0bff ("net: mediatek: mtk_eth_sock: allocate dummy net_device dynamically")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/4160f4e0-cbef-4a22-8b5d-42c4d399e1f7@stanley.mountain/ [1]
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240724080524.2734499-1-leitao@debian.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-ecc.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/crypto/atmel-ecc.c
-+++ b/drivers/crypto/atmel-ecc.c
-@@ -84,6 +84,7 @@ static int atmel_ecdh_set_secret(struct
- 
- 	kfree(ctx->public_key);
- 	ctx->public_key = NULL;
-+	ctx->do_fallback = false;
- 
- 	if (crypto_ecdh_decode_key(buf, len, &params) < 0) {
- 		dev_err(&ctx->client->dev, "crypto_ecdh_decode_key failed\n");
-@@ -91,8 +92,9 @@ static int atmel_ecdh_set_secret(struct
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -4249,8 +4249,6 @@ static int mtk_free_dev(struct mtk_eth *
+ 		dst_release(&eth->dsa_meta[i]->dst);
  	}
  
- 	if (params.key_size) {
--		ctx->do_fallback = true;
--		return crypto_kpp_set_secret(ctx->fallback, buf, len);
-+		ret = crypto_kpp_set_secret(ctx->fallback, buf, len);
-+		ctx->do_fallback = !ret;
-+		return ret;
- 	}
- 
- 	cmd = kmalloc(sizeof(*cmd), GFP_KERNEL);
-@@ -103,8 +105,6 @@ static int atmel_ecdh_set_secret(struct
- 	if (!public_key)
- 		goto free_cmd;
- 
--	ctx->do_fallback = false;
+-	free_netdev(eth->dummy_dev);
 -
- 	atmel_i2c_init_genkey_cmd(cmd, DATA_SLOT_2);
+ 	return 0;
+ }
  
- 	ret = atmel_i2c_send_receive(ctx->client, cmd);
+@@ -5103,6 +5101,7 @@ static int mtk_remove(struct platform_de
+ 	netif_napi_del(&eth->tx_napi);
+ 	netif_napi_del(&eth->rx_napi);
+ 	mtk_cleanup(eth);
++	free_netdev(eth->dummy_dev);
+ 	mtk_mdio_cleanup(eth);
+ 
+ 	return 0;
 
 
