@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C20E51D528;
-	Wed, 30 Sep 2026 18:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08B051FCAC;
+	Wed, 30 Sep 2026 18:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793877; cv=none; b=SbhT+kPRYl6U4EiRGABTQxiA77i04RROugIOyFkf6qpLinqcM7Bxgh7vDLu3Zu71uP6w5Im7Tx3F+xQrR7/D0C5K1G4O38kQQ+SeQQlAf97sr7I38hIESJKqkBLu+5PB1ZlyVorknsYuvl0HIMeOLJNz9c2iovVEU79DSi20uW8=
+	t=1790793880; cv=none; b=CnCE4qBQBNE+HsCQq3TzOxXkXiUfTHzWFRgPrfmZsBbnPTeESB2JoDmogtszkwbBgjhef5pYURXilPUuutMSCzF+3RJ7cDPOH3SO1vx4TZwaUpQH7DOfUE473nYVOTbozn7SzgfmRfI67sly+F76v6BVDVCgfl3h3dTPVidKz8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793877; c=relaxed/simple;
-	bh=VV9q+yPOZVdEL3Xay6ebmL/CfsDp5b6RkrygEMEype0=;
+	s=arc-20240116; t=1790793880; c=relaxed/simple;
+	bh=ahu45spetpiKktUML3U6McnBJMjjpyJR/E5ynl1U9AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KVNqhKTGEMh/o98kvFFkladfirL5G/XVZPaGQE2p/s0vdsfqOD2iqbLwY/UZMKV473xwr+37A89W0MV3lBNNUkkON1/DThXe64SBDWWHAIQJcUO3ComXm6Gh9Lx06q+VmQbvGxPITqw+pfTEXw7g35iXo+GbalbBmeM4Q64gV9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSaZiu6l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AfN77it2zNU1C0rpxWHlKVftfTtnl5OXC1r3feiq0Zmhkko48Zr3pO5kinZfTwVQGuwPZpgoNoATOvi5raRU+6Eq2mcksIDWE7PdYYqL/wDiz6UNje5+T/lGqF2yS2/tlTmpwSfWmE72vyMb9JgnJ5zRWBnF4hkqNEomUaWbm5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsV/l/BW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSaZiu6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674861F000FF;
-	Wed, 30 Sep 2026 18:44:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsV/l/BW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E631F000FF;
+	Wed, 30 Sep 2026 18:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793875;
-	bh=1F2Kr8Io41NBDMH23RZLZNWdCaA3B5poTXLBvvV+hQA=;
+	s=korg; t=1790793878;
+	bh=QKEq0xmBwE+Z6BFBlkizCpRDT4yT96PuTdVQo6DqqIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSaZiu6lHb4LOTJqI3Oo1uWhGBt7phFURJKG5qqknUTFoekC+1fY7o/0FAuVInt+5
-	 JCoBrE72kuYsnc2aYj96oajMsmT/aZJ6RGJ0D8I/EdM3nPQdxB7Xh2fw0It18oJxWv
-	 zJ72LBTkm3RyGVJDtCiJ9tK/bmusrPzTNRCBtN/M=
+	b=lsV/l/BWTiaVguzFGnL+1CNQ78Smfhu195vgAM+EB4ZJL9lOkUbyb9h6J8OjxDPlp
+	 Wu7ubCYCLgVImScPRDqz3uH92kn1dO7CGEqXL52H5+PoiWjyfxWLnfaw9eTK66JiHn
+	 QEqW9yvp7On7BsYGnffR0e3POFGHc4Ox5pUCH89Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jouni Malinen <j@w1.fi>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0006/1193] drm/amd/pm: Check SMUv13.0.6/12 metrics integrity
-Date: Wed, 30 Sep 2026 17:11:30 +0200
-Message-ID: <20260930152434.450015027@linuxfoundation.org>
+Subject: [PATCH 6.6 0015/1193] wifi: mac80211: always allow transmitting null-data on TXQs
+Date: Wed, 30 Sep 2026 17:11:39 +0200
+Message-ID: <20260930152434.641263924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,36 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 6fc63d80c01a480e3d2c98620f07d46e5bcfc85a ]
+[ Upstream commit 51129a2ca0482b006d0e12a0aa025ff1e1cad2cb ]
 
-Check if data fetch is proper by matching the first few bytes against
-0xFFs. If 0xFFs, that means data couldn't be read properly.
+Jouni reported that certain sequences of tests caused some
+WDS tests to fail after applying the upcoming hwsim changes
+for NAN. I bisected that down to converting hwsim to TXQs,
+and after a long debug session found that the 4-addr NDP was
+getting dropped, because it goes out via a (management) TXQ
+and is a data frame.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+It's unclear to me now why this only happens in some test
+sequences (e.g. "sigma_dut_sae_h2e_ap_loop ap_wds_sta" and
+"sigma_dut_eap_ttls_all_akm_suites ap_wds_sta_open"), maybe
+that affects timing and the frame is otherwise delayed in
+some way.
+
+Correct the check to only drop frames that actually carry
+data, not NDPs.
+
+Reported-by: Jouni Malinen <j@w1.fi>
+Link: https://patch.msgid.link/20260417141601.851ddf4adb59.I3d668c0e1bdca9cd98f2fc46f84a066e68cc7a62@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-index 44c5f8585f1ee..4edb631461223 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -317,6 +317,10 @@ static int smu_v13_0_6_get_metrics_table(struct smu_context *smu,
- 		amdgpu_asic_invalidate_hdp(smu->adev, NULL);
- 		memcpy(smu_table->metrics_table, table->cpu_addr, table_size);
- 
-+		if (!memchr_inv(smu_table->metrics_table, 0xff,
-+				min(16, table_size)))
-+			return -EHWPOISON;
-+
- 		smu_table->metrics_time = jiffies;
- 	}
- 
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 5ea7572aae3df..912686d07a419 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3882,7 +3882,7 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 		 * injected frames or EAPOL frames from the local station.
+ 		 */
+ 		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data(hdr->frame_control) &&
++			     ieee80211_is_data_present(hdr->frame_control) &&
+ 			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+ 			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+ 			     !is_multicast_ether_addr(hdr->addr1) &&
 -- 
 2.53.0
 
