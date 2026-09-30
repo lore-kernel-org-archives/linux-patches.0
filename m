@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D523D25B2;
-	Wed, 30 Sep 2026 19:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BFA36826E;
+	Wed, 30 Sep 2026 19:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795851; cv=none; b=JkTmLY1nQHJn7G48W5+gUwSFXG/4Y/Zb1c4nWXoI+Wm4/lJX3mRdmyk7EK87/pV4UNWOOm+6AvrNXdvgFTPeeKs6i/Frq+SQ0MLQ4mlXd/3cBfY1m205IubqGblvdodA8mGyktPw/5cW6lZUQU3KuslvbaKuV/NXxPrAw73MxIs=
+	t=1790795854; cv=none; b=vFmdNsrRR/zWQXUv1sPPCnM96KFDIIi9J6vnncIaPrWXnVzO7WJLr1OUk5lCFzskTVpXV8JBSU+RXvPB2XXDqm+8ipwI6/wD4W2xRMl6vwki9jSYgzNpHsN4EmneRwhbUZdza7zKKUCpAXsne8zO3ls+5Ov5kP2u2JTRHDZr8GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795851; c=relaxed/simple;
-	bh=cDc8AWyUDt9y4FXdqVPSoeDDcxPTGAQKOl9RfUEv0B0=;
+	s=arc-20240116; t=1790795854; c=relaxed/simple;
+	bh=AteeG4j+tFs5FtlspEMaFNBg9P7d/I3IVd263CFXwsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGMAAFq/HkrGRQqLyckzDl3XlKPo97dTDnDkF41bthacdOI3hBD1agIhfsHeqmla+b4D7wdn4EYEPs1DLVl6SktNV0R7LHlHaA79tgnXDeg5cE4GWObDDN22xLxgRPrgGkjm0MMiaUKL4M9PrNsLSCHXsxwvvK7HyNO0s88yNu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1St8nAYx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sG0EcplzmWaHgcdIT7UIGGoLvUNS4SwocRCLuxm+BjelITNTeOf76yV/FVVdX0UeaKDoUDKSUzbcu/ycma0e9Q7TJna2FnW206rODTBKLi9dVewLoO1BRJgCRVATE6FzbMcCzZSyjBjdgKTGDwKxFij0YLZZHb4jN5xxFCDCtvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa7FvbZo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1St8nAYx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDE51F000FF;
-	Wed, 30 Sep 2026 19:17:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa7FvbZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDFC1F000FF;
+	Wed, 30 Sep 2026 19:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795850;
-	bh=Vd6w4yqvi6NRdPyi7FBtU+2pQOkhGKcpKXlA57JIpp8=;
+	s=korg; t=1790795853;
+	bh=/E8jyk6FiOv6fdSjHPb9jLdhnwWE5kEAcMS0VIqzR44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1St8nAYxC7Ez0EVVhU0AiqMPGHkQFhhwzFVUDs71ZqM2mCNPR1MjNMvjT1MZf24+6
-	 Foog4qh9DhefwFM4GOs+Oq3hUmo83ZEX/jNG6VxEFPHwYdYtaoQRMVUrWGfwOig0AZ
-	 6izCJFlP4xFFgNdJ8HSjszqaUYUJi/NykHmVvR9M=
+	b=Qa7FvbZor96jzxpwi1mDb4do+FoPMlB302Ry00MSbfQa0MXrPCyIJ+9ReEWKG//yc
+	 WF9sVSfG6cjreRn8uBQeybWY9fcv/keDvEkT0AwpgGkPzwpjS1D0w0uv7AyHSmKTuh
+	 9QOKA9QIzFQqjXnsR8h9J2/ZolC7SrWcW8ajh5yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mallesh Koujalagi <mallesh.koujalagi@intel.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 0704/1193] workqueue: Update documentation as per system_percpu_wq naming
-Date: Wed, 30 Sep 2026 17:23:08 +0200
-Message-ID: <20260930152449.892443535@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0705/1193] Bluetooth: btintel: Fix compiler warning for multi_v7_defconfig config
+Date: Wed, 30 Sep 2026 17:23:09 +0200
+Message-ID: <20260930152449.913847252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,72 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
+From: Kiran K <kiran.k@intel.com>
 
-commit 4a91a33f15c634fb3477d122bdf1eef098d77ee3 upstream.
+commit 36b1c9c35452d043ce2239a65393b3e7ee7101c5 upstream.
 
-Update documentation to use "per-CPU workqueue" instead of
-"global workqueue" to match the system_wq to system_percpu_wq
-rename. The workqueue behavior remains unchanged; this just
-aligns terminology with the clearer naming.
+Fix the following compiler warning reported for ARCH=arm
+multi_v7_defconfig.
 
-Fixes: a2be943b46b4 ("workqueue: replace use of system_wq with system_percpu_wq")
-Signed-off-by: Mallesh Koujalagi <mallesh.koujalagi@intel.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+In file included from drivers/bluetooth/hci_ldisc.c:34:
+drivers/bluetooth/btintel.h:373:13: warning: 'btintel_hw_error' defined
+but not used [-Wunused-function]
+  373 | static void btintel_hw_error(struct hci_dev *hdev, u8 code)
+      |             ^~~~~~~~~~~~~~~~
+
+cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Fixes: 67d4dbac3b8c ("Bluetooth: btintel: Export few static functions")
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/workqueue.h |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btintel.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -610,14 +610,14 @@ static inline bool schedule_work_on(int
+--- a/drivers/bluetooth/btintel.h
++++ b/drivers/bluetooth/btintel.h
+@@ -364,7 +364,7 @@ static inline int btintel_shutdown_combi
+ 	return -ENODEV;
  }
  
- /**
-- * schedule_work - put work task in global workqueue
-+ * schedule_work - put work task in per-CPU workqueue
-  * @work: job to be done
-  *
-- * Returns %false if @work was already on the kernel-global workqueue and
-+ * Returns %false if @work was already on the system per-CPU workqueue and
-  * %true otherwise.
-  *
-- * This puts a job in the kernel-global workqueue if it was not already
-- * queued and leaves it in the same position on the kernel-global
-+ * This puts a job in the system per-CPU workqueue if it was not already
-+ * queued and leaves it in the same position on the system per-CPU
-  * workqueue otherwise.
-  *
-  * Shares the same memory-ordering properties of queue_work(), cf. the
-@@ -668,12 +668,12 @@ extern void __warn_flushing_systemwide_w
- })
- 
- /**
-- * schedule_delayed_work_on - queue work in global workqueue on CPU after delay
-+ * schedule_delayed_work_on - queue work in per-CPU workqueue on CPU after delay
-  * @cpu: cpu to use
-  * @dwork: job to be done
-  * @delay: number of jiffies to wait
-  *
-- * After waiting for a given time this puts a job in the kernel-global
-+ * After waiting for a given time this puts a job in the system per-CPU
-  * workqueue on the specified CPU.
-  */
- static inline bool schedule_delayed_work_on(int cpu, struct delayed_work *dwork,
-@@ -683,11 +683,11 @@ static inline bool schedule_delayed_work
+-static void btintel_hw_error(struct hci_dev *hdev, u8 code)
++static inline void btintel_hw_error(struct hci_dev *hdev, u8 code)
+ {
  }
- 
- /**
-- * schedule_delayed_work - put work task in global workqueue after delay
-+ * schedule_delayed_work - put work task in per-CPU workqueue after delay
-  * @dwork: job to be done
-  * @delay: number of jiffies to wait or 0 for immediate execution
-  *
-- * After waiting for a given time this puts a job in the kernel-global
-+ * After waiting for a given time this puts a job in the system per-CPU
-  * workqueue.
-  */
- static inline bool schedule_delayed_work(struct delayed_work *dwork,
+ #endif
 
 
