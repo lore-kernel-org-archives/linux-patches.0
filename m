@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CA84E3245;
-	Wed, 30 Sep 2026 16:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2872E5158A8;
+	Wed, 30 Sep 2026 16:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786788; cv=none; b=V5t2VkSjzm+LGa9CX8lYh6M8zDTmAcs1tTd6u7bo7MBigPXOKEEy9gQHYFZuxHna5jT2h0uJGT9uFSaBgP+VOy+/0dIQC+U9xSzGY/3UZsWVTUS9Gb/UfKVYNEe06TgYhCVEDBD1WOGFpyR0MEsRj4GLbHWbyDVI+a+EwYlAt08=
+	t=1790786791; cv=none; b=drQyF5gyhxxoB4xzNJKxzPk+40ldoVV8WcAlCxCBhUYT6HzB9L6S2A+xLpadZCzJQHwzdk4suu3bYuxxORZsQ/0bvZXp+t8xvrAyycO4jfXoYrDXR7usL6KlZYGiKqJ901mU1gvav2Fm5JjaNUk50cbpkIlNQDYg5GPVgJL+Ow0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786788; c=relaxed/simple;
-	bh=OSpikaKBoOGPRcjxDCDsj3bCGZ2NdFYdTds26NRn04Q=;
+	s=arc-20240116; t=1790786791; c=relaxed/simple;
+	bh=YsTnUFXgNaA+bVs2oQ7A0XAKa/4bqyrP98aihOQ7EjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPWVp9nKRrWYGeP/j+JqL/JxqndoYG0czjX6PLTRVwlmaKV3QU4mG5DWZLBQiEsPLxmWmm3UaRo182WlHHHuG+DG6Vv/B0MJUt6RWLcZQeE2mzUKCKZdshRTxcQQAOcg1Ajm/hjXPWGI8YqMdmqqx15zLtRW1D7fuDMsUHp0CCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcMNGiD/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WTnOq0XFNC3n8VQn1PS6Pt1uHrjzA+B4igiNe2mqQVxvwneulxCDNUq2oV8gJVf6d4WVs2Dn85B+kLz31eG5jOsWhjMTHybarIxesMyg92q9hAdAolSbJC4j2jGpCkueO7ag5xcSZT7mHB/cotgTF7s/VEv2+8w11vB6i+ybPVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/zzTk+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcMNGiD/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1491F000FF;
-	Wed, 30 Sep 2026 16:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/zzTk+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81AB61F000FF;
+	Wed, 30 Sep 2026 16:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786787;
-	bh=x7BCezNSFcayH5m8ZT0oie8i8KXYFA4GEInpcICIkoU=;
+	s=korg; t=1790786790;
+	bh=JwT4WAu+rgkfGrxTNkV9avhducljB6x/CRF1Ilsz00w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zcMNGiD//crNoDKnDwoZoBlGFcijzfZFBhoYNoLGFbWNbMovomSdo2GxWOw1HxkE7
-	 y43Xz33naPnJItRjbZJ3SAxFLpBbpbeSbBhtTALt9nKqz7ftHB4aIV00GSE2+MajTz
-	 6txqtbrwYREYgqHYpdK31KAzgUTbSn2K/u8skG7M=
+	b=f/zzTk+fEiLZ6NWhbE/D3Et9Z9m+kl2P1nqmAF6+0HlIIDVIMH7yVH87Kq/dnGZnW
+	 YKUhXY9eTFk5t+h8Vt7h6Tk8ILXwm3N07Jm6OOex9kztcsa/lZQkAXetaBIRt4K2Pg
+	 8zqOczvwgc852TxGRa12YaywzKlTeyukGo6dgz+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Eckert <fe@dev.tdt.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.1 978/982] tools/thermal/tmon: Fix compilation warning for wrong format
-Date: Wed, 30 Sep 2026 17:28:34 +0200
-Message-ID: <20260930152437.750820073@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Rengarajan S <rengarajan.s@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Minh=20Ti=E1=BA=BFn=20Nguy=E1=BB=85n?= <zizuzacker@gmail.com>
+Subject: [PATCH 6.1 979/982] lan78xx: Enable 125 MHz CLK configuration for LAN7801 if NO EEPROM is detected
+Date: Wed, 30 Sep 2026 17:28:35 +0200
+Message-ID: <20260930152437.771880846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,65 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Eckert <fe@dev.tdt.de>
+From: Rengarajan S <rengarajan.s@microchip.com>
 
-commit 9da39ef332c417ce52732564c1c682a6e1209302 upstream.
+commit 5160b129f65fc6e1a4aa282d44f824e12aa800ee upstream.
 
-The following warnings are shown during compilation:
+The 125MHz and 25MHz clock configurations are enabled in the initialization
+regardless of EEPROM (125MHz is needed for RGMII 1000Mbps operation). After
+a lite reset (lan78xx_reset), these contents go back to defaults(all 0, so
+no 125MHz or 25MHz clock).
 
-tui.c: In function 'show_cooling_device':
- tui.c:216:40: warning: format '%d' expects argument of type 'int', but
-argument 7 has type 'long unsigned int' [-Wformat=]
-   216 |                         "%02d %12.12s%6d %6d",
-       |                                      ~~^
-       |                                        |
-       |                                        int
-       |                                      %6ld
- ......
-   219 |                         ptdata.cdi[j].cur_state,
-       |                         ~~~~~~~~~~~~~~~~~~~~~~~
-       |                                      |
-       |                                      long unsigned int
- tui.c:216:44: warning: format '%d' expects argument of type 'int', but
-argument 8 has type 'long unsigned int' [-Wformat=]
-   216 |                         "%02d %12.12s%6d %6d",
-       |                                          ~~^
-       |                                            |
-       |                                            int
-       |                                          %6ld
- ......
-   220 |                         ptdata.cdi[j].max_state);
-       |                         ~~~~~~~~~~~~~~~~~~~~~~~
-       |                                      |
-       |                                      long unsigned int
-
-To fix this, the correct string format must be used for printing.
-
-Signed-off-by: Florian Eckert <fe@dev.tdt.de>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20231204141335.2798194-1-fe@dev.tdt.de
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
+Link: https://lore.kernel.org/r/20240529140256.1849764-2-rengarajan.s@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Minh Tiến Nguyễn <zizuzacker@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/thermal/tmon/tui.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/lan78xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/thermal/tmon/tui.c
-+++ b/tools/thermal/tmon/tui.c
-@@ -213,7 +213,7 @@ void show_cooling_device(void)
- 		 * cooling device instances. skip unused idr.
- 		 */
- 		mvwprintw(cooling_device_window, j + 2, 1,
--			"%02d %12.12s%6d %6d",
-+			"%02d %12.12s%6lu %6lu",
- 			ptdata.cdi[j].instance,
- 			ptdata.cdi[j].type,
- 			ptdata.cdi[j].cur_state,
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -2979,6 +2979,8 @@ static int lan78xx_reset(struct lan78xx_
+ 		return ret;
+ 
+ 	buf |= HW_CFG_MEF_;
++	buf |= HW_CFG_CLK125_EN_;
++	buf |= HW_CFG_REFCLK25_EN_;
+ 
+ 	ret = lan78xx_write_reg(dev, HW_CFG, buf);
+ 	if (ret < 0)
 
 
