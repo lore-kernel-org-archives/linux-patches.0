@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D3F5172CF;
-	Wed, 30 Sep 2026 17:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE73F5172F8;
+	Wed, 30 Sep 2026 17:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787903; cv=none; b=h/7mjL5clAAD5/rETLQtZNQL/vxN1vV6FmIRSWG84tL99G+Jz/H9ZEcwCICjHl+VQHXQ6JlJ2i3CEQxttr4QzZhczKo4d6KUINyDPXKyuwyCL5Xt9idNvKo/8oUUjyjeVhbVM/dsScJEiq5d+bpkbNS4sVGkYz1XKLIlbTXF/AA=
+	t=1790787906; cv=none; b=acnXIr6zMCHe3nX5gNkYP+tm0omjVAN9RgS+ovEqOaRhG10BsZfJn07+EFbxUwyXgurG6UlzXZlCaVXptlxZpohIVnRkCjVO85ioRWRaGOFaA1itu18cB/fETWGMa5qwZFXHQfW0RvTbpyIat0jXCZTgl/XQ4+GEEALBsDnkVxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787903; c=relaxed/simple;
-	bh=b5IBioapaEfoq5WJb44jaGfsj5KEGA0LiluUgCQkH3k=;
+	s=arc-20240116; t=1790787906; c=relaxed/simple;
+	bh=zMXHPnaZr7aBxKzYGlkoAUMy0BPlVUj8rAinSAa2tHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgBiOU9AIxqUEdJ6ZCZR9v+drCcF5hsJkgalrj8J61BlcXiss64+h710INPScHLTC5UjpcyKRFyJM8WHVNVP45Njc1of+dMo537/Z6FgBmy8e/1v5BSZWOafnCF2udLH0hDa1EdY9AXCgc27z3rzsI/zzyEHk2iks8/lgVjlLYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+qGrSim; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UjNpZDIE3QH5pLENoR0fV2xK2kMI1zVXfr14hL48DQHRS7vrxtZSkC1VS3eHB0Ubr2G5ToL6/USRQ/z25NA1+0wvLtb8CGCsYfhd8Nb9EN52ny1Qm+puijfAEkF/7Oy7stUJ+QKt81Rw+WDVVL7bX21XwSzAro3V6aN5WGBjYlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaPR34HG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+qGrSim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97301F000FF;
-	Wed, 30 Sep 2026 17:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaPR34HG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562601F000FF;
+	Wed, 30 Sep 2026 17:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787902;
-	bh=/o0szf84hpzr8nuf70basuAPaSKPCatR12B1Mg3NJZ8=;
+	s=korg; t=1790787904;
+	bh=QHAH3ZidwWBe8GYMB1MSWGTy0V4yh7dilFFs8PEnSTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+qGrSim+undODMiW7YILTKRPap7Y/vjRiR82QO4KttWcuv7bMhF1xyZRbTDWtj5B
-	 HVVfloH0yAPluMEwcMyQYMBV+r8DOY00ktSd95LxQA30JeYCdivDJbSMLIS79SKPO2
-	 xvnLJIxL4Ll82l3tlJZnCbCS+k/NeB5kDj290b34=
+	b=xaPR34HGr/pm5QCPRCO5xfASr1M8VosZ36jAF9cB9ovt2NvLWVAk9zBhBh+zwy5mC
+	 bf6tiQDYLZBzJWTvuPkGwsCzNLabcGRTdIrmIGsP88nBQ2Mys2SyYqR7GAdltWxf7a
+	 IfvUHg6n/hLupfsXzJfH1aeo1s4gYdN5QYfOpu6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 7.2 392/457] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
-Date: Wed, 30 Sep 2026 17:28:17 +0200
-Message-ID: <20260930152354.456163654@linuxfoundation.org>
+Subject: [PATCH 7.2 393/457] RISC-V: KVM: Synchronize hrtimer callback during teardown
+Date: Wed, 30 Sep 2026 17:28:18 +0200
+Message-ID: <20260930152354.476869775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,61 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 8ae12ccaec6ec74945d8c1ef39f2c1b8df779abc upstream.
+commit aaad136d56d91252517272b68cd533e5714698d5 upstream.
 
-KVM device ioctls are not serialized against KVM_RUN. As a result,
-kvm_riscv_aia_imsic_rw_attr() can snapshot the physical CPU and HGEI of
-an IMSIC VS-file before a concurrent vCPU migration releases it.
+The non-Sstc hrtimer callback clears next_set before its final uses of
+the enclosing vCPU.  If teardown observes next_set as false while the
+callback is still running, kvm_riscv_vcpu_timer_cancel() skips
+hrtimer_cancel() and kvm_destroy_vcpus() can free the vCPU before the
+callback enters kvm_riscv_vcpu_set_interrupt().
 
-The HGEI can then be allocated to another vCPU before imsic_vsfile_rw()
-uses the stale tuple. A GET or SET attribute may consequently access the
-new owner's interrupt file.
+A guest can arm the timer with SBI TIME and request shutdown with SBI
+legacy shutdown or SRST.  A VMM that honors KVM_EXIT_SYSTEM_EVENT and
+destroys the VM supplies the teardown side of the race; no post-launch
+host ioctl is needed to arm or request teardown.
 
-Serialize the entire IMSIC attribute operation with the target vCPU
-mutex. This prevents the VS-file from being migrated and recycled until
-the attribute access completes. Acquire the mutex killably so that the
-device ioctl remains interruptible while waiting for KVM_RUN to finish.
+On upstream master 62cc90241548, generic KASAN reported:
 
-Fixes: db8b7e97d613 ("RISC-V: KVM: Add in-kernel virtualization of AIA IMSIC")
+  BUG: KASAN: slab-use-after-free in do_raw_spin_lock
+  Write of size 4 at addr ff60000005e58898
+
+  kvm_riscv_vcpu_set_interrupt
+  kvm_riscv_vcpu_hrtimer_expired
+  __hrtimer_run_queues
+  hrtimer_interrupt
+
+The object was allocated by KVM_CREATE_VCPU and freed concurrently by:
+
+  kvm_destroy_vcpus
+  kvm_arch_destroy_vm
+  kvm_destroy_vm
+  __fput
+
+For deterministic validation, I added mdelay(1000) immediately after
+the existing next_set = false assignment.  This only widens the
+existing post-clear callback window.  A no-delay trace build naturally
+reached the callback-after-teardown-start/before-deinit ordering in 12
+of 200 runs, but 1,500 stock-kernel stress iterations did not produce a
+KASAN report, so natural reproduction is timing-sensitive.
+
+Always invoke hrtimer_cancel() for an initialized timer.  Preserve the
+existing -EINVAL result when the timer is no longer set, but only after
+synchronizing with a running callback.
+
+With this patch, hrtimer_cancel() blocked for the full widened callback
+window before vCPU destruction.  KASAN reported no error in 100
+fixed-and-widened runs or 200 fix-only timing-sweep runs.
+
+Fixes: 3a9f66cb25e1 ("RISC-V: KVM: Add timer functionality")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Assisted-by: OpenAI:GPT-5.6
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260810-imsic-attr-race-v2-1-00ed95ad321e@ultrarisc.com
+Link: https://lore.kernel.org/r/20260731163550.46991-1-mhun512@gmail.com
 Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/aia_imsic.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ arch/riscv/kvm/vcpu_timer.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -969,9 +969,14 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
- 	if (!vcpu)
- 		return -ENODEV;
+--- a/arch/riscv/kvm/vcpu_timer.c
++++ b/arch/riscv/kvm/vcpu_timer.c
+@@ -61,10 +61,13 @@ static enum hrtimer_restart kvm_riscv_vc
  
-+	if (mutex_lock_killable(&vcpu->mutex))
-+		return -EINTR;
+ static int kvm_riscv_vcpu_timer_cancel(struct kvm_vcpu_timer *t)
+ {
+-	if (!t->init_done || !t->next_set)
++	if (!t->init_done)
+ 		return -EINVAL;
+ 
+ 	hrtimer_cancel(&t->hrt);
 +
- 	imsic = vcpu->arch.aia_context.imsic_state;
--	if (!imsic)
--		return -ENODEV;
-+	if (!imsic) {
-+		rc = -ENODEV;
-+		goto out_unlock;
-+	}
- 	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
++	if (!t->next_set)
++		return -EINVAL;
+ 	t->next_set = false;
  
- 	read_lock_irqsave(&imsic->vsfile_lock, flags);
-@@ -995,6 +1000,8 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
- 		rc = imsic_vsfile_rw(vsfile_hgei, vsfile_cpu, imsic->nr_eix,
- 				     isel, write, val);
- 
-+out_unlock:
-+	mutex_unlock(&vcpu->mutex);
- 	return rc;
- }
- 
+ 	return 0;
 
 
