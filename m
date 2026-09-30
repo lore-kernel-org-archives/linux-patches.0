@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A683515D1;
-	Wed, 30 Sep 2026 17:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C708415B66;
+	Wed, 30 Sep 2026 17:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789747; cv=none; b=I5+Ykoa5etxTT3olSswqJoQfhllaT7OVBpn8H6z/xpeaMoDrW2EXLgCripj1yVgLj6FcE12KeGz6udpSJqbRiJJ0R8SKBEgp9A3g9Nh+gvP++bhcsZo85Qoo5YFKCR5SNoo4+Fp1dkUm1TDEzbD6omdZGyVIvJVms0B4HMUxu3Q=
+	t=1790789750; cv=none; b=b5YkgMa0/aXv7N0oCsVvAzOZy68CMlVeHORI5jEfDte6dEkyy6rw/GCOxp/lx6eQqjAsh/ys8yL9+MXjKff/1VTRmeuwIm3Hw4S+bmKa9gtz+SveRS0XYFbAaba5x8XDEEsuHR+sBQxoi9sIYYUxzTBJqIlrTFzORCmYOCd+YfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789747; c=relaxed/simple;
-	bh=68DP3+YvBG/ExkOslhqthC/wkkEeKjjSBwdAGD2oFl8=;
+	s=arc-20240116; t=1790789750; c=relaxed/simple;
+	bh=yVr1xRNPZS/mpMX4TFuoZ0BOUtAv8lNa2XfLXPFcGT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R715Ko5jvHcJc4NhKuPDifhx8hiECz4R+9bBoF31igH91w8vzN5/HI5uRSaGexLZNj846HVQYJPJejhcL5hTxXunHzV2OWsAXW8SAFzUelfWXkXROX95z410th5nv4XjyDEyawNBON9CbiqJhj98XXyPHjjZ3D6SDA+KBGUD+LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDqu+0/I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o7Zmm7JAmX31M3nnJf9dRM+mCDqTK/u1WYwILYFgVH2jTutbw5vu0UO1SRLcngVTpsx+YTMdREZ1aqxWMX3C3hRqabXn+sxh5a83Cx+v6n4ZxLE8CPt5AGxzNmEnX6JJyesUjE3fWnV599sc6AxBMcGqeSjRZH/moTJgHEgZ9+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi+fzDwf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDqu+0/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28311F000FF;
-	Wed, 30 Sep 2026 17:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi+fzDwf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54081F000FF;
+	Wed, 30 Sep 2026 17:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789746;
-	bh=vUeRVnTObJwb/9Sk8YWhhL9Kj+5vcVW2W/cTdorhXsA=;
+	s=korg; t=1790789749;
+	bh=3ht1aAL/or5FwtGMNbBFM7KkQ52P4IHdg62qdewPvRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDqu+0/IVNUhhEbqfUzhilx1U93g8aubxKrrrOwP4frZwgU+QE9fmY8rwpue5YBxF
-	 lbhAaot6Zd6Qa0FSEOVJM1+FmFVMlgI0/3n9f45p+fXtNEFWKl3+tj1LxPooUWaZtN
-	 DsIzI7d/Ofb7fZlb2I/00HwCMNESWdyJOQ8si48E=
+	b=Pi+fzDwfz/0gN5Bng33I41/yqPmyVgWSrclGg2pRmGE4WRzHZySk37If1r9hE0pgZ
+	 /X+oSch6uK63dvUvpJ7Sc1GiY3tYqyNs0UjKGxtoV1mh8wcbR/FOiZcI3I5UFDz4Jd
+	 t+tTTWD9FTN0gOsVU1sZBkHET8PjBE8pgng2tdgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 584/877] platform/x86: think-lmi: Fix current password length check
-Date: Wed, 30 Sep 2026 17:24:55 +0200
-Message-ID: <20260930152427.247324455@linuxfoundation.org>
+Subject: [PATCH 6.12 585/877] platform/x86: think-lmi: improve check if BIOS account security enabled
+Date: Wed, 30 Sep 2026 17:24:56 +0200
+Message-ID: <20260930152427.271219892@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,52 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 54745d563114b74f6fecebce68cd020d06c1772b ]
+[ Upstream commit b39e8ece931a4b4f64cdf9e75fffd6e82828e471 ]
 
-current_password_store() checks the password length before removing the
-trailing newline, which can reject valid passwords that are exactly
-->maxlen bytes long.
+Improve determination of whether authentication account is enabled by
+checking if either password or certificate is enabled.
 
-It also passes ->maxlen to strscpy(), which truncates passwords without
-a newline.
+Renamed valid to pwd_enabled for better readability.
 
-Use strchrnul() to measure the password length up to the newline, then
-copy that many bytes and add a trailing NUL terminator using strscpy().
-
-Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260818151635.37094-2-thorsten.blum@linux.dev
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20241024195536.6992-1-mpearson-lenovo@squebb.ca
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 4f3183f5ae9b ("platform/x86: think-lmi: Fix certificate thumbprint sysfs output")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/think-lmi.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/platform/x86/think-lmi.c |   26 +++++++++++++-------------
+ drivers/platform/x86/think-lmi.h |    2 +-
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
 --- a/drivers/platform/x86/think-lmi.c
 +++ b/drivers/platform/x86/think-lmi.c
-@@ -402,14 +402,13 @@ static ssize_t current_password_store(st
+@@ -390,7 +390,7 @@ static ssize_t is_enabled_show(struct ko
+ {
  	struct tlmi_pwd_setting *setting = to_tlmi_pwd_setting(kobj);
- 	size_t pwdlen;
  
--	pwdlen = strlen(buf);
-+	/* Strip newline; setting password won't work if one is present. */
-+	pwdlen = strchrnul(buf, '\n') - buf;
- 	/* pwdlen == 0 is allowed to clear the password */
- 	if (pwdlen && ((pwdlen < setting->minlen) || (pwdlen > setting->maxlen)))
- 		return -EINVAL;
- 
--	strscpy(setting->password, buf, setting->maxlen);
--	/* Strip out CR if one is present, setting password won't work if it is present */
--	strreplace(setting->password, '\n', '\0');
-+	strscpy(setting->password, buf, pwdlen + 1);
- 	return count;
+-	return sysfs_emit(buf, "%d\n", setting->valid);
++	return sysfs_emit(buf, "%d\n", setting->pwd_enabled || setting->cert_installed);
  }
  
+ static struct kobj_attribute auth_is_pass_set = __ATTR_RO(is_enabled);
+@@ -467,7 +467,7 @@ static ssize_t new_password_store(struct
+ 		if (ret)
+ 			goto out;
+ 
+-		if (tlmi_priv.pwd_admin->valid) {
++		if (tlmi_priv.pwd_admin->pwd_enabled) {
+ 			ret = tlmi_opcode_setting("WmiOpcodePasswordAdmin",
+ 					tlmi_priv.pwd_admin->password);
+ 			if (ret)
+@@ -775,7 +775,7 @@ static ssize_t certificate_store(struct
+ 				new_cert, setting->signature);
+ 	} else {
+ 		/* This is a fresh install */
+-		if (!setting->valid || !setting->password[0]) {
++		if (!setting->pwd_enabled || !setting->password[0]) {
+ 			kfree(new_cert);
+ 			return -EACCES;
+ 		}
+@@ -1018,7 +1018,7 @@ static ssize_t current_value_store(struc
+ 		 * Workstation's require the opcode to be set before changing the
+ 		 * attribute.
+ 		 */
+-		if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
++		if (tlmi_priv.pwd_admin->pwd_enabled && tlmi_priv.pwd_admin->password[0]) {
+ 			ret = tlmi_opcode_setting("WmiOpcodePasswordAdmin",
+ 						  tlmi_priv.pwd_admin->password);
+ 			if (ret)
+@@ -1041,7 +1041,7 @@ static ssize_t current_value_store(struc
+ 		else
+ 			ret = tlmi_save_bios_settings("");
+ 	} else { /* old non-opcode based authentication method (deprecated) */
+-		if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
++		if (tlmi_priv.pwd_admin->pwd_enabled && tlmi_priv.pwd_admin->password[0]) {
+ 			auth_str = kasprintf(GFP_KERNEL, "%s,%s,%s;",
+ 					tlmi_priv.pwd_admin->password,
+ 					encoding_options[tlmi_priv.pwd_admin->encoding],
+@@ -1217,7 +1217,7 @@ static ssize_t save_settings_store(struc
+ 			if (ret)
+ 				goto out;
+ 		} else if (tlmi_priv.opcode_support) {
+-			if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
++			if (tlmi_priv.pwd_admin->pwd_enabled && tlmi_priv.pwd_admin->password[0]) {
+ 				ret = tlmi_opcode_setting("WmiOpcodePasswordAdmin",
+ 							  tlmi_priv.pwd_admin->password);
+ 				if (ret)
+@@ -1225,7 +1225,7 @@ static ssize_t save_settings_store(struc
+ 			}
+ 			ret = tlmi_save_bios_settings("");
+ 		} else { /* old non-opcode based authentication method (deprecated) */
+-			if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
++			if (tlmi_priv.pwd_admin->pwd_enabled && tlmi_priv.pwd_admin->password[0]) {
+ 				auth_str = kasprintf(GFP_KERNEL, "%s,%s,%s;",
+ 						     tlmi_priv.pwd_admin->password,
+ 						     encoding_options[tlmi_priv.pwd_admin->encoding],
+@@ -1275,7 +1275,7 @@ static ssize_t debug_cmd_store(struct ko
+ 	if (!new_setting)
+ 		return -ENOMEM;
+ 
+-	if (tlmi_priv.pwd_admin->valid && tlmi_priv.pwd_admin->password[0]) {
++	if (tlmi_priv.pwd_admin->pwd_enabled && tlmi_priv.pwd_admin->password[0]) {
+ 		auth_str = kasprintf(GFP_KERNEL, "%s,%s,%s;",
+ 				tlmi_priv.pwd_admin->password,
+ 				encoding_options[tlmi_priv.pwd_admin->encoding],
+@@ -1602,14 +1602,14 @@ static int tlmi_analyze(void)
+ 		goto fail_clear_attr;
+ 
+ 	if (tlmi_priv.pwdcfg.core.password_state & TLMI_PAP_PWD)
+-		tlmi_priv.pwd_admin->valid = true;
++		tlmi_priv.pwd_admin->pwd_enabled = true;
+ 
+ 	tlmi_priv.pwd_power = tlmi_create_auth("pop", "power-on");
+ 	if (!tlmi_priv.pwd_power)
+ 		goto fail_clear_attr;
+ 
+ 	if (tlmi_priv.pwdcfg.core.password_state & TLMI_POP_PWD)
+-		tlmi_priv.pwd_power->valid = true;
++		tlmi_priv.pwd_power->pwd_enabled = true;
+ 
+ 	if (tlmi_priv.opcode_support) {
+ 		tlmi_priv.pwd_system = tlmi_create_auth("smp", "system");
+@@ -1617,7 +1617,7 @@ static int tlmi_analyze(void)
+ 			goto fail_clear_attr;
+ 
+ 		if (tlmi_priv.pwdcfg.core.password_state & TLMI_SMP_PWD)
+-			tlmi_priv.pwd_system->valid = true;
++			tlmi_priv.pwd_system->pwd_enabled = true;
+ 
+ 		tlmi_priv.pwd_hdd = tlmi_create_auth("hdd", "hdd");
+ 		if (!tlmi_priv.pwd_hdd)
+@@ -1635,7 +1635,7 @@ static int tlmi_analyze(void)
+ 			/* Check if PWD is configured and set index to first drive found */
+ 			if (tlmi_priv.pwdcfg.ext.hdd_user_password ||
+ 					tlmi_priv.pwdcfg.ext.hdd_master_password) {
+-				tlmi_priv.pwd_hdd->valid = true;
++				tlmi_priv.pwd_hdd->pwd_enabled = true;
+ 				if (tlmi_priv.pwdcfg.ext.hdd_master_password)
+ 					tlmi_priv.pwd_hdd->index =
+ 						ffs(tlmi_priv.pwdcfg.ext.hdd_master_password) - 1;
+@@ -1645,7 +1645,7 @@ static int tlmi_analyze(void)
+ 			}
+ 			if (tlmi_priv.pwdcfg.ext.nvme_user_password ||
+ 					tlmi_priv.pwdcfg.ext.nvme_master_password) {
+-				tlmi_priv.pwd_nvme->valid = true;
++				tlmi_priv.pwd_nvme->pwd_enabled = true;
+ 				if (tlmi_priv.pwdcfg.ext.nvme_master_password)
+ 					tlmi_priv.pwd_nvme->index =
+ 						ffs(tlmi_priv.pwdcfg.ext.nvme_master_password) - 1;
+--- a/drivers/platform/x86/think-lmi.h
++++ b/drivers/platform/x86/think-lmi.h
+@@ -65,7 +65,7 @@ struct tlmi_pwdcfg {
+ /* password setting details */
+ struct tlmi_pwd_setting {
+ 	struct kobject kobj;
+-	bool valid;
++	bool pwd_enabled;
+ 	char password[TLMI_PWD_BUFSIZE];
+ 	const char *pwd_type;
+ 	const char *role;
 
 
