@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53673CEB9E;
-	Wed, 30 Sep 2026 18:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0AA3DA7DB;
+	Wed, 30 Sep 2026 18:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794118; cv=none; b=qub2Kil0u1u6P4Qhk04F03Pe440WXiZUrB8NT/4wlTbXLnx/74BLUbmeu3G7ie7b2JFA+6FVjVWJ/SqVxqLU+eUu+CZ/HaFN1Miv7rIBIEGcqOfg8119+ijcL/+aVYgmQPXrf2ICj8YmCqrY+LWrAbtWhjctxJt+c/blpw3yQWc=
+	t=1790794121; cv=none; b=VbpkU5v9rZE6F77WOp+xasicUbGUrXHN67YR4ELZk73HgEPST2CssUSbmRMkJJksMrKGyiOPHYmv0YVNJ0Z4dlMpq3HoGix6Yq5KbbunH2+oHFqCkVfsEU38oQSDgkYfSVriylH1St5kdHMblwJhtbuvAGBhFCIT7nGdqP1yfec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794118; c=relaxed/simple;
-	bh=IQisz/YlLEi+2Id62vBsVrt18HyJMNPJbgWw+8CsPqg=;
+	s=arc-20240116; t=1790794121; c=relaxed/simple;
+	bh=NRrReintCLpWgEzXWQ594zQHfzuhMcI+dEn0R7WWaLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OcRnIAagl8ZumFI0lwF4vsvXdZ8Xgpw80haphbLALF/gD6wGedgHwhZkyjKqmBLllpCLe0MOOogJeGohoQXs2itFFKoxzOaURsqkg+LzIlvLBoy4wtYUVuf8l46sBkVDsCLW+fBEpVDPUjYlKWalOFKKiLYdhmj+ixClzrgmzBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbPswnll; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UfxnbMpJxJl1XzaHFEhnNVICWYRnBm5Jwe/86Yx5V+UmJPCB0h/rZCBFy8eN7GkP6mit97iVYvJzjsl/IMiZ7R4N9RR6AaOhpb/8rNrEDaWBXxV32s4+A/2Nj9kQwFbQWzb6V5AhVAum+WbLiNHJ7LVEVRyiYtrb+tixAIZLSJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfeeXCX1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbPswnll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0FF1F000FF;
-	Wed, 30 Sep 2026 18:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfeeXCX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BDB1F000FF;
+	Wed, 30 Sep 2026 18:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794117;
-	bh=VxVvxbWufMDAW4QR8apj6e+DcGunr5Q/Td3nJgaeQhw=;
+	s=korg; t=1790794120;
+	bh=6wH/Dvbzpu6sDihbZukeU6Rp204Pl+T1GH9iJAsG5bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NbPswnllRlUHQnupcGeVSkb4TKupznUDAW+zm2DahP7X03la4B6A/uKSvNsS4PEHx
-	 e5+2FklXrngtmi/y5D65uFwe2vrGsugfrdDnr6aBGwry/VdDc6eg1jEBMcNDs/W56O
-	 kbQsRqxfXCw1urXTyFSEZB6GDNXCyIsfKSUpqQUs=
+	b=JfeeXCX1KSvOPJ87nFbC9joC7ieTRmCp7Jg8HHa9Lm9kWBP3i+qIUEtrQdmQI8Qa3
+	 l5ts7eWyOS0TRJn+Q3uUiyD2IPX3PiCy8kf82VjYyTT6uc3GnPWEDA9aI2sQYuwfHp
+	 mAIyTCbLG9cRnh8Yztk9NeimooGbpXnxfTONEGSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0096/1193] usb: gadget: aspeed_udc: avoid past-the-end iterator in dequeue
-Date: Wed, 30 Sep 2026 17:13:00 +0200
-Message-ID: <20260930152436.371947823@linuxfoundation.org>
+Subject: [PATCH 6.6 0097/1193] serial: 8250: fix possible ISR soft lockup
+Date: Wed, 30 Sep 2026 17:13:01 +0200
+Message-ID: <20260930152436.393014985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,63 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit e2ffaac1884b921b8ec2b3a964c6a8b5d610bf4b ]
+[ Upstream commit 0c6bf45e5a345cc3b9ffbeaf9083ecac3c2293eb ]
 
-ast_udc_ep_dequeue() declares the loop cursor `req` outside the
-list_for_each_entry(). After the loop it tests `&req->req != _req`
-to decide whether the request was found. If the queue holds no
-match, `req` is past-the-end. It then aliases
-container_of(&ep->queue, struct ast_udc_request, queue) via offset
-cancellation. Whether that synthetic address equals `_req` depends
-on heap layout. The function can return 0 without dequeueing
-anything.
+There are rare cases in which the host gets stuck in the ISR because it
+is flooded with messages during the startup phase.
 
-Default `rc` to -EINVAL and set it to 0 only inside the match
-branch. `req` is no longer read after the loop, so the past-the-end
-dereference goes away. No extra cursor variable or post-loop test
-is needed.
+The reason for the soft lockup in the ISR is the missing FIFO error IRQ
+(FIFOE) handling. Not handling it and reporting IRQ_HANDLED triggers
+the IRQ immediately again.
 
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260521065428.3261238-1-maoyixie.tju@gmail.com
+Fix this by adding a check for the FIFOE status and clearing the FIFO
+if no data is ready (DR).
+
+This behavior was observed on an AM62L device which uses the OMAP 8250
+driver. Fix it for all 8250 drivers, since the OMAP driver's special
+IRQ setup handling may trigger this behavior more frequently, but it
+is not ensured that other 8250 drivers aren't affected.
+
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://patch.msgid.link/20260519-v7-1-topic-serial-8250-v1-1-56b04293a246@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/aspeed_udc.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/tty/serial/8250/8250_port.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/aspeed_udc.c b/drivers/usb/gadget/udc/aspeed_udc.c
-index efcceb886bb40..de00e53977ad0 100644
---- a/drivers/usb/gadget/udc/aspeed_udc.c
-+++ b/drivers/usb/gadget/udc/aspeed_udc.c
-@@ -694,7 +694,7 @@ static int ast_udc_ep_dequeue(struct usb_ep *_ep, struct usb_request *_req)
- 	struct ast_udc_dev *udc = ep->udc;
- 	struct ast_udc_request *req;
- 	unsigned long flags;
--	int rc = 0;
-+	int rc = -EINVAL;
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index c246503c9f80b..4bd7092d25f72 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1916,6 +1916,13 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
  
- 	spin_lock_irqsave(&udc->lock, flags);
+ 	status = serial_lsr_in(up);
  
-@@ -704,14 +704,11 @@ static int ast_udc_ep_dequeue(struct usb_ep *_ep, struct usb_request *_req)
- 			list_del_init(&req->queue);
- 			ast_udc_done(ep, req, -ESHUTDOWN);
- 			_req->status = -ECONNRESET;
-+			rc = 0;
- 			break;
- 		}
- 	}
- 
--	/* dequeue request not found */
--	if (&req->req != _req)
--		rc = -EINVAL;
--
- 	spin_unlock_irqrestore(&udc->lock, flags);
- 
- 	return rc;
++	/*
++	 * Recover from no-data-ready and FIFO error condition to avoid getting
++	 * stuck in the ISR.
++	 */
++	if (!(status & UART_LSR_DR) && (status & UART_LSR_FIFOE))
++		serial8250_clear_and_reinit_fifos(up);
++
+ 	/*
+ 	 * If port is stopped and there are no error conditions in the
+ 	 * FIFO, then don't drain the FIFO, as this may lead to TTY buffer
 -- 
 2.53.0
 
