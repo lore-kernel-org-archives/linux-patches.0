@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72091368D79;
-	Wed, 30 Sep 2026 15:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72CE4F68B5;
+	Wed, 30 Sep 2026 15:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783949; cv=none; b=BXm4Vrc+iIT2/o0XWF/e78LEZwwMppi93OJmBERXM0r9f6v0T3qAU6xzPgK0Wxn1exCk9iBpVlafV8+YZRlTW0u3eytNd4Hn6fz3ym7Hb6eIQ5OS5/8iHAZz28bGedl3KWobIZOs38iRWHZfVlyEmSFqKGvXpFX0bbtZrCiCDjA=
+	t=1790783952; cv=none; b=Af+zge+9l+iZRoQF+aP/1bPT3rk8K2YY2CGxnQLBRjmyaqAWq/NTzHd4v4td10j0oa53ofeLIuzM2HSgVJt/4BcZ093dX0OzJCKUhZwU3FunpvjNg7fxD/hxGtbO+iKy6dPDlN66xhYE13z0YakujBWaItj8AeTyuH+9X3+AVnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783949; c=relaxed/simple;
-	bh=2XLT9vIy5DJ2vCnp9QgIbU8neAE45LyWSswUwmKgTcI=;
+	s=arc-20240116; t=1790783952; c=relaxed/simple;
+	bh=0brHsPSvoIBWoxhjOME0lgrbFk1zBZhqWe6bufgQRjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BS16EvMs765KxrObNGudbD2u4oCsLbPZfIpm2AHjIeD4LFmxKKUyEu2MGHeNLTcO2xvxgSX7YY1fBgfdjE5GJSI4BoQ8kUs4FN3nQaSWDLAtk73Eh88HSF1B78IQjGZpTviy2xUP3MHjeIeDPMBer4QhnE6Z2x9foG5hkTtkpOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVtrjIeB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EBbztR4KRhjsyGfQ4AVB5ANTeXka9Udlo7si1usRsOUXdJ1OtYxedMUMhGphu9sw/srWCCwdNzKdG3Sumeq6mjvlUzpxCMziBtfCYah0wZG/bZfAdBYTQP27MHL4rvM6vVKurQd9tsE9CIDzZXkmwC6cMsiOFLgWip6EkKHf7c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDgRq6De; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVtrjIeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FAB1F00893;
-	Wed, 30 Sep 2026 15:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDgRq6De"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52441F00898;
+	Wed, 30 Sep 2026 15:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783943;
-	bh=+v4GksxMBGDoSmVRe58ssc6nlBV8guVwCiUEKA+dilQ=;
+	s=korg; t=1790783949;
+	bh=J1AqBbDMT8YWiclVWb8LcTIt9ubeQSfINyRV0yrolmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MVtrjIeB9i9VgbvF1SSUVaWQCw+WcLk/8ki6vlqzsGle/sn8vmH6x7ulYzP94CwZX
-	 9YbIgDU4w92GieuW/5J5knzc+3RUrXHnM5ynbwC3CZ+qXdhOH06usJpJpN+NPTLaSL
-	 7RF9KQbAf9aSxW5Q2nqRo94MinZqOCS2+5uYf3Og=
+	b=hDgRq6DepSOV9NVsoMbteTydaPCrYXMDyIuTo6rYpxPgRMcXTp1h7yTuwjXhwojlw
+	 MeWnVxrOxoKEg9ARm5YZ6Sd4IvRhQu+IT9F3z21wU3G+iPN3D9zzsnz22FJ3YCUuK8
+	 Ks2Rp5LwTCc/OSCK+uI6wp5DAuwFNzW+Tnrwfh2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Mierczuk <axel.mierczuk@1password.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 576/595] net: openvswitch: conntrack: avoid modifying shared unconfirmed ct entry
-Date: Wed, 30 Sep 2026 17:27:49 +0200
-Message-ID: <20260930152400.121417803@linuxfoundation.org>
+	=?UTF-8?q?Gajdos=20Tam=C3=A1s?= <tamas@rimpianto.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 578/595] net: atl1e: fix soft lockup on out-of-range hw_next_to_clean read
+Date: Wed, 30 Sep 2026 17:27:51 +0200
+Message-ID: <20260930152400.165985258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -46,85 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Gajdos Tamás <tamas@rimpianto.com>
 
-commit 26b2bd70d22457556e2fa01cbf1192cb1a94d619 upstream.
+commit 374bf9e4b90f979e052332c4faca2d745c491a12 upstream.
 
-In a case where skb with an unconfirmed ct entry gets cloned, we may
-end up committing both but with different sets of extensions.
+Same issue as atl1c (see the first commit in this series, "net:
+atl1c: fix soft lockup on out-of-range tpd_cons read"): the hardware
+can report an out-of-range hw_next_to_clean (seen as 0xffff) while
+the PCIe link/MAC is resetting. An out-of-range value can never be
+reached and the loop below would spin forever. Treat it as "nothing
+new to clean" instead.
 
-The series of events:
-
- 1. The first clone wants to commit and runs the helpers wiring up
-    the extension pointer into the expectation list.
- 2. Then it looses the confirmation keeping the entry unconfirmed.
- 3. Second clone now wants to commit labels and adds the new extension
-    for that breaking the pointer in the expectation list causing
-    UAF on the destruction path later.
-
-While this is possible to trigger, there should be no practical
-network pipeline where committing both clones without modifications
-into the same zone is needed.  So, let's just reset the entry in case
-for some reason we got an skb with a shared one during commit.  This
-doesn't affect any known use cases, but avoids any potential problems
-with sharing and modification of the unconfirmed ct entry.
-
-The fixes tag points to the introduction of helpers, since that's the
-main UAF trigger for the sharing.
-
-Fixes: cae3a2627520 ("openvswitch: Allow attaching helpers to ct action")
+Fixes: a6a5325239c202 ("atl1e: Atheros L1E Gigabit Ethernet driver")
 Cc: stable@vger.kernel.org
-Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260921145655.3167436-2-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gajdos Tamás <tamas@rimpianto.com>
+Link: https://patch.msgid.link/20260921091334.3571525-3-tamas@rimpianto.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_conntrack.h |    5 +++++
- net/openvswitch/conntrack.c          |   12 ++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/net/ethernet/atheros/atl1e/atl1e_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/net/netfilter/nf_conntrack.h
-+++ b/include/net/netfilter/nf_conntrack.h
-@@ -166,6 +166,11 @@ static inline void nf_ct_put(struct nf_c
- int nf_ct_l3proto_try_module_get(unsigned short l3proto);
- void nf_ct_l3proto_module_put(unsigned short l3proto);
+--- a/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
++++ b/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
+@@ -1234,6 +1234,9 @@ static bool atl1e_clean_tx_irq(struct at
+ 	u16 hw_next_to_clean = AT_READ_REGW(&adapter->hw, REG_TPD_CONS_IDX);
+ 	u16 next_to_clean = atomic_read(&tx_ring->next_to_clean);
  
-+static inline bool nf_ct_shared(const struct nf_conn *ct)
-+{
-+	return refcount_read(&ct->ct_general.use) > 1;
-+}
++	if (unlikely(hw_next_to_clean >= tx_ring->count))
++		hw_next_to_clean = next_to_clean;
 +
- /* load module; enable/disable conntrack in this namespace */
- int nf_ct_netns_get(struct net *net, u8 nfproto);
- void nf_ct_netns_put(struct net *net, u8 nfproto);
---- a/net/openvswitch/conntrack.c
-+++ b/net/openvswitch/conntrack.c
-@@ -955,6 +955,18 @@ static int __ovs_ct_lookup(struct net *n
- 	enum ip_conntrack_info ctinfo;
- 	struct nf_conn *ct;
- 
-+	/* If the ct entry is not confirmed and shared with some other skb,
-+	 * e.g., a cloned one, we can't just modify it with the commit as we
-+	 * must not modify the extension set.  Reset.
-+	 */
-+	if (cached && info->commit) {
-+		ct = nf_ct_get(skb, &ctinfo);
-+		if (ct && !nf_ct_is_confirmed(ct) && nf_ct_shared(ct)) {
-+			nf_reset_ct(skb);
-+			cached = false;
-+		}
-+	}
-+
- 	if (!cached) {
- 		struct nf_hook_state state = {
- 			.hook = NF_INET_PRE_ROUTING,
+ 	while (next_to_clean != hw_next_to_clean) {
+ 		tx_buffer = &tx_ring->tx_buffer[next_to_clean];
+ 		if (tx_buffer->dma) {
 
 
