@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9823C4551;
-	Wed, 30 Sep 2026 19:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78A534E75A;
+	Wed, 30 Sep 2026 19:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795533; cv=none; b=RMajR4eFOW8J6z7CpL1ut/rVSeiLgGjoYXnL90nJPsZ8zUYIdJyht151a3KhIaaA2Fu0yJ8+NiPlC4Lf5LvUmBkfT6XFeyoVIrJ+g2TDP4/wsWOxZqdaVg/lf+e6FWR86TJT3PuBAL2DxeA1OD4qwMWfpapaqDhBNTz7dnyk/2Y=
+	t=1790795536; cv=none; b=tmngVKOnRlEuzStkQkwEFK+584GIQkKY+CqIxJzzCilQS4h0pw234Dt0VEJmq7/LnCyCMTrbXZmRzMYdRTQaWmiWySNgK9o9r/aacl2b2KFaU4NEnPFdaaeoKxaNxftmv9Af9zxB6ipERqnsUCJqPkBYiBBI+Q9QlFI2skWmq7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795533; c=relaxed/simple;
-	bh=vL+ffQb7AR9F+XWjOan1QtpRD7wmn6oaIydgcLE5KX4=;
+	s=arc-20240116; t=1790795536; c=relaxed/simple;
+	bh=CPbCCvVvkm8w8Rg8KDClXAam4ROhj75W5muC1Gfg8UY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7K63vdF1oskf7dYgVgCWs0HLzjDju7F+XMvjIdaAUisK3fo3z7Q2Ti/dYB+rK5IAajpvLyZC9TTZC70JOJ3kmb8CYsGcI0V9NRsnM2TIejFhLHw9YERohh3es62piav7WTrcmjyV21zZUR1dT97aKVu56cyTUtY7FbvFHQqjbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUJU+SX2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R5XjNqgQt8ZXc69gE1paxQxddrWdueHHzdkDh89ZhXXbtnO/0y7fFB23mOfj2ls+ep9tLa9EtIFjSBFYkWLXFPBo+EL6+p03+L9+4I6QGKUy9mKPluPfhTaPgJVK1zkGcsSOTPB5ScCvzb9fe5XL669QDa8qYA5tAG2+VOPpPDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISMHzaPw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUJU+SX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697511F000FF;
-	Wed, 30 Sep 2026 19:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISMHzaPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406401F000FF;
+	Wed, 30 Sep 2026 19:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795532;
-	bh=q0Cta+ixBcMBGVsC+Xgf3b/4FhfyTyVn0U3uYTa0DUY=;
+	s=korg; t=1790795534;
+	bh=Bwe+B94IfGxBJ96TsBKgvu3dZxWmF6dLd92WC/dokok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUJU+SX2wEw7L6/04BjQpsaJC1Lb0cXXdNudfv3V6iVP7ItGi51wiGjkxfxb8wHCs
-	 cPgByo5tu2X3tpCkMq2BgrgFS/7Ugr3gCcB9xrLexfnaXm0Dwow4Jf7XgnOsPouz38
-	 iiAg/iL5wfIy2R3UyquWXPowXIZClBXzcOFIPNGg=
+	b=ISMHzaPwB9gdLMivc7pmOT7VBnRlUE4f0ffvVhO85iKcub/EySAL7+6psAk0Z6al1
+	 45KmW6ozrt6Hiim8sgR8rpHp7IZeIdpOKJbAHAJ9XQq+MceUE6oZxE3fKZjfsQE6Zw
+	 0emhOQFl9ZAcvHBYvCRWi7Ai8iZJne8WDpH6KJBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Stian Halseth <stian@itx.no>,
-	Jens Axboe <axboe@kernel.dk>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0593/1193] sunvdc: unmap LDC cookies when the descriptor send fails
-Date: Wed, 30 Sep 2026 17:21:17 +0200
-Message-ID: <20260930152447.420894745@linuxfoundation.org>
+Subject: [PATCH 6.6 0594/1193] scsi: target: iscsi: Fix hang for aborted WRITE_PENDING commands
+Date: Wed, 30 Sep 2026 17:21:18 +0200
+Message-ID: <20260930152447.442032523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,82 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stian Halseth <stian@itx.no>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 0c6da21fa35e03fc74f09895433ccd6d4a9c3530 ]
+[ Upstream commit d5869dae5080e976d4b03cc33eb7ceb527f242bf ]
 
-__send_request() maps the request's pages into the LDC channel's map
-table (ldc_map_sg()), fills in the descriptor and marks it
-VIO_DESC_READY before ringing the doorbell via __vdc_tx_trigger().
-When the trigger fails, the error path only prints a message: the
-descriptor stays READY and the cookies are never unmapped. The
-mapping is normally released in vdc_end_one() when the peer completes
-the descriptor - but a descriptor whose doorbell was never sent will
-never complete, and since dr->prod is not advanced on failure, the
-reset path (vdc_requeue_inflight(), which walks [cons, prod)) never
-visits it either. The map table entries are leaked permanently.
+When a LUN_RESET aborts a WRITE command that is in the
+TRANSPORT_WRITE_PENDING state, the target core sets CMD_T_ABORTED and
+waits for the frontend to finish processing.
 
-Since commit a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop
-when vio_ldc_send() returns EAGAIN") trigger failures occur in
-practice under load, so every resulting I/O error also leaks one
-request's worth of entries from the fixed-size (8192 entries per
-channel) map table. Because the allocator hands out contiguous
-ranges, fragmentation makes large multi-segment requests fail first
-as the table drains, until ldc_map_sg() fails permanently and the
-disk is dead until reboot.
+If the initiator subsequently sends the remaining dataout PDUs,
+__iscsit_check_dataout_hdr() catches the payload, stops the dataout
+timer if the sequence is final and finally dumps the data.  However, the
+iSCSI target doesn't trigger the completion process for these aborted
+commands. Because of this, the abort path hangs indefinitely in
+target_put_cmd_and_wait(), leading to a deadlocked target worker thread.
 
-It also makes any retry-based recovery unusable: requeuing the
-request on -EAGAIN remaps the pages on every attempt, overwriting
-desc->cookies and orphaning the previous mapping, so the table
-drains at the retry rate. This is the memory exhaustion observed
-when the requeue approach was first tested in October 2025.
+Fix this by explicitly calling target_complete_cmd() when the final
+dataout PDU is received for an aborted WRITE command.
+target_complete_cmd() detects the CMD_T_ABORTED flag and cleanly routes
+the command into target_abort_work, allowing the abort completion to
+successfully unblock.
 
-Roll back on failure: unmap the cookies, mark the descriptor FREE
-again and clear the request entry. If the trigger failed with
--ENOTCONN, __vdc_tx_trigger() has already reset the port, which
-tears down and reallocates both the dring and the LDC channel
-including its map table - nothing to roll back, and the stale
-descriptor must not be touched.
-
-Fixes: a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://github.com/sparclinux/issues/issues/2
-Signed-off-by: Stian Halseth <stian@itx.no>
-Link: https://patch.msgid.link/20260901173947.3292110-2-stian@itx.no
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260717143828.76291-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/target/iscsi/iscsi_target.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index a379a37c94498..829da2723fda4 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -526,6 +526,23 @@ static int __send_request(struct request *req)
- 	err = __vdc_tx_trigger(port);
- 	if (err < 0) {
- 		printk(KERN_ERR PFX "vdc_tx_trigger() failure, err=%d\n", err);
-+		/*
-+		 * If the port was reset (-ENOTCONN), the dring and the
-+		 * LDC channel including all of its mappings are already
-+		 * torn down and reallocated - there is nothing to undo
-+		 * and @desc must not be touched.
-+		 *
-+		 * For any other failure the descriptor was never handed
-+		 * to the peer: unmap the cookies and free the descriptor
-+		 * again, so that a later retry of the request does not
-+		 * leak LDC map table entries.
-+		 */
-+		if (err != -ENOTCONN) {
-+			ldc_unmap(port->vio.lp, desc->cookies,
-+				  desc->ncookies);
-+			desc->hdr.state = VIO_DESC_FREE;
-+			rqe->req = NULL;
-+		}
- 	} else {
- 		port->req_id++;
- 		dr->prod = vio_dring_next(dr, dr->prod);
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 5cad086853503..6fd2dc866aa53 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -1567,8 +1567,10 @@ __iscsit_check_dataout_hdr(struct iscsit_conn *conn, void *buf,
+ 		 */
+ 		if (se_cmd->transport_state & CMD_T_ABORTED) {
+ 			if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
+-			    --cmd->outstanding_r2ts < 1)
++			    --cmd->outstanding_r2ts < 1) {
+ 				iscsit_stop_dataout_timer(cmd);
++				target_complete_cmd(se_cmd, SAM_STAT_TASK_ABORTED);
++			}
+ 
+ 			return iscsit_dump_data_payload(conn, payload_length, 1);
+ 		}
 -- 
 2.53.0
 
