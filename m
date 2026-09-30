@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6758320A37;
-	Wed, 30 Sep 2026 19:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75A6320A37;
+	Wed, 30 Sep 2026 19:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796965; cv=none; b=Zm+fsDci1hIXsVt5Yj8vKogppjK9kDqbYlNX6Fi5qJmVWnVV1K7ggBu1JZNGVVgbUacm3h43JCNaqm61OQnjvGDkq+Ccc5hoZSR3jJfMTQCODbt6RNWkBSgGWqJ/d3ZfRs5tKfGmRqur1l4VriHha31J4ZHIyCX4ZjdoHtXhcTM=
+	t=1790796968; cv=none; b=XpHQCafBKUlmHG0Nd2/HtXx7WWSPVsqvRcWxpvJWfeuvEC3gtXXJ//4qdNlku5A4j9rOVLHr4u9cAEiMENEkz0AAxREZmuSRBd5DfyM8qM605xIXOqKXvaEgeH6SGBX6ddOqsUwORG/iKKOLYF2KHfyJjPGkEyi9cAOz0Z4MUU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796965; c=relaxed/simple;
-	bh=eqkj+L91Ng16+zZ28B33gB8FnEmZXFJyofbInkRXZfE=;
+	s=arc-20240116; t=1790796968; c=relaxed/simple;
+	bh=AUlXTPy+jlbzG87+RVzy4naPXzUbFCDx5EOR2GfNCtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WogpupGFgQpGoByw+jtYdEILcsfW+4bwiSQYf7ZUz6Pxhqf3YC9GjyW6VSUhqdVynE2I2fqjy3zT0aAXhQOO6ODV9ky4XRo6IHHDyDTdTrmjwBmkIKce+3W5rPphM5CApc7TiF1XnA8Lqco9w8hP3CBLwVid+UEcGY/TYg54MeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VE5xJzlc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jxnjend13B36yHcbxbbVnTOO0+fIftWeLHUPwm+ufvgzdZuRXQxSEmZrwecKcESiTkmqssllVlkhMpRG1BBeuVudsfVCMUpsQz9F+j5lRIkr5B3e5F1yTvZlUOpJ4hTk8b364n2NFsbBFUuQIINvuKI87MOt6ln4fUQgC97P2Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZZyae6B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VE5xJzlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD691F000FF;
-	Wed, 30 Sep 2026 19:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZZyae6B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2C01F000FF;
+	Wed, 30 Sep 2026 19:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796963;
-	bh=LjZbd/yD9HQWb5HliNUhD5A88gu78Tx98UtxarEChIg=;
+	s=korg; t=1790796966;
+	bh=6WCeVR/nSGSqE3yPwwbsr98LKlhNJ5P0uYFwZZiMFJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VE5xJzlcYNpRyRjdZcvVXstJLESTkxbIaLHNLclCifqFCRgrT7HQjln8Yndgh2Gij
-	 Kpp2z0nUXuT6K5C7YrFOLZiKxmz8/LK9pdD8UVBoZS6y2AFu7Oy3RaVf3+bPt3s5MJ
-	 zW0n2UL73z8mC4JlYavae6MPDNpy5uonPN+/KrS4=
+	b=PZZyae6BkN6KBc47PNm+6it0n9HH/n4S84USB6CWeItypVsfgVqQhNB8iRfYiIXwV
+	 8ZlzAgweIbn7GlCXbmQ/OLGTxVaCE0MCDlLreq74N1rMD2P2GeU97NnmD4XVlFtIi8
+	 YX+8W4juQB35ES8oFZ9P0RUMNDNorNPO6KbviaCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Sasso <stesasso@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1054/1193] vrf: Stop corrupting skb->csum when capturing CHECKSUM_COMPLETE packets
-Date: Wed, 30 Sep 2026 17:28:58 +0200
-Message-ID: <20260930152457.642881906@linuxfoundation.org>
+Subject: [PATCH 6.6 1045/1193] nfc: llcp: fix sdreq TLV list leak on parse/alloc/send failure
+Date: Wed, 30 Sep 2026 17:28:49 +0200
+Message-ID: <20260930152457.436987733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,55 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit ab7aa05c06ae340e5c7530bb78fa8d23794e460b ]
+[ Upstream commit 66f4300206b82b0b143ef0d9be90cd8d29f23a47 ]
 
-The VRF device is an Ethernet device but it can have non-Ethernet ports
-such as IP tunnels. Before the cited commit, capturing packets from such
-ports on the VRF device resulted in these packets being detected as
-malformed since they lack an Ethernet header.
+nfc_genl_llc_sdreq() builds a list of TLV nodes while walking nested
+netlink attrs, but 3 error paths (nested-attr parse failure, TLV alloc
+ENOMEM, nfc_llcp_send_snl_sdreq() failure) all skip freeing what was
+already queued.
 
-The cited commit fixed it by pushing a dummy Ethernet header to such
-packets before the capture and pulling it afterwards. In the case of
-CHECKSUM_COMPLETE packets it also updated skb->csum with the checksum of
-the dummy Ethernet header. This is wrong as skb->csum should not include
-the checksum of the Ethernet header ("checksum of the _whole_ packet as
-seen by netif_rx()").
+Route them through a new free_list label, mirroring the SDRES path in
+the same file which already does this. Harmless on the success path
+too -- send_snl_sdreq() drains the list as it moves nodes, so it's
+already empty by the time free_list runs.
 
-This also means that L4 protocols receive a corrupted skb->csum and
-potentially drop the packet, as is the case with UDP packets whose
-checksum was completed by software.
-
-Fix by removing the unnecessary call to skb_postpush_rcsum().
-
-Fixes: 048939088220 ("vrf: add mac header for tunneled packets when sniffer is attached")
-Reported-by: Stefano Sasso <stesasso@gmail.com>
-Closes: https://lore.kernel.org/netdev/CALtE316UtL3x7LL6uxfXzx8rW6AbzYPeDOb478hqJCr_-dj=Wg@mail.gmail.com/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260922131239.2509494-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d9b8d8e19b07 ("NFC: llcp: Service Name Lookup netlink interface")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260914121129.2098606-1-congnt264@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/nfc/netlink.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index 8f435f58a8886..845b6ec660958 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1253,8 +1253,6 @@ static int vrf_prepare_mac_header(struct sk_buff *skb,
- 	skb->protocol = eth->h_proto;
- 	skb->pkt_type = PACKET_HOST;
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index aa1dbf654c3e5..162549b10b7ee 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1178,7 +1178,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
  
--	skb_postpush_rcsum(skb, skb->data, ETH_HLEN);
--
- 	skb_pull_inline(skb, ETH_HLEN);
+ 		if (rc != 0) {
+ 			rc = -EINVAL;
+-			goto put_local;
++			goto free_list;
+ 		}
  
- 	return 0;
+ 		if (!sdp_attrs[NFC_SDP_ATTR_URI])
+@@ -1197,7 +1197,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 		sdreq = nfc_llcp_build_sdreq_tlv(tid, uri, uri_len);
+ 		if (sdreq == NULL) {
+ 			rc = -ENOMEM;
+-			goto put_local;
++			goto free_list;
+ 		}
+ 
+ 		tlvs_len += sdreq->tlv_len;
+@@ -1212,6 +1212,9 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	rc = nfc_llcp_send_snl_sdreq(local, &sdreq_list, tlvs_len);
+ 
++free_list:
++	nfc_llcp_free_sdp_tlv_list(&sdreq_list);
++
+ put_local:
+ 	nfc_llcp_local_put(local);
+ 
 -- 
 2.53.0
 
