@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CB34D90B7;
-	Wed, 30 Sep 2026 16:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DAB4D7D5B;
+	Wed, 30 Sep 2026 16:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784361; cv=none; b=GwgZphfKd3Je8brOPqioy+sDP9FcQcpAZN6IXQ5fb2l0BQ+w0PYBqov9nXvMeUgtOtGWI0sfZpd58fBxaZigawhB0MLFvyImyadMXo0qwR/3man521oU/k9nxNI7XbZ300FObp5zxzohWdEe5ffsg6gOS92oG45yBQTRLn8627A=
+	t=1790784364; cv=none; b=eRySZ6xRajaGR6kZ2G13NBKVetud4ilFvQSdDjDD2zsLS00lG1ai9+GhuavhbvYZc7QiAgbEeYTtTsQA56LuklxNrgZpIQ/uLIW8pCycRexeSYjQaxdqb340T3LVgZxfaa915a45RRtl/rbzX+mTG68eCXgstfVhI3tSFwzqlsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784361; c=relaxed/simple;
-	bh=iPgAn39OoxJ71fjziW2PshiL1gruzFL523VH+e1RneI=;
+	s=arc-20240116; t=1790784364; c=relaxed/simple;
+	bh=SjIlMmDwpK9QMKHyGmmFUECdRiV1sx/TdHywktR0OxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IUlVZOK6H7TOEk9IY5g552PCZnDBkLmZjCK6GCe9tzteExWsGxZBtDbAghnl9QeVsxbgVDYw9y/xDAZW5e1Aj4sf4qXwxiz2ESNCgIeHm4jv23opMtGD6vZSdPDi5mdDgCkU4EiZYoy7kRmdZRDiP8xwPRSYNHdaARdaMkLrEk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3ab6bRb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uB6glrhGF7eciVoBGfjP2ew9/sSVv1Ror5ZnjD9+qxvngWxvXHdBqyfqELxZo1Jk/3sNZXFTFHh0XEH1CN+1irKOYyMtbtgEqsghAO5UXQdqjKngxXAI20pdS7iLoIDEM3vrtfNaQJ4NusdKij4YqWhOCFc9Z5GtbD9zIEfqGR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0XxM1F9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3ab6bRb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DF71F000FF;
-	Wed, 30 Sep 2026 16:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0XxM1F9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1582C1F00898;
+	Wed, 30 Sep 2026 16:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784357;
-	bh=z9oXDcvW0y0pbUjogzt2OmAYzJhXIYpml1JRqEul5Jg=;
+	s=korg; t=1790784360;
+	bh=l3OayBBUq+QP+Yk9HsEAEvfZK9eRmg+BRd5vSQav04A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M3ab6bRbGhn157Hk1a0b19Y3dWeCYl5JLdA4gskzntjEsFk7huLyK0zk/Ut0xHOjE
-	 Ydk7E/jfEGAJaRxHSRdKCzQTmSyHn0z1QDq52MfqV5x1gNkAjDoyXrj6rUl6PIRFet
-	 pThQcLaXcCjphVLOVQ9IzvN/huP7iUsvm6J/W+fM=
+	b=t0XxM1F9rNdqN9+aDl2SPntDc5610LW65PvQULj3TjtaFjaUCewnHrTpXnYhzhfL7
+	 psiDPY92hQMrazwo3zCMj2rYi+j2bdb8el/SASEppJz5/ibhFEHlvf5OlxFAlsQx/b
+	 +QYSmxD4u4jDobl+69DNRkCuC673iJSny6j4EayA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/982] iio: accel: mma8452: switch to non-devm request_threaded_irq()
-Date: Wed, 30 Sep 2026 17:14:24 +0200
-Message-ID: <20260930152419.564402105@linuxfoundation.org>
+Subject: [PATCH 6.1 129/982] libbpf: Also reset {insn,data}_cur on realloc failure
+Date: Wed, 30 Sep 2026 17:14:25 +0200
+Message-ID: <20260930152419.584618991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,81 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 0a6726ec20cd4c0101f2de0ca485a11676224dea ]
+[ Upstream commit d2f7bd066ed492aeaf82864fbf1f06770f9d9f9d ]
 
-Avoid using devm_request_threaded_irq() as the driver requires explicit
-error-handling path(s). Using devm_* API together with goto-based
-unwinding breaks the expected LIFO resource release model.
+realloc_insn_buf() as well as realloc_data_buf() free and NULL
+gen->insn_start / gen->data_start on -ENOMEM but leave gen->insn_cur /
+gen->data_cur pointing into the old, freed buffer. Just reset the
+cursors to NULL alongside the base pointers so the freed state is
+coherent.
 
-Add explicit IRQ cleanup in the driver teardown paths to follow kernel
-resource management conventions.
-
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260529094119.307264-3-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/mma8452.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ tools/lib/bpf/gen_loader.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-index 28002c714ea98..7be63b5965993 100644
---- a/drivers/iio/accel/mma8452.c
-+++ b/drivers/iio/accel/mma8452.c
-@@ -1695,18 +1695,16 @@ static int mma8452_probe(struct i2c_client *client,
- 		goto trigger_cleanup;
- 
- 	if (client->irq) {
--		ret = devm_request_threaded_irq(&client->dev,
--						client->irq,
--						NULL, mma8452_interrupt,
--						IRQF_TRIGGER_LOW | IRQF_ONESHOT,
--						client->name, indio_dev);
-+		ret = request_threaded_irq(client->irq, NULL, mma8452_interrupt,
-+					   IRQF_TRIGGER_LOW | IRQF_ONESHOT,
-+					   client->name, indio_dev);
- 		if (ret)
- 			goto buffer_cleanup;
+diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+index b74c82bb831e6..13fac40d5fd92 100644
+--- a/tools/lib/bpf/gen_loader.c
++++ b/tools/lib/bpf/gen_loader.c
+@@ -63,6 +63,7 @@ static int realloc_insn_buf(struct bpf_gen *gen, __u32 size)
+ 		gen->error = -ENOMEM;
+ 		free(gen->insn_start);
+ 		gen->insn_start = NULL;
++		gen->insn_cur = NULL;
+ 		return -ENOMEM;
  	}
- 
- 	ret = pm_runtime_set_active(&client->dev);
- 	if (ret < 0)
--		goto buffer_cleanup;
-+		goto free_irq;
- 
- 	pm_runtime_enable(&client->dev);
- 	pm_runtime_set_autosuspend_delay(&client->dev,
-@@ -1715,7 +1713,7 @@ static int mma8452_probe(struct i2c_client *client,
- 
- 	ret = iio_device_register(indio_dev);
- 	if (ret < 0)
--		goto buffer_cleanup;
-+		goto free_irq;
- 
- 	ret = mma8452_set_freefall_mode(data, false);
- 	if (ret < 0)
-@@ -1726,6 +1724,10 @@ static int mma8452_probe(struct i2c_client *client,
- unregister_device:
- 	iio_device_unregister(indio_dev);
- 
-+free_irq:
-+	if (client->irq)
-+		free_irq(client->irq, indio_dev);
-+
- buffer_cleanup:
- 	iio_triggered_buffer_cleanup(indio_dev);
- 
-@@ -1751,6 +1753,9 @@ static void mma8452_remove(struct i2c_client *client)
- 	pm_runtime_disable(&client->dev);
- 	pm_runtime_set_suspended(&client->dev);
- 
-+	if (client->irq)
-+		free_irq(client->irq, indio_dev);
-+
- 	iio_triggered_buffer_cleanup(indio_dev);
- 	mma8452_trigger_cleanup(indio_dev);
- 	mma8452_standby(iio_priv(indio_dev));
+ 	gen->insn_start = insn_start;
+@@ -86,6 +87,7 @@ static int realloc_data_buf(struct bpf_gen *gen, __u32 size)
+ 		gen->error = -ENOMEM;
+ 		free(gen->data_start);
+ 		gen->data_start = NULL;
++		gen->data_cur = NULL;
+ 		return -ENOMEM;
+ 	}
+ 	gen->data_start = data_start;
 -- 
 2.53.0
 
