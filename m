@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBFF55D882;
-	Wed, 30 Sep 2026 17:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23785172EF;
+	Wed, 30 Sep 2026 17:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789739; cv=none; b=UePQpqPLfbqfhYDk1+MOUVZy+aqQsqUeWpQpw7Zvk4gOV81dKAYFJ3MF41o7YPg94F6RtvztKBQnMDjvxFObL3YLwDjzOCwik1wW4WryruS8QCJJGXrgBKyHn5LDUbTcMuHGfmu4s4YH5S111YhrBCfWCJHItjMF7n6pL5zs5E4=
+	t=1790789742; cv=none; b=UHIKYgW8f5FFzGAwS/aDmcj8U8zgQc9Ojz4V8oAb0sx2qA2Mu+jPvEOcUsOom5+4WzRNeZjB0VZhWKjXKAaA1xn0xBfsl8ppNp077VXi9fBdTT/76uzSdcnBP5t7mSI6pCd5RA0MA4VYDA5d7RNJ1O7NPp96qqcA7K8hYN9pQfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789739; c=relaxed/simple;
-	bh=S30LetbxRegs2luX8prqgnEBFevUX0g0UIADelwz3ik=;
+	s=arc-20240116; t=1790789742; c=relaxed/simple;
+	bh=gSYjg7ta3FDddXKoSoOyRyFcjpVTKUPymKiWjEyamHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7qFvkJ7TGpLGiItFNXTRslUWfPBYFyFbzLBE/GPrrCB9bjgV+1ZQoF878kuK/+I7/v4ulnM0lti5siMTtSIe3p0s/KQBuDnze2IdwdH8uB5LkzRF6XMhb+Kr1Gplkfu1879TMti0ptQeqtXbZilxHRhytyuU3EcuSfUgBh5lTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uzt8i7Eo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FO2ot6/pVrfOqgk4nTKesJz+V7OAvPrC6v5eunVvPYT8hhgKsbDUyNxywyEd3633pckiLSW2tRP0/u65knuWR8WIhvJ6wIuDcntFtfDqZZxPmEBaWeciSh/pIsFWlmVj4sxuNO/Ora4dwkzw6VlaBjvgf5Dtk3baXusuZDukcs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgagfk3j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uzt8i7Eo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7194D1F0089A;
-	Wed, 30 Sep 2026 17:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgagfk3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4C11F0089A;
+	Wed, 30 Sep 2026 17:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789738;
-	bh=lp4o2xHSbX0xg/MuINh5UfDSZW7FJvGG4LmBZLGhJMM=;
+	s=korg; t=1790789740;
+	bh=abrwkof5q9mTnOuGs1JN3KkyOxz8hNAB+0DBPFbl00k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uzt8i7EouKHxOfdB9M/F4uiSQJ4mDO3O16IhWvvOss2+bKaEiGFOjLtfIQjwx1zcQ
-	 0gjH/GZ/qBOeGIfZRgXBDS0VixTtBpTbcttpPE9yyg9tmRhRoDSfFiFMbzuQ+9uMxb
-	 MLQdCUMiPp/7kZXT5XdLEJDqpn1i0UxILVcrrras=
+	b=hgagfk3j/V34sntu3NnWLI8de2Ti/M30dW8GMFO+dMLglpcFm6R9bUfhFhoHWQLrR
+	 f5dgGR5zDsPKjg/bn3EdnQfPBonOQQPeWbPTVmIwfT93KmNU0F9OPZIRgSZ1ndIuok
+	 0jlvgf1fdIcati6A8aVjb7NMjWTlItm7wSRKZjkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxing Yin <root@tr0jan.top>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.12 546/877] smb: client: validate POSIX create context length
-Date: Wed, 30 Sep 2026 17:24:17 +0200
-Message-ID: <20260930152426.421879328@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Tyrel Datwyler <tyreld@linux.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 582/877] PCI: Introduce PCI_SLOT_PLACEHOLDER constant for slot_nr placeholder value
+Date: Wed, 30 Sep 2026 17:24:53 +0200
+Message-ID: <20260930152427.203723901@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,54 +54,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-commit fa2e9900dd2a3f5a1e7ef5a8c5e8d435feedbfcc upstream.
+[ Upstream commit c243e6c470c4695965cc8287767925bc1d9a7867 ]
 
-parse_posix_ctxt() reads the fixed nlink, reparse_tag, and mode fields
-before checking that the POSIX create context contains them.  A short
-context can pass the generic checks and still make these fixed-width
-reads run past its declared data.
+Introduce a constant for placeholder value and update the kerneldoc for
+pci_create_slot() to reference PCI_SLOT_PLACEHOLDER instead of -1
+throughout. No functional change.
 
-The current in-tree smb2_open_file() path passes a NULL posix pointer,
-so this handler is not reached on the ordinary open path.  Still require
-the POSIX data to cover all three fields before reading them because the
-helper performs those unguarded reads.  Keep the existing soft-failure
-behavior so malformed optional metadata does not fail the open.
+Suggested-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Tyrel Datwyler <tyreld@linux.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://patch.msgid.link/20260805165518.794-2-alifm@linux.ibm.com
 
-Fixes: 69dda3059e7a ("cifs: add SMB2_open() arg to return POSIX data")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: LLM
-Co-developed-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Luxing Yin <root@tr0jan.top>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Tested-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Stable backport: this tree predates 102c8b26b54e ("PCI: Allow all bus
+devices to use the same slot"). Include its PCI_SLOT_ALL_DEVICES definition,
+slot-number documentation, and core matching/address handling so that
+subsequent commit dcc5bec09e23 ("PCI: Allow per function PCI slots to fix
+slot reset on s390") applies without conflicts. Keep the PCIe hotplug
+callers unchanged; enabling bus-wide slots there is outside this dependency.
+
+Retain the stable tree's kzalloc() and ATTRIBUTE_GROUPS() implementations.
+The placeholder conversion covers both PowerPC hotplug callers and the
+PCI core. All code changes stay within existing functions.
+
+Stable-dep-of: dcc5bec09e23 ("PCI: Allow per function PCI slots to fix slot reset on s390")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pci/hotplug/pnv_php.c     |    2 -
+ drivers/pci/hotplug/rpaphp_slot.c |    2 -
+ drivers/pci/slot.c                |   50 ++++++++++++++++++++++++++++----------
+ include/linux/pci.h               |   13 +++++++++
+ 4 files changed, 51 insertions(+), 16 deletions(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -2313,12 +2313,15 @@ static void
- parse_posix_ctxt(struct create_context *cc, struct smb2_file_all_info *info,
- 		 struct create_posix_rsp *posix)
+--- a/drivers/pci/hotplug/pnv_php.c
++++ b/drivers/pci/hotplug/pnv_php.c
+@@ -800,7 +800,7 @@ static struct pnv_php_slot *pnv_php_allo
+ 	if (dn->child && PCI_DN(dn->child))
+ 		php_slot->slot_no = PCI_SLOT(PCI_DN(dn->child)->devfn);
+ 	else
+-		php_slot->slot_no = -1;   /* Placeholder slot */
++		php_slot->slot_no = PCI_SLOT_PLACEHOLDER;   /* Placeholder slot */
+ 
+ 	kref_init(&php_slot->kref);
+ 	php_slot->state	                = PNV_PHP_STATE_INITIALIZED;
+--- a/drivers/pci/hotplug/rpaphp_slot.c
++++ b/drivers/pci/hotplug/rpaphp_slot.c
+@@ -85,7 +85,7 @@ int rpaphp_register_slot(struct slot *sl
+ 	struct device_node *child;
+ 	u32 my_index;
+ 	int retval;
+-	int slotno = -1;
++	int slotno = PCI_SLOT_PLACEHOLDER;
+ 
+ 	dbg("%s registering slot:path[%pOF] index[%x], name[%s] pdomain[%x] type[%d]\n",
+ 		__func__, slot->dn, slot->index, slot->name,
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -38,11 +38,20 @@ static const struct sysfs_ops pci_slot_s
+ 
+ static ssize_t address_read_file(struct pci_slot *slot, char *buf)
  {
--	int sid_len;
- 	u8 *beg = (u8 *)cc + le16_to_cpu(cc->DataOffset);
--	u8 *end = beg + le32_to_cpu(cc->DataLength);
-+	u32 dlen = le32_to_cpu(cc->DataLength);
-+	u8 *end = beg + dlen;
-+	int sid_len;
- 	u8 *sid;
+-	if (slot->number == 0xff)
++	if (slot->number == PCI_SLOT_PLACEHOLDER)
+ 		return sysfs_emit(buf, "%04x:%02x\n",
+ 				  pci_domain_nr(slot->bus),
+ 				  slot->bus->number);
  
- 	memset(posix, 0, sizeof(*posix));
-+	if (dlen < 3 * sizeof(__le32))
-+		return;
++	/*
++	 * Preserve legacy ABI expectations that hotplug drivers that manage
++	 * multiple devices per slot emit 0 for the device number.
++	 */
++	if (slot->number == PCI_SLOT_ALL_DEVICES)
++		return sysfs_emit(buf, "%04x:%02x:00\n",
++				  pci_domain_nr(slot->bus),
++				  slot->bus->number);
++
+ 	return sysfs_emit(buf, "%04x:%02x:%02x\n",
+ 			  pci_domain_nr(slot->bus),
+ 			  slot->bus->number,
+@@ -74,7 +83,8 @@ static void pci_slot_release(struct kobj
  
- 	posix->nlink = get_unaligned_le32(beg);
- 	posix->reparse_tag = get_unaligned_le32(beg + 4);
+ 	down_read(&pci_bus_sem);
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list)
+-		if (PCI_SLOT(dev->devfn) == slot->number)
++		if (slot->number == PCI_SLOT_ALL_DEVICES ||
++		    PCI_SLOT(dev->devfn) == slot->number)
+ 			dev->slot = NULL;
+ 	up_read(&pci_bus_sem);
+ 
+@@ -167,7 +177,8 @@ void pci_dev_assign_slot(struct pci_dev
+ 
+ 	mutex_lock(&pci_slot_mutex);
+ 	list_for_each_entry(slot, &dev->bus->slots, list)
+-		if (PCI_SLOT(dev->devfn) == slot->number)
++		if (slot->number == PCI_SLOT_ALL_DEVICES ||
++		    PCI_SLOT(dev->devfn) == slot->number)
+ 			dev->slot = slot;
+ 	mutex_unlock(&pci_slot_mutex);
+ }
+@@ -189,7 +200,8 @@ static struct pci_slot *get_slot(struct
+ /**
+  * pci_create_slot - create or increment refcount for physical PCI slot
+  * @parent: struct pci_bus of parent bridge
+- * @slot_nr: PCI_SLOT(pci_dev->devfn) or -1 for placeholder
++ * @slot_nr: PCI_SLOT(pci_dev->devfn), PCI_SLOT_PLACEHOLDER for placeholder, or
++ *	PCI_SLOT_ALL_DEVICES
+  * @name: user visible string presented in /sys/bus/pci/slots/<name>
+  * @hotplug: set if caller is hotplug driver, NULL otherwise
+  *
+@@ -214,15 +226,26 @@ static struct pci_slot *get_slot(struct
+  * In most cases, @pci_bus, @slot_nr will be sufficient to uniquely identify
+  * a slot. There is one notable exception - pSeries (rpaphp), where the
+  * @slot_nr cannot be determined until a device is actually inserted into
+- * the slot. In this scenario, the caller may pass -1 for @slot_nr.
++ * the slot. In this scenario, the caller may pass PCI_SLOT_PLACEHOLDER for @slot_nr.
+  *
+  * The following semantics are imposed when the caller passes @slot_nr ==
+- * -1. First, we no longer check for an existing %struct pci_slot, as there
+- * may be many slots with @slot_nr of -1.  The other change in semantics is
+- * user-visible, which is the 'address' parameter presented in sysfs will
+- * consist solely of a dddd:bb tuple, where dddd is the PCI domain of the
+- * %struct pci_bus and bb is the bus number. In other words, the devfn of
+- * the 'placeholder' slot will not be displayed.
++ * PCI_SLOT_PLACEHOLDER. First, we no longer check for an existing %struct
++ * pci_slot, as there may be many slots with @slot_nr of
++ * PCI_SLOT_PLACEHOLDER. The other change in semantics is user-visible,
++ * which is the 'address' parameter presented in sysfs will consist solely
++ * of a dddd:bb tuple, where dddd is the PCI domain of the %struct pci_bus
++ * and bb is the bus number. In other words, the devfn of the 'placeholder'
++ * slot will not be displayed.
++ *
++ * Bus-wide slots:
++ * For PCIe hotplug, the physical slot encompasses the entire secondary
++ * bus, not just a single device number. If the device supports ARI and ARI
++ * Forwarding is enabled in the upstream bridge, a multi-function device
++ * may include functions that appear to have several different device
++ * numbers, i.e., PCI_SLOT() values.  Pass @slot_nr == PCI_SLOT_ALL_DEVICES
++ * to create a slot that matches all devices on the bus. Unlike placeholder
++ * slots, bus-wide slots go through normal slot lookup and reuse existing
++ * slots if present.
+  */
+ struct pci_slot *pci_create_slot(struct pci_bus *parent, int slot_nr,
+ 				 const char *name,
+@@ -235,7 +258,7 @@ struct pci_slot *pci_create_slot(struct
+ 
+ 	mutex_lock(&pci_slot_mutex);
+ 
+-	if (slot_nr == -1)
++	if (slot_nr == PCI_SLOT_PLACEHOLDER)
+ 		goto placeholder;
+ 
+ 	/*
+@@ -287,7 +310,8 @@ placeholder:
+ 
+ 	down_read(&pci_bus_sem);
+ 	list_for_each_entry(dev, &parent->devices, bus_list)
+-		if (PCI_SLOT(dev->devfn) == slot_nr)
++		if (slot_nr == PCI_SLOT_ALL_DEVICES ||
++		    PCI_SLOT(dev->devfn) == slot_nr)
+ 			dev->slot = slot;
+ 	up_read(&pci_bus_sem);
+ 
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -72,12 +72,23 @@
+ /* return bus from PCI devid = ((u16)bus_number) << 8) | devfn */
+ #define PCI_BUS_NUM(x) (((x) >> 8) & 0xff)
+ 
++/*
++ * PCI_SLOT_ALL_DEVICES indicates a slot that covers all devices on the bus.
++ * Used for PCIe hotplug where the physical slot is the entire secondary bus,
++ * and, if ARI Forwarding is enabled, functions may appear to be on multiple
++ * devices.
++ */
++#define PCI_SLOT_ALL_DEVICES	0xfe
++
++/* Used to identify a slot as a placeholder */
++#define PCI_SLOT_PLACEHOLDER	0xff
++
+ /* pci_slot represents a physical slot */
+ struct pci_slot {
+ 	struct pci_bus		*bus;		/* Bus this slot is on */
+ 	struct list_head	list;		/* Node in list of slots */
+ 	struct hotplug_slot	*hotplug;	/* Hotplug info (move here) */
+-	unsigned char		number;		/* PCI_SLOT(pci_dev->devfn) */
++	unsigned char		number;		/* Device nr, or PCI_SLOT_ALL_DEVICES */
+ 	struct kobject		kobj;
+ };
+ 
 
 
