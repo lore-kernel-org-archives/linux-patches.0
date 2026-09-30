@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473C038C42F;
-	Wed, 30 Sep 2026 19:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACDD3C10B9;
+	Wed, 30 Sep 2026 19:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795024; cv=none; b=WQM/ghwz/lBcYhE0PEximTyZNiXF0bomIdfLB4AOf//tyo3anx9yD3pkj9stgyk2ka9eD4woNh4eFDrKDTU6PLyw4uQrulpFXylW6QFUkhqXeeLQCzxHKr4rr2qxLniJbFrIya+aPD1kxtXzIgzErTQv3inL8eg8MqmcnRQ85OQ=
+	t=1790795027; cv=none; b=BJfJotmKrby5E4By8oj6YkyfSlORxZqs6q0YxRcEtGt4fVDq2F+K1ShKfB3I+FeQXYSKe/6oHIg31AXlVLZTd3jXU6wgS8du3+qa+ClqgHQhVeusM+7INUQklx5b3JjeuTSYObuMj9AnAWtobzoKF4zfsOjsUqfJsPTiH0m24og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795024; c=relaxed/simple;
-	bh=004dQzBVO42wuF4D9XZL3JhX84jZOjeHMtc5C+EwOyA=;
+	s=arc-20240116; t=1790795027; c=relaxed/simple;
+	bh=QQG2PPToouRUOQhbPsk7B9r7z7qCoDT83jR1AHfJig0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvpiDDCslRzdRooSZYsDfD18bxRPwQpMNmkQlEFcmhE6s2QGMCjYIXXr7fJc4QX1xHqQ17BEEBBvB7CgcixDy0oFmAgz80s84VR/f/MSO5boKJs+Gse2Dh8mdrvNMGmt4HhwswzKxFvsxmNLus1A0Vzn1KL63re5j+mr5Dg3G/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFF+NClZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ThNaE5IxMkXU05SiCZT9eAoqM1MM64XPWBKkQ1XZ6DEfRcysbeeSaWid8jO9X7lYCJieXjS01iIC2nTJu1gm4gF4YKeglPcOiMpZKHrwVGDkJ33gb6KG/CcFtaL78MY1/uHcJG3veCSjVwt8NRO+8AGi9jPu3R5lnINm1Q4//iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfpR0iwP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFF+NClZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15621F00898;
-	Wed, 30 Sep 2026 19:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfpR0iwP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770AE1F000FF;
+	Wed, 30 Sep 2026 19:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795023;
-	bh=mLUN3SbWIEsP3um/+MgFcYf9emgb+eCXGcWTRXA8uk4=;
+	s=korg; t=1790795026;
+	bh=2jxCtijuXpUWITjWTxVLUC95aIyg7XrC0lbGTXMgpQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFF+NClZSAXwz9xCZ8PgwmpOhxYr5lkq9oZZUldqe3a1BKpEwvkZMog8aIhP1fhsX
-	 0ZJCJ+S1yqqbdFk0DAIRPsaZCBTq058jJ45pn6Z4B0YlwuTu8zOSufIiOTvPH00T3a
-	 F7Hntef7hvTsDCvAxt90QpGHDMXkbforhUs+Wv8Y=
+	b=bfpR0iwPezhoHjGyCXIEW4elmRuX0SpXL60PRjvGfCIH+tZjwIPnfwEo64XoqXFs5
+	 ut9g3YOyok1gD7JfxKFruUKZFp8rk3uBZJiphNwAJlxY2jSaVl1vNxiGeVa9AAD36z
+	 G/iMkPlZGh5nnTmhiEoz5bsvJjmmdmQhIUM1HKRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0414/1193] Bluetooth: btintel: Print firmware SHA1
-Date: Wed, 30 Sep 2026 17:18:18 +0200
-Message-ID: <20260930152443.396403475@linuxfoundation.org>
+Subject: [PATCH 6.6 0415/1193] Bluetooth: btintel: Export few static functions
+Date: Wed, 30 Sep 2026 17:18:19 +0200
+Message-ID: <20260930152443.419547503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,65 +53,181 @@ Content-Transfer-Encoding: 8bit
 
 From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit a2e7707bba21b373c7b429ad7f9030d63dfb4542 ]
+[ Upstream commit 67d4dbac3b8c48ada784ae923f7cd68dfac509ec ]
 
-Intel Read Version event contains a TLV(0x32) having firmware sha1 in
-operational image.
+Some of the functions used in btintel.c is made global so that they can
+be reused in other transport drivers apart from USB.
 
 Signed-off-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: a086c0892969 ("Bluetooth: btintel: validate version TLV value lengths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 5 +++++
- drivers/bluetooth/btintel.h | 4 +++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btintel.c | 26 +++++++++++++---------
+ drivers/bluetooth/btintel.h | 43 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 43ddde0a4d48c..bac58babec1e7 100644
+index bac58babec1e7..24c9d7081bc60 100644
 --- a/drivers/bluetooth/btintel.c
 +++ b/drivers/bluetooth/btintel.c
-@@ -530,6 +530,8 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
- 	bt_dev_info(hdev, "%s timestamp %u.%u buildtype %u build %u", variant,
- 		    2000 + (version->timestamp >> 8), version->timestamp & 0xff,
- 		    version->build_type, version->build_num);
-+	if (version->img_type == 0x03)
-+		bt_dev_info(hdev, "Firmware SHA1: 0x%8.8x", version->git_sha1);
+@@ -235,7 +235,7 @@ static int btintel_set_diag_combined(struct hci_dev *hdev, bool enable)
+ 	return ret;
+ }
+ 
+-static void btintel_hw_error(struct hci_dev *hdev, u8 code)
++void btintel_hw_error(struct hci_dev *hdev, u8 code)
+ {
+ 	struct sk_buff *skb;
+ 	u8 type = 0x00;
+@@ -272,6 +272,7 @@ static void btintel_hw_error(struct hci_dev *hdev, u8 code)
+ unlock:
+ 	hci_req_sync_unlock(hdev);
+ }
++EXPORT_SYMBOL_GPL(btintel_hw_error);
+ 
+ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
+ {
+@@ -450,8 +451,8 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
+ }
+ EXPORT_SYMBOL_GPL(btintel_read_version);
+ 
+-static int btintel_version_info_tlv(struct hci_dev *hdev,
+-				    struct intel_version_tlv *version)
++int btintel_version_info_tlv(struct hci_dev *hdev,
++			     struct intel_version_tlv *version)
+ {
+ 	const char *variant;
+ 
+@@ -535,10 +536,11 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
  
  	return 0;
  }
-@@ -625,6 +627,9 @@ static int btintel_parse_version_tlv(struct hci_dev *hdev,
- 			memcpy(&version->otp_bd_addr, tlv->val,
- 							sizeof(bdaddr_t));
- 			break;
-+		case INTEL_TLV_GIT_SHA1:
-+			version->git_sha1 = get_unaligned_le32(tlv->val);
-+			break;
- 		default:
- 			/* Ignore rest of information */
- 			break;
++EXPORT_SYMBOL_GPL(btintel_version_info_tlv);
+ 
+-static int btintel_parse_version_tlv(struct hci_dev *hdev,
+-				     struct intel_version_tlv *version,
+-				     struct sk_buff *skb)
++int btintel_parse_version_tlv(struct hci_dev *hdev,
++			      struct intel_version_tlv *version,
++			      struct sk_buff *skb)
+ {
+ 	/* Consume Command Complete Status field */
+ 	skb_pull(skb, 1);
+@@ -640,6 +642,7 @@ static int btintel_parse_version_tlv(struct hci_dev *hdev,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(btintel_parse_version_tlv);
+ 
+ static int btintel_read_version_tlv(struct hci_dev *hdev,
+ 				    struct intel_version_tlv *version)
+@@ -2531,8 +2534,8 @@ static void btintel_set_dsm_reset_method(struct hci_dev *hdev,
+ 	data->acpi_reset_method = btintel_acpi_reset_method;
+ }
+ 
+-static int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
+-					struct intel_version_tlv *ver)
++int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
++				 struct intel_version_tlv *ver)
+ {
+ 	u32 boot_param;
+ 	char ddcname[64];
+@@ -2599,8 +2602,9 @@ static int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(btintel_bootloader_setup_tlv);
+ 
+-static void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
++void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
+ {
+ 	switch (hw_variant) {
+ 	/* Legacy bootloader devices that supports MSFT Extension */
+@@ -2623,6 +2627,7 @@ static void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
+ 		break;
+ 	}
+ }
++EXPORT_SYMBOL_GPL(btintel_set_msft_opcode);
+ 
+ static int btintel_setup_combined(struct hci_dev *hdev)
+ {
+@@ -2873,7 +2878,7 @@ static int btintel_setup_combined(struct hci_dev *hdev)
+ 	return err;
+ }
+ 
+-static int btintel_shutdown_combined(struct hci_dev *hdev)
++int btintel_shutdown_combined(struct hci_dev *hdev)
+ {
+ 	struct sk_buff *skb;
+ 	int ret;
+@@ -2907,6 +2912,7 @@ static int btintel_shutdown_combined(struct hci_dev *hdev)
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(btintel_shutdown_combined);
+ 
+ int btintel_configure_setup(struct hci_dev *hdev, const char *driver_name)
+ {
 diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
-index 3a2d5b4219ddb..d19fcdb9ff0b6 100644
+index d19fcdb9ff0b6..4b0f526be8c43 100644
 --- a/drivers/bluetooth/btintel.h
 +++ b/drivers/bluetooth/btintel.h
-@@ -41,7 +41,8 @@ enum {
- 	INTEL_TLV_LIMITED_CCE,
- 	INTEL_TLV_SBE_TYPE,
- 	INTEL_TLV_OTP_BDADDR,
--	INTEL_TLV_UNLOCKED_STATE
-+	INTEL_TLV_UNLOCKED_STATE,
-+	INTEL_TLV_GIT_SHA1
- };
+@@ -228,6 +228,16 @@ void btintel_bootup(struct hci_dev *hdev, const void *ptr, unsigned int len);
+ void btintel_secure_send_result(struct hci_dev *hdev,
+ 				const void *ptr, unsigned int len);
+ int btintel_set_quality_report(struct hci_dev *hdev, bool enable);
++int btintel_version_info_tlv(struct hci_dev *hdev,
++			     struct intel_version_tlv *version);
++int btintel_parse_version_tlv(struct hci_dev *hdev,
++			      struct intel_version_tlv *version,
++			      struct sk_buff *skb);
++void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant);
++int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
++				 struct intel_version_tlv *ver);
++int btintel_shutdown_combined(struct hci_dev *hdev);
++void btintel_hw_error(struct hci_dev *hdev, u8 code);
+ #else
  
- struct intel_tlv {
-@@ -69,6 +70,7 @@ struct intel_version_tlv {
- 	u8	min_fw_build_yy;
- 	u8	limited_cce;
- 	u8	sbe_type;
-+	u32	git_sha1;
- 	bdaddr_t otp_bd_addr;
- };
- 
+ static inline int btintel_check_bdaddr(struct hci_dev *hdev)
+@@ -324,4 +334,37 @@ static inline int btintel_set_quality_report(struct hci_dev *hdev, bool enable)
+ {
+ 	return -ENODEV;
+ }
++
++static inline int btintel_version_info_tlv(struct hci_dev *hdev,
++					   struct intel_version_tlv *version)
++{
++	return -EOPNOTSUPP;
++}
++
++static inline int btintel_parse_version_tlv(struct hci_dev *hdev,
++					    struct intel_version_tlv *version,
++					    struct sk_buff *skb)
++{
++	return -EOPNOTSUPP;
++}
++
++static inline void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
++
++{
++}
++
++static inline int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
++					       struct intel_version_tlv *ver)
++{
++	return -ENODEV;
++}
++
++static inline int btintel_shutdown_combined(struct hci_dev *hdev)
++{
++	return -ENODEV;
++}
++
++static void btintel_hw_error(struct hci_dev *hdev, u8 code)
++{
++}
+ #endif
 -- 
 2.53.0
 
