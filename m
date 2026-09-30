@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589213DDAFD;
-	Wed, 30 Sep 2026 16:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752A750EC11;
+	Wed, 30 Sep 2026 16:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787472; cv=none; b=h3FbSb7G1IpsxlM6HC62VSA3rxgbmKnrY2Z8a6Kj0V45kYTT89wUpNYXK8JNBfY0BhsGhxhFdYafa2RHdX7tZLdFfI5/yhKZDD4EKUv8KXZ6KQf2atr0ht80zqRQdicuKp6I0sJtHmK0pkiP0ud+6Fxk+GIQ5gkpD/GhBwc2Sbs=
+	t=1790787475; cv=none; b=UzQ+sG4wbTkNIQJtILeHh72tX8WxvsNT7+eiWfeNfIkCgn9aWLgZoS92AwYkPDmXQm/sb8zrXe7NtAKhzdrfDKJ5nX0GZwAFBzS32iP9OXlHZVF4t1Si/hMoTXOb1HBcsTW9Vj6Wd0InozJZMGfg3uZ7eS6MclFvm5bElfdrMxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787472; c=relaxed/simple;
-	bh=T/u0ETTXAUDpCi+bfmFeOZbqvwYX0wcW/XkbGUkx0WM=;
+	s=arc-20240116; t=1790787475; c=relaxed/simple;
+	bh=wXEogamuAyrr2ioR1BgOE4buSWFjcy59Wyyxs6epWkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7HASZctEyuVmg+t2KTqnqiMfw1KkiRxJoGWmr0EsH9sMvYei4xs9jyrchd5vePWCvKg1/P7gVLVyvUSSqL0EjRiI/nBpsjQbto5pjc7IacSXdI4RNDXPSMHpOe3PEK16d09F4YQTka/v9JzwFOmJZ7O8KJ0a9/lEnxkqAIhHos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGAWf7n2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=caZfwajRGxGQrmkS6fMezvgvY618lAX/TQxv+nEIujrRV66Zp5hbZSLdH44jv3e0jMYnh8PnDFbbmTAVCa2reSQfFo5U/+Lo1zPxlFU0gM4Va5yMgEn/N0ZZM3YoZFDf68+Ncr1Tnda4e9zm08KB6kTW3uy6p+F9wxrIaObUr5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00O8kH9J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGAWf7n2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91931F000FF;
-	Wed, 30 Sep 2026 16:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00O8kH9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8566F1F000FF;
+	Wed, 30 Sep 2026 16:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787471;
-	bh=U/1yNAhf1YHQfFwHMYmD8sS31MYVTVTPHRiP0ydgfW0=;
+	s=korg; t=1790787474;
+	bh=026g1tZ3/ru7JfhAYSyJEHtpyCHho0+ze/QReVF/jIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGAWf7n2350DSTmQv5IU/FDRFyiEnKBfnEfleSplrij2twxyndasQlozQmNJkgQAA
-	 EHQS+Nzky6lXj7clq80LADqnJ3eE0pUKx5kK8OYbBim+zCldxzwEXdnETtflPy7RIN
-	 av6Y01Vn+Mpz5UCjRp1GDY+oBgNz5V09T6e+7oOc=
+	b=00O8kH9JQCf1O6kAo1pipXSoOToXmzCDqjphpgk1J4OyYDD4oSvqugDtFU/LcRWHM
+	 XRN8hyL4VGTrY3AzTpE8tvpAP+Lt4dKcthHbHLwsaek/rxNOT3k5UuyZrBNMAszznO
+	 dJWXqbgRPS1uP9v1IZ6FwOTyevi36GR9Qc6Fk+lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 205/457] net: emac: move setting of netops to fix crash
-Date: Wed, 30 Sep 2026 17:25:10 +0200
-Message-ID: <20260930152350.477742865@linuxfoundation.org>
+	Melody Wang <huibo.wang@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH 7.2 241/457] x86/sev: Make vTPM SVSM calls preemption-safe
+Date: Wed, 30 Sep 2026 17:25:46 +0200
+Message-ID: <20260930152351.245798166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,119 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Lamparter <chunkeey@gmail.com>
+From: Melody Wang <huibo.wang@amd.com>
 
-[ Upstream commit 7c9f391ec89cb621d7af375ace2eb9a6248e5b9d ]
+commit 6c43c72748fffd29dec15cd1f31e9a32949bc437 upstream.
 
-fixes the following crash on driver initialization:
+Two functions in the SVSM vTPM guest implementation do not disable
+preemption when fetching the SVSM Calling Area Address (CAA).
 
-|BUG: Kernel NULL pointer dereference on read at 0x00000158
-|Faulting instruction address: 0xc0566b40
-|Oops: Kernel access of bad area, sig: 11 [#1]
-|BE PAGE_SIZE=4K  PowerPC 44x Platform
-|Modules linked in:
-|CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: GW 7.3.0-rc3+ #1
-|Tainted: [W]=WARN
-|Hardware name: MyBook Live APM821XX 0x12c41c83 PowerPC 44x Platform
-|NIP:  c0566b40 LR: c05648f8 CTR: c04c1e9c
-|REGS: c1053a20 TRAP: 0300   Tainted: GW  (7.3.0-rc3+)
-|MSR:  0002b000 <CE,EE,FP,ME>  CR: 24008808  XER: 00000000
-|DEAR: 00000158 ESR: 00000000
-|GPR00: c05648f8 c1053b10 c1063600 c1030000 c5ab3000 00000000 [...]
-|GPR08: 00000002 00000000 00000000 c1053b40 84002808 00000000 [...]
-|GPR16: cfffd210 00000002 c0beafcc cfffc960 00000000 c1030644 [...]
-|GPR24: c0beafbc c1037000 00000000 0000000a 00000000 c1030000 [...]
-|NIP [c0566b40] phy_link_topo_add_phy+0x2c/0x1d0
-|LR [c05648f8] phy_attach_direct+0x1a4/0x368
-|Call Trace:
-|[c1053b10] [c0811e04] klist_put+0x54/0xb4 (unreliable)
-|[c1053b40] [c05648f8] phy_attach_direct+0x1a4/0x368
-|[c1053b70] [c0564ae8] phy_connect_direct+0x2c/0x60
-|[c1053b90] [c056c7a8] of_phy_connect+0x50/0x74
-|[c1053bc0] [c0572a88] emac_probe+0xd50/0x119c
-|[c1053c90] [c04cb770] platform_probe+0x74/0xa4
-|[c1053cb0] [c04c8f08] really_probe+0x120/0x2b0
-|[c1053cd0] [c04c9254] __driver_probe_device+0x1bc/0x1fc
-|[c1053d00] [c04c9334] driver_probe_device+0x38/0xa8
-|[c1053d30] [c04c9560] __driver_attach+0xf4/0x10c
-|[c1053d50] [c04c6af8] bus_for_each_dev+0x68/0xd0
-|[c1053d90] [c04c7c34] bus_add_driver+0xcc/0x1ec
-|[c1053dc0] [c04c9f6c] driver_register+0xcc/0x110
-|[c1053de0] [c0aa3f40] emac_init+0x1c4/0x200
+The SVSM CAA is a per-CPU structure. When a thread is preempted and migrated
+to a different CPU after fetching the per-CPU CAA, the SVSM call will execute
+on the new CPU with the original CPU's CAA. Which is wrong.
 
-This bug showed up starting with v7.3-rc1. At the NIP in
-phy_link_topo_add_phy() is a netdev_need_ops_lock() check.
-This was added by the following
-commit ded86da4bbb7 ("net: ethtool: relax ethnl_req_get_phydev() locking assertion")
+Move the CAA fetching operation inside svsm_perform_call_protocol() which
+disables interrupts around the SVSM call and thus runs preemption-safe.
 
-The bug shows up because at the time of_phy_connect() was called, the
-netdev_ops were *not yet* determined. My fix is to move the code that
-sets netdev_ops+commac.ops+ethtool_ops further up as emac_init_config()
-derives that by looking at the device-tree and sets the required
-dev->phy_mode accordingly.
-
-During review, the Sashiko bot's AI stated that the commac assignment
-became a dead store. Great catch! To keep the original behavior as-is,
-one mentioned option "set dev->commac.ops = &emac_commac_ops only in
-the non-gige case?" sounded like a great plan. So the dev->commac.ops
-assignment for the non-gige-case moves into the else block.
-
-This patch was tested on a WD MyBook Live (RGMII). the device now works again.
-
-Fixes: ded86da4bbb7 ("net: ethtool: relax ethnl_req_get_phydev() locking assertion")
-Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/49cd7343bc0e507c022071f3e2b5662b053dca73.1790007431.git.chunkeey@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 770de678bc28 ("x86/sev: Add SVSM vTPM probe/send_command functions")
+Signed-off-by: Melody Wang <huibo.wang@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/a5bc0d4a2c462a0089109e145c21626b244b2ff0.1789345277.git.huibo.wang@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/emac/core.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ arch/x86/coco/sev/svsm.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
-index 1d46cf6c2c127..e7043523457c1 100644
---- a/drivers/net/ethernet/ibm/emac/core.c
-+++ b/drivers/net/ethernet/ibm/emac/core.c
-@@ -3044,6 +3044,15 @@ static int emac_probe(struct platform_device *ofdev)
- 	if (err)
- 		goto err_gone;
+--- a/arch/x86/coco/sev/svsm.c
++++ b/arch/x86/coco/sev/svsm.c
+@@ -74,6 +74,14 @@ int svsm_perform_call_protocol(struct sv
  
-+	if (emac_phy_supports_gige(dev->phy_mode)) {
-+		ndev->netdev_ops = &emac_gige_netdev_ops;
-+		dev->commac.ops = &emac_commac_sg_ops;
-+	} else {
-+		ndev->netdev_ops = &emac_netdev_ops;
-+		dev->commac.ops = &emac_commac_ops;
-+	}
-+	ndev->ethtool_ops = &emac_ethtool_ops;
+ 	flags = native_local_irq_save();
+ 
++	/*
++	 * 'caa' is a per-CPU variable. To avoid using a stale or incorrect
++	 * 'caa' if the task is preempted or migrated to another CPU after it
++	 * is fetched, always fetch 'caa' and then issue the SVSM call with
++	 * interrupts disabled. This ensures the correct 'caa' is used.
++	 */
++	call->caa = svsm_get_caa();
 +
- 	dev->emacp = devm_platform_ioremap_resource(ofdev, 0);
- 	if (IS_ERR(dev->emacp)) {
- 		err = PTR_ERR(dev->emacp);
-@@ -3076,7 +3085,6 @@ static int emac_probe(struct platform_device *ofdev)
- 		dev->mdio_instance = platform_get_drvdata(dev->mdio_dev);
+ 	ghcb = __sev_get_ghcb(&state);
  
- 	/* Register with MAL */
--	dev->commac.ops = &emac_commac_ops;
- 	dev->commac.dev = dev;
- 	dev->commac.tx_chan_mask = MAL_CHAN_MASK(dev->mal_tx_chan);
- 	dev->commac.rx_chan_mask = MAL_CHAN_MASK(dev->mal_rx_chan);
-@@ -3144,12 +3152,6 @@ static int emac_probe(struct platform_device *ofdev)
- 		ndev->features |= ndev->hw_features | NETIF_F_RXCSUM;
- 	}
- 	ndev->watchdog_timeo = 5 * HZ;
--	if (emac_phy_supports_gige(dev->phy_mode)) {
--		ndev->netdev_ops = &emac_gige_netdev_ops;
--		dev->commac.ops = &emac_commac_sg_ops;
--	} else
--		ndev->netdev_ops = &emac_netdev_ops;
--	ndev->ethtool_ops = &emac_ethtool_ops;
+ 	do {
+@@ -321,7 +329,6 @@ int snp_svsm_vtpm_send_command(u8 *buffe
+ {
+ 	struct svsm_call call = {};
  
- 	/* MTU range: 46 - 1500 or whatever is in OF */
- 	ndev->min_mtu = EMAC_MIN_MTU;
--- 
-2.53.0
-
+-	call.caa = svsm_get_caa();
+ 	call.rax = SVSM_VTPM_CALL(SVSM_VTPM_CMD);
+ 	call.rcx = __pa(buffer);
+ 
+@@ -345,7 +352,6 @@ bool snp_svsm_vtpm_probe(void)
+ 	if (!snp_vmpl)
+ 		return false;
+ 
+-	call.caa = svsm_get_caa();
+ 	call.rax = SVSM_VTPM_CALL(SVSM_VTPM_QUERY);
+ 
+ 	if (svsm_perform_call_protocol(&call))
 
 
