@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BCC37A825;
-	Wed, 30 Sep 2026 16:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14AB37A825;
+	Wed, 30 Sep 2026 16:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785970; cv=none; b=KyyEUR5sTppV8GUl6dr2MQ/30Nh3CWZdRMYmz9d8cKOMNEe53sxFeXMt+2fwBX59C2TVCtT6bG/hpA0AZUkNyxDrO+JDtIklkACZP8oOCt+7NMwkpvSuEkXHX/YquXzxj9X/Qmnxfvsa6ucR4+8rAuTj9MpnFp7eHi7flriCt5s=
+	t=1790785972; cv=none; b=eQhMk1QOso0WUAwKKUFtwTHK5FzLBwdDMp7TJwb8t6u6mAMASj6sd+j+MDEvOVK+nstskqGfklNsrAD7XnFR+axI+rZQ9huWUVhEN4OLIueTgNFEvL9ZcRjcQ7Ior0DfEs2JGaxEax2iN+dCHsuvCrB2dRqN/2EOiCscmUO3+NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785970; c=relaxed/simple;
-	bh=m8pVWzyOG7nJoY1lN1bPGAuBGKdIuPU+BenDWpy25Cg=;
+	s=arc-20240116; t=1790785972; c=relaxed/simple;
+	bh=Gbd6MS2ZMnXgGBrqAjLExHiemZOZt+3lyWb5TFf50Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jH0PsYyS/QEdm/gxcig8kKl1H4xOPucz1orddigLgpngpJaMb8thRyR8J7twJZ5O+elM1P11aY3Y1T9PdLZPyFrr5DS/HC9HqY7iycXC9uSPtU3GiHRMAammJfGMXPbtEWZGeUR9rLpAEoLoO3jZEcYylRb0uMurIKp+hKRoOzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAN12yYM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XQFgMZHcUKRlUGKqargkpG3T9LRcIEj2MAcs9ePt1zU3bH3VZmq/+RZzg/mkTxD8gaNnYPEa5CLbkRvlrNuWJUQ7lR9Y/kTNEiFo0u3kD4ib2SjHXxnJZFSFFTIaPyVmINtEJhk/AWRs8ExPlhD1V/n/JnwN/6XO896oym/hF3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5FREXzG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAN12yYM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A25C1F000FF;
-	Wed, 30 Sep 2026 16:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5FREXzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094971F000FF;
+	Wed, 30 Sep 2026 16:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785968;
-	bh=OUPNrvHK05nJsI/u1uvEWwxdA+1SGlGznGiNqYRwPSQ=;
+	s=korg; t=1790785971;
+	bh=2hH2sI4WmKVuT7CiDJAwh424islZJUoE2qD/l+22c+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SAN12yYMWl7lT6Ii12FjPa1NjyrN1Ujejku3wjQNYcgQzpDkOV5pqxR624yG1Q4OR
-	 /jBWlJHTGOInGpzlN5g0Mc1nTAXZ9U7cGLfP3KswtEcvlXGkeDQo4Bo0S1q6HSz035
-	 SFi45G07ZPbrdy9RXOEjTGLHS8yXNWPeyxr4psGI=
+	b=g5FREXzGlI++NYhbXPQ/7B/XID3I41kARl/t/InDSOAvFGvBw82SjzkHmjjqUj0u/
+	 MqWSaP3WUSvO4jrB9dB5ulhIvSHSJTB26rXDYwuWJIs4arKRJSpsouzIVtU/mEH5up
+	 CsUPB4/79ziMl/JZIu/RYOzV2/FqJLzIhSRJh+kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roland Waltersson <roland.waltersson@netinsight.net>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.1 697/982] ata: libahci: clear PxCLBU and PxFBU for AHCI_HFLAG_32BIT_ONLY
-Date: Wed, 30 Sep 2026 17:23:53 +0200
-Message-ID: <20260930152431.730611259@linuxfoundation.org>
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Allison Henderson <achender@kernel.org>,
+	Aohan Mei <henrymei@tencent.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 698/982] rds: ib: use rds_conn_drop() on protocol version mismatch
+Date: Wed, 30 Sep 2026 17:23:54 +0200
+Message-ID: <20260930152431.751815397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,70 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Aohan Mei <henrymei@tencent.com>
 
-commit 82e47533221d4746947b74d2e79a478c36c6433a upstream.
+commit f97d8c7bab7843631206a114986c9059da03efeb upstream.
 
-A user reported that commit 105c42566a55 ("ata: ahci: force 32-bit DMA for
-JMicron JMB582/JMB585") made the JMicron JMB585 unusable on his board.
+rds_ib_cm_connect_complete() runs from the RDMA-CM event handler with
+conn->c_cm_lock held.  When the peer negotiates a protocol version
+older than RDS_PROTOCOL_COMPAT_VERSION, the handler calls
+rds_conn_destroy(), which is only safe in the rmmod path: it
+synchronously tears the connection down and flush_work()es the
+shutdown work cp_down_w.
 
-The failure is seen as soon as the ahci driver is probed, and booting with
-iommu=off does not solve the problem.
+That shutdown work (rds_conn_shutdown()) needs cp_cm_lock, which is
+the very lock the event handler still holds, so the flush never
+completes: the two workers wait on each other and the RDS connection
+workqueues stall for good.
 
-Looking at the AHCI specification, PxCLBU and PxFBU are both read only '0'
-for HBAs that do not support 64-bit addressing.
+All other RDMA-CM failure paths (REJECTED, CONNECT_ERROR,
+DISCONNECTED) use rds_conn_drop(), which marks the connection
+RDS_CONN_ERROR and schedules the shutdown work asynchronously.  Use
+it here as well.
 
-For HBAs that do support 64-bit addressing, the registers are read write,
-with a reset value that is Implementation Specific.
-
-When using the AHCI_HFLAG_32BIT_ONLY flag, the HBA does support 64-bit
-addressing, and a 32-bit DMA mask is set by simply clearing HOST_CAP_64.
-Thus, in this case, we need to explicitly clear the registers to 0.
-
-Fixes: 105c42566a55 ("ata: ahci: force 32-bit DMA for JMicron JMB582/JMB585")
-Fixes: c7a42156d99b ("ahci: disable 64bit dma on sb600")
+Fixes: f147dd9ecabf ("RDS/IB: Disallow connections less than RDS 3.1")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
 Cc: stable@vger.kernel.org
-Reported-by: Roland Waltersson <roland.waltersson@netinsight.net>
-Closes: https://lore.kernel.org/linux-ide/IA0PR17MB668730A4ECCD65F7A1DC3EDC9EB62@IA0PR17MB6687.namprd17.prod.outlook.com/
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260904134310.1465051-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+Link: https://patch.msgid.link/20260911073436.3542080-1-ljp1205831794@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libahci.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/rds/ib_cm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -745,15 +745,28 @@ void ahci_start_fis_rx(struct ata_port *
- 	struct ahci_port_priv *pp = ap->private_data;
- 	u32 tmp;
- 
--	/* set FIS registers */
-+	/*
-+	 * On HBAs that only support 32-bit addressing PxCLBU is read only '0'.
-+	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxCLBU is RW, and the
-+	 * reset value is Implementation Specific, so we need to clear it to 0.
-+	 */
- 	if (hpriv->cap & HOST_CAP_64)
- 		writel((pp->cmd_slot_dma >> 16) >> 16,
- 		       port_mmio + PORT_LST_ADDR_HI);
-+	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
-+		writel(0, port_mmio + PORT_LST_ADDR_HI);
- 	writel(pp->cmd_slot_dma & 0xffffffff, port_mmio + PORT_LST_ADDR);
- 
-+	/*
-+	 * On HBAs that only support 32-bit addressing PxFBU is read only '0'.
-+	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxFBU is RW, and the
-+	 * reset value is Implementation Specific, so we need to clear it to 0.
-+	 */
- 	if (hpriv->cap & HOST_CAP_64)
- 		writel((pp->rx_fis_dma >> 16) >> 16,
- 		       port_mmio + PORT_FIS_ADDR_HI);
-+	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
-+		writel(0, port_mmio + PORT_FIS_ADDR_HI);
- 	writel(pp->rx_fis_dma & 0xffffffff, port_mmio + PORT_FIS_ADDR);
- 
- 	/* enable FIS reception */
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -115,7 +115,7 @@ void rds_ib_cm_connect_complete(struct r
+ 				  &conn->c_laddr, &conn->c_faddr,
+ 				  RDS_PROTOCOL_MAJOR(conn->c_version),
+ 				  RDS_PROTOCOL_MINOR(conn->c_version));
+-			rds_conn_destroy(conn);
++			rds_conn_drop(conn);
+ 			return;
+ 		}
+ 	}
 
 
