@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02903E1681;
-	Wed, 30 Sep 2026 19:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BD13E40E9;
+	Wed, 30 Sep 2026 19:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796495; cv=none; b=P1wU1rF92oov7ZIyaJOb6RcbFuG163U6W1WWO6wPUeE0IHhRkzEe4Qb9spNoZNBAr0lpi5ou6ZDqWtohw+o9RMZ6NqF548SFzgdM2da04nyUDuAS+l7NJJERUjEYYB5hdTrBwuPsm4R4yxNHksc6tJJ9SVvhNPf+zHdl7i46OhA=
+	t=1790796498; cv=none; b=LjxRCRIerheSdmbDxudjXlHp9d5M5tOOm2t/mFoLFfKUvcBrD1eMyNJIvLUMqkARS1QwI8g0DTGJwqwnfS79oCjBND79LVDrIHjL67ZbyODtJOHXT9IiEz3YHfa0tIUa25UCMeH9blk+gGMZr68i7PIghWWrpQTJ/Q66cg/m3+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796495; c=relaxed/simple;
-	bh=jmO2NEKclEKV1ZjBdYePvdB5uo0RlqTqZ0XKcxkqKAg=;
+	s=arc-20240116; t=1790796498; c=relaxed/simple;
+	bh=8k6iNAF/cypXooafd7MeaPuQIaCW66bic2bwM88fUnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgPrkVeDwfhT4ahsmMsg1KGcC5o5RJdpwizriBXw8zWZqF2GjO+a5+I/+NBt/nYiydvNKyx4moAYtdQwkkZyMHykx/jzuRNwoB5N9KPlN8xEdpg+voo+Sz482OeEe1cMEbCayatU9GLoTjSh0dP6TDYeF+rtl+KdTXCpFD4lKZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hM2EzjGR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gq00u3eGtEGSdu81TUhQ/phEc71jQ/s8IYZinpXdIIgVEK4trm6b1UfimvdjijC9hAu8MyX0/rQhrJnzR89NeNY/0R5HSkMw80t/EUGdmV0BgToMd5l317Jc0XwWE2/mUAnTczOC6O4C7spgrvo06sI/eWKbnWMm5UbR6E+vE+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVNiUIYX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hM2EzjGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3700C1F000FF;
-	Wed, 30 Sep 2026 19:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVNiUIYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1495D1F000FF;
+	Wed, 30 Sep 2026 19:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796493;
-	bh=NIaVKdnGkF9tjYG5JDl4BwNtCauMPjw1meEuRp5ANqg=;
+	s=korg; t=1790796496;
+	bh=ApW6tH2fFt+qWc/bt0U0NNNGikl0aMD9D13D7PVwaUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hM2EzjGRGWP5yh/KOZmmZ/1CYdPfcEhvJEHX4crXhYuXCj1j5DmDXlu+2TB0BUew5
-	 765YP02o2/8wHUHL3oOs6Umg3m9w6zFQC/5MMIdZtcBGUTtykHyHlLm909ZLAortjf
-	 L/vtD03WbjDdLrNEDvBh53svRadDWqbbFoNJw3uE=
+	b=pVNiUIYX/POlB6IEbmPd1E091ulCO2IEKBxc2u6/g+2br9hQY2XI4rehzp8GIiqZG
+	 GDkJPZPYO5u8v8iLQR2yjdzeGmkgKmLjOxr+uOyxvWGIU1QBAo9RsfI2Hc1ar2HaT3
+	 d0c5cCcvo8zSMkGLNF8gS+R9AZ5jf0ryQvB7MCWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.6 0932/1193] drm/msm/hdmi_phy: fix runtime PM cleanup on probe failure
-Date: Wed, 30 Sep 2026 17:26:56 +0200
-Message-ID: <20260930152454.948607677@linuxfoundation.org>
+	syzbot+5003556314abc915a71f@syzkaller.appspotmail.com,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 6.6 0933/1193] smb: client: cancel reconnect work in clean_demultiplex_info()
+Date: Wed, 30 Sep 2026 17:26:57 +0200
+Message-ID: <20260930152454.971673728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,64 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit f4fae975db08a9aeec0b15e145c7d4d0fe02a0ec upstream.
+commit c65eae6f61d1778ff7a82e4aae4080e26f486af1 upstream.
 
-msm_hdmi_phy_probe() enables runtime PM before enabling the PHY
-resources and initializing the PLL, but failures from either operation
-return without calling the matching pm_runtime_disable().
+clean_demultiplex_info() cancels server->echo delayed work but not
+server->reconnect, which can cause a use-after-free when the
+demultiplex thread exits while a reconnect work is still queued:
 
-The remove path disables runtime PM, but it is not called when probe
-fails. As a result, runtime PM remains enabled after an unsuccessful
-probe.
+  cifs_demultiplex_thread()
+    cifs_readv_from_socket()
+      cifs_reconnect()
+        __cifs_reconnect()
+          cifs_queue_server_reconn()
+            mod_delayed_work(cifsiod_wq, &server->reconnect, 0)
+    clean_demultiplex_info()
+      cancel_delayed_work_sync(&server->echo)   // echo canceled
+                                                 // reconnect NOT canceled
+      kfree_sensitive(server)                    // server freed
 
-Route failures after pm_runtime_enable() through a common error path
-and disable runtime PM before returning.
+  ...later, on cifsiod_wq:
 
-This issue was found by manual code inspection.
+  smb2_reconnect_server()
+    server->srv_count  // UAF read of freed server
 
-Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Fix this by canceling server->reconnect delayed work in
+clean_demultiplex_info() before the server is freed, the same way
+cifs_put_tcp_session() already does.
+
+Reported-by: syzbot+5003556314abc915a71f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/6aa4a12d.f81106d8.2ab401.0023.GAE@google.com
+Fixes: 53e0e11efe92 ("CIFS: Fix a possible memory corruption during reconnect")
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/753043/
-Link: https://lore.kernel.org/r/20260913085814.1509352-1-lgs201920130244@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -161,13 +161,13 @@ static int msm_hdmi_phy_probe(struct pla
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -998,6 +998,7 @@ clean_demultiplex_info(struct TCP_Server
+ 	spin_unlock(&server->srv_lock);
  
- 	ret = msm_hdmi_phy_resource_enable(phy);
- 	if (ret)
--		return ret;
-+		goto err_pm_disable;
+ 	cancel_delayed_work_sync(&server->echo);
++	cancel_delayed_work_sync(&server->reconnect);
  
- 	ret = msm_hdmi_phy_pll_init(pdev, phy->cfg->type);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "couldn't init PLL\n");
- 		msm_hdmi_phy_resource_disable(phy);
--		return ret;
-+		goto err_pm_disable;
- 	}
- 
- 	msm_hdmi_phy_resource_disable(phy);
-@@ -175,6 +175,10 @@ static int msm_hdmi_phy_probe(struct pla
- 	platform_set_drvdata(pdev, phy);
- 
- 	return 0;
-+
-+err_pm_disable:
-+	pm_runtime_disable(dev);
-+	return ret;
- }
- 
- static int msm_hdmi_phy_remove(struct platform_device *pdev)
+ 	spin_lock(&server->srv_lock);
+ 	server->tcpStatus = CifsExiting;
 
 
