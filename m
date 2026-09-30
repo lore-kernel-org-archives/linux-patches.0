@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E2E3D45E5;
-	Wed, 30 Sep 2026 18:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985EB3CEB9E;
+	Wed, 30 Sep 2026 18:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794101; cv=none; b=jnW3Oj60r1WWlXc3yxLtDgUvfNv3HJP9lP6hWwfaPtsHpCYD0neeRz2rFrygQD/+pGXdHVO0uyM92lIU2fip1tRZveVHGr769AqWPsH2uo7en5lqSK0Q7pCYgJNrheQmE+8e60DUvyUlbAHG1ePU5mBlHT1PSCm/B6bzvoM64pA=
+	t=1790794104; cv=none; b=d0jOZ7F3fgPGn/LKiyz2q49mbAWeQ5R0PFtDC3DNwLGiKHzuhH6/piD6oPGmSryg3zkCW6KyUrjnfTn7GRZ3uG6lHbabPmcD6znTz5lHUs1EcHYaqVr0HWu9PfxeEQzT1VlPPsIDu2MF4Dy5rO2ktaeLRAE0jgRPay8qjZegBRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794101; c=relaxed/simple;
-	bh=71+wSwWX975HwhLKhe5D6oXMR3nhfT7L1cUv76r0UHU=;
+	s=arc-20240116; t=1790794104; c=relaxed/simple;
+	bh=1Xe5oBjw0PGwIEWfwaloANGsHhZ5810unB+Vd1O9moI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBFTwmn+XOba0Q5pkfZIi4+gy4emXxOdJJ/aTzYQ1ZY0tgfDloVdSkX9RRinMki5PI+07f8IHkAfXCBODwV/jJBYNXytq2EbAKC8vBcA0ubJ2tTyzQ52/txWHU5hGQbOmyyWRvS2byUz+DpTwDp/z+VQunZDcAPMDWfGXzqsFhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ca8MJyvy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dZN/Gr/7un3SYdfaQjXZTsKV/WXNidkzojZgTP0KdLkUYzhQh/yGVc3GhH+wjWKz3eN+k80Rt3oCW4i6fsMvpKb55/HuyWA7L22aRaYKDPsmtY3pORVbPrObJKlLhtxkip9MQc2Jvo8FzrtubgTaYOz3IECmgYgsQR3eD0jZ2E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maE5DcWl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ca8MJyvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CC21F000FF;
-	Wed, 30 Sep 2026 18:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maE5DcWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BB21F000FF;
+	Wed, 30 Sep 2026 18:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794100;
-	bh=MnrRxuo4DfhUgCQascwWEYX2C9B34TEsDatPR4Dk1Qs=;
+	s=korg; t=1790794103;
+	bh=GetGvDJVA43eKG0uXHtKySVaXHnInG9dyDmxcTOFjc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ca8MJyvyiKyV74jW2061UwVelZVCoOy5uxB63vKrtzs8dRgW/8PohHQ/QixPKUzwO
-	 6Cao74chgAGwADs9WwSZ6BMHbZSdUFIGZhRoDrG0F5wCSHaVOi61Co6cjEjc4gwSA3
-	 sOVTVzSjhAqKXTFgpixuysxTEmIQ1BnhLkQ/gCrA=
+	b=maE5DcWlNAYU5KouJIpLdQ4ZXR/IjMrXdCemnDU1tvowhXrn17D+m+cpUMs+n/+O7
+	 acYqZtjoJCZ0/eTl78aUtRWv1ctrqT6Cjtz+flalE3VHar5XjxJtkn5Oide68zh7HN
+	 qOw003+KXF89T2wxAXPzoOAiG3WH3eOy6J/ZxMRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Adrian Wowk <dev@adrianwowk.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0091/1193] isofs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:12:55 +0200
-Message-ID: <20260930152436.263635155@linuxfoundation.org>
+Subject: [PATCH 6.6 0092/1193] usbip: vhci_hcd: fix NULL deref in status_show_vhci
+Date: Wed, 30 Sep 2026 17:12:56 +0200
+Message-ID: <20260930152436.285599053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,39 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Adrian Wowk <dev@adrianwowk.com>
 
-[ Upstream commit 25ef4c4d9f0e96fb89c0ae0d7127c3f12a31bc32 ]
+[ Upstream commit bc150783542ba2e7c1257d1299c6f3269bdba270 ]
 
-isofs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+platform_get_drvdata() can return NULL if a VHCI host controller's
+probe failed (e.g. due to USB bus number exhaustion). status_show_vhci()
+checked for a NULL pdev but not for a NULL hcd returned by
+platform_get_drvdata(). Passing NULL to hcd_to_vhci_hcd() does not
+return NULL - it returns a pointer offset of 0x260, causing a NULL
+pointer dereference when that value is subsequently dereferenced.
 
-        BUG_ON(offset >= folio_size(folio));
+Add a NULL check on hcd before calling hcd_to_vhci_hcd(). Move
+status_show_not_ready() above status_show_vhci() to make it callable
+from the new error path without a forward declaration.
 
-in folio_set_bh on the first __bread_gfp call.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-8-hch@lst.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Adrian Wowk <dev@adrianwowk.com>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20260414010050.158064-2-dev@adrianwowk.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/usbip/vhci_sysfs.c | 52 +++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 23 deletions(-)
 
-diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
-index d989bdcfaa26c..e7de6f3a5443b 100644
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -859,7 +859,8 @@ static int isofs_fill_super(struct super_block *s, void *data, int silent)
- 	 * entries.  By forcing the blocksize in this way, we ensure
- 	 * that we will never be required to do this.
- 	 */
--	sb_set_blocksize(s, orig_zonesize);
-+	if (!sb_set_blocksize(s, orig_zonesize))
-+		goto out_freesbi;
+diff --git a/drivers/usb/usbip/vhci_sysfs.c b/drivers/usb/usbip/vhci_sysfs.c
+index e2847cd3e6e36..7dd6465ee4358 100644
+--- a/drivers/usb/usbip/vhci_sysfs.c
++++ b/drivers/usb/usbip/vhci_sysfs.c
+@@ -59,6 +59,29 @@ static void port_show_vhci(char **out, int hub, int port, struct vhci_device *vd
+ 	*out += sprintf(*out, "\n");
+ }
  
- 	sbi->s_nls_iocharset = NULL;
++static ssize_t status_show_not_ready(int pdev_nr, char *out)
++{
++	char *s = out;
++	int i = 0;
++
++	for (i = 0; i < VHCI_HC_PORTS; i++) {
++		out += sprintf(out, "hs  %04u %03u ",
++				    (pdev_nr * VHCI_PORTS) + i,
++				    VDEV_ST_NOTASSIGNED);
++		out += sprintf(out, "000 00000000 0000000000000000 0-0");
++		out += sprintf(out, "\n");
++	}
++
++	for (i = 0; i < VHCI_HC_PORTS; i++) {
++		out += sprintf(out, "ss  %04u %03u ",
++				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
++				    VDEV_ST_NOTASSIGNED);
++		out += sprintf(out, "000 00000000 0000000000000000 0-0");
++		out += sprintf(out, "\n");
++	}
++	return out - s;
++}
++
+ /* Sysfs entry to show port status */
+ static ssize_t status_show_vhci(int pdev_nr, char *out)
+ {
+@@ -76,6 +99,12 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
+ 	}
  
+ 	hcd = platform_get_drvdata(pdev);
++
++	if (!hcd) {
++		usbip_dbg_vhci_sysfs("show status error (hcd is NULL)\n");
++		return status_show_not_ready(pdev_nr, out);
++	}
++
+ 	vhci_hcd = hcd_to_vhci_hcd(hcd);
+ 	vhci = vhci_hcd->vhci;
+ 
+@@ -104,29 +133,6 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
+ 	return out - s;
+ }
+ 
+-static ssize_t status_show_not_ready(int pdev_nr, char *out)
+-{
+-	char *s = out;
+-	int i = 0;
+-
+-	for (i = 0; i < VHCI_HC_PORTS; i++) {
+-		out += sprintf(out, "hs  %04u %03u ",
+-				    (pdev_nr * VHCI_PORTS) + i,
+-				    VDEV_ST_NOTASSIGNED);
+-		out += sprintf(out, "000 00000000 0000000000000000 0-0");
+-		out += sprintf(out, "\n");
+-	}
+-
+-	for (i = 0; i < VHCI_HC_PORTS; i++) {
+-		out += sprintf(out, "ss  %04u %03u ",
+-				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
+-				    VDEV_ST_NOTASSIGNED);
+-		out += sprintf(out, "000 00000000 0000000000000000 0-0");
+-		out += sprintf(out, "\n");
+-	}
+-	return out - s;
+-}
+-
+ static int status_name_to_id(const char *name)
+ {
+ 	char *c;
 -- 
 2.53.0
 
