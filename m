@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1303C3F56;
-	Wed, 30 Sep 2026 19:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BF23CE099;
+	Wed, 30 Sep 2026 19:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795221; cv=none; b=kSN9UBGagqh4QLzyvnihfHzOJGuev1NHuSjP2x2r1Sq8Hc0Xu6v6f6o4gVF2fN/zS2vJzlnNVnr+leBxgsz4EpSUHI8otwbvYmqzoTOgvzC2sE3HfInHJ96yfaH2rThPTyNpllFjgjD3Ja3cv82qBCIvQ9Ltz3KJUNhdZuEw53s=
+	t=1790795224; cv=none; b=XtqIAqgdj6Xsgbj6vwxO4O0DclVYAkoX+B7YcIGvNUirNkOgDiix565ODbTdZ0jSZb6/+JZC8CCtJXke8ZjgZX+nctS1xA+u9sIf3Qmut3F/3Ok8kpecm8HST+nU/OSJCckS/0ZeMAEBFetF5KVGGy8hAIhrTuZqepbwiJgzgJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795221; c=relaxed/simple;
-	bh=fsxMV7ZDYjFr4L7vNbZbfQE3i5PDkjvNRv13o5u4A04=;
+	s=arc-20240116; t=1790795224; c=relaxed/simple;
+	bh=gyjzFb1bvBhEc1psJX4FUajCZ92Kd+eBSXE+qrpsL7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEylasFvv0YU6ucduipgRzk0FqNKEZqPuevAtGCcKmmzWjB92wf/gZW5P4ZVXNeB4rI+CEt76nJ/zQR5uwzrV5E8OpmF1nWo+nqzZX+INiVWQUbYQbULNAYTa9hOU6trdO52tJ8KIdzlN6mRMz7mcN04RV0EsczPNn2OjdNvLt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiUg/twC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eoqwrn6CS0WTDkRbxO3N5bCw8D5Qm2asV/wPqpAAYKx6KOP/QGZSkBLrbJ8RENEBtya7NR6DMt2JdWEWue5AXGc2cbi12IeKFnFYTdEOWBn7Mk1QLC8G8lE/lnLPJtgz6WOL5zjmoNd1wgG7s0YNMuaI7jcrjBDh3ylcnHDghSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCGC3nc2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiUg/twC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037271F000FF;
-	Wed, 30 Sep 2026 19:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCGC3nc2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A8D1F000FF;
+	Wed, 30 Sep 2026 19:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795219;
-	bh=rhu/BOL9WTWHghgQe7f64ACeLOPloiaGave/r9LgWxs=;
+	s=korg; t=1790795222;
+	bh=+61cz+p1dq/LkYFjZ2UQaHTy5Qk2uv19KB1amvXjlM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DiUg/twCKOcNgt5mirJg0nI9G1kLLWgXFD5FiyEDHPZHeCGL3xfk1zTw1TTdhq+rl
-	 e/NM+M7duK5Ev6rZCV/9uWvLzD25dT9UmiDvlF6X48Ow5tWUMlRVavxg/Z4M4ShJRO
-	 zoHjupFCpaXGEmh/r2uGEaucJbfeyKXN0JL0U9BA=
+	b=NCGC3nc2+3Da8n/dk/laJXMkDTh4+Wy5bQ1LhvYUKDO0fB11H2LnpdCfUGoY3Hctv
+	 Yku2PSn3rg6DNQbkNgrmZHACFCbuOcIhr6gjNXUoFFcMD+kaH7C3djrUMWH3hG+Tzy
+	 SmcJgSqhYtobyBNjL89vPfgQmNSDhNFjMPrJ9w+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Cowie <brad@faucet.nz>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0486/1193] selftests/bpf: Update tests for new ct zone opts for nf_conntrack kfuncs
-Date: Wed, 30 Sep 2026 17:19:30 +0200
-Message-ID: <20260930152444.951168650@linuxfoundation.org>
+Subject: [PATCH 6.6 0469/1193] net/rds: use clear_bit_unlock() in release_refill()
+Date: Wed, 30 Sep 2026 17:19:13 +0200
+Message-ID: <20260930152444.588400089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,222 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brad Cowie <brad@faucet.nz>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit a87f34e742d279d54d529e4bc4763fdaab32a466 ]
+[ Upstream commit 17c4476dbb9c3bfd34193a6c22f2c3da8747134a ]
 
-Add test for allocating and looking up ct entry in a
-non-default ct zone with kfuncs bpf_{xdp,skb}_ct_alloc
-and bpf_{xdp,skb}_ct_lookup.
+release_refill() drops the RDS_RECV_REFILL bit with a plain
+clear_bit().  clear_bit() has no ordering semantics, and the
+smp_mb__after_atomic() that follows it sits on the wrong side for a
+lock release: it orders the clear against the waitqueue_active() load
+below it, but does nothing to order the refill critical section's ring
+and descriptor stores before the clear itself.
 
-Add negative tests for looking up ct entry in a different
-ct zone to where it was allocated and with a different
-direction.
+That matters once connection teardown owns RDS_RECV_REFILL as a lock
+across the transport shutdown and path reset, rather than sampling it
+clear, which "net/rds: acquire the fastpath locks in
+rds_conn_shutdown()" later in this series arranges: on a weakly
+ordered architecture the teardown can win the bit and start the
+shutdown and reset while some of the refill's stores are not yet
+visible to it.  The same gap existed under the sample-based scheme - a
+waiter that saw the bit clear had no guarantee it also observed the
+refill's stores - but taking the bit as a lock makes the missing
+release pairing load-bearing.
 
-Update reserved test for old struct definition to test for
-ct_zone_id being set when opts size isn't NF_BPF_CT_OPTS_SZ (16).
+Switch to clear_bit_unlock(), which orders the critical section before
+the release, and replace the open-coded barrier-plus-waitqueue_active()
+with wq_has_sleeper(), whose internal full barrier keeps the
+store-buffering guarantee between clearing the bit and checking for
+sleepers.  This mirrors what "net/rds: use wq_has_sleeper() in
+release_in_xmit()" does for RDS_IN_XMIT.
 
-Signed-off-by: Brad Cowie <brad@faucet.nz>
-Link: https://lore.kernel.org/r/20240522050712.732558-2-brad@faucet.nz
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Stable-dep-of: 5e8c349bc8d7 ("selftests/bpf: Fix flaky bpf_nf test when random NAT port is 0")
+The fast-path acquire side, acquire_refill(), uses test_and_set_bit(),
+a full-barrier RMW that pairs with this release.  The teardown at this
+point in the series still samples the bit, so on its own this change
+is release-side hardening; the shutdown-conversion patch named above
+makes the teardown acquire the bit with the same RMW, completing the
+pairing at the end of the series.
+
+Fixes: 73ce4317bf98 ("RDS: make sure we post recv buffers")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260828223921.202913-3-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/config            |   1 +
- .../testing/selftests/bpf/prog_tests/bpf_nf.c |   7 ++
- .../testing/selftests/bpf/progs/test_bpf_nf.c | 108 ++++++++++++++++++
- 3 files changed, 116 insertions(+)
+ net/rds/ib_recv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/config b/tools/testing/selftests/bpf/config
-index 5751614aef6a5..9b6ed235c12c4 100644
---- a/tools/testing/selftests/bpf/config
-+++ b/tools/testing/selftests/bpf/config
-@@ -76,6 +76,7 @@ CONFIG_NETFILTER_XT_MATCH_STATE=y
- CONFIG_NETFILTER_XT_TARGET_CT=y
- CONFIG_NF_CONNTRACK=y
- CONFIG_NF_CONNTRACK_MARK=y
-+CONFIG_NF_CONNTRACK_ZONES=y
- CONFIG_NF_DEFRAG_IPV4=y
- CONFIG_NF_DEFRAG_IPV6=y
- CONFIG_NF_NAT=y
-diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-index f80660c00a1a7..fad98f01e2c06 100644
---- a/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-@@ -110,6 +110,7 @@ static void test_bpf_nf_ct(int mode)
+diff --git a/net/rds/ib_recv.c b/net/rds/ib_recv.c
+index e53b7f266bd76..20210822c9235 100644
+--- a/net/rds/ib_recv.c
++++ b/net/rds/ib_recv.c
+@@ -363,15 +363,14 @@ static int acquire_refill(struct rds_connection *conn)
  
- 	ASSERT_EQ(skel->bss->test_einval_bpf_tuple, -EINVAL, "Test EINVAL for NULL bpf_tuple");
- 	ASSERT_EQ(skel->bss->test_einval_reserved, -EINVAL, "Test EINVAL for reserved not set to 0");
-+	ASSERT_EQ(skel->bss->test_einval_reserved_new, -EINVAL, "Test EINVAL for reserved in new struct not set to 0");
- 	ASSERT_EQ(skel->bss->test_einval_netns_id, -EINVAL, "Test EINVAL for netns_id < -1");
- 	ASSERT_EQ(skel->bss->test_einval_len_opts, -EINVAL, "Test EINVAL for len__opts != NF_BPF_CT_OPTS_SZ");
- 	ASSERT_EQ(skel->bss->test_eproto_l4proto, -EPROTO, "Test EPROTO for l4proto != TCP or UDP");
-@@ -128,6 +129,12 @@ static void test_bpf_nf_ct(int mode)
- 	ASSERT_EQ(skel->bss->test_exist_lookup_mark, 43, "Test existing connection lookup ctmark");
- 	ASSERT_EQ(skel->data->test_snat_addr, 0, "Test for source natting");
- 	ASSERT_EQ(skel->data->test_dnat_addr, 0, "Test for destination natting");
-+	ASSERT_EQ(skel->data->test_ct_zone_id_alloc_entry, 0, "Test for alloc new entry in specified ct zone");
-+	ASSERT_EQ(skel->data->test_ct_zone_id_insert_entry, 0, "Test for insert new entry in specified ct zone");
-+	ASSERT_EQ(skel->data->test_ct_zone_id_succ_lookup, 0, "Test for successful lookup in specified ct_zone");
-+	ASSERT_EQ(skel->bss->test_ct_zone_dir_enoent_lookup, -ENOENT, "Test ENOENT for lookup with wrong ct zone dir");
-+	ASSERT_EQ(skel->bss->test_ct_zone_id_enoent_lookup, -ENOENT, "Test ENOENT for lookup in wrong ct zone");
-+
- end:
- 	if (client_fd != -1)
- 		close(client_fd);
-diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-index 77ad8adf68daa..0289d8ce2b80d 100644
---- a/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-+++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-@@ -9,10 +9,14 @@
- #define EINVAL 22
- #define ENOENT 2
- 
-+#define NF_CT_ZONE_DIR_ORIG (1 << IP_CT_DIR_ORIGINAL)
-+#define NF_CT_ZONE_DIR_REPL (1 << IP_CT_DIR_REPLY)
-+
- extern unsigned long CONFIG_HZ __kconfig;
- 
- int test_einval_bpf_tuple = 0;
- int test_einval_reserved = 0;
-+int test_einval_reserved_new = 0;
- int test_einval_netns_id = 0;
- int test_einval_len_opts = 0;
- int test_eproto_l4proto = 0;
-@@ -22,6 +26,11 @@ int test_eafnosupport = 0;
- int test_alloc_entry = -EINVAL;
- int test_insert_entry = -EAFNOSUPPORT;
- int test_succ_lookup = -ENOENT;
-+int test_ct_zone_id_alloc_entry = -EINVAL;
-+int test_ct_zone_id_insert_entry = -EAFNOSUPPORT;
-+int test_ct_zone_id_succ_lookup = -ENOENT;
-+int test_ct_zone_dir_enoent_lookup = 0;
-+int test_ct_zone_id_enoent_lookup = 0;
- u32 test_delta_timeout = 0;
- u32 test_status = 0;
- u32 test_insert_lookup_mark = 0;
-@@ -45,6 +54,17 @@ struct bpf_ct_opts___local {
- 	s32 netns_id;
- 	s32 error;
- 	u8 l4proto;
-+	u8 dir;
-+	u8 reserved[2];
-+};
-+
-+struct bpf_ct_opts___new {
-+	s32 netns_id;
-+	s32 error;
-+	u8 l4proto;
-+	u8 dir;
-+	u16 ct_zone_id;
-+	u8 ct_zone_dir;
- 	u8 reserved[3];
- } __attribute__((preserve_access_index));
- 
-@@ -220,10 +240,97 @@ nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
- 	}
- }
- 
-+static __always_inline void
-+nf_ct_opts_new_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
-+						 struct bpf_ct_opts___new *, u32),
-+		    struct nf_conn *(*alloc_fn)(void *, struct bpf_sock_tuple *, u32,
-+						struct bpf_ct_opts___new *, u32),
-+		    void *ctx)
-+{
-+	struct bpf_ct_opts___new opts_def = { .l4proto = IPPROTO_TCP, .netns_id = -1 };
-+	struct bpf_sock_tuple bpf_tuple;
-+	struct nf_conn *ct;
-+
-+	__builtin_memset(&bpf_tuple, 0, sizeof(bpf_tuple.ipv4));
-+
-+	opts_def.reserved[0] = 1;
-+	ct = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
-+		       sizeof(opts_def));
-+	opts_def.reserved[0] = 0;
-+	if (ct)
-+		bpf_ct_release(ct);
-+	else
-+		test_einval_reserved_new = opts_def.error;
-+
-+	bpf_tuple.ipv4.saddr = bpf_get_prandom_u32(); /* src IP */
-+	bpf_tuple.ipv4.daddr = bpf_get_prandom_u32(); /* dst IP */
-+	bpf_tuple.ipv4.sport = bpf_get_prandom_u32(); /* src port */
-+	bpf_tuple.ipv4.dport = bpf_get_prandom_u32(); /* dst port */
-+
-+	/* use non-default ct zone */
-+	opts_def.ct_zone_id = 10;
-+	opts_def.ct_zone_dir = NF_CT_ZONE_DIR_ORIG;
-+	ct = alloc_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4), &opts_def,
-+		      sizeof(opts_def));
-+	if (ct) {
-+		__u16 sport = bpf_get_prandom_u32();
-+		__u16 dport = bpf_get_prandom_u32();
-+		union nf_inet_addr saddr = {};
-+		union nf_inet_addr daddr = {};
-+		struct nf_conn *ct_ins;
-+
-+		bpf_ct_set_timeout(ct, 10000);
-+
-+		/* snat */
-+		saddr.ip = bpf_get_prandom_u32();
-+		bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC___local);
-+		/* dnat */
-+		daddr.ip = bpf_get_prandom_u32();
-+		bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST___local);
-+
-+		ct_ins = bpf_ct_insert_entry(ct);
-+		if (ct_ins) {
-+			struct nf_conn *ct_lk;
-+
-+			/* entry should exist in same ct zone we inserted it */
-+			ct_lk = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4),
-+					  &opts_def, sizeof(opts_def));
-+			if (ct_lk) {
-+				bpf_ct_release(ct_lk);
-+				test_ct_zone_id_succ_lookup = 0;
-+			}
-+
-+			/* entry should not exist with wrong direction */
-+			opts_def.ct_zone_dir = NF_CT_ZONE_DIR_REPL;
-+			ct_lk = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4),
-+					  &opts_def, sizeof(opts_def));
-+			opts_def.ct_zone_dir = NF_CT_ZONE_DIR_ORIG;
-+			if (ct_lk)
-+				bpf_ct_release(ct_lk);
-+			else
-+				test_ct_zone_dir_enoent_lookup = opts_def.error;
-+
-+			/* entry should not exist in default ct zone */
-+			opts_def.ct_zone_id = 0;
-+			ct_lk = lookup_fn(ctx, &bpf_tuple, sizeof(bpf_tuple.ipv4),
-+					  &opts_def, sizeof(opts_def));
-+			if (ct_lk)
-+				bpf_ct_release(ct_lk);
-+			else
-+				test_ct_zone_id_enoent_lookup = opts_def.error;
-+
-+			bpf_ct_release(ct_ins);
-+			test_ct_zone_id_insert_entry = 0;
-+		}
-+		test_ct_zone_id_alloc_entry = 0;
-+	}
-+}
-+
- SEC("xdp")
- int nf_xdp_ct_test(struct xdp_md *ctx)
+ static void release_refill(struct rds_connection *conn)
  {
- 	nf_ct_test((void *)bpf_xdp_ct_lookup, (void *)bpf_xdp_ct_alloc, ctx);
-+	nf_ct_opts_new_test((void *)bpf_xdp_ct_lookup, (void *)bpf_xdp_ct_alloc, ctx);
- 	return 0;
- }
+-	clear_bit(RDS_RECV_REFILL, &conn->c_flags);
+-	smp_mb__after_atomic();
++	clear_bit_unlock(RDS_RECV_REFILL, &conn->c_flags);
  
-@@ -231,6 +338,7 @@ SEC("tc")
- int nf_skb_ct_test(struct __sk_buff *ctx)
- {
- 	nf_ct_test((void *)bpf_skb_ct_lookup, (void *)bpf_skb_ct_alloc, ctx);
-+	nf_ct_opts_new_test((void *)bpf_skb_ct_lookup, (void *)bpf_skb_ct_alloc, ctx);
- 	return 0;
+ 	/* We don't use wait_on_bit()/wake_up_bit() because our waking is in a
+ 	 * hot path and finding waiters is very rare.  We don't want to walk
+ 	 * the system-wide hashed waitqueue buckets in the fast path only to
+ 	 * almost never find waiters.
+ 	 */
+-	if (waitqueue_active(&conn->c_waitq))
++	if (wq_has_sleeper(&conn->c_waitq))
+ 		wake_up_all(&conn->c_waitq);
  }
  
 -- 
