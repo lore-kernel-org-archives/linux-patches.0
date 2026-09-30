@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D9251B16C;
-	Wed, 30 Sep 2026 18:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3C151D530;
+	Wed, 30 Sep 2026 18:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792634; cv=none; b=mGvQfvqEGoe2IvgEGr4FMSH33XstlV5+7u8XYngeuB4aMi3Z9qJElYEHoD6WY2tzfxJUC5t79LxYKc+UoHgqlZuUouEvoHcY+t9/4hJD4ADsoBEnjVw0Qoq5DJ+EGWKh6GkAGnVk+0UDokhfWudntG40/hcPwso3viEDNgCfwzc=
+	t=1790792637; cv=none; b=gWTtD5Lyz2uL5Zo5UWH1z/+ktR3Rm0RQqTg8uWzeggmVSFdHrnkQ1tJ0OEuB6gKi5R/mvZ+jhtCsXwun+cq/rU0Ne9ZBMoVLa+UbChVEnEhZo7+mEwUl7rsRBclIQJ8j+l9ti4XfhXFkx46OeL0s3BAL8D2Cek+YcykLwa/Bunw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792634; c=relaxed/simple;
-	bh=w/12m1h6b33cwhOf+lvXaoKlkXuyk5VwHPdvo0D0pgk=;
+	s=arc-20240116; t=1790792637; c=relaxed/simple;
+	bh=5uo7SPJCoLmICQlc/kDJphAs3VyXI9f6kTl+WsVEdSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRSgFg/CPxWMo6xehl9ep383bdP6AZj14ETQj7hFay/trk8VTzytINW4rswsHgq3BNqIp6jnHkGVKcwkVLjFlXlP6kmYc1IBs7AP6MwqpmSMDUhfL1XnqZQ0mC4fVy2wVJsfOE/cSTURw1GBpcJkuQV5ph2Sdn85gLZY4v8N1RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbF99Ze1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rt+uPKkduwCwnX2fYSfBwtQkrz1f+VRu4eGejmSuHxm3bqcAfBwtON90bdwp1XI4NhSx6Qi9BhIDqZ8HB96ZL3SO0do+jDypXI/sALG/4QYTSl9sDJSU1OD9hNnxfUKsAVTTKkuU8qSA9meg5XzbT24FAoPpZh2T2LNfyhr0WpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lehclN3J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbF99Ze1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE8E1F000FF;
-	Wed, 30 Sep 2026 18:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lehclN3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BA71F000FF;
+	Wed, 30 Sep 2026 18:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792633;
-	bh=cTgn1GESVZNj07J6Y4LPjchdtRrGzxN/X4vitDrAsI4=;
+	s=korg; t=1790792635;
+	bh=ePFHAYG7nKFRYsAyvXMjPPHGn17wCNn9kkcGJ1oqDrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbF99Ze1WTeEljTyzIiiiUxpG2FNvyzuzkOOmF9cSebj9MwRw3c5GYFjFCZbNRDIM
-	 LVN3jcs7kWs4dGUQRTFwO9BBVNS6nQ9LAwgJwmJwjZN4ttwNfGSl8/6x99QdGnwATH
-	 KTHRAE2GVJuTKj6MYt1bfhE4ujPy79WKkpd4XuSI=
+	b=lehclN3JK8N0X48mnNnY66VuSU2UOYWPuz0FOVhGm7RYfygmS6muG9g5OvEpCyrab
+	 T2EcF5olPUjHwPhsLoTeH+mzQWtwJea3L9YhMAFe+Cf2Wfy/SB/oeXBA3OBKcPq9FN
+	 v5pS8KGc+daEzhX+qO0inHXqwuJKcKxu82yEI41I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming01@loongson.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 724/752] net: usb: cdc_mbim: add MeiG Smart SRM821 to ZLP whitelist
-Date: Wed, 30 Sep 2026 17:29:54 +0200
-Message-ID: <20260930152413.886454008@linuxfoundation.org>
+	co+459f67f4d8af8ce6@bugs.sh,
+	Florian Westphal <fw@strlen.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 725/752] netfilter: ip6t_rpfilter: reject routes without inet6_dev
+Date: Wed, 30 Sep 2026 17:29:55 +0200
+Message-ID: <20260930152413.907123664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,46 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Wang <wangming01@loongson.cn>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit f75f21ef36285e5f56ee0c428bd2909ee81165b9 upstream.
+commit 1b9b5323725e458906c7620a3bc10398b51ad954 upstream.
 
-The MeiG Smart SRM821 5G module (0x2dee:0x4d53) crashes and drops off
-the USB bus when it receives a Zero Length Packet (ZLP) after sending
-or receiving an NTB of exactly 16384 bytes (tx_max).
+ip6_route_lookup() can return an error-free route whose rt6i_idev is
+NULL. Lowering an external nexthop device's MTU below IPV6_MIN_MTU tears
+down its inet6_dev while fib6_ifdown() leaves routes using nexthop objects
+in the FIB. An unprivileged user can construct this state with rtnetlink
+in a private user and network namespace, then trigger a NULL dereference
+through an IPv6 rpfilter lookup:
 
-According to the MBIM specification, devices do not require a ZLP
-if the NTB size is exactly dwNtbOutMaxSize. However, the cdc_mbim
-driver defaults to sending ZLPs for devices not explicitly whitelisted
-to accommodate non-conformant hardware. This default behavior breaks
-the strictly conformant MeiG SRM821 module.
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000000
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: rpfilter_mt (net/ipv6/netfilter/ip6t_rpfilter.c:75)
+  Call Trace:
+  ip6t_do_table (net/ipv6/netfilter/ip6_tables.c:316)
+  nf_hook_slow (net/netfilter/core.c:619)
+  ipv6_rcv (net/ipv6/ip6_input.c:351)
+  __netif_receive_skb_one_core (net/core/dev.c:6216)
+  process_backlog (net/core/dev.c:6680)
+  __napi_poll (net/core/dev.c:7739)
+  net_rx_action (net/core/dev.c:7959)
+  handle_softirqs (kernel/softirq.c:622)
+  do_softirq.part.0 (kernel/softirq.c:523)
+  __local_bh_enable_ip (kernel/softirq.c:450)
+  __dev_queue_xmit (net/core/dev.c:4913)
+  packet_sendmsg (net/packet/af_packet.c:3139)
+  __sys_sendto (net/socket.c:2252)
+  __x64_sys_sendto (net/socket.c:2259)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Add this device to the ZLP conformance whitelist (cdc_mbim_info) so
-the driver will pad the NTB to avoid sending ZLPs, preventing the
-device firmware from crashing.
+Reject routes without an inet6_dev immediately after lookup. Such routes
+are not eligible for reverse-path filtering, and the check protects all
+later rt6i_idev dereferences.
 
+Fixes: e26f9a480fb6 ("netfilter: add ipv6 reverse path filter match")
+Reported-by: co+459f67f4d8af8ce6@bugs.sh
+Closes: https://lore.kernel.org/all/VtWUkE8QzJt5CroTj2V2v3ZQ0gwbXZ7nq7I3@bugs.sh/
+Suggested-by: Florian Westphal <fw@strlen.de>
+Assisted-by: Claude:gpt-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Wang <wangming01@loongson.cn>
-Link: https://patch.msgid.link/20260920074500.826121-1-wangming01@loongson.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc_mbim.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv6/netfilter/ip6t_rpfilter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/cdc_mbim.c
-+++ b/drivers/net/usb/cdc_mbim.c
-@@ -633,6 +633,11 @@ static const struct usb_device_id mbim_d
- 	  .driver_info = (unsigned long)&cdc_mbim_info,
- 	},
+--- a/net/ipv6/netfilter/ip6t_rpfilter.c
++++ b/net/ipv6/netfilter/ip6t_rpfilter.c
+@@ -61,7 +61,7 @@ static bool rpfilter_lookup_reverse6(str
+ 		fl6.flowi6_oif = dev->ifindex;
  
-+	/* MeiG Smart SRM821 ZLP conformance */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d53, USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
-+	  .driver_info = (unsigned long)&cdc_mbim_info,
-+	},
-+
- 	/* Some Huawei devices, ME906s-158 (12d1:15c1) and E3372
- 	 * (12d1:157d), are known to fail unless the NDP is placed
- 	 * after the IP packets.  Applying the quirk to all Huawei
+ 	rt = (void *)ip6_route_lookup(net, &fl6, skb, lookup_flags);
+-	if (rt->dst.error)
++	if (rt->dst.error || !rt->rt6i_idev)
+ 		goto out;
+ 
+ 	if (rt->rt6i_flags & (RTF_REJECT|RTF_ANYCAST))
 
 
