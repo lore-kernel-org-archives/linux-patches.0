@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9414E73B2;
-	Wed, 30 Sep 2026 17:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2855F3AE71C;
+	Wed, 30 Sep 2026 17:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788587; cv=none; b=kA07B5D7ftIknEzdOozT5cOsz/OBceDffoxqt7yEUczPSbwWz5+Gu+LoAlqwLaM8Q0U2axA4I1WkcxOnYZ9rYnLSxg5TvMLc0MkGP9V+kuLlnuPj32hkU7NYs0Uz9PS/dPOqmO4NsuFp1jwrjmmqvtg0f1K96hHOEnL9YvVHhEU=
+	t=1790788590; cv=none; b=Us3YcvC2oD+q09KZd17z4ENTeY1DFIkfP6vDI5quVHBDbkCxRS2vNzTrVJrQHiB03smnHpx8ErAwcVsGmzdOAQLtg6AIbSEPyt7DaVeQVXeMKLESHEDarahsxqy1Q+T0o08Ta+Xlhw1cSBo7kT6hc9Fsh6S+7yiyPj78qBpN2Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788587; c=relaxed/simple;
-	bh=RQ0KKr0ODAd0hZ987o/hhG++5500AGieYGycKaHQG8s=;
+	s=arc-20240116; t=1790788590; c=relaxed/simple;
+	bh=lWd0V4NycIS1F1i2Kj+Ic2piia5ZP+Trznk0EHEy3DM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJsvFO75VXjUSroxnDavG6kxR/HUB47DUAeOC+AOnM9wZDGhRZZlvSnFNvxo6NWfD0ESx09hVUUhOHEGjI3ENHiPF6H5GjHNJyFcAnOQ+5s98otMNHcVRkvFFgU7pPFwrGdrxlOU7YUSBFC2o9N8dN01kK2a2OmdAhwELLwLmr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9rCrJVt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eTb0LWd5wznUgCd1Kmu6jQW6USSeOYcQmylT2gumzzmPw4XxD8Q3gbOJpJ/2/qSeiwEn0Ix3+7Y55yr1tfurG032D4Gf6I+qTMAY60oSQ/Mvrfpnd8Z/yT50ef4YjAy77imzbbl2Yya6swxiQgObS9UYNhLMknPzbr3yvUSsZXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2+tVXX7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9rCrJVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5F31F000FF;
-	Wed, 30 Sep 2026 17:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2+tVXX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811141F000FF;
+	Wed, 30 Sep 2026 17:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788586;
-	bh=mjxarR23pBwyOURrZwesAA8QbpsJ5xb/cFoepjesXLo=;
+	s=korg; t=1790788589;
+	bh=4xl4xMf21iTZ2C1c0nRlm8HcK5vw3APn5e8+aVTuT9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9rCrJVtXGhBBrrqnCJLfSzjTAuDHuMZeGSSNTRyhH8VcIrEn8qHi8mMlRKWnKz8j
-	 QxdpjjepajQgTkGeKsTLz0hipFYZqYx4BIJydArS9tlhC1y31Uc+BSjr7OET58sCal
-	 +A5KIJqr/hNR/dYih9dt236lEW4wA9kt2WnDR2/M=
+	b=F2+tVXX7urJpqVnDxp7Hi/N8AYMUQbxBS6+N2PC3JJax5kHy+MOhYy1TgLety74IC
+	 +9eqMrP7nxaYA7OHnfEwYwiYGniiyfrsDhm0/iAGhj/r3L8tGXL8MuvllMlEIXho+w
+	 Y0teTp4/AeuR39hIeoCSBceb/wuyEvMmK0VmLyRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/877] wifi: rtw88: Fix the random "error beacon valid" messages for USB
-Date: Wed, 30 Sep 2026 17:17:51 +0200
-Message-ID: <20260930152418.172061535@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 178/877] HID: logitech-hidpp: fix race condition when accessing stale stack pointer
+Date: Wed, 30 Sep 2026 17:18:09 +0200
+Message-ID: <20260930152418.570862604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,88 +45,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit f24d0d8c3cd7e4237f802c4d2f3bd4ac04572948 ]
+commit e2aaf2d3ad92ac4a8afa6b69ad4c38e7747d3d6e upstream.
 
-All the USB devices have a problem in AP mode: uploading the updated
-beacon to the chip's reserved page can randomly fail:
+The driver uses hidpp->send_receive_buf to point to a stack-allocated
+buffer in the synchronous command path (__do_hidpp_send_message_sync).
+However, this pointer is not cleared when the function returns.
 
-[34996.474304] rtw88_8723du 1-2:1.2: error beacon valid
-[34996.474788] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
-[34999.956369] rtw88_8723du 1-2:1.2: error beacon valid
-[34999.956846] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
-[34999.956855] rtw88_8723du 1-2:1.2: failed to download beacon
-[35017.978296] rtw88_8723du 1-2:1.2: error beacon valid
-[35017.978805] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
-[35017.978823] rtw88_8723du 1-2:1.2: failed to download beacon
-[35023.200395] rtw88_8723du 1-2:1.2: error beacon valid
-[35023.200869] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
-[35023.200875] rtw88_8723du 1-2:1.2: failed to download beacon
-[35478.680547] rtw88_8723du 1-2:1.2: error beacon valid
-[35478.681023] rtw88_8723du 1-2:1.2: failed to download drv rsvd page
+If an event is processed (e.g. by a different thread) while the
+send_mutex is held by a new command, but before that command has
+updated send_receive_buf, the handler (hidpp_raw_hidpp_event) will
+observe that the mutex is locked and dereference the stale pointer.
 
-Disable some beacon-related hardware functions before uploading the
-beacon and enable them again after.
+This results in an out-of-bounds access on a different thread's kernel
+stack (or a NULL pointer dereference on the very first command).
 
-Tested with RTL8723DU, RTL8812BU, RTL8822CE.
+Fix this by:
+1. Clearing hidpp->send_receive_buf to NULL before releasing the mutex
+   in the synchronous command path.
+2. Moving the assignment of the local 'question' and 'answer' pointers
+   inside the mutex_is_locked() block in the handler, and adding
+   a NULL check before dereferencing.
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/c248c40a-d432-47ed-90e0-d81ee6c32464@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Cc: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/fw.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/fw.c b/drivers/net/wireless/realtek/rtw88/fw.c
-index 43e3df6a48369..fd3bcb4466209 100644
---- a/drivers/net/wireless/realtek/rtw88/fw.c
-+++ b/drivers/net/wireless/realtek/rtw88/fw.c
-@@ -1446,7 +1446,7 @@ void rtw_add_rsvd_page_sta(struct rtw_dev *rtwdev,
- int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
- 				u8 *buf, u32 size)
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -305,21 +305,22 @@ static int __do_hidpp_send_message_sync(
+ 	if (ret) {
+ 		dbg_hid("__hidpp_send_report returned err: %d\n", ret);
+ 		memset(response, 0, sizeof(struct hidpp_report));
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	if (!wait_event_timeout(hidpp->wait, hidpp->answer_available,
+ 				5*HZ)) {
+ 		dbg_hid("%s:timeout waiting for response\n", __func__);
+ 		memset(response, 0, sizeof(struct hidpp_report));
+-		return -ETIMEDOUT;
++		ret = -ETIMEDOUT;
++		goto out;
+ 	}
+ 
+ 	if (response->report_id == REPORT_ID_HIDPP_SHORT &&
+ 	    response->rap.sub_id == HIDPP_ERROR) {
+ 		ret = response->rap.params[1];
+ 		dbg_hid("%s:got hidpp error %02X\n", __func__, ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	if ((response->report_id == REPORT_ID_HIDPP_LONG ||
+@@ -327,10 +328,14 @@ static int __do_hidpp_send_message_sync(
+ 	    response->fap.feature_index == HIDPP20_ERROR) {
+ 		ret = response->fap.params[1];
+ 		dbg_hid("%s:got hidpp 2.0 error %02X\n", __func__, ret);
+-		return ret;
++		goto out;
+ 	}
+ 
+-	return 0;
++	ret = 0;
++
++out:
++	hidpp->send_receive_buf = NULL;
++	return ret;
+ }
+ 
+ /*
+@@ -3866,8 +3871,7 @@ static int hidpp_input_configured(struct
+ static int hidpp_raw_hidpp_event(struct hidpp_device *hidpp, u8 *data,
+ 		int size)
  {
--	u8 bckp[2];
-+	u8 bckp[3];
- 	u8 val;
- 	u16 rsvd_pg_head;
- 	u32 bcn_valid_addr;
-@@ -1458,6 +1458,8 @@ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
- 	if (!size)
- 		return -EINVAL;
- 
-+	bckp[2] = rtw_read8(rtwdev, REG_BCN_CTRL);
+-	struct hidpp_report *question = hidpp->send_receive_buf;
+-	struct hidpp_report *answer = hidpp->send_receive_buf;
++	struct hidpp_report *question, *answer;
+ 	struct hidpp_report *report = (struct hidpp_report *)data;
+ 	int ret;
+ 	int last_online;
+@@ -3877,6 +3881,12 @@ static int hidpp_raw_hidpp_event(struct
+ 	 * previously sent command.
+ 	 */
+ 	if (unlikely(mutex_is_locked(&hidpp->send_mutex))) {
++		question = hidpp->send_receive_buf;
++		answer = hidpp->send_receive_buf;
 +
- 	if (rtw_chip_wcpu_11n(rtwdev)) {
- 		rtw_write32_set(rtwdev, REG_DWBCN0_CTRL, BIT_BCN_VALID);
- 	} else {
-@@ -1471,6 +1473,9 @@ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
- 	val |= BIT_ENSWBCN >> 8;
- 	rtw_write8(rtwdev, REG_CR + 1, val);
- 
-+	rtw_write8(rtwdev, REG_BCN_CTRL,
-+		   (bckp[2] & ~BIT_EN_BCN_FUNCTION) | BIT_DIS_TSF_UDT);
++		if (!question)
++			return 0;
 +
- 	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE) {
- 		val = rtw_read8(rtwdev, REG_FWHW_TXQ_CTRL + 2);
- 		bckp[1] = val;
-@@ -1501,6 +1506,7 @@ int rtw_fw_write_data_rsvd_page(struct rtw_dev *rtwdev, u16 pg_addr,
- 	rsvd_pg_head = rtwdev->fifo.rsvd_boundary;
- 	rtw_write16(rtwdev, REG_FIFOPAGE_CTRL_2,
- 		    rsvd_pg_head | BIT_BCN_VALID_V1);
-+	rtw_write8(rtwdev, REG_BCN_CTRL, bckp[2]);
- 	if (rtw_hci_type(rtwdev) == RTW_HCI_TYPE_PCIE)
- 		rtw_write8(rtwdev, REG_FWHW_TXQ_CTRL + 2, bckp[1]);
- 	rtw_write8(rtwdev, REG_CR + 1, bckp[0]);
--- 
-2.53.0
-
+ 		/*
+ 		 * Check for a correct hidpp20 answer or the corresponding
+ 		 * error
 
 
