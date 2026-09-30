@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955B851CF7E;
-	Wed, 30 Sep 2026 18:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FFA51C358;
+	Wed, 30 Sep 2026 18:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793337; cv=none; b=FAzlUKiDi0bJjnt7JGqkODVtmEuDGIfHe30X8jqGZH6uu3Mi/O3XzozYI1cd3er9vAcEtX2ZiaTUPCGBKxTG8N9idYCSgJrC7EV6dOLPr10Y6CW2ZEPViscYEkTDHgKLSi2q++8+GrtkURKGb+Fr1ebKaqbdsfEUIE717Jx9zcE=
+	t=1790793340; cv=none; b=Am8RS2863ZDFwrWTDNwVXWiyQfYZBrCYPRxkmnUbW8tnoXAbmP2KwppC6CWd7ws5DIRbWI49tm2szmaZ/BrQGv3S1O+EbnDGXRWUZyT0JeqxveqA73U45K5/pkHcY7INH79kdYMVeVVo3eRwZgVqHSsLHr47dBy3d5JQ11zRrI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793337; c=relaxed/simple;
-	bh=aJzZS42l3qn9p5ScrYDR+7LqWtvvrfq2UVMqY6eBLnE=;
+	s=arc-20240116; t=1790793340; c=relaxed/simple;
+	bh=WPOgWUxspZBYdQvXk+n90AjO1UCKFqmQz7Q/0lpRl/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rndgO2y/hYlNXthFVIcEa2MnJNg4V/O9Vh+Sk9oQQZZNw3A5a+N5UOsQhGggr8qvOqVGxuoZu0EinhVWAH9BCUOCnZMQ6BZHO2naoHvWupu/Gl27q0KhQXFAvO8pZWxSIfBAQWghXqhKjgRQSEuGW9Abe/d53DQsQTtDpdbc7Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+XTu6UC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7PoHJPcLSsvJ16upQf5bUpPL+2YaIUFH/w8TR6NPophf4fvlHDJ5n1BE8aXsqe1COLohnP9ZxY5F1MNLGF4YFjqDDCEDSB73XQWtoGw5/ZmChnYqMXdKEzCwac9SgEfk38jTCveLzJQl+xfefjAD3AgjETtNiNyN7LkQMoMirI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvZSbtHP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+XTu6UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F25E1F000FF;
-	Wed, 30 Sep 2026 18:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvZSbtHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600A01F000FF;
+	Wed, 30 Sep 2026 18:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793336;
-	bh=TvPSU1suW9lfK9QfHQRhJAQAxe+eDoRb9DsWVcyVWdQ=;
+	s=korg; t=1790793338;
+	bh=bd6rEJ43TInRjSzqR+sCUeeXaTsbXKXrU5fBR/67v68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T+XTu6UCGHlgw9y2f52ZzNEQlsbTqPQeTFehtUEvDO/KBnpMlAGM4EJWizDi2mbWg
-	 +Dg8K+CRc0NVSlBMAj5CDjdRXFUWjmtb6w5l8ConM9Rsg/Q5cHcdRKiqBco5pv1qkd
-	 oXdhZDB7n2LOLFQ9yfkVDFl5xrTMYZBjodO1syfU=
+	b=cvZSbtHPPmRc5qcbSBx6YfnmAdzXU262K7KpvdgBaQ1epD+m8ZNhhqYPyvpNa2ZbR
+	 WrBAXP7g8emTgnpolL7FvSbXh+bfObLQ6aUXov2a1Ne+zFc0cpaWqeDZkXsmJ2Vv08
+	 euioFZCsLr0H8+E9lgKlKQcuFRD6Gk56Tq7NzxdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 217/395] bpf: fs/xattr: dont assume the inode is locked in path_unlink/path_rmdir
-Date: Wed, 30 Sep 2026 17:27:59 +0200
-Message-ID: <20260930152345.368951884@linuxfoundation.org>
+	Aleksei Sviridkin <f@lex.la>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 175/395] net: dsa: mt7530: fix NULL dereference on unbind of MT7531 and MT7621
+Date: Wed, 30 Sep 2026 17:27:17 +0200
+Message-ID: <20260930152344.446479823@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,44 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Aleksei Sviridkin <f@lex.la>
 
-commit 35d442ed1f86465e49df3119fb898f985186db13 upstream.
+[ Upstream commit c2cdef41e0b4d8ed23a5b41e6ad4e64594e055e4 ]
 
-bpf_lsm_has_d_inode_locked() makes the verifier rewrite
-bpf_[set|remove]_dentry_xattr() to the _locked variants, which assume
-that the caller already holds the inode's i_rwsem.  The path_unlink and
-path_rmdir hooks are listed, but security_path_unlink() and
-security_path_rmdir() run before vfs_unlink()/vfs_rmdir() take the
-victim inode's i_rwsem, so a sleepable BPF LSM program attached to
-either hook mutates the victim's xattrs without the lock held.
+The core and io supplies are only requested for ID_MT7530: both the
+devm_regulator_get() in probe and the regulator_enable() in
+mt7530_setup() are guarded by the switch id, but mt7530_remove()
+disables them unconditionally. On an MT7621 or an MT7531 both pointers
+are still NULL from devm_kzalloc(), so rmmod or a sysfs unbind calls
+regulator_disable() on NULL.
 
-Drop the two path hooks from d_inode_locked_hooks so that the verifier
-keeps the locking bpf_[set|remove]_dentry_xattr() variants, which take
-the lock themselves.
-
-Fixes: 56467292794b8 ("bpf: fs/xattr: Add BPF kfuncs to set and remove xattrs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260922145530.369775-1-parri.andrea@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ddda1ac116c8 ("net: dsa: mt7530: support the 7530 switch on the Mediatek MT7621 SoC")
+Signed-off-by: Aleksei Sviridkin <f@lex.la>
+Link: https://patch.msgid.link/20260918015020.2518315-2-f@lex.la
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/bpf_fs_kfuncs.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/dsa/mt7530-mdio.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/fs/bpf_fs_kfuncs.c
-+++ b/fs/bpf_fs_kfuncs.c
-@@ -403,10 +403,6 @@ BTF_ID(func, bpf_lsm_inode_rmdir)
- BTF_ID(func, bpf_lsm_inode_setattr)
- BTF_ID(func, bpf_lsm_inode_setxattr)
- BTF_ID(func, bpf_lsm_inode_unlink)
--#ifdef CONFIG_SECURITY_PATH
--BTF_ID(func, bpf_lsm_path_unlink)
--BTF_ID(func, bpf_lsm_path_rmdir)
--#endif /* CONFIG_SECURITY_PATH */
- BTF_SET_END(d_inode_locked_hooks)
+diff --git a/drivers/net/dsa/mt7530-mdio.c b/drivers/net/dsa/mt7530-mdio.c
+index 6cc2c8975af66..119fdbea57160 100644
+--- a/drivers/net/dsa/mt7530-mdio.c
++++ b/drivers/net/dsa/mt7530-mdio.c
+@@ -227,15 +227,17 @@ mt7530_remove(struct mdio_device *mdiodev)
+ 	if (!priv)
+ 		return;
  
- bool bpf_lsm_has_d_inode_locked(const struct bpf_prog *prog)
+-	ret = regulator_disable(priv->core_pwr);
+-	if (ret < 0)
+-		dev_err(priv->dev,
+-			"Failed to disable core power: %d\n", ret);
+-
+-	ret = regulator_disable(priv->io_pwr);
+-	if (ret < 0)
+-		dev_err(priv->dev, "Failed to disable io pwr: %d\n",
+-			ret);
++	if (priv->id == ID_MT7530) {
++		ret = regulator_disable(priv->core_pwr);
++		if (ret < 0)
++			dev_err(priv->dev,
++				"Failed to disable core power: %d\n", ret);
++
++		ret = regulator_disable(priv->io_pwr);
++		if (ret < 0)
++			dev_err(priv->dev, "Failed to disable io pwr: %d\n",
++				ret);
++	}
+ 
+ 	mt7530_remove_common(priv);
+ 
+-- 
+2.53.0
+
 
 
