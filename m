@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F9D51EDE8;
-	Wed, 30 Sep 2026 17:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A724B51FCC0;
+	Wed, 30 Sep 2026 17:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789506; cv=none; b=C/0ZllAMI17+PTaRqpCQNhpHaQV+w5aQzoNbhJdbX/gOfSxDArXvuGoF+0f1fcL3G6LJLnLE6EhRqQBYNjCLMP2xl9Fb2kMLzAp4JJDKauIPUh3VYGVvMaYrWcc9wuPNjZiMLAaDZItQ8/dietY5gosVRvTwrg5zw4N5Z5JeiRo=
+	t=1790789510; cv=none; b=bG0PzY8L+PXZasxzlD6oJjPm+72XEK7CdvDczXcBo7LCOsH2wI7oz8FtlGDuiswKEh3CW8Atpw4d6K3TyRh9S/i957szXK+XPjrBtttRUwCEmRNvMUcLSAJPSTd4NsFVR8WqsSHrczWYxDPGPEY8xvo1UjV2vK3myIqyPgS4REo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789506; c=relaxed/simple;
-	bh=wJQdZ7SXfFnoypFHQET+6o+1B6MpMQeFz+Nxy4KM1GM=;
+	s=arc-20240116; t=1790789510; c=relaxed/simple;
+	bh=hv9v47WBpf85BJ+tWq8jKxncXLBnPeLVWhRvX3qishw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nyuP3/eXWZG1ZaTlTWrKbQlyL5uqU+MA2IjDq0OXZwMTBkuKfgrGGp5ghS4Lacx6ZGekYoPTMgQVH14K4QCi89jt2rai36UiZN0X1d3w+GN2vChZkEela1GBOk8yl2nGGUkHLeDvpVH50igqTLdRxA008VuHaNUvSK+EfKKmXG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsssYeWy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KTKJeZrfCOdHcnrYx2jYIBMrFxXL03Ot6ch/S324d6SoZpQMfpqdxczwQ7wn5dEEhq6TqHoQq4N+eP1cCESyjEFdNdsQKLcYC/d+zTYJTZm3NiEWfCbjFqhTfZIHVcQ+ROteBcyI9VzAWGIk19npbsJXzg6bdEa2rtILMd0JXgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mi/NRhsj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsssYeWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC981F000FF;
-	Wed, 30 Sep 2026 17:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mi/NRhsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DC31F000FF;
+	Wed, 30 Sep 2026 17:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789504;
-	bh=Ob+xWHKbrwTe9G0G59YTYVr57AKGxUZyG0Q9iP968NQ=;
+	s=korg; t=1790789507;
+	bh=ep3sZjAXmgGEZ/ftgL9AQf6TqW5UFrLkBsKuyt0F/ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jsssYeWy3/2Hye6AoMix6dLud6CrOEFUk+QZYEacxUFBPUWNnbCeRAQon7NVxYogL
-	 8xPsLWHiM+eCvQ9Bss5ovW+1DYh4aXWUQkY/a0TF3QGq1dSGkCG9dwgEtVakX0aSgu
-	 BJAlDCQob48qWNEVcXR+APWzmrjQf0SB8tdSzIP4=
+	b=mi/NRhsj6h7uSQhf/uzgIrjln1avBKUVFOE/1EymTRcuR7DWOU87aVjFlW3cazjwd
+	 fFjmxztCsotB1gOMf20EtM3Id3Cmpq8U7uYtbuQVu3wgTxOLH744UFfIg7J4CKHR5f
+	 jx3EwhwKVzuLtSiaN7ZbxHVL2SlIa/kOnuK1+UYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jiri Pirko <jiri@resnulli.us>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 446/877] net/sched: sch_teql: fix shadowed err in __teql_resolve()
-Date: Wed, 30 Sep 2026 17:22:37 +0200
-Message-ID: <20260930152424.306308749@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Robert Beckett <bob.beckett@collabora.com>,
+	=?UTF-8?q?Szymon=20Aceda=C5=84ski?= <accek@invisiblethingslab.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.12 495/877] drm/xe: Limit sg segment size to PAGE_SIZE on Xen PV
+Date: Wed, 30 Sep 2026 17:23:26 +0200
+Message-ID: <20260930152425.343305459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -47,59 +48,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Szymon Acedański <accek@invisiblethingslab.com>
 
-[ Upstream commit 907b978e82cb4c1c245fc2985bb27c5d5c88c8f6 ]
+commit 141008dec73521ccf64878517460cec8b3297251 upstream.
 
-__teql_resolve() declares an inner 'int err;' inside the
-'if (neigh_event_send(n, skb_res) == 0)' block, shadowing the outer
-'int err = 0;'. As a result, a negative return from dev_hard_header()
-is written to the inner variable and __teql_resolve() still returns 0.
+Fix display corruption on Xen PV dom0, where DMA buffers are not
+guaranteed machine-contiguous, in which case bounce buffering kicks
+in, breaking xe's memory coherency assumptions.
 
-Remove the shadowed variable and set the outer err to -EINVAL when
-dev_hard_header() returns a negative error.
+Apply the same workaround i915 carries in i915_sg_segment_size() since
+commit 78a07fe777c4 ("drm/i915: stop abusing swiotlb_max_segment").
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Closes: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Jiri Pirko <jiri@resnulli.us>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260924082951.1599377-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8382
+Link: https://lore.kernel.org/xen-devel/aYtznP_tT6xNPwf-@mail-itl/
+Link: https://lore.kernel.org/all/20221020110308.1582518-1-hch@lst.de/ # i915 counterpart
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Robert Beckett <bob.beckett@collabora.com>
+Cc: stable@vger.kernel.org # v6.8+
+Signed-off-by: Szymon Acedański <accek@invisiblethingslab.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patch.msgid.link/20260916173030.3223833-1-accek@invisiblethingslab.com
+(cherry picked from commit 77f704158f099b952681f207478a22d5b8218edb)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.h |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
-index eb424b20027e5..d3baf17ebe6ce 100644
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -265,14 +265,11 @@ __teql_resolve(struct sk_buff *skb, struct sk_buff *skb_res,
- 	}
+--- a/drivers/gpu/drm/xe/xe_bo.h
++++ b/drivers/gpu/drm/xe/xe_bo.h
+@@ -8,6 +8,8 @@
  
- 	if (neigh_event_send(n, skb_res) == 0) {
--		int err;
- 		char haddr[MAX_ADDR_LEN];
+ #include <drm/ttm/ttm_tt.h>
  
- 		neigh_ha_snapshot(haddr, n, dev);
--		err = dev_hard_header(skb, dev, ntohs(skb_protocol(skb, false)),
--				      haddr, NULL, skb->len);
--
--		if (err < 0)
-+		if (dev_hard_header(skb, dev, ntohs(skb_protocol(skb, false)),
-+				    haddr, NULL, skb->len) < 0)
- 			err = -EINVAL;
- 	} else {
- 		err = (skb_res == NULL) ? -EAGAIN : 1;
--- 
-2.53.0
-
++#include <xen/xen.h>
++
+ #include "xe_bo_types.h"
+ #include "xe_macros.h"
+ #include "xe_vm_types.h"
+@@ -328,6 +330,23 @@ static inline unsigned int xe_sg_segment
+ 	struct scatterlist __maybe_unused sg;
+ 	size_t max = BIT_ULL(sizeof(sg.length) * 8) - 1;
+ 
++	/*
++	 * For Xen PV guests pages aren't contiguous in DMA (machine) address
++	 * space.  The DMA API takes care of that both in dma_alloc_* (by
++	 * calling into the hypervisor to make the pages contiguous) and in
++	 * dma_map_* (by bounce buffering).  But xe (like i915, see commit
++	 * 78a07fe777c4) ignores the coherency aspects of the DMA API and thus
++	 * can't cope with bounce buffering actually happening, so add a hack
++	 * here to force small allocations and mappings when running in PV
++	 * mode on Xen.
++	 *
++	 * Note this will still break if bounce buffering is required for other
++	 * reasons, like confidential computing hypervisors or PCIe root ports
++	 * with addressing limitations.
++	 */
++	if (xen_pv_domain())
++		return PAGE_SIZE;
++
+ 	max = min_t(size_t, max, dma_max_mapping_size(dev));
+ 
+ 	/*
 
 
