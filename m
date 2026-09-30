@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8403F503918;
-	Wed, 30 Sep 2026 16:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7A4509EF3;
+	Wed, 30 Sep 2026 16:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787557; cv=none; b=OkVEUQe4P0ophJ4zBGVTEITAwkCnUoSJaHmwwbqg/lJG800+rOjb90T0KanzBk9n4yOn8t6VMx7069NVCYpxj73P3QgfbC29IpQfhuJsisN5xqOew89u2IddHDr4WaDV5R0nwf/qSZm52RWWzBnUL/z1VMHBMzvsyHTRDFMJkgU=
+	t=1790787560; cv=none; b=tfFtlf41hVjsWWaZ8d9SLBiRWb2aj7/MlXnG5ZJrlr9zY86BcjHw+X1wOPlgvgyuKlcu8P7KqaaedUJlVw/j6MQ41muct/ucKsUSSwvyLpFpRQXc190RFhi9Q5Aka61rSWHoBxKC7LYsHcfdsnGNC40b9bjHzJGO6KyGonv1vXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787557; c=relaxed/simple;
-	bh=QZbZOaZ27PdqNQti1RwqA31FJT72JKIA2cTMOyMEoBg=;
+	s=arc-20240116; t=1790787560; c=relaxed/simple;
+	bh=H1LpMcM9ivN7ifXgfntgJIA6nOWerbjhFBTOmcvMHXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OA0E0y3qnkLiNB3XJbCAEXwc2ItkJVHBGjpCO0twfetHSvwOi5Bu3Gb9ccd2UEYOk2SmhA0PYb24k6acL+KuFDqauA54npNrT4dOEFnnv/m2UIo1k1vXRRjzSPppspCjgwwy27OwNNEkRWhJBwFxndWaAyQIw7jBpUM3++b62jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9Mc0b7c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WMEPH3GwOkrqNvoa+VVGTDjck9sAKHnn0UEQXCGiuZ38Ppv8hj0v67diBi7v+0pnKsRWsYnJB7mcnbByZf9GICqM41nY1KemgF7jdXqyQDEe+FsnnGQalEMvPmB7PPAPA2+w/5Ds+JHZGUWrpKwvopzhHs7TXeetY6mfNisD+ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ODh3zpJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9Mc0b7c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4661F000FF;
-	Wed, 30 Sep 2026 16:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ODh3zpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0071F000FF;
+	Wed, 30 Sep 2026 16:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787556;
-	bh=HrCdr8VvW4pkdxz3lz1uQTKCqRVcdZK4N3a/3SiJ0D8=;
+	s=korg; t=1790787559;
+	bh=rtrlIoSqgCXAv7O9xTu4UlS+IhFkiB2yJSdCyJuUljc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9Mc0b7c27AvUmF9mAF4Bft6uWveZrRWjaElyy/ylhjKUs6Mp5B6TieEAGGB/MC/A
-	 dq+IY2+gBAVu/WthMI2Vfg0NO2Jvmmf2EhtkPjwfG1sBm9pGpVYbi5z/uMrpoIpGnm
-	 OoRPUwPJ4991eALd4lTR+YTH4iJm0QQ+0WgfdQ1g=
+	b=2ODh3zpJms67XvTfYhQOTDUO9iL3Lgvatq0327dXsex3gPcy3+RHEl2EIrs+vK3g/
+	 Wyx8MDW3bDXTxkn2yq4rF0XvnrasU2EWDSOqhyXt0fP8cyrSheQkRnQIaNssqMILWw
+	 BxiObXNJnkNA4B8/YOOT/Qv27SEJ4YiNs/+Q01PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Hui Peng <benquike@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 272/457] llc: reserve device headroom for allocated frames
-Date: Wed, 30 Sep 2026 17:26:17 +0200
-Message-ID: <20260930152351.910225429@linuxfoundation.org>
+Subject: [PATCH 7.2 273/457] mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()
+Date: Wed, 30 Sep 2026 17:26:18 +0200
+Message-ID: <20260930152351.931525110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,58 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit 72b5b9a28b996e09b8b5b944370c79851bb68f52 upstream.
+commit 26cc0e69cce062cd3aa6fae33074684669c35a71 upstream.
 
-llc_alloc_frame() reserves link-layer headroom using the device type.
-This is insufficient for stacked Ethernet devices such as VLAN devices,
-where vlan_dev_hard_header() pushes a VLAN header before the lower
-device's Ethernet header. An LLC response on such a device can
-therefore underflow skb headroom in eth_header().
+When a socket transmits a packet with MCTP_TAG_PREALLOC set,
+mctp_lookup_prealloc_tag() iterates over the per-netns &mns->keys list
+and matches netid, req_tag, peer_addr, and manual_alloc, without
+checking whether tmp->sk == &msk->sk. This allows any MCTP socket in the
+same network namespace to use and consume another socket's preallocated
+tag.
 
-Use LL_RESERVED_SPACE() to account for the device's actual required
-headroom while preserving the existing LLC device-type check.
+Iterate the socket's own tag list (&msk->keys via sklist) instead of the
+namespace-wide &mns->keys list in mctp_lookup_prealloc_tag(), ensuring
+that only tags allocated by msk are matched.
 
-Fixes: bf9ae5386bca ("llc: use dev_hard_header")
+Tested in QEMU against Linux 7.3.0-rc3 by allocating a manual tag
+(0x18) on socket A via SIOCMCTPALLOCTAG for peer EID 9 and sending a
+4-byte message with MCTP_TAG_PREALLOC from socket B in the same network
+namespace. On the unfixed kernel, sendto(sock_b) using socket A's
+preallocated tag succeeds (ret = 4); with this patch applied,
+sendto(sock_b) fails with -ENOENT (errno = 2) while sendto(sock_a)
+succeeds (ret = 4).
+
+Fixes: 63ed1aab3d40 ("mctp: Add SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control")
+Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
 Cc: stable@vger.kernel.org
-Reported-by: VEGA <vega@nebusec.ai>
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260924012613.2533934-1-weir@nebusec.ai
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Link: https://patch.msgid.link/20260921051002.1656692-1-benquike@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/llc_sap.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mctp/route.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/llc/llc_sap.c
-+++ b/net/llc/llc_sap.c
-@@ -19,12 +19,12 @@
- #include <linux/llc.h>
- #include <linux/slab.h>
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -825,7 +825,7 @@ static struct mctp_sk_key *mctp_lookup_p
  
--static int llc_mac_header_len(unsigned short devtype)
-+static int llc_mac_header_len(struct net_device *dev)
- {
--	switch (devtype) {
-+	switch (dev->type) {
- 	case ARPHRD_ETHER:
- 	case ARPHRD_LOOPBACK:
--		return sizeof(struct ethhdr);
-+		return LL_RESERVED_SPACE(dev);
- 	}
- 	return 0;
- }
-@@ -45,7 +45,7 @@ struct sk_buff *llc_alloc_frame(struct s
- 	int hlen = type == LLC_PDU_TYPE_U ? 3 : 4;
- 	struct sk_buff *skb;
+ 	spin_lock_irqsave(&mns->keys_lock, flags);
  
--	hlen += llc_mac_header_len(dev->type);
-+	hlen += llc_mac_header_len(dev);
- 	skb = alloc_skb(hlen + data_size, GFP_ATOMIC);
+-	hlist_for_each_entry(tmp, &mns->keys, hlist) {
++	hlist_for_each_entry(tmp, &msk->keys, sklist) {
+ 		if (tmp->net != netid)
+ 			continue;
  
- 	if (skb) {
 
 
