@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9D04F405E;
-	Wed, 30 Sep 2026 18:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89034F405E;
+	Wed, 30 Sep 2026 18:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793743; cv=none; b=baU6XkzllES7tAuthLXsNX/cLbKrRSuc27Y6V31GfvP8v4BOmRN6a4faGjpbMH+XC238lSySVfb0vAnRmx/hf2lKdk8nNlSJSD+5MI8pn9MGSDUgeFF4H5b1DhKkSpSqPoIA6jj4VQVZvcxxp2dHrjjOluscRIhmcAKqe3YmPRU=
+	t=1790793746; cv=none; b=GBY6pukhwZ3CPZyrc8j6h6dE1pGyQA6r54fU8n3vYBBYY/wrB0mH6eHF48ZfNqnMN77z5mOzFXsm0ay7jzrllq8kRXfEwM+AIg1/t8K73bGd9s6BdR3mhLpq2diQ2U4t7rE1Tqm9QeSslRnIteJYFn3ViD6ioJM5T3QGIDjabMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793743; c=relaxed/simple;
-	bh=AtX72uYWLtgK0awfbHB3fY6m57uR415Gzwaw14+V3r8=;
+	s=arc-20240116; t=1790793746; c=relaxed/simple;
+	bh=18ubxypm9jJBPCQUwE+HzZVfJszljxLW6SjteJH2bEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llRVtY9PBxKdY5rQGAYRdQWNgHGw/c3COU1Ih5eln46AvzithhP4FZMzY1z57FmTg0ekhQnK1t0csTbZX/3ZeAAHKr4oOcX/NMvySFOe40PSbvAkMU7NURXbZAA7xc4gtuFKXxCOkaulP4+AHFjZCedZArPkyig8bEAb96UN36g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1UcRZEQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h5+Df6rwCP6nDex62FtDShtIa7gSdlNKLuo80LWl+O2Qdl4uPoaF1DuuQojBI09Km5KOqOsF1LzDWtLe4Myikl8RAbx9cB2LPfAnfgqP5nHD927jbhqSjT5h3TDl4cluMDveNdTB8x0DhfBnw88m87b7wpnro0AoTHUwAk5dis0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJASTSNQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1UcRZEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC521F000FF;
-	Wed, 30 Sep 2026 18:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJASTSNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C881F000FF;
+	Wed, 30 Sep 2026 18:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793741;
-	bh=GUMCue3jhDhl4jJPJBQq8S9i3rPNHkWuY+1UaI+EldE=;
+	s=korg; t=1790793744;
+	bh=SPtPi3oMByJlqSDJ3EwFuyFyLwsXlvwb/IH+XX5JoR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X1UcRZEQwxdkoRXbhSmWPZGlJS+bW8xHzzNmmvGKu4qeRQFOhuOF+Ol9ATwC5A5NJ
-	 Ft/MYGVLpCD9zsyNVqkb8mF4XXNdx7XM9ACxuipW7PHKIVy7Tf2juEuWTNjKe0l6JF
-	 5bD97K2alsMwtIiTRiZD6/47cxmbsEURfVxCYyP0=
+	b=LJASTSNQp21XMLveQAlD0HSonDe/ieQeCNvHOlFsAv1kSK6lnIjWJQRdjuGoJ97b/
+	 hZoSLcg7Hd2+wpe9t/JpcBYl07ffnbMe/1vEly98Fh+lXmkj00ILIQ5Qrthrb3Pxkg
+	 Vl1tai4+6pk2AOhi3Kq55nGhj8g12GTa1mcpOvWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	shechenglong <shechenglong@xfusion.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 360/395] drm/client: Pass force parameter to client restore
-Date: Wed, 30 Sep 2026 17:30:22 +0200
-Message-ID: <20260930152348.496529044@linuxfoundation.org>
+Subject: [PATCH 6.18 361/395] drm/client: fix restore of partially initialized client
+Date: Wed, 30 Sep 2026 17:30:23 +0200
+Message-ID: <20260930152348.518394044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,205 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: shechenglong <shechenglong@xfusion.com>
 
-[ Upstream commit 943240d342f148896733eb6c7b223a08aa1f520a ]
+[ Upstream commit 1fca688e9443003e33cf30453e7a7560367656c9 ]
 
-Add force parameter to client restore and pass value through the
-layers. The only currently used value is false.
+I got a null-ptr-deref report when closing a DRM file descriptor:
 
-If force is true, the client should restore its display even if it
-does not hold the DRM master lock. This is be required for emergency
-output, such as sysrq.
+WARNING: drivers/gpu/drm/drm_atomic.c:2031 at
+__drm_atomic_helper_set_config+0x18e/0x1b0 [drm]
 
-While at it, inline drm_fb_helper_lastclose(), which is a trivial
-wrapper around drm_fb_helper_restore_fbdev_mode_unlocked().
+Call Trace:
+drm_client_modeset_commit_atomic+0x16b/0x220 [drm]
+drm_client_modeset_commit_locked+0x56/0x160 [drm]
+drm_client_modeset_commit+0x21/0x40 [drm]
+__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0x7b/0x80
+drm_fbdev_client_restore+0xe/0x20 [drm_client_lib]
+drm_client_dev_restore+0x9f/0xc0 [drm]
+drm_release+0xc5/0xe0 [drm]
 
+The warning is followed by a NULL pointer dereference:
+
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+
+RIP:
+__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0x41/0x80
+[drm_kms_helper]
+
+Call Trace:
+drm_fbdev_client_restore+0xe/0x20 [drm_client_lib]
+drm_client_dev_restore+0x9f/0xc0 [drm]
+drm_release+0xc5/0xe0 [drm]
+__fput+0xdc/0x2b0
+__x64_sys_close+0x39/0x80
+do_syscall_64+0x8d/0x460
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+drm_client_register() adds the DRM client to the device client list
+before invoking the initial hotplug callback. If the hotplug callback
+fails, the client remains registered.
+
+For the fbdev client, a failure during drm_fb_helper_initial_config()
+causes the partially initialized fbdev helper to be cleaned up.
+drm_fb_helper_fini() releases fb_helper->info and leaves it NULL.
+
+The fbdev client therefore remains registered even though there is no
+fully initialized framebuffer device.
+
+Later, when userspace closes the DRM file descriptor, drm_release()
+can invoke the restore callbacks of registered DRM clients:
+
+drm_release()
+drm_client_dev_restore()
+drm_fbdev_client_restore()
+drm_fb_helper_restore_fbdev_mode_unlocked()
+
+drm_fbdev_client_restore() currently restores the fbdev state
+unconditionally. For a partially initialized fbdev client this can
+submit an incomplete modeset state and subsequently access fbdev
+state which has not been initialized, resulting in the warning and
+NULL pointer dereference above.
+
+drm_fbdev_client_unregister() already uses fb_helper->info to
+distinguish a fully probed framebuffer device from a partially
+initialized client.
+
+Use the same condition in drm_fbdev_client_restore() and skip restore
+if no framebuffer device has been successfully initialized.
+
+Signed-off-by: shechenglong <shechenglong@xfusion.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 5d08c44e47b9 ("drm/fbdev: Add memory-agnostic fbdev client")
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://patch.msgid.link/20251110154616.539328-2-tzimmermann@suse.de
-Stable-dep-of: 1fca688e9443 ("drm/client: fix restore of partially initialized client")
+Cc: <stable@vger.kernel.org> # v6.13+
+Link: https://patch.msgid.link/20260907035147.1339-1-shechenglong@xfusion.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/clients/drm_fbdev_client.c |    6 ++++--
- drivers/gpu/drm/drm_client_event.c         |    4 ++--
- drivers/gpu/drm/drm_fb_helper.c            |   24 ++++++------------------
- drivers/gpu/drm/drm_file.c                 |    2 +-
- include/drm/drm_client.h                   |    8 +++++---
- include/drm/drm_client_event.h             |    4 ++--
- include/drm/drm_fb_helper.h                |    8 ++------
- 7 files changed, 22 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/clients/drm_fbdev_client.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/drivers/gpu/drm/clients/drm_fbdev_client.c
 +++ b/drivers/gpu/drm/clients/drm_fbdev_client.c
-@@ -26,9 +26,11 @@ static void drm_fbdev_client_unregister(
- 	}
- }
- 
--static int drm_fbdev_client_restore(struct drm_client_dev *client)
-+static int drm_fbdev_client_restore(struct drm_client_dev *client, bool force)
+@@ -30,6 +30,14 @@ static int drm_fbdev_client_restore(stru
  {
--	drm_fb_helper_lastclose(client->dev);
-+	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
+ 	struct drm_fb_helper *fb_helper = drm_fb_helper_from_client(client);
+ 
++	/*
++	 * The client is registered before the initial fbdev probe.
++	 * If probing failed, the client remains registered but there
++	 * is no valid fbdev framebuffer to restore.
++	 */
++	if (!fb_helper->info || !fb_helper->fb)
++		return 0;
 +
-+	drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, force);
+ 	drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, force);
  
  	return 0;
- }
---- a/drivers/gpu/drm/drm_client_event.c
-+++ b/drivers/gpu/drm/drm_client_event.c
-@@ -101,7 +101,7 @@ void drm_client_dev_hotplug(struct drm_d
- }
- EXPORT_SYMBOL(drm_client_dev_hotplug);
- 
--void drm_client_dev_restore(struct drm_device *dev)
-+void drm_client_dev_restore(struct drm_device *dev, bool force)
- {
- 	struct drm_client_dev *client;
- 	int ret;
-@@ -114,7 +114,7 @@ void drm_client_dev_restore(struct drm_d
- 		if (!client->funcs || !client->funcs->restore)
- 			continue;
- 
--		ret = client->funcs->restore(client);
-+		ret = client->funcs->restore(client, force);
- 		drm_dbg_kms(dev, "%s: ret=%d\n", client->name, ret);
- 		if (!ret) /* The first one to return zero gets the privilege to restore */
- 			break;
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -253,6 +253,7 @@ __drm_fb_helper_restore_fbdev_mode_unloc
- /**
-  * drm_fb_helper_restore_fbdev_mode_unlocked - restore fbdev configuration
-  * @fb_helper: driver-allocated fbdev helper, can be NULL
-+ * @force: ignore present DRM master
-  *
-  * This helper should be called from fbdev emulation's &drm_client_funcs.restore
-  * callback. It ensures that the user isn't greeted with a black screen when the
-@@ -261,9 +262,9 @@ __drm_fb_helper_restore_fbdev_mode_unloc
-  * Returns:
-  * 0 on success, or a negative errno code otherwise.
-  */
--int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper)
-+int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper, bool force)
- {
--	return __drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, false);
-+	return __drm_fb_helper_restore_fbdev_mode_unlocked(fb_helper, force);
- }
- EXPORT_SYMBOL(drm_fb_helper_restore_fbdev_mode_unlocked);
- 
-@@ -1316,9 +1317,9 @@ int drm_fb_helper_set_par(struct fb_info
- 	 * the KDSET IOCTL with KD_TEXT, and only after that drops the master
- 	 * status when exiting.
- 	 *
--	 * In the past this was caught by drm_fb_helper_lastclose(), but on
--	 * modern systems where logind always keeps a drm fd open to orchestrate
--	 * the vt switching, this doesn't work.
-+	 * In the past this was caught by drm_fb_helper_restore_fbdev_mode_unlocked(),
-+	 * but on modern systems where logind always keeps a drm fd open to
-+	 * orchestrate the vt switching, this doesn't work.
- 	 *
- 	 * To not break the userspace ABI we have this special case here, which
- 	 * is only used for the above case. Everything else uses the normal
-@@ -1946,16 +1947,3 @@ int drm_fb_helper_hotplug_event(struct d
- 	return 0;
- }
- EXPORT_SYMBOL(drm_fb_helper_hotplug_event);
--
--/**
-- * drm_fb_helper_lastclose - DRM driver lastclose helper for fbdev emulation
-- * @dev: DRM device
-- *
-- * This function is obsolete. Call drm_fb_helper_restore_fbdev_mode_unlocked()
-- * instead.
-- */
--void drm_fb_helper_lastclose(struct drm_device *dev)
--{
--	drm_fb_helper_restore_fbdev_mode_unlocked(dev->fb_helper);
--}
--EXPORT_SYMBOL(drm_fb_helper_lastclose);
---- a/drivers/gpu/drm/drm_file.c
-+++ b/drivers/gpu/drm/drm_file.c
-@@ -405,7 +405,7 @@ EXPORT_SYMBOL(drm_open);
- 
- static void drm_lastclose(struct drm_device *dev)
- {
--	drm_client_dev_restore(dev);
-+	drm_client_dev_restore(dev, false);
- 
- 	if (dev_is_pci(dev->dev))
- 		vga_switcheroo_process_delayed_switch();
---- a/include/drm/drm_client.h
-+++ b/include/drm/drm_client.h
-@@ -47,12 +47,14 @@ struct drm_client_funcs {
- 	 *
- 	 * Note that the core does not guarantee exclusion against concurrent
- 	 * drm_open(). Clients need to ensure this themselves, for example by
--	 * using drm_master_internal_acquire() and
--	 * drm_master_internal_release().
-+	 * using drm_master_internal_acquire() and drm_master_internal_release().
-+	 *
-+	 * If the caller passes force, the client should ignore any present DRM
-+	 * master and restore the display anyway.
- 	 *
- 	 * This callback is optional.
- 	 */
--	int (*restore)(struct drm_client_dev *client);
-+	int (*restore)(struct drm_client_dev *client, bool force);
- 
- 	/**
- 	 * @hotplug:
---- a/include/drm/drm_client_event.h
-+++ b/include/drm/drm_client_event.h
-@@ -10,7 +10,7 @@ struct drm_device;
- #if defined(CONFIG_DRM_CLIENT)
- void drm_client_dev_unregister(struct drm_device *dev);
- void drm_client_dev_hotplug(struct drm_device *dev);
--void drm_client_dev_restore(struct drm_device *dev);
-+void drm_client_dev_restore(struct drm_device *dev, bool force);
- void drm_client_dev_suspend(struct drm_device *dev);
- void drm_client_dev_resume(struct drm_device *dev);
- #else
-@@ -18,7 +18,7 @@ static inline void drm_client_dev_unregi
- { }
- static inline void drm_client_dev_hotplug(struct drm_device *dev)
- { }
--static inline void drm_client_dev_restore(struct drm_device *dev)
-+static inline void drm_client_dev_restore(struct drm_device *dev, bool force)
- { }
- static inline void drm_client_dev_suspend(struct drm_device *dev)
- { }
---- a/include/drm/drm_fb_helper.h
-+++ b/include/drm/drm_fb_helper.h
-@@ -254,7 +254,8 @@ int drm_fb_helper_set_par(struct fb_info
- int drm_fb_helper_check_var(struct fb_var_screeninfo *var,
- 			    struct fb_info *info);
- 
--int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper);
-+int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper,
-+					      bool force);
- 
- void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper);
- void drm_fb_helper_fill_info(struct fb_info *info,
-@@ -281,7 +282,6 @@ int drm_fb_helper_hotplug_event(struct d
- int drm_fb_helper_initial_config(struct drm_fb_helper *fb_helper);
- int drm_fb_helper_debug_enter(struct fb_info *info);
- int drm_fb_helper_debug_leave(struct fb_info *info);
--void drm_fb_helper_lastclose(struct drm_device *dev);
- #else
- static inline void drm_fb_helper_prepare(struct drm_device *dev,
- 					 struct drm_fb_helper *helper,
-@@ -397,10 +397,6 @@ static inline int drm_fb_helper_debug_le
- {
- 	return 0;
- }
--
--static inline void drm_fb_helper_lastclose(struct drm_device *dev)
--{
--}
- #endif
- 
- #endif
 
 
