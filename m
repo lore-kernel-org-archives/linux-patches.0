@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A1A3B71B6;
-	Wed, 30 Sep 2026 18:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41244F5E18;
+	Wed, 30 Sep 2026 18:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792901; cv=none; b=IfPtwcKxYT46F42/mOsz1YYCD4h2/9Rctp1t+y+PTWIp0kKlGjbkzhRoKnN5S+CdYz13WoYg/AYhbdNJVmjtU0glYDtNFdkG+nC9gGRiegbasOqomp9XKHgB3eFiO2WE5NLJOji5p6OuHMX3KTt0n9CLlg0I03mBqriaFZzlVXI=
+	t=1790792904; cv=none; b=SdxJaJu+8ZIYnmro2D5CkIEwAMK0zgJGsWz1CppQ1KCGtP3qOgKDx2hHCvymOrPUiVYlhbbldJqDxRBwvtS4wSLYojTaeYI/xTL/59G5Mt04DGQSvfdRfOE6qbypxPeY/5sf3DaG01KGkb5usYMRZ3RfGWdBjSqaBMKvIr1vdJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792901; c=relaxed/simple;
-	bh=PzcjcNe6XRKfba1MOadtAuhE8NFkzo9B6kVNHfW8v5w=;
+	s=arc-20240116; t=1790792904; c=relaxed/simple;
+	bh=CQzgYRY2/oJ94SnmzZCFnof21GhFmcGLeQoitRfoqv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMpinAlDg4Iwb1WcjfjX7dH1IzurxkcsI2Zq1+FLJZZPqG5BSoR2yFWwCgJQtHNn8dE+VFx8nnPgAVHJ1mLMA2jbAiTL9YcZVdrIgMpKLrzjsso3Jb++dYtH5RwxjTOevWdY+aZ6ImzjxBsnGIb0zGJcQeNSW/MU4uqAJQY0U4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZK2Pia4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JN9n6dAf61hd/FANffhMENwD8kEsfJA4eTU5RgBkXWENEOYoK6BNCtxryQOILUSAYvfDt2xm96oqmCutsdip/tm5tyZdD1E2xeFYpS/tlL58r4ilP9BhGzCrN41ffhMFkSehw09+NLLRP/D2aBxNNZtRLr7tzzlLNWuPddrud1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wwgxb+i+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZK2Pia4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1711F000FF;
-	Wed, 30 Sep 2026 18:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wwgxb+i+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5781F000FF;
+	Wed, 30 Sep 2026 18:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792900;
-	bh=B++FE40ZaznlDDcUe/jB0PMVEbHJtkgEGIjybvq9h1s=;
+	s=korg; t=1790792902;
+	bh=OugAyg8uMjs7QtywSoTz1xehOvmLxieudje0G92S0bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZK2Pia45TzXY07fAYnExveIgqfC2sQTvNM0s/j8x18f7Xrw/Ez9mYkYtWWDrrnC6
-	 oNR8x/P1aADYT0fZlJE9REFh8+G4nDW4WTBtfJ0uJ4YKXa6k7SoWaBw/CFpPvJJpBp
-	 efhG4W8h6nA565fsluUaclBUIlwR6xK86b/dRX1w=
+	b=Wwgxb+i+PVn3aHbvxVToqcDorS/+toa5m84B0sPCPd4ff1QtCJu20KVEmMu76F0/r
+	 JEXnYiybHgAQJK/i4JEtQQD73+htbvXboN6sONUW/ObL5Ik7kzIOn7cM9/3/Byp5+d
+	 IioR2EsRHZ57m6hwvxlshsalY3vDaSsZ+rCHSrA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Linkui Xiao <xiaolinkui@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/395] libbpf: Reject truncated ldimm64 CO-RE relocations
-Date: Wed, 30 Sep 2026 17:25:26 +0200
-Message-ID: <20260930152342.021515756@linuxfoundation.org>
+Subject: [PATCH 6.18 065/395] ipv4: fib: fix data-race and stale genid check around nh->nh_saddr
+Date: Wed, 30 Sep 2026 17:25:27 +0200
+Message-ID: <20260930152342.042654445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,53 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Linkui Xiao <xiaolinkui@kylinos.cn>
 
-[ Upstream commit b4e875d397da451fb4e9c573ff4b86db53caba05 ]
+[ Upstream commit 46bc52d13594848023e681860df8700c8db14354 ]
 
-CO-RE relocation of an ldimm64 instruction operates on two instruction
-slots. A malformed BPF ELF can end a function after the first slot and
-attach a CO-RE relocation to it. libbpf allocates the instruction array
-according to the function symbol size, so the shared relocation code would
-then access beyond the allocation.
+fib_select_multipath() compares nexthop_nh->nh_saddr against the flow
+source address with no lock held, while fib_info_update_nhc_saddr()
+stores a new value from another CPU as soon as the preferred source
+address of the egress device changes.
 
-Reject a terminal ldimm64 in libbpf's relocation loop, where the program
-length is available, before resolving or applying the relocation. Both
-resolved and unresolved relocations validate the absent second slot, and
-unresolved relocation poisoning would additionally write past the array.
+Commit 195374d89368 ("ipv4: fib: annotate races around nh->nh_saddr_genid
+and nh->nh_saddr") added WRITE_ONCE() on the store side and READ_ONCE()
+in fib_result_prefsrc() after syzbot reported
 
-The in-kernel caller is protected by the verifier's early instruction-stream
-check before it applies CO-RE relocations.
+	BUG: KCSAN: data-race in fib_select_path / fib_select_path
 
-Fixes: eacaaed784e2 ("libbpf: Implement enum value-based CO-RE relocations")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/20260914140852.03DA21F0089B@smtp.kernel.org
-Link: https://patch.msgid.link/20260917233222.2542500-11-memxor@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+but it only covered that reader. fib_select_multipath(), reached from
+fib_select_path(), is a second lockless reader of nh->nh_saddr and was
+left bare.
+
+Moreover, nh_saddr is only meaningful when nh_saddr_genid matches
+dev_addr_genid, as established by commit 436c3b66ec98 ("ipv4: Invalidate
+nexthop cache nh_saddr more correctly."). fib_select_multipath()
+skips that validation, so it can score a nexthop using a stale source
+address and skew the ECMP selection.
+
+Annotate both reads with READ_ONCE() and refresh the cached source
+address via fib_info_update_nhc_saddr() when the genid does not match,
+mirroring fib_result_prefsrc().
+
+Fixes: 32607a332cfe ("ipv4: prefer multipath nexthop that matches source address")
+Signed-off-by: Linkui Xiao <xiaolinkui@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260916125316.988044-1-xiaolinkui@126.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ipv4/fib_semantics.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 94ee5f52b8661..b21d2f842579f 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -6051,6 +6051,13 @@ bpf_object__relocate_core(struct bpf_object *obj, const char *targ_btf_path)
- 				return -EINVAL;
- 			insn = &prog->insns[insn_idx];
+diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+index 2aba8c0b9b2b5..5ab23a1fa45f6 100644
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -2181,6 +2181,15 @@ static bool fib_good_nh(const struct fib_nh *nh)
+ 	return !!(state & NUD_VALID);
+ }
  
-+			if (is_ldimm64_insn(insn) && (size_t)insn_idx + 1 >= prog->insns_cnt) {
-+				pr_warn("prog '%s': relo #%d: insn #%d (LDIMM64) is truncated\n",
-+					prog->name, i, insn_idx);
-+				err = -EINVAL;
-+				goto out;
-+			}
++static __be32 fib_nh_saddr(struct net *net, const struct fib_info *fi,
++			   struct fib_nh *nh, int genid)
++{
++	if (READ_ONCE(nh->nh_saddr_genid) == genid)
++		return READ_ONCE(nh->nh_saddr);
 +
- 			err = record_relo_core(prog, rec, insn_idx);
- 			if (err) {
- 				pr_warn("prog '%s': relo #%d: failed to record relocation: %s\n",
++	return fib_info_update_nhc_saddr(net, &nh->nh_common, fi->fib_scope);
++}
++
+ void fib_select_multipath(struct fib_result *res, int hash,
+ 			  const struct flowi4 *fl4)
+ {
+@@ -2189,6 +2198,7 @@ void fib_select_multipath(struct fib_result *res, int hash,
+ 	bool use_neigh;
+ 	int score = -1;
+ 	__be32 saddr;
++	int genid;
+ 
+ 	if (unlikely(res->fi->nh)) {
+ 		nexthop_path_fib_result(res, hash);
+@@ -2197,6 +2207,7 @@ void fib_select_multipath(struct fib_result *res, int hash,
+ 
+ 	use_neigh = READ_ONCE(net->ipv4.sysctl_fib_multipath_use_neigh);
+ 	saddr = fl4 ? fl4->saddr : 0;
++	genid = saddr ? atomic_read(&net->ipv4.dev_addr_genid) : 0;
+ 
+ 	change_nexthops(fi) {
+ 		int nh_upper_bound, nh_score = 0;
+@@ -2209,7 +2220,7 @@ void fib_select_multipath(struct fib_result *res, int hash,
+ 		    (use_neigh && !fib_good_nh(nexthop_nh)))
+ 			continue;
+ 
+-		if (saddr && nexthop_nh->nh_saddr == saddr)
++		if (saddr && fib_nh_saddr(net, fi, nexthop_nh, genid) == saddr)
+ 			nh_score += 2;
+ 		if (hash <= nh_upper_bound)
+ 			nh_score++;
 -- 
 2.53.0
 
