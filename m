@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821FA5158B3;
-	Wed, 30 Sep 2026 17:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D054CEE53;
+	Wed, 30 Sep 2026 17:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789094; cv=none; b=SYE7mO/UeP3SpHS+/+ANyaK5n2uJBykHrT9h62Mr3AZ5Q6pFYlfRQpepW8HKmbLkKVox2ljeeZRusfvNGDrTx0Xw9YE2xgyyoMXkAD1zUNKmcmDe3z96qSgrIG4JbG8sQa7mLJZaPPlHBzhRwZ3Ur70f4fayGsB5PtwypSYu5EQ=
+	t=1790789097; cv=none; b=L4vihHO2zNiGo4JYUtgO4dOD7YKMC5yy06O3DNOeqzjCjKKF5OTGD6XZPKd44MgVcfHiXQ3Ml8Cq8TQy8MbYsINGXzIU3zmDaAw8M6YIyBdAsWYbS60cc1jvwwdEDNwYoxm6Mqd5RATy8EsZNXQQlqGeFUx6q1Li7SSZsrtWmbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789094; c=relaxed/simple;
-	bh=ks1rZjNLOGv3UlT4SGawXxTLd0tLwatLihAv4/C081w=;
+	s=arc-20240116; t=1790789097; c=relaxed/simple;
+	bh=Py6qiZrJTCqVoORHfnJebZQ0NZns5udgT0KP9pNU6nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L4SnXf8iJnc3kVQmD7evythwz0FA7haUXbOGrB3+rl+OwFK/lgwa/fD4XpXXmMcwTlqioMyliXO7HZqytkVVwCRnvHVr6LtqATHCO11v8MekTesFNftmq29Uni8Xf8iXQgh+wR4d73vFZCn+G85L9mIwF+L3EGHZ8zlxrsfh7dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3P5N4P9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DJVFFT3Xqmm5R/liJEuGZO5Eq+0wWkLuh2XMNqRszoJUrhGTgjiSxZhGfn5GgZZ7uAjNc6SIZVDxzN47ivpIDNffS0B6Vh0ULCisg3ulMtcdVZ1gbQeRNE45OcrWDTuA6TIh91rav/T4ixFJl0yacRQjeOfa3R3UtfUMGzCTcwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyVvEOGS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3P5N4P9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39611F000FF;
-	Wed, 30 Sep 2026 17:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyVvEOGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB7F1F000FF;
+	Wed, 30 Sep 2026 17:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789093;
-	bh=GefnL4mAxz1A4UV7LcILm5yH5/qSEWi0NNjJLsB4Xhw=;
+	s=korg; t=1790789096;
+	bh=LbwEC+/WOS984t+gs6m+rtRFWfNDuJJ5b6HzOlfHQaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U3P5N4P94WsXCcZnD/g+/rZNW58vR2SCqbULmlHThMGG2829KTHWxCWvYX6h0Xbph
-	 WnV0W4RHciBdxkURw/1sQOFfg8O6ZVtTKLwnVfhmAod7EF+ip8+iAzXWyMiwyZV3Zy
-	 0S3md2yR6uf2SY+m6OPEVzEwGSJcZLzUTssQOQ6c=
+	b=jyVvEOGS46LO7nA5qg8UPtAdmCwLPfZpPbTQyU4nn4qjs6xO91T7jBCYUWDcrhYXY
+	 TMnVyrdTvPCaKM0gLb7NCuadSiowfVOdvo0My8uP9Bss9MG/idGI1Ji3A3GIjmY38p
+	 /O9/MrQkOX5HlaNDPj7o/K6bw8WgxM1kM84Bd9Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/877] bpf: Bail out early in __htab_map_lookup_and_delete_elem()
-Date: Wed, 30 Sep 2026 17:20:23 +0200
-Message-ID: <20260930152421.426171243@linuxfoundation.org>
+Subject: [PATCH 6.12 303/877] selftests/ftrace: Fix unique symbol check in kprobe_non_uniq_symbol.tc
+Date: Wed, 30 Sep 2026 17:20:14 +0200
+Message-ID: <20260930152421.238250850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,100 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit 588c6ead325aecc9894c9925cf1f771b77437bee ]
+[ Upstream commit d22c3e0088e85be8131f7a9283f759cdbb20726d ]
 
-Use goto statement to bail out early when the target element is not
-found, instead of using a large else branch to handle the more likely
-case. This change doesn't affect functionality and simply make the code
-cleaner.
+The current regex also matches symbols in modules, which makes the
+test fail on s390 where name_show is present only once in the kernel,
+but also multiple times in modules:
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Link: https://lore.kernel.org/r/20250117101816.2101857-3-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 1c21452d02ee ("bpf: Fix UAF due to concurrent consumption of ttrace lists in alloc_bulk")
+000001b1401cdc20 t name_show
+000001b0c05e6c40 t name_show    [mdev]
+000001b0c0495f30 t name_show    [i2c_core]
+
+Fix this by changing the regular expression to only match the function
+name.
+
+Link: https://lore.kernel.org/all/20260909092954.2200558-1-svens@linux.ibm.com/
+
+Fixes: 03b80ff8023a ("selftests/ftrace: Add new test case which checks non unique symbol")
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 51 ++++++++++++++++++++++----------------------
- 1 file changed, 26 insertions(+), 25 deletions(-)
+ .../selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 6df745abb88a7..22cc255519ce8 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -1637,37 +1637,38 @@ static int __htab_map_lookup_and_delete_elem(struct bpf_map *map, void *key,
- 	l = lookup_elem_raw(head, hash, key, key_size);
- 	if (!l) {
- 		ret = -ENOENT;
--	} else {
--		if (is_percpu) {
--			u32 roundup_value_size = round_up(map->value_size, 8);
--			void __percpu *pptr;
--			int off = 0, cpu;
-+		goto out_unlock;
-+	}
+diff --git a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+index bc9514428dbaf..07b1177c16344 100644
+--- a/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
++++ b/tools/testing/selftests/ftrace/test.d/kprobe/kprobe_non_uniq_symbol.tc
+@@ -6,7 +6,7 @@
+ SYMBOL='name_show'
  
--			pptr = htab_elem_get_ptr(l, key_size);
--			for_each_possible_cpu(cpu) {
--				copy_map_value_long(&htab->map, value + off, per_cpu_ptr(pptr, cpu));
--				check_and_init_map_value(&htab->map, value + off);
--				off += roundup_value_size;
--			}
--		} else {
--			u32 roundup_key_size = round_up(map->key_size, 8);
-+	if (is_percpu) {
-+		u32 roundup_value_size = round_up(map->value_size, 8);
-+		void __percpu *pptr;
-+		int off = 0, cpu;
+ # We skip this test on kernel where SYMBOL is unique or does not exist.
+-if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}" /proc/kallsyms)" -le '1' ]; then
++if [ "$(grep -c -E "[[:alnum:]]+ t ${SYMBOL}$" /proc/kallsyms)" -le '1' ]; then
+ 	exit_unsupported
+ fi
  
--			if (flags & BPF_F_LOCK)
--				copy_map_value_locked(map, value, l->key +
--						      roundup_key_size,
--						      true);
--			else
--				copy_map_value(map, value, l->key +
--					       roundup_key_size);
--			/* Zeroing special fields in the temp buffer */
--			check_and_init_map_value(map, value);
-+		pptr = htab_elem_get_ptr(l, key_size);
-+		for_each_possible_cpu(cpu) {
-+			copy_map_value_long(&htab->map, value + off, per_cpu_ptr(pptr, cpu));
-+			check_and_init_map_value(&htab->map, value + off);
-+			off += roundup_value_size;
- 		}
-+	} else {
-+		u32 roundup_key_size = round_up(map->key_size, 8);
- 
--		hlist_nulls_del_rcu(&l->hash_node);
--		if (!is_lru_map)
--			free_htab_elem(htab, l);
-+		if (flags & BPF_F_LOCK)
-+			copy_map_value_locked(map, value, l->key +
-+					      roundup_key_size,
-+					      true);
-+		else
-+			copy_map_value(map, value, l->key +
-+				       roundup_key_size);
-+		/* Zeroing special fields in the temp buffer */
-+		check_and_init_map_value(map, value);
- 	}
-+	hlist_nulls_del_rcu(&l->hash_node);
-+	if (!is_lru_map)
-+		free_htab_elem(htab, l);
- 
-+out_unlock:
- 	htab_unlock_bucket(htab, b, hash, bflags);
- 
- 	if (is_lru_map && l)
 -- 
 2.53.0
 
