@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD1950B8DA;
-	Wed, 30 Sep 2026 16:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8642165EA;
+	Wed, 30 Sep 2026 16:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785131; cv=none; b=H0j3Mvdu9Mt8rK31xfKc0Jx02UhdG8ZEfCx+2zcFaYMcxHZ49p8QdKG9VhHl2FSr1MUVC3Ub0NB/Zf78MpOL5bTfRXeT8WJ+2KYWVJf7dJKJZzHT9SLO3eU0h2HcCSWC6g3Q6BiPcuy+Ef2w+21pupE72LrZScrG/XA+Pfm3wTI=
+	t=1790785134; cv=none; b=CN272QHcA44eibmaBdoXG1QHEh4Bg3SQgSrAAKbOBrf+hg6/oGJw2CxlDmtUQQBqytJBdPHT2RMJlP9OSsSeVFUSjUQG14wwDdNLWy0mc0/NnvQznwVyffl4O2HhJ0Fyd4dKHvOU+U35WU6bh3UufdtUlkxN1L0SDQEOKy+ye6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785131; c=relaxed/simple;
-	bh=9YEs5WSv3R6XuLpwgid81NkJFPY+rEcXoqYqWOT8+pg=;
+	s=arc-20240116; t=1790785134; c=relaxed/simple;
+	bh=f0mIPdI3tlw9cmraI+dZ3KZjgnnAAUTlErpo5n2gwUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3ReFrDkY5JOTFZdReHJ7hguL3a7R7v8ggkze7Rk0R9S50dz8tcR+tUQqRIKQmpNRfgXufQ5TG/0kJqc5lUdY7p9yUWTpMlrVKvrHkFtP3bGtaYWZH4OkkDJRFqhkuK7o/cmJ6igTGCLlTF/yPC744kGJGFa+INxfjt0plnUH1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQgTwVIy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nMCHGA7vtN0bDDCkS3oVpuFVri2VvxJ27w6okuVU2+QE9pOFA1b05WNa9pn/B13fE5IJu/EfCiNMufwq4FdDM7+VbvCuVfJIsYv6CttoAhpOlYq3jV+EbBXXRDcUJ4stwpB/Ifjlds8zJne3IzOvlQPGINUHMuyyMbaZ1k7WGLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ab3jRMO7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQgTwVIy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0711F00899;
-	Wed, 30 Sep 2026 16:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ab3jRMO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D23E1F000FF;
+	Wed, 30 Sep 2026 16:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785127;
-	bh=NmpOVyq++HUZSRLipcaNtOA4L+e6X8neMJBKtwyBJj0=;
+	s=korg; t=1790785130;
+	bh=zXRkwd0u+l2gC85gylnngtsrnfvYwUIefefb+Un6ziU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kQgTwVIyjt0NbXcP5mYgo9//SIzWCoaOD3H7f72ICsO3LFCQjm11Jc2EpDCJckBTR
-	 1u3DslTkgUy1jBW48l0YTHvy9MMM1aZ3kwXj5Ka6fihRpV9aTI628QaK1K+JV5+RWw
-	 YAnK3jjnzPsiaNW+RrcXJymkmofkwhk8Qq93nZfA=
+	b=ab3jRMO798CYjGBy0sHZdKswAQ+kq8Pe9VoAxXR++ivw7W4TrCIovY5rHY2qu2hN2
+	 +4oKo0EBNcmAtShMOo9tffbeHxjJFefVowXxVOKfV4B6eRBaLsbsEmDmPWwEtHqj1w
+	 lEen/gX5cx02vv2jMw4QUm5MYWF6PaDxYgcEMDbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 354/982] ppp: ppp_async: simplify tty disc_data access
-Date: Wed, 30 Sep 2026 17:18:10 +0200
-Message-ID: <20260930152424.418127047@linuxfoundation.org>
+Subject: [PATCH 6.1 355/982] ipv6: tunnels: use DEV_STATS_INC()
+Date: Wed, 30 Sep 2026 17:18:11 +0200
+Message-ID: <20260930152424.439933910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,216 +51,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9feb069e5ed03582fbf6272539f1caa2a17dc6d5 ]
+[ Upstream commit 2fad1ba354d4a82b1b635a78f25d9682d4febb5e ]
 
-tty_ldisc_hangup() invokes the hangup callback while holding only a read
-lock on tty->ldisc_sem, so it can run concurrently with other line
-discipline callbacks. This currently forces async PPP to maintain
-separate lifetime protection around tty->disc_data.
+Most of code paths in tunnels are lockless (eg NETIF_F_LLTX in tx).
 
-Line discipline close is called under the write lock during hangup
-processing. Remove the hangup callback and rely on close for teardown,
-as done for SLIP by commit 23c53269f2ba ("slip: remove slip_hangup() to
-fix use-after-free in slip_receive_buf()"). This serializes teardown
-with all other line discipline operations.
+Adopt SMP safe DEV_STATS_{INC|ADD}() to update dev->stats fields.
 
-disc_data_lock, refcount and completion are redundant with that
-serialization. Remove them and access tty->disc_data directly.
-
-This also eliminates a lockdep warning reported by syzbot. The warning
-does not indicate a real deadlock because the write side runs only in
-process context with hardirqs disabled.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+8e808eb853386f575d86@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/0000000000002fbad30611e25849@google.com/
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260828073245.126804-1-qingfang.deng@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 97cc84dad1d7 ("ip6_gre: check tunnel info before xmit in ip6gre_tunnel_xmit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 82 ++++---------------------------------
- 1 file changed, 7 insertions(+), 75 deletions(-)
+ net/ipv6/ip6_gre.c    | 11 ++++-------
+ net/ipv6/ip6_tunnel.c | 26 ++++++++++++--------------
+ net/ipv6/ip6_vti.c    | 16 +++++++---------
+ net/ipv6/ip6mr.c      | 10 +++++-----
+ 4 files changed, 28 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index aba0744c0ab58..3f3c662550372 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -65,8 +65,6 @@ struct asyncppp {
- 
- 	struct tasklet_struct tsk;
- 
--	refcount_t	refcnt;
--	struct completion dead;
- 	struct ppp_channel chan;	/* interface to generic ppp layer */
- 	unsigned char	obuf[OBUFSIZE];
- };
-@@ -115,38 +113,6 @@ static const struct ppp_channel_ops async_ops = {
-  * Routines implementing the PPP line discipline.
-  */
- 
--/*
-- * We have a potential race on dereferencing tty->disc_data,
-- * because the tty layer provides no locking at all - thus one
-- * cpu could be running ppp_asynctty_receive while another
-- * calls ppp_asynctty_close, which zeroes tty->disc_data and
-- * frees the memory that ppp_asynctty_receive is using.  The best
-- * way to fix this is to use a rwlock in the tty struct, but for now
-- * we use a single global rwlock for all ttys in ppp line discipline.
-- *
-- * FIXME: this is no longer true. The _close path for the ldisc is
-- * now guaranteed to be sane.
-- */
--static DEFINE_RWLOCK(disc_data_lock);
--
--static struct asyncppp *ap_get(struct tty_struct *tty)
--{
--	struct asyncppp *ap;
--
--	read_lock(&disc_data_lock);
--	ap = tty->disc_data;
--	if (ap != NULL)
--		refcount_inc(&ap->refcnt);
--	read_unlock(&disc_data_lock);
--	return ap;
--}
--
--static void ap_put(struct asyncppp *ap)
--{
--	if (refcount_dec_and_test(&ap->refcnt))
--		complete(&ap->dead);
--}
--
- /*
-  * Called when a tty is put into PPP line discipline. Called in process
-  * context.
-@@ -181,9 +147,6 @@ ppp_asynctty_open(struct tty_struct *tty)
- 	skb_queue_head_init(&ap->rqueue);
- 	tasklet_setup(&ap->tsk, ppp_async_process);
- 
--	refcount_set(&ap->refcnt, 1);
--	init_completion(&ap->dead);
--
- 	ap->chan.private = ap;
- 	ap->chan.ops = &async_ops;
- 	ap->chan.mtu = PPP_MRU;
-@@ -204,34 +167,18 @@ ppp_asynctty_open(struct tty_struct *tty)
- }
- 
- /*
-- * Called when the tty is put into another line discipline
-- * or it hangs up.  We have to wait for any cpu currently
-- * executing in any of the other ppp_asynctty_* routines to
-- * finish before we can call ppp_unregister_channel and free
-- * the asyncppp struct.  This routine must be called from
-- * process context, not interrupt or softirq context.
-+ * Called when the tty is put into another line discipline or it hangs up.
-+ * This call is serialized against other ldisc functions.
-  */
- static void
- ppp_asynctty_close(struct tty_struct *tty)
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index e298981be75f6..a2c4287d3c753 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -918,7 +918,6 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
+ 	struct net_device *dev)
  {
--	struct asyncppp *ap;
-+	struct asyncppp *ap = tty->disc_data;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct net_device_stats *stats = &t->dev->stats;
+ 	__be16 payload_protocol;
+ 	int ret;
  
--	write_lock_irq(&disc_data_lock);
--	ap = tty->disc_data;
--	tty->disc_data = NULL;
--	write_unlock_irq(&disc_data_lock);
- 	if (!ap)
- 		return;
+@@ -948,8 +947,8 @@ static netdev_tx_t ip6gre_tunnel_xmit(struct sk_buff *skb,
  
--	/*
--	 * We have now ensured that nobody can start using ap from now
--	 * on, but we have to wait for all existing users to finish.
--	 * Note that ppp_unregister_channel ensures that no calls to
--	 * our channel ops (i.e. ppp_async_send/ioctl) are in progress
--	 * by the time it returns.
--	 */
--	if (!refcount_dec_and_test(&ap->refcnt))
--		wait_for_completion(&ap->dead);
-+	tty->disc_data = NULL;
- 	tasklet_kill(&ap->tsk);
- 
- 	ppp_unregister_channel(&ap->chan);
-@@ -241,17 +188,6 @@ ppp_asynctty_close(struct tty_struct *tty)
- 	kfree(ap);
+ tx_err:
+ 	if (!t->parms.collect_md || !IS_ERR(skb_tunnel_info_txcheck(skb)))
+-		stats->tx_errors++;
+-	stats->tx_dropped++;
++		DEV_STATS_INC(dev, tx_errors);
++	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
  }
+@@ -960,7 +959,6 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 	struct ip_tunnel_info *tun_info = NULL;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device_stats *stats;
+ 	bool truncate = false;
+ 	int encap_limit = -1;
+ 	__u8 dsfield = false;
+@@ -1113,10 +1111,9 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
  
--/*
-- * Called on tty hangup in process context.
-- *
-- * Wait for I/O to driver to complete and unregister PPP channel.
-- * This is already done by the close routine, so just call that.
-- */
--static void ppp_asynctty_hangup(struct tty_struct *tty)
--{
--	ppp_asynctty_close(tty);
--}
--
- /*
-  * Read does nothing - no data is ever available this way.
-  * Pppd reads and writes packets via /dev/ppp instead.
-@@ -283,7 +219,7 @@ ppp_asynctty_write(struct tty_struct *tty, struct file *file,
- static int
- ppp_asynctty_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
- {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	int err, val;
- 	int __user *p = (int __user *)arg;
- 
-@@ -324,7 +260,6 @@ ppp_asynctty_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
- 		err = tty_mode_ioctl(tty, cmd, arg);
+ tx_err:
+-	stats = &t->dev->stats;
+ 	if (!IS_ERR(tun_info))
+-		stats->tx_errors++;
+-	stats->tx_dropped++;
++		DEV_STATS_INC(dev, tx_errors);
++	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 8519579be257c..0deea48700574 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -811,8 +811,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 	     (tunnel->parms.i_flags & TUNNEL_CSUM)) ||
+ 	    ((tpi->flags & TUNNEL_CSUM) &&
+ 	     !(tunnel->parms.i_flags & TUNNEL_CSUM))) {
+-		tunnel->dev->stats.rx_crc_errors++;
+-		tunnel->dev->stats.rx_errors++;
++		DEV_STATS_INC(tunnel->dev, rx_crc_errors);
++		DEV_STATS_INC(tunnel->dev, rx_errors);
+ 		goto drop;
  	}
  
--	ap_put(ap);
- 	return err;
- }
+@@ -820,8 +820,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 		if (!(tpi->flags & TUNNEL_SEQ) ||
+ 		    (tunnel->i_seqno &&
+ 		     (s32)(ntohl(tpi->seq) - tunnel->i_seqno) < 0)) {
+-			tunnel->dev->stats.rx_fifo_errors++;
+-			tunnel->dev->stats.rx_errors++;
++			DEV_STATS_INC(tunnel->dev, rx_fifo_errors);
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto drop;
+ 		}
+ 		tunnel->i_seqno = ntohl(tpi->seq) + 1;
+@@ -832,8 +832,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 	/* Warning: All skb pointers will be invalidated! */
+ 	if (tunnel->dev->type == ARPHRD_ETHER) {
+ 		if (!pskb_may_pull(skb, ETH_HLEN)) {
+-			tunnel->dev->stats.rx_length_errors++;
+-			tunnel->dev->stats.rx_errors++;
++			DEV_STATS_INC(tunnel->dev, rx_length_errors);
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto drop;
+ 		}
  
-@@ -340,7 +275,7 @@ static void
- ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
- 		  const char *cflags, int count)
+@@ -872,8 +872,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 					     &ipv6h->saddr,
+ 					     ipv6_get_dsfield(ipv6h));
+ 		if (err > 1) {
+-			++tunnel->dev->stats.rx_frame_errors;
+-			++tunnel->dev->stats.rx_errors;
++			DEV_STATS_INC(tunnel->dev, rx_frame_errors);
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto drop;
+ 		}
+ 	}
+@@ -1094,7 +1094,6 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
  {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
- 	unsigned long flags;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+ 	struct net *net = t->net;
+-	struct net_device_stats *stats = &t->dev->stats;
+ 	struct ipv6hdr *ipv6h;
+ 	struct ipv6_tel_txoption opt;
+ 	struct dst_entry *dst = NULL, *ndst = NULL;
+@@ -1189,7 +1188,7 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
+ 	tdev = dst->dev;
  
- 	if (!ap)
-@@ -350,21 +285,19 @@ ppp_asynctty_receive(struct tty_struct *tty, const unsigned char *buf,
- 	spin_unlock_irqrestore(&ap->recv_lock, flags);
- 	if (!skb_queue_empty(&ap->rqueue))
- 		tasklet_schedule(&ap->tsk);
--	ap_put(ap);
- 	tty_unthrottle(tty);
- }
- 
- static void
- ppp_asynctty_wakeup(struct tty_struct *tty)
+ 	if (tdev == dev) {
+-		stats->collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		net_warn_ratelimited("%s: Local routing loop detected!\n",
+ 				     t->parms.name);
+ 		goto tx_err_dst_release;
+@@ -1276,7 +1275,7 @@ int ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev, __u8 dsfield,
+ 	ip6tunnel_xmit(NULL, skb, dev);
+ 	return 0;
+ tx_err_link_failure:
+-	stats->tx_carrier_errors++;
++	DEV_STATS_INC(dev, tx_carrier_errors);
+ 	dst_link_failure(skb);
+ tx_err_dst_release:
+ 	dst_release(dst);
+@@ -1419,7 +1418,6 @@ static netdev_tx_t
+ ip6_tnl_start_xmit(struct sk_buff *skb, struct net_device *dev)
  {
--	struct asyncppp *ap = ap_get(tty);
-+	struct asyncppp *ap = tty->disc_data;
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct net_device_stats *stats = &t->dev->stats;
+ 	u8 ipproto;
+ 	int ret;
  
- 	clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
- 	if (!ap)
- 		return;
- 	set_bit(XMIT_WAKEUP, &ap->xmit_flags);
- 	tasklet_schedule(&ap->tsk);
--	ap_put(ap);
+@@ -1449,8 +1447,8 @@ ip6_tnl_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	stats->tx_errors++;
+-	stats->tx_dropped++;
++	DEV_STATS_INC(dev, tx_errors);
++	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
  }
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 856ceb9551e61..1bdd5e50c9b85 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -319,7 +319,7 @@ static int vti6_input_proto(struct sk_buff *skb, int nexthdr, __be32 spi,
  
+ 		ipv6h = ipv6_hdr(skb);
+ 		if (!ip6_tnl_rcv_ctl(t, &ipv6h->daddr, &ipv6h->saddr)) {
+-			t->dev->stats.rx_dropped++;
++			DEV_STATS_INC(t->dev, rx_dropped);
+ 			rcu_read_unlock();
+ 			goto discard;
+ 		}
+@@ -361,8 +361,8 @@ static int vti6_rcv_cb(struct sk_buff *skb, int err)
+ 	dev = t->dev;
  
-@@ -374,7 +307,6 @@ static struct tty_ldisc_ops ppp_ldisc = {
- 	.name	= "ppp",
- 	.open	= ppp_asynctty_open,
- 	.close	= ppp_asynctty_close,
--	.hangup	= ppp_asynctty_hangup,
- 	.read	= ppp_asynctty_read,
- 	.write	= ppp_asynctty_write,
- 	.ioctl	= ppp_asynctty_ioctl,
+ 	if (err) {
+-		dev->stats.rx_errors++;
+-		dev->stats.rx_dropped++;
++		DEV_STATS_INC(dev, rx_errors);
++		DEV_STATS_INC(dev, rx_dropped);
+ 
+ 		return 0;
+ 	}
+@@ -448,7 +448,6 @@ static int
+ vti6_xmit(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+ {
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct net_device_stats *stats = &t->dev->stats;
+ 	struct dst_entry *dst = skb_dst(skb);
+ 	struct net_device *tdev;
+ 	struct xfrm_state *x;
+@@ -508,7 +507,7 @@ vti6_xmit(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+ 	tdev = dst->dev;
+ 
+ 	if (tdev == dev) {
+-		stats->collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		net_warn_ratelimited("%s: Local routing loop detected!\n",
+ 				     t->parms.name);
+ 		goto tx_err_dst_release;
+@@ -546,7 +545,7 @@ vti6_xmit(struct sk_buff *skb, struct net_device *dev, struct flowi *fl)
+ 
+ 	return 0;
+ tx_err_link_failure:
+-	stats->tx_carrier_errors++;
++	DEV_STATS_INC(dev, tx_carrier_errors);
+ 	dst_link_failure(skb);
+ tx_err_dst_release:
+ 	dst_release(dst);
+@@ -557,7 +556,6 @@ static netdev_tx_t
+ vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct ip6_tnl *t = netdev_priv(dev);
+-	struct net_device_stats *stats = &t->dev->stats;
+ 	struct flowi fl;
+ 	int ret;
+ 
+@@ -593,8 +591,8 @@ vti6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	stats->tx_errors++;
+-	stats->tx_dropped++;
++	DEV_STATS_INC(dev, tx_errors);
++	DEV_STATS_INC(dev, tx_dropped);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index 00774cfa011af..3c60a63c9f31f 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -622,8 +622,8 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
+ 	if (ip6mr_fib_lookup(net, &fl6, &mrt) < 0)
+ 		goto tx_err;
+ 
+-	dev->stats.tx_bytes += skb->len;
+-	dev->stats.tx_packets++;
++	DEV_STATS_ADD(dev, tx_bytes, skb->len);
++	DEV_STATS_INC(dev, tx_packets);
+ 	rcu_read_lock();
+ 	ip6mr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
+ 			   MRT6MSG_WHOLEPKT);
+@@ -632,7 +632,7 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ }
+@@ -2059,8 +2059,8 @@ static int ip6mr_forward2(struct net *net, struct mr_table *mrt,
+ 	if (vif->flags & MIFF_REGISTER) {
+ 		WRITE_ONCE(vif->pkt_out, vif->pkt_out + 1);
+ 		WRITE_ONCE(vif->bytes_out, vif->bytes_out + skb->len);
+-		vif_dev->stats.tx_bytes += skb->len;
+-		vif_dev->stats.tx_packets++;
++		DEV_STATS_ADD(vif_dev, tx_bytes, skb->len);
++		DEV_STATS_INC(vif_dev, tx_packets);
+ 		ip6mr_cache_report(mrt, skb, vifi, MRT6MSG_WHOLEPKT);
+ 		goto out_free;
+ 	}
 -- 
 2.53.0
 
