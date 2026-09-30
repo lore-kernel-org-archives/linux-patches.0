@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5214F3EAB;
-	Wed, 30 Sep 2026 17:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED04A23ABBE;
+	Wed, 30 Sep 2026 17:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790769; cv=none; b=ufet2FgIbgKLTtzVsjT2qMf+vnyZECUbgB2Gc9FX+cyjCi2FAr1FNtq1/aA2Bn3mADGnAkx0dvMBcmyoHBeZCrzqaGRKuBW/rTA6c4jFLJDeAFY2Sq1O1NzB+lCJWK0Oc4AIyhlQ0as5BVTo3V+euT6qxyhyXk721C5ZNcrFqc8=
+	t=1790790772; cv=none; b=MXN7vEz+3Lq4+kxCSCbAmHpexsOnuA1f7dHBOXe/43ruyYo+N82bwy/GDw+XVF4UGibExrR7VMZI2gIYNncfYo16bHWiClhcasB6I7PyM1/puaeEZP+NJULnnrqbt19sBOlzhS7vEXUhoYm6ric3Va9eD1lApAZtw8iFOftSQkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790769; c=relaxed/simple;
-	bh=6mCmZ7OoIVAFM/JkzZG03XnztgD4EK6+zzuA9InRGHQ=;
+	s=arc-20240116; t=1790790772; c=relaxed/simple;
+	bh=XC1gVlRsdeo5/mEP/fqhibeCndoWamGIuokEI+2YFDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ol3zvokhJOCSSH6TIEDikPgtkvbdI3U25x32OLAcTMFU0U27pm7rdxGUS/AKD8/xvrvXeQZkew4wOkK+FfoToWWeFfZ5if9UW6npoEH9pEP9MCWWh/qcpddq8mk7lO7CEO4/X7x9ELLah4NqMfbPO5FeMQLebueEPjgdCtzVbqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHvNUnL0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z26R9rVLcNygCFuC/fZ4sHgGYO88zOS/0b0UXVU7FHlbEaCqAmCyiMmUBkAFSnsoEFLfQYu+DGSgAc/AMV4LTrjAxpEquKpu8WSTvdADGcrgjIQQaUsfysBJLSgZPDzRhE+UWTCblwKD4b7XuUKWsJnrjTX9QXHyhB25WESCxcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kFw29o5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHvNUnL0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EB9A1F000FF;
-	Wed, 30 Sep 2026 17:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kFw29o5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000F31F000FF;
+	Wed, 30 Sep 2026 17:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790767;
-	bh=ZUkZ8Qog8abMP/04T/a5sjQ5a5EyUrmw55wmleca/UE=;
+	s=korg; t=1790790770;
+	bh=lOIgbQ208KmrjZcetLJYd2Jv0SelKNQZclXn8rp5Sw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHvNUnL0ENVtXZC4df2nZMvsLJG2I0mCCzzpl34bL8fzr7d5UZzGSJ9q+yHGOviR6
-	 87r/9oTbtkVt6mDd5pez+t0CbmM+zhFeEdwC9FoNc3svXPUkX1RLF0Sbv/LO8eBd3d
-	 /HGojZ7vpecBkDsXfOF98xMjoQorZEvfweOPp2R0=
+	b=2kFw29o53E0eGB/95coReJ4+lv5HrxSC7Y3pYWijLiuffUvz6UOm3ffntVhQXbnxT
+	 Oq1ClrgyQd52AJfC2BeVkh+uH/rOWsOA8bKuExjokJx3xH8lO6knKEwuoUI9X9hlR/
+	 w0uzT5Hfe19F1Gel5tM3aiIF+LCfH0QgjlMiitLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Kumar Meiyappan <kumar.meiyappan@microchip.com>,
+	Sagar Biradar <sagar.biradar@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/752] s390/zcore: Removed unused variables
-Date: Wed, 30 Sep 2026 17:18:56 +0200
-Message-ID: <20260930152359.593050724@linuxfoundation.org>
+Subject: [PATCH 5.15 031/752] scsi: pm8001: Reject non-fatal dump when controller is crashed
+Date: Wed, 30 Sep 2026 17:18:21 +0200
+Message-ID: <20260930152358.823160940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,53 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
 
-[ Upstream commit 0a2aa995c0a1d363b5f0803862e84834e3876ae2 ]
+[ Upstream commit aa3b8f56ef27ed72394a752820abdec4608b731c ]
 
-allmodconfig with clang W=1 points out unused global variables:
+pm80xx_get_non_fatal_dump() can be called even after the controller has
+entered a fatal error state. In that case the forensic memory contents
+are not safe to access for a non-fatal dump request, and attempting to
+do so can trigger a call trace.
 
-drivers/s390/char/zcore.c:49:23: error: variable
- 'zcore_reipl_file' set but not used [-Werror,-Wunused-but-set-global]
-drivers/s390/char/zcore.c:50:23: error: variable
- 'zcore_hsa_file' set but not used [-Werror,-Wunused-but-set-global]
+Check controller_fatal_error before reading the non-fatal dump buffer
+and return -EINVAL when the controller is already in a crashed state.
 
-Remove both of them, since there is no point in keeping them.
+This prevents non-fatal dump collection from running in an invalid
+controller state.
 
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
+Link: https://patch.msgid.link/20260416154650.415624-1-sagar.biradar@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/zcore.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/scsi/pm8001/pm80xx_hwi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/s390/char/zcore.c b/drivers/s390/char/zcore.c
-index 92b32ce645b95..535ef707b8587 100644
---- a/drivers/s390/char/zcore.c
-+++ b/drivers/s390/char/zcore.c
-@@ -46,8 +46,6 @@ struct ipib_info {
- static struct debug_info *zcore_dbf;
- static int hsa_available;
- static struct dentry *zcore_dir;
--static struct dentry *zcore_reipl_file;
--static struct dentry *zcore_hsa_file;
- static struct ipl_parameter_block *zcore_ipl_block;
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index d37b1bdb29b49..e5b5a730116a9 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -400,6 +400,13 @@ ssize_t pm80xx_get_non_fatal_dump(struct device *cdev,
+ 	char *buf_copy = buf;
  
- static DEFINE_MUTEX(hsa_buf_mutex);
-@@ -325,10 +323,8 @@ static int __init zcore_init(void)
- 		goto fail;
- 
- 	zcore_dir = debugfs_create_dir("zcore" , NULL);
--	zcore_reipl_file = debugfs_create_file("reipl", S_IRUSR, zcore_dir,
--						NULL, &zcore_reipl_fops);
--	zcore_hsa_file = debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir,
--					     NULL, &zcore_hsa_fops);
-+	debugfs_create_file("reipl", S_IRUSR, zcore_dir, NULL, &zcore_reipl_fops);
-+	debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir, NULL, &zcore_hsa_fops);
- 
- 	register_reboot_notifier(&zcore_reboot_notifier);
- 	atomic_notifier_chain_register(&panic_notifier_list, &zcore_on_panic_notifier);
+ 	temp = (u32 *)pm8001_ha->memoryMap.region[FORENSIC_MEM].virt_ptr;
++
++	if (pm8001_ha->controller_fatal_error) {
++		pm8001_dbg(pm8001_ha, FAIL,
++			   "non-fatal dump not available in fatal error state\n");
++		return -EINVAL;
++	}
++
+ 	if (++pm8001_ha->non_fatal_count == 1) {
+ 		if (pm8001_ha->chip_id == chip_8001) {
+ 			snprintf(pm8001_ha->forensic_info.data_buf.direct_data,
 -- 
 2.53.0
 
