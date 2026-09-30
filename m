@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE8651C040;
-	Wed, 30 Sep 2026 17:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03788517BAF;
+	Wed, 30 Sep 2026 17:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789310; cv=none; b=GIWiR3ad+bpUX/TbHYQvpJ9TOyp2J5Xp0bysB90LPskBGB093Bi2xqUrZ8i31xbw+s6FoNLkq0dXUzVVSifEmYyY5V1mAOiFbqm55riT0EqcE/Awvy2aKk4QLBVSEhQA4CPugA3xoMC6QPK8HzbWpOMlIE4oCsiGFnVzpp3RIEQ=
+	t=1790789314; cv=none; b=cmoCpGC1ypmmeKcSXuZZ4gJFWOqZpaLsCUy9HUkUOlVgu/asEaK0pXGhcFHlGFsqxyptYG27Fyb/Htny0wyFTirRjHQ6tRF7e2xlg8IDuQURqeU3lLppG903UFyoDA4Nia2pMuNyow9Yh3niqj0zRCt+//er1ep10tbIDRyzZrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789310; c=relaxed/simple;
-	bh=sWMsVfp+2hyDg2oBgPgSZXm5TgSUDSk5yHLAz0OtC/o=;
+	s=arc-20240116; t=1790789314; c=relaxed/simple;
+	bh=NsAVlu/X4rjX5TIiWgAqCVYW3e1BuY/UOl8Q9w2zQ5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBj8TuVJWNteJa9686RjopMyZPFc32hL+x+1vCllA3YjrinAFXmuGLoL9qBTTJd4qQW8m1Chc5Tv085DROltbUd/Tyl/YULMTiISWTEcrfHEg8vmtYO2dBKHTfhvExbhz+npvZj2RtLFZw07Jp7kv6Qbyy1dUrA4+vnTq0wUZjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnDvRTO4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m2Lz3tX/ikndDnZ5pdlNRpdLHgjvOVfctyJAagRod7CVSjycREcfyefkchdjr7M6opQuzEZfwylvCRVZwwfFkpHYvUaCjk8QSihVfw5/NheeKkr6NjVb/zQDoVNUA/gPkGvZOZZeOkAb2E5I5O0II5qa32hNI9NEGE7I1JLJzUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiTEriuZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnDvRTO4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78071F000FF;
-	Wed, 30 Sep 2026 17:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiTEriuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58601F00898;
+	Wed, 30 Sep 2026 17:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789306;
-	bh=pXgna3528DGiUpObPKy4IsZMAeOX+yUQvtyi7AT4KBc=;
+	s=korg; t=1790789309;
+	bh=S5pfhfJxE3kPIs4jXwRCKCowySLgNAeYnRLDbwBLB5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XnDvRTO4CfOxdRO1xAn6CZ9dVSPlQpAOpqD7f4GZC+WeUIeZUOVm49Kdvnf95wKxs
-	 zCECPtZSnXOZlXUsaBZAYk1AYTL/kSV3Z4fRZoV8E3Q/uWaOmgkhjAp+2BUJNqFVqu
-	 mWT/GvTF8L1vdOaG/wEJN1CWRTesKsrrQoqVSUHI=
+	b=IiTEriuZP1pduj3Hx6ijkvh40PEIKFY7PurNF2/QzDdRXUKl9HzLw9KQEHL0HzKt0
+	 0LMmaxtW2cYPZ1qrWrt5yZGnn6YbxbjZQF1JXJpJzZiEEWpOtNk36qilFDoYx33PNI
+	 3lFvl/T7IDb80y0GXemLWNWBsZewaLUnwu7MZ5bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 430/877] ip_gre: Reject enabling collect metadata through changelink
-Date: Wed, 30 Sep 2026 17:22:21 +0200
-Message-ID: <20260930152423.967020141@linuxfoundation.org>
+Subject: [PATCH 6.12 431/877] vxlan: use one headroom snapshot for neighbour replies
+Date: Wed, 30 Sep 2026 17:22:22 +0200
+Message-ID: <20260930152423.987564048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,65 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit a3f315be9d30eeb6938d11fa17fd4b32d52f7c42 ]
+[ Upstream commit 481506a756dcd828ef42391cb08f38d8d96d38fc ]
 
-ipgre_netlink_parms() can enable collect_md on an existing GRE, GRETAP
-or ERSPAN device. Unlike newlink, changelink does not enforce metadata
-tunnel uniqueness. Converting a non-metadata device can therefore
-replace the metadata receive entry for another device of the same type
-in the same netns. Deleting either device then clears the shared entry,
-breaking metadata receive lookup for the surviving device.
+vxlan_na_create() samples LL_RESERVED_SPACE() to size the reply skb and then
+samples it again to reserve headroom. A concurrent vxlan_changelink() can
+update needed_headroom between the two reads, creating a TOCTOU race. The
+second value can exceed the allocation and make the Ethernet header write out
+of bounds.
 
-If parameter validation fails after collect_md is set, deleting the
-modified device can also clear an entry it never owned.
+The race is reproducible on the unpatched kernel. It occurred when
+vxlan_na_create() generated a neighbour reply while vxlan_changelink() changed
+the link headroom. KASAN caught a four-byte write two bytes beyond a 704-byte
+skbuff_small_head allocation.
 
-Reject enabling metadata mode in both changelink callbacks before any
-encapsulation or tunnel parameters are modified. Allow requests that
-repeat the metadata attribute on an existing metadata device.
+Snapshot the headroom once and use that value for both allocation and
+reservation.
 
-Fixes: 2e15ea390e6f ("ip_gre: Add support to collect tunnel metadata.")
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260921031859.9283-1-xuanqiang.luo@linux.dev
+Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Link: https://patch.msgid.link/20260918032842.502409-2-sanghyun.park.cnu@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/vxlan/vxlan_core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index f344e9bb31fbb..5c5ea36584bf9 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1449,6 +1449,12 @@ static int ipgre_changelink(struct net_device *dev, struct nlattr *tb[],
- 	if (!rtnl_dev_link_net_capable(dev, t->net))
- 		return -EPERM;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index b14dbc6892078..f612def46c3c4 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -1979,13 +1979,15 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+ 	struct ipv6hdr *pip6;
+ 	u8 *daddr;
+ 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
++	int headroom;
+ 	int ns_olen;
+ 	int i, len;
  
-+	if (data && data[IFLA_GRE_COLLECT_METADATA] && !t->collect_md) {
-+		NL_SET_ERR_MSG(extack,
-+			       "Enabling collect_md on an existing device is not supported");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
-@@ -1481,6 +1487,12 @@ static int erspan_changelink(struct net_device *dev, struct nlattr *tb[],
- 	if (!rtnl_dev_link_net_capable(dev, t->net))
- 		return -EPERM;
+ 	if (dev == NULL || !pskb_may_pull(request, request->len))
+ 		return NULL;
  
-+	if (data && data[IFLA_GRE_COLLECT_METADATA] && !t->collect_md) {
-+		NL_SET_ERR_MSG(extack,
-+			       "Enabling collect_md on an existing device is not supported");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	err = ipgre_newlink_encap_setup(dev, data);
- 	if (err)
- 		return err;
+-	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
++	headroom = LL_RESERVED_SPACE(dev);
++	len = headroom + sizeof(struct ipv6hdr) +
+ 		sizeof(*na) + na_olen + dev->needed_tailroom;
+ 	reply = alloc_skb(len, GFP_ATOMIC);
+ 	if (reply == NULL)
+@@ -1993,7 +1995,7 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
+ 
+ 	reply->protocol = htons(ETH_P_IPV6);
+ 	reply->dev = dev;
+-	skb_reserve(reply, LL_RESERVED_SPACE(request->dev));
++	skb_reserve(reply, headroom);
+ 	skb_push(reply, sizeof(struct ethhdr));
+ 	skb_reset_mac_header(reply);
+ 
 -- 
 2.53.0
 
