@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793FA51357D;
-	Wed, 30 Sep 2026 16:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C89513555;
+	Wed, 30 Sep 2026 16:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786657; cv=none; b=Bp9CzJsrKlknFOtgBLD1qLyZLenQlpZVJeO8T6QZWDsI5+0pxOo5zGe7lRFgfvPE1EJ7uleg+JwxTKJGRbxcNCBrSLDgDOOYOJJ2Gy1MaisXDMd2w5+P+Pkugt5lx8/5mwt3sTYxlHaLwWdNO01Xv59OncZ8d/2eXojE7vs3l0Y=
+	t=1790786660; cv=none; b=DhGF3WPirJGdoSQUyeG1yUlnx3W4FLb1yaHs7DsxOyNnNo1mp78KTGI3akYOYymZSB8udAwU+cGLtlvU2zg7elbebS1LUxvCtqn+QFFbRptzpoPqx2EP0vH6j3QM2DYa2fMPTqKdZvERDyX8QJ11IkPPXPdsn5AioGkj1QXCIjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786657; c=relaxed/simple;
-	bh=coQ5/e+qM5q9Y+DAeryei6Yadtk2OI8I3kGZPBTEyX4=;
+	s=arc-20240116; t=1790786660; c=relaxed/simple;
+	bh=4kcVrTCugBFqkjrx1JzOqOvfLZ8j6vDGcnmaflwCZzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1CDrrE0TvjOvijAS4Pj5ZvRXPr+eC4ntBhbWpDgn6xZK4riwggNVze169jzrb7sdM484SR1jxEoQ0gAEL/gbjAaxXPPPxwaza+uFELzznWtLeN/0Y6P0iFOZyv+I5TUtIi9neTAGFJZCfAB0vm+RgqXYs6+83+8pNct83jHISo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuvhsRr8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDMRHZggTuUIXUDMaknfF/Fu+eohjJSII1GKyGzQAJlLVbUS9yBsTZWgSJbR00OdHtzs4h11vJh1JguXrjl7oxFZE+GIQKrCn9ZPYQgjX+fIrgpIebu/DbsuOqTBz7/5xRs8T2RVc1Sp7TVJy3S4+1hIlydFk6PKmfUh/OPX/YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXXMXvPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuvhsRr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4B71F000FF;
-	Wed, 30 Sep 2026 16:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXXMXvPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A5F1F000FF;
+	Wed, 30 Sep 2026 16:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786656;
-	bh=JNUeS8EC7lfLorc8QzF+fHPq19CJ9msmIMTlxaSs3Mo=;
+	s=korg; t=1790786659;
+	bh=jl6gGD+YNyn6ycayWQkwYuqhu5/T10Y2j7Pfy4D9jKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kuvhsRr8kHdubW6/1ibwl3dBDAcowuzhS5VI8mQ4HZ+MFsT2A5Lk/CYuqbaKrihhL
-	 iWJMTKpL7XO7SrMpOoJomZ+G6IWfLu1wv5mxWzBILhmVq2hoHpvhPLKh8l9fwirl4P
-	 oJMtPLsyje/1TwkCcz3+xSBIaglq0YFw7Cgderyg=
+	b=vXXMXvPxpfU1IlCLNZnqXtDEtddgRle8pukbgUPWT79Ave5fItXGFVq5KQP3oIzd8
+	 L8IBwHZlNkMrNkECakj2yP67f7hazDFgmcNxuS6ophTrxL/N9YfyEpGEjkJZOW2S7x
+	 V30dVB3VfCJXWOpnPK27lLg+QjkSV75ijrgfiw2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 940/982] drm/amdgpu: Fix last_update fence leak in amdgpu_vm_init()
-Date: Wed, 30 Sep 2026 17:27:56 +0200
-Message-ID: <20260930152436.930976010@linuxfoundation.org>
+Subject: [PATCH 6.1 941/982] drm/amdgpu: Fix runtime PM leak in amdgpu_debugfs_test_ib_show()
+Date: Wed, 30 Sep 2026 17:27:57 +0200
+Message-ID: <20260930152436.951975991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,39 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit b4f7b4459b1b155e4c4977a6482b5df2cf08758c upstream.
+commit 2b86ab1bd6673c525adda88819d7658ba9e784ec upstream.
 
-amdgpu_vm_init() initializes vm->last_update, vm->last_unlocked and
-vm->last_tlb_flush with references to the stub fence taken via
-dma_fence_get_stub().  The error label at the end of the function
-releases the last_unlocked and last_tlb_flush references with
-dma_fence_put(), but the reference stored in vm->last_update is never
-dropped, so whenever the page table root creation, the reservation of
-the root BO or the PASID registration fails, the stub fence reference
-leaks.
+amdgpu_debugfs_test_ib_show() resumes the device with
+pm_runtime_get_sync() before taking the reset domain semaphore with
+down_write_killable().  If the write lock acquisition is interrupted,
+the function returns without calling pm_runtime_put_autosuspend(),
+leaking the runtime PM reference acquired for the device and keeping
+the GPU awake.
 
-Drop the vm->last_update reference together with the other stub fence
-references on the error path.
+Drop the runtime PM reference on the interrupted down_write_killable()
+error path before returning.
 
-Fixes: 187916e6ed9d ("drm/amdgpu: install stub fence into potential unused fence pointers")
+Fixes: 6049db43d6dd ("drm/amdgpu: change reset lock from mutex to rw_semaphore")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e7979c84fc05a176bdf855ee664871b1648404c9)
+(cherry picked from commit ec30a576c2d4c0364549e6c04218f50704ef56c8)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2135,6 +2135,7 @@ error_free_root:
- 	vm->root.bo = NULL;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -1494,8 +1494,10 @@ static int amdgpu_debugfs_test_ib_show(s
  
- error_free_delayed:
-+	dma_fence_put(vm->last_update);
- 	dma_fence_put(vm->last_tlb_flush);
- 	dma_fence_put(vm->last_unlocked);
- 	drm_sched_entity_destroy(&vm->delayed);
+ 	/* Avoid accidently unparking the sched thread during GPU reset */
+ 	r = down_write_killable(&adev->reset_domain->sem);
+-	if (r)
++	if (r) {
++		pm_runtime_put_autosuspend(dev->dev);
+ 		return r;
++	}
+ 
+ 	/* hold on the scheduler */
+ 	for (i = 0; i < AMDGPU_MAX_RINGS; i++) {
 
 
