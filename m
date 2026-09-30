@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39C13749F6;
-	Wed, 30 Sep 2026 16:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6744E324C;
+	Wed, 30 Sep 2026 16:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786125; cv=none; b=h5GM6jhSIKzJIYzl3D96s5oGI3gmXL+I/nebdvGZ3g6nabH0cghMvUZ5XKRjeB++J3DVi0xzpQWTBPQ7/ZMAP17fWi6esXkCJjh+EsoG6TbDl7YN86tY39T9u9Uazhi8WxtL3ZT/s+iVo8/TNxuCgTaTh3cCh2X9jJ98KNraGPQ=
+	t=1790786128; cv=none; b=HONXpoA1Vv7s18UYJEeKnW5bqV9jAFp8pqfYRBnAPJ5Kr6UxCxiTcLQQme6oiFeV+gOAIfDX15obD7+19sI4KOBH4Ss33bAwY0CUKS0l1DQKAWrjQPVemwKIjQVBE2CxtJZFmpK8CtzYpE0p0er2OIDNq7a3LZIg5qSC2ARUIr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786125; c=relaxed/simple;
-	bh=EzEqQbBx6ERA6r054ld5Jp6vLjqOdtGMsoI59qgN9j0=;
+	s=arc-20240116; t=1790786128; c=relaxed/simple;
+	bh=29v1yPbS2BUFU9fqZwvZtd1sXvxoS33EoCq1RBif85k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HP6FswV6mQRhDr/N7Nq4UgiBl0pcxoRV85sNyt/LgpCgIj08IbNJseLsC+kEiAVaqKV0WvzEYf/cYOmyULcpvGxi602Gc1czwZ2THtufnUSbYwcyv/P8xP+LAtki/hYW1TpSs9FSKKaGOMCNTeNazfpU+aYtLBhdN/eB0nwrqfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w47ZUthw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TQGt2ZdRKSnJjQDyftMOUFOskS8mT7nV9GIUKBxvq3t+mB7Pp1eNrut4Zd9fTQXYYuOBmAHthJ7meMz/pLe76PzT04Nkv2XJAX9j1UxUrO06WblXT9N5FxD8rHXKNq4TVuPFSLdkq+7LSFNlLWDrWMw1kxN82jD3JvSUacdF520=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qd9GVSCV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w47ZUthw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585771F00893;
-	Wed, 30 Sep 2026 16:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qd9GVSCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3119E1F000FF;
+	Wed, 30 Sep 2026 16:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786123;
-	bh=HLIRXE+3VlE7DFwie+SZ6puazkKjOm2vGrfyEku9gic=;
+	s=korg; t=1790786126;
+	bh=Fr4gPZBpro4zsHIjdWdOnRKf5TYijLtk7b6O4sbGE0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w47ZUthwlfYRzT86SmFq8GlPD9UiseUuWRfnE/fyr3BYau3VVIaWMkTrwFrHuoCWa
-	 KCsnVEDxpGT53K/jUYlGHnNQyXPqM3LgPfEeCX0YgKNBTXoO5VmS9qkvKiqAO4eCFa
-	 v+6DGIU4xqlsysEYUj/oVdD8PmBzj7vqv+U8rpsw=
+	b=qd9GVSCVD8+PHKMxXUM3o8XTiBuGGeH7zusx+EBoMKnsby2Aot06jpOUQV+s2Lm4u
+	 HZ2S9NfeANj0qRM9nQcVA98676A1wTTFKnDdx9LzF97HTyCPbscnhrfqOdflObgPSN
+	 kf/yNrjJxpyLOtETqQHr9/DkLB9Vx3asp4lHFP9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 752/982] hwmon: (w83791d) remove fan/pwm 4-5 sysfs group on remove
-Date: Wed, 30 Sep 2026 17:24:48 +0200
-Message-ID: <20260930152432.905932722@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.1 735/982] mmc: sdio_uart: fix xmit_fifo leak when the port table is full
+Date: Wed, 30 Sep 2026 17:24:31 +0200
+Message-ID: <20260930152432.542113094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,46 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 0ff9c7775e51ac6d47b1bb5c46f06b1434fe58a8 upstream.
+commit 53823e25793a97d07e6e98e0904bbf74cac8bc76 upstream.
 
-When the fan/pwm 4-5 pins are not used as GPIO, w83791d_probe()
-creates the w83791d_group_fanpwm45 sysfs group on the I2C client
-device.
+sdio_uart_add_port() allocates the transmit fifo before claiming a
+slot in sdio_uart_table[].  When all UART_NR slots are taken, it
+returns -EBUSY with the fifo still allocated, but the probe error
+path only kfree()s the port, leaking the transmit fifo.
 
-The probe error path removes this group when a later initialization
-step fails, but the normal remove path only removes w83791d_group.
-As a result, the optional fan/pwm 4-5 sysfs files can remain after the
-driver is unbound.
+Free the fifo in the failure path of sdio_uart_add_port() itself so
+the function retains nothing on error.
 
-The callbacks associated with these files access the driver data,
-which is devm allocated and released after driver unbind. Leaving the
-sysfs files behind can therefore result in accesses to stale driver
-data.
-
-Remove w83791d_group_fanpwm45 during normal teardown as well.
-
-This issue was found by manual code inspection.
-
-Fixes: 6e1ecd9b8f13 ("hwmon: (w83791d) fan 4/5 pins can also be used for gpio")
+Fixes: 8b197a5ce7a7 ("sdio_uart: Use kfifo instead of the messy circ stuff")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260914062809.1650538-1-lgs201920130244@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/w83791d.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/core/sdio_uart.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwmon/w83791d.c
-+++ b/drivers/hwmon/w83791d.c
-@@ -1415,6 +1415,7 @@ static void w83791d_remove(struct i2c_cl
- 	struct w83791d_data *data = i2c_get_clientdata(client);
+--- a/drivers/mmc/core/sdio_uart.c
++++ b/drivers/mmc/core/sdio_uart.c
+@@ -104,6 +104,9 @@ static int sdio_uart_add_port(struct sdi
+ 	}
+ 	spin_unlock(&sdio_uart_table_lock);
  
- 	hwmon_device_unregister(data->hwmon_dev);
-+	sysfs_remove_group(&client->dev.kobj, &w83791d_group_fanpwm45);
- 	sysfs_remove_group(&client->dev.kobj, &w83791d_group);
++	if (ret)
++		kfifo_free(&port->xmit_fifo);
++
+ 	return ret;
  }
  
 
