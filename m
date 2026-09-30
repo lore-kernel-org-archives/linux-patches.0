@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BAA4BD7BC;
-	Wed, 30 Sep 2026 18:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394E44D9540;
+	Wed, 30 Sep 2026 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793979; cv=none; b=XB5lFHYHuF0Qhs2BQ3E7+EWs61hm1Y+T1Q1j3taQzhc89OJYIpRtN6uXQUodVQmBGqoCwHL6f7rLdz2zFrHzpDzFcqVYwaAtxtKzPxNhi6rckZFI9z3OWOj1It0QT5wpSEr4bFko5Hr4KdSr/gLqD13nJf58/OB5TbJ4XB/AHRg=
+	t=1790793982; cv=none; b=kv15okAuyu2nfkpG/C20ZtUS48pw9HYls6MzxPyANgL/2UhNpi5iyyw/ebkcHzfUIUUN1NZmuOnDNA7XJEp6zuy61gCz6zT15ufAuQZhVFpFTcO5vas3Yx2MbVU5ebXJuPzLQytKYCLiF1o3dEnhqRVXPTBnhmoXr3lcWAnIgpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793979; c=relaxed/simple;
-	bh=ih2+IKlpG7Ghe03T/Q7DWKegcJBphQYWudt8rpD+WB0=;
+	s=arc-20240116; t=1790793982; c=relaxed/simple;
+	bh=G3iLdUJBWVti2ZceXAYzCB20UFduyrMB+W34/G7CiA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+iCRsfskeWZFB1zDWYX5dgW5XZM9jBpfjdkrQN6YCwg5uxx1tfinj0+UpcHaze0Evlc0ZS57GH0uFKe6Q6uNctKFKuwmxA41St/oglCG8XSONg32dU6cT2ld3qdX3fGbcY3Sj8a2i4np0nxZMy/2RGIH95wszdcEIGprCgJ0kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17xAWhTJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rtMrLAjpDKuE9pIE65R/kYXUtsICFLnqVdHJ1F9jXbTu/ULtRwaP6g8EsCg8UUHOcPz7lWq5MVz8paQ3MigsA/11EpDKI3YJIVo8gUWvRVdoyAsgb3K1CHraQ0eONO8TVSyOZMSv4uweEiYlpKcDLGnIQPKeM6E+2CiuTI4JyNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9LDdh7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17xAWhTJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786581F000FF;
-	Wed, 30 Sep 2026 18:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9LDdh7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A5E1F000FF;
+	Wed, 30 Sep 2026 18:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793978;
-	bh=iIaKE7GEicMcHkVwmxTt3bA1DbTkD0wM4D2NIA8v1oE=;
+	s=korg; t=1790793980;
+	bh=pFjqdwfPrwMgkdcE7C3h7KUPzUE4kQLZ2feF/lT34Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17xAWhTJdoKLU8eHcNf8TlFcPpqcg8OjiS2XT0CYXWyEo1zOswQRam1j7V31Qan9j
-	 iK0rAP7g7LmKV989woKGvycO+7zLK+hSrB/V3mGKBrUOq82bmSly2bYXia3RFvrWTQ
-	 S+JHMTbYcgG4t2e3i3R4YILS7xhmdR7TigKKyIGI=
+	b=O9LDdh7YDOvWYRrdO0bVPRDoBc8e+NUosn7JfzjXkD+1mfb+Kw6aJvFGZruaeZDgt
+	 FKyDaNnN+iBn7JFUGJtwBjqrFXrlRqGlGxcIeGO4L7o/JMr6czh+l7tfMh+lv/P7te
+	 uTTOSzEDkfztVDbbbDPjYbeXIUJhH0i9WT0T45PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0047/1193] wifi: rtw89: phy: check length before parsing PHY status IE
-Date: Wed, 30 Sep 2026 17:12:11 +0200
-Message-ID: <20260930152435.327855996@linuxfoundation.org>
+Subject: [PATCH 6.6 0048/1193] net: dsa: realtek: rtl8365mb: add support for RTL8367SB
+Date: Wed, 30 Sep 2026 17:12:12 +0200
+Message-ID: <20260930152435.348578351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
 
-[ Upstream commit 884495c39de1a02f42bd40051b921e2311d6ac91 ]
+[ Upstream commit 28702a215c96917d85558ad6309a57ab224808c0 ]
 
-Hardware might report PHY status IE with unexpected length, and parser
-might access out of range. Check the length ahead.
+Add chip info entry for the Realtek RTL8367SB switch. This device has
+chip ID 0x6367 and version 0x0010. It exposes two external interfaces:
+port 6 supports MII, TMII, RMII, RGMII, SGMII and HSGMII, while port 7
+supports MII, TMII, RMII and RGMII. Use the existing 8365MB-VC jam table
+for initialization.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260506131000.1706298-12-pkshih@realtek.com
+Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+Link: https://patch.msgid.link/3c6d822b-0e85-4173-86ba-2badb140bbf1@yahoo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/dsa/realtek/rtl8365mb.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index c172ef13c9540..a31bfb81818cd 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -1423,13 +1423,15 @@ static int rtw89_core_rx_parse_phy_sts(struct rtw89_dev *rtwdev,
- 		const struct rtw89_phy_sts_iehdr *iehdr = pos;
- 
- 		ie_len = rtw89_core_get_phy_status_ie_len(rtwdev, iehdr);
--		rtw89_core_process_phy_status_ie(rtwdev, iehdr, phy_ppdu);
- 		pos += ie_len;
- 		if (pos > end || ie_len == 0) {
- 			rtw89_debug(rtwdev, RTW89_DBG_TXRX,
- 				    "phy status parse failed\n");
-+
- 			return -EINVAL;
- 		}
-+
-+		rtw89_core_process_phy_status_ie(rtwdev, iehdr, phy_ppdu);
- 	}
- 
- 	rtw89_phy_antdiv_parse(rtwdev, phy_ppdu);
+diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
+index 625d1d4d17a20..c7659a1d3be3b 100644
+--- a/drivers/net/dsa/realtek/rtl8365mb.c
++++ b/drivers/net/dsa/realtek/rtl8365mb.c
+@@ -541,6 +541,20 @@ static const struct rtl8365mb_chip_info rtl8365mb_chip_infos[] = {
+ 		.jam_table = rtl8365mb_init_jam_8365mb_vc,
+ 		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
+ 	},
++	{
++		.name = "RTL8367SB",
++		.chip_id = 0x6367,
++		.chip_ver = 0x0010,
++		.extints = {
++			{ 6, 1, PHY_INTF(MII) | PHY_INTF(TMII) |
++				PHY_INTF(RMII) | PHY_INTF(RGMII) |
++				PHY_INTF(SGMII) | PHY_INTF(HSGMII) },
++			{ 7, 2, PHY_INTF(MII) | PHY_INTF(TMII) |
++				PHY_INTF(RMII) | PHY_INTF(RGMII) },
++		},
++		.jam_table = rtl8365mb_init_jam_8365mb_vc,
++		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
++	},
+ 	{
+ 		.name = "RTL8367RB-VB",
+ 		.chip_id = 0x6367,
 -- 
 2.53.0
 
