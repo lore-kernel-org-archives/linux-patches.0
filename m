@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EB84F3924;
-	Wed, 30 Sep 2026 17:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B9F314A86;
+	Wed, 30 Sep 2026 17:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788797; cv=none; b=ROt83MfQ030qoSbeDu7kPtWnBVayJqKy9lIktUtG3aFZIswSlGyi2T+9fujTWfT+GYIDRsCRzWLNpGsSv6a1iehK1reP4yRf0MjJDgBCjX1SS7udJ8du+YNxtZ4/v/soNonNFqsenYiAxqR4RBWRRNeK2RMF/S+KAsnc7oN9bE0=
+	t=1790788800; cv=none; b=YqF1Elrgcw5G3JYzz2+RGGK6puQD730YHsohdc/gofH3+FMhr+W1yLXRLcuhQGLHfa7uzIrNNg1Tiq0+haKZsfGIFPZ1wgAnbibMiX3OC51OZg7ZPZ1XaxXu12JAj+R8i7SgjiqmWmE5PnapZ35UYseK0RXqvpl0c7FGMnoBy7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788797; c=relaxed/simple;
-	bh=hPAqLvJPvPI8vouYqhgkug2cCdhy1LYitgpBWFo57kA=;
+	s=arc-20240116; t=1790788800; c=relaxed/simple;
+	bh=693s2Jg4t0/XGNN6j5fEFoaAz1c95eelfrt8S1wzR6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tv9Se8XKeNFWdTUxbH4YJfxFOktKyW7K3GGRoMSd1m20C3I8QzWlc/abP8hRXUo/viU454/N9/ypXm0q9IzCeR2BCnjrOp2l6TXWi/9NaNcLVrm7lp69hV466ME0kkA8rxbdAL3A2DuZBW9gTxpv4ATasO97deA34PINd0d/D7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkzLgl/w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PQwM8E4fFSVKrudKjY3UqfeBpwhSRCg4y3Pix2HdBnx3Tg6YzQOIr6aa/j2kYNBqAUtgKf/2XIjC0isicq4Vo9b1bnGfq7jN3frVnupG145okNg4G2H+F/vR5n9TM2/Z3QJ5yV09P3gzQDTJeLw/ax0AdU5X8L6jODewPJ62Mxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5GuEjDO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkzLgl/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3091F00898;
-	Wed, 30 Sep 2026 17:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5GuEjDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315FA1F000FF;
+	Wed, 30 Sep 2026 17:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788795;
-	bh=7W7o0qfV7FK97JP7OxurKwsCiEc6JSe3dhbuvlUMJDM=;
+	s=korg; t=1790788798;
+	bh=qd7LZivCUew2Gf4sDBW9HTwAfMlVzIVr5pLH9kv2XJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rkzLgl/wfYe0hef3gXqlmX7q1FMW/+DccF3GjDwBnLjN0hNY3f3zTEk6a9xIrqnjh
-	 nJ7W1JPg2aEQp5nPYaigj7ETgQAQsn/59x2gq7i1foFtvWyAV2TwkErQDRyVm35Lvt
-	 SgTV4JOeS9mCNskACgH5hE4JIVtUp2tq/2JH0AXE=
+	b=L5GuEjDOyI49tkfSeOkFLS5izm1DS1/InLjr4tvHWjtfb7P5rOW+bCn1V5hZCWpn7
+	 1BDjBd+Fd4NeU19gmaznuzKGugY+tLvZbFSC3PE0Mc6/1bjWnz6/ZkIChtgheTqhsN
+	 TG2FZ4QzLBLtMkhpRf5oMbwz+EHGUskTmUPK6IQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 249/877] hwmon: (pmbus/tps53679) Select page 0 for single-page TPS53676
-Date: Wed, 30 Sep 2026 17:19:20 +0200
-Message-ID: <20260930152420.095879981@linuxfoundation.org>
+Subject: [PATCH 6.12 250/877] hwmon: (w83791d) remove fan/pwm 4-5 sysfs group on remove
+Date: Wed, 30 Sep 2026 17:19:21 +0200
+Message-ID: <20260930152420.117727725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,45 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 089070b51ccbac411462a30a454690274c6e4270 upstream.
+commit 0ff9c7775e51ac6d47b1bb5c46f06b1434fe58a8 upstream.
 
-tps53676_identify() derives the number of PMBus pages but does not
-ensure that page 0 is selected for single-page configurations.
-pmbus_set_page() does not update the PAGE register when info->pages is
-1, so if boot firmware leaves PAGE set to another value subsequent
-register accesses may target the wrong page.
+When the fan/pwm 4-5 pins are not used as GPIO, w83791d_probe()
+creates the w83791d_group_fanpwm45 sysfs group on the I2C client
+device.
 
-For single-page devices, select page 0 explicitly.
+The probe error path removes this group when a later initialization
+step fails, but the normal remove path only removes w83791d_group.
+As a result, the optional fan/pwm 4-5 sysfs files can remain after the
+driver is unbound.
 
-Fixes: cb3d37b59012 ("hwmon: (pmbus/tps53679) Add support for TI TPS53676")
+The callbacks associated with these files access the driver data,
+which is devm allocated and released after driver unbind. Leaving the
+sysfs files behind can therefore result in accesses to stale driver
+data.
+
+Remove w83791d_group_fanpwm45 during normal teardown as well.
+
+This issue was found by manual code inspection.
+
+Fixes: 6e1ecd9b8f13 ("hwmon: (w83791d) fan 4/5 pins can also be used for gpio")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://patch.msgid.link/20260916235406.681131-2-sanman.pradhan@hpe.com
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260914062809.1650538-1-lgs201920130244@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/tps53679.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hwmon/w83791d.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/pmbus/tps53679.c
-+++ b/drivers/hwmon/pmbus/tps53679.c
-@@ -181,6 +181,15 @@ static int tps53676_identify(struct i2c_
- 	if (phases_b > 0) {
- 		info->pages = 2;
- 		info->phases[1] = phases_b;
-+	} else {
-+		/*
-+		 * pmbus_set_page() does not update the PAGE register on
-+		 * single-page devices, so select page 0 explicitly in case
-+		 * the boot firmware left the device on another page.
-+		 */
-+		ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 0);
-+		if (ret < 0)
-+			return ret;
- 	}
- 	return 0;
+--- a/drivers/hwmon/w83791d.c
++++ b/drivers/hwmon/w83791d.c
+@@ -1415,6 +1415,7 @@ static void w83791d_remove(struct i2c_cl
+ 	struct w83791d_data *data = i2c_get_clientdata(client);
+ 
+ 	hwmon_device_unregister(data->hwmon_dev);
++	sysfs_remove_group(&client->dev.kobj, &w83791d_group_fanpwm45);
+ 	sysfs_remove_group(&client->dev.kobj, &w83791d_group);
  }
+ 
 
 
