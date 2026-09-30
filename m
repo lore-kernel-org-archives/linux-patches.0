@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E666516149;
-	Wed, 30 Sep 2026 16:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEF051597D;
+	Wed, 30 Sep 2026 16:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787170; cv=none; b=bBOHFJVZQYdyIyrCJZGRsv0yOtyoEypcNIXKs/+TW5CaTxHFd/A/eK2OlMo/o2a0dzZ82/jfW4f56hg3O/Su611jdthhoAIvcjwKNulcJQ3MoyssGYzpoU90SHBRDAJZfBua6xaBJrB9bk0w2YlYxiYGMJmwlTMsyVNcYPzkkz8=
+	t=1790787173; cv=none; b=YI5js3qFYdLBDofhrBC3bqUvkU01XWf7gKuJAvA6Ep+6Ab69nJDsJvp5dbnR12Vz89aDqg5obzNYyMF2Cf21yMjSM3r4YlwAXV4NLemrmCnJRTNrCRaG9MEQ3EnNugn/wCx6Nrolumnb+JFwD68iqy5n4DvH2m4hJkDFgaqORyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787170; c=relaxed/simple;
-	bh=lG6P/V6LqgRQ6vTm5CWracjiMhwgIXn28G9bTj6S+Mk=;
+	s=arc-20240116; t=1790787173; c=relaxed/simple;
+	bh=hjEVaExrotJOpazsJTFE/R3brt4v3gGn4JkVr0QjKFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3bHFJeMcN3S3dV5L4SvDC2vPE17UnnOHJfmTpgfn/ec70wqGkhqd0UC50Ib9i/axpKd7GdcYMrmvbuDRTYLuJd70N9PfVUDZ7tpc3ge7jU2sPhTTFQrE8V4VpTAmz/awnBtBppbIUFhoBjkC53uvdKuDNSpb2kHhfX2Y7mUFrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcFqnVqg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fGGWxtN5SxLgQBM75aSJBz3C2zM8mqd2G4ZpsyYJhAK4P8c4MLMSodpjHlUZgZlR09cSTsS5jDbYPNWajj/iQcNmsJw5+1mgc1uYjw+pIbWageXs6m2HDC5Pyxu8yDmL/DabUxSY+i3mV6Xbc6VgjXTVHH5mOdqaHMsv4RE3O8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wo3LsGRm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcFqnVqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687F61F000FF;
-	Wed, 30 Sep 2026 16:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wo3LsGRm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3894E1F000FF;
+	Wed, 30 Sep 2026 16:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787169;
-	bh=rsGpqnVTMnLHz1V8MBj8wvwPvJkjPhx0Mdz4CmSZRwo=;
+	s=korg; t=1790787171;
+	bh=ssRQZ5XkmhtJl7WYRBzNUMc+DZS6pTu9co8HKkPJ+dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GcFqnVqgpXaZVKHbKQ+pAWs8003XD7w+MWnsTlMBsAnp2tZk74tZ5epPwxopdwWfd
-	 B2lQ4iCyBUSSx2n8PA7bJjsOT/O95t9qMN1asxwtm1dcc1oS/hf1GZCOENblZmBoY7
-	 8TkDbG8dICwC7xqZHczHUT1wf0PGoHQ3InZvxMnM=
+	b=Wo3LsGRmkHeRZrOzNmFy1B4Fefuf+JcGNvYrMZacy8Wfj4d++iMnSvWNUMd0yhkr9
+	 ltySjWh8C5AjgSs5HRIs/YP0HUYIVbEau1U00fVoMO+4kiSLqmIJ3Y51ETcHsbXuMD
+	 pGu7CtPfOXOhdNA3zuN+uDQZUAgLl5OZyt0qOAA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Pengpeng Hou <hppiscas@163.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 135/457] net: usb: sr9700: include receive overhead in the length check
-Date: Wed, 30 Sep 2026 17:24:00 +0200
-Message-ID: <20260930152348.959699112@linuxfoundation.org>
+Subject: [PATCH 7.2 136/457] ipv6: Fix dst leak for uncached routes.
+Date: Wed, 30 Sep 2026 17:24:01 +0200
+Message-ID: <20260930152348.983004292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,47 +55,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit c06bde80ae7a7b595732f7cabcb92cf08db9d56a ]
+[ Upstream commit be31fe6333f534155e6b408f1ef6d77974bb41aa ]
 
-The receive fixup subtracts the Ethernet CRC from the reported packet
-length, but compares that payload length against the whole remaining
-receive buffer. The following copy starts after the three-byte header,
-and the cursor advance consumes both that header and the four-byte CRC.
+ip6_route_output_flags(), ip6_rt_put_flags(), and ip6_dst_check()
+detect an uncached route by list_empty(&rt->dst.rt_uncached),
+which replaced the static DST_NOCACHE flag check in commit
+a4c2fd7f7891 ("net: remove DST_NOCACHE flag").
 
-Require the payload to fit after SR_RX_OVERHEAD before copying it or
-advancing to the next packet. The loop already ensures that the
-remaining buffer is larger than the overhead, so the subtraction is
-safe.
+When a device is unregistered, rt6_uncached_list_flush_dev()
+unlinks uncached routes tied to the device from rt6_uncached_list.
 
-The issue was found by our static-analysis tool.
+Previously, they were moved to another list with list_move()
+(__list_del_entry() + list_add()), and since commit 98aa546af5e4
+("inet: remove (struct uncached_list)->quarantine"), the routes
+are just unlinked with list_del_init().
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Reviewed-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Tested-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Link: https://patch.msgid.link/20260920034745.18468-1-hppiscas@163.com
+If list_del_init() runs concurrently, list_empty() evaluates to
+true; ip6_route_output_flags() calls dst_hold_safe() incorrectly
+and ip6_rt_put_flags() skips ip6_rt_put(), leaking dst, and thus
+dev tied via rt->from as well.
+
+The same race is partially fixed by commit 9a6f0c4d5796 ("dst:
+fix races in rt6_uncached_list_del() and rt_del_uncached_list()").
+
+Let's check rt6->dst.rt_uncached_list instead.
+
+Note that IPv4 does not have the same issue.
+
+Fixes: 98aa546af5e4 ("inet: remove (struct uncached_list)->quarantine")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260920191558.2990636-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/ip6_route.h | 4 ++--
+ net/ipv6/route.c        | 7 ++++---
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 937e6fef3ac6d..50981a28376a5 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -355,7 +355,8 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		/* ignore the CRC length */
- 		len = (skb->data[1] | (skb->data[2] << 8)) - 4;
+diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
+index 745ab62154ace..0a6c4ceb95a7a 100644
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -101,12 +101,12 @@ static inline struct dst_entry *ip6_route_output(struct net *net,
+ }
  
--		if (len > ETH_FRAME_LEN || len > skb->len || len < 0)
-+		if (len > ETH_FRAME_LEN || len < 0 ||
-+		    len > skb->len - SR_RX_OVERHEAD)
- 			return 0;
+ /* Only conditionally release dst if flags indicates
+- * !RT6_LOOKUP_F_DST_NOREF or dst is in uncached_list.
++ * !RT6_LOOKUP_F_DST_NOREF or dst is uncached.
+  */
+ static inline void ip6_rt_put_flags(struct rt6_info *rt, int flags)
+ {
+ 	if (!(flags & RT6_LOOKUP_F_DST_NOREF) ||
+-	    !list_empty(&rt->dst.rt_uncached))
++	    rt->dst.rt_uncached_list)
+ 		ip6_rt_put(rt);
+ }
  
- 		/* the last packet of current skb */
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index c94ad52d03f24..8fddcc631fcb6 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -139,6 +139,7 @@ void rt6_uncached_list_add(struct rt6_info *rt)
+ {
+ 	struct uncached_list *ul = raw_cpu_ptr(&rt6_uncached_list);
+ 
++	/* Set once and never cleared: non-NULL marks an uncached route. */
+ 	rt->dst.rt_uncached_list = ul;
+ 
+ 	spin_lock_bh(&ul->lock);
+@@ -2726,8 +2727,8 @@ struct dst_entry *ip6_route_output_flags(struct net *net,
+ 	rcu_read_lock();
+ 	dst = ip6_route_output_flags_noref(net, sk, fl6, flags);
+ 	rt6 = dst_rt6_info(dst);
+-	/* For dst cached in uncached_list, refcnt is already taken. */
+-	if (list_empty(&rt6->dst.rt_uncached) && !dst_hold_safe(dst)) {
++	/* For an uncached dst, refcnt is already taken. */
++	if (!rt6->dst.rt_uncached_list && !dst_hold_safe(dst)) {
+ 		dst = &net->ipv6.ip6_null_entry->dst;
+ 		dst_hold(dst);
+ 	}
+@@ -2836,7 +2837,7 @@ INDIRECT_CALLABLE_SCOPE struct dst_entry *ip6_dst_check(struct dst_entry *dst,
+ 	from = rcu_dereference(rt->from);
+ 
+ 	if (from && (rt->rt6i_flags & RTF_PCPU ||
+-	    unlikely(!list_empty(&rt->dst.rt_uncached))))
++	    unlikely(rt->dst.rt_uncached_list)))
+ 		dst_ret = rt6_dst_from_check(rt, from, cookie);
+ 	else
+ 		dst_ret = rt6_check(rt, from, cookie);
 -- 
 2.53.0
 
