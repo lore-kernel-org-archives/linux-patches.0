@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6EE750B8A8;
-	Wed, 30 Sep 2026 18:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF8C4DEC26;
+	Wed, 30 Sep 2026 18:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792315; cv=none; b=gjny3o/NOEJSo+Fs8rZ3fxXnM3MyMZ2cqNLeYqQSAQcODcBWXqe/wUQhe7hDTCZMrNEbxh6M8rD3dYPKOOtDJCwOwNtz1MS0AjGL0RbIhltBK03nIyKZo2BGejseIPuAEBD5/ldAH+xMVeGJmRyWwuzXjCGjt6PBCI77H7MqAKY=
+	t=1790792317; cv=none; b=s2fQM8IlQGo9hwlrenLWeCUUCIXaUp5sgRAQXDJhCYCI2Wgzlr3ePkoUHmp+UudRQ2gGQoovV2EVFBEyYNV7lPCryYhXHd/wWNAHsGXK16h46N9/lzKGDCTpSTiyv2EoTLIuCxlk3S/a4v6FxfL911+cyaC0tukN6EfOxGL3x3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792315; c=relaxed/simple;
-	bh=WLRQuB3YNSdqm9ewZ2WwwzCgS58WOZiv/lu4hI+vYBQ=;
+	s=arc-20240116; t=1790792317; c=relaxed/simple;
+	bh=eXBGbWfMvbkYZ8EVwEZC2rrmpRFFCM6Toa5YWl0wCMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tU6lPuc5I4q16N/ectcHkltD9jsHfgAvXmEdqs5M4tMQ6Di6s2C3eVl3NLVRhRbs8WF07DbG/dvYuw+26BFyoJZVb6PQTYHCLMl4SrTPW3iOwHR+evjdchLOFHg9r6DuRdM8uo+6+U/9EGjGihJRlvYnOylyayknDIsSXSxGYCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNlXGI8H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tF0aetW5lBHnhQMu3SrUlS8Tpt9lfMoEpnH3ymwILIUKBDii6hhnxOaQdO8PTNtsbAx0O9Z+imPwaNSjDe3v6bCdY/aaoAUGMFKtWkwSLmVaeA7Km9RaRWTjSkzwYgvaF+WwmgrZvIljswnYLIi1aRUeh4t5nTXgW2r0DhfNgIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tE587Oqn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNlXGI8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0E01F000FF;
-	Wed, 30 Sep 2026 18:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tE587Oqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EBA1F000FF;
+	Wed, 30 Sep 2026 18:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792313;
-	bh=fS+lGakW2E407P45T5tbeyxzWus4Y8OHOSPxJf/6F2o=;
+	s=korg; t=1790792316;
+	bh=X0NwXxbdNucQcX0dXdzjLdrFxHF5Y6cRnM9/MiOmtn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vNlXGI8HzPVUhTuESUM1P6a0HKwYQfBHp7Oab7EZooNTxesZrASOGB7d29G09BomE
-	 KbmTw4LN/pHYa8TPNSN0ZEcvgKxW45Z6X7cr56um13Zhint3pF0VsdBQgHq1vYpzRh
-	 4AgCPvgtkbL3NgkM1MmrtlBgWoTGhibUz0a0TAgs=
+	b=tE587OqnxxmRvMwE4SLuZqbSFxBU30BFijyuuba71iNHpHHBDs1XJ4uL8Nxyi7U/h
+	 AA7KWt9DDoF7PP10RC8JZxSu6cesJ/OsYbnYNuY++3O3MMzb17KDUuSlR3Ral/l/us
+	 nG1u1WtTMM3QFs9kECJELzmZOHI5YBXyRHunBVWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 556/752] Input: rmi_smbus - fix out-of-bounds read in rmi_smb_write_block()
-Date: Wed, 30 Sep 2026 17:27:06 +0200
-Message-ID: <20260930152410.274416093@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 605/752] Documentation: s390: correct spelling
+Date: Wed, 30 Sep 2026 17:27:55 +0200
+Message-ID: <20260930152411.374338266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,65 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 51cfe54f815ae175c7d1126b983d4d7c89715004 upstream.
+[ Upstream commit ac56c666f80df0b1dc9c3ef53d0798b74629a116 ]
 
-When chunking writes into SMBus blocks in rmi_smb_write_block(), the
-loop calculates block_len using the original total length (len) instead
-of the remaining length (cur_len).
+Correct spelling problems for Documentation/s390/ as reported
+by codespell.
 
-If len is greater than 32 bytes (SMB_MAX_COUNT), block_len remains 32
-for every iteration, even on the final partial chunk where fewer than 32
-bytes remain. This causes smb_block_write() to read 32 bytes from the
-advanced data buffer pointer, reading past the end of the input buffer.
-
-Fix this by calculating block_len using cur_len and advancing the buffer
-and address pointers by block_len.
-
-Fixes: 82264d0cf7ae ("Input: synaptics-rmi4 - add SMBus support")
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: LLM
-Link: https://patch.msgid.link/anLFSMKSoKyyZ272@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230209071400.31476-16-rdunlap@infradead.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: 4525a9110495 ("s390/pci/docs: Fix sriov_numvfs attribute name")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_smbus.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/s390/pci.rst      | 4 ++--
+ Documentation/s390/vfio-ccw.rst | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/input/rmi4/rmi_smbus.c
-+++ b/drivers/input/rmi4/rmi_smbus.c
-@@ -140,7 +140,7 @@ static int rmi_smb_write_block(struct rm
- 	u8 commandcode;
- 	struct rmi_smb_xport *rmi_smb =
- 		container_of(xport, struct rmi_smb_xport, xport);
--	int cur_len = (int)len;
-+	size_t cur_len = len;
+diff --git a/Documentation/s390/pci.rst b/Documentation/s390/pci.rst
+index 8157f0cddbc24..a1a72a47dc960 100644
+--- a/Documentation/s390/pci.rst
++++ b/Documentation/s390/pci.rst
+@@ -51,7 +51,7 @@ Entries specific to zPCI functions and entries that hold zPCI information.
  
- 	mutex_lock(&rmi_smb->page_mutex);
+   The slot entries are set up using the function identifier (FID) of the
+   PCI function. The format depicted as XXXXXXXX above is 8 hexadecimal digits
+-  with 0 padding and lower case hexadecimal digitis.
++  with 0 padding and lower case hexadecimal digits.
  
-@@ -148,7 +148,7 @@ static int rmi_smb_write_block(struct rm
- 		/*
- 		 * break into 32 bytes chunks to write get command code
- 		 */
--		int block_len = min_t(int, len, SMB_MAX_COUNT);
-+		int block_len = min_t(size_t, cur_len, SMB_MAX_COUNT);
+   - /sys/bus/pci/slots/XXXXXXXX/power
  
- 		retval = rmi_smb_get_command_code(xport, rmiaddr, block_len,
- 						  false, &commandcode);
-@@ -161,9 +161,9 @@ static int rmi_smb_write_block(struct rm
- 			goto exit;
+@@ -66,7 +66,7 @@ Entries specific to zPCI functions and entries that hold zPCI information.
  
- 		/* prepare to write next block of bytes */
--		cur_len -= SMB_MAX_COUNT;
--		databuff += SMB_MAX_COUNT;
--		rmiaddr += SMB_MAX_COUNT;
-+		cur_len -= block_len;
-+		databuff += block_len;
-+		rmiaddr += block_len;
- 	}
- exit:
- 	mutex_unlock(&rmi_smb->page_mutex);
+   - function_handle
+     Low-level identifier used for a configured PCI function.
+-    It might be useful for debuging.
++    It might be useful for debugging.
+ 
+   - pchid
+     Model-dependent location of the I/O adapter.
+diff --git a/Documentation/s390/vfio-ccw.rst b/Documentation/s390/vfio-ccw.rst
+index 8aad08a8b8a50..9bcd597e3de6d 100644
+--- a/Documentation/s390/vfio-ccw.rst
++++ b/Documentation/s390/vfio-ccw.rst
+@@ -176,7 +176,7 @@ The process of how these work together.
+    Use the 'mdev_create' sysfs file, we need to manually create one (and
+    only one for our case) mediated device.
+ 3. vfio_mdev.ko drives the mediated ccw device.
+-   vfio_mdev is also the vfio device drvier. It will probe the mdev and
++   vfio_mdev is also the vfio device driver. It will probe the mdev and
+    add it to an iommu_group and a vfio_group. Then we could pass through
+    the mdev to a guest.
+ 
+-- 
+2.53.0
+
 
 
