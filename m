@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C2A34E75A;
-	Wed, 30 Sep 2026 19:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91FB33A6F1;
+	Wed, 30 Sep 2026 19:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795513; cv=none; b=E8JYEoE61qfupwdS6G4w68Ebg+W1n47+uyQVR/MSIHg36aZSD/3q8AuzSa/lteMAriUKFxuMphgJXgBJ4aKnDsjwU/kkLY0l29ykWf4SCs5m7pRmQuCCfT9oAEUjnNYwxwn4Ew4IAqlpTlbS2sQrX5z69RS9nOtQz6JRCUGLDQ4=
+	t=1790795515; cv=none; b=ghbZgTafxviATsJt0jkNW0hZeUeqij7Jal1dNqb5ZerQvAg/eJ0SLKFToFftUdW44JMtpQSw304mmWfNQ5TvXR7PSO8nx+YdoeI7WvBGVXSCfbHQ7SxVwVKJRjHnLyqmj7TX2vdh3vDNPf7ZJ7RU0Wwornkk2UT2K1XZnJB819I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795513; c=relaxed/simple;
-	bh=ff3VSAFEaQB40ebyx+JlKaOxMFXYzMfOf/RTfDOLNc4=;
+	s=arc-20240116; t=1790795515; c=relaxed/simple;
+	bh=0afdZctfgPB+hTU+idSGbyOybjYtdHlfoZH9iE4ptd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7qUbgERSuXwqfSTbJ2/pb571Si0NK9QsDTGGDeVfOpB5r3x1iFZA0IhJm+Y12Rl2bGCtk88hqEcjMv6MJi7pP1yTyNlgkzWT0oYnwTTBKiExoQSW1wrakiO0Zg7cMHgG40rargSB6FTzjRjEZTvhUlRPVCm52ttUtvEXBJUHaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4ZQ5PdC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u7aHT4pNriuzExit06w26cq1v4qp4opAfo+PjxCmx0Of6b1+4cIs8nw8kAzHWCCXl/ARQ/ziXA2F2zoRbJZi24C06bxa5fIKXnbdeQcXvpF/LJIxLQfze7sassNoYT2dDm+3Re7wYllVimHVQ2dsTpmrS2xR75GR5nSy4oFYPf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ui+oABhc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4ZQ5PdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E481F00898;
-	Wed, 30 Sep 2026 19:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ui+oABhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9E51F00898;
+	Wed, 30 Sep 2026 19:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795511;
-	bh=O+v+eXpOoAc/ZXcsHDO7/LATshDTw3+3JOVMv0JUV1M=;
+	s=korg; t=1790795514;
+	bh=hI0Mq4iqtWI+6uxY0ztOxLgJjl67YaR/B8N7cjrdX50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x4ZQ5PdCrE/x9khs9D8+ONeT5duwzi40wIKAnQ9wtHCVSDuHwwO5lufCDhIyikp81
-	 gCdlhCztD9vrN40jt14JNM4N/hF10XEZH0k5nl/9Is5NsybdMDYnYxp3TwJFWBEYt0
-	 9W78ehtoNfB+cxWAOuEgcnGx4wBgro2Uu0QIbAdM=
+	b=Ui+oABhc2QG/Za3+3DpA66q6xdzDe0ihOWsZ/h4rv9TQ+ynQvsIf6CFFfbrpXYnaF
+	 6Yzqe7JsGRkT1V1Cw3aXek/fCNwwOCzWx1zINCTM6k5TPCoir8BOdp+uFMasJiZRSs
+	 7j2NpfryYro/VXEsiME3T5oGIpVixj5B/zNEKq5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taras Madan <tarasmadan@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	hybris@mojatatu.ai,
+	Li Youhong <liyouhong@kylinos.cn>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0587/1193] net/sched: cls_api: Dont replay RTM_GETCHAIN in tc_ctl_chain().
-Date: Wed, 30 Sep 2026 17:21:11 +0200
-Message-ID: <20260930152447.287117316@linuxfoundation.org>
+Subject: [PATCH 6.6 0588/1193] net: sun4i-emac: fix missing of_node_put() for phy_node
+Date: Wed, 30 Sep 2026 17:21:12 +0200
+Message-ID: <20260930152447.309292761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,82 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Li Youhong <liyouhong@kylinos.cn>
 
-[ Upstream commit dff39930ad5e53d202bfdfb14687d1d2fd753b4d ]
+[ Upstream commit af406abfecad2f48d8f1fc646d3994f0982bac62 ]
 
-If a netlink socket sends RTM_GETCHAIN requests repeatedly
-without recv()ing the responses, tc_ctl_chain() hogs CPU and
-triggers Hung Task splat. [0]
+of_parse_phandle() returns a node pointer with an elevated refcount.
+Add the missing of_node_put() on the probe error path after
+register_netdev() fails and in emac_remove().
 
-As caught in the stack trace, netlink_attachskb() could confuse
-tc_ctl_chain() by returning -EAGAIN when the userspace netlink
-socket's receive buffer is full.
-
-The replay: label exists since commit 32a4f5ecd738 ("net: sched:
-introduce chain object to uapi") but was not used initially.
-
-Since commit 9f407f1768d3 ("net: sched: introduce chain templates"),
-the label is needed for RTM_NEWCHAIN because tcf_proto_lookup_ops()
-may release RTNL to call request_module().
-
-However, the replay logic is unnecessary for RTM_GETCHAIN.
-
-Let's apply the replay logic only for RTM_NEWCHAIN.
-
-[0]:
-INFO: task repro:1018 is blocked on a mutex likely owned by task repro:1022.
-task:repro           state:R  running task     stack:14096 pid:1022  tgid:1014  ppid:961    task_flags:0x400040 flags:0x00080000
-Call Trace:
- <TASK>
- ? clockevents_program_event (kernel/time/clockevents.c:372)
- ? pskb_expand_head (net/core/skbuff.c:615)
- ? skb_release_data (net/core/skbuff.c:1122)
- ? netlink_attachskb (./include/linux/skbuff.h:1323 ./include/linux/skbuff.h:1332 net/netlink/af_netlink.c:1232)
- ? __netlink_lookup (./include/linux/rcupdate.h:882 ./include/linux/rhashtable.h:711 net/netlink/af_netlink.c:499)
- ? tc_chain_notify (net/sched/cls_api.c:3045)
- ? tc_chain_notify (./include/linux/skbuff.h:1384 net/sched/cls_api.c:3041)
- ? netlink_unicast (net/netlink/af_netlink.c:1335)
- ? rtnl_unicast (./include/net/netlink.h:1198 net/core/rtnetlink.c:985)
- ? tc_ctl_chain (net/sched/cls_api.c:3242)
- ? rtnetlink_rcv_msg (net/core/rtnetlink.c:7146)
- ? netlink_unicast (net/netlink/af_netlink.c:1354)
- ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:7177)
- ? netlink_rcv_skb (net/netlink/af_netlink.c:2556)
- ? netlink_unicast (net/netlink/af_netlink.c:1319)
- ? netlink_sendmsg (net/netlink/af_netlink.c:1900)
- ? __sock_sendmsg (net/socket.c:800)
- ? __sys_sendto (net/socket.c:2281)
- ? __x64_sys_sendto (net/socket.c:2288 net/socket.c:2284 net/socket.c:2284)
- ? do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
- ? entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
- </TASK>
-
-Fixes: 2ed9db3074fc ("net: sched: cls_api: fix dead code in switch")
-Reported-by: Taras Madan <tarasmadan@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: hybris@mojatatu.ai
-Link: https://patch.msgid.link/20260908205537.863484-1-kuniyu@google.com
+Fixes: 492205050d77 ("net: Add EMAC ethernet driver found on Allwinner A10 SoC's")
+Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904080758.2432748-1-dayou5941@163.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/allwinner/sun4i-emac.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index ac6d27172c84b..539228eb06c60 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -3224,7 +3224,7 @@ static int tc_ctl_chain(struct sk_buff *skb, struct nlmsghdr *n,
- 	tcf_chain_put(chain);
- errout_block:
- 	tcf_block_release(q, block, true);
--	if (err == -EAGAIN)
-+	if (err == -EAGAIN && n->nlmsg_type == RTM_NEWCHAIN)
- 		/* Replay the request. */
- 		goto replay;
- 	return err;
+diff --git a/drivers/net/ethernet/allwinner/sun4i-emac.c b/drivers/net/ethernet/allwinner/sun4i-emac.c
+index 9a6948cde2403..789a5008fe61e 100644
+--- a/drivers/net/ethernet/allwinner/sun4i-emac.c
++++ b/drivers/net/ethernet/allwinner/sun4i-emac.c
+@@ -1067,6 +1067,7 @@ static int emac_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ out_release_sram:
++	of_node_put(db->phy_node);
+ 	sunxi_sram_release(&pdev->dev);
+ out_clk_disable_unprepare:
+ 	clk_disable_unprepare(db->clk);
+@@ -1094,6 +1095,7 @@ static int emac_remove(struct platform_device *pdev)
+ 	}
+ 
+ 	unregister_netdev(ndev);
++	of_node_put(db->phy_node);
+ 	sunxi_sram_release(&pdev->dev);
+ 	clk_disable_unprepare(db->clk);
+ 	irq_dispose_mapping(ndev->irq);
 -- 
 2.53.0
 
