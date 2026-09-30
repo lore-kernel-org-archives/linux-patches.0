@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF064D7D26;
-	Wed, 30 Sep 2026 15:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649AD4FE2F2;
+	Wed, 30 Sep 2026 15:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782828; cv=none; b=c/DE7cx3Vo8SB+/S3IskwYTAx4DGCCmobj+jAr0rB6Rs0BDWZBKI4p2qfc+ybDoOsoWwxMspqd0oUvrEGgwJd4nWkJQzzfXjOtWsGyPNzugAb0Iw/uGPQ7e9TLk6zZUCSAiowU8Pawy06axDnO0GDkahLq91hPW83MjARB3AdvQ=
+	t=1790782829; cv=none; b=i7TXYzFvGbN4n+fMNT84OmyhkNFjAcGWqDHiYs2XF403czng87jbkFwOevg9xXfvI46Saz+95B+kNiu/07Qxbzv4FwEszPCnbRLDOynD2LSDW10DRm8G3cNZmiFxLYkVzY/GIxpP53t/zu5ebHZxtxi/aNLwUSB7zh8A+jnhwho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782828; c=relaxed/simple;
-	bh=BYIpwELDfXJ6aWVU4RR0N8m8UHd3LUNJKagrS/PHqrM=;
+	s=arc-20240116; t=1790782829; c=relaxed/simple;
+	bh=r5s37eta114hRQopElvf10guZnUwNBhLCzKMWUkwEbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MX4XaXCN8MyKPO1HVY96sLeN89psxPr5vU0fAjS/bbEcai4YGwdOwpLNpOVyIsI69iHet4ZhFA5Z2QXCslmT7DoKiWMgGDu/GdQEq+snCqNOPWUge9QdsXqSRNWbX0PE96I5vRDer5PK3l8+rmnVnevEOGcRDYtlN8t2eOd99Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pN/UD9g/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YPU3C/2xhAqYw+VQugOO8qAeGFEd8S1cBvcV+LIBfO8zYcaCI3gwai7jnEvLHMduzqnhUMUIijeCGMLxe+Z4h45mu8G4ADq+MJYS5+V3TpMfBz82RAdGAtf/SDxeF3TS6Q5PC81XWicBEF5WmPYG64Ndlwdk945cjpC4T0iPXQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X94YnfCe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pN/UD9g/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A5E1F000FF;
-	Wed, 30 Sep 2026 15:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X94YnfCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5011F00893;
+	Wed, 30 Sep 2026 15:40:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782820;
-	bh=kF6j06DETdMyO0lthZZ7CJoFJa8KUBDUSgSbdigl3O0=;
+	s=korg; t=1790782823;
+	bh=ybprl5qjBDMkTxhpvam3FXyzXLvw2he18Mslz4KsNNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pN/UD9g/62sVFcEzr6Nhaurk10N2T7ayOGCyl2ZPeonuzLKjv30k+Ir+qmC+4su0j
-	 LDxOS2qRHo7Tg8+Jeb0djdlgWQrUhasbf+lpUFjBohrpSTM6//GlkQ4WBgfHm04zYh
-	 /UOCWI4RkDJosZFBlJzrwOdRQQ8gnaoo1rObvOoA=
+	b=X94YnfCeBZDf7aolvw+l9LVzimwapDwOitIBtUpy/2orjP6Qxf70D3NiNnK7GY67z
+	 wFIS6uXc2ztlzKLUePCtMpOk3cg0HW6YW9ypRyYMA7ATsDRhHg03fh78L4y/vWf4Xw
+	 BGsayF7CqBuQDL+/mg2b4ExIQlIMYDstE0wrD7Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Abrahamse <denobyte2@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/595] ALSA: usb-audio: Add quirk for Corsair Virtuoso (later revision)
-Date: Wed, 30 Sep 2026 17:21:14 +0200
-Message-ID: <20260930152351.633638618@linuxfoundation.org>
+Subject: [PATCH 5.10 182/595] vhost-scsi: flush backend after device ioctls
+Date: Wed, 30 Sep 2026 17:21:15 +0200
+Message-ID: <20260930152351.655442646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Abrahamse <denobyte2@gmail.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit cee046679655b4822f76efc9658f19efee9ac979 ]
+[ Upstream commit 22598f55a4c2b510b3df5e69e563387a963222ae ]
 
-Add USB mixer mapping quirk for later revisions of the Corsair Virtuoso
-headset with USB IDs 0x1b1c:0x0a43 (wired) and 0x1b1c:0x0a44
-(wireless). These devices exhibit the same mixer label collision as
-earlier Virtuoso variants: all controls are labelled "Headset", causing
-applications like PulseAudio to move the sidetone control instead of
-the main playback volume.
+vhost-scsi translates guest response descriptors into userspace iovecs
+when commands are submitted.  Target-core completes those commands
+asynchronously, so VHOST_SET_MEM_TABLE can replace the memory table while
+an in-flight command still retains response iovecs translated through the
+old table.
 
-Signed-off-by: Robert Abrahamse <denobyte2@gmail.com>
-Link: https://patch.msgid.link/20260728140314.11601-1-denobyte2@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the old mapping is reused after VHOST_SET_MEM_TABLE returns, command
+completion can write the response to an unrelated userspace object.
+
+Flush the vhost-scsi backend after vhost_dev_ioctl() handles a device
+ioctl.  This waits for in-flight commands that can still use the old
+response iovecs before the ioctl returns.
+
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260724060919.1569170-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_maps.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/vhost/scsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer_maps.c b/sound/usb/mixer_maps.c
-index 08082fdf82187..5e8c91c9f1528 100644
---- a/sound/usb/mixer_maps.c
-+++ b/sound/usb/mixer_maps.c
-@@ -603,6 +603,16 @@ static const struct usbmix_ctl_map usbmix_ctl_maps[] = {
- 		.id = USB_ID(0x1b1c, 0x0a42),
- 		.map = corsair_virtuoso_map,
- 	},
-+	{
-+		/* Corsair Virtuoso (wired mode, later revision) */
-+		.id = USB_ID(0x1b1c, 0x0a43),
-+		.map = corsair_virtuoso_map,
-+	},
-+	{
-+		/* Corsair Virtuoso (wireless mode, later revision) */
-+		.id = USB_ID(0x1b1c, 0x0a44),
-+		.map = corsair_virtuoso_map,
-+	},
- 	{
- 		/* Corsair HS80 RGB Wireless (wired mode) */
- 		.id = USB_ID(0x1b1c, 0x0a6a),
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index ec9691f6594d1..3b15955751fa2 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1937,9 +1937,10 @@ vhost_scsi_ioctl(struct file *f,
+ 	default:
+ 		mutex_lock(&vs->dev.mutex);
+ 		r = vhost_dev_ioctl(&vs->dev, ioctl, argp);
+-		/* TODO: flush backend after dev ioctl. */
+ 		if (r == -ENOIOCTLCMD)
+ 			r = vhost_vring_ioctl(&vs->dev, ioctl, argp);
++		else
++			vhost_scsi_flush(vs);
+ 		mutex_unlock(&vs->dev.mutex);
+ 		return r;
+ 	}
 -- 
 2.53.0
 
