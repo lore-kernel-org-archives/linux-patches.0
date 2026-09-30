@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D814BD786;
-	Wed, 30 Sep 2026 15:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51F04FC8E6;
+	Wed, 30 Sep 2026 15:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783226; cv=none; b=ScE4j6HJpA/wqm2H9YGv+zwQuzIAwSjKeELi2Z09S23iWqMEZzzV1zN6q2M7PnghnXwT2eEMJoZo7wXlv+5VzpU4Lw/JkK3AZdj23+fOXMml9lsxN17Kwg8kGkuGw2Iver7EFQGxDp7nRgJxkS2AMTNGCqnkfWpm098swrul3D0=
+	t=1790783230; cv=none; b=mG9NKvtyyrPOb03Pu/SFQqqDxykkiWdR9PuziegSK/ubX1v5Vg5XIOsC0wADzDncbvC7WAygXcRHwlJ5wWkX5MBk8IpCcDwRjm3FDCtRtFMNDERQaLE8kKJkt+3bnKdQsfo3W2JbC7amEg4OGWYD/Lesfc4XwEySdtlqfk1T9bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783226; c=relaxed/simple;
-	bh=L5qYHbVIP9fXVVZIHivyG+3QHWL4eL4olodHg9mZ1us=;
+	s=arc-20240116; t=1790783230; c=relaxed/simple;
+	bh=qlREYLa5nX5ZnfHjOgQg1xx7Z0EgdmYSD/d3UbtadoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sebS9I8a0v36lG+PBZU/gneDnPh28sNy7mWAhPb6jeIltkVFqaAM2WlOO9nTyhoVGdgbME0GgEDypPECv3FMl8yiejMhRhwK56NbFLBZxgsPGUEk1i/Z1L6IOuzElLchTvET9XQGXV/Ag5GokoTGddnTlW2wWIrJq9dWJ3zcUVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7lTpOu8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZIJhdUusL6UCvyvKmG/mIHHUFTmD9WKg5ZAHbdvSjeM8opAlkKg8JUCiJ6tdgu5i2YldQmoOuTDQGhKzGoZdD1bpP/KbT2fGhZgy/DDOklgDmRtKvCsPiA9aVjvWbNiSIcXdBPHNVipB/l5A81VMt1+foWJuLsQcPCSqNmZ1+SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tV+zecI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7lTpOu8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFF51F000FF;
-	Wed, 30 Sep 2026 15:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tV+zecI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40641F00898;
+	Wed, 30 Sep 2026 15:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783222;
-	bh=8uxP0yJ36iirmMmPDnPSS1Zj1QFMjH2EwHOKLckpNg8=;
+	s=korg; t=1790783225;
+	bh=ajt+uWKlnFAOLlgHcQmxtYTdbh7zzy+b4Mlz1f/4K7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K7lTpOu8pM/MJ+EPAG64jARJA9VAmFphxQMY9P96CIxaS9+28EGuxpHSJoRPI1aJY
-	 CRjIRn6+P3YFwqB2Lwja5qYsjY6ZbjZj8p/mQ7llgkhAcdlL2hsqsM+oRIx4H1hqoI
-	 NLvMGLiwTloqvuAApt3sn4y+E7joj+mrCmzwDT1M=
+	b=2tV+zecI/nNONeXzf0VZB3BHH9aKXoPrj1dPAzfcm6lOROFYYGzgFW85HQbpNKaVb
+	 pIdU/s/T4L5mkgAGnC4JxJZZq8RQpOeCFEDpxxOVL6mAUL6oTHWEkIG4ZbJO496l/e
+	 QsrF721meFSY5iBs/u/mNlYdlHMypxT9R9E7x9/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 323/595] net: appletalk: fix NULL pointer dereference in aarp_send_ddp()
-Date: Wed, 30 Sep 2026 17:23:36 +0200
-Message-ID: <20260930152354.631964261@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Subject: [PATCH 5.10 324/595] fou: Fix use-after-free in fou_create()
+Date: Wed, 30 Sep 2026 17:23:37 +0200
+Message-ID: <20260930152354.653019335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,51 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 9e7f36ab5b7bf68463faa5f7b926fea8f35597bb upstream.
+commit b14361aca6350ff7907b0e9903c7b94dc7d5d4a0 upstream.
 
-aarp_send_ddp() calls atalk_find_dev_addr(dev) in the LocalTalk fast
-path without checking for NULL. When the device has no AppleTalk
-interface configured (dev->atalk_ptr == NULL), this leads to a NULL
-pointer dereference at the at->s_net access.
+fou_create() publishes struct fou through sk_user_data before adding the
+new FOU port to the per-netns list.  If fou_add_to_port_list() fails,
+the error path frees fou while it is still reachable through
+sk_user_data.  A concurrent receive can then dereference the freed
+object in fou_from_sock().
 
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:aarp_send_ddp (net/appletalk/aarp.c:552 (discriminator 2))
- Call Trace:
-  <TASK>
-  atalk_sendmsg (net/appletalk/ddp.c:1715)
-  __sys_sendto (net/socket.c:2265 (discriminator 1))
-  __x64_sys_sendto (net/socket.c:2272)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+This ordering issue was previously noted in the linked discussion.
 
-Add a NULL check consistent with the other callers of
-atalk_find_dev_addr().
+The failure is reachable when local port 0 is requested.  Each socket
+binds to a different ephemeral port, but fou_cfg_cmp() compares the
+requested port 0 and reports -EALREADY once an entry already exists.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260514123806.3085961-3-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Release the tunnel socket before freeing fou so sk_user_data is cleared
+first, and defer reclamation with kfree_rcu() to protect concurrent RCU
+readers.  This matches the lifetime handling in fou_release().
+
+Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://lore.kernel.org/netdev/20260502031401.3557229-12-kuniyu@google.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260722083858.182506-1-xuanqiang.luo@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/appletalk/aarp.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv4/fou_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/appletalk/aarp.c
-+++ b/net/appletalk/aarp.c
-@@ -573,6 +573,11 @@ int aarp_send_ddp(struct net_device *dev
- 		struct ddpehdr *ddp = (struct ddpehdr *)skb->data;
- 		int ft = 2;
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -639,9 +639,9 @@ static int fou_create(struct net *net, s
+ 	return 0;
  
-+		if (!at) {
-+			kfree_skb(skb);
-+			return NET_XMIT_DROP;
-+		}
-+
- 		/*
- 		 * Compressible ?
- 		 *
+ error:
+-	kfree(fou);
+ 	if (sock)
+ 		udp_tunnel_sock_release(sock);
++	kfree_rcu(fou, rcu);
+ 
+ 	return err;
+ }
 
 
