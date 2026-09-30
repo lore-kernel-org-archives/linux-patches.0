@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F2E509F05;
-	Wed, 30 Sep 2026 16:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFED50B433;
+	Wed, 30 Sep 2026 16:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784339; cv=none; b=Ngh+DyuEU1hSz5R70OaW+iC0mVqskDtawBxxyUmBniBfzjw3DKIDGnh1xpCMSmjGvJIFuyMAVMKIgrR6CI6kO/UijcuQykljifHzWYrvS/GsqP8BKQv5h3fa5quqXxZSOkFvBb3FCqqgWLCfzRRVtTZoiao3inpE8OYeuiL4jHM=
+	t=1790784339; cv=none; b=DSHh7uyuY+D4VId2WRSFdf0ggIL2pqz28F26GVNkUZS6YQ89ThFL8lACzmxzBUsm7axQrwlQCJaRHZDxWV2mD9lIAjj++5b8CbCOUAlLTAqYBA32+sZbbzlbMD+aZosgOhQR1P6ov6mt8W9h8o3sQ9HMp5eJA4dMLpWOS8ZIjvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784339; c=relaxed/simple;
-	bh=E4bGQzFn0/pQJWNrL7viiASToiHX80GN7NBe886s+JQ=;
+	bh=q1oBLPjfJJ+BhCiE9YIdaZAlwgWa+rAKQGRa3+wZVS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cyCjJsTKFzmETS16q/LE0Op5HiEmpjXuSC4FMyBqASJBLNU2ACQANwlyp3qCHIvt2pXE0rMxhTo4hGNCFBumxFD7eN0KV54Qt6nas0Aq8Xxwew5gFkDtP29YIbHFb19mzSxEd550pn6QMs6+uTwLksiy0sIeO01ZQOMoPj+bEWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kd6OAeMQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KqH/YrnzfAY9bnd5dfOa+YSY1Sy7U57nAZerqhpkWdEY7vNCt81HAQHcmABgdz8k4lY76RoiFn5JGZMOlBvb8HfaWS01XljoGe6QISVDlfJeUbyjPw8uVGFA3c6pZlsI3DX0n57yNmJvqD1KIH0/YzQ+30/8nEeaofSlO4u/+XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdf8RKOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kd6OAeMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9BC1F00893;
-	Wed, 30 Sep 2026 16:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdf8RKOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C3D1F00898;
+	Wed, 30 Sep 2026 16:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784332;
-	bh=l93XVZwl1rifziIq4r/wHwprI3DsU92efD9MslSgQDM=;
+	s=korg; t=1790784335;
+	bh=8NgaVTdnhpzlXzKPXYcmhO7PEOenIMJr1Mvp7ldGAoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kd6OAeMQwU3IeZykQtnpOtHudc7YbeYTymGPVPAj7bWcP5tKy4Ymz+OFEakyj5mf7
-	 1p+K5RfRLxc/qIO0Myvh4D2uLOQAlHgmeAtjKqZ6SHYdiHCciNbWrJmAQp/BIDnHgY
-	 1bLWoXZwAuZ2Kk8F/4U1f5S63X4cxWEyAG5PWaGo=
+	b=bdf8RKOWIezXVjLHPFGNh4pTSjgf876+ujPABClyCDnr2qjWbqtMBRL5Gvg2bFHVn
+	 5Nmlfnv6ocrD6CaA2BIeiJsvSp7UavH8VFvLUqR6PhueSW/g0+/6pL0h1M/oVoR553
+	 maQT8xN+QE68wGTaf1wpmbgYsAoxm9FKXf0DOrK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Nikhil Chatterjee <nikhilc1527@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/982] isofs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:13:30 +0200
-Message-ID: <20260930152418.395007165@linuxfoundation.org>
+Subject: [PATCH 6.1 075/982] HID: bpf: Add Huion Inspiroy Frego M button quirk
+Date: Wed, 30 Sep 2026 17:13:31 +0200
+Message-ID: <20260930152418.417046546@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,39 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Nikhil Chatterjee <nikhilc1527@gmail.com>
 
-[ Upstream commit 25ef4c4d9f0e96fb89c0ae0d7127c3f12a31bc32 ]
+[ Upstream commit 857e71cb0a538b1660743a4267a1e789575f7966 ]
 
-isofs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+The Huion Inspiroy Frego M pen report descriptor exposes the second
+side button as Secondary Tip Switch instead of Secondary Barrel Switch.
+This makes userspace see the control as the wrong pen button.
 
-        BUG_ON(offset >= folio_size(folio));
+Add a HID-BPF report descriptor fixup for the Bluetooth 256c:8251
+device and USB 256c:2012 L610 variant. The fixup matches the expected
+pen descriptor and rewrites the offending usage from Secondary Tip
+Switch to Secondary Barrel Switch.
 
-in folio_set_bh on the first __bread_gfp call.
+Tested by building the HID-BPF object with:
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-8-hch@lst.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+  make -C drivers/hid/bpf/progs Huion__Inspiroy-Frego-M.bpf.o
+
+Signed-off-by: Nikhil Chatterjee <nikhilc1527@gmail.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../bpf/progs/Huion__Inspiroy-Frego-M.bpf.c   | 87 +++++++++++++++++++
+ 1 file changed, 87 insertions(+)
+ create mode 100644 drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c
 
-diff --git a/fs/isofs/inode.c b/fs/isofs/inode.c
-index e3052d3fe5dcd..8fd91f09086f1 100644
---- a/fs/isofs/inode.c
-+++ b/fs/isofs/inode.c
-@@ -859,7 +859,8 @@ static int isofs_fill_super(struct super_block *s, void *data, int silent)
- 	 * entries.  By forcing the blocksize in this way, we ensure
- 	 * that we will never be required to do this.
- 	 */
--	sb_set_blocksize(s, orig_zonesize);
-+	if (!sb_set_blocksize(s, orig_zonesize))
-+		goto out_freesbi;
- 
- 	sbi->s_nls_iocharset = NULL;
- 
+diff --git a/drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c b/drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c
+new file mode 100644
+index 0000000000000..e6ba2295dc775
+--- /dev/null
++++ b/drivers/hid/bpf/progs/Huion__Inspiroy-Frego-M.bpf.c
+@@ -0,0 +1,87 @@
++// SPDX-License-Identifier: GPL-2.0-only
++#include "vmlinux.h"
++#include "hid_bpf.h"
++#include "hid_bpf_helpers.h"
++#include <bpf/bpf_tracing.h>
++
++/*
++ * Huion Inspiroy Frego M Pen Tablet
++ * Model L610
++ * 256c:8251 (Bluetooth)
++ * 256c:2012 (USB)
++ */
++#define VID_HUION			0x256C
++#define PID_INSPIROY_FREGO_M		0x8251
++#define PID_L610			0x2012
++
++#define PEN_RDESC_SIZE			125
++#define SECONDARY_SWITCH_OFFSET		17
++
++HID_BPF_CONFIG(
++	HID_DEVICE(BUS_BLUETOOTH, HID_GROUP_GENERIC, VID_HUION, PID_INSPIROY_FREGO_M),
++	HID_DEVICE(BUS_USB, HID_GROUP_GENERIC, VID_HUION, PID_L610)
++);
++
++/*
++ * The pen descriptor reports the second side button as Secondary Tip Switch
++ * instead of Secondary Barrel Switch.
++ *
++ * Relevant part of the original pen report descriptor:
++ *
++ * 0x09, 0x42,       // Usage (Tip Switch)                  12
++ * 0x09, 0x44,       // Usage (Barrel Switch)               14
++ * 0x09, 0x43,       // Usage (Secondary Tip Switch)        16 <- change to 0x5a
++ * 0x09, 0x3c,       // Usage (Invert)                      18
++ * 0x09, 0x45,       // Usage (Eraser)                      20
++ * 0x15, 0x00,       // Logical Minimum (0)                 22
++ * 0x25, 0x01,       // Logical Maximum (1)                 24
++ */
++SEC(HID_BPF_RDESC_FIXUP)
++int BPF_PROG(fix_secondary_barrel_rdesc, struct hid_bpf_ctx *hctx)
++{
++	__u8 *data = hid_bpf_get_data(hctx, 0 /* offset */, HID_MAX_DESCRIPTOR_SIZE /* size */);
++
++	if (!data)
++		return 0; /* EPERM check */
++
++	if (hctx->size != PEN_RDESC_SIZE)
++		return 0;
++
++	if (data[0] != 0x05 || data[1] != 0x0d || /* Usage Page (Digitizers) */
++	    data[2] != 0x09 || data[3] != 0x02 || /* Usage (Pen) */
++	    data[16] != 0x09 ||
++	    data[SECONDARY_SWITCH_OFFSET] != 0x43) /* Secondary Tip Switch */
++		return 0;
++
++	data[SECONDARY_SWITCH_OFFSET] = 0x5a;
++
++	return 0;
++}
++
++HID_BPF_OPS(fix_secondary_barrel) = {
++	.hid_rdesc_fixup = (void *)fix_secondary_barrel_rdesc,
++};
++
++SEC("syscall")
++int probe(struct hid_bpf_probe_args *ctx)
++{
++	ctx->retval = ctx->rdesc_size != PEN_RDESC_SIZE;
++	if (ctx->retval) {
++		ctx->retval = -EINVAL;
++		return 0;
++	}
++
++	if (ctx->rdesc[0] != 0x05 || ctx->rdesc[1] != 0x0d || /* Usage Page (Digitizers) */
++	    ctx->rdesc[2] != 0x09 || ctx->rdesc[3] != 0x02 || /* Usage (Pen) */
++	    ctx->rdesc[16] != 0x09 ||
++	    ctx->rdesc[SECONDARY_SWITCH_OFFSET] != 0x43) { /* Secondary Tip Switch */
++		ctx->retval = -EINVAL;
++		return 0;
++	}
++
++	ctx->retval = 0;
++
++	return 0;
++}
++
++char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
