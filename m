@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766EB513567;
-	Wed, 30 Sep 2026 16:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D76B3F5BFC;
+	Wed, 30 Sep 2026 16:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784764; cv=none; b=U5HjIvbqHPiGUmE2OfO9wqbNRE8UxhyoHWtI64OsuvQwIAIU82wEHL8jgr0Hb4b1jVAK0ejWSU1yqrex/SPwW1eXY19SxByKrd6EWP2kx7rCUMB/lxl5yBs/oTbevqzCrlMeA9qDsj6wS8USlcX1Z1rKuCzrn00gbV2TLLIAitY=
+	t=1790784768; cv=none; b=drzjUlsT3Y5Tgys9kUYDkH+/J9UNvhwqGFCrDKxZO1tghajh/gydgarfb5wGT1s4WrPPUBUGdEx49D803lxaSaPxKzpQlK5hmGG85+aF6aLfDf1gYj5eCWi7g2WNvsPWYydK2mt+Vp3WqiLEsOEXiveS8ZrkBIKuOh9bVQW8WWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784764; c=relaxed/simple;
-	bh=1RDIIcz6+afPPApmhJl3Z1TN7ZArKOPsVxdz9S7Af8E=;
+	s=arc-20240116; t=1790784768; c=relaxed/simple;
+	bh=oMX2B8Y0pk/ES4OG3opYDCaM8fDzhKKCGlG2UB3dx5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPVNkWkgCXonRVgx4NYCVh/YROGY6blDwLQGyNfgDYCaO0VVdjI6vbyHxUetFX0Ut4nlI9gr5mtaBnsYDTOpThcOB5NHNvmKS3IQ1sVpigXOEOgWgubGpMRYcGQ4hFakawIg9CIlGP4i9rnCDEtAMYG7VYY3myPP8dSd+59KsPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq0vak65; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k72QAJ/Q54geiDdmQntnjoJTbqY8leCO9ICZFAg5Ex5BUhY0SLvE44YBYOuxIw8iZfeuK/OZxUnYJGs4hNYS7c/WnggZwm8KpdudF0kr+QNfxBs/D4GbYs1zR3JlmKMaDwyOh4/bnPA1qrDwz3lVWobuyJUy6GBheBIWbiPy+Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxCX3v1l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq0vak65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329851F000FF;
-	Wed, 30 Sep 2026 16:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxCX3v1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EA91F00893;
+	Wed, 30 Sep 2026 16:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784759;
-	bh=fmxkeaFHsfXwWOBasUB6OD1ZPQHP6FNQbqH5lAVueeY=;
+	s=korg; t=1790784762;
+	bh=98rqMoFqByx2Khgysy19lNnFpHwZ3s74+Hi8A/OzWxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cq0vak652VaRKUCsrSeYGRAN+YUTvX82wzhCSEcFVO5pqCy3M1ZAVo4Jw65sWiI1c
-	 tzARUBZEJzxYYQnplrvKZ0qtERKluIoFEZmljb7h9SHBYE5U7lxdVrwy2wT6IXc4f1
-	 r7W2CBihwEBPEMO63UO9c7usMmczhJ55zJ5clgpc=
+	b=DxCX3v1lbD2qz8dcxn2ao3NL0U0Qgy51rdedJU+fwogSd0JUvKJH3xoXnJ88dRHIU
+	 Bd0BGZCtS2YUllP0D+5J5YnFrKKa21/KaHb+Kuoqq3Gyyps7Sd7BU5sVDZ3pafJr85
+	 1sTX14hXw9czIuIxObVpoxO0o0VTDZEsQwC6Dkjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Hu <hupu@transsion.com>,
-	Hongyan Xia <hongyan.xia@transsion.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/982] arm64: kprobes: Allow reentering kprobes while single-stepping
-Date: Wed, 30 Sep 2026 17:16:46 +0200
-Message-ID: <20260930152422.602052135@linuxfoundation.org>
+Subject: [PATCH 6.1 271/982] drm/amd/pm/si: Dont schedule thermal work when queue isnt initialized
+Date: Wed, 30 Sep 2026 17:16:47 +0200
+Message-ID: <20260930152422.622882312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -47,124 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pu Hu <hupu@transsion.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 23f851ac0078a908bf3422d6467ebc1db5828c46 ]
+[ Upstream commit f8922d5a946699fc2bdc7660e6778bd6726bf8b8 ]
 
-A kprobe can be hit while another kprobe is in KPROBE_HIT_SS state. This
-can happen when tracing or perf code runs from the debug exception path
-while the first kprobe is preparing or executing its out-of-line
-single-step instruction.
+When DPM is turned off with the amdgpu.dpm=0 module parameter,
+the thermal work queue isn't initialized so we shouldn't
+schedule any work on it.
 
-Currently arm64 treats a kprobe hit in KPROBE_HIT_SS as unrecoverable,
-the same as a hit in KPROBE_REENTER. This is too strict. A hit in
-KPROBE_HIT_SS is still a one-level reentry and can be handled by saving
-the current kprobe state and setting up single-step for the new probe,
-just like reentry from KPROBE_HIT_ACTIVE or KPROBE_HIT_SSDONE.
-
-The truly unrecoverable case is hitting another kprobe while already in
-KPROBE_REENTER, because the reentry save area has already been consumed.
-
-Move KPROBE_HIT_SS to the recoverable reentry cases and leave
-KPROBE_REENTER as the unrecoverable nested reentry case.
-
-This change also requires saving saved_irqflag in struct prev_kprobe.
-When a nested kprobe calls kprobes_save_local_irqflag(), it overwrites
-kcb->saved_irqflag with the currently masked DAIF value, losing the
-outer kprobe's original DAIF state. Without this fix, when the outer
-kprobe's single-step finishes, kprobes_restore_local_irqflag() applies
-the wrong DAIF mask and leaves interrupts permanently disabled.
-
-Extend struct prev_kprobe with a saved_irqflag field and save/restore it
-alongside kp and status. This ensures the outer kprobe's original
-interrupt state is preserved across reentry.
-
-This mirrors the x86 fix in commit 6a5022a56ac3
-("kprobes/x86: Allow to handle reentered kprobe on single-stepping").
-
-Signed-off-by: Pu Hu <hupu@transsion.com>
-Signed-off-by: Hongyan Xia <hongyan.xia@transsion.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bd018d36171a695952c6d391471c279c9e05c8b2)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kprobes.h   |  6 ++++++
- arch/arm64/kernel/probes/kprobes.c | 23 ++++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/kprobes.h b/arch/arm64/include/asm/kprobes.h
-index 05cd82eeca136..221c7ab3ee6f4 100644
---- a/arch/arm64/include/asm/kprobes.h
-+++ b/arch/arm64/include/asm/kprobes.h
-@@ -26,6 +26,12 @@
- struct prev_kprobe {
- 	struct kprobe *kp;
- 	unsigned int status;
-+
-+	/*
-+	 * The original DAIF state of the outer kprobe, saved here before
-+	 * a nested kprobe overwrites kcb->saved_irqflag during reentry.
-+	 */
-+	unsigned long saved_irqflag;
- };
- 
- /* per-cpu kprobe control block */
-diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
-index c9e4d07202856..46acee523d782 100644
---- a/arch/arm64/kernel/probes/kprobes.c
-+++ b/arch/arm64/kernel/probes/kprobes.c
-@@ -165,12 +165,27 @@ static void __kprobes save_previous_kprobe(struct kprobe_ctlblk *kcb)
- {
- 	kcb->prev_kprobe.kp = kprobe_running();
- 	kcb->prev_kprobe.status = kcb->kprobe_status;
-+
-+	/*
-+	 * Save the outer kprobe's original DAIF flags before the nested
-+	 * kprobe calls kprobes_save_local_irqflag() and overwrites
-+	 * kcb->saved_irqflag. Without this, the outer kprobe will restore
-+	 * the wrong DAIF state and leave interrupts permanently masked.
-+	 */
-+	kcb->prev_kprobe.saved_irqflag = kcb->saved_irqflag;
- }
- 
- static void __kprobes restore_previous_kprobe(struct kprobe_ctlblk *kcb)
- {
- 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
- 	kcb->kprobe_status = kcb->prev_kprobe.status;
-+
-+	/*
-+	 * Restore the outer kprobe's saved_irqflag so that when its
-+	 * single-step completes, kprobes_restore_local_irqflag() uses
-+	 * the correct original DAIF value.
-+	 */
-+	kcb->saved_irqflag = kcb->prev_kprobe.saved_irqflag;
- }
- 
- static void __kprobes set_current_kprobe(struct kprobe *p)
-@@ -231,10 +246,16 @@ static int __kprobes reenter_kprobe(struct kprobe *p,
- 	switch (kcb->kprobe_status) {
- 	case KPROBE_HIT_SSDONE:
- 	case KPROBE_HIT_ACTIVE:
-+	case KPROBE_HIT_SS:
-+		/*
-+		 * A probe can be hit while another kprobe is preparing or
-+		 * executing its XOL single-step instruction. This is still a
-+		 * recoverable one-level reentry, so handle it in the same way as
-+		 * reentry from KPROBE_HIT_ACTIVE or KPROBE_HIT_SSDONE.
-+		 */
- 		kprobes_inc_nmissed_count(p);
- 		setup_singlestep(p, regs, kcb, 1);
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index f71585ae68498..be70e2b6376a8 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -7670,7 +7670,7 @@ static int si_dpm_process_interrupt(struct amdgpu_device *adev,
  		break;
--	case KPROBE_HIT_SS:
- 	case KPROBE_REENTER:
- 		pr_warn("Failed to recover from reentered kprobes.\n");
- 		dump_kprobe(p);
+ 	}
+ 
+-	if (queue_thermal)
++	if (queue_thermal && amdgpu_dpm)
+ 		schedule_work(&adev->pm.dpm.thermal.work);
+ 
+ 	return 0;
 -- 
 2.53.0
 
