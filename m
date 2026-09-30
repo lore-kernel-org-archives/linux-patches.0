@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8E151993B;
-	Wed, 30 Sep 2026 17:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47CC52E047;
+	Wed, 30 Sep 2026 17:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791081; cv=none; b=Sv8xDLCbJyjx9uTKUNfezMCzQiM92xPmScNlDUeCiHYI1RshSN7f/3FFrjsDGQjMwn0rwqmG6Tf4PcazVbKVIMG3At8qyPMJUzyKS5gZLKV5OgmIBeljtKmGLNLUeDAQ68bobp+HbTL00HD89RAS7NPdFA0ZPkmohKkaR88jdEs=
+	t=1790791083; cv=none; b=aHnHKO5jBbbFnBWo6vFcaMWCo6O9ZxvUoL55dxEBDOVy+OlWbZQUGqqsSr+f4EUYAQ76wvS1Poxr+7+MH41DTKJSAniDfN9rtFT/k3lDszkO7n3XfbO48MWqOA0as2T75jGTMGGB65ZJl1W2+gtLb4wAFzlnWkPuz4gwjOCP+2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791081; c=relaxed/simple;
-	bh=c9T7mopZROU457FroXwXzvVAItQksRymBJMoVC3Elhk=;
+	s=arc-20240116; t=1790791083; c=relaxed/simple;
+	bh=xG5DUowCRPTg9958+OAd96ZSDUdJ90qW9HvCEOcJTVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szZMMacAUJDSug9xlPZ5vQ9kGWePo1LhNa6J0Nl8ONG8ayCLGWi3yUDJ0ZXAo4eWH0QrdeP5tJffT0n3Rq17P8/AfZOhcXJoO8Pq9B6kefMzt/AW8Zi/3w7uRWo69lp+iQse319H/1LBak4d0sscg4kloc+k6jP3UkGeklEqHRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlfk18hO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gqg513TD3EzD38Cir+bdbn2FijbCUVIWgWnYj9VR26qX7THZJ5KnOr/Ddbzvk3G0oLTSGJYMoKUDLuccTxoK8aU7dSp+tAQ5pC6ig3iuOGZWL+PBXw3qiEWZW3tlV6UbR6LhHeIQNzDvvGFBD/rViwuG4E9ufl6ZgrEJK/2vY+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHEnT05q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlfk18hO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478931F000FF;
-	Wed, 30 Sep 2026 17:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHEnT05q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247DB1F000FF;
+	Wed, 30 Sep 2026 17:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791079;
-	bh=/y+TkALo1J+vsZPuFsQ3xsCfOpYZDUh9QcdeUzyFmoc=;
+	s=korg; t=1790791082;
+	bh=oV33ms4+D7xbT2z38AswQl9i+qaDMlzO1uMem/SDjoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qlfk18hOIF9vtz5B3hGY5bk94vc8dEicKE2w5sKMzCTcORMzCfbu6HD3ogKH23wW6
-	 o+4X2VKvlv16Wclx/nM0UxRBxIcRIh3eBkcqynz1iZJN+Qkx92AkS/SQpo0390Kf/p
-	 8+of9cF+D5fm+muHF0D2bFHaaEtgz8Tc5TtG826M=
+	b=vHEnT05quzzxUxR4XpzfOsDBnNviJuMDEMEDMUmD02GuMe9ZVeSCX71ZdGhR+uVt8
+	 iGWaMRQpK++gQtyXFRVBO62eqfmX0rGyCqCgvxhbWmIEHP1SPas8xNKgWjwyJ0xDoC
+	 vjHEVv8PMkRrgFZ4VVEnrXEcRIZkXIVoT0MGXbpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Xu Rao <raoxu@uniontech.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/752] hwmon: (adt7462) Add of_match_table to support devicetree
-Date: Wed, 30 Sep 2026 17:20:05 +0200
-Message-ID: <20260930152401.100765558@linuxfoundation.org>
+Subject: [PATCH 5.15 136/752] ata: libata-pmp: add JMicron JMS562 quirk
+Date: Wed, 30 Sep 2026 17:20:06 +0200
+Message-ID: <20260930152401.121906311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,52 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit cd1b42617aafe01810ab7d3b9948d2f5fa9fb8af ]
+[ Upstream commit c62aff1174cf88e10716c7513702443c47551fc6 ]
 
-Add of_match_table to add support of devicetree probing.
+JMicron JMS562, as used in QNAP QDA-A2AR RAID1 adapters, may
+keep the exported ATA device not ready while the array is rebuilding.
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-[rgantois: Removed of_match_ptr().]
-Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
-Link: https://lore.kernel.org/r/20260608-adt7462-bindings-v2-1-272982c40325@bootlin.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+In this state, libata may repeatedly try to softreset and classify
+the fan-out link.  On the affected adapter, this can time out, make
+PMP/SCR access fail, and eventually disable the fan-out link before
+the RAID volume is exported.
+
+A failing boot shows the fan-out link failing SRST, PMP access
+timing out, SCR read failing, and the link being disabled:
+
+  ata4.00: softreset failed (device not ready)
+  ata4.15: qc timeout after 3000 msecs (cmd 0xe4)
+  ata4.00: failed to read SCR 0 (Emask=0x4)
+  ata4.00: failed to recover link after 3 tries, disabling
+
+After that, the root filesystem on the exported RAID volume cannot
+be found.
+
+Add JMS562 to the existing JMicron PMP quirk that disables LPM,
+avoids softreset on fan-out links, and assumes an ATA device.  This
+prevents libata from dropping the exported RAID volume during rebuild
+recovery.
+
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7462.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/ata/libata-pmp.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
-index e75bbd87ad093..5436c73e8d536 100644
---- a/drivers/hwmon/adt7462.c
-+++ b/drivers/hwmon/adt7462.c
-@@ -12,6 +12,7 @@
- #include <linux/hwmon.h>
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/mutex.h>
- #include <linux/log2.h>
- #include <linux/slab.h>
-@@ -1814,10 +1815,17 @@ static const struct i2c_device_id adt7462_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, adt7462_id);
- 
-+static const struct of_device_id adt7462_of_match[] = {
-+	{ .compatible = "onnn,adt7462" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, adt7462_of_match);
-+
- static struct i2c_driver adt7462_driver = {
- 	.class		= I2C_CLASS_HWMON,
- 	.driver = {
- 		.name	= "adt7462",
-+		.of_match_table = adt7462_of_match,
- 	},
- 	.probe_new	= adt7462_probe,
- 	.id_table	= adt7462_id,
+diff --git a/drivers/ata/libata-pmp.c b/drivers/ata/libata-pmp.c
+index ba7be3f386171..5347ed88f6386 100644
+--- a/drivers/ata/libata-pmp.c
++++ b/drivers/ata/libata-pmp.c
+@@ -446,8 +446,13 @@ static void sata_pmp_quirks(struct ata_port *ap)
+ 		 * otherwise.  Don't try hard to recover it.
+ 		 */
+ 		ap->pmp_link[ap->nr_pmp_links - 1].flags |= ATA_LFLAG_NO_RETRY;
+-	} else if (vendor == 0x197b && (devid == 0x2352 || devid == 0x0325)) {
++	} else if (vendor == 0x197b &&
++		   (devid == 0x0562 || devid == 0x2352 || devid == 0x0325)) {
+ 		/*
++		 * 0x0562: JMicron JMS562, as used in QNAP QDA-A2AR RAID1
++		 *         adapters.  The exported device may stay not ready
++		 *         while the array is rebuilding, and SRST/classify can
++		 *         time out before the RAID volume is exported.
+ 		 * 0x2352: found in Thermaltake BlackX Duet, jmicron JMB350?
+ 		 * 0x0325: jmicron JMB394.
+ 		 */
 -- 
 2.53.0
 
