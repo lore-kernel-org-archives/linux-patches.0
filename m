@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8007C51A725;
-	Wed, 30 Sep 2026 17:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735B05208DE;
+	Wed, 30 Sep 2026 17:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789538; cv=none; b=RTeaOkR5AbjcJGtLgLOyi8UWT7A3I+VcHFU6E1oQPqMe4/i+DYa8nkmng254gcy45XkFnHgKnpu8//Fx3pqa0nvlA/MYEk4jlb8+eEuvbUbnrco7Os9BtW8rFU67q+RMFFRpp1FoJyNayYx9VZIV/iXF/QmVlyqLHSZyvFSYfco=
+	t=1790789541; cv=none; b=uANUg82j82GztvdAv0pmEEHm1ERILsCmH5BeMWgWa1Zz3JYlWnYM8LVICU58SE83jmEqr0/H+/vcXpxfSEPDu9zjFqmuOY0IH+tNm5GAarfigip/nsAi1kRESGPgJPXgstLHJ7kniDsgwCtKJDg5L/8b0eXmV5iszGnKGEmhnhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789538; c=relaxed/simple;
-	bh=Lumm07A0v0F3fTqTnVF5I5lGrlE0d5o3zU5p2AQyQg0=;
+	s=arc-20240116; t=1790789541; c=relaxed/simple;
+	bh=9beVqNWa9VQRZe3xVNJN46h6cpIQEk+B6itzezwCvMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LaMnh2dF1mf8STbb9ri7xdFFjhgRDs4+QmDEhvirhrrGA76CDXytxsCHaiGHkwszUExpDIhec3rTVBRvVQ6LgtnTaY0Ypj4655BqqJ5e/N4u7hFGl7wnt2Xf6C3bjAa9GyobxIZazff529xv+UuqFij69pLqnzQ8F6n1+rYgh8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y52cQ1sd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtZBdIuVrta0pjYrfCtAC0Jh/y9nPj9G+FqmRDsVnLJOWMw6+0vk+1mZKnPFpkGFj9spk1Hied+65PThHKXZe6RDJJYdWk3AEtSknwJdi5OYgaaqytgDoGD/sMtbLbos0YSsF1aUb2rs65eg7d1NyYwBL4aKsSSOibmk38CvXUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRNz9Xr0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y52cQ1sd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A44A1F00898;
-	Wed, 30 Sep 2026 17:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRNz9Xr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3811F000FF;
+	Wed, 30 Sep 2026 17:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789536;
-	bh=WtSEF1AM5/7sNp02B1wiWmEmZu4p0cSY2JHK7T3TKUI=;
+	s=korg; t=1790789539;
+	bh=aYK1ie/pKyj1LAgHk2Wis3LDDyKtVwFjqbGnSmxueMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y52cQ1sdkgL4MGmOr4GO5eVZFlayX0RX7bNGTQ4WHp9GdT2RhkPh+lG075Yp6JYXr
-	 GYNzVGiYpU6gMkxhOunNjP6QkHjCzSuGOvy1x6jdoulK5nuXhv15263oEY6OkQrwhM
-	 ZUvLh8AVBcpqcJukCYyUys7kueGEkV/BUiqyoKEw=
+	b=nRNz9Xr0ogOwpvCjLFSgsTmuXMs5lCjMoFLQBx3PIHAhXJIzpGlYATc7BVy3c2ex3
+	 vR+N4hvoiz+Tkf4eY83BZqrXH7g+d/WD5oeH1NLPnK4KHkOQV071tahMWvh2bn3u3D
+	 V4vNXCLxEKz4bR7m4pv/HxxHbdZ43+9dg9WEq91A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gajdos=20Tam=C3=A1s?= <tamas@rimpianto.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 513/877] net: atl1c: fix soft lockup on out-of-range tpd_cons read
-Date: Wed, 30 Sep 2026 17:23:44 +0200
-Message-ID: <20260930152425.727153210@linuxfoundation.org>
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.12 496/877] drm/virtio: fix memory leak of fence event on execbuffer failure
+Date: Wed, 30 Sep 2026 17:23:27 +0200
+Message-ID: <20260930152425.365812763@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -44,74 +44,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gajdos Tamás <tamas@rimpianto.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 36c2009d90f2210ef92e6f4f2850e8b57b09e754 upstream.
+commit b74aad23d99b279bb34d135795f39a6d8ecdc075 upstream.
 
-The hardware can report an out-of-range tpd_cons (seen as 0xffff)
-while the PCIe link/MAC is resetting. An out-of-range value can
-never be reached and the loop below would spin forever. To avoid
-a soft lockup treat it as "nothing new to clean" instead.
+virtio_gpu_execbuffer_ioctl() reserves a DRM event with
+drm_event_reserve_init() when VIRTGPU_EXECBUF_RING_IDX selects a ring that
+userspace has enabled polling for. virtio_gpu_init_submit() does this
+before the BO handles, the command buffer, the syncobj arrays and the
+in-fence are processed, so every later error path runs with the event
+already pending, including plain argument validation failures such as an
+invalid bo_handle or an in-syncobj that carries no fence.
 
-Reproduced on two machines, same NIC (Qualcomm Atheros AR8151 v2.0,
-4-port), triggered by rebooting a Mikrotik CCR2004 PCIe card that
-the ports are directly linked to:
+On those paths, virtio_gpu_cleanup_submit() drops the out-fence without
+cancelling the event. The fence is freed without ever having been emitted,
+taking the only driver-side pointer to the event with it. Closing the DRM
+file does not help. drm_events_release() unlinks pending events but
+deliberately leaves the freeing to the driver's later drm_send_event(),
+which never runs for an orphaned event, so the allocation is leaked
+permanently.
 
-- Ubuntu 26.04.1 LTS, kernel 7.0.0-31-generic. The link-flap
-  precursor, before the lockup was captured with a full trace
-  elsewhere:
+Found when fuzzing the virtio driver with Syzkaller:
 
-    atl1c 0000:05:00.0 enp5s0f0: NETDEV WATCHDOG: CPU: 4: transmit queue 2 timed out 489984 ms
-    atl1c 0000:05:00.0: MAC state machine can't be idle since disabled for 10ms second
-    atl1c 0000:05:00.0: atl1c: enp5s0f0 NIC Link is Up<65535 Mbps Full Duplex>
+	BUG: memory leak
+	unreferenced object 0xffff88802c176e80 (size 96):
+	comm "syz.1.367", pid 10561, jiffies 4294960122
+	hex dump (first 32 bytes):
+		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+		c8 6e 17 2c 80 88 ff ff 00 00 00 00 00 00 00 00  .n.,............
+	backtrace (crc e1973c6b):
+		kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+		slab_post_alloc_hook mm/slub.c:4597 [inline]
+		slab_alloc_node mm/slub.c:4917 [inline]
+		__kmalloc_cache_noprof+0x49d/0x6f0 mm/slub.c:5485
+		_kmalloc_noprof include/linux/slab.h:988 [inline]
+		_kzalloc_noprof include/linux/slab.h:1309 [inline]
+		virtio_gpu_fence_event_create drivers/gpu/drm/virtio/virtgpu_submit.c:282 [inline]
+		virtio_gpu_init_submit drivers/gpu/drm/virtio/virtgpu_submit.c:398 [inline]
+		virtio_gpu_execbuffer_ioctl+0xbbf/0x1aa0 drivers/gpu/drm/virtio/virtgpu_submit.c:505
+		drm_ioctl_kernel+0x1f4/0x3e0 drivers/gpu/drm/drm_ioctl.c:817
+		drm_ioctl+0x5f4/0xc70 drivers/gpu/drm/drm_ioctl.c:914
+		vfs_ioctl fs/ioctl.c:51 [inline]
+		__do_sys_ioctl fs/ioctl.c:597 [inline]
+		__se_sys_ioctl fs/ioctl.c:583 [inline]
+		__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+		do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+		do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
+		entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  65535 (0xffff) here is the same value tpd_cons reads back once the
-  loop below gets stuck.
+Fix by cancelling and freeing the DRM event on the execbuffer error path
+before dropping the fence. Clear the fence's event pointer after
+cancellation so it does not retain a dangling pointer.
 
-- Proxmox VE, kernel 7.0.14-11-pve. Same NIC/trigger, this time
-  caught by the soft lockup watchdog with a full stack trace:
-
-    watchdog: BUG: soft lockup - CPU#12 stuck for 354s! [napi/eth%d-0:329]
-    CPU: 12 UID: 0 PID: 329 Comm: napi/eth%d-0 Tainted: P O L 7.0.14-11-pve #1 PREEMPT(lazy)
-    RIP: 0010:atl1c_clean_tx+0x142/0x2d0 [atl1c]
-    Call Trace:
-     <TASK>
-     __napi_poll+0x32/0x1e0
-     napi_threaded_poll_loop+0x286/0x2e0
-     napi_threaded_poll+0xfd/0x140
-     kthread+0xf7/0x130
-     ret_from_fork+0x2da/0x3a0
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-Fixes: 43250ddd75a35d ("atl1c: Atheros L1C Gigabit Ethernet driver")
+Fixes: cd7f5ca33585 ("drm/virtio: implement context init: add virtio_gpu_fence_event")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gajdos Tamás <tamas@rimpianto.com>
-Link: https://patch.msgid.link/20260921091334.3571525-2-tamas@rimpianto.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Assisted-by: Codex:gpt-5.6-luna
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/D320EAB5680C1411+20260908121323.2405044-1-peiyang_he@smail.nju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/atheros/atl1c/atl1c_main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/virtio/virtgpu_submit.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -1602,6 +1602,9 @@ static int atl1c_clean_tx(struct napi_st
- 	AT_READ_REGW(&adapter->hw, atl1c_qregs[tpd_ring->num].tpd_cons,
- 		     &hw_next_to_clean);
+--- a/drivers/gpu/drm/virtio/virtgpu_submit.c
++++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
+@@ -538,6 +538,10 @@ int virtio_gpu_execbuffer_ioctl(struct d
+ 	virtio_gpu_process_post_deps(&submit);
+ 	virtio_gpu_complete_submit(&submit);
+ cleanup:
++	if (ret && submit.out_fence && submit.out_fence->e) {
++		drm_event_cancel_free(dev, &submit.out_fence->e->base);
++		submit.out_fence->e = NULL;
++	}
+ 	virtio_gpu_cleanup_submit(&submit);
  
-+	if (unlikely(hw_next_to_clean >= tpd_ring->count))
-+		hw_next_to_clean = next_to_clean;
-+
- 	while (next_to_clean != hw_next_to_clean) {
- 		buffer_info = &tpd_ring->buffer_info[next_to_clean];
- 		if (buffer_info->skb) {
+ 	return ret;
 
 
