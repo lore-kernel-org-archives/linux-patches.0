@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7186C51993C;
-	Wed, 30 Sep 2026 18:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A7B448D03;
+	Wed, 30 Sep 2026 18:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793791; cv=none; b=qbe+M5y1RkCQRfH4tm9AG8oNbDssYwPibbPhQuRrcXVQIUODaRMWxxoM70KIlu26KJQW6Ryi+2YlPId7J7O5blFz+O7bwZWdMxLaNpsYtFqjv0xwwnN47bLDNLlNjQDcXJfWVk/QuX1ngQtI4u0i/A3JTNg96ICD/oPkuxNyBdA=
+	t=1790793794; cv=none; b=ulRqZmGilsHGU++jjUiCPC5xbRfrEseLdYEvYIrufy5keYnwhKvZ8hYL3WkBTJv4cTCMRpYEENEPUhBAucQd058+PLMAOlOYldVtRS7wjEo01YO5Hv5ZXWzTgBqSu6SrCdXiXdLb5+idsKs+g595pMd8SbBqNqOy4nkN+w75tsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793791; c=relaxed/simple;
-	bh=JdC42iW/ub9H0oRnJy+AcRMfcIid7Xwmb4VgdtBNB6Q=;
+	s=arc-20240116; t=1790793794; c=relaxed/simple;
+	bh=kpfIo+ceAmmbE0FV9N7uDRgu0qrISCUssxS5Z4JdNSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEhk1YsSfpq8IaQf5GNsBz1dQWA0aL6kMGuYWmmKqVzSdIhDXXufbTuSV59Ssp7izNTl5jBOVHGSbfrBHkAy6jz8bRV2ySUr+PIDs1f/t5RPuMzf6Arn3dZsM+lZlAMbwZFIIMiu2jTAM98tdxZev7LufRAG+DTsR7FbzcqGRns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAg+lZUi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tcNCeBI+/kkNc2tPD1imuP82slSF/fAHNF81ZlVRc9Lf2NzlezFyw/SVxDiEURfY9sIPFO1MOpm4uAiT1NyUKFK+STEIcZ8YujmHQW3QAX4wpUVSy0mvSSFHfjJTVq6tX9vfUBmmjnshmLRcpAT8+jetZYpYHrtDdysm3MLcI1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFTBoCJB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAg+lZUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC681F00898;
-	Wed, 30 Sep 2026 18:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFTBoCJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF041F000FF;
+	Wed, 30 Sep 2026 18:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793790;
-	bh=sxNk3rtsN6ffzxAdOi4ZDyU6/Be1gNV7HBOqr3+hNq8=;
+	s=korg; t=1790793793;
+	bh=2ifTdns5QyVDF7FpTp/0RoFjJ4iHE1HJZWfRSc1c6aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wAg+lZUikKMwOpvVH/Iorq3yD+f2Q2pdX/mPMW7zwUgZYpsNYLAKp3FvgoDketVd7
-	 XVX6p3ncFy9b3ricI5BNScbrCsJSwbz1jAvUTR3gJr/OV+u6vjvVx/VrbT0gMPaTX4
-	 NXwsRni2/zR0ZC/pj+nEH7WxBcAx2fMirWf1MchE=
+	b=cFTBoCJBDxt9y8yO5dgYxliy8g+fvNp9UjYTpB0PSKxqDA0MJkJxJ47do+4IIe43q
+	 yyZuBOeTwL44/MaitQjYo3Bsw0NblDu6JLsIv5Cp1Oe1Ruw/P1jA/Dgf2XdveErpHH
+	 FaXLrT1CKxApHSJd6VCGoIP1NlTFt92L/c8Kye+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
+	Melody Wang <huibo.wang@amd.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 380/395] x86/sev: Remove redundant ghcbs_initialized checks around __sev_{get,put}_ghcb()
-Date: Wed, 30 Sep 2026 17:30:42 +0200
-Message-ID: <20260930152348.942417450@linuxfoundation.org>
+Subject: [PATCH 6.18 381/395] x86/sev: Make vTPM SVSM calls preemption-safe
+Date: Wed, 30 Sep 2026 17:30:43 +0200
+Message-ID: <20260930152348.964120506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,100 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikunj A Dadhania <nikunj@amd.com>
+From: Melody Wang <huibo.wang@amd.com>
 
-[ Upstream commit 9d8460a1c7a6b0f2dc6302e5d0f31d4e8c2a7913 ]
+[ Upstream commit 6c43c72748fffd29dec15cd1f31e9a32949bc437 ]
 
-After
+Two functions in the SVSM vTPM guest implementation do not disable
+preemption when fetching the SVSM Calling Area Address (CAA).
 
-  3645eb7e3915 ("x86/fred: Fix early boot failures on SEV-ES/SNP guests"),
+The SVSM CAA is a per-CPU structure. When a thread is preempted and migrated
+to a different CPU after fetching the per-CPU CAA, the SVSM call will execute
+on the new CPU with the original CPU's CAA. Which is wrong.
 
-__sev_{get,put}_ghcb() handle the early-boot GHCB fallback internally, making
-the ghcbs_initialized guards in __set_pages_state() and
-svsm_perform_call_protocol() redundant.
+Move the CAA fetching operation inside svsm_perform_call_protocol() which
+disables interrupts around the SVSM call and thus runs preemption-safe.
 
-Remove them.
-
-Also initialize state->ghcb to NULL in the early-boot path of
-__sev_get_ghcb() so that the ghcb_state is well-defined for all callers,
-even though __sev_put_ghcb() currently returns early before reading it.
-
-No functional change intended.
-
-Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Fixes: 770de678bc28 ("x86/sev: Add SVSM vTPM probe/send_command functions")
+Signed-off-by: Melody Wang <huibo.wang@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://patch.msgid.link/20260518102230.3394603-1-nikunj@amd.com
-Stable-dep-of: 6c43c72748ff ("x86/sev: Make vTPM SVSM calls preemption-safe")
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/a5bc0d4a2c462a0089109e145c21626b244b2ff0.1789345277.git.huibo.wang@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/sev/core.c    |    8 ++------
- arch/x86/coco/sev/noinstr.c |    4 +++-
- arch/x86/coco/sev/svsm.c    |   10 ++--------
- 3 files changed, 7 insertions(+), 15 deletions(-)
+ arch/x86/coco/sev/svsm.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -367,17 +367,13 @@ static unsigned long __set_pages_state(s
- 
- 	local_irq_save(flags);
- 
--	if (sev_cfg.ghcbs_initialized)
--		ghcb = __sev_get_ghcb(&state);
--	else
--		ghcb = boot_ghcb;
-+	ghcb = __sev_get_ghcb(&state);
- 
- 	/* Invoke the hypervisor to perform the page state changes */
- 	if (!ghcb || vmgexit_psc(ghcb, data))
- 		sev_es_terminate(SEV_TERM_SET_LINUX, GHCB_TERM_PSC);
- 
--	if (sev_cfg.ghcbs_initialized)
--		__sev_put_ghcb(&state);
-+	__sev_put_ghcb(&state);
- 
- 	local_irq_restore(flags);
- 
---- a/arch/x86/coco/sev/noinstr.c
-+++ b/arch/x86/coco/sev/noinstr.c
-@@ -121,8 +121,10 @@ noinstr struct ghcb *__sev_get_ghcb(stru
- 
- 	WARN_ON(!irqs_disabled());
- 
--	if (!sev_cfg.ghcbs_initialized)
-+	if (!sev_cfg.ghcbs_initialized) {
-+		state->ghcb = NULL;
- 		return boot_ghcb;
-+	}
- 
- 	data = this_cpu_read(runtime_data);
- 	ghcb = &data->ghcb_page;
 --- a/arch/x86/coco/sev/svsm.c
 +++ b/arch/x86/coco/sev/svsm.c
-@@ -74,20 +74,14 @@ int svsm_perform_call_protocol(struct sv
+@@ -74,6 +74,14 @@ int svsm_perform_call_protocol(struct sv
  
  	flags = native_local_irq_save();
  
--	if (sev_cfg.ghcbs_initialized)
--		ghcb = __sev_get_ghcb(&state);
--	else if (boot_ghcb)
--		ghcb = boot_ghcb;
--	else
--		ghcb = NULL;
-+	ghcb = __sev_get_ghcb(&state);
++	/*
++	 * 'caa' is a per-CPU variable. To avoid using a stale or incorrect
++	 * 'caa' if the task is preempted or migrated to another CPU after it
++	 * is fetched, always fetch 'caa' and then issue the SVSM call with
++	 * interrupts disabled. This ensures the correct 'caa' is used.
++	 */
++	call->caa = svsm_get_caa();
++
+ 	ghcb = __sev_get_ghcb(&state);
  
  	do {
- 		ret = ghcb ? svsm_perform_ghcb_protocol(ghcb, call)
- 			   : __pi_svsm_perform_msr_protocol(call);
- 	} while (ret == -EAGAIN);
+@@ -321,7 +329,6 @@ int snp_svsm_vtpm_send_command(u8 *buffe
+ {
+ 	struct svsm_call call = {};
  
--	if (sev_cfg.ghcbs_initialized)
--		__sev_put_ghcb(&state);
-+	__sev_put_ghcb(&state);
+-	call.caa = svsm_get_caa();
+ 	call.rax = SVSM_VTPM_CALL(SVSM_VTPM_CMD);
+ 	call.rcx = __pa(buffer);
  
- 	native_local_irq_restore(flags);
+@@ -345,7 +352,6 @@ bool snp_svsm_vtpm_probe(void)
+ 	if (!snp_vmpl)
+ 		return false;
  
+-	call.caa = svsm_get_caa();
+ 	call.rax = SVSM_VTPM_CALL(SVSM_VTPM_QUERY);
+ 
+ 	if (svsm_perform_call_protocol(&call))
 
 
