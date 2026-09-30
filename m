@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4561A50C2A4;
-	Wed, 30 Sep 2026 17:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECF84FB9AF;
+	Wed, 30 Sep 2026 17:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788392; cv=none; b=qlLh8YPc1c9GZSXESxu+J/DCsYQcU4UMLb6i689NeI18J+BJJC5+/ZwjHB3vdYsoqc/mXymcBSfpZId48JrPSuiX3HbwoLgWwunMdA1o1OD+B8Z28ox4j2UpdqXWcGgbhSP2IvG4u7sXHwqPcZDEii1+mfEi6jTxeQ5QpgjYqJk=
+	t=1790788395; cv=none; b=WcEIVAQ3nL6sm5EzTGB9vHZZzq63rRu4/F4MtsYPMouiBr25hYGYa/6qGT9mqONnoa8u/n/uPk2d5fAqrL9Srx0irP2P100fzgM0ZUTZ3xNNpLsEd8k5H/2gHTNT4oKekPX5nCgrvRn1vOG9EDGTrwC1XQ06bRocVr5OnHz4lvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788392; c=relaxed/simple;
-	bh=I3ZzpRTsoH8qFFSRldwDKydfDEf478rYdOXukVunlok=;
+	s=arc-20240116; t=1790788395; c=relaxed/simple;
+	bh=A5Mwq3jaQ/qdi4hZkugu0zofgdlc4U5/IrkorN2Oi7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcYIyvOUaTQozX+v0J71FygmgfqRonjdW0abNs4QRhBCWbKhWg89q5rYsFSLRoLv9Nciq+FohYvzapY0vWtSxvCvqVxlAkImv7ZywGLCcOACzpxxQiGH5ZPw76fB+HP7wcM7DCjxg3ejsylr3x7P37GxcMuqigJL2UHd9PCHM5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xigjrkDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdomNu88H/86zdYMGjNkbplZwIpCLQba8UCl0vdPWk0uS1Verl9RvNk1c5/WGwFyYUGxs4HLJNBi9AqtHPr4mjq0RRereCby5rDCJW2UtJFYGnF2mMobLNaWYv4csAcKJim4igVAQXLP20CrpqMKBEdwkqeareJRgX3zB09Q1Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc27W0EQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xigjrkDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596631F000FF;
-	Wed, 30 Sep 2026 17:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc27W0EQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3566B1F000FF;
+	Wed, 30 Sep 2026 17:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788390;
-	bh=BVHzXfnaQzDXFrLDyNYY0aREKLvnbBIXMNf8dc5pNGU=;
+	s=korg; t=1790788393;
+	bh=FSSuJl/AQG6XSLQgldapJTWd7M/U7CxU8Zd63QQWa/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xigjrkDCHQTsu1jtSvj9wL6liQY6vUWoWfjD9NTAGAVrzaueDlyJm5CnYj4OkkqSy
-	 +qyO/CoGDk4Ok/OJTgpnUyp7Z/zD0YCrFdITnFEHRRRk9Skw3lpHB+eNre+CC/KQMY
-	 qwmJUd/s3RYeHmYh4sk7xh20tHcmQm+/SbcfwCZ8=
+	b=Hc27W0EQEQzMil0vl1KOhJ9xyWtc2VGmOFpBy3avhupegqBzjKWmnKoR59Xq9Xe2j
+	 OxMlmVU3CByHnmQ6u5PTgUAEkuBwccb41RztHNQHErFaeghuavbE1uEYifMADgU/Hk
+	 rZaiKJVDkOHZLf2RkY5gRpYc5rxpxlHRQZIEXArw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/877] ASoC: Add codec_ch_mask to snd_soc_dai_link_ch_map
-Date: Wed, 30 Sep 2026 17:16:57 +0200
-Message-ID: <20260930152417.025242071@linuxfoundation.org>
+Subject: [PATCH 6.12 107/877] ASoC: soc-pcm: Apply snd_soc_dai_link_ch_map.codec_ch_mask to codec params
+Date: Wed, 30 Sep 2026 17:16:58 +0200
+Message-ID: <20260930152417.048647943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,49 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 88b14c0d0bab5c0f3e7c641f274e3c70210c0e36 ]
+[ Upstream commit 6b382bdfe26a2232091bf743e454e6794295783e ]
 
-Add a codec_ch_mask member to snd_soc_dai_link_ch_map.
+In __soc_pcm_hw_params() if there is a snd_soc_dai_link_ch_map with
+non-zero codec_ch_mask, use that channel mask to restrict which channels
+are enabled on the codec. But only if there isn't a TDM mask.
 
-The CPU and codec channel masks are not necessarily the same, and are
-quite likely different. SoundWire and I2S/TDM both support assigning
-different sample slots to each codec, so for example channel 0 on each
-codec could map to different channels at the CPU.
+It is possible that a snd_soc_dai_link_ch_map could include the same codec
+multiple times on different CPUs so the for_each_rtd_ch_maps() loop
+accumulates the channel masks for all entries of that codec.
 
-It is also possible for one TX channel to map to multiple RX channels.
-So it isn't _always_ safe to assume that the total number of set bits
-in the CPU ch_mask is the same as the total number of enabled channels
-on the codec.
+If a TDM mask was also set, it takes priority and is used instead of any
+possible snd_soc_dai_link_ch_map entries. (They cannot be ANDed together
+because the bit positions are indicating different things: TDM is a bit
+for each TDM slot, codec_ch_mask is a bit for each codec channel.)
 
-For example consider this mapping on a capture stream:
+This fixes a problem of incorrect TX channels enabled on the codec when
+multiple codecs are aggregated on a single capture link. For example:
 
-CPU0 CODEC0 cpu_ch_mask = 0x03
-CPU1 CODEC0 cpu_ch_mask = 0x03
+- Two CPUs with six 4-channel codecs.
+- The machine driver chooses to assign one channel from each codec to
+  one channel on the CPU
+- But the codec hw_params() would be passed a channel count of 6, which
+  (a) is more channels than the codec has and (b) allows enabling channels
+  that should not be driving the audio bus.
 
-This could be either four TX channels on the codec split across two
-receiving CPUs, or two TX channels on the codec duplicated to two CPUs.
-
+Fixes: ac950278b087 ("ASoC: add N cpus to M codecs dai link support")
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260910114500.1586637-3-rf@opensource.cirrus.com
+Link: https://patch.msgid.link/20260910114500.1586637-4-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 6b382bdfe26a ("ASoC: soc-pcm: Apply snd_soc_dai_link_ch_map.codec_ch_mask to codec params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc.h | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/soc-pcm.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/soc.h b/include/sound/soc.h
-index 87e50c8cdda31..a5f8e83e6ced4 100644
---- a/include/sound/soc.h
-+++ b/include/sound/soc.h
-@@ -718,6 +718,7 @@ struct snd_soc_dai_link_ch_map {
- 	unsigned int cpu;
- 	unsigned int codec;
- 	unsigned int cpu_ch_mask;
-+	unsigned int codec_ch_mask;
- };
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 440acec700a56..d52771a4a723b 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1122,7 +1122,9 @@ static int __soc_pcm_hw_params(struct snd_soc_pcm_runtime *rtd,
+ 		goto out;
  
- struct snd_soc_dai_link {
+ 	for_each_rtd_codec_dais(rtd, i, codec_dai) {
+-		unsigned int tdm_mask = snd_soc_dai_tdm_mask_get(codec_dai, substream->stream);
++		unsigned int ch_mask = snd_soc_dai_tdm_mask_get(codec_dai, substream->stream);
++		struct snd_soc_dai_link_ch_map *ch_maps;
++		int j;
+ 
+ 		/*
+ 		 * Skip CODECs which don't support the current stream type,
+@@ -1144,9 +1146,15 @@ static int __soc_pcm_hw_params(struct snd_soc_pcm_runtime *rtd,
+ 		/* copy params for each codec */
+ 		tmp_params = *params;
+ 
+-		/* fixup params based on TDM slot masks */
+-		if (tdm_mask)
+-			soc_pcm_codec_params_fixup(&tmp_params, tdm_mask);
++		/* fixup params based on TDM or ch_map masks */
++		if (!ch_mask) {
++			for_each_rtd_ch_maps(rtd, j, ch_maps)
++				if (ch_maps->codec == i)
++					ch_mask |= ch_maps->codec_ch_mask;
++		}
++
++		if (ch_mask)
++			soc_pcm_codec_params_fixup(&tmp_params, ch_mask);
+ 
+ 		ret = snd_soc_dai_hw_params(codec_dai, substream,
+ 					    &tmp_params);
 -- 
 2.53.0
 
