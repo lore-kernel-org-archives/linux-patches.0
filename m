@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C8F51588E;
-	Wed, 30 Sep 2026 16:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE11851DAEB;
+	Wed, 30 Sep 2026 16:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784735; cv=none; b=ZPBhH92mhfAuCowSe2nXMyHi6KZhzYvLJ8ruUZ8sgFb5c/sZKy52UikiLeNPcDVaw/bfhR3diW2TLXDIjfj1344K0QsZ2E1ItnHikcIk0HLLagAWVLmUuDAC681pnFohOW13LCP2KNvM+ipvX2gNmVmrKc7yOt2pTA8s0HbB8uM=
+	t=1790784738; cv=none; b=fD+QBFPO9ID5c5xg9DA7hSFGDH5O8o39jALCQrrFEBNMBEjRNNTNaPy07C1MOzA0zWixIr26bTtzSYm4X0HxgwewelM63igAixh5ijx+ltY8i5RGdEMbsHK3Sxg4MMMVZWafoit/dYzRC8BIp5CWqzvFaAJJiYrGbjVrTBpKKAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784735; c=relaxed/simple;
-	bh=IVvclSFb4kWjVLKpRBKkINBSO2df8B3Lpxscn33iDZI=;
+	s=arc-20240116; t=1790784738; c=relaxed/simple;
+	bh=Qn2L7TD/Jv43dm3iwC2FtCh/nQBFpR6TecHWFPep6T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPezy5dKooa5BCT3xn44w96VPxlPe29itFrxJFsDo7UNyQQWhdsYk2fy8JEUpbeUPdrpYps/fykxoN1e9RWhD2uan1j1OOMWN1lHH6b1XNVaWEJdpN8iumJQ7zgc6h2T57dhc4tRB/xC+Q+/GTJMZgGO81vk0ia9Rp1MUaF5tRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLnlVwhn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Veu4KJvO6c2MJZ2eI7++7ZMh8yA1hya7GSgJUlDR9jLPereJFB/9SiWeQPmV59znfXMJ9swJHPkX3tplLnaN0oVK8W46gG2tSRCns6K4Cf4J/So1FtPmGbmu7zkz4kRkroAditQinqMnZXYXuM7t6e45jirYng67E3OChIVLCX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJ6ZqqRH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLnlVwhn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99FC1F000FF;
-	Wed, 30 Sep 2026 16:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJ6ZqqRH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7561F00893;
+	Wed, 30 Sep 2026 16:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784731;
-	bh=/yehAe9ITI9GnU3tNgFPg6EB5pyDz5FvVpLiqY+NomU=;
+	s=korg; t=1790784734;
+	bh=+eXWMwSiya3bP540hs3fQUHRkxGSOJhpj8SXNrbRwJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VLnlVwhnwtRBbzy5rH4vJ9y1+OxdfkCkHEn0diHOEGeFtxusJJbGDIqhlOWBTPm3e
-	 J4lBuz+90/6OQXmFIIzNq3GC0nRv0zNteghLxzzRp8IhpCI6h5cfE2T2Tuf8hG0lcX
-	 R2y12PmoTdaTUkaMMM+6KYl8qChUbbm57hP8fZCs=
+	b=LJ6ZqqRHD7il5T7k86eh8Ga29M/P0fmtyy7n1pSGM6mbODQzKVrLvSgPjP5q7VBIQ
+	 EE/3cIbAEhY7JhAviZ2OJcUqMz6Rt8vv4nEf7r+KKdEL8pZiWwYe8uonfWtKb90F/K
+	 sVIlJMUoKGLoaN3mhvMqx3vRN6JMbVoAyo4ewNIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Galen Hassen <rwekyes@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/982] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
-Date: Wed, 30 Sep 2026 17:15:40 +0200
-Message-ID: <20260930152421.192836694@linuxfoundation.org>
+Subject: [PATCH 6.1 253/982] ksmbd: mark invalid session responses as signed
+Date: Wed, 30 Sep 2026 17:16:29 +0200
+Message-ID: <20260930152422.230313485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,73 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Galen Hassen <rwekyes@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
+[ Upstream commit 9e8ad620ddfde5a5f4ef58372e3805e9388cb0f4 ]
 
-The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
-Conexant SN6140 codec. The internal microphone is on pin 0x1a but
-the BIOS configures it with pin default 0x95a60120, which includes
-a jack detection bit that causes the kernel to treat it as an
-unplugged external mic rather than a fixed internal mic.
+When a signed request uses a session that is not registered on the
+connection, ksmbd returns STATUS_USER_SESSION_DELETED before reaching the
+normal response signing path. The response therefore lacks
+SMB2_FLAGS_SIGNED.
 
-Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
-setting the connectivity bits to indicate a fixed/always-connected
-device. This allows the internal microphone to be correctly
-identified and used.
+Clients that require signing check this flag before handling
+STATUS_USER_SESSION_DELETED and replace the server status with
+STATUS_ACCESS_DENIED when it is absent. The protocol permits this error
+response to skip signature verification because the connection has no
+matching session key.
 
-Signed-off-by: Galen Hassen <rwekyes@gmail.com>
-Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Preserve SMB2_FLAGS_SIGNED on the early error response when the request was
+signed. This lets the client propagate STATUS_USER_SESSION_DELETED.
+It fixes smb2.session.bind2.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/smb/server/server.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 0aed86820402c..0a2ebb8789bb3 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -307,6 +307,7 @@ enum {
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
- 	CXT_PINCFG_SWS_JS201D,
-+	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
- 	CXT_PINCFG_TOP_SPEAKER,
- 	CXT_FIXUP_HP_A_U,
- 	CXT_FIXUP_ACER_SWIFT_HP,
-@@ -841,6 +842,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
- 	{}
- };
- 
-+/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
-+static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
-+	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
-+	{}
-+};
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index ac7477edc62f2..a5e9bb40e2191 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -195,6 +195,12 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
+ 				else
+ 					conn->ops->set_rsp_status(work,
+ 						STATUS_USER_SESSION_DELETED);
++				if (conn->ops->is_sign_req(work, conn->ops->get_cmd_val(work))) {
++					struct smb2_hdr *rsp_hdr;
 +
- /* SuoWoSi/South-holding JS201D with sn6140 */
- static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
- 	{ 0x16, 0x03211040 }, /* hp out */
-@@ -1032,6 +1039,10 @@ static const struct hda_fixup cxt_fixups[] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = cxt_pincfg_sws_js201d,
- 	},
-+	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
-+	},
- 	[CXT_PINCFG_TOP_SPEAKER] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = cxt_fixup_sirius_top_speaker,
-@@ -1137,6 +1148,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
-+	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
- 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
++					rsp_hdr = ksmbd_resp_buf_curr(work);
++					rsp_hdr->Flags |= SMB2_FLAGS_SIGNED;
++				}
+ 				goto send;
+ 			} else if (rc > 0) {
+ 				rc = conn->ops->get_ksmbd_tcon(work);
 -- 
 2.53.0
 
