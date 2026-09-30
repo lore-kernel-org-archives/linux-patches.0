@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420072DEA95;
-	Wed, 30 Sep 2026 18:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F852DB785;
+	Wed, 30 Sep 2026 18:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794445; cv=none; b=OvTr0XnbbDJ6Dy3VHfzkp7C96p7FhRNQfGe1EcXLw6X0tiT39t6QzvWDjRH4j2GqWIVTB/PVFUVKVPSv5ZWtLur9SsYDcgo133lKnZX0ztAePN+NmuuilhRlvj+/YoUrbek/FJlCaY9ma+2VEdXGpRTDb0a+tKUFYHHRlIl0Y/E=
+	t=1790794448; cv=none; b=EfQRcDL7n2ui7NbELulfq9OlosYjEKpbqsOJ7pdBYG5nCq5D+sxMJAHxXhTGruAQ2cFdOr1y/yNDs55reWYxBpV1TM1NSIJJnIMbNNDI4my9k4YfBMEyxZNPUiKDvzatenLuJ+zpQ84xWgUuXh6oezLca9f3Hx4YE17Ct/kTjdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794445; c=relaxed/simple;
-	bh=PTfCX7bVtw3KGQurbSa7ROl//mLwn3mW3benXJba9DI=;
+	s=arc-20240116; t=1790794448; c=relaxed/simple;
+	bh=7exlf5Yhq/oVBTDG9TFJU1FFG/9ksDLEKYQj38uiBKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKqs/HxRwbL4Q6uBho/8Qcwmdq0EKKlqp5QBFsDxDSlWnV3blBN+ZUvjvcPmVtD/igIadvma7E+adfD520fdWsoSWZlv6rY8xM2ejW0RljZ1o7XHx06GE69TGNC8FuVBe/8ptHinXF4fgMQ55jtpT2QtiW47wM3yZm6n3OaNhuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF/+9+bS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FyOOMHTiyTEi6y7UPPVjb3RGQ+qI7L7s9FeYc/vetwV2W9ZZYkyRYjgX1qRlpdGodpU7ezFMNUx5gLEyrtYngTONNfm9fVpJG+9mhJMMbKAb2lTHuM23j7kpx+FnwSmMKbroSL4ll2vqE726wcexbozagBSwqyBa471xDIiBwDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fwc6gHN1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF/+9+bS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62681F000FF;
-	Wed, 30 Sep 2026 18:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fwc6gHN1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4A41F000FF;
+	Wed, 30 Sep 2026 18:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794444;
-	bh=VMybe0PmTByxW+x9jjrcOWqoyyy62KADftFzifJHrpo=;
+	s=korg; t=1790794447;
+	bh=2vq8snFjGGz658fMnFlgyKlHmKOrXJ034OMCPpeOL0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GF/+9+bSiXCYxEGb50N+QhipmnJlyvlK0VLsuZfcGoL8ep3ObIyDFr6SqVZgftPKK
-	 LXQYqhuwk0zoy9TCt2Op+OBfQZMXu0sWKe5hCC2iZ62tgs/o7r+AW8xFiy+Fm7EgH7
-	 0QrbrYSb5HbOFUrpioWLn7Fy4fGhZ0WayPZRUHK4=
+	b=Fwc6gHN1cJ337TAR2GSedd/ZGXugTLi1LYkzB0EoJnBmJcx4QiibR/zZb0COEIB/v
+	 g0H/KL6EuiaRwcT39WhCFY4svPAYaa7eg6mdsQtjLIcHTO6ElO6ZKuvHkb1BoUbQ9M
+	 nWctP1jCAxkfHPEZv/x6wn//hOljYjo9xDMdfV7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Moelius <sam.moelius@trailofbits.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sashiko AI Review <sashiko-bot@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0213/1193] Bluetooth: L2CAP: validate connectionless PSM length
-Date: Wed, 30 Sep 2026 17:14:57 +0200
-Message-ID: <20260930152438.935629192@linuxfoundation.org>
+Subject: [PATCH 6.6 0214/1193] ASoC: rockchip: rockchip_pdm: Handle runtime PM resume failures in set_fmt
+Date: Wed, 30 Sep 2026 17:14:58 +0200
+Message-ID: <20260930152438.957439259@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,48 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Moelius <sam.moelius@trailofbits.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit a40a5f922546b3bd7c094d882b29177db4f2abe0 ]
+[ Upstream commit ee7b5f7b39332febf917f9ebf212842cc9379815 ]
 
-Connectionless L2CAP frames carry a two-byte PSM at the start of the
-payload.  l2cap_recv_frame() currently reads that PSM unconditionally
-after validating only the outer L2CAP length.
+rockchip_pdm_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-A malformed connectionless frame with a zero- or one-byte payload can
-therefore make the parser read beyond the advertised skb payload and use
-tailroom bytes as part of the PSM.  A VHCI-backed QEMU reproducer
-injected a one-byte connectionless payload and reached the unchecked
-read.
-
-Reject connectionless frames that cannot contain the PSM before reading
-or pulling it.  This preserves all valid connectionless frames while
-dropping only structurally incomplete packets.
-
-Assisted-by: Codex:gpt-5.5-cyber-preview
-Signed-off-by: Samuel Moelius <sam.moelius@trailofbits.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260522110302.349421F000E9@smtp.kernel.org/
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260602101608.45137-6-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/rockchip/rockchip_pdm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9643a8aacb96b..0f2fe83215cf3 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7031,6 +7031,11 @@ static void l2cap_recv_frame(struct l2cap_conn *conn, struct sk_buff *skb)
- 		break;
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index 4756cfc23218c..96f77e1c16e32 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -322,6 +322,7 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
+ {
+ 	struct rk_pdm_dev *pdm = to_info(cpu_dai);
+ 	unsigned int mask = 0, val = 0;
++	int ret;
  
- 	case L2CAP_CID_CONN_LESS:
-+		if (skb->len < L2CAP_PSMLEN_SIZE) {
-+			kfree_skb(skb);
-+			break;
-+		}
+ 	mask = PDM_CKP_MSK;
+ 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+@@ -335,7 +336,10 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
+ 		return -EINVAL;
+ 	}
+ 
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
 +
- 		psm = get_unaligned((__le16 *) skb->data);
- 		skb_pull(skb, L2CAP_PSMLEN_SIZE);
- 		l2cap_conless_channel(conn, psm, skb);
+ 	regmap_update_bits(pdm->regmap, PDM_CLK_CTRL, mask, val);
+ 	pm_runtime_put(cpu_dai->dev);
+ 
 -- 
 2.53.0
 
