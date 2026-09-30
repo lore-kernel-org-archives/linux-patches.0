@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461B50E5B1;
-	Wed, 30 Sep 2026 15:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5A94F93BA;
+	Wed, 30 Sep 2026 15:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782605; cv=none; b=W1m9VUwT6yWcQ/1+ZzSH7sPlsvvx8wC4FVhge5E5ZlmU8Vd8PdAm3eSLm6i+9ALTai631NuxX7G3kSlNaJFeWwLfyOOWQpImr9pWN6qCcYVHl5BWf7DoNu2htUCAdJy4zT4fwfyr01JcPfJKPuBfdglN5914SxB8u9Qy97ewxNE=
+	t=1790782604; cv=none; b=temAZFkK/LwDSWpdayRdCruovxfwyarinLEBN7qQngGkIIzlbwhwWqbIYbzWOSwnnj6+oqbTwiCGRmWcH/u751y7EN3xoSI7kNkOqnkHMO/wIiOoWRYUyc4DiYz0rQtQ3oKPWYY4RwgSkTNOz95eQlrSz+klM3px3NsYCq+vWWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782605; c=relaxed/simple;
-	bh=v3OhlcrrKh8n62ljCjApg0IEMC6BeQRyIrrFPcqO/r4=;
+	s=arc-20240116; t=1790782604; c=relaxed/simple;
+	bh=FfrERFp66rSLVyfKxxzcDLLDDxSSYmhtCKgpUke7RGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHDcjWW5iKgFX1pmOwSjjG61YRUT1muB1wdMip+IZ4nz6vU7pgF2XghWykK+WtgNkwlRgnTEoCIQGtMrbzi1JoV/er6ute7neQlwg65a/OSNoZ2EUdAQ7Msn04byBkU7ZOanLxb6Zo4XAiQRXY0f5uO+AGl+4RIwIswzNyKQU4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAk/eYH6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lDz8soy+aBgh1BbuEgG5hLKrCG1IJZQNbe1b8eLaoVItmpWvEUbj3T+4fq3GcnPQofCEGobuA9AMbWpNAVcaOfH4cBdRz7u8g2MFdTJBCo3zIVQMxm0T515apacqu9+WCRALaxTtcGh64AJCxOqatdcuKJw0UQvpnysKsushCYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0PmJ1/c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAk/eYH6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4C21F000FF;
-	Wed, 30 Sep 2026 15:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0PmJ1/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B1E1F00898;
+	Wed, 30 Sep 2026 15:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782598;
-	bh=ebnVIb4M0Hp6tR44My4n4fVla1wq9aoQmO74OhAIPBw=;
+	s=korg; t=1790782595;
+	bh=Y9tjLEPfy/Xy0wahCw7JkRzW0Mh7I/E8mNS5k2Xm40U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iAk/eYH60FDMoaUYh7ybF9qwNKwXhPBxC/gDvD/vjN9jkfzCLZQXzC9DdijZ18nO6
-	 Xfh//xk6iy4agSZaf3dwLV88QmKehTgUNX5p8f1pqmUC4HXwOLW9nVAu1rW70B75Fn
-	 R0x9rI4lsZDHpU/tEommVRCYYYCOLVl+HmJApzlw=
+	b=Y0PmJ1/c0/6B6j06Gbbyu2ME4g0qUKwAR0zCiwSswhIV3QvQJQcOV4OGs0oP/R/om
+	 ZOynRdNk2Sr1zSxB4jn09hyRvF8+TU0agUnDdR50M1XZAP9HFAvNwq0J3eU/fXmTp2
+	 O8R/anlIEl5SJD5AKNqstHPsfKtlLMCm+cyWdO94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/595] RDMA/mlx5: Fix state and counter desync on loopback enable failure
-Date: Wed, 30 Sep 2026 17:19:55 +0200
-Message-ID: <20260930152349.932783959@linuxfoundation.org>
+Subject: [PATCH 5.10 101/595] wifi: nl80211: Increase ie_len size to prevent truncated IEs in new peer notifications
+Date: Wed, 30 Sep 2026 17:19:54 +0200
+Message-ID: <20260930152349.910689365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,53 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
 
-[ Upstream commit 0d32eabccbe4b2f8d45be3192c5f3c76c8af703d ]
+[ Upstream commit dfb67ae569bf0726187725b1ef8d89377778861e ]
 
-In mlx5_ib_enable_lb(), dev->lb.enabled was unconditionally set
-to true even if mlx5_nic_vport_update_local_lb() failed.
+Currently, ie_len in cfg80211_notify_new_peer_candidate is defined as
+1-byte field, capping the maximum IE list size at 255 bytes. When a
+large beacon is received, the IE list is truncated, passing incomplete
+data to wpa_supplicant. This causes supplicant to fail parsing the IEs.
 
-Fix this by only setting dev->lb.enabled on success. On failure,
-roll back the reference counters and return the error.
+Increasing the size of ie_len to allow the full length of the IE list to
+be forwarded properly.
 
-Link: https://patch.msgid.link/r/20260601095818.2227-1-lirongqing@baidu.com
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
+Link: https://patch.msgid.link/20260605054307.427874-1-thiyagarajan@aerlync.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/net/cfg80211.h | 2 +-
+ net/wireless/nl80211.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 0e20b99cae8b6..56151a616b07c 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1708,6 +1708,9 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- 	    dev->lb.qps == 1) {
- 		if (!dev->lb.enabled) {
- 			err = mlx5_nic_vport_update_local_lb(dev->mdev, true);
-+			if (err)
-+				goto err_rollback;
-+
- 			dev->lb.enabled = true;
- 		}
- 	}
-@@ -1715,6 +1718,14 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- 	mutex_unlock(&dev->lb.mutex);
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 5595c2a949397..a2758f9ce340c 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -6482,7 +6482,7 @@ void cfg80211_ibss_joined(struct net_device *dev, const u8 *bssid,
+  * cfg80211 then sends a notification to userspace.
+  */
+ void cfg80211_notify_new_peer_candidate(struct net_device *dev,
+-		const u8 *macaddr, const u8 *ie, u8 ie_len,
++		const u8 *macaddr, const u8 *ie, size_t ie_len,
+ 		int sig_dbm, gfp_t gfp);
  
- 	return err;
-+
-+err_rollback:
-+	if (td)
-+		dev->lb.user_td--;
-+	if (qp)
-+		dev->lb.qps--;
-+	mutex_unlock(&dev->lb.mutex);
-+	return err;
+ /**
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 3b2a70b467de9..506d621212e44 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -16259,7 +16259,7 @@ void nl80211_send_ibss_bssid(struct cfg80211_registered_device *rdev,
  }
  
- void mlx5_ib_disable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
+ void cfg80211_notify_new_peer_candidate(struct net_device *dev, const u8 *addr,
+-					const u8 *ie, u8 ie_len,
++					const u8 *ie, size_t ie_len,
+ 					int sig_dbm, gfp_t gfp)
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
 -- 
 2.53.0
 
