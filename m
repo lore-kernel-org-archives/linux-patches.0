@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ACE36A37E;
-	Wed, 30 Sep 2026 17:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DF750AC0E;
+	Wed, 30 Sep 2026 17:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788831; cv=none; b=L79WNt+mkTZ7g1q/02/K9IG+BpG8UsyZXe3SqF4PjU/LJ1p3Nkst4riznlxi+LY0wbG6xix2adTxrtSZrpVMDLYod96FCVRin7F+mUhLBUqejBqyiDXviWqlE/J1Tz59vuHvDXXGwiH7rI760I6Wz/8xcQ+niVpHgEZsPOIAhJY=
+	t=1790788833; cv=none; b=CAWEMBzRFNtTVo9YZHy/RtTO9QWcAFvu4K6TtdGyli0/wMdYTNnDlV5nJUH+zqa+YIGu/4p6gQ5pM2unWA7P8eewZ7TvsQlXsAWp1yaSFQkF0A8EAEGyuvbQNQo9bAZtQKNex504VIN2MTwgmBb9x/Hheg7wVd3aVqbVbT6tkJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788831; c=relaxed/simple;
-	bh=VoHhusmN4eqPDUmyBhQHvzSNzXocankYg9p9HyH9PXw=;
+	s=arc-20240116; t=1790788833; c=relaxed/simple;
+	bh=YuMgYZuExcartwuOAsyOmQyEGKTc2i+21gM9P/ATVOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+GMHQauKMEHR+k1yDL8PtujJwJI6HfawL3YPDb3/EFQIIYaPbnSPYlsElv8ughVmRXAM/lfOGkS7JGb56pFMjbGxDBJfffp7xXd3xyfaoQlugHUgy1Mv67HFO2KFveDC/mP1gDoWlXCcBWhsKddIys8G6WMJo3iQSbly+xRRZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRPdp8Gl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zb6GTEbKLfwFWJw184ibs8/AOptiGjvzXfoiyi4/xO8fkH4GFgU9Lb8peVA5dhtZ2vqq1YuNc3zAEZU25iFOL6b2I4EZ8UwkqZHEuI0NC+D9aDoi7cyo3nDyB2dPBpeHvuPXMqcW1Vj9Zvxkdz8FyaMQTGnraSqHoi2/lzT1RQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+H8e9b2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRPdp8Gl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464641F000FF;
-	Wed, 30 Sep 2026 17:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+H8e9b2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EADD1F000FF;
+	Wed, 30 Sep 2026 17:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788829;
-	bh=aQiAGZGH6DOgA+1OZX/D1Bq/K64wf6k4iC8Q5nnMeug=;
+	s=korg; t=1790788832;
+	bh=5HjSS39texGcQjdgz1YCQVAnjbJkmKVzHlqgG0Rs6JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oRPdp8Glrh7fU/4euxwMlQ6uCFJI+IoLT9xmp80+DQyX8W8PG9AOaemv5wYLS5Iwg
-	 kVdwzc1926d6Sml7x1nrAg63NYx8K21z7l4OkmXaZehVG3m1a8S3KghLuscUBpo5X7
-	 1YXqUJ3vIAKRsGk+EJN/gPKB3YhU1hikTQplHEas=
+	b=H+H8e9b2ZP3VLuhgPrjsf8a2++tDkNZ3xAuU2vE6kW+0eScsern6Tp6H+0vKnyG0y
+	 l5+r532UL4XG9DsIyiFH3f6Qwy7FAfzUHBqORev3o4/oK0I4Niy/g2s8elIRZiIOCO
+	 VaqlHBRg+yfbSiB+NUv7ROrs5cqAcb7DFPsQEF8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 256/877] watchdog: rtd119x: Avoid division by zero
-Date: Wed, 30 Sep 2026 17:19:27 +0200
-Message-ID: <20260930152420.246027304@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 265/877] wifi: wilc1000: fix RX buffer OOB-write in wilc_wlan_handle_isr_ext()
+Date: Wed, 30 Sep 2026 17:19:36 +0200
+Message-ID: <20260930152420.443248303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,47 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 5af7d2cbd20f893def03c8310a460ade66a5d822 upstream.
+commit c1ba7f7f18465e259cf1b4d9c73fc73853d7f790 upstream.
 
-clk_get_rate() could return 0.  Avoid a division by zero panic.
+wilc_wlan_handle_isr_ext() takes the RX transfer size from the
+device-reported interrupt status register (a 15-bit field shifted left by 2,
+up to 131068 bytes) and reads that many bytes from the device into
+rx_buffer, which is only WILC_RX_BUFF_SIZE (96K) large. The wrap
+check only handles the current offset; the size itself is never
+compared against the buffer, so a bogus SDIO device can make the driver
+OOB-write rx_buffer by up to ~32K with data it controls.
 
-Fixes: 2bdf6acbfead ("watchdog: Add Realtek RTD1295")
+The oversized transfer also leaves rx_buffer_offset past the end of
+the buffer, after which the unsigned wrap check stops working and
+the overflow can repeat.
+
+Drop any transfer whose size exceeds the RX buffer, acknowledging
+the data interrupt and re-arming the RX engine so the bogus frame is
+discarded and reception can continue. This also restores the
+rx_buffer_offset <= WILC_RX_BUFF_SIZE invariant the wrap check
+relies on.
+
+This is not expected to change driver behavior in most cases:
+without this check, an oversized transfer would most likely
+corrupt neighboring kernel memory instead of completing anyway, and
+the drop path performs the same interrupt acknowledgment and RX
+engine re-arming as the normal path, so subsequent transfers are
+received unaffected.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260913064851.8239-3-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/7c971924c6bdccf6c2f75704a5a746e9303aaf64@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/rtd119x_wdt.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/microchip/wilc1000/wlan.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/watchdog/rtd119x_wdt.c
-+++ b/drivers/watchdog/rtd119x_wdt.c
-@@ -98,6 +98,7 @@ static int rtd119x_wdt_probe(struct plat
- {
- 	struct device *dev = &pdev->dev;
- 	struct rtd119x_watchdog_device *data;
-+	unsigned long rate;
+--- a/drivers/net/wireless/microchip/wilc1000/wlan.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
+@@ -1035,6 +1035,15 @@ static void wilc_wlan_handle_isr_ext(str
+ 	if (size <= 0)
+ 		return;
  
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
-@@ -111,10 +112,14 @@ static int rtd119x_wdt_probe(struct plat
- 	if (IS_ERR(data->clk))
- 		return PTR_ERR(data->clk);
- 
-+	rate = clk_get_rate(data->clk);
-+	if (!rate)
-+		return -EINVAL;
++	/* A size exceeding the RX buffer is bogus; drop the transfer
++	 * instead of overflowing the buffer.
++	 */
++	if (size > WILC_RX_BUFF_SIZE) {
++		wilc->hif_func->hif_clear_int_ext(wilc,
++						  DATA_INT_CLR | ENABLE_RX_VMM);
++		return;
++	}
 +
- 	data->wdt_dev.info = &rtd119x_wdt_info;
- 	data->wdt_dev.ops = &rtd119x_wdt_ops;
- 	data->wdt_dev.timeout = 120;
--	data->wdt_dev.max_timeout = 0xffffffff / clk_get_rate(data->clk);
-+	data->wdt_dev.max_timeout = 0xffffffff / rate;
- 	data->wdt_dev.min_timeout = 1;
- 	data->wdt_dev.parent = dev;
+ 	if (WILC_RX_BUFF_SIZE - offset < size)
+ 		offset = 0;
  
 
 
