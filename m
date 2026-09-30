@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EBC51120F;
-	Wed, 30 Sep 2026 15:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE64A4F96C5;
+	Wed, 30 Sep 2026 15:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782588; cv=none; b=Jo4Oa1vYXDR2O4oAgwIXK8u1lVScJO7ozBk537NxJzwNKWpwxIvGcI1LCIXroZ59vYtrHksJthSCwMj9n5eWzLA6GrqEhlB9/km21DjJcvlAJ2CZP9B9mleZqAsoiOXBnnn1ijrKfnBTVh6QIdSZl/87IWMJObGqWGtLh1LX8kM=
+	t=1790782593; cv=none; b=CbjpyUaMnarrdKO5/XGHSAHV+cCz9V/Lx4QjKmCJslEbMqd1VqfUoQiK3nzRmtyk6FYx5qT+83vHYqaN+EJOFd0aw0vRzoU3sfkfoiu77uAPytPU/Rr2G2tx6mHQ71X2v4/SlYLnQ0Ja752YR9fj8Ac85bxbM+A/PG9+/lyFeIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782588; c=relaxed/simple;
-	bh=swgkyGsqoYXGiEmSZ1A+/HdwEDKMRnIY6PyNg+v5mCU=;
+	s=arc-20240116; t=1790782593; c=relaxed/simple;
+	bh=R6kxFUNYwKZY7u3VbkZJ9Eal94bbyDtOuVsHJiHIzU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A0zxjdrn092+CH16FN2Byt8b0VAmtw0SriyqKbFk+tH4XYH9Fi+7Whmq1rVECqI/Bhg8D+/+ZyxzeKxNdt38oDutPfjHifBInicKNXu0AbIApuOzGgkMubAJTojv0F380yLbfd9bifriOTfHfO4hTWQEWVKnKyxY5NRMsCgYp9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPzRozsd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cYSy2OVioe85/I62oNgip09PDhkm8pgZxtin2VxhxWbWX5U5o/+rB3hoaYREfXvZI8cnBKpVOhu1EJY4Fo3yWrXjLz4P7TwsYSJhS0cUvoPZODw1OMsl251sjkCMgYh1elBkSupldmrUt48lXMsj/70xxfHbSxcNMkZyFIYi7H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K5/bX1ld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPzRozsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC0F1F0089B;
-	Wed, 30 Sep 2026 15:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K5/bX1ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71D21F00898;
+	Wed, 30 Sep 2026 15:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782575;
-	bh=hGbXUmgPLHERDUa4XrWXItcyat8m8+kzfTiufwbekCA=;
+	s=korg; t=1790782584;
+	bh=OYoooR5LfEDOuBRgOwxIYPnTZFY9+ixUAJGqV1WSeVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPzRozsd7Pqq8j2L8/x0eRg4eRuCKID2A+tkUgL54DodU0cvDJcZ+Bp0nMllpEk9I
-	 zv6yZzcH1KSJe8Mc9Dr6UcJEeCWKcNpEKhOPjqMbAAcO5qntbuI4vWZMwr3SOuV/fh
-	 /zZsV0jrkPvRi4yU99HQ5cmDHJWdf8jXth7cW6bM=
+	b=K5/bX1ldEEsU29+UOFnl9DrSS6k8a5jTetJVIngccxMF8eZRstAzPACWCR8T7Pamz
+	 MDuJajxhq/5N+N6FD3tohC21jTM8WoF6QWb7kqj7EKbGGKXU8DtSweuVM3FGydkjtH
+	 60gk5R0caYLEQ+BLMV2RtZqNF66nfNtfpSaR21DI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 094/595] ASoC: codecs: rk3328: Use managed GPIO and clock helpers
-Date: Wed, 30 Sep 2026 17:19:47 +0200
-Message-ID: <20260930152349.761100971@linuxfoundation.org>
+Subject: [PATCH 5.10 097/595] xhci: Prevent queuing new commands if xhci is inaccessible
+Date: Wed, 30 Sep 2026 17:19:50 +0200
+Message-ID: <20260930152349.824831642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,134 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 0cf3489bba9ad13aae052232e223e19a620fe7a7 ]
+[ Upstream commit 82b70c799281cc24506085be978b829149ba0ca4 ]
 
-rk3328_platform_probe() acquires the mute GPIO with gpiod_get_optional()
-but never releases it. It also enables mclk and pclk manually while
-relying on probe error labels for unwind, and the driver has no platform
-remove callback to disable those clocks after a successful unbind.
+Refuse to queue a new command on the command ring if xHC is marked
+inaccessible with the HCD_FLAG_HW_ACCESSIBLE.
 
-This path has already needed fixes for missing clock unwinds on probe
-errors. Use devm_gpiod_get_optional() and devm_clk_get_enabled() so the
-GPIO and enabled clock lifetimes are tied to the device. This removes the
-manual error labels and makes both probe failure and driver unbind follow
-the normal devres cleanup path.
+HCD_FLAG_HW_ACCESSIBLE is set and cleared in suspend and resume.
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260525-asoc-rk3328-devm-resources-v1-1-2abde0006f89@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Also print a warning if xhci is being suspended with commands
+still pending on the command ring.
+
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20260603091132.1110849-13-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rk3328_codec.c | 54 ++++++++-------------------------
- 1 file changed, 13 insertions(+), 41 deletions(-)
+ drivers/usb/host/xhci-ring.c | 6 ++++++
+ drivers/usb/host/xhci.c      | 4 ++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/rk3328_codec.c b/sound/soc/codecs/rk3328_codec.c
-index e40b97929f6c2..f9756a72e2d65 100644
---- a/sound/soc/codecs/rk3328_codec.c
-+++ b/sound/soc/codecs/rk3328_codec.c
-@@ -426,7 +426,6 @@ static int rk3328_platform_probe(struct platform_device *pdev)
- 	struct rk3328_codec_priv *rk3328;
- 	struct regmap *grf;
- 	void __iomem *base;
--	int ret = 0;
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 67804954e146a..0e0045a81f92e 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -4199,6 +4199,7 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
+ 			 u32 field3, u32 field4, bool command_must_succeed)
+ {
+ 	int reserved_trbs = xhci->cmd_ring_reserved_trbs;
++	struct usb_hcd *hcd = xhci_to_hcd(xhci);
+ 	int ret;
  
- 	rk3328 = devm_kzalloc(&pdev->dev, sizeof(*rk3328), GFP_KERNEL);
- 	if (!rk3328)
-@@ -442,14 +441,13 @@ static int rk3328_platform_probe(struct platform_device *pdev)
- 	regmap_write(grf, RK3328_GRF_SOC_CON2,
- 		     (BIT(14) << 16 | BIT(14)));
- 
--	ret = of_property_read_u32(rk3328_np, "spk-depop-time-ms",
--				   &rk3328->spk_depop_time);
--	if (ret < 0) {
-+	if (of_property_read_u32(rk3328_np, "spk-depop-time-ms",
-+				 &rk3328->spk_depop_time)) {
- 		dev_info(&pdev->dev, "spk_depop_time use default value.\n");
- 		rk3328->spk_depop_time = 200;
+ 	if ((xhci->xhc_state & XHCI_STATE_DYING) ||
+@@ -4208,6 +4209,11 @@ static int queue_command(struct xhci_hcd *xhci, struct xhci_command *cmd,
+ 		return -ESHUTDOWN;
  	}
  
--	rk3328->mute = gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
-+	rk3328->mute = devm_gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
- 	if (IS_ERR(rk3328->mute))
- 		return PTR_ERR(rk3328->mute);
- 	/*
-@@ -462,57 +460,31 @@ static int rk3328_platform_probe(struct platform_device *pdev)
- 		regmap_write(grf, RK3328_GRF_SOC_CON10, BIT(17) | BIT(1));
- 	}
++	if (!HCD_HW_ACCESSIBLE(hcd)) {
++		xhci_warn(xhci, "Can't queue command, xHC not accessible\n");
++		return -ESHUTDOWN;
++	}
++
+ 	if (!command_must_succeed)
+ 		reserved_trbs++;
  
--	rk3328->mclk = devm_clk_get(&pdev->dev, "mclk");
-+	rk3328->mclk = devm_clk_get_enabled(&pdev->dev, "mclk");
- 	if (IS_ERR(rk3328->mclk))
- 		return PTR_ERR(rk3328->mclk);
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 2cc27dba08e2d..4d33130f1378a 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -1034,6 +1034,10 @@ int xhci_suspend(struct xhci_hcd *xhci, bool do_wakeup)
+ 	/* step 1: stop endpoint */
+ 	/* skipped assuming that port suspend has done */
  
--	ret = clk_prepare_enable(rk3328->mclk);
--	if (ret)
--		return ret;
- 	clk_set_rate(rk3328->mclk, INITIAL_FREQ);
- 
--	rk3328->pclk = devm_clk_get(&pdev->dev, "pclk");
--	if (IS_ERR(rk3328->pclk)) {
--		dev_err(&pdev->dev, "can't get acodec pclk\n");
--		ret = PTR_ERR(rk3328->pclk);
--		goto err_unprepare_mclk;
--	}
--
--	ret = clk_prepare_enable(rk3328->pclk);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to enable acodec pclk\n");
--		goto err_unprepare_mclk;
--	}
-+	rk3328->pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
-+	if (IS_ERR(rk3328->pclk))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(rk3328->pclk),
-+				     "failed to get or enable acodec pclk\n");
- 
- 	base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(base)) {
--		ret = PTR_ERR(base);
--		goto err_unprepare_pclk;
--	}
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
- 
- 	rk3328->regmap = devm_regmap_init_mmio(&pdev->dev, base,
- 					       &rk3328_codec_regmap_config);
--	if (IS_ERR(rk3328->regmap)) {
--		ret = PTR_ERR(rk3328->regmap);
--		goto err_unprepare_pclk;
--	}
-+	if (IS_ERR(rk3328->regmap))
-+		return PTR_ERR(rk3328->regmap);
- 
- 	platform_set_drvdata(pdev, rk3328);
- 
--	ret = devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
-+	return devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
- 					       rk3328_dai,
- 					       ARRAY_SIZE(rk3328_dai));
--	if (ret)
--		goto err_unprepare_pclk;
--
--	return 0;
--
--err_unprepare_pclk:
--	clk_disable_unprepare(rk3328->pclk);
--
--err_unprepare_mclk:
--	clk_disable_unprepare(rk3328->mclk);
--	return ret;
- }
- 
- static const struct of_device_id rk3328_codec_of_match[] = {
++	/* Check if command ring is empty */
++	if (!list_empty(&xhci->cmd_list))
++		xhci_warn(xhci, "Suspending and stopping xHC with pending command!\n");
++
+ 	/* step 2: clear Run/Stop bit */
+ 	command = readl(&xhci->op_regs->command);
+ 	command &= ~CMD_RUN;
 -- 
 2.53.0
 
