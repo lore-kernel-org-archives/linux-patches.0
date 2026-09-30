@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6DB50254F;
-	Wed, 30 Sep 2026 16:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621B1511E61;
+	Wed, 30 Sep 2026 16:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787389; cv=none; b=chp6pLe018bR0tF9G7BKM6vgXhAQ3i31S4TryebxlsvolZ0ay7ZlEQyhDXtQTVCWAtg5ChjgI58CqvhJZbvYANW6gDL7Ug5ksZKdV7IhAka2H3woqQNLBSjw+3wZOBXyuDFmwKi/Bz+NuKG9hAwO6KiYtiNUONTUT3oe86kvj58=
+	t=1790787392; cv=none; b=JTpYXhQoaLfukY0zgGGn2Rq3zJltAFGFaVnwftAkOi2W2j/6VZC8Fm6L4Bu1qapZ4Gz+SmpFxeIt/ndaAh0+fStj9er+GF2y/lp5zemyexUj8K0CglAqHR5HyRIHEZGpxLESaCWDjTnp13Pd2I4YeufeV/uK0B0IxQzVaG6ZBIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787389; c=relaxed/simple;
-	bh=O/0/+XxegHSdGBnYH/4gw7pFDo4T+eY18qui/DCmtpc=;
+	s=arc-20240116; t=1790787392; c=relaxed/simple;
+	bh=giYPf+IcI0PVgXJSfTeBvpfEeOqKUWHYNB60NOO1R/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCUBD4awiAbSJbIhJMlXX/Q1QRghCEp56UxMjQkMS2mGbU1qOsVq5AED0lWhvTuEvpUh82LvlydD63G8qlDbpp+7zpF3cIdlcVEjPBloxD+tCWTCD8RtomfbtDTS0+CsJm1NCHn+C8hQQ8LI0LYMn6LYjqLmk5sK73WIz/1cwcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCsMuR/U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IRJhUYh/8oKO+pZ7TRyToFHARn9sjGCKi4jlApGhAw9UFRzFUWG9otG3ao++/rK0rAJFbk6hCx7+JPSnnULEhWIbniw3ZriFzbOLyUxRAgnuBxiEtVEKYwPiwDPjOmvYkefACO0uXeHciK3yC447PV/ADbJYJD+lubNhP/LAIiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C31KSdRY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCsMuR/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB68F1F000FF;
-	Wed, 30 Sep 2026 16:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C31KSdRY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27371F000FF;
+	Wed, 30 Sep 2026 16:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787388;
-	bh=Olopk5GlO3/H97WPRKotTQEzRzZ7OoPa6ZsghYkogwg=;
+	s=korg; t=1790787391;
+	bh=tppjZs8+AW/+NnHDktZokxSr+LgyreMk3usWgaNEO50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NCsMuR/UWGL578eeoWTUpxildPHJXF0LL6D0TV503MIrgHuCtXHyx4yJhldO5dcar
-	 kktqTzuPu4BYgVFaF5RwkEH/7KRreXcntWZXqUIaVrdW7rRd+bqUpEpw+u50ouA7GX
-	 NaBKg74aGR5oA0rhrI455Y0lOEeBuJ9Bg3VbhTnk=
+	b=C31KSdRY1jrsd+VGgbHhAHP/e//iuMtsQbMY8z58kJaMKKeqfB6sVzbvfELQ/MaPU
+	 bBMNlcIsDenIZkxmt0OnOpWlHceuNDtNjsv+e5mPqHnhhOlz5O7wptVOOoDxtDgEAH
+	 LwvI20cw0iipbMD4uYRcHZuhRB8xzIcQApCtL2Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 214/457] net/rds: size a connections path set by the transport it ends up with
-Date: Wed, 30 Sep 2026 17:25:19 +0200
-Message-ID: <20260930152350.667899413@linuxfoundation.org>
+Subject: [PATCH 7.2 215/457] net/smc: fix UAF on lgr list traversal in smcr_port_err()
+Date: Wed, 30 Sep 2026 17:25:20 +0200
+Message-ID: <20260930152350.688349199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,57 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-[ Upstream commit ba3d1f480c7a3fba963e7867ad6cc557c197acbc ]
+[ Upstream commit 61cb282fe97b3b0ba32ca09417a693162bf4ae3f ]
 
-__rds_conn_create() computes npaths from the caller's transport before
-it decides whether a connection to one of the host's own addresses is
-to be handled by the loopback transport instead.  That substitution is
-what an RDS/TCP socket sending to a local address gets, and after it
-the path init loop still runs for the TCP transport's RDS_MPATH_WORKERS
-paths and allocates an ordered workqueue for each, while
-rds_loop_conn_alloc() only ever provides transport data for path 0.
+smcr_port_err() traverses smc_lgr_list.list without holding
+smc_lgr_list.lock, allowing a concurrent smc_lgr_terminate_sched()
+to free an lgr while it is still being dereferenced.
 
-rds_conn_destroy() sizes its teardown from c_trans, by then the
-loopback transport, so it visits path 0 only - and
-rds_conn_path_destroy() would skip the other paths anyway, since it
-returns before destroy_workqueue() for a path without transport data.
-kfree(c_path) then drops the last pointers to seven workqueues.  That
-repeats for every such connection, on every netns teardown or module
-unload, and every distinct local destination address is a separate
-connection.
+Hold smc_lgr_list.lock across the traversal. Update
+smc_ib_gid_check() to call smcr_port_err() after releasing the lock.
 
-Recompute npaths once the transport is final, so that creation and
-destruction agree on the set of paths.  The c_path array stays sized
-for the caller's transport; the unused entries are freed with it.
-
-Fixes: 4716af3897e9 ("net/rds: Give each connection path its own workqueue")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260921215027.174657-1-achender@kernel.org
+Fixes: 541afa10c126 ("net/smc: add smcr_port_err() and smcr_link_down() processing")
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260922073149.474762-1-sidraya@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/smc/smc_core.c |  2 ++
+ net/smc/smc_ib.c   | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index b6c4beb50eaf0..c752a8623cfca 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -276,6 +276,12 @@ static struct rds_connection *__rds_conn_create(struct net *net,
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 04aedd957543a..9974149659c2f 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1849,6 +1849,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 	struct smc_link_group *lgr, *n;
+ 	int i;
  
- 	conn->c_trans = trans;
++	spin_lock_bh(&smc_lgr_list.lock);
+ 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
+ 		if (strncmp(smcibdev->pnetid[ibport - 1], lgr->pnet_id,
+ 			    SMC_MAX_PNETID_LEN))
+@@ -1863,6 +1864,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 				smcr_link_down_cond_sched(lnk);
+ 		}
+ 	}
++	spin_unlock_bh(&smc_lgr_list.lock);
+ }
  
-+	/* The transport may just have been swapped for loopback; size the
-+	 * set of paths - which is also what rds_conn_destroy() tears down
-+	 * again - by the transport the connection actually uses.
-+	 */
-+	npaths = (trans->t_mp_capable ? RDS_MPATH_WORKERS : 1);
-+
- 	init_waitqueue_head(&conn->c_hs_waitq);
- 	for (i = 0; i < npaths; i++) {
- 		__rds_conn_path_init(conn, &conn->c_path[i],
+ static void smc_link_down_work(struct work_struct *work)
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index 9bb495707445e..daaa8a72da90f 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -333,6 +333,7 @@ static bool smc_ib_check_link_gid(u8 gid[SMC_GID_SIZE], bool smcrv2,
+ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ {
+ 	struct smc_link_group *lgr;
++	bool stale_gid = false;
+ 	int i;
+ 
+ 	spin_lock_bh(&smc_lgr_list.lock);
+@@ -348,11 +349,16 @@ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ 				continue;
+ 			if (!smc_ib_check_link_gid(lgr->lnk[i].gid,
+ 						   lgr->smc_version == SMC_V2,
+-						   smcibdev, ibport))
+-				smcr_port_err(smcibdev, ibport);
++						   smcibdev, ibport)) {
++				stale_gid = true;
++				goto out;
++			}
+ 		}
+ 	}
++out:
+ 	spin_unlock_bh(&smc_lgr_list.lock);
++	if (stale_gid)
++		smcr_port_err(smcibdev, ibport);
+ }
+ 
+ static int smc_ib_remember_port_attr(struct smc_ib_device *smcibdev, u8 ibport)
 -- 
 2.53.0
 
