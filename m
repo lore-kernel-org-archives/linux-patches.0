@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F9F50B8B1;
-	Wed, 30 Sep 2026 16:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E7B25F7A9;
+	Wed, 30 Sep 2026 16:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785693; cv=none; b=c8HkPwfJxnGpJRLCpjxJ4YgDWaaAHAYsL7cvsuVRY3qhVtlO47CFDwPwx7wc2SKzj8ssBhkRLN9lYF2NywlXRdx2uKIY55XpAe7La4LL59uM2Sn5oGBGGls9VNyxPf4vOxlxmVMYw6OnsRtznpRkvYqSrKTjqrHs1ZTpmiq0eEY=
+	t=1790785698; cv=none; b=UGTSRJoD98jE6pzUr0SGAdDyjegenYrQAmdUK/oHVpHUMmtejfipUMgFgExth6llRpTO5FkJPb9MItNBAxl0X4qeIBQ/0WSF5M1TW09fnT7JINQeA1msbLddBQhudFcAg9tSXDM7HF7SdyBC0Q7eXvp0/fregcOmO9j1Lr74Xjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785693; c=relaxed/simple;
-	bh=2/SyEQzpaHYnrmuCpKUx4xf3Zgecq7wOAwGE7E/k+8s=;
+	s=arc-20240116; t=1790785698; c=relaxed/simple;
+	bh=PtNpLj6VWdD6mObdg+eAF70t/7s1HshxAF9fxW7Z5B0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxwAN1k04liM4vjSOIm1k0BS0ydFtCvww4884pPpDXDaWvRQ0kSvlV0hyWHcKmQezJRgGFQFsXk5axvjyCWmk2zw6hChSORhT4czPfiXP1yeGHOHsAvfP2zV632/Di/MAnhxLm1HkPBHph3PHmA1liT9+6GLU4c7CyN7Eal2UwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYxF4Bdr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pBDfwWy4SDGko8dFK/OoCFw1diNmLihuNW35xeqkCexLyPpv6hLDLAcVh8m0mlmx3qbIq5RBVbr8Rs4v5nw6wHz6LqR8la36vBWwSsO7X7Fdrb9Ls4Ooi3XCKDR+zZlE9bEIU7l9BH30B24CZO1AdyFUdspvpeC6uRaltpqVZPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXRXtKD0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYxF4Bdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682601F000FF;
-	Wed, 30 Sep 2026 16:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXRXtKD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DBA1F00898;
+	Wed, 30 Sep 2026 16:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785687;
-	bh=5Kgkk+GX7klvuyNZS2g2FXE/EZcamNuYYoTnIonKf7I=;
+	s=korg; t=1790785690;
+	bh=JHqTPZ9440xFjh1knBKHvr5DfHyPe7/zREglhTfl6yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYxF4Bdr2f1fNKSsEX1d8kcseJgqnK6QfEbO6a2ru2YWkjJ0fYFUa2GdiHKCcmy+K
-	 JmVuQSgRHrktG86OyKDorZ649sHKW2q4p5T31fQ2GJJRkpmWfAoFBOiWSX9dNduUuV
-	 na+jqjqAJOLt0U/6hDd7WARAiDM5J5ssreRLd0aU=
+	b=UXRXtKD0cs2EzIZto7wsnGpC+Q6vj23W0xRVqoEhYmgtYoTWu48lyF3q6y5Qto41A
+	 xM5MdsZbpw5SZB17J2ccyTECbDSNkQ7QxmhKEa2zLVQBxcEBoow3+ut2HxIpGS4m9C
+	 dHiX2G6biQwmTZ0JE5NOpBJpy2Cc59RIhGtOivN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 590/982] xfrm: fix compat ALLOCSPI request use-after-free
-Date: Wed, 30 Sep 2026 17:22:06 +0200
-Message-ID: <20260930152429.458245522@linuxfoundation.org>
+Subject: [PATCH 6.1 599/982] RDMA/rxe: insert mcg into mcg_tree only after rxe_mcast_add() succeeds
+Date: Wed, 30 Sep 2026 17:22:15 +0200
+Message-ID: <20260930152429.648440007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,71 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit d1ebd9081879fd9ae9c8fb7e8928f19cc88ae320 ]
+[ Upstream commit 1caceeb2d74bbe88223aea55eb8626b4c5f076fd ]
 
-xfrm_state_netlink() builds the ALLOCSPI response with
-dump_one_state(), which already calls alloc_compat() with the response
-skb and header.
+rxe_get_mcg() publishes a newly allocated multicast group in
+rxe->mcg_tree before programming the backing Ethernet multicast address
+with rxe_mcast_add(), which runs outside mcg_lock. A local userspace
+RDMA client reaches this path with ATTACH_MCAST on a UD QP; if
+rxe_mcast_add() then returns an error (for example -ENODEV when the
+backing netdev has been removed, or a propagated dev_mc_add() error),
+the unwind frees the published group without removing it from the tree.
+A later lookup of the same MGID dereferences the freed struct rxe_mcg
+from __rxe_lookup_mcg().
 
-xfrm_alloc_userspi() then calls alloc_compat() again, but passes the
-original request skb and its header. For a compat request, the
-translator therefore interprets the 228-byte compat xfrm_userspi_info
-as the 232-byte native layout and reads four bytes past the declared
-payload. It also publishes the translated child through the request's
-frag_list.
+Fix this by keeping the new mcg private until rxe_mcast_add() succeeds.
+Split the tree publication into __rxe_publish_mcg(), call rxe_mcast_add()
+before taking the tree reference, and free the still-private mcg on
+failure. Because the group is never visible in mcg_tree until the
+multicast address is programmed, no concurrent caller can look it up or
+attach a QP to a group that is about to be torn down, so the error path
+needs no conditional unwind. If another caller publishes the same MGID
+while the address is being programmed, the post-add re-check under
+mcg_lock finds the winner; this caller then drops its private object and
+balances its own rxe_mcast_add() with rxe_mcast_del() before returning
+the winner.
 
-A multicast clone of the request shares skb_shared_info and can observe
-that child. xfrm_user_rcv_msg() frees it after the request handler
-returns, racing a compat receiver which may still be copying from it and
-resulting in a use-after-free.
+Reproduced by forcing the rxe_mcast_add() error return under KASAN:
+without the change the next attach to the same MGID reports a
+slab-use-after-free in __rxe_lookup_mcg(); with it the forced failure
+returns cleanly. A no-injection attach/detach regression, including a
+two-QP shared join/leave and re-attach, stays KASAN- and leak-clean.
 
-Remove the redundant conversion. The response keeps its correct compat
-translation from dump_one_state(), and no child is attached to the
-inbound request.
-
-Fixes: 5f3eea6b7e8f ("xfrm/compat: Attach xfrm dumps to 64=>32 bit translator")
-Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Co-developed-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: a926a903b7dc ("RDMA/rxe: Do not call  dev_mc_add/del() under a spinlock")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260617022728.2770116-1-michael.bommarito@gmail.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mcast.c | 50 +++++++++++++++++++--------
+ 1 file changed, 36 insertions(+), 14 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 66c73b71ad653..6fb79def144c8 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1563,7 +1563,6 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	struct net *net = sock_net(skb->sk);
- 	struct xfrm_state *x;
- 	struct xfrm_userspi_info *p;
--	struct xfrm_translator *xtr;
- 	struct sk_buff *resp_skb;
- 	xfrm_address_t *daddr;
- 	int family;
-@@ -1614,17 +1613,6 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		goto out;
+diff --git a/drivers/infiniband/sw/rxe/rxe_mcast.c b/drivers/infiniband/sw/rxe/rxe_mcast.c
+index 86cc2e18a7fda..55e78d4c83960 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mcast.c
++++ b/drivers/infiniband/sw/rxe/rxe_mcast.c
+@@ -157,7 +157,9 @@ struct rxe_mcg *rxe_lookup_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
+  * @mgid: multicast address as a gid
+  * @mcg: new mcg object
+  *
+- * Context: caller should hold rxe->mcg lock
++ * Initializes the mcg fields. The mcg is private and not yet visible in
++ * mcg_tree, so this may run without rxe->mcg_lock; __rxe_publish_mcg()
++ * makes it visible under the lock once it is ready.
+  */
+ static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
+ 			   struct rxe_mcg *mcg)
+@@ -166,13 +168,22 @@ static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
+ 	memcpy(&mcg->mgid, mgid, sizeof(mcg->mgid));
+ 	INIT_LIST_HEAD(&mcg->qp_list);
+ 	mcg->rxe = rxe;
++}
+ 
+-	/* caller holds a ref on mcg but that will be
+-	 * dropped when mcg goes out of scope. We need to take a ref
+-	 * on the pointer that will be saved in the red-black tree
+-	 * by __rxe_insert_mcg and used to lookup mcg from mgid later.
+-	 * Inserting mcg makes it visible to outside so this should
+-	 * be done last after the object is ready.
++/**
++ * __rxe_publish_mcg - make a fully initialized mcg visible in mcg_tree
++ * @mcg: the mcg object
++ *
++ * Context: caller must hold rxe->mcg_lock and a reference on mcg
++ */
++static void __rxe_publish_mcg(struct rxe_mcg *mcg)
++{
++	/* caller holds a ref on mcg but that will be dropped when mcg goes
++	 * out of scope. We need to take a ref on the pointer that will be
++	 * saved in the red-black tree by __rxe_insert_mcg and used to lookup
++	 * mcg from mgid later. Inserting mcg makes it visible to outside so
++	 * this is done last after the object is ready and the multicast
++	 * address has been programmed.
+ 	 */
+ 	kref_get(&mcg->ref_cnt);
+ 	__rxe_insert_mcg(mcg);
+@@ -210,26 +221,37 @@ static struct rxe_mcg *rxe_get_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
+ 		err = -ENOMEM;
+ 		goto err_dec;
+ 	}
++	__rxe_init_mcg(rxe, mgid, mcg);
++
++	/* program the multicast address while mcg is still private, before
++	 * it is inserted into mcg_tree. dev_mc_add() may sleep so this must
++	 * run outside mcg_lock. On failure mcg was never published, so a
++	 * plain free is correct and the tree is untouched.
++	 */
++	err = rxe_mcast_add(rxe, mgid);
++	if (err) {
++		kfree(mcg);
++		goto err_dec;
++	}
+ 
+ 	spin_lock_bh(&rxe->mcg_lock);
+-	/* re-check to see if someone else just added it */
++	/* re-check to see if someone else just added it while we were adding
++	 * the multicast address; if so use theirs and drop ours
++	 */
+ 	tmp = __rxe_lookup_mcg(rxe, mgid);
+ 	if (tmp) {
+ 		spin_unlock_bh(&rxe->mcg_lock);
++		rxe_mcast_del(rxe, mgid);
+ 		atomic_dec(&rxe->mcg_num);
+ 		kfree(mcg);
+ 		return tmp;
  	}
  
--	xtr = xfrm_get_translator();
--	if (xtr) {
--		err = xtr->alloc_compat(skb, nlmsg_hdr(skb));
--
--		xfrm_put_translator(xtr);
--		if (err) {
--			kfree_skb(resp_skb);
--			goto out;
--		}
--	}
--
- 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
+-	__rxe_init_mcg(rxe, mgid, mcg);
++	__rxe_publish_mcg(mcg);
+ 	spin_unlock_bh(&rxe->mcg_lock);
  
- out:
+-	/* add mcast address outside of lock */
+-	err = rxe_mcast_add(rxe, mgid);
+-	if (!err)
+-		return mcg;
++	return mcg;
+ 
+-	kfree(mcg);
+ err_dec:
+ 	atomic_dec(&rxe->mcg_num);
+ 	return ERR_PTR(err);
 -- 
 2.53.0
 
