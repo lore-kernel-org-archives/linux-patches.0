@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF6A4E4306;
-	Wed, 30 Sep 2026 16:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEAAF4F93A8;
+	Wed, 30 Sep 2026 16:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786312; cv=none; b=CmX6541YWPqsD6mz+C62T/x0WAvadZuJIWH9oUgZRtjN1mSJurUIwP4DKEJaB1W2oqTJ/yPo9L+LUM9zcrMwn8388N4iLsycpMdO4BSPtJqPLR0UnbuMeIiDBXHln1nmnUjrFKJHRI278eUCefNF643AtidcWO0dOqJTq6JXjog=
+	t=1790786315; cv=none; b=JgHwj3UL8ZO3PSrpAytq3DD/7LSa17aqH6dEn9yE5+NpDlwuX2J0qnZTAJrMsM5wCgPsq+3pJ3abKgbr0cv8P/KZh3SOArO7YodF2R+twKH1xY4kAO+5fgc63FUgA2fc3laxH1L9JBUZcLD28nFrtfT95sjLbAKrNvXdhvTFgT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786312; c=relaxed/simple;
-	bh=2MA8YHqBzqqSv7z6oPsxL5MwhgaEih/4VNPC790SYhY=;
+	s=arc-20240116; t=1790786315; c=relaxed/simple;
+	bh=UpXJ8+bbjCZz5LMBetAPr2y5SoLBDmiphWFYxddv1NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4on2VR/a7MjCoLPV5yVIi3P/6+94x6bVhYJNBZaorPf/uRd4N3fz88m8SqNxFJBWTJuGeVdWtU14MacLXjkCZDlQpuCVRrXC/R8tCYDvnLARlf+An24dLkqfGCZMimjoiNVQzCFWVMTKa/9yq9C7qI8PSgaq2wxMow+vWxMNhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmH2g27z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SEgk/A4UQuK6yuhLIw+oBlt79rflQIjorMN/8cuh2EXgiqBCfs1J8iJx9xyzcIHMdxxM2Q97PnGx7Q2Rz2J7Sw8hHuuCk7lMGzD595KBhNrJ7vyCnJGKiNdIjMitvySkRKqzkA2AcF8RZku3LTkmrjIeg2FGvp4kTSGqnNQRezQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yszKMDez; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmH2g27z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F98C1F00898;
-	Wed, 30 Sep 2026 16:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yszKMDez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBE91F000FF;
+	Wed, 30 Sep 2026 16:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786310;
-	bh=Hc3bE44q7PCNeAllzTlvNNECwAZLDjLYg2lCIHXg6RM=;
+	s=korg; t=1790786313;
+	bh=i3XMIilWzAmIq41JT8L8IlO+5zIIsup/yOC+msmrsBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EmH2g27zSV7XnC5v50/abYK2KgXjms4ue8I5kMQ9uysftFediyqTY8/GPyifmdHWT
-	 TKnQRDxE4+vynZQX4fP5dgLFSNO8vBe7pQdHvsji0G/xZV99X/KXHx7p9OPosc/tiV
-	 6YwClo7zNyfEJMceY5F4AeAdfTIZOM+IRcJK/uuQ=
+	b=yszKMDezSShyllED2ol7ojp6eDjn/vzjCUV+OxXhk6qfHIn4+S2fIxBR6abZ3hZ/E
+	 HbBza6IioqBbOyGOwaq7hb95KMQWB8dlXLBjmr3/CkH+3N67KeOxnbCRDda6kfAfTu
+	 ohDBxFZJg7IHHhc0sVSkTgYvQjPJn249Wajkfnw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sanderson@brivo.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linusw@kernel.org>,
+	syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 816/982] pinctrl: meson: Fix typo in s4 group name
-Date: Wed, 30 Sep 2026 17:25:52 +0200
-Message-ID: <20260930152434.288176400@linuxfoundation.org>
+Subject: [PATCH 6.1 817/982] HID: amd_sfh: Validate PCI BAR size before mapping
+Date: Wed, 30 Sep 2026 17:25:53 +0200
+Message-ID: <20260930152434.309069541@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,36 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sanderson@brivo.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit 692f32609a30f75ca3401e25b504bfd06bd5662a ]
+[ Upstream commit 65bcc5f89704efe5b9d69d4ea2c1002d90c31382 ]
 
-One of the i2c pin groups has some junk at the end. The name should be
-i2c2_scl_h1, and indeed that's the name used by i2c2_pins3 in
-meson-s4.dtsi.
+The amd_sfh driver maps PCI BAR 2 using pcim_iomap_regions() and
+subsequently accesses MMIO registers at offsets up to 0x10958 (e.g.,
+AMD_P2C_MSG3 at 0x1068C). However, the driver never validates that the BAR
+size is large enough to cover these accesses. If the driver is bound to a
+device with a smaller BAR 2, this leads to an out-of-bounds memory access
+and a page fault during the probe function.
 
-Fixes: 775214d389c25 ("pinctrl: meson: add pinctrl driver support for Meson-S4 Soc")
-Signed-off-by: Sean Anderson <sanderson@brivo.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+For example, a page fault can occur when reading from privdata->mmio +
+AMD_P2C_MSG3 in mp2_select_ops():
+
+  BUG: unable to handle page fault for address: ffffc9000390368c
+  PGD 100000067 P4D 100000067 PUD 1012c1067 PMD 105b64067 PTE 0
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:readl arch/x86/include/asm/io.h:59 [inline]
+  RIP: 0010:mp2_select_ops drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:282
+  [inline]
+  RIP: 0010:amd_mp2_pci_probe+0x337/0x5f0
+  drivers/hid/amd-sfh-hid/amd_sfh_pcie.c:487
+  Call Trace:
+   <TASK>
+   local_pci_probe drivers/pci/pci-driver.c:332 [inline]
+   pci_call_probe drivers/pci/pci-driver.c:394 [inline]
+   __pci_device_probe drivers/pci/pci-driver.c:455 [inline]
+   pci_device_probe+0x431/0xc90 drivers/pci/pci-driver.c:489
+
+Fix this by verifying that the length of BAR 2 is at least 128KB before
+attempting to map it. Since the maximum accessed offset is 0x10958, and PCI
+BAR sizes are powers of 2, any legitimate hardware will have a BAR size of
+at least 128KB.
+
+Fixes: 4f567b9f8141 ("SFH: PCIe driver to add support of AMD sensor fusion hub")
+Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+4eadd4dfe9e66522bae8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
+Link: https://syzkaller.appspot.com/ai_job?id=3bc1c45c-548f-4ab5-8243-d2c8ec321d6c
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Link: https://syzkaller.appspot.com/bug?extid=4eadd4dfe9e66522bae8
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson-s4.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_common.h |  4 ++++
+ drivers/hid/amd-sfh-hid/amd_sfh_pcie.c   | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/pinctrl/meson/pinctrl-meson-s4.c b/drivers/pinctrl/meson/pinctrl-meson-s4.c
-index cea77864b8808..b61d562f9a9fa 100644
---- a/drivers/pinctrl/meson/pinctrl-meson-s4.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson-s4.c
-@@ -854,7 +854,7 @@ static const char * const i2c1_groups[] = {
- static const char * const i2c2_groups[] = {
- 	"i2c2_sda_d", "i2c2_scl_d",
- 	"i2c2_sda_h8", "i2c2_scl_h9",
--	"i2c2_sda_h0", "i2c2_scl_h1l,"
-+	"i2c2_sda_h0", "i2c2_scl_h1",
- };
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_common.h b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
+index 2643bb14fee27..0aeb670ae1a4f 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_common.h
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_common.h
+@@ -11,11 +11,15 @@
+ #define AMD_SFH_COMMON_H
  
- static const char * const i2c3_groups[] = {
+ #include <linux/pci.h>
++#include <linux/sizes.h>
+ #include "amd_sfh_hid.h"
+ 
+ #define PCI_DEVICE_ID_AMD_MP2		0x15E4
+ #define PCI_DEVICE_ID_AMD_MP2_1_1	0x164A
+ 
++/* The BAR 2 size must cover the highest register offset (0x10958) */
++#define AMD_SFH_MIN_BAR_SIZE		SZ_128K
++
+ #define AMD_C2P_MSG(regno) (0x10500 + ((regno) * 4))
+ #define AMD_P2C_MSG(regno) (0x10680 + ((regno) * 4))
+ 
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+index 9c963ad27f9d1..20d898a70b8a2 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+@@ -345,6 +345,16 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
+ 	if (rc)
+ 		return rc;
+ 
++	if (!(pci_resource_flags(pdev, 2) & IORESOURCE_MEM)) {
++		dev_err(&pdev->dev, "BAR 2 is not IORESOURCE_MEM\n");
++		return -ENODEV;
++	}
++
++	if (pci_resource_len(pdev, 2) < AMD_SFH_MIN_BAR_SIZE) {
++		dev_err(&pdev->dev, "BAR 2 is too small\n");
++		return -EINVAL;
++	}
++
+ 	rc = pcim_iomap_regions(pdev, BIT(2), DRIVER_NAME);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
