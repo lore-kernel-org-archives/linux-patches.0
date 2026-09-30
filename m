@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599103B1016;
-	Wed, 30 Sep 2026 18:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EEC511225;
+	Wed, 30 Sep 2026 18:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792139; cv=none; b=tzROTMD6JXfBAjFAXN6HB0pH2nh1eRDnuKDATlsfZuWz4mnNXtEpYWMylLYBgtQ2c2xrMvFvq5pX6mSgLyTcqQpkeJAoXcB/bu1grKYl0r+iOLgdsi5vRBDejRSfMDJ4TSC554CYR7ke5tYA5naobLhFaTy7WPqjPgYJEzoDo9c=
+	t=1790792142; cv=none; b=T+kIgtLYwq4+o36ysrNSIOd3REKR/Nv7J7MKxGXv2URxrL3AhOAk61XFa85hSOAd2gFlKSY6Fy71wDiB9Ghs80jP487hX7qYzfz6UgoqQp/9UGy/TELw5IDlravHMVfhkNyb4kW2Il9NoWJ0RhQGSm68M3gda12+WHWdlh+x3kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792139; c=relaxed/simple;
-	bh=7rQkfrffH0tQbAHi8SttRlOP39rhcImnWv+X9mCQiNQ=;
+	s=arc-20240116; t=1790792142; c=relaxed/simple;
+	bh=QiT77jB0+D+3wlUn6TNbGJm3LiuB0BZsp8ne0VZuD4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwwGKH1r0hAIIhrZn/IhN6VYDnGg7i9XSUIKEXxzRUySFC2iNp0t2ULwTE5ZYGNTONwx5syG1/R1v9Nfz3HFcBSCQKbdrcSS3717847N/VsN53mggwcfq5ZodhTEtU/B+WHhaLmnZKrNXk09G0Er74G7f7Gk9VjYoz3VSmE6uBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLgLLWeK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qaoGlvwd/7TYim/zOpL0ZvoCMUzVFp+roOP2+h1MWPRejODfsmlY3YBw7SftYuQ2+MuNBmVSRvuXIHmNZb/OOq9u/5xiKgpGD1prev4n2oZJCdiRI0WVrg8D4tQ/5th2nQAPRZ15TdTjXFD8BhAZYORAGh0YzuP1RGwbKPrTQFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJEhWARw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLgLLWeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9581F00898;
-	Wed, 30 Sep 2026 18:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJEhWARw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E521F000FF;
+	Wed, 30 Sep 2026 18:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792137;
-	bh=Owsqw00wq1aKE0UY9xsuSoN8LXlbIAJdQGPtcIdcxTU=;
+	s=korg; t=1790792140;
+	bh=U3kyt4h/oag5LChilBttokX8ISaOVimCN7E+T5gIDGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLgLLWeKIywbnm14WBa+nh3sSfcQNMMSypgs3l8DZhp5TPKpa3f5eCqfo0tClaLy2
-	 egQSP8SCdKwYdhMGsV9PYJq0sBJzPer94KsAA1At9vpdx/A18Pp0usFmx46iQQ473P
-	 2coO9vVep+hHM0hroHe6YPMbZ1HRmnjINTJt0oBU=
+	b=OJEhWARwrOEjBx+FQpdPZLDg9MM27qsH2EG6gFEKjkN/Fl2jU1tU1Ny2WCUqskgE6
+	 Vg28jJC7LF2aVxCsD8YV75hMnacvE+zL8pAm6dibzADTKZIwppjdCWpBp8AJjtz7Xr
+	 3yiGp+uzN7k03nIiNOpAHSFwKjUsOwAJOLjsbeIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 512/752] net: ethernet: cortina: Ack RX overrun interrupt correctly
-Date: Wed, 30 Sep 2026 17:26:22 +0200
-Message-ID: <20260930152409.337391506@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.15 548/752] mmc: sdhci-of-aspeed: Remove children before releasing SDC resources
+Date: Wed, 30 Sep 2026 17:26:58 +0200
+Message-ID: <20260930152410.102786625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,41 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 1dd85662fee6e2ac580b1c4f9a0c0a7ae6e31f0e ]
+commit 4396d70bb7fec531bcf934fed016b2f3300c670b upstream.
 
-The RX overrun interrupt is reported in interrupt status register 4, but
-gmac_irq() acknowledges it using the RX descriptor error bit from status
-register 0. For GMAC0 this writes the GMAC1 overrun bit, while for GMAC1
-the shift leaves no bit in the 32-bit register.
+Probe failure and removal leave SDHCI child devices registered after the
+parent clock and managed resources are released.
 
-Acknowledge the same per-port RX overrun bit that was detected.
+Unregister the OF children in reverse order before disabling the parent
+clock on both paths. Use of_platform_device_destroy() because manual
+child creation does not set the flag required by of_platform_depopulate().
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260914-b4-gemini-ethernet-fixes-2-v2-1-5ab39a047b90@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Fixes: bb7b8ec62dfb ("mmc: sdhci-of-aspeed: Add support for the ASPEED SD controller")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-of-aspeed.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 0067930a822e5..0bf2e17126163 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1767,7 +1767,7 @@ static irqreturn_t gmac_irq(int irq, void *data)
+--- a/drivers/mmc/host/sdhci-of-aspeed.c
++++ b/drivers/mmc/host/sdhci-of-aspeed.c
+@@ -565,12 +565,14 @@ static int aspeed_sdc_probe(struct platf
+ 		if (!cpdev) {
+ 			of_node_put(child);
+ 			ret = -ENODEV;
+-			goto err_clk;
++			goto err_children;
+ 		}
+ 	}
  
- 	if (val & (GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8))) {
- 		spin_lock(&geth->irq_lock);
--		writel(GMAC0_RXDERR_INT_BIT << (netdev->dev_id * 8),
-+		writel(GMAC0_RX_OVERRUN_INT_BIT << (netdev->dev_id * 8),
- 		       geth->base + GLOBAL_INTERRUPT_STATUS_4_REG);
- 		u64_stats_update_begin(&port->ir_stats_syncp);
- 		++port->stats.rx_fifo_errors;
--- 
-2.53.0
-
+ 	return 0;
+ 
++err_children:
++	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
+ err_clk:
+ 	clk_disable_unprepare(sdc->clk);
+ 	return ret;
+@@ -580,6 +582,7 @@ static int aspeed_sdc_remove(struct plat
+ {
+ 	struct aspeed_sdc *sdc = dev_get_drvdata(&pdev->dev);
+ 
++	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
+ 	clk_disable_unprepare(sdc->clk);
+ 
+ 	return 0;
 
 
