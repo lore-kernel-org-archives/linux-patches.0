@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069B636E467;
-	Wed, 30 Sep 2026 16:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D777536E467;
+	Wed, 30 Sep 2026 16:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787116; cv=none; b=lDk9l5skBvKTSxJ82f2culxpSfT8ZOpVC/kiNSq6LEyf6eSMqVEJ2FQI7C8pw4QFm3sIHfmEHCVs7dSH+jacu7XKQ25jOcW4kWXbv3SvnHnMVTOTUspsdTHqxkopce2rt04FHzv2n5lGYc1tfSdq/7yNiIBUWbgaDSwALh5aa7E=
+	t=1790787119; cv=none; b=DDaxQ6bKjZkO7cjswnQrNgszBKNzJFs9BEGugiHu52PVvwSd3icOLIR5woCr/I8hgnjEoAAxrORv1iZ8iCNTPMYTncUGPec1FraDpeNdFMMzVAVnf9FYcBUmsweKYzjhqmyRCMLbS5jVKsgEiCYHR5M8bJzs8Y9UKWyOyRAxsSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787116; c=relaxed/simple;
-	bh=RS/pEYXzo2qdL7WGRaHQCmzwNExG+i6oxD6upgSiicU=;
+	s=arc-20240116; t=1790787119; c=relaxed/simple;
+	bh=hZksQiy23Nb0lJsUe75pz+vk2078mwhd4It8mKj/pNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqjBxZBvcmY5BgtGmbzMCaATFzByqqQmDESYGd+XxXAoq3AixDWlQzWU59Aa6zni3TJy0L05XeEIuAnhibHizvJjen/YldAKwZunhqypKLP+yyZSP52P7nRxpA2pQ85+QNMuB0Z5Md3SgK6b+Ce9s+WiF8Cy0pvha5+MX+Y9Dww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqZA0jjn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ilgLk0U0mKeMLAXGRFwZdMXI72G7ncB20JHLe1xrkbedAlAnlFc8WEpEJbqOWGFjz1Jl42rOGF2fQqcPV6/nLYxDL6iU8zF1Spau0y+gw+ZfXdqzRIalNppx+qP8q5bEK5BLiLuDFPMPTGbA96BhRsxzPfZfcf6UBTlgD9+6rYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMiwHU3E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqZA0jjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6307F1F000FF;
-	Wed, 30 Sep 2026 16:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMiwHU3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBB31F000FF;
+	Wed, 30 Sep 2026 16:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787114;
-	bh=sZW6IbdASFbCEPHSgOAk7q2GBdaGMKdSGMFb4ektyrw=;
+	s=korg; t=1790787117;
+	bh=enx53yI4hzKnRo0bvI8aGBumc5eCAuCvRxJjwWAxtjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqZA0jjnhq0POU9zhR4sqHxqdNDMXQ0Zt9uxeJxdCHaa2Tx+UAYuy+JRh+k9qUR/Y
-	 ZG8Yr7uXXTkGI4Xpl/nasmygy6V/XrGJ6smdDdRJhN4q5m5ytcm++w4oqpMhxWkb/n
-	 g/1/Z48d+LcnYpgUYF7+DXqHNiLnpouZ7QePKHMM=
+	b=gMiwHU3E8C7CYCPTCZhvPe9fsmMVXlTe9sd03xx/qSs2x6EXyErg3W3I8bA0px6Pz
+	 wz7Hl2grPxUwg/e41/ENnt3XfvntZdN6ewrSgJDzkUXnAfqfU0ZQl4IDB/7vPZOLhH
+	 SE4KVoGe7qqnQuX6KB7XIQp3aS2u1YWcf8KOt7wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ralf Lici <ralf@mandelbit.com>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 118/457] ovpn: track UDP socket route key for peer dst cache
-Date: Wed, 30 Sep 2026 17:23:43 +0200
-Message-ID: <20260930152348.598640888@linuxfoundation.org>
+Subject: [PATCH 7.2 119/457] ovpn: validate peer state before caching UDP dst
+Date: Wed, 30 Sep 2026 17:23:44 +0200
+Message-ID: <20260930152348.620324655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,303 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Ralf Lici <ralf@mandelbit.com>
 
-[ Upstream commit 7c66b7a4ae80a9309e6dc1d24b7b6b897e6348eb ]
+[ Upstream commit fa603710bdb9aea33c0d9cc2c05ed24d84f58753 ]
 
-ovpn stores the route used to transmit UDP packets in a per-peer dst
-cache. A cached dst is only valid for the route lookup inputs used when
-it was resolved.
+UDP route lookup runs without peer->lock while the bind is protected by
+RCU. The route key is snapshotted separately. Either can change while
+the lookup is in progress.
 
-Some of those inputs are mutable while userspace still owns the UDP
-socket. In particular, changes to the socket mark or UDP source port do
-not invalidate ovpn's peer dst cache, so ovpn can keep using a route
-selected with an old socket route key.
+The TX path currently checks only the route key before publishing the
+looked-up dst. If the bind changes but the route key does not, a dst
+resolved from the old endpoint can be installed in the cache after the
+bind replacement.
 
-Replace the cached mark with a route key containing the socket-owned
-lookup inputs currently used by ovpn, and reset the peer dst cache when
-the key changes. Before storing a newly looked-up dst, recheck the route
-key under the peer lock so a dst resolved for stale socket state is not
-published.
+Compare both the bind pointer and the route key under peer->lock before
+updating the cache. The RCU read-side critical section keeps the old
+bind alive throughout the lookup, so pointer identity is sufficient to
+detect a replacement.
 
-Fixes: 08857b5ec5d9 ("ovpn: implement basic TX path (UDP)")
+Fixes: f0281c1d3732 ("ovpn: add support for updating local or remote UDP endpoint")
 Signed-off-by: Ralf Lici <ralf@mandelbit.com>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/peer.c |  1 +
- drivers/net/ovpn/peer.h | 19 ++++++++-
- drivers/net/ovpn/udp.c  | 90 +++++++++++++++++++++++++++++++++++------
- 3 files changed, 95 insertions(+), 15 deletions(-)
+ drivers/net/ovpn/udp.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index c95656ca7c357..b400783c2efab 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -113,6 +113,7 @@ struct ovpn_peer *ovpn_peer_new(struct ovpn_priv *ovpn, u32 id)
- 	RCU_INIT_POINTER(peer->bind, NULL);
- 	ovpn_crypto_state_init(&peer->crypto);
- 	spin_lock_init(&peer->lock);
-+	seqcount_spinlock_init(&peer->route_key_seq, &peer->lock);
- 	kref_init(&peer->refcount);
- 	ovpn_peer_stats_init(&peer->vpn_stats);
- 	ovpn_peer_stats_init(&peer->link_stats);
-diff --git a/drivers/net/ovpn/peer.h b/drivers/net/ovpn/peer.h
-index dfa5c0037e02b..063535699ecd8 100644
---- a/drivers/net/ovpn/peer.h
-+++ b/drivers/net/ovpn/peer.h
-@@ -10,6 +10,7 @@
- #ifndef _NET_OVPN_OVPNPEER_H_
- #define _NET_OVPN_OVPNPEER_H_
- 
-+#include <linux/seqlock.h>
- #include <net/dst_cache.h>
- #include <net/strparser.h>
- 
-@@ -17,6 +18,16 @@
- #include "socket.h"
- #include "stats.h"
- 
-+/**
-+ * struct ovpn_route_key - route key used for the peer dst cache
-+ * @mark: fwmark used for route lookup
-+ * @sport: UDP source port used for route lookup
-+ */
-+struct ovpn_route_key {
-+	u32 mark;
-+	__be16 sport;
-+};
-+
- /**
-  * struct ovpn_peer - the main remote peer object
-  * @ovpn: main openvpn instance this peer belongs to
-@@ -45,6 +56,8 @@
-  * @tcp.sk_cb.ops: pointer to the original prot_ops object (TCP only)
-  * @crypto: the crypto configuration (ciphers, keys, etc..)
-  * @dst_cache: cache for dst_entry used to send to peer
-+ * @route_key: route key matching the current dst cache contents
-+ * @route_key_seq: seqcount protecting lockless route_key reads
-  * @bind: remote peer binding
-  * @keepalive_interval: seconds after which a new keepalive should be sent
-  * @keepalive_xmit_exp: future timestamp when next keepalive should be sent
-@@ -55,7 +68,7 @@
-  * @vpn_stats: per-peer in-VPN TX/RX stats
-  * @link_stats: per-peer link/transport TX/RX stats
-  * @delete_reason: why peer was deleted (i.e. timeout, transport error, ..)
-- * @lock: protects binding to peer (bind) and keepalive* fields
-+ * @lock: protects binding to peer (bind), route_key and keepalive* fields
-  * @refcount: reference counter
-  * @rcu: used to free peer in an RCU safe way
-  * @release_entry: entry for the socket release list
-@@ -99,6 +112,8 @@ struct ovpn_peer {
- 	} tcp;
- 	struct ovpn_crypto_state crypto;
- 	struct dst_cache dst_cache;
-+	struct ovpn_route_key route_key;
-+	seqcount_spinlock_t route_key_seq;
- 	struct ovpn_bind __rcu *bind;
- 	unsigned long keepalive_interval;
- 	unsigned long keepalive_xmit_exp;
-@@ -109,7 +124,7 @@ struct ovpn_peer {
- 	struct ovpn_peer_stats vpn_stats;
- 	struct ovpn_peer_stats link_stats;
- 	enum ovpn_del_peer_reason delete_reason;
--	spinlock_t lock; /* protects bind  and keepalive* */
-+	spinlock_t lock; /* protects bind, route_key and keepalive* */
- 	struct kref refcount;
- 	struct rcu_head rcu;
- 	struct llist_node release_entry;
 diff --git a/drivers/net/ovpn/udp.c b/drivers/net/ovpn/udp.c
-index df4750dabd1e1..c6d591cb7ff45 100644
+index c6d591cb7ff45..eeef4a7229f5b 100644
 --- a/drivers/net/ovpn/udp.c
 +++ b/drivers/net/ovpn/udp.c
-@@ -131,6 +131,48 @@ static int ovpn_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
- 	return 0;
+@@ -173,6 +173,35 @@ static void ovpn_dst_cache_check_key(struct ovpn_peer *peer,
+ 	spin_unlock_bh(&peer->lock);
  }
  
-+static bool ovpn_route_key_equal(const struct ovpn_route_key *a,
-+				 const struct ovpn_route_key *b)
-+{
-+	return a->mark == b->mark && a->sport == b->sport;
-+}
-+
 +/**
-+ * ovpn_dst_cache_check_key - reset peer dst cache after key changes
-+ * @peer: the peer owning the dst cache
-+ * @cache: the cache that might need to be reset
-+ * @key: the route key for the packet being transmitted
++ * ovpn_dst_cache_current - check whether a route lookup matches peer state
++ * @peer: the peer owning the bind and dst cache
++ * @bind: the RCU bind used for the route lookup
++ * @key: the route key used for the route lookup
 + *
-+ * Reset the peer dst cache if it was populated for a different route key.
++ * Check that @bind is still the current peer bind and that @key still matches
++ * the peer route key. The caller must hold @peer->lock. The TX path keeps
++ * @bind inside an RCU read-side critical section, so pointer identity is enough
++ * to detect whether the bind was replaced while the route lookup was running.
++ *
++ * Return: true if the lookup result still matches the current peer state and
++ * may update the dst cache.
 + */
-+static void ovpn_dst_cache_check_key(struct ovpn_peer *peer,
-+				     struct dst_cache *cache,
-+				     const struct ovpn_route_key *key)
++static bool ovpn_dst_cache_current(const struct ovpn_peer *peer,
++				   const struct ovpn_bind *bind,
++				   const struct ovpn_route_key *key)
 +{
-+	struct ovpn_route_key old_key;
-+	unsigned int seq;
++	const struct ovpn_bind *curr_bind;
 +
-+	/* snapshot the saved key before deciding whether the cache matches */
-+	do {
-+		seq = read_seqcount_begin(&peer->route_key_seq);
-+		old_key = peer->route_key;
-+	} while (read_seqcount_retry(&peer->route_key_seq, seq));
++	lockdep_assert_held(&peer->lock);
 +
-+	/* nothing changed: the current cache can be reused */
-+	if (likely(ovpn_route_key_equal(&old_key, key)))
-+		return;
++	curr_bind = rcu_dereference_protected(peer->bind,
++					      lockdep_is_held(&peer->lock));
 +
-+	/* recheck under lock because another path may have updated the key */
-+	spin_lock_bh(&peer->lock);
-+	if (!ovpn_route_key_equal(&peer->route_key, key)) {
-+		write_seqcount_begin(&peer->route_key_seq);
-+		peer->route_key = *key;
-+		dst_cache_reset(cache);
-+		write_seqcount_end(&peer->route_key_seq);
-+	}
-+	spin_unlock_bh(&peer->lock);
++	return curr_bind == bind &&
++	       ovpn_route_key_equal(key, &peer->route_key);
 +}
 +
  /**
   * ovpn_udp4_output - send IPv4 packet over udp socket
   * @peer: the destination peer
-@@ -138,21 +180,23 @@ static int ovpn_udp_encap_recv(struct sock *sk, struct sk_buff *skb)
-  * @cache: dst cache
-  * @sk: the socket to send the packet over
-  * @skb: the packet to send
-+ * @key: the route key snapshot used for cache validation and flow lookup
-  *
-  * Return: 0 on success or a negative error code otherwise
-  */
- static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 			    struct dst_cache *cache, struct sock *sk,
--			    struct sk_buff *skb)
-+			    struct sk_buff *skb,
-+			    const struct ovpn_route_key *key)
- {
- 	struct rtable *rt;
- 	struct flowi4 fl = {
- 		.saddr = bind->local.ipv4.s_addr,
- 		.daddr = bind->remote.in4.sin_addr.s_addr,
--		.fl4_sport = inet_sk(sk)->inet_sport,
-+		.fl4_sport = key->sport,
- 		.fl4_dport = bind->remote.in4.sin_port,
- 		.flowi4_proto = sk->sk_protocol,
--		.flowi4_mark = sk->sk_mark,
-+		.flowi4_mark = key->mark,
- 	};
- 	int ret;
+@@ -240,7 +269,7 @@ static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
  
-@@ -193,7 +237,12 @@ static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 				    ret);
- 		goto err;
- 	}
--	dst_cache_set_ip4(cache, &rt->dst, fl.saddr);
-+
-+	/* avoid storing a stale cache */
-+	spin_lock_bh(&peer->lock);
-+	if (likely(ovpn_route_key_equal(key, &peer->route_key)))
-+		dst_cache_set_ip4(cache, &rt->dst, fl.saddr);
-+	spin_unlock_bh(&peer->lock);
+ 	/* avoid storing a stale cache */
+ 	spin_lock_bh(&peer->lock);
+-	if (likely(ovpn_route_key_equal(key, &peer->route_key)))
++	if (likely(ovpn_dst_cache_current(peer, bind, key)))
+ 		dst_cache_set_ip4(cache, &rt->dst, fl.saddr);
+ 	spin_unlock_bh(&peer->lock);
  
- transmit:
- 	udp_tunnel_xmit_skb(rt, sk, skb, fl.saddr, fl.daddr, 0,
-@@ -213,12 +262,14 @@ static int ovpn_udp4_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
-  * @cache: dst cache
-  * @sk: the socket to send the packet over
-  * @skb: the packet to send
-+ * @key: the route key snapshot used for cache validation and flow lookup
-  *
-  * Return: 0 on success or a negative error code otherwise
-  */
- static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 			    struct dst_cache *cache, struct sock *sk,
--			    struct sk_buff *skb)
-+			    struct sk_buff *skb,
-+			    const struct ovpn_route_key *key)
- {
- 	struct dst_entry *dst;
- 	int ret;
-@@ -226,10 +277,10 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 	struct flowi6 fl = {
- 		.saddr = bind->local.ipv6,
- 		.daddr = bind->remote.in6.sin6_addr,
--		.fl6_sport = inet_sk(sk)->inet_sport,
-+		.fl6_sport = key->sport,
- 		.fl6_dport = bind->remote.in6.sin6_port,
- 		.flowi6_proto = sk->sk_protocol,
--		.flowi6_mark = sk->sk_mark,
-+		.flowi6_mark = key->mark,
- 		.flowi6_oif = bind->remote.in6.sin6_scope_id,
- 	};
+@@ -313,7 +342,7 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
  
-@@ -259,7 +310,12 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
- 				    &bind->remote.in6, ret);
- 		goto err;
- 	}
--	dst_cache_set_ip6(cache, dst, &fl.saddr);
-+
-+	/* avoid storing a stale cache */
-+	spin_lock_bh(&peer->lock);
-+	if (likely(ovpn_route_key_equal(key, &peer->route_key)))
-+		dst_cache_set_ip6(cache, dst, &fl.saddr);
-+	spin_unlock_bh(&peer->lock);
+ 	/* avoid storing a stale cache */
+ 	spin_lock_bh(&peer->lock);
+-	if (likely(ovpn_route_key_equal(key, &peer->route_key)))
++	if (likely(ovpn_dst_cache_current(peer, bind, key)))
+ 		dst_cache_set_ip6(cache, dst, &fl.saddr);
+ 	spin_unlock_bh(&peer->lock);
  
- transmit:
- 	/* user IPv6 packets may be larger than the transport interface
-@@ -288,6 +344,7 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
-  * @cache: dst cache
-  * @sk: the socket to send the packet over
-  * @skb: the packet to send
-+ * @key: route key snapshot used for cache validation and flow lookup
-  *
-  * rcu_read_lock should be held on entry.
-  * On return, the skb is consumed.
-@@ -295,7 +352,8 @@ static int ovpn_udp6_output(struct ovpn_peer *peer, struct ovpn_bind *bind,
-  * Return: 0 on success or a negative error code otherwise
-  */
- static int ovpn_udp_output(struct ovpn_peer *peer, struct dst_cache *cache,
--			   struct sock *sk, struct sk_buff *skb)
-+			   struct sock *sk, struct sk_buff *skb,
-+			   struct ovpn_route_key *key)
- {
- 	struct ovpn_bind *bind;
- 	int ret;
-@@ -315,11 +373,11 @@ static int ovpn_udp_output(struct ovpn_peer *peer, struct dst_cache *cache,
- 
- 	switch (bind->remote.in4.sin_family) {
- 	case AF_INET:
--		ret = ovpn_udp4_output(peer, bind, cache, sk, skb);
-+		ret = ovpn_udp4_output(peer, bind, cache, sk, skb, key);
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
--		ret = ovpn_udp6_output(peer, bind, cache, sk, skb);
-+		ret = ovpn_udp6_output(peer, bind, cache, sk, skb, key);
- 		break;
- #endif
- 	default:
-@@ -341,15 +399,21 @@ static int ovpn_udp_output(struct ovpn_peer *peer, struct dst_cache *cache,
- void ovpn_udp_send_skb(struct ovpn_peer *peer, struct sock *sk,
- 		       struct sk_buff *skb)
- {
-+	struct ovpn_route_key key = {
-+		.mark = READ_ONCE(sk->sk_mark),
-+		.sport = READ_ONCE(inet_sk(sk)->inet_sport),
-+	};
- 	int ret;
- 
- 	skb->dev = peer->ovpn->dev;
--	skb->mark = READ_ONCE(sk->sk_mark);
-+	skb->mark = key.mark;
- 	/* no checksum performed at this layer */
- 	skb->ip_summed = CHECKSUM_NONE;
- 
-+	ovpn_dst_cache_check_key(peer, &peer->dst_cache, &key);
-+
- 	/* crypto layer -> transport (UDP) */
--	ret = ovpn_udp_output(peer, &peer->dst_cache, sk, skb);
-+	ret = ovpn_udp_output(peer, &peer->dst_cache, sk, skb, &key);
- 	if (unlikely(ret < 0))
- 		kfree_skb(skb);
- }
 -- 
 2.53.0
 
