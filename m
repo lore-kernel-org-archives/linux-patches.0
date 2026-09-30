@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6446537647E;
-	Wed, 30 Sep 2026 19:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328933E1681;
+	Wed, 30 Sep 2026 19:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796407; cv=none; b=PIncsNL057ARom+eTq81hJ3vOmzKTQldjB+nowQbmMbeOam9/fVHkKNrco4EGOSJplErtiqU43K5KhEWPr/j6CA3q5HtbiBGEZLfBbB+bNx2+Hrs8XI7FQZ21IsNI9NufYEpuMyYaq5yZy4TDnFTzxKdZd9W6/Jmm9p2RT4pIv8=
+	t=1790796410; cv=none; b=dgGuw9nd6X7QemWzKSYFHh7ZK3JahkKXe/fVvrPpy9o7VIZH2XR7rFME2ZiopiX7N3LFhDztUqlEyNJgbSGJFBSTRFDcfRX9s2JqmBDHI4EA+CI22SfOtcrwLYZzPSqoWYxIAhQObSS7wAK/uyrRxPwdYvG/Ftgx6aXIfpgFjJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796407; c=relaxed/simple;
-	bh=86hjL9TxCjtuad+HuWcZ49HMEDRSdB1z8jzR0IVCpF4=;
+	s=arc-20240116; t=1790796410; c=relaxed/simple;
+	bh=GMp9Niwnap7oS3MCLzPCNOjeHxG4hhT0lM5f6bDtduw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIsMGwqGKPGg8vpkfMsWkt1xXA1qCGWM5gx8zkQ1qop2njvFJdsyZSE1gsl7OCHvsL5ldW+zOJGT9ubqhk8BIhtePAljHvJ8q0cHaEFhQ55Rg2fL8qtrBttu45sdgQ4GLBvHDLmZuZubHE+ELjuMKYpKJF/1/DPkCJIBQR6cFX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOvqiCzK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=haojDRhDk5hGfB16auOUV5oYN9Ard8XOrcfqZ9prezmUEpfVlEqEf1/KVWSuxdjmA+W3217wrhlsJvW36FDvmdBPRzxRzRQ0P9PPCVM8S/RiMh3IbtE2uBBAvlNB0ILpT2BHwfIwdzOSsxjGxMAVd8nrRSsQ/EzW/6CA5OIF6u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qv/IMBwl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOvqiCzK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6356D1F000FF;
-	Wed, 30 Sep 2026 19:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qv/IMBwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6171F000FF;
+	Wed, 30 Sep 2026 19:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796405;
-	bh=FUsJhs0po7BuIGHQd1ZWjFPQ6RkWzCa+L6HdBhwK7a0=;
+	s=korg; t=1790796408;
+	bh=f7Ww477UcTC6lvXtotIqVAAc4JlJZRQdF0AIxb6KLZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wOvqiCzKLbowa7+9tQOjJg/giCcHjqoEk7+KNQNGZ9f4uPOsGPrggp1sdweU2qItV
-	 Cx6F05Yd9Hk2GCn4ZgLrnBPd4f8Ml79VAMThiFOVgsC2DvuQr7/k8habnOS7Xygmi3
-	 mx7Cuj58NXBdp1T3n692jG6V5/spqQa5Xzn7SO2U=
+	b=qv/IMBwlgr6b9BE3Op9oXpCJDzmWk9tRw+/3C52Nxi8MyakkWrA4b8w2a+3EhiWjn
+	 uyHSlpoeZS+DDFDg/23E6VPhbtI5HvLWbk5Doy1ojzmLS1O3sfzbdKiyHkOiSLRrjl
+	 UGNaemN4EGawX+29ugorzrc5xc+eFtF6UtRGWn9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+	Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 0857/1193] dmaengine: sun6i: fix undefined behaviour in sun6i_dma_tx_status
-Date: Wed, 30 Sep 2026 17:25:41 +0200
-Message-ID: <20260930152453.274867124@linuxfoundation.org>
+Subject: [PATCH 6.6 0858/1193] dmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_rx_chn()
+Date: Wed, 30 Sep 2026 17:25:42 +0200
+Message-ID: <20260930152453.296849259@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,64 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+From: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
 
-commit 9096bdc8d930147f7c39a493a859acbd3a8485d8 upstream.
+commit 0294b6dd515256c03ea2dbf508ddd3826d788579 upstream.
 
-sun6i_dma_tx_status() calls vchan_find_desc() to look up the virtual
-descriptor for a given cookie, before checking whether the pointer
-vd is NULL:
+If devm_kcalloc() for rx_chn->flows fails in a channel request function,
+the error path calls k3_udma_glue_release_rx_chn(), which dereferences
+the NULL rx_chn->flows pointer in k3_udma_glue_release_rx_flow().
 
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    txd = to_sun6i_desc(&vd->tx);   /* vd may be NULL here */
+Skip the flow release loop in k3_udma_glue_release_rx_chn() when
+rx_chn->flows is not allocated.
 
-    if (vd) {
-        for (lli = txd->v_lli; ...)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-vchan_find_desc() returns NULL when the descriptor has already been
-completed or is in-flight on a physical channel and no longer present
-in the virtual channel's descriptor list. When vd is NULL,
-to_sun6i_desc() is called unconditionally on &vd->tx before the NULL
-check, which is undefined behaviour. Move the call inside the if (vd)
-guard to ensure it is only reached with a valid pointer.
-
-    vd = vchan_find_desc(&vchan->vc, cookie);
-    if (vd) {
-        struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-        for (lli = txd->v_lli; ...)
-
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+Reported-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+Signed-off-by: Alexander Chesnokov <Alexander.Chesnokov@kaspersky.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260817135723.12807-3-christian.lugnberg@soundtrack.io
+Link: https://patch.msgid.link/20260812053426.3521589-1-Alexander.Chesnokov@kaspersky.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/sun6i-dma.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/dma/ti/k3-udma-glue.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -970,7 +970,6 @@ static enum dma_status sun6i_dma_tx_stat
- 	struct sun6i_pchan *pchan = vchan->phy;
- 	struct sun6i_dma_lli *lli;
- 	struct virt_dma_desc *vd;
--	struct sun6i_desc *txd;
- 	enum dma_status ret;
- 	unsigned long flags;
- 	size_t bytes = 0;
-@@ -982,9 +981,9 @@ static enum dma_status sun6i_dma_tx_stat
- 	spin_lock_irqsave(&vchan->vc.lock, flags);
+--- a/drivers/dma/ti/k3-udma-glue.c
++++ b/drivers/dma/ti/k3-udma-glue.c
+@@ -1107,8 +1107,9 @@ void k3_udma_glue_release_rx_chn(struct
+ 		rx_chn->psil_paired = false;
+ 	}
  
- 	vd = vchan_find_desc(&vchan->vc, cookie);
--	txd = to_sun6i_desc(&vd->tx);
+-	for (i = 0; i < rx_chn->flow_num; i++)
+-		k3_udma_glue_release_rx_flow(rx_chn, i);
++	if (rx_chn->flows)
++		for (i = 0; i < rx_chn->flow_num; i++)
++			k3_udma_glue_release_rx_flow(rx_chn, i);
  
- 	if (vd) {
-+		struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
- 		for (lli = txd->v_lli; lli != NULL; lli = lli->v_lli_next)
- 			bytes += lli->len;
- 	} else if (!pchan || !pchan->desc) {
+ 	if (xudma_rflow_is_gp(rx_chn->common.udmax, rx_chn->flow_id_base))
+ 		xudma_free_gp_rflow_range(rx_chn->common.udmax,
 
 
