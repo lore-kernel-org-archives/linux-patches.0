@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F384D4F93DB;
-	Wed, 30 Sep 2026 16:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2251D4E2F09;
+	Wed, 30 Sep 2026 16:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785595; cv=none; b=FIVKYDLSikf9GivFgXqr5GERwP+MnmBdgMbXjLSUVNpiNBPkinEdJL7SzAABQt+rK93tUPeM411oMT+MVv68uBC6tC7poqXYPp68jJ3dxbBAprVeWEnrlkbHWD9mQnACKu1S1sMqLQnr7G4P1hc0SX6M8FkvhkAQW1lWx15DsTM=
+	t=1790785601; cv=none; b=gMssDF5ZfxOa5hOvZjVZ7ll6AoFQKPcMDGTTUcSYteh6k02Hq5vFTl/S/Vv/+P61P1UVVTZwPy2Ejo1B5YpVUz5T3xQK41jSfOwB5LVnOl4AR+G6YtAvRMddEI8u3WWFRouKWnxMdD0u223sEeI4OX+GT/qAbSeRVD5BjuGXQYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785595; c=relaxed/simple;
-	bh=DrJamwhJmmwfn3d/TXvqSXeKPP27xSXq5Vi0VpnmhTU=;
+	s=arc-20240116; t=1790785601; c=relaxed/simple;
+	bh=ecsyK+h7Nq5wyQxSH9H2f1Ftk6tB04aXJw04hY2345w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbpMFkDrH6duUfQW5K1mIOvXa/W4JCwNkl+g1sp/XgI50tNN0KuSjJ/VTE+3qSy40KiSxVthuBV+wTsxWKUk4Lh0mBllifbL5iv9Bz7/LnUeYDVRoRuOpaAfbj1iosnLbe+52cVuJ3L6gdxqaQP3H1vouVJ+9qw2sN3ABpSsBZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lr3AE3mJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tD9jSCWwkmQlSj5lKbdhVlFtO2UC1j8I2dfgrEVb+hCr1fzvVE1ezd2SvaMMDi9yHOfYGGoDNPDGwbbuX9y/heCiFsx3TiltU34eO1vuPaJoaLnGbqQBprWRXUJNtxGZLu3uSsgKBWSmCOlDEArHIj+clHDSkupD8YWPSsdiva4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thVEEM/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lr3AE3mJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467231F00899;
-	Wed, 30 Sep 2026 16:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thVEEM/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40E81F000FF;
+	Wed, 30 Sep 2026 16:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785582;
-	bh=LarswIPy2/zm1EhgRvyDNsOdaynNdk+kJN6tbgC36lw=;
+	s=korg; t=1790785588;
+	bh=Mf0dyWJ+5pytMFeLqFQrl4awEuE79hhyeQzX+tX2cL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lr3AE3mJQuzg+cNbbI3bPmvpriqWyhg2OV1uFeTVIdx0USHPoHKGvVttCOlMDD0vW
-	 poct9kNKBoTeDOWaMV9e5L6IQEBsL3klDEY4o791bnjVCyzp+pBnDDHQsyGsnW/Ou9
-	 RLmvL7QfyqsXhF/3CV1jeH+jOoCWqgWmoEvN5TN4=
+	b=thVEEM/us3eHU5GcB4wacUtDEsTMDmrD0a5G5SPzdTFuAKqrp4I+5OPdrXQGtKQz3
+	 H4JUaDaKFFZbuE8mq5YpLrcWVQse4XLflmD1xk2sa2V/+a/xS3DDh4gfCuk6wvHamr
+	 jrWFXky7atlz5xhbgPjPjOkLxa9ZB5L+04O8+HrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 560/982] Revert "perf tests: Fix flakiness in BPF counters test on hybrid systems"
-Date: Wed, 30 Sep 2026 17:21:36 +0200
-Message-ID: <20260930152428.802376231@linuxfoundation.org>
+Subject: [PATCH 6.1 562/982] wifi: ath9k_htc: dont store usb_device_id
+Date: Wed, 30 Sep 2026 17:21:38 +0200
+Message-ID: <20260930152428.843111506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -49,77 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 08c1316f983d3e1777f9087bb466dc5cf9a476f8.
+From: Gary Guo <gary@garyguo.net>
 
+[ Upstream commit 14d2ac442d660e112efc0ce87ad10085013ed2b1 ]
+
+usb_device_id is not guaranteed to live longer than probe due to presence
+of dynamic ID. All information apart from driver_data can be easily
+retrieved from usb_device, so just store driver_data.
+
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-1-632dcf3adfba@garyguo.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 28 ++++++++-------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 12 ++++++------
+ drivers/net/wireless/ath/ath9k/hif_usb.h |  2 +-
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 76d4a7f15a43d..b776ee2e445a6 100755
---- a/tools/perf/tests/shell/stat_bpf_counters.sh
-+++ b/tools/perf/tests/shell/stat_bpf_counters.sh
-@@ -4,26 +4,21 @@
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index 7650f14dca8da..0a36fe39d5a25 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -1099,7 +1099,7 @@ static int ath9k_hif_usb_download_fw(struct hif_device_usb *hif_dev)
+ 	}
+ 	kfree(buf);
  
- set -e
+-	if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
++	if (IS_AR7010_DEVICE(hif_dev->id_info))
+ 		firm_offset = AR7010_FIRMWARE_TEXT;
+ 	else
+ 		firm_offset = AR9271_FIRMWARE_TEXT;
+@@ -1194,7 +1194,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
+ 	if (MAJOR_VERSION_REQ == 1 && hif_dev->fw_minor_index == 3) {
+ 		const char *filename;
  
--# Get the first allowed CPU
--CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
--if [ -z "$CPU" ]; then
--	CPU=0
--fi
--workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
-+workload="perf test -w sqrtloop"
+-		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
++		if (IS_AR7010_DEVICE(hif_dev->id_info))
+ 			filename = FIRMWARE_AR7010_1_1;
+ 		else
+ 			filename = FIRMWARE_AR9271;
+@@ -1210,7 +1210,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
  
--# check whether $2 is within +/- 15% of $1
-+# check whether $2 is within +/- 20% of $1
- compare_number()
- {
- 	first_num=$1
- 	second_num=$2
+ 		return -ENOENT;
+ 	} else {
+-		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
++		if (IS_AR7010_DEVICE(hif_dev->id_info))
+ 			chip = "7010";
+ 		else
+ 			chip = "9271";
+@@ -1267,9 +1267,9 @@ static void ath9k_hif_usb_firmware_cb(const struct firmware *fw, void *context)
  
--	# upper bound is first_num * 115%
--	upper=$(expr $first_num + $first_num / 20 \* 3 )
--	# lower bound is first_num * 85%
--	lower=$(expr $first_num - $first_num / 20 \* 3 )
-+	# upper bound is first_num * 120%
-+	upper=$(expr $first_num + $first_num / 5 )
-+	# lower bound is first_num * 80%
-+	lower=$(expr $first_num - $first_num / 5 )
+ 	ret = ath9k_htc_hw_init(hif_dev->htc_handle,
+ 				&hif_dev->interface->dev,
+-				hif_dev->usb_device_id->idProduct,
++				le16_to_cpu(hif_dev->udev->descriptor.idProduct),
+ 				hif_dev->udev->product,
+-				hif_dev->usb_device_id->driver_info);
++				hif_dev->id_info);
+ 	if (ret) {
+ 		ret = -EINVAL;
+ 		goto err_htc_hw_init;
+@@ -1383,7 +1383,7 @@ static int ath9k_hif_usb_probe(struct usb_interface *interface,
  
- 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
--		echo "The difference between $first_num and $second_num are greater than 15%."
-+		echo "The difference between $first_num and $second_num are greater than 20%."
- 		exit 1
- 	fi
- }
-@@ -46,12 +41,11 @@ check_counts()
- test_bpf_counters()
- {
- 	printf "Testing --bpf-counters "
--	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
-+	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
- 				awk -v i=0 -v c=0 '/instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
- 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
--	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
--				-- "${workload[@]}"  2>&1 | \
-+	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
- 				awk -v i=0 -v c=0 '/instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
- 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
-@@ -63,9 +57,7 @@ test_bpf_counters()
- test_bpf_modifier()
- {
- 	printf "Testing bpf event modifier "
--	stat_output=$(perf stat --no-big-num \
--		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
--		-- "${workload[@]}" 2>&1)
-+	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
- 	base_instructions=$(echo "$stat_output"| \
- 				awk -v i=0 -v c=0 '/base_instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
+ 	hif_dev->udev = udev;
+ 	hif_dev->interface = interface;
+-	hif_dev->usb_device_id = id;
++	hif_dev->id_info = id->driver_info;
+ #ifdef CONFIG_PM
+ 	udev->reset_resume = 1;
+ #endif
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.h b/drivers/net/wireless/ath/ath9k/hif_usb.h
+index 5985aa15ca931..96c59af629982 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.h
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.h
+@@ -115,7 +115,7 @@ struct cmd_buf {
+ struct hif_device_usb {
+ 	struct usb_device *udev;
+ 	struct usb_interface *interface;
+-	const struct usb_device_id *usb_device_id;
++	int id_info;
+ 	const void *fw_data;
+ 	size_t fw_size;
+ 	struct completion fw_done;
 -- 
 2.53.0
 
