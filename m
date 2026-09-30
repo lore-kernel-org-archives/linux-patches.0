@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BB4C4F58;
-	Wed, 30 Sep 2026 15:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4B54BFE6D;
+	Wed, 30 Sep 2026 15:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783426; cv=none; b=OXJ0iIu60m2jeQk8UW4pJw2fqrdZQQtcY1r1juz4zQAoTvjRTlYUYPSX9tX1vr1YHPrzZ73iEjcpTAxqktPoMwhnkNWhT5JD8N50MHb0eWzFd0uosSwRqM9t2Rt5+TolaHBakqazv7XOHhqMNQrogELNSC3HTtc85IxAKaBfEt8=
+	t=1790783430; cv=none; b=Vc9Ll+azp5XrVh6MGWUZMCXCh7/HTNrWJT4dPepTr16tmDJylieVvSIPC9tSL1i9yX4e/GRdVlHJTAqTpjIytzwNisa3FhWffKNwOQF2I+68xKEwauYu0RNdGgu4P6fbVPUZw1u+tOERi5X45sB3ucJCeDyolL3dxD5nJp3LVgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783426; c=relaxed/simple;
-	bh=pnOLCn4lggZFNeB2BRAY0Ka1UPwbrXgY+WaL0DUXUn4=;
+	s=arc-20240116; t=1790783430; c=relaxed/simple;
+	bh=z3YBuUSVMLBCIUOSHXeSSnoC93LBTGSClVrCPmJq9mU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWxSowCgO34spOukQuBhxFpNimn4XrqaRPkATvd8XPYdnJao4CSJDLY/dygcQr41whQXXCPsPNIDLDpIZ/hWXwUHfxy+pNG+Ga3ff9F4pgdGcFpEf+Ul/gFgXmPBOplJFknar2dQZKRgbap78hVn2zX3IXqB0gtUF06N5T60jL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLHaVmNn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NDShO7mrl2KRuQ5w2P+sCXa79ziko5nVciJCu59NfSHSkqZKdzh9H+9+Ynz4/vvbG36D9/jw4qfIBcjbvo0S8V96ModpDHpAbt57XbPU7agXXD2f5kNluOU+6KPFhj+IxhKw11E2WhtOfm+zBxrdQLBrj0D+IFmDBrcOu0c1NVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaZNxGlR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLHaVmNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22291F000FF;
-	Wed, 30 Sep 2026 15:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaZNxGlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF1E1F000FF;
+	Wed, 30 Sep 2026 15:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783421;
-	bh=1dei6aotc0RFVVsHjbuPVDoqn4qgMSl14fYc+Ak48rI=;
+	s=korg; t=1790783427;
+	bh=H3bsKLhASD5xgVIM7V9Qh39iQG4EpTo0K5ArDanFTeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sLHaVmNnl8kVu3kUQK5Xg4s6XPiQOIT5h+pSLckJgAMKXS1lHWBpoYtgFcCQ9nbYM
-	 a8+9+xQ0O6bxTc4z4gTQPocvLm5sNYhvJpXHHiq4FOVbV15PoeKyyB0OeOoDa+vKPJ
-	 +yPhtttjRL9YAPuwkHReCFh0F89g0puZCUkUM7hs=
+	b=IaZNxGlRfJeswlhekqIVA12otjSy4yNs7SdY4B3BVwciyJxB78MW9C67sP7TUNWpm
+	 HG5jCnzgyyOGz+cs6PH90g5f8x+7TTpl2bwQx4g29w0RGxl5eESLhbM5XnejeZi0lL
+	 DurIRuPxfE9D9HEMhKi75AtuecdueQEPpItnIC0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 391/595] netfilter: flowtable: hold reference on ct until flow is released
-Date: Wed, 30 Sep 2026 17:24:44 +0200
-Message-ID: <20260930152356.083766485@linuxfoundation.org>
+Subject: [PATCH 5.10 393/595] keys: fix lost wakeup when reaping a dead key type
+Date: Wed, 30 Sep 2026 17:24:46 +0200
+Message-ID: <20260930152356.127631937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,62 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit e75a9fa1d44bcbd66ea02e8781bcca6ea4076e0d ]
+[ Upstream commit 2725ab3f5ad1c5f375c7c9fee4af02a9b138f701 ]
 
-nf_ct_put() releases the ct->ext area inmediately, the rcu typesafe
-semantics also allow to refer to the wrong conntrack from the flowtable
-datapath. Hold reference on ct until flow is released after rcu grace
-period.
+clear_bit() is atomic with respect to the word it modifies, but it is
+an unordered operation: it implies no memory barrier on either side
+(Documentation/atomic_bitops.txt).
 
-Add rcu_barrier() on module exit path, to ensure pending flow entries
-are release before module goes away.
+key_garbage_collector() clears KEY_GC_REAPING_KEYTYPE with clear_bit()
+and calls wake_up_bit() after reaping a dead key type. wake_up_bit()
+uses a lockless waitqueue check and requires a full barrier after the
+clear.
 
-Fixes: 0ff90b6c2034 ("netfilter: nf_flow_offload: fix use-after-free and a resource leak")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The existing smp_mb() is before clear_bit(), so nothing orders the clear
+against that check. The GC can see an empty waitqueue while
+unregister_key_type() still sees the bit set. The final wakeup is then
+lost, leaving module unload stuck in wait_on_bit().
+
+Use clear_and_wake_up_bit(). Its clear_bit_unlock() has RELEASE
+semantics, so the completed GC work stays ordered before the clear, and
+its smp_mb__after_atomic() orders the clear before the waitqueue check.
+
+Fixes: 0c061b5707ab ("KEYS: Correctly destroy key payloads when their keytype is removed")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260821025327.61488-1-kmehltretter@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ security/keys/gc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index 8f6b791918ae7..1d4a236b5bc25 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -173,6 +173,14 @@ static void flow_offload_route_release(struct flow_offload *flow)
- 	dst_release(flow->tuplehash[FLOW_OFFLOAD_DIR_REPLY].tuple.dst_cache);
- }
+diff --git a/security/keys/gc.c b/security/keys/gc.c
+index eaddaceda14ea..285ebbf490f04 100644
+--- a/security/keys/gc.c
++++ b/security/keys/gc.c
+@@ -324,9 +324,7 @@ static void key_garbage_collector(struct work_struct *work)
  
-+static void flow_offload_free_rcu(struct rcu_head *rcu_head)
-+{
-+	struct flow_offload *flow = container_of(rcu_head, struct flow_offload, rcu_head);
-+
-+	nf_ct_put(flow->ct);
-+	kfree(flow);
-+}
-+
- void flow_offload_free(struct flow_offload *flow)
- {
- 	switch (flow->type) {
-@@ -182,8 +190,7 @@ void flow_offload_free(struct flow_offload *flow)
- 	default:
- 		break;
+ 	if (unlikely(gc_state & KEY_GC_REAPING_DEAD_3)) {
+ 		kdebug("dead wake");
+-		smp_mb();
+-		clear_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
+-		wake_up_bit(&key_gc_flags, KEY_GC_REAPING_KEYTYPE);
++		clear_and_wake_up_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
  	}
--	nf_ct_put(flow->ct);
--	kfree_rcu(flow, rcu_head);
-+	call_rcu(&flow->rcu_head, flow_offload_free_rcu);
- }
- EXPORT_SYMBOL_GPL(flow_offload_free);
  
-@@ -584,6 +591,7 @@ static int __init nf_flow_table_module_init(void)
- 
- static void __exit nf_flow_table_module_exit(void)
- {
-+	rcu_barrier();
- 	nf_flow_table_offload_exit();
- }
- 
+ 	if (gc_state & KEY_GC_REAP_AGAIN)
 -- 
 2.53.0
 
