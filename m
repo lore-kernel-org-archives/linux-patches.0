@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5276530E16;
-	Wed, 30 Sep 2026 17:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DBB525A79;
+	Wed, 30 Sep 2026 17:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790646; cv=none; b=pivfrKZ8STXuFIBY5HFuCQJGwEvCbysrKV3PxIKUIRiG3LHy4KeE+38LMllIK3t+uc40KLh10UmvN3KyIFZ8NRy1gy8AJpvkFmBevx2WlwbGKydJYkRuqdmrjB19qJPugGiGV21Dx/N+6WTOrdeCmsZHemcEBrzi1ZmvMDyRFgg=
+	t=1790790648; cv=none; b=gTwlX/FKtY1j1A0gf6YEhDoNS6a8jZAMGANRsP83Yf2bF/SBa/TwXfkJ6UhdJe/LCF99pWXJl5TrMdukKX3ZsOjje/ttYDKWLKLkFiK0pfexL4LWinkjEtC89v3L/ECiPvGnNpQLywT05kQD7eosp90vhiqUI0fCUhnoFjDFobo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790646; c=relaxed/simple;
-	bh=Kj6Bpjn0iEWOfDXCaK/ER1W/MozNVbgs/vASBpe8Ogs=;
+	s=arc-20240116; t=1790790648; c=relaxed/simple;
+	bh=DGA4l/TJMPR4gIt5oWAaP9fVjq8v+LdUkp53+62dcko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBMedpINo5LsvCZ90AqyiIVdl2wOCzCG8pZgAYE4QPwKOuxliu8YYQgE1u0kT50QG955y//q+KpPhF0f3zfwKeXdmZOm9BQfhZMAK5us6lZBPFBMBGTXEWuGQEo6T0XotEu+ZwxPwtDs3zeZkc78DjbbR8TmetyUh5E15LuI8yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUlRItq6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PJCfVYWKTOXIycUoNxwtqjYZLRUddQazl4Wzp/H6ZhIXOqREHTqUuO2h+P3cYPixB9yo0MnfP2yjMU9P9LJsDvrHQhZfG+IRMSOUm6s6/z8fjifZ81jd1yGLRfBykInfaAEKTnzEVuAwDvl005MrExLDCOlTDBNEoe2wjCSUAmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuKSys3x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUlRItq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2E41F0089B;
-	Wed, 30 Sep 2026 17:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuKSys3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E911F000FF;
+	Wed, 30 Sep 2026 17:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790644;
-	bh=KCQsog9+LmjYkcgzU7FhvoT+KGYMNpxRQVr4aDCtHvc=;
+	s=korg; t=1790790647;
+	bh=Q8EFNulZcSHEL3fa4A9RkL4Gk7syL9vFimZ1jqwN8oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OUlRItq6zbvx7FPAWSx2msX6gv/A6uR8Q4i91WY15tVaIZ8rOzEyM5y7Ws7rR7y58
-	 4xnFRnYMaf/KYQwRTnhV48RwDTX5pMLxNMD+cpuOCYYm0IXAntG/udW0MOz4xTbmEO
-	 NACbTQAfzzg1HERC1YC1Z6lTkRhs+XNyZMaBTDcM=
+	b=zuKSys3xYylWs/QJLcs/O3EEw6WMLLBkiPuecP7X6figWWxI/3T7KTD/I09aVW8Ga
+	 ILt24arfD1M0rad+KOAHiOxsF/5DVKEZEVSnLehPkWT4A4bB5Rj5rM1m8AUWXGuIlb
+	 Xp3hG1ZQ4+HifsMtEp5XmWmoY8kNjHBj+mdSE7GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/752] mmc: core: Add validation for host-provided max_segs
-Date: Wed, 30 Sep 2026 17:18:14 +0200
-Message-ID: <20260930152358.675761410@linuxfoundation.org>
+Subject: [PATCH 5.15 025/752] mmc: davinci: avoid NULL deref of host->data in IRQ handler
+Date: Wed, 30 Sep 2026 17:18:15 +0200
+Message-ID: <20260930152358.696317045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,99 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit 3e0483e93a8be320f70a1ff68d835f7f015af311 ]
+[ Upstream commit 4f28846aaf8db9668e338b8987973f8935edff34 ]
 
-The max_segs field is of type unsigned short, and if a host driver
-sets an excessively large value, it may be truncated to zero. This
-can cause mmc_alloc_sg() to call kmalloc_objs() with a zero size
-allocation request, which leads to undefined behavior.
+mmc_davinci_irq() returns early only when both host->cmd and
+host->data are NULL:
 
-Under the SLUB allocator, kmalloc(0) returns a special pointer
-(ZERO_SIZE_PTR). The subsequent 'if (sg)' check will evaluate to
-true, and sg_init_table() will then attempt to access invalid memory,
-resulting in a crash:
+  if (host->cmd == NULL && host->data == NULL) {
+          ...
+          return IRQ_NONE;
+  }
 
-dwmmc_rockchip 2a310000.mmc: Successfully tuned phase to 133
-mmc1: new UHS-I speed SDR104 SDHC card at address aaaa
-Unable to handle kernel paging request at virtual address 0000001ffffffff0
-Mem abort info:
-ESR = 0x0000000096000004
-EC = 0x25: DABT (current EL), IL = 32 bits
-SET = 0, FnV = 0
-EA = 0, S1PTW = 0
-FSC = 0x04: level 0 translation fault
-Data abort info:
-ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=0000000102c88000
-[0000001ffffffff0] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1] SMP
-Modules linked in:
-CPU: 2 UID: 0 PID: 102 Comm: kworker/2:1 Not tainted 7.0.0-rc6-next-20260331-00013-g4d93c25963c5-dirty #80 PREEMPT
-Hardware name: Rockchip RK3576 EVB V10 Board (DT)
-Workqueue: events_freezable mmc_rescan
-pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : sg_init_table+0x2c/0x50
-lr : sg_init_table+0x24/0x50
-sp : ffff8000837db710
-x29: ffff8000837db710 x28: 000000000000c000 x27: 0000000000000300
-x26: 0000000000000000 x25: 0000000000000040 x24: ffff0000c46a0000
-x23: 0000000000000000 x22: ffff0000c0c73c00 x21: 0000000000000010
-x20: 0000000000000010 x19: 0000000000000000 x18: 000000000000002c
-x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
-x14: 0000000000000400 x13: ffff8000837dc000 x12: 0000000000000000
-x11: ffff0000c0c73ca0 x10: 0000000000000040 x9 : 459ec1f0abbdbb00
-x8 : 0000001fffffffe0 x7 : 0000000000000000 x6 : 000000000000003f
-x5 : 0000000000035579 x4 : 0000000000000901 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000010
-Call trace:
-sg_init_table+0x2c/0x50 (P)
-mmc_mq_init_request+0x64/0x90
-blk_mq_alloc_map_and_rqs+0x3ac/0x480
-blk_mq_alloc_set_map_and_rqs+0x98/0x1e0
-blk_mq_alloc_tag_set+0x1c0/0x290
-mmc_init_queue+0x120/0x370
-mmc_blk_alloc_req+0x150/0x420
+So we may legitimately reach the rest of the handler with
+host->data == NULL (and therefore data == NULL). The DATDNE branch
+already guards against this with an explicit "if (data != NULL)"
+check, but the subsequent TOUTRD ("read data timeout") and
+CRCWR/CRCRD ("data CRC error") branches dereference data
+unconditionally:
 
-To prevent this, add a validation check in mmc_mq_init_request() to
-detect when sg_len (derived from max_segs) is zero. If sg_len is zero,
-we return an error and print an error message, allowing host driver
-developers to identify and fix incorrect max_segs configuration.
+  if (qstatus & MMCST0_TOUTRD) {
+          data->error = -ETIMEDOUT;        <-- NULL deref
+          ...
+          davinci_abort_data(host, data);
+  }
 
-This is a defensive measure that ensures the MMC core fails gracefully
-when host drivers provide invalid max_segs values, rather than crashing
-with a page fault.
+  if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
+          data->error = -EILSEQ;           <-- NULL deref
+          ...
+  }
 
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+If either bit is set in qstatus while host->data is NULL, the kernel
+will crash inside the IRQ handler. smatch flags this:
+
+  drivers/mmc/host/davinci_mmc.c:933 mmc_davinci_irq() error: we
+    previously assumed 'data' could be null (see line 914)
+
+Gate both branches on a non-NULL data, matching the existing pattern
+used by the DATDNE branch.
+
+No functional change for callers where data is non-NULL, which is
+the only case in which these branches did meaningful work before
+this change.
+
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/queue.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mmc/host/davinci_mmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-index b15c034b42fb5..c50b0ac068d4a 100644
---- a/drivers/mmc/core/queue.c
-+++ b/drivers/mmc/core/queue.c
-@@ -206,8 +206,14 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
- 	struct mmc_queue *mq = set->driver_data;
- 	struct mmc_card *card = mq->card;
- 	struct mmc_host *host = card->host;
-+	u16 sg_len = mmc_get_max_segments(host);
+diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
+index e0175808c3b0d..845604a96bc93 100644
+--- a/drivers/mmc/host/davinci_mmc.c
++++ b/drivers/mmc/host/davinci_mmc.c
+@@ -934,7 +934,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
+ 		}
+ 	}
  
--	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
-+	if (!sg_len) {
-+		dev_err(mmc_dev(host), "Wrong max_segs assigned\n");
-+		return -EINVAL;
-+	}
-+
-+	mq_rq->sg = mmc_alloc_sg(sg_len, GFP_KERNEL);
- 	if (!mq_rq->sg)
- 		return -ENOMEM;
+-	if (qstatus & MMCST0_TOUTRD) {
++	if (data && (qstatus & MMCST0_TOUTRD)) {
+ 		/* Read data timeout */
+ 		data->error = -ETIMEDOUT;
+ 		end_transfer = 1;
+@@ -946,7 +946,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
+ 		davinci_abort_data(host, data);
+ 	}
  
+-	if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
++	if (data && (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD))) {
+ 		/* Data CRC error */
+ 		data->error = -EILSEQ;
+ 		end_transfer = 1;
 -- 
 2.53.0
 
