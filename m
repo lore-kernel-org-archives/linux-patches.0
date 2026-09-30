@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B547D3BE642;
-	Wed, 30 Sep 2026 18:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889134DEC26;
+	Wed, 30 Sep 2026 18:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792424; cv=none; b=tkV1N92cTJtCQNZy412J6JqgwAfjp/LqRqHKXs7zXNgVHBx4vtMn17pr5sHf8IF7E7PpIvtrZC76XNca3zHlTLjFM8O5GjjnmFsD1BWhOzZDBzVAssHaNRWH7UEIxLUMguQlOeQdrENHhxuLvVEOqUTm6sgTgkF9OV7fdZ1DBb0=
+	t=1790792427; cv=none; b=VIwirgkb3LR6aPkonqaCabiyQyh2IcoFjxDSdTeQsgrwQkbCIs5oesI1EopUWqlZAw49FQcCZSKBq93NWjnAtM+4tss1KHuewOQi631rRyjTl/ZMpwZmoYJffEKbIY7iJADLUU2+o4h9Z+Lg6xJzVlOhCgZdhf++IxdPsRHiBeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792424; c=relaxed/simple;
-	bh=gq8RfWTqIwf/RFLZslrQHPz8WCcJRrLq55k3HUBqsvk=;
+	s=arc-20240116; t=1790792427; c=relaxed/simple;
+	bh=WuOcm+E9eXkJp2Xcv0l8ILCN9lZhkCGV02XZjdG4Vho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIAOwoWZNP4I3ewEYfUjUeujqRlDGNfxk+uxHbrZ8GLMPQ05CH65dUbTJ7/dhqqvUC31Bl2h1cKQ5HENGMf9No1MnZCeXR00NFd8Ia90HNfGofeJEWqoaGzoCKvxnclNqVNH78UXE1EnkQ2+GO+xEy9kh7K+9Q2N3i9+gs4w//Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwQdhdwd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rgv97zwtXtZjpf6BGQFqeQq97mFYzh4jACsuy2R79vLTyMmxi7x+un36ZuaQW9yGyPj/OBZ3udUrBLoeAmPCjXUeTrDC5X3b1Aqbr8/qhKchUmytB1/UqXEDgfEcybqaJgMvkYi3ZIrgYK/Qf64LHGH+YkBHbgizL44fJIb2LCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfCdHNxV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwQdhdwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBD11F000FF;
-	Wed, 30 Sep 2026 18:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfCdHNxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40E01F000FF;
+	Wed, 30 Sep 2026 18:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792423;
-	bh=UXum8n40GFlgwGpbjdFk1jhtvf5mM/QUWn87xZGkLAw=;
+	s=korg; t=1790792426;
+	bh=50zvJRuPD1XhvKdQEHSfu7wRocEFRl5LxsjJcZUMQkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CwQdhdwdjcx4SYoiA4wRTL0Bz1xNfLyPX//NJeDuLNvKHeQOgDGN7Nbd35mvCx1FT
-	 miqStSnJhF3Izn82RTaUdPAxNvG/aP1r2IFdiyKKoLaQn0PUKkk57NpYvhPgJpy+9o
-	 Miaorkl5JwkwgWvUOqfNFPOXKj+xqb/uvjaa2cMU=
+	b=BfCdHNxVKTAi04XKuEIc88pDNnql6w7xB9SRCEPCYXqDpENJK2qbLWXBbXZZTOkUB
+	 TuA3xDrXU3Wj1rMfBn0AAIMX7DuFYsNXEgQ7qOMyZ2egVZlmA2mWSyNFOsWiEJ5vKl
+	 CFecsrXjovejCpTl+2yetxka0+weZ3Yh/VmnkcGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	David Heidelberg <david@ixit.cz>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 648/752] nfc: nfcmrvl: validate helper command length before pull
-Date: Wed, 30 Sep 2026 17:28:38 +0200
-Message-ID: <20260930152412.284267746@linuxfoundation.org>
+Subject: [PATCH 5.15 649/752] nfc: st21nfca: remove redundant assignment to variable i
+Date: Wed, 30 Sep 2026 17:28:39 +0200
+Message-ID: <20260930152412.306493326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,49 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 686f942332b1667f13f3b8d6a2f50bcfbf42e277 ]
+[ Upstream commit 314fbde95769e0cff68ef74ccc261935bb0c6852 ]
 
-The firmware download receive path removes the NCI data header and
-reads the helper command before validating the remaining packet length.
-A short frame can therefore reach the data access before the malformed
-packet is rejected.
+Variable i is being assigned a value that is never read, the
+assignment is redundant and can be removed. Cleans up clang-scan
+build warning:
 
-Validate the complete helper command length before stripping the NCI
-data header.
+drivers/nfc/st21nfca/i2c.c:319:4: warning: Value stored to 'i'
+is never read [deadcode.DeadStores]
+                        i = 0;
 
-Fixes: 3194c6870158 ("NFC: nfcmrvl: add firmware download support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260715084325.40276-1-pengpeng@iscas.ac.cn
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Link: https://lore.kernel.org/r/20211230161230.428457-1-colin.i.king@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: a653c01ce447 ("nfc: st21nfca: validate received frame size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nfcmrvl/fw_dnld.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/nfc/st21nfca/i2c.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/nfc/nfcmrvl/fw_dnld.c b/drivers/nfc/nfcmrvl/fw_dnld.c
-index edac56b01fd13..bb4ed02a618f0 100644
---- a/drivers/nfc/nfcmrvl/fw_dnld.c
-+++ b/drivers/nfc/nfcmrvl/fw_dnld.c
-@@ -264,9 +264,14 @@ static int process_state_fw_dnld(struct nfcmrvl_private *priv,
- 		 * B8..N: payload
- 		 */
+diff --git a/drivers/nfc/st21nfca/i2c.c b/drivers/nfc/st21nfca/i2c.c
+index d56bc24709b5c..7304013ab269c 100644
+--- a/drivers/nfc/st21nfca/i2c.c
++++ b/drivers/nfc/st21nfca/i2c.c
+@@ -315,10 +315,8 @@ static int st21nfca_hci_i2c_repack(struct sk_buff *skb)
+ 		skb_pull(skb, 1);
  
--		/* Remove NCI HDR */
--		skb_pull(skb, 3);
--		if (skb->data[0] != HELPER_CMD_PACKET_FORMAT || skb->len != 5) {
-+		if (skb->len != NCI_DATA_HDR_SIZE + 5) {
-+			nfc_err(priv->dev, "bad command");
-+			return -EINVAL;
-+		}
-+
-+		/* Remove NCI header */
-+		skb_pull(skb, NCI_DATA_HDR_SIZE);
-+		if (skb->data[0] != HELPER_CMD_PACKET_FORMAT) {
- 			nfc_err(priv->dev, "bad command");
- 			return -EINVAL;
- 		}
+ 		r = check_crc(skb->data, skb->len);
+-		if (r != 0) {
+-			i = 0;
++		if (r != 0)
+ 			return -EBADMSG;
+-		}
+ 
+ 		/* remove headbyte */
+ 		skb_pull(skb, 1);
 -- 
 2.53.0
 
