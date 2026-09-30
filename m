@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E410451CF6D;
-	Wed, 30 Sep 2026 17:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BB151CF75;
+	Wed, 30 Sep 2026 17:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789231; cv=none; b=iIDDlHXAxJJG9QsgyAkc4tuBGCTW0c62goh9ON1MOXiYZatCYOk6pWMbUQTOt1NcyGYGsgQ3T/mpxvbwmTchkq3YGToEgYXdm0lYp7RsljOCJrxio5Db8pgdCN0mR8EwcQ/XptUM+Tz1CBdm5yFm0F/3j25sVIOBy6YBWIPRAIs=
+	t=1790789234; cv=none; b=bRSdgVF9xnWTNUFsdbsognxRu+pwIzxUuRyMFoRSqiRUDMpefbuH1oUT1DkjAGk1vcoSE53s7bN0EZmqFG6YwhlLKbJhlPJBB6UmgEHY7O+IQgXTRXo0DjNCVSbatn+1/EiJs6rbuQ5ep4X+JSLPlvIroNNinnF3j0Z2HyH/zgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789231; c=relaxed/simple;
-	bh=I85JsAUJyus3aYEh/21Pn0JsIgEKeMPO/hWItlYq468=;
+	s=arc-20240116; t=1790789234; c=relaxed/simple;
+	bh=t7EYVLamzbRjEqTmOqOoGSHYDvty2DJv/OZZ1XqNUOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+0KAWQDtHX7v8WVL302ObVOYwWPBEGpiONTFRvIv6+ef1CGjxG+evoMPYDh/sxLyVAoDO2s29FWw18J5Q2XKe8bxezJz3tWn6XF8F1TbVlg5h80zwLGmFeojgmv6HOBS12jF2QL/qZanLt3DfLqK4v6V0uDnqkGemvskPCAuuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBoAl299; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HDs/MrB+CRwUYOoijr00Omjf1nQ83HrvcOUoHj4Mxn7xtfSutiGPy6N5spCkbZ3dVQK931IBxnbVntbz5ESB2LBAT6wNODXjJPIXSqX0D9x7PtuRTMI21G8W1nBjU2wqQPwO8u5TD2RZ26zQ1aWMHyTndCtjwhXqeLFYaV3XYNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcBFkWaa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBoAl299"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C2F1F000FF;
-	Wed, 30 Sep 2026 17:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcBFkWaa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298D81F000FF;
+	Wed, 30 Sep 2026 17:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789229;
-	bh=5LN4/TBK+BVQ8Z0mW+Kyt7OCdTHiZh/pIVLhkI4e3qo=;
+	s=korg; t=1790789232;
+	bh=fJnB42KriW3X37b+8PhfgwtxHqdAQLtygVBPwUfn9gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBoAl299xCMULPvUnLe06hkecD7zIJpIzx3wfnBzDhTbEUCXqAkl5Yfp7OYrkBWvb
-	 gCaEwpxvgfO2+DUROv0+Eq/x+p/ejFoIboZ9l6OfkelhuD7GsUm5LNU8/sLCBF+bgg
-	 k3bi29eQ8BTDARdRccWr5fuy5z+M6ou5xL4uyEOk=
+	b=OcBFkWaaE9+S3owF1EMdP+bKvQeFQaIB5jnroWSKvqLSGtkZW7d+kLOROJmai8v/u
+	 rX/MVhEcDC8Dknbpu/A9BAMqV7DXtJOkoO47NPZ8GzOIQ3Yl1FhvsDXgZ2/6fxcdFC
+	 EVY/+fFwkDaAq2dSxpy7hBnbvcSA/wwMwm4iGSnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 358/877] net/sched: act_ct: dont WARN on benign flow_offload_alloc() failure
-Date: Wed, 30 Sep 2026 17:21:09 +0200
-Message-ID: <20260930152422.402424405@linuxfoundation.org>
+Subject: [PATCH 6.12 359/877] net: gue: reject invalid REMCSUM offsets
+Date: Wed, 30 Sep 2026 17:21:10 +0200
+Message-ID: <20260930152422.425177988@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -47,62 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 47abe7a5c4eb53269aca3506446f851572a059a3 ]
+[ Upstream commit 2566866fc30965d915d0b52b5c3323b362619f0e ]
 
-flow_offload_alloc() returns NULL when the conntrack entry is dying
-(e.g. raced with a conntrack flush) or when the GFP_ATOMIC allocation
-fails; both are expected under load and neither is a kernel bug. This
-path runs from softirq on every committed packet, so with
-panic_on_warn=1 an unprivileged user can panic the box just by racing
-a conntrack flush against a `tc ... action ct commit` classifier.
+The REMCSUM option carries an absolute checksum start and checksum field
+offset. gue_remcsum() passes them to skb_remcsum_process(), whose
+partial path stores offset - start in the u16 skb->csum_offset variable.
+If offset is less than start, this underflows.
 
-Reproduced with a custom repro under QEMU: a small, fixed set of UDP
-flows through `tc filter ... action ct commit` on lo, raced against
-threads flooding bare ctnetlink CT_DELETE (flush) requests. Hits
-WARNING: net/sched/act_ct.c:437 (tcf_ct_flow_table_add(), inlined
-into tcf_ct_act() in this build) within ~15s on the unpatched kernel;
-same setup is clean on the patched kernel. The fix itself is
-behavior-preserving: both branches already did `goto err_alloc`
-before and after, only the WARN is removed.
+A forwarded packet can retain CHECKSUM_PARTIAL and reach a NETIF_F_HW_CSUM
+driver which trusts the metadata, leading skb_copy_and_csum_dev() to write
+two bytes about 64 KiB beyond the destination buffer.
 
-Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
-Reported-by: syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6cc37aba98dac721c415
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260915150816.36487-1-ngocthang2710.1999@gmail.com
+Reject reversed tuples in validate_gue_flags(), after the existing length
+validation, so all GUE parsers enforce the ordering in one place.
+
+Fixes: fe881ef11cf0 ("gue: Use checksum partial with remote checksum offload")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260915124806.2852293-2-Jeremy.Jean@oss.cyber.gouv.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ct.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/net/gue.h | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 8aed25cad9eef..46564bfc13251 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -430,11 +430,10 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
- 	if (test_and_set_bit(IPS_OFFLOAD_BIT, &ct->status))
- 		return;
+diff --git a/include/net/gue.h b/include/net/gue.h
+index caefd6da86939..d377155fd0b31 100644
+--- a/include/net/gue.h
++++ b/include/net/gue.h
+@@ -84,8 +84,9 @@ static inline size_t guehdr_priv_flags_len(__be32 flags)
+ }
  
-+	/* NULL if ct is dying (raced flush) or the atomic alloc failed. */
- 	entry = flow_offload_alloc(ct);
--	if (!entry) {
--		WARN_ON_ONCE(1);
-+	if (!entry)
- 		goto err_alloc;
--	}
+ /* Validate standard and private flags. Returns non-zero (meaning invalid)
+- * if there is an unknown standard or private flags, or the options length for
+- * the flags exceeds the options length specific in hlen of the GUE header.
++ * if there is an unknown standard or private flags, if the options length for
++ * the flags exceeds the options length specified in hlen of the GUE header, or
++ * if a private option contains invalid data.
+  */
+ static inline int validate_gue_flags(struct guehdr *guehdr, size_t optlen)
+ {
+@@ -103,8 +104,8 @@ static inline int validate_gue_flags(struct guehdr *guehdr, size_t optlen)
+ 		/* Private flags are last four bytes accounted in
+ 		 * guehdr_flags_len
+ 		 */
+-		__be32 pflags = *(__be32 *)((void *)&guehdr[1] +
+-					    len - GUE_LEN_PRIV);
++		void *data = (void *)&guehdr[1] + len;
++		__be32 pflags = *(__be32 *)(data - GUE_LEN_PRIV);
  
- 	if (tcp) {
- 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
+ 		if (pflags & ~GUE_PFLAGS_ALL)
+ 			return 1;
+@@ -112,6 +113,16 @@ static inline int validate_gue_flags(struct guehdr *guehdr, size_t optlen)
+ 		len += guehdr_priv_flags_len(pflags);
+ 		if (len > optlen)
+ 			return 1;
++
++		if (pflags & GUE_PFLAG_REMCSUM) {
++			__be16 *pd = data;
++
++			/* The field offset pd[1] must not be less
++			 * than the start pd[0].
++			 */
++			if (ntohs(pd[1]) < ntohs(pd[0]))
++				return 1;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
