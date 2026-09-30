@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A66A51CF5E;
-	Wed, 30 Sep 2026 17:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F1451CF5E;
+	Wed, 30 Sep 2026 17:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789222; cv=none; b=jFeETU3bSZW/mSRObKuMfaXhejd35VRoFMsrIrhLuiRBe/3appFFTD2rOWlI5wr43FFYt/Q8tm/w37Pii4o7kieIAkeyiKXik9q4iAqOgz4ZKGdTSTupSnoL/it+qEOLV6frqWZ1k3fcxul0wDfkwFZXDqdsAb5IRA3wgyJGyuw=
+	t=1790789226; cv=none; b=QP3rpVHDK385X9PuoJG2SEGvAAPFwTZbZpgK/T9LcQb5UHILcC/fREONo4YES6HtWfp+RkXAG3jfnsb3d5LSfTxLXHl6P0Hh9O5GqmJ555ObOV4U+HVklHZzzUtrIVlfFLQncjenFTVIijUCehHMgp5/yxlc+OdCpAcfLCbXbko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789222; c=relaxed/simple;
-	bh=OaBCtu4cSel43+3Jv5WREeyhtfp5gjixYTxe2E3I110=;
+	s=arc-20240116; t=1790789226; c=relaxed/simple;
+	bh=ix5RC0xOXfvW8lQJb7LYvH0ZcvTzKnJoP5RtHM9+waM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmY/lsqQTvwSEd6MJpVoA/MJbiyuacrcqGWFQkAbHIUQV/UonoYOezSyaACqPsTWfk7LaEbK+JHq2155uzkjh2GrELJwSPHxKPDI2XD9NW/pOIb/2Pq4NCISKKHMpULTUSL0TXxyl3vZQ+RsL7XLBGH2ZSnaNuTilTPLDTlkShs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GULFTBuy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sYqClj1yIwQuMJTIwYwnDkB8nnLkYxsrQm9H7n+5pFYP/whGTW+VdCVJt8sn4UYCHjHZlCj9gibOKDNRaT0hUehpD3JdTlsJDq7V6tsijrq1BwXIjrRfJGx+YEm6tndnUwQtEddxFeyyPgrWyDB/TlreMlY1G1SS0CvLzQz8bkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSrp5dwR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GULFTBuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47EE1F00898;
-	Wed, 30 Sep 2026 17:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSrp5dwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A441F000FF;
+	Wed, 30 Sep 2026 17:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789221;
-	bh=zD0TtnsG9YPL6eLmcbdf+1/vqeH50kI3mIKDwZ7qqFg=;
+	s=korg; t=1790789224;
+	bh=S6yNdgibVQq/q3qQWldLavbLRaFSU2dC8euXXDClvdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GULFTBuy8umpz6y4984e/KEXBIhOd71jFa/xDWKQajHjPBazYUDPXq6TVez0zilEY
-	 1v0Ip+F6Mou5T9FEP/OADLQ4kdCqDIN6zMFG4dzlvoIYEMl/KIODM3WS5gJEgg1RjE
-	 TaHwUXq55V+Mna20kR0wUcsmWR+lYvet9OI6ZHog=
+	b=YSrp5dwR6SF7DTRG2z8N+kDoeQpVj/RBvVqrAiqsG3ukkFcVs48+cw8vRW3y0Ekox
+	 rRIrpeuqBEwTSzGU1xV3AJwUGAeiIyoD2OCwFOB62MjP5mQuhX/m6YaPmSUOMyERvV
+	 uBdn+7AGzpby5AWUyfcHrZenfmJU82yMjeqIhvtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
 	Francesco Magazzu <postadelmaga@gmail.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 355/877] drm/nouveau/clk: fix list cursor use after loop in nvkm_clk_ustate_update
-Date: Wed, 30 Sep 2026 17:21:06 +0200
-Message-ID: <20260930152422.332104477@linuxfoundation.org>
+Subject: [PATCH 6.12 356/877] drm/nouveau/clk: dont clobber reclock status when restoring volt/fan
+Date: Wed, 30 Sep 2026 17:21:07 +0200
+Message-ID: <20260930152422.353961204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Francesco Magazzu <postadelmaga@gmail.com>
 
-[ Upstream commit aff09d9e37e02dc60bde79035ac15b136d602259 ]
+[ Upstream commit e5cccdafc855cd5f96f4b51d38114a0360b075d7 ]
 
-If list_for_each_entry() exits without hitting a break then "pstate" is
-not a valid pstate pointer.  Introduce a "found" variable instead.
+nvkm_cstate_prog() reuses 'ret' for the voltage and fan-speed restore
+calls it makes after reprogramming the clocks.  Those calls almost always
+succeed, so the status of the reclock itself is overwritten and the
+function reports success even when clk->func->calc() or clk->func->prog()
+failed.  The converse is also true: a successful reclock is reported as an
+error if the final restore call fails, even though that failure is only
+logged and otherwise ignored.
 
-The check is reachable from userspace: nvkm_clk_ustate_update() takes the
-pstate id straight from the 'pstate' debugfs file, so requesting an id
-that is not in clk->states - or any id at all when the perf tables are
-broken and the list is empty - makes the pstate->pstate != req test
-dereference the list head cast to a struct nvkm_pstate, which is an
-out-of-bounds read.
+The only consumer of the return value is the error message in
+nvkm_pstate_work(), so in practice a failing reclock is simply never
+reported.  Nothing else changes, but a function that returns success on
+failure is a trap for the next caller.
 
-Fixes: 7c8565220697 ("drm/nouveau/clk: implement power state and engine clock control in core")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-[Francesco: rebased on drm-misc-next, expanded the commit message]
+Keep the calc/prog status in 'ret' and use a separate local for the
+restore calls.
+
+Fixes: 3eca809b3c05 ("drm/nouveau/clk: cosmetic changes")
 Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260918131620.405133-2-postadelmaga@gmail.com
+Link: https://patch.msgid.link/20260918131620.405133-5-postadelmaga@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-index 178dc56909c27..5f4cd122415fa 100644
+index 5f4cd122415fa..e6539931a7596 100644
 --- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
 +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-@@ -473,6 +473,7 @@ static int
- nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
- {
- 	struct nvkm_pstate *pstate;
-+	bool found = false;
- 	int i = 0;
- 
- 	if (!clk->allow_reclock)
-@@ -480,12 +481,14 @@ nvkm_clk_ustate_update(struct nvkm_clk *clk, int req)
- 
- 	if (req != -1 && req != -2) {
- 		list_for_each_entry(pstate, &clk->states, head) {
--			if (pstate->pstate == req)
-+			if (pstate->pstate == req) {
-+				found = true;
- 				break;
-+			}
- 			i++;
- 		}
- 
--		if (pstate->pstate != req)
-+		if (!found)
- 			return -EINVAL;
- 		req = i;
+@@ -199,16 +199,18 @@ nvkm_cstate_prog(struct nvkm_clk *clk, struct nvkm_pstate *pstate, int cstatei)
  	}
+ 
+ 	if (volt) {
+-		ret = nvkm_volt_set_id(volt, cstate->voltage,
+-				       pstate->base.voltage, clk->temp, -1);
+-		if (ret && ret != -ENODEV)
+-			nvkm_error(subdev, "failed to lower voltage: %d\n", ret);
++		int err = nvkm_volt_set_id(volt, cstate->voltage,
++					   pstate->base.voltage, clk->temp, -1);
++
++		if (err && err != -ENODEV)
++			nvkm_error(subdev, "failed to lower voltage: %d\n", err);
+ 	}
+ 
+ 	if (therm) {
+-		ret = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
+-		if (ret && ret != -ENODEV)
+-			nvkm_error(subdev, "failed to lower fan speed: %d\n", ret);
++		int err = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
++
++		if (err && err != -ENODEV)
++			nvkm_error(subdev, "failed to lower fan speed: %d\n", err);
+ 	}
+ 
+ 	return ret;
 -- 
 2.53.0
 
