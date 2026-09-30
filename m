@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859373C063A;
-	Wed, 30 Sep 2026 19:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590B33AFAE2;
+	Wed, 30 Sep 2026 19:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795055; cv=none; b=QXCmVHyszM0EgYE9Wq3snFHfsCQE9ONhDmEoazAzvu3UrV+BsTRbmcCw4jThSyeeav5o2gyIG1FtP00VF5xhyUfewp6jvG0iYm2AEokZ8D+Vn0lkRQglXy1d9e5JU2hwJ/us2/grzvylybjmvtI0dgURG0IFhdkhzZQbBtVhtRQ=
+	t=1790795058; cv=none; b=fK36IFWZ3i+oRe3giqqEsFnD3XqXL/5dnuk3LD519tRM9w7K010hiMu/qL0yXPFgDF4pqEtwP/5KGT9lxvhG78c3zsYGkjowPU6FIIPPWIIgnY2T3RQRavxMiOI/DkzBFP/PkDl97hir7FoM7qcORuYIqIg0iWuGvAyfE3btd6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795055; c=relaxed/simple;
-	bh=I2SnVoBjphIvZ7Yx3GYvOPy+6LFgMbC/toRvA906JPM=;
+	s=arc-20240116; t=1790795058; c=relaxed/simple;
+	bh=3FE3lb5SIC2EIbxrxpjAH3zaMEF2svscT9qNGiY4+Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CdKsG3bSxE3nII2kMR43PNGahaEs8Fwf+RD/EW4n3KkVx3+gG9S+UQbd24cjU1mPJ7+/Wbdt7pA5C6+I7iT0myPXoipgKwwr7PcwOeBWudurAfQP/YghB8hPq47XucLkFQ374udiYcuQnQPNlFPGKvjPUt7QK90aQAT34IwkmXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUxpQs6R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IAfL4Jw17/6PHa9OEF4g+vxEPRpIV4BcLXz21Eu7mzyMtUYLd1Nrs9Xl300y4J5hTIPl5rEgJVU3r75Fapx9fqzXlMgVzDbu4eTmWP69HtX1iH3EzbR4MkDbAxymDaH8Ws2zvs+vM57+ZE+j9qeTfxn//LB7YYSgeDAJoE8HMt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgRLSYGg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUxpQs6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01791F000FF;
-	Wed, 30 Sep 2026 19:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgRLSYGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D9F1F000FF;
+	Wed, 30 Sep 2026 19:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795054;
-	bh=Y2B5OZNHpygPLNMSasiZWV56Rj+viZOSQBodyl+GDrA=;
+	s=korg; t=1790795057;
+	bh=7YmlLbMOCdkgNQzajRpg8XgEE3Yv7k2FutHzty+XCzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qUxpQs6RKtJjwEVUQThGs13I4euN7R1XiL1636XveteA0oh62cqhNzHoXXcYXKWev
-	 lQUMv0m8eLV+J6Mib/fr3OIzNXs7deaJhfkcQ8TLMj4XJ2eaVrV7HcBkpLrlWfoz3R
-	 Al3ewve6vUU08govNgm/79ADDISpqnRunsYP1+Hw=
+	b=KgRLSYGg1rcjRRZzcFvtt52fZ+CRw9PtfT1qyXU417Ynua+raNCAisfGYxeupwtrr
+	 w8YYX/j9iYbDlDLiruDCHdKauXGvnFmoVE4f2/+5gXbM0iqob1rpIKgjAIQxmkGdVd
+	 2qYeaPxzdPKrsT8ffjJSpPihUzY8vHBMP/YlUS1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gongwei Li <ligongwei@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Fourie Zhang <fouriezhang@tencent.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0420/1193] Bluetooth: hci_mrvl: Fix wrong return value check of wait_on_bit_timeout()
-Date: Wed, 30 Sep 2026 17:18:24 +0200
-Message-ID: <20260930152443.535002869@linuxfoundation.org>
+Subject: [PATCH 6.6 0429/1193] ipv6: sr: restore network header before routing and forwarding
+Date: Wed, 30 Sep 2026 17:18:33 +0200
+Message-ID: <20260930152443.728213881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,45 +55,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gongwei Li <ligongwei@kylinos.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2deb76c21b81e42b3282224f7dd2046fe73fd1e0 ]
+[ Upstream commit 975b5b067f525a1b1338c4a3bee1c46545801518 ]
 
-wait_on_bit_timeout() returns 0 if the bit was cleared, -EINTR if the
-process received a signal and the mode permitted wake up on that signal,
-or -EAGAIN if the timeout elapsed.  It never returns 1.
+ipv6_srh_rcv() runs with skb->data at the Segment Routing Header (SRH)
+while skb_network_header() points at the IPv6 header.
 
-Hence the check "err == 1" in mrvl_load_firmware() is dead code: when
-the waiting task is interrupted by a signal (-EINTR), the code falls
-into the "else if (err)" branch and misreports it as "Firmware request
-timeout" with -ETIMEDOUT instead of propagating -EINTR.
+When segments_left > 0, ipv6_srh_rcv() previously restored the skb->data
+position by pushing sizeof(struct ipv6hdr), assuming the SRH immediately
+followed the fixed IPv6 header. If another extension header (such as a
+Hop-by-Hop options header) precedes the SRH, skb_network_offset()
+remained negative.
 
-Fix this by testing for -EINTR so that an interrupted firmware load is
-properly detected and reported.
+This led to two problems:
+1. During ip6_route_input(), fib6_rules_early_flow_dissect() invokes
+   __skb_flow_dissect() which passes the negative skb_network_offset()
+   to flow dissection, breaking BPF and C flow dissector logic.
+2. If forwarded via ip6_forward() or redirected via act_mirred, downstream
+   handlers (like sch_fragment() or neighbour output) pass the negative
+   offset as an unsigned length, triggering OOB memcpy or buffer overflows.
 
-Fixes: 162f812f23ba ("Bluetooth: hci_uart: Add Marvell support")
-Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by pushing -skb_network_offset(skb) before routing, ensuring
+skb_network_offset(skb) is 0 for route lookup / flow dissection as well as
+downstream forwarding. On the loopback path, pull skb_transport_offset(skb)
+to restore skb->data to the SRH before looping back.
+
+Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Reported-by: Jun Yang <junvyyang@tencent.com>
+Reported-by: Fourie Zhang <fouriezhang@tencent.com>
+Closes: https://lore.kernel.org/netdev/20260817104128.22681-1-juny24602@gmail.com/
+Closes: https://lore.kernel.org/netdev/20260827092345.2301937-1-fouriezhang@tencent.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828141727.2372570-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_mrvl.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv6/exthdrs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_mrvl.c b/drivers/bluetooth/hci_mrvl.c
-index e08222395772d..b4edaac2032e8 100644
---- a/drivers/bluetooth/hci_mrvl.c
-+++ b/drivers/bluetooth/hci_mrvl.c
-@@ -307,9 +307,8 @@ static int mrvl_load_firmware(struct hci_dev *hdev, const char *name)
- 		err = wait_on_bit_timeout(&mrvl->flags, STATE_FW_REQ_PENDING,
- 					  TASK_INTERRUPTIBLE,
- 					  msecs_to_jiffies(2000));
--		if (err == 1) {
-+		if (err == -EINTR) {
- 			bt_dev_err(hdev, "Firmware load interrupted");
--			err = -EINTR;
- 			break;
- 		} else if (err) {
- 			bt_dev_err(hdev, "Firmware request timeout");
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index e024d8da431c4..6b4cdc7745e85 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -454,7 +454,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 	hdr->segments_left--;
+ 	addr = hdr->segments + hdr->segments_left;
+ 
+-	skb_push(skb, sizeof(struct ipv6hdr));
++	skb_push(skb, -skb_network_offset(skb));
+ 
+ 	if (skb->ip_summed == CHECKSUM_COMPLETE)
+ 		seg6_update_csum(skb);
+@@ -478,7 +478,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 		}
+ 		ipv6_hdr(skb)->hop_limit--;
+ 
+-		skb_pull(skb, sizeof(struct ipv6hdr));
++		skb_pull(skb, skb_transport_offset(skb));
+ 		goto looped_back;
+ 	}
+ 
 -- 
 2.53.0
 
