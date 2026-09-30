@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6B94E324D;
-	Wed, 30 Sep 2026 15:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC415157A5A;
+	Wed, 30 Sep 2026 15:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783847; cv=none; b=Rhm1vjHEZC+C1keX7R4w33lIKxkdhBaDrA7hWi8gEmhm/sUvAVVTHpIBGBCAKxVPZOgvmx7yNsct1565Nfx9dR1/Vfss2Zh99nU0gS7aFT0uXPDAkfpK6aczJ2n1r90+hn5ROzBEyeZXqzi6gCwTbugg4GuryMtK2xqp8SQGGxg=
+	t=1790783848; cv=none; b=Newrz6Q8yQEikCXQM/EeL/9p7OoLqAoO6dQAc/IFsgju/Em6kNhX1LW3sVqzL46TJQYWqb9FZ1AkJ31Twz5ZYqTRKjvZXEhqOcCVoAksNKFB9z14htIMMrDiSRDO1NnqiUJcWKRo730qhLEquXIuENZzXJe1zzf1P1sKXn+rLhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783847; c=relaxed/simple;
-	bh=yStJPiNDf13r0Cnjw/Pc4x9K21/q8Tt33XUhmWwQY8M=;
+	s=arc-20240116; t=1790783848; c=relaxed/simple;
+	bh=scTy3U4yYzH1VX+Fbg7UHvxfRhXlvbunev6icRWPDFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KF0oemenodIam8BMWqQcMXILJHW2hK4SkeAZIC14LmYtKShQU4TfozdgbWN9411MNsTCbkqKBfwmOfkmvJnzpbDPPMBmt3e5dI5v9vBmEPeN3qTAdAEelKNnJoi4IZvHfg2oJRUFGWxhVUC8aO0zhpmH44bqtG3rJ1m6utXnqVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JzqVRjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f1dHZnkph8pewKlvjQCSJMkr/inrjJBy+vFm+WnMRMsMwNw8SrDeh3EvIZt4C5b1LPiyGsG8jSu62bV3j40Z36PtDub6C8eIafvUf638iEqkVl8iW90MqXHMgCRytzTGRN7UYsP5yN9SdKgPj3FT3C3zI4eJU9TL6QWlSxMdws0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdQ3/cm9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JzqVRjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A258C1F000FF;
-	Wed, 30 Sep 2026 15:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdQ3/cm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6BE1F00893;
+	Wed, 30 Sep 2026 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783841;
-	bh=/sZtxvt9wDoZn/0c2IS3LS29mPwVae93I/u+rQQngYw=;
+	s=korg; t=1790783844;
+	bh=q8y+hU2PhBKAmb4s2e/TDQeXwsKCiqFfAXlH+wskq38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0JzqVRjsJc8EsYIJZ2HQ3vEyffZsoOR2qjJL/nclZCtyojCN4aqx6azh4O/mhBA6T
-	 vnE0DIQy9BziRy71HjQ+kh4qO4LHIyWPHZWsOI0mGpRBbWbwDo+ijHrEQ7QjW/pwg5
-	 MvkfqHDbPJCRt+FVtT9DEiVk830zWvR+hWsNBXqI=
+	b=GdQ3/cm9WJw+6DLjkxQuGMqMoSFqCLjAU2rr03D4uOFFdMoonAm8Qi+sSdi7Tkl1w
+	 Il/wLTBCr+eiqkMfA4pfiXoyoywN9DMt1W3U31Fiey0I32NxvvovQa4TNRWWAoY5Qu
+	 vlpC/6mqrIGTxl3dSz/I8xXoIkSoB27mFKTu76vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Ginger Li <ginger.jzllee@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 539/595] net: xps: reject an out of range traffic class
-Date: Wed, 30 Sep 2026 17:27:12 +0200
-Message-ID: <20260930152359.301988702@linuxfoundation.org>
+Subject: [PATCH 5.10 540/595] tipc: Fix a data race on mon->peer_cnt in mon_timeout()
+Date: Wed, 30 Sep 2026 17:27:13 +0200
+Message-ID: <20260930152359.323627773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,69 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
+[ Upstream commit 8e1937fed6738460554ec123c64839e2445e7d53 ]
 
-Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
-dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
-lowers dev->num_tc without touching either array.
+mon_timeout() evaluates dom_size(mon->peer_cnt) before it takes mon->lock,
+while mon->peer_cnt is updated under that lock by tipc_mon_add_peer() and
+tipc_mon_remove_peer().  The value can therefore be stale, and the decision
+whether the local domain has to be recomputed can be based on an outdated
+member count.
 
-netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
-netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
-entry is handed out as a traffic class >= dev->num_tc. Taking that
-class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
-negative one and indexes an XPS map sized for dev->num_tc classes:
+Read mon->peer_cnt inside the write_lock_bh(&mon->lock) protected region.
 
-	tci = j * num_tc + tc;
-	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
-
-attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
-in the mask, so a class that is not below num_tc pushes tci past the end
-of the map for the last ids and the store overruns it.
-
-Any caller that lowers num_tc leaves such entries behind, and
-mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
-netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
-still describe txq 1..7. The splat is from an XPS write to txq 2 on a
-veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
-j == 6 stores one past the end of the 88-byte map:
-
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
-  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
-   __netif_set_xps_queue (net/core/dev.c:2954)
-   xps_rxqs_store (net/core/net-sysfs.c:1880)
-   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
-  Allocated by task 634:
-   __kmalloc_noprof (mm/slub.c:5439)
-   __netif_set_xps_queue (net/core/dev.c:2937)
-  The buggy address is located 0 bytes to the right of
-   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
-
-Reject a class the map has no room for.
-
-Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
+Fixes: 35c55c9877f8 ("tipc: add neighbor monitoring framework")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260922080909.21123-1-ginger.jzllee@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/tipc/monitor.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 3e41d02fe28ce..244dc6f7929d0 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2638,7 +2638,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
+diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
+index ba0a308d41d85..0b5832640b32f 100644
+--- a/net/tipc/monitor.c
++++ b/net/tipc/monitor.c
+@@ -601,9 +601,10 @@ static void mon_timeout(struct timer_list *t)
+ {
+ 	struct tipc_monitor *mon = from_timer(mon, t, timer);
+ 	struct tipc_peer *self;
+-	int best_member_cnt = dom_size(mon->peer_cnt) - 1;
++	int best_member_cnt;
  
- 		tc = netdev_txq_to_tc(dev, index);
--		if (tc < 0)
-+		if (tc < 0 || tc >= num_tc)
- 			return -EINVAL;
- 	}
- 
+ 	write_lock_bh(&mon->lock);
++	best_member_cnt = dom_size(mon->peer_cnt) - 1;
+ 	self = mon->self;
+ 	if (self && (best_member_cnt != self->applied)) {
+ 		mon_update_local_domain(mon);
 -- 
 2.53.0
 
