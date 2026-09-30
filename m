@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23163DD50C;
-	Wed, 30 Sep 2026 16:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F144F85CA;
+	Wed, 30 Sep 2026 16:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786620; cv=none; b=gsvUzQC3WHe1QqgNtzyGJbNnKxbNPP1ytRZ4avubxBVmabOj58EWRdubQfI/q1ysrX62lWVnG2AxbsoSGhAzTNub/3+Rz+umY9SPjjuHhoKd8oF9BSd6yDiv34uaWH4xdRVaxKre2M9WZPpKKPMavyTte7CGpny86knxXswIWlA=
+	t=1790786623; cv=none; b=SHZfac0Adr+DEqVQf5t+0P+vCQ/AbMOQTfXOrK0YVAg1ArfVO50+ulvlo+EMoUzpmgLlKd09pDVZ8Nw0YwHCG7wfQ8P+Db+5jJoH5bdWcTs3YgjXbgXNX7X51zYQOjCKYH8K6yCLjH7iOqThlQK5qgE8VImU7MTIeUAjt5kexqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786620; c=relaxed/simple;
-	bh=FMULvz+ZkdBznVhd1B/1LGRvdbUOA7m8K6U9DM2X17M=;
+	s=arc-20240116; t=1790786623; c=relaxed/simple;
+	bh=udz5C++IMlAa5JxpFVOD5CnHH6kndSFpLCu1Ld6L8nY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6go3vtzixaKDJnNxOFE/nqyI8tYvTcQmhrOWONQQsU7yRi9CQ8/NaeX+n65Ne4b2RWTmwpxGbzbA/yIxFOubWfE7sVNmMTb0Fp8Ny3b8fBuYQt74seoaXAhMZi2Oke9Cf6Gzo84NYJ78Tf5pPt2JbMV3p+9/T2RvRgiZU+6yKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UY899bdz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bgTKeN7ak6qUtvM4Xa3CllJVyrkYaqdkpeQdkMFAel4FZ4AzisapJSIAvBSHtCBpfYzJ/DTJX5ji8iZZUiO6AisAdRGvAHwLuJlvgr9yk+DqIZDJs5ima9RZj4b0Hf4fjYsAyhlHwnoilulDmx7v/Mt336RuA6vJaYjncG4RAXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnbMv2+q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UY899bdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B981F000FF;
-	Wed, 30 Sep 2026 16:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnbMv2+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13EB1F000FF;
+	Wed, 30 Sep 2026 16:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786619;
-	bh=r5QTRtIR6bkVr5EcTq2+VjNAE9PhR6QXkYAFFORjtOE=;
+	s=korg; t=1790786622;
+	bh=j8lM/olJvl4RzwLJ8ISSxG1/ATDhvtTjyti5/m8ZVUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UY899bdzk9Rh7plWtDj3JGecR/sgMOJk9ik78q94n89V+AXvcbRmc+l1Z7+YxURwp
-	 B+XLO5qAB58ClNcCbimjMP6hkhRp6S6updSzH5xlTUtK5AINnysSKOgy9+478lRoBP
-	 mWHmMY6k45wyWuJYDcnGbJp4A544g5TDwIy37lQ4=
+	b=CnbMv2+qxSiG52upxyRPELNr+sM9TgmwLz5C9/cG12mcoV9gD74ebe2E/ZDzp4aC/
+	 ZykruvCovuc1L2gy4DabxEfJlDMAdmPlz21Lg1MaePnksRP0SsmECJgXsJdl7vX57E
+	 pJEDUvj6yTWEFoVtBskrvOBI4j3dVKnSh9h5xwu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Etienne <mikael1022bzh@gmail.com>,
-	Arthur Husband <artmoty@gmail.com>,
-	Alvin Lim <alvinwylim@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	John Smith <imjohnsmith4000@gmail.com>,
-	Lennert Buytenhek <kernel@wantstofly.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Roland Waltersson <roland.waltersson@netinsight.net>
-Subject: [PATCH 6.1 924/982] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
-Date: Wed, 30 Sep 2026 17:27:40 +0200
-Message-ID: <20260930152436.588977856@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 882/982] nfc: llcp: fix sdreq TLV list leak on parse/alloc/send failure
+Date: Wed, 30 Sep 2026 17:26:58 +0200
+Message-ID: <20260930152435.694017278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -58,145 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
+[ Upstream commit 66f4300206b82b0b143ef0d9be90cd8d29f23a47 ]
 
-Multiple users report data corruption during 64-bit DMA transfers on
-systems with AMD NBIO 7.7 and 7.11 controllers.
+nfc_genl_llc_sdreq() builds a list of TLV nodes while walking nested
+netlink attrs, but 3 error paths (nested-attr parse failure, TLV alloc
+ENOMEM, nfc_llcp_send_snl_sdreq() failure) all skip freeing what was
+already queued.
 
-This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
-Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
-corrupted.
+Route them through a new free_list label, mirroring the SDRES path in
+the same file which already does this. Harmless on the success path
+too -- send_snl_sdreq() drains the list as it moves nodes, so it's
+already empty by the time free_list runs.
 
-Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
-
-Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
-Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
-Reported-by: Arthur Husband <artmoty@gmail.com>
-Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
-Reported-by: Alvin Lim <alvinwylim@gmail.com>
-Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: commit log, s/IOVA/DMA/ in comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Cc: David Laight <david.laight.linux@gmail.com>
-Cc: John Smith <imjohnsmith4000@gmail.com>
-Cc: Lennert Buytenhek <kernel@wantstofly.org>
-Cc: Niklas Cassel <cassel@kernel.org>
-Cc: Roland Waltersson <roland.waltersson@netinsight.net>
-Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d9b8d8e19b07 ("NFC: llcp: Service Name Lookup netlink interface")
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260914121129.2098606-1-congnt264@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ net/nfc/netlink.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -844,4 +844,103 @@ static void quirk_clear_strap_no_soft_re
- 	}
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index e9ac6a6f934e7..c59eb73c84914 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1178,7 +1178,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 
+ 		if (rc != 0) {
+ 			rc = -EINVAL;
+-			goto put_local;
++			goto free_list;
+ 		}
+ 
+ 		if (!sdp_attrs[NFC_SDP_ATTR_URI])
+@@ -1197,7 +1197,7 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 		sdreq = nfc_llcp_build_sdreq_tlv(tid, uri, uri_len);
+ 		if (sdreq == NULL) {
+ 			rc = -ENOMEM;
+-			goto put_local;
++			goto free_list;
+ 		}
+ 
+ 		tlvs_len += sdreq->tlv_len;
+@@ -1212,6 +1212,9 @@ static int nfc_genl_llc_sdreq(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	rc = nfc_llcp_send_snl_sdreq(local, &sdreq_list, tlvs_len);
+ 
++free_list:
++	nfc_llcp_free_sdp_tlv_list(&sdreq_list);
 +
-+/*
-+ * Enhanced atomic operations can cause corruption with 64-bit DMA
-+ * on these devices.
-+ */
-+#define RX_ENH_ATOMIC_EN		BIT(8)
-+
-+static const u32 nbio_7_7_pcie_smn_addrs[] = {
-+	0x111401d0,
-+	0x111411d0,
-+	0x111421d0,
-+	0x111431d0,
-+	0x111441d0,
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x114401d0,
-+};
-+
-+static const u32 nbio_7_11_pcie_smn_addrs[] = {
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x113411d0,
-+	0x113421d0,
-+	0x113431d0,
-+	0x113441d0,
-+	0x113451d0,
-+};
-+
-+static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
-+					   const u32 *smn_addrs,
-+					   size_t nr_smn_addrs)
-+{
-+	bool changed = false;
-+	size_t i;
-+	u32 data;
-+	int ret;
-+
-+	for (i = 0; i < nr_smn_addrs; i++) {
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (!(data & RX_ENH_ATOMIC_EN))
-+			continue;
-+		data = data & ~RX_ENH_ATOMIC_EN;
-+		ret = amd_smn_write(0, smn_addrs[i], data);
-+		if (ret)
-+			continue;
-+		if (changed)
-+			continue;
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (data & RX_ENH_ATOMIC_EN)
-+			continue;
-+		changed = true;
-+	}
-+
-+	if (changed)
-+		pci_info(host_bridge, "enhanced atomics disabled\n");
-+}
-+
-+static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
-+}
-+
-+static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
-+}
-+
-+/* Phoenix, Hawk Point (NBIO 7.7) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+
-+/* Strix, Krackan, Strix Halo (NBIO 7.11) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+
- #endif
+ put_local:
+ 	nfc_llcp_local_put(local);
+ 
+-- 
+2.53.0
+
 
 
