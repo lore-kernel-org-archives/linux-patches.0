@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FA53E1681;
-	Wed, 30 Sep 2026 19:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E743B2D1A;
+	Wed, 30 Sep 2026 19:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796517; cv=none; b=SZ7EdfxvjsTIFW1bpnLdMMM6H+BAHCISavlWaVeLoeiikbuLOxvwGw3gpfOSARvLtYyxKivupCDzR/og0y5qFVRFStOSR3gchGe0FCwX6fSoinAstwQqyyWvGd7Qvx8i0TcR0YBlMvrMC2yhZzvLq9Qjy8vWPG8w8Ov4s5wtDKQ=
+	t=1790796520; cv=none; b=ZaJ3TlC+m7cFVW2ffWNsegXLbgypP2GMyDeHytf7wsvQfC92kOG+qzXUwo0hA9xtfiqbH+IT6PYAVeHQOhjKGpAmhUM7xDUuX2IVvI8WRxt2FR65TzVbMFNp+J/FqJT+Y6OSUEWGX0YL4FJmHfgNZarNrbCEJAiPg9RholOVzuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796517; c=relaxed/simple;
-	bh=1+SM/v6FlackVNZHgKmETpTDkxvO2Cv97px0mrVFQ3Y=;
+	s=arc-20240116; t=1790796520; c=relaxed/simple;
+	bh=S5IKrA29vW6jAT3O/kzMQLVBCgccM0oLwfHIRvbV144=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrhbMUckS0KBqP68dKC8VvR4ztWqPFpzIAdAgR2bRXPhV/JwoQF3hhp+Q0MrrkbRk53arR7HUhid3du99nlOcChMLhaKUZsT1uTNplWpHfTGQboMyjUzkHXArYJ+vCxlqKIJkktVMawBIZ3ekmSgiGwDFRT4dBZ7LTN9gIJut44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yV22lup2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnIshb5XCjL6PwbcU99UQ1mg1SyYtFCbKxprs98Nxd8e+bw26LCVlF7FdGqLF6zwcY9HMhSDbCDxF1JwGi28ILsQv+1rbHZqGEQ5x0JJ/ODLHkwRPCmo3sVK+kEC2OXg4KoJ/pcSumsIjtIGvBjNi2sNESL+A9iEC0nxQfNYm5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fShqLMms; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yV22lup2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2B41F000FF;
-	Wed, 30 Sep 2026 19:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fShqLMms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986301F000FF;
+	Wed, 30 Sep 2026 19:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796516;
-	bh=smf1HV8MS7sY4BHlv4NQvBZkUJRKvYYet4a5M+k828g=;
+	s=korg; t=1790796519;
+	bh=EwiWmN5hrM4Xei8EmdI9njEOzuInL+v7jPvdCQuRBR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yV22lup2dj+GSakZ2k5JJsTKVEn+SxaM4pJMjrJwO3MTFuUUVD79oHJSbSYUq7q+m
-	 +SSZv2Ui/fg6MGSrogGI76LBbe/bGMvZHc8G8bNj/SeZiEQUQU8LvcP3CFfHkSXe1S
-	 ZeLlrfpZFMMsvkEWWtvXlsvR03W4AQVP9a8At8QA=
+	b=fShqLMmsOoh25FU6N0dzQwXTZmSG46Fv9pUWqVhgYvXDZHLNFbiairoTmVyFxgn/D
+	 N3rln0LOp9z+dBgsuP9vW9k5+PAWxgFB88bccdMMHFMpad1wtm+fMBELjz9NEmF6sd
+	 ZlpeXkGUC8D+l5IFRoE9eVdtBxgwPCcGJFhoYy+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	James Seo <james@equiv.tech>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 0904/1193] hwmon: (hp-wmi-sensors) Fix use-after-free in fungible_show()
-Date: Wed, 30 Sep 2026 17:26:28 +0200
-Message-ID: <20260930152454.327957934@linuxfoundation.org>
+	Frank Sorenson <sorenson@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 0940/1193] smb: client: fix missing lower-bound check on DFS referral string offsets
+Date: Wed, 30 Sep 2026 17:27:04 +0200
+Message-ID: <20260930152455.123668884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,76 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit e6cb0b4d4ecb8e71fd2200d907ab2e9663356f69 upstream.
+commit e83330c55edc0c3ac08aa6c95e49e4694c65523b upstream.
 
-nsensor->current_state is dynamically replaced as the sensor's state
-changes. update_numeric_sensor_from_wobj() does this by freeing the
-old string and installing a new one:
+parse_dfs_referrals() checks that DfsPathOffset and NetworkAddressOffset
+do not exceed the buffer end, but fails to check that they don't point
+inside the referral header itself.
 
-	if (strcmp(trimmed, nsensor->current_state)) {
-		new_string = hp_wmi_strdup(dev, trimmed);
-		if (new_string) {
-			devm_kfree(dev, nsensor->current_state);
-			nsensor->current_state = new_string;
-		}
-	}
+If a server provides an offset smaller than
+sizeof(struct dfs_referral_level_3), the derived string pointer overlaps
+with the struct fields, causing cifs_strndup_from_utf16() to interpret
+header data as UTF-16 strings.
 
-This function is only ever called from hp_wmi_update_info() while
-state->lock is held, so the free-and-replace itself is properly
-serialized against concurrent updates.
+Fix this by enforcing that string offsets are at least sizeof(*ref).
 
-fungible_show(), however, reads the same pointer after the lock has
-already been dropped:
-
-	err = hp_wmi_update_info(state, info);
-	if (err)
-		return err;
-
-	switch (prop) {
-	...
-	case HP_WMI_PROPERTY_CURRENT_STATE:
-		seq_printf(seqf, "%s\n", nsensor->current_state);
-		break;
-
-hp_wmi_update_info() takes state->lock internally and releases it
-before returning, so by the time fungible_show() dereferences
-nsensor->current_state in seq_printf(), no lock is held. Two
-processes reading a sensor's current_state debugfs entry at
-overlapping times (or one reading it while another read of the same
-sensor triggers a refresh) can race: one thread's seq_printf() can
-be part-way through printing the string at the moment another
-thread's call into update_numeric_sensor_from_wobj() frees it with
-devm_kfree() and installs a new pointer, causing a use-after-free
-read.
-
-Take state->lock around the read in fungible_show() as well, so it
-can never run concurrently with the free-and-replace in
-update_numeric_sensor_from_wobj().
-
-Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
+Fixes: 4ecce920e13a ("CIFS: move DFS response parsing out of SMB1 code")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Acked-by: James Seo <james@equiv.tech>
-Link: https://patch.msgid.link/20260916002926.161595-1-meatuni001@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/hp-wmi-sensors.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/misc.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/hp-wmi-sensors.c
-+++ b/drivers/hwmon/hp-wmi-sensors.c
-@@ -1247,7 +1247,9 @@ static int fungible_show(struct seq_file
- 		break;
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1056,7 +1056,11 @@ parse_dfs_referrals(struct get_dfs_refer
+ 		node->ref_flag = le16_to_cpu(ref->ReferralEntryFlags);
  
- 	case HP_WMI_PROPERTY_CURRENT_STATE:
-+		mutex_lock(&state->lock);
- 		seq_printf(seqf, "%s\n", nsensor->current_state);
-+		mutex_unlock(&state->lock);
- 		break;
+ 		/* copy DfsPath */
+-		if (le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
++		if (le16_to_cpu(ref->DfsPathOffset) < sizeof(*ref) ||
++		    le16_to_cpu(ref->DfsPathOffset) > data_end - (char *)ref) {
++			cifs_dbg(VFS, "%s: DfsPathOffset %u out of range [%zu, %td]\n",
++				 __func__, le16_to_cpu(ref->DfsPathOffset),
++				 sizeof(*ref), data_end - (char *)ref);
+ 			rc = -EINVAL;
+ 			goto parse_DFS_referrals_exit;
+ 		}
+@@ -1070,7 +1074,11 @@ parse_dfs_referrals(struct get_dfs_refer
+ 		}
  
- 	case HP_WMI_PROPERTY_UNIT_MODIFIER:
+ 		/* copy link target UNC */
+-		if (le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
++		if (le16_to_cpu(ref->NetworkAddressOffset) < sizeof(*ref) ||
++		    le16_to_cpu(ref->NetworkAddressOffset) > data_end - (char *)ref) {
++			cifs_dbg(VFS, "%s: NetworkAddressOffset %u out of range [%zu, %td]\n",
++				 __func__, le16_to_cpu(ref->NetworkAddressOffset),
++				 sizeof(*ref), data_end - (char *)ref);
+ 			rc = -EINVAL;
+ 			goto parse_DFS_referrals_exit;
+ 		}
 
 
