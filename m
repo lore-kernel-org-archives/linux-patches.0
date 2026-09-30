@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3950D5172E2;
-	Wed, 30 Sep 2026 17:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9B75172E9;
+	Wed, 30 Sep 2026 17:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787722; cv=none; b=emJEvIwI+iC78bJnbwtUt16cjjGcIKZ0VAwYX/CO/TRkTDvGttknmFfgQR4PYY1ZOkrvadLsrvSlmElQEe4UyKvA5i7Pyv2znrqJtxQ0JxubxXDgPVy12IvDVK0P6EtkCoHRdGndMVRalTeTdhNYO0xiQbUPlZePa2wQM7XaPMg=
+	t=1790787725; cv=none; b=HymkPxd1XNl3RPNFq3eH5dDjSGFlcGVImKcYL6mZ1qt/ndJzDsK4jFd8wD5slNRsvs/h1ziXKJrq8h4MkVgHM/2IaFWrw0hg8F8YYSOMynhZblGO6BYzLs4bfHXa/mUGw55W5JVtvCqcXwQQCe6iFvyyWvijNssXFB8SxOBggOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787722; c=relaxed/simple;
-	bh=EGwsGGsCLeOu1OWV+7RQ+FYi4r7zKrtGHRbJ128iwOo=;
+	s=arc-20240116; t=1790787725; c=relaxed/simple;
+	bh=ZVmFFnyj8OgnCH8rZmfLUdYgPpZ/NW0oFr2GUKwH6NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANwj4FeP6R5Gdw00nfANsuvl6ELw5gpePIl55/MKp+OLOfeVYZeoUoyNDtBXXCG8VmSrnrlLJuLF7zHjy5PfeU0w8PdXPBmULDNTkBnwgavpZ1SrCWAxEVn6L3Qw6XiBez/EgQb31VPk7RB9Z1+3onwoARSEgMBw8nyiDAaKHH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9e0S9iu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tJd2iXls5FgkMcyD2GggVws1lqT0HPdCfue9w0EQlVM2hQkw8Rx82CH5xgC+mF67swUZt5MZkwtnxtguknMeOOwp8D8hwkZ9cFT8jvpPIqWKHO6bId3b/qI2AdlBrUFuu/M5EIf/6xGYCbCR9d4o4jCT8+XjNc//KqAxKcee008=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7Tcazje; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9e0S9iu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9F51F000FF;
-	Wed, 30 Sep 2026 17:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7Tcazje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A0B1F00898;
+	Wed, 30 Sep 2026 17:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787721;
-	bh=Jn+hzVsnfkg8EYS6zEF5xQb99F+1glRHliVb5tjCzQk=;
+	s=korg; t=1790787723;
+	bh=F50tIM4aeGAeGhZSW4raf9EyzZvkFMBRqac4zvwSmjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9e0S9iucWQ1zU0SI5oqH4AM59auopnhnDc6A1eygwevV47DRRdJLzwVtNllQAx/M
-	 D1UsekFIRStv8+mtYEufCVFje8fIk6LxzAXiXS//TQ8LA8pD2wqA82rf9Jr+FwyK+f
-	 uwffxuIsEPBH1x8aot4fvS9SSJ1DFc4siifZDzkA=
+	b=c7TcazjeQgM/EwLhTLdsWStjzyAOTx4STBBs+0qzDLbwFNEG7qItrSwGZT9422JtV
+	 56C2H1N2lBViuuNy8aqXn3pC896r7mDI6J+EH9s9lJC+M7PnIz2hrdi8v2D6G2w/8e
+	 ZsKVFFBIQE2iOPl++SGgt5hCr1JBxGhruqXdUAxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 329/457] net/mlx5e: fix swapped IPv6 IPsec policy masks
-Date: Wed, 30 Sep 2026 17:27:14 +0200
-Message-ID: <20260930152353.119976175@linuxfoundation.org>
+Subject: [PATCH 7.2 330/457] net/sched: reject IDR error pointers when deleting actions
+Date: Wed, 30 Sep 2026 17:27:15 +0200
+Message-ID: <20260930152353.141048084@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,51 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 10de7ed8ef4840da9ca21de4c29578657ac367db upstream.
+commit c82b797abe668d0b668601a93ba2c0b071a63574 upstream.
 
-IPv6 XFRM policies may use different source and destination prefix
-lengths. mlx5e_ipsec_policy_mask() builds the corresponding masks
-independently, but setup_fte_addr6() installs each mask in the opposite
-address field.
+tcf_action_delete() drops the reference held by its lookup before calling
+tcf_idr_delete_index() with the saved action index.  An unlocked
+classifier can remove that action and reserve the same IDR slot with
+ERR_PTR(-EBUSY) in between.
 
-When the prefix lengths differ, this makes the source match use the
-destination prefix and the destination match use the source prefix. The
-resulting hardware rule can both miss traffic covered by the policy and
-match traffic outside it.
+tcf_idr_delete_index() only checks the lookup result for NULL.  It
+therefore treats the reservation as a tc_action and dereferences
+tcfa_bindcnt.  A hardware execution breakpoint was used to schedule the
+interleaving without changing the kernel source.  KASAN reported this
+decoded trace:
 
-Install each mask in its corresponding match field.
+  BUG: KASAN: null-ptr-deref in tca_action_gd+0x5b9/0x1010
+  Read of size 4 at addr 0000000000000010 by task poc/150
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002
+  RIP: tca_action_gd+0x5c0/0x1010:
+    arch_atomic_read at arch/x86/include/asm/atomic.h:23
+    raw_atomic_read at include/linux/atomic/atomic-arch-fallback.h:457
+    atomic_read at include/linux/atomic/atomic-instrumented.h:33
+    tcf_idr_delete_index at net/sched/act_api.c:766
+    tcf_action_delete at net/sched/act_api.c:1859
+    tcf_del_notify at net/sched/act_api.c:2014
+    tca_action_gd at net/sched/act_api.c:2064
+  R13: 0000000000000010 R15: fffffffffffffff0
+  Kernel panic - not syncing: Fatal exception
 
-Fixes: ca7992f52c2c ("net/mlx5e: Properly match IPsec subnet addresses")
+R15 contains ERR_PTR(-EBUSY), and adding the tcfa_bindcnt offset produces
+the address in R13.  With the guard applied, the same reproducer returned
+-ENOENT without a KASAN report or panic.  Treat error pointers as absent
+and return -ENOENT.
+
+Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
 Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260917115542.177675-1-parri.andrea@gmail.com
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260914065123.4109709-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/act_api.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -1564,14 +1564,14 @@ static void setup_fte_addr6(struct mlx5_
- 		memcpy(MLX5_ADDR_OF(fte_match_param, spec->match_value,
- 				    outer_headers.src_ipv4_src_ipv6.ipv6_layout.ipv6), saddr, 16);
- 		memcpy(MLX5_ADDR_OF(fte_match_param, spec->match_criteria,
--				    outer_headers.src_ipv4_src_ipv6.ipv6_layout.ipv6), dmask, 16);
-+				    outer_headers.src_ipv4_src_ipv6.ipv6_layout.ipv6), smask, 16);
- 	}
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -758,7 +758,7 @@ static int tcf_idr_delete_index(struct t
  
- 	if (!addr6_all_zero(daddr)) {
- 		memcpy(MLX5_ADDR_OF(fte_match_param, spec->match_value,
- 				    outer_headers.dst_ipv4_dst_ipv6.ipv6_layout.ipv6), daddr, 16);
- 		memcpy(MLX5_ADDR_OF(fte_match_param, spec->match_criteria,
--				    outer_headers.dst_ipv4_dst_ipv6.ipv6_layout.ipv6), smask, 16);
-+				    outer_headers.dst_ipv4_dst_ipv6.ipv6_layout.ipv6), dmask, 16);
+ 	mutex_lock(&idrinfo->lock);
+ 	p = idr_find(&idrinfo->action_idr, index);
+-	if (!p) {
++	if (IS_ERR_OR_NULL(p)) {
+ 		mutex_unlock(&idrinfo->lock);
+ 		return -ENOENT;
  	}
- }
- 
 
 
