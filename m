@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001E551DDE9;
-	Wed, 30 Sep 2026 18:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858BB5208C2;
+	Wed, 30 Sep 2026 18:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793901; cv=none; b=KKk91cQh6cUFn1zhc9pbrsSX3Aq21r4LhXFGcgCDrfVb0w8azSjoGDZUJNIa51WXUydkxbqXj4TXZvURCIYZ42DhNJkf60l6Zgbv1B0Cj4RajAsRxjPAIScNETzMmlRr7ZGs7YkffgCW+2IwKnsXV/p9LU+yD75W0YZU1oZjxuk=
+	t=1790793903; cv=none; b=OOJx4XjT/fyM5FphyMQWD5jK3RVNWj70lwdRFDf+xNn570UNivgiRPhnq1fdn8KFVxBQJsMfS40v+DmZJiVFiaaZ+zalfF8Msumn/PqrJCsgzdZXnSN64mxh9uDIsm7vFf3qOVhyzwzCNzb+LsYqTJbb6aFFVnA08EXQkhCwI0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793901; c=relaxed/simple;
-	bh=l2h0w1v5bpvwQFivKYrqmaKnz4l+YjgP1ZaMAdKNXfo=;
+	s=arc-20240116; t=1790793903; c=relaxed/simple;
+	bh=6+LmSvfo79YaR1eb7WWOzlAab/o5DgfokJYdbXkgXWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6is9QYrCUJHyas48wjwknAJloo2SQ54VyrnsSEMaTRTXsFme2rVuC35M84g5Mp3IHk1vnvd+bWGAax1uqwDFMvQAx2XAdvp+EwUlhvpOM8N4rZNpPdW1VKfTCoGGCz6sSqQzZRbLcxF0r9mFUUGlKl36B2o+EByUlmg7+AoxQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lo300k6D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GC47ySzcdISWeEGI4cZDoDl67ITr67E3HmAeCR6kxBm9tG05duc7YYIFUv0vkXSZrH76KBoh6Hirn2l1WpyOhQ+YqAmjMK4Q/5To0I4BxhoM3mXMUHJ1igF7qm2ztvyBbSL5RewZWMnP7yey6iHfrQDb+nRT9qyZuZdYPY1XW4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EemfZ0jh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo300k6D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0288E1F000FF;
-	Wed, 30 Sep 2026 18:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EemfZ0jh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22661F00898;
+	Wed, 30 Sep 2026 18:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793898;
-	bh=7S+6BVhIdfMwOQfeoP5ORZN9FDY4qoWW04IZhIfFgww=;
+	s=korg; t=1790793901;
+	bh=vlpTfpsQR/tnLD8dhHKL9Ce3AsupswSxAMpildGb3EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lo300k6DSArJHH92CQJ4mgD+dzDtq/E44gSIdcw6IOchIPxoF0vh6yW4WcwE+H6O3
-	 4jD40zRPIJ73RLIBcaQ+jQX3yli1Gerulg6XkUty3YZSU0q0b5bYuDFXm6/F35KkPh
-	 6fQz8AHYAIyhqT9u6KQdvjZjelz7yKu5bx8Y/Cms=
+	b=EemfZ0jhQ3dDwCRfF6XEG4nMg63LCtPgTPHdIytHx4TXxCFgd1Sgq4t3e4pyOUPJi
+	 u5JWc/jZMJK+Vj+8NXqcN2616qiIAywrgWAws82oN4nlRGhrD8LGM0YPHBVNs77F3n
+	 0yZ7HFD+UJ+LRVte4TjegJUlKhGqYzIFBppBPGVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riccardo Boninsegna <rboninsegna2@gmail.com>,
-	Sean Young <sean@mess.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0022/1193] media: rc: mceusb: Add support for 04eb:e033
-Date: Wed, 30 Sep 2026 17:11:46 +0200
-Message-ID: <20260930152434.789362633@linuxfoundation.org>
+Subject: [PATCH 6.6 0023/1193] thunderbolt: Release request if tb_cfg_request() fails in __tb_xdomain_response()
+Date: Wed, 30 Sep 2026 17:11:47 +0200
+Message-ID: <20260930152434.809905799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,39 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Riccardo Boninsegna <rboninsegna2@gmail.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 0692c2602e4cd410aa045f8991bd1c142b2e56f9 ]
+[ Upstream commit 4c63f29872cb444b33665348bbd2f45cab06afcd ]
 
-This is a Sonix SN8P2202XG microcontroller with firmware compatible with
-the already supported Northstar 04eb:e004, implementing an MCE IR receiver
-(PCB seems to be tracked for a transmitter too but missing related parts).
+If tb_cfg_request() fails setting up the request (for example the
+control channel is shut down already) it returns an error without
+calling the callback. To avoid leaking that memory, call
+tb_cfg_request_put() if tb_cfg_request() fails.
 
-Found in a Skintek SK-CR-IN+IR ( http://www.skintek.it/SK-CR-IN+IR.php )
-internal 3.5 inch USB card reader and MCE receiver combo
-(implemented by, and wired as, separate USB devices)
-PCB marking: AU6475 966816 STIR REV:A02 MCE
-
-Signed-off-by: Riccardo Boninsegna <rboninsegna2@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/mceusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thunderbolt/xdomain.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/mceusb.c b/drivers/media/rc/mceusb.c
-index 4115a46929c47..3e5c2aa582cff 100644
---- a/drivers/media/rc/mceusb.c
-+++ b/drivers/media/rc/mceusb.c
-@@ -398,6 +398,8 @@ static const struct usb_device_id mceusb_dev_table[] = {
- 	{ USB_DEVICE(VENDOR_COMPRO, 0x3082) },
- 	/* Northstar Systems, Inc. eHome Infrared Transceiver */
- 	{ USB_DEVICE(VENDOR_NORTHSTAR, 0xe004) },
-+	/* Northstar Systems, Inc. eHome Infrared Transceiver - variant */
-+	{ USB_DEVICE(VENDOR_NORTHSTAR, 0xe033) },
- 	/* TiVo PC IR Receiver */
- 	{ USB_DEVICE(VENDOR_TIVO, 0x2000),
- 	  .driver_info = TIVO_KIT },
+diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
+index 87fbced665b91..99a3f4317b5ca 100644
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -139,6 +139,7 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
+ 				 size_t size, enum tb_cfg_pkg_type type)
+ {
+ 	struct tb_cfg_request *req;
++	int ret;
+ 
+ 	req = tb_cfg_request_alloc();
+ 	if (!req)
+@@ -150,7 +151,11 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
+ 	req->request_size = size;
+ 	req->request_type = type;
+ 
+-	return tb_cfg_request(ctl, req, response_ready, req);
++	ret = tb_cfg_request(ctl, req, response_ready, req);
++	if (ret)
++		tb_cfg_request_put(req);
++
++	return ret;
+ }
+ 
+ /**
 -- 
 2.53.0
 
