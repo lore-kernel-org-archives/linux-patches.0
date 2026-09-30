@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2B0518128;
-	Wed, 30 Sep 2026 16:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E891650E5BC;
+	Wed, 30 Sep 2026 16:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784460; cv=none; b=b0QouTa7FTDsNuEB96j915hY5FmWdTSYtJ3sfaGAblL50qpaxtJ49PVHfaID/z3YNOiMs3fj6/R0Phv3N/BhZH6O9GgxX18je2t0j31vgDMmNlK8s+DIkK3rtFWxPvIW/9I/eC///LKzRaxegeg6yfBQrY52oTcd0hAaMQ29UJ4=
+	t=1790784460; cv=none; b=Id+l9+ZO031d4v95c8v40bLkfmaWtfzIbZp+YHr8vegQ28wi3X76WhyRFH0Ug3/orKXuVm8iVylujHU+Uf7z1zGxuuJt2gFZ1Uwj5vYDCGL1ECNBBXfMvCgqdfucZazDuhFJS5KbMao6N7WHLJ00q4+Bbr1B0KhnIIVkCNgEPCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784460; c=relaxed/simple;
-	bh=oA+uVcLmeTwMSKGuLqKR+CMsLIWxajAIurGtCFlvouM=;
+	bh=m5iVP/DYwoGHC7FIsrM4K+MXsdycS/1hDFkRYY3RZQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3NH0rXKLHzMSvtafZyjqng6RKvtjFoPvRqsuNibX8XmuZALFP5XDCMARHR8cXP+Y5qq7M3581EQJK/QpauzHCpFFBKV/iuOsZKnmIbihj2kweUfu2s3wfoiRM/pLKEeYAEBAEL7NW2TD9O6gZsg+cPIZ96sOMDUIUB3fHVH/oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSjbOEMt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gBkMwGKwJJAvibiAA0n9Fx7TTC8VcOIsdEfhBSxjXkcAW2wbmm6MlKBFVMkh3yb5C2FV3tHFmNGzM4zirLGCfCnDLn2OOpDsPoozxsXfoGF+nNIIuuuGAc3A2vhYc7NeAhYyjzlezxz6GtrWTEj2HmD7+ZsDuKvCXv1XzHT+khI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRNLD7b7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSjbOEMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE9A1F000FF;
-	Wed, 30 Sep 2026 16:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRNLD7b7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7871F00899;
+	Wed, 30 Sep 2026 16:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784453;
-	bh=HmP9TFqbO9a87pKsofsyqJqkFfHp6SrwgxuboAWGdQw=;
+	s=korg; t=1790784451;
+	bh=xbn1f9F2kLXybogqDESJisFjKNn9LNblpjqKu3NjKNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSjbOEMt6G0mtnSav6RNidflquDGDWY/8pbjWuZlD+cTswbpYadal2WrKtBi/7jq0
-	 qMWTzjAaxq9ydVU7JjRe5OLU50maXJqSB3w6S6xmO0krGJuDmhCqUApR3qlAuKHFBY
-	 7SDnY7LLBgIix0lSZ8OjMZnS6yCDuYIjsVba9ExY=
+	b=oRNLD7b72ObI9ZSDG/hiuShloYDezzeVzoDRSSZo1lx/rLWqv9nt1CnXcr6HBWE0g
+	 2kPzI/Ku3MA1SNfoY/PRC7XmlsjmB8TfTXXEWcNMjIIJU3aM6JQisJXigq26mWmWze
+	 b2tTNggoiBKSMsEmWqHcdere1Kmnfm3CkF53/Ld8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 159/982] hsr: broadcast netlink notifications in the devices net namespace
-Date: Wed, 30 Sep 2026 17:14:55 +0200
-Message-ID: <20260930152420.224951409@linuxfoundation.org>
+Subject: [PATCH 6.1 158/982] net: cpsw_new: unregister devlink on port registration failure
+Date: Wed, 30 Sep 2026 17:14:54 +0200
+Message-ID: <20260930152420.203371017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,69 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit a762fabd7ef9a6cc07258684138f9c3f078d0326 ]
+[ Upstream commit b64f763b607426ac97e44b114f0b8844ac3b86dd ]
 
-The HSR generic netlink family sets .netnsok = true. HSR devices can
-live in network namespaces other than init_net.
+cpsw_probe() registers devlink before registering the CPSW ports.
 
-Two async notifiers broadcast events with genlmsg_multicast(). They
-are hsr_nl_ringerror() and hsr_nl_nodedown(). That helper delivers
-only on the default genl socket in init_net. So the events always land
-in init_net. The network namespace of the device does not matter.
+If cpsw_register_ports() fails, the error path only unregisters the
+notifiers and then releases the lower level resources. It does not undo
+the successful cpsw_register_devlink() call, leaving the devlink instance
+and its parameters registered after probe has failed.
 
-This has two effects. A listener in the device's own namespace never
-sees its own ring error and node down events. A privileged listener in
-init_net receives events from HSR devices in other namespaces. The
-payload carries the peer node MAC (HSR_A_NODE_ADDR) and the slave port
-ifindex (HSR_A_IFINDEX).
+Add a devlink cleanup label for the path where devlink registration has
+already succeeded, and use it when port registration fails.
 
-Switch both callers to genlmsg_multicast_netns(). Other families with
-.netnsok = true already do this. Examples are gtp, ovpn, team,
-batman-adv, netdev-genl, ethtool and handshake.
-
-hsr_nl_ringerror() already has the slave port. It uses
-dev_net(port->dev). hsr_nl_nodedown() takes the namespace from the
-master port via hsr_port_get_hsr().
-
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260604054949.2999304-1-maoyixie.tju@gmail.com
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260604043115.1409134-1-lgs201920130244@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_netlink.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ti/cpsw_new.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_netlink.c b/net/hsr/hsr_netlink.c
-index 898f18c6da53e..72aad6f845319 100644
---- a/net/hsr/hsr_netlink.c
-+++ b/net/hsr/hsr_netlink.c
-@@ -233,7 +233,8 @@ void hsr_nl_ringerror(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN],
- 		goto nla_put_failure;
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index 17c267f6d79aa..931fc8fdead05 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -2010,7 +2010,7 @@ static int cpsw_probe(struct platform_device *pdev)
  
- 	genlmsg_end(skb, msg_head);
--	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
-+	genlmsg_multicast_netns(&hsr_genl_family, dev_net(port->dev),
-+				skb, 0, 0, GFP_ATOMIC);
+ 	ret = cpsw_register_ports(cpsw);
+ 	if (ret)
+-		goto clean_unregister_notifiers;
++		goto clean_unregister_devlink;
  
- 	return;
+ 	dev_notice(dev, "initialized (regs %pa, pool size %d) hw_ver:%08X %d.%d (%d)\n",
+ 		   &ss_res->start, descs_pool_size,
+@@ -2022,6 +2022,8 @@ static int cpsw_probe(struct platform_device *pdev)
  
-@@ -269,8 +270,12 @@ void hsr_nl_nodedown(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN])
- 	if (res < 0)
- 		goto nla_put_failure;
+ 	return 0;
  
-+	rcu_read_lock();
-+	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
- 	genlmsg_end(skb, msg_head);
--	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
-+	genlmsg_multicast_netns(&hsr_genl_family, dev_net(master->dev),
-+				skb, 0, 0, GFP_ATOMIC);
-+	rcu_read_unlock();
- 
- 	return;
- 
++clean_unregister_devlink:
++	cpsw_unregister_devlink(cpsw);
+ clean_unregister_notifiers:
+ 	cpsw_unregister_notifiers(cpsw);
+ clean_cpts:
 -- 
 2.53.0
 
