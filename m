@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C034851AED4;
-	Wed, 30 Sep 2026 18:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF451616F;
+	Wed, 30 Sep 2026 18:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793836; cv=none; b=D7dyX0VOUbqwMCMth1HOUlM56txO6G2bfRSnZ7NWrMmdlR3H3HwBcLjvPd9+fYYXVCWMKJBxkGwmG2JMqANfhKH7zkk+mAkgq8o79oMNTV96W8BLsJB25r6sY6UEFKFSMis35qVJMOEqKmZQxhFFQPECQ6J70XB0HQpYpMCXxxQ=
+	t=1790793839; cv=none; b=Asy0tnBILBnxDAVfSOqDalrAqZqgpNcwSiHZc26bFObdCg1u2CtpCZAXhHnGShwMGqWIBe9irgyyoVjyGZFg+zigC78dar0DPFGSAGqioGPzqzNePzpsmQDXQQ8ss2mvYCQTKRGPTdnouNwIjjQYy7oc+MWlIqOl7IaEWgweA28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793836; c=relaxed/simple;
-	bh=vQfoxWs9dTO2IzTmAYMijDimOL4Gv4ELAqf5AwV7BpI=;
+	s=arc-20240116; t=1790793839; c=relaxed/simple;
+	bh=Qj9TdM+RMOyPEaMPAnI0+SNhmj1K9+0chvHxSH18VAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7N3yLaI9OwKRGNP+ShdCJjqz70k6oEXML+wcX5K3GhQ9ym+HvLoEtU6BuIMkA0DYtj2c+PndZIXgCrxnQ8on3bzmBBThvXurGxdAUh/VPWDsIUD7dbpszCTudD0F/T0THSMvAjlvmPIYRKpvrd5diWev2O67ZE/2l3IcnqPlxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GClXo+r1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qf9EngfRPNkARMoto+9RXyRT2O8zHdig2ZbiGgFniAmsm3pDBwB6oYWvpGtvFWlCB1e5lgNHSQrSl+a0sTQ13T+l/+kUmUrijfpMKc4vCzuxV+uVf3TqKcEgBT7TcKy0jl7mhtEh922eW8v2vlnH4iCY/1eofNXP31diZt8CGWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H++UFK7Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GClXo+r1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059851F000FF;
-	Wed, 30 Sep 2026 18:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H++UFK7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A441F000FF;
+	Wed, 30 Sep 2026 18:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793835;
-	bh=6akGJL3ymMO2QW8tJ+ihvYdpRmMdR7un9lR+rUQf7yQ=;
+	s=korg; t=1790793838;
+	bh=DiulsmjJuGs/dE89ID00hVvWFsFc5ov4BSapD2nerJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GClXo+r1KPVwF+n2OxWCvKF4Kvtnz8oO4ZXHg4UobFsc7xyLxokB+NSR/TDqMaUHm
-	 SUp970aF26+DcqepKzohSIfJU0gMBEYrR4+/IHTddX54LbdOdUA1OW5zZGa0/uNXhS
-	 MATkfI7Nc2rN3BGxhHzCAzZDnFPw0thWQGUVfSIk=
+	b=H++UFK7YkT5p2Sl61CV7i3ofC4c0XWQM/SoiyKsmVAgeawYsPlIDGSmagCdE+ulXl
+	 fNg8ew/V1lkfUjL/qhznyLzGRPr+QGEIn/37qwF5jAxav1Vzja7A3O45AT4pbuc3hp
+	 qZAAgch7USwXlIOseMy7UCNFOk56XSPdDr0ClEMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>
-Subject: [PATCH 6.18 394/395] rose: dont warn on stray CALL_ACCEPTED/CLEAR_CONFIRMATION in state 3
-Date: Wed, 30 Sep 2026 17:30:56 +0200
-Message-ID: <20260930152349.249467142@linuxfoundation.org>
+	syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.18 395/395] bpf: Reject key-less BTF for hash maps
+Date: Wed, 30 Sep 2026 17:30:57 +0200
+Message-ID: <20260930152349.270988946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -49,55 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-rose_state3_machine() logs "ROSE: unknown %02X in state 3" at
-KERN_WARNING for any frame type it does not handle during data
-transfer. Two of them reach that default arm routinely on real AX.25
-links and alarm sysops watching the console, even though they are
-harmless:
+commit 0895a0c0734703be5532f3883c42db95615fd98b upstream.
 
-  - CALL_ACCEPTED (0x0F): a late or duplicated Call Accepted that
-    arrives after the socket has already moved to STATE_3, typically a
-    retransmission on a slow link.
+map_check_btf() allows a key-less BTF (btf_key_type_id == 0) only for
+maps that have a ->map_check_btf callback, and leaves the actual
+decision to that callback. Hash maps used to have no ->map_check_btf,
+so a key-less BTF was rejected outright.
 
-  - CLEAR_CONFIRMATION (0x17): crossed clearing, or a clear confirmation
-    left over from a previous incarnation of a reused logical channel.
+That changed when htab and rhtab gained a ->map_check_btf to register a
+dtor - htab in commit 1df97a7453ee ("bpf: Register dtor for freeing
+special fields") and rhtab in commit 6905f8601298 ("bpf: Allow special
+fields in resizable hashtab"). Neither looks at the key, so a key-less
+hash map now passes map_check_btf() and gets created. Reading it back
+through bpffs feeds the key type_id 0 into btf_type_seq_show();
+btf_type_by_id() returns the void type, kind_ops[BTF_KIND_UNKN] is NULL,
+and btf_type_show() dereferences it:
 
-In both cases the frame is simply dropped: no state change, no
-teardown, nothing freed. Only the noise is a problem.
+RIP: 0010:btf_type_show+0x223/0x2e0 kernel/bpf/btf.c:8232
+RSP: 0018:ffffc9000399f868 EFLAGS: 00010206
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000028
+RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+R10: ffffc9000399f970 R11: 0000000000000001 R12: ffffffff9b96b140
+R13: ffffc9000399f8e0 R14: ffff88803d393c00 R15: 0000000000000003
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000000 CR3: 000000003d213000 CR4: 0000000000352ef0
+DR0: 0000000039ae8f55 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ btf_type_seq_show_flags+0xca/0x120 kernel/bpf/btf.c:8250
+ htab_map_seq_show_elem+0x12e/0x350 kernel/bpf/hashtab.c:1669
+ map_seq_show+0x13d/0x1e0 kernel/bpf/inode.c:293
+ traverse.part.0.constprop.0+0x107/0x650 fs/seq_file.c:112
+ traverse fs/seq_file.c:99 [inline]
+ seq_read_iter+0x93f/0x1270 fs/seq_file.c:196
+ seq_read+0x344/0x4d0 fs/seq_file.c:163
+ vfs_read+0x1e4/0xb40 fs/read_write.c:572
+ ksys_pread64 fs/read_write.c:764 [inline]
+ __do_sys_pread64 fs/read_write.c:772 [inline]
+ __se_sys_pread64 fs/read_write.c:769 [inline]
+ __x64_sys_pread64+0x1eb/0x250 fs/read_write.c:769
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x123/0x790 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Drop these two frame types silently. Keep reporting any other,
-genuinely unexpected frame type, but through net_warn_ratelimited() so
-a misbehaving peer cannot flood the kernel log.
+Reject a key-less BTF in htab_map_check_btf() and rhtab_map_check_btf(),
+restoring the previous behavior.
 
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Fixes: 1df97a7453ee ("bpf: Register dtor for freeing special fields")
+Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
+Reported-by: syzbot+37b56485bbbf90ad8489@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a8f4e88.27659fcc.2ceef7.0008.GAE@google.com/T/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/r/20260901104924.346187-2-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/rose_in.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ kernel/bpf/hashtab.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/rose/rose_in.c
-+++ b/net/rose/rose_in.c
-@@ -203,7 +203,18 @@ static int rose_state3_machine(struct so
- 		break;
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -543,6 +543,9 @@ static int htab_map_check_btf(const stru
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
  
- 	default:
--		printk(KERN_WARNING "ROSE: unknown %02X in state 3\n", frametype);
-+		/*
-+		 * CALL_ACCEPTED (0x0F) and CLEAR_CONFIRMATION (0x17) may show
-+		 * up in state 3 as a late or duplicated Call Accepted, or as
-+		 * crossed clearing / a reused logical channel on a slow AX.25
-+		 * link. These are harmless protocol races, so drop them
-+		 * silently. Any other frame type is genuinely unexpected and
-+		 * is still reported, rate limited to avoid flooding the log.
-+		 */
-+		if (frametype != ROSE_CALL_ACCEPTED &&
-+		    frametype != ROSE_CLEAR_CONFIRMATION)
-+			net_warn_ratelimited("ROSE: unknown %02X in state 3\n",
-+					     frametype);
- 		break;
- 	}
- 
++	if (btf_type_is_void(key_type))
++		return -EINVAL;
++
+ 	if (htab_is_prealloc(htab))
+ 		return 0;
+ 	/*
 
 
