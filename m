@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB88254705C;
-	Wed, 30 Sep 2026 16:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60F64F93DB;
+	Wed, 30 Sep 2026 16:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785410; cv=none; b=TVR9Gs4y2qzX+0eF/CMhX6wPcqNNJJXSKmzYSKj4pIb6RAY3XpjmXHRcckrOTTW6getNZMLoiSM7Ce61KMAzpxrTXG3mMPAd3GhOf1PriWx2raJe90M0zdepE2GnqSj38SsKGP/NrUC9NerNptbE4FbPAfE9ygrSm6brBMTMf3g=
+	t=1790785410; cv=none; b=rmvvaxn8gjZsz0p0kVRFkgKsgyeM7T4Oz96EYdMdaNXuAiM2l+YI0me2dyASHoWzgWgXw63UVQtmDSCCsG2DbcwmB9M/ecaO2nfq9J07CYggb7VOkUsv1WP7Xk1xSd1bAT1T1K+8mlcnJZJPaY/vk0+EmDTkT5Ghnag+lR6Uln4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790785410; c=relaxed/simple;
-	bh=w4K0OnoEsoldxzk6WE6DEj4iELxXqMJQ51lpk+Ojzp8=;
+	bh=8ge06IBQbxP6SOEqMffKZ62c2nYQxPlfEWaNbxtqbeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiqf1wcDumbkS8r9f1pp/ONW5l2TUTLiN/g6eHBhJ+7VNe9nJYgaQOV0Ovzq9HkEMPmcE04CXpf4uxyqI+Dtpa+5habOviWWCwcT55+cNBHBnSARbawlLleq9GHHKVqWitNfS0iNN+yLUpgs+/c9JkKxKb9Zl9SZY6GphoNUoKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx4B2aex; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DOvTb2U3w7ATmeQo8q07/HiTEcJ+dGqCPsE8G/6t2MAtp9zOK/eueXbksiMQxskeiqtf4VmybqdZmMoNQ5DWiDfhAi6uDu4H1GnMnlc/jPJ+7m/cUhY4XN09iJ+HiDBO8bxnpYSwklQ0psUgEPuYOeRBOqPv1oSWP9FDE09PNuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWedBqv5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx4B2aex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D891F00898;
-	Wed, 30 Sep 2026 16:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWedBqv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD5E1F000FF;
+	Wed, 30 Sep 2026 16:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785407;
-	bh=QAi+Z4P/aAEXHB4KSxwqKAc9+DaUxJN9ap40LdT2Gto=;
+	s=korg; t=1790785401;
+	bh=XO4ci60xRRzc7JxqErZcwP0f2m5DqPMjNusOiu2b0ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hx4B2aexeWRhpkXMAKGUFmDd6QjFdkj/jGAiUe/GpCnbSv0H46muXg2F8n+Q+Dd1A
-	 sTbmrVvWcGjRXdb5bS/yGCL1bFUMhp7GmuS5FBkiFruS3btcp82lAc/TJbQzWJzGVD
-	 rylmubqep3rN8D9Lycb9QeI7M51fnQZwBxiplJzQ=
+	b=hWedBqv5vwtXPinKmYP14jyYdFLnx4ODWjtYRbqe9lH7vAuFcPdciapMOdkrQdLki
+	 z9i7JRHMo5dsI6q7KRd/G7OQRdtMYQM0hPqNLk8NB0pEBZ2pTI/aFJYxLANvVT4Dyb
+	 FDqukaKMgGLZjkgEgoelzH4nPPCbsMWNvku5DAXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Joe Damato <joe@dama.to>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 453/982] drm/logicvc: Drop the select of the nonexistent CONFIG_DRM_KMS_DMA_HELPER
-Date: Wed, 30 Sep 2026 17:19:49 +0200
-Message-ID: <20260930152426.522465562@linuxfoundation.org>
+Subject: [PATCH 6.1 451/982] net: ethernet: cortina: Count RX drops once per frame
+Date: Wed, 30 Sep 2026 17:19:47 +0200
+Message-ID: <20260930152426.481370858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,43 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit f97802dd98b27e45c04293f9926f07642578b23f ]
+[ Upstream commit 6520198c430c81bcc367f0dd5e32f2fb740b9d51 ]
 
-CONFIG_DRM_KMS_CMA_HELPER was removed by commit 09717af7d13d ("drm:
-Remove CONFIG_DRM_KMS_CMA_HELPER option"). When commit 6bcfe8eaeef0
-("drm/fb: rename FB CMA helpers to FB DMA helpers") later renamed the
-select in this Kconfig to CONFIG_DRM_KMS_DMA_HELPER, no symbol of that
-name existed, and git log -S finds no Kconfig file that has defined one
-since. The select is silently ignored. The driver already selects
-CONFIG_DRM_GEM_DMA_HELPER, which is what it needs.
+The absence of a partial skb means either that the driver is not
+assembling a frame or that the current frame was already dropped.
+Consequently, repeated descriptor errors can increment rx_dropped more
+than once, while an orphaned descriptor chain can reach EOF without being
+counted at all.
 
-Remove the dead line.
+Track the dropping state across NAPI polls. Clear it at frame boundaries
+and route mapping failures and orphaned continuations through the common
+drop path so each discarded frame is counted exactly once.
 
-Fixes: 6bcfe8eaeef0 ("drm/fb: rename FB CMA helpers to FB DMA helpers")
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Reported-by: Joe Damato <joe@dama.to>
+Closes: https://lore.kernel.org/netdev/apdK5aMmvYssz35F@devvm20253.cco0.facebook.com/
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260905080344.34077-1-kmehltretter@gmail.com
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-4-2bbbd598ca6e@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/logicvc/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 41 +++++++++++++++------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/logicvc/Kconfig b/drivers/gpu/drm/logicvc/Kconfig
-index 1df22a852a23e..283dca51e4bdd 100644
---- a/drivers/gpu/drm/logicvc/Kconfig
-+++ b/drivers/gpu/drm/logicvc/Kconfig
-@@ -3,7 +3,6 @@ config DRM_LOGICVC
- 	depends on DRM
- 	depends on OF || COMPILE_TEST
- 	select DRM_KMS_HELPER
--	select DRM_KMS_DMA_HELPER
- 	select DRM_GEM_DMA_HELPER
- 	select REGMAP
- 	select REGMAP_MMIO
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 85d476301f3ea..03f8546bc224a 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -123,6 +123,7 @@ struct gemini_ethernet_port {
+ 	unsigned int		rx_coalesce_nsecs;
+ 	struct sk_buff		*rx_skb;
+ 	unsigned int		rx_frag_nr;
++	bool			rx_dropping;
+ 
+ 	unsigned int		freeq_refill;
+ 	struct gmac_txq		txq[TX_QUEUE_NUM];
+@@ -1456,6 +1457,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	struct gmac_rxdesc *rx = NULL;
+ 	struct gmac_queue_page *gpage;
+ 	unsigned int received = 0;
++	bool dropping = port->rx_dropping;
+ 	union gmac_rxdesc_0 word0;
+ 	union gmac_rxdesc_1 word1;
+ 	union gmac_rxdesc_3 word3;
+@@ -1477,6 +1479,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 	w = rw.bits.wptr;
+ 
+ 	while (budget && w != r) {
++		page = NULL;
+ 		rx = port->rxq_ring + r;
+ 		word0 = rx->word0;
+ 		word1 = rx->word1;
+@@ -1490,6 +1493,16 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		frame_len = word1.bits.byte_count;
+ 		page_offs = mapping & ~PAGE_MASK;
+ 
++		if (word3.bits32 & SOF_BIT) {
++			if (skb) {
++				napi_free_frags(&port->napi);
++				port->stats.rx_dropped++;
++				skb = NULL;
++				frag_nr = 0;
++			}
++			dropping = false;
++		}
++
+ 		if (!mapping) {
+ 			netdev_err(netdev,
+ 				   "rxq[%u]: HW BUG: zero DMA desc\n", r);
+@@ -1500,24 +1513,11 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
+ 		if (!gpage) {
+ 			dev_err(geth->dev, "could not find mapping\n");
+-			port->stats.rx_dropped++;
+-			if (skb) {
+-				napi_free_frags(&port->napi);
+-				skb = NULL;
+-				frag_nr = 0;
+-			}
+-			goto next_desc;
++			goto err_drop;
+ 		}
+ 		page = gpage->page;
+ 
+ 		if (word3.bits32 & SOF_BIT) {
+-			if (skb) {
+-				napi_free_frags(&port->napi);
+-				port->stats.rx_dropped++;
+-				skb = NULL;
+-				frag_nr = 0;
+-			}
+-
+ 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
+ 			if (!skb)
+ 				goto err_drop;
+@@ -1527,8 +1527,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 			frag_nr = 0;
+ 
+ 		} else if (!skb) {
+-			put_page(page);
+-			goto next_desc;
++			goto err_drop;
+ 		}
+ 
+ 		if (word3.bits32 & EOF_BIT)
+@@ -1561,21 +1560,26 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 			frag_nr = 0;
+ 		}
+ 
+-		if (mapping)
++		if (page)
+ 			put_page(page);
+ 
+-		port->stats.rx_dropped++;
++		if (!dropping) {
++			port->stats.rx_dropped++;
++			dropping = true;
++		}
+ 
+ next_desc:
+ 		/* Final or single-descriptor fragment, advance things */
+ 		if (word3.bits32 & EOF_BIT) {
+ 			budget--;
+ 			received++;
++			dropping = false;
+ 		}
+ 	}
+ 
+ 	port->rx_skb = skb;
+ 	port->rx_frag_nr = frag_nr;
++	port->rx_dropping = dropping;
+ 	writew(r, ptr_reg);
+ 	return received;
+ }
+@@ -1906,6 +1910,7 @@ static int gmac_stop(struct net_device *netdev)
+ 	napi_disable(&port->napi);
+ 	port->rx_skb = NULL;
+ 	port->rx_frag_nr = 0;
++	port->rx_dropping = false;
+ 
+ 	gmac_enable_irq(netdev, 0);
+ 	gmac_cleanup_rxq(netdev);
 -- 
 2.53.0
 
