@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CC93AF66E;
-	Wed, 30 Sep 2026 17:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584463AF66E;
+	Wed, 30 Sep 2026 17:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790860; cv=none; b=jfCWHLzGTeQvsUi+5PegobECcRV3p5skmE5erKBkzzBIRSt2zHBY51jzA95lN1TaEf3C/DuerXfQZiOHuRBVu/0fMOMEOPSuw1w5wme+o/1kSdQa0/HjskTmAwhTmzrNZ7+n1z/ykR0bSm/nWc7ZtOCugkZ28ogiuqBk0WhfT1I=
+	t=1790790862; cv=none; b=lNo0BFmf5n6zZDSmlEO1jmOkMFYFcOT3VqeuhdZdJcQoK9LEiZIjPvJR1X8co5/ri8yBJASSKeOv6Rd002NTyJEor9WyNqK0iR5oO3Tcn3ADQ+UmuR43hb8KjzvrqiLQvdC23zT3EDCagBWuuFjUgcGw3PfKJPsFUBFlSRtc8ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790860; c=relaxed/simple;
-	bh=1NfLWlmOB7GIxFYHEYfv52ddqsxKk77SftkPmN9Qoho=;
+	s=arc-20240116; t=1790790862; c=relaxed/simple;
+	bh=RA3yUKdaoyAKEACq0EiX9S+tHieELIQPMwXL3Wn1KBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nET/ZojFXyGhf/PY9lTykTOO1WD/3MtzAB+rcsyqMh5FXHfUNdIkqr4DFYUOZuMiOcQFBiJUJNUDZm7Q02seFwVluYeol9MROQvOv9E733pW4FYcs8KgZXH4d3HeG8HyxUROFxwvkDI3buDBU6wCj0PhuLrhzLHJ1RKk80Rq5Dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqu3C6KI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1Gq7wXLBGKEEFesedWBafRY+Q07UjHH8EFIu9NrUQfwVJRA2iqrle8DCnx20yjvoTj5NH/b7aICFRNI/6YsrL/wyUmRmbFgnBMjCJV4zkYV7eqA+96465XAsDaKfOEG5BN6dOTQ1v0jRZVBTmY71Q2LN5MgjCL3HCyCGe3zdo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWSaoBw2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqu3C6KI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D035C1F000FF;
-	Wed, 30 Sep 2026 17:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWSaoBw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0151F000FF;
+	Wed, 30 Sep 2026 17:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790858;
-	bh=LWuARUNQ6RNbAHYONkmhWu55e3ApK0TVzVsRwCJo+K4=;
+	s=korg; t=1790790861;
+	bh=Sd08zk+RzL9rmMektSGGmnvV4h+oY7hiaBfhdHfJYcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qqu3C6KIABhAaURZoPNjCUyrjTQoMOM/bD3zpaqSjOpo8E96NDNIyhsUc2/hA9aRM
-	 2GT7A0ZESEhrPxiALnVL2aOGibLN48P5+nygf6fAkeZrCUQTPL9aYaUicGQuIVHOE9
-	 9j+iChpIO+y7SRwxIWciD4VPDDPAGy75cRwhpcqg=
+	b=dWSaoBw2CASN2dKZxOJk5k4wHqoeIIKYFZkgSUwSbnpm/KVoJxnaIgZPZC/ck+gVG
+	 lngAB40TkoqfGLYoXX8KXdaYgleP0XTgKTTERp23R3ZW52Nn3PXp3G0xgfRoe1eK92
+	 +HTTakEiKwgoDDCPRAvr4oPTYJIVpFPfP5t+0w3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/752] libbpf: Also reset {insn,data}_cur on realloc failure
-Date: Wed, 30 Sep 2026 17:19:29 +0200
-Message-ID: <20260930152400.309961080@linuxfoundation.org>
+Subject: [PATCH 5.15 100/752] net: ibm: emac: Reserve VLAN header in MJS limit
+Date: Wed, 30 Sep 2026 17:19:30 +0200
+Message-ID: <20260930152400.330395032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,44 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit d2f7bd066ed492aeaf82864fbf1f06770f9d9f9d ]
+[ Upstream commit 0906c117f81c2ae6e6dbfa82719f79c75e1c9325 ]
 
-realloc_insn_buf() as well as realloc_data_buf() free and NULL
-gen->insn_start / gen->data_start on -ENOMEM but leave gen->insn_cur /
-gen->data_cur pointing into the old, freed buffer. Just reset the
-cursors to NULL alongside the base pointers so the freed state is
-coherent.
+The IBM EMAC programs its Maximum Jumbo Size (MJS) drop
+threshold from ndev->mtu directly. The hardware sizes the threshold
+against the L2 frame minus the ethernet header, but does not
+discount the 802.1Q tag, so a frame carrying a VLAN tag and a full
+1500-byte payload exceeds MJS by exactly 4 bytes and is dropped.
 
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260529094119.307264-3-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+This is normally hidden because JPSM (and therefore the MJS check)
+only engages when the MTU is raised above ETH_DATA_LEN.  With the
+qca8k DSA tagger the conduit MTU is bumped by QCA_HDR_LEN to 1502
+during dsa_conduit_setup(), which is enough to enable JPSM and
+expose the off-by-VLAN-tag in the limit.
+
+Pad MJS by VLAN_HLEN so a VLAN-tagged full-MTU frame passes.
+
+Reported on Meraki MX60 (qca8k switch): tagged VLAN
+traffic drops at 1500-byte payload, while 1496 bytes works
+and untagged 1500 bytes works.
+
+Assisted-by: Claude:Opus-4.7
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/ibm/emac/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index 4435c09fe132f..aec28a0bddc11 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -55,6 +55,7 @@ static int realloc_insn_buf(struct bpf_gen *gen, __u32 size)
- 		gen->error = -ENOMEM;
- 		free(gen->insn_start);
- 		gen->insn_start = NULL;
-+		gen->insn_cur = NULL;
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
+index 664a91af662df..018fd19d1ce74 100644
+--- a/drivers/net/ethernet/ibm/emac/core.c
++++ b/drivers/net/ethernet/ibm/emac/core.c
+@@ -30,6 +30,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/crc32.h>
+ #include <linux/ethtool.h>
++#include <linux/if_vlan.h>
+ #include <linux/mii.h>
+ #include <linux/bitops.h>
+ #include <linux/workqueue.h>
+@@ -465,7 +466,7 @@ static inline u32 emac_iff2rmr(struct net_device *ndev)
+ 
+ 	if (emac_has_feature(dev, EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE)) {
+ 		r &= ~EMAC4_RMR_MJS_MASK;
+-		r |= EMAC4_RMR_MJS(ndev->mtu);
++		r |= EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN);
  	}
- 	gen->insn_start = insn_start;
-@@ -78,6 +79,7 @@ static int realloc_data_buf(struct bpf_gen *gen, __u32 size)
- 		gen->error = -ENOMEM;
- 		free(gen->data_start);
- 		gen->data_start = NULL;
-+		gen->data_cur = NULL;
- 		return -ENOMEM;
- 	}
- 	gen->data_start = data_start;
+ 
+ 	return r;
 -- 
 2.53.0
 
