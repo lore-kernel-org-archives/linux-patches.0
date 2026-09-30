@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D705F3DD86F;
-	Wed, 30 Sep 2026 19:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EC93B42E7;
+	Wed, 30 Sep 2026 19:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796167; cv=none; b=toRHLTAC+vMHbr647bcLnh9DDlc+NKEJT9UEar8YehNI1mwLiaLDoz4hcG1BxvSyVYYdaOL/m3sFPD5e9UdqWyolJ6VQnW1X11UEoAVp11fdTMIXugaEF/bUPNWaF0zNIHxyK0YUYCzddI9Wz6PlOFxRyxFn2jZPpzUxgtda1ks=
+	t=1790796169; cv=none; b=rixtx8jdCPKcl1PjrmE8CPugrMKd+LIOp30hW1EdzwNdNoraaFZmQiMkpQQtuQ3uI/2bHuy80papGuLAh9cv0QPUzIMF/aQUBN4mucMj3CC4RNJiir4SqITDwMCBorjBpjxQHwjFSoRCLF2kTzc18n7cV/4GiteuofnfE3cp6FU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796167; c=relaxed/simple;
-	bh=CncCImA/kpvK97qYBf3FGlDIykbYeivKg1P1KpW55q0=;
+	s=arc-20240116; t=1790796169; c=relaxed/simple;
+	bh=2xnUGNYT2getm8rtxBKj57Q9+OR06Rgxh0c/0pL9dKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3ypykYe7JryADSSItFPo1nkGxPNdHmu5drrv4H6fcLIzDZvuHUi0PXE88dAGS8klsTsK31PciJ265mETd0YZPtD8Zciyi638du6qdM8vuymjkjVPIqNDSqIAs/7U2xeBRXnrkIwteBJ7BgI8Vp1Gq/2tRO4gxsBWI0j2wxWNGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3wAKpo9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lUC6SbxWOu8kp9TWd0MOslHZcvQWydh+brxq+D3PcaRDQLrAxRKs0ZIIeLra1cVW5rA8HyN8du7OnpHebpxFzxSx7iLFM3UAOO5HJRTCOJQ/F1bty26PRQimMUBB+/qbJXmhRnEOKe4E00oXt9ZNGCPtjRCbxTotVY3e9qSxLts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTUGR1Yd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3wAKpo9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55CB1F000FF;
-	Wed, 30 Sep 2026 19:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTUGR1Yd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F4D1F000FF;
+	Wed, 30 Sep 2026 19:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796165;
-	bh=M/lRgoijyGSw8+zBdQrE3gV/i3rVYDzD5oKYJ/AS0OU=;
+	s=korg; t=1790796168;
+	bh=CfTMLzlViKZGCKACFtTuwMLQiglhejog8xamT81wtOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s3wAKpo9PZgG3dLxQO8H2QPW7FuJ4rJZmHnrOUuKrZ0D2lPJzGrPBvxZ7TC8U8Csy
-	 IePxWEWqyQQ6L2JVpYzO1gTsdtae0taX45gW0HRumt1gQHFouO+/Ds76sNnII3hV7U
-	 xiKftNUh28YkJijV1goiAQmKFH/SiMi3TElSms0M=
+	b=WTUGR1YdSEML5LeEdVp8/1tpSVRhjJX6EEOFYaxP+YGgD2irnLIw89ntWc7Ud0CDS
+	 fl68N/gjn+y0zG8jpMpRqLWJm3bvgJ8LgJlAwo9Cw40Vm9YBhAvCS1tOMRPqpRRac8
+	 tKBC+D3fB/om3nCEiVw8cOefRWpRQJlpI356ge/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yige Jiang <yigejiang86@gmail.com>,
+	Jungwoo Lee <jwlee2217@gmail.com>,
+	Wongi Lee <qw3rtyp0@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0818/1193] net: netsec: fix device_node reference leak on phy_np
-Date: Wed, 30 Sep 2026 17:25:02 +0200
-Message-ID: <20260930152452.419733337@linuxfoundation.org>
+Subject: [PATCH 6.6 0819/1193] net: lock the socket in sock_gettstamp()
+Date: Wed, 30 Sep 2026 17:25:03 +0200
+Message-ID: <20260930152452.442550275@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,70 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yige Jiang <yigejiang86@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5ae916fabca141b79b32e2e57f3c915c0f1e1b2e ]
+[ Upstream commit 9ed55f3dbef4f4adfe65eb03b0c35c53229a8490 ]
 
-netsec_of_probe() takes a reference on the PHY device_node with
-of_parse_phandle() and stores it in priv->phy_np, but the driver never
-drops it.  One device_node reference is leaked per probe, on the success
-path as well as on every error path reached after netsec_of_probe().
+sk->sk_flags must only be changed while holding the socket lock,
+because sock_set_flag() and sock_reset_flag() use non atomic
+operations (__set_bit() and __clear_bit()).
 
-Neither consumer takes ownership.  of_mdio_parse_addr() is a static
-inline taking a const struct device_node * that only reads the "reg"
-property.  of_phy_connect() borrows as well: of_phy_get_and_connect() in
-drivers/net/mdio/of_mdio.c brackets its own call with of_node_get() at
-:364 and of_node_put() at :373, which would be a double put if
-of_phy_connect() consumed the reference.
+sock_gettstamp() is one of the last places where a bit of sk->sk_flags
+is changed from a syscall without owning the socket lock, through
+sock_enable_timestamp(sk, SOCK_TIMESTAMP).
 
-The node is still in use at netsec_netdev_open() time, where it is
-passed to of_phy_connect(), so it has device lifetime.  Release it at
-the probe error label, which every failure path after the acquire
-funnels through, and in netsec_remove().  Both releases precede
-free_netdev(), since priv is netdev_priv(ndev).  The ACPI probe path
-leaves priv->phy_np NULL and of_node_put(NULL) is a no-op.
+sk_set_memalloc() and sk_clear_memalloc() also change sk->sk_flags
+without the socket lock, but their callers (nbd, iscsi_tcp, nvme-tcp,
+sunrpc, wireguard) need a careful audit, this will be addressed in a
+separate patch.
 
-There is no end-user visible symptom on currently supported platforms:
-a device_node is only freed once OF_DYNAMIC is enabled and the node has
-been detached, so on a static device tree the imbalance is inert.  It is
-observable as a refcount that grows across bind/unbind cycles, and would
-matter under device tree overlays.
+Jungwoo Lee and Wongi Lee reported an UDP socket use-after-free
+caused by this bug: a SIOCGSTAMPNS_NEW ioctl racing with bind()
+can cancel the SOCK_RCU_FREE bit that udp_lib_get_port() just set,
+because both threads perform a read-modify-write on the same word.
 
-Found by static analysis of reference acquire/release pairing rather
-than from a runtime report.  No reproducer was produced and the change
-has not been runtime tested; it is compile-tested only (arm64,
-CONFIG_SNI_NETSEC=m via COMPILE_TEST).
+  CPU 0 (bind)                        CPU 1 (SIOCGSTAMPNS_NEW)
+  --------------------------------    ----------------------------
+  read sk_flags = F                   read sk_flags = F
+  compute F | BIT(SOCK_RCU_FREE)      compute F | BIT(SOCK_TIMESTAMP)
+  store F | BIT(SOCK_RCU_FREE)
+  sk_add_node_rcu(sk, ...)
+                                      store F | BIT(SOCK_TIMESTAMP)
 
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Yige Jiang <yigejiang86@gmail.com>
+After the lost update, SOCK_RCU_FREE is clear while the socket is
+visible to lockless UDP receive lookups. sk_destruct() then frees
+the socket immediately instead of waiting for a RCU grace period,
+while the receive path still holds a reference-less pointer to it:
+
+ BUG: KASAN: slab-use-after-free in ipv4_pktinfo_prepare+0x30/0x410
+ Read of size 8 at addr ffff888008806610 by task exploit/207
+ CPU: 0 UID: 1000 PID: 207 Comm: exploit Not tainted 6.12.95+ #1
+  ipv4_pktinfo_prepare+0x30/0x410
+  udp_queue_rcv_one_skb+0x51c/0x1180
+  udp_unicast_rcv_skb+0x109/0x350
+  ip_protocol_deliver_rcu+0x14b/0x310
+  ip_local_deliver_finish+0x29d/0x390
+  ip_local_deliver+0x24d/0x2a0
+
+Only grab the socket lock when SOCK_TIMESTAMP has to be set,
+to keep the common case lockless.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Jungwoo Lee <jwlee2217@gmail.com>
+Reported-by: Wongi Lee <qw3rtyp0@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260913064102.37452-1-yigejiang86@gmail.com
+Link: https://patch.msgid.link/20260915043055.3441600-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/sock.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index b834b129639f0..7389efcdde0b4 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -2144,6 +2144,7 @@ static int netsec_probe(struct platform_device *pdev)
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- free_ndev:
-+	of_node_put(priv->phy_np);
- 	free_netdev(ndev);
- 	dev_err(&pdev->dev, "init failed\n");
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 9d0fe1e8f5b29..ef5f69a4b3abc 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3608,7 +3608,14 @@ int sock_gettstamp(struct socket *sock, void __user *userstamp,
+ 	struct sock *sk = sock->sk;
+ 	struct timespec64 ts;
  
-@@ -2161,6 +2162,7 @@ static int netsec_remove(struct platform_device *pdev)
- 	netif_napi_del(&priv->napi);
- 
- 	pm_runtime_disable(&pdev->dev);
-+	of_node_put(priv->phy_np);
- 	free_netdev(priv->ndev);
- 
- 	return 0;
+-	sock_enable_timestamp(sk, SOCK_TIMESTAMP);
++	/* sk->sk_flags must only be changed under the socket lock,
++	 * because sock_set_flag() uses non atomic operations.
++	 */
++	if (!sock_flag(sk, SOCK_TIMESTAMP)) {
++		lock_sock(sk);
++		sock_enable_timestamp(sk, SOCK_TIMESTAMP);
++		release_sock(sk);
++	}
+ 	ts = ktime_to_timespec64(sock_read_timestamp(sk));
+ 	if (ts.tv_sec == -1)
+ 		return -ENOENT;
 -- 
 2.53.0
 
