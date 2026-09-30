@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D793351E424;
-	Wed, 30 Sep 2026 17:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22251E458;
+	Wed, 30 Sep 2026 17:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790300; cv=none; b=Lwr/hNyE1LpEitXUf9nIKIcipQVWcAvmLZv5w8vYwM7PdXhrhFu5oghc16v74miJK0XUvc2K4/PAdSJTBQku6qPbF5LGGbU7xivPCq7+d/uXZnKNvEM/cuT6/fReXCqqAkoC2cZjpqqDO4i4enMLbz6sYDEnW4l3YzWrPd8jfLM=
+	t=1790790302; cv=none; b=GuoX6ROjIxRlvYP+IvexauW1eCjdewvRHFM7Evjav8/F/BPYPLI2xJe9tcZonOqmZMzZsWVtuvU2mNXoVAgmigXEIrfaTIUFAaA5fOexJGd6PC3aR0b3EhDe6jyDMKBXxDWKmj/U2U1lO5erASAWbDIi/wHhbH00gNgG2cffQnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790300; c=relaxed/simple;
-	bh=wgnqVHGp6jTEbX2A7FggLfFtnTv/CJtocJ/Ws7S21Vg=;
+	s=arc-20240116; t=1790790302; c=relaxed/simple;
+	bh=E/F5JvdsTBb+SGFMWcKAfaMtCgOQRQhCFBeyiJIdJq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+xXD1aCTjsamaOjhVIRUGMFbN58GIGJEbNl5WBqZLljLr7UsuHKmrgLTT3jjUC/TUP0Yz7oEG7T2vaDa7rO84d9XAcdGTZEvMNXBKvv8SViY8B1wQALaMzTixLR7bKvZGmZT8vmwZV7la6PYvBHjt3ZIRyBOcu3ejkFxsM4zg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJO7huWq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ze/OcnNC0lk5JwP8L70nUw14R4zk7I2RBDoYBEDsDg4tGEHbwdXnEg0sZMymDwzJFT77kHAM0kstDtLdwND3U7Ay3ZWQtxiT5fnhSBOnokBhoJHM4t4L6n7G/7Z6HBm1leteRlTkZtMrSAJCc9BHbsV0I9xKWLVdCAt5IobFjP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqRM3yFs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJO7huWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8221F000FF;
-	Wed, 30 Sep 2026 17:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqRM3yFs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F70A1F000FF;
+	Wed, 30 Sep 2026 17:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790298;
-	bh=wlrlxewsk2jwMazMgl1ErhKom0G1a7IidLpVEOz/tUk=;
+	s=korg; t=1790790301;
+	bh=YigR575OVIVZjFqbsDJ0VmpbE6uLKGAOI8366sN1rXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJO7huWq+Sl1eoa3A4xftWquumFyBG22TR5815niwKGAbxBaadxtrUbp1PhtHAtNC
-	 QXM0JlETgS8sXYDzIHE+/v54ROteFz6QUv5lp2ma/bOK840AxAHd7BSNdmbEb/0aPX
-	 DYGbzsMbVBWpwCXvhiCLPfHCNBHKyCi+3/u2buKU=
+	b=MqRM3yFs7EyfFQ4c+KTUeDVfSpbNHQxgmuptk5wjNMJluPmcwLbMw+su3hBWC/Pb4
+	 DJmXJkMd0tEB5FWav+Pi7/Po4i9dcd4JvvHFjcDTEVwKXMgvkr/q+nvVDORCsXJoqc
+	 0MpdZGLm7LwHyl/J2RH1/zXvysCDO1Gs5JREXbxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 778/877] xfs: fix short ifork reaping computation in xreap_bmapi_binval
-Date: Wed, 30 Sep 2026 17:28:09 +0200
-Message-ID: <20260930152431.502437334@linuxfoundation.org>
+Subject: [PATCH 6.12 779/877] xfs: strengthen the "is cow staging" helpers in scrub
+Date: Wed, 30 Sep 2026 17:28:10 +0200
+Message-ID: <20260930152431.524385368@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,40 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit eacb8479507756c3305994e87fb2fb1183827e98 ]
+[ Upstream commit 0d43368844a75ad13561a1198a3b027940730756 ]
 
-LOLLM got really confused about the update to imap->br_blockcount in
-xreap_bmapi_binval if xreap_inc_binval returns false.  The intent of
-this code is that we shorten the imap to whatever length of space we
-invalidated so that the next iteration through the loop will start
-wherever we left off.  Unfortunately, the calculation sets br_blockcount
-to the amount of *unfinished* work, which means that we pointlessly
-re-scan blocks that we already reaped.  This is benign, but we should
-fix the computation anyway.
+LOLLM pointed out a bug in both of the refcount scrub predicates that
+determine if a range of blocks is marked as CoW staging in the btree.
+While it compares blockcount < len, this isn't enough to determine that
+the CoW staging record is at least as large as the range passed into the
+helper.  Fix both of them.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 5befb047b9f4de ("xfs: add the ability to reap entire inode forks")
+Cc: stable@vger.kernel.org # v4.16
+Fixes: f6d5fc21fdc713 ("xfs: cross-reference refcount btree during scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ Adjusted context to retain `invalidated > XREAP_MAX_BINVAL` instead of `xreap_inc_binval(rs)`. ]
+[ Omitted the rtrefcount.c hunk because Linux 6.12 lacks realtime refcount scrub support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/reap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/refcount.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/reap.c
-+++ b/fs/xfs/scrub/reap.c
-@@ -861,7 +861,7 @@ xreap_bmapi_binval(
- 			 * much of the mapping we've seen so far.
- 			 */
- 			if (invalidated > XREAP_MAX_BINVAL) {
--				imap->br_blockcount = agbno_next - bno;
-+				imap->br_blockcount = bno - agbno;
- 				goto out;
- 			}
- 		}
+--- a/fs/xfs/scrub/refcount.c
++++ b/fs/xfs/scrub/refcount.c
+@@ -581,8 +581,12 @@ xchk_xref_is_cow_staging(
+ 	if (rc.rc_domain != XFS_REFC_DOMAIN_COW)
+ 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+ 
++	/* Can't start after bno */
++	if (rc.rc_startblock > agbno)
++		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
++
+ 	/* Must be at least as long as what was passed in */
+-	if (rc.rc_blockcount < len)
++	if (rc.rc_startblock + rc.rc_blockcount < agbno + len)
+ 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+ }
+ 
 
 
