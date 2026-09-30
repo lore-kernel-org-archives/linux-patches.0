@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8469450C2A4;
-	Wed, 30 Sep 2026 17:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF5E4FB9AF;
+	Wed, 30 Sep 2026 17:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788400; cv=none; b=u5yTSgktgg4x2VhfG18yP+kTKpKi8L6J0LH6AA7z16kpSrYg5874hdGt6/wEnWyRqjRPT/bvxe3OVPJkzKdj9rcdjRRLdH/6sXmym2hU6YA2CvRZdMed9l6N+VLiXSn6MGkFT6TwUCl7bCaHtT6l5t1blIIGGAOa4KtQTJpdkEs=
+	t=1790788404; cv=none; b=ZYAH6gYaQNMBum9uT6m88VPOv4wTVBZ77iB0N6xi9DE5YhGIx9wHIucrAtp8lBnmndBQFJqXF/bq+AanBMXQKG+uwcUjQL8vsujTcGJkG/wgz2doXd7zp2nD4LXDXOqL7/jGNMU5Z9TYzWGw+tI/BUtxbRJyMZ09f+O0iup5opw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788400; c=relaxed/simple;
-	bh=k8tbjoidGnlE28DlkLQ8QQnPilwXkr2z0hHl8T/ZCRw=;
+	s=arc-20240116; t=1790788404; c=relaxed/simple;
+	bh=vtO0ZQ/QSjqt7meXo3H6BkjWWI8rbhzviQKzwKVjGa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhjrIVdaVJ6WstxfstXeUJqe1caQ4aklYpRP6NWfCky9BQJG1a1EXjtkU7MpvPmEdY53u1/0D1mvlqlUaJ2qY2JdlEdhfOr7aUGzqXKLR+hgOuAc/xIvHf83p+pLtYYWWgOaBxg32z64UuwrugrTndQH5qGD0QfdasdV9lI4Kgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvk4VhF0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TUvwxoKCyuAbHPf+JLWMdEINets1+je1qTNO+6A2sAvaNaPny4ngc8pJzivvvPnibgkOxRkThUicREA6v8NYjQl9FH8oahj4NT0PowNx6Tqg+JDTveRMp9aUYarhvdkwT5AbMrRS7VVKuq2zXACihMMrGhqvPBMcktmudOL3M2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0fonagU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvk4VhF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90101F000FF;
-	Wed, 30 Sep 2026 17:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0fonagU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE62C1F0089A;
+	Wed, 30 Sep 2026 17:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788399;
-	bh=yJC914sId3l9oirmguQrTA4+f4HAGFKonSZ73GG2/RU=;
+	s=korg; t=1790788402;
+	bh=BuCntm2RUqPxx0N4BzP9UQlInGJBVgCXiqQlCDxNACg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvk4VhF0heOq/iO/cC9ygLjPxg5nNwY+HYOIPY/TqD/PEflC7FE0GW0/vGJcCMGcW
-	 XhNXC8FQNhHFy7Xsb4sW1j3EPZQHiSG16TGLzOHSPufPPWPNKbd48zB5/BgZvktx3T
-	 fnbrfk6w5cEjD+f8K4OnYQtPCkNPeeYz8+AEyzkc=
+	b=C0fonagUOUkLVasTxXNAnCdgBSTBGz9+KPAvggV71BrrCN0uJZtNgyTvaMo7nn1xj
+	 H9gebmWhJsx6hfK55cohWx8pZRox2XFltPFkQxJ/pthqCazSEaysz/D5XCqYQG0D4o
+	 Y+NcCM9kyOkVvrO6uTTGfmFT1CO2CgN06NIe7O5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Manaswini Paluri <quic_mpaluri@quicinc.com>,
+	Kavita Kavita <quic_kkavita@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/877] gpio: virtuser: skip free_irq when no IRQ is installed
-Date: Wed, 30 Sep 2026 17:17:00 +0200
-Message-ID: <20260930152417.091345312@linuxfoundation.org>
+Subject: [PATCH 6.12 067/877] wifi: cfg80211: skip regulatory for punctured subchannels
+Date: Wed, 30 Sep 2026 17:16:18 +0200
+Message-ID: <20260930152416.185502144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,54 +52,561 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Kavita Kavita <quic_kkavita@quicinc.com>
 
-[ Upstream commit 50fd0ada8d37587223001600933270b59cb30e19 ]
+[ Upstream commit 9add053591ed9d126b6f071236e33e762c439fa8 ]
 
-Disabling interrupt monitoring uses atomic_xchg() to clear the stored IRQ.
-When monitoring is already disabled, atomic_xchg() returns 0. It must not
-be passed to free_irq().
+The kernel performs several regulatory checks for AP mode in
+nl80211/cfg80211. These checks include radar detection,
+verification of whether the sub-channel is disabled, and
+an examination to determine if the channel is a DFS channel
+(both DFS usable and DFS available). These checks are
+performed across a frequency range, examining each sub-channel.
 
-The bug is reproducible on an x86_64 QEMU guest with
-CONFIG_GPIO_VIRTUSER=y and CONFIG_GPIO_SIM=y. Configure a live
-gpio-virtuser device through configfs. Its input lookup must refer to a
-live gpio-sim bank, such as key gpio-sim-test with offset 0. The
-consumer's dev_name attribute is shown as <dev> below; then run:
+However, these checks are also performed on subchannels that
+have been punctured which should not be examined as they are
+not in use.
 
-    echo 0 > /sys/kernel/debug/gpio-virtuser/<dev>/gpiod:input:0/interrupts
+This leads to the issue where the AP stops because one of
+the 20 MHz sub-channels is disabled or radar detected on
+the channel, even when the sub-channel is punctured.
 
-On an unpatched kernel, this reaches gpio_virtuser_interrupts_set() with
-ld->irq still at its initial value 0, and free_irq() reports:
+To address this issue, add a condition check wherever
+regulatory checks exist for AP mode in nl80211/cfg80211.
+This check identifies punctured channels and, upon finding
+them, skips the regulatory checks for those channels.
 
-    Trying to free already-free IRQ 0
-
-The same reproducer completes without the warning on the patched kernel.
-
-Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260914051537.15320-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Co-developed-by: Manaswini Paluri <quic_mpaluri@quicinc.com>
+Signed-off-by: Manaswini Paluri <quic_mpaluri@quicinc.com>
+Signed-off-by: Kavita Kavita <quic_kkavita@quicinc.com>
+Link: https://patch.msgid.link/20250109050409.25351-1-quic_kkavita@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: e14bf37bb2b3 ("wifi: mac80211: don't allow injecting frames wider than the chanctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-virtuser.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/wireless/chan.c | 370 +++++++++++++++-----------------------------
+ 1 file changed, 123 insertions(+), 247 deletions(-)
 
-diff --git a/drivers/gpio/gpio-virtuser.c b/drivers/gpio/gpio-virtuser.c
-index ff1977b269914..5de9cee51fd08 100644
---- a/drivers/gpio/gpio-virtuser.c
-+++ b/drivers/gpio/gpio-virtuser.c
-@@ -698,7 +698,8 @@ static int gpio_virtuser_interrupts_set(void *data, u64 val)
- 		atomic_set(&ld->irq, irq);
- 	} else {
- 		irq = atomic_xchg(&ld->irq, 0);
--		free_irq(irq, ld);
-+		if (irq)
-+			free_irq(irq, ld);
+diff --git a/net/wireless/chan.c b/net/wireless/chan.c
+index 515d40c09e788..b1a8d17baa62a 100644
+--- a/net/wireless/chan.c
++++ b/net/wireless/chan.c
+@@ -55,6 +55,56 @@ void cfg80211_chandef_create(struct cfg80211_chan_def *chandef,
+ }
+ EXPORT_SYMBOL(cfg80211_chandef_create);
+ 
++static int cfg80211_chandef_get_width(const struct cfg80211_chan_def *c)
++{
++	return nl80211_chan_width_to_mhz(c->width);
++}
++
++static u32 cfg80211_get_start_freq(const struct cfg80211_chan_def *chandef,
++				   u32 cf)
++{
++	u32 start_freq, center_freq, bandwidth;
++
++	center_freq = MHZ_TO_KHZ((cf == 1) ?
++			chandef->center_freq1 : chandef->center_freq2);
++	bandwidth = MHZ_TO_KHZ(cfg80211_chandef_get_width(chandef));
++
++	if (bandwidth <= MHZ_TO_KHZ(20))
++		start_freq = center_freq;
++	else
++		start_freq = center_freq - bandwidth / 2 + MHZ_TO_KHZ(10);
++
++	return start_freq;
++}
++
++static u32 cfg80211_get_end_freq(const struct cfg80211_chan_def *chandef,
++				 u32 cf)
++{
++	u32 end_freq, center_freq, bandwidth;
++
++	center_freq = MHZ_TO_KHZ((cf == 1) ?
++			chandef->center_freq1 : chandef->center_freq2);
++	bandwidth = MHZ_TO_KHZ(cfg80211_chandef_get_width(chandef));
++
++	if (bandwidth <= MHZ_TO_KHZ(20))
++		end_freq = center_freq;
++	else
++		end_freq = center_freq + bandwidth / 2 - MHZ_TO_KHZ(10);
++
++	return end_freq;
++}
++
++#define for_each_subchan(chandef, freq, cf)				\
++	for (u32 punctured = chandef->punctured,			\
++	     cf = 1, freq = cfg80211_get_start_freq(chandef, cf);	\
++	     freq <= cfg80211_get_end_freq(chandef, cf);		\
++	     freq += MHZ_TO_KHZ(20),					\
++	     ((cf == 1 && chandef->center_freq2 != 0 &&			\
++	       freq > cfg80211_get_end_freq(chandef, cf)) ?		\
++	      (cf++, freq = cfg80211_get_start_freq(chandef, cf),	\
++	       punctured = 0) : (punctured >>= 1)))			\
++		if (!(punctured & 1))
++
+ struct cfg80211_per_bw_puncturing_values {
+ 	u8 len;
+ 	const u16 *valid_values;
+@@ -258,11 +308,6 @@ int nl80211_chan_width_to_mhz(enum nl80211_chan_width chan_width)
+ }
+ EXPORT_SYMBOL(nl80211_chan_width_to_mhz);
+ 
+-static int cfg80211_chandef_get_width(const struct cfg80211_chan_def *c)
+-{
+-	return nl80211_chan_width_to_mhz(c->width);
+-}
+-
+ static bool cfg80211_valid_center_freq(u32 center,
+ 				       enum nl80211_chan_width width)
+ {
+@@ -582,29 +627,11 @@ cfg80211_chandef_compatible(const struct cfg80211_chan_def *c1,
+ }
+ EXPORT_SYMBOL(cfg80211_chandef_compatible);
+ 
+-static void cfg80211_set_chans_dfs_state(struct wiphy *wiphy, u32 center_freq,
+-					 u32 bandwidth,
+-					 enum nl80211_dfs_state dfs_state)
+-{
+-	struct ieee80211_channel *c;
+-	u32 freq;
+-
+-	for (freq = center_freq - bandwidth/2 + 10;
+-	     freq <= center_freq + bandwidth/2 - 10;
+-	     freq += 20) {
+-		c = ieee80211_get_channel(wiphy, freq);
+-		if (!c || !(c->flags & IEEE80211_CHAN_RADAR))
+-			continue;
+-
+-		c->dfs_state = dfs_state;
+-		c->dfs_state_entered = jiffies;
+-	}
+-}
+-
+ void cfg80211_set_dfs_state(struct wiphy *wiphy,
+ 			    const struct cfg80211_chan_def *chandef,
+ 			    enum nl80211_dfs_state dfs_state)
+ {
++	struct ieee80211_channel *c;
+ 	int width;
+ 
+ 	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
+@@ -614,41 +641,14 @@ void cfg80211_set_dfs_state(struct wiphy *wiphy,
+ 	if (width < 0)
+ 		return;
+ 
+-	cfg80211_set_chans_dfs_state(wiphy, chandef->center_freq1,
+-				     width, dfs_state);
+-
+-	if (!chandef->center_freq2)
+-		return;
+-	cfg80211_set_chans_dfs_state(wiphy, chandef->center_freq2,
+-				     width, dfs_state);
+-}
+-
+-static u32 cfg80211_get_start_freq(u32 center_freq,
+-				   u32 bandwidth)
+-{
+-	u32 start_freq;
+-
+-	bandwidth = MHZ_TO_KHZ(bandwidth);
+-	if (bandwidth <= MHZ_TO_KHZ(20))
+-		start_freq = center_freq;
+-	else
+-		start_freq = center_freq - bandwidth / 2 + MHZ_TO_KHZ(10);
+-
+-	return start_freq;
+-}
+-
+-static u32 cfg80211_get_end_freq(u32 center_freq,
+-				 u32 bandwidth)
+-{
+-	u32 end_freq;
+-
+-	bandwidth = MHZ_TO_KHZ(bandwidth);
+-	if (bandwidth <= MHZ_TO_KHZ(20))
+-		end_freq = center_freq;
+-	else
+-		end_freq = center_freq + bandwidth / 2 - MHZ_TO_KHZ(10);
++	for_each_subchan(chandef, freq, cf) {
++		c = ieee80211_get_channel_khz(wiphy, freq);
++		if (!c || !(c->flags & IEEE80211_CHAN_RADAR))
++			continue;
+ 
+-	return end_freq;
++		c->dfs_state = dfs_state;
++		c->dfs_state_entered = jiffies;
++	}
+ }
+ 
+ static bool
+@@ -725,17 +725,12 @@ static bool cfg80211_dfs_permissive_chan(struct wiphy *wiphy,
+ }
+ 
+ static int cfg80211_get_chans_dfs_required(struct wiphy *wiphy,
+-					    u32 center_freq,
+-					    u32 bandwidth,
+-					    enum nl80211_iftype iftype)
++					   const struct cfg80211_chan_def *chandef,
++					   enum nl80211_iftype iftype)
+ {
+ 	struct ieee80211_channel *c;
+-	u32 freq, start_freq, end_freq;
+-
+-	start_freq = cfg80211_get_start_freq(center_freq, bandwidth);
+-	end_freq = cfg80211_get_end_freq(center_freq, bandwidth);
+ 
+-	for (freq = start_freq; freq <= end_freq; freq += MHZ_TO_KHZ(20)) {
++	for_each_subchan(chandef, freq, cf) {
+ 		c = ieee80211_get_channel_khz(wiphy, freq);
+ 		if (!c)
+ 			return -EINVAL;
+@@ -768,25 +763,9 @@ int cfg80211_chandef_dfs_required(struct wiphy *wiphy,
+ 		if (width < 0)
+ 			return -EINVAL;
+ 
+-		ret = cfg80211_get_chans_dfs_required(wiphy,
+-					ieee80211_chandef_to_khz(chandef),
+-					width, iftype);
+-		if (ret < 0)
+-			return ret;
+-		else if (ret > 0)
+-			return BIT(chandef->width);
+-
+-		if (!chandef->center_freq2)
+-			return 0;
+-
+-		ret = cfg80211_get_chans_dfs_required(wiphy,
+-					MHZ_TO_KHZ(chandef->center_freq2),
+-					width, iftype);
+-		if (ret < 0)
+-			return ret;
+-		else if (ret > 0)
+-			return BIT(chandef->width);
++		ret = cfg80211_get_chans_dfs_required(wiphy, chandef, iftype);
+ 
++		return (ret > 0) ? BIT(chandef->width) : ret;
+ 		break;
+ 	case NL80211_IFTYPE_STATION:
+ 	case NL80211_IFTYPE_OCB:
+@@ -806,16 +785,18 @@ int cfg80211_chandef_dfs_required(struct wiphy *wiphy,
+ }
+ EXPORT_SYMBOL(cfg80211_chandef_dfs_required);
+ 
+-static int cfg80211_get_chans_dfs_usable(struct wiphy *wiphy,
+-					 u32 center_freq,
+-					 u32 bandwidth)
++bool cfg80211_chandef_dfs_usable(struct wiphy *wiphy,
++				 const struct cfg80211_chan_def *chandef)
+ {
+ 	struct ieee80211_channel *c;
+-	u32 freq, start_freq, end_freq;
+-	int count = 0;
++	int width, count = 0;
+ 
+-	start_freq = cfg80211_get_start_freq(center_freq, bandwidth);
+-	end_freq = cfg80211_get_end_freq(center_freq, bandwidth);
++	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
++		return false;
++
++	width = cfg80211_chandef_get_width(chandef);
++	if (width < 0)
++		return false;
+ 
+ 	/*
+ 	 * Check entire range of channels for the bandwidth.
+@@ -823,61 +804,24 @@ static int cfg80211_get_chans_dfs_usable(struct wiphy *wiphy,
+ 	 * DFS_AVAILABLE). Return number of usable channels
+ 	 * (require CAC). Allow DFS and non-DFS channel mix.
+ 	 */
+-	for (freq = start_freq; freq <= end_freq; freq += MHZ_TO_KHZ(20)) {
++	for_each_subchan(chandef, freq, cf) {
+ 		c = ieee80211_get_channel_khz(wiphy, freq);
+ 		if (!c)
+-			return -EINVAL;
++			return false;
+ 
+ 		if (c->flags & IEEE80211_CHAN_DISABLED)
+-			return -EINVAL;
++			return false;
+ 
+ 		if (c->flags & IEEE80211_CHAN_RADAR) {
+ 			if (c->dfs_state == NL80211_DFS_UNAVAILABLE)
+-				return -EINVAL;
++				return false;
+ 
+ 			if (c->dfs_state == NL80211_DFS_USABLE)
+ 				count++;
+ 		}
  	}
  
- 	return 0;
+-	return count;
+-}
+-
+-bool cfg80211_chandef_dfs_usable(struct wiphy *wiphy,
+-				 const struct cfg80211_chan_def *chandef)
+-{
+-	int width;
+-	int r1, r2 = 0;
+-
+-	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
+-		return false;
+-
+-	width = cfg80211_chandef_get_width(chandef);
+-	if (width < 0)
+-		return false;
+-
+-	r1 = cfg80211_get_chans_dfs_usable(wiphy,
+-					   MHZ_TO_KHZ(chandef->center_freq1),
+-					   width);
+-
+-	if (r1 < 0)
+-		return false;
+-
+-	switch (chandef->width) {
+-	case NL80211_CHAN_WIDTH_80P80:
+-		WARN_ON(!chandef->center_freq2);
+-		r2 = cfg80211_get_chans_dfs_usable(wiphy,
+-					MHZ_TO_KHZ(chandef->center_freq2),
+-					width);
+-		if (r2 < 0)
+-			return false;
+-		break;
+-	default:
+-		WARN_ON(chandef->center_freq2);
+-		break;
+-	}
+-
+-	return (r1 + r2 > 0);
++	return count > 0;
+ }
+ EXPORT_SYMBOL(cfg80211_chandef_dfs_usable);
+ 
+@@ -1051,26 +995,29 @@ bool cfg80211_any_wiphy_oper_chan(struct wiphy *wiphy,
+ 	return false;
+ }
+ 
+-static bool cfg80211_get_chans_dfs_available(struct wiphy *wiphy,
+-					     u32 center_freq,
+-					     u32 bandwidth)
++static bool cfg80211_chandef_dfs_available(struct wiphy *wiphy,
++				const struct cfg80211_chan_def *chandef)
+ {
+ 	struct ieee80211_channel *c;
+-	u32 freq, start_freq, end_freq;
++	int width;
+ 	bool dfs_offload;
+ 
++	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
++		return false;
++
++	width = cfg80211_chandef_get_width(chandef);
++	if (width < 0)
++		return false;
++
+ 	dfs_offload = wiphy_ext_feature_isset(wiphy,
+ 					      NL80211_EXT_FEATURE_DFS_OFFLOAD);
+ 
+-	start_freq = cfg80211_get_start_freq(center_freq, bandwidth);
+-	end_freq = cfg80211_get_end_freq(center_freq, bandwidth);
+-
+ 	/*
+ 	 * Check entire range of channels for the bandwidth.
+ 	 * If any channel in between is disabled or has not
+ 	 * had gone through CAC return false
+ 	 */
+-	for (freq = start_freq; freq <= end_freq; freq += MHZ_TO_KHZ(20)) {
++	for_each_subchan(chandef, freq, cf) {
+ 		c = ieee80211_get_channel_khz(wiphy, freq);
+ 		if (!c)
+ 			return false;
+@@ -1087,124 +1034,54 @@ static bool cfg80211_get_chans_dfs_available(struct wiphy *wiphy,
+ 	return true;
+ }
+ 
+-static bool cfg80211_chandef_dfs_available(struct wiphy *wiphy,
+-				const struct cfg80211_chan_def *chandef)
++unsigned int
++cfg80211_chandef_dfs_cac_time(struct wiphy *wiphy,
++			      const struct cfg80211_chan_def *chandef)
+ {
++	struct ieee80211_channel *c;
+ 	int width;
+-	int r;
++	unsigned int t1 = 0, t2 = 0;
+ 
+ 	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
+-		return false;
++		return 0;
+ 
+ 	width = cfg80211_chandef_get_width(chandef);
+ 	if (width < 0)
+-		return false;
+-
+-	r = cfg80211_get_chans_dfs_available(wiphy,
+-					     MHZ_TO_KHZ(chandef->center_freq1),
+-					     width);
+-
+-	/* If any of channels unavailable for cf1 just return */
+-	if (!r)
+-		return r;
+-
+-	switch (chandef->width) {
+-	case NL80211_CHAN_WIDTH_80P80:
+-		WARN_ON(!chandef->center_freq2);
+-		r = cfg80211_get_chans_dfs_available(wiphy,
+-					MHZ_TO_KHZ(chandef->center_freq2),
+-					width);
+-		break;
+-	default:
+-		WARN_ON(chandef->center_freq2);
+-		break;
+-	}
+-
+-	return r;
+-}
+-
+-static unsigned int cfg80211_get_chans_dfs_cac_time(struct wiphy *wiphy,
+-						    u32 center_freq,
+-						    u32 bandwidth)
+-{
+-	struct ieee80211_channel *c;
+-	u32 start_freq, end_freq, freq;
+-	unsigned int dfs_cac_ms = 0;
+-
+-	start_freq = cfg80211_get_start_freq(center_freq, bandwidth);
+-	end_freq = cfg80211_get_end_freq(center_freq, bandwidth);
++		return 0;
+ 
+-	for (freq = start_freq; freq <= end_freq; freq += MHZ_TO_KHZ(20)) {
++	for_each_subchan(chandef, freq, cf) {
+ 		c = ieee80211_get_channel_khz(wiphy, freq);
+-		if (!c)
+-			return 0;
+-
+-		if (c->flags & IEEE80211_CHAN_DISABLED)
+-			return 0;
++		if (!c || (c->flags & IEEE80211_CHAN_DISABLED)) {
++			if (cf == 1)
++				t1 = INT_MAX;
++			else
++				t2 = INT_MAX;
++			continue;
++		}
+ 
+ 		if (!(c->flags & IEEE80211_CHAN_RADAR))
+ 			continue;
+ 
+-		if (c->dfs_cac_ms > dfs_cac_ms)
+-			dfs_cac_ms = c->dfs_cac_ms;
+-	}
+-
+-	return dfs_cac_ms;
+-}
+-
+-unsigned int
+-cfg80211_chandef_dfs_cac_time(struct wiphy *wiphy,
+-			      const struct cfg80211_chan_def *chandef)
+-{
+-	int width;
+-	unsigned int t1 = 0, t2 = 0;
++		if (cf == 1 && c->dfs_cac_ms > t1)
++			t1 = c->dfs_cac_ms;
+ 
+-	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
+-		return 0;
++		if (cf == 2 && c->dfs_cac_ms > t2)
++			t2 = c->dfs_cac_ms;
++	}
+ 
+-	width = cfg80211_chandef_get_width(chandef);
+-	if (width < 0)
++	if (t1 == INT_MAX && t2 == INT_MAX)
+ 		return 0;
+ 
+-	t1 = cfg80211_get_chans_dfs_cac_time(wiphy,
+-					     MHZ_TO_KHZ(chandef->center_freq1),
+-					     width);
++	if (t1 == INT_MAX)
++		return t2;
+ 
+-	if (!chandef->center_freq2)
++	if (t2 == INT_MAX)
+ 		return t1;
+ 
+-	t2 = cfg80211_get_chans_dfs_cac_time(wiphy,
+-					     MHZ_TO_KHZ(chandef->center_freq2),
+-					     width);
+-
+ 	return max(t1, t2);
+ }
+ EXPORT_SYMBOL(cfg80211_chandef_dfs_cac_time);
+ 
+-static bool cfg80211_secondary_chans_ok(struct wiphy *wiphy,
+-					u32 center_freq, u32 bandwidth,
+-					u32 prohibited_flags,
+-					u32 permitting_flags)
+-{
+-	struct ieee80211_channel *c;
+-	u32 freq, start_freq, end_freq;
+-
+-	start_freq = cfg80211_get_start_freq(center_freq, bandwidth);
+-	end_freq = cfg80211_get_end_freq(center_freq, bandwidth);
+-
+-	for (freq = start_freq; freq <= end_freq; freq += MHZ_TO_KHZ(20)) {
+-		c = ieee80211_get_channel_khz(wiphy, freq);
+-		if (!c)
+-			return false;
+-		if (c->flags & permitting_flags)
+-			continue;
+-		if (c->flags & prohibited_flags)
+-			return false;
+-	}
+-
+-	return true;
+-}
+-
+ /* check if the operating channels are valid and supported */
+ static bool cfg80211_edmg_usable(struct wiphy *wiphy, u8 edmg_channels,
+ 				 enum ieee80211_edmg_bw_config edmg_bw_config,
+@@ -1270,6 +1147,7 @@ bool _cfg80211_chandef_usable(struct wiphy *wiphy,
+ 	bool ext_nss_cap, support_80_80 = false, support_320 = false;
+ 	const struct ieee80211_sband_iftype_data *iftd;
+ 	struct ieee80211_supported_band *sband;
++	struct ieee80211_channel *c;
+ 	int i;
+ 
+ 	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
+@@ -1420,19 +1298,17 @@ bool _cfg80211_chandef_usable(struct wiphy *wiphy,
+ 	if (width < 20)
+ 		prohibited_flags |= IEEE80211_CHAN_NO_OFDM;
+ 
++	for_each_subchan(chandef, freq, cf) {
++		c = ieee80211_get_channel_khz(wiphy, freq);
++		if (!c)
++			return false;
++		if (c->flags & permitting_flags)
++			continue;
++		if (c->flags & prohibited_flags)
++			return false;
++	}
+ 
+-	if (!cfg80211_secondary_chans_ok(wiphy,
+-					 ieee80211_chandef_to_khz(chandef),
+-					 width, prohibited_flags,
+-					 permitting_flags))
+-		return false;
+-
+-	if (!chandef->center_freq2)
+-		return true;
+-	return cfg80211_secondary_chans_ok(wiphy,
+-					   MHZ_TO_KHZ(chandef->center_freq2),
+-					   width, prohibited_flags,
+-					   permitting_flags);
++	return true;
+ }
+ 
+ bool cfg80211_chandef_usable(struct wiphy *wiphy,
 -- 
 2.53.0
 
