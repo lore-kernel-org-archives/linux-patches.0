@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332425172CB;
-	Wed, 30 Sep 2026 16:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C70251599B;
+	Wed, 30 Sep 2026 16:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787355; cv=none; b=FkUKyyx2UGwSijfL0q9fRn3dzgjOeXEliKc6jo0vNvO4NAfgog7CUBjwO5ZvyTtLLQ18wjV/LnW2FjRU6Pp5Yut7KdB9xtYBLtClJl94naXx6uFkPK18UrPBIh14p46n4C/XKC4M/LsrFVBILRaYsqjIspks4N+bHGsELyU/OzQ=
+	t=1790787358; cv=none; b=ce5UXpqEpYeJvnKCy10OZNhOP+qQJBLCsWwP3kyQHUTKuPVVVSLXBZJVQ0CFWat8E6YOu+nlwfZVLfIhTGG+6odOdyNScNsCnANHlPXz1RU4W1hZ8r9dmsPDZZjTUh+dDSMBUCpcm3Au21Fw3FEbo0otyjXv1G9kPWrlKlF0I6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787355; c=relaxed/simple;
-	bh=ULhB7UXewOeShsQuBYYSTJUvxwdGKrEvYQO/lE1AKIM=;
+	s=arc-20240116; t=1790787358; c=relaxed/simple;
+	bh=Q/rK7iaGUPSKAITKm8lrTa9hioqbIQlWHTDqkvo/i3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XV8S1uHc1HiGBXuaMVdw1WANCfpWbS+qm8J6IKPO0S/U9gtMs0cA3ZlZQq7/PUCKu1KL+sdvQRsOqCJWBIs8RhEV0zzn9jOeVKV7xZNmXNtI+jchFw5cfSmZczNERj+n5AUOiuI51UU7R9/K2dEPJPP/8V3tkeQKA3Nh8XsymwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vj45h6Qs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HRzQZgEuAR9QjPbV+BFmYxe320r50KdOZHJCr7wjiVcD92VGRyc7BjnM2xTb21/8zKr1X6x/bHpEnGNFYBfR8c1bU8Ne+ICHRGhlaLerTo9hpgiMWUOrZVPlttqedD9KjVDxZyZSY8UFlw0q1CHPpRPAYe4lkUytKN0Q4qd3uos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4/jUMwK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vj45h6Qs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA9C1F000FF;
-	Wed, 30 Sep 2026 16:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4/jUMwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6439A1F000FF;
+	Wed, 30 Sep 2026 16:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787354;
-	bh=/F9lHQJBc1uo2zOstzZGhThFLiFanuM+acP+CuZVsh8=;
+	s=korg; t=1790787356;
+	bh=9wjiQ+4IB5kMVDOJGAhn9Kd6Ij9x52guhAjgKG27kBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vj45h6QsoI6DI4JRX32+NFjAr52W9RzoJC/vL9k2MJh1KECSj2qnhGZl+gfvzjAKI
-	 YxDu7H7L+AUHn1e1S7fEdCr1UlwLPedWS2gqITCD/GbEvUNdAtqBXyC6D/Vsl4MpEW
-	 LZ4lvrPlqR64BRMuAx+KNtmSd+7akZj/LH+WBFZU=
+	b=X4/jUMwKTtqmRIYDURp98XcaCT3ek7qUDEAmGwB+y3fbxXEMxczNA2L/VoWkgYGeb
+	 LGHPWBAuKySGer2dmx2RWh2CjEzR1njn2nu2NACfWcl+KwnxAhB/GVQzdn67pNpXfT
+	 YcTE9OjhUPsdBkhlyFqBu7fOi1AzBnsjgzNZpU0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Norbert Szetei <norbert@doyensec.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 199/457] vxlan: use one headroom snapshot for neighbour replies
-Date: Wed, 30 Sep 2026 17:25:04 +0200
-Message-ID: <20260930152350.350252410@linuxfoundation.org>
+Subject: [PATCH 7.2 200/457] net: xps: reject an out of range traffic class
+Date: Wed, 30 Sep 2026 17:25:05 +0200
+Message-ID: <20260930152350.372164720@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,62 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 481506a756dcd828ef42391cb08f38d8d96d38fc ]
+[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
 
-vxlan_na_create() samples LL_RESERVED_SPACE() to size the reply skb and then
-samples it again to reserve headroom. A concurrent vxlan_changelink() can
-update needed_headroom between the two reads, creating a TOCTOU race. The
-second value can exceed the allocation and make the Ethernet header write out
-of bounds.
+Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
+dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
+lowers dev->num_tc without touching either array.
 
-The race is reproducible on the unpatched kernel. It occurred when
-vxlan_na_create() generated a neighbour reply while vxlan_changelink() changed
-the link headroom. KASAN caught a four-byte write two bytes beyond a 704-byte
-skbuff_small_head allocation.
+netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
+netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
+entry is handed out as a traffic class >= dev->num_tc. Taking that
+class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
+negative one and indexes an XPS map sized for dev->num_tc classes:
 
-Snapshot the headroom once and use that value for both allocation and
-reservation.
+	tci = j * num_tc + tc;
+	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
 
-Fixes: 4b29dba9c085 ("vxlan: fix nonfunctional neigh_reduce()")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Link: https://patch.msgid.link/20260918032842.502409-2-sanghyun.park.cnu@gmail.com
+attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
+in the mask, so a class that is not below num_tc pushes tci past the end
+of the map for the last ids and the store overruns it.
+
+Any caller that lowers num_tc leaves such entries behind, and
+mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
+netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
+still describe txq 1..7. The splat is from an XPS write to txq 2 on a
+veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
+j == 6 stores one past the end of the 88-byte map:
+
+  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
+  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
+   __netif_set_xps_queue (net/core/dev.c:2954)
+   xps_rxqs_store (net/core/net-sysfs.c:1880)
+   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
+  Allocated by task 634:
+   __kmalloc_noprof (mm/slub.c:5439)
+   __netif_set_xps_queue (net/core/dev.c:2937)
+  The buggy address is located 0 bytes to the right of
+   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
+
+Reject a class the map has no room for.
+
+Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index e045e1ee9e594..c4bcaadba471d 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -1958,13 +1958,15 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
- 	struct ipv6hdr *pip6;
- 	u8 *daddr;
- 	int na_olen = 8; /* opt hdr + ETH_ALEN for target */
-+	int headroom;
- 	int ns_olen;
- 	int i, len;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 65cdaf0c81f71..a48958a3f76c1 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2897,7 +2897,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
+ 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
  
- 	if (dev == NULL || !pskb_may_pull(request, request->len))
- 		return NULL;
- 
--	len = LL_RESERVED_SPACE(dev) + sizeof(struct ipv6hdr) +
-+	headroom = LL_RESERVED_SPACE(dev);
-+	len = headroom + sizeof(struct ipv6hdr) +
- 		sizeof(*na) + na_olen + dev->needed_tailroom;
- 	reply = alloc_skb(len, GFP_ATOMIC);
- 	if (reply == NULL)
-@@ -1972,7 +1974,7 @@ static struct sk_buff *vxlan_na_create(struct sk_buff *request,
- 
- 	reply->protocol = htons(ETH_P_IPV6);
- 	reply->dev = dev;
--	skb_reserve(reply, LL_RESERVED_SPACE(request->dev));
-+	skb_reserve(reply, headroom);
- 	skb_push(reply, sizeof(struct ethhdr));
- 	skb_reset_mac_header(reply);
+ 		tc = netdev_txq_to_tc(dev, index);
+-		if (tc < 0)
++		if (tc < 0 || tc >= num_tc)
+ 			return -EINVAL;
+ 	}
  
 -- 
 2.53.0
