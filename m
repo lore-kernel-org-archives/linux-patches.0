@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB3B509F0D;
-	Wed, 30 Sep 2026 15:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D12B18C332;
+	Wed, 30 Sep 2026 15:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783351; cv=none; b=rylCAw19N9qmNhAc+geEXKUKLdqufA4I7W4o/z2zs10dJtWePJGHptKGAUxlidDLWTXmMzbQR2bhYER8eh8Cy/lyl7L1X/TGSmttSNXq0VlEpHKXD8XKtcNfW43EpyZ5YpmdDwuUFtjpaD3gfF3E4NxsUub8A/Difnn7E4y2ri4=
+	t=1790783352; cv=none; b=AyagR0cnGGQgZLBWIgkO5+L5jLcR9JrGrhjSFXgSCXzKDP63+JrsuFlmOv6GuhG+FzUAFbAGz8vog/AUzb/2nhGNd7YFRXJRYDp9tZA5bVKrjcYhyQJRVg5noa8AkTNjmmn+1F/kVJNWl48gbKmiBKciWa56gdjUdQsef7cMVys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783351; c=relaxed/simple;
-	bh=xQyfo+I9xX9DL+dPNiktO57Shphip5tdGd8BEG4ih+s=;
+	s=arc-20240116; t=1790783352; c=relaxed/simple;
+	bh=gjcKLUsZl1xdsICWe5aYzKgbxIhtxvgx/3V/Tlsvlgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IISaKoECsQuGJ1cQTq4E2WuSTYg5nTtAgkcqQ3PpfOgEDd/DpOzyB0+51wV7qRHorX8fV16IDZmr8jUyqNhdFNOJ37m2ySoq6lzOWu98y7nRgmPjSOgl6EwEf+wAzLwkBevci6qOGt3R2FL90Iy7778ZUqKRIumWRHOkZJrFprw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3EV+rru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N0NLPO0wB3sd8ZN4vWr4lWNLs2Rtw+e5dfeefxXU3dkGvBPD3RHyEPNS8qHoTuRRxCwOSreqaQW5wcvW3tT53OnYohylXI17BpvcpZqJhCNhNj7cb6Cq017YafSzVTINhVzuxbmWQOubi4+rP/MP09+E7Q9Q3lIkwUeLFIRrAAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXCwe7SJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3EV+rru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FBD1F00893;
-	Wed, 30 Sep 2026 15:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXCwe7SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8871F0089B;
+	Wed, 30 Sep 2026 15:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783342;
-	bh=2gmdqG/CsRVhJFTNpj9A39IvSyUYzeDukGRjgVIHxso=;
+	s=korg; t=1790783345;
+	bh=6N+OPgVUuYWUS9nwdYinOseQW41omEq+1zID5Fqgwh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O3EV+rrumMFflpTPfzMiujp9iQZR3w5eB8xcKFwk/9t+viV5GFh/WzsG9i6TfaWyz
-	 abKzJHhnOTxHHXMsT84F9I7KV4WqV6KH68mZ4ciUH8bQ7ctIoBrZ1Gedr+5scsw4OX
-	 bP2M3b5ZmwNuS9hy3XpYGOQ97qGh4y/xfPupbmKQ=
+	b=OXCwe7SJIQBm+q0wRo70duCRf+lmf/6YJJPllvi9g5Ussq255A1NS7HfVkiU1bi9a
+	 Xhes6z9DxqxcBem4HB+0+myhefuuuYg4KsJr02Hr4eAYAncM3XTGEPGYObiXj/eiad
+	 XaGdg25VyDRWxQdCJNSnaHGSOV5JlOiVv3bSAJQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 366/595] RDMA/mad: Fix receive buffer leak when PKey enforcement fails
-Date: Wed, 30 Sep 2026 17:24:19 +0200
-Message-ID: <20260930152355.549598703@linuxfoundation.org>
+Subject: [PATCH 5.10 367/595] dmaengine: sprd: Fix runtime PM reference leak in probe
+Date: Wed, 30 Sep 2026 17:24:20 +0200
+Message-ID: <20260930152355.570779345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,56 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 3476c28c9addfa253f505e6bd87f1f5598b961d0 ]
+[ Upstream commit a7df136ec529ee49a789c5029bc37b98b0d4bedd ]
 
-ib_mad_complete_recv() initializes mad_recv_wc->rmpp_list and then runs
-ib_mad_enforce_security() before linking recv_buf onto that list.  On
-failure it calls ib_free_recv_mad(), which only walks rmpp_list and frees
-the ib_mad_private of every buffer found there.  As the list is still
-empty at that point, nothing is freed at all.
+pm_runtime_get_sync() increments a device's usage counter even when it
+fails. sprd_dma_probe() currently jumps directly to controller clock
+cleanup on that error, bypassing both pm_runtime_put_noidle() and
+pm_runtime_disable(). This can happen if the preceding unchecked
+pm_runtime_set_active() fails and the following runtime-resume attempt
+also returns an error.
 
-The caller cannot clean up either: ib_mad_recv_done() sets recv to NULL
-right after ib_mad_complete_recv() returns, assuming the MAD layer took
-ownership of the buffer.  Every MAD that fails the PKey check therefore
-leaks one ib_mad_private (about 300 bytes per IB port MAD, ~2K for OPA),
-and a remote node can trigger this repeatedly by sending MADs with a
-wrong PKey.
+Enter the existing runtime-PM unwind path instead. This drops the
+reference without idling the partially initialized device, disables
+runtime PM, and then releases the controller clocks. The success path
+and propagated error code are unchanged.
 
-Link recv_buf onto rmpp_list right after the list is initialized, so the
-error path has something to free.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Fixes: 47a2b338fe63 ("IB/core: Enforce security on management datagrams")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260826073216.2367-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20260813153149.3953497-1-ruoyuw560@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/sprd-dma.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 10d29167b585c..1be9513b8966b 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -1810,6 +1810,8 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 	int ret;
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index 60115d8d40832..e6ba7f7df8638 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -1205,7 +1205,7 @@ static int sprd_dma_probe(struct platform_device *pdev)
  
- 	INIT_LIST_HEAD(&mad_recv_wc->rmpp_list);
-+	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
-+
- 	ret = ib_mad_enforce_security(mad_agent_priv,
- 				      mad_recv_wc->wc->pkey_index);
- 	if (ret) {
-@@ -1818,7 +1820,6 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 		return;
- 	}
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0)
+-		goto err_rpm;
++		goto err_register;
  
--	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
- 	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
- 		spin_lock_irqsave(&mad_agent_priv->lock, flags);
- 		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
+ 	ret = dma_async_device_register(&sdev->dma_dev);
+ 	if (ret < 0) {
+@@ -1227,7 +1227,6 @@ static int sprd_dma_probe(struct platform_device *pdev)
+ err_register:
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+-err_rpm:
+ 	sprd_dma_disable(sdev);
+ 	return ret;
+ }
 -- 
 2.53.0
 
