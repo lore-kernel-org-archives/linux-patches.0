@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092344E36F1;
-	Wed, 30 Sep 2026 18:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313304A8430;
+	Wed, 30 Sep 2026 18:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791898; cv=none; b=SDlJ5ii94QjodNgukBzPBdh9WSGKFmDG9wS8cXpqivbS+r5yD1cw9Rsl4gq49Bt+SIC7dmVdMjlrkQpjx+YT7B/vJam8pwro+ZeH5XOcv525cosVcmxXNBb4FaSXvlNWB2GFTQXTkpshSWFyKeYAgcHTYer0+CPLSnIO83/o7vA=
+	t=1790791901; cv=none; b=ImZujAY4HjJ3MGKUYwJJsBo8HRk+7bWLBx2VrmaWA2J5ZsVjicSI7Eo37PzB4o0awdhmlwLC46iqOmDhXbKp0qqQJprVp45mGP5VKtoiQfq8NI/pj7bF0uQZ7cPg873MVa7xpx2FAPqd5SHo84spVJ/1uf2R/e/Jssr2JitaHnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791898; c=relaxed/simple;
-	bh=nLVsQODV/z5r7D1qkBatsnvbWJcAeYyyrE7ieAHvelY=;
+	s=arc-20240116; t=1790791901; c=relaxed/simple;
+	bh=g4a7vmLL+EPWspsSmjzNOPvueH9qTKlggtxVL6xuHug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBF8cUbh3rkPDmfLAxJjpJ16D/gsiY9K2lfradq+dPSTBl07oJqOmJHPcnGG1CqlJwU3aBn67d9qog/KHEtmJg1vzUNJUoowLfxbtSTs0qzeC/vywTpGRaZEOU43vWzL04IPOYY5ykXhfJSELPKZ2LeLCwSREhTEzfUfL8zGYhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=goBE/cMq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3ZuBu+hZiF24YEtDi7E6ssLvXhrKv+f9XcVSN2Q8LPqfJX7d6QX1zJhHlu9aCvlSWlVg01ZsioDYmaa+kWp9W8DfqvXSVZDAg6BjBMISvZblkTYnMqDYfN4xfvMYC6vGYaXTz4fhOJAtpF2H7NHhQQxkzqr0BJRph2IAWsKuVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnLY6uRN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="goBE/cMq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6203C1F000FF;
-	Wed, 30 Sep 2026 18:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnLY6uRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEA01F000FF;
+	Wed, 30 Sep 2026 18:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791896;
-	bh=qousH2Ds3+j0rFQA0MavsIpqYPwXpNkEZ6Bq9+ABW2M=;
+	s=korg; t=1790791899;
+	bh=1qDCd3HTYPQtwTX63Lt9ZsbCQWbspPC+6iBF9mxRCDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=goBE/cMqsOEkKqq40XcggQ9BeWNXZJ6W6Zfb0iMZeUDx9XWb8thserjzqSya6OU9e
-	 y6OzVX/mMdv6jMQicipqf2iQTa2zaX7LKBwmTBdOp5T9H9QPlSYx36FhRcZAjT3lt6
-	 HbLtKfdMAJQc8rjktqXefxzNprCjEAYVQIIWFix0=
+	b=UnLY6uRNWDzpDiwo8FlwifHnCatMuu3pB3x0qLNYUfL6zdxjmXOnkg5JCysb7CSQz
+	 NvhotWKvqNH0NXyI/D2MZO8dPlNsuPkvBzhjd7cNS5BN5puByxUr4/w7TmFtR9aGdw
+	 uozlqOUN4kRFKT/E+j0OPV6bRB+0Q9oe75KpZk2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	"Miguel Gazquez (Schneider Electric)" <miguel.gazquez@bootlin.com>,
+	Zizhi Wo <wozizhi@huaweicloud.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 420/752] iomap: iomap: fix memory corruption when recording errors during writeback
-Date: Wed, 30 Sep 2026 17:24:50 +0200
-Message-ID: <20260930152407.372336442@linuxfoundation.org>
+Subject: [PATCH 5.15 421/752] ARM: fix hash_name() fault
+Date: Wed, 30 Sep 2026 17:24:51 +0200
+Message-ID: <20260930152407.394940641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,141 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 3d5f3ba1ac28059bdf7000cae2403e4e984308d2 ]
+[ Upstream commit 7733bc7d299d682f2723dc38fc7f370b9bf973e9 ]
 
-Every now and then I see this crash on arm64:
+Zizhi Wo reports:
 
-Unable to handle kernel NULL pointer dereference at virtual address 00000000000000f8
-Buffer I/O error on dev dm-0, logical block 8733687, async page read
-Mem abort info:
-  ESR = 0x0000000096000006
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x06: level 2 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000006
-  CM = 0, WnR = 0
-user pgtable: 64k pages, 42-bit VAs, pgdp=0000000139750000
-[00000000000000f8] pgd=0000000000000000, p4d=0000000000000000, pud=0000000000000000, pmd=0000000000000000
-Internal error: Oops: 96000006 [#1] PREEMPT SMP
-Buffer I/O error on dev dm-0, logical block 8733688, async page read
-Dumping ftrace buffer:
-Buffer I/O error on dev dm-0, logical block 8733689, async page read
-   (ftrace buffer empty)
-XFS (dm-0): log I/O error -5
-Modules linked in: dm_thin_pool dm_persistent_data
-XFS (dm-0): Metadata I/O Error (0x1) detected at xfs_trans_read_buf_map+0x1ec/0x590 [xfs] (fs/xfs/xfs_trans_buf.c:296).
- dm_bio_prison
-XFS (dm-0): Please unmount the filesystem and rectify the problem(s)
-XFS (dm-0): xfs_imap_lookup: xfs_ialloc_read_agi() returned error -5, agno 0
- dm_bufio dm_log_writes xfs nft_chain_nat xt_REDIRECT nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip6t_REJECT
-potentially unexpected fatal signal 6.
- nf_reject_ipv6
-potentially unexpected fatal signal 6.
- ipt_REJECT nf_reject_ipv4
-CPU: 1 PID: 122166 Comm: fsstress Tainted: G        W          6.0.0-rc5-djwa #rc5 3004c9f1de887ebae86015f2677638ce51ee7
- rpcsec_gss_krb5 auth_rpcgss xt_tcpudp ip_set_hash_ip ip_set_hash_net xt_set nft_compat ip_set_hash_mac ip_set nf_tables
-Hardware name: QEMU KVM Virtual Machine, BIOS 1.5.1 06/16/2021
-pstate: 60001000 (nZCv daif -PAN -UAO -TCO -DIT +SSBS BTYPE=--)
- ip_tables
-pc : 000003fd6d7df200
- x_tables
-lr : 000003fd6d7df1ec
- overlay nfsv4
-CPU: 0 PID: 54031 Comm: u4:3 Tainted: G        W          6.0.0-rc5-djwa #rc5 3004c9f1de887ebae86015f2677638ce51ee7405
-Hardware name: QEMU KVM Virtual Machine, BIOS 1.5.1 06/16/2021
-Workqueue: writeback wb_workfn
-sp : 000003ffd9522fd0
- (flush-253:0)
-pstate: 60401005 (nZCv daif +PAN -UAO -TCO -DIT +SSBS BTYPE=--)
-pc : errseq_set+0x1c/0x100
-x29: 000003ffd9522fd0 x28: 0000000000000023 x27: 000002acefeb6780
-x26: 0000000000000005 x25: 0000000000000001 x24: 0000000000000000
-x23: 00000000ffffffff x22: 0000000000000005
-lr : __filemap_set_wb_err+0x24/0xe0
- x21: 0000000000000006
-sp : fffffe000f80f760
-x29: fffffe000f80f760 x28: 0000000000000003 x27: fffffe000f80f9f8
-x26: 0000000002523000 x25: 00000000fffffffb x24: fffffe000f80f868
-x23: fffffe000f80fbb0 x22: fffffc0180c26a78 x21: 0000000002530000
-x20: 0000000000000000 x19: 0000000000000000 x18: 0000000000000000
+"During the execution of hash_name()->load_unaligned_zeropad(), a
+ potential memory access beyond the PAGE boundary may occur. For
+ example, when the filename length is near the PAGE_SIZE boundary.
+ This triggers a page fault, which leads to a call to
+ do_page_fault()->mmap_read_trylock(). If we can't acquire the lock,
+ we have to fall back to the mmap_read_lock() path, which calls
+ might_sleep(). This breaks RCU semantics because path lookup occurs
+ under an RCU read-side critical section."
 
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000001 x13: 0000000000470af3 x12: fffffc0058f70000
-x11: 0000000000000040 x10: 0000000000001b20 x9 : fffffe000836b288
-x8 : fffffc00eb9fd480 x7 : 0000000000f83659 x6 : 0000000000000000
-x5 : 0000000000000869 x4 : 0000000000000005 x3 : 00000000000000f8
-x20: 000003fd6d740020 x19: 000000000001dd36 x18: 0000000000000001
-x17: 000003fd6d78704c x16: 0000000000000001 x15: 000002acfac87668
-x2 : 0000000000000ffa x1 : 00000000fffffffb x0 : 00000000000000f8
-Call trace:
- errseq_set+0x1c/0x100
- __filemap_set_wb_err+0x24/0xe0
- iomap_do_writepage+0x5e4/0xd5c
- write_cache_pages+0x208/0x674
- iomap_writepages+0x34/0x60
- xfs_vm_writepages+0x8c/0xcc [xfs 7a861f39c43631f15d3a5884246ba5035d4ca78b]
-x14: 0000000000000000 x13: 2064656e72757465 x12: 0000000000002180
-x11: 000003fd6d8a82d0 x10: 0000000000000000 x9 : 000003fd6d8ae288
-x8 : 0000000000000083 x7 : 00000000ffffffff x6 : 00000000ffffffee
-x5 : 00000000fbad2887 x4 : 000003fd6d9abb58 x3 : 000003fd6d740020
-x2 : 0000000000000006 x1 : 000000000001dd36 x0 : 0000000000000000
-CPU: 1 PID: 122167 Comm: fsstress Tainted: G        W          6.0.0-rc5-djwa #rc5 3004c9f1de887ebae86015f2677638ce51ee7
- do_writepages+0x90/0x1c4
- __writeback_single_inode+0x4c/0x4ac
-Hardware name: QEMU KVM Virtual Machine, BIOS 1.5.1 06/16/2021
- writeback_sb_inodes+0x214/0x4ac
- wb_writeback+0xf4/0x3b0
-pstate: 60001000 (nZCv daif -PAN -UAO -TCO -DIT +SSBS BTYPE=--)
- wb_workfn+0xfc/0x580
- process_one_work+0x1e8/0x480
-pc : 000003fd6d7df200
- worker_thread+0x78/0x430
+This is seen with CONFIG_DEBUG_ATOMIC_SLEEP=y and CONFIG_KFENCE=y.
 
-This crash is a result of iomap_writepage_map encountering some sort of
-error during writeback and wanting to set that error code in the file
-mapping so that fsync will report it.  Unfortunately, the code
-dereferences folio->mapping after unlocking the folio, which means that
-another thread could have removed the page from the page cache
-(writeback doesn't hold the invalidation lock) and give it to somebody
-else.
+Kernel addresses (with the exception of the vectors/kuser helper
+page) do not have VMAs associated with them. If the vectors/kuser
+helper page faults, then there are two possibilities:
 
-At best we crash the system like above; at worst, we corrupt memory or
-set an error on some other unsuspecting file while failing to record the
-problems with *this* file.  Regardless, fix the problem by reporting the
-error to the inode mapping.
+1. if the fault happened while in kernel mode, then we're basically
+   dead, because the CPU won't be able to vector through this page
+   to handle the fault.
+2. if the fault happened while in user mode, that means the page was
+   protected from user access, and we want to fault anyway.
 
-NOTE: Commit 598ecfbaa742 lifted the XFS writeback code to iomap, so
-this fix should be backported to XFS in the 4.6-5.4 kernels in addition
-to iomap in the 5.5-5.19 kernels.
+Thus, we can handle kernel addresses from any context entirely
+separately without going anywhere near the mmap lock. This gives us
+an entirely non-sleeping path for all kernel mode kernel address
+faults.
 
-Fixes: e735c0079465 ("iomap: Convert iomap_add_to_ioend() to take a folio") # 5.17 onward
-Fixes: 598ecfbaa742 ("iomap: lift the xfs writeback code to iomap") # 5.5-5.16, needs backporting
-Fixes: 150d5be09ce4 ("xfs: remove xfs_cancel_ioend") # 4.6-5.4, needs backporting
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Miguel Gazquez (Schneider Electric) <miguel.gazquez@bootlin.com>
+As we handle the kernel address faults before interrupts are enabled,
+this change has the side effect of improving the branch predictor
+hardening, but does not completely solve the issue.
+
+[ Xie Yuanbin: At the upstream, the following patches are a patch set:
+  1. commit dea20281ac8822661576 ("ARM: group is_permission_fault() with
+     is_translation_fault()")
+  2. commit 40b466db1dffb41f0529 ("ARM: allow __do_kernel_fault() to
+     report execution of memory faults")
+  3. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault")
+  4. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening")
+  patch 1. and 2. is unneeded for 5.10.y and 5.15.y . This patch backports
+  patch 3. and simply adapts to the context differences. ]
+
+Reported-by: Zizhi Wo <wozizhi@huaweicloud.com>
+Reported-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Link: https://lore.kernel.org/r/20251126090505.3057219-1-wozizhi@huaweicloud.com
+Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mm/fault.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 6c76dba0a61c9..2d65616762ba9 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1387,7 +1387,7 @@ iomap_writepage_map(struct iomap_writepage_ctx *wpc,
- 	if (!count)
- 		end_page_writeback(page);
- done:
--	mapping_set_error(page->mapping, error);
-+	mapping_set_error(inode->i_mapping, error);
- 	return error;
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 622fa99e138f6..831fc426cda1f 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -247,6 +247,35 @@ __do_page_fault(struct mm_struct *mm, unsigned long addr, unsigned int fsr,
+ 	return fault;
  }
  
++static int __kprobes
++do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
++			     unsigned int fsr, struct pt_regs *regs)
++{
++	if (user_mode(regs)) {
++		/*
++		 * Fault from user mode for a kernel space address. User mode
++		 * should not be faulting in kernel space, which includes the
++		 * vector/khelper page. Send a SIGSEGV.
++		 */
++		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
++	} else {
++		/*
++		 * Fault from kernel mode. Enable interrupts if they were
++		 * enabled in the parent context. Section (upper page table)
++		 * translation faults are handled via do_translation_fault(),
++		 * so we will only get here for a non-present kernel space
++		 * PTE or PTE permission fault. This may happen in exceptional
++		 * circumstances and need the fixup tables to be walked.
++		 */
++		if (interrupts_enabled(regs))
++			local_irq_enable();
++
++		__do_kernel_fault(mm, addr, fsr, regs);
++	}
++
++	return 0;
++}
++
+ static int __kprobes
+ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ {
+@@ -261,6 +290,12 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 
+ 	tsk = current;
+ 	mm  = tsk->mm;
++	/*
++	 * Handle kernel addresses faults separately, which avoids touching
++	 * the mmap lock from contexts that are not able to sleep.
++	 */
++	if (addr >= TASK_SIZE)
++		return do_kernel_address_page_fault(mm, addr, fsr, regs);
+ 
+ 	/* Enable interrupts if they were enabled in the parent context. */
+ 	if (interrupts_enabled(regs))
 -- 
 2.53.0
 
