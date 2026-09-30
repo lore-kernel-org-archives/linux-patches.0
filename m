@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99A31E0DD8;
-	Wed, 30 Sep 2026 16:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C4418C332;
+	Wed, 30 Sep 2026 16:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787538; cv=none; b=VzLNgohrJMRyinCMnaMbEAWB3NE9YoUe0x9KaQ4fPvPZD+xMmfV+rPiccwq8ykKvbcpQ8BMFVsPvXSJS56GEp9LCUXEA9HNMXY6f6Z1dGj0x+w+VYqcaDtYw+2VGqfvrBloz4BH0DpVBN3VAF32q2asmgd6KjY/AgUAppSzqchw=
+	t=1790787541; cv=none; b=GlE5LaWfiVaeW8/803Eg95nASU/7JF0Vov1ezlUHj9oY0B8PwuEcW4zBGjZ0se5O0RwxrFbyKPCZjTamH5hpbTdunGjPs5VHZIbO1UkULwvBijc435F+NNYM4tOsMNPeoKJEwBCOjwrYuBFraFGTYqCxjfytZ1NwpnSiBpmkBnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787538; c=relaxed/simple;
-	bh=rb7/wLG6TPQUs85ssthxQo++agvqdGmklLCvzhOEsug=;
+	s=arc-20240116; t=1790787541; c=relaxed/simple;
+	bh=jqVl1gU3UmWM+myGziU3xUYWIsVA0fr6/Vn1XUfZ5j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPq8CL++lrX/4yftGOs5/i6xYpGqB+tg96ScS/7X+dp07QbaWdY7yawTeNk6msAW4uI4nrcpMjZ3I5K8rXMO2+ni90hUknhzUIwib3zfW+9IUh9bQF4mz5YAQos8n+St8528hhKGcKTdMjZXe0vdg3bJ4Ij8DmPBL7iA4CwVQRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kD/xYIPB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mah/3Y60iPHts4a3j8j+D6SiDQ0H3LFCK1GryXkh8fgsvW4j+YTh23oy3aONrnyFN+Sc3YYsTUADNRZCsvqc43ov+RjBu6IEu7pYZiOR9kbpRmnn8wPQxJVSXgPwDiqxUuU4lR0P7qanFuZbsKfL3nn2/l+JCf4yJMdCAuWYeWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7L/KLrl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kD/xYIPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DD21F000FF;
-	Wed, 30 Sep 2026 16:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7L/KLrl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B1D1F000FF;
+	Wed, 30 Sep 2026 16:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787536;
-	bh=s/xjO8cefZvKvtbMeRpmnIvExyfIabz84aIHxXssfvs=;
+	s=korg; t=1790787539;
+	bh=v8+Z7p0U6thY3SGLVQbHXamj1RBDOk1h0O0iqo5kHwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kD/xYIPBXNQ2iGVNBs2AhcOyI6hRMuLPCZCvcx7lsdTCsKxegZgez+uOHhoVSKF0W
-	 bNTcGfNVGfnHza6i07H9AJH0u9aWpTkwnfkkg5rAbR3NT0ce3G280US7ZCleARlukp
-	 dgEohhtOuLYwAck0C1ugtonO8JmANMCBxrcqMVnw=
+	b=t7L/KLrlDRYTrI27bvn+131Kij5ubHUqKdbOrNKVVzi7SpLI0oLB8mLXS9o22lYER
+	 iG+s3AB8ZFEXgrRG6dRfkWP87EHL/tYbOguPE0ZaQb8wxnn6iMDt4hsEC9UbOWFeV+
+	 9gtkjmXwHPIM+C/mwdkeM4Ezz+4f2X0pw+yZ9SLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Hui Peng <benquike@gmail.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 266/457] ipv6: do not let ipv6_find_hdr() return an offset past the packet end
-Date: Wed, 30 Sep 2026 17:26:11 +0200
-Message-ID: <20260930152351.784767023@linuxfoundation.org>
+Subject: [PATCH 7.2 267/457] ipv6: sr: enforce exact attribute length for SEG6_ATTR_DST
+Date: Wed, 30 Sep 2026 17:26:12 +0200
+Message-ID: <20260930152351.806129268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,70 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit ee319bd3a0e976af5087cbe59ebc50a66f31d202 upstream.
+commit 2d959c75c27f90e9ec489d18ce5ee6b852ad4741 upstream.
 
-ipv6_find_hdr() walks the extension header chain, skipping each header by
-the length that header itself declares.  ipv6_optlen() returns up to 2048,
-and the skip is never checked against skb->len, so the offset stored in
-*offset can point past the end of the packet.
+In seg6_genl_policy, SEG6_ATTR_DST is defined with .type = NLA_BINARY and
+.len = sizeof(struct in6_addr). For NLA_BINARY, .len only enforces the
+maximum payload length and permits shorter payloads (e.g., 0 bytes).
+When seg6_genl_set_tunsrc() copies sizeof(struct in6_addr) bytes via
+kmemdup(val, sizeof(*val), GFP_KERNEL), a short SEG6_ATTR_DST attribute
+triggers a 16-byte out-of-bounds read past skb->tail into uninitialized
+skb->head memory, which is stored in sdata->tun_src and leaked back to
+userspace via SEG6_CMD_GET_TUNSRC.
 
-openvswitch installs that offset as the transport header, and
-update_ipv6_checksum() then reads and writes the transport checksum field
-out of bounds:
+Switch SEG6_ATTR_DST in seg6_genl_policy to
+NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)) so that generic netlink
+validation rejects any attribute whose length is not exactly
+sizeof(struct in6_addr) with -ERANGE.
 
-  BUG: KASAN: slab-use-after-free in inet_proto_csum_replace16+0x445/0x470
-  Read of size 2 at addr ffff88810b754b06 by task ovs_ipv6_oob/629
-  CPU: 4 UID: 1000 PID: 629 Comm: ovs_ipv6_oob Tainted: G N 7.3.0-rc3+ #348
-  Call Trace:
-   inet_proto_csum_replace16+0x445/0x470
-   set_ipv6_addr+0x3dd/0x460
-   do_execute_actions+0x6a3d/0x7c40
-   ovs_execute_actions+0xfd/0x480
-   ovs_packet_cmd_execute+0xc38/0xf20
-   genl_rcv_msg+0x59e/0x870
-   netlink_rcv_skb+0x18b/0x450
-   genl_rcv+0x2d/0x40
-   netlink_unicast+0x6bc/0xa20
+Tested in QEMU against Linux 7.3.0-rc3 by sending a SEG6_CMD_SET_TUNSRC
+Generic Netlink message with a 0-byte SEG6_ATTR_DST attribute followed
+by SEG6_CMD_GET_TUNSRC. On the unfixed kernel, SEG6_CMD_SET_TUNSRC
+succeeds (err = 0) and SEG6_CMD_GET_TUNSRC leaks 16 bytes of
+uninitialized kernel heap memory (tun_src =
+836a61ecc4d25a1042a8d60411cfb378); with this patch applied,
+SEG6_CMD_SET_TUNSRC is rejected by netlink policy validation with
+-ERANGE (-34) and tun_src remains zeroed.
 
-  The buggy address belongs to the object at ffff88810b754980
-   which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 390 bytes inside of
-   freed 704-byte region [ffff88810b754980, ffff88810b754c40)
-
-Other callers use that offset too, so bound it here rather than in one
-caller.
-
-Reject a header whose declared length does not fit in the packet.
-ipv6_find_hdr() already fails with -EBADMSG on a malformed chain, so this
-adds no new failure mode.
-
-Fixes: f8f626754ebe ("ipv6: Move ipv6_find_hdr() out of Netfilter code.")
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Suggested-by: Eric Dumazet <edumazet@google.com>
+Fixes: 915d7e5e5930 ("ipv6: sr: add code base for control plane support of SR-IPv6")
 Cc: stable@vger.kernel.org
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/8F80BA1A-DDFD-432D-9075-242A3435FEB5@doyensec.com
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260921044025.1535982-1-benquike@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs_core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/seg6.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/exthdrs_core.c
-+++ b/net/ipv6/exthdrs_core.c
-@@ -278,6 +278,9 @@ int ipv6_find_hdr(const struct sk_buff *
- 			hdrlen = ipv6_optlen(hp);
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -138,8 +138,8 @@ out:
+ static struct genl_family seg6_genl_family;
  
- 		if (!found) {
-+			if (skb->len - start < hdrlen)
-+				return -EBADMSG;
-+
- 			nexthdr = hp->nexthdr;
- 			start += hdrlen;
- 		}
+ static const struct nla_policy seg6_genl_policy[SEG6_ATTR_MAX + 1] = {
+-	[SEG6_ATTR_DST]				= { .type = NLA_BINARY,
+-		.len = sizeof(struct in6_addr) },
++	[SEG6_ATTR_DST]				=
++		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
+ 	[SEG6_ATTR_DSTLEN]			= { .type = NLA_S32, },
+ 	[SEG6_ATTR_HMACKEYID]		= { .type = NLA_U32, },
+ 	[SEG6_ATTR_SECRET]			= { .type = NLA_BINARY, },
 
 
