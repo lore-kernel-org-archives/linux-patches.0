@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A666515884;
-	Wed, 30 Sep 2026 16:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756D250EBF3;
+	Wed, 30 Sep 2026 16:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785102; cv=none; b=PwTm413qK7+rmyqLzaM5mtl8nNuzmJ2s270HO0CEdUxyuRQLLcwwVqv9yOyo9XsxmOuO+6+bS+IAtcyCJprFAq7UcFjQwMJWxINUmy+y2w1a50BZX4BtjIW+nLg9xeO4005jj1GFZ/tGjVwvvD/haO5UdiUpQJXaa8UeELD6pgw=
+	t=1790785105; cv=none; b=JMFFxjt2e6rpX/Lkw8H3brLWx4BPJ6DRYQar9YMgG4fxRxyZRVV8njOe9eL94cIwMkIAnhRiGGaONIikiAjDoR4pVG394DkXnUh51vpOhck6MNfLuU4HYy3a2J1mkklJciPumFD6lS/ys7oB2J/gsFuX4ztqteqwJE/QiqkMUdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785102; c=relaxed/simple;
-	bh=t91/QzhHApHasqRkftTOITVKvTlEkHDvNxmqy01ijmw=;
+	s=arc-20240116; t=1790785105; c=relaxed/simple;
+	bh=3ErnDLW4TQBzTQ591EPnDISDoqstvkuMuuFoZ3IoZo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfPzWH7C+WS/SD2GoFxJkYEXikQ2L5KMVm6enV3SbANMHMQthkjpbVLHnWnhBapLW+HyE8XKhGw6VX5Zv3dSLZcpjgg/kx7fFMxvSCNV5hOJ2u7hkUguRQzfe5+qpK+2fxBt5igKQbQcNtaLNbqZx/BqlbsFgJtUANRnQi9vCPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4eniYb+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lz9SYxbD08uoFtV0vlRJCcE7lDUtghQiFR2t6oXTTY1BcWDOfFC9ku14SdrGiwVJuOTiTnqxG+76N+JLBizVGvC4BGxIm7V19rhlwtiz0PzKqv6UZaZoTnlMbHihaaja9dqI3buwPf1RLNHkiVEPTTDat11N1+BH+X/DJcH9njQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEWCqKsC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4eniYb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB0E1F00899;
-	Wed, 30 Sep 2026 16:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEWCqKsC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB2E1F00893;
+	Wed, 30 Sep 2026 16:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785096;
-	bh=S6BXAxn6yBiIsCwPOBAzq0tTxLOHsUWrQlJGmfZdxqw=;
+	s=korg; t=1790785098;
+	bh=ihdYJhz4yY2REFft/NZ7wv2IVNMlmKjkpJHNU5Hdufw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4eniYb+8J2Jtxs4kKJi4WAHrjYfWMgCnzxs+HVME07qxhAUNoU/yNndsma3snTez
-	 Q65rUvnZi5hJnNxtmK/Y6h8WxulxSQKz8Ml1013pVyURfpxhid1TYRB63eCozdYxc7
-	 eAeMfODdc831E5kIPtlRqCTOQGIIh6/rAnNBVK8s=
+	b=OEWCqKsC1Sd1ydtTAMvMsfep9teBG7HzIs3jyYXJBhb4srcFhuTbw++ZikHjuVihS
+	 249VCEBABXAoKti+H6pxr27PTqv1uYaTQG5K7X/K5g+3iSXN9kJaGPfe9v+lFR9wS9
+	 WyBwufytY0cP7DaN/ncsVohL/OtxB3JQ4I5mnAuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Martin <bsdhenrymartin@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 387/982] tracing/probes: Fix use-after-free on field name/type of events with multiple probes
-Date: Wed, 30 Sep 2026 17:18:43 +0200
-Message-ID: <20260930152425.119593449@linuxfoundation.org>
+Subject: [PATCH 6.1 352/982] ASoC: ab8500: Validate and program TDM slots correctly
+Date: Wed, 30 Sep 2026 17:18:08 +0200
+Message-ID: <20260930152424.373640584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,164 +51,301 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Martin <bsdhenrymartin@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 86b7a239ec6b14a7544200ede85474c6f5526049 ]
+[ Upstream commit 85cef7e2004ef5c1a715feaddb55d3f3d27bac0a ]
 
-The fields of a probe-based dynamic event (kprobe, uprobe, eprobe and
-fprobe events) are created in traceprobe_define_arg_fields() by handing
-the probe_arg name/type strings to trace_define_field(), which only
-stores the pointers without copying. Those strings are owned by the
-trace_probe and are freed when that probe is removed.
+The interface clock ratio is selected from the slot count alone, ffs()
+and fls() produce one-based hardware slot numbers, eight-channel mode
+does not program any mappings, and all register errors are ignored.
+Invalid masks can also leave a partially programmed interface.
 
-An event can have several probes attached. The field list is defined
-only once, by the first probe that registers the event, but it is kept
-alive by any surviving sibling probe. Deleting just that first probe by
-symbol -
+Validate the complete configuration first, derive the supported BCLK
+ratio from slots times slot width, use zero-based slot indices, program
+deterministic eight-channel maps, and propagate register failures.
 
-  # primary A: fields are defined from A's args
-  echo 'p:kprobes/ev vfs_read  a1=$arg1' >  kprobe_events
-  # append B: shares A's event call
-  echo 'p:kprobes/ev vfs_write a1=$arg1' >> kprobe_events
-  # delete only A (matched by symbol), B survives
-  echo '-:kprobes/ev vfs_read'           >> kprobe_events
-
-frees A's args (trace_probe_cleanup() -> traceprobe_free_probe_arg()),
-but trace_probe_unlink() keeps the trace_probe_event because the probe
-list is not empty. The event call stays registered via B while its
-fields now reference freed memory. Any field lookup then reads it, e.g.
-
-  echo 'a1 == 1' > events/kprobes/ev/filter
-
-  BUG: KASAN: slab-use-after-free in strcmp+0xa7/0xb0
-  Call Trace:
-   strcmp
-   trace_find_event_field
-   parse_pred
-   process_preds
-   create_filter
-   apply_event_filter
-   event_filter_write
-
-field->name references parg->name (kstrdup'd, freed with the probe) and,
-for array arguments, field->type references parg->fmt (kmalloc'd, freed
-with the probe) - the scalar type otherwise points at the static
-fmttype rodata, which is safe.
-
-Have traceprobe_define_arg_fields() duplicate the name and type strings
-and anchor the copies on the trace_probe_event, which embeds the event
-call and outlives every individual probe; trace_probe_event_free()
-releases them.
-
-The reproducer above triggers reliably; the field lookup and the delete
-both run under event_mutex, so this is a dangling reference after
-removal rather than a race.
-
-The issue was found by the autokbug dynamic kernel fuzzer at Tencent
-Yunding Lab.
-
-Link: https://lore.kernel.org/all/20260826030009.1855331-1-bsdhenrymartin@gmail.com/
-
-Fixes: ca89bc071d5e4 ("tracing/kprobe: Add multi-probe per event support")
-Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-4-f85024e717e3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 48 +++++++++++++++++++++++++++++++++++++-
- kernel/trace/trace_probe.h |  2 ++
- 2 files changed, 49 insertions(+), 1 deletion(-)
+ sound/soc/codecs/ab8500-codec.c | 216 ++++++++++++++++++--------------
+ 1 file changed, 123 insertions(+), 93 deletions(-)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 758705ffc6a15..f5df2a2d3681d 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -993,19 +993,60 @@ int traceprobe_set_print_fmt(struct trace_probe *tp, enum probe_print_type ptype
- int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 				 size_t offset, struct trace_probe *tp)
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 7d6a90ee337c6..b6a74d2e6c290 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -2159,23 +2159,27 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
+ 		int slots, int slot_width)
  {
-+	struct trace_probe_event *tpe = trace_probe_event_from_call(event_call);
- 	int ret, i;
+ 	struct snd_soc_component *component = dai->component;
+-	unsigned int val, mask, slot, slots_active;
++	unsigned int active_mask, clock_ratio, slot, value, ad_out, reg;
++	unsigned int tx_active, rx_active;
++	unsigned int conf1_val, conf2_val;
++	unsigned int mask;
++	int channel, ret;
  
-+	/*
-+	 * A field created by trace_define_field() only stores the name and
-+	 * type pointers, it does not copy the strings. Here they point into
-+	 * the probe_arg of @tp, which is freed when @tp is removed. For an
-+	 * event with multiple probes attached, the field list is defined
-+	 * once by the first probe but kept alive by the surviving siblings,
-+	 * so removing that first probe would leave the fields referencing
-+	 * freed memory. Duplicate the strings and anchor the copies on the
-+	 * trace_probe_event, which lives as long as the field list itself.
-+	 *
-+	 * event_define_fields() ignores the return value of this hook, so
-+	 * if a previous attempt failed before creating any field, it may
-+	 * call here again. Release duplicates left behind by such an
-+	 * attempt before starting over.
-+	 */
-+	for (i = 0; i < tpe->nr_field_strings; i++)
-+		kfree(tpe->field_strings[i]);
-+	kfree(tpe->field_strings);
-+	tpe->field_strings = NULL;
-+	tpe->nr_field_strings = 0;
-+
-+	if (tp->nr_args) {
-+		tpe->field_strings = kcalloc(tp->nr_args * 2, sizeof(char *),
-+					     GFP_KERNEL);
-+		if (!tpe->field_strings)
-+			return -ENOMEM;
+ 	mask = BIT(AB8500_DIGIFCONF2_IF0WL0) |
+ 		BIT(AB8500_DIGIFCONF2_IF0WL1);
+-	val = 0;
++	conf2_val = 0;
+ 
+ 	switch (slot_width) {
+ 	case 16:
+ 		break;
+ 	case 20:
+-		val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL0);
+ 		break;
+ 	case 24:
+-		val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
++		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1);
+ 		break;
+ 	case 32:
+-		val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
++		conf2_val |= BIT(AB8500_DIGIFCONF2_IF0WL1) |
+ 			BIT(AB8500_DIGIFCONF2_IF0WL0);
+ 		break;
+ 	default:
+@@ -2184,27 +2188,11 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
+ 		return -EINVAL;
+ 	}
+ 
+-	dev_dbg(dai->component->dev, "%s: IF0 slot-width: %d bits.\n",
+-		__func__, slot_width);
+-	snd_soc_component_update_bits(component, AB8500_DIGIFCONF2, mask, val);
+-
+-	/* Setup TDM clocking according to slot count */
+-	dev_dbg(dai->component->dev, "%s: Slots, total: %d\n", __func__, slots);
+-	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
+-			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
+ 	switch (slots) {
+ 	case 2:
+-		val = AB8500_MASK_NONE;
+-		break;
+ 	case 4:
+-		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
+-		break;
+ 	case 8:
+-		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
+-		break;
+ 	case 16:
+-		val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
+-			BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
+ 		break;
+ 	default:
+ 		dev_err(dai->component->dev,
+@@ -2212,92 +2200,134 @@ static int ab8500_codec_set_dai_tdm_slot(struct snd_soc_dai *dai,
+ 			__func__, slots);
+ 		return -EINVAL;
+ 	}
+-	snd_soc_component_update_bits(component, AB8500_DIGIFCONF1, mask, val);
+-
+-	/* Setup TDM DA according to active tx slots */
+ 
+-	if (tx_mask & ~0xff)
+-		return -EINVAL;
+-
+-	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
+-	tx_mask = tx_mask << AB8500_DA_DATA0_OFFSET;
+-	slots_active = hweight32(tx_mask);
+-
+-	dev_dbg(dai->component->dev, "%s: Slots, active, TX: %d\n", __func__,
+-		slots_active);
+-
+-	switch (slots_active) {
+-	case 0:
++	clock_ratio = slots * slot_width;
++	switch (clock_ratio) {
++	case 32:
++		conf1_val = 0;
+ 		break;
+-	case 1:
+-		slot = ffs(tx_mask);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
++	case 64:
++		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0);
+ 		break;
+-	case 2:
+-		slot = ffs(tx_mask);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF1, mask, slot);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF3, mask, slot);
+-		slot = fls(tx_mask);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF2, mask, slot);
+-		snd_soc_component_update_bits(component, AB8500_DASLOTCONF4, mask, slot);
++	case 128:
++		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
+ 		break;
+-	case 8:
+-		dev_dbg(dai->component->dev,
+-			"%s: In 8-channel mode DA-from-slot mapping is set manually.",
+-			__func__);
++	case 256:
++		conf1_val = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
++			    BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
+ 		break;
+ 	default:
+-		dev_err(dai->component->dev,
+-			"%s: Unsupported number of active TX-slots (%d)!\n",
+-			__func__, slots_active);
++		dev_err(component->dev, "%s: Unsupported BCLK ratio (%u)!\n",
++			__func__, clock_ratio);
+ 		return -EINVAL;
+ 	}
+ 
+-	/* Setup TDM AD according to active RX-slots */
++	active_mask = GENMASK(min(slots, 8) - 1, 0);
++	if ((tx_mask | rx_mask) & ~active_mask) {
++		dev_err(component->dev, "%s: Slot mask exceeds slot count\n",
++			__func__);
++		return -EINVAL;
++	}
+ 
+-	if (rx_mask & ~0xff)
++	tx_active = hweight32(tx_mask);
++	rx_active = hweight32(rx_mask);
++	if (tx_active != 0 && tx_active != 1 && tx_active != 2 &&
++	    tx_active != 8) {
++		dev_err(component->dev, "%s: Unsupported active TX slots (%u)!\n",
++			__func__, tx_active);
++		return -EINVAL;
++	}
++	if (rx_active != 0 && rx_active != 1 && rx_active != 2 &&
++	    rx_active != 8) {
++		dev_err(component->dev, "%s: Unsupported active RX slots (%u)!\n",
++			__func__, rx_active);
+ 		return -EINVAL;
 +	}
 +
- 	/* Set argument names as fields */
- 	for (i = 0; i < tp->nr_args; i++) {
- 		struct probe_arg *parg = &tp->args[i];
- 		const char *fmt = parg->type->fmttype;
- 		int size = parg->type->size;
-+		char *name, *type;
++	dev_dbg(component->dev,
++		"%s: %d slots of %d bits, TX active: %u, RX active: %u\n",
++		__func__, slots, slot_width, tx_active, rx_active);
  
- 		if (parg->fmt)
- 			fmt = parg->fmt;
- 		if (parg->count)
- 			size *= parg->count;
--		ret = trace_define_field(event_call, fmt, parg->name,
+-	rx_mask = rx_mask << AB8500_AD_DATA0_OFFSET;
+-	slots_active = hweight32(rx_mask);
++	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF2,
++					    mask, conf2_val);
++	if (ret < 0)
++		return ret;
+ 
+-	dev_dbg(dai->component->dev, "%s: Slots, active, RX: %d\n", __func__,
+-		slots_active);
++	mask = BIT(AB8500_DIGIFCONF1_IF0BITCLKOS0) |
++	       BIT(AB8500_DIGIFCONF1_IF0BITCLKOS1);
++	ret = snd_soc_component_update_bits(component, AB8500_DIGIFCONF1,
++					    mask, conf1_val);
++	if (ret < 0)
++		return ret;
+ 
+-	switch (slots_active) {
+-	case 0:
+-		break;
+-	case 1:
+-		slot = ffs(rx_mask);
+-		snd_soc_component_update_bits(component, AB8500_ADSLOTSEL(slot),
+-				AB8500_MASK_SLOT(slot),
+-				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
+-		break;
+-	case 2:
+-		slot = ffs(rx_mask);
+-		snd_soc_component_update_bits(component,
+-				AB8500_ADSLOTSEL(slot),
+-				AB8500_MASK_SLOT(slot),
+-				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3, slot));
+-		slot = fls(rx_mask);
+-		snd_soc_component_update_bits(component,
+-				AB8500_ADSLOTSEL(slot),
+-				AB8500_MASK_SLOT(slot),
+-				AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2, slot));
+-		break;
+-	case 8:
+-		dev_dbg(dai->component->dev,
+-			"%s: In 8-channel mode AD-to-slot mapping is set manually.",
+-			__func__);
+-		break;
+-	default:
+-		dev_err(dai->component->dev,
+-			"%s: Unsupported number of active RX-slots (%d)!\n",
+-			__func__, slots_active);
+-		return -EINVAL;
++	mask = AB8500_DASLOTCONFX_SLTODAX_MASK;
++	if (tx_active == 1 || tx_active == 2) {
++		slot = __ffs(tx_mask) + AB8500_DA_DATA0_OFFSET;
++		reg = AB8500_DASLOTCONF1;
++		ret = snd_soc_component_update_bits(component, reg, mask, slot);
++		if (ret < 0)
++			return ret;
++		reg = AB8500_DASLOTCONF3;
++		ret = snd_soc_component_update_bits(component, reg, mask, slot);
++		if (ret < 0)
++			return ret;
 +
-+		name = kstrdup(parg->name, GFP_KERNEL);
-+		type = kstrdup(fmt, GFP_KERNEL);
-+		if (!name || !type) {
-+			kfree(name);
-+			kfree(type);
-+			return -ENOMEM;
++		if (tx_active == 2)
++			slot = __fls(tx_mask) + AB8500_DA_DATA0_OFFSET;
++		reg = AB8500_DASLOTCONF2;
++		ret = snd_soc_component_update_bits(component, reg, mask, slot);
++		if (ret < 0)
++			return ret;
++		reg = AB8500_DASLOTCONF4;
++		ret = snd_soc_component_update_bits(component, reg, mask, slot);
++		if (ret < 0)
++			return ret;
++	} else if (tx_active == 8) {
++		channel = 0;
++		for (slot = 0; slot < 8; slot++) {
++			if (!(tx_mask & BIT(slot)))
++				continue;
++			reg = AB8500_DASLOTCONF1 + channel++;
++			value = slot + AB8500_DA_DATA0_OFFSET;
++			ret = snd_soc_component_update_bits(component, reg, mask, value);
++			if (ret < 0)
++				return ret;
 +		}
-+		tpe->field_strings[tpe->nr_field_strings++] = name;
-+		tpe->field_strings[tpe->nr_field_strings++] = type;
++	}
 +
-+		ret = trace_define_field(event_call, type, name,
- 					 offset + parg->offset, size,
- 					 parg->type->is_signed,
- 					 FILTER_OTHER);
-@@ -1017,6 +1058,11 @@ int traceprobe_define_arg_fields(struct trace_event_call *event_call,
- 
- static void trace_probe_event_free(struct trace_probe_event *tpe)
- {
-+	int i;
++	if (rx_active == 1 || rx_active == 2) {
++		slot = __ffs(rx_mask) + AB8500_AD_DATA0_OFFSET;
++		value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT3,
++							 slot);
++		reg = AB8500_ADSLOTSEL(slot);
++		mask = AB8500_MASK_SLOT(slot);
++		ret = snd_soc_component_update_bits(component, reg, mask, value);
++		if (ret < 0)
++			return ret;
 +
-+	for (i = 0; i < tpe->nr_field_strings; i++)
-+		kfree(tpe->field_strings[i]);
-+	kfree(tpe->field_strings);
- 	kfree(tpe->class.system);
- 	kfree(tpe->call.name);
- 	kfree(tpe->call.print_fmt);
-diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
-index aef19096b4dd0..8cf45bbf1ae00 100644
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -242,6 +242,8 @@ struct trace_probe_event {
- 	struct trace_event_call		call;
- 	struct list_head 		files;
- 	struct list_head		probes;
-+	char				**field_strings;
-+	int				nr_field_strings;
- 	struct trace_uprobe_filter	filter[];
- };
++		if (rx_active == 2) {
++			slot = __fls(rx_mask) + AB8500_AD_DATA0_OFFSET;
++			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(AB8500_AD_OUT2,
++								 slot);
++			reg = AB8500_ADSLOTSEL(slot);
++			mask = AB8500_MASK_SLOT(slot);
++			ret = snd_soc_component_update_bits(component, reg, mask, value);
++			if (ret < 0)
++				return ret;
++		}
++	} else if (rx_active == 8) {
++		channel = 0;
++		for (slot = 0; slot < 8; slot++) {
++			if (!(rx_mask & BIT(slot)))
++				continue;
++			ad_out = AB8500_AD_OUT1 + channel++;
++			value = AB8500_ADSLOTSELX_AD_OUT_TO_SLOT(ad_out, slot);
++			reg = AB8500_ADSLOTSEL(slot);
++			mask = AB8500_MASK_SLOT(slot);
++			ret = snd_soc_component_update_bits(component, reg, mask, value);
++			if (ret < 0)
++				return ret;
++		}
+ 	}
  
+ 	return 0;
 -- 
 2.53.0
 
