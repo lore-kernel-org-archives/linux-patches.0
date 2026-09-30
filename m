@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D89A52F278;
-	Wed, 30 Sep 2026 18:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA73527596;
+	Wed, 30 Sep 2026 18:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793581; cv=none; b=h7vjbedgXqdADg8JmGNq78S6Gk0CR3AUjGKX1CqF4uQXDf046+82MTVUwZvT/pav73SqLEaQxFpmJ4a6/R6yg1PqZYs5aW6ERq0HhhcvP+fV4D7lFqTec3/wwzX8YnfYzmDYQA1/onp3BXz9exQ2NXsImCoJQHT/6jGUnJo6qV4=
+	t=1790793584; cv=none; b=bGiEbKJS3OxQmAr1bF3Y79fNoLYyOhabAIcBBVobW+sZZvcDXn3l8jOuZHuHXKe7AFNoDob9icbGpdQ6dDLmZyKThevrb6HuHDtF0x+amEQegzlVAIjsY7EY6d4as/rVX6sZrHk/gLZqdUPAzoS/a+pKYWPwXyBKDUiwZ2ZEUTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793581; c=relaxed/simple;
-	bh=im2A3h3UZqgbjgD9JT5dcT+4l7jdfBmrZIfdxHaH7Co=;
+	s=arc-20240116; t=1790793584; c=relaxed/simple;
+	bh=+qY0iCI/W+RSP5UnnPPCEvA9RvDictdLxwfh93iSYmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhRCOVSN8i6cGPVjwQLkSnVG/L5jhJhVlxUq7zh2s9bTaQX2vjiQJEWNOBi8uCyIAaPaHWBfQnxrUe3UpXoOxjw7ETFLzkCA48DvnHj1Hu4saGBqUML+aC5zyU0al8xW/IPRbeyeLSqnAU/HW7XaWYqEgSmo1XlvkyHmFOsbV0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2alDY16b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hr7zySnQF1oDhbPsrK2RvaCX6DmdZ0xRN4fM6pVJqEL4eK/+D81iqdowNREKxzSr53XebNnsb+zmdNz8u024r1/EdT/8X39o9zu31RNRsfVfYTzKtnBaIpwFogLAibvSLtAGG8WLs0yjhTMIJUxecy1Pq7tyKnkIITLe3AUdVEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPmTYBJ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2alDY16b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE061F00898;
-	Wed, 30 Sep 2026 18:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPmTYBJ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B28A1F0089A;
+	Wed, 30 Sep 2026 18:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793580;
-	bh=pIshVXvVTA5/iUAUm49SbqP7S0a9IHFsjKjwKZizDm0=;
+	s=korg; t=1790793582;
+	bh=NlY7/i+6aSRbs4uD8N9kAaGk+FT2PGogS13lybiCbVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2alDY16bLkRraN/Jo8WjRz0aFtVb1+XUpqzWcHTtCBli4Y8Ub9LvnYunJYEO93gI2
-	 CSF6Cf7b6jrYojXUU/VbyFhhutJjTV34MX/MXelfK3Ppm4PyrFJJ+6HcH3XKycEw4J
-	 8O6PycboBezx1vfTHDqwtP1G320/E+uJKw1AZkqk=
+	b=mPmTYBJ5u3d3O3cmi1soeai2/LvgYJ4iL7dR11yeCP2NYOMCqjj356j5NfAYsRA/X
+	 Ze9/6egYI/FFYz9k8OSEm2j1OEqTMkDam9dlWbRJpFnHSfSl9FNQEAeVrTk7cxDelw
+	 ulbuAKiJ/RMYdUHWKbRIhijcCR3GWsmOR37mFNLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.18 304/395] s390/cmf: Fix virtual vs physical address confusion
-Date: Wed, 30 Sep 2026 17:29:26 +0200
-Message-ID: <20260930152347.250373542@linuxfoundation.org>
+Subject: [PATCH 6.18 305/395] s390/pci: Fix leak of struct pci_dev reference in zpci_report_status()
+Date: Wed, 30 Sep 2026 17:29:27 +0200
+Message-ID: <20260930152347.271880003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,68 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit f4d04425e66af2ecee9d1a49ae0484436f3c2fd1 upstream.
+commit 09b7040a1b79f4f61cdad6d9af972e045bb7c498 upstream.
 
-The measurement block address is an absolute address. Define the
-associated schib_config and schib fields as dma64_t to enable automatic
-detection of incorrect assignments. Also add the missing virt_to_dma64()
-translation.
+In zpci_report_status(), a reference to the pdev associated with the
+zdev being reported about is acquired using pci_get_slot(). This
+reference needs to be dropped with pci_dev_put(), but this call is
+missing, thus leaking the reference. On subsequent hot unplug, this will
+cause the struct pci_dev to not be released, leaking memory and
+preventing reattach.
 
-Without this fix, a wrong address will be used by firmware when storing
-extended format channel measurement data on kernels built with
-CONFIG_RANDOMIZE_IDENTITY_BASE=y.
+At the same time, the only existing caller already holds a pdev
+reference. So instead of reacquiring and then dropping another reference,
+simply pass the existing pdev pointer to zpci_report_status(). This gets
+rid of the need for pci_get_slot() as well as the zdev->zbus check.
 
-Fixes: 14edd0d73bfe ("s390/cmf: fix virtual vs physical address confusion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 4ec6054e7321 ("s390/pci: Report PCI error recovery results via SCLP")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/cio.h |    5 +++--
- drivers/s390/cio/cmf.c |    2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ arch/s390/pci/pci_event.c  |    2 +-
+ arch/s390/pci/pci_report.c |   11 +++++------
+ arch/s390/pci/pci_report.h |    4 +++-
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/s390/cio/cio.h
-+++ b/drivers/s390/cio/cio.h
-@@ -7,6 +7,7 @@
- #include <linux/mod_devicetable.h>
- #include <asm/chpid.h>
- #include <asm/cio.h>
-+#include <asm/dma-types.h>
- #include <asm/fcx.h>
- #include <asm/schid.h>
- #include <asm/tpi.h>
-@@ -49,7 +50,7 @@ struct pmcw {
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -258,7 +258,7 @@ static pci_ers_result_t zpci_event_attem
+ 	pci_uevent_ers(pdev, PCI_ERS_RESULT_RECOVERED);
+ out_unlock:
+ 	device_unlock(&pdev->dev);
+-	zpci_report_status(zdev, "recovery", status_str);
++	zpci_report_status(zdev, pdev, "recovery", status_str);
  
- /* Target SCHIB configuration. */
- struct schib_config {
--	u64 mba;
-+	dma64_t mba;
- 	u32 intparm;
- 	u16 mbi;
- 	u32 isc:3;
-@@ -66,7 +67,7 @@ struct schib_config {
- struct schib {
- 	struct pmcw pmcw;	 /* path management control word */
- 	union scsw scsw;	 /* subchannel status word */
--	__u64 mba;               /* measurement block address */
-+	dma64_t mba;		 /* measurement block address */
- 	__u8 mda[4];		 /* model dependent area */
- } __attribute__ ((packed,aligned(4)));
+ 	return ers_res;
+ }
+--- a/arch/s390/pci/pci_report.c
++++ b/arch/s390/pci/pci_report.c
+@@ -90,7 +90,8 @@ static struct debug_view debug_log_view
  
---- a/drivers/s390/cio/cmf.c
-+++ b/drivers/s390/cio/cmf.c
-@@ -184,7 +184,7 @@ static int set_schib(struct ccw_device *
- 	sch->config.mbfc = mbfc;
- 	/* address can be either a block address or a block index */
- 	if (mbfc)
--		sch->config.mba = address;
-+		sch->config.mba = address ? virt_to_dma64((void *)address) : 0;
- 	else
- 		sch->config.mbi = address;
+ /**
+  * zpci_report_status - Report the status of operations on a PCI device
+- * @zdev:	The PCI device for which to report status
++ * @zdev:	The zPCI device for which to report status
++ * @pdev:	The PCI device associated with the zdev if any, NULL otherwise
+  * @operation:	A string representing the operation reported
+  * @status:	A string representing the status of the operation
+  *
+@@ -104,15 +105,15 @@ static struct debug_view debug_log_view
+  *
+  * Return: 0 on success an error code < 0 otherwise.
+  */
+-int zpci_report_status(struct zpci_dev *zdev, const char *operation, const char *status)
++int zpci_report_status(struct zpci_dev *zdev, struct pci_dev *pdev,
++		       const char *operation, const char *status)
+ {
+ 	struct zpci_report_error *report;
+ 	struct pci_driver *driver = NULL;
+-	struct pci_dev *pdev = NULL;
+ 	char *buf, *end;
+ 	int ret;
  
+-	if (!zdev || !zdev->zbus)
++	if (!zdev)
+ 		return -ENODEV;
+ 
+ 	/* Protected virtualization hosts get nothing from us */
+@@ -122,8 +123,6 @@ int zpci_report_status(struct zpci_dev *
+ 	report = (void *)get_zeroed_page(GFP_KERNEL);
+ 	if (!report)
+ 		return -ENOMEM;
+-	if (zdev->zbus->bus)
+-		pdev = pci_get_slot(zdev->zbus->bus, zdev->devfn);
+ 	if (pdev)
+ 		driver = to_pci_driver(pdev->dev.driver);
+ 
+--- a/arch/s390/pci/pci_report.h
++++ b/arch/s390/pci/pci_report.h
+@@ -8,9 +8,11 @@
+  */
+ #ifndef __S390_PCI_REPORT_H
+ #define __S390_PCI_REPORT_H
++#include <linux/pci.h>
+ 
+ struct zpci_dev;
+ 
+-int zpci_report_status(struct zpci_dev *zdev, const char *operation, const char *status);
++int zpci_report_status(struct zpci_dev *zdev, struct pci_dev *pdev,
++		       const char *operation, const char *status);
+ 
+ #endif /* __S390_PCI_REPORT_H */
 
 
