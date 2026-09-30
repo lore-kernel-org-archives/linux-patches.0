@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C58151598A;
-	Wed, 30 Sep 2026 16:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC48374A16;
+	Wed, 30 Sep 2026 16:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786991; cv=none; b=Ha9AM7a7Var7M7LlxSKw+u/QoQfLyFw0xkU9KpmPeUZVx48QtAuN/Y2IOfjvp6SSAEllUsHGN5NxCCGEMfjo3J5d83zdvOD2POgWxGSIiaDgnLNrkpxOIaop6zGC7/A7QHkjWu3F7hfbDkvEPENbNWoMFKabtkKdtoRl8qXMVHg=
+	t=1790786994; cv=none; b=iZlpu2z0m4og1IsR10xgK3/5YwapbM6CIuAcMiV21kiDjxju00vz9o/GEtNrfU/280mZczgbngtnwFI1UBPnozrR15fJ4cVnk5hxsNpyB3MOIE7mxUCP2qQCQYid+NU8m4R6OMO2GrEff+a5NQ6fZQqEX9GWyHM4rYI+BW/c7MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786991; c=relaxed/simple;
-	bh=SkTXZkhj22zT6yE8EN4AxfpZ8Csi4wAqR4+gIpYrOuE=;
+	s=arc-20240116; t=1790786994; c=relaxed/simple;
+	bh=fNQSfe79nUK/cJJyctc7v17Xp2p1/VGz3tSdGUl/OIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxfbvBFw1djzjgFPeRhf1qJ7ghYeeenHJn5DndbMq4jUw3LvlR1FZ3xsCX8RAKT1tvKDV8qWiuiTy+27qvG1pbLvqUXdGCBOuiJ2rPeFLJCJVr9weKoSCdwKOKp168VMVfOkSO5FIrKDfI190uZGfpRRdHzeonYzy5xGHyRuOgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHeOkq81; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BGGQng4HeAiHKkMZzKXMr0iRGvvs4/UCTcJre/SAsNDnr061t5xhn6cJCSFf1wsHp8bFLJ/ZqhSN4tofALHCAHD6ubl4NThHcN1VeMvbU+sWH3vTOcPxhWyO+ppfu6iMVIiOqjKXb4UMa8D6h9kaEsMNWeVd7eleGlIAd/itgBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKIH12Bu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHeOkq81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C01B1F000FF;
-	Wed, 30 Sep 2026 16:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKIH12Bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329BA1F00898;
+	Wed, 30 Sep 2026 16:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786989;
-	bh=Meav4Kr2P2ls280sRR0WLn4RqOaRlhBO72FqRqggg7I=;
+	s=korg; t=1790786992;
+	bh=q3ON8kGJJ7dwO0IsFOZxk6KOnFKI4toFcYfjp9CuQGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uHeOkq81hjcnAolU009uhq9gaFXAhp/MondktGslIe2Z3xts3gcBSbe+O/a4XBACR
-	 7bRXj7gliwsyFraHeU2qUNj+BHfP7T6QA4o7VpwkGVeVmNnCAjvK4S5po/LZHFz/UU
-	 mUowZpn76OxcfipM1NkJmj8Bi6tzLmcU5YsjT+S8=
+	b=AKIH12BuY2U5k3pZbq1iM3ikOous8/LkEkHV76iS7k+HjzOaSeT//f941yrlBh49d
+	 pck6bhZb+eutO7elWcWGfSlXr0ttJFxOTF1JlFU0WmThSVJqs6P7ihKUduOmCQodDm
+	 PzbY1jthNQdxHe1EhxurRZ1tOxh7q2d/IIMBVfN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Akiva Goldberger <agoldberger@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 074/457] net/mlx5: LAG, reload IB reps of LAG master before the rest
-Date: Wed, 30 Sep 2026 17:22:59 +0200
-Message-ID: <20260930152347.645700277@linuxfoundation.org>
+Subject: [PATCH 7.2 075/457] bpf: Make post-verification instruction rewrites killable
+Date: Wed, 30 Sep 2026 17:23:00 +0200
+Message-ID: <20260930152347.668570856@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,93 +52,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit bae23d1ae62092c7f0ec6d5f7e1be5d164822638 ]
+[ Upstream commit 261b61d3735b042ae25634f795c4540be0fc140c ]
 
-In a shared-FDB LAG the master device creates the bond IB device; the
-other LAG members do not create their own, they populate a port inside
-the master's IB device. mlx5_lag_reload_ib_reps_unlocked() reloaded the
-members' IB reps in iteration order, with no guarantee the master is
-reloaded first. When a non-master member is reloaded before the master,
-it tries to populate its port in an IB device that has not been
-recreated yet.
+After do_check() returns, the verifier runs several instruction rewrite
+passes. Some of them patch or remove one instruction at a time. Each
+operation moves the remaining instruction and auxiliary-data arrays and
+adjusts all branch offsets, making the overall work quadratic in the
+program length.
 
-Hence, reload the master's IB reps first, then every other member.
+A privileged loader can submit 131072 unconditional jumps by zero followed
+by a valid return. Verification finishes quickly, but bpf_opt_remove_nops()
+then spends a long time removing each jump separately. Since this
+post-verification work neither checks for signals nor reschedules, a pending
+SIGKILL cannot terminate the task until the rewrite finishes.
 
-Fixes: 2b204cdb1206 ("net/mlx5: LAG, use xa_alloc to manage LAG device indices")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260915113459.3934760-4-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Make bpf_patch_insn_data() and verifier_remove_insns() common cancellation
+and rescheduling points. These helpers run from BPF_PROG_LOAD process
+context, and bpf_patch_insn_data() can already sleep while reallocating
+auxiliary data.
+
+Report interrupted constant blinding as -EINTR and propagate it through
+both JIT paths, including kernels that permit interpreter fallback.
+Other blinding failures retain the existing fallback behavior.
+
+This does not reduce the quadratic cost of the rewrite passes, but it makes
+the work preemptible and allows a killed loader to be torn down promptly.
+
+Fixes: 52875a04f4b2 ("bpf: verifier: remove dead code")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/20260917233222.2542500-2-memxor@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/lag/lag.c | 44 ++++++++++++++-----
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ kernel/bpf/core.c   | 21 +++++++++++++++++----
+ kernel/bpf/fixups.c | 24 ++++++++++++++++++++++--
+ 2 files changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index c655f6e32e9b0..dd14cdc378de0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -1266,25 +1266,45 @@ void mlx5_lag_remove_devices(struct mlx5_lag *ldev)
- 	mlx5_lag_remove_devices_filter(ldev, MLX5_LAG_FILTER_PORTS);
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 883cb7a800b17..71ee96a77ae26 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -19,6 +19,7 @@
+ 
+ #include <uapi/linux/btf.h>
+ #include <linux/filter.h>
++#include <linux/sched/signal.h>
+ #include <linux/skbuff.h>
+ #include <linux/static_call.h>
+ #include <linux/vmalloc.h>
+@@ -1612,6 +1613,8 @@ struct bpf_prog *bpf_jit_blind_constants(struct bpf_verifier_env *env, struct bp
+ 			 * fix it up here on error.
+ 			 */
+ 			bpf_jit_prog_release_other(prog, clone);
++			if (env && fatal_signal_pending(current))
++				return ERR_PTR(-EINTR);
+ 			return IS_ERR(tmp) ? tmp : ERR_PTR(-ENOMEM);
+ 		}
+ 
+@@ -2641,11 +2644,14 @@ static struct bpf_prog *bpf_prog_jit_compile(struct bpf_verifier_env *env, struc
+ 	orig_prog = prog;
+ 	prog = bpf_jit_blind_constants(env, prog);
+ 	/*
+-	 * If blinding was requested and we failed during blinding, we must fall
+-	 * back to the interpreter.
++	 * Fall back to the interpreter after blinding failures, except when
++	 * the loader was killed.
+ 	 */
+-	if (IS_ERR(prog))
++	if (IS_ERR(prog)) {
++		if (PTR_ERR(prog) == -EINTR)
++			return prog;
+ 		goto out_restore;
++	}
+ 
+ 	prog = bpf_int_jit_compile(env, prog);
+ 	if (prog->jited) {
+@@ -2668,6 +2674,8 @@ static struct bpf_prog *bpf_prog_jit_compile(struct bpf_verifier_env *env, struc
+ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct bpf_prog *fp,
+ 					   int *err)
+ {
++	struct bpf_prog *jit_prog;
++
+ 	/* In case of BPF to BPF calls, verifier did all the prep
+ 	 * work with regards to JITing, etc.
+ 	 */
+@@ -2690,7 +2698,12 @@ struct bpf_prog *__bpf_prog_select_runtime(struct bpf_verifier_env *env, struct
+ 		if (*err)
+ 			return fp;
+ 
+-		fp = bpf_prog_jit_compile(env, fp);
++		jit_prog = bpf_prog_jit_compile(env, fp);
++		if (IS_ERR(jit_prog)) {
++			*err = PTR_ERR(jit_prog);
++			return fp;
++		}
++		fp = jit_prog;
+ 		bpf_prog_jit_attempt_done(fp);
+ 		if (!fp->jited && jit_needed) {
+ 			*err = -ENOTSUPP;
+diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+index 48acb61854ed4..19c1b8f1b317c 100644
+--- a/kernel/bpf/fixups.c
++++ b/kernel/bpf/fixups.c
+@@ -8,6 +8,7 @@
+ #include <linux/bsearch.h>
+ #include <linux/sort.h>
+ #include <linux/perf_event.h>
++#include <linux/sched/signal.h>
+ #include <net/xdp.h>
+ #include "disasm.h"
+ 
+@@ -240,12 +241,28 @@ static void adjust_poke_descs(struct bpf_prog *prog, u32 off, u32 len)
+ 	}
  }
  
-+static int mlx5_lag_reload_ib_reps_idx(struct mlx5_lag *ldev, int idx,
-+				       u32 flags)
++/*
++ * Some post-verification instruction rewriting passes require an
++ * O(prog->len) operation per instruction. Keep their shared primitives
++ * killable and preemptible.
++ */
++static bool bpf_rewrite_must_abort(void)
 +{
-+	struct lag_func *pf = mlx5_lag_pf(ldev, idx);
-+	struct mlx5_eswitch *esw;
-+	int ret;
-+
-+	if (pf->dev->priv.flags & flags)
-+		return 0;
-+
-+	esw = pf->dev->priv.eswitch;
-+	mlx5_esw_reps_block(esw);
-+	ret = mlx5_eswitch_reload_ib_reps(esw);
-+	mlx5_esw_reps_unblock(esw);
-+
-+	return ret;
++	if (fatal_signal_pending(current))
++		return true;
++	cond_resched();
++	return false;
 +}
 +
- static int mlx5_lag_reload_ib_reps_unlocked(struct mlx5_lag *ldev, u32 flags,
- 					    u32 filter, bool cont_on_fail)
+ struct bpf_prog *bpf_patch_insn_data(struct bpf_verifier_env *env, u32 off,
+ 				     const struct bpf_insn *patch, u32 len)
  {
--	struct lag_func *pf;
-+	int master_idx = mlx5_lag_get_dev_index_by_seq_filter(ldev, MLX5_LAG_P1,
-+							     filter);
- 	int ret;
- 	int i;
+ 	struct bpf_prog *new_prog;
+ 	struct bpf_insn_aux_data *new_data = NULL;
  
-+	if (master_idx < 0)
-+		return -EINVAL;
++	if (bpf_rewrite_must_abort())
++		return NULL;
 +
-+	ret = mlx5_lag_reload_ib_reps_idx(ldev, master_idx, flags);
-+	if (ret && !cont_on_fail)
-+		return ret;
+ 	if (len > 1) {
+ 		new_data = vrealloc(env->insn_aux_data,
+ 				    array_size(env->prog->len + len - 1,
+@@ -457,6 +474,9 @@ static int verifier_remove_insns(struct bpf_verifier_env *env, u32 off, u32 cnt)
+ 	unsigned int orig_prog_len = env->prog->len;
+ 	int err;
+ 
++	if (bpf_rewrite_must_abort())
++		return -EINTR;
 +
- 	mlx5_lag_for_each(i, 0, ldev, filter) {
--		pf = mlx5_lag_pf(ldev, i);
--		if (!(pf->dev->priv.flags & flags)) {
--			struct mlx5_eswitch *esw;
--
--			esw = pf->dev->priv.eswitch;
--			mlx5_esw_reps_block(esw);
--			ret = mlx5_eswitch_reload_ib_reps(esw);
--			mlx5_esw_reps_unblock(esw);
--			if (ret && !cont_on_fail)
--				return ret;
--		}
-+		if (i == master_idx)
-+			continue;
-+		ret = mlx5_lag_reload_ib_reps_idx(ldev, i, flags);
-+		if (ret && !cont_on_fail)
-+			return ret;
+ 	if (bpf_prog_is_offloaded(env->prog->aux))
+ 		bpf_prog_offload_remove_insns(env, off, cnt);
+ 
+@@ -1316,7 +1336,7 @@ int bpf_jit_subprogs(struct bpf_verifier_env *env)
+ 		}
+ 		prog = bpf_jit_blind_constants(env, prog);
+ 		if (IS_ERR(prog)) {
+-			err = -ENOMEM;
++			err = PTR_ERR(prog);
+ 			prog = orig_prog;
+ 			goto out_restore;
+ 		}
+@@ -1395,7 +1415,7 @@ int bpf_fixup_call_args(struct bpf_verifier_env *env)
+ 		err = bpf_jit_subprogs(env);
+ 		if (err == 0)
+ 			return 0;
+-		if (err == -EFAULT)
++		if (err == -EFAULT || err == -EINTR)
+ 			return err;
  	}
- 
- 	return 0;
+ #ifndef CONFIG_BPF_JIT_ALWAYS_ON
 -- 
 2.53.0
 
