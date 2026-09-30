@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF03502560;
-	Wed, 30 Sep 2026 15:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15F44D7D26;
+	Wed, 30 Sep 2026 15:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782708; cv=none; b=YuzpTkpr5RUUxyy9cwikS+BUgseX7orYgYbEW05nRXk0rs8mmi5w/siATvNg2/agVBF7RYVi6D0HDJwb33Kas95iuZHkhlsIYGVouyhEMZd/rWv+xMvKXJbbmPWiVsdDDryCVxKrbt6jkDSiLvbFrQCXNmR19GfOsK5rd6gtuFo=
+	t=1790782708; cv=none; b=j0qqxS2ItD3HZI/8eH6egPHG2qcRngKqBDuoYikJPYcdXRqBJ7DQYAx/7Nq48Jf/PCKOcreVoEFz0QEwtVFIrAEapU6ccbI4wrVDXhBmG0l4YFPy0r3spD/jIJkWKT6wiA7nNAQctm4L5daLd8a8Sc4bJr2GU85KcmYMvakzbQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782708; c=relaxed/simple;
-	bh=6CaQxNklmnI3IS14ewyqSBp4NXg2O5ZApm3y90ErcDc=;
+	bh=4rUKsajbLxrOA7Zaz1c74BbxBaY0W+XRc/Z5JsAY0fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJHPFBdrX2H+JUzrKx/r3KlCQDB9CFiP5W9UTqiFe5+loPpCWf/VP94cUM5CXC998Gml83F6OyxV53J0plmu0kWVi9XhmZyQOiPfDQPdvpIuvzEcG3Mw9UflyrjYbzr9oIFnaAaoeR4JdfZ3wu0oZHgKoTq0OcG7peXYQWC33WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sA2HyhQP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y2dRBLkb0kTfSAXhu8+s64TASCK9+lTiEAWFSU3ITPe/KQWaACD9NGNgolsTcnOP/0Pp8dZhmSjOa7eneZ80/UUQ30gk4jUMKaNGzldUteQZGQT+4494zoQ+hPMbEPp70FH+nvHKXdOpcN7KUfn2Otuz4qpr6q0qJggH12Sj1YQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUzz3cxs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sA2HyhQP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB8F1F00893;
-	Wed, 30 Sep 2026 15:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUzz3cxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663A41F00899;
+	Wed, 30 Sep 2026 15:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782703;
-	bh=uWzMXOJ6lWe6WVbtYm/ZlJG83YAKiDRJdlVIhnxA5jo=;
+	s=korg; t=1790782697;
+	bh=W041xjGyoLspJ1lGMytcBgFKpxmzeTy40YJ4aCtcryA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sA2HyhQPf3zmGX52o/+mYgekqXL9S+TMysNfHphC1u9GrCBPn1KonhZC4+FWUCqeW
-	 mgLulPCu+CfxuHBHD1tVgxa+c117QpVg49h2Vqu/1hNVU01QpX2u4wgBZJ003qRZp5
-	 KuNXFIF9S+ZO2VyG5LhA2CC2VdyJEN+zrricMXrI=
+	b=dUzz3cxsv9sQy/7QYpqR84xfw6VJpZOyPMCmgD4OKCvqsiseVX4LaflMMPA2hLBOO
+	 smsxOL+k7lpuWDimWOPg6fs6ApRrkKARVKUVOkmPF6WqVJQD3M25uZwT3MbeVAZnDr
+	 7Xfwx6/fAKOCZ9CmHTWtnx1obVLQNICejvgWUJwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 140/595] PCI: mediatek: Protect root bus removal with rescan lock
-Date: Wed, 30 Sep 2026 17:20:33 +0200
-Message-ID: <20260930152350.745636261@linuxfoundation.org>
+Subject: [PATCH 5.10 138/595] PCI: altera: Protect root bus removal with rescan lock
+Date: Wed, 30 Sep 2026 17:20:31 +0200
+Message-ID: <20260930152350.703283759@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit a29812a55da8d0dbeb071b26ac428c338e3fc389 ]
+[ Upstream commit a8759c8ac48c0419f5899e95a6ffc611b07c965b ]
 
 Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
 to avoid racing with concurrent rescan or hotplug operations triggered via
@@ -64,27 +64,27 @@ Signed-off-by: Hans Zhang <18255117159@163.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 [bhelgaas: commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260521161822.132996-7-18255117159@163.com
+Link: https://patch.msgid.link/20260521161822.132996-4-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek.c | 2 ++
+ drivers/pci/controller/pcie-altera.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
-index d2aa0a6819672..b7e6ee250e1a7 100644
---- a/drivers/pci/controller/pcie-mediatek.c
-+++ b/drivers/pci/controller/pcie-mediatek.c
-@@ -1155,8 +1155,10 @@ static int mtk_pcie_remove(struct platform_device *pdev)
- 	struct mtk_pcie *pcie = platform_get_drvdata(pdev);
- 	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
+diff --git a/drivers/pci/controller/pcie-altera.c b/drivers/pci/controller/pcie-altera.c
+index 68a1bdcf02f82..d7089000521cc 100644
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -837,8 +837,10 @@ static int altera_pcie_remove(struct platform_device *pdev)
+ 	struct altera_pcie *pcie = platform_get_drvdata(pdev);
+ 	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(pcie);
  
 +	pci_lock_rescan_remove();
- 	pci_stop_root_bus(host->bus);
- 	pci_remove_root_bus(host->bus);
+ 	pci_stop_root_bus(bridge->bus);
+ 	pci_remove_root_bus(bridge->bus);
 +	pci_unlock_rescan_remove();
- 	mtk_pcie_free_resources(pcie);
+ 	altera_pcie_irq_teardown(pcie);
  
- 	mtk_pcie_irq_teardown(pcie);
+ 	return 0;
 -- 
 2.53.0
 
