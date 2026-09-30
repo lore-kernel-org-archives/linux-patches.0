@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB4B4A441D;
-	Wed, 30 Sep 2026 17:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24AD65192;
+	Wed, 30 Sep 2026 17:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790223; cv=none; b=PWkJK7HWkybUd3JC6I+FDxLX5omW7XyqpAR3B9JCHa41nPd5XWSUeNprVTnCH2OpwqkvlUeE4nrBTu7GwoSrGWDd74XhxyPp5Tolt4SGQuiHidzfOh9NAHyzdR6KE/IgbjcJ8j07F+Ijqg2Mn5r3V9q+CdTSRu+g950oKTYoAF8=
+	t=1790790225; cv=none; b=qCO56TrI32BzvMZyy7/RBlYM3SxbibZUrvJoQQ9OAiKm2bNYp9GF12V9t+HmobG7mqb1QtzyOLjox8Lm7ccQKvxXoRFLT7aMB5jlL2hSIMglD7StYjzLw2MA5npoYlVgvYlWPgi+yMPbawGxEpZSYC2Q9qBhPDTXwtrjmiYZqPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790223; c=relaxed/simple;
-	bh=l+P+Ht8CkC+36g+sS+IkAPH7+gz14vuHZzNW/Rm1fow=;
+	s=arc-20240116; t=1790790225; c=relaxed/simple;
+	bh=WR1A9zm4skBWveTqTXaTzjMiaewSEc6tMLmroB7nfeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I2hS9JvJ3Qcz1jSO85kcviJa5oBt+Bgg6u1rMTPoXuByuYcaAEh/5U4W3/9dQOFg0kK4pPQusrylw8RQK9+2sqcBw3Gds212T/n2Hnbof8Ag+CFKSxhbkEkWuqbHY2xWVPJKP+XJ4O+zFW6GG8rL5hE4iLjptTU/k8zj3JQWWKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7WoSvTj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fLDbF6701gDWlfgPJXta9MiMCuDk5dK0xGUGEDBLLhUfwqmHFAnSUChCYnl3Rj5XT9As5vVT7nigWfr2Fmr0INQMSB7RGoat4qcs3MFbwKkoInUkHLAML2dGuSdjn1qg4AYfyiplaUO/dzN1sJYmYBQNkR66PVoeikP78cY/NQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMp+zvvK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7WoSvTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326201F000FF;
-	Wed, 30 Sep 2026 17:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMp+zvvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096C91F000FF;
+	Wed, 30 Sep 2026 17:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790221;
-	bh=T7Mry7ZYraT9AgStEC3SgwbDid6+V1HdZYHrQ3t41cc=;
+	s=korg; t=1790790224;
+	bh=totW2jo6aXDihgLjBEigUDU705BxNflKqDTFLSY2S74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7WoSvTjMEWuCiKXamyjGAphJs4p9H2px5Nz7QJcV9nczZnQlU1zv8veWe7Cib1X7
-	 el3jF+zeLNwg9kdjOzTjHKtG02bHZ0F+J/Uqj1RiDjjQRHy9HdexKsAs9z3+HKF9+8
-	 ib0w2jZqBLRyL5i1LB4IRTqh1AaWG/YUONUozBc0=
+	b=mMp+zvvKSUrZqnTrPP6Y5W7wYqgV2HyNyBOQ+WWpbDHFPJZr73JIjM4NPluXXo5xG
+	 XPsoiznVfHppFRogVrhIdL5eDVM5HLuoq+kUW931sfwo+MxbZzsaV5J5ANzNY5arF+
+	 Ejww9kXIcMVO9+gj9OkzqrB1HFoVvI10bBjwNVtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Norbert Szetei <norbert@doyensec.com>,
 	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 753/877] landlock: Clarify documentation for the IOCTL access right
-Date: Wed, 30 Sep 2026 17:27:44 +0200
-Message-ID: <20260930152430.945998923@linuxfoundation.org>
+Subject: [PATCH 6.12 754/877] landlock: Fix use-after-free of the sources parent directory
+Date: Wed, 30 Sep 2026 17:27:45 +0200
+Message-ID: <20260930152430.968364253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,86 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Günther Noack <gnoack3000@gmail.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 6abbb8703aeeb645a681ab6ad155e0b450413787 ]
+[ Upstream commit 2c6dc792538260a8087ac5b22c31b3b8e47c85d6 ]
 
-Move the description of the LANDLOCK_ACCESS_FS_IOCTL_DEV access right
-together with the file access rights.
+current_check_refer_path() reads old_dentry->d_parent without holding a
+reference nor a lock on it, and then dereferences it in
+collect_domain_accesses() and in the audit record.
 
-This group of access rights applies to files (in this case device
-files), and they can be added to file or directory inodes using
-landlock_add_rule(2).  The check for that works the same for all file
-access rights, including LANDLOCK_ACCESS_FS_IOCTL_DEV.
+A reference on a child does not pin its parent: __d_move() reassigns
+dentry->d_parent and drops the reference the child held on its former
+parent.  hook_path_rename() is not affected because the rename path
+calls lock_rename() before the hook, so the source cannot be reparented
+under it.  hook_path_link() has no such protection: filename_linkat()
+holds a reference on the source dentry but neither locks nor references
+its parent, so a concurrent rename(2) can reparent the source while
+security_path_link() runs, and the former parent can then be removed and
+freed while the hook walks it.
 
-Invoking ioctl(2) on directory FDs can not currently be restricted
-with Landlock.  Having it grouped separately in the documentation is a
-remnant from earlier revisions of the LANDLOCK_ACCESS_FS_IOCTL_DEV
-patch set.
+A process can trigger this after entering a Landlock domain that handles
+at least one filesystem access right.  The process can then race a
+linkat(2) loop against rename(2) and rmdir(2):
 
-Link: https://lore.kernel.org/all/20260108.Thaex5ruach2@digikod.net/
-Signed-off-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://lore.kernel.org/r/20260111175203.6545-2-gnoack3000@gmail.com
+  BUG: KASAN: slab-use-after-free in collect_domain_accesses+0x278/0x290
+  Read of size 4 at addr ffff888160bd53f4 by task llrepro2/549
+   collect_domain_accesses+0x278/0x290
+   current_check_refer_path+0x952/0x1120
+   security_path_link+0x1be/0x320
+   filename_linkat+0x342/0x6d0
+   __x64_sys_linkat+0xfa/0x150
+  Freed by task 562:
+   kmem_cache_free+0x139/0x4c0
+   i_callback+0x4b/0x80
+   rcu_core+0x7dc/0x10a0
+
+Take a reference on the dentry selected as the source parent, using
+dget() for the common-mount-root case and dget_parent() otherwise.
+Release it after the hierarchy walk and synchronous audit logging.
+
+Cc: stable@vger.kernel.org
+Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Tested-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://patch.msgid.link/E9CDD9E6-E960-4DE2-B1AC-5667D52ABB3E@doyensec.com
+[mic: Clarify the caller, reachability, and reference handling]
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Stable-dep-of: 2c6dc7925382 ("landlock: Fix use-after-free of the source's parent directory")
+[ adapted to older Landlock helpers using dom and lacking audit arguments. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/landlock.h |   37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ security/landlock/fs.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/include/uapi/linux/landlock.h
-+++ b/include/uapi/linux/landlock.h
-@@ -156,6 +156,23 @@ struct landlock_net_port_attr {
-  *   :manpage:`ftruncate(2)`, :manpage:`creat(2)`, or :manpage:`open(2)` with
-  *   ``O_TRUNC``.  This access right is available since the third version of the
-  *   Landlock ABI.
-+ * - %LANDLOCK_ACCESS_FS_IOCTL_DEV: Invoke :manpage:`ioctl(2)` commands on an opened
-+ *   character or block device.
-+ *
-+ *   This access right applies to all `ioctl(2)` commands implemented by device
-+ *   drivers.  However, the following common IOCTL commands continue to be
-+ *   invokable independent of the %LANDLOCK_ACCESS_FS_IOCTL_DEV right:
-+ *
-+ *   * IOCTL commands targeting file descriptors (``FIOCLEX``, ``FIONCLEX``),
-+ *   * IOCTL commands targeting file descriptions (``FIONBIO``, ``FIOASYNC``),
-+ *   * IOCTL commands targeting file systems (``FIFREEZE``, ``FITHAW``,
-+ *     ``FIGETBSZ``, ``FS_IOC_GETFSUUID``, ``FS_IOC_GETFSSYSFSPATH``)
-+ *   * Some IOCTL commands which do not make sense when used with devices, but
-+ *     whose implementations are safe and return the right error codes
-+ *     (``FS_IOC_FIEMAP``, ``FICLONE``, ``FICLONERANGE``, ``FIDEDUPERANGE``)
-+ *
-+ *   This access right is available since the fifth version of the Landlock
-+ *   ABI.
-  *
-  * Whether an opened file can be truncated with :manpage:`ftruncate(2)` or used
-  * with `ioctl(2)` is determined during :manpage:`open(2)`, in the same way as
-@@ -216,26 +233,6 @@ struct landlock_net_port_attr {
-  *   If multiple requirements are not met, the ``EACCES`` error code takes
-  *   precedence over ``EXDEV``.
-  *
-- * The following access right applies both to files and directories:
-- *
-- * - %LANDLOCK_ACCESS_FS_IOCTL_DEV: Invoke :manpage:`ioctl(2)` commands on an opened
-- *   character or block device.
-- *
-- *   This access right applies to all `ioctl(2)` commands implemented by device
-- *   drivers.  However, the following common IOCTL commands continue to be
-- *   invokable independent of the %LANDLOCK_ACCESS_FS_IOCTL_DEV right:
-- *
-- *   * IOCTL commands targeting file descriptors (``FIOCLEX``, ``FIONCLEX``),
-- *   * IOCTL commands targeting file descriptions (``FIONBIO``, ``FIOASYNC``),
-- *   * IOCTL commands targeting file systems (``FIFREEZE``, ``FITHAW``,
-- *     ``FIGETBSZ``, ``FS_IOC_GETFSUUID``, ``FS_IOC_GETFSSYSFSPATH``)
-- *   * Some IOCTL commands which do not make sense when used with devices, but
-- *     whose implementations are safe and return the right error codes
-- *     (``FS_IOC_FIEMAP``, ``FICLONE``, ``FICLONERANGE``, ``FIDEDUPERANGE``)
-- *
-- *   This access right is available since the fifth version of the Landlock
-- *   ABI.
-- *
-  * .. warning::
-  *
-  *   It is currently not possible to restrict some file-related actions
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -1192,11 +1192,12 @@ static int current_check_refer_path(stru
+ 	/*
+ 	 * old_dentry may be the root of the common mount point and
+ 	 * !IS_ROOT(old_dentry) at the same time (e.g. with open_tree() and
+-	 * OPEN_TREE_CLONE).  We do not need to call dget(old_parent) because
+-	 * we keep a reference to old_dentry.
++	 * OPEN_TREE_CLONE).  Pin the dentry used as old_parent in either case.
++	 * Otherwise, dget_parent() safely fetches and pins the current parent
++	 * against a concurrent rename(2).
+ 	 */
+-	old_parent = (old_dentry == mnt_dir.dentry) ? old_dentry :
+-						      old_dentry->d_parent;
++	old_parent = (old_dentry == mnt_dir.dentry) ? dget(old_dentry) :
++						      dget_parent(old_dentry);
+ 
+ 	/* new_dir->dentry is equal to new_dentry->d_parent */
+ 	allow_parent1 = collect_domain_accesses(dom, mnt_dir.dentry, old_parent,
+@@ -1204,8 +1205,10 @@ static int current_check_refer_path(stru
+ 	allow_parent2 = collect_domain_accesses(
+ 		dom, mnt_dir.dentry, new_dir->dentry, &layer_masks_parent2);
+ 
+-	if (allow_parent1 && allow_parent2)
++	if (allow_parent1 && allow_parent2) {
++		dput(old_parent);
+ 		return 0;
++	}
+ 
+ 	/*
+ 	 * To be able to compare source and destination domain access rights,
+@@ -1216,8 +1219,11 @@ static int current_check_refer_path(stru
+ 	if (is_access_to_paths_allowed(
+ 		    dom, &mnt_dir, access_request_parent1, &layer_masks_parent1,
+ 		    old_dentry, access_request_parent2, &layer_masks_parent2,
+-		    exchange ? new_dentry : NULL))
++		    exchange ? new_dentry : NULL)) {
++		dput(old_parent);
+ 		return 0;
++	}
++	dput(old_parent);
+ 
+ 	/*
+ 	 * This prioritizes EACCES over EXDEV for all actions, including
 
 
