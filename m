@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEC147124F;
-	Wed, 30 Sep 2026 15:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0338350B8DA;
+	Wed, 30 Sep 2026 15:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782499; cv=none; b=jPWDLVCK3U6TPFF4vO4US4pnbpnpdw2CAtjk4bbEJdjDjFIFrgGBUK1AEweu9oW+s3lEajg7YZEUDZjs784PCLiWI/NGM9dI80woBq1tH7ibQTcFYWSRL4i1LYe8sqn99q+VOKWbKNYPVVS44xLpS8LfbuVFanU9s6Y4HctiqdE=
+	t=1790782501; cv=none; b=KYV7XhYWLdGfc8l0rEsG7UiDx6uUfxjKRnW8WivnWPUSZictCpycqiVxuofyV4q/vj+tW87XhZ3iTlkcnIY5m/dYJrHl6qXGvVeYinKF7qf/6apn6B5ms5tXU8uVUvDLJ1Ze062ASmq6EF52LVLtihEUDLqZZX7nfkR4fxWAbN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782499; c=relaxed/simple;
-	bh=Y2s4kF9jGrG3YTm3xCZlyURQ76yrnFAVyxqBs4J27Rg=;
+	s=arc-20240116; t=1790782501; c=relaxed/simple;
+	bh=jUVI2jF5LnyyPBEVxRXmd6NVuVVeOhyv+8bfD6uqBo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Or8iw9qof50xKGQKTuH03GOf60ikRByPxxHgVSr+BHMPYOclwzcfnIMRrriLSIOqc7Y/BujZdHuKu3r70kMLHrIiYJtRNn8GNRMBcDZWlOmhT58ZpND/GxuPR79FCzETZUSYXRpyoW13BE5PxkKTYVRUC5VF0UPdN2mg7AOgRn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4nH+bR+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jez08eugTvSQj/JwhZLC41AWAksN6zJ0EYcwPcKdWLjt+FziS0o9iAy+hg8cZrc8KLBJr4/l6jaD+0pB9nzBIKHaulfGsZSXr1un7QV3rZgWr0zg0fnTb7FmIz1i5wIUNPtH1t3Q9gNVKiFaU3uxU5/Gu9cEU9WNgUSw6vgby5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRM68Cuj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4nH+bR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD541F00893;
-	Wed, 30 Sep 2026 15:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRM68Cuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9C31F0089C;
+	Wed, 30 Sep 2026 15:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782487;
-	bh=lsFSk1Ux4dPpqAaE6kHfFGLQHTyhIEKc4o9FbRerlD4=;
+	s=korg; t=1790782496;
+	bh=Hu5UICBhPOCl6pJhTylFmx4N0HYxDXPj7AoUhO+IouY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4nH+bR+Th/BQKnHT/JtxVabR7ChE3qV4LzSPcnIorxZdS+GoZgX1O/emaB6FWdXx
-	 x89aacDtNnEQEEGJjORjFkIY15Bm9RnPvBARLHh+V2q7aVUTL/eDwW4OCmfuNbpItb
-	 Y3MGZ0EVJRNv14f6WrYcDcDrLwOkEJvEL+brTAAo=
+	b=qRM68CujTNsw7hyS9PJKemspshA9In1/nrzA8watsx80G+9+Cp5CaObhNPZiZdur3
+	 Hl1KSihu/2rbCsrArI8w6SV7GdduT8hRkbCPYQJ9J7QQ9tPEGJg8h2fULb6Anc5wNw
+	 BJDbYwk0QIdLBmsDNa6GSklgMoaIsx+qfJGJga/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Trimarchi <michael@amarulasolutions.com>,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Ray Wu <ray.wu@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	James Lin <pinglei.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/595] drm/panel: simple: Add AM-1280800W8TZQW-T00H
-Date: Wed, 30 Sep 2026 17:19:15 +0200
-Message-ID: <20260930152349.070635877@linuxfoundation.org>
+Subject: [PATCH 5.10 022/595] drm/amd/display: Fix CRC open failure during active rendering
+Date: Wed, 30 Sep 2026 17:18:35 +0200
+Message-ID: <20260930152348.202548003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,69 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 6acb810ebc5d8dea5c250326c14dc44e32dc8e92 ]
+[ Upstream commit 5eb2fdafeb6f4a442643b77a21a4c9e70586a146 ]
 
-Add Ampire, AM-1280800W8TZQW-T00H 10.1" TFT LCD panel timings.
+[Why]
+Opening the CRC data file during active rendering can fail with -EINVAL.
+The wait for commit->hw_done returns remaining jiffies on success, but
+the CRC path was treating that as an error.
 
-Co-developed-by: Michael Trimarchi <michael@amarulasolutions.com>
-Signed-off-by: Michael Trimarchi <michael@amarulasolutions.com>
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260515082232.1766586-2-dario.binacchi@amarulasolutions.com
+[How]
+Handle wait_for_completion_interruptible_timeout() correctly:
+positive return as success, 0 as timeout, and negative as error.
+
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: James Lin <pinglei.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index a59adc08267f5..0c18c0cc701c4 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -686,6 +686,31 @@ static const struct panel_desc ampire_am_1280800n3tzqw_t00h = {
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
- };
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+index 04c20ce6e94df..2658339ad8cc8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+@@ -176,8 +176,13 @@ int amdgpu_dm_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+ 		 */
+ 		ret = wait_for_completion_interruptible_timeout(
+ 			&commit->hw_done, 10 * HZ);
+-		if (ret)
++		if (ret < 0)
++			goto cleanup;
++
++		if (ret == 0) {
++			ret = -ETIMEDOUT;
+ 			goto cleanup;
++		}
+ 	}
  
-+static const struct drm_display_mode ampire_am_1280800w8tzqw_t00h_mode = {
-+	.clock = 72400,
-+	.hdisplay = 1280,
-+	.hsync_start = 1280 + 40,
-+	.hsync_end = 1280 + 40 + 80,
-+	.htotal = 1280 + 40 + 80 + 40,
-+	.vdisplay = 800,
-+	.vsync_start = 800 + 10,
-+	.vsync_end = 800 + 10 + 18,
-+	.vtotal = 800 + 10 + 18 + 10,
-+};
-+
-+static const struct panel_desc ampire_am_1280800w8tzqw_t00h = {
-+	.modes = &ampire_am_1280800w8tzqw_t00h_mode,
-+	.num_modes = 1,
-+	.bpc = 8,
-+	.size = {
-+		.width = 217,
-+		.height = 136,
-+	},
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
-+	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
-+	.connector_type = DRM_MODE_CONNECTOR_LVDS,
-+};
-+
- static const struct drm_display_mode ampire_am_480272h3tmqw_t01h_mode = {
- 	.clock = 9000,
- 	.hdisplay = 480,
-@@ -3921,6 +3946,9 @@ static const struct of_device_id platform_of_match[] = {
- 	{
- 		.compatible = "ampire,am-1280800n3tzqw-t00h",
- 		.data = &ampire_am_1280800n3tzqw_t00h,
-+	}, {
-+		.compatible = "ampire,am-1280800w8tzqw-t00h",
-+		.data = &ampire_am_1280800w8tzqw_t00h,
- 	}, {
- 		.compatible = "ampire,am-480272h3tmqw-t01h",
- 		.data = &ampire_am_480272h3tmqw_t01h,
+ 	enable = amdgpu_dm_is_valid_crc_source(source);
 -- 
 2.53.0
 
