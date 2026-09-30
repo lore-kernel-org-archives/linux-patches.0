@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4EB4DE720;
-	Wed, 30 Sep 2026 17:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23306518156;
+	Wed, 30 Sep 2026 17:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789006; cv=none; b=Vr5HvINLxVi6jSJtcgikc3h0/m4OOWBkDiZeOUMV/xFF8jU7rc5z7NbC1xwinFnhWyfFSezXAax1MT1hOTUhrYIeG0k8T2ikhGpFb0dw8DslTOxnOxt2Ob87wmKfVqP3Z2nLRzD8Nc9vefUxpsIjjyQmhgRt/3RyzZ0ATixWbK4=
+	t=1790789008; cv=none; b=aTUk8W8eDGeRv3PcRLp2lJfGotrx6bzEBli1JvQA8lcDag3cX0tnDslZFMHrjvFaw51mGUqAIAf0x1oP3T+smk0G2+S9UqjzQB1RQ3I302dzc61Vr+e6/cTdExgavtQ+giaBGcT+R8eCzS3HIQCfKgrjECZb8JWjNEc1ZiZ6gyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789006; c=relaxed/simple;
-	bh=Tu1WbNyn8DyqkvA4GtSrxS5NJsN8Yiw0UsguSZ8mofk=;
+	s=arc-20240116; t=1790789008; c=relaxed/simple;
+	bh=6rVAGrKYy7SaTxeMFZt4IIul3RY1+DU6ZUDLSgaR6qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTwXqU0qNnNpCva0/z9Yk9Y9exkSDHn2vYyf8AXGD1gZOmV+nBo1vrV7/XAV0DFQAwZ7QhyaWzniw1mXl5kAWPLnE0BNG43rdWNrhKpLh7AXP1Lcc10DAdVCjlmydhKVMSUSlHpQNdbFofnwBw1DZKzkGKCsQrMObI09KCxIwNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iE7FKdyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iY2fQ4faRSKJR5nJZsQk9bDAR5DyhyHVq1GKYPDkcFpeBHTYS1Rf6YfN/7gsUecmz/Q/b+3Uj9jvc/pZGhiAoilwO6RM2BuI58Far6zMg78aUjL4WHK6jMVGsVw19u5RSOsc47MT5TCpjjbfdwk48s6ZmyIns0q2EJsjwjWQzZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAjrmhLQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iE7FKdyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189021F000FF;
-	Wed, 30 Sep 2026 17:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAjrmhLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B9F1F00898;
+	Wed, 30 Sep 2026 17:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789002;
-	bh=s1ENDOsY53Dw0Yw9PFgl0x1fxNz7vXNZgOC+tNwyp7E=;
+	s=korg; t=1790789005;
+	bh=l3wrr6E5A81m+ZXdinaDrKWBuqgHSeo+OrwbEofIzbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iE7FKdyrWfqumnw0LXuxtjE9G49wfy+PwJxTrktmfvV/lGljbREJ0Wqhr0O7CxXXZ
-	 n/BRmVsJ3daIzsRKN9XO5aXerg8qcIeX4767IjabmjmxV/rmumDIM3l2Bq4nUw+wke
-	 YzMorP49oTXYPn3fgxuR5N3Bg5Wjm6bSmz+fFSiU=
+	b=PAjrmhLQ2xkf9pi45ooKmMzRNXZy+Kus/uxDq9NmmYE1U8V9R2yAl4t8okH0Pliru
+	 8eq7PCG7/YxpIH1hx41NypvwTESjDK/DBoToXgeHwyXuYTHTJy+Yh+I2ZyowDglxA4
+	 lgheMfgYvsasnkDLPq/nX2ORAk/Xc21vV3WbrbCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marc Zyngier <maz@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Oliver Upton <oupton@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/877] KVM: arm64: vgic-its: Free the caches when GITS_BASER changes
-Date: Wed, 30 Sep 2026 17:20:35 +0200
-Message-ID: <20260930152421.676509247@linuxfoundation.org>
+Subject: [PATCH 6.12 325/877] KVM: arm64: vgic-its: Add stronger type-checking to the ITS entry sizes
+Date: Wed, 30 Sep 2026 17:20:36 +0200
+Message-ID: <20260930152421.697568667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,83 +51,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 8cd92f77ae4f5371a7d581f8324c24919670b304 ]
+[ Upstream commit 3b2c81d5feb250dfdcb0ef5825319f36c29f8336 ]
 
-A guest that disables the ITS and re-points or shrinks GITS_BASER<n>
-with VALID still set keeps the devices and collections it mapped
-against the old table, as KVM frees them only when VALID is cleared.
-The contents of the table are IMPLEMENTATION DEFINED, so a write that
-gives GITS_BASER<n> a different address or size may lose whatever the
-old value described. Free the list whenever the stored value changes,
-and drop the translation cache with it.
+The ITS ABI infrastructure allows for some pretty lax code, where
+the size of the data doesn't have to match the size of the entry,
+potentially leading to a collection of interesting bugs.
 
-The cache is not empty just because the ITS is disabled: its->enabled
-is written under the cmd_lock, while vgic_its_resolve_lpi() tests it
-under the its_lock, so an injection can still cache an entry after the
-ITS was disabled. Hence the invalidation inside the its_lock section.
+Commit 7fe28d7e68f9 ("KVM: arm64: vgic-its: Add a data length check
+in vgic_its_save_*") added some checks, but starts by implicitly
+casting all writes to a 64bit value, hiding some of the issues.
 
-Test for a change rather than a write: its_restore_enable() rewrites
-GITS_BASER<n> from its probe-time cache on resume, and KVM reports
-GITS_TYPER.HCC as 0, so nothing re-maps the boot CPU's collection
-afterwards.
+Instead, introduce macros that will check the data type actually used
+for dealing with the table entries. The macros are taking a symbolic
+entry type that is used to fetch the size of the entry type for the
+current ABI. This immediately catches a couple of low-impact gotchas
+(zero values that are implicitly 32bit), easy enough to fix.
 
-Fixes: 36d6961c2b481 ("KVM: arm/arm64: vgic-its: Free caches when GITS_BASER Valid bit is cleared")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/all/87ecg9owwa.wl-maz@kernel.org/
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260821064445.615838-2-fuad.tabba@linux.dev
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Given that we currently only have a single ABI, hardcode a couple of
+BUILD_BUG_ON()s that will fire if we use anything but a 64bit quantity,
+and some (currently unreachable) fallback code that may become useful
+one day.
+
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241117165757.247686-5-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Stable-dep-of: cc5d96036e01 ("KVM: arm64: vgic-its: Skip unreachable devices instead of failing the save")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c | 69 ++++++++++++++++++++++++----------
+ arch/arm64/kvm/vgic/vgic.h     | 23 ------------
+ 2 files changed, 50 insertions(+), 42 deletions(-)
 
 diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-index 7282305de3471..6737db1fb922f 100644
+index 6737db1fb922f..8842e53734a1d 100644
 --- a/arch/arm64/kvm/vgic/vgic-its.c
 +++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -1637,7 +1637,7 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
- 				      unsigned long val)
- {
- 	const struct vgic_its_abi *abi = vgic_its_get_abi(its);
--	u64 entry_size, table_type;
-+	u64 old, entry_size, table_type;
- 	u64 reg, *regptr, clearbits = 0;
+@@ -31,6 +31,41 @@ static int vgic_its_commit_v0(struct vgic_its *its);
+ static int update_lpi_config(struct kvm *kvm, struct vgic_irq *irq,
+ 			     struct kvm_vcpu *filter_vcpu, bool needs_inv);
  
- 	/* When GITS_CTLR.Enable is 1, we ignore write accesses. */
-@@ -1660,7 +1660,9 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
- 		return;
- 	}
- 
--	reg = update_64bit_reg(*regptr, addr & 7, len, val);
-+	old = *regptr;
++#define vgic_its_read_entry_lock(i, g, valp, t)				\
++	({								\
++		int __sz = vgic_its_get_abi(i)->t##_esz;		\
++		struct kvm *__k = (i)->dev->kvm;			\
++		int __ret;						\
++									\
++		BUILD_BUG_ON(NR_ITS_ABIS == 1 &&			\
++			     sizeof(*(valp)) != ABI_0_ESZ);		\
++		if (NR_ITS_ABIS > 1 &&					\
++		    KVM_BUG_ON(__sz != sizeof(*(valp)), __k))		\
++			__ret = -EINVAL;				\
++		else							\
++			__ret = kvm_read_guest_lock(__k, (g),		\
++						    valp, __sz);	\
++		__ret;							\
++	})
 +
-+	reg = update_64bit_reg(old, addr & 7, len, val);
- 	reg &= ~GITS_BASER_RO_MASK;
- 	reg &= ~clearbits;
++#define vgic_its_write_entry_lock(i, g, val, t)				\
++	({								\
++		int __sz = vgic_its_get_abi(i)->t##_esz;		\
++		struct kvm *__k = (i)->dev->kvm;			\
++		typeof(val) __v = (val);				\
++		int __ret;						\
++									\
++		BUILD_BUG_ON(NR_ITS_ABIS == 1 &&			\
++			     sizeof(__v) != ABI_0_ESZ);			\
++		if (NR_ITS_ABIS > 1 &&					\
++		    KVM_BUG_ON(__sz != sizeof(__v), __k))		\
++			__ret = -EINVAL;				\
++		else							\
++			__ret = vgic_write_guest_lock(__k, (g),		\
++						      &__v, __sz);	\
++		__ret;							\
++	})
++
+ /*
+  * Creates a new (reference to a) struct vgic_irq for a given LPI.
+  * If this LPI is already mapped on another ITS, we increase its refcount
+@@ -798,7 +833,7 @@ static int vgic_its_cmd_handle_discard(struct kvm *kvm, struct vgic_its *its,
  
-@@ -1670,7 +1672,8 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
+ 		its_free_ite(kvm, ite);
  
- 	*regptr = reg;
- 
--	if (!(reg & GITS_BASER_VALID)) {
-+	/* The ITS driver rewrites an unchanged GITS_BASER<n> on resume. */
-+	if (reg != old) {
- 		/* Take the its_lock to prevent a race with a save/restore */
- 		mutex_lock(&its->its_lock);
- 		switch (table_type) {
-@@ -1681,6 +1684,8 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
- 			vgic_its_free_collection_list(kvm, its);
- 			break;
- 		}
-+		/* A concurrent injection may have cached a translation. */
-+		vgic_its_invalidate_cache(its);
- 		mutex_unlock(&its->its_lock);
+-		return vgic_its_write_entry_lock(its, gpa, 0, ite_esz);
++		return vgic_its_write_entry_lock(its, gpa, 0ULL, ite);
  	}
+ 
+ 	return E_ITS_DISCARD_UNMAPPED_INTERRUPT;
+@@ -1147,7 +1182,6 @@ static int vgic_its_cmd_handle_mapd(struct kvm *kvm, struct vgic_its *its,
+ 	bool valid = its_cmd_get_validbit(its_cmd);
+ 	u8 num_eventid_bits = its_cmd_get_size(its_cmd);
+ 	gpa_t itt_addr = its_cmd_get_ittaddr(its_cmd);
+-	int dte_esz = vgic_its_get_abi(its)->dte_esz;
+ 	struct its_device *device;
+ 	gpa_t gpa;
+ 
+@@ -1172,7 +1206,7 @@ static int vgic_its_cmd_handle_mapd(struct kvm *kvm, struct vgic_its *its,
+ 	 * is an error, so we are done in any case.
+ 	 */
+ 	if (!valid)
+-		return vgic_its_write_entry_lock(its, gpa, 0, dte_esz);
++		return vgic_its_write_entry_lock(its, gpa, 0ULL, dte);
+ 
+ 	device = vgic_its_alloc_device(its, device_id, itt_addr,
+ 				       num_eventid_bits);
+@@ -2099,7 +2133,7 @@ static int scan_its_table(struct vgic_its *its, gpa_t base, int size, u32 esz,
+  * vgic_its_save_ite - Save an interrupt translation entry at @gpa
+  */
+ static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
+-			      struct its_ite *ite, gpa_t gpa, int ite_esz)
++			      struct its_ite *ite, gpa_t gpa)
+ {
+ 	u32 next_offset;
+ 	u64 val;
+@@ -2110,7 +2144,7 @@ static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
+ 		ite->collection->collection_id;
+ 	val = cpu_to_le64(val);
+ 
+-	return vgic_its_write_entry_lock(its, gpa, val, ite_esz);
++	return vgic_its_write_entry_lock(its, gpa, val, ite);
  }
+ 
+ /**
+@@ -2210,7 +2244,7 @@ static int vgic_its_save_itt(struct vgic_its *its, struct its_device *device)
+ 		if (ite->irq->hw && !kvm_vgic_global_state.has_gicv4_1)
+ 			return -EACCES;
+ 
+-		ret = vgic_its_save_ite(its, device, ite, gpa, ite_esz);
++		ret = vgic_its_save_ite(its, device, ite, gpa);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -2249,10 +2283,9 @@ static int vgic_its_restore_itt(struct vgic_its *its, struct its_device *dev)
+  * @its: ITS handle
+  * @dev: ITS device
+  * @ptr: GPA
+- * @dte_esz: device table entry size
+  */
+ static int vgic_its_save_dte(struct vgic_its *its, struct its_device *dev,
+-			     gpa_t ptr, int dte_esz)
++			     gpa_t ptr)
+ {
+ 	u64 val, itt_addr_field;
+ 	u32 next_offset;
+@@ -2265,7 +2298,7 @@ static int vgic_its_save_dte(struct vgic_its *its, struct its_device *dev,
+ 		(dev->num_eventid_bits - 1));
+ 	val = cpu_to_le64(val);
+ 
+-	return vgic_its_write_entry_lock(its, ptr, val, dte_esz);
++	return vgic_its_write_entry_lock(its, ptr, val, dte);
+ }
+ 
+ /**
+@@ -2345,10 +2378,8 @@ static int vgic_its_device_cmp(void *priv, const struct list_head *a,
+  */
+ static int vgic_its_save_device_tables(struct vgic_its *its)
+ {
+-	const struct vgic_its_abi *abi = vgic_its_get_abi(its);
+ 	u64 baser = its->baser_device_table;
+ 	struct its_device *dev;
+-	int dte_esz = abi->dte_esz;
+ 
+ 	if (!(baser & GITS_BASER_VALID))
+ 		return 0;
+@@ -2367,7 +2398,7 @@ static int vgic_its_save_device_tables(struct vgic_its *its)
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = vgic_its_save_dte(its, dev, eaddr, dte_esz);
++		ret = vgic_its_save_dte(its, dev, eaddr);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -2448,7 +2479,7 @@ static int vgic_its_restore_device_tables(struct vgic_its *its)
+ 
+ static int vgic_its_save_cte(struct vgic_its *its,
+ 			     struct its_collection *collection,
+-			     gpa_t gpa, int esz)
++			     gpa_t gpa)
+ {
+ 	u64 val;
+ 
+@@ -2457,7 +2488,7 @@ static int vgic_its_save_cte(struct vgic_its *its,
+ 	       collection->collection_id);
+ 	val = cpu_to_le64(val);
+ 
+-	return vgic_its_write_entry_lock(its, gpa, val, esz);
++	return vgic_its_write_entry_lock(its, gpa, val, cte);
+ }
+ 
+ /*
+@@ -2465,7 +2496,7 @@ static int vgic_its_save_cte(struct vgic_its *its,
+  * Return +1 on success, 0 if the entry was invalid (which should be
+  * interpreted as end-of-table), and a negative error value for generic errors.
+  */
+-static int vgic_its_restore_cte(struct vgic_its *its, gpa_t gpa, int esz)
++static int vgic_its_restore_cte(struct vgic_its *its, gpa_t gpa)
+ {
+ 	struct its_collection *collection;
+ 	struct kvm *kvm = its->dev->kvm;
+@@ -2473,7 +2504,7 @@ static int vgic_its_restore_cte(struct vgic_its *its, gpa_t gpa, int esz)
+ 	u64 val;
+ 	int ret;
+ 
+-	ret = vgic_its_read_entry_lock(its, gpa, &val, esz);
++	ret = vgic_its_read_entry_lock(its, gpa, &val, cte);
+ 	if (ret)
+ 		return ret;
+ 	val = le64_to_cpu(val);
+@@ -2520,7 +2551,7 @@ static int vgic_its_save_collection_table(struct vgic_its *its)
+ 	max_size = GITS_BASER_NR_PAGES(baser) * SZ_64K;
+ 
+ 	list_for_each_entry(collection, &its->collection_list, coll_list) {
+-		ret = vgic_its_save_cte(its, collection, gpa, cte_esz);
++		ret = vgic_its_save_cte(its, collection, gpa);
+ 		if (ret)
+ 			return ret;
+ 		gpa += cte_esz;
+@@ -2534,7 +2565,7 @@ static int vgic_its_save_collection_table(struct vgic_its *its)
+ 	 * table is not fully filled, add a last dummy element
+ 	 * with valid bit unset
+ 	 */
+-	return vgic_its_write_entry_lock(its, gpa, 0, cte_esz);
++	return vgic_its_write_entry_lock(its, gpa, 0ULL, cte);
+ }
+ 
+ /*
+@@ -2559,7 +2590,7 @@ static int vgic_its_restore_collection_table(struct vgic_its *its)
+ 	max_size = GITS_BASER_NR_PAGES(baser) * SZ_64K;
+ 
+ 	while (read < max_size) {
+-		ret = vgic_its_restore_cte(its, gpa, cte_esz);
++		ret = vgic_its_restore_cte(its, gpa);
+ 		if (ret <= 0)
+ 			break;
+ 		gpa += cte_esz;
+diff --git a/arch/arm64/kvm/vgic/vgic.h b/arch/arm64/kvm/vgic/vgic.h
+index 309295f5e1b07..f2486b4d9f956 100644
+--- a/arch/arm64/kvm/vgic/vgic.h
++++ b/arch/arm64/kvm/vgic/vgic.h
+@@ -146,29 +146,6 @@ static inline int vgic_write_guest_lock(struct kvm *kvm, gpa_t gpa,
+ 	return ret;
+ }
+ 
+-static inline int vgic_its_read_entry_lock(struct vgic_its *its, gpa_t eaddr,
+-					   u64 *eval, unsigned long esize)
+-{
+-	struct kvm *kvm = its->dev->kvm;
+-
+-	if (KVM_BUG_ON(esize != sizeof(*eval), kvm))
+-		return -EINVAL;
+-
+-	return kvm_read_guest_lock(kvm, eaddr, eval, esize);
+-
+-}
+-
+-static inline int vgic_its_write_entry_lock(struct vgic_its *its, gpa_t eaddr,
+-					    u64 eval, unsigned long esize)
+-{
+-	struct kvm *kvm = its->dev->kvm;
+-
+-	if (KVM_BUG_ON(esize != sizeof(eval), kvm))
+-		return -EINVAL;
+-
+-	return vgic_write_guest_lock(kvm, eaddr, &eval, esize);
+-}
+-
+ /*
+  * This struct provides an intermediate representation of the fields contained
+  * in the GICH_VMCR and ICH_VMCR registers, such that code exporting the GIC
 -- 
 2.53.0
 
