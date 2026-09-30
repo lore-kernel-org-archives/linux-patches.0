@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB104F7CBF;
-	Wed, 30 Sep 2026 17:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DDC4D2EFE;
+	Wed, 30 Sep 2026 17:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787894; cv=none; b=hC5BxyuRU6QL9PQ+ghhlXT4TaGSAN0oa0NIEDACgmdgMTHVDzZdvpf5u8kSpP3XUEvl5/XzXAP9FQBY2iWUOOYmDdrkEnPSmVmleh/Z/4wXTgncQcbjARMYR7kO0ZDXmLKqGQas4U51Nn8gy3P5k+oEuF513V502G5g4UeDeUyM=
+	t=1790787898; cv=none; b=t/t6EoNnOq2CV1D4Qvwa3k0aZeMIjytV8ZnN03+EEsT4niY4Jr/bMMPNzTCjXNkxAYAeT2LAJbsXJE84LlY2LtNm8UKv7GXHFYRvGMDoPMv6a6LyKZoyMG0QfzTaR1K8O4G1Ji6HRchOZbt0tudFQb9FnqgiV7txB17jwev82ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787894; c=relaxed/simple;
-	bh=vXAK5BW9jffhE5wS/wT7PaQUTzoWrhH1LPfNJgFpOsk=;
+	s=arc-20240116; t=1790787898; c=relaxed/simple;
+	bh=UTWhVSYy/tDO6bgsVpwLv2nNrQ9xGNOeVuyJo64tDVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRIYBOTyx+r+06PqldvE2h3PqE+4GCOkK7+BrjzVzf1ufMnwtEn5BdcOuk1LiEFq8NSA5ihWXIz51WSw4OCcQmx8Ag6WP7hWu278SM0by9UuzGtWznWBAqaxIyPpH3G1LAeiHaC43H+1OJWEua/CnpcsZa719rkSaeB1GsgYwmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBeL6tZN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XgUokKvN0xiLSjvWujKIqJCto6IZ6FxokxXaz9liCN7CZTcIilFukD1x207A/PPhDRJNJvfV/qbIAbHRqicVQOe9i1V1frNIWZWDDN/PPGZF3JTL/dLxXpZVsT8/5/Jp4HQUAagh71q/wJv1YZXGtX1q6G7t5i2DBx6c3qXfS4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJRQjauI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBeL6tZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BBF1F000FF;
-	Wed, 30 Sep 2026 17:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJRQjauI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCFC1F000FF;
+	Wed, 30 Sep 2026 17:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787893;
-	bh=goZkTgs2UjuoYWb446bAyh0ogWEHaGom0kUOUQBfp08=;
+	s=korg; t=1790787896;
+	bh=ER9FspU0AvMEl0Pia3KQL8JB3azxHCd26FaN/egQ+a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBeL6tZNgHqq3wsQjPpyRw1qVbPTiFYVv4D5wmspObom4QZYynqu2bslVRkbnjmSf
-	 QRWw7NB0X2aI8/rVukiy7BtgaRJOzujLux/U3taGMzukdZfBDA6m8pIJVtwnrcFprs
-	 GDkzXourNzschdag5rXR10kJhMeZLDBqJMgJnk08=
+	b=WJRQjauI0EsIcNChl8IseGXCN1JKp8GbDdOnb1JmjmIsvEd+K1Ra0t4uKkxffRQgj
+	 9ZRtZxceOkQ4mns7u9Rw1jm3vtwaIc4m/GtNlex/KPknLBKwxR5pTDXrRfZoEQ87Df
+	 hoCk1kfvyVcX4wwedy7uHmJtS3Y60w4M6F9U21f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Yao <yaoyuan@linux.alibaba.com>,
 	Marc Zyngier <maz@kernel.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Jonathan Davies <jonathan.davies@nutanix.com>,
 	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 7.2 389/457] KVM: arm64: Fix spurious warning for benign stage 2 teardown race
-Date: Wed, 30 Sep 2026 17:28:14 +0200
-Message-ID: <20260930152354.392165171@linuxfoundation.org>
+Subject: [PATCH 7.2 390/457] KVM: arm64: nv: Fix null ptr deref on nested wp/unmap, teardown race
+Date: Wed, 30 Sep 2026 17:28:15 +0200
+Message-ID: <20260930152354.412888588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,19 +54,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 38b70fc453c3112f1a62583b89903ae41116cc27 upstream.
+commit 4c74e233cdedd11592775fae2a6243e67ca3f891 upstream.
 
-kvmtool was used to establish an L1 guest with 8 CPUs and 8 GiB of RAM, an
-L2 guest with 4 CPUs and 4 GiB of RAM and an L3 guest with 2 CPUs and 2 GiB
-of RAM, all of which was then exited.
+Commit 7270cc9157f4 ("KVM: arm64: nv: Handle VNCR_EL2 invalidation from MMU
+notifiers") introduced VNCR_EL2 invalidation in both kvm_nested_s2_unmap()
+and kvm_nested_s2_wp().
 
-Under memory pressure in the L0 host warnings were observed due to
-migration triggered by compaction:
+However at the point of this being performed concurrent stage 2 teardown of
+a nested guest can cause kvm->arch.mmu.pgt to be set to NULL.
 
-WARNING: arch/arm64/kvm/mmu.c:336 at __unmap_stage2_range+0x64/0x80,
-CPU#5: kcompactd0/66
+This happens in kvm_flush_shadow_all() -> kvm_arch_flush_shadow_all() ->
+kvm_free_stage2_pgd() and is performed under the kvm->mmu_lock.
 
-Which was, in turn, triggered by an MMU notifier for the host invalidation:
+Commit ec14c272408a ("KVM: arm64: nv: Unmap/flush shadow stage 2 page
+tables") introduced the teardown of the entire nested MMU range, which then
+invokes stage2_apply_range() with resched=true:
 
 mmu_notifier_invalidate_range_start()
   -> ... -> kvm_mmu_notifier_invalidate_range_start()
@@ -75,112 +77,72 @@ mmu_notifier_invalidate_range_start()
         -> kvm_nested_s2_unmap()
           -> kvm_stage2_unmap_range()
             -> __unmap_stage2_range()
-               -> stage2_apply_range()
-       	       <- -EINVAL, triggering a WARN_ON()
+                -> stage2_apply_range()
 
-Racing with L0's teardown of stage 2 page tables:
+This means that stage2_apply_range() can drop the kvm->mmu_lock and thus
+concurrent progress can be made in lockstep with
+kvm_arch_flush_shadow_all().
 
-exit_mm()
-  -> mmput()
-    -> __mmput()
-      -> exit_mmap()
-        -> mmu_notifier_release()
-	  -> ... -> kvm_mmu_notifier_release()
-            -> kvm_flush_shadow_all()
-              -> kvm_arch_flush_shadow_all()
-	        -> kvm_free_stage2_pgd()
-		  -> [ acquire kvm->mmu_lock for write ]
-		  -> mmu->pgt = NULL [ among other tasks ]
-		  -> [ release kvm->mmu_lock for write ]
+If kvm_arch_flush_shadow_all() advances ahead of stage2_apply_range() and
+completes its operation it guarantees a NULL pointer deref.
 
-It turns out there is a benign race resulting in a spurious warning:
+Since kvm_free_stage2_pgd() is performed under the kvm->mmu_lock this will
+either be observed NULL or not and serialised against
+kvm_free_stage2_pgd().
 
-	Thread A - notify: migration   | Thread B - notify: release
-	-------------------------------|---------------------------------
-	< kvm->mmu_lock held >         |
-	stage2_apply_range()           |
-	  get mmu->pgt, check !NULL    |
-	  ...                          | kvm_arch_flush_shadow_all()
-	  cond_resched_rwlock_write(); |   < contend, sleep kvm->mmu_lock >
-	< drop kvm->mmu_lock >         |   < acquire kvm->mmu_lock>
-                                       |   ...
-				       |   kvm_free_stage2_pgd()
-                                       |     mmu->pgt = NULL
-				       |   < invalidate MMU >
-				       |   ...
-				       |   < release kvm->mmu_lock >
-	[ scheduled ]		       |
-	stage2_apply_range()           |
-	  < loop to next >             |
-	  get, mmu->pgt, check !NULL   |
-	  is NULL, return -EINVAL      |
-        __unmap_stage2_range()         |
-	  WARN_ON(-EINVAL) <--- entirely spurious - the race was handled
-                                 correctly.
+Resolve the issue by abstracting the invalidation to a new function,
+kvm_invalidate_vncr_ipa_all(), and check that the pgt is non-NULL before
+dereferencing it.
 
-Fix the spurious warning by updating stage2_apply_range() to no longer
-treat concurrent PGT teardown on lock release as an error - whether the
-walker is tearing down page tables or doing something else this is a
-legitimate reason to abort the operation without error.
-
-This keeps the warning in place for all other circumstances.
-
-In practice only __unmap_stage2_range() actually does anything with the
-error so this only impacts that.
-
-Fixes: ec14c272408a ("KVM: arm64: nv: Unmap/flush shadow stage 2 page tables")
+Fixes: 7270cc9157f4 ("KVM: arm64: nv: Handle VNCR_EL2 invalidation from MMU notifiers")
 Cc: stable@vger.kernel.org
-Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
 Reviewed-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Link: https://patch.msgid.link/20260901-kvm-arm-nested-virt-fix-v3-1-b154676f7e4c@kernel.org
+Tested-by: Jonathan Davies <jonathan.davies@nutanix.com>
+Link: https://patch.msgid.link/20260901-kvm-arm-nested-virt-fix-v3-2-b154676f7e4c@kernel.org
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/mmu.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/nested.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -59,27 +59,36 @@ static phys_addr_t stage2_range_addr_end
-  * long will also starve other vCPUs. We have to also make sure that the page
-  * tables are not freed while we released the lock.
-  */
--static int stage2_apply_range(struct kvm_s2_mmu *mmu, phys_addr_t addr,
-+static int stage2_apply_range(struct kvm_s2_mmu *mmu, phys_addr_t start,
- 			      phys_addr_t end,
- 			      int (*fn)(struct kvm_pgtable *, u64, u64),
- 			      bool resched)
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -1256,6 +1256,17 @@ void kvm_handle_s1e2_tlbi(struct kvm_vcp
+ 	invalidate_vncr_va(vcpu->kvm, &scope);
+ }
+ 
++static void kvm_invalidate_vncr_ipa_all(struct kvm *kvm)
++{
++	struct kvm_pgtable *pgt = kvm->arch.mmu.pgt;
++
++	lockdep_assert_held_write(&kvm->mmu_lock);
++
++	/* if the mmu lock was dropped, pgt teardown may have raced. */
++	if (pgt)
++		kvm_invalidate_vncr_ipa(kvm, 0, BIT(pgt->ia_bits));
++}
++
+ void kvm_nested_s2_wp(struct kvm *kvm)
  {
- 	struct kvm *kvm = kvm_s2_mmu_to_kvm(mmu);
-+	bool lock_dropped = false;
-+	phys_addr_t addr = start;
- 	int ret;
- 	u64 next;
+ 	int i;
+@@ -1272,7 +1283,7 @@ void kvm_nested_s2_wp(struct kvm *kvm)
+ 			kvm_stage2_wp_range(mmu, 0, kvm_phys_size(mmu));
+ 	}
  
- 	do {
- 		struct kvm_pgtable *pgt = mmu->pgt;
-+		/*
-+		 * We may be raced on PGT teardown when we release the
-+		 * kvm->mmu_lock. That's fine as the PGT is legitimately no
-+		 * longer present.
-+		 */
- 		if (!pgt)
--			return -EINVAL;
-+			return lock_dropped ? 0 : -EINVAL;
+-	kvm_invalidate_vncr_ipa(kvm, 0, BIT(kvm->arch.mmu.pgt->ia_bits));
++	kvm_invalidate_vncr_ipa_all(kvm);
+ }
  
- 		next = stage2_range_addr_end(addr, end);
- 		ret = fn(pgt, addr, next - addr);
- 		if (ret)
- 			break;
+ void kvm_nested_s2_unmap(struct kvm *kvm, bool may_block)
+@@ -1291,7 +1302,7 @@ void kvm_nested_s2_unmap(struct kvm *kvm
+ 			kvm_stage2_unmap_range(mmu, 0, kvm_phys_size(mmu), may_block);
+ 	}
  
--		if (resched && next != end)
-+		if (resched && next != end) {
- 			cond_resched_rwlock_write(&kvm->mmu_lock);
-+			lock_dropped = true;
-+		}
- 	} while (addr = next, addr != end);
+-	kvm_invalidate_vncr_ipa(kvm, 0, BIT(kvm->arch.mmu.pgt->ia_bits));
++	kvm_invalidate_vncr_ipa_all(kvm);
+ }
  
- 	return ret;
+ void kvm_nested_s2_flush(struct kvm *kvm)
 
 
