@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727F330E0FB;
-	Wed, 30 Sep 2026 18:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBA31E1A17;
+	Wed, 30 Sep 2026 18:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794047; cv=none; b=aRS5o53WDM56kCiiaXuL0CaIkJCfB2WFm9RXpnrldIHXChu7cMxHGPqRENZ3xaoVW8OqDlfgSM/gvFKR/gC2fScFZBKveYJ/KpQcniMsjoIWcBMd7IFFglKxY6ndxe/k0QpkFheL70nfzast4rjWBNrNjcayaedtKh0+aHko1dE=
+	t=1790794050; cv=none; b=NpNZ3huIKOdA4aUnbhKqYAgEZyf/E7gCK275JY4y410sUHfndnKDtQdRHnLOH2FDmaM7p5Bo4mEQESDyp2m/f1Qu1+kyh4IYC7kLGMvi/gIRKuyyQE9EdnH/8cPbnHX3Lh3RWf6xKUuyP+OoG5h+oqXZLGR3VTHLb6oYlGo652g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794047; c=relaxed/simple;
-	bh=Wrxkd1Uca0JeZMnkXqdNijPsXBeoNom5umF2NHAM51A=;
+	s=arc-20240116; t=1790794050; c=relaxed/simple;
+	bh=EgiYkw8sClak3JQ091T7/jTqSZwTchMbqOCTvqJ/Ps4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ax52sZkILAVkJZV3P7y1oO1BFeWQd4T7xdgtVBebQZ7cO/Rw3+qlLO/IL7VQtJ//t4+LjtLBS+YeuhvqueySxe2343J3eYISNRCOIlR3SLDqNhQD8fyrP7Ue/WQmiR0SnFh9k7ysHM5Thv7jYIwxKFDQIo8oqv0sMtdPqHk4GCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIgUSRtr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PfvZIXZmPPw83+YHAD63i8AwBWK0O3ChyCuy2MBaNssTir7qd4PlA48HVczO9wE1/21HQjakLBlECnbRSSkiT6KOzELu2JQniw0t9EQDAb6DiJdDaI/2HKWbEEAmmSo7AK+ui03agBdivPLSe3rhYWBtyQbFLH4KTxdQlkXxf2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ynmSJIB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIgUSRtr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA741F000FF;
-	Wed, 30 Sep 2026 18:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ynmSJIB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CB81F000FF;
+	Wed, 30 Sep 2026 18:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794046;
-	bh=9MbQcA6UgVujTZ3vNUMOLAWaACueWeGnWRJSKtjNXoI=;
+	s=korg; t=1790794049;
+	bh=/IIaf+HJxP9quKxVZSe9i3EM2z6gJB+wwofo5LfBWOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sIgUSRtri0ejXG2IBNaWQ4Svbe0hDKRsDpU7s1RV9pA7PDuTd78T5Ejtakat9oOWD
-	 E9nkzGpd/fLYUYL2WR9cco35+rhzXTi0XAh5cVMmrZY9PTSMT2vw1bTNptTfD3hqeJ
-	 gBMe+jFr/PFuTcv4xXn+dTMvAky2NwHIdPWNALBw=
+	b=1ynmSJIBScyTQeJTum8Doa8Qh5vM67H73NIgYFH92bqpaxxVWMIItab5xI0KWG5mR
+	 whBF/hjH3Qy8Mj/qPMl1NYGN6rHQ0n4ZMD0SY/MbYd9hU0F2Wll3wcXiM75aZIVEyI
+	 706QwOTKfTucZamLdepSh0yGIa/M3aKEPDEToGcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0073/1193] firmware: arm_scmi: Validate BASE_ERROR_EVENT payload size
-Date: Wed, 30 Sep 2026 17:12:37 +0200
-Message-ID: <20260930152435.886464804@linuxfoundation.org>
+Subject: [PATCH 6.6 0074/1193] thunderbolt: Increase timeout for Configuration Ready bit
+Date: Wed, 30 Sep 2026 17:12:38 +0200
+Message-ID: <20260930152435.906552517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,59 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-[ Upstream commit 56e7e64cdd0e7209a58c8ec66028d63387402919 ]
+[ Upstream commit ba2cc385110129d03cd0f18a1b5969a430b67a18 ]
 
-BASE_ERROR_EVENT carries a variable number of message reports,
-with the count encoded in error_status. The notification parser used
-that count without checking whether the received payload contained all
-reported entries.
+After setting the Configuration Valid bit (ROUTER_CS_5.CV), the USB4
+Connection Manager guide specifies a 500 ms timeout for the router to
+set the Configuration Ready bit (ROUTER_CS_6.CR). The current timeout
+is shorter than specified. While there, fix the kernel-doc typo.
 
-Reject truncated payloads before copying the report array.
+Increase the timeout to match the CM guide recommendation.
 
-Link: https://patch.msgid.link/20260517-scmi_fixes-v1-2-d86daec4defd@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/base.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/usb4.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/base.c b/drivers/firmware/arm_scmi/base.c
-index a52f084a6a87b..f455165a81bcd 100644
---- a/drivers/firmware/arm_scmi/base.c
-+++ b/drivers/firmware/arm_scmi/base.c
-@@ -324,6 +324,8 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
- 					  void *report, u32 *src_id)
- {
- 	int i;
-+	u32 error_status;
-+	size_t expected_sz;
- 	const struct scmi_base_error_notify_payld *p = payld;
- 	struct scmi_base_error_report *r = report;
+diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
+index d4b4f58e717c1..254415920f57f 100644
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -303,7 +303,7 @@ int usb4_switch_setup(struct tb_switch *sw)
+  * Sets configuration valid bit for the router. Must be called before
+  * any tunnels can be set through the router and after
+  * usb4_switch_setup() has been called. Can be called to host and device
+- * routers (does nothing for the latter).
++ * routers (does nothing for the former).
+  *
+  * Returns %0 in success and negative errno otherwise.
+  */
+@@ -326,7 +326,7 @@ int usb4_switch_configuration_valid(struct tb_switch *sw)
+ 		return ret;
  
-@@ -337,10 +339,19 @@ static void *scmi_base_fill_custom_report(const struct scmi_protocol_handle *ph,
- 	if (evt_id != SCMI_EVENT_BASE_ERROR_EVENT || sizeof(*p) < payld_sz)
- 		return NULL;
+ 	return tb_switch_wait_for_bit(sw, ROUTER_CS_6, ROUTER_CS_6_CR,
+-				      ROUTER_CS_6_CR, 50);
++				      ROUTER_CS_6_CR, 500);
+ }
  
-+	expected_sz = offsetof(typeof(*p), msg_reports);
-+	if (payld_sz < expected_sz)
-+		return NULL;
-+
- 	r->timestamp = timestamp;
- 	r->agent_id = le32_to_cpu(p->agent_id);
--	r->fatal = IS_FATAL_ERROR(le32_to_cpu(p->error_status));
--	r->cmd_count = ERROR_CMD_COUNT(le32_to_cpu(p->error_status));
-+	error_status = le32_to_cpu(p->error_status);
-+	r->fatal = IS_FATAL_ERROR(error_status);
-+	r->cmd_count = ERROR_CMD_COUNT(error_status);
-+	expected_sz += r->cmd_count * sizeof(p->msg_reports[0]);
-+	if (payld_sz < expected_sz)
-+		return NULL;
-+
- 	for (i = 0; i < r->cmd_count; i++)
- 		r->reports[i] = le64_to_cpu(p->msg_reports[i]);
- 	*src_id = 0;
+ /**
 -- 
 2.53.0
 
