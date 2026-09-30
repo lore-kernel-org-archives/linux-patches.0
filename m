@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6134B5013B0;
-	Wed, 30 Sep 2026 15:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846D84F648A;
+	Wed, 30 Sep 2026 15:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782701; cv=none; b=EuwdJzY8ERezu8XOJAETMIo0xPslL7OiasG3bk2RgDzKzHB3+3RC3j/ZE7Ltg6QFva/9cZLp4Q3L8HOs14KHIkI8LbvdS7vH0udSR1qzZXpHhdqUQ+SkjAbIqmyrpXUwVPgGiQu8sCQKCLut7ESXbYTkdVENMQS2vkIRTRH6KHs=
+	t=1790782701; cv=none; b=rqK1bqVU4veUgflATkj3r/JCUmCVRd3jc7N/VlBzxgXdnr83PH/RYYHBDy7JypSaH4TU0BewaFuGQWg9I+tfFZS6X87BvhDbM+AbIbOwQru5ywbuhTT3O6z1wcSai5GHjnLkp0rATSwBzOUZepNhZM8WvY2ohHhJ7IoPSxrPI68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782701; c=relaxed/simple;
-	bh=75G39ypWEw2o49XsSbh7PU7Mwz1OL4aE9nO5wYlaAmA=;
+	bh=wzBluChLDI9USRr1B8A49a7DsaXx+tn1wKOe+WTHn1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRkun0gKTSYeFY8ZBT6HQ6JL+ZGiETfwGRlDlXMwhsFD4RIdmxKUIbG/MO+7++Hjnu4n4jRdyGykQ/XA3X0Wc2XA0V753htwftZ2HBfTJbv00aOegeWvFJAoUCvflmzTznH9UtN+HQFYGM3TM6wyGzGLUaLTXV5aG9dvZ/lI03s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIvIHENy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HGyOBwq13ViKnX9ka6e+CGHaFjYHEfZisGYZtGsA+v6gnUChGs1ucO44EWjGVE4gazFuoD9XycehiIBDq/I5qP4t6ws/3HMXYe4tstfVbAgV2R7/nya5nypxf1otWzUH6bCuGsr4TUtARJp/78EhGNw95/7uKI4eMGU7LYnif9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKrd5h4z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIvIHENy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB3C1F0089C;
-	Wed, 30 Sep 2026 15:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKrd5h4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BEA1F0089A;
+	Wed, 30 Sep 2026 15:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782689;
-	bh=CTGnOMDcPrUfCGsI91njB4eZRMgqE23K/KbB+LZPzao=;
+	s=korg; t=1790782683;
+	bh=T6eG6neEhqfrlNvCncuLWU0mafWWSTCwavjfATSkw+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xIvIHENyqAYGOxvFsioIhN5C4onbLkSeTKesIcBTAllPxYTAKubO0a0af/36i+zL/
-	 nej2v9siVthUCtqLYXUWpbdBaMmC89VnYqT3IyL8lm0zRQRzgFJiG4v2AUM8ECnOD/
-	 vjBBq7LxuqHoEcK21kZd8C6E8q2Pwa5MI/ILKQDY=
+	b=cKrd5h4zdglsRhJf6S2ewl+MIIxd9oY2UaQUanj8ydjIamdghBApnSiBpIWRP94LU
+	 THn1bssraTMYVC8okH4krf9w7u5EQCg7IJrQ2gq/x0xHwOEtF56FqjE+IXJDzBGAvn
+	 Wo8JysR8SdV+xz1vJZsSkI4Ap1l8A6P8BuNaRU/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
-	Lee Jones <lee@kernel.org>,
+	Galen Hassen <rwekyes@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 135/595] leds: pca9532: Dont stop blinking for non-zero brightness
-Date: Wed, 30 Sep 2026 17:20:28 +0200
-Message-ID: <20260930152350.639592337@linuxfoundation.org>
+Subject: [PATCH 5.10 133/595] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
+Date: Wed, 30 Sep 2026 17:20:26 +0200
+Message-ID: <20260930152350.597603902@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,57 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Deiminger <tobias.deiminger@linutronix.de>
+From: Galen Hassen <rwekyes@gmail.com>
 
-[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
+[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
 
-pca9532 unexpectedly stopped blinking when changing brightness to a
-non-zero value. To reproduce:
+The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
+Conexant SN6140 codec. The internal microphone is on pin 0x1a but
+the BIOS configures it with pin default 0x95a60120, which includes
+a jack detection bit that causes the kernel to treat it as an
+unplugged external mic rather than a fixed internal mic.
 
- echo timer > /sys/class/leds/led-1/trigger   # blinks
- echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
- cat /sys/class/leds/led-1/trigger            # still claims [timer]
+Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
+setting the connectivity bits to indicate a fixed/always-connected
+device. This allows the internal microphone to be correctly
+identified and used.
 
-According to Documentation/leds/leds-class.rst, only brightness = 0
-shall be a stop condition:
-
-> You can change the brightness value of a LED independently of the
-> timer trigger. However, if you set the brightness value to LED_OFF it
-> will also disable the timer trigger.
-
-Therefore add a guard to continue blinking when brightness != LED_OFF,
-similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
-HW blink support").
-
-Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Galen Hassen <rwekyes@gmail.com>
+Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_conexant.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index e350d5a588d6c..1cf39aecaf088 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -177,11 +177,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
- 	int err = 0;
- 	struct pca9532_led *led = ldev_to_led(led_cdev);
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 4d0bd1903ccbd..6a7fcb4c77dda 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -237,6 +237,7 @@ enum {
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+ 	CXT_PINCFG_SWS_JS201D,
++	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
+ 	CXT_FIXUP_ACER_SWIFT_HP,
+@@ -771,6 +772,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
+ 	{}
+ };
  
--	if (value == LED_OFF)
-+	if (value == LED_OFF) {
- 		led->state = PCA9532_OFF;
--	else if (value == LED_FULL)
-+	} else if (led->state == PCA9532_PWM1) {
-+		return 0; /* Non-zero brightness shall not stop HW blinking */
-+	} else if (value == LED_FULL) {
- 		led->state = PCA9532_ON;
--	else {
-+	} else {
- 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
- 		err = pca9532_calcpwm(led->client, 0, 0, value);
- 		if (err)
++/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
++static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
++	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
++	{}
++};
++
+ /* SuoWoSi/South-holding JS201D with sn6140 */
+ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
+ 	{ 0x16, 0x03211040 }, /* hp out */
+@@ -962,6 +969,10 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
++	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
++	},
+ 	[CXT_PINCFG_TOP_SPEAKER] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cxt_fixup_sirius_top_speaker,
+@@ -1067,6 +1078,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
++	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
 -- 
 2.53.0
 
