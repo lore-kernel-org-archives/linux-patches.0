@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D3351A725;
-	Wed, 30 Sep 2026 17:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28ECE5187EE;
+	Wed, 30 Sep 2026 17:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789259; cv=none; b=Qap+oGwn3JfPEAIMsGZ+ZGuE7l8sTjtAMH1XHdgEjzBP1MHJHR15fveb6KGI3bvxFk4vEyIo40mA+wj62LwQy5KAUA0a03iGr8BmfBztftkFLNlfdwyxA4YmjwWFPQ/N3QXbiB0zK5ZxGDlkRTrMXy+mg/6XNVx6vH+a1q6zDCA=
+	t=1790789262; cv=none; b=Fwf3y1VPrcCzrtr7Ycb5YIu1A2SNhNYy+gUnNBBA6YHhsYqPY46KOdPlSKCS7R28yVesBBj9ouIUhyrgCf64OwdKTVL7Iz1q2IRnf0wD5EtG8+Ii++T1WMEmTiHgfdOpvy8AFoN3kctfHaQ/7Em/9UX8+ACJRaknhpSH25LCx/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789259; c=relaxed/simple;
-	bh=0yRE/td0gAUAKj2Szk7q55HF90VlB+oqbapbTOa1BD4=;
+	s=arc-20240116; t=1790789262; c=relaxed/simple;
+	bh=W+P8tfdAOvrEv5KPGKoSEmsAuhcYzFVq1UOxmrIkwoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFyT4GMZHs/Opf9u+SmXFpFZZJwbhhe6wut+b1+t+9IdhRCNNh+NnESKwD3TRUFF4CmHZaEM2QHQOJEXXrbroqRsEdtGvRtsAJS7o2+5z3R7LaRamFauujmrgU6aXs7lyKsRLTvQ1KQW4XdpJdHQFE2OViFmTs6LbCBPHfDt7g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7vm8/qA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AoOsCegsN9gqlhPV8EFutQcyZvfPXZG+4zkeH9Pounm4DMPDJjEjw5x1EpOU4IjclAhA+ZWJV9xrce79mVTh52cLy7akTvvKTWZj+w6Scrn/dr9Q3YscCTgrwk/1XIDhxn88ZTKI0yS4f2oU1q5vMgpcdS+Imjoma//m4YfMD1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Q7QeLf+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7vm8/qA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC6C1F00898;
-	Wed, 30 Sep 2026 17:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Q7QeLf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A81E1F000FF;
+	Wed, 30 Sep 2026 17:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789258;
-	bh=jYZYtVXTbw3nEynt4jqB29kl9yWd/UxypXa9dpi5lz8=;
+	s=korg; t=1790789261;
+	bh=tsdOzmi+5DtMxaBoUhf8KhUkn4NpxJwfN5jwbggBPtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D7vm8/qAfJtFfxszIdJWEruLXo0nAKVmqj4n9TmFD4XHy6vJWmn7NYVRUSPSHmJtO
-	 fSQRhlqz+UxbK1ujxabXoC/IWzTAPvtM2LQF09rbPS2BgVmPmxWhqA8xt/cltbOXKi
-	 NL9T84Lut1Umdpp5q197LtSIWRgVLUlO5z9vrcQ4=
+	b=2Q7QeLf+pAv1RrJdeA23IJOdNkspByFK/rsFhYd6d+1oWx12TJq6kD48dK6hlBYmx
+	 TyBaM//MDEWRcQIGDO6PmWZ++YFYcMhEY5fjyX6P8G/kwRGISDzdwHH9QFqi5ZzQjh
+	 oM20m1b8ltQwzQvGRQOK2obn+5uNbTKpRA4PogL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	hybris <hybris@mojatatu.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jason Xing <kerneljasonxing@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 415/877] net/sched: act_gate: budget the per-entry list in get_fill_size
-Date: Wed, 30 Sep 2026 17:22:06 +0200
-Message-ID: <20260930152423.648392486@linuxfoundation.org>
+Subject: [PATCH 6.12 416/877] veth: manage XDP program pointers during channel resize
+Date: Wed, 30 Sep 2026 17:22:07 +0200
+Message-ID: <20260930152423.669723735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,89 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit cfa165cbfbed9d0f4bbc22fef4309f595a3ab187 ]
+[ Upstream commit 7104a370714346b667712913dc16abf14bbc97ed ]
 
-tcf_gate_get_fill_size returns only the TCA_GATE_PARMS size, but
-tcf_gate_dump also emits three 64-bit timestamps, the clock id, flags,
-priority and the variable-length TCA_GATE_ENTRY_LIST nest. The per-entry
-nest is unbounded: parse_gate_list places no cap on the number of
-sched-entries, so a gate with many entries can push the real dump well
-past the skb that tca_get_fill allocates from this size.
+veth_set_channels() tears down XDP resources for removed RX queues
+without clearing rq->xdp_prog.  If the program is then detached or
+replaced, those queues keep the old pointer after bpf_prog_put().
+A later channel increase can re-enable NAPI and run the freed program.
 
-RTM_NEWACTION then fails the add-notify with -EINVAL while the action is
-already committed to the IDR, and a subsequent RTM_GETACTION on the
-installed gate also returns -EINVAL because its dump no longer fits.
+  BUG: unable to handle page fault for address: ffffc90000256048
+  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: veth_xdp_rcv_skb (include/linux/filter.h:779
+                         include/net/xdp.h:696 drivers/net/veth.c:820)
+  Call Trace:
+   veth_xdp_rcv (drivers/net/veth.c:941)
+   veth_poll (drivers/net/veth.c:986)
+   __napi_poll (net/core/dev.c:7787)
+   net_rx_action (net/core/dev.c:7850 net/core/dev.c:8007)
+   handle_softirqs (kernel/softirq.c:645)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Fix this by accounting for the missing fields in tcf_gate_get_fill_size
-along with all elements in the entries list.
-
-Note that sizing the reply from the action lets an oversized gate
-install cleanly for the first time: with the input unbounded by
-parse_gate_list, the sized skb can now grow well above
-NLMSG_GOODSIZE per netlink request (a transient GFP_KERNEL allocation
-reachable only with namespace-local CAP_NET_ADMIN). Overload from a
-malicious netns admin is hardening material, not net, per the
-discussion at
-https://lore.kernel.org/netdev/20260914191108.55a1a4f1@kernel.org/;
-a follow-up patch for net-next will cap the sched-entry count.
-
-Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824153903.4143642-1-victor@mojatatu.com
-Tested-by: hybris <hybris@mojatatu.ai>
-Co-developed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-3BLH.v1.20260914203033@mojatatu.com
+Fixes: 4752eeb3d891 ("veth: implement support for set_channel ethtool op")
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20260921231856.1798630-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_gate.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ drivers/net/veth.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/act_gate.c b/net/sched/act_gate.c
-index 58cae012a4391..d66c07aef95a2 100644
---- a/net/sched/act_gate.c
-+++ b/net/sched/act_gate.c
-@@ -686,7 +686,35 @@ static void tcf_gate_stats_update(struct tc_action *a, u64 bytes, u64 packets,
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 03341951a2126..f3e5f8ce9ac20 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1053,6 +1053,7 @@ static int __veth_napi_enable_range(struct net_device *dev, int start, int end)
+ 	for (i = start; i < end; i++) {
+ 		struct veth_rq *rq = &priv->rq[i];
  
- static size_t tcf_gate_get_fill_size(const struct tc_action *act)
- {
--	return nla_total_size(sizeof(struct tc_gate));
-+	struct tcf_gate *gact = to_gate(act);
-+	const struct tcf_gate_params *p;
-+	struct tcfg_gate_entry *entry;
-+	size_t size = nla_total_size(sizeof(struct tc_gate)) /* TCA_GATE_PARMS */
-+		+ 3 * nla_total_size_64bit(sizeof(u64)) /* TCA_GATE_BASE_TIME
-+							 * TCA_GATE_CYCLE_TIME
-+							 * TCA_GATE_CYCLE_TIME_EXT
-+							 */
-+		+ nla_total_size(sizeof(s32)) /* TCA_GATE_CLOCKID */
-+		+ nla_total_size(sizeof(u32)) /* TCA_GATE_FLAGS */
-+		+ nla_total_size(sizeof(s32)) /* TCA_GATE_PRIORITY */
-+		+ nla_total_size(0); /* TCA_GATE_ENTRY_LIST */
-+	/* TCA_GATE_TM is budgeted by tcf_action_shared_attrs_size() */
-+
-+	rcu_read_lock();
-+	p = rcu_dereference(gact->param);
-+	if (p) {
-+		list_for_each_entry_rcu(entry, &p->entries, list)
-+			/* TCA_GATE_ONE_ENTRY nest and its attributes */
-+			size += nla_total_size(0)
-+				+ nla_total_size(sizeof(u32)) /* TCA_GATE_ENTRY_INDEX */
-+				+ nla_total_size(0) /* TCA_GATE_ENTRY_GATE */
-+				+ nla_total_size(sizeof(u32)) /* TCA_GATE_ENTRY_INTERVAL */
-+				+ nla_total_size(sizeof(s32)) /* TCA_GATE_ENTRY_MAX_OCTETS */
-+				+ nla_total_size(sizeof(s32)); /* TCA_GATE_ENTRY_IPV */
-+	}
-+	rcu_read_unlock();
-+
-+	return size;
- }
++		rcu_assign_pointer(rq->xdp_prog, priv->_xdp_prog);
+ 		napi_enable(&rq->xdp_napi);
+ 		rcu_assign_pointer(priv->rq[i].napi, &priv->rq[i].xdp_napi);
+ 	}
+@@ -1087,6 +1088,7 @@ static void veth_napi_del_range(struct net_device *dev, int start, int end)
  
- static void tcf_gate_entry_destructor(void *priv)
+ 		rcu_assign_pointer(priv->rq[i].napi, NULL);
+ 		napi_disable(&rq->xdp_napi);
++		rcu_assign_pointer(rq->xdp_prog, NULL);
+ 		__netif_napi_del(&rq->xdp_napi);
+ 	}
+ 	synchronize_net();
 -- 
 2.53.0
 
