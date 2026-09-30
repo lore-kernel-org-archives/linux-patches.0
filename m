@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B3F1E0DD8;
-	Wed, 30 Sep 2026 17:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBE62EEE63;
+	Wed, 30 Sep 2026 17:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791174; cv=none; b=ft3tzwspNTW5H+9qRRTo3i8UKhFIC9w911P3uO/lVs10mQVFkQCjmWdwecMLD6NvQLDDXmX4uZBVeRWO3QHqXQjkVnXtNypIVGFZyHvIEQvT2l80MdIX1/41TXCqktv/taim5Jla01mtKdgmRj6LRwOynFISrvQHApOKvrFEnM4=
+	t=1790791177; cv=none; b=CmQE1iLeQJRAdcGcASeq6nqlIqM0BMQ1I9WsF5wHTdCuIDubffltqmF4wQaKHF/gaWe37AIoxDW5D76JxC/eZiJGi2SgIFzHodgQpGDy7Agb8O/H5x5W4qR1GgAuCueD+Nwqa+p++1XXHn8fJCMw/Z5K8ujqtiu6SGiz4EEJdJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791174; c=relaxed/simple;
-	bh=V/ZRIYcCSrJPaK5YzApQCmGmElU2dsQ/h3ncn04+hI0=;
+	s=arc-20240116; t=1790791177; c=relaxed/simple;
+	bh=itZPG7A0636OCAKwr9iGPIGoYEySK/arbm6niO23Cg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SI0PvJO5XE9vFyQEJVomMzBAXdh+KAakLZvQDtANMTQ0X9KWprasa8VKgkJg6YhPFKX3tWLw977EXeqr+m1uAO4hnnaj/HU8rys/pkdmfTVa62UJEsJFuo/sqHYL7jEUdgc6skLrpnRkF+9i6/vDt/Ckkeq3KqsxUGhShhm2hqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv+tP5nQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N18lKJbmNjEXXJWZ1OMO+YfrBn/lYDUF3Jy1VxrMzDBMeaP8NkNMfKnXGTOcJTT/VauHifCZn48s2hKRLx9E4yLm/VAIJi4+YYiaasWQhuQwcXlHbSLxOjvG3gFug4+NhivQbjiW7A+IKDmNoq9QF1lpugXvL76znu5T+kaoO/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r16nitjq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv+tP5nQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC5D1F000FF;
-	Wed, 30 Sep 2026 17:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r16nitjq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1A21F000FF;
+	Wed, 30 Sep 2026 17:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791173;
-	bh=AyhVKKaxcWn9IldGivdKx5wJczirZnwCzfplbTG79KA=;
+	s=korg; t=1790791176;
+	bh=0XsxbzDVUx6alXO/CjCcYFjxxJC5d74oaUNLHHBBORM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vv+tP5nQvLS319xnhJaaelc3zoSKv6Q587vVdahltvlL8S/msNyQ/b21Zl2lddPCw
-	 Rd8cgVlsMiNzkhmD8HNm8n6F1uKG8wpkADAlyQB3RpvgDUbRhVrq7drORDcscF6tnK
-	 FGDDDfaYZPcN5UP8I6+aSY1SsUv29a3eS/+0a+XA=
+	b=r16nitjqk3jcSiofUN77FLx2taFGAW9i7IlZJvi/oinP0lRQKQzPV12aQnFYAjWOQ
+	 aXAKHzgIDj8/op/nEOn9gX3HLYqI+jadlDQvL0NQCSX2DF0xatN8QdzAn3PTYmu4+r
+	 qm+e7KOP+U3y7AjNPhnIu7WgYiEKA1SEVXM4u5eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Peng <pengyu@kylinos.cn>,
+	Pu Hu <hupu@transsion.com>,
+	Hongyan Xia <hongyan.xia@transsion.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 209/752] arm64: fixmap: Allow 256K early_ioremap() at any offset
-Date: Wed, 30 Sep 2026 17:21:19 +0200
-Message-ID: <20260930152402.756167523@linuxfoundation.org>
+Subject: [PATCH 5.15 210/752] arm64: kprobes: Allow reentering kprobes while single-stepping
+Date: Wed, 30 Sep 2026 17:21:20 +0200
+Message-ID: <20260930152402.778307816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,43 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Peng <pengyu@kylinos.cn>
+From: Pu Hu <hupu@transsion.com>
 
-[ Upstream commit 21fc7ec93f8b633b60d5bddef2f1529ff6b36185 ]
+[ Upstream commit 23f851ac0078a908bf3422d6467ebc1db5828c46 ]
 
-NR_FIX_BTMAPS is the per-slot page limit for early_ioremap(). Since
-__early_ioremap() maps the page-aligned physical range, a 256K request
-can require one extra page when the physical address is not page-aligned.
+A kprobe can be hit while another kprobe is in KPROBE_HIT_SS state. This
+can happen when tracing or perf code runs from the debug exception path
+while the first kprobe is preparing or executing its out-of-line
+single-step instruction.
 
-Reserve one extra page per slot so the 256K mapping budget is usable
-regardless of the initial page offset.
+Currently arm64 treats a kprobe hit in KPROBE_HIT_SS as unrecoverable,
+the same as a hit in KPROBE_REENTER. This is too strict. A hit in
+KPROBE_HIT_SS is still a one-level reentry and can be handled by saving
+the current kprobe state and setting up single-step for the new probe,
+just like reentry from KPROBE_HIT_ACTIVE or KPROBE_HIT_SSDONE.
 
-Link: https://lore.kernel.org/r/08fd96fa-ee3a-4904-bd11-bb08bd90436f@kylinos.cn
-Signed-off-by: Yu Peng <pengyu@kylinos.cn>
+The truly unrecoverable case is hitting another kprobe while already in
+KPROBE_REENTER, because the reentry save area has already been consumed.
+
+Move KPROBE_HIT_SS to the recoverable reentry cases and leave
+KPROBE_REENTER as the unrecoverable nested reentry case.
+
+This change also requires saving saved_irqflag in struct prev_kprobe.
+When a nested kprobe calls kprobes_save_local_irqflag(), it overwrites
+kcb->saved_irqflag with the currently masked DAIF value, losing the
+outer kprobe's original DAIF state. Without this fix, when the outer
+kprobe's single-step finishes, kprobes_restore_local_irqflag() applies
+the wrong DAIF mask and leaves interrupts permanently disabled.
+
+Extend struct prev_kprobe with a saved_irqflag field and save/restore it
+alongside kp and status. This ensures the outer kprobe's original
+interrupt state is preserved across reentry.
+
+This mirrors the x86 fix in commit 6a5022a56ac3
+("kprobes/x86: Allow to handle reentered kprobe on single-stepping").
+
+Signed-off-by: Pu Hu <hupu@transsion.com>
+Signed-off-by: Hongyan Xia <hongyan.xia@transsion.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/fixmap.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kprobes.h   |  6 ++++++
+ arch/arm64/kernel/probes/kprobes.c | 23 ++++++++++++++++++++++-
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/fixmap.h b/arch/arm64/include/asm/fixmap.h
-index daff882883f92..9dcf004a4166b 100644
---- a/arch/arm64/include/asm/fixmap.h
-+++ b/arch/arm64/include/asm/fixmap.h
-@@ -73,8 +73,12 @@ enum fixed_addresses {
- 	/*
- 	 * Temporary boot-time mappings, used by early_ioremap(),
- 	 * before ioremap() is functional.
-+	 *
-+	 * Reserve one extra page so a 256K mapping may start at any
-+	 * offset within a page. early_ioremap() maps the page-aligned
-+	 * physical range, so the initial offset can consume an extra page.
- 	 */
--#define NR_FIX_BTMAPS		(SZ_256K / PAGE_SIZE)
-+#define NR_FIX_BTMAPS		((SZ_256K / PAGE_SIZE) + 1)
- #define FIX_BTMAPS_SLOTS	7
- #define TOTAL_FIX_BTMAPS	(NR_FIX_BTMAPS * FIX_BTMAPS_SLOTS)
+diff --git a/arch/arm64/include/asm/kprobes.h b/arch/arm64/include/asm/kprobes.h
+index 5d38ff4a48062..6d131318d5779 100644
+--- a/arch/arm64/include/asm/kprobes.h
++++ b/arch/arm64/include/asm/kprobes.h
+@@ -26,6 +26,12 @@
+ struct prev_kprobe {
+ 	struct kprobe *kp;
+ 	unsigned int status;
++
++	/*
++	 * The original DAIF state of the outer kprobe, saved here before
++	 * a nested kprobe overwrites kcb->saved_irqflag during reentry.
++	 */
++	unsigned long saved_irqflag;
+ };
  
+ /* per-cpu kprobe control block */
+diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
+index 2162b6fd7251d..1abeb4a115307 100644
+--- a/arch/arm64/kernel/probes/kprobes.c
++++ b/arch/arm64/kernel/probes/kprobes.c
+@@ -150,12 +150,27 @@ static void __kprobes save_previous_kprobe(struct kprobe_ctlblk *kcb)
+ {
+ 	kcb->prev_kprobe.kp = kprobe_running();
+ 	kcb->prev_kprobe.status = kcb->kprobe_status;
++
++	/*
++	 * Save the outer kprobe's original DAIF flags before the nested
++	 * kprobe calls kprobes_save_local_irqflag() and overwrites
++	 * kcb->saved_irqflag. Without this, the outer kprobe will restore
++	 * the wrong DAIF state and leave interrupts permanently masked.
++	 */
++	kcb->prev_kprobe.saved_irqflag = kcb->saved_irqflag;
+ }
+ 
+ static void __kprobes restore_previous_kprobe(struct kprobe_ctlblk *kcb)
+ {
+ 	__this_cpu_write(current_kprobe, kcb->prev_kprobe.kp);
+ 	kcb->kprobe_status = kcb->prev_kprobe.status;
++
++	/*
++	 * Restore the outer kprobe's saved_irqflag so that when its
++	 * single-step completes, kprobes_restore_local_irqflag() uses
++	 * the correct original DAIF value.
++	 */
++	kcb->saved_irqflag = kcb->prev_kprobe.saved_irqflag;
+ }
+ 
+ static void __kprobes set_current_kprobe(struct kprobe *p)
+@@ -216,10 +231,16 @@ static int __kprobes reenter_kprobe(struct kprobe *p,
+ 	switch (kcb->kprobe_status) {
+ 	case KPROBE_HIT_SSDONE:
+ 	case KPROBE_HIT_ACTIVE:
++	case KPROBE_HIT_SS:
++		/*
++		 * A probe can be hit while another kprobe is preparing or
++		 * executing its XOL single-step instruction. This is still a
++		 * recoverable one-level reentry, so handle it in the same way as
++		 * reentry from KPROBE_HIT_ACTIVE or KPROBE_HIT_SSDONE.
++		 */
+ 		kprobes_inc_nmissed_count(p);
+ 		setup_singlestep(p, regs, kcb, 1);
+ 		break;
+-	case KPROBE_HIT_SS:
+ 	case KPROBE_REENTER:
+ 		pr_warn("Failed to recover from reentered kprobes.\n");
+ 		dump_kprobe(p);
 -- 
 2.53.0
 
