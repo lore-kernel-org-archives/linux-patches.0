@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0760130D401;
-	Wed, 30 Sep 2026 19:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1521736826E;
+	Wed, 30 Sep 2026 19:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796373; cv=none; b=hmu5/zu/REQ5iTBSrSDalFQWNu1Z0u9mryK9vMTkQh6NDmzlH/Ql8mn1Xgo39p+QBR4vB4tDGZPWm0388pRMah9epm3WqrPD0Pgx7K7RL7g1CG6wETuBg6bt5M6yWOzg2ljpTz5N/fgSj0HrDqd4oK/hLqUbbTKbQwdjRow6zJU=
+	t=1790796376; cv=none; b=rXxjpcCQ350LtSoo9pPs2vmgWy+xiFE6QH5cU52uhK/5s2CKS5EUUib+FbzrQcecnU9+nkq9pFDBei/khOSgyb9NjJfsCKcRWiHV5OwkwMnjodZ1ROUKeKBP65tkUnoEiRHiukOxRCG3Zf9Pkgk5oiNnURjMdz2pkHtlz7qtMSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796373; c=relaxed/simple;
-	bh=KF+ynqu9mT5AROsww4+QRXhwB4eItZlrOUdfKeNyl5Y=;
+	s=arc-20240116; t=1790796376; c=relaxed/simple;
+	bh=qbcNqgkA+JXz/GgQWZBuR7jlIXXty3Vz4saHEm01Xnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQEk99dIM3wUDxssHTe+mXNO4VhcjUShhkw/SG1vf/s4zhDgxaUQ2D78lRdguGm2cLbJtDwmJ+rJQAhe41y4NbkAvEOxhax2A3h5m1YPk2wdrHKajs8BVo+c1mDHmy7TAhOuvoiKTuHSrRismOm1MHWOwN+IatAcPmlVPQPDmYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHpvBKcg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kNVIBtCNu/HOAipQ9fIuZO1Ufh9gBbN/eM3aSeCL4bqCGydBr12uLW9d30aTlbq9pNCwegNdDL/SrqyGlTblkwYczaYnLqZWvt8miO0A5ZEoXEHoq+XWl5Zv24qeNyxd8h67PdrhWGoEq/SnRLeW2U8tNm+Fue/nhR2Y4OV8x9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5i1cBmm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHpvBKcg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635A21F000FF;
-	Wed, 30 Sep 2026 19:26:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5i1cBmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306EE1F000FF;
+	Wed, 30 Sep 2026 19:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796371;
-	bh=ho+0jKTVNg13S8CWMiCxdb28o8qH9NJoqYsARRovXlU=;
+	s=korg; t=1790796374;
+	bh=2hfG6AilvT5XMjE50PyLAN9eoeJxllVH3rZiQdhszDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHpvBKcg2/PQrsV89x3mZo1lABvMcPAJS9Y++IgsOV16EdqygVnVd6p05Q9A+d7m8
-	 Af9lO2pKsq7E5wJcDwKpZTg3VC4tOZD+aDrbrMIxl88V94YygKHKfkSRw8jVRdfr5M
-	 epWC5vkwYHI0BjpovVOUEO2MDegQRqRiA78ID+i4=
+	b=Y5i1cBmmofIiHr4Ch7TOnqSioAT18s5GevsCO5YUqyicuve0kAy+OrDpgRHX3Gpiv
+	 2r57kKuIN30Bx45KvWSl3bifbghUqFMG7ALUtbshBQhXTM1fbQkHVebAqym6PelPfd
+	 oQkvqZsxvhaMl0IwbLHym7slpiZvSW3PcaUJhH3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 0889/1193] mmc: sdio_uart: fix xmit_fifo leak when the port table is full
-Date: Wed, 30 Sep 2026 17:26:13 +0200
-Message-ID: <20260930152453.999627189@linuxfoundation.org>
+Subject: [PATCH 6.6 0890/1193] mmc: sh_mmcif: initialize IRQ-thread mutex before requesting interrupt
+Date: Wed, 30 Sep 2026 17:26:14 +0200
+Message-ID: <20260930152454.020325487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,38 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 53823e25793a97d07e6e98e0904bbf74cac8bc76 upstream.
+commit d5ea0d226e8f0801d78702142a124d78c317d822 upstream.
 
-sdio_uart_add_port() allocates the transmit fifo before claiming a
-slot in sdio_uart_table[].  When all UART_NR slots are taken, it
-returns -EBUSY with the fifo still allocated, but the probe error
-path only kfree()s the port, leaking the transmit fifo.
+The threaded IRQ handler can run before devm_request_threaded_irq()
+returns, but thread_lock was initialized afterwards. Initialize it before
+requesting either interrupt.
 
-Free the fifo in the failure path of sdio_uart_add_port() itself so
-the function retains nothing on error.
-
-Fixes: 8b197a5ce7a7 ("sdio_uart: Use kfifo instead of the messy circ stuff")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 8047310ee984 ("mmc: sh_mmcif: fix a race, causing an Oops on SMP")
 Cc: stable@vger.kernel.org
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio_uart.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mmc/host/sh_mmcif.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/mmc/core/sdio_uart.c
-+++ b/drivers/mmc/core/sdio_uart.c
-@@ -104,6 +104,9 @@ static int sdio_uart_add_port(struct sdi
+--- a/drivers/mmc/host/sh_mmcif.c
++++ b/drivers/mmc/host/sh_mmcif.c
+@@ -1423,6 +1423,7 @@ static int sh_mmcif_probe(struct platfor
+ 	host->pd = pdev;
+ 
+ 	spin_lock_init(&host->lock);
++	mutex_init(&host->thread_lock);
+ 
+ 	mmc->ops = &sh_mmcif_ops;
+ 	sh_mmcif_init_ocr(host);
+@@ -1483,8 +1484,6 @@ static int sh_mmcif_probe(struct platfor
+ 		}
  	}
- 	spin_unlock(&sdio_uart_table_lock);
  
-+	if (ret)
-+		kfifo_free(&port->xmit_fifo);
-+
- 	return ret;
- }
- 
+-	mutex_init(&host->thread_lock);
+-
+ 	ret = mmc_add_host(mmc);
+ 	if (ret < 0)
+ 		goto err_clk;
 
 
