@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2251D4E2F09;
-	Wed, 30 Sep 2026 16:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B5750E5BC;
+	Wed, 30 Sep 2026 16:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785601; cv=none; b=gMssDF5ZfxOa5hOvZjVZ7ll6AoFQKPcMDGTTUcSYteh6k02Hq5vFTl/S/Vv/+P61P1UVVTZwPy2Ejo1B5YpVUz5T3xQK41jSfOwB5LVnOl4AR+G6YtAvRMddEI8u3WWFRouKWnxMdD0u223sEeI4OX+GT/qAbSeRVD5BjuGXQYw=
+	t=1790785604; cv=none; b=n0oGPpbJIzONIi76u5R8/PhhC1CLQEY3zbuEcEEtyQNO9fFuNKFiaybUOjNL+qztGztq+GCFwu0H3IhyzG/Y+sGX/wNsryYdUdKQJyNjqXHcFJg6gKQLFgLWCHJgLG4TH8ZfrTDNmovJR5hHSqHhSmZZuZt5F2LkPVkTeLkLjD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785601; c=relaxed/simple;
-	bh=ecsyK+h7Nq5wyQxSH9H2f1Ftk6tB04aXJw04hY2345w=;
+	s=arc-20240116; t=1790785604; c=relaxed/simple;
+	bh=fWliRPRMqpOeaDE6DYsusoEJwc5Madkm9cDrsl5Hu/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tD9jSCWwkmQlSj5lKbdhVlFtO2UC1j8I2dfgrEVb+hCr1fzvVE1ezd2SvaMMDi9yHOfYGGoDNPDGwbbuX9y/heCiFsx3TiltU34eO1vuPaJoaLnGbqQBprWRXUJNtxGZLu3uSsgKBWSmCOlDEArHIj+clHDSkupD8YWPSsdiva4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thVEEM/u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jUjmw95J2Ykn47yV9yrEGwDfY2NTGano+Qhur31yP/Q2bAkxXteSGXXMzqkYGVZKpT8AUveNcctweCIKBkXYceU1VK2MJNrRlvbgRdYvmLTNMuVvK9jnp6ug55U/PLKY0Ujj3BcQa+pxBNQhn7XUeiJ1q1UdJtXq4CBuPPCoeec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CE7OGR4g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thVEEM/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40E81F000FF;
-	Wed, 30 Sep 2026 16:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CE7OGR4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E72D1F008A0;
+	Wed, 30 Sep 2026 16:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785588;
-	bh=Mf0dyWJ+5pytMFeLqFQrl4awEuE79hhyeQzX+tX2cL4=;
+	s=korg; t=1790785594;
+	bh=ABjIOy3AFGgWqKNiHmX4pKM92ogq856nZ6T6BR6iT5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=thVEEM/us3eHU5GcB4wacUtDEsTMDmrD0a5G5SPzdTFuAKqrp4I+5OPdrXQGtKQz3
-	 H4JUaDaKFFZbuE8mq5YpLrcWVQse4XLflmD1xk2sa2V/+a/xS3DDh4gfCuk6wvHamr
-	 jrWFXky7atlz5xhbgPjPjOkLxa9ZB5L+04O8+HrM=
+	b=CE7OGR4gVa2ncc2szYEFjEO1+ZY+FGyUez4LpFlgcmqZLo/D2TdvEzoIXUUpe9cwq
+	 CC/4Z3kYY4hmCyMijpNXh2O7eM4Qst3wx+3b392yLPoy3EoFIHYiOm1YE4yqygXspa
+	 z56XM1U++gpHfvVoiPG6iOfKOK2WbzII0Xi8ZDfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 562/982] wifi: ath9k_htc: dont store usb_device_id
-Date: Wed, 30 Sep 2026 17:21:38 +0200
-Message-ID: <20260930152428.843111506@linuxfoundation.org>
+Subject: [PATCH 6.1 564/982] media: as102: do not rely on id table address comparison
+Date: Wed, 30 Sep 2026 17:21:40 +0200
+Message-ID: <20260930152428.885679280@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,86 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 14d2ac442d660e112efc0ce87ad10085013ed2b1 ]
+[ Upstream commit 91a8c8c718889fc8ccf5c38b750d790e9f36f92d ]
 
-usb_device_id is not guaranteed to live longer than probe due to presence
-of dynamic ID. All information apart from driver_data can be easily
-retrieved from usb_device, so just store driver_data.
+The driver info should be retrieved using the driver_info field, not by
+address comparison.
 
 Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-1-632dcf3adfba@garyguo.net
+Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-4-632dcf3adfba@garyguo.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 12 ++++++------
- drivers/net/wireless/ath/ath9k/hif_usb.h |  2 +-
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/media/usb/as102/as102_usb_drv.c | 73 ++++++++++---------------
+ 1 file changed, 30 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index 7650f14dca8da..0a36fe39d5a25 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -1099,7 +1099,7 @@ static int ath9k_hif_usb_download_fw(struct hif_device_usb *hif_dev)
- 	}
- 	kfree(buf);
+diff --git a/drivers/media/usb/as102/as102_usb_drv.c b/drivers/media/usb/as102/as102_usb_drv.c
+index 07f6d0331e4d9..083f1535e862f 100644
+--- a/drivers/media/usb/as102/as102_usb_drv.c
++++ b/drivers/media/usb/as102/as102_usb_drv.c
+@@ -24,35 +24,33 @@ static void as102_usb_stop_stream(struct as102_dev_t *dev);
+ static int as102_open(struct inode *inode, struct file *file);
+ static int as102_release(struct inode *inode, struct file *file);
  
--	if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
-+	if (IS_AR7010_DEVICE(hif_dev->id_info))
- 		firm_offset = AR7010_FIRMWARE_TEXT;
- 	else
- 		firm_offset = AR9271_FIRMWARE_TEXT;
-@@ -1194,7 +1194,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
- 	if (MAJOR_VERSION_REQ == 1 && hif_dev->fw_minor_index == 3) {
- 		const char *filename;
+-static const struct usb_device_id as102_usb_id_table[] = {
+-	{ USB_DEVICE(AS102_USB_DEVICE_VENDOR_ID, AS102_USB_DEVICE_PID_0001) },
+-	{ USB_DEVICE(PCTV_74E_USB_VID, PCTV_74E_USB_PID) },
+-	{ USB_DEVICE(ELGATO_EYETV_DTT_USB_VID, ELGATO_EYETV_DTT_USB_PID) },
+-	{ USB_DEVICE(NBOX_DVBT_DONGLE_USB_VID, NBOX_DVBT_DONGLE_USB_PID) },
+-	{ USB_DEVICE(SKY_IT_DIGITAL_KEY_USB_VID, SKY_IT_DIGITAL_KEY_USB_PID) },
+-	{ } /* Terminating entry */
++struct as102_dev_info {
++	const char *name;
++	/*
++	 * eLNA configuration: devices built on the reference design work best
++	 * with 0xA0, while custom designs seem to require 0xC0
++	 */
++	uint8_t elna_cfg;
+ };
  
--		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
-+		if (IS_AR7010_DEVICE(hif_dev->id_info))
- 			filename = FIRMWARE_AR7010_1_1;
- 		else
- 			filename = FIRMWARE_AR9271;
-@@ -1210,7 +1210,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
+-/* Note that this table must always have the same number of entries as the
+-   as102_usb_id_table struct */
+-static const char * const as102_device_names[] = {
+-	AS102_REFERENCE_DESIGN,
+-	AS102_PCTV_74E,
+-	AS102_ELGATO_EYETV_DTT_NAME,
+-	AS102_NBOX_DVBT_DONGLE_NAME,
+-	AS102_SKY_IT_DIGITAL_KEY_NAME,
+-	NULL /* Terminating entry */
+-};
++#define DRIVER_INFO(dev_name, dev_elna_cfg) \
++	.driver_info = (kernel_ulong_t)&(const struct as102_dev_info){ \
++		.name = (dev_name), \
++		.elna_cfg = (dev_elna_cfg), \
++	}
  
- 		return -ENOENT;
- 	} else {
--		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
-+		if (IS_AR7010_DEVICE(hif_dev->id_info))
- 			chip = "7010";
- 		else
- 			chip = "9271";
-@@ -1267,9 +1267,9 @@ static void ath9k_hif_usb_firmware_cb(const struct firmware *fw, void *context)
+-/* eLNA configuration: devices built on the reference design work best
+-   with 0xA0, while custom designs seem to require 0xC0 */
+-static uint8_t const as102_elna_cfg[] = {
+-	0xA0,
+-	0xC0,
+-	0xC0,
+-	0xA0,
+-	0xA0,
+-	0x00 /* Terminating entry */
++static const struct usb_device_id as102_usb_id_table[] = {
++	{ USB_DEVICE(AS102_USB_DEVICE_VENDOR_ID, AS102_USB_DEVICE_PID_0001),
++	  DRIVER_INFO(AS102_REFERENCE_DESIGN, 0xA0) },
++	{ USB_DEVICE(PCTV_74E_USB_VID, PCTV_74E_USB_PID),
++	  DRIVER_INFO(AS102_PCTV_74E, 0xC0) },
++	{ USB_DEVICE(ELGATO_EYETV_DTT_USB_VID, ELGATO_EYETV_DTT_USB_PID),
++	  DRIVER_INFO(AS102_ELGATO_EYETV_DTT_NAME, 0xC0) },
++	{ USB_DEVICE(NBOX_DVBT_DONGLE_USB_VID, NBOX_DVBT_DONGLE_USB_PID),
++	  DRIVER_INFO(AS102_NBOX_DVBT_DONGLE_NAME, 0xA0) },
++	{ USB_DEVICE(SKY_IT_DIGITAL_KEY_USB_VID, SKY_IT_DIGITAL_KEY_USB_PID),
++	  DRIVER_INFO(AS102_SKY_IT_DIGITAL_KEY_NAME, 0xA0) },
++	{ } /* Terminating entry */
+ };
  
- 	ret = ath9k_htc_hw_init(hif_dev->htc_handle,
- 				&hif_dev->interface->dev,
--				hif_dev->usb_device_id->idProduct,
-+				le16_to_cpu(hif_dev->udev->descriptor.idProduct),
- 				hif_dev->udev->product,
--				hif_dev->usb_device_id->driver_info);
-+				hif_dev->id_info);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto err_htc_hw_init;
-@@ -1383,7 +1383,7 @@ static int ath9k_hif_usb_probe(struct usb_interface *interface,
+ struct usb_driver as102_usb_driver = {
+@@ -338,29 +336,18 @@ static int as102_usb_probe(struct usb_interface *intf,
+ {
+ 	int ret;
+ 	struct as102_dev_t *as102_dev;
+-	int i;
+-
+-	/* This should never actually happen */
+-	if (ARRAY_SIZE(as102_usb_id_table) !=
+-	    (sizeof(as102_device_names) / sizeof(const char *))) {
+-		pr_err("Device names table invalid size");
+-		return -EINVAL;
+-	}
++	const struct as102_dev_info *info = (const struct as102_dev_info *)id->driver_info;
  
- 	hif_dev->udev = udev;
- 	hif_dev->interface = interface;
--	hif_dev->usb_device_id = id;
-+	hif_dev->id_info = id->driver_info;
- #ifdef CONFIG_PM
- 	udev->reset_resume = 1;
- #endif
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.h b/drivers/net/wireless/ath/ath9k/hif_usb.h
-index 5985aa15ca931..96c59af629982 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.h
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.h
-@@ -115,7 +115,7 @@ struct cmd_buf {
- struct hif_device_usb {
- 	struct usb_device *udev;
- 	struct usb_interface *interface;
--	const struct usb_device_id *usb_device_id;
-+	int id_info;
- 	const void *fw_data;
- 	size_t fw_size;
- 	struct completion fw_done;
+ 	as102_dev = kzalloc(sizeof(struct as102_dev_t), GFP_KERNEL);
+ 	if (as102_dev == NULL)
+ 		return -ENOMEM;
+ 
+-	/* Assign the user-friendly device name */
+-	for (i = 0; i < ARRAY_SIZE(as102_usb_id_table); i++) {
+-		if (id == &as102_usb_id_table[i]) {
+-			as102_dev->name = as102_device_names[i];
+-			as102_dev->elna_cfg = as102_elna_cfg[i];
+-		}
+-	}
+-
+-	if (as102_dev->name == NULL)
++	if (info) {
++		as102_dev->name = info->name;
++		as102_dev->elna_cfg = info->elna_cfg;
++	} else {
+ 		as102_dev->name = "Unknown AS102 device";
++	}
+ 
+ 	/* set private callback functions */
+ 	as102_dev->bus_adap.ops = &as102_priv_ops;
 -- 
 2.53.0
 
