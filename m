@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340E7341ADD;
-	Wed, 30 Sep 2026 19:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B473E3D8900;
+	Wed, 30 Sep 2026 19:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795826; cv=none; b=WjxlzvesBfDPDjSJt44tEmClbCkwhN3gt1K8piSjHGxpEMwVlRsfC93f7Qg7M57yfBFY1YlzVFw+eYzS/XABt5jNBrNiKQ/6BjYSCTI6Vye7rW4WtD20IXY385CnfzkkPBklQArYoRZW0HNZFJ0nRIlYjj91/hiayRN99KI+2f0=
+	t=1790795828; cv=none; b=qX/QIFjKhP9gutsa02pkn79X2Ltap3z6N2PvlREXoHMmBa+e5vr+j6vX5Zyhs9nArdrY6faAGlzek5EGQOHhEnUiRFd8mbVV3sHlAcwzmJNCTuxxHHVZfDKMwwNEjdug2EicpKzOhDrujqLSnuNDRUufwoYLQicBi7PMgOlVR4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795826; c=relaxed/simple;
-	bh=ncksL19b8lERYEeYKv6PweTJ3VTaUU1PDNNLc4EAxJo=;
+	s=arc-20240116; t=1790795828; c=relaxed/simple;
+	bh=CiLDUqgiPtp0zjx0aHncyXpObgd1Gu4eKYTsouxz3Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E6oW+3OIFhrwsdQjlJhyure7qGFsmKv+vAY1xan6YJNH6NndAYrHmtiI8U9Hncxya+GOsSIvl3Zqxr86DF9XbX8Fq6O2VWgppqV2PtrP5m5kq3E382PV1kld0pUl5mPzTzY8AAjtNGttIH2NZapTpWoGofAruk5V9y+rxdep6BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvbXPR6b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Szq39UPHnOHcZOPITKkQiQdNe0QpFgAsFsdyGTVzUUG/fesSLqXT1CJ9JfqBsc5+z/LtCWr4fBa2FD53Ld2p30PriiM7wbRaFCI4YF3id+V8m1UrlWiRTbYcsmlBXVd9hy6BRarTlVF+yk86ojvWESKxRwPr8ej7rxDiH7yNrWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbPpYQUf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvbXPR6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0281F000FF;
-	Wed, 30 Sep 2026 19:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbPpYQUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136521F000FF;
+	Wed, 30 Sep 2026 19:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795824;
-	bh=0BEGaXReaAnuFqJ/lsEb1ZkoxdAXPAazr0R03iy22PY=;
+	s=korg; t=1790795827;
+	bh=NbJLlC+r3SjzljQlwfAm5VA5q3IX25rIB7MxqWPAVuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JvbXPR6bU375wS7Eorgq1w1yqIAhvrycxeBNEbnzWkRbGp9tjT6HEwnerGsrjE1va
-	 UUnCE4TKC8LSYFnLn/0z5CiEw2+3veZw7Tdb+gGv6pzcjFi23+NJOJslZqXHdOYhHR
-	 5vj1xERC4VjEAtw0wjgQIL0wNYZwcsabqbX08z9M=
+	b=lbPpYQUf5100M3ekas5qsrS4JNzcflevfqrsZKysC5SD6Y0XJ1pJ0Vuwd0DrMVMs2
+	 hu8PEsML9V1Wt+Lffo+exOtWNXdEqsWh8sl0vBbrwDfltBxcrJSbECe7IjbxIi505G
+	 C5qAMJmAAOWd0XjUN69k354oWPdhLiR9FMIsGUHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0696/1193] net: usb: pegasus: dont rely on id table pointer arithmetic
-Date: Wed, 30 Sep 2026 17:23:00 +0200
-Message-ID: <20260930152449.713488475@linuxfoundation.org>
+Subject: [PATCH 6.6 0697/1193] ALSA: us122l: Prevent write upgrades for read mappings
+Date: Wed, 30 Sep 2026 17:23:01 +0200
+Message-ID: <20260930152449.735838802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,184 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Kazuki Hanai <hnkz.64@gmail.com>
 
-[ Upstream commit ce8101c331956bbd3e20681331dfd22eb7c1c1ea ]
+[ Upstream commit 71c610aeb1770302ac9c9e0b9a4ecd37f1311928 ]
 
-The current code is broken when dynamic ID is involved; in such cases
-usb_device_id parameter of probe lives on the heap and the pointer
-arithmetic will get an index that is wildly out of bound. Instead of
-keeping a side table for additional information, use driver_info field of
-the usb_device_id.
+The hwdep mmap callback rejects read-buffer mappings that are initially
+writable, but leaves VM_MAYWRITE set on mappings created with PROT_READ.
+A process that can open the hwdep node O_RDWR can later use mprotect() to
+make the mapping writable.
 
-The dynamic ID parsing code needs to be updated for this; convert it to
-just write to the reserved entry for dynamic ID and remove the weird loop.
+The read allocation begins with struct usb_stream. Its read_size member is
+used by the fault handler to decide which pages belong to the read buffer.
+The read VMA intentionally remains expandable because pcm_usb_stream uses
+mremap() after reading that size. Changing read_size first can therefore
+map and access pages beyond the allocation. The same member is also
+consumed by usb_stream_free(), where changing it can make
+free_pages_exact() release pages outside the allocation.
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-5-632dcf3adfba@garyguo.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Clear VM_MAYWRITE for read-buffer mappings after rejecting an initially
+writable VMA. This keeps the separate output-buffer mapping writable while
+preventing later permission upgrades.
+
+Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
+Link: https://patch.msgid.link/20260908110053.2950767-1-hnkz.64@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/pegasus.c | 54 ++++++++++++++++-----------------------
- drivers/net/usb/pegasus.h |  3 ---
- 2 files changed, 22 insertions(+), 35 deletions(-)
+ sound/usb/usx2y/us122l.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
-index 475b066081c7f..8ec798f97f99b 100644
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -46,21 +46,12 @@ static bool loopback;
- static bool mii_mode;
- static char *devid;
- 
--static struct usb_eth_dev usb_dev_id[] = {
--#define	PEGASUS_DEV(pn, vid, pid, flags)	\
--	{.name = pn, .vendor = vid, .device = pid, .private = flags},
--#define PEGASUS_DEV_CLASS(pn, vid, pid, dclass, flags) \
--	PEGASUS_DEV(pn, vid, pid, flags)
--#include "pegasus.h"
--#undef	PEGASUS_DEV
--#undef	PEGASUS_DEV_CLASS
--	{NULL, 0, 0, 0},
--	{NULL, 0, 0, 0}
--};
-+static struct usb_eth_dev dynamic_id_info = {};
- 
- static struct usb_device_id pegasus_ids[] = {
- #define	PEGASUS_DEV(pn, vid, pid, flags) \
--	{.match_flags = USB_DEVICE_ID_MATCH_DEVICE, .idVendor = vid, .idProduct = pid},
-+	{.match_flags = USB_DEVICE_ID_MATCH_DEVICE, .idVendor = vid, .idProduct = pid, \
-+	 .driver_info = (kernel_ulong_t)&(const struct usb_eth_dev) {.name = pn, .private = flags}},
- /*
-  * The Belkin F8T012xx1 bluetooth adaptor has the same vendor and product
-  * IDs as the Belkin F5D5050, so we need to teach the pegasus driver to
-@@ -69,7 +60,8 @@ static struct usb_device_id pegasus_ids[] = {
-  */
- #define PEGASUS_DEV_CLASS(pn, vid, pid, dclass, flags) \
- 	{.match_flags = (USB_DEVICE_ID_MATCH_DEVICE | USB_DEVICE_ID_MATCH_DEV_CLASS), \
--	.idVendor = vid, .idProduct = pid, .bDeviceClass = dclass},
-+	.idVendor = vid, .idProduct = pid, .bDeviceClass = dclass, \
-+	.driver_info = (kernel_ulong_t)&(const struct usb_eth_dev) {.name = pn, .private = flags}},
- #include "pegasus.h"
- #undef	PEGASUS_DEV
- #undef	PEGASUS_DEV_CLASS
-@@ -405,12 +397,12 @@ static inline int reset_mac(pegasus_t *pegasus)
- 	if (i == REG_TIMEOUT)
- 		return -ETIMEDOUT;
- 
--	if (usb_dev_id[pegasus->dev_index].vendor == VENDOR_LINKSYS ||
--	    usb_dev_id[pegasus->dev_index].vendor == VENDOR_DLINK) {
-+	if (le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_LINKSYS ||
-+	    le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_DLINK) {
- 		set_register(pegasus, Gpio0, 0x24);
- 		set_register(pegasus, Gpio0, 0x26);
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index 612047ca5fe7a..36167300b8d07 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -209,9 +209,12 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
+ 	mutex_lock(&us122l->mutex);
+ 	s = us122l->sk.s;
+ 	read = offset < s->read_size;
+-	if (read && area->vm_flags & VM_WRITE) {
+-		err = -EPERM;
+-		goto out;
++	if (read) {
++		if (area->vm_flags & VM_WRITE) {
++			err = -EPERM;
++			goto out;
++		}
++		vm_flags_clear(area, VM_MAYWRITE);
  	}
--	if (usb_dev_id[pegasus->dev_index].vendor == VENDOR_ELCON) {
-+	if (le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_ELCON) {
- 		__u16 auxmode;
- 		ret = read_mii_word(pegasus, 3, 0x1b, &auxmode);
- 		if (ret < 0)
-@@ -448,9 +440,9 @@ static int enable_net_traffic(struct net_device *dev, struct usb_device *usb)
- 	memcpy(pegasus->eth_regs, data, sizeof(data));
- 	ret = set_registers(pegasus, EthCtrl0, 3, data);
- 
--	if (usb_dev_id[pegasus->dev_index].vendor == VENDOR_LINKSYS ||
--	    usb_dev_id[pegasus->dev_index].vendor == VENDOR_LINKSYS2 ||
--	    usb_dev_id[pegasus->dev_index].vendor == VENDOR_DLINK) {
-+	if (le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_LINKSYS ||
-+	    le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_LINKSYS2 ||
-+	    le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_DLINK) {
- 		u16 auxmode;
- 		ret = read_mii_word(pegasus, 0, 0x1b, &auxmode);
- 		if (ret < 0)
-@@ -1156,7 +1148,7 @@ static int pegasus_probe(struct usb_interface *intf,
- 	struct usb_device *dev = interface_to_usbdev(intf);
- 	struct net_device *net;
- 	pegasus_t *pegasus;
--	int dev_index = id - pegasus_ids;
-+	const struct usb_eth_dev *info = (const struct usb_eth_dev *)id->driver_info;
- 	int res = -ENOMEM;
- 	static const u8 bulk_ep_addr[] = {
- 		PEGASUS_USB_EP_BULK_IN | USB_DIR_IN,
-@@ -1181,7 +1173,6 @@ static int pegasus_probe(struct usb_interface *intf,
- 		goto out;
- 
- 	pegasus = netdev_priv(net);
--	pegasus->dev_index = dev_index;
- 	pegasus->intf = intf;
- 
- 	res = alloc_urbs(pegasus);
-@@ -1209,7 +1200,7 @@ static int pegasus_probe(struct usb_interface *intf,
- 	pegasus->msg_enable = netif_msg_init(msg_level, NETIF_MSG_DRV
- 				| NETIF_MSG_PROBE | NETIF_MSG_LINK);
- 
--	pegasus->features = usb_dev_id[dev_index].private;
-+	pegasus->features = info ? info->private : DEFAULT_GPIO_RESET;
- 	res = get_interrupt_interval(pegasus);
- 	if (res)
- 		goto out2;
-@@ -1238,7 +1229,7 @@ static int pegasus_probe(struct usb_interface *intf,
- 	queue_delayed_work(system_long_wq, &pegasus->carrier_check,
- 			   CARRIER_CHECK_DELAY);
- 	dev_info(&intf->dev, "%s, %s, %pM\n", net->name,
--		 usb_dev_id[dev_index].name, net->dev_addr);
-+		 info ? info->name : "(unknown)", net->dev_addr);
- 	return 0;
- 
- out3:
-@@ -1328,8 +1319,9 @@ static struct usb_driver pegasus_driver = {
- 
- static void __init parse_id(char *id)
- {
--	unsigned int vendor_id = 0, device_id = 0, flags = 0, i = 0;
-+	unsigned int vendor_id = 0, device_id = 0, flags = 0;
- 	char *token, *name = NULL;
-+	int dyn_id_index = ARRAY_SIZE(pegasus_ids) - 2;
- 
- 	if ((token = strsep(&id, ":")) != NULL)
- 		name = token;
-@@ -1347,14 +1339,12 @@ static void __init parse_id(char *id)
- 	if (device_id > 0x10000 || device_id == 0)
- 		return;
- 
--	for (i = 0; usb_dev_id[i].name; i++);
--	usb_dev_id[i].name = name;
--	usb_dev_id[i].vendor = vendor_id;
--	usb_dev_id[i].device = device_id;
--	usb_dev_id[i].private = flags;
--	pegasus_ids[i].match_flags = USB_DEVICE_ID_MATCH_DEVICE;
--	pegasus_ids[i].idVendor = vendor_id;
--	pegasus_ids[i].idProduct = device_id;
-+	dynamic_id_info.name = name;
-+	dynamic_id_info.private = flags;
-+	pegasus_ids[dyn_id_index].match_flags = USB_DEVICE_ID_MATCH_DEVICE;
-+	pegasus_ids[dyn_id_index].idVendor = vendor_id;
-+	pegasus_ids[dyn_id_index].idProduct = device_id;
-+	pegasus_ids[dyn_id_index].driver_info = (kernel_ulong_t)&dynamic_id_info;
- }
- 
- static int __init pegasus_init(void)
-diff --git a/drivers/net/usb/pegasus.h b/drivers/net/usb/pegasus.h
-index a05b143155ba8..ccdedcef52e76 100644
---- a/drivers/net/usb/pegasus.h
-+++ b/drivers/net/usb/pegasus.h
-@@ -85,7 +85,6 @@ typedef struct pegasus {
- 	unsigned		features;
- 	u32			msg_enable;
- 	u32			wolopts;
--	int			dev_index;
- 	int			intr_interval;
- 	struct tasklet_struct	rx_tl;
- 	struct delayed_work	carrier_check;
-@@ -102,8 +101,6 @@ typedef struct pegasus {
- 
- struct usb_eth_dev {
- 	char	*name;
--	__u16	vendor;
--	__u16	device;
- 	__u32	private; /* LSB is gpio reset value */
- };
- 
+ 	snd_printdd(KERN_DEBUG "%lu %u\n", size,
+ 		    read ? s->read_size : s->write_size);
 -- 
 2.53.0
 
