@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68E4511E96;
-	Wed, 30 Sep 2026 16:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FF736A033;
+	Wed, 30 Sep 2026 16:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785199; cv=none; b=niQuhOl4j9aOHCOSfjruN/3jqJvqJ7gbhK1bUwSfikTLgfug1P5YafkJaQDs3BFkcpdobzMETi5IG4zIU/hYMuZA808xLAs9oinkHZAXlaV0zbfQk/z8r6kdxkBDUc3SNTIzrCvu14A0L2dmgv4rHNMSETDaWHJSWfkFWyl9FwE=
+	t=1790785200; cv=none; b=avLeh2GFd9P4LOhGvBKoVrS2RjWkXLp/G5Wf4InZz5AHMSTt1uYUhua8uSgEWw0WxJUJllji02aINFylMDU3WJVvyfK/S6+rI9S0rRrEl1yc4fEJFyYauKQNVQwmT/dNjYk2Vom9vFjXSHV19Dpt6pDqVtCr9LD2Gig1wzviEBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785199; c=relaxed/simple;
-	bh=Lp8dVpsBv5CHGYErigfsrtiIsJnx3KJK46HzkezTtq4=;
+	s=arc-20240116; t=1790785200; c=relaxed/simple;
+	bh=0ioM14a7Sn+0QHoppvMcCMMFEY8qVavzIIrYNDd9q3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8mpNtKEm3FluUy0cejGU48FqMfdQqlp1EuN4NWLPYRXYDObQ5hEBrL7CsCaPRp20awvceKLLc52iCsVAeUYB9eJX2IwxYD8IFWkj2w3kBL4RculSd/2uQ0f+5Kj2FQsmA8ZSmJTa/xqq8sDTSsumFXIDINwDMW1sl/QTcO3ytE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtJ4uBJa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U8SAgKJoGoxfdtGid+g96Zt7z8r3AflFoF9lBbbh/6YFo/rR4gt+Zj6h+8xAi9iwV7JgDxkl2/+bDW+p8HfGE8w8Uhtj2uX4uAoq/iW4DxQvTGqNppgciz+w4vrwpJbicOL14qh8tiA+w0oNInDzI/eTFwrtvioek967in5DPII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO5h5oOE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtJ4uBJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F49D1F000FF;
-	Wed, 30 Sep 2026 16:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO5h5oOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884DC1F00898;
+	Wed, 30 Sep 2026 16:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785194;
-	bh=chqbdwzzUh+1jnB3C3LxTUWzBE/ciJdyqpgtZIgTGHY=;
+	s=korg; t=1790785192;
+	bh=J2lh7a+ZiNHxLH9oESyxIuuz12SSAx8uWmMlVgEAnK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WtJ4uBJag9fkAhcpQTSiderfOvOE/R94HNR4W/tBNYEqmLRDHhWbv8KlaYwP8/+LH
-	 tRHFqfjQsYHN+2OrCFehhPCYz57SRHK7j8UShXMl6YYAAOD4DG08gwqQQkNbmMi68e
-	 IAI1SJnD01nPgLnaobscvlucmmpXNp512U+5PAlg=
+	b=tO5h5oOEwT/k+3Pv0gqkDlKTGB9H6pKTSNAHUheLhc1Don+6QuDoH4qp0Vt8YdTkb
+	 ZkyEHe8ukFvQILtCbdhiQjZowYY9LH2gJhAONXkGO17MWvdU4gc6JwfHjkRxqnLKpz
+	 B+MG4HTyHhaNIoj1qMBQWTyHjHeVdTL7c7Ox06oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lama Kayal <lkayal@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 423/982] net_sched: sch_fq_pie: implement lockless fq_pie_dump()
-Date: Wed, 30 Sep 2026 17:19:19 +0200
-Message-ID: <20260930152425.888234460@linuxfoundation.org>
+Subject: [PATCH 6.1 422/982] net/mlx5: E-Switch, prevent mc_list repopulation during vport disable
+Date: Wed, 30 Sep 2026 17:19:18 +0200
+Message-ID: <20260930152425.867711514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,132 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lama Kayal <lkayal@nvidia.com>
 
-[ Upstream commit 13a9965de32457d59aa3162d657aa4c5e512c146 ]
+[ Upstream commit c0c6f4ba8a37688f7b4d4044898d88f0450d44c2 ]
 
-Instead of relying on RTNL, fq_pie_dump() can use READ_ONCE()
-annotations, paired with WRITE_ONCE() ones in fq_pie_change().
+In mlx5_esw_vport_disable(), move esw_apply_vport_rx_mode() ahead
+of esw_vport_change_handle_locked() so vport->allmulti_rule is
+NULL before the change handler observes it.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 4864f58c53eb ("net/sched: fq_pie: clamp quantum in change path")
+During FW-fatal recovery the disable runs while dev->state ==
+INTERNAL_ERROR. The promisc query inside esw_update_vport_rx_mode()
+fails and returns early, leaving vport->allmulti_rule intact, so
+esw_update_vport_mc_promisc() runs and adds MLX5_ACTION_ADD entries
+to vport->mc_list whose flow rules are then installed in the FDB
+by esw_add_mc_addr(). esw_destroy_legacy_table() tears down the
+FDB with those refs still held, corrupting the sub-tree and
+leaving dangling flow_rule pointers in vport->mc_list.
+
+Two-stage failure on `echo 1 > /sys/bus/pci/devices/<bdf>/reset`:
+
+  refcount_t: underflow; use-after-free.
+   tree_put_node+0xef/0x110 [mlx5_core]
+   clean_tree+0x44/0xd0 [mlx5_core] (x5)
+   mlx5_fs_core_cleanup+0x57/0x1c0 [mlx5_core]
+   mlx5_unload+0x65/0xd0 [mlx5_core]
+   ... mlx5_health_try_recover
+
+  BUG: unable to handle page fault for address: 0000000003000055
+   down_write+0x1c/0x60
+   mlx5_del_flow_rules+0x33/0x1f0 [mlx5_core]
+   esw_del_mc_addr+0x7b/0x170 [mlx5_core]
+   esw_apply_vport_addr_list+0x56/0xf0 [mlx5_core]
+   esw_vport_change_handle_locked+0x28b/0x310 [mlx5_core]
+   mlx5_esw_vport_enable+0x270/0x4a0 [mlx5_core]
+   ... mlx5_load ... mlx5_health_try_recover
+
+esw_apply_vport_rx_mode(false, false) clears vport->allmulti_rule
+via its local state machine even when the FW del fails. With the
+rule NULL the !IS_ERR_OR_NULL(allmulti_rule) gate in the change
+handler closes, no rules are installed during disable, and the
+reload starts with a clean mc_list.
+
+Fixes: 922f56e9a795 ("net/mlx5: Fix steering rules cleanup")
+Signed-off-by: Lama Kayal <lkayal@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260902193854.3669035-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 61 +++++++++++++++++++++++-------------------
- 1 file changed, 34 insertions(+), 27 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index fc57b1daa235a..f8fb1d1af6abb 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -298,8 +298,8 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (tb[TCA_FQ_PIE_LIMIT]) {
- 		u32 limit = nla_get_u32(tb[TCA_FQ_PIE_LIMIT]);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 8b2b78f05cbe7..bf9869ee75236 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -910,13 +910,19 @@ void mlx5_esw_vport_disable(struct mlx5_eswitch *esw, u16 vport_num)
+ 	    MLX5_CAP_GEN(esw->dev, vhca_resource_manager))
+ 		mlx5_esw_vport_vhca_id_clear(esw, vport_num);
  
--		q->p_params.limit = limit;
--		sch->limit = limit;
-+		WRITE_ONCE(q->p_params.limit, limit);
-+		WRITE_ONCE(sch->limit, limit);
- 	}
- 	if (tb[TCA_FQ_PIE_FLOWS]) {
- 		if (q->flows) {
-@@ -321,39 +321,45 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 		u32 target = nla_get_u32(tb[TCA_FQ_PIE_TARGET]);
++	/* Clear rx-mode before esw_vport_change_handle_locked(): on
++	 * MLX5_VPORT_PROMISC_CHANGE it calls esw_update_vport_mc_promisc()
++	 * when vport->allmulti_rule is set, repopulating mc_list with FDB
++	 * rules that dangle once the FDB is destroyed. NULL allmulti_rule
++	 * here skips that path.
++	 */
++	esw_apply_vport_rx_mode(esw, vport, false, false);
+ 	/* We don't assume VFs will cleanup after themselves.
+ 	 * Calling vport change handler while vport is disabled will cleanup
+ 	 * the vport resources.
+ 	 */
+ 	esw_vport_change_handle_locked(vport);
+ 	vport->enabled_events = 0;
+-	esw_apply_vport_rx_mode(esw, vport, false, false);
+ 	esw_vport_cleanup(esw, vport);
+ 	esw->enabled_vports--;
  
- 		/* convert to pschedtime */
--		q->p_params.target =
--			PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC);
-+		WRITE_ONCE(q->p_params.target,
-+			   PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC));
- 	}
- 
- 	/* tupdate is in jiffies */
- 	if (tb[TCA_FQ_PIE_TUPDATE])
--		q->p_params.tupdate =
--			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE]));
-+		WRITE_ONCE(q->p_params.tupdate,
-+			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE])));
- 
- 	if (tb[TCA_FQ_PIE_ALPHA])
--		q->p_params.alpha = nla_get_u32(tb[TCA_FQ_PIE_ALPHA]);
-+		WRITE_ONCE(q->p_params.alpha,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ALPHA]));
- 
- 	if (tb[TCA_FQ_PIE_BETA])
--		q->p_params.beta = nla_get_u32(tb[TCA_FQ_PIE_BETA]);
-+		WRITE_ONCE(q->p_params.beta,
-+			   nla_get_u32(tb[TCA_FQ_PIE_BETA]));
- 
- 	if (tb[TCA_FQ_PIE_QUANTUM])
--		q->quantum = nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]);
-+		WRITE_ONCE(q->quantum, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]));
- 
- 	if (tb[TCA_FQ_PIE_MEMORY_LIMIT])
--		q->memory_limit = nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]);
-+		WRITE_ONCE(q->memory_limit,
-+			   nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]));
- 
- 	if (tb[TCA_FQ_PIE_ECN_PROB])
--		q->ecn_prob = nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]);
-+		WRITE_ONCE(q->ecn_prob,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]));
- 
- 	if (tb[TCA_FQ_PIE_ECN])
--		q->p_params.ecn = nla_get_u32(tb[TCA_FQ_PIE_ECN]);
-+		WRITE_ONCE(q->p_params.ecn,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ECN]));
- 
- 	if (tb[TCA_FQ_PIE_BYTEMODE])
--		q->p_params.bytemode = nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]);
-+		WRITE_ONCE(q->p_params.bytemode,
-+			   nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]));
- 
- 	if (tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR])
--		q->p_params.dq_rate_estimator =
--			nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]);
-+		WRITE_ONCE(q->p_params.dq_rate_estimator,
-+			   nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]));
- 
- 	/* Drop excess packets if new limit is lower */
- 	while (sch->q.qlen > sch->limit) {
-@@ -471,22 +477,23 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
- 		return -EMSGSIZE;
- 
- 	/* convert target from pschedtime to us */
--	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, sch->limit) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, q->flows_cnt) ||
-+	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, READ_ONCE(sch->limit)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, READ_ONCE(q->flows_cnt)) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_TARGET,
--			((u32)PSCHED_TICKS2NS(q->p_params.target)) /
-+			((u32)PSCHED_TICKS2NS(READ_ONCE(q->p_params.target))) /
- 			NSEC_PER_USEC) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_TUPDATE,
--			jiffies_to_usecs(q->p_params.tupdate)) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, q->p_params.alpha) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_BETA, q->p_params.beta) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, q->quantum) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT, q->memory_limit) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, q->ecn_prob) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ECN, q->p_params.ecn) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, q->p_params.bytemode) ||
-+			jiffies_to_usecs(READ_ONCE(q->p_params.tupdate))) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, READ_ONCE(q->p_params.alpha)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_BETA, READ_ONCE(q->p_params.beta)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, READ_ONCE(q->quantum)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT,
-+			READ_ONCE(q->memory_limit)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, READ_ONCE(q->ecn_prob)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ECN, READ_ONCE(q->p_params.ecn)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, READ_ONCE(q->p_params.bytemode)) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_DQ_RATE_ESTIMATOR,
--			q->p_params.dq_rate_estimator))
-+			READ_ONCE(q->p_params.dq_rate_estimator)))
- 		goto nla_put_failure;
- 
- 	return nla_nest_end(skb, opts);
 -- 
 2.53.0
 
