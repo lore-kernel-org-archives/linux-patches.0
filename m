@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CDB54705C;
-	Wed, 30 Sep 2026 16:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C114D37B0;
+	Wed, 30 Sep 2026 16:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785445; cv=none; b=uXq58p8Oc5ef4ykqEQ8sDrsORC4xytk2Huk314DmtD5kyJpsXygNKaehi4/kQyqPcBC/z4JA9IfkiQEPA/RVCGsDfakm2tQPSlggSa5M0wEvB0dR2RIYbQG5G/+IW8JjZFUpgYIqt8AFrpLIbQBUwoeUMll9N5qeXueHQX0x93o=
+	t=1790785448; cv=none; b=TQmnXCsdPjQStSNUfv7if057dZVcjC2JoFpqvLlAmDdm4rxuYe/2Y+CxXZ9Ey42ZjaLFOMxeTiz4yz4TPifgbh0ZOW3IB6OHhRoups0uSRBQ3LNCVj5S+J21IAQWP3dghfNgnFO/wyqpC9XlVKUmvxtlQC19sHuaqZfV5Xy4lBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785445; c=relaxed/simple;
-	bh=xGTIU5nx22VP9lCUhieTU3K+7FBpfpQp8PlPOMHcewI=;
+	s=arc-20240116; t=1790785448; c=relaxed/simple;
+	bh=n4wC8EhhpBiHfFNetMCrzsKvT8Nfi4ZNQzl7k82eNM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8ALWuoerKjun7Ed2P/AtuT/Z71IVIYEdLvh4JBTXPnjPa+SGKgG1+/J2TcG0+6ODCmUc0/4xN7UUKXrQlLPLyOH2dW06a0P5wKu04jntHJXIRxYrwzCSQodzA+O9SiTflw1YS4H+XPDhbOjSRRWIXw/yw7hg2G7AKa93WOIFmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFsPD8kW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPsjUAdhd0w5NM8r353gtFJonUgRLAZh9zGG8t+g0ksqiY5LkdCfr6ZlA/wyn2tKEJ+jxPOMimW5rtl0P2c+K5Y9Ugnu+O9glylYkNkbhT8MSwR2WuvrDLJYXEIL5uojPbZxWtY9bsIUTV0BCswomLtU73aXHlWmiM84lMwoTKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cxviun83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFsPD8kW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EE21F00898;
-	Wed, 30 Sep 2026 16:23:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cxviun83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94781F00899;
+	Wed, 30 Sep 2026 16:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785435;
-	bh=MF7YpM3bEHxUzJi5JwfisitLfVl2+MAKEr8OyW7UKGo=;
+	s=korg; t=1790785438;
+	bh=tX5YS538P0qVN/xxXNGBmaVcooeppZyTSx/miJeJm4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BFsPD8kWt304X0f50tQUHQTsBl1ixgjnDQlpu40WRQj/1cHPbHhL6WsmZyMAWRI6N
-	 cJDVqN4BCg4sK8N+ISvp61ieLs92jwUNau6XTijsYjl2gaE58HO2GsmrVPf+dW0s2w
-	 MkSU0NQvRc0M6KRSRCB+gbFyh/tX+ddPSo+cG60w=
+	b=Cxviun83HpdmD1RhILSzG6ntns8JbMha7t620/0wy8O4N/iNZFnhKIKRWkG+7XUu9
+	 SrLlPGrhQOadJscXclADOznIIs/RDw/FKsgpbRfqezmz8c/LFfAgzCdWG3expc8a6n
+	 yl1p1p1k+si2U8S9v0z6tejE7LatIVNJby2OF71M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 509/982] tracing: Free histogram the field rejected for a bad modifier
-Date: Wed, 30 Sep 2026 17:20:45 +0200
-Message-ID: <20260930152427.711242355@linuxfoundation.org>
+Subject: [PATCH 6.1 510/982] tracing: Let histogram values keep the percent and graph modifiers
+Date: Wed, 30 Sep 2026 17:20:46 +0200
+Message-ID: <20260930152427.732315817@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,74 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 230234d12ce42ab04132a32c3a848f07a5d27a71 upstream.
+commit 3d617bfd79330ae3acf94862c18bb3ccf5f5a0f9 upstream.
 
-Writing a hist trigger whose value or variable carries a modifier that is
-not allowed there leaks the fields that were built for it.
+The .percent and .graph modifiers exist only for histogram values, but a
+value carrying either of them has been rejected since v6.3. The example
+in Documentation/trace/histogram.rst,
 
-__create_val_field() takes the field from parse_expr() and stores it in
-hist_data->fields[] only after the modifier checks have run:
-
-	hist_field = parse_expr(hist_data, file, field_str, flags, var_name,
-				&n_subexprs);
-	...
-	if (hist_field->flags & HIST_FIELD_FL_VAR) {
-		if (hist_field->flags & (...))
-			goto err;
-	} else {
-		if (hist_field->flags & (...))
-			goto err;
-	}
-
-	hist_data->fields[val_idx] = hist_field;
-
-Both checks jump past that store, and the err label returns without
-freeing anything. The error unwinds to create_hist_data(), which calls
-destroy_hist_data() -> destroy_hist_fields(), and that reaches a field
-only by walking fields[]. A field that never got there is unreachable.
-
-commit e0213434fe3e ("tracing: Do not let histogram values have some
-modifiers") set ret to -EINVAL and fell through to the store, which left
-the field owned by fields[] and freed along with the rest of hist_data.
-Splitting the check into a value case and a variable case replaced that
-fall-through with a goto that skips it.
-
-With CONFIG_DEBUG_KMEMLEAK, 200 writes of
-
-  # echo 'hist:keys=prev_pid:vals=next_pid.log2' > \
+  # echo 'hist:keys=prev_comm:vals=hitcount.percent:nohitcount' > \
 	 events/sched/sched_switch/trigger
 
-each correctly rejected with -EINVAL, leave 332 unreferenced objects
-(63744 bytes) reported at create_hist_field(); 200 install and remove
-cycles of a valid trigger leave none. A '.log2' field is two
-allocations, since create_hist_field() puts the plain field in
-operands[0] of the log2 field, and both are reported.
+returns -EINVAL.
 
-Use destroy_hist_field() rather than __destroy_hist_field() so that
-operands[0] is freed as well. It returns early for HIST_FIELD_FL_VAR_REF,
-which is what an operand owned by hist_data->var_refs[] needs; the
-rejected field itself is never a var ref, because a var ref never carries
-a modifier flag.
+parse_field() sets the two flags only when the field is neither a key nor
+a variable, that is, only on a value:
+
+	} else if (strncmp(modifier, "percent", 7) == 0) {
+		if (*flags & (HIST_FIELD_FL_VAR | HIST_FIELD_FL_KEY))
+			goto error;
+		*flags |= HIST_FIELD_FL_PERCENT;
+
+__create_val_field() then rejects a value for carrying them, so no field
+can reach hist_trigger_print_val(), where both are implemented.
+
+commit e0213434fe3e ("tracing: Do not let histogram values have some
+modifiers") added the check after a value with .buckets oopsed in
+hist_field_name(). That happens because .buckets and .log2 make
+create_hist_field() build a nested field in operands[0] which
+hist_field_name() then walks into. The percent and graph flags do not
+create an operand and are not read by hist_field_name(); they are only
+used when printing a value.
+
+Stop rejecting the two flags on a value. The check for variables is left
+alone, where they are unreachable anyway because parse_field() rejects a
+variable carrying them first.
+
+With the two flags removed, the trigger above installs and prints as
+documented:
+
+  { prev_comm: rcu_preempt  }  hitcount (%):   0.00
+  { prev_comm: init         }  hitcount (%):  99.98
+  Totals:
+      Hits: 237896
 
 Cc: stable@vger.kernel.org
-Fixes: e30fbc618e97 ("tracing/histograms: Allow variables to have some modifiers")
-Link: https://patch.msgid.link/20260907034948.240387-1-donggeunyoo.kernel@gmail.com
+Fixes: e0213434fe3e ("tracing: Do not let histogram values have some modifiers")
+Link: https://patch.msgid.link/20260907052113.430818-1-donggeunyoo.kernel@gmail.com
 Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_events_hist.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/kernel/trace/trace_events_hist.c
 +++ b/kernel/trace/trace_events_hist.c
-@@ -4199,6 +4199,7 @@ static int __create_val_field(struct his
- 	return ret;
-  err:
- 	hist_err(file->tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
-+	destroy_hist_field(hist_field, 0);
- 	return -EINVAL;
- }
- 
+@@ -4181,8 +4181,7 @@ static int __create_val_field(struct his
+ 			goto err;
+ 	} else {
+ 		/* Value */
+-		if (hist_field->flags & (HIST_FIELD_FL_GRAPH | HIST_FIELD_FL_PERCENT |
+-					 HIST_FIELD_FL_BUCKET | HIST_FIELD_FL_LOG2 |
++		if (hist_field->flags & (HIST_FIELD_FL_BUCKET | HIST_FIELD_FL_LOG2 |
+ 					 HIST_FIELD_FL_SYM | HIST_FIELD_FL_SYM_OFFSET |
+ 					 HIST_FIELD_FL_SYSCALL | HIST_FIELD_FL_STACKTRACE))
+ 			goto err;
 
 
