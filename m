@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B031418A55;
-	Wed, 30 Sep 2026 19:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579CF405C3F;
+	Wed, 30 Sep 2026 19:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797078; cv=none; b=eVxmTZdn6CvOxSLBrzJwBWePA4+WE2fAtaK1BNM4WFNdm1SmshMO5sdL/SeOimymgRmnetP9FQtoEwi66PN71jXeC/8k/XFuKiWaMShAlvGNHbaC9PgVZLyQceSwItFbK0JpS+EtPPqvVkocVovuXXqNU1NzqydeAGikbirZ2Bo=
+	t=1790797081; cv=none; b=djPYDXQDj+JLTj8qmMIvfgMsuOTrEuT4MF9tswnflyqfv1EdIY0s9vRhEphoyUgpBUrlU19YYBYbY2aNvrIqMNnpcdHnFLo33bfK5XmKxbobsAimcsVaRkLOjfCgsP1z9p/Db3UBTYKPyLHeL/61PZJWPNEfDq/6G8oP1cF6vPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797078; c=relaxed/simple;
-	bh=ROehNXxUubxzpYyK4L9CVDjUssBMMAPbjIog6zNttHs=;
+	s=arc-20240116; t=1790797081; c=relaxed/simple;
+	bh=UphmeI9z1Wkr35I0eanVr8KAXXxNayWfKZHzpN9YqXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCZfEMjeIEbA1WeDuIpLNhAp94Q1AdECQkAc7ufBR/KAVLIAAf9MJCfCTD7e0PPEbwuKA/cYxwaC7CYxP6KRXGcy/KUGP/UmA8Aw1O45xGHwnJli3ClFmqxGeSYaS4IGt5xPs1i45BXPX5i7jN8ct/2ekdg9poF8yNCp2C+kz/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qorU41V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nc7VD43NDwQg6WVWnxGmwMaVgURwfOyzbmW+9B6G6kHnJ0IeEbkcKd4sO9C8DtwWjwaNDO0Vf2KMsQ4Z17IwF9NOlr2oMYzSpOZXZRTmlFMkeul3i3qjxaKEu5bHZbtydeebfXQAANyx7hy9I2lGjhTIEpqeDJgIQctWLJgRh8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBHilxjG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qorU41V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37CA1F000FF;
-	Wed, 30 Sep 2026 19:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBHilxjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A776E1F000FF;
+	Wed, 30 Sep 2026 19:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797077;
-	bh=++AmNQ/O4ScRpt12zjU1BPhcKq7FVxY33ZPXNZ8GH/E=;
+	s=korg; t=1790797080;
+	bh=HOOxQPVomXOl8nkInAtV0fO0pDUcgYCR2I1RIaxirYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qorU41VKf4PtYOUk+/JRsvm1w2iyj995EWRtu51hxptzeKn8QT2g/WpXvshyO/rW
-	 dBQ/S4TdhUNLgkF0m7jkeSbbE14DPqVymMruI6yNchO3gLHNedvOMq2o38OzxLrDU8
-	 5mvhyUHrhgmoMTLp4APZLhHj2LbrBMtilfJmUgOs=
+	b=pBHilxjGdN4+c/xOWlnmEI3bJq9VW+un0ZI+IL7yqw0S/PUQFCidwRZgYFQk/0WZv
+	 kwjt6LkzVCHh1Q3VOpue4eEjzqi57+VY1q7eN4b+nuSgW5+M2fwgNJKuah1uHc4z+c
+	 262Z/ht5sMsqjqSQuvb1f2pxQIdkcg1cR1OQQoKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
+	Aamir Ahmed <elb12345@hotmail.co.uk>,
 	Simon Horman <horms@kernel.org>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.6 1137/1193] nfc: fix use-after-free in nfc_get_local_general_bytes
-Date: Wed, 30 Sep 2026 17:30:21 +0200
-Message-ID: <20260930152459.500914257@linuxfoundation.org>
+Subject: [PATCH 6.6 1138/1193] nfc: llcp: drop truncated I/RR/RNR PDUs in nfc_llcp_recv_hdlc()
+Date: Wed, 30 Sep 2026 17:30:22 +0200
+Message-ID: <20260930152459.522859026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,309 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Aamir Ahmed <elb12345@hotmail.co.uk>
 
-commit dcab71a7011918f6fdba7adcec02d217dcb84b8d upstream.
+commit 273f9d667cde649f8de9d72b1303cc2f4b658c50 upstream.
 
-Commit 6709d4b7bc2e ("net: nfc: Fix use-after-free caused by
-nfc_llcp_find_local") attempted to fix a use-after-free (UAF) issue by
-invoking nfc_llcp_local_put(local) after accessing local->gb. However,
-if the reference count drops to zero, local is freed immediately,
-leading to a use-after-free when callers access the returned pointer.
-Alternative approaches using dynamic allocation (e.g. kmemdup) introduced
-memory leaks because callers consistently treat the returned pointer as
-borrowed memory.
+nfc_llcp_recv_hdlc() reads the sequence byte skb->data[2], via
+nfc_llcp_ns()/nfc_llcp_nr(), before any length check. The receive path
+only guarantees the two-byte LLCP header -- __nfc_llcp_recv() checks it
+with pskb_may_pull() and nfc_llcp_recv_agf() admits two-byte inner PDUs
+-- so a two-byte I, RR or RNR PDU reads one byte of uninitialised skb
+tailroom. The byte becomes N(R)/N(S); a peer can already set those with
+a well-formed PDU, so this is acting on uninitialised memory, not new
+peer control.
 
-Fix this properly by refactoring nfc_llcp_general_bytes() and
-nfc_get_local_general_bytes() to accept a caller-provided output buffer
-(out_gb) and its maximum length (gb_max_len). The general bytes are
-safely copied into out_gb before calling nfc_llcp_local_put(local),
-ensuring safe lifetime management without ownership transfer complications.
+Guard the read with pskb_may_pull(), as commit 95674f506c63 ("nfc: llcp:
+reject PDUs shorter than the LLCP header") did for the two-byte header,
+so the sequence byte is present and linear before it is read. RR and RNR
+PDUs are LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE bytes and an I PDU is
+longer, so no valid frame is rejected; a truncated PDU is malformed, so
+return without a DM reply.
 
-Update all callers across drivers (microread, pn533, pn544, st21nfca,
-digital_dep, and nci) to provide their own destination buffers and pass
-them to nfc_get_local_general_bytes().
-
-Fixes: 6709d4b7bc2e ("net: nfc: Fix use-after-free caused by nfc_llcp_find_local")
+Fixes: d646960f7986 ("NFC: Initial LLCP support")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
 Assisted-by: LLM
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
+Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/3cbaac3bee23f8ff3a3284ed32d347696eb1d208.1788841683.git.rakukuip@gmail.com
+Link: https://patch.msgid.link/AS8P251MB0001789BBF04B72745C7D96BC8BA2@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/microread/microread.c |    6 +++---
- drivers/nfc/pn533/pn533.c         |   14 ++++++++------
- drivers/nfc/pn533/pn533.h         |    4 +++-
- drivers/nfc/pn544/pn544.c         |    7 +++----
- drivers/nfc/st21nfca/core.c       |    8 ++++----
- include/net/nfc/hci.h             |    2 +-
- include/net/nfc/nfc.h             |    3 ++-
- net/nfc/core.c                    |   15 +++++++--------
- net/nfc/digital_dep.c             |    8 ++++----
- net/nfc/llcp_core.c               |   17 +++++++++++++----
- net/nfc/nci/core.c                |   10 +++++-----
- net/nfc/nfc.h                     |    3 ++-
- 12 files changed, 55 insertions(+), 42 deletions(-)
+ net/nfc/llcp_core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nfc/microread/microread.c
-+++ b/drivers/nfc/microread/microread.c
-@@ -251,9 +251,9 @@ static int microread_start_poll(struct n
- 		param[1] |= (1 << 1);
- 
- 	if ((im_protocols | tm_protocols) & NFC_PROTO_NFC_DEP_MASK) {
--		hdev->gb = nfc_get_local_general_bytes(hdev->ndev,
--						       &hdev->gb_len);
--		if (hdev->gb == NULL || hdev->gb_len == 0) {
-+		nfc_get_local_general_bytes(hdev->ndev, hdev->gb,
-+					    sizeof(hdev->gb), &hdev->gb_len);
-+		if (hdev->gb_len == 0) {
- 			im_protocols &= ~NFC_PROTO_NFC_DEP_MASK;
- 			tm_protocols &= ~NFC_PROTO_NFC_DEP_MASK;
- 		}
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -1355,10 +1355,11 @@ static int pn533_poll_dep(struct nfc_dev
- 	u8 *next, nfcid3[NFC_NFCID3_MAXSIZE];
- 	u8 passive_data[PASSIVE_DATA_LEN] = {0x00, 0xff, 0xff, 0x00, 0x3};
- 
--	if (!dev->gb) {
--		dev->gb = nfc_get_local_general_bytes(nfc_dev, &dev->gb_len);
--
--		if (!dev->gb || !dev->gb_len) {
-+	if (!dev->gb_len) {
-+		nfc_get_local_general_bytes(nfc_dev, dev->gb,
-+					    sizeof(dev->gb),
-+					    &dev->gb_len);
-+		if (!dev->gb_len) {
- 			dev->poll_dep = 0;
- 			queue_work(dev->wq, &dev->rf_work);
- 		}
-@@ -1660,8 +1661,9 @@ static int pn533_start_poll(struct nfc_d
- 	}
- 
- 	if (tm_protocols) {
--		dev->gb = nfc_get_local_general_bytes(nfc_dev, &dev->gb_len);
--		if (dev->gb == NULL)
-+		nfc_get_local_general_bytes(nfc_dev, dev->gb,
-+					    sizeof(dev->gb), &dev->gb_len);
-+		if (dev->gb_len == 0)
- 			tm_protocols = 0;
- 	}
- 
---- a/drivers/nfc/pn533/pn533.h
-+++ b/drivers/nfc/pn533/pn533.h
-@@ -6,6 +6,8 @@
-  * Copyright (C) 2012-2013 Tieto Poland
-  */
- 
-+#include <net/nfc/nfc.h>
-+
- #define PN533_DEVICE_STD		0x1
- #define PN533_DEVICE_PASORI		0x2
- #define PN533_DEVICE_ACR122U		0x3
-@@ -166,7 +168,7 @@ struct pn533 {
- 	struct timer_list listen_timer;
- 	int cancel_listen;
- 
--	u8 *gb;
-+	u8 gb[NFC_MAX_GT_LEN];
- 	size_t gb_len;
- 
- 	u8 tgt_available_prots;
---- a/drivers/nfc/pn544/pn544.c
-+++ b/drivers/nfc/pn544/pn544.c
-@@ -377,10 +377,9 @@ static int pn544_hci_start_poll(struct n
- 		return r;
- 
- 	if ((im_protocols | tm_protocols) & NFC_PROTO_NFC_DEP_MASK) {
--		hdev->gb = nfc_get_local_general_bytes(hdev->ndev,
--							&hdev->gb_len);
--		pr_debug("generate local bytes %p\n", hdev->gb);
--		if (hdev->gb == NULL || hdev->gb_len == 0) {
-+		nfc_get_local_general_bytes(hdev->ndev, hdev->gb,
-+					    sizeof(hdev->gb), &hdev->gb_len);
-+		if (hdev->gb_len == 0) {
- 			im_protocols &= ~NFC_PROTO_NFC_DEP_MASK;
- 			tm_protocols &= ~NFC_PROTO_NFC_DEP_MASK;
- 		}
---- a/drivers/nfc/st21nfca/core.c
-+++ b/drivers/nfc/st21nfca/core.c
-@@ -351,10 +351,10 @@ static int st21nfca_hci_start_poll(struc
- 			if (r < 0)
- 				return r;
- 		} else {
--			hdev->gb = nfc_get_local_general_bytes(hdev->ndev,
--							       &hdev->gb_len);
--
--			if (hdev->gb == NULL || hdev->gb_len == 0) {
-+			nfc_get_local_general_bytes(hdev->ndev, hdev->gb,
-+						    sizeof(hdev->gb),
-+						    &hdev->gb_len);
-+			if (hdev->gb_len == 0) {
- 				im_protocols &= ~NFC_PROTO_NFC_DEP_MASK;
- 				tm_protocols &= ~NFC_PROTO_NFC_DEP_MASK;
- 			}
---- a/include/net/nfc/hci.h
-+++ b/include/net/nfc/hci.h
-@@ -144,7 +144,7 @@ struct nfc_hci_dev {
- 	data_exchange_cb_t async_cb;
- 	void *async_cb_context;
- 
--	u8 *gb;
-+	u8 gb[NFC_MAX_GT_LEN];
- 	size_t gb_len;
- 
- 	unsigned long quirks;
---- a/include/net/nfc/nfc.h
-+++ b/include/net/nfc/nfc.h
-@@ -269,7 +269,8 @@ struct sk_buff *nfc_alloc_recv_skb(unsig
- 
- int nfc_set_remote_general_bytes(struct nfc_dev *dev,
- 				 const u8 *gt, u8 gt_len);
--u8 *nfc_get_local_general_bytes(struct nfc_dev *dev, size_t *gb_len);
-+u8 *nfc_get_local_general_bytes(struct nfc_dev *dev, u8 *out_gb,
-+				size_t gb_max_len, size_t *gb_len);
- 
- int nfc_fw_download_done(struct nfc_dev *dev, const char *firmware_name,
- 			 u32 result);
---- a/net/nfc/core.c
-+++ b/net/nfc/core.c
-@@ -279,10 +279,10 @@ static struct nfc_target *nfc_find_targe
- 
- int nfc_dep_link_up(struct nfc_dev *dev, int target_index, u8 comm_mode)
- {
--	int rc = 0;
--	u8 *gb;
--	size_t gb_len;
- 	struct nfc_target *target;
-+	u8 gb[NFC_MAX_GT_LEN];
-+	size_t gb_len = 0;
-+	int rc = 0;
- 
- 	pr_debug("dev_name=%s comm %d\n", dev_name(&dev->dev), comm_mode);
- 
-@@ -301,7 +301,7 @@ int nfc_dep_link_up(struct nfc_dev *dev,
- 		goto error;
- 	}
- 
--	gb = nfc_llcp_general_bytes(dev, &gb_len);
-+	nfc_get_local_general_bytes(dev, gb, sizeof(gb), &gb_len);
- 	if (gb_len > NFC_MAX_GT_LEN) {
- 		rc = -EINVAL;
- 		goto error;
-@@ -644,11 +644,10 @@ int nfc_set_remote_general_bytes(struct
- }
- EXPORT_SYMBOL(nfc_set_remote_general_bytes);
- 
--u8 *nfc_get_local_general_bytes(struct nfc_dev *dev, size_t *gb_len)
-+u8 *nfc_get_local_general_bytes(struct nfc_dev *dev, u8 *out_gb,
-+				size_t gb_max_len, size_t *gb_len)
- {
--	pr_debug("dev_name=%s\n", dev_name(&dev->dev));
--
--	return nfc_llcp_general_bytes(dev, gb_len);
-+	return nfc_llcp_general_bytes(dev, out_gb, gb_max_len, gb_len);
- }
- EXPORT_SYMBOL(nfc_get_local_general_bytes);
- 
---- a/net/nfc/digital_dep.c
-+++ b/net/nfc/digital_dep.c
-@@ -1490,14 +1490,14 @@ static int digital_tg_send_atr_res(struc
- 				   struct digital_atr_req *atr_req)
- {
- 	struct digital_atr_res *atr_res;
-+	u8 gb[NFC_MAX_GT_LEN];
- 	struct sk_buff *skb;
--	u8 *gb, payload_bits;
-+	u8 payload_bits;
- 	size_t gb_len;
- 	int rc;
- 
--	gb = nfc_get_local_general_bytes(ddev->nfc_dev, &gb_len);
--	if (!gb)
--		gb_len = 0;
-+	nfc_get_local_general_bytes(ddev->nfc_dev, gb, sizeof(gb),
-+				    &gb_len);
- 
- 	skb = digital_skb_alloc(ddev, sizeof(struct digital_atr_res) + gb_len);
- 	if (!skb)
 --- a/net/nfc/llcp_core.c
 +++ b/net/nfc/llcp_core.c
-@@ -651,23 +651,32 @@ out:
- 	return ret;
- }
+@@ -1099,6 +1099,9 @@ static void nfc_llcp_recv_hdlc(struct nf
+ 	struct sock *sk;
+ 	u8 dsap, ssap, ptype, ns, nr;
  
--u8 *nfc_llcp_general_bytes(struct nfc_dev *dev, size_t *general_bytes_len)
-+u8 *nfc_llcp_general_bytes(struct nfc_dev *dev, u8 *out_gb, size_t gb_max_len,
-+			   size_t *general_bytes_len)
- {
- 	struct nfc_llcp_local *local;
- 
-+	if (!out_gb || !general_bytes_len)
-+		return NULL;
++	if (!pskb_may_pull(skb, LLCP_HEADER_SIZE + LLCP_SEQUENCE_SIZE))
++		return;
 +
- 	local = nfc_llcp_find_local(dev);
--	if (local == NULL) {
-+	if (!local) {
- 		*general_bytes_len = 0;
- 		return NULL;
- 	}
- 
- 	nfc_llcp_build_gb(local);
- 
--	*general_bytes_len = local->gb_len;
-+	if (local->gb_len) {
-+		*general_bytes_len = min_t(size_t, local->gb_len, gb_max_len);
-+		memcpy(out_gb, local->gb, *general_bytes_len);
-+	} else {
-+		*general_bytes_len = 0;
-+	}
- 
- 	nfc_llcp_local_put(local);
- 
--	return local->gb;
-+	return out_gb;
- }
- 
- int nfc_llcp_set_remote_gb(struct nfc_dev *dev, const u8 *gb, u8 gb_len)
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -772,15 +772,15 @@ static int nci_set_local_general_bytes(s
- {
- 	struct nci_dev *ndev = nfc_get_drvdata(nfc_dev);
- 	struct nci_set_config_param param;
-+	u8 gb[NFC_MAX_GT_LEN];
- 	int rc;
- 
--	param.val = nfc_get_local_general_bytes(nfc_dev, &param.len);
--	if ((param.val == NULL) || (param.len == 0))
-+	nfc_get_local_general_bytes(nfc_dev, gb, sizeof(gb),
-+				    &param.len);
-+	if (param.len == 0)
- 		return 0;
- 
--	if (param.len > NFC_MAX_GT_LEN)
--		return -EINVAL;
--
-+	param.val = gb;
- 	param.id = NCI_PN_ATR_REQ_GEN_BYTES;
- 
- 	rc = nci_request(ndev, nci_set_config_req, &param,
---- a/net/nfc/nfc.h
-+++ b/net/nfc/nfc.h
-@@ -49,7 +49,8 @@ void nfc_llcp_mac_is_up(struct nfc_dev *
- int nfc_llcp_register_device(struct nfc_dev *dev);
- void nfc_llcp_unregister_device(struct nfc_dev *dev);
- int nfc_llcp_set_remote_gb(struct nfc_dev *dev, const u8 *gb, u8 gb_len);
--u8 *nfc_llcp_general_bytes(struct nfc_dev *dev, size_t *general_bytes_len);
-+u8 *nfc_llcp_general_bytes(struct nfc_dev *dev, u8 *out_gb, size_t gb_max_len,
-+			   size_t *general_bytes_len);
- int nfc_llcp_data_received(struct nfc_dev *dev, struct sk_buff *skb);
- struct nfc_llcp_local *nfc_llcp_find_local(struct nfc_dev *dev);
- int nfc_llcp_local_put(struct nfc_llcp_local *local);
+ 	ptype = nfc_llcp_ptype(skb);
+ 	dsap = nfc_llcp_dsap(skb);
+ 	ssap = nfc_llcp_ssap(skb);
 
 
