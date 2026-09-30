@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDC7509F05;
-	Wed, 30 Sep 2026 16:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436364D5988;
+	Wed, 30 Sep 2026 16:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784127; cv=none; b=Hn1boGEDHnuWZSu1ELKNvinoyBU8bF2sVh9FZntkN5RlsQOG92lEY8f06CHZSFfR4qN5UcoOerPYf797S92qbE3xJms+kqQs21lpp1V53d3Q/xyVNiLPlpqjD3QK5W0dWqn9xHrukv9IqZ18SdcdMnD11g9VwxKCWAo4pSUD9QA=
+	t=1790784130; cv=none; b=jdJhtr2xE/Pm8VfN3pGIGUFfFVxMLNKvElgWWZPuwluEc/apD2YyBvKRaCfwJciOwLBIXZl2r6Ya6WTWN8ZTzaKv6ZRweimanFSCapQY9s++SboJwOHi3HfhKu9Bl8hGwBgeypO5R4pEJxH1Q9eH0lohYlx6phybEAvoglTq/Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784127; c=relaxed/simple;
-	bh=sfjcjcHBGmXqCFmXuVKCkDNV/bgTysCxR4wQ/Qex16c=;
+	s=arc-20240116; t=1790784130; c=relaxed/simple;
+	bh=AqXOp2rwNYjngUNX9Rm5e4u6d+bNSmzGyKL+SFt6JbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cv8xEKUGErqplf3a3/B1xHwauPx2EldQhnti7o2oslqLxIJQ2uo1f1C24mCyqcwnaCsFR1suJpzbSmFoLwV9KI1SAn+Uo33XfNBTOoKy4b9J3G8hY9PStC0XdGH+wC+Y5+jDZs8G1Kbj1WQ/+BQQPQUk+8exLdXT1a4OdiSS818=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igLcIetE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nniTLV9UNTglbBlLfXPMSgxN1xbW5wS+7Dz+7OWDcPN1TX75DKGPlL+kiauiaVJ3Rhna8krt9Ml8BgBxcPoS5rC6nI+T3PxrNtdwf2Wo1+m07ws7dtrFCMuzIRPIac9k5aBHMXgsFml3TFnVK9XDIOb4BRdBEG3d9jaCku+bSkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR5izu65; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igLcIetE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105721F00893;
-	Wed, 30 Sep 2026 16:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR5izu65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3F61F000FF;
+	Wed, 30 Sep 2026 16:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784119;
-	bh=+ry3yLTah+I5yaABbLhOxKULv8m8d8PJqERI6guMm24=;
+	s=korg; t=1790784125;
+	bh=vtEH7YiPkzyXiH9lwFUvWgChUgJ2P+wdDDGE8nCBQb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=igLcIetEMxeMEwWsercNoTXKg2wZMJplJTmU/7TG2vGfDBeiEzBARXzNWm5HDhuAu
-	 rhm5SaHaSnDBXSYBHGopRgPU6PTAMGn0r9ahE7TGvL2kkd1qeGlj+FHRI30rnfM8j4
-	 rGlEoP+q3dN1R4C/HPdMvURQ2alYPKrgTaNZQQ7c=
+	b=TR5izu657JusNgaA+ulYkAHoUFRYApNyKmQs8L9Wj/St9TZvfhw1lDt64fBPWOq/T
+	 kE0YfqVL3jxEtKlV/Yk0ySPDm7p7iNSxeiCsHQq8T0nUk6460bAO7DHbxmXJHQ/QdO
+	 aPrOIF8MENkv7H0cHp6c3T+6YoMmB17r24YkHP7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Meiyappan <kumar.meiyappan@microchip.com>,
-	Sagar Biradar <sagar.biradar@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/982] scsi: pm8001: Reject firmware update in fatal error state
-Date: Wed, 30 Sep 2026 17:12:59 +0200
-Message-ID: <20260930152417.720170673@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 045/982] crypto: ecc - Unbreak the build on arm with CONFIG_KASAN_STACK=y
+Date: Wed, 30 Sep 2026 17:13:01 +0200
+Message-ID: <20260930152417.764583586@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,46 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 2a8fbcfb04aa9db189bfa3842d4f586aecd0e631 ]
+[ Upstream commit c64ba13e2033c3c6dc1a097bf35f9f1fe457c3f7 ]
 
-pm8001_store_update_fw() allows a firmware update request even when the
-controller has already entered a fatal error state.
+Andrew reports build breakage of arm allmodconfig, reproducible with gcc
+14.2.0 and 15.2.0:
 
-Firmware update is not valid once the controller is in that state, and
-attempting it can lead to a call trace. Reject the request early by
-checking controller_fatal_error, set the firmware status to
-FAIL_PARAMETERS, and return -EINVAL.
+  crypto/ecc.c: In function 'ecc_point_mult':
+  crypto/ecc.c:1380:1: error: the frame size of 1360 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
 
-Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
-Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
-Link: https://patch.msgid.link/20260416153757.414896-1-sagar.biradar@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+gcc aggressively inlines functions called by ecc_point_mult() (without
+there being any explicit inline declarations), which pushes stack usage
+close to the limit imposed by CONFIG_FRAME_WARN.  allmodconfig implies
+CONFIG_KASAN_STACK=y, which increases the stack above that limit.
+
+In the bugzilla entry linked below, gcc maintainers explain that gcc
+estimates extra stack usage caused by inlining, but ASAN instrumentation
+is added in post-IPA passes and thus the inlining heuristics cannot
+account for it.
+
+It could be argued that -Werror=frame-larger-than=1280 instructs the
+compiler to avoid inlining beyond that limit lest the build breaks,
+which would imply gcc behaves incorrectly.  But gcc maintainers reject
+this notion and believe that a warning switch should never affect code
+generation, even if it is promoted to an error.
+
+One way to unbreak the build is to limit inlining via -finline-limit=100
+or by explicitly declaring some functions noinline.  However while it
+does keep stack usage of individual functions below the limit, *total*
+stack usage increases.
+
+A longterm solution is to refactor ecc.c for reduced stack usage.  It
+currently performs ECC point multiplication with a Montgomery ladder
+which uses co-Z (conjugate) addition to trade off memory for speed.
+The algorithm is susceptible to timing attacks and needs to be replaced
+with a constant time Montgomery ladder, which should consume less memory
+and thus resolve the stack usage issue as a side effect.
+
+In the interim, raise the limit for ecc.c, as is already done for
+several other files in the source tree.
+
+Constrain to gcc because clang 19.1.7 does not exhibit the issue.  It
+makes do with a 724 bytes stack frame even though it inlines almost the
+same functions as gcc.
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
+Reported-by: Andrew Morton <akpm@linux-foundation.org> # off-list
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_ctl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ crypto/Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
-index 8113045f7cb93..0158e0353fe0d 100644
---- a/drivers/scsi/pm8001/pm8001_ctl.c
-+++ b/drivers/scsi/pm8001/pm8001_ctl.c
-@@ -827,6 +827,14 @@ static ssize_t pm8001_store_update_fw(struct device *cdev,
- 		goto out;
- 	}
+diff --git a/crypto/Makefile b/crypto/Makefile
+index 303b21c43df05..f92458db8fe9f 100644
+--- a/crypto/Makefile
++++ b/crypto/Makefile
+@@ -186,6 +186,11 @@ obj-$(CONFIG_CRYPTO_ECC) += ecc.o
+ obj-$(CONFIG_CRYPTO_ESSIV) += essiv.o
+ obj-$(CONFIG_CRYPTO_CURVE25519) += curve25519-generic.o
  
-+	if (pm8001_ha->controller_fatal_error) {
-+		pm8001_dbg(pm8001_ha, FAIL,
-+			   "controller in fatal error state, firmware update rejected\n");
-+		pm8001_ha->fw_status = FAIL_PARAMETERS;
-+		ret = -EINVAL;
-+		goto out;
-+	}
++# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124949
++ifeq ($(CONFIG_ARM)$(CONFIG_KASAN_STACK)$(CONFIG_CC_IS_GCC),yyy)
++CFLAGS_ecc.o += $(call cc-option,-Wframe-larger-than=1536)
++endif
 +
- 	for (i = 0; flash_command_table[i].code != FLASH_CMD_NONE; i++) {
- 		if (!memcmp(flash_command_table[i].command,
- 				 cmd_ptr, strlen(cmd_ptr))) {
+ ecdh_generic-y += ecdh.o
+ ecdh_generic-y += ecdh_helper.o
+ obj-$(CONFIG_CRYPTO_ECDH) += ecdh_generic.o
 -- 
 2.53.0
 
