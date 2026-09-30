@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A7551DE0A;
-	Wed, 30 Sep 2026 18:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C1D511235;
+	Wed, 30 Sep 2026 18:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792842; cv=none; b=GaLbBpZ946RtvxUKMvH75pA6n5qSuWTtDtAA/9MRei1LY1XP3LWNra2YzpXlFY09WLTnpYa6W6bBmQDZxMt677C/T8zGy480BPbjmKqJGmauFYgLgAlLvAFJoAMCR8gDELyZpyE9Ca8GPzdEQyrmStHDvtko17THXJJE2XNX++U=
+	t=1790792844; cv=none; b=YjVE6e2wcHtsas7Mo1UyUhsUX5abQLqxJ6q5DKe2dpIbzKWKAs6wE5ijEiaWhg/diFLJN1jFp31Kdxj5+MCwVtcQAtY2m0XjZVoQYGNJBrK/4N2mFB2wBg+q+TIU4GubTt5y1gu4agGv/2S895IBKfVHMwPxjewTja7N8NmG7bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792842; c=relaxed/simple;
-	bh=8j+fc1pfBm+ThVfM9OJom6rdY1XhpX9tkwQh+bLH7xY=;
+	s=arc-20240116; t=1790792844; c=relaxed/simple;
+	bh=Q74DEczoS2BXPeN2sU7fuzRvnC99ZmO9UarAImZHrhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FC2YAGGZ3GRaVNIRuDHZKCFPJ58XhkyHtNmBmFXxF56CK2smlvbzqqK+bo95+k8KA4YDdUownwoeb82NIDR2I7n1nVciZWQV6XsgVhWoee+yV0yc83Jcod3PRNlCrs6CKyzIWBTpyjZo6X4MrYq+OxlHGDP1MywkPdj3U7Ax1ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ0S7rHO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nzruZuA5x9M1DXwLvw2ESJMIJ9kKp1ltIDmgV6CcxApTXi75J0zM5a6gT7PtZOkt9iyvSTa6Fm7Y3JJGykPbZULcoo/So/vJRTACmAQNwrS91HAC4Fdtpia6qW2H41xlqx+Ka9sOzYb0viwsjoqJatKML8A3qFzlWow1rWycqow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYo5shXy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ0S7rHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C65F1F000FF;
-	Wed, 30 Sep 2026 18:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYo5shXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E490F1F000FF;
+	Wed, 30 Sep 2026 18:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792840;
-	bh=1XHHa+jJmkk+55cFGt9lGD/APZYZGORGWMcpIcQ13Lo=;
+	s=korg; t=1790792843;
+	bh=/84vuT2g5nJFIdggDvy21Q6PD1usmSpoDEZw6qNXcOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZ0S7rHOXAYm9vI5wCFLAFqzAjDIHOdCXgJrNLnUyTNQ1Wr89PHpadYwyYN3sKVFt
-	 LUfrVEhgL21GgGs1RT0l/h8JiMsjZBQ07zs9iXVePUMtFaye9imKieid/CanoUBoOh
-	 el2Y4uboiHqsj6P0Sd1kx2maEuu3Vw49iR7q/FsI=
+	b=FYo5shXyk0nEqptIgyjrWE06TnHoF24GT20H0KYv4dVEKKVtPBgpRvantT/5Li0nM
+	 RcJOjMXhzn27A2EEuUKNGIqNIJ4DBTaU7SJxr+pmA6Q6AmjYA9nHMMJjP2YY/cTtGp
+	 FNNpnMUP36Bj7MPuTmUA0XUF/E5QIqEnlz2vu93w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christiano Amora <christiano.amora@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/395] Bluetooth: SMP: reject Security Request over BR/EDR
-Date: Wed, 30 Sep 2026 17:25:07 +0200
-Message-ID: <20260930152341.609921350@linuxfoundation.org>
+Subject: [PATCH 6.18 028/395] KVM: riscv: Fix NACL hfence entry update order
+Date: Wed, 30 Sep 2026 17:24:50 +0200
+Message-ID: <20260930152341.229260751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,92 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christiano Amora <christiano.amora@gmail.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit f033482d76a9f18080c7a40c5f9c678bd7adc8f3 ]
+[ Upstream commit b3d346838ec65fac7fd83f5dbcedd13cadfffddb ]
 
-Bose QC Ultra Headphones (dual-mode, same public address on both
-transports) occasionally send an SMP Security Request on the BR/EDR
-SMP fixed channel right after the ACL link is encrypted. The kernel
-handles it as if it were an LE link: smp_cmd_security_req() has no
-transport check, smp_ltk_encrypt() looks up an LTK with the ACL
-connection's dst_type, and hci_find_ltk() matches the peer's LE LTK
-because the LE public address type is stored as ADDR_LE_DEV_PUBLIC (0),
-the same value as BDADDR_BREDR. HCI_OP_LE_START_ENC is then issued on
-the ACL handle, the controller rejects it with Invalid HCI Command
-Parameters, and hci_cs_le_start_enc() disconnects the link with
-HCI_ERROR_AUTH_FAILURE. The headphones drop within a second of
-connecting, before any profile is up; a manual reconnect works.
+The SBI v3.0 specification (section 15.1.2) requires a nested HFENCE
+entry to be populated as follows:
+1) find an unused entry with Config.Pending == 0
+2) update the Page_Number and Page_Count words
+3) update the Config word with Config.Pending set
 
-btmon (MediaTek MT7922, kernel 7.0.12):
+__kvm_riscv_nacl_hfence() writes the Config word first, so the SBI
+implementation (or NACL hardware) can observe a pending entry with
+pnum/pcount values left over from the previous use of that entry,
+resulting in incorrect TLB flush ranges.
 
-  > HCI Event: Encryption Change (0x08) plen 4
-        Status: Success (0x00)
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-        Encryption: Enabled with AES-CCM (0x02)
-  > ACL Data RX: Handle 50 flags 0x02 dlen 6
-        BR/EDR SMP: Security Request (0x0b) len 1
-        Authentication requirement: No bonding, No MITM, SC (0x08)
-  < HCI Command: LE Start Encryption (0x08|0x0019) plen 28
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-  > HCI Event: Command Status (0x0f) plen 4
-        LE Start Encryption (0x08|0x0019) ncmd 1
-        Status: Invalid HCI Command Parameters (0x12)
-  < HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-        Reason: Authentication Failure (0x05)
+Write pnum and pcount first and the Config word last. Since the
+consumer is an external agent on coherent shared memory, use
+WRITE_ONCE() to stop the compiler from reordering the stores and
+smp_wmb() to make the parameter words globally visible before the
+Pending bit is set.
 
-SMP over BR/EDR is limited to cross-transport key derivation; the
-Security Request procedure (Core Specification Vol 3, Part H, Section
-2.4.6, PDU in Section 3.6.7) has no BR/EDR counterpart. Reply with
-Pairing Failed / Command Not Supported on a non-LE link, before the PDU
-is parsed, and keep the connection. The reply is sent directly rather
-than through smp_failure(): rejecting a command on the wrong transport
-is not an authentication failure, and MGMT_EV_AUTH_FAILED would make
-bluetoothd disconnect the device.
-
-Tested on the affected host (kernel 7.0.12, MediaTek MT7922, Bose QC
-Ultra) with the patched module built out of tree: 7 days and 49
-reconnects without a drop, against 2 drops in the 3 days before the
-patch. Every disconnect in that week had a userspace or remote reason.
-
-Fixes: b5ae344d4c0f ("Bluetooth: Add full SMP BR/EDR support")
-Assisted-by: LLM
-Signed-off-by: Christiano Amora <christiano.amora@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: d466c19cead5 ("RISC-V: KVM: Add common nested acceleration support")
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260826075009.68952-1-min_halo@163.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/riscv/kvm/nacl.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index 1172df9b7004d..51e0545a9e240 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2301,6 +2301,23 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
+diff --git a/arch/riscv/kvm/nacl.c b/arch/riscv/kvm/nacl.c
+index 08a95ad9ada2c..f922e9f62fee3 100644
+--- a/arch/riscv/kvm/nacl.c
++++ b/arch/riscv/kvm/nacl.c
+@@ -42,12 +42,24 @@ void __kvm_riscv_nacl_hfence(void *shmem,
+ 		}
+ 	}
  
- 	bt_dev_dbg(hdev, "conn %p", conn);
- 
-+	/* SMP over BR/EDR only covers cross-transport key derivation; the
-+	 * Security Request procedure has no BR/EDR counterpart. Reject it
-+	 * here, otherwise smp_ltk_encrypt() finds the peer's LE LTK
-+	 * (ADDR_LE_DEV_PUBLIC and BDADDR_BREDR are both 0) and issues
-+	 * HCI_OP_LE_START_ENC on the ACL handle, which the controller
-+	 * rejects and hci_cs_le_start_enc() turns into a disconnect. Reply
-+	 * without smp_failure(): this is not an authentication failure, and
-+	 * MGMT_EV_AUTH_FAILED would make bluetoothd drop the device.
+-	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_CONFIG(i);
+-	*entp = cpu_to_lelong(control);
++	/*
++	 * Per SBI v3.0 section 15.1.2, the Page_Number and Page_Count
++	 * words must be updated before the Config word with its Pending
++	 * bit set. WRITE_ONCE() stops the compiler from reordering the
++	 * stores and smp_wmb() makes the parameter words globally
++	 * visible to the SBI implementation (or NACL hardware) before
++	 * the Pending bit is set.
 +	 */
-+	if (hcon->type != LE_LINK) {
-+		u8 reason = SMP_CMD_NOTSUPP;
+ 	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_PNUM(i);
+-	*entp = cpu_to_lelong(page_num);
++	WRITE_ONCE(*entp, cpu_to_lelong(page_num));
+ 	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_PCOUNT(i);
+-	*entp = cpu_to_lelong(page_count);
++	WRITE_ONCE(*entp, cpu_to_lelong(page_count));
 +
-+		smp_send_cmd(conn, SMP_CMD_PAIRING_FAIL, sizeof(reason),
-+			     &reason);
-+		return 0;
-+	}
++	/* Ensure the parameter words are visible before the Pending bit */
++	smp_wmb();
 +
- 	if (skb->len < sizeof(*rp))
- 		return SMP_INVALID_PARAMS;
++	entp = shmem + SBI_NACL_SHMEM_HFENCE_ENTRY_CONFIG(i);
++	WRITE_ONCE(*entp, cpu_to_lelong(control));
+ }
  
+ int kvm_riscv_nacl_enable(void)
 -- 
 2.53.0
 
