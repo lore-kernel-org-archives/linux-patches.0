@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F5350C2A4;
-	Wed, 30 Sep 2026 17:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ACE36A37E;
+	Wed, 30 Sep 2026 17:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788828; cv=none; b=YnmeC+tXf0xk+JSKrx5Zf+JcS/VnzZgMves3HyWfD/Mzy7f6K+JTet8UtVu1XBFLEEXbLvxjN7N05m61RzkAwslZBBVDU3wMH7qsLytxatheM2C6/Oqt66cixF7wQcO5zao89j2yPM55idcPPozRnkUkaQatjTMRug52tNcRrYc=
+	t=1790788831; cv=none; b=L79WNt+mkTZ7g1q/02/K9IG+BpG8UsyZXe3SqF4PjU/LJ1p3Nkst4riznlxi+LY0wbG6xix2adTxrtSZrpVMDLYod96FCVRin7F+mUhLBUqejBqyiDXviWqlE/J1Tz59vuHvDXXGwiH7rI760I6Wz/8xcQ+niVpHgEZsPOIAhJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788828; c=relaxed/simple;
-	bh=vVk4/jPDFYjykkwyEUyGNlsJS7fQVkN3ycyp8dtGOeg=;
+	s=arc-20240116; t=1790788831; c=relaxed/simple;
+	bh=VoHhusmN4eqPDUmyBhQHvzSNzXocankYg9p9HyH9PXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kk/dJTqP4fz9rUDaQEN390/mHazNbgLn1PLIMRajCKyG9kdNgCm75LwKWV9DT7FrwjS1ZyZ90nFvXjBY/oTFbt5AfRhQxzKzYaeGWs80pdziGkBcjKW7R4Pv8se6Q6XoUvo4LauST4v2QxGGzAotC6qZHr6Jy/AaRZWnVNbCzh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pXB0f6R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T+GMHQauKMEHR+k1yDL8PtujJwJI6HfawL3YPDb3/EFQIIYaPbnSPYlsElv8ughVmRXAM/lfOGkS7JGb56pFMjbGxDBJfffp7xXd3xyfaoQlugHUgy1Mv67HFO2KFveDC/mP1gDoWlXCcBWhsKddIys8G6WMJo3iQSbly+xRRZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRPdp8Gl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pXB0f6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6041F000FF;
-	Wed, 30 Sep 2026 17:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRPdp8Gl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464641F000FF;
+	Wed, 30 Sep 2026 17:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788827;
-	bh=4Ym+TCKuwdKeER8l2Zgw0b3+nJz6J8PctcuTLfGsahc=;
+	s=korg; t=1790788829;
+	bh=aQiAGZGH6DOgA+1OZX/D1Bq/K64wf6k4iC8Q5nnMeug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0pXB0f6RKz8fI8o1/nuB8JxeB7UpHloegTqiiUR7snAONrgyU52YuRkjnTd4WwjRQ
-	 y0cTI/fCBMGO+Lj3kz7VilYbAz5nbgLPLqLvE31W+bdF6BqElYpkRETI49ts/YbWZN
-	 mX/HBXZzEKD61gg9s6DK6ZbH/QcjWQFa6T7SQfEs=
+	b=oRPdp8Glrh7fU/4euxwMlQ6uCFJI+IoLT9xmp80+DQyX8W8PG9AOaemv5wYLS5Iwg
+	 kVdwzc1926d6Sml7x1nrAg63NYx8K21z7l4OkmXaZehVG3m1a8S3KghLuscUBpo5X7
+	 1YXqUJ3vIAKRsGk+EJN/gPKB3YhU1hikTQplHEas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.12 206/877] keys: translate request_key_auth pid for the reading procfs instance
-Date: Wed, 30 Sep 2026 17:18:37 +0200
-Message-ID: <20260930152419.169923482@linuxfoundation.org>
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 256/877] watchdog: rtd119x: Avoid division by zero
+Date: Wed, 30 Sep 2026 17:19:27 +0200
+Message-ID: <20260930152420.246027304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,103 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 0d6a4268b06084baafd8ee5d66955c7e1c2e053b upstream.
+commit 5af7d2cbd20f893def03c8310a460ade66a5d822 upstream.
 
-request_key_auth_describe() prints rka->pid into /proc/keys as a raw
-pid_t in the initial pid namespace. A reader can open /proc/keys through
-a mount in another pid namespace. That reader sees a number with no
-meaning there. The number can even name an unrelated task. The line
-needs VIEW on the key. So the reader either shares the key owner's uid
-or possesses the key.
+clk_get_rate() could return 0.  Avoid a division by zero panic.
 
-The fix keeps a struct pid. Commit 4f82f45730c6 ("net ip6 flowlabel:
-Make owner a union of struct pid * and kuid_t") gave
-/proc/net/ip6_flowlabel the same storage. The print goes through
-pid_nr_ns(). It renders against the pid namespace of the procfs instance
-the line is read through. Commit ad08978ab41c ("ipv6/flowlabel: simplify
-pid namespace lookup") moved that print to the same anchor. Output
-through an initial namespace /proc does not change. The line shows 0 for
-a requestor with no number in that namespace.
-
-Translating at read time was the alternative. find_pid_ns() can resolve
-a recycled number. The line would then name a live task with no
-connection to the key. A stored struct pid gives 0 instead when the
-requestor has no number there.
-
-Link: https://lore.kernel.org/keyrings/20260809110202.2180410-1-maoyixie.tju@gmail.com/
-Fixes: 78b7280cce23 ("KEYS: Improve /proc/keys")
-Cc: stable@vger.kernel.org # v5.10+
-Assisted-by: Claude:claude-opus-5 codeql
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://lore.kernel.org/r/20260821095935.1864998-1-maoyixie.tju@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 2bdf6acbfead ("watchdog: Add Realtek RTD1295")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260913064851.8239-3-tzungbi@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/keys/request_key_auth-type.h |    2 +-
- security/keys/request_key_auth.c     |   12 +++++++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/watchdog/rtd119x_wdt.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/include/keys/request_key_auth-type.h
-+++ b/include/keys/request_key_auth-type.h
-@@ -22,7 +22,7 @@ struct request_key_auth {
- 	const struct cred	*cred;
- 	void			*callout_info;
- 	size_t			callout_len;
--	pid_t			pid;
-+	struct pid		*pid;
- 	char			op[8];
- } __randomize_layout;
+--- a/drivers/watchdog/rtd119x_wdt.c
++++ b/drivers/watchdog/rtd119x_wdt.c
+@@ -98,6 +98,7 @@ static int rtd119x_wdt_probe(struct plat
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct rtd119x_watchdog_device *data;
++	unsigned long rate;
  
---- a/security/keys/request_key_auth.c
-+++ b/security/keys/request_key_auth.c
-@@ -9,6 +9,8 @@
+ 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+@@ -111,10 +112,14 @@ static int rtd119x_wdt_probe(struct plat
+ 	if (IS_ERR(data->clk))
+ 		return PTR_ERR(data->clk);
  
- #include <linux/sched.h>
- #include <linux/err.h>
-+#include <linux/pid.h>
-+#include <linux/proc_fs.h>
- #include <linux/seq_file.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -73,7 +75,10 @@ static void request_key_auth_describe(co
- 	seq_puts(m, "key:");
- 	seq_puts(m, key->description);
- 	if (key_is_positive(key))
--		seq_printf(m, " pid:%d ci:%zu", rka->pid, rka->callout_len);
-+		seq_printf(m, " pid:%d ci:%zu",
-+			   pid_nr_ns(rka->pid,
-+				     proc_pid_ns(file_inode(m->file)->i_sb)),
-+			   rka->callout_len);
- }
++	rate = clk_get_rate(data->clk);
++	if (!rate)
++		return -EINVAL;
++
+ 	data->wdt_dev.info = &rtd119x_wdt_info;
+ 	data->wdt_dev.ops = &rtd119x_wdt_ops;
+ 	data->wdt_dev.timeout = 120;
+-	data->wdt_dev.max_timeout = 0xffffffff / clk_get_rate(data->clk);
++	data->wdt_dev.max_timeout = 0xffffffff / rate;
+ 	data->wdt_dev.min_timeout = 1;
+ 	data->wdt_dev.parent = dev;
  
- /*
-@@ -113,6 +118,7 @@ static void free_request_key_auth(struct
- 	if (rka->cred)
- 		put_cred(rka->cred);
- 	kfree(rka->callout_info);
-+	put_pid(rka->pid);
- 	kfree(rka);
- }
- 
-@@ -226,14 +232,14 @@ struct key *request_key_auth_new(struct
- 
- 		irka = cred->request_key_auth->payload.data[0];
- 		rka->cred = get_cred(irka->cred);
--		rka->pid = irka->pid;
-+		rka->pid = get_pid(irka->pid);
- 
- 		up_read(&cred->request_key_auth->sem);
- 	}
- 	else {
- 		/* it isn't - use this process as the context */
- 		rka->cred = get_cred(cred);
--		rka->pid = current->pid;
-+		rka->pid = get_pid(task_pid(current));
- 	}
- 
- 	rka->target_key = key_get(target);
 
 
