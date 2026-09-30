@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B880B4BEE27;
-	Wed, 30 Sep 2026 16:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A6503BDA;
+	Wed, 30 Sep 2026 16:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785089; cv=none; b=cltqCoTKti4KwcbUuu5UX9XsNfoUfpfVTHPTIb+XItcB0/qx0glzuNVoFYh2E/U0o7jMvbgs0N8ZP3f7BZ3OLyd8JvEZ18jMKcp+uRY0RYRd4iAj+EmPOssqi2XqLlAvP7P7MEJtyu8kGws+a9FFsFkt5lihIOqQ17RlnFSCWsk=
+	t=1790785092; cv=none; b=EQhmJSRO6IWwDL+dBGI8z32jND9YNwU627KgCXUV7JQhNNB4nbAzhqSCJWiepcvm4VQ26fSHVhTVMRltAf4G3NO7XhN6jNJ6D4nTz+w4RSwexmar0D6byt5HAydjWai4OpZCTG07ZWM3YRMve4LI5Tt5HVR1wWpROyce1WWq+No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785089; c=relaxed/simple;
-	bh=oOl77E2b75hhvztMiN0KuyRmz0so4VHsVC5USOghhs4=;
+	s=arc-20240116; t=1790785092; c=relaxed/simple;
+	bh=Vg4zP6WrqkDieRVjiSJHn2thxA7JngsOYKRo8i5xd5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1m00z1xnjOs4cLVWCE8BASwJ4JXpLGxQCLuLx4QKWBpwZZL1DkmAtql9J+GaEObWjBHj1/Om4k9SypzdiricbVnawM4t1tZr6abV6GnLGmpeIuUnq+D/ZCgtRj2UEo5sSM6Pzj/ztnOZj4mYIPh3rx5hM9H+5xdRXiqbV3tX+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oo0x7Y+U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FYg5fCkH7BCLVAs8dFD9L0saP3veHi5OeCuHwLc+HdizOPlq2c2/I+AR9BBr60vH/g+b9dSkPrPHvgLr3mozM3oHnzKDGF9nbsE6IB5/P0dQZfbKQo4KnvhLl7lm2ujYJuqMRT4RG6qnrQeEwWU1S2/uNjTlR1vh0OY2MFtjrj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlHFJTkF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oo0x7Y+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB571F00893;
-	Wed, 30 Sep 2026 16:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlHFJTkF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F8D1F000FF;
+	Wed, 30 Sep 2026 16:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785082;
-	bh=cT+jICr0O/iyP3ch88cyEnIY64kIg74q+UX+caPzqkI=;
+	s=korg; t=1790785084;
+	bh=XAg/GhLdATqBouujboLq+hkg073FWG1y/5inuAnYdmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oo0x7Y+Ui4ooWo1pSxX0JihIpDOYtC07TldRHbwsw2Vn9imOqj+zqFLE9I2tHblSn
-	 E5/INjPK70FGmdjTIYAsphJaeoD0vEyjoe65AtHtQ3YYe7fGWuTD5vkWD3KO+LxgQ0
-	 1dTKxP29Q6JZUKspR43Z2a8vN01v1l9Gl/s0/b2w=
+	b=UlHFJTkFahdjBm7Hge4O1LuPb70zF0RJQd3hfKMbE8iSsEGeSCh3Uzo8i41k4VYqL
+	 VORRSgZBiawQutBhMpV7oCd8MFOBW7n1LlrwTD4EupZyaoK1cuDv0rVEqeG1bCD0nJ
+	 QJOcJdjv6onoZFqvb213rU7ytBGdC5fLvBSV5kYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 382/982] ASoC: ux500: Request the MSP MMIO resource
-Date: Wed, 30 Sep 2026 17:18:38 +0200
-Message-ID: <20260930152425.015104980@linuxfoundation.org>
+Subject: [PATCH 6.1 383/982] ASoC: ux500: Program the MSP FIFO watermarks
+Date: Wed, 30 Sep 2026 17:18:39 +0200
+Message-ID: <20260930152425.035664721@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,62 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 4fb67925f33ad789e9e00903a73306ed40f7ae32 ]
+[ Upstream commit 2519439b4b5f6ee95879b1a44fc373127291b1e4 ]
 
-A bare devm_ioremap() neither reserves the register range nor preserves
-the platform resource error. This permits another driver to claim the
-same range and reports every mapping failure as an allocation failure.
+The DMA engine is configured for four-element bursts, but the MSP
+driver never programs the FIFO watermark register and instead depends
+on its previous or reset value. The DB8500 DMA request protocol requires
+the peripheral watermark to match the DMA packet size.
 
-Use the managed platform resource helper, retaining the resolved
-resource only to derive the DMA register address.
+Program four-element receive and transmit watermarks when configuring
+the first direction, before enabling MSP DMA requests.
 
 Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-6-4b60b002d55a@kernel.org
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-9-4b60b002d55a@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_i2s.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ sound/soc/ux500/ux500_msp_i2s.c | 2 ++
+ sound/soc/ux500/ux500_msp_i2s.h | 5 +++++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
-index bc77174e00707..43dc9b3aa4ef5 100644
+index 43dc9b3aa4ef5..683b485fb5708 100644
 --- a/sound/soc/ux500/ux500_msp_i2s.c
 +++ b/sound/soc/ux500/ux500_msp_i2s.c
-@@ -733,7 +733,7 @@ int ux500_msp_i2s_close(struct ux500_msp *msp, unsigned int dir)
- int ux500_msp_i2s_init_msp(struct platform_device *pdev,
- 			struct ux500_msp **msp_p)
- {
--	struct resource *res = NULL;
-+	struct resource *res;
- 	struct ux500_msp *msp;
+@@ -507,6 +507,8 @@ int ux500_msp_i2s_open(struct ux500_msp *msp,
+ 		old_reg &= ~mask;
+ 		new_reg |= old_reg;
+ 		writel(new_reg, msp->registers + MSP_GCR);
++		writel(MSP_WMRK_TX_4_ELEMENTS | MSP_WMRK_RX_4_ELEMENTS,
++		       msp->registers + MSP_WMRK);
+ 	}
  
- 	*msp_p = devm_kzalloc(&pdev->dev, sizeof(struct ux500_msp), GFP_KERNEL);
-@@ -743,20 +743,10 @@ int ux500_msp_i2s_init_msp(struct platform_device *pdev,
+ 	res = enable_msp(msp, config, first);
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 17b5c37a7e5d5..2bf2699bdc49f 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -62,6 +62,7 @@ enum msp_direction {
+ #define MSP_SRG		0x10
+ #define MSP_FLR		0x14
+ #define MSP_DMACR	0x18
++#define MSP_WMRK	0x1c
  
- 	msp->dev = &pdev->dev;
+ #define MSP_IMSC	0x20
+ #define MSP_RIS		0x24
+@@ -228,6 +229,10 @@ enum msp_direction {
+ #define RDMAE_SHIFT		0
+ #define TDMAE_SHIFT		1
  
--	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	if (res == NULL) {
--		dev_err(&pdev->dev, "%s: ERROR: Unable to get resource!\n",
--			__func__);
--		return -ENOMEM;
--	}
--
-+	msp->registers = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
-+	if (IS_ERR(msp->registers))
-+		return PTR_ERR(msp->registers);
- 	msp->tx_rx_addr = res->start + MSP_DR;
--	msp->registers = devm_ioremap(&pdev->dev, res->start,
--				      resource_size(res));
--	if (msp->registers == NULL) {
--		dev_err(&pdev->dev, "%s: ERROR: ioremap failed!\n", __func__);
--		return -ENOMEM;
--	}
- 
- 	msp->msp_state = MSP_STATE_IDLE;
- 	msp->loopback_enable = 0;
++/* FIFO watermark register */
++#define MSP_WMRK_RX_4_ELEMENTS	BIT(0)
++#define MSP_WMRK_TX_4_ELEMENTS	BIT(3)
++
+ /* Interrupt Register */
+ #define RX_SERVICE_INT		BIT(0)
+ #define RX_OVERRUN_ERROR_INT	BIT(1)
 -- 
 2.53.0
 
