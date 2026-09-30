@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799D84E7802;
-	Wed, 30 Sep 2026 17:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B719314A86;
+	Wed, 30 Sep 2026 17:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788788; cv=none; b=R/gKCGnggDGdjdCf4vm9FEeL19bKrFZxLTVEVlcPe/Mq9PxNKVZPX2giXnVOyZkHDSaDlK4nbmHuM6GJv5XXhq12qiiBAV9x/iknHLvynhvbOXaeXKMDIxtA/EZ7dieBy6SyuyhD4mRO/Z3Dr5isp1TjwXeZTBAxSbFcXFeAFR4=
+	t=1790788791; cv=none; b=Udx2mWfBbmY7Tn0Kor5rizBLh5I7BBpCetYm87aY8pMTEdhQ/bSErmxvD9lrhYc6dnCBW0fNWsFiec6DqyiX7Miy8voPuSUdl24Za+MAu63V4TkPSXEPzkFJV+9NAF1hNELRbNGAh7JDqQr+9Rj1I22OzjioKvVblc1GOxxR0ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788788; c=relaxed/simple;
-	bh=MLglkbfXfYFhwl1DcQ7+j1EyeScVekGBOH2YzkVrukQ=;
+	s=arc-20240116; t=1790788791; c=relaxed/simple;
+	bh=P2BsaLZHs0NlmIJijngyWCvlO4mNKKH+51qJulwAJG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozAN/UVCYgqLuyRNOyd22cO9Atyd/sghNLN6zimMF/ZHICEts3HKOPg9n9OXHbsWaOT5UU0i0l2yJhIv8dG/Wyx0NIg64xZy/JBvK92XciHOuIC8YFGnfV3sNqkSbmqs+gw6Lsr3AlZPBDdVulsS1priMh8rlrYb28VZz8aN858=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6ukreri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oAJ2JTAGIPCKqnIiQKDj2kq1EQS2XVkpeplnNP7Laf3sH9D92i+fusIEYzlgdw2V6jkRdAPKsXM6vnQV1uDSveGpkwaRJPY6dogoPt574gxpFhYQH1XprBHR3kcZybtL6kG51CV+rhqisNlxpszCpNCpEdOdlsqS0Wz2W4FEOa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbyqxwpQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6ukreri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D721F000FF;
-	Wed, 30 Sep 2026 17:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbyqxwpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55C21F000FF;
+	Wed, 30 Sep 2026 17:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788787;
-	bh=Kc11FenEoYbVjcTzj7BEGp8GWjSjRBKh7D1cZ7NxJkE=;
+	s=korg; t=1790788790;
+	bh=rsu6Zsb5wTjBwxgYLOhnb6ib0z3WaWEYVX55mkO3wjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S6ukreriiL6WRz2BUFWwBfG3PP3GeRZLze5WQ2S7kqCmwTQXR5IjFybLXJhmtC4ol
-	 /+5xXu0zZBOYr/U6AZEagTrw+LFG4QNa+sZgheD52WJoEAYAlhIB3xVcb/IgfVkr+w
-	 bMn9EYomKMQgA77yvMhn2K1ZYIS8OqUKe8q+RNy8=
+	b=cbyqxwpQvNgUtDWmO0jbeRS5mkJU3HaiWxoPVTzSRG05CC13yVDn3Lr3N9FzKqQG5
+	 vmGhu6tIKkTlCdx2VfpH0vybzvw7rjDvq2zqLMktRe6WHYxv5ntphcJdwBSAvnwAfS
+	 zubWycFNDhQR50dJf5UaJBEMm58fvSODpP7jfRyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	James Seo <james@equiv.tech>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 246/877] hwmon: (hp-wmi-sensors) Fix use-after-free in fungible_show()
-Date: Wed, 30 Sep 2026 17:19:17 +0200
-Message-ID: <20260930152420.032703102@linuxfoundation.org>
+Subject: [PATCH 6.12 247/877] hwmon: (pmbus/core) increase number of phases and add new mask
+Date: Wed, 30 Sep 2026 17:19:18 +0200
+Message-ID: <20260930152420.054333389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,82 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit e6cb0b4d4ecb8e71fd2200d907ab2e9663356f69 upstream.
+commit 06bd6794b5fd2163880ac3bfe973d4cc61f359f3 upstream.
 
-nsensor->current_state is dynamically replaced as the sensor's state
-changes. update_numeric_sensor_from_wobj() does this by freeing the
-old string and installing a new one:
+Increase the number of phases to 16 as a new upcoming device supports
+such a number.
 
-	if (strcmp(trimmed, nsensor->current_state)) {
-		new_string = hp_wmi_strdup(dev, trimmed);
-		if (new_string) {
-			devm_kfree(dev, nsensor->current_state);
-			nsensor->current_state = new_string;
-		}
-	}
+While at it, add a new mask for controlling the source of the output
+voltage.
 
-This function is only ever called from hp_wmi_update_info() while
-state->lock is held, so the free-and-replace itself is properly
-serialized against concurrent updates.
+Note (groeck):
 
-fungible_show(), however, reads the same pointer after the lock has
-already been dropped:
+This patch was meant to prepare for support of MAX20826 and compatible
+devices, which support more than 10 phases per page. However, Sashiko
+reports that the mp2975 driver already supports up to 14 phases, and the
+mp2856 driver supports up to 12 phases. This already has the potential for
+out-of-bounds writes when probing the affected chips, making this patch a
+bug fix.
 
-	err = hp_wmi_update_info(state, info);
-	if (err)
-		return err;
-
-	switch (prop) {
-	...
-	case HP_WMI_PROPERTY_CURRENT_STATE:
-		seq_printf(seqf, "%s\n", nsensor->current_state);
-		break;
-
-hp_wmi_update_info() takes state->lock internally and releases it
-before returning, so by the time fungible_show() dereferences
-nsensor->current_state in seq_printf(), no lock is held. Two
-processes reading a sensor's current_state debugfs entry at
-overlapping times (or one reading it while another read of the same
-sensor triggers a refresh) can race: one thread's seq_printf() can
-be part-way through printing the string at the moment another
-thread's call into update_numeric_sensor_from_wobj() frees it with
-devm_kfree() and installs a new pointer, causing a use-after-free
-read.
-
-Take state->lock around the read in fungible_show() as well, so it
-can never run concurrently with the free-and-replace in
-update_numeric_sensor_from_wobj().
-
-Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
+Fixes: 2c6fcbb21149 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2975 controller")
+Fixes: f9e5f289b686 ("hwmon: (pmbus) Add support for MPS Multi-phase mp2856/mp2857 controller")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260911-hwmon-max20826-support-v2-1-5e30cbd97d84@analog.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Acked-by: James Seo <james@equiv.tech>
-Link: https://patch.msgid.link/20260916002926.161595-1-meatuni001@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/hp-wmi-sensors.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/pmbus.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/hp-wmi-sensors.c
-+++ b/drivers/hwmon/hp-wmi-sensors.c
-@@ -1247,7 +1247,9 @@ static int fungible_show(struct seq_file
- 		break;
+--- a/drivers/hwmon/pmbus/pmbus.h
++++ b/drivers/hwmon/pmbus/pmbus.h
+@@ -241,6 +241,7 @@ enum pmbus_regs {
+ /*
+  * OPERATION
+  */
++#define PB_OPERATION_CONTROL_V_SRC	GENMASK(5, 4)
+ #define PB_OPERATION_CONTROL_ON		BIT(7)
  
- 	case HP_WMI_PROPERTY_CURRENT_STATE:
-+		mutex_lock(&state->lock);
- 		seq_printf(seqf, "%s\n", nsensor->current_state);
-+		mutex_unlock(&state->lock);
- 		break;
+ /*
+@@ -385,7 +386,7 @@ enum pmbus_sensor_classes {
+ };
  
- 	case HP_WMI_PROPERTY_UNIT_MODIFIER:
+ #define PMBUS_PAGES	32	/* Per PMBus specification */
+-#define PMBUS_PHASES	10	/* Maximum number of phases per page */
++#define PMBUS_PHASES	16	/* Maximum number of phases per page */
+ 
+ /* Functionality bit mask */
+ #define PMBUS_HAVE_VIN		BIT(0)
 
 
