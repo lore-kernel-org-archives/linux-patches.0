@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45497524B0A;
-	Wed, 30 Sep 2026 17:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFA552B1FB;
+	Wed, 30 Sep 2026 17:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790507; cv=none; b=OVCxoIB61Jqgl13xZpHHl6EphWAdeqKp30s6+AqPOXraiyk4jV905VREsMU9ZF0KljQcG497MTT2008YoyC/oLwL3gpfUoQCvmtXgDfffF/hwD0mx07JQ2+/6rnOfMFyOzBXVS16LgZlD89R+wdFvhgmJeElAmuDcfqFu1I3dak=
+	t=1790790510; cv=none; b=oB+cTMLSpU7OcUmANGY8lJAdxr1EfG6Y+LNsWeYPrNFuFpqk/t5shPDYm2wONL9TY5A/oBA4HEYQJ1Bz5HRnVZnJJFA0GdrOFRiLcIdV35CvOmUtI/HyhrFePmMrhfHJi6E0Ih2Q3sqXcrGG8mXwkVSPQdaYW6pd33/pDdvXd5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790507; c=relaxed/simple;
-	bh=u4s/O96mxGO0SDkUyLFDM/qyVkzutsweZ5AbF+ZSKcc=;
+	s=arc-20240116; t=1790790510; c=relaxed/simple;
+	bh=5EDJ2j5O/xFQxMfQywXyKsdezJ0Llyed6cDYozaWtqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipwFtr5cUpnMbMknPBcIo4Ty3u99OFNLIhq5VJvaTxHTKvp8YKOuU806jETs44ZnR0SDS6dsFTfYX2+bsXwZfURxpiHKaH/RkbuZjYWa6qL4CAADU9fqOyeSCxVY/fXl/gBfXWSffbmLgahQC6tbz9PLGyPwpHQH+l8dodTqBuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClDlE/3t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u5sUlUNQMzEN1QgZP06FaZ7SXLgYyOxV973tfhnBu5KodWX+xf7KhNIiwFfYH2XW8HPC/bn3EcShv28jEutCFSXWwqxaRC/eEtLN1hIxTJQbesqKZPXOwp0YN1hVMdW46Bl3fc+iE831Q3MjO2lFvxngrTczJlVBxdzOkOWThCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0EDTOcc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClDlE/3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A32341F00898;
-	Wed, 30 Sep 2026 17:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0EDTOcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802E01F00898;
+	Wed, 30 Sep 2026 17:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790506;
-	bh=j9sTP6gs5XYYZtbBFCvzmTIMwDvqk3+vKcaPBIPR6OA=;
+	s=korg; t=1790790509;
+	bh=jTnjnpj7w90kfOaqMeia8xj41VMVya4Y93k0YTSbD+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ClDlE/3tCP951hxRMj2bsYOibU3I4xVBeAyBFESlbjsHjf7zM/+7DM8NG2jm2oIPL
-	 oAuyYSEvDCklXpcrknm33cjC1PSTiSqu/M1+hEAT1EPhIXb7HK8O1Jx2Yjfw0SVkri
-	 JtwqDn9c783gIJeXeWei2xuJVMqbShLnOzNQVwOU=
+	b=e0EDTOccXyO8FMr+IBBTvIVNvnQOYa249F87kGpG14yFgdueX3xOjbEemstO/wjGQ
+	 oogC9hbC6IoORol3tdtslQeqD1Hg0VBcBbfe+UBxrl7kl6PCRJQ6n7hHMLHFy8NgGK
+	 KUsdVYR9FlJA8q8HSWhvWvJBF8xlDRN5wxdW16pE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 853/877] RISC-V: KVM: Serialize IMSIC attributes with vCPU migration
-Date: Wed, 30 Sep 2026 17:29:24 +0200
-Message-ID: <20260930152433.148035858@linuxfoundation.org>
+	Bernard Pidoux <bernard.f6bvp@gmail.com>
+Subject: [PATCH 6.12 854/877] rose: fix dev_put() leak in rose_loopback_timer()
+Date: Wed, 30 Sep 2026 17:29:25 +0200
+Message-ID: <20260930152433.169419666@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,62 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit 8ae12ccaec6ec74945d8c1ef39f2c1b8df779abc ]
+commit ff91adc54db2b62c7cdf063ff761eceb5adf2215 upstream.
 
-KVM device ioctls are not serialized against KVM_RUN. As a result,
-kvm_riscv_aia_imsic_rw_attr() can snapshot the physical CPU and HGEI of
-an IMSIC VS-file before a concurrent vCPU migration releases it.
+rose_rx_call_request() always consumes or returns the skb but never
+releases the device reference obtained from rose_dev_get().  When
+rose_rx_call_request() succeeds (returns non-zero) dev_put() was never
+called, leaking one reference per loopback CALL_REQUEST.
 
-The HGEI can then be allocated to another vCPU before imsic_vsfile_rw()
-uses the stale tuple. A GET or SET attribute may consequently access the
-new owner's interrupt file.
+Move dev_put() outside the conditional so it is called unconditionally
+after rose_rx_call_request() in all cases.
 
-Serialize the entire IMSIC attribute operation with the target vCPU
-mutex. This prevents the VS-file from being migrated and recycled until
-the attribute access completes. Acquire the mutex killably so that the
-device ioctl remains interruptible while waiting for KVM_RUN to finish.
+Also remove the dead check (!rose_loopback_neigh->dev &&
+!rose_loopback_neigh->loopback) that immediately precedes it: the
+loopback neighbour always has loopback=1 so this condition can never
+be true.
 
-Fixes: db8b7e97d613 ("RISC-V: KVM: Add in-kernel virtualization of AIA IMSIC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260810-imsic-attr-race-v2-1-00ed95ad321e@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0453c6824595 ("net/rose: fix unbound loop in rose_loopback_timer()")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kvm/aia_imsic.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/rose/rose_loopback.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -895,9 +895,14 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
- 	if (!vcpu)
- 		return -ENODEV;
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -96,22 +96,15 @@ static void rose_loopback_timer(struct t
+ 		}
  
-+	if (mutex_lock_killable(&vcpu->mutex))
-+		return -EINTR;
-+
- 	imsic = vcpu->arch.aia_context.imsic_state;
--	if (!imsic)
--		return -ENODEV;
-+	if (!imsic) {
-+		rc = -ENODEV;
-+		goto out_unlock;
-+	}
- 	isel = KVM_DEV_RISCV_AIA_IMSIC_GET_ISEL(type);
+ 		if (frametype == ROSE_CALL_REQUEST) {
+-			if (!rose_loopback_neigh->dev &&
+-			    !rose_loopback_neigh->loopback) {
+-				kfree_skb(skb);
+-				continue;
+-			}
+-
+ 			dev = rose_dev_get(dest);
+ 			if (!dev) {
+ 				kfree_skb(skb);
+ 				continue;
+ 			}
  
- 	read_lock_irqsave(&imsic->vsfile_lock, flags);
-@@ -921,6 +926,8 @@ int kvm_riscv_aia_imsic_rw_attr(struct k
- 		rc = imsic_vsfile_rw(vsfile_hgei, vsfile_cpu, imsic->nr_eix,
- 				     isel, write, val);
- 
-+out_unlock:
-+	mutex_unlock(&vcpu->mutex);
- 	return rc;
- }
- 
+-			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0) {
+-				dev_put(dev);
++			if (rose_rx_call_request(skb, dev, rose_loopback_neigh, lci_o) == 0)
+ 				kfree_skb(skb);
+-			}
++			dev_put(dev);
+ 		} else {
+ 			kfree_skb(skb);
+ 		}
 
 
