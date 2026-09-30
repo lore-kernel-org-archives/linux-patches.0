@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1749436826E;
-	Wed, 30 Sep 2026 19:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE2A3E40E9;
+	Wed, 30 Sep 2026 19:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796557; cv=none; b=MHnn+6DcnVYxvm30U0LiTjpDfRhM80g81EPFVIGupvYiorel6szrenZkDqDKKR28AMkHem9vf9Sb1pu9QJgcWSpyS65txUE6QD+X4hpAfhzkw1yLntNOzIkG2zjrSxPfz0hDvedy+LlV/QAyRkCfPThzcKnSQGw175iHzQiezXc=
+	t=1790796560; cv=none; b=qqRavyXHawqU8wBbYdmRFdt+oC9XStrZ5g8xMpGrod/1BskRG567Q2O7nU4iDlHB0IBHeCc9ywy/rpxjhpR6r4J54gJqHSCeoJ1vW8m3JmbK/6YwadQXocVDAcDPCfX4MEZHhrqpbIXnUpdthXehOLte2HSvGQ24RUIUS/OCSj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796557; c=relaxed/simple;
-	bh=pngXEvDlGwRXJlMeuTIMy9/Kwbf/HHkuos4qefhnEx8=;
+	s=arc-20240116; t=1790796560; c=relaxed/simple;
+	bh=nFGo0OGyoIsTUQllSX8L3YuNQdsGu+i1tn0TaW84/jA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvNqZo7TtBdZnn80ShhMliIRrSfcd0YVns9TWbrFUZYEcsjW3Re0MaJBjiSWuXMDslCdP0aS6ZnulZWQF9NV+DvUHa6+6slLROB3xOorE5BQN7C6oeXD9t56O05wAWAyBqSdqh1vTH7DXZHp70qbdONm8bocPIiIGCKsTaW5HfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAgSXPrP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KDVwEha69GptR7pFCuPo/hj/uv9FXCfuAN23DtTkgtkL6riDbnZwwvvGOAxpq2LILbyKUy39GMaS1FoPo74KI8PAqreq4ZprCmRqbriKLkGLxRE++s7g/ZoIlmPbVXZLd9slJuX+JuGfv7jV7khmR/EPy0pndWcJ68GNeJ73Cfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9FneuOJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAgSXPrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670491F000FF;
-	Wed, 30 Sep 2026 19:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9FneuOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B241F000FF;
+	Wed, 30 Sep 2026 19:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796555;
-	bh=mme054pr8+U+ozeYzc/qmAtj/szwb9WDxkvTst7fGh8=;
+	s=korg; t=1790796558;
+	bh=U6GLFeLH65V8LAcGNfbbFlyBMzHg97E67VhRdqywFdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAgSXPrPEOlW6DVboJ4uSWBU9qETKorTAMH1IuWxw/bn6jrD0hZHBBW1f+pTkDJRY
-	 688iMxkcWmuWvQ4DbGcJFtduX9hLejER/97z6Pu7xYqlq4M7IP+tzZv8tGcZP7u7bh
-	 GCLxlEMMHMA281Ajpev/1cs+ex2zfDWCfikD+bls=
+	b=d9FneuOJ9o2htcRPfCrpfdZRmDAGcM7cuv2OLBPrBRpJP6lYWgDa8EbP5YYy/5s15
+	 Dk46v0AHK1oZ1NoDulfUJLSdbxpbCzsubsp0u7z9cGDlvR+dINDGap4GThrRdJURXI
+	 A+6HAu5pFRcYw+thmEyeBNuySFqPtmSsa8G2T2oA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shashiko <sashiko-bot@kernel.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0900/1193] Input: soc_button_array - check btns_desc->package.count
-Date: Wed, 30 Sep 2026 17:26:24 +0200
-Message-ID: <20260930152454.237476442@linuxfoundation.org>
+	Itai Handler <itai.handler@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0949/1193] spi: spi-zynqmp-gqspi: stop the controller on shutdown
+Date: Wed, 30 Sep 2026 17:27:13 +0200
+Message-ID: <20260930152455.325558809@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,35 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Itai Handler <itai.handler@gmail.com>
 
-commit fb5022278b6ea7f1838e3ef78028d5d5e3375f65 upstream.
+commit e922bad8b2d5028c51a096d083fea41cd0987154 upstream.
 
-Check that btns_desc->package.count is not 0 before accessing
-btns_desc->package.elements[0].
+The driver has no ->shutdown, and platform_drv_shutdown() has no
+fallback of its own.  Unlike pci_device_shutdown(), which clears bus
+mastering when kexec_in_progress, nothing on the platform bus disarms a
+device that can still write to memory.  The normal kexec path never
+calls ->suspend either, so the quiesce in zynqmp_qspi_suspend() is not
+reached.
 
-Fixes: 4c3362f44980 ("Input: soc_button_array - add support for ACPI 6.0 Generic Button Device")
+A controller that is still executing a DMA read may therefore keep
+writing to memory across a kexec.  QSPIDMA_DST_ADDR still points at
+memory owned by the kernel that called kexec, DST_SIZE is non-zero and
+the flash is still clocked, so data can keep landing in RAM while the
+new kernel is being relocated, and after it has started executing.
+
+That destination is a physical address which means nothing to the new
+kernel, so the writes can corrupt whatever now occupies it: kernel text
+or data, page tables, or the initrd.  Nothing reports an error and the
+resulting behaviour is undefined.
+
+This can be observed by reading GQSPI_EN (offset 0x114) and
+QSPIDMA_DST_ADDR/SIZE/STS/CTRL (offsets 0x800 to 0x80c) early in the new
+kernel, before the driver probes: without this patch GQSPI_EN reads 1
+and QSPIDMA_DST_ADDR still points into the previous kernel's memory.
+
+Add a ->shutdown that stops the controller the way zynqmp_qspi_suspend()
+already does.  spi_controller_suspend() stops the queue, waits for a
+message that is already executing and makes any later transfer fail with
+-ESHUTDOWN, so nothing can be cut short by the register write that
+follows.  It may sleep, which is fine here: device_shutdown() runs in
+process context.  Unlike ->suspend this cannot abort on error, because a
+controller left mastering the bus is worse than a truncated transfer, so
+a failure to drain is only logged.
+
+GQSPI_EN_OFST is then cleared, as zynqmp_qspi_remove() and
+zynqmp_qspi_suspend() already do.  Skip that write only when
+pm_runtime_get_if_in_use() returns 0, i.e. runtime suspended: the clocks
+are gated, so the registers are unreachable and the controller cannot be
+mastering the bus.  A negative return is not the same thing - it is what
+the CONFIG_PM=n stub always returns, and there probe() has enabled pclk
+and refclk for good, so the controller is running and must be stopped.
+
+Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
 Cc: stable@vger.kernel.org
-Reported-by: Shashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-input/20260909091440.3384C1F00A3A@smtp.kernel.org/
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260909093934.29411-2-johannes.goede@oss.qualcomm.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Itai Handler <itai.handler@gmail.com>
+Link: https://patch.msgid.link/20260910174832.873352-1-itai.handler@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ itai: context only - the platform_driver callback is still spelled
+  .remove_new in this tree, renamed back to .remove upstream by commit
+  494c3dc46776 ("spi: Switch back to struct platform_driver::remove()") ]
+Signed-off-by: Itai Handler <itai.handler@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/soc_button_array.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
---- a/drivers/input/misc/soc_button_array.c
-+++ b/drivers/input/misc/soc_button_array.c
-@@ -377,7 +377,7 @@ static struct soc_button_info *soc_butto
- 		}
- 	}
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index b9ed6d6824b2d..f0710f2924bda 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1377,11 +1377,45 @@ static void zynqmp_qspi_remove(struct platform_device *pdev)
+ 	clk_disable_unprepare(xqspi->pclk);
+ }
  
--	if (!btns_desc) {
-+	if (!btns_desc || !btns_desc->package.count) {
- 		dev_err(dev, "ACPI Button Descriptors not found\n");
- 		button_info = ERR_PTR(-ENODEV);
- 		goto out;
++static void zynqmp_qspi_shutdown(struct platform_device *pdev)
++{
++	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
++	int ret;
++
++	/*
++	 * Stop the queue and reject any later transfer first, so the write
++	 * below cannot cut into a message that is still being executed.
++	 * Unlike ->suspend this cannot abort on error: a controller left
++	 * mastering the bus is worse than a truncated transfer.
++	 */
++	ret = spi_controller_suspend(xqspi->ctlr);
++	if (ret)
++		dev_warn(&pdev->dev, "could not stop the queue: %d\n", ret);
++
++	/*
++	 * Only a runtime suspended controller can be left alone: its clocks
++	 * are gated, so it cannot be mastering the bus, and its registers
++	 * must not be accessed either.  Any other answer means it may be
++	 * running and has to be stopped.  In particular, on a kernel built
++	 * without runtime PM this returns -EINVAL, and there the clocks
++	 * enabled in probe() are never gated at all.
++	 */
++	ret = pm_runtime_get_if_in_use(&pdev->dev);
++	if (!ret)
++		return;
++
++	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
++
++	if (ret > 0)
++		pm_runtime_put_noidle(&pdev->dev);
++}
++
+ MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
+ 
+ static struct platform_driver zynqmp_qspi_driver = {
+ 	.probe = zynqmp_qspi_probe,
+ 	.remove_new = zynqmp_qspi_remove,
++	.shutdown = zynqmp_qspi_shutdown,
+ 	.driver = {
+ 		.name = "zynqmp-qspi",
+ 		.of_match_table = zynqmp_qspi_of_match,
+-- 
+2.53.0
+
 
 
