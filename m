@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F285265192;
-	Wed, 30 Sep 2026 18:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FCC3B71B6;
+	Wed, 30 Sep 2026 18:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791986; cv=none; b=ahxLikxe2A+A/qWws7JPhcTfptqCuN1lvnUtco6qUbG0OLAjStzfrpcm30yjQzcaXAjYhzhaemx3JRxJZmvWwJWnRt0K+9Y8FHDwGLyVY/Lns7TyDugRq3iSIaeKMMTjXhtoP0kfXke1KHLI2t7FjX3FGE8Nugw8Pi4Kdx/m4lA=
+	t=1790791988; cv=none; b=ImQQ4eHWR7Tcfch2j1kjUji+4zQLjqVHRJ6Q299DiRaa3+AjUMsAasQH77E5VPWF4jcGg2Mnj984XqyH5XSG/goOcdcKOL4mpvF2NyWgMVgeSiQDMN37sb4i8TP7GlMw6F8F/FSLtYURWfXbQYq8QdmLhzEngbTWZ5LpuiTgtFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791986; c=relaxed/simple;
-	bh=1FqY1irauDILPejFC5pPf0bBgE6s7APVc5b4tQVoqZU=;
+	s=arc-20240116; t=1790791988; c=relaxed/simple;
+	bh=puuCs3Ua0xxD4d8k4UJi9UYrPhEoFDfga2y6j0eChEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVGJm0NuES1yEqH/0wlPQjXnpbOVCEVmmhpNrpGRvpu00ECtHJ47WHTSrSqZMWxgqq8CeorFanDwTUrqxr9wUBGQeWPOZHJkVjyxs7arRAIbouwR5oGFrRGFK1RhfbEIL1UmlNnDCMdyfBuJFqe4WlJzMnLU3DpF2Y358oVoWK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5usUCib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7hTP9pUHslULQqqZq1s1lia7IUu+KIYHdHxczMu9xcH1ao7ypZNTOsSMiLcWoxqjHpwmbYjvlxtsB2pMLNK8IaiE8r8kmrsmBcLbxbvVCz3SqGKtkjINH1m+uF4impK/QHn1kFzPP5HYuekJ6hmTcVvYnKFIRONROdc9SyVcdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz2EuM6C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5usUCib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551A21F00898;
-	Wed, 30 Sep 2026 18:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz2EuM6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAB91F000FF;
+	Wed, 30 Sep 2026 18:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791984;
-	bh=4Rv5o3Ym6jLarQfuYUbpoFcMsbiDNRtIz88dpfGJKe8=;
+	s=korg; t=1790791987;
+	bh=cs/j7Y6Jl4zq8FvWXoEzm2Mek6RWhz7K3Pc6PC6ihRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o5usUCibwdYRO5hpCxVTriGxV8p8A44BCPUxDYsppxHxVjQoW3jyJNJEoH7pPAywf
-	 ObMzbsdnx5jb4PqKE0CWyD50M28rZZAYaQu4mgZSmZY3Ib05iLGBQLKmTYTE4qNqEq
-	 j7n+p09sUWSByb580AwX1H7j+oop/xvNoo48VbyI=
+	b=Hz2EuM6CaGc0EAOuK05SJMr1epBzdYEUv+pkPq2oh4E0YN4xEz5oVVh6M0NseRJZz
+	 WZQSwTxHu1ZjL4VpKILYx5EUHC69Wol3ql29NXS6YCyKJmTSNBsjuT3riUq+nQKOqF
+	 leVegVLCIJWWtNUOXOFBOwFakUwXcOfvmZiG/E/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hohyun Sim <tlaghgus0425@korea.ac.kr>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 494/752] net: fddi: skfp: fix NULL deref when setting the MAC address while down
-Date: Wed, 30 Sep 2026 17:26:04 +0200
-Message-ID: <20260930152408.955770096@linuxfoundation.org>
+Subject: [PATCH 5.15 495/752] wifi: brcmfmac: fix lost 802.1x TX completion wakeup
+Date: Wed, 30 Sep 2026 17:26:05 +0200
+Message-ID: <20260930152408.976007893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,105 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hohyun Sim <tlaghgus0425@korea.ac.kr>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 7c8810c2e69c3d9ca6df870b40ae9218e50b4fb1 ]
+[ Upstream commit 621d90169cef6c8da5b6134db5c0c4e23cdd09ce ]
 
-skfp_ctl_set_mac_address() calls ResetAdapter() unconditionally, without
-checking netif_running(). ResetAdapter() first calls card_stop(), which
-sets smc->hw.hw_state to STOPPED, and then mac_drv_clear_tx_queue(),
-which walks the two transmit queues:
+brcmf_txfinalize() decrements pend_8021x_cnt before a lockless
+waitqueue_active() check. atomic_dec() does not order the decrement
+against the check.
 
-	for (i = QUEUE_S; i <= QUEUE_A0; i++) {
-		queue = smc->hw.fp.tx[i] ;
-		...
-		t = queue->tx_curr_get ;
+The waiter can therefore observe a nonzero count while the waker observes
+an empty queue, losing the final wakeup and delaying key installation
+until the 950 ms timeout.
 
-smc->hw.fp.tx[] is only populated by init_tx(), which is reached from
-skfp_open() through init_smt() -> init_fddi_driver() -> init_fplus() ->
-init_mac() -> init_tx(). The private area is allocated and zeroed by
-alloc_fddidev(), so on an interface that has never been brought up both
-queue pointers are still NULL. The hw_state test at the top of
-mac_drv_clear_tx_queue() does not catch this, because card_stop() has
-just set STOPPED; the function proceeds into the loop and dereferences
-NULL. ResetAdapter() does call init_smt() itself, but only after the
-queues have been cleared.
+Add smp_mb__after_atomic() to order the decrement before the queue
+check. wait_event_timeout() provides the matching barrier. LKMM confirms
+that this forbids the lost-wakeup outcome.
 
-Setting the MAC address on a down interface therefore oopses:
-
-  ip link set dev fddi0 address 02:00:00:00:00:01
-
-  BUG: KASAN: null-ptr-deref in mac_drv_clear_tx_queue+0x68/0x2c0 [skfp]
-  Read of size 8 at addr 0000000000000010 by task ip/302
-  Call Trace:
-   <TASK>
-   mac_drv_clear_tx_queue+0x68/0x2c0 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
-   ResetAdapter+0x29/0x100 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
-   skfp_ctl_set_mac_address+0x57/0x80 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
-   netif_set_mac_address+0x1e4/0x2c0
-   do_setlink+0x684/0x2680
-   </TASK>
-
-Address 0x10 is the offset of tx_curr_get, the third pointer in
-struct s_smt_tx_queue, on 64-bit. mac_drv_clear_rx_queue(), which
-ResetAdapter() calls immediately afterwards, dereferences
-smc->hw.fp.rx[QUEUE_R1] in the same way behind the same ineffective
-hw_state test; the transmit queue merely crashes first. Both are
-covered by the guard below.
-
-Skip the adapter reset when the interface is down. dev_addr_set() is
-left unconditional, so the new address is still recorded in
-dev->dev_addr. Nothing is lost by not resetting the adapter here:
-skfp_open() deliberately re-reads the factory address on every open,
-
-	read_address(smc, NULL);
-	eth_hw_addr_set(dev, smc->hw.fddi_canon_addr.a);
-
-and the comment above it states this is done to discard exactly such an
-address override across a close/open cycle. An address set while the
-interface is down could not have survived the following open even
-before this change, so the guard removes no working behaviour. Guarding
-the hardware side of ndo_set_mac_address() with netif_running() is
-established practice; skge_set_mac_address() has done so since commit
-2eb3e621c4e0 ("skge: set mac address bonding fix").
-
-Guarding the reset as a whole, rather than NULL-checking the queues, is
-also what the rest of the driver expects. After a previous open/close
-the queue pointers are stale but non-NULL, so there is no crash, yet
-ResetAdapter() goes on to call smt_online() and STI_FBI() ("Enable
-Board Interrupts") while skfp_close() has already called free_irq() -
-the adapter would be brought back online with no handler installed. The
-only other ResetAdapter() caller is skfp_interrupt(), which by
-construction runs only while the device is open.
-
-Found by automated driver testing against an emulated SysKonnect FDDI
-adapter under a KASAN-enabled 7.0.0 kernel. Triggering it requires
-CAP_NET_ADMIN.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: LLM KASAN
-Signed-off-by: Hohyun Sim <tlaghgus0425@korea.ac.kr>
-Link: https://patch.msgid.link/20260910063743.110747-1-tlaghgus0425@korea.ac.kr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 21fff75d2fb6 ("brcmfmac: use wait_event_timeout for 8021x pending count")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260811082702.44521-1-kmehltretter@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/fddi/skfp/skfddi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/fddi/skfp/skfddi.c b/drivers/net/fddi/skfp/skfddi.c
-index c5cb421f9890d..f27255b516289 100644
---- a/drivers/net/fddi/skfp/skfddi.c
-+++ b/drivers/net/fddi/skfp/skfddi.c
-@@ -926,7 +926,8 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+index 109c13189206e..860376037265b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
+@@ -560,6 +560,8 @@ void brcmf_txfinalize(struct brcmf_if *ifp, struct sk_buff *txp, bool success)
  
- 	memcpy(dev->dev_addr, p_sockaddr->sa_data, FDDI_K_ALEN);
- 	spin_lock_irqsave(&bp->DriverLock, Flags);
--	ResetAdapter(smc);
-+	if (netif_running(dev))
-+		ResetAdapter(smc);
- 	spin_unlock_irqrestore(&bp->DriverLock, Flags);
- 
- 	return 0;		/* always return zero */
+ 	if (type == ETH_P_PAE) {
+ 		atomic_dec(&ifp->pend_8021x_cnt);
++		/* Order the decrement before waitqueue_active() */
++		smp_mb__after_atomic();
+ 		if (waitqueue_active(&ifp->pend_8021x_wait))
+ 			wake_up(&ifp->pend_8021x_wait);
+ 	}
 -- 
 2.53.0
 
