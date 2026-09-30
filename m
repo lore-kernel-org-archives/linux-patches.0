@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3014C5172EC;
-	Wed, 30 Sep 2026 16:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7BA4F4755;
+	Wed, 30 Sep 2026 16:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784876; cv=none; b=QVuw4Ho4cLmqbqmrq3y4gDBJiTDeUiGXyJC/8R3hfnT8m2qhJCorgOq9+2Y7w2nxrs6dkm+KH+5CpshMEfwx+md8b86Obr6uxNyNC9hN18dxTzsJTNnwXjRWxrOq0xmqMPZj+E9V/1DLONkIBefBgvJ19zd70oLacXNRCtZYrYU=
+	t=1790784882; cv=none; b=uE8VSWhVuUwlv+Smpvr3X9RaKoFpe4MOcSDNrRprZSkWoWBRQDItLChIeVbEULoBz8S9Z4qrighzWeTTeulymbiAmiSKXwYIOlGNI2I4/v+PakJLX1OSgkhwPvs5spf2Slf3qOmY3PwBlM6f2tanOGZdMRJuy/rW3IDuG2h1MMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784876; c=relaxed/simple;
-	bh=TwfAWgfMjTmb4JVw1E7DqIUW0ZvkaLYtXI0KXPYBrZc=;
+	s=arc-20240116; t=1790784882; c=relaxed/simple;
+	bh=hsQ3dxXtNY6iCcAuVtoybbqF1v2xKIHvUIq6GfK1Q+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCQ/FBmUgu24/LSPmaordKRLwuyTl1bgtWLhNnh/Uc98pHsKOAN4MRsVCOM4+PL2M1Sg6+YSRkvVWMHNLISb/qeB0stSXekGAOTzxCHTWoBNdBLJdD5FyPZJFuLNU4Z8FuoNf1F5p0vsIT8gC8Ol9XpUp3VW7g2xBU1P2bQ0EPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNkZY2b1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AStpruqmhPWnIRNUCC5vIbO9YJCZLv95tOlP1AFKOSxmHA+yV7vfU1VGp/5wg+p8S8vaV42nnNIsV4NYPGhwMZujrZ0RBtsk1dxQRnKStHQ7/NHHKv9zoPlZNuo3L3Ppo70/hCBfKf25oci0UHgFCWAxWT5miJ7gBMsitIJLMZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPyiJmze; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNkZY2b1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692231F000FF;
-	Wed, 30 Sep 2026 16:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPyiJmze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D471F00893;
+	Wed, 30 Sep 2026 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784870;
-	bh=PEbE8wyidsbWb/izKqAPEQ4Naz7TXQm7m/Ml3it6sDs=;
+	s=korg; t=1790784875;
+	bh=g+TDQG1GXKd6Xb9YgpqOHxa4C4thQmDDgjAotyMkuPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNkZY2b1gpIz/ijy64DFRQgw8K2o6Z4eiVtrmSIjYDhi2IZgo35tjHSMPpZPmBwkt
-	 CYR/csWaDSpHT/nYFWhn4zG14i0+zdI5N5o1I4+e7TLtndYHgPfOeSn3cduXt5BulT
-	 yQRHzODQfnSram2pdxXaRkUHA+rRxmxlW25DOTg4=
+	b=GPyiJmzerQAT2cE6UIFXgkRur3KgV4yHd0auhuk/aEeG49pIPR/kWApi6QPPkxK/c
+	 PJYEfUIwqmzHMtukCo/l4zrSa4YCfxJWTOfCz7TFBT0CxQxW7sY48fJs05JTMFvJoX
+	 i8h3PsrsBqXdM7YDh4LNbCctjZHqxhFTBeqpgh8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LocalHost <localhost.detect@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/982] ksmbd: validate ACE size against SID sub-authorities
-Date: Wed, 30 Sep 2026 17:17:17 +0200
-Message-ID: <20260930152423.273736278@linuxfoundation.org>
+Subject: [PATCH 6.1 311/982] ipv4: fib: Dont dump dying fib_info in fib_leaf_notify().
+Date: Wed, 30 Sep 2026 17:17:27 +0200
+Message-ID: <20260930152423.500524083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,63 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 5152c6d49e3fd4e9f2e857c57527aead752f1f87 ]
+[ Upstream commit 06b693d2eb6651a63ad85bad8673de3b7d4edd6d ]
 
-set_ntacl_dacl() validates sid.num_subauth before copying an ACE, but
-does not verify that the declared ACE size contains all sub-authorities
-described by that field. An undersized ACE can therefore be copied
-and later make the POSIX ACL deduplication walk inspect data beyond
-the copied ACE boundary.
+syzbot reported use-after-free in nsim_fib4_prepare_event(). [0]
 
-The existing initial bound check is also too small. It only ensures
-that the ACE size field is accessible before set_ntacl_dacl() reads
-sid.num_subauth farther into the input buffer.
+The problem is that the following functions call fib_info_hold() /
+refcount_inc() while dumping fib_info under RCU, which is unsafe.
 
-Require enough input for the fixed SID header before accessing
-num_subauth, reject ACEs smaller than that header, and skip ACEs
-whose declared size cannot contain the complete SID. This makes the
-validation consistent with the other ACE walk paths.
+  * mlxsw_sp_router_fib4_event()
+  * rocker_router_fib_event()
+  * nsim_fib4_prepare_event()
 
-Reported-by: LocalHost <localhost.detect@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+refcount_inc_not_zero() must be used, but it would be too late
+there.
+
+Let's guarantee the lifetime of fib_info in fib_leaf_notify().
+
+Note that IPv6 does not need the corresponding change since
+fib6_table_dump() holds fib6_table.tb6_lock.
+
+[0]:
+refcount_t: addition on 0; use-after-free.
+WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25, CPU#0: kworker/u8:15/3420
+Modules linked in:
+CPU: 0 UID: 0 PID: 3420 Comm: kworker/u8:15 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+Workqueue: netns cleanup_net
+RIP: 0010:refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25
+Code: eb 66 85 db 74 3e 83 fb 01 75 4c e8 1b f1 22 fd 48 8d 3d 84 cb f1 0a 67 48 0f b9 3a eb 4a e8 08 f1 22 fd 48 8d 3d 81 cb f1 0a <67> 48 0f b9 3a eb 37 e8 f5 f0 22 fd 48 8d 3d 7e cb f1 0a 67 48 0f
+RSP: 0018:ffffc9000f2c7270 EFLAGS: 00010293
+RAX: ffffffff84a18858 RBX: 0000000000000002 RCX: ffff888032ff9ec0
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff8f9353e0
+RBP: 0000000000000000 R08: ffff888032ff9ec0 R09: 0000000000000005
+R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880570cc000
+R13: dffffc0000000000 R14: ffff88802b40563c R15: ffff8880570cc000
+FS:  0000000000000000(0000) GS:ffff888126173000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb1f4d5d000 CR3: 000000006072a000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:-1 [inline]
+ __refcount_inc include/linux/refcount.h:366 [inline]
+ refcount_inc include/linux/refcount.h:383 [inline]
+ fib_info_hold include/net/ip_fib.h:629 [inline]
+ nsim_fib4_prepare_event drivers/net/netdevsim/fib.c:930 [inline]
+ nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1000 [inline]
+ nsim_fib_event_nb+0x1055/0x1240 drivers/net/netdevsim/fib.c:1043
+ call_fib_notifier+0x45/0x80 net/core/fib_notifier.c:25
+ call_fib_entry_notifier net/ipv4/fib_trie.c:90 [inline]
+ fib_leaf_notify net/ipv4/fib_trie.c:2176 [inline]
+ fib_table_notify net/ipv4/fib_trie.c:2194 [inline]
+ fib_notify+0x36b/0x5e0 net/ipv4/fib_trie.c:2217
+ fib_net_dump net/core/fib_notifier.c:70 [inline]
+ register_fib_notifier+0x184/0x360 net/core/fib_notifier.c:108
+ nsim_fib_create+0x85d/0x9f0 drivers/net/netdevsim/fib.c:1596
+ nsim_dev_reload_create drivers/net/netdevsim/dev.c:1604 [inline]
+ nsim_dev_reload_up+0x374/0x7c0 drivers/net/netdevsim/dev.c:1058
+ devlink_reload+0x501/0x8d0 net/devlink/dev.c:475
+ devlink_pernet_pre_exit+0x1ff/0x420 net/devlink/core.c:558
+ ops_pre_exit_list net/core/net_namespace.c:161 [inline]
+ ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
+ cleanup_net+0x56e/0x800 net/core/net_namespace.c:702
+ process_one_work kernel/workqueue.c:3314 [inline]
+ process_scheduled_works+0xb5d/0x1860 kernel/workqueue.c:3397
+ worker_thread+0xa53/0xfc0 kernel/workqueue.c:3478
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: 0ae3eb7b4611 ("netdevsim: fib: Perform the route programming in a non-atomic context")
+Fixes: c3852ef7f2f8 ("ipv4: fib: Replay events when registering FIB notifier")
+Reported-by: syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a290011.39669fcc.33b062.00b1.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260610061744.2030996-2-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ include/net/ip_fib.h | 5 +++++
+ net/ipv4/fib_trie.c  | 4 ++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 051df6536f7a3..7a0396db6f1d2 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -749,15 +749,22 @@ static void set_ntacl_dacl(struct user_namespace *user_ns,
- 		for (i = 0; i < nt_num_aces; i++) {
- 			unsigned short nt_ace_size;
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index b6fc9924ef7a0..a41e7c299af8d 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -576,6 +576,11 @@ static inline void fib_info_hold(struct fib_info *fi)
+ 	refcount_inc(&fi->fib_clntref);
+ }
  
--			if (offsetof(struct smb_ace, access_req) > aces_size)
-+			if (aces_size < offsetof(struct smb_ace, sid) +
-+					CIFS_SID_BASE_SIZE)
- 				break;
++static inline bool fib_info_hold_safe(struct fib_info *fi)
++{
++	return refcount_inc_not_zero(&fi->fib_clntref);
++}
++
+ static inline void fib_info_put(struct fib_info *fi)
+ {
+ 	if (refcount_dec_and_test(&fi->fib_clntref))
+diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
+index 53e7664eeb0a2..f40a774686ebf 100644
+--- a/net/ipv4/fib_trie.c
++++ b/net/ipv4/fib_trie.c
+@@ -2178,10 +2178,14 @@ static int fib_leaf_notify(struct key_vector *l, struct fib_table *tb,
+ 		if (fa->fa_slen == last_slen)
+ 			continue;
  
- 			nt_ace_size = le16_to_cpu(ntace->size);
--			if (nt_ace_size > aces_size)
-+			if (nt_ace_size > aces_size ||
-+			    nt_ace_size < offsetof(struct smb_ace, sid) +
-+					  CIFS_SID_BASE_SIZE)
- 				break;
- 
- 			if (ntace->sid.num_subauth == 0 ||
--			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
-+			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
-+			    nt_ace_size < offsetof(struct smb_ace, sid) +
-+					  CIFS_SID_BASE_SIZE +
-+					  sizeof(__le32) *
-+					  ntace->sid.num_subauth)
- 				goto next_ace;
- 
- 			memcpy((char *)pndace + size, ntace, nt_ace_size);
++		if (!fib_info_hold_safe(fa->fa_info))
++			continue;
++
+ 		last_slen = fa->fa_slen;
+ 		err = call_fib_entry_notifier(nb, FIB_EVENT_ENTRY_REPLACE,
+ 					      l->key, KEYLENGTH - fa->fa_slen,
+ 					      fa, extack);
++		fib_info_put(fa->fa_info);
+ 		if (err)
+ 			return err;
+ 	}
 -- 
 2.53.0
 
