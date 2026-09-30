@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5565434992;
-	Wed, 30 Sep 2026 19:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791AC42F709;
+	Wed, 30 Sep 2026 19:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795240; cv=none; b=mUJ9AVq5Mi/PizSzFFA7ydPUD642HHAowWV+nZRo1wzKDXrb6eqpQqOjZ9yXvWQbMetKlfY9Lh43TemW4bdr1Ty1eZdoT5cSAp1TufROwKmaUgwCDNJ6zzDGqRLryJzlXUC6c4iKHAV1ILWdQ+TSbbh8EPrBhu8pk4lQvihJqNY=
+	t=1790795243; cv=none; b=Pif4UuywI/l315m7J8gCWGyVkF4x+8Qk6sIN3q7xkTuo0CHjpre8sJChaFslHFaJqBhpH+wnheOeey0vtwP3NFt0cpCGr4gvDrY6HDxOnMM/DOOGQ9l+1/WEs14awYh4Ijsf2aX0aiMmYZLQGqnuu7noT0KUcCw+QjjYM4kCvuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795240; c=relaxed/simple;
-	bh=BUWIo5Y98w0hmMQV7NAWR9FWYKmPXJA7Yv4ktZ0HEBA=;
+	s=arc-20240116; t=1790795243; c=relaxed/simple;
+	bh=8qAt8d7U2TOcCLaRyL4DmDzpTOogSHhXOS1KfbmkbPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imhKGiT+bXx+EsoqNj7owF5VjHFI7+J4o7dr+k5VVfDPxRK0uX8+6Cy2uxpaXS1bwnDLplf2MgDUR3zX9EwJ3fciXXSxAhJ7y7pytJExx4kDv41BK9cRhijE2iAlKdO9Sciz5vHMC/Zxp96Kl4omafzB1aJIwr67vb+WMcunrKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZOPrOY8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFmL5C8nFB0UFc4thw+J0O93UHzbazdvtc8Yxg36mekwCcONKufKhfwsq5FYJ0ZyxOxjjUpRhDsqqXukorDxuREH5hFQI4Cc+IgQJUoVxKsJKuRz79RZrN5z4J33/9OjZJ5MAYQyhgmNm2V0WFq/PJAu6mNP18hNAUM/6yKfKaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbhL7kqC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZOPrOY8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2D61F000FF;
-	Wed, 30 Sep 2026 19:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbhL7kqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B381F000FF;
+	Wed, 30 Sep 2026 19:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795239;
-	bh=kVx0U+/wKqKgpq212q+V/B9BAlMbRRxoNgsASqcHs9g=;
+	s=korg; t=1790795242;
+	bh=2rmhx014ninbOjHuUOS0biuMYFxxPyC9tyqZXDVLK1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZOPrOY8OiFMOjWsMQTMK8qGxXRy2Vpjou/M6ZdaZq8IsSMaUJfyko7GdWi5gI+iA
-	 04lrJAwtX1uE8TiAA48iib0n8EjzSYhmJokl7neY3sg9xQ2z3dUsVfNSB7GOBpumX8
-	 16FcsJS+I/mmPNtVJX6oUvL6G2aXRyap/DiwQ2jo=
+	b=GbhL7kqCFPiqx+qj8unWB3XhsIabzBQRVQouo53McztR1J2VCeyM0nn1vmCF1dZ8i
+	 udtLFAXzdJ5M55Mcnoc2L+yqxNLqOlU4VPrE2D1tjYWg/9rZH969y/VM5mK3L6obIH
+	 JdATNdW101dwp3q7jt4nWhzlidb+QuszM7MLPbLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
+	Viswajith Murali <viswajithm@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0492/1193] net: bridge: mcast: properly convert mglist to rcu
-Date: Wed, 30 Sep 2026 17:19:36 +0200
-Message-ID: <20260930152445.082441511@linuxfoundation.org>
+Subject: [PATCH 6.6 0493/1193] octeontx2-af: mcs: Clear stale X2P calibration state before calibration
+Date: Wed, 30 Sep 2026 17:19:37 +0200
+Message-ID: <20260930152445.104284156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,70 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Viswajith Murali <viswajithm@marvell.com>
 
-[ Upstream commit 4b772869a1e5f9da5cef5b9c722ec0aa424ee0a0 ]
+[ Upstream commit 1f29543126dde307e8b5fb6a740c54e59deaa2ff ]
 
-Sashiko reported a bug [1] that br_multicast_del_port_group unlists the
-port group not using proper rcu helper that preserves the next pointer and
-after that immediately frees the port group without waiting for rcu grace
-period. The only rcu walker of mglist is br_multicast_list_adjacent() and
-it turns out that function has always been buggy because mglist was never
-properly converted to RCU. Fix it by converting it to rcu and moving its
-initialization after eth_addr's. Initializing p->next can use
-RCU_INIT_POINTER because we have a barrier from the hlist_add_head_rcu call
-later, besides we're initializing an unpublished structure anyway.
+Some firmware versions leave MCSX_MIL_GLOBAL bit 5 set on boot.
+If the bit is already set when the driver attempts X2P calibration,
+the hardware sees no rising edge and calibration never triggers.
+Clear the bit and wait briefly before starting calibration to ensure
+a clean rising edge.
 
-[1] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260826014200.362304-1-littleddfu%40gmail.com
-
-Fixes: 07f8ac4a1e26 ("bridge: add export of multicast database adjacent to net_dev")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260903093851.1494297-1-razor@blackwall.org
+Fixes: ca7f49ff8846 ("octeontx2-af: cn10k: Introduce driver for macsec block.")
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Signed-off-by: Viswajith Murali <viswajithm@marvell.com>
+Link: https://patch.msgid.link/20260901094318.1395356-1-nshettyj@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mcs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index 11ac945c6e29b..b563c97cc7090 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -1436,16 +1436,17 @@ struct net_bridge_port_group *br_multicast_new_port_group(
- 		goto free_out;
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+index a07e0b3d8d000..211c10aa5880f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+@@ -1417,6 +1417,16 @@ static int mcs_x2p_calibration(struct mcs *mcs)
+ 	int i, err = 0;
+ 	u64 val;
  
--	rcu_assign_pointer(p->next, next);
- 	timer_setup(&p->timer, br_multicast_port_group_expired, 0);
- 	timer_setup(&p->rexmit_timer, br_multicast_port_group_rexmit, 0);
--	hlist_add_head(&p->mglist, &port->mglist);
- 
- 	if (src)
- 		memcpy(p->eth_addr, src, ETH_ALEN);
- 	else
- 		eth_broadcast_addr(p->eth_addr);
- 
-+	RCU_INIT_POINTER(p->next, next);
-+	hlist_add_head_rcu(&p->mglist, &port->mglist);
++	/* Clear any stale calibration state left by firmware/bootloader.
++	 * Some firmware versions may leave MCSX_MIL_GLOBAL bit 5 set,
++	 * preventing the hardware from detecting the rising edge needed to
++	 * trigger X2P calibration.
++	 */
++	val = mcs_reg_read(mcs, MCSX_MIL_GLOBAL);
++	val &= ~BIT_ULL(5);
++	mcs_reg_write(mcs, MCSX_MIL_GLOBAL, val);
++	usleep_range(100, 200);
 +
- 	return p;
- 
- free_out:
-@@ -1460,11 +1461,11 @@ void br_multicast_del_port_group(struct net_bridge_port_group *p)
- 	struct net_bridge_port *port = p->key.port;
- 	__u16 vid = p->key.addr.vid;
- 
--	hlist_del_init(&p->mglist);
-+	hlist_del_init_rcu(&p->mglist);
- 	if (!br_multicast_is_star_g(&p->key.addr))
- 		rhashtable_remove_fast(&port->br->sg_port_tbl, &p->rhnode,
- 				       br_sg_port_rht_params);
--	kfree(p);
-+	kfree_rcu(p, rcu);
- 	br_multicast_port_ngroups_dec(port, vid);
- }
- 
+ 	/* set X2P calibration */
+ 	val = mcs_reg_read(mcs, MCSX_MIL_GLOBAL);
+ 	val |= BIT_ULL(5);
 -- 
 2.53.0
 
