@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818675172F8;
-	Wed, 30 Sep 2026 16:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9342C357D11;
+	Wed, 30 Sep 2026 16:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787141; cv=none; b=ohHgN8P2b7T+iKjK6ar+7MlSDIwioFp5W/YvljXulym4Iv9HDVneh0wIWmTeROH6LwigI28k62WF1VdhWI/vqn0mLqNNaPR33lwL2HNP12RCCdFgS3060dRVyXZ+32FHTrACzFet1lMWWSZGOLicOZUaCC7B8ubGswWALON3/6k=
+	t=1790787144; cv=none; b=uc2iEuDl3k7vcVDLYvo0BpkW+QX7AgQh05BVh+TLiFxqc6gktM5PYSlOGgr1ehRoXk0BcSLYp23WjcoQjAXgPEJMhKOGap24R+mhaZ1a36PuhMNpsDS4Z5G5a8ZwSl0l9Vajwh2z8Pu0mG+qgy/7LCxw8dx0fIqZst/V/1vPPyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787141; c=relaxed/simple;
-	bh=OJbvGy1WSeLQkF+wDv6TQFzAVxkwqPDbHxRhF2c8Enk=;
+	s=arc-20240116; t=1790787144; c=relaxed/simple;
+	bh=O9v/JjkavWJoS48MuFQZcKqLIwqiMxK/a4pLg8vS/OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkgmh2+m4P8s2e7yMUBhtplr8S+0AsPXPFaXzWljgk2iMEoMKUw2mPf509k9LmVaqOqoaGbEvOcKDvEi0bzsY/dwq+YIlLgE1zubqrk1fULye/zYmaQsdoV0COWTJvlr4yEBGarttzLXktQFgp7DzDGJZDCnEsXZkL80btCB4To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZgjTgFN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JwTYYHKR7i/wO2/lGTdeRwvP0go8wNnfrDKX+0VcIb9oXz3ogUWlUvxHF9gtSL0NtosAl5+diaoMKkUf+foUgzxCno0JCLRrj+N/vIepG/4adG770wO87MkZdBvBvZ7/Taa0AagDzlCsjOf0dQgBL88Zdcx4XD77jVLQHLWpUbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKTB6kHS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZgjTgFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58191F000FF;
-	Wed, 30 Sep 2026 16:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKTB6kHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3331F00898;
+	Wed, 30 Sep 2026 16:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787140;
-	bh=3DknalspYNvUE52XOnRmrZjlVUiS+4kdJ9RsCh/5IH8=;
+	s=korg; t=1790787143;
+	bh=PzZBsDsoUxDEB7pFmulkyF9YYQl30DcUuF+Pm5Kh7BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZgjTgFNvTDAyI9R5rvi4O38Qd5uM3s8pHUzwyLP+4L1VM2q3i+TND7yM3q54Ub80
-	 VNlyBhg1qa/MtAY3enhDKWdxg+yzHQILvhbQsrOk5mjXFn0MqTCt6tnRsw8xDGZ+hF
-	 j4GVU3JEXc/UcvvOtB2QoXoS1rE2DsqQ5I33hM5s=
+	b=pKTB6kHSiuKpMYryfo0jzMNs94nenpcwkDJd5DRHe9EYXC96trEtusmyfjWAmggVC
+	 ++1TDSOog9+tOEt1JVQuwW62CJL/tvCDHTlsjWnK79DHRVgiglb9rXgnjeNPnmd82W
+	 /5+/6ccMxIHr6MO5v+MPMFMQT2KzmKPdXmFBKL2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sk Anirban <sk.anirban@intel.com>,
-	Raag Jadav <raag.jadav@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Hui Peng <benquike@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 126/457] drm/xe/gt_throttle: Report power brake as a throttle reason on CRI
-Date: Wed, 30 Sep 2026 17:23:51 +0200
-Message-ID: <20260930152348.769872769@linuxfoundation.org>
+Subject: [PATCH 7.2 127/457] Bluetooth: bnep: fix out-of-bounds reads on short RX/TX frames and control fallthrough
+Date: Wed, 30 Sep 2026 17:23:52 +0200
+Message-ID: <20260930152348.790933882@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,74 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sk Anirban <sk.anirban@intel.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit ea4debcd8016f73c5dee3a29250a3d7977f015ef ]
+[ Upstream commit f0ca020cbb9bb7f3f4ea8ba1dfcf30a282aec91e ]
 
-CRI defines bit 5 of the perf limit reasons register as a power brake
-(PWRBRK) indicator. Add PWRBRK_MASK and a reason_pwrbrk sysfs attribute
-for CRI in place of reason_ratl.
+Fix multiple out-of-bounds reads in Bluetooth BNEP frame processing:
 
-Signed-off-by: Sk Anirban <sk.anirban@intel.com>
-Fixes: 8578e6d0546c ("drm/xe/gt_throttle: Drop individual show functions")
-Reviewed-by: Raag Jadav <raag.jadav@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260909114931.1039331-2-sk.anirban@intel.com
-(cherry picked from commit e199c851c0ab608a0ca89e7be1756a1461b41a2c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+1. In bnep_rx_frame() and bnep_ctrl_frame() (net/bluetooth/bnep/core.c),
+   use pskb_may_pull() to verify the BNEP header, control type byte,
+   filter count, and extension headers exist before reading them, and
+   return 0 after handling BNEP_CONTROL instead of falling through to
+   Ethernet frame submission when no extension headers follow.
+2. In bnep_net_xmit() (net/bluetooth/bnep/netdev.c), verify skb->len >=
+   ETH_HLEN with pskb_may_pull() before reading the 14-byte Ethernet
+   header to prevent an out-of-bounds heap read and infoleak on short
+   AF_PACKET TX frames.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/regs/xe_gt_regs.h | 1 +
- drivers/gpu/drm/xe/xe_gt_throttle.c  | 5 +++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/bnep/core.c   | 17 ++++++++++++++++-
+ net/bluetooth/bnep/netdev.c |  8 +++++++-
+ 2 files changed, 23 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/regs/xe_gt_regs.h b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-index 08251c7a1a4b6..247a736a54aaa 100644
---- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-+++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-@@ -651,6 +651,7 @@
- #define   MEM_THERMAL_MASK			REG_BIT(2)
- #define   VR_THERMAL_MASK			REG_BIT(3)
- #define   ICCMAX_MASK				REG_BIT(4)
-+#define   PWRBRK_MASK				REG_BIT(5)
- #define   SOC_AVG_THERMAL_MASK			REG_BIT(6)
- #define   FASTVMODE_MASK			REG_BIT(7)
- #define   PSYS_PL1_MASK				REG_BIT(12)
-diff --git a/drivers/gpu/drm/xe/xe_gt_throttle.c b/drivers/gpu/drm/xe/xe_gt_throttle.c
-index 1e7e3a31aa698..c0af5484611d1 100644
---- a/drivers/gpu/drm/xe/xe_gt_throttle.c
-+++ b/drivers/gpu/drm/xe/xe_gt_throttle.c
-@@ -39,7 +39,7 @@
-  * - ``reason_mem_thermal``: Memory thermal
-  * - ``reason_vr_thermal``: VR thermal
-  * - ``reason_iccmax``: ICCMAX
-- * - ``reason_ratl``: RATL thermal algorithm
-+ * - ``reason_pwrbrk``: Power brake
-  * - ``reason_soc_avg_thermal``: SoC average temp
-  * - ``reason_fastvmode``: VR is hitting FastVMode
-  * - ``reason_psys_pl1``: PSYS PL1
-@@ -200,6 +200,7 @@ static THROTTLE_ATTR_RO(reason_psys_pl1, PSYS_PL1_MASK);
- static THROTTLE_ATTR_RO(reason_psys_pl2, PSYS_PL2_MASK);
- static THROTTLE_ATTR_RO(reason_p0_freq, P0_FREQ_MASK);
- static THROTTLE_ATTR_RO(reason_psys_crit, PSYS_CRIT_MASK);
-+static THROTTLE_ATTR_RO(reason_pwrbrk, PWRBRK_MASK);
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index f7d88c33e23e4..ad24d2486665a 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -270,9 +270,14 @@ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
  
- static struct attribute *cri_throttle_attrs[] = {
- 	/* Common */
-@@ -209,12 +210,12 @@ static struct attribute *cri_throttle_attrs[] = {
- 	&attr_reason_pl2.attr.attr,
- 	&attr_reason_pl4.attr.attr,
- 	&attr_reason_prochot.attr.attr,
--	&attr_reason_ratl.attr.attr,
- 	/* CRI */
- 	&attr_reason_vr_thermal.attr.attr,
- 	&attr_reason_soc_thermal.attr.attr,
- 	&attr_reason_mem_thermal.attr.attr,
- 	&attr_reason_iccmax.attr.attr,
-+	&attr_reason_pwrbrk.attr.attr,
- 	&attr_reason_soc_avg_thermal.attr.attr,
- 	&attr_reason_fastvmode.attr.attr,
- 	&attr_reason_psys_pl1.attr.attr,
+ 		BT_DBG("type 0x%x len %u", h->type, h->len);
+ 
++		if (skb->len < h->len) {
++			err = -EILSEQ;
++			break;
++		}
++
+ 		switch (h->type & BNEP_TYPE_MASK) {
+ 		case BNEP_EXT_CONTROL:
+-			bnep_rx_control(s, skb->data, skb->len);
++			bnep_rx_control(s, skb->data, h->len);
+ 			break;
+ 
+ 		default:
+@@ -373,6 +378,11 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 			goto badframe;
+ 	}
+ 
++	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
++		kfree_skb(skb);
++		return 0;
++	}
++
+ 	/* Strip 802.1p header */
+ 	if (ntohs(s->eh.h_proto) == ETH_P_8021Q) {
+ 		if (!skb_pull(skb, 4))
+@@ -451,6 +461,11 @@ static int bnep_tx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 		goto send;
+ 	}
+ 
++	if (skb->len < ETH_HLEN) {
++		kfree_skb(skb);
++		return 0;
++	}
++
+ 	iv[il++] = (struct kvec) { &type, 1 };
+ 	len++;
+ 
+diff --git a/net/bluetooth/bnep/netdev.c b/net/bluetooth/bnep/netdev.c
+index ee1e39a3daffb..b451ef457741f 100644
+--- a/net/bluetooth/bnep/netdev.c
++++ b/net/bluetooth/bnep/netdev.c
+@@ -166,6 +166,12 @@ static netdev_tx_t bnep_net_xmit(struct sk_buff *skb,
+ 
+ 	BT_DBG("skb %p, dev %p", skb, dev);
+ 
++	if (!pskb_may_pull(skb, ETH_HLEN)) {
++		dev->stats.tx_dropped++;
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
++
+ #ifdef CONFIG_BT_BNEP_MC_FILTER
+ 	if (bnep_net_mc_filter(skb, s)) {
+ 		kfree_skb(skb);
+@@ -218,7 +224,7 @@ void bnep_net_setup(struct net_device *dev)
+ 	dev->addr_len = ETH_ALEN;
+ 
+ 	ether_setup(dev);
+-	dev->min_mtu = 0;
++	dev->min_mtu = ETH_MIN_MTU;
+ 	dev->max_mtu = ETH_MAX_MTU;
+ 	dev->priv_flags &= ~IFF_TX_SKB_SHARING;
+ 	dev->netdev_ops = &bnep_netdev_ops;
 -- 
 2.53.0
 
