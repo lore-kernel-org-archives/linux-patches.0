@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8224C4FD78D;
-	Wed, 30 Sep 2026 16:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCAF4CE681;
+	Wed, 30 Sep 2026 16:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785324; cv=none; b=lzMbGAPorxsKcSlfFECAPyWzweaZZamVjR73wp4q+ZDEK8l16vTBxWlBnhNKqKCYpEcaEbR1V+NCuAYPo6yBTMvIxYFoseN8iZJ4NP3VRxFILlxjrZTebMF9/3nGveiZkWfOnvDrk0UXlZev/qqZ9TpUh4fn5vrvMMKBwmGWcOc=
+	t=1790785328; cv=none; b=Z1z1hvkf2O46PCmENzxacm1WgpDe0Oito8SIjfbxfhm0f/Hyr9/et8P6ZSKPL1ElcZUlCLne+yBle8Gqe/bzw1Jq4LVyNfhnpqphfMEoCzSwJSSQvcLZSQW8vU+bfkjOY8S/B+WEu1Y6/DKgaQ9/63NaVCgqUQMqFoGgr9TIs50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785324; c=relaxed/simple;
-	bh=8bFpWjnVGGvYSTkOVVFTPF5aZF8/+lDecihIlnKANr0=;
+	s=arc-20240116; t=1790785328; c=relaxed/simple;
+	bh=ZYyOBwpS3UPN/ln38eXsQ1tokYQ2bf3ncCu7KHWI7V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3zpZIr03KEi8c6UJKs9PbyQfDYbuO7NZaohW8ediTDUeoit9qRDo/zz5EHdvG4y7FXRQBI7toVEiGfcbbTfVsK0RyzvLwj6AtBCkvYugaoLAwWZf7ltOb/ItikuLe105GYTqVCf/wkwF0SVWNfF45TcU2xwOpMq5CIBV2irIWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOc/2lbM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rdHCM4LF8gP4c9r6FAMxZat2MBIVbA1DhfiXdNIlVreenaBXrWu3SPQhTJ16PgwXx3tMGgtBiqffhUpnxQVbSyG05XILei8za0JeBXPb6wzlYbXV2zL5zQPunvxe+bhsSE824MzfuCkKUx+OzqdYCWVsUHBOPPqSSGocKCxOi4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcUIP64k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOc/2lbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85D21F000FF;
-	Wed, 30 Sep 2026 16:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcUIP64k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43C81F00898;
+	Wed, 30 Sep 2026 16:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785316;
-	bh=yrsKEHTmBkjSjoR3g+xlm2SBkTMephfSpo/tlN1ESr4=;
+	s=korg; t=1790785319;
+	bh=gHE/omMi5yydyafVgKTBjknw0+A35dNDWc+rQtoyxjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uOc/2lbMksxYGVa51V72fKn2/Lutfn+laNlTdldC7EBf69uSt+ZPkV+Y4jpOcbLwI
-	 zJ7Au1AbPwtKaNm2jRfFy+MKkMFk77HWQC14+ZKmjvAqcBvvcC92hG/tujWRKQkALl
-	 Z9u9ghKdlR7H4F2CkwbPBKOVTRFapT7+2S0yqPO0=
+	b=DcUIP64kDH7mYh1U1vtX4KAAgmrASLOxKEprUBVrmE1f/MYHdtJ1L02GqdyVWBfrU
+	 AOOYpV6zQqKGSNKMxArlqJakkFtkT8ieIOrDBLytYSKoAdnFAqhPEIGS0g2Rddya+1
+	 UysrzpLoyAXiNENat+BClIxe9svkRq/4NyG/42Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 466/982] watchdog: msc313e: Fix undefined behavior
-Date: Wed, 30 Sep 2026 17:20:02 +0200
-Message-ID: <20260930152426.795441094@linuxfoundation.org>
+Subject: [PATCH 6.1 467/982] watchdog: msc313e: Sync timeout value if WDT was running at boot
+Date: Wed, 30 Sep 2026 17:20:03 +0200
+Message-ID: <20260930152426.817316529@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,52 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit ab390021b2a3bb4cc875f28a6f76d13de90d7457 ]
+[ Upstream commit 01504d14e47b34779911250dd308a03f6ef681c2 ]
 
-readw() returns a u16.  Left shifting a u16 by 16 bits yields undefined
-behavior.
+If WDT was running at boot, the hardware timeout might be set to values
+other than the final software timeout.
 
-Cast to u32 explicitly before the shift.
+To be consistent, set the hardware timeout to match the final software
+timeout (i.e., after watchdog_init_timeout()) if WDT was running.
 
 Fixes: ffd264bd152c ("watchdog: msc313e: Check if the WDT was running at boot")
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260828161348.13212-7-tzungbi@kernel.org
+Link: https://patch.msgid.link/20260828161348.13212-8-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/msc313e_wdt.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/watchdog/msc313e_wdt.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
-index 9cfe059fd31a7..72620adec641a 100644
+index 72620adec641a..eea26c6c95d84 100644
 --- a/drivers/watchdog/msc313e_wdt.c
 +++ b/drivers/watchdog/msc313e_wdt.c
-@@ -32,6 +32,16 @@ struct msc313e_wdt_priv {
- 	struct clk *clk;
- };
+@@ -145,12 +145,21 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	priv->wdev.max_timeout = U32_MAX / rate;
+ 	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
  
-+static u32 msc313e_wdt_get_hw_timeout(struct msc313e_wdt_priv *priv)
-+{
-+	u16 low, high;
++	watchdog_set_drvdata(&priv->wdev, priv);
++	platform_set_drvdata(pdev, priv);
 +
-+	low = readw(priv->base + REG_WDT_MAX_PRD_L);
-+	high = readw(priv->base + REG_WDT_MAX_PRD_H);
++	watchdog_init_timeout(&priv->wdev, timeout, dev);
++	watchdog_stop_on_reboot(&priv->wdev);
++	watchdog_stop_on_unregister(&priv->wdev);
++	watchdog_stop_ping_on_suspend(&priv->wdev);
 +
-+	return ((u32)high << 16) | low;
-+}
-+
- static void msc313e_wdt_set_hw_timeout(struct msc313e_wdt_priv *priv,
- 				       unsigned int timeout)
- {
-@@ -140,7 +150,7 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	ret = clk_prepare_enable(priv->clk);
+ 	if (ret)
  		return ret;
  
  	/* If the period is non-zero the WDT is running */
--	if (readw(priv->base + REG_WDT_MAX_PRD_L) | (readw(priv->base + REG_WDT_MAX_PRD_H) << 16)) {
-+	if (msc313e_wdt_get_hw_timeout(priv)) {
+ 	if (msc313e_wdt_get_hw_timeout(priv)) {
++		msc313e_wdt_set_hw_timeout(priv, priv->wdev.timeout);
  		set_bit(WDOG_HW_RUNNING, &priv->wdev.status);
  		/*
  		 * Keep the clock enabled. The watchdog core will skip the next
+@@ -161,14 +170,6 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 		clk_disable_unprepare(priv->clk);
+ 	}
+ 
+-	watchdog_set_drvdata(&priv->wdev, priv);
+-	platform_set_drvdata(pdev, priv);
+-
+-	watchdog_init_timeout(&priv->wdev, timeout, dev);
+-	watchdog_stop_on_reboot(&priv->wdev);
+-	watchdog_stop_on_unregister(&priv->wdev);
+-	watchdog_stop_ping_on_suspend(&priv->wdev);
+-
+ 	ret = devm_watchdog_register_device(dev, &priv->wdev);
+ 
+ 	/* If the WDT is running and anything goes wrong, disable the clock. */
 -- 
 2.53.0
 
