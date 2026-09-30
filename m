@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5D84FC8E0;
-	Wed, 30 Sep 2026 15:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35313E8C65;
+	Wed, 30 Sep 2026 15:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783116; cv=none; b=Pj0qWUEybIKFs/QlBuhkzt3GhcDRCn3zNGWIlqvq1DydsRh77iiBI54yLB7COS0pdIAjSMs90VlA1h5Q8WHp3GmUdKhtWgNMO10wzhVI28wRyHcdKLcGrKwvTh7PNYSwQFI9HnIMy1V4T/rzc0dA+w3zcVFFUrnItM5odNa9bTc=
+	t=1790783117; cv=none; b=S+iej/jLG7rLFN0VCVzTm+neOrLWe34klppgt8M1LnCxb2I8SAKyoyKHiVOWigcJRHNDSmFg3GoVwGHEHCE0gmAn26xIm/3Kmlv7WIqiFnsN9xji3ru9lcfgzrxv7b7TM9tLFkOeKxAmuCWdcUPIKugvtPNVfvv4JJud89MkR0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783116; c=relaxed/simple;
-	bh=BdPMF3THI6RA+/HAhaIu1NHuRqzyGdoVcMjrncjzlNo=;
+	s=arc-20240116; t=1790783117; c=relaxed/simple;
+	bh=VGMVgDRGRw4Bt8vi36Ecex+quwacmqya5PlLHgu3bK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptyeOywohdq/j6vZ2O+yPlv1shDi8AYgyFr6Flp2ICBGl7iP+JEBWsPiUbrPsT8I9U64rNOlDil5oxqlCypJ03C66Cx1bqKvr9ukip/BcBlWUoQYXFovvhDR4HjUowRZRvB8xojtRRIVwzWOBO937SWyMMxcfYaHUuMo7+0T6uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVSFwtET; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=phBhsvV2lGi2Eio5LYLOwc9/SYAsN6Rv2pxCXEwIZqXUaUl4aJDPYGk0hldrwkZ+RaHHawlTxZ2/jXE+3uhW2HOPJib99ua3sCK6VknDlm3bLdkXbFJoXUo5XngXtB5M0CDgnvnxzCL2pyuwLC0NG41I5j2w05k4kDlboGKfgyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9pC7ADl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVSFwtET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D12C1F00898;
-	Wed, 30 Sep 2026 15:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9pC7ADl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253981F000FF;
+	Wed, 30 Sep 2026 15:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783111;
-	bh=Ys/8FFQjdu3ERRvHN0uZsPwKfk2M1Fg6ky6eygf9GmY=;
+	s=korg; t=1790783114;
+	bh=RAAd8ZcsbSH6b2v+kFo05pvu43phy2EWJsXr1ahs0n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVSFwtETZDl3id0dFrM3oiKzICXF1tIOaqFvau5nLvPCIX4O6Zss/G5Ff2onORD5p
-	 2lf00jJcz9yuFtTagDWHwzetGgMjJGvACYgdxwWvi6Vk6dn09uSlUiTI0RXW/USetG
-	 5HeZbrMI7RhaXKadKFlU9qKNuYfMhUJWicjGqia8=
+	b=C9pC7ADlboIFZjBOOLZzV06SFh78+Fc2idPEbR5NE0M3nmLelTtTXUempMid984FV
+	 +IJ1Q1bumg0tLwhyec2FZWxU69rKul2XKm0YwWU2kSgIgB4vdH6K80uteSAyC6OtjS
+	 QLmjgwZXNdWhW1oMxaA0aVhGsXzV34lfsmRm49dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"hpp.iscas" <hppiscas@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 284/595] scsi: target: iscsi: Handle abort for WRITE_PENDING cmds
-Date: Wed, 30 Sep 2026 17:22:57 +0200
-Message-ID: <20260930152353.808356280@linuxfoundation.org>
+Subject: [PATCH 5.10 258/595] ASoC: Intel: SST: Publish the PCI module aliases
+Date: Wed, 30 Sep 2026 17:22:31 +0200
+Message-ID: <20260930152353.257492404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Bogdanov <d.bogdanov@yadro.com>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit ea87981a0ee8fb8ced1c87d004a541b60623ff97 ]
+[ Upstream commit d112159df5c6cc5ee6ab91cc32bf6ed29939df38 ]
 
-Sometimes an initiator does not send data for a WRITE command and tries to
-abort it. The abort hangs waiting for frontend driver completion. iSCSI
-driver waits for data and that timeout eventually initiates connection
-reinstatment. The connection closing releases the commands in the
-connection, but those aborted commands still did not handle the abort and
-did not decrease a command ref counter. Because of that the connection
-reinstatement hangs indefinitely and prevents re-login for that initiator.
+The legacy SST PCI driver matches Intel Tangier devices using
+intel_sst_ids, but its only explicit module alias is "sst". That alias
+does not match PCI modalias events when this driver is built as a module.
 
-Add handling in TCM of the abort for the WRITE_PENDING commands at
-connection closing moment to make it possible to release them.
+Publish its PCI table. The independently configurable SOF driver does
+not provide aliases for the legacy SST module.
 
-Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-[mnc: Rebase and expand comment]
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-10-michael.christie@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905133133.63661-1-hppiscas@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/intel/atom/sst/sst_pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 17835c878caeb..ddeaf0f69639b 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -26,6 +26,7 @@
- #include <target/target_core_base.h>
- #include <target/target_core_fabric.h>
+diff --git a/sound/soc/intel/atom/sst/sst_pci.c b/sound/soc/intel/atom/sst/sst_pci.c
+index f7ad991bf04d5..900e3d42e3d5e 100644
+--- a/sound/soc/intel/atom/sst/sst_pci.c
++++ b/sound/soc/intel/atom/sst/sst_pci.c
+@@ -179,6 +179,7 @@ static const struct pci_device_id intel_sst_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, SST_MRFLD_PCI_ID), 0},
+ 	{ 0, }
+ };
++MODULE_DEVICE_TABLE(pci, intel_sst_ids);
  
-+#include <target/target_core_backend.h>
- #include <target/iscsi/iscsi_target_core.h>
- #include "iscsi_target_parameters.h"
- #include "iscsi_target_seq_pdu_list.h"
-@@ -4102,6 +4103,16 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
- 		} else {
- 			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
- 		}
-+
-+		if (cmd->se_cmd.t_state == TRANSPORT_WRITE_PENDING) {
-+			/*
-+			 * We never submitted the cmd to LIO core, so we have
-+			 * to tell LIO to perform the completion process.
-+			 */
-+			spin_unlock_irq(&se_cmd->t_state_lock);
-+			target_complete_cmd(&cmd->se_cmd, SAM_STAT_TASK_ABORTED);
-+			continue;
-+		}
- 		spin_unlock_irq(&se_cmd->t_state_lock);
- 	}
- 	spin_unlock_bh(&conn->cmd_lock);
+ static struct pci_driver sst_driver = {
+ 	.name = SST_DRV_NAME,
 -- 
 2.53.0
 
