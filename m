@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBF838C42F;
-	Wed, 30 Sep 2026 19:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45243CC300;
+	Wed, 30 Sep 2026 19:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794959; cv=none; b=T85viUpiJqz9R4dXLfs2zsPTvuVKe/V7zngzq18rQfCi9dbiYR9suTRFbkBx8SBwTqKkuyqBRlR4szDGVKr+M//Fu37ODh6D0H8KqpdEcIWFVtVjnMBbGbFL8It0QGrmR/qCaIBADbug4H4bpVXmw852E4sIdo37NmIbAT5pKg0=
+	t=1790794962; cv=none; b=HE34dcJIlv9QXvfbvPVbL0opo1/yP9wMXpwR4PsiFbsEsavYgg7oi2hF6/A315yei+cZRVCD5aLeFf8A3uoizjKGHvEafRrbCn5J3gWB0QsWwHmqtzM+1pXlh+jBYTEKgZhoOm3CzOsn+eyLXELl6vx8FdXW6zhGlS6MLqrqKJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794959; c=relaxed/simple;
-	bh=WjsAsNbqu/eo1QESBQ3pr7QanryENQt9PCsdZE+4wpE=;
+	s=arc-20240116; t=1790794962; c=relaxed/simple;
+	bh=oj8bK9dJKt0mYjRjqyN0jG+mysczX8NPc0DcbiyT4Wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTz/sN29nhn84YFuUTbU/q6hpfNC9mRwFQwsBg9bHgAtqhh0zk4wc1fUY+6+Q7RIa166Kcql/KOXvKR0q5PMqUaL1WhQ+QfC6sOFCsnftBq1KCkdB9VC5KQct78JozPvH8jyMcUKa6LaLwtEhaVtyjrSHG/TQ1Pu+Ny1m5JsZXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mzCpg+b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mW/ARChArHkADKN+YX9zSBR1n+iLm17Oloq0xVkUyzVpYXsamEc5Eh5lX5rIX6b3zc5zSqZBgs2r6fqcmx8ZOOUvxzf6/Q3KFsdfIKrI1uhfYo+uAtiJg3yEOfsOfpZBYJ2O1ptXXm4Bf6VeA+7Yu9ALW1C47nF/ySmncrV+q5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0w9jukL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mzCpg+b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CF71F000FF;
-	Wed, 30 Sep 2026 19:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0w9jukL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8F51F000FF;
+	Wed, 30 Sep 2026 19:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794957;
-	bh=1Y6G9TinPrc0sHkgVqd1a9kpjoaRMCRLkQdEY2999nA=;
+	s=korg; t=1790794960;
+	bh=yUcqQFVfKDoeEdR4L4f/yv1baQiMG3uTx3G5QkC4hnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1mzCpg+bI49TvsJbOgmEUxELY03Dqc5HYAnFUyf2bVv4cpCo8yklziGm8zDgAOvuU
-	 fmV5sjpetuNHsbqkr03EmDBEgRoxpP+/1K0N38oN7EOWEc3a5CWESRwS3gWTyorsjE
-	 2CfuahaLsDE62CuIfwObX8qFW3GFej++8AsROo3A=
+	b=K0w9jukLW0Ge6qSCG79tu4fr79E7qsjc1ccNSfReIjaa+nh2vGuRDCQBG3WfQXxtR
+	 Fpk/h2Gv9P74xlqryE4Ve30NkBwgXGxH9GuMqkVlnbE1jaB7wbQHHgAUnBZGT2xnLv
+	 ycUyGvmRuI8P8YyqX+cHHkfoHWfMR0Vp1G/dIZdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0393/1193] net/sched: act_api: fix skb sizing and action leak on reoffload delete
-Date: Wed, 30 Sep 2026 17:17:57 +0200
-Message-ID: <20260930152442.919332038@linuxfoundation.org>
+Subject: [PATCH 6.6 0394/1193] sctp: fix a TOCTOU race in SCTP_CMD_TIMER_START
+Date: Wed, 30 Sep 2026 17:17:58 +0200
+Message-ID: <20260930152442.940819821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,95 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 251367a0a3319fa565daf7468b0afd933b1f5ab1 ]
+[ Upstream commit 2188569e7e1b0bc3f3b557dc97ab7a02befc11c8 ]
 
-tcf_reoffload_del_notify_msg() sizes the RTM_DELACTION skb with
-tcf_action_fill_size(action) alone.  Unlike every other notification path
-it never wraps that in tcf_action_full_attrs_size(), so the nlmsg_put()
-header, struct tcamsg and the TCA_ACT_TAB nest that tca_get_fill() emits -
-24 bytes on x86_64 - are not budgeted.  As long as the single action stays
-well under NLMSG_GOODSIZE the floor in alloc_skb() hides this, but once its
-fill size crosses NLMSG_GOODSIZE the allocation is exactly 24 bytes short
-and tca_get_fill() runs out of tailroom.  That is now easy to reach for an
-offloadable act_pedit with a large tcfp_nkeys, which commit 8e2efb3f45a5
-("net/sched: add get_fill_size callbacks for actions missing them") started
-accounting for properly.
+The SCTP_CMD_TIMER_START handler checks timer_pending() before calling
+timer_reduce(). The timer can expire and detach between these operations,
+causing timer_reduce() to rearm the timer without taking the association
+reference required for the newly armed timer.
 
-When that happens tcf_reoffload_del_notify() returns early, before
-tcf_idr_release_unsafe(), and tcf_action_reoffload_cb() discards the return
-value:
+The timer callback later unconditionally drops its association reference,
+which can leave the association reference count unbalanced and result in
+use-after-free during association teardown.
 
-	if (tc_act_skip_sw(p->tcfa_flags) && !tc_act_in_hw(p))
-		tcf_reoffload_del_notify(net, p);
+Use the return value of timer_reduce() to determine whether the timer was
+actually armed. Take the association reference only when timer_reduce()
+successfully starts a new timer, closing the race between checking the
+timer state and rearming it.
 
-The action has just lost its last hardware instance and is skip_sw, so it
-is left installed while processing no packets, and with no notification to
-tell userspace about it.  An -ENOBUFS from alloc_skb() gets the same
-treatment.
+This issue was reported by Nico Yip (@_cyeaa_) working with TrendAI Zero
+Day Initiative.
 
-Fix this by budgeting the message header the way the add and delete paths
-do, and release the action even when the notification cannot be built -
-dropping the notification is strictly better than leaking a dead action,
-and there is no caller left to report the error to.
-
-Fixes: 13926d19a11e ("flow_offload: add reoffload process to update hw_count")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://patch.msgid.link/20260824153903.4143642-4-victor@mojatatu.com
+Fixes: 20a785aa52c8 ("sctp: Don't add the shutdown timer if its already been added")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/9d8f1b5c50329d5ea7c642128d35681abaa9ed20.1787773744.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/sctp/sm_sideeffect.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 138cd6e4bc8eb..2459fb8abcb9d 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1834,11 +1834,13 @@ static int tcf_action_delete(struct net *net, struct tc_action *actions[])
- static struct sk_buff *tcf_reoffload_del_notify_msg(struct net *net,
- 						    struct tc_action *action)
- {
--	size_t attr_size = tcf_action_fill_size(action);
- 	struct tc_action *actions[TCA_ACT_MAX_PRIO] = {
- 		[0] = action,
- 	};
- 	struct sk_buff *skb;
-+	size_t attr_size;
-+
-+	attr_size = tcf_action_full_attrs_size(tcf_action_fill_size(action));
+diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
+index ed0a36acc5e1c..c05f1b0736960 100644
+--- a/net/sctp/sm_sideeffect.c
++++ b/net/sctp/sm_sideeffect.c
+@@ -1539,17 +1539,8 @@ static int sctp_cmd_interpreter(enum sctp_event_type event_type,
+ 			timeout = asoc->timeouts[cmd->obj.to];
+ 			BUG_ON(!timeout);
  
- 	skb = alloc_skb(max(attr_size, NLMSG_GOODSIZE), GFP_KERNEL);
- 	if (!skb)
-@@ -1855,15 +1857,18 @@ static struct sk_buff *tcf_reoffload_del_notify_msg(struct net *net,
- static int tcf_reoffload_del_notify(struct net *net, struct tc_action *action)
- {
- 	const struct tc_action_ops *ops = action->ops;
--	struct sk_buff *skb;
-+	struct sk_buff *skb = NULL;
- 	int ret;
+-			/*
+-			 * SCTP has a hard time with timer starts.  Because we process
+-			 * timer starts as side effects, it can be hard to tell if we
+-			 * have already started a timer or not, which leads to BUG
+-			 * halts when we call add_timer. So here, instead of just starting
+-			 * a timer, if the timer is already started, and just mod
+-			 * the timer with the shorter of the two expiration times
+-			 */
+-			if (!timer_pending(timer))
++			if (!timer_reduce(timer, jiffies + timeout))
+ 				sctp_association_hold(asoc);
+-			timer_reduce(timer, jiffies + timeout);
+ 			break;
  
--	if (!rtnl_notify_needed(net, 0, RTNLGRP_TC)) {
--		skb = NULL;
--	} else {
-+	if (rtnl_notify_needed(net, 0, RTNLGRP_TC)) {
- 		skb = tcf_reoffload_del_notify_msg(net, action);
-+		/* The action has already lost its hardware instance and is
-+		 * skip_sw, so it must be released whether or not the
-+		 * notification can be built.  Drop the notification rather
-+		 * than leave an action behind that processes no packets.
-+		 */
- 		if (IS_ERR(skb))
--			return PTR_ERR(skb);
-+			skb = NULL;
- 	}
- 
- 	ret = tcf_idr_release_unsafe(action);
+ 		case SCTP_CMD_TIMER_RESTART:
 -- 
 2.53.0
 
