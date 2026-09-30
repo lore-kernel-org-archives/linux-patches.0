@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CD74C10DD;
-	Wed, 30 Sep 2026 18:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0C04DDB2B;
+	Wed, 30 Sep 2026 18:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793491; cv=none; b=AHZABFJFN1vZJEekvO50R/5ys8tol6rmEG3Ls2yS1rk9PD8Er4xjPRFK40JN1NfaXVNTTYXsAy9x5sk6wrrDY+QjyLBXIq/gtFegJ73IVltSFwoZHVIRrd7gZX4meQTk07tgcFoabI01hRXZgCwb7+3C6Fp/YrmJX+b0huE1TQs=
+	t=1790793495; cv=none; b=p/qVx88ARBMvBP6lrgIAzB4s5WqZNHZHECiFen7loImEAeUqvqBU355C4rbZXRR/mmu4xxXfBluWgzTY2IWetfRpYZwOIv+A2fPovifD7C+CfoJVE0F8dEYQVaOKe1/YFeCcpGWqy+0hMjQWq1FLA0qa6tms82IpCUusowc5rAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793491; c=relaxed/simple;
-	bh=DX9iq7lqAeXU58Xa2ncN+mc9VXjAo37WCTzh4TkRRtU=;
+	s=arc-20240116; t=1790793495; c=relaxed/simple;
+	bh=A1gRtqj+n2muNEoXWMq0hSOKZJx7FuuIjbaER639dK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FmDFRk/Sv2OWC5dNDmWczGGwf+s3uHcKuFzh1GXpD2gPmkJ/TI0S14G2pazBUHv93yl3Po7ZS05pDASsf0DnvlyGAAWMKLPmEGe00H/w1w16bPHlHj/eyvNsD0Tc28bYDTNEEw6ffPQtUq5IXn0g6azj6HL01i7eKrm/mv5sFl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8lKfP2+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qUufNvQ9xRRcY4rNf1Tqk/BuMRBgbADz6i7HvTr7sxzBEjyupxee6HXrqGUGX6G8NnOyNyaRE/b2yX6tOHBDQNphGYRUEJfYBH+Rg+Cx1E/apPQfRH8u+UFwtu7xxCx6HjU+Gw45kA64ywRy0rXK2LXYiKeUqMEg6lfHJsjWInY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIVed84R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8lKfP2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FBC1F000FF;
-	Wed, 30 Sep 2026 18:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIVed84R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999D51F000FF;
+	Wed, 30 Sep 2026 18:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793489;
-	bh=Lz5WVigjeGePC4D4W3tlcVgF7jPnJf2uC5whwJiHO+I=;
+	s=korg; t=1790793492;
+	bh=R1MAzSyEcYJpUXVMWZ/cgJ3+CgcSHJ8TkWL1kV4YYyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K8lKfP2+HFB5zcQ+P8Jjai+cWPRQwuG2ancnZ9Dz+TR4H6qLQn8su+z5LcmbGy/6k
-	 Zz2H8KynQeDb/FyA7reOLOQorOTb2Nnubeq+HRr3pZk+6OQh6U4ChOEzfDC3UJvgMn
-	 d17mXSs7GVTEAxtvkQVcExGpEXrww6uzRb2TN1Kw=
+	b=cIVed84Rb6mBr2Q8aih1nLeZ1A3SioIWEOVqVeXJGRcm+VzfeKAZ87Y0FenAKs/mN
+	 pZ16jZkTXG+t6s04DGmamysRnUu6Z5OLL6TVw3IMNu7iTApKtodcAuf+MXiU3V3GGl
+	 Fr0DNu8q39FQc7vnN1lN7tArY97qDbiu5d7f1/uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 218/395] crypto: s390/hmac - Generate intermediate CV for API partial block handling
-Date: Wed, 30 Sep 2026 17:28:00 +0200
-Message-ID: <20260930152345.389658796@linuxfoundation.org>
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.18 267/395] HID: alps: fix use-after-free on input2 registration failure
+Date: Wed, 30 Sep 2026 17:28:49 +0200
+Message-ID: <20260930152346.446090008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,38 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-commit 10396a2d6d41d594975b6ece712278570c3c970c upstream.
+commit d3aba3442798ce4a4c8ce3104d7b286d61e605f9 upstream.
 
-The API partial block handling requires a intermediate chaining
-value (CV). The internal function hash_data() sets the function code
-correctly, so also call cpacf_kimd() instruction for intermediate CV
-generation, as cpacf_klmd() always generate the final hash value.
+alps_input_configured() stores data->input2 before calling
+input_register_device().  If registration fails, input_free_device()
+frees the input device but data->input2 still points to the freed memory.
+alps_input_configured() calls hid_hw_open() before allocating input2, so
+URBs are already active and raw_event can fire during the failure window.
+A U1_SP_ABSOLUTE_REPORT_ID report arriving then causes u1_raw_event()
+to dereference the freed data->input2 -> use-after-free.
 
-Cc: stable@vger.kernel.org # 6.15+
-Fixes: 08811169ac01 ("crypto: s390/hmac - Use API partial block handling")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix by only storing input2 into drvdata after successful registration
+and adding a NULL guard in the raw_event path.
+
+Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/hmac_s390.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hid/hid-alps.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/s390/crypto/hmac_s390.c
-+++ b/arch/s390/crypto/hmac_s390.c
-@@ -151,7 +151,10 @@ static int hash_data(const u8 *in, unsig
+--- a/drivers/hid/hid-alps.c
++++ b/drivers/hid/hid-alps.c
+@@ -407,6 +407,8 @@ static int u1_raw_event(struct alps_dev
+ 		return 1;
  
- #undef PARAM_INIT
+ 	case U1_SP_ABSOLUTE_REPORT_ID:
++		if (!hdata->input2)
++			return 0;
+ 		sp_x = get_unaligned_le16(data+2);
+ 		sp_y = get_unaligned_le16(data+4);
  
--	cpacf_klmd(func, &param, in, inlen);
-+	if (final)
-+		cpacf_klmd(func, &param, in, inlen);
-+	else
-+		cpacf_kimd(func, &param, in, inlen);
+@@ -738,7 +740,6 @@ static int alps_input_configured(struct
+ 			goto exit;
+ 		}
  
- 	memcpy(digest, &param, digestsize);
+-		data->input2 = input2;
+ 		input2->phys = input->phys;
+ 		input2->name = "DualPoint Stick";
+ 		input2->id.bustype = BUS_I2C;
+@@ -762,11 +763,12 @@ static int alps_input_configured(struct
+ 		__set_bit(INPUT_PROP_POINTER, input2->propbit);
+ 		__set_bit(INPUT_PROP_POINTING_STICK, input2->propbit);
  
+-		if (input_register_device(data->input2)) {
++		if (input_register_device(input2)) {
+ 			input_free_device(input2);
+ 			ret = -ENOENT;
+ 			goto exit;
+ 		}
++		data->input2 = input2;
+ 	}
+ 
+ exit:
 
 
