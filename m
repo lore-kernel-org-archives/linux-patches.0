@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B964DDB20;
-	Wed, 30 Sep 2026 16:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC7351C326;
+	Wed, 30 Sep 2026 16:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784717; cv=none; b=jWhz3zxRKM1SONAPOBqoVMpNkHd3hIu4HXsMy/tNGNcZmO9sNaYwHaiapVl4mTKQE8yNSW6QZIuXkmACWAiW+Rte5SJS6vhEW944HV4lTXCtNKJdKp/IeWo4KyPW1cCFnOCxbBsWTZcejqjmy01bSJfZBvO/jpDtZty8UFY4ZZA=
+	t=1790784722; cv=none; b=IBWcR3966tbniRZoomWPNHfpb8Iiumum2V2a6R0JE4RN97h7FF5hTzpdvq1OeXOEhuyzFHzHuqsTIJsT4eOKZLf3JN5MlCMc2bIjCjQaUT3PGLkblRXZgXjJIN/bnVwSME9076lnICmJw8ETAXfFnAZIfj+5jBRIg0sK8debVrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784717; c=relaxed/simple;
-	bh=mubmwMI3/M7X4vXEoiKEtYpm7Xp00hfTIzLpyHyip+A=;
+	s=arc-20240116; t=1790784722; c=relaxed/simple;
+	bh=zHXj4gWaPP87EQDr1Y1PIu23VNdmEt+fAW/dcHylBzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFzq4JE8+U/gZyIeMCRP6jnjXRwTcs5FauzgVJMiB74B1Q4/C2yc6D4PxX2EABsct/P8JNoz3vwnnGjISSBiucQtZmpxNwl/pMMuxiuAKc23XQcZMvbkcl0fOvSC8ARqkOrX1WC+GvtVjLYyHTUpnN33eiZqfxGR/0j0SyHbQ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjStzuW/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z97Mb7HQgxx26wSkiU/CLeMmXzqfuWEvvjzaHehyhhFEZcPeZi4lwYkBU3OlmaztOrMgfNWjdM3EFN0al8prE/PHihq6tmUe4OhApIBjUy0wdlLGpbv79c9rdK059g0dmN0F5tKH3iQdxIHr/Gjrk2qVeSk9LtxEHQ586BfTqbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJRGKB+h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjStzuW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8C91F0089B;
-	Wed, 30 Sep 2026 16:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJRGKB+h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A440C1F000FF;
+	Wed, 30 Sep 2026 16:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784708;
-	bh=m87B6NNNRmNijsmXDCiLOvTja78hhIQeMhuc9MsYFzY=;
+	s=korg; t=1790784717;
+	bh=NQLkztnTIaLgujqWP7s4/JCM4dY+e6dgtr2HMEPYeDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjStzuW/BKrNz047Knqh8oiwTTh7rl4zdWh2TO+YhkIBfPrTyzPnfxB7SHWNyxC4v
-	 NDXN/jP+MR/ycCiEIFVRk27/o6D25fNE63qDKFM15LNtUsEwLPmtl9cZ1BG6FWc7CV
-	 R1VshnvjuPzhnEuAhk+FXRzhzirNwOcMW2HngafE=
+	b=UJRGKB+hvR3EAcfBpxNsm87ZjyvS6LTc3bSJB16eaYOb+yPbsy30VeBKMi1L3Hoko
+	 Wcbq9XDalcJ0lJ9OW8YeKOkOYRKi6KTHEPDUTsqWsgagYyrNhvu9z1fbfLT95mfr4n
+	 kwW/jjNPzBTFcpWgLplAQFvUATeFapQAECLFx1jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 249/982] wifi: rsi: avoid reading TKIP MIC keys for non-TKIP ciphers
-Date: Wed, 30 Sep 2026 17:16:25 +0200
-Message-ID: <20260930152422.141984303@linuxfoundation.org>
+Subject: [PATCH 6.1 209/982] PCI: iproc: Protect root bus removal with rescan lock
+Date: Wed, 30 Sep 2026 17:15:45 +0200
+Message-ID: <20260930152421.297396731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,45 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 843fe9bc583b7686ca68312ac9319c9240a73c03 ]
+[ Upstream commit a6a64e150f12ad5391e0a0d60f6a3d119b06ce50 ]
 
-rsi_hal_load_key() copies tx_mic_key and rx_mic_key from data[16] and
-data[24] whenever key data is present. Those offsets are only part of
-the 32-byte TKIP key layout. Shorter keys used by other ciphers, such as
-CCMP, do not provide those bytes, so the unconditional copies can read
-past the supplied key buffer.
+Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
+to avoid racing with concurrent rescan or hotplug operations triggered via
+sysfs.  Such races may lead to use-after-free issues or system crashes.
 
-Only copy the MIC keys for TKIP, and reject malformed TKIP keys that are
-shorter than the expected 32-byte layout.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260701053414.34015-1-pengpeng@iscas.ac.cn
-[drop useless length check]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260521161822.132996-6-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mgmt.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pcie-iproc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_mgmt.c b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-index 1b309e47a1f11..195d7394ab775 100644
---- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
-@@ -848,8 +848,10 @@ int rsi_hal_load_key(struct rsi_common *common,
- 		} else {
- 			memcpy(&set_key->key[0][0], data, key_len);
- 		}
--		memcpy(set_key->tx_mic_key, &data[16], 8);
--		memcpy(set_key->rx_mic_key, &data[24], 8);
-+		if (cipher == WLAN_CIPHER_SUITE_TKIP) {
-+			memcpy(set_key->tx_mic_key, &data[16], 8);
-+			memcpy(set_key->rx_mic_key, &data[24], 8);
-+		}
- 	} else {
- 		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
- 	}
+diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
+index 6525c7ded5c40..2eae2d1859d34 100644
+--- a/drivers/pci/controller/pcie-iproc.c
++++ b/drivers/pci/controller/pcie-iproc.c
+@@ -1541,8 +1541,10 @@ int iproc_pcie_remove(struct iproc_pcie *pcie)
+ {
+ 	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
+ 
++	pci_lock_rescan_remove();
+ 	pci_stop_root_bus(host->bus);
+ 	pci_remove_root_bus(host->bus);
++	pci_unlock_rescan_remove();
+ 
+ 	iproc_pcie_msi_disable(pcie);
+ 
 -- 
 2.53.0
 
