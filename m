@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B28350AC15;
-	Wed, 30 Sep 2026 15:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779074CE67E;
+	Wed, 30 Sep 2026 15:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782472; cv=none; b=VBQkqW7qL94dGdT9dGGVtaXVRAEv1SJxtH2H6cNMDyf9RQ0UXsL+LkiLxtADzMwNhpepd5LCAh1UjblWatmU7v/IKSYnW0U+pwol23Hb80xMVn42r/kl4cAe7TWYQFcN8Q2KoOoa0Ev3Ar+qywAVa1uxMZWldtvE80hqAfQV9Cc=
+	t=1790782469; cv=none; b=rNrT942YpEDfARIR/Q0ROX8t96OGftu6I0YguD9CYqEnbV7590zZGWMxUqveDGe+JaUPssMgwH60gjrXUIAqZm4dg6hnxvGTO5blATEZy/yFd/4ZJvmd0j6i/FjeU2XZdPFzb9c+gjf0ufbh+7AhTLhzDTCBeQpd/NvjWcgknY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782472; c=relaxed/simple;
-	bh=3AJYTAM4Kg+PrIoaukHVahs480/0iwZNaanIRpYCJmk=;
+	s=arc-20240116; t=1790782469; c=relaxed/simple;
+	bh=PgMprE7oJ/jx6N0w9eYEhogd/mwvwc2WfKLd4lAjBGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7VijLNaTYEAj10fsRWq0MYZxgBv660uMw0BYhyOMUKh38qKqnlF+n9vbbmSIFe6hbCrewP/jIySmeeQs+AKm7yMDTOTybiwRRiN04lJMEvF0CzKL4XiP2Q7Z0GcruwEBi6lIX5N/YP8tB1BIS67cLirBgTfqwiIRatwBiu4F4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXEwFZCT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RI3WAaRVXHykcAVOZYrvQvQ6nSh5v9heTZbNZKY2eQuRIQLpgWmi62MGI/vbf9SGaWNcJFr1S8RDtpxVX1siuI7kQleRHCeis5GqO+dWNjxyLtF8yTwbVH4bxBe54O6F8Ypi0OUWySBK5bQHvy6pztT3daBjsWRoo+Ql3z3nGMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBghxpqA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXEwFZCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925E41F00899;
-	Wed, 30 Sep 2026 15:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBghxpqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A1A1F0089A;
+	Wed, 30 Sep 2026 15:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782462;
-	bh=zhSQgHawaIKKX7ynXaAh07ncyDuGoAxytNGUwlZSzAM=;
+	s=korg; t=1790782456;
+	bh=8AXbuc3tzqVXsIz5clMskkrfYTtp4iwmMkBK1NsG+iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YXEwFZCTOUhdpLUzh1+2PY7ZXU3s7+wbPyrbad8y19cSplhSa8msWajjBQCadoC1/
-	 Nv0yXzg4zUU2fzz6xhghWBknnSXrlIWP4a25emqns9K3vrMNii9iXT6B3EHTyD6Rlb
-	 T4v3yRsHBVS8BUj4jxiyYaW/myf26k6CHYCWfOL8=
+	b=tBghxpqArPTfYCVM8S0+I9SXrmYkgC7fane7sxLWM1ob1GwD1Iav/9ZWeNIQC5mji
+	 SW92KfrVhiPYqLO/GgAE0/AJ+xDCpgdlHh2AdqfzwvL62dH31iKmmm+U8YwEz2pJxF
+	 mzcHvAvp9x516Fcl66zocYGZlIXcbZViwoK84FQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Stepan Ionichev <sozdayvek@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/595] usb: host: add ARCH_AIROHA in XHCI MTK dependency
-Date: Wed, 30 Sep 2026 17:19:07 +0200
-Message-ID: <20260930152348.892690833@linuxfoundation.org>
+Subject: [PATCH 5.10 052/595] usb: gadget: goku_udc: avoid NULL deref of dev->driver in INT_USBRESET log
+Date: Wed, 30 Sep 2026 17:19:05 +0200
+Message-ID: <20260930152348.850388126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,35 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit ffeaf31f05d664581aa436d9cb92b4d1d8d301ce ]
+[ Upstream commit 5bf5e3fba9bc7dfd69701521dbe9809f8ccbdb02 ]
 
-Airoha SoC use the same register map and logic of the Mediatek xHCI
-driver, hence add it to the dependency list to permit compilation also
-on this ARCH.
+goku_irq() handles a number of bus events under a single ep0 path.
+It already guards the gadget driver suspend/resume callbacks against a
+NULL ->driver:
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Link: https://patch.msgid.link/20260519164903.31258-1-ansuelsmth@gmail.com
+	if (dev->gadget.speed != USB_SPEED_UNKNOWN
+			&& dev->driver
+			&& dev->driver->resume) {
+		spin_unlock(&dev->lock);
+		dev->driver->resume(&dev->gadget);
+		...
+	}
+
+but the very next branch unconditionally dereferences dev->driver
+when an INT_USBRESET arrives:
+
+	if (stat & INT_USBRESET) {
+		ACK(INT_USBRESET);
+		INFO(dev, "USB reset done, gadget %s\n",
+			dev->driver->driver.name);
+	}
+
+If the controller raises INT_USBRESET before any gadget driver has
+been bound (or after one has been unbound), dev->driver is NULL and
+the printk dereferences NULL.
+
+smatch flags the inconsistency:
+
+  drivers/usb/gadget/udc/goku_udc.c:1618 goku_irq() error:
+  we previously assumed 'dev->driver' could be null (see line 1607)
+
+Fall back to a placeholder when the gadget driver is not bound.
+
+No functional change while a gadget driver is bound.
+
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Link: https://patch.msgid.link/20260509110636.19762-1-sozdayvek@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/goku_udc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
-index ab12c4bf0ef1f..d9bce38d42765 100644
---- a/drivers/usb/host/Kconfig
-+++ b/drivers/usb/host/Kconfig
-@@ -72,7 +72,7 @@ config USB_XHCI_HISTB
- config USB_XHCI_MTK
- 	tristate "xHCI support for MediaTek SoCs"
- 	select MFD_SYSCON
--	depends on (MIPS && SOC_MT7621) || ARCH_MEDIATEK || COMPILE_TEST
-+	depends on (MIPS && SOC_MT7621) || ARCH_MEDIATEK || ARCH_AIROHA || COMPILE_TEST
- 	help
- 	  Say 'Y' to enable the support for the xHCI host controller
- 	  found in MediaTek SoCs.
+diff --git a/drivers/usb/gadget/udc/goku_udc.c b/drivers/usb/gadget/udc/goku_udc.c
+index 3e1267d38774f..b9c4adb767efa 100644
+--- a/drivers/usb/gadget/udc/goku_udc.c
++++ b/drivers/usb/gadget/udc/goku_udc.c
+@@ -1615,7 +1615,8 @@ static irqreturn_t goku_irq(int irq, void *_dev)
+ 		if (stat & INT_USBRESET) {		/* hub reset done */
+ 			ACK(INT_USBRESET);
+ 			INFO(dev, "USB reset done, gadget %s\n",
+-				dev->driver->driver.name);
++				dev->driver ? dev->driver->driver.name :
++					      "<not bound>");
+ 		}
+ 		// and INT_ERR on some endpoint's crc/bitstuff/... problem
+ 	}
 -- 
 2.53.0
 
