@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9435230BDB;
-	Wed, 30 Sep 2026 17:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CFE515889;
+	Wed, 30 Sep 2026 17:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788099; cv=none; b=qpaj0nBiXkWB1wc8XddADzKwHaijgRuYi/8S+VjG8a5jXGN+NLvw2N2DcBgHarrm5Hxqixs4TIAy2c2E2uGtQzdNF87WJbbHZ736zkuZ7VxX8sOwt4CW/DWhL93WhslUFTK+//Mi9WZ29nR3d88zL4Djox4avoMJrr9Q7TzSItc=
+	t=1790788101; cv=none; b=lsROrnjWyRzci3X69+LNGfu4RCuVT+xZ/Hxzd2MVgwRuppwhscD2wt6Ad7bvaruL8nLmXzVlb57EWm4PGzZZo3ZkuHlgO8xtJ7tWD7oejuIalBT+qcdcAFvV4/+BCXSLvd0v411kpoOpDrgwCOgoEzJsZnCVWZP/tXyLAZiJt4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788099; c=relaxed/simple;
-	bh=ukLXPTORDYbKuvT5S4nUUtS/SHNy9GdEPPJ2EukswvU=;
+	s=arc-20240116; t=1790788101; c=relaxed/simple;
+	bh=8SFHqwc0/QJVn69QTBA7ZF5Y1plpopgbI9EarOi2oqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0F4j51Cu33wSuwu2pylHD1wpLLgH6L5nBy3wtUHTXEYQs0Q7KAvvONnaELM/gSITWVx7XJt7fJYHFdh0XMx9KssdGsMQS8VU4jJoLmRIMyv5gwlGF6d1LXSlKKAhDm2f1I/iuB2CkwgAfxTjXTC8FiK3OXPU6GO7XqKs3K6/Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7OFcKSC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qq4ajZukPK0l3lhxz901555UhG6vxIsYfi92ZZXr+AVGHpa0SZfTk/Q7KjiU8jeQ/QHY05uTFoXAT+CXk+BPBbjuOHOzrcRPLuf4WfzFQyr0H8yce6oD3zU7SyUK8+4jllpQsogOSjuNYaYn5F6KxOQp7FMPwS/ANkigJw0giZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPo82Zl/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7OFcKSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F29D1F000FF;
-	Wed, 30 Sep 2026 17:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPo82Zl/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144421F000FF;
+	Wed, 30 Sep 2026 17:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788097;
-	bh=IUAOHlayQlaQXBK7NoCD1mF4UUhhYG6sTaC0+onjg6w=;
+	s=korg; t=1790788100;
+	bh=I66ozHKU10JX7UHOxaMuBxisGm9eumyThtyfm2cfKwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7OFcKSCsjn+3sgBqt5alDUhfBwzMppyWRqqNJH+KSfqPdu/4AuTGMfysDd4sEKPf
-	 6dU9YxJTkXZAu8aDaXQqheEGalp7dRA+uS8j9hT8QWJoW5JMYS9W6UJvcniS45NwWP
-	 nffKCK9QZmmDDxsuT9FpuNcRO6J2yFaPoOMhAbkY=
+	b=GPo82Zl/akCtxKRD4taPjDtiamIxGSekksHPT2pQnRVR7yQZtq/yftAGTYG5FYawb
+	 bB9e8TtYwR77PjyKArK0Q0jFQEDAwostvA3xeP1p9EHK5sW0J2C6iDFBVr98nq0A1L
+	 BBakOOQcCkte0y5chumgYjIFqiDQSr57gfIEYMHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
 	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Binbin Wu <binbin.wu@linux.intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 450/457] KVM: x86: Move IRQ-related helper declarations from kvm_host.h => irq.h
-Date: Wed, 30 Sep 2026 17:29:15 +0200
-Message-ID: <20260930152355.717163090@linuxfoundation.org>
+Subject: [PATCH 7.2 451/457] KVM: x86/mmu: Move kvm_arch_async_page_ready() below kvm_tdp_page_fault()
+Date: Wed, 30 Sep 2026 17:29:16 +0200
+Message-ID: <20260930152355.738719537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -56,78 +56,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 0bdd2d6d7328a7debcf138a7d6ef95d01a26b1b8 ]
+[ Upstream commit 31a2cf735cc00c01526bcb676f111d5c0b711d17 ]
 
-Move the function declaration for APIs to get/query pending IRQs from
-kvm_host.h to irq.h, as the APIs are only used by KVM x86 code.
+Move the implementation of kvm_arch_async_page_ready() "down" in mmu.c so
+that it lives below kvm_tdp_page_fault().  This will allow moving
+kvm_mmu_do_page_fault() into mmu.c without needing a forward declaration.
 
 No functional change intended.
 
 Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
 Reviewed-by: Kai Huang <kai.huang@intel.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Message-ID: <20260613000329.732085-25-seanjc@google.com>
+Message-ID: <20260613000329.732085-29-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: 10180a277549 ("KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    5 -----
- arch/x86/kvm/irq.h              |    6 ++++++
- arch/x86/kvm/svm/nested.c       |    1 +
- arch/x86/kvm/vmx/nested.c       |    1 +
- 4 files changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/kvm/mmu/mmu.c |   62 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -2462,12 +2462,7 @@ enum {
- # define kvm_memslots_for_spte_role(kvm, role) __kvm_memslots(kvm, 0)
- #endif
- 
--int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
--int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
--int kvm_cpu_has_extint(struct kvm_vcpu *v);
- int kvm_arch_interrupt_allowed(struct kvm_vcpu *vcpu);
--int kvm_cpu_get_extint(struct kvm_vcpu *v);
--int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
- void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event);
- 
- int kvm_pv_send_ipi(struct kvm *kvm, unsigned long ipi_bitmap_low,
---- a/arch/x86/kvm/irq.h
-+++ b/arch/x86/kvm/irq.h
-@@ -112,6 +112,12 @@ static inline int irqchip_in_kernel(stru
- 	return mode != KVM_IRQCHIP_NONE;
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4600,37 +4600,6 @@ static bool kvm_arch_setup_async_pf(stru
+ 				  kvm_vcpu_gfn_to_hva(vcpu, fault->gfn), &arch);
  }
  
-+int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
-+int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
-+int kvm_cpu_has_extint(struct kvm_vcpu *v);
-+int kvm_cpu_get_extint(struct kvm_vcpu *v);
-+int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
-+
- void kvm_inject_pending_timer_irqs(struct kvm_vcpu *vcpu);
- void kvm_inject_apic_timer_irqs(struct kvm_vcpu *vcpu);
- void kvm_apic_nmi_wd_deliver(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -23,6 +23,7 @@
+-void kvm_arch_async_page_ready(struct kvm_vcpu *vcpu, struct kvm_async_pf *work)
+-{
+-	int r;
+-
+-	if (WARN_ON_ONCE(work->arch.error_code & PFERR_PRIVATE_ACCESS))
+-		return;
+-
+-	if ((vcpu->arch.mmu->root_role.direct != work->arch.direct_map) ||
+-	      work->wakeup_all)
+-		return;
+-
+-	r = kvm_mmu_reload(vcpu);
+-	if (unlikely(r))
+-		return;
+-
+-	if (!vcpu->arch.mmu->root_role.direct &&
+-	      work->arch.cr3 != kvm_mmu_get_guest_pgd(vcpu, vcpu->arch.mmu))
+-		return;
+-
+-	r = kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, work->arch.error_code,
+-				  true, NULL, NULL);
+-
+-	/*
+-	 * Account fixed page faults, otherwise they'll never be counted, but
+-	 * ignore stats for all other return times.  Page-ready "faults" aren't
+-	 * truly spurious and never trigger emulation
+-	 */
+-	if (r == RET_PF_FIXED)
+-		vcpu->stat.pf_fixed++;
+-}
+-
+ static void kvm_mmu_finish_page_fault(struct kvm_vcpu *vcpu,
+ 				      struct kvm_page_fault *fault, int r)
+ {
+@@ -5088,6 +5057,37 @@ long kvm_arch_vcpu_pre_fault_memory(stru
+ 	return min(range->size, end - range->gpa);
+ }
  
- #include "kvm_emulate.h"
- #include "trace.h"
-+#include "irq.h"
- #include "mmu.h"
- #include "x86.h"
- #include "smm.h"
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -11,6 +11,7 @@
- #include "x86.h"
- #include "cpuid.h"
- #include "hyperv.h"
-+#include "irq.h"
- #include "mmu.h"
- #include "nested.h"
- #include "pmu.h"
++void kvm_arch_async_page_ready(struct kvm_vcpu *vcpu, struct kvm_async_pf *work)
++{
++	int r;
++
++	if (WARN_ON_ONCE(work->arch.error_code & PFERR_PRIVATE_ACCESS))
++		return;
++
++	if ((vcpu->arch.mmu->root_role.direct != work->arch.direct_map) ||
++	      work->wakeup_all)
++		return;
++
++	r = kvm_mmu_reload(vcpu);
++	if (unlikely(r))
++		return;
++
++	if (!vcpu->arch.mmu->root_role.direct &&
++	      work->arch.cr3 != kvm_mmu_get_guest_pgd(vcpu, vcpu->arch.mmu))
++		return;
++
++	r = kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, work->arch.error_code,
++				  true, NULL, NULL);
++
++	/*
++	 * Account fixed page faults, otherwise they'll never be counted, but
++	 * ignore stats for all other return times.  Page-ready "faults" aren't
++	 * truly spurious and never trigger emulation
++	 */
++	if (r == RET_PF_FIXED)
++		vcpu->stat.pf_fixed++;
++}
++
+ #ifdef CONFIG_KVM_GUEST_MEMFD
+ static void kvm_assert_gmem_invalidate_lock_held(struct kvm_memory_slot *slot)
+ {
 
 
