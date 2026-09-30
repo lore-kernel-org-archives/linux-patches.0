@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D9F4FB9C6;
-	Wed, 30 Sep 2026 16:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA83502545;
+	Wed, 30 Sep 2026 16:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784352; cv=none; b=iCG4z6qw5jTfzSfbpZt82KYLNH1IFdkhhscvanyx8WnOTRjVlY+Bw66bTOqFDAgbVJ1dcXmSp0uZmTdQhdk7eTG/8WbC7e77SfkfDdBn8eOL/4llKL3kbFLOf9fvuRxdDEl+idnFK/SpNHbkl6BrtefLrTEW9aVtNMPTKHkFG2o=
+	t=1790784357; cv=none; b=gtAMfPSwhVINUNS4hbrtnQnFc4YsKGXuJ6iBlW/1WAh0TKXYF+hIjbopRe2on7a8buwZmSx62+2/e3uhJ7YbG4X1u9UDQzKJj+yQXj2Oit8pPu0S7Ey0XqRDwBrsDGRTJKhQvWli69cj/rekzs6nNvcihPtMCAsjdjuIHCD+nRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784352; c=relaxed/simple;
-	bh=h/j0kQzuvfD1aBKl833FeG9O7LzSDtWooI7Ty8Tc7Fw=;
+	s=arc-20240116; t=1790784357; c=relaxed/simple;
+	bh=sC07YK6FuZEHDKqv8xk/m9NGNkRhLG9b/L9V2N+ecqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmqNevw1Fz8XPWl1JpogDwilJQn0xr0C05JNotkApCFCRZEGOCF9M57J3hV+BhcDxo7o59bUJzkH5Gj25ST3gTXSKSCSKnWJgwnZKvW9kgM/CGhIgdnJ3DSA0EvJt54dfNqp2fvTHuNplV94Wz1nMU8Zmp4hSTpxi8IEZem7+S4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5NOeUBW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ocgl2Tb92j5oz+VeTS52qBcR9B0jyPYsteMg2rkvfrKH/QpJ3CS6MgqK+m/d9ijAshv8Ii2P/IqXYyhi/bKNETK78IHv8rwGCXK5Mf82nszOUtOPNVtGMb8TvEmHrxnEUe2FinWJYkWvI5rkXfMl7SPBzk5JS3z96COJ9XYYkfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4PhZWrM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5NOeUBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E831F00893;
-	Wed, 30 Sep 2026 16:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4PhZWrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852731F000FF;
+	Wed, 30 Sep 2026 16:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784349;
-	bh=T6izrYRbr0HTFDqsuyFSbVujfIw2WHl1oqQvfod7AQ8=;
+	s=korg; t=1790784352;
+	bh=Zq0i/dni8uatEOr9iGmpt/dSe8tkCfHSyd9o0NnUT0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5NOeUBWpxq6Q5C7tknoOing8AxErFi2qX6Ih5qcqU15kIF2j0W5O5a12Vo3OmuvD
-	 WzMAAyhiBh2PQLXXJ9Hy05r7/3vR4rz+wQE15+egt0O94js1czLSa0JBb4ltQmiMYu
-	 K7ilsVu6jNJF6s0kVlUzJdX9UGpYEMF5LI8PxdVA=
+	b=T4PhZWrMnIacwN+QwPdLTgLVOKNHWgtZ/W9mKQLsI9hi4KhCMaPEoYAoT/xzLgOIc
+	 6GEmtT5a13VX2M9Nl4D7+/J9+Plh4GgaGddi+zfrdwHRsg4UVhiRhZ5OcFHGRQJZxP
+	 H2/EWeZ9DkNHcJW+uc6oj3+rvaV7vmPSDgqXiFL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Miao Li <limiao@kylinos.cn>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/982] mmc: renesas_sdhi: Add OF entry for RZ/G2E SoC
-Date: Wed, 30 Sep 2026 17:14:21 +0200
-Message-ID: <20260930152419.501411274@linuxfoundation.org>
+Subject: [PATCH 6.1 126/982] iio: light: stk3310: Deal with the ps interrupt issue in PM
+Date: Wed, 30 Sep 2026 17:14:22 +0200
+Message-ID: <20260930152419.523623395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,41 +51,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Miao Li <limiao@kylinos.cn>
 
-[ Upstream commit ebf7f2198ac4817bd2929cf83c697cefa8bf36a9 ]
+[ Upstream commit 9c1d639e90cf42f5c1401f91f38ffd89af6dd970 ]
 
-The RZ/G2E (R8A774C0) SoC was previously handled via the generic
-"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
-the SDHI IP on RZ/G2E is identical with the R-Car E3 (R8A77990), it
-requires the specific quirks and configuration defined in
-`of_r8a77990_compatible` rather than the generic Gen3 data.
+On the Inspur HS326 laptop(which integrated with HiSilicon M900
+processor), if the STK3311-X chip's PS interrupt is configured
+in "Recommended interrupt mode", the interrupt cannot be triggered
+normally after waking from suspend or hibernation.
 
-Add the explicit "renesas,sdhi-r8a774c0" match entry to map it correctly.
-Note that the DT binding file renesas,sdhi.yaml does not need an update
-as the entry for this SoC is already present.
+In this case, neither disabling and re-enabling the interrupt nor
+resetting the PS threshold register can restore the interrupt to
+normal operation.
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+If the interrupt is disabled in suspend() then reset the PS threshold
+register and enable the interrupt in resume(). This resolves the issue.
+
+Signed-off-by: Miao Li <limiao@kylinos.cn>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/renesas_sdhi_internal_dmac.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/light/stk3310.c | 76 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 69 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-index 20118b3c428c9..e05ac6475899d 100644
---- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-+++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-@@ -270,6 +270,7 @@ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
- 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
- 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a774b1", .data = &of_r8a77965_compatible, },
-+	{ .compatible = "renesas,sdhi-r8a774c0", .data = &of_r8a77990_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
+diff --git a/drivers/iio/light/stk3310.c b/drivers/iio/light/stk3310.c
+index 7b8e0da6aabc1..b1b0e77922ac1 100644
+--- a/drivers/iio/light/stk3310.c
++++ b/drivers/iio/light/stk3310.c
+@@ -106,6 +106,9 @@ struct stk3310_data {
+ 	struct mutex lock;
+ 	bool als_enabled;
+ 	bool ps_enabled;
++	bool ps_int_enabled;
++	uint32_t ps_thdl;
++	uint32_t ps_thdh;
+ 	uint32_t ps_near_level;
+ 	u64 timestamp;
+ 	struct regmap *regmap;
+@@ -275,10 +278,17 @@ static int stk3310_write_event(struct iio_dev *indio_dev,
+ 
+ 	buf = cpu_to_be16(val);
+ 	ret = regmap_bulk_write(data->regmap, reg, &buf, 2);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&client->dev, "failed to set PS threshold!\n");
++		return ret;
++	}
+ 
+-	return ret;
++	if (reg == STK3310_REG_THDH_PS)
++		data->ps_thdh = val;
++	else
++		data->ps_thdl = val;
++
++	return 0;
+ }
+ 
+ static int stk3310_read_event_config(struct iio_dev *indio_dev,
+@@ -313,11 +323,17 @@ static int stk3310_write_event_config(struct iio_dev *indio_dev,
+ 	/* Set INT_PS value */
+ 	mutex_lock(&data->lock);
+ 	ret = regmap_field_write(data->reg_int_ps, state);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&client->dev, "failed to set interrupt mode\n");
++		mutex_unlock(&data->lock);
++		return ret;
++	}
++
++	data->ps_int_enabled = state;
++
+ 	mutex_unlock(&data->lock);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int stk3310_read_raw(struct iio_dev *indio_dev,
+@@ -490,10 +506,15 @@ static int stk3310_init(struct iio_dev *indio_dev)
+ 
+ 	/* Enable PS interrupts */
+ 	ret = regmap_field_write(data->reg_int_ps, STK3310_PSINT_EN);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&client->dev, "failed to enable interrupts!\n");
++		return ret;
++	}
+ 
+-	return ret;
++	data->ps_int_enabled = true;
++	data->ps_thdh = STK3310_PS_MAX_VAL;
++
++	return 0;
+ }
+ 
+ static bool stk3310_is_volatile_reg(struct device *dev, unsigned int reg)
+@@ -660,9 +681,18 @@ static void stk3310_remove(struct i2c_client *client)
+ static int stk3310_suspend(struct device *dev)
+ {
+ 	struct stk3310_data *data;
++	int ret;
+ 
+ 	data = iio_priv(i2c_get_clientdata(to_i2c_client(dev)));
+ 
++	if (data->ps_int_enabled) {
++		ret = regmap_field_write(data->reg_int_ps, 0x0);
++		if (ret < 0) {
++			dev_err(dev, "failed to disable ps int at suspend.\n");
++			return ret;
++		}
++	}
++
+ 	return stk3310_set_state(data, STK3310_STATE_STANDBY);
+ }
+ 
+@@ -670,6 +700,8 @@ static int stk3310_resume(struct device *dev)
+ {
+ 	u8 state = 0;
+ 	struct stk3310_data *data;
++	__be16 buf;
++	int ret;
+ 
+ 	data = iio_priv(i2c_get_clientdata(to_i2c_client(dev)));
+ 	if (data->ps_enabled)
+@@ -677,7 +709,37 @@ static int stk3310_resume(struct device *dev)
+ 	if (data->als_enabled)
+ 		state |= STK3310_STATE_EN_ALS;
+ 
+-	return stk3310_set_state(data, state);
++	ret = stk3310_set_state(data, state);
++	if (ret < 0)
++		return ret;
++
++	if (data->ps_thdl != 0x0) {
++		buf = cpu_to_be16(data->ps_thdl);
++		ret = regmap_bulk_write(data->regmap, STK3310_REG_THDL_PS, &buf, 2);
++		if (ret < 0) {
++			dev_err(dev, "failed to set reg THDL_PS at resume.\n");
++			return ret;
++		}
++	}
++
++	if (data->ps_thdh != STK3310_PS_MAX_VAL) {
++		buf = cpu_to_be16(data->ps_thdh);
++		ret = regmap_bulk_write(data->regmap, STK3310_REG_THDH_PS, &buf, 2);
++		if (ret < 0) {
++			dev_err(dev, "failed to set reg THDH_PS at resume.\n");
++			return ret;
++		}
++	}
++
++	if (data->ps_int_enabled) {
++		ret = regmap_field_write(data->reg_int_ps, STK3310_PSINT_EN);
++		if (ret < 0) {
++			dev_err(dev, "failed to enable ps int at resume.\n");
++			return ret;
++		}
++	}
++
++	return 0;
+ }
+ 
+ static DEFINE_SIMPLE_DEV_PM_OPS(stk3310_pm_ops, stk3310_suspend,
 -- 
 2.53.0
 
