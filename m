@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20998519DFD;
-	Wed, 30 Sep 2026 18:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7545511E96;
+	Wed, 30 Sep 2026 18:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792966; cv=none; b=EWxdm2LXsgtrJ0rz98+Pheydpl12/aOqDOIFL6vlzav3Hf6vKYoc/atAosqyoJpr/Sh3pIYRQ/m5C93Wgxk6i2vvIodVbk6Pqs7XPhu3hHArAvBk8i+PfFL8QMuENpESPjrvQNYua4RJ10IXToFAFk8IfNE6ARKyLkNmkWiXbp8=
+	t=1790792969; cv=none; b=SxerpmMaJzarDkwtzMXrhfy/pQ1flo7SnmS70cBVNEuqmZAuv3T8ACj16aTvxpZs+OcrvgKe1Zg2A8CNvrAjxRuOj1y5+luKVjyGP1uP6GLloAu08N16/EO1/DXM1nEI4HpSV8qCQH2p5GUtN4xnPLI1Qh12vJQY3/GqtOhGU0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792966; c=relaxed/simple;
-	bh=xxETB8frNzDOlbALSAz0qs1vCfyKa0Wvcm/mB85SZjM=;
+	s=arc-20240116; t=1790792969; c=relaxed/simple;
+	bh=Hc8wo4yHm9dXR0wFw8CkafNdom87EgBQSQ6fKqmHaeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8ecuSYWQwziHN2nNQNznV2wvlchiHW0jNr3BP/LfD082u/ZwhvSHX2o2sRmXV81r08LbAbX/vXycOb3qednA9XdlaUs7da/r/Uaut8qfe/wOiM/my5A0X9mHhAlCH47ysG7T9WJF9YrwXLvcAI38dXKgF93HUL1UoYmltwf79E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Txbuju4w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fueKwifQy3VnanOIXLgrF6Aq3NU9JP33aEgeBg1K4pSua4wU3zz2arTi2tXVXxJCM3MUlbgLKVwosd0Oi2VDcyKdCiQwTvxlvn45edM1Ipw6Im/MccA8VfbT5+Am5z+mpN5pZmDsSoqouZy1o9vEyBIuFqqYGyEwm4Dm1DkX+lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/CEmtAG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Txbuju4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5609E1F000FF;
-	Wed, 30 Sep 2026 18:29:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/CEmtAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F6A1F000FF;
+	Wed, 30 Sep 2026 18:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792964;
-	bh=m88pJuX+e+uzxDs5tfgBh8kv+EccHIObZx1jBw/BtI4=;
+	s=korg; t=1790792967;
+	bh=FWxqNdXu+XPbD3lIJnYObFL2/3XzF4BE0vXvcp9/OJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Txbuju4wcgDz99t5eVTi4KJ8+1DfXWLBuEm72t33nfORWkJXOpAw8LsEMx0R5jf6v
-	 CdquVyHzUsFzG/dL91uAqXBchCpuyaVeHfN0qR7i5Dik1WNm6RS08JprtSqWm0H16C
-	 3AsAPHmUXvvIQd9zy3No9DW1Ucz1tJsg88wvLuyo=
+	b=U/CEmtAGgdMViF0ijcd2vTnSH2Ku70ZRehuQ83NVHa3dvFBxpyaWNiTKZ9nLBn83c
+	 48IWshgQiQNU05l58JdfGUalz6AzXjb1Vxqb2jL1wpDJtziPcFpJGI4Bobb7x8IoGp
+	 XvzCaD/1rsYcF2TeFbiHHndMqwPhLmndV4h8a9yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Ren Wei <weir@nebusec.ai>,
+	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 089/395] bpf: Check params size before reading reserved fields
-Date: Wed, 30 Sep 2026 17:25:51 +0200
-Message-ID: <20260930152342.565716373@linuxfoundation.org>
+Subject: [PATCH 6.18 090/395] net/sched: sch_hfsc: bound the classify inner-filter walk with a drift budget
+Date: Wed, 30 Sep 2026 17:25:52 +0200
+Message-ID: <20260930152342.587475183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -47,53 +48,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit a11212910cf09b2fe8db9afa41ef60c4f81879c5 ]
+[ Upstream commit 8a60ade2277e1f0e0d0578d565354e52292fa46d ]
 
-bpf_crypto_ctx_create() is a kfunc whose second argument is declared
-with the __sz annotation, so the verifier only guarantees that
-params__sz bytes of params are valid.  The function nevertheless reads
-params->reserved[0] and params->reserved[1] (offsets 14 and 15) before
-comparing params__sz against the size of struct bpf_crypto_params, so a
-BPF program can pass a shorter buffer and have the kernel read past the
-region that was validated for it.
+hfsc_classify() applies the "filter may only point downwards" level check
+only when the filter result carries no bound class. A filter created with
+a flowid gets res.class set once at bind time, so the check never runs for
+it during classification. hfsc_adjust_levels() can later raise a class's
+level without revalidating existing bindings, leaving two binds that were
+each legal at bind time pointing at each other; the classify walk then
+bounces between two interior classes forever with the qdisc lock held and
+BH disabled — a soft lockup from a single packet. The stuck walk trips
+the watchdog:
 
-Move the size check in front of the reserved field reads.
+  watchdog: BUG: soft lockup - CPU#3 stuck for 13s! [ping:444]
+  RIP: 0010:u32_classify+0x542/0x17f0
+  ...
+  tcf_classify+0x66/0xa0
+  hfsc_enqueue+0x166/0xdf0
 
-Fixes: 3e1c6f35409f ("bpf: make common crypto API for TC/XDP programs")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Ren Wei <weir@nebusec.ai>
-Link: https://patch.msgid.link/4f3ab4b03e79017e215521743996555439bf0bb3.1789802413.git.xuyuqiabc@gmail.com
+Bound the traversal with a budget of non-descending hops, the only way a
+configured walk can move without descending the class tree once levels
+drift after bind time. The budget is cumulative over the whole walk and
+is deliberately not reset on a descending hop: a chain that alternates a
+descent with a lateral hop would return the budget every lap and never
+trip. Descending hops never decrement it, so legitimately deep trees are
+unaffected and a terminating lateral chain still classifies normally.
+Drop the packet with a rate-limited warning once the budget is exhausted,
+mirroring the merged HTB fix.
+
+This is a follow-up to commit 729c4896ab82 ("net/sched: sch_htb: limit
+htb_classify inner-class filter hops"), which bounded the same classify
+loop on the HTB side but left the HFSC walk unbounded.
+
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED, CONFIG_NET_SCH_HFSC, CONFIG_NET_CLS_U32,
+  CONFIG_LOCKUP_DETECTOR.
+- Build a cycle with two legal-at-bind-time flowid binds and a level
+  drift: class X 1:1 (child of root) with leaf child 1:10; class Y 1:2
+  (sibling of X) with children 1:20 and 1:200; root u32 filter flowid
+  1:1; filter on X flowid 1:2 (legal when Y is a leaf); after Y's level
+  rises to 2, filter on Y flowid 1:1 (legal then). Send one packet (ping
+  on the device). Unfixed kernel: classify spins with the qdisc lock
+  held; with softlockup_panic=1 it panics.
+- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
+
+Fixes: a2f79227138c ("net_sched: sch_hfsc: fix classification loops")
+Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/netdev/QDISC-CTUU.v2.20260913192614@mojatatu.com/
+Link: https://sashiko.dev/#/patchset/QDISC-CTUU.v2.20260913192614@mojatatu.com
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/QDISC-CTUU.v2.20260913192614%40mojatatu.com
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-CTUU.v3.20260916184908@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/crypto.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/sched/sch_hfsc.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/kernel/bpf/crypto.c b/kernel/bpf/crypto.c
-index 1d024fe7248ac..3837d4dcf48d5 100644
---- a/kernel/bpf/crypto.c
-+++ b/kernel/bpf/crypto.c
-@@ -149,8 +149,9 @@ bpf_crypto_ctx_create(const struct bpf_crypto_params *params, u32 params__sz,
- 	const struct bpf_crypto_type *type;
- 	struct bpf_crypto_ctx *ctx;
+diff --git a/net/sched/sch_hfsc.c b/net/sched/sch_hfsc.c
+index 601f99dd989ae..df3501dfe01a8 100644
+--- a/net/sched/sch_hfsc.c
++++ b/net/sched/sch_hfsc.c
+@@ -386,6 +386,15 @@ cftree_update(struct hfsc_class *cl)
+ #define	SM_MASK		((1ULL << SM_SHIFT) - 1)
+ #define	ISM_MASK	((1ULL << ISM_SHIFT) - 1)
  
--	if (!params || params->reserved[0] || params->reserved[1] ||
--	    params__sz != sizeof(struct bpf_crypto_params)) {
-+	if (!params ||
-+	    params__sz != sizeof(struct bpf_crypto_params) ||
-+	    params->reserved[0] || params->reserved[1]) {
- 		*err = -EINVAL;
- 		return NULL;
- 	}
++/*
++ * Cap on the non-descending hops a classify walk may take before its
++ * filter chain is treated as misconfigured. A flowid binding that was
++ * legal at bind time can become lateral once hfsc_adjust_levels()
++ * raises a class level; a few such hops are legitimate, an unbounded
++ * run means the chain cycles.
++ */
++#define	HFSC_CLASSIFY_MAX_DRIFT	8
++
+ static inline u64
+ seg_x2y(u64 x, u64 sm)
+ {
+@@ -1133,6 +1142,7 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
+ 	struct hfsc_class *head, *cl;
+ 	struct tcf_result res;
+ 	struct tcf_proto *tcf;
++	unsigned int drift;
+ 	int result;
+ 
+ 	if (TC_H_MAJ(skb->priority ^ sch->handle) == 0 &&
+@@ -1142,6 +1152,7 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
+ 
+ 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
+ 	head = &q->root;
++	drift = HFSC_CLASSIFY_MAX_DRIFT;
+ 	tcf = rcu_dereference_bh(q->root.filter_list);
+ 	while (tcf && (result = tcf_classify(skb, NULL, tcf, &res, false)) >= 0) {
+ #ifdef CONFIG_NET_CLS_ACT
+@@ -1167,6 +1178,17 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
+ 		if (cl->level == 0)
+ 			return cl; /* hit leaf class */
+ 
++		/*
++		 * flowid binds skip the level check above (res.class is set
++		 * at bind time and levels drift after), so a walk can follow
++		 * lateral hops without descending; a bounded number of them
++		 * is legal, more means the chain cycles.
++		 */
++		if (cl->level >= head->level && drift-- == 0) {
++			pr_warn_ratelimited("hfsc: classify hop budget exhausted, dropping packet\n");
++			return NULL;
++		}
++
+ 		/* apply inner filter chain */
+ 		tcf = rcu_dereference_bh(cl->filter_list);
+ 		head = cl;
 -- 
 2.53.0
 
