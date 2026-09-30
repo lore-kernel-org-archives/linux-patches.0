@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A515B515967;
-	Wed, 30 Sep 2026 16:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2B0518128;
+	Wed, 30 Sep 2026 16:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784453; cv=none; b=hTq8TwksA2452cXXv8xjKSfTKuSdhLUwPd2uBnENEj/aOcpKxa2J9WN5KCkpplGg/dmcscJf9hkTQtqI8dLU3NpYPHCbt3AdfAgcV+yf6U5XfuAdltyRuzm94zvLTH4FFN0UeunnmarPLjv3LZnwRm8ylcT68hwwMRgYRxMaswE=
+	t=1790784460; cv=none; b=b0QouTa7FTDsNuEB96j915hY5FmWdTSYtJ3sfaGAblL50qpaxtJ49PVHfaID/z3YNOiMs3fj6/R0Phv3N/BhZH6O9GgxX18je2t0j31vgDMmNlK8s+DIkK3rtFWxPvIW/9I/eC///LKzRaxegeg6yfBQrY52oTcd0hAaMQ29UJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784453; c=relaxed/simple;
-	bh=eNsJV5gxkyuLH1MCqUjdevFOvRjIywXkjeMKeuERCFA=;
+	s=arc-20240116; t=1790784460; c=relaxed/simple;
+	bh=oA+uVcLmeTwMSKGuLqKR+CMsLIWxajAIurGtCFlvouM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgS415WuvLeL3BgqcBf1doKqOxuiMGYUxhErRiS/0k4+XtUeIr98V4nBP1RzJP7+7prhdE76FMZIO21WKvEayEMDt7Q+HEcwXUk1ojb0IuV5oKmyccNNOuJrH5NAkVN3XYjhOlBi2ihAG2y80o2AVXLM5LiprpcEFVRJD8KD4Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edTtfG0d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g3NH0rXKLHzMSvtafZyjqng6RKvtjFoPvRqsuNibX8XmuZALFP5XDCMARHR8cXP+Y5qq7M3581EQJK/QpauzHCpFFBKV/iuOsZKnmIbihj2kweUfu2s3wfoiRM/pLKEeYAEBAEL7NW2TD9O6gZsg+cPIZ96sOMDUIUB3fHVH/oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSjbOEMt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edTtfG0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB99A1F00898;
-	Wed, 30 Sep 2026 16:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSjbOEMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE9A1F000FF;
+	Wed, 30 Sep 2026 16:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784448;
-	bh=qPMe8e2g5nSM1+8EFxNFBpEZf0OxLeEEH0RoC25+YtQ=;
+	s=korg; t=1790784453;
+	bh=HmP9TFqbO9a87pKsofsyqJqkFfHp6SrwgxuboAWGdQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=edTtfG0dtuTod8ysvXx+jxCcsx5d2xE3rCkFnOhbd1bsRrUQ4V4zQ1GI6QSNhqFCK
-	 /66P2BkIkJSdl7gUVD8cz7XDo+AAKKmK3mw42jr5qQ7qdbH6FbNpQcCgM51GsdoCbZ
-	 563nRpTtFV1hBFzNYvazxSdG99c4Ms+PCAPlNz5Q=
+	b=GSjbOEMt6G0mtnSav6RNidflquDGDWY/8pbjWuZlD+cTswbpYadal2WrKtBi/7jq0
+	 qMWTzjAaxq9ydVU7JjRe5OLU50maXJqSB3w6S6xmO0krGJuDmhCqUApR3qlAuKHFBY
+	 7SDnY7LLBgIix0lSZ8OjMZnS6yCDuYIjsVba9ExY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 157/982] bpf: NUL-terminate replaced sysctl value
-Date: Wed, 30 Sep 2026 17:14:53 +0200
-Message-ID: <20260930152420.182844786@linuxfoundation.org>
+Subject: [PATCH 6.1 159/982] hsr: broadcast netlink notifications in the devices net namespace
+Date: Wed, 30 Sep 2026 17:14:55 +0200
+Message-ID: <20260930152420.224951409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,80 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit a66e3b5bacf38d6ab29fa05a9754f7a114485605 ]
+[ Upstream commit a762fabd7ef9a6cc07258684138f9c3f078d0326 ]
 
-When writing to sysctls, proc_sys_call_handler() guarantees that the
-buffer passed to proc handlers is NUL-terminated. If
-bpf_sysctl_set_new_value() replaces the pending sysctl value, it can
-hand a replacement buffer directly to proc handlers. However, the
-helper currently copies only buf_len bytes into that buffer without
-appending a NUL terminator, leaving downstream parsers vulnerable to
-out-of-bounds access.
+The HSR generic netlink family sets .netnsok = true. HSR devices can
+live in network namespaces other than init_net.
 
-Fix this by appending a '\0' after the replaced value to restore the
-expected sysctl semantics. Since the helper already rejects buf_len
-greater than PAGE_SIZE - 1, there is always room for the extra byte.
+Two async notifiers broadcast events with genlmsg_multicast(). They
+are hsr_nl_ringerror() and hsr_nl_nodedown(). That helper delivers
+only on the default genl socket in init_net. So the events always land
+in init_net. The network namespace of the device does not matter.
 
-Reproduced in a QEMU x86_64 guest booted with KASAN while exercising
-the sysctl replacement path with a cgroup/sysctl BPF program. The
-reproducer targets `/proc/sys/net/core/flow_limit_cpu_bitmap`, fills
-the original user write buffer with non-zero bytes, and overrides the
-sysctl value so the replacement buffer lacks a terminating NUL. Under
-that setup, the pre-fix kernel reported:
+This has two effects. A listener in the device's own namespace never
+sees its own ring error and node down events. A privileged listener in
+init_net receives events from HSR devices in other namespaces. The
+payload carries the peer node MAC (HSR_A_NODE_ADDR) and the slave port
+ifindex (HSR_A_IFINDEX).
 
-  BUG: KASAN: slab-out-of-bounds in strnchrnul+0x72/0x90
-  Read of size 1 at addr ffff88800de57000 by task repro_patch3/66
-  CPU: 0 UID: 0 PID: 66 Comm: repro_patch3 Not tainted 7.1.0-rc3-00269-g8370ca1f87cc #6 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x68/0xa0
-   print_report+0xcb/0x5e0
-   ? __virt_addr_valid+0x21d/0x3f0
-   ? strnchrnul+0x72/0x90
-   ? strnchrnul+0x72/0x90
-   kasan_report+0xca/0x100
-   ? strnchrnul+0x72/0x90
-   strnchrnul+0x72/0x90
-   bitmap_parse+0x37/0x2e0
-   flow_limit_cpu_sysctl+0xc6/0x840
-   ? __pfx_flow_limit_cpu_sysctl+0x10/0x10
-   ? __kvmalloc_node_noprof+0x5ba/0x870
-   proc_sys_call_handler+0x31d/0x480
-   ? __pfx_proc_sys_call_handler+0x10/0x10
-   ? selinux_file_permission+0x39f/0x500
-   ? lock_is_held_type+0x9e/0x120
-   vfs_write+0x98e/0x1000
-   ...
-   </TASK>
-  The buggy address is located 0 bytes to the right of
-  allocated 4096-byte region [ffff88800de56000, ffff88800de57000)
-With this fix applied, rerunning the same sysctl-targeted path yields
-no corresponding KASAN reports.
+Switch both callers to genlmsg_multicast_netns(). Other families with
+.netnsok = true already do this. Examples are gtp, ovpn, team,
+batman-adv, netdev-genl, ethtool and handshake.
 
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20260603105317.944304-2-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+hsr_nl_ringerror() already has the slave port. It uses
+dev_net(port->dev). hsr_nl_nodedown() takes the namespace from the
+master port via hsr_port_get_hsr().
+
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/20260604054949.2999304-1-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/hsr/hsr_netlink.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 3929c7548e6ff..6158b021f617f 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -2148,6 +2148,7 @@ BPF_CALL_3(bpf_sysctl_set_new_value, struct bpf_sysctl_kern *, ctx,
- 		return -E2BIG;
+diff --git a/net/hsr/hsr_netlink.c b/net/hsr/hsr_netlink.c
+index 898f18c6da53e..72aad6f845319 100644
+--- a/net/hsr/hsr_netlink.c
++++ b/net/hsr/hsr_netlink.c
+@@ -233,7 +233,8 @@ void hsr_nl_ringerror(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN],
+ 		goto nla_put_failure;
  
- 	memcpy(ctx->new_val, buf, buf_len);
-+	((char *)ctx->new_val)[buf_len] = '\0';
- 	ctx->new_len = buf_len;
- 	ctx->new_updated = 1;
+ 	genlmsg_end(skb, msg_head);
+-	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
++	genlmsg_multicast_netns(&hsr_genl_family, dev_net(port->dev),
++				skb, 0, 0, GFP_ATOMIC);
+ 
+ 	return;
+ 
+@@ -269,8 +270,12 @@ void hsr_nl_nodedown(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN])
+ 	if (res < 0)
+ 		goto nla_put_failure;
+ 
++	rcu_read_lock();
++	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	genlmsg_end(skb, msg_head);
+-	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
++	genlmsg_multicast_netns(&hsr_genl_family, dev_net(master->dev),
++				skb, 0, 0, GFP_ATOMIC);
++	rcu_read_unlock();
+ 
+ 	return;
  
 -- 
 2.53.0
