@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182314FDA4E;
-	Wed, 30 Sep 2026 16:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A36B3CCFCB;
+	Wed, 30 Sep 2026 16:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784017; cv=none; b=kU9N1K9F0N3/l0xal5jlyARzpjXngDsldMmwy5GHJCgItSQiMuwCM7h5SMhUiljWBWuBDb5TCGqQCsE2swogaKekl6Tl520pquJE1wqslS4ZmfkMF5YsLES7sRH62VgKydrHZjX4hISbeT3/eFEiYTNXzN4r6l6uUJb0Fc59apA=
+	t=1790784020; cv=none; b=oSopfHOD+aJe5LL+wvH8fsobMLPRZu10WuVKaDesrXWAGibtv3UwEQ2RwM4SFk3TTinthPN2IwmxHK6Xyrpn/oPYWaI5yPM4eapTIWFwzQoNeRyojsEXTaNTwdFT7IQpLdIlXJmQ6z2F7iL8+D2IU9ArGjshPWgtt9SJawxrmRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784017; c=relaxed/simple;
-	bh=V/r+tpy3eQ4q8ed5hNqng8tRLmbiT4IOY3Obu0fm/L4=;
+	s=arc-20240116; t=1790784020; c=relaxed/simple;
+	bh=WCbfF/PiZ6DD5ym+yhfn84ux3tpwwcs6mHWgzNiZGZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VDAau6fnQz+/RqJqber17h/UoqA9SwfVEEISOVK9qzEovACN2xvshYSInY6j4x5a41GzwzqFgi7pLN97UN3C9EygR3eimqyceZ0pJaplrJVK8mtE0Q6qjqDed6umSH4YMP9oDvg0VzBE6wVZazBhplJgcuWyBA1nE/2ipttrdCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUm4Hp/O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=euuqm5jsRXY5wwN0dXOhfctZzAn8ch1LFGKwU1HevYzD3mALm0KKTeVWEATzKIKH8ra6aY1hfSdpKgJ5omzZHVg/skvbQiH3d1++hrpazU1IOjUWbaUmxud0FfEE6swk65/js29Jv4ESL2QbOwGEBOWq9ygjZBYdmowWbyynM9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ij3poikO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUm4Hp/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAF91F000FF;
-	Wed, 30 Sep 2026 16:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ij3poikO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B4B1F00898;
+	Wed, 30 Sep 2026 16:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784011;
-	bh=hlg0dtj0rcXFHQpTXrfxAeg5bDAjvQ2IHlqHJqp5SmI=;
+	s=korg; t=1790784017;
+	bh=m1709KEMOh3zi2uS3HSwXj8ITfzukc16ZPETeo6Riho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LUm4Hp/OeDKyEkVmH4pBJXpu5vazP6Dfut+ba1SnShMk+wVepkfCT7YSd3CsHV2Cy
-	 LZuWd4gcGkhfDdVyEjO2DHAASKabaa/niYWFSE/m22i8S4tYCiavqU9kvV9kYdpToL
-	 chhYw2EkjNzMDVJx2QXnmV/Kzl6OY2yaCSjIMpbc=
+	b=ij3poikO7eqzLwqhOT0qrjYhwIZPhvc7Bv1jYYLWMbBhCHSXB20SUPo3E8H8Tj0ot
+	 Rw6yCks1BYn5Zf7znKuWRPb38E4I/W4fo8TsN8WFPqW6AnsVbIMr1T+cNd7uq68rN/
+	 vUdzxY69EZdmQWIp2IRZyOnKdvW0v3KtO6SSq+nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.10 594/595] drm/amdgpu/atom: Check kcalloc() for WS buffer in amdgpu_atom_execute_table_locked()
-Date: Wed, 30 Sep 2026 17:28:07 +0200
-Message-ID: <20260930152400.514952069@linuxfoundation.org>
+	Hui Peng <benquike@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 591/595] Bluetooth: RFCOMM: fix NULL dereference of dlc->session in RFCOMM_CONNINFO
+Date: Wed, 30 Sep 2026 17:28:04 +0200
+Message-ID: <20260930152400.448696689@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,44 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Hui Peng <benquike@gmail.com>
 
-commit cc9a8e238e42c1f43b98c097995137d644b69245 upstream.
+commit 46f8ffd0a1f1eb6cbc94946a92c11ef601e228a1 upstream.
 
-kcalloc() may fail. When WS is non-zero and allocation fails, ectx.ws
-remains NULL while ectx.ws_size is set, leading to a potential NULL
-pointer dereference in atom_get_src_int() when accessing WS entries.
+The RFCOMM_CONNINFO getsockopt handler accepts a socket that is not
+connected as long as deferred setup is enabled:
 
-Return -ENOMEM on allocation failure to avoid the NULL dereference.
+	if (sk->sk_state != BT_CONNECTED &&
+				!rfcomm_pi(sk)->dlc->defer_setup) {
+		err = -ENOTCONN;
+		break;
+	}
+	l2cap_sk = rfcomm_pi(sk)->dlc->session->sock->sk;
 
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Roman: added parentheses to the 'if' statement, matching the upstream commit. ]
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+dlc->defer_setup is set in rfcomm_sock_init() when rfcomm_connect_ind()
+creates a child socket for an incoming connection on a listening socket
+that has BT_DEFER_SETUP enabled. It is never cleared afterwards. The
+session, however, can go away underneath it.
+
+rfcomm_recv_disc() forces the dlc state before tearing it down:
+
+	d->state = BT_CLOSED;
+	__rfcomm_dlc_close(d, err);
+
+The RFCOMM_DEFER_SETUP early return in __rfcomm_dlc_close() only covers
+BT_CONNECT, BT_CONFIG, BT_OPEN and BT_CONNECT2, so with the state
+already BT_CLOSED that switch does not match and the function falls
+through to rfcomm_dlc_unlink(), which sets d->session = NULL, while
+d->defer_setup stays 1.
+
+A getsockopt(SOL_RFCOMM, RFCOMM_CONNINFO) on the accepted socket after
+that point therefore skips the -ENOTCONN path -- sk->sk_state is
+BT_CLOSED, but dlc->defer_setup is still set -- and dereferences the
+NULL session. No race is needed: once the DISC has been processed, the
+dereference is unconditional.
+
+Reproduced on a KASAN kernel under QEMU with a BR/EDR peer emulated over
+/dev/vhci: the peer brings up an ACL link, opens L2CAP on the RFCOMM
+PSM, starts a session and sends SABM for a channel bound with
+BT_DEFER_SETUP, and sends DISC for that dlci after the socket has been
+accepted. getsockopt(SOL_RFCOMM, RFCOMM_CONNINFO) on the accepted
+socket then hits:
+
+ Oops: general protection fault, probably for non-canonical address
+ 0xdffffc0000000002: 0000 [#1] SMP KASAN PTI
+ KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+ CPU: 1 UID: 0 PID: 150 Comm: init Tainted: G B 7.3.0-rc3-g5dd1818b15d9
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+ RIP: 0010:rfcomm_sock_getsockopt+0x529/0x780
+ Call Trace:
+  <TASK>
+  do_sock_getsockopt+0x3ad/0x7d0
+  __sys_getsockopt+0x10e/0x1b0
+  __x64_sys_getsockopt+0xc2/0x160
+  do_syscall_64+0xda/0x4b0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
+
+0x10 is the offset of sock in struct rfcomm_session;
+rfcomm_sock_getsockopt_old() is inlined into rfcomm_sock_getsockopt().
+
+Commit 43a556b2fd43 ("Bluetooth: RFCOMM: take rfcomm_mutex for the
+deferred setup accept") fixed the same "a remote DISC clears the session
+while deferred setup is still flagged" problem in rfcomm_dlc_accept();
+this is the remaining instance of it, in the getsockopt path.
+
+Deferred setup only leaves a socket usable here once it has reached
+BT_CONNECT2, so restrict the exception to that state and check that a
+session is actually present before following it.
+
+Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/bluetooth/rfcomm/sock.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/atom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1225,10 +1225,15 @@ static int amdgpu_atom_execute_table_loc
- 	ectx.ps = params;
- 	ectx.abort = false;
- 	ectx.last_jump = 0;
--	if (ws)
-+	if (ws) {
- 		ectx.ws = kcalloc(4, ws, GFP_KERNEL);
--	else
-+		if (!ectx.ws) {
-+			ret = -ENOMEM;
-+			goto free;
-+		}
-+	} else {
- 		ectx.ws = NULL;
-+	}
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -783,8 +783,10 @@ static int rfcomm_sock_getsockopt_old(st
+ 		break;
  
- 	debug_depth++;
- 	while (1) {
+ 	case RFCOMM_CONNINFO:
+-		if (sk->sk_state != BT_CONNECTED &&
+-					!rfcomm_pi(sk)->dlc->defer_setup) {
++		if ((sk->sk_state != BT_CONNECTED &&
++		     !(sk->sk_state == BT_CONNECT2 &&
++		       rfcomm_pi(sk)->dlc->defer_setup)) ||
++		    !rfcomm_pi(sk)->dlc->session) {
+ 			err = -ENOTCONN;
+ 			break;
+ 		}
 
 
