@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C124751AECC;
-	Wed, 30 Sep 2026 17:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C6E4F7CCF;
+	Wed, 30 Sep 2026 17:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789196; cv=none; b=PQRbcYbnqVjAnGTsUxGHzeXZMQHsDvuc04YJpVfNptec63DvZB7urGNE7tbJH+eTelCQD97sNIOO5Ss5FTMNRuGD0ljVl/bLrSTUEzD2wt/kKfCsv6KaulPtq73LyIB7FYEuA0GSYA5yxShF4nm39Qk1JTqP3aoDrLfdkWgPMU8=
+	t=1790789199; cv=none; b=WfrKUJMEvEh4XQSOFawtjFw9f96RmSVcBMqH05jQVfINlD+vOdQoPqicOgQJt1GnOADjZCbQdOledHZIOvaUDJ5Wrk+EKwKP2G1j4+LwTJdJfT6V3WdOai5UUNMdCAPjkgUv0WBclsTOEFwS4AVx28ZbE2FRDsiaqLD8ERUZO34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789196; c=relaxed/simple;
-	bh=E1+EnlvkfAAJ/0a01TmVBOt7KLSd+D9kNtB0YNqDdzc=;
+	s=arc-20240116; t=1790789199; c=relaxed/simple;
+	bh=5iC0YdN1l/IgOn2fEmQyysxD9AbQuFCBq9JqNkH+Qi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJA7dKnQGTNTCghd+Hh4qmlfZPwZJ3uDYQmkekwqWAvxumm93pZTkyMp3P4PE8K5yc9ZWAqaYo+88OsQMiuOBoAG1susTrW6+4fqS03VB9dt3inh09ZJr47OuAV2sgorUZoy1qfSw0bTBPlhhWDKltOGBvCksssEOfWlW5PJDVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/wXVoF2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CtSpwngCM15TePmkRLPnA6KTYLWQmS8v22a4Ax3Ct52ydDz8nWluYfRXkglf19ZtC25dyeSS+zI4nY7P89PqY4xDv5s7yfOEcTFSfLMOSK3aypVLe6rh7MtbT+B/azeBuVKSrnpk0M/Jkl/EIEFVDDJ61vjnMJ6HjzOGfCM9zNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtP7jG3g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/wXVoF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CD01F000FF;
-	Wed, 30 Sep 2026 17:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtP7jG3g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11141F000FF;
+	Wed, 30 Sep 2026 17:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789195;
-	bh=SRsdOJtGhJxGm+sB5OLRdK0brEKnDNDKQUxWBw3hPd0=;
+	s=korg; t=1790789198;
+	bh=fSASrg6O3ExPU/W8v2j8bcxrz08Dn0IRdxzUsH1hEN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w/wXVoF2VqpOG1apZPqCTmeFT3+eMpaflR1tQgO41HLeJwGh25fUZESnbc/VkD7RB
-	 HZj8XGzB/lUxPljOEpf8zWw0FWEwOI3IloYjU3vk79mfFDjeQW5+jukKLziTlbwoKj
-	 VYaHVoVj/VBtDaa84VmVS8/ft7MKMiABQEzdR25M=
+	b=PtP7jG3gJEAjUN6NO9rl5MY7xMFN89opGroGXGsJ1bgbTVqL5yrJI1WsC5Bp+6EPZ
+	 5/loYFfefSLtK3hfRy1oSa6j3zJiDEv8azcZfVCS+AYl/q9uW7lOsi+2k5xfB9NScr
+	 AP65/kz6VRTvXW8aWvEc8VrGUR7FY6woKeCYrFU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 390/877] bpf: Fix bounds check for skb-backed dynptrs
-Date: Wed, 30 Sep 2026 17:21:41 +0200
-Message-ID: <20260930152423.101134922@linuxfoundation.org>
+Subject: [PATCH 6.12 391/877] bpf: Fix bpf_sock context code generation
+Date: Wed, 30 Sep 2026 17:21:42 +0200
+Message-ID: <20260930152423.122631728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -55,52 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Emil Tsalapatis <emil@etsalapatis.com>
 
-[ Upstream commit ed6eec97b534979dcf28b40c389cee57bd6561d4 ]
+[ Upstream commit 4a4852376e3a2727ea40e61143d6d7c22bb6dfad ]
 
-The skb_pointer_if_linear() function checks whether a
-memory region of length len starting at offset off into
-the skb is in the linear area, and returns a pointer to
-the region if so. The check currently subtracts between
-skb_headlen and offset of the check, and since skb_headlen
-is unsigned the subtraction can underflow. This causes the
-bounds check to spuriously pass and generate an arbitrary
-pointer of the form *(skb->data + off).
+Currently, the ctx access code reads the rx_queue_mapping
+field with either a 4-byte or 2-byte load. The rest of the bits
+in the register are marked known zero by the verifier. However,
+the emitted ctx access code places in the register on certain
+the special value (-1) using BPF_MOV_IMM64, which gets sign-extended
+to turn on all the bits in the register. By shifting this value right,
+the program ends up with a value at runtime above what the verifier
+assumes is possible.
 
-The only user of this helper is currently skb-backed BPF
-dynptr code. Returning the wrong pointer leads to the
-dynptr erroneously being backed with invalid memory.
+Fix this by ensuring the read value is as wide as the assumed size.
+Use MOV32 instructions instead of MOV64 instructions to keep
+the upper bits zero as assumed by the verifier. Also properly report
+the size of the destination variable (the bpf_sock field, 4 bytes) instead
+of the source (the socket field, 2 bytes).
 
-Ensure the subtraction cannot underflow, and fail the check if
-it would. Use u64 arithmetic to also prevent overflow when
-calculating (skb_headlen(skb) - off) since off is unsigned.
-
-Fixes: 6f5a630d7c57 ("bpf, net: Introduce skb_pointer_if_linear().")
+Fixes: c3c16f2ea6d2 ("bpf: Add rx_queue_mapping to bpf_sock")
 Reported-by: Nicholas Carlini <nicholas@carlini.com>
+Suggested-by: Nicholas Carlini <nicholas@carlini.com>
 Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260922172028.6269-2-emil@etsalapatis.com
+Link: https://patch.msgid.link/20260922172028.6269-4-emil@etsalapatis.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/filter.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 1bfdc03e0d94e..1e6b8871c432f 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -4280,7 +4280,10 @@ skb_header_pointer_careful(const struct sk_buff *skb, int offset,
- static inline void * __must_check
- skb_pointer_if_linear(const struct sk_buff *skb, int offset, int len)
- {
--	if (likely(skb_headlen(skb) - offset >= len))
-+	unsigned int uoffset = (unsigned int)offset;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 7114a64e1898e..a680cf27ad820 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -10187,11 +10187,12 @@ u32 bpf_sock_convert_ctx_access(enum bpf_access_type type,
+ 				       target_size));
+ 		*insn++ = BPF_JMP_IMM(BPF_JNE, si->dst_reg, NO_QUEUE_MAPPING,
+ 				      1);
+-		*insn++ = BPF_MOV64_IMM(si->dst_reg, -1);
++		*insn++ = BPF_MOV32_IMM(si->dst_reg, -1);
+ #else
+-		*insn++ = BPF_MOV64_IMM(si->dst_reg, -1);
+-		*target_size = 2;
++		*insn++ = BPF_MOV32_IMM(si->dst_reg, -1);
+ #endif
++		*target_size = sizeof_field(struct bpf_sock, rx_queue_mapping);
 +
-+	if (likely(uoffset <= skb_headlen(skb) &&
-+		   (unsigned int)len <= skb_headlen(skb) - uoffset))
- 		return skb->data + offset;
- 	return NULL;
- }
+ 		break;
+ 	}
+ 
 -- 
 2.53.0
 
