@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D684E4F5E18;
-	Wed, 30 Sep 2026 18:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF9151AECE;
+	Wed, 30 Sep 2026 18:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793533; cv=none; b=a2ETNylrHUlZcXHTUNDIP/JM2IQwHlKrm3+QYPjVKTZBOsQn60OScwtBkeTx2RrsCIcyTaRmMIY/kRD5VmyP6HCCzVE76SSdCj5VrC5bQZi2vVMO030S7qhu4Um1TAC0baSxnwfNwwSa45sLr8/G7J4/iQhviaQUctHN9CXx330=
+	t=1790793536; cv=none; b=JRjOAjcMu47rJBy5WAYCOFHOaeQWI8WyneMsFxa1+ieV3+NPY2PiTTnxSPTH3D3/ecdtTZWltOnMMn3Rxph8GiowTGKGv60dyAKHHfQmdX5KTZ8FJmGrIbM+ovUQNhc8tQRm5vz37nT2q17rZuF0CmL5eO0+5QKlK6MV8e5S4+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793533; c=relaxed/simple;
-	bh=1jxkCdgPqevviy6cgjfE2fqNHT6cbpLczH53RXzY16o=;
+	s=arc-20240116; t=1790793536; c=relaxed/simple;
+	bh=ulHf0n/L/EKGw8z5yeU8z0dD9kn3I0NE86REu2N2WCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhxvcqG9RCnsZ82ShnxvWg+r0dSlWDxT9DbeJDa32kKm5H2DPRzk7eqy22sKr/q527164kM5QSlaIdbyml6prxb0+Y5Qv1n+e5RpNDDrgk0g6ol+ZycMmrZ7nGbtL1bCnxuud5Iv9fk5kVYoBkgDrxn4JgXhK6vXu88ZU9n5xOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPJzc9uv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbW40SzlvwooSwKTJMbpJAJv76Orfwwy2qvVeA8B6/Rjrx57jX3STybECLotobLvbNpPcmMege2CHo/y0WjjLIjXXg954wiLaS0fsOuzGeiaKFdbwdLrb4ScY+4W8qI3y0XL+Jy7zNX5SDK1x5f6AF2HKwplWOWx+R6G89WcP6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewgiI6Gh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPJzc9uv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335421F00898;
-	Wed, 30 Sep 2026 18:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewgiI6Gh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3C61F000FF;
+	Wed, 30 Sep 2026 18:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793531;
-	bh=IoTKdLL6aYJZI5+y77utXr0fYJ7fV1X3lqjRlNNoWYQ=;
+	s=korg; t=1790793534;
+	bh=B9vcnE13mOAsFutbRYj3oUr2iZd4jESXIC0GWphp8lA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPJzc9uv1kG47vhoQ0ic/CfbxA59qgA81pJCbILxW69tyHjUu33H/IZCMXNvWj/dS
-	 ZAc5cUXG8hQ4rQEsT5F8c+jEde2ZVgmPIPVjiM0oKPjNZmRcdRzfVb1pO3AU4xWGaC
-	 Gak4R5Yrjr++YK8Z6fk0Zp9ELVrtNv4WK0vz/Ws0=
+	b=ewgiI6GhWC/ifdfRF5gyGrFhxTKOLU61dbs6OvaAVPttvg4llVLUbmnrrBbJBk4kW
+	 dTUy3IqLO0ECmpADqrXXcukVLdcLKnfU6W2LCRQgAJoOnDynAB+kkOsQRfd9YJIY3b
+	 oIYZF8tfNy7v1VfJsDwLrTVwyw1WQhmg+17jTiQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming01@loongson.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 288/395] net: usb: cdc_mbim: add MeiG Smart SRM821 to ZLP whitelist
-Date: Wed, 30 Sep 2026 17:29:10 +0200
-Message-ID: <20260930152346.907090250@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 289/395] net: usb: lan78xx: Fix URB reference leak in lan78xx_submit_deferred_urbs()
+Date: Wed, 30 Sep 2026 17:29:11 +0200
+Message-ID: <20260930152346.928500427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,46 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Wang <wangming01@loongson.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit f75f21ef36285e5f56ee0c428bd2909ee81165b9 upstream.
+commit 17741334d00bf5ebd37f8c1c36bc9c146a351deb upstream.
 
-The MeiG Smart SRM821 5G module (0x2dee:0x4d53) crashes and drops off
-the USB bus when it receives a Zero Length Packet (ZLP) after sending
-or receiving an NTB of exactly 16384 bytes (tx_max).
+usb_get_from_anchor() hands over a reference to the URB, which the caller
+must release. lan78xx_submit_deferred_urbs() never does, so every deferred
+Tx URB keeps an extra reference: the counter grows on each suspend/resume
+cycle and the URBs are never freed when the buffers are released. Drop
+the reference after submitting, and on the path that drops the packet
+instead of submitting it.
 
-According to the MBIM specification, devices do not require a ZLP
-if the NTB size is exactly dwNtbOutMaxSize. However, the cdc_mbim
-driver defaults to sending ZLPs for devices not explicitly whitelisted
-to accommodate non-conformant hardware. This default behavior breaks
-the strictly conformant MeiG SRM821 module.
-
-Add this device to the ZLP conformance whitelist (cdc_mbim_info) so
-the driver will pad the NTB to avoid sending ZLPs, preventing the
-device firmware from crashing.
-
+Fixes: 5f4cc6e25148 ("lan78xx: Fix race conditions in suspend/resume handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Wang <wangming01@loongson.cn>
-Link: https://patch.msgid.link/20260920074500.826121-1-wangming01@loongson.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260917115811.2150119-1-vulab@iscas.ac.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc_mbim.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/lan78xx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/usb/cdc_mbim.c
-+++ b/drivers/net/usb/cdc_mbim.c
-@@ -634,6 +634,11 @@ static const struct usb_device_id mbim_d
- 	  .driver_info = (unsigned long)&cdc_mbim_info,
- 	},
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -5246,10 +5246,12 @@ static bool lan78xx_submit_deferred_urbs
+ 		    !netif_carrier_ok(dev->net) ||
+ 		    pipe_halted) {
+ 			lan78xx_release_tx_buf(dev, skb);
++			usb_put_urb(urb);
+ 			continue;
+ 		}
  
-+	/* MeiG Smart SRM821 ZLP conformance */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d53, USB_CLASS_COMM, USB_CDC_SUBCLASS_MBIM, USB_CDC_PROTO_NONE),
-+	  .driver_info = (unsigned long)&cdc_mbim_info,
-+	},
-+
- 	/* Some Huawei devices, ME906s-158 (12d1:15c1) and E3372
- 	 * (12d1:157d), are known to fail unless the NDP is placed
- 	 * after the IP packets.  Applying the quirk to all Huawei
+ 		ret = usb_submit_urb(urb, GFP_ATOMIC);
++		usb_put_urb(urb);
+ 
+ 		if (ret == 0) {
+ 			netif_trans_update(dev->net);
 
 
