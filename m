@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF3736A37E;
-	Wed, 30 Sep 2026 16:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F35377A93;
+	Wed, 30 Sep 2026 16:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785862; cv=none; b=XXc7AOn6Azj8CMysdRHsPcQfEKTJsfYrBE3fhGgWHzwFvZAEiSZLE3+JKR12Qn1b9EZGvlJWYcc5Zwhr4Danjl3dQ+Jc6Jxfs1KSpOGc3pTyKT13jUmteev4HqiInTm9PGbOussKbZFFirTelpTRcyVQJWXQhw3IJK+bqRWxsNE=
+	t=1790785865; cv=none; b=LmKNeXKITY3bTI2rMiZ0I994wNrLzbSOymhdow/w1p6kLDgto5aOMaEMhhsAP3Pszb9nEdl7/ngEJB3C7hz76XMZxvh5zdAN76bLNGe9xvA0Hr5v3lITxh/cD91vwImgB7gyV/Y54A08jYrPob936Xg15+TRyY4Mfe0hM7Q9wo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785862; c=relaxed/simple;
-	bh=9JwulycLe5l66cyQ7N5dKqvgFcVla9Cj+wlJZNWXBoY=;
+	s=arc-20240116; t=1790785865; c=relaxed/simple;
+	bh=tYlLss/JErYHHg0v3hE32JXhPukVJwIRCg6vnL6IaXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dnye2NR87ZDwuQfZNYujPD1+WtPqhCKGSjv1qkUeEbzqoVfYos64rjRFtfEuFhVYCy17I8l4yu6MwuZkQ9QjOJlX9YgonwmO+NS/TOs4DP9530U3IPmUfr6zl/o1B9Z5QRPNSW1XoaAYtZAFMwhbE510U1uozoiiqbTspr1R7Mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwQCrth9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9Nee79GwVR9G9S+Nz0DJHr23zz1QNpeJYduNHTv1WnIrVsdT7cP24ULoJoi8BPUFmRVMY+cmWEN9V28zFe0DibL65jLAFrIlNz//gmfwdzZnX2XgdIqd1Spqe2nB0dLfMeFx98JjChnOCIbLijpFngLaHq6mqH5/Rnie+IWmlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p45O5per; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwQCrth9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A901F000FF;
-	Wed, 30 Sep 2026 16:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p45O5per"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31171F000FF;
+	Wed, 30 Sep 2026 16:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785861;
-	bh=lrUvGVMw2c4iPEXaUWxqPa/DyJLAEW7uKqiU3cwQEEg=;
+	s=korg; t=1790785864;
+	bh=RRZPnKlx99/c1BUVmV3e5iR8Y6gGsjR05ctaMmI3v54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kwQCrth9xN4Q423UcK0TLqgqqUl2wzk2yF4yNgwMTrjzo/2fHdcZkYkJDPAd+Q1Oi
-	 AP/pubtkU//eATSHkAspKlg0aAEC8iYTH5RTs9x6enCDpXmNHWnqaJ/TP91TH70l+N
-	 MpTDMUJES0e5J6HvI8AUKZoSiU1LCgW7p13BoB7w=
+	b=p45O5per5amWHyj3odt8v/rWAitKa9FyXNRU8XGE5Jw+se7NgsXUgkS3hLrphCPZE
+	 Q+hVdiw8BhReHSuHEeLOePnkr691eGdmDUKTD1T0W+3jPu1C3H7ednNzvTlkwsY63D
+	 JCzi5ldn4pLgz+i8xaaKyCA/2o9/Lk+3Bd0NXyhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+855929c2df672879@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 658/982] ALSA: 6fire: fix OOB write from device-reported iso length
-Date: Wed, 30 Sep 2026 17:23:14 +0200
-Message-ID: <20260930152430.897879317@linuxfoundation.org>
+Subject: [PATCH 6.1 659/982] wifi: virt_wifi: dont transfer operstate before register
+Date: Wed, 30 Sep 2026 17:23:15 +0200
+Message-ID: <20260930152430.918341231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,96 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit 1589afe2d099d3e817873bc474676968d7080410 ]
+[ Upstream commit e5c8d7acd31b27057ea42cd405d0b3ece097bc89 ]
 
-usb6fire_pcm_in_urb_handler() sizes each outgoing isochronous packet as
-(actual_length - 4) / (in_n_analog << 2) * (out_n_analog << 2) + 4, where
-actual_length is the unsigned length the device reported for the matching
-IN packet.  A packet completed with status 0 and actual_length < 4 wraps
-the subtraction to 0x7fffffec; a zero-length isochronous packet is legal
-on the bus, and the preceding loop rejects only non-zero status.  The sum
-reaches memset() on out_urb->buffer, a 4832-byte object from
-kcalloc(PCM_MAX_PACKET_SIZE, PCM_N_PACKETS_PER_URB).
+virt_wifi_newlink() calls netif_stacked_transfer_operstate() before
+register_netdevice(). If the lower device is dormant, that queues the
+new netdev on lweventlist while it is still uninitialized. If
+registration fails after that, for example because of an invalid name
+such as "bad/name", free_netdev() immediately frees the object. A
+later linkwatch_fire_event() then use-after-frees the list entry.
 
-Even without the wrap the result is out of bounds: at 88.2/96 kHz the
-4-in/6-out scaling turns a full 420-byte IN packet into 628, so eight
-packets span 5024 bytes of that buffer.  usb_submit_urb() rejects an
-over-long descriptor only after the memset() and the
-usb6fire_pcm_playback() copy of user PCM data have run.
+Move the transfer to after netdev_upper_dev_link(), as macvlan and
+ipvlan already do.
 
-Guard the subtraction as the sibling usb6fire_pcm_capture() already does,
-and limit the frame count to what fits in rt->out_packet_size, the OUT
-endpoint's wMaxPacketSize.  This bounds total_length by the buffer size
-while keeping each packet length aligned to a whole output frame.
-
-  BUG: KASAN: out-of-bounds in usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
-  Write of size 18446744073709551456 at addr ffff88802a3d0000 by task vhci_rx/5018
-  Call Trace:
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   kasan_check_range (mm/kasan/generic.c:186 mm/kasan/generic.c:200)
-   __asan_memset (mm/kasan/shadow.c:84)
-   usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
-   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107 drivers/usb/usbip/vhci_rx.c:242)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-  Allocated by task 10:
-   __kmalloc_cache_noprof (mm/slub.c:5563)
-   usb6fire_pcm_init (sound/usb/6fire/pcm.c:560 sound/usb/6fire/pcm.c:595)
-   usb6fire_chip_probe (sound/usb/6fire/chip.c:133)
-   usb_probe_interface (drivers/usb/core/driver.c:399)
-
-  The buggy address belongs to the object at ffff88802a3d0000
-   which belongs to the cache kmalloc-8k of size 8192
-  The buggy address is located 0 bytes inside of
-   4832-byte region [ffff88802a3d0000, ffff88802a3d12e0)
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
-Reported-by: co+855929c2df672879@bugs.sh
-Closes: https://lore.kernel.org/all/gisnub8aWGLbyZLcDCSc7zWsHonMWGcyRgt5%40bugs.sh/
+Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
+Reported-by: Vega <vega@nebusec.ai>
 Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260914074324.3590843-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Link: https://patch.msgid.link/f5a832fb0ab228ce6e2b5a91fba4ca8b79198a2f.1788948455.git.zihanx@nebusec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/pcm.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/virt_wifi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/6fire/pcm.c b/sound/usb/6fire/pcm.c
-index 9e8f4371e89ff..5f6a63f79990b 100644
---- a/sound/usb/6fire/pcm.c
-+++ b/sound/usb/6fire/pcm.c
-@@ -335,11 +335,19 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
- 
- 	/* setup out urb structure */
- 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
-+		unsigned int frames = 0;
-+
- 		isoc_out = &out_urb->instance->iso_frame_desc[i];
- 		isoc_in = &in_urb->instance->iso_frame_desc[i];
-+		if (isoc_in->actual_length > 4)
-+			frames = (isoc_in->actual_length - 4)
-+					/ (rt->in_n_analog << 2);
-+		frames = min_t(unsigned int, frames,
-+				       (rt->out_packet_size - 4)
-+				       / (rt->out_n_analog << 2));
-+
- 		isoc_out->offset = total_length;
--		isoc_out->length = (isoc_in->actual_length - 4) / (rt->in_n_analog << 2)
--				* (rt->out_n_analog << 2) + 4;
-+		isoc_out->length = frames * (rt->out_n_analog << 2) + 4;
- 		isoc_out->status = 0;
- 		total_length += isoc_out->length;
+diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
+index 474451e8b5e16..dd2a74f7d06e6 100644
+--- a/drivers/net/wireless/virt_wifi.c
++++ b/drivers/net/wireless/virt_wifi.c
+@@ -552,7 +552,6 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
  	}
+ 
+ 	eth_hw_addr_inherit(dev, priv->lowerdev);
+-	netif_stacked_transfer_operstate(priv->lowerdev, dev);
+ 
+ 	dev->ieee80211_ptr = kzalloc(sizeof(*dev->ieee80211_ptr), GFP_KERNEL);
+ 
+@@ -578,6 +577,8 @@ static int virt_wifi_newlink(struct net *src_net, struct net_device *dev,
+ 		goto unregister_netdev;
+ 	}
+ 
++	netif_stacked_transfer_operstate(priv->lowerdev, dev);
++
+ 	dev->priv_destructor = virt_wifi_net_device_destructor;
+ 	priv->being_deleted = false;
+ 	priv->is_connected = false;
 -- 
 2.53.0
 
