@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED5F50C2A4;
-	Wed, 30 Sep 2026 17:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6CF5187EE;
+	Wed, 30 Sep 2026 17:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788225; cv=none; b=Ak3wxvhZuFBxY8vtDe8gbzcRMLXSLh2I/pofE2J/D+NqI0jyGFcJaPrLnUChRAUSe3bCg7ZNnJbK3kHsI1xj04zVthUjLPWPJnD7BJ33z40WnLGBRWS6pkuxsoKXRPguGbOIHkwkVwmtJL8TvFu7DQkovjGLQQda5S7sqpE67qs=
+	t=1790788227; cv=none; b=GSXpW3zN0J4Cx83iOLgChGbyiisz/1Ko5WdbXVejiqOPWqDmJnfd9x1hfFZOyeZASlNSPiAvx7wcuLmMmRmpeeeg/gYpagqcP5Oy3jMoGD1Ax6ns0C3e0rMopWKh4n/YoGdwPrSMT7BZSeWT5TZvBzKOPUP6zyswjp4nhhoXAOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788225; c=relaxed/simple;
-	bh=S8fpWCZI14FrR0y+XchnNhNfm3wesz/s9H3uwE6Mwpc=;
+	s=arc-20240116; t=1790788227; c=relaxed/simple;
+	bh=zEUvkW/eXhrfl/xblG8Z9pEv+MbLWog6YFre9qw4Mlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixbyWemhtCQAnnMK2VU8BKxXsBhAhbbZNA3pjEinyK9yIH9F/ZulBIiXg7tKzM/XuuEwTr8+FXIPQTKCCf3VtWX8RFysBUHM33Q/HaHAzGzRmcIcDR3ej+tpWWy4VEVU2UG5aQ0H3df4fK5El4Ls8D0/CkxwO5M9TcOYDHe79Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8ZMW95J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=stXuEVpjlTMDIGoGpdPFjoYdi+EKi1bSY465QfWLgu9y+PUUqQSVMJL+jCGNHJjLBfcgWE7DA/7TRWt4oYQ4GMt/J5S/Bh7mdF7JQybXYuSmuVoyFTxmAt1UCRsm128EuvSron5tcEywF0jf70WOpstFbZE4BqiqWeRYPeUkV2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnFBN+2F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8ZMW95J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087B71F000FF;
-	Wed, 30 Sep 2026 17:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnFBN+2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64281F000FF;
+	Wed, 30 Sep 2026 17:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788223;
-	bh=HWjAkt3SysL5iMv8bJ/ivUGZxpxl5Fas0H77lEONkVk=;
+	s=korg; t=1790788226;
+	bh=pKShE7Fr8zlzhhLWyMFKDtJlKWuAJFJDZ9KmiO80pLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8ZMW95J917YBtX9cv75EPdrCzvT23QvNTT9bpwTRZC6nAPJk75yKk+yRZJPqIqWq
-	 RKZ7IL2udRPGNSSf/ClJ9VrzdPD/Nxx3zXeq7iP2/2wk+X5rgxJA1Wa9bc/+GScd4/
-	 bSyULWL5GHd3TkwViBOZ5qpbDvbp4slta4va+Qxs=
+	b=OnFBN+2F5IRjL5q8L4mR4sIYlPoqBkQUKIocMvd2Saypeq4kEnLt4zCIRJ4LRhriK
+	 r0wNU8/rVdY2Yd61fE15YEktBbYqptcHGKEn5PjTRnrfOz803l11xHmjVNxEJW2Z3r
+	 CpuPKIOCodWteb+wBU4AMrzjsvrvpne2FlE1lYuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	David Lin <david.lin@intel.com>,
-	Shuming Fan <shumingf@realtek.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/877] soundwire: cadence_master: wait and cancel cdns->work before clock stop
-Date: Wed, 30 Sep 2026 17:15:59 +0200
-Message-ID: <20260930152415.785392661@linuxfoundation.org>
+Subject: [PATCH 6.12 049/877] MIPS: Octeon: apply USB FDT fixups also when USB is modular
+Date: Wed, 30 Sep 2026 17:16:00 +0200
+Message-ID: <20260930152415.806287235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,44 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit aba7b41faeecb7692458095ce6fafc341fe0b80e ]
+[ Upstream commit 126f16e0a1b353c2ba5c7e2c8626cfa865934f9f ]
 
-A peripheral event could happen during the clock stop process. We need
-to wait for the event be handled before stopping the bus clock.
-Otherwise, we will get the IO transfer timed out issue.
+The uctl/usbn device-tree fixups in octeon_prune_device_tree() - which
+set the board's USB reference-clock frequency and type from
+__cvmx_helper_board_usb_get_clock_type() - are guarded by
+"#ifdef CONFIG_USB", which is false when USB is built as a module. The
+fixups then silently disappear and octeon-hcd sees whatever default the
+DTS carries (12MHz crystal in octeon_3xxx.dts), leaving the PHY dead or
+the bus erroring on boards with a different reference clock.
 
-Fixes: af4cc917826f ("soundwire: cadence: mask Slave interrupt before stopping clock")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: David Lin <david.lin@intel.com>
-Reviewed-by: Shuming Fan <shumingf@realtek.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260901031019.233254-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Use IS_ENABLED() so USB=m gets the same fixups as USB=y.
+
+Fixes: 7fd57ab9d9cf ("MIPS: Octeon: Fix compile error when USB is not enabled.")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/cadence_master.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/mips/cavium-octeon/octeon-platform.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
-index a503ef606a62c..1557d6b044491 100644
---- a/drivers/soundwire/cadence_master.c
-+++ b/drivers/soundwire/cadence_master.c
-@@ -1670,6 +1670,13 @@ int sdw_cdns_clock_stop(struct sdw_cdns *cdns, bool block_wake)
- 		return 0;
+diff --git a/arch/mips/cavium-octeon/octeon-platform.c b/arch/mips/cavium-octeon/octeon-platform.c
+index 5e1dd4e6e82fb..4b5c99e6f5bcc 100644
+--- a/arch/mips/cavium-octeon/octeon-platform.c
++++ b/arch/mips/cavium-octeon/octeon-platform.c
+@@ -17,7 +17,7 @@
+ #include <asm/octeon/octeon.h>
+ #include <asm/octeon/cvmx-helper-board.h>
+ 
+-#ifdef CONFIG_USB
++#if IS_ENABLED(CONFIG_USB)
+ #include <linux/usb/ehci_def.h>
+ #include <linux/usb/ehci_pdriver.h>
+ #include <linux/usb/ohci_pdriver.h>
+@@ -1080,7 +1080,7 @@ int __init octeon_prune_device_tree(void)
+ 		;
  	}
  
-+	/*
-+	 * wait for any in-flight peripheral event handling to complete before stopping the clock.
-+	 * No need to disable peripheral interrupts before canceling the work, as the peripheral
-+	 * interrupts are already masked before the work is scheduled.
-+	 */
-+	cancel_work_sync(&cdns->work);
-+
- 	/*
- 	 * Before entering clock stop we mask the Slave
- 	 * interrupts. This helps avoid having to deal with e.g. a
+-#ifdef CONFIG_USB
++#if IS_ENABLED(CONFIG_USB)
+ 	/* OHCI/UHCI USB */
+ 	alias_prop = fdt_getprop(initial_boot_params, aliases,
+ 				 "uctl", NULL);
 -- 
 2.53.0
 
