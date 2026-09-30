@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E3A4F7CCF;
-	Wed, 30 Sep 2026 15:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B28350AC15;
+	Wed, 30 Sep 2026 15:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782468; cv=none; b=e/fS8FPo0WbIjboDeqpZXFgx+r0YbR/Xy6hORMfUj9622sKQJh8+pY38aTA5pFdPitCLJh8HTOE5u81WcPKgUzsJb5yh0TPLJDEL+a2QRuf+Y5lF73Ipq6jo6IuywXfTf0wJPYB95ZCf42qMms0yw+tbmKHFRkA4Wo4DYeevOhg=
+	t=1790782472; cv=none; b=VBQkqW7qL94dGdT9dGGVtaXVRAEv1SJxtH2H6cNMDyf9RQ0UXsL+LkiLxtADzMwNhpepd5LCAh1UjblWatmU7v/IKSYnW0U+pwol23Hb80xMVn42r/kl4cAe7TWYQFcN8Q2KoOoa0Ev3Ar+qywAVa1uxMZWldtvE80hqAfQV9Cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782468; c=relaxed/simple;
-	bh=V7dtYKZVdWcsuuwCuhkT0Q5sSoGUqJqYvIqYzasvJKM=;
+	s=arc-20240116; t=1790782472; c=relaxed/simple;
+	bh=3AJYTAM4Kg+PrIoaukHVahs480/0iwZNaanIRpYCJmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApXoKoMxu8Fo7jA5TJGubY6Hz8tu9d5SHMYdBnslUlQl8G4145MgM9zsxuvh6d316HnQgJ/+oIatSMySDahZ54e61rneaL16kkzh4LJ4vqNsOCriOL6xoDV6dOiQEE8EAv5QhV6KVtfDyLliuNSr95M0KbQUYwJy7WCVNNEpGiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMPxejFv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7VijLNaTYEAj10fsRWq0MYZxgBv660uMw0BYhyOMUKh38qKqnlF+n9vbbmSIFe6hbCrewP/jIySmeeQs+AKm7yMDTOTybiwRRiN04lJMEvF0CzKL4XiP2Q7Z0GcruwEBi6lIX5N/YP8tB1BIS67cLirBgTfqwiIRatwBiu4F4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXEwFZCT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMPxejFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234961F000FF;
-	Wed, 30 Sep 2026 15:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXEwFZCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925E41F00899;
+	Wed, 30 Sep 2026 15:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782453;
-	bh=IzxPV793UJLc5W2Rk5e5r4A2F4pmRYDEVwBeOrOWHHA=;
+	s=korg; t=1790782462;
+	bh=zhSQgHawaIKKX7ynXaAh07ncyDuGoAxytNGUwlZSzAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kMPxejFv9h2deCRwwUd79UrD3Ad3P4zZzobW7cMjBiPSvbRwMA14sveTPsIeG+2qt
-	 NQgq4lGllBXUfPKHUCr8294LM26W0shSZ2KuwlS9uiR/F4ndRQ6/HZ3Om7y4F9YKDX
-	 KhMak3dPDhE1UhWsh9tACtfRYRKDK3PhCMY+ZrLM=
+	b=YXEwFZCTOUhdpLUzh1+2PY7ZXU3s7+wbPyrbad8y19cSplhSa8msWajjBQCadoC1/
+	 Nv0yXzg4zUU2fzz6xhghWBknnSXrlIWP4a25emqns9K3vrMNii9iXT6B3EHTyD6Rlb
+	 T4v3yRsHBVS8BUj4jxiyYaW/myf26k6CHYCWfOL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/595] usb: core: hcd: fix possible deadlock in rh control transfers
-Date: Wed, 30 Sep 2026 17:19:04 +0200
-Message-ID: <20260930152348.828724739@linuxfoundation.org>
+Subject: [PATCH 5.10 054/595] usb: host: add ARCH_AIROHA in XHCI MTK dependency
+Date: Wed, 30 Sep 2026 17:19:07 +0200
+Message-ID: <20260930152348.892690833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,79 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit d5559f43d76b398392b26a15cbc16d731969cd1c ]
+[ Upstream commit ffeaf31f05d664581aa436d9cb92b4d1d8d301ce ]
 
->From within the SCSI error handler memory allocations must not
-trigger IO. Handling errors in UAS and the storage driver may
-involve resetting a device. The thread doing the reset itself
-relies on VM magic. However, that is insufficient, as resetting
-a device involves resuming it. Resumption as well as resetting
-involves conrol transfers to the parent of the device to be reset.
-That may be a root hub. Hence usbcore must heed the flags passed
-to usb_submit_urb() processing control transfers to root hubs.
+Airoha SoC use the same register map and logic of the Mediatek xHCI
+driver, hence add it to the dependency list to permit compilation also
+on this ARCH.
 
-The problem exist since the storage driver has been merged.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260429094413.181038-1-oneukum@suse.com
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Link: https://patch.msgid.link/20260519164903.31258-1-ansuelsmth@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hcd.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/usb/host/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 0e54f6f183486..eb0de366fb034 100644
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -473,7 +473,8 @@ rh_string(int id, struct usb_hcd const *hcd, u8 *data, unsigned len)
- 
- 
- /* Root hub control transfers execute synchronously */
--static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
-+static int rh_call_control(struct usb_hcd *hcd,
-+		struct urb *urb, gfp_t mem_flags)
- {
- 	struct usb_ctrlrequest *cmd;
- 	u16		typeReq, wValue, wIndex, wLength;
-@@ -508,8 +509,8 @@ static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
- 	 * tbuf should be at least as big as the
- 	 * USB hub descriptor.
- 	 */
--	tbuf_size =  max_t(u16, sizeof(struct usb_hub_descriptor), wLength);
--	tbuf = kzalloc(tbuf_size, GFP_KERNEL);
-+	tbuf_size = max_t(u16, sizeof(struct usb_hub_descriptor), wLength);
-+	tbuf = kzalloc(tbuf_size, mem_flags);
- 	if (!tbuf) {
- 		status = -ENOMEM;
- 		goto err_alloc;
-@@ -839,12 +840,13 @@ static int rh_queue_status (struct usb_hcd *hcd, struct urb *urb)
- 	return retval;
- }
- 
--static int rh_urb_enqueue (struct usb_hcd *hcd, struct urb *urb)
-+static int rh_urb_enqueue(struct usb_hcd *hcd,
-+		struct urb *urb, gfp_t mem_flags)
- {
- 	if (usb_endpoint_xfer_int(&urb->ep->desc))
- 		return rh_queue_status (hcd, urb);
- 	if (usb_endpoint_xfer_control(&urb->ep->desc))
--		return rh_call_control (hcd, urb);
-+		return rh_call_control(hcd, urb, mem_flags);
- 	return -EINVAL;
- }
- 
-@@ -1549,7 +1551,7 @@ int usb_hcd_submit_urb (struct urb *urb, gfp_t mem_flags)
- 	 */
- 
- 	if (is_root_hub(urb->dev)) {
--		status = rh_urb_enqueue(hcd, urb);
-+		status = rh_urb_enqueue(hcd, urb, mem_flags);
- 	} else {
- 		status = map_urb_for_dma(hcd, urb, mem_flags);
- 		if (likely(status == 0)) {
+diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
+index ab12c4bf0ef1f..d9bce38d42765 100644
+--- a/drivers/usb/host/Kconfig
++++ b/drivers/usb/host/Kconfig
+@@ -72,7 +72,7 @@ config USB_XHCI_HISTB
+ config USB_XHCI_MTK
+ 	tristate "xHCI support for MediaTek SoCs"
+ 	select MFD_SYSCON
+-	depends on (MIPS && SOC_MT7621) || ARCH_MEDIATEK || COMPILE_TEST
++	depends on (MIPS && SOC_MT7621) || ARCH_MEDIATEK || ARCH_AIROHA || COMPILE_TEST
+ 	help
+ 	  Say 'Y' to enable the support for the xHCI host controller
+ 	  found in MediaTek SoCs.
 -- 
 2.53.0
 
