@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE421E0DD8;
-	Wed, 30 Sep 2026 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589213DDAFD;
+	Wed, 30 Sep 2026 16:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787469; cv=none; b=No2CRGIQBYY5m8tNrMaoa9grTUASVHk6RZ4VYZUadBH0eVrflIx3kZBwXNdQPMU0T1oXJOpu3pCEgGBg7a9QUTbY/j3j/8b1JscPpikVnxsCpOp2WViX9yIiqTLoZ99XFmt4pMmw/Ec+zsVKnqWnkPCHGIm+nGu0MzUAJAAvKQc=
+	t=1790787472; cv=none; b=h3FbSb7G1IpsxlM6HC62VSA3rxgbmKnrY2Z8a6Kj0V45kYTT89wUpNYXK8JNBfY0BhsGhxhFdYafa2RHdX7tZLdFfI5/yhKZDD4EKUv8KXZ6KQf2atr0ht80zqRQdicuKp6I0sJtHmK0pkiP0ud+6Fxk+GIQ5gkpD/GhBwc2Sbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787469; c=relaxed/simple;
-	bh=/Ge1SvrqyM2srszBE3omwhaYxv9E5p+cyWqRSuDkbNE=;
+	s=arc-20240116; t=1790787472; c=relaxed/simple;
+	bh=T/u0ETTXAUDpCi+bfmFeOZbqvwYX0wcW/XkbGUkx0WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svW+qr17pfkXDa15NxPBZNu7klDLIgOlL1Yr5kVz+MmV9iB4Qtj5oWVcWZeadaZx14/eYeuesba6QzLVTyQFIerexwGrLMb0bPvLyNeCeq+FebddfejUfKgDu4ZNNmXSaABR8pq3B0BicrY3hbY2e45k/W8XG4koKwQ+Ct3owwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uovJy09K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d7HASZctEyuVmg+t2KTqnqiMfw1KkiRxJoGWmr0EsH9sMvYei4xs9jyrchd5vePWCvKg1/P7gVLVyvUSSqL0EjRiI/nBpsjQbto5pjc7IacSXdI4RNDXPSMHpOe3PEK16d09F4YQTka/v9JzwFOmJZ7O8KJ0a9/lEnxkqAIhHos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGAWf7n2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uovJy09K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59761F000FF;
-	Wed, 30 Sep 2026 16:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGAWf7n2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91931F000FF;
+	Wed, 30 Sep 2026 16:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787468;
-	bh=dX/R19+6NtnExIqLZmdCOdP/eK6OZp5+YMKqIIR546w=;
+	s=korg; t=1790787471;
+	bh=U/1yNAhf1YHQfFwHMYmD8sS31MYVTVTPHRiP0ydgfW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uovJy09K0nH8nQlUXzxExdScYlBrPlT97xCvfI3Kke32d5mm61oDNSZL7s1A7mDft
-	 MMRnIJ5c1RjROE5BIuTliDiB3DhlK8gvtIMvQUD7U+HIXFbIPJthvWPgu3jbiiFBjx
-	 Wy93aD19elaGtTfQ1nb99aGTkaMPpZFYXgyn1/XA=
+	b=eGAWf7n2350DSTmQv5IU/FDRFyiEnKBfnEfleSplrij2twxyndasQlozQmNJkgQAA
+	 EHQS+Nzky6lXj7clq80LADqnJ3eE0pUKx5kK8OYbBim+zCldxzwEXdnETtflPy7RIN
+	 av6Y01Vn+Mpz5UCjRp1GDY+oBgNz5V09T6e+7oOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikael Etienne <mikael1022bzh@gmail.com>,
-	Arthur Husband <artmoty@gmail.com>,
-	Alvin Lim <alvinwylim@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	David Laight <david.laight.linux@gmail.com>,
-	John Smith <imjohnsmith4000@gmail.com>,
-	Lennert Buytenhek <kernel@wantstofly.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Roland Waltersson <roland.waltersson@netinsight.net>
-Subject: [PATCH 7.2 240/457] x86/PCI: Disable enhanced atomics on AMD NBIO 7.7 and 7.11
-Date: Wed, 30 Sep 2026 17:25:45 +0200
-Message-ID: <20260930152351.222689230@linuxfoundation.org>
+	Christian Lamparter <chunkeey@gmail.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 205/457] net: emac: move setting of netops to fix crash
+Date: Wed, 30 Sep 2026 17:25:10 +0200
+Message-ID: <20260930152350.477742865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -58,147 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Christian Lamparter <chunkeey@gmail.com>
 
-commit 4fde448225123442c5796f54b7a4400e2d3cbaf6 upstream.
+[ Upstream commit 7c9f391ec89cb621d7af375ace2eb9a6248e5b9d ]
 
-Multiple users report data corruption during 64-bit DMA transfers on
-systems with AMD NBIO 7.7 and 7.11 controllers.
+fixes the following crash on driver initialization:
 
-This occurs when BIOS enables AMD "enhanced atomic operations" on PCIe Root
-Ports. When enhanced atomics are enabled, any 64-bit DMA access may be
-corrupted.
+|BUG: Kernel NULL pointer dereference on read at 0x00000158
+|Faulting instruction address: 0xc0566b40
+|Oops: Kernel access of bad area, sig: 11 [#1]
+|BE PAGE_SIZE=4K  PowerPC 44x Platform
+|Modules linked in:
+|CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: GW 7.3.0-rc3+ #1
+|Tainted: [W]=WARN
+|Hardware name: MyBook Live APM821XX 0x12c41c83 PowerPC 44x Platform
+|NIP:  c0566b40 LR: c05648f8 CTR: c04c1e9c
+|REGS: c1053a20 TRAP: 0300   Tainted: GW  (7.3.0-rc3+)
+|MSR:  0002b000 <CE,EE,FP,ME>  CR: 24008808  XER: 00000000
+|DEAR: 00000158 ESR: 00000000
+|GPR00: c05648f8 c1053b10 c1063600 c1030000 c5ab3000 00000000 [...]
+|GPR08: 00000002 00000000 00000000 c1053b40 84002808 00000000 [...]
+|GPR16: cfffd210 00000002 c0beafcc cfffc960 00000000 c1030644 [...]
+|GPR24: c0beafbc c1037000 00000000 0000000a 00000000 c1030000 [...]
+|NIP [c0566b40] phy_link_topo_add_phy+0x2c/0x1d0
+|LR [c05648f8] phy_attach_direct+0x1a4/0x368
+|Call Trace:
+|[c1053b10] [c0811e04] klist_put+0x54/0xb4 (unreliable)
+|[c1053b40] [c05648f8] phy_attach_direct+0x1a4/0x368
+|[c1053b70] [c0564ae8] phy_connect_direct+0x2c/0x60
+|[c1053b90] [c056c7a8] of_phy_connect+0x50/0x74
+|[c1053bc0] [c0572a88] emac_probe+0xd50/0x119c
+|[c1053c90] [c04cb770] platform_probe+0x74/0xa4
+|[c1053cb0] [c04c8f08] really_probe+0x120/0x2b0
+|[c1053cd0] [c04c9254] __driver_probe_device+0x1bc/0x1fc
+|[c1053d00] [c04c9334] driver_probe_device+0x38/0xa8
+|[c1053d30] [c04c9560] __driver_attach+0xf4/0x10c
+|[c1053d50] [c04c6af8] bus_for_each_dev+0x68/0xd0
+|[c1053d90] [c04c7c34] bus_add_driver+0xcc/0x1ec
+|[c1053dc0] [c04c9f6c] driver_register+0xcc/0x110
+|[c1053de0] [c0aa3f40] emac_init+0x1c4/0x200
 
-Disable enhanced atomics using SMN for NBIO 7.7 and 7.11 based models.
+This bug showed up starting with v7.3-rc1. At the NIP in
+phy_link_topo_add_phy() is a netdev_need_ops_lock() check.
+This was added by the following
+commit ded86da4bbb7 ("net: ethtool: relax ethnl_req_get_phydev() locking assertion")
 
-Reported-by: Mikael Etienne <mikael1022bzh@gmail.com>
-Closes: https://lore.kernel.org/178789300872.392066.15963676631650361573@gmail.com/
-Reported-by: Arthur Husband <artmoty@gmail.com>
-Closes: https://lore.kernel.org/20260406222335.379935-1-artmoty@gmail.com/
-Reported-by: Alvin Lim <alvinwylim@gmail.com>
-Closes: https://lore.kernel.org/20260621100844.1224301-1-alvinwylim@gmail.com/
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: commit log, s/IOVA/DMA/ in comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Cc: David Laight <david.laight.linux@gmail.com>
-Cc: John Smith <imjohnsmith4000@gmail.com>
-Cc: Lennert Buytenhek <kernel@wantstofly.org>
-Cc: Niklas Cassel <cassel@kernel.org>
-Cc: Roland Waltersson <roland.waltersson@netinsight.net>
-Link: https://patch.msgid.link/20260908190600.226485-2-mario.limonciello@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The bug shows up because at the time of_phy_connect() was called, the
+netdev_ops were *not yet* determined. My fix is to move the code that
+sets netdev_ops+commac.ops+ethtool_ops further up as emac_init_config()
+derives that by looking at the device-tree and sets the required
+dev->phy_mode accordingly.
+
+During review, the Sashiko bot's AI stated that the commac assignment
+became a dead store. Great catch! To keep the original behavior as-is,
+one mentioned option "set dev->commac.ops = &emac_commac_ops only in
+the non-gige case?" sounded like a great plan. So the dev->commac.ops
+assignment for the non-gige-case moves into the else block.
+
+This patch was tested on a WD MyBook Live (RGMII). the device now works again.
+
+Fixes: ded86da4bbb7 ("net: ethtool: relax ethnl_req_get_phydev() locking assertion")
+Signed-off-by: Christian Lamparter <chunkeey@gmail.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/49cd7343bc0e507c022071f3e2b5662b053dca73.1790007431.git.chunkeey@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/fixup.c |   99 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ drivers/net/ethernet/ibm/emac/core.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/arch/x86/pci/fixup.c
-+++ b/arch/x86/pci/fixup.c
-@@ -886,6 +886,105 @@ static void quirk_clear_strap_no_soft_re
- 	}
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x15b8, quirk_clear_strap_no_soft_reset_dev2_f0);
-+
-+/*
-+ * Enhanced atomic operations can cause corruption with 64-bit DMA
-+ * on these devices.
-+ */
-+#define RX_ENH_ATOMIC_EN		BIT(8)
-+
-+static const u32 nbio_7_7_pcie_smn_addrs[] = {
-+	0x111401d0,
-+	0x111411d0,
-+	0x111421d0,
-+	0x111431d0,
-+	0x111441d0,
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x114401d0,
-+};
-+
-+static const u32 nbio_7_11_pcie_smn_addrs[] = {
-+	0x112401d0,
-+	0x112411d0,
-+	0x112421d0,
-+	0x112431d0,
-+	0x112441d0,
-+	0x112451d0,
-+	0x113401d0,
-+	0x113411d0,
-+	0x113421d0,
-+	0x113431d0,
-+	0x113441d0,
-+	0x113451d0,
-+};
-+
-+static void quirk_amd_nbio_enhanced_atomic(struct pci_dev *host_bridge,
-+					   const u32 *smn_addrs,
-+					   size_t nr_smn_addrs)
-+{
-+	bool changed = false;
-+	size_t i;
-+	u32 data;
-+	int ret;
-+
-+	for (i = 0; i < nr_smn_addrs; i++) {
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (!(data & RX_ENH_ATOMIC_EN))
-+			continue;
-+		data = data & ~RX_ENH_ATOMIC_EN;
-+		ret = amd_smn_write(0, smn_addrs[i], data);
-+		if (ret)
-+			continue;
-+		if (changed)
-+			continue;
-+		ret = amd_smn_read(0, smn_addrs[i], &data);
-+		if (ret)
-+			continue;
-+		if (data & RX_ENH_ATOMIC_EN)
-+			continue;
-+		changed = true;
-+	}
-+
-+	if (changed)
-+		pci_info(host_bridge, "enhanced atomics disabled\n");
-+}
-+
-+static void quirk_amd_nbio_7_7_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_7_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_7_pcie_smn_addrs));
-+}
-+
-+static void quirk_amd_nbio_7_11_disable_enhanced_atomic(struct pci_dev *dev)
-+{
-+	quirk_amd_nbio_enhanced_atomic(dev, nbio_7_11_pcie_smn_addrs,
-+				       ARRAY_SIZE(nbio_7_11_pcie_smn_addrs));
-+}
-+
-+/* Phoenix, Hawk Point (NBIO 7.7) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x14E8,
-+			quirk_amd_nbio_7_7_disable_enhanced_atomic);
-+
-+/* Strix, Krackan, Strix Halo (NBIO 7.11) */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1507,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1122,
-+			quirk_amd_nbio_7_11_disable_enhanced_atomic);
-+
- #endif
+diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
+index 1d46cf6c2c127..e7043523457c1 100644
+--- a/drivers/net/ethernet/ibm/emac/core.c
++++ b/drivers/net/ethernet/ibm/emac/core.c
+@@ -3044,6 +3044,15 @@ static int emac_probe(struct platform_device *ofdev)
+ 	if (err)
+ 		goto err_gone;
  
- /*
++	if (emac_phy_supports_gige(dev->phy_mode)) {
++		ndev->netdev_ops = &emac_gige_netdev_ops;
++		dev->commac.ops = &emac_commac_sg_ops;
++	} else {
++		ndev->netdev_ops = &emac_netdev_ops;
++		dev->commac.ops = &emac_commac_ops;
++	}
++	ndev->ethtool_ops = &emac_ethtool_ops;
++
+ 	dev->emacp = devm_platform_ioremap_resource(ofdev, 0);
+ 	if (IS_ERR(dev->emacp)) {
+ 		err = PTR_ERR(dev->emacp);
+@@ -3076,7 +3085,6 @@ static int emac_probe(struct platform_device *ofdev)
+ 		dev->mdio_instance = platform_get_drvdata(dev->mdio_dev);
+ 
+ 	/* Register with MAL */
+-	dev->commac.ops = &emac_commac_ops;
+ 	dev->commac.dev = dev;
+ 	dev->commac.tx_chan_mask = MAL_CHAN_MASK(dev->mal_tx_chan);
+ 	dev->commac.rx_chan_mask = MAL_CHAN_MASK(dev->mal_rx_chan);
+@@ -3144,12 +3152,6 @@ static int emac_probe(struct platform_device *ofdev)
+ 		ndev->features |= ndev->hw_features | NETIF_F_RXCSUM;
+ 	}
+ 	ndev->watchdog_timeo = 5 * HZ;
+-	if (emac_phy_supports_gige(dev->phy_mode)) {
+-		ndev->netdev_ops = &emac_gige_netdev_ops;
+-		dev->commac.ops = &emac_commac_sg_ops;
+-	} else
+-		ndev->netdev_ops = &emac_netdev_ops;
+-	ndev->ethtool_ops = &emac_ethtool_ops;
+ 
+ 	/* MTU range: 46 - 1500 or whatever is in OF */
+ 	ndev->min_mtu = EMAC_MIN_MTU;
+-- 
+2.53.0
+
 
 
