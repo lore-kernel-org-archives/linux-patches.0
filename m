@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003C95158BA;
-	Wed, 30 Sep 2026 18:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23D94ABBA5;
+	Wed, 30 Sep 2026 18:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791447; cv=none; b=oZFyhtp2O3xQ4Omti+vE/KXEHdpL2akThWj1SHtnAxRQAf5hvAqKkJwLAQhx+aNDr9a1TwCOAmd0Q0vtpCGXX8DNxSz+hzF7ZON6SSaN0q3A1OdB5pUoprwsAF53acQKbfHRZWxqETqwa5eWk2Rid6u+GH/b/BXYou6K6UOQtwA=
+	t=1790791450; cv=none; b=gt4tabxdC5zi9vO0c6odKRDVZbzhegowZsJQmDHB/SIe3hhUssz3L4FzuvjptTvQK0Up1r0t2xMM0C68issTw/z2p32r+sVRHusBRnpKwnd0C+CP1nB18wf8Ig84XFAV1qEGGdmTuvvSgdaKH/bfeJ86ckmy2xdXhqMHSMUDhjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791447; c=relaxed/simple;
-	bh=aO+v0O8UaZjwPgTfMwKNZWQNfAn7dSnOhm94URbjRHE=;
+	s=arc-20240116; t=1790791450; c=relaxed/simple;
+	bh=ZH8+eecroK3nS/nDRAN/8Fdvvq8uQMCz4n3i1vHAkAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZVBtZSvbokXPvYyGhDrtGwTJ5fqXodDSeLkXSjFWxA17PF2+Ja1Id2nqD0RDwEtII9+HiJ5vv9R8T4iOl31wWmzlgXaHpag6ZHYho2qRVvKSw+b8qdc0c/xrktZpz9ohaanMSxCddZqvW5Ts9hOf9Vnx6gZXaJNH5uprUSPcs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxUb3O+A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ifw5DvrxfwqF1vs93+XvSaDH0Xx4PxRG9mRopjbv4vkprvGQrAilG93Lo6KiFOiIDSk4oYt8de7ejLGQVrXpRVncRKmAkZdwu+cnPkVARpOoMXYa/+F+7AUUuVS4AlwpQdHW/iENirYznBwqD+IGVP569mGEg+roMFeBfB0NpYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFUYW/8P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxUb3O+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F141F000FF;
-	Wed, 30 Sep 2026 18:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFUYW/8P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3911A1F000FF;
+	Wed, 30 Sep 2026 18:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791445;
-	bh=vHPe1rqR179j3cr4TsaEv2uZUFNgV+QNusC6uyq1ioI=;
+	s=korg; t=1790791448;
+	bh=JRL+SK2kZivzXFzLWrQxx5RX0Lq4lIZRSiupwd62P6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VxUb3O+AQ+B38yuOeZ6CKDTBy+j3L8WOOJw6YE0JaJbSGNQfgShJJ8aU4O5IH31Ft
-	 pO0o+cNMZB26Db9L5zdS7P/Cj6ObImSEG0QRzL0WIBo4CfYvx2VcjxQbNNUn5rnmhv
-	 mgoqlsAkujBRHq1rGg/mZmWOLRa1GRwaf/Y9TLVU=
+	b=GFUYW/8PigOrgTttRQzQRExmhI3BBTCUv2SRCdRHUhmmUksiQP7xdV/+iIydhAXe5
+	 tAAD09mJEJypudwT4eUQZUyaQPvNPgXqiG1EtrcWN0TwRUV7ht0ktkdIqtUPdR2DfK
+	 cZslQN21zsR+5MWwSCa6M86v52YzAFGg6NQsUm1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 304/752] net: dsa: bcm_sf2: bound the CFP rule dump by the callers buffer size
-Date: Wed, 30 Sep 2026 17:22:54 +0200
-Message-ID: <20260930152404.870534606@linuxfoundation.org>
+Subject: [PATCH 5.15 305/752] net: dsa: mv88e6xxx: bound the policy rule dump by the callers buffer size
+Date: Wed, 30 Sep 2026 17:22:55 +0200
+Message-ID: <20260930152404.892419836@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -55,40 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit cdb719f4b8596d9ccee2d56d204c2c4dce982f46 ]
+[ Upstream commit b1fffc273112e7284c5b705e186b43b5770cd3d5 ]
 
-bcm_sf2_cfp_rule_get_all() walks the whole cfp.unique bitmap into
-rule_locs[] without consulting nfc->rule_cnt, which is how many entries
-the caller had room for.  ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN
-and the ioctl sizes the buffer from the rule_cnt userspace passes in, so
-once an admin has installed CFP rules any user can ask for fewer slots
-than there are rules and run off the end of the allocation.  A rule_cnt
-of 0 leaves the buffer pointer NULL and the walk dereferences it.
+mv88e6xxx_get_rxnfc() uses rxnfc->rule_cnt as the write index while
+dumping the policy IDR, clobbering the input value before it has been
+looked at.  That input is the number of entries the caller had room for.
+ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN and the ioctl sizes the
+buffer from the rule_cnt userspace passes in, so once an admin has
+installed policy rules any user can ask for fewer slots than there are
+rules and run off the end of the allocation.  A rule_cnt of 0 leaves the
+buffer pointer NULL and the walk dereferences it.
 
-Fixes: 7318166cacad ("net: dsa: bcm_sf2: Add support for ethtool::rxnfc")
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Count into a local so the caller's limit survives the walk, and stop with
+-EMSGSIZE once it is reached.
+
+Fixes: da7dc8755304 ("net: dsa: mv88e6xxx: add RXNFC support")
 Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260903032611.3000029-2-kuba@kernel.org
+Link: https://patch.msgid.link/20260903032611.3000029-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/bcm_sf2_cfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/bcm_sf2_cfp.c b/drivers/net/dsa/bcm_sf2_cfp.c
-index edbe5e7f1cb6b..83be8db6f2d49 100644
---- a/drivers/net/dsa/bcm_sf2_cfp.c
-+++ b/drivers/net/dsa/bcm_sf2_cfp.c
-@@ -1088,6 +1088,8 @@ static int bcm_sf2_cfp_rule_get_all(struct bcm_sf2_priv *priv,
- 	unsigned int index = 1, rules_cnt = 0;
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index bcf5696804504..273d5e930362a 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -1995,6 +1995,7 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
+ 	struct ethtool_rx_flow_spec *fs = &rxnfc->fs;
+ 	struct mv88e6xxx_chip *chip = ds->priv;
+ 	struct mv88e6xxx_policy *policy;
++	u32 cnt = 0;
+ 	int err;
+ 	int id;
  
- 	for_each_set_bit_from(index, priv->cfp.unique, priv->num_cfp_rules) {
-+		if (rules_cnt == nfc->rule_cnt)
-+			return -EMSGSIZE;
- 		rule_locs[rules_cnt] = index;
- 		rules_cnt++;
- 	}
+@@ -2020,11 +2021,18 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
+ 		break;
+ 	case ETHTOOL_GRXCLSRLALL:
+ 		rxnfc->data = 0;
+-		rxnfc->rule_cnt = 0;
+-		idr_for_each_entry(&chip->policies, policy, id)
+-			if (policy->port == port)
+-				rule_locs[rxnfc->rule_cnt++] = id;
+ 		err = 0;
++		idr_for_each_entry(&chip->policies, policy, id) {
++			if (policy->port != port)
++				continue;
++			if (cnt == rxnfc->rule_cnt) {
++				err = -EMSGSIZE;
++				break;
++			}
++			rule_locs[cnt++] = id;
++		}
++		if (!err)
++			rxnfc->rule_cnt = cnt;
+ 		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
 -- 
 2.53.0
 
