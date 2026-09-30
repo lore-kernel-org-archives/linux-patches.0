@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CEB51CF46;
-	Wed, 30 Sep 2026 16:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE8551CF65;
+	Wed, 30 Sep 2026 16:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785033; cv=none; b=SXezlZn6QRIEkFoQfoqqRRgIgkxlvQv6FeEj24R/3SiFhVTMfMOCjvnhusYky4rvR12BfNYVAYpwFzHWh49ohirKlwnZgdD2iSVmWV1vGe8c67Cxr2RyfKkry6Ymw1u1gKB9Hbb8JIkOhdsHPzlZUJsGXrBGa83z+t76BRU2aPo=
+	t=1790785035; cv=none; b=pUQt/o/LbVdaXvRY0tqtPdjqPJtHvQN4eVZUgDEImQSJKf1UfWeqC8cY5YDT/UW5Lywyyj5iBbdH6nM4lkUNLjtcsE3oWrUo+V1+8OINzDNATyy0rxrXr1pN41hiQb2oPbDbGSaPDJDYY9dgT7gFlpjiovSdDD7itfVUsNM7cDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785033; c=relaxed/simple;
-	bh=1zqOdp/ICy63ATucMtiY+LYJwheq3FgRTIlEDDQgcoc=;
+	s=arc-20240116; t=1790785035; c=relaxed/simple;
+	bh=l6GD0SWf7aEfDb+KrG7A8UjGHohq4uMrdtn9r3yt0bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfZXhhYekxGOSFC5S55tpLbneozGI89UMg9p4g9dXM/z5E65vXedPFTqeNcd1nhsi1oCiuvd7x3ifR2YspHx+ZptqW2dcZ7XQAklxeYxEegw3PQaz5+4WO0Unw0rvK13cTCHQf4G12C6AqSAZGYO/iikTPZPv1oATFg2Psy+lng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyNfEGFu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sJN2vIvhlZ6TlSIqjH/Y0K7uhCKsZB0o355fk1pMUEGfPmKVlSD6/oWOMZfS+QCghcsS4G/UOGtOLLAEJve+W+OjpRzWa/Us1/VZkGu89byT12P//XEBj1GE4LibWxT9sxino+oEjN8JyJU99gER3DW855egsOPoBTuEH3krP5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxvGT7QM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyNfEGFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27BA1F0089A;
-	Wed, 30 Sep 2026 16:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxvGT7QM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FBC1F000FF;
+	Wed, 30 Sep 2026 16:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785028;
-	bh=JkLzaQJ6lpB5GGYLVzA925zqQMGQSKQIWWI/Xw3pBao=;
+	s=korg; t=1790785031;
+	bh=zhqQEMiPgECuuPeXl3ZnpHrHpanuCKgHmTKXX1TzqoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZyNfEGFuBbsPOc8EgFzvRquSkMpRXn8GYJGrp9khArOcOoRULYBB4IHHqYejaJ1RZ
-	 mNPozBmsLTQ8bSD7A3jMj9auSMdkdfYFCuIeC2LBAb+wnOft7Ud08oRfawcr4rDa43
-	 I7/pauM7EBDexxxqNxYJ/fRQL7tzO8y5kWRot9TI=
+	b=TxvGT7QMdCs5p+xqlnSrj0x9SOXA8wcq8d6NXoTgoi/NueSkknBcVedl2wmJ3g5bG
+	 B7v0T61+OIpumykGEBd4oKv72iL3xfb/H9okcZM6hrdj1TMRjeqfoiRmfhO9vymruy
+	 TSxzOSpHHlIDUcU3/jKdnnVNoerRziR8s2Ve2eEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Joe Damato <joe@dama.to>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Ivy Lopez <skunkolee@gmail.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 365/982] bonding: alb: fix uninitialized transport header access in alb_determine_nd()
-Date: Wed, 30 Sep 2026 17:18:21 +0200
-Message-ID: <20260930152424.652195838@linuxfoundation.org>
+Subject: [PATCH 6.1 366/982] scsi: mpt3sas: Avoid out-of-bounds cpumask_of_node() call in _base_assign_reply_queues()
+Date: Wed, 30 Sep 2026 17:18:22 +0200
+Message-ID: <20260930152424.674218294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,79 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ivy Lopez <skunkolee@gmail.com>
 
-[ Upstream commit 70f3995830d3f1e79faa14eb0605914f778feca9 ]
+[ Upstream commit e0d26fe176a8db6ccad4ab38c5bab29391c1946b ]
 
-alb_determine_nd() uses icmp6_hdr(skb) to inspect ICMPv6 headers.
-However, in xmit paths (e.g. packets sent via AF_PACKET / raw sockets
-or forwarded packets), skb->transport_header is not guaranteed to be
-initialized. While pskb_network_may_pull() ensures the packet data is
-linear starting from the network header, it does not set or adjust the
-transport header offset.
+dev_to_node() can return NUMA_NO_NODE (-1) on systems without NUMA
+topology information for the PCI device, such as single-socket boards
+that don't expose device-to-node affinity. Passing -1 directly into
+cpumask_of_node() indexes node_to_cpumask_map[-1], an out-of-bounds
+array read caught by UBSAN:
 
-Dereferencing icmp6_hdr(skb) can therefore access out-of-bounds memory.
+  UBSAN: array-index-out-of-bounds in arch/x86/include/asm/topology.h:72:28
+  index -1 is out of range for type 'cpumask *[1024]'
 
-Fetch the icmp6hdr directly after ipv6hdr following pskb_network_may_pull(),
-and reload ipv6hdr in case pskb_may_pull() reallocated skb->head.
-Also remove the unused bond argument from alb_determine_nd().
+Fall back to cpu_online_mask when no NUMA node is available, rather than
+assuming dev_to_node() always returns a valid node index.
 
-Fixes: 0da8aa00bfcf ("net: bonding: Add support for IPV6 ns/na to balance-alb/balance-tlb mode")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260831194626.119371-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221294
+Suggested-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Fixes: 728bbc6cbff7 ("scsi: mpt3sas: Affinity high iops queues IRQs to local node")
+Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260825190313.24013-1-skunkolee@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_alb.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index c44a9358f8b27..8930652efe321 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -1282,10 +1282,10 @@ static int alb_set_mac_address(struct bonding *bond, void *addr)
- }
- 
- /* determine if the packet is NA or NS */
--static bool alb_determine_nd(struct sk_buff *skb, struct bonding *bond)
-+static bool alb_determine_nd(struct sk_buff *skb)
- {
--	struct ipv6hdr *ip6hdr;
--	struct icmp6hdr *hdr;
-+	const struct ipv6hdr *ip6hdr;
-+	const struct icmp6hdr *hdr;
- 
- 	if (!pskb_network_may_pull(skb, sizeof(*ip6hdr)))
- 		return true;
-@@ -1297,7 +1297,8 @@ static bool alb_determine_nd(struct sk_buff *skb, struct bonding *bond)
- 	if (!pskb_network_may_pull(skb, sizeof(*ip6hdr) + sizeof(*hdr)))
- 		return true;
- 
--	hdr = icmp6_hdr(skb);
-+	ip6hdr = ipv6_hdr(skb);
-+	hdr = (const struct icmp6hdr *)(ip6hdr + 1);
- 	return hdr->icmp6_type == NDISC_NEIGHBOUR_ADVERTISEMENT ||
- 		hdr->icmp6_type == NDISC_NEIGHBOUR_SOLICITATION;
- }
-@@ -1382,7 +1383,7 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
- 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
- 		switch (skb->protocol) {
- 		case htons(ETH_P_IPV6):
--			if (alb_determine_nd(skb, bond))
-+			if (alb_determine_nd(skb))
- 				break;
- 			fallthrough;
- 		case htons(ETH_P_IP):
-@@ -1468,7 +1469,7 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
- 			break;
- 		}
- 
--		if (alb_determine_nd(skb, bond)) {
-+		if (alb_determine_nd(skb)) {
- 			do_tx_balance = false;
- 			break;
- 		}
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 479682770ee51..35d53c86e05e7 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -3228,7 +3228,10 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
+ 		 * corresponding to high iops queues.
+ 		 */
+ 		if (ioc->high_iops_queues) {
+-			mask = cpumask_of_node(dev_to_node(&ioc->pdev->dev));
++			int node = dev_to_node(&ioc->pdev->dev);
++
++			mask = (node == NUMA_NO_NODE) ?
++				cpu_online_mask : cpumask_of_node(node);
+ 			for (index = 0; index < ioc->high_iops_queues;
+ 			    index++) {
+ 				irq = pci_irq_vector(ioc->pdev, index);
 -- 
 2.53.0
 
