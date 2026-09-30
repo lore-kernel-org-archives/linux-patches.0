@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E15F405C3F;
-	Wed, 30 Sep 2026 19:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547953E3156;
+	Wed, 30 Sep 2026 19:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796846; cv=none; b=JQIIlEzAJi67cs4CyaW9uanJyTjNki0Y0DcWZ2oLahHKJHnunKCUxxXFUqmSoGxwpK1EvCZ6rJNO9iz6Ir5vR41c1bV5cCAolXoCas7PTVCc7K11kDLaXpUdS314ojOufFbQt77kidnPJ0v5X4CIqwowjcW9+0a2kWxWVVSLXeo=
+	t=1790796850; cv=none; b=F31LKYoYWXIcOiPIaUwIQdPUgGsK+PAya/HmZqZTrOHe77rt/BgD/IE5hBG8ddTHpHtuRj+HvVTVVawv227fOk3sCNqq0B+2ElOGH0F2eILoTyDQM83orl++3tNNGUhQPUijZXug7PFADwJ7gkwZdRjPYiOKU4RtMYpnUQEIUSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796846; c=relaxed/simple;
-	bh=fU/yUvDQG9DEh7HtnDiobi7LD/gvc4iWq4zKFGOCUhM=;
+	s=arc-20240116; t=1790796850; c=relaxed/simple;
+	bh=PVgTgkUhMyEOxVJBHDIaBDQBWYLdrvI/t1f0YGjFrYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pkamOpjeW6NyUXBJ9YsaowqEnotEQtaEWK3j6DNrPtJ1YpiULgy2ebgKU+irGJUajHeSpEfU+yundV4+FZIIiabi0jaxfvNhnEWarfc9ObQaeaIp6QMTy2/MWatL+piYf/FnC9lHjsnvGNM8h0puIDqe2cYqW3OxWU/W68FYbSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7tS0O9E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RQu3euOWAEQ/2yfUtVBH1kWy3m1i0xr5CANZ8ESPYBBTktekqyr2TibxD+ajKfAYAdtiX5PsZQh42XlFKSFcT+gLlD0vwPZ1o/B39LWD360BqFIMEmcCPKqGQsXM1kcM8c6qJg3CBJ470Y4YB1olIOzNlytW087t61r8AXSUg7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LF0NLrsn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7tS0O9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93111F000FF;
-	Wed, 30 Sep 2026 19:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LF0NLrsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5E81F00898;
+	Wed, 30 Sep 2026 19:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796845;
-	bh=t9RnVqyYZ2bbljFcCCdg0sxftZRSusU9iajaRGfNGBo=;
+	s=korg; t=1790796848;
+	bh=BUyQRYCL4sqgLGAX8zizydQG+uraxldRlAr89Ihkkck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7tS0O9EPgEXbdX3c6sQvJASfzh5Kk+aILXA8Rrym0eT4tXlIKHvzcaBo6OpsZS8n
-	 iVeQUwHlQ4FB5jAOHgQx417HmljYPltqF89d85Fvd3bcj6htG7k8osPNsByh87+Dpw
-	 U7Q9lIZYGDoU3PwF23ICkrwx8W5xiMHiSz8/NvDg=
+	b=LF0NLrsnD7N4aygjL/tybGhKrMZx/FD4Bsob/9+FNl454Ozgp4OexAwmOUs9aXTn4
+	 AcELOdq7Hv7U55a+IhUpn5a0dCcveIJVrl0OxlpyyHe64rVImmNPTCvDsBhIngS1Zr
+	 wjopDRrgD1vf5AU8Dq+uaZ1Wlm1inkygVLQUL9hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Dragan Simic <dsimic@manjaro.org>,
+	=?UTF-8?q?H=C3=A9l=C3=A8ne=20Vulquin?= <oss@helene.moe>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1058/1193] driver core: Make dev_err_probe() silent for -ENOMEM
-Date: Wed, 30 Sep 2026 17:29:02 +0200
-Message-ID: <20260930152457.732962246@linuxfoundation.org>
+Subject: [PATCH 6.6 1059/1193] driver core: Add device probe log helper dev_warn_probe()
+Date: Wed, 30 Sep 2026 17:29:03 +0200
+Message-ID: <20260930152457.754287946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,54 +53,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit 2f3cfd2f4b7cf3026fe6b9b2a5320cc18f4c184e ]
+[ Upstream commit 36e69b160705b65bf136c2fb6a1194447eeb8478 ]
 
-For an out-of-memory error there should be no additional output. Adapt
-dev_err_probe() to not emit the error message when err is -ENOMEM.
-This simplifies handling errors that might among others be -ENOMEM.
+Some drivers can still provide their functionality to a certain extent
+even when some of their resource acquisitions eventually fail.  In such
+cases, emitting errors isn't the desired action, but warnings should be
+emitted instead.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/3d1e308d45cddf67749522ca42d83f5b4f0b9634.1718311756.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To solve this, introduce dev_warn_probe() as a new device probe log helper,
+which behaves identically as the already existing dev_err_probe(), while it
+produces warnings instead of errors.  The intended use is with the resources
+that are actually optional for a particular driver.
+
+While there, copyedit the kerneldoc for dev_err_probe() a bit, to simplify
+its wording a bit, and reuse it as the kerneldoc for dev_warn_probe(), with
+the necessary wording adjustments, of course.
+
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Tested-by: Hélène Vulquin <oss@helene.moe>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2be0a28538bb2a3d1bcc91e2ca1f2d0dc09146d9.1727601608.git.dsimic@manjaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 4eb3f195ef08 ("tg3: use random MAC address when tg3_get_device_address fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/base/core.c        | 129 +++++++++++++++++++++++++++++--------
+ include/linux/dev_printk.h |   1 +
+ 2 files changed, 102 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 8e17aeabd6e80..c00e48c68a801 100644
+index c00e48c68a801..a972b585bae9c 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -5149,11 +5149,22 @@ int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
- 	vaf.fmt = fmt;
- 	vaf.va = &args;
+@@ -5107,6 +5107,49 @@ define_dev_printk_level(_dev_info, KERN_INFO);
  
--	if (err != -EPROBE_DEFER) {
--		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
--	} else {
+ #endif
+ 
++static void __dev_probe_failed(const struct device *dev, int err, bool fatal,
++			       const char *fmt, va_list vargsp)
++{
++	struct va_format vaf;
++	va_list vargs;
++
++	/*
++	 * On x86_64 and possibly on other architectures, va_list is actually a
++	 * size-1 array containing a structure.  As a result, function parameter
++	 * vargsp decays from T[1] to T*, and &vargsp has type T** rather than
++	 * T(*)[1], which is expected by its assignment to vaf.va below.
++	 *
++	 * One standard way to solve this mess is by creating a copy in a local
++	 * variable of type va_list and then using a pointer to that local copy
++	 * instead, which is the approach employed here.
++	 */
++	va_copy(vargs, vargsp);
++
++	vaf.fmt = fmt;
++	vaf.va = &vargs;
++
 +	switch (err) {
 +	case -EPROBE_DEFER:
- 		device_set_deferred_probe_reason(dev, &vaf);
- 		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		device_set_deferred_probe_reason(dev, &vaf);
++		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
 +		break;
 +
 +	case -ENOMEM:
-+		/*
-+		 * We don't print anything on -ENOMEM, there is already enough
-+		 * output.
-+		 */
++		/* Don't print anything on -ENOMEM, there's already enough output */
 +		break;
 +
 +	default:
-+		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		/* Log fatal final failures as errors, otherwise produce warnings */
++		if (fatal)
++			dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
++		else
++			dev_warn(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
 +		break;
- 	}
++	}
++
++	va_end(vargs);
++}
++
+ /**
+  * dev_err_probe - probe error check and log helper
+  * @dev: the pointer to the struct device
+@@ -5119,7 +5162,7 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+  * -EPROBE_DEFER and propagate error upwards.
+  * In case of -EPROBE_DEFER it sets also defer probe reason, which can be
+  * checked later by reading devices_deferred debugfs attribute.
+- * It replaces code sequence::
++ * It replaces the following code sequence::
+  *
+  * 	if (err != -EPROBE_DEFER)
+  * 		dev_err(dev, ...);
+@@ -5131,47 +5174,77 @@ define_dev_printk_level(_dev_info, KERN_INFO);
+  *
+  * 	return dev_err_probe(dev, err, ...);
+  *
+- * Using this helper in your probe function is totally fine even if @err is
+- * known to never be -EPROBE_DEFER.
++ * Using this helper in your probe function is totally fine even if @err
++ * is known to never be -EPROBE_DEFER.
+  * The benefit compared to a normal dev_err() is the standardized format
+- * of the error code, it being emitted symbolically (i.e. you get "EAGAIN"
+- * instead of "-35") and the fact that the error code is returned which allows
+- * more compact error paths.
++ * of the error code, which is emitted symbolically (i.e. you get "EAGAIN"
++ * instead of "-35"), and having the error code returned allows more
++ * compact error paths.
+  *
+  * Returns @err.
+  */
+ int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
+ {
+-	struct va_format vaf;
+-	va_list args;
++	va_list vargs;
  
- 	va_end(args);
+-	va_start(args, fmt);
+-	vaf.fmt = fmt;
+-	vaf.va = &args;
++	va_start(vargs, fmt);
+ 
+-	switch (err) {
+-	case -EPROBE_DEFER:
+-		device_set_deferred_probe_reason(dev, &vaf);
+-		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+-		break;
++	/* Use dev_err() for logging when err doesn't equal -EPROBE_DEFER */
++	__dev_probe_failed(dev, err, true, fmt, vargs);
+ 
+-	case -ENOMEM:
+-		/*
+-		 * We don't print anything on -ENOMEM, there is already enough
+-		 * output.
+-		 */
+-		break;
++	va_end(vargs);
+ 
+-	default:
+-		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+-		break;
+-	}
++	return err;
++}
++EXPORT_SYMBOL_GPL(dev_err_probe);
+ 
+-	va_end(args);
++/**
++ * dev_warn_probe - probe error check and log helper
++ * @dev: the pointer to the struct device
++ * @err: error value to test
++ * @fmt: printf-style format string
++ * @...: arguments as specified in the format string
++ *
++ * This helper implements common pattern present in probe functions for error
++ * checking: print debug or warning message depending if the error value is
++ * -EPROBE_DEFER and propagate error upwards.
++ * In case of -EPROBE_DEFER it sets also defer probe reason, which can be
++ * checked later by reading devices_deferred debugfs attribute.
++ * It replaces the following code sequence::
++ *
++ * 	if (err != -EPROBE_DEFER)
++ * 		dev_warn(dev, ...);
++ * 	else
++ * 		dev_dbg(dev, ...);
++ * 	return err;
++ *
++ * with::
++ *
++ * 	return dev_warn_probe(dev, err, ...);
++ *
++ * Using this helper in your probe function is totally fine even if @err
++ * is known to never be -EPROBE_DEFER.
++ * The benefit compared to a normal dev_warn() is the standardized format
++ * of the error code, which is emitted symbolically (i.e. you get "EAGAIN"
++ * instead of "-35"), and having the error code returned allows more
++ * compact error paths.
++ *
++ * Returns @err.
++ */
++int dev_warn_probe(const struct device *dev, int err, const char *fmt, ...)
++{
++	va_list vargs;
++
++	va_start(vargs, fmt);
++
++	/* Use dev_warn() for logging when err doesn't equal -EPROBE_DEFER */
++	__dev_probe_failed(dev, err, false, fmt, vargs);
++
++	va_end(vargs);
+ 
+ 	return err;
+ }
+-EXPORT_SYMBOL_GPL(dev_err_probe);
++EXPORT_SYMBOL_GPL(dev_warn_probe);
+ 
+ static inline bool fwnode_is_primary(struct fwnode_handle *fwnode)
+ {
+diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
+index ca32b5bb28eb5..eb2094e43050c 100644
+--- a/include/linux/dev_printk.h
++++ b/include/linux/dev_printk.h
+@@ -276,6 +276,7 @@ do {									\
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
+ 
+ __printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++__printf(3, 4) int dev_warn_probe(const struct device *dev, int err, const char *fmt, ...);
+ 
+ /* Simple helper for dev_err_probe() when ERR_PTR() is to be returned. */
+ #define dev_err_ptr_probe(dev, ___err, fmt, ...) \
 -- 
 2.53.0
 
