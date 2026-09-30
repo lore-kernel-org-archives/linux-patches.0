@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC6B51EE1B;
-	Wed, 30 Sep 2026 18:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA325208AF;
+	Wed, 30 Sep 2026 18:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793117; cv=none; b=bAhZB2CDXAgWHisPjgEzWucD0J97QMDIYtuc2LeiEkt5CENstN7wgUAH3xNkVWUA9Vdjo1fxBIGNOBEYTgnDlKiOiX+rQdLDuOkctd9utwtt/l5Hg5oPjr9XmSso4o7hrlWEV39QC2pOwNxvb7rDRQtb5sDfHOVSGh+vPWbtEXk=
+	t=1790793120; cv=none; b=i/D19/izSn0h3yMVvArvYLGrr2RyBOklz1QqxF4adhAIn1RpTxqTfMbQGEe5ZruiTQQ6V2QGzmD4xyyKytf5wr5Jl7Y3UHqjIjra8Ax3MOoBUxtUNR1edH/AzBzTCnqacGH1CmCRp3E8C+iS5BxMDbvEtQnQBEqWL70vbpdZdEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793117; c=relaxed/simple;
-	bh=idD0gYGK2rnEdjxWQhLfBw+ccZYHTjfkz1xFemV3zMw=;
+	s=arc-20240116; t=1790793120; c=relaxed/simple;
+	bh=v0VDcdyCXN+mENoNZO++T1OU8LAhS5S9645zWNyQz+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVdp9ELmnKqpEjtnrlnQGC8h0/MIQM1LC0VBtxFXt5lvW8/7phZkdBayYpeWlIasu6jTLrFLZxz+yzvEO8tXDwUon4Q9tEeJ8os3k9mThXvzCyrrzdJZ43tuesl06vvUq/LfBLtsdDljgm8Ux28vxBYXN/3IAcuFhmkBSJQphG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzWLiz3f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KYkE0EM5uCvgGc6g24jHlv0+ut1q2JjrW+eCgfES+xB8RBMwUTRGkQHZjowysBxk6mPg6Agx8l8de4ju3PJxJ3WsbK3sMvDozNe14C1olEg5fcFplX9fpkdCy56RBDycDduFs2e57iqo+4Y91RMaXnbOv/tBwNnyepzEpi4/vpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eq2rmo0t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzWLiz3f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F611F000FF;
-	Wed, 30 Sep 2026 18:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq2rmo0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEB31F000FF;
+	Wed, 30 Sep 2026 18:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793115;
-	bh=jOwheGPsrR7RSZ9uACsEoQeRtgiI7QcUeY05uvrmgAI=;
+	s=korg; t=1790793118;
+	bh=x5S+P5jFF+oFs2CjhxStsPZ5FTDjUlQFvOmj2Cz7WPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzWLiz3fZ/j641/26R9hdlpV3D6N7QX61sEmOye5vO9n5KJkYC5xdxwNouDvjwQvX
-	 VPHDvfe0Vy2ALdNT1foC9Lf4ItSnh1Z5VZh2v6JPv2SAMR903zjWmItCjBe5iJei9S
-	 A3pRbADrW6qYP6eknEjx+63EjpnxanWbB4LZwX80=
+	b=Eq2rmo0t+G3o/RmDF4Htv25+PamispW3RGa6RfDO26+Mu3A3NcAM/6rW9dBkcWLb8
+	 7ssg2EKllTouOcD2TE37uXUwRLmUhcbW47JBMQ1YLWDJaj5OQOjApHRGKCQnlCowDo
+	 xuyW7WjMGVGNDtQuENSgObZKvo3qEfU2+ctet1uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/395] genetlink: report the real command id for dump-only ops in policy dumps
-Date: Wed, 30 Sep 2026 17:26:26 +0200
-Message-ID: <20260930152343.333357694@linuxfoundation.org>
+Subject: [PATCH 6.18 142/395] nfc: st21nfca: validate received frame size
+Date: Wed, 30 Sep 2026 17:26:44 +0200
+Message-ID: <20260930152343.723712208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,76 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 261e8a37ecbaf462cdf9c336d2b2f5056088401a ]
+[ Upstream commit a653c01ce447f10c36b901646888c0330363af4f ]
 
-The op-to-policy map a CTRL_CMD_GETPOLICY dump returns is the only way
-for userspace to find out which policy index belongs to which command.
-ctrl_dumppolicy_put_op() tags the nest with doit->cmd, but an op which
-only has a dumpit has no doit and every path which fills the split ops
-in zeroes it out, so those entries all claim to be command 0.  nlctrl's
-own CTRL_CMD_GETPOLICY and NETDEV_CMD_QSTATS_GET are both in that group:
+st21nfca_hci_i2c_repack() trims a received frame at its EOF marker
+before removing byte stuffing.  It then assumes the truncated frame
+contains the LLC header and two CRC bytes, and it unconditionally reads
+the byte after an escape marker.
 
-  [{'family-id': 16, 'op-policy': {'do': 0, 'dump': 0, 'op-id': 3}},
-   {'family-id': 16, 'op-policy': {'dump': 1, 'op-id': 0}},
+A malformed frame can place EOF immediately after the start marker or can
+end its data portion with an escape marker.  The former leaves too few
+bytes for check_crc(), while the latter makes the unstuffing loop read past
+the current skb length.
 
-ctrl_fill_info() gets this right - it uses the iterator's cmd for
-CTRL_ATTR_OP_ID - so the two introspection interfaces of the same family
-contradict each other today.
+Require the minimum framing bytes both before and after unstuffing.  Use
+separate input and output cursors while removing byte stuffing, and reject
+an escape marker without its encoded byte.  This keeps malformed frames
+within the received frame boundary before CRC processing.
 
-Pass the command in rather than reconstructing it from
-doit->cmd | dumpit->cmd inside the helper, both callers already have it.
-
-Fixes: 26588edbef60 ("genetlink: support split policies in ctrl_dumppolicy_put_op()")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260918222949.4190284-1-kuba@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3096e25a3e40 ("NFC: st21nfca: Fix incorrect byte stuffing revocation")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260715084405.41546-1-pengpeng@iscas.ac.cn
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/genetlink.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/nfc/st21nfca/i2c.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 81b4494e2db74..7925a7913bc4f 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1657,7 +1657,7 @@ static void *ctrl_dumppolicy_prep(struct sk_buff *skb,
- }
- 
- static int ctrl_dumppolicy_put_op(struct sk_buff *skb,
--				  struct netlink_callback *cb,
-+				  struct netlink_callback *cb, u32 cmd,
- 				  struct genl_split_ops *doit,
- 				  struct genl_split_ops *dumpit)
+diff --git a/drivers/nfc/st21nfca/i2c.c b/drivers/nfc/st21nfca/i2c.c
+index 6d78613838068..58f07725cc5f9 100644
+--- a/drivers/nfc/st21nfca/i2c.c
++++ b/drivers/nfc/st21nfca/i2c.c
+@@ -289,27 +289,36 @@ static int check_crc(u8 *buf, int buflen)
+  */
+ static int st21nfca_hci_i2c_repack(struct sk_buff *skb)
  {
-@@ -1678,7 +1678,7 @@ static int ctrl_dumppolicy_put_op(struct sk_buff *skb,
- 	if (!nest_pol)
- 		goto err;
+-	int i, j, r, size;
++	int read, write, r, size;
  
--	nest_op = nla_nest_start(skb, doit->cmd);
-+	nest_op = nla_nest_start(skb, cmd);
- 	if (!nest_op)
- 		goto err;
+-	if (skb->len < 1 || (skb->len > 1 && skb->data[1] != 0))
++	if (skb->len < ST21NFCA_FRAME_HEADROOM ||
++	    !IS_START_OF_FRAME(skb->data))
+ 		return -EBADMSG;
  
-@@ -1722,7 +1722,8 @@ static int ctrl_dumppolicy(struct sk_buff *skb, struct netlink_callback *cb)
- 						      &doit, &dumpit)))
- 				return -ENOENT;
+ 	size = get_frame_size(skb->data, skb->len);
+ 	if (size > 0) {
++		if (size < ST21NFCA_FRAME_HEADROOM + 2)
++			return -EBADMSG;
++
+ 		skb_trim(skb, size);
+ 		/* remove ST21NFCA byte stuffing for upper layer */
+-		for (i = 1, j = 0; i < skb->len; i++) {
+-			if (skb->data[i + j] ==
++		for (read = 1, write = 1; read < skb->len;) {
++			if (skb->data[read] ==
+ 					(u8) ST21NFCA_ESCAPE_BYTE_STUFFING) {
+-				skb->data[i] = skb->data[i + j + 1]
+-						| ST21NFCA_BYTE_STUFFING_MASK;
+-				i++;
+-				j++;
++				if (read + 1 == skb->len)
++					return -EBADMSG;
++
++				skb->data[write++] = skb->data[read + 1]
++						     | ST21NFCA_BYTE_STUFFING_MASK;
++				read += 2;
++			} else {
++				skb->data[write++] = skb->data[read++];
+ 			}
+-			skb->data[i] = skb->data[i + j];
+ 		}
+ 		/* remove byte stuffing useless byte */
+-		skb_trim(skb, i - j);
++		skb_trim(skb, write);
++		if (skb->len < ST21NFCA_FRAME_HEADROOM + 2)
++			return -EBADMSG;
+ 		/* remove ST21NFCA_SOF_EOF from head */
+ 		skb_pull(skb, 1);
  
--			if (ctrl_dumppolicy_put_op(skb, cb, &doit, &dumpit))
-+			if (ctrl_dumppolicy_put_op(skb, cb, ctx->op,
-+						   &doit, &dumpit))
- 				return skb->len;
- 
- 			/* done with the per-op policy index list */
-@@ -1731,6 +1732,7 @@ static int ctrl_dumppolicy(struct sk_buff *skb, struct netlink_callback *cb)
- 
- 		while (ctx->dump_map) {
- 			if (ctrl_dumppolicy_put_op(skb, cb,
-+						   ctx->op_iter->cmd,
- 						   &ctx->op_iter->doit,
- 						   &ctx->op_iter->dumpit))
- 				return skb->len;
 -- 
 2.53.0
 
