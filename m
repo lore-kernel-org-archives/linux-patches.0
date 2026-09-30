@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20291400963;
-	Wed, 30 Sep 2026 17:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DDC519E1E;
+	Wed, 30 Sep 2026 17:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789080; cv=none; b=ozcTp7dz2iJi/0TK88xdq9Z5nqR1LwiRHhmp2kEXQCmC3jNQ2DaYq7osMhpVYlZwXZ/mEk42oUvoTnRlQ6BZfLTia9IigtG36yy35AEjzzUBKcQUfp1uW01AIK14r6gvWC3WxxvTR9ENM53Ez+5ftZ6wxGatRXGT8Y5FANhvNTs=
+	t=1790789083; cv=none; b=iVt36UTVyOiuam4cCzliSyXsFd/609YymZeaHwP8aku1mBDnroftbBnQCFOYedqmR3rjR8rvQRPMdpBh+q5lVWCfezKIkXGB4nY/6hAxobrg9iAkBQEmaqd3P7IOT6cYkU8gVbSUl0snL07UQRsJ8lRf+u2cfZD6R4a7HZLJDho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789080; c=relaxed/simple;
-	bh=DYB+UcDp7nXtXhsO4PMr1NeywytzREFpK+eDW/HiPiM=;
+	s=arc-20240116; t=1790789083; c=relaxed/simple;
+	bh=t9rQy1eWlK+ZUXT0gT2sOJvupaXxnQ/1EhuYN+b4yCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFtEmQaFji8KjrjIVIarM+JS1ADmkg/Q/ki0qLk+kf1EONGgfnSjmpYYOMIrRw+AA3nciKBrndZgQl9q0Z1fqjKcatZU6zv2brGcdGP1bIMkZ0/Q9WMgic6wg+twZINK6qd4COd/dyUQgsvvtxEQY9FZvWMmy7n4W9JSYyqXLbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZVi8fc9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JDSxh8NZs3dIhPbFFu+zqGooqLklMRUjWlMnHUANbxNoiWY4d7Jd9xkEV0X4iZ989lvg4NcapqNpWtsloow3BYog5Sk85ErIK3gr+8pXBcLu9gfnBjP6J6WJXnIhdM2ESlac6AbkJpwk45fFKhBN3v3VCAoJH8MEC7p9llZN3vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qj0x2c/W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZVi8fc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5FE1F000FF;
-	Wed, 30 Sep 2026 17:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qj0x2c/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572B21F000FF;
+	Wed, 30 Sep 2026 17:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789079;
-	bh=3tnNZYpaUdb9qC83qu+hjgDO+3ExpJxufFSsCQ6RWOE=;
+	s=korg; t=1790789081;
+	bh=xK92rSSjlrdJaKBtX7YvvlJR77TKthWsP8Gi9vbEUUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KZVi8fc9UV917WL0xHCUk8baxyR9obGFV3nhlhXVqrf/VLXWTxPtB4pDF7//NJ6Xw
-	 AuX8q+LVtNM+S/ljnMmcubQZ+5UaaZ9dibM1kjGGswNqV3EVlhLLELa2hTt69P1tfL
-	 Hzj6oRc1boYdAahDom7ddxP1pA+QufQjof+vYVFk=
+	b=Qj0x2c/WzAtncZ9uJfBD0DAlpLhkxus4DSRR7vUhFcAPpnOV6zWzDvy/87OE6YgjS
+	 iu4qrkcCHa/eEVJ7GjKbNF+neMsV79fu8J2i6z9+sNX+O5btPRUACvrrxvd8ox8+R9
+	 CqXn9Q2WzZoaWXaBtejsjPybDfcfvxtu05GVgtEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jim Mattson <jmattson@google.com>,
+	Like Xu <likexu@tencent.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 349/877] netfilter: nfnetlink_queue: hold nfnl mutex in event notifier
-Date: Wed, 30 Sep 2026 17:21:00 +0200
-Message-ID: <20260930152422.203282644@linuxfoundation.org>
+Subject: [PATCH 6.12 308/877] KVM: x86/pmu: Move Intel PMU global MSRs to intel_is_valid_msr()
+Date: Wed, 30 Sep 2026 17:20:19 +0200
+Message-ID: <20260930152421.342699140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,68 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jim Mattson <jmattson@google.com>
 
-[ Upstream commit 9461613afc59acef44a0071b0dd5075f6e993ffe ]
+[ Upstream commit 79a71cc2568f4b5d42284da2aa26f3b4f47ce01b ]
 
-We must serialize the release notifier and the config netlink function.
-A concurrent thread can issue close() which can call the release function
-while unrelated socket processes UNBIND request for same portid:
+Commit c85cdc1cc1ea ("KVM: x86/pmu: Move handling PERF_GLOBAL_CTRL and
+friends to common x86") moved the existence check for the following Intel
+PMU MSRs to kvm_pmu_is_valid_msr():
+ - MSR_CORE_PERF_GLOBAL_STATUS
+ - MSR_CORE_PERF_GLOBAL_CTRL
+ - MSR_CORE_PERF_GLOBAL_OVF_CTRL
 
-Oops: general protection fault, [..]
-RIP: 0010:__instance_destroy+0x60/0x210 [nfnetlink_queue]
-Call Trace:
- nfqnl_recv_config+0x9b0/0xdc0 [nfnetlink_queue]
- nfnetlink_rcv_msg+0x7c2/0xeb0
- ? __pfx_nfnetlink_rcv_msg+0x10/0x10
+That commit deemed these MSRs valid whenever pmu->version > 1. It intended
+to share the check with AMD PerfMonV2 because both vendor implementations
+require version 2 or greater for global PMU controls.  However, as noted in
+the commit message, AMD uses different MSR indices for its global PMU
+registers.
 
-After this, parallel UNBIND and URELEASE events are impossible.
+Commit 4a2771895ca6 ("KVM: x86/svm/pmu: Add AMD PerfMonV2 support")
+subsequently added AMD PerfMonV2 support and set pmu->version = 2.  Because
+kvm_pmu_is_valid_msr() validated the Intel MSRs whenever pmu->version > 1,
+KVM incorrectly permitted AMD guests with PerfMonV2 to access these Intel
+MSRs without a #GP.
 
-This change isn't nice, but its the shortest fix given instances
-are not refcounted and the nfnetlink config callback drops the
-rcu read lock early due to need for sleeping allocations.
+Move the validation of these Intel MSRs to intel_is_valid_msr() and remove
+the common switch statement from kvm_pmu_is_valid_msr(). AMD already
+validates its own global PMU MSRs in amd_is_valid_msr().
 
-Fixes: 7af4cc3fa158 ("[NETFILTER]: Add "nfnetlink_queue" netfilter queue handler over nfnetlink")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 4a2771895ca6 ("KVM: x86/svm/pmu: Add AMD PerfMonV2 support")
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Reviewed-by: Like Xu <likexu@tencent.com>
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+Link: https://patch.msgid.link/20260902184711.138538-1-jmattson@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/x86/kvm/pmu.c           | 8 --------
+ arch/x86/kvm/vmx/pmu_intel.c | 3 +++
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 2e00a07eb545d..797c99c626d23 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -1338,6 +1338,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
- 	if (event == NETLINK_URELEASE && n->protocol == NETLINK_NETFILTER) {
- 		int i;
+diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+index a26e8f5ad7901..a0efe59aa0794 100644
+--- a/arch/x86/kvm/pmu.c
++++ b/arch/x86/kvm/pmu.c
+@@ -614,14 +614,6 @@ void kvm_pmu_deliver_pmi(struct kvm_vcpu *vcpu)
  
-+		nfnl_lock(NFNL_SUBSYS_QUEUE);
- 		/* destroy all instances for this portid */
- 		spin_lock(&q->instances_lock);
- 		for (i = 0; i < INSTANCE_BUCKETS; i++) {
-@@ -1351,6 +1352,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
- 			}
- 		}
- 		spin_unlock(&q->instances_lock);
-+		nfnl_unlock(NFNL_SUBSYS_QUEUE);
- 	}
- 	return NOTIFY_DONE;
+ bool kvm_pmu_is_valid_msr(struct kvm_vcpu *vcpu, u32 msr)
+ {
+-	switch (msr) {
+-	case MSR_CORE_PERF_GLOBAL_STATUS:
+-	case MSR_CORE_PERF_GLOBAL_CTRL:
+-	case MSR_CORE_PERF_GLOBAL_OVF_CTRL:
+-		return kvm_pmu_has_perf_global_ctrl(vcpu_to_pmu(vcpu));
+-	default:
+-		break;
+-	}
+ 	return kvm_pmu_call(msr_idx_to_pmc)(vcpu, msr) ||
+ 	       kvm_pmu_call(is_valid_msr)(vcpu, msr);
  }
-@@ -1672,9 +1674,9 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
+diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+index a5edc623166ac..4f6fa564028f8 100644
+--- a/arch/x86/kvm/vmx/pmu_intel.c
++++ b/arch/x86/kvm/vmx/pmu_intel.c
+@@ -154,6 +154,9 @@ static bool intel_is_valid_msr(struct kvm_vcpu *vcpu, u32 msr)
+ 	int ret;
  
- 	/* Lookup queue under RCU. After peer_portid check (or for new queue
- 	 * in BIND case), the queue is owned by the socket sending this message.
--	 * A socket cannot simultaneously send a message and close, so while
--	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
--	 * socket close) cannot destroy this queue. Safe to use without RCU.
-+	 * nfqnl_rcv_nl_event() will block on the nfnl subsys mutex that is
-+	 * held by the caller, so the queue cannot be destroyed in parallel,
-+	 * even after we drop the RCU read lock.
- 	 */
- 	rcu_read_lock();
- 	queue = instance_lookup(q, queue_num);
+ 	switch (msr) {
++	case MSR_CORE_PERF_GLOBAL_STATUS:
++	case MSR_CORE_PERF_GLOBAL_CTRL:
++	case MSR_CORE_PERF_GLOBAL_OVF_CTRL:
+ 	case MSR_CORE_PERF_FIXED_CTR_CTRL:
+ 		return kvm_pmu_has_perf_global_ctrl(pmu);
+ 	case MSR_IA32_PEBS_ENABLE:
 -- 
 2.53.0
 
