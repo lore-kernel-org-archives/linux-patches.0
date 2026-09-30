@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0706509F06;
-	Wed, 30 Sep 2026 18:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D053438A6;
+	Wed, 30 Sep 2026 18:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791608; cv=none; b=EB/nTvwkhVts7ZbhrVUSFg5Bl+5XsBTEmkAD+Ro/ENCPwIQFKLN2RCgyxaZsW6XOx7nPP31ZlL5xXmVDqEtTT74VqGn/MzFswaK1WdYUkBlPwB6pFrvd/gEpGRIkznquPTQxShsJw+dZrYSJnLHJ340Xr97BP+P3yjNkkEtsbTw=
+	t=1790791611; cv=none; b=CkeyNIR00bu1DiVp92l3WJr8oK1suEFveu3eCHfauxnYhYQ/ACsec2rPaenck/PNlSEquloKmmaEshs8csGSHDug+L5+0hjOSTkEnBW1HLGb55SZGf4qtNlmUtJf9GZbgwCdYy+k4iPSEy52dJaMVoWYgHZXU4Xszmmfrx/UhUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791608; c=relaxed/simple;
-	bh=v2Tiw3yjpaPrNu5INcCk1MNz97QBZWFz6NkxxnzvwXk=;
+	s=arc-20240116; t=1790791611; c=relaxed/simple;
+	bh=+LpwipHAWd9gXmKnwXBQspklIcIpJPmpt2a1+XsYnos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xi5adBAUUSOdKNtrpk1WimppNTuwkvsgZxesVAOczs0sR/8PtXSJI3GO4hRgWHMyQb346C2AKd4KcKS8df3lxVr4EwXv+yJEqLAyb81o5B6GXvnJ5hIy8Y31e7ov8r8i+W/dO473t1ekvnYwDRFr+VCJzj4tft+wpCYqbvoiewE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwYDaWI9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e1D0tdaJ9LHKUweFtmwG9rSwYhf5D+qjD4VwNfgYI3bwCRBmrDMi4XVajLGRfesNwX1oA0baUuT5gnoK+1kaZ8do7ggqdQJgnxRhVLLl0PWGFIOe5XubWkzLVkpheFhJKsFFyhps+HHblraq+Pa5iw3fzBhNvWF/gLjC0vEEBeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJQoiypO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwYDaWI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184571F000FF;
-	Wed, 30 Sep 2026 18:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJQoiypO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40FB1F000FF;
+	Wed, 30 Sep 2026 18:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791607;
-	bh=nBgGAZvtjjQNKvM99gX+GsSfATq8IG37TmAk+1KMbVY=;
+	s=korg; t=1790791610;
+	bh=R4L3qo7iJNfi2pwjCvlybKI/dEghJPekYbC9QzAs/cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WwYDaWI9c5YJDZ/MxPqxSaxyQHButcEMZTInvc0NzAQsh39GRNIiV6MAHcl6zdnCY
-	 yLJ619G/urKMir/Wu7SSBOIyAGXfSItlxr/GN06ZtHLIIlR8BftFcGMxiJfoxv93xS
-	 GkXYcZgQbhVuc7UltSiPdW57C52PQW3Wq492u67A=
+	b=JJQoiypOMYo6p/gM4K8pZef/ZucJerQeBtpY2JSU2acnYDmHTTHExC110yOkIE0ES
+	 jJQxGQIABmBPW5uzdsyJn15fiC6RWiWHqkkfI3tmiCDabPj1aUrwcmvQJBS1H7eh16
+	 Z3yh0ilvGS12MSlTyrdymMuVtTjmY4sU/Fb/o43Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 360/752] scsi: target: iscsi: Handle abort for WRITE_PENDING cmds
-Date: Wed, 30 Sep 2026 17:23:50 +0200
-Message-ID: <20260930152406.072104756@linuxfoundation.org>
+Subject: [PATCH 5.15 361/752] scsi: target: iscsi: Fix hang for aborted WRITE_PENDING commands
+Date: Wed, 30 Sep 2026 17:23:51 +0200
+Message-ID: <20260930152406.092667531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,60 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Bogdanov <d.bogdanov@yadro.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit ea87981a0ee8fb8ced1c87d004a541b60623ff97 ]
+[ Upstream commit d5869dae5080e976d4b03cc33eb7ceb527f242bf ]
 
-Sometimes an initiator does not send data for a WRITE command and tries to
-abort it. The abort hangs waiting for frontend driver completion. iSCSI
-driver waits for data and that timeout eventually initiates connection
-reinstatment. The connection closing releases the commands in the
-connection, but those aborted commands still did not handle the abort and
-did not decrease a command ref counter. Because of that the connection
-reinstatement hangs indefinitely and prevents re-login for that initiator.
+When a LUN_RESET aborts a WRITE command that is in the
+TRANSPORT_WRITE_PENDING state, the target core sets CMD_T_ABORTED and
+waits for the frontend to finish processing.
 
-Add handling in TCM of the abort for the WRITE_PENDING commands at
-connection closing moment to make it possible to release them.
+If the initiator subsequently sends the remaining dataout PDUs,
+__iscsit_check_dataout_hdr() catches the payload, stops the dataout
+timer if the sequence is final and finally dumps the data.  However, the
+iSCSI target doesn't trigger the completion process for these aborted
+commands. Because of this, the abort path hangs indefinitely in
+target_put_cmd_and_wait(), leading to a deadlocked target worker thread.
 
-Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-[mnc: Rebase and expand comment]
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-10-michael.christie@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fix this by explicitly calling target_complete_cmd() when the final
+dataout PDU is received for an aborted WRITE command.
+target_complete_cmd() detects the CMD_T_ABORTED flag and cleanly routes
+the command into target_abort_work, allowing the abort completion to
+successfully unblock.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260717143828.76291-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/target/iscsi/iscsi_target.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index c7bd7759a5acd..30b21e65779de 100644
+index 30b21e65779de..d77fbd66acbe3 100644
 --- a/drivers/target/iscsi/iscsi_target.c
 +++ b/drivers/target/iscsi/iscsi_target.c
-@@ -26,6 +26,7 @@
- #include <target/target_core_base.h>
- #include <target/target_core_fabric.h>
+@@ -1530,8 +1530,10 @@ __iscsit_check_dataout_hdr(struct iscsi_conn *conn, void *buf,
+ 		 */
+ 		if (se_cmd->transport_state & CMD_T_ABORTED) {
+ 			if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
+-			    --cmd->outstanding_r2ts < 1)
++			    --cmd->outstanding_r2ts < 1) {
+ 				iscsit_stop_dataout_timer(cmd);
++				target_complete_cmd(se_cmd, SAM_STAT_TASK_ABORTED);
++			}
  
-+#include <target/target_core_backend.h>
- #include <target/iscsi/iscsi_target_core.h>
- #include "iscsi_target_parameters.h"
- #include "iscsi_target_seq_pdu_list.h"
-@@ -4104,6 +4105,16 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
- 		} else {
- 			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+ 			return iscsit_dump_data_payload(conn, payload_length, 1);
  		}
-+
-+		if (cmd->se_cmd.t_state == TRANSPORT_WRITE_PENDING) {
-+			/*
-+			 * We never submitted the cmd to LIO core, so we have
-+			 * to tell LIO to perform the completion process.
-+			 */
-+			spin_unlock_irq(&se_cmd->t_state_lock);
-+			target_complete_cmd(&cmd->se_cmd, SAM_STAT_TASK_ABORTED);
-+			continue;
-+		}
- 		spin_unlock_irq(&se_cmd->t_state_lock);
- 	}
- 	spin_unlock_bh(&conn->cmd_lock);
 -- 
 2.53.0
 
