@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C71A3A784F;
-	Wed, 30 Sep 2026 17:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA943AEB2C;
+	Wed, 30 Sep 2026 17:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788644; cv=none; b=Klx83k+ZNReybbAjppmaDq4OuQrFQEbiRypNesI/Vg1aPyuaHAxSWp9KBIQ4FAT8mh+6BFAiH1fel3l6uyDShfToh/EZgyV3WSIemzvoTAlU+8Yz/5lcpjiUUigkchOigFKw9jV6sHt5DnuQp5fkWxzFj/y6VVetroJ1piKs/QE=
+	t=1790788647; cv=none; b=bMI7ndQrpizqUar/yGuK+WieqJSpaVSZ+s0m+uaemvZg44jKim0rENFGK6UX0mRQfuQJnXaFrXpofv44gj5tU/eEQ3eRg6eI/lVXvPuCivMGZOjOaX2wzgDyElPXATViM9gzh36wqx/X0X9K68mszvlm4JG6Jgb7mBPZrllRhAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788644; c=relaxed/simple;
-	bh=qGvoq4QlUQzesx/UsddI29Vk7dca25gNlNItkp8GgfE=;
+	s=arc-20240116; t=1790788647; c=relaxed/simple;
+	bh=/zClz/z7ozmOLbZXDP3QgjE7hr5eqB173ldiukRBYJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVi1XWw1kHM9czaISLgqdNlBOWlcCm+zd28nQJuc+7v92+s2Yv07JX8YtgAPKv5Po7dj+gn7xIx2kn28nqlyddPgNvRCB1lvxAHhyHW/u92pf40d0MqjGaVhETQLxQh5fYIQS0qE8ianQ2HXTzPwb9Nvbpz2hAjw1YZyWHKmSMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pir9kdLB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j9fc/pHgElMyJcF+D7qyBI6yZ9XiPmGGX82ZBAkHySYoZAG9h19jY3BwN+hv1DWUxfWe5MqD790bz4kwN+eqIJw7HLur/VjEun9q4paZxocbuqgNz9j3A6Qp8KpcmDFkCkHQZPG36545yI/YZWy31Q9eYpv5JZcQMqyn/cW8/8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOFrwG8t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pir9kdLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787EA1F00898;
-	Wed, 30 Sep 2026 17:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOFrwG8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1741F00898;
+	Wed, 30 Sep 2026 17:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788643;
-	bh=kZXGdvIHMsEXWQEvw0LjnRwug5TyWCCkjjRKeGKyV7Q=;
+	s=korg; t=1790788645;
+	bh=E0j13IObsfakL8IJ+W1tjV444IHyZvGjNAZvgqwkSa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pir9kdLBGbHvTO9r4mfEdIhh3gqB+tV0YqdN9RaJzQ/U/eDGPLxg8OeNDGP8NnL4s
-	 OEVMMoYye6l/gYA1Maun1HgSdTyrxZfuuSgRPKGz2JxJCHvkM+eYCScFBQuFIcyPhp
-	 ql7bobUiJyvPlLR8aAdFU+wKY4H1srwJmBpETJj0=
+	b=WOFrwG8tuDyGM8LWHoXLC6hi8KplGe1fOPsIMs57aJVncKCHZMslzfhgWwSXghk2G
+	 /enHz21kZbHCcTgSX9RP117yLNcbsb10NpWwNxJdauTNTo5Z1voT23ooOREWt/SUxc
+	 3ZURBigPjowZAM8svq4UPqgzb5NZVQbNPful6IKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 196/877] net/sched: act_api: release tail references on DELACTION failure
-Date: Wed, 30 Sep 2026 17:18:27 +0200
-Message-ID: <20260930152418.954461612@linuxfoundation.org>
+	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 197/877] net/sched: hhf: cap hh_flows_limit at change time
+Date: Wed, 30 Sep 2026 17:18:28 +0200
+Message-ID: <20260930152418.976264508@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,55 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 6e05e46fa821a5c1b281355f1f622ac76cb6080a upstream.
+commit 2cef2588c995722a901368def30befeef9ae55c6 upstream.
 
-A batched RTM_DELACTION request takes a temporary reference on each
-action before attempting any deletion. tcf_action_delete() clears
-each processed slot and drops its temporary reference before attempting
-the deletion. If deletion fails, tca_action_gd() calls
-tcf_action_put_many() to release the remaining references, but its
-tcf_act_for_each_action() iterator stops at the first NULL slot.
+hhf_change() stores TCA_HHF_HH_FLOWS_LIMIT with no upper bound. A huge
+hh_flows_limit lets each new heavy-hitter flow pass the
+hh_flows_current_cnt check in alloc_new_hh() and forces a fixed-size
+kzalloc(GFP_ATOMIC) per flow under spoofed traffic, for unbounded memory
+growth.
 
-When a batch stops at an action bound to a filter, this leaks a
-reference on each subsequent action. A later delete of an unbound
-action can then return success without removing it from the IDR.
+Bound the attribute with NLA_POLICY_MAX() at 2*HH_FLOWS_CNT (the
+hhf_init() default) and report the rejected value via extack. The
+deprecated nested parse is kept: legacy tc does not set NLA_F_NESTED on
+TCA_OPTIONS. Configs relying on hh_limit above the default were relying
+on unbounded, unsafe behaviour and are not supported going forward.
 
-Walk the full array in tcf_action_put_many() and skip NULL slots to
-release the references held on the unprocessed actions.
+hhf_init() also ran hhf_change() before setting the default
+hh_flows_limit, so a user-supplied hh_limit at add time was clobbered
+back to 2048. Set the default before hhf_change() so the configured
+value sticks.
 
-Fixes: a0e947c9ccff ("net/sched: act_api: avoid non-contiguous action array")
+This is a follow-up to commit eb56a495f59b ("net/sched: hhf: clamp
+quantum in change and init paths"), which bounded the quantum of the
+same qdisc; the hh_flows_limit bound is the remaining unbounded knob of
+that series' scope.
+
+Conditions to recreate the bug: CAP_NET_ADMIN in a user namespace;
+tc qdisc change dev X root hhf hh_limit 4294967295 succeeds and the
+value is echoed by tc qdisc show, unbounding heavy-hitter flow
+allocations; also tc qdisc add dev X root hhf hh_limit 500 stores 2048
+instead of 500.
+
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260910093413.34509-2-xuanqiang.luo@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260822195509.112717-1-jhs@mojatatu.com
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-B855.v1.20260911153152@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/sched/sch_hhf.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1165,11 +1165,16 @@ static int tcf_action_put(struct tc_acti
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -526,7 +526,7 @@ static void hhf_destroy(struct Qdisc *sc
+ static const struct nla_policy hhf_policy[TCA_HHF_MAX + 1] = {
+ 	[TCA_HHF_BACKLOG_LIMIT]	 = { .type = NLA_U32 },
+ 	[TCA_HHF_QUANTUM]	 = { .type = NLA_U32 },
+-	[TCA_HHF_HH_FLOWS_LIMIT] = { .type = NLA_U32 },
++	[TCA_HHF_HH_FLOWS_LIMIT] = NLA_POLICY_MAX(NLA_U32, 2 * HH_FLOWS_CNT),
+ 	[TCA_HHF_RESET_TIMEOUT]	 = { .type = NLA_U32 },
+ 	[TCA_HHF_ADMIT_BYTES]	 = { .type = NLA_U32 },
+ 	[TCA_HHF_EVICT_TIMEOUT]	 = { .type = NLA_U32 },
+@@ -545,7 +545,7 @@ static int hhf_change(struct Qdisc *sch,
+ 	u32 new_hhf_non_hh_weight = q->hhf_non_hh_weight;
  
- static void tcf_action_put_many(struct tc_action *actions[])
- {
--	struct tc_action *a;
- 	int i;
+ 	err = nla_parse_nested_deprecated(tb, TCA_HHF_MAX, opt, hhf_policy,
+-					  NULL);
++					  extack);
+ 	if (err < 0)
+ 		return err;
  
--	tcf_act_for_each_action(i, a, actions) {
--		const struct tc_action_ops *ops = a->ops;
-+	/* Deletion may have cleared entries before failing. */
-+	for (i = 0; i < TCA_ACT_MAX_PRIO; i++) {
-+		struct tc_action *a = actions[i];
-+		const struct tc_action_ops *ops;
+@@ -621,6 +621,9 @@ static int hhf_init(struct Qdisc *sch, s
+ 	q->hhf_evict_timeout = HZ;      /* 1  sec */
+ 	q->hhf_non_hh_weight = 2;
+ 
++	/* Cap max active HHs at twice len of hh_flows table. */
++	q->hh_flows_limit = 2 * HH_FLOWS_CNT;
 +
-+		if (!a)
-+			continue;
-+		ops = a->ops;
- 		if (tcf_action_put(a))
- 			module_put(ops->owner);
- 	}
+ 	if (opt) {
+ 		int err = hhf_change(sch, opt, extack);
+ 
+@@ -637,8 +640,6 @@ static int hhf_init(struct Qdisc *sch, s
+ 		for (i = 0; i < HH_FLOWS_CNT; i++)
+ 			INIT_LIST_HEAD(&q->hh_flows[i]);
+ 
+-		/* Cap max active HHs at twice len of hh_flows table. */
+-		q->hh_flows_limit = 2 * HH_FLOWS_CNT;
+ 		q->hh_flows_overlimit = 0;
+ 		q->hh_flows_total_cnt = 0;
+ 		q->hh_flows_current_cnt = 0;
 
 
