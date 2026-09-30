@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF812519E13;
-	Wed, 30 Sep 2026 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CF8517BAF;
+	Wed, 30 Sep 2026 18:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792489; cv=none; b=SwUgdT2bDsv6gjBy7I9DabNmv4Uq1h8NiSrD7grUxhQZeBsQ1hyYwa89D5f3mDOZk33/RIoorsb/p/rkgHJXyhU4Tdd8VwJG5sWUMwqWa7jCR3qLD25WV+BHzEGbOjP6KgpqfrRhFlNNNfDH4Rq9lhhCIJ89RkqYLqfZXA6tu6M=
+	t=1790792492; cv=none; b=Jb21MpIut9WvAw5ReBpMjFhBaLW6GIBQaTODAOc03lFTgaylYEzvT0SCKG5VxaP+20ImZIWSFvzazA15rXNTsIZwGRTC1bdRbFu8Ed3dE9xyi8MQgDxPYbR9THKd3dh0StEABgizWrvMq6bvIuybUbU/iN8gkz8AHOxgrnWbX7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792489; c=relaxed/simple;
-	bh=E0T7XoD2T5a1ScOjQ9kAxo9Ow7jP3vn9C/U5BRqU4c4=;
+	s=arc-20240116; t=1790792492; c=relaxed/simple;
+	bh=4gI/uuE2y60ccX0s0jsK6KVLYqQw39ddG05pZZbh7Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnPfnG3Tjp7n4Qf/4eqJACjxmP18Eo9xqvbznl/FW9WCbiBzibSuK/TgCktVlRGqs6LVjswBLxFxl95oYSPNxXsSphvexFG3B7DC+mrw9N2N/47AkyOzlXvQX1xqqhxNXPRu3FDnXr+supchMPwPM2HqsfOQMOa/aOp9EGu00WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9ZKnQb9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZrB1DTi7aVKBHw9Z0be1hSUa4LSAHKRlRklPekHXaJuOUaoNbDJoxVgItwVRjsDtENOVAsclw7Ee0mznJob10QUzUodVMOZxHCNRp8RtSxSX88l7L+k9zlrdK3WWsSHqnCDudyMX1km2PzxQqqGHiOIKEjEQTTsJq92w0GRQjUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIxd7HPa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9ZKnQb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E521F000FF;
-	Wed, 30 Sep 2026 18:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIxd7HPa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE01F0089B;
+	Wed, 30 Sep 2026 18:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792488;
-	bh=V0CmJRmkRH+XyuBC1wPPhycS4g00PW157JgUoSXG9v8=;
+	s=korg; t=1790792491;
+	bh=vG7hSV0Ak7v6dq+9WwZEHM2WwiDeSa+ICmIbhBNc2Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s9ZKnQb9sNa7DJp7kNZRUdZgu3HIN7gBeO7MlujIkRP39hJfE/kJi4h3IVO6DcmWh
-	 /UVsKOJEhrUkh3J9+HvijNjubL/A6+QCArGz82AzKGYf4Ex5utnAw3E9IZAgCk4MSV
-	 e1EXXtK74hHzksKcjtrBRmTNaF8xashWZH6TbWBA=
+	b=DIxd7HPaPhkIQD+pxczStOJBuhw8JC5wwYDJrKqavrOOh0hLlJ4pxkt4Led7kc9NN
+	 YI3dCs/lhNyHQCVBppJ2TSPmDcPkltv/mCb4Fk7Nx9jM/vSSVcDjuT6SjvW8jyJo9u
+	 zIDrQLT2v8KnhY15JlSawbPJ1p7IDxuONKnahLL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 673/752] tipc: Fix a data race on mon->peer_cnt in mon_timeout()
-Date: Wed, 30 Sep 2026 17:29:03 +0200
-Message-ID: <20260930152412.814761506@linuxfoundation.org>
+Subject: [PATCH 5.15 674/752] llc: fix skb UAF and leaks on llc_mac_hdr_init() failure
+Date: Wed, 30 Sep 2026 17:29:04 +0200
+Message-ID: <20260930152412.835001497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,44 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8e1937fed6738460554ec123c64839e2445e7d53 ]
+[ Upstream commit 72f9dd522f8d6c5a00be9695c7bb74631eb5069e ]
 
-mon_timeout() evaluates dom_size(mon->peer_cnt) before it takes mon->lock,
-while mon->peer_cnt is updated under that lock by tipc_mon_add_peer() and
-tipc_mon_remove_peer().  The value can therefore be stale, and the decision
-whether the local domain has to be recomputed can be based on an outdated
-member count.
+In llc_conn_ac_resend_i_xxx_x_set_0_or_send_rr(), if llc_mac_hdr_init()
+fails, kfree_skb(skb) is called instead of kfree_skb(nskb). This leaks
+the newly allocated nskb, reads from the freed skb via LLC_I_GET_NR(pdu),
+and double-frees skb when llc_conn_state_process() drops its reference.
 
-Read mon->peer_cnt inside the write_lock_bh(&mon->lock) protected region.
+In llc_sap_action_send_xid_r() and llc_sap_action_send_test_r(), nskb is
+leaked if llc_mac_hdr_init() returns an error.
 
-Fixes: 35c55c9877f8 ("tipc: add neighbor monitoring framework")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260922080909.21123-1-ginger.jzllee@gmail.com
+Free nskb in all three error paths.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Closes: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260924082951.1599377-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/monitor.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/llc/llc_c_ac.c | 2 +-
+ net/llc/llc_s_ac.c | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/monitor.c b/net/tipc/monitor.c
-index 23efd35adaa35..e96dcdaa93894 100644
---- a/net/tipc/monitor.c
-+++ b/net/tipc/monitor.c
-@@ -632,9 +632,10 @@ static void mon_timeout(struct timer_list *t)
- {
- 	struct tipc_monitor *mon = from_timer(mon, t, timer);
- 	struct tipc_peer *self;
--	int best_member_cnt = dom_size(mon->peer_cnt) - 1;
-+	int best_member_cnt;
- 
- 	write_lock_bh(&mon->lock);
-+	best_member_cnt = dom_size(mon->peer_cnt) - 1;
- 	self = mon->self;
- 	if (self && (best_member_cnt != self->applied)) {
- 		mon_update_local_domain(mon);
+diff --git a/net/llc/llc_c_ac.c b/net/llc/llc_c_ac.c
+index 647c0554d04cd..8e18b264408ad 100644
+--- a/net/llc/llc_c_ac.c
++++ b/net/llc/llc_c_ac.c
+@@ -443,7 +443,7 @@ int llc_conn_ac_resend_i_xxx_x_set_0_or_send_rr(struct sock *sk,
+ 		if (likely(!rc))
+ 			llc_conn_send_pdu(sk, nskb);
+ 		else
+-			kfree_skb(skb);
++			kfree_skb(nskb);
+ 	}
+ 	if (rc) {
+ 		nr = LLC_I_GET_NR(pdu);
+diff --git a/net/llc/llc_s_ac.c b/net/llc/llc_s_ac.c
+index 7a0cae9a81114..cc6fb29a9510a 100644
+--- a/net/llc/llc_s_ac.c
++++ b/net/llc/llc_s_ac.c
+@@ -127,6 +127,8 @@ int llc_sap_action_send_xid_r(struct llc_sap *sap, struct sk_buff *skb)
+ 	rc = llc_mac_hdr_init(nskb, mac_sa, mac_da);
+ 	if (likely(!rc))
+ 		rc = dev_queue_xmit(nskb);
++	else
++		kfree_skb(nskb);
+ out:
+ 	return rc;
+ }
+@@ -176,6 +178,8 @@ int llc_sap_action_send_test_r(struct llc_sap *sap, struct sk_buff *skb)
+ 	rc = llc_mac_hdr_init(nskb, mac_sa, mac_da);
+ 	if (likely(!rc))
+ 		rc = dev_queue_xmit(nskb);
++	else
++		kfree_skb(nskb);
+ out:
+ 	return rc;
+ }
 -- 
 2.53.0
 
