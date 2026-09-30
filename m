@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8B9509F06;
-	Wed, 30 Sep 2026 18:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499DD47C0FA;
+	Wed, 30 Sep 2026 18:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792326; cv=none; b=eUamuvLmwwVZ0i+y+laDsZXoV76TvML/l5nMic7UJdYSV2aQyRrEzyym0GgfMqczRaUhj3wVlOZOh6L5ynuswfo4m05+ehEfnd7m7oddF91L6+YQvV7WPVkmfQQZH1WhFmewcpThIL8zH9rl5XkHl15r5nUGgWMsyn/FB5/KDN0=
+	t=1790792329; cv=none; b=Kxyu1ZbkZLsybItoHzEWXxJbioU+R70lbsZHXZUyhgJmq879ic5ru3BwSvN9p2baRcCKUx+a4SKbHQvsfBB2bqoqUz3p+ZyD7zzrqM6y0SOafLRG7yguxbTqn9EkReyImb/C+8iC1vc2GyDT99slPvGSmtYWQtJBoMhAmgFtn/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792326; c=relaxed/simple;
-	bh=Q2IcrYI3ZrCVZbA/IyAKFCIz9V9XwnyYLPTsBl+ORbQ=;
+	s=arc-20240116; t=1790792329; c=relaxed/simple;
+	bh=TM88YOWaFXyeNIWw7K0JLvjD1wOwu03bRZew60NcHoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGLEzDBmqxM63S1XrZErBCs/WxnEG5l9yRrp984JzTltq6QRYsA8boynbqMt7vi6bZLdGurb2YPGB+7MF3b5ClxJAvhKqC1hUZMUoy9xvHymX83e5Mwj1maTH1P62PJ2wzHfdjdEH9qyCOf/8SkMMDZpxujCVvuI5yOGUImJBJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcpL7wVF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bl7vkZViEY8HayEF+AdiyIL9jbaNY8flsj/YWLJvRunOG7x+hkrRzfY6rpPJv7y1BNP5Yd6RF+DM3H9jEUNkUdRmPoN5LCEW2yRBnNay3Rji4A03KjnM7Nivfbm5xnzBY1PZcPjOlKPEfXSskrRoTwA+MwQrJB3j1aTntptj9T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMXnkuh4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcpL7wVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF571F00898;
-	Wed, 30 Sep 2026 18:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMXnkuh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B361F000FF;
+	Wed, 30 Sep 2026 18:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792325;
-	bh=wEOHm2xXyuDeoTxr8u+wGS4l9SwGDYah9gxqFViRntk=;
+	s=korg; t=1790792328;
+	bh=woyW2SHmu0m3j+ndK03ohUf+8zSolZlCwEmFLzNHpGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QcpL7wVFN0wEQTc7cLREOIrMJXrh1ELhMm9F87p3CycxAzm7BruYXLLkN02FFzLCZ
-	 F4VqStAk731WZpzP+7hyICZP3tMKEMV+YeCEmNhngyjaahG74Qk3XoZo1i3l2pKhGW
-	 F4BqhF5SY56nJRDWVuF3m9KGgL591Vbr5mJrF6LQ=
+	b=rMXnkuh4i80u1O6uAfTpgdOCDK2bOVxMmYcVu9oy4rLXsyrJmm7YWF9L9ui8o84Tc
+	 tpMEBeu+tbKnkHariaGxKBSxjwzLZ0ML/ehBVxQYHHU8jsIj/BCa3pX5c8LVzBlyWX
+	 CsrnRTX013wJK5r8mcDDZBp3zR9qxfCBivFNpK/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Westphal <fw@strlen.de>,
-	Scott Mitchell <scott.k.mitch1@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 616/752] netfilter: nfnetlink_queue: nfqnl_instance GFP_ATOMIC -> GFP_KERNEL_ACCOUNT allocation
-Date: Wed, 30 Sep 2026 17:28:06 +0200
-Message-ID: <20260930152411.611256002@linuxfoundation.org>
+Subject: [PATCH 5.15 617/752] netfilter: nfnetlink_queue: hold nfnl mutex in event notifier
+Date: Wed, 30 Sep 2026 17:28:07 +0200
+Message-ID: <20260930152411.632658176@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,173 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mitchell <scott.k.mitch1@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a4400a5b343d1bc4aa8f685608515413238e7ee2 ]
+[ Upstream commit 9461613afc59acef44a0071b0dd5075f6e993ffe ]
 
-Currently, instance_create() uses GFP_ATOMIC because it's called while
-holding instances_lock spinlock. This makes allocation more likely to
-fail under memory pressure.
+We must serialize the release notifier and the config netlink function.
+A concurrent thread can issue close() which can call the release function
+while unrelated socket processes UNBIND request for same portid:
 
-Refactor nfqnl_recv_config() to drop RCU lock after instance_lookup()
-and peer_portid verification. A socket cannot simultaneously send a
-message and close, so the queue owned by the sending socket cannot be
-destroyed while processing its CONFIG message. This allows
-instance_create() to allocate with GFP_KERNEL_ACCOUNT before taking
-the spinlock.
+Oops: general protection fault, [..]
+RIP: 0010:__instance_destroy+0x60/0x210 [nfnetlink_queue]
+Call Trace:
+ nfqnl_recv_config+0x9b0/0xdc0 [nfnetlink_queue]
+ nfnetlink_rcv_msg+0x7c2/0xeb0
+ ? __pfx_nfnetlink_rcv_msg+0x10/0x10
 
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Scott Mitchell <scott.k.mitch1@gmail.com>
+After this, parallel UNBIND and URELEASE events are impossible.
+
+This change isn't nice, but its the shortest fix given instances
+are not refcounted and the nfnetlink config callback drops the
+rcu read lock early due to need for sleeping allocations.
+
+Fixes: 7af4cc3fa158 ("[NETFILTER]: Add "nfnetlink_queue" netfilter queue handler over nfnetlink")
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 9461613afc59 ("netfilter: nfnetlink_queue: hold nfnl mutex in event notifier")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_queue.c | 75 +++++++++++++++------------------
- 1 file changed, 34 insertions(+), 41 deletions(-)
+ net/netfilter/nfnetlink_queue.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 4967fc7ddb12f..4e40612c72025 100644
+index 4e40612c72025..a239efbb87ba9 100644
 --- a/net/netfilter/nfnetlink_queue.c
 +++ b/net/netfilter/nfnetlink_queue.c
-@@ -119,17 +119,9 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 	unsigned int h;
- 	int err;
+@@ -1027,6 +1027,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
+ 	if (event == NETLINK_URELEASE && n->protocol == NETLINK_NETFILTER) {
+ 		int i;
  
--	spin_lock(&q->instances_lock);
--	if (instance_lookup(q, queue_num)) {
--		err = -EEXIST;
--		goto out_unlock;
--	}
--
--	inst = kzalloc(sizeof(*inst), GFP_ATOMIC);
--	if (!inst) {
--		err = -ENOMEM;
--		goto out_unlock;
--	}
-+	inst = kzalloc(sizeof(*inst), GFP_KERNEL_ACCOUNT);
-+	if (!inst)
-+		return ERR_PTR(-ENOMEM);
- 
- 	inst->queue_num = queue_num;
- 	inst->peer_portid = portid;
-@@ -139,9 +131,15 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 	spin_lock_init(&inst->lock);
- 	INIT_LIST_HEAD(&inst->queue_list);
- 
-+	spin_lock(&q->instances_lock);
-+	if (instance_lookup(q, queue_num)) {
-+		err = -EEXIST;
-+		goto out_unlock;
-+	}
-+
- 	if (!try_module_get(THIS_MODULE)) {
- 		err = -EAGAIN;
--		goto out_free;
-+		goto out_unlock;
- 	}
- 
- 	h = instance_hashfn(queue_num);
-@@ -151,10 +149,9 @@ instance_create(struct nfnl_queue_net *q, u_int16_t queue_num, u32 portid)
- 
- 	return inst;
- 
--out_free:
--	kfree(inst);
- out_unlock:
- 	spin_unlock(&q->instances_lock);
-+	kfree(inst);
- 	return ERR_PTR(err);
- }
- 
-@@ -1307,7 +1304,8 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
- 	struct nfqnl_msg_config_cmd *cmd = NULL;
- 	struct nfqnl_instance *queue;
- 	__u32 flags = 0, mask = 0;
--	int ret = 0;
-+
-+	WARN_ON_ONCE(!lockdep_nfnl_is_held(NFNL_SUBSYS_QUEUE));
- 
- 	if (nfqa[NFQA_CFG_CMD]) {
- 		cmd = nla_data(nfqa[NFQA_CFG_CMD]);
-@@ -1353,47 +1351,44 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
++		nfnl_lock(NFNL_SUBSYS_QUEUE);
+ 		/* destroy all instances for this portid */
+ 		spin_lock(&q->instances_lock);
+ 		for (i = 0; i < INSTANCE_BUCKETS; i++) {
+@@ -1040,6 +1041,7 @@ nfqnl_rcv_nl_event(struct notifier_block *this,
+ 			}
  		}
+ 		spin_unlock(&q->instances_lock);
++		nfnl_unlock(NFNL_SUBSYS_QUEUE);
  	}
+ 	return NOTIFY_DONE;
+ }
+@@ -1353,9 +1355,9 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
  
-+	/* Lookup queue under RCU. After peer_portid check (or for new queue
-+	 * in BIND case), the queue is owned by the socket sending this message.
-+	 * A socket cannot simultaneously send a message and close, so while
-+	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
-+	 * socket close) cannot destroy this queue. Safe to use without RCU.
-+	 */
+ 	/* Lookup queue under RCU. After peer_portid check (or for new queue
+ 	 * in BIND case), the queue is owned by the socket sending this message.
+-	 * A socket cannot simultaneously send a message and close, so while
+-	 * processing this CONFIG message, nfqnl_rcv_nl_event() (triggered by
+-	 * socket close) cannot destroy this queue. Safe to use without RCU.
++	 * nfqnl_rcv_nl_event() will block on the nfnl subsys mutex that is
++	 * held by the caller, so the queue cannot be destroyed in parallel,
++	 * even after we drop the RCU read lock.
+ 	 */
  	rcu_read_lock();
  	queue = instance_lookup(q, queue_num);
- 	if (queue && queue->peer_portid != NETLINK_CB(skb).portid) {
--		ret = -EPERM;
--		goto err_out_unlock;
-+		rcu_read_unlock();
-+		return -EPERM;
- 	}
-+	rcu_read_unlock();
- 
- 	if (cmd != NULL) {
- 		switch (cmd->command) {
- 		case NFQNL_CFG_CMD_BIND:
--			if (queue) {
--				ret = -EBUSY;
--				goto err_out_unlock;
--			}
--			queue = instance_create(q, queue_num,
--						NETLINK_CB(skb).portid);
--			if (IS_ERR(queue)) {
--				ret = PTR_ERR(queue);
--				goto err_out_unlock;
--			}
-+			if (queue)
-+				return -EBUSY;
-+			queue = instance_create(q, queue_num, NETLINK_CB(skb).portid);
-+			if (IS_ERR(queue))
-+				return PTR_ERR(queue);
- 			break;
- 		case NFQNL_CFG_CMD_UNBIND:
--			if (!queue) {
--				ret = -ENODEV;
--				goto err_out_unlock;
--			}
-+			if (!queue)
-+				return -ENODEV;
- 			instance_destroy(q, queue);
--			goto err_out_unlock;
-+			return 0;
- 		case NFQNL_CFG_CMD_PF_BIND:
- 		case NFQNL_CFG_CMD_PF_UNBIND:
- 			break;
- 		default:
--			ret = -ENOTSUPP;
--			goto err_out_unlock;
-+			return -EOPNOTSUPP;
- 		}
- 	}
- 
--	if (!queue) {
--		ret = -ENODEV;
--		goto err_out_unlock;
--	}
-+	if (!queue)
-+		return -ENODEV;
- 
- 	if (nfqa[NFQA_CFG_PARAMS]) {
- 		struct nfqnl_msg_config_params *params =
-@@ -1418,9 +1413,7 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
- 		spin_unlock_bh(&queue->lock);
- 	}
- 
--err_out_unlock:
--	rcu_read_unlock();
--	return ret;
-+	return 0;
- }
- 
- static const struct nfnl_callback nfqnl_cb[NFQNL_MSG_MAX] = {
 -- 
 2.53.0
 
