@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C70251599B;
-	Wed, 30 Sep 2026 16:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38995187DE;
+	Wed, 30 Sep 2026 16:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787358; cv=none; b=ce5UXpqEpYeJvnKCy10OZNhOP+qQJBLCsWwP3kyQHUTKuPVVVSLXBZJVQ0CFWat8E6YOu+nlwfZVLfIhTGG+6odOdyNScNsCnANHlPXz1RU4W1hZ8r9dmsPDZZjTUh+dDSMBUCpcm3Au21Fw3FEbo0otyjXv1G9kPWrlKlF0I6c=
+	t=1790787361; cv=none; b=MHYEmyfQSXg5gwtiE2E5PJi3SP8CiKNl4ouECaAwp0cwbTb74/ZFFUavDZjjuKtg6MK88ZR8mwerqJEPUX9mYl5RSrYNq/3WojFxsIiyni28Vp9sucCqY0PWxxynsiknVhTFliBCsjYe0WMcpr2ShictZ/SB8sNpKZPQoKSHoSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787358; c=relaxed/simple;
-	bh=Q/rK7iaGUPSKAITKm8lrTa9hioqbIQlWHTDqkvo/i3Y=;
+	s=arc-20240116; t=1790787361; c=relaxed/simple;
+	bh=ahqH3Ek2QNr3ONTcDDa6AZ16a9mJFUyP/f3ulTTEB94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRzQZgEuAR9QjPbV+BFmYxe320r50KdOZHJCr7wjiVcD92VGRyc7BjnM2xTb21/8zKr1X6x/bHpEnGNFYBfR8c1bU8Ne+ICHRGhlaLerTo9hpgiMWUOrZVPlttqedD9KjVDxZyZSY8UFlw0q1CHPpRPAYe4lkUytKN0Q4qd3uos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4/jUMwK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JB7Tn4ZQTsgI8cFSTmp737K4HojFrBPzAXuIsAZULs96UY80mPwRlzKq9EBN+Pn6u5T6pugVjik4s5ASbuTMVJ96WVfz1/oAhANmo5iPHQUYLqICOYe1nO1aZ03R+ImOvric4LVLKnQDe3FxhGEfObK2nylsvpcQaonuWRgu0XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O76wqsRR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4/jUMwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6439A1F000FF;
-	Wed, 30 Sep 2026 16:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O76wqsRR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2E81F000FF;
+	Wed, 30 Sep 2026 16:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787356;
-	bh=9wjiQ+4IB5kMVDOJGAhn9Kd6Ij9x52guhAjgKG27kBU=;
+	s=korg; t=1790787359;
+	bh=KMSnIwsEQ8UR/5NTlIM3xoSBOcpu8IG3FnWU1oOVhuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4/jUMwKTtqmRIYDURp98XcaCT3ek7qUDEAmGwB+y3fbxXEMxczNA2L/VoWkgYGeb
-	 LGHPWBAuKySGer2dmx2RWh2CjEzR1njn2nu2NACfWcl+KwnxAhB/GVQzdn67pNpXfT
-	 YcTE9OjhUPsdBkhlyFqBu7fOi1AzBnsjgzNZpU0Q=
+	b=O76wqsRRunK5n/N+JcLrwDLcCN2/aJeemgd1FtJYBUaHMcvwAQwBY/qXJBKxt8w26
+	 YFkgCnKiyM82TRiLizAQqY5Y9t6n7xtuTjir4L6N4/IulImcQstTOPxppqZJuGYmip
+	 Cpss6GpDZGD82HdMCu8gPv8VImVmufpkx+Q9efmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 200/457] net: xps: reject an out of range traffic class
-Date: Wed, 30 Sep 2026 17:25:05 +0200
-Message-ID: <20260930152350.372164720@linuxfoundation.org>
+Subject: [PATCH 7.2 158/457] net: stmmac: selftests: Validate EEE based on the actual LPI timer value
+Date: Wed, 30 Sep 2026 17:24:23 +0200
+Message-ID: <20260930152349.460142430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,67 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
+[ Upstream commit c8c1795aa8106293020a836d01e127e98f442925 ]
 
-Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
-dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
-lowers dev->num_tc without touching either array.
+The EEE selftest is a 2-step test :
+ - It validates that we enter in LPI mode with the
+   irq_tx_path_in_lpi_mode_n counter
+ - It then validates that we exit LPI when sending a frame, with the
+   irq_tx_path_exit_lpi_mode_n counter.
 
-netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
-netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
-entry is handed out as a traffic class >= dev->num_tc. Taking that
-class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
-negative one and indexes an XPS map sized for dev->num_tc classes:
+The current state of the test lacks 2 main things :
 
-	tci = j * num_tc + tc;
-	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
+ - We don't know exactly when was the previous frame sent (it's from the
+   previous selftest)
 
-attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
-in the mask, so a class that is not below num_tc pushes tci past the end
-of the map for the last ids and the store overruns it.
+ - The timeout is hardcoded, while the LPI is entered after a
+   user-configurable delay. On top of that, the timeout loop uses a
+   pre-decrement iterator (--retries) that actually only iterate nine
+   times, so 900ms while the default LPI value is 1 second.
 
-Any caller that lowers num_tc leaves such entries behind, and
-mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
-netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
-still describe txq 1..7. The splat is from an XPS write to txq 2 on a
-veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
-j == 6 stores one past the end of the 88-byte map:
+Let's therefore make it more deterministic :
 
-  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
-  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
-   __netif_set_xps_queue (net/core/dev.c:2954)
-   xps_rxqs_store (net/core/net-sysfs.c:1880)
-   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
-  Allocated by task 634:
-   __kmalloc_noprof (mm/slub.c:5439)
-   __netif_set_xps_queue (net/core/dev.c:2937)
-  The buggy address is located 0 bytes to the right of
-   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
+ - Send a frame at the beginning of the test
+ - Wait for more than the lpi timer value, we timeout after about twice
+   the value,
+ - Then send another frame, and verify that we do go out of LPI, also
+   with a timeout.
 
-Reject a class the map has no room for.
+As LPI timer can get pretty high, bail out if LPI timer is over 5
+seconds.
 
-Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
+Note that the test's goal isn't to validate the LPI timer value itself,
+only that we enter/leave LPI mode.
+
+Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260917215339.2022523-3-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../stmicro/stmmac/stmmac_selftests.c         | 44 ++++++++++++++++---
+ 1 file changed, 37 insertions(+), 7 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 65cdaf0c81f71..a48958a3f76c1 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2897,7 +2897,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index a65eac55323af..045d644ae50b5 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -31,6 +31,7 @@ struct stmmachdr {
+ 			      sizeof(struct stmmachdr))
+ #define STMMAC_TEST_PKT_MAGIC	0xdeadcafecafedeadULL
+ #define STMMAC_LB_TIMEOUT	msecs_to_jiffies(200)
++#define STMMAC_SFT_MAX_LPI	(5 * USEC_PER_SEC)
  
- 		tc = netdev_txq_to_tc(dev, index);
--		if (tc < 0)
-+		if (tc < 0 || tc >= num_tc)
- 			return -EINVAL;
+ struct stmmac_packet_attrs {
+ 	int vlan;
+@@ -482,12 +483,16 @@ static int stmmac_test_mmc(struct stmmac_priv *priv)
+ static int stmmac_test_eee(struct stmmac_priv *priv)
+ {
+ 	struct stmmac_extra_stats *initial, *final;
+-	int retries = 10;
++	unsigned long timeout, max_duration;
+ 	int ret;
+ 
+ 	if (!priv->dma_cap.eee || !priv->eee_active)
+ 		return -EOPNOTSUPP;
+ 
++	/* Bail out if the configured LPI timer is too long */
++	if (priv->tx_lpi_timer > STMMAC_SFT_MAX_LPI)
++		return -EOPNOTSUPP;
++
+ 	initial = kzalloc_obj(*initial);
+ 	if (!initial)
+ 		return -ENOMEM;
+@@ -498,14 +503,21 @@ static int stmmac_test_eee(struct stmmac_priv *priv)
+ 		goto out_free_initial;
+ 	}
+ 
++	/* Snapshot stats, we want to count the in_lpi events. We may enter
++	 * LPI just after the packet was sent.
++	 */
+ 	memcpy(initial, &priv->xstats, sizeof(*initial));
+ 
++	/* Send a frame, then wait to enter LPI */
+ 	ret = stmmac_test_mac_loopback(priv);
+ 	if (ret)
+ 		goto out_free_final;
+ 
++	max_duration = usecs_to_jiffies(2 * priv->tx_lpi_timer);
++
+ 	/* We have no traffic in the line so, sooner or later it will go LPI */
+-	while (--retries) {
++	timeout = jiffies + max_duration;
++	while (!time_after(jiffies, timeout)) {
+ 		memcpy(final, &priv->xstats, sizeof(*final));
+ 
+ 		if (final->irq_tx_path_in_lpi_mode_n >
+@@ -514,20 +526,38 @@ static int stmmac_test_eee(struct stmmac_priv *priv)
+ 		msleep(100);
+ 	}
+ 
+-	if (!retries) {
++	memcpy(final, &priv->xstats, sizeof(*final));
++	if (final->irq_tx_path_in_lpi_mode_n <=
++	    initial->irq_tx_path_in_lpi_mode_n) {
+ 		ret = -ETIMEDOUT;
+ 		goto out_free_final;
+ 	}
+ 
+-	if (final->irq_tx_path_in_lpi_mode_n <=
+-	    initial->irq_tx_path_in_lpi_mode_n) {
+-		ret = -EINVAL;
++	/* Re-snapshot, as we want to measure exit_lpi events. We should be
++	 * in LPI right now.
++	 */
++	memcpy(initial, &priv->xstats, sizeof(*initial));
++
++	/* TX something so we go out of LPI */
++	ret = stmmac_test_mac_loopback(priv);
++	if (ret)
+ 		goto out_free_final;
++
++	/* Wait for the exit LPI interrupt */
++	timeout = jiffies + max_duration;
++	while (!time_after(jiffies, timeout)) {
++		memcpy(final, &priv->xstats, sizeof(*final));
++
++		if (final->irq_tx_path_exit_lpi_mode_n >
++		    initial->irq_tx_path_exit_lpi_mode_n)
++			break;
++		msleep(100);
+ 	}
+ 
++	memcpy(final, &priv->xstats, sizeof(*final));
+ 	if (final->irq_tx_path_exit_lpi_mode_n <=
+ 	    initial->irq_tx_path_exit_lpi_mode_n) {
+-		ret = -EINVAL;
++		ret = -ETIMEDOUT;
+ 		goto out_free_final;
  	}
  
 -- 
