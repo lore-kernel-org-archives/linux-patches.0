@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985B84F55B6;
-	Wed, 30 Sep 2026 16:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9294F55B6;
+	Wed, 30 Sep 2026 16:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787244; cv=none; b=mFy2+UPuo/NXqF3E5AOWF4ZyQByl/v/CsaDmxGuOYisx7YA0UIKYvyPouIdXN+34tnnDL4j3d2ZPuR1hcevaTwIReLCiaFpYCepFgb+XV8SQQlfuG6YXslD/A6p/3Z2tuSicXGzqd0TCCw3QsYbAGVY2vhoPD/aC9JRkM7Pzs3Q=
+	t=1790787247; cv=none; b=Lk9KtxbIti1sm0lQM8s/Ae80pYDgcsSyQ80weTG8rr0slC2zfiTzTJ6hlbyZzRnl0mh6VtnKkxmVPKAgzgv5DNorQ2ofNkZM/9SVvcsXxEjtVfZ6e+FdtpE74Wu/jPdt/ik1vZJU5WoOaK2paLTJ6yaJZq9G8LFVbgJ9aK67uhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787244; c=relaxed/simple;
-	bh=wa+u7IJNVUtMRCjEX3dStwxMqI42teqwAUPBYfmvMMo=;
+	s=arc-20240116; t=1790787247; c=relaxed/simple;
+	bh=DZC69UUL5A637Vt+a1AFU54Pf5bsSplYL/Q80mXjlXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqWuw4ldSVcJCrNJvt8x9S7blnonnXss0zZT68Y42xspiZV63SckMKxpc1zDzp1KfDn5Q0Q5oLTQ/nqJD7Vy9c0Q7Xdjj/NiBNKJS/mxoYsDBjiJL3T2ly7iMkmABbty22c8q5vmAyrTxDbGs8GV3sjz2DamERwNw23MmOTSiCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQltji6l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ScxWvsKRoaUszbdGabhqQ0dRQD06za4sybq1kyhme+lOwXpjjgUTVgCEZJzPgJ8MhPvNZnmEv4pgMdwtJz/0y5tc1MdONiLP11QIRlNbcWVBBxJFEg3YNmuhP/PqTT5UF0qexwYMDUUi++rKFrUPmSo0Cz123D05LdonE0PRvag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OC/P6c4z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQltji6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944381F000FF;
-	Wed, 30 Sep 2026 16:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OC/P6c4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420181F000FF;
+	Wed, 30 Sep 2026 16:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787243;
-	bh=gGnhfWiZcltkYaGQeyAdOSnrd5p00Y3tWRkY82Ktdbo=;
+	s=korg; t=1790787245;
+	bh=ASzd9+wXGz6rtgxXKeCjWrU86Wlb2QN7LSmn35tzyws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NQltji6l2LhaqgXB0YinWKTkdrWfRvxCXchkHuVL/MDQuSvq4pUeEnZEv53nvJSsn
-	 jnuaSqLmq++1QtMLBVhQSGz/Qq0/Xnm3KfSMK4c34XFVIOKBG4P4noqbVVpeEdoBqK
-	 6H2SIBr2DEVSkgNwEDIbNhsfPJRFHRNFEuGGlG8s=
+	b=OC/P6c4z5iFaXMQf+3TB2kHCD1HIOsQpK2FJOxJRGMjVY7B45zq/XiXAfRj7pVujm
+	 mnrhp98q1Ebh5WuvTtDBajjLpzI5qJvMUsvhQeJC9RPs5MWrNEqV4aPaH/5+zrlaz4
+	 JIx5t+h/PIenvTH96+/Be9ZbBMOWQyUaBx2cfMD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 163/457] net: stmmac: selftests: Account for alignment shift on dwmac1000 for Jumbo test
-Date: Wed, 30 Sep 2026 17:24:28 +0200
-Message-ID: <20260930152349.567772163@linuxfoundation.org>
+Subject: [PATCH 7.2 164/457] eth: fbnic: Avoid rounding zero ring sizes
+Date: Wed, 30 Sep 2026 17:24:29 +0200
+Message-ID: <20260930152349.589055870@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -46,55 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Björn Töpel <bjorn@kernel.org>
 
-[ Upstream commit c4ac6e94eb9423126bda907a7f2933284f7450ff ]
+[ Upstream commit 0160953d8eec75c3c55562158c46442ff1fd410b ]
 
-On dwmac1000, we currently only support single-descriptor frames. The
-Jumbo test started failing when NET_IP_ALIGN was added to align the IP
-header, as this tests tries to send the biggest possible frame.
+roundup_pow_of_two() is undefined for zero. ethtool permits a zero ring
+size to reach the driver, where the minimum-size check should reject it.
 
-On dwmac1000 the DMA transfer is aligned on 4-bytes, so adding a 2-byte
-shift at the start-of-buffer address means it takes a whole extra 4-byte
-DMA burst to receive the Jumbo packet, causing it to spill over the next
-descriptor.
+Leave zero unchanged while rounding nonzero ring sizes. The minimum-size
+check then rejects zero deterministically without changing the established
+behavior for other values.
 
-This doesn't seem to happen on dwmac4 and xgmac that appear to correctly
-handle unaligned xfers (only tested on dwmac4)
-
-Let's account for that in the Jumbo test, reduce the size of our big
-packet by the align size.
-
-Fixes: 23680bf5f8c6 ("net: stmmac: restore NET_IP_ALIGN in the RX DMA offset")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260917215339.2022523-8-maxime.chevallier@bootlin.com
+Fixes: 6cbf18a05c06 ("eth: fbnic: support ring size configuration")
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Link: https://lore.kernel.org/netdev/178971206933.22033.236948278674126701@kernel.org/
+Suggested-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Björn Töpel <bjorn@kernel.org>
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260918114641.1281172-1-bjorn@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index b3b05a7753335..75647992cbb44 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -1809,6 +1809,9 @@ static int __stmmac_test_jumbo(struct stmmac_priv *priv, u16 queue)
- 	struct stmmac_packet_attrs attr = { };
- 	int size = priv->dma_conf.dma_buf_sz;
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c b/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c
+index 423f179c9d475..76e9a545bb165 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_ethtool.c
+@@ -313,6 +313,11 @@ fbnic_get_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 	kernel_ring->hds_thresh = fbn->hds_thresh;
+ }
  
-+	if (!dwmac_is_xmac(priv->plat->core_type))
-+		size -= NET_IP_ALIGN;
++static u32 fbnic_ring_size_pow2(u32 size)
++{
++	return size ? roundup_pow_of_two(size) : 0;
++}
 +
- 	attr.dst = priv->dev->dev_addr;
- 	attr.max_size = size - ETH_FCS_LEN;
- 	attr.queue_mapping = queue;
+ static void fbnic_set_rings(struct fbnic_net *fbn,
+ 			    struct ethtool_ringparam *ring,
+ 			    struct kernel_ethtool_ringparam *kernel_ring)
+@@ -334,10 +339,10 @@ fbnic_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 	struct fbnic_net *clone;
+ 	int err;
+ 
+-	ring->rx_pending	= roundup_pow_of_two(ring->rx_pending);
+-	ring->rx_mini_pending	= roundup_pow_of_two(ring->rx_mini_pending);
+-	ring->rx_jumbo_pending	= roundup_pow_of_two(ring->rx_jumbo_pending);
+-	ring->tx_pending	= roundup_pow_of_two(ring->tx_pending);
++	ring->rx_pending	= fbnic_ring_size_pow2(ring->rx_pending);
++	ring->rx_mini_pending	= fbnic_ring_size_pow2(ring->rx_mini_pending);
++	ring->rx_jumbo_pending	= fbnic_ring_size_pow2(ring->rx_jumbo_pending);
++	ring->tx_pending	= fbnic_ring_size_pow2(ring->tx_pending);
+ 
+ 	/* These are absolute minimums allowing the device and driver to operate
+ 	 * but not necessarily guarantee reasonable performance. Settings below
 -- 
 2.53.0
 
