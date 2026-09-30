@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F7F50B8A8;
-	Wed, 30 Sep 2026 18:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86044DEC26;
+	Wed, 30 Sep 2026 18:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792261; cv=none; b=Ci2Gfjn2+OHaHJOIzaijdKJUJcqeqm+APgkdQKnP4732FJLncoHsvmhsBTOkOm7f5yo+BoobuBBEjQBxQkrQe1r7B+vMxNX9PAdORcuirYfX2MPtO2FyUC6YvLEVMpnJ3XH++25V4QT2e4m1C1Htp5I6idVfffC3JwzsmvOrc/M=
+	t=1790792263; cv=none; b=Z9J0ROCTkdpwdkPPCcMPB11gyWQ0Q4gJ6LDYvVHndMnXmzOtVbviD0VBcSBFGiJ+PF+1Tyw3/2u2RUVysTkptdln24aUluf4nKwDb/tMLPXPO+BnUU6UjkYJVvpXePYxUwtxN2Gu7/6kBOZlD9WCqXjtv8kIHBuYyU9qTpaulwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792261; c=relaxed/simple;
-	bh=V4haEoTAHCUJsbKO5gVbGFEb0O0Iyf2dH1Ccd6mFhJw=;
+	s=arc-20240116; t=1790792263; c=relaxed/simple;
+	bh=VQZ+IfYZilpUAq3Z1Ue3wo4kaQFUJE916JXzHkskYpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnJcdS6B+a3WaFgPV9rjk0tWPqx5f0OaeqGX6hwu74+EsOJJkNSnG0ZEmHXsjiEEAsGNY8u5KFix+6srCULwQitCYyzLa+1kuyEqSTVy22pWjmQKAlVWUyUrYHr/ehLgj4TH2bW8mQbnNlBK3NTG09Lu5y3zv8A5ZPF6Z95xx14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvI0ufkw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OEas+dodoMImR8gaH+NlKo5dT2GKy4eJP9wJzV59vRLnW+bl45sVrK/n12T+zv1tedMqTc9dVPDcC4N+j9gBd7EilzbMMgiTETu6qqMP0n5sZjLi6jxrg/Vb86foFSHaZ2zZLf4ADc5ZiXvPjeiYEIXFC+n7RrH2Y7HvGW6Trb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1202sqcM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvI0ufkw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3F11F0089B;
-	Wed, 30 Sep 2026 18:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1202sqcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBB41F000FF;
+	Wed, 30 Sep 2026 18:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792259;
-	bh=gjs/Zw1qgghLqAKMHL7lP8/umdykc1yKtTFE/ZwWl1w=;
+	s=korg; t=1790792262;
+	bh=PUwmriuELZ7roBAZ/otJ0xMGhEGb0UdTvGTWoAhvHUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvI0ufkwgwFY/6Zwu4a6gLN0UWhbfakYu90kUillLkceg9p2KEnviXFAp0dKt0KLW
-	 0Ms03XmiJv8qsBrtTpJvSnJ8GXomZmxvxGYOsRxOmz9CslAVNK5+bUH+WsbJaLeH0n
-	 eXB15REf0hBjCGLNckBPHgZgCJpsS3d6VM55ojZ0=
+	b=1202sqcMeHPotZ1zIQwtH/nLbcjFSd2zWTHME5eYO05w3j3bWQjVNFEuBMXqMgSDY
+	 UdVm5nYFRQw8za/WvOlBNLFR8x23O11fUoqBs9HlVMOrqJQN1sGKKU93sUjMcm4em3
+	 F9R1Aq4qsEAw45v1YZ6tIdPsq61tpR3+V2UXGQ8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Jiri Kosina <jkosina@suse.com>,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 591/752] HID: hyperv: streamline driver probe to avoid devres issues
-Date: Wed, 30 Sep 2026 17:27:41 +0200
-Message-ID: <20260930152411.076657412@linuxfoundation.org>
+Subject: [PATCH 5.15 592/752] KVM: s390: Fix IRQ injection with SIGP Stop and Store Status
+Date: Wed, 30 Sep 2026 17:27:42 +0200
+Message-ID: <20260930152411.097827890@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,185 +50,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-commit 66ef47faa90d838cda131fe1f7776456cc3b59f2 upstream
+[ Upstream commit d343407b728a80b74be3c24b59f15e60289ea527 ]
 
-It was found that unloading 'hid_hyperv' module results in a devres
-complaint:
+When __inject_sigp_stop() is called for a Stop and Store Status
+operation, if the vCPU is running, the interrupt is marked as pending
+and the status is stored by the thread performing the KVM_RUN IOCTL.
 
- ...
- hv_vmbus: unregistering driver hid_hyperv
- ------------[ cut here ]------------
- WARNING: CPU: 2 PID: 3983 at drivers/base/devres.c:691 devres_release_group+0x1f2/0x2c0
- ...
- Call Trace:
-  <TASK>
-  ? devres_release_group+0x1f2/0x2c0
-  ? __warn+0xd1/0x1c0
-  ? devres_release_group+0x1f2/0x2c0
-  ? report_bug+0x32a/0x3c0
-  ? handle_bug+0x53/0xa0
-  ? exc_invalid_op+0x18/0x50
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? devres_release_group+0x1f2/0x2c0
-  ? devres_release_group+0x90/0x2c0
-  ? rcu_is_watching+0x15/0xb0
-  ? __pfx_devres_release_group+0x10/0x10
-  hid_device_remove+0xf5/0x220
-  device_release_driver_internal+0x371/0x540
-  ? klist_put+0xf3/0x170
-  bus_remove_device+0x1f1/0x3f0
-  device_del+0x33f/0x8c0
-  ? __pfx_device_del+0x10/0x10
-  ? cleanup_srcu_struct+0x337/0x500
-  hid_destroy_device+0xc8/0x130
-  mousevsc_remove+0xd2/0x1d0 [hid_hyperv]
-  device_release_driver_internal+0x371/0x540
-  driver_detach+0xc5/0x180
-  bus_remove_driver+0x11e/0x2a0
-  ? __mutex_unlock_slowpath+0x160/0x5e0
-  vmbus_driver_unregister+0x62/0x2b0 [hv_vmbus]
-  ...
+If the vCPU is already stopped, the status is stored immediately.
 
-And the issue seems to be that the corresponding devres group is not
-allocated. Normally, devres_open_group() is called from
-__hid_device_probe() but Hyper-V HID driver overrides 'hid_dev->driver'
-with 'mousevsc_hid_driver' stub and basically re-implements
-__hid_device_probe() by calling hid_parse() and hid_hw_start() but not
-devres_open_group(). hid_device_probe() does not call __hid_device_probe()
-for it. Later, when the driver is removed, hid_device_remove() calls
-devres_release_group() as it doesn't check whether hdev->driver was
-initially overridden or not.
+Storing the status means writing into userspace, which might fault, and
+__inject_sigp_stop() is called from do_inject_vcpu() which in turn is
+always called holding a spinlock, which is obviously an issue.
 
-The issue seems to be related to the commit 62c68e7cee33 ("HID: ensure
-timely release of driver-allocated resources") but the commit itself seems
-to be correct.
+Fix this by returning -EWOULDBLOCK from __inject_sigp_stop(), and
+adding a bool flag to indicate whether a store status is needed. The
+callers of do_inject_vcpu() are modified to pass the pointer to the
+bool flag; whenever a Store Status operation is needed, the callers can
+now perform it outside the spinlock.
 
-Fix the issue by dropping the 'hid_dev->driver' override and using
-hid_register_driver()/hid_unregister_driver() instead. Alternatively, it
-would have been possible to rely on the default handling but
-HID_CONNECT_DEFAULT implies HID_CONNECT_HIDRAW and it doesn't seem to work
-for mousevsc as-is.
+Opportunistically refactor kvm_s390_set_irq_state() to use
+scoped_guard() and __free().
 
-Fixes: 62c68e7cee33 ("HID: ensure timely release of driver-allocated resources")
-Suggested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-[ 5.15: context adjusted only - mousevsc_ll_driver is non-const in 5.15
-  because the hid_ll_driver constification (d38213a911c5 "HID: hyperv:
-  Constify lowlevel HID driver") is not present; the applied diff is
-  identical to the upstream commit, no functional change ]
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Fixes: 6cddd432e3da ("KVM: s390: handle stop irqs without action_bits")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+[ Added Fixes tag while picking -- Claudio ]
+Message-ID: <20260812104436.109741-7-imbrenda@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-hyperv.c | 58 ++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 17 deletions(-)
+ arch/s390/kvm/interrupt.c | 70 +++++++++++++++++++++------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/hid/hid-hyperv.c b/drivers/hid/hid-hyperv.c
-index b9f64e3744885..3fdea2a59ce2f 100644
---- a/drivers/hid/hid-hyperv.c
-+++ b/drivers/hid/hid-hyperv.c
-@@ -456,6 +456,25 @@ static int mousevsc_hid_raw_request(struct hid_device *hid,
- 	return 0;
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 7207390bd849e..4b0640bf3a671 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -1579,23 +1579,21 @@ static int __inject_set_prefix(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
  }
  
-+static int mousevsc_hid_probe(struct hid_device *hid_dev, const struct hid_device_id *id)
-+{
-+	int ret;
-+
-+	ret = hid_parse(hid_dev);
-+	if (ret) {
-+		hid_err(hid_dev, "parse failed\n");
-+		return ret;
-+	}
-+
-+	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
-+	if (ret) {
-+		hid_err(hid_dev, "hw start failed\n");
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
- static struct hid_ll_driver mousevsc_ll_driver = {
- 	.parse = mousevsc_hid_parse,
- 	.open = mousevsc_hid_open,
-@@ -465,7 +484,16 @@ static struct hid_ll_driver mousevsc_ll_driver = {
- 	.raw_request = mousevsc_hid_raw_request,
- };
+ #define KVM_S390_STOP_SUPP_FLAGS (KVM_S390_STOP_FLAG_STORE_STATUS)
+-static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int __inject_sigp_stop(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+ 	struct kvm_s390_stop_info *stop = &li->irq.stop;
+-	int rc = 0;
  
--static struct hid_driver mousevsc_hid_driver;
-+static const struct hid_device_id mousevsc_devices[] = {
-+	{ HID_DEVICE(BUS_VIRTUAL, HID_GROUP_ANY, 0x045E, 0x0621) },
-+	{ }
-+};
-+
-+static struct hid_driver mousevsc_hid_driver = {
-+	.name = "hid-hyperv",
-+	.id_table = mousevsc_devices,
-+	.probe = mousevsc_hid_probe,
-+};
+ 	vcpu->stat.inject_stop_signal++;
+ 	trace_kvm_s390_inject_vcpu(vcpu->vcpu_id, KVM_S390_SIGP_STOP, 0, 0);
  
- static int mousevsc_probe(struct hv_device *device,
- 			const struct hv_vmbus_device_id *dev_id)
-@@ -507,7 +535,6 @@ static int mousevsc_probe(struct hv_device *device,
+ 	if (irq->u.stop.flags & ~KVM_S390_STOP_SUPP_FLAGS)
+ 		return -EINVAL;
+-
+ 	if (is_vcpu_stopped(vcpu)) {
+-		if (irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS)
+-			rc = kvm_s390_store_status_unloaded(vcpu,
+-						KVM_S390_STORE_STATUS_NOADDR);
+-		return rc;
++		if (!(irq->u.stop.flags & KVM_S390_STOP_FLAG_STORE_STATUS))
++			return 0;
++		*storestatus = true;
++		return -EWOULDBLOCK;
  	}
  
- 	hid_dev->ll_driver = &mousevsc_ll_driver;
--	hid_dev->driver = &mousevsc_hid_driver;
- 	hid_dev->bus = BUS_VIRTUAL;
- 	hid_dev->vendor = input_dev->hid_dev_info.vendor;
- 	hid_dev->product = input_dev->hid_dev_info.product;
-@@ -522,20 +549,6 @@ static int mousevsc_probe(struct hv_device *device,
- 	if (ret)
- 		goto probe_err2;
- 
--
--	ret = hid_parse(hid_dev);
--	if (ret) {
--		hid_err(hid_dev, "parse failed\n");
--		goto probe_err2;
--	}
--
--	ret = hid_hw_start(hid_dev, HID_CONNECT_HIDINPUT | HID_CONNECT_HIDDEV);
--
--	if (ret) {
--		hid_err(hid_dev, "hw start failed\n");
--		goto probe_err2;
--	}
--
- 	device_init_wakeup(&device->device, true);
- 
- 	input_dev->connected = true;
-@@ -615,12 +628,23 @@ static struct  hv_driver mousevsc_drv = {
- 
- static int __init mousevsc_init(void)
- {
--	return vmbus_driver_register(&mousevsc_drv);
-+	int ret;
-+
-+	ret = hid_register_driver(&mousevsc_hid_driver);
-+	if (ret)
-+		return ret;
-+
-+	ret = vmbus_driver_register(&mousevsc_drv);
-+	if (ret)
-+		hid_unregister_driver(&mousevsc_hid_driver);
-+
-+	return ret;
+ 	if (test_and_set_bit(IRQ_PEND_SIGP_STOP, &li->pending_irqs))
+@@ -2136,7 +2134,7 @@ void kvm_s390_clear_stop_irq(struct kvm_vcpu *vcpu)
+ 	spin_unlock(&li->lock);
  }
  
- static void __exit mousevsc_exit(void)
+-static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
++static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq, bool *storestatus)
  {
- 	vmbus_driver_unregister(&mousevsc_drv);
-+	hid_unregister_driver(&mousevsc_hid_driver);
- }
+ 	int rc;
  
- MODULE_LICENSE("GPL");
+@@ -2148,7 +2146,7 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ 		rc = __inject_set_prefix(vcpu, irq);
+ 		break;
+ 	case KVM_S390_SIGP_STOP:
+-		rc = __inject_sigp_stop(vcpu, irq);
++		rc = __inject_sigp_stop(vcpu, irq, storestatus);
+ 		break;
+ 	case KVM_S390_RESTART:
+ 		rc = __inject_sigp_restart(vcpu);
+@@ -2184,11 +2182,16 @@ static int do_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ int kvm_s390_inject_vcpu(struct kvm_vcpu *vcpu, struct kvm_s390_irq *irq)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
++	bool storestatus = false;
+ 	int rc;
+ 
+ 	spin_lock(&li->lock);
+-	rc = do_inject_vcpu(vcpu, irq);
++	rc = do_inject_vcpu(vcpu, irq, &storestatus);
+ 	spin_unlock(&li->lock);
++
++	if (rc == -EWOULDBLOCK && storestatus)
++		rc = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++
+ 	if (!rc)
+ 		kvm_s390_vcpu_wakeup(vcpu);
+ 	return rc;
+@@ -2924,7 +2927,8 @@ int kvm_set_msi(struct kvm_kernel_irq_routing_entry *e, struct kvm *kvm,
+ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len)
+ {
+ 	struct kvm_s390_local_interrupt *li = &vcpu->arch.local_int;
+-	struct kvm_s390_irq *buf;
++	struct kvm_s390_irq *buf __free(kvfree) = NULL;
++	bool tmp, storestatus = false;
+ 	int r = 0;
+ 	int n;
+ 
+@@ -2932,31 +2936,33 @@ int kvm_s390_set_irq_state(struct kvm_vcpu *vcpu, void __user *irqstate, int len
+ 	if (!buf)
+ 		return -ENOMEM;
+ 
+-	if (copy_from_user((void *) buf, irqstate, len)) {
+-		r = -EFAULT;
+-		goto out_free;
+-	}
++	if (copy_from_user((void *)buf, irqstate, len))
++		return -EFAULT;
+ 
+-	/*
+-	 * Don't allow setting the interrupt state
+-	 * when there are already interrupts pending
+-	 */
+-	spin_lock(&li->lock);
+-	if (li->pending_irqs) {
+-		r = -EBUSY;
+-		goto out_unlock;
+-	}
++	scoped_guard(spinlock, &li->lock) {
++		/*
++		 * Don't allow setting the interrupt state
++		 * when there are already interrupts pending
++		 */
++		if (li->pending_irqs)
++			return -EBUSY;
+ 
+-	for (n = 0; n < len / sizeof(*buf); n++) {
+-		r = do_inject_vcpu(vcpu, &buf[n]);
+-		if (r)
+-			break;
++		for (n = 0; n < len / sizeof(*buf); n++) {
++			tmp = false;
++			r = do_inject_vcpu(vcpu, &buf[n], &tmp);
++			if (r == -EWOULDBLOCK && tmp) {
++				storestatus = true;
++				r = 0;
++			}
++			if (r)
++				break;
++		}
+ 	}
+ 
+-out_unlock:
+-	spin_unlock(&li->lock);
+-out_free:
+-	vfree(buf);
++	if (storestatus) {
++		n = kvm_s390_store_status_unloaded(vcpu, KVM_S390_STORE_STATUS_NOADDR);
++		return r ? r : n;
++	}
+ 
+ 	return r;
+ }
 -- 
 2.53.0
 
