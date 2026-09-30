@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862F234E75A;
-	Wed, 30 Sep 2026 19:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E63CAA41;
+	Wed, 30 Sep 2026 19:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795604; cv=none; b=jNI0jOVDKyQj8GemynJL71bQugXJW58iIUD72WNry4dJYIwN+hDw+kHzaNX/9tLrC9xmrcxZe6Akqf9H8Gq6N2ihIG5WY6ILRY7YAdmRXnTXqR1ttO+rMaIPVe9OfJNuJN4cU16qCAWGXv8D4+YaJxsMAavoJh6HgBYgz2Swtis=
+	t=1790795607; cv=none; b=pybyk/7sk+BPiQ6wZbfHXMJuPC2RFx3ebR67airh4UJ7nhRqulujZkgJil2Y339bSaQkFzaWD8ESendt0G3PD6HH3fvNHiHtlQhc4YCAroDlDQFnWtyVomGmUndt8nbF//iSh+ZIbqv9oV13IzSlodoMhVNQFghFDpj/p5/UFLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795604; c=relaxed/simple;
-	bh=fkOezXZ5HD2ArPD0tWHGRlzI7m659Xc23J/VzkInPas=;
+	s=arc-20240116; t=1790795607; c=relaxed/simple;
+	bh=dqqwefU+oHZTZ+SYImGqBCMMcf7THJDijj/mry7p7sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z58AfFLItn5kwEcjMA7VYAou3/VGIkCOSUouPHENCUlzZ5EVUWYSy/XKWqjVDyxzSywCSho8V22C+E+Bsk4IXWQSduo/1GyU8ESoY0/1LzkcZMzoG63SYyDuYqiMw1NoY3DfDEPOc30vyQq/sF4ERLmZmMQ4wRY9z5jdMPo9gUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmeSfvDJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwrEQD7OX3IT97qz9LOA/pgoRy3rpCt/JYY7I98ZmdowSPgUhTqAMxbvKwVIkr0SdrbJAbzeyE8Ez/f+X9hXIzH3miR5ndXq1WXLH5qn4Dqc/AVwUdt0dyGyE2NhEDPPLQ5xHdqg0IY46DAZyFWHfahXQBLfgT/KCGMx9+T5OpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQO1V21i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmeSfvDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25091F000FF;
-	Wed, 30 Sep 2026 19:13:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQO1V21i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C429B1F00898;
+	Wed, 30 Sep 2026 19:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795603;
-	bh=w4Ng2O4HTuT3xRzJ7JMtAFDXHk6yhoQ3SouUpYbGX7Y=;
+	s=korg; t=1790795606;
+	bh=Ie1he4VaKa1gXuR3P0QwMlGp368zqGSsPn+QUiGlabA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmeSfvDJBca8fzluR+9gEfRh5GL4nZiiaA2lu+xKX2u6OeS7vDtqKrECGoyd90BSh
-	 EPM8RAxZlwQA/fFt3z1QQebP4hVggg8L5bE7lK2IiOD353dMJ2NjxeUUdYYabRlQts
-	 wFllzj88YDFceV02mcfmX2jPPOKEkW6teHMhYZMI=
+	b=vQO1V21ij5maIFjbSSn16lCQ5M6tr1k2w4oBpkcVcj2aq8OZCZ0MryjF8OrS3omCo
+	 yBp13JV+/oyfjQV3qkL4e2TW6GPYF548pn5c0MdbZ43EdoSGvAioN0m9GOAYMvaCFV
+	 sXTEbNtJLGHA7sGid6jTGAQiNldlOJKNbXuuDzoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 0612/1193] tracing: Free histogram the var ref when its initialization fails
-Date: Wed, 30 Sep 2026 17:21:36 +0200
-Message-ID: <20260930152447.841528204@linuxfoundation.org>
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 0621/1193] cpufreq: initialize policy rwsem before sysfs publication
+Date: Wed, 30 Sep 2026 17:21:45 +0200
+Message-ID: <20260930152448.040372088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,49 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 516001d53e6b2ea95a251ee2ef54a1a689a3fd58 upstream.
+commit 3e5d1bf4bd687beb2cb4e32a07af695455925588 upstream.
 
-create_var_ref() allocates a VAR_REF hist_field and then calls
-init_var_ref() to fill it in. When that fails the field is leaked.
+cpufreq_policy_alloc() initializes policy->rwsem after
+kobject_init_and_add() has created the policy sysfs directory and its
+default attributes. A sysfs access can therefore reach a policy callback
+before the semaphore has been initialized.
 
-commit 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy
-var_refs") made destroy_hist_field() return early for
-HIST_FIELD_FL_VAR_REF, since var refs are freed by walking the trigger's
-var_refs[] array instead. create_var_ref() adds the field to that array
-only after init_var_ref() has succeeded, so on this path the field is in
-neither place and nothing frees it. The call was correct when it was
-written, before var refs were taken out of destroy_hist_field().
+Initialize policy->rwsem before publishing the policy kobject so sysfs
+callbacks always see an initialized semaphore.
 
-init_var_ref() cannot free it either. The caller owns the field, so
-init_var_ref() undoes only its own string allocations and leaves the
-field alone. Freeing it there would leave create_var_ref() passing freed
-memory to destroy_hist_field(), which reads its flags.
-
-Call __destroy_hist_field(), which frees the field without consulting
-the flag.
-
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260906133352.3815019-1-donggeunyoo.kernel@gmail.com
-Fixes: 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy var_refs")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 2fc3384dc75b ("cpufreq: Initialize policy->kobj while allocating policy")
+Cc: All Applicable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/all/20260830155301.2713780-1-runyu.xiao@seu.edu.cn/
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20260902041915.3453421-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2211,7 +2211,7 @@ static struct hist_field *create_var_ref
- 	ref_field = create_hist_field(var_field->hist_data, NULL, flags, NULL);
- 	if (ref_field) {
- 		if (init_var_ref(ref_field, var_field, system, event_name)) {
--			destroy_hist_field(ref_field, 0);
-+			__destroy_hist_field(ref_field);
- 			return NULL;
- 		}
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1273,6 +1273,8 @@ static struct cpufreq_policy *cpufreq_po
+ 	if (!zalloc_cpumask_var(&policy->real_cpus, GFP_KERNEL))
+ 		goto err_free_rcpumask;
  
++	init_rwsem(&policy->rwsem);
++
+ 	init_completion(&policy->kobj_unregister);
+ 	ret = kobject_init_and_add(&policy->kobj, &ktype_cpufreq,
+ 				   cpufreq_global_kobject, "policy%u", cpu);
+@@ -1287,8 +1289,6 @@ static struct cpufreq_policy *cpufreq_po
+ 		goto err_free_real_cpus;
+ 	}
+ 
+-	init_rwsem(&policy->rwsem);
+-
+ 	freq_constraints_init(&policy->constraints);
+ 
+ 	policy->nb_min.notifier_call = cpufreq_notifier_min;
 
 
