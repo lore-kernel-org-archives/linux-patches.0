@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0204DEC26;
-	Wed, 30 Sep 2026 18:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6123F511225;
+	Wed, 30 Sep 2026 18:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792396; cv=none; b=P7SuHyjfuaL6No2Y17FAb9qa1puZyuaXtMUApshnYAXOE7lT5bjE4c6C8x0pwmle8XYErulFWEg1cEPGKfoPzNCwgS4IOkK/pmrHJia2ozWJsftObfQmeo6Ll+v9V+mzzB3OrJmMgG/GEh6woBvU+YDa6KmFb6fwOM9Pdsrh4P8=
+	t=1790792399; cv=none; b=BH8HMeuZD/t80rUQQJBFiPHfgei5updUJJ30B2LzciYYMwoYMy9RIzyOFYr2iFmxasOHJQuClYp6C31qcfnRinB6H6Dn0aLTiyxs2zSTGQry0CQ9XVTPyIk29aiXMR4MV7KMHgHPA6ylyQ7VRv1UTb4QdrlTVc81d7yqp2hVzpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792396; c=relaxed/simple;
-	bh=Pau6dnPg9xt0sNgob+6gY6phI5CR35ZO1OCajbhte4g=;
+	s=arc-20240116; t=1790792399; c=relaxed/simple;
+	bh=0hQmzNUQ40NdYTx0/wEV7BfON9vduF3MZjm9PaHr6mc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+Q+nqqId3p/xZ2ml5rr+6NMS/qTK6cHHtb2FXQZogg2tJaNb/j/uPZSv48QAipShn8sYwrJglAZwWxWrXrR98F/mJ8tIRT95xhRtjBjtf7mkehiHzVzUg/44u7rJ/bGvF3Qs4o3AnaQISt/bYt6Zy2SY3YPp+ZoUYShIrU0D+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUXATnSJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sSu0QwtJJcFBm18oM4sqBR3GOGqofyE6AZk6zXLM2vv4t5Lqi0I1nWWvGYH1MY50E052VXbuzAnwPvMlV2NTnGdhZzDf4MltUsM4lJwdWpCIV9dCxLhno80P/yeG8AnajqzybyrLKUWrTSA/5BBqnmzNq+kxAoCakUFncjHU39U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLbFeB/j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUXATnSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC85D1F000FF;
-	Wed, 30 Sep 2026 18:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLbFeB/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1F91F000FF;
+	Wed, 30 Sep 2026 18:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792395;
-	bh=+hlE9bszGPJHJrREwBoYN13io/v0gAaQ1KlYWkfLJpk=;
+	s=korg; t=1790792398;
+	bh=mS5SyCrKTKktq7lhK8JkI33767QmYcn45D8FULguOJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUXATnSJSJXEjIzlPfWWFhWFIVEJPnRNSpa6QLHFZbIlN/ViKij2bnXkEpXUCuiGD
-	 h7Ep2QnTh1eyU4CA7v5lMhWKQgfF3H8EgqAhhMF8GU5jB0nXPe+Gs+gKOD4ycwKluU
-	 3rfGNI1nOhmBcMXBU1wGMX37Kg0yQwN2mb6TYXqo=
+	b=sLbFeB/j3jHJfxHrj+IB2PTLXFRbvkJJHqzbuG0GAKhJP157Q1JbuezyITCkDpsOK
+	 22TudWt9DnDC9xC0yH3SzuuxjWAckujCvzIsGsQIRgNovIl9Q+bqOTSOWqQsrDK6Jt
+	 Ysc1F2Amf2+t717Xc063O/74FTWSW+4zDOXUsRRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Nicholas Carlini <nicholas@carlini.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 639/752] net: ethernet: ti: netcp: fix pm_runtime usage counter leak on error
-Date: Wed, 30 Sep 2026 17:28:29 +0200
-Message-ID: <20260930152412.093293841@linuxfoundation.org>
+Subject: [PATCH 5.15 640/752] bpf: Fix bpf_sock context code generation
+Date: Wed, 30 Sep 2026 17:28:30 +0200
+Message-ID: <20260930152412.115903418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,41 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Emil Tsalapatis <emil@etsalapatis.com>
 
-[ Upstream commit ac4334522e4ba4a3b6710dd5d4cc98092824b8ca ]
+[ Upstream commit 4a4852376e3a2727ea40e61143d6d7c22bb6dfad ]
 
-pm_runtime_get_sync() leaves the runtime PM usage counter incremented even
-when it fails, but the error path in netcp_probe() does not call
-pm_runtime_put_noidle() to balance it, leaking a reference each time
-resume fails.
+Currently, the ctx access code reads the rx_queue_mapping
+field with either a 4-byte or 2-byte load. The rest of the bits
+in the register are marked known zero by the verifier. However,
+the emitted ctx access code places in the register on certain
+the special value (-1) using BPF_MOV_IMM64, which gets sign-extended
+to turn on all the bits in the register. By shifting this value right,
+the program ends up with a value at runtime above what the verifier
+assumes is possible.
 
-Use pm_runtime_resume_and_get() instead, which automatically drops the
-usage counter on failure, fixing the leak.
+Fix this by ensuring the read value is as wide as the assumed size.
+Use MOV32 instructions instead of MOV64 instructions to keep
+the upper bits zero as assumed by the verifier. Also properly report
+the size of the destination variable (the bpf_sock field, 4 bytes) instead
+of the source (the socket field, 2 bytes).
 
-Fixes: 84640e27f230 ("net: netcp: Add Keystone NetCP core ethernet driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260918042804.13101-1-phucduc.bui@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c3c16f2ea6d2 ("bpf: Add rx_queue_mapping to bpf_sock")
+Reported-by: Nicholas Carlini <nicholas@carlini.com>
+Suggested-by: Nicholas Carlini <nicholas@carlini.com>
+Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260922172028.6269-4-emil@etsalapatis.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/filter.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index 08c6cb16532e5..948b0ada5011f 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -2167,7 +2167,7 @@ static int netcp_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 1ee9432d516ed..f4a6ca23eef5b 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -9428,11 +9428,12 @@ u32 bpf_sock_convert_ctx_access(enum bpf_access_type type,
+ 				       target_size));
+ 		*insn++ = BPF_JMP_IMM(BPF_JNE, si->dst_reg, NO_QUEUE_MAPPING,
+ 				      1);
+-		*insn++ = BPF_MOV64_IMM(si->dst_reg, -1);
++		*insn++ = BPF_MOV32_IMM(si->dst_reg, -1);
+ #else
+-		*insn++ = BPF_MOV64_IMM(si->dst_reg, -1);
+-		*target_size = 2;
++		*insn++ = BPF_MOV32_IMM(si->dst_reg, -1);
+ #endif
++		*target_size = sizeof_field(struct bpf_sock, rx_queue_mapping);
++
+ 		break;
+ 	}
  
- 	pm_runtime_enable(&pdev->dev);
--	ret = pm_runtime_get_sync(&pdev->dev);
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to enable NETCP power-domain\n");
- 		pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
