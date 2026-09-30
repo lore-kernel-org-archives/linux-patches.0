@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14B136998C;
-	Wed, 30 Sep 2026 18:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934073AEB38;
+	Wed, 30 Sep 2026 18:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794599; cv=none; b=BscNYh6XbljXnjrJIutYxcDl5iGm+oOA5OvohPm8qSozM6xZpaGcBdPgsqyGOXo9EVs9VRGnJrZOfdSmPTD5uweGzv6dMhcel8d8CfbZ4YJaa/+TIUbM7r7Lsh+qip/0KILQpN7o4eYQm9ll7zcb2VkB2rp83eGgS8weL4sfSUA=
+	t=1790794601; cv=none; b=lLIHai97ndWpAKdFS8gjQjnmGr0JY1UFNxB07NKBBqkHaCc8djF8+BcA8AgjlIHkr4+KeMH5KBFyygF/v6QaYAg3lOZIjNVVEe2AiY0iIMhzXUu4Px6B9arW6RX/khT7j98gPpfkUQXKNGSUCWWU222IG6dNTEwFxeW/H8GvOLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794599; c=relaxed/simple;
-	bh=JYiEjqwa7rtCGSFQZfh067JtsTb3YjmtJyDrFlqC9M8=;
+	s=arc-20240116; t=1790794601; c=relaxed/simple;
+	bh=5HilJpvaA9J5b+GhhAxDcTNvxDrB4AqShsUpCwCIQmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B57bKvg7W2N4IbNClJTuoKURTfXX8T+jEZFU3VFXGCXnHDGnjIZ8hvObcgwyNwKLxtbiMrlgQcOUkJyc9gzi7mQZ0XiMe//FMs/a1nOkIsQZ/oqqlgMGodju4cpfi/VMY7fRAkAZAdDPQocag/cqdmrs8/rnXddWg7JHxqQh780=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbJIxnsR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F8QGgp3W7W0IdJ9vEsER42UaQPFFpXqOj99dWLFXRiz8UX5tAwXeDDhMOYpvo719n+ett5W87S7xDVUAoewEY2MJCKyHC6LyKAvFjRDATXorlxetp6HjK8WN7FbLQy6Wj35uC58JYQMzDUbMnXqHHeT4Eaxm2bahwWieEm8SYCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s38lsVG1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbJIxnsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264101F000FF;
-	Wed, 30 Sep 2026 18:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s38lsVG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4381F00898;
+	Wed, 30 Sep 2026 18:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794597;
-	bh=WbiN/zAMqK4p9nSiReIEdzQta3vltyo7UYvHJBW9yV4=;
+	s=korg; t=1790794600;
+	bh=djhpcgkwxEPsEbzY8TDyDdWuBfUoMDvWlSWciZTvP+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xbJIxnsRI6BarGN3nlcZhH73mQ/XfMa17w0OpLjoU1KKLzXNoCdGGegm6jHMN7c4z
-	 nUupLWFm1vhH9a3UMivGXbej7G7hGUEpebK6HTEUQKUIoxQMGHhU6OeSBLM5a6ZEBN
-	 cc0lxMZweH5Z91N3mf3Z4YyEpETWxOlAN01ZDS3w=
+	b=s38lsVG1xU58+skDS6FzGhN0b4EZZSkmoQ6b0fzihENV5vTP0fW6qtFEuSYZrF2lz
+	 HsoQfrELRRgXYx7RJ5eFQglnAQhD5ffHFpq71a0tXsP4Ni1HBoQ6mwjg/GGoeqEcYl
+	 KylK67kZvj1ksDPyTyDW6ET26h20L641JRrJa/zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fygo.io>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0266/1193] blk-cgroup: protect iterating blkgs with blkcg->lock in blkcg_print_stat()
-Date: Wed, 30 Sep 2026 17:15:50 +0200
-Message-ID: <20260930152440.080635936@linuxfoundation.org>
+Subject: [PATCH 6.6 0231/1193] gpio: pisosr: Read "ngpios" as u32
+Date: Wed, 30 Sep 2026 17:15:15 +0200
+Message-ID: <20260930152439.328836097@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,52 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 25656304dabd26198ec69460c594a19d086ef099 ]
+[ Upstream commit 4910aa198d25e5d1067236560ba34ab12bccc677 ]
 
-blkcg_print_one_stat() will be called for each blkg:
-- access blkg->iostat, which is freed from rcu callback
-  blkg_free_workfn();
-- access policy data from pd_stat_fn(), which is freed from
-  pd_free_fn(), while pd_free_fn() can be called by removing blkcg or
-  deactivating policy;
+The generic "ngpios" property is encoded as a normal uint32 cell. The
+pisosr driver stores it in the gpio_chip field, but reading it with a
+u16 helper does not match the DT property encoding.
 
-Take blkcg->lock while iterating so the blkgs stay online and both
-blkg->iostat and policy data for activated policies stay valid.  Use
-irq-safe locking because blkcg->lock can be nested under q->queue_lock,
-which is used from IRQ completion paths.
+Read "ngpios" as u32 and keep the existing assignment to the chip
+field.
 
-Prepare to convert protecting blkgs from request_queue with mutex.
-
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e162959d7cc.1780621988.git.yukuai@fygo.io
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Assisted-by: Codex:gpt-5-5
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20260612215216.1887485-1-robh@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-pisosr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index b108e934a1427..cd30f2ca561f5 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1201,13 +1201,10 @@ static int blkcg_print_stat(struct seq_file *sf, void *v)
- 	else
- 		cgroup_rstat_flush(blkcg->css.cgroup);
+diff --git a/drivers/gpio/gpio-pisosr.c b/drivers/gpio/gpio-pisosr.c
+index e3013e778e151..dd4a0a990d158 100644
+--- a/drivers/gpio/gpio-pisosr.c
++++ b/drivers/gpio/gpio-pisosr.c
+@@ -125,6 +125,7 @@ static int pisosr_gpio_probe(struct spi_device *spi)
+ {
+ 	struct device *dev = &spi->dev;
+ 	struct pisosr_gpio *gpio;
++	u32 ngpios;
+ 	int ret;
  
--	rcu_read_lock();
--	hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
--		spin_lock_irq(&blkg->q->queue_lock);
-+	guard(spinlock_irq)(&blkcg->lock);
-+	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node)
- 		blkcg_print_one_stat(blkg, sf);
--		spin_unlock_irq(&blkg->q->queue_lock);
--	}
--	rcu_read_unlock();
-+
- 	return 0;
- }
+ 	gpio = devm_kzalloc(dev, sizeof(*gpio), GFP_KERNEL);
+@@ -133,7 +134,8 @@ static int pisosr_gpio_probe(struct spi_device *spi)
+ 
+ 	gpio->chip = template_chip;
+ 	gpio->chip.parent = dev;
+-	of_property_read_u16(dev->of_node, "ngpios", &gpio->chip.ngpio);
++	if (!of_property_read_u32(dev->of_node, "ngpios", &ngpios))
++		gpio->chip.ngpio = ngpios;
+ 
+ 	gpio->spi = spi;
  
 -- 
 2.53.0
