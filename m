@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4C5355819;
-	Wed, 30 Sep 2026 19:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427B53DC4D8;
+	Wed, 30 Sep 2026 19:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796132; cv=none; b=NK1ocFg8vb5Lbx1RHBxpAAPDX/6+HfB6+07ILZ6Ns/wpDDWDUvPOgXezEEuAjCeuCHbrofR9ZHKFcqWU6tM+5Y5d+OQf8BqRL6PPgtxcEwExUThBozwFCvgh7DlMN1gVj7YvpSQ/cbnzeZVfOAin3d28ltmKBlhiisANVQ9JZog=
+	t=1790796135; cv=none; b=baRck0Q22UysH068gAf/Fx8smio3pUtYxsTa2gFZAsJSpJ57HVl15t5pm/cgnwdW7B7xbk0daPZSppLE0GDTql3bApnqpOeHJAUAnATtGV2f+atwClkT/DvBw9L//fn3zYUbCR7gwr96yv/CvAn66CqVUC17Cl2n353Ti4qN/Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796132; c=relaxed/simple;
-	bh=h69jXzMOmSWF6Pf60jf+WC+akL0OfnP9mz79Jp3EwRE=;
+	s=arc-20240116; t=1790796135; c=relaxed/simple;
+	bh=ZnF9kgffNVI1RB2y7RNJpFeDYBXZi2AFjuVGp4V6YXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZWkhFF/CtahtFfg0xxW92k57HQJB/V1EJpYwLWFpkzzNb1giTn4HUZNpSDQ0CtEvWTwhTRSBu+/I7jz2GvphA1tsIv3okovebfRYgdkj2Iho8BZOj3DEUsoUS1MgpxNRWIOF6hVnJHS8OiZt5i5kEd7OsP4E8s+AW0tY6lmVefc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEFu21IJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aa53aFALy7alyJp2w9rrFDvqtCFX9ogpXSxzqwgZWifPAoiViNg+v1lRurL49tCo4/fbIgefLzKITRa7Mx0P0GQd4+wcRp6DxWlg3LQnZdTaXzHNGQcZq30fcy52nUrjbBNZE7OkRqMDdA16cpZduntZvHr9kfl1CCgioV+7Nq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W732j+IG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEFu21IJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E271F000FF;
-	Wed, 30 Sep 2026 19:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W732j+IG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8581F000FF;
+	Wed, 30 Sep 2026 19:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796131;
-	bh=dWd7iQuMvxSq4+3bVh5ISz4tMjjk/XJykiwbwpUQPzg=;
+	s=korg; t=1790796134;
+	bh=cB1CGj782BIFpVUifRbzapifHU3XVxh7mDlkwAy1XOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEFu21IJGiVWh4QUJ65QZHDkH1LS2GQBl30igAhet1pk1drNt4sJVvqEjqYwbxX1g
-	 oktve+CoF0nZ6sio6dBTMnEkNvR1WtQ7GLk8zpf8vvmhXQk5cMK3Bo4Z8SXsmd8i74
-	 C88TN0m6CYhj0atMcFHr0+04vbeYvrdBIATW1J44=
+	b=W732j+IGc7mzbU6xrWTaHwGcN3sk2DP9I/5s49W7clNyivi57NkP/SG+76fZwFRyr
+	 XfMfzhav3MLrwIFi29aZBQ/A5JAdG9w36nzTpOI0sNT0mEz1nHKXEUKH8Sk76CBC1h
+	 TNtVZJ/nUA4xfrvkaqISNsj9dyOEcqTUeKU8LS9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	syzbot+e55106f8389651870be0@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0803/1193] ksmbd: fix partial file information responses
-Date: Wed, 30 Sep 2026 17:24:47 +0200
-Message-ID: <20260930152452.084018331@linuxfoundation.org>
+Subject: [PATCH 6.6 0761/1193] wifi: mac80211: require a peer station for TDLS setup confirm
+Date: Wed, 30 Sep 2026 17:24:05 +0200
+Message-ID: <20260930152451.164192321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,110 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 6b8b79226bc3e0ac3fdd4e91836241af712e8cd1 ]
+[ Upstream commit 038e1d126304fd25d507fd4e671232df57bd1799 ]
 
-Variable-length file information handlers use the client output length
-while constructing the response. FILE_ALL_INFORMATION can consequently
-return -EINVAL before the common buffer check, while stream information
-can stop building the complete result too early.
+It's nonsense for the setup confirm to go to station that
+doesn't even exist, and it hits a warning when building
+the frame:
 
-Build the complete response within the available server response buffer
-and apply the client output length only when selecting the final status
-and transmitted length. Use the protocol-defined fixed sizes for all,
-alternate-name, and stream information to distinguish
-STATUS_INFO_LENGTH_MISMATCH from STATUS_BUFFER_OVERFLOW.
+  WARN_ON_ONCE(!sta || !ap_sta)
 
-This fixes smb2.getinfo.qfile_buffercheck.
+Only accept WLAN_TDLS_SETUP_CONFIRM when the station is
+already there as a TDLS station. Need to copy the call
+to ieee80211_tdls_prep_mgmt_packet() since the existing
+WLAN_TDLS_DISCOVERY_REQUEST already falls through to it.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Stable-dep-of: 9fa26285ae70 ("ksmbd: keep compound responses on query info errors")
+Assisted-by: LLM
+Fixes: 6f7eaa47e1de ("mac80211: add TDLS QoS param IE on setup-confirm")
+Reported-by: syzbot+e55106f8389651870be0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e55106f8389651870be0
+Link: https://patch.msgid.link/20260908122838.201719-15-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ net/mac80211/tdls.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index c85cbfc945cd9..4f33b73724c04 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4997,7 +4997,6 @@ static int get_file_all_info(struct ksmbd_work *work,
- 	char *filename;
- 	u64 time;
- 	int ret, buf_free_len, filename_len;
--	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
- 
- 	if (!(fp->daccess & FILE_READ_ATTRIBUTES_LE)) {
- 		ksmbd_debug(SMB, "no right to read the attributes : 0x%x\n",
-@@ -5010,10 +5009,9 @@ static int get_file_all_info(struct ksmbd_work *work,
- 		return PTR_ERR(filename);
- 
- 	filename_len = strlen(filename);
--	buf_free_len = smb2_calc_max_out_buf_len(work,
-+	buf_free_len = smb2_resp_buf_len(work,
- 			offsetof(struct smb2_query_info_rsp, Buffer) +
--			offsetof(struct smb2_file_all_info, FileName),
--			le32_to_cpu(req->OutputBufferLength));
-+			offsetof(struct smb2_file_all_info, FileName));
- 	if (buf_free_len < (filename_len + 1) * 2) {
- 		kfree(filename);
- 		return -EINVAL;
-@@ -5098,7 +5096,6 @@ static int get_file_stream_info(struct ksmbd_work *work,
- 	ssize_t xattr_list_len;
- 	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
- 	int buf_free_len;
--	struct smb2_query_info_req *req = ksmbd_req_buf_next(work);
- 	int ret;
- 
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
-@@ -5108,10 +5105,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
- 
- 	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
- 
--	buf_free_len =
--		smb2_calc_max_out_buf_len(work,
--				offsetof(struct smb2_query_info_rsp, Buffer),
--				le32_to_cpu(req->OutputBufferLength));
-+	buf_free_len = smb2_resp_buf_len(work,
-+			offsetof(struct smb2_query_info_rsp, Buffer));
- 	if (buf_free_len < 0)
- 		goto out;
- 
-@@ -5407,6 +5402,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 	struct ksmbd_file *fp;
- 	int fileinfoclass = 0;
- 	int rc = 0;
-+	unsigned int fixed_len;
- 	unsigned int id = KSMBD_NO_FID, pid = KSMBD_NO_FID;
- 
- 	if (test_share_config_flag(work->tcon->share_conf,
-@@ -5510,10 +5506,23 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 			    fileinfoclass);
- 		rc = -EOPNOTSUPP;
- 	}
--	if (!rc)
-+	if (!rc) {
-+		fixed_len = le32_to_cpu(rsp->OutputBufferLength);
-+		switch (fileinfoclass) {
-+		case FILE_ALL_INFORMATION:
-+			fixed_len = FILE_ALL_INFORMATION_SIZE;
-+			break;
-+		case FILE_ALTERNATE_NAME_INFORMATION:
-+			fixed_len = FILE_ALTERNATE_NAME_INFORMATION_SIZE;
-+			break;
-+		case FILE_STREAM_INFORMATION:
-+			fixed_len = FILE_STREAM_INFORMATION_SIZE;
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index c3622f779d120..38cbfced6ae34 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1316,6 +1316,24 @@ int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
+ 						   peer_capability, initiator,
+ 						   extra_ies, extra_ies_len);
+ 		break;
++	case WLAN_TDLS_SETUP_CONFIRM: {
++		struct sta_info *sta;
++
++		sta = sta_info_get(sdata, peer);
++		if (!sta || !sta->sta.tdls) {
++			ret = -ENOLINK;
 +			break;
 +		}
- 		rc = buffer_check_err(le32_to_cpu(req->OutputBufferLength),
--				      le32_to_cpu(rsp->OutputBufferLength),
-+				      fixed_len,
- 				      rsp, work->response_buf);
++
++		ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer,
++						      link_id, action_code,
++						      dialog_token,
++						      status_code,
++						      peer_capability,
++						      initiator, extra_ies,
++						      extra_ies_len, 0, NULL);
++		break;
 +	}
- 	ksmbd_fd_put(work, fp);
- 
- iov_pin_out:
+ 	case WLAN_TDLS_DISCOVERY_REQUEST:
+ 		/*
+ 		 * Protect the discovery so we can hear the TDLS discovery
+@@ -1324,7 +1342,6 @@ int ieee80211_tdls_mgmt(struct wiphy *wiphy, struct net_device *dev,
+ 		 */
+ 		drv_mgd_protect_tdls_discover(sdata->local, sdata);
+ 		fallthrough;
+-	case WLAN_TDLS_SETUP_CONFIRM:
+ 	case WLAN_PUB_ACTION_TDLS_DISCOVER_RES:
+ 		/* no special handling */
+ 		ret = ieee80211_tdls_prep_mgmt_packet(wiphy, dev, peer,
 -- 
 2.53.0
 
