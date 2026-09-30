@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6F34ED187;
-	Wed, 30 Sep 2026 15:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B6633DEDF;
+	Wed, 30 Sep 2026 15:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783014; cv=none; b=DHHbt7FIYDdKbe1CbPuZdhl18FwHcz1LeHF9r7RZ3WQ7ySMPUJY6Vg63gX4ROGcFNs/1HHt66wmPLPhlRgPOiMBLH/XhgiFrADzniND2wGCldCZ/ii7dp16sJRmOG+fZXgNI2UVGNKfKH11XJsRF3rASih8RmKUyvSkPIwawwSg=
+	t=1790783019; cv=none; b=auvsvl18eWGEtx3kd47Etxk3N9tIhdF2LDIWs/d8WvvdcotoxjHI4XwxbeaYFf087MmPdIRx6vIwFNN/UknBa7XAFv2F99lpixSYHChKUE3wwI5g9ne0+UushXdV0IKzE8ns8vwECRoEY9M9/ZSn1yPTU02yQGwe8N9YCED/b5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783014; c=relaxed/simple;
-	bh=g9BIZNDrI1Rc9t22vtZ10OcheTCLqP2jpDIMbm8VNig=;
+	s=arc-20240116; t=1790783019; c=relaxed/simple;
+	bh=9QY8k4dF1U611Ef1+Sqx8KvhNkNcSqNkpBmGzsZe9Uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=URTZlaWwCPd8kXbS5nCwCiVPtZ8cfdWoUeOkuxH8UAaaKnmc2UFB/7cJ9IXArsfuE0jnabfDWK/qMJTYPQaBKBayyTYEgxtfsq68CneTjaKCq6S7C3aRtKuKjczrMxAOBMHXYhDAnUsxv6vQI0c59MA0wUjz+m/g23FLk+ybWs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqI3JvL4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=meu+lZMaBVomZm05fMRAe8B2P6F/lp5qFrZRB7+A6usrCSaa7F06HhZuebZiJl1KyGj4otXB2ooE6KN7XFn9CRNUTgWhklQY7DhfIxKegA5H+i+u2a6UFYIWR/sUjf87aHOWofwZihC5MXH51e8fUfPHZVwQqRZCkk4q5FilzA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEmQ7nrS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqI3JvL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22AB1F00898;
-	Wed, 30 Sep 2026 15:43:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEmQ7nrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D2081F000FF;
+	Wed, 30 Sep 2026 15:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783010;
-	bh=o3vACZ74Oxk+cb6euP3am+sCSSm5/5p2FdkzU5lBPiE=;
+	s=korg; t=1790783013;
+	bh=gWbg18w9MDgJB8xNfsHSSsFDXnYuW6OpLb1Fa+wgU/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqI3JvL4sLuZEnthAWKJ0Ofg5TftYUC89FHRQZCN80r/w5qfRfsUW6bzPVxcxIhaR
-	 6zvs90laiZgoB0Gs8p2Mjk2G+T/D0E+3TajGh2PH0Dax8MapHrpTkh60Oop0uu2rN/
-	 4CKbhV8rM1kC5j/hrrbSbyLqo2GTZsKZTXbQsXRk=
+	b=DEmQ7nrSBqyDMhifJtIakYVw6WEBp7NKo4niJnl/TiQrT1SBPDhOBzoORUwbxIOLH
+	 zvz1s5YW8wlWCkQgzerZ1WyHrJU9oYqyh+RrLAqVVwsVb4THHFFzRbb5edkrkGLoBu
+	 ZFNehhB3e3kSS4JGKSAy17DCeSF0BVrP3WEybK2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Nam Cao <namcao@linutronix.de>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Alex Lazar <alazar@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 211/595] staging: fbtft: make dirty_lock IRQ-safe
-Date: Wed, 30 Sep 2026 17:21:44 +0200
-Message-ID: <20260930152352.272289443@linuxfoundation.org>
+Subject: [PATCH 5.10 247/595] net/mlx5e: Fix ETS zero BW reporting when one TC holds 100%
+Date: Wed, 30 Sep 2026 17:22:20 +0200
+Message-ID: <20260930152353.029039911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,98 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit f576944a59f31bcffff121117ebf452c5dd162b7 ]
+[ Upstream commit e7ee89740800a1cf253713e9249c3ee9203ebe91 ]
 
-fbtft_mkdirty() can be reached from the fbcon rendering path while
-processing printk() in hardirq context. Meanwhile, dirty_lock is also
-taken by fbtft_deferred_io() in workqueue context with local interrupts
-enabled.
+When ETS TCs with zero bandwidth are configured, the driver programs the
+firmware using an alternate representation. On get, it needs
+to recognize that representation so those TCs can be translated back and
+reported as 0% bandwidth.
 
-Lockdep reports a possible IRQ lock inversion involving dirty_lock and
-console_owner. A hardirq can interrupt a CPU holding dirty_lock and
-enter the console rendering path, which can attempt to acquire
-dirty_lock again.
+The existing detection relied on the programmed bandwidth because it was
+enough to identify this representation. However, when a single ETS TC
+owns 100% of the bandwidth, its firmware representation becomes the
+same as a strict-priority TC, causing zero-bandwidth ETS TCs to be
+reported with non-zero bandwidth values.
 
-The following lockdep report was observed on an RK3566 system with
-CONFIG_PROVE_LOCKING enabled:
+Use the cached TSA instead to distinguish the ETS and strict-priority
+cases.
 
-  WARNING: possible irq lock inversion dependency detected
-  swapper/2/0 just changed the state of lock:
-  (console_owner){-...}-{0:0}
-  but this lock took another, HARDIRQ-unsafe lock in the past:
-  (&par->dirty_lock){+.+.}-{2:2}
-
-  CPU0                    CPU1
-  ----                    ----
-  lock(&par->dirty_lock);
-                         local_irq_disable();
-                         lock(console_owner);
-                         lock(&par->dirty_lock);
-  <Interrupt>
-    lock(console_owner);
-
-  *** DEADLOCK ***
-
-Use spin_lock_irqsave() for fbtft_mkdirty() and spin_lock_irq() for
-fbtft_deferred_io(). They only access the dirty line range, so the
-IRQ-off regions remain short.
-
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Hui Su <sh_def@163.com>
-Link: https://lore.kernel.org/lkml/20260804173712.176017-1-sh_def@163.com/
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Link: https://patch.msgid.link/20260807150953.2811933-3-sh_def@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: be0f161ef141 ("net/mlx5e: DCBNL, Implement tc with ets type and zero bandwidth")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260902193224.3668743-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index 723ca72d1bd39..1bfad2a6852e2 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -303,6 +303,7 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
- {
- 	struct fbtft_par *par = info->par;
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
-+	unsigned long flags;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 6ea50a9ef1be5..09bae012d7701 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -133,7 +133,7 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+ 		if (err)
+ 			return err;
  
- 	/* special case, needed ? */
- 	if (y == -1) {
-@@ -311,12 +312,12 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
- 	}
+-		if (ets->tc_tx_bw[i] < MLX5E_MAX_BW_ALLOC &&
++		if (priv->dcbx.tc_tsa[i] == IEEE_8021QAZ_TSA_ETS &&
+ 		    tc_group[i] == (MLX5E_LOWEST_PRIO_GROUP + 1))
+ 			is_zero_bw_ets_tc = true;
  
- 	/* Mark display lines/area as dirty */
--	spin_lock(&par->dirty_lock);
-+	spin_lock_irqsave(&par->dirty_lock, flags);
- 	if (y < par->dirty_lines_start)
- 		par->dirty_lines_start = y;
- 	if (y + height - 1 > par->dirty_lines_end)
- 		par->dirty_lines_end = y + height - 1;
--	spin_unlock(&par->dirty_lock);
-+	spin_unlock_irqrestore(&par->dirty_lock, flags);
- 
- 	/* Schedule deferred_io to update display (no-op if already on queue)*/
- 	schedule_delayed_work(&info->deferred_work, fbdefio->delay);
-@@ -331,13 +332,13 @@ static void fbtft_deferred_io(struct fb_info *info, struct list_head *pagelist)
- 	unsigned int y_low = 0, y_high = 0;
- 	int count = 0;
- 
--	spin_lock(&par->dirty_lock);
-+	spin_lock_irq(&par->dirty_lock);
- 	dirty_lines_start = par->dirty_lines_start;
- 	dirty_lines_end = par->dirty_lines_end;
- 	/* set display line markers as clean */
- 	par->dirty_lines_start = par->info->var.yres - 1;
- 	par->dirty_lines_end = 0;
--	spin_unlock(&par->dirty_lock);
-+	spin_unlock_irq(&par->dirty_lock);
- 
- 	/* Mark display lines as dirty */
- 	list_for_each_entry(page, pagelist, lru) {
 -- 
 2.53.0
 
