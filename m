@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D9051FCC2;
-	Wed, 30 Sep 2026 18:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E56942C513;
+	Wed, 30 Sep 2026 18:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791242; cv=none; b=arH6p1HXDaXMrqjwmahH41HyIW8HOyppdmKw7LeuaUF4HmAao3nSN+FFNyGWPr+6t+7/0HmoUykRaymvRxMz09pajMiP3zo8mT4vMwd+fnmDQxJOh+HVwIOsSzqRNG41+N9QedEfCHDS44ofVpNVQ+2pNo3u4xjsxReq+KqzAYA=
+	t=1790791245; cv=none; b=oomyg3YtNaA+Kn9CAdWuS79VyVFDOLAWcGtbG1HpLKWsvGHRTRJ6Mx+WoRQK3xNbjMuEovc6h2F/K8s2P4v1aadtsi3zWItErZkWJjujf4ZsJTz9fWOAYZrlTMcSAVBtYiNewtTbfTvWqwYEcTsuzDtqHkQVUdyMZ2QUkDyrh/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791242; c=relaxed/simple;
-	bh=FJe5aluaPmILJfT44/tkfaPPBu+GQPj0dJux4jYFcKk=;
+	s=arc-20240116; t=1790791245; c=relaxed/simple;
+	bh=vmFlwYZBWp6dBjWAMI0x8CclTH+BvzhnfBligBDirlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mrr7bvqtRz2QbJecs0VAgpg2qB47l09Mv1aeCryS2tnkgBINPuhS9wlo7XwkJCxOxjjf03xzxltPZE/NS72LFaFp5bj48zauIob2rg0y8/OasVz+gT657cLPfkvyTpufcCT2W/pZZJaLveeSca+ZJ5AVBffB0ojcp1MjABaYBds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHBBMV8Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gzseZO7ctE23M8+RnUK0qJLRqJMhp+LsCg6KsWlIQdBPRmyBfBJThVNlakP5NlyyH4W8LAtMd/M87eq46OQ2nXE6/JWAtku8lVi3y09gdznJ5bw/MwowOvtaL9+YuW8g/inyyysnn/ryILolVjbtLt8AEjBSPRWtEONkEKeg7Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjJDsNKJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHBBMV8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5531F000FF;
-	Wed, 30 Sep 2026 18:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjJDsNKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EC51F000FF;
+	Wed, 30 Sep 2026 18:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791241;
-	bh=IMSWRC8ynk1rXqD/vGULsbCKbnZw9PC+hw5mc/JZLPk=;
+	s=korg; t=1790791244;
+	bh=/xFwF5IKyBy01FyfRsAf426B6MTwmKpvvG38R4DA/a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHBBMV8YCht2vF/akhCS4hGci/JhFFhEl3jSBFBUr56RUouRYEpJUxAJ7tWSykPGq
-	 dmpXAxRVBNGbEIK43wNa2T6oj/8t9mQmtMHm633U81b31vhPYfxZ1qduQDEh0bxC6e
-	 CEwqH69PU8Btry182AUpnaU2sWNpIam+nwY7LFEs=
+	b=BjJDsNKJI+1J0ineZff7DZadPChWXfMPgHz3jmgg9uQqnKbjY55Rg1B/7/8s3XKG2
+	 ojJSs+uvOny9reH2MqYSEYrsyDvfzZpex/Vi1+UOesiLqYa9nFURyZe93XaCUGmTi/
+	 RG2e7+K2VQYgl/y1JhVQ139/udl1Wxl1fnOBIj/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Linus Walleij <linusw@kernel.org>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/752] ARM: 9484/1: enable interrupts when unhandled user faults are triggered
-Date: Wed, 30 Sep 2026 17:21:44 +0200
-Message-ID: <20260930152403.328349258@linuxfoundation.org>
+Subject: [PATCH 5.15 235/752] EDAC/igen6: Fix interleave boundary condition
+Date: Wed, 30 Sep 2026 17:21:45 +0200
+Message-ID: <20260930152403.349796801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,59 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit e79ca91165d4fd18549c536abdb86101e889052f ]
+[ Upstream commit f4008169bd320eedb9ddf2b39eeb21370ddac278 ]
 
-PREEMPT_RT requires interrupts to be enabled when sending signals.
+The address translation logic splits the memory space into interleaved
+and non-interleaved regions using a boundary at 2 * s_size.
 
-When do_DataAbort()/do_PrefetchAbort() triggers unhandled user faults,
-that is `inf->fn()` return a non-zero value, and the interrupts are not
-enabled within the hook function, force_sig_fault() will be called
-with interrupts disabled.
+The current check uses '>' and incorrectly classifies the boundary
+address (2 * s_size) as part of the interleaved region. This leads to
+incorrect channel/sub-channel selection at the region boundary.
 
-This can be triggered by user programs executing the bkpt instruction,
-with kernel config CONFIG_PERF_EVENTS=n.
+Fix the classification by using '>=' so that the boundary address is
+handled in the non-interleaved region, matching the hardware layout.
 
-Enable interrupts in do_DataAbort()/do_PrefetchAbort() when unhandled
-user faults are triggered to fix the issue.
-
-Fixes: c6e61c06d606 ("ARM: 9463/1: Allow to enable RT")
-Link: https://lore.kernel.org/20260629123349.134224-1-xieyuanbin1@huawei.com
-Suggested-by: Russell King <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://patch.msgid.link/20260730024238.4096623-3-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/edac/igen6_edac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index c16d6a293b97c..622fa99e138f6 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -533,6 +533,9 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
- 		return;
+diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
+index 0ab8642c4e55a..8201e92714c68 100644
+--- a/drivers/edac/igen6_edac.c
++++ b/drivers/edac/igen6_edac.c
+@@ -493,7 +493,7 @@ static void decode_addr(u64 addr, u32 hash, u64 s_size, int l_map,
+ {
+ 	int intlv_bit = CHANNEL_HASH_LSB_MASK_BIT(hash) + 6;
  
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
-+
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
-@@ -571,6 +574,9 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
- 	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
+-	if (addr > 2 * s_size) {
++	if (addr >= 2 * s_size) {
+ 		*sub_addr = addr - s_size;
+ 		*idx = l_map;
  		return;
- 
-+	if (likely(user_mode(regs)))
-+		local_irq_enable();
-+
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, ifsr, addr);
 -- 
 2.53.0
 
