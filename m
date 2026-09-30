@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0173624BF;
-	Wed, 30 Sep 2026 17:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDAF51617E;
+	Wed, 30 Sep 2026 17:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787776; cv=none; b=h8o9zrSBdd9kHf/lae3/EmLIdRzPCkEo5upuHcNM6yvH2v8QW3J5lJke+IPaEbO0/gPfl6zVcopah8tZPl+VX31EnN8mY+s7oTV4U4giPw1oNwj85l6kDTgHqrAh7UtrmQc32BfNMl4mn7QRUmQUJ57//EYHxH18ONtAZv4ybvI=
+	t=1790787778; cv=none; b=WewOfWD8uCIedZmEm2W2MMRLZA7erM0F53t9pLb/fwGVWqogZT/1zb8A9yhCc9ZlDf2sGWyqnEDTj22NFCGPKTdJwFB/STenXkSaGSWW3bDu042S6KWDJt+6/YjhmmxPxrAAnC92dMg55zqlH7Uufsi1+Ow6jaBB09pju+U2m9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787776; c=relaxed/simple;
-	bh=D08bNgiEV/iulRHBzIZLKghocECLp8dMwhN0VsIaX7c=;
+	s=arc-20240116; t=1790787778; c=relaxed/simple;
+	bh=wy+LxIGbyoSZl1x/GvlPPS0pGesDl5O1G2ZSRXCZfEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nitEUwwyvDcfXrQjXhPNUCDIHu2yYaT6ChpHqsdTJlBc6ABqJ35ri52I+f40Hoq0V1CfgO91s69fT2VkzlILou98xj1u80u38t5hnv9RCVCP1FTddG2j95fLZdVrqx4MSvAcmQWr6vIg9j53tGm5r3K2S7IGPnZX3wK9tqMjWm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4LKkfPd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CxXQ0wEwC9/5E/M3C8E5ZY9PBTjBRP79/QgHQ9Fja31sRaL4HJOZ2ylu3Bzw/yxcAOtmuC2mE0bpSEkLDYnFMTU5hQoe0y61V4jLPQ05jvNRm2KMTshX6BjI4yEXNXfdR0SLq9lBQmZsdWjX4CjsnTHjfxxk6CHJkQLpdnINxVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j4dEAn8Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4LKkfPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F511F0089B;
-	Wed, 30 Sep 2026 17:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4dEAn8Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA98C1F000FF;
+	Wed, 30 Sep 2026 17:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787774;
-	bh=A6FhqbnWYpzpHHeJuqkNYon7BYgp76NfBGmmW6TynaE=;
+	s=korg; t=1790787777;
+	bh=zzhKCSf4iT0zE7j6kgAftpfR+x5POBzm+6D60aVLlO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g4LKkfPdcgqZ1JKiokIDMJUVI/HwhBPox6gc/xo2vk2S1bbbsYvqU8CLsBbXGlhh6
-	 EatsYZ0MZvjFZwcMun0eVMhHrife6wqkPEKdZBNLqCjAXzJCe6ob3vdxT2oDdx2kQx
-	 m9+htrLjadffV1a6d8nch5ackkTVjQKujPB7LoaI=
+	b=j4dEAn8QuA1lIciKX28KRw+FLtoh4CMjU22yfIFgohcGDiRQ0n7fyCrjiSXkBrSE1
+	 Ur72VUAEj+qjf5nFOCGNParony0Ofb9OCgQyjD9zL28b+i0ebxqluzJRJKbpaeuEra
+	 uLgB7yiWae0syKsNUUd5SZwIeEOCcZVhtlUTylEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Robert Beckett <bob.beckett@collabora.com>,
-	=?UTF-8?q?Szymon=20Aceda=C5=84ski?= <accek@invisiblethingslab.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.2 304/457] drm/xe: Limit sg segment size to PAGE_SIZE on Xen PV
-Date: Wed, 30 Sep 2026 17:26:49 +0200
-Message-ID: <20260930152352.591133973@linuxfoundation.org>
+Subject: [PATCH 7.2 305/457] drm/xe: Keep walking on SVM eviction failure
+Date: Wed, 30 Sep 2026 17:26:50 +0200
+Message-ID: <20260930152352.612238201@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -48,77 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Szymon Acedański <accek@invisiblethingslab.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 141008dec73521ccf64878517460cec8b3297251 upstream.
+commit be1df8badae513e01d9575398438716cfae18655 upstream.
 
-Fix display corruption on Xen PV dom0, where DMA buffers are not
-guaranteed machine-contiguous, in which case bounce buffering kicks
-in, breaking xe's memory coherency assumptions.
+The desired behavior for SVM eviction failures, which can occur due to
+various uncontrollable races, is for TTM to continue walking the LRU
+list and look for another eviction candidate. This is expressed by
+returning -ENOSPC from the ->move() callback.
 
-Apply the same workaround i915 carries in i915_sg_segment_size() since
-commit 78a07fe777c4 ("drm/i915: stop abusing swiotlb_max_segment").
+Adjust the SVM eviction failure path because of races in ->move() to
+return -ENOSPC so that TTM continues searching for another buffer to
+evict.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8382
-Link: https://lore.kernel.org/xen-devel/aYtznP_tT6xNPwf-@mail-itl/
-Link: https://lore.kernel.org/all/20221020110308.1582518-1-hch@lst.de/ # i915 counterpart
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Robert Beckett <bob.beckett@collabora.com>
-Cc: stable@vger.kernel.org # v6.8+
-Signed-off-by: Szymon Acedański <accek@invisiblethingslab.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patch.msgid.link/20260916173030.3223833-1-accek@invisiblethingslab.com
-(cherry picked from commit 77f704158f099b952681f207478a22d5b8218edb)
+Fixes: 3ca608dc7561 ("drm/xe: Basic SVM BO eviction")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patch.msgid.link/20260917203158.292823-1-matthew.brost@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 36a86c23588b8f57c9d20feb4cf5a2ab27e3baba)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_bo.h |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/gpu/drm/xe/xe_bo.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_bo.h
-+++ b/drivers/gpu/drm/xe/xe_bo.h
-@@ -9,6 +9,8 @@
- #include <drm/drm_prime.h>
- #include <drm/ttm/ttm_tt.h>
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -1025,6 +1025,13 @@ static int xe_bo_move(struct ttm_buffer_
+ 		} else {
+ 			drm_dbg(&xe->drm, "Evict system allocator BO failed=%pe\n",
+ 				ERR_PTR(ret));
++			/*
++			 * The semantic we want upon SVM eviction failure
++			 * because of racing access is keep walking for
++			 * eviction, which is -ENOSPC.
++			 */
++			if (ret == -EBUSY)
++				ret = -ENOSPC;
+ 		}
  
-+#include <xen/xen.h>
-+
- #include "xe_bo_types.h"
- #include "xe_ggtt.h"
- #include "xe_macros.h"
-@@ -574,6 +576,23 @@ static inline unsigned int xe_sg_segment
- 	struct scatterlist __maybe_unused sg;
- 	size_t max = BIT_ULL(sizeof(sg.length) * 8) - 1;
- 
-+	/*
-+	 * For Xen PV guests pages aren't contiguous in DMA (machine) address
-+	 * space.  The DMA API takes care of that both in dma_alloc_* (by
-+	 * calling into the hypervisor to make the pages contiguous) and in
-+	 * dma_map_* (by bounce buffering).  But xe (like i915, see commit
-+	 * 78a07fe777c4) ignores the coherency aspects of the DMA API and thus
-+	 * can't cope with bounce buffering actually happening, so add a hack
-+	 * here to force small allocations and mappings when running in PV
-+	 * mode on Xen.
-+	 *
-+	 * Note this will still break if bounce buffering is required for other
-+	 * reasons, like confidential computing hypervisors or PCIe root ports
-+	 * with addressing limitations.
-+	 */
-+	if (xen_pv_domain())
-+		return PAGE_SIZE;
-+
- 	max = min_t(size_t, max, dma_max_mapping_size(dev));
- 
- 	/*
+ 		goto out;
 
 
