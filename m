@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1905374A16;
-	Wed, 30 Sep 2026 16:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA97150EC06;
+	Wed, 30 Sep 2026 16:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786536; cv=none; b=mJJeMQoHpGgHOANytcUDViP9W0N9gwwHnAekluogG+VNjVT1J8ggHr+gmLPypKrg+akzH4efYu/aNgBdGRht/D1mskNnztWgpULGBxzu+wuKJg1INdhUR1eW1L3PyVseOoXIydGs+SfJ/Nq2XYCSXP0N5iGRPgccXDmD5VXxtVU=
+	t=1790786539; cv=none; b=opQkl5LSVSBJrj3l3xdhe3PSbrQeyS3Td/CjwW5Th4Qu821dgJM8mwF23A1lW5Pg0PqCxQQl33f7lzqTiO/G26O6UDLsmY9iT2GDwzel/hFr9XXgDLIfjqwmulZ2CdXjJLKLl0oQ5rEfmxCrWkVHiI2o73ZGBbPEht9Yw/n5nog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786536; c=relaxed/simple;
-	bh=ukWlX6zqiDgQBf3NCAidxxTiQ6ghLvUKMJMPrwETtAM=;
+	s=arc-20240116; t=1790786539; c=relaxed/simple;
+	bh=4htQTjGXlDEflnceGt3x+gSDb/WPP2t8xjFERPaYuWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFLuYoYNQRNT9H3tJb7sa5Kp/TZoKA2vlZUESuqmgKsHX69BWsq/RCnD/S0zEwyMHPNZgT/X6CuUZjhMahSLGKsEytBW4Y16FLQXmcJC239Y1qzHkHVIkRZNCcWqE0Zng8E2gnpHI0+S8TC4wHICFzEZBDgF+wZARJ3X7bAQE7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DF9GXtuy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KMHCejdV+9Nd/l+Cu7FeMzSr3URbQsj5XA9X53MIUzR8H7K1abUGoZMttBKp+NMW7nURaze++LTm21kuOxQO4mDY0I+gQ1MU5Fy/xjuSvegmoZkB+nCVHFIDaiW/PgD43C/euH+zcozFxmPLKr8Xp7ABGpTu3rDYeV/r1ggtFas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOJaxzYB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DF9GXtuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2384B1F000FF;
-	Wed, 30 Sep 2026 16:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOJaxzYB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC8E1F000FF;
+	Wed, 30 Sep 2026 16:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786534;
-	bh=by7PykH+v67y8PmycJpbesPGfiKG1U56Qr/ICGVSNos=;
+	s=korg; t=1790786537;
+	bh=CQtAC7JOjB1rWifgaB/Z79rdb3y7rfym9M2byuTdrKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DF9GXtuyUd25Omz0oArIN61dk8Bi+EiR3DbDrmO8gbKE+d/aMnygVhpyZyi+aN8kz
-	 lpSy1EFEBXxy8IwfqgnSNgwowd0xEoOHt6F707rvLaoMT8mwe9WQqVJ1QI9midAfO0
-	 81RMJ9kC5yR3hQu/UP8Ydl8jyq9Mjiws/kYbOleM=
+	b=KOJaxzYByCIDXEM8v5as/4duPD5HVoJDDulJETMEV+pVoPTWaWIEdxApOAvQk/YRN
+	 GgqCj8p7PiFRgBZVn0Os2SVbSKnkyc1BY/zzxgZvmqJLMl3zRSHTpWqXB6o2RawrA2
+	 63dDnY1RxxMaDojHqZDhxombhwPlF0/6xSXGbbEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	David Heidelberg <david@ixit.cz>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ivan Delalande <colona@arista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 879/982] selftests: nci: Fix uninitialized family ID on missing attribute
-Date: Wed, 30 Sep 2026 17:26:55 +0200
-Message-ID: <20260930152435.630332746@linuxfoundation.org>
+Subject: [PATCH 6.1 897/982] tg3: use random MAC address when tg3_get_device_address fails
+Date: Wed, 30 Sep 2026 17:27:13 +0200
+Message-ID: <20260930152436.011570110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,43 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Ivan Delalande <colona@arista.com>
 
-[ Upstream commit eda518d2cdb6074a0bcdfa06af291616bcb5c421 ]
+[ Upstream commit 4eb3f195ef08c5acaed87958297e41cc49588dde ]
 
-get_family_id() walks the generic netlink CTRL_CMD_GETFAMILY reply
-looking for the CTRL_ATTR_FAMILY_ID attribute and returns the parsed
-value in the local variable "id". If the reply does not carry that
-attribute, the parsing loop never assigns "id" and the function returns
-an indeterminate stack value, which the caller stores in self->fid and
-uses for subsequent netlink requests.
+Some of the tg3 NICs we use (BCM57762) reset the SRAM MAC address to the
+placeholder address on link flaps, tg3_chip_reset, etc. We've typically
+fixed it from userspace, but since e4c00ba7274b ("tg3: replace
+placeholder MAC address with device property") was merged, tg3 just
+fails probe as we don't have a way to get it through the generic
+device_get_mac_address infrastructure as fallback on our systems.
 
-Initialize "id" to 0 so a missing attribute yields a deterministic
-(invalid) family ID instead of a garbage value.
+Make the driver assign a random address in this condition instead of
+being fatal for probe. Set deferred_probe_reason through dev_warn_probe
+if the address isn't yet available from the provider.
 
-Fixes: f595cf1242f3 ("selftests: Add nci suite")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260901070618.3299012-1-nagachaithanya9911@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: e4c00ba7274b ("tg3: replace placeholder MAC address with device property")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/netdev/20260909191751.651aa5c4@kernel.org/
+Signed-off-by: Ivan Delalande <colona@arista.com>
+Link: https://patch.msgid.link/20260918224715.GA654128@visor
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/nci/nci_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
-index 6f571e3c21c09..87262f8d0c101 100644
---- a/tools/testing/selftests/nci/nci_dev.c
-+++ b/tools/testing/selftests/nci/nci_dev.c
-@@ -182,7 +182,7 @@ static int get_family_id(int sd, __u32 pid, __u32 *event_group)
- 	} ans;
- 	struct nlattr *na;
- 	int resp_len;
--	__u16 id;
-+	__u16 id = 0;
- 	int len;
- 	int rc;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 65bab84f4d972..045d33ca7c675 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -17834,11 +17834,14 @@ static int tg3_init_one(struct pci_dev *pdev,
  
+ 	err = tg3_get_device_address(tp, addr);
+ 	if (err) {
+-		dev_err(&pdev->dev,
+-			"Could not obtain valid ethernet address, aborting\n");
+-		goto err_out_apeunmap;
++		dev_warn_probe(&pdev->dev, err,
++			       "Could not obtain a valid ethernet address\n");
++		if (err == -EPROBE_DEFER)
++			goto err_out_apeunmap;
++		eth_hw_addr_random(dev);
++	} else {
++		eth_hw_addr_set(dev, addr);
+ 	}
+-	eth_hw_addr_set(dev, addr);
+ 
+ 	intmbx = MAILBOX_INTERRUPT_0 + TG3_64BIT_REG_LOW;
+ 	rcvmbx = MAILBOX_RCVRET_CON_IDX_0 + TG3_64BIT_REG_LOW;
 -- 
 2.53.0
 
