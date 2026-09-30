@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F026B511E61;
-	Wed, 30 Sep 2026 16:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF2B3DDAFD;
+	Wed, 30 Sep 2026 16:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787487; cv=none; b=sDTSPY5C+6RqTBMrBA4/uZBSJ/XQGr1ta2/kzBpktzT/i08dimiGtYQ/2ivCg5uPRiaCikkCAC/t6zMLYnoSBC1Io0CzuUtUjCA2W0r7497l+yajwp7L1/8eoErXZ3RNfW7blqmxxAHr05/uOilL16n5ZCBo6W/twHRxU7wtk/A=
+	t=1790787489; cv=none; b=lK+QSzZ8VOC6QgA+VJlanegTEXrv/oKjVktJgHgPdQ52W599MkauRyNTDpCAE/olVcly3dnjsjfB2o+50BgJv35nFq+CMen1uHpyXL3gEgyOgrOdbhYM/SFmtxQ4d7NkkLkk8Qg9HuHNLaZmqbbiFAZ5O8bHOcODhZ+qvrOAHFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787487; c=relaxed/simple;
-	bh=o1jSfRHOFfYF5qzFGxmEFL3Z1FTDhpw9mFNzpeqSlBI=;
+	s=arc-20240116; t=1790787489; c=relaxed/simple;
+	bh=hBmwMRPYTKQDn9BLyn8xZESUN9Bcx+2w/oa9YU2IHOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I36oeEvvz1ecZHIYtBIkUUsNIDpeN4B1biLibZietbPWXGDoHoVtlivT25RJ8rFX3FnZZo1J7C+JtGKkyf4sxWa+qCYJbkkW7HhfLPFFX+FE3DcCrvBIIH1Ce0JV1+qJjCaLmjZlkgd/PrbZ/Hecml2mGQrxTFz5UkIPCcxmpEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iAiIlMaE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8h0mWWj6mhwy+mYz44pWe7ITDC+1LAhg0XPT0lpMzYKcI/7DFdmdMsGs4rulsKGD8N1x9cEWftj8btHq3HoGGudtAwjMhKSYHb52wF3owEkoKQaUGsGxOb74xNMG211sU5EYkwICOdmyDCVz771S5n6fXel5bVl7JHkZVWJCx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daQo7tQJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iAiIlMaE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C031F000FF;
-	Wed, 30 Sep 2026 16:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daQo7tQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A451F000FF;
+	Wed, 30 Sep 2026 16:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787485;
-	bh=pXD00qc0pGmEWJ4PvkzZQxJzqZrXed+b4Y671Ov1A5M=;
+	s=korg; t=1790787488;
+	bh=ZWymGRFJVnrrM07qnxdQKIpQkN+Ch+HeAJeQhEdLNoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iAiIlMaEmKa1M5NZMUIDTaUZKh/Kv7RvVYE7ioH1IAhNuhDHGMvQr6QmZSPt+2xNQ
-	 hN4zMiGF0ykCgpVEfTGdGLRiz2eKuuvifLEb75ASW4EZjrAWbyGPsYwCXIKMOEusot
-	 uO2+DZ8XG9PR8/EDcwKvLAjRM//fa6F9xNSHkD5c=
+	b=daQo7tQJnFDvqO4PRboiv4V/el2fNyRcZnFqIHfoVXBav85bTRxrM+61kMF1cqLqk
+	 ky5g5D/bSGTFcHemdEmWPLKTsbL68cVAlLbl7r+zX48fQxr6spx4Kvm2yR8/3T2i6h
+	 fq/R9fEaCca77fTN9Wq6ylas7vp/f5ymfTz36ywg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Zahka <daniel.zahka@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Aohan Mei <henrymei@tencent.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 245/457] tcp: prevent collapsing skbs across boundary in rtx queue
-Date: Wed, 30 Sep 2026 17:25:50 +0200
-Message-ID: <20260930152351.334409281@linuxfoundation.org>
+Subject: [PATCH 7.2 246/457] sctp: discard the rest of the packet on a stale-cookie error
+Date: Wed, 30 Sep 2026 17:25:51 +0200
+Message-ID: <20260930152351.355250294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,77 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Aohan Mei <henrymei@tencent.com>
 
-commit fc6d80eb504458d6416b75a94188b268c95c6533 upstream.
+commit 4498467a8af06cfa3d71cb04bd7c4170dec8f449 upstream.
 
-tcp_write_collapse_fence() sets TCP_SKB_CB(skb)->eor = 1 on
-tcp_write_queue_tail(sk) to prevent skbs queued after a switch to
-device encryption from being collapsed into earlier skbs.
+When an association is in COOKIE-ECHOED state and the peer sends a
+bundled [ERROR(Stale Cookie)][DATA] packet from one of its non-primary
+addresses, processing the ERROR chunk takes the non-fatal stale-cookie
+retry path sctp_sf_do_5_2_6_stale(), which queues
+SCTP_CMD_DEL_NON_PRIMARY while keeping the association alive.
+sctp_cmd_del_non_primary() removes every non-primary transport -
+including the very transport this packet arrived on, which is still
+referenced by the receive lookup and shared by all chunks of the
+packet via chunk->transport.
 
-The fence is a no-op if all earlier data has already been transmitted
-when the switch happens: sk->sk_write_queue is empty. The not yet
-acknowledged earlier skbs wait in sk->tcp_rtx_queue with eor 0.
+sctp_assoc_rm_peer() does redirect asoc->peer.last_data_from away from
+the removed transport, but right afterwards the bundled DATA chunk
+makes sctp_assoc_bh_rcv() re-register
+asoc->peer.last_data_from = chunk->transport unconditionally, undoing
+the redirection with the just-removed transport.
 
-On a subsequent retransmit or SACK shift, tcp_retrans_try_collapse() or
-tcp_shift_skb_data() can then merge an skb queued after the switch into
-one queued before it.
+Once the packet is done, the receive reference is dropped and the
+transport is RCU-freed, while the surviving association keeps the
+dangling last_data_from.  A later FWD-TSN (or the delayed SACK timer)
+makes sctp_gen_sack() dereference it (->param_flags and friends), and
+sctp_make_sack()/sctp_outq_select_transport() may write to the freed
+object and link it into the live transport list.  This is a
+use-after-free triggerable by any malicious SCTP peer (or a local
+unprivileged user acting as one) with no capabilities required:
 
-Both users of the fence are affected:
+  BUG: KASAN: slab-use-after-free in sctp_do_sm+0x498a/0x5660
+  Read of size 4 at addr ffff88800e1e356c by task poc/115
+  Call Trace: sctp_do_sm <- sctp_assoc_bh_rcv <- sctp_inq_push <-
+              sctp_rcv <- ip_protocol_deliver_rcu <- ip_rcv
+  Allocated: sctp_transport_new <- sctp_assoc_add_peer <-
+             sctp_process_init (INIT-ACK processing)
+  Freed: kfree <- sctp_transport_destroy_rcu <- rcu_core
+         (call_rcu queued by sctp_transport_put at end of sctp_rcv)
+  The buggy address is located 364 bytes inside of freed 1024-byte
+  region [ffff88800e1e3400, ffff88800e1e3800), cache kmalloc-1k
 
-- psp: devices only encrypt skbs with skb->decrypted set. The merged skb
-  keeps decrypted = 0 from the earlier skb, so merged data sent after
-  psp_sock_assoc_set_tx() is retransmitted in cleartext.
+Note that commit 03a9d10ecf71 ("sctp: drop a chunk if its transport
+was removed") only covers the window between the receive lookup and
+the chunk processing (e.g. an ASCONF DEL-IP racing the socket backlog);
+here the transport is removed *while* the packet is being processed,
+by an earlier chunk of the same packet, so the drop in sctp_inq_push()
+does not reach this path.  Verified with the bundled [ERROR(Stale
+Cookie)][DATA] + FWD-TSN reproducer: the KASAN report above still
+fires with that commit applied, and is gone with this patch on top.
 
-- tls device offload: the merged skb straddles the start marker set in
-  tls_set_device_offload(). The software fallback (fill_sg_in() returns
-  -EINVAL) and the mlx5, nfp and funeth drivers cannot handle such an
-  skb and drop it. Every retransmit rebuilds the same skb, so the
-  connection stalls.
+Fix it by discarding the rest of the packet on this path, as suggested
+by Xin.  After the stale-cookie ERROR has sent the association back to
+COOKIE-WAIT and removed the non-primary transports, the remaining
+chunks of the packet can only run against the restarted handshake
+while referencing the removed arrival transport through
+chunk->transport: besides the last_data_from registration above,
+sctp_cmd_setup_t2() and the sctp_make_*() reply builders would also
+copy that pointer into association-lifetime state that
+sctp_assoc_rm_peer() has already sanitized.  Let the peer retransmit
+them, in line with what sctp_inq_push() does for chunks whose
+transport was removed before processing.
 
-Fix this in two places, for defense in depth:
-
-1. Fall back to tcp_rtx_queue_tail(sk) in tcp_write_collapse_fence()
-   when tcp_write_queue_tail(sk) is NULL.
-
-2. Check !skb_cmp_decrypted(to, from) in tcp_skb_can_collapse(), as
-   tcp_skb_can_collapse_rx() does on receive. skb_shift(), which both
-   collapse paths call, already has a DEBUG_NET_WARN_ON_ONCE() for this
-   condition.
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/20260924154427.953800-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Aohan Mei <henrymei@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260921093707.1432184-1-ljp1205831794@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/sm_statefuns.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1232,9 +1232,9 @@ static inline bool tcp_skb_can_collapse_
- static inline bool tcp_skb_can_collapse(const struct sk_buff *to,
- 					const struct sk_buff *from)
- {
--	/* skb_cmp_decrypted() not needed, use tcp_write_collapse_fence() */
- 	return likely(tcp_skb_can_collapse_to(to) &&
- 		      mptcp_skb_can_collapse(to, from) &&
-+		      !skb_cmp_decrypted(to, from) &&
- 		      skb_pure_zcopy_same(to, from) &&
- 		      skb_frags_readable(to) == skb_frags_readable(from));
- }
-@@ -2327,7 +2327,7 @@ static inline void tcp_rtx_queue_unlink_
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -2654,6 +2654,8 @@ static enum sctp_disposition sctp_sf_do_
  
- static inline void tcp_write_collapse_fence(struct sock *sk)
- {
--	struct sk_buff *skb = tcp_write_queue_tail(sk);
-+	struct sk_buff *skb = tcp_write_queue_tail(sk) ?: tcp_rtx_queue_tail(sk);
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
  
- 	if (skb)
- 		TCP_SKB_CB(skb)->eor = 1;
++	sctp_add_cmd_sf(commands, SCTP_CMD_DISCARD_PACKET, SCTP_NULL());
++
+ 	return SCTP_DISPOSITION_CONSUME;
+ 
+ nomem:
 
 
