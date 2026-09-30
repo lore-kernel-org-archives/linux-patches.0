@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D2E554090;
-	Wed, 30 Sep 2026 17:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2324E51C348;
+	Wed, 30 Sep 2026 17:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790157; cv=none; b=M6OGLz3a3X+Af6GpHHs8m5jgvthmMZsb7mfcBiVL8mVCxmnq0FBIwgosVj4FOsLZBCQwYJJ88NkLXf9dCi5RrRU9CVlJT++Ocbvj5IHRKBfMv49yd21pZXuGtiYPqEvesv6mdjkeb8HKhJXQNUCyl50DRGMefYyQwdsAlA9VJpQ=
+	t=1790790160; cv=none; b=N+c4mm+IXLmRAA0yPJSW97uRep++sVfbffvRtHEIPWRCGyH1LVpkYNPB2NrzoNyfsfXxbE4Wsj5CbbY+nRjNA1jxLSFsgi3ClFJ5bT9RStjidyc+NyDCH59yNPnF8pgUWozeluumNhM9Mg/CaM1tqfcKY+3U4VnjG3LVgdcQJ34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790157; c=relaxed/simple;
-	bh=K1w5uCSUgoDlgrnl80Ls9S14UNiYedR9OwW5GQ0Dl8g=;
+	s=arc-20240116; t=1790790160; c=relaxed/simple;
+	bh=ueA0pdNbf3YNjR5jt2kvDCAntk5QXv3bKxUErtO/xpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2IfEGQ4c0f5WoRtm0bIEWU+KnGxHbHr4H83CoLckdVQkHZWJRD+nuX5HyWtC0Rku2Yj08f3yKzjxlWHILQy3i7rR2j0vV3RYq2JJp6pHYjhdvJ999B2rVCL3P2qcr4K/Au9FCOMzI5ywERVCny6nGSgiYV9Pt9MiZatuXzSAV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKvznF1C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RN7lRt7SyxmLgSaXgeQsUBXElz2q+3BRoBBTl5/2Em/fa8uCtgh28m9GNtA1RP/XQw1CQ7XcMILeh6OoexZVunNzPwGur9Xkw1pFNVM6n2q6t19vvFr+pI7ruw1xNGx1Si9UkRmCyNG1joLnDV0fiHTa787tzu9tUqu0wugkTKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbvRzZn2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKvznF1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB991F00898;
-	Wed, 30 Sep 2026 17:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbvRzZn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF161F000FF;
+	Wed, 30 Sep 2026 17:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790156;
-	bh=GKRXl3Vs3+IvT2DUcJ7v2HqnaQwEm/jRnvlsyMd/kBA=;
+	s=korg; t=1790790159;
+	bh=zffBLY31FnFNq9p9NDPmY4vS1LMMimISCocsPI9gn7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EKvznF1CJH39TlKVslwVK183mO1o7D5g+xptSht8GN9T/ZrUwVCVoJaQGaVTO7Mxh
-	 OOeMMzyy9EouW8aqquy1Jg2eZKlyz+TGYBgEZTEBePkBxcVY/673YPT78M/PL1+o/D
-	 od/B+JjCbLYcSjhn2J9Dn+Iw+aegojdEv9BOFFyQ=
+	b=TbvRzZn2Xt3wEbmfY3LXzhf3dYcojdcZri9yVC3DrzkdfBtxieJlcd1IetNpHJO6O
+	 72y6KUK3KLbGMKKsuGzuyta+29dO7/8fPCvEzw5YJmMfRkj868zztG/k4tAcK9Mmwx
+	 ysy2LbnnxyMy8tVlZfb68flVk3Pe8K+o5z8xEPrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	XingWang Xiang <v3rdant.xiang@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 728/877] EDAC/altera: Use parent device for devres in altr_portb_setup()
-Date: Wed, 30 Sep 2026 17:27:19 +0200
-Message-ID: <20260930152430.397158663@linuxfoundation.org>
+Subject: [PATCH 6.12 729/877] genetlink: pin family module during policy dump
+Date: Wed, 30 Sep 2026 17:27:20 +0200
+Message-ID: <20260930152430.419238785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,75 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinh Nguyen <dinguyen@kernel.org>
+From: XingWang Xiang <v3rdant.xiang@gmail.com>
 
-[ Upstream commit 9868f5c077dfe0b606331f2e782484f91a5789a5 ]
+[ Upstream commit 6a1094c34d176827b2b173e163dcc964a13af93f ]
 
-Anchor the devres group and the devm-managed IRQ requests in altr_portb_setup()
-to the actual parent device (device->edac->dev) instead of the embedded struct
-device inside the copied per-port altr_edac_device_dev.
+The generic netlink controller's policy dump keeps pointers to the target
+family's operation and policy tables in its callback state.  A dump may be
+split across multiple skbs and remain pending after the initial request.
 
-This keeps devres_open_group(), devm_request_irq(), devres_remove_group() and
-devres_release_group() all referring to the same long-lived device so the
-group and the resources allocated inside it are torn down together.
+Netlink pins the module which owns the dump callback, but in this case
+that is the controller's owner rather than the target family's owner.  The
+target family can consequently be unregistered and its module unloaded
+while a policy dump is pending.  Advancing the dump then dereferences
+policy memory from the unloaded module.
 
-Fixes: 911049845d70 ("EDAC, altera: Add Arria10 SD-MMC EDAC support")
-Closes: https://sashiko.dev/#/patchset/20260503212558.2811480-1-dbgh9129%40gmail.com
-Assisted-by: LLM
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Take a reference to the target family's module when the dump starts.
+Drop it from the error and done paths.  This matches the lifetime for which
+the dump context retains the family and policy pointers.
+
+Fixes: d07dcf9aadd6 ("netlink: add infrastructure to expose policies to userspace")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260617164303.585555-1-dinguyen@kernel.org
+Signed-off-by: XingWang Xiang <v3rdant.xiang@gmail.com>
+Link: https://patch.msgid.link/20260902084317.4092542-1-v3rdant.xiang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjusted context to retain kmalloc(sizeof(*ctx->op_iter), GFP_KERNEL) instead of kmalloc_obj(*ctx->op_iter). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/altera_edac.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/netlink/genetlink.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1534,7 +1534,7 @@ static int altr_portb_setup(struct altr_
- 	altdev = dci->pvt_info;
- 	*altdev = *device;
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1514,6 +1514,7 @@ struct ctrl_dump_policy_ctx {
+ 	struct netlink_policy_dump_state *state;
+ 	const struct genl_family *rt;
+ 	struct genl_op_iter *op_iter;
++	struct module *owner;
+ 	u32 op;
+ 	u16 fam_id;
+ 	u8 dump_map:1,
+@@ -1556,6 +1557,9 @@ static int ctrl_dumppolicy_start(struct
+ 		return -ENOENT;
  
--	if (!devres_open_group(&altdev->ddev, altr_portb_setup, GFP_KERNEL))
-+	if (!devres_open_group(device->edac->dev, altr_portb_setup, GFP_KERNEL))
- 		return -ENOMEM;
+ 	ctx->rt = rt;
++	ctx->owner = rt->module;
++	if (!try_module_get(ctx->owner))
++		return -ENOENT;
  
- 	/* Update PortB specific values */
-@@ -1562,7 +1562,7 @@ static int altr_portb_setup(struct altr_
- 		rc = -ENODEV;
- 		goto err_release_group_1;
- 	}
--	rc = devm_request_irq(&altdev->ddev, altdev->sb_irq,
-+	rc = devm_request_irq(device->edac->dev, altdev->sb_irq,
- 			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
-@@ -1584,7 +1584,7 @@ static int altr_portb_setup(struct altr_
- 			rc = -ENODEV;
- 			goto err_release_group_1;
+ 	if (tb[CTRL_ATTR_OP]) {
+ 		struct genl_split_ops doit, dump;
+@@ -1566,7 +1570,7 @@ static int ctrl_dumppolicy_start(struct
+ 		err = genl_get_cmd_both(ctx->op, rt, &doit, &dump);
+ 		if (err) {
+ 			NL_SET_BAD_ATTR(cb->extack, tb[CTRL_ATTR_OP]);
+-			return err;
++			goto err_put_owner;
  		}
--		rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
-+		rc = devm_request_irq(device->edac->dev, altdev->db_irq,
- 				      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 				      ecc_name, altdev);
- 		if (rc) {
-@@ -1604,13 +1604,13 @@ static int altr_portb_setup(struct altr_
  
- 	list_add(&altdev->next, &altdev->edac->a10_ecc_devices);
+ 		if (doit.policy) {
+@@ -1584,16 +1588,20 @@ static int ctrl_dumppolicy_start(struct
+ 				goto err_free_state;
+ 		}
  
--	devres_remove_group(&altdev->ddev, altr_portb_setup);
-+	devres_remove_group(device->edac->dev, altr_portb_setup);
+-		if (!ctx->state)
+-			return -ENODATA;
++		if (!ctx->state) {
++			err = -ENODATA;
++			goto err_put_owner;
++		}
  
+ 		ctx->dump_map = 1;
+ 		return 0;
+ 	}
+ 
+ 	ctx->op_iter = kmalloc(sizeof(*ctx->op_iter), GFP_KERNEL);
+-	if (!ctx->op_iter)
+-		return -ENOMEM;
++	if (!ctx->op_iter) {
++		err = -ENOMEM;
++		goto err_put_owner;
++	}
+ 
+ 	genl_op_iter_init(rt, ctx->op_iter);
+ 	ctx->dump_map = genl_op_iter_next(ctx->op_iter);
+@@ -1625,6 +1633,8 @@ err_free_state:
+ 	netlink_policy_dump_free(ctx->state);
+ err_free_op_iter:
+ 	kfree(ctx->op_iter);
++err_put_owner:
++	module_put(ctx->owner);
+ 	return err;
+ }
+ 
+@@ -1763,6 +1773,7 @@ static int ctrl_dumppolicy_done(struct n
+ 
+ 	kfree(ctx->op_iter);
+ 	netlink_policy_dump_free(ctx->state);
++	module_put(ctx->owner);
  	return 0;
+ }
  
- err_release_group_1:
- 	edac_device_free_ctl_info(dci);
--	devres_release_group(&altdev->ddev, altr_portb_setup);
-+	devres_release_group(device->edac->dev, altr_portb_setup);
- 	edac_printk(KERN_ERR, EDAC_DEVICE,
- 		    "%s:Error setting up EDAC device: %d\n", ecc_name, rc);
- 	return rc;
 
 
