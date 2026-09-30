@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EB94D956D;
-	Wed, 30 Sep 2026 15:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA225503BD8;
+	Wed, 30 Sep 2026 15:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783717; cv=none; b=fRQ9D1U/KiyPy4kKJZQG6bNCML/lmP2WcKIH8okHR/peYFtAv1WQsZqVbzuJ6+Gj9fSqtx47c4IpdbRZLFpN0tcTuN880nxEDB5XBNeYNASYkbl384aA35d9N3MUXEOZK3AvEzCY4yw9h1BAT1RGJ59k+vf8WdU1Ng2TJPK7EHU=
+	t=1790783719; cv=none; b=g+tuQtW6ACQVDL8fcN3d4yJk8wBcl+P/PeQoiKWo9gf0nkb9WzzaHGGSZ5gT8gf3ZxiZi2Jlc+927DKxet1RrrU0m86aHzBBO2WQmj7SxJar/Ej8WWt5VJd5Bxy3bHvfKEfrCGAetP3bwlqEaBH5yhm6iSDzWbsbNPy+fmuQGB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783717; c=relaxed/simple;
-	bh=fqz7Ln/1CQ54pRsrN04KNEdKy9/HRUQK0bdeOAqg5Xk=;
+	s=arc-20240116; t=1790783719; c=relaxed/simple;
+	bh=iPGOroqjouk+3oHb2j298DpOqP+cxBW8IYCLsvrUEQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nL7yJsswGdQMQ/HNckvCHcPKf0mWf3eSDxb5uyFeVkAYv71nnzxP19JwKgP122dsMP/OqKCWXbXZ1YYDWvO8tPIEXNAmxa4R1wjTlFvf8Zl2p8r/TNOJxLvJSp3aeFe1loL/wj6DmhAl6ZuFqBOdI9Sqp65OqspnFexzh1ZGFSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RI72YJGy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q3xujME3ZgUefJcO26OnjM/N4lcvqi2LcpZGDppTYmORiLPIybnxdKDz/yNCpbgcB++qYLY33fffYijwYGfbtc82s3JRDy/MiZ/6tsQNMAdgMKfjfxQgNCQ/NR4Vioiie40GM+HB4sUraBAIZCWs2jypmAt+L2SRabLnGYoi3DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04LbBYea; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RI72YJGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA271F000FF;
-	Wed, 30 Sep 2026 15:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04LbBYea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4571F00893;
+	Wed, 30 Sep 2026 15:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783713;
-	bh=mxbhc6wvuysKOOCWGwItL0TnprusazxOTPyztmN3MXs=;
+	s=korg; t=1790783716;
+	bh=UCHoGLLVdELrVowNbRVF/lm1hhmGrm+W1jyCdaq2xSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RI72YJGy9vE9pfX/qSzwIbhUlBsW00LqbWl4zmQ6GjkLbIJ1ka2hNIh7/51s2r6Mm
-	 mMP9oSUYR6JBio2SNN/Y1wMA3yN+1xhnFn8yzHJyLqcFtOZWajmxmxRjdhL87jkgQ5
-	 C3+URgEFSfgDSFQ7sQQy+ZudlXptakbs5mMgQYHQ=
+	b=04LbBYeaaHeWKpIChfk0tdvW4am6rVOW7LuJ1YtuDB1nHaJgo/BrtAw0M3aJ4ueO5
+	 ERdFTPDBlKoi91Zs1yrkHO/dhppIL04mMHzrmEcMlbxXld4pCpTft9vJdEiJBIbgL+
+	 brCIkMsg2eSGwVCp7l+U3Z14W4V/6RWPrVZDwWjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 494/595] netfilter: flowtable: publish HW_DEAD after worker is done
-Date: Wed, 30 Sep 2026 17:26:27 +0200
-Message-ID: <20260930152358.318659923@linuxfoundation.org>
+	Sergey Lebedev <lsa.uz@pm.me>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 452/595] Input: soc_button_array - fix MS Surface Pro 11 probe failure
+Date: Wed, 30 Sep 2026 17:25:45 +0200
+Message-ID: <20260930152357.403533134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -45,68 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit d644b23afe1ef509c9961a6d84a093c2587edf02 ]
+commit ed22ad5fdbdbf9b4cb4ad3003f60314b5a5eb89d upstream.
 
-flow_offload_work_del() sets NF_FLOW_HW_DEAD before the work handler
-clears NF_FLOW_HW_PENDING. Once a flow is both HW_DYING and HW_DEAD, a
-concurrent garbage collection pass can remove it and schedule it for RCU
-freeing.
+On the MS Surface Pro 11 soc_button_array probing races with the GPIO
+driver probing. If soc_button_array wins the race then gpiod_get() returns
+EPROBE_DEFER, which should normally take care of retrying later, but
+the soc_button_array code deliberately ignores EPROBE_DEFER causing it
+to fail its probe() which causes the volume and power buttons to now work.
 
-The offload worker holds neither an RCU read lock nor a reference to the
-flow. If it is preempted after publishing HW_DEAD, the RCU callback can
-free the flow before the worker resumes and clears HW_PENDING, resulting
-in a use-after-free.
+The ignoring of EPROBE_DEFER is there to deal with a problem specific to
+older Bay Trail (BYT) and Cherry Trail (CHT) tablets which often use this
+driver. Modify the error handling to only ignore EPROBE_DEFER on BYT and
+CHT platforms and propagate EPROBE_DEFER normally on other platforms.
 
-Move HW_DEAD publication to the common worker epilogue after the pending
-bit is cleared, making it the final flow access by destroy work. Order all
-preceding flow accesses before publishing the bit that allows garbage
-collection to free the object.
-
-Fixes: 2c8897953f3b ("netfilter: flowtable: Add pending bit for offload work")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bcf059578980 ("Input: soc_button_array - partial revert of support for newer surface devices")
+Cc: stable@vger.kernel.org
+Reported-by: Sergey Lebedev <lsa.uz@pm.me>
+Closes: https://lore.kernel.org/lkml/20260830141355.55898-1-lsa.uz@pm.me/
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Sergey Lebedev <lsa.uz@pm.me>
+Link: https://patch.msgid.link/20260909093934.29411-1-johannes.goede@oss.qualcomm.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_flow_table_offload.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/misc/soc_button_array.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index b383f6241d834..7b94c63fb1efc 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -768,7 +768,6 @@ static void flow_offload_work_del(struct flow_offload_work *offload)
- 	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_ORIGINAL);
- 	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
- 		flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
--	set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
- }
+--- a/drivers/input/misc/soc_button_array.c
++++ b/drivers/input/misc/soc_button_array.c
+@@ -16,6 +16,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/gpio_keys.h>
+ #include <linux/gpio.h>
++#include <linux/platform_data/x86/soc.h>
+ #include <linux/platform_device.h>
  
- static void flow_offload_tuple_stats(struct flow_offload_work *offload,
-@@ -826,6 +825,12 @@ static void flow_offload_work_handler(struct work_struct *work)
- 	}
+ static bool use_low_level_irq;
+@@ -160,7 +161,7 @@ soc_button_device_create(struct platform
+ 	struct gpio_keys_platform_data *gpio_keys_pdata;
+ 	const struct dmi_system_id *dmi_id;
+ 	int invalid_acpi_index = -1;
+-	int error, gpio, irq;
++	int error, gpio, irq = 0;
+ 	int n_buttons = 0;
  
- 	clear_bit(NF_FLOW_HW_PENDING, &offload->flow->flags);
-+	if (offload->cmd == FLOW_CLS_DESTROY) {
-+		/* Publish after the worker's last flow access. */
-+		smp_mb__before_atomic();
-+		set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
-+	}
+ 	for (info = button_info; info->name; info++)
+@@ -191,8 +192,9 @@ soc_button_device_create(struct platform
+ 		error = soc_button_lookup_gpio(&pdev->dev, info->acpi_index, &gpio, &irq);
+ 		if (error || irq < 0) {
+ 			/*
+-			 * Skip GPIO if not present. Note we deliberately
+-			 * ignore -EPROBE_DEFER errors here. On some devices
++			 * Propagate -EPROBE_DEFER, skip button on other errors.
++			 *
++			 * -EPROBE_DEFER is ignored on Bay & Cherry Trail. Here
+ 			 * Intel is using so called virtual GPIOs which are not
+ 			 * GPIOs at all but some way for AML code to check some
+ 			 * random status bits without need a custom opregion.
+@@ -201,6 +203,12 @@ soc_button_device_create(struct platform
+ 			 * we do not have a driver for these so they will never
+ 			 * show up, therefore we ignore -EPROBE_DEFER.
+ 			 */
++			if ((error == -EPROBE_DEFER || irq == -EPROBE_DEFER) &&
++			    !(soc_intel_is_byt() || soc_intel_is_cht())) {
++				error = -EPROBE_DEFER;
++				goto err_free_mem;
++			}
 +
- 	kfree(offload);
- }
+ 			continue;
+ 		}
  
--- 
-2.53.0
-
 
 
