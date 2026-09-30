@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756833B0582;
-	Wed, 30 Sep 2026 18:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149BB370AC7;
+	Wed, 30 Sep 2026 18:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793918; cv=none; b=RWLB16R/ZAL0S0zlPmSXr0/pKKyEyRri0Zvdvqb8tsJCjmU8FdnBjsJxneDcKKyqHOvFBxSB2dFCfcpHaZUaOJfMKv2/QisAeW9XMQdUmQi8hQlYG6w2V+aQYUbMwU/3tcOuvK5vbL9ya8yzhSLcIZdia/VzHKVimdf4qwUjcvQ=
+	t=1790793920; cv=none; b=NGUUe6AWc7KPleP3/coPfrKlyJMCAyVmTVXhaxIauzDJwggd6Y5MZpgkUu3wPDxbBbKnbRnq6tkTCkdu9YHJ4e8K6WD0k6H3U+4KaAY5rK3D4217/IJ0DeAwqVduRmeB2OcbaRrLThNAyrN/9iah4xBOPnEKturYutDAbppjIvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793918; c=relaxed/simple;
-	bh=gYDGEEVuN/JG15VvEy+bbW5nhcuIiAs32ZhcvUCBBeg=;
+	s=arc-20240116; t=1790793920; c=relaxed/simple;
+	bh=FIgImKGQqQcQV+K53EKXTKVYwAJXfpFkALBnW5V+sNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpvVBlJqh3ML5nxZhl54vECyPWI6Ql3/EiuuuxuzFGlVTvxjo4kH0/ty3KvFxbYTs5luQnqVvlVmuauPViNE4UD61hxF++0pTfDxiTUmgXjjXrhcwvXLDFPr/flpjJdPBnpCoan6WjqZCa1HP2tVXjvxU4GgtjRIYuW3TZRAivk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK7h/cTi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txcXTX5PLSxqIjAmzqKfwVfZFXoU3n9nhXI5R5FBMctLJPshD3uRdOWvVHBWMUMHP2NZVOGFVdJ8kuTE39H2bAfOWPgudA6nvixwEXdMM7/vLCUhw9LtajtgnBlkLtrHGzPDzFw9gsV1AWgLUBoTUrMn9SyHsqHtklzCbO5Xwqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBOxfAVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK7h/cTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F52B1F000FF;
-	Wed, 30 Sep 2026 18:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBOxfAVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8A81F00899;
+	Wed, 30 Sep 2026 18:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793915;
-	bh=08wRDNnAqpgjqybGCUVwhjmGIdiRbNma+lWCoQ232L0=;
+	s=korg; t=1790793918;
+	bh=nyX7Yv2PIkEKtH5qAOmlBG+wAYxiw3PhIsTW4dc+/yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AK7h/cTip1qpJZrICFpU6w7QJ9zyu6b/hHnosiCFREZU34BmfQfmlC7WsjEKbY85i
-	 QIHbbp2d3fy2oEwGI7M/7ygOPtPVcvkeEnq8aNp/KF3i03cGi052LamN+hGwIsNuon
-	 35vRpJ7wm98K7WJfCIEzR9UajyJ//EJAsz3qt36Q=
+	b=eBOxfAVx89+SKZyE5ZuQ4YlPzWKmbxSkvWZQeAZe/WzoGJK11Fj3NqlO/9yNxRClG
+	 xjm58ai0CD2fh5c7Qnfak1wLnrZFeZBciKYjg8+EoOuIxog8uQEPIvaH9Womc8bd4k
+	 vJllVJO12fwF4HBrUNGmcJ6XgWVHehLLQOE3MA7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Zhaoyang Yu <2426767509@qq.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0027/1193] thunderbolt: Dont create multiple DMA tunnels on firmware connection manager
-Date: Wed, 30 Sep 2026 17:11:51 +0200
-Message-ID: <20260930152434.897158656@linuxfoundation.org>
+Subject: [PATCH 6.6 0028/1193] media: dm1105: fix missing error check for dma_alloc_coherent
+Date: Wed, 30 Sep 2026 17:11:52 +0200
+Message-ID: <20260930152434.917475462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,123 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Zhaoyang Yu <2426767509@qq.com>
 
-[ Upstream commit cf0c38ee554c3e9062408cc3a38325483d52ecd0 ]
+[ Upstream commit 3eaac9e02d8591d3c790db572ef1c8fa5a841fdb ]
 
-Firmware connection manager supports only one DMA tunnel per XDomain
-connection. Firmware prior Intel Titan Ridge failed the operation
-directly but the same does not happen anymore on Titan Ridge and
-forward. For this reason add an explicit check, and fail the operation
-accordingly in the driver.
+The return value of dm1105_dma_map(), which handles DMA memory allocation,
+is ignored in dm1105_hw_init(). If dma_alloc_coherent() fails, the driver
+will proceed using a NULL pointer for DMA transfers, leading to a kernel
+oops or invalid hardware access.
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fix this by checking the return value and propagating -ENOMEM on failure.
+
+Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/icm.c     | 10 ++++++++++
- drivers/thunderbolt/xdomain.c | 25 +++++++++++++++++++------
- include/linux/thunderbolt.h   |  2 ++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ drivers/media/pci/dm1105/dm1105.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
-index c07fed6c117e2..4db947c168f79 100644
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -565,6 +565,11 @@ static int icm_fr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
- 	struct icm_fr_pkg_approve_xdomain request;
- 	int ret;
+diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
+index c1d55b9836744..abd86488064b5 100644
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -768,6 +768,8 @@ static void dm1105_ir_exit(struct dm1105_dev *dm1105)
  
-+	if (atomic_read(&xd->ntunnels) >= 1) {
-+		tb_warn(tb, "only one tunnel is supported by the firmware\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	memset(&request, 0, sizeof(request));
- 	request.hdr.code = ICM_APPROVE_XDOMAIN;
- 	request.link_info = xd->depth << ICM_LINK_INFO_DEPTH_SHIFT | xd->link;
-@@ -1132,6 +1137,11 @@ static int icm_tr_approve_xdomain_paths(struct tb *tb, struct tb_xdomain *xd,
- 	struct icm_tr_pkg_approve_xdomain request;
- 	int ret;
- 
-+	if (atomic_read(&xd->ntunnels) >= 1) {
-+		tb_warn(tb, "only one tunnel is supported by the firmware\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	memset(&request, 0, sizeof(request));
- 	request.hdr.code = ICM_APPROVE_XDOMAIN;
- 	request.route_hi = upper_32_bits(xd->route);
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 867eac780cce9..316aa2738cfee 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1960,6 +1960,7 @@ struct tb_xdomain *tb_xdomain_alloc(struct tb *tb, struct device *parent,
- 	INIT_DELAYED_WORK(&xd->state_work, tb_xdomain_state_work);
- 	INIT_DELAYED_WORK(&xd->properties_changed_work,
- 			  tb_xdomain_properties_changed);
-+	atomic_set(&xd->ntunnels, 0);
- 
- 	xd->local_uuid = kmemdup(local_uuid, sizeof(uuid_t), GFP_KERNEL);
- 	if (!xd->local_uuid)
-@@ -2230,9 +2231,15 @@ int tb_xdomain_enable_paths(struct tb_xdomain *xd, int transmit_path,
- 			    int transmit_ring, int receive_path,
- 			    int receive_ring)
+ static int dm1105_hw_init(struct dm1105_dev *dev)
  {
--	return tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
--					       transmit_ring, receive_path,
--					       receive_ring);
 +	int ret;
 +
-+	ret = tb_domain_approve_xdomain_paths(xd->tb, xd, transmit_path,
-+					      transmit_ring, receive_path,
-+					      receive_ring);
-+	if (ret)
-+		return ret;
-+	atomic_inc(&xd->ntunnels);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(tb_xdomain_enable_paths);
+ 	dm1105_disable_irqs(dev);
  
-@@ -2255,9 +2262,15 @@ int tb_xdomain_disable_paths(struct tb_xdomain *xd, int transmit_path,
- 			     int transmit_ring, int receive_path,
- 			     int receive_ring)
- {
--	return tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
--						  transmit_ring, receive_path,
--						  receive_ring);
-+	int ret;
+ 	dm_writeb(DM1105_HOST_CTR, 0);
+@@ -778,7 +780,10 @@ static int dm1105_hw_init(struct dm1105_dev *dev)
+ 	dm_writew(DM1105_TSCTR, 0xc10a);
+ 
+ 	/* map DMA and set address */
+-	dm1105_dma_map(dev);
++	ret = dm1105_dma_map(dev);
++	if (ret)
++		return -ENOMEM;
 +
-+	ret = tb_domain_disconnect_xdomain_paths(xd->tb, xd, transmit_path,
-+						 transmit_ring, receive_path,
-+						 receive_ring);
-+	if (ret)
-+		return ret;
-+	atomic_dec(&xd->ntunnels);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(tb_xdomain_disable_paths);
- 
-diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
-index d95e69c1ac63b..fb6b066d03998 100644
---- a/include/linux/thunderbolt.h
-+++ b/include/linux/thunderbolt.h
-@@ -224,6 +224,7 @@ enum tb_link_width {
-  *				changed notification
-  * @bonding_possible: True if lane bonding is possible on local side
-  * @target_link_width: Target link width from the remote host
-+ * @ntunnels: Keeps track of how many tunnels go through this XDomain
-  * @link: Root switch link the remote domain is connected (ICM only)
-  * @depth: Depth in the chain the remote domain is connected (ICM only)
-  *
-@@ -270,6 +271,7 @@ struct tb_xdomain {
- 	int properties_changed_retries;
- 	bool bonding_possible;
- 	u8 target_link_width;
-+	atomic_t ntunnels;
- 	u8 link;
- 	u8 depth;
- };
+ 	dm1105_set_dma_addr(dev);
+ 	/* big buffer */
+ 	dm_writel(DM1105_RLEN, 5 * DM1105_DMA_BYTES);
 -- 
 2.53.0
 
