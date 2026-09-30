@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CAD4FE2C9;
-	Wed, 30 Sep 2026 16:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703BB5111A7;
+	Wed, 30 Sep 2026 16:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784522; cv=none; b=dtdykG+gWlKIdRLpgJ3pAAAuOiJcblAuW8Ft22Jyi9VLCmy/jkdfNfWQBRuxiK62TwCBot68s6jcfJpqeiRQhtmB47LkqhGT/swz9alXrWU7K3IsI15mOCOfkvPHTMcUczhxqppt6lEV9ayuXr/AHy8u7D5K6xCv8rQ/qAp6k+s=
+	t=1790784526; cv=none; b=cZ4jIqYxE+1LGQRQELtuMaYWR9fOwHV9PULe/MOdp5jz7OEntzsAlef0JMCgnro3kftmtKrKoLY6MdIepkoOl0ywteffc19fI9eCprL2oTFQwAflXNhqlHTK/1fn3oJP+dwuBJBgwoRPFf8Bqo1BDKMgoVGvj2iXKsK6SkMhh90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784522; c=relaxed/simple;
-	bh=2Tzrc4Vu3XyYJhAympPvDhj2cqHIU0hQVyW/HwQAbvU=;
+	s=arc-20240116; t=1790784526; c=relaxed/simple;
+	bh=Ud/FIlQH8fVPooWEjAWdD8Fr6XbqYCoXJjWq+CP6Yik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZivrqPSDTFvVbHScIn4OPAzyrcIuVHLCfNjFqtGK4HJTq39RctADlWF9h9U0an+BGVooPwKt8ZeXwIi1VHhoqYDRSXiQQAEhKdCRL/ebnJDaRZ92WfThmj/xxKOfPXC5zgmc2TO2KFXEHJORUDVo0Qu5m92aTIZ1JfO7AOScwQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEcH3QBE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BBXq9x/vcqOj6ncUxfbumjOGZ5DsUA3oA+5QchZjnpefmq5KselMPDqAq7AXrKc2RPyTcOueaQJBXoY1wjmejzr/kzOX//IBzyxwLlmQ3ORGqMzoUK1iyeISXXbzhLP2JrbbmOUh/OQ/3XFA5VhQMC6tlpyC+9Y00qxHl9d7TjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2tLy3f9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEcH3QBE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477EA1F00898;
-	Wed, 30 Sep 2026 16:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2tLy3f9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BCD1F00893;
+	Wed, 30 Sep 2026 16:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784518;
-	bh=mbKjB24RcoT+Swc1BZOvkKMnHi++dIgE9lqcXc5xuiE=;
+	s=korg; t=1790784521;
+	bh=77qYefBNyHvrpcJLJuJiCzq8qAZkDPyqblSSKj7ETUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEcH3QBEK7ZTu7/w8vesm2jKTP7CiXmdQTYsrerb+uYKpNzE5BIZKUuR4IkzU4BD/
-	 hgorLMvDhR9yYlaUYfx9/hTZMsexEmQf67yoGDY0OgjRO3/ph2QAQEERftNjcawuLd
-	 S8XnpVHRWFmGtu4mJRAvDdpxJ4Lu7Q21TN4gXyNk=
+	b=u2tLy3f9X1V//RiS9AVLJdiDYJOE2cxncC9rWfLLiuMGsXbkWHiObFMVOvlP6hc36
+	 ZecBq1drFZS2SJDOmRx/XaZrzZRc/QBnOKjZM1Cf1YGVDsT3RwkUd1KMHFG0vQFzL7
+	 Mh1sJE/XfA3GvWzGzzeKvKonkAKQ1lHYJ0LOWhZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Breno Leitao <leitao@debian.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Sashiko AI Review <sashiko-bot@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/982] configfs_depend_prep(): pass configfs_dirent instead of dentry
-Date: Wed, 30 Sep 2026 17:15:03 +0200
-Message-ID: <20260930152420.400186036@linuxfoundation.org>
+Subject: [PATCH 6.1 185/982] ASoC: rockchip: rockchip_pdm: Handle runtime PM resume failures in set_fmt
+Date: Wed, 30 Sep 2026 17:15:21 +0200
+Message-ID: <20260930152420.791670677@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,62 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 764682e0118432260191d194edbdaff208260483 ]
+[ Upstream commit ee7b5f7b39332febf917f9ebf212842cc9379815 ]
 
-Again, the only thing it uses dentry for is dentry->d_fsdata; for the
-recursive call the situation is the same as with configfs_detach_prep()
-and the same observation about ->s_dentry->d_fsdata applies.
+rockchip_pdm_set_fmt() calls pm_runtime_get_sync() before accessing
+hardware registers, but ignores its return value.
+If the runtime resume fails, the function continues to perform register
+accesses while the device state is undefined.
+Replace pm_runtime_get_sync() with pm_runtime_resume_and_get() and
+return early on failure to avoid unpowered register accesses.
 
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260522110302.349421F000E9@smtp.kernel.org/
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260602101608.45137-6-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ sound/soc/rockchip/rockchip_pdm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index 01c9d54833b30..69762a33dff6b 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -1060,15 +1060,12 @@ static int configfs_dump(struct configfs_dirent *sd, int level)
-  * much on the stack, though, so folks that need this function - be careful
-  * about your stack!  Patches will be accepted to make it iterative.
-  */
--static int configfs_depend_prep(struct dentry *origin,
-+static int configfs_depend_prep(struct configfs_dirent *sd,
- 				struct config_item *target)
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index 5b1e47bdc376b..336d0eb0e8b47 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -322,6 +322,7 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
  {
--	struct configfs_dirent *child_sd, *sd;
-+	struct configfs_dirent *child_sd;
- 	int ret = 0;
+ 	struct rk_pdm_dev *pdm = to_info(cpu_dai);
+ 	unsigned int mask = 0, val = 0;
++	int ret;
  
--	BUG_ON(!origin || !origin->d_fsdata);
--	sd = origin->d_fsdata;
--
- 	if (sd->s_element == target)  /* Boo-yah */
- 		goto out;
+ 	mask = PDM_CKP_MSK;
+ 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+@@ -335,7 +336,10 @@ static int rockchip_pdm_set_fmt(struct snd_soc_dai *cpu_dai,
+ 		return -EINVAL;
+ 	}
  
-@@ -1076,8 +1073,7 @@ static int configfs_depend_prep(struct dentry *origin,
- 		if ((child_sd->s_type & CONFIGFS_DIR) &&
- 		    !(child_sd->s_type & CONFIGFS_USET_DROPPING) &&
- 		    !(child_sd->s_type & CONFIGFS_USET_CREATING)) {
--			ret = configfs_depend_prep(child_sd->s_dentry,
--						   target);
-+			ret = configfs_depend_prep(child_sd, target);
- 			if (!ret)
- 				goto out;  /* Child path boo-yah */
- 		}
-@@ -1098,7 +1094,7 @@ static int configfs_do_depend_item(struct dentry *subsys_dentry,
- 
- 	spin_lock(&configfs_dirent_lock);
- 	/* Scan the tree, return 0 if found */
--	ret = configfs_depend_prep(subsys_dentry, target);
-+	ret = configfs_depend_prep(subsys_dentry->d_fsdata, target);
- 	if (ret)
- 		goto out_unlock_dirent_lock;
+-	pm_runtime_get_sync(cpu_dai->dev);
++	ret = pm_runtime_resume_and_get(cpu_dai->dev);
++	if (ret)
++		return ret;
++
+ 	regmap_update_bits(pdm->regmap, PDM_CLK_CTRL, mask, val);
+ 	pm_runtime_put(cpu_dai->dev);
  
 -- 
 2.53.0
