@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119FC37CD22;
-	Wed, 30 Sep 2026 16:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25123749F6;
+	Wed, 30 Sep 2026 16:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786094; cv=none; b=WYnr/ieVH9w9A45YszRune3rijd58uos0nEgoQteKo7e581z98Q4VTydnYIXKWkp1CAY2Bf9C+tJEDn1jB4LdHnN4StzlLGhMrjbaOxBm/U/rdSbEMBk8MJ5m+KubIzhs9XBxolYDAXBGq1QpieQ4QThtnXA72T0AyUH2nooalU=
+	t=1790786097; cv=none; b=OIm+M6JgweMWTHmTmFwcBGXbmvaKe+5v1rWi4uL2om5lB1W4va8QPvsecWl8tRStQjxe0Zoo/jRcSKCYnpF0iTN5Zl3rxVDnot/lNZueDav+3dZLHcsv3+LnXCwiWPQhsHerLfKaTIKSwu5/OhgAPNctgxNHxgodPr7DwjRZwk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786094; c=relaxed/simple;
-	bh=AI2pAvp+ea61bM4IcJTupQv4M/muNiJrc2dPCGMnQ18=;
+	s=arc-20240116; t=1790786097; c=relaxed/simple;
+	bh=H6i1FMKy4akM3sFQR0syRAGv6Mh9vmzUgT2CmbzhyWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZzC1QNDg1A1HeaG1D4yo4SBLbAn6J7TcDiNhDUqQKJtZvIgrcjAZc8qB3T7KR6NaWvpGDU+F5NocMxBr66o7hkJOiP2gW+uGlxdVTDICSDQqT3c0r3A2nEQcfujrdqp3/1gf4tRTb0lURQehoBCEatCcd1V7Ii3+272Tdfmcwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6eXQw/I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jw/ib7h/JSlJaoM4ArSCgujh+I0VWzlhtHUDin0Nkyb9Metlet8KTcn2wqXzqBfHGTR5N6HkiS3RU6tCwA+3aLkAbHJuqseZvk0UvbVsIhr0Gf0MKo8ZWJjygaNiEmb0fPZnQdB1Rh8ne11kUX8/C5HPWrVII5rb8vToSIQSe7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=De7Ojchk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6eXQw/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB151F000FF;
-	Wed, 30 Sep 2026 16:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="De7Ojchk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477941F000FF;
+	Wed, 30 Sep 2026 16:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786093;
-	bh=qSkp9mROl04i8Qokdr11sWmrqWH/SPay5pCtuEubz18=;
+	s=korg; t=1790786095;
+	bh=kz6khbcrkbBCdwnR94stWM38b0ETYavzCCI6Zj8BQS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6eXQw/IQ3sHq1K2ZdsAD7Qk7blDMt2wS85LievaXG9TSt2fCQzn4IgNHx0ty4PZ7
-	 OmixqWjrTDwRHMk503ik1E/PXmMX4mw995NXYWtXcBakPLzHwvGuIRykNCHk8sSGXB
-	 hewdj1nQY+59eFC80SBof/MdDV8bqLGDAEWobUjs=
+	b=De7OjchkpmyvPasXT3L4aCuR7yxt2JBuoOOILEnzHNa6s+JQwoDavDY0lGOzYoIh9
+	 cjTI4RwUYiy7l+hE7a+dIm/IJDfbbVH7turmI40UzEbGaZ8QpGcqpPMLadAIoRS39V
+	 P+0m32ErNuf1y6C7DnN9MK4AjlLkjlDVQmVD7LT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yige Jiang <yigejiang86@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 685/982] net: netsec: fix device_node reference leak on phy_np
-Date: Wed, 30 Sep 2026 17:23:41 +0200
-Message-ID: <20260930152431.475741836@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.1 734/982] mmc: sdhci-of-aspeed: Remove children before releasing SDC resources
+Date: Wed, 30 Sep 2026 17:24:30 +0200
+Message-ID: <20260930152432.521571891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,72 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yige Jiang <yigejiang86@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 5ae916fabca141b79b32e2e57f3c915c0f1e1b2e ]
+commit 4396d70bb7fec531bcf934fed016b2f3300c670b upstream.
 
-netsec_of_probe() takes a reference on the PHY device_node with
-of_parse_phandle() and stores it in priv->phy_np, but the driver never
-drops it.  One device_node reference is leaked per probe, on the success
-path as well as on every error path reached after netsec_of_probe().
+Probe failure and removal leave SDHCI child devices registered after the
+parent clock and managed resources are released.
 
-Neither consumer takes ownership.  of_mdio_parse_addr() is a static
-inline taking a const struct device_node * that only reads the "reg"
-property.  of_phy_connect() borrows as well: of_phy_get_and_connect() in
-drivers/net/mdio/of_mdio.c brackets its own call with of_node_get() at
-:364 and of_node_put() at :373, which would be a double put if
-of_phy_connect() consumed the reference.
+Unregister the OF children in reverse order before disabling the parent
+clock on both paths. Use of_platform_device_destroy() because manual
+child creation does not set the flag required by of_platform_depopulate().
 
-The node is still in use at netsec_netdev_open() time, where it is
-passed to of_phy_connect(), so it has device lifetime.  Release it at
-the probe error label, which every failure path after the acquire
-funnels through, and in netsec_remove().  Both releases precede
-free_netdev(), since priv is netdev_priv(ndev).  The ACPI probe path
-leaves priv->phy_np NULL and of_node_put(NULL) is a no-op.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-There is no end-user visible symptom on currently supported platforms:
-a device_node is only freed once OF_DYNAMIC is enabled and the node has
-been detached, so on a static device tree the imbalance is inert.  It is
-observable as a refcount that grows across bind/unbind cycles, and would
-matter under device tree overlays.
-
-Found by static analysis of reference acquire/release pairing rather
-than from a runtime report.  No reproducer was produced and the change
-has not been runtime tested; it is compile-tested only (arm64,
-CONFIG_SNI_NETSEC=m via COMPILE_TEST).
-
-Fixes: 533dd11a12f6 ("net: socionext: Add Synquacer NetSec driver")
-Signed-off-by: Yige Jiang <yigejiang86@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260913064102.37452-1-yigejiang86@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bb7b8ec62dfb ("mmc: sdhci-of-aspeed: Add support for the ASPEED SD controller")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/socionext/netsec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/sdhci-of-aspeed.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/socionext/netsec.c b/drivers/net/ethernet/socionext/netsec.c
-index b130e978366c1..bffb5728ef714 100644
---- a/drivers/net/ethernet/socionext/netsec.c
-+++ b/drivers/net/ethernet/socionext/netsec.c
-@@ -2141,6 +2141,7 @@ static int netsec_probe(struct platform_device *pdev)
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- free_ndev:
-+	of_node_put(priv->phy_np);
- 	free_netdev(ndev);
- 	dev_err(&pdev->dev, "init failed\n");
- 
-@@ -2158,6 +2159,7 @@ static int netsec_remove(struct platform_device *pdev)
- 	netif_napi_del(&priv->napi);
- 
- 	pm_runtime_disable(&pdev->dev);
-+	of_node_put(priv->phy_np);
- 	free_netdev(priv->ndev);
+--- a/drivers/mmc/host/sdhci-of-aspeed.c
++++ b/drivers/mmc/host/sdhci-of-aspeed.c
+@@ -565,12 +565,14 @@ static int aspeed_sdc_probe(struct platf
+ 		if (!cpdev) {
+ 			of_node_put(child);
+ 			ret = -ENODEV;
+-			goto err_clk;
++			goto err_children;
+ 		}
+ 	}
  
  	return 0;
--- 
-2.53.0
-
+ 
++err_children:
++	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
+ err_clk:
+ 	clk_disable_unprepare(sdc->clk);
+ 	return ret;
+@@ -580,6 +582,7 @@ static int aspeed_sdc_remove(struct plat
+ {
+ 	struct aspeed_sdc *sdc = dev_get_drvdata(&pdev->dev);
+ 
++	device_for_each_child_reverse(&pdev->dev, NULL, of_platform_device_destroy);
+ 	clk_disable_unprepare(sdc->clk);
+ 
+ 	return 0;
 
 
