@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3C1516165;
-	Wed, 30 Sep 2026 18:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC93E348C7F;
+	Wed, 30 Sep 2026 18:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791501; cv=none; b=IgYmY9j+/0xBhgSBDPW3VfX8A19CRy/ndY8RxhHEShB+sGC0Oawgq09BKdO5m5csRTQJz69dAELxXkoDtqMwyT1SjHWnc/k+Fsviy85t8Ym+QTQhURQ5e1m+Xgs5zIC8WMyGDXISQEvmIe7P6n5mv7tezd/Hro1k06hXNJaXKtU=
+	t=1790791504; cv=none; b=Lv/nULKd9KMMTfFCYJmvPIWHn4p26pG669zOJS0a9kNgaGhVZvqlkOnId175s68FYA0X1oT7aImBeIQBXPWSK5LKIvB91MBA6sXXrnGDAxZ+YWoN33ux2vcCPtTZToUT58+FEM6UVyeintVuN3lJeBiTTdq/YY48bsRdZSPI/PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791501; c=relaxed/simple;
-	bh=a4qCTTCb6UdbPAxjWxYp8scjvHAOkdBo4mQ25jRfVsE=;
+	s=arc-20240116; t=1790791504; c=relaxed/simple;
+	bh=E9CBP+mAOHQAAnasX2+ujL/JdNlk/saFCSONwm+tEJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KywALVHnuBTo3EO3jwRhQk1SFQDHcYzRtJUGOBUJExRwhPUHvsOojMgyhTSc/XvYtjRswLUrdjMKLwmoVyf6nwp3Sd0DZCk1rVaiLiEBxaitHNI9ZM7Q51YpCoXusvUx3LGgoeiCxHPfstuGgcUIclxtk02NSFk8v9F09ruPMhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0up0ThNI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g6mndnfnpqlOeqUyMWYg4OJ/i1HaywXorz+Wr7gHbhXVGC2ANT9vvnBM3/6eetRQTUqNww3vAFFJm2dGUiXVDuV1LmaXe0xmXgIjzKch5l2esTHaB24yOCHu0an3MSvek++QHa1ISmMseaK9cXehbEJoTQvWNq+sHvq2nlB1y2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHbGVGkn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0up0ThNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC9A1F000FF;
-	Wed, 30 Sep 2026 18:04:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHbGVGkn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE081F000FF;
+	Wed, 30 Sep 2026 18:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791499;
-	bh=zzj4ZbPYi9sXufZ7r84bSn68pfaHziN4OU3fN1KFOk4=;
+	s=korg; t=1790791502;
+	bh=0lIgvc4F135hFnI0k9H4eP1Q0sw78qUrqvMK8wkJp6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0up0ThNIYuBteiQLpGnEA1CA98wKWpjCjhq7ay+Q1t7sI7SwBhSy3NhWfdcCuISQH
-	 cQrXwMkBAw1sbaeChKQV+wlsjaZWOPk3zFvi0uGWTvHQCJGBwo6z9SOPa11WDAwmRb
-	 uD0BRz11O9bMg+qQ76em9UwlzheecewO0mw7Fr9Y=
+	b=lHbGVGkn+6oqjIQ0+mZrg26D28u72EGpeK18TCxnx2XagKJ/EgSVObssB3ZfF+I6O
+	 UqFSheTvZEoxtQ7bZZQYsFh8ZihJkM2kQjBHPQ3IrhwW9XiE8V3Fgeo3LKtHfxTknl
+	 CPtQjwIuIVajYNLTpEpqIVrn3jkVY2tiAyg1OgQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 269/752] btrfs: restore active device pointers after failed sprout
-Date: Wed, 30 Sep 2026 17:22:19 +0200
-Message-ID: <20260930152404.106285756@linuxfoundation.org>
+Subject: [PATCH 5.15 318/752] net/sched: hhf: clamp quantum in change and init paths
+Date: Wed, 30 Sep 2026 17:23:08 +0200
+Message-ID: <20260930152405.177843947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -46,51 +48,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit e0b54613aabeb8e9da597f23b90c6a03d0981986 ]
+[ Upstream commit eb56a495f59baf6cad5ed80e3ffb9078098b1346 ]
 
-btrfs_init_new_device() switches latest_dev and possibly s_bdev from the
-seed device to the new sprout device before creating the first writable
-chunks.
+hhf_change() accepts any quantum from userspace, including 1. With a
+crafted size table qdisc_pkt_len reaches ~2 GiB, so quantum=1 makes
+the deficit-refill loop spin ~2^31 times under the qdisc lock
+(a soft lockup / denial of service).
 
-If chunk creation or the subsequent sprout setup fails, the error path
-releases the new device without switching those pointers back.
-btrfs_show_devname() can then dereference the freed latest_dev and crash.
+Add max(256U, ...) in hhf_change() matching fq_codel_change(). Clamp
+hhf_init() to [256, 1<<20] matching the siblings, and remove the old
+fallback that only set quantum=256 on overflow.
 
-Restore the active device pointers to the latest seed device before
-removing and releasing the failed sprout device.
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_HHF=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
 
-Fixes: b7cb29e666fe ("btrfs: update latest_dev when we create a sprout device")
-Assisted-by: Codex:gpt-5
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  tc qdisc add dev dummy0 root hhf
+  tc qdisc change dev dummy0 root hhf quantum 1 stab data 32768 size_log 15 cell_log 0
+
+Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.5
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sched/sch_hhf.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 794b8ccd683ab..fbf4e54ef9c57 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2918,6 +2918,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- error_sysfs:
- 	btrfs_sysfs_remove_device(device);
- 	mutex_lock(&fs_info->fs_devices->device_list_mutex);
-+	if (seeding_dev)
-+		btrfs_assign_next_active_device(device, seed_devices->latest_dev);
- 	mutex_lock(&fs_info->chunk_mutex);
- 	if (!list_empty(&device->post_commit_list))
- 		list_del_init(&device->post_commit_list);
+diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
+index ba67eed62d318..baf8b586298c3 100644
+--- a/net/sched/sch_hhf.c
++++ b/net/sched/sch_hhf.c
+@@ -553,7 +553,7 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
+ 		return err;
+ 
+ 	if (tb[TCA_HHF_QUANTUM])
+-		new_quantum = nla_get_u32(tb[TCA_HHF_QUANTUM]);
++		new_quantum = max(256U, nla_get_u32(tb[TCA_HHF_QUANTUM]));
+ 
+ 	if (tb[TCA_HHF_NON_HH_WEIGHT])
+ 		new_hhf_non_hh_weight = nla_get_u32(tb[TCA_HHF_NON_HH_WEIGHT]);
+@@ -609,7 +609,7 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
+ 	int i;
+ 
+ 	sch->limit = 1000;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
+ 	INIT_LIST_HEAD(&q->new_buckets);
+ 	INIT_LIST_HEAD(&q->old_buckets);
+@@ -620,10 +620,6 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->hhf_evict_timeout = HZ;      /* 1  sec */
+ 	q->hhf_non_hh_weight = 2;
+ 
+-	if ((int)q->quantum <= 0 ||
+-	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
+-		q->quantum = 256;
+-
+ 	if (opt) {
+ 		int err = hhf_change(sch, opt, extack);
+ 
 -- 
 2.53.0
 
