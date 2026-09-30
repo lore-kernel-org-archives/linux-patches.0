@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07415514757;
-	Wed, 30 Sep 2026 16:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E22251616E;
+	Wed, 30 Sep 2026 16:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784563; cv=none; b=VYg27Gy0JNMCmbiYZFWzOrzHVPYX759Q03n3SnxGd3L4cYcUG2b2Jmh0XXLTzhD2+BGUaOzEWn6kxGKA5VCj/K6uQKGZN/y0Y0zJ7N1RLV7f22XOcPh0ZAvwUpxj+PqgdvFdFuH8xzisjyvPRyN6Xcn+i49J0h0ShDb3tLTFZHE=
+	t=1790784565; cv=none; b=tFEw1V7+cr6BlJr1kyyT4E3qdlgkBLPjO8hOrWom/ZtCc406hjX7bMk6EgW/i0mh93Hbor3WWBEujF3iBlSOYa5+G/O72GUaACIVoXrGELLCtOG+6WG4yp2G1tRp+xf8k6Or4EhL2P/J70rf2mGNu5lU6Lt1qdUdDvtF9woYZd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784563; c=relaxed/simple;
-	bh=E1NtFfZB49Av0htvp/Y05gowcAUJj3VBL3NMRbtxZJ8=;
+	s=arc-20240116; t=1790784565; c=relaxed/simple;
+	bh=r3sli3YZnAGog/O+JAlmXrrrvDNvwhzGIcqQpeoA6iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6QlyaIzEJjEk2Pi6NI86zLFrdFhjg7ATYoVWgdWoOpc1ZTFJrjMpTDUCR83GeX7zGJeFHfOC6SvJDnKbDLMF5mLvVIUurIZ4d8TBuAR97CWgwsYO59Hiqg2Yy5TIaGLYzucgV7UoZKy4REkzVu1t6/w1KSSMichC1inaJNE5Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJ3fM6hX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lc3HZtHmMOqoNnMZTC9dbPoVHYWY90x6szOqkseHckcR3yjwmbA7Qpii8CDgeuI4e0uZdf/TgGTpfqk6d/sCu92rJTOENnuS3XaTF40j4H4G/9Uzua8Z+60NenBMbFQrbvgDKPfLAVKwq9mY0F7T9MBzbRRzsvKK5t5wnpReqE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGq7DdMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJ3fM6hX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F9E1F0089D;
-	Wed, 30 Sep 2026 16:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGq7DdMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C807B1F000FF;
+	Wed, 30 Sep 2026 16:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784558;
-	bh=X2C9NOcs8Gci4/xoOP8mqEc7uyfyCMA7JE501qw6bgg=;
+	s=korg; t=1790784561;
+	bh=AbbekaMY3KWZmFdyQlGAzPY9JLIPtOXekznVcrkHP/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VJ3fM6hXQX+EBzW7nU7Fgt6Gpf7P/UjENOicqygDh4lvuFBvMpj3NBPoA0qaMKdXB
-	 MXl0XzxUOnap/Ow2HWtdn/ke+RghvvgQ0eMFIKV36MoMI++Z9CoRxBUG1hp668sBgI
-	 sPQbqmYOX7SDuYGnEYQ+NYmVE6ZBEtceBAffi434=
+	b=aGq7DdMXkKWBKdVanwWUj7iKcvbCjvuLv7WPFEY5250qB9DEKrahzjdPscvZ+eirr
+	 /lk1BOvFm97Ausph7qSgzsfZlGeDy1Q8apBmeg8adA8iXt/pAxcMkhsm6HAGZMeis9
+	 6jlcsOHhIhB4q4hKV6er2za3P1wBhhPEV/d8P1i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Jiri Kosina <jkosina@suse.com>,
+	Li Yichao <liyichao.1@bytedance.com>,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/982] HID: hidpp: fix potential UAF in hidpp_connect_event()
-Date: Wed, 30 Sep 2026 17:15:33 +0200
-Message-ID: <20260930152421.045372337@linuxfoundation.org>
+Subject: [PATCH 6.1 198/982] fuse: set ff->flock only on success
+Date: Wed, 30 Sep 2026 17:15:34 +0200
+Message-ID: <20260930152421.065668563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-[ Upstream commit 6df6b1f2c49678211f65647c300bc51dda02893b ]
+[ Upstream commit 71947173cef279be5eed209ec28f8c11f9d73159 ]
 
-If input_register_device() fails, we call input_free_device(), but keep
-stale pointer to the old device in hidpp->input, which could potentially
-lead to UAF. Fix that by resetting it to NULL before returning from
-hidpp_connect_event().
+If FUSE_SETLK fails (e.g., due to EWOULDBLOCK), we shall not set
+FUSE_RELEASE_FLOCK_UNLOCK in fuse_file_release().
 
-Reported-by: zdi-disclosures@trendmicro.com
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Li Yichao <liyichao.1@bytedance.com>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index eae0b0b46439d..1d4df88f690c0 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4056,6 +4056,7 @@ static void hidpp_connect_event(struct hidpp_device *hidpp)
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 30da0d0397f23..56774b31d5ff6 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -2668,8 +2668,9 @@ static int fuse_file_flock(struct file *file, int cmd, struct file_lock *fl)
+ 		struct fuse_file *ff = file->private_data;
  
- 	ret = input_register_device(input);
- 	if (ret) {
-+		hidpp->input = NULL;
- 		input_free_device(input);
- 		return;
+ 		/* emulate flock with POSIX locks */
+-		ff->flock = true;
+ 		err = fuse_setlk(file, fl, 1);
++		if (!err)
++			ff->flock = true;
  	}
+ 
+ 	return err;
 -- 
 2.53.0
 
