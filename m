@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357E054EEA7;
-	Wed, 30 Sep 2026 17:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2723551985;
+	Wed, 30 Sep 2026 17:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790146; cv=none; b=Jh9lcxfse0lV2tmlKa+gD7d/6oJxWErbVy7gJ/DwIsIOE/aqpo2xb5fNcj85pNX+RuztRo54AFneFwKFXr/ylaBGr1boGCx0fxQ9Kb4HA8xqcrXr09nHqFrGG8asxmVcmpbW6kaI3KC5Dqy5L4ogK3xkJ2RzYDOJwSHoSoGuEKc=
+	t=1790790149; cv=none; b=BtYsm6zfn9bQp0wDA5I70IPBZMrV+l5Mz1btbeSCHUErFrfSsbZ/8Z+Yw+6BzVPhjdjMrvc1Z36X4ykHZZvMK0vCP7q0SYfccxPiEkcvjQLcNWBiNodT7Q9WQnCGa6sVepASxNU7bHWjDmAmcinmtyuNuWTmMst38aMniImAG0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790146; c=relaxed/simple;
-	bh=/ZD8PjY9nbFuFt0dOzAuoEF89+wLcQHzOqBh+8Hyh14=;
+	s=arc-20240116; t=1790790149; c=relaxed/simple;
+	bh=9N7P+U4EOXnPK8LX8nfqFYuhXkYks3Pta5+lU3L+qew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+uc6VOYxLzOubma1qytFC2c7mAm5DDRwJbLusFUZkj0RdS2u3f3eUIEvqb7vRvm/SFI20wvfYcTtQ56RScze5sUWgrNXEhPEWZ8+luyg9gqjiKMmPm6yh27HRPl1LTUmyywchnOPvIqklLIXTyfoz9HuiSAN+zOokq6RiIcaB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLfyBLcn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pxHJqFA+wtHITl1VvLPPTJ9QextY4hfgTF5tvG09emC/dzKx1JTlexlx8XDERvw0yz00TsPgQbG5lUxRNN5Y7LW3kftt3QSJCZwbtw+tNJeGuR3sTqlKjYCGpPU/CFQT1dOzeHScZBVrXCD00Y8/Pc3BEdGYAwmonapvGjjdMgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9Q4fwKW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLfyBLcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7621F000FF;
-	Wed, 30 Sep 2026 17:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9Q4fwKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205E51F00898;
+	Wed, 30 Sep 2026 17:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790144;
-	bh=2dJAS4DhYbyEWvW2mLqiCsXAlppChU+YVijWMLKLYsQ=;
+	s=korg; t=1790790147;
+	bh=hN9BwsylpguRYjcdYYDs642kDrNgCwLn6hwp9BCFeaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLfyBLcn3GGQdP3w0N8lRRW8khZIyFTxG32nE5QzugJEKuei3ABSBjxB1HVXqch1Y
-	 kgcoL5iRMBO6Shy/Q9RvGRM4WGZz/mc8gZSCEmtP0BSDin/aoP2EwKxRFc978balHt
-	 3ZUHIPlvUDYfEcIKz5U3pVAhJsbKU8sJw5ID7Q74=
+	b=Y9Q4fwKWEyfOSweU9qLtYC8ydnX4ufQqto0kEvM53NDKkkjaUs60JSYyoCONiNmg/
+	 LA16o3n2OJNqXE3hbxFmb3esiekLwYE6UDtQNRPvRPP27tEV+O6Rw+Yo7jvewx73Ao
+	 +RKeeaa5s/8D85uyrHZKrTg/ea70yWiuqh6FIkw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Tom Zanussi <zanussi@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 689/877] f2fs: fix to avoid potential section-unaligned pinfile
-Date: Wed, 30 Sep 2026 17:26:40 +0200
-Message-ID: <20260930152429.545413832@linuxfoundation.org>
+Subject: [PATCH 6.12 725/877] tracing: Take the reference before publishing the named histogram trigger
+Date: Wed, 30 Sep 2026 17:27:16 +0200
+Message-ID: <20260930152430.331744256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,86 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit d0a481fad5c7a3a56ecf54a099651216869f4d0a ]
+[ Upstream commit 0fe23b8eaba0d3372c66b7b31204408da0715edc ]
 
-Blocks of pinfile may not aligned to section size due to wrong use
-on pinfile, result in heavy overhead of GC, let avoid this by
-adding additional check condition in f2fs_setattr().
+event_hist_trigger_named_init() puts the trigger on the global
+named_triggers list and only then takes the reference on the trigger it
+shares its histogram with:
 
-- truncate -s 8mb pinfile
-: random checkpoint may persist filesize w/ inode
-- fallocate -o 0 -l 8mb pinfile
- - f2fs_fallocate
-  - f2fs_expand_inode_data
-   - f2fs_allocate_pinning_section
-   - f2fs_map_blocks
-    - f2fs_map_lock
-    - __allocate_data_block
-    - file_need_truncate
-    : w/ FADVISE_TRUNC_BIT, we can expect unaligned mapping can be
-      truncated while open() if f2fs is not umount abnormally
-    - f2fs_map_unlock
-    : following f2fs checkpoint and sudden power-cut
+	data->ref++;
 
-- mount
-- open pinfile
- - f2fs_file_open
-  - finish_preallocate_blocks
-   - truncate_setsize
-   : filesize is 8mb
-   - f2fs_truncate
-   : can only truncate block outside filesize, rather than truncating
-     unaligned blocks inside filesize
+	save_named_trigger(data->named_data->name, data);
 
-Fixes: f5a53edcf01e ("f2fs: support aligned pinned file")
-Cc: stable@kernel.org
-Cc: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+	ret = event_hist_trigger_init(data->named_data);
+	if (ret < 0) {
+		kfree(data->cmd_ops);
+		data->cmd_ops = &trigger_hist_cmd;
+	}
+
+	return ret;
+
+event_hist_trigger_init() fails when alloc_hist_pad() cannot allocate, and
+nothing takes the trigger back off the list on the way out.
+event_hist_trigger_parse() frees it, and the next lookup by name reads the
+freed object:
+
+ BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
+ Read of size 8 at addr ffff888009346860 by task init/1
+  find_named_trigger+0xac/0xc0
+  hist_register_trigger+0xc1/0xa00
+  event_hist_trigger_parse+0x3146/0x6af0
+  event_trigger_write+0xce/0x160
+ Freed by task 67:
+  kfree+0x154/0x420
+  trigger_kthread_fn+0xfd/0x160
+
+Do the reference first and publish once it has succeeded, so that nothing
+which can fail runs after the trigger becomes findable.
+
+Cc: stable@vger.kernel.org
+Fixes: 7ab0fc61ce73 ("tracing: Move histogram trigger variables from stack to per CPU structure")
+Reported-by: Sashiko AI <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-trace-kernel/20260907092944.3950E1F00A3D@smtp.kernel.org/
+Link: https://patch.msgid.link/20260907124420.607097-2-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Acked-by: Tom Zanussi <zanussi@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |   28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ kernel/trace/trace_events_hist.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1097,17 +1097,23 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 			!IS_ALIGNED(attr->ia_size,
- 			F2FS_BLK_TO_BYTES(fi->i_cluster_size)))
- 			return -EINVAL;
--		/*
--		 * To prevent scattered pin block generation, we don't allow
--		 * smaller/equal size unaligned truncation for pinned file.
--		 * We only support overwrite IO to pinned file, so don't
--		 * care about larger size truncation.
--		 */
--		if (f2fs_is_pinned_file(inode) &&
--			attr->ia_size <= i_size_read(inode) &&
--			!IS_ALIGNED(attr->ia_size,
--			F2FS_BLK_TO_BYTES(CAP_BLKS_PER_SEC(sbi))))
--			return -EINVAL;
-+
-+		if (f2fs_is_pinned_file(inode)) {
-+			/*
-+			 * It may break section-aligned fallocate recovery
-+			 * mechanism, so do not allow larger size truncation.
-+			 */
-+			if (attr->ia_size > i_size_read(inode))
-+				return -EINVAL;
-+			/*
-+			 * To prevent scattered pin block generation, we don't
-+			 * allow smaller/equal size unaligned truncation for
-+			 * pinned file.
-+			 */
-+			else if (!IS_ALIGNED(attr->ia_size,
-+				F2FS_BLK_TO_BYTES(CAP_BLKS_PER_SEC(sbi))))
-+				return -EINVAL;
-+		}
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6327,17 +6327,18 @@ static int event_hist_trigger_named_init
+ {
+ 	int ret;
+ 
+-	data->ref++;
+-
+-	save_named_trigger(data->named_data->name, data);
+-
+ 	ret = event_hist_trigger_init(data->named_data);
+ 	if (ret < 0) {
+ 		kfree(data->cmd_ops);
+ 		data->cmd_ops = &trigger_hist_cmd;
++		return ret;
  	}
  
- 	if (is_quota_modification(idmap, inode, attr)) {
+-	return ret;
++	data->ref++;
++
++	save_named_trigger(data->named_data->name, data);
++
++	return 0;
+ }
+ 
+ static void event_hist_trigger_named_free(struct event_trigger_data *data)
 
 
