@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29A93B3C03;
-	Wed, 30 Sep 2026 17:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71423AF66E;
+	Wed, 30 Sep 2026 17:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790868; cv=none; b=jvKVktVw87kKNL3HZI+T9XzxcUjyo947zNoSgwep0GCIYyqF3fLZHTxy0pV/cGFQHqKnWYKm4yitekjTPGjCw7CaGUxXLigXMMDYeKpC7YY+nq15zFZD/1GN6p9jWy/lQ7HRPO/uvbVMRdzbvLf0bVkhiJqdlPC8NldczNlrfak=
+	t=1790790870; cv=none; b=TSW0JGJ57MH/QyXqK6L9+1i1iYppdkPu9iSdfgs3YpoeIh0VzkHAFfTZjaA7kIj3pJItLiU6bZoU3sdKRVKD0aCFvV0uBT2TBYbPBl7CyzevJsE8bvcL4DsZOIM1JDJSBxb/NcT3bDgHLPV/fqk78GgGsvtGV63pEiz91YYSnOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790868; c=relaxed/simple;
-	bh=ks4cSHqmMgFUiS26Rez6TPth0GJfCz/4G0t154aPzoo=;
+	s=arc-20240116; t=1790790870; c=relaxed/simple;
+	bh=eRXjl10Dllx4nK00fhrMFBoXCtYJGI5NaIVTy3K/GYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEDvh4j/bxIZbgfymkqtrXGGgaZfe5yW+J55/N6TR8xuScI0Rvu3mpE9DiCHFN/BV9ZLwLNjWYlSPP4bIAVf+JthQ2+RN+yBMh6nueFbqCf++vR67RbeCD58dSWkQXCBLY0SOf4SaBSX6+dPM7dKtlimIOzrBDQO3Ve9GvURFvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqdh5UBy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWpxyPAE3ncToVUFbnkHDnb86LskDlsL8M2eZUDCFbD341u3cQWQbbGBJqVDCYG2O7WZZebAgjU1vlux6TDNoY4wBYsATSEYjPAWa6v2sqCoFqTTdOE0KRE4DWABpTDprfD8oIJfLWeYKn6yKoLAc5vAUJGtzT/r/QN4YMP43LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+qKuzRF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqdh5UBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A1B1F00898;
-	Wed, 30 Sep 2026 17:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+qKuzRF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7871F000FF;
+	Wed, 30 Sep 2026 17:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790866;
-	bh=xcUr4ZnZ+eA9RMRpPOD+GncblmuNyI6egqAkJp9NS8E=;
+	s=korg; t=1790790869;
+	bh=C7j8NrtA6/34rin1wPchEWJlvZlKt2EDK145FmqM490=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fqdh5UBybXTJQq5sP0tVvAP+dxN2T/baUtSFjzZcyWKwsG9h/okuR2qyEpobQV1g9
-	 LyFHxBcSpiXwRRF4E0NG68FRbx0xP3nUcfDX48TBB0VgLmDqhF/D8LatCqkm4PW6Mx
-	 9aZYwayZSrjChcnySY6Mz3vPwKT/YuIXm/yVjue0=
+	b=P+qKuzRFhqw1elik2MN8BB3mThvI1gEKw1XZ7cHhzi1slPVkfREtBITHr9a5y6pdu
+	 vCC3woi1s3my0EpsFzIQfP2h0jEwYSfd8ut7yMEiEJRmMp4eI5rUr4UFMXkpuTQnXK
+	 suFo5AUstEHknh9Y5XEZQFwVHxUk02EjS5Po3DEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Chen Pei <cp0613@linux.alibaba.com>,
+	"Dan Williams (nvidia)" <djbw@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 102/752] ata: ahci: fail probe if BAR too small for claimed ports
-Date: Wed, 30 Sep 2026 17:19:32 +0200
-Message-ID: <20260930152400.374028346@linuxfoundation.org>
+Subject: [PATCH 5.15 103/752] ACPI: PCI: Clear _DEP dependencies after PCI root bridge attach
+Date: Wed, 30 Sep 2026 17:19:33 +0200
+Message-ID: <20260930152400.395891833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,80 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liyouhong <liyouhong@kylinos.cn>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-[ Upstream commit c4086c6e1af757e1ff26fa2d2926b3ec0195de79 ]
+[ Upstream commit 3a59c3b772e5dc0cedecce8e7fbf7c2d6245b643 ]
 
-When an AHCI controller is disabled in BIOS, its HOST_CAP register may
-contain a bogus value, e.g. 0xFFFFFFFF.
+PCI root bridges enumerated by acpi_pci_root_add() can be the _DEP
+supplier for other ACPI consumers, most notably ACPI0017 CXL root
+devices whose probe path depends on acpi_pci_find_root() succeeding.
+Once the root bus has been added, those consumers can safely be
+enumerated, so notify them by clearing the dependency.
 
-Since CAP.NP (Number of Ports) is a zeroes based 5-bit register field,
-a value of 0x1f means 32 ports. If CAP.NP claims more ports than can
-physically fit within the mapped BAR region, accessing port registers
-beyond the BAR boundary causes a kernel panic.
+Call acpi_dev_clear_dependencies() at the end of acpi_pci_root_add(),
+after pci_bus_add_devices(), following the same pattern used by other
+ACPI suppliers such as the EC (drivers/acpi/ec.c) and the ACPI PCI
+Link device (drivers/acpi/pci_link.c). The clear is intentionally
+done only on the success path; on the error paths the supplier did
+not attach and consumers must keep dep_unmet set.
 
-Add validation in ahci_init_one() to check that the BAR size is
-sufficient for the number of ports claimed in CAP.NP. The check
-calculates the required MMIO size as:
+This is a prerequisite for honoring _DEP on ACPI0016 host bridges,
+which matters on architectures where the probe order of acpi_pci_root
+relative to cxl_acpi is not guaranteed (e.g. RISC-V).
 
-  required_size = 0x100 (global registers) + max_ports * 0x80
-
-If required_size exceeds the actual BAR size, the probe fails with
--ENODEV, preventing the panic and providing a clear error message.
-
-Reported-by: liyouhong <liyouhong@kylinos.cn>
-Closes: https://lore.kernel.org/all/20260422080322.1006592-1-dayou5941@163.com/
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-[cassel: commit log]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Suggested-by: Dan Williams (nvidia) <djbw@kernel.org>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260526025118.38935-2-cp0613@linux.alibaba.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/acpi/pci_root.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index c3a9264ed77c2..93dbdbea3a1ac 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -1772,6 +1772,24 @@ static ssize_t remapped_nvme_show(struct device *dev,
- 
- static DEVICE_ATTR_RO(remapped_nvme);
- 
-+static int ahci_validate_bar_size(struct pci_dev *pdev, int bar,
-+				  struct ahci_host_priv *hpriv)
-+{
-+	u32 cap = readl(hpriv->mmio + HOST_CAP);
-+	unsigned int max_ports = ahci_nr_ports(cap);
-+	u32 last_port_end = 0x100 + (max_ports * 0x80);
-+	resource_size_t bar_size = pci_resource_len(pdev, bar);
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index 19ce7cb7512b5..4b3aae4d9bef0 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -628,6 +628,10 @@ static int acpi_pci_root_add(struct acpi_device *device,
+ 	pci_lock_rescan_remove();
+ 	pci_bus_add_devices(root->bus);
+ 	pci_unlock_rescan_remove();
 +
-+	if (last_port_end > bar_size) {
-+		dev_warn(&pdev->dev,
-+			 "BAR%d too small for %u ports (last port ends at %#x, BAR %pa)\n",
-+			 bar, max_ports, last_port_end, &bar_size);
-+		return -ENODEV;
-+	}
++	/* Clear _DEP dependencies to allow consumers to enumerate */
++	acpi_dev_clear_dependencies(device);
 +
-+	return 0;
-+}
-+
- static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	unsigned int board_id = ent->driver_data;
-@@ -1876,6 +1894,10 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	return 1;
  
- 	hpriv->mmio = pcim_iomap_table(pdev)[ahci_pci_bar];
- 
-+	rc = ahci_validate_bar_size(pdev, ahci_pci_bar, hpriv);
-+	if (rc)
-+		return rc;
-+
- 	/* detect remapped nvme devices */
- 	ahci_remap_check(pdev, ahci_pci_bar, hpriv);
- 
+ remove_dmar:
 -- 
 2.53.0
 
