@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA643438A6;
-	Wed, 30 Sep 2026 17:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9435230BDB;
+	Wed, 30 Sep 2026 17:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788096; cv=none; b=nH1mxDy6XRl6/59cFNhJcSz2MVU1pFefgX/lUgqRmL6Zsyrgwdj1Ck4pYbR7F9K+GFB9MX0MZTfnH3MyVZ+hEcUhW5Va+tmsq62xIWyI4MS+p7tXy82TantcNkgX40Abb1p9Az1bPHEhqBv1kTkI7cq34UkYiuok5mojIhfE7JI=
+	t=1790788099; cv=none; b=qpaj0nBiXkWB1wc8XddADzKwHaijgRuYi/8S+VjG8a5jXGN+NLvw2N2DcBgHarrm5Hxqixs4TIAy2c2E2uGtQzdNF87WJbbHZ736zkuZ7VxX8sOwt4CW/DWhL93WhslUFTK+//Mi9WZ29nR3d88zL4Djox4avoMJrr9Q7TzSItc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788096; c=relaxed/simple;
-	bh=YtTzAtYDDLaRWsW+ubjyNmdCLs60m/ygdWuxFVWY7YA=;
+	s=arc-20240116; t=1790788099; c=relaxed/simple;
+	bh=ukLXPTORDYbKuvT5S4nUUtS/SHNy9GdEPPJ2EukswvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drczjH4hAlV8yGXcYeFqZ487mfB/Cn3aGuvw11q/FkT+MJENO/xcilqBzT5SdjP51pYPFxpW0bMEoXHxi3RwMvcHQBq4vAj6RLM0rCg+Ae4yD/I1kUT53czKFEvWNq/fDQ/JaIg4VGWIs+Bq9VhFKPW0L9glIFw9Ywkq7C7+uTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6CieCPq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V0F4j51Cu33wSuwu2pylHD1wpLLgH6L5nBy3wtUHTXEYQs0Q7KAvvONnaELM/gSITWVx7XJt7fJYHFdh0XMx9KssdGsMQS8VU4jJoLmRIMyv5gwlGF6d1LXSlKKAhDm2f1I/iuB2CkwgAfxTjXTC8FiK3OXPU6GO7XqKs3K6/Sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7OFcKSC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6CieCPq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E9A1F000FF;
-	Wed, 30 Sep 2026 17:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7OFcKSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F29D1F000FF;
+	Wed, 30 Sep 2026 17:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788094;
-	bh=ZTuEEVzda+ZIrqnYswDPA4OUynA9fA2er217I8py5tg=;
+	s=korg; t=1790788097;
+	bh=IUAOHlayQlaQXBK7NoCD1mF4UUhhYG6sTaC0+onjg6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6CieCPq71r64Y9z2RlInkJRwbm4NsJ1XrfiSbqcXGM6tTBSPw5LRPUcnW414mHmW
-	 3CLwO+2Y3U/AWoGylOMQafSdAGdFXzc/b7k21aTlDSWcQ2joy7wL/lRlkOqrz68S6N
-	 q1QCiuYkpXi/uL7Ka3k/AVctF9GGqQktty3mhVnE=
+	b=O7OFcKSCsjn+3sgBqt5alDUhfBwzMppyWRqqNJH+KSfqPdu/4AuTGMfysDd4sEKPf
+	 6dU9YxJTkXZAu8aDaXQqheEGalp7dRA+uS8j9hT8QWJoW5JMYS9W6UJvcniS45NwWP
+	 nffKCK9QZmmDDxsuT9FpuNcRO6J2yFaPoOMhAbkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Wei-Lin Chang <weilin.chang@arm.com>,
-	Oliver Upton <oupton@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Binbin Wu <binbin.wu@linux.intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 449/457] KVM: arm64: nv: Delay freeing of shadow S2 structures until VM destruction
-Date: Wed, 30 Sep 2026 17:29:14 +0200
-Message-ID: <20260930152355.694790029@linuxfoundation.org>
+Subject: [PATCH 7.2 450/457] KVM: x86: Move IRQ-related helper declarations from kvm_host.h => irq.h
+Date: Wed, 30 Sep 2026 17:29:15 +0200
+Message-ID: <20260930152355.717163090@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,100 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit e5843f4effaa2ffac3e789ecd4456403564961d4 ]
+[ Upstream commit 0bdd2d6d7328a7debcf138a7d6ef95d01a26b1b8 ]
 
-We free the shadow S2 structures from kvm_arch_flush_shadow_all(), which
-is a Bad Idea(tm). Freeing the page tables is fair game (this is what
-this callback is for), but freeing the container that could still be
-referenced by another part of the system is not great.
+Move the function declaration for APIs to get/query pending IRQs from
+kvm_host.h to irq.h, as the APIs are only used by KVM x86 code.
 
-Instead, grow separate destructors that gets called when we tear the VM
-down for good. From there, we can nuke both the individual MMUs as well
-as the global array that points to them, safe in the knowledge that the
-vcpus themselves have been destroyed already.
+No functional change intended.
 
-Fixes: 4f128f8e1aaac ("KVM: arm64: nv: Support multiple nested Stage-2 mmu structures")
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
-Link: https://patch.msgid.link/20260911162203.1919330-3-maz@kernel.org
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
+Message-ID: <20260613000329.732085-25-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 10180a277549 ("KVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_nested.h |    1 +
- arch/arm64/kvm/arm.c                |    4 ++--
- arch/arm64/kvm/nested.c             |   15 ++++++++++-----
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ arch/x86/include/asm/kvm_host.h |    5 -----
+ arch/x86/kvm/irq.h              |    6 ++++++
+ arch/x86/kvm/svm/nested.c       |    1 +
+ arch/x86/kvm/vmx/nested.c       |    1 +
+ 4 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_nested.h
-+++ b/arch/arm64/include/asm/kvm_nested.h
-@@ -67,6 +67,7 @@ static inline u64 translate_ttbr0_el2_to
- extern bool forward_smc_trap(struct kvm_vcpu *vcpu);
- extern bool forward_debug_exception(struct kvm_vcpu *vcpu);
- extern int kvm_init_nested(struct kvm *kvm);
-+extern void kvm_destroy_nested(struct kvm *kvm);
- extern int kvm_vcpu_init_nested(struct kvm_vcpu *vcpu);
- extern void kvm_init_nested_s2_mmu(struct kvm_s2_mmu *mmu);
- extern struct kvm_s2_mmu *lookup_s2_mmu(struct kvm_vcpu *vcpu);
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -282,7 +282,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -2462,12 +2462,7 @@ enum {
+ # define kvm_memslots_for_spte_role(kvm, role) __kvm_memslots(kvm, 0)
+ #endif
  
- err_uninit_mmu:
- 	kvm_uninit_stage2_mmu(kvm);
--	kvfree(kvm->arch.nested_mmus);
-+	kvm_destroy_nested(kvm);
- err_free_cpumask:
- 	free_cpumask_var(kvm->arch.supported_cpus);
- err_unshare_kvm:
-@@ -340,7 +340,7 @@ void kvm_arch_destroy_vm(struct kvm *kvm
+-int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
+-int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
+-int kvm_cpu_has_extint(struct kvm_vcpu *v);
+ int kvm_arch_interrupt_allowed(struct kvm_vcpu *vcpu);
+-int kvm_cpu_get_extint(struct kvm_vcpu *v);
+-int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
+ void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event);
  
- 	kvm_unshare_hyp(kvm, kvm + 1);
- 
--	kvfree(kvm->arch.nested_mmus);
-+	kvm_destroy_nested(kvm);
- 	kvm_arm_teardown_hypercalls(kvm);
+ int kvm_pv_send_ipi(struct kvm *kvm, unsigned long ipi_bitmap_low,
+--- a/arch/x86/kvm/irq.h
++++ b/arch/x86/kvm/irq.h
+@@ -112,6 +112,12 @@ static inline int irqchip_in_kernel(stru
+ 	return mode != KVM_IRQCHIP_NONE;
  }
  
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -54,6 +54,15 @@ int kvm_init_nested(struct kvm *kvm)
- 	return kvm->arch.nested_mmus ? 0 : -ENOMEM;
- }
- 
-+void kvm_destroy_nested(struct kvm *kvm)
-+{
-+	for (int i = 0; i < kvm->arch.nested_mmus_size; i+= S2_MMU_PER_VCPU)
-+		kvfree(kvm->arch.nested_mmus[i]);
++int kvm_cpu_has_injectable_intr(struct kvm_vcpu *v);
++int kvm_cpu_has_interrupt(struct kvm_vcpu *vcpu);
++int kvm_cpu_has_extint(struct kvm_vcpu *v);
++int kvm_cpu_get_extint(struct kvm_vcpu *v);
++int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
 +
-+	kvm->arch.nested_mmus_size = 0;
-+	kvfree(kvm->arch.nested_mmus);
-+}
-+
- static int init_nested_s2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
- {
- 	/*
-@@ -1318,16 +1327,12 @@ void kvm_nested_s2_flush(struct kvm *kvm
+ void kvm_inject_pending_timer_irqs(struct kvm_vcpu *vcpu);
+ void kvm_inject_apic_timer_irqs(struct kvm_vcpu *vcpu);
+ void kvm_apic_nmi_wd_deliver(struct kvm_vcpu *vcpu);
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -23,6 +23,7 @@
  
- void kvm_arch_flush_shadow_all(struct kvm *kvm)
- {
--	for (int i = kvm->arch.nested_mmus_size - 1; i >= 0; i--) {
-+	for (int i = 0; i < kvm->arch.nested_mmus_size; i++) {
- 		struct kvm_s2_mmu *mmu = kvm->arch.nested_mmus[i];
- 
- 		if (!WARN_ON(atomic_read(&mmu->refcnt)))
- 			kvm_free_stage2_pgd(mmu);
--
--		if ((i % S2_MMU_PER_VCPU) == 0)
--			kvfree(mmu);
- 	}
--	kvm->arch.nested_mmus_size = 0;
- 	kvm_uninit_stage2_mmu(kvm);
- }
- 
+ #include "kvm_emulate.h"
+ #include "trace.h"
++#include "irq.h"
+ #include "mmu.h"
+ #include "x86.h"
+ #include "smm.h"
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -11,6 +11,7 @@
+ #include "x86.h"
+ #include "cpuid.h"
+ #include "hyperv.h"
++#include "irq.h"
+ #include "mmu.h"
+ #include "nested.h"
+ #include "pmu.h"
 
 
