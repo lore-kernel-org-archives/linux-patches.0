@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0111374A17;
-	Wed, 30 Sep 2026 18:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993B2374A17;
+	Wed, 30 Sep 2026 18:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791487; cv=none; b=uhD1OH3vdzXM6Vh8L0sicHEcZfmKvwIMhvxn6oDnZEQCVCS4b9GoTGXfurX3Lws316AGyiBO1R8ZI4u3FwMj7pOJhjNsTQbk7TwdNL2rnid/zARQTQw+TIlqUWKtscv9QcqlOUlBlxv3jKys+0EXWAiMmfetz7fVsstHRb3I494=
+	t=1790791490; cv=none; b=hoF+gnFy48V96mQSo5RwcgAvP5LAz12lPPTo8GSA3x0MHfebGTyEqzOuYWVr5m72RhH4O68oN4TnzZxbabOoZTI/SWu5ygcsZ652opt6kwhldQ3qHnwnT+1Xbg//DPrr1AREC/v3RhMMgEDx17jxScaaWO59p/2yIJcESOt+068=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791487; c=relaxed/simple;
-	bh=eHtPo53xJg/G1xoVzO0n0iLJN5TaW+4lL6qHC49e1O0=;
+	s=arc-20240116; t=1790791490; c=relaxed/simple;
+	bh=98pmetn4R2xhxCy5wPFllZldg3+LocQJ0/ozSqWg89M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYsYd2Nrfcgl+kvHKhTPwJWbEscSf8Ya/KOXeVS6NZI6LgSpDliycog3uUQdwmpryynrigAvBq7XKF9DMv+SMdzSTttVWnu75hAA8qEO2v+kpM35vFfnOO2k2FHI0PHgXwX8Y3avWUa1cGqtAswY6JpIuYmotRwgjjufYVlom0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trFubiS2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jo6PbqX0fLkwpJMkZ21A84aZVQYAxs2AQFkXOeJHUEgKxvFVZVebPUB7AOVO5uduTQVZS/VtfLNkMvPPpRifKR2UktY8kraq9x9K4URcKtA8JBBdj2uS9UVM6I2P4WSVgMrahbdusrM0MsOhdiMwojguOUWi1dtRPflI3D7EhQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tn3XBPhF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trFubiS2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2879B1F000FF;
-	Wed, 30 Sep 2026 18:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tn3XBPhF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F353B1F000FF;
+	Wed, 30 Sep 2026 18:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791485;
-	bh=eJm/HHiXgUVjlYm0VfYMFj6+WfMCYlzAZuipG/0hwqE=;
+	s=korg; t=1790791488;
+	bh=f8m+rhi8seGUidv/McfAbW/BdWTaQl3ChSmX1FgagUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trFubiS2z3lEhGRt89wTXPEPJtBjwlL9t4y1dm55Sg9G0/g5tCobtSn6hERW91ksV
-	 1q1sRwoHgEwdV3G60HnRCKjrE+PC60IR6ZZNCEpAroPr8CGw05zHy1hWBQJx2ISyTX
-	 23bfnpl/grcFh42+B9A+2UJPuGgRyFMhWXSAm8qA=
+	b=tn3XBPhFZqIrj38XPU5vsBxQCQtMwqf//RAsMPP+D0kpy0atH6qhX57npxut0poXQ
+	 5CXBWNKfa/gbKTv56XkBoFNy1iv+bb+0K56gCECk+ZyquTkDS31neY/an685QLpnal
+	 qIgmWKkAwMz4D0inVAgoAO8bKoJqxxfF/d5G7+5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 274/752] locking/lockdep: Improve the deadlock scenario print for sync and read lock
-Date: Wed, 30 Sep 2026 17:22:24 +0200
-Message-ID: <20260930152404.216605596@linuxfoundation.org>
+Subject: [PATCH 5.15 275/752] lockdep: Add lock_set_cmp_fn() annotation
+Date: Wed, 30 Sep 2026 17:22:25 +0200
+Message-ID: <20260930152404.239636044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,209 +51,436 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boqun Feng <boqun.feng@gmail.com>
+From: Kent Overstreet <kent.overstreet@linux.dev>
 
-[ Upstream commit 0471db447cb7de56bbe2fedd9256b4d2b8ef642a ]
+[ Upstream commit eb1cfd09f788e39948a82be8063e54e40dd018d9 ]
 
-Lock scenario print is always a weak spot of lockdep splats. Improvement
-can be made if we rework the dependency search and the error printing.
+This implements a new interface to lockdep, lock_set_cmp_fn(), for
+defining a custom ordering when taking multiple locks of the same
+class.
 
-However without touching the graph search, we can improve a little for
-the circular deadlock case, since we have the to-be-added lock
-dependency, and know whether these two locks are read/write/sync.
+This is an alternative to subclasses, but can not fully replace them
+since subclasses allow lock hierarchies with other clasees
+inter-twined, while this relies on pure class nesting.
 
-In order to know whether a held_lock is sync or not, a bit was
-"stolen" from ->references, which reduce our limit for the same lock
-class nesting from 2^12 to 2^11, and it should still be good enough.
+Specifically, if A is our nesting class then:
 
-Besides, since we now have bit in held_lock for sync, we don't need the
-"hardirqoffs being 1" trick, and also we can avoid the __lock_release()
-if we jump out of __lock_acquire() before the held_lock stored.
+  A/0 <- B <- A/1
 
-With these changes, a deadlock case evolved with read lock and sync gets
-a better print-out from:
+Would be a valid lock order with subclasses (each subclass really is a
+full class from the validation PoV) but not with this annotation,
+which requires all nesting to be consecutive.
 
-	[...]  Possible unsafe locking scenario:
-	[...]
-	[...]        CPU0                    CPU1
-	[...]        ----                    ----
-	[...]   lock(srcuA);
-	[...]                                lock(srcuB);
-	[...]                                lock(srcuA);
-	[...]   lock(srcuB);
+Example output:
 
-to
+| ============================================
+| WARNING: possible recursive locking detected
+| 6.2.0-rc8-00003-g7d81e591ca6a-dirty #15 Not tainted
+| --------------------------------------------
+| kworker/14:3/938 is trying to acquire lock:
+| ffff8880143218c8 (&b->lock l=0 0:2803368){++++}-{3:3}, at: bch_btree_node_get.part.0+0x81/0x2b0
+|
+| but task is already holding lock:
+| ffff8880143de8c8 (&b->lock l=1 1048575:9223372036854775807){++++}-{3:3}, at: __bch_btree_map_nodes+0xea/0x1e0
+| and the lock comparison function returns 1:
+|
+| other info that might help us debug this:
+|  Possible unsafe locking scenario:
+|
+|        CPU0
+|        ----
+|   lock(&b->lock l=1 1048575:9223372036854775807);
+|   lock(&b->lock l=0 0:2803368);
+|
+|  *** DEADLOCK ***
+|
+|  May be due to missing lock nesting notation
+|
+| 3 locks held by kworker/14:3/938:
+|  #0: ffff888005ea9d38 ((wq_completion)bcache){+.+.}-{0:0}, at: process_one_work+0x1ec/0x530
+|  #1: ffff8880098c3e70 ((work_completion)(&cl->work)#3){+.+.}-{0:0}, at: process_one_work+0x1ec/0x530
+|  #2: ffff8880143de8c8 (&b->lock l=1 1048575:9223372036854775807){++++}-{3:3}, at: __bch_btree_map_nodes+0xea/0x1e0
 
-	[...]  Possible unsafe locking scenario:
-	[...]
-	[...]        CPU0                    CPU1
-	[...]        ----                    ----
-	[...]   rlock(srcuA);
-	[...]                                lock(srcuB);
-	[...]                                lock(srcuA);
-	[...]   sync(srcuB);
-
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+[peterz: extended changelog]
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230509195847.1745548-1-kent.overstreet@linux.dev
 Stable-dep-of: 02c6be7d675b ("locking/lockdep: Invalidate stale class_cache entries for zapped classes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/lockdep.h  |  3 ++-
- kernel/locking/lockdep.c | 48 ++++++++++++++++++++++++++--------------
- 2 files changed, 34 insertions(+), 17 deletions(-)
+ include/linux/lockdep.h       |   8 +++
+ include/linux/lockdep_types.h |   8 +++
+ kernel/locking/lockdep.c      | 118 +++++++++++++++++++++++++---------
+ 3 files changed, 103 insertions(+), 31 deletions(-)
 
 diff --git a/include/linux/lockdep.h b/include/linux/lockdep.h
-index 4ec21addcec3a..710f5fb64813e 100644
+index 710f5fb64813e..e8cb0f1925ba4 100644
 --- a/include/linux/lockdep.h
 +++ b/include/linux/lockdep.h
-@@ -138,7 +138,8 @@ struct held_lock {
- 	unsigned int read:2;        /* see lock_acquire() comment */
- 	unsigned int check:1;       /* see lock_acquire() comment */
- 	unsigned int hardirqs_off:1;
--	unsigned int references:12;					/* 32 bits */
-+	unsigned int sync:1;
-+	unsigned int references:11;					/* 32 bits */
- 	unsigned int pin_count;
- };
+@@ -434,6 +434,14 @@ extern int lockdep_is_held(const void *);
+ 
+ #endif /* !LOCKDEP */
+ 
++#ifdef CONFIG_PROVE_LOCKING
++void lockdep_set_lock_cmp_fn(struct lockdep_map *, lock_cmp_fn, lock_print_fn);
++
++#define lock_set_cmp_fn(lock, ...)	lockdep_set_lock_cmp_fn(&(lock)->dep_map, __VA_ARGS__)
++#else
++#define lock_set_cmp_fn(lock, ...)	do { } while (0)
++#endif
++
+ enum xhlock_context_t {
+ 	XHLOCK_HARD,
+ 	XHLOCK_SOFT,
+diff --git a/include/linux/lockdep_types.h b/include/linux/lockdep_types.h
+index 3e726ace5c621..6c5c270469469 100644
+--- a/include/linux/lockdep_types.h
++++ b/include/linux/lockdep_types.h
+@@ -84,6 +84,11 @@ struct lock_trace;
+ 
+ #define LOCKSTAT_POINTS		4
+ 
++struct lockdep_map;
++typedef int (*lock_cmp_fn)(const struct lockdep_map *a,
++			   const struct lockdep_map *b);
++typedef void (*lock_print_fn)(const struct lockdep_map *map);
++
+ /*
+  * The lock-class itself. The order of the structure members matters.
+  * reinit_class() zeroes the key member and all subsequent members.
+@@ -109,6 +114,9 @@ struct lock_class {
+ 	struct list_head		locks_after, locks_before;
+ 
+ 	const struct lockdep_subclass_key *key;
++	lock_cmp_fn			cmp_fn;
++	lock_print_fn			print_fn;
++
+ 	unsigned int			subclass;
+ 	unsigned int			dep_gen_id;
  
 diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 585d0b5574a5c..018d156151afd 100644
+index 018d156151afd..94c228fbb0512 100644
 --- a/kernel/locking/lockdep.c
 +++ b/kernel/locking/lockdep.c
-@@ -1836,6 +1836,8 @@ print_circular_lock_scenario(struct held_lock *src,
- 	struct lock_class *source = hlock_class(src);
- 	struct lock_class *target = hlock_class(tgt);
- 	struct lock_class *parent = prt->class;
-+	int src_read = src->read;
-+	int tgt_read = tgt->read;
+@@ -678,7 +678,7 @@ void get_usage_chars(struct lock_class *class, char usage[LOCK_USAGE_CHARS])
+ 	usage[i] = '\0';
+ }
  
- 	/*
- 	 * A direct locking problem where unsafe_class lock is taken
-@@ -1863,7 +1865,10 @@ print_circular_lock_scenario(struct held_lock *src,
- 	printk(" Possible unsafe locking scenario:\n\n");
- 	printk("       CPU0                    CPU1\n");
- 	printk("       ----                    ----\n");
--	printk("  lock(");
-+	if (tgt_read != 0)
-+		printk("  rlock(");
-+	else
-+		printk("  lock(");
- 	__print_lock_name(target);
+-static void __print_lock_name(struct lock_class *class)
++static void __print_lock_name(struct held_lock *hlock, struct lock_class *class)
+ {
+ 	char str[KSYM_NAME_LEN];
+ 	const char *name;
+@@ -693,17 +693,19 @@ static void __print_lock_name(struct lock_class *class)
+ 			printk(KERN_CONT "#%d", class->name_version);
+ 		if (class->subclass)
+ 			printk(KERN_CONT "/%d", class->subclass);
++		if (hlock && class->print_fn)
++			class->print_fn(hlock->instance);
+ 	}
+ }
+ 
+-static void print_lock_name(struct lock_class *class)
++static void print_lock_name(struct held_lock *hlock, struct lock_class *class)
+ {
+ 	char usage[LOCK_USAGE_CHARS];
+ 
+ 	get_usage_chars(class, usage);
+ 
+ 	printk(KERN_CONT " (");
+-	__print_lock_name(class);
++	__print_lock_name(hlock, class);
+ 	printk(KERN_CONT "){%s}-{%d:%d}", usage,
+ 			class->wait_type_outer ?: class->wait_type_inner,
+ 			class->wait_type_inner);
+@@ -741,7 +743,7 @@ static void print_lock(struct held_lock *hlock)
+ 	}
+ 
+ 	printk(KERN_CONT "%px", hlock->instance);
+-	print_lock_name(lock);
++	print_lock_name(hlock, lock);
+ 	printk(KERN_CONT ", at: %pS\n", (void *)hlock->acquire_ip);
+ }
+ 
+@@ -1823,7 +1825,7 @@ print_circular_bug_entry(struct lock_list *target, int depth)
+ 	if (debug_locks_silent)
+ 		return;
+ 	printk("\n-> #%u", depth);
+-	print_lock_name(target->class);
++	print_lock_name(NULL, target->class);
+ 	printk(KERN_CONT ":\n");
+ 	print_lock_trace(target->trace, 6);
+ }
+@@ -1854,11 +1856,11 @@ print_circular_lock_scenario(struct held_lock *src,
+ 	 */
+ 	if (parent != source) {
+ 		printk("Chain exists of:\n  ");
+-		__print_lock_name(source);
++		__print_lock_name(src, source);
+ 		printk(KERN_CONT " --> ");
+-		__print_lock_name(parent);
++		__print_lock_name(NULL, parent);
+ 		printk(KERN_CONT " --> ");
+-		__print_lock_name(target);
++		__print_lock_name(tgt, target);
+ 		printk(KERN_CONT "\n\n");
+ 	}
+ 
+@@ -1869,13 +1871,13 @@ print_circular_lock_scenario(struct held_lock *src,
+ 		printk("  rlock(");
+ 	else
+ 		printk("  lock(");
+-	__print_lock_name(target);
++	__print_lock_name(tgt, target);
  	printk(KERN_CONT ");\n");
  	printk("                               lock(");
-@@ -1872,7 +1877,12 @@ print_circular_lock_scenario(struct held_lock *src,
- 	printk("                               lock(");
- 	__print_lock_name(target);
+-	__print_lock_name(parent);
++	__print_lock_name(NULL, parent);
  	printk(KERN_CONT ");\n");
--	printk("  lock(");
-+	if (src_read != 0)
-+		printk("  rlock(");
-+	else if (src->sync)
-+		printk("  sync(");
-+	else
-+		printk("  lock(");
- 	__print_lock_name(source);
+ 	printk("                               lock(");
+-	__print_lock_name(target);
++	__print_lock_name(tgt, target);
+ 	printk(KERN_CONT ");\n");
+ 	if (src_read != 0)
+ 		printk("  rlock(");
+@@ -1883,7 +1885,7 @@ print_circular_lock_scenario(struct held_lock *src,
+ 		printk("  sync(");
+ 	else
+ 		printk("  lock(");
+-	__print_lock_name(source);
++	__print_lock_name(src, source);
  	printk(KERN_CONT ");\n");
  	printk("\n *** DEADLOCK ***\n\n");
-@@ -4487,7 +4497,13 @@ mark_usage(struct task_struct *curr, struct held_lock *hlock, int check)
- 					return 0;
+ }
+@@ -2109,6 +2111,8 @@ check_path(struct held_lock *target, struct lock_list *src_entry,
+ 	return ret;
+ }
+ 
++static void print_deadlock_bug(struct task_struct *, struct held_lock *, struct held_lock *);
++
+ /*
+  * Prove that the dependency graph starting at <src> can not
+  * lead to <target>. If it can, there is a circle when adding
+@@ -2140,7 +2144,10 @@ check_noncircular(struct held_lock *src, struct held_lock *target,
+ 			*trace = save_trace();
  		}
+ 
+-		print_circular_bug(&src_entry, target_entry, src, target);
++		if (src->class_idx == target->class_idx)
++			print_deadlock_bug(current, src, target);
++		else
++			print_circular_bug(&src_entry, target_entry, src, target);
  	}
--	if (!hlock->hardirqs_off) {
-+
-+	/*
-+	 * For lock_sync(), don't mark the ENABLED usage, since lock_sync()
-+	 * creates no critical section and no extra dependency can be introduced
-+	 * by interrupts
-+	 */
-+	if (!hlock->hardirqs_off && !hlock->sync) {
- 		if (hlock->read) {
- 			if (!mark_lock(curr, hlock,
- 					LOCK_ENABLED_HARDIRQ_READ))
-@@ -4866,7 +4882,7 @@ static int __lock_is_held(const struct lockdep_map *lock, int read);
- static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 			  int trylock, int read, int check, int hardirqs_off,
- 			  struct lockdep_map *nest_lock, unsigned long ip,
--			  int references, int pin_count)
-+			  int references, int pin_count, int sync)
+ 
+ 	return ret;
+@@ -2296,7 +2303,7 @@ static void print_lock_class_header(struct lock_class *class, int depth)
+ 	int bit;
+ 
+ 	printk("%*s->", depth, "");
+-	print_lock_name(class);
++	print_lock_name(NULL, class);
+ #ifdef CONFIG_DEBUG_LOCKDEP
+ 	printk(KERN_CONT " ops: %lu", debug_class_ops_read(class));
+ #endif
+@@ -2478,11 +2485,11 @@ print_irq_lock_scenario(struct lock_list *safe_entry,
+ 	 */
+ 	if (middle_class != unsafe_class) {
+ 		printk("Chain exists of:\n  ");
+-		__print_lock_name(safe_class);
++		__print_lock_name(NULL, safe_class);
+ 		printk(KERN_CONT " --> ");
+-		__print_lock_name(middle_class);
++		__print_lock_name(NULL, middle_class);
+ 		printk(KERN_CONT " --> ");
+-		__print_lock_name(unsafe_class);
++		__print_lock_name(NULL, unsafe_class);
+ 		printk(KERN_CONT "\n\n");
+ 	}
+ 
+@@ -2490,18 +2497,18 @@ print_irq_lock_scenario(struct lock_list *safe_entry,
+ 	printk("       CPU0                    CPU1\n");
+ 	printk("       ----                    ----\n");
+ 	printk("  lock(");
+-	__print_lock_name(unsafe_class);
++	__print_lock_name(NULL, unsafe_class);
+ 	printk(KERN_CONT ");\n");
+ 	printk("                               local_irq_disable();\n");
+ 	printk("                               lock(");
+-	__print_lock_name(safe_class);
++	__print_lock_name(NULL, safe_class);
+ 	printk(KERN_CONT ");\n");
+ 	printk("                               lock(");
+-	__print_lock_name(middle_class);
++	__print_lock_name(NULL, middle_class);
+ 	printk(KERN_CONT ");\n");
+ 	printk("  <Interrupt>\n");
+ 	printk("    lock(");
+-	__print_lock_name(safe_class);
++	__print_lock_name(NULL, safe_class);
+ 	printk(KERN_CONT ");\n");
+ 	printk("\n *** DEADLOCK ***\n\n");
+ }
+@@ -2538,20 +2545,20 @@ print_bad_irq_dependency(struct task_struct *curr,
+ 	pr_warn("\nand this task is already holding:\n");
+ 	print_lock(prev);
+ 	pr_warn("which would create a new lock dependency:\n");
+-	print_lock_name(hlock_class(prev));
++	print_lock_name(prev, hlock_class(prev));
+ 	pr_cont(" ->");
+-	print_lock_name(hlock_class(next));
++	print_lock_name(next, hlock_class(next));
+ 	pr_cont("\n");
+ 
+ 	pr_warn("\nbut this new dependency connects a %s-irq-safe lock:\n",
+ 		irqclass);
+-	print_lock_name(backwards_entry->class);
++	print_lock_name(NULL, backwards_entry->class);
+ 	pr_warn("\n... which became %s-irq-safe at:\n", irqclass);
+ 
+ 	print_lock_trace(backwards_entry->class->usage_traces[bit1], 1);
+ 
+ 	pr_warn("\nto a %s-irq-unsafe lock:\n", irqclass);
+-	print_lock_name(forwards_entry->class);
++	print_lock_name(NULL, forwards_entry->class);
+ 	pr_warn("\n... which became %s-irq-unsafe at:\n", irqclass);
+ 	pr_warn("...");
+ 
+@@ -2921,10 +2928,10 @@ print_deadlock_scenario(struct held_lock *nxt, struct held_lock *prv)
+ 	printk("       CPU0\n");
+ 	printk("       ----\n");
+ 	printk("  lock(");
+-	__print_lock_name(prev);
++	__print_lock_name(prv, prev);
+ 	printk(KERN_CONT ");\n");
+ 	printk("  lock(");
+-	__print_lock_name(next);
++	__print_lock_name(nxt, next);
+ 	printk(KERN_CONT ");\n");
+ 	printk("\n *** DEADLOCK ***\n\n");
+ 	printk(" May be due to missing lock nesting notation\n\n");
+@@ -2934,6 +2941,8 @@ static void
+ print_deadlock_bug(struct task_struct *curr, struct held_lock *prev,
+ 		   struct held_lock *next)
  {
- 	struct task_struct *curr = current;
- 	struct lock_class *class = NULL;
-@@ -4917,7 +4933,8 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 
- 	class_idx = class - lock_classes;
- 
--	if (depth) { /* we're holding locks */
-+	if (depth && !sync) {
-+		/* we're holding locks and the new held lock is not a sync */
- 		hlock = curr->held_locks + depth - 1;
- 		if (hlock->class_idx == class_idx && nest_lock) {
- 			if (!references)
-@@ -4951,6 +4968,7 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 	hlock->trylock = trylock;
- 	hlock->read = read;
- 	hlock->check = check;
-+	hlock->sync = !!sync;
- 	hlock->hardirqs_off = !!hardirqs_off;
- 	hlock->references = references;
- #ifdef CONFIG_LOCK_STAT
-@@ -5012,6 +5030,10 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
- 	if (!validate_chain(curr, hlock, chain_head, chain_key))
- 		return 0;
- 
-+	/* For lock_sync(), we are done here since no actual critical section */
-+	if (hlock->sync)
-+		return 1;
++	struct lock_class *class = hlock_class(prev);
 +
- 	curr->curr_chain_key = chain_key;
- 	curr->lockdep_depth++;
- 	check_chain_key(curr);
-@@ -5153,7 +5175,7 @@ static int reacquire_held_locks(struct task_struct *curr, unsigned int depth,
- 				    hlock->read, hlock->check,
- 				    hlock->hardirqs_off,
- 				    hlock->nest_lock, hlock->acquire_ip,
--				    hlock->references, hlock->pin_count)) {
-+				    hlock->references, hlock->pin_count, 0)) {
- 		case 0:
- 			return 1;
- 		case 1:
-@@ -5623,7 +5645,7 @@ void lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 	if (!debug_locks_off_graph_unlock() || debug_locks_silent)
+ 		return;
  
- 	lockdep_recursion_inc();
- 	__lock_acquire(lock, subclass, trylock, read, check,
--		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0);
-+		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0, 0);
- 	lockdep_recursion_finish();
- 	raw_local_irq_restore(flags);
- }
-@@ -5656,11 +5678,6 @@ EXPORT_SYMBOL_GPL(lock_release);
-  * APIs are used to wait for one or multiple critical sections (on other CPUs
-  * or threads), and it means that calling these APIs inside these critical
-  * sections is potential deadlock.
-- *
-- * This annotation acts as an acquire+release annotation pair with hardirqoff
-- * being 1. Since there's no critical section, no interrupt can create extra
-- * dependencies "inside" the annotation, hardirqoff == 1 allows us to avoid
-- * false positives.
-  */
- void lock_sync(struct lockdep_map *lock, unsigned subclass, int read,
- 	       int check, struct lockdep_map *nest_lock, unsigned long ip)
-@@ -5674,10 +5691,9 @@ void lock_sync(struct lockdep_map *lock, unsigned subclass, int read,
- 	check_flags(flags);
+@@ -2948,6 +2957,11 @@ print_deadlock_bug(struct task_struct *curr, struct held_lock *prev,
+ 	pr_warn("\nbut task is already holding lock:\n");
+ 	print_lock(prev);
  
- 	lockdep_recursion_inc();
--	__lock_acquire(lock, subclass, 0, read, check, 1, nest_lock, ip, 0, 0);
--
--	if (__lock_release(lock, ip))
--		check_chain_key(current);
-+	__lock_acquire(lock, subclass, 0, read, check,
-+		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0, 1);
-+	check_chain_key(current);
- 	lockdep_recursion_finish();
- 	raw_local_irq_restore(flags);
++	if (class->cmp_fn) {
++		pr_warn("and the lock comparison function returns %i:\n",
++			class->cmp_fn(prev->instance, next->instance));
++	}
++
+ 	pr_warn("\nother info that might help us debug this:\n");
+ 	print_deadlock_scenario(next, prev);
+ 	lockdep_print_held_locks(curr);
+@@ -2969,6 +2983,7 @@ print_deadlock_bug(struct task_struct *curr, struct held_lock *prev,
+ static int
+ check_deadlock(struct task_struct *curr, struct held_lock *next)
+ {
++	struct lock_class *class;
+ 	struct held_lock *prev;
+ 	struct held_lock *nest = NULL;
+ 	int i;
+@@ -2989,6 +3004,12 @@ check_deadlock(struct task_struct *curr, struct held_lock *next)
+ 		if ((next->read == 2) && prev->read)
+ 			continue;
+ 
++		class = hlock_class(prev);
++
++		if (class->cmp_fn &&
++		    class->cmp_fn(prev->instance, next->instance) < 0)
++			continue;
++
+ 		/*
+ 		 * We're holding the nest_lock, which serializes this lock's
+ 		 * nesting behaviour.
+@@ -3050,6 +3071,14 @@ check_prev_add(struct task_struct *curr, struct held_lock *prev,
+ 		return 2;
+ 	}
+ 
++	if (prev->class_idx == next->class_idx) {
++		struct lock_class *class = hlock_class(prev);
++
++		if (class->cmp_fn &&
++		    class->cmp_fn(prev->instance, next->instance) < 0)
++			return 2;
++	}
++
+ 	/*
+ 	 * Prove that the new <prev> -> <next> dependency would not
+ 	 * create a circular dependency in the graph. (We do this by
+@@ -3527,7 +3556,7 @@ static void print_chain_keys_chain(struct lock_chain *chain)
+ 		hlock_id = chain_hlocks[chain->base + i];
+ 		chain_key = print_chain_key_iteration(hlock_id, chain_key);
+ 
+-		print_lock_name(lock_classes + chain_hlock_class_idx(hlock_id));
++		print_lock_name(NULL, lock_classes + chain_hlock_class_idx(hlock_id));
+ 		printk("\n");
+ 	}
  }
+@@ -3884,11 +3913,11 @@ static void print_usage_bug_scenario(struct held_lock *lock)
+ 	printk("       CPU0\n");
+ 	printk("       ----\n");
+ 	printk("  lock(");
+-	__print_lock_name(class);
++	__print_lock_name(lock, class);
+ 	printk(KERN_CONT ");\n");
+ 	printk("  <Interrupt>\n");
+ 	printk("    lock(");
+-	__print_lock_name(class);
++	__print_lock_name(lock, class);
+ 	printk(KERN_CONT ");\n");
+ 	printk("\n *** DEADLOCK ***\n\n");
+ }
+@@ -3974,7 +4003,7 @@ print_irq_inversion_bug(struct task_struct *curr,
+ 		pr_warn("but this lock took another, %s-unsafe lock in the past:\n", irqclass);
+ 	else
+ 		pr_warn("but this lock was taken by another, %s-safe lock in the past:\n", irqclass);
+-	print_lock_name(other->class);
++	print_lock_name(NULL, other->class);
+ 	pr_warn("\n\nand interrupts could create inverse lock ordering between them.\n\n");
+ 
+ 	pr_warn("\nother info that might help us debug this:\n");
+@@ -4838,6 +4867,33 @@ EXPORT_SYMBOL_GPL(lockdep_init_map_type);
+ struct lock_class_key __lockdep_no_validate__;
+ EXPORT_SYMBOL_GPL(__lockdep_no_validate__);
+ 
++#ifdef CONFIG_PROVE_LOCKING
++void lockdep_set_lock_cmp_fn(struct lockdep_map *lock, lock_cmp_fn cmp_fn,
++			     lock_print_fn print_fn)
++{
++	struct lock_class *class = lock->class_cache[0];
++	unsigned long flags;
++
++	raw_local_irq_save(flags);
++	lockdep_recursion_inc();
++
++	if (!class)
++		class = register_lock_class(lock, 0, 0);
++
++	if (class) {
++		WARN_ON(class->cmp_fn	&& class->cmp_fn != cmp_fn);
++		WARN_ON(class->print_fn && class->print_fn != print_fn);
++
++		class->cmp_fn	= cmp_fn;
++		class->print_fn = print_fn;
++	}
++
++	lockdep_recursion_finish();
++	raw_local_irq_restore(flags);
++}
++EXPORT_SYMBOL_GPL(lockdep_set_lock_cmp_fn);
++#endif
++
+ static void
+ print_lock_nested_lock_not_held(struct task_struct *curr,
+ 				struct held_lock *hlock)
 -- 
 2.53.0
 
