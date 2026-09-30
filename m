@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EBD5349AB;
-	Wed, 30 Sep 2026 17:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6F75372E4;
+	Wed, 30 Sep 2026 17:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790032; cv=none; b=EzUmfsyzCtYdop297kMxtYESeJgl0rt01BOtbKfpXpRhKcGpbCwz6wgX/Ff0XEDrJffQaLXbxIiNZKtdZ5LmcJ87HX53HDaxApeK9E8D9PSZq5q6fQ0JJuks+ofdBCej/6KXz0CNDoRfkBlpZd0TEAZm6PrXp2mSwxkqt+0olng=
+	t=1790790035; cv=none; b=JwJIw15z2BTSFcIVwmP0KGmrTVBDFSHa1lpZATHbuVwZO2+wcZCE8LGv4fKQuAWumCSxsZLmbprb+NPyvaUYSAwvyzeFD3m9bzBZABSmgfOISJBSm3kY7j0or2ZH0bh4gr8muyyYkNiYUamSJZ94s+uywVvIqEaq7BBQgkGAB4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790032; c=relaxed/simple;
-	bh=46tSF95aYgKGQLy/NgzZCvy6drM3vfcXvdteSfhPyo8=;
+	s=arc-20240116; t=1790790035; c=relaxed/simple;
+	bh=Mb0/CnLTYIy/wX9Q6v97gAFytZyIZkKGfROUjFLEZvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZ3BGhUcF/A0GwPnsUmr9s5ctLHFWZ1aFGYF37g73HFAy+Bt27MTlRJPw+D/H2BcIvRQ1kWY6AED7Z3xuSyrRtYANWUj6KCraEvZpgeWU71C2yZ3bF018wliWfwoKmj3vsQpno5JXJcijfV7Ww8s8yWRy5Pbrz9tTC2NG5HrwYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrX9EEog; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rRoDe0YwaK8tcowcHbwiH9f+1d4Q0Thws43wuJ3UrthQwTN6HrpNZp2K45a/AZQVibfpW8Pxcmpjaf3kdA5Voss6l/brHeX76CKkoR8s5lqissb2s7pYc1uScbZfySEZPVU7Qa86fFUnSjCl3cvbCMKDVxSR/BmeGqqNF2zIeiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+Z2JKEZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrX9EEog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231521F000FF;
-	Wed, 30 Sep 2026 17:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+Z2JKEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13911F000FF;
+	Wed, 30 Sep 2026 17:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790030;
-	bh=/cDl09P2842zGrZYs6ov+ixZ/kS8GPNJBuo9ZJ9bRtY=;
+	s=korg; t=1790790033;
+	bh=2X5DmsR4E+HuhIFANzHjXR3Yb3YDGSTbzJdGSOfLRRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HrX9EEogMNwLvZOCuRh+W8hkfNu5jk8niupDLDm20baweruJ1YEf3bHVseKHOLqr2
-	 Q8LG+7zsI5KZiS9tnd2mRzaBHjyXUebfb/znS4IFuC4Iq7/ADPBGU4oANOu7avhwMS
-	 p5zUCw9u/2WWgQH7f+MpAY8aPUOPJ4hEqGn3bdC0=
+	b=e+Z2JKEZSWGokNjAYVa26O1saxnHIZ3fmMG4KkT2WKdTQRfUP4zlEZL6bVTZ/hHGK
+	 QfF2xxicFy+LIoLfQSksWSJLA0XmGTgBJhbQ8fOXudeLaGxYFsspVN/LYmQf2dX4Z+
+	 QYg9urNoWBje7nS4D/m+R8IG94/tyonELohF0nUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Alan Adamson <alan.adamson@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 684/877] scsi: qla2xxx: Serialize NVMe unsol ctx list with a per-fcport lock
-Date: Wed, 30 Sep 2026 17:26:35 +0200
-Message-ID: <20260930152429.435677357@linuxfoundation.org>
+Subject: [PATCH 6.12 642/877] nvme: all namespaces in a subsystem must adhere to a common atomic write size
+Date: Wed, 30 Sep 2026 17:25:53 +0200
+Message-ID: <20260930152428.510370453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,108 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Alan Adamson <alan.adamson@oracle.com>
 
-[ Upstream commit 76da0c43c63eb0496649e372ac64466364d0fe7d ]
+[ Upstream commit 8695f060a02953b33ac6240895dcb9c7ce16c91c ]
 
-The fcport->unsol_ctx_head list is modified from several contexts without
-a common lock. Entries are added in qla2xxx_process_purls_iocb() from the
-response queue ISR (under the qpair qp_lock), while they are removed from
-qla2xxx_process_purls_pkt() (DPC/purex worker), qla_nvme_xmt_ls_rsp()
-(NVMe-FC transport callback) and qla_nvme_release_lsrsp_cmd_kref() (SRB
-completion). The qpair qp_lock cannot serialize this per-fcport list since
-multiqueue adapters add entries through different qpairs, so a concurrent
-add and delete (or two concurrent deletes) can corrupt the list pointers.
+The first namespace configured in a subsystem sets the subsystem's
+atomic write size based on its AWUPF or NAWUPF. Subsequent namespaces
+must have an atomic write size (per their AWUPF or NAWUPF) less than or
+equal to the subsystem's atomic write size, or their probing will be
+rejected.
 
-Introduce a dedicated per-fcport spinlock, unsol_ctx_lock, initialized in
-qla2x00_alloc_fcport(), and take it around every list_add_tail()/list_del()
-on unsol_ctx_head. The add nests under the existing qp_lock; no delete path
-takes qp_lock, so the lock order is consistent and deadlock free.
-
-Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-28-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Alan Adamson <alan.adamson@oracle.com>
+[hch: fold in review comments from John Garry]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Stable-dep-of: 3838e80fcfb3 ("nvme: skip the zoned limits update if the zone info query failed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h  |    2 ++
- drivers/scsi/qla2xxx/qla_init.c |    1 +
- drivers/scsi/qla2xxx/qla_nvme.c |    9 +++++++++
- 3 files changed, 12 insertions(+)
+ drivers/nvme/host/core.c |   30 +++++++++++++++++++++++++++---
+ drivers/nvme/host/nvme.h |    3 ++-
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -2570,6 +2570,8 @@ typedef struct fc_port {
- 	struct list_head list;
- 	struct scsi_qla_host *vha;
- 	struct list_head unsol_ctx_head;
-+	/* Serializes unsol_ctx_head against ISR, DPC and NVMe transport. */
-+	spinlock_t unsol_ctx_lock;
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2054,7 +2054,21 @@ static bool nvme_update_disk_info(struct
+ 		if (id->nsfeat & NVME_NS_FEAT_ATOMICS && id->nawupf)
+ 			atomic_bs = (1 + le16_to_cpu(id->nawupf)) * bs;
+ 		else
+-			atomic_bs = (1 + ns->ctrl->subsys->awupf) * bs;
++			atomic_bs = (1 + ns->ctrl->awupf) * bs;
++
++		/*
++		 * Set subsystem atomic bs.
++		 */
++		if (ns->ctrl->subsys->atomic_bs) {
++			if (atomic_bs != ns->ctrl->subsys->atomic_bs) {
++				dev_err_ratelimited(ns->ctrl->device,
++					"%s: Inconsistent Atomic Write Size, Namespace will not be added: Subsystem=%d bytes, Controller/Namespace=%d bytes\n",
++					ns->disk ? ns->disk->disk_name : "?",
++					ns->ctrl->subsys->atomic_bs,
++					atomic_bs);
++			}
++		} else
++			ns->ctrl->subsys->atomic_bs = atomic_bs;
  
- 	unsigned int conf_compl_supported:1;
- 	unsigned int deleted:2;
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -5649,6 +5649,7 @@ qla2x00_alloc_fcport(scsi_qla_host_t *vh
- 	INIT_LIST_HEAD(&fcport->gnl_entry);
- 	INIT_LIST_HEAD(&fcport->list);
- 	INIT_LIST_HEAD(&fcport->unsol_ctx_head);
-+	spin_lock_init(&fcport->unsol_ctx_lock);
- 
- 	INIT_LIST_HEAD(&fcport->sess_cmd_list);
- 	spin_lock_init(&fcport->sess_cmd_lock);
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -257,7 +257,9 @@ static void qla_nvme_release_lsrsp_cmd_k
- 
- 	fd_rsp = uctx->fd_rsp;
- 
-+	spin_lock_irqsave(&uctx->fcport->unsol_ctx_lock, flags);
- 	list_del(&uctx->elem);
-+	spin_unlock_irqrestore(&uctx->fcport->unsol_ctx_lock, flags);
- 
- 	fd_rsp->done(fd_rsp);
- 	kfree(uctx);
-@@ -446,7 +448,9 @@ out:
- 		qla_nvme_ls_reject_iocb(vha, ha->base_qpair, &a, true);
- 		spin_unlock_irqrestore(ha->base_qpair->qp_lock_ptr, flags);
+ 		nvme_update_atomic_write_disk_info(ns, id, lim, bs, atomic_bs);
  	}
-+	spin_lock_irqsave(&uctx->fcport->unsol_ctx_lock, flags);
- 	list_del(&uctx->elem);
-+	spin_unlock_irqrestore(&uctx->fcport->unsol_ctx_lock, flags);
- 	kfree(uctx);
- 	return rval;
- }
-@@ -1216,7 +1220,9 @@ qla2xxx_process_purls_pkt(struct scsi_ql
- 			spin_unlock_irqrestore(vha->hw->base_qpair->qp_lock_ptr,
- 					       flags);
- 		}
-+		spin_lock_irqsave(&uctx->fcport->unsol_ctx_lock, flags);
- 		list_del(&uctx->elem);
-+		spin_unlock_irqrestore(&uctx->fcport->unsol_ctx_lock, flags);
- 		kfree(uctx);
+@@ -2193,6 +2207,17 @@ static int nvme_update_ns_info_block(str
+ 	nvme_set_chunk_sectors(ns, id, &lim);
+ 	if (!nvme_update_disk_info(ns, id, &lim))
+ 		capacity = 0;
++
++	/*
++	 * Validate the max atomic write size fits within the subsystem's
++	 * atomic write capabilities.
++	 */
++	if (lim.atomic_write_hw_max > ns->ctrl->subsys->atomic_bs) {
++		blk_mq_unfreeze_queue(ns->disk->queue, memflags);
++		ret = -ENXIO;
++		goto out;
++	}
++
+ 	nvme_config_discard(ns, &lim);
+ 	if (IS_ENABLED(CONFIG_BLK_DEV_ZONED) &&
+ 	    ns->head->ids.csi == NVME_CSI_ZNS)
+@@ -3029,7 +3054,6 @@ static int nvme_init_subsystem(struct nv
+ 		kfree(subsys);
+ 		return -EINVAL;
  	}
- }
-@@ -1258,6 +1264,7 @@ void qla2xxx_process_purls_iocb(void **p
- 	struct purex_item *item;
- 	port_id_t d_id = {0};
- 	port_id_t id = {0};
-+	unsigned long flags;
- 	u8 *opcode;
- 	bool xmt_reject = false;
+-	subsys->awupf = le16_to_cpu(id->awupf);
+ 	nvme_mpath_default_iopolicy(subsys);
  
-@@ -1323,7 +1330,9 @@ void qla2xxx_process_purls_iocb(void **p
- 	uctx->ox_id = p->ox_id;
- 	qla_rport->uctx = uctx;
- 	INIT_LIST_HEAD(&uctx->elem);
-+	spin_lock_irqsave(&fcport->unsol_ctx_lock, flags);
- 	list_add_tail(&uctx->elem, &fcport->unsol_ctx_head);
-+	spin_unlock_irqrestore(&fcport->unsol_ctx_lock, flags);
- 	item->purls_context = (void *)uctx;
+ 	subsys->dev.class = &nvme_subsys_class;
+@@ -3439,7 +3463,7 @@ static int nvme_init_identify(struct nvm
+ 		dev_pm_qos_expose_latency_tolerance(ctrl->device);
+ 	else if (!ctrl->apst_enabled && prev_apst_enabled)
+ 		dev_pm_qos_hide_latency_tolerance(ctrl->device);
+-
++	ctrl->awupf = le16_to_cpu(id->awupf);
+ out_free:
+ 	kfree(id);
+ 	return ret;
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -410,6 +410,7 @@ struct nvme_ctrl {
  
- 	ql_dbg(ql_dbg_unsol, vha, 0x2121,
+ 	enum nvme_ctrl_type cntrltype;
+ 	enum nvme_dctype dctype;
++	u16 awupf; /* 0's based value. */
+ };
+ 
+ static inline enum nvme_ctrl_state nvme_ctrl_state(struct nvme_ctrl *ctrl)
+@@ -442,11 +443,11 @@ struct nvme_subsystem {
+ 	u8			cmic;
+ 	enum nvme_subsys_type	subtype;
+ 	u16			vendor_id;
+-	u16			awupf;	/* 0's based awupf value. */
+ 	struct ida		ns_ida;
+ #ifdef CONFIG_NVME_MULTIPATH
+ 	enum nvme_iopolicy	iopolicy;
+ #endif
++	u32			atomic_bs;
+ };
+ 
+ /*
 
 
