@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDC03C4551;
-	Wed, 30 Sep 2026 19:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E633CE4B9;
+	Wed, 30 Sep 2026 19:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794884; cv=none; b=gz0IZmcbz3DKy+v8GkZ/yw2RAj/SjMDjJE1C3FFtX1OZmTU7Rm7VpQBRCK6wWpGBkzyLnL2rmulRIyk8MKtepiIl4cpgl2GsX5tcKE/Vls1Yu+Jxl0BhuKPj4j1WfFo+pjNXhSil7fTKDS39LUyc2a30OVcOnFzhN5o9E10HkFQ=
+	t=1790794886; cv=none; b=EvhdoldKZvLugvlY5P/W+k4UWJb0J/0027tdsZdnIjymc2cLGxzSW7FfAjZGXj/PvXb+SZGUTa/DmIWx8x6Zc1WlHzuNqB3oV0N1iNKfJxYGJizMYioDf+/x6LlqNG59QvsNYOwJDanIHn9CvHCpTwr1D7uw7W1y5u5bmBWsph0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794884; c=relaxed/simple;
-	bh=zoTLzRqNm/HzhctIIKkLHYcT0kXCOykYvEvww2mEF/M=;
+	s=arc-20240116; t=1790794886; c=relaxed/simple;
+	bh=704E0emm0JdKUHwkY64OhGlrn3KUVjgncqY6Ytb/MSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jVeALzHZyfrWWGEzdwDemopU7kqyhYEUPj8/cwt7PhVT8/NvXIPNmXczRANVWOiDlbirgt8duc6RxqczHUO41q8iWb+0ki92I8EmxqN0biDLBWR0q7eJdq1ILBOxWXpwIVm6wE3mu2FQiACFZSFOgMZwiLaF0Dg+wQ6AvLi3qB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhQ346OS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TTYDt3+wrspDmT2pKiSwybOKR1eY+FhNroCoyS8iWAHweavuB4VAyPI8uEGLvxHduX5TWfG80D41BUhuVQNJvatAUPZrP9FAUAi3Ju8iL8Dvyg4B1J2lBH9i44feAGIuq65UgfJtyCDCpYzrx0IqMn9N7uG+m5EwtgvYax1DWtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sG6fjc4K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhQ346OS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41951F008A6;
-	Wed, 30 Sep 2026 19:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sG6fjc4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C3E1F00898;
+	Wed, 30 Sep 2026 19:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794878;
-	bh=Jh5pf/3PXDzYR9x9DAl/bQD16Hqc64V3L2N7FoRMiaM=;
+	s=korg; t=1790794884;
+	bh=QE+7ccT0VagYoV9LZOqLgh+MnzXyh254iFf6vMvJhZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HhQ346OSRV/80Vy3C7N1nDyeqos2R5MLqttDWD1ryNf4XsvBxYiuKkR1lTRcYJDeC
-	 XruT27qBZC/ky9PzYKorlNxvVHoilLDbzhM27uK1qarvJpTiZnmb4nwHgp7zSRaIHs
-	 OQ9+Hwr16vds1t5zXVxbwRkuR8owmR68rZFYARpI=
+	b=sG6fjc4KA+WFc7Kx5ji9X04wGceizO5BRgcddz9jMf63f91l1fC6ooOUHkY5GqaaU
+	 bJnwKu7uLeMU0e65G3fBPLn15ITn1QHtfvUJbVrnj+Y4Qs6VrwZxC9rW78iF3IIobi
+	 RMJp1v7GxODDRHz76m8SD++gSsIpcBhokLvm2XH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Samu <nomomentomori@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0363/1193] ASoC: topology: Check PCM and DAI name strings before use
-Date: Wed, 30 Sep 2026 17:17:27 +0200
-Message-ID: <20260930152442.241444186@linuxfoundation.org>
+Subject: [PATCH 6.6 0365/1193] ksmbd: use memcmp() to compare ClientGUIDs
+Date: Wed, 30 Sep 2026 17:17:29 +0200
+Message-ID: <20260930152442.286508077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,120 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b7e44d1986d6671342c19b82192189ca5db5dab7 ]
+[ Upstream commit e8bb506e6ef749ac0336f3e579d8d02396b7d832 ]
 
-Topology objects store several PCM and DAI names in fixed-size UAPI
-arrays. Other topology parser paths validate these fields with bounded
-strnlen() checks before using them as C strings, but the PCM and DAI
-paths still pass some fixed-size arrays directly to strlen(),
-devm_kstrdup(), DAI lookup, and diagnostic prints.
+ClientGUID is a fixed-size binary value and can contain embedded NUL
+bytes. strncmp() stops comparing at the first NUL byte, so different
+ClientGUID values can incorrectly be treated as equal.
 
-A malformed topology blob with a non-NUL-terminated PCM, DAI, or stream
-capability name can therefore make the parser read past the end of the
-fixed-size field.
+Use memcmp() in SMB3 multichannel session binding and
+FSCTL_VALIDATE_NEGOTIATE_INFO to compare all SMB2_CLIENT_GUID_SIZE
+bytes.
 
-Reject unterminated PCM and DAI name fields before consuming them as C
-strings.
-
-Fixes: 64527e8a3529 ("ASoC: topology: Add FE DAIs dynamically")
-Fixes: acfc7d46cddc ("ASoC: topology: Add FE DAI links dynamically")
-Fixes: 0038be9a84dc ("ASoC: topology: Add support for configuring existing BE DAIs")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260604-asoc-topology-check-pcm-dai-names-v1-1-e1b0f6f7c2ce@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Samu <nomomentomori@gmail.com>
+Suggested-by: Samu <nomomentomori@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-topology.c | 37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
-index a643ef654b9d7..ff6c9de25b968 100644
---- a/sound/soc/soc-topology.c
-+++ b/sound/soc/soc-topology.c
-@@ -1523,9 +1523,24 @@ static int soc_tplg_dapm_complete(struct soc_tplg *tplg)
- 	return ret;
- }
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 293ebee718912..6fd7efe45fef0 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1741,7 +1741,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 			goto out_err;
+ 		}
  
-+static int soc_tplg_check_name(const char *name)
-+{
-+	if (strnlen(name, SNDRV_CTL_ELEM_ID_NAME_MAXLEN) ==
-+	    SNDRV_CTL_ELEM_ID_NAME_MAXLEN)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- static int set_stream_info(struct soc_tplg *tplg, struct snd_soc_pcm_stream *stream,
- 			   struct snd_soc_tplg_stream_caps *caps)
- {
-+	int ret;
-+
-+	ret = soc_tplg_check_name(caps->name);
-+	if (ret)
-+		return ret;
-+
- 	stream->stream_name = devm_kstrdup(tplg->dev, caps->name, GFP_KERNEL);
- 	if (!stream->stream_name)
- 		return -ENOMEM;
-@@ -1578,7 +1593,11 @@ static int soc_tplg_dai_create(struct soc_tplg *tplg,
- 	if (dai_drv == NULL)
- 		return -ENOMEM;
- 
--	if (strlen(pcm->dai_name)) {
-+	ret = soc_tplg_check_name(pcm->dai_name);
-+	if (ret)
-+		goto err;
-+
-+	if (pcm->dai_name[0]) {
- 		dai_drv->name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
- 		if (!dai_drv->name) {
- 			ret = -ENOMEM;
-@@ -1684,7 +1703,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
- 	if (tplg->ops)
- 		link->dobj.unload = tplg->ops->link_unload;
- 
--	if (strlen(pcm->pcm_name)) {
-+	ret = soc_tplg_check_name(pcm->pcm_name);
-+	if (ret)
-+		goto err;
-+
-+	if (pcm->pcm_name[0]) {
- 		link->name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
- 		link->stream_name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
- 		if (!link->name || !link->stream_name) {
-@@ -1694,7 +1717,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
+-		if (strncmp(conn->ClientGUID, sess->ClientGUID,
++		if (memcmp(conn->ClientGUID, sess->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			rc = -ENOENT;
+ 			goto out_err;
+@@ -8106,7 +8106,7 @@ static int fsctl_validate_negotiate_info(struct ksmbd_conn *conn,
+ 		goto err_out;
  	}
- 	link->id = le32_to_cpu(pcm->pcm_id);
  
--	if (strlen(pcm->dai_name)) {
-+	ret = soc_tplg_check_name(pcm->dai_name);
-+	if (ret)
-+		goto err;
-+
-+	if (pcm->dai_name[0]) {
- 		link->cpus->dai_name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
- 		if (!link->cpus->dai_name) {
- 			ret = -ENOMEM;
-@@ -2188,6 +2215,10 @@ static int soc_tplg_dai_config(struct soc_tplg *tplg,
- 
- 	memset(&dai_component, 0, sizeof(dai_component));
- 
-+	ret = soc_tplg_check_name(d->dai_name);
-+	if (ret)
-+		return ret;
-+
- 	dai_component.dai_name = d->dai_name;
- 	dai = snd_soc_find_dai(&dai_component);
- 	if (!dai) {
+-	if (strncmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
++	if (memcmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
+ 		ret = -EINVAL;
+ 		goto err_out;
+ 	}
 -- 
 2.53.0
 
