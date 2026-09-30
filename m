@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE00B37A825;
-	Wed, 30 Sep 2026 18:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B254C225E;
+	Wed, 30 Sep 2026 18:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791748; cv=none; b=pho4AV+bUOhBRMBGykl/PVsxXq4VA+rzHsdOIg5Ml3lw/9okHfEdZHES5JFLv+sx3KDhdOxuxJ2nhxORwdMazWKok6hGYocJZIyk1N2/mMOmRjvMhetqw0ClXnWXoSDDNwfsrTMgQXj0ANqjcTuDgRNI/zHe0mYotifbKS2UmS8=
+	t=1790791750; cv=none; b=OPZDQAO5vUDtCnBzeJyf3trpNN5TfHc4IQjhFB6Ckmv9QDl5Vl61bzf5LY85iuoQQ0NeOJtaxOSZwIOcAVUaeVZEwOrzuVGACRorVOFJ6pPiNYLQnbS4P7nFnE/8HUBZHT+QyJXDHYr8kONXHAB29DXXugB1sLhSsaEql5Pnba0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791748; c=relaxed/simple;
-	bh=1Jg9ogeGdqqinUYJ5LWKKx/svMTIOx/qIK+PXa9+gFQ=;
+	s=arc-20240116; t=1790791750; c=relaxed/simple;
+	bh=aQWBLyHCpn0Ai3hmyl1KBqFtBrxPdkaCEYTUpRd6Wzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByQON7zzgWm+WVF6MidjgvRJTDKy8vnap9Po4g7bwCYcsC4RuiFJzytbiIaZPiCeRCyfqTdBEZLSo4+qLawQ23oIaF/kQUVSc6xmHBkuMmy+BtkFOD5URcvfRE2VlKfQ61MbkLg8Tzj9d+HnYBteNgW8N8IqeCI6fyUY+Uidr6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OECg8TwQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uK2dGMYhdmbK8X5aRMDK0g7HBTtIrfoP7nbEiczHMiN5+7MoE0wo2QDKv2T7aMTc+CdedJ5lEy8yG/LodfAdUKyljFpxCOzPzOfT18JSd2z0Zr/LXEke09h+qXHNsGd8kJWNPWId138ZguyQTQJoplwF9kNwBldJzIOxVEomf6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=veiDngxL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OECg8TwQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188261F000FF;
-	Wed, 30 Sep 2026 18:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="veiDngxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A7F1F000FF;
+	Wed, 30 Sep 2026 18:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791746;
-	bh=VAnFS+tzl0e5vLoFOPsrfRGnS4CdaAzp6GNcPEPUBkI=;
+	s=korg; t=1790791749;
+	bh=DVfMP716y7pwPHK0fzwd4lNByUPPEiLSgrQbnCeaaTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OECg8TwQue8dzxArteRk7p3hZQ1o1bCGKLoX505Q0JiKiXeT6IA36PoLVl7b2+M43
-	 OKUJIkXd7KXePrTNNZ9jOudHXC5h5Mod5QvIVuELHkWej+zTZF2ZEsn5W3FAKyFf3Z
-	 H8mJPgwE+zWnUbLil3SMv5ASLKFroJi2g843ofO0=
+	b=veiDngxLcoKux1jP5nKN5u3048ANvJIV71XhCnuI2njaJL+s7j4WMJpwY7s6NZNzX
+	 /pQUvlHprd4Wt36/JDIRsROuws6pfk5TCoaS/JwF1Q/rnpRM3Yb+ZV0ToEKl+tKpZU
+	 nFvWe2jW99PylmhQVZB1f1ZOPr4ygmgSWq95OOmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Shun Ota <shun.ota@miraclelinux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 409/752] ipv6: mcast: extend RCU protection in igmp6_send()
-Date: Wed, 30 Sep 2026 17:24:39 +0200
-Message-ID: <20260930152407.128260135@linuxfoundation.org>
+Subject: [PATCH 5.15 410/752] Revert "perf tests: Fix flakiness in BPF counters test on hybrid systems"
+Date: Wed, 30 Sep 2026 17:24:40 +0200
+Message-ID: <20260930152407.148390872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,107 +49,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+This reverts commit 7600a966d40b7cfba56ffcc796d51d9d2d702a33.
 
-[ Upstream commit 087c1faa594fa07a66933d750c0b2610aa1a2946 ]
-
-igmp6_send() can be called without RTNL or RCU being held.
-
-Extend RCU protection so that we can safely fetch the net pointer
-and avoid a potential UAF.
-
-Note that we no longer can use sock_alloc_send_skb() because
-ipv6.igmp_sk uses GFP_KERNEL allocations which can sleep.
-
-Instead use alloc_skb() and charge the net->ipv6.igmp_sk
-socket under RCU protection.
-
-Fixes: b8ad0cbc58f7 ("[NETNS][IPV6] mcast - handle several network namespace")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20250207135841.1948589-9-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ use IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, full_len)
-  instead of upstream's IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTPKTS).
-  Older LTS kernels do not have commit b4a11b2033b7 ("net: fix
-  IPSTATS_MIB_OUTPKGS increment in OutForwDatagrams"), so the legacy
-  byte-based counter logic must be preserved. ]
-Signed-off-by: Shun Ota <shun.ota@miraclelinux.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c |   32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 28 ++++++++-------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -2154,21 +2154,21 @@ static void mld_send_cr(struct inet6_dev
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index 76d4a7f15a43d..b776ee2e445a6 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -4,26 +4,21 @@
  
- static void igmp6_send(struct in6_addr *addr, struct net_device *dev, int type)
+ set -e
+ 
+-# Get the first allowed CPU
+-CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
+-if [ -z "$CPU" ]; then
+-	CPU=0
+-fi
+-workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
++workload="perf test -w sqrtloop"
+ 
+-# check whether $2 is within +/- 15% of $1
++# check whether $2 is within +/- 20% of $1
+ compare_number()
  {
--	struct net *net = dev_net(dev);
--	struct sock *sk = net->ipv6.igmp_sk;
-+	const struct in6_addr *snd_addr, *saddr;
-+	int err, len, payload_len, full_len;
-+	struct in6_addr addr_buf;
- 	struct inet6_dev *idev;
- 	struct sk_buff *skb;
- 	struct mld_msg *hdr;
--	const struct in6_addr *snd_addr, *saddr;
--	struct in6_addr addr_buf;
- 	int hlen = LL_RESERVED_SPACE(dev);
- 	int tlen = dev->needed_tailroom;
--	int err, len, payload_len, full_len;
- 	u8 ra[8] = { IPPROTO_ICMPV6, 0,
- 		     IPV6_TLV_ROUTERALERT, 2, 0, 0,
- 		     IPV6_TLV_PADN, 0 };
--	struct flowi6 fl6;
- 	struct dst_entry *dst;
-+	struct flowi6 fl6;
-+	struct net *net;
-+	struct sock *sk;
+ 	first_num=$1
+ 	second_num=$2
  
- 	if (type == ICMPV6_MGM_REDUCTION)
- 		snd_addr = &in6addr_linklocal_allrouters;
-@@ -2179,20 +2179,21 @@ static void igmp6_send(struct in6_addr *
- 	payload_len = len + sizeof(ra);
- 	full_len = sizeof(struct ipv6hdr) + payload_len;
+-	# upper bound is first_num * 115%
+-	upper=$(expr $first_num + $first_num / 20 \* 3 )
+-	# lower bound is first_num * 85%
+-	lower=$(expr $first_num - $first_num / 20 \* 3 )
++	# upper bound is first_num * 120%
++	upper=$(expr $first_num + $first_num / 5 )
++	# lower bound is first_num * 80%
++	lower=$(expr $first_num - $first_num / 5 )
  
--	rcu_read_lock();
--	IP6_UPD_PO_STATS(net, __in6_dev_get(dev),
--		      IPSTATS_MIB_OUT, full_len);
--	rcu_read_unlock();
-+	skb = alloc_skb(hlen + tlen + full_len, GFP_KERNEL);
- 
--	skb = sock_alloc_send_skb(sk, hlen + tlen + full_len, 1, &err);
-+	rcu_read_lock();
- 
-+	net = dev_net_rcu(dev);
-+	idev = __in6_dev_get(dev);
-+	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, full_len);
- 	if (!skb) {
--		rcu_read_lock();
--		IP6_INC_STATS(net, __in6_dev_get(dev),
--			      IPSTATS_MIB_OUTDISCARDS);
-+		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
- 		rcu_read_unlock();
- 		return;
- 	}
-+	sk = net->ipv6.igmp_sk;
-+	skb_set_owner_w(skb, sk);
-+
- 	skb->priority = TC_PRIO_CONTROL;
- 	skb_reserve(skb, hlen);
- 
-@@ -2217,9 +2218,6 @@ static void igmp6_send(struct in6_addr *
- 					 IPPROTO_ICMPV6,
- 					 csum_partial(hdr, len, 0));
- 
--	rcu_read_lock();
--	idev = __in6_dev_get(skb->dev);
--
- 	icmpv6_flow_init(sk, &fl6, type,
- 			 &ipv6_hdr(skb)->saddr, &ipv6_hdr(skb)->daddr,
- 			 skb->dev->ifindex);
+ 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
+-		echo "The difference between $first_num and $second_num are greater than 15%."
++		echo "The difference between $first_num and $second_num are greater than 20%."
+ 		exit 1
+ 	fi
+ }
+@@ -46,12 +41,11 @@ check_counts()
+ test_bpf_counters()
+ {
+ 	printf "Testing --bpf-counters "
+-	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
++	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+-	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
+-				-- "${workload[@]}"  2>&1 | \
++	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+@@ -63,9 +57,7 @@ test_bpf_counters()
+ test_bpf_modifier()
+ {
+ 	printf "Testing bpf event modifier "
+-	stat_output=$(perf stat --no-big-num \
+-		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
+-		-- "${workload[@]}" 2>&1)
++	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
+ 	base_instructions=$(echo "$stat_output"| \
+ 				awk -v i=0 -v c=0 '/base_instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+-- 
+2.53.0
+
 
 
