@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602253BB138;
-	Wed, 30 Sep 2026 18:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314413BC68E;
+	Wed, 30 Sep 2026 18:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794692; cv=none; b=jxRUGjn8RwhIoXxQ8kBOojcO843CsFL9k38CxNzVUglt3rwQ9DR8BUQcibfu32ViH9/EdDe6MQKa0QAVqR5OlXnah2jInkXOIrQEi0uYirJKSn9XYRlinOZVMb21D7d51Pa7oXASzFXEvI8mqyaX5i8/qs1aCNnGaGgWQfIcJD8=
+	t=1790794695; cv=none; b=nKQ1YyTEdBZb7M3ADDvnTf3AxDcutTCZyncxGkMNo3aylRjTcyxnumuO98xX6KSG7L2dNNPGOZOrCQY9+++ulb5jK3zAUjdBd+8JeDPST3Tk+6vg4Q0G+1f7dP6NPQ4diZCYYSBn5JNdlvATK11pvcqWU4MSyr+SQ//Z1bWe0tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794692; c=relaxed/simple;
-	bh=9eYz54L5f7ZOaGs9a2aN6mBGBvzSxznTp5/hgzqgMMM=;
+	s=arc-20240116; t=1790794695; c=relaxed/simple;
+	bh=w5kPfRNJKOwopvZ/eSUXSvG1R4K+V2Ator0/WVtZvm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnO+CyuCDPMYEeBUOpuoK6NToQDBsoywnWJx0CTUO91UweMH7UhcccoLWMnak/ROPRt32Ql8yP/Pck62Kup5IwQGZtNCuwxYxCXGkFAKPZFyLfKRgOgVBBFqM5rKUBOESVC5bQPavzOvRdIqDfoBd8rsV0DvPZHJM3sGFAigtRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHqwTgUm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LtcHqSHPsQuKb9I/bCANydALTAtF859tP/LQ4TBDCJOldujYykbYTY0nxtVui35Uu1YiujI7ed7OPLaWjVEF35HS0sOp1mD4uWod8cbwZpsz0s3mahopbqac5WcpRP17zJwLp39+nbX9qUf+sH/IkBtysoGBQRklwO4CkFV6jKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWTTIz8e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHqwTgUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9F51F000FF;
-	Wed, 30 Sep 2026 18:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWTTIz8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA921F000FF;
+	Wed, 30 Sep 2026 18:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794691;
-	bh=QR3ZRPEobv7F1FpUHNDmxCNIBROnShNv9IorsKJ1zG4=;
+	s=korg; t=1790794694;
+	bh=mgtasWhIc9wFapihHPnIlI4OjxnIwNJb8pNiVa5TrUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eHqwTgUmt72JFXGokV4p1G+59BmZHHpRSSoUTYEfwro/s2J9jbjjGHYdnQJh/dSCy
-	 pc2083Y06I7CxSuHlyszhonmfxKKI2gJKOPgG14war3hsB/AaFxTrORWDi3Poasr8u
-	 ZiCrFzyRyK4g/O5XnT0uQJcGgeim6GAmCni6Ac54=
+	b=kWTTIz8e+EUvEnaqHIY6ypLWXmNGcVBTeNnTZyELlSa4irt++jYgLRnEtxyGWCeJd
+	 dIihfw09L014IUv5VgzMKCAQxuspJwa8r+2oZmL/H/m7XwmZBOk+O9ypn69Xu/+OGk
+	 RHmlKJ0gFNud3Oq1nguQ/wR6fHaMK7CdB4uP6R4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Bowen <hicbowen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Filipe Manana <fdmanana@suse.com>,
+	Dave Chen <davechen@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0300/1193] ALSA: hda/realtek: Fix speakers on MECHREVO WUJIE Series
-Date: Wed, 30 Sep 2026 17:16:24 +0200
-Message-ID: <20260930152440.819285774@linuxfoundation.org>
+Subject: [PATCH 6.6 0301/1193] btrfs: only account delalloc bytes for regular file inodes in btrfs_getattr()
+Date: Wed, 30 Sep 2026 17:16:25 +0200
+Message-ID: <20260930152440.841388540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,68 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Bowen <hicbowen@gmail.com>
+From: Dave Chen <davechen@synology.com>
 
-[ Upstream commit 9064637fb2a80b43105900a47d414997630e5b6b ]
+[ Upstream commit 9411aafdf352b8d72668732af5a37dcb27383e25 ]
 
-The internal speakers on the MECHREVO WUJIE Series are silent,
-while the headphone output works correctly.
+btrfs_getattr() unconditionally reads BTRFS_I(inode)->new_delalloc_bytes
+and adds it (sector-aligned) to stat->blocks for every inode type.
+However, new_delalloc_bytes lives in a union with last_dir_index_offset:
 
-The BIOS reports NID 0x1b on the Realtek ALC233 codec as
-unconnected with pin configuration 0x411111f0. However, the pin
-is connected to an internal speaker.
+    union {
+        u64 new_delalloc_bytes;     /* files only */
+        u64 last_dir_index_offset;  /* directories only */
+    };
 
-Overriding NID 0x1b with 0x90170150 makes the HDA generic parser
-detect both 0x14 and 0x1b as speaker outputs and restores internal
-speaker playback.
+For a directory inode this memory holds last_dir_index_offset, which is
+set during directory logging (e.g. flush_dir_items_batch()) to the
+offset of the last logged BTRFS_DIR_INDEX_KEY.  That offset grows with
+the number of entries ever created in the directory (dir indexes are
+monotonic and never reused), so it can be arbitrarily large.
 
-Add a pin configuration fixup for the affected PCI SSID c011:1d05.
+As a result, after a directory has been logged (e.g. via an fsync that
+triggers directory logging), btrfs_getattr() reports inflated st_blocks
+for that directory.  The inflation is purely in-core and disappears
+after the inode is evicted and reloaded (btrfs_alloc_inode() zeroes the
+union), e.g. after a remount.
 
-Tested on a MECHREVO WUJIE Series laptop with board
-WUJIE Series-Lark4-LNL and firmware EM_LNL326_V1.0.23.
+Reproducer (on a btrfs filesystem):
 
-Signed-off-by: Chen Bowen <hicbowen@gmail.com>
-Link: https://patch.msgid.link/20260710133409.16641-1-hicbowen@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+    D=/mnt/btrfs/d
+    mkdir -p $D
+    for i in $(seq 1 20000); do touch $D/f$i; done
+    sync                      # commit, push dir index high
+    touch $D/trigger          # dirty the dir in a new transaction
+    xfs_io -c fsync $D        # log the directory -> sets last_dir_index_offset
+    stat -c '%b' $D           # st_blocks is now inflated (e.g. 40)
+    # umount + mount -> st_blocks drops back to the correct value
+
+The evict path already knows this union is type-dependent and guards the
+corresponding WARN_ON with !S_ISDIR() in btrfs_destroy_inode(); only
+btrfs_getattr() was missing the equivalent check.
+
+Only read new_delalloc_bytes for regular files, which are the only
+inodes that ever set it.
+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dave Chen <davechen@synology.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/btrfs/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 300d78a4d8e58..3a320b9baaa1d 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7453,6 +7453,7 @@ enum {
- 	ALC275_FIXUP_DELL_XPS,
- 	ALC293_FIXUP_LENOVO_SPK_NOISE,
- 	ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY,
-+	ALC233_FIXUP_WUJIE_SPEAKERS,
- 	ALC233_FIXUP_LENOVO_L2MH_LOW_ENLED,
- 	ALC255_FIXUP_DELL_SPK_NOISE,
- 	ALC225_FIXUP_DISABLE_MIC_VREF,
-@@ -7663,6 +7664,13 @@ static void alc287_fixup_lenovo_14irp8_duetitl(struct hda_codec *codec,
- }
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index e843531201bef..d04965bbae428 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -8841,7 +8841,8 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 	stat->dev = BTRFS_I(inode)->root->anon_dev;
  
- static const struct hda_fixup alc269_fixups[] = {
-+	[ALC233_FIXUP_WUJIE_SPEAKERS] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1b, 0x90170150 }, /* internal speaker */
-+			{ }
-+		},
-+	},
- 	[ALC269_FIXUP_GPIO2] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc_fixup_gpio2,
-@@ -10674,6 +10682,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
- 	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC295_FIXUP_CHROME_BOOK),
-+	SND_PCI_QUIRK(0xc011, 0x1d05, "MECHREVO WUJIE Series", ALC233_FIXUP_WUJIE_SPEAKERS),
- 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	spin_lock(&BTRFS_I(inode)->lock);
+-	delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
++	delalloc_bytes = S_ISREG(inode->i_mode) ?
++			 BTRFS_I(inode)->new_delalloc_bytes : 0;
+ 	inode_bytes = inode_get_bytes(inode);
+ 	spin_unlock(&BTRFS_I(inode)->lock);
+ 	stat->blocks = (ALIGN(inode_bytes, blocksize) +
 -- 
 2.53.0
 
