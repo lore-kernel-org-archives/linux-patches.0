@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ABB3E1D1A;
-	Wed, 30 Sep 2026 19:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBBD3B2D1A;
+	Wed, 30 Sep 2026 19:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796529; cv=none; b=oZb2XoMXLsYrF5kLUJO4jasW7t8M1eiqFS1jw7RciK6Nv3vo0+XAeleqhpME0m8buzfEGLqInMssv5YSk8hQemztmFSujsselAd7GmuJuN3D2tqbf4YPy+LHamlQqWV9lcf7JAw88Nkd/v2ZJwMERq+r/P+BsjWvqRappeZjOwQ=
+	t=1790796531; cv=none; b=uLnqH3DQ0dxoUrSUMchIrdZ65sALoBjYiNAv/Anbxp4hdlWM8Sorsj0Nu/X10uZHljaqK1gBC2Gt6yKWKv7qlABcNGzce3bvnCnhZAD6Ey0tbZfSa/3Pz2QvxL+gfJvKiU7QKAxsVl7LZAF4PaIXj8L4fyWJwGrIbuW05G47ogc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796529; c=relaxed/simple;
-	bh=vcRveNjEXW6mkO+FD+0J5pTFUOT41HLOuh1ykVb+qv4=;
+	s=arc-20240116; t=1790796531; c=relaxed/simple;
+	bh=qrNCTtHkxDNiu7Yybw3IgiyA22FxA2e7cYbqOmqOzDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mPOnGetBR4UnHKU3kQq13eKk5q+s/W/e74TJJ2/qjHUsiHtKXtcBGZjJSjyBfbp0nEat4jrICSppfUBbRMJDc5kW9Jrclf2NB+tIwt6rYkJRjAn4NQy4IsL5pPx4xjKBpRC1xTtYWpyQCVMm4/GI9CCHoTm1O4G5dPCYMICPGF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTi3+BV5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f5Ryq4NC54H2aPpeye4RxY1207wqCZUPjKg8ChOTgb+gGPlQVZM09lC44tXpktF6bd0K1ehWtFtUQgzESTHaCCCUDOb3xln0BCgHZ1ISP9vbHiT5zSuiyPXme8nRZ53brHBsFVQE8hs1F9txujPhQf/eFXNCDIdP1c9yhh6P7/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIZ9tnZ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTi3+BV5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9211F000FF;
-	Wed, 30 Sep 2026 19:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIZ9tnZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044471F000FF;
+	Wed, 30 Sep 2026 19:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796527;
-	bh=zPhmUGl2Fc3/q9i5iRzc9yPvIOj/ZLnppcxOOvdKxkA=;
+	s=korg; t=1790796530;
+	bh=50Va8pIpMstt9XWLwafTheH5F2XmHea2vjCzefLfRkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DTi3+BV5DnFgCvSyNiG2uvJINuKRPVrjvndTPF4KNMGh0Dy7vXfd4kStTxr1FAcc+
-	 4QT+TcBpEvRqMUCQYwZA50CQiG9gRw2u2VgqXUihYDJOCshMCLL8pm1Df7eVbNzJII
-	 YFtzqQqN15PFGjrUXIcNBLi1jIq23Pww9pefAGYI=
+	b=kIZ9tnZ9I+EoKCJS6fjge7ZqQzJUQjqXy6w8Uf27Oh80zYMt8PK1B8pSCbrrjLfxm
+	 KOoNGQsHjjzn2NTxN7jij5LqBVBkivmYkpSy5U6vilB5w0Rx+gY5bVdwGFp3uwG/nO
+	 yFQp3CZp8qg0YcAquiSROt9owwGiLVLqYIauAIkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0943/1193] ipv6: mcast: Dont hold RTNL for IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.
-Date: Wed, 30 Sep 2026 17:27:07 +0200
-Message-ID: <20260930152455.188503852@linuxfoundation.org>
+Subject: [PATCH 6.6 0944/1193] ipv6: mcast: Dont hold RTNL for IPV6_DROP_MEMBERSHIP and MCAST_LEAVE_GROUP.
+Date: Wed, 30 Sep 2026 17:27:08 +0200
+Message-ID: <20260930152455.212103284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,114 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1767bb2d47b715a106287a8f963d9ec6cbab4e69 ]
+[ Upstream commit 2ceb71ce7d34e751f91bbca9da3513a2bc29089c ]
 
-In __ipv6_sock_mc_join(), per-socket mld data is protected by lock_sock(),
-and only __dev_get_by_index() requires RTNL.
+In __ipv6_sock_mc_drop(), per-socket mld data is protected by lock_sock(),
+and only __dev_get_by_index() and __in6_dev_get() require RTNL.
 
-Let's use dev_get_by_index() and drop RTNL for IPV6_ADD_MEMBERSHIP and
-MCAST_JOIN_GROUP.
+Let's use dev_get_by_index() and in6_dev_get() and drop RTNL for
+IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.
 
-Note that we must call rt6_lookup() and dev_hold() under RCU.
-
-If rt6_lookup() returns an entry from the exception table, dst_dev_put()
-could change rt->dev.dst to loopback concurrently, and the original device
-could lose the refcount before dev_hold() and unblock device registration.
-
-dst_dev_put() is called from NETDEV_UNREGISTER and synchronize_net() follows
-it, so as long as rt6_lookup() and dev_hold() are called within the same
-RCU critical section, the dev is alive.
-
-Even if the race happens, they are synchronised by idev->dead and mcast
-addresses are cleaned up.
-
-For the racy access to rt->dst.dev, we use dst_dev().
+Note that __ipv6_sock_mc_drop() is factorised to reuse in the next patch.
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250702230210.3115355-7-kuni1840@gmail.com
+Link: https://patch.msgid.link/20250702230210.3115355-8-kuni1840@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  net/ipv6/ipv6_sockglue.c |  2 --
- net/ipv6/mcast.c         | 24 +++++++++++++-----------
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ net/ipv6/mcast.c         | 47 +++++++++++++++++++++++-----------------
+ 2 files changed, 27 insertions(+), 22 deletions(-)
 
 diff --git a/net/ipv6/ipv6_sockglue.c b/net/ipv6/ipv6_sockglue.c
-index 289cfd11e35b6..59965a0decc44 100644
+index 59965a0decc44..39835f22f3458 100644
 --- a/net/ipv6/ipv6_sockglue.c
 +++ b/net/ipv6/ipv6_sockglue.c
-@@ -121,11 +121,9 @@ static bool setsockopt_needs_rtnl(int optname)
+@@ -121,10 +121,8 @@ static bool setsockopt_needs_rtnl(int optname)
  {
  	switch (optname) {
  	case IPV6_ADDRFORM:
--	case IPV6_ADD_MEMBERSHIP:
- 	case IPV6_DROP_MEMBERSHIP:
+-	case IPV6_DROP_MEMBERSHIP:
  	case IPV6_JOIN_ANYCAST:
  	case IPV6_LEAVE_ANYCAST:
--	case MCAST_JOIN_GROUP:
- 	case MCAST_LEAVE_GROUP:
+-	case MCAST_LEAVE_GROUP:
  	case MCAST_JOIN_SOURCE_GROUP:
  	case MCAST_LEAVE_SOURCE_GROUP:
+ 	case MCAST_BLOCK_SOURCE:
 diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
-index 5b427150cc416..a5d3deef4bb1b 100644
+index a5d3deef4bb1b..cc0a07f8770d3 100644
 --- a/net/ipv6/mcast.c
 +++ b/net/ipv6/mcast.c
-@@ -172,14 +172,12 @@ static int unsolicited_report_interval(struct inet6_dev *idev)
- static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 			       const struct in6_addr *addr, unsigned int mode)
+@@ -250,14 +250,36 @@ int ipv6_sock_mc_join_ssm(struct sock *sk, int ifindex,
+ /*
+  *	socket leave on multicast group
+  */
++static void __ipv6_sock_mc_drop(struct sock *sk, struct ipv6_mc_socklist *mc_lst)
++{
++	struct net *net = sock_net(sk);
++	struct net_device *dev;
++
++	dev = dev_get_by_index(net, mc_lst->ifindex);
++	if (dev) {
++		struct inet6_dev *idev = in6_dev_get(dev);
++
++		ip6_mc_leave_src(sk, mc_lst, idev);
++
++		if (idev) {
++			__ipv6_dev_mc_dec(idev, &mc_lst->addr);
++			in6_dev_put(idev);
++		}
++
++		dev_put(dev);
++	} else {
++		ip6_mc_leave_src(sk, mc_lst, NULL);
++	}
++
++	atomic_sub(sizeof(*mc_lst), &sk->sk_omem_alloc);
++	kfree_rcu(mc_lst, rcu);
++}
++
+ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
  {
--	struct net_device *dev = NULL;
--	struct ipv6_mc_socklist *mc_lst;
  	struct ipv6_pinfo *np = inet6_sk(sk);
-+	struct ipv6_mc_socklist *mc_lst;
- 	struct net *net = sock_net(sk);
-+	struct net_device *dev = NULL;
- 	int err;
- 
--	ASSERT_RTNL();
+-	struct ipv6_mc_socklist *mc_lst;
+ 	struct ipv6_mc_socklist __rcu **lnk;
+-	struct net *net = sock_net(sk);
 -
+-	ASSERT_RTNL();
++	struct ipv6_mc_socklist *mc_lst;
+ 
  	if (!ipv6_addr_is_multicast(addr))
  		return -EINVAL;
- 
-@@ -199,13 +197,18 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 
- 	if (ifindex == 0) {
- 		struct rt6_info *rt;
-+
-+		rcu_read_lock();
- 		rt = rt6_lookup(net, addr, NULL, 0, NULL, 0);
- 		if (rt) {
--			dev = rt->dst.dev;
-+			dev = dst_dev(&rt->dst);
-+			dev_hold(dev);
- 			ip6_rt_put(rt);
- 		}
--	} else
--		dev = __dev_get_by_index(net, ifindex);
-+		rcu_read_unlock();
-+	} else {
-+		dev = dev_get_by_index(net, ifindex);
-+	}
- 
- 	if (!dev) {
- 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
-@@ -216,12 +219,11 @@ static int __ipv6_sock_mc_join(struct sock *sk, int ifindex,
- 	mc_lst->sfmode = mode;
- 	RCU_INIT_POINTER(mc_lst->sflist, NULL);
- 
--	/*
--	 *	now add/increase the group membership on the device
--	 */
+@@ -267,23 +289,8 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
+ 	      lnk = &mc_lst->next) {
+ 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
+ 		    ipv6_addr_equal(&mc_lst->addr, addr)) {
+-			struct net_device *dev;
 -
-+	/* now add/increase the group membership on the device */
- 	err = __ipv6_dev_mc_inc(dev, addr, mode);
- 
-+	dev_put(dev);
-+
- 	if (err) {
- 		sock_kfree_s(sk, mc_lst, sizeof(*mc_lst));
- 		return err;
+ 			*lnk = mc_lst->next;
+-
+-			dev = __dev_get_by_index(net, mc_lst->ifindex);
+-			if (dev) {
+-				struct inet6_dev *idev = __in6_dev_get(dev);
+-
+-				ip6_mc_leave_src(sk, mc_lst, idev);
+-				if (idev)
+-					__ipv6_dev_mc_dec(idev, &mc_lst->addr);
+-			} else {
+-				ip6_mc_leave_src(sk, mc_lst, NULL);
+-			}
+-
+-			atomic_sub(sizeof(*mc_lst), &sk->sk_omem_alloc);
+-			kfree_rcu(mc_lst, rcu);
++			__ipv6_sock_mc_drop(sk, mc_lst);
+ 			return 0;
+ 		}
+ 	}
 -- 
 2.53.0
 
