@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3948750E5B3;
-	Wed, 30 Sep 2026 16:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0204F0526;
+	Wed, 30 Sep 2026 16:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785964; cv=none; b=sJoPyhoRTA451L2rU9p26Bjk/GQpUf9mbs8clGg4ixUYQvAAf9VibuLTVmArVJjV2vcLwGO2p2E/6XoGPAZTqOBZwSeq45Xwrng8fszRPfa5gsSJ4WpGWd6QibmyfgkE4plSt7gysOpHJb7g5WsvUUmYs6Div97xiotQyTpp5wI=
+	t=1790785967; cv=none; b=qrrYpa/KBVi8bBiVITg8qCUgKNEUbu6FC1DI9qpDGSHy2GT1NAiwb7uM7O1Ag/YEbEjuirAJ/GRa0QCdPAppfDE0y4awCgvqrnu8IwuisuXhli9oNY3z54PXRjaspclgXZHkn6l1cs5MVCAhsU+5EDug9AU/uuGuDzNJ2jlruww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785964; c=relaxed/simple;
-	bh=q+fQpMnVrooLwufd3AgYInQyPn3Jx16d9a0zrAiUYrs=;
+	s=arc-20240116; t=1790785967; c=relaxed/simple;
+	bh=rQ5kSzcEC9nJeTPxFOOIT37u30k0NVnQFdagKJDyfAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kiQxr+aON40PY9WwIOYc1F06bGMO2v9M9fJytXi5+VR/ie71XF9Lpy4bEOEgi6hIcYuCbRI+nV4fGjJyXM9BXTBZt4Z0lrBnFZW8iRKAYWi8QANlKjJwdI565T1+YHLuzSkuN8CYqSgVD9LAprEu8PKJR88fhOLbqBnkkJeNwCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rb4AAqPN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S/ijQlJW0HFz/aSCSEHSIOQPAztYxA5Ognt+EA24FFufEZgby0R2dWC5knOKF+8l+7EShkK6CYWTr4DKQTWsvmWVjk8Vzr+/zIyRH8XWk56KuzR1M/eqUOKEmunpZ6SqpSmUBRttpx/CcONg8ThVGgaWtASXGDVwxqOFI4K0EMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUI1N+vl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rb4AAqPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9575F1F000FF;
-	Wed, 30 Sep 2026 16:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUI1N+vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B56F1F000FF;
+	Wed, 30 Sep 2026 16:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785963;
-	bh=FdIj1EzyACKOPWwJNIuwJY+E1m46MdYDegZ0GfS2WlM=;
+	s=korg; t=1790785966;
+	bh=OYvCBex+4wiG6095tf7ibEF+syJudYLarImsbNOMCZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rb4AAqPN0TtAg9dSNMY6iAyvTZoGhfmK4giolYiPS4NIrqKMrbeGNbMRg1AmPfjgL
-	 vUdDgQ7GkvvyFT/HQPbqqa1PAQOFnjbR2i9QB/l+svRu0tWz5sYZu/WDDCcF2rRU37
-	 6AbMliHZNcLHBRya/bJDC/EULmC+gHK/rx4ltP9g=
+	b=KUI1N+vlASaRAOriaI/B9N1qHt9Pb7uCmDAmjpbXhNqAQvtCd2Ar20dVJGbKfe/FC
+	 ZaBlobTOrDNGa5qSZvF3UVjXOP8MiJlYgBoxkSz8l90u9NBFm2tygRUyK3UR+BsPaa
+	 s9xts6jkkZkAuMnqcdE1KpE3uNHxapq1N3xv53CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Nyberg <SlickStretch3.0@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 695/982] Input: xpad - fix PDP Marvel Xbox 360 controller
-Date: Wed, 30 Sep 2026 17:23:51 +0200
-Message-ID: <20260930152431.687634270@linuxfoundation.org>
+	Yuho Choi <oss.patchbox@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 696/982] ALSA: virtio: reset device before deleting virtqueues
+Date: Wed, 30 Sep 2026 17:23:52 +0200
+Message-ID: <20260930152431.708541482@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,43 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Nyberg <slickstretch3.0@gmail.com>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-commit 7bc369cb3d3f3656eb77285628ee264264d28ad4 upstream.
+commit 6c05d00af307560e6a9f1631d6270d3df5aa2272 upstream.
 
-The PDP Marvel Xbox 360 controller with USB ID 0e6f:0147 is
-incorrectly classified as an Xbox One controller.
+virtsnd_remove() and virtsnd_freeze() delete the virtqueues before
+resetting the device. del_vqs() frees the vring backing, but does not
+provide a generic device quiesce operation. In particular, modern
+virtio-pci keeps enabled queues active until the device is reset.
 
-With the current XTYPE_XBOXONE classification, the controller is
-detected but produces no input, while its four player LEDs continue
-blinking indefinitely.
+Reset the device before deleting the virtqueues so it can no longer
+access the vring memory when that memory is released. This also covers
+probe failures after DRIVER_OK, which unwind through virtsnd_remove().
 
-Classify USB ID 0e6f:0147 as an Xbox 360 controller instead.
-
-Tested on a PDP Marvel Xbox 360 controller with USB ID 0e6f:0147.
-All inputs register correctly and the player LED indicates the
-current player.
-
-Fixes: c225370e01b8 ("Input: xpad - sync supported devices with 360Controller")
+Fixes: de3a9980d8c3 ("ALSA: virtio: add virtio sound driver")
+Fixes: 575483e90a32 ("ALSA: virtio: introduce device suspend/resume support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jeremy Nyberg <SlickStretch3.0@gmail.com>
-Link: https://patch.msgid.link/20260910071627.236014-1-SlickStretch3.0@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Link: https://patch.msgid.link/20260911031121.1542502-1-oss.patchbox@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/virtio/virtio_card.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -229,7 +229,7 @@ static const struct xpad_device {
- 	{ 0x0e6f, 0x0139, "Afterglow Prismatic Wired Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x013a, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
--	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
-+	{ 0x0e6f, 0x0147, "PDP Marvel Xbox 360 Controller", 0, XTYPE_XBOX360 },
- 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x0162, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+--- a/sound/virtio/virtio_card.c
++++ b/sound/virtio/virtio_card.c
+@@ -349,8 +349,8 @@ static void virtsnd_remove(struct virtio
+ 	if (snd->card)
+ 		snd_card_free(snd->card);
+ 
+-	vdev->config->del_vqs(vdev);
+ 	virtio_reset_device(vdev);
++	vdev->config->del_vqs(vdev);
+ 
+ 	for (i = 0; snd->substreams && i < snd->nsubstreams; ++i) {
+ 		struct virtio_pcm_substream *vss = &snd->substreams[i];
+@@ -378,8 +378,8 @@ static int virtsnd_freeze(struct virtio_
+ 	virtsnd_disable_event_vq(snd);
+ 	virtsnd_ctl_msg_cancel_all(snd);
+ 
+-	vdev->config->del_vqs(vdev);
+ 	virtio_reset_device(vdev);
++	vdev->config->del_vqs(vdev);
+ 
+ 	for (i = 0; i < snd->nsubstreams; ++i)
+ 		cancel_work_sync(&snd->substreams[i].elapsed_period);
 
 
