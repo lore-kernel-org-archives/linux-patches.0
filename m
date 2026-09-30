@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB933CB54E;
-	Wed, 30 Sep 2026 19:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4373E5EC2;
+	Wed, 30 Sep 2026 19:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795129; cv=none; b=tVyCDvTpKxHmUyq9y4FtQrTXc1thhiLQAK89Sq7mSXc4A8l3mgGBAddlkUB5j99TGWnMqCnwQi5xy0pbSCsCrPE4qre8BhkMnfjt8SiWAlC1QoR3QJ5uw+dEQsqCGcDrQ7Sz7dsrSZSnEqURI43fIOALRx8RfAoOOpQlVLtCx8E=
+	t=1790795132; cv=none; b=UD9UgV5yWbM9K5VeJwylBWdeMSoqCGQPprZkBZXk7+856ZeCCebZOmIMKp3/JMrLdpwAz0lYzt44QrfPjZ0lUBr2nfUwrd6gu9Jqvgn2TLLQaxvYmO2cITMg8RBoVcICw3wA6lLxhwAo7jAciei5Yu52Dly0sWGqMPoIuN3uuTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795129; c=relaxed/simple;
-	bh=JRI3wOpPP2g0xSjwKa15ELS2UCv9FoV5E1gc8LBSxRc=;
+	s=arc-20240116; t=1790795132; c=relaxed/simple;
+	bh=4Pt8NId0LFTuMycEot0UAhIrBY/WxclWkEoGUlQl1oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GlGyLSdYrruox2wmR5TAplwkkNjG/BtfnhHrJlVdgEDBZG1EDebILITJjc/j0ZuON8xmmO5GrlpEq+9O7KmJ7wIDLemDeDB6XHlB5FQd7t37aC/Y417x3+k/YTinOiahiqgTyiBFVwOgEvqtV+Elp/+vzjFskUOGjCm2+KgbtCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCd3t/Br; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h4XWL8OweZ3m9LNGLYQumLTD+hTd5NR97MKFYMlL7/sFeEs7a6XtDBeWwGdbum7Ngns6EAUBZkPRtLfPfyPfAqggJWubxdq9hZQSMxd+uoMXlHw9dRWb1DsMd8RI/EvP/CDUCt+MjOeV7yhJuoE3zQBFyCK4z73YVDrFg34nh/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ebm2VqAp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCd3t/Br"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9421F000FF;
-	Wed, 30 Sep 2026 19:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ebm2VqAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0251F000FF;
+	Wed, 30 Sep 2026 19:05:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795128;
-	bh=ZnBSA2pAeBXOtWi5SwzLmtUu7g1gEzbXUFNuyXOXqbI=;
+	s=korg; t=1790795131;
+	bh=LTz50efGi++/X8iH52ae6UnITf7m1DiH50vkMEVAaGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yCd3t/BrDjgpdLbjhcMgAEXYKrIDq9+q7koapVnTwlh/o03iAbHoyjQkpn9oGwPd3
-	 oj99an8nNxhv0WLscW+N0zJ6lKGntgrJneOVlU+4DimloMwFcRA7R2xHD5BNr9QP9b
-	 hV2rAAB4Q6PwSREJvlSdb6bzj7tCWQai8LLX6xLw=
+	b=Ebm2VqApQrvLFkS/FXtWnZKpbJn/w3XCQbiqrI7WG7l7soPNnjOfc+ojlh3HJblX/
+	 6yePX7v3/JTnbl+XRzPhMcCWE86fhZnmILLmYdvXFm5c+Zr0QwEOzROfO6I/SrgWSG
+	 YFZ3ZJl9BvPF+TNGbG1F3piPp+5IYkRJ9US/UjsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0452/1193] ASoC: ux500: Validate MSP DAI configuration
-Date: Wed, 30 Sep 2026 17:18:56 +0200
-Message-ID: <20260930152444.218579337@linuxfoundation.org>
+Subject: [PATCH 6.6 0453/1193] mfd: db8500-prcmu: Remove needless return in three void APIs
+Date: Wed, 30 Sep 2026 17:18:57 +0200
+Message-ID: <20260930152444.239634621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,178 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 9ccbacf5a0120964fc1ffacb8151e3347bee9287 ]
+[ Upstream commit c105c555f8b4fd57b09439806b43b97ebc240ee2 ]
 
-Installing channel constraints from hw_params is too late to affect the
-parameters being committed. The driver consequently accepts channel
-counts which disagree with the I2S or TDM setup. It also silently
-truncates out-of-range slot masks and accepts inverted bit clock formats
-which prepare then rejects.
+Remove needless 'return' in the following void APIs:
 
-Validate the selected channel count directly, reject invalid masks
-before changing cached TDM state, and implement all four standard clock
-and frame inversion combinations. Use the requested format in
-validation diagnostics.
+ prcmu_early_init()
+ prcmu_system_reset()
+ prcmu_modem_reset()
 
-Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-4-4b60b002d55a@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since both the API and callee involved are void functions.
+
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20250221-rmv_return-v1-15-cc8dff275827@quicinc.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 66ec63e7a90b ("ASoC: ux500: Deassert the MSP reset during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_dai.c | 41 ++++++++++++++++++++++-----------
- sound/soc/ux500/ux500_msp_i2s.c |  7 ++++--
- sound/soc/ux500/ux500_msp_i2s.h |  1 +
- 3 files changed, 33 insertions(+), 16 deletions(-)
+ include/linux/mfd/dbx500-prcmu.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
-index 4c826305cebc6..ca011b1a0bbcd 100644
---- a/sound/soc/ux500/ux500_msp_dai.c
-+++ b/sound/soc/ux500/ux500_msp_dai.c
-@@ -130,7 +130,16 @@ static int setup_clocking(struct snd_soc_dai *dai,
- 	case SND_SOC_DAIFMT_NB_IF:
- 		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
- 		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
-+		break;
-+
-+	case SND_SOC_DAIFMT_IB_NF:
-+		msp_config->bclk_inverted = true;
-+		break;
+diff --git a/include/linux/mfd/dbx500-prcmu.h b/include/linux/mfd/dbx500-prcmu.h
+index dd0fc891b2289..98567623c9df6 100644
+--- a/include/linux/mfd/dbx500-prcmu.h
++++ b/include/linux/mfd/dbx500-prcmu.h
+@@ -215,7 +215,7 @@ struct prcmu_fw_version {
  
-+	case SND_SOC_DAIFMT_IB_IF:
-+		msp_config->bclk_inverted = true;
-+		msp_config->tx_fsync_pol ^= 1 << TFSPOL_SHIFT;
-+		msp_config->rx_fsync_pol ^= 1 << RFSPOL_SHIFT;
- 		break;
- 
- 	default:
-@@ -453,7 +462,6 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 				struct snd_soc_dai *dai)
+ static inline void prcmu_early_init(void)
  {
- 	unsigned int mask, slots_active;
--	struct snd_pcm_runtime *runtime = substream->runtime;
- 	struct ux500_msp_i2s_drvdata *drvdata = dev_get_drvdata(dai->dev);
- 
- 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter.\n",
-@@ -461,9 +469,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 
- 	switch (drvdata->fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
- 	case SND_SOC_DAIFMT_I2S:
--		snd_pcm_hw_constraint_minmax(runtime,
--				SNDRV_PCM_HW_PARAM_CHANNELS,
--				1, 2);
-+		if (params_channels(params) < 1 || params_channels(params) > 2)
-+			return -EINVAL;
- 		break;
- 
- 	case SND_SOC_DAIFMT_DSP_B:
-@@ -475,9 +482,8 @@ static int ux500_msp_dai_hw_params(struct snd_pcm_substream *substream,
- 		slots_active = hweight32(mask);
- 		dev_dbg(dai->dev, "TDM-slots active: %d", slots_active);
- 
--		snd_pcm_hw_constraint_single(runtime,
--				SNDRV_PCM_HW_PARAM_CHANNELS,
--				slots_active);
-+		if (!slots_active || params_channels(params) != slots_active)
-+			return -EINVAL;
- 		break;
- 
- 	default:
-@@ -510,20 +516,21 @@ static int ux500_msp_dai_set_dai_fmt(struct snd_soc_dai *dai,
- 	default:
- 		dev_err(dai->dev,
- 			"%s: Error: Unsupported protocol/master (fmt = 0x%x)!\n",
--			__func__, drvdata->fmt);
-+			__func__, fmt);
- 		return -EINVAL;
- 	}
- 
- 	switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
- 	case SND_SOC_DAIFMT_NB_NF:
- 	case SND_SOC_DAIFMT_NB_IF:
-+	case SND_SOC_DAIFMT_IB_NF:
- 	case SND_SOC_DAIFMT_IB_IF:
- 		break;
- 
- 	default:
- 		dev_err(dai->dev,
- 			"%s: Error: Unsupported inversion (fmt = 0x%x)!\n",
--			__func__, drvdata->fmt);
-+			__func__, fmt);
- 		return -EINVAL;
- 	}
- 
-@@ -557,17 +564,23 @@ static int ux500_msp_dai_set_tdm_slot(struct snd_soc_dai *dai,
- 			__func__, slots);
- 		return -EINVAL;
- 	}
--	drvdata->slots = slots;
- 
--	if (!(slot_width == 16)) {
-+	if (slot_width != 16) {
- 		dev_err(dai->dev, "%s: Error: Unsupported slot-width (%d)!\n",
- 			__func__, slot_width);
- 		return -EINVAL;
- 	}
--	drvdata->slot_width = slot_width;
- 
--	drvdata->tx_mask = tx_mask & cap;
--	drvdata->rx_mask = rx_mask & cap;
-+	if ((tx_mask | rx_mask) & ~cap) {
-+		dev_err(dai->dev, "%s: Slot mask exceeds %d slots\n",
-+			__func__, slots);
-+		return -EINVAL;
-+	}
-+
-+	drvdata->slots = slots;
-+	drvdata->slot_width = slot_width;
-+	drvdata->tx_mask = tx_mask;
-+	drvdata->rx_mask = rx_mask;
- 
- 	return 0;
+-	return db8500_prcmu_early_init();
++	db8500_prcmu_early_init();
  }
-diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
-index ef41de92d8e76..bc77174e00707 100644
---- a/sound/soc/ux500/ux500_msp_i2s.c
-+++ b/sound/soc/ux500/ux500_msp_i2s.c
-@@ -201,10 +201,12 @@ static int configure_protocol(struct ux500_msp *msp,
  
- 	/* The code below should not be separated. */
- 	temp_reg = readl(msp->registers + MSP_GCR) & ~TX_CLK_POL_RISING;
--	temp_reg |= MSP_TX_CLKPOL_BIT(~protdesc->tx_clk_pol);
-+	temp_reg |= MSP_TX_CLKPOL_BIT(!protdesc->tx_clk_pol ^
-+					  config->bclk_inverted);
- 	writel(temp_reg, msp->registers + MSP_GCR);
- 	temp_reg = readl(msp->registers + MSP_GCR) & ~RX_CLK_POL_RISING;
--	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol);
-+	temp_reg |= MSP_RX_CLKPOL_BIT(protdesc->rx_clk_pol ^
-+					  config->bclk_inverted);
- 	writel(temp_reg, msp->registers + MSP_GCR);
+ static inline int prcmu_set_power_state(u8 state, bool keep_ulp_clk,
+@@ -302,7 +302,7 @@ static inline int prcmu_request_ape_opp_100_voltage(bool enable)
  
- 	return 0;
-@@ -441,6 +443,7 @@ static bool ux500_msp_config_compatible(struct ux500_msp *msp,
- 	       active->data_size == config->data_size &&
- 	       active->def_elem_len == config->def_elem_len &&
- 	       active->clock_provider == config->clock_provider &&
-+	       active->bclk_inverted == config->bclk_inverted &&
- 	       !memcmp(&active->protdesc, &config->protdesc,
- 		       sizeof(active->protdesc));
+ static inline void prcmu_system_reset(u16 reset_code)
+ {
+-	return db8500_prcmu_system_reset(reset_code);
++	db8500_prcmu_system_reset(reset_code);
  }
-diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
-index 80085dde50793..17b5c37a7e5d5 100644
---- a/sound/soc/ux500/ux500_msp_i2s.h
-+++ b/sound/soc/ux500/ux500_msp_i2s.h
-@@ -459,6 +459,7 @@ struct ux500_msp_config {
- 	unsigned int def_elem_len;
- 	unsigned int iodelay;
- 	bool clock_provider;
-+	bool bclk_inverted;
- };
  
- struct ux500_msp {
+ static inline u16 prcmu_get_reset_code(void)
+@@ -314,7 +314,7 @@ int prcmu_ac_wake_req(void);
+ void prcmu_ac_sleep_req(void);
+ static inline void prcmu_modem_reset(void)
+ {
+-	return db8500_prcmu_modem_reset();
++	db8500_prcmu_modem_reset();
+ }
+ 
+ static inline bool prcmu_is_ac_wake_requested(void)
 -- 
 2.53.0
 
