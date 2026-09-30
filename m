@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FCB4ABBA5;
-	Wed, 30 Sep 2026 18:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6F033DEF9;
+	Wed, 30 Sep 2026 18:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792176; cv=none; b=evWmi7Hj4Ztw24Or9p+vaY0DjixiZaI4XzEihYZRwhxeFI0k9qp7VMu5B4ItAh2gf3w57yUYZlFpmmnT9NalNi+ranZ8w4AWLzng9CRFN9zBkE4bnYRgYJDXMeCoPkuPqETUD6rMpwwaRitKmPsaO3sOSdTt+naDyD0JrUQcjd4=
+	t=1790792178; cv=none; b=Qawu1zbZGfr2yWpg7/0hvU1aDLgUf+VXXyv5AetiMJfIifxSiNfFkV534YaWO7xi996ucq5bejvNtfry/b131EL5QgWZsyODSE/LgEPij8U3UHoVg0ioeU3oO/vOQg1s8DCVTEKsU9nGrCnscKYgaPoVdTx+YG5ePbMKR5iu5uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792176; c=relaxed/simple;
-	bh=+tf2OjYCVUYe/A+PUL8spGW7Z6pg2oTGl8rk2Pbx3dQ=;
+	s=arc-20240116; t=1790792178; c=relaxed/simple;
+	bh=2TrEuuIR4QgxoaAYzI7Yav8c3jE9QxU+P/XK0BSoQto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuFRT9AwX+qnnDvlkKfeNhYngn2TYqVdrdMDp/HLjwDEfmC90+FPSA4RDQCsh2ggFrjV3AB1zBe1piapKhL7zKLsQgVQzeRF9AZ8PrEpZlbxvmxy3G/djoYhNeyDBDLajb6DrEkXFmdF9xISQB1gH8nZSpJ22k+hKhGXd6xj4UE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F73KE2nt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OMi73Kdl4wwIlGTTLDxt0Sm5f8iFxIyOKOM6LONbWOi7HhG3J31e4RelOHNY+0Iib14/NaMTFVJ47ixonP4lkOQnTrPEEsD1bGAqHdrvIrLxG/BhR8LpOPV2IrHV2jCPEPbR3ITG9YjJL7omkH0y4yqvJ5QW9DyJeCDtiBa+NP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YerEXCCX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F73KE2nt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E37A1F000FF;
-	Wed, 30 Sep 2026 18:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YerEXCCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B141F000FF;
+	Wed, 30 Sep 2026 18:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792174;
-	bh=jC3QfhV+4gbbC2qNsmywNWDAVUgLh1539yV2BNbESjs=;
+	s=korg; t=1790792177;
+	bh=3x5yFslEsxrVZZ/zFUs23GnFhKgMItgrgV8mt49hvSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F73KE2ntf5u+SOzus55KMGnIZthv8WMsXwhV9Fat/PybwBfhQkhtgH6jp6ltPyt+U
-	 H2cLeFE82fSF9ss+OB9mVpGxM9cao3gVog00pbprdNceJAywUpFGJq698jEDUlnPF6
-	 egyqjfr51Yg0dDNE6nnC+pfDCqaGu0cnt1nK9s8Y=
+	b=YerEXCCX29vho1eT698a7c/9cPgYjbozGi4nOrXmAklaEjnLWnUjulkn2EJqZc1/P
+	 WukQZwkWuk4KMakN6SNHlaI+e61WCUdxWvbu5qm96ewpHNSyvZH4iy4bi3ixZGEtwS
+	 Ls/bmDzP4E5kS1EZLN/ShmoXHuf0wrNfkN6dRoV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberts Kursitis <roberts.kursitis@azeron.eu>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 517/752] Input: xpad - add support for Azeron devices
-Date: Wed, 30 Sep 2026 17:26:27 +0200
-Message-ID: <20260930152409.444554719@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 508/752] ASoC: ux500: Parenthesize MSP_{RX,TX}_CLKPOL_BIT() arguments
+Date: Wed, 30 Sep 2026 17:26:18 +0200
+Message-ID: <20260930152409.250525339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,51 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberts Kursitis <roberts.kursitis@azeron.eu>
+[ Upstream commit 11fc0048a6930f4fca44fe3bd16a0023e78846a2 ]
 
-commit cba76c0f47af1a389d718c5bb69e75cbd67bba98 upstream.
+arm allmodconfig fails to build with gcc:
 
-Azeron controllers (Cyro, Cyborg, Classic/Compact, Cyro Lefty,
-Cyborg II and Keyzen) present a standard Xbox 360 controller
-interface, so they work with the existing xpad driver once their
-USB IDs are added.
+  In file included from sound/soc/ux500/ux500_msp_i2s.c:20:
+  sound/soc/ux500/ux500_msp_i2s.h:151:38: error: suggest parentheses
+  around arithmetic in operand of '^' [-Werror=parentheses]
+  sound/soc/ux500/ux500_msp_i2s.c:204:21: note: in expansion of macro
+  'MSP_TX_CLKPOL_BIT'
+  cc1: all warnings being treated as errors
 
-The 0x16d0 vendor ID is a shared block, but this is safe because
-xpad only binds interfaces that match the Xbox 360 signature.
+The macros never parenthesized their argument:
 
-Tested with an Azeron Keyzen.
+  #define MSP_TX_CLKPOL_BIT(n)  ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
 
-Signed-off-by: Roberts Kursitis <roberts.kursitis@azeron.eu>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260906143040.162418-1-roberts.kursitis@azeron.eu
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+That went unnoticed while every caller passed a plain variable, but
+configure_protocol() now passes an XOR expression, which binds as
+"a ^ (b & MASK)" rather than "(a ^ b) & MASK", and gcc rightly
+complains.
+
+No functional change: tx_clk_pol and rx_clk_pol only ever hold
+MSP_FALLING_EDGE (0) or MSP_RISING_EDGE (1), and bclk_inverted is a
+bool, so masking before or after the XOR gives the same 0/1 result.
+Parenthesize the argument anyway - it fixes the build and stops the
+macros from silently mis-evaluating a future composite argument.
+
+Fixes: 9ccbacf5a012 ("ASoC: ux500: Validate MSP DAI configuration")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609051547.G9SJp8UQ-lkp@intel.com/
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260913173132.1172003-1-sashal@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/ux500/ux500_msp_i2s.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -281,6 +281,12 @@ static const struct xpad_device {
- 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1103, "Azeron Cyro", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x113c, "Azeron Cyborg", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1192, "Azeron Classic/Compact", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1212, "Azeron Cyro Lefty", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x12f7, "Azeron Cyborg II", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x13ea, "Azeron Keyzen", 0, XTYPE_XBOX360 },
- 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
-@@ -472,6 +478,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark X-Box 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech X-Box 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
-+	XPAD_XBOX360_VENDOR(0x16d0),		/* Azeron controllers */
- 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harminix Rock Band Guitar and Drums */
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 28a90207a4cb5..4e4f140912f9b 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -149,8 +149,8 @@ enum msp_direction {
+ #define RCKPOL_MASK		BIT(0)
+ #define TCKPOL_MASK		BIT(0)
+ #define SPICKM_MASK		(BIT(1) | BIT(0))
+-#define MSP_RX_CLKPOL_BIT(n)     ((n & RCKPOL_MASK) << RCKPOL_SHIFT)
+-#define MSP_TX_CLKPOL_BIT(n)     ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
++#define MSP_RX_CLKPOL_BIT(n)     (((n) & RCKPOL_MASK) << RCKPOL_SHIFT)
++#define MSP_TX_CLKPOL_BIT(n)     (((n) & TCKPOL_MASK) << TCKPOL_SHIFT)
+ 
+ #define P1ELEN_SHIFT		0
+ #define P1FLEN_SHIFT		3
+-- 
+2.53.0
+
 
 
