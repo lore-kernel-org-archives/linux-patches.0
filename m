@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5408451A14B;
-	Wed, 30 Sep 2026 17:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D5E364059;
+	Wed, 30 Sep 2026 17:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789131; cv=none; b=IbtYB4Fn2bR7Uwr7QfSLqCVu1TlkCoz6NwqhnNTN7dEgUAQsekSzGT+Zf8YsxYO7NeFHSoTlZllytWLKDqaD3OvgSgj1+Ltx1hptTV7n4xCMkKOPAW5AArffFpYECGBU7psRF5e2g7JK0MKvk/JQJrwxcmNfk9N0aL46mxtnIuw=
+	t=1790789134; cv=none; b=PDiWjfabTXK/nBVNPU10ypcUE7gu3DS7azpYlOqlyD9NYgj8f7Gkjymbi9oJQ+Qar0mWqig90gp97zdo8haFi9yDE1vjR2jn0uf73mnGIO8P/LV6UIdNEUA2I5TflhjqQUHZtZn1pig50uj4Cq2c6c1L9b2XZoYK4Z9WumYzinc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789131; c=relaxed/simple;
-	bh=KdbkWLhWGlBxymb6BTF/VWlooJBnaxSbd4uuwdfD4Co=;
+	s=arc-20240116; t=1790789134; c=relaxed/simple;
+	bh=FgMo5k0DUZZy4SSVC1JNfwj8j5UWhIpJM5AWYkdLFOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKRGh2+p68uqgRzxNxrX/VupOx6poG0c6ymkhVtUca+Lc2EWBpUIf7eB/1IXxam3ef7ibVjvw8mMgbj4nCbj89d1wzF35SS870Husq7grO5nAjt2er9edj9bTbvBu5ToAG0pKJOTgHJsqskwiNrCnHdt73TK7+sJpQFkJbURZQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pn/YEnXh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aTxNzK8/XvrNPMpE7zWftqvdoam2F7Sbrpj0DJWHW0Yd8o54scMmsY8hS5RVSNvv/fAkjJ67r7rD8goTCcIERgPF50CQDfaQCg0cv6KmvRX50hvIbbSFZEEmOXC7HkSf3RIL3FLNiSulN4dZWx+5Rk8WTAEsZieXcDeYbKnMXHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiE0bla8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pn/YEnXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A870F1F000FF;
-	Wed, 30 Sep 2026 17:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiE0bla8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1321F000FF;
+	Wed, 30 Sep 2026 17:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789130;
-	bh=G/JPodqhpihMVIOE0rUqPoHq4Pcm8S4qgK25CgoXgTo=;
+	s=korg; t=1790789133;
+	bh=/kI4ykHaqS6fUE00gHqHWgPsngHl8hj2bz7XrfNUdGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pn/YEnXhH3EmtTgwpLnMr7piJj2ZctV3rWQHHWz6ZZJvhps0esVXusLPI0pSb4MCj
-	 PcXzyb7M3Z1AgZ4U91UUx9JIuqo2rqefEsWX/R057ypTrdbrOiZ2+TjYiF6FOK3++O
-	 fM9IUf4OWG6ebtaFP5R9TfGD69BkPDe/oDUq0TGM=
+	b=ZiE0bla8P5uAN/DeDqr1DVJS5Ues5vVu0/G5q0plc6HjqHuiWeQIu2OwDGRueNP0a
+	 qYSJTYTVvgOpipgc0MWgtnDnxfPoTj8gaNuLmwn+dH2I11myqgLXRWYJsH27L5uRwT
+	 y87qrggcAgIFnd2eUYHC/uupGJFylPN1LjXIA/z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4bd730aede2791e40bdf@syzkaller.appspotmail.com,
-	Naman Gulati <namangulati@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 352/877] netfilter: ctnetlink: fix suspicious RCU usage in expect_iter_name
-Date: Wed, 30 Sep 2026 17:21:03 +0200
-Message-ID: <20260930152422.268512725@linuxfoundation.org>
+Subject: [PATCH 6.12 370/877] drm/virtio: fix object leak in virtio_gpu_resource_create_ioctl()
+Date: Wed, 30 Sep 2026 17:21:21 +0200
+Message-ID: <20260930152422.661886850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,74 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Gulati <namangulati@google.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 207d591c353201f3bd3e0c89bb7d44a849c8fd59 ]
+[ Upstream commit 477bc3068fc3777b9d8ffd79e265b0dfdf2d3a6b ]
 
-expect_iter_name() is invoked by nf_ct_expect_iterate_net() under
-spin_lock_bh(&nf_conntrack_expect_lock). It does not hold
-rcu_read_lock().
+virtio_gpu_resource_create_ioctl() calls drm_gem_object_release() on the
+drm_gem_handle_create() error path instead of dropping the reference it
+owns, so obj->funcs->free() never runs and the virtio_gpu_object, its
+pages and sg table, the resource id and the host-side resource are
+leaked.
 
-When accessing exp->helper with rcu_dereference() in syzbot's report,
-lockdep warns:
+Use drm_gem_object_put() instead.
 
-  =============================
-  WARNING: suspicious RCU usage
-  syzkaller #0 Not tainted
-  -----------------------------
-  net/netfilter/nf_conntrack_netlink.c:3393 suspicious rcu_dereference_check() usage!
-
-  locks held by syz-executor381/5628: 2, last CPU#1:
-   #0: ffffffff9aee42a0 (nfnl_subsys_ctnetlink_exp){+.+.}-{4:4},
-       at: nfnetlink_rcv_msg+0xa69/0x12b0
-   #1: ffffffff8ea74d58 (nf_conntrack_expect_lock){+...}-{3:3},
-       at: nf_ct_expect_iterate_net+0x38/0x180
-
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0xe8/0x150
-   lockdep_rcu_suspicious+0x140/0x1d0
-   expect_iter_name+0xfb/0x100
-   nf_ct_expect_iterate_net+0xf2/0x180
-   ctnetlink_del_expect+0x45d/0x640
-   nfnetlink_rcv_msg+0xcc2/0x12b0
-   netlink_rcv_skb+0x226/0x4a0
-   nfnetlink_rcv+0x2b9/0x28c0
-   netlink_unicast+0x7bd/0x940
-   netlink_sendmsg+0x813/0xb40
-   ____sys_sendmsg+0x54e/0x850
-   ___sys_sendmsg+0x2a5/0x360
-   __sys_sendmsg+0x2a5/0x360
-   do_syscall_64+0x166/0x520
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Use rcu_dereference_protected() with lockdep_is_held() on
-nf_conntrack_expect_lock instead, similar to expect_iter_me() in
-nf_conntrack_helper.c.
-
-Fixes: f01794106042 ("netfilter: nf_conntrack_expect: use expect->helper")
-Reported-by: syzbot+4bd730aede2791e40bdf@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6aa4a377.f81106d8.2ab401.0024.GAE@google.com/T/#u
-Signed-off-by: Naman Gulati <namangulati@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 62fb7a5e1096 ("virtio-gpu: add 3d/virgl support")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260915-fixes-v2-2-a0d799e4db66@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_ioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index a081d38702f5d..8bb32965edb83 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3390,7 +3390,8 @@ static bool expect_iter_name(struct nf_conntrack_expect *exp, void *data)
- 	struct nf_conntrack_helper *helper;
- 	const char *name = data;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
+index e4f76f3155504..60e5146ddefec 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
++++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
+@@ -180,7 +180,7 @@ static int virtio_gpu_resource_create_ioctl(struct drm_device *dev, void *data,
  
--	helper = rcu_dereference(exp->helper);
-+	helper = rcu_dereference_protected(exp->helper,
-+					   lockdep_is_held(&nf_conntrack_expect_lock));
- 	if (!helper)
- 		return false;
+ 	ret = drm_gem_handle_create(file, obj, &handle);
+ 	if (ret) {
+-		drm_gem_object_release(obj);
++		drm_gem_object_put(obj);
+ 		return ret;
+ 	}
  
 -- 
 2.53.0
