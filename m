@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C0038D3E2;
-	Wed, 30 Sep 2026 16:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966C350C287;
+	Wed, 30 Sep 2026 16:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785806; cv=none; b=XUKb6JcFBf/BbecSRmhnSP/9qSnVQ9O2YSupIOo+ynW3qpcDYmfy9wYfiKnq7ndjqA67/dpSWP61KbGEieL9MT4ni+vdQE4qVsYWNkHwogJpQa9FIknD+WzIjHFlRmcp+CmhmLVfo3Abix0E8h02hbWfmPHGCdSAHfU4kp/U5WA=
+	t=1790785808; cv=none; b=JmhIKKW5+QKpUwtUGumR3/DVV/fY4WFeM6lepEcgqKAsUjiUlToc1t+WZj3IFy2SZ1CZ0jy0k/tM6M7fxxiRGsG2DP7BpRCVBF18ucCFtAkoFotiQfv+LHWlaBsvpxKmJ4XrqP21jsSwFqKfNpBW2nfK1ZcGqSnS5P5rAv124aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785806; c=relaxed/simple;
-	bh=V1OgYKfQO1ammuRD7VqGH6+wrArTihmbAokk6Q8Ctkg=;
+	s=arc-20240116; t=1790785808; c=relaxed/simple;
+	bh=r8dvwAAP7kMPT5qevPMThH/XVr78Q+/5ZtvpbV1c6og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuO3J21W4wqW5zfWAA+SpbzqwJkEecnTpproKUySqysQ/ulcPUhhF/VtLodQBPe4APtFcZ4RrkZZ2YPdXFPujsIG6XuJd804IiW+jsb5SRFrko37sff1vSSzD6zO+QQa2BNYcJjqr+cbRMMyXO/cKKQSoCkE61mzUEHQ4/z2FKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+r5Crc4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9ypg+GpTpNwLtwwADeMob2O7EDWi2A7TXQ/GW2KiBUxtw131aenOcTw2IsLglKzCX8oBCrX7JD9lXgVOKcWpLBeLr/0dObwMccoYDr2V9Pp2FSNLxskoHLIzKoy2PPQC9UI+AKUEw8IhDQOxVW+QOrwzOMpRvnTJELwAB+MPpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBBtvKJ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+r5Crc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5D81F000FF;
-	Wed, 30 Sep 2026 16:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBBtvKJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF351F000FF;
+	Wed, 30 Sep 2026 16:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785804;
-	bh=3uoa6CKRSdEvEWLJkm3FzBeRnZfgGeGzQ1CVN3NqPQY=;
+	s=korg; t=1790785807;
+	bh=sOSP5LJPy3fmuLYok4rmY6Iz2uhPwXxTVlov+zDLhEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+r5Crc4YvT4BS7z60cBaSPpPww7HwyI1OoVd6RPW/KY3Pq6RqLI8aK0dzXGqFozr
-	 Nwqno3mIpS1CgT+UXVPzJNiNyBj6TpDyCb8OMh7fOuxUCRB4Oy0Vo8fevVNJpU2Hxm
-	 Vu/jOqgT9JS8QHIvHdx33CtsFMmrj+YK4Y+PnNgI=
+	b=WBBtvKJ1MqiDR2H7EWNYtmez1E3haKgkBygU57NqbJe7SPM1wjWj8NzDyHCPvEwT8
+	 oiw97jOqGKuSSU4PQYcC1sZZZtI1pAhTUbr2nTrcUce2IWtPi5JMRkY1y+EhF0IhPh
+	 knH/RqSDtHAzcxxfdqbLSv4CUzTP2pLZsvWuGryg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b59873f5699e941717ca@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 636/982] wifi: mac80211: dont RCU-dereference the mesh CSA settings we just set
-Date: Wed, 30 Sep 2026 17:22:52 +0200
-Message-ID: <20260930152430.430499643@linuxfoundation.org>
+Subject: [PATCH 6.1 594/982] RDMA/siw: Introduce siw_cep_set_free_and_put
+Date: Wed, 30 Sep 2026 17:22:10 +0200
+Message-ID: <20260930152429.543280921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,40 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit b481e64e4498e2c053d5954f546ee02338f6ab63 ]
+[ Upstream commit b5c91543204c345f1b28af573854c4b7e699cc91 ]
 
-In the error path of ieee80211_mesh_csa_beacon() the settings that were
-just assigned are read back with rcu_dereference(), which lockdep then
-complains about.
+Add the helper which can be used in some places.
 
-There's no need to read the pointer at all, tmp_csa_settings still is
-the right value anyway.
-
-Assisted-by: LLM
-Fixes: b8456a14e9d2 ("{nl,cfg,mac}80211: implement mesh channel switch userspace API")
-Reported-by: syzbot+b59873f5699e941717ca@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b59873f5699e941717ca
-Link: https://patch.msgid.link/20260908122838.201719-17-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Link: https://lore.kernel.org/r/20231113115726.12762-11-guoqing.jiang@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 32cd87f54dd1 ("RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 31 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index 1b928cd4545aa..79569c6fbbd05 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -1417,7 +1417,6 @@ int ieee80211_mesh_csa_beacon(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index 32cefc30d6cd6..bc2ad13f9c6b6 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -450,6 +450,12 @@ void siw_cep_put(struct siw_cep *cep)
+ 	kref_put(&cep->ref, __siw_cep_dealloc);
+ }
  
- 	ret = ieee80211_mesh_rebuild_beacon(sdata);
- 	if (ret) {
--		tmp_csa_settings = rcu_dereference(ifmsh->csa);
- 		RCU_INIT_POINTER(ifmsh->csa, NULL);
- 		kfree_rcu(tmp_csa_settings, rcu_head);
- 		return ret;
++static void siw_cep_set_free_and_put(struct siw_cep *cep)
++{
++	siw_cep_set_free(cep);
++	siw_cep_put(cep);
++}
++
+ void siw_cep_get(struct siw_cep *cep)
+ {
+ 	kref_get(&cep->ref);
+@@ -1517,9 +1523,7 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 
+ 		cep->state = SIW_EPSTATE_CLOSED;
+ 
+-		siw_cep_set_free(cep);
+-
+-		siw_cep_put(cep);
++		siw_cep_set_free_and_put(cep);
+ 
+ 	} else if (s) {
+ 		sock_release(s);
+@@ -1567,16 +1571,14 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	if (cep->state != SIW_EPSTATE_RECVD_MPAREQ) {
+ 		siw_dbg_cep(cep, "out of state\n");
+ 
+-		siw_cep_set_free(cep);
+-		siw_cep_put(cep);
++		siw_cep_set_free_and_put(cep);
+ 
+ 		return -ECONNRESET;
+ 	}
+ 	qp = siw_qp_id2obj(sdev, params->qpn);
+ 	if (!qp) {
+ 		WARN(1, "[QP %d] does not exist\n", params->qpn);
+-		siw_cep_set_free(cep);
+-		siw_cep_put(cep);
++		siw_cep_set_free_and_put(cep);
+ 
+ 		return -EINVAL;
+ 	}
+@@ -1719,8 +1721,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	cep->qp = NULL;
+ 	siw_qp_put(qp);
+ 
+-	siw_cep_set_free(cep);
+-	siw_cep_put(cep);
++	siw_cep_set_free_and_put(cep);
+ 
+ 	return rv;
+ }
+@@ -1743,8 +1744,7 @@ int siw_reject(struct iw_cm_id *id, const void *pdata, u8 pd_len)
+ 	if (cep->state != SIW_EPSTATE_RECVD_MPAREQ) {
+ 		siw_dbg_cep(cep, "out of state\n");
+ 
+-		siw_cep_set_free(cep);
+-		siw_cep_put(cep); /* put last reference */
++		siw_cep_set_free_and_put(cep); /* put last reference */
+ 
+ 		return -ECONNRESET;
+ 	}
+@@ -1761,8 +1761,7 @@ int siw_reject(struct iw_cm_id *id, const void *pdata, u8 pd_len)
+ 
+ 	cep->state = SIW_EPSTATE_CLOSED;
+ 
+-	siw_cep_set_free(cep);
+-	siw_cep_put(cep);
++	siw_cep_set_free_and_put(cep);
+ 
+ 	return 0;
+ }
+@@ -1894,8 +1893,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
+ 		siw_socket_disassoc(s);
+ 		cep->state = SIW_EPSTATE_CLOSED;
+ 
+-		siw_cep_set_free(cep);
+-		siw_cep_put(cep);
++		siw_cep_set_free_and_put(cep);
+ 	}
+ 	sock_release(s);
+ 
+@@ -1926,8 +1924,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
+ 			cep->sock = NULL;
+ 		}
+ 		cep->state = SIW_EPSTATE_CLOSED;
+-		siw_cep_set_free(cep);
+-		siw_cep_put(cep);
++		siw_cep_set_free_and_put(cep);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
