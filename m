@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FED14E3229;
-	Wed, 30 Sep 2026 15:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BB4C4F58;
+	Wed, 30 Sep 2026 15:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783421; cv=none; b=o7WzjU64LHNkRAvwrD/YvC+3c+HQzxon5S+pV3MwNQ3tmV3XtERKAI/lInzeFPurtftwUtCveIAzelNR2Fsx5lwjcDh7F60Es/jfzC3dWen2W5A9EZSPcF9a1MVv45uuwlHuLoQAtjONs7340yq3UNd0Zx0GO32ohnIKT55IPfE=
+	t=1790783426; cv=none; b=OXJ0iIu60m2jeQk8UW4pJw2fqrdZQQtcY1r1juz4zQAoTvjRTlYUYPSX9tX1vr1YHPrzZ73iEjcpTAxqktPoMwhnkNWhT5JD8N50MHb0eWzFd0uosSwRqM9t2Rt5+TolaHBakqazv7XOHhqMNQrogELNSC3HTtc85IxAKaBfEt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783421; c=relaxed/simple;
-	bh=ols5mxPTZw/eTntJqiHAEGjJFz6Rkyv50z92+kSZeec=;
+	s=arc-20240116; t=1790783426; c=relaxed/simple;
+	bh=pnOLCn4lggZFNeB2BRAY0Ka1UPwbrXgY+WaL0DUXUn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHp9/lP7vCqdvHGWDl3naNViha4cSzFhkEDbXQrk+Epcyi0pM9ADouw0bP0tNOb+OB5fdp1clFlFwJ3Tgmf46gFIbn3kC3k3UxWL4jZqmtvoLkaGGB0caBQKBYNlAl8t9vbKNHcNQ9hjHM20TIe1zFfr+Ys8IQCk1yl9SmmIqjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KO54JJPr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZWxSowCgO34spOukQuBhxFpNimn4XrqaRPkATvd8XPYdnJao4CSJDLY/dygcQr41whQXXCPsPNIDLDpIZ/hWXwUHfxy+pNG+Ga3ff9F4pgdGcFpEf+Ul/gFgXmPBOplJFknar2dQZKRgbap78hVn2zX3IXqB0gtUF06N5T60jL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLHaVmNn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KO54JJPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212F51F00893;
-	Wed, 30 Sep 2026 15:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLHaVmNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22291F000FF;
+	Wed, 30 Sep 2026 15:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783418;
-	bh=4RQ82h5RLX4TvD1u2dqUsnlx0PhWBadha4TuaKalqKw=;
+	s=korg; t=1790783421;
+	bh=1dei6aotc0RFVVsHjbuPVDoqn4qgMSl14fYc+Ak48rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KO54JJPrWcjb1ubQHykUpWpPzb4qJCyCIJsXvZokEHwrf1LLLa/ai/kpZEEa2XfEr
-	 3Y3+/YhlmKsHwKU1YHc2gugULmW6Z86hor7lUWjIEUFXVH3EXdh/JWYI0HbSdrw5LI
-	 c9WcHzLNFVdhvcwN0SJS/B8xyAxwVCwCdAKN+kcU=
+	b=sLHaVmNnl8kVu3kUQK5Xg4s6XPiQOIT5h+pSLckJgAMKXS1lHWBpoYtgFcCQ9nbYM
+	 a8+9+xQ0O6bxTc4z4gTQPocvLm5sNYhvJpXHHiq4FOVbV15PoeKyyB0OeOoDa+vKPJ
+	 +yPhtttjRL9YAPuwkHReCFh0F89g0puZCUkUM7hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 355/595] firmware: arm_scpi: reject DVFS OPP count above MAX_DVFS_OPPS
-Date: Wed, 30 Sep 2026 17:24:08 +0200
-Message-ID: <20260930152355.313226115@linuxfoundation.org>
+Subject: [PATCH 5.10 391/595] netfilter: flowtable: hold reference on ct until flow is released
+Date: Wed, 30 Sep 2026 17:24:44 +0200
+Message-ID: <20260930152356.083766485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,42 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 32471d84a487c7fd74532bc96be56f8028cf4a3f ]
+[ Upstream commit e75a9fa1d44bcbd66ea02e8781bcca6ea4076e0d ]
 
-scpi_dvfs_get_info() already rejected a zero opp_count, but still trusted
-any larger value from the SCP firmware. The shared-memory reply only holds
-MAX_DVFS_OPPS entries in buf.opps[]; a bigger count over-reads that array
-and then sizes the allocated OPP table incorrectly (garbage OPPs / OOB).
-The missing upper bound dates back to the original SCPI DVFS support.
+nf_ct_put() releases the ct->ext area inmediately, the rcu typesafe
+semantics also allow to refer to the wrong conntrack from the flowtable
+datapath. Hold reference on ct until flow is released after rcu grace
+period.
 
-Reject zero and out-of-range counts in one check and return -EINVAL.
+Add rcu_barrier() on module exit path, to ensure pending flow entries
+are release before module goes away.
 
-Fixes: 8cb7cf56c9fe ("firmware: add support for ARM System Control and Power Interface(SCPI) protocol")
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Link: https://patch.msgid.link/022802f0b38f.v2.1785200642.git.liuxixin@kylinos.cn
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 0ff90b6c2034 ("netfilter: nf_flow_offload: fix use-after-free and a resource leak")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scpi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_flow_table_core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
-index 3a1d77b882f7e..1ff0e759c6be8 100644
---- a/drivers/firmware/arm_scpi.c
-+++ b/drivers/firmware/arm_scpi.c
-@@ -627,8 +627,8 @@ static struct scpi_dvfs_info *scpi_dvfs_get_info(u8 domain)
- 	if (ret)
- 		return ERR_PTR(ret);
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 8f6b791918ae7..1d4a236b5bc25 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -173,6 +173,14 @@ static void flow_offload_route_release(struct flow_offload *flow)
+ 	dst_release(flow->tuplehash[FLOW_OFFLOAD_DIR_REPLY].tuple.dst_cache);
+ }
  
--	if (!buf.opp_count)
--		return ERR_PTR(-ENOENT);
-+	if (!buf.opp_count || buf.opp_count > MAX_DVFS_OPPS)
-+		return ERR_PTR(-EINVAL);
++static void flow_offload_free_rcu(struct rcu_head *rcu_head)
++{
++	struct flow_offload *flow = container_of(rcu_head, struct flow_offload, rcu_head);
++
++	nf_ct_put(flow->ct);
++	kfree(flow);
++}
++
+ void flow_offload_free(struct flow_offload *flow)
+ {
+ 	switch (flow->type) {
+@@ -182,8 +190,7 @@ void flow_offload_free(struct flow_offload *flow)
+ 	default:
+ 		break;
+ 	}
+-	nf_ct_put(flow->ct);
+-	kfree_rcu(flow, rcu_head);
++	call_rcu(&flow->rcu_head, flow_offload_free_rcu);
+ }
+ EXPORT_SYMBOL_GPL(flow_offload_free);
  
- 	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
+@@ -584,6 +591,7 @@ static int __init nf_flow_table_module_init(void)
+ 
+ static void __exit nf_flow_table_module_exit(void)
+ {
++	rcu_barrier();
+ 	nf_flow_table_offload_exit();
+ }
+ 
 -- 
 2.53.0
 
