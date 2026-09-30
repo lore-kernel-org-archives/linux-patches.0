@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706CA502568;
-	Wed, 30 Sep 2026 15:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDF950277A;
+	Wed, 30 Sep 2026 15:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783649; cv=none; b=dPL+oLk+DVh18BSPE1z094iz45z8In/LLCU8Cj69t0pm4AGO758NC3XzsRNFyBPH8jK2Fotr7IPLRRLDzmVTUdN2HpVtRVkkLV5LHW7n0DOOV0/ewp+1SgmuM4+MnQLoHMMLQC++Vs7en6DUfCUYth0KDy3dNbyav35URPsr+Wg=
+	t=1790783652; cv=none; b=YaBmSxXRFOKDvfMIwPXI1j3GB5pP/g3ttq50NLwgw2i3TNBuWmes8wgmMxZU/aXGhbFHe/f79iXYImU5QHCNM7/tD2BOH861jbMHSkY0nRIS3aAhqQxOXKjzFM0cCxzY7vl0xsWtT/jFEHgxVxcSw3Gf2qvfjEDgc0+Qy9T1W94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783649; c=relaxed/simple;
-	bh=TsKser2z+uIOFaYYh46bWMR+zJlhX+avF4XOrN2Ejdg=;
+	s=arc-20240116; t=1790783652; c=relaxed/simple;
+	bh=73lAtEdUegwYSMc/HlQJxuG5z+kC6OzUo2hXCXjhLew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWETJGgilansMWD/zbTLC2Eu/PGGVGS4CCv9BquW8dXu21N2iM//G4+Fi2aB3d9L1cYd6hfwT+RMPJ8CKVwZu6/EyKxAGh0Bpl41Q0fd8Vcp3X1fVOhDB0wUtjm61y5ThqsG8g5yggOz6QtTuE/l1Oamcg+59eexcZd682SBD6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4b5Tdej; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qykSlOlMc1t6nEmYjrhnrGkeKhggQGQsR0nfOEHZgzjtnpXHHx18OS77GWeXAGbjY6UJeLqcno3zeSbFZl5jTrIiQvISEqyJgOiWLzXLy/XidytjVcrt7z83o+jZGONo61Xyzjic0cJwDtU8mF21bbCfEmpsBqHEUnKVArVCm24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuoesuRB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4b5Tdej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70C81F00893;
-	Wed, 30 Sep 2026 15:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuoesuRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7C31F00898;
+	Wed, 30 Sep 2026 15:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783645;
-	bh=VzC65+DLbYIszRmg2dAvumxnQu6dpNhq1zJuida2fjA=;
+	s=korg; t=1790783648;
+	bh=ryZakyDH4HNZCQJMN08kApIAwuu9I/f3J2cVvLgv6Bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M4b5TdejjI+dGa3xCW5MjU8APllszoMqAy4ioXHjJ2jpo+DcWJiDCjcBWToObCifi
-	 cFwS0qDcOpijrPJwRbX8tlwxHpS/VhUJRTGfpptdPz7a5rJFLOpc/Bjsjs+td78l+v
-	 2kDC6DhHdCk5pl0lpvjCi65NFYqRB48JEt6X4Mck=
+	b=TuoesuRB9iSIvjhKfWI4Rt20kLrjEwdILDFYHn3xsmDWTscafj04MQVO27Oq+TLr4
+	 PHkq+ZzcPAHGJMJRMdeB8lKyHbT0jLABwWWXbVpjyr4UVXn5vGae+sW6dAsW0NmNZX
+	 7njufD1J9LrfuKJW3XiW1iiTrEWzyXtaEOSk0EDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Brian Norris <briannorris@chromium.org>,
-	Zhao Li <enderaoelyther@gmail.com>,
+	syzbot+af177aa139efdd13a9da@syzkaller.appspotmail.com,
+	Rik van Riel <riel@surriel.com>,
+	syzbot+dcaca020ca8377e7ced0@syzkaller.appspotmail.com,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 472/595] wifi: mwifiex: validate action frame fixed fields
-Date: Wed, 30 Sep 2026 17:26:05 +0200
-Message-ID: <20260930152357.832344075@linuxfoundation.org>
+Subject: [PATCH 5.10 473/595] wifi: mac80211: avoid WARN in set_bitrate_mask when sdata not in driver
+Date: Wed, 30 Sep 2026 17:26:06 +0200
+Message-ID: <20260930152357.855937858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,65 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 1c25bfad93e69ce13f744a2fb919f02ea396a985 upstream.
+commit da2ca406f45a6e21760243152ed8d2e8e72915c2 upstream.
 
-mwifiex_process_mgmt_packet() accepts an rx_pkt_length as small as a
-four-address struct ieee80211_hdr plus the two-byte firmware length prefix.
-After stripping the prefix, mwifiex_parse_mgmt_packet() can receive a
-frame equal to sizeof(struct ieee80211_hdr).
+ieee80211_set_bitrate_mask() checks if the interface is running via
+ieee80211_sdata_running(), but it does not check if the interface is
+still present in the driver.
 
-For action frames, the parser reads the category byte immediately after
-that header and, for a public action frame, reads the following action
-code byte without verifying that either field is present. A truncated frame
-can therefore make the parser consume up to two bytes past the
-firmware-declared frame length. If those bytes look like a TDLS discovery
-response, the malformed frame can spuriously update peer signal state.
+When sdata is running but IEEE80211_SDATA_IN_DRIVER is not set, the
+call reaches drv_set_bitrate_mask() in driver-ops.h which hits
 
-Require the category and public action-code fields before reading them.
-Use sizeof(*ieee_hdr) so the checks and field accesses directly match the
-firmware four-address layout being parsed before address4 is removed.
+  wlan1: Failed check-sdata-in-driver check, flags: 0x0
+  WARNING: net/mac80211/driver-ops.h:884 at drv_set_bitrate_mask
 
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Suggested-by: Brian Norris <briannorris@chromium.org>
-Fixes: 72e5aa8d2a6d ("mwifiex: support for parsing TDLS discovery frames")
+Syzkaller triggers this via wext SIOCSIWRATE ioctl. The Call Trace shows
+wext_ioctl_dispatch() in wext-core.c dispatching the ioctl, calling
+ioctl_standard_call() for SIOCSIWRATE, which calls cfg80211_wext_siwrate()
+in wext-compat.c. That builds a bitrate mask and calls
+rdev_set_bitrate_mask() which ends up in ieee80211_set_bitrate_mask() in
+cfg.c. The interface is marked running via SDATA_STATE_RUNNING but
+flags is 0, so check_sdata_in_driver() fails.
+
+When the interface is being torn down, or when wext ioctl is issued
+during interface bringup before drv_add_interface() sets IN_DRIVER, the
+running check passes while IN_DRIVER is clear.
+
+Check IEEE80211_SDATA_IN_DRIVER in ieee80211_set_bitrate_mask() before
+calling the driver, returning -ENETDOWN. This avoids the WARN_ONCE in
+driver-ops.h and matches other cfg.c operations that bail early when not
+in driver.
+
+This change should be safe because wiphy mutex is held in
+cfg80211_wext_siwrate() via guard(wiphy), and IN_DRIVER is set/cleared
+under RTNL and wiphy paths in drv_add_interface() and
+drv_remove_interface() in driver-ops.c, so the check is race-free
+against driver add/remove. Returning -ENETDOWN is the same error other
+not-running paths use and does not introduce new locking.
+
+Reported-by: syzbot+af177aa139efdd13a9da@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=af177aa139efdd13a9da
+Link: https://lore.kernel.org/all/6a75205c.59b6c763.2bba34.00c3.GAE@google.com/
+Fixes: 554a43d5e77e ("mac80211: check sdata_running on ieee80211_set_bitrate_mask")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/66f148d83eb9f0970b9abbccc85d1b61244e54ad.camel@sipsolutions.net/
-Link: https://lore.kernel.org/all/20260708195911.84365-8-enderaoelyther@gmail.com/
-Link: https://lore.kernel.org/all/20260723011013.76968-1-enderaoelyther@gmail.com/
-Link: https://lore.kernel.org/all/20260723202257.688-1-enderaoelyther@gmail.com/
-Link: https://lore.kernel.org/all/anuWyiPQja6_5vly@google.com/
-Assisted-by: Codex:gpt-5
-Assisted-by: Kimi:K3
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260825112523.95774-1-enderaoelyther@gmail.com
+Assisted-by: Hermes:muse-spark-1.2 syzkaller
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Link: https://patch.msgid.link/20260808104755.319c686e@fangorn
+Reported-by: syzbot+dcaca020ca8377e7ced0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dcaca020ca8377e7ced0
+[also add second syzbot report]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/util.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/mac80211/cfg.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/util.c
-+++ b/drivers/net/wireless/marvell/mwifiex/util.c
-@@ -347,10 +347,16 @@ mwifiex_parse_mgmt_packet(struct mwifiex
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2951,6 +2951,9 @@ static int ieee80211_set_bitrate_mask(st
+ 	if (!ieee80211_sdata_running(sdata))
+ 		return -ENETDOWN;
  
- 	switch (stype) {
- 	case IEEE80211_STYPE_ACTION:
--		category = *(payload + sizeof(struct ieee80211_hdr));
-+		if (len < sizeof(*ieee_hdr) + 1)
-+			return -1;
++	if (!(sdata->flags & IEEE80211_SDATA_IN_DRIVER))
++		return -ENETDOWN;
 +
-+		category = *(payload + sizeof(*ieee_hdr));
- 		switch (category) {
- 		case WLAN_CATEGORY_PUBLIC:
--			action_code = *(payload + sizeof(struct ieee80211_hdr)
-+			if (len < sizeof(*ieee_hdr) + 2)
-+				return -1;
-+
-+			action_code = *(payload + sizeof(*ieee_hdr)
- 					+ 1);
- 			if (action_code == WLAN_PUB_ACTION_TDLS_DISCOVER_RES) {
- 				addr2 = ieee_hdr->addr2;
+ 	/*
+ 	 * If active validate the setting and reject it if it doesn't leave
+ 	 * at least one basic rate usable, since we really have to be able
 
 
