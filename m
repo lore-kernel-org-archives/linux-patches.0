@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E3D51B174;
-	Wed, 30 Sep 2026 17:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D2351B174;
+	Wed, 30 Sep 2026 17:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790837; cv=none; b=dRh86hk8r8o/MgfO0flLE/39L3BjAMkZAailU3ADkCbgecmHoh3fdnTaL1JGnl+zZsRZwKwdJiNJkQLL5uc8ZXj4DQ2+75jn6vibglP749GJ4NVkTCfSWE+nz5fIlH4OPjTjMgBeRdlG0lkOb91XGOdBO5icKSgmorAeW8K3oEY=
+	t=1790790839; cv=none; b=VKrFww+AtjvYuzi4LBBn74trkl+uYo+2037SM8U6ViouvpQUeINHyGVs0YDKzM1oVu0PoUxFp2DSK4xwp3x+6KALMw3QNN188VHBdXdh3L+qY8QwP8EmexcLv1syAfLWIsd1gI4DOT8ObdAn9jrmn5QD+NF1tlK4KeS+gey9XdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790837; c=relaxed/simple;
-	bh=2zNGZfwIG3kvbP1VYq1earCTK/p5r/ljaMZwkJO8L1A=;
+	s=arc-20240116; t=1790790839; c=relaxed/simple;
+	bh=owN4vFb6hRXyPm7XdCEJT1qH0Yonhf/yIP0tNkcvUcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sorUWPv4lNWW5thxLvPu2Bu+Ab311Rt/2XwSrSJw8AKev3E2McRUsj2DbO8LTDG5R8DzDqggmWMCVq2rXTr2YsjkTwaqefDdyeXB/K2Z88YLXdgk2D7hA+CJaxlTChPSPoz5k7wrt2IvzGUL3xMT8fRU8LTDl8il6y9Dd6V3pD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6aYk5H9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BLs/66Y8yRc+XDUvtqi8zYxKItMn9oDyGv7KKh/vyYqztNovYIdG2bzpP+AA8s5BCcw46fIil/+PpTBKkHzbRBqoLo3hve8QWDq0tOgrVGqhXpzxI+uPt0myfGxkGDIAJawf0+VtcTdv3kbAxkLeUQSfXUaWlQ/ROVr8SDXTTVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LM5HDKj2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6aYk5H9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BA81F000FF;
-	Wed, 30 Sep 2026 17:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LM5HDKj2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1093C1F000FF;
+	Wed, 30 Sep 2026 17:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790835;
-	bh=om3ViBOsl+//8D6SwKUNhbl7MYg/hEQ3UiF5AirXu80=;
+	s=korg; t=1790790838;
+	bh=5QDkfQxZKt/7rriFuzCgKY4y9u285avUq0cS584b9CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6aYk5H9Jd3VElaankB2zcNWKfDB55CCEj2R2HJ4F38CMS7jhdLLvblzOSKFD3/Z/
-	 7wbBxIxnkVCPFcwO25V9yBVY5Cn92VrteY4lVjatla5p47nWEvAAPLS0I+kHkBgV9n
-	 XQ171IvclaCfCz8dmz1SXOoq5MRGkKSL84xQ/it4=
+	b=LM5HDKj2MxT+iSMvcWSOM/6vU0eIgmojrkrT++HjpJb8wNdfBewj4zupj1uUP7pqW
+	 uFBxJMi0pD8mmOzuxrqQqM73+mc26gmTbkAslw9zWL3PTooCQZxklSwO4lWxxBcvJn
+	 3xtA8J4NXzXHZj7WKIlmpLdUQmLb6vbkIPzDuqP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/752] ASoC: Intel: catpt: Complete coredump handling
-Date: Wed, 30 Sep 2026 17:19:22 +0200
-Message-ID: <20260930152400.159717213@linuxfoundation.org>
+Subject: [PATCH 5.15 093/752] soundwire: only handle alert events when the peripheral is attached
+Date: Wed, 30 Sep 2026 17:19:23 +0200
+Message-ID: <20260930152400.180690584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -45,114 +48,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 7e5d59f407bc39d43b350cc45f7880647429eb5d ]
+[ Upstream commit 38cd651ebce7065a81c7e950d9e2ea1572304605 ]
 
-An exception may occur during the firmware booting procedure.  In such
-case the firmware sends COREDUMP_REQUESTS and expects the driver to dump
-relevant information and finish with the COREDUMP_RELEASE write.
+It doesn't make sense to handle an alert event when the peripheral is
+not attached. The slave->status could be SDW_SLAVE_ATTACHED or
+SDW_SLAVE_ALERT when it is attached on the bus.
 
-To distinguish such situation from generic timeout, always signal
-fw_ready completion when a coredump request is received and translate
-it to -EREMOTEIO in catpt_boot_firmware().
-
-The "FW READY" print makes the success clearly visible even when
-the event-traces are not enabled.
-
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260528083444.1439233-2-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260520025720.1999367-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/ipc.c       |  8 ++++++++
- sound/soc/intel/catpt/loader.c    |  3 +++
- sound/soc/intel/catpt/registers.h | 12 ++++++++++++
- 3 files changed, 23 insertions(+)
+ drivers/soundwire/bus.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/intel/catpt/ipc.c b/sound/soc/intel/catpt/ipc.c
-index 5b718a846fda5..3341a3a190e62 100644
---- a/sound/soc/intel/catpt/ipc.c
-+++ b/sound/soc/intel/catpt/ipc.c
-@@ -205,6 +205,7 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
- 		memcpy_fromio(&config, cdev->lpe_ba + off, sizeof(config));
- 		trace_catpt_ipc_payload((u8 *)&config, sizeof(config));
+diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+index 230a3250f3154..3317bc9221b48 100644
+--- a/drivers/soundwire/bus.c
++++ b/drivers/soundwire/bus.c
+@@ -1798,6 +1798,10 @@ int sdw_handle_slave_status(struct sdw_bus *bus,
+ 			break;
  
-+		dev_dbg(cdev->dev, "FW READY 0x%08x\n", header);
- 		catpt_ipc_arm(ipc, &config);
- 		complete(&cdev->fw_ready);
- 		return;
-@@ -215,6 +216,13 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
- 		dev_err(cdev->dev, "ADSP device coredump received\n");
- 		ipc->ready = false;
- 		catpt_coredump(cdev);
+ 		case SDW_SLAVE_ALERT:
++			if (slave->status != SDW_SLAVE_ATTACHED &&
++			    slave->status != SDW_SLAVE_ALERT)
++				continue;
 +
-+		if (catpt_readl_dram(cdev, COREDUMP) == CATPT_COREDUMP_REQUEST) {
-+			dev_dbg(cdev->dev, "releasing firmware from the coredump state\n");
-+			catpt_writel_dram(cdev, COREDUMP, CATPT_COREDUMP_RELEASE);
-+		}
-+
-+		complete(&cdev->fw_ready);
- 		/* TODO: attempt recovery */
- 		break;
- 
-diff --git a/sound/soc/intel/catpt/loader.c b/sound/soc/intel/catpt/loader.c
-index ff7b8f0d34ac7..6602587787cb4 100644
---- a/sound/soc/intel/catpt/loader.c
-+++ b/sound/soc/intel/catpt/loader.c
-@@ -626,6 +626,9 @@ int catpt_boot_firmware(struct catpt_dev *cdev, bool restore)
- 	if (!ret) {
- 		dev_err(cdev->dev, "firmware ready timeout\n");
- 		return -ETIMEDOUT;
-+	/* Wake up does not mean FW is ready, an exception could occur. */
-+	} else if (!cdev->ipc.ready) {
-+		return -EREMOTEIO;
- 	}
- 
- 	/* update sram pg & clock once done booting */
-diff --git a/sound/soc/intel/catpt/registers.h b/sound/soc/intel/catpt/registers.h
-index 47280d82842eb..a6da59dff76ef 100644
---- a/sound/soc/intel/catpt/registers.h
-+++ b/sound/soc/intel/catpt/registers.h
-@@ -124,6 +124,11 @@
- #define CATPT_SSCR2_DEFAULT		0x0
- #define CATPT_SSPSP2_DEFAULT		0x0
- 
-+/* Coredump register and its states */
-+#define CATPT_DRAM_COREDUMP		0x1F4
-+#define CATPT_COREDUMP_REQUEST		UINT_MAX
-+#define CATPT_COREDUMP_RELEASE		0
-+
- /* Physically the same block, access address differs between host and dsp */
- #define CATPT_DSP_DRAM_OFFSET		0x400000
- #define catpt_to_host_offset(offset)	((offset) & ~(CATPT_DSP_DRAM_OFFSET))
-@@ -137,6 +142,8 @@
- 
- /* registry I/O helpers */
- 
-+#define catpt_dram_addr(cdev) \
-+	((cdev)->lpe_ba + (cdev)->spec->host_dram_offset)
- #define catpt_shim_addr(cdev) \
- 	((cdev)->lpe_ba + (cdev)->spec->host_shim_offset)
- #define catpt_dma_addr(cdev, dma) \
-@@ -151,6 +158,11 @@
- #define catpt_writel_ssp(cdev, ssp, reg, val) \
- 	writel(val, catpt_ssp_addr(cdev, ssp) + (reg))
- 
-+#define catpt_readl_dram(cdev, reg) \
-+	readl(catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
-+#define catpt_writel_dram(cdev, reg, val) \
-+	writel(val, catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
-+
- #define catpt_readl_shim(cdev, reg) \
- 	readl(catpt_shim_addr(cdev) + CATPT_SHIM_##reg)
- #define catpt_writel_shim(cdev, reg, val) \
+ 			ret = sdw_handle_slave_alerts(slave);
+ 			if (ret < 0)
+ 				dev_err(&slave->dev,
 -- 
 2.53.0
 
