@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B4D511194;
-	Wed, 30 Sep 2026 16:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC855111AE;
+	Wed, 30 Sep 2026 16:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786329; cv=none; b=sGmlTO8f/yw1Hdn+IoQXQciATIQhx5ZSrtPvcTLTR2gcjtu5Ud+LzmlCCE0txaZBYstw//wmypX3Ch3GNAtL0QtHTsJYEvSMfWSZfUChdI0R7qLM5uL0OiyXWifqT4TWfd0NmA79FMwZb4L2Vuz4a9C977++MuMzlxu2T1+FJPA=
+	t=1790786331; cv=none; b=WL0o6PmYJnoAfN4tJoskgVfVc4GudlFZtETuHoxnesuyMGY3IkepwW9lMVqJUz1RLPjq/8ojvXXZ7l3VVsKn3MRsK8nu0nqaOHaN/e4kaxmYBWfqCSoKOniJJ9S4TJdEOwK0JT6D1foN0fVTUWZ4rGz4F4XVW5PX88mICAt8/zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786329; c=relaxed/simple;
-	bh=AebU0c/X9tXvjfkl6mPY3SeoVuIH2fiN7vExID4Xbhk=;
+	s=arc-20240116; t=1790786331; c=relaxed/simple;
+	bh=oT+co5hE7/Ep/nH4Q6pJ+z43PNYvo3aPfWbgiZlZmcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kVvuoh/jiqqHjtkrydJtB9MSE8pNokCjx/rCvILLwH3zGxZQQg47fpT9d2bRPde/iF+r+h7ddd/cIql9K6IyhXytApEIZOB21sXUzoAHfzzIPnpRsMFfwLa9QV620qb0PCWo2a9YdBik9yQ3YNFvGZF+foI/tjibYkHPD32zL8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtDAJeGg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CbvUFLo1u5O9X/cT0TwTR6y/631HsXdlA0N2VqYfbI6R0z02cLmLpa6b9FwBCew/BF630tfjQZ1tVxcOTs6s0fVYeqXHoGHN9MhSdhcODkV1f9vpIPPkKli5MKmb9y1M0+s5k7JeyOTDAJXnBbluB83LtVNikMdy138qJda0cpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJRU0Csa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtDAJeGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD441F000FF;
-	Wed, 30 Sep 2026 16:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJRU0Csa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E116B1F000FF;
+	Wed, 30 Sep 2026 16:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786327;
-	bh=aPLXOuHS39UBSqzYdvfLOd6s+Q6N6w5ugvm2kM3Fdoc=;
+	s=korg; t=1790786330;
+	bh=H0O8T041hrGkq8tBL91GYTgBvTbzFHqF4G1P0FXqLdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtDAJeGgUWiannWMrRxMK1cKaV+Ynen1jrvNVMlhq87fHSLEnGIrfiM44aFaLbQ8J
-	 hJsT+t/aROirTyChjmhxV6r6UmNknhyL1/ZCpDn/gBb27MKrGGpteSlnDjREIiBxKk
-	 Re6Aq1YBqI6G7OO+nRtSN94NXklgPN+3cfilHVag=
+	b=qJRU0CsabZdAn8i8lpZSjNencCcSVlCE/NcI3UEFchlY+d2Mu476XHQn8ZpIDmKQI
+	 THYTnvdhs4amqN7JAQsk4l4dp9kJZgXJt3Qpdh/D0I+es9e1SUPZs/Gntpos3vsD+N
+	 GZhzg4vq6AYxBXEC6amvhUOSdW7N0i0sjHK9T4hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 786/982] Bluetooth: hci_sync: Fix UAF in hci_disconnect_all_sync
-Date: Wed, 30 Sep 2026 17:25:22 +0200
-Message-ID: <20260930152433.638128775@linuxfoundation.org>
+Subject: [PATCH 6.1 822/982] Documentation: s390: correct spelling
+Date: Wed, 30 Sep 2026 17:25:58 +0200
+Message-ID: <20260930152434.415677882@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,187 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 94d9ba9f9888b748d4abd2aa1547af56ae85f772 ]
+[ Upstream commit ac56c666f80df0b1dc9c3ef53d0798b74629a116 ]
 
-Use-after-free can occur in hci_disconnect_all_sync if a connection is
-deleted by concurrent processing of a controller event.
+Correct spelling problems for Documentation/s390/ as reported
+by codespell.
 
-To prevent this the code now tries to iterate over the list backwards
-to ensure the links are cleanup before its parents, also it no longer
-relies on a cursor, instead it always uses the last element since
-hci_abort_conn_sync is guaranteed to call hci_conn_del.
-
-UAF crash log:
-==================================================================
-BUG: KASAN: slab-use-after-free in hci_set_powered_sync
-(net/bluetooth/hci_sync.c:5424) [bluetooth]
-Read of size 8 at addr ffff888009d9c000 by task kworker/u9:0/124
-
-CPU: 0 PID: 124 Comm: kworker/u9:0 Tainted: G        W
-6.5.0-rc1+ #10
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-1.16.2-1.fc38 04/01/2014
-Workqueue: hci0 hci_cmd_sync_work [bluetooth]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5b/0x90
- print_report+0xcf/0x670
- ? __virt_addr_valid+0xdd/0x160
- ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
- kasan_report+0xa6/0xe0
- ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
- ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
- hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
- ? __pfx_hci_set_powered_sync+0x10/0x10 [bluetooth]
- ? __pfx_lock_release+0x10/0x10
- ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
- hci_cmd_sync_work+0x137/0x220 [bluetooth]
- process_one_work+0x526/0x9d0
- ? __pfx_process_one_work+0x10/0x10
- ? __pfx_do_raw_spin_lock+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- worker_thread+0x92/0x630
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x196/0x1e0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x2c/0x50
- </TASK>
-
-Allocated by task 1782:
- kasan_save_stack+0x33/0x60
- kasan_set_track+0x25/0x30
- __kasan_kmalloc+0x8f/0xa0
- hci_conn_add+0xa5/0xa80 [bluetooth]
- hci_bind_cis+0x881/0x9b0 [bluetooth]
- iso_connect_cis+0x121/0x520 [bluetooth]
- iso_sock_connect+0x3f6/0x790 [bluetooth]
- __sys_connect+0x109/0x130
- __x64_sys_connect+0x40/0x50
- do_syscall_64+0x60/0x90
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Freed by task 695:
- kasan_save_stack+0x33/0x60
- kasan_set_track+0x25/0x30
- kasan_save_free_info+0x2b/0x50
- __kasan_slab_free+0x10a/0x180
- __kmem_cache_free+0x14d/0x2e0
- device_release+0x5d/0xf0
- kobject_put+0xdf/0x270
- hci_disconn_complete_evt+0x274/0x3a0 [bluetooth]
- hci_event_packet+0x579/0x7e0 [bluetooth]
- hci_rx_work+0x287/0xaa0 [bluetooth]
- process_one_work+0x526/0x9d0
- worker_thread+0x92/0x630
- kthread+0x196/0x1e0
- ret_from_fork+0x2c/0x50
-==================================================================
-
-Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-
-[ Backport to 6.1.y: the source change is unchanged; only hunk locations
-  in hci_sync.c differ. ]
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230209071400.31476-16-rdunlap@infradead.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: 4525a9110495 ("s390/pci/docs: Fix sriov_numvfs attribute name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 55 +++++++++++++++++++++++++---------------
- 1 file changed, 35 insertions(+), 20 deletions(-)
+ Documentation/s390/pci.rst      | 4 ++--
+ Documentation/s390/vfio-ccw.rst | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index c5adc87b4992b..84d98bc3efa3f 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5589,6 +5589,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- {
- 	int err = 0;
- 	u16 handle = conn->handle;
-+	struct hci_conn *c;
+diff --git a/Documentation/s390/pci.rst b/Documentation/s390/pci.rst
+index 8157f0cddbc24..a1a72a47dc960 100644
+--- a/Documentation/s390/pci.rst
++++ b/Documentation/s390/pci.rst
+@@ -51,7 +51,7 @@ Entries specific to zPCI functions and entries that hold zPCI information.
  
- 	switch (conn->state) {
- 	case BT_CONNECTED:
-@@ -5602,43 +5603,57 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
- 		err = hci_reject_conn_sync(hdev, conn, reason);
- 		break;
- 	default:
-+		hci_dev_lock(hdev);
- 		conn->state = BT_CLOSED;
-+		hci_disconn_cfm(conn, reason);
-+		hci_conn_del(conn);
-+		hci_dev_unlock(hdev);
- 		return 0;
- 	}
+   The slot entries are set up using the function identifier (FID) of the
+   PCI function. The format depicted as XXXXXXXX above is 8 hexadecimal digits
+-  with 0 padding and lower case hexadecimal digitis.
++  with 0 padding and lower case hexadecimal digits.
  
-+	hci_dev_lock(hdev);
-+
-+	/* Check if the connection hasn't been cleanup while waiting
-+	 * commands to complete.
-+	 */
-+	c = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (!c || c != conn) {
-+		err = 0;
-+		goto unlock;
-+	}
-+
- 	/* Cleanup hci_conn object if it cannot be cancelled as it
- 	 * likelly means the controller and host stack are out of sync
- 	 * or in case of LE it was still scanning so it can be cleanup
- 	 * safely.
- 	 */
--	if (err) {
--		struct hci_conn *c;
--
--		/* Check if the connection hasn't been cleanup while waiting
--		 * commands to complete.
--		 */
--		c = hci_conn_hash_lookup_handle(hdev, handle);
--		if (!c || c != conn)
--			return 0;
--
--		hci_dev_lock(hdev);
--		hci_conn_failed(conn, err);
--		hci_dev_unlock(hdev);
--	}
-+	hci_conn_failed(conn, reason);
+   - /sys/bus/pci/slots/XXXXXXXX/power
  
-+unlock:
-+	hci_dev_unlock(hdev);
- 	return err;
- }
+@@ -66,7 +66,7 @@ Entries specific to zPCI functions and entries that hold zPCI information.
  
- static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
- {
--	struct hci_conn *conn, *tmp;
--	int err;
-+	struct list_head *head = &hdev->conn_hash.list;
-+	struct hci_conn *conn;
+   - function_handle
+     Low-level identifier used for a configured PCI function.
+-    It might be useful for debuging.
++    It might be useful for debugging.
  
--	list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
--		err = hci_abort_conn_sync(hdev, conn, reason);
--		if (err)
--			return err;
-+	rcu_read_lock();
-+	while ((conn = list_first_or_null_rcu(head, struct hci_conn, list))) {
-+		/* Make sure the connection is not freed while unlocking */
-+		conn = hci_conn_get(conn);
-+		rcu_read_unlock();
-+		/* Disregard possible errors since hci_conn_del shall have been
-+		 * called even in case of errors had occurred since it would
-+		 * then cause hci_conn_failed to be called which calls
-+		 * hci_conn_del internally.
-+		 */
-+		hci_abort_conn_sync(hdev, conn, reason);
-+		hci_conn_put(conn);
-+		rcu_read_lock();
- 	}
-+	rcu_read_unlock();
+   - pchid
+     Model-dependent location of the I/O adapter.
+diff --git a/Documentation/s390/vfio-ccw.rst b/Documentation/s390/vfio-ccw.rst
+index ea928a3806f43..945a5b57a56d5 100644
+--- a/Documentation/s390/vfio-ccw.rst
++++ b/Documentation/s390/vfio-ccw.rst
+@@ -176,7 +176,7 @@ The process of how these work together.
+    Use the 'mdev_create' sysfs file, we need to manually create one (and
+    only one for our case) mediated device.
+ 3. vfio_mdev.ko drives the mediated ccw device.
+-   vfio_mdev is also the vfio device drvier. It will probe the mdev and
++   vfio_mdev is also the vfio device driver. It will probe the mdev and
+    add it to an iommu_group and a vfio_group. Then we could pass through
+    the mdev to a guest.
  
- 	return 0;
- }
 -- 
 2.53.0
 
