@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0415151812D;
-	Wed, 30 Sep 2026 18:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D160F4594E;
+	Wed, 30 Sep 2026 18:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791265; cv=none; b=Y8K+BSrGYU0Y+79qv4ctu+qSUySfhUijckP7QXjhg26WrGMGHua4D7lAg6V67DQuDSQsyT+E/TrWXhPJr831irnihRXVhVfi/fFLwxTVAuG5O1oGwA7mKXVDet6tQpDCpBy8Ee4Vmr2VqbC6LHANMQ4BNnhsbUyMAUa8eCSxueU=
+	t=1790791268; cv=none; b=b6iOERBezPy0hYJ86Nv7UH8hADjNfcCSliqYHNc00xklzsrZX1ZDue2gisgYUKv5haMRWr8A9Xmupx43oISkpJij5vXDp0S5WhrnSprQGhU5nd2eRFwAAcafzfuMlFABt8gNVr5ei4vfcFr+WEbvKSUo+q7ri4Fb9gEGLg/4giE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791265; c=relaxed/simple;
-	bh=pCoyP4f6qRD/kfgLPRg2QWXpOi8PDDVKEOnU/EDVeEA=;
+	s=arc-20240116; t=1790791268; c=relaxed/simple;
+	bh=4/cj3hD5hi27oYZi4KvnL3W2cYavzzOKYznx+2/sy6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ahOW+PPpkklfjlgGL7rh8XMViUuBMHzU7z/eza6FZqS/l/dZWm4lv6HGv4eL+amonnc4BgMjKTojxCE1uJXPnRLaR+3+BW4pljrbLZKz4XbqLy6ubzVw8R8hxQ4wTMnsv46axT8NYtp/IPZ/DpTdiIf+IOplQmxE606a+LYziNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdM1BCXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hDf6KO+zcS2R05QHz/0RE7bKtMx/PpHHYFj7JM8fWhXP0uOWrNH46BZnwm5K4kO5RiK5FpY6QIlcDvAIEoctCefYylLQomoKU3bkSUfTKGUGlHqDO6/ckjCJuRNG5NGSjiiqg366A1WGNlXF8OlwzepN1+pDYGjOhTs8LRXUAOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVGljiEz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdM1BCXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7D81F000FF;
-	Wed, 30 Sep 2026 18:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVGljiEz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4691F000FF;
+	Wed, 30 Sep 2026 18:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791263;
-	bh=RUWYUpB4L2nUyxxxJRgdWV9zesWGVhppGeW3sS2YIlo=;
+	s=korg; t=1790791266;
+	bh=DS042EsCa9uXUIK1vr3xu+vm9Is93ruO+a2yDrJMgmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UdM1BCXc6jkE9YRvbbAo7l03gTnd9sF9gHpJf+HESZgrAAWwS89HFGAeGeq+XR/4k
-	 l5Slef0z9GCLm3h9w1KrgqW7pCJotii72Ws0OwloMty6wAGlIq8IzQ+990/S1l51SC
-	 u6ei0V5UNFU0hBWzC48UlrEboDGx2BJ6P0xID6k0=
+	b=QVGljiEzERXqIzwegqxxF4GPwRNT68JdDlPbPS0kSolgC1ByhIb41PQQLFz7Gh9AL
+	 61xBR4y0pLm4ACAnXuDy+q0iW1m/JuwRJh4M/wjmnoRQQESrRscHX1S/LaVHh8ajYQ
+	 H5BJt/bvtGsbJ5wxycz08bTJTPAie5gXRIvakhGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfu Li <lihongfu@kylinos.cn>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/752] selftests/cgroup: Fix cg_run_in_subcgroups ignoring arg parameter
-Date: Wed, 30 Sep 2026 17:21:51 +0200
-Message-ID: <20260930152403.482839177@linuxfoundation.org>
+Subject: [PATCH 5.15 242/752] net/sched: act_api: budget all shared attributes in notify skbs
+Date: Wed, 30 Sep 2026 17:21:52 +0200
+Message-ID: <20260930152403.505645278@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -46,48 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongfu Li <lihongfu@kylinos.cn>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit a8c6daab4b0e276508b7ffdd66c60fd3020a9178 ]
+[ Upstream commit 13eb543cebef6d6c3ec42e31afe3856f51b7126b ]
 
-cg_run_in_subcgroups() discards its arg and always passes NULL to cg_run(),
-turning the (void *)100 from test_kmem_dead_cgroups() into NULL so no
-allocation occurs.
+tcf_action_shared_attrs_size() is supposed to return an upper bound on the
+netlink attributes every action dump emits outside of TCA_ACT_OPTIONS, so
+that tcf_add_notify_msg(), tcf_del_notify_msg() and friends can allocate
+an skb large enough for the reply.  It has fallen behind the dump path and
+is now an underestimate for every single action.
 
-This makes test_kmem_dead_cgroups() falsely pass without exercising the
-"dying cgroup with charged slab" scenario it intends to test.
+Attributes, such as, TCA_ACT_IN_HW_COUNT and TCA_STATS_BASIC_HW are
+emitted unconditionally and never accounted for. TCA_STATS_PKT64,
+TCA_ACT_USED_HW_STATS, TCA_STATS_RATE_EST, TCA_STATS_RATE_EST64 require
+specific conditions, but are also not accounted for.
 
-Pass the arg through to cg_run() to fix this.
+Fix the issue by budgeting all of them so that we have a legitimate
+upper bound. Even tough for of them require specific conditions, they
+are cheap so, to avoid overcomplicating, we opted to account for them
+unconditionally as well to account for a real worst case scenario.
 
-Fixes: 933dc80ec262 ("kselftests: cgroup: add kernel memory accounting tests")
-Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260824153903.4143642-2-victor@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/cgroup/test_kmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_api.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/cgroup/test_kmem.c b/tools/testing/selftests/cgroup/test_kmem.c
-index 22b31ebb35139..c960289a4f09b 100644
---- a/tools/testing/selftests/cgroup/test_kmem.c
-+++ b/tools/testing/selftests/cgroup/test_kmem.c
-@@ -140,7 +140,7 @@ static int cg_run_in_subcgroups(const char *parent,
- 			return -1;
- 		}
- 
--		if (cg_run(child, fn, NULL)) {
-+		if (cg_run(child, fn, arg)) {
- 			cg_destroy(child);
- 			free(child);
- 			return -1;
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 20944a2e162e7..bdbb62537b6c3 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -208,12 +208,21 @@ static size_t tcf_action_shared_attrs_size(const struct tc_action *act)
+ 		+ nla_total_size(IFNAMSIZ) /* TCA_ACT_KIND */
+ 		+ cookie_len /* TCA_ACT_COOKIE */
+ 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_HW_STATS */
++		/* TCA_ACT_USED_HW_STATS */
++		+ nla_total_size(sizeof(struct nla_bitfield32))
++		+ nla_total_size(sizeof(u32)) /* TCA_ACT_IN_HW_COUNT */
+ 		+ nla_total_size(0) /* TCA_ACT_STATS nested */
+ 		+ nla_total_size(sizeof(struct nla_bitfield32)) /* TCA_ACT_FLAGS */
+ 		/* TCA_STATS_BASIC */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
+-		/* TCA_STATS_PKT64 */
+-		+ nla_total_size_64bit(sizeof(u64))
++		/* TCA_STATS_BASIC_HW */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_basic))
++		/* TCA_STATS_PKT64, emitted by both of the basic copies above */
++		+ 2 * nla_total_size_64bit(sizeof(u64))
++		/* TCA_STATS_RATE_EST */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est))
++		/* TCA_STATS_RATE_EST64 */
++		+ nla_total_size_64bit(sizeof(struct gnet_stats_rate_est64))
+ 		/* TCA_STATS_QUEUE */
+ 		+ nla_total_size_64bit(sizeof(struct gnet_stats_queue))
+ 		+ nla_total_size(0) /* TCA_OPTIONS nested */
 -- 
 2.53.0
 
