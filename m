@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8C2519DFD;
-	Wed, 30 Sep 2026 18:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396A5514753;
+	Wed, 30 Sep 2026 18:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793034; cv=none; b=HAbtK9kYm/eW5J9QGnnI7r2dcu+FHBOSvZ6gYIh0SfDCWn/Sj38g1ni6X5aBvdW+hSXoaG26hmWXOjTXnZ9fK1emwH632bZ5PKfKZ+PfVxaMSNjlJ3heFrVXWvJmu3tvSv0ByM1ieykRxx+zt6VuGG6stkUln85cV9r2SMjIGUE=
+	t=1790793037; cv=none; b=I7tayucoB0GEgMwSOIvhiZWydlN+OzUbwpIpxdwnzxkLJmxOk2OhVBRslp4i8Q0E2cgdxrh1xBOj2MBHPcN1z4hPB1mL9vyzNb/qS5EKzyzVfpFYjixmiYAss1qIn42XQLyDQz2psXTMuJYw1yLR5diLJu8cKoHW7y63BrYDtHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793034; c=relaxed/simple;
-	bh=7j0BsLvbk1gN5OOuukk6WsiFCUAlW7EWdFhogLgwy/8=;
+	s=arc-20240116; t=1790793037; c=relaxed/simple;
+	bh=RgGpsUYWf2/NJMFxL37VLF9RT5NrkKPed9Kbf0pewKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qf5kGKq63Qisi6hMhAiRjGFI6EFedZTxPTAVWNGNljkO2noxlq6+Y/ya9lRytRWRdALlnwEMyIg12H3WsAvgFuG8Hb/UyV+AY610Omp2+wVhBc5F/TWhPLpN9yjJm0ZXiEoRI+aL0ajp+e7tLq84ZnHkfWJf7yEzB+RbaWiYU9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXmyitsE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OmskoPh0CIkpUPFRLpgpmbW4CZ7FQlHQw/a1WrzUCL7X9IQ29HNPIFEo7ZN7gMI4kb3XAsutew+pftOTxM2DYBGGzPxGSwi2ABNxMN9++3cmqObk8Hw/68A1UdW+5EnhosW+JuGLC2XxVjlEgjoUSU7wpnAJ78ly7IKQ6STS+h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Botl992o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXmyitsE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05A51F000FF;
-	Wed, 30 Sep 2026 18:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Botl992o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9184F1F000FF;
+	Wed, 30 Sep 2026 18:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793033;
-	bh=XQsTvcBx105e4bB2/7WpvGtS4oBcT7clBnJ8VXoAOVU=;
+	s=korg; t=1790793036;
+	bh=q8p3iUgevnD1RwPywUgO+KvJ8Y5Y99Epwnb3DGHnzVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXmyitsEyUabDciQjpp2NSowDlXELXrBpyfGsB53FjCgw5hyraCYDrpIwvXcC18K9
-	 KYF+1TusXlJjhJPslOSTU05E/Sy3KsJSnqBR3lzATknNJMN8T7Z9Ic0iBPXJQSSrR9
-	 e4+OTpDSNFGHgXQC8H8ZjD3nEPDnoLSTa9FfuHx0=
+	b=Botl992ozbWeI1ssT0DtQkYQ5trINBvQr1pJR23KjcqFqNcMJPSgydO9FaU2l2bYY
+	 Vom5H0uLHSTRy8H7Mi5594TLDRTBTEY05VabJ23w19+lPepSLyWiRoAfGy0z5cq5x6
+	 zEzvY+FbqnBCWWSRMyaA6m1GbsI1x3O/IsCYWe5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 111/395] octeontx2-af: Fix memory scaling limitation in SR-IOV mode
-Date: Wed, 30 Sep 2026 17:26:13 +0200
-Message-ID: <20260930152343.048913532@linuxfoundation.org>
+Subject: [PATCH 6.18 112/395] ipv6: Prevent rt6_insert_exception() for dying fib6_info.
+Date: Wed, 30 Sep 2026 17:26:14 +0200
+Message-ID: <20260930152343.069943569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,104 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d06f2ebf67ff2962fe00d687e4f0d4703eb41a12 ]
+[ Upstream commit 0346ec2f080b40d95ed05b853bb9226289e75212 ]
 
-The original code used DMA_ATTR_FORCE_CONTIGUOUS, which could exhaust
-the CMA pool when a large number of VFs were requested.
+Before the cited commit, fib6_nh_flush_exceptions() always set
+from->exception_bucket_flushed = 1 under rt6_exception_lock to
+prevent rt6_insert_exception() from inserting a new exception
+for a dying fib6_info.
 
-Fix this by switching to the DMA streaming API. This is equivalent on
-Octeon platforms, which provide full I/O coherency via the SMMU.
+The flag was replaced with the FIB6_EXCEPTION_BUCKET_FLUSHED
+bit stored in nh->rt6i_exception_bucket.
 
-Cc: Leon Romanovsky <leon@kernel.org>
-Fixes: 73d33dbc0723 ("octeontx2-af: Use DMA_ATTR_FORCE_CONTIGUOUS attribute in DMA alloc")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Leon Romanovsky <leon@kernel.org>
-Link: https://patch.msgid.link/20260916022111.1083017-1-rkannoth@marvell.com
+The problem is that now the bit is only set when the bucket
+is not NULL and fib6_nh_flush_exceptions() is called from
+fib6_nh_release() after fib6_ref has already reached zero.
+
+If rt6_insert_exception() is called while the target fib6_info
+is being removed via fib6_purge_rt(), a new exception could be
+created successfully because rt6_flush_exceptions() no longer
+sets the bit.
+
+This creates a reference cycle between the fib6_info and the
+exception route, leaking the fib6_info, its nexthop device,
+and all per-CPU routes in fib6_nh->rt6i_pcpu, which stalls netdev
+unregistration.
+
+[   34.680602] unregister_netdevice: waiting for gre6 to become free. Usage count = 68
+[   44.920675] unregister_netdevice: waiting for gre6 to become free. Usage count = 68
+[   55.176582] unregister_netdevice: waiting for gre6 to become free. Usage count = 68
+
+Let's call fib6_drop_pcpu_from() before rt6_flush_exceptions(),
+to set fib6_destroying before rt6_exception_lock, and check
+f6i->fib6_destroying in rt6_insert_exception().
+
+Note that FIB6_EXCEPTION_BUCKET_FLUSHED logic is dead and
+we can clean it up in net-next.
+
+Fixes: cc5c073a693f ("ipv6: Move exception bucket to fib6_nh")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260918082209.2853582-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/common.h    | 45 ++++++++++++++++---
- 1 file changed, 39 insertions(+), 6 deletions(-)
+ net/ipv6/ip6_fib.c | 2 +-
+ net/ipv6/route.c   | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/common.h b/drivers/net/ethernet/marvell/octeontx2/af/common.h
-index 8a08bebf08c2c..e6c6e03c3f293 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/common.h
-@@ -7,6 +7,10 @@
- #ifndef COMMON_H
- #define COMMON_H
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 75875e4a1edea..9fc2d2677b747 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1033,8 +1033,8 @@ static void fib6_purge_rt(struct fib6_info *rt, struct fib6_node *fn,
+ 	struct fib6_table *table = rt->fib6_table;
  
-+#include <linux/dma-mapping.h>
-+#include <linux/gfp.h>
-+#include <linux/mm.h>
-+
- #include "rvu_struct.h"
+ 	/* Flush all cached dst in exception table */
+-	rt6_flush_exceptions(rt);
+ 	fib6_drop_pcpu_from(rt);
++	rt6_flush_exceptions(rt);
  
- #define OTX2_ALIGN			128  /* Align to cacheline */
-@@ -44,6 +48,33 @@ struct qmem {
- 	u32		qsize;
- };
+ 	if (rt->nh) {
+ 		spin_lock(&rt->nh->lock);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 71a38034f5ca8..c71e93e17017e 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -1725,6 +1725,11 @@ static int rt6_insert_exception(struct rt6_info *nrt,
  
-+static inline void *otx2_dma_alloc_coherent(struct device *dev, size_t size,
-+					    dma_addr_t *dma_handle)
-+{
-+	dma_addr_t dma_addr;
-+	void *vaddr;
-+
-+	vaddr = kzalloc(size, GFP_KERNEL);
-+	if (!vaddr)
-+		return NULL;
-+
-+	dma_addr = dma_map_single(dev, vaddr, size, DMA_BIDIRECTIONAL);
-+	if (dma_mapping_error(dev, dma_addr)) {
-+		kfree(vaddr);
-+		return NULL;
+ 	spin_lock_bh(&rt6_exception_lock);
+ 
++	if (f6i->fib6_destroying) {
++		err = -ENOENT;
++		goto out;
 +	}
 +
-+	*dma_handle = dma_addr;
-+	return vaddr;
-+}
-+
-+static inline void otx2_dma_free_coherent(struct device *dev, size_t size,
-+					  void *vaddr, dma_addr_t dma_handle)
-+{
-+	dma_unmap_single(dev, dma_handle, size, DMA_BIDIRECTIONAL);
-+	kfree(vaddr);
-+}
-+
- static inline int qmem_alloc(struct device *dev, struct qmem **q,
- 			     int qsize, int entry_sz)
- {
-@@ -60,8 +91,11 @@ static inline int qmem_alloc(struct device *dev, struct qmem **q,
- 
- 	qmem->entry_sz = entry_sz;
- 	qmem->alloc_sz = (qsize * entry_sz) + OTX2_ALIGN;
--	qmem->base = dma_alloc_attrs(dev, qmem->alloc_sz, &qmem->iova,
--				     GFP_KERNEL, DMA_ATTR_FORCE_CONTIGUOUS);
-+
-+	if (get_order(PAGE_ALIGN(qmem->alloc_sz)) > MAX_PAGE_ORDER)
-+		return -ENOMEM;
-+
-+	qmem->base = otx2_dma_alloc_coherent(dev, qmem->alloc_sz, &qmem->iova);
- 	if (!qmem->base)
- 		return -ENOMEM;
- 
-@@ -80,10 +114,9 @@ static inline void qmem_free(struct device *dev, struct qmem *qmem)
- 		return;
- 
- 	if (qmem->base)
--		dma_free_attrs(dev, qmem->alloc_sz,
--			       qmem->base - qmem->align,
--			       qmem->iova - qmem->align,
--			       DMA_ATTR_FORCE_CONTIGUOUS);
-+		otx2_dma_free_coherent(dev, qmem->alloc_sz,
-+				       qmem->base - qmem->align,
-+				       qmem->iova - qmem->align);
- 	devm_kfree(dev, qmem);
- }
- 
+ 	bucket = rcu_dereference_protected(nh->rt6i_exception_bucket,
+ 					  lockdep_is_held(&rt6_exception_lock));
+ 	if (!bucket) {
 -- 
 2.53.0
 
