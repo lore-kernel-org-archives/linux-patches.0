@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEF8509EFA;
-	Wed, 30 Sep 2026 15:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C218E4F85BE;
+	Wed, 30 Sep 2026 15:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783491; cv=none; b=dv20QTMLQFo7rLOTHjU/FblNqvmCwNJ0VmR9gZIXk+36LeOc3W9G19nd1wNWNsBhT8A3qelyd389EfVOcsF598WaxbstK0sCwAHT4yUrxvE2/Jz2/4yv7y/gPJDB6pOammY+gTsrtEB8FIZoD5LPYzSnO9pgbCLsOvDJ+hx+3XU=
+	t=1790783494; cv=none; b=s7SskgYvhyT0t2aPbqNVzxV7AmG2DFpSmU3XYH1yB5b0fRFpq6HUt/NUyyvZljnW1hJ09zwdnUUB+af752LiJILAj0oZgo9WVoaVSxwWb8JA2v/BgXx2Cn9F0HLdbEctwTlXNXYxle72LOf/QLakyJukKXjw6q2SydjPSLR8tzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783491; c=relaxed/simple;
-	bh=WozPgXspcrUHRqxJNTgI3W1wr2v/3NiHaFLRXhnjec4=;
+	s=arc-20240116; t=1790783494; c=relaxed/simple;
+	bh=6+HZWu4Q7vDTLJrMHyS8IwQ1dtqGJ0jZPoWX+iExQvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGf6UiK/Uq6ssBa7r87gCW7PCmLs7AzTpX4kYrpYsLm/EvGE1zaTN/w4Mblii5eFKlB4VirfKxVQ6NICPNlmIBWmTGT1iFP2zog4lRyK7ryfFeRolLHiBU4QzD+9BA2ZJjjw6N0mKMR5oWvNhMgW/DFEhVCEqZU1Ku+Y0eZtWZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy6v8Pnq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ADFH1jzTzMde1jNyGIToYLqOYffFVkNAUEEluQ4Hu7HS0aodsaiSx50JI86Wx/F2TDNuh1YgIUx30r9npKB3G4zpxpg2+OAkWaaHiEEU2fTTVzq6LDy+61Dg385lwi716DrGR+1nrHkXpxBRLw4cWMh1ezAE4VjNxM2/uWsXp5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFisoJEh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy6v8Pnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397B81F000FF;
-	Wed, 30 Sep 2026 15:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFisoJEh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A71D1F00898;
+	Wed, 30 Sep 2026 15:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783486;
-	bh=oCK7246BhzdO2wyMtGtc28uKNygGaoLuIV6UCNLo7vA=;
+	s=korg; t=1790783489;
+	bh=vosFINd/0pJKhYbObjqUFEWHaoyA4nzBBhm3PKvwRxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hy6v8PnqmDiEpNMMW4fFQaN6JeUE707j3Zkhg20BK+n8zeYiUZC/sS5vcUM4UONRZ
-	 VJx+2iwvgq6tDtV7FfQPqUsEH3dRsFQx1Ju1Z5yLOGIihg46+7ARWexPZJzrM9Cv9m
-	 9ZIDI1oP0mCA7rcC8SKN4/2wQEeV6lswyfrVCugA=
+	b=QFisoJEh3PAAlvvlbXlKYCaXGFNpr/eBcLxaKJKbILtAcV38++I5cqLEp6gnZ+oA8
+	 UbiJewV0fi2YkuGKxoVD2Ey8wEQrDHiKgR0LP4Lbo5AZqB1a53T//oPGCfMbngJxQH
+	 0PXBQkb/4+qOOQl74sAKs1NdZs+Om0jtsSgBnEyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erich Sartison <byt.es@mailbox.org>,
+	Jeremy Nyberg <SlickStretch3.0@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 417/595] Input: xpad - add support for Victrix Pro BFG Controller
-Date: Wed, 30 Sep 2026 17:25:10 +0200
-Message-ID: <20260930152356.648730549@linuxfoundation.org>
+Subject: [PATCH 5.10 418/595] Input: xpad - fix PDP Marvel Xbox 360 controller
+Date: Wed, 30 Sep 2026 17:25:11 +0200
+Message-ID: <20260930152356.669367466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,30 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erich Sartison <byt.es@mailbox.org>
+From: Jeremy Nyberg <slickstretch3.0@gmail.com>
 
-commit 971fa7ea8621e123feb9c8d7dc61be1c656bd945 upstream.
+commit 7bc369cb3d3f3656eb77285628ee264264d28ad4 upstream.
 
-The controller doesn't currently work via USB-cable.
+The PDP Marvel Xbox 360 controller with USB ID 0e6f:0147 is
+incorrectly classified as an Xbox One controller.
 
-Signed-off-by: Erich Sartison <byt.es@mailbox.org>
-Link: https://patch.msgid.link/20260903103137.630170-1-byt.es@mailbox.org
+With the current XTYPE_XBOXONE classification, the controller is
+detected but produces no input, while its four player LEDs continue
+blinking indefinitely.
+
+Classify USB ID 0e6f:0147 as an Xbox 360 controller instead.
+
+Tested on a PDP Marvel Xbox 360 controller with USB ID 0e6f:0147.
+All inputs register correctly and the player LED indicates the
+current player.
+
+Fixes: c225370e01b8 ("Input: xpad - sync supported devices with 360Controller")
 Cc: stable@vger.kernel.org
+Signed-off-by: Jeremy Nyberg <SlickStretch3.0@gmail.com>
+Link: https://patch.msgid.link/20260910071627.236014-1-SlickStretch3.0@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/joystick/xpad.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -220,6 +220,7 @@ static const struct xpad_device {
- 	{ 0x0e6f, 0x0213, "Afterglow Gamepad for Xbox 360", 0, XTYPE_XBOX360 },
- 	{ 0x0e6f, 0x021f, "Rock Candy Gamepad for Xbox 360", 0, XTYPE_XBOX360 },
- 	{ 0x0e6f, 0x0246, "Rock Candy Gamepad for Xbox One 2015", 0, XTYPE_XBOXONE },
-+	{ 0x0e6f, 0x024c, "PDP Victrix Pro BFG Wired Controller for Xbox", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x02a0, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x02a1, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
- 	{ 0x0e6f, 0x02a2, "PDP Wired Controller for Xbox One - Crimson Red", 0, XTYPE_XBOXONE },
+@@ -209,7 +209,7 @@ static const struct xpad_device {
+ 	{ 0x0e6f, 0x0139, "Afterglow Prismatic Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x013a, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
+-	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
++	{ 0x0e6f, 0x0147, "PDP Marvel Xbox 360 Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0162, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
 
 
