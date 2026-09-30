@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3F037A825;
-	Wed, 30 Sep 2026 18:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9601565192;
+	Wed, 30 Sep 2026 18:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791827; cv=none; b=Km3tSdLQwit9G3uvHC2FmVJiA78d3WwBT6Gti7Kd1pTdVyFmPrNQoAQKDfgbxzzt6VPMtoB0hHoS6Y+0ymlPeGPl7YSihxjC8CDCSoDSGK98PZQdNtDn07B4RaVNy3QUz38kS+Eb8QYVgSkwCdUssC/GID8S1ONWun0QksARFKU=
+	t=1790791830; cv=none; b=VOiCg78CXxP1I7usYwvJMD+ATFJgRJrRKgY88SwwcxbRGIqHvSjw7FGCsdWvE6DdANmqBrld7F/NZ6HHmdBmabY/wBH2flo4pRsRKw7MaFibtTCZA/4WBqr7VEFk5VLJGMj8/+1vlrDSCVHeMugBb7VX885wirXd9JtFDadE0M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791827; c=relaxed/simple;
-	bh=mF7MLsZCqvGGLRsf+pUFLbHArQz83Y+YcBWGJ8rCkgc=;
+	s=arc-20240116; t=1790791830; c=relaxed/simple;
+	bh=nXDjnypceykfeaaFUnXxgmS13ppel3rtnn7apInkkHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1RPj2Fn5fGSTL7wBx2TqR7uuPralx0/ZVqiY/vdqlu5Xp6YoMkQboJQc+s7FmJJTrUKL6QMm3vSYSc1xqG+QStcsXp7r87g4vFUAlazC/Zs8n7SHoaV8rg4JYgNhYytQvvRMszol1KRtgXZ7xtEOFWwn7UKHJ27fJcJLNYrMuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqXBVSa9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j6z3dS2Qme9zmdmdvVmkYBIEfil2hl5T6r5YQKMCJtE8WDDwmj0hlnsVURkb8XpUdLz6HdmGO5MnRtiyWbNih01JL33bSHcQtR+xDO8DyQgwOdMgjueBlPPmBVWYJioRYw4BWmNQ5BWtNtlixDh10Uph+4HAZP7gr5RQQmZfle0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRPEUdI6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqXBVSa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267B31F000FF;
-	Wed, 30 Sep 2026 18:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRPEUdI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BDE1F000FF;
+	Wed, 30 Sep 2026 18:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791825;
-	bh=XMxdwMeavQurs3uE7xbGe/m51kCveGMyk8eYWdGtBhE=;
+	s=korg; t=1790791828;
+	bh=3jhlpObDfdQsyBhke+F3mFW4I+h9bXkMJlspDp+xnMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lqXBVSa9cuTy3pmSDaE+Dd09hyja5iUanx5XSQFX3m+0TxfgWSk8k/EQq7MGmgcwj
-	 6fBqTJYTeEzUw/vDQhVIa5MnkRUNevCuMqmmCKFlj2vK6d6FJlfkNNBPp1s1f6NAl4
-	 KZALIqLG9U3/qT+0bfovsyVymGkG44FrESARrGhc=
+	b=IRPEUdI6isBDyfGuFoRxrys6iwSX0twTBqSS4Uu5sxvKo8MIs2Jsd5yDbORiDPzXT
+	 Nvw/eCeGe+1UylL/LW2gJKodGG3AbVqtrUAa1dw/pN3B1RsMyfSy8i1CLAUAu60lA7
+	 194RUtxe62nOb4Rz7qHhwBD0TOXzrDWQIY5FWQTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 439/752] xfrm: add extack support to verify_newsa_info
-Date: Wed, 30 Sep 2026 17:25:09 +0200
-Message-ID: <20260930152407.784855696@linuxfoundation.org>
+Subject: [PATCH 5.15 440/752] xfrm: add extack to verify_one_alg, verify_auth_trunc, verify_aead
+Date: Wed, 30 Sep 2026 17:25:10 +0200
+Message-ID: <20260930152407.805722117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,219 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 6999aae17a7b66c56e6cc8e05b3cd51718c3bfe3 ]
+[ Upstream commit 1fc8fde553917bca7c9b65fafb045a2a5c97e683 ]
 
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Stable-dep-of: d1ebd9081879 ("xfrm: fix compat ALLOCSPI request use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 90 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 69 insertions(+), 21 deletions(-)
+ net/xfrm/xfrm_user.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
 diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 419e70b887512..64d7469d62230 100644
+index 64d7469d62230..82578cb1933e6 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -148,7 +148,8 @@ static inline int verify_replay(struct xfrm_usersa_info *p,
- }
+@@ -34,7 +34,8 @@
+ #endif
+ #include <asm/unaligned.h>
  
- static int verify_newsa_info(struct xfrm_usersa_info *p,
--			     struct nlattr **attrs)
-+			     struct nlattr **attrs,
-+			     struct netlink_ext_ack *extack)
+-static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type)
++static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type,
++			  struct netlink_ext_ack *extack)
  {
- 	int err;
- 	u16 family = p->sel.family;
-@@ -163,10 +164,12 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
- 		break;
- #else
- 		err = -EAFNOSUPPORT;
-+		NL_SET_ERR_MSG(extack, "IPv6 support disabled");
- 		goto out;
- #endif
+ 	struct nlattr *rt = attrs[type];
+ 	struct xfrm_algo *algp;
+@@ -43,8 +44,10 @@ static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type)
+ 		return 0;
  
- 	default:
-+		NL_SET_ERR_MSG(extack, "Invalid address family");
- 		goto out;
- 	}
- 
-@@ -178,65 +181,98 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
- 		break;
- 
- 	case AF_INET:
--		if (p->sel.prefixlen_d > 32 || p->sel.prefixlen_s > 32)
-+		if (p->sel.prefixlen_d > 32 || p->sel.prefixlen_s > 32) {
-+			NL_SET_ERR_MSG(extack, "Invalid prefix length in selector (must be <= 32 for IPv4)");
- 			goto out;
-+		}
- 
- 		break;
- 
- 	case AF_INET6:
- #if IS_ENABLED(CONFIG_IPV6)
--		if (p->sel.prefixlen_d > 128 || p->sel.prefixlen_s > 128)
-+		if (p->sel.prefixlen_d > 128 || p->sel.prefixlen_s > 128) {
-+			NL_SET_ERR_MSG(extack, "Invalid prefix length in selector (must be <= 128 for IPv6)");
- 			goto out;
-+		}
- 
- 		break;
- #else
-+		NL_SET_ERR_MSG(extack, "IPv6 support disabled");
- 		err = -EAFNOSUPPORT;
- 		goto out;
- #endif
- 
- 	default:
-+		NL_SET_ERR_MSG(extack, "Invalid address family in selector");
- 		goto out;
- 	}
- 
- 	err = -EINVAL;
- 	switch (p->id.proto) {
- 	case IPPROTO_AH:
--		if ((!attrs[XFRMA_ALG_AUTH]	&&
--		     !attrs[XFRMA_ALG_AUTH_TRUNC]) ||
--		    attrs[XFRMA_ALG_AEAD]	||
-+		if (!attrs[XFRMA_ALG_AUTH]	&&
-+		    !attrs[XFRMA_ALG_AUTH_TRUNC]) {
-+			NL_SET_ERR_MSG(extack, "Missing required attribute for AH: AUTH_TRUNC or AUTH");
-+			goto out;
-+		}
-+
-+		if (attrs[XFRMA_ALG_AEAD]	||
- 		    attrs[XFRMA_ALG_CRYPT]	||
- 		    attrs[XFRMA_ALG_COMP]	||
--		    attrs[XFRMA_TFCPAD])
-+		    attrs[XFRMA_TFCPAD]) {
-+			NL_SET_ERR_MSG(extack, "Invalid attributes for AH: AEAD, CRYPT, COMP, TFCPAD");
- 			goto out;
-+		}
- 		break;
- 
- 	case IPPROTO_ESP:
--		if (attrs[XFRMA_ALG_COMP])
-+		if (attrs[XFRMA_ALG_COMP]) {
-+			NL_SET_ERR_MSG(extack, "Invalid attribute for ESP: COMP");
- 			goto out;
-+		}
-+
- 		if (!attrs[XFRMA_ALG_AUTH] &&
- 		    !attrs[XFRMA_ALG_AUTH_TRUNC] &&
- 		    !attrs[XFRMA_ALG_CRYPT] &&
--		    !attrs[XFRMA_ALG_AEAD])
-+		    !attrs[XFRMA_ALG_AEAD]) {
-+			NL_SET_ERR_MSG(extack, "Missing required attribute for ESP: at least one of AUTH, AUTH_TRUNC, CRYPT, AEAD");
- 			goto out;
-+		}
-+
- 		if ((attrs[XFRMA_ALG_AUTH] ||
- 		     attrs[XFRMA_ALG_AUTH_TRUNC] ||
- 		     attrs[XFRMA_ALG_CRYPT]) &&
--		    attrs[XFRMA_ALG_AEAD])
-+		    attrs[XFRMA_ALG_AEAD]) {
-+			NL_SET_ERR_MSG(extack, "Invalid attribute combination for ESP: AEAD can't be used with AUTH, AUTH_TRUNC, CRYPT");
- 			goto out;
-+		}
-+
- 		if (attrs[XFRMA_TFCPAD] &&
--		    p->mode != XFRM_MODE_TUNNEL)
-+		    p->mode != XFRM_MODE_TUNNEL) {
-+			NL_SET_ERR_MSG(extack, "TFC padding can only be used in tunnel mode");
- 			goto out;
-+		}
- 		break;
- 
- 	case IPPROTO_COMP:
--		if (!attrs[XFRMA_ALG_COMP]	||
--		    attrs[XFRMA_ALG_AEAD]	||
-+		if (!attrs[XFRMA_ALG_COMP]) {
-+			NL_SET_ERR_MSG(extack, "Missing required attribute for COMP: COMP");
-+			goto out;
-+		}
-+
-+		if (attrs[XFRMA_ALG_AEAD]	||
- 		    attrs[XFRMA_ALG_AUTH]	||
- 		    attrs[XFRMA_ALG_AUTH_TRUNC]	||
- 		    attrs[XFRMA_ALG_CRYPT]	||
--		    attrs[XFRMA_TFCPAD]		||
--		    (ntohl(p->id.spi) >= 0x10000))
-+		    attrs[XFRMA_TFCPAD]) {
-+			NL_SET_ERR_MSG(extack, "Invalid attributes for COMP: AEAD, AUTH, AUTH_TRUNC, CRYPT, TFCPAD");
-+			goto out;
-+		}
-+
-+		if (ntohl(p->id.spi) >= 0x10000) {
-+			NL_SET_ERR_MSG(extack, "SPI is too large for COMP (must be < 0x10000)");
- 			goto out;
-+		}
- 		break;
- 
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -249,13 +285,20 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
- 		    attrs[XFRMA_ALG_CRYPT]	||
- 		    attrs[XFRMA_ENCAP]		||
- 		    attrs[XFRMA_SEC_CTX]	||
--		    attrs[XFRMA_TFCPAD]		||
--		    !attrs[XFRMA_COADDR])
-+		    attrs[XFRMA_TFCPAD]) {
-+			NL_SET_ERR_MSG(extack, "Invalid attributes for DSTOPTS/ROUTING");
-+			goto out;
-+		}
-+
-+		if (!attrs[XFRMA_COADDR]) {
-+			NL_SET_ERR_MSG(extack, "Missing required COADDR attribute for DSTOPTS/ROUTING");
- 			goto out;
-+		}
- 		break;
- #endif
- 
- 	default:
-+		NL_SET_ERR_MSG(extack, "Unsupported protocol");
- 		goto out;
- 	}
- 
-@@ -269,7 +312,7 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
- 		goto out;
- 	if ((err = verify_one_alg(attrs, XFRMA_ALG_COMP)))
- 		goto out;
--	if ((err = verify_sec_ctx_len(attrs, NULL)))
-+	if ((err = verify_sec_ctx_len(attrs, extack)))
- 		goto out;
- 	if ((err = verify_replay(p, attrs)))
- 		goto out;
-@@ -283,14 +326,19 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
- 		break;
- 
- 	default:
-+		NL_SET_ERR_MSG(extack, "Unsupported mode");
- 		goto out;
- 	}
- 
- 	err = 0;
- 
--	if (attrs[XFRMA_MTIMER_THRESH])
--		if (!attrs[XFRMA_ENCAP])
-+	if (attrs[XFRMA_MTIMER_THRESH]) {
-+		if (!attrs[XFRMA_ENCAP]) {
-+			NL_SET_ERR_MSG(extack, "MTIMER_THRESH attribute can only be set on ENCAP states");
- 			err = -EINVAL;
-+			goto out;
-+		}
+ 	algp = nla_data(rt);
+-	if (nla_len(rt) < (int)xfrm_alg_len(algp))
++	if (nla_len(rt) < (int)xfrm_alg_len(algp)) {
++		NL_SET_ERR_MSG(extack, "Invalid AUTH/CRYPT/COMP attribute length");
+ 		return -EINVAL;
 +	}
  
- out:
- 	return err;
-@@ -691,7 +739,7 @@ static int xfrm_add_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	int err;
- 	struct km_event c;
+ 	switch (type) {
+ 	case XFRMA_ALG_AUTH:
+@@ -53,6 +56,7 @@ static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type)
+ 		break;
  
--	err = verify_newsa_info(p, attrs);
-+	err = verify_newsa_info(p, attrs, extack);
- 	if (err)
- 		return err;
+ 	default:
++		NL_SET_ERR_MSG(extack, "Invalid algorithm attribute type");
+ 		return -EINVAL;
+ 	}
  
+@@ -60,7 +64,8 @@ static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type)
+ 	return 0;
+ }
+ 
+-static int verify_auth_trunc(struct nlattr **attrs)
++static int verify_auth_trunc(struct nlattr **attrs,
++			     struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr *rt = attrs[XFRMA_ALG_AUTH_TRUNC];
+ 	struct xfrm_algo_auth *algp;
+@@ -69,14 +74,16 @@ static int verify_auth_trunc(struct nlattr **attrs)
+ 		return 0;
+ 
+ 	algp = nla_data(rt);
+-	if (nla_len(rt) < (int)xfrm_alg_auth_len(algp))
++	if (nla_len(rt) < (int)xfrm_alg_auth_len(algp)) {
++		NL_SET_ERR_MSG(extack, "Invalid AUTH_TRUNC attribute length");
+ 		return -EINVAL;
++	}
+ 
+ 	algp->alg_name[sizeof(algp->alg_name) - 1] = '\0';
+ 	return 0;
+ }
+ 
+-static int verify_aead(struct nlattr **attrs)
++static int verify_aead(struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr *rt = attrs[XFRMA_ALG_AEAD];
+ 	struct xfrm_algo_aead *algp;
+@@ -85,8 +92,10 @@ static int verify_aead(struct nlattr **attrs)
+ 		return 0;
+ 
+ 	algp = nla_data(rt);
+-	if (nla_len(rt) < (int)aead_len(algp))
++	if (nla_len(rt) < (int)aead_len(algp)) {
++		NL_SET_ERR_MSG(extack, "Invalid AEAD attribute length");
+ 		return -EINVAL;
++	}
+ 
+ 	algp->alg_name[sizeof(algp->alg_name) - 1] = '\0';
+ 	return 0;
+@@ -302,15 +311,15 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
+ 		goto out;
+ 	}
+ 
+-	if ((err = verify_aead(attrs)))
++	if ((err = verify_aead(attrs, extack)))
+ 		goto out;
+-	if ((err = verify_auth_trunc(attrs)))
++	if ((err = verify_auth_trunc(attrs, extack)))
+ 		goto out;
+-	if ((err = verify_one_alg(attrs, XFRMA_ALG_AUTH)))
++	if ((err = verify_one_alg(attrs, XFRMA_ALG_AUTH, extack)))
+ 		goto out;
+-	if ((err = verify_one_alg(attrs, XFRMA_ALG_CRYPT)))
++	if ((err = verify_one_alg(attrs, XFRMA_ALG_CRYPT, extack)))
+ 		goto out;
+-	if ((err = verify_one_alg(attrs, XFRMA_ALG_COMP)))
++	if ((err = verify_one_alg(attrs, XFRMA_ALG_COMP, extack)))
+ 		goto out;
+ 	if ((err = verify_sec_ctx_len(attrs, extack)))
+ 		goto out;
 -- 
 2.53.0
 
