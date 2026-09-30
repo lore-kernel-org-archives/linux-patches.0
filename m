@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89C83DB626;
-	Wed, 30 Sep 2026 19:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946893DA7DD;
+	Wed, 30 Sep 2026 19:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795939; cv=none; b=NCuQS4/w+2qUV9FcktxK5nVMJKuW/RxhI21Bd6fPOYBqqDndCLXP15mqZIJ0iep6cC1QU2b344fFStCLTjIvu5V9HcDFC1jNon7P0M8+vPGb0p18ZV4nXobHJfhGbJTdxSeN6bw6fsgTlZ8udHnKaJ0+9a+4nVipOVkDij3N7Pg=
+	t=1790795943; cv=none; b=qubJkbTKJlw5qCP0UBLyCqK5XLJ9X4vZ32L5f6SY0JYVGv358Le0BYyQn/ZPgxyd/hd1XdTlQJMfbgcGvyA8X3bM0LNiPjNjRNymX9FA9GjbGb8rk4UYrQm9cOtHbH3inL3meGZ2JJnQmRL+MsTRjedSuSLy/QGO6epy2F9AQk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795939; c=relaxed/simple;
-	bh=gmFQtEYZ8vHmk5BXF4xPMyr6Er20Hxy88pDIOVnHwlE=;
+	s=arc-20240116; t=1790795943; c=relaxed/simple;
+	bh=M+kuI7Yu9DyrNM1X/tkvpBMvhjBIItn9kVmiNnTlswU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BkAJSsgScP9txBpWyIryVVw4VmL+2XlYtSRaSkmWuWxVXc8suGrLBs4HZnbtaXdVtjmjo9XYbi1P58ox0KgX0uOPWqWejrVHSLnxmUhax9xDui1p4k1SFowbyT/X6MrhDVUyn4NfMaYRfwbs3Q6qXnQW+whJe/WEl8zLfyqI+4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/fORWUD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HP9xIwN+tepbI9gLjm8jgkTe3hSPYiOh8TtmNkB4t9IMnre37zEMdqS3MbkzX64hkuHAEXr3AFBAdibq+SYq4fiYUZfnN/Shva7Bn9uowNrkNwUZvg/EH1t8X1nKjBuao2xUCe/LutcxfzR5WVDpONJc/Y6zO53zKuwkIvzvK0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TiVuI3dx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/fORWUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9F91F000FF;
-	Wed, 30 Sep 2026 19:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TiVuI3dx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA451F000FF;
+	Wed, 30 Sep 2026 19:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795938;
-	bh=xlxCA3ECmjzsWKlcUF6S09T8DmbUvgWhyu06Wxg36Cg=;
+	s=korg; t=1790795941;
+	bh=Wb1CC5prH5ENQvyAqBvccGL4bho1kU9r4hxnlpolVwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1/fORWUDyQyw6mEhtwagonw7c7tJ/lIsbaWhownfRhaxyvLnjb7Zjh56Yb4eJpSA9
-	 2k9BBjt2PTjCGHVcnbHCUkOee/0Cy/NYm5z/+m5sE4kF2008v6Vl44TMCRLpykv3gr
-	 8NKdQECk5PQvo1Ks/djoltcMRWieE62x/AA0nsCY=
+	b=TiVuI3dxCv0UR6iCgWsKS4RNn6BR7LHN/3wXyHfv/qQpEhW4eiuMssq41zstXP0Jk
+	 1tVozHHh+jlWr1XfrdnsQ2oHsR+YS0VzHlKE5TDihVwKEb2U47mvPKG8BzaqfOEwov
+	 zUvQ8TVPjDzizD/d1JNbuLR15tk5qBwmz/pCTjRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Song Liu <song@kernel.org>,
+	Tingmao Wang <m@maowtm.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0737/1193] RDMA/mad: Fix receive buffer leak when PKey enforcement fails
-Date: Wed, 30 Sep 2026 17:23:41 +0200
-Message-ID: <20260930152450.626590696@linuxfoundation.org>
+Subject: [PATCH 6.6 0711/1193] selftests/landlock: Add tests for access through disconnected paths
+Date: Wed, 30 Sep 2026 17:23:15 +0200
+Message-ID: <20260930152450.047433064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -45,62 +47,525 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Tingmao Wang <m@maowtm.org>
 
-[ Upstream commit 3476c28c9addfa253f505e6bd87f1f5598b961d0 ]
+[ Upstream commit a18ee3f31fd714173a62515d049d77e76ab55649 ]
 
-ib_mad_complete_recv() initializes mad_recv_wc->rmpp_list and then runs
-ib_mad_enforce_security() before linking recv_buf onto that list.  On
-failure it calls ib_free_recv_mad(), which only walks rmpp_list and frees
-the ib_mad_private of every buffer found there.  As the list is still
-empty at that point, nothing is freed at all.
+This adds tests for the edge case discussed in [1], with specific ones
+for rename and link operations when the operands are through
+disconnected paths, as that go through a separate code path in Landlock.
 
-The caller cannot clean up either: ib_mad_recv_done() sets recv to NULL
-right after ib_mad_complete_recv() returns, assuming the MAD layer took
-ownership of the buffer.  Every MAD that fails the PKey check therefore
-leaks one ib_mad_private (about 300 bytes per IB port MAD, ~2K for OPA),
-and a remote node can trigger this repeatedly by sending MADs with a
-wrong PKey.
+This has resulted in a warning, due to collect_domain_accesses() not
+expecting to reach a different root from path->mnt:
 
-Link recv_buf onto rmpp_list right after the list is initialized, so the
-error path has something to free.
+  #  RUN           layout1_bind.path_disconnected ...
+  #            OK  layout1_bind.path_disconnected
+  ok 96 layout1_bind.path_disconnected
+  #  RUN           layout1_bind.path_disconnected_rename ...
+  [..] ------------[ cut here ]------------
+  [..] WARNING: CPU: 3 PID: 385 at security/landlock/fs.c:1065 collect_domain_accesses
+  [..] ...
+  [..] RIP: 0010:collect_domain_accesses (security/landlock/fs.c:1065 (discriminator 2) security/landlock/fs.c:1031 (discriminator 2))
+  [..] current_check_refer_path (security/landlock/fs.c:1205)
+  [..] ...
+  [..] hook_path_rename (security/landlock/fs.c:1526)
+  [..] security_path_rename (security/security.c:2026 (discriminator 1))
+  [..] do_renameat2 (fs/namei.c:5264)
+  #            OK  layout1_bind.path_disconnected_rename
+  ok 97 layout1_bind.path_disconnected_rename
 
-Fixes: 47a2b338fe63 ("IB/core: Enforce security on management datagrams")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260826073216.2367-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Move the const char definitions a bit above so that we can use the path
+for s4d1 in cleanup code.
+
+Cc: Günther Noack <gnoack@google.com>
+Cc: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/027d5190-b37a-40a8-84e9-4ccbc352bcdf@maowtm.org [1]
+Signed-off-by: Tingmao Wang <m@maowtm.org>
+Link: https://lore.kernel.org/r/20251128172200.760753-4-mic@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+[mic: Backport: adapt the tests to the older fixture API]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/landlock/fs_test.c | 423 ++++++++++++++++++++-
+ 1 file changed, 415 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index bddb1c607aff6..4347b3af13119 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -1805,6 +1805,8 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 	int ret;
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index c239838c796a4..79b8e2acd5105 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -3738,6 +3738,18 @@ TEST(memfd_ftruncate)
+ FIXTURE(layout1_bind) {};
+ /* clang-format on */
  
- 	INIT_LIST_HEAD(&mad_recv_wc->rmpp_list);
-+	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
++static const char bind_dir_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3";
++static const char bind_file1_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3/f1";
 +
- 	ret = ib_mad_enforce_security(mad_agent_priv,
- 				      mad_recv_wc->wc->pkey_index);
- 	if (ret) {
-@@ -1813,7 +1815,6 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
- 		return;
- 	}
++/* Move targets for disconnected path tests. */
++static const char dir_s4d1[] = TMP_DIR "/s4d1";
++static const char file1_s4d1[] = TMP_DIR "/s4d1/f1";
++static const char file2_s4d1[] = TMP_DIR "/s4d1/f2";
++static const char dir_s4d2[] = TMP_DIR "/s4d1/s4d2";
++static const char file1_s4d2[] = TMP_DIR "/s4d1/s4d2/f1";
++static const char file1_name[] = "f1";
++static const char file2_name[] = "f2";
++
+ FIXTURE_SETUP(layout1_bind)
+ {
+ 	prepare_layout(_metadata);
+@@ -3755,14 +3767,14 @@ FIXTURE_TEARDOWN(layout1_bind)
+ 	EXPECT_EQ(0, umount(dir_s2d2));
+ 	clear_cap(_metadata, CAP_SYS_ADMIN);
  
--	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
- 	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
- 		spin_lock_irqsave(&mad_agent_priv->lock, flags);
- 		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
++	remove_path(file1_s4d1);
++	remove_path(file2_s4d1);
++
+ 	remove_layout1(_metadata);
+ 
+ 	cleanup_layout(_metadata);
+ }
+ 
+-static const char bind_dir_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3";
+-static const char bind_file1_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3/f1";
+-
+ /*
+  * layout1_bind hierarchy:
+  *
+@@ -3773,20 +3785,25 @@ static const char bind_file1_s1d3[] = TMP_DIR "/s2d1/s2d2/s1d3/f1";
+  * │   └── s1d2
+  * │       ├── f1
+  * │       ├── f2
+- * │       └── s1d3
++ * │       └── s1d3 [disconnected by path_disconnected]
+  * │           ├── f1
+  * │           └── f2
+  * ├── s2d1
+  * │   ├── f1
+- * │   └── s2d2
++ * │   └── s2d2 [bind mount from s1d2]
+  * │       ├── f1
+  * │       ├── f2
+  * │       └── s1d3
+  * │           ├── f1
+  * │           └── f2
+- * └── s3d1
+- *     └── s3d2
+- *         └── s3d3
++ * ├── s3d1
++ * │   └── s3d2
++ * │       └── s3d3
++ * └── s4d1 [renamed from s1d3 by path_disconnected]
++ *     ├── f1
++ *     ├── f2
++ *     └── s4d2
++ *         └── f1
+  */
+ 
+ TEST_F_FORK(layout1_bind, no_restriction)
+@@ -3985,6 +4002,396 @@ TEST_F_FORK(layout1_bind, reparent_cross_mount)
+ 	ASSERT_EQ(0, rename(bind_file1_s1d3, file1_s2d2));
+ }
+ 
++/*
++ * Make sure access to file through a disconnected path works as expected.
++ * This test moves s1d3 to s4d1.
++ */
++TEST_F_FORK(layout1_bind, path_disconnected)
++{
++	const struct rule layer1_allow_all[] = {
++		{
++			.path = TMP_DIR,
++			.access = ACCESS_ALL,
++		},
++		{},
++	};
++	const struct rule layer2_allow_just_f1[] = {
++		{
++			.path = file1_s1d3,
++			.access = LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{},
++	};
++	const struct rule layer3_only_s1d2[] = {
++		{
++			.path = dir_s1d2,
++			.access = LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{},
++	};
++
++	/* Landlock should not deny access just because it is disconnected. */
++	int ruleset_fd_l1 =
++		create_ruleset(_metadata, ACCESS_ALL, layer1_allow_all);
++
++	/* Creates the new ruleset now before we move the dir containing the file. */
++	int ruleset_fd_l2 =
++		create_ruleset(_metadata, ACCESS_RW, layer2_allow_just_f1);
++	int ruleset_fd_l3 =
++		create_ruleset(_metadata, ACCESS_RW, layer3_only_s1d2);
++	int bind_s1d3_fd;
++
++	ASSERT_LE(0, ruleset_fd_l1);
++	ASSERT_LE(0, ruleset_fd_l2);
++	ASSERT_LE(0, ruleset_fd_l3);
++
++	enforce_ruleset(_metadata, ruleset_fd_l1);
++	EXPECT_EQ(0, close(ruleset_fd_l1));
++
++	bind_s1d3_fd = open(bind_dir_s1d3, O_PATH | O_CLOEXEC);
++	ASSERT_LE(0, bind_s1d3_fd);
++
++	/* Tests access is possible before we move. */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, "..", O_RDONLY | O_DIRECTORY));
++
++	/* Makes it disconnected. */
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d1))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d1,
++		       strerror(errno));
++	}
++
++	/* Tests that access is still possible. */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++
++	/*
++	 * Tests that ".." is not possible (not because of Landlock, but just
++	 * because it's disconnected).
++	 */
++	EXPECT_EQ(ENOENT,
++		  test_open_rel(bind_s1d3_fd, "..", O_RDONLY | O_DIRECTORY));
++
++	/* This should still work with a narrower rule. */
++	enforce_ruleset(_metadata, ruleset_fd_l2);
++	EXPECT_EQ(0, close(ruleset_fd_l2));
++
++	EXPECT_EQ(0, test_open(file1_s4d1, O_RDONLY));
++	/*
++	 * Accessing a file through a disconnected file descriptor can still be
++	 * allowed by a rule tied to this file, even if it is no longer visible in
++	 * its mount point.
++	 */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(EACCES, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++
++	enforce_ruleset(_metadata, ruleset_fd_l3);
++	EXPECT_EQ(0, close(ruleset_fd_l3));
++
++	EXPECT_EQ(EACCES, test_open(file1_s4d1, O_RDONLY));
++	/*
++	 * Accessing a file through a disconnected file descriptor can still be
++	 * allowed by a rule tied to the original mount point, even if it is no
++	 * longer visible in its mount point.
++	 */
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(EACCES, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++}
++
++/*
++ * Test that renameat with disconnected paths works under Landlock.  This test
++ * moves s1d3 to s4d2, so that we can have a rule allowing refers on the move
++ * target's immediate parent.
++ */
++TEST_F_FORK(layout1_bind, path_disconnected_rename)
++{
++	const struct rule layer1[] = {
++		{
++			.path = dir_s1d2,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_MAKE_DIR |
++				  LANDLOCK_ACCESS_FS_REMOVE_DIR |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE |
++				  LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{
++			.path = dir_s4d1,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_MAKE_DIR |
++				  LANDLOCK_ACCESS_FS_REMOVE_DIR |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE |
++				  LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{}
++	};
++
++	/* This layer only handles LANDLOCK_ACCESS_FS_READ_FILE. */
++	const struct rule layer2_only_s1d2[] = {
++		{
++			.path = dir_s1d2,
++			.access = LANDLOCK_ACCESS_FS_READ_FILE,
++		},
++		{},
++	};
++	int ruleset_fd_l1, ruleset_fd_l2;
++	pid_t child_pid;
++	int bind_s1d3_fd, status;
++
++	ASSERT_EQ(0, mkdir(dir_s4d1, 0755))
++	{
++		TH_LOG("Failed to create %s: %s", dir_s4d1, strerror(errno));
++	}
++	ruleset_fd_l1 = create_ruleset(_metadata, ACCESS_ALL, layer1);
++	ruleset_fd_l2 = create_ruleset(_metadata, LANDLOCK_ACCESS_FS_READ_FILE,
++				       layer2_only_s1d2);
++	ASSERT_LE(0, ruleset_fd_l1);
++	ASSERT_LE(0, ruleset_fd_l2);
++
++	enforce_ruleset(_metadata, ruleset_fd_l1);
++	EXPECT_EQ(0, close(ruleset_fd_l1));
++
++	bind_s1d3_fd = open(bind_dir_s1d3, O_PATH | O_CLOEXEC);
++	ASSERT_LE(0, bind_s1d3_fd);
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++
++	/* Tests ENOENT priority over EACCES for disconnected directory. */
++	EXPECT_EQ(EACCES, test_open_rel(bind_s1d3_fd, "..", O_DIRECTORY));
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d2))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d2,
++		       strerror(errno));
++	}
++	EXPECT_EQ(ENOENT, test_open_rel(bind_s1d3_fd, "..", O_DIRECTORY));
++
++	/*
++	 * The file is no longer under s1d2 but we should still be able to access it
++	 * with layer 2 because its mount point is evaluated as the first valid
++	 * directory because it was initially a parent.  Do a fork to test this so
++	 * we don't prevent ourselves from renaming it back later.
++	 */
++	child_pid = fork();
++	ASSERT_LE(0, child_pid);
++	if (child_pid == 0) {
++		enforce_ruleset(_metadata, ruleset_fd_l2);
++		EXPECT_EQ(0, close(ruleset_fd_l2));
++		EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++		EXPECT_EQ(EACCES, test_open(file1_s4d2, O_RDONLY));
++
++		/*
++		 * Tests that access widening checks indeed prevents us from renaming it
++		 * back.
++		 */
++		EXPECT_EQ(-1, rename(dir_s4d2, dir_s1d3));
++		EXPECT_EQ(EXDEV, errno);
++
++		/*
++		 * Including through the now disconnected fd (but it should return
++		 * EXDEV).
++		 */
++		EXPECT_EQ(-1, renameat(bind_s1d3_fd, file1_name, AT_FDCWD,
++				       file1_s2d2));
++		EXPECT_EQ(EXDEV, errno);
++		_exit(_metadata->passed ? EXIT_SUCCESS : EXIT_FAILURE);
++		return;
++	}
++
++	EXPECT_EQ(child_pid, waitpid(child_pid, &status, 0));
++	EXPECT_EQ(1, WIFEXITED(status));
++	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
++
++	ASSERT_EQ(0, rename(dir_s4d2, dir_s1d3))
++	{
++		TH_LOG("Failed to rename %s back to %s: %s", dir_s4d1, dir_s1d3,
++		       strerror(errno));
++	}
++
++	/* Now checks that we can access it under l2. */
++	child_pid = fork();
++	ASSERT_LE(0, child_pid);
++	if (child_pid == 0) {
++		enforce_ruleset(_metadata, ruleset_fd_l2);
++		EXPECT_EQ(0, close(ruleset_fd_l2));
++		EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++		EXPECT_EQ(0, test_open(file1_s1d3, O_RDONLY));
++		_exit(_metadata->passed ? EXIT_SUCCESS : EXIT_FAILURE);
++		return;
++	}
++
++	EXPECT_EQ(child_pid, waitpid(child_pid, &status, 0));
++	EXPECT_EQ(1, WIFEXITED(status));
++	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
++
++	/*
++	 * Also test that we can rename via a disconnected path.  We move the
++	 * dir back to the disconnected place first, then we rename file1 to
++	 * file2 through our dir fd.
++	 */
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d2))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d2,
++		       strerror(errno));
++	}
++	ASSERT_EQ(0,
++		  renameat(bind_s1d3_fd, file1_name, bind_s1d3_fd, file2_name))
++	{
++		TH_LOG("Failed to rename %s to %s within disconnected %s: %s",
++		       file1_name, file2_name, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file2_name, O_RDONLY));
++	ASSERT_EQ(0, renameat(bind_s1d3_fd, file2_name, AT_FDCWD, file1_s2d2))
++	{
++		TH_LOG("Failed to rename %s to %s through disconnected %s: %s",
++		       file2_name, file1_s2d2, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file1_s2d2, O_RDONLY));
++	EXPECT_EQ(0, test_open(file1_s1d2, O_RDONLY));
++
++	/* Move it back using the disconnected path as the target. */
++	ASSERT_EQ(0, renameat(AT_FDCWD, file1_s2d2, bind_s1d3_fd, file1_name))
++	{
++		TH_LOG("Failed to rename %s to %s through disconnected %s: %s",
++		       file1_s1d2, file1_name, bind_dir_s1d3, strerror(errno));
++	}
++
++	/* Now make it connected again. */
++	ASSERT_EQ(0, rename(dir_s4d2, dir_s1d3))
++	{
++		TH_LOG("Failed to rename %s back to %s: %s", dir_s4d2, dir_s1d3,
++		       strerror(errno));
++	}
++
++	/* Checks again that we can access it under l2. */
++	enforce_ruleset(_metadata, ruleset_fd_l2);
++	EXPECT_EQ(0, close(ruleset_fd_l2));
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++	EXPECT_EQ(0, test_open(file1_s1d3, O_RDONLY));
++}
++
++/*
++ * Test that linkat(2) with disconnected paths works under Landlock. This
++ * test moves s1d3 to s4d1.
++ */
++TEST_F_FORK(layout1_bind, path_disconnected_link)
++{
++	/* Ruleset to be applied after renaming s1d3 to s4d1. */
++	const struct rule layer1[] = {
++		{
++			.path = dir_s4d1,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_READ_FILE |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE,
++		},
++		{
++			.path = dir_s2d2,
++			.access = LANDLOCK_ACCESS_FS_REFER |
++				  LANDLOCK_ACCESS_FS_READ_FILE |
++				  LANDLOCK_ACCESS_FS_MAKE_REG |
++				  LANDLOCK_ACCESS_FS_REMOVE_FILE,
++		},
++		{}
++	};
++	int ruleset_fd, bind_s1d3_fd;
++
++	/* Removes unneeded files created by layout1, otherwise it will EEXIST. */
++	ASSERT_EQ(0, unlink(file1_s1d2));
++	ASSERT_EQ(0, unlink(file2_s1d3));
++
++	bind_s1d3_fd = open(bind_dir_s1d3, O_PATH | O_CLOEXEC);
++	ASSERT_LE(0, bind_s1d3_fd);
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY));
++
++	/* Disconnects bind_s1d3_fd. */
++	ASSERT_EQ(0, rename(dir_s1d3, dir_s4d1))
++	{
++		TH_LOG("Failed to rename %s to %s: %s", dir_s1d3, dir_s4d1,
++		       strerror(errno));
++	}
++
++	/* Need this later to test different parent link. */
++	ASSERT_EQ(0, mkdir(dir_s4d2, 0755))
++	{
++		TH_LOG("Failed to create %s: %s", dir_s4d2, strerror(errno));
++	}
++
++	ruleset_fd = create_ruleset(_metadata, ACCESS_ALL, layer1);
++	ASSERT_LE(0, ruleset_fd);
++	enforce_ruleset(_metadata, ruleset_fd);
++	EXPECT_EQ(0, close(ruleset_fd));
++
++	/* From disconnected to connected. */
++	ASSERT_EQ(0, linkat(bind_s1d3_fd, file1_name, AT_FDCWD, file1_s2d2, 0))
++	{
++		TH_LOG("Failed to link %s to %s via disconnected %s: %s",
++		       file1_name, file1_s2d2, bind_dir_s1d3, strerror(errno));
++	}
++
++	/* Tests that we can access via the new link... */
++	EXPECT_EQ(0, test_open(file1_s2d2, O_RDONLY))
++	{
++		TH_LOG("Failed to open newly linked %s: %s", file1_s2d2,
++		       strerror(errno));
++	}
++
++	/* ...as well as the old one. */
++	EXPECT_EQ(0, test_open(file1_s4d1, O_RDONLY))
++	{
++		TH_LOG("Failed to open original %s: %s", file1_s4d1,
++		       strerror(errno));
++	}
++
++	/* From connected to disconnected. */
++	ASSERT_EQ(0, unlink(file1_s4d1));
++	ASSERT_EQ(0, linkat(AT_FDCWD, file1_s2d2, bind_s1d3_fd, file2_name, 0))
++	{
++		TH_LOG("Failed to link %s to %s via disconnected %s: %s",
++		       file1_s2d2, file2_name, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file2_s4d1, O_RDONLY));
++	ASSERT_EQ(0, unlink(file1_s2d2));
++
++	/* From disconnected to disconnected (same parent). */
++	ASSERT_EQ(0,
++		  linkat(bind_s1d3_fd, file2_name, bind_s1d3_fd, file1_name, 0))
++	{
++		TH_LOG("Failed to link %s to %s within disconnected %s: %s",
++		       file2_name, file1_name, bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file1_s4d1, O_RDONLY))
++	{
++		TH_LOG("Failed to open newly linked %s: %s", file1_s4d1,
++		       strerror(errno));
++	}
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, file1_name, O_RDONLY))
++	{
++		TH_LOG("Failed to open %s through newly created link under disconnected path: %s",
++		       file1_name, strerror(errno));
++	}
++	ASSERT_EQ(0, unlink(file2_s4d1));
++
++	/* From disconnected to disconnected (different parent). */
++	ASSERT_EQ(0,
++		  linkat(bind_s1d3_fd, file1_name, bind_s1d3_fd, "s4d2/f1", 0))
++	{
++		TH_LOG("Failed to link %s to %s within disconnected %s: %s",
++		       file1_name, "s4d2/f1", bind_dir_s1d3, strerror(errno));
++	}
++	EXPECT_EQ(0, test_open(file1_s4d2, O_RDONLY))
++	{
++		TH_LOG("Failed to open %s after link: %s", file1_s4d2,
++		       strerror(errno));
++	}
++	EXPECT_EQ(0, test_open_rel(bind_s1d3_fd, "s4d2/f1", O_RDONLY))
++	{
++		TH_LOG("Failed to open %s through disconnected path after link: %s",
++		       "s4d2/f1", strerror(errno));
++	}
++}
++
+ #define LOWER_BASE TMP_DIR "/lower"
+ #define LOWER_DATA LOWER_BASE "/data"
+ static const char lower_fl1[] = LOWER_DATA "/fl1";
 -- 
 2.53.0
 
