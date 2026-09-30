@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24D2371D11;
-	Wed, 30 Sep 2026 15:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775E736B912;
+	Wed, 30 Sep 2026 15:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783985; cv=none; b=oyjtc032wWDEtH9XTDOvVdD+MZ3h7eNY2aqAkOGH81CRZnTz+LAln2nv2skbF85GSnZmoQf7jNzpctN0XcTXQK2JUvQQmp/wy8J7/wLYw6LKEsOy6RbcAHfMhhhUvSc2Neq4//RwXude7EHdYZzhWB/3znBs0laSTrC57iYfYW0=
+	t=1790783986; cv=none; b=esp7KTeW4PvxZ1C1zMnX/BmdKPFPvkw3WxMkO0iQ7zsSLn/b9D3ujg64IDUiKSrQDuqvk9lf8VhvDlIANfAIppTjCKWC23RL7jyocfrmdJDtWpYk3KZ4YiGVRzMSzMEPGTiM3YeQOJ2HSHmRYmDawwambldoaEeLUapURsWjhyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783985; c=relaxed/simple;
-	bh=IRmKWUOCOoMRsFCoavcqYfoCJwwZgbH6mIs4xgHn5e0=;
+	s=arc-20240116; t=1790783986; c=relaxed/simple;
+	bh=gnbcNryF6o5i5sdlcdRz8YfpID0kc1uxYeE8xSAgFzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+zb9ub3HPQqToYWu2vcJjmJDiQV2jHZKfsXgfsSDdNNTEVlPchx9zSFisDV7lPtzTszpwrrPgqO+3TbAcWGvfZf4AcShicxS4tAHO3c4DU54gP2GJ4Qhbrxyl1GWbLTGjFjCOu3VYMeVv+Uul62PYBCDvXPmh2jg/tqikDLVNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4IORJ0L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B6tnY/9qk905yySp3cX1zLVyNV/hgtn3WkSQFnyb46cQ6x4kZGbXXUJJUUIVvOW8qvvKc0DM+wnZNtElPuaQCnc/igv6tkRoXI+8IXRlYyrpDGx35GF1qHiJ0+0gKDiopl4hMUSKMjfd+d216IBcH2DwV+G3sDOhkM+1tkT9xrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=il39ayRg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4IORJ0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7741F00899;
-	Wed, 30 Sep 2026 15:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="il39ayRg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63811F00893;
+	Wed, 30 Sep 2026 15:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783980;
-	bh=Y8K4L3nNqbqoFf+eNdl2OE/6HT+EDz+R0GkGT2eXksU=;
+	s=korg; t=1790783983;
+	bh=TreiOAfNlWSJpKqVlFTIotoYsI/rdpYRdDRyk4jnN4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4IORJ0L8qZ5k9xajU/ihsezjpCRRVFLprsNFG8JxRYM7VAkrRBOP2DVdfSDcYdgu
-	 7w6aL2O886+ZUb7jD2/iQOZEppa94HDFH0MMi3tK4+2yZPhXDrmp11qWcdn1Zs/Sl0
-	 OifwIKgqw9qKPQO+Lie2LCN63FImvbbvnOGG9Y80=
+	b=il39ayRgDwkJF48fXwwFvmvW5FkFJTBABhrR4CMn9LYQJk0seCY6ftnD7M/lR6ldj
+	 4/5VblGEXAY4O4VREXp/xWE3mvp6oDP5+5tpPo6h8UmjiB+IIdq2nBjxVIs68v21oB
+	 oxaUaO/F822I5D9WdfF4TnotlHFZkt1KwA06COSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 588/595] Bluetooth: hci_sock: validate event length before filtering
-Date: Wed, 30 Sep 2026 17:28:01 +0200
-Message-ID: <20260930152400.383081250@linuxfoundation.org>
+Subject: [PATCH 5.10 589/595] Bluetooth: hci_sock: reject out-of-range OCF values
+Date: Wed, 30 Sep 2026 17:28:02 +0200
+Message-ID: <20260930152400.406546531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,25 +52,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit b0a6cf99afd57a39598b1beca0e86ef5004980de upstream.
+commit e93fad891c72deb84cae49430163b384ebcc92b1 upstream.
 
-is_filtered_packet() reads the event code from skb->data[0] without first
-checking that the skb is nonempty. When an opcode filter is configured,
-it also reads the command opcode at offsets 3 or 4 without checking that
-a Command Complete or Command Status event is long enough.
+The raw HCI socket security filter has 128 OCF bits per supported OGF,
+but masks the 10-bit OCF with 127 before looking up the command. An
+unprivileged socket can therefore submit a reserved OCF that aliases an
+allowlisted command modulo 128.
 
-hci_send_to_sock() invokes the filter before hci_event_packet() validates
-the event header. A malformed event supplied by a controller or a vhci
-device can therefore cause an out-of-bounds read.
+A conforming controller should reject reserved opcodes. Nevertheless,
+the security decision must apply to the opcode that will actually be
+sent, especially since controller-specific behavior is outside the host
+stack's control.
 
-Keep the unmasked event code for the opcode checks. The masked value is
-needed for the 64-bit event bitmap, but using it to identify command events
-aliases event codes above 0x3f. In particular, Synchronous Train Complete
-(0x4f) was treated as Command Status (0x0f) even though its payload has no
-opcode.
-
-Reject actual command events that are too short for the field being
-inspected. A truncated command event cannot match a configured opcode.
+Reject OCF values that cannot be represented by the security filter
+instead of aliasing them onto an unrelated command.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
@@ -78,51 +73,20 @@ Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sock.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_sock.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/net/bluetooth/hci_sock.c
 +++ b/net/bluetooth/hci_sock.c
-@@ -165,6 +165,7 @@ static bool is_filtered_packet(struct so
- {
- 	struct hci_filter *flt;
- 	int flt_type, flt_event;
-+	u8 event;
+@@ -1848,7 +1848,8 @@ static int hci_sock_sendmsg(struct socke
+ 		u16 ocf = hci_opcode_ocf(opcode);
  
- 	/* Apply filter */
- 	flt = &hci_pi(sk)->filter;
-@@ -178,7 +179,11 @@ static bool is_filtered_packet(struct so
- 	if (hci_skb_pkt_type(skb) != HCI_EVENT_PKT)
- 		return false;
- 
--	flt_event = (*(__u8 *)skb->data & HCI_FLT_EVENT_BITS);
-+	if (skb->len < 1)
-+		return true;
-+
-+	event = *(__u8 *)skb->data;
-+	flt_event = event & HCI_FLT_EVENT_BITS;
- 
- 	if (!hci_test_bit(flt_event, &flt->event_mask))
- 		return true;
-@@ -187,11 +192,17 @@ static bool is_filtered_packet(struct so
- 	if (!flt->opcode)
- 		return false;
- 
--	if (flt_event == HCI_EV_CMD_COMPLETE &&
-+	if (event == HCI_EV_CMD_COMPLETE && skb->len < 5)
-+		return true;
-+
-+	if (event == HCI_EV_CMD_COMPLETE &&
- 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 3)))
- 		return true;
- 
--	if (flt_event == HCI_EV_CMD_STATUS &&
-+	if (event == HCI_EV_CMD_STATUS && skb->len < 6)
-+		return true;
-+
-+	if (event == HCI_EV_CMD_STATUS &&
- 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 4)))
- 		return true;
- 
+ 		if (((ogf > HCI_SFLT_MAX_OGF) ||
+-		     !hci_test_bit(ocf & HCI_FLT_OCF_BITS,
++		     (ocf > HCI_FLT_OCF_BITS) ||
++		     !hci_test_bit(ocf,
+ 				   &hci_sec_filter.ocf_mask[ogf])) &&
+ 		    !capable(CAP_NET_RAW)) {
+ 			err = -EPERM;
 
 
