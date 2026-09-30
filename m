@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABBC514766;
-	Wed, 30 Sep 2026 17:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E268F4FB9C3;
+	Wed, 30 Sep 2026 17:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787789; cv=none; b=J2tRl50hqmh6xLMB0wofoMd+k0YKaBWaOnfbOlYImPMeOcMhCDjTDa1oL0RlJOxhEceFgFVXg1n+25d2hySJy2hge2aYKvCzNlE5eF+bE8dhNo7O5+a6I+EKEObgojPm0fyVsjRpCX2utkk5U3rRDp2HmwAHlE3YnB+4LKRIQ9Q=
+	t=1790787793; cv=none; b=rb+jIhX3uvFVIoekHgvDqr0s2gpCEjgz2s1plKF0/uuCDqCAO5zuEmefe3EnlGTEqNfb5aHgFUrorUCgl9BkJNxKVv0SkLwJMneIzXrnBOel6Wj+DMQPI6q/JNiE6gBoJcF1e4oswpPDmu/E6X84tx3f9a1I/0Z4bXOyl2mlZAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787789; c=relaxed/simple;
-	bh=DAxdIScqM5KRyOLVF2LxD0NL8xS6+UzaILt3qPZ+NwU=;
+	s=arc-20240116; t=1790787793; c=relaxed/simple;
+	bh=UpLIM6T1SGHvMow93z+r+NiILiMAoEz3T3KxMxnHQUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnqTBZfuSG/pMEq8yBV9GA4k9Eh15fzPsxgwloSVlT4YdnwnIXjh7NxBpFEWIZz32tpxz3Hv0oyfhwqDoT+aLKhfZo0eOLBDIiIIrKyiJJmc+yacSyVFqdKSb2y5DSmedNn7hFZ1xKj3dKOA45mRoWAXI+joMcSj+ximK0MzqHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3r7gV/G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHFNOdCd/z3aYE+fRCg5MkdGp/DUeMeiBtUCTvt3pkgkAFXlRR78txq/sDro9LcK8uDrueMxCTQQsFrABnVr16KANh/Rk/xu1H5m76nasyvVnynoI6Kl+2U+KD3D1EeVMmHWLDl5Hv4BJVsYTOE3KsrOmP4wP4XzKvFaWaGrdI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrHxljxi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3r7gV/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E711F000FF;
-	Wed, 30 Sep 2026 17:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrHxljxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103861F000FF;
+	Wed, 30 Sep 2026 17:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787788;
-	bh=6LSNFio2+du5rYR3/MzYOPnqkrYreE78hkndeZtXHoQ=;
+	s=korg; t=1790787791;
+	bh=XscU+tZAzw8U4qfIbbKrbawhSx8GZkJGk7NmPt3x6kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H3r7gV/GubqGcWtKNUemSR+ww9duNBvdJ1lgv3Puas6AaksXFMcyyyaoALvwEUxyF
-	 Qp6COwuS+v3AxgIaxHmop9xfQeKv8yqZKlTxdwWNLopbwcWl4T1ln8X23YvHlLkzbT
-	 QKETuuAy6/hRv0e+v8pwPj0WKHUlJhwGMlBtohqw=
+	b=RrHxljxi5ZOgjaO6DR4cOBPE2tskOiagguqjhukq5Vpv1mFiKup5tAIdsS1oV66+N
+	 mdo9CK1y7H4vO1H8HxXHi+HYb7bDUpaGYw02hyN9ffKXbxPOmMBJZZ+VDndlrEosZ2
+	 eLh3I1APEea2BZ8RDIDAWfD0noi+HGMQVK3X8ebQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Paul Geurts <paul.geurts@prodrive-technologies.com>,
 	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.2 355/457] nfc: port100: reject frames whose declared length exceeds the received data
-Date: Wed, 30 Sep 2026 17:27:40 +0200
-Message-ID: <20260930152353.671896897@linuxfoundation.org>
+Subject: [PATCH 7.2 356/457] nfc: trf7970a: power down on startup RX gain failure
+Date: Wed, 30 Sep 2026 17:27:41 +0200
+Message-ID: <20260930152353.691892391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,51 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 092c6a605cbd6414ef499834c2e0da69c2c3388e upstream.
+commit d2acbde7e67df44efa8f0963462d1192e7694ffc upstream.
 
-port100_recv_response() passes the URB transfer buffer to
-port100_rx_frame_is_valid(), which checksums le16_to_cpu(frame->datalen)
-bytes of frame->data. datalen is a 16-bit field supplied by the device
-and is never checked against the number of bytes actually received
-(urb->actual_length), so a device reporting a datalen larger than the
-received frame makes port100_data_checksum() read out of bounds past the
-transfer buffer.
+trf7970a_startup() powers up the device before applying the optional RX
+gain reduction. If the register read or write fails, it returns without
+undoing that power-up. Probe's unwind only drops the separate regulator
+references acquired by probe, leaving the additional VIN enable from
+startup unbalanced. The system resume caller also has no power-down on
+this error.
 
-Reject a response whose declared frame size does not fit the received
-length before validating it.
+Call trf7970a_power_down() before returning the RX gain error to deassert
+the enable GPIOs, release the startup VIN reference and restore the
+powered-off state. Runtime PM has not been enabled yet, so the full
+shutdown helper is not appropriate here. Preserve the original SPI error.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing bound is evident from source. Compile-tested.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Fixes: 562d4d59b8a1 ("NFC: Sony Port-100 Series driver")
+Fixes: 5d69351820ea ("NFC: trf7970a: Create device-tree parameter for RX gain reduction")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260711123651.32595-1-doruk@0sec.ai
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Paul Geurts <paul.geurts@prodrive-technologies.com>
+Link: https://patch.msgid.link/20260913042625.31296-1-mhun512@gmail.com
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/port100.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nfc/trf7970a.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/nfc/port100.c
-+++ b/drivers/nfc/port100.c
-@@ -636,6 +636,13 @@ static void port100_recv_response(struct
+--- a/drivers/nfc/trf7970a.c
++++ b/drivers/nfc/trf7970a.c
+@@ -1997,8 +1997,10 @@ static int trf7970a_startup(struct trf79
+ 		return ret;
  
- 	in_frame = dev->in_urb->transfer_buffer;
- 
-+	if (urb->actual_length < PORT100_FRAME_HEADER_LEN ||
-+	    urb->actual_length < port100_rx_frame_size(in_frame)) {
-+		nfc_err(&dev->interface->dev, "Received a truncated frame\n");
-+		cmd->status = -EIO;
-+		goto sched_wq;
+ 	ret = trf7970a_update_rx_gain_reduction(trf);
+-	if (ret)
++	if (ret) {
++		trf7970a_power_down(trf);
+ 		return ret;
 +	}
-+
- 	if (!port100_rx_frame_is_valid(in_frame)) {
- 		nfc_err(&dev->interface->dev, "Received an invalid frame\n");
- 		cmd->status = -EIO;
+ 
+ 	pm_runtime_set_active(trf->dev);
+ 	pm_runtime_enable(trf->dev);
 
 
