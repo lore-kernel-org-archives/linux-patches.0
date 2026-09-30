@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396A5514753;
-	Wed, 30 Sep 2026 18:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2693AD539;
+	Wed, 30 Sep 2026 18:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793037; cv=none; b=I7tayucoB0GEgMwSOIvhiZWydlN+OzUbwpIpxdwnzxkLJmxOk2OhVBRslp4i8Q0E2cgdxrh1xBOj2MBHPcN1z4hPB1mL9vyzNb/qS5EKzyzVfpFYjixmiYAss1qIn42XQLyDQz2psXTMuJYw1yLR5diLJu8cKoHW7y63BrYDtHc=
+	t=1790793040; cv=none; b=HgnssnCXlTzG4cThE0MWNWJ+fqW56qagA0uO/EyGCkCRyMfAZFQrAviwS3PEFXVG5dfEeLEJXDePC6Piowm4eAsXlf0APMxCTRshjBza3vzA8HqG0K9e/hoz5H+N5nj2SQJmZOXI5F1/stoiA9DCqj9+k166CABEWw14Q8Zodks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793037; c=relaxed/simple;
-	bh=RgGpsUYWf2/NJMFxL37VLF9RT5NrkKPed9Kbf0pewKI=;
+	s=arc-20240116; t=1790793040; c=relaxed/simple;
+	bh=3FXa8g8AqR+xnYUs2NISKNs9G3g/ZS8CzIWKEXP3Rzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmskoPh0CIkpUPFRLpgpmbW4CZ7FQlHQw/a1WrzUCL7X9IQ29HNPIFEo7ZN7gMI4kb3XAsutew+pftOTxM2DYBGGzPxGSwi2ABNxMN9++3cmqObk8Hw/68A1UdW+5EnhosW+JuGLC2XxVjlEgjoUSU7wpnAJ78ly7IKQ6STS+h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Botl992o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YgcEYWdTsYZxDxBWdTwNrcyw63fBejBBc+E0XiKRnbJ/DCv9rieHK6iW8bKoS+Q0q06WMLWuNgxQciMyzBFSLKFGRJkDUfPg4k5ayL2O+9WjAWsj64QpCPlpbTayvlQdONpnqDNoMiC027VlerXO6C/2oaliTPfzd/CjVk544kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJbUiKKg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Botl992o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9184F1F000FF;
-	Wed, 30 Sep 2026 18:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJbUiKKg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715211F000FF;
+	Wed, 30 Sep 2026 18:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793036;
-	bh=q8p3iUgevnD1RwPywUgO+KvJ8Y5Y99Epwnb3DGHnzVQ=;
+	s=korg; t=1790793039;
+	bh=YChr/Wv7VvH9yzDJ/mw+cJKfWeM2Jg8SOdd2dv6N8cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Botl992ozbWeI1ssT0DtQkYQ5trINBvQr1pJR23KjcqFqNcMJPSgydO9FaU2l2bYY
-	 Vom5H0uLHSTRy8H7Mi5594TLDRTBTEY05VabJ23w19+lPepSLyWiRoAfGy0z5cq5x6
-	 zEzvY+FbqnBCWWSRMyaA6m1GbsI1x3O/IsCYWe5s=
+	b=KJbUiKKgYtND0FuqWGABxfSlgGanX7hvA3+I9IX4hB3MeyZXhsmmqQJlnDFVfLbRv
+	 lfYceBNJ+oOM65oOkZb3bG93E+CPKCPMKylRAz0HuMLZChcj+Z1+6Et2pAzBRoZ0iQ
+	 fwTafbxl0zCIiDdcXBWU38Hvq1XiynvyrZCDojBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/395] ipv6: Prevent rt6_insert_exception() for dying fib6_info.
-Date: Wed, 30 Sep 2026 17:26:14 +0200
-Message-ID: <20260930152343.069943569@linuxfoundation.org>
+Subject: [PATCH 6.18 113/395] dpll: use exact lookup for reference sync pin id
+Date: Wed, 30 Sep 2026 17:26:15 +0200
+Message-ID: <20260930152343.092286415@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,84 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 0346ec2f080b40d95ed05b853bb9226289e75212 ]
+[ Upstream commit 7cce782d8327b7291334c4a304cf3fd909a74d9d ]
 
-Before the cited commit, fib6_nh_flush_exceptions() always set
-from->exception_bucket_flushed = 1 under rt6_exception_lock to
-prevent rt6_insert_exception() from inserting a new exception
-for a dying fib6_info.
+dpll_pin_ref_sync_state_set() looks up the reference sync pin in the
+pin->ref_sync_pins xarray, which is keyed by the sync pin's id (see
+dpll_pin_ref_sync_pair_add() using xa_insert() with ref_sync_pin->id).
+The pin id to operate on is supplied by userspace via DPLL_A_PIN_ID.
 
-The flag was replaced with the FIB6_EXCEPTION_BUCKET_FLUSHED
-bit stored in nh->rt6i_exception_bucket.
+The lookup however used xa_find() with a ULONG_MAX limit, which returns
+the first present entry with an index greater than or equal to the
+requested id, not the entry stored exactly at that id. If userspace
+passes an id that is not paired as a reference sync pin, but another
+pin with a higher id is present in the xarray, xa_find() silently
+returns that wrong pin and the subsequent ref_sync_set() operates on
+it. The request only fails when the given id is larger than every
+present key.
 
-The problem is that now the bit is only set when the bucket
-is not NULL and fib6_nh_flush_exceptions() is called from
-fib6_nh_release() after fib6_ref has already reached zero.
+Use xa_load() for an exact-key lookup instead, mirroring the deletion
+path in dpll_pin_ref_sync_pair_del().
 
-If rt6_insert_exception() is called while the target fib6_info
-is being removed via fib6_purge_rt(), a new exception could be
-created successfully because rt6_flush_exceptions() no longer
-sets the bit.
-
-This creates a reference cycle between the fib6_info and the
-exception route, leaking the fib6_info, its nexthop device,
-and all per-CPU routes in fib6_nh->rt6i_pcpu, which stalls netdev
-unregistration.
-
-[   34.680602] unregister_netdevice: waiting for gre6 to become free. Usage count = 68
-[   44.920675] unregister_netdevice: waiting for gre6 to become free. Usage count = 68
-[   55.176582] unregister_netdevice: waiting for gre6 to become free. Usage count = 68
-
-Let's call fib6_drop_pcpu_from() before rt6_flush_exceptions(),
-to set fib6_destroying before rt6_exception_lock, and check
-f6i->fib6_destroying in rt6_insert_exception().
-
-Note that FIB6_EXCEPTION_BUCKET_FLUSHED logic is dead and
-we can clean it up in net-next.
-
-Fixes: cc5c073a693f ("ipv6: Move exception bucket to fib6_nh")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260918082209.2853582-1-kuniyu@google.com
+Fixes: 58256a26bfb3 ("dpll: add reference sync get/set")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://patch.msgid.link/20260917143736.526221-1-ivecera@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 2 +-
- net/ipv6/route.c   | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/dpll/dpll_netlink.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 75875e4a1edea..9fc2d2677b747 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1033,8 +1033,8 @@ static void fib6_purge_rt(struct fib6_info *rt, struct fib6_node *fn,
- 	struct fib6_table *table = rt->fib6_table;
+diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
+index eb23ee401aaef..d8917150477ee 100644
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -1059,8 +1059,7 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	unsigned long i;
+ 	int ret;
  
- 	/* Flush all cached dst in exception table */
--	rt6_flush_exceptions(rt);
- 	fib6_drop_pcpu_from(rt);
-+	rt6_flush_exceptions(rt);
- 
- 	if (rt->nh) {
- 		spin_lock(&rt->nh->lock);
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 71a38034f5ca8..c71e93e17017e 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1725,6 +1725,11 @@ static int rt6_insert_exception(struct rt6_info *nrt,
- 
- 	spin_lock_bh(&rt6_exception_lock);
- 
-+	if (f6i->fib6_destroying) {
-+		err = -ENOENT;
-+		goto out;
-+	}
-+
- 	bucket = rcu_dereference_protected(nh->rt6i_exception_bucket,
- 					  lockdep_is_held(&rt6_exception_lock));
- 	if (!bucket) {
+-	ref_sync_pin = xa_find(&pin->ref_sync_pins, &ref_sync_pin_idx,
+-			       ULONG_MAX, XA_PRESENT);
++	ref_sync_pin = xa_load(&pin->ref_sync_pins, ref_sync_pin_idx);
+ 	if (!ref_sync_pin) {
+ 		NL_SET_ERR_MSG(extack, "reference sync pin not found");
+ 		return -EINVAL;
 -- 
 2.53.0
 
