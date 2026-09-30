@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AD03750CF;
-	Wed, 30 Sep 2026 17:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955B74D2EFE;
+	Wed, 30 Sep 2026 17:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787928; cv=none; b=F5saGSRkrF8n5s7vi+LS5QL+m/I3rZHuAYy/rIs0nJDxS62Z/fqHI9ARvewS49B364mlUKK239MS6V1pZek6vqOY+nbaGd2Jm6gWcCQGul1PWeC39EbLxPIeck6VF39FdpVHP0uW37GxkmjseJDoD+ceHFW/O200Jt+BnyPrqgs=
+	t=1790787931; cv=none; b=CYP0drQhdZhmsnm23MAxxW1x2f4I0aACLphmuUt32RQAIuC59VPvl8nMhFkx5DMEvymahepAIuF6yk5IgdJRJAflzHquZmKI+wRWSVjj7s3XVvmyBOUg/zPi6IC+ZT/xvLhDiBs5Qc/R5d1rbHAcObvD5/gZrhlVrxw5+jTDQQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787928; c=relaxed/simple;
-	bh=lFtHJ6ZI/dEE13xynl8hL5YDt0ZBYZEyKiCcHIB6zr0=;
+	s=arc-20240116; t=1790787931; c=relaxed/simple;
+	bh=bMu3JJI+muM3IuiGgM/+inzKlAkMuZlLf/UUV6Qa5R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZZDs17ER5mNASsJe5DZNBzyq972kgKeHa00SwuK8OeIZnJNdTky5G+pGDB9aleeyffw9mwnpdi3J6djhwSnl3JGhJGxgmWHse7iwWkRZoI8IcVGe0V2vhjdf8tWJm4A3qUTVB49ZNxcAekokbR4Zk9qA7c7jje+pXlTiB9SDEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbUZ/iwp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iDTIPQatg695HIlZtKGRw6nKl8sMAPOJ0UJsvlR7pXoHqituu+bni5UN/CpTtL0SuoSwKnCoejolSjfD89dGiqrPCHFN26jH5wtGvjbx+TGLKdVc3wZZWNsQ3BY0S6W+dpl+PCjHG6OkDt8JUX5CULTHOpjLrhd9WAov0N5WKyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sqt6t/oT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbUZ/iwp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105841F000FF;
-	Wed, 30 Sep 2026 17:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sqt6t/oT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E199E1F000FF;
+	Wed, 30 Sep 2026 17:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787927;
-	bh=7t2bEF7hce7VcVMiNSy8Ur66LV3IOmfdB0vbda0WEvw=;
+	s=korg; t=1790787930;
+	bh=ROWSXPQ70xL2Vvke9AhWi7zEUdACRppU0x9ARA1ZLwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JbUZ/iwp4dkRZKtig7Mzc67STTLrV8A1Jqt04hz6d50+683hkXtaih15QGjhlQTgt
-	 +mOhCjEIaRt3s1isvGLRgXoQFDhmP2ka8MhTas40hQQKBzomivBSsfLrLOri5HBYly
-	 bRVumMqO1zmnJkF+5t1qd/FmR6SJEn4jjWRvjkUg=
+	b=Sqt6t/oT8GoAPb4kAveZJuRfRIi8H9g/N+MuZxYlGgeI/iDFb+ckDlPhaYHYHzK6I
+	 fwQ2C7ZzFLh73IywMWmv7miF8rm8TEZkO40mZZurAZQFD9vGScoZ/4n0XArmNpRgHO
+	 cA7DtA0crsKWPmBK0q2VX4MZT4k/uoUMKYHxJFss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 404/457] Bluetooth: ISO: release unused CIS holds after channel attach
-Date: Wed, 30 Sep 2026 17:28:29 +0200
-Message-ID: <20260930152354.712885697@linuxfoundation.org>
+Subject: [PATCH 7.2 405/457] Bluetooth: L2CAP: validate frame length before control and FCS access
+Date: Wed, 30 Sep 2026 17:28:30 +0200
+Message-ID: <20260930152354.735581773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,57 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 0fcd4dad555c96e0bd3a1b8c569f989be85c7341 upstream.
+commit 6c78a213d9070b610c7f418af2c25b66180b7e37 upstream.
 
-hci_bind_cis() and hci_connect_cis() return one hci_conn hold for the
-ISO layer.  A new channel association consumes that hold, which is
-eventually released by iso_conn_free().
+l2cap_data_rcv() unpacks either a two-byte or four-byte control field
+without first ensuring that it is present. A short ERTM or streaming-mode
+frame can therefore cause an out-of-bounds read.
 
-There are two cases where iso_chan_add() does not create an association:
-it returns success when the socket is already attached to the same
-iso_conn, and it returns -EBUSY when another socket is attached.  The
-hold returned for the current call is unused in both cases.  This occurs
-when deferred setup calls iso_connect_cis() again for its existing
-socket, or when another socket attempts to reuse the CIS.
+There is a second short-frame case when CRC16 is enabled. After the
+control field is pulled, l2cap_check_fcs() subtracts two from skb->len
+without checking it. If fewer than two bytes remain, the subtraction
+wraps; skb_trim() leaves the buffer unchanged and the subsequent FCS
+load reads past the logical end of the frame.
 
-Detect the idempotent case while the connection is locked and release
-the unused hold after iso_chan_add().  Also release it on -EBUSY.  Do not
-drop it for other errors: a newly allocated iso_conn releases the
-transferred hold when its last temporary reference is put.
+Validate that the frame contains both its control field and, when
+enabled, its FCS before either field is accessed.
 
-Fixes: 69997d50ec57 ("Bluetooth: ISO: handle bound CIS cleanup via hci_conn")
+Fixes: 1c2acffb76d4 ("Bluetooth: Add initial support for ERTM packets transfers")
+Fixes: fcc203c30d72 ("Bluetooth: Add support for FCS option to L2CAP")
 Cc: stable@vger.kernel.org
 Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/l2cap_core.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -496,6 +496,7 @@ static int iso_connect_cis(struct sock *
- 	struct hci_dev  *hdev;
- 	bdaddr_t src, dst;
- 	u8 src_type;
-+	bool already_attached;
- 	int err;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6701,9 +6701,17 @@ static int l2cap_stream_rx(struct l2cap_
+ static int l2cap_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ {
+ 	struct l2cap_ctrl *control = &bt_cb(skb)->l2cap;
+-	u16 len;
++	u16 len, min_len;
+ 	u8 event;
  
- 	lock_sock(sk);
-@@ -568,8 +569,14 @@ static int iso_connect_cis(struct sock *
- 		goto unlock;
- 	}
- 
-+	iso_conn_lock(conn);
-+	already_attached = iso_pi(sk)->conn == conn && conn->sk == sk;
-+	iso_conn_unlock(conn);
++	min_len = test_bit(FLAG_EXT_CTRL, &chan->flags) ?
++		  L2CAP_EXT_CTRL_SIZE : L2CAP_ENH_CTRL_SIZE;
++	if (chan->fcs == L2CAP_FCS_CRC16)
++		min_len += L2CAP_FCS_SIZE;
 +
- 	err = iso_chan_add(conn, sk, NULL);
- 	iso_conn_put(conn);
-+	if (already_attached || err == -EBUSY)
-+		hci_conn_drop(hcon);
- 	if (err)
- 		goto unlock;
++	if (skb->len < min_len)
++		goto drop;
++
+ 	__unpack_control(chan, skb);
  
+ 	len = skb->len;
 
 
