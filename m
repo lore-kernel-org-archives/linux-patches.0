@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76150403B1B;
-	Wed, 30 Sep 2026 19:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC665432E60;
+	Wed, 30 Sep 2026 19:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795085; cv=none; b=busmTo4+HhaxZ61v5gfyjSgDCHaBmkiWVGb282KVbyDSv1x3MQDp8NMVyvhVa9Fc4wQlnSdNDMwqIl46aOlQl9PqcnCQRuoUVYR6wU9Fgbw83jNeZa5E1R/8S+L+zdwMjJLcZLmnoW+VW9sjP+fnwJUBZt6mGaEMdY0RrB+wobc=
+	t=1790795087; cv=none; b=HecgRVmgmd+t96sXk12hl6+uy7WcpEnxI5o9dQavyQspwMn7drUZaPpMSZGFVtPGzDSjHVyumQY0VoujtvIiD/ouI4yM2ArJjTZZO30QdfB+9sXFpBaLKwcvtDwSFZuGTy+6c8ae3TOYTBboN3l7etI5tqENYwh8V3hotrwvCHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795085; c=relaxed/simple;
-	bh=8TFFAZBtunwoM8WfM32vGmlD6zsFo18py78Lm9QoXjQ=;
+	s=arc-20240116; t=1790795087; c=relaxed/simple;
+	bh=lKYPUojXtwHYFwhA/6lTE7y5K8Td+CSPLltmly4sTP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDJ+eakv4ONXQgW6jra7OIvqXnWWRLeoLkcfE0y1/UQViFv/xs9bKXB9igHDhnTmuYhTsSwDw0sLORXblekcYrZ5x4axKDYtyGuRUWBNB0d51OFNNaSqb3WSHs/RIkKPJsXVeA1rQ5yZQrLgGNUdQVVNGH7SSKGCLAsQxhZRjTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iB9PNBk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=byNJjQqJDHNl8WYh7ob13IKTswEGPH0bEzfey4oEiFNBHcSK5PM+4BHKN1LGO7OV9scPXQyGlk5vu9XK83bBhL6vHvKLVOxQ1QrNpq7zVzBwYskxBIusPYXkOWsGV14K4EOqRD2uKK4qigRQQ/DHuUAbaQG7aimOPWI8H9reyog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvBmnV2h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iB9PNBk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372261F00A0F;
-	Wed, 30 Sep 2026 19:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvBmnV2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9B51F008A6;
+	Wed, 30 Sep 2026 19:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795082;
-	bh=wZKRn6qpC6gMvnGq7pw4wpxFZA1d1nA7sp6TJvuESlk=;
+	s=korg; t=1790795085;
+	bh=fnAfE6sYMGAoYez/rzLbp2aTtvqaytoEwszXBiX6/+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2iB9PNBktoF2A7R11/L5yBCI6WAeOprKz/tGPjCWYFkU07X82rettGWeCEAWN2Nm1
-	 lFOI7M9hK6UpnznFmSuIey1EaDniwW6ZVrVo5JmusDYNnMgbz964XCqKBIg7HGhyiQ
-	 4UKrrNlnhWWnzZ47p6fDB9eQEof2m2g3V7dl9Ilo=
+	b=TvBmnV2hdc6sVfxIYMp8U3MdF9iGNh4zS6oLqoDJsoDrRMpDZiJMu4+JTXZSFJb98
+	 cuwvwv3pBggZBXnWPRU89mnJSNo2NuPTbze8mdkSYtmcggnYW8ccB40o+42s5H9DS/
+	 l0LZZelCGIAILieQ09y7vm6ddN9dVAAObXlt8JSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Guanghui Yang <3497809730@qq.com>,
-	David Sterba <dsterba@suse.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0438/1193] btrfs: restore active device pointers after failed sprout
-Date: Wed, 30 Sep 2026 17:18:42 +0200
-Message-ID: <20260930152443.918472733@linuxfoundation.org>
+Subject: [PATCH 6.6 0421/1193] ASoC: ab8500: Reset the audio block before configuring it
+Date: Wed, 30 Sep 2026 17:18:25 +0200
+Message-ID: <20260930152443.555756161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,45 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit e0b54613aabeb8e9da597f23b90c6a03d0981986 ]
+[ Upstream commit 8e839bca7793a0b03c005f4b2b0825464290d425 ]
 
-btrfs_init_new_device() switches latest_dev and possibly s_bdev from the
-seed device to the new sprout device before creating the first writable
-chunks.
+ResetAudn is active low, but the codec probe only deasserts it. It also
+clears Clk32kOut2Dis despite claiming to disable that output, and writes
+codec registers before releasing reset.
 
-If chunk creation or the subsequent sprout setup fails, the error path
-releases the new device without switching those pointers back.
-btrfs_show_devname() can then dereference the freed latest_dev and crash.
+Pulse ResetAudn before the first audio-bank access and leave the unused
+32 kHz output disabled.
 
-Restore the active device pointers to the latest seed device before
-removing and releasing the failed sprout device.
-
-Fixes: b7cb29e666fe ("btrfs: update latest_dev when we create a sprout device")
-Assisted-by: Codex:gpt-5
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-1-f85024e717e3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/ab8500-codec.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 44abd64ffd3aa..da9b08afdddda 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2864,6 +2864,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- error_sysfs:
- 	btrfs_sysfs_remove_device(device);
- 	mutex_lock(&fs_info->fs_devices->device_list_mutex);
-+	if (seeding_dev)
-+		btrfs_assign_next_active_device(device, seed_devices->latest_dev);
- 	mutex_lock(&fs_info->chunk_mutex);
- 	if (!list_empty(&device->post_commit_list))
- 		list_del_init(&device->post_commit_list);
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 42e448978c4a0..187250400613d 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -1917,18 +1917,18 @@ enum ab8500_filter {
+ static int ab8500_audio_init_audioblock(struct snd_soc_component *component)
+ {
+ 	int status;
++	u8 mask = AB8500_STW4500CTRL3_CLK32KOUT2DIS |
++		  AB8500_STW4500CTRL3_RESETAUDN;
+ 
+ 	dev_dbg(component->dev, "%s: Enter.\n", __func__);
+ 
+-	/* Reset audio-registers and disable 32kHz-clock output 2 */
+-	status = ab8500_sysctrl_write(AB8500_STW4500CTRL3,
+-				AB8500_STW4500CTRL3_CLK32KOUT2DIS |
+-					AB8500_STW4500CTRL3_RESETAUDN,
+-				AB8500_STW4500CTRL3_RESETAUDN);
++	/* Reset the audio registers and disable the unused 32 kHz output. */
++	status = ab8500_sysctrl_write(AB8500_STW4500CTRL3, mask,
++				      AB8500_STW4500CTRL3_CLK32KOUT2DIS);
+ 	if (status < 0)
+ 		return status;
+ 
+-	return 0;
++	return ab8500_sysctrl_write(AB8500_STW4500CTRL3, mask, mask);
+ }
+ 
+ static int ab8500_audio_setup_mics(struct snd_soc_component *component,
+@@ -2461,6 +2461,13 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
+ 
+ 	ab8500_codec_of_probe(dev, np, &codec_pdata);
+ 
++	status = ab8500_audio_init_audioblock(component);
++	if (status < 0) {
++		dev_err(dev, "%s: failed to init audio-block (%d)!\n",
++			__func__, status);
++		return status;
++	}
++
+ 	status = ab8500_audio_setup_mics(component, &codec_pdata.amics);
+ 	if (status < 0) {
+ 		pr_err("%s: Failed to setup mics (%d)!\n", __func__, status);
+@@ -2473,13 +2480,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
+ 		return status;
+ 	}
+ 
+-	status = ab8500_audio_init_audioblock(component);
+-	if (status < 0) {
+-		dev_err(dev, "%s: failed to init audio-block (%d)!\n",
+-			__func__, status);
+-		return status;
+-	}
+-
+ 	/* Override HW-defaults */
+ 	snd_soc_component_write(component, AB8500_ANACONF5,
+ 		      BIT(AB8500_ANACONF5_HSAUTOEN));
 -- 
 2.53.0
 
