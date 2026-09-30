@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B2F5038F7;
-	Wed, 30 Sep 2026 16:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839804E2F09;
+	Wed, 30 Sep 2026 16:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785356; cv=none; b=UcoTDR6l1UCKkgPQP7+hnnaXwv5dQhg6yMf2fzlj6AfheOUB33d38+GXCS4Ut6sfpvsoxUt4aTJJn6n2drSruvm1ccmsTb6sVKIkGaPQsLA9zI2R8Xy/QFTy4tY+4pNg4cBfrFPqU507cf3vvNQWv18zUrdafqO+bvo6LdDmZYA=
+	t=1790785364; cv=none; b=EPbQtJWB+Fv/7e0u0kXmZE6LSkAugiV+o5J9Fc5pbRwfkMOfUvmEB1p3rbyz83Pi4tACZO7WTkx/wd9FbbSCX5N92gffgZxWFtOngegMabQUucqSOrk5lhSMKXwVhphTSY0EMivS+aYQIsxZ5xKBVJC+WAdJninXFjLY3PQYjGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785356; c=relaxed/simple;
-	bh=E0C4Mz25NtfnLlL8EQpjnmhwaz4J9AtsrpGJyaU2sH8=;
+	s=arc-20240116; t=1790785364; c=relaxed/simple;
+	bh=VHvfU6rlxx+W6fxGIjha/rXaJoM0+5Y4Z7c2WDMctKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pm1Uww5eF/LHOvVrT/qfmYjBX3xkfloOG7iellvA6dzWP1baSfASAFB81v8oRTFglWCaYWanvtXNjtB9FYOH5ysteioeTvdrVW3zqfOQ5qpMhEs7MAKFypITFRNs9KoD2wiCnjNDzRbrJNsVlP9LNfLOSU1a1CRDWtg/SAEiTI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkB3bIVi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mo5apAlZOxFqq9hKDXvz2ynTT72X4rzcXOjloKcdClkdhGqZV/fozjKajdWdxtC3xAgYe716hAHcoJa9YP+Kkfbm4HV+caw4Q/wxeeWzQrycDWSbK0k/HseqmwZCzqn6XzETlccwTm3S/QmJMadU1eUEdpcM2G1zcDQoPEB7UpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA1Fjecu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkB3bIVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A84C1F000FF;
-	Wed, 30 Sep 2026 16:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA1Fjecu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58AC1F00893;
+	Wed, 30 Sep 2026 16:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785347;
-	bh=l4PtEH7EpF5iOfYMc1EwsSUx7YjQ+JfC9YSvYSBy0Jo=;
+	s=korg; t=1790785356;
+	bh=J6Mlu2/ceh9zccjmSA3QlZJmdBgpG3As/3xqeppWnRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkB3bIVi0Zf6ovpOhFCSHRdBAy9xrUJXRTFDwuRBY7Uu4N5cIKFAcuAJVOlv8ipiL
-	 rwuiF8YcE+F6ST5uU+kd/6xKC41n+OoPkfs+BElkRxHR2JaSkWr9tQCQS1EH1BDWR8
-	 u9PwSGBdWtHv6YpiCEFC1B+MsKujal2nnjNbS9dI=
+	b=IA1Fjecu1zvAjHZp2E4Zaol6ad6uYma2mCykGDH9idiG+JogkiVcgquHjDt/3LIzV
+	 C9WXpVks/kwt7HgpKWdv4Ewn8HGJ2YSvr4MEXRMgTna0c7+04rhj39Qud37lAURgV7
+	 k1/QepZu8+2O4SCQ4Ecd1q31jmVJ4iBm88L5imek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 476/982] vxlan: Pull inner IP header in vxlan_xmit_one().
-Date: Wed, 30 Sep 2026 17:20:12 +0200
-Message-ID: <20260930152427.006736633@linuxfoundation.org>
+Subject: [PATCH 6.1 479/982] net: stmmac: initialize ptp_lock at probe time
+Date: Wed, 30 Sep 2026 17:20:15 +0200
+Message-ID: <20260930152427.069290077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,56 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 31392048f55f98cb01ca709d32d06d926ab9760a ]
+[ Upstream commit 0338c68e22abd2ee509ec2e32508a50896618c32 ]
 
-Ensure the inner IP header is part of the skb's linear data before
-setting old_iph. Otherwise, on a non-linear skb, old_iph could point
-outside of the packet data.
+priv->ptp_lock is only initialized in stmmac_ptp_register(), which runs
+during __stmmac_open(). However, the lock is also used while the
+interface is down and has never been opened: tc_taprio_configure()
+invokes the PTP gettime64() callback to compute the EST base time when
+offloading a TAPRIO schedule, and stmmac_get_time() takes
+priv->ptp_lock. Using an uninitialized rwlock is undefined behaviour.
+Move the rwlock_init() to __stmmac_dvr_probe(), together with the other
+private locks, so that ptp_lock is always valid regardless of the
+interface state.
 
-Unlike classical VXLAN, which always encapsulates Ethernet packets,
-VXLAN-GPE can transport IP packets directly. In that case, we need to
-look at skb->protocol to figure out if an Ethernet header is present.
-
-Fixes: d342894c5d2f ("vxlan: virtual extensible lan")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/2aa75f6fa62ac9dbe4f16ad5ba75dd04a51d4b99.1718804000.git.gnault@redhat.com
+Fixes: b60189e0392f ("net: stmmac: Integrate EST with TAPRIO scheduler API")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260904-stmmac-fix-ptp-clock-init-v1-1-df70eb1eb04d@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: be83178bfc44 ("vxlan: initialize _md in vxlan_xmit_one()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 34cdc9b4221bc..6659a7df23a17 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2439,7 +2439,7 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
- 	struct ip_tunnel_key *pkey;
- 	struct ip_tunnel_key key;
- 	struct vxlan_dev *vxlan = netdev_priv(dev);
--	const struct iphdr *old_iph = ip_hdr(skb);
-+	const struct iphdr *old_iph;
- 	struct vxlan_metadata _md;
- 	struct vxlan_metadata *md = &_md;
- 	unsigned int pkt_len = skb->len;
-@@ -2453,8 +2453,15 @@ static void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
- 	bool use_cache;
- 	bool udp_sum = false;
- 	bool xnet = !net_eq(vxlan->net, dev_net(vxlan->dev));
-+	bool no_eth_encap;
- 	__be32 vni = 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index fb8c65c2bc0ef..5ca6157208864 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7417,6 +7417,7 @@ int stmmac_dvr_probe(struct device *device,
+ 	stmmac_napi_add(ndev);
  
-+	no_eth_encap = flags & VXLAN_F_GPE && skb->protocol != htons(ETH_P_TEB);
-+	if (!skb_vlan_inet_prepare(skb, no_eth_encap))
-+		goto drop;
-+
-+	old_iph = ip_hdr(skb);
-+
- 	info = skb_tunnel_info(skb);
- 	use_cache = ip_tunnel_dst_cache_usable(skb, info);
+ 	mutex_init(&priv->lock);
++	rwlock_init(&priv->ptp_lock);
+ 
+ 	/* If a specific clk_csr value is passed from the platform
+ 	 * this means that the CSR Clock Range selection cannot be
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index cc223fe086484..d1ad9161de3ae 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -307,7 +307,6 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+ 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
+ 	stmmac_ptp_clock_ops.n_ext_ts = priv->dma_cap.aux_snapshot_n;
+ 
+-	rwlock_init(&priv->ptp_lock);
+ 	mutex_init(&priv->aux_ts_lock);
+ 	priv->ptp_clock_ops = stmmac_ptp_clock_ops;
  
 -- 
 2.53.0
