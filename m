@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD5651B196;
-	Wed, 30 Sep 2026 18:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0534DEC26;
+	Wed, 30 Sep 2026 18:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792566; cv=none; b=GNO8cUitEsS3zqS+dOvBMjanWQZ+qsulBZEM3rAOR6RvoVKFVjf0P195YSNEhhhQ2zleci4MrDk4oxUQ9ch9XdbO9i9Il9vfTcNxnsXTe4qurLS8MjUaAnFKusWDQirQMicT6ehiaE5ChcjOzp/ZkwvxDlOTjZHRH0QYu3Cqtmo=
+	t=1790792569; cv=none; b=lqF7+wny2GRbovEgm2kvhPg7mj8ywnQ86tGD5pZIGsz8kdINn/RXKixt17uZO+b3g4IR5eA+tfe9CVcZj5B6JPVjBGcvV6FRQu/79Q8bEKOzy1kRspsNxxl/+5SttXz0KDo3oGkjJfkGOG3xrxAJGex3ZdP1muGRieLysFv/vHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792566; c=relaxed/simple;
-	bh=zfpsU7I8jIiiet8BcsjEFHIVjvQ2nUrFpj7VhH5A7WI=;
+	s=arc-20240116; t=1790792569; c=relaxed/simple;
+	bh=e96XF7Wc98aiWQZalxUht0y75/RMBr5nN7SkXynh+9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZ2WKDys7IYqRGhQULJOBHkQEY3QILhXiP1hhHBnluuOaxakFbyQZfF54sGac7O3IJILQQA4c5BU1IXlWRxLhoUw8MANxO3Mpz/J8J08DlxNNQwYMpeqNqfiMf+PvPyTyjwCEyUwcT7C04oSJ59pMZQltf9B2yS5OoK0nNKSKWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7tPCbua; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KWtB98mJhPjiAs1y3i9ZgS4+CoPAKrD0Tq/v8D1dZFurvJyeJAydPyG7A4ExFDGICOkOaz+Ckv4IDCIpPvdsvUDWsRLygLJHQvHl3UaEcZzgkEccybb6e2aYgjVmYWdPW5T2rQDVgYf/b8rZrzImObWR+gXxdbr+QGgssSwJKQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDXixsfb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7tPCbua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686471F000FF;
-	Wed, 30 Sep 2026 18:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDXixsfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4229A1F000FF;
+	Wed, 30 Sep 2026 18:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792564;
-	bh=ZOJJq9ukF5ypY3vL5b5CXa9DhFfz3GK+44AKU1kJclY=;
+	s=korg; t=1790792567;
+	bh=EGHrrDeXpxnMoFGxIL2PnjNJeZfjdUm9M0KnGXI+SLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H7tPCbuaK08vByZixg+GmIy8O04xF5kg5/aSgI+b3J0ZSkJBKtrHOR2QInXK+JTnG
-	 e23sO0hBA1T7psC1B2qTz0jXAxoHkw2HoykPzpghbtAzCEoa8Fwp5+EdAFAayyyhk0
-	 8dKDAWHjgXSExwS1F4Sb4BqbGAxJTSOg5Ux3bYKY=
+	b=TDXixsfbjiNR7pplPi70d3YnPbOwmXzgYL0bJhEavCl4Xm96aN5qoGIHOHbKKb6j6
+	 A0j6nHnHyZp5Lucv4QQLeXVdnoZo5fso9ghPp/5yFn3A11yCFlmUa8N+5PbcBwubUt
+	 4Rlyv+hhkOGVDXrkcm7wDAcDDhTdpYMqa0LAwR+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 698/752] fou: reject omitted FOU_ATTR_IPPROTO on FOU_ENCAP_DIRECT
-Date: Wed, 30 Sep 2026 17:29:28 +0200
-Message-ID: <20260930152413.337432187@linuxfoundation.org>
+	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.15 699/752] workqueue: Fix NULL current_pwq deref in flush dependency check
+Date: Wed, 30 Sep 2026 17:29:29 +0200
+Message-ID: <20260930152413.358229203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,66 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
 
-commit d22609f3d13fc5baacd92c222731b03c593401db upstream.
+commit db6365ced4d5855e321f772b240c0e473bcfcdd5 upstream.
 
-Commit 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.") added
-NLA_POLICY_MIN(NLA_U8, 1) to fou_nl_policy[FOU_ATTR_IPPROTO], which
-rejects an explicitly supplied FOU_ATTR_IPPROTO == 0 attribute with
--ERANGE.
+check_flush_dependency() uses current_wq_worker() to determine whether
+the caller is a workqueue worker and then dereferences worker->current_pwq
+to test whether the current workqueue is WQ_MEM_RECLAIM.
 
-However, FOU_ATTR_IPPROTO is an optional netlink attribute. When a user
-sends FOU_CMD_ADD with FOU_ATTR_TYPE set to FOU_ENCAP_DIRECT and omits
-FOU_ATTR_IPPROTO entirely, nla_policy validation succeeds and
-parse_nl_config() leaves cfg->protocol as 0 (from memset(cfg, 0,
-sizeof(*cfg))). fou_create() then creates a FOU_ENCAP_DIRECT socket with
-fou->protocol == 0.
+current_wq_worker() only means that %current has PF_WQ_WORKER set. A
+kworker can reach check_flush_dependency() while it is not executing a
+work item. One such path is worker_thread() acting as the pool manager,
+where create_worker() does GFP_KERNEL allocation and the allocation path
+invokes the OOM notifier. In that state worker->current_pwq is NULL
+because current_pwq is set only by process_one_work() and cleared again
+after the work function returns.
 
-In fou_udp_recv(), returning -fou->protocol to udp_queue_rcv_one_skb()
-triggers IP protocol resubmission when fou->protocol > 0, whereas
-returning 0 tells the UDP tunnel layer that the skb was consumed without
-freeing it. When fou->protocol == 0, every packet received on the socket
-returns 0 from fou_udp_recv() and leaks the sk_buff.
+[  416.760634][  T375] Call trace:
+[  416.760638][  T375]  check_flush_dependency+0x80/0x120 (P)
+[  416.760648][  T375]  __flush_work+0x98/0x224
+[  416.760657][  T375]  flush_work+0x30/0x44
+[  416.760665][  T375]  ...
+[  416.760710][  T375]  blocking_notifier_call_chain+0x58/0xa0
+[  416.760719][  T375]  out_of_memory+0xb4/0x458
+[  416.760730][  T375]  __alloc_pages_may_oom+0x11c/0x1a8
+[  416.760739][  T375]  __alloc_pages_slowpath+0x314/0x46c
+[  416.760746][  T375]  __alloc_frozen_pages_noprof+0x110/0x1a4
+[  416.760753][  T375]  new_slab+0x12c/0x484
+[  416.760759][  T375]  ___slab_alloc+0x7a8/0xc7c
+[  416.760765][  T375]  __slab_alloc+0x74/0xd8
+[  416.760772][  T375]  __kmalloc_cache_node_noprof+0x2ac/0x304
+[  416.760779][  T375]  alloc_worker+0x28/0x60
+[  416.760785][  T375]  create_worker+0x4c/0x20c
+[  416.760790][  T375]  worker_thread+0xe8/0x2b8
+[  416.760796][  T375]  kthread+0x1a8/0x200
+[  416.760805][  T375]  ret_from_fork+0x10/0x20
 
-Reject FOU_ENCAP_DIRECT when !cfg->protocol in fou_create() so that
-creating a direct encapsulation port without FOU_ATTR_IPPROTO fails with
--EINVAL while leaving FOU_CMD_DEL and FOU_CMD_GET (which share
-parse_nl_config()) unaffected.
+Guard the WQ_MEM_RECLAIM-worker warning with worker->current_pwq. If the
+kworker is not currently executing a work item, there is no current
+workqueue to diagnose with that warning. The PF_MEMALLOC warning is left
+unchanged so explicit reclaim context flushing a !WQ_MEM_RECLAIM target
+is still reported.
 
-Tested in QEMU against Linux 7.3.0-rc3 by sending a FOU_CMD_ADD Generic
-Netlink request with FOU_ATTR_PORT = 5555 and FOU_ATTR_TYPE =
-FOU_ENCAP_DIRECT while omitting FOU_ATTR_IPPROTO. On the unfixed kernel,
-FOU_CMD_ADD succeeds (err = 0), FOU_CMD_GET reports fou->type = 1 and
-fou->protocol = 0, and sending 4000 UDP packets to 127.0.0.1:5555 leaks
-all 4000 sk_buffs (SUnreclaim in /proc/meminfo grows from 41456 kB to
-59008 kB, +17552 kB); with this patch applied, FOU_CMD_ADD is rejected
-with -EINVAL (-22).
-
-Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
-Fixes: 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.")
+Fixes: fca839c00a12 ("workqueue: warn if memory reclaim tries to flush !WQ_MEM_RECLAIM workqueue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260921045920.1613098-1-benquike@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fou_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/workqueue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -610,6 +610,10 @@ static int fou_create(struct net *net, s
- 	/* Initial for fou type */
- 	switch (cfg->type) {
- 	case FOU_ENCAP_DIRECT:
-+		if (!cfg->protocol) {
-+			err = -EINVAL;
-+			goto error;
-+		}
- 		tunnel_cfg.encap_rcv = fou_udp_recv;
- 		tunnel_cfg.gro_receive = fou_gro_receive;
- 		tunnel_cfg.gro_complete = fou_gro_complete;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -2646,7 +2646,7 @@ static void check_flush_dependency(struc
+ 	WARN_ONCE(current->flags & PF_MEMALLOC,
+ 		  "workqueue: PF_MEMALLOC task %d(%s) is flushing !WQ_MEM_RECLAIM %s:%ps",
+ 		  current->pid, current->comm, target_wq->name, target_func);
+-	WARN_ONCE(worker && ((worker->current_pwq->wq->flags &
++	WARN_ONCE(worker && worker->current_pwq && ((worker->current_pwq->wq->flags &
+ 			      (WQ_MEM_RECLAIM | __WQ_LEGACY)) == WQ_MEM_RECLAIM),
+ 		  "workqueue: WQ_MEM_RECLAIM %s:%ps is flushing !WQ_MEM_RECLAIM %s:%ps",
+ 		  worker->current_pwq->wq->name, worker->current_func,
 
 
