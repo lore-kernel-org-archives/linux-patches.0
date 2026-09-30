@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8E251B19D;
-	Wed, 30 Sep 2026 17:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D3451617B;
+	Wed, 30 Sep 2026 17:24:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789063; cv=none; b=twu8vaiAIle6eMlsHfZmYo7aWW9vR6sXpRighjFdq8diFLWnlxrzlnffrKXvgX5EhrBC5SfLoC7JePbcUJU5viYccNdB694wqywNx3BzHESNiDeb+UCIQ/dk41UdLAy4wAo486YqT04e9QCj9P0dzZvK9r+HAjwi5RHYyK+DQJw=
+	t=1790789066; cv=none; b=Von4z2uU1bdvneJKRecJ16Xf8f+ru5dlRU8iLmlEFbEc6ZjDfQ8BlptT1sxMSZkZOMA9PY8qVnU1+TrHOFdRDo7JWVTd3s9FO0UMxBRG4QfxE3CfhE1+1cJRyqmQn5IZ9NVunucBz+mpwkGh4XRDnriVcRQUYiQx+Oi7pfgKCfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789063; c=relaxed/simple;
-	bh=kTA+j8DSBKDqsO+JgndUN0iXAUmOtFmjGajASbXYKj8=;
+	s=arc-20240116; t=1790789066; c=relaxed/simple;
+	bh=n9TZt2384YI2nnmIHDg5r+JjeFJjUPfsnxqKaH6fuos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cmo/ConiWCjn6dMtWhrGaIAQ4YyfdlF/9BE+sZk0ZSzkmObL5HH2zE+c21tzEBCU80vMJu/IHFq/FHq99MsHUFe8zWvGZsk87nh9wVh2cI03F/jjoIhPCxG83t+b9IhYTI8f47OwAvZk4XQJoIpJaM9l+VdLeNvHhU8CrLam3IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ru48uwBA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=esYthS2xI8IaVxjX4K1GxUuNc+R/vf3DdG4pjHerTYUl9MMzr4HmI2AYGxrI1vzn7PQd6j9P9W7sC7DZHPtNKPRADCActo9kaUX1xKokjveC2GNqRuANMS65xo94RMRoCx/AzMHRbxV8uZIM5v+cT9YUgY6ZRt9kjl9rkq9Z80s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQQANOdk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ru48uwBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823611F00898;
-	Wed, 30 Sep 2026 17:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQQANOdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612621F000FF;
+	Wed, 30 Sep 2026 17:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789062;
-	bh=7b8IdtsIwqcvEs5Xmrr1ZQRfCuYgM3e7SgIxZtFed10=;
+	s=korg; t=1790789064;
+	bh=zLmJAAZyOIsVsxBWrAgeJD9hclcMvWfQXJIlZiGYNuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ru48uwBACGvJlBp1Wz6g+NSAuybh4OkF0Gf0YUDHgY7SBHD9h0rRv/KAc+KXKJ6fD
-	 dk4maYoTqfFhV8UcQPZfiRjolSMY7nHJjUl1kr7IQTNCZycjltxom3rwSj0TDiISBx
-	 4n+5yEG9LRLHHaS9/Y3Lq2gsdnY5WcYEgyAPYsrI=
+	b=WQQANOdk1i1olbRjsbOuFncX6mZ4NvAiaAs8JKgXnTH6MlApFAPnMeFE5JBtrtvOv
+	 Ji/WhRlLAY8Th6puJ6x57MtwTtxzPaNm8inKYI1cWAhEoMTbcA6u76TlSujjzbZSum
+	 U/Ei5g8FgfiYNOYjEbuvlkSShO1duI61lcCE8I+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	"Sashiko (gemini + nipa)" <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 343/877] bpf: Skip unsettled links in link iterator
-Date: Wed, 30 Sep 2026 17:20:54 +0200
-Message-ID: <20260930152422.070961841@linuxfoundation.org>
+Subject: [PATCH 6.12 344/877] net/sched: cls_u32: fix manual hash table handle IDR aliasing
+Date: Wed, 30 Sep 2026 17:20:55 +0200
+Message-ID: <20260930152422.092649233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,60 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 50e80e2bb5e2be8515205b9c496b9640ddefa434 ]
+[ Upstream commit 0a5f5d9e94dead312d32c366b917c64e552b72f7 ]
 
-bpf_link_prime() inserts a link into link_idr before anon_inode_getfile()
-succeeds and before bpf_link_settle() publishes the ID in link->id.
-bpf_link_by_id() treats such an ID-zero link as unsettled, but the link
-iterator takes a reference without this check.
+A u32 hash table created with an explicit handle ('tc filter add ...
+handle 801: u32 divisor N') keys its IDR entry on the raw handle, while
+the destroy paths free it under handle2id(handle). The two key domains
+disagree for handles in the 0x800..0xFFF htid range:
+handle2id() folds them back into the auto-allocated id space (1..0x7FF).
 
-If anon_inode_getfile() then fails, the creator removes the ID and frees
-its still-private link directly.  The iterator is left with a dangling
-reference and its next bpf_link_put() accesses freed memory.
+A manual table therefore leaves its raw-keyed IDR entry unreachable on
+delete (a permanent leak), and its delete can drop the idr entry of an
+unrelated live auto table. A later auto allocation can then hand out a
+handle that aliases the live manual table; u32_lookup_ht() first-match
+routes lookups and TCA_U32_LINK for that htid to the wrong table.
 
-Treat ID-zero entries as transient in bpf_link_get_curr_or_next(), just as
-bpf_link_by_id() does.
+Key the divisor-path alloc on handle2id(handle) so allocation and
+removal share one key domain. A manual handle that maps onto an id
+already in use is rejected with -ENOSPC, and auto allocation skips ids
+held by live manual tables.
 
-  BUG: KASAN: slab-use-after-free in bpf_link_put
-  Write of size 8 by task exp/384
-  Call Trace:
-  bpf_link_put                    kernel/bpf/syscall.c:3372
-  bpf_link_seq_next               kernel/bpf/link_iter.c:33
-  bpf_seq_read                    kernel/bpf/bpf_iter.c:158
-  vfs_read                        fs/read_write.c:572
-  ksys_read                       fs/read_write.c:716
-  do_syscall_64                   arch/x86/entry/syscall_64.c:84
-  entry_SYSCALL_64_after_hwframe  arch/x86/entry/entry_64.S:121
-  Kernel panic - not syncing: KASAN: panic_on_warn set ...
+Conditions to recreate:
+  ip link add test0 type dummy
+  tc qdisc add dev test0 clsact
+  tc filter add dev test0 ingress protocol ip pref 1 \
+          handle 801: u32 divisor 16
+  tc filter add dev test0 ingress protocol ip pref 2 u32 divisor 16
+  tc -d filter show dev test0 ingress | grep 'fh 801:'
+  # unpatched: two live tables with handle 0x80100000 (the pref 2 root
+  # hnode is auto-allocated id 1); patched: the auto hnode takes id 2.
 
-Fixes: 9f8836127308 ("bpf: Add bpf_link iterator")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260914170206.170723-2-bestswngs@gmail.com
+Also tested with a poc with a live u32 table on the block, add/delete a manual
+table 'handle 901: u32 divisor 1' twice; unpatched, the re-add fails with
+-ENOSPC because the raw key leaked on the first delete.
+
+Fixes: 73af53d82076 ("net: sched: cls_u32: Fix u32's systematic failure to free IDR entries for hnodes.")
+Reported-by: Sashiko (gemini + nipa) <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260822222049.114526-1-jhs@mojatatu.com
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: hybris <hybris@mojatatu.ai>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-LQFE.v1.20260911041746.1@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sched/cls_u32.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 954b299f241b6..857285a48d433 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5472,7 +5472,10 @@ struct bpf_link *bpf_link_get_curr_or_next(u32 *id)
- again:
- 	link = idr_get_next(&link_idr, id);
- 	if (link) {
--		link = bpf_link_inc_not_zero(link);
-+		if (link->id)
-+			link = bpf_link_inc_not_zero(link);
-+		else
-+			link = ERR_PTR(-EAGAIN);
- 		if (IS_ERR(link)) {
- 			(*id)++;
- 			goto again;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 83a60698cc009..e5e5533f866dc 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1000,8 +1000,16 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 				return -ENOMEM;
+ 			}
+ 		} else {
+-			err = idr_alloc_u32(&tp_c->handle_idr, ht, &handle,
+-					    handle, GFP_KERNEL);
++			/* The IDR is keyed on the mapped id, and that is
++			 * what the destroy paths remove. Ask for it here,
++			 * so a manual handle colliding with the
++			 * auto-allocated id space is rejected (-ENOSPC)
++			 * instead of aliasing a future auto id.
++			 */
++			u32 id = handle2id(handle);
++
++			err = idr_alloc_u32(&tp_c->handle_idr, ht, &id, id,
++					    GFP_KERNEL);
+ 			if (err) {
+ 				kfree(ht);
+ 				return err;
 -- 
 2.53.0
 
