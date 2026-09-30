@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719103624BF;
-	Wed, 30 Sep 2026 17:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D863AEB2C;
+	Wed, 30 Sep 2026 17:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788629; cv=none; b=cQBapAydaNbnFommalH8TgMcDe4ZDnKOWvSTgmOfmm0lD47AIvsO59jQOxZctIq+Wi9STO9H1yKD3cZjcdHhCyDGjiFrFOs1L8oY42Uwdx/O2xt9nJZ+Oci094og6HVmXbtR/FLbaMAvhviXNbX8I76OHSlTDe8MfEjDbe7e7ao=
+	t=1790788632; cv=none; b=nK53dEoxK/tcW0Aj4vhZG/ci994yZ6U5VrMTLzU/AvJ1fKW7skTqLrpBLQ53tCtzBLL80osl3Zrid/EXm7MlTJ5atfBrnoJlGuXLC1pRtueHXchWbP7ifauEkKpRxep1zShHTwMZlMoo1OwCC3a7WQ2MJEoJG9E62bll2U17qQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788629; c=relaxed/simple;
-	bh=RxvNolrVr46SeykX76sLwPs/0MNgBiNuaS0I1GVVyoY=;
+	s=arc-20240116; t=1790788632; c=relaxed/simple;
+	bh=J20cJpon76rr/39U6p+5h6J4hQlufCnA6Dd0YraEmuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpkTVO6cSG85E+cuBnZTkwOOxMHQWAIVWZXW0GWMDucRRQ4NHFUundna8ULT01lGPTJn3drObP+tXCzGk6HMwqWI34ZL7zmGQMK+NxZglEQ0h+5/oqLaHstQwqX4G4f95C72dhjgZxpykRQt9mXuOqDuBAYXzFsY2m3t7+wih+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZOwSRam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gNsjp71243X8Qmq3O7p6owY552apQMp13u8ffMmXs38xVM5uloqFVVg0LWFZBwMJDmoZnHufkdqW1FRU5oqXCDPrGis0TfIxPI3klDB3tR5mYXUzkMSErCq4TSeJuJZ0cqx5MxbfPPLbZsln8ZAerXMvuYduZ4B8MYbJea51h30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkQE63vT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZOwSRam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDD91F000FF;
-	Wed, 30 Sep 2026 17:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkQE63vT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8901F000FF;
+	Wed, 30 Sep 2026 17:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788628;
-	bh=a+xjn5kVRYIhuyI6X2H/IeiBXvd/LsB5KFyvtn1hrTI=;
+	s=korg; t=1790788631;
+	bh=TS1rsF8b1ChXVNbOYIsIbfBu9rS7tSTBjhAlroE+6+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YZOwSRam6ZM9nRO7BRmnyW3oDhS2cYhubCDN/YWqvozE3LuranaNdwsgPLFd7eluz
-	 li2D17Nsn7QcoswBsZ1sI8VpN+4/L5sjwUZYOhQOgV+4cP9oRoYKsL+OPh0jx/0qbI
-	 Oogj8hk/4oU9NhE8YTQ+XwVs5z2c4LDez+FraJ6s=
+	b=JkQE63vTmbUxv45S03NAgKnYfy8ApA/JLticHIsog9mRK7Xi8KqKbG539AaVeBOaZ
+	 y+ZdnV/7XQrgYRx3SW/2I+dYFD8qXvInc6D5JLhou9xffjp2KrFNMZkg90/mZ9rKFr
+	 kIWhSTdA1mMac5LlRAs9Fc8U1o7EC0d9BVxMNUi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.12 191/877] ipv6: xfrm: use full sockets in local error paths
-Date: Wed, 30 Sep 2026 17:18:22 +0200
-Message-ID: <20260930152418.849526923@linuxfoundation.org>
+	Mark Amirkan <markdamirkan@gmail.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 192/877] net: lan743x: fix RX checksum use-after-free
+Date: Wed, 30 Sep 2026 17:18:23 +0200
+Message-ID: <20260930152418.870777420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,62 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-commit 6973a21ee73c5567f883813c8ef414774b45892f upstream.
+commit a9ce4053dc945c5372dedba5017ee675b30dc0c5 upstream.
 
-xfrm6_local_rxpmtu() and xfrm6_local_error() dereference skb->sk as if it
-always pointed at a full IPv6 socket.
+lan743x_rx_process_buffer() adds each non-first receive buffer to the
+head skb's frag_list.  On the last descriptor, lan743x_rx_trim_skb()
+linearizes the head and frees the fragment skb metadata.
 
-That is not guaranteed. TCP SYN-ACK skbs can be owned by a
-TCP_NEW_SYN_RECV request_sock while the output path itself is driven by the
-full listener. If rerouting selects an IPv6 XFRM tunnel route with a lower
-MTU, the local PMTU/error handling path can reach these callbacks with that
-mini-socket still attached to the skb.
+The checksum-success path then writes ip_summed through the local skb
+pointer, which still points to the final fragment.  This causes a
+use-after-free write when a packet spans more than one receive buffer.
 
-The callbacks then miscast the request socket as a full inet/IPv6 socket and
-can read beyond the request_sock allocation when they access inet_sock or
-ipv6_pinfo state.
+Set ip_summed on the surviving head skb instead.  Multi-buffer receive
+can occur after a live MTU increase because existing ring entries keep
+their old buffer size until they are replenished.
 
-Resolve the owner with skb_to_full_sk() in both callbacks and bail out when
-no full socket is attached. This matches the surrounding XFRM IPv6 PMTU/error
-logic, which already reasons about full sockets with skb_to_full_sk().
+A KUnit test invoking lan743x_rx_process_buffer() with a two-buffer
+packet produced a one-byte KASAN use-after-free write before this change.
+The same test passed after the change.  The driver object also builds
+with W=1.  This was not tested on physical LAN743x hardware.
 
-Fixes: dd767856a36e ("xfrm6: Don't call icmpv6_send on local error")
+Fixes: cd6910501cfd ("net: lan743x: Add support for Rx IP & TCP checksum offload")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Link: https://patch.msgid.link/20260913-b4-send-lan743x-uaf-v1-1-73d563d08ba9@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_output.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microchip/lan743x_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/xfrm6_output.c
-+++ b/net/ipv6/xfrm6_output.c
-@@ -19,7 +19,10 @@
- void xfrm6_local_rxpmtu(struct sk_buff *skb, u32 mtu)
- {
- 	struct flowi6 fl6;
--	struct sock *sk = skb->sk;
-+	struct sock *sk = skb_to_full_sk(skb);
-+
-+	if (!sk)
-+		return;
- 
- 	fl6.flowi6_oif = sk->sk_bound_dev_if;
- 	fl6.daddr = ipv6_hdr(skb)->daddr;
-@@ -31,7 +34,10 @@ void xfrm6_local_error(struct sk_buff *s
- {
- 	struct flowi6 fl6;
- 	const struct ipv6hdr *hdr;
--	struct sock *sk = skb->sk;
-+	struct sock *sk = skb_to_full_sk(skb);
-+
-+	if (!sk)
-+		return;
- 
- 	hdr = skb->encapsulation ? inner_ipv6_hdr(skb) : ipv6_hdr(skb);
- 	fl6.fl6_dport = inet_sk(sk)->inet_dport;
+--- a/drivers/net/ethernet/microchip/lan743x_main.c
++++ b/drivers/net/ethernet/microchip/lan743x_main.c
+@@ -2587,7 +2587,7 @@ process_extension:
+ 							rx->adapter->netdev);
+ 		if (rx->adapter->netdev->features & NETIF_F_RXCSUM) {
+ 			if (!is_ice && !is_tce && !is_icsm)
+-				skb->ip_summed = CHECKSUM_UNNECESSARY;
++				rx->skb_head->ip_summed = CHECKSUM_UNNECESSARY;
+ 		}
+ 		netdev_dbg(netdev, "sending %d byte frame to OS",
+ 			   rx->skb_head->len);
 
 
