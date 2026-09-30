@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9A04BD348;
-	Wed, 30 Sep 2026 15:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24D2371D11;
+	Wed, 30 Sep 2026 15:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783983; cv=none; b=YWijfuwVET3HU3kz3sWUL3pMqwHWN4Y76zygM5RBoJP7L+yONtZ2ZfSnr+TwQWPx/A9LCtaG3cCVr8E7atqHVg+qdPrmyiVIkwPdzX/bVNqucsnEcZnaB/1QrxJwWYYn3HV844KeTXLeNtrbEQgh+XtCor19zX5On/DWACbXmxE=
+	t=1790783985; cv=none; b=oyjtc032wWDEtH9XTDOvVdD+MZ3h7eNY2aqAkOGH81CRZnTz+LAln2nv2skbF85GSnZmoQf7jNzpctN0XcTXQK2JUvQQmp/wy8J7/wLYw6LKEsOy6RbcAHfMhhhUvSc2Neq4//RwXude7EHdYZzhWB/3znBs0laSTrC57iYfYW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783983; c=relaxed/simple;
-	bh=iAw12MLNdCBcW0phPyLTLjmUrF0PXZFSAJGLOKSH9Fo=;
+	s=arc-20240116; t=1790783985; c=relaxed/simple;
+	bh=IRmKWUOCOoMRsFCoavcqYfoCJwwZgbH6mIs4xgHn5e0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlUsYAaurmxvC5WU96E8XGZAuZCiQGWr+xOoh+0HyI6HvnQx/Xk5GNM13ssXq55Q50rtd4zQJg8nP/DrWxFcWlu+lG2sjrAjEVFHh4ispDuBzfBdYKZYj8cNzx9U//qj+aWVk39J+3aS7BYz5+vz6+S1gIDqInRo6DRmu5kgAm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zooI+uKm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j+zb9ub3HPQqToYWu2vcJjmJDiQV2jHZKfsXgfsSDdNNTEVlPchx9zSFisDV7lPtzTszpwrrPgqO+3TbAcWGvfZf4AcShicxS4tAHO3c4DU54gP2GJ4Qhbrxyl1GWbLTGjFjCOu3VYMeVv+Uul62PYBCDvXPmh2jg/tqikDLVNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4IORJ0L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zooI+uKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D79C1F00898;
-	Wed, 30 Sep 2026 15:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4IORJ0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7741F00899;
+	Wed, 30 Sep 2026 15:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783977;
-	bh=WNOpiqzyxaz9DKbQG2yL1A/k4gjPmLRt8uPWXiWjDAY=;
+	s=korg; t=1790783980;
+	bh=Y8K4L3nNqbqoFf+eNdl2OE/6HT+EDz+R0GkGT2eXksU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zooI+uKmDvhBeGNcmBi2LYPo2+JipA2+SgCFAYoXrUJSbvwqSHG7VZmsVHXYISwvo
-	 snbUteE8bKIybTYowViWIWZT1pPIb5y1Lw9y3qHblL06pBpGFfWeEQ0FgO8XWmaZNQ
-	 vE4aP02tYXUh5PRkRENz+DuRMpMJmI9VzCSOUzwY=
+	b=o4IORJ0L8qZ5k9xajU/ihsezjpCRRVFLprsNFG8JxRYM7VAkrRBOP2DVdfSDcYdgu
+	 7w6aL2O886+ZUb7jD2/iQOZEppa94HDFH0MMi3tK4+2yZPhXDrmp11qWcdn1Zs/Sl0
+	 OifwIKgqw9qKPQO+Lie2LCN63FImvbbvnOGG9Y80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.10 587/595] s390/cio: Fix NULL pointer dereference in ccw_device_get_util_str()
-Date: Wed, 30 Sep 2026 17:28:00 +0200
-Message-ID: <20260930152400.359920807@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 588/595] Bluetooth: hci_sock: validate event length before filtering
+Date: Wed, 30 Sep 2026 17:28:01 +0200
+Message-ID: <20260930152400.383081250@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,36 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 5b76268dac968612f7283d59b539036de955b7d9 upstream.
+commit b0a6cf99afd57a39598b1beca0e86ef5004980de upstream.
 
-The channel path registry entry associated with a CHPID may be removed
-while the subchannel's PMCW still references that CHPID. In this case,
-chpid_to_chp() can return NULL, leading to a NULL pointer dereference.
+is_filtered_packet() reads the event code from skb->data[0] without first
+checking that the skb is nonempty. When an opcode filter is configured,
+it also reads the command opcode at offsets 3 or 4 without checking that
+a Command Complete or Command Status event is long enough.
 
-Add the missing NULL check before dereferencing the returned pointer.
+hci_send_to_sock() invokes the filter before hci_event_packet() validates
+the event header. A malformed event supplied by a controller or a vhci
+device can therefore cause an out-of-bounds read.
 
-Fixes: 199652309a4d ("s390/cio: add helper to query utility strings per given ccw device")
+Keep the unmasked event code for the opcode checks. The masked value is
+needed for the 64-bit event bitmap, but using it to identify command events
+aliases event codes above 0x3f. In particular, Synchronous Train Complete
+(0x4f) was treated as Command Status (0x0f) even though its payload has no
+opcode.
+
+Reject actual command events that are too short for the field being
+inspected. A truncated command event cannot match a configured opcode.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/device_ops.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_sock.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/cio/device_ops.c
-+++ b/drivers/s390/cio/device_ops.c
-@@ -501,6 +501,8 @@ u8 *ccw_device_get_util_str(struct ccw_d
- 	chp_id_init(&chpid);
- 	chpid.id = sch->schib.pmcw.chpid[chp_idx];
- 	chp = chpid_to_chp(chpid);
-+	if (!chp)
-+		return NULL;
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -165,6 +165,7 @@ static bool is_filtered_packet(struct so
+ {
+ 	struct hci_filter *flt;
+ 	int flt_type, flt_event;
++	u8 event;
  
- 	util_str = kmalloc(sizeof(chp->desc_fmt3.util_str), GFP_KERNEL);
- 	if (!util_str)
+ 	/* Apply filter */
+ 	flt = &hci_pi(sk)->filter;
+@@ -178,7 +179,11 @@ static bool is_filtered_packet(struct so
+ 	if (hci_skb_pkt_type(skb) != HCI_EVENT_PKT)
+ 		return false;
+ 
+-	flt_event = (*(__u8 *)skb->data & HCI_FLT_EVENT_BITS);
++	if (skb->len < 1)
++		return true;
++
++	event = *(__u8 *)skb->data;
++	flt_event = event & HCI_FLT_EVENT_BITS;
+ 
+ 	if (!hci_test_bit(flt_event, &flt->event_mask))
+ 		return true;
+@@ -187,11 +192,17 @@ static bool is_filtered_packet(struct so
+ 	if (!flt->opcode)
+ 		return false;
+ 
+-	if (flt_event == HCI_EV_CMD_COMPLETE &&
++	if (event == HCI_EV_CMD_COMPLETE && skb->len < 5)
++		return true;
++
++	if (event == HCI_EV_CMD_COMPLETE &&
+ 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 3)))
+ 		return true;
+ 
+-	if (flt_event == HCI_EV_CMD_STATUS &&
++	if (event == HCI_EV_CMD_STATUS && skb->len < 6)
++		return true;
++
++	if (event == HCI_EV_CMD_STATUS &&
+ 	    flt->opcode != get_unaligned((__le16 *)(skb->data + 4)))
+ 		return true;
+ 
 
 
