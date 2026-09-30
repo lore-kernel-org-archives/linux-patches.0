@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60A13D8900;
-	Wed, 30 Sep 2026 19:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0D33DA7D9;
+	Wed, 30 Sep 2026 19:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795704; cv=none; b=ctWn1fYQ36Y1Wn9d/nVH4ncSZ1nQgThM96S1LuGB2PeU9aqBM4m0bqluejkVUaHhQua7BhvffLb7YkG1O/FABO4hrrR8mQ79yG70INPIotc+ID0OB3V7KiPP3Syq71p/PInv94jIT1v0VWs4HzzvLSjwa+QBkAuT1iYStDDHOlA=
+	t=1790795706; cv=none; b=nF+NoB61Tr2VhxLDdoRU3vgx8ZfdMM9GgJlFI0oJGfTk9uie2nPLbrM6idjuIZfb1Tx5++svMZZHRq+NILFDhXvuUfrIV+0z2hQEseBsL5YT36V29AZZFCZpkKeQYskMR2vr3UzpbpLiqO9/Z4jpaJ3rNPgkRerFbf5FgeOBHiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795704; c=relaxed/simple;
-	bh=WkfE9MMsstKvRKfUOvlMcNpTNsP0xe2ca4FNHm2QpZI=;
+	s=arc-20240116; t=1790795706; c=relaxed/simple;
+	bh=l0c331cgOfLoKSm/gSWewkXES9PXEBIykLlLpAo9ioA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSkK4n2Iop0Y8/kzSuW95dTjSvDcMavMTtIrbI/xYzdmmnp4R4uoKPbrLHujNMeP+plTfL/Cn0yc5K2f7F4hZp/6dtsjfwD+uYaaRrixm4yQ3qm8K2cYOSlTi2LyVpszKqItwZzgFGCDDfO/TOpNq4PUbIF1sr7pz0D8m1iQiF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IqSNCmCS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HWF4uDSIzhyCie8L45+oQad2dhRPqdGlWvgcWw8TpsOZYs6h24az7oIfqgDDdzM7zKn4vl8w/ZwxSwX9ox/ej+hFWBKjysj6gYfx9nOksJPUS5HhPwdMKfFXO80360TkQ05o7revtj+uNBwOkEkaL9xgsGxXECW3M80PrFsNK4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXEVxO+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IqSNCmCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C7D1F000FF;
-	Wed, 30 Sep 2026 19:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXEVxO+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D5C1F000FF;
+	Wed, 30 Sep 2026 19:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795702;
-	bh=YnqKEBdA/Iy1LuFkSpIbnIrjffjKIO78RspUnh8j+oc=;
+	s=korg; t=1790795705;
+	bh=IYQcUD3nV7jPi2XwYIQksLhRJZYSNF6PB+gGvRGZB70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IqSNCmCSU6gaLeciUd4/J1K/EvOPjzKm1nBdyNgLR/i9G1GzapTDWPKsksuGbiR6W
-	 9FNZBE9qmWeklkIDUCu1C9YQp7bNyQtgVqbmbxQBLV84rufJCGzmh2p4xMmDEyh0kh
-	 YfrwJBmIarEDDWFTQtYxkWdyA1hueb16v064KllY=
+	b=pXEVxO+JBTKQBh+TmXF/sk4j+dRm3HeaR2QsRUcB02EmjusqFZ+1Pyt9oIC1OaAvN
+	 yIU2Tx7s3PxDLLjixq0RxzzFBIkrKE0flszpEIRTJgDFWNAOyBPAu86DBzu13Nz8Z0
+	 joiJzFGkoGbmhXlwAF2aKc5pCf/x/x0yW2l2cMUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0652/1193] media: verisilicon: rockchip: guard VPU981 AV1 divisor and tile buffer
-Date: Wed, 30 Sep 2026 17:22:16 +0200
-Message-ID: <20260930152448.732897163@linuxfoundation.org>
+Subject: [PATCH 6.6 0653/1193] media: verisilicon: rockchip: reject AV1 frames exceeding the tile capacity
+Date: Wed, 30 Sep 2026 17:22:17 +0200
+Message-ID: <20260930152448.754319418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,17 +53,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit b84f6533a8ed2fd7b282fc7ab4b8efadc745a89c upstream.
+commit 367db8b23c26a913d76ed70457bbcd781c422b49 upstream.
 
-rockchip_vpu981_av1_dec_set_tile_info() divides context_update_tile_id by
-tile_info->tile_cols and writes one descriptor per tile into the tile_info
-DMA buffer, which holds AV1_MAX_TILES entries; tile_cols and tile_rows
-come from the bitstream. Guard the division against a zero tile_cols by
-initialising the context-update values to zero and computing them only
-when tile_cols is non-zero, and stop the descriptor writes once the
-tile_info buffer is full. The tile geometry written to the hardware
-registers is left unmodified; the per-dimension and total tile bounds are
-enforced by the control validation.
+rockchip_vpu981_av1_dec_set_tile_info() indexes the tile group entry
+array by tile1 * tile_cols + tile0, reading up to tile_cols * tile_rows
+entries, lays out one descriptor per tile in the AV1_MAX_TILES tile_info
+buffer, and programs the real tile_cols / tile_rows into the hardware.
+
+The tile group entry control is a dynamic array sized to the number of
+entries userspace submitted, independent of tile_cols / tile_rows, so a
+frame that claims more tiles than entries reads past the array. A frame
+that claims more than AV1_MAX_TILES tiles also leaves the hardware
+programmed for more tiles than the descriptor buffer holds.
+
+Reject both in prepare_run(): tile_cols * tile_rows must not exceed the
+submitted entry count or AV1_MAX_TILES. The entry count is read via
+v4l2_ctrl_find() (ctrl->elems). This mirrors the bound the mediatek AV1
+decoder already enforces.
 
 Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
 Assisted-by: Claude:claude-opus-4-8
@@ -73,67 +79,53 @@ Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |   32 ++++++++--
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |   25 ++++++++--
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
 --- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
 +++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -577,16 +577,30 @@ static void rockchip_vpu981_av1_dec_set_
- 	const struct v4l2_av1_tile_info *tile_info = &ctrls->frame->tile_info;
- 	const struct v4l2_ctrl_av1_tile_group_entry *group_entry =
- 	    ctrls->tile_group_entry;
--	int context_update_y =
--	    tile_info->context_update_tile_id / tile_info->tile_cols;
--	int context_update_x =
--	    tile_info->context_update_tile_id % tile_info->tile_cols;
--	int context_update_tile_id =
--	    context_update_x * tile_info->tile_rows + context_update_y;
-+	int context_update_y = 0;
-+	int context_update_x = 0;
-+	int context_update_tile_id = 0;
- 	u8 *dst = av1_dec->tile_info.cpu;
-+	u8 *dst_end = dst + av1_dec->tile_info.size;
- 	struct hantro_dev *vpu = ctx->dev;
- 	int tile0, tile1;
+@@ -430,20 +430,39 @@ static int rockchip_vpu981_av1_dec_prepa
+ {
+ 	struct hantro_av1_dec_hw_ctx *av1_dec = &ctx->av1_dec;
+ 	struct hantro_av1_dec_ctrls *ctrls = &av1_dec->ctrls;
++	const struct v4l2_av1_tile_info *tile_info;
++	struct v4l2_ctrl *tge;
++	u32 num_tiles;
+ 
+ 	ctrls->sequence = hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_SEQUENCE);
+ 	if (WARN_ON(!ctrls->sequence))
+ 		return -EINVAL;
+ 
+-	ctrls->tile_group_entry =
+-	    hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_TILE_GROUP_ENTRY);
+-	if (WARN_ON(!ctrls->tile_group_entry))
++	tge = v4l2_ctrl_find(&ctx->ctrl_handler,
++			     V4L2_CID_STATELESS_AV1_TILE_GROUP_ENTRY);
++	if (WARN_ON(!tge))
+ 		return -EINVAL;
++	ctrls->tile_group_entry = tge->p_cur.p;
+ 
+ 	ctrls->frame = hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_FRAME);
+ 	if (WARN_ON(!ctrls->frame))
+ 		return -EINVAL;
  
 +	/*
-+	 * tile_cols and tile_rows are bounded by the V4L2 control validation
-+	 * (V4L2_AV1_MAX_TILE_{COLS,ROWS} and V4L2_AV1_MAX_TILE_COUNT). Guard
-+	 * the divisor here, and keep the descriptor writes within the
-+	 * AV1_MAX_TILES tile_info buffer below; the register values use the
-+	 * unmodified tile geometry.
++	 * rockchip_vpu981_av1_dec_set_tile_info() indexes the tile group
++	 * entry array by tile1 * tile_cols + tile0, so it reads up to
++	 * tile_cols * tile_rows entries, and lays out one descriptor per tile
++	 * in the AV1_MAX_TILES tile_info buffer while programming the real
++	 * tile geometry into the hardware. Reject a frame that claims more
++	 * tiles than userspace submitted, or more than the hardware tile
++	 * buffer holds, so the read stays in bounds and the programmed
++	 * geometry matches the descriptors written.
 +	 */
-+	if (tile_info->tile_cols) {
-+		context_update_y =
-+		    tile_info->context_update_tile_id / tile_info->tile_cols;
-+		context_update_x =
-+		    tile_info->context_update_tile_id % tile_info->tile_cols;
-+		context_update_tile_id =
-+		    context_update_x * tile_info->tile_rows + context_update_y;
-+	}
++	tile_info = &ctrls->frame->tile_info;
++	num_tiles = (u32)tile_info->tile_cols * tile_info->tile_rows;
++	if (num_tiles > tge->elems || num_tiles > AV1_MAX_TILES)
++		return -EINVAL;
 +
- 	memset(dst, 0, av1_dec->tile_info.size);
+ 	ctrls->film_grain =
+ 	    hantro_get_ctrl(ctx, V4L2_CID_STATELESS_AV1_FILM_GRAIN);
  
- 	for (tile0 = 0; tile0 < tile_info->tile_cols; tile0++) {
-@@ -597,6 +611,10 @@ static void rockchip_vpu981_av1_dec_set_
- 			    tile_info->height_in_sbs_minus_1[tile1] + 1;
- 			u32 x0 = tile_info->width_in_sbs_minus_1[tile0] + 1;
- 
-+			/* Stop once the tile_info descriptor buffer is full. */
-+			if (dst + 16 > dst_end)
-+				break;
-+
- 			/* tile size in SB units (width,height) */
- 			*dst++ = x0;
- 			*dst++ = 0;
-@@ -621,6 +639,8 @@ static void rockchip_vpu981_av1_dec_set_
- 			*dst++ = (end >> 16) & 255;
- 			*dst++ = (end >> 24) & 255;
- 		}
-+		if (dst + 16 > dst_end)
-+			break;
- 	}
- 
- 	hantro_reg_write(vpu, &av1_multicore_expect_context_update, !!(context_update_x == 0));
 
 
