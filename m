@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9388651AEEE;
-	Wed, 30 Sep 2026 17:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E699501285;
+	Wed, 30 Sep 2026 17:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789338; cv=none; b=BiANbGQZwA2ULgGXkPGdcnUK+gGwcklI0UXW1Ilfn+X1RnnhNNP4g0cSqBd5Y+TTCt6ekjpoplu3DhZWUDUgMcPJLiAHpxIN+lUyDGdbS7bb5phvrS+gLo07hgwgrpfOKMYzLsNiQKIeBTvAeYOfYoD45pbUXKnMAOQFWO5yRtE=
+	t=1790789341; cv=none; b=FPOcT7orqqd28I/kHG5QdqZkD8KAhXU2EeYUfJClOr9slvPgsSjetSpDkXkx3LWsfWrmkx7ojFFK3GH6Ll4eq3eK37t+u9T3ICVRMyrso8ICnFntEwRGtGz6PcYZGg60BvwuOy2PpPaXCZlt+IV+BJrjCHsxQVJemfQzfbLUmkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789338; c=relaxed/simple;
-	bh=tLHi5H4VAxVegJHTk+bvjIx+UZtKPwzIc6eipQSB3/w=;
+	s=arc-20240116; t=1790789341; c=relaxed/simple;
+	bh=vOyWTzL73bkXTVvyuOtfFYyfda5CWpDoqJhC3pkI7kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTwlL78E4Edu+dN/tY05JrU2uBNXdMnvk5QREJuKUwAKZvX/WrbnZYjzz2aqvgLaeYmWQFNSz+x70hvaWZ4e5wtP0jtlZ5R/nMeRU9dICr9spT4vtgqLNyON4XiHA/RKMlhl2Qt0xsPXLVMEUfYZY1AgdbZIDHgnj28rHKLWFPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsVbGCE4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=biOIoYnQXaqvlaB/hYepQUJhZ19SbaexJEeAqb2Nz4Aph/t9338i57KkeU42LbBn+kIcjS9NaBFKQmJk5qiUjSQsMzrUXEYXdDeuyHozOmsiY0p2tbG72O/C6LGFLG1ULRLIBwj8Fo0bnD3m+VHq6kWpX1XGlheMKIJiifUvH2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlFcM9bF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsVbGCE4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4951F000FF;
-	Wed, 30 Sep 2026 17:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlFcM9bF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96751F000FF;
+	Wed, 30 Sep 2026 17:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789337;
-	bh=qgY7ggTPMqZd6mGJdm0CALwKUXAGJai/5ZFN3AoeLI4=;
+	s=korg; t=1790789340;
+	bh=YejwSgJrkUw4qYgj1Ju7L+wCkiF6KznSiKA0q9rPmcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tsVbGCE4+FDSo2dMRWUq3erd+YzinatNluTwH0OVbCGgAEzhABXxD8u7YE6qMdSLX
-	 rYkci+82vKH/eKt1HDF7LyByE2aAObtK66/287stL9Ouapuy1R2Zpi7m17fW6meRaE
-	 QlRqH/ex3OvOYfgOJmnEBefI/T9FbUO9gKuCcuL4=
+	b=QlFcM9bFfHjvcgoDDlNPj+pWgxB5vrvSoFHGddOQOFePF7oxNIiN6MbZgyk0vZRNZ
+	 EPlT9i7OzY7CDsKNnVfwP4J5h/yG5l6tZPWysAfDBhDnguKZUiax5q47/7LcdsejfJ
+	 XL6LhqdHy8hy7xfpny/dO2ZnlBCnv+BBFDUHbUWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 440/877] nfp: hold IPsec RX state under the XArray lock
-Date: Wed, 30 Sep 2026 17:22:31 +0200
-Message-ID: <20260930152424.177278704@linuxfoundation.org>
+Subject: [PATCH 6.12 441/877] net/smc: fix UAF on lgr list traversal in smcr_port_err()
+Date: Wed, 30 Sep 2026 17:22:32 +0200
+Message-ID: <20260930152424.198856472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,53 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-[ Upstream commit 1a983a4e14c635c40354be110cd9a1a5c94e01e6 ]
+[ Upstream commit 61cb282fe97b3b0ba32ca09417a693162bf4ae3f ]
 
-nfp_net_ipsec_rx() drops the XArray lock before taking a reference to the
-xfrm_state it found. The delete path can erase the entry and drop the last
-state reference in that interval. RX can then try to increment a zero
-refcount after the state has been queued for destruction.
+smcr_port_err() traverses smc_lgr_list.list without holding
+smc_lgr_list.lock, allowing a concurrent smc_lgr_terminate_sched()
+to free an lgr while it is still being dereferenced.
 
-The driver queues firmware invalidation asynchronously; the delete path
-does not wait for the command to complete or drain pending RX processing.
+Hold smc_lgr_list.lock across the traversal. Update
+smc_ib_gid_check() to call smcr_port_err() after releasing the lock.
 
-The XFRM garbage collector waits for an RCU grace period before freeing
-the state. That delays reclamation but does not make acquiring a reference
-from zero valid.
-
-Take the xfrm_state reference before releasing the XArray lock so
-xa_erase() cannot run between lookup and reference acquisition.
-
-Fixes: 57f273adbcd4 ("nfp: add framework to support ipsec offloading")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Link: https://patch.msgid.link/179001455912.44752.17153022439349797877.idr-bug-92@gmail.com
+Fixes: 541afa10c126 ("net/smc: add smcr_port_err() and smcr_link_down() processing")
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260922073149.474762-1-sidraya@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/crypto/ipsec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/smc/smc_core.c |  2 ++
+ net/smc/smc_ib.c   | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c b/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
-index 515069d5637b0..3925a00aeaf7e 100644
---- a/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
-+++ b/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
-@@ -637,11 +637,12 @@ int nfp_net_ipsec_rx(struct nfp_meta_parsed *meta, struct sk_buff *skb)
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index ed0027ba66c75..e0bf348bd812e 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1830,6 +1830,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 	struct smc_link_group *lgr, *n;
+ 	int i;
  
- 	xa_lock(&nn->xa_ipsec);
- 	x = xa_load(&nn->xa_ipsec, saidx);
-+	if (x)
-+		xfrm_state_hold(x);
- 	xa_unlock(&nn->xa_ipsec);
- 	if (!x)
- 		return -EINVAL;
++	spin_lock_bh(&smc_lgr_list.lock);
+ 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
+ 		if (strncmp(smcibdev->pnetid[ibport - 1], lgr->pnet_id,
+ 			    SMC_MAX_PNETID_LEN))
+@@ -1844,6 +1845,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 				smcr_link_down_cond_sched(lnk);
+ 		}
+ 	}
++	spin_unlock_bh(&smc_lgr_list.lock);
+ }
  
--	xfrm_state_hold(x);
- 	sp->xvec[sp->len++] = x;
- 	sp->olen++;
- 	xo = xfrm_offload(skb);
+ static void smc_link_down_work(struct work_struct *work)
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index fc07fc4ed9986..0cca7b9ca044e 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -333,6 +333,7 @@ static bool smc_ib_check_link_gid(u8 gid[SMC_GID_SIZE], bool smcrv2,
+ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ {
+ 	struct smc_link_group *lgr;
++	bool stale_gid = false;
+ 	int i;
+ 
+ 	spin_lock_bh(&smc_lgr_list.lock);
+@@ -348,11 +349,16 @@ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ 				continue;
+ 			if (!smc_ib_check_link_gid(lgr->lnk[i].gid,
+ 						   lgr->smc_version == SMC_V2,
+-						   smcibdev, ibport))
+-				smcr_port_err(smcibdev, ibport);
++						   smcibdev, ibport)) {
++				stale_gid = true;
++				goto out;
++			}
+ 		}
+ 	}
++out:
+ 	spin_unlock_bh(&smc_lgr_list.lock);
++	if (stale_gid)
++		smcr_port_err(smcibdev, ibport);
+ }
+ 
+ static int smc_ib_remember_port_attr(struct smc_ib_device *smcibdev, u8 ibport)
 -- 
 2.53.0
 
