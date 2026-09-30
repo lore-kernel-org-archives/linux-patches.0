@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D08371049;
-	Wed, 30 Sep 2026 19:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B22C37A825;
+	Wed, 30 Sep 2026 19:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796778; cv=none; b=QunlFMMzfD/QTP5f1Iw6QTUXOSsAFNbVPmJomTeqw4HcUJ5KqRB2nRwumUmprmfapJfVNR0Hch/1yQD/x11Ol/oBfFJSBq+ZG17mlKGJUDXpIpaToWpoxjfQIBZQiEOuI507WtxAI+PiLHydIMt7spmbUiMqyiF1VTacGC/ZPjY=
+	t=1790796781; cv=none; b=aMc9okysELe6Nctj5Z5C8kuGvC4RMWAL0AEFD3qZjzVfGErjRaU8CIfpi9YQ0fJOj77x4vC6UQsUZUNtjAZizRN63NxwANNUOQKUsCloHTFpGlD1qeW5/k8BG2HEfT6cNNXRIXPMWOnlJJode8E+vf5IiZCpk+lLG16a9tzVIl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796778; c=relaxed/simple;
-	bh=ake43x7xUETFncxMe90ZernmFnt4JwjPzi61VLuk6Ag=;
+	s=arc-20240116; t=1790796781; c=relaxed/simple;
+	bh=f7Hu7rrIfvV9XvGbFn+mRlAW+A/LEBVg1LwaGdmiVlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JOPjocXfSnQbu0UtrClWZkmAZzrADQnoenhkM+hnjEp0IMMM2HNjVW0OKRghq+Dirhg83MV4KOzrXFpEBdpNE2W4FAT6Iy8wWINXCDGTv+DrEPn2x4lwKw/VWP23TFW6CRdFx9Q1QqCf0AzE1xYuvWpqegwUSLWfInyBhjif8ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSH2JMRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PYI7/P2WDsyqYasSBAb9wSt0Ezv5EquOaShNyO93Kb8ES6jiOarNW5ADXWU5C7QqSV6j55Px5PvPUtv3xDBOkjy9U3WVhy84VIb+Vdlam1TMFNytyMz9YiSMfwUPl8lp8S+E9odDRRPPt0AQ3NDMQVuvv+hqsCuKfzBbUYXT+Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CK16opKd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSH2JMRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14481F000FF;
-	Wed, 30 Sep 2026 19:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CK16opKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B601F1F000FF;
+	Wed, 30 Sep 2026 19:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796777;
-	bh=GSTCWkdzeht47wBOV+23eB6iVOWdTMRzRBy5LKLYYM4=;
+	s=korg; t=1790796780;
+	bh=i8H1iwPjqXUXqFSzkB2fvBLXQG0Ie8q5I/uGKhgWsWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MSH2JMRNU3qYBlllAaHg4hB5Zu38wZjNpOUdwxq61eiFo9e/yTx55C6jsrVEcq7TG
-	 XIdH/knEIGnaXygVKNLpOdeownd7seJ5aF1X4wBmXJJdH0hq7krY39D7DXNXlhnnpU
-	 0BcaRmv98tl/bgRsZOsrsig5TKCNVxZO4tCE/wPk=
+	b=CK16opKdn+doRW+CQBPD6ocT/MLBvJxJxnnq6f8dSpnPB09U3nDVQ3tkNwPTulV0N
+	 xUNN1EG5i817XbX+CW9axNoHYwTMA2hfmZYDGclhYQIh1zZNhSB2gNTwJDif+6qGLp
+	 6mQjsZYXN92DXqWQItDpGbcu+3moYVBlz5asoTLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1032/1193] net: stmmac: selftests: Support running selftests on DSA conduits
-Date: Wed, 30 Sep 2026 17:28:36 +0200
-Message-ID: <20260930152457.156559488@linuxfoundation.org>
+Subject: [PATCH 6.6 1033/1193] net: stmmac: selftests: Check the dev->features for S-TAG offload testing
+Date: Wed, 30 Sep 2026 17:28:37 +0200
+Message-ID: <20260930152457.177413730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,256 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit d68acbf93531abdb5b02b21994cd4c15a3c95b42 ]
+[ Upstream commit ba804b23d76d278ee475b8427fa7c5623ce5e270 ]
 
-Most stmmac selftests rely on dev_add_pack() to add custom handlers,
-that validate the packets sent to ourselves through MAC loopback.
+The S-TAG offload insertion incorrectly checks the dvlan (double vlan)
+DMA cap, which is different than S-TAG support. Use
+NETIF_F_HW_VLAN_STAG_TX to check if the feature is supported instead.
 
-However, when the stmmac-driven interface is a DSA CPU conduit, all
-frames that are received have ETH_P_XDSA as a protocol, even though they
-don't actually contain any tag as they come from the loopback and not
-the switch.
-
-This will prevent any incoming packet to match our packet handlers.
-
-Let's register a ETH_P_ALL packet handler when we detect that we're a
-DSA conduit, and use a proxy packet handler to filter the h_proto.
-
-As this allows external frames to be received through our .func(), the
-packet handler is added after the dev->addr field is populated in our
-selftest attributes.
-
-Note that we may still receive incoming packets from the switch, but
-these frames shouldn't interfere with the very specific frames used for
-selftests, and stmmac selftests in general aren't safe against external
-traffic interferences.
-
-This was validated on a WPQ864 devkit for IPQ8064, that has the SoC
-connected to a QCA8k switch.
-
-The ARP offload's packet handler is left alone, this feature is just not
-implemented in stmmac and due for removal.
+Note that this flag isn't set in stmmac yet, but contrary to ARP
+offload, this is a feature that has a chance to get there eventually so
+let's leave the selftest here for now. It'll report -EOPNOTSUPP in the
+meantime.
 
 Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260917215339.2022523-2-maxime.chevallier@bootlin.com
+Link: https://patch.msgid.link/20260917215339.2022523-4-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../stmicro/stmmac/stmmac_selftests.c         | 89 +++++++++++++++----
- 1 file changed, 71 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 83e78613d0d9e..9ec8c96559488 100644
+index 9ec8c96559488..7d45eface1260 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -13,6 +13,7 @@
- #include <linux/ip.h>
- #include <linux/phy.h>
- #include <linux/udp.h>
-+#include <net/dsa.h>
- #include <net/pkt_cls.h>
- #include <net/pkt_sched.h>
- #include <net/tcp.h>
-@@ -238,6 +239,9 @@ struct stmmac_test_priv {
- 	struct stmmac_packet_attrs *packet;
- 	struct packet_type pt;
- 	struct completion comp;
-+	__be16 packet_type;
-+	int (*func)(struct sk_buff *skb, struct net_device *ndev,
-+		    struct packet_type *pt, struct net_device *orig_ndev);
- 	int double_vlan;
- 	int vlan_id;
- 	int ok;
-@@ -317,6 +321,50 @@ static int stmmac_test_loopback_validate(struct sk_buff *skb,
- 	return 0;
- }
+@@ -1395,7 +1395,7 @@ static int stmmac_test_vlanoff(struct stmmac_priv *priv)
  
-+static int stmmac_sft_filter(struct sk_buff *skb, struct net_device *ndev,
-+			     struct packet_type *pt,
-+			     struct net_device *orig_ndev)
-+{
-+	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
-+	struct ethhdr *hdr = eth_hdr(skb);
-+	int ret = 0;
-+
-+	if (hdr->h_proto == tpriv->packet_type) {
-+		struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
-+
-+		if (nskb)
-+			ret = tpriv->func(nskb, ndev, pt, orig_ndev);
-+	}
-+
-+	kfree_skb(skb);
-+	return ret;
-+}
-+
-+static void stmmac_sft_add_pack(struct packet_type *pt)
-+{
-+	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
-+
-+	if (netdev_uses_dsa(tpriv->pt.dev)) {
-+		tpriv->packet_type = tpriv->pt.type;
-+		tpriv->func = tpriv->pt.func;
-+
-+		/* DSA conduit will report ETH_P_XDSA, so our packet handler
-+		 * won't match. Let's register a ETH_P_ALL match and filter
-+		 * manually in stmmac_sft_filter.
-+		 */
-+		tpriv->pt.type = htons(ETH_P_ALL);
-+		tpriv->pt.func = stmmac_sft_filter;
-+		tpriv->pt.ignore_outgoing = true;
-+	}
-+
-+	dev_add_pack(pt);
-+}
-+
-+static void stmmac_sft_remove_pack(struct packet_type *pt)
-+{
-+	dev_remove_pack(pt);
-+}
-+
- static int __stmmac_test_loopback(struct stmmac_priv *priv,
- 				  struct stmmac_packet_attrs *attr)
+ static int stmmac_test_svlanoff(struct stmmac_priv *priv)
  {
-@@ -338,7 +386,7 @@ static int __stmmac_test_loopback(struct stmmac_priv *priv,
- 	tpriv->packet = attr;
- 
- 	if (!attr->dont_wait)
--		dev_add_pack(&tpriv->pt);
-+		stmmac_sft_add_pack(&tpriv->pt);
- 
- 	skb = stmmac_test_get_udp_skb(priv, attr);
- 	if (!skb) {
-@@ -361,7 +409,7 @@ static int __stmmac_test_loopback(struct stmmac_priv *priv,
- 
- cleanup:
- 	if (!attr->dont_wait)
--		dev_remove_pack(&tpriv->pt);
-+		stmmac_sft_remove_pack(&tpriv->pt);
- 	kfree(tpriv);
- 	return ret;
- }
-@@ -775,7 +823,7 @@ static int stmmac_test_flowctrl(struct stmmac_priv *priv)
- 	tpriv->pt.func = stmmac_test_flowctrl_validate;
- 	tpriv->pt.dev = priv->dev;
- 	tpriv->pt.af_packet_priv = tpriv;
--	dev_add_pack(&tpriv->pt);
-+	stmmac_sft_add_pack(&tpriv->pt);
- 
- 	/* Compute minimum number of packets to make FIFO full */
- 	pkt_count = priv->plat->rx_fifo_size;
-@@ -833,7 +881,7 @@ static int stmmac_test_flowctrl(struct stmmac_priv *priv)
- cleanup:
- 	dev_mc_del(priv->dev, paddr);
- 	dev_set_promiscuity(priv->dev, -1);
--	dev_remove_pack(&tpriv->pt);
-+	stmmac_sft_remove_pack(&tpriv->pt);
- 	kfree(tpriv);
- 	return ret;
- }
-@@ -938,18 +986,20 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
- 	 * HASH values.
- 	 */
- 	tpriv->vlan_id = 0x123;
--	dev_add_pack(&tpriv->pt);
- 
- 	ret = vlan_vid_add(priv->dev, htons(ETH_P_8021Q), tpriv->vlan_id);
- 	if (ret)
- 		goto cleanup;
- 
-+	attr.vlan = 1;
-+	attr.dst = priv->dev->dev_addr;
-+	attr.sport = 9;
-+	attr.dport = 9;
-+
-+	stmmac_sft_add_pack(&tpriv->pt);
-+
- 	for (i = 0; i < 4; i++) {
--		attr.vlan = 1;
- 		attr.vlan_id_out = tpriv->vlan_id + i;
--		attr.dst = priv->dev->dev_addr;
--		attr.sport = 9;
--		attr.dport = 9;
- 
- 		skb = stmmac_test_get_udp_skb(priv, &attr);
- 		if (!skb) {
-@@ -976,9 +1026,9 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
- 	}
- 
- vlan_del:
-+	stmmac_sft_remove_pack(&tpriv->pt);
- 	vlan_vid_del(priv->dev, htons(ETH_P_8021Q), tpriv->vlan_id);
- cleanup:
--	dev_remove_pack(&tpriv->pt);
- 	kfree(tpriv);
- 	return ret;
- }
-@@ -1032,18 +1082,20 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
- 	 * HASH values.
- 	 */
- 	tpriv->vlan_id = 0x123;
--	dev_add_pack(&tpriv->pt);
- 
- 	ret = vlan_vid_add(priv->dev, htons(ETH_P_8021AD), tpriv->vlan_id);
- 	if (ret)
- 		goto cleanup;
- 
-+	attr.vlan = 2;
-+	attr.dst = priv->dev->dev_addr;
-+	attr.sport = 9;
-+	attr.dport = 9;
-+
-+	stmmac_sft_add_pack(&tpriv->pt);
-+
- 	for (i = 0; i < 4; i++) {
--		attr.vlan = 2;
- 		attr.vlan_id_out = tpriv->vlan_id + i;
--		attr.dst = priv->dev->dev_addr;
--		attr.sport = 9;
--		attr.dport = 9;
- 
- 		skb = stmmac_test_get_udp_skb(priv, &attr);
- 		if (!skb) {
-@@ -1070,9 +1122,9 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
- 	}
- 
- vlan_del:
-+	stmmac_sft_remove_pack(&tpriv->pt);
- 	vlan_vid_del(priv->dev, htons(ETH_P_8021AD), tpriv->vlan_id);
- cleanup:
--	dev_remove_pack(&tpriv->pt);
- 	kfree(tpriv);
- 	return ret;
- }
-@@ -1303,7 +1355,6 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
- 	tpriv->pt.af_packet_priv = tpriv;
- 	tpriv->packet = &attr;
- 	tpriv->vlan_id = 0x123;
--	dev_add_pack(&tpriv->pt);
- 
- 	ret = vlan_vid_add(priv->dev, htons(proto), tpriv->vlan_id);
- 	if (ret)
-@@ -1311,6 +1362,8 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
- 
- 	attr.dst = priv->dev->dev_addr;
- 
-+	stmmac_sft_add_pack(&tpriv->pt);
-+
- 	skb = stmmac_test_get_udp_skb(priv, &attr);
- 	if (!skb) {
- 		ret = -ENOMEM;
-@@ -1328,9 +1381,9 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
- 	ret = tpriv->ok ? 0 : -ETIMEDOUT;
- 
- vlan_del:
-+	stmmac_sft_remove_pack(&tpriv->pt);
- 	vlan_vid_del(priv->dev, htons(proto), tpriv->vlan_id);
- cleanup:
--	dev_remove_pack(&tpriv->pt);
- 	kfree(tpriv);
- 	return ret;
+-	if (!priv->dma_cap.dvlan)
++	if (!(priv->dev->features & NETIF_F_HW_VLAN_STAG_TX))
+ 		return -EOPNOTSUPP;
+ 	return stmmac_test_vlanoff_common(priv, true);
  }
 -- 
 2.53.0
