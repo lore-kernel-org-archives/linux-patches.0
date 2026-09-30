@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1224B3C4551;
-	Wed, 30 Sep 2026 19:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9F02BEFEF;
+	Wed, 30 Sep 2026 19:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795423; cv=none; b=h0V+iTJKuQZmE0DoUNNM09sDOLY/lldna6fMmvwtidNs/6Ek4NBTXr8sJXyYaWVSDPf1xY6eItP4ywQSX+n1hU2oTqSnZHOEEUJQ3NoBgMuwScbY31GfbfvqkA8LqlsjfL6tvb6S+jCbTfntrgneFpCJE1d1amoM3uZjUt/nO/E=
+	t=1790795426; cv=none; b=nIGsP5pvWGiB0natfKIXDyVu/aVcrBziCsi5aDEGWyBNWdJXX1Hplq0HC3fmdFSRjPrC/QfvizTYg06JICFv3rOu7kzo9bKCKASEZOLIxtJvdF5k5uFuINN7V3SmBTktPBNldXKo9/SwXCoHzIx5zcLAbGsO07NhR4GtuopRDqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795423; c=relaxed/simple;
-	bh=JcGSA8iIimPzvJtwVMEOFImvEVTVpAt5b6z8BhQMdhw=;
+	s=arc-20240116; t=1790795426; c=relaxed/simple;
+	bh=gc2i2RQ5/KQS1mvs8+1RADBSbTWcC6HPjurczOvkjHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CD+xe9caVqGIcrwUZFIpzxpgGTsBVH3tqKnPWT1Bi6ZxFxb/SL+agIyY8g7tXA93eBjPAWkMEgclVylua0MC7pHpsq8alLYdFd1nV0oeH/YxgRCkFBj3D95t2j6nU/BWvA5SH5H7uPhHek1b8B2d0N2GzE7zg9J2DW4xmjcg8H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bQRJUkzk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EbRUFWwg2ioGl97zuIAaIwd8pwwyzj6FqjarOsnEQf++elzQGtSOmrVdnynb8OmjDZmTPuqt+NVZ1a+Pbqvn+n5chHxHplgVsIHqtlg4uLv6LekbDDuGzAQgWtFgyJ0Oxc7v/hrNQZjVdBKjYhgbK79FORv2dwgismGTsYEE7QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKCjTL+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bQRJUkzk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7C81F000FF;
-	Wed, 30 Sep 2026 19:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKCjTL+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D111F000FF;
+	Wed, 30 Sep 2026 19:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795421;
-	bh=lFUw/xEoMKzaHWFKNgwHD2fEm1zprRroy8aOKsJMWcc=;
+	s=korg; t=1790795424;
+	bh=pqv3496YSh7k0AwPuYBesYJUuRPTegdeMUuGIWMyAOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bQRJUkzkstdekwkheWSibBo4yvNAmzUVr3rvVPOhkM5iZKi6x3YUvKtP2Q+bZ49vt
-	 xVkLjwRrw2VqbgKliC8Q4woP07BQirmj/FkR1VNnNnGf5pQxRs5sdvUQmZTShEplQD
-	 PXg7h4EMYavC2269/BvA/kHfSVu+Iw0pl3fnZb70=
+	b=mKCjTL+6m1oTWp4PgKU4vaFQc5XFeZdbqbPP413csEcRgPS2XK5GqLXsao0N5uxR6
+	 cnsynRH/o7oX8TTKgWqzcnV6DltPh7FWNDyAdBpTLEI10FqspFdMnJajtu2RFjTTgz
+	 L51qhhSM4QZkerYMnb9PAIlHD43ewjB+SEORG59Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hpp.iscas" <hppiscas@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0519/1193] ASoC: Intel: SST: Publish the PCI module aliases
-Date: Wed, 30 Sep 2026 17:20:03 +0200
-Message-ID: <20260930152445.710308393@linuxfoundation.org>
+Subject: [PATCH 6.6 0555/1193] Bluetooth: btusb: Fix UAF of btusb_data by rx_work
+Date: Wed, 30 Sep 2026 17:20:39 +0200
+Message-ID: <20260930152446.568494189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,38 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hpp.iscas <hppiscas@163.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit d112159df5c6cc5ee6ab91cc32bf6ed29939df38 ]
+[ Upstream commit 1c12c3117639e78940959d956519c758c57d0849 ]
 
-The legacy SST PCI driver matches Intel Tangier devices using
-intel_sst_ids, but its only explicit module alias is "sst". That alias
-does not match PCI modalias events when this driver is built as a module.
+btusb_close() and btusb_flush() cancel data->rx_work with the
+asynchronous cancel_delayed_work(), so if btusb_rx_work() is already
+running on another CPU it keeps running after the cancel returns.
 
-Publish its PCI table. The independently configurable SOF driver does
-not provide aliases for the legacy SST module.
+btusb_disconnect() calls hci_unregister_dev(), which invokes
+btusb_close(), and then frees the btusb_data. A still running
+btusb_rx_work() then dereferences the freed data:
 
-Fixes: f533a035e4da ("ASoC: Intel: mrfld - create separate module for pci part")
-Signed-off-by: hpp.iscas <hppiscas@163.com>
-Link: https://patch.msgid.link/20260905133133.63661-1-hppiscas@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	while ((skb = skb_dequeue(&data->acl_q)))
+		data->recv_acl(data->hdev, skb);
+
+Use cancel_delayed_work_sync() instead. In btusb_close() the cancel also
+has to happen after btusb_stop_traffic(), otherwise an URB completion
+racing with the cancel can requeue the work right after it has been
+waited for.
+
+Fixes: 800fe5ec302e ("Bluetooth: btusb: Add support for queuing during polling interval")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/atom/sst/sst_pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/intel/atom/sst/sst_pci.c b/sound/soc/intel/atom/sst/sst_pci.c
-index 296bea33e16ff..745e2e60a1440 100644
---- a/sound/soc/intel/atom/sst/sst_pci.c
-+++ b/sound/soc/intel/atom/sst/sst_pci.c
-@@ -178,6 +178,7 @@ static const struct pci_device_id intel_sst_ids[] = {
- 	{ PCI_DEVICE_DATA(INTEL, SST_TNG, 0) },
- 	{ 0, }
- };
-+MODULE_DEVICE_TABLE(pci, intel_sst_ids);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5372a28b9f750..534d3731505c9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1961,18 +1961,24 @@ static int btusb_close(struct hci_dev *hdev)
  
- static struct pci_driver sst_driver = {
- 	.name = SST_DRV_NAME,
+ 	BT_DBG("%s", hdev->name);
+ 
+-	cancel_delayed_work(&data->rx_work);
+ 	cancel_work_sync(&data->work);
+ 	cancel_work_sync(&data->waker);
+ 
+-	skb_queue_purge(&data->acl_q);
+-
+ 	clear_bit(BTUSB_ISOC_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_BULK_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_INTR_RUNNING, &data->flags);
+ 	clear_bit(BTUSB_DIAG_RUNNING, &data->flags);
+ 
+ 	btusb_stop_traffic(data);
++
++	/* rx_work must only be canceled once the URBs that can rearm it are
++	 * gone, and it must be canceled synchronously since btusb_disconnect()
++	 * frees the btusb_data it dereferences right after hci_unregister_dev().
++	 */
++	cancel_delayed_work_sync(&data->rx_work);
++
++	skb_queue_purge(&data->acl_q);
++
+ 	btusb_free_frags(data);
+ 
+ 	err = usb_autopm_get_interface(data->intf);
+@@ -1998,7 +2004,7 @@ static int btusb_flush(struct hci_dev *hdev)
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
+-	cancel_delayed_work(&data->rx_work);
++	cancel_delayed_work_sync(&data->rx_work);
+ 
+ 	skb_queue_purge(&data->acl_q);
+ 
 -- 
 2.53.0
 
