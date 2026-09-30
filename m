@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590B33AFAE2;
-	Wed, 30 Sep 2026 19:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396672BEFEF;
+	Wed, 30 Sep 2026 19:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795058; cv=none; b=fK36IFWZ3i+oRe3giqqEsFnD3XqXL/5dnuk3LD519tRM9w7K010hiMu/qL0yXPFgDF4pqEtwP/5KGT9lxvhG78c3zsYGkjowPU6FIIPPWIIgnY2T3RQRavxMiOI/DkzBFP/PkDl97hir7FoM7qcORuYIqIg0iWuGvAyfE3btd6M=
+	t=1790795061; cv=none; b=Y4DwFdRMbRR0bOoLl7A7/abVVrjbiD7pSzYdyuCX1GqbjeU2tfoJuiy2LLbSVfzPHfZ6lU2E1NLO8FPe2HuJz0R3DGSkVfefEEGmi7AMGYTnPJNnFAPG9hIdzfKHJM+JsC+zs2vlnmL44HX5/3ZWutJNOOnCCvBKpI9+gQkrs/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795058; c=relaxed/simple;
-	bh=3FE3lb5SIC2EIbxrxpjAH3zaMEF2svscT9qNGiY4+Wo=;
+	s=arc-20240116; t=1790795061; c=relaxed/simple;
+	bh=3JJHBMOUrdzFAqCakQYDCop0wWkgI+imBzDLosQ0NiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAfL4Jw17/6PHa9OEF4g+vxEPRpIV4BcLXz21Eu7mzyMtUYLd1Nrs9Xl300y4J5hTIPl5rEgJVU3r75Fapx9fqzXlMgVzDbu4eTmWP69HtX1iH3EzbR4MkDbAxymDaH8Ws2zvs+vM57+ZE+j9qeTfxn//LB7YYSgeDAJoE8HMt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgRLSYGg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jwEM0XRYirOUUVynU9tLeIUZV8V9ID1QFJ0sjks6rT7y8Y888FUenay8+6/ACRzWNexLPWn7sY7APca1Wv7JUiAEP1FUMITwkCjQflKU0qwEb+aPaetZyVQxAxqZOtLlKxlORvYg+KJ/aVcGThmBR+vFqW/S5wSJ5yjGzijgwRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdXFgQp7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgRLSYGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D9F1F000FF;
-	Wed, 30 Sep 2026 19:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdXFgQp7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCE31F000FF;
+	Wed, 30 Sep 2026 19:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795057;
-	bh=7YmlLbMOCdkgNQzajRpg8XgEE3Yv7k2FutHzty+XCzo=;
+	s=korg; t=1790795060;
+	bh=y07Dbks8DLkNu8OGCfRlUlpS+IeGSwceSfo9qG9MusQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgRLSYGg1rcjRRZzcFvtt52fZ+CRw9PtfT1qyXU417Ynua+raNCAisfGYxeupwtrr
-	 w8YYX/j9iYbDlDLiruDCHdKauXGvnFmoVE4f2/+5gXbM0iqob1rpIKgjAIQxmkGdVd
-	 2qYeaPxzdPKrsT8ffjJSpPihUzY8vHBMP/YlUS1I=
+	b=mdXFgQp7HlqOje73nFigerb3TS4rHjTPu1kD569ZMeQAzDJiHDQ760TyZ1uT1K0Ig
+	 DqrYfSsV6p9TlWj7Vg66aUOA4iy2iFgNOTmfvlm8jFou8fIQQflVg4l4OllPSbLOZM
+	 F97F/lAbWfc1r20l+uiaK73PIEtU8n2A5SOprGAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Fourie Zhang <fouriezhang@tencent.com>,
+	syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0429/1193] ipv6: sr: restore network header before routing and forwarding
-Date: Wed, 30 Sep 2026 17:18:33 +0200
-Message-ID: <20260930152443.728213881@linuxfoundation.org>
+Subject: [PATCH 6.6 0430/1193] af_packet: Dont cast tpacket_hdr.tp_len to int in tpacket_parse_header().
+Date: Wed, 30 Sep 2026 17:18:34 +0200
+Message-ID: <20260930152443.749465180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,67 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 975b5b067f525a1b1338c4a3bee1c46545801518 ]
+[ Upstream commit 73e594c19b4f815d8343461cec7074c4713bbde7 ]
 
-ipv6_srh_rcv() runs with skb->data at the Segment Routing Header (SRH)
-while skb_network_header() points at the IPv6 header.
+syzbot reported BUG() in sock_sendmsg_nosec(). [0]
 
-When segments_left > 0, ipv6_srh_rcv() previously restored the skb->data
-position by pushing sizeof(struct ipv6hdr), assuming the SRH immediately
-followed the fixed IPv6 header. If another extension header (such as a
-Hop-by-Hop options header) precedes the SRH, skb_network_offset()
-remained negative.
+The problem is that tpacket_parse_header() casts user-provided
+tpacket_hdr.tp_len, which is u32, to int.
 
-This led to two problems:
-1. During ip6_route_input(), fib6_rules_early_flow_dissect() invokes
-   __skb_flow_dissect() which passes the negative skb_network_offset()
-   to flow dissection, breaking BPF and C flow dissector logic.
-2. If forwarded via ip6_forward() or redirected via act_mirred, downstream
-   handlers (like sch_fragment() or neighbour output) pass the negative
-   offset as an unsigned length, triggering OOB memcpy or buffer overflows.
+If the length is larger than INT_MAX, the following condition
+in tpacket_parse_header() passes,
 
-Fix this by pushing -skb_network_offset(skb) before routing, ensuring
-skb_network_offset(skb) is 0 for route lookup / flow dissection as well as
-downstream forwarding. On the loopback path, pull skb_transport_offset(skb)
-to restore skb->data to the SRH before looping back.
+  if (unlikely(tp_len > size_max))
 
-Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Reported-by: Jun Yang <junvyyang@tencent.com>
-Reported-by: Fourie Zhang <fouriezhang@tencent.com>
-Closes: https://lore.kernel.org/netdev/20260817104128.22681-1-juny24602@gmail.com/
-Closes: https://lore.kernel.org/netdev/20260827092345.2301937-1-fouriezhang@tencent.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260828141727.2372570-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+and any negative value can be returned to the caller, up to
+sock_sendmsg_nosec().
+
+The repro set tpacket_hdr.tp_len to 0xfffffdef, which is cast
+to -EIOCBQUEUED (-529), triggering BUG() in sock_sendmsg_nosec().
+
+  *(uint64_t*)0x200000000008 = 0xfffffdef;
+  ...
+  syscall(__NR_write, /*fd=*/r[0], /*buf=*/0x200000000000ul, /*count=*/1ul);
+
+Let's define the local tp_len as u32 in tpacket_parse_header().
+
+[0]:
+kernel BUG at net/socket.c:803!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 5628 Comm: syz-executor176 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+RIP: 0010:sock_sendmsg_nosec+0x145/0x180 net/socket.c:803
+Code: 06 67 48 0f b9 3a eb 95 e8 e8 3a 22 f8 48 89 df 4c 89 f6 4c 89 e2 4d 89 fb 2e e8 32 a5 5c 16 e9 51 ff ff ff e8 cc 3a 22 f8 90 <0f> 0b e8 c4 3a 22 f8 48 83 c3 18 48 89 d8 48 c1 e8 03 42 80 3c 28
+RSP: 0018:ffffc90003aefb48 EFLAGS: 00010293
+RAX: ffffffff89a578d4 RBX: ffff8880764c67c0 RCX: ffff88807fb23e80
+RDX: 0000000000000000 RSI: 00000000fffffdef RDI: 00000000fffffdef
+RBP: 00000000fffffdef R08: ffffc90003aef747 R09: 1ffff9200075dee8
+R10: dffffc0000000000 R11: fffff5200075dee9 R12: 0000000000000001
+R13: dffffc0000000000 R14: ffffc90003aefbc0 R15: ffffffff8aac4310
+FS:  000055559101b400(0000) GS:ffff888124ce0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000210 CR3: 0000000073dca000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __sock_sendmsg net/socket.c:815 [inline]
+ sock_write_iter+0x2de/0x3e0 net/socket.c:1266
+ new_sync_write fs/read_write.c:595 [inline]
+ vfs_write+0x612/0xba0 fs/read_write.c:687
+ ksys_write+0x150/0x270 fs/read_write.c:739
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f173130ecb9
+Code: c0 79 93 eb d5 48 8d 7c 1d 00 eb 99 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 d8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffd67e44248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f173130ecb9
+RDX: 0000000000000001 RSI: 0000200000000000 RDI: 0000000000000003
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd67e44388
+R13: 0000000000000002 R14: 00002000000000c0 R15: 0000000000000002
+ </TASK>
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Reported-by: syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a946ffa.1d9ded08.62e62.0123.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260830180915.260225-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index e024d8da431c4..6b4cdc7745e85 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -454,7 +454,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
- 	hdr->segments_left--;
- 	addr = hdr->segments + hdr->segments_left;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 116578fbd9a1c..f7560c8a026df 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2725,7 +2725,8 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 				int size_max, void **data)
+ {
+ 	union tpacket_uhdr ph;
+-	int tp_len, off;
++	u32 tp_len;
++	int off;
  
--	skb_push(skb, sizeof(struct ipv6hdr));
-+	skb_push(skb, -skb_network_offset(skb));
+ 	ph.raw = frame;
  
- 	if (skb->ip_summed == CHECKSUM_COMPLETE)
- 		seg6_update_csum(skb);
-@@ -478,7 +478,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
- 		}
- 		ipv6_hdr(skb)->hop_limit--;
- 
--		skb_pull(skb, sizeof(struct ipv6hdr));
-+		skb_pull(skb, skb_transport_offset(skb));
- 		goto looped_back;
+@@ -2745,7 +2746,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 		break;
+ 	}
+ 	if (unlikely(tp_len > size_max)) {
+-		pr_err("packet size is too long (%d > %d)\n", tp_len, size_max);
++		pr_err("packet size is too long (%u > %d)\n", tp_len, size_max);
+ 		return -EMSGSIZE;
  	}
  
 -- 
