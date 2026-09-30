@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731763FCB3D;
-	Wed, 30 Sep 2026 19:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404EA403B1E;
+	Wed, 30 Sep 2026 19:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796699; cv=none; b=dqJ3IS9rzuMp4kB3S1Mw7w6mE56Ii3KelnJSSAK4BhGKJd2Q6nyeZ6mDOa2+BlxyuHWnI4vgSWDV/u/s3dJGashTs83Wv5RMonzo0/PMZLEuNfS0skXykOEOa3gPJknO+934Xl7dH7RSPmSMVV6cexpr3ygzXJP9TdqxarZdF8I=
+	t=1790796702; cv=none; b=EdkEvtsWbff5VwS70JrnFU7wHC+duvRaGk4pvh5MzQMFFD2Hpey8/MEEZg2YZGKmWgjNg1I6zqTmRhokofPcDJsIzJejrw2xNBoCJVbCELfpIHaWR05vPhqa9fHFGSjG3yjHfuQNS+oOGM7sPNH3tAL7ZE2aP4ajEKEBiygW9rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796699; c=relaxed/simple;
-	bh=EUngwc1XjGFdR9C5kxGYpnBxo5B2nFSKPnXNtkt93wQ=;
+	s=arc-20240116; t=1790796702; c=relaxed/simple;
+	bh=6Q+d1W7eFx+ON2/bkLljX1Rx2whGtbep326fC16Sr1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crKyusd1EsDz9H5MHNLJMQsBi8HjoAtWEISV1ajUaSvj3A82Nu2FqICwLEBf81S+RWKs17v9SMNTYVXdm6ALvOWplRW51QmYdWI/Se64YxUB1crHMnJkxlRuLU5GQlyCTYYNITgeaGqSMWk5fyL6RPXPKIIpVb10CXSHeYsB+3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWEwSOxK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AF67WEwcGay8R/bOM1mOA6Uiw5ykmv67yRujzzrTciEZhpPHS7+SXqM4DuIxp/EEjAZrziaYXtY9dUw5N123kJ/9WxCcx3O7eWphSpNZK59NhvB4uT2sHnlRrB8YK0Hqmnsnifbw9UmPAFwAg9555jga/Cp8M5REhQMEg6yrCXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0MALu3Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWEwSOxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6A91F000FF;
-	Wed, 30 Sep 2026 19:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0MALu3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DA21F000FF;
+	Wed, 30 Sep 2026 19:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796698;
-	bh=F/b/06QWj6icrkE8xTeLfffOpmFf7N/V4j8hXCScjeQ=;
+	s=korg; t=1790796701;
+	bh=5PYtauxB2WaAFtB/WLa49IpWfzdJbXBqaL5R1ku3D2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWEwSOxKNclsPR0a83bSaDBVZ28/bT4WkiE1NKajsnwDtExny64Sb32g/eYRYa+5A
-	 4yFR4pLS5Ppb4jINrD69JmuwBRAprGTKcfz8JflpnqQHL2SH59Dsa6/mQ+XF3dz+oC
-	 wlEoH8Ia5FUtbWCOgb7ZCGUs5R2P3OnroVea8rG0=
+	b=L0MALu3YRNvyMRfpUwv/EiXJBv+NxTybL4wSaaIedWeCzjA4jZa2ItZMlmqi84+Hs
+	 rXaufVl8EIJWQ4+loXu7JRPULfUxJTDCoYgQlt1AMKlUWMGsHCB5d4LQj9W/2mChi8
+	 1oUJnZpYF0yqzZ4dG+vM4qt/URlpIhjXxd/ecDUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
 	Breno Leitao <leitao@debian.org>,
-	Ido Schimmel <idosch@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1006/1193] net: create a dummy net_device allocator
-Date: Wed, 30 Sep 2026 17:28:10 +0200
-Message-ID: <20260930152456.594230187@linuxfoundation.org>
+Subject: [PATCH 6.6 1007/1193] net: mediatek: mtk_eth_sock: allocate dummy net_device dynamically
+Date: Wed, 30 Sep 2026 17:28:11 +0200
+Message-ID: <20260930152456.616699003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,140 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c661050f93d3fd37a33c06041bb18a89688de7d2 ]
+[ Upstream commit b209bd6d0bffb8991aba568e2d9a892c86a1a43c ]
 
-It is impossible to use init_dummy_netdev together with alloc_netdev()
-as the 'setup' argument.
+Embedding net_device into structures prohibits the usage of flexible
+arrays in the net_device structure. For more details, see the discussion
+at [1].
 
-This is because alloc_netdev() initializes some fields in the net_device
-structure, and later init_dummy_netdev() memzero them all. This causes
-some problems as reported here:
+Un-embed the net_device from the private struct by converting it
+into a pointer. Then use the leverage the new alloc_netdev_dummy()
+helper to allocate and initialize dummy devices.
 
-	https://lore.kernel.org/all/20240322082336.49f110cc@kernel.org/
+[1] https://lore.kernel.org/all/20240229225910.79e224cf@kernel.org/
 
-Split the init_dummy_netdev() function in two. Create a new function called
-init_dummy_netdev_core() that does not memzero the net_device structure.
-Then have init_dummy_netdev() memzero-ing and calling
-init_dummy_netdev_core(), keeping the old behaviour.
-
-init_dummy_netdev_core() is the new function that could be called as an
-argument for alloc_netdev().
-
-Also, create a helper to allocate and initialize dummy net devices,
-leveraging init_dummy_netdev_core() as the setup argument. This function
-basically simplify the allocation of dummy devices, by allocating and
-initializing it. Freeing the device continue to be done through
-free_netdev()
-
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 310d1ac61a4d ("net: ethernet: mtk_eth_soc: unregister net_devices in case of probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  3 +++
- net/core/dev.c            | 56 ++++++++++++++++++++++++++-------------
- 2 files changed, 41 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 17 +++++++++++++----
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h |  2 +-
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index e704b6b920712..3510177cd1ba6 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -4632,6 +4632,9 @@ static inline void netif_addr_unlock_bh(struct net_device *dev)
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 6de783fe116ce..8cc5f94b1e8aa 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -1714,7 +1714,7 @@ static struct page_pool *mtk_create_page_pool(struct mtk_eth *eth,
+ 	if (IS_ERR(pp))
+ 		return pp;
  
- void ether_setup(struct net_device *dev);
+-	err = __xdp_rxq_info_reg(xdp_q, &eth->dummy_dev, id,
++	err = __xdp_rxq_info_reg(xdp_q, eth->dummy_dev, id,
+ 				 eth->rx_napi.napi_id, PAGE_SIZE);
+ 	if (err < 0)
+ 		goto err_free_pp;
+@@ -4249,6 +4249,8 @@ static int mtk_free_dev(struct mtk_eth *eth)
+ 		dst_release(&eth->dsa_meta[i]->dst);
+ 	}
  
-+/* Allocate dummy net_device */
-+struct net_device *alloc_netdev_dummy(int sizeof_priv);
++	free_netdev(eth->dummy_dev);
 +
- /* Support for loadable net-drivers */
- struct net_device *alloc_netdev_mqs(int sizeof_priv, const char *name,
- 				    unsigned char name_assign_type,
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 57ffe8b86d779..b6e024356a831 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10408,25 +10408,12 @@ int register_netdevice(struct net_device *dev)
+ 	return 0;
  }
- EXPORT_SYMBOL(register_netdevice);
  
--/**
-- *	init_dummy_netdev	- init a dummy network device for NAPI
-- *	@dev: device to init
-- *
-- *	This takes a network device structure and initializes the minimum
-- *	amount of fields so it can be used to schedule NAPI polls without
-- *	registering a full blown interface. This is to be used by drivers
-- *	that need to tie several hardware interfaces to a single NAPI
-- *	poll scheduler due to HW limitations.
-+/* Initialize the core of a dummy net device.
-+ * This is useful if you are calling this function after alloc_netdev(),
-+ * since it does not memset the net_device fields.
-  */
--void init_dummy_netdev(struct net_device *dev)
-+static void init_dummy_netdev_core(struct net_device *dev)
- {
--	/* Clear everything. Note we don't initialize spinlocks
--	 * as they aren't supposed to be taken by any of the
--	 * NAPI code and this dummy netdev is supposed to be
--	 * only ever used for NAPI polls
--	 */
--	memset(dev, 0, sizeof(struct net_device));
--
- 	/* make sure we BUG if trying to hit standard
- 	 * register/unregister code path
+@@ -5044,9 +5046,14 @@ static int mtk_probe(struct platform_device *pdev)
+ 	/* we run 2 devices on the same DMA ring so we need a dummy device
+ 	 * for NAPI to work
  	 */
-@@ -10447,8 +10434,28 @@ void init_dummy_netdev(struct net_device *dev)
- 	 * its refcount.
- 	 */
- }
--EXPORT_SYMBOL_GPL(init_dummy_netdev);
+-	init_dummy_netdev(&eth->dummy_dev);
+-	netif_napi_add(&eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
+-	netif_napi_add(&eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
++	eth->dummy_dev = alloc_netdev_dummy(0);
++	if (!eth->dummy_dev) {
++		err = -ENOMEM;
++		dev_err(eth->dev, "failed to allocated dummy device\n");
++		goto err_unreg_netdev;
++	}
++	netif_napi_add(eth->dummy_dev, &eth->tx_napi, mtk_napi_tx);
++	netif_napi_add(eth->dummy_dev, &eth->rx_napi, mtk_napi_rx);
  
-+/**
-+ *	init_dummy_netdev	- init a dummy network device for NAPI
-+ *	@dev: device to init
-+ *
-+ *	This takes a network device structure and initializes the minimum
-+ *	amount of fields so it can be used to schedule NAPI polls without
-+ *	registering a full blown interface. This is to be used by drivers
-+ *	that need to tie several hardware interfaces to a single NAPI
-+ *	poll scheduler due to HW limitations.
-+ */
-+void init_dummy_netdev(struct net_device *dev)
-+{
-+	/* Clear everything. Note we don't initialize spinlocks
-+	 * as they aren't supposed to be taken by any of the
-+	 * NAPI code and this dummy netdev is supposed to be
-+	 * only ever used for NAPI polls
-+	 */
-+	memset(dev, 0, sizeof(struct net_device));
-+	init_dummy_netdev_core(dev);
-+}
-+EXPORT_SYMBOL_GPL(init_dummy_netdev);
+ 	platform_set_drvdata(pdev, eth);
+ 	schedule_delayed_work(&eth->reset.monitor_work,
+@@ -5054,6 +5061,8 @@ static int mtk_probe(struct platform_device *pdev)
  
- /**
-  *	register_netdev	- register a network device
-@@ -11054,6 +11061,19 @@ void free_netdev(struct net_device *dev)
- }
- EXPORT_SYMBOL(free_netdev);
+ 	return 0;
  
-+/**
-+ * alloc_netdev_dummy - Allocate and initialize a dummy net device.
-+ * @sizeof_priv: size of private data to allocate space for
-+ *
-+ * Return: the allocated net_device on success, NULL otherwise
-+ */
-+struct net_device *alloc_netdev_dummy(int sizeof_priv)
-+{
-+	return alloc_netdev(sizeof_priv, "dummy#", NET_NAME_UNKNOWN,
-+			    init_dummy_netdev_core);
-+}
-+EXPORT_SYMBOL_GPL(alloc_netdev_dummy);
-+
- /**
-  *	synchronize_net -  Synchronize with packet receive processing
-  *
++err_unreg_netdev:
++	mtk_unreg_dev(eth);
+ err_deinit_ppe:
+ 	mtk_ppe_deinit(eth);
+ 	mtk_mdio_cleanup(eth);
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index d1c7b5f1ee4a9..20d0580ea9775 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -1250,7 +1250,7 @@ struct mtk_eth {
+ 	spinlock_t			page_lock;
+ 	spinlock_t			tx_irq_lock;
+ 	spinlock_t			rx_irq_lock;
+-	struct net_device		dummy_dev;
++	struct net_device		*dummy_dev;
+ 	struct net_device		*netdev[MTK_MAX_DEVS];
+ 	struct mtk_mac			*mac[MTK_MAX_DEVS];
+ 	int				irq[3];
 -- 
 2.53.0
 
