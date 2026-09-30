@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A06551CF5D;
-	Wed, 30 Sep 2026 18:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A4A51C058;
+	Wed, 30 Sep 2026 18:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792739; cv=none; b=lUbS68FEdUa0LNjLO0u0kQinJDbWMb9FXK27FqOyqioEjGxFCZEBkjs6YkhjCI9ramu3UJn5AzhQAp9dNaaDgctRQjPfeK06cndFK4G4Pn3hQ7O1mQmUzVzpl5Na24Ffwvc7T3tik0gDjQKsLDsO+yrgsABAcutjrISaB9PffQQ=
+	t=1790792742; cv=none; b=Y/QCkd2ByscBGJ4tKyYijKaKiYJtiS7Te2LQg1Dwq+A6FPMlRU9PoyCQrdfuurq1ZLlwzFLtyPz8PIiQ3Lox8twxXkFzFiQwCmpAsgzK7FSBpyoNE51eBQ/9f5HA1c5p+Ay+yEi4f2ltyinDiLLsM2+0yLAAyDMImOg1qjrTVsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792739; c=relaxed/simple;
-	bh=9Bw6lsnycB6qA1SEIQgil+alweg5625IC/mBd7tfL7k=;
+	s=arc-20240116; t=1790792742; c=relaxed/simple;
+	bh=r4nKeukdMq2aismpCwDtuVmmdtGeIMzTwQI8jcinKjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YujnSW0i9NMZrjYpeR6LpsikePfPwdd9j/m+z9B3Qsp5+iGm7mxC0W9gnqeaH23ISrD4ow2JnWVRjb1qWSKvqX1Pi6/66lICycNlAE9KtlAe/iZw6cEYFB3c4KUCCSto63JGKwbvt2Cog+BTh4ABW5M759sWZazHQ9EzmRivJNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FfQOwBv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IMvuBgoIlrdRMhLk4xk72hNaFyZAEUk04l5cS8MJKqDVrLoP8120qvOJn7xsAu6nvR2EPa7U7mSFx1U+oC+8Bcdt4e2umPn7BhEnvNn3xMYFbYjV+eKwIXk/EIt3fWcGH43xAO50CH+LhSrvqktqB+BAluYhl7rQh2B3GBfw+Uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo8x/2N+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FfQOwBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938C21F000FF;
-	Wed, 30 Sep 2026 18:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo8x/2N+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606001F000FF;
+	Wed, 30 Sep 2026 18:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792738;
-	bh=KRfth6iqFbG3dMTTjk7Ahfb9EwPoVAgZ42/vp6PuhUQ=;
+	s=korg; t=1790792740;
+	bh=KPXYbuY52Jj/QZOOGogfzItIZGVtgEjvy9HW/vvCMdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FfQOwBvRVzDK0TzlPZ9uqntr4gUoub6BX7E9O36WfK8iglqYFuBYAtPjA/lHQOQm
-	 /V3wxzldBW8AjuFyShHQnEfmbleRRCZgSS5jbWWlNBYNUBmJ/7X+vowQ+WPf/BS/21
-	 RWRCBlstGT/nsc1pGBV7Rn76B/d1o/thW58Ax5pU=
+	b=bo8x/2N+JAwAB1BHzXLFnwYrcGlmKSWCFuYR9udplYz92oCfhraMh39XlaCSkVK7x
+	 bjnxfzlNYsXrjoQ+PACm4WAOVTN1dNEDZZqjDbASXIREEol++Yb45WnCd+NAwDy0YB
+	 P4LbCLQGh2kgLktmt6DWKrtLYRvNLhuDbThNh6yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Tom Hadlaw <tom.hadlaw@isovalent.com>,
+	Yusuke Suzuki <yusuke.suzuki@isovalent.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/395] xfs: dont stash removename operations with unknown ftype
-Date: Wed, 30 Sep 2026 17:24:23 +0200
-Message-ID: <20260930152340.627781445@linuxfoundation.org>
+Subject: [PATCH 6.18 010/395] bpf: Fix bpf_skb_change_tail wrt csum partial skbs
+Date: Wed, 30 Sep 2026 17:24:32 +0200
+Message-ID: <20260930152340.838461169@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,62 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 865b751e75039fc07838b3200f9740256653da9a ]
+[ Upstream commit 3b55f350c68a0aceff108f47f9d31f47ebffaf7b ]
 
-LOLLM notices that the behavior of xrep_dir_replay_update changes based
-on the ftype recorded in the stashed removename information.  It also
-notices that the unlink iops sometimes set that ftype to FT_UNKNOWN
-because the regular directory tree update code paths don't need to know
-the ftype of the child.
+Cilium generates ICMP "frag needed" replies from BPF when a LB DSR
+packet exceeds the egress MTU. The reply is built by first trimming the
+packet down to target size via bpf_skb_change_tail(), and then pushing
+the ICMP error headers in front of it.
 
-Unfortunately, this results in incorrect link counts, which eventually
-trips link count errors in later phases of xfs_scrub, or in xfs_repair.
-Fix this by creating a second xfs_name with the type set correctly.
+The trim is rejected for skbs which carry a checksum offload, e.g. TCP
+packets aggregated by GRO on ingress where tcp_gro_complete() leaves
+the skb as CHECKSUM_PARTIAL. __bpf_skb_min_len() raises the minimum
+length to the end of the L4 checksum field, so a trim to 42 bytes bails
+out with -EINVAL given a min_len of 52 in this case, and due to that
+the ICMP generator fails. This is not the case if GRO is turned off.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 8559b21a64d983 ("xfs: implement live updates for directory repairs")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fix this bpf_skb_change_tail() restriction and drop the checksum offload
+when the new length no longer covers the checksum field. The BPF program
+rewrites the skb into an ICMP error and computes the checksum itself
+anyway.
+
+Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
+Reported-by: Tom Hadlaw <tom.hadlaw@isovalent.com>
+Reported-by: Yusuke Suzuki <yusuke.suzuki@isovalent.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260907121025.1923656-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/dir_repair.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ net/core/filter.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/fs/xfs/scrub/dir_repair.c b/fs/xfs/scrub/dir_repair.c
-index 36432705c44a7..ad3d414d9705d 100644
---- a/fs/xfs/scrub/dir_repair.c
-+++ b/fs/xfs/scrub/dir_repair.c
-@@ -1381,9 +1381,24 @@ xrep_dir_live_update(
- 		if (p->delta > 0)
- 			error = xrep_dir_stash_createname(rd, p->name,
- 					p->ip->i_ino);
--		else
--			error = xrep_dir_stash_removename(rd, p->name,
-+		else {
-+			/*
-+			 * xfs_dentry_to_name in unlink or rename-exchange can
-+			 * pass us names with ftype FT_UNKNOWN, but we really
-+			 * must know the ftype of the child that is being
-+			 * removed so that we can do nlink updates correctly
-+			 * without holding inode references.
-+			 */
-+			struct xfs_name	name = {
-+				.name	= p->name->name,
-+				.len	= p->name->len,
-+				.type	= xfs_mode_to_ftype(
-+						VFS_IC(p->ip)->i_mode),
-+			};
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 35427793ddb7e..42f5688dc1fab 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3825,12 +3825,6 @@ static u32 __bpf_skb_min_len(const struct sk_buff *skb)
+ 		if (offset > 0)
+ 			min_len = offset;
+ 	}
+-	if (skb->ip_summed == CHECKSUM_PARTIAL) {
+-		offset = skb_checksum_start_offset(skb) +
+-			 skb->csum_offset + sizeof(__sum16);
+-		if (offset > 0)
+-			min_len = offset;
+-	}
+ 	return min_len;
+ }
+ 
+@@ -3847,6 +3841,11 @@ static int bpf_skb_grow_rcsum(struct sk_buff *skb, unsigned int new_len)
+ 
+ static int bpf_skb_trim_rcsum(struct sk_buff *skb, unsigned int new_len)
+ {
++	if (skb->ip_summed == CHECKSUM_PARTIAL &&
++	    new_len < skb_checksum_start_offset(skb) + skb->csum_offset +
++		      sizeof(__sum16))
++		skb->ip_summed = CHECKSUM_NONE;
 +
-+			error = xrep_dir_stash_removename(rd, &name,
- 					p->ip->i_ino);
-+		}
- 		mutex_unlock(&rd->pscan.lock);
- 		if (error)
- 			goto out_abort;
+ 	return __skb_trim_rcsum(skb, new_len);
+ }
+ 
 -- 
 2.53.0
 
