@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D448951FCA5;
-	Wed, 30 Sep 2026 18:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA69951FCA9;
+	Wed, 30 Sep 2026 18:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793618; cv=none; b=udn23ctzYZkXgq3D/bb37yDuuzmbc+EsUMK05eoV20NueFf+p7udWWUqYgolfcVq4ldvyDm1GjtjKwGBkUPYO95hWskDBk7+tolCqqRIABA2c+wXVgR5t7LjD6/+jveRFvF3K9j3S79mXGd9zHiyWHCR2fRnDhSN5zN+YMWmmbQ=
+	t=1790793621; cv=none; b=tSEzyw0a4e/FIqAOj9tD/a1dBcPPYsFRnuZ2qOW2+Iz9rIOWBEzLyx7qWsxVN3NseoIuDuPPnsNCOR9pF4j1YfolHOq054jK9FqkSX7VaJk4AKlZgpBM6QdaQkw2GK8x3VP0oHevBF2d1G/e0H3IEMYRL5lhkfAk2X0v+e5BbMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793618; c=relaxed/simple;
-	bh=q4OV5L+tXTfjHFiimbx1GmnxuSf66S82fu2PPOG0jcs=;
+	s=arc-20240116; t=1790793621; c=relaxed/simple;
+	bh=NertkoHq9LWwzO4CmgyyCONihRWLImwIUDy2wM7qR+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j1PwpUX13BcuwazkZ6sqSBTa/nAU++73V2QpWK0OO6JCas63su5WzcuFYXYHDWV6g3nAEMRIpuOYjGbRao3Z5XISq1q0oiaKO8IvcNCc966uZr0vyln+vI+N3zgTZ99d3CGFHcNFGaphUKFt+NhciM6LwIgn07D2sQIWnRtdYhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fK9XP0Tf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GLMHIBsUAXupn/ro1I4S1g7PMnm96+NmwyHeSkugXq1CbHFKLwNlqNvblFUMddDzuOq8JW4+qoypRI/pjiAo/sKuSmqKpnly/geJfnzLydBBxzl387IFTzntT82Kycet8bsw+5OwaroTIpojfCy56Q92NX2D3N2hNBXIHWPUsv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdLwzxpN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fK9XP0Tf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB661F00898;
-	Wed, 30 Sep 2026 18:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdLwzxpN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D42D1F00898;
+	Wed, 30 Sep 2026 18:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793616;
-	bh=bkEjVmmuCWtdkyEP9O8tptqwbA4AnTKr9BGWo/5jeNI=;
+	s=korg; t=1790793619;
+	bh=6zqxs9YMFFowZVfULLBjSzGTDCo7QF868HvofEwsomI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fK9XP0Tf5IzOlx7rLyAecbAyFwmMc4ACtLtvyE3abnzYIcYyLm1sEwIpdHn+r6soG
-	 LCN1tLwbOt1iMm0MQEGqe/dz/uHS9+tNKh8djHV3bcJGhLw4pVXPTRLoI1WBGNdP1q
-	 1FtQEDzGhoWVKATxe/aBMm7IZ4lOtTi5Pbe58I0o=
+	b=tdLwzxpNUQffvlFxUEyBjT0wjcvdyc181KXEsbd7AbVVFZqBBgbatF3QB40okp9ec
+	 oO71H4zH28PrbG2Zz+bSvCp6RHp1+z9jsrO5S3+gH7Da+paaRRiOeKldtS0KhSjciw
+	 HJre9A5pcR5VRmAh+rSuH9FE/6IoFMAlFq0lFhAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 273/395] net/sched: reject IDR error pointers when deleting actions
-Date: Wed, 30 Sep 2026 17:28:55 +0200
-Message-ID: <20260930152346.582297794@linuxfoundation.org>
+Subject: [PATCH 6.18 274/395] net: airoha: npu: cancel wdt_work after releasing the WDT IRQ
+Date: Wed, 30 Sep 2026 17:28:56 +0200
+Message-ID: <20260930152346.603909484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,61 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit c82b797abe668d0b668601a93ba2c0b071a63574 upstream.
+commit 4bdee8060d1e4581624e68fbd369b1afb14df4bc upstream.
 
-tcf_action_delete() drops the reference held by its lookup before calling
-tcf_idr_delete_index() with the saved action index.  An unlocked
-classifier can remove that action and reserve the same IDR slot with
-ERR_PTR(-EBUSY) in between.
+airoha_npu_remove() calls cancel_work_sync() on each core's wdt_work,
+but the watchdog IRQ that queues it is requested with devm_request_irq()
+and is freed only after .remove() returns.  airoha_npu_wdt_handler() can
+therefore schedule_work() again once the cancel has returned.  struct
+airoha_npu, which contains the work, is devm_kzalloc()'d and is freed in
+that same unwind, so the late work dereferences freed memory.
 
-tcf_idr_delete_index() only checks the lookup result for NULL.  It
-therefore treats the reservation as a tc_action and dereferences
-tcfa_bindcnt.  A hardware execution breakpoint was used to schedule the
-interleaving without changing the kernel source.  KASAN reported this
-decoded trace:
+Register the work with devm_work_autocancel() before devm_request_irq()
+and drop .remove().  Devres runs in reverse order, so the IRQ is freed
+before cancel_work_sync(), including when probe fails.  A cancel left in
+.remove() cannot get that order.  Initializing the work first also stops
+a pending watchdog interrupt from queuing an uninitialized work item.
+Probe currently calls INIT_WORK() only after devm_request_irq().
 
-  BUG: KASAN: null-ptr-deref in tca_action_gd+0x5b9/0x1010
-  Read of size 4 at addr 0000000000000010 by task poc/150
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002
-  RIP: tca_action_gd+0x5c0/0x1010:
-    arch_atomic_read at arch/x86/include/asm/atomic.h:23
-    raw_atomic_read at include/linux/atomic/atomic-arch-fallback.h:457
-    atomic_read at include/linux/atomic/atomic-instrumented.h:33
-    tcf_idr_delete_index at net/sched/act_api.c:766
-    tcf_action_delete at net/sched/act_api.c:1859
-    tcf_del_notify at net/sched/act_api.c:2014
-    tca_action_gd at net/sched/act_api.c:2064
-  R13: 0000000000000010 R15: fffffffffffffff0
-  Kernel panic - not syncing: Fatal exception
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-R15 contains ERR_PTR(-EBUSY), and adding the tcfa_bindcnt offset produces
-the address in R13.  With the guard applied, the same reproducer returned
--ENOENT without a KASAN report or panic.  Treat error pointers as absent
-and return -ENOENT.
-
-Fixes: 0190c1d452a9 ("net: sched: atomically check-allocate action")
-Cc: stable@vger.kernel.org
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260914065123.4109709-2-bestswngs@gmail.com
+Fixes: 23290c7bc190 ("net: airoha: Introduce Airoha NPU support")
+Cc: stable@vger.kernel.org # 6.15+
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260922000914.542068-1-mhun512@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_api.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/airoha/airoha_npu.c |   18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -758,7 +758,7 @@ static int tcf_idr_delete_index(struct t
+--- a/drivers/net/ethernet/airoha/airoha_npu.c
++++ b/drivers/net/ethernet/airoha/airoha_npu.c
+@@ -5,6 +5,7 @@
+  */
  
- 	mutex_lock(&idrinfo->lock);
- 	p = idr_find(&idrinfo->action_idr, index);
--	if (!p) {
-+	if (IS_ERR_OR_NULL(p)) {
- 		mutex_unlock(&idrinfo->lock);
- 		return -ENOENT;
+ #include <linux/devcoredump.h>
++#include <linux/devm-helpers.h>
+ #include <linux/firmware.h>
+ #include <linux/platform_device.h>
+ #include <linux/of_net.h>
+@@ -669,12 +670,15 @@ static int airoha_npu_probe(struct platf
+ 		if (irq < 0)
+ 			return irq;
+ 
++		err = devm_work_autocancel(dev, &core->wdt_work,
++					   airoha_npu_wdt_work);
++		if (err)
++			return err;
++
+ 		err = devm_request_irq(dev, irq, airoha_npu_wdt_handler,
+ 				       IRQF_SHARED, "airoha-npu-wdt", core);
+ 		if (err)
+ 			return err;
+-
+-		INIT_WORK(&core->wdt_work, airoha_npu_wdt_work);
  	}
+ 
+ 	/* wlan IRQ lines */
+@@ -716,18 +720,8 @@ static int airoha_npu_probe(struct platf
+ 	return 0;
+ }
+ 
+-static void airoha_npu_remove(struct platform_device *pdev)
+-{
+-	struct airoha_npu *npu = platform_get_drvdata(pdev);
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(npu->cores); i++)
+-		cancel_work_sync(&npu->cores[i].wdt_work);
+-}
+-
+ static struct platform_driver airoha_npu_driver = {
+ 	.probe = airoha_npu_probe,
+-	.remove = airoha_npu_remove,
+ 	.driver = {
+ 		.name = "airoha-npu",
+ 		.of_match_table = of_airoha_npu_match,
 
 
