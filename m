@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3689151D508;
-	Wed, 30 Sep 2026 17:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0513A511E61;
+	Wed, 30 Sep 2026 17:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789810; cv=none; b=KNb+5jLP/lILBmVzFPe9hJpuKPdVSwfhW9OKaCo+DmBnA4/8RAVWD8nYKrzArG3BWe9CcP4q9DGc/wlg1+3maEHsVjo9va8pn9pufbfmnTBEudqsJeVQ6rLLTZpFY+Kwu2q5KXwKRJVRT344QDNBc4f/nS7X7H1WxZmRivLjwMk=
+	t=1790789813; cv=none; b=uRblJGa3DNMqEW0Mxa3jOyzJnZ6LRcZLy9Q6I/hEEwkGBHQX0JYVFIepmayod4ZY1A5Pb7aqEs6NbCspIcdgFceypZ25pEpKuslKdnvJYuIvNcx78EzbSTETNeCargFQ24i4VTdakhnSYntDqCqzORpykrbRhdB9OK+irv1todc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789810; c=relaxed/simple;
-	bh=msd37TnOnWvQHlLsKSbKkDuW00+diau+48A782wL8fM=;
+	s=arc-20240116; t=1790789813; c=relaxed/simple;
+	bh=sTIFjmiFGNBvJfV01e0Rt5MXUUkKHd1ZLXO+SgMw7A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPgkNB4oGHmWg/SCaCBz4h/5hITh9LT9O9Wsdh8v+ptdz3tvrvjnDgE33EI/uAK98HqDbq8X+99SbwvF5foC6Bt/0FkNV9Y9ixgsntC6NZw7M5RUd9paAQOc2mdLVROZ7HDXYhCEiXOZ9aZcRBHYA9/hfRAC1iG+RMVV+Izz4ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rxg/83YY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BUQpF7u8EQfXIuo5Gwvrrb33h7+BG7/DIQFosnSSp5/jvFEsVtqyJgCsUA6L68cUf9n4mRgWb6BWa8lim0KChZS4vmhMxxicFbQ2xLLBSm7nTpFUet6iTrfuWeMvWXSUzO+LbDdQ8+D6hVqQTtTgmYSRRBAE3qTa0ERIvT3CwAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Thxu16oa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rxg/83YY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902291F000FF;
-	Wed, 30 Sep 2026 17:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Thxu16oa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1431F000FF;
+	Wed, 30 Sep 2026 17:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789809;
-	bh=mlJm5j9rVWATgH0xhhbpFGZagOihnMBUAAk9Y5xlK1g=;
+	s=korg; t=1790789811;
+	bh=rKvUJ0Wty7TN7Pb/R8kB5gZRSn+gJ84Jj5T4gdf+EX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rxg/83YYQ3exiZWz9IPZkEbu2d8MljMt0iW4KcPEcjxoZ43Ua2Rq0BnT6hFIoi1rx
-	 FTGXYXl+loDH+LZjFcr8eqx4cATa22iDROOxl5EZnU95ZzPzyKGgZCD8MXBAADfa2y
-	 /BrqMESvTdqNB2uE3AJP74ms6f31jT0xal7FBinw=
+	b=Thxu16oaoDxgMnHjHA0c8+N5F6Ju5WGPIoY5azqX8WCp9JherN+ZqwY6sZPEcT8CZ
+	 8XYz2tM9DCdkDya6wiC6GoXhc6kP7LCz1kAA+sA+BqE/hQCk1crcTI/20RT9KJpQe2
+	 agBahCJuTIKPaP+p/C6KDYdav1CiBM779ensjzJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 609/877] udf: Fix data loss when converting inline inodes to out of line
-Date: Wed, 30 Sep 2026 17:25:20 +0200
-Message-ID: <20260930152427.797657825@linuxfoundation.org>
+Subject: [PATCH 6.12 592/877] platform/x86/amd/pmc: Restore msg_port on amd_stb_s2d_init() error paths
+Date: Wed, 30 Sep 2026 17:25:03 +0200
+Message-ID: <20260930152427.425825915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -44,77 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 62333e480d12ab186f89fe2725b372d12f72d5eb ]
+[ Upstream commit 9cef693bce96bb4c6952f48d855284cf7fa4f367 ]
 
-When udf_expand_file_adinicb() converts file from inline format to out
-of line, we use filemap_fdatawrite() to writeout the data to the new
-blocks. However since 36580ed08776 ("udf: Do not allocate blocks on page
-writeback") the writeback actually doesn't allocate the new block and
-the folio dirty bit is just silently cleared. Thus unless the file is
-written to after the conversion (as it can easily happen in case of
-truncate up), the data is just lost. Fix the problem by explicitely
-allocating the block underlying the data before starting writeback.
+dev->msg_port is switched to MSG_PORT_S2D before issuing the S2D SMU
+commands but is only restored to MSG_PORT_PMC on the success path.  The
+early "return -EIO" and "return -ENOMEM" leave the port stuck on
+MSG_PORT_S2D, so all subsequent SMU communication - including the s2idle
+prepare/restore handlers - is directed at the wrong mailbox.
 
-Fixes: 36580ed08776 ("udf: Do not allocate blocks on page writeback")
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260730104232.4086759-4-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
+Consolidate the exit path through a single label so the message port is
+always restored.
+
+Fixes: 3d7d407dfb05 ("platform/x86: amd-pmc: Add support for AMD Spill to DRAM STB feature")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260721181756.143084-2-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/platform/x86/amd/pmc/mp1_stb.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -399,6 +399,10 @@ int udf_expand_file_adinicb(struct inode
- {
- 	struct folio *folio;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
-+	struct udf_map_rq map = {
-+		.lblk = 0,
-+		.iflags = UDF_MAP_CREATE,
-+	};
- 	int err;
+--- a/drivers/platform/x86/amd/pmc/mp1_stb.c
++++ b/drivers/platform/x86/amd/pmc/mp1_stb.c
+@@ -253,7 +253,7 @@ int amd_stb_s2d_init(struct amd_pmc_dev
+ 	u32 phys_addr_low, phys_addr_hi;
+ 	u64 stb_phys_addr;
+ 	u32 size = 0;
+-	int ret;
++	int ret = 0;
  
- 	WARN_ON_ONCE(!inode_is_locked(inode));
-@@ -428,20 +432,27 @@ int udf_expand_file_adinicb(struct inode
- 		iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
- 	else
- 		iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
-+	up_write(&iinfo->i_data_sem);
+ 	if (!enable_stb)
+ 		return 0;
+@@ -271,8 +271,10 @@ int amd_stb_s2d_init(struct amd_pmc_dev
+ 	dev->msg_port = MSG_PORT_S2D;
+ 
+ 	amd_pmc_send_cmd(dev, S2D_TELEMETRY_SIZE, &size, dev->stb_arg.s2d_msg_id, true);
+-	if (size != S2D_TELEMETRY_BYTES_MAX)
+-		return -EIO;
++	if (size != S2D_TELEMETRY_BYTES_MAX) {
++		ret = -EIO;
++		goto out;
++	}
+ 
+ 	/* Get DRAM size */
+ 	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->stb_arg.s2d_msg_id, true);
+@@ -291,12 +293,16 @@ int amd_stb_s2d_init(struct amd_pmc_dev
+ 
+ 	stb_phys_addr = ((u64)phys_addr_hi << 32 | phys_addr_low);
+ 
+-	/* Clear msg_port for other SMU operation */
+-	dev->msg_port = MSG_PORT_PMC;
+-
+ 	dev->stb_virt_addr = devm_ioremap(dev->dev, stb_phys_addr, dev->dram_size);
+-	if (!dev->stb_virt_addr)
+-		return -ENOMEM;
++	if (!dev->stb_virt_addr) {
++		ret = -ENOMEM;
++		goto out;
++	}
 +
-+	/* Allocate the block underlying the data */
-+	err = udf_map_block(inode, &map);
-+	if (err < 0)
-+		goto restore;
-+
- 	folio_mark_dirty(folio);
- 	folio_unlock(folio);
--	up_write(&iinfo->i_data_sem);
- 	err = filemap_fdatawrite(inode->i_mapping);
- 	if (err) {
- 		/* Restore everything back so that we don't lose data... */
- 		folio_lock(folio);
-+restore:
- 		down_write(&iinfo->i_data_sem);
- 		memcpy_from_folio(iinfo->i_data + iinfo->i_lenEAttr,
- 				folio, 0, inode->i_size);
--		folio_unlock(folio);
- 		iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
- 		iinfo->i_lenAlloc = inode->i_size;
- 		up_write(&iinfo->i_data_sem);
-+		folio_unlock(folio);
- 	}
- 	folio_put(folio);
- 	mark_inode_dirty(inode);
++	ret = 0;
+ 
+-	return 0;
++out:
++	/* Restore the default message port for subsequent SMU operations */
++	dev->msg_port = MSG_PORT_PMC;
++	return ret;
+ }
 
 
