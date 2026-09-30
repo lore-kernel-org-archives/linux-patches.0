@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955634F68C3;
-	Wed, 30 Sep 2026 15:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2574E3245;
+	Wed, 30 Sep 2026 15:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783021; cv=none; b=GBYdEtcbqO8f/ZWdE0iMu6IVAK7pVxfF0ZJor2FFtKb+78quMG/C7i6Q+SgBvnZ0vfr31U1MU/zVyeJ7Jrb8LXWbscVeCrmGW+4L/BPkeH933GNao/Z6FFC39xVZv/5v+TPqaCKzd/WdmGnvSYQXtT/tPOi8qt+aws8M1GNF9oI=
+	t=1790783025; cv=none; b=hTdAHbKVPkEW0alHgtls5xRhCctWmRVW7Emf0KGsAF5liXwgjHXAJAlbItnrND4serqsiD8guhQQAMIxyoVosc0eVl0dXeziXZnjR0XALwiYzMPcbASVBaq/I8skZA2avxGkBkMesluBhHjpvZyvcIupouGsyMxQB+fKWTEQHz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783021; c=relaxed/simple;
-	bh=ptnSwOcb0PP3JJwet+179dSBbvpAdRHH+4WDt8G/UUU=;
+	s=arc-20240116; t=1790783025; c=relaxed/simple;
+	bh=vetqO87I7Oh9jLrbo3BG1feOMv6se7eJa/+A5A2ps3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a635pJWxUvMnnrlLyG4ENI9FGchIvvrIrYrI8Lg/SuS562pQFxflucHbx7JdeJhKg4h8ph6ZSDbe1qfEsvqNff49aXI/31PuBI1wiF9JT6EySG0wUCVTs0YiDFlUT7pVcWax7x11zijHzgYKULdOStfQCGY/aoiLH+C+wF/8ZxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3XRj7F2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BU1R/hsvg5PfiV5W09P0Ac6mhy4WiUA8NhiXk5jgzkv8ZhIJkk9UkPu2qwfgi7SSdOaQxXtMtFoL98dF6/BU0pYm3RtviPpnfAWM1fyjAzsAShe5YQR6F2UXsoU+vfFw8Eu/p1KMhge0BwOarw9JW9qH84NWEePVfDEH3ASXZS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PB4TyGlA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3XRj7F2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454DB1F00893;
-	Wed, 30 Sep 2026 15:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PB4TyGlA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B881F00898;
+	Wed, 30 Sep 2026 15:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783015;
-	bh=lHuy4ieec96ah97FWQWgWMD1rrW5rooqXzRtEihgV+I=;
+	s=korg; t=1790783018;
+	bh=iW1InVCnXP15TeXaU2lcInxA5Uua3TS33jzawmVX9ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N3XRj7F2h1KL9qF+5slFrXzZy9Aby494MFn+GcpCCA3WXyP8K19zlFxJIKgJlihK3
-	 mp/ucbCclPbsCqX2FQFpUx39LCk2khh/oT5qZVF3ESrUQgLNMq9w+NffiOWUowWy5k
-	 TbT6fSEVTvG3Vm38X588X7lZDoMJ2MFurdWB/pxs=
+	b=PB4TyGlAByCDG5Z9FT1PLyW4ZCLj3t2LqXBYjfor/vOHX7SB3YWgF2aPiJTldv4EO
+	 IKN6u45Efw/A5mTz1ccT2avg1xklHUElVYskUaXcEwjYbOs4oEfDG0XRnTDH4kKh24
+	 CMD1Twjyu32fPh9qmRA6QDoCyX8HfexgCBfJ3E08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yael Chemla <ychemla@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 248/595] net/mlx5: E-Switch: fix use-after-free in mlx5_eswitch_termtbl_put
-Date: Wed, 30 Sep 2026 17:22:21 +0200
-Message-ID: <20260930152353.051369667@linuxfoundation.org>
+Subject: [PATCH 5.10 249/595] net_sched: sch_fq_pie: implement lockless fq_pie_dump()
+Date: Wed, 30 Sep 2026 17:22:22 +0200
+Message-ID: <20260930152353.072230771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,55 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yael Chemla <ychemla@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7ee07f601f8f507c9faf25c68a49396ab8950596 ]
+[ Upstream commit 13a9965de32457d59aa3162d657aa4c5e512c146 ]
 
-In mlx5_eswitch_termtbl_put(), the zero-ref cleanup check reads
-tt->ref_count after termtbl_mutex has been released.  Two concurrent
-callers on the same mlx5_termtbl_handle race: one decrements ref_count
-to zero, removes the hash entry, and calls kfree(tt) while the other
-has already dropped the mutex and is about to evaluate
-if (!tt->ref_count), producing a use-after-free.
+Instead of relying on RTNL, fq_pie_dump() can use READ_ONCE()
+annotations, paired with WRITE_ONCE() ones in fq_pie_change().
 
-Fix this by capturing the result of the decrement into a stack-local
-last variable before dropping the mutex.  The cleanup decision is now
-made entirely under termtbl_mutex, and tt is not touched after
-kfree.
-
-Fixes: 10caabdaad5a ("net/mlx5e: Use termination table for VLAN push actions")
-Signed-off-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193514.3668880-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 4864f58c53eb ("net/sched: fq_pie: clamp quantum in change path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/sched/sch_fq_pie.c | 61 +++++++++++++++++++++++-------------------
+ 1 file changed, 34 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-index 132ea9997676a..345585529a30a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-@@ -162,12 +162,15 @@ void
- mlx5_eswitch_termtbl_put(struct mlx5_eswitch *esw,
- 			 struct mlx5_termtbl_handle *tt)
- {
-+	bool last;
-+
- 	mutex_lock(&esw->offloads.termtbl_mutex);
--	if (--tt->ref_count == 0)
-+	last = (--tt->ref_count == 0);
-+	if (last)
- 		hash_del(&tt->termtbl_hlist);
- 	mutex_unlock(&esw->offloads.termtbl_mutex);
+diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
+index c5c728576c161..884c4cbcf2b6f 100644
+--- a/net/sched/sch_fq_pie.c
++++ b/net/sched/sch_fq_pie.c
+@@ -301,8 +301,8 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
+ 	if (tb[TCA_FQ_PIE_LIMIT]) {
+ 		u32 limit = nla_get_u32(tb[TCA_FQ_PIE_LIMIT]);
  
--	if (!tt->ref_count) {
-+	if (last) {
- 		mlx5_del_flow_rules(tt->rule);
- 		mlx5_destroy_flow_table(tt->termtbl);
- 		kfree(tt);
+-		q->p_params.limit = limit;
+-		sch->limit = limit;
++		WRITE_ONCE(q->p_params.limit, limit);
++		WRITE_ONCE(sch->limit, limit);
+ 	}
+ 	if (tb[TCA_FQ_PIE_FLOWS]) {
+ 		if (q->flows) {
+@@ -324,39 +324,45 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
+ 		u32 target = nla_get_u32(tb[TCA_FQ_PIE_TARGET]);
+ 
+ 		/* convert to pschedtime */
+-		q->p_params.target =
+-			PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC);
++		WRITE_ONCE(q->p_params.target,
++			   PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC));
+ 	}
+ 
+ 	/* tupdate is in jiffies */
+ 	if (tb[TCA_FQ_PIE_TUPDATE])
+-		q->p_params.tupdate =
+-			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE]));
++		WRITE_ONCE(q->p_params.tupdate,
++			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE])));
+ 
+ 	if (tb[TCA_FQ_PIE_ALPHA])
+-		q->p_params.alpha = nla_get_u32(tb[TCA_FQ_PIE_ALPHA]);
++		WRITE_ONCE(q->p_params.alpha,
++			   nla_get_u32(tb[TCA_FQ_PIE_ALPHA]));
+ 
+ 	if (tb[TCA_FQ_PIE_BETA])
+-		q->p_params.beta = nla_get_u32(tb[TCA_FQ_PIE_BETA]);
++		WRITE_ONCE(q->p_params.beta,
++			   nla_get_u32(tb[TCA_FQ_PIE_BETA]));
+ 
+ 	if (tb[TCA_FQ_PIE_QUANTUM])
+-		q->quantum = nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]);
++		WRITE_ONCE(q->quantum, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]));
+ 
+ 	if (tb[TCA_FQ_PIE_MEMORY_LIMIT])
+-		q->memory_limit = nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]);
++		WRITE_ONCE(q->memory_limit,
++			   nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]));
+ 
+ 	if (tb[TCA_FQ_PIE_ECN_PROB])
+-		q->ecn_prob = nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]);
++		WRITE_ONCE(q->ecn_prob,
++			   nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]));
+ 
+ 	if (tb[TCA_FQ_PIE_ECN])
+-		q->p_params.ecn = nla_get_u32(tb[TCA_FQ_PIE_ECN]);
++		WRITE_ONCE(q->p_params.ecn,
++			   nla_get_u32(tb[TCA_FQ_PIE_ECN]));
+ 
+ 	if (tb[TCA_FQ_PIE_BYTEMODE])
+-		q->p_params.bytemode = nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]);
++		WRITE_ONCE(q->p_params.bytemode,
++			   nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]));
+ 
+ 	if (tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR])
+-		q->p_params.dq_rate_estimator =
+-			nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]);
++		WRITE_ONCE(q->p_params.dq_rate_estimator,
++			   nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]));
+ 
+ 	/* Drop excess packets if new limit is lower */
+ 	while (sch->q.qlen > sch->limit) {
+@@ -472,22 +478,23 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
+ 		return -EMSGSIZE;
+ 
+ 	/* convert target from pschedtime to us */
+-	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, sch->limit) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, q->flows_cnt) ||
++	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, READ_ONCE(sch->limit)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, READ_ONCE(q->flows_cnt)) ||
+ 	    nla_put_u32(skb, TCA_FQ_PIE_TARGET,
+-			((u32)PSCHED_TICKS2NS(q->p_params.target)) /
++			((u32)PSCHED_TICKS2NS(READ_ONCE(q->p_params.target))) /
+ 			NSEC_PER_USEC) ||
+ 	    nla_put_u32(skb, TCA_FQ_PIE_TUPDATE,
+-			jiffies_to_usecs(q->p_params.tupdate)) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, q->p_params.alpha) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_BETA, q->p_params.beta) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, q->quantum) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT, q->memory_limit) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, q->ecn_prob) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_ECN, q->p_params.ecn) ||
+-	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, q->p_params.bytemode) ||
++			jiffies_to_usecs(READ_ONCE(q->p_params.tupdate))) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, READ_ONCE(q->p_params.alpha)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_BETA, READ_ONCE(q->p_params.beta)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, READ_ONCE(q->quantum)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT,
++			READ_ONCE(q->memory_limit)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, READ_ONCE(q->ecn_prob)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_ECN, READ_ONCE(q->p_params.ecn)) ||
++	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, READ_ONCE(q->p_params.bytemode)) ||
+ 	    nla_put_u32(skb, TCA_FQ_PIE_DQ_RATE_ESTIMATOR,
+-			q->p_params.dq_rate_estimator))
++			READ_ONCE(q->p_params.dq_rate_estimator)))
+ 		goto nla_put_failure;
+ 
+ 	return nla_nest_end(skb, opts);
 -- 
 2.53.0
 
