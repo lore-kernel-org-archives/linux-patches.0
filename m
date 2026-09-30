@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F05515897;
-	Wed, 30 Sep 2026 17:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B78E516157;
+	Wed, 30 Sep 2026 17:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788530; cv=none; b=cta+96UX3i1qblN7h42ZFfqCaWNsXt7LcaYdhyo5DQYyXa8jl67Sryx21kx8fr0aEuU4ImhsWSAnW5C9ic/zNJAXEpTwbBuVM2GNXS3o0tY19aKbbnzJ+eLX/CLAWXwEu40ImV4W4u8dqe/pii/3k55hMoJ4iXSJOTpszB7ChnA=
+	t=1790788533; cv=none; b=tgPzeJ7ZqMlwlqFPP3wy4fpUse6neOjen2DPXAdmQfpdB+dc/50LlCmBeujBWEIjbGu17ERIi9vq3qCM8GxKEGnMRwhZbIRgWSyl15CfmWt7kEGpk3TCY1z8MF57BwfzFFikc3WVNMSgsZfeGWsEJeIXB3HPsvW/TLLHgdKT56k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788530; c=relaxed/simple;
-	bh=jUdbJrVZqAIJxw69M3KLPL+fDLiPCMenKt2a0NsFxx0=;
+	s=arc-20240116; t=1790788533; c=relaxed/simple;
+	bh=eec4Lg/y/IPPqMqG2TbQCztbT6zceZi8nFdb7Km7WDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jveCQhaw1JNIuoJ2nk7CsA5/k85xjI5t9Z2FjVE1u3tK03hIINav5gL2CN/63QrwsNOprdhms4gt0WfXt4qaQ/XOl2Ez/7ElsqFjbQ70M8IkNPs/Inl7Fs+p24YtKRniuseMJ+FiJZTfmfNH5cGZw4Oc5Iq2MsXDbKvzmSBxuS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4R/Av+E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NnD5DJKKZOnnpjz8eD3+vHiJfAO6Pc/u/30rVkU3ptj0Lr7xyawq3RyavcPe0n0bYdImEQbYQnSd8cLr93tq0yF7G1AnsSymsneTNwM+3Oy7Pazf70G/S6DM2hdvypSOjGxsQim5DUXiRQk7e0GtBy55/hJtUcSePJqyOKsp0is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4GHFwDm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4R/Av+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E9F1F000FF;
-	Wed, 30 Sep 2026 17:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4GHFwDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69571F000FF;
+	Wed, 30 Sep 2026 17:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788529;
-	bh=mb9ZzzVbIUqcK5kHrm83jaYJF6aqld0TiznehI8kgDc=;
+	s=korg; t=1790788532;
+	bh=dKaQ2wU5QF1y4epxdh1MXZa4my0BgO4vxv7D31kG7+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F4R/Av+Eycsh/+yzrupgVkz4piWVtC5Mzh0M/tssoQLMY0Cq2m1F3TNjmYIZ7wEDO
-	 fFt1HTZCkRLvHAz3qHWd7OpSLnNze2FjxHtZ2eb9AAOwAUspmn2dn5Y50G0wmMACP5
-	 DzH1s+a+HKxRLNelNHHO5hWN96o4BhU5/YZKQspA=
+	b=q4GHFwDmlLNZ3fob80XSbHdKTFw4sBVtQ/UKGWvzuJNj76+GnbWVlQoW9XLSKJAKc
+	 Qsfwg15BBpv4ZwCYJ2RfHKrUqzxpJdeF5/GsUrlPpniDzEoEEvdcmSXyVp+W90Ls4G
+	 9E+vcAnlzqupohwm1+/s6l7jQ69pDWftAyOt9bD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Dmitriy Chumachenko <Dmitry.Chumachenko@cyberprotect.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 155/877] drm/amdgpu: check ras and obj before dereference
-Date: Wed, 30 Sep 2026 17:17:46 +0200
-Message-ID: <20260930152418.066740066@linuxfoundation.org>
+Subject: [PATCH 6.12 156/877] btrfs: abort transaction on failure to update inode for hole punching and reflinking
+Date: Wed, 30 Sep 2026 17:17:47 +0200
+Message-ID: <20260930152418.087782941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitriy Chumachenko <Dmitry.Chumachenko@cyberprotect.ru>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 723d4dc628d764b19cf9efca14b82cca5ff020c9 ]
+[ Upstream commit 97fcd34aa9fd73cefe3120ac9a82ca9d7763922f ]
 
-nbio_v7_9_handle_ras_controller_intr_no_bifring() dereferences ras and obj
-without checking either for NULL. Both amdgpu_ras_get_context() and
-amdgpu_ras_find_obj() can return NULL, e.g. during the window between
-adev->nbio.ras being set (early in amdgpu_ras_init(), by design, to
-enable the fatal-error interrupt as soon as possible) and the PCIE_BIF
-ras object actually being created in RAS late_init. Any interrupt in that
-window crashes in hard-IRQ context.
+If we fail to update the inode we error out without aborting the
+transaction, which can result in a persistent inconsistency if after
+the failure the transaction is committed, as we have dropped file
+extent items from a range and either punched a hole or insert a new file
+extent item for that range (for reflinks).
 
-This is analogous to commit d190b459b2a4 ("drm/amdgpu: the warning
-dereferencing obj for nbio_v7_4"), which fixed the same issue in the
-nbio_v7_4 handler.
+So add the missing transaction abort.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 7692e1ee2446 ("drm/amdgpu: add RAS fatal error handler for NBIO v7.9")
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Dmitriy Chumachenko <Dmitry.Chumachenko@cyberprotect.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c7071767a50a32ed727cf800ac84372429e3b4b3)
+Fixes: 2aaa66558172 ("Btrfs: add hole punching")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/file.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
-index 8e401f8b2a054..2b3a1b9f8efc0 100644
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
-@@ -518,7 +518,7 @@ static void nbio_v7_9_handle_ras_controller_intr_no_bifring(struct amdgpu_device
- 						RAS_CNTLR_INTERRUPT_CLEAR, 1);
- 		WREG32_SOC15(NBIO, 0, regBIF_BX0_BIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 9c3b5ecb0b01e..5627e2f7dd64a 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2545,8 +2545,10 @@ int btrfs_replace_file_extents(struct btrfs_inode *inode,
+ 					      inode_set_ctime_current(&inode->vfs_inode));
  
--		if (!ras->disable_ras_err_cnt_harvest) {
-+		if (ras && !ras->disable_ras_err_cnt_harvest && obj) {
- 			/*
- 			 * clear error status after ras_controller_intr
- 			 * according to hw team and count ue number
+ 		ret = btrfs_update_inode(trans, inode);
+-		if (ret)
++		if (unlikely(ret)) {
++			btrfs_abort_transaction(trans, ret);
+ 			break;
++		}
+ 
+ 		btrfs_end_transaction(trans);
+ 		btrfs_btree_balance_dirty(fs_info);
 -- 
 2.53.0
 
