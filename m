@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9207509EF1;
-	Wed, 30 Sep 2026 17:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B625E5221C6;
+	Wed, 30 Sep 2026 17:57:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791027; cv=none; b=uhFv931N3sfHaXqf7e5EgpM+oTfnWf1L6FohWHmUrLovAlWfStothLgb3iMGDZzBJm0Yj3MhYGnEKdFgQpFMq9ZoqwCL2MYEejHY11CGfgLnsltq7mwMEgFTXFIhP3lY3kQc52VkMjKsaEv9cbSVrl+O31YzFuttJMQY1bHDpGY=
+	t=1790791029; cv=none; b=towckkrihVby+irwZ+tvwoZxKi4kUdA+/r0fFZzTJ5xvwAsHZYEhlbahLssgOPGwbejk8k+nxWw5hxvwIUfzvpo0aab0ExMtQZJ0LFLKY+h7oW24fa3fX849705ZwsBRDLfR5ksRWAVnAZNbTJ2RrlK/oiW3YnfXaEWKom2uPxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791027; c=relaxed/simple;
-	bh=rD93wHfnkYNoD66omtkL0Zc2xFgkPzTFIO7n/Y2+KuU=;
+	s=arc-20240116; t=1790791029; c=relaxed/simple;
+	bh=TQzYzY6pYN8Oy6dmheM4RhJDtfjO5D3QBJ6o5P3U3/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/u/I8i1UmGeyFMHx9t5eH3admGluD4Vr0YgnN99s+oIXj7ojTeMnJjqq3b+ZDmF6LKSePH2YtTQECHDDLICO+SXkS9NNfplsGAos+B/4mZACXx7i2Ad3jW13Qur710/w5C57s5cL9T8ZKRVGzZ/Tzwv1IQ5QSE9nmqAV4G5nl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlSbE4XA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SwIGRNZkLM7hOX+8FBgZ0vnYRd71LfPxTNx0AAFNrzjnoCpfM1xmEFZX4wJ2qsFsn2IbJHuk92fER6gudGKm4yJctQbBTUoUHQCbnn4UaMe1Jv92RIPia+F8ESo7v+pEQtn3NPgw+GtXPTu9YP4rcCzlCLVA+UoUdZEC1ZOVZCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVGT4v6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlSbE4XA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6621F000FF;
-	Wed, 30 Sep 2026 17:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVGT4v6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5501F000FF;
+	Wed, 30 Sep 2026 17:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791025;
-	bh=2fgSo5v6mwhpHa4u6HLySxlye3h4l6CVPwkNoAj2VRA=;
+	s=korg; t=1790791028;
+	bh=sP8SMrPDpSirzMYvXjMRd+1O6/oyL3OnFoGmbix5yQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LlSbE4XAk+0pcshMvnDE5Bn5D7Txh2JYluGp7UObZ+5w/l1QguyUfDhHGSe89nas1
-	 CZknRslJMTk6UWAScpWjRINeCIY1b4g7HSowxuNvomDk8LRa2Tn06iHI2An311p0tW
-	 Dn36jMGuZ7z1Nrg2361ZHVH0q3kMHJ+KwFpr2dUw=
+	b=tVGT4v6GNvh1yJayfLyFV7x/CNr2pzy34oQjWxAad3Zj9+1L6Ax40vyBjFrpoqJvZ
+	 8o34KRst3JfSQL7KuygUNpqH3rcQMJYV7g1JPE2PvEyUzF1eVys6UK0wx/gGGIKytN
+	 mrL65F6VjzAV5WNYKbWstmvcNNVmMRjEWiscCGvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Galen Hassen <rwekyes@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/752] net: ibm: emac: mal: fix potential system hang in mal_remove()
-Date: Wed, 30 Sep 2026 17:20:01 +0200
-Message-ID: <20260930152401.014068425@linuxfoundation.org>
+Subject: [PATCH 5.15 158/752] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
+Date: Wed, 30 Sep 2026 17:20:28 +0200
+Message-ID: <20260930152401.611168440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,52 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Galen Hassen <rwekyes@gmail.com>
 
-[ Upstream commit 7c5d41f87f079990bf241359e3c1332d8d10fe87 ]
+[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
 
-napi_disable() is not idempotent and calling it on an already-disabled
-or unenabled NAPI context will cause the kernel to spin indefinitely
-waiting for the NAPI_STATE_SCHED bit to clear.
+The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
+Conexant SN6140 codec. The internal microphone is on pin 0x1a but
+the BIOS configures it with pin default 0x95a60120, which includes
+a jack detection bit that causes the kernel to treat it as an
+unplugged external mic rather than a fixed internal mic.
 
-In mal_remove(), napi_disable() is called unconditionally. If no MACs were
-registered, NAPI was never enabled. Also, if they were registered but
-subsequently unregistered, NAPI was already disabled in
-mal_unregister_commac(). In either case, calling napi_disable() causes
-the kernel to hang upon module removal.
+Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
+setting the connectivity bits to indicate a fixed/always-connected
+device. This allows the internal microphone to be correctly
+identified and used.
 
-Fix this by only calling napi_disable() in mal_remove() if the commac list
-is not empty (which implies NAPI is enabled).
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260603230821.5619-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Galen Hassen <rwekyes@gmail.com>
+Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_conexant.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index b095d5057b5eb..34d9e03f631c0 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -716,13 +716,13 @@ static int mal_remove(struct platform_device *ofdev)
- 	MAL_DBG(mal, "remove" NL);
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 0aed86820402c..0a2ebb8789bb3 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -307,6 +307,7 @@ enum {
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+ 	CXT_PINCFG_SWS_JS201D,
++	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
+ 	CXT_FIXUP_ACER_SWIFT_HP,
+@@ -841,6 +842,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
+ 	{}
+ };
  
- 	/* Synchronize with scheduled polling */
--	napi_disable(&mal->napi);
--
--	if (!list_empty(&mal->list))
-+	if (!list_empty(&mal->list)) {
-+		napi_disable(&mal->napi);
- 		/* This is *very* bad */
- 		WARN(1, KERN_EMERG
- 		       "mal%d: commac list is not empty on remove!\n",
- 		       mal->index);
-+	}
- 
- 	free_irq(mal->serr_irq, mal);
- 	free_irq(mal->txde_irq, mal);
++/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
++static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
++	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
++	{}
++};
++
+ /* SuoWoSi/South-holding JS201D with sn6140 */
+ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
+ 	{ 0x16, 0x03211040 }, /* hp out */
+@@ -1032,6 +1039,10 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
++	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
++	},
+ 	[CXT_PINCFG_TOP_SPEAKER] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cxt_fixup_sirius_top_speaker,
+@@ -1137,6 +1148,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
++	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
 -- 
 2.53.0
 
