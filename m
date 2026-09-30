@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A336514764;
-	Wed, 30 Sep 2026 16:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C8F51588E;
+	Wed, 30 Sep 2026 16:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784733; cv=none; b=pEIP683MihZhR5NgXHB2RqjBOkb1u/arXs90BwKMkmmX90OgJQy3a1gEI5agBCCqoVucIeSAU8oARmCOyHP8XZVYJNlbwIusd5j2xQNU3v1eQdhG7SqHYwhgcwwPDjSi6Y0pC+sykndBSmdFclih8yS5+Cc+IcQsqeFNo1V6ros=
+	t=1790784735; cv=none; b=ZPBhH92mhfAuCowSe2nXMyHi6KZhzYvLJ8ruUZ8sgFb5c/sZKy52UikiLeNPcDVaw/bfhR3diW2TLXDIjfj1344K0QsZ2E1ItnHikcIk0HLLagAWVLmUuDAC681pnFohOW13LCP2KNvM+ipvX2gNmVmrKc7yOt2pTA8s0HbB8uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784733; c=relaxed/simple;
-	bh=BBOEaxJXZqFlL5jbQJtL9k/DiKKTwvuIVJKH4E35SBs=;
+	s=arc-20240116; t=1790784735; c=relaxed/simple;
+	bh=IVvclSFb4kWjVLKpRBKkINBSO2df8B3Lpxscn33iDZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4cOd9YYbz0IdUvswD7lYm4kRRCVb5t0qEBr7sQ8vDp67xPyjaM0pWnD9MwfBcfPhlOmbVhNmmScBAXsgGWC9uYDn7Q0eWSORLm7g4G3uVKDRDs2Px4HMc/LCUwyWHo0UBR8WlVhVSFjdP8MmTkW/qM96JIjz+xVPMrXcDOa02g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7N7tLya; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VPezy5dKooa5BCT3xn44w96VPxlPe29itFrxJFsDo7UNyQQWhdsYk2fy8JEUpbeUPdrpYps/fykxoN1e9RWhD2uan1j1OOMWN1lHH6b1XNVaWEJdpN8iumJQ7zgc6h2T57dhc4tRB/xC+Q+/GTJMZgGO81vk0ia9Rp1MUaF5tRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLnlVwhn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7N7tLya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CD71F00899;
-	Wed, 30 Sep 2026 16:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLnlVwhn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99FC1F000FF;
+	Wed, 30 Sep 2026 16:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784728;
-	bh=B2H1FeauJ50b6EcDzW1Ze/iA4WtymDSaTUVz1bolmVI=;
+	s=korg; t=1790784731;
+	bh=/yehAe9ITI9GnU3tNgFPg6EB5pyDz5FvVpLiqY+NomU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e7N7tLyaI+ZhtaO9ICBtF4D9BL40LOyALc3Mc1V0dsUNDrMYRPaHQ3PjySCvTmjxH
-	 qvXcyiQFWu5QnY6NOET6hIvzDP6yN3Q8KaT30benBVb5AN/W8WRSSMKmO2/hQ2jTKe
-	 YiPrFuVRoF/ZGF7nphwvvKOSe93JjlCvInhXuwA4=
+	b=VLnlVwhnwtRBbzy5rH4vJ9y1+OxdfkCkHEn0diHOEGeFtxusJJbGDIqhlOWBTPm3e
+	 J4lBuz+90/6OQXmFIIzNq3GC0nRv0zNteghLxzzRp8IhpCI6h5cfE2T2Tuf8hG0lcX
+	 R2y12PmoTdaTUkaMMM+6KYl8qChUbbm57hP8fZCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fygo.io>,
+	Galen Hassen <rwekyes@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/982] md/raid5: account discard IO
-Date: Wed, 30 Sep 2026 17:15:49 +0200
-Message-ID: <20260930152421.383169137@linuxfoundation.org>
+Subject: [PATCH 6.1 204/982] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
+Date: Wed, 30 Sep 2026 17:15:40 +0200
+Message-ID: <20260930152421.192836694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,84 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Galen Hassen <rwekyes@gmail.com>
 
-[ Upstream commit 74ddbf98e2db646ec58f7e7731c936b7a4a470fe ]
+[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
 
-Raid5 handles discard bios internally through make_discard_request() and
-never passes them through md_account_bio(). As a result, discard IO is
-missing the md-device iostat accounting that normal raid5 IO and discard
-IO in other raid levels get from md_account_bio().
+The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
+Conexant SN6140 codec. The internal microphone is on pin 0x1a but
+the BIOS configures it with pin default 0x95a60120, which includes
+a jack detection bit that causes the kernel to treat it as an
+unplugged external mic rather than a fixed internal mic.
 
-Before accounting the bio, trim the request to the full data stripes that
-raid5 will actually discard. The first full stripe is the ceiling of the
-bio start divided by data-stripe sectors, and the last full stripe is the
-floor of the bio end divided by data-stripe sectors. Account that exact
-MD logical full-stripe range, then restore the original iterator so bio
-completion and iostat still cover the original request.
+Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
+setting the connectivity bits to indicate a fixed/always-connected
+device. This allows the internal microphone to be correctly
+identified and used.
 
-Link: https://patch.msgid.link/20260605072639.2434847-2-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Galen Hassen <rwekyes@gmail.com>
+Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ sound/pci/hda/patch_conexant.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 6675ca50259e0..664aa8c0781e9 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5796,7 +5796,10 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- {
- 	struct r5conf *conf = mddev->private;
- 	sector_t logical_sector, last_sector;
-+	sector_t first_stripe, last_stripe;
- 	struct stripe_head *sh;
-+	struct bvec_iter bi_iter;
-+	struct bio *orig_bi = bi;
- 	int stripe_sectors;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 0aed86820402c..0a2ebb8789bb3 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -307,6 +307,7 @@ enum {
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+ 	CXT_PINCFG_SWS_JS201D,
++	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
+ 	CXT_FIXUP_ACER_SWIFT_HP,
+@@ -841,6 +842,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
+ 	{}
+ };
  
- 	/* We need to handle this when io_uring supports discard/trim */
-@@ -5807,19 +5810,29 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
- 		/* Skip discard while reshape is happening */
- 		return;
- 
--	logical_sector = bi->bi_iter.bi_sector & ~((sector_t)RAID5_STRIPE_SECTORS(conf)-1);
--	last_sector = bio_end_sector(bi);
--
--	bi->bi_next = NULL;
--
- 	stripe_sectors = conf->chunk_sectors *
- 		(conf->raid_disks - conf->max_degraded);
--	logical_sector = DIV_ROUND_UP_SECTOR_T(logical_sector,
--					       stripe_sectors);
--	sector_div(last_sector, stripe_sectors);
-+	first_stripe = DIV_ROUND_UP_SECTOR_T(bi->bi_iter.bi_sector,
-+					     stripe_sectors);
-+	last_stripe = bio_end_sector(bi);
-+	sector_div(last_stripe, stripe_sectors);
++/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
++static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
++	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
++	{}
++};
 +
-+	if (first_stripe >= last_stripe) {
-+		bio_endio(bi);
-+		return;
-+	}
-+
-+	bi_iter = bi->bi_iter;
-+	bi->bi_iter.bi_sector = first_stripe * stripe_sectors;
-+	bi->bi_iter.bi_size = ((last_stripe - first_stripe) *
-+			       stripe_sectors) << 9;
-+	md_account_bio(mddev, &bi);
-+	orig_bi->bi_iter = bi_iter;
-+	bi->bi_iter = bi_iter;
-+	bi->bi_next = NULL;
- 
--	logical_sector *= conf->chunk_sectors;
--	last_sector *= conf->chunk_sectors;
-+	logical_sector = first_stripe * conf->chunk_sectors;
-+	last_sector = last_stripe * conf->chunk_sectors;
- 
- 	for (; logical_sector < last_sector;
- 	     logical_sector += RAID5_STRIPE_SECTORS(conf)) {
+ /* SuoWoSi/South-holding JS201D with sn6140 */
+ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
+ 	{ 0x16, 0x03211040 }, /* hp out */
+@@ -1032,6 +1039,10 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
++	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
++	},
+ 	[CXT_PINCFG_TOP_SPEAKER] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cxt_fixup_sirius_top_speaker,
+@@ -1137,6 +1148,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
++	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
 -- 
 2.53.0
 
