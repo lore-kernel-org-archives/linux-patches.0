@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B805B51C056;
-	Wed, 30 Sep 2026 18:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83988519DFD;
+	Wed, 30 Sep 2026 18:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792875; cv=none; b=HV+0OsQHToH2jmXEe4pGzvVX/MjrKWrowDkdpOasaD11KNS90skryQFF7AWAPa4i4fmi1RSOPkQXJokZ0anNh0IBA3XR5U5foyY1rdFVdwBxXF6hx2yTmI8jG+r27guEDjMwPKUB59rDrEpgrcs2aolvEOSCtxKthTRs3iMFBVY=
+	t=1790792878; cv=none; b=ZfzxlHm4/SLOFw5upNQMeK1GZWrIPfG3XXiMH4iiBGEeBRaPqbEzQL9t5cFFpX2sOhejxMDwEw5UERetg5Zk4UCsaA00gVEF0oTfkABTOfZ8LpIfrxkaNQ/CtFAMR02iOe1FCSnYeAz4WJvieO5WFcdmFoX5LOGg0Naoht8Cqhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792875; c=relaxed/simple;
-	bh=khaO9ifMdEq17+l7wnIlFzioe5/qN/gjmRpZMewph54=;
+	s=arc-20240116; t=1790792878; c=relaxed/simple;
+	bh=MwaF1p/PKcR9gpGA0vzlKWHWzmeoYQQXmljUdCelvnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4tCA8h0Asq7uR2f22TKz7++PeZLb5zbIaKaEt9D5ZT8K4pBUPccBuXoqS/8vrIm20AvLNMXblXa8QIfSp13vUsrM4CcNhIuTGuOb48/qx4df8y9EoIpepFqoWw/KDsUmom9g5RZefv5vEhLe/vVwxACIBiChmvyNFt5CaEVW3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mb9egTiD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkmPKe6L2q7mqgSFMtGLy/UV9XQSHdLOBqjnFWfREKe311iQiAlFVUpy89OBBuI4tnMUwzHkiisKVaXNxRuf6Uzw+AzZHH/ipL39M34Qu3j1dmVjDI0BFIPjtU5rphFC6LJ2lvGeQAycSbfC1CjxuNYFC2WrQJcMq82tKSHQy1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjNtnDrp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mb9egTiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBDB1F000FF;
-	Wed, 30 Sep 2026 18:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjNtnDrp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FC01F000FF;
+	Wed, 30 Sep 2026 18:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792874;
-	bh=jXJGFlZgVHN73cdt00z+lV1W1F/z/0MIls+WImP4+qg=;
+	s=korg; t=1790792877;
+	bh=QnPkxpICwsROBrdnCsHFRMXZD8zd+4aJfXEwmUH9gYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mb9egTiDPMt+F4a22D8wXmYvW/C/D7TCSKd/VYeqDRhKX6K/FUbezRvmOXg/a5znR
-	 fB7de+DBIQMXTMnRsrghm+CZl/lWAf6WM8gAOsM/CCDjOA3vrGfYkAAhFc39rbMYyA
-	 Y/kf9Iow0lcD51doHv+GlvfgsBAfXWBmUL/zM4AA=
+	b=WjNtnDrpHPN01W2UwhaqBF0zHLLMzaUCmmgPPcBTcofAls2ZMf6XymeHZNdp7vPuW
+	 ConYPu/w4vS8ot24rPGrBlpS963vjR9kE5MeXaZhEeo4gA6gzczQEYK2YWXiSEFA+M
+	 guIRbNNYsMSol9y72urY066KUfWFBHeB8YHV1Duw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Anup Patel <anup@brainfault.org>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/395] RISC-V: KVM: Preserve firmware counter value across stop/start
-Date: Wed, 30 Sep 2026 17:24:51 +0200
-Message-ID: <20260930152341.251058640@linuxfoundation.org>
+Subject: [PATCH 6.18 056/395] xsk: Use a 32-bit compare in xsk_map_gen_lookup
+Date: Wed, 30 Sep 2026 17:25:18 +0200
+Message-ID: <20260930152341.850932027@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -51,61 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 8b3fd1a8b305321171602bfa7c41212441cf69e4 ]
+[ Upstream commit 70504de0bb627848667207bec7ccfd647deb8814 ]
 
-Firmware events accumulate in kvpmu->fw_event[].value while running,
-but counter stop only clears fw_event[].started without saving the
-value back to pmc->counter_val. A subsequent counter start without
-SBI_PMU_START_FLAG_SET_INIT_VALUE reloads the stale counter_val into
-fw_event[].value, losing all events counted so far.
+xsk_map_gen_lookup() loads a u32 key and compares it with max_entries
+using BPF_JMP_IMM. BPF immediates are sign-extended to 64 bits, so a
+max_entries value of 0x80000000 or higher becomes a threshold larger
+than every zero-extended 32-bit key. An out-of-range index then skips
+the bounds check and the generated lookup reads past xsk_map[].
 
-Save fw_event[].value into counter_val when actually stopping a
-running counter, and remove the now redundant synchronization from
-the snapshot path.
+Compare with BPF_JMP32_IMM so the check stays in 32-bit unsigned range.
 
-Fixes: badc386869e2c ("RISC-V: KVM: Support firmware events")
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260825083719.643970-2-suunj1331@gmail.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Fixes: e65650f291ee ("bpf: Implement map_gen_lookup() callback for XSKMAP")
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://patch.msgid.link/7d2cb8e8dfaa9eb8fdff85156987a60960787dc3.1789056660.git.zhilinz@nebusec.ai
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/xdp/xskmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index ef55089c0c1a6..f3a8fd52d13a5 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -648,10 +648,12 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
- 				goto out;
- 			}
+diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
+index afa457506274c..607f8b7e16d96 100644
+--- a/net/xdp/xskmap.c
++++ b/net/xdp/xskmap.c
+@@ -124,7 +124,7 @@ static int xsk_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
+ 	struct bpf_insn *insn = insn_buf;
  
--			if (!kvpmu->fw_event[fevent_code].started)
-+			if (!kvpmu->fw_event[fevent_code].started) {
- 				sbiret = SBI_ERR_ALREADY_STOPPED;
--
--			kvpmu->fw_event[fevent_code].started = false;
-+			} else {
-+				kvpmu->fw_event[fevent_code].started = false;
-+				pmc->counter_val = kvpmu->fw_event[fevent_code].value;
-+			}
- 		} else if (pmc->perf_event) {
- 			if (pmc->started) {
- 				/* Stop counting the counter */
-@@ -669,9 +671,7 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
- 		}
- 
- 		if (snap_flag_set && !sbiret) {
--			if (pmc->cinfo.type == SBI_PMU_CTR_TYPE_FW)
--				pmc->counter_val = kvpmu->fw_event[fevent_code].value;
--			else if (pmc->perf_event)
-+			if (pmc->perf_event)
- 				pmc->counter_val += perf_event_read_value(pmc->perf_event,
- 									  &enabled, &running);
- 			/*
+ 	*insn++ = BPF_LDX_MEM(BPF_W, ret, index, 0);
+-	*insn++ = BPF_JMP_IMM(BPF_JGE, ret, map->max_entries, 5);
++	*insn++ = BPF_JMP32_IMM(BPF_JGE, ret, map->max_entries, 5);
+ 	*insn++ = BPF_ALU64_IMM(BPF_LSH, ret, ilog2(sizeof(struct xsk_sock *)));
+ 	*insn++ = BPF_ALU64_IMM(BPF_ADD, mp, offsetof(struct xsk_map, xsk_map));
+ 	*insn++ = BPF_ALU64_REG(BPF_ADD, ret, mp);
 -- 
 2.53.0
 
