@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A77F5226BF;
-	Wed, 30 Sep 2026 17:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC94522F0A;
+	Wed, 30 Sep 2026 17:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790373; cv=none; b=mrLm1P7nkAnH2ySGZxpb+ONiBGCfeE9yGZ+9walXZQdp5rlQITOdc5SWQZxfcBA0xGkJ0ctNgnHE40MgDUnl6EgrcuNeN7aF6fLV9GPRRaSFIinpy/By+Cwvyg3drbfDHTXGSvpr7H3XqehK4LGwARkKHS9SkmfYBzJQoOF3nLY=
+	t=1790790376; cv=none; b=V6/zTNjKHxEThLAk+icFrmtgRT5Tw00KsuiWIy0+Gv+A1hjQRi4fgjxmrjyhV1RoVsJl0xmtf8zH9nzz4didSJhfb1aTy9muPSaB/bKvRJKu87HXFkar9Pfd77Rd6W5w5MqdrrEFYf9Mu/UQCSgbfmakDpigRtBOEdY1Usl3ePo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790373; c=relaxed/simple;
-	bh=iltx4OXhBdRlhDSrICaSxtPhH4vPhoLMAp+iAXswt60=;
+	s=arc-20240116; t=1790790376; c=relaxed/simple;
+	bh=J7ig5Mt7vyhaupXMlL82dcC3aYCxMjCwU08laE2HK84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bE/ABBKllRZ1W83GaxQ6CMhrOStrlLy3ai/wO5oeUZlSqkZLtmLA32rWNm2rS1uCchxeUuSWWcPWm/mMxjh/EbqtpcSKH84prs2wvgtLLxXkAcJWwj1A8iS6Ubgko3EYhrWP7L+9uEWqMz3urlAGkqg5s0RhjNNzyMkkHPf8iS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDlTy9dT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=As9zILbwXK7yx0zBw4Ehtkq7/xLOMAkEpR4L88iNjfuOM02RGVth4xS1TEcHF/a+WqaSC9/E7nZwGUSjhqzwyBGS2UfjZOSRKzUWliSRM1MhP54iBRJqbTqJVIxrNeoA+Wlp/Wuct7c3Sn39tEgkVfUVZrcr8OdTJhasia3Z/pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01rij+tV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDlTy9dT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37181F000FF;
-	Wed, 30 Sep 2026 17:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01rij+tV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0B51F000FF;
+	Wed, 30 Sep 2026 17:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790372;
-	bh=Fbu4cDNTG7zevArRwi9rOo7LPX7iv8cb9GH1ojgXmDc=;
+	s=korg; t=1790790375;
+	bh=y8dT6Agmw3cp0DWfgca/hhcQBTvElo5kns9v2cikbE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gDlTy9dT6ci64yA8hSIdLiGJFfJbCATzgk3VgYLVd43QhgEHaFoiDlWj2hiR7smTH
-	 Tpcg5UOVYnGoKxhurU44O8PQ6tRldnuVcTb5l5YnRdRvdJbdGF3jHQSo+mdkp/zwZb
-	 Z0kuVgzk2EHCmFO6Q6vvgg9KKwRN472uxpxQXvKk=
+	b=01rij+tVUc8vvXgf7OSJL7glP5mU84HH50q5vBK+aNh2D43KBVvFKJIaXdnyijoE5
+	 qnV6eCknDcgC5NXJiT7rSFDPLcDxL9QmTbX99ZeXTJLQhT0qsOC2rOp96WXc2hMdLZ
+	 u3uN5+lV/x2mmBOmxAgDz7bUhA3xV34848eqRSWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Martin <Andrew.Martin@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 806/877] drm/amdgpu: Failed to check various return code
-Date: Wed, 30 Sep 2026 17:28:37 +0200
-Message-ID: <20260930152432.109472938@linuxfoundation.org>
+Subject: [PATCH 6.12 807/877] drm/amdgpu: set the VM pointer to NULL in amdgpu_job_prepare
+Date: Wed, 30 Sep 2026 17:28:38 +0200
+Message-ID: <20260930152432.130872188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,93 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Martin <Andrew.Martin@amd.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 357ef5b3b7e98b4d21cb0abc1bde1140332c7eb8 ]
+[ Upstream commit 26c95e838e6301b0230430ec2fadeabfcb07aeda ]
 
-Clean up code to quiet the compiler on us failing to check the return
-code.
+As soon as the prepare phase is completed the VM might be released,
+better set it to NULL.
 
-Signed-off-by: Andrew Martin <Andrew.Martin@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 5155002b03b2 ("drm/amdgpu: fix rmmio iounmap skipped on device removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c       |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |   14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -368,7 +368,7 @@ void amdgpu_amdkfd_free_gtt_mem(struct a
- {
- 	struct amdgpu_bo **bo = (struct amdgpu_bo **) mem_obj;
- 
--	amdgpu_bo_reserve(*bo, true);
-+	(void)amdgpu_bo_reserve(*bo, true);
- 	amdgpu_bo_kunmap(*bo);
- 	amdgpu_bo_unpin(*bo);
- 	amdgpu_bo_unreserve(*bo);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -722,7 +722,7 @@ kfd_mem_dmaunmap_userptr(struct kgd_mem
- 		return;
- 
- 	amdgpu_bo_placement_from_domain(bo, AMDGPU_GEM_DOMAIN_CPU);
--	ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
-+	(void)ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
- 
- 	dma_unmap_sgtable(adev->dev, ttm->sg, direction, 0);
- 	sg_free_table(ttm->sg);
-@@ -771,7 +771,7 @@ kfd_mem_dmaunmap_sg_bo(struct kgd_mem *m
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -368,6 +368,13 @@ amdgpu_job_prepare_job(struct drm_sched_
+ 			dev_err(ring->adev->dev, "Error getting VM ID (%d)\n", r);
+ 			goto error;
+ 		}
++		/*
++		 * The VM structure might be released after the VMID is
++		 * assigned, we had multiple problems with people trying to use
++		 * the VM pointer so better set it to NULL.
++		 */
++		if (!fence)
++			job->vm = NULL;
  	}
  
- 	amdgpu_bo_placement_from_domain(bo, AMDGPU_GEM_DOMAIN_CPU);
--	ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
-+	(void)ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
- 
- 	dir = mem->alloc_flags & KFD_IOC_ALLOC_MEM_FLAGS_WRITABLE ?
- 				DMA_BIDIRECTIONAL : DMA_TO_DEVICE;
-@@ -981,7 +981,7 @@ unwind:
- 		if (!attachment[i])
- 			continue;
- 		if (attachment[i]->bo_va) {
--			amdgpu_bo_reserve(bo[i], true);
-+			(void)amdgpu_bo_reserve(bo[i], true);
- 			if (--attachment[i]->bo_va->ref_count == 0)
- 				amdgpu_vm_bo_del(adev, attachment[i]->bo_va);
- 			amdgpu_bo_unreserve(bo[i]);
-@@ -1251,11 +1251,11 @@ static int unmap_bo_from_gpuvm(struct kg
- 		return -EBUSY;
- 	}
- 
--	amdgpu_vm_bo_unmap(adev, bo_va, entry->va);
-+	(void)amdgpu_vm_bo_unmap(adev, bo_va, entry->va);
- 
--	amdgpu_vm_clear_freed(adev, vm, &bo_va->last_pt_update);
-+	(void)amdgpu_vm_clear_freed(adev, vm, &bo_va->last_pt_update);
- 
--	amdgpu_sync_fence(sync, bo_va->last_pt_update);
-+	(void)amdgpu_sync_fence(sync, bo_va->last_pt_update);
- 
- 	return 0;
- }
-@@ -2358,7 +2358,7 @@ void amdgpu_amdkfd_gpuvm_unmap_gtt_bo_fr
- {
- 	struct amdgpu_bo *bo = mem->bo;
- 
--	amdgpu_bo_reserve(bo, true);
-+	(void)amdgpu_bo_reserve(bo, true);
- 	amdgpu_bo_kunmap(bo);
- 	amdgpu_bo_unpin(bo);
- 	amdgpu_bo_unreserve(bo);
+ 	return fence;
 
 
