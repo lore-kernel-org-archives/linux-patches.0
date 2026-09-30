@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FCC3B71B6;
-	Wed, 30 Sep 2026 18:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A523465192;
+	Wed, 30 Sep 2026 18:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791988; cv=none; b=ImQQ4eHWR7Tcfch2j1kjUji+4zQLjqVHRJ6Q299DiRaa3+AjUMsAasQH77E5VPWF4jcGg2Mnj984XqyH5XSG/goOcdcKOL4mpvF2NyWgMVgeSiQDMN37sb4i8TP7GlMw6F8F/FSLtYURWfXbQYq8QdmLhzEngbTWZ5LpuiTgtFs=
+	t=1790791991; cv=none; b=BlK7WvKvE/6W5mHZ9H1n4O2MQU3+AmqIEAlBbUxVwHrEJuTnFXRr59RjC6LknpuSY2Ipu4DBqoDWl3b/1P1rFh7ivFy8rsgG6foVQWENGyb7r4q2U+29qqOa7mPGo8R53cIqafR48iPUkMTVTM+qqEtOakp5Pwebgi26VvosuPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791988; c=relaxed/simple;
-	bh=puuCs3Ua0xxD4d8k4UJi9UYrPhEoFDfga2y6j0eChEQ=;
+	s=arc-20240116; t=1790791991; c=relaxed/simple;
+	bh=lgwv1bBrZDy7aCzeyqWzk6VbwQ7wb9z9xRIvWag6/do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7hTP9pUHslULQqqZq1s1lia7IUu+KIYHdHxczMu9xcH1ao7ypZNTOsSMiLcWoxqjHpwmbYjvlxtsB2pMLNK8IaiE8r8kmrsmBcLbxbvVCz3SqGKtkjINH1m+uF4impK/QHn1kFzPP5HYuekJ6hmTcVvYnKFIRONROdc9SyVcdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hz2EuM6C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XYVq/pxWvjCNzepLPxbHyvufT3diUFTpGmmU6v8mQUlxne3QEzEbsPdklG9vullCRvMXlvEm0ZdNoJ6+ibn+g1GXOTUN2CrHofeDRH5r3tbKn7x56WRn65lYXnBj8q/WjST609cB9bsHkhb0D2GFMlN0PQfNNZZoOhaZOb3A9ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f04M9Gyh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hz2EuM6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAB91F000FF;
-	Wed, 30 Sep 2026 18:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f04M9Gyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1E41F00899;
+	Wed, 30 Sep 2026 18:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791987;
-	bh=cs/j7Y6Jl4zq8FvWXoEzm2Mek6RWhz7K3Pc6PC6ihRU=;
+	s=korg; t=1790791990;
+	bh=+1uAYievOhqX+097H1b9weofbrt2ILvHHAleQBdfPF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hz2EuM6CaGc0EAOuK05SJMr1epBzdYEUv+pkPq2oh4E0YN4xEz5oVVh6M0NseRJZz
-	 WZQSwTxHu1ZjL4VpKILYx5EUHC69Wol3ql29NXS6YCyKJmTSNBsjuT3riUq+nQKOqF
-	 leVegVLCIJWWtNUOXOFBOwFakUwXcOfvmZiG/E/g=
+	b=f04M9Gyhv9EGMRPyIFFgNbja1v+ZbEbdn38vETShQa50f2UeIDtUJP4HB0d+gay4+
+	 sfRFECDXFgc4FtGuoq0+YofWMsxMIcG49os7YdrR/3QY9kpvoogE5EGVxg8ejWTP5t
+	 2Ya617OmRchgqiRi6NypbO2hRoZ5oPzPeNpwqkVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 495/752] wifi: brcmfmac: fix lost 802.1x TX completion wakeup
-Date: Wed, 30 Sep 2026 17:26:05 +0200
-Message-ID: <20260930152408.976007893@linuxfoundation.org>
+Subject: [PATCH 5.15 496/752] tcp: Dont call skb_clone_and_charge_r() for close()d listener in tcp_v6_do_rcv().
+Date: Wed, 30 Sep 2026 17:26:06 +0200
+Message-ID: <20260930152408.996333993@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,46 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 621d90169cef6c8da5b6134db5c0c4e23cdd09ce ]
+[ Upstream commit 8e759cd1f6444a946bd1fd2b2b29eea582eea1d5 ]
 
-brcmf_txfinalize() decrements pend_8021x_cnt before a lockless
-waitqueue_active() check. atomic_dec() does not order the decrement
-against the check.
+tcp_v6_do_rcv() no longer calls skb_clone_and_charge_r() for
+TCP_LISTEN since commit 073d89808c06 ("net: fix data-races around
+sk->sk_forward_alloc").
 
-The waiter can therefore observe a nonzero count while the waker observes
-an empty queue, losing the final wakeup and delaying key installation
-until the 950 ms timeout.
+However, there is still a small race window between tcp_v6_rcv()
+and tcp_v6_do_rcv(), where concurrent close() changes TCP_LISTEN
+to TCP_CLOSE, causing skb_clone_and_charge_r() to be called
+locklessly and resulting in the splat below. [0]
 
-Add smp_mb__after_atomic() to order the decrement before the queue
-check. wait_event_timeout() provides the matching barrier. LKMM confirms
-that this forbids the lost-wakeup outcome.
+Let's avoid calling skb_clone_and_charge_r() for TCP_CLOSE as well.
 
-Fixes: 21fff75d2fb6 ("brcmfmac: use wait_event_timeout for 8021x pending count")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260811082702.44521-1-kmehltretter@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This is fine for non-listeners because tcp_rcv_state_process()
+drops skb for TCP_CLOSE and opt_skb was freed immediately anyway.
+
+[0]:
+sk->sk_forward_alloc
+WARNING: net/ipv4/af_inet.c:162 at inet_sock_destruct+0x64d/0x810 net/ipv4/af_inet.c:162, CPU#1: ksoftirqd/1/28
+Modules linked in:
+CPU: 1 UID: 0 PID: 28 Comm: ksoftirqd/1 Not tainted 7.2.0 #17 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+RIP: 0010:inet_sock_destruct+0x64d/0x810 net/ipv4/af_inet.c:162
+Code: 3d 49 ff e9 06 fd ff ff e8 d0 5b 83 f8 90 0f 0b 90 e9 35 fe ff ff e8 c2 5b 83 f8 90 0f 0b 90 e9 c5 fe ff ff e8 b4 5b 83 f8 90 <0f> 0b 90 e9 04 ff ff ff e8 a6 5b 83 f8 90 0f 0b 90 e9 65 fe ff ff
+RSP: 0018:ffffc90000677bb8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8880117bde80 RCX: ffffffff8957eb41
+RDX: ffff88801dad5d00 RSI: ffffffff8957ec3c RDI: 0000000000000005
+RBP: 00000000fffff000 R08: ffffffff8957eb41 R09: 00000000fffff000
+R10: 0000000000000005 R11: 0000000000000000 R12: dffffc0000000000
+R13: ffff8880117bdf10 R14: ffffffff81c08eb7 R15: 0000000000000003
+FS:  0000000000000000(0000) GS:ffff8880d7ae5000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f93a1021138 CR3: 00000000207a9000 CR4: 0000000000350ef0
+Call Trace:
+ <TASK>
+ __sk_destruct+0x82/0xae0 net/core/sock.c:2356
+ rcu_do_batch kernel/rcu/tree.c:2645 [inline]
+ rcu_core+0x59c/0x1100 kernel/rcu/tree.c:2897
+ handle_softirqs+0x1e4/0x9b0 kernel/softirq.c:622
+ run_ksoftirqd kernel/softirq.c:1076 [inline]
+ run_ksoftirqd+0x38/0x60 kernel/softirq.c:1068
+ smpboot_thread_fn+0x458/0xc80 kernel/smpboot.c:160
+ kthread+0x396/0x4a0 kernel/kthread.c:436
+ ret_from_fork+0x8e0/0xe40 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260914011420.115556-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/tcp_ipv6.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-index 109c13189206e..860376037265b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -560,6 +560,8 @@ void brcmf_txfinalize(struct brcmf_if *ifp, struct sk_buff *txp, bool success)
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 77069176137d0..c950d4907cd61 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1490,7 +1490,8 @@ static int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
+ 	   by tcp. Feel free to propose better solution.
+ 					       --ANK (980728)
+ 	 */
+-	if (np->rxopt.all && sk->sk_state != TCP_LISTEN)
++	if (np->rxopt.all &&
++	    !((1 << sk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE)))
+ 		opt_skb = skb_clone_and_charge_r(skb, sk);
  
- 	if (type == ETH_P_PAE) {
- 		atomic_dec(&ifp->pend_8021x_cnt);
-+		/* Order the decrement before waitqueue_active() */
-+		smp_mb__after_atomic();
- 		if (waitqueue_active(&ifp->pend_8021x_wait))
- 			wake_up(&ifp->pend_8021x_wait);
- 	}
+ 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
 -- 
 2.53.0
 
