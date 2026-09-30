@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5976A52B1DE;
-	Wed, 30 Sep 2026 17:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183945304B2;
+	Wed, 30 Sep 2026 17:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790660; cv=none; b=VhtvSZ2+OF8p/T175dXq6LKHZyZUTwmU9qTxwBC4KhXLqzspQRPNo6n/Tjjawep6d7kGZ6d9jb05EN62kPoSBMpMuDo8vaiUrGaaMjzkzJQ3U/Zz7/tX+jPVNiI/E4Av3KNP4TTrVsfDN08yKQ0VshMBNmvyg9uCWNWEEvh91wI=
+	t=1790790663; cv=none; b=rAedVvAW0sQfKGKXgJDa0WpBK+YtEuICIslBY0iy+KvO6R/RVh2f20A66vaTjxF4h1D/G76Dzi2R+b7yYU/icJRa1U6TQOf6Cr1nwleeMA29zAgHBtM0TyR4YJ7stTxj6MkjGc2XxY7PDeYDzDbw8Q727swNKnraTpx9fMz/C2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790660; c=relaxed/simple;
-	bh=hjt2lk0LAK6/lW4gKKg9dSF1pq4ncjzcPiNLpUFdEuA=;
+	s=arc-20240116; t=1790790663; c=relaxed/simple;
+	bh=mB0OXHveAumeuO7sNqME+qNKrI0aQhhL263px1olaWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKJdN90lW/jcO/YEKvktC0h5ZaGSZ01XaC2wcXKWdW6SHNOaOuLPepQM8bn2QYTvoahlisDpdGfwizJRdMYzPGvaNf7EZ2L0Ozy/1WPSmXuHaYEXBF7ZFHnL5MGElitxh2Q550C4j6BMJOpfuO0YuwmjB/3UAE0St/1CfaSnNsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCk+X5mq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=llmncOK3BTaVP3IoqsMJpZTFW2s+3u71K20BMUJ1Pr7zThXgPLJmLJiYKAjHgYMJ9sdrPhYosHlYE6ajrbe+OmAUHXVT53mREwXJiX+jjcE8YPR+W+ekP4EENNi1yNbRanT3gQzO6++ZLiTVbgffkjwZpO8/RnBeVTy5rLtrDHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFULiC6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCk+X5mq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708421F000FF;
-	Wed, 30 Sep 2026 17:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFULiC6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F511F000FF;
+	Wed, 30 Sep 2026 17:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790659;
-	bh=kzBpLznSMWLS3n9wyuZKvcgHzTtSybaZxWTyeLIrsFs=;
+	s=korg; t=1790790661;
+	bh=3RHXZWllbXf9Iil9foU72+Q7Eji5JKDvIAghSXZ7HcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cCk+X5mqORxd0HaHcygla3vwfj1szuZOjkbOGK9i8kiGzP6ekyLkjfIGCsaGSFsy/
-	 ACx3hLnlTLjXHI74Eglb6edzBp8mtqYbEdXT1qitnGH9R5ed7g5flebxOdNnAJ9ZLC
-	 IHNwXfTlmZCqExhHkWIZEyzLtY8mrKxiuB9G2ki8=
+	b=kFULiC6aPogGI1gtuDb8tvGMoF+YxVtp8fHEXpTuwe+XhiJbFng8jlaNkVFD+U/qT
+	 wG8lyWMpcssQQco1p6PqxP557CxlC2QfcPQfTFHaZhjfwnYu5Kd15Hofsy85K4R1HG
+	 gQFuKg0+rGekiD53/uK509Rp5+4Ohe96VCwHplhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/752] PCI: Stop setting cached power state to unknown on unbind
-Date: Wed, 30 Sep 2026 17:17:55 +0200
-Message-ID: <20260930152358.258590446@linuxfoundation.org>
+Subject: [PATCH 5.15 006/752] hfsplus: fix issue of direct writes beyond end-of-file
+Date: Wed, 30 Sep 2026 17:17:56 +0200
+Message-ID: <20260930152358.280946483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,68 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit d462c8e89e84bfb6417e6b4c88e0cb7cc747ba41 ]
+[ Upstream commit 5f63ac80aef2ee6bb58eab62e98c264774872da6 ]
 
-When a PCI device is unbound from its driver, pci_device_remove() sets the
-cached power state in pci_dev->current_state to PCI_UNKNOWN.  This was
-introduced by commit 2449e06a5696 ("PCI: reset pci device state to unknown
-state for resume") to invalidate the cached power state in case the system
-is subsequently put to sleep.
+The xfstests' test-case generic/729 fails with error:
 
-For bound devices, the cached power state is set to PCI_UNKNOWN in
-pci_pm_suspend_noirq(), immediately before entering system sleep.
+sudo ./check generic/729
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #36 SMP PREEMPT_DYNAMIC Fri Apr 17 12:40:51 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Extend to unbound devices for consistency.
+generic/729  23s ... [failed, exit status 1]- output mismatch
 
-This obviates the need to change the cached power state on unbind, so stop
-doing so.
+mmap-rw-fault: /mnt/test/mmap-rw-fault.tmp: Input/output error
 
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/af7d11d3ceb231acc90829f7a5c8400c2446744f.1776415510.git.lukas@wunner.de
+The hfsplus_get_block() only allows creating the next
+sequential block. It returns -EIO for direct writes
+beyond EOF. This patch waits for any in-flight DIO on the inode
+to finish. Then, it extends the file by calling
+generic_cont_expand_simple() with the goal to guarantee
+that blockdev_direct_IO() finds all needed blocks
+already reachable sequentially. And, finally, it flushes and
+invalidates the DIO range again so the page cache is clean
+before the direct write begins.
+
+sudo ./check generic/729
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.0.0-rc1+ #40 SMP PREEMPT_DYNAMIC Thu Apr 16 15:41:03 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/729  23s ...  32s
+Ran: generic/729
+Passed all 1 tests
+
+Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/210
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260417214940.2735557-2-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ fs/hfsplus/inode.c | 38 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 08c985478b8ff..087e664a95bdd 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -478,13 +478,6 @@ static void pci_device_remove(struct device *dev)
- 	/* Undo the runtime PM settings in local_pci_probe() */
- 	pm_runtime_put_sync(dev);
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 4310b9105d0fa..840729acb9bcc 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -129,9 +129,44 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ 	struct file *file = iocb->ki_filp;
+ 	struct address_space *mapping = file->f_mapping;
+ 	struct inode *inode = mapping->host;
++	loff_t isize;
+ 	size_t count = iov_iter_count(iter);
++	loff_t end = iocb->ki_pos + count;
+ 	ssize_t ret;
  
--	/*
--	 * If the device is still on, set the power state as "unknown",
--	 * since it might change by the next time we load the driver.
--	 */
--	if (pci_dev->current_state == PCI_D0)
--		pci_dev->current_state = PCI_UNKNOWN;
--
++	/*
++	 * The hfsplus_get_block() only allows creating the next sequential block.
++	 * For direct writes beyond EOF, expand the file first.
++	 */
++	if (iov_iter_rw(iter) == WRITE && iocb->ki_pos > i_size_read(inode)) {
++		loff_t start_off, end_off;
++		loff_t start_page, end_page;
++
++		isize = i_size_read(inode);
++
++		/*
++		 * Wait for any in-flight DIO on this inode to finish before
++		 * calling generic_cont_expand_simple().
++		 */
++		inode_dio_wait(inode);
++
++		ret = generic_cont_expand_simple(inode, iocb->ki_pos);
++		if (ret)
++			return ret;
++
++		start_off = isize;
++		end_off = (end > 0) ? end - 1 : end;
++
++		ret = filemap_write_and_wait_range(mapping, start_off, end_off);
++		if (ret)
++			return ret;
++
++		start_page = start_off >> PAGE_SHIFT;
++		end_page = end_off >> PAGE_SHIFT;
++
++		invalidate_inode_pages2_range(mapping, start_page, end_page);
++	}
++
+ 	ret = blockdev_direct_IO(iocb, inode, iter, hfsplus_get_block);
+ 
  	/*
- 	 * We would love to complain here if pci_dev->is_enabled is set, that
- 	 * the driver should have called pci_disable_device(), but the
-@@ -822,7 +815,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
+@@ -139,8 +174,7 @@ static ssize_t hfsplus_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
+ 	 * blocks outside i_size. Trim these off again.
+ 	 */
+ 	if (unlikely(iov_iter_rw(iter) == WRITE && ret < 0)) {
+-		loff_t isize = i_size_read(inode);
+-		loff_t end = iocb->ki_pos + count;
++		isize = i_size_read(inode);
  
- 	if (!pm) {
- 		pci_save_state(pci_dev);
--		goto Fixup;
-+		goto set_unknown;
- 	}
- 
- 	if (pm->suspend_noirq) {
-@@ -879,6 +872,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
- 		goto Fixup;
- 	}
- 
-+set_unknown:
- 	pci_pm_set_unknown_state(pci_dev);
- 
- 	/*
+ 		if (end > isize)
+ 			hfsplus_write_failed(mapping, end);
 -- 
 2.53.0
 
