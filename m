@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D253C1986;
-	Wed, 30 Sep 2026 19:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C993B2D1A;
+	Wed, 30 Sep 2026 19:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797240; cv=none; b=OLo/bDwM0F+GqCIwuYgf7CFPr1XlD8GGoNWxEbOASloGOFRyn8tWrMNyxZhZkzJuIWQTcnv7CwNOLn7hTq+Xbjituxc1EhU6M9ccLzw2Jl9a+Obryael2ZpoHA+z+WTYdIVHvWHf0haAusYsf6IVq7FweJqjBHh0ysLVo5bvM9Q=
+	t=1790797243; cv=none; b=QN2Vy3VhkBrmXNmeLmx8f1YHY+CpiRGP9maeLX8xlSQToV6OYeK5GY+a8vqNjXRJ9hYEF3QBtCQtKMS5SSKiqSLJtI4jUwXGLFCrNNgwsvDIWriij7hBydn9KhBMc95F2bwFUdSID1ixOUpAYdZWkNlFpqyw3syeKys2IEkigxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797240; c=relaxed/simple;
-	bh=4SisvzF6elWtSHzQdvDXTjFtJwgXU7botYarojiB8vY=;
+	s=arc-20240116; t=1790797243; c=relaxed/simple;
+	bh=XE13Hp4lHFYkJeIDP7vJMD8DfnDZy6/1YqWFU51MkLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chROj5e3EfgqWuM2gK+zr5mJhEjNV9/2Y6AVU8IXYybm94x7T2Z45adGJDvpjP6pV6fWgUxpOOWPUNA3Yo9v7eDtPyVa8p0viebsJXHoaOgUHvzEcwx+erh0p0BGpP2hlRpSkW0ZsvaLcR7cTjqmaIKiCkS8KzaCL7oJQO29JAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYUgvsY/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jvgg5rW+qIKV2oH+KBWkVKrAVmQZb90cXN/geWZPzkHyWKSg/s4JBm/nTwhfP1+HIMPaqybDIJATcJJsHeHHhIeL/Fo32juuB2buK3YwpHdyLUWgNxszSUJLES8OcVLIRkQpzRYxAi2ClWcX05RRosj04KSVNojrRbwCqk1PfFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usbE0SzB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYUgvsY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6765E1F000FF;
-	Wed, 30 Sep 2026 19:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usbE0SzB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C591F000FF;
+	Wed, 30 Sep 2026 19:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797238;
-	bh=cidXOTfwi320N3nmxytHBNIMelnxfXw01FLoXUuCmSc=;
+	s=korg; t=1790797241;
+	bh=h5aMkclh+BOzOvePtyfQQ1oK/DoyU/0zE7bgcxwSQjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JYUgvsY/82JrfQGQvLHMxSFn3EiuPzEx6eHrjuvtRgn16qRTI+mHLoxsRKA/dUXBv
-	 Dl7+0luBbxDQOazWVXvbTs8wV7VzrNaGfVw0nUfihC4N2IsAO4/fYsnVGubu3WWKyG
-	 FhI4BQ7ukYWTcD0xydSMZj2fmTnPirAG9dCp8TDQ=
+	b=usbE0SzBtiFKswvdzDv38DmeNElvgRkv5wJ/lARO2LfS6eiDusU0HRZzfbhsq5wFb
+	 s0R5jEQf1ZfktWOOfdOgT6K4R06AT9i/wh9nolyKbUDTSn5GyR7a1zlLcoXyjYgo1X
+	 31PUW83c9Yb0rzqOXi2Ot1jOAltqNiLyqtNWBTkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.6 1141/1193] pinctrl: single: free the IRQ on domain creation failure
-Date: Wed, 30 Sep 2026 17:30:25 +0200
-Message-ID: <20260930152459.588813234@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1190/1193] netfilter: nf_tables: place base_seq in struct net
+Date: Wed, 30 Sep 2026 17:31:14 +0200
+Message-ID: <20260930152500.685197948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,47 +50,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 1d9bb9c870632adea249cfdec49ac37e6f069164 upstream.
+[ Upstream commit 64102d9bbc3d41dac5188b8fba75b1344c438970 ]
 
-pcs_irq_init_chained_handler() requests a shared IRQ on affected SoCs, but
-its domain creation failure path only removes a chained handler. That does
-not release the action installed by request_irq(). The probe can continue
-without interrupt support while leaving the shared IRQ action registered.
+This will soon be read from packet path around same time as the gencursor.
 
-Use pcs_irq_free() to undo the appropriate type of handler registration.
-At this point pcs->domain is NULL, so the helper only releases the parent
-IRQ handler. Then mark the IRQ invalid, as the other initialization error
-paths already do, to prevent another release from a later probe unwind or
-remove.
+Both gencursor and base_seq get incremented almost at the same time, so
+it makes sense to place them in the same structure.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+This doesn't increase struct net size on 64bit due to padding.
 
-Fixes: 3e6cee1786a1 ("pinctrl: single: Add support for wake-up interrupts")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 7904b94768e9 ("netfilter: nf_tables: don't queue packet path object notifications")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-single.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_tables.h |    1 
+ include/net/netns/nftables.h      |    1 
+ net/netfilter/nf_tables_api.c     |   40 +++++++++++++++++---------------------
+ 3 files changed, 19 insertions(+), 23 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -1630,7 +1630,8 @@ static int pcs_irq_init_chained_handler(
- 					    &pcs_irqdomain_ops,
- 					    pcs_soc);
- 	if (!pcs->domain) {
--		irq_set_chained_handler(pcs_soc->irq, NULL);
-+		pcs_irq_free(pcs);
-+		pcs_soc->irq = -1;
- 		return -EINVAL;
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1815,7 +1815,6 @@ struct nftables_pernet {
+ 	struct mutex		commit_mutex;
+ 	u64			table_handle;
+ 	u64			tstamp;
+-	unsigned int		base_seq;
+ 	unsigned int		gc_seq;
+ 	u8			validate_state;
+ };
+--- a/include/net/netns/nftables.h
++++ b/include/net/netns/nftables.h
+@@ -3,6 +3,7 @@
+ #define _NETNS_NFTABLES_H_
+ 
+ struct netns_nftables {
++	unsigned int		base_seq;
+ 	u8			gencursor;
+ };
+ 
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -924,9 +924,7 @@ nf_tables_chain_type_lookup(struct net *
+ 
+ static unsigned int nft_base_seq(const struct net *net)
+ {
+-	struct nftables_pernet *nft_net = nft_pernet(net);
+-
+-	return READ_ONCE(nft_net->base_seq);
++	return READ_ONCE(net->nft.base_seq);
+ }
+ 
+ static const struct nla_policy nft_table_policy[NFTA_TABLE_MAX + 1] = {
+@@ -1033,7 +1031,7 @@ static int nf_tables_dump_tables(struct
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (family != NFPROTO_UNSPEC && family != table->family)
+@@ -1885,7 +1883,7 @@ static int nf_tables_dump_chains(struct
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (family != NFPROTO_UNSPEC && family != table->family)
+@@ -3569,7 +3567,7 @@ static int nf_tables_dump_rules(struct s
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (family != NFPROTO_UNSPEC && family != table->family)
+@@ -3708,7 +3706,6 @@ nf_tables_getrule_single(u32 portid, con
+ static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
+ 			     const struct nlattr * const nla[])
+ {
+-	struct nftables_pernet *nft_net = nft_pernet(info->net);
+ 	u32 portid = NETLINK_CB(skb).portid;
+ 	struct net *net = info->net;
+ 	struct sk_buff *skb2;
+@@ -3740,7 +3737,7 @@ static int nf_tables_getrule(struct sk_b
+ 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
+ 			nla_len(nla[NFTA_RULE_TABLE]),
+ 			(char *)nla_data(nla[NFTA_RULE_TABLE]),
+-			nft_net->base_seq);
++			nft_base_seq(net));
+ 	audit_log_nfcfg(buf, info->nfmsg->nfgen_family, 1,
+ 			AUDIT_NFT_OP_RULE_RESET, GFP_ATOMIC);
+ 	kfree(buf);
+@@ -4730,7 +4727,7 @@ static int nf_tables_dump_sets(struct sk
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (ctx->family != NFPROTO_UNSPEC &&
+@@ -5910,7 +5907,7 @@ static int nf_tables_dump_set(struct sk_
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (dump_ctx->ctx.family != NFPROTO_UNSPEC &&
+@@ -6257,7 +6254,7 @@ static int nf_tables_getsetelem(struct s
  	}
+ 
+ 	if (reset)
+-		audit_log_nft_set_reset(table, nft_pernet(net)->base_seq,
++		audit_log_nft_set_reset(table, nft_base_seq(net),
+ 					nelems);
+ 
+ 	return err;
+@@ -7900,7 +7897,7 @@ static int nf_tables_dump_obj(struct sk_
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (family != NFPROTO_UNSPEC && family != table->family)
+@@ -7934,7 +7931,7 @@ cont:
+ 			idx++;
+ 		}
+ 		if (ctx->reset && entries)
+-			audit_log_obj_reset(table, nft_net->base_seq, entries);
++			audit_log_obj_reset(table, nft_base_seq(net), entries);
+ 		if (rc < 0)
+ 			break;
+ 	}
+@@ -8103,7 +8100,7 @@ static int nf_tables_getobj_reset(struct
+ 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
+ 			nla_len(nla[NFTA_OBJ_TABLE]),
+ 			(char *)nla_data(nla[NFTA_OBJ_TABLE]),
+-			nft_net->base_seq);
++			nft_base_seq(net));
+ 	audit_log_nfcfg(buf, info->nfmsg->nfgen_family, 1,
+ 			AUDIT_NFT_OP_OBJ_RESET, GFP_ATOMIC);
+ 	kfree(buf);
+@@ -8935,7 +8932,7 @@ static int nf_tables_dump_flowtable(stru
+ 
+ 	rcu_read_lock();
+ 	nft_net = nft_pernet(net);
+-	cb->seq = READ_ONCE(nft_net->base_seq);
++	cb->seq = nft_base_seq(net);
+ 
+ 	list_for_each_entry_rcu(table, &nft_net->tables, list) {
+ 		if (family != NFPROTO_UNSPEC && family != table->family)
+@@ -9115,7 +9112,6 @@ static void nf_tables_flowtable_destroy(
+ static int nf_tables_fill_gen_info(struct sk_buff *skb, struct net *net,
+ 				   u32 portid, u32 seq)
+ {
+-	struct nftables_pernet *nft_net = nft_pernet(net);
+ 	struct nlmsghdr *nlh;
+ 	char buf[TASK_COMM_LEN];
+ 	int event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, NFT_MSG_NEWGEN);
+@@ -9125,7 +9121,7 @@ static int nf_tables_fill_gen_info(struc
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+-	if (nla_put_be32(skb, NFTA_GEN_ID, htonl(nft_net->base_seq)) ||
++	if (nla_put_be32(skb, NFTA_GEN_ID, htonl(nft_base_seq(net))) ||
+ 	    nla_put_be32(skb, NFTA_GEN_PROC_PID, htonl(task_pid_nr(current))) ||
+ 	    nla_put_string(skb, NFTA_GEN_PROC_NAME, get_task_comm(buf, current)))
+ 		goto nla_put_failure;
+@@ -10259,11 +10255,11 @@ static int nf_tables_commit(struct net *
+ 	 * Bump generation counter, invalidate any dump in progress.
+ 	 * Cannot fail after this point.
+ 	 */
+-	base_seq = READ_ONCE(nft_net->base_seq);
++	base_seq = nft_base_seq(net);
+ 	while (++base_seq == 0)
+ 		;
+ 
+-	WRITE_ONCE(nft_net->base_seq, base_seq);
++	WRITE_ONCE(net->nft.base_seq, base_seq);
+ 
+ 	gc_seq = nft_gc_seq_begin(nft_net);
+ 
+@@ -10480,7 +10476,7 @@ static int nf_tables_commit(struct net *
+ 
+ 	nft_commit_notify(net, NETLINK_CB(skb).portid);
+ 	nf_tables_gen_notify(net, skb, NFT_MSG_NEWGEN);
+-	nf_tables_commit_audit_log(&adl, nft_net->base_seq);
++	nf_tables_commit_audit_log(&adl, nft_base_seq(net));
+ 
+ 	nft_gc_seq_end(nft_net, gc_seq);
+ 	nft_net->validate_state = NFT_VALIDATE_SKIP;
+@@ -10800,7 +10796,7 @@ static bool nf_tables_valid_genid(struct
+ 	mutex_lock(&nft_net->commit_mutex);
+ 	nft_net->tstamp = get_jiffies_64();
+ 
+-	genid_ok = genid == 0 || nft_net->base_seq == genid;
++	genid_ok = genid == 0 || nft_base_seq(net) == genid;
+ 	if (!genid_ok)
+ 		mutex_unlock(&nft_net->commit_mutex);
+ 
+@@ -11423,7 +11419,7 @@ static int __net_init nf_tables_init_net
+ 	INIT_LIST_HEAD(&nft_net->module_list);
+ 	INIT_LIST_HEAD(&nft_net->notify_list);
+ 	mutex_init(&nft_net->commit_mutex);
+-	nft_net->base_seq = 1;
++	net->nft.base_seq = 1;
+ 	nft_net->gc_seq = 0;
+ 	nft_net->validate_state = NFT_VALIDATE_SKIP;
  
 
 
