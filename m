@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697922798F8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71700371049;
 	Wed, 30 Sep 2026 15:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782885; cv=none; b=qOsSCmw+AT9rk9vtZK53TKfFKNtelNptZEaefBnKNbbsFjFXsv1itB+gIPEWGpQa2Cflz08dnyVeDXymvS+AnMU10Nbcd/d/6q162MkIKyHwSmCAFIiG6H9reqa1n5NpyGVW8WCpntSKWpqX9e5U2jclz2gUPyhafxUPZHmg5DQ=
+	t=1790782886; cv=none; b=fxSrnX24qJ659j/YwBjjsyJ/DhHEkCQP3khFFWd4PTcK9LpK6gw9zbBAlHuo8phW11F+5XV0zej7Tax7hO8NhjsyxhzhCGFVRX2YDi21mcPiD/wI81loXSB0YDKkabMpoL/RXiLN7rWmNL7rWhDBv5f3SjOI5HRP6J8gRwMW8k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782885; c=relaxed/simple;
-	bh=SNjzunkMbqMNd0mm7AuoQe3dKrXH3z8yo1xtk5/hePo=;
+	s=arc-20240116; t=1790782886; c=relaxed/simple;
+	bh=yMLwjW1Yt0C3okUoLPitOHrDCUZv5dFfENS4IJkYEmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBrSBhX3LFHsuZHMWK9WhomvWSsqzRXCVEOQqQQkz0wE6ufKBEBs0H5/PcxCv1klYsrj8XkVb0pYirgGQWekxELw+nsFcAQEA2QaGEncGaxVLeGZ/RX+9+QCQxEN9ISblfFE2IkYMlnKddFPGiDkcJCmr+kQlwMLsldDIHjK9W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxSBFOyw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V61aHPodgA2TxEcLmglguL4At54q8PbsMq07/HLTUWCUtaRTo8hUsKx//Wq+nXM00mCEmleUoNTivyD0C1wEfWgap76ljiELPQXFssfd8Uu39ghJdvspJ3ZeXsyeInJC6DgYUY9a+llrynDLWCHUwdHPqRbPw6cWBjrMAJAfOms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNZS/66d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxSBFOyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA941F00898;
-	Wed, 30 Sep 2026 15:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNZS/66d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0024D1F000FF;
+	Wed, 30 Sep 2026 15:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782879;
-	bh=HCp1tDpWa/7cou+xQ21BP7P/5H6PGeSLoBAySriwJvI=;
+	s=korg; t=1790782882;
+	bh=Zzt96EZuDygaPOG6/sY3MvK22DQSUdbXVsKO0f4nAD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxSBFOywjMkBtiYIWVpDs/nt7LZT75CVeDMYsiZFoNS9By68SIXsFZKmDWqad9UK6
-	 JpI1yJQIajtZL9eoc4qkso5FF2Y7XTEh8QDwCqTtlr3NOxHnb44lI8FM8nbj1UkPOG
-	 ToH3O3kJhpKB0b7jDvcnCWcTjMCBDwMrlsOZhxkc=
+	b=FNZS/66dWoBeKm6kiCejEt6x8zS6soKNGGPnj4H6/7gJuOlOy0l4uzwWvc5AbKhSN
+	 ADoRGZKgyu6uy+EMFDT4S1SArOT0OpWY7bbKU/pZIF/dr2uMg2PzrEC82TRj5Kf8V6
+	 iPtP4SHxYux/HUbSWHagHl5GObXF4WqGVkItwUyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Gongwei Li <ligongwei@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 200/595] Bluetooth: L2CAP: clear FLAG_DEFER_SETUP only for same PID/PSM
-Date: Wed, 30 Sep 2026 17:21:33 +0200
-Message-ID: <20260930152352.037181753@linuxfoundation.org>
+Subject: [PATCH 5.10 201/595] Bluetooth: hci_mrvl: Fix wrong return value check of wait_on_bit_timeout()
+Date: Wed, 30 Sep 2026 17:21:34 +0200
+Message-ID: <20260930152352.058711579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,51 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Gongwei Li <ligongwei@kylinos.cn>
 
-[ Upstream commit 0d77683237270702fa93489ca759c89b4e970554 ]
+[ Upstream commit 2deb76c21b81e42b3282224f7dd2046fe73fd1e0 ]
 
-l2cap_ecred_defer_connect() clears FLAG_DEFER_SETUP also for channels
-with different PID/PSM, which will not be added to the same
-ECRED_CONN_REQ in any case. Consequently, only one ECRED connection
-group can work at a time although it appears intended they would be
-separate for each PID/PSM combination.
+wait_on_bit_timeout() returns 0 if the bit was cleared, -EINTR if the
+process received a signal and the mode permitted wake up on that signal,
+or -EAGAIN if the timeout elapsed.  It never returns 1.
 
-Fix by clearing FLAG_DEFER_SETUP only for the connections that could be
-added in the request. Retain test_bit(FLAG_DEFER_SETUP) before calling
-get_peer_pid as it may be NULL otherwise.
+Hence the check "err == 1" in mrvl_load_firmware() is dead code: when
+the waiting task is interrupted by a signal (-EINTR), the code falls
+into the "else if (err)" branch and misreports it as "Firmware request
+timeout" with -ETIMEDOUT instead of propagating -EINTR.
 
-Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fix this by testing for -EINTR so that an interrupted firmware load is
+properly detected and reported.
+
+Fixes: 162f812f23ba ("Bluetooth: hci_uart: Add Marvell support")
+Signed-off-by: Gongwei Li <ligongwei@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_mrvl.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index df2daa2c2ef3a..e974d8038dec8 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1477,7 +1477,7 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
- 	if (chan == conn->chan)
- 		return;
- 
--	if (!test_and_clear_bit(FLAG_DEFER_SETUP, &chan->flags))
-+	if (!test_bit(FLAG_DEFER_SETUP, &chan->flags))
- 		return;
- 
- 	pid = chan->ops->get_peer_pid(chan);
-@@ -1487,6 +1487,9 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
- 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL || chan->state != BT_CONNECT)
- 		return;
- 
-+	if (!test_and_clear_bit(FLAG_DEFER_SETUP, &chan->flags))
-+		return;
-+
- 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
- 		return;
- 
+diff --git a/drivers/bluetooth/hci_mrvl.c b/drivers/bluetooth/hci_mrvl.c
+index fbc3f7c3a5c71..b986bdbe09b56 100644
+--- a/drivers/bluetooth/hci_mrvl.c
++++ b/drivers/bluetooth/hci_mrvl.c
+@@ -297,9 +297,8 @@ static int mrvl_load_firmware(struct hci_dev *hdev, const char *name)
+ 		err = wait_on_bit_timeout(&mrvl->flags, STATE_FW_REQ_PENDING,
+ 					  TASK_INTERRUPTIBLE,
+ 					  msecs_to_jiffies(2000));
+-		if (err == 1) {
++		if (err == -EINTR) {
+ 			bt_dev_err(hdev, "Firmware load interrupted");
+-			err = -EINTR;
+ 			break;
+ 		} else if (err) {
+ 			bt_dev_err(hdev, "Firmware request timeout");
 -- 
 2.53.0
 
