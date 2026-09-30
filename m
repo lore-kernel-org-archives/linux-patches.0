@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E287519DFC;
-	Wed, 30 Sep 2026 18:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB87519DFD;
+	Wed, 30 Sep 2026 18:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792594; cv=none; b=plAJY1+FL/NZEluw4xHHhqQEHAT2nVDUCEWa2D9IN+5dsCdcxsBzRCLJP2Fm3R638XsEph0/CJ2cTNWCFOVjbgR9XI79DWEBpq/Vx5/54v4klAGQ2yI2iGQ4ZwAVL8h9boUQDJGlvKpawx/XOOxJrb1qVzmzeP3tThzGBinUFDE=
+	t=1790792597; cv=none; b=rF+jtA/9+JKQuDN3xGapnTv48veyH7bBRnHyNYMpoDiPTkudkKzuY7UvLIgMqiUQZZxzDNffxkcSbbBfx7uSaBQWScrxU5YKhMZmXhbH17u52AMHQUMeUgFoWzBjglxSQ898z7DkQOtBXwjvR21jW0NKHhGSeLBC6nBICPjet4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792594; c=relaxed/simple;
-	bh=jLNaIzG1a6Yzu0I5QA5o7M6xrMhOLhYa8kLAoo/tK38=;
+	s=arc-20240116; t=1790792597; c=relaxed/simple;
+	bh=e3/5+YQXAB/uX0ouoeBNQ+4ZeT3eizxao/cjOOn1Ebo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5/g0yVtdwP7ji9pQWmACKoosMo7a+5pPeM+jDGmSYDw1RzO0vVv5RM2ZfFbTHHP90+QMBsf8g287jpq7NjkKGRt/ZuW7XdHdDjWMQ9nDAYmYyv4ynyPA87WX1oir3adxHZd9fgP7lY9q83iYpO2Aisn6Agxzu+h/3j7/LtOTQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlgTiiC9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jAMIht9HPCtGq9HkAWmY2owenUzLB/aIQ/Ha1Hry1l25pVY4Ja8hWgdVlszyZfRqcGPZvNFNFzM2Vck0TI9thayIYS4moTTtFK7rVsyQMw2qFp7hf2eyN760kSHThAvFgL/LMwFQLWkep0haPwA8YTVYRkJz4I2X2Z9IlwiPnf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvUW5WDb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlgTiiC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5E01F000FF;
-	Wed, 30 Sep 2026 18:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvUW5WDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9500C1F0089B;
+	Wed, 30 Sep 2026 18:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792593;
-	bh=N9HlOWYLpvD52+otzFReYJ6l70xc8gQa/gA7YhYjS0s=;
+	s=korg; t=1790792596;
+	bh=zYhn3ozQFdZgqpZeYCJqDFtc2Mc0nE61+A3J8V/Tgtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NlgTiiC90y7fzh+7KQDBVaEQlSFYRdkoeKiyFZWDsmbDkZNuaQYtg1QJX78UhQT42
-	 pDjxm5EJUvxifwGa7iXKRM3xVNI8f1Px/IFO/tRdWsTf4AMwighyZsf57U0UyRhN2Y
-	 KsBQnw39XlpvEBxSSJk4LFyzy2Xfn8YJXDzok3Is=
+	b=DvUW5WDbCu7/8SWblTadFUddswOsqc2WE6cuL+Lfcqa/5+SOEBVQiKz1W2t4CZ2qY
+	 v/OtxpMIBvwTITg2FM47Uz7EzZI2puRLbJtKarnrFi4kLVWpC/dArDZ4A2D0je4G8x
+	 blycoyTS8oDWmHvcdMGtaZui/pNE7aLfz+s/V4ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 5.15 711/752] drm/nouveau: Fix gem reference leak in validate_init()
-Date: Wed, 30 Sep 2026 17:29:41 +0200
-Message-ID: <20260930152413.616217066@linuxfoundation.org>
+Subject: [PATCH 5.15 712/752] drm/nouveau: dont bump pin count on failed re-pin in nouveau_bo_pin_locked()
+Date: Wed, 30 Sep 2026 17:29:42 +0200
+Message-ID: <20260930152413.636258589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,44 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 5ea72f7b7139b123713a7983448f910bc4514d9e upstream.
+commit 6a6870d3077faa501ca97760057ddca22b68418d upstream.
 
-On the ttm_bo_reserve() failure and "vma not found" error paths, the
-loop breaks without adding the looked-up object to any validate list,
-so the reference taken by drm_gem_object_lookup() is never released;
-validate_fini() only walks the spliced lists.  Drop the reference
-before breaking out on both paths.
+nouveau_bo_pin_locked() checks whether an already pinned BO is in a
+memory domain compatible with a new pin request. When the domains are
+incompatible, it sets -EBUSY but still calls ttm_bo_pin() before
+returning.
 
-Fixes: 19ca10d82e33bcfe ("drm/nouveau/gem: lookup VMAs for buffers referenced by pushbuf ioctl")
+Callers treat a failed nouveau_bo_pin() as not having acquired a new pin,
+so the extra pin count is never decreased by a matching unpin.
+This triggers the warning in ttm_bo_release():
+
+	WARN_ON_ONCE(bo->pin_count);
+
+Found when fuzzing the nouveau driver with a modified Syzkaller:
+
+	WARNING: drivers/gpu/drm/ttm/ttm_bo.c:256 at ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256, CPU#1: syz.3.24/2212
+	Modules linked in:
+	CPU: 1 UID: 0 PID: 2212 Comm: syz.3.24 Not tainted 7.2.0 #24 PREEMPT(lazy)
+	nouveau 0000:01:00.0: gsp:msg fn:103 len:0x40/0x20 res:0x19 resp:0x19
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+	RIP: 0010:ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256
+	Code: 02 00 0f 85 51 01 00 00 48 8b 7b 08 e8 d2 20 01 00 e9 80 fd ff ff e8 d8 15 c0 fe 90 0f 0b 90 e9 e1 f8 ff ff e8 ca 15 c0 fe 90 <0f> 0b 90 e9 a4 f8 ff ff e8 bc 15 c0 fe be 03 00 00 00 4c 89 e7 e8
+	msg: 00000000: 05 00 d0 c1 04 00 f0 f1 01 30 00 00 2d 90 00 00  .........0..-...
+	RSP: 0018:ffffc9000f5cf710 EFLAGS: 00010293
+	RAX: 0000000000000000 RBX: ffff888018e5d2a8 RCX: ffffffff82bb1b36
+	RDX: ffff888017b68000 RSI: 0000000000000004 RDI: ffff888018e5d2a8
+	msg: 00000010: 19 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+	RBP: ffff88801261c720 R08: 0000000000000001 R09: ffffed10031cba55
+	R10: ffff888018e5d2ab R11: 00000000000000f3 R12: ffff888018e5d290
+	R13: ffff888018e5d2d4 R14: ffff88801b219c18 R15: dffffc0000000000
+	FS:  0000000000000000(0000) GS:ffff8880e0f6f000(0000) knlGS:0000000000000000
+	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	CR2: 0000001b31223ffc CR3: 0000000028e00005 CR4: 0000000000770ef0
+	PKRU: 80000000
+	Call Trace:
+	<TASK>
+	kref_put include/linux/kref.h:65 [inline]
+	ttm_bo_put drivers/gpu/drm/ttm/ttm_bo.c:325 [inline]
+	ttm_bo_fini+0x55/0x80 drivers/gpu/drm/ttm/ttm_bo.c:330
+	nouveau_gem_object_del+0xb2/0x1b0 drivers/gpu/drm/nouveau/nouveau_gem.c:90
+	drm_gem_object_free+0x5f/0x90 drivers/gpu/drm/drm_gem.c:1165
+	kref_put include/linux/kref.h:65 [inline]
+	__drm_gem_object_put include/drm/drm_gem.h:562 [inline]
+	drm_gem_object_put include/drm/drm_gem.h:575 [inline]
+	nouveau_abi16_chan_fini.constprop.0+0x44f/0x5a0 drivers/gpu/drm/nouveau/nouveau_abi16.c:195
+	nouveau 0000:01:00.0: syz.2.23[2209]: Unknown handle 0x00000000
+	nouveau_abi16_fini+0x1d0/0x340 drivers/gpu/drm/nouveau/nouveau_abi16.c:225
+	nouveau_drm_postclose+0x18b/0x3e0 drivers/gpu/drm/nouveau/nouveau_drm.c:1284
+	nouveau 0000:01:00.0: syz.2.23[2209]: validate_init
+	drm_file_free.part.0+0x6d6/0xb60 drivers/gpu/drm/drm_file.c:267
+	drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
+	drm_close_helper.isra.0+0x11a/0x160 drivers/gpu/drm/drm_file.c:290
+	drm_release+0x1ab/0x330 drivers/gpu/drm/drm_file.c:438
+	__fput+0x39c/0xa60 fs/file_table.c:512
+	nouveau 0000:01:00.0: syz.2.23[2209]: validate: -2
+	task_work_run+0x15a/0x230 kernel/task_work.c:233
+	exit_task_work include/linux/task_work.h:40 [inline]
+	do_exit+0x82b/0x25a0 kernel/exit.c:1009
+	do_group_exit+0xc2/0x280 kernel/exit.c:1152
+	get_signal+0x1d6e/0x1f30 kernel/signal.c:3046
+	arch_do_signal_or_restart+0x7d/0x6e0 arch/x86/kernel/signal.c:337
+	__exit_to_user_mode_loop kernel/entry/common.c:66 [inline]
+	exit_to_user_mode_loop+0xdf/0x440 kernel/entry/common.c:101
+	__exit_to_user_mode_prepare include/linux/irq-entry-common.h:207 [inline]
+	syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:230 [inline]
+	syscall_exit_to_user_mode include/linux/entry-common.h:318 [inline]
+	do_syscall_64+0x4f8/0x690 arch/x86/entry/syscall_64.c:100
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7f12bac8594d
+	Code: Unable to access opcode bytes at 0x7f12bac85923.
+	RSP: 002b:00007f12b96e70d8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+	RAX: 0000000000000001 RBX: 00007f12baf15fa8 RCX: 00007f12bac8594d
+	RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 00007f12baf15fac
+	RBP: 00007f12baf15fa0 R08: 00007f12baee8000 R09: 0000000000000000
+	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+	R13: 00007f12baf16038 R14: 0000000000000006 R15: 00007ffe2ed394b0
+	</TASK>
+	irq event stamp: 47867
+	hardirqs last  enabled at (47883): [<ffffffff815cafc6>] __up_console_sem+0x66/0x70 kernel/printk/printk.c:347
+	hardirqs last disabled at (47892): [<ffffffff815cafab>] __up_console_sem+0x4b/0x70 kernel/printk/printk.c:345
+	softirqs last  enabled at (47880): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
+	softirqs last  enabled at (47880): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
+	softirqs last  enabled at (47880): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
+	softirqs last disabled at (47875): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
+	softirqs last disabled at (47875): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
+	softirqs last disabled at (47875): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
+
+Fix by calling ttm_bo_pin() only when the existing placement is compatible
+with the new pin request. This matches the correct behavior in other DRM
+drivers such as amdgpu_bo_pin() in amdgpu.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Fixes: ad76b3f7c7a0 ("drm/nouveau: teach nouveau_bo_pin() how to force a contig vram allocation")
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Assisted-by: LLM
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260916180202.2090231-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/EACEF2F4E098413F+20260918025312.2814889-1-peiyang_he@smail.nju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_gem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_bo.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_gem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
-@@ -471,6 +471,7 @@ retry:
- 			if (unlikely(ret)) {
- 				if (ret != -ERESTARTSYS)
- 					NV_PRINTK(err, cli, "fail reserve\n");
-+				drm_gem_object_put(gem);
- 				break;
- 			}
+--- a/drivers/gpu/drm/nouveau/nouveau_bo.c
++++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
+@@ -460,8 +460,9 @@ nouveau_bo_pin(struct nouveau_bo *nvbo,
+ 				      "0x%08x vs 0x%08x\n", bo,
+ 				 bo->resource->mem_type, domain);
+ 			ret = -EBUSY;
++		} else {
++			ttm_bo_pin(&nvbo->bo);
  		}
-@@ -480,6 +481,7 @@ retry:
- 			struct nouveau_vma *vma = nouveau_vma_find(nvbo, vmm);
- 			if (!vma) {
- 				NV_PRINTK(err, cli, "vma not found!\n");
-+				drm_gem_object_put(gem);
- 				ret = -EINVAL;
- 				break;
- 			}
+-		ttm_bo_pin(&nvbo->bo);
+ 		goto out;
+ 	}
+ 
 
 
