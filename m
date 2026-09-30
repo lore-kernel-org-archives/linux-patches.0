@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF5C364931;
-	Wed, 30 Sep 2026 16:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BDD374A16;
+	Wed, 30 Sep 2026 16:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786668; cv=none; b=nJqPCpWEMPwjJEOKKB+U7ljtcxiYe5KmwHBfYgMqUlU+rTEgdgIAUPxV7TE0hl9m8EbJqoQpgQ+14uPUofO5oUIXyE8HACj3bpVVK1voDBj79WuTJ4m9+K1qJcGKp97HgiNC4+thvVPegq74V36ZaWcDOr7oDxOZsK9jb5yXyRs=
+	t=1790786672; cv=none; b=FMXh/Z3HlCIVbVS+XIzL6RW7c+PvMb/Kpvt+xchsYrFE27fcje2ib+KPYB0gI2YJ41neGDbOhMqkmmAilqTmPydxtH/xE/hLf4hkhpfL7NLg9csKZKV0226nRD50T00FL+caGpG3np/eCAKs8JSOfQqcR6yenAKHIyEBIl4LccM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786668; c=relaxed/simple;
-	bh=bk6sPfJGBnYw1kYbLZ0zyoFgXymlItkX2dm6eyFWkj4=;
+	s=arc-20240116; t=1790786672; c=relaxed/simple;
+	bh=kCfuuCtoqsqg9AtGbF1pzIcZyUU8DUBItZBIj+dlC20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AvIP6tikDydFF+vM6PuG2aSw9La3EPGH1yGBhaknOBWkK6VSUDPxQNPy3X0t5vY3YONtcJ8qJ9WAiBJ7zupkEuPf2CjLTS6j+g3mtlVhWDsOSr9ni74yOYmzbRtz+QHhK+f+khNvcEcAUpKyEdq5YVkqzwX1YC3JxlVh4az+Rvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6OXFPgF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9UDCeJE4zxXw8y7uKuPDXKolYgqOEZZLidkox081vW4j8XmFB5lz5/Od1ZDvPtTQqilyAqpdSph2A2RhJr90/FGxSv5u5DOEmU+IkYpF0alHMnnoIXSHs5/P1gzvzrZm+oeYye+gNlSinAOGmbRzjc7ZAkDNz3dGrONuP7Gbfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeqFFwGU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6OXFPgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C5B1F000FF;
-	Wed, 30 Sep 2026 16:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeqFFwGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CCD1F000FF;
+	Wed, 30 Sep 2026 16:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786667;
-	bh=xLQKfORjlCyVdTuCfHr2Ea2BU0KbUvd2OzFYcINUwfM=;
+	s=korg; t=1790786670;
+	bh=lrIZ7l1PzdbWxra1Ro4ze2EZm+0Vphw/p5iQcxRrmXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j6OXFPgFoWYwrnxG6wyFB/L97nTf3WqUPMxOnuKwTUytqpeOzWAP5KyB1fbYBRXVN
-	 tr0KXViSXjsAgOWDqHrcJBDO9/m2lSbDIfwiA08rJB/86gZfcxETNYsXFaHVdY4Uji
-	 cCZqO8X/1HKtU5Y8IHAy6lS9kZTy6WlRjYRFPdzc=
+	b=MeqFFwGUXP/l8RUSXg4MHqDHlWeLWlV/leBpojr39nTR0FifUE9E8ALmInAnUCcyq
+	 jSHGCONHpNsLNCK3OnsfcICSLelt3pdJefatme4FjKpjrpk3zAzqhHxabLSp9d3Suz
+	 edItmWizoGxzA/oVYJ8/QQjy9AZWo2lTdzMTJeVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.1 944/982] drm/nouveau: Fix bridge reference leak in nv1a_ram_new()
-Date: Wed, 30 Sep 2026 17:28:00 +0200
-Message-ID: <20260930152437.015240212@linuxfoundation.org>
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 927/982] af_packet: fix integer overflow in prb_calc_retire_blk_tmo()
+Date: Wed, 30 Sep 2026 17:27:43 +0200
+Message-ID: <20260930152436.654393295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,35 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-commit 67b4411538c8341692548429d43256f25be99f7a upstream.
+commit 56d82862a0a243ac14ba11b6d7b57ddc2d064b95 upstream.
 
-pci_get_domain_bus_and_slot() takes a reference to the PCI device,
-which is never released once the memory size has been read from its
-config space.  Drop the reference before returning.
+prb_calc_retire_blk_tmo() computes in 32-bit int arithmetic:
 
-Fixes: 2fa6d6cdaf283c05 ("drm/nouveau: deprecate pci_get_bus_and_slot()")
+        mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
+
+If I'm reading the validation right, tp_block_size is user
+controlled and packet_set_ring() only rejects values that are <= 0
+as int or not page aligned, so a 256MiB block goes right through
+(and alloc_one_pg_vec_page() even has a vzalloc fallback for it).
+0x10000000 * 8 wraps to INT_MIN, and on a NIC reporting 1 Gbps
+(div == 1) the function ends up returning -2047.
+
+The condition is actually (8 * size) mod 2^32 >= 2^31 && div == 1,
+so the trigger set is [256,512), [768,1024), [1280,1536) and
+[1792,2048) MiB. Other sizes wrap to non-negative values and faster
+links divide the unsigned value back below 2^31, which is why this
+doesn't blow up for everyone.
+
+What makes it fatal is what happens next in init_prb_bdqc():
+
+        p1->interval_ktime = ms_to_ktime(prb_calc_retire_blk_tmo(...));
+        hrtimer_start(&p1->retire_blk_timer, p1->interval_ktime,
+                      HRTIMER_MODE_REL_SOFT);
+
+A negative relative timeout expires immediately. The callback
+unconditionally returns HRTIMER_RESTART, and hrtimer_forward() turns
+the negative interval into hrtimer_resolution:
+
+        if (interval < hrtimer_resolution)
+                interval = hrtimer_resolution;
+
+So the SOFT timer re-fires at the maximum rate forever, holding
+sk_receive_queue.lock each pass. One CPU spins in softirq until the
+socket is closed. Repeat with more rings and the machine is gone.
+
+The overflow itself is ancient - it was introduced together with
+TPACKET_V3 in f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer
+implementation."). Its effect prior to f7460d2989fa ("net:
+af_packet: Use hrtimer to do the retire operation", v6.18) was not
+as clear-cut, though: the return value was stored into an unsigned
+short retire_blk_tov, so a negative result was truncated, and a
+0-jiffy delay loop could be programmed as well. Neither is nearly
+as detrimental as the immediate maximum-rate spin the hrtimer
+conversion turned it into.
+
+(Unrelated to CVE-2019-20812 - that one was the ethtool failure path
+returning 0, which now returns DEFAULT_PRB_RETIRE_TOV.)
+
+Reproducer, needs CAP_NET_RAW (a --network host container has it by
+default) and a 1 Gbps NIC (QEMU e1000 works):
+
+        int fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+        bind(fd, ...);
+        int v = TPACKET_V3;
+        setsockopt(fd, SOL_PACKET, PACKET_VERSION, &v, sizeof(v));
+        struct tpacket_req3 req = {
+                .tp_block_size = 0x10000000,
+                .tp_block_nr = 1,
+                .tp_frame_size = 2048,
+                .tp_frame_nr = 0x10000000 / 2048,
+                .tp_retire_blk_tov = 0,
+        };
+        setsockopt(fd, SOL_PACKET, PACKET_RX_RING, &req, sizeof(req));
+
+Compute in 64 bits instead. The operands are already bounded by the
+existing validation, so nothing else changes. If you'd prefer a
+different fix, just say so and I'll respin.
+
+Fixes: f6fb8f100b80 ("af-packet: TPACKET_V3 flexible buffer implementation.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260916180036.2090118-1-vulab@iscas.ac.cn
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260923050101.1510064-1-zhangdairui@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramnv1a.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/packet/af_packet.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramnv1a.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/ramnv1a.c
-@@ -51,6 +51,8 @@ nv1a_ram_new(struct nvkm_fb *fb, struct
- 		mib = ((mem >> 4) & 127) + 1;
- 	}
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -638,7 +638,7 @@ static int prb_calc_retire_blk_tmo(struc
+ 		return DEFAULT_PRB_RETIRE_TOV;
  
-+	pci_dev_put(bridge);
-+
- 	return nvkm_ram_new_(&nv04_ram_func, fb, NVKM_RAM_TYPE_STOLEN,
- 			     mib * 1024 * 1024, pram);
- }
+ 	div = ecmd.base.speed / 1000;
+-	mbits = (blk_size_in_bytes * 8) / (1024 * 1024);
++	mbits = (u64)blk_size_in_bytes * 8 / (1024 * 1024);
+ 
+ 	if (div)
+ 		mbits /= div;
 
 
