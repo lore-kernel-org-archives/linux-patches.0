@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32393D25B2;
-	Wed, 30 Sep 2026 19:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937D82FD696;
+	Wed, 30 Sep 2026 19:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795902; cv=none; b=H41SOT/yJC7ToogM3IqHd7W/UNjIuL8U+NMny1qceS+iredDoYKEv4MYrClXr1M5b2IFsq/kCnlP8Y56UD34f5jW6CdfQN64F+z2+qXo5N85MbTdYtYe47ZxJ2IQzHvI33rCNfkFc11IlebY1LnQXI2bXsdINpSdxzsejMuH4kM=
+	t=1790795905; cv=none; b=BQNAKVAaoeDkgzswyrKPSPf8Lt6v+laluSU9MI4zmokkHE8APJui4UF3ZvvO8bvJVzDlGjZj3lIs8VDdJqKb/EmGIA5MkH6VzMWf4vUTlkvhvuxuYd5MpqjWJ7cz1VT5daGLApWx9/wmu7bFkoQkJC2zy4Ch7g8/jH4YThBiDaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795902; c=relaxed/simple;
-	bh=XJnOiwAEDpShRkjmw0L0KxS8EZ6TC2F70BZXQh1Umk0=;
+	s=arc-20240116; t=1790795905; c=relaxed/simple;
+	bh=Aucwmsj8eYIBR//JilngkIKF/5d0s1MeyOFgVq3SSRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgXxrS5XmMDTtZI218CrVx3tDyHx4ZEEfxFoQa0MNtUsen3D9bIe3EU09xdHLvRREvyWCTe60SvaIOF0Z1KZ9th6v18ckv+DGeuiIDXsvJ8AQ9/hKhZ9ivywXRJAVmeFcBzPbIEo8asQTbx4DVhF9A4BEF8JQ1bI+9pHBtnmunM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoWoEAyg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MfidoZLDrQbP7AbV48xE6NfIj6BksqXwVayn7riCIx9fL/RomD/Q4drkFZgu6+lwQj6t1r6Y7oTTC5YD6+m7WoiwOpfmE8uYE4v5VXX+qdSc6w5lxzrfSZoZ0UBPA85sExcz7KG8JNmpXMAT37bpqb7dss6dBSxp5UUEHhmU+vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tljKOfQm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoWoEAyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA0C1F000FF;
-	Wed, 30 Sep 2026 19:18:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tljKOfQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A0B1F000FF;
+	Wed, 30 Sep 2026 19:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795901;
-	bh=vIYZXqJLYQoartJweaxY0oyS5vqXjg0X0hJE1POeiZk=;
+	s=korg; t=1790795904;
+	bh=/lZFrDJXjKU6f7X0tQLXCIIhidpB+//D1/4H4BlnXf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EoWoEAygJyORazKd2S6867y5+3YHybuZStn2PSU0YUqmUX/28fNgz6gyxt5A/lq78
-	 u3RJQ1R2y386jCU7FT6C5oFTEt/kwd5RKrDTuJbSQS99QN+X7VgiBN2kKSGXZpMzvg
-	 U0rtTsbo2vqmFTPIMowhz8+kpOGOR5O34+5gXv4g=
+	b=tljKOfQm3lJ63Vi3DiPuyn6KU2exi8CdubtZ2++j2neuE29yNgeo918o0GnOhOoeX
+	 h63yrPktroNpGe+A5DH5QBBEqkPIqaG+Z9SlDXZPXwEwF7SCBWvoTS7tE5V0iILCcT
+	 xUMyU3f7u/vtpn/IKtmI12fjbiZp1YMVP1LnW/5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guoqing Jiang <guoqing.jiang@linux.dev>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0725/1193] RDMA/siw: Introduce siw_cep_set_free_and_put
-Date: Wed, 30 Sep 2026 17:23:29 +0200
-Message-ID: <20260930152450.359790931@linuxfoundation.org>
+Subject: [PATCH 6.6 0726/1193] RDMA/siw: Cleanup siw_accept
+Date: Wed, 30 Sep 2026 17:23:30 +0200
+Message-ID: <20260930152450.382376932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,115 +54,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit b5c91543204c345f1b28af573854c4b7e699cc91 ]
+[ Upstream commit 77b59bd932a026b64303d313d966decb0e9225fa ]
 
-Add the helper which can be used in some places.
+With the initialization of rv and the two added label, we can
+simplifiy code a bit.
 
 Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
 Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Link: https://lore.kernel.org/r/20231113115726.12762-11-guoqing.jiang@linux.dev
+Link: https://lore.kernel.org/r/20231113115726.12762-13-guoqing.jiang@linux.dev
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: 32cd87f54dd1 ("RDMA/siw: Clear association under lock if siw_qp_modify fails in siw_accept")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cm.c | 31 ++++++++++++++----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 41 ++++++++++--------------------
+ 1 file changed, 14 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
-index a04c1fcabfcc4..6dff4ddd896f8 100644
+index 6dff4ddd896f8..e5d04a060b228 100644
 --- a/drivers/infiniband/sw/siw/siw_cm.c
 +++ b/drivers/infiniband/sw/siw/siw_cm.c
-@@ -453,6 +453,12 @@ void siw_cep_put(struct siw_cep *cep)
- 	kref_put(&cep->ref, __siw_cep_dealloc);
- }
+@@ -1559,7 +1559,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	struct siw_cep *cep = (struct siw_cep *)id->provider_data;
+ 	struct siw_qp *qp;
+ 	struct siw_qp_attrs qp_attrs;
+-	int rv, max_priv_data = MPA_MAX_PRIVDATA;
++	int rv = -EINVAL, max_priv_data = MPA_MAX_PRIVDATA;
+ 	bool wait_for_peer_rts = false;
  
-+static void siw_cep_set_free_and_put(struct siw_cep *cep)
-+{
-+	siw_cep_set_free(cep);
-+	siw_cep_put(cep);
-+}
-+
- void siw_cep_get(struct siw_cep *cep)
- {
- 	kref_get(&cep->ref);
-@@ -1522,9 +1528,7 @@ int siw_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	siw_cep_set_inuse(cep);
+@@ -1575,24 +1575,17 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
  
- 		cep->state = SIW_EPSTATE_CLOSED;
- 
--		siw_cep_set_free(cep);
--
--		siw_cep_put(cep);
-+		siw_cep_set_free_and_put(cep);
- 
- 	} else if (s) {
- 		sock_release(s);
-@@ -1572,16 +1576,14 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
  	if (cep->state != SIW_EPSTATE_RECVD_MPAREQ) {
  		siw_dbg_cep(cep, "out of state\n");
- 
--		siw_cep_set_free(cep);
--		siw_cep_put(cep);
-+		siw_cep_set_free_and_put(cep);
- 
- 		return -ECONNRESET;
+-
+-		siw_cep_set_free_and_put(cep);
+-
+-		return -ECONNRESET;
++		rv = -ECONNRESET;
++		goto free_cep;
  	}
  	qp = siw_qp_id2obj(sdev, params->qpn);
  	if (!qp) {
  		WARN(1, "[QP %d] does not exist\n", params->qpn);
--		siw_cep_set_free(cep);
--		siw_cep_put(cep);
-+		siw_cep_set_free_and_put(cep);
- 
- 		return -EINVAL;
+-		siw_cep_set_free_and_put(cep);
+-
+-		return -EINVAL;
++		goto free_cep;
  	}
-@@ -1724,8 +1726,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
- 	cep->qp = NULL;
- 	siw_qp_put(qp);
+ 	down_write(&qp->state_lock);
+-	if (qp->attrs.state > SIW_QP_STATE_RTR) {
+-		rv = -EINVAL;
+-		up_write(&qp->state_lock);
+-		goto error;
+-	}
++	if (qp->attrs.state > SIW_QP_STATE_RTR)
++		goto error_unlock;
+ 	siw_dbg_cep(cep, "[QP %d]\n", params->qpn);
  
--	siw_cep_set_free(cep);
--	siw_cep_put(cep);
-+	siw_cep_set_free_and_put(cep);
- 
- 	return rv;
- }
-@@ -1748,8 +1749,7 @@ int siw_reject(struct iw_cm_id *id, const void *pdata, u8 pd_len)
- 	if (cep->state != SIW_EPSTATE_RECVD_MPAREQ) {
- 		siw_dbg_cep(cep, "out of state\n");
- 
--		siw_cep_set_free(cep);
--		siw_cep_put(cep); /* put last reference */
-+		siw_cep_set_free_and_put(cep); /* put last reference */
- 
- 		return -ECONNRESET;
+ 	if (try_gso && cep->mpa.hdr.params.bits & MPA_RR_FLAG_GSO_EXP) {
+@@ -1606,9 +1599,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 			"[QP %u]: ord %d (max %d), ird %d (max %d)\n",
+ 			qp_id(qp), params->ord, sdev->attrs.max_ord,
+ 			params->ird, sdev->attrs.max_ird);
+-		rv = -EINVAL;
+-		up_write(&qp->state_lock);
+-		goto error;
++		goto error_unlock;
  	}
-@@ -1766,8 +1766,7 @@ int siw_reject(struct iw_cm_id *id, const void *pdata, u8 pd_len)
+ 	if (cep->enhanced_rdma_conn_est)
+ 		max_priv_data -= sizeof(struct mpa_v2_data);
+@@ -1618,9 +1609,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 			cep,
+ 			"[QP %u]: private data length: %d (max %d)\n",
+ 			qp_id(qp), params->private_data_len, max_priv_data);
+-		rv = -EINVAL;
+-		up_write(&qp->state_lock);
+-		goto error;
++		goto error_unlock;
+ 	}
+ 	if (cep->enhanced_rdma_conn_est) {
+ 		if (params->ord > cep->ord) {
+@@ -1629,9 +1618,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 			} else {
+ 				cep->ird = params->ird;
+ 				cep->ord = params->ord;
+-				rv = -EINVAL;
+-				up_write(&qp->state_lock);
+-				goto error;
++				goto error_unlock;
+ 			}
+ 		}
+ 		if (params->ird < cep->ird) {
+@@ -1640,8 +1627,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 				params->ird = cep->ird;
+ 			else {
+ 				rv = -ENOMEM;
+-				up_write(&qp->state_lock);
+-				goto error;
++				goto error_unlock;
+ 			}
+ 		}
+ 		if (cep->mpa.v2_ctrl.ord &
+@@ -1688,7 +1674,6 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 				   SIW_QP_ATTR_ORD | SIW_QP_ATTR_IRD |
+ 				   SIW_QP_ATTR_MPA);
+ 	up_write(&qp->state_lock);
+-
+ 	if (rv)
+ 		goto error;
  
- 	cep->state = SIW_EPSTATE_CLOSED;
- 
--	siw_cep_set_free(cep);
--	siw_cep_put(cep);
-+	siw_cep_set_free_and_put(cep);
+@@ -1711,6 +1696,9 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	siw_cep_set_free(cep);
  
  	return 0;
- }
-@@ -1899,8 +1898,7 @@ int siw_create_listen(struct iw_cm_id *id, int backlog)
- 		siw_socket_disassoc(s);
- 		cep->state = SIW_EPSTATE_CLOSED;
- 
--		siw_cep_set_free(cep);
--		siw_cep_put(cep);
-+		siw_cep_set_free_and_put(cep);
++
++error_unlock:
++	up_write(&qp->state_lock);
+ error:
+ 	siw_socket_disassoc(cep->sock);
+ 	sock_release(cep->sock);
+@@ -1725,9 +1713,8 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
  	}
- 	sock_release(s);
- 
-@@ -1931,8 +1929,7 @@ static void siw_drop_listeners(struct iw_cm_id *id)
- 			cep->sock = NULL;
- 		}
- 		cep->state = SIW_EPSTATE_CLOSED;
--		siw_cep_set_free(cep);
--		siw_cep_put(cep);
-+		siw_cep_set_free_and_put(cep);
- 	}
+ 	cep->qp = NULL;
+ 	siw_qp_put(qp);
+-
++free_cep:
+ 	siw_cep_set_free_and_put(cep);
+-
+ 	return rv;
  }
  
 -- 
