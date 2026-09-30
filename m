@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD67400963;
-	Wed, 30 Sep 2026 17:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582B951476F;
+	Wed, 30 Sep 2026 17:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789074; cv=none; b=Qk8PzZZqIbAdbmj0rSuuoLMa2SowS0TE8kmSADV9+x9AOlAcLKFKaYKOIfoC78gbYCpcBtZsDAhB1Rxpqx4ulMTYPaZiHhFcVVBn70q4IahJWS9rYG/VJ4Ld86/TvaDy25CzHZIDsJeC47Cxjebvu06F6lBquegUFmejBc+jFdE=
+	t=1790789077; cv=none; b=IMmCy+6dNJURZw++MTr77uYJFHSY27clsMf7RsZSp/sBRoMrDLtVxptcuRIJlSaEnZGhipJ2zjG6qJSETllZWltqhsnnm+UvCL11jhpuDczxFC9dq41i4xAr/8SOe6As5KMHPGyJR07zbt3DCgEtQ7I6zE7XSg4P7GcR7ovqw20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789074; c=relaxed/simple;
-	bh=M5Hl1IFVnLHF+AzlO20ruuZARS78ZXuohSTZ2CV9h8E=;
+	s=arc-20240116; t=1790789077; c=relaxed/simple;
+	bh=futcTsCZOPArNohmIF6YyPUnEIrccfpQPVM0U5eT8Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuPh0JD+G5rHAoDazLFBpdEpyyDc2BxUMWXyAvrnYW85C5PWH+iVklSS5CGzozOyGt9IEeZuOK4ZtnTNvTJRj/ets5C3EP7b1YpMxs6QhoJEVSyPO7cd15sqYHExXtIc2PbLVzDFpYLRWrFgm6FNFkmTfvBcV4aLGFeiccgRnU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQrpMzHV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bqtiKlH2y1nuQq5aS9oj1q2zHxHc2Ph7vzGohKIo3Gbwrcg2czA026WQyi4LchUyfkfbZcqfvfRFptMguGmyNPMbY6fcJKNjvfKvaCFhcZPgFVC7bSgNMbLxYgZkNWplrqJA/QlLtbA40WVeMsm4vb5pf1tOghF1Cq+3Rdw2BBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTwZ4FkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQrpMzHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15F41F000FF;
-	Wed, 30 Sep 2026 17:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTwZ4FkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BFA1F000FF;
+	Wed, 30 Sep 2026 17:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789073;
-	bh=HB678qoMrbIt18Ylif0uupIZoGCfYEgk2S3NO5j3ORs=;
+	s=korg; t=1790789076;
+	bh=aQfS1ZNDcXWJ13itNGTtnRvFN+bZxFWhMu83Es60XLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQrpMzHV/xeEqrw1VKy6lj+BPrUlGvD5C5S3OmY71rnh04IHEg23+4dckJglIlTLF
-	 UjBCWvd9wEy+mwrLxBX0AZvJn3GMMX/jgANk89+mpdYOWg3jyKFlAzA24OORnvQQc7
-	 Krgf3tgq6EQjI2s8QHg0jXSnj1PQt3lR2YTyax9g=
+	b=LTwZ4FkN7XRSIAg/dTk/GIAka/rBu3J8y3UhMSu5wivB2i6HiZZWp3DRyIbvbbLXH
+	 9d2/Wsi3Sn1Sw+BoIesUQ5bjNOGEaucBM6sOx9dzxxk/i2SorcSMv5snBMCgyDFEJE
+	 4xq+yq71TDJ43zCagOTCdrgdkTD0BrcvYSMBfpD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 347/877] libbpf: Reject truncated ldimm64 CO-RE relocations
-Date: Wed, 30 Sep 2026 17:20:58 +0200
-Message-ID: <20260930152422.158731413@linuxfoundation.org>
+Subject: [PATCH 6.12 348/877] netfilter: flowtable: publish HW_DEAD after worker is done
+Date: Wed, 30 Sep 2026 17:20:59 +0200
+Message-ID: <20260930152422.181158986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,59 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit b4e875d397da451fb4e9c573ff4b86db53caba05 ]
+[ Upstream commit d644b23afe1ef509c9961a6d84a093c2587edf02 ]
 
-CO-RE relocation of an ldimm64 instruction operates on two instruction
-slots. A malformed BPF ELF can end a function after the first slot and
-attach a CO-RE relocation to it. libbpf allocates the instruction array
-according to the function symbol size, so the shared relocation code would
-then access beyond the allocation.
+flow_offload_work_del() sets NF_FLOW_HW_DEAD before the work handler
+clears NF_FLOW_HW_PENDING. Once a flow is both HW_DYING and HW_DEAD, a
+concurrent garbage collection pass can remove it and schedule it for RCU
+freeing.
 
-Reject a terminal ldimm64 in libbpf's relocation loop, where the program
-length is available, before resolving or applying the relocation. Both
-resolved and unresolved relocations validate the absent second slot, and
-unresolved relocation poisoning would additionally write past the array.
+The offload worker holds neither an RCU read lock nor a reference to the
+flow. If it is preempted after publishing HW_DEAD, the RCU callback can
+free the flow before the worker resumes and clears HW_PENDING, resulting
+in a use-after-free.
 
-The in-kernel caller is protected by the verifier's early instruction-stream
-check before it applies CO-RE relocations.
+Move HW_DEAD publication to the common worker epilogue after the pending
+bit is cleared, making it the final flow access by destroy work. Order all
+preceding flow accesses before publishing the bit that allows garbage
+collection to free the object.
 
-Fixes: eacaaed784e2 ("libbpf: Implement enum value-based CO-RE relocations")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/20260914140852.03DA21F0089B@smtp.kernel.org
-Link: https://patch.msgid.link/20260917233222.2542500-11-memxor@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 2c8897953f3b ("netfilter: flowtable: Add pending bit for offload work")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/netfilter/nf_flow_table_offload.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index ffb0d1f7e9a08..214f8b48c1ea3 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -5983,6 +5983,13 @@ bpf_object__relocate_core(struct bpf_object *obj, const char *targ_btf_path)
- 				return -EINVAL;
- 			insn = &prog->insns[insn_idx];
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index 4f346f51d7d74..8e3edc7c37b38 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -993,7 +993,6 @@ static void flow_offload_work_del(struct flow_offload_work *offload)
+ 	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_ORIGINAL);
+ 	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
+ 		flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
+-	set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
+ }
  
-+			if (is_ldimm64_insn(insn) && (size_t)insn_idx + 1 >= prog->insns_cnt) {
-+				pr_warn("prog '%s': relo #%d: insn #%d (LDIMM64) is truncated\n",
-+					prog->name, i, insn_idx);
-+				err = -EINVAL;
-+				goto out;
-+			}
+ static void flow_offload_tuple_stats(struct flow_offload_work *offload,
+@@ -1057,6 +1056,12 @@ static void flow_offload_work_handler(struct work_struct *work)
+ 	}
+ 
+ 	clear_bit(NF_FLOW_HW_PENDING, &offload->flow->flags);
++	if (offload->cmd == FLOW_CLS_DESTROY) {
++		/* Publish after the worker's last flow access. */
++		smp_mb__before_atomic();
++		set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
++	}
 +
- 			err = record_relo_core(prog, rec, insn_idx);
- 			if (err) {
- 				pr_warn("prog '%s': relo #%d: failed to record relocation: %d\n",
+ 	kfree(offload);
+ }
+ 
 -- 
 2.53.0
 
