@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D213D903C;
-	Wed, 30 Sep 2026 18:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C5D3B3BF2;
+	Wed, 30 Sep 2026 18:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793940; cv=none; b=Sgm+76sRP3CBsVOhNYxMrITJ3QZXy9CJmvfK9GHet41h4ky4vbqXSGdTayWiLbJPeb6UF3+yYMCo1yMy0ikL4uRqnFwwumHY0urmG3Bix4cYq6RGwps9ZGqtbFm2CnuAxIV4ZgqOaDj5vLXBSf/rmn9h7bfKnWIOyS93/iYm67s=
+	t=1790793943; cv=none; b=Lncb8LtF24nnArYuD3ar3rkdsl7kuK3ZUndwefPxvlUEOi1Ss+M3j+zS1glszrF7KA7EL7D+w5HK3REbLDcWLkqAYbvumQTdKKASor8i8jfJ3jh2wxrC0BZaDtYk6a2BqQe3znxWaPUlMzIeACeFR1W5hGWXniApcsHsBuzp3Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793940; c=relaxed/simple;
-	bh=xew+Ba1u1TAIZfQrnU2kDLrrCQDnGAIECQYaqPUwZ4o=;
+	s=arc-20240116; t=1790793943; c=relaxed/simple;
+	bh=kQj5nk1QOq3gztqBZzTp3mgsVtGKkcMmOtRsa+botrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ns8Scli2v0L6CK7fBvTb9pr0ndQIhi+iewqnPZfuXmpU7Zvev83hxry1jLo8bkScZDJdA4eAb5qxHSmeliVflzKwHqU9NEMDZUefZujepXjj0/s5+AhznMUnA35cuga6ByedLYHGjENnqhxkULUveDqZaafPJmPics9qZ/QHg/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBubPsK4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LrpjDX5bFgIkhUElIbEsrFRc/j7mgAfPnCA6v3DQhVkWpwxTbkm382HimFwBVosKbKtVM7rUc3eH8GCVcdKPWFQdxMxwIZ9v+AP2yX3qQ2/A33zFZwy1+JfoFufFKnGGOKNRTHS5xjPt3QXoPCVqLQF3lS8ocMbztq07ehCjPX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W72FiFR7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBubPsK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEF61F00899;
-	Wed, 30 Sep 2026 18:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W72FiFR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06CB1F000FF;
+	Wed, 30 Sep 2026 18:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793938;
-	bh=33QbPE2sVSLvw5PtkyQ8uRbIzT0eaPIRejHwegvmcbA=;
+	s=korg; t=1790793941;
+	bh=Lpl80kAB5r15dAAnXLN8S/lqbDMEPMeZqid8DWIJjK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SBubPsK483bwrb3MbK27R1lsQmx4Mj100qs4X8//t8J06hUv9b5FQj7V9+zE7Ph+7
-	 mF1mdLaAREk/rt2cO4r2U7uXVGswQCBAzUf4UDRHEooTws3SOuLIubAWx8N2hZXLHV
-	 Ndh8TzltCLvS30jBj6kb5yQcFEdtv2xCn4kNpUnU=
+	b=W72FiFR7LAKofeMPuPQFd0D6hdTAkbXqSHyiHERLVVIT1H3b0bHznq7EajVzkbDrg
+	 bCtjWki03Mz2vuITS7doLQpu7iWPZa6LB+4T+3nhp6bszxlAaNcgtnCfPUC0l58zJ8
+	 bpBqShoAC+e9N+e2F8F09lamd2GLMBTi6UNxA5PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Goldwyn Rodrigues <rgoldwyn@suse.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0008/1193] ima: return error early if file xattr cannot be changed
-Date: Wed, 30 Sep 2026 17:11:32 +0200
-Message-ID: <20260930152434.493424364@linuxfoundation.org>
+Subject: [PATCH 6.6 0035/1193] crypto: omap - add omap_des_unregister_algs helper
+Date: Wed, 30 Sep 2026 17:11:59 +0200
+Message-ID: <20260930152435.064929183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,64 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Goldwyn Rodrigues <rgoldwyn@suse.de>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 69fc6474236d9edda6983623e4282f2bdfd8e3d8 ]
+[ Upstream commit 9ab1392b1163daab674484d6ddacf16f0ad4c040 ]
 
-During early boot, the filesystem is read-only and any changes
-to xattrs are not allowed. This fails in case of ext4 because
-changing xattr starts an ext4 transaction which fails with the
-following warning.
+Add a new helper omap_des_unregister_algs() and replace two for loops in
+omap_des_probe() and omap_des_remove(), which also ensure ->registered
+is reset to 0.
 
-WARNING: fs/ext4/ext4_jbd2.c:75 at ext4_journal_check_start+0x63/0xa0 [ext4], CPU#1: systemd-sysroot/561
-CPU: 1 UID: 0 PID: 561 Comm: systemd-sysroot Not tainted 6.19.12-1-default #1 PREEMPT(voluntary) openSUSE Tumbleweed  c2dfc3c9d9f6f1233251c5d4410574fe82a348ee
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-RIP: 0010:ext4_journal_check_start+0x63/0xa0 [ext4]
-Call Trace:
-  __ext4_journal_start_sb+0x3e/0x180 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
-  ext4_xattr_set+0x104/0x150 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
-  __vfs_setxattr+0x9a/0xd0
-  __vfs_setxattr_noperm+0x76/0x1f0
-  ima_appraise_measurement+0x23e/0xe40
-  ima_d_path+0x5a/0xd0
-  process_measurement+0xb29/0xc40
-  ? copy_from_kernel_nofault+0x21/0xe0
-  ? fscrypt_file_open+0xc0/0xe0
-  ? ext4_file_open+0x60/0x490 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
-  ? bpf_prog_31efb7c56239148b_restrict_filesystems+0xab/0x126
-  ? __bpf_prog_exit+0x23/0xd0
-  ? __bpf_tramp_exit+0xd/0x50
-  ? bpf_trampoline_6442530367+0x9f/0xea
-  ima_file_check+0x57/0x80
-  security_file_post_open+0x50/0xf0
-  path_openat+0x493/0x1650
-  do_filp_open+0xc7/0x170
-
-Detect the state of the file early and return the error.
-
-Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_appraise.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/crypto/omap-des.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
-index a5dff9c38393e..3804eaea120cd 100644
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -90,6 +90,11 @@ static int ima_fix_xattr(struct dentry *dentry,
- 	int rc, offset;
- 	u8 algo = iint->ima_hash->algo;
+diff --git a/drivers/crypto/omap-des.c b/drivers/crypto/omap-des.c
+index 089dd45eaedd7..c5e7064be9c55 100644
+--- a/drivers/crypto/omap-des.c
++++ b/drivers/crypto/omap-des.c
+@@ -946,6 +946,20 @@ static int omap_des_get_pdev(struct omap_des_dev *dd,
+ 	return 0;
+ }
  
-+	if (IS_RDONLY(d_inode(dentry)))
-+		return -EROFS;
-+	if (IS_IMMUTABLE(d_inode(dentry)))
-+		return -EPERM;
++static void omap_des_unregister_algs(const struct omap_des_pdata *pdata)
++{
++	struct omap_des_algs_info *alg_info;
++	int i;
 +
- 	if (algo <= HASH_ALGO_SHA1) {
- 		offset = 1;
- 		iint->ima_hash->xattr.sha1.type = IMA_XATTR_DIGEST;
++	for (i = pdata->algs_info_size - 1; i >= 0; i--) {
++		alg_info = &pdata->algs_info[i];
++
++		crypto_engine_unregister_skciphers(alg_info->algs_list,
++						   alg_info->registered);
++		alg_info->registered = 0;
++	}
++}
++
+ static int omap_des_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1051,11 +1065,7 @@ static int omap_des_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_algs:
+-	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
+-		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--)
+-			crypto_engine_unregister_skcipher(
+-					&dd->pdata->algs_info[i].algs_list[j]);
+-
++	omap_des_unregister_algs(dd->pdata);
+ err_engine:
+ 	if (dd->engine)
+ 		crypto_engine_exit(dd->engine);
+@@ -1075,16 +1085,12 @@ static int omap_des_probe(struct platform_device *pdev)
+ static int omap_des_remove(struct platform_device *pdev)
+ {
+ 	struct omap_des_dev *dd = platform_get_drvdata(pdev);
+-	int i, j;
+ 
+ 	spin_lock_bh(&list_lock);
+ 	list_del(&dd->list);
+ 	spin_unlock_bh(&list_lock);
+ 
+-	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
+-		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--)
+-			crypto_engine_unregister_skcipher(
+-					&dd->pdata->algs_info[i].algs_list[j]);
++	omap_des_unregister_algs(dd->pdata);
+ 
+ 	tasklet_kill(&dd->done_task);
+ 	omap_des_dma_cleanup(dd);
 -- 
 2.53.0
 
