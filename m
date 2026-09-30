@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A4A4ABBA5;
-	Wed, 30 Sep 2026 18:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CC251DAFE;
+	Wed, 30 Sep 2026 18:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792648; cv=none; b=GF11Lq3pLtkuzaRpPvF3KcBHuleMupQd/vP6EJP/mwLqsq6n/oA/4lMXuTPmWbOnWDS6IPQhxO1v1vpqqavTo2u+iIPjb1k8Ff3inihXE0YPyxr4eR6Q3tBKmGBMH4J9Pqv/slyZOWqKj8VlwMjUPSSc/vpbcQbX1Crg0sdh2+0=
+	t=1790792651; cv=none; b=IRd/h+QBLPXsVEL5f1pPVG3/nh3IBETxT9pNq3AGqLiFC+CP3jvou4ggD2UhpWH+mo15uCmiNSY0o5FuSVzFRwzxEqDZID/lsQ2p4uK3WMzgufbs3MCETQd9QCsoSj0hIQKNLbWW498HS7qTXdh00N5sDiLAEgcgjbkoDCDU1Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792648; c=relaxed/simple;
-	bh=8Joa8uNYP55aFKujixPYUMRi8ml7SR9PhSJokZLavn0=;
+	s=arc-20240116; t=1790792651; c=relaxed/simple;
+	bh=WVFjh7OfgXSbolrxcqmmUpVbkbLI0Tk+mckhBKYj9Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZMgIpUcSw+TUAA5MUJHQk/3QsQHpccmEVYRUg0Kluw770O/isMIq5NFOH3mQGoIU2g9FdjVWrBUyfRNsXi89uVfJ4AjpTPa2N2ojTGv9qvb3iUdX2BAkHQogM6S6D97dwPkb0HoFlhOMaC9cPLLBctWcalikkhcnwDeFtUiBdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzPTnaeG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KrJfHCBjXInbnBsV3agA0B1zJOztAnDjxt6i8hPv6+VDHn2vYwNhx8rrUtpZJZN2zAhy6PtV8JCGPrEVZVgPPvlrDQXJYiNrbrYjdrzlC0VuueCfYvjMHy0Dl/OfRFWGVyC/lnYjlp+ZqbdH6+OQaxfxYRbnDEAG3iR6ISzany8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cfo1zx/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzPTnaeG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C481F00899;
-	Wed, 30 Sep 2026 18:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cfo1zx/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1031F00899;
+	Wed, 30 Sep 2026 18:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792647;
-	bh=l7vStYZ5V9GktHdVN/sP/AoNKaZeEQYAnE3rScrfcuU=;
+	s=korg; t=1790792650;
+	bh=pko7/HF/bOfSwCaYJj0OjadibP4SV342j7N7RkzDX7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nzPTnaeGlabNiAupLvrCRiTwdhsAdLuqk65YEPwASjI3uuHI/7jnXs1F8qHYc4fd+
-	 4nASrq+6XgLSH/bCXtkXL2r8RDcdBR4zc8nHuCWFTnrMW/JvcCwO0lyq4+RgzO9sBa
-	 KD6bMOw3TSU2fVgHo7J5pxwIf8Vkj8ymuC2S7oWg=
+	b=Cfo1zx/uUAp9REweemGvNKaHwB0REcRsAi83yOrjVMkEuKCjnKgZJMkInPoFOjzVt
+	 gyHR6o5J1iNqRlWuP/2G8zIRmeN9EbmMXWWKLIuOqeYXVEIrHR0giX/ARwmVW8VHBF
+	 AQCkMtmBl3DFJbZ6eQ0Eb1i46qCKy0XpC7z9iYyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 5.15 729/752] nfc: port100: reject frames whose declared length exceeds the received data
-Date: Wed, 30 Sep 2026 17:29:59 +0200
-Message-ID: <20260930152413.991724722@linuxfoundation.org>
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 730/752] scsi: libiscsi_tcp: Check the data direction of a Data-In PDU
+Date: Wed, 30 Sep 2026 17:30:00 +0200
+Message-ID: <20260930152414.013210833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,51 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 092c6a605cbd6414ef499834c2e0da69c2c3388e upstream.
+commit bce07e2f37b5e4a427d36fd6b1c14067b27591db upstream.
 
-port100_recv_response() passes the URB transfer buffer to
-port100_rx_frame_is_valid(), which checksums le16_to_cpu(frame->datalen)
-bytes of frame->data. datalen is a 16-bit field supplied by the device
-and is never checked against the number of bytes actually received
-(urb->actual_length), so a device reporting a datalen larger than the
-received frame makes port100_data_checksum() read out of bounds past the
-transfer buffer.
+The Data-In branch of iscsi_tcp_hdr_dissect() resolves the ITT to a task
+and copies the PDU's data segment into that command's scatterlist without
+asking whether the command was reading. iscsi_tcp_r2t_rsp() in the same
+file does ask, and rejects an R2T for a command that is not DMA_TO_DEVICE.
 
-Reject a response whose declared frame size does not fit the received
-length before validating it.
+A target that answers a WRITE command's ITT with a Data-In therefore has
+the initiator write target-supplied bytes into the pages that write was
+about to send. Those are the caller's own pinned pages for an O_DIRECT
+write, and page cache pages for a buffered one.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing bound is evident from source. Compile-tested.
+Observed against a test target that emits one 512-byte Data-In naming a 128
+KB write's ITT, after the R2T for that write. With O_DIRECT the caller's
+buffer ends up holding 512 bytes of the target's data while pwrite()
+returns 131072. Buffered is quieter: pwrite() and fsync() both succeed,
+nothing is logged, and reading those blocks back returns the target's bytes
+out of the page cache without a command going on the wire.
 
-Fixes: 562d4d59b8a1 ("NFC: Sony Port-100 Series driver")
+Check the direction before using the scatterlist, the way the R2T path
+already does.
+
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260711123651.32595-1-doruk@0sec.ai
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260801133635.1986706-1-yhlee@isslab.korea.ac.kr
+Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/port100.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/scsi/libiscsi_tcp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nfc/port100.c
-+++ b/drivers/nfc/port100.c
-@@ -636,6 +636,13 @@ static void port100_recv_response(struct
+--- a/drivers/scsi/libiscsi_tcp.c
++++ b/drivers/scsi/libiscsi_tcp.c
+@@ -491,6 +491,9 @@ static int iscsi_tcp_data_in(struct iscs
+ 	int datasn = be32_to_cpu(rhdr->datasn);
+ 	unsigned total_in_length = task->sc->sdb.length;
  
- 	in_frame = dev->in_urb->transfer_buffer;
- 
-+	if (urb->actual_length < PORT100_FRAME_HEADER_LEN ||
-+	    urb->actual_length < port100_rx_frame_size(in_frame)) {
-+		nfc_err(&dev->interface->dev, "Received a truncated frame\n");
-+		cmd->status = -EIO;
-+		goto sched_wq;
-+	}
++	if (task->sc->sc_data_direction != DMA_FROM_DEVICE)
++		return ISCSI_ERR_PROTO;
 +
- 	if (!port100_rx_frame_is_valid(in_frame)) {
- 		nfc_err(&dev->interface->dev, "Received an invalid frame\n");
- 		cmd->status = -EIO;
+ 	/*
+ 	 * lib iscsi will update this in the completion handling if there
+ 	 * is status.
 
 
