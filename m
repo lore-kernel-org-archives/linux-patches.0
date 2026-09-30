@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A486E51D524;
-	Wed, 30 Sep 2026 18:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AC54F5E19;
+	Wed, 30 Sep 2026 18:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793345; cv=none; b=BYOo+zIiMbDlblO6SJmpf29Ge4te0Xswby7g+yGyTg2wLyaJ67uGqjbRMVmIXluwtocvacjhTN90JDXo6pAJh8od7hcNADrTgIu9y6Y3AGPXVJgGjCxf4IjC4RRdouU7cUlV3nQSzmG4WgWrcY4OKW5tU87rv2enTZ/lTtsRav0=
+	t=1790793349; cv=none; b=J/c7Pebu+1oVSPMMfUm0Tq0EsDNyMQkdmyau/rvR38KuBsX+Mu4p+l0foyd9StM4nQ4Q53dBNSGYqp6NE13dBto9UYG8fTFbP94zLJ5RgJFGB0RRd3A3u044yxlym6iudTg16XAG5w26U5adLv61DrQeBNJlZ+JT3FzFGtkklm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793345; c=relaxed/simple;
-	bh=8GNnfbRtoUDNhMtuPQGR191fAptQd765RkIn9/pIDTc=;
+	s=arc-20240116; t=1790793349; c=relaxed/simple;
+	bh=hwAu+ZqQs3yoJOaXcXG+lPMjyFyNJZJZRWJpnzvdJhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nP65N4xrUc3M4Y7mo1MUQEYDwwZvnAfwx3hH0eRDn4+rfHmdI2GGWXULyOyRMORw50aYumOwan3DU1s9KVPsWAngHpJVAdg4AP4/TAzmFd9Kts/EpMaqoa0YJjBVE+eTxoxGQuKSCpOOL9YY5kXKDeQgC9wcgF/c/2s5pFwavdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7s7kFDD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=frig1Dru7f4eE0hkA5ITN6xVXDGPOWmPaqhMi82L8PED+D6y+OXb1abxiArxm/1I0mBwgtEM4pwkRsw4LGzBEaboxEkuSwTdVx8b4aMvg7jIy5KxE4+P0qeTGgU4mRFCwNtS+dYLv8E/V48vsLzqognYDde6vCV1jiKM7qggF60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNqgcXP3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7s7kFDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1BF1F000FF;
-	Wed, 30 Sep 2026 18:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNqgcXP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B461F00898;
+	Wed, 30 Sep 2026 18:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793344;
-	bh=r4b3otQMxq08He+QI6DyfnUtlOsdI99cRQAJ2Tn4bg8=;
+	s=korg; t=1790793347;
+	bh=ctRc7bYoyyJBgp2s6SICgyQRoW8EcpfOaT2qOet7kME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u7s7kFDDRkmze2bXVqLk29S4WCjKPfN5tOiu+STaPdwPCRoWfuaj8uPoYCWOqK/u1
-	 4rFNJmY2HhePuMz9/dwftyvAr/ZCuzw3eLYAy0GG2ZgI2GiYoxNhmmEgdj2ujF+qR7
-	 Kd9Hc97B032NWrVoTAdMm0AtGJUJ4GRniduNZZts=
+	b=ZNqgcXP3fojye62sOslW/sMm6kTyQLjklGsPUOwXCUpOQBUJEhlW0XK0KJx4whTa9
+	 ED9e6KO1EQwc+x8fMFvMDSxJv/Lx8sWiFzINVpx139fQpAF1SqLueQ8OyTgIxhb5Fx
+	 9uATNtW0KNZgusblnLAQfoeIshpH5cY9Oq/yVLq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Weiming Shi <shiweiming@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Eric Dumazet <edumazet@google.com>,
+	Aleksei Sviridkin <f@lex.la>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 177/395] tcp: fix use-after-free of retransmit_skb_hint in tcp_send_synack()
-Date: Wed, 30 Sep 2026 17:27:19 +0200
-Message-ID: <20260930152344.489563452@linuxfoundation.org>
+Subject: [PATCH 6.18 178/395] net: phylink: record the PHY only once bringup cannot fail
+Date: Wed, 30 Sep 2026 17:27:20 +0200
+Message-ID: <20260930152344.513107401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,64 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Aleksei Sviridkin <f@lex.la>
 
-[ Upstream commit fe99bbeee5c5dbd3abc30721a8079ced59649d97 ]
+[ Upstream commit a940003f44e7e441c228151dd212642152700ec8 ]
 
-When tcp_send_synack() replaces the cloned SYN skb at the head of the
-retransmit queue with a copy, it frees the original with
-tcp_rtx_queue_unlink_and_free() and only repairs tp->highest_sack.
-tp->retransmit_skb_hint keeps pointing at the freed
-skbuff_fclone_cache object.
+phylink_bringup_phy() stores the PHY in pl->phydev before its last
+fallible step: on a MAC whose phylink ops implement LPI,
+phy_eee_rx_clock_stop() can fail with a real MDIO error. The callers
+unwind with phy_detach(), which knows nothing about pl->phydev, so a
+pointer to a PHY that is no longer attached outlives the failed
+connect.
 
-The dangling hint is read in tcp_verify_retransmit_hint() and used as
-the root of the rbtree walk in tcp_xmit_retransmit_queue().  An
-unprivileged TFO client (sendmsg(MSG_FASTOPEN)) can arm the hint with
-an attacker-supplied ICMP fragmentation-needed message, after which a
-simultaneous open frees the armed SYN skb:
+What that costs depends on how the caller got here.
+phylink_connect_phy() goes through phylink_attach_phy(), which refuses
+to attach while pl->phydev is set, turning a transient MDIO error into
+a permanent -EBUSY. The SFP path is worse than that: sfp_sm_probe_phy()
+answers the failure with phy_device_remove() and phy_device_free(), and
+it assigns sfp->mod_phy only past that error return, so nothing clears
+pl->phydev and it is left pointing at a freed phy_device that
+phylink_resolve() and the ethtool helpers go on reading.
+phylink_fwnode_phy_connect() has no such check, so a later connect
+overwrites the stale pointer and hides the problem. A disconnect does
+not: phylink_disconnect_phy() hands that pointer to phy_disconnect(),
+and the second phy_detach() on the same PHY drops references the first
+one already released.
 
-  BUG: KASAN: slab-use-after-free in tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
-  Read of size 4 at addr ffff88800604d928 by task swapper/1/0
-  Call Trace:
-   tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
-   tcp_simple_retransmit (net/ipv4/tcp_input.c:3158)
-   tcp_v4_err (net/ipv4/tcp_ipv4.c:587)
+Found while making a DSA port survive a PHY whose driver arrives after
+the switch probes: keeping the port across a failed connect and
+retrying is what makes this window reachable.
 
-Sync the hint to the copy.
+Publish the pointer after the last call that can fail instead of
+unwinding it afterwards. Nothing between the two points reads
+pl->phydev, and the registration that follows cannot fail:
+phy_request_interrupt() falls back to polling on its own. The PHY-side
+state keeps the order it had, so no MDIO operation moves relative to
+another.
 
-Fixes: c31b70c9968f ("tcp: Add logic to check for SYN w/ data in tcp_simple_retransmit")
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Tested-by: Weiming Shi <shiweiming@moonshot.ai>
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/8a9dff4063a2745653b7e88ceb745d75efa16e68.1790224474.git.yilinzhang@moonshot.ai
+Fixes: 03abf2a7c654 ("net: phylink: add EEE management")
+Signed-off-by: Aleksei Sviridkin <f@lex.la>
+Link: https://patch.msgid.link/20260920222044.1752860-1-f@lex.la
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/phylink.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 0cd46896e7983..3f9e11a43f35f 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3821,6 +3821,7 @@ void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason)
-  */
- int tcp_send_synack(struct sock *sk)
- {
-+	struct tcp_sock *tp = tcp_sk(sk);
- 	struct sk_buff *skb;
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 848b6ec9bd85b..0b618842d41d7 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -2115,7 +2115,6 @@ static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
+ 	mutex_lock(&pl->phydev_mutex);
+ 	mutex_lock(&phy->lock);
+ 	mutex_lock(&pl->state_mutex);
+-	pl->phydev = phy;
+ 	pl->phy_state.interface = interface;
+ 	pl->phy_state.pause = MLO_PAUSE_NONE;
+ 	pl->phy_state.speed = SPEED_UNKNOWN;
+@@ -2182,10 +2181,25 @@ static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
+ 			ret = 0;
+ 	}
  
- 	skb = tcp_rtx_queue_head(sk);
-@@ -3838,6 +3839,8 @@ int tcp_send_synack(struct sock *sk)
- 			if (!nskb)
- 				return -ENOMEM;
- 			INIT_LIST_HEAD(&nskb->tcp_tsorted_anchor);
-+			if (skb == tp->retransmit_skb_hint)
-+				tp->retransmit_skb_hint = nskb;
- 			tcp_highest_sack_replace(sk, skb, nskb);
- 			tcp_rtx_queue_unlink_and_free(skb, sk);
- 			__skb_header_release(nskb);
+-	if (ret == 0 && phy_interrupt_is_valid(phy))
++	if (ret)
++		return ret;
++
++	/* Nothing below can fail, so the PHY can be recorded now. Doing it
++	 * here rather than above keeps a failed bringup from leaving
++	 * pl->phydev pointing at a PHY the caller is about to detach.
++	 */
++	mutex_lock(&pl->phydev_mutex);
++	mutex_lock(&phy->lock);
++	mutex_lock(&pl->state_mutex);
++	pl->phydev = phy;
++	mutex_unlock(&pl->state_mutex);
++	mutex_unlock(&phy->lock);
++	mutex_unlock(&pl->phydev_mutex);
++
++	if (phy_interrupt_is_valid(phy))
+ 		phy_request_interrupt(phy);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int phylink_attach_phy(struct phylink *pl, struct phy_device *phy,
 -- 
 2.53.0
 
