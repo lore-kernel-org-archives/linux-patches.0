@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10846515961;
-	Wed, 30 Sep 2026 16:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012E351599B;
+	Wed, 30 Sep 2026 16:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787586; cv=none; b=H9AEQLJhXH9c8LZnMOXoI7uiQ6rQh3b3az5YL+Xi5JandQwF2P+xdAOV1hgU8gI6Zw2QRDXw8EyN4oAVTtK6n47WriIUdrCeS8VhhneBPT22E8kT3cCyE+Lfstz83tnxY9onUWGc0LZcjnesiBjwLLWyQiJ382OyrYAkFnfcUsE=
+	t=1790787589; cv=none; b=HV8AAzhpxbqNztkUvR+3BdiiNlsqfWsffJZu5G3mi82WptIjJ6AHuMoaA1VjoYmx2DOs2JdUC+dgpxKdhdg2V+UKEN57xehZPovX32yO5jv0QSJmPZPpJ5jbxNUUKYFii1l4rhGNgZCRcyi5nEzdU7dXXrO8mTC5SjtgQhB6GY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787586; c=relaxed/simple;
-	bh=g/o5dYgzYVgBkIlbc2J+FhZXvWkCqui4lZ84t314/YQ=;
+	s=arc-20240116; t=1790787589; c=relaxed/simple;
+	bh=BAePkFoz/VCKxmI42+Mh7o4n9gs78E6z5VG3kj5OI7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oeA+JW59a55MzRD3EwDUJfPNy+JNu3bfzvuJdcddxS44QGxZlJI5dBOSjhDgQLJ/nif10scRxzKjYWPoo+Og1NdiT5cpnRKIsnzYbd9VyyrKN4PSthjOqCWrYCibiFUc42UIn4F+JnrJnp+y+ObVEIS93gr1Aj5JWLLsEDUlH1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXYBd7M8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fHshLeH/ZDOkC+uZmRkI01O/CvnmTdGzQtz2LjM13AFf22kiR8S3KS4mpHNrJlf6ZYFqjerbOQULlF5X0fkv7yVn/juJO4CE2MeTtq/grOpinFY9soIOw52ACQLN5CL61zOMEy731/cCxdDBqcywT3vg3qZQGHh+2xUKfdelqfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTFlnfBP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXYBd7M8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666DB1F000FF;
-	Wed, 30 Sep 2026 16:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTFlnfBP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365661F00898;
+	Wed, 30 Sep 2026 16:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787584;
-	bh=YnBoYMSBOjj2eeAQ7O8Aoqq8CukA4lvTBCpVEz0GigI=;
+	s=korg; t=1790787587;
+	bh=sKhzBtDLo5h0mUk3Xwp8jxCPdMeI+vmD8nqXOz6scRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HXYBd7M8ZzJA1JhigXK+beyrt/7EMyr9qlQDdGLjnzHyVE8MaSK3TszKnH8vvpRPg
-	 rO0b0mVqggqKHvvycObaR8YlvZHysFnRYsttsGHNvi5yn6BZRQgo6d9ER9/973Ba9Z
-	 olrLBVFkdhA1eZbLFTlHj7Ch0jZocPjMU/Aue7dI=
+	b=nTFlnfBPYojoKQ8NrMMQlfixZj3EfJNoFsW5gLKXBQN07O2Y0b+ortgLk1PJhpio5
+	 8qWg4dzmFCO1sUdpGgEl+qxg6Rjbof2cRNrTAwWDqPWZFlA0/JjSBQ3ugjML1aKd/l
+	 /+Oqid+jijO2yBvAShu+ps0ORfNYmUAoDklDqHLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Coelho <luciano.coelho@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 7.2 281/457] drm/i915/dp_mst: Fix configuring TUs for a disconnected stream
-Date: Wed, 30 Sep 2026 17:26:26 +0200
-Message-ID: <20260930152352.100292043@linuxfoundation.org>
+	Asad Kamal <asad.kamal@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 282/457] drm/amdkfd: fix use-after-free and multi-container gap in kfd_dev_mapping
+Date: Wed, 30 Sep 2026 17:26:27 +0200
+Message-ID: <20260930152352.122050612@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,93 +51,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-commit a443e0b8d647c1401b110d9f919d8c6cb8607260 upstream.
+commit c3a31087b1c8df679b653c1a09d9abe5ff7ec8ef upstream.
 
-During an atomic commit after all the MST stream CRTC state is computed
-the driver ensures that the sum of TUs of all the streams on a given MST
-topology link is within limits (63 for 8b10 and 64 for 128b132b). For a
-disconnected stream the DRM MST core's BW verification doesn't ensure
-this, because the topology state it uses for this is destroyed as soon
-as the stream (i.e. MST connector/port) is disconnected. The driver
-should keep the link state valid even for such disconnected streams, as
-userspace may disable them one-by-one only in a deferred way. Ensure the
-link's sum of TUs stays within limits in this case by simply reusing the
-maximum link BPP limit from the stream's (i.e. CRTC's) old state.
+kfd_dev_mapping caches the address_space of the first /dev/kfd opener
+so that the GPU reset path can call unmap_mapping_range() to zap all
+userspace mappings of doorbell and MMIO ranges.  This design has two
+bugs that both manifest under SRIOV with multiple containers:
 
-The disconnection can happen either via the whole topology getting
-disconnected or via only the given stream's port getting disconnected.
-Check for both of these conditions separately, as a connector gets
-unregistered after a link disconnect event only in a deferred way.
+1. Use-after-free / rwsem deadlock.  The cached pointer refers to an
+   inode owned by the first opener's container.  When that container
+   exits and its inode is released, kfd_dev_mapping becomes a dangling
+   pointer.  A subsequent GPU reset dereferences it inside
+   unmap_mapping_range(), which takes i_mmap_rwsem on the freed inode,
+   causing a hard hang observable as an uninterruptible rwsem wait.
 
-Cc: stable@vger.kernel.org # v6.10+
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16073
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16384
-Reviewed-by: Luca Coelho <luciano.coelho@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260907174413.741851-2-imre.deak@intel.com
-(cherry picked from commit ee00f8fbb2b202002ab90834e02e9ba372773a36)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+2. Multi-container gap.  Only the first opener's address_space is cached;
+   VMAs created by later openers live in a different address_space and
+   are never reached by unmap_mapping_range().  After a GPU reset those
+   stale mappings keep doorbell and MMIO pages accessible to guest
+   userspace with no GPU behind them, risking PCIe transaction timeouts
+   and NMI panics.
+
+Fix both bugs with the same approach used by DRM core (drm_drv.c):
+create a private pseudo-filesystem at module init time and allocate one
+anonymous inode from it.  In kfd_open() redirect every opener's
+file->f_mapping to that inode's address_space.  The inode is
+module-owned, lives exactly as long as the amdgpu module, and collects
+VMAs from all openers in one address_space.  A single
+unmap_mapping_range() call in the reset path then correctly reaches
+every container's mappings with no dangling pointer risk.
+
+The hang manifests as an NMI backtrace on the GPU reset workqueue stuck
+spinning in rwsem_down_read_slowpath() with a corrupted i_mmap_rwsem:
+
+  Workqueue: amdgpu-reset-dev xgpu_ai_mailbox_flr_work [amdgpu]
+  Call Trace:
+   <TASK>
+   kvm_wait+0x1f/0x40
+   __pv_queued_spin_lock_slowpath+0x31d/0x3a0
+   _raw_spin_lock_irq+0x51/0x80
+   rwsem_down_read_slowpath+0xb3/0x550
+   down_read+0x48/0xd0
+   unmap_mapping_range+0x71/0x140
+   kfd_dev_unmap_mapping_range+0x5b/0x140 [amdgpu]
+   amdgpu_amdkfd_clear_kfd_mapping+0xd8/0x190 [amdgpu]
+   amdgpu_device_gpu_recover+0x232/0x450 [amdgpu]
+   xgpu_ai_mailbox_flr_work+0xb5/0xc0 [amdgpu]
+   process_one_work+0x18e/0x3e0
+   worker_thread+0x2e3/0x420
+   kthread+0x10a/0x230
+
+Fixes: 70cadefcc616 ("drm/amdgpu: unmap all user mappings of framebuffer and doorbell before mode1 reset")
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1128b4a52de1572e87431de837fd9850cb99542c)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_mst.c  |   21 +++++++++++++++++++++
- drivers/gpu/drm/i915/display/intel_dp_mst.h  |    2 ++
- drivers/gpu/drm/i915/display/intel_link_bw.c |    3 ++-
- 3 files changed, 25 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 71 +++++++++++++++++++-----
+ 1 file changed, 57 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -2122,6 +2122,27 @@ bool intel_dp_mst_crtc_needs_modeset(str
- 	return false;
- }
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 504a286368eb..344da6c0e96a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -35,6 +35,7 @@
+ #include <linux/time.h>
+ #include <linux/mm.h>
+ #include <linux/mman.h>
++#include <linux/pseudo_fs.h>
+ #include <linux/ptrace.h>
+ #include <linux/dma-buf.h>
+ #include <linux/processor.h>
+@@ -70,18 +71,54 @@ static const struct class kfd_class = {
+ };
  
-+bool intel_dp_mst_stream_disconnected(struct intel_atomic_state *state,
-+				      const struct intel_crtc *crtc)
+ /*
+- * Cache the address space of the chardev on first open so that the reset
+- * path can drop all userspace mappings of doorbell and MMIO ranges via
+- * unmap_mapping_range().
++ * Private pseudo-filesystem for KFD, Provides a stable, module-owned
++ * inode whose address_space is the unmap target for all /dev/kfd
++ * openers during GPU reset.
+  */
+-static struct address_space *kfd_dev_mapping;
++static struct vfsmount *kfd_fs_mnt;
++static int kfd_fs_cnt;
++
++static int kfd_fs_init_fs_context(struct fs_context *fc)
 +{
-+	struct intel_connector *connector;
-+
-+	connector = get_connector_in_state_for_crtc(state, crtc);
-+	if (!connector)
-+		return false;
-+
-+	if (!connector->mst.dp)
-+		return false;
-+
-+	if (!connector->mst.dp->mst.mgr.mst_state)
-+		return true;
-+
-+	if (drm_connector_is_unregistered(&connector->base))
-+		return true;
-+
-+	return false;
++	return init_pseudo(fc, 0x4b464400 /* "KFD" */) ? 0 : -ENOMEM;
 +}
 +
- /**
-  * intel_dp_mst_prepare_probe - Prepare an MST link for topology probing
-  * @intel_dp: DP port object
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.h
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.h
-@@ -28,6 +28,8 @@ int intel_dp_mst_atomic_check_link(struc
- 				   struct intel_link_bw_limits *limits);
- bool intel_dp_mst_crtc_needs_modeset(struct intel_atomic_state *state,
- 				     struct intel_crtc *crtc);
-+bool intel_dp_mst_stream_disconnected(struct intel_atomic_state *state,
-+				      const struct intel_crtc *crtc);
- void intel_dp_mst_prepare_probe(struct intel_dp *intel_dp);
- bool intel_dp_mst_verify_dpcd_state(struct intel_dp *intel_dp);
++static struct file_system_type kfd_fs_type = {
++	.name		= "kfd",
++	.init_fs_context = kfd_fs_init_fs_context,
++	.kill_sb	= kill_anon_super,
++};
++
++static struct inode *kfd_fs_inode_new(void)
++{
++	struct inode *inode;
++	int r;
++
++	r = simple_pin_fs(&kfd_fs_type, &kfd_fs_mnt, &kfd_fs_cnt);
++	if (r < 0)
++		return ERR_PTR(r);
++
++	inode = alloc_anon_inode(kfd_fs_mnt->mnt_sb);
++	if (IS_ERR(inode))
++		simple_release_fs(&kfd_fs_mnt, &kfd_fs_cnt);
++
++	return inode;
++}
++
++static void kfd_fs_inode_free(struct inode *inode)
++{
++	if (inode) {
++		iput(inode);
++		simple_release_fs(&kfd_fs_mnt, &kfd_fs_cnt);
++	}
++}
++
++static struct inode *kfd_anon_inode;
  
---- a/drivers/gpu/drm/i915/display/intel_link_bw.c
-+++ b/drivers/gpu/drm/i915/display/intel_link_bw.c
-@@ -64,7 +64,8 @@ void intel_link_bw_init_limits(struct in
- 			intel_atomic_get_new_crtc_state(state, crtc);
- 		int forced_bpp_x16 = get_forced_link_bpp_x16(state, crtc);
+ void kfd_dev_unmap_mapping_range(loff_t const holebegin, loff_t const holelen)
+ {
+-	struct address_space *mapping = READ_ONCE(kfd_dev_mapping);
+-
+-	if (mapping)
+-		unmap_mapping_range(mapping, holebegin, holelen, 1);
++	if (kfd_anon_inode)
++		unmap_mapping_range(kfd_anon_inode->i_mapping, holebegin, holelen, 1);
+ }
  
--		if (state->base.duplicated && crtc_state) {
-+		if ((state->base.duplicated && crtc_state) ||
-+		    intel_dp_mst_stream_disconnected(state, crtc)) {
- 			limits->max_bpp_x16[pipe] = crtc_state->max_link_bpp_x16;
- 			if (intel_dsc_enabled_on_link(crtc_state))
- 				limits->link_dsc_pipes |= BIT(pipe);
+ static inline struct kfd_process_device *kfd_lock_pdd_by_id(struct kfd_process *p, __u32 gpu_id)
+@@ -107,6 +144,13 @@ int kfd_chardev_init(void)
+ {
+ 	int err = 0;
+ 
++	kfd_anon_inode = kfd_fs_inode_new();
++	if (IS_ERR(kfd_anon_inode)) {
++		err = PTR_ERR(kfd_anon_inode);
++		kfd_anon_inode = NULL;
++		return err;
++	}
++
+ 	kfd_char_dev_major = register_chrdev(0, kfd_dev_name, &kfd_fops);
+ 	err = kfd_char_dev_major;
+ 	if (err < 0)
+@@ -130,6 +174,8 @@ int kfd_chardev_init(void)
+ err_class_create:
+ 	unregister_chrdev(kfd_char_dev_major, kfd_dev_name);
+ err_register_chrdev:
++	kfd_fs_inode_free(kfd_anon_inode);
++	kfd_anon_inode = NULL;
+ 	return err;
+ }
+ 
+@@ -138,6 +184,8 @@ void kfd_chardev_exit(void)
+ 	device_destroy(&kfd_class, MKDEV(kfd_char_dev_major, 0));
+ 	class_unregister(&kfd_class);
+ 	unregister_chrdev(kfd_char_dev_major, kfd_dev_name);
++	kfd_fs_inode_free(kfd_anon_inode);
++	kfd_anon_inode = NULL;
+ 	kfd_device = NULL;
+ }
+ 
+@@ -150,12 +198,7 @@ static int kfd_open(struct inode *inode, struct file *filep)
+ 	if (iminor(inode) != 0)
+ 		return -ENODEV;
+ 
+-	/*
+-	 * /dev/kfd is a single chardev so all opens share one inode. Cache
+-	 * its address_space on the first open for use by the reset path.
+-	 */
+-	if (!READ_ONCE(kfd_dev_mapping))
+-		cmpxchg(&kfd_dev_mapping, NULL, inode->i_mapping);
++	filep->f_mapping = kfd_anon_inode->i_mapping;
+ 
+ 	is_32bit_user_mode = in_compat_syscall();
+ 
+-- 
+2.55.0
+
 
 
