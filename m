@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BAD51C34D;
-	Wed, 30 Sep 2026 17:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222A151A747;
+	Wed, 30 Sep 2026 17:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789628; cv=none; b=Qx8lZJvBgBsuDajTcc3PDMKLQoPhxRrSKysYzeksTGvtc6iBz4AHVgxX1qvEv7K4G9q8ggze7xyj7E7D5ZCcNP9dMW/K6wGWCIkyI3s866mYyadioKyPWBLbQLr6SfbcUg/zUSuFnSd+5l5Oad2k0y9Snb/cmUNQnHub44OtFMQ=
+	t=1790789631; cv=none; b=oXsJjKdoMy5XoLRqj2idNpktjAcXSyW4Cs5LK1PFBwUALKPBgPQlwJkaTttFv6PJPJBU+1+rSZUw/kLAAR411Tc6u8Ud98iPsA0VH5aRj5ay7k6N5K8rtqgcLjXhUuJfFi0tL6VeWHEeXxztVfX9y686voVYZEAURDK45As2iEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789628; c=relaxed/simple;
-	bh=71YTUVuF1QRCecvbUKW5fo2dcBqQVknnBWYAwNFkZVY=;
+	s=arc-20240116; t=1790789631; c=relaxed/simple;
+	bh=RxvX9vtUN/0rP5NJWr4sxpCbJy1tVAoYaPD347wxwp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JoUy6VQkeJgkRXaZKTvE35QsAPM3LoRSEWW5zqtl5PLvnXZ3kp4dDEv6acVL3tXWtlsSswUUfEmpJiyMRoOqn2Zzgol0srHZ+mhY2rW7tocMy7wL8AYmOVIK5R2tRl5PzbYkvrgfZ8eCxeO3fsefItJbK+cCuIcD1JSwGQp6WVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOdF5jmQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J8SU6ZaVyyiepFYMA/cfBNHaVqcuvNEZz4ec+DiHsvHjC+2W0+NA+Zef6dV5SSkAYJdzPhVjNkWVzmt+vEdHLd+QwXdNuGz1nBp680U2y0xqlzboqGh0hvj013ueMv2kmUGLyT+C89zzA17YGHj1fStnmU6xY+dByPHR+AB4zYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STLW3Z7S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOdF5jmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0A21F000FF;
-	Wed, 30 Sep 2026 17:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STLW3Z7S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7B91F000FF;
+	Wed, 30 Sep 2026 17:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789627;
-	bh=s26f0wRlUyoOvn9iF+O/EjcCulNIAzR/oFr05VnSOMI=;
+	s=korg; t=1790789630;
+	bh=adL329oC+vJeqgGbyrSrKkv4rAFsCLlvOhnSJwi4Ukg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bOdF5jmQNgZNN6oCKurvX6VTzXn2b6pgXPtD1PZxyf6HH10GkO1vaxUVmI3BxY8Nd
-	 9EDR9Ulz4Whi+A9Gv9OLf3KFT3+gGAzNHi2GzxQepUbLGZVB31bzglJdPacMR+xJuI
-	 E6Hj/A1ITTnLN64y8NK5SHWrQUEjhWlI0i76CpDI=
+	b=STLW3Z7SIB04mJ8ON6hFvEQEcebgKFKBFM7HfYtVYKMSur0rRpduom9QGBOp6iP5n
+	 ppbV/S4kj21gc7ZXQw4Ld/557a8FtQHXjl/K5P4J6toneZIaG1s/+f0H8Iu3mTMgME
+	 THk/XgJ0wCE6WcPAzNpQQw3moeJCfFbqW8/fj398=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaewook You <jaewook376@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>
-Subject: [PATCH 6.12 499/877] mm/hugetlb: preserve mremap address delta when skipping page tables
-Date: Wed, 30 Sep 2026 17:23:30 +0200
-Message-ID: <20260930152425.430644786@linuxfoundation.org>
+	Angel J <iamanaws@httpd.dev>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.12 500/877] PCI: of_property: Omit bus properties without a subordinate bus
+Date: Wed, 30 Sep 2026 17:23:31 +0200
+Message-ID: <20260930152425.452722014@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,71 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaewook You <jaewook376@gmail.com>
+From: Angel J <iamanaws@httpd.dev>
 
-commit 9bdad082d44bdcf93716973dcba6be77e8a06e7b upstream.
+commit 8805840aad73df7146778be243a196d48b4f6430 upstream.
 
-move_hugetlb_page_tables() optimizes mremap() by advancing to the last
-entry in the page table when the source page table does not exist, either
-initially or after unsharing a PMD table.  The common loop increment then
-steps to the first entry in the next page table.
+A bridge (a device with a Type 1 header) may not have a secondary bus
+allocated (pdev->subordinate), e.g., if there are no available bus numbers
+or the bridge secondary/subordinate bus numbers are not writable.
 
-However, the code advances both the source and destination addresses to
-the last entries in their respective page tables, which is wrong.  The
-destination address must be advanced only by the same amount as the source
-address.
+The dynamic OF helpers of_pci_prop_bus_range() and of_pci_prop_intr_map()
+dereference pdev->subordinate without checking it.  When
+CONFIG_PCI_DYNAMIC_OF_NODES is enabled, this can cause a NULL pointer
+dereference and early boot hang.
 
-If the source and destination offsets within their page tables differ, the
-destination address can be advanced too far, causing follow-up issues.
-Fix this by advancing the destination address by the source advance
-distance.
+Generate 'bus-range' and 'interrupt-map' properties only when a subordinate
+bus exists.  Keep the node and its remaining properties for bridges without
+one.
 
-With a reproducer, we were able to trigger a kernel panic on x86-64.  With
-this fix in place, we can no longer reproduce the issue.
+The problem was latent since 407d1a51921e ("PCI: Create device tree node
+for bridge"), but wasn't reachable until 1f340724419e ("PCI: of: Create
+device tree PCI host bridge node"), which appeared in v6.15.  Before
+1f340724419e, of_pci_make_dev_node() returned early because the parent OF
+node was missing.
 
-Link: https://lore.kernel.org/20260914132352.472-1-jaewook376@gmail.com
-Fixes: e95a9851787b ("hugetlb: skip to end of PT page mapping when pte not present")
-Fixes: 4ddb4d91b82f ("hugetlb: do not update address in huge_pmd_unshare")
-Signed-off-by: Jaewook You <jaewook376@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Assisted-by: LLM
+Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
+Signed-off-by: Angel J <iamanaws@httpd.dev>
+[bhelgaas: move pdev->subordinate test to callees, commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org	# v6.6+
+Link: https://patch.msgid.link/20260918195540.GA1187209@bhelgaas
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/pci/of_property.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5473,18 +5473,21 @@ int move_hugetlb_page_tables(struct vm_a
- 	hugetlb_vma_lock_write(vma);
- 	i_mmap_lock_write(mapping);
- 	for (; old_addr < old_end; old_addr += sz, new_addr += sz) {
-+		const unsigned long offset_to_last_entry =
-+			(old_addr | last_addr_mask) - old_addr;
+--- a/drivers/pci/of_property.c
++++ b/drivers/pci/of_property.c
+@@ -91,9 +91,13 @@ static int of_pci_prop_bus_range(struct
+ 				 struct of_changeset *ocs,
+ 				 struct device_node *np)
+ {
+-	u32 bus_range[] = { pdev->subordinate->busn_res.start,
+-			    pdev->subordinate->busn_res.end };
++	u32 bus_range[2];
+ 
++	if (!pdev->subordinate)
++		return 0;
 +
- 		src_pte = hugetlb_walk(vma, old_addr, sz);
- 		if (!src_pte) {
--			old_addr |= last_addr_mask;
--			new_addr |= last_addr_mask;
-+			old_addr += offset_to_last_entry;
-+			new_addr += offset_to_last_entry;
- 			continue;
- 		}
- 		if (huge_pte_none(huge_ptep_get(mm, old_addr, src_pte)))
- 			continue;
++	bus_range[0] = pdev->subordinate->busn_res.start;
++	bus_range[1] = pdev->subordinate->busn_res.end;
+ 	return of_changeset_add_prop_u32_array(ocs, np, "bus-range", bus_range,
+ 					       ARRAY_SIZE(bus_range));
+ }
+@@ -216,6 +220,9 @@ static int of_pci_prop_intr_map(struct p
+ 	int ret;
+ 	u8 pin;
  
- 		if (huge_pmd_unshare(&tlb, vma, old_addr, src_pte)) {
--			old_addr |= last_addr_mask;
--			new_addr |= last_addr_mask;
-+			old_addr += offset_to_last_entry;
-+			new_addr += offset_to_last_entry;
- 			continue;
- 		}
- 
++	if (!pdev->subordinate)
++		return 0;
++
+ 	pnode = pci_device_to_OF_node(pdev->bus->self);
+ 	if (!pnode)
+ 		pnode = pci_bus_to_OF_node(pdev->bus);
 
 
