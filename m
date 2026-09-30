@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643E84F5E18;
-	Wed, 30 Sep 2026 18:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD71519DEA;
+	Wed, 30 Sep 2026 18:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792515; cv=none; b=eQjAk3jRXoyhFdnIgeDMEzmn9yG4wai8XRQOa1f1xAkUDtT4PgY2LLMrAjtn8enkCruPTXwRXf3nj1x6XcBhaz9NR79VeuwvXDYD41WT3eIUYqVXB4OUx7ltpCii3SFcsC0sqzyLDtm/0jdzfPBpFOXhuND41UeN1/iWqr5sxdA=
+	t=1790792518; cv=none; b=ghFQ0W4XbbxyP4aNs3natNekoKNcpLuv4gdhvicdJ5EMYiafKPyGm5XLZoxxeO5UxeQMCw14jFCjQxK/H9/bpJle3iUadK9miTbRtv+IBrVTYcL1lNJtoEjrleXp52bbU1URWfCkiDphfP1wZhH3CUR4l3ps+iCEEM9HEkJHAqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792515; c=relaxed/simple;
-	bh=I+tpthNREcv7XVHKDOb24jID+TAN5esqFfYIUtnA6Ik=;
+	s=arc-20240116; t=1790792518; c=relaxed/simple;
+	bh=9T/9gUsX9MzZdze4GHICXPn0imTPoCmszhJr4SHmHAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPViZnpxX9tyzNAEqzJ8FqRaBXoDfptLEfUMGaoK/G9aNfam8cNs9LPYnrno2fH308a+3pte+EpmSRliQYItTcTB9UrWvQeAUvtCsW3AzpBmgM8uPG6xpkGKAS8TjjsJHBbo2v/vOVMXqH0sVUCbDxQsXh11S2w5h7VwK33MhGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZH0jeuFv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iimKrd0ZkZrMsckNxuSXiWwDedaGuKr/Xr1LksoGdP5C/UIjczcxpyCz8eX8rX9I4gwIeEBHkzLub55rZkZBd/3Qc9GSNqLRB+41gKlBjFOYs8aEWqxAvHFFKcYI5auca7LJBTLW9zvik6Y5TxCXm7vqVeTiFg48nYpppbdr/q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uhf9CfCW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZH0jeuFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C060C1F000FF;
-	Wed, 30 Sep 2026 18:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uhf9CfCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DB81F000FF;
+	Wed, 30 Sep 2026 18:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792514;
-	bh=y0btqLvAMp4zQrhJE+KHPQZ0wlveGt6/JYhnSNEPV9Y=;
+	s=korg; t=1790792517;
+	bh=4ohemlVBR7pAQJBznpc8pABERnxMvxxAkSk2WL0KnhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZH0jeuFv7aXf5Y3kzaEhpNCkH8u9+KNpXOvQXzE49f3KreRDwjpLTEVYTsVmXlIBu
-	 1yMsgGM49laUK66fMMTMaOrCcLeCtaf4ym87+2XZ3vRg+lJ7pPcsFJpH2oGMiKFU/3
-	 tWZe10huJMiFuJgrVlC0HrJe8d2c4V0X8/gjLF8c=
+	b=Uhf9CfCWjjYDcsTEUkSDMJABYTF0dPl2vWNFB7WNm1s1DvQd/tXkrcaTN9Q5Qr65+
+	 0D55BhajCSsInGECDlRSCEyatwfo2gSvu7FbA5CKpNvOy7GLEDJIbRZ55WjZCoX/QL
+	 ySk0ThvGRTg7fyBbc4WH1IA26r5T1JL++1TqmvzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Gellermann <christian.gellermann@codasip.com>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	David Matlack <dmatlack@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Kenta Akagi <k@mgml.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 655/752] selftests/nci: Fix out-of-bounds store on thread join
-Date: Wed, 30 Sep 2026 17:28:45 +0200
-Message-ID: <20260930152412.430990200@linuxfoundation.org>
+Subject: [PATCH 5.15 682/752] KVM: x86/mmu: Stop passing "direct" to mmu_alloc_root()
+Date: Wed, 30 Sep 2026 17:29:12 +0200
+Message-ID: <20260930152413.002470031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,143 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Gellermann <christian.gellermann@codasip.com>
+From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit 6be581aeffc215bfc77939cd59902b0dbc4af23e ]
+commit 86938ab6925b8fe174ca6abf397e6ea9d3c054a4 upstream.
 
-The NCI test collects the exit status of its helper threads by passing
-the address of an int to pthread_join():
+The "direct" argument is vcpu->arch.mmu->root_role.direct,
+because unlike non-root page tables, it's impossible to have
+a direct root in an indirect MMU.  So just use that.
 
-	int status;
-	...
-	pthread_join(thread_t, (void **) &status);
-
-pthread_join() stores a void pointer to the memory location. On 64-bit
-systems, a void pointer is wider than an int, so the store overruns the
-4 bytes of space allocated on the stack for the integer and corrupts the
-adjacent stack. On our CHERI system, this caused a fault due to a
-capability bounds violation.
-
-Fix this by introducing a helper that joins a thread through a void
-pointer and converts the result back to an integer, which is what the
-helper threads return.
-
-While here, also fix the logic in disconnect_tag() if the helper thread
-creation failed. Previously, it would have joined a thread that was
-never created when pthread_create() failed.
-
-Fixes: f595cf1242f3 ("selftests: Add nci suite")
-Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904095915.3372241-1-christian.gellermann@codasip.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Suggested-by: Lai Jiangshan <jiangshanlai@gmail.com>
+Signed-off-by: David Matlack <dmatlack@google.com>
+Message-Id: <20220516232138.1783324-4-dmatlack@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Kenta Akagi <k@mgml.me>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/nci/nci_dev.c | 31 +++++++++++++++++----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
-index 87262f8d0c101..30db9bda001e3 100644
---- a/tools/testing/selftests/nci/nci_dev.c
-+++ b/tools/testing/selftests/nci/nci_dev.c
-@@ -8,6 +8,7 @@
- 
- #include <stdlib.h>
- #include <errno.h>
-+#include <stdint.h>
- #include <string.h>
- #include <sys/ioctl.h>
- #include <fcntl.h>
-@@ -87,6 +88,16 @@ struct msgtemplate {
- 	char buf[MAX_MSG_SIZE];
- };
- 
-+static int join_thread_status(pthread_t thread)
-+{
-+	void *thread_ret = NULL;
-+
-+	if (pthread_join(thread, &thread_ret))
-+		return -1;
-+
-+	return (int)(intptr_t)thread_ret;
-+}
-+
- static int create_nl_socket(void)
- {
- 	int fd;
-@@ -444,7 +455,7 @@ FIXTURE_SETUP(NCI)
- 			       NFC_CMD_DEV_UP, self->dev_idex);
- 	EXPECT_EQ(rc, 0);
- 
--	pthread_join(thread_t, (void **)&status);
-+	status = join_thread_status(thread_t);
- 	ASSERT_EQ(status, 0);
- 	self->open_state = true;
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index f5cfbf973e859..9f193b1620a95 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -3439,8 +3439,9 @@ static int mmu_check_root(struct kvm_vcpu *vcpu, gfn_t root_gfn)
  }
-@@ -514,7 +525,7 @@ FIXTURE_TEARDOWN(NCI)
- 				       NFC_CMD_DEV_DOWN, self->dev_idex);
- 		EXPECT_EQ(rc, 0);
  
--		pthread_join(thread_t, (void **)&status);
-+		status = join_thread_status(thread_t);
- 		ASSERT_EQ(status, 0);
+ static hpa_t mmu_alloc_root(struct kvm_vcpu *vcpu, gfn_t gfn, gva_t gva,
+-			    u8 level, bool direct)
++			    u8 level)
+ {
++	bool direct = vcpu->arch.mmu->mmu_role.base.direct;
+ 	struct kvm_mmu_page *sp;
+ 
+ 	sp = kvm_mmu_get_page(vcpu, gfn, gva, level, direct, ACC_ALL);
+@@ -3466,7 +3467,7 @@ static int mmu_alloc_direct_roots(struct kvm_vcpu *vcpu)
+ 		root = kvm_tdp_mmu_get_vcpu_root_hpa(vcpu);
+ 		mmu->root_hpa = root;
+ 	} else if (shadow_root_level >= PT64_ROOT_4LEVEL) {
+-		root = mmu_alloc_root(vcpu, 0, 0, shadow_root_level, true);
++		root = mmu_alloc_root(vcpu, 0, 0, shadow_root_level);
+ 		mmu->root_hpa = root;
+ 	} else if (shadow_root_level == PT32E_ROOT_LEVEL) {
+ 		if (WARN_ON_ONCE(!mmu->pae_root)) {
+@@ -3478,7 +3479,7 @@ static int mmu_alloc_direct_roots(struct kvm_vcpu *vcpu)
+ 			WARN_ON_ONCE(IS_VALID_PAE_ROOT(mmu->pae_root[i]));
+ 
+ 			root = mmu_alloc_root(vcpu, i << (30 - PAGE_SHIFT),
+-					      i << 30, PT32_ROOT_LEVEL, true);
++					      i << 30, PT32_ROOT_LEVEL);
+ 			mmu->pae_root[i] = root | PT_PRESENT_MASK |
+ 					   shadow_me_mask;
+ 		}
+@@ -3541,7 +3542,7 @@ static int mmu_alloc_shadow_roots(struct kvm_vcpu *vcpu)
+ 	 */
+ 	if (mmu->root_level >= PT64_ROOT_4LEVEL) {
+ 		root = mmu_alloc_root(vcpu, root_gfn, 0,
+-				      mmu->shadow_root_level, false);
++				      mmu->shadow_root_level);
+ 		mmu->root_hpa = root;
+ 		goto set_root_pgd;
  	}
+@@ -3587,7 +3588,7 @@ static int mmu_alloc_shadow_roots(struct kvm_vcpu *vcpu)
+ 		}
  
-@@ -585,7 +596,6 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
- 	void *nla_start_poll_data[2] = {&dev_idx, &proto};
- 	int nla_start_poll_len[2] = {4, 4};
- 	pthread_t thread_t;
--	int status;
- 	int rc;
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
-@@ -598,14 +608,12 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
- 	if (rc != 0)
- 		return rc;
- 
--	pthread_join(thread_t, (void **)&status);
--	return status;
-+	return join_thread_status(thread_t);
- }
- 
- int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
- {
- 	pthread_t thread_t;
--	int status;
- 	int rc;
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
-@@ -618,8 +626,7 @@ int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
- 	if (rc != 0)
- 		return rc;
- 
--	pthread_join(thread_t, (void **)&status);
--	return status;
-+	return join_thread_status(thread_t);
- }
- 
- TEST_F(NCI, start_poll)
-@@ -834,8 +841,10 @@ int disconnect_tag(int nfc_sock, int virtual_fd)
- 		return status;
- 
- 	close(nfc_sock);
--	pthread_join(thread_t, (void **)&status);
--	return status;
-+	if (status)
-+		return -1;
-+
-+	return join_thread_status(thread_t);
- }
- 
- TEST_F(NCI, t4t_tag_read)
-@@ -882,7 +891,7 @@ TEST_F(NCI, deinit)
- 			       NFC_CMD_DEV_DOWN, self->dev_idex);
- 	EXPECT_EQ(rc, 0);
- 
--	pthread_join(thread_t, (void **)&status);
-+	status = join_thread_status(thread_t);
- 	self->open_state = 0;
- 	ASSERT_EQ(status, 0);
+ 		root = mmu_alloc_root(vcpu, root_gfn, i << 30,
+-				      PT32_ROOT_LEVEL, false);
++				      PT32_ROOT_LEVEL);
+ 		mmu->pae_root[i] = root | pm_mask;
+ 	}
  
 -- 
 2.53.0
