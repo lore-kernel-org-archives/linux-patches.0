@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93923B1016;
-	Wed, 30 Sep 2026 18:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E433733DEF9;
+	Wed, 30 Sep 2026 18:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792161; cv=none; b=fY6Xamilmp2PG8N87emdTxoON/HP68+NxulEvZKZHJNEo2xiBYBbF4ENHDC0UsVAIhjO9QBtt3FzMQvqWrwx+fA79r997laYdhaT+WDKO8dwQyM/MihcbLf5WyJiI1SlBEfhQapLLWfqQcCPnPok7IQ92tB8q7gq/V1L5N19roI=
+	t=1790792165; cv=none; b=Fnz87R0jWz+Hz0y4Q/yYCCXARkDs1xJWrJ8+csips/KxNXJzqphGclpyyB+HCrqDAz8WFl6Az/r2PVsFD830kOAs0dute+1mGuAR4fyhKLGO7Cr7OnQ3Zu0od5V5ZoSdHcB20H1xwfy6e1jm8/2Rp9RcJRhk5Oanf2G0LfGEx1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792161; c=relaxed/simple;
-	bh=dc/OuTjsodKYgH3Qh2RbtEeiNrTKsM/N9DmUUHdL7uo=;
+	s=arc-20240116; t=1790792165; c=relaxed/simple;
+	bh=RTcNAxtvbl1qEjtjYaVRKKCddqLVntVCHxtj/2fw1gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7j9CF3ATg2Vp3e8tw2hBzWRER5ICm3bicFptb+175EaFjAqfuwBB2GVIW/6uvHICReLoJiwWVff8N84XK5VuliZd4GkmclP+5j5rG2WXhMf6VaMapa8k6uGdEUJL2dWChB0h1J+dpxD2d7uCMQdw4lpRq3cNHhnWkVP9BtuFso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulp/AJW7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KRXHxNLg2X1layxpsqw/TCdlc3wDBsaVmuEIdOOop6YyKMmQGiTNt2Y/Y/4RMtlx1dSzVPaGuvJAnGVgRLfIzwZYSvRiqs7NfUPQeDYN3M40C8PaWzTh76Roufq6ORCzvGvEdMEEkm5Y14YrSRyybzfz816gYIjRxacjvrOaoh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPlQnnSE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulp/AJW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1976B1F000FF;
-	Wed, 30 Sep 2026 18:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPlQnnSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040851F000FF;
+	Wed, 30 Sep 2026 18:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792160;
-	bh=DNRQMrFQx62pK8aNa+DU3vZoI0tVfzTVvVL6sX41+Zc=;
+	s=korg; t=1790792163;
+	bh=Amv8C/W3Cj07o4LJNLzvEgDWVUO0RuUCmKbBRgBAeoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ulp/AJW7WFxkL3IFtKXi5HhviiPIsfvv2hgNkgjWp143MWb1s9/9Ty7fVFPV47tWh
-	 YOuRK8D4Y2ofUtKyv0XvGGTWlajV2mmFJ/O6FT7sl6JFw21P417aHe6odw6cJ3Ycdq
-	 PVZs8BhGTi9C5Nsnl0iKko2VY5KnLl53G3OErBPw=
+	b=LPlQnnSEIrg/19L/d7AehebDJNzRr+GtXfsRdTBfhcHePKIq6kDaWlEh7ALw1r3R2
+	 JUDw65nV32i6X3TGQGq2K9cLAKaD5w26nrcJD1GYGIQ9B3d/4oRpOb+Xg36NYVwJDO
+	 CoM/qH90tWUaFAHeXfNJmm/hM4DvQVx+1lyfb+mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Sommers <chris.sommers@icloud.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 555/752] Input: i8042 - add quirk for Acer Aspire Go 15 AG15-42P
-Date: Wed, 30 Sep 2026 17:27:05 +0200
-Message-ID: <20260930152410.253664835@linuxfoundation.org>
+	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 513/752] net: mvpp2: prevent buffer overflow in page_pool allocation
+Date: Wed, 30 Sep 2026 17:26:23 +0200
+Message-ID: <20260930152409.359072629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -44,51 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Sommers <chris.sommers@icloud.com>
+From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
 
-commit 25e424eb4ae1a662d9c3573218d06ac32f797fc5 upstream.
+[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
 
-On the Acer Aspire Go 15 (AG15-42P), the internal keyboard drops out
-~5 seconds after boot on both Linux and Linux-LTS kernels. Keystrokes on
-the built-in keyboard stop registering while the trackpad and external
-keyboards remain functional.
+The per‑processor buffering scheme is supported only if the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
+This is already checked in mvpp2_probe() during the initial
+activation of percpu_pools.
 
-Testing confirms that booting with the i8042.reset kernel parameter
-resolves the issue and keeps the internal keyboard responsive.
+However, mvpp2_change_mtu() may later call
+mvpp2_bm_switch_buffers(priv, true) without this check, which can
+lead to an out-of-bounds access in the priv->page_pool array in
+mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
+entries, and mvpp2_get_nrxqs() may return exactly that value. The
+per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
+bounds.
 
-Add SERIO_QUIRK_RESET_ALWAYS to i8042_dmi_quirk_table for the Acer
-Aspire AG15-42P to automatically apply this quirk on boot.
+Check that the hardware version is MVPP22 or newer and that the
+number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
+before switching to per-CPU mode.
 
-Signed-off-by: Chris Sommers <chris.sommers@icloud.com>
-Link: https://patch.msgid.link/20260907182723.2709981-1-chris.sommers@icloud.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
+Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -265,6 +265,13 @@ static const struct dmi_system_id i8042_
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire AG15-42P"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_RESET_ALWAYS)
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire ES1-432"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_RESET_ALWAYS)
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index c4951eb88241b..de582b10ab6be 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5072,7 +5072,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
+ 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
+ 			mvpp2_bm_switch_buffers(priv, false);
+ 		}
+-	} else {
++	} else if (priv->hw_version >= MVPP22 &&
++		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
+ 		bool jumbo = false;
+ 		int i;
+ 
+-- 
+2.53.0
+
 
 
