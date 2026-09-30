@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C176A4D1784;
-	Wed, 30 Sep 2026 17:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18C54E73B2;
+	Wed, 30 Sep 2026 17:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788649; cv=none; b=rWo9494ySU8AEWxTqV0A+m0W5fWnuL9jgvAupTzG4ElqDRmZK19nIjU3bv3vBpoYpedtnFeUVoySt9k1b4kh82/N+z1qi84LK4SP2q/S9d44eJcE9Wt4DXpHco6MpQLOmSbTIJatqOZrQZNTJT8L2LKkmECexbL/345JhqgPUaI=
+	t=1790788652; cv=none; b=XM1pyScLsAYe4aher6zM5ITTSHF99Byo/x7nkQLzsbNDqm7iFlqPCeinJhU4AP4csEANZZ73TJYME9j9DUbv232n529RcAdAVZNk2abq8KO3HmxZ3F3L++t3PscoNoC+N95wOHP7Ch7Dmim6KTThBiFlPGN4f1PJ9Uy+jTYTHjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788649; c=relaxed/simple;
-	bh=NtqkG7Z6T3x8vgQ0ULqqZ5VA8h4VRsQh9BaTsmq7Zy8=;
+	s=arc-20240116; t=1790788652; c=relaxed/simple;
+	bh=bO+FuFrct4gNvQvt54X/vs1jzI1hCMQlBEl94rt1WXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YvY5HCixrXrTRSXWjukScGuz4HX6g7KvNDY5mdBUBujKa63b3W57JW3KIbE780Fo368+EbJBLlf8hBoNzS6K+nhZpuvbfUPdLjq4JlOAwIzBoQh3FIXx/I5AEgvftF3gFRZuzc22lEpGllD9EDQ52eavhG8lg/xMtMv4h/Adqzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFTncytf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BEdd9kTJyJHodqn0lx3LdEXz4hrHfsQaACpveMFY/QNe7kWr+hUFrZyxU7fcH+jsPDPpoRsUWODOpIWPGrjrH786T1fTJTcJB2r35EdClzaKw75rtJQR/02ShId0Q+mEDJSgwPl20YMBcwnb2+G4D6mXIT60+FT9I7FqyvxdIB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8VTMll7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFTncytf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CED31F000FF;
-	Wed, 30 Sep 2026 17:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8VTMll7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29841F000FF;
+	Wed, 30 Sep 2026 17:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788648;
-	bh=0g52N9TodR0cYAoP8cch6Oz3ToUd5FMFy0rA3I7RYJI=;
+	s=korg; t=1790788651;
+	bh=CHcYbBe2qklzrBRko0pKL2Cs35uFdd6IcpvmXFGyH5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qFTncytfuqJyKa7CI8EjzwuPpqnYh+I/I3hsqJg8ZkBP1kz4hWZAFtnyKrooTWgqj
-	 2kJBrVZ4ZVVJvUCVTEF4vemT12Z43jXWTl47q7QuugOgZGaS+ddbTHO2HsxRUMFBHK
-	 VSrd/FjFyxNT9mpJH5TtX1b8UBijqjg+eWig0has=
+	b=A8VTMll7pM1PHSH4qER8LAcABQW203tadb6o1t9anD4B/xC6TcQgSkWKD5eIeV+JB
+	 Ar/kQmw4WMEKXbpCVv2fpLO5+EyXnAuxqx4xbXpgxXBFvkJj87h/rjFWeGd5yoYbIa
+	 oDELknTTOinp8N/gBzPn6ARpjDjgZ0ZHJxPR0D5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberts Kursitis <roberts.kursitis@azeron.eu>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 162/877] Input: xpad - add support for Azeron devices
-Date: Wed, 30 Sep 2026 17:17:53 +0200
-Message-ID: <20260930152418.217377103@linuxfoundation.org>
+	Mark Amirkan <markdamirkan@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 198/877] net/packet: clear RX owner on VNET header error
+Date: Wed, 30 Sep 2026 17:18:29 +0200
+Message-ID: <20260930152418.996535005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberts Kursitis <roberts.kursitis@azeron.eu>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-commit cba76c0f47af1a389d718c5bb69e75cbd67bba98 upstream.
+commit 33ff111d7ba3beb86e28938d6382bb5beabd865a upstream.
 
-Azeron controllers (Cyro, Cyborg, Classic/Compact, Cyro Lefty,
-Cyborg II and Keyzen) present a standard Xbox 360 controller
-interface, so they work with the existing xpad driver once their
-USB IDs are added.
+Commit 61fad6816fc1 ("net/packet: tpacket_rcv: avoid a producer race
+condition") added rx_owner_map and made tpacket_rcv() claim a V1 or V2
+ring slot before converting the virtio-net header.  If the conversion
+fails, the drop path leaves the slot claimed.
 
-The 0x16d0 vendor ID is a shared block, but this is safe because
-xpad only binds interfaces that match the Xbox 360 signature.
+With a one-frame TPACKET_V2 ring, an unsupported UDP GSO packet leaves
+the only slot unavailable, so the ring also drops the next valid packet.
 
-Tested with an Azeron Keyzen.
+Clear the ownership bit on this error path.  TPACKET_V3 already clears
+its block state here.
 
-Signed-off-by: Roberts Kursitis <roberts.kursitis@azeron.eu>
+Fixes: 61fad6816fc1 ("net/packet: tpacket_rcv: avoid a producer race condition")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260906143040.162418-1-roberts.kursitis@azeron.eu
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260913-b4-send-packet-vnet-v1-1-5545ffb528ae@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/packet/af_packet.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -321,6 +321,12 @@ static const struct xpad_device {
- 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
- 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1103, "Azeron Cyro", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x113c, "Azeron Cyborg", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1192, "Azeron Classic/Compact", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x1212, "Azeron Cyro Lefty", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x12f7, "Azeron Cyborg II", 0, XTYPE_XBOX360 },
-+	{ 0x16d0, 0x13ea, "Azeron Keyzen", 0, XTYPE_XBOX360 },
- 	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
- 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
- 	{ 0x1a86, 0xe310, "Legion Go S", 0, XTYPE_XBOX360 },
-@@ -555,6 +561,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech Xbox 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
-+	XPAD_XBOX360_VENDOR(0x16d0),		/* Azeron controllers */
- 	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
- 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
- 	XPAD_XBOX360_VENDOR(0x1a86),		/* Nanjing Qinheng Microelectronics (WCH) */
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2436,7 +2436,9 @@ static int tpacket_rcv(struct sk_buff *s
+ 	    virtio_net_hdr_from_skb(skb, h.raw + macoff -
+ 				    sizeof(struct virtio_net_hdr),
+ 				    vio_le(), true, 0)) {
+-		if (po->tp_version == TPACKET_V3)
++		if (po->tp_version <= TPACKET_V2)
++			__clear_bit(slot_id, po->rx_ring.rx_owner_map);
++		else
+ 			prb_clear_blk_fill_status(&po->rx_ring);
+ 		goto drop_n_account;
+ 	}
 
 
