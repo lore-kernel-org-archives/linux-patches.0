@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369C51C050;
-	Wed, 30 Sep 2026 17:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193CA51C048;
+	Wed, 30 Sep 2026 17:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791039; cv=none; b=dYYhPb/wrHS3FOAdtqRn1EzBiE8+qo8bfB68wAsae/VIMU+Li68YzprekGRJw9/U1+l9gH7d65t7PdJ1KTme9Giv8i6SfWVeBM0bAd0Mu570aHlg95Ua+lrQQGrXtjaiZP3C8DNHHh3xDre6lDZ+gAdt0zrjqctH2knmV0YDQUU=
+	t=1790791041; cv=none; b=p0Vj6jKzGe0oT8d5iVHoSCVgmv6c4C5x6rEZc22ganRV5H2GEXM+31e43DNZ913WXSm1eKS9F//atEQLvKpfVT00SSt3TDGBPZEmzqzEyZdcsevwpstIyH3OkfYT4nNRUnI9PkMcC1odVwOqnBzteAJBJgUfjQ0zHr5HhzLajuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791039; c=relaxed/simple;
-	bh=uxRjZIXKWiujdzy6UXnmYhPlvzojeg85EuUsoOaN74A=;
+	s=arc-20240116; t=1790791041; c=relaxed/simple;
+	bh=Rs9FI4W9vd0IBJOuY9DxEYnhwMCKBY1roErmdt/eVUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sUBy94L/YRVkHoAnWy0HAa/0hXYGK/VeEFiS43vgLml3Zl4SOOnkWFb1Sr4Ou8Rzrcazv/h8k7Ti0MvJJ2rbP08o3FYTEnA6oorR3XUDMPrDpLerqYXUz8NaU2X19ErpOkvXCUsJfhtR3RQWFZ6a/PPL3ZNgt5ZxzbOcqolHBwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLdmy8WU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lpCJOBQ5O+LVI8+4YcUq5ADITPufoh0O8/lQTMEnKICdaVX8HHI2NDaccHIGXcKiyLeSpbpgoKx4HEn6pwjBsT7Rh1uI+gAzBz+w5lc54j869xC1PseJ8p8V0Rvybq/lA95nXVUnk0Blyoo6G9F2OKY1f2wwktScCoWsqtg/d74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WyUzwLi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLdmy8WU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0C51F000FF;
-	Wed, 30 Sep 2026 17:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WyUzwLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723CA1F00898;
+	Wed, 30 Sep 2026 17:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791037;
-	bh=RIBHPYJiCgz6PO4puZwbvZ2s3IeuHk4ksN4Tf0bGnxg=;
+	s=korg; t=1790791040;
+	bh=E/s8a/J60UWNVt8BocMrt5JY4rYlcnewk6Vugt1gC2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TLdmy8WUceclPCFa9eHPZDiGVvaaBLpLCEuGSzAhJjXPWaaTye0IC9k2DBWICGoBo
-	 lnP8ZwyU7kvdhW4bkYp0OwPtHVtYM7J2qAOUohLjy8hq9DKQpkmv68WyenWuivUQlC
-	 FCskeiQXZmsVC6vgSoEKaFjOkTKKF8fz5KU6Uizs=
+	b=1WyUzwLiEMpiS/zgnrysczqUm5i22Dwg85lVBjqdQKytf+UbaYqD/2yGcoEmb4ZiZ
+	 JapqGtEm/hx6Vo3PFdBGVouEy0+w+GPbuXtR7jBZvq7PGzNvBZB3SuSn8zd2X1Xwv1
+	 QfsAk5pnfwXcxdJGCk9hHOBBPRqUUehTl+8vPWSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Bystrin <dev.mbstr@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Jean-Louis Colaco <jean-louis.colaco@orange.fr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 161/752] mfd: rsmu: Add 8a34002 support
-Date: Wed, 30 Sep 2026 17:20:31 +0200
-Message-ID: <20260930152401.677942638@linuxfoundation.org>
+Subject: [PATCH 5.15 162/752] ALSA: usb-audio: Add quirk for YAMAHA CDS3000
+Date: Wed, 30 Sep 2026 17:20:32 +0200
+Message-ID: <20260930152401.702559156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,62 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Bystrin <dev.mbstr@gmail.com>
+From: Jean-Louis Colaco <jean-louis.colaco@orange.fr>
 
-[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
+[ Upstream commit 348f69320e4db6ebec6940c81154bec4b9eb275a ]
 
-Add compatible string, i2c_devcie_id and spi_devcie_id to support
-8a34002.
+This quirk is identical to the one for the Yamaha Steinberg UR22, here
+applied to a CD player that also uses the Steinberg USB interface.
+This quirk is necessary to avoid sporadic "clic" noise when using the DAC
+of the player.
 
-Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
-Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jean-Louis Colaco <jean-louis.colaco@orange.fr>
+Link: https://patch.msgid.link/20260618113202.8363-1-jean-louis.colaco@orange.fr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rsmu_i2c.c | 2 ++
- drivers/mfd/rsmu_spi.c | 2 ++
- 2 files changed, 4 insertions(+)
+ sound/usb/quirks-table.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
-index dc001c9791c16..8c25a15db9807 100644
---- a/drivers/mfd/rsmu_i2c.c
-+++ b/drivers/mfd/rsmu_i2c.c
-@@ -158,6 +158,7 @@ static int rsmu_i2c_remove(struct i2c_client *client)
- static const struct i2c_device_id rsmu_i2c_id[] = {
- 	{ "8a34000",  RSMU_CM },
- 	{ "8a34001",  RSMU_CM },
-+	{ "8a34002",  RSMU_CM },
- 	{ "82p33810", RSMU_SABRE },
- 	{ "82p33811", RSMU_SABRE },
- 	{ "8v19n850", RSMU_SL },
-@@ -169,6 +170,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
- static const struct of_device_id rsmu_i2c_of_match[] = {
- 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
-+	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
-diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
-index fec2b4ec477c5..d4891344bba7d 100644
---- a/drivers/mfd/rsmu_spi.c
-+++ b/drivers/mfd/rsmu_spi.c
-@@ -232,6 +232,7 @@ static int rsmu_spi_remove(struct spi_device *client)
- static const struct spi_device_id rsmu_spi_id[] = {
- 	{ "8a34000",  RSMU_CM },
- 	{ "8a34001",  RSMU_CM },
-+	{ "8a34002",  RSMU_CM },
- 	{ "82p33810", RSMU_SABRE },
- 	{ "82p33811", RSMU_SABRE },
- 	{}
-@@ -241,6 +242,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
- static const struct of_device_id rsmu_spi_of_match[] = {
- 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
-+	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
- 	{}
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 8e0e44b1f5262..40de1c6fafb8b 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -484,6 +484,20 @@ YAMAHA_DEVICE(0x105d, NULL),
+ 		}
+ 	}
+ },
++{
++	USB_DEVICE(0x0499, 0x150d),
++	QUIRK_DRIVER_INFO {
++		/* .vendor_name = "Yamaha", */
++		/* .product_name = "CDS3000", */
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_MIDI_YAMAHA(3) },
++			{ QUIRK_DATA_IGNORE(4) },
++			QUIRK_COMPOSITE_END
++		}
++	}
++},
+ {
+ 	USB_DEVICE(0x0499, 0x1718),
+ 	QUIRK_DRIVER_INFO {
 -- 
 2.53.0
 
