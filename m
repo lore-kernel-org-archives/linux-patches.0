@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC302E285C;
-	Wed, 30 Sep 2026 18:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850813E1230;
+	Wed, 30 Sep 2026 18:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794247; cv=none; b=tPYFmnkSAJdn3jtwzTBbb9BiVX02XQRms2m2A1Pthkmx1ABNSPhlWhvZ6w306rLg8RZLgoDH7QdKMBDU8AgTr2cjM6aG73/et6RbCn+B4fgXL7h2Nj5LUeTlqsMxmUA3kFUD/BpGZJRom9hdW9zHe9cPfPQIk65CF9I40SPGMOQ=
+	t=1790794249; cv=none; b=rWMcRQnrnb2yWIJYsWMYtpNOsUz2oOVdZyjLrGEvC6Lp4pPruZ+Iy8sMGrkyxCSHrProZfUMTrUdQRu/WkTgTZ67FUbfttIMw5dDtApaDXcdRNBQ7TNZI0WdsRllnnQiQbhVJRDda3NV5OAVadpYfRxkbSOX0NmUNdlIlBURGEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794247; c=relaxed/simple;
-	bh=ynMe9fqC+kZ9rWhrt6d+22aXKyxEjGnzEsgnWhH5dsc=;
+	s=arc-20240116; t=1790794249; c=relaxed/simple;
+	bh=r1pMzGTpl2UoUoyAz3Q1TtdJ1g07SilL1/H4eNv7Qb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8uzE5eSEeSw3IeIDNHmdFRxC+nTncBdWlBAkXR+tlhkEoUKxZKGQeJAEZZb28yb/D/22UUqlyh789qJsg24Zar3aYlCyZM69v3gvbvAayMYSx2s5TJluyKKKlL8I1NvnJ98oMyHNSVsK/NIMtIKab/fyKSU2FncTrNQ8ZoVJP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyT8bAxw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RMXG+2CXX0gLPs0yiE4jl/pkC7hnsVgJ4U+fnjiVEvJ8vEu1ji/nAE9b/ww1rsa6EyyUdAyVhdnic/8plP1azHgMafaQVczI70dndoCyOPmpj3Nq/GG12hqXnT8xSj12sATAUocQZV1kwia2eP/bZ89XankToJ9GjtQS4CFx74w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ST5JHWTW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyT8bAxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67FF1F000FF;
-	Wed, 30 Sep 2026 18:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ST5JHWTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7711F0089C;
+	Wed, 30 Sep 2026 18:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794245;
-	bh=12CJy016QmfkZ74vwzMPK36Fqzn/qAQW3HC9ON2tFFc=;
+	s=korg; t=1790794248;
+	bh=gQrN/8EMQC1XzA5/zCqqQd+HpwQhPpX9v9swtJv0OGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dyT8bAxwBbwE10I6QxxRIwDu5KDhHqtT+1yBVxoXwE87fehDFzNXAWjADOu6pcNcy
-	 XgYJ4cVok72r/EAmZzud/y78yUVuWghJVw7AHvs4fv6f5hkQl+pmQ3CjlpHi1yR7Ik
-	 4d81/vqhry4WW8Lm0X1PsMn5bmLjkGeWwSfwBcpg=
+	b=ST5JHWTWDSibUsfkcppD2FaX8SvHIxMXoJ63kXGLtlhEJTGEPiE2bsppwehUyJZ1A
+	 wJwzUqEfEFgBP7wZHj9VNxDJ+xAjRgL2g5GowuNdYWq0gvI/GZtomNTtlzpYXhryiw
+	 PNeQFtFwLg7thp8yaTrtElsBncUoPmiVrken7Uj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0141/1193] mmc: davinci: fix mmc_add_host order in probe
-Date: Wed, 30 Sep 2026 17:13:45 +0200
-Message-ID: <20260930152437.341213430@linuxfoundation.org>
+Subject: [PATCH 6.6 0142/1193] mmc: renesas_sdhi: Add OF entry for RZ/G2N SoC
+Date: Wed, 30 Sep 2026 17:13:46 +0200
+Message-ID: <20260930152437.364085831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,61 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit d04e0151d316edbdb4f0397a9b92a1936e4a1421 ]
+[ Upstream commit 5ce500d31a1625d8fe7ede950201b8df076bdd48 ]
 
-mmc_add_host() makes the host visible to the MMC core. Register the
-interrupt handlers and advertise MMC_CAP_SDIO_IRQ before that, so the
-core cannot start using the host before IRQ handling is set up.
+The RZ/G2N (R8A774B1) SoC was previously handled via the generic
+"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
+the SDHI IP on RZ/G2N is identical with the R-Car M3-N (R8A77965), it
+requires the specific quirks and configuration defined in
+`of_r8a77965_compatible` rather than the generic Gen3 data.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Add the explicit "renesas,sdhi-r8a774b1" match entry to map it correctly.
+Note that the DT binding file renesas,sdhi.yaml does not need an update
+as the entry for this SoC is already present.
+
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/mmc/host/renesas_sdhi_internal_dmac.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index f0b4c904ad6c1..1751c69e4bf4c 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1302,14 +1302,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 		goto cpu_freq_fail;
- 	}
- 
--	ret = mmc_add_host(mmc);
--	if (ret < 0)
--		goto mmc_add_host_fail;
--
- 	ret = devm_request_irq(&pdev->dev, irq, mmc_davinci_irq, 0,
- 			       mmc_hostname(mmc), host);
- 	if (ret)
--		goto request_irq_fail;
-+		goto mmc_add_host_fail;
- 
- 	if (host->sdio_irq >= 0) {
- 		ret = devm_request_irq(&pdev->dev, host->sdio_irq,
-@@ -1319,6 +1315,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 			mmc->caps |= MMC_CAP_SDIO_IRQ;
- 	}
- 
-+	ret = mmc_add_host(mmc);
-+	if (ret < 0)
-+		goto mmc_add_host_fail;
-+
- 	rename_region(mem, mmc_hostname(mmc));
- 
- 	dev_info(mmc_dev(host->mmc), "Using %s, %d-bit mode\n",
-@@ -1327,8 +1327,6 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--request_irq_fail:
--	mmc_remove_host(mmc);
- mmc_add_host_fail:
- 	mmc_davinci_cpufreq_deregister(host);
- cpu_freq_fail:
+diff --git a/drivers/mmc/host/renesas_sdhi_internal_dmac.c b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+index 5eb40fbba4351..f37c2efd6feff 100644
+--- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
++++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+@@ -277,6 +277,7 @@ static const struct renesas_sdhi_of_data_with_quirks of_rza2_compatible = {
+ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
+ 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
+ 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
++	{ .compatible = "renesas,sdhi-r8a774b1", .data = &of_r8a77965_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
 -- 
 2.53.0
 
