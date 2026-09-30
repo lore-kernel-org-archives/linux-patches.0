@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB83351121D;
-	Wed, 30 Sep 2026 16:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ECB511E78;
+	Wed, 30 Sep 2026 16:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784889; cv=none; b=Zi9FTDPX3BHLg+cTN96uXLwK3mJ4pG5v0y3r9ifE8TbuQPEU3ZVxkhB5q/zspGc5XhCvSrWsTwVlIYXfTOsiZ7c/lkvcZx3OUMDWqakgiGq3i6xgTLkaWK3j5/n7EHuAwg0CL8jQt6d//u1uY8R9kbyb++Btdsbq+l1RBIz+7HM=
+	t=1790784891; cv=none; b=W6pD2oHJSoyg0D/AXAWrHIHoHtvJ5it8kZeYCGIv300KlqFCBr2Abx0gips/Er1AakQFSGJfpOmRmK32I0aduII7IKHcytQH8u9RNaPrId7D5uQBABIu1nGq4Zy4icrjP3GGUMrIGdbpGpNF1GVCqgPJSgCp+VCHppqJRoIRZ7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784889; c=relaxed/simple;
-	bh=ps9DCZ0pJuithiCMC90jXt8J8MAEvOoD7XLhIbz7gO4=;
+	s=arc-20240116; t=1790784891; c=relaxed/simple;
+	bh=iwXR9c6MDPl0IuRWEIDC+RTL9OOubS+Ko0ed9QM91LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgdBnYyuaA3i4s2lXkBZUXEQPrztAg+lQ9Q0Wt74lNMX+iNNSmF+jr+//2fOFBDBO9DSpdCNyaPi+DoI/cqumSAZpf6ZCzEya6vJvceCeVUn+1Bk8eDSSbPmUdP0Aj0am+3LXhK1AG4U/oPHxE6mEl/p4nxvHbpdjZmlussx8Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdbJm/yq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ajsFsxj8Ng1C0WNHfFMZrEoKj/F7UkpT1YieGX1E4TuzrotOZgyaADpewlq1xrZDJPy2wpGkXx0GQ3DtRWiSAAzTmj4OMxfbZDis2s4oDxzTcpjbZIuWCGZqi6iBflyeEttIAEnHpjR4zcKjBN9+9tVrtAYQ6wLp/vpMwbdqiPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUyUjWr8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdbJm/yq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C411F00893;
-	Wed, 30 Sep 2026 16:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUyUjWr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFE61F000FF;
+	Wed, 30 Sep 2026 16:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784884;
-	bh=aLV8nbfbv9iwQ6nh5GDswtQZnuYLshq05XZZBb+HKEA=;
+	s=korg; t=1790784887;
+	bh=zflReMEkbzweY8BdNMNz5NxPcrkUbeVkTZ498o6/0sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdbJm/yqn0St1KvnOL9rsmJ7CV5hgHxO1D2ZV6u40KbmGYCmj27wusgx1tw2Wx3av
-	 W237FoKwjSnou4cNJfbtQIISCUdKsJUCz+QYq5Oq6HxtMEqUUSQfqeoNHZMljfXpIx
-	 InHmZq0xX4MqXy2CYBk/PsG5vGMqBIGPPGv0aAnU=
+	b=eUyUjWr8CTcHQ5yqtRg1448MqMHhWjbyh+x6XDrXbQtoMdrEPLXukS+xRjDRbwAJR
+	 t2ZreM6g560X7+dEoOnCRSVo5MfsganBtNiGc/QM8IqwPFWC4txtlcdIQgXKsylm31
+	 49MMot9Qs4kwszIgQ/Lcs6vwrq761Uhh/idHGD7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 314/982] af_unix: Unlink scc_entry in unix_del_edge().
-Date: Wed, 30 Sep 2026 17:17:30 +0200
-Message-ID: <20260930152423.563998369@linuxfoundation.org>
+Subject: [PATCH 6.1 315/982] mm/damon/core: avoid infinite kdamond_merge_regions() internal loop
+Date: Wed, 30 Sep 2026 17:17:31 +0200
+Message-ID: <20260930152423.585763078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,70 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 594d905195024b228c962627ae5ae7c17bd582a4 ]
+commit 123e4619ab6c8ab1c4cb1d7a58311a2af13929cd upstream.
 
-Kyle Zeng reported that GC could free a dead SCC partially.
+Patch series "mm/damon: unurgent fixes for infinite loop, NULL de-ref and
+races", v1.1.
 
-The scenario is as follows:
+Sashiko found a few issues in DAMON that could cause infinite loop, NULL
+dereference and monitoring results degradation.  The first two sounds
+scary but the infinite loop happens only under unreasonable user setup.
+The NULL dereference is only in a unit test.  Monitoring results
+degradation is trivial since it is only best-effort, and those happens
+from only unlikely races.  Still those are bugs that better to fix if
+possible.  Fix those.
 
-   1) Create two SCCs:
+This patch (of 6):
 
-       X -.   A <-> B
-       ^--'
+Due to online parameter update like events, the number of DAMON regions
+could be higher than the user-set upper limit.  kdamond_merge_regions()
+repeats merge regions until the number meets the limit, while doubling the
+merge threshold up to the theoretical maximum threshold.  It is tried only
+up to the theoretical maximum threshold because even the aggressive
+merging can fail from reducing the number of regions under the
+user-defined upper limit.  For example, there could be many user-defined
+non-contiguous regions that cannot be merged.
 
-   2) Run the following concurrently:
+The threshold based loop break condition is evaluated by comparing the
+threshold for the next merging try against the theoretical maximum
+threshold.  If max_thres is larger than UINT_MAX / 2, doubling the
+threshold could make it overflow, and bypass the loop break condition.  In
+the case, if the number of regions cannot be reduced under the upper limit
+like explained above, the loop will run infinitely.
 
-      2-1) send() sk-B to sk-B from sk-X
-      2-2) close() both A and B
+Prevent the case by doing the break condition check before doubling the
+threshold.  Also, prevent the threshold exceeding the maximum threshold,
+as it could overflow and apply the wrong merge threshold.
 
-At 2-1), there is a small window where unix_add_edges()
-publishes a new edge (B <-> B) to GC but its skb is not queued
-by skb_queue_tail().
+This issue is unlikely to occur in real world, since having the max_thres
+higher than UINT_MAX / 2 require unrealistically large aggregation
+intervals compared to the sampling interval.  Also, it requires an
+unrealistically large number of uncontiguous regions setup.  Nonetheless,
+the consequence is bad and the fix is simple.
 
-If 2-2) completes before skb_queue_tail() and GC is triggered,
-it judges A <-> B as dead, but B is not freed because GC cannot
-collect the not-yet-queued skb holding the B <-> B edge.
+The issue was discovered [1] by Sashiko.
 
-       X -.   A <-> B -. This edge is visible
-       ^--'         ^..'  but skb is not
-
-This itself is not a problem since the next GC run will judge
-B as dead as well and free it finally.
-
-       X -.   A <.> B -.
-       ^--'         ^--'
-
-However, X's SCC forces the next GC to call unix_walk_scc_fast(),
-and it iterates over A through B's scc_entry.
-
-Let's unlink scc_entry before freeing the vertex in unix_del_edge().
-
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.")
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Kyle Zeng <kylebot@openai.com>
-Fixes: 4090fa373f0e ("af_unix: Replace garbage collection algorithm.").
-Link: https://patch.msgid.link/20260804002155.2233594-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20260715031002.108504-1-sj@kernel.org
+Link: https://lore.kernel.org/20260715031002.108504-2-sj@kernel.org
+Link: https://lore.kernel.org/20260709145425.96247-1-sj@kernel.org [1]
+Fixes: 310d6c15e910 ("mm/damon/core: merge regions aggressively when max_nr_regions is unmet")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.10.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/core.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index fa6983dc3181d..338769200065e 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -173,6 +173,7 @@ static void unix_del_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
- 	if (!vertex->out_degree) {
- 		edge->predecessor->vertex = NULL;
- 		list_move_tail(&vertex->entry, &fpl->vertices);
-+		list_del(&vertex->scc_entry);
- 	}
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 859a6a636ab0e..7afbc20833ea4 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -988,7 +988,7 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 
+ 	max_thres = c->attrs.aggr_interval /
+ 		(c->attrs.sample_interval ?  c->attrs.sample_interval : 1);
+-	do {
++	while (true) {
+ 		nr_regions = 0;
+ 		damon_for_each_target(t, c) {
+ 			damon_merge_regions_of(t, threshold, sz_limit,
+@@ -996,9 +996,14 @@ static void kdamond_merge_regions(struct damon_ctx *c, unsigned int threshold,
+ 			nr_regions += damon_nr_regions(t);
+ 		}
+ 		count_age = false;
+-		threshold = max(1, threshold * 2);
+-	} while (nr_regions > c->attrs.max_nr_regions &&
+-			threshold / 2 < max_thres);
++		if (nr_regions <= c->attrs.max_nr_regions ||
++				max_thres <= threshold)
++			break;
++		if (threshold < max_thres / 2)
++			threshold = max(1, threshold * 2);
++		else
++			threshold = max_thres;
++	}
  }
  
+ /*
 -- 
 2.53.0
 
