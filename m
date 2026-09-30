@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C58E46C4CC;
-	Wed, 30 Sep 2026 18:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7A74C33E6;
+	Wed, 30 Sep 2026 18:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793473; cv=none; b=SeCr9JRtgt9prgUgv0AH+4iUAfsgMShPTkPODvX3eZtS2Vi5+xHDtb9cTugZMrTLfDA9BptxrtFKB2u20kPIWXXe2UCot8P6QfIe4nymuiN2z+UHdzrp6JBAvyZWldOh1RwkzKiYrfd/yYd3jaoSNAOB18gpFAR7bZay3jYFXuI=
+	t=1790793476; cv=none; b=gL2LS82K1hu1xT3kwhZXCDkjBfgSCXDmZONb9gDhvWM9z8Sf/AJbahUyl4C70Z4mrkoFa44KCkenCo/X1u936UoCRG0KHmcrtXf9JC9bhPUsXjhhxnZhIM/28OcR/LTGz3NGZoywfGk6zYK1fLgyky65ZkOAdGw6aZG0lcyoqJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793473; c=relaxed/simple;
-	bh=kl0JtVQNvgBVKZ90dguvXbng2tt/tYjNWDtbD4xZ4hM=;
+	s=arc-20240116; t=1790793476; c=relaxed/simple;
+	bh=YpBPHJl8pPjszuWWcOhap1X4d+PxgkGXQmnZvn3SgRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3yqLaEVpMn9qZxnpBvqutgjKg+42/+fi3N6AI5jyPlDWI/7sI/fQGvowxbKGJY0Bz9hCh/RfK9v34W3Qehn8mHtjJyB83MFteqbg3uH2Bu6N4dJHFZDYCgXzSe4sMlUUmanuM/wVaByZ/VrQl+7VodTGcKCUBTIzHSyCCOZE8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Vb8IAdL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WjWYz33IA19/X8lkwcHdeqNO9mmHi3D/YdwfPRmcr9iHrWZbC69hjN8Fs+6B2jVtFQGZ08k/pKvoBd85eWOZ9v4aoB441eyUgJThtCOzsPByNcTUCWuHYDwhzDArkZfl403mj3PMU37mNDcDcwitmf4NQ/m8SV8n0NTSbPGokxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVzG1lRK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Vb8IAdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A631E1F000FF;
-	Wed, 30 Sep 2026 18:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVzG1lRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869A81F000FF;
+	Wed, 30 Sep 2026 18:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793472;
-	bh=voPYZS/s+NtcAob8NH2eIc11VoS+f5vXkwEhuVCQ8uI=;
+	s=korg; t=1790793475;
+	bh=TodXCWkdl8Wk7jLkO7PiCWI5yCu4glQgfVWPrm91tEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Vb8IAdL4pF9YhblsDwoZNCKxdsrNwr7BJ1tENDV45ke0C7H9zsl4lqbYOhmXNhVB
-	 u3eikqYcrim49nsdcMC6NHmDnrOvrlAyzFisBzSs6F8R+bgNNUnRFv6iW9tfeuCAkF
-	 YTToSvGkJwRCLYi/WWJb3vH2f/MfBU9FOkO8I2iQ=
+	b=XVzG1lRK8ECQQGHnTfB5KCGAd7mUfRx7gm2MneVTu2sXhjGUxGF5UjZeHswIbSFT7
+	 NE/pXBY/KW2Qa6s+p3C+Zll8GbBAeuogj1ck8VBsVv5aiKLkkZ+D+N2Kp6ZruxOhua
+	 tlAmyFkkeQ8/OoLnM/w9NP5I+qjc1XH5OyZlHErI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angel J <iamanaws@httpd.dev>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.18 265/395] PCI: of_property: Omit bus properties without a subordinate bus
-Date: Wed, 30 Sep 2026 17:28:47 +0200
-Message-ID: <20260930152346.403906320@linuxfoundation.org>
+	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.18 223/395] workqueue: Fix NULL current_pwq deref in flush dependency check
+Date: Wed, 30 Sep 2026 17:28:05 +0200
+Message-ID: <20260930152345.497900347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,67 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Angel J <iamanaws@httpd.dev>
+From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
 
-commit 8805840aad73df7146778be243a196d48b4f6430 upstream.
+commit db6365ced4d5855e321f772b240c0e473bcfcdd5 upstream.
 
-A bridge (a device with a Type 1 header) may not have a secondary bus
-allocated (pdev->subordinate), e.g., if there are no available bus numbers
-or the bridge secondary/subordinate bus numbers are not writable.
+check_flush_dependency() uses current_wq_worker() to determine whether
+the caller is a workqueue worker and then dereferences worker->current_pwq
+to test whether the current workqueue is WQ_MEM_RECLAIM.
 
-The dynamic OF helpers of_pci_prop_bus_range() and of_pci_prop_intr_map()
-dereference pdev->subordinate without checking it.  When
-CONFIG_PCI_DYNAMIC_OF_NODES is enabled, this can cause a NULL pointer
-dereference and early boot hang.
+current_wq_worker() only means that %current has PF_WQ_WORKER set. A
+kworker can reach check_flush_dependency() while it is not executing a
+work item. One such path is worker_thread() acting as the pool manager,
+where create_worker() does GFP_KERNEL allocation and the allocation path
+invokes the OOM notifier. In that state worker->current_pwq is NULL
+because current_pwq is set only by process_one_work() and cleared again
+after the work function returns.
 
-Generate 'bus-range' and 'interrupt-map' properties only when a subordinate
-bus exists.  Keep the node and its remaining properties for bridges without
-one.
+[  416.760634][  T375] Call trace:
+[  416.760638][  T375]  check_flush_dependency+0x80/0x120 (P)
+[  416.760648][  T375]  __flush_work+0x98/0x224
+[  416.760657][  T375]  flush_work+0x30/0x44
+[  416.760665][  T375]  ...
+[  416.760710][  T375]  blocking_notifier_call_chain+0x58/0xa0
+[  416.760719][  T375]  out_of_memory+0xb4/0x458
+[  416.760730][  T375]  __alloc_pages_may_oom+0x11c/0x1a8
+[  416.760739][  T375]  __alloc_pages_slowpath+0x314/0x46c
+[  416.760746][  T375]  __alloc_frozen_pages_noprof+0x110/0x1a4
+[  416.760753][  T375]  new_slab+0x12c/0x484
+[  416.760759][  T375]  ___slab_alloc+0x7a8/0xc7c
+[  416.760765][  T375]  __slab_alloc+0x74/0xd8
+[  416.760772][  T375]  __kmalloc_cache_node_noprof+0x2ac/0x304
+[  416.760779][  T375]  alloc_worker+0x28/0x60
+[  416.760785][  T375]  create_worker+0x4c/0x20c
+[  416.760790][  T375]  worker_thread+0xe8/0x2b8
+[  416.760796][  T375]  kthread+0x1a8/0x200
+[  416.760805][  T375]  ret_from_fork+0x10/0x20
 
-The problem was latent since 407d1a51921e ("PCI: Create device tree node
-for bridge"), but wasn't reachable until 1f340724419e ("PCI: of: Create
-device tree PCI host bridge node"), which appeared in v6.15.  Before
-1f340724419e, of_pci_make_dev_node() returned early because the parent OF
-node was missing.
+Guard the WQ_MEM_RECLAIM-worker warning with worker->current_pwq. If the
+kworker is not currently executing a work item, there is no current
+workqueue to diagnose with that warning. The PF_MEMALLOC warning is left
+unchanged so explicit reclaim context flushing a !WQ_MEM_RECLAIM target
+is still reported.
 
-Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
-Signed-off-by: Angel J <iamanaws@httpd.dev>
-[bhelgaas: move pdev->subordinate test to callees, commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org	# v6.6+
-Link: https://patch.msgid.link/20260918195540.GA1187209@bhelgaas
+Fixes: fca839c00a12 ("workqueue: warn if memory reclaim tries to flush !WQ_MEM_RECLAIM workqueue")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/of_property.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/workqueue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/of_property.c
-+++ b/drivers/pci/of_property.c
-@@ -95,9 +95,13 @@ static int of_pci_prop_bus_range(struct
- 				 struct of_changeset *ocs,
- 				 struct device_node *np)
- {
--	u32 bus_range[] = { pdev->subordinate->busn_res.start,
--			    pdev->subordinate->busn_res.end };
-+	u32 bus_range[2];
- 
-+	if (!pdev->subordinate)
-+		return 0;
-+
-+	bus_range[0] = pdev->subordinate->busn_res.start;
-+	bus_range[1] = pdev->subordinate->busn_res.end;
- 	return of_changeset_add_prop_u32_array(ocs, np, "bus-range", bus_range,
- 					       ARRAY_SIZE(bus_range));
- }
-@@ -220,6 +224,9 @@ static int of_pci_prop_intr_map(struct p
- 	int ret;
- 	u8 pin;
- 
-+	if (!pdev->subordinate)
-+		return 0;
-+
- 	pnode = pci_device_to_OF_node(pdev->bus->self);
- 	if (!pnode)
- 		pnode = pci_bus_to_OF_node(pdev->bus);
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -3796,7 +3796,7 @@ static void check_flush_dependency(struc
+ 	WARN_ONCE(current->flags & PF_MEMALLOC,
+ 		  "workqueue: PF_MEMALLOC task %d(%s) is flushing !WQ_MEM_RECLAIM %s:%ps",
+ 		  current->pid, current->comm, target_wq->name, target_func);
+-	WARN_ONCE(worker && ((worker->current_pwq->wq->flags &
++	WARN_ONCE(worker && worker->current_pwq && ((worker->current_pwq->wq->flags &
+ 			      (WQ_MEM_RECLAIM | __WQ_LEGACY)) == WQ_MEM_RECLAIM),
+ 		  "workqueue: WQ_MEM_RECLAIM %s:%ps is flushing !WQ_MEM_RECLAIM %s:%ps",
+ 		  worker->current_pwq->wq->name, worker->current_func,
 
 
