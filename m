@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E26A46C4CC;
-	Wed, 30 Sep 2026 18:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AEA51D528;
+	Wed, 30 Sep 2026 18:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793643; cv=none; b=TkA+fhw5dUmDWzhW5oa4nfSUqT+s+VIt9D48cc/3lTbWxzAn9/ZsG/v/Jez244Mb35ausZaP5xrAZPAtzuJ6bjPFB5Yw7y+YnNjLue8PHX8ws6jI6h0c82TS/M2jJQrT6r37v0uZ8+b2EbRcSQiIDG7ceGBrHAzCkcN+9KSqDR8=
+	t=1790793646; cv=none; b=I7sBbrZMKOb54rGtoDwtLkmCqAahSrCRm8I7CY8VN+80c6+FINGLIpXBOptsMkSHsFMkKmK0Ts/vS1dsj4wg9Rs3f3fKRBlCAbWM2hJFmnauM74yYDK7y0I7d4eLBhNXcbz5cyOyNa2RStnjOkNq47KfVERV7Gdl6dh5LL0LxbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793643; c=relaxed/simple;
-	bh=6QjsOLOfvnZwDhBcpcaP2YkWoVvtTARUwhJaJ3uMx20=;
+	s=arc-20240116; t=1790793646; c=relaxed/simple;
+	bh=8efXggz2nCmdQf+c89JLD1riYaDxpQCQl/Bozv+d0vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOOAaIBuZhxs/L2DLM9KudzL0IkchBppUOr0qULeY8odpAwvdWKN3aniVict/VFBYqhoAaMAyTj5h3wzE0gx5yC8NDGW3bZJz5NObjUZGuiEOshwKOJP58Pszpd/uGmCN8CnXTfRZqJezV4CoaIARpGAgNS96p5XSUhIxoI49hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqkX7ewi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bf6k/Sx/4qwjfMYnLGuHWmwiiZm2NIgiqy3OqHutKVJJqJIWve7qSuO6SdREi3PlHdgI+Lxd+ZISbNEln4zTReNTCfdt7TugCBl0a9vX2jOLYcm8Qb5KxuhGanRHTz/SReOYDh2IS3gWw+AvGvd/Ktno2V6/kM9Waq+hbGwF5Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emQiWTj4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqkX7ewi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C95511F000FF;
-	Wed, 30 Sep 2026 18:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emQiWTj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0361F000FF;
+	Wed, 30 Sep 2026 18:40:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793642;
-	bh=GgsDijgcCp30lwCvcgelZ5mINZQ5sVJnGTBsiCFw2iw=;
+	s=korg; t=1790793645;
+	bh=kbJw8z+430lFQzJufwG2QLBGFAf1ZUvEAWaydkmJPyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqkX7ewi+gunXUpg8qMn2XqSnYzcvKy1MP/WItlpn0I2La+DA/N5Yg6CtrDGgZf60
-	 fVYD8DzBZUtZjZnKbEIWl5EI7AJHyNwXprlAwiCACWED90qolGy/780MToTK6sHWr4
-	 MN+3i3gMZP8nJmpGsdJtp2gFrzuH7zPzQqzQPhSg=
+	b=emQiWTj4gQtVdeOhQif0+/FVYs7X6KOktjdy9sJorRER6IZQhMHxNliQ2AtlJWhA3
+	 xqWHLeE2/DEV+uJInIjdiRVsSSwmg56Lk1nDWSQS2+Xr/vKulN9+k2ClYzTGlKmdvN
+	 5RaIUg63B04EdYQcWMBkNaxbTVPR9T+tfUi8a07Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 328/395] Bluetooth: RFCOMM: fix NULL dereference of dlc->session in RFCOMM_CONNINFO
-Date: Wed, 30 Sep 2026 17:29:50 +0200
-Message-ID: <20260930152347.777650635@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.18 329/395] smb: client: fix create context out-of-bounds reads
+Date: Wed, 30 Sep 2026 17:29:51 +0200
+Message-ID: <20260930152347.798248904@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -50,100 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 46f8ffd0a1f1eb6cbc94946a92c11ef601e228a1 upstream.
+commit 67f4c1c6a1b51e203d986779299824d1c2c590a6 upstream.
 
-The RFCOMM_CONNINFO getsockopt handler accepts a socket that is not
-connected as long as deferred setup is enabled:
+smb2_parse_contexts() validates the complete create-context area but
+does not limit each record to its Next field before dispatching it.  A
+malformed chain can therefore expose bytes beyond the current context to
+a handler.  The QFid handler also used a full response-structure cast
+although it only reads DiskFileId.
 
-	if (sk->sk_state != BT_CONNECTED &&
-				!rfcomm_pi(sk)->dlc->defer_setup) {
-		err = -ENOTCONN;
-		break;
-	}
-	l2cap_sk = rfcomm_pi(sk)->dlc->session->sock->sk;
+The SMB2/SMB3 lease parsers made the same layout assumption: they read
+LeaseState and LeaseFlags at canonical offsets rather than at
+DataOffset.  A valid non-canonical DataOffset could therefore yield
+unrelated in-bounds data, while a short DataLength was still accepted.
 
-dlc->defer_setup is set in rfcomm_sock_init() when rfcomm_connect_ind()
-creates a child socket for an incoming connection on a listening socket
-that has BT_DEFER_SETUP enabled. It is never cleared afterwards. The
-session, however, can go away underneath it.
+Limit each context to its Next value, reject offsets before the context
+header, and reject malformed chains.  Bound the name range by the current
+context and do not dispatch a known handler when DataLength is zero.  Read
+the QFid DiskFileId only when the context data covers that field.  Parse the
+lease context from DataOffset and require DataLength to match the v1 or v2
+lease_context size used by ksmbd.  A size mismatch skips lease parsing
+without failing the open.
 
-rfcomm_recv_disc() forces the dlc state before tearing it down:
-
-	d->state = BT_CLOSED;
-	__rfcomm_dlc_close(d, err);
-
-The RFCOMM_DEFER_SETUP early return in __rfcomm_dlc_close() only covers
-BT_CONNECT, BT_CONFIG, BT_OPEN and BT_CONNECT2, so with the state
-already BT_CLOSED that switch does not match and the function falls
-through to rfcomm_dlc_unlink(), which sets d->session = NULL, while
-d->defer_setup stays 1.
-
-A getsockopt(SOL_RFCOMM, RFCOMM_CONNINFO) on the accepted socket after
-that point therefore skips the -ENOTCONN path -- sk->sk_state is
-BT_CLOSED, but dlc->defer_setup is still set -- and dereferences the
-NULL session. No race is needed: once the DISC has been processed, the
-dereference is unconditional.
-
-Reproduced on a KASAN kernel under QEMU with a BR/EDR peer emulated over
-/dev/vhci: the peer brings up an ACL link, opens L2CAP on the RFCOMM
-PSM, starts a session and sends SABM for a channel bound with
-BT_DEFER_SETUP, and sends DISC for that dlci after the socket has been
-accepted. getsockopt(SOL_RFCOMM, RFCOMM_CONNINFO) on the accepted
-socket then hits:
-
- Oops: general protection fault, probably for non-canonical address
- 0xdffffc0000000002: 0000 [#1] SMP KASAN PTI
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- CPU: 1 UID: 0 PID: 150 Comm: init Tainted: G B 7.3.0-rc3-g5dd1818b15d9
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
- RIP: 0010:rfcomm_sock_getsockopt+0x529/0x780
- Call Trace:
-  <TASK>
-  do_sock_getsockopt+0x3ad/0x7d0
-  __sys_getsockopt+0x10e/0x1b0
-  __x64_sys_getsockopt+0xc2/0x160
-  do_syscall_64+0xda/0x4b0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
-0x10 is the offset of sock in struct rfcomm_session;
-rfcomm_sock_getsockopt_old() is inlined into rfcomm_sock_getsockopt().
-
-Commit 43a556b2fd43 ("Bluetooth: RFCOMM: take rfcomm_mutex for the
-deferred setup accept") fixed the same "a remote DISC clears the session
-while deferred setup is still flagged" problem in rfcomm_dlc_accept();
-this is the remaining instance of it, in the getsockopt path.
-
-Deferred setup only leaves a socket usable here once it has reached
-BT_CONNECT2, so restrict the exception to that state and check that a
-session is actually present before following it.
-
-Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
+Fixes: b8c32dbb0deb ("CIFS: Request SMB2.1 leases")
+Fixes: f047390a097e ("CIFS: Add create lease v2 context for SMB3")
+Fixes: 89a5bfa350fa ("smb3: optimize open to not send query file internal info")
 Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
 Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Tested-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c |   28 ++++++++++++++++++++--------
+ fs/smb/client/smb2pdu.c |   44 ++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 54 insertions(+), 18 deletions(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -785,8 +785,10 @@ static int rfcomm_sock_getsockopt_old(st
- 		break;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4457,25 +4457,37 @@ smb3_create_lease_buf(u8 *lease_key, u8
+ static __u8
+ smb2_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
+ {
+-	struct create_lease *lc = (struct create_lease *)buf;
++	struct create_context *cc = buf;
++	struct lease_context lc;
  
- 	case RFCOMM_CONNINFO:
--		if (sk->sk_state != BT_CONNECTED &&
--					!rfcomm_pi(sk)->dlc->defer_setup) {
-+		if ((sk->sk_state != BT_CONNECTED &&
-+		     !(sk->sk_state == BT_CONNECT2 &&
-+		       rfcomm_pi(sk)->dlc->defer_setup)) ||
-+		    !rfcomm_pi(sk)->dlc->session) {
- 			err = -ENOTCONN;
+ 	*epoch = 0; /* not used */
+-	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
++	if (le32_to_cpu(cc->DataLength) != sizeof(lc))
++		return 0;
++
++	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
++	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
+ 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
+-	return le32_to_cpu(lc->lcontext.LeaseState);
++	return le32_to_cpu(lc.LeaseState);
+ }
+ 
+ static __u8
+ smb3_parse_lease_buf(void *buf, __u16 *epoch, char *lease_key)
+ {
+-	struct create_lease_v2 *lc = (struct create_lease_v2 *)buf;
++	struct create_context *cc = buf;
++	struct lease_context_v2 lc;
++
++	if (le32_to_cpu(cc->DataLength) != sizeof(lc)) {
++		*epoch = 0;
++		return 0;
++	}
+ 
+-	*epoch = le16_to_cpu(lc->lcontext.Epoch);
+-	if (lc->lcontext.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
++	memcpy(&lc, (u8 *)cc + le16_to_cpu(cc->DataOffset), sizeof(lc));
++	*epoch = le16_to_cpu(lc.Epoch);
++	if (lc.LeaseFlags & SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE)
+ 		return SMB2_OPLOCK_LEVEL_NOCHANGE;
+ 	if (lease_key)
+-		memcpy(lease_key, &lc->lcontext.LeaseKey, SMB2_LEASE_KEY_SIZE);
+-	return le32_to_cpu(lc->lcontext.LeaseState);
++		memcpy(lease_key, lc.LeaseKey, SMB2_LEASE_KEY_SIZE);
++	return le32_to_cpu(lc.LeaseState);
+ }
+ 
+ static unsigned int
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2280,11 +2280,17 @@ create_reconnect_durable_buf(struct cifs
+ static void
+ parse_query_id_ctxt(struct create_context *cc, struct smb2_file_all_info *buf)
+ {
+-	struct create_disk_id_rsp *pdisk_id = (struct create_disk_id_rsp *)cc;
++	u16 doff = le16_to_cpu(cc->DataOffset);
++	u32 dlen = le32_to_cpu(cc->DataLength);
++	u8 *beg;
+ 
+-	cifs_dbg(FYI, "parse query id context 0x%llx 0x%llx\n",
+-		pdisk_id->DiskFileId, pdisk_id->VolumeId);
+-	buf->IndexNumber = pdisk_id->DiskFileId;
++	if (dlen < sizeof(__le64))
++		return;
++
++	beg = (u8 *)cc + doff;
++	memcpy(&buf->IndexNumber, beg, sizeof(__le64));
++	cifs_dbg(FYI, "parse query id context 0x%llx\n",
++		 le64_to_cpu(buf->IndexNumber));
+ }
+ 
+ static void
+@@ -2332,6 +2338,7 @@ int smb2_parse_contexts(struct TCP_Serve
+ 	struct smb2_create_rsp *rsp = rsp_iov->iov_base;
+ 	struct create_context *cc;
+ 	size_t rem, off, len;
++	size_t cc_len;
+ 	size_t doff, dlen;
+ 	size_t noff, nlen;
+ 	char *name;
+@@ -2354,29 +2361,41 @@ int smb2_parse_contexts(struct TCP_Serve
+ 		buf->IndexNumber = 0;
+ 
+ 	while (rem >= sizeof(*cc)) {
++		off = le32_to_cpu(cc->Next);
++		if (off) {
++			if ((off & 0x7) || off >= rem || off < sizeof(*cc))
++				return -EINVAL;
++			cc_len = off;
++		} else {
++			cc_len = rem;
++		}
++
+ 		doff = le16_to_cpu(cc->DataOffset);
+ 		dlen = le32_to_cpu(cc->DataLength);
+-		if (check_add_overflow(doff, dlen, &len) || len > rem)
++		if (doff < sizeof(*cc) ||
++		    check_add_overflow(doff, dlen, &len) || len > cc_len)
+ 			return -EINVAL;
+ 
+ 		noff = le16_to_cpu(cc->NameOffset);
+ 		nlen = le16_to_cpu(cc->NameLength);
+-		if (noff + nlen > doff)
++		if (noff < sizeof(*cc) ||
++		    check_add_overflow(noff, nlen, &len) || len > cc_len ||
++		    (dlen && len > doff))
+ 			return -EINVAL;
+ 
+ 		name = (char *)cc + noff;
+ 		switch (nlen) {
+ 		case 4:
+-			if (!strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
++			if (dlen && !strncmp(name, SMB2_CREATE_REQUEST_LEASE, 4)) {
+ 				*oplock = server->ops->parse_lease_buf(cc, epoch,
+ 								       lease_key);
+-			} else if (buf &&
++			} else if (dlen && buf &&
+ 				   !strncmp(name, SMB2_CREATE_QUERY_ON_DISK_ID, 4)) {
+ 				parse_query_id_ctxt(cc, buf);
+ 			}
  			break;
+ 		case 16:
+-			if (posix && !memcmp(name, smb3_create_tag_posix, 16))
++			if (dlen && posix && !memcmp(name, smb3_create_tag_posix, 16))
+ 				parse_posix_ctxt(cc, buf, posix);
+ 			break;
+ 		default:
+@@ -2388,13 +2407,18 @@ int smb2_parse_contexts(struct TCP_Serve
  		}
+ 
+ 		off = le32_to_cpu(cc->Next);
+-		if (!off)
++		if (!off) {
++			rem = 0;
+ 			break;
++		}
+ 		if (check_sub_overflow(rem, off, &rem))
+ 			return -EINVAL;
+ 		cc = (struct create_context *)((u8 *)cc + off);
+ 	}
+ 
++	if (rem)
++		return -EINVAL;
++
+ 	if (rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
+ 		*oplock = rsp->OplockLevel;
+ 
 
 
