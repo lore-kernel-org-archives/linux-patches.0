@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6FB36D4E1;
-	Wed, 30 Sep 2026 18:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28469503BD3;
+	Wed, 30 Sep 2026 18:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791631; cv=none; b=XkJ4x0SppqFXm3NolGU3BysrlsT1wH+tcO52D/LjbyUVivypfcooWB9NBMf9mffBRh6KFMmA7e/LEODeS6o9HT0SH2iBtgPznVcFyw8ifdv+ENNZpyV7shx+dyXj8wmo78fUheuFIJhZpZAs9z9zac8gaTP/PDEUdGZtQbGLXgo=
+	t=1790791634; cv=none; b=ZjpH6XWvJ59+VAWLYQWIqpgTpsWlyFlwiAM1+2/2UsTtroEI+Omq6rfhO9JIKVzTeSirG8IGbmnO0ay1DpTFUyfNgAKePMjBA7Wk9Wt4/lnrK80cm9BnXF3Rn0NxjpLrk4yauPi2uD74N6Fnm2SIVyx0+hD4wED8d/DAz9Q1mLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791631; c=relaxed/simple;
-	bh=9PtbVljgOO+jyYi7w5Z+g+OGZ+JMFCfr24+ZwNFVnUc=;
+	s=arc-20240116; t=1790791634; c=relaxed/simple;
+	bh=ZFH6a2E1zcFyrvS4rZo/39/7Z4NobtEfYX0tUv+d1VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyf08hreVNct8JcUWLt/hZRJfdGDRJofaUb/pQQAZKk+dySVRaIztcTqXpfkQWHezralNA4RZ5NjnQb+OQvdG4mr5y+UivdVCeg0/E9sREBhStpFivWa+FluiazaEz+asvV2xE3T92r8V9W2rmac1pd1ZnyTiIORGT4BIAqIXDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQcKe4/X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hNa7Hk7Yayw9kM/bQFhhkMaYhjo+RiCneZqZx9MuKVN+WHr8NGe/GJtD5e7Dzbxd1sZPclZr0aIa3DhuhJ25NxMLhZiCU1BRI4Tre8lpl7yaB68QfilhEbQ4QliqeXpGkght4e86Mag6JBYexdeT2CRLv5M8jFigs6uYtVOGz1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jqeyswc7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQcKe4/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A0A1F000FF;
-	Wed, 30 Sep 2026 18:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jqeyswc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828EE1F000FF;
+	Wed, 30 Sep 2026 18:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791630;
-	bh=ZG175XpEsGfRlMKxhZWPUn90UHHbJwl+KWYsGZiHFtY=;
+	s=korg; t=1790791633;
+	bh=57+hnwKZxO/t4urVyDIc6BZP6UEiRCa/BdyM99VZ4tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rQcKe4/XnlkobEUPiItjS/UdKGh7myLI4iP6P2VxbZLEoVR20TxTaj/pXWeKqcSUX
-	 FfkoBOwKWSUS7vdMgGRAjXFXCZKChDxFxV09xLyOyG7f1iggex8Rm8eIsk5+FffUTQ
-	 xC5XuiniOFHbu3EtC2F2lr9+X+SjjtAY0QUPbcpk=
+	b=Jqeyswc7Ez30jPLLk99IVHIImterFu8lOb9CnijW2A4nwMYcEv7OvropNOHLHrpV1
+	 qginDOf4hyff/dOYmP8oHMRhaXalWplqLNsBQRvpiqvdSH5Iq4paVKOiiqSCbDUyJM
+	 UmzDbQGNkfi/0i6/3LTHKADTsWrxfqpTDMvvU6kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/752] netfilter: nfnetlink_log: cope with concurrent instance destruction
-Date: Wed, 30 Sep 2026 17:23:15 +0200
-Message-ID: <20260930152405.329123960@linuxfoundation.org>
+Subject: [PATCH 5.15 326/752] netfilter: ip6_tables: set F_PROTO when proto value is nonzero
+Date: Wed, 30 Sep 2026 17:23:16 +0200
+Message-ID: <20260930152405.349532294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -55,59 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 387d744fa7e499d2c3748a4e60e02ebb24e7fb16 ]
+[ Upstream commit da4afc5a956d407443988e97a4d4ca14c2e999c7 ]
 
-Instances are refcounted. However, only memory release happens on the
-1 -> 0 transition; the unlink from hashes can occur with any refcount.
+The ip6tables traverser doesn't search the extension header chain unless
+userspace did set the IP6T_F_PROTO flag.
 
-Uncooperative userspace can force a situation where a queue is pending
-for destruction from netlink event while a different socket with same
-portid processes an UNBIND request.
+This also means that userspace that sets the e->ipv6.proto flag can bypass
+the protocol check for the rule by not setting this flag.
 
-With right timing, this will unhash the instance again:
+That in turn means that all ip6_tables modules and targets that want to
+reject rules without '-p' flag MUST also check for that flag.
 
-Oops: general protection fault, [..]
-Call Trace:
- <TASK>
- nfulnl_recv_config+0x31a/0xd50
- nfnetlink_rcv_msg+0x7c2/0xeb0
+Not all do, likely because they got copied from iptables which lacks
+this flag (no extension headers).
 
-Fixes: 0597f2680d66 ("[NETFILTER]: Add new "nfnetlink_log" userspace packet logging facility")
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Instead of fixing up all the relevant targets, emulate ip6tables behaviour
+in the kernel (like nft_compat.c) and set the flag if the protocol is set.
+
+Reported-by: Zhiling Zou <zhilinz@nebusec.ai>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_log.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/ipv6/netfilter/ip6_tables.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index 7ad0cf0cb6935..c39d016619f4b 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -217,13 +217,18 @@ static void __nfulnl_flush(struct nfulnl_instance *inst);
- static void
- __instance_destroy(struct nfulnl_instance *inst)
- {
-+	spin_lock(&inst->lock);
-+	if (inst->copy_mode == NFULNL_COPY_DISABLED) {
-+		/* attempt to UNBIND a queue already pending
-+		 * destruction via netlink close event. Ignore.
-+		 */
-+		spin_unlock(&inst->lock);
-+		return;
-+	}
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index f2de34f0de239..6fdd00ac2f84e 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -649,6 +649,11 @@ check_entry_size_and_hooks(struct ip6t_entry *e,
+ 	/* Clear counters and comefrom */
+ 	e->counters = ((struct xt_counters) { 0, 0 });
+ 	e->comefrom = 0;
 +
- 	/* first pull it out of the global list */
- 	hlist_del_rcu(&inst->hlist);
- 
--	/* then flush all pending packets from skb */
--
--	spin_lock(&inst->lock);
--
- 	/* lockless readers wont be able to use us */
- 	inst->copy_mode = NFULNL_COPY_DISABLED;
++	/* set F_PROTO, else ip6_packet_match won't do the right thing. */
++	if (e->ipv6.proto)
++		e->ipv6.flags |= IP6T_F_PROTO;
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
