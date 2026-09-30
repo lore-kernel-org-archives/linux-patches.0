@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DAD51EDE8;
-	Wed, 30 Sep 2026 17:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9405221E0;
+	Wed, 30 Sep 2026 17:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790353; cv=none; b=HS7utJOGkAjhXcvvalKdhuLTtRxPO3f4xQjHqIPzq5wgpbKLKxodHiKStzpdXq3oZZDyMXiBDnZ6c5xnACPVPlhD1ocjNSwdT02XOI6LUPGGEWTMvSreGG108EbOUhvLpXvw1YDoV5pm8X5bsnihELD9AeknQHHyiv7dgGzRKjk=
+	t=1790790356; cv=none; b=AZ4URwoDDpNaw1GfXFJwFEK37q19owbyzM0+PbAvfAL+lw/P4TsbAW3TDB9fZKNARGP9MGFuDgeIS0Bxz27chDn/R00mwtGcuU6hOJBMLDhd/aDphS8z9AdpM1J0HmYPwjk00B3nQmdaoAhHLEmem5KPOZBgRLfYAciEzHPFpfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790353; c=relaxed/simple;
-	bh=hchH15UaXSpz3n0uyW7nH5nJdjICUrcC5+/Y9nEmEag=;
+	s=arc-20240116; t=1790790356; c=relaxed/simple;
+	bh=kVUeS2CWMJjFJ36oPGxPKMNRtCNa7X6xqg757RKShk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuhfK4lfQeVrpYi7LajfzGDZD5JPU9gIxfuPiZLgGErEF1XEhChQG8J82NmE0+mIRmEEj/PcEiJhK2IKcPhvydSXr8/BeDWEOQLDxm4Gce8mP+aTCKiqeCmsMosVLadfB52WtpwWUSsqxOxKv5wpIea6oICBzFxiBdkZzB4T3zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtUSF5Yr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LyWWhP0awKBR7hXXfaMQweFA9wGgOB6LrDbnMLssES16WLm1SiNz8k1kukoJwRUuO3Jf78I6BYaOcyssdDRelAj7/Flcl1dkooBKCo3fH5KtdrRK887RBG5/YbQGEEA8aZmr+Xy9HRQ89HoHh8oeF9IaRUPGKI5gCpbyq/1cAwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLSyWoxd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtUSF5Yr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024E81F000FF;
-	Wed, 30 Sep 2026 17:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLSyWoxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73231F00898;
+	Wed, 30 Sep 2026 17:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790352;
-	bh=NBKZXFY4qwCJVjSvisxy6eRli4yPeZJm6aGtOfTI4oQ=;
+	s=korg; t=1790790355;
+	bh=ypzC413Hywsl8ICfKzhtHHJRBsskDAs4ssqxjwSpDtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtUSF5Yr6mTxP8z3JSw4DTb0JGOhhuvRQcsI7ZU+nv0TA8aWYMB7pbGlik5siZoLE
-	 FyF3FcKKLytqx49MicuQbXjNnMcEKBcxln//8tQXx4XBVg/zFPrUayq6ej5Az8/f1+
-	 dgtDe/va75XHyJ7evs3zrKAnVNVt+WapUgIB/R5c=
+	b=vLSyWoxd3IvS3aVxa6K/yeL4D8J8/5Ad/ZLDXtHV+R95aFu0aogxZhspOLmFRMuC7
+	 t+YCjgHtChnKmrNPide1GFYwMMimRFwTd4HCLz1Un93NgGQT20gTgGqjvjBj/73ev2
+	 E+/jlP+oYlpX1oIaoemWpKplLkjwQ0SCdYPPNGYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Saim Shujah <saimzst@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 782/877] xfs: fix backwards mergeability logic in refcount scrubber
-Date: Wed, 30 Sep 2026 17:28:13 +0200
-Message-ID: <20260930152431.589995969@linuxfoundation.org>
+Subject: [PATCH 6.12 800/877] drm/msm/dpu: clear pending peripheral flush state
+Date: Wed, 30 Sep 2026 17:28:31 +0200
+Message-ID: <20260930152431.980478396@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,40 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Saim Shujah <saimzst@gmail.com>
 
-[ Upstream commit e8b01aaafffe6b852325debdf1ef4b13ccea1cd7 ]
+[ Upstream commit a5b5cc909931572aec446e129c035b76b3f0c1fa ]
 
-When we start the refcount or rtrefcount btree scanners, prev_rec is
-initialized to all zeroes.  This is done so that the record mergeability
-checks skip the first record because you must have two records to
-compare.  Unfortunately, I got the logic backwards, so scrub has never
-complained about mergeable refcountbt records.  Fix this bug that LOLLM
-noticed.
+dpu_hw_ctl_clear_pending_flush() resets the cached per-block state after a
+flush transaction, but misses pending_periph_flush_mask.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: db0502b39c21d1 ("xfs: flag refcount btree records that could be merged")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ omitted the rtrefcount.c hunk because the file does not exist in Linux 6.12. ]
+The peripheral flush updater accumulates interface bits in this mask. A
+later transaction which sets the top-level peripheral flush bit can write
+stale interface bits to CTL_PERIPH_FLUSH together with the current state.
+
+Peripheral flush support was added after the helper started clearing every
+individual pending flush mask. Clear the peripheral mask together with the
+other cached child masks.
+
+Fixes: 64f7b81f0358 ("drm/msm/dpu: add support of new peripheral flush mechanism")
+Cc: stable@vger.kernel.org
+Signed-off-by: Saim Shujah <saimzst@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/748968/
+Link: https://lore.kernel.org/r/20260828065440.140410-1-saimzst@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[ Adjusted context due to the missing pending_cwb_flush_mask field in Linux 6.12. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/refcount.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/scrub/refcount.c
-+++ b/fs/xfs/scrub/refcount.c
-@@ -411,7 +411,7 @@ xchk_refcount_mergeable(
- 	const struct xfs_refcount_irec	*r1 = &rrc->prev_rec;
- 
- 	/* Ignore if prev_rec is not yet initialized. */
--	if (r1->rc_blockcount > 0)
-+	if (r1->rc_blockcount == 0)
- 		return false;
- 
- 	if (r1->rc_domain != r2->rc_domain)
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -110,6 +110,7 @@ static inline void dpu_hw_ctl_clear_pend
+ 	ctx->pending_flush_mask = 0x0;
+ 	ctx->pending_intf_flush_mask = 0;
+ 	ctx->pending_wb_flush_mask = 0;
++	ctx->pending_periph_flush_mask = 0;
+ 	ctx->pending_merge_3d_flush_mask = 0;
+ 	ctx->pending_dsc_flush_mask = 0;
+ 	ctx->pending_cdm_flush_mask = 0;
 
 
