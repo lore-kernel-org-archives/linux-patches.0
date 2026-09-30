@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CAB263F4A;
-	Wed, 30 Sep 2026 17:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A3F263F4A;
+	Wed, 30 Sep 2026 17:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788536; cv=none; b=eYnIrjtUv7Ht3H3tzFfYyhB9A0UEuXzP44EmlL7jjYoiJbzfq8/tH34eKeShOn0f3ztYg+7gE6+Z1HFBBbc3ncOFgUNttgB1FzgAWbkhiSDhek3+SShTBdck0uAe8jWRLFgy5cf0fn0idp/FmwbspYs4pySFo8gPrpqpMBQchFE=
+	t=1790788539; cv=none; b=sVYZstWgccQiL4RIIfVl+K6dJ84BzS+xTL+k/VEP3Tkw1JU+2zhpnn51Q6+l68PCFpcHs2Cp/8hOYNAL3nFz8XRxvLFLe4XnVtaqu5J2owsXlBLnsX2W4lvtO+K65EpvuOkY9tojIOo5ozjukphNx2j8zyHVFtiP+eUP6p1Whgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788536; c=relaxed/simple;
-	bh=GbLPWcu6jeGtXVH//1NUBXbFnQCABZHTJcCdvkaKZaU=;
+	s=arc-20240116; t=1790788539; c=relaxed/simple;
+	bh=pjF0SdQSiOuu93rGd1bG3CHK+maUWq1qx22f9bjlG/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvzL/T5E+EKjJtYxFiEjnWw1HfLtp8GYFeTtioSjoar6T2gkK1/ky5OWv4XcJ6LV6yrV4Y2rS25WX2DDO/vncmdRoh+UFnoJWKB2JjBqeEoc9qqnucg2f+T8WKDeAYsNRoGS9QRlIL9zFcLcwBVEuB98sqsa6vMG5nY0xA/1cH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aqtuHx2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=okhquqECHdgtEFW2Oacf1CG3IfviDNPiQV2tXweTlPGE6vPE9AZbpdxIxD2uaTvueuftqIInZmaPUKTwnU1gdCFCkED2AntkRtYeS4webOVKnwE4LJkOu0Dzrw8xuDeb5w1nyQ1S6hPS7FtxTNgUHW+jcYEQsnBXQwA0BBN6E4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CceyLPst; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aqtuHx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE951F000FF;
-	Wed, 30 Sep 2026 17:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CceyLPst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2251F000FF;
+	Wed, 30 Sep 2026 17:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788535;
-	bh=X/D0CZ3tbX9xK+4BVjudXCDBQTyUWor9yngGMQMQxdk=;
+	s=korg; t=1790788538;
+	bh=/nGtigCZK3JdbDsLA1iGx30FsNVeDRJL+hMzW0UPRyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1aqtuHx2Y1X1Ehfd2OzwJnD9HxkOGk0GzRSWtG6lRrrm4rortk/l6S7WegDHnV2i3
-	 7ymDX8U2XM8mqDiuAqzEz6UCE8q7FMJV0PtMVFOaWmqbhTXhRDvMuu9utGisjqEBYf
-	 Zdd+OKhgTsIKJQRXpl0OPEk40yPWDOIkOuNt1iak=
+	b=CceyLPstlPnLVr3K/PTohPi+hlKmhjUSWrJ7p2xzASpOEiQQQLk8mqUK42Z71hzQ8
+	 cywfTj2e4nG4lmgbBvJ4NiHGwdS/OuxqLsYclfiPYvJXUp5gWVnr00esunu2Amc1dr
+	 59+KoIdEMc39ZEcPHYjxRsaFWJ7RmcBP6PhAA7t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Gofman <pgofman@codeweavers.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 157/877] x86/fred: Reconstruct the #GP context for rejected INT instructions
-Date: Wed, 30 Sep 2026 17:17:48 +0200
-Message-ID: <20260930152418.108652537@linuxfoundation.org>
+Subject: [PATCH 6.12 115/877] ALSA: hda: trace PCM open only after assigning a stream
+Date: Wed, 30 Sep 2026 17:17:06 +0200
+Message-ID: <20260930152417.219226083@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,81 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 93f53499d0b945e8ae447f497faf743d60069f61 ]
+[ Upstream commit c9e6e5f38bf75276605f1952b22285f5f3abcaff ]
 
-FRED event delivery does not use the IDT, so the gate DPL check that
-rejects a user INT n falls to software (Intel FRED specification [1],
-section 8.3). fred_intx() rejects the same vectors as IDT delivery, but
-reports a zero error code and the IP after the INT. This breaks the
-signal ABI. Wine uses the error code to recognize INT 0x2d, so the
-changed context turns a handled breakpoint into an access violation in
-Elden Ring.
+Stream assignment can fail when hardware streams are exhausted.
+Move the tracepoint after the NULL check because its payload accesses
+the assigned stream tag.
 
-Rewind IP using the instruction length in the augmented SS and
-synthesize the IDT selector error code, (vector << 3) | 2. Set RF in the
-saved flags, as the CPU does for a #GP fault. Section 5.2.1 defines the
-saved vector, instruction length and RF state. The supplied length
-handles prefixes without reading user memory. Limit the changes to
-already-rejected software interrupts, preserving the accepted INT3, INT4
-and enabled INT80 paths and hardware exceptions. With IA32 emulation
-disabled, INT 0x80 now reports the same #GP as the DPL 0 gate IDT
-installs there. The rewound IP also stops fixup_iopl_exception() from
-inspecting the byte after the INT.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-Also clear the software event flag. Section 6.2.3 specifies that ERETU
-with this flag and TF set traps before executing any user instruction. A
-tracer that suppresses SIGSEGV and resumes with TF set expects the next
-instruction to run first, as after IRET. The sigreturn path clears the
-same flag for this reason in prevent_single_step_upon_eretu().
-
-[1] Intel Flexible Return and Event Delivery (FRED) Specification,
-revision 9.0 (346446-009US), sections 5.2.1, 6.2.3 and 8.3.
-
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/15745
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/16132
-Reported-by: Paul Gofman <pgofman@codeweavers.com>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: H. Peter Anvin <hpa@zytor.com>
-Link: https://cdrdv2.intel.com/v1/dl/getContent/678938 # [1]
-Link: https://patch.msgid.link/20260917230907.2080792-2-matthew.schwartz@linux.dev
+Fixes: 184865085b88 ("ALSA: hda - rename hda_intel_trace.h to hda_controller_trace.h")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125154.109944-1-bolin.liu@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_fred.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_controller.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/entry/entry_fred.c b/arch/x86/entry/entry_fred.c
-index 9f50f0c1c00f5..c43c750fa26dc 100644
---- a/arch/x86/entry/entry_fred.c
-+++ b/arch/x86/entry/entry_fred.c
-@@ -10,6 +10,7 @@
- #include <asm/desc.h>
- #include <asm/fred.h>
- #include <asm/idtentry.h>
-+#include <asm/processor-flags.h>
- #include <asm/syscall.h>
- #include <asm/trapnr.h>
- #include <asm/traps.h>
-@@ -71,7 +72,15 @@ static noinstr void fred_intx(struct pt_regs *regs)
- #endif
- 
- 	default:
--		return exc_general_protection(regs, 0);
-+		/*
-+		 * Reconstruct the #GP fault state that IDT delivery would produce.
-+		 * Clear the software event flag so ERETU with TF set does not trap
-+		 * before the resumed instruction. See prevent_single_step_upon_eretu().
-+		 */
-+		regs->ip -= regs->fred_ss.insnlen;
-+		regs->flags |= X86_EFLAGS_RF;
-+		regs->fred_ss.swevent = 0;
-+		return exc_general_protection(regs, (regs->fred_ss.vector << 3) | 2);
+diff --git a/sound/pci/hda/hda_controller.c b/sound/pci/hda/hda_controller.c
+index bd13ea0c9352e..7c0574eb54c61 100644
+--- a/sound/pci/hda/hda_controller.c
++++ b/sound/pci/hda/hda_controller.c
+@@ -593,11 +593,11 @@ static int azx_pcm_open(struct snd_pcm_substream *substream)
+ 	snd_hda_codec_pcm_get(apcm->info);
+ 	mutex_lock(&chip->open_mutex);
+ 	azx_dev = azx_assign_device(chip, substream);
+-	trace_azx_pcm_open(chip, azx_dev);
+ 	if (azx_dev == NULL) {
+ 		err = -EBUSY;
+ 		goto unlock;
  	}
- }
++	trace_azx_pcm_open(chip, azx_dev);
+ 	runtime->private_data = azx_dev;
  
+ 	runtime->hw = azx_pcm_hw;
 -- 
 2.53.0
 
