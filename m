@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482B751AFD6;
-	Wed, 30 Sep 2026 18:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A1A3B71B6;
+	Wed, 30 Sep 2026 18:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792898; cv=none; b=D8rmsJmiK3Mqitjn0YqwbQBEx2wfL7bB8ocIhPshWCJ6L8oX278lGyqcAVD+45fPeIqi015PSyPkf5luJGseP6GC9k6bO2qv4hv2bHwzCNpWaRDQYW4jDPIAYjV9rYwQveg8O521+SUE35p0NFZyketgkX3Tl1YKjihNC0iNWSY=
+	t=1790792901; cv=none; b=IfPtwcKxYT46F42/mOsz1YYCD4h2/9Rctp1t+y+PTWIp0kKlGjbkzhRoKnN5S+CdYz13WoYg/AYhbdNJVmjtU0glYDtNFdkG+nC9gGRiegbasOqomp9XKHgB3eFiO2WE5NLJOji5p6OuHMX3KTt0n9CLlg0I03mBqriaFZzlVXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792898; c=relaxed/simple;
-	bh=z/Ykk6K4O2ZgptVf+bRqIVTwXBQeOCTL4NQ3BsPcAco=;
+	s=arc-20240116; t=1790792901; c=relaxed/simple;
+	bh=PzcjcNe6XRKfba1MOadtAuhE8NFkzo9B6kVNHfW8v5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSKig+teSBiJjpj04coOQHUpLE11l4GdY+DsjDXHt18LhlfLdxkECPbExiZP8eHjR/xsLTBadUXCT5wqitP0zBIeJKdENxpQf4MI5oRm1oPGN1UmU9Mii7OkSqwS3YfcgsOuv4dUkw8b9+4mMJgn5ta5U2F6Sj2fJL6qOkwiNJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXbGDx53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VMpinAlDg4Iwb1WcjfjX7dH1IzurxkcsI2Zq1+FLJZZPqG5BSoR2yFWwCgJQtHNn8dE+VFx8nnPgAVHJ1mLMA2jbAiTL9YcZVdrIgMpKLrzjsso3Jb++dYtH5RwxjTOevWdY+aZ6ImzjxBsnGIb0zGJcQeNSW/MU4uqAJQY0U4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZK2Pia4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXbGDx53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A516F1F000FF;
-	Wed, 30 Sep 2026 18:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZK2Pia4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1711F000FF;
+	Wed, 30 Sep 2026 18:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792897;
-	bh=Vn/n6OUDGMhDH5jXCL3pfr7O1ilB3BjlBrPmLsOlxVE=;
+	s=korg; t=1790792900;
+	bh=B++FE40ZaznlDDcUe/jB0PMVEbHJtkgEGIjybvq9h1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXbGDx53QgsywGtknmuVmWminlpGJPrPCE5QviygvRYUFUDtjPxqc40b6q+aE1wir
-	 VmqztpRDHyjrTvVn1Qty0wBnC/argGxvqE0OY8uuxrpuDp5C0XFPK8R26ulxm44vyA
-	 h9O46QYng5p3jcnygAfsMcfSpQwSegkPZFmuENSc=
+	b=cZK2Pia45TzXY07fAYnExveIgqfC2sQTvNM0s/j8x18f7Xrw/Ez9mYkYtWWDrrnC6
+	 oNR8x/P1aADYT0fZlJE9REFh8+G4nDW4WTBtfJ0uJ4YKXa6k7SoWaBw/CFpPvJJpBp
+	 efhG4W8h6nA565fsluUaclBUIlwR6xK86b/dRX1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 063/395] bpf: Restrict CO-RE poisoning to relocatable instructions
-Date: Wed, 30 Sep 2026 17:25:25 +0200
-Message-ID: <20260930152341.999623936@linuxfoundation.org>
+Subject: [PATCH 6.18 064/395] libbpf: Reject truncated ldimm64 CO-RE relocations
+Date: Wed, 30 Sep 2026 17:25:26 +0200
+Message-ID: <20260930152342.021515756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,155 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 394ae398337c5f87e567f6cd63b937fc2b2f6ddc ]
+[ Upstream commit b4e875d397da451fb4e9c573ff4b86db53caba05 ]
 
-CO-RE relocation records can name any instruction offset. When a
-relocation cannot be resolved, bpf_core_patch_insn() currently poisons its
-target before checking whether that instruction is a valid relocation
-target. Malformed metadata can therefore replace jumps, calls, exits,
-register-source arithmetic, or non-immediate loads instead of failing at
-the relocation step.
+CO-RE relocation of an ldimm64 instruction operates on two instruction
+slots. A malformed BPF ELF can end a function after the first slot and
+attach a CO-RE relocation to it. libbpf allocates the instruction array
+according to the function symbol size, so the shared relocation code would
+then access beyond the allocation.
 
-Handle poisoning only after the instruction has passed the same class and
-operand-form checks used for a resolved relocation. Route invalid forms
-through the existing diagnostic and return a hard error. Keep poisoning
-supported instructions, including both halves of a plain ldimm64, so an
-unresolved relocation in dead code remains valid.
+Reject a terminal ldimm64 in libbpf's relocation loop, where the program
+length is available, before resolving or applying the relocation. Both
+resolved and unresolved relocations validate the absent second slot, and
+unresolved relocation poisoning would additionally write past the array.
 
-Extend bpf_core_poison_insn() to poison both halves of ldimm64, and return
-its status directly from each validated instruction case. This avoids
-routing the success path through a common label and leaves the helper free
-to report errors.
+The in-kernel caller is protected by the verifier's early instruction-stream
+check before it applies CO-RE relocations.
 
-The shared relocation code applies this restriction to both libbpf and
-in-kernel CO-RE.
-
-Fixes: d7a252708dbc ("libbpf: Improve handling of failed CO-RE relocations")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Fixes: eacaaed784e2 ("libbpf: Implement enum value-based CO-RE relocations")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260917233222.2542500-7-memxor@gmail.com
+Link: https://lore.kernel.org/20260914140852.03DA21F0089B@smtp.kernel.org
+Link: https://patch.msgid.link/20260917233222.2542500-11-memxor@gmail.com
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/relo_core.c | 58 +++++++++++++++++++++------------------
- 1 file changed, 31 insertions(+), 27 deletions(-)
+ tools/lib/bpf/libbpf.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
-index 0ccc8f548cbaa..a6a88e1cad270 100644
---- a/tools/lib/bpf/relo_core.c
-+++ b/tools/lib/bpf/relo_core.c
-@@ -980,23 +980,30 @@ static int bpf_core_calc_relo(const char *prog_name,
- }
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 94ee5f52b8661..b21d2f842579f 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -6051,6 +6051,13 @@ bpf_object__relocate_core(struct bpf_object *obj, const char *targ_btf_path)
+ 				return -EINVAL;
+ 			insn = &prog->insns[insn_idx];
  
- /*
-- * Turn instruction for which CO_RE relocation failed into invalid one with
-+ * Turn instruction for which CO-RE relocation failed into invalid one with
-  * distinct signature.
-  */
--static void bpf_core_poison_insn(const char *prog_name, int relo_idx,
--				 int insn_idx, struct bpf_insn *insn)
-+static int bpf_core_poison_insn(const char *prog_name, int relo_idx,
-+				struct bpf_insn *insn, int insn_idx)
- {
--	pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
--		 prog_name, relo_idx, insn_idx);
--	insn->code = BPF_JMP | BPF_CALL;
--	insn->dst_reg = 0;
--	insn->src_reg = 0;
--	insn->off = 0;
--	/* if this instruction is reachable (not a dead code),
--	 * verifier will complain with the following message:
--	 * invalid func unknown#195896080
--	 */
--	insn->imm = 195896080; /* => 0xbad2310 => "bad relo" */
-+	int insn_cnt = is_ldimm64_insn(insn) ? 2 : 1;
-+	int i;
++			if (is_ldimm64_insn(insn) && (size_t)insn_idx + 1 >= prog->insns_cnt) {
++				pr_warn("prog '%s': relo #%d: insn #%d (LDIMM64) is truncated\n",
++					prog->name, i, insn_idx);
++				err = -EINVAL;
++				goto out;
++			}
 +
-+	for (i = 0; i < insn_cnt; i++) {
-+		pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
-+			 prog_name, relo_idx, insn_idx + i);
-+		insn[i].code = BPF_JMP | BPF_CALL;
-+		insn[i].dst_reg = 0;
-+		insn[i].src_reg = 0;
-+		insn[i].off = 0;
-+		/*
-+		 * If this instruction is reachable (not dead code), the verifier
-+		 * will complain with "invalid func unknown#195896080".
-+		 */
-+		insn[i].imm = 195896080; /* => 0xbad2310 => "bad relo" */
-+	}
-+
-+	return 0;
- }
- 
- static int insn_bpf_size_to_bytes(struct bpf_insn *insn)
-@@ -1047,17 +1054,6 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 
- 	class = BPF_CLASS(insn->code);
- 
--	if (res->poison) {
--poison:
--		/* poison second part of ldimm64 to avoid confusing error from
--		 * verifier about "unknown opcode 00"
--		 */
--		if (is_ldimm64_insn(insn))
--			bpf_core_poison_insn(prog_name, relo_idx, insn_idx + 1, insn + 1);
--		bpf_core_poison_insn(prog_name, relo_idx, insn_idx, insn);
--		return 0;
--	}
--
- 	orig_val = res->orig_val;
- 	new_val = res->new_val;
- 
-@@ -1065,7 +1061,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 	case BPF_ALU:
- 	case BPF_ALU64:
- 		if (BPF_SRC(insn->code) != BPF_K)
--			return -EINVAL;
-+			goto bad_insn;
-+		if (res->poison)
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
- 		if (res->validate && insn->imm != orig_val) {
- 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (ALU/ALU64) value: got %u, exp %llu -> %llu\n",
- 				prog_name, relo_idx,
-@@ -1082,6 +1080,8 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 	case BPF_LDX:
- 	case BPF_ST:
- 	case BPF_STX:
-+		if (res->poison)
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
- 		if (res->validate && insn->off != orig_val) {
- 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDX/ST/STX) value: got %u, exp %llu -> %llu\n",
- 				prog_name, relo_idx, insn_idx, insn->off, (unsigned long long)orig_val,
-@@ -1097,7 +1097,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 			pr_warn("prog '%s': relo #%d: insn #%d (LDX/ST/STX) accesses field incorrectly. "
- 				"Make sure you are accessing pointers, unsigned integers, or fields of matching type and size.\n",
- 				prog_name, relo_idx, insn_idx);
--			goto poison;
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
- 		}
- 
- 		orig_val = insn->off;
-@@ -1140,6 +1140,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 			return -EINVAL;
- 		}
- 
-+		if (res->poison)
-+			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
-+
- 		imm = (__u32)insn[0].imm | ((__u64)insn[1].imm << 32);
- 		if (res->validate && imm != orig_val) {
- 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDIMM64) value: got %llu, exp %llu -> %llu\n",
-@@ -1157,6 +1160,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
- 		break;
- 	}
- 	default:
-+bad_insn:
- 		pr_warn("prog '%s': relo #%d: trying to relocate unrecognized insn #%d, code:0x%x, src:0x%x, dst:0x%x, off:0x%x, imm:0x%x\n",
- 			prog_name, relo_idx, insn_idx, insn->code,
- 			insn->src_reg, insn->dst_reg, insn->off, insn->imm);
+ 			err = record_relo_core(prog, rec, insn_idx);
+ 			if (err) {
+ 				pr_warn("prog '%s': relo #%d: failed to record relocation: %s\n",
 -- 
 2.53.0
 
