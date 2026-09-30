@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE7B3B3BE1;
-	Wed, 30 Sep 2026 19:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DF13CAE8D;
+	Wed, 30 Sep 2026 19:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795431; cv=none; b=Bn4rWtGZU2ioulqyrzaqcsliDVGb2nhcNiI0++LEg9to5LbagzIFxFAIBhoAOD3Sbgjs4EdZFsOrQJjVvrLJnI5LVZZMWgaWaWTp6LDmvKhsIwGJkX8sw4FMgbPfeu/k9LwvesECrBg8mLTPR2ToNorZNU15njgONexp+lHgY1c=
+	t=1790795434; cv=none; b=baFpADL50eJ2FiqfdtAx/40yPTJaQL7/Ums1gr2XSHjSRU60Ive4BvFDTpMpszzM6H6WRbjtH9KBgnTu0Jrsy3dRzy333ePMX9JvyCLbFDlk2cp0OxT5wucWOR2sR1K5Xn4H6xi8Qtjz04Lz/Aq3pJhSjSYt3jRxKxXZkFS+res=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795431; c=relaxed/simple;
-	bh=eMbUZr58nanVvPY2yLwRiADCKyiLdCcHR6YK34XX+yU=;
+	s=arc-20240116; t=1790795434; c=relaxed/simple;
+	bh=xsqVOFe/53K0AFop5o9OkGkLFWgHviB/Jf4VLl0jsS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgIF7E+zffDWSiYe8hnWhd4RMSuMv4T/2rJrpip1jfvEJ/RDqbUt5wnmy1oZ2/ZUu38Q4K/ytix6BbX3WzkXQMnRYrRCCJQIgGMWnjSmLuBJN12WOVg/gI+80wnw2UDMCMoQCPyypbJXVZ5E6AD8D05peI2yuDQ0DZx/LlnWA9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KytC7GG+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rSpVFaDedsVjwZ94BovHrBO+PocNTxQHWezHJEsguJEPcZ9wejVLqjj7pjStCqFj8MjiYfyXz+E4FVVd2X2DYVhOIK3rg8IP3KDxPiIrNpukK2/enbkBAYo5W9Of/8rNtLg07zwJGPoSkrxqrCqMKW8Jl6do/9srKGQjQk+WoOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Imeujj2T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KytC7GG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F421F1F00898;
-	Wed, 30 Sep 2026 19:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Imeujj2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9FE1F00898;
+	Wed, 30 Sep 2026 19:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795430;
-	bh=FMHigDpE3f0SZeji6H1uLSLLFEyvcKfPa4A1d5KeeSA=;
+	s=korg; t=1790795433;
+	bh=77QT2p2DPXz0KSoWBxylPdUX7aTXx5ydX6JsVAN0pSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KytC7GG+6N/ODZioO7vCZqalTf+JHNpcBZB1MA/psWxfEcYs0mZ5y2Wv70t7PtKLI
-	 kOJzvj/BPJqFU2i8AgSSQ4f3+iOw7w0I/z3tSxvlWH0VTGJKHqNPzOkYfrtK2FLLjV
-	 TXkx2LMApHvWd+x6Tr8DZsXUBAwoHYEa+Mgpgh8I=
+	b=Imeujj2THTeFusl23jOzmInd3JnPwzCyNrEnubSp/O7DIFqIukWdldU8pPYXsBioO
+	 K5he3SP+lx33s/dwrNhrjReQ5N+PODqqeWxvbTTjqWlm4K9FTe3bJGkkcVVPmM1VoG
+	 4JIGDKPcWUmbOufoFTTRlUdB5qX7bSZ6eNONj3fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arcari <darcari@redhat.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0557/1193] watchdog: fix hrtimer start when pretimeout is zero
-Date: Wed, 30 Sep 2026 17:20:41 +0200
-Message-ID: <20260930152446.613679833@linuxfoundation.org>
+Subject: [PATCH 6.6 0558/1193] watchdog: msc313e: Avoid division by zero
+Date: Wed, 30 Sep 2026 17:20:42 +0200
+Message-ID: <20260930152446.636332294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Arcari <darcari@redhat.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 0fa37512eb747e4ffdcf367274f9e72845f1bca4 ]
+[ Upstream commit 3c73a37f5e40972ce26d8eeb98e8b938d719b069 ]
 
-Per the watchdog API, a pretimeout value of 0 disables the feature.
-However, watchdog_hrtimer_pretimeout_start() fails to verify if the
-pretimeout is non-zero before arming the timer.
+clk_get_rate() could return 0.  Avoid a division by zero panic.
 
-This omission inadvertently starts the software pretimeout timer,
-which could result in the pretimeout handler executing incorrectly
-when the watchdog timeout is reached.
-
-Fix this by adding a check for wdd->pretimeout before calling
-hrtimer_start(), ensuring the disabled state is respected.
-
-Fixes: 7b7d2fdc8c3e ("watchdog: Add hrtimer-based pretimeout feature")
-Signed-off-by: David Arcari <darcari@redhat.com>
-Link: https://patch.msgid.link/20260903182029.936030-1-darcari@redhat.com
+Fixes: e9800b799464 ("watchdog: Add Mstar MSC313e WDT driver")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20260828161348.13212-3-tzungbi@kernel.org
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_hrtimer_pretimeout.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/watchdog/msc313e_wdt.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/watchdog_hrtimer_pretimeout.c b/drivers/watchdog/watchdog_hrtimer_pretimeout.c
-index 940b53718a91e..7572489e647f2 100644
---- a/drivers/watchdog/watchdog_hrtimer_pretimeout.c
-+++ b/drivers/watchdog/watchdog_hrtimer_pretimeout.c
-@@ -30,6 +30,7 @@ void watchdog_hrtimer_pretimeout_init(struct watchdog_device *wdd)
- void watchdog_hrtimer_pretimeout_start(struct watchdog_device *wdd)
+diff --git a/drivers/watchdog/msc313e_wdt.c b/drivers/watchdog/msc313e_wdt.c
+index 3b62650375628..072bfcea85c24 100644
+--- a/drivers/watchdog/msc313e_wdt.c
++++ b/drivers/watchdog/msc313e_wdt.c
+@@ -98,6 +98,7 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
  {
- 	if (!(wdd->info->options & WDIOF_PRETIMEOUT) &&
-+	    wdd->pretimeout &&
- 	    !watchdog_pretimeout_invalid(wdd, wdd->pretimeout))
- 		hrtimer_start(&wdd->wd_data->pretimeout_timer,
- 			      ktime_set(wdd->timeout - wdd->pretimeout, 0),
+ 	struct device *dev = &pdev->dev;
+ 	struct msc313e_wdt_priv *priv;
++	unsigned long rate;
+ 
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -117,7 +118,10 @@ static int msc313e_wdt_probe(struct platform_device *pdev)
+ 	priv->wdev.ops = &msc313e_wdt_ops,
+ 	priv->wdev.parent = dev;
+ 	priv->wdev.min_timeout = MSC313E_WDT_MIN_TIMEOUT;
+-	priv->wdev.max_timeout = U32_MAX / clk_get_rate(priv->clk);
++	rate = clk_get_rate(priv->clk);
++	if (!rate)
++		return -EINVAL;
++	priv->wdev.max_timeout = U32_MAX / rate;
+ 	priv->wdev.timeout = MSC313E_WDT_DEFAULT_TIMEOUT;
+ 
+ 	/* If the period is non-zero the WDT is running */
 -- 
 2.53.0
 
