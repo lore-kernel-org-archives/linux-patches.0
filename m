@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC983E7151;
-	Wed, 30 Sep 2026 19:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B498E3E8338;
+	Wed, 30 Sep 2026 19:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796580; cv=none; b=ladRzNJ9saKI2+QC2at9oVCe2hGTnw/Rl2GTN0yYX7WzJxmf8+f2prUTaOpZ4XzxZw7ZkSN7EVxKR+XJNjh2pAoVeYGkkwoLqH6pndilW93yaXQI58+rB/bc/eSAw6wa+lhNqgZu/cax874Ah+eXJozVrPdBC7cuvm7sHNGp1bs=
+	t=1790796582; cv=none; b=azQJFbuj+olJebr7MYsSKfNLpnzJ1ratOk8cC6vzzY3wq7Pb3/eAh3i1pCqnOTvRkRSEn22aolHWGZSj+S6CDS3EvSMKEDvgoMPw+3/+4m1kuVv3u5lWF+GpbkIfKRQpX1XyxA1rPycdlZV5O2hkjc5tgyEYKe4j3K4VOYSRa6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796580; c=relaxed/simple;
-	bh=//11NWrjlI2WTM06x16Gk4khyZWBfIQqilWCrNPur00=;
+	s=arc-20240116; t=1790796582; c=relaxed/simple;
+	bh=QLY+X44GQRUjGKnJE0W2Yr7r3tfSuZz0H2ClGOo9zCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZUJCSVPxlSpXBMzIHxBKqhvic0G4WMYhJ/WQhRVZcg3gQDB4x+1uf8lVJsxAoapWURQaV0BgySpvUVpmMDNPyyON7RmWp6tRdH8k1sMjJOf2ICqCJ3syTsbXagz0o1I9zzeAmQwX3/igNAhIwOQokJN+rRuus8/FHwKwqDh33I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZS4ml1c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWNSTWTxpvFF+I0V5rTvepJj2KApicMW8VJhVMUJMTFdA3BCbA7DTnV5TCjbnYLOcGWG0LjSsVX1wP9uSf4frzdBTenjdsLelh4bvRs4Kji/maxPVAj34Jsa8zTkXRcHEV7UZuOFmdqrOkwInaeBvs8l4sL2nQh8io/nAbmjltY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZRk2sLo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZS4ml1c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC681F00898;
-	Wed, 30 Sep 2026 19:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZRk2sLo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E81F0089A;
+	Wed, 30 Sep 2026 19:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796578;
-	bh=ytP4k2UixLWwBfpU0/ka9EpNJt+k29F2oh4ooo5ygqQ=;
+	s=korg; t=1790796581;
+	bh=o3e/XA9LbivNyqDE9TIiCsYW5iHrx5x1OGdy6Iwztug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZS4ml1c66MWDwiezRabgFo9HpOn9EgHE0+rE7KLieG+rW4y4nhf1sqSkFaZqjaDz
-	 4IniqXEyAAbPdfJIDoOVLOWGX9GzkXR2pci2BB6NBKpG6p1+TmpuuLzAQdi/PkB+Jk
-	 K/+jrNsYaTazeBGggwrKK7zU93P+/Mg0z+FiRpD8=
+	b=BZRk2sLo5BVkFrxihU8BfZhJfQCzjy+zDc4pP4MAHcOyyzwZKY8CLOWt03SDtSBOH
+	 v6HEHOp6cGTpKuFQ5rnuKNVt7rgXum8C670x5BPX/LkP7S+XjhHgGFcHOaEZDDMs4R
+	 CPBey0Skm30QESTLtPS/GjtbkvBSkmMvCaHfSr1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
 	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0964/1193] bpf: Fix out-of-bounds read of sk_protocol in bpf_sock_destroy()
-Date: Wed, 30 Sep 2026 17:27:28 +0200
-Message-ID: <20260930152455.661890670@linuxfoundation.org>
+Subject: [PATCH 6.6 0965/1193] tcp: Skip cond_resched() in inet_csk_listen_stop() under BPF context
+Date: Wed, 30 Sep 2026 17:27:29 +0200
+Message-ID: <20260930152455.684790342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,25 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 01b245ba016d44861690594e10f67e026ce8552f ]
+[ Upstream commit eaab8cab451b9502ce224cd202550375b894a467 ]
 
-sk_protocol lives in struct sock, not in struct sock_common. A timewait
-or request sock handed to bpf_sock_destroy() by the tcp iterator is
-neither, so reading sk->sk_protocol runs past the object:
+bpf_sock_destroy() runs from the tcp iterator, under rcu_read_lock(). If
+the sock is a listener that still has children in its accept queue,
+tcp_abort() ends up in inet_csk_listen_stop() and the cond_resched()
+there trips the debug check:
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in bpf_sock_destroy+0xc7/0xe0
-Read of size 2 at addr ffff8881047d11b4 by task test_progs/428
-
+BUG: sleeping function called from invalid context at net/ipv4/inet_connection_sock.c:1523
+in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 628, name: test_progs
+preempt_count: 0, expected: 0
+RCU nest depth: 1, expected: 0
+locks held by test_progs/628: 3, last CPU#3:
+ #0: ffff8881158cee18 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x56/0x1210
+ #1: ffff8881106bb858 (sk_lock-AF_INET6){+.+.}-{0:0}, at: bpf_iter_tcp_seq_show+0x32b/0x4b0
+ #2: ffffffffb435af20 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x46b/0xde0
+CPU: 3 UID: 0 PID: 628 Comm: test_progs Tainted: G        W           7.2.0+ #65 PREEMPT
 Tainted: [W]=WARN
 Call Trace:
  <TASK>
- dump_stack_lvl+0x91/0xf0
- print_report+0xd1/0x630
- kasan_report+0xf3/0x130
- __asan_report_load2_noabort+0x14/0x30
- bpf_sock_destroy+0xc7/0xe0
- bpf_prog_c3dd61f9d9cd9f37_iter_tcp6_timewait+0x9f/0xb7
+ dump_stack_lvl+0xc1/0xf0
+ dump_stack+0x10/0x20
+ __might_resched+0x3d2/0x610
+ inet_csk_listen_stop+0x7b/0xbf0
+ tcp_abort+0x23b/0x3b0
+ bpf_sock_destroy+0xfc/0x140
+ bpf_prog_448133d24601754f_iter_tcp6_server+0x81/0x8a
  bpf_iter_run_prog+0x538/0xde0
  bpf_iter_tcp_seq_show+0x26b/0x4b0
  bpf_seq_read+0x424/0x1210
@@ -83,54 +88,43 @@ Call Trace:
  x64_sys_call+0x647/0x27e0
  do_syscall_64+0xe5/0x610
  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fad39b28aca
+RSP: 002b:00007ffc381c61c0 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 00007ffc381c6a88 RCX: 00007fad39b28aca
+RDX: 0000000000000032 RSI: 00007ffc381c6250 RDI: 0000000000000014
+RBP: 00007ffc381c61e0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
+R13: 0000000000000000 R14: 000055f077c1bbb0 R15: 00007fad3a0f3000
+ </TASK>
 
-Only check sk_protocol on full socks. tcp_abort() already knows how to
-deal with TIME_WAIT and NEW_SYN_RECV socks. Also fix the comment, it
-never matched the code.
+The commit that added the kfunc already guards lock_sock() in tcp_abort()
+and udp_abort() with has_current_bpf_ctx(), but missed the listener path.
+Do the same for the cond_resched(). The loop runs inside the iterator's
+rcu_read_lock(), it must not reschedule or report a quiescent state there.
 
 Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Closes: https://lore.kernel.org/bpf/20260702224519.800135-1-xmei5@asu.edu/
 Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://lore.kernel.org/r/20260910112634.152195-1-jiayuan.chen@linux.dev
+Link: https://lore.kernel.org/r/20260910112736.153710-1-jiayuan.chen@linux.dev
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/ipv4/inet_connection_sock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index f947154603203..9f3608de67a3d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -12071,8 +12071,9 @@ __diag_ignore_all("-Wmissing-prototypes",
-  * @sock: Pointer to socket to be destroyed
-  *
-  * Return:
-- * On error, may return EPROTONOSUPPORT, EINVAL.
-- * EPROTONOSUPPORT if protocol specific destroy handler is not supported.
-+ * On error, may return EOPNOTSUPP, or whatever the protocol specific
-+ * destroy handler returns.
-+ * EOPNOTSUPP if protocol specific destroy handler is not supported.
-  * 0 otherwise
-  */
- __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
-@@ -12084,8 +12085,12 @@ __bpf_kfunc int bpf_sock_destroy(struct sock_common *sock)
- 	 * Supporting protocols will need to acquire sock lock in the BPF context
- 	 * prior to invoking this kfunc.
- 	 */
--	if (!sk->sk_prot->diag_destroy || (sk->sk_protocol != IPPROTO_TCP &&
--					   sk->sk_protocol != IPPROTO_UDP))
-+	if (!sk->sk_prot->diag_destroy)
-+		return -EOPNOTSUPP;
-+
-+	if (sk_fullsock(sk) &&
-+	    sk->sk_protocol != IPPROTO_TCP &&
-+	    sk->sk_protocol != IPPROTO_UDP)
- 		return -EOPNOTSUPP;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 530d495ff7d28..43184b9c7f4fe 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1478,7 +1478,8 @@ void inet_csk_listen_stop(struct sock *sk)
+ 		local_bh_enable();
+ 		sock_put(child);
  
- 	return sk->sk_prot->diag_destroy(sk, ECONNABORTED);
+-		cond_resched();
++		if (!has_current_bpf_ctx())
++			cond_resched();
+ 	}
+ 	if (queue->fastopenq.rskq_rst_head) {
+ 		/* Free all the reqs queued in rskq_rst_head. */
 -- 
 2.53.0
 
