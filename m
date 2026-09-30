@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582B4502D5A;
-	Wed, 30 Sep 2026 18:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B81D511225;
+	Wed, 30 Sep 2026 18:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792201; cv=none; b=GcwVagY5yez6PPMQEGAohTW/4DK2dgvdqQB5uhidYQblpdlBbdad9Mb3/mKCscmJpa1+DtQp0z3tx18smDIFtzaXSkfe1FFQvVcCIzwdA/qfn5sbf5k+u7JcJ6CILJtrehXzVIq6X0EQ0hjy8d9YyxobaGQzY9/Vy1wUwib5yDk=
+	t=1790792204; cv=none; b=bgFsKWUuqDAi8o0X4iEZj6uGb6Ems/gadxGiugkM+Wbdgimkcz7mx9pn9kncyA7QSA8n+oBEkNkgzJMkSsalOJjGlMnTLwicIRde3S2QfNIas80DYpKZx5SXkJiR/h3q/mj4k9jt1YHwUofdh6rSNit5tPS7FNr6FjfZmmDm2ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792201; c=relaxed/simple;
-	bh=T4f95I3OJZS69amDY+6Rnba/kVpWELj5mdKgbYf34io=;
+	s=arc-20240116; t=1790792204; c=relaxed/simple;
+	bh=5fxtZDVF0ZJ+cBDyHiFtURykfvMyGngmDQ06LXEn7p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8pI2ObbAKTG/MqUfm8Nq7pEwzCNvDceg52QF1GdUjzPnZXyDeSAkwlkQxuibLNwmlCJKfleMdtreEw9BejN/dp4+WP9Wdv8gekOVMd9LHA1UGj7h+B22vdyFGJBiNwwDSwPBHbj/+Ox8GPVZXeL3FrvAeH4746/dbWBVVYccM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TB2F6KNf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CggAPNjC7gIfuKFgXoofTljQNvMaVQw8JMEeyEeSHi+g6fyaB/1rMxSa3a2qAPC0crftHnoU48xEekuF+5amDOE9IHoCkehrgx+bQNn0m5oBAidJ4QkoT/UUTJYH3QQroZm5hN/pO77WX3c5DZqT9kk74Jf5pEgqBXPVqXyvCck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKZ4Awue; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TB2F6KNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33F71F000FF;
-	Wed, 30 Sep 2026 18:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKZ4Awue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882E71F000FF;
+	Wed, 30 Sep 2026 18:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792200;
-	bh=1mM97pEXszXRYDXwKs69mBoo6Htr7BbaQQxwk0Ribxs=;
+	s=korg; t=1790792203;
+	bh=TBQcCuNSuacwytizKtzceuQESsbnGAtA6wAYi7W7Z/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TB2F6KNfgKqSeX4IvxScaX6Hk5ZVO9IhbpphquiIv7V6+7JgmfmS5pCTkxA5UlcIQ
-	 PVtIPmLdEie7lbDWQkJRPYeIx484X0Lcxa59HxaGOHjOYfVNRnA89r+EQGEbxOxIc+
-	 OrTWPePBVeRaFYUQTZEx8U3+hunlR4ngIUgIIfYw=
+	b=qKZ4AwuetRk+o5vfxdQkCZCvVlS0lTRB6dv+vN0wMBU/lELUQhYDLkcjyLjbrs/Z+
+	 fDJFD8CqGr3hAiuLkhKb/qYYQLvf/fxyLz2iFyP9HdykGHKbTH4X5Yc7JeXySLSWHu
+	 gz/zmlOoE3rTlN65JtLdnzWnCSQrWNsJV/JgX63w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 572/752] wifi: libertas_tf: fix UAF in lbtf_free_adapter()
-Date: Wed, 30 Sep 2026 17:27:22 +0200
-Message-ID: <20260930152410.610829497@linuxfoundation.org>
+Subject: [PATCH 5.15 573/752] wifi: rsi: fix heap OOB write on key removal
+Date: Wed, 30 Sep 2026 17:27:23 +0200
+Message-ID: <20260930152410.693825486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,41 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit bbb9a0ab96d44a64529aafc7a16de460a1712f6a upstream.
+commit e6c5ed7a98d7bc8b0f7918246f1c90ddb3f79dfa upstream.
 
-lbtf_free_adapter() calls lbtf_free_cmd_buffer() to free the command
-buffers before calling timer_delete_sync() to wait for the command
-timer callback.  If the timer callback (command_timer_fn) is already
-running when lbtf_free_cmd_buffer() frees the command array, the
-callback dereferences priv->cur_cmd->cmdbuf which points to freed
-memory.
+When a key is removed (data == NULL), rsi_hal_load_key() runs:
 
-Swap the order so that timer_delete_sync() runs first, ensuring any
-in-flight callback has completed before the command buffers are freed.
+	memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
 
-Fixes: 06b16ae53192 ("libertas_tf: main.c, data paths and mac80211 handlers")
+set_key is a struct rsi_set_key *, so the subscript is scaled by
+sizeof(struct rsi_set_key) (160 bytes): &set_key[FRAME_DESC_SZ] is
+skb->data + 2560, and the memset writes 144 zero bytes starting
+2.4KB past the end of the 160-byte skb data buffer, corrupting
+unrelated heap objects. The intended byte offset would have been
+(u8 *)set_key + FRAME_DESC_SZ.
+
+The write fires on every DISABLE_KEY callback, so plain disconnects,
+roams and interface teardowns trigger it on real networks.
+
+The memset is redundant: the whole buffer is zeroed right after
+allocation, so the frame sent to the device is byte-identical
+without it. Drop the else branch; normal operation is unaffected.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260815115724.920628-1-yijiangshan@kylinos.cn
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/90bb2b07007942064c04aa3729cedd9eb1e930b1@linux.dev
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas_tf/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/rsi/rsi_91x_mgmt.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/net/wireless/marvell/libertas_tf/main.c
-+++ b/drivers/net/wireless/marvell/libertas_tf/main.c
-@@ -173,8 +173,8 @@ static int lbtf_init_adapter(struct lbtf
- static void lbtf_free_adapter(struct lbtf_private *priv)
- {
- 	lbtf_deb_enter(LBTF_DEB_MAIN);
--	lbtf_free_cmd_buffer(priv);
- 	timer_delete_sync(&priv->command_timer);
-+	lbtf_free_cmd_buffer(priv);
- 	lbtf_deb_leave(LBTF_DEB_MAIN);
- }
+--- a/drivers/net/wireless/rsi/rsi_91x_mgmt.c
++++ b/drivers/net/wireless/rsi/rsi_91x_mgmt.c
+@@ -852,8 +852,6 @@ int rsi_hal_load_key(struct rsi_common *
+ 			memcpy(set_key->tx_mic_key, &data[16], 8);
+ 			memcpy(set_key->rx_mic_key, &data[24], 8);
+ 		}
+-	} else {
+-		memset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);
+ 	}
  
+ 	skb_put(skb, frame_len);
 
 
