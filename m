@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F395013C9;
-	Wed, 30 Sep 2026 16:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FAE4FECF8;
+	Wed, 30 Sep 2026 16:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784431; cv=none; b=Tg8PKt9tLGOZGqSNq8/v5QPJBeERwXz2G8eIvxfv1e9f1Irfe5Amha5Kq0wJ5AtJDVTYWfnHvahViRibp9cuvecCK/JscQmKkimDHO6doht2a2t5sCqK4crFTdCcKH1pqQtoMir+sKW7+7QhjjjPgu77m1lj4yXelr0yvLqDbC4=
+	t=1790784438; cv=none; b=BDcXefCgdAGNRyaaiVqtwbmsPWcOmSjmFxFpm67OWr+EdTkEYGo5WDqcB1Cf2hudmaEF1Gfjfte0HR8buQkjZORG2ChGkssPdQhSnpU1SN8ZbV4tXwkWk+Mw+e534eHs8EQ9wFsGbcxaTGICmG0kBlcGSQYbYJfB0jOEw2hBEec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784431; c=relaxed/simple;
-	bh=qTAF7jn4L3zrmJIbTFp9WhJgTw7TXLo7bwdwQRwtZBo=;
+	s=arc-20240116; t=1790784438; c=relaxed/simple;
+	bh=VM2ysT9B7VoOftFRWQ9mAckI0LizDqOKS2H71wN1n3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVM9y4qNWwYqPDTymsvRkdp5HwgXtyc91UTr3hMtGX6fXEHvr7CFziEb1EqsdsvM9r4NURrQeXSob6jKJtmfHd+RwT9UqKL/pUpu1JwosK8ZUQhEBAs/WrXqqpGQ/J/ZsVMinmdDQrbXvSKSDBX2YrK4x+2bKfvE0oPfyKXs5r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeN/fN/K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nz1fIq1UFOLTjsLoi3bSS/vyHDmwjDLQgNxt65oxLwAQN7bHSp7hSYWlIWNKxSwa1ysDEETKdjrRJZ/0Vo7HZK2S8xDKmkXKIudSBWm4T404qbTi7ddxXanbIwwK6MIZBcn0HfDauOuepfzMrJuzNVNMODJbZEHzcqmQvZ+qQR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfAxY71S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeN/fN/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0211F000FF;
-	Wed, 30 Sep 2026 16:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfAxY71S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66E61F0089C;
+	Wed, 30 Sep 2026 16:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784428;
-	bh=JANyNZxGAP9Sqqd4H8USp1epUmxPMvDdgy+QD0T5x9Y=;
+	s=korg; t=1790784431;
+	bh=NRKol0McBaCUxf2yzQKw4LzMf7d4mC0gbp4Q5qFDgCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BeN/fN/Kz4CMKH96JfIJmo2utEBPRm6f5p40gF/A0YvE57s2vf2cIAIqUJPBOlki5
-	 0qyMBpTHEtBVZ+Cszhhen05v+EjnkZ8gOQGAwSZ2Yz8jOfUvSFifIlwF7FMvBF97pw
-	 zKs+eV3iSUdCIZ8IRFh1IODv5g5OzaH0e3nBM5GA=
+	b=pfAxY71SLesEjo4dFs/CE6kVHVFjwpro3/6AuVVldxE9DNT4fI3e6mD9zHL+3WEZu
+	 vV90C4OsRl8MUatM8zdvLJFzne5brTrvagXJ9HpvWOBKhL0Qxj66PkvvP66QVKbYLq
+	 8IDBss90kn28dR5KssiGfdbuBd0ylvTSvumvT5Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Randolph Sapp <rs@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Antonios Christidis <a-christidis@ti.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Andrei Faleichyk <andrei.faleichyk@noogadev.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/982] clk: keystone: dont cache clock rate
-Date: Wed, 30 Sep 2026 17:14:47 +0200
-Message-ID: <20260930152420.057594683@linuxfoundation.org>
+Subject: [PATCH 6.1 152/982] ALSA: hda/realtek: Add quirk for ASUS VivoBook X509DAP
+Date: Wed, 30 Sep 2026 17:14:48 +0200
+Message-ID: <20260930152420.078243697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -55,51 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Andrei Faleichyk <andrei.faleichyk@noogadev.com>
 
-[ Upstream commit a80b32a140c8612bbaed27009c383d43304db6d5 ]
+[ Upstream commit 3580bc53520ce4efc94ece5886ad3670b93667ba ]
 
-The TISCI firmware will return 0 if the clock or consumer is not
-enabled although there is a stored value in the firmware. IOW a call to
-set rate will work but at get rate will always return 0 if the clock is
-disabled.
-The clk framework will try to cache the clock rate when it's requested
-by a consumer. If the clock or consumer is not enabled at that point,
-the cached value is 0, which is wrong. Thus, disable the cache
-altogether.
+The internal microphone on ASUS VivoBook X509DAP (subsystem ID
+0x1043:0x197e) is not detected without a quirk entry. Add
+ALC256_FIXUP_ASUS_MIC_NO_PRESENCE to fix the issue.
 
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Reviewed-by: Randolph Sapp <rs@ti.com>
-Reviewed-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Antonios Christidis <a-christidis@ti.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Link: https://patch.msgid.link/20260507-clk-sci-v2-1-38f59b48777a@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Andrei Faleichyk <andrei.faleichyk@noogadev.com>
+Link: https://patch.msgid.link/20260603213313.6298-1-andrei.faleichyk@noogadev.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/keystone/sci-clk.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/keystone/sci-clk.c b/drivers/clk/keystone/sci-clk.c
-index 254f2cf24be21..e1d5c08564c2c 100644
---- a/drivers/clk/keystone/sci-clk.c
-+++ b/drivers/clk/keystone/sci-clk.c
-@@ -334,6 +334,14 @@ static int _sci_clk_build(struct sci_clk_provider *provider,
- 
- 	init.ops = &sci_clk_ops;
- 	init.num_parents = sci_clk->num_parents;
-+
-+	/*
-+	 * A clock rate query to the SCI firmware will return 0 if either the
-+	 * clock itself is disabled or the attached device/consumer is disabled.
-+	 * This makes it inherently unsuitable for the caching of the clk
-+	 * framework.
-+	 */
-+	init.flags = CLK_GET_RATE_NOCACHE;
- 	sci_clk->hw.init = &init;
- 
- 	ret = devm_clk_hw_register(provider->dev, &sci_clk->hw);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 7b4fd95c66f9b..94bcf1fc639b9 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10146,6 +10146,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x18f1, "Asus FX505DT", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x194e, "ASUS UX563FD", ALC294_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x1970, "ASUS UX550VE", ALC289_FIXUP_ASUS_GA401),
++	SND_PCI_QUIRK(0x1043, 0x197e, "ASUS VivoBook X509DAP", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1982, "ASUS B1400CEPE", ALC256_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x19ce, "ASUS B9450FA", ALC294_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x19e1, "ASUS UX581LV", ALC295_FIXUP_ASUS_MIC_NO_PRESENCE),
 -- 
 2.53.0
 
