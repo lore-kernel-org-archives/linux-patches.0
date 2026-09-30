@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FDD50AC28;
-	Wed, 30 Sep 2026 16:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A41B379EDA;
+	Wed, 30 Sep 2026 16:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784112; cv=none; b=Xo8mPYuA5UHw9880M6K1JeooKw5k16201/wCa4O/GVUxuse5gH+xWblqiRdJmw9plrzbAmczEaZ57hO+d+VopOz+ecHPYoTPjA9rbAQWejSSHboyibZylBbMEf+lzn2c3PJ6qEbaGmjeYt3ko3WpZAuY+yUFzqo+Dznbyem7YrE=
+	t=1790784116; cv=none; b=KWAT/1fpiL3TZbSKMEG7w58LdgV1v0hJCa4qFVnx1+Jh3TYS6wTCHy1rXHoinGTME4b9m6S0BPdPyQXn9g6ADUBNUlMFzsrLiyXvDOX+Pk5RU3EScpbfOpxZvXbm+gHt6gU3GW1ocF/a2oqquLbrvt4K0R9CKd3ePjSGiEIH8ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784112; c=relaxed/simple;
-	bh=5yK/Tep/t06Zr0ybboQnX8Y/ShEo9umHKLsmVAzTaYM=;
+	s=arc-20240116; t=1790784116; c=relaxed/simple;
+	bh=+ULBmw3pD90wjqI1L6Z2E0WDqqTHM4/4hWPHC0jppKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnWNCAAsMIhgv9V11rxmkRwnfn21s7rpzoqUYiAGd8Lh1NSfUZSo/EAtq5xynbtfUsnHraIUz79bXtM0bVk8qsfY8qu9yVouSvTOqx2UfVIG/bu6+tLfjPJsXsw9TEVbvikZDH2wEYQIu32Nb8T/G/uZPKBiEYll2NX0ukQEvLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAPRd85E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jRO8HiJ7Ut9ZYPC23McVZvnSdGqkgSXf36b2lRcN/uesOSjhKYOVwoyIsc0MhWz3r82mJi0tmEYE9ERAgYPijUZ29q0+CdXjI2fbK/F46MEBtwsx30E5QwTK70TZp8l/eo8e7Apk/t8AEZcmNOs7wzyn/agh3ErcPAV1zSuAAb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPiAvUm5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAPRd85E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC51F1F000FF;
-	Wed, 30 Sep 2026 16:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPiAvUm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70FB1F00893;
+	Wed, 30 Sep 2026 16:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784108;
-	bh=N85lujXf2ztU8mEqzLpXcqx792s9AwTGo8pUCB1LJ38=;
+	s=korg; t=1790784111;
+	bh=g94CEvBADAerSQDrwzHIci64XzVoh3CK8W7yUIXEJU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wAPRd85E/ZdX4TuIqpddJYpmyRZMNbd+rYmzzyKRxP8zYWtqdHYfV7UM1uHeCHIVf
-	 lpkgQZ1oA7Af/NFL2w8V72OuhlGUC8XDBU5HmY8KybXDNmHN4Cxp/8Pe/lCCC8QW89
-	 S6iyOsJKckNbeuxjjJO9JxbD2mkqZq7o80aOuO+c=
+	b=RPiAvUm5Rcc8EqiXFjC7NL7JhpGp0rzycdSSdsNGzB+epX8Uapi75BisAGwEJV7V7
+	 AWyLJwv4NDneTBrHSgCcNSCXaPyNsgl09920wqVKJQrH7WYf3LPIgoKw4ag3c+3mCX
+	 i02zX4uV3ZWJgDXPaN/tNKQ3Vs+jUSqiTyKFTqiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/982] media: video-i2c: use vb2_video_unregister_device on driver removal
-Date: Wed, 30 Sep 2026 17:12:55 +0200
-Message-ID: <20260930152417.638034203@linuxfoundation.org>
+Subject: [PATCH 6.1 040/982] net: dsa: realtek: rtl8365mb: add support for RTL8367SB
+Date: Wed, 30 Sep 2026 17:12:56 +0200
+Message-ID: <20260930152417.659076929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,37 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
 
-[ Upstream commit 56384b486b80ce4a2bc93689aae49995f908f90d ]
+[ Upstream commit 28702a215c96917d85558ad6309a57ab224808c0 ]
 
-The driver uses vb2_fop_release() as its file release operation, so
-vb2_video_unregister_device() should be used instead of
-video_unregister_device() during driver removal.
+Add chip info entry for the Realtek RTL8367SB switch. This device has
+chip ID 0x6367 and version 0x0010. It exposes two external interfaces:
+port 6 supports MII, TMII, RMII, RGMII, SGMII and HSGMII, while port 7
+supports MII, TMII, RMII and RGMII. Use the existing 8365MB-VC jam table
+for initialization.
 
-This ensures that the vb2 queue is properly disconnected before the
-video device is unregistered.
-
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+Link: https://patch.msgid.link/3c6d822b-0e85-4173-86ba-2badb140bbf1@yahoo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/video-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/realtek/rtl8365mb.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-index 685e4d5d174f4..83a4fc95252fa 100644
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -911,7 +911,7 @@ static void video_i2c_remove(struct i2c_client *client)
- 	if (data->chip->set_power)
- 		data->chip->set_power(data, false);
- 
--	video_unregister_device(&data->vdev);
-+	vb2_video_unregister_device(&data->vdev);
- }
- 
- #ifdef CONFIG_PM
+diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
+index 97673ccb7ac79..f622e724e01f6 100644
+--- a/drivers/net/dsa/realtek/rtl8365mb.c
++++ b/drivers/net/dsa/realtek/rtl8365mb.c
+@@ -539,6 +539,20 @@ static const struct rtl8365mb_chip_info rtl8365mb_chip_infos[] = {
+ 		.jam_table = rtl8365mb_init_jam_8365mb_vc,
+ 		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
+ 	},
++	{
++		.name = "RTL8367SB",
++		.chip_id = 0x6367,
++		.chip_ver = 0x0010,
++		.extints = {
++			{ 6, 1, PHY_INTF(MII) | PHY_INTF(TMII) |
++				PHY_INTF(RMII) | PHY_INTF(RGMII) |
++				PHY_INTF(SGMII) | PHY_INTF(HSGMII) },
++			{ 7, 2, PHY_INTF(MII) | PHY_INTF(TMII) |
++				PHY_INTF(RMII) | PHY_INTF(RGMII) },
++		},
++		.jam_table = rtl8365mb_init_jam_8365mb_vc,
++		.jam_size = ARRAY_SIZE(rtl8365mb_init_jam_8365mb_vc),
++	},
+ 	{
+ 		.name = "RTL8367RB-VB",
+ 		.chip_id = 0x6367,
 -- 
 2.53.0
 
