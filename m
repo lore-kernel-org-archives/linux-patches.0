@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94704376A09;
-	Wed, 30 Sep 2026 18:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61121357D09;
+	Wed, 30 Sep 2026 18:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794317; cv=none; b=D0nJLHB62r5RVUycE4kiX5R3wUGDngfPWSoXb16qWp06gB3Dlj1ofy13bAoeBcJD4Z+83toWKuRy1h4wOyhMsglptzOHsqTNGrZFEm4GdAfGFEbeHiTIRr1L7aIr5S5JXMKhlpB/kiZHpz3I1Ktax67EqitMy9oF43z/3ebfcmo=
+	t=1790794320; cv=none; b=O0hnfRL42PEpmIagU+1bpCDcVYb9t1kG06KCShRhtVMfeGcV4Msb1s8sLniglVjPeDUTMfbK0Fbs17LoI2ffiafv3T+2iHci82y76Y9Jb7j6V+Mrrja7kvgBXI8Q2B5cMcGzA4Vk/bMxzcbVUdrEQ0yrPN0/S8PETyNzJIGKJc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794317; c=relaxed/simple;
-	bh=jRggGJVxmP+DaQBf8WkLqO/dKJ4XoamwOyDqNLu9SOg=;
+	s=arc-20240116; t=1790794320; c=relaxed/simple;
+	bh=jTpNu92f2q+Or2Zcks2QtBlh06XJ64VGRwhBkLvC+fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4ehNhha70flAXJz0ZtPPE6H+0EYp9UvL1lv/nSBRwS1NPESIaZgRxYilPWobLMO+Us0gl313OrG6g3ToiCvTcNpJ4fFqs2SusaBc62PMOUTums4PZcPtryV+hcko99KND/oFU5eyeb02KchQHNJ9OYcko8ebzu5uXIL8m96rYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm5W0lem; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PhGHD0EZ+1Dgbj42W3shwh6Buc0PAyfC7N8GaTt+dde3YQax5Pb5GTcg/MmdKnrtdBK3rZQcM7Bfe9E3zpd9svY1tNlumDaPxL2S2Qpde6O6u4IllyIGYlpwRHXtKdske9Q6jn+Vk7DKSAsAu19mNYqdE/8A7rn3wFpcQStwdsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKZXZI3i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm5W0lem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2D51F000FF;
-	Wed, 30 Sep 2026 18:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKZXZI3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2A21F000FF;
+	Wed, 30 Sep 2026 18:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794316;
-	bh=jGIVumNoI49AD7Z9qa0afzLhyk939vsvkUmhsWDn9bQ=;
+	s=korg; t=1790794319;
+	bh=Br0ggGOsVeb3VS74ZQWLYmwb5Q9wO8W605/XafKWsyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xm5W0lemDbE/pTb3ZlC40NnZhU+k/8RzMUbZPI0QlAURkXgA+D6K0bCzKbYge31tp
-	 6YXC9jO550tTKphviPQqQuRnbwIu6ADrh30FOML0r+b8cufWDRkQzMLk/xHh2f7afi
-	 sxKWZci8kTmzVdSkO4UlJSpBNysk/zyPfG3R4+u8=
+	b=UKZXZI3iqmTjyF6x8Wgm80NWZmPeMyhYOAh0ePhje5K8scuFjDyIm7cKiu+edyek2
+	 vWTkmgGjq8OAeZsb84ZkWlv31mZCaHaWzZGjvLvV3CRfkTMqKIzvkLgIuZLYzA9Hhn
+	 0elzpD2HRhiKwXecBvp8bAGtEpSPs9CDPIV2z8NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Amir Shetaia <Amir.Shetaia@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0151/1193] ASoC: qcom: q6apm: return error code to consumers on failures
-Date: Wed, 30 Sep 2026 17:13:55 +0200
-Message-ID: <20260930152437.561640611@linuxfoundation.org>
+Subject: [PATCH 6.6 0169/1193] drm/amdkfd: fix UAF race in destroy_queue_cpsch
+Date: Wed, 30 Sep 2026 17:14:13 +0200
+Message-ID: <20260930152437.946337486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,60 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Alysa Liu <Alysa.Liu@amd.com>
 
-[ Upstream commit 3075ae5abbc370d2a9a01bd6d554a412d406f5bd ]
+[ Upstream commit ac081deaf16a639ea7dff2f285fe421a33c1ade0 ]
 
-Return errors from audioreach_set_media_format() to ensure callers are
-notified when media format setup fails.
+wait_on_destroy_queue() drops locks to wait for queue resume, allowing
+a concurrent destroy to free the queue. Use is_being_destroyed flag to
+serialize destruction.
 
-This could hide failures while programming media format parameters for
-individual modules and allow graph setup to continue with incomplete
-configuration.
-
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260528185806.6316-3-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Amir Shetaia <Amir.Shetaia@amd.com>
+Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index b6d957f7c7aba..50a496e665f85 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -203,10 +203,7 @@ int q6apm_graph_media_format_shmem(struct q6apm_graph *graph,
- 	if (!module)
- 		return -ENODEV;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 01481112a4ae3..85d461340e64e 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2048,6 +2048,9 @@ static int wait_on_destroy_queue(struct device_queue_manager *dqm,
+ 	if (pdd->qpd.is_debug)
+ 		return ret;
  
--	audioreach_set_media_format(graph, module, cfg);
--
--	return 0;
--
-+	return audioreach_set_media_format(graph, module, cfg);
- }
- EXPORT_SYMBOL_GPL(q6apm_graph_media_format_shmem);
++	if (q->properties.is_being_destroyed)
++		return -EBUSY;
++
+ 	q->properties.is_being_destroyed = true;
  
-@@ -371,6 +368,7 @@ int q6apm_graph_media_format_pcm(struct q6apm_graph *graph, struct audioreach_mo
- 	struct audioreach_sub_graph *sgs;
- 	struct audioreach_container *container;
- 	struct audioreach_module *module;
-+	int ret;
- 
- 	list_for_each_entry(sgs, &info->sg_list, node) {
- 		list_for_each_entry(container, &sgs->container_list, node) {
-@@ -379,7 +377,9 @@ int q6apm_graph_media_format_pcm(struct q6apm_graph *graph, struct audioreach_mo
- 					(module->module_id == MODULE_ID_RD_SHARED_MEM_EP))
- 					continue;
- 
--				audioreach_set_media_format(graph, module, cfg);
-+				ret = audioreach_set_media_format(graph, module, cfg);
-+				if (ret)
-+					return ret;
- 			}
- 		}
+ 	if (pdd->process->debug_trap_enabled && q->properties.is_suspended) {
+@@ -2060,6 +2063,9 @@ static int wait_on_destroy_queue(struct device_queue_manager *dqm,
+ 		dqm_lock(dqm);
  	}
+ 
++	if (ret)
++		q->properties.is_being_destroyed = false;
++
+ 	return ret;
+ }
+ 
+@@ -2151,7 +2157,7 @@ static int destroy_queue_cpsch(struct device_queue_manager *dqm,
+ 	return retval;
+ 
+ failed_try_destroy_debugged_queue:
+-
++	q->properties.is_being_destroyed = false;
+ 	dqm_unlock(dqm);
+ 	return retval;
+ }
 -- 
 2.53.0
 
