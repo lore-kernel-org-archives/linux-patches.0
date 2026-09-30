@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7206514770;
-	Wed, 30 Sep 2026 16:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF90515897;
+	Wed, 30 Sep 2026 16:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785215; cv=none; b=JPwnFPxrGEdGtPnuYRlxfor475wWzrPMMnp770VWPqYjHl5aVeOPuQbxMqh80XCXvTVVFJLA2QeSwNzGvET/ZMlDaQSlb8jiQAEH4OVODNUTC/v00SHLBfzd2HX6ld7tJy9ZJfYK6f30+YmZ9xh1Ftd27LdCZhvu0ijZLiilIdw=
+	t=1790785216; cv=none; b=T7zPwKsWW1oVq4DImuENleOkhflK9MH9QZEeH7MXLAzcHJTpH2ojWdGTyX7hkrN+pPohG5SfAiqeWE6FzcPP8w9uzUAImskFDIAEEXRSLTDulIjCzQaPirwWc2CFGCpbV6kcJcG4rvPZShTZ7gPNmyWjxYwtn+BmFpoFBs0jqRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785215; c=relaxed/simple;
-	bh=urn2PJFjIZUK8Ne+R0LGIFWbEKlD2Anb6xj1NyOTtB4=;
+	s=arc-20240116; t=1790785216; c=relaxed/simple;
+	bh=dLM3IRag3sxPjpGLberxssElcAbKDZooS9euURe7y8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f8j9oh2wvwCU9tKUjhQZI+W3DspNceY7KT5Y+ZoGpUi93EG/l/HOSubJA2nlC5v3JSIs0JsFyahKrcvDLAd74ysjxGEFjjNQhY/c2pZVNnXa2VzsSCqzTpilia2CWC5yleMaaSktE/5MRAQVpYN5IDlXj3b8IaWov6Ei2esyfR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMoqwAnc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FasgULGoGnFVp9uK0U1WqThJj59b+HIHBV8Uk1n3x8DO6cBgQFqz4h7l+DWCvOEIhs6BizqmTcudUTBl6CC7qyBv9dYOFF1usxEX1CJdcjrKJuTDmnmUDR9R7N145Y61GUzO8I8Fld/m+v+Npgtpd84/YLNJAJjftxKOgMowJKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GycLY2rv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMoqwAnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998361F00893;
-	Wed, 30 Sep 2026 16:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GycLY2rv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A9E1F000FF;
+	Wed, 30 Sep 2026 16:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785209;
-	bh=WZJEhpZTtXarqxB4F3CT5oZOvnqwUbkAK2s3fVybF1Q=;
+	s=korg; t=1790785211;
+	bh=4IMTLiruq0b0iMNrbTWE2vlNoQN8YFGdFx9Rdz/+zLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMoqwAncCDCUg/8GH+I5+gtt0q4jovi+MOoGvZCBziGVrxWO+QItemdksdQEoVntH
-	 2Svgkz1XRuBuGXWT31Gtma4Cei6NarX8Av/Ok/OgwXgDHFYo/BdkFYuPCTsJZoeMOT
-	 GH9lv7ONedkiezkNijkKTYzOROlYxbSVizW8En8k=
+	b=GycLY2rvHrU+32es+kCdnrCqYzThWqUkP7M1dCHKQFYGsas4vAOHumuLVszDd0LKt
+	 XQYjDgAQiV4RPtx1srGTnAkDv4y02WiyWGCq9NFhIXKD6A1S8FHQ7srLXHBeONhMyA
+	 MQZSDxGZS3SQdP7sA7LD1vL7lnS+9D6c+nY6A2kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 427/982] net/sched: pie: clamp psched_mtu in pie_drop_early
-Date: Wed, 30 Sep 2026 17:19:23 +0200
-Message-ID: <20260930152425.972081386@linuxfoundation.org>
+Subject: [PATCH 6.1 428/982] net/sched: drr: clamp quantum in change class
+Date: Wed, 30 Sep 2026 17:19:24 +0200
+Message-ID: <20260930152425.992847737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -57,44 +57,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 54370e44c002770ae61fc889f28f699e91616ffc ]
+[ Upstream commit 8382abec0f1568d0a5590d75a3df92f23fcf5196 ]
 
-pie_drop_early() calls psched_mtu() with no clamp. With mtu=0x80000000
-the bytemode divide silently zeroes the drop probability, disabling AQM.
-Clamp to [1, 1<<20].
+drr_change_class() rejects explicit quantum==0 but falls back to
+psched_mtu() with no floor. With a crafted size table qdisc_pkt_len
+reaches ~2 GiB, so quantum=1 (or a zero psched_mtu on a headerless
+device) makes the deficit-refill loop spin under the qdisc lock.
+
+Add clamp_t(u32, quantum, 256, 1<<20) after the zero reject and on the
+fallback path. The explicit-zero reject is preserved.
 
 Conditions to recreate the bug:
-  CONFIG_NET_SCH_PIE=y. Requires CAP_NET_ADMIN (namespace-local via
+  CONFIG_NET_SCH_DRR=y. Requires CAP_NET_ADMIN (namespace-local via
   unshare -Urn suffices).
 
-  tc qdisc add dev dummy0 root pie
-  tc qdisc change dev dummy0 root pie stab data 32768 size_log 15 cell_log 0
+  tc qdisc add dev dummy0 root drr
+  tc class add dev dummy0 parent 1: classid 1:1 drr quantum 1
 
-Fixes: d4b36210c2e6 ("net: pkt_sched: PIE AQM scheme")
+Fixes: 13d2a1d2b032 ("pkt_sched: add DRR scheduler")
 Reported-by: Vega <vega@nebusec.ai>
 Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.7
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.8
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_pie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_drr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 4ab296678b0b1..1ed6f43c93c4d 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -35,7 +35,7 @@ bool pie_drop_early(struct Qdisc *sch, struct pie_params *params,
- {
- 	u64 rnd;
- 	u64 local_prob = vars->prob;
--	u32 mtu = psched_mtu(qdisc_dev(sch));
-+	u32 mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
+diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
+index 437b09acef123..63ec888d6b495 100644
+--- a/net/sched/sch_drr.c
++++ b/net/sched/sch_drr.c
+@@ -83,8 +83,9 @@ static int drr_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 			NL_SET_ERR_MSG(extack, "Specified DRR quantum cannot be zero");
+ 			return -EINVAL;
+ 		}
++		quantum = clamp_t(u32, quantum, 256, 1 << 20);
+ 	} else
+-		quantum = psched_mtu(qdisc_dev(sch));
++		quantum = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
  
- 	/* If there is still burst allowance left skip random early drop */
- 	if (vars->burst_time > 0)
+ 	if (cl != NULL) {
+ 		if (tca[TCA_RATE]) {
 -- 
 2.53.0
 
