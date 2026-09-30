@@ -1,40 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AAC524AED;
-	Wed, 30 Sep 2026 17:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E1B524AED;
+	Wed, 30 Sep 2026 17:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790453; cv=none; b=C35v7gyEdtlawt302+GmFdUS03gvbJpZikHmEr5OtLfQWcmdIIUpVEpDkSKUOaShujKHqLT7TkJM6qCfr7TmP1gOrlDZh1kDBb3k2Ikk8s93gfU5zhU1GHY7ze7ZnDyqWxeHJ4gQITbcw7PreNqL4/1+iPWYt14BArQtXm5TUNw=
+	t=1790790456; cv=none; b=GO4pZRJLCnoSZoMk/W1bO9O3QdgXO9wZBCSO4VIN+egQbCaJNR7n2GGMtsPxuc/EHONvGLiXv5LCQnroR+WTigm/IVjTsf1V8Mu1+t/ma7ZQ77OoFkgqdV8i8eBV0WVCed7dn05hCyTGCbXy0Tc4KL6Llmt49KS9XDgzxf0rwCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790453; c=relaxed/simple;
-	bh=WDJXDY+/PVb+cfp35t5jyXqUz+vAhbPZk7S2G3TJKQI=;
+	s=arc-20240116; t=1790790456; c=relaxed/simple;
+	bh=4l3mAjWSwVGvBnqfiZ4d6fQSqg1hdfDMnYtMUWdDRPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEa542tKksMs69oDlpIByp4Ay+7XTWJiFFtbHLHSMaEldwkitETOWQhDE92H6kFB8xBwsrtOGo3hJ74upQz/d7dKH456EDxrjzCq84kRUYmBo5i2N1k92ZTI8us2h890jUxigG5E4yQgTuCrAXzQ0iIFbGcA6Y36JTDKK2uaVkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWtAxFnS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A6Z7R9bQd0iWsti+jHnvR9hUfG61R0BFKU4PrxxBPCUkBkvtVwXcN8Dj9HAbkS8nPbRhXHDVgJ0KcbTSVlivBw+6gqEUIkH6GEL9ueqrswy0j0BwTC6Noo2PseAApbQKvu2hRR0kL9S9Z84Ex3ZYTtpKrxc/PQ1qftWrl4CMDEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iA3DYhng; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWtAxFnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB021F000FF;
-	Wed, 30 Sep 2026 17:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iA3DYhng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5982B1F000FF;
+	Wed, 30 Sep 2026 17:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790452;
-	bh=T55WiVa3nAvWKuoyXQYyRJpPdejNh4q5VqYCqa/VKVI=;
+	s=korg; t=1790790455;
+	bh=JIWz4BXjCr+3Arh1ApfdagQzohhnWn9sFGUclsDtBGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWtAxFnSGseHU8fdMeSWI7YNNfb3vkh912gobZ0K8CQVImD1YEP6zNiQzUv2mqheM
-	 RkG1gBOSFFOZQZROJBbwgfKHj8ebyi+WExYz6j92ahhit5Ssg9Zc5DK4HM2iyOn7Ql
-	 5So4/Eshuu91WznHC+3EHAWBX14wDQkKtId+fb0I=
+	b=iA3DYhng9HD+uoLMe6IVMZRORezMGCO5KBnxMYcPMBU7tibX9sBInhJ5Evygg4A2B
+	 eIOfAPnTrL0F6UHpjDxZqtOPwzWI2XJyWiuCR4erbqZrrkWA7jjrWJkMyz+Ae3Sv3X
+	 o8wO5jBLVOWojdJK06qugE8nAa8Y5XZ/McYRY2Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>,
+	Jann Horn <jannh@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Larry Woodman <lwoodman@redhat.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Rik van Riel <riel@surriel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 780/877] xfs: remove the i_ino field in struct xfs_inode
-Date: Wed, 30 Sep 2026 17:28:11 +0200
-Message-ID: <20260930152431.545774483@linuxfoundation.org>
+Subject: [PATCH 6.12 828/877] mm/rmap: fix missing barrier between anon_vma init and vma->anon_vma publish
+Date: Wed, 30 Sep 2026 17:28:59 +0200
+Message-ID: <20260930152432.598585143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,111 +64,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Jinjiang Tu <tujinjiang@huawei.com>
 
-[ Upstream commit 1113a6d6d5d1336f4415fa1367aac0f853f0892d ]
+[ Upstream commit b6ac0b3f6013c168f22cad97e79967accacb08e1 ]
 
-Now that the VFS inode has a u64 i_ino field, there is no need to store
-a copy of the inode number in the xfs_inode structure.
+On arm64 server, we find that a task trying to grab the anon_vma lock
+triggers hungtask.
 
-Introduce an I_INO() wrapper as a shortcut to the inode number so that
-we don't have to propagate the VFS inode everywhere.
+INFO: task main:2354726 blocked for more than 120 seconds.
+      Tainted: G            E     5.10.0-0021.aarch64 #1
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:main            state:D stack:    0 pid:2354726 ppid:2350673 flags:0x00000a01
+Call trace:
+ __switch_to+0x7c/0xbc
+ __schedule+0x3b4/0x8a0
+ schedule+0x50/0xe0
+ rwsem_down_write_slowpath+0x3cc/0x6cc
+ down_write+0x60/0x260
+ __anon_vma_prepare+0x6c/0x210
+ do_anonymous_page+0x258/0x660
+ handle_pte_fault+0x188/0x214
+ __handle_mm_fault+0x1b0/0x380
+ handle_mm_fault+0xf4/0x284
+ do_page_fault+0x19c/0x494
+ do_translation_fault+0xcc/0xf8
+ do_mem_abort+0x48/0xac
+ el0_da+0x44/0x80
+ el0_sync_handler+0x88/0xb4
+ el0_sync+0x160/0x180
 
-The only non-obvious part is the clearing of i_ino to 0 for RCU freeing
-the inode.  None of this calls into VFS paths, which makes clearing the
-VFS inode field here just as safe as clearing the old field in the
-xfs_inode.
+After analyzing the vmcore, we found the anon_vma->root->rwsem.count is
+-1.  There is another anon_vma whose anon_vma->root->rwsem.count is 1, the
+anon_vma->root->rwsem.owner shows the lock is held, but the stack of the
+task shows the task doesn't hold the anon_vma lock.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+After adding more debugging info, we found __anon_vma_prepare() reuses
+anon_vma and triggers the UAF of anon_vma->root due to missing memory
+barrier, leading to locking and unlocking two different anon_vma->root,
+thus leading to an anon_vma will never be unlocked, and another anon_vma
+couldn't be locked anymore.
 
-[6.12 dependency adaptation]
+This race requires two adjacent VMAs that are not merged but are
+anon_vma-compatible (e.g., they differ in VMA_ACCESS_FLAGS that can be
+changed by mprotect()).  Two threads fault on each VMA concurrently, both
+calling __anon_vma_prepare() with only mmap_lock held for reading.
 
-Keep only the inode-number accessor spelling needed for the attr and
-directory repair hunks of 4d3c07591534517c633945c8d8e6526f10e3fabc to
-apply cleanly.  Define I_INO as a macro over xfs_inode.i_ino and convert
-only the two xfs_da_args.owner initializers in xrep_xattr_swap_prep and
-xrep_dir_swap_prep.  No functions are added.
+    THREAD A                             THREAD B
+__anon_vma_prepare                __anon_vma_prepare
+ find_mergeable_anon_vma() -> NULL
+ anon_vma = anon_vma_alloc();
+   anon_vma->root = anon_vma;
+ // the two stores may be reordered
+ vma->anon_vma = anon_vma;
+                                   // finds A's anon_vma
+                                   anon_vma = find_mergeable_anon_vma(vma);
+                                   anon_vma_lock_write(anon_vma);
+                                     // may still see the old root
+                                     down_write(&anon_vma->root->rwsem);
+                                   anon_vma_unlock_write(anon_vma);
+                                     // see the new root, never unlock old
+                                     up_write(&anon_vma->root->rwsem);
 
-Unlike upstream, this stable tree still has an unsigned long VFS i_ino.
-Retain the separate 64-bit XFS inode number and all existing allocation,
-reinitialization, reclaim, and VFS setup behavior to avoid truncation on
-32-bit systems.  Drop the remaining tree-wide conversions, including
-changes to metadata-directory, realtime, and health-monitor files that
-do not exist in this tree.  The accessor and the two substitutions are
-behavior preserving; the reservation fix remains in the target commit.
+thread A triggers page fault and calls __anon_vma_prepare() to prepare
+anon_vma for the faulting vma.  __anon_vma_prepare() allocates and
+initializes a new anon_vma, and then publishes it to the vma with a plain
+store.  anon_vma_prepare() only requires the mmap_lock to be held for
+reading, so two threads can fault on adjacent VMAs at the same time.
+While thread A publishes a new anon_vma, thread B could find the anon_vma
+via find_mergeable_anon_vma() and then locks anon_vma->root->rwsem.
 
-Original upstream rationale follows:
+The store to anon_vma->root in anon_vma_alloc() and the store to
+vma->anon_vma can be reordered.  The anon_vma_lock_write() and spin_lock()
+only provide acquire semantics, which do not prevent prior stores from
+being reordered after them.  The release semantics of the corresponding
+spin_unlock() and anon_vma_unlock_write() come too late, the store to
+vma->anon_vma is already published before they take effect.  As a result,
+thread B can observe the following order:
 
-Now that the VFS inode has a u64 i_ino field, there is no need to store
-a copy of the inode number in the xfs_inode structure.
+    vma->anon_vma = anon_vma;
+    anon_vma->root = anon_vma;
 
-Introduce an I_INO() wrapper as a shortcut to the inode number so that
-we don't have to propagate the VFS inode everywhere.
+The anon_vma slab is SLAB_TYPESAFE_BY_RCU, so a newly allocated anon_vma
+may reuse memory from a previously freed one.  The constructor
+(anon_vma_ctor) does not reset anon_vma->root, and __put_anon_vma()
+doesn't clear it either, so the old root value persists until
+anon_vma_alloc() overwrites it.  If that store isn't visible, thread B
+reads a root that points to the old anon_vma and locks it.
 
-The only non-obvious part is the clearing of i_ino to 0 for RCU freeing
-the inode.  None of this calls into VFS paths, which makes clearing the
-VFS inode field here just as safe as clearing the old field in the
-xfs_inode.
+As a result, thread B can call anon_vma_lock_write() with the old root,
+and call anon_vma_unlock_write() with the new root, leading to an anon_vma
+will never be unlocked, and another anon_vma couldn't be locked anymore
+(its count is dropped from 0 to -1 due to wrong unlock).
 
-[ sashal: Reduced backport -- upstream 1113a6d6d5d13 touches 91 file(s), this
-  backport carries 3. Not backported here:
-  fs/xfs/libxfs/xfs_attr.c
-  fs/xfs/libxfs/xfs_attr_leaf.c
-  fs/xfs/libxfs/xfs_bmap_btree.c
-  fs/xfs/libxfs/xfs_bmap.c
-  fs/xfs/libxfs/xfs_btree.c
-  fs/xfs/libxfs/xfs_btree_staging.c
-  fs/xfs/libxfs/xfs_da_btree.c
-  fs/xfs/libxfs/xfs_dir2.c
-  ... and 80 more
-  This note is generated from the file lists only; see the resolution record
-  for the reasoning. ]
+To fix it, change the plain store `vma->anon_vma = anon_vma` to store
+release, so that the fields of anon_vma are visible before anon_vma is
+published to vma->anon_vma.
 
-Stable-dep-of: 4d3c07591534 ("xfs: fix under-reservation of blocks when repairing sf directories")
+At read side, the load of anon_vma and anon_vma->root have address
+dependency.  According to Documentation/memory-barriers.txt and some
+investigations, only Alpha needs address-dependency barriers and it has
+been handled by READ_ONCE() in reusable_anon_vma().
+
+We reproduced this issue in v5.10 with KSM enabled.  The kernel doesn't
+merge commit cf7e7a3503df ("mm: prevent KSM from breaking VMA merging for
+new VMAs"), so there are many adjacent VMAs that aren't merged but are
+compatible for anon_vma.
+
+Without this fix, our production environment could reproduce this issue
+about 2-5 times each month.  After adding a smp_mb() before
+anon_vma_lock_write(anon_vma) in __anon_vma_prepare(), which is different
+to this patch, this issue hasn't been reproduced for one month.
+
+Link: https://lore.kernel.org/20260908122924.554373-1-tujinjiang@huawei.com
+Fixes: 5c341ee1dfc8 ("mm: track the root (oldest) anon_vma")
+Signed-off-by: Jinjiang Tu <tujinjiang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Hiroyouki Kamezawa <kamezawa.hiroyu@jp.fujitsu.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Larry Woodman <lwoodman@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/attr_repair.c |    2 +-
- fs/xfs/scrub/dir_repair.c  |    2 +-
- fs/xfs/xfs_inode.h         |    3 +++
- 3 files changed, 5 insertions(+), 2 deletions(-)
+ mm/rmap.c |    6 +++++-
+ mm/vma.c  |    8 ++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/attr_repair.c
-+++ b/fs/xfs/scrub/attr_repair.c
-@@ -1295,7 +1295,7 @@ xrep_xattr_swap_prep(
- 			.whichfork	= XFS_ATTR_FORK,
- 			.trans		= sc->tp,
- 			.total		= 1,
--			.owner		= sc->ip->i_ino,
-+			.owner		= I_INO(sc->ip),
- 		};
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -210,7 +210,11 @@ int __anon_vma_prepare(struct vm_area_st
+ 	/* page_table_lock to protect against threads */
+ 	spin_lock(&mm->page_table_lock);
+ 	if (likely(!vma->anon_vma)) {
+-		vma->anon_vma = anon_vma;
++		/*
++		 * Make anon_vma fields visible before anon_vma is published.
++		 * Paired with an address dependency in reusable_anon_vma().
++		 */
++		smp_store_release(&vma->anon_vma, anon_vma);
+ 		anon_vma_chain_assign(vma, avc, anon_vma);
+ 		anon_vma_interval_tree_insert(avc, &anon_vma->rb_root);
+ 		anon_vma->num_active_vmas++;
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -1760,6 +1760,13 @@ static int anon_vma_compatible(struct vm
+  * acceptable for merging, so we can do all of this optimistically. But
+  * we do that READ_ONCE() to make sure that we never re-load the pointer.
+  *
++ * The READ_ONCE() establishes an address dependency between anon_vma and
++ * any access to its fields, which pairs with the assignment to
++ * vma->anon_vma performed with release semantics in __anon_vma_prepare().
++ *
++ * This is especially important as anon_vma's are SLAB_TYPESAFE_BY_RCU so
++ * accessing an uninitialised anon_vma's fields may result in a UAF.
++ *
+  * IOW: that the "list_is_singular()" test on the anon_vma_chain only
+  * matters for the 'stable anon_vma' case (ie the thing we want to avoid
+  * is to return an anon_vma that is "complex" due to having gone through
+@@ -1774,6 +1781,7 @@ static struct anon_vma *reusable_anon_vm
+ 					  struct vm_area_struct *b)
+ {
+ 	if (anon_vma_compatible(a, b)) {
++		/* Paired with a memory barrier in __anon_vma_prepare(). */
+ 		struct anon_vma *anon_vma = READ_ONCE(old->anon_vma);
  
- 		error = xfs_attr_shortform_to_leaf(&args);
---- a/fs/xfs/scrub/dir_repair.c
-+++ b/fs/xfs/scrub/dir_repair.c
-@@ -1487,7 +1487,7 @@ xrep_dir_swap_prep(
- 			.whichfork	= XFS_DATA_FORK,
- 			.trans		= sc->tp,
- 			.total		= 1,
--			.owner		= sc->ip->i_ino,
-+			.owner		= I_INO(sc->ip),
- 		};
- 
- 		error = xfs_dir2_sf_to_block(&args);
---- a/fs/xfs/xfs_inode.h
-+++ b/fs/xfs/xfs_inode.h
-@@ -178,6 +178,9 @@ static inline const struct inode *VFS_IC
- 	return &ip->i_vnode;
- }
- 
-+/* Keep the full inode number on systems with a 32-bit VFS i_ino. */
-+#define I_INO(ip)	((ip)->i_ino)
-+
- /*
-  * For regular files we only update the on-disk filesize when actually
-  * writing data back to disk.  Until then only the copy in the VFS inode
+ 		if (anon_vma && list_is_singular(&old->anon_vma_chain))
 
 
