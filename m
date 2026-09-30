@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A6503BDA;
-	Wed, 30 Sep 2026 16:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00378514753;
+	Wed, 30 Sep 2026 16:18:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785092; cv=none; b=EQhmJSRO6IWwDL+dBGI8z32jND9YNwU627KgCXUV7JQhNNB4nbAzhqSCJWiepcvm4VQ26fSHVhTVMRltAf4G3NO7XhN6jNJ6D4nTz+w4RSwexmar0D6byt5HAydjWai4OpZCTG07ZWM3YRMve4LI5Tt5HVR1wWpROyce1WWq+No=
+	t=1790785096; cv=none; b=Z0+mElhEvENiYfkqLaYTYJHCXE+ThorZ1A8kk2jKCANLtolS24nWR7HzDP5DvjByFuDplRTyfBDdG8D3oSGsQ8dIZKqqzwPxOKkLN2QioeoLww5+oplFbFgr9X7F9qKt7pWGt5hwcjnbRlxrBc4y/dyR9MLZOGn8R41yvsyL3bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785092; c=relaxed/simple;
-	bh=Vg4zP6WrqkDieRVjiSJHn2thxA7JngsOYKRo8i5xd5Q=;
+	s=arc-20240116; t=1790785096; c=relaxed/simple;
+	bh=w0u2wUFN6O/mR7FqxPm2uwU0iLmO6++5bf1+56cYWKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYg5fCkH7BCLVAs8dFD9L0saP3veHi5OeCuHwLc+HdizOPlq2c2/I+AR9BBr60vH/g+b9dSkPrPHvgLr3mozM3oHnzKDGF9nbsE6IB5/P0dQZfbKQo4KnvhLl7lm2ujYJuqMRT4RG6qnrQeEwWU1S2/uNjTlR1vh0OY2MFtjrj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlHFJTkF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FnUZ3AUWv2IyhLxJ1CYLvU2AQzKGG0r/z6JsacXo8lvdUrxV4+Hdl9uLwquLQascIA9TBlCgGGnd869aRGvrcTdhDG3FVnnkFo9ejS+Kkbw5nIZjVQwlmz2UN0HdnmfbWImuSpdbbvnRWWdzGpGHhZFS1u7XEmfdALd8rCO9QaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0xpOxJ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlHFJTkF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F8D1F000FF;
-	Wed, 30 Sep 2026 16:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0xpOxJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7FD1F00893;
+	Wed, 30 Sep 2026 16:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785084;
-	bh=XAg/GhLdATqBouujboLq+hkg073FWG1y/5inuAnYdmw=;
+	s=korg; t=1790785090;
+	bh=BIid4X3om2/bonDNEn2KqflghvrXadhR3vwYffAdz5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UlHFJTkFahdjBm7Hge4O1LuPb70zF0RJQd3hfKMbE8iSsEGeSCh3Uzo8i41k4VYqL
-	 VORRSgZBiawQutBhMpV7oCd8MFOBW7n1LlrwTD4EupZyaoK1cuDv0rVEqeG1bCD0nJ
-	 QJOcJdjv6onoZFqvb213rU7ytBGdC5fLvBSV5kYg=
+	b=L0xpOxJ1E7cHxgRFyjt8Mu0Hc+VVVzgJ2MUrQ8zCFM/OAU55MUEbvpUInDmyMxl2Z
+	 K+eUJZKHczel6q3Ru/HFMjsjUQdU6v55YxNTCaNaU0LfxH94BJyFU/+LnoVxdyX+lf
+	 lttHYocNDs8noWqRwQTJEbl8I5W7gJp7bGA/2ngc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 383/982] ASoC: ux500: Program the MSP FIFO watermarks
-Date: Wed, 30 Sep 2026 17:18:39 +0200
-Message-ID: <20260930152425.035664721@linuxfoundation.org>
+Subject: [PATCH 6.1 385/982] ipvs: fix reversed sequence option serialization
+Date: Wed, 30 Sep 2026 17:18:41 +0200
+Message-ID: <20260930152425.077677743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,65 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 2519439b4b5f6ee95879b1a44fc373127291b1e4 ]
+[ Upstream commit b04578b74f2d3755548fe9e829e3b2a6c6f966a1 ]
 
-The DMA engine is configured for four-element bursts, but the MSP
-driver never programs the FIFO watermark register and instead depends
-on its previous or reset value. The DB8500 DMA request protocol requires
-the peripheral watermark to match the DMA packet size.
+hton_seq() expects the host-order source first and the unaligned
+network-order destination second. The version 1 sync sender passes these
+arguments in reverse for both sequence blocks. This leaves 24 bytes of the
+kmalloc-backed message unwritten. It may disclose stale heap data and
+replace the live connection sequence state with values read from the
+buffer.
 
-Program four-element receive and transmit watermarks when configuring
-the first direction, before enabling MSP DMA requests.
+Pass the connection sequence state as the source and the message payload as
+the destination for both blocks.
 
-Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-9-4b60b002d55a@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 986a07579533 ("IPVS: Backup, Change sending to Version 1 format")
+Assisted-by: Codex:gpt-5.6-sol
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_i2s.c | 2 ++
- sound/soc/ux500/ux500_msp_i2s.h | 5 +++++
- 2 files changed, 7 insertions(+)
+ net/netfilter/ipvs/ip_vs_sync.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
-index 43dc9b3aa4ef5..683b485fb5708 100644
---- a/sound/soc/ux500/ux500_msp_i2s.c
-+++ b/sound/soc/ux500/ux500_msp_i2s.c
-@@ -507,6 +507,8 @@ int ux500_msp_i2s_open(struct ux500_msp *msp,
- 		old_reg &= ~mask;
- 		new_reg |= old_reg;
- 		writel(new_reg, msp->registers + MSP_GCR);
-+		writel(MSP_WMRK_TX_4_ELEMENTS | MSP_WMRK_RX_4_ELEMENTS,
-+		       msp->registers + MSP_WMRK);
+diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
+index bade3fa936f13..f8bd07d8f0397 100644
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -748,9 +748,9 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
+ 		*(p++) = IPVS_OPT_SEQ_DATA;
+ 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
+-		hton_seq((struct ip_vs_seq *)p, &cp->in_seq);
++		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
+ 		p += sizeof(struct ip_vs_seq);
+-		hton_seq((struct ip_vs_seq *)p, &cp->out_seq);
++		hton_seq(&cp->out_seq, (struct ip_vs_seq *)p);
+ 		p += sizeof(struct ip_vs_seq);
  	}
- 
- 	res = enable_msp(msp, config, first);
-diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
-index 17b5c37a7e5d5..2bf2699bdc49f 100644
---- a/sound/soc/ux500/ux500_msp_i2s.h
-+++ b/sound/soc/ux500/ux500_msp_i2s.h
-@@ -62,6 +62,7 @@ enum msp_direction {
- #define MSP_SRG		0x10
- #define MSP_FLR		0x14
- #define MSP_DMACR	0x18
-+#define MSP_WMRK	0x1c
- 
- #define MSP_IMSC	0x20
- #define MSP_RIS		0x24
-@@ -228,6 +229,10 @@ enum msp_direction {
- #define RDMAE_SHIFT		0
- #define TDMAE_SHIFT		1
- 
-+/* FIFO watermark register */
-+#define MSP_WMRK_RX_4_ELEMENTS	BIT(0)
-+#define MSP_WMRK_TX_4_ELEMENTS	BIT(3)
-+
- /* Interrupt Register */
- #define RX_SERVICE_INT		BIT(0)
- #define RX_OVERRUN_ERROR_INT	BIT(1)
+ 	/* Handle pe data */
 -- 
 2.53.0
 
