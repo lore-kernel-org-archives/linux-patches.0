@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B634E2F06;
-	Wed, 30 Sep 2026 16:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCAB50E5AF;
+	Wed, 30 Sep 2026 16:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784828; cv=none; b=aM6ODSy71m57j5NyAdI5sJqqHxCPM8jdeg8c8Xshx4FVyMp/8xwCSLNqxd7eeqNBroV/tDjrcANb2daSnGbCTKOEhXkOaer3RxEIkTExD5CsmMnlg4+R6wD1jQ0cUMiH7YFLYnELfxnczegSZ0sQ+7uxxFKjWw7TxurC60ETUXM=
+	t=1790784832; cv=none; b=lJbwuGKs2+Vhnpzur9PQXmxOBgnDRQlO6dtUXPk/04agpPodurR78E1diZnZT68RDFjgOMGlSaDNse3e/qbWh/qcFFwM3QIdpFX5cxyCIUJHqqDWTpCjV9TXRt/hs2Vucpmj2LitAprNC6ZAkJiomR2Zrzadsd/W1mljQd3JHM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784828; c=relaxed/simple;
-	bh=hwvsxuhRhAs0VEjztauGqbmUFRg6iVXtt93noBBlj+w=;
+	s=arc-20240116; t=1790784832; c=relaxed/simple;
+	bh=a3+SHKIuGMVGMeyKhGpBkasFv5m6ufMOS8VEwrkHs9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UC5EuSpR3GUO/iT2NeDa7CSrL65GKBoqDEfI205EhYSk24/7KEqLS/aw8SxPWj576Fv3hAc1QEDbsp6k4v67AXPZhSFFKMiJZPt+N7RyPDIbbE+cNrC0wzLMOX03g2OOiBn5tDc7mS6+Kl39kllCMpJqZdtPT03p5+O82Yom4O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMsXtclg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jpOZOBOsWXkucxTwE8Hnd/Sx0HyjLrwALRhcN7BZeC67OPkMkDdMvyMTWiMuALyLeqlaK3q+53ndaTqpAIAZ61oCuCsTp1qJC+ZSicBa2Cdzc61QNs4pIJZHgapaDur8o0tUSzlnXGzkOEWqVV1JuQKYyXDnAQQbTdg6fTZRvA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jf5Lwxl0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMsXtclg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA341F000FF;
-	Wed, 30 Sep 2026 16:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jf5Lwxl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16D11F00893;
+	Wed, 30 Sep 2026 16:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784824;
-	bh=76u0Q3wa1MXmp7gJXgsR9BWf7CnVJT5VcampYbegASg=;
+	s=korg; t=1790784827;
+	bh=65Wuu3L/We9T329pzN84wEhhg7nRgtZQJL65X2Ex4j0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMsXtclgl4uTmIsq5wngWJd3Ds2FNU/7WtbGpskZakXoYWOuSHuMWhb+I0rdWWV2Z
-	 WokH1nKnh5ps7Zvsv8O9CTcbmHU66u4zetq3gE4ZmkBGGkDeqShxpgUVj4krUmFoLy
-	 bADijw5nr7UNVsm5wm8W5XddXPDQfM5P6uR68CYU=
+	b=Jf5Lwxl0JpCEfkLjI8ttpVbyPv3Zyg4/XLLtgoSurTKXVZt9M8WB+9jrTgJEovnTp
+	 mzBK78hU4f9GNN2XoXQTClYhFOSDmHUN4WHxFTKGX89THSbF0iXjrPJqlHXjyjlUgB
+	 oW8nTypOYQP6ecm6ely73LqFHd7hRSBR1YUMR670=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudi Heitbaum <rudi@heitbaum.com>,
-	Mark Brown <broonie@kernel.org>,
+	Liang Hao <haohlliang@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 291/982] ASoC: rt5645: Perform the initial jack detect at probe
-Date: Wed, 30 Sep 2026 17:17:07 +0200
-Message-ID: <20260930152423.057213295@linuxfoundation.org>
+Subject: [PATCH 6.1 256/982] gpio: dwapb: Mask interrupts at hardware initialization
+Date: Wed, 30 Sep 2026 17:16:32 +0200
+Message-ID: <20260930152422.295550927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,50 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rudi Heitbaum <rudi@heitbaum.com>
+From: Liang Hao <haohlliang@gmail.com>
 
-[ Upstream commit 54b279699279411c77c8afbc73b83c70740a7303 ]
+[ Upstream commit aaf7766ba3b99a3834319e7cf939838afc705574 ]
 
-The only initial jack detect is the rt5645_irq(0, rt5645) at the end of
-rt5645_set_jack_detect(). A card described with simple-audio-card has no
-machine driver to call that, so jack state is only ever sampled from an
-edge on hp-detect-gpios.
+GPIO interrupts may retain stale state across warm reboots when
+peripherals remain powered. If a GPIO line is not explicitly
+configured for interrupts, this can result in interrupt storms
+due to missing handlers.
 
-A headphone already in the socket at boot is therefore never noticed, and
-the card is silent with every mixer control set correctly.
-rt5645_jack_detect() is what force enables the "LDO2" and "Mic Det Power"
-supplies that the "HP amp" widget depends on, and what programs
-RT5645_CHARGE_PUMP away from its reset value, so without it "HP amp"
-cannot power up. Unplugging and replugging the jack is the only way to
-recover.
+Fix this by ensuring all interrupts are masked and disabled at
+hardware initialization time via the init_hw() callback. Pending
+interrupts are also cleared to start from a known-safe state.
 
-Do the detect at the end of the component probe when the driver owns a
-hp-detect GPIO and the codec's own jack detect is unused, which is the
-case that has no other trigger. A machine driver calling
-rt5645_set_jack_detect() later just repeats it.
+Interrupts will be unmasked only when explicitly configured by
+userspace or kernel drivers.
 
-Signed-off-by: Rudi Heitbaum <rudi@heitbaum.com>
-Link: https://patch.msgid.link/anNU3tOUR7rOReSB@5e001e58230e
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Liang Hao <haohlliang@gmail.com>
+Link: https://patch.msgid.link/20260705074759.47863-1-haohlliang@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5645.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpio/gpio-dwapb.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index 0bb70066111b7..7d4ebef1edfd7 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -3453,6 +3453,10 @@ static int rt5645_probe(struct snd_soc_component *component)
- 	if (!rt5645->eq_param)
- 		return -ENOMEM;
- 
-+	/* no machine driver to call rt5645_set_jack_detect(), so detect here */
-+	if (!rt5645->pdata.jd_mode && rt5645->gpiod_hp_det)
-+		rt5645_irq(0, rt5645);
-+
- 	return 0;
+diff --git a/drivers/gpio/gpio-dwapb.c b/drivers/gpio/gpio-dwapb.c
+index 6b7d47a52b10a..8c07776725dda 100644
+--- a/drivers/gpio/gpio-dwapb.c
++++ b/drivers/gpio/gpio-dwapb.c
+@@ -200,6 +200,22 @@ static void dwapb_toggle_trigger(struct dwapb_gpio *gpio, unsigned int offs)
+ 	dwapb_write(gpio, GPIO_INT_POLARITY, pol);
  }
+ 
++static int dwapb_irq_init_hw(struct gpio_chip *gc)
++{
++	struct dwapb_gpio *gpio = to_dwapb_gpio(gc);
++
++	/*
++	 * GPIO interrupts may retain stale state across warm reboots when
++	 * peripherals stay powered. Force a known-safe state before the GPIO
++	 * irqchip and irq domain are set up.
++	 */
++	dwapb_write(gpio, GPIO_INTEN, 0);
++	dwapb_write(gpio, GPIO_INTMASK, 0xffffffff);
++	dwapb_write(gpio, GPIO_PORTA_EOI, 0xffffffff);
++
++	return 0;
++}
++
+ static u32 dwapb_do_irq(struct dwapb_gpio *gpio)
+ {
+ 	struct gpio_chip *gc = &gpio->ports[0].gc;
+@@ -461,6 +477,7 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
+ 	girq = &gc->irq;
+ 	girq->handler = handle_bad_irq;
+ 	girq->default_type = IRQ_TYPE_NONE;
++	girq->init_hw = dwapb_irq_init_hw;
+ 
+ 	port->pirq = pirq;
  
 -- 
 2.53.0
