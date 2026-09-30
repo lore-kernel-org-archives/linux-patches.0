@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA2C4E06CC;
-	Wed, 30 Sep 2026 16:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D704ED196;
+	Wed, 30 Sep 2026 16:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786982; cv=none; b=O/lZAkvsyJSFMxGHtFMlx3JR6i+iBHavkucJH+sVpwdrJt/PBKN+a3lwIgW9H5H37lp/H6+IzQSUOzv3MvtxVQE9GeoRe5B3Y1k2SnyQfMxL0LkbJdNVWaebxRWrni7zVuBqNvVJJUz88KSxjoCBnm6XD2yAoBgz0vz39U1dehQ=
+	t=1790786985; cv=none; b=PJF0Od3E3QuZ6LPO4Nw+GPMqRt3tgdDxGoPDwOdEBkNrPmLf8ccVtKFng/cwDGjE451x4u2dyvtkiLU3B2uce3Th+aYJoVApiUdrpJw/1Rn/AOlB4hLjqZY2k8zT/6eCgIag50FgyjW3AgAOMSaXSoVYEbfOXr+BQzmseXA22iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786982; c=relaxed/simple;
-	bh=fvF5SJae4z0ZoOpsqkiCEHFPeRxJ0UmmDOSDI/VdPFQ=;
+	s=arc-20240116; t=1790786985; c=relaxed/simple;
+	bh=W5tdaglF+8Ke4HvGfvyOwh1x4Wuos164UH+B5986mLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+E8/cLUye4Vza3Eog+cmZ2mwboB1Lxf74GbapCoVS7CksuOx0HyOdvyWqMCI6KFfF6IiBjHlT3gdIsf7K4LThT9HxZYCjSddyGYJsqCv8fd0d7LA8GQgcMMjU0UfwgorXlc4OiI2af8YdDRt2JYBlqvJjCcENEVhEIoatlSsD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsZwrbYD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ElU81hjVMQoYnIEOLcan44GapmXMWJRnwgijcM+w1MRHHQ6BqezlpBKntdeXwAfSYB+cRhglOahGXxME9n0YU8XvaFRoFjtjWKGD9XCjwMBd1Nw7rix1rpTCXF42MLMhSJZrQB0RzRhSRmte56PDZGXplUalaywX0VZSIGjnCQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4njuUJF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsZwrbYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60771F000FF;
-	Wed, 30 Sep 2026 16:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4njuUJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914C01F000FF;
+	Wed, 30 Sep 2026 16:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786981;
-	bh=JX+Jr6F1SxRW6RYIJhm16iiLYpsqHEpsd1NNBE+Pf1Q=;
+	s=korg; t=1790786984;
+	bh=3Km/wTXAC4/OWnswVqn/HYkqUi6Hp05HVust3wmesEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YsZwrbYDw8gcSUDMcp2zUjFocUDInRNni94OQVYGj//19yFObbXNYbfbXK8oMFOnc
-	 smAP+Q3vjSzPhmqxiDgoY0AW2r3z3CyqxV9I7O8c2G613jvWdWZ0fAB01d8kcThrGy
-	 A9nkgSnUB3XdM/Ft2OFaIFsgqtIohnMZ93gra7qQ=
+	b=W4njuUJFJAe77YNSlGuaEYTQVUkW+aaOG0nrsPGrtV3IfpadtiUYpPuduFwHMYMQE
+	 1bNc8r1dZAUnlB3CXCVpJemydihqY8c70V3Fd3/6/j0aVCJBLjpbp/MriJhamWheub
+	 xhetPjJO3j2qJGpRuuTq1gpmJuJ0TH8PvTM4C4fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heyang Tan <thy15333007817@163.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Akiva Goldberger <agoldberger@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 071/457] octeontx2-af: use seq_file for rsrc_alloc debugfs
-Date: Wed, 30 Sep 2026 17:22:56 +0200
-Message-ID: <20260930152347.581655355@linuxfoundation.org>
+Subject: [PATCH 7.2 072/457] net/mlx5: devcom, Base component size on linked devices
+Date: Wed, 30 Sep 2026 17:22:57 +0200
+Message-ID: <20260930152347.603232112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,176 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heyang Tan <thy15333007817@163.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 39c6580765dad6477fb2637f6f616e0d276aae65 ]
+[ Upstream commit d09e8f64653c93da5793c16be19330968f2a32e6 ]
 
-The rsrc_alloc debugfs reader writes rows directly to userspace without
-respecting the caller's read count. It also uses the current row length as
-the userspace stride, which can corrupt output when rows have different
-widths.
+mlx5_devcom_comp_get_size() returns the component's kref count. That
+kref is bumped in mlx5_devcom_register_component() under comp_list_lock,
+before the comp_dev is linked onto comp_dev_list_head under comp->sem.
+The event broadcast (mlx5_devcom_locked_send_event()) walks that list.
 
-Use seq_file to handle userspace buffer sizes, offsets, and partial reads,
-and write output columns directly to the seq_file buffer.
+Hence, a caller can read the expected size, but send_event won't be sent
+to all peers. In the SD group registration path, this lets a member
+broadcast its role-election event over an incomplete list, electing a
+primary that never completes the group, is never marked ready, and
+leaves the group with a stale primary.
 
-Fixes: 23205e6d06d4 ("octeontx2-af: Dump current resource provisioning status")
-Signed-off-by: Heyang Tan <thy15333007817@163.com>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260914020521.146-1-thy15333007817@163.com
+Track the number of linked comp_devs in a dedicated counter, maintained
+under comp->sem together with the list add/remove, and return it from
+mlx5_devcom_comp_get_size().
+
+Fixes: 9bb1ac80738a ("net/mlx5: devcom, Add component size getter")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Akiva Goldberger <agoldberger@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260915113459.3934760-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/af/rvu_debugfs.c        | 104 ++++++------------
- 1 file changed, 33 insertions(+), 71 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-index 904374baae6f3..2927633465d96 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
-@@ -714,110 +714,72 @@ static int get_max_column_width(struct rvu *rvu)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
+index 64f92427602de..75855481522b1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
+@@ -37,6 +37,7 @@ struct mlx5_devcom_comp {
+ 	struct mlx5_devcom_key key;
+ 	mlx5_devcom_event_handler_t handler;
+ 	struct kref ref;
++	int nr_devs;
+ 	bool ready;
+ 	struct rw_semaphore sem;
+ 	struct lock_class_key lock_key;
+@@ -170,6 +171,7 @@ devcom_alloc_comp_dev(struct mlx5_devcom_dev *devc,
+ 
+ 	down_write(&comp->sem);
+ 	list_add_tail(&devcom->list, &comp->comp_dev_list_head);
++	WRITE_ONCE(comp->nr_devs, comp->nr_devs + 1);
+ 	up_write(&comp->sem);
+ 
+ 	return devcom;
+@@ -182,6 +184,7 @@ devcom_free_comp_dev(struct mlx5_devcom_comp_dev *devcom)
+ 
+ 	down_write(&comp->sem);
+ 	list_del(&devcom->list);
++	WRITE_ONCE(comp->nr_devs, comp->nr_devs - 1);
+ 	up_write(&comp->sem);
+ 
+ 	kref_put(&devcom->devc->ref, mlx5_devcom_dev_release);
+@@ -284,7 +287,7 @@ int mlx5_devcom_comp_get_size(struct mlx5_devcom_comp_dev *devcom)
+ {
+ 	struct mlx5_devcom_comp *comp = devcom->comp;
+ 
+-	return kref_read(&comp->ref);
++	return READ_ONCE(comp->nr_devs);
  }
  
- /* Dumps current provisioning status of all RVU block LFs */
--static ssize_t rvu_dbg_rsrc_attach_status(struct file *filp,
--					  char __user *buffer,
--					  size_t count, loff_t *ppos)
-+static int rvu_dbg_rsrc_attach_status(struct seq_file *filp, void *unused)
- {
--	int index, off = 0, flag = 0, len = 0, i = 0;
--	struct rvu *rvu = filp->private_data;
--	int bytes_not_copied = 0;
-+	struct rvu *rvu = filp->private;
-+	int index, pf, vf, pcifunc;
- 	struct rvu_block block;
--	int pf, vf, pcifunc;
--	int buf_size = 2048;
- 	int lf_str_size;
- 	char *lfs;
--	char *buf;
--
--	/* don't allow partial reads */
--	if (*ppos != 0)
--		return 0;
--
--	buf = kzalloc(buf_size, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
- 
--	/* Get the maximum width of a column */
- 	lf_str_size = get_max_column_width(rvu);
-+	if (lf_str_size < 0)
-+		return lf_str_size;
- 
- 	lfs = kzalloc(lf_str_size, GFP_KERNEL);
--	if (!lfs) {
--		kfree(buf);
-+	if (!lfs)
- 		return -ENOMEM;
--	}
--	off +=	scnprintf(&buf[off], buf_size - 1 - off, "%-*s", lf_str_size,
--			  "pcifunc");
--	for (index = 0; index < BLK_COUNT; index++)
--		if (strlen(rvu->hw->block[index].name)) {
--			off += scnprintf(&buf[off], buf_size - 1 - off,
--					 "%-*s", lf_str_size,
--					 rvu->hw->block[index].name);
--		}
- 
--	off += scnprintf(&buf[off], buf_size - 1 - off, "\n");
--	bytes_not_copied = copy_to_user(buffer + (i * off), buf, off);
--	if (bytes_not_copied)
--		goto out;
-+	seq_printf(filp, "%-*s", lf_str_size, "pcifunc");
-+	for (index = 0; index < BLK_COUNT; index++)
-+		if (strlen(rvu->hw->block[index].name))
-+			seq_printf(filp, "%-*s", lf_str_size,
-+				   rvu->hw->block[index].name);
- 
--	i++;
--	*ppos += off;
-+	seq_putc(filp, '\n');
- 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
- 		for (vf = 0; vf <= rvu->hw->total_vfs; vf++) {
--			off = 0;
--			flag = 0;
- 			pcifunc = rvu_make_pcifunc(rvu->pdev, pf, vf);
- 			if (!pcifunc)
- 				continue;
- 
--			if (vf) {
-+			for (index = 0; index < BLK_COUNT; index++) {
-+				block = rvu->hw->block[index];
-+				if (!strlen(block.name))
-+					continue;
-+				lfs[0] = '\0';
-+				get_lf_str_list(&block, pcifunc, lfs);
-+				if (strlen(lfs))
-+					break;
-+			}
-+			if (index == BLK_COUNT)
-+				continue;
-+
-+			if (vf)
- 				sprintf(lfs, "PF%d:VF%d", pf, vf - 1);
--				off = scnprintf(&buf[off],
--						buf_size - 1 - off,
--						"%-*s", lf_str_size, lfs);
--			} else {
-+			else
- 				sprintf(lfs, "PF%d", pf);
--				off = scnprintf(&buf[off],
--						buf_size - 1 - off,
--						"%-*s", lf_str_size, lfs);
--			}
-+			seq_printf(filp, "%-*s", lf_str_size, lfs);
- 
- 			for (index = 0; index < BLK_COUNT; index++) {
- 				block = rvu->hw->block[index];
- 				if (!strlen(block.name))
- 					continue;
--				len = 0;
--				lfs[len] = '\0';
--				get_lf_str_list(&block, pcifunc, lfs);
--				if (strlen(lfs))
--					flag = 1;
- 
--				off += scnprintf(&buf[off], buf_size - 1 - off,
--						 "%-*s", lf_str_size, lfs);
--			}
--			if (flag) {
--				off +=	scnprintf(&buf[off],
--						  buf_size - 1 - off, "\n");
--				bytes_not_copied = copy_to_user(buffer +
--								(i * off),
--								buf, off);
--				if (bytes_not_copied)
--					goto out;
--
--				i++;
--				*ppos += off;
-+				lfs[0] = '\0';
-+				get_lf_str_list(&block, pcifunc, lfs);
-+				seq_printf(filp, "%-*s", lf_str_size, lfs);
- 			}
-+			seq_putc(filp, '\n');
- 		}
- 	}
- 
--out:
- 	kfree(lfs);
--	kfree(buf);
--	if (bytes_not_copied)
--		return -EFAULT;
- 
--	return *ppos;
-+	return 0;
- }
- 
--RVU_DEBUG_FOPS(rsrc_status, rsrc_attach_status, NULL);
-+RVU_DEBUG_SEQ_FOPS(rsrc_status, rsrc_attach_status, NULL);
- 
- static int rvu_dbg_rvu_pf_cgx_map_display(struct seq_file *filp, void *unused)
- {
+ int mlx5_devcom_locked_send_event(struct mlx5_devcom_comp_dev *devcom,
 -- 
 2.53.0
 
