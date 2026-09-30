@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4441D5187EB;
-	Wed, 30 Sep 2026 17:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26BE515976;
+	Wed, 30 Sep 2026 17:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790183; cv=none; b=WCwEcCmFcV/5OK84sE1XLUKNqh72TrL3uSWVE6PAwYCEnz389l+hvcWoPX8SjUTUtz7CGxmzSp2WsWL18xQPqIwCyYy7e3iTMPZ694yIDOSFxrJwOAVCQExPn5eBK2WAXCdTBOGlfzwwrAYI7A6Vy7TKEJvpxMbVZu0JnU+Kipw=
+	t=1790790186; cv=none; b=GNIkj3ztYsOkmBDB5z8mDUON0K0ixZvFbllflNZSYSr69+g4NgHu+jApVWUjB/FbM0eIE9Wnm87GLRzYlg1TnSPUCvEx3dEPVc2QCdk+L54wfE3k5DFwkNnGaCgwkQQKmYUVnbdPZ584P75bmeqOeJXx4WFXhrVjcnGmjlA/P5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790183; c=relaxed/simple;
-	bh=1gQc7zFViDaC/BYBhhrRyb403qHPtoYBf7GvGpIb9bc=;
+	s=arc-20240116; t=1790790186; c=relaxed/simple;
+	bh=Duga2fRLKC0hl1DDICMTgY5MY1+AxG5U85S4Me2xkK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZiXw85PM7OQwJV+FP/sZ3OGaDaBc3OCFnvjkaex9iHOlxjutgCuIKyPYs4ocVUYk8inZz6fpvpOQ/kyY/SgmtuDA+KIT0nabHmHfdbXMRgj3osIHoh7hT2ps9yh7tndlD3pGtGToMc5pUA/zgpm/ZQebtqzhWiQQvgucaACGSAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYgwv4gd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SCWsofI7fZD+GNurjCNxam/BoGb6jXAYVsdteqK2nHiQrQpyhROtiAkD+yR433UR5BkIiW9+vESW7VXyw6ctLmXLetIunbHIriLQWt1WW4XBe2h0LF3sWHWPSD/EHnKZrgkc8vIhpgxPsB+CvlAaEMAa8ZLgze2/aPgRCswPJug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sodL24D+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYgwv4gd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1A51F00898;
-	Wed, 30 Sep 2026 17:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sodL24D+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B201F000FF;
+	Wed, 30 Sep 2026 17:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790181;
-	bh=zFicVEcCHiPirlpJy3reXAr1H40Q/jKvlvGM522GArE=;
+	s=korg; t=1790790184;
+	bh=c9WrdLOyHQf/VnMb7XH7QOY9wF2XLBFXYnExTsUsuQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zYgwv4gdXynCPXi8ozeqVBTHIEPk8JwGaBU+m/dDEWQNWR+zdYTyFCJ5sFSYu249z
-	 aTH2nQnUbComlgd7B7D4pTpIv5LXZeBywLIep9DkRZu71/rY6ovyxfzHVfmEY8PtYg
-	 /KIFn98+qDdzU8PQxpQ/RyZWeEP7zKyBwDbmc5Ag=
+	b=sodL24D+ZMU9d/omnzefHfUeyeQTqCrAVeR8ddsEoAjebeEjFCyizioZo/9fe4mL0
+	 gceFQZkc+APG367fhi6R7gUDlv+qZn4LrNjlqhYa9eyDrAdftyeSz0a+2KIvnaWm0Q
+	 80+1MizC8fp0qQx8odpz1iiUyY13iAqAynpOen0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 685/877] scsi: qla2xxx: Validate BSG request_len before reading vendor_cmd[]
-Date: Wed, 30 Sep 2026 17:26:36 +0200
-Message-ID: <20260930152429.457383849@linuxfoundation.org>
+Subject: [PATCH 6.12 733/877] bootconfig: Fix integer overflow in initrd size check
+Date: Wed, 30 Sep 2026 17:27:24 +0200
+Message-ID: <20260930152430.506731042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,153 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 4cf38dd9465736141263ebb63375868311a0ec81 ]
+[ Upstream commit 7812d6dab0698001e50e8c2f901e17da3eb6f429 ]
 
-The FC BSG transport allocates job->request via memdup_user() using the
-exact user-supplied request_len. For FC_BSG_HST_VENDOR,
-fc_bsg_host_dispatch() only guarantees request_len covers msgcode and
-vendor_id; it does not account for the vendor_cmd[] flexible array.
+Sashiko reported that in get_boot_config_from_initrd(), a crafted initrd
+with a huge bootconfig size (such as 0xFFFFFFFF) can cause the pointer
+arithmetic:
 
-qla2xxx then reads the command selector vendor_cmd[0] and, in several
-sub-handlers, vendor_cmd[1]/[2] or structures overlaid on the vendor
-command area without verifying request_len. A caller holding
-CAP_SYS_RAWIO can submit a short request whose vendor_id matches the
-host, triggering out-of-bounds heap reads (KASAN-detectable, and able to
-mis-select a command or panic).
+    data = ((void *)hdr) - size;
 
-Add a central guard in qla2x00_process_vendor_specific() so the selector
-is always in bounds, restrict the early vendor_cmd[0] read in
-qla24xx_bsg_request() to sufficiently long vendor messages, and add
-request_len checks to the sub-handlers that read further:
-qla24xx_proc_fcp_prio_cfg_cmd(), qla2x00_process_loopback(),
-qla84xx_reset(), qla84xx_updatefw(), qla2x00_read_optrom(),
-qla2x00_update_optrom(), qlafx00_mgmt_cmd() and
-qla28xx_validate_flash_image().
+to wrap around on 32-bit systems (or when pointer subtraction overflows).
+Because data wraps around, the subsequent bounds check:
 
-Fixes: 01e0e15c8b3b ("scsi: don't use fc_bsg_job::request and fc_bsg_job::reply directly")
+    if ((unsigned long)data < initrd_start)
+
+evaluates to false, bypassing the check. The kernel then calls
+xbc_calc_checksum(data, size), which attempts to read 4GB of memory,
+hitting unmapped pages and triggering a fatal kernel page fault during
+early boot. Furthermore, on 64-bit systems with an initrd > 4.29 GB, an
+unbounded 32-bit size can similarly bypass the initrd_start check.
+
+Fix this by:
+1. Ensuring the initrd is at least large enough to contain the bootconfig
+   footer and verifying hdr is within the initrd bounds.
+2. Checking that size does not exceed XBC_DATA_MAX and does not exceed
+   the available space between initrd_start and hdr before performing
+   pointer subtraction.
+
+Link: https://lore.kernel.org/all/178905333479.213925.1358412668943562406.stgit@devnote2/
+
+Fixes: de462e5f1071 ("bootconfig: Fix to remove bootconfig data from initrd while boot")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-31-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ adapted hunks to the existing OPTROM helper and absence of qla28xx_validate_flash_image(). ]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.8-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+[ Adjusted context to preserve the existing u32 *hdr pointer and le32_to_cpu() header reads. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   45 +++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+ init/main.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -158,6 +158,12 @@ qla24xx_proc_fcp_prio_cfg_cmd(struct bsg
- 		goto exit_fcp_prio_cfg;
- 	}
+--- a/init/main.c
++++ b/init/main.c
+@@ -270,7 +270,8 @@ static void * __init get_boot_config_fro
+ 	u32 *hdr;
+ 	int i;
  
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t)) {
-+		ret = -EINVAL;
-+		goto exit_fcp_prio_cfg;
+-	if (!initrd_end)
++	if (!initrd_end || initrd_end < initrd_start ||
++	    initrd_end - initrd_start < BOOTCONFIG_MAGIC_LEN + 8)
+ 		return NULL;
+ 
+ 	data = (char *)initrd_end - BOOTCONFIG_MAGIC_LEN;
+@@ -287,16 +288,26 @@ static void * __init get_boot_config_fro
+ 
+ found:
+ 	hdr = (u32 *)(data - 8);
++	if ((unsigned long)hdr < initrd_start)
++		return NULL;
++
+ 	size = le32_to_cpu(hdr[0]);
+ 	csum = le32_to_cpu(hdr[1]);
+ 
+-	data = ((void *)hdr) - size;
+-	if ((unsigned long)data < initrd_start) {
+-		pr_err("bootconfig size %d is greater than initrd size %ld\n",
++	if (size > XBC_DATA_MAX) {
++		pr_err("bootconfig size %u is greater than max size %d\n",
++			size, XBC_DATA_MAX);
++		return NULL;
 +	}
 +
- 	/* Get the sub command */
- 	oper = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
- 
-@@ -756,6 +762,10 @@ qla2x00_process_loopback(struct bsg_job
- 		return -EIO;
++	if (size > ((unsigned long)hdr - initrd_start)) {
++		pr_err("bootconfig size %u is greater than initrd size %lu\n",
+ 			size, initrd_end - initrd_start);
+ 		return NULL;
  	}
  
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 3 * sizeof(uint32_t))
-+		return -EINVAL;
++	data = ((void *)hdr) - size;
 +
- 	memset(&elreq, 0, sizeof(elreq));
- 
- 	elreq.req_sg_cnt = dma_map_sg(&ha->pdev->dev,
-@@ -988,6 +998,10 @@ qla84xx_reset(struct bsg_job *bsg_job)
- 		return -EINVAL;
+ 	if (xbc_calc_checksum(data, size) != csum) {
+ 		pr_err("bootconfig checksum failed\n");
+ 		return NULL;
+@@ -399,12 +410,6 @@ static void __init setup_boot_config(voi
+ 		return;
  	}
  
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	flag = bsg_request->rqst_data.h_vendor.vendor_cmd[1];
- 
- 	rval = qla84xx_reset_chip(vha, flag == A84_ISSUE_RESET_DIAG_FW);
-@@ -1032,6 +1046,10 @@ qla84xx_updatefw(struct bsg_job *bsg_job
- 		return -EINVAL;
- 	}
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	sg_cnt = dma_map_sg(&ha->pdev->dev, bsg_job->request_payload.sg_list,
- 		bsg_job->request_payload.sg_cnt, DMA_TO_DEVICE);
- 	if (!sg_cnt) {
-@@ -1482,6 +1500,10 @@ qla2x00_read_optrom(struct bsg_job *bsg_
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	if (ha->flags.nic_core_reset_hdlr_active)
- 		return -EBUSY;
- 
-@@ -1519,6 +1541,10 @@ qla2x00_update_optrom(struct bsg_job *bs
- 	struct qla_hw_data *ha = vha->hw;
- 	int rval = 0;
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + 2 * sizeof(uint32_t))
-+		return -EINVAL;
-+
- 	mutex_lock(&ha->optrom_mutex);
- 	rval = qla2x00_optrom_setup(bsg_job, vha, 1);
- 	if (rval) {
-@@ -2010,6 +2036,11 @@ qlafx00_mgmt_cmd(struct bsg_job *bsg_job
- 	struct fc_port *fcport;
- 	char  *type = "FC_BSG_HST_FX_MGMT";
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + sizeof(uint32_t) +
-+	    sizeof(struct qla_mt_iocb_rqst_fx00))
-+		return -EINVAL;
-+
- 	/* Copy the IOCB specific information */
- 	piocb_rqst = (struct qla_mt_iocb_rqst_fx00 *)
- 	    &bsg_request->rqst_data.h_vendor.vendor_cmd[1];
-@@ -2899,6 +2930,13 @@ qla2x00_process_vendor_specific(struct s
- {
- 	struct fc_bsg_request *bsg_request = bsg_job->request;
- 
-+	if (bsg_job->request_len <
-+	    sizeof(struct fc_bsg_request) + sizeof(uint32_t)) {
-+		ql_log(ql_log_warn, vha, 0x7000,
-+		       "BSG request too small for vendor cmd.\n");
-+		return -EINVAL;
-+	}
-+
- 	ql_dbg(ql_dbg_edif, vha, 0x911b, "%s FC_BSG_HST_VENDOR cmd[0]=0x%x\n",
- 	    __func__, bsg_request->rqst_data.h_vendor.vendor_cmd[0]);
- 
-@@ -3024,8 +3062,11 @@ qla24xx_bsg_request(struct bsg_job *bsg_
- 	}
- 
- 	/* Disable port will bring down the chip, allow enable command */
--	if (bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_MANAGE_HOST_PORT ||
--	    bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_GET_HOST_STATS)
-+	if (bsg_request->msgcode == FC_BSG_HST_VENDOR &&
-+	    bsg_job->request_len >=
-+		sizeof(struct fc_bsg_request) + sizeof(uint32_t) &&
-+	    (bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_MANAGE_HOST_PORT ||
-+	     bsg_request->rqst_data.h_vendor.vendor_cmd[0] == QL_VND_GET_HOST_STATS))
- 		goto skip_chip_chk;
- 
- 	if (vha->hw->flags.port_isolated) {
+-	if (size >= XBC_DATA_MAX) {
+-		pr_err("bootconfig size %ld greater than max size %d\n",
+-			(long)size, XBC_DATA_MAX);
+-		return;
+-	}
+-
+ 	ret = xbc_init(data, size, &msg, &pos);
+ 	if (ret < 0) {
+ 		if (pos < 0)
 
 
