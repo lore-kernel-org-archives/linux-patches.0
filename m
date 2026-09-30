@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1C14F3924;
-	Wed, 30 Sep 2026 17:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4BD3AE1A0;
+	Wed, 30 Sep 2026 17:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788550; cv=none; b=FEi9JNyMPfjKvEb18US4g8QZAXA2wQhdzXPxYQ6YtCfPUxvGYGeImIo2fY899iOeQFzNYBkmxB8VtPCFBmlrehxR8Kr/LuUb64uaVeg4MShk/XXtsRzsMnyyE2wmGoI1zTyDNPfJpjGe7ILIEWpda5kaOqutewXFTVwV5Tkz2oM=
+	t=1790788553; cv=none; b=OwFjhcExjHCh2vQmYC5sv47+1PhAelmyT/SUsLpeMZR351mNqZ6uqV7BoJzoxMDKJ0HEorN3+6ItTyXc1A2IKyOFWFuZ5930fA5w6SXzDJXArs0nVwm7LgomvzG52tJsvMWlaICvoIxIDUIO/lKzdY0SnuYyXHaCGLpZZBSC8gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788550; c=relaxed/simple;
-	bh=7V+QB2iiXkZ2NJUm9MKGC2YFfxy1wlrGPtc2X1phGaA=;
+	s=arc-20240116; t=1790788553; c=relaxed/simple;
+	bh=O0UA/AT3ofA2BwYEPwJNAJTmnZX3NeNEHOAtcrt1gR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBQop0KsbR5csYMTmEcpCwmYUbNNdONCnmmrYD5BeLqVdgi7JO9o5Uw+roBX1N459Rl/yVnTA07NKaeFL1OGdmHgtM0KsL4tW09wt9zwv9YwQ8/egxW85iU36YFtiCRXfc36gq/Ve6+UVUJVKQ5Wwb3gBQw5cjtOws7AiSLWbyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mfn119gn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X2ax9d4h5unzraWeBXnjNhqqCsyeytgdoM1c9tjErEytFbK50ppKKl7OMDkBSiOoXKZRz+sUH6ExxGpLL8dkNch0YLTkQ/GL+raLXh2/hDiiQNM2jc01GR0Kl80RG/5gXbzw6/IVcTUoIAY7LKTin2lBxXW7jbbj2gZZoj4f2VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvNYDIHH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mfn119gn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C683F1F000FF;
-	Wed, 30 Sep 2026 17:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvNYDIHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A547B1F000FF;
+	Wed, 30 Sep 2026 17:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788549;
-	bh=z7GBC8rHLDHmCcxeOhS3Tvou0OCTHPpPXQdK0V3YE8Y=;
+	s=korg; t=1790788552;
+	bh=oazaJnHw7Tba0jAnGj/y2X2IJqKtaPgQNUeodSUbGpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mfn119gn/Qt2MEgHIsoQY4PP4uCn81dKyUzv57eAkc/3PbZtHRxtcWvnSMdqL85wS
-	 tR6IvpUmVomX+NPRFusw6a/0dMt0/OYnY5d6Em/eGc38j465TPBSaYwdlrdi03Wevm
-	 oeMA6s1Rk0z35gO3PQuV3Hf6JmDbnBYvhPDrTmCk=
+	b=OvNYDIHHegCjs96HywAjf8walXib3ZXsbCEGkrh86tnWJUj8cg79ujWktl+hcbk/v
+	 FY5lAMvLcAeTr97uq2dfm5E4cvcgCdN5IjcW7gD9LXI0vkobzh5TFHSYItDhZN1Zwl
+	 KwdKZioXV5EmRljkAVdriQNx8gYHEmUz6Hhf13VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/877] seg6: set IPSKB_L3SLAVE from IP6SKB_L3SLAVE on IPIP decapsulation
-Date: Wed, 30 Sep 2026 17:17:10 +0200
-Message-ID: <20260930152417.305355704@linuxfoundation.org>
+Subject: [PATCH 6.12 110/877] ALSA: 6fire: Clean ups with guard()
+Date: Wed, 30 Sep 2026 17:17:01 +0200
+Message-ID: <20260930152417.112645884@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,61 +50,370 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7616242a2b37883f7322aaa1d2bd6cd0fed28315 ]
+[ Upstream commit 6ff0d95774f0c728f96b8f78367318e95e09ee64 ]
 
-When an SRv6 packet arrives on an interface enslaved to a VRF,
-vrf_ip6_rcv() sets IP6SKB_L3SLAVE in IP6CB, but decap_and_validate()
-has never set IPSKB_L3SLAVE in IPCB. The bit stayed clear in the
-common case, and with CONFIG_IPV6_MIP6 the leftover frag_max_size of
-a reassembled outer packet could even set it, with no VRF involved.
-Commit 44930446dde4 ("ipv6: seg6: clear IPv4 control block on IPIP
-decapsulation") then made the unreliable bit reliably clear.
+Simple code cleanups with the guard() for spinlock and mutex.
+No functional changes.
 
-The effect of the missing flag is visible with End.DX4 when a
-delivery to a local address of the node reaches the socket lookup.
-For example, a UDP socket bound to the enslaved ingress interface
-does not receive any of the decapsulated packets, while an unbound
-socket outside the VRF does.
-This contradicts Documentation/networking/vrf.rst: by default the
-scope of an unbound UDP or TCP socket is limited to the default VRF.
-
-Set IPSKB_L3SLAVE for IPv4 in decap_and_validate(), which already does
-the same for IPv6. The socket lookup then matches the decapsulated
-packet like any other packet received on that enslaved interface. Such
-a packet matches an unbound UDP or TCP socket only when
-udp_l3mdev_accept or tcp_l3mdev_accept is set.
-
-Fixes: 891ef8dd2a8d ("ipv6: sr: implement additional seg6local actions")
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260913194421.31-1-andrea.mayer@uniroma2.it
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20250811082231.31498-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 1589afe2d099 ("ALSA: 6fire: fix OOB write from device-reported iso length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/seg6_local.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/6fire/chip.c | 40 ++++++++++----------
+ sound/usb/6fire/midi.c | 21 +++--------
+ sound/usb/6fire/pcm.c  | 83 ++++++++++++++++++------------------------
+ 3 files changed, 59 insertions(+), 85 deletions(-)
 
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 10f29bb8e608f..191b99b073b06 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -257,10 +257,13 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
- 		return false;
+diff --git a/sound/usb/6fire/chip.c b/sound/usb/6fire/chip.c
+index e5916c6b75aea..30b240e06a8c8 100644
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -83,24 +83,22 @@ static int usb6fire_chip_probe(struct usb_interface *intf,
+ 	struct snd_card *card = NULL;
  
- 	if (proto == IPPROTO_IPIP) {
-+		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
- 		int iif = IP6CB(skb)->iif;
+ 	/* look if we already serve this card and return if so */
+-	mutex_lock(&register_mutex);
+-	for (i = 0; i < SNDRV_CARDS; i++) {
+-		if (devices[i] == device) {
+-			if (chips[i])
+-				chips[i]->intf_count++;
+-			usb_set_intfdata(intf, chips[i]);
+-			mutex_unlock(&register_mutex);
+-			return 0;
+-		} else if (!devices[i] && regidx < 0)
+-			regidx = i;
+-	}
+-	if (regidx < 0) {
+-		mutex_unlock(&register_mutex);
+-		dev_err(&intf->dev, "too many cards registered.\n");
+-		return -ENODEV;
++	scoped_guard(mutex, &register_mutex) {
++		for (i = 0; i < SNDRV_CARDS; i++) {
++			if (devices[i] == device) {
++				if (chips[i])
++					chips[i]->intf_count++;
++				usb_set_intfdata(intf, chips[i]);
++				return 0;
++			} else if (!devices[i] && regidx < 0)
++				regidx = i;
++		}
++		if (regidx < 0) {
++			dev_err(&intf->dev, "too many cards registered.\n");
++			return -ENODEV;
++		}
++		devices[regidx] = device;
+ 	}
+-	devices[regidx] = device;
+-	mutex_unlock(&register_mutex);
  
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
- 		IPCB(skb)->iif = iif;
-+		if (l3slave)
-+			IPCB(skb)->flags |= IPSKB_L3SLAVE;
- 	} else if (proto == IPPROTO_IPV6) {
- 		bool l3slave = ipv6_l3mdev_skb(IP6CB(skb)->flags);
- 		int iif = IP6CB(skb)->iif;
+ 	/* check, if firmware is present on device, upload it if not */
+ 	ret = usb6fire_fw_init(intf);
+@@ -175,10 +173,10 @@ static void usb6fire_chip_disconnect(struct usb_interface *intf)
+ 	if (chip) { /* if !chip, fw upload has been performed */
+ 		chip->intf_count--;
+ 		if (!chip->intf_count) {
+-			mutex_lock(&register_mutex);
+-			devices[chip->regidx] = NULL;
+-			chips[chip->regidx] = NULL;
+-			mutex_unlock(&register_mutex);
++			scoped_guard(mutex, &register_mutex) {
++				devices[chip->regidx] = NULL;
++				chips[chip->regidx] = NULL;
++			}
+ 
+ 			/*
+ 			 * Save card pointer before teardown.
+diff --git a/sound/usb/6fire/midi.c b/sound/usb/6fire/midi.c
+index de2691d58de6e..6c6bccc0c410d 100644
+--- a/sound/usb/6fire/midi.c
++++ b/sound/usb/6fire/midi.c
+@@ -23,9 +23,8 @@ static void usb6fire_midi_out_handler(struct urb *urb)
+ {
+ 	struct midi_runtime *rt = urb->context;
+ 	int ret;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&rt->out_lock, flags);
++	guard(spinlock_irqsave)(&rt->out_lock);
+ 
+ 	if (rt->out) {
+ 		ret = snd_rawmidi_transmit(rt->out, rt->out_buffer + 4,
+@@ -43,18 +42,14 @@ static void usb6fire_midi_out_handler(struct urb *urb)
+ 		} else /* no more data to transmit */
+ 			rt->out = NULL;
+ 	}
+-	spin_unlock_irqrestore(&rt->out_lock, flags);
+ }
+ 
+ static void usb6fire_midi_in_received(
+ 		struct midi_runtime *rt, u8 *data, int length)
+ {
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&rt->in_lock, flags);
++	guard(spinlock_irqsave)(&rt->in_lock);
+ 	if (rt->in)
+ 		snd_rawmidi_receive(rt->in, data, length);
+-	spin_unlock_irqrestore(&rt->in_lock, flags);
+ }
+ 
+ static int usb6fire_midi_out_open(struct snd_rawmidi_substream *alsa_sub)
+@@ -73,14 +68,11 @@ static void usb6fire_midi_out_trigger(
+ 	struct midi_runtime *rt = alsa_sub->rmidi->private_data;
+ 	struct urb *urb = &rt->out_urb;
+ 	__s8 ret;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&rt->out_lock, flags);
++	guard(spinlock_irqsave)(&rt->out_lock);
+ 	if (up) { /* start transfer */
+-		if (rt->out) { /* we are already transmitting so just return */
+-			spin_unlock_irqrestore(&rt->out_lock, flags);
++		if (rt->out) /* we are already transmitting so just return */
+ 			return;
+-		}
+ 
+ 		ret = snd_rawmidi_transmit(alsa_sub, rt->out_buffer + 4,
+ 				MIDI_BUFSIZE - 4);
+@@ -99,7 +91,6 @@ static void usb6fire_midi_out_trigger(
+ 		}
+ 	} else if (rt->out == alsa_sub)
+ 		rt->out = NULL;
+-	spin_unlock_irqrestore(&rt->out_lock, flags);
+ }
+ 
+ static void usb6fire_midi_out_drain(struct snd_rawmidi_substream *alsa_sub)
+@@ -125,14 +116,12 @@ static void usb6fire_midi_in_trigger(
+ 		struct snd_rawmidi_substream *alsa_sub, int up)
+ {
+ 	struct midi_runtime *rt = alsa_sub->rmidi->private_data;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&rt->in_lock, flags);
++	guard(spinlock_irqsave)(&rt->in_lock);
+ 	if (up)
+ 		rt->in = alsa_sub;
+ 	else
+ 		rt->in = NULL;
+-	spin_unlock_irqrestore(&rt->in_lock, flags);
+ }
+ 
+ static const struct snd_rawmidi_ops out_ops = {
+diff --git a/sound/usb/6fire/pcm.c b/sound/usb/6fire/pcm.c
+index 32c39d8bd2e55..14d23e3103989 100644
+--- a/sound/usb/6fire/pcm.c
++++ b/sound/usb/6fire/pcm.c
+@@ -289,7 +289,7 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
+ 	struct pcm_urb *out_urb = in_urb->peer;
+ 	struct pcm_runtime *rt = in_urb->chip->pcm;
+ 	struct pcm_substream *sub;
+-	unsigned long flags;
++	bool period_elapsed;
+ 	int total_length = 0;
+ 	int frame_count;
+ 	int frame;
+@@ -313,17 +313,18 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
+ 
+ 	/* receive our capture data */
+ 	sub = &rt->capture;
+-	spin_lock_irqsave(&sub->lock, flags);
+-	if (sub->active) {
+-		usb6fire_pcm_capture(sub, in_urb);
+-		if (sub->period_off >= sub->instance->runtime->period_size) {
+-			sub->period_off %= sub->instance->runtime->period_size;
+-			spin_unlock_irqrestore(&sub->lock, flags);
+-			snd_pcm_period_elapsed(sub->instance);
+-		} else
+-			spin_unlock_irqrestore(&sub->lock, flags);
+-	} else
+-		spin_unlock_irqrestore(&sub->lock, flags);
++	period_elapsed = false;
++	scoped_guard(spinlock_irqsave, &sub->lock) {
++		if (sub->active) {
++			usb6fire_pcm_capture(sub, in_urb);
++			if (sub->period_off >= sub->instance->runtime->period_size) {
++				sub->period_off %= sub->instance->runtime->period_size;
++				period_elapsed = true;
++			}
++		}
++	}
++	if (period_elapsed)
++		snd_pcm_period_elapsed(sub->instance);
+ 
+ 	/* setup out urb structure */
+ 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
+@@ -338,17 +339,18 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
+ 
+ 	/* now send our playback data (if a free out urb was found) */
+ 	sub = &rt->playback;
+-	spin_lock_irqsave(&sub->lock, flags);
+-	if (sub->active) {
+-		usb6fire_pcm_playback(sub, out_urb);
+-		if (sub->period_off >= sub->instance->runtime->period_size) {
+-			sub->period_off %= sub->instance->runtime->period_size;
+-			spin_unlock_irqrestore(&sub->lock, flags);
+-			snd_pcm_period_elapsed(sub->instance);
+-		} else
+-			spin_unlock_irqrestore(&sub->lock, flags);
+-	} else
+-		spin_unlock_irqrestore(&sub->lock, flags);
++	period_elapsed = false;
++	scoped_guard(spinlock_irqsave, &sub->lock) {
++		if (sub->active) {
++			usb6fire_pcm_playback(sub, out_urb);
++			if (sub->period_off >= sub->instance->runtime->period_size) {
++				sub->period_off %= sub->instance->runtime->period_size;
++				period_elapsed = true;
++			}
++		}
++	}
++	if (period_elapsed)
++		snd_pcm_period_elapsed(sub->instance);
+ 
+ 	/* setup the 4th byte of each sample (0x40 for analog channels) */
+ 	dest = out_urb->buffer;
+@@ -392,7 +394,7 @@ static int usb6fire_pcm_open(struct snd_pcm_substream *alsa_sub)
+ 	if (rt->panic)
+ 		return -EPIPE;
+ 
+-	mutex_lock(&rt->stream_mutex);
++	guard(mutex)(&rt->stream_mutex);
+ 	alsa_rt->hw = pcm_hw;
+ 
+ 	if (alsa_sub->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+@@ -408,14 +410,12 @@ static int usb6fire_pcm_open(struct snd_pcm_substream *alsa_sub)
+ 	}
+ 
+ 	if (!sub) {
+-		mutex_unlock(&rt->stream_mutex);
+ 		dev_err(&rt->chip->dev->dev, "invalid stream type.\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	sub->instance = alsa_sub;
+ 	sub->active = false;
+-	mutex_unlock(&rt->stream_mutex);
+ 	return 0;
+ }
+ 
+@@ -423,18 +423,17 @@ static int usb6fire_pcm_close(struct snd_pcm_substream *alsa_sub)
+ {
+ 	struct pcm_runtime *rt = snd_pcm_substream_chip(alsa_sub);
+ 	struct pcm_substream *sub = usb6fire_pcm_get_substream(alsa_sub);
+-	unsigned long flags;
+ 
+ 	if (rt->panic)
+ 		return 0;
+ 
+-	mutex_lock(&rt->stream_mutex);
++	guard(mutex)(&rt->stream_mutex);
+ 	if (sub) {
+ 		/* deactivate substream */
+-		spin_lock_irqsave(&sub->lock, flags);
+-		sub->instance = NULL;
+-		sub->active = false;
+-		spin_unlock_irqrestore(&sub->lock, flags);
++		scoped_guard(spinlock_irqsave, &sub->lock) {
++			sub->instance = NULL;
++			sub->active = false;
++		}
+ 
+ 		/* all substreams closed? if so, stop streaming */
+ 		if (!rt->playback.instance && !rt->capture.instance) {
+@@ -442,7 +441,6 @@ static int usb6fire_pcm_close(struct snd_pcm_substream *alsa_sub)
+ 			rt->rate = ARRAY_SIZE(rates);
+ 		}
+ 	}
+-	mutex_unlock(&rt->stream_mutex);
+ 	return 0;
+ }
+ 
+@@ -458,7 +456,7 @@ static int usb6fire_pcm_prepare(struct snd_pcm_substream *alsa_sub)
+ 	if (!sub)
+ 		return -ENODEV;
+ 
+-	mutex_lock(&rt->stream_mutex);
++	guard(mutex)(&rt->stream_mutex);
+ 	sub->dma_off = 0;
+ 	sub->period_off = 0;
+ 
+@@ -467,7 +465,6 @@ static int usb6fire_pcm_prepare(struct snd_pcm_substream *alsa_sub)
+ 			if (alsa_rt->rate == rates[rt->rate])
+ 				break;
+ 		if (rt->rate == ARRAY_SIZE(rates)) {
+-			mutex_unlock(&rt->stream_mutex);
+ 			dev_err(&rt->chip->dev->dev,
+ 				"invalid rate %d in prepare.\n",
+ 				alsa_rt->rate);
+@@ -475,19 +472,15 @@ static int usb6fire_pcm_prepare(struct snd_pcm_substream *alsa_sub)
+ 		}
+ 
+ 		ret = usb6fire_pcm_set_rate(rt);
+-		if (ret) {
+-			mutex_unlock(&rt->stream_mutex);
++		if (ret)
+ 			return ret;
+-		}
+ 		ret = usb6fire_pcm_stream_start(rt);
+ 		if (ret) {
+-			mutex_unlock(&rt->stream_mutex);
+ 			dev_err(&rt->chip->dev->dev,
+ 				"could not start pcm stream.\n");
+ 			return ret;
+ 		}
+ 	}
+-	mutex_unlock(&rt->stream_mutex);
+ 	return 0;
+ }
+ 
+@@ -495,26 +488,22 @@ static int usb6fire_pcm_trigger(struct snd_pcm_substream *alsa_sub, int cmd)
+ {
+ 	struct pcm_substream *sub = usb6fire_pcm_get_substream(alsa_sub);
+ 	struct pcm_runtime *rt = snd_pcm_substream_chip(alsa_sub);
+-	unsigned long flags;
+ 
+ 	if (rt->panic)
+ 		return -EPIPE;
+ 	if (!sub)
+ 		return -ENODEV;
+ 
++	guard(spinlock_irqsave)(&sub->lock);
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+-		spin_lock_irqsave(&sub->lock, flags);
+ 		sub->active = true;
+-		spin_unlock_irqrestore(&sub->lock, flags);
+ 		return 0;
+ 
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+-		spin_lock_irqsave(&sub->lock, flags);
+ 		sub->active = false;
+-		spin_unlock_irqrestore(&sub->lock, flags);
+ 		return 0;
+ 
+ 	default:
+@@ -527,15 +516,13 @@ static snd_pcm_uframes_t usb6fire_pcm_pointer(
+ {
+ 	struct pcm_substream *sub = usb6fire_pcm_get_substream(alsa_sub);
+ 	struct pcm_runtime *rt = snd_pcm_substream_chip(alsa_sub);
+-	unsigned long flags;
+ 	snd_pcm_uframes_t ret;
+ 
+ 	if (rt->panic || !sub)
+ 		return SNDRV_PCM_POS_XRUN;
+ 
+-	spin_lock_irqsave(&sub->lock, flags);
++	guard(spinlock_irqsave)(&sub->lock);
+ 	ret = sub->dma_off;
+-	spin_unlock_irqrestore(&sub->lock, flags);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
