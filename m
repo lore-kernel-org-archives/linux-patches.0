@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398CA4F4049;
-	Wed, 30 Sep 2026 17:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AF85172E2;
+	Wed, 30 Sep 2026 17:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787702; cv=none; b=EK4N1Lf8uhjHnxHiDDNuiusRWjMox+75K9cZ2jZ2LXntbfIT2mSWX+UhIQwD191F1DT8html5a5/PADxBApmrhja3d1yOLt63Hr9fCrGUIFVrmJtRtRKV2mmVjJTj2vOGc/ZyyJhYJCLlRt30T2s8fljWDSaF9wQLd9P71ugplU=
+	t=1790787705; cv=none; b=EcjW2o2oltScqTW9tVsdr5YSAEkd04tnkZwikS1uy7FBq9zF6fwsDfIlA1qUHiaEboCzkB0l/T+MyKdYiUGf9FUdA3kKBazn7ky/XFyF7mN3Ige4gw0vFE0anM3IddEb/aUd0ETXEeb2f7bLgR32nRdVyuT3Ti+DVRvvJaB4M2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787702; c=relaxed/simple;
-	bh=7KDNRqdYEDNg7cBTbU24/kmqgMTdG2pgisZE/AcG604=;
+	s=arc-20240116; t=1790787705; c=relaxed/simple;
+	bh=ZfBUYlOM33/tspZRuga4WvxXYsrurc4koN3OiH0Hghw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFtPj0JFAnUI1Do+AfV12WiZfn7TDpNEmKvR40X/K8aqL9ldVH1z1jcxmy08YOmKfQJGw4TUPjA48zqpAv44oDUr1jOAunPVfUhcC3Mn510u0YT+sw1h4etoW5e3AxlRHNOTtqaQtP0Lgw4x4WP20/ndc2Ri9QY1o8QO2WvIyCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Llr+aZ67; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EwGk1I3B6xaViQ4h4VviP838MA/goxdRTM9CqpX7YYr312xGsVuX9nBX1KWJzk8oHVZREvDcuB/3PBnil6nxk5bdIWkLa5vdqxJiyH10MVuAV46BDOcIOqDG6B8qWggPAFa8zfl1B4esLluamKjcXqouvSg5z9SEnbO82xc+8o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R12mIdTV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Llr+aZ67"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966AF1F000FF;
-	Wed, 30 Sep 2026 17:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R12mIdTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E97B1F000FF;
+	Wed, 30 Sep 2026 17:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787701;
-	bh=D+RlTVTluj4fMZLlQHr5tr2gzNz1dWv1wl4H8OvcKoc=;
+	s=korg; t=1790787704;
+	bh=5HHVQLfkNKsakWCag51j0c9VwcV4K1dtcVzubxd0iNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Llr+aZ67EgPjET/7AW30KLzr7X2ogBD+eCyIYzcZngyETaNiWBi7cSFOqOr+rpHO2
-	 wSXKu6SzA9jVx+h0wtoRXWeKGzluFYux2ZdOTcU+ZgGAvP10MnGeTTgLwBX6bph6A9
-	 QZ1EYtjcr3NOhBn9fiRRdmJdzJ5u+NIAQG4iq0As=
+	b=R12mIdTVOg8HrjoEzGgB4ur9xVguEvJO1FSf0sKp1Ss5v57ca8ciPvbYdnH6jR1Rt
+	 hVaWYJ7jvnQAv9jApHsX3sc7sVWNnPtuoQo6uGG5NIVlxxNXXfaEQKpdg8PRCJQDH6
+	 ePzU32PZE1TYpvuOTA5mA1IlR1UKurUEUfK1SUoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.2 323/457] HID: alps: fix use-after-free on input2 registration failure
-Date: Wed, 30 Sep 2026 17:27:08 +0200
-Message-ID: <20260930152352.994697578@linuxfoundation.org>
+Subject: [PATCH 7.2 324/457] HID: hid-oxp: use cancel_delayed_work_sync() in remove
+Date: Wed, 30 Sep 2026 17:27:09 +0200
+Message-ID: <20260930152353.014508095@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit d3aba3442798ce4a4c8ce3104d7b286d61e605f9 upstream.
+commit abd24922c2a9797d6184be0561dd85e7bcdfd091 upstream.
 
-alps_input_configured() stores data->input2 before calling
-input_register_device().  If registration fails, input_free_device()
-frees the input device but data->input2 still points to the freed memory.
-alps_input_configured() calls hid_hw_open() before allocating input2, so
-URBs are already active and raw_event can fire during the failure window.
-A U1_SP_ABSOLUTE_REPORT_ID report arriving then causes u1_raw_event()
-to dereference the freed data->input2 -> use-after-free.
+oxp_hid_remove() uses cancel_delayed_work() for all three delayed work
+items.  cancel_delayed_work() only dequeues a pending work item without
+waiting for a currently executing callback to finish.  If any of the
+work callbacks (oxp_rgb_queue_fn, oxp_btn_queue_fn, oxp_mcu_init_fn) is
+running at the time of removal, the callback continues executing
+concurrently with hid_hw_close() and hid_hw_stop(), accessing the HID
+device after it has been closed and stopped.
 
-Fix by only storing input2 into drvdata after successful registration
-and adding a NULL guard in the raw_event path.
+Use cancel_delayed_work_sync() instead to ensure that any in-progress
+work callback completes before device teardown proceeds.
 
-Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
+Fixes: 84910c459d65 ("HID: hid-oxp: Add OneXPlayer configuration driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Link: https://lore.kernel.org/r/20260804-oxp-fix-v2-1-b2d56e4c8a2c@cherr.cc
+Link: https://lore.kernel.org/r/20260804-oxp-fix-v1-1-51a4fe787167@cherr.cc
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-alps.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-oxp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-alps.c
-+++ b/drivers/hid/hid-alps.c
-@@ -407,6 +407,8 @@ static int u1_raw_event(struct alps_dev
- 		return 1;
+diff --git a/drivers/hid/hid-oxp.c b/drivers/hid/hid-oxp.c
+index d2ded6b08ce9..1e691ebc1199 100644
+--- a/drivers/hid/hid-oxp.c
++++ b/drivers/hid/hid-oxp.c
+@@ -1552,9 +1552,9 @@ static int oxp_hid_probe(struct hid_device *hdev,
  
- 	case U1_SP_ABSOLUTE_REPORT_ID:
-+		if (!hdata->input2)
-+			return 0;
- 		sp_x = get_unaligned_le16(data+2);
- 		sp_y = get_unaligned_le16(data+4);
- 
-@@ -738,7 +740,6 @@ static int alps_input_configured(struct
- 			goto exit;
- 		}
- 
--		data->input2 = input2;
- 		input2->phys = input->phys;
- 		input2->name = "DualPoint Stick";
- 		input2->id.bustype = BUS_I2C;
-@@ -762,11 +763,12 @@ static int alps_input_configured(struct
- 		__set_bit(INPUT_PROP_POINTER, input2->propbit);
- 		__set_bit(INPUT_PROP_POINTING_STICK, input2->propbit);
- 
--		if (input_register_device(data->input2)) {
-+		if (input_register_device(input2)) {
- 			input_free_device(input2);
- 			ret = -ENOENT;
- 			goto exit;
- 		}
-+		data->input2 = input2;
- 	}
- 
- exit:
+ static void oxp_hid_remove(struct hid_device *hdev)
+ {
+-	cancel_delayed_work(&drvdata.oxp_rgb_queue);
+-	cancel_delayed_work(&drvdata.oxp_btn_queue);
+-	cancel_delayed_work(&drvdata.oxp_mcu_init);
++	cancel_delayed_work_sync(&drvdata.oxp_rgb_queue);
++	cancel_delayed_work_sync(&drvdata.oxp_btn_queue);
++	cancel_delayed_work_sync(&drvdata.oxp_mcu_init);
+ 	hid_hw_close(hdev);
+ 	hid_hw_stop(hdev);
+ }
+-- 
+2.55.0
+
 
 
