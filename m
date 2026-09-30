@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C134E36E9;
-	Wed, 30 Sep 2026 17:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B5C4DA9D4;
+	Wed, 30 Sep 2026 17:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787951; cv=none; b=icJocv1uHWOO/DS8cmYKneBO11J2kziZiiIY6EsQaW67g8srUthnLeurqYtNY5ZxBiI/dNecPN/TC4aJpLvIrSzIqhTxbSZl+8XbkpU0rIW29YnURHCFly05vo0UIbBqCfUk26+1TinrSQLNAubMf+FBcYvnGlooFnhVu2csXrM=
+	t=1790787954; cv=none; b=Eb7KIKl+6CSWiQn5B+qzFoe9ripzoLjUjSFwssULL+CO5shxPFUW8tzonMS1EAi5g4XGO6qxn4zwiStcysdsT9xKayxJsXpwfDIOnqwHiUZEbyFOG4syIqY6nUTDxQe+29obgqUuFU/Vxj4QGM51M28e36SvnY52YJgoDjXiV/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787951; c=relaxed/simple;
-	bh=5VIk4Rev+pfGcl9lI/f6WVCd8i50kEtsE4pfHUowew8=;
+	s=arc-20240116; t=1790787954; c=relaxed/simple;
+	bh=8T9SBmzn+Zy87WfDeLH1VeYCTiOFuAbZB71U6fl6HfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwpE0rvc0uCXMFywDVwFor/Iq2oo/JIjrbY10QrMjbcLQwOZuna4D7Jj2XHVDDDMgioV5klrVF/YhWR2e/gRgnjKOoSfXBsAj9iu13RlTooItjG9Cb88GMNoWvLGrsESUW250epxtBWQ2uOAhN7ccNpWLj5fBPQ8YZsHSpHnvvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w48ip3n+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W/9xZ/FDSwzx1/OGTz51OIzVI9olruD3NrxoZ9Mn3DazRy1Oofy3v81k0W2gY2ML+3PTzt45794QDhK3k9mTaYbSsBy9B4+ioQUGAuk6LJZjocySg3dNIFCAH0ktwiQ0U4Dl6fo+ZNnBZPiqrMCrLbuKkOeQGkZElP8I6+6csbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjXZ1spn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w48ip3n+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A571A1F000FF;
-	Wed, 30 Sep 2026 17:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjXZ1spn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5CD1F0089A;
+	Wed, 30 Sep 2026 17:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787950;
-	bh=aTcmTYmdHVtTihBqGFTzZODzDbxFGcgfl8qMAU+5Uuo=;
+	s=korg; t=1790787953;
+	bh=SgR4MoqbWxeh5gf17GsVmxVK2J/gasulKAPdm5scF24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w48ip3n+3isCVIk3k4BjHKn426x+GCWEaF1f+2jga8NTGZaW34e50dbY0QHkBi7yX
-	 l8+VHJuXlY7DiFftPC2vMgOVRlj5Z0m450iLIHVapO1Id+bH9QQaWUQ4dGaFEKzI21
-	 hKwKCAwkAdyCFgiQztHHlWxATv/57wiX/vdKCV4M=
+	b=SjXZ1spneK4akWIbhcpJ7vipIP73BDWcCJgyykRkI5ijt5JuTG2FUxE1CFiFQxyNH
+	 +nHbokAbv0a561vCOLHrAYY/UgBKyEJRkqzhyOsPcKDuGl2QmMn5j4Y7FdBNU94ebp
+	 ZzKRy/6JiDcx+IgtO6S2edTpbimUdb2aHyyZPajo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Frank Sorenson <sorenson@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 412/457] smb: client: use finish_no_open() for non-regular inodes
-Date: Wed, 30 Sep 2026 17:28:37 +0200
-Message-ID: <20260930152354.880584246@linuxfoundation.org>
+Subject: [PATCH 7.2 413/457] smb: client: validate POSIX create context length
+Date: Wed, 30 Sep 2026 17:28:38 +0200
+Message-ID: <20260930152354.900377547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,206 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit e66cf1625ec4a3fe68346119f371def713fd0a4d upstream.
+commit fa2e9900dd2a3f5a1e7ef5a8c5e8d435feedbfcc upstream.
 
-An O_CREAT open can find an existing symlink or another non-regular
-inode. cifs_atomic_open() calls finish_open() on it and attaches a
-cifsFileInfo. Symlink inodes have no CIFS release operation, so the
-dentry reference held by cifsFileInfo is leaked. FMODE_OPENED also
-prevents the VFS from following the symlink.
+parse_posix_ctxt() reads the fixed nlink, reparse_tag, and mode fields
+before checking that the POSIX create context contains them.  A short
+context can pass the generic checks and still make these fixed-width
+reads run past its declared data.
 
-Track whether cifs_do_create() returned an open server handle. For
-non-regular inodes, close the handle if present, remove the pending
-open, and call finish_no_open() so the VFS can continue the lookup.
-Do not set FMODE_CREATED unless a regular file was opened. For
-O_NOFOLLOW with __O_REGULAR, return -ELOOP before the VFS's
--EFTYPE check.
+The current in-tree smb2_open_file() path passes a NULL posix pointer,
+so this handler is not reached on the ordinary open path.  Still require
+the POSIX data to cover all three fields before reading them because the
+helper performs those unguarded reads.  Keep the existing soft-failure
+behavior so malformed optional metadata does not fail the open.
 
-Defer closing a legacy POSIX handle on a non-regular inode until
-after inode lookup. This avoids closing it again if lookup fails.
-
-Fixes: d2c127197dfc ("cifs: implement i_op->atomic_open()")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Fixes: 69dda3059e7a ("cifs: add SMB2_open() arg to return POSIX data")
 Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Tested-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/dir.c |   52 +++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 39 insertions(+), 13 deletions(-)
+ fs/smb/client/smb2pdu.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/dir.c
-+++ b/fs/smb/client/dir.c
-@@ -203,7 +203,7 @@ static int __cifs_do_create(struct inode
- 			    struct tcon_link *tlink, unsigned int oflags,
- 			    umode_t mode, __u32 *oplock, struct cifs_fid *fid,
- 			    struct cifs_open_info_data *buf,
--			    struct inode **inode)
-+			    struct inode **inode, bool *opened)
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2396,12 +2396,15 @@ static void
+ parse_posix_ctxt(struct create_context *cc, struct smb2_file_all_info *info,
+ 		 struct create_posix_rsp *posix)
  {
- 	int rc = -ENOENT;
- 	int create_options = CREATE_NOT_DIR;
-@@ -220,6 +220,7 @@ static int __cifs_do_create(struct inode
- 	__le32 lease_flags = 0;
+-	int sid_len;
+ 	u8 *beg = (u8 *)cc + le16_to_cpu(cc->DataOffset);
+-	u8 *end = beg + le32_to_cpu(cc->DataLength);
++	u32 dlen = le32_to_cpu(cc->DataLength);
++	u8 *end = beg + dlen;
++	int sid_len;
+ 	u8 *sid;
  
- 	*inode = NULL;
-+	*opened = false;
- 	*oplock = 0;
- 	if (tcon->ses->server->oplocks)
- 		*oplock = REQ_OPLOCK;
-@@ -236,6 +237,7 @@ static int __cifs_do_create(struct inode
- 				     oflags, oplock, &fid->netfid, xid);
- 		switch (rc) {
- 		case 0:
-+			*opened = true;
- 			if (newinode == NULL) {
- 				/* query inode info */
- 				goto cifs_create_get_file_info;
-@@ -257,11 +259,9 @@ static int __cifs_do_create(struct inode
- 				/*
- 				 * The server may allow us to open things like
- 				 * FIFOs, but the client isn't set up to deal
--				 * with that. If it's not a regular file, just
--				 * close it and proceed as if it were a normal
--				 * lookup.
-+				 * with that. Keep the handle until the caller
-+				 * can finish the lookup.
- 				 */
--				CIFSSMBClose(xid, tcon, fid->netfid);
- 				goto cifs_create_get_file_info;
- 			}
- 			/* success, no need to query */
-@@ -388,6 +388,7 @@ retry_open:
- 		}
- 		return rc;
- 	}
-+	*opened = true;
- 	if (rdwr_for_fscache == 2)
- 		cifs_invalidate_cache(dir, FSCACHE_INVAL_DIO_WRITE);
+ 	memset(posix, 0, sizeof(*posix));
++	if (dlen < 3 * sizeof(__le32))
++		return;
  
-@@ -479,7 +480,7 @@ cifs_create_set_dentry:
- 	return rc;
- 
- out_err:
--	if (server->ops->close)
-+	if (*opened && server->ops->close)
- 		server->ops->close(xid, tcon, fid);
- 	if (newinode)
- 		iput(newinode);
-@@ -491,7 +492,7 @@ static int cifs_do_create(struct inode *
- 			  unsigned int oflags, umode_t mode,
- 			  __u32 *oplock, struct cifs_fid *fid,
- 			  struct cifs_open_info_data *buf,
--			  struct inode **inode)
-+			  struct inode **inode, bool *opened)
- {
- 	void *page = alloc_dentry_path();
- 	const char *full_path;
-@@ -500,10 +501,11 @@ static int cifs_do_create(struct inode *
- 	full_path = build_path_from_dentry(direntry, page);
- 	if (IS_ERR(full_path)) {
- 		rc = PTR_ERR(full_path);
-+		*opened = false;
- 	} else {
- 		rc = __cifs_do_create(dir, direntry, full_path, xid,
- 				      tlink, oflags, mode, oplock,
--				      fid, buf, inode);
-+				      fid, buf, inode, opened);
- 	}
- 	free_dentry_path(page);
- 	return rc;
-@@ -533,6 +535,8 @@ int cifs_atomic_open(struct inode *dir,
- 	struct inode *inode;
- 	unsigned int xid;
- 	__u32 oplock;
-+	bool is_regular;
-+	bool opened;
- 	int rc;
- 
- 	if (unlikely(cifs_forced_shutdown(cifs_sb)))
-@@ -585,12 +589,26 @@ int cifs_atomic_open(struct inode *dir,
- 	cifs_add_pending_open(&fid, tlink, &open);
- 
- 	rc = cifs_do_create(dir, direntry, xid, tlink, oflags, mode,
--			    &oplock, &fid, &buf, &inode);
-+			    &oplock, &fid, &buf, &inode, &opened);
- 	if (rc) {
- 		cifs_del_pending_open(&open);
- 		goto out;
- 	}
- 
-+	is_regular = S_ISREG(inode->i_mode);
-+	if (!is_regular || !opened) {
-+		if (opened && server->ops->close)
-+			server->ops->close(xid, tcon, &fid);
-+		cifs_del_pending_open(&open);
-+		if (S_ISLNK(inode->i_mode) &&
-+		    (oflags & (O_NOFOLLOW | __O_REGULAR)) ==
-+		    (O_NOFOLLOW | __O_REGULAR) && !(oflags & O_EXCL)) {
-+			iput(inode);
-+			rc = -ELOOP;
-+			goto out;
-+		}
-+	}
-+
- 	if (d_in_lookup(direntry)) {
- 		alias = d_splice_alias(inode, direntry);
- 		if (!IS_ERR_OR_NULL(alias))
-@@ -599,9 +617,15 @@ int cifs_atomic_open(struct inode *dir,
- 		d_instantiate(direntry, inode);
- 	}
- 
--	if ((oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
-+	if (is_regular && opened &&
-+	    (oflags & (O_CREAT | O_EXCL)) == (O_CREAT | O_EXCL))
- 		file->f_mode |= FMODE_CREATED;
- 
-+	if (!is_regular || !opened) {
-+		rc = finish_no_open(file, NULL);
-+		goto out;
-+	}
-+
- 	rc = finish_open(file, direntry, generic_file_open);
- 	if (rc) {
- 		if (server->ops->close)
-@@ -664,6 +688,7 @@ int cifs_create(struct mnt_idmap *idmap,
- 	struct inode *inode;
- 	struct cifs_fid fid;
- 	__u32 oplock;
-+	bool opened;
- 	struct cifs_open_info_data buf = {};
- 
- 	cifs_dbg(FYI, "cifs_create parent inode = 0x%p name is: %pd and dentry = 0x%p\n",
-@@ -686,10 +711,10 @@ int cifs_create(struct mnt_idmap *idmap,
- 		server->ops->new_lease_key(&fid);
- 
- 	rc = cifs_do_create(dir, direntry, xid, tlink, oflags,
--			    mode, &oplock, &fid, &buf, &inode);
-+			    mode, &oplock, &fid, &buf, &inode, &opened);
- 	if (!rc) {
- 		d_instantiate(direntry, inode);
--		if (server->ops->close)
-+		if (opened && server->ops->close)
- 			server->ops->close(xid, tcon, &fid);
- 	}
- 
-@@ -1082,6 +1107,7 @@ int cifs_tmpfile(struct mnt_idmap *idmap
- 	struct inode *inode;
- 	unsigned int xid;
- 	__u32 oplock;
-+	bool opened;
- 	int namelen;
- 	int rc;
- 
-@@ -1120,7 +1146,7 @@ int cifs_tmpfile(struct mnt_idmap *idmap
- 		namelen = scnprintf(name, namesize, CIFS_TMPNAME_PREFIX "%x",
- 				    atomic_inc_return(&cifs_tmpcounter));
- 		rc = __cifs_do_create(dir, dentry, path, xid, tlink, oflags,
--				      mode, &oplock, &fid, NULL, &inode);
-+				      mode, &oplock, &fid, NULL, &inode, &opened);
- 		if (!rc) {
- 			rc = d_mark_tmpfile_name(file, &QSTR_LEN(name, namelen));
- 			if (rc) {
+ 	posix->nlink = get_unaligned_le32(beg);
+ 	posix->reparse_tag = get_unaligned_le32(beg + 4);
 
 
