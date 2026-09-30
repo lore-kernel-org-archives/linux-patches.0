@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1D550B408;
-	Wed, 30 Sep 2026 16:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5DF501F28;
+	Wed, 30 Sep 2026 16:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784093; cv=none; b=We6z9WSNwmRTs/+EOfe9yNssEQkgBMWu4GXOfZYlKUAnY01Rp4BLOyvSn0wGZxErVlZ36Ym9yyI99bwJrDcnaljE1Pu+5rNyj1eyvBVlHbS2lm585zEvJLicNWs1tATcid2v757KS86ws61elq4BhCZ6Ew+tinKVBCpKEb6zdo4=
+	t=1790784100; cv=none; b=DJjGsRpTYqQSqB5jvYIZaPTrc+EMYpSCevs3nE3oW4IwohBZTbxwitkTeicXk8bddlWKzs+XIraGc/Eh9rIJ3zvgotfIIw/32P74jg8+NlJwJOxtuxRaFFWaZFj6cwpOKZ+4wwqr7qnzctmtKLAXv+cwAxmpGHXf4j+78tIaQco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784093; c=relaxed/simple;
-	bh=FqWpG2YfCFeTePYNH9EcRGt5MSrPkQr2lC9fQUcTF4s=;
+	s=arc-20240116; t=1790784100; c=relaxed/simple;
+	bh=ni9snUYdHoqQDYrusMdAlF6eGT3O7jHh49Cnz0hGhUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2f6fyrI6WTvyPzYHtXL/H/NWbs6YsqbB9caJ1uwTrlxbrQkJ8nWM9If8rbmuwx+pxPFZcBKK1Xwx0xvQg2WsNyN7llk20S4LxFaB4dTPgPYnt3P2/JmTysUVKfdDDIlXQ+/Quwta1F/mOqtDyP2dtCP5FFglvgNcyEKIqDXRzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbmMZtzG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+lTIpLKcG7YV+VOuMI2hui/xIb55zT/FVkc3jfhmaF25Uc9cC4OTsxLLeIodd3iUNANyBrthAc+s9phgOSqhcpnisSCqeCCpe9BvSwYpJl+ekDR+GVh0KnyV+aLH9/vVDyWJsFjwmeFUqnxtIYiRWcK58/hMMJqAKyQXtBR7eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWVw7HWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbmMZtzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364D21F00893;
-	Wed, 30 Sep 2026 16:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWVw7HWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82411F00893;
+	Wed, 30 Sep 2026 16:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784085;
-	bh=hSSH7bXwiDpGMEHcdV4AocyISq4MxfEhi4yiXVYko2U=;
+	s=korg; t=1790784094;
+	bh=rf3HYMBd6GRVmrWgeWk/REL+jcs6QlLkzekrmDyFEvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sbmMZtzG9iUMFxsu/yG+kWSVXp4/8qBG8XTWNeOARpNJS2g7qomhnX5Sjnx+qn3nX
-	 vQYpTUu4Rxw2drcT7IQxRjwiX114PuxHdGlwNGkzE8lPSRqVOAzhcut/qu3TxMXuRg
-	 PhBW19ZHMBwqbuPWoMOxB9szEeLa2bf5RazBfyJs=
+	b=GWVw7HWDc5gGD5V+FeLJHz9MIrfRAm/hdgFW0Rlfe6pOAw9I7ACLWgqpAUWvR3vAy
+	 HWfntSNptg4qfkmHwqac3aPwjJAsLsiV2PChEdmU2SsKAe0p7cLRzdP2qXuv3cf/BZ
+	 WwZZG67wXXnotSzGHEYNz63FU7MPF9cunHs2bTCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Jarkko Nikula <jarkko.nikula@bitmer.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ray Wu <ray.wu@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	James Lin <pinglei.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/982] ASoC: ti: omap3pandora: update board check to use DT compatible
-Date: Wed, 30 Sep 2026 17:12:48 +0200
-Message-ID: <20260930152417.486653500@linuxfoundation.org>
+Subject: [PATCH 6.1 035/982] drm/amd/display: Fix CRC open failure during active rendering
+Date: Wed, 30 Sep 2026 17:12:51 +0200
+Message-ID: <20260930152417.549150019@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,57 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 45efb8fbdae303539e7fb5562e147583d4ed63ad ]
+[ Upstream commit 5eb2fdafeb6f4a442643b77a21a4c9e70586a146 ]
 
-The omap3pandora driver contains a check for the ARM machine ID via the
-machine_is_omap3_pandora() macro. The board concerned now supports
-only FDT booting, which does not use machine IDs, and therefore the
-code should be updated to check the DT compatible property instead. The
-legacy board file for this machine was removed in commit 7fcf7e061edd
-("ARM: OMAP2+: Remove legacy booting support for Pandora").
-The presence of this machine ID check prevents the removal of machine
-IDs no longer used by the kernel from arch/arm/tools/mach-types,
-because the machine_is_*() macros are generated from mach-types. To
-resolve this issue, use of_machine_is_compatible() instead.
+[Why]
+Opening the CRC data file during active rendering can fail with -EINVAL.
+The wait for commit->hw_done returns remaining jiffies on success, but
+the CRC path was treating that as an error.
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@bitmer.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[How]
+Handle wait_for_completion_interruptible_timeout() correctly:
+positive return as success, 0 as timeout, and negative as error.
+
+Reviewed-by: Ray Wu <ray.wu@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: James Lin <pinglei.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/omap3pandora.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/ti/omap3pandora.c b/sound/soc/ti/omap3pandora.c
-index a287e9747c2a1..3cec2eaafe62f 100644
---- a/sound/soc/ti/omap3pandora.c
-+++ b/sound/soc/ti/omap3pandora.c
-@@ -11,12 +11,12 @@
- #include <linux/delay.h>
- #include <linux/regulator/consumer.h>
- #include <linux/module.h>
-+#include <linux/of.h>
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+index 8a441a22c46ec..0c17877a6c5c8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c
+@@ -261,8 +261,13 @@ int amdgpu_dm_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
+ 		 */
+ 		ret = wait_for_completion_interruptible_timeout(
+ 			&commit->hw_done, 10 * HZ);
+-		if (ret)
++		if (ret < 0)
++			goto cleanup;
++
++		if (ret == 0) {
++			ret = -ETIMEDOUT;
+ 			goto cleanup;
++		}
+ 	}
  
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/soc.h>
- 
--#include <asm/mach-types.h>
- #include <linux/platform_data/asoc-ti-mcbsp.h>
- 
- #include "omap-mcbsp.h"
-@@ -224,7 +224,8 @@ static int __init omap3pandora_soc_init(void)
- {
- 	int ret;
- 
--	if (!machine_is_omap3_pandora())
-+	if (!of_machine_is_compatible("openpandora,omap3-pandora-600mhz") &&
-+		!of_machine_is_compatible("openpandora,omap3-pandora-1ghz"))
- 		return -ENODEV;
- 
- 	pr_info("OMAP3 Pandora SoC init\n");
+ 	enable = amdgpu_dm_is_valid_crc_source(source);
 -- 
 2.53.0
 
