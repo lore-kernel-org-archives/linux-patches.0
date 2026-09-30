@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5ED519912;
-	Wed, 30 Sep 2026 17:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F54516157;
+	Wed, 30 Sep 2026 17:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788525; cv=none; b=sGaXObFQT2Lh37YfLf3j6OukhBMt/rX1VUayJXiU6pT5vhpC66pbWlRV9TCVDRI0Zm19B2YdYM2pyuY3vKu/I2VvnsgZkGeQAJJ1xSN0rTIIxxX3Q+swBeS8jQLQNxv/YahObcWA47UwosU2l4q/EabqPffZM0/m9HVWvtnN6YY=
+	t=1790788528; cv=none; b=V4r14s9GoD8b9cUtWA1fyY1uc04yuXsxAiZWALlzbsm+FxQUzizWpA4xuh5vyL1BZ5RxT0Hm7IxeXP3KbFm1dEsnG44sRVKNJ2jrIMv9yqhiMv3IKYPa06JUntpNv3lskh5uVLK1sukMn0UVL/LApw1hA5xEtI2ghaYqAajLXB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788525; c=relaxed/simple;
-	bh=hNKaezMaljJ3WTROXEtqY0CPdsvBLppkzSetSeIPO5g=;
+	s=arc-20240116; t=1790788528; c=relaxed/simple;
+	bh=+6CWJyVwLOCJH3+lTTG8vEn6/N9+hhxaziMQWczt8NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mbjPV51D6qKedqsMwq+vop8qpU/oiTd3dkG9b46EoBIfWeHEN53IGs4L2cjeP2xHhfuE+ccuLQy2+cqodKBQvmOHrV+B56PiGXI83y3EF1FrrC33wUmPjzQ8y67xytLTkwzA0JDeurKIr4qNwdBAo9N3DPop1S8hM5MIpN9292o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcLHDz7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rExZRaCkgx/9RPw9Hxbbg5DXCZOn7lYTKeRBeK8ux6eR033BdcNGAssWGw4TeF0S0fnmXeniI8HAztQnUjF19N4236Qp39f9Edu3BrlEeuh9zaPgCIWSMVmd+UCt8Ot7kv2PWpCT/pTvA4G23qv16FqTSnbWhloj+uxWXzKz/NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YR7DS7Gw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcLHDz7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5062E1F000FF;
-	Wed, 30 Sep 2026 17:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR7DS7Gw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1DD1F000FF;
+	Wed, 30 Sep 2026 17:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788523;
-	bh=W7gulRopiX/RNmMx5Ghn0jhp8uJE98G7tBnaGYrsGMg=;
+	s=korg; t=1790788526;
+	bh=vFuOVMeQ/oC2yVUjGYMBqBQfjb46GoBA2YCcy2yZtd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JcLHDz7qBLgHZMWmBXD09/svscR2I+rf7uuI1dBNHWzqazHB9RNMznqEaWnKPev6u
-	 yfYrwZN8TUiYabeZlHYoPCSk1+M+Uc/LDBuP5zqWwYOtaYkM3U+TyMKZW29qmAQDym
-	 JnptE4undnhU+5XNUAuX2LSb3F7iMYWre7ZV9Z3s=
+	b=YR7DS7GwHkpnyH9uILnvNcCCwvPfaHObAxeveUx0HVuWMBudpXnJqsV6ZgcwarOsk
+	 bRYA9cIaVF1st7l/dYKdIFpVugE9fiRjD0se2tWria3dK56KsqUnfPGAXd+SCRKcmt
+	 BS2s+F1d4lJkb09tiedzXdMAUoE66K1jtDZEvV3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitriy Okunev <dokunevdmitriy@gmail.com>,
+	syzbot+586af68eb819833c2d91@syzkaller.appspotmail.com,
+	Xuanqiang Luo <xuanqiang.luo@linux.dev>,
+	Allison Henderson <achender@kernel.org>,
+	rds-devel@oss.oracle.com,
+	Eric Dumazet <edumazet@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 153/877] net: mvpp2: prevent buffer overflow in page_pool allocation
-Date: Wed, 30 Sep 2026 17:17:44 +0200
-Message-ID: <20260930152418.023682506@linuxfoundation.org>
+Subject: [PATCH 6.12 154/877] net: skbuff: do not leave stale header offsets after pskb_carve()
+Date: Wed, 30 Sep 2026 17:17:45 +0200
+Message-ID: <20260930152418.045349518@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -45,59 +50,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitriy Okunev <dokunevdmitriy@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 14cb1e7702e5cb3c58888f6aed498381a73927d2 ]
+[ Upstream commit a5117e1eccac6ee3bd4aed7cacf8ebcb6b3eb309 ]
 
-The per‑processor buffering scheme is supported only if the
-number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS (8).
-This is already checked in mvpp2_probe() during the initial
-activation of percpu_pools.
+pskb_carve_inside_header() and pskb_carve_inside_nonlinear() remove
+the first bytes of a packet and reallocate skb->head.
 
-However, mvpp2_change_mtu() may later call
-mvpp2_bm_switch_buffers(priv, true) without this check, which can
-lead to an out-of-bounds access in the priv->page_pool array in
-mvpp2_bm_init(). The array is sized to hold MVPP2_PORT_MAX_RXQ
-entries, and mvpp2_get_nrxqs() may return exactly that value. The
-per-CPU scheme then doubles it to nrxqs * 2, exceeding the array
-bounds.
+All the headers that were present before the operation are gone,
+but both functions call skb_headers_offset_update(skb, 0), which
+is a no-op : skb->mac_header, skb->network_header,
+skb->transport_header and skb->csum_start keep their old values and
+now describe bytes which are no longer there.
 
-Check that the hardware version is MVPP22 or newer and that the
-number of pools (nrxqs * 2) does not exceed MVPP2_BM_MAX_POOLS
-before switching to per-CPU mode.
+Both helpers size the new head from the old skb_end_offset(), so the
+stale offsets still land inside the new allocation. They point past
+skb_tail_pointer() though, to bytes that were never initialized.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+pskb_carve_inside_nonlinear() is the worst case, because it leaves a
+zombie skb with an empty linear part (skb->data ==
+skb_tail_pointer(skb), skb_headlen(skb) == 0), while
+skb_mac_header_was_set() is still true and skb->mac_header is way
+ahead of skb->data.
 
-Fixes: 7d04b0b13b11 ("mvpp2: percpu buffers")
-Signed-off-by: Dmitriy Okunev <dokunevdmitriy@gmail.com>
-Link: https://patch.msgid.link/20260914091557.71769-1-dokunevdmitriy@gmail.com
+The only user of pskb_extract() is rds_tcp_data_recv(), and the
+carved skb is queued on tinc->ti_skb_list. When the RDS incoming
+message is released, rds_tcp_inc_free() calls skb_queue_purge(),
+which frees the skbs with SKB_DROP_REASON_QUEUE_PURGE. This is
+visible from drop_monitor, which then tries to pull back to the
+(bogus) mac header :
+
+skbuff: __skb_pull(len=234)
+skb len=6968 data_len=6968 headroom=0 headlen=0 tailroom=0
+end-tail=384 mac=(234,14) mac_len=14 net=(248,40) trans=288
+shinfo(txflags=0 nr_frags=1 gso(size=1428 type=16 segs=5))
+csum(0x100120 start=288 offset=16 ip_summed=3 complete_sw=0 valid=1 level=0)
+hash(0x7b446c6c sw=0 l4=1) proto=0x86dd pkttype=0 iif=60
+kernel BUG at ./include/linux/skbuff.h:2847!
+
+Add skb_carve_reset_headers() to mark the mac and transport headers
+as not set, reset the network header, clear skb->mac_len, and drop
+a now meaningless CHECKSUM_PARTIAL (csum_start no longer describes
+anything).
+
+Invalidate the inner offsets as well. Unlike mac_header and
+transport_header they have no "unset" sentinel, so a leftover
+non-zero value still looks like a real header. Zero
+skb->inner_mac_header, skb->inner_network_header,
+skb->inner_transport_header, skb->inner_protocol and
+skb->encapsulation, so that all the header state is invalidated in
+one place.
+
+v2: fixed an inaccurate changelog. The stale offsets stay inside the
+    new skb->head, which is never smaller than the old one, they
+    simply point past skb_tail_pointer() to bytes that are gone.
+    Thanks to Xuanqiang Luo for insisting on this.
+    Also invalidate the inner header state, as suggested by the
+    netdev AI review :
+    https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260911114922.621937-1-edumazet%40google.com
+
+Fixes: 6fa01ccd8830 ("skbuff: Add pskb_extract() helper function")
+Reported-by: syzbot+586af68eb819833c2d91@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6aa3e9d3.f2639fcc.29487d.0028.GAE@google.com/
+Cc: Xuanqiang Luo <xuanqiang.luo@linux.dev>
+Cc: Allison Henderson <achender@kernel.org>
+Cc: rds-devel@oss.oracle.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260915130423.3956471-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/skbuff.c | 32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 325a3a657249d..8096b46b654fd 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -5099,7 +5099,8 @@ static int mvpp2_change_mtu(struct net_device *dev, int mtu)
- 			netdev_warn(dev, "mtu %d too high, switching to shared buffers", mtu);
- 			mvpp2_bm_switch_buffers(priv, false);
- 		}
--	} else {
-+	} else if (priv->hw_version >= MVPP22 &&
-+		   mvpp2_get_nrxqs(priv) * 2 <= MVPP2_BM_MAX_POOLS) {
- 		bool jumbo = false;
- 		int i;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 449c84fa73539..1e4f7b8e952cc 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6696,6 +6696,34 @@ struct sk_buff *alloc_skb_with_frags(unsigned long header_len,
+ }
+ EXPORT_SYMBOL(alloc_skb_with_frags);
  
++/* pskb_carve_inside_header() and pskb_carve_inside_nonlinear()
++ * remove the first bytes of a packet and reallocate skb->head.
++ *
++ * Whatever headers were present before the operation are gone,
++ * we must not leave stale offsets, otherwise users of this skb
++ * (skb_dump(), drop_monitor, taps, ...) would read or pull garbage.
++ */
++static void skb_carve_reset_headers(struct sk_buff *skb)
++{
++	skb_unset_mac_header(skb);
++	skb_unset_transport_header(skb);
++	skb_reset_network_header(skb);
++	skb->mac_len = 0;
++
++	/* Inner offsets have no "unset" marker, zero them so that
++	 * skb_inner_network_header_was_set() becomes false and no
++	 * consumer mistakes them for a real (and long gone) header.
++	 */
++	skb->inner_mac_header = 0;
++	skb->inner_network_header = 0;
++	skb->inner_transport_header = 0;
++	skb->inner_protocol = 0;
++	skb->encapsulation = 0;
++
++	if (skb->ip_summed == CHECKSUM_PARTIAL)
++		skb->ip_summed = CHECKSUM_NONE;
++}
++
+ /* carve out the first off bytes from skb when off < headlen */
+ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
+ 				    const int headlen, gfp_t gfp_mask)
+@@ -6751,7 +6779,7 @@ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
+ 	skb->head_frag = 0;
+ 	skb_set_end_offset(skb, size);
+ 	skb_set_tail_pointer(skb, skb_headlen(skb));
+-	skb_headers_offset_update(skb, 0);
++	skb_carve_reset_headers(skb);
+ 	skb->cloned = 0;
+ 	skb->hdr_len = 0;
+ 	skb->nohdr = 0;
+@@ -6892,7 +6920,7 @@ static int pskb_carve_inside_nonlinear(struct sk_buff *skb, const u32 off,
+ 	skb->data = data;
+ 	skb_set_end_offset(skb, size);
+ 	skb_reset_tail_pointer(skb);
+-	skb_headers_offset_update(skb, 0);
++	skb_carve_reset_headers(skb);
+ 	skb->cloned   = 0;
+ 	skb->hdr_len  = 0;
+ 	skb->nohdr    = 0;
 -- 
 2.53.0
 
