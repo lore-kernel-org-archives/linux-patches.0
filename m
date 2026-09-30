@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D0242CB08;
-	Wed, 30 Sep 2026 19:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B992509EF1;
+	Wed, 30 Sep 2026 19:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797166; cv=none; b=UJdECvWexNakLG6zC1EyJHP6xyHOqSmgsvHIE3mEwOCUQWEEjmLsiisNUg8po2jE0WgjRgoK0wLIXfY6BU6Of0wQvoOJpQTq1BFPzhiveFyaudwMmyWCF/OQ3i3tKh7tuKjCOs2KoG8L+qdKemY4G66Kzss2Aq/t3yLmTv7wAcg=
+	t=1790797170; cv=none; b=WO3r04XvHnORpdyeloVvA8o58RS1K5e6QILFFWdLQAmGUlyKkVZeO8D7XmR414bFmq6Al73miatVr4quqEBOPB+3ZUy7+3CIH65udtkyHPyysO+mu4xECCJld0+CvkepkGyoLTQPVHv1QaQ/vMTQnMu6lJmQZsOEPw66bRiev/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797166; c=relaxed/simple;
-	bh=U/CxzqfxNBa3NxFjhvo8xDTY866wYn6gcPUOiwT48rA=;
+	s=arc-20240116; t=1790797170; c=relaxed/simple;
+	bh=g2fQ6Uh4EEQQYqAe69J4DSGVT2uBWSTSpAz4R4i/gIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vAoKcQmsOHuhJM1zkZgX8SmOAWEhtNz6vB8dxE8g5u6qKY69FD/Dlyucm+vxHzchk3cMVvetQrZDZcS1tp6HKq2Agj0OSDax2ZoWEOmmABcuSQATYPUSt/R0uVPk3znhdcEKz+P9UGcXkRJEMyPqZ+K1SwFd6rC4iaDk6uaFiBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuYJ4AOY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WN2gqUGXc+xlNjAcbJ8LWMG1KIramyI8F1omKWT1o/RFu9Ic6XaC4AtthPPzTAO5kwaiJp9teGnI0JjLx7c7Gn+P417pJpt8GyVF2z0nnqXiDIL4RGQ/kojOruFTsVQZnEkcFubi9iohJfvTkETIcs3tmMCFCj1+7SLlOoGrh28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAub9NHP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuYJ4AOY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D641F000FF;
-	Wed, 30 Sep 2026 19:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAub9NHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725DA1F000FF;
+	Wed, 30 Sep 2026 19:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797165;
-	bh=bKhGC2j5T79bUZRG6HUjy2xS0vsT1FOTFzG1mwAKKD8=;
+	s=korg; t=1790797168;
+	bh=xP8TQz1AT6hikh0ptStOpfJ6kyo8PGbkt9+cdmxGe1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FuYJ4AOYWwW+wDJqLxCuWyJmjUDG2ckMD9+3TZbCA2KGH7ZpxfssDtKPvVAEZqf0U
-	 N+HezxSqH11PEvlx83hOBbWl9s029MbUqsZNXgR8HGqANswjaAJzErFZYgX2sS1GHG
-	 7PpSKX/aSQSCK8gb6xS948Cu2E7FRJDYfibUncsA=
+	b=YAub9NHPqQsCLrcBzrIyzVtifJNVimUZ8gxaBA61vc606uNRACCvKNPgJt+zqcUCL
+	 kOd+rkNcQttP7xul058TdMn1GduwJEOvcrAvgsl6V6qj6zvX28TDZDYdAIsiqVk5pm
+	 95ShQ1EWAjnEKKxIbdMKfeQnEiR1jWXTNYvIwT9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Rengarajan S <rengarajan.s@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Minh=20Ti=E1=BA=BFn=20Nguy=E1=BB=85n?= <zizuzacker@gmail.com>
-Subject: [PATCH 6.6 1170/1193] lan78xx: Enable Auto Speed and Auto Duplex configuration for LAN7801 if NO EEPROM is detected
-Date: Wed, 30 Sep 2026 17:30:54 +0200
-Message-ID: <20260930152500.238506418@linuxfoundation.org>
+	Tan Chi <tanchi25@mails.ucas.ac.cn>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.6 1144/1193] RISC-V: KVM: Fix HSM hart status error propagation
+Date: Wed, 30 Sep 2026 17:30:28 +0200
+Message-ID: <20260930152459.653147090@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -46,45 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Tan Chi <tanchi25@mails.ucas.ac.cn>
 
-commit 799f532de13601f91ecb9cc6169d45d6e6933b0f upstream.
+commit 41e81f7e3ef96594fb840445343c0ee7723aa550 upstream.
 
-Enabled ASD/ADD configuration for LAN7801 in the absence of EEPROM.
-After the lite reset these contents go back to defaults where ASD/
-ADD is disabled. The check is already available for LAN7800.
+kvm_sbi_hsm_vcpu_get_status() returns SBI_ERR_INVALID_PARAM when
+the requested hart does not exist. However, the HART_STATUS case
+returns from the SBI handler without storing this error in
+retdata->err_val.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20240529140256.1849764-3-rengarajan.s@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Minh Tiến Nguyễn <zizuzacker@gmail.com>
+As a result, a guest querying the status of a non-existent hart
+observes SBI_SUCCESS instead of SBI_ERR_INVALID_PARAM.
+
+Use the common SBI error handling path for HART_STATUS after
+saving a valid hart state in retdata->out_val. This preserves
+the returned error when kvm_sbi_hsm_vcpu_get_status() fails.
+
+Fixes: bae0dfd74e01 ("RISC-V: KVM: Modify SBI extension handler to return SBI error code")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260914031146.446157-1-tanchi25@mails.ucas.ac.cn
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/vcpu_sbi_hsm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -3069,8 +3069,11 @@ static int lan78xx_reset(struct lan78xx_
- 		return ret;
- 
- 	/* LAN7801 only has RGMII mode */
--	if (dev->chipid == ID_REV_CHIP_ID_7801_)
-+	if (dev->chipid == ID_REV_CHIP_ID_7801_) {
- 		buf &= ~MAC_CR_GMII_EN_;
-+		/* Enable Auto Duplex and Auto speed */
-+		buf |= MAC_CR_AUTO_DUPLEX_ | MAC_CR_AUTO_SPEED_;
-+	}
- 
- 	if (dev->chipid == ID_REV_CHIP_ID_7800_ ||
- 	    dev->chipid == ID_REV_CHIP_ID_7850_) {
+--- a/arch/riscv/kvm/vcpu_sbi_hsm.c
++++ b/arch/riscv/kvm/vcpu_sbi_hsm.c
+@@ -102,9 +102,9 @@ static int kvm_sbi_ext_hsm_handler(struc
+ 		ret = kvm_sbi_hsm_vcpu_get_status(vcpu);
+ 		if (ret >= 0) {
+ 			retdata->out_val = ret;
+-			retdata->err_val = 0;
++			ret = 0;
+ 		}
+-		return 0;
++		break;
+ 	case SBI_EXT_HSM_HART_SUSPEND:
+ 		switch (cp->a0) {
+ 		case SBI_HSM_SUSPEND_RET_DEFAULT:
 
 
