@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89263B2D1A;
-	Wed, 30 Sep 2026 17:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF1851123D;
+	Wed, 30 Sep 2026 17:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791186; cv=none; b=GGZI9oxFhfUDRoPv6fXm2ZGGWG7AJH98A4pdC9Lx2Feg7SsgTk9v1mUAm7cg337GFEWn0p++s/kM90xOs01ut6+b3BDuD3ttfYxcDEddKYss/0mlD7qoIV52DvUbAi/u1rWsf85kQrZe5vMyKWxJvxaPTfjaok3zIywy3ifLNok=
+	t=1790791188; cv=none; b=rXjozOmoIAsUSIVAPmf8LnBmySmAfUF4upT9VgzZ+Fg7fAsaVaYretPJOI2ni/Q5hpoogscLKtMte7B8+jIOW3Zpt0x53VERk5GRHDR4oQPP+QnWDuCREEO+wMfEtWcU0X1oBI/WC5BO36YBj+M8xadMPMCZqLI/dR4viu/vb/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791186; c=relaxed/simple;
-	bh=Ek1qbNmkuQeJYyjON0lv9Qu8ByNF/5HcbZivoFUb2W8=;
+	s=arc-20240116; t=1790791188; c=relaxed/simple;
+	bh=HX7FDDskjmDrlodGqdLNTJijVkVyCHv4gQI4QaCxhYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrGIJiqy+VhO8bWqqdqvm9zGy4/v3rJunjw2dYQ/6sSqa4QKCo5gjrUshX3VoODHZ4Tx5AfDA5jDFEu3t8R5GAVrnVXsiHHQ8rgYuSuk/AjAHv5fxlreQkAdcvJBKlLjH3ICwmal8wJ69uagu0tmeFLBr5CZZfEy0SZ5tQS1TUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFzzeDs7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t9AW5BMyoNW2elE1sqv72VUk58PIWfsu+L5aCLOheKbY28AmksX16Tt3of4/pnH64L0jDTgSijrIanuYujeBTA7vgtGbi4af0VH0oRXpnBxi9M60lIySRa9FOCpz4gTPNLbcCXOKlIEwvkDEHqTWe0gD+P1WyHXA0FrdeCPyio4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoDfp+df; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFzzeDs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8FE1F00898;
-	Wed, 30 Sep 2026 17:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoDfp+df"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3063D1F000FF;
+	Wed, 30 Sep 2026 17:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791184;
-	bh=SRiubttBPr8RIkckiGSV74WvZkSUMlHrlYq7v6NRnGM=;
+	s=korg; t=1790791187;
+	bh=85k7NfWDuMwmorPp46Oyv/HpZ+gQ0hPnU0ouDMoXfjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nFzzeDs7pe2wZFi4A8lg2yeivHLwjMNIH3hRQlPAt33UZdD/OAsCb2h6lC0492Vv5
-	 6xx0IRfCtDA8m2sE4d1xoZX1PUGObKoqxQMzSg1PtGubNIk8OiWRkJsUJ8lPf+Zg+U
-	 PB0IjpN6lYDx6KuHDcJ8/UJJOPqr6Th2JVHzb6W8=
+	b=xoDfp+dfnkusQ0JHohBUD0vIYc+HH/t7apnaf5G+ZBjeh+xXMI/H7GEIUga2O06jK
+	 xXf63geCbUxsF1Y6qwswV2atX3s5uh2NyBmKmbXDpwBWwBvzxVOAd00K4gP7tDygTf
+	 Ey+IqIu7+zh30ZHjlZQPGxZG56QjYgWbpJzx+Uv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adriana Stancu <adriana@arista.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"Daniel C. Ribeiro" <dcoutinho.96@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 177/752] rtc: bq32000: add delay between RTC reads
-Date: Wed, 30 Sep 2026 17:20:47 +0200
-Message-ID: <20260930152402.034700169@linuxfoundation.org>
+Subject: [PATCH 5.15 213/752] ALSA: usb-audio: Add FIXED_RATE quirk for JBL Quantum650 Wireless
+Date: Wed, 30 Sep 2026 17:21:23 +0200
+Message-ID: <20260930152402.852151261@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,61 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adriana Stancu <adriana@arista.com>
+From: Daniel C. Ribeiro <dcoutinho.96@gmail.com>
 
-[ Upstream commit d4992b7050a10079bc760bdc5b8688e05a09dfc2 ]
+[ Upstream commit f6d6a4147ace0c417035f65b021027c209c75190 ]
 
-When the RTC is used on systems without a interrupt line, userspace
-tools like `hwclock` fall back to a frequent polling loop to synchronize
-with the edge of the next second.
+JBL Quantum650 Wireless (0ecb:2125) requires the same workaround that
+was used for JBL Quantum610 and Quantum810 for limiting the sample rate.
+Without it, the capture (microphone) stream fails to work.  Setting the
+QUIRK_FLAG_FIXED_RATE flag, as done for the sibling models, makes both
+playback and capture work correctly.
 
-On the BQ32000, this aggressive polling can temporarly lock the register
-refresh cycle, because the continuous transfers prevent the hardware from
-updating the buffer. This results in stale data reads or select() timeouts
-in userspace.
-
-This patch introduces a delay before reading the RTC registers in order to
-provide a sufficient idle time for the hardware to sync with the register
-buffer.
-
-Signed-off-by: Adriana Stancu <adriana@arista.com>
-Link: https://patch.msgid.link/20260416142151.3385827-1-adriana@arista.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Daniel C. Ribeiro <dcoutinho.96@gmail.com>
+Link: https://patch.msgid.link/20260719090037.40149-1-dcoutinho.96@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-bq32k.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-bq32k.c b/drivers/rtc/rtc-bq32k.c
-index 2235c968842db..9873bea505fcb 100644
---- a/drivers/rtc/rtc-bq32k.c
-+++ b/drivers/rtc/rtc-bq32k.c
-@@ -15,6 +15,7 @@
- #include <linux/init.h>
- #include <linux/errno.h>
- #include <linux/bcd.h>
-+#include <linux/delay.h>
- 
- #define BQ32K_SECONDS		0x00	/* Seconds register address */
- #define BQ32K_SECONDS_MASK	0x7F	/* Mask over seconds value */
-@@ -88,9 +89,17 @@ static int bq32k_write(struct device *dev, void *data, uint8_t off, uint8_t len)
- 
- static int bq32k_rtc_read_time(struct device *dev, struct rtc_time *tm)
- {
-+	struct i2c_client *client = to_i2c_client(dev);
- 	struct bq32k_regs regs;
- 	int error;
- 
-+	/*
-+	 * When the device doesn't have the interrupt connected, prevent
-+	 * userpace from polling the RTC registers too frequently.
-+	 */
-+	if (client->irq <= 0)
-+		usleep_range(2000, 2500);
-+
- 	error = bq32k_read(dev, &regs, 0, sizeof(regs));
- 	if (error)
- 		return error;
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 9cb0e24004db6..1278d8a3cc128 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1851,6 +1851,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
++	DEVICE_FLG(0x0ecb, 0x2125, /* JBL Quantum650 Wireless */
++		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0fd9, 0x0008, /* Hauppauge HVR-950Q */
 -- 
 2.53.0
 
