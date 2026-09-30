@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC7351C326;
-	Wed, 30 Sep 2026 16:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9078351DAEB;
+	Wed, 30 Sep 2026 16:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784722; cv=none; b=IBWcR3966tbniRZoomWPNHfpb8Iiumum2V2a6R0JE4RN97h7FF5hTzpdvq1OeXOEhuyzFHzHuqsTIJsT4eOKZLf3JN5MlCMc2bIjCjQaUT3PGLkblRXZgXjJIN/bnVwSME9076lnICmJw8ETAXfFnAZIfj+5jBRIg0sK8debVrM=
+	t=1790784725; cv=none; b=KWA/LlpJZsDg6rzJ+bPwe9aFqA6hzvc2+CtM1qLnw4R4NsJ7pA2XQ9jBm8sr5hkAtTdKSWaA3wBAxXpM+wg+x3kZh/Jx1XQ4iwo5OFXTWJoHAmd8d05AKjDTFVLUfI/uPuLr6x5BamlYBVWfTM8mACIKXkpf6SXcMZORVWafTeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784722; c=relaxed/simple;
-	bh=zHXj4gWaPP87EQDr1Y1PIu23VNdmEt+fAW/dcHylBzM=;
+	s=arc-20240116; t=1790784725; c=relaxed/simple;
+	bh=qYLKlIhgjJ1YmOj+OjfdbSvVsTJEUDREgjNrwuJAId0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z97Mb7HQgxx26wSkiU/CLeMmXzqfuWEvvjzaHehyhhFEZcPeZi4lwYkBU3OlmaztOrMgfNWjdM3EFN0al8prE/PHihq6tmUe4OhApIBjUy0wdlLGpbv79c9rdK059g0dmN0F5tKH3iQdxIHr/Gjrk2qVeSk9LtxEHQ586BfTqbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJRGKB+h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oZkp18SJKJffhzktN++haVcixLnDLM52m8e6CUrYJaciifeqkgPIeHEEUqZZEtXyp1WzI7CKG7UHSZhzKipDiSLR+t4wDr6g4Cj5xHHUf99myNhWSgy6wm/9yyKKUNhZpCEMzNrTSQN9uYr76iUpOIloUGZ6uNRgpIz/TxGUrCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mm7T5RR7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJRGKB+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A440C1F000FF;
-	Wed, 30 Sep 2026 16:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mm7T5RR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744611F0089B;
+	Wed, 30 Sep 2026 16:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784717;
-	bh=NQLkztnTIaLgujqWP7s4/JCM4dY+e6dgtr2HMEPYeDE=;
+	s=korg; t=1790784720;
+	bh=21VDLxKGKlHzZT2u3+FPNih2oQN32tnk1M6slWbILHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJRGKB+hvR3EAcfBpxNsm87ZjyvS6LTc3bSJB16eaYOb+yPbsy30VeBKMi1L3Hoko
-	 Wcbq9XDalcJ0lJ9OW8YeKOkOYRKi6KTHEPDUTsqWsgagYyrNhvu9z1fbfLT95mfr4n
-	 kwW/jjNPzBTFcpWgLplAQFvUATeFapQAECLFx1jQ=
+	b=mm7T5RR7lNO2XZJeOBQbHbNRXB5rgJTBxBZ2BtUt4bF6PSdhjTgFtOR2iRUkkBkMg
+	 CI0pzRHlKeF3YEAq2zvbGdHoNLgT0fo+deW3xZCjlS7LKPyZ2T9jU9or2KgMQ2OHui
+	 IyDX4NzvAjOo8xatlrsmnJHZAZdxEke/FKQL6Y74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/982] PCI: iproc: Protect root bus removal with rescan lock
-Date: Wed, 30 Sep 2026 17:15:45 +0200
-Message-ID: <20260930152421.297396731@linuxfoundation.org>
+Subject: [PATCH 6.1 210/982] PCI: altera: Protect root bus removal with rescan lock
+Date: Wed, 30 Sep 2026 17:15:46 +0200
+Message-ID: <20260930152421.318714389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit a6a64e150f12ad5391e0a0d60f6a3d119b06ce50 ]
+[ Upstream commit a8759c8ac48c0419f5899e95a6ffc611b07c965b ]
 
 Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
 to avoid racing with concurrent rescan or hotplug operations triggered via
@@ -64,27 +64,27 @@ Signed-off-by: Hans Zhang <18255117159@163.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 [bhelgaas: commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260521161822.132996-6-18255117159@163.com
+Link: https://patch.msgid.link/20260521161822.132996-4-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-iproc.c | 2 ++
+ drivers/pci/controller/pcie-altera.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
-index 6525c7ded5c40..2eae2d1859d34 100644
---- a/drivers/pci/controller/pcie-iproc.c
-+++ b/drivers/pci/controller/pcie-iproc.c
-@@ -1541,8 +1541,10 @@ int iproc_pcie_remove(struct iproc_pcie *pcie)
- {
- 	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
+diff --git a/drivers/pci/controller/pcie-altera.c b/drivers/pci/controller/pcie-altera.c
+index afd03c47d6f5a..acdd8ed8c34fa 100644
+--- a/drivers/pci/controller/pcie-altera.c
++++ b/drivers/pci/controller/pcie-altera.c
+@@ -833,8 +833,10 @@ static int altera_pcie_remove(struct platform_device *pdev)
+ 	struct altera_pcie *pcie = platform_get_drvdata(pdev);
+ 	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(pcie);
  
 +	pci_lock_rescan_remove();
- 	pci_stop_root_bus(host->bus);
- 	pci_remove_root_bus(host->bus);
+ 	pci_stop_root_bus(bridge->bus);
+ 	pci_remove_root_bus(bridge->bus);
 +	pci_unlock_rescan_remove();
+ 	altera_pcie_irq_teardown(pcie);
  
- 	iproc_pcie_msi_disable(pcie);
- 
+ 	return 0;
 -- 
 2.53.0
 
