@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D01531AFB;
-	Wed, 30 Sep 2026 17:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5976A52B1DE;
+	Wed, 30 Sep 2026 17:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790657; cv=none; b=PdsM5qJILDvsTcMkZOMhO7OjOav1TnYiyzwEn5GzEVT1rUPn1YRTfCIO9Khu4k0N39e0QNdnLyDurl6jYE8DgZIskzsV19PiSBdd0mm5QavY6d3vvtN9uOYze/q5nfw+TTqxuesBRqfHPbg39M3cZkmnBQ97iCPyg3c0N5EG0p0=
+	t=1790790660; cv=none; b=VhtvSZ2+OF8p/T175dXq6LKHZyZUTwmU9qTxwBC4KhXLqzspQRPNo6n/Tjjawep6d7kGZ6d9jb05EN62kPoSBMpMuDo8vaiUrGaaMjzkzJQ3U/Zz7/tX+jPVNiI/E4Av3KNP4TTrVsfDN08yKQ0VshMBNmvyg9uCWNWEEvh91wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790657; c=relaxed/simple;
-	bh=4BRZK7lLZmfmcezpuPCOf+G+bKol63w3TAP1gcOmzMY=;
+	s=arc-20240116; t=1790790660; c=relaxed/simple;
+	bh=hjt2lk0LAK6/lW4gKKg9dSF1pq4ncjzcPiNLpUFdEuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTLVVjKM+H1I9Z9ngQw46s+57G9Wcr6kjVQQLnLo8erw4rOBI00KGwLoLOz9QHiUVcd5T6okC6cFfRTB5UCndhvwVr+nc+ExYXuA9IHi4nKIjwc2vLFyMgIAVXnkUnF6IMMB4A1JavrAZGszDbMoMCFORow76d4WCgKm7vfmsSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxdFVfxK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JKJdN90lW/jcO/YEKvktC0h5ZaGSZ01XaC2wcXKWdW6SHNOaOuLPepQM8bn2QYTvoahlisDpdGfwizJRdMYzPGvaNf7EZ2L0Ozy/1WPSmXuHaYEXBF7ZFHnL5MGElitxh2Q550C4j6BMJOpfuO0YuwmjB/3UAE0St/1CfaSnNsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCk+X5mq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxdFVfxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916171F000FF;
-	Wed, 30 Sep 2026 17:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCk+X5mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708421F000FF;
+	Wed, 30 Sep 2026 17:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790656;
-	bh=kmECrZ7wgFiN7d+ErAuH8aTsekTcyc8OuZ5uQYiNUUs=;
+	s=korg; t=1790790659;
+	bh=kzBpLznSMWLS3n9wyuZKvcgHzTtSybaZxWTyeLIrsFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxdFVfxKr8JKFRU1Ae4GYucgGHgEPZoAFM51Qe/MSApk0HCRNhJA10HBhAfWuxkKQ
-	 O3PzcWKh+wHv5bGeAbpU/9VNpx6WjQbXEKA3sxH98FoYFAvL8wzm1wzQ/GVBdXnOJw
-	 aXR4EfGL3ecYm9QbWPGg7XoyyUaGEKXA1YLu/4y4=
+	b=cCk+X5mqORxd0HaHcygla3vwfj1szuZOjkbOGK9i8kiGzP6ekyLkjfIGCsaGSFsy/
+	 ACx3hLnlTLjXHI74Eglb6edzBp8mtqYbEdXT1qitnGH9R5ed7g5flebxOdNnAJ9ZLC
+	 IHNwXfTlmZCqExhHkWIZEyzLtY8mrKxiuB9G2ki8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hirokazu Honda <hiroh@chromium.org>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/752] tee: optee: Allow MT_NORMAL_TAGGED shared memory
-Date: Wed, 30 Sep 2026 17:17:54 +0200
-Message-ID: <20260930152358.235546518@linuxfoundation.org>
+Subject: [PATCH 5.15 005/752] PCI: Stop setting cached power state to unknown on unbind
+Date: Wed, 30 Sep 2026 17:17:55 +0200
+Message-ID: <20260930152358.258590446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,37 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hirokazu Honda <hiroh@chromium.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 1a6e94a8ff32e7879effd1e4a45bf112e506edc1 ]
+[ Upstream commit d462c8e89e84bfb6417e6b4c88e0cb7cc747ba41 ]
 
-On ARM64, shared memory can have MT_NORMAL_TAGGED attribute when using
-the Memory Tagging Extension (MTE). The OP-TEE driver needs to
-recognize this as normal memory to allow sharing such buffers with the
-Secure World.
+When a PCI device is unbound from its driver, pci_device_remove() sets the
+cached power state in pci_dev->current_state to PCI_UNKNOWN.  This was
+introduced by commit 2449e06a5696 ("PCI: reset pci device state to unknown
+state for resume") to invalidate the cached power state in case the system
+is subsequently put to sleep.
 
-Signed-off-by: Hirokazu Honda <hiroh@chromium.org>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+For bound devices, the cached power state is set to PCI_UNKNOWN in
+pci_pm_suspend_noirq(), immediately before entering system sleep.
+
+Extend to unbound devices for consistency.
+
+This obviates the need to change the cached power state on unbind, so stop
+doing so.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/af7d11d3ceb231acc90829f7a5c8400c2446744f.1776415510.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/call.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/pci-driver.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/tee/optee/call.c b/drivers/tee/optee/call.c
-index 945f03da02237..4588a23d5b02b 100644
---- a/drivers/tee/optee/call.c
-+++ b/drivers/tee/optee/call.c
-@@ -574,7 +574,8 @@ static bool is_normal_memory(pgprot_t p)
- 	return (((pgprot_val(p) & L_PTE_MT_MASK) == L_PTE_MT_WRITEALLOC) ||
- 		((pgprot_val(p) & L_PTE_MT_MASK) == L_PTE_MT_WRITEBACK));
- #elif defined(CONFIG_ARM64)
--	return (pgprot_val(p) & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL);
-+	return ((pgprot_val(p) & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL)) ||
-+	       ((pgprot_val(p) & PTE_ATTRINDX_MASK) == PTE_ATTRINDX(MT_NORMAL_TAGGED));
- #else
- #error "Unuspported architecture"
- #endif
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 08c985478b8ff..087e664a95bdd 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -478,13 +478,6 @@ static void pci_device_remove(struct device *dev)
+ 	/* Undo the runtime PM settings in local_pci_probe() */
+ 	pm_runtime_put_sync(dev);
+ 
+-	/*
+-	 * If the device is still on, set the power state as "unknown",
+-	 * since it might change by the next time we load the driver.
+-	 */
+-	if (pci_dev->current_state == PCI_D0)
+-		pci_dev->current_state = PCI_UNKNOWN;
+-
+ 	/*
+ 	 * We would love to complain here if pci_dev->is_enabled is set, that
+ 	 * the driver should have called pci_disable_device(), but the
+@@ -822,7 +815,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
+ 
+ 	if (!pm) {
+ 		pci_save_state(pci_dev);
+-		goto Fixup;
++		goto set_unknown;
+ 	}
+ 
+ 	if (pm->suspend_noirq) {
+@@ -879,6 +872,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
+ 		goto Fixup;
+ 	}
+ 
++set_unknown:
+ 	pci_pm_set_unknown_state(pci_dev);
+ 
+ 	/*
 -- 
 2.53.0
 
