@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AA9448D03;
-	Wed, 30 Sep 2026 18:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F412552FE2D;
+	Wed, 30 Sep 2026 18:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793780; cv=none; b=GUPnRa6EjpNNqzjwiKX8Ep5jRNGVm2hmQKr1QuEc/kiJI+O4cM8dG4TDj9yUse5R67wJTOyDYYY3Se43TUtfN+y0XYPhPnhDm5jTFumYQxKKEgc7OvBEhRSP562mxAZML0niBQHDy0LQ206oiwc4OKes8ksaxr013CGmUnBkrP4=
+	t=1790793783; cv=none; b=hD6uH9D/TO5A5/zD/w0lgtft6boG7qA4v1w8l7e9mqkyWqp0dc+4Ez8IApndny07WQ3K4sxQtc2bTOnjJPpiqdRV2qyFGJYMF53W7U6QInqB6q9SaHmUbk3G7fwhD7teuBxOSKOUVqfY36xVukKUZSpxZ/xIsAfIiZRIXvtzf+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793780; c=relaxed/simple;
-	bh=5d8Yz6rayDql6adZ3XpHTpZx2HTJz8O6n/OsV4rwKv8=;
+	s=arc-20240116; t=1790793783; c=relaxed/simple;
+	bh=zLEqKG+cvOhWseqgoj3Sa1+rnTX0c7sxok0WHRLe+c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KnOLITB4n/hiwpSRAReYet6rsz7J/ACJC3PqZWdYAgCQjHLrXKKOj2zC0Hk4fj7yrHra4FFS7EPur4HxErFYymGiBStTrBieGrJjtnEtYPm2IVQM345904zar0lAxOiAoSAeIFQgbaOVX8a3SodTZKY3BfWdRrHSMXFEJxdAta4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2btCYs3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tBmB1wnhbEdiXPLWXodOahdyn0Ysr8iUm6aJw4fVXLd7jzyNifgif/nceBVJq+NElWaHaoH8vwknM8GYMhaBB8ocLC2DeyHmHmfSe9z0RIgTZIK+xoFFUNX9qMI/WARi5ENj0GArRqPUk2tx+lEK1y3OSHxGOJWSIPqz0uaDs6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNQML1Fz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2btCYs3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BA31F000FF;
-	Wed, 30 Sep 2026 18:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNQML1Fz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0EB1F000FF;
+	Wed, 30 Sep 2026 18:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793778;
-	bh=iI23zQMZt6ipJuHpwdzgHhxsRju7gOuj2Ks4S1AQKxs=;
+	s=korg; t=1790793781;
+	bh=1+ZIFtHK9ZOglUUDnUD4Jee3iELMFdLWrrDvDHSr8iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F2btCYs3luuzkE9Fkoj0Y4urdbFU28ZJgvK0J2SBkMFZydx96hBKNVL6EOyJt+Kxs
-	 K/wGIqkVlfeCl/We1zMzCamp1wgHFEvTF0J3ejlNcWhNScndpYbFovEjx2Yvaolv5R
-	 uD5+w31AXse884UtnBU98LY1s91+nMLITktqKuRs=
+	b=PNQML1Fz5cZLCCylNBvR3DVq+kdYvWRDzltg9ZOYEZ5ti35wUz6j5o6XZ43912xU4
+	 l2hNANjNYI8eNX9oNhPSHqGiCMXRzrRyvlYZHX7IP6Dg8Tf1wkOpctcte/CuZKsBFW
+	 5YCKpfRiJRUqPqyRdAduXB9LV+bgqvkjaEpcuvEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 376/395] perf/x86/intel: Remove incorrect LionCove PEBS data-source constraints
-Date: Wed, 30 Sep 2026 17:30:38 +0200
-Message-ID: <20260930152348.854128408@linuxfoundation.org>
+Subject: [PATCH 6.18 377/395] x86/sev: Move the internal header
+Date: Wed, 30 Sep 2026 17:30:39 +0200
+Message-ID: <20260930152348.875054198@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,85 +51,285 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit 7c944595cc43a664019edc22505b6d6f6039be5e ]
+[ Upstream commit c1e8980fabf5d0106992a430284fac28bba053a6 ]
 
-On Lion Cove, PEBS data source is valid only for these events:
+Move the internal header out of the usual include/asm/ include path
+because having an "internal" header there doesn't really make it
+internal - quite the opposite - that's the normal arch include path.
 
-- MEM_TRANS_RETIRED.LOAD_LATENCY (0x1cd)
-- MEM_TRANS_RETIRED.STORE_SAMPLE (0x2cd)
+So move where it belongs and make it really internal.
 
-The perfmon database (https://github.com/intel/perfmon) previously
-tagged additional memory events such as MEM_INST_RETIRED.STLB_MISS_LOADS
-with L1_Hit_Indication, implying PEBS data-source support, which is
-incorrect. The database has since been fixed, but
-intel_lnc_pebs_event_constraints[] still follows the old definition and
-marks those events as data-source capable.
+No functional changes.
 
-As a result, get_data_src() may decode data-source information for
-events that do not provide valid PEBS data-source data and mislead
-users.
-
-Remove those non-data-source memory events from the Lion Cove PEBS
-constraint table so matching falls back to the regular non-PEBS
-constraints, which already provide the same counter constraints.
-
-Also update lnc_latency_data() to decode LOAD/STORE flags explicitly
-when setting memory operation direction, for consistency with other
-*_latency_data() helpers.
-
-Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260917015234.981153-6-dapeng1.mi@linux.intel.com
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20251204145716.GDaTGhTEHNOtSdTkEe@fat_crate.local
+Stable-dep-of: 6c43c72748ff ("x86/sev: Make vTPM SVSM calls preemption-safe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c |   22 +++++-----------------
- 1 file changed, 5 insertions(+), 17 deletions(-)
+ arch/x86/boot/startup/sev-startup.c                          | 3 ++-
+ arch/x86/coco/sev/core.c                                     | 3 ++-
+ arch/x86/{include/asm/sev-internal.h => coco/sev/internal.h} | 0
+ arch/x86/boot/startup/sev-startup.c |    3 -
+ arch/x86/coco/sev/core.c            |    3 -
+ arch/x86/coco/sev/internal.h        |   87 ++++++++++++++++++++++++++++++++++++
+ arch/x86/coco/sev/noinstr.c         |    3 -
+ arch/x86/coco/sev/vc-handle.c       |    3 -
+ arch/x86/include/asm/sev-internal.h |   87 ------------------------------------
+ 6 files changed, 95 insertions(+), 91 deletions(-)
+ rename arch/x86/{include/asm/sev-internal.h => coco/sev/internal.h} (100%)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -395,7 +395,11 @@ static u64 lnc_latency_data(struct perf_
- 		val |= P(BLK, NA);
+--- a/arch/x86/boot/startup/sev-startup.c
++++ b/arch/x86/boot/startup/sev-startup.c
+@@ -27,7 +27,6 @@
+ #include <asm/cpu_entry_area.h>
+ #include <asm/stacktrace.h>
+ #include <asm/sev.h>
+-#include <asm/sev-internal.h>
+ #include <asm/insn-eval.h>
+ #include <asm/fpu/xcr.h>
+ #include <asm/processor.h>
+@@ -41,6 +40,8 @@
+ #include <asm/cpuid/api.h>
+ #include <asm/cmdline.h>
  
- 	src.val = val;
--	if (event->hw.flags & PERF_X86_EVENT_PEBS_ST_HSW)
-+	if (event->hw.flags &
-+	    (PERF_X86_EVENT_PEBS_LDLAT | PERF_X86_EVENT_PEBS_LD_HSW))
-+		src.mem_op = P(OP, LOAD);
-+	if (event->hw.flags &
-+	    (PERF_X86_EVENT_PEBS_STLAT | PERF_X86_EVENT_PEBS_ST_HSW))
- 		src.mem_op = P(OP, STORE);
++#include "../../coco/sev/internal.h"
++
+ /* Include code shared with pre-decompression boot stage */
+ #include "sev-shared.c"
  
- 	return src.val;
-@@ -1221,24 +1225,8 @@ struct event_constraint intel_lnc_pebs_e
- 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x012a, 0x1),		/* OCR.* events */
- 	INTEL_FLAGS_UEVENT_CONSTRAINT(0x012b, 0x1),		/* OCR.* events */
+--- a/arch/x86/coco/sev/core.c
++++ b/arch/x86/coco/sev/core.c
+@@ -31,7 +31,6 @@
+ #include <asm/cpu_entry_area.h>
+ #include <asm/stacktrace.h>
+ #include <asm/sev.h>
+-#include <asm/sev-internal.h>
+ #include <asm/insn-eval.h>
+ #include <asm/fpu/xcr.h>
+ #include <asm/processor.h>
+@@ -46,6 +45,8 @@
+ #include <asm/cmdline.h>
+ #include <asm/msr.h>
  
--	INTEL_FLAGS_UEVENT_CONSTRAINT(0x04a4, 0x1),		/* TOPDOWN.BAD_SPEC_SLOTS */
--	INTEL_FLAGS_UEVENT_CONSTRAINT(0x08a4, 0x1),		/* TOPDOWN.BR_MISPREDICT_SLOTS */
--	INTEL_FLAGS_UEVENT_CONSTRAINT(0x10a4, 0x8),		/* TOPDOWN.MEMORY_BOUND_SLOTS */
++#include "internal.h"
++
+ /* Bitmap of SEV features supported by the hypervisor */
+ u64 sev_hv_features __ro_after_init;
+ SYM_PIC_ALIAS(sev_hv_features);
+--- /dev/null
++++ b/arch/x86/coco/sev/internal.h
+@@ -0,0 +1,87 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#define DR7_RESET_VALUE        0x400
++
++extern u64 sev_hv_features;
++extern u64 sev_secrets_pa;
++
++/* #VC handler runtime per-CPU data */
++struct sev_es_runtime_data {
++	struct ghcb ghcb_page;
++
++	/*
++	 * Reserve one page per CPU as backup storage for the unencrypted GHCB.
++	 * It is needed when an NMI happens while the #VC handler uses the real
++	 * GHCB, and the NMI handler itself is causing another #VC exception. In
++	 * that case the GHCB content of the first handler needs to be backed up
++	 * and restored.
++	 */
++	struct ghcb backup_ghcb;
++
++	/*
++	 * Mark the per-cpu GHCBs as in-use to detect nested #VC exceptions.
++	 * There is no need for it to be atomic, because nothing is written to
++	 * the GHCB between the read and the write of ghcb_active. So it is safe
++	 * to use it when a nested #VC exception happens before the write.
++	 *
++	 * This is necessary for example in the #VC->NMI->#VC case when the NMI
++	 * happens while the first #VC handler uses the GHCB. When the NMI code
++	 * raises a second #VC handler it might overwrite the contents of the
++	 * GHCB written by the first handler. To avoid this the content of the
++	 * GHCB is saved and restored when the GHCB is detected to be in use
++	 * already.
++	 */
++	bool ghcb_active;
++	bool backup_ghcb_active;
++
++	/*
++	 * Cached DR7 value - write it on DR7 writes and return it on reads.
++	 * That value will never make it to the real hardware DR7 as debugging
++	 * is currently unsupported in SEV-ES guests.
++	 */
++	unsigned long dr7;
++};
++
++struct ghcb_state {
++	struct ghcb *ghcb;
++};
++
++extern struct svsm_ca boot_svsm_ca_page;
++
++struct ghcb *__sev_get_ghcb(struct ghcb_state *state);
++void __sev_put_ghcb(struct ghcb_state *state);
++
++DECLARE_PER_CPU(struct sev_es_runtime_data*, runtime_data);
++DECLARE_PER_CPU(struct sev_es_save_area *, sev_vmsa);
++
++void early_set_pages_state(unsigned long vaddr, unsigned long paddr,
++			   unsigned long npages, const struct psc_desc *desc);
++
++DECLARE_PER_CPU(struct svsm_ca *, svsm_caa);
++DECLARE_PER_CPU(u64, svsm_caa_pa);
++
++extern u64 boot_svsm_caa_pa;
++
++enum es_result verify_exception_info(struct ghcb *ghcb, struct es_em_ctxt *ctxt);
++void vc_forward_exception(struct es_em_ctxt *ctxt);
++
++static inline u64 sev_es_rd_ghcb_msr(void)
++{
++	return native_rdmsrq(MSR_AMD64_SEV_ES_GHCB);
++}
++
++static __always_inline void sev_es_wr_ghcb_msr(u64 val)
++{
++	u32 low, high;
++
++	low  = (u32)(val);
++	high = (u32)(val >> 32);
++
++	native_wrmsr(MSR_AMD64_SEV_ES_GHCB, low, high);
++}
++
++enum es_result sev_es_ghcb_handle_msr(struct ghcb *ghcb, struct es_em_ctxt *ctxt, bool write);
++
++u64 get_hv_features(void);
++
++const struct snp_cpuid_table *snp_cpuid_get_table(void);
+--- a/arch/x86/coco/sev/noinstr.c
++++ b/arch/x86/coco/sev/noinstr.c
+@@ -16,7 +16,8 @@
+ #include <asm/msr.h>
+ #include <asm/ptrace.h>
+ #include <asm/sev.h>
+-#include <asm/sev-internal.h>
++
++#include "internal.h"
+ 
+ static __always_inline bool on_vc_stack(struct pt_regs *regs)
+ {
+--- a/arch/x86/coco/sev/vc-handle.c
++++ b/arch/x86/coco/sev/vc-handle.c
+@@ -23,7 +23,6 @@
+ #include <asm/init.h>
+ #include <asm/stacktrace.h>
+ #include <asm/sev.h>
+-#include <asm/sev-internal.h>
+ #include <asm/insn-eval.h>
+ #include <asm/fpu/xcr.h>
+ #include <asm/processor.h>
+@@ -35,6 +34,8 @@
+ #include <asm/apic.h>
+ #include <asm/cpuid/api.h>
+ 
++#include "internal.h"
++
+ static enum es_result vc_slow_virt_to_phys(struct ghcb *ghcb, struct es_em_ctxt *ctxt,
+ 					   unsigned long vaddr, phys_addr_t *paddr)
+ {
+--- a/arch/x86/include/asm/sev-internal.h
++++ /dev/null
+@@ -1,87 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
 -
- 	INTEL_HYBRID_LDLAT_CONSTRAINT(0x1cd, 0x3fc),
- 	INTEL_HYBRID_STLAT_CONSTRAINT(0x2cd, 0x3),
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x11d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_LOADS */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x12d0, 0xf),	/* MEM_INST_RETIRED.STLB_MISS_STORES */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x21d0, 0xf),	/* MEM_INST_RETIRED.LOCK_LOADS */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x41d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_LOADS */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x42d0, 0xf),	/* MEM_INST_RETIRED.SPLIT_STORES */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_LD(0x81d0, 0xf),	/* MEM_INST_RETIRED.ALL_LOADS */
--	INTEL_FLAGS_UEVENT_CONSTRAINT_DATALA_ST(0x82d0, 0xf),	/* MEM_INST_RETIRED.ALL_STORES */
--	INTEL_FLAGS_UEVENT_CONSTRAINT(0x87d0, 0x3ff),		/* MEM_INST_RETIRED.ANY */
+-#define DR7_RESET_VALUE        0x400
 -
--	INTEL_FLAGS_EVENT_CONSTRAINT_DATALA_LD_RANGE(0xd1, 0xd4, 0xf),
+-extern u64 sev_hv_features;
+-extern u64 sev_secrets_pa;
 -
--	INTEL_FLAGS_EVENT_CONSTRAINT(0xd0, 0xf),
- 
- 	/*
- 	 * Everything else is handled by PMU_FL_PEBS_ALL, because we
+-/* #VC handler runtime per-CPU data */
+-struct sev_es_runtime_data {
+-	struct ghcb ghcb_page;
+-
+-	/*
+-	 * Reserve one page per CPU as backup storage for the unencrypted GHCB.
+-	 * It is needed when an NMI happens while the #VC handler uses the real
+-	 * GHCB, and the NMI handler itself is causing another #VC exception. In
+-	 * that case the GHCB content of the first handler needs to be backed up
+-	 * and restored.
+-	 */
+-	struct ghcb backup_ghcb;
+-
+-	/*
+-	 * Mark the per-cpu GHCBs as in-use to detect nested #VC exceptions.
+-	 * There is no need for it to be atomic, because nothing is written to
+-	 * the GHCB between the read and the write of ghcb_active. So it is safe
+-	 * to use it when a nested #VC exception happens before the write.
+-	 *
+-	 * This is necessary for example in the #VC->NMI->#VC case when the NMI
+-	 * happens while the first #VC handler uses the GHCB. When the NMI code
+-	 * raises a second #VC handler it might overwrite the contents of the
+-	 * GHCB written by the first handler. To avoid this the content of the
+-	 * GHCB is saved and restored when the GHCB is detected to be in use
+-	 * already.
+-	 */
+-	bool ghcb_active;
+-	bool backup_ghcb_active;
+-
+-	/*
+-	 * Cached DR7 value - write it on DR7 writes and return it on reads.
+-	 * That value will never make it to the real hardware DR7 as debugging
+-	 * is currently unsupported in SEV-ES guests.
+-	 */
+-	unsigned long dr7;
+-};
+-
+-struct ghcb_state {
+-	struct ghcb *ghcb;
+-};
+-
+-extern struct svsm_ca boot_svsm_ca_page;
+-
+-struct ghcb *__sev_get_ghcb(struct ghcb_state *state);
+-void __sev_put_ghcb(struct ghcb_state *state);
+-
+-DECLARE_PER_CPU(struct sev_es_runtime_data*, runtime_data);
+-DECLARE_PER_CPU(struct sev_es_save_area *, sev_vmsa);
+-
+-void early_set_pages_state(unsigned long vaddr, unsigned long paddr,
+-			   unsigned long npages, const struct psc_desc *desc);
+-
+-DECLARE_PER_CPU(struct svsm_ca *, svsm_caa);
+-DECLARE_PER_CPU(u64, svsm_caa_pa);
+-
+-extern u64 boot_svsm_caa_pa;
+-
+-enum es_result verify_exception_info(struct ghcb *ghcb, struct es_em_ctxt *ctxt);
+-void vc_forward_exception(struct es_em_ctxt *ctxt);
+-
+-static inline u64 sev_es_rd_ghcb_msr(void)
+-{
+-	return native_rdmsrq(MSR_AMD64_SEV_ES_GHCB);
+-}
+-
+-static __always_inline void sev_es_wr_ghcb_msr(u64 val)
+-{
+-	u32 low, high;
+-
+-	low  = (u32)(val);
+-	high = (u32)(val >> 32);
+-
+-	native_wrmsr(MSR_AMD64_SEV_ES_GHCB, low, high);
+-}
+-
+-enum es_result sev_es_ghcb_handle_msr(struct ghcb *ghcb, struct es_em_ctxt *ctxt, bool write);
+-
+-u64 get_hv_features(void);
+-
+-const struct snp_cpuid_table *snp_cpuid_get_table(void);
 
 
