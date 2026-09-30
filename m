@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1683A4D6C3F;
-	Wed, 30 Sep 2026 16:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA28F4D6C3F;
+	Wed, 30 Sep 2026 16:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786567; cv=none; b=G28Z49rxIg73Nmyn3RMWhOugIPUumXecqqt3GrEoHI3tzqprDWawNOsTneemr44VNISzINIGrxiyOOrRdnuy0rVi3I77lOWJ5ivRjAueUXzjFl8hAKCXC0NhfxqCbKNQT/w4sKCDH10uHPc1zVT1WOV2Irph07CSB0Eh1KHcDzA=
+	t=1790786570; cv=none; b=j6bvmkKO+RW5QDeUGFPPp9VhpZeEoUpyRyZEUJd/41lgUVRCU/Q3gh83PjEaN/wEBV70jk9vcBQR+5Q3ewt9LX3VAi2cO6QxQX7rLahdI2Uo5LyrYgnhe3UPpaL+8bPchmpGRA2oSGe2KVfDLHOHEwYvJEnDFzJKyUOHmLA4z20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786567; c=relaxed/simple;
-	bh=VNaszkeOETYq3P26owThAukuZY89IOc1yTMsedh6qGI=;
+	s=arc-20240116; t=1790786570; c=relaxed/simple;
+	bh=b94ox2LUr0pVqYPpkjW/fzAw2ch6yuQ9lMbw3/vUAYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXZuE7ZmqWIXVqoU1NuQEk3gVrThpXdO64UtYtLwijiaCw456rsATiyzdm3tLQgWH/ofPU2DSli9QUDrNat9uSnRiLL5uMUQE9RkikZNIwHLmc3xXCuOVgXa+W6iZDqN12SC1dveM2FzLcA3IUtKN6uk+Ka9+OI8iaxYiOKmb0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAuz00Xh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NW2xBxIrlwDzSFIaprq/sDBSNNmM2WsmsomBJlZsvSGJgxJdhBT9Ue9Wn1BHYvSNNo8kWdbCWo2J8W99tDrfuhbaf3ud+ht/sFYNTK84h9Ni9bxQkvcoIDoyoRgy38/2RxHRf6XW3bGs2W00L5MUraxg9Krxgd/LjV7pGSslxCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efeEmFGj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAuz00Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711951F000FF;
-	Wed, 30 Sep 2026 16:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efeEmFGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6B91F000FF;
+	Wed, 30 Sep 2026 16:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786566;
-	bh=/IrCEkojFqzNp6XDinczp/zcecqQHKm3tme3cBCdRK0=;
+	s=korg; t=1790786568;
+	bh=ij9jPbS0w313uYiYb8+XMGbWrvP2pgF2uH2BgK95HDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAuz00XhVOSQZUi28w7xTQXMMboG8w+MBuU/5InhwOte+TcfFahId1uWT1AQn0vNL
-	 nloEXp1MacoQtzW0Cpaq/V19bPhApEzPVMygVZqr6Y9X75KwZC9QwJkCZcNENhBpIA
-	 BKsYexNHNm+I+Z5dvyoh2Z3BWUvSSQpnk/TAQv10=
+	b=efeEmFGjSNAKaAWLAUSuVDVmA0apzq0KS21JNITqKzVd/BnazCSn7cMOWYnEtblWr
+	 yh8HAzbV1hooRWYWBdhVcLIlVoFnXviQxsuwwGrih36dW0ojRQEDMLhcDoFdBylO5d
+	 zbDPzWySpcJB4e3mRppDt0DwvVetUi+PPmRGbXgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Gellermann <christian.gellermann@codasip.com>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 880/982] selftests/nci: Fix out-of-bounds store on thread join
-Date: Wed, 30 Sep 2026 17:26:56 +0200
-Message-ID: <20260930152435.651746649@linuxfoundation.org>
+Subject: [PATCH 6.1 907/982] net: xps: reject an out of range traffic class
+Date: Wed, 30 Sep 2026 17:27:23 +0200
+Message-ID: <20260930152436.220676514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,143 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Gellermann <christian.gellermann@codasip.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit 6be581aeffc215bfc77939cd59902b0dbc4af23e ]
+[ Upstream commit 4da3b7b8b50f3e2fde54a4c18a82a8e3f6223910 ]
 
-The NCI test collects the exit status of its helper threads by passing
-the address of an int to pthread_join():
+Only the entries below dev->num_tc are valid in dev->tc_to_txq[], and
+dev->prio_tc_map[] may only name classes below it. netdev_set_num_tc()
+lowers dev->num_tc without touching either array.
 
-	int status;
-	...
-	pthread_join(thread_t, (void **) &status);
+netdev_txq_to_tc() walks all TC_MAX_QUEUE slots and
+netdev_get_prio_tc_map() returns the entry as it stands, so a leftover
+entry is handed out as a traffic class >= dev->num_tc. Taking that
+class from netdev_txq_to_tc(), __netif_set_xps_queue() rejects only a
+negative one and indexes an XPS map sized for dev->num_tc classes:
 
-pthread_join() stores a void pointer to the memory location. On 64-bit
-systems, a void pointer is wider than an int, so the store overruns the
-4 bytes of space allocated on the stack for the integer and corrupts the
-adjacent stack. On our CHERI system, this caused a fault due to a
-capability bounds violation.
+	tci = j * num_tc + tc;
+	RCU_INIT_POINTER(new_dev_maps->attr_map[tci], map);
 
-Fix this by introducing a helper that joins a thread through a void
-pointer and converts the result back to an integer, which is what the
-helper threads return.
+attr_map[] holds nr_ids * num_tc entries and j runs over the ids named
+in the mask, so a class that is not below num_tc pushes tci past the end
+of the map for the last ids and the store overruns it.
 
-While here, also fix the logic in disconnect_tag() if the helper thread
-creation failed. Previously, it would have joined a thread that was
-never created when pthread_create() failed.
+Any caller that lowers num_tc leaves such entries behind, and
+mqprio_destroy() tears down with netdev_set_num_tc(dev, 0) rather than
+netdev_reset_tc(). After mqprio with 8 classes then 1, tc_to_txq[1..7]
+still describe txq 1..7. The splat is from an XPS write to txq 2 on a
+veth with 8 rx queues: attr_map[] has 8 * 1 entries, tci = j + 2, and
+j == 6 stores one past the end of the 88-byte map:
 
-Fixes: f595cf1242f3 ("selftests: Add nci suite")
-Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260904095915.3372241-1-christian.gellermann@codasip.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue (net/core/dev.c:2954)
+  Write of size 8 at addr ffff88813016bc58 by task xps_oob/634
+   __netif_set_xps_queue (net/core/dev.c:2954)
+   xps_rxqs_store (net/core/net-sysfs.c:1880)
+   netdev_queue_attr_store (net/core/net-sysfs.c:1390)
+  Allocated by task 634:
+   __kmalloc_noprof (mm/slub.c:5439)
+   __netif_set_xps_queue (net/core/dev.c:2937)
+  The buggy address is located 0 bytes to the right of
+   allocated 88-byte region [ffff88813016bc00, ffff88813016bc58)
+
+Reject a class the map has no room for.
+
+Fixes: 184c449f91fe ("net: Add support for XPS with QoS via traffic classes")
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/162DD16F-54C6-444A-9E09-0B8CB3D591F2@doyensec.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/nci/nci_dev.c | 31 +++++++++++++++++----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
-index 87262f8d0c101..30db9bda001e3 100644
---- a/tools/testing/selftests/nci/nci_dev.c
-+++ b/tools/testing/selftests/nci/nci_dev.c
-@@ -8,6 +8,7 @@
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 1f5d42c726d8b..3b81f1787222f 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2630,7 +2630,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
+ 		dev = netdev_get_tx_queue(dev, index)->sb_dev ? : dev;
  
- #include <stdlib.h>
- #include <errno.h>
-+#include <stdint.h>
- #include <string.h>
- #include <sys/ioctl.h>
- #include <fcntl.h>
-@@ -87,6 +88,16 @@ struct msgtemplate {
- 	char buf[MAX_MSG_SIZE];
- };
- 
-+static int join_thread_status(pthread_t thread)
-+{
-+	void *thread_ret = NULL;
-+
-+	if (pthread_join(thread, &thread_ret))
-+		return -1;
-+
-+	return (int)(intptr_t)thread_ret;
-+}
-+
- static int create_nl_socket(void)
- {
- 	int fd;
-@@ -444,7 +455,7 @@ FIXTURE_SETUP(NCI)
- 			       NFC_CMD_DEV_UP, self->dev_idex);
- 	EXPECT_EQ(rc, 0);
- 
--	pthread_join(thread_t, (void **)&status);
-+	status = join_thread_status(thread_t);
- 	ASSERT_EQ(status, 0);
- 	self->open_state = true;
- }
-@@ -514,7 +525,7 @@ FIXTURE_TEARDOWN(NCI)
- 				       NFC_CMD_DEV_DOWN, self->dev_idex);
- 		EXPECT_EQ(rc, 0);
- 
--		pthread_join(thread_t, (void **)&status);
-+		status = join_thread_status(thread_t);
- 		ASSERT_EQ(status, 0);
+ 		tc = netdev_txq_to_tc(dev, index);
+-		if (tc < 0)
++		if (tc < 0 || tc >= num_tc)
+ 			return -EINVAL;
  	}
- 
-@@ -585,7 +596,6 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
- 	void *nla_start_poll_data[2] = {&dev_idx, &proto};
- 	int nla_start_poll_len[2] = {4, 4};
- 	pthread_t thread_t;
--	int status;
- 	int rc;
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
-@@ -598,14 +608,12 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
- 	if (rc != 0)
- 		return rc;
- 
--	pthread_join(thread_t, (void **)&status);
--	return status;
-+	return join_thread_status(thread_t);
- }
- 
- int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
- {
- 	pthread_t thread_t;
--	int status;
- 	int rc;
- 
- 	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
-@@ -618,8 +626,7 @@ int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
- 	if (rc != 0)
- 		return rc;
- 
--	pthread_join(thread_t, (void **)&status);
--	return status;
-+	return join_thread_status(thread_t);
- }
- 
- TEST_F(NCI, start_poll)
-@@ -834,8 +841,10 @@ int disconnect_tag(int nfc_sock, int virtual_fd)
- 		return status;
- 
- 	close(nfc_sock);
--	pthread_join(thread_t, (void **)&status);
--	return status;
-+	if (status)
-+		return -1;
-+
-+	return join_thread_status(thread_t);
- }
- 
- TEST_F(NCI, t4t_tag_read)
-@@ -882,7 +891,7 @@ TEST_F(NCI, deinit)
- 			       NFC_CMD_DEV_DOWN, self->dev_idex);
- 	EXPECT_EQ(rc, 0);
- 
--	pthread_join(thread_t, (void **)&status);
-+	status = join_thread_status(thread_t);
- 	self->open_state = 0;
- 	ASSERT_EQ(status, 0);
  
 -- 
 2.53.0
