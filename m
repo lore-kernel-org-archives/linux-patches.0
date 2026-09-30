@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A87C4F85AB;
-	Wed, 30 Sep 2026 16:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBD433D6FD;
+	Wed, 30 Sep 2026 16:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785837; cv=none; b=Z7NPAsl5U7Wi0ztI0X5DFa4OQP0wsuhmQAJa42DdmRmivf0+gfZmRW2jFrqSy1Fv5rf9Q+NbiC611gmqovHmsLiiHuUcVMzydIp3+/9slc12K9fyQb71cCUUWCukitLg2khGFx2Mtf/4JJtDmX0wgYUrZ3EduuHLWxC0iqNoF74=
+	t=1790785841; cv=none; b=aXcFrTDXnjz+1lNnES3hzyFVh9ZVANN1BpUqc4nhg54kxmL10+bBpZGUYbZwRRk8EZSiG3v6EpLtIqe/V2bqrFqKyKBiIzF3yzauVqdCuzMPN5w1lJ0mt9Mf9QtcLDSu4TeB6T8ao3MtH3Y2/moMG0bAus7dcRmPSZW4h3JpzG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785837; c=relaxed/simple;
-	bh=/8M5GOwiSKqAa7X7oOdhpa+W6zi2qgeF6xWecclZeJM=;
+	s=arc-20240116; t=1790785841; c=relaxed/simple;
+	bh=9LDoYwvmqtsydaEj5JNjfYRmp/FXOK9xPZtjY+JEOVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRTfhbfnEUJY2frV2Ugo8XErVWTkfygrlEtghA5xxtfc8va9O3kucHF6dkEamvBINyfqkhcsfHuSJWuD3bh0fEM3C6fXQI++rfTICTiG5Xho4QAXneacsp1aY2PzLJPCOjpREweBHN+01xxL4SSso2DAh6SmgoEz4g+19MPWtZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbMUk/O3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kaZLNDFL8sAP51fVE3rrg8v5p1n9EW0ypBYFKuUNqMsldFujQB7TFkwuBLo97kpL8CZ4wMjYl9zQys3dAMTFcCQ+JaqVc85UIYSlK88xFWnbKiKPj1piWSPnOaJ4IJq0gzJ/WnoqdkhVCGNLDzUg0R63XJ7r0Xxd5FrmK2nCZAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLRNtTgR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbMUk/O3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F9C1F00893;
-	Wed, 30 Sep 2026 16:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLRNtTgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8241F00893;
+	Wed, 30 Sep 2026 16:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785836;
-	bh=bZflkPvPvxOp3MmVD7zWJ7/yJo3lyMbrLGn/W+xFUjI=;
+	s=korg; t=1790785838;
+	bh=8c0LMurmWjp/bMDFJi9fZdGlR9ndBXn/fS/gJMZcjDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fbMUk/O3tZWWcqt+R8RYBwLM5nSe/4TDFRv4QVknxH/yTqHw+LeC/0U/uIN8h663V
-	 zg31pTlYlrVo4W0DRCKDYLBfOTlb3YD09zcN+DBF/YA7+w4UqnRZdjjqQsIr/P1Kfs
-	 oPxBQ0T01YU+uCRdRbwUkhZUUIHbDXXP/j4gcAdo=
+	b=MLRNtTgRrGN7tBdTDbPYvxFy+W/sbNoloLuVIvIdXDHRgdqeclOf+arXnKdzfDkIz
+	 CsuZP6vgWf3/hZgl5nyXUjolgagC0K1WSMmxpzJWcjcfuU6/B0b0VvOMflv2KcQO1F
+	 LD5Oc5Y7xwD05OoVqvJ9DMDF0X+s5PsxClDipyXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shouping Wang <allen.wang@hj-micro.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
+	sashiko-bot@kernel.org,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Melissa Wen <mwen@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 650/982] perf/arm-cmn: Fix wp_dev_sel2 setting for multi-DTM configurations
-Date: Wed, 30 Sep 2026 17:23:06 +0200
-Message-ID: <20260930152430.728113977@linuxfoundation.org>
+Subject: [PATCH 6.1 651/982] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
+Date: Wed, 30 Sep 2026 17:23:07 +0200
+Message-ID: <20260930152430.748903522@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,60 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shouping Wang <allen.wang@hj-micro.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 49daa3d668b69a5454b5aba0078848a479f79f1c ]
+[ Upstream commit 9eb1a393c89a79c4210230d23e7d88d239c61d7b ]
 
-When MXP_MULTIPLE_DTM_EN is TRUE, each DTM will monitor at most
-two device ports. In this case, {wp_dev_sel2, wp_dev_sel} will
-only use values 2'b00 and 2'b01 per DTM.
+When an out_fence_ptr is provided but DRM_MODE_PAGE_FLIP_EVENT is not
+set, a drm_pending_vblank_event will be allocated. If later, there is an
+allocation failure or another failure at setup_out_fence(), that event
+will not have base.fence set and it will not be released at
+complete_signaling().
 
-Previously the setting allowed values beyond the supported range
-per DTM, which could cause each DTM to select invalid ports when
-MXP_MULTIPLE_DTM_EN is TRUE.
+Release the event and set crtc_state->event to NULL just like in the
+DRM_MODE_PAGE_FLIP_EVENT case when there is a failure at
+drm_event_reserve_init(). That is, prepare_signaling() releases the
+event and there is nothing to be done at complete_signaling(). Use
+drm_event_cancel_free() as that will also undo drm_event_reserve_init()
+in case it has been called.
 
-Fix this by only setting CMN_DTM_WPn_CONFIG_WP_DEV_SEL2 when
-!multi_dtm.
-
-Fixes: 60d1504070c2 ("perf/arm-cmn: Support new IP features")
-Signed-off-by: Shouping Wang <allen.wang@hj-micro.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com?part=1
+Fixes: 92c715fca907 ("drm/atomic: Fix double free in drm_atomic_state_default_clear")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Link: https://patch.msgid.link/20260826-drm_pending_vblank_event_leak-v4-1-f8de8b996b9d@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_atomic_uapi.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index dc985a0c40877..43b0afd1cfe52 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -1207,18 +1207,22 @@ static int arm_cmn_wp_idx(struct perf_event *event)
+diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+index 38f94b7543a70..c2e0c6dab99db 100644
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -1159,10 +1159,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 			struct dma_fence *fence;
+ 			struct drm_out_fence_state *f;
  
- static u32 arm_cmn_wp_config(struct perf_event *event)
- {
-+	struct arm_cmn *cmn = to_cmn(event->pmu);
- 	u32 config;
- 	u32 dev = CMN_EVENT_WP_DEV_SEL(event);
- 	u32 chn = CMN_EVENT_WP_CHN_SEL(event);
- 	u32 grp = CMN_EVENT_WP_GRP(event);
- 	u32 exc = CMN_EVENT_WP_EXCLUSIVE(event);
- 	u32 combine = CMN_EVENT_WP_COMBINE(event);
--	bool is_cmn600 = to_cmn(event->pmu)->part == PART_CMN600;
-+	bool is_cmn600 = cmn->part == PART_CMN600;
++			ret = -ENOMEM;
++
+ 			f = krealloc(*fence_state, sizeof(**fence_state) *
+ 				     (*num_fences + 1), GFP_KERNEL);
+ 			if (!f)
+-				return -ENOMEM;
++				goto err_free_event;
  
- 	config = FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL, dev) |
- 		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_CHN_SEL, chn) |
--		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_GRP, grp) |
--		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL2, dev >> 1);
-+		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_GRP, grp);
+ 			memset(&f[*num_fences], 0, sizeof(*f));
+ 
+@@ -1171,12 +1173,12 @@ static int prepare_signaling(struct drm_device *dev,
+ 
+ 			fence = drm_crtc_create_fence(crtc);
+ 			if (!fence)
+-				return -ENOMEM;
++				goto err_free_event;
+ 
+ 			ret = setup_out_fence(&f[(*num_fences)++], fence);
+ 			if (ret) {
+ 				dma_fence_put(fence);
+-				return ret;
++				goto err_free_event;
+ 			}
+ 
+ 			crtc_state->event->base.fence = fence;
+@@ -1230,6 +1232,11 @@ static int prepare_signaling(struct drm_device *dev,
+ 		return -EINVAL;
+ 
+ 	return 0;
 +
-+	if (!cmn->multi_dtm)
-+		config |= FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL2, dev >> 1);
-+
- 	if (exc)
- 		config |= is_cmn600 ? CMN600_WPn_CONFIG_WP_EXCLUSIVE :
- 				      CMN_DTM_WPn_CONFIG_WP_EXCLUSIVE;
++err_free_event:
++	drm_event_cancel_free(dev, &crtc_state->event->base);
++	crtc_state->event = NULL;
++	return ret;
+ }
+ 
+ static void complete_signaling(struct drm_device *dev,
 -- 
 2.53.0
 
