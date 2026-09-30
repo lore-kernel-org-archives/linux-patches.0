@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955FA33A6F1;
-	Wed, 30 Sep 2026 18:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CB823ABBE;
+	Wed, 30 Sep 2026 18:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794493; cv=none; b=rY65iPkSnwEnn0utiMRpccK0ztVIB2ore1gj0Tiqkbvg17v8qnK0wd/NZguMvtCjSO5l1iiy/jAFSWdEq4aTsuupSPetuCO5FQhgmSs1rH7wJIAPG/jzem3vs8aM15L8LGzEKtDhcKYqfLsFaSHtpfIvnCIVzYBn9qyWfXmavU0=
+	t=1790794496; cv=none; b=uXuCZtY1ybYrM8VqWFCNARBI8wMXxx3W8Tp2iC4SoVPRi0SG0hDlrxSAvvX1QOBWCliec0fLEOVmB70XPvFG5tZRpM+jvCWXDH3a9nUdhxijZ4ETd4P5kvhuF0pje2KA3eYfgs2F4ubh5iyuer4YDo7QVH/KxQzHmtGTak4BO3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794493; c=relaxed/simple;
-	bh=WyADdJAhTF1ynloTn2X9cCDHNdg52e5uBs1G6gB94no=;
+	s=arc-20240116; t=1790794496; c=relaxed/simple;
+	bh=kydA5tql3/Zvwz2EfZkB9HFtlVCZj+3nINZqZiJrQSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIjzsdPglLNGlZQme+fEhO05OO3RQOiDn4lVBS+qGXniDZarCMiSgx8CM+RUSqHPSwcmEmItCAPLze6uaEjUBI97HRXs+4/cNIF+wUC+awo1sFXXIQWepiYpQgDNznpL6waL4bnsTRP3toYbFudqL+GAYZdEw04VpYncFLrEAao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duetKZw4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1CKmN0nX1N7oY5iYAgDM5a3QhZnZMkgtRH6KhS6+M55Z2VXb6+9aPRYrAmy9sgL46y+ray+wCM4fSLkHKe/Sk2Q2Fc5wabP1LWNj3agJEPBPIET0J8LGk1yg1n/8vU2LvEzH7f22KvoWCv/z2n1Qrxm4RBMmHQ8WwPf2Rs3D1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYeHnjE8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duetKZw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73071F000FF;
-	Wed, 30 Sep 2026 18:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYeHnjE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE91B1F000FF;
+	Wed, 30 Sep 2026 18:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794492;
-	bh=3chXhHMJoSjQcd5y3R7kI6ZNmZO/6zcw1OXXsu3F7yg=;
+	s=korg; t=1790794495;
+	bh=yLZJW6zW4nWqhL0cDsvMiEU4yBaRjx5si/DbawzQrCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=duetKZw4fg7Iyz5J97RJUmsGoFJBRwdrvK/lstbiX4dWgrhMSZouyuj1XbiGtqWGX
-	 RND0EKFNau5b0Ase72qV7YbRsxOwAtGTbe+GRQ2o6sRoGJypMTxEJkhx+BvLaUERnC
-	 ClIPVn7XFiqbyCBtcb3hqPN8wrW9Phxs82X5BiOw=
+	b=RYeHnjE8eCXEDh3+77EwB12TTxDEH4LmK53AUTBSqW0Vh8dhUhMonmVxelgjnLfNO
+	 VXRNUdoLkdqsW2d1M1nA+5VVZUtc4cFHJ/syGO3idrW7u1EKSD3pjqQ5gtldgqJELs
+	 6BJJUFhNLnr3JReWdIUiDSQUOGtR09KH9u212MiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiajia Liu <liujiajia@kylinos.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	KangNing Liao <lkangn.kernel@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0196/1193] wifi: mt76: transform aspm_conf for pci_disable_link_state
-Date: Wed, 30 Sep 2026 17:14:40 +0200
-Message-ID: <20260930152438.557139652@linuxfoundation.org>
+Subject: [PATCH 6.6 0197/1193] btrfs: protect sb_write_pointer() with invalidate lock
+Date: Wed, 30 Sep 2026 17:14:41 +0200
+Message-ID: <20260930152438.580794417@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,46 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiajia Liu <liujiajia@kylinos.cn>
+From: KangNing Liao <lkangn.kernel@gmail.com>
 
-[ Upstream commit 2dd78856223484895306351df1f903a4b75d213f ]
+[ Upstream commit 123b9a545f4d0348e81f558a032bf2a93ee5722f ]
 
-commit b478e162f227 ("PCI/ASPM: Consolidate link state defines") changed
-PCIE_LINK_STATE_L0S (1) to (BIT(0) | BIT(1)). PCI_EXP_LNKCTL_ASPM_L0S (1)
-and PCI_EXP_LNKCTL_ASPM_L1 (2) are no longer matched with
-PCIE_LINK_STATE_L0S (3) and PCIE_LINK_STATE_L1 (4).
+sb_write_pointer() reads the super block from the block device page cache
+using read_cache_page_gfp(). This has the same race with BLKBSZSET as the
+one fixed by commit 3f29d661e568 ("btrfs: sync read disk super and set
+block size").
 
-On the platform enabling ASPM L0s and L1, mt76_pci_disable_aspm is not able
-to disable L1. Fix this by transforming aspm_conf to pcie link state.
+Take the mapping invalidate lock around read_cache_page_gfp() to
+serialize the read against block size changes.
 
-Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
-Link: https://patch.msgid.link/20260602054349.42429-1-liujia6264@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: KangNing Liao <lkangn.kernel@gmail.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/pci.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/zoned.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/pci.c b/drivers/net/wireless/mediatek/mt76/pci.c
-index 4c1c159fbb62f..36dba6e03e8b4 100644
---- a/drivers/net/wireless/mediatek/mt76/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/pci.c
-@@ -30,8 +30,14 @@ void mt76_pci_disable_aspm(struct pci_dev *pdev)
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index b704df009fc5a..92ec2d91c41fe 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -130,8 +130,10 @@ static int sb_write_pointer(struct block_device *bdev, struct blk_zone *zones,
+ 			u64 bytenr = ALIGN_DOWN(zone_end, BTRFS_SUPER_INFO_SIZE) -
+ 						BTRFS_SUPER_INFO_SIZE;
  
- 	if (IS_ENABLED(CONFIG_PCIEASPM)) {
- 		int err;
-+		int state = 0;
- 
--		err = pci_disable_link_state(pdev, aspm_conf);
-+		if (aspm_conf & PCI_EXP_LNKCTL_ASPM_L0S)
-+			state |= PCIE_LINK_STATE_L0S;
-+		if (aspm_conf & PCI_EXP_LNKCTL_ASPM_L1)
-+			state |= PCIE_LINK_STATE_L1;
-+
-+		err = pci_disable_link_state(pdev, state);
- 		if (!err)
- 			return;
- 	}
++			filemap_invalidate_lock(mapping);
+ 			page[i] = read_cache_page_gfp(mapping,
+ 					bytenr >> PAGE_SHIFT, GFP_NOFS);
++			filemap_invalidate_unlock(mapping);
+ 			if (IS_ERR(page[i])) {
+ 				if (i == 1)
+ 					btrfs_release_disk_super(super[0]);
 -- 
 2.53.0
 
