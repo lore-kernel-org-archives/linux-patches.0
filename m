@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D2F50EBE5;
-	Wed, 30 Sep 2026 16:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2725050E5B0;
+	Wed, 30 Sep 2026 16:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784577; cv=none; b=QE+P4mPI4k8YY7745Z7lVrdfyGvLgcCEK8A3y74u++xorNbdJQdSZbiwm5fnigHl44ijb3Zcvee1AOs6qqiiLSCSu32opcNiu6S3ygr/hkg9WbINV/BM9JMJg76LEhRA203owii7bDttEQbVu25u899GtrhPnuO9shhioCHBCZE=
+	t=1790784579; cv=none; b=ZJsz+sZly+O4OBsUxIKfo698g7i8fxTu/Vg/CgGsPpTdG14NrxebmgEqCiWQlzd8dV1GUB5YbK2YQ+7VtLFXD5hBt9nZIb+R2GqnbOgEXEuOLf5ALHPkGRm6+065x0GQPkDzgAV0BTlZZ46uxhwjiW5hPhM315luLaui9jz1kWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784577; c=relaxed/simple;
-	bh=6PWH2gaxGXZWBIz/1xGrWK+tFR5APT82w5ebZtkmv9o=;
+	s=arc-20240116; t=1790784579; c=relaxed/simple;
+	bh=4V02PAk6YRaHB/TcY9x6XNOihod/3WkGxgzZSE8DAug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q2ubUWBqOpJ535GrX6xUURQw8GYtRESEwcwmGZmoFx12R/P8qi0a3Jt44m+Ck3oMw/o4t6VOI+EGFOFMgvwFhYam7UtOGg7LT57Le+nkQlg/4KrdUEZ/aIjvrfsSYZySU1nEhZnkx8+4RpeOOG6P1w7zZDr+w4CZQRNGT++IBe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGL3mHoO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t3BtI3+Dl1Qw6UTVXuK8ZCveP6Nfv86WA7eqaDv8YDtIOE489XY1DJfldFB/hDSnjRX4MlPb8vW/yWaYN0++FUacfGhquZPTgmq7fgjXzElWRYrYm8BWAng33VfYcYkDnzEaHzREDqoCkHQMv+5chrSYmgJ7yWWPlZ8vcYpx5So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3wprDWs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGL3mHoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3BC1F0089B;
-	Wed, 30 Sep 2026 16:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3wprDWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EB71F008A6;
+	Wed, 30 Sep 2026 16:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784569;
-	bh=5MQKjIw0WhUAPdEh/ZPYySz2jiV/5RHWByGNinabQVk=;
+	s=korg; t=1790784575;
+	bh=rqbPY88sTEJBYlsxLO2gjFOpOtkxhibo1u9varOlrfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cGL3mHoO3DH9DORp0PEeODhDWfxXMsoN+BNybGaSgOMlOitUNAdJDjPre0XPKMVYD
-	 oigyFm0EIqj4rZ+RnFI4UTpGdupGD/AzRWQlf12J1GfUJKgFx8Ud+3ZI9gkla49k5y
-	 xIARXEcsw2MGA2LhHy67AXrQinweRy/okvkztyoI=
+	b=D3wprDWsFs3jti8t3qFhwPXRY9rN5Ng4kb3fecIrmSFPlvDvj1e2ExNB6zCY0wD4E
+	 VTboDxTOUjaidJaXwV2mni6RgNw1SmWGmngR2upG8tCWvDh8FnC41Lq7vOTxwnC2Hd
+	 N80gTIx5+1uqHrejbxY3oMQ/J8YvQJP9E5HLWVTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	guoqi0226 <guoqi0226@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 201/982] spi: Add NULL check for spi_get_device_id() in spi_get_device_match_data()
-Date: Wed, 30 Sep 2026 17:15:37 +0200
-Message-ID: <20260930152421.129696470@linuxfoundation.org>
+Subject: [PATCH 6.1 203/982] tls: reject the combination of TLS and sockmap
+Date: Wed, 30 Sep 2026 17:15:39 +0200
+Message-ID: <20260930152421.171961871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,42 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: guoqi0226 <guoqi0226@163.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f1b061b4d4c6cbf861319ba954caa80145cf018f ]
+[ Upstream commit 460e6486617c17dd19abe8f3fc67d9a6fa25f8ca ]
 
-Prevent NULL pointer dereference when spi_get_device_id() returns NULL,
-which can happen when using driver_override without matching SPI ID entry.
+TLS and sockmap (BPF psock) integration hides a lot of latent bugs.
+Bugs which may be more or less relevant for real users but they
+are definitely exploitable.
 
-Signed-off-by: guoqi0226 <guoqi0226@163.com>
-Link: https://patch.msgid.link/20260616103018.105612-3-guoqi0226@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+We could not find anyone actively using this integration so let's
+reject this config. Adding a TLS socket to a sockmap was already
+rejected by sk_psock_init() through the inet_csk_has_ulp() check.
+We need to reject the attempts to configure the TLS keys (rather
+than adding the ULP itself) because checking prior to the ULP
+installation is tricky without risking a race with sockmap getting
+added in parallel (sockmap does not hold the socket lock).
+
+This patch is a minimal rejection of the feature. Subsequent patch
+in the series will do a light dead code removal. Full cleanup would
+require a major rewrite of the Tx path, we don't need skmsg any more.
+
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tls/tls_main.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index 4fbf5925bdb89..e1eabb959c515 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -365,12 +365,16 @@ EXPORT_SYMBOL_GPL(spi_get_device_id);
- const void *spi_get_device_match_data(const struct spi_device *sdev)
- {
- 	const void *match;
-+	const struct spi_device_id *id;
+diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
+index 4797f68b9ec80..42c61cd1359c6 100644
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -665,6 +665,17 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
+ 	int rc = 0;
+ 	int conf;
  
- 	match = device_get_match_data(&sdev->dev);
- 	if (match)
- 		return match;
- 
--	return (const void *)spi_get_device_id(sdev)->driver_data;
-+	id = spi_get_device_id(sdev);
-+	if (!id)
-+		return NULL;
-+	return (const void *)id->driver_data;
- }
- EXPORT_SYMBOL_GPL(spi_get_device_match_data);
++	/* TLS and sockmap are mutually exclusive. A socket already in a
++	 * sockmap (i.e. with a psock attached) cannot be upgraded to TLS.
++	 * sockmap rejects TLS sockets already (see sk_psock_init()).
++	 */
++	rcu_read_lock();
++	if (sk_psock(sk)) {
++		rcu_read_unlock();
++		return -EINVAL;
++	}
++	rcu_read_unlock();
++
+ 	if (sockptr_is_null(optval) || (optlen < sizeof(*crypto_info)))
+ 		return -EINVAL;
  
 -- 
 2.53.0
