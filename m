@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C5151D52B;
-	Wed, 30 Sep 2026 17:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CFC51D53E;
+	Wed, 30 Sep 2026 17:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790825; cv=none; b=u9rsERyyE44qYwoWD+867TkHzFtpmh7fvAu+/tUH8Ukl7ck/bRLMJAJQmZYSZcWkUZKI/Kutx+j9uk6vWlKnMW+3om1/0m4C7O9efbZ2gkctLgapZ5gs44UQydCoupj4sVpSGO80n1cacU/9sTYSuGh6JO+fmSIuyxPGSilnst8=
+	t=1790790828; cv=none; b=A2Ul/1l8YHhWtjIhhm6DBkfx1ox6szdBoBfZNLwCIZ9BTNrEn+jD/vJQGnAvmSFzeEzve9SxWqFlo5fNiCEmLWw3/ssZIqRiPNu/YnrmI8xLWrrpxjd7Azpz7u9Z15usrasWuhtlVeng3CV8H979HXfS/JirtXH7TiVMCmIy1lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790825; c=relaxed/simple;
-	bh=omelRyOGNMuYC7WXKuv5pvqwkRSY6fDyBc74KGWbaeo=;
+	s=arc-20240116; t=1790790828; c=relaxed/simple;
+	bh=t0q/gpUGykogGPVzaoSf2TnGqLj1SWxoQtVM1Lz9rvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLs98VBO4pShJgLpSRWu6VBwTs/lJVgU1ZSrOUxBgk4cO0VQIG2RyzXHWktUMx+iRsqOGs8/L8xqd1RLeotN21t3K2W9fR+jrqhj98lAKIj8jJqQhGTZbc6F8BcAkkEKINXi7pqRTCYeN0kyXDn90igkpcV7e/W2Yvrhesx7R5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbQnr//C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a21gXO5ZCc8dAd67HvYGIm4B6vajW2HTGP1E9As/AkrO8lQYEcPxkvRj4GRuVKkdTKpD9x92pQxXY2H01h7zmlcqRjD8+ADw2Nfo5RVY4NaEM5DpMQb8Z99eHEQhOnRoC3I+xTd5vAJ3KJ6uBMLy+UkJjKLv++rSALfFTxHHe1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5ydLX0N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbQnr//C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCD51F000FF;
-	Wed, 30 Sep 2026 17:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5ydLX0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B095A1F00898;
+	Wed, 30 Sep 2026 17:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790824;
-	bh=OQYTSQzjhXzLrBA12SX1tg/sgUAZZZJtbKKVKDU/Ypk=;
+	s=korg; t=1790790827;
+	bh=oSfI16cXfP9TFa1eI1GVQf1syO/L7ApZSMqW9pQ+eNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dbQnr//CUd4cQU4FMTuDgtBaiB77qjgv6La6fUktQgJfzpOw9aDI8uOr5aowGpyZ/
-	 7FkOrHtfcskLbAMq1B+IbK3PZsYsrOslEtuHfquKXPypIPAXEkdcJGSONBzpbvxhkc
-	 Ihs1c9QLXjUO8eTtfYlsKNaj4V9672szLMiPhIAg=
+	b=X5ydLX0NMWWAH/KCtdWcQL7+dFyQhxdj0y1Loveam9po0KRT0EK/MSroM/Sf3AnaB
+	 jFbCYOx7Q2+dTojBrIwi6eaTNUPq8g2XEKzRpdoCVhMOzAoDHn4GQ1pqyNTPZ1oV9Y
+	 mIrjRe31L2UCjkijdsnprasutB22F7XRGHkpbJlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/752] ACPICA: add boundary checks in two places
-Date: Wed, 30 Sep 2026 17:19:18 +0200
-Message-ID: <20260930152400.073003785@linuxfoundation.org>
+Subject: [PATCH 5.15 089/752] hfs: rework hfsplus_readdir() logic
+Date: Wed, 30 Sep 2026 17:19:19 +0200
+Message-ID: <20260930152400.094950507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,93 +53,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit bdc35754012906dbf094be104b103ca3adfef6f7 ]
+[ Upstream commit 7fde7e806657fbe0d33f489521b488eed94f9b39 ]
 
-Add boundary checks in acpi_ps_get_next_namestring() and
-acpi_ps_peek_opcode() to prevent out-of-bounds access.
+The xfstests' test-case generic/637 fails with error:
 
-Link: https://github.com/acpica/acpica/commit/cfdc96896d8d
-Signed-off-by: ikaros <void0red@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5180044.0VBMTVartN@rafael.j.wysocki
+FSTYP -- hfs
+PLATFORM -- Linux/x86_64 kvm-xfstests 6.15.0-rc4-xfstests-g00b827f0cffa #1 SMP PREEMPT_DYNAMIC Fri May 25
+MKFS_OPTIONS -- /dev/vdc
+MOUNT_OPTIONS -- /dev/vdc /vdc
+
+QA output created by 637
+entries 7 and 8 have duplicate d_off 8
+Found unlinked files in open dir (see xfstests-dev/results//generic/637.full for details)
+
+Likewise HFS+, currently, HFS has very complicated and
+fragile logic of rd->file->f_pos correction in hfs_delete_cat().
+This patch removes this logic and it stores the current
+pos into hfs_readdir_data. Finally, if rd->pos == ctx->pos
+then hfs_readdir() tries to find the position in
+b-tree's node by means of hfs_cat_key. This position is
+used to re-start the folder's content traversal.
+
+sudo ./check generic/637
+FSTYP         -- hfs
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 7.1.0-rc1+ #55 SMP PREEMPT_DYNAMIC Tue May 19 15:18:02 PDT 2026
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/637  32s ...  31s
+Ran: generic/637
+Passed all 1 tests
+
+Closes: https://github.com/hfs-linux-kernel/hfs-linux-kernel/issues/65
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260519222811.1311071-2-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c  | 18 +++++++++++++++++-
- drivers/acpi/acpica/psparse.c |  6 ++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+ fs/hfs/catalog.c |  9 ---------
+ fs/hfs/dir.c     | 28 +++++++++++-----------------
+ fs/hfs/hfs.h     |  3 +--
+ fs/hfs/hfs_fs.h  |  2 --
+ fs/hfs/inode.c   |  4 ----
+ 5 files changed, 12 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index bc6e6700894c8..b1705a1a45f35 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -148,10 +148,16 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
+diff --git a/fs/hfs/catalog.c b/fs/hfs/catalog.c
+index d365bf0b8c77d..41e09f209f745 100644
+--- a/fs/hfs/catalog.c
++++ b/fs/hfs/catalog.c
+@@ -222,7 +222,6 @@ int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str)
+ {
+ 	struct super_block *sb;
+ 	struct hfs_find_data fd;
+-	struct hfs_readdir_data *rd;
+ 	int res, type;
  
- 	/* Point past any namestring prefix characters (backslash or carat) */
- 
--	while (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end)) {
-+	while (end < parser_state->aml_end &&
-+	       (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end))) {
- 		end++;
+ 	hfs_dbg(CAT_MOD, "delete_cat: %s,%u\n", str ? str->name : NULL, cnid);
+@@ -248,14 +247,6 @@ int hfs_cat_delete(u32 cnid, struct inode *dir, const struct qstr *str)
+ 		}
  	}
  
-+	if (end >= parser_state->aml_end) {
-+		parser_state->aml = parser_state->aml_end;
-+		return_PTR(NULL);
-+	}
-+
- 	/* Decode the path prefix character */
- 
- 	switch (*end) {
-@@ -176,6 +182,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
- 
- 		/* Multiple name segments, 4 chars each, count in next byte */
- 
-+		if ((end + 1) >= parser_state->aml_end) {
-+			parser_state->aml = parser_state->aml_end;
-+			return_PTR(NULL);
-+		}
-+
- 		end += 2 + (*(end + 1) * ACPI_NAMESEG_SIZE);
- 		break;
- 
-@@ -187,6 +198,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
- 		break;
+-	/* we only need to take spinlock for exclusion with ->release() */
+-	spin_lock(&HFS_I(dir)->open_dir_lock);
+-	list_for_each_entry(rd, &HFS_I(dir)->open_dir_list, list) {
+-		if (fd.tree->keycmp(fd.search_key, (void *)&rd->key) < 0)
+-			rd->file->f_pos--;
+-	}
+-	spin_unlock(&HFS_I(dir)->open_dir_lock);
+-
+ 	res = hfs_brec_remove(&fd);
+ 	if (res)
+ 		goto out;
+diff --git a/fs/hfs/dir.c b/fs/hfs/dir.c
+index 527f6e46cbe81..f392aee79f422 100644
+--- a/fs/hfs/dir.c
++++ b/fs/hfs/dir.c
+@@ -97,7 +97,15 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
  	}
- 
-+	if (end > parser_state->aml_end) {
-+		parser_state->aml = parser_state->aml_end;
-+		return_PTR(NULL);
+ 	if (ctx->pos >= inode->i_size)
+ 		goto out;
+-	err = hfs_brec_goto(&fd, ctx->pos - 1);
++	rd = file->private_data;
++	if (rd && rd->pos == ctx->pos) {
++		memcpy(fd.search_key, &rd->key, sizeof(struct hfs_cat_key));
++		err = hfs_brec_find(&fd);
++		if (err == -ENOENT)
++			err = hfs_brec_goto(&fd, 1);
++	} else {
++		err = hfs_brec_goto(&fd, ctx->pos - 1);
 +	}
-+
- 	parser_state->aml = end;
- 	return_PTR((char *)start);
+ 	if (err)
+ 		goto out;
+ 
+@@ -146,7 +154,6 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 		if (err)
+ 			goto out;
+ 	}
+-	rd = file->private_data;
+ 	if (!rd) {
+ 		rd = kmalloc(sizeof(struct hfs_readdir_data), GFP_KERNEL);
+ 		if (!rd) {
+@@ -154,15 +161,8 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 			goto out;
+ 		}
+ 		file->private_data = rd;
+-		rd->file = file;
+-		spin_lock(&HFS_I(inode)->open_dir_lock);
+-		list_add(&rd->list, &HFS_I(inode)->open_dir_list);
+-		spin_unlock(&HFS_I(inode)->open_dir_lock);
+ 	}
+-	/*
+-	 * Can be done after the list insertion; exclusion with
+-	 * hfs_delete_cat() is provided by directory lock.
+-	 */
++	rd->pos = ctx->pos;
+ 	memcpy(&rd->key, &fd.key->cat, sizeof(struct hfs_cat_key));
+ out:
+ 	hfs_find_exit(&fd);
+@@ -171,13 +171,7 @@ static int hfs_readdir(struct file *file, struct dir_context *ctx)
+ 
+ static int hfs_dir_release(struct inode *inode, struct file *file)
+ {
+-	struct hfs_readdir_data *rd = file->private_data;
+-	if (rd) {
+-		spin_lock(&HFS_I(inode)->open_dir_lock);
+-		list_del(&rd->list);
+-		spin_unlock(&HFS_I(inode)->open_dir_lock);
+-		kfree(rd);
+-	}
++	kfree(file->private_data);
+ 	return 0;
  }
-diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
-index d81bba505d3d0..13000a588e44d 100644
---- a/drivers/acpi/acpica/psparse.c
-+++ b/drivers/acpi/acpica/psparse.c
-@@ -70,6 +70,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
- 	u16 opcode;
  
- 	aml = parser_state->aml;
-+	if (aml >= parser_state->aml_end) {
-+		return (0xFFFF);
-+	}
- 	opcode = (u16) ACPI_GET8(aml);
+diff --git a/fs/hfs/hfs.h b/fs/hfs/hfs.h
+index 6f194d0768b6f..f46d12ce04a3f 100644
+--- a/fs/hfs/hfs.h
++++ b/fs/hfs/hfs.h
+@@ -281,8 +281,7 @@ struct hfs_mdb {
+ /*======== Data structures kept in memory ========*/
  
- 	if (opcode == AML_EXTENDED_PREFIX) {
-@@ -77,6 +80,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
- 		/* Extended opcode, get the second opcode byte */
+ struct hfs_readdir_data {
+-	struct list_head list;
+-	struct file *file;
++	loff_t pos;
+ 	struct hfs_cat_key key;
+ };
  
- 		aml++;
-+		if (aml >= parser_state->aml_end) {
-+			return (0xFFFF);
-+		}
- 		opcode = (u16) ((opcode << 8) | ACPI_GET8(aml));
- 	}
+diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
+index 9083df1ec5e25..ddc144e18331c 100644
+--- a/fs/hfs/hfs_fs.h
++++ b/fs/hfs/hfs_fs.h
+@@ -68,8 +68,6 @@ struct hfs_inode_info {
  
+ 	struct hfs_cat_key cat_key;
+ 
+-	struct list_head open_dir_list;
+-	spinlock_t open_dir_lock;
+ 	struct inode *rsrc_inode;
+ 
+ 	struct mutex extents_lock;
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index 5013e43e8d3f7..953e520199b08 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -190,8 +190,6 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
+ 		return NULL;
+ 
+ 	mutex_init(&HFS_I(inode)->extents_lock);
+-	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFS_I(inode)->open_dir_lock);
+ 	hfs_cat_build_key(sb, (btree_key *)&HFS_I(inode)->cat_key, dir->i_ino, name);
+ 	inode->i_ino = HFS_SB(sb)->next_id++;
+ 	inode->i_mode = mode;
+@@ -325,8 +323,6 @@ static int hfs_read_inode(struct inode *inode, void *data)
+ 	HFS_I(inode)->flags = 0;
+ 	HFS_I(inode)->rsrc_inode = NULL;
+ 	mutex_init(&HFS_I(inode)->extents_lock);
+-	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
+-	spin_lock_init(&HFS_I(inode)->open_dir_lock);
+ 
+ 	/* Initialize the inode */
+ 	inode->i_uid = hsb->s_uid;
 -- 
 2.53.0
 
