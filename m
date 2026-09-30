@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907073AD539;
-	Wed, 30 Sep 2026 18:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CD74C10DD;
+	Wed, 30 Sep 2026 18:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793487; cv=none; b=rTgqdOMRMg/ERaMHZ8n9xfjJeJjhLIMjj9SQGUwebnLR5yvBq4t8WQNeAsbKZncQtmRfcFo1YxJ5SWM00WJ/d9ITPOn1yT/NuWC3P7NH+TspmWcT2u4nAlam4Gtb5ySyW6a7LHQV1gq/avDjzJ6IU7x4ECam+5FVzV8f9olBPLs=
+	t=1790793491; cv=none; b=AHZABFJFN1vZJEekvO50R/5ys8tol6rmEG3Ls2yS1rk9PD8Er4xjPRFK40JN1NfaXVNTTYXsAy9x5sk6wrrDY+QjyLBXIq/gtFegJ73IVltSFwoZHVIRrd7gZX4meQTk07tgcFoabI01hRXZgCwb7+3C6Fp/YrmJX+b0huE1TQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793487; c=relaxed/simple;
-	bh=R/JuKjBM4JtDAvP5X6lSaWJrNtuV1FmjX7c48RL725o=;
+	s=arc-20240116; t=1790793491; c=relaxed/simple;
+	bh=DX9iq7lqAeXU58Xa2ncN+mc9VXjAo37WCTzh4TkRRtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpRJHcCHvHrr/RvfIU3bMZA1cSKb/qcVWo1UWsoX9/aG3ZcXQE9hqFnPMcWMnYxvXXBVPU8K90fKLnTpFtodPZS/OhsvqF5J6dbxzaJF5ubc4JgPCTv1R4nCU+Dq2gGGW8j76Xud+3kNyWn9/6uiapSUiY0GpXcN0b4ueSTVT+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9Wx2MZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FmDFRk/Sv2OWC5dNDmWczGGwf+s3uHcKuFzh1GXpD2gPmkJ/TI0S14G2pazBUHv93yl3Po7ZS05pDASsf0DnvlyGAAWMKLPmEGe00H/w1w16bPHlHj/eyvNsD0Tc28bYDTNEEw6ffPQtUq5IXn0g6azj6HL01i7eKrm/mv5sFl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8lKfP2+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9Wx2MZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FBD1F000FF;
-	Wed, 30 Sep 2026 18:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8lKfP2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FBC1F000FF;
+	Wed, 30 Sep 2026 18:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793486;
-	bh=aNkTDCAu+EdlUZuXWU4TMjRlZXfo7297/60dNRM15kw=;
+	s=korg; t=1790793489;
+	bh=Lz5WVigjeGePC4D4W3tlcVgF7jPnJf2uC5whwJiHO+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n9Wx2MZVngOUJxIX95kd44FkwYWqoumOO3pQf00IMFfb1LpRBnITqC8wI1sB8NlkN
-	 0Jq2YfbGn4LNSqoVg8/gEOVVvbFgKd3NUb/epHS6DIzlFd0kOYQy62a+BsjbaMlV6G
-	 D7UzBIuOQgGm8SOLYFD24QBY81+ZM5qTaiCjUuGU=
+	b=K8lKfP2+HFB5zcQ+P8Jjai+cWPRQwuG2ancnZ9Dz+TR4H6qLQn8su+z5LcmbGy/6k
+	 Zz2H8KynQeDb/FyA7reOLOQorOTb2Nnubeq+HRr3pZk+6OQh6U4ChOEzfDC3UJvgMn
+	 d17mXSs7GVTEAxtvkQVcExGpEXrww6uzRb2TN1Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <wufan@kernel.org>
-Subject: [PATCH 6.18 227/395] ipe: protect the dm-verity root hash with RCU
-Date: Wed, 30 Sep 2026 17:28:09 +0200
-Message-ID: <20260930152345.586469960@linuxfoundation.org>
+	Holger Dengler <dengler@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 218/395] crypto: s390/hmac - Generate intermediate CV for API partial block handling
+Date: Wed, 30 Sep 2026 17:28:00 +0200
+Message-ID: <20260930152345.389658796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -49,112 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <wufan@kernel.org>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-commit 2776e9c28513a1c855a94792b292cbcc533418c8 upstream.
+commit 10396a2d6d41d594975b6ece712278570c3c970c upstream.
 
-ipe_bdev_setintegrity() frees the old root hash when dm-verity publishes
-a new one on ->preresume, while policy evaluation can still be
-dereferencing it.
+The API partial block handling requires a intermediate chaining
+value (CV). The internal function hash_data() sets the function code
+correctly, so also call cpacf_kimd() instruction for intermediate CV
+generation, as cpacf_klmd() always generate the final hash value.
 
-Protect the root hash with RCU. The evaluation path already runs under
-rcu_read_lock().
-
-Fixes: e155858dd995 ("ipe: add support for dm-verity as a trust provider")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-[FW: remove model name according to latest guideline]
-Signed-off-by: Fan Wu <wufan@kernel.org>
+Cc: stable@vger.kernel.org # 6.15+
+Fixes: 08811169ac01 ("crypto: s390/hmac - Use API partial block handling")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/ipe/eval.c  |   12 ++++++++----
- security/ipe/eval.h  |    2 +-
- security/ipe/hooks.c |   22 +++++++++++++++++-----
- 3 files changed, 26 insertions(+), 10 deletions(-)
+ arch/s390/crypto/hmac_s390.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/security/ipe/eval.c
-+++ b/security/ipe/eval.c
-@@ -134,10 +134,14 @@ static bool evaluate_boot_verified(const
- static bool evaluate_dmv_roothash(const struct ipe_eval_ctx *const ctx,
- 				  struct ipe_prop *p)
- {
--	return !!ctx->ipe_bdev &&
--	       !!ctx->ipe_bdev->root_hash &&
--	       ipe_digest_eval(p->value,
--			       ctx->ipe_bdev->root_hash);
-+	const struct digest_info *root_hash;
-+
-+	if (!ctx->ipe_bdev)
-+		return false;
-+
-+	root_hash = rcu_dereference(ctx->ipe_bdev->root_hash);
-+
-+	return root_hash && ipe_digest_eval(p->value, root_hash);
- }
- #else
- static bool evaluate_dmv_roothash(const struct ipe_eval_ctx *const ctx,
---- a/security/ipe/eval.h
-+++ b/security/ipe/eval.h
-@@ -27,7 +27,7 @@ struct ipe_bdev {
- #ifdef CONFIG_IPE_PROP_DM_VERITY_SIGNATURE
- 	bool dm_verity_signed;
- #endif /* CONFIG_IPE_PROP_DM_VERITY_SIGNATURE */
--	struct digest_info *root_hash;
-+	struct digest_info __rcu *root_hash;
- };
- #endif /* CONFIG_IPE_PROP_DM_VERITY */
+--- a/arch/s390/crypto/hmac_s390.c
++++ b/arch/s390/crypto/hmac_s390.c
+@@ -151,7 +151,10 @@ static int hash_data(const u8 *in, unsig
  
---- a/security/ipe/hooks.c
-+++ b/security/ipe/hooks.c
-@@ -9,6 +9,7 @@
- #include <linux/binfmts.h>
- #include <linux/mman.h>
- #include <linux/blk_types.h>
-+#include <linux/rcupdate.h>
+ #undef PARAM_INIT
  
- #include "ipe.h"
- #include "hooks.h"
-@@ -204,7 +205,20 @@ void ipe_bdev_free_security(struct block
- {
- 	struct ipe_bdev *blob = ipe_bdev(bdev);
+-	cpacf_klmd(func, &param, in, inlen);
++	if (final)
++		cpacf_klmd(func, &param, in, inlen);
++	else
++		cpacf_kimd(func, &param, in, inlen);
  
--	ipe_digest_free(blob->root_hash);
-+	ipe_digest_free(rcu_access_pointer(blob->root_hash));
-+}
-+
-+static void ipe_set_dmverity_roothash(struct ipe_bdev *blob,
-+				      struct digest_info *info)
-+{
-+	struct digest_info *old;
-+
-+	/* Protected by device-mapper's md->suspend_lock */
-+	old = rcu_replace_pointer(blob->root_hash, info, true);
-+	if (old) {
-+		synchronize_rcu();
-+		ipe_digest_free(old);
-+	}
- }
+ 	memcpy(digest, &param, digestsize);
  
- #ifdef CONFIG_IPE_PROP_DM_VERITY_SIGNATURE
-@@ -252,8 +266,7 @@ int ipe_bdev_setintegrity(struct block_d
- 		return -EINVAL;
- 
- 	if (!value) {
--		ipe_digest_free(blob->root_hash);
--		blob->root_hash = NULL;
-+		ipe_set_dmverity_roothash(blob, NULL);
- 
- 		return 0;
- 	}
-@@ -273,8 +286,7 @@ int ipe_bdev_setintegrity(struct block_d
- 
- 	info->digest_len = digest->digest_len;
- 
--	ipe_digest_free(blob->root_hash);
--	blob->root_hash = info;
-+	ipe_set_dmverity_roothash(blob, info);
- 
- 	return 0;
- err:
 
 
