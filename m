@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCD723D7FF;
-	Wed, 30 Sep 2026 18:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4011636A033;
+	Wed, 30 Sep 2026 18:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793436; cv=none; b=dwdDrGra10KrY6y7tBRtM6d4wxFNJgcBtcc25C5C9KT+ANkDQCB8peBDs7XcmM+71FzIy5ViijKyMmWGvDxI3x8s/WebLUIESQ2zgDSUizZDNQbVV/+EGGHRRoUFZFlYw8E75ypucGLEov3KsXRvKfxbrMWZKfnQZtcE4hwcOMI=
+	t=1790793439; cv=none; b=rrIIbqTBnhucXimQ0C6TfJg/7yFfSgqACsh4ZhRRkfOnfhK2+ufExj3mJ2+q4F62sps1fxZtP3ubaRDRmy9NopJegmK4IzlEd98PItegs41c75XQMm3fDCuK3ah7xmPwvevGiCqsZnj8JqVydHbSj1PP4RCRKDhJI+rzkrIIQ5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793436; c=relaxed/simple;
-	bh=FsLukFWjZqvNAv4nhXsSFxyAKdbamefzW6/L/VKG/PM=;
+	s=arc-20240116; t=1790793439; c=relaxed/simple;
+	bh=3KMvFTiHvQHi0E6+mZtNr/VcMNyMbnyGUT8T2O3SZms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNk5tYHAAEsmlW6f/KLHP8Dx0EcpkeWyIcVqD1NLY061kTLkT3bSK4Q5E5MnvobvBqBBNtvhsB5/nw2badZbvBQUpAHrSzua/hPwULzKAdeeTjRHzPgZ/5f+mbrok+9nqFuxP0I4aYcLEiMYAnREWwEkkp/8BOBR1euDObtJPHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JP3ODSFc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qN3dh3qeEQdoh2HdRRs36EaKFIBo+tMMjenfVzlkKkQkehliFKrJVqYbI0oNViTpc2fYKfn9gBQ2o/mUqwtGb4cFecGqpP3tq8F+ChRVKgZTW9aOjmVKurlMSvk9XvlyLgwf2Kj6SPHTbZuMNsyGOpzjH+SMRaHqqYrMwwHFdpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5MfDTJg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP3ODSFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F2F1F000FF;
-	Wed, 30 Sep 2026 18:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5MfDTJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971FA1F000FF;
+	Wed, 30 Sep 2026 18:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793435;
-	bh=QIGJZdezYYtWvKV04MdI7UmYRJ8+E4o65HR7OEOdKoE=;
+	s=korg; t=1790793438;
+	bh=8xia0+/yQNMa5b3NlgM6g2v7GmTwL1PgKtn1GpzyOYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JP3ODSFcXRmmtohkgF1Y1CGXefhdmQxepCT6oDeMWOXAiYnRausVIF3gNIeYyKXyT
-	 d4Euot7G3QyaCp84v+s11sw/2xx/MUDMCmFu7E0C6Y/YHELrJ6QSpSbn3eaUkjmmQW
-	 dY8cN6ij9zBysbWGCP0YJXdyqUbnM5zfqa4mgP9Y=
+	b=x5MfDTJgrxe88rvqupOZVvV4iF3q0sWotrd7M0O3IOGyqKxpNaqHXjcauvFrC4Q1i
+	 HH6jlKioIbhjCr/DJN58q5hn36lAmy/OKO5/TwE+nPatjBa/d4tT3qRb0wOz+xp9JJ
+	 25oCipnm+Cm+c2m0dHUKxdd7/Io/n3JXydPInayQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.18 253/395] drm/nouveau: dont bump pin count on failed re-pin in nouveau_bo_pin_locked()
-Date: Wed, 30 Sep 2026 17:28:35 +0200
-Message-ID: <20260930152346.141073748@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.18 254/395] drm/xe/vm: nuke PTs only after unlinking contested VMAs
+Date: Wed, 30 Sep 2026 17:28:36 +0200
+Message-ID: <20260930152346.161696533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -44,129 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 6a6870d3077faa501ca97760057ddca22b68418d upstream.
+commit 24a22fb3c731474b68e986af6804db450fb88617 upstream.
 
-nouveau_bo_pin_locked() checks whether an already pinned BO is in a
-memory domain compatible with a new pin request. When the domains are
-incompatible, it sets -EBUSY but still calls ttm_bo_pin() before
-returning.
+In xe_vm_close_and_put(), external-BO VMAs are queued on the contested
+list for deferred destruction via xe_vma_destroy_unlocked(). However,
+xe_vm_pt_destroy() was previously invoked before processing contested
+VMAs, destroying vm->pt_root while those VMAs were still linked to their
+respective buffer objects (vm_bo->list.gpuva).
 
-Callers treat a failed nouveau_bo_pin() as not having acquired a new pin,
-so the extra pin count is never decreased by a matching unpin.
-This triggers the warning in ttm_bo_release():
+If a concurrent thread evicts one of those shared buffer objects,
+xe_bo_trigger_rebind() holding only bo->resv walks the BO's VMAs and, in
+fault mode, calls xe_vm_invalidate_vma() -> xe_pt_zap_ptes(). Because
+vm->pt_root[tile->id] is already NULL, dereferencing pt->level causes a
+NULL ptr deref.
 
-	WARN_ON_ONCE(bo->pin_count);
+Fix this by deferring xe_vm_free_scratch() and xe_vm_pt_destroy() until
+after all contested VMAs have been unlinked and destroyed.
 
-Found when fuzzing the nouveau driver with a modified Syzkaller:
+User is reporting hitting a NULL ptr deref in xe_pt_zap_ptes(), which
+could be explained by this race.
 
-	WARNING: drivers/gpu/drm/ttm/ttm_bo.c:256 at ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256, CPU#1: syz.3.24/2212
-	Modules linked in:
-	CPU: 1 UID: 0 PID: 2212 Comm: syz.3.24 Not tainted 7.2.0 #24 PREEMPT(lazy)
-	nouveau 0000:01:00.0: gsp:msg fn:103 len:0x40/0x20 res:0x19 resp:0x19
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	RIP: 0010:ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256
-	Code: 02 00 0f 85 51 01 00 00 48 8b 7b 08 e8 d2 20 01 00 e9 80 fd ff ff e8 d8 15 c0 fe 90 0f 0b 90 e9 e1 f8 ff ff e8 ca 15 c0 fe 90 <0f> 0b 90 e9 a4 f8 ff ff e8 bc 15 c0 fe be 03 00 00 00 4c 89 e7 e8
-	msg: 00000000: 05 00 d0 c1 04 00 f0 f1 01 30 00 00 2d 90 00 00  .........0..-...
-	RSP: 0018:ffffc9000f5cf710 EFLAGS: 00010293
-	RAX: 0000000000000000 RBX: ffff888018e5d2a8 RCX: ffffffff82bb1b36
-	RDX: ffff888017b68000 RSI: 0000000000000004 RDI: ffff888018e5d2a8
-	msg: 00000010: 19 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-	RBP: ffff88801261c720 R08: 0000000000000001 R09: ffffed10031cba55
-	R10: ffff888018e5d2ab R11: 00000000000000f3 R12: ffff888018e5d290
-	R13: ffff888018e5d2d4 R14: ffff88801b219c18 R15: dffffc0000000000
-	FS:  0000000000000000(0000) GS:ffff8880e0f6f000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 0000001b31223ffc CR3: 0000000028e00005 CR4: 0000000000770ef0
-	PKRU: 80000000
-	Call Trace:
-	<TASK>
-	kref_put include/linux/kref.h:65 [inline]
-	ttm_bo_put drivers/gpu/drm/ttm/ttm_bo.c:325 [inline]
-	ttm_bo_fini+0x55/0x80 drivers/gpu/drm/ttm/ttm_bo.c:330
-	nouveau_gem_object_del+0xb2/0x1b0 drivers/gpu/drm/nouveau/nouveau_gem.c:90
-	drm_gem_object_free+0x5f/0x90 drivers/gpu/drm/drm_gem.c:1165
-	kref_put include/linux/kref.h:65 [inline]
-	__drm_gem_object_put include/drm/drm_gem.h:562 [inline]
-	drm_gem_object_put include/drm/drm_gem.h:575 [inline]
-	nouveau_abi16_chan_fini.constprop.0+0x44f/0x5a0 drivers/gpu/drm/nouveau/nouveau_abi16.c:195
-	nouveau 0000:01:00.0: syz.2.23[2209]: Unknown handle 0x00000000
-	nouveau_abi16_fini+0x1d0/0x340 drivers/gpu/drm/nouveau/nouveau_abi16.c:225
-	nouveau_drm_postclose+0x18b/0x3e0 drivers/gpu/drm/nouveau/nouveau_drm.c:1284
-	nouveau 0000:01:00.0: syz.2.23[2209]: validate_init
-	drm_file_free.part.0+0x6d6/0xb60 drivers/gpu/drm/drm_file.c:267
-	drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
-	drm_close_helper.isra.0+0x11a/0x160 drivers/gpu/drm/drm_file.c:290
-	drm_release+0x1ab/0x330 drivers/gpu/drm/drm_file.c:438
-	__fput+0x39c/0xa60 fs/file_table.c:512
-	nouveau 0000:01:00.0: syz.2.23[2209]: validate: -2
-	task_work_run+0x15a/0x230 kernel/task_work.c:233
-	exit_task_work include/linux/task_work.h:40 [inline]
-	do_exit+0x82b/0x25a0 kernel/exit.c:1009
-	do_group_exit+0xc2/0x280 kernel/exit.c:1152
-	get_signal+0x1d6e/0x1f30 kernel/signal.c:3046
-	arch_do_signal_or_restart+0x7d/0x6e0 arch/x86/kernel/signal.c:337
-	__exit_to_user_mode_loop kernel/entry/common.c:66 [inline]
-	exit_to_user_mode_loop+0xdf/0x440 kernel/entry/common.c:101
-	__exit_to_user_mode_prepare include/linux/irq-entry-common.h:207 [inline]
-	syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:230 [inline]
-	syscall_exit_to_user_mode include/linux/entry-common.h:318 [inline]
-	do_syscall_64+0x4f8/0x690 arch/x86/entry/syscall_64.c:100
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7f12bac8594d
-	Code: Unable to access opcode bytes at 0x7f12bac85923.
-	RSP: 002b:00007f12b96e70d8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
-	RAX: 0000000000000001 RBX: 00007f12baf15fa8 RCX: 00007f12bac8594d
-	RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 00007f12baf15fac
-	RBP: 00007f12baf15fa0 R08: 00007f12baee8000 R09: 0000000000000000
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 00007f12baf16038 R14: 0000000000000006 R15: 00007ffe2ed394b0
-	</TASK>
-	irq event stamp: 47867
-	hardirqs last  enabled at (47883): [<ffffffff815cafc6>] __up_console_sem+0x66/0x70 kernel/printk/printk.c:347
-	hardirqs last disabled at (47892): [<ffffffff815cafab>] __up_console_sem+0x4b/0x70 kernel/printk/printk.c:345
-	softirqs last  enabled at (47880): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
-	softirqs last  enabled at (47880): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
-	softirqs last  enabled at (47880): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
-	softirqs last disabled at (47875): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
-	softirqs last disabled at (47875): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
-	softirqs last disabled at (47875): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
-
-Fix by calling ttm_bo_pin() only when the existing placement is compatible
-with the new pin request. This matches the correct behavior in other DRM
-drivers such as amdgpu_bo_pin() in amdgpu.
-
-Cc: stable@vger.kernel.org
-Fixes: ad76b3f7c7a0 ("drm/nouveau: teach nouveau_bo_pin() how to force a contig vram allocation")
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
 Assisted-by: LLM
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/EACEF2F4E098413F+20260918025312.2814889-1-peiyang_he@smail.nju.edu.cn
+Fixes: b06d47be7c83 ("drm/xe: Port Xe to GPUVA")
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/9290
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.12+
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260918131034.598078-2-matthew.auld@intel.com
+(cherry picked from commit c2863648959489767f08892fd6e90577d2ea0b6a)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_bo.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_vm.c |   21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_bo.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
-@@ -578,8 +578,9 @@ int nouveau_bo_pin_locked(struct nouveau
- 				      "0x%08x vs 0x%08x\n", bo,
- 				 bo->resource->mem_type, domain);
- 			ret = -EBUSY;
-+		} else {
-+			ttm_bo_pin(&nvbo->bo);
- 		}
--		ttm_bo_pin(&nvbo->bo);
- 		goto out;
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1744,21 +1744,13 @@ void xe_vm_close_and_put(struct xe_vm *v
+ 		vma->gpuva.flags |= XE_VMA_DESTROYED;
  	}
  
+-	/*
+-	 * All vm operations will add shared fences to resv.
+-	 * The only exception is eviction for a shared object,
+-	 * but even so, the unbind when evicted would still
+-	 * install a fence to resv. Hence it's safe to
+-	 * destroy the pagetables immediately.
+-	 */
+-	xe_vm_free_scratch(vm);
+-	xe_vm_pt_destroy(vm);
+ 	xe_vm_unlock(vm);
+ 
+ 	/*
+-	 * VM is now dead, cannot re-add nodes to vm->vmas if it's NULL
+-	 * Since we hold a refcount to the bo, we can remove and free
+-	 * the members safely without locking.
++	 * Unlink and destroy all contested external-BO VMAs before destroying
++	 * the page tables. Otherwise, concurrent eviction holding only bo->resv
++	 * can walk the BO's VMAs and attempt to invalidate/zap page tables that
++	 * have already been freed.
+ 	 */
+ 	list_for_each_entry_safe(vma, next_vma, &contested,
+ 				 combined_links.destroy) {
+@@ -1766,6 +1758,11 @@ void xe_vm_close_and_put(struct xe_vm *v
+ 		xe_vma_destroy_unlocked(vma);
+ 	}
+ 
++	xe_vm_lock(vm, false);
++	xe_vm_free_scratch(vm);
++	xe_vm_pt_destroy(vm);
++	xe_vm_unlock(vm);
++
+ 	xe_svm_fini(vm);
+ 
+ 	up_write(&vm->lock);
 
 
