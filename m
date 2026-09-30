@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C204730D401;
-	Wed, 30 Sep 2026 19:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE9A3DD849;
+	Wed, 30 Sep 2026 19:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796279; cv=none; b=ElmRNWHvcTR8fYa1EC2FzaxAQNs3fyE0ilan0qpD8o9Trn1g2YjO16le6UhXdAbKVnPJg1c4gBLP4fFqnQdfYQr+cRJl5Ftpz8xuUXoq1qVLLpX29C7bj7Hz857ISZ2th6yEP9SnKZw0rLUjShjnHpbso5SHpRTwUJKS2jxcnuQ=
+	t=1790796282; cv=none; b=KBTX8mtP5E4m7bdCKSSern660XKPKr+hh2e6HMABSiM3mzqFFwjwRNQQYbQ7UQoZh2X1QQKTHRhKptcsJHlcukQDmYad3rUPfSfSZRkAHH4WONvc1Asf4VPzoNk7xdhnjDGugQ3aw+44ACEb+n7O1/rT7GdK06tD8zh0TihA+Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796279; c=relaxed/simple;
-	bh=ubXSYRyM3Z6UohwwJMNHDcl7ptBXgao48TInh4neR2o=;
+	s=arc-20240116; t=1790796282; c=relaxed/simple;
+	bh=WrCBdep+duoi0m+6Eag49GgsvR+vPf5gKbzl0X3uadU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQdMWn1nw+lpMVaIbGqWJUtsG8DPF99JdWOFjDOTOOTSPTN7G1FPYPnNlrvNPAND1IPBiUCV8m8keue9WEXuXO6T0r5/0Tic950ZaYfQL2j1CvnRKxGC3E53hutpq0r25SFWU2eF8DafZg0pWbi5Z4bj/iI0oo3lEw2HpCJx9L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18LCfurW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jGjK233802uix+frXCxoIV8XaS3+2P++aFkzUvfDpZ5F2kaI6wgZjnIzpdebQr/fuyKMPcRmxnodgdU+siQ6qtXsHoxP1pUmmppdBtGf6ElR5eeT4+juV8aHGXAz0H4QJr1i8wWMaT9ouEzLeYFQB5shHBJ1lLIwOpoQdgHFYUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGj4PghK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18LCfurW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2834D1F000FF;
-	Wed, 30 Sep 2026 19:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGj4PghK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D331F000FF;
+	Wed, 30 Sep 2026 19:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796278;
-	bh=8xUZWWcyzOC3MYokKgtsd8xNXIY8Vo8z/jNyiqdKw7I=;
+	s=korg; t=1790796281;
+	bh=9pztGcWNja0KkN8/MJTY95LBGMI3L06MFwu2i/edmZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=18LCfurW+7etgtUbd7IUQGOMlNFSnIUcqNirmgV3D8wx231V8uDuDMoEjY0lDOk1Z
-	 nCX31T94Q/2adwGlGfSNBSxuJddmdRSsugHxPPteRXrthkdi2N3xL69HmZ+mLl2iv5
-	 9Q7j8xpSa/utUFq9czRG/lmKlaAWt2z7FKkqd0TQ=
+	b=HGj4PghKHoxohTYp61vcVYckXVhbsoJViSzNqMwZjPLXZBf/KLD6QSAbAQ98a6V0j
+	 OoO6uhWdjl8bGDP7zmOgmuAHL39husFkaLJeWY39iaM++05kHcd0mJHytn5OGpx5qd
+	 IzO7giEhmO9PHmLurAm4N0NO9quHE/YvUD1JF9Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0812/1193] drop_monitor: fix out-of-bounds write in reset_per_cpu_data()
-Date: Wed, 30 Sep 2026 17:24:56 +0200
-Message-ID: <20260930152452.285227905@linuxfoundation.org>
+Subject: [PATCH 6.6 0813/1193] KVM: PPC: Book3S HV: fix use-after-free in kvmhv_emulate_tlbie_all_lpid()
+Date: Wed, 30 Sep 2026 17:24:57 +0200
+Message-ID: <20260930152452.307859225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,60 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-[ Upstream commit 439f392084f8f7f59ab9d47a9579185accefe1d8 ]
+[ Upstream commit 51938dfa8a51a4f85328413fca9b6e21f9d2d088 ]
 
-In reset_per_cpu_data(), al is computed as:
+kvmhv_emulate_tlbie_all_lpid() iterates the nested-guest IDR and drops
+mmu_lock before calling kvmhv_emulate_tlbie_lpid(), but does not hold a
+reference on the kvm_nested_guest pointer obtained from the IDR.  A
+concurrent vCPU issuing a single-LPID tlbie (is=2, ric=2) can race
+through kvmhv_flush_nested() -> kvmhv_remove_nested() -> idr_remove /
+--refcnt -> kvmhv_release_nested() -> kfree(gp) in that window, leaving
+the iterating vCPU with a dangling pointer.  The subsequent
+mutex_lock(&gp->tlb_lock) and accesses to gp->shadow_pgtable,
+gp->shadow_lpid and gp->l1_host all touch freed memory.  The free path
+is fully L1-controlled.
 
-    al = sizeof(struct net_dm_alert_msg);
-    al += dm_hit_limit * sizeof(struct net_dm_drop_point);
-    al += sizeof(struct nlattr);
+Fix this by incrementing gp->refcnt inside the loop before dropping
+mmu_lock, mirroring what kvmhv_get_nested() does, and releasing the
+reference with kvmhv_put_nested() after the per-guest work completes.
+This is the same get/put discipline already used at every other
+call site that drops mmu_lock while holding a nested-guest pointer.
 
-    skb = genlmsg_new(al, GFP_KERNEL);
-    ...
-    nla = nla_reserve(skb, NLA_UNSPEC, sizeof(struct net_dm_alert_msg));
-    ...
-    msg = nla_data(nla);
-    memset(msg, 0, al);
-
-Because al includes sizeof(struct nlattr) (the 4-byte attribute header),
-genlmsg_new() allocates al bytes of tailroom starting at nla.
-However, msg points to nla_data(nla), which is located
-sizeof(struct nlattr) bytes past nla. Calling memset(msg, 0, al)
-therefore writes al bytes starting from msg, exceeding the allocated
-buffer by sizeof(struct nlattr) (4 bytes) and corrupting
-skb_shared_info.
-
-Fix this by letting al represent only the payload length, allocating
-the skb with genlmsg_new(nla_total_size(al), GFP_KERNEL), and zeroing
-al bytes from msg.
-
-Fixes: 683703a26e46 ("drop_monitor: Update netlink protocol to include netlink attribute header in alert message")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260910204612.3762015-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e3b6b4661527 ("KVM: PPC: Book3S HV: Implement H_TLB_INVALIDATE hcall")
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/powerpc/kvm/book3s_hv_nested.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index 052abd988e80a..c0489d5339ce3 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -140,9 +140,8 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
+diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
+index 49144129da420..6c7d483e1c184 100644
+--- a/arch/powerpc/kvm/book3s_hv_nested.c
++++ b/arch/powerpc/kvm/book3s_hv_nested.c
+@@ -1172,8 +1172,10 @@ static void kvmhv_emulate_tlbie_all_lpid(struct kvm_vcpu *vcpu, int ric)
  
- 	al = sizeof(struct net_dm_alert_msg);
- 	al += dm_hit_limit * sizeof(struct net_dm_drop_point);
--	al += sizeof(struct nlattr);
- 
--	skb = genlmsg_new(al, GFP_KERNEL);
-+	skb = genlmsg_new(nla_total_size(al), GFP_KERNEL);
- 
- 	if (!skb)
- 		goto err;
+ 	spin_lock(&kvm->mmu_lock);
+ 	idr_for_each_entry(&kvm->arch.kvm_nested_guest_idr, gp, lpid) {
++		++gp->refcnt;
+ 		spin_unlock(&kvm->mmu_lock);
+ 		kvmhv_emulate_tlbie_lpid(vcpu, gp, ric);
++		kvmhv_put_nested(gp);
+ 		spin_lock(&kvm->mmu_lock);
+ 	}
+ 	spin_unlock(&kvm->mmu_lock);
 -- 
 2.53.0
 
