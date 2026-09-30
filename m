@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C294551614B;
-	Wed, 30 Sep 2026 17:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD3951614B;
+	Wed, 30 Sep 2026 17:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788119; cv=none; b=RpJXnzMC7pDH1xg66HXli42LNBmVXESN7Gw5To8vU0H2+QJcEsRvWatNqyrrj64/PwQScZ+cGn+/5jlTaj6y8lxIvBDN7mQbf7mlfW3NbGnY/oBWoT2IXhl4NvoCbOfrSEhHUYu1YYjgrKQ9H5akFDvFdEZ4DlXqso0tNU9Gzec=
+	t=1790788121; cv=none; b=Rdf/lMdLOglQI15avaDuucFnUWuiaL4ByPpF4BvRenUWdWGGQYBk5lR1rl9U0Bqdlr8KDIeZbYVinZpVx2AM07Gx9phctx9hiV7gc9LKSN8/WqRa14j0DyVbIpb3NXMX1dWOPpuDFpnL6YIR4Cc1pO0uW1OwFLzDrt7WkGo1Oj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788119; c=relaxed/simple;
-	bh=0SXtLmmSSq72xJ7ZrqkOQ17Ut/YLNNpCTYEeXC79EbE=;
+	s=arc-20240116; t=1790788121; c=relaxed/simple;
+	bh=tRyAgoeZB7Rd51adBqIvgJ2PEZZrvPhQDdOWzKmeAbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbXRKWSBTpXCkIeWB6sXJQfP0lrG7FMHMjZTcfFtQtgnSUYsjyVbPrKYfC1opzT2bvGl/UIxMmpe8+vAPMPMDjOwZwqQVTtEG05zWonIgHbhx8N4pMAENeJb4cTCJ90Qo5alb+T2AJOg5fu8RgBbYMXfeNaMpgslFbrW5NoWI1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwkQ+J0e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YmjRaCNvcpALefYlhz4JCZ/WSpLygdhoMXHUIB99XBC3TjZxa+feAMGx12VbozuSzZ5LMbtlT86nFZdlGxpn70X8M9FPaOUT4Q/0lzkkE6f5XOePTIE/PiQE0kGjyUz0iiNhoRpXGXpguq4PSDFR9Mi5lFK1ktaZVLtsZlAWXzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCDyW4Ah; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwkQ+J0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB4C1F000FF;
-	Wed, 30 Sep 2026 17:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCDyW4Ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79151F000FF;
+	Wed, 30 Sep 2026 17:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788117;
-	bh=ME+yPCSBnqT+0xqTjfEcYS/6bh/TDt1fn6/l3FpxMgs=;
+	s=korg; t=1790788120;
+	bh=GzWE91Gq7ekmbaBeyZVW6M4UQI04pJ4OB0XeF04Krq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jwkQ+J0eEqyHOwY+okltHUG/idQHH0mijh/tmdOR/flsvI0wHCvuQNAvCQcpcrmn9
-	 24vnL8xNMx9jepL0Y+GMxsz7fTOkC5/GCKdA9OudtEQtRKxg8wghvDUjs/PKNr5GdW
-	 AIt+F3h3f714m6maWMxNwVqBnrmtvFumVz1X5IVg=
+	b=WCDyW4AhXFKc46Nl54DO/SvFegatReQMdea6VCXAIng4pJQjk1P2zmRf/ZwpC9tau
+	 RvD0BphQGh1kiC5rBKsDmH9FOWOQdE/G+Cu31+gjjSOlekYEJJHuT5P0app6sU36cy
+	 i2Evj5gAj+3BBB+ihr++2zUg9bPDuPBlw6DjaBus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/877] net: cpsw: Execute ndo_set_rx_mode callback in a work queue
-Date: Wed, 30 Sep 2026 17:15:24 +0200
-Message-ID: <20260930152415.032261514@linuxfoundation.org>
+Subject: [PATCH 6.12 002/877] Revert "hwmon: (emc1403) Rely on subsystem locking"
+Date: Wed, 30 Sep 2026 17:15:13 +0200
+Message-ID: <20260930152414.797893364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,160 +49,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+This reverts commit 52dfb8be29d9918c40b512f3d65529f88304afe4.
 
-commit 0b8c878d117319f2be34c8391a77e0f4d5c94d79 upstream.
-
-Commit 1767bb2d47b7 ("ipv6: mcast: Don't hold RTNL for
-IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.") removed the RTNL lock for
-IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP operations. However, this
-change triggered the following call trace on my BeagleBone Black board:
-  WARNING: net/8021q/vlan_core.c:236 at vlan_for_each+0x120/0x124, CPU#0: rpcbind/481
-  RTNL: assertion failed at net/8021q/vlan_core.c (236)
-  Modules linked in:
-  CPU: 0 UID: 997 PID: 481 Comm: rpcbind Not tainted 6.19.0-rc7-next-20260130-yocto-standard+ #35 PREEMPT
-  Hardware name: Generic AM33XX (Flattened Device Tree)
-  Call trace:
-   unwind_backtrace from show_stack+0x28/0x2c
-   show_stack from dump_stack_lvl+0x30/0x38
-   dump_stack_lvl from __warn+0xb8/0x11c
-   __warn from warn_slowpath_fmt+0x130/0x194
-   warn_slowpath_fmt from vlan_for_each+0x120/0x124
-   vlan_for_each from cpsw_add_mc_addr+0x54/0x98
-   cpsw_add_mc_addr from __hw_addr_ref_sync_dev+0xc4/0xec
-   __hw_addr_ref_sync_dev from __dev_mc_add+0x78/0x88
-   __dev_mc_add from igmp6_group_added+0x84/0xec
-   igmp6_group_added from __ipv6_dev_mc_inc+0x1fc/0x2f0
-   __ipv6_dev_mc_inc from __ipv6_sock_mc_join+0x124/0x1b4
-   __ipv6_sock_mc_join from do_ipv6_setsockopt+0x84c/0x1168
-   do_ipv6_setsockopt from ipv6_setsockopt+0x88/0xc8
-   ipv6_setsockopt from do_sock_setsockopt+0xe8/0x19c
-   do_sock_setsockopt from __sys_setsockopt+0x84/0xac
-   __sys_setsockopt from ret_fast_syscall+0x0/0x54
-
-This trace occurs because vlan_for_each() is called within
-cpsw_ndo_set_rx_mode(), which expects the RTNL lock to be held.
-Since modifying vlan_for_each() to operate without the RTNL lock is not
-straightforward, and because ndo_set_rx_mode() is invoked both with and
-without the RTNL lock across different code paths, simply adding
-rtnl_lock() in cpsw_ndo_set_rx_mode() is not a viable solution.
-
-To resolve this issue, we opt to execute the actual processing within
-a work queue, following the approach used by the icssg-prueth driver.
-
-Please note: To reproduce this issue, I manually reverted the changes to
-am335x-bone-common.dtsi from commit c477358e66a3 ("ARM: dts: am335x-bone:
-switch to new cpsw switch drv") in order to revert to the legacy cpsw
-driver.
-
-Fixes: 1767bb2d47b7 ("ipv6: mcast: Don't hold RTNL for IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260203-bbb-v5-2-ea0ea217a85c@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw.c | 41 +++++++++++++++++++++++++++++-----
- 1 file changed, 35 insertions(+), 6 deletions(-)
+ drivers/hwmon/emc1403.c | 46 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
-index c0a5abd8d9a8e..2968b5fbe428c 100644
---- a/drivers/net/ethernet/ti/cpsw.c
-+++ b/drivers/net/ethernet/ti/cpsw.c
-@@ -305,12 +305,19 @@ static int cpsw_purge_all_mc(struct net_device *ndev, const u8 *addr, int num)
+diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
+index ccce948a4306e..eca33220d34a0 100644
+--- a/drivers/hwmon/emc1403.c
++++ b/drivers/hwmon/emc1403.c
+@@ -17,6 +17,7 @@
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/err.h>
+ #include <linux/sysfs.h>
++#include <linux/mutex.h>
+ #include <linux/regmap.h>
+ #include <linux/util_macros.h>
+ 
+@@ -29,6 +30,7 @@ enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
+ struct thermal_data {
+ 	enum emc1403_chip chip;
+ 	struct regmap *regmap;
++	struct mutex mutex;
+ };
+ 
+ static ssize_t power_state_show(struct device *dev, struct device_attribute *attr, char *buf)
+@@ -266,8 +268,8 @@ static s8 emc1403_temp_regs_low[][4] = {
+ 	},
+ };
+ 
+-static int emc1403_get_temp(struct thermal_data *data, int channel,
+-			    enum emc1403_reg_map map, long *val)
++static int __emc1403_get_temp(struct thermal_data *data, int channel,
++			      enum emc1403_reg_map map, long *val)
+ {
+ 	unsigned int regvalh;
+ 	unsigned int regvall = 0;
+@@ -293,23 +295,38 @@ static int emc1403_get_temp(struct thermal_data *data, int channel,
  	return 0;
  }
  
--static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
-+static void cpsw_ndo_set_rx_mode_work(struct work_struct *work)
- {
--	struct cpsw_priv *priv = netdev_priv(ndev);
-+	struct cpsw_priv *priv = container_of(work, struct cpsw_priv, rx_mode_work);
- 	struct cpsw_common *cpsw = priv->cpsw;
-+	struct net_device *ndev = priv->ndev;
- 	int slave_port = -1;
- 
-+	rtnl_lock();
-+	if (!netif_running(ndev))
-+		goto unlock_rtnl;
++static int emc1403_get_temp(struct thermal_data *data, int channel,
++			    enum emc1403_reg_map map, long *val)
++{
++	int ret;
 +
-+	netif_addr_lock_bh(ndev);
++	mutex_lock(&data->mutex);
++	ret = __emc1403_get_temp(data, channel, map, val);
++	mutex_unlock(&data->mutex);
 +
- 	if (cpsw->data.dual_emac)
- 		slave_port = priv->emac_port + 1;
- 
-@@ -318,7 +325,7 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
- 		/* Enable promiscuous mode */
- 		cpsw_set_promiscious(ndev, true);
- 		cpsw_ale_set_allmulti(cpsw->ale, IFF_ALLMULTI, slave_port);
--		return;
-+		goto unlock_addr;
- 	} else {
- 		/* Disable promiscuous mode */
- 		cpsw_set_promiscious(ndev, false);
-@@ -331,6 +338,18 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
- 	/* add/remove mcast address either for real netdev or for vlan */
- 	__hw_addr_ref_sync_dev(&ndev->mc, ndev, cpsw_add_mc_addr,
- 			       cpsw_del_mc_addr);
-+
-+unlock_addr:
-+	netif_addr_unlock_bh(ndev);
-+unlock_rtnl:
-+	rtnl_unlock();
++	return ret;
 +}
 +
-+static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
-+{
-+	struct cpsw_priv *priv = netdev_priv(ndev);
-+
-+	schedule_work(&priv->rx_mode_work);
+ static int emc1403_get_hyst(struct thermal_data *data, int channel,
+ 			    enum emc1403_reg_map map, long *val)
+ {
+ 	int hyst, ret;
+ 	long limit;
+ 
+-	ret = emc1403_get_temp(data, channel, map, &limit);
++	mutex_lock(&data->mutex);
++	ret = __emc1403_get_temp(data, channel, map, &limit);
+ 	if (ret < 0)
+-		return ret;
++		goto unlock;
+ 	ret = regmap_read(data->regmap, 0x21, &hyst);
+ 	if (ret < 0)
+-		return ret;
++		goto unlock;
+ 	if (map == temp_min)
+ 		*val = limit + hyst * 1000;
+ 	else
+ 		*val = limit - hyst * 1000;
+-	return 0;
++unlock:
++	mutex_unlock(&data->mutex);
++	return ret;
  }
  
- static unsigned int cpsw_rxbuf_total_len(unsigned int len)
-@@ -1444,6 +1463,7 @@ static int cpsw_probe_dual_emac(struct cpsw_priv *priv)
- 	priv_sl2->ndev = ndev;
- 	priv_sl2->dev  = &ndev->dev;
- 	priv_sl2->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
-+	INIT_WORK(&priv_sl2->rx_mode_work, cpsw_ndo_set_rx_mode_work);
+ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, long *val)
+@@ -434,16 +451,20 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
+ 	else
+ 		val = clamp_val(val, 0, 255000);
  
- 	if (is_valid_ether_addr(data->slave_data[1].mac_addr)) {
- 		memcpy(priv_sl2->mac_addr, data->slave_data[1].mac_addr,
-@@ -1625,6 +1645,7 @@ static int cpsw_probe(struct platform_device *pdev)
- 	priv->dev  = dev;
- 	priv->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
- 	priv->emac_port = 0;
-+	INIT_WORK(&priv->rx_mode_work, cpsw_ndo_set_rx_mode_work);
+-	ret = emc1403_get_temp(data, 0, temp_crit, &limit);
++	mutex_lock(&data->mutex);
++	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
+ 	if (ret < 0)
+-		return ret;
++		goto unlock;
  
- 	if (is_valid_ether_addr(data->slave_data[0].mac_addr)) {
- 		memcpy(priv->mac_addr, data->slave_data[0].mac_addr, ETH_ALEN);
-@@ -1727,6 +1748,8 @@ static int cpsw_probe(struct platform_device *pdev)
- static void cpsw_remove(struct platform_device *pdev)
- {
- 	struct cpsw_common *cpsw = platform_get_drvdata(pdev);
-+	struct net_device *ndev;
-+	struct cpsw_priv *priv;
- 	int i, ret;
+ 	hyst = limit - val;
+ 	if (data->chip == emc1428)
+ 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
+ 	else
+ 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
+-	return regmap_write(data->regmap, 0x21, hyst);
++	ret = regmap_write(data->regmap, 0x21, hyst);
++unlock:
++	mutex_unlock(&data->mutex);
++	return ret;
+ }
  
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
-@@ -1739,9 +1762,15 @@ static void cpsw_remove(struct platform_device *pdev)
- 		return;
+ static int emc1403_set_temp(struct thermal_data *data, int channel,
+@@ -457,6 +478,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 	regh = emc1403_temp_regs[channel][map];
+ 	regl = emc1403_temp_regs_low[channel][map];
+ 
++	mutex_lock(&data->mutex);
+ 	if (regl >= 0) {
+ 		if (data->chip == emc1428)
+ 			val = clamp_val(val, -128000, 127875);
+@@ -465,7 +487,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 		regval = DIV_ROUND_CLOSEST(val, 125);
+ 		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
+ 		if (ret < 0)
+-			return ret;
++			goto unlock;
+ 		ret = regmap_write(data->regmap, regl, (regval & 0x07) << 5);
+ 	} else {
+ 		if (data->chip == emc1428)
+@@ -475,6 +497,8 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 		regval = DIV_ROUND_CLOSEST(val, 1000);
+ 		ret = regmap_write(data->regmap, regh, regval);
  	}
++unlock:
++	mutex_unlock(&data->mutex);
+ 	return ret;
+ }
  
--	for (i = 0; i < cpsw->data.slaves; i++)
--		if (cpsw->slaves[i].ndev)
--			unregister_netdev(cpsw->slaves[i].ndev);
-+	for (i = 0; i < cpsw->data.slaves; i++) {
-+		ndev = cpsw->slaves[i].ndev;
-+		if (!ndev)
-+			continue;
+@@ -671,6 +695,8 @@ static int emc1403_probe(struct i2c_client *client)
+ 	if (IS_ERR(data->regmap))
+ 		return PTR_ERR(data->regmap);
+ 
++	mutex_init(&data->mutex);
 +
-+		priv = netdev_priv(ndev);
-+		unregister_netdev(ndev);
-+		disable_work_sync(&priv->rx_mode_work);
-+	}
- 
- 	cpts_release(cpsw->cpts);
- 	cpdma_ctlr_destroy(cpsw->dma);
+ 	hwmon_dev = devm_hwmon_device_register_with_info(&client->dev,
+ 							 client->name, data,
+ 							 &emc1403_chip_info,
 -- 
 2.53.0
 
