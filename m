@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F53503BF7;
-	Wed, 30 Sep 2026 17:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369C51C050;
+	Wed, 30 Sep 2026 17:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791035; cv=none; b=NsYsT+o6fdkNRbOSchmMDm1s3VkMmuuM/CRIp9HcEzEo8OeDjcvqYdk2t3f9KZfp8/7h7mTCqBosP8JR8fUQboRMC5p5DY4euR7188e02dcRwP0ZPR3lf49vQe2vvA3weLE/tn7EAGo4B8uNPFy6PtRBp6KnKQBJV6LYWXp8pU0=
+	t=1790791039; cv=none; b=dYYhPb/wrHS3FOAdtqRn1EzBiE8+qo8bfB68wAsae/VIMU+Li68YzprekGRJw9/U1+l9gH7d65t7PdJ1KTme9Giv8i6SfWVeBM0bAd0Mu570aHlg95Ua+lrQQGrXtjaiZP3C8DNHHh3xDre6lDZ+gAdt0zrjqctH2knmV0YDQUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791035; c=relaxed/simple;
-	bh=9IbRxxydO4UPcSZx4KKCz61XaEmEzg/SKtOhINW3ph4=;
+	s=arc-20240116; t=1790791039; c=relaxed/simple;
+	bh=uxRjZIXKWiujdzy6UXnmYhPlvzojeg85EuUsoOaN74A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCQErfp7v8kHRyT35n/1N4Q7DooS7bvsL+laHd1cTHdQFjJ20H9FCHi6Ecpz+OrNUNqiL4beeji1trXLbMZe12gAioXvU6UoC9Uz27o21e1DCe75oFD6p+xNOgaCQs3J41djYr6UEQIfhIzlq7Ug35vVP+mdXIBs5RpQkQG+9bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3zRWZhe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sUBy94L/YRVkHoAnWy0HAa/0hXYGK/VeEFiS43vgLml3Zl4SOOnkWFb1Sr4Ou8Rzrcazv/h8k7Ti0MvJJ2rbP08o3FYTEnA6oorR3XUDMPrDpLerqYXUz8NaU2X19ErpOkvXCUsJfhtR3RQWFZ6a/PPL3ZNgt5ZxzbOcqolHBwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLdmy8WU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3zRWZhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BDA1F000FF;
-	Wed, 30 Sep 2026 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLdmy8WU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0C51F000FF;
+	Wed, 30 Sep 2026 17:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791034;
-	bh=gsUY7AkG0jkdFTnJ6zN3sli0mJvd+LoQ7tFPc2+nmJo=;
+	s=korg; t=1790791037;
+	bh=RIBHPYJiCgz6PO4puZwbvZ2s3IeuHk4ksN4Tf0bGnxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x3zRWZheEpOLNn3SqSl8MfrrWEZlAApnXgn8x4oq4XOEVfxg8zxPLgK8at9qcIYqn
-	 yhtBoArw5xxdt5cRGF9VW196cH/lCjur5DPySgdiger6AAsddi5GFYvtTxGZG8zfv+
-	 bz1F+CiJDsB9klkdwnHhRPM9937P6rPsQTP6MWoc=
+	b=TLdmy8WUceclPCFa9eHPZDiGVvaaBLpLCEuGSzAhJjXPWaaTye0IC9k2DBWICGoBo
+	 lnP8ZwyU7kvdhW4bkYp0OwPtHVtYM7J2qAOUohLjy8hq9DKQpkmv68WyenWuivUQlC
+	 FCskeiQXZmsVC6vgSoEKaFjOkTKKF8fz5KU6Uizs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Matthew Bystrin <dev.mbstr@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/752] leds: pca9532: Dont stop blinking for non-zero brightness
-Date: Wed, 30 Sep 2026 17:20:30 +0200
-Message-ID: <20260930152401.653952059@linuxfoundation.org>
+Subject: [PATCH 5.15 161/752] mfd: rsmu: Add 8a34002 support
+Date: Wed, 30 Sep 2026 17:20:31 +0200
+Message-ID: <20260930152401.677942638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,57 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Deiminger <tobias.deiminger@linutronix.de>
+From: Matthew Bystrin <dev.mbstr@gmail.com>
 
-[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
+[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
 
-pca9532 unexpectedly stopped blinking when changing brightness to a
-non-zero value. To reproduce:
+Add compatible string, i2c_devcie_id and spi_devcie_id to support
+8a34002.
 
- echo timer > /sys/class/leds/led-1/trigger   # blinks
- echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
- cat /sys/class/leds/led-1/trigger            # still claims [timer]
-
-According to Documentation/leds/leds-class.rst, only brightness = 0
-shall be a stop condition:
-
-> You can change the brightness value of a LED independently of the
-> timer trigger. However, if you set the brightness value to LED_OFF it
-> will also disable the timer trigger.
-
-Therefore add a guard to continue blinking when brightness != LED_OFF,
-similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
-HW blink support").
-
-Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
+Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
+Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mfd/rsmu_i2c.c | 2 ++
+ drivers/mfd/rsmu_spi.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index b5562de6349eb..b7d0aeeecfcf8 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -177,11 +177,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
- 	int err = 0;
- 	struct pca9532_led *led = ldev_to_led(led_cdev);
- 
--	if (value == LED_OFF)
-+	if (value == LED_OFF) {
- 		led->state = PCA9532_OFF;
--	else if (value == LED_FULL)
-+	} else if (led->state == PCA9532_PWM1) {
-+		return 0; /* Non-zero brightness shall not stop HW blinking */
-+	} else if (value == LED_FULL) {
- 		led->state = PCA9532_ON;
--	else {
-+	} else {
- 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
- 		err = pca9532_calcpwm(led->client, 0, 0, value);
- 		if (err)
+diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
+index dc001c9791c16..8c25a15db9807 100644
+--- a/drivers/mfd/rsmu_i2c.c
++++ b/drivers/mfd/rsmu_i2c.c
+@@ -158,6 +158,7 @@ static int rsmu_i2c_remove(struct i2c_client *client)
+ static const struct i2c_device_id rsmu_i2c_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{ "8v19n850", RSMU_SL },
+@@ -169,6 +170,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
+ static const struct of_device_id rsmu_i2c_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
+diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
+index fec2b4ec477c5..d4891344bba7d 100644
+--- a/drivers/mfd/rsmu_spi.c
++++ b/drivers/mfd/rsmu_spi.c
+@@ -232,6 +232,7 @@ static int rsmu_spi_remove(struct spi_device *client)
+ static const struct spi_device_id rsmu_spi_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{}
+@@ -241,6 +242,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
+ static const struct of_device_id rsmu_spi_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{}
 -- 
 2.53.0
 
