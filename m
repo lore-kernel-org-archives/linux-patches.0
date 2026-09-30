@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814DE3A9852;
-	Wed, 30 Sep 2026 18:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E93536998C;
+	Wed, 30 Sep 2026 18:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794510; cv=none; b=fxMv8QdRMTCbcaT3KYIMnqGSAtkwV5yHpnYxD2Tuph5zRyGePUt1cOdTyXmdsb4ZTXzuWdIY8djlxlEE3bHBlDXVIHWlIjGG9lEYwXS9Se5TsZ93t5RWfuC6o+3Jz+5y5Av+WP8+oLcV3uP6WqrhjhWOOTBAyKMoAmbt9qBADBM=
+	t=1790794513; cv=none; b=lzYE9EG8dG6uaJT097FlwFTO7NE/xabxQNMf6dWGrBIahal4W5wWrB2tK+QHDl++ZOWj34InCQTftODdkRW7QUnHjOGISHTtl3EZ0T8mj+m6oIyXfAk6C6jhOwwjTUHagl6PEo6FvvrX0P1atIgjlmuRkLnJlc7/SWmRFLZwYMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794510; c=relaxed/simple;
-	bh=wCOcM5/ASSvqemVrXFS7CnPucXO3pwE4En2cjDWBEhM=;
+	s=arc-20240116; t=1790794513; c=relaxed/simple;
+	bh=AqIZePh2gDvYiz8K35omXmHqQS3TSWD/qRduSfWLjiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DODquKNdCSUUjofyUmqomrADiz1VS+AGPkMSP2GrBitNmcExGbYzymf1oI3UPCuHVq0Up7jxSiFZAoLkFJOBKfnfkHqQMJYXUMUeTe6eG7XuFW7/NmertzFUJmAMkwZbtppzXQsJrSV/fT08XeOVwLYyLujhnaVTvjc2hdjIV4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/OwvtDx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DAGGAHMRB2WXjZSjp3B8AAAgMpYV3pCZJM+or8bapLe9JHD1kNFReCMEeZv1swxXibJJeOV+dajtFhd38iWqC/tkAoogJx45hst0O/HOBywarfd4bzKRiLv6QzBN0gePoMbQJMX3eNNB6kbt3FMtU1Esd8sQl2rbWmk5u00LwVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBc8PYU3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/OwvtDx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51E11F000FF;
-	Wed, 30 Sep 2026 18:55:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBc8PYU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81781F000FF;
+	Wed, 30 Sep 2026 18:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794509;
-	bh=hFQ9oqRNfNunuNvwpFdhIn3nddAAhlXVHMiT7kOd9dA=;
+	s=korg; t=1790794512;
+	bh=Fg55+Orah52Wya2eF3Z9uFl+uTpSzyuAH3rDkVAlM+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L/OwvtDxk7N+Iros1CHPXpIwsHsDBphKXCJPobpCraOZi6xymvjsJLVzJjpfVi8hQ
-	 EQI9hyimEuqGEbfULeC/xDk0OInWVniD5TFMxErtVThKeclOWWPiS1yXxFIQH+av0g
-	 Mjla75gHHIIfwvKcWCyW/N2s1fI0XdsmkbEB4vUo=
+	b=rBc8PYU3kA3VmTCBYGP0D5p5V1JOBJWnXd+gnzyX2M7xipH5Qdnyfm1io6tLqDz+o
+	 KNE2O2IQE4QXn6Poe68cbsNb5+h6/E0y05VJWC8rt2Famxq3ps+J0Y4XYvQJoogOLb
+	 +geBSyCXPcaL9Gp6iiUJ6l1OI6APLPXMjX8L/Xqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Akashdeep Kaur <a-kaur@ti.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0237/1193] leds: pca9532: Dont stop blinking for non-zero brightness
-Date: Wed, 30 Sep 2026 17:15:21 +0200
-Message-ID: <20260930152439.456928555@linuxfoundation.org>
+Subject: [PATCH 6.6 0238/1193] mfd: tps65219: Make poweroff handler conditional on system-power-controller
+Date: Wed, 30 Sep 2026 17:15:22 +0200
+Message-ID: <20260930152439.477750029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,57 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Deiminger <tobias.deiminger@linutronix.de>
+From: Akashdeep Kaur <a-kaur@ti.com>
 
-[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
+[ Upstream commit 104cd764a031bfe2ffe253adce9581384a78c16e ]
 
-pca9532 unexpectedly stopped blinking when changing brightness to a
-non-zero value. To reproduce:
+Currently, the TPS65219 driver unconditionally registers a poweroff
+handler. This causes issues on systems where a different component
+(such as TF-A firmware) should handle system poweroff instead.
 
- echo timer > /sys/class/leds/led-1/trigger   # blinks
- echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
- cat /sys/class/leds/led-1/trigger            # still claims [timer]
+Make the poweroff handler registration conditional based on the
+"system-power-controller" device tree property. This follows the
+standard kernel pattern where only the designated power controller
+registers for system poweroff operations.
 
-According to Documentation/leds/leds-class.rst, only brightness = 0
-shall be a stop condition:
+On systems where the property is absent, the PMIC will not register
+a poweroff handler, allowing other poweroff mechanisms to function.
 
-> You can change the brightness value of a LED independently of the
-> timer trigger. However, if you set the brightness value to LED_OFF it
-> will also disable the timer trigger.
-
-Therefore add a guard to continue blinking when brightness != LED_OFF,
-similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
-HW blink support").
-
-Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
-Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
+Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
+Link: https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mfd/tps65219.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 9f8a7511ec3fd..34eab5f547fc6 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -175,11 +175,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
- 	int err = 0;
- 	struct pca9532_led *led = ldev_to_led(led_cdev);
+diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
+index 72a5f51fe32a5..c2cee7db1508d 100644
+--- a/drivers/mfd/tps65219.c
++++ b/drivers/mfd/tps65219.c
+@@ -280,13 +280,15 @@ static int tps65219_probe(struct i2c_client *client)
+ 		return ret;
+ 	}
  
--	if (value == LED_OFF)
-+	if (value == LED_OFF) {
- 		led->state = PCA9532_OFF;
--	else if (value == LED_FULL)
-+	} else if (led->state == PCA9532_PWM1) {
-+		return 0; /* Non-zero brightness shall not stop HW blinking */
-+	} else if (value == LED_FULL) {
- 		led->state = PCA9532_ON;
--	else {
-+	} else {
- 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
- 		err = pca9532_calcpwm(led->client, 0, 0, value);
- 		if (err)
+-	ret = devm_register_power_off_handler(tps->dev,
+-					      tps65219_power_off_handler,
+-					      tps);
+-	if (ret) {
+-		dev_err(tps->dev, "failed to register power-off handler: %d\n", ret);
+-		return ret;
++	if (of_device_is_system_power_controller(tps->dev->of_node)) {
++		ret = devm_register_power_off_handler(tps->dev,
++						      tps65219_power_off_handler,
++						      tps);
++		if (ret)
++			return dev_err_probe(tps->dev, ret,
++					     "Failed to register power-off handler\n");
+ 	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
