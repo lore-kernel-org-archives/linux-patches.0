@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2465A4E4306;
-	Wed, 30 Sep 2026 19:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFD641D4F7;
+	Wed, 30 Sep 2026 19:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797135; cv=none; b=k/b0JFCjg/5FXrri7v+b9o5YLpyyS2SBImeME+GNZWMMyy+fGpEWQu11c/z2cCf7mzM7b2IqIIDlfHYgVKCHQmLlaOh/FsGpxLsy2USCRyvnm7AaXS3+atj4NgRIhr4Yb9/D1A6EhyBZt6FQQXxEPoy+vfy8v0i5MOKmIoGbQX4=
+	t=1790797138; cv=none; b=JlgqwejNSyJdkp4Pj2Yek8YjPRCAjWSTN+LpesV3AuzZluQoMlEnDhOoQCXDh9cVLCfiZqcdOG60ngI6HGNrLkAxawuRf2bT1k5fuexC2deXwT9lMGLtk6ElvKuGSPRjeVHuCw7Alf+obnASKDFlZ0VcMQcUPH15mChsIDmCpck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797135; c=relaxed/simple;
-	bh=EiCHp6kpWXzv33h1mWYS4qx478TJkO+RDwg9uiEAsnQ=;
+	s=arc-20240116; t=1790797138; c=relaxed/simple;
+	bh=YuVG21/c1MWC3K3ExrC6QgtkAip/V9kEkiKPeQ3ceYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q44c+Dhp/s9H2sR/VbIAuisKxQa4Z68CK2l71rPEuAtKKyx8O12fvia5zp0wXKWHbcyge9pGsr2B/dZlsqlxkgdN/Ooxg0aKEM+j2Ep65lgem9J8VkT6FXvwWwZ7r4isE+Hgst2teFAmwVdFieRQkZM9zTP95gxKGTvkp8VIwZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2I+Zg18W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZlZmPakt/JKejr06fTCYQoLbkzoA/gfajwpLukMUDbpYC/YXZj61j2P6sMyOFArl1RfGlfL2gf4vUVuUoT1c/aXq1nDhD0uKkpBVstUPuz+NRWuRgi5ATyP4X3lUtJl7/T5D9d8heVPlalm/NT6k2aVMAlMjg7QBP50lNnckz5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gD1AMu0N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2I+Zg18W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D96F1F000FF;
-	Wed, 30 Sep 2026 19:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gD1AMu0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544D01F0089A;
+	Wed, 30 Sep 2026 19:38:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797134;
-	bh=JoD4cw5SqnmlHB8bdLKmJNG7XGLFFClD17bb5CVrH5E=;
+	s=korg; t=1790797136;
+	bh=a2GrFL7Mk/NNK0NeTKoXB8f/a8kfmwltFcRqpPE/IcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2I+Zg18WMinO4A1T8dDNrSWk/Oab/joiWXE/C2PdgE5lB1rc5cGcAH+rK6ZH5PV64
-	 5xSJQLHFzi0raF0jT9hJr2Frm3M3GDfVofyJ1JJR0dWGaNEMFUqsoHefvpi3jc9txx
-	 c73ccumjGj9HuWfLjVxntxzh1Kojq4MtZfSLnkWE=
+	b=gD1AMu0NEtOJfge+XVzPmAQIcfv6+Vnlg8hK/StNx+1DZj35xyBmzgMnJCM5odUMq
+	 VNcn948vHvE8S+ZGsGLN3Xrwv1t//sKevLriyj7BnkVTbyKzUYQVdCfVNkjlPKUrOl
+	 /uPnkL1BvViIO5S0fGW+mW9cIRMekCmqnJaTEKiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Artem Dinaburg <artem@trailofbits.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1160/1193] wifi: ath12k: check M3 buffer size as well whey trying to reuse it
-Date: Wed, 30 Sep 2026 17:30:44 +0200
-Message-ID: <20260930152500.015425895@linuxfoundation.org>
+	Myeonghun Pak <mhun512@gmail.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.6 1143/1193] RISC-V: KVM: Synchronize hrtimer callback during teardown
+Date: Wed, 30 Sep 2026 17:30:27 +0200
+Message-ID: <20260930152459.632078345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,112 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 05090ae82f44570fefddb4e1be1d7e5770d6de40 ]
+commit aaad136d56d91252517272b68cd533e5714698d5 upstream.
 
-Currently in recovery/resume cases, we do not free M3 buffer but
-instead will reuse it. This is done by checking m3_mem->vaddr: if it
-is not NULL we believe M3 buffer is ready and go ahead to reuse it.
+The non-Sstc hrtimer callback clears next_set before its final uses of
+the enclosing vCPU.  If teardown observes next_set as false while the
+callback is still running, kvm_riscv_vcpu_timer_cancel() skips
+hrtimer_cancel() and kvm_destroy_vcpus() can free the vCPU before the
+callback enters kvm_riscv_vcpu_set_interrupt().
 
-Note that m3_mem->size is not checked. This is safe for now because
-currently M3 reuse logic only gets executed in recovery/resume cases
-and the size keeps unchanged in either of them.
+A guest can arm the timer with SBI TIME and request shutdown with SBI
+legacy shutdown or SRST.  A VMM that honors KVM_EXIT_SYSTEM_EVENT and
+destroys the VM supplies the teardown side of the race; no post-launch
+host ioctl is needed to arm or request teardown.
 
-However ideally the size should be checked as well, to make the code
-safer. So add the check there. Now if that check fails, free old M3
-buffer and reallocate a new one.
+On upstream master 62cc90241548, generic KASAN reported:
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+  BUG: KASAN: slab-use-after-free in do_raw_spin_lock
+  Write of size 4 at addr ff60000005e58898
 
-[ Backport to 6.6.y: mapped the M3 size validation onto the target's
-  older QMI allocation layout. ]
+  kvm_riscv_vcpu_set_interrupt
+  kvm_riscv_vcpu_hrtimer_expired
+  __hrtimer_run_queues
+  hrtimer_interrupt
 
-Fixes: 303c017821d8 ("wifi: ath12k: fix kernel crash during resume")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240425021740.29221-1-quic_bqiang@quicinc.com
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The object was allocated by KVM_CREATE_VCPU and freed concurrently by:
+
+  kvm_destroy_vcpus
+  kvm_arch_destroy_vm
+  kvm_destroy_vm
+  __fput
+
+For deterministic validation, I added mdelay(1000) immediately after
+the existing next_set = false assignment.  This only widens the
+existing post-clear callback window.  A no-delay trace build naturally
+reached the callback-after-teardown-start/before-deinit ordering in 12
+of 200 runs, but 1,500 stock-kernel stress iterations did not produce a
+KASAN report, so natural reproduction is timing-sensitive.
+
+Always invoke hrtimer_cancel() for an initialized timer.  Preserve the
+existing -EINVAL result when the timer is no longer set, but only after
+synchronizing with a running callback.
+
+With this patch, hrtimer_cancel() blocked for the full widened callback
+window before vCPU destruction.  KASAN reported no error in 100
+fixed-and-widened runs or 200 fix-only timing-sweep runs.
+
+Fixes: 3a9f66cb25e1 ("RISC-V: KVM: Add timer functionality")
+Cc: stable@vger.kernel.org
+Assisted-by: OpenAI:GPT-5.6
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20260731163550.46991-1-mhun512@gmail.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/qmi.c | 39 ++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ arch/riscv/kvm/vcpu_timer.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
-index 7a9868dbab02d..48d0043fcee93 100644
---- a/drivers/net/wireless/ath/ath12k/qmi.c
-+++ b/drivers/net/wireless/ath/ath12k/qmi.c
-@@ -2511,6 +2511,19 @@ static int ath12k_qmi_load_bdf_qmi(struct ath12k_base *ab,
- 	return ret;
- }
+--- a/arch/riscv/kvm/vcpu_timer.c
++++ b/arch/riscv/kvm/vcpu_timer.c
+@@ -60,10 +60,13 @@ static enum hrtimer_restart kvm_riscv_vc
  
-+static void ath12k_qmi_m3_free(struct ath12k_base *ab)
-+{
-+	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
-+
-+	if (!m3_mem->vaddr)
-+		return;
-+
-+	dma_free_coherent(ab->dev, m3_mem->size,
-+			  m3_mem->vaddr, m3_mem->paddr);
-+	m3_mem->vaddr = NULL;
-+	m3_mem->size = 0;
-+}
-+
- static int ath12k_qmi_m3_load(struct ath12k_base *ab)
+ static int kvm_riscv_vcpu_timer_cancel(struct kvm_vcpu_timer *t)
  {
- 	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
-@@ -2518,9 +2531,6 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
- 	char path[100];
- 	int ret;
+-	if (!t->init_done || !t->next_set)
++	if (!t->init_done)
+ 		return -EINVAL;
  
--	if (m3_mem->vaddr || m3_mem->size)
--		return 0;
--
- 	fw = ath12k_core_firmware_request(ab, ATH12K_M3_FILE);
- 	if (IS_ERR(fw)) {
- 		ret = PTR_ERR(fw);
-@@ -2530,6 +2540,17 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
- 		return ret;
- 	}
+ 	hrtimer_cancel(&t->hrt);
++
++	if (!t->next_set)
++		return -EINVAL;
+ 	t->next_set = false;
  
-+	/* In recovery/resume cases, M3 buffer is not freed, try to reuse that */
-+	if (m3_mem->vaddr) {
-+		if (m3_mem->size >= fw->size) {
-+			release_firmware(fw);
-+			return 0;
-+		}
-+
-+		/* Old buffer is too small, free and reallocate */
-+		ath12k_qmi_m3_free(ab);
-+	}
-+
- 	m3_mem->vaddr = dma_alloc_coherent(ab->dev,
- 					   fw->size, &m3_mem->paddr,
- 					   GFP_KERNEL);
-@@ -2547,18 +2568,6 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
  	return 0;
- }
- 
--static void ath12k_qmi_m3_free(struct ath12k_base *ab)
--{
--	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
--
--	if (!m3_mem->vaddr)
--		return;
--
--	dma_free_coherent(ab->dev, m3_mem->size,
--			  m3_mem->vaddr, m3_mem->paddr);
--	m3_mem->vaddr = NULL;
--}
--
- static int ath12k_qmi_wlanfw_m3_info_send(struct ath12k_base *ab)
- {
- 	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
--- 
-2.53.0
-
 
 
