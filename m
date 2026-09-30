@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BFE37A843;
-	Wed, 30 Sep 2026 15:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F535379EDA;
+	Wed, 30 Sep 2026 15:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783307; cv=none; b=b9RHy1MkliE8Ov2WazHz5awrOD08edG2gBGEfTQrzL+hkg+DUmG7h6Llglfoi9YFQr8F1sLmm0sGyhAZjzZhwQv7A8CvQtZL51FKdyDx7cMyc2OJb+5icw7VCbtOTjBK7QTS+p1yJw1TxWWcCQV3lSJ/0tE7a9/7iI3bLIAJs40=
+	t=1790783309; cv=none; b=c5HIwZXLjqoYsABGJHOJ5Dk3lPsa2s7Q76bLLjtNunLMeb62SqQyEg3JjA12UxgXsYLO2oYfHagXpsLoIkd5fR+IPuJkG5W7xPUK9u0EOAg7fatGrvqwWEINhlfhMl2zXhY8pG/vJn6z2ITJGaD2lFknYUFMTehIfsFypmbsrc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783307; c=relaxed/simple;
-	bh=nlpt7wI1tos/QOpsaI/VDYOscCcZcSaxA/NLpS30WeM=;
+	s=arc-20240116; t=1790783309; c=relaxed/simple;
+	bh=P5DbrL5dZxi7lsTzhjfXj2UiP5D9/UB17WsTthuU6Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/REmDn7/zonKf+LLmQD+F3zjJpWrqRYxPeQTb47E8Dzrhb0FNhDy6Sb/7AEUH8S/daIR1vhiS5mJdkXEm5aQbGroPv+9aLPPc9kiwkcOarHvBB8grt1b550bp8G0ezJRtnjRCuJLHifgxRRmmOmyzwMLkeN1YjWOpUNHvQLTdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeZyzN1n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZSx/W4Tg/pW9OOw/QMogDCVINN66D3l3TBwYCantoT+u5kwSxCuleoyfr5Zu1NPQ5uvw37NSejYm8ssq5gl9+s/5WT1qhnmvovLtxIIKDyq5bEagZakp28BYuKVmag54DPO4ju0WYLg1P70WVlQjBsgrSMWYgoUy8ByfBLwnk3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pn/Vjhpz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeZyzN1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AD91F00893;
-	Wed, 30 Sep 2026 15:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pn/Vjhpz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F93C1F00898;
+	Wed, 30 Sep 2026 15:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783302;
-	bh=hUOOkqJKYBqujfQctrtzXrGUS6gCvRhnPMX4AXWTbhc=;
+	s=korg; t=1790783305;
+	bh=G9V1zKY+Q1lKg2HcWVJ+F2w+9s7ehzdaSUgFpUp/CbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CeZyzN1nZv6ciHWI87zwFOfUopitn0iE7hJ/YoHVo10GxfH3XOu6on/2yFwlo//8l
-	 5ufrHXPHU/0g10fB241KwvMVrxmzSxOcr3kyhMYZNB8MCXo4DvnYtPUydq0NozRcZo
-	 iMpLbX7dMzT79qOOJhItBDVqfEEsXaxTW/6Jrlzo=
+	b=pn/VjhpzbTIl6S+epimim9Em5/H0jaqtMv9Tb6YmLZ73Sl75MZH4qtndUz6wEi0WY
+	 0omqkKSyNbdP1fClpgYHzxfMjzse9LOOrXn9K+KUwUFmw0FxxHdDxkDsp6Gm/Z5kfl
+	 SPE1idw4eC3GihTiiO9wNUVG3pxdJxKa/FQGmr40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 349/595] xfrm: avoid RCU warnings around the per-netns netlink socket
-Date: Wed, 30 Sep 2026 17:24:02 +0200
-Message-ID: <20260930152355.186726206@linuxfoundation.org>
+Subject: [PATCH 5.10 350/595] xfrm: fix compat ALLOCSPI request use-after-free
+Date: Wed, 30 Sep 2026 17:24:03 +0200
+Message-ID: <20260930152355.207935481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,137 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit d87f8bc47fbf012a7f115e311d0603d97e47c34c ]
+[ Upstream commit d1ebd9081879fd9ae9c8fb7e8928f19cc88ae320 ]
 
-net->xfrm.nlsk is used in 2 types of contexts:
- - fully under RCU, with rcu_read_lock + rcu_dereference and a NULL check
- - in the netlink handlers, with requests coming from a userspace socket
+xfrm_state_netlink() builds the ALLOCSPI response with
+dump_one_state(), which already calls alloc_compat() with the response
+skb and header.
 
-In the 2nd case, net->xfrm.nlsk is guaranteed to stay non-NULL and the
-object is alive, since we can't enter the netns destruction path while
-the user socket holds a reference on the netns.
+xfrm_alloc_userspi() then calls alloc_compat() again, but passes the
+original request skb and its header. For a compat request, the
+translator therefore interprets the 228-byte compat xfrm_userspi_info
+as the 232-byte native layout and reads four bytes past the declared
+payload. It also publishes the translated child through the request's
+frag_list.
 
-After adding the __rcu annotation to netns_xfrm.nlsk (which silences
-sparse warnings in the RCU users and __net_init code), we need to tell
-sparse that the 2nd case is safe. Add a helper for that.
+A multicast clone of the request shares skb_shared_info and can observe
+that child. xfrm_user_rcv_msg() frees it after the request handler
+returns, racing a compat receiver which may still be copying from it and
+resulting in a use-after-free.
 
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Remove the redundant conversion. The response keeps its correct compat
+translation from dump_one_state(), and no child is attached to the
+inbound request.
+
+Fixes: 5f3eea6b7e8f ("xfrm/compat: Attach xfrm dumps to 64=>32 bit translator")
+Assisted-by: Codex:gpt-5.6-sol Codex:gpt-5.5-cyber
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Co-developed-by: David Lee <david.lee@trailofbits.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Stable-dep-of: d1ebd9081879 ("xfrm: fix compat ALLOCSPI request use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/xfrm.h |  2 +-
- net/xfrm/xfrm_user.c     | 25 +++++++++++++++++--------
- 2 files changed, 18 insertions(+), 9 deletions(-)
+ net/xfrm/xfrm_user.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
-index 7b87da22b2950..47bc0ec051eb5 100644
---- a/include/net/netns/xfrm.h
-+++ b/include/net/netns/xfrm.h
-@@ -58,7 +58,7 @@ struct netns_xfrm {
- 	struct list_head	inexact_bins;
- 
- 
--	struct sock		*nlsk;
-+	struct sock		__rcu *nlsk;
- 	struct sock		*nlsk_stash;
- 
- 	u32			sysctl_aevent_etime;
 diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 098b035ac2acd..d43a0fc005216 100644
+index d43a0fc005216..9a9e291dd964f 100644
 --- a/net/xfrm/xfrm_user.c
 +++ b/net/xfrm/xfrm_user.c
-@@ -34,6 +34,15 @@
- #endif
- #include <asm/unaligned.h>
- 
-+static struct sock *xfrm_net_nlsk(const struct net *net, const struct sk_buff *skb)
-+{
-+	/* get the source of this request, see netlink_unicast_kernel */
-+	const struct sock *sk = NETLINK_CB(skb).sk;
-+
-+	/* sk is refcounted, the netns stays alive and nlsk with it */
-+	return rcu_dereference_protected(net->xfrm.nlsk, sk->sk_net_refcnt);
-+}
-+
- static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type,
- 			  struct netlink_ext_ack *extack)
- {
-@@ -1328,7 +1337,7 @@ static int xfrm_get_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	err = build_spdinfo(r_skb, net, sportid, seq, *flags);
- 	BUG_ON(err < 0);
- 
--	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
-+	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
- }
- 
- static inline unsigned int xfrm_sadinfo_msgsize(void)
-@@ -1388,7 +1397,7 @@ static int xfrm_get_sadinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	err = build_sadinfo(r_skb, net, sportid, seq, *flags);
- 	BUG_ON(err < 0);
- 
--	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
-+	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
- }
- 
- static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
-@@ -1408,7 +1417,7 @@ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (IS_ERR(resp_skb)) {
- 		err = PTR_ERR(resp_skb);
- 	} else {
--		err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
-+		err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
- 	}
- 	xfrm_state_put(x);
- out_noput:
-@@ -1484,7 +1493,7 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		}
+@@ -1431,7 +1431,6 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_state *x;
+ 	struct xfrm_userspi_info *p;
+-	struct xfrm_translator *xtr;
+ 	struct sk_buff *resp_skb;
+ 	xfrm_address_t *daddr;
+ 	int family;
+@@ -1482,17 +1481,6 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		goto out;
  	}
  
--	err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
-+	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
+-	xtr = xfrm_get_translator();
+-	if (xtr) {
+-		err = xtr->alloc_compat(skb, nlmsg_hdr(skb));
+-
+-		xfrm_put_translator(xtr);
+-		if (err) {
+-			kfree_skb(resp_skb);
+-			goto out;
+-		}
+-	}
+-
+ 	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
  
  out:
- 	xfrm_state_put(x);
-@@ -2081,7 +2090,7 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	r_up->out = net->xfrm.policy_default[XFRM_POLICY_OUT];
- 	nlmsg_end(r_skb, r_nlh);
- 
--	return nlmsg_unicast(net->xfrm.nlsk, r_skb, portid);
-+	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, portid);
- }
- 
- static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
-@@ -2147,7 +2156,7 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		if (IS_ERR(resp_skb)) {
- 			err = PTR_ERR(resp_skb);
- 		} else {
--			err = nlmsg_unicast(net->xfrm.nlsk, resp_skb,
-+			err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb,
- 					    NETLINK_CB(skb).portid);
- 		}
- 	} else {
-@@ -2307,7 +2316,7 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	err = build_aevent(r_skb, x, &c);
- 	BUG_ON(err < 0);
- 
--	err = nlmsg_unicast(net->xfrm.nlsk, r_skb, NETLINK_CB(skb).portid);
-+	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
- 	spin_unlock_bh(&x->lock);
- 	xfrm_state_put(x);
- 	return err;
-@@ -2933,7 +2942,7 @@ static int xfrm_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			goto err;
- 		}
- 
--		err = netlink_dump_start(net->xfrm.nlsk, skb, nlh, &c);
-+		err = netlink_dump_start(xfrm_net_nlsk(net, skb), skb, nlh, &c);
- 		goto err;
- 	}
- 
 -- 
 2.53.0
 
