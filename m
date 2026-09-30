@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F414DEC26;
-	Wed, 30 Sep 2026 18:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE1C502D5A;
+	Wed, 30 Sep 2026 18:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792549; cv=none; b=F/omx/WRiRF6uU2+A3QNxCR16H82BC6POOZypIcuZC2PAG0saEKGpcwxqBSKnajHC5YMIvtGNiEBV3OBWK25dVuWet7ULxG37nzEfnsEtfITZ5Y/FtiBp59KgiX4a92bP7c1FlGnX1m9QRad+yLxOpYUAxR1Y3B1pjzkfv/txN8=
+	t=1790792552; cv=none; b=msfpMoZs7Vt4GV1ezPdgNQv9QaOWxqnOQjnIE8e4qz3h2HIbgt5PSOOvdg2p8JJpsEPcHJOskYw1ErNzIOgeVI66FeWGLQnlYPlWuxc4DWzMIf7OVr7SU3mxW4G8SYowKbQgJAB9hthqf9Df0Jhc9OW2RzRKVUT0/mF3kfY///g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792549; c=relaxed/simple;
-	bh=0a3ppWExgoUEZmzYswj6cT+CVMJu31tPAvEK1Mzp9Os=;
+	s=arc-20240116; t=1790792552; c=relaxed/simple;
+	bh=5dWU1h0E7OBYKjmiQHPDafgJSxgOuPJsLt6WkP7prGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyMMXrNvXe4ICkTXmIwMNRjNOnSfT4qsu31xA27gb053fjTQ3QbeebNntceal3sIjE2aFpffzRVC7uAO3IYEsjKmTbOibMTKV21WS8qjqh+1WqCRkN031kR5Ax5lmiv67aTv/Y/XkHvfYUvpqXh/frjihO2cZzylaAT5v5t35Xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGbDJ+F9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PY5POodUoIq3twm953GLl05K0YIMZZ9+VpxrID+Fsmi8i1YZET/dGj8CdWltfPZTzSRPZYTRR/sr/Me22g9jQ7nhzfsbXvPcBPznxhVKuFAqCdqIzbMh9qw43zj5Fy2RJjct4Z9PX6Tj6DiHAWfj7TknAdMeqPAISqOF86tV44g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guW48CxU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGbDJ+F9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9671F00898;
-	Wed, 30 Sep 2026 18:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guW48CxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9A71F000FF;
+	Wed, 30 Sep 2026 18:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792548;
-	bh=L5e+colVDBFr9cR8MdlHxeJX4s8P6VVAmyVIzacsKi8=;
+	s=korg; t=1790792551;
+	bh=557UmblKVQiQBKOfzmiipYADxRMjsUOGFWsEXNvvsQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QGbDJ+F9Ca1YwFDPOItA0EA1Jb7nmOnSOWbciAJZApIDZE3chRPWZXZeCI5zXeNX9
-	 yZ0NHd3m9nGPOOFLYkhz9qjoIQM92b4DWisz4xRGomlVWPk7OYGH5jwzlQ3Uh3a+be
-	 njTt+uwF3HvkgmTbmWDhhSjtZ/SEfMWKDY8ZV5l0=
+	b=guW48CxUDZB73y0LWz1nk9o9LGfWmy0m8N7ChnDwW6feTXJIJ82FOaGMsa+a3mNkb
+	 VRS8L4yLrn3vPzouIMDX3VreTryqCptv8+l77tuyP5CVYSjd8zIXs/R0lQPwQUvNG3
+	 GysMjWDhA7hmNzAwXPRXp2uvoo8BbKrzlP8CR6RU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 692/752] KVM: x86/mmu: WARN and clear role.invalid when creating a child shadow page
-Date: Wed, 30 Sep 2026 17:29:22 +0200
-Message-ID: <20260930152413.211094131@linuxfoundation.org>
+	Dave Hansen <dave.hansen@intel.com>,
+	Seth Forshee <sforshee@kernel.org>,
+	Eric Hagberg <ehagberg@janestreet.com>,
+	Stephen Dolan <sdolan@janestreet.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.15 693/752] x86/mm: Fix check/use ordering in switch_mm_irqs_off()
+Date: Wed, 30 Sep 2026 17:29:23 +0200
+Message-ID: <20260930152413.232630046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,95 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Stephen Dolan <sdolan@janestreet.com>
 
-[ Upstream commit 5ec42d57655c690234c14aece6dd3f209778c1d8 ]
+This is a stable-specific fix. There is no single upstream commit to
+cherry-pick; the equivalent mainline fix is commit 83b0177a6c48
+("x86/mm: Fix SMP ordering in switch_mm_irqs_off()"), which is in
+v6.18 but does not apply to these trees because the surrounding code
+was refactored.
 
-Explicitly clear role.invalid when deriving a child shadow page's role from
-its parent to harden against bugs elsewhere in KVM, as violating KVM's
-invariant that invalid pages are NOT on the list of active MMU pages leads
-to use-after-free due to __kvm_mmu_prepare_zap_page() using list_add()
-instead of list_move() when processing an invalid shadow page, i.e. makes a
-bad situation far worse.
+The backports of commit fea4e317f9e7 ("x86/mm: Eliminate window where
+TLB flushes may be inadvertently skipped") -- the fix for
+CVE-2025-37964 -- to the 6.1, 6.6 and 6.12 trees ended up with two
+code blocks in the wrong order relative to mainline. The fix depends
+on setting cpu_tlbstate.loaded_mm to LOADED_MM_SWITCHING *before*
+reading tlb_gen, so that a concurrent TLB shootdown either sees
+LOADED_MM_SWITCHING and sends the IPI, or the switching CPU sees the
+updated tlb_gen. In the stable trees the write of LOADED_MM_SWITCHING
+was placed after the tlb_gen read, so the race window fea4e317f9e7 was
+meant to close is still open and CVE-2025-37964 is unfixed there:
+a process can be left running with stale TLB entries, which typically
+manifests as rare, hard-to-bisect memory corruption or segfaults.
 
-Yell loudly if the parent is invalid, as it means KVM has missed a validity
-check, i.e. KVM is attempting to map memory using an invalid/obsolete root,
-but continue on as the child is otherwise still a valid shadow page.
+This has been confirmed by several independent parties:
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
-  Write of size 8 at addr ff11000153dd1368 by task repro/853
+  - reproduced on 6.1.y/6.6.y/6.12.y with the test program in [1],
+    and confirmed fixed by this patch
+  - Seth Forshee saw segfaults on 6.12.y within ~30 minutes of running
+    a test workload; with this patch it ran 18 hours cleanly [2]
+  - Greg Thelen reports 6.6.y- and 6.12.y-based test failures fixed by
+    this patch [3]
 
-  CPU: 1 UID: 1000 PID: 853 Comm: repro Not tainted 7.2.0-rc2-3aec122bdcaf-next-vm #5 PREEMPT
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4b/0x70
-   print_report+0x153/0x49c
-   kasan_report+0xbc/0xf0
-   __kvm_mmu_get_shadow_page+0x1817/0x1860 [kvm]
-   mmu_alloc_root+0x141/0x320 [kvm]
-   kvm_mmu_load+0x612/0x20f0 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x3dd5/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
+Dave Hansen acked the patch [4] and has no objection to it going into
+stable [5].
 
-  Allocated by task 853:
-   kasan_save_stack+0x20/0x40
-   kasan_save_track+0x14/0x30
-   __kasan_slab_alloc+0x5f/0x70
-   kmem_cache_alloc_noprof+0xfe/0x2e0
-   __kvm_mmu_topup_memory_cache+0x135/0x530 [kvm]
-   paging64_page_fault+0x318/0x1e30 [kvm]
-   kvm_mmu_do_page_fault+0x21d/0x630 [kvm]
-   kvm_mmu_page_fault+0x18c/0x17b0 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x1f35/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+The patch below is against 6.12.y; the identical change applies to
+6.1.y and 6.6.y. (The cpumask_test_cpu()/smp_mb() portion of the
+mainline fix is not needed here because commit 209954cbc7d0
+("x86/mm/tlb: Update mm_cpumask lazily") was never backported to these
+trees.)
 
-  Freed by task 853:
-   kasan_save_stack+0x20/0x40
-   kasan_save_track+0x14/0x30
-   kasan_save_free_info+0x3b/0x60
-   __kasan_slab_free+0x43/0x70
-   kmem_cache_free+0xe2/0x400
-   kvm_mmu_commit_zap_page.part.0+0x1e2/0x310 [kvm]
-   kvm_mmu_free_roots+0x283/0x560 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x33c8/0x6150 [kvm]
-   kvm_vcpu_ioctl+0x5e4/0x10d0 [kvm]
-   __x64_sys_ioctl+0x131/0x1b0
-   do_syscall_64+0x67/0x5f0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[1] https://lore.kernel.org/lkml/CAHDw0oGd0B4=uuv8NGqbUQ_ZVmSheU2bN70e4QhFXWvuAZdt2w@mail.gmail.com/
+[2] https://lore.kernel.org/lkml/aZYWXe739XUJrBld@do-x1carbon/
+[3] https://lore.kernel.org/lkml/CAHH2K0brx9omC9QYyB6Lio3t_1Lf8v=VaFoiaG23UgQ-aec89Q@mail.gmail.com/
+[4] https://lore.kernel.org/lkml/281e8018-5506-4a79-8775-e0de7e58b95f@intel.com/
+[5] https://lore.kernel.org/lkml/86421ee5-5332-46c2-bb48-d40310b818be@intel.com/
 
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Fixes: a770f6f28b1a ("KVM: MMU: Inherit a shadow page's guest level count from vcpu setup")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: fea4e317f9e7 ("x86/mm: Eliminate window where TLB flushes may be inadvertently skipped")  # 6.1.y/6.6.y/6.12.y backports
+Acked-by: Dave Hansen <dave.hansen@intel.com>
+Tested-by: Seth Forshee <sforshee@kernel.org>
+Tested-by: Eric Hagberg <ehagberg@janestreet.com>
+Signed-off-by: Stephen Dolan <sdolan@janestreet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Lee: The v5.15.y backport of fea4e317f9e7 (12f703811af0) placed the
+      LOADED_MM_SWITCHING write after the tlb_gen read too, so v5.15.y
+      suffers from the same issue.  Applies cleanly]
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/mm/tlb.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index b2525c38197f3..081547246801b 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2148,6 +2148,9 @@ static union kvm_mmu_page_role kvm_mmu_child_role(u64 *sptep, bool direct, unsig
- 	role.access = access;
- 	role.direct = direct;
+diff --git a/arch/x86/mm/tlb.c b/arch/x86/mm/tlb.c
+index 11a43d373baee..f6e541c24ae2d 100644
+--- a/arch/x86/mm/tlb.c
++++ b/arch/x86/mm/tlb.c
+@@ -596,6 +596,14 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
+ 		 */
+ 		cond_mitigation(tsk);
  
-+	WARN_ON_ONCE(role.invalid);
-+	role.invalid = 0;
++		/*
++		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
++		 * and others are sensitive to the window where mm_cpumask(),
++		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
++		 */
++		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
++		barrier();
 +
- 	/*
- 	 * If the guest has 4-byte PTEs then that means it's using 32-bit,
- 	 * 2-level, non-PAE paging. KVM shadows such guests with PAE paging
+ 		/*
+ 		 * Stop remote flushes for the previous mm.
+ 		 * Skip kernel threads; we never send init_mm TLB flushing IPIs,
+@@ -615,14 +623,6 @@ void switch_mm_irqs_off(struct mm_struct *prev, struct mm_struct *next,
+ 		next_tlb_gen = atomic64_read(&next->context.tlb_gen);
+ 
+ 		choose_new_asid(next, next_tlb_gen, &new_asid, &need_flush);
+-
+-		/*
+-		 * Indicate that CR3 is about to change. nmi_uaccess_okay()
+-		 * and others are sensitive to the window where mm_cpumask(),
+-		 * CR3 and cpu_tlbstate.loaded_mm are not all in sync.
+- 		 */
+-		this_cpu_write(cpu_tlbstate.loaded_mm, LOADED_MM_SWITCHING);
+-		barrier();
+ 	}
+ 
+ 	if (need_flush) {
 -- 
 2.53.0
 
