@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70695516140;
-	Wed, 30 Sep 2026 16:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BF450B8DF;
+	Wed, 30 Sep 2026 16:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784838; cv=none; b=fDRwDPIFrlma7/F5K914a9pCsg57K5YQ7IQuxK2xBJwJVtVqTOjcUK3WWYRu8bmjR1X1JUutgMdeinF+nyHbAdWwpQvKaRXvR5CT1bCa/9jrDh+ZXpg68l5q+hGDMKZac4YJt8tKDMV5vnsZQOKu3t40C/iq7DuRecVWjnsa+Ng=
+	t=1790784842; cv=none; b=czg6K+Qd3P6eLkNI5MbJcud2rtdBMW/8cIQkHmrIbW/wIUgHQE9CP3kBCVhQhax80OHI4oYCAVE8ndIt6MxB4kzagL4B6ooEszNOScDoXf6pwL+M7BRc4025fTJMT2UOX7qQmFWiOIXZfslbBVNVtPbZ2J0EvUIpxF+UzTp0beY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784838; c=relaxed/simple;
-	bh=KvQbCrqHsHW/NSR7NytHFkJ6dPgeKnC1V/LEHt6Q4cE=;
+	s=arc-20240116; t=1790784842; c=relaxed/simple;
+	bh=L/0CelVnoHHewS6ddshfqzhYX1K4EIaNBq8Pnd8ikRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0WLAlMn1BRG1vJLOIrmGp8sDZDXtvj9Xu6/iL4RlL3OV64nOQXXm7DAiEUA2BYfMx9IREGu8Uo+M7i/jUH5muklLvyu10F1eNRmzuw+5WegMM1fIv1KSZ/ej8qRUHvYAIUig3FlkCIJ4urAHpNtEPhykbdp2ojq+5pEwjCtfnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKwqCUMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I0BwDD8OTvXcEyifJrDPaRde8xri5qpKU7bAsk3/sLvNuU+vL5W7nkgT/OAjfHegsU8qJNi2t3HdDdgeJjsGFj+tOLLcCIl8oLd4eWiHx5avXCucMYUQrWQ2cq+QHUdanQQHItrKBDsGPBJK1G3DxLfx8QcYvCFjKDIkAcCjf+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xot5jfS+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKwqCUMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7081F000FF;
-	Wed, 30 Sep 2026 16:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xot5jfS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4D01F00898;
+	Wed, 30 Sep 2026 16:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784830;
-	bh=a3MHZHLLN29xJ0fAYToBtJr27NlsQJiBh5aEosQUsFU=;
+	s=korg; t=1790784836;
+	bh=JicajmPda1jM3qFj//OQtqXzdZvu2x909hMt/0LwYIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RKwqCUMhLgWXqSlQwRIqH6NVXg972eL75kh/UzraFGjz8fNwFr6eWWBefrzhVdDNB
-	 dajpjHOATYrNaAuh9WVIEfNh9/jxXLnh3PPSJNiKBqb0F+Z1L2v7vb9DxCMHKKIH9Q
-	 ZVxFgLEgVOoZ06VwNfFskJPRUziBYWkOUtMYE0OM=
+	b=Xot5jfS+FxEQ/m/DhrptwAHwL8c8GM7csu54VlRel5A1RsOpMd/SZvHKiQZ7jMija
+	 UCrsLs9gzlC5eyeiJbiDK9rQYnSBrVI+S0NvK1I3bGkLykl/KQN1Ng+E7fcJl2hk14
+	 utk7kGc21wieG/M/v3NjnwWL7tNJ9znFL6hB4wJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Genevieve Chan <genevieve.chan@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 292/982] scsi: core: Do not block on tag allocation in scsi_eh_lock_door()
-Date: Wed, 30 Sep 2026 17:17:08 +0200
-Message-ID: <20260930152423.080328531@linuxfoundation.org>
+Subject: [PATCH 6.1 294/982] firmware: stratix10-svc: fix FCS SMC call kernel-doc
+Date: Wed, 30 Sep 2026 17:17:10 +0200
+Message-ID: <20260930152423.121141462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,65 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Genevieve Chan <genevieve.chan@altera.com>
 
-[ Upstream commit 732cb6bb37fd26863d5786522fb1997e7f5865b4 ]
+[ Upstream commit 9b9a6e31bdd1ff20c3ffdab87431672d8bfc2a07 ]
 
-scsi_eh_lock_door() is called from scsi_restart_operations() while the
-host is still in the SHOST_RECOVERY state, i.e. before the host is
-switched back to SHOST_RUNNING and scsi_run_host_queues() restarts the
-queues. It allocates a request via scsi_alloc_request() with no flags,
-so blk_mq_get_tag() may block waiting for a free sched tag when all tags
-are already in use.
+Correct kernel-doc errors for two FCS SMC calls:
 
-Those tags can be held by commands that were just requeued by
-scsi_eh_flush_done_q() during error handling. Such commands cannot be
-dispatched until the host leaves SHOST_RECOVERY and
-scsi_run_host_queues() is called - which only happens *after*
-scsi_eh_lock_door() returns.
+INTEL_SIP_SMC_FCS_SEND_CERTIFICATE:
+- Describe as async to match STD_CALL_VAL usage
+- Replace INTEL_SIP_SMC_FCS_REJECTED with INTEL_SIP_SMC_REJECTED
 
-This forms a circular dependency:
+INTEL_SIP_SMC_FCS_GET_PROVISION_DATA:
+- Replace FCS-specific status macros with standard status macros
+  (INTEL_SIP_SMC_STATUS_ERROR and INTEL_SIP_SMC_STATUS_REJECTED)
+- Restore return register documentation for a1 (mailbox error),
+  a2 (physical address), and a3 (structure size)
 
-  - scsi_eh_lock_door(), running in the SCSI error handler thread, waits
-    for a sched tag held by a requeued command;
-
-  - the requeued command cannot complete and release its sched tag until
-    the error handler thread leaves scsi_restart_operations() and restart
-    the queues.
-
-For devices with a single driver tag (e.g. USB storage) it is a
-guaranteed deadlock and I/O that can never be submitted. This problem
-has also been reproduced in our environment.
-
-Locking the door is a best-effort operation, and scsi_eh_lock_door()
-already returns silently when the request allocation fails. Pass
-BLK_MQ_REQ_NOWAIT to scsi_alloc_request() so the allocation fails
-instead of blocking when no tag is available. This breaks the circular
-dependency and allows the error handler to finish restarting the queues,
-after which the pending commands are dispatched normally.
-
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260723041238.1584632-1-wozizhi@huaweicloud.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 4a4709d470e6 ("firmware: stratix10-svc: add new FCS commands")
+Fixes: 4b0a32016347 ("firmware: stratix10-svc: change get provision data to async SMC call")
+Cc: stable@vger.kernel.org # 6.0+
+Signed-off-by: Genevieve Chan <genevieve.chan@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/firmware/intel/stratix10-smc.h | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 79dc157661ce9..f6d3f35647636 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -2060,7 +2060,7 @@ static void scsi_eh_lock_door(struct scsi_device *sdev)
- 	struct scsi_cmnd *scmd;
- 	struct request *req;
+diff --git a/include/linux/firmware/intel/stratix10-smc.h b/include/linux/firmware/intel/stratix10-smc.h
+index 4ae295c4e9cc1..118be73846ccc 100644
+--- a/include/linux/firmware/intel/stratix10-smc.h
++++ b/include/linux/firmware/intel/stratix10-smc.h
+@@ -557,7 +557,7 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
  
--	req = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_IN, 0);
-+	req = scsi_alloc_request(sdev->request_queue, REQ_OP_DRV_IN, BLK_MQ_REQ_NOWAIT);
- 	if (IS_ERR(req))
- 		return;
- 	scmd = blk_mq_rq_to_pdu(req);
+ /**
+  * Request INTEL_SIP_SMC_FUNCID_FCS_SEND_CERTIFICATE
+- * Sync call to send a signed certificate
++ * Async call to send a signed certificate
+  *
+  * Call register usage:
+  * a0 INTEL_SIP_SMC_FCS_SEND_CERTIFICATE
+@@ -566,7 +566,7 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
+  * a3-a7 not used
+  *
+  * Return status:
+- * a0 INTEL_SIP_SMC_STATUS_OK or INTEL_SIP_SMC_FCS_REJECTED
++ * a0 INTEL_SIP_SMC_STATUS_OK or INTEL_SIP_SMC_REJECTED
+  * a1-a3 not used
+  */
+ #define INTEL_SIP_SMC_FUNCID_FCS_SEND_CERTIFICATE 93
+@@ -582,9 +582,11 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
+  * a1-a7 not used
+  *
+  * Return status:
+- * a0 INTEL_SIP_SMC_STATUS_OK, INTEL_SIP_SMC_FCS_ERROR or
+- *      INTEL_SIP_SMC_FCS_REJECTED
+- * a1-a3 not used
++ * a0 INTEL_SIP_SMC_STATUS_OK, INTEL_SIP_SMC_STATUS_ERROR or
++ *	INTEL_SIP_SMC_STATUS_REJECTED
++ * a1 mailbox error if a0 is INTEL_SIP_SMC_STATUS_ERROR
++ * a2 physical address for the structure of fuse and key hashes
++ * a3 the size of structure
+  *
+  */
+ #define INTEL_SIP_SMC_FUNCID_FCS_GET_PROVISION_DATA 94
 -- 
 2.53.0
 
