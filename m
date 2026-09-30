@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AABE42668E;
-	Wed, 30 Sep 2026 19:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F1441D4F7;
+	Wed, 30 Sep 2026 19:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797126; cv=none; b=nhtqhwLdrLavpDpbCkDvFtVzPG501PoS9+cVjUBoncToPqHHQXuf8PeVoKl1zHV8spelLlcDbaOrt6geadVRhvr5HPHHWM229ftGYeQabd8VH2d7PkHOtnrlCg49AmNxRS0xuAId0xH8Ju/WERt1CNJ2Ge+cO1CZ11r7jTW8RrU=
+	t=1790797129; cv=none; b=aAqnFTTUzZorsFAskk5ynE/rnGi6HO/RqO0ifyNBhWmb4Xb4pJBdXEixZEtTyWpSnKmnqmb/e/YUTVku/IaYNVrUnyOctTJh07QGB7G0ss1d4SQ5t7o/Yi1C58ZNlQ6BmmmyzrjGeA2FjcuEW3LN/Dv5bNOf/3tU0Le514m7OeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797126; c=relaxed/simple;
-	bh=qDojRZh8PsjFGw34o3DTAg64qi3iAuNnHztvxl/rrFU=;
+	s=arc-20240116; t=1790797129; c=relaxed/simple;
+	bh=JW+knWsDlE2vlMhbNzRFDXvCxKRSkzkahgbT7PSn5Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGcBP4kjhYRLTKKNYBqkuSTlLvG933eEi0c5ll2Z6nZO5WlDSGsKhHfQ9+YQ5xZYQghpM9L76jQGo9Z1relqJBBGu2Z9HWTMxYvd2LnwYgsfudNE5EUnj50Dvb9H5aFXte/E6X1ShzZyBq4Te/G0GFqdsnXtnypRMHFlBJY5VAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wa9tnN7V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NNHmA7IwDoAJgTZUi+waFO9nluCJEazWozFc0VT2CGEr5mxGTSzVxokffdIBaA7Fh2EdvpIisdLyid/ZT7cLlTfJ4sqrY3pSg5zqlBEHgvUewJgEkUFaw3Ngx0xotQewohTe3LsK2argOvL0MOca7cV/8xGK3NT9zV1P5w9Gj/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jdj+1RzQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wa9tnN7V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4431F000FF;
-	Wed, 30 Sep 2026 19:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jdj+1RzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8E21F00898;
+	Wed, 30 Sep 2026 19:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797125;
-	bh=ePX5qH5AeG8Qpe/azc14hrP/HBBhy4TJyJsQznn06sE=;
+	s=korg; t=1790797128;
+	bh=E8xEGVdSp1b8fKhJY+Lqew31znGEQZtI7lHhn7SrzNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wa9tnN7VPghcY/oWRmUb9LMT97c8HM9eso45BrYriTIAw9IXWWKinSJTPGao78I4q
-	 7NrqVI8qvKQ1cW4r7+ZEyU9t6gIxvcWA9xKOveXFDAQIV0TtQzh6YqCZRxH/FEV/46
-	 yq62ro0COdFRLQHRsw7/Ai7ymYfH8qSR2Lq/WDUc=
+	b=Jdj+1RzQAzDuYIzTz7aRqQMuVDYiqrDgPdzFNNr8DkwAlT7VaJEmv4OC8NZvJ6c5/
+	 T05O7hikx2Z5Pykm6R5ZXihydsaFBC+8BqA1CcvR+BNJrX4aTj0vauxnK8wzCosjMO
+	 kaSdwEFVqcPvzTW9FfDCX4CxkVI/DeMFT+bK46/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
-	Li Ming <ming4.li@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Artem Dinaburg <artem@trailofbits.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1157/1193] cxl/mem: Fix no cxl_nvd during pmem region auto-assembling
-Date: Wed, 30 Sep 2026 17:30:41 +0200
-Message-ID: <20260930152459.948558608@linuxfoundation.org>
+Subject: [PATCH 6.6 1158/1193] net: tls: fix silent data drop under pipe back-pressure
+Date: Wed, 30 Sep 2026 17:30:42 +0200
+Message-ID: <20260930152459.970397919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -55,193 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ming <ming4.li@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 84ec985944ef34a34a1605b93ce401aa8737af96 ]
+[ Upstream commit 7e7be31bfdb066c1c780dcd6b1224078fc54063f ]
 
-When CXL subsystem is auto-assembling a pmem region during cxl
-endpoint port probing, always hit below calltrace.
+tls_sw_splice_read() uses len when advancing rxm->offset / rxm->full_len
+after skb_splice_bits(), rather than copied (the actual number of bytes
+successfully spliced into the pipe). When the destination pipe cannot
+accept all the requested bytes, splice_to_pipe() returns fewer bytes
+than len, and 'len - copied' of data is effectively skipped over.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000078
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- RIP: 0010:cxl_pmem_region_probe+0x22e/0x360 [cxl_pmem]
- Call Trace:
-  <TASK>
-  ? __die+0x24/0x70
-  ? page_fault_oops+0x82/0x160
-  ? do_user_addr_fault+0x65/0x6b0
-  ? exc_page_fault+0x7d/0x170
-  ? asm_exc_page_fault+0x26/0x30
-  ? cxl_pmem_region_probe+0x22e/0x360 [cxl_pmem]
-  ? cxl_pmem_region_probe+0x1ac/0x360 [cxl_pmem]
-  cxl_bus_probe+0x1b/0x60 [cxl_core]
-  really_probe+0x173/0x410
-  ? __pfx___device_attach_driver+0x10/0x10
-  __driver_probe_device+0x80/0x170
-  driver_probe_device+0x1e/0x90
-  __device_attach_driver+0x90/0x120
-  bus_for_each_drv+0x84/0xe0
-  __device_attach+0xbc/0x1f0
-  bus_probe_device+0x90/0xa0
-  device_add+0x51c/0x710
-  devm_cxl_add_pmem_region+0x1b5/0x380 [cxl_core]
-  cxl_bus_probe+0x1b/0x60 [cxl_core]
-
-The cxl_nvd of the memdev needs to be available during the pmem region
-probe. Currently the cxl_nvd is registered after the endpoint port probe.
-The endpoint probe, in the case of autoassembly of regions, can cause a
-pmem region probe requiring the not yet available cxl_nvd. Adjust the
-sequence so this dependency is met.
-
-This requires adding a port parameter to cxl_find_nvdimm_bridge() that
-can be used to query the ancestor root port. The endpoint port is not
-yet available, but will share a common ancestor with its parent, so
-start the query from there instead.
-
-[ Backport to 6.6.y: mapped find_cxl_root() and reference handling to the
-  older struct cxl_port and put_device() APIs. The new early error return
-  explicitly drops parent_port because 6.6.y lacks the scoped cleanup later
-  added by upstream commit dd2617ebd2a6 ("cxl/port: Use __free() to drop
-  put_device() for cxl_port"). ]
-
-Fixes: f17b558d6663 ("cxl/pmem: Refactor nvdimm device registration, delete the workqueue")
-Co-developed-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Li Ming <ming4.li@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20240612064423.2567625-1-ming4.li@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Assisted-by: LLM
-Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
+Fixes: e062fe99cccd ("tls: splice_read: fix accessing pre-processed records")
+Link: https://patch.msgid.link/20260429222944.2139041-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pmem.c   | 21 ++++++++++++++-------
- drivers/cxl/core/region.c |  2 +-
- drivers/cxl/cxl.h         |  4 ++--
- drivers/cxl/mem.c         | 18 ++++++++++--------
- 4 files changed, 27 insertions(+), 18 deletions(-)
+ net/tls/tls_sw.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cxl/core/pmem.c b/drivers/cxl/core/pmem.c
-index 317b2fbbef668..1f87ce9191a74 100644
---- a/drivers/cxl/core/pmem.c
-+++ b/drivers/cxl/core/pmem.c
-@@ -62,16 +62,21 @@ static int match_nvdimm_bridge(struct device *dev, void *data)
- 	return is_cxl_nvdimm_bridge(dev);
- }
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index d380aaf5f124c..fbea00967c14c 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2338,9 +2338,9 @@ ssize_t tls_sw_splice_read(struct socket *sock,  loff_t *ppos,
+ 	if (copied < 0)
+ 		goto splice_requeue;
  
--struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_memdev *cxlmd)
-+/**
-+ * cxl_find_nvdimm_bridge() - find a bridge device relative to a port
-+ * @port: any descendant port of an nvdimm-bridge associated
-+ *        root-cxl-port
-+ */
-+struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_port *port)
- {
--	struct cxl_port *port = find_cxl_root(cxlmd->endpoint);
-+	struct cxl_port *root = find_cxl_root(port);
- 	struct device *dev;
- 
--	if (!port)
-+	if (!root)
- 		return NULL;
- 
--	dev = device_find_child(&port->dev, NULL, match_nvdimm_bridge);
--	put_device(&port->dev);
-+	dev = device_find_child(&root->dev, NULL, match_nvdimm_bridge);
-+	put_device(&root->dev);
- 
- 	if (!dev)
- 		return NULL;
-@@ -244,18 +249,20 @@ static void cxlmd_release_nvdimm(void *_cxlmd)
- 
- /**
-  * devm_cxl_add_nvdimm() - add a bridge between a cxl_memdev and an nvdimm
-+ * @parent_port: parent port for the (to be added) @cxlmd endpoint port
-  * @cxlmd: cxl_memdev instance that will perform LIBNVDIMM operations
-  *
-  * Return: 0 on success negative error code on failure.
-  */
--int devm_cxl_add_nvdimm(struct cxl_memdev *cxlmd)
-+int devm_cxl_add_nvdimm(struct cxl_port *parent_port,
-+			struct cxl_memdev *cxlmd)
- {
- 	struct cxl_nvdimm_bridge *cxl_nvb;
- 	struct cxl_nvdimm *cxl_nvd;
- 	struct device *dev;
- 	int rc;
- 
--	cxl_nvb = cxl_find_nvdimm_bridge(cxlmd);
-+	cxl_nvb = cxl_find_nvdimm_bridge(parent_port);
- 	if (!cxl_nvb)
- 		return -ENODEV;
- 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index af4f8bbe63c44..97e4a4755ab2f 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -2682,7 +2682,7 @@ static struct cxl_pmem_region *cxl_pmem_region_alloc(struct cxl_region *cxlr)
- 		 * bridge for one device is the same for all.
- 		 */
- 		if (i == 0) {
--			cxl_nvb = cxl_find_nvdimm_bridge(cxlmd);
-+			cxl_nvb = cxl_find_nvdimm_bridge(cxlmd->endpoint);
- 			if (!cxl_nvb) {
- 				kfree(cxlr_pmem);
- 				cxlr_pmem = ERR_PTR(-ENODEV);
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index a7a1b71626de4..59e963e39d31b 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -795,8 +795,8 @@ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
- struct cxl_nvdimm *to_cxl_nvdimm(struct device *dev);
- bool is_cxl_nvdimm(struct device *dev);
- bool is_cxl_nvdimm_bridge(struct device *dev);
--int devm_cxl_add_nvdimm(struct cxl_memdev *cxlmd);
--struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_memdev *cxlmd);
-+int devm_cxl_add_nvdimm(struct cxl_port *parent_port, struct cxl_memdev *cxlmd);
-+struct cxl_nvdimm_bridge *cxl_find_nvdimm_bridge(struct cxl_port *port);
- 
- #ifdef CONFIG_CXL_REGION
- bool is_cxl_pmem_region(struct device *dev);
-diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
-index 317c7548e4e9b..3400d2f2a5ff9 100644
---- a/drivers/cxl/mem.c
-+++ b/drivers/cxl/mem.c
-@@ -153,6 +153,16 @@ static int cxl_mem_probe(struct device *dev)
- 		return -ENXIO;
+-	if (chunk < rxm->full_len) {
+-		rxm->offset += len;
+-		rxm->full_len -= len;
++	if (copied < rxm->full_len) {
++		rxm->offset += copied;
++		rxm->full_len -= copied;
+ 		goto splice_requeue;
  	}
  
-+	if (resource_size(&cxlds->pmem_res) && IS_ENABLED(CONFIG_CXL_PMEM)) {
-+		rc = devm_cxl_add_nvdimm(parent_port, cxlmd);
-+		if (rc) {
-+			if (rc == -ENODEV)
-+				dev_info(dev, "PMEM disabled by platform\n");
-+			put_device(&parent_port->dev);
-+			return rc;
-+		}
-+	}
-+
- 	if (dport->rch)
- 		endpoint_parent = parent_port->uport_dev;
- 	else
-@@ -173,14 +183,6 @@ static int cxl_mem_probe(struct device *dev)
- 	if (rc)
- 		return rc;
- 
--	if (resource_size(&cxlds->pmem_res) && IS_ENABLED(CONFIG_CXL_PMEM)) {
--		rc = devm_cxl_add_nvdimm(cxlmd);
--		if (rc == -ENODEV)
--			dev_info(dev, "PMEM disabled by platform\n");
--		else
--			return rc;
--	}
--
- 	/*
- 	 * The kernel may be operating out of CXL memory on this device,
- 	 * there is no spec defined way to determine whether this device
 -- 
 2.53.0
 
