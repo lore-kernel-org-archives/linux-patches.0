@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFE550B8A8;
-	Wed, 30 Sep 2026 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01104E36F1;
+	Wed, 30 Sep 2026 18:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792275; cv=none; b=eXlOP8igJfazebD8d1Yjb21dAFWMRwlNjnTiERMmptYV4rHmaRuGFQmob6EM+pcSO05rdwtxX0Ncs7JXkp34xWCXksukaEE1La5M6vS0iGaARl3LAE83X8dhLKgdTYzbMlCL7twB0tDzMCWggqswx4piUxeaAeGxp2fUyN+cyMs=
+	t=1790792278; cv=none; b=m3eOC2pMrBVdCdPMJdoBgP2dRIpcYrt7sJ8i+6dJAry/r+/2+aGR5H9vy4iOZSwfmtNvktF9zl3A0iMnYwqqtCNRJQfuN8lN0Sjj7ACufww9ROR4RyOtikp2X6icXA0CFIF4RvveKzwNLbYjFnh/3Sq9RaQb2kpa4qGYJvlTwDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792275; c=relaxed/simple;
-	bh=uBJebX4Cw0kRmubd/btfH397xtJoZNa6rKc2hiSNTRU=;
+	s=arc-20240116; t=1790792278; c=relaxed/simple;
+	bh=A7TW6GVOTpbC0YmlX8gwO8b9tsQc/numITWGSE0d1o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQL0Hsfvd2WL07cAx0KUx6mQ2Jrf/sMrXu7XcR2m9aD2gmkPG0ukmm/Wp0elSgZXc6SW/Y+Alz+PXseG6TSgN3N7zp3X7N1W8+CQRREK9Gm/61gAYS1G8Xkm9rYwCoiB0mjxnWecfXadz0T2RgW06y8MDRcNKVSM9Pwgv6TOjjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBTJzCRy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2Q8zBWdzQWg+71GCQOvzt4FFnDrTURZcTcDNFylZXmYGC6xxSJMWDWsmxhVp52s/Po3WMPmGg3iBVWjGgXjvvji/nDBDFDIXWpPWQsFMs6QrTOIoD4q94MgGOkEuUypkDy/zbKxYKI5CdL+NWu1yPRAG+xPjE8QjZAnDn9izYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5uzBQTj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBTJzCRy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867711F000FF;
-	Wed, 30 Sep 2026 18:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5uzBQTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C561F000FF;
+	Wed, 30 Sep 2026 18:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792274;
-	bh=urVBfmMGFaW+wwpa5MddhHasvhSFrsj0wV7csHzjdZw=;
+	s=korg; t=1790792276;
+	bh=mF4mWjZOyfDGosz+MJzMqBULrj6iIbeH0n1KelnRmcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sBTJzCRyo3ViifjewVUrnG3CC4LHin79q0/vWw36YF85pG8sntauRbAOpNRUoGGlX
-	 Ahs4v6f/+LALTlcnKUsbFGZBIUSxTcXe0j4srOXhIgS7u5MTtHNaymqwE6IgKU0QQc
-	 +pq8//zYJf8jlHNWsathhYr8I0nzJotiyllWaiOo=
+	b=I5uzBQTjePU4KtCa1478MLUIkoM5IQZUMTj9Qv8wdi2vKqVvlcH1ayF2GCjJvm9es
+	 3MeRJhh2HTY7J9RDCChnnl7odFXCPiUyQmXeAH/dPa9F28EUFd/HWA+5ODm6m1Vjo+
+	 BdADQ91XKeEgpjEaUMPLdwUMTuLPHJX6F7nG9xBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+09103639e39c989e3ed3@syzkaller.appspotmail.com,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 560/752] Input: synaptics-rmi4 - fix GPF in suspend and resume when unbound
-Date: Wed, 30 Sep 2026 17:27:10 +0200
-Message-ID: <20260930152410.357497210@linuxfoundation.org>
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Feng Zhou <zhoufeng.zf@bytedance.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 596/752] bpf: support access variable length array of integer type
+Date: Wed, 30 Sep 2026 17:27:46 +0200
+Message-ID: <20260930152411.183645723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,66 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Feng Zhou <zhoufeng.zf@bytedance.com>
 
-commit fe10579b6dc3f0dac61e51e1797cacbba5039ac2 upstream.
+[ Upstream commit 2569c7b8726fc06d946a4f999fb1be15b68f3f3c ]
 
-Transport drivers (such as rmi_i2c and rmi_spi) invoke
-rmi_driver_suspend() and rmi_driver_resume() on their child rmi_dev
-device during system power management events. However, transport drivers
-are fully registered and operational even if the physical RMI driver
-failed to bind or probe the rmi_dev device.
+After this commit:
+bpf: Support variable length array in tracing programs (9c5f8a1008a1)
+Trace programs can access variable length array, but for structure
+type. This patch adds support for integer type.
 
-When rmi_driver_suspend() or rmi_driver_resume() is called on an unbound
-rmi_dev, dev_get_drvdata() returns NULL. Calling rmi_disable_irq() or
-rmi_enable_irq() without driver data attached causes a NULL pointer
-dereference and General Protection Fault when attempting to lock
-data->enabled_mutex.
+Example:
+Hook load_balance
+struct sched_domain {
+	...
+	unsigned long span[];
+}
 
-Fix this by checking if driver data is attached to rmi_dev in
-rmi_driver_suspend() and rmi_driver_resume(), exiting early if
-no driver data is present.
+The access: sd->span[0].
 
-Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
-Reported-by: syzbot+09103639e39c989e3ed3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=09103639e39c989e3ed3
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Link: https://patch.msgid.link/anQe8UiyUR4x0flD@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Chengming Zhou <zhouchengming@bytedance.com>
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Signed-off-by: Feng Zhou <zhoufeng.zf@bytedance.com>
+Link: https://lore.kernel.org/r/20230420032735.27760-2-zhoufeng.zf@bytedance.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: b0b3dc665296 ("bpf: Fix divide-by-zero in btf_struct_walk()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/rmi4/rmi_driver.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ kernel/bpf/btf.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/input/rmi4/rmi_driver.c
-+++ b/drivers/input/rmi4/rmi_driver.c
-@@ -946,6 +946,15 @@ int rmi_driver_suspend(struct rmi_device
- {
- 	int retval;
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 27fc64e8be00d..7a233feeac8d6 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -4960,11 +4960,13 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
+ 		if (off < moff)
+ 			goto error;
  
-+	/*
-+	 * Transport driver will try to suspend RMI device even if physical
-+	 * driver did not bind to the RMI device, because transport device
-+	 * (I2C, SPI) is fully registered and operational. Exit early if
-+	 * there is no driver data attached to the RMI device.
-+	 */
-+	if (!dev_get_drvdata(&rmi_dev->dev))
-+		return 0;
+-		/* Only allow structure for now, can be relaxed for
+-		 * other types later.
+-		 */
++		/* allow structure and integer */
+ 		t = btf_type_skip_modifiers(btf, array_elem->type,
+ 					    NULL);
 +
- 	retval = rmi_suspend_functions(rmi_dev);
- 	if (retval)
- 		dev_warn(&rmi_dev->dev, "Failed to suspend functions: %d\n",
-@@ -960,6 +969,10 @@ int rmi_driver_resume(struct rmi_device
- {
- 	int retval;
- 
-+	/* Skip if not fully bound to RMI driver */
-+	if (!dev_get_drvdata(&rmi_dev->dev))
-+		return 0;
++		if (btf_type_is_int(t))
++			return WALK_SCALAR;
 +
- 	rmi_enable_irq(rmi_dev, clear_wake);
+ 		if (!btf_type_is_struct(t))
+ 			goto error;
  
- 	retval = rmi_resume_functions(rmi_dev);
+-- 
+2.53.0
+
 
 
