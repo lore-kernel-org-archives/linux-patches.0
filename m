@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86E13C0A06;
-	Wed, 30 Sep 2026 19:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A78D3B3C18;
+	Wed, 30 Sep 2026 19:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796010; cv=none; b=gBV1k6NPUc61MK0RVFx4fwrS/Hm6eoEp00YZdaEO2vtn43j50zIJBChsWIyJ0rikmMN7xK2p85T5ndN9cl0iUOviEZnIj3JmVT+3CA4iRBz93qbdJ3tzgYQQKxee/Y/7Vh27Lv/zQ22XiVR0U2F48wgaH3yZgr2EZBwy2ttnzuc=
+	t=1790796013; cv=none; b=kADw+6MxzOXNoSC7g3fNY9/6k1/ULA5ERFIINBD2qt7gLUEe+uuVHQ8mrmQ8JM8ZkXzDRSOYe7x0imPCzvJLWD/gPWFUI8KVX1tPIuM8dEIV6SH7aCMbyrkaUrcLLaCg1owQIf4BnU/TJvC0OpYhyNOY2/snvtvIB1jKp7+cgFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796010; c=relaxed/simple;
-	bh=q7Hj8o6nPPDto1ZpNQmOREfhBJ8nsSzx7adf8DhcmPY=;
+	s=arc-20240116; t=1790796013; c=relaxed/simple;
+	bh=0fKN/u5VBpXZZmiVBvxkoCPElA4SlOJ63F3n1ecQuVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SEldiQ+5N0F+v1Cv+iFyfy7kSCDPa6cq5hkbPIssFnaSTuWQhEL2p/7Xtz29EHrLTPku4F7DJ7FyBuUxbZvIc2A9byLoK2mImHc61AnUDkMcNiqu4AgQMQUsEGAIhV96KdVdoghO9LoMneai3VYdRm57GBxiPwLQtPOmDfNzIW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bpDNRMCH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mm2lefMHqA56kGRsR70iGeO7O+I/EkG500KcygH6gL5VFTH1TbMthvrDcnCusNA4Vs9slZNAi/DHjhb2DUhv20ebdJ8Er+KKzU6eib5PUhu9H9ggTrSBz4RqvY7RY3N+Mt6NQJ7NDfhuLthlCczwPBHZ2YseAfIgiogJeOYqLBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s53tgFOH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bpDNRMCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA441F000FF;
-	Wed, 30 Sep 2026 19:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s53tgFOH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C756D1F000FF;
+	Wed, 30 Sep 2026 19:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796009;
-	bh=rUFcJDDIP6evODATvqX4BpKrSxUCGqvEB+mQ+yEDL6E=;
+	s=korg; t=1790796012;
+	bh=LpNYISQiNHs0JOWzwfKDc1UKg3lTU+awY+ig5oFUdqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bpDNRMCH3xVXzOSm6DXdD1wWilBDmZqf9VLQ9TZ+GBBDkn43NTm01BFVUaweOfH6P
-	 7kIxoQUwOa54m2uUghNaJeGuUYvlF1b1tnUS1pFRV89bxQ7Qu4wrpvN4pOuXxaRWbZ
-	 xH2gSsVJGRMQA7AOzeCgYkiRZCo2lLcr0gEOQyyc=
+	b=s53tgFOHI2yoNmF0VE8BZERimgZgf7uclE0+mZtMhvXuyo1jQBNxQUiPgB/qYO8Qd
+	 MjED6wpUHukqJZRAbMQ6NI7Iv5YmkVWc8dlFlUNxGTGNgpMA1SyMyz0blrd7a0djx1
+	 QmoTASEHfzUnJqFY2SllcsVRhoXl7fSZlR3Y2Lm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arash Golgol <arash.golgol@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0717/1193] media: video-i2c: fix buffer queue ordering
-Date: Wed, 30 Sep 2026 17:23:21 +0200
-Message-ID: <20260930152450.180428990@linuxfoundation.org>
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	Xinyang Ge <xinyang@anthropic.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0708/1193] mptcp: close race between scheduler and state change
+Date: Wed, 30 Sep 2026 17:23:12 +0200
+Message-ID: <20260930152449.980107819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,44 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arash Golgol <arash.golgol@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit bc4574c265ed738849e46d942617100580fcedd2 ]
+commit 42064de57fb83231fcc89663a94885f228a1ee53 upstream.
 
-Queued buffers are added to the tail of vid_cap_active in
-buffer_queue(), but the capture kthread also retrieves buffers from
-the tail of the list.
+The mptcp scheduler may race with subflow sockets state change: data
+transmission on the selected socket may fail and a later release could
+try to use mss_now reset to 0 for a divide operation.
 
-This makes the queue behave as LIFO instead of FIFO when multiple
-buffers are queued.
+Address the issue by explicitly checking for the critical scenario.
 
-Fix this by retrieving buffers from the head of the list.
-
-Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c886d70286bf ("mptcp: do not queue data on closed subflows")
+Cc: stable@vger.kernel.org
+Reported-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+Reported-by: Xinyang Ge <xinyang@anthropic.com>
+Closes: https://lore.kernel.org/20260525194828.1137119-1-shardul.b@mpiricsoftware.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260917-net-mptcp-misc-fixes-7-3-rc4-v2-2-0cf5c72667c8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/video-i2c.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mptcp/protocol.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-index 7a975e2eab00b..325ee77ba4466 100644
---- a/drivers/media/i2c/video-i2c.c
-+++ b/drivers/media/i2c/video-i2c.c
-@@ -464,8 +464,9 @@ static int video_i2c_thread_vid_cap(void *priv)
- 		spin_lock(&data->slock);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1562,7 +1562,9 @@ struct sock *mptcp_subflow_get_send(stru
  
- 		if (!list_empty(&data->vid_cap_active)) {
--			vid_cap_buf = list_last_entry(&data->vid_cap_active,
--						 struct video_i2c_buffer, list);
-+			vid_cap_buf = list_first_entry(&data->vid_cap_active,
-+						       struct video_i2c_buffer,
-+						       list);
- 			list_del(&vid_cap_buf->list);
- 		}
+ static void mptcp_push_release(struct sock *ssk, struct mptcp_sendmsg_info *info)
+ {
+-	tcp_push(ssk, 0, info->mss_now, tcp_sk(ssk)->nonagle, info->size_goal);
++	if (info->mss_now)
++		tcp_push(ssk, 0, info->mss_now, tcp_sk(ssk)->nonagle,
++			 info->size_goal);
+ 	release_sock(ssk);
+ }
  
--- 
-2.53.0
-
 
 
