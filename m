@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78934F85CB;
-	Wed, 30 Sep 2026 17:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D1751356C;
+	Wed, 30 Sep 2026 17:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790242; cv=none; b=AC/Cv2vs7iWtk1Bqf3AvZpJzqHzAMN2eAB+QJo7ICXNyuV60CNrbASFrCld0r5HxsZT8GompVCFJs5S5xTUHlSoXrXMtmZgsHVm2PptCainul3zZl3XaUFda9RaxwLDi4B7f3uofepNVHU2Qh+el6rOSLA2OYhBWtt0277z37iU=
+	t=1790790246; cv=none; b=fVqtUV1qgSQPCm+13/WAoKw/z3s6nwxSI3JZ6ubd02znuXVTZOcgUzAvZ/SJdLf9v03KPv1OGneu4I0IRPdsgQ5Zbdk6XxYpqMYxmODMHDaM4bCLbenxk+FpflJbFoxrTtT3gEIIJCfrFIGnUmwG3Y7qMGX8Qg0HC5Va96kLnbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790242; c=relaxed/simple;
-	bh=bA+XHXESyMhX1s+VJ/GO2tvvLZs6bc03daDKpyfUPPs=;
+	s=arc-20240116; t=1790790246; c=relaxed/simple;
+	bh=2RSanxlYnN3/AK5UEiBEDImjkCJ534TSSDdllJzXIfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLuTEJ1jrOd9jXWX2Ds8lmf3CIWNffHn7krcyhTELqhyL/TARgLtLuTgVknFkyc5/0L9WyKEKgErPxphWG5KpQsKE5skI0Z3NYcFYhFBQMmVv+MtvaFhIyO3HqCgorljnLFgFjISarrZHCzF52Z7xmUC5dLLLrYeAIZBn23ow5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZyKtkJW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R9Razy5OBllJIGA5DnAgznA713CmvcAwri7fOKFqJ8Fz1DQoDC2/vLVZ/0ebe2+BIdXa+VSI+9PUzDn1ojszf8HOFUvkjjLOIEnHBkYqyGe8xZvU1OctyilhlpIkUW/1GNpco0evuOLca4Vu/GmAfWuN4bqNlcy90JDAfo1d/Zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Spd90UGt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZyKtkJW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFFE1F000FF;
-	Wed, 30 Sep 2026 17:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Spd90UGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2A1F000FF;
+	Wed, 30 Sep 2026 17:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790241;
-	bh=SvXhs9nevmHhB4qDz0RThmWQP+1pxw2443vyITZrZO4=;
+	s=korg; t=1790790244;
+	bh=utH4ZhL9HWWEO52krFz+1DLbnVez06Cx9mBjm3y42ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZyKtkJWPEFVhu9I3dkkOlvdbfA7auLCGrjr3QrlvEgECSKCdMzjn1WDVI92cCkvQ
-	 R3q8TYe1g382UDtMAdyRNTNaGl26ZXDDGbk+DRYD8mEORa7yDqTtXiIg1AI16gNrhW
-	 40imh+qGoP5bCmFjswwJ3NXXwIFL2czou/yB8C+o=
+	b=Spd90UGtDNcyeOSPVQW8EQTNhoymQ+sPrcEv4MMOGpcO0+dcBxzOnigCeCc9rmozW
+	 L7m5cpQIUlZ2GItylhA1PyxaHeincDq08ZvHB3fXmMd/NH9nk1z8ALr7w1I75BNTgZ
+	 pmdGmGlhGQQ3jVvBAfqlrw2JdQMvgMZerjiwGapg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Geliang Tang <tanggeliang@kylinos.cn>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 760/877] sock: add sock_kmemdup helper
-Date: Wed, 30 Sep 2026 17:27:51 +0200
-Message-ID: <20260930152431.103037156@linuxfoundation.org>
+Subject: [PATCH 6.12 761/877] mptcp: use sock_kmemdup for address entry
+Date: Wed, 30 Sep 2026 17:27:52 +0200
+Message-ID: <20260930152431.124902926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -55,60 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 456cc675b6d4cadd4872a477d8976ff56eef4b6f ]
+[ Upstream commit 52f83c0b5f857dbe24f66fc9a7f035523e9ffbc9 ]
 
-This patch adds the sock version of kmemdup() helper, named sock_kmemdup(),
-to duplicate the input "src" memory block using the socket's option memory
-buffer.
+Instead of using sock_kmalloc() to allocate an address
+entry "e" and then immediately duplicate the input "entry"
+to it, the newly added sock_kmemdup() helper can be used in
+mptcp_userspace_pm_append_new_local_addr() to simplify the code.
+
+More importantly, the code "*e = *entry;" that assigns "entry"
+to "e" is not easy to implemented in BPF if we use the same code
+to implement an append_new_local_addr() helper of a BFP path
+manager. This patch avoids this type of memory assignment
+operation.
 
 Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/f828077394c7d1f3560123497348b438c875b510.1740735165.git.tanggeliang@kylinos.cn
+Link: https://patch.msgid.link/3e5a307aed213038a87e44ff93b5793229b16279.1740735165.git.tanggeliang@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: f9f0068e8813 ("mptcp: pm: userspace: fix address ID overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sock.h |    2 ++
- net/core/sock.c    |   16 ++++++++++++++++
- 2 files changed, 18 insertions(+)
+ net/mptcp/pm_userspace.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1840,6 +1840,8 @@ static inline struct sk_buff *sock_alloc
- }
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -68,13 +68,12 @@ static int mptcp_userspace_pm_append_new
+ 		/* Memory for the entry is allocated from the
+ 		 * sock option buffer.
+ 		 */
+-		e = sock_kmalloc(sk, sizeof(*e), GFP_ATOMIC);
++		e = sock_kmemdup(sk, entry, sizeof(*entry), GFP_ATOMIC);
+ 		if (!e) {
+ 			ret = -ENOMEM;
+ 			goto append_err;
+ 		}
  
- void *sock_kmalloc(struct sock *sk, int size, gfp_t priority);
-+void *sock_kmemdup(struct sock *sk, const void *src,
-+		   int size, gfp_t priority);
- void sock_kfree_s(struct sock *sk, void *mem, int size);
- void sock_kzfree_s(struct sock *sk, void *mem, int size);
- void sk_send_sigurg(struct sock *sk);
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2837,6 +2837,22 @@ void *sock_kmalloc(struct sock *sk, int
- }
- EXPORT_SYMBOL(sock_kmalloc);
- 
-+/*
-+ * Duplicate the input "src" memory block using the socket's
-+ * option memory buffer.
-+ */
-+void *sock_kmemdup(struct sock *sk, const void *src,
-+		   int size, gfp_t priority)
-+{
-+	void *mem;
-+
-+	mem = sock_kmalloc(sk, size, priority);
-+	if (mem)
-+		memcpy(mem, src, size);
-+	return mem;
-+}
-+EXPORT_SYMBOL(sock_kmemdup);
-+
- /* Free an option memory block. Note, we actually want the inline
-  * here as this allows gcc to detect the nullify and fold away the
-  * condition entirely.
+-		*e = *entry;
+ 		if (!e->addr.id && needs_id)
+ 			e->addr.id = find_next_zero_bit(id_bitmap,
+ 							MPTCP_PM_MAX_ADDR_ID + 1,
 
 
