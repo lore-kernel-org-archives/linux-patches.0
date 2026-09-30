@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9153BB138;
-	Wed, 30 Sep 2026 19:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932133BB138;
+	Wed, 30 Sep 2026 19:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796378; cv=none; b=LeZcJ9PCYK90FEw2sS8mAZJcl0yk4d2TsP5yfV6AEZY6QNDnFWCaFRi79t+BaeQB7Yy8T1YqDxjtifJaWAnzRAit9NaSPkcBZ03SoW8ehaexcGfVROUUXJKo8MvPmtLVAVnWIeyGBW2cciA6zyXR91hDuqZYhIMfVHJQZHPGzpA=
+	t=1790796381; cv=none; b=WBPLY/7/2HKsyStuIZFEri1yDwx9GDxH5i6HQ4qpU9Z9oKXXWzWvMK21587/hx37h2h/1n6uQV7Yc4U8gn2DR9hxfaVerOAUZ1GG/1QNevuFS+TLbJGBzMw5akcxvvuykD+Dlb0V6h+j/ga8KUbI9MCLZij5TTQLf3C3UAJKGnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796378; c=relaxed/simple;
-	bh=jBMYCMOwwHjZyxJ92KeOa0pV2/6Tao2iVCs54SXkePc=;
+	s=arc-20240116; t=1790796381; c=relaxed/simple;
+	bh=gs5+Q5mCtWwDalectHzStWOEeP1tT4BWLKorm0z9Y6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XaBaN95QsYHPsYDeHib9dJL8NRuGtlhYcjsClmmesqlueEtQYhZ4Q3QsD9PCCQoTZ793xsLvt2MZr/abO7i6mpauKICVadzzP6sYennhtd9ke2XcgC80xnSyHbaJ1W3jmMpcw+0t1QqkAg+anMM8hSLBmJezUK00pdJiFhHRahk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZwsgiOL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S2UfngHt7H9KCtFLcBoUc3mZXN8pn7eS8xgKpXzb5ii6mHBmSneDSX2UimKbpGcJu8J/m1rmoBptPNt/i3oAySqBxUW4+X5zQ6OFvxuqZQKPUyHVx4VuUNJVBLgFfzaOSGUm26ZfRjRUojIoZjBYURt3NvrjfBJ8dkTPLY4LZHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIIKl0Sg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZwsgiOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B7E1F000FF;
-	Wed, 30 Sep 2026 19:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIIKl0Sg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD101F000FF;
+	Wed, 30 Sep 2026 19:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796377;
-	bh=lNK7aDtY9pY8vpZh1uvRzNgkY/4hgq6ExAwjtXMtAyk=;
+	s=korg; t=1790796380;
+	bh=BQ3NuuO7rVX2FBzL1wamwwNnKUU7RFqNftkcZR2oNdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hZwsgiOLp09Ontnr/4IAryG8y9vatcHdXRvuDi/TiPdYvISTEMAyndROXXgH6nw4T
-	 5ryfMjH0m9n0p4eHkuv96f23KzJSpJn88Yr52l5jRFq0ROzey4ID2e8olu0xwdDsaN
-	 YdL1wh/MYgL5PgdLuiWMuALwiPpcXC08KyVAPt68=
+	b=uIIKl0SgFz0/uQ2PN6g/p7rPv+kEba+89b/J1o+jzRiLXQ8KmrzdJixK0TmONdiz6
+	 uKwx1CVpgjRwU26PZdlgnq6+UAc1ulFyh8xFST5xzw5VtJLKJAXlCLnTsMhWUzzbgL
+	 S+8yX6rp9kt1PIp0dE7eQJzBg7uLxQJzb8mT5lt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 0891/1193] mmc: spi: reset bytes_xfered before retrying CRC failures
-Date: Wed, 30 Sep 2026 17:26:15 +0200
-Message-ID: <20260930152454.041199149@linuxfoundation.org>
+	Christian Lugnberg <christian.lugnberg@soundtrack.io>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 0856/1193] dmaengine: sun6i: fix non-atomic read of DMA position registers
+Date: Wed, 30 Sep 2026 17:25:40 +0200
+Message-ID: <20260930152453.251232679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,53 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Christian Lugnberg <christian.lugnberg@soundtrack.io>
 
-commit 8b0cc8707f65e0f51912e764e1b309b2559db1ec upstream.
+commit c90b6973daa37f4c283342dff881ae001dea4fe6 upstream.
 
-mmc_spi_data_do() updates data->bytes_xfered after each block has been
-transferred successfully.  If a later block in the same data request
-fails with a CRC error, data->bytes_xfered may therefore contain the
-number of bytes completed before the failing block.
+sun6i_get_chan_size() reads DMA_CHAN_LLI_ADDR and DMA_CHAN_CUR_CNT in two
+separate readl() calls with no synchronisation between them:
 
-mmc_spi_request() has a private recovery path for such CRC failures.  It
-sends STOP_TRANSMISSION, clears data->error and jumps back to
-crc_recover to issue the same command and data request again.  However,
-it does not clear data->bytes_xfered before the retry.
+    pos   = readl(pchan->base + DMA_CHAN_LLI_ADDR);
+    bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
 
-If the retry succeeds, the request is completed with the bytes from the
-failed attempt still included in data->bytes_xfered.  For a multi-block
-request this can make the completed request report more bytes than were
-transferred by the successful retry, and can even exceed the request size
-when most blocks completed before the CRC error.
+DMA_CHAN_LLI_ADDR holds the physical address of the *next* descriptor the
+engine will load once the current one completes. DMA_CHAN_CUR_CNT holds the
+remaining byte count for the *current* descriptor. If the DMA engine
+advances to the next LLI entry between the two reads, pos becomes stale: it
+still points to what was the next descriptor at the time of the first read,
+but that descriptor is now the current one and CUR_CNT reflects its initial
+(full) byte count. The subsequent virtual-chain walk starts one entry too
+early and accumulates an extra full period's worth of bytes into the
+residue estimate.
 
-This is most likely to be observed on MMC-over-SPI systems where long
-multi-block transfers occasionally hit a data CRC error but the
-mmc_spi-internal retry succeeds.  The data itself is retried, but the
-completion accounting is not.
+Fix this by re-reading DMA_CHAN_LLI_ADDR after DMA_CHAN_CUR_CNT and
+retrying if the value changed. This double-read pattern guarantees that
+both registers were sampled during the same descriptor interval. The cost
+is at most one extra readl() pair per call in the racy case, which occurs
+only at descriptor boundaries (~every 2 ms) and is negligible.
 
-Clear data->bytes_xfered together with data->error before repeating the
-request so the final completion reports only the bytes transferred by the
-successful attempt.
-
-Fixes: 061c6c847eeb ("mmc_spi: Recover from CRC errors for r/w operation over SPI.")
+Fixes: a90e173f3faf ("dmaengine: sun6i: Add cyclic capability")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Christian Lugnberg <christian.lugnberg@soundtrack.io>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260817135723.12807-2-christian.lugnberg@soundtrack.io
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmc_spi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/sun6i-dma.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -954,6 +954,7 @@ crc_recover:
- 			status = mmc_spi_command_send(host, mrq, &stop, 0);
- 			crc_retry--;
- 			mrq->data->error = 0;
-+			mrq->data->bytes_xfered = 0;
- 			goto crc_recover;
- 		}
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -353,8 +353,10 @@ static size_t sun6i_get_chan_size(struct
+ 	size_t bytes;
+ 	dma_addr_t pos;
  
+-	pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
+-	bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
++	do {
++		pos = readl(pchan->base + DMA_CHAN_LLI_ADDR);
++		bytes = readl(pchan->base + DMA_CHAN_CUR_CNT);
++	} while (pos != readl(pchan->base + DMA_CHAN_LLI_ADDR));
+ 
+ 	if (pos == LLI_LAST_ITEM)
+ 		return bytes;
 
 
