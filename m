@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD04C509EF1;
-	Wed, 30 Sep 2026 16:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7131E4E06FC;
+	Wed, 30 Sep 2026 16:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785527; cv=none; b=lSzfhtGyIp/4S9QnydBDiMYQ4NIDQ/SJNlZLzBbhBhGMX9UBW6AbbvIUwaRYUy7AIiTht18Y6I2s/1vvOxitxv8WVYM3PFMKna5u/Apz6rkEvBAYIriK/8D4OKZ0jPr9HJdLGGM4qTfXEi0Ov9yZ9cW/QDe/O8H4iUw/4r9b3/Y=
+	t=1790785533; cv=none; b=PI4PRL+sbnhlLr6MNrjHr4fZpoW+DhShsVeKD2YV9ipZqRdAVUO8LerJUOB5+KDONvWhIDzA4ae3Hm8NL7aqvh5i/hlQ2NCzT7vbVBLMXICVFKNbm7+bz48n6Cz7IKPq2FM6aF11oRWh7Q1NUQGnKr7rkICCj+n6clnBKmzp2WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785527; c=relaxed/simple;
-	bh=dDDJgg78NiP6GJne5/sJcIDkxTJxqdDwRjiOtneGlvc=;
+	s=arc-20240116; t=1790785533; c=relaxed/simple;
+	bh=ortbGzceaJh/gsmGRZtioT0p0xg+rwOAxbXmUZBpEQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+9rSdZ64tuex1THeouuJPuAYJh2dkNiXTa2jl4wdg0TMnssqpmQG1wGF2D0RpVbD8WWeGQib9dGN6aT9IwlsB2RThXFUS4Cowx4l8DWoa7htqmHTSOzEh3J/RuBP7KX5u69hFc93qnq7GSg4x/tnrE3jr1WHYRraXHGTBTAqCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ1fYZEt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SluwWvuJTS+szPmmRWmo2Ea9fcNw8I6uz6L0eYSkI1L/VTPvhrgTeNLIXSBZWpJjWH6l5/FN3h/cyH65ova2fVYGVKVoQ5E4dGhekUyfLOcr2K8Os1zomwDtmch6t6tMQfLs5GazKgzR/fmwfMs1eq3E8m0FUJKVC2Nlm9SvjTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+iWhSq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ1fYZEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368FB1F00893;
-	Wed, 30 Sep 2026 16:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+iWhSq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A3B1F0089B;
+	Wed, 30 Sep 2026 16:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785517;
-	bh=irMTv3Ym7ayH3oUidtdza5cB2K0rIbON4iyodZ5I080=;
+	s=korg; t=1790785526;
+	bh=IpUIlDOGu4zJkzGYIY0K5//TPQesL2xzDAlk9r8FUpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qJ1fYZEtZkF+Y7NTGlZtCNXFDfaeZut0qauLr+KhfgAdMjbqdHk1JRTACNhrfzGrh
-	 KAdayXaUVkp396iJ81yUnEUDlMWRFXH30olgiCBq4W1iVyPSTOTYTLLurE6BOJ39FX
-	 3l7+HPNeN+9ng6iBTDTaK1d4MRFeK8OU5cmkO20Y=
+	b=K+iWhSq7TRvw/PVKASEi8jGbHwrTTb/wnJciPW38LObqEt9XX/XanjIW7ZnP7NWLs
+	 E65Cg3PjWdyg1Y99kLYz0gEKpTGbruSJNmtjHZJHUYz6MqGs4NDUzzG5HUtVx+0mNp
+	 bhw77m6pcepnaABkZ9LTCWGoojfFfQbZTgBBBGcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 535/982] media: verisilicon: hantro: bound G2 HEVC tile loop to the buffer capacity
-Date: Wed, 30 Sep 2026 17:21:11 +0200
-Message-ID: <20260930152428.262470167@linuxfoundation.org>
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 538/982] bnxt_en: Only restore LRO if the device supports TPA
+Date: Wed, 30 Sep 2026 17:21:14 +0200
+Message-ID: <20260930152428.326711044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Joe Damato <joe@dama.to>
 
-commit 06236b094c899c22c12ac5097935eb6719293de8 upstream.
+commit 4e17b5007b6664559cdad2b2fe270526cf786b5b upstream.
 
-prepare_tile_info_buffer() writes one entry per tile into the tile_sizes
-DMA buffer, sized for a grid equal to the PPS uAPI array capacity. Use the
-bounded v4l2_hevc_pps_num_tile_columns() / v4l2_hevc_pps_num_tile_rows()
-helpers so the loops stay inside the buffer.
+With a P5+ device with firmware that reports max_aggs_supported == 0, it is
+possible to make LRO settable by attaching and detaching an XDP program
+even though the device does not support TPA.
 
-Fixes: cb5dd5a0fa51 ("media: hantro: Introduce G2/HEVC decoder")
-Assisted-by: Claude:claude-opus-4-8
+Fix this by testing BNXT_SUPPORTS_TPA before restoring the feature bit.
+
+Fixes: f0aa6a37a3db ("eth: bnxt: always recalculate features after XDP clearing, fix null-deref")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260902015652.2421609-2-joe@dama.to
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
-@@ -5,6 +5,8 @@
-  * Copyright (C) 2020 Safran Passenger Innovations LLC
-  */
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -4094,7 +4094,8 @@ void bnxt_set_rx_skb_mode(struct bnxt *b
+ 		bnxt_get_max_rings(bp, &rx, &tx, true);
+ 		if (rx > 1) {
+ 			bp->flags &= ~BNXT_FLAG_NO_AGG_RINGS;
+-			bp->dev->hw_features |= NETIF_F_LRO;
++			if (BNXT_SUPPORTS_TPA(bp))
++				bp->dev->hw_features |= NETIF_F_LRO;
+ 		}
+ 	}
  
-+#include <media/v4l2-hevc.h>
-+
- #include "hantro_hw.h"
- #include "hantro_g2_regs.h"
- 
-@@ -29,8 +31,8 @@ static void prepare_tile_info_buffer(str
- 	const struct v4l2_ctrl_hevc_pps *pps = ctrls->pps;
- 	const struct v4l2_ctrl_hevc_sps *sps = ctrls->sps;
- 	u16 *p = (u16 *)((u8 *)ctx->hevc_dec.tile_sizes.cpu);
--	unsigned int num_tile_rows = pps->num_tile_rows_minus1 + 1;
--	unsigned int num_tile_cols = pps->num_tile_columns_minus1 + 1;
-+	unsigned int num_tile_rows = v4l2_hevc_pps_num_tile_rows(pps);
-+	unsigned int num_tile_cols = v4l2_hevc_pps_num_tile_columns(pps);
- 	unsigned int pic_width_in_ctbs, pic_height_in_ctbs;
- 	unsigned int max_log2_ctb_size, ctb_size;
- 	bool tiles_enabled, uniform_spacing;
 
 
