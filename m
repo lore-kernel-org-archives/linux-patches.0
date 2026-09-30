@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614062D9484;
-	Wed, 30 Sep 2026 18:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F2036D4E1;
+	Wed, 30 Sep 2026 18:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792045; cv=none; b=cVSs/16oUK5iI3rNf5lMarMb722olI8lASt1pd4FhqDWJPHZ5uuXm3Zo83VvcU9NjxxE4YQTMyXSd8WSRPSo47YzVUL7NHJ7g1wCzXqmO2RdNzbt2fTynou5QywwZGjXAkdKxxa1jfOECOqqzXC9PCVziIYTPEkP/sDEPGWD3sc=
+	t=1790792048; cv=none; b=l9hHR+bMnGElZ66y3WICSeir0Lk2Hoedx8sxRuTUOIAZW4jExul9hx8ueC5rsW+6O0vCpiY5CT9qXoAFHFZyxAmTaeCeHqVEk/YOZwGobgld6YYz6UCefE6l7jatZuk67d5I0V4rZSI2G0aqEA4lQdjle8EwuftV0ae8zGsytI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792045; c=relaxed/simple;
-	bh=AC60K/O7u67GrBeYxFV21fR9I+vAGjMSE6DRTnvod7A=;
+	s=arc-20240116; t=1790792048; c=relaxed/simple;
+	bh=OVAp6WSo/vjapULwgB7Kvq9rNsTYNHMcVPDNOUPEDLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agT2aSzxh1aq87kqYqYqL0DNtQBQ1R2+6/djjctd4cEBx8cgAdNOMVcwnsbLZOroZj0rlkAa/4eAKb9OZW6I9YVR6HYeBUtIX5oXCw/oMSYXSwaiqF6PSGeBP/bXLlRz1V1UAqZhJEISEDNF/I4UipSMhgODmIoINqpDdjou/wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJ5dG3aw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BNPxx+Pf7e2CuGITcjuZNYVhUBAyqJ/TmZbm0IgXISSs8kgjwfT8XQy3Mxtu2NuPLKxPdSNhRIBNzOCGCZTgXDb7aMNa+RDlsqIXZRklVvnEelXUqk2HPHEHGBNQTeFYuXDQcsuRgOu+Pi1057udLH3xhf7UZbDz21nv0005rhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUHN8QPW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJ5dG3aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F861F000FF;
-	Wed, 30 Sep 2026 18:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUHN8QPW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1491F000FF;
+	Wed, 30 Sep 2026 18:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792044;
-	bh=D+AnqENgTDhTxk7bPoG/kjzR93/q7iDpTHDDOtr3CsY=;
+	s=korg; t=1790792047;
+	bh=OQxbueDrmTpuC7MEAbv8P2ZoNmzbQzvrbZNmYoYT2a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jJ5dG3awwW35/b9NzWleI5xjiAqhRVzRvd//Eb/9c/ta/eyZofXQcQE3aqkgJlPS4
-	 aLDD1VHOTiizY7DNr6dnj7k6fpLBxFL8pLQrcZyQyP616YZQ8Bnpfh6K6ahe5e68H/
-	 4eqvT+iJeZJksqhEK9FOrw0M8x9I9cpk5z2xHqfI=
+	b=WUHN8QPWTSUPyuAICLh4zPlAkdlkr5PFZefkYNIQsUSMRVA6GozBbeTiuvLjZQ0MR
+	 TznkSt6z5QzQYjyInqLoNQJCHgKOLzjFuOcuK3rXI/gRi/isdw25QmJtlVBYDWnX+p
+	 1I3uXaXNh5wBnWJD4lB80fbIkTUwzNzF4zcT5c3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 509/752] ASoC: hdmi-codec: Report a change when the channel status moves
-Date: Wed, 30 Sep 2026 17:26:19 +0200
-Message-ID: <20260930152409.271942797@linuxfoundation.org>
+	Jeremy Nyberg <SlickStretch3.0@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 518/752] Input: xpad - fix PDP Marvel Xbox 360 controller
+Date: Wed, 30 Sep 2026 17:26:28 +0200
+Message-ID: <20260930152409.464776493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,57 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Jeremy Nyberg <slickstretch3.0@gmail.com>
 
-[ Upstream commit c17ae8c26eac16ad244daef44044d714f68a2ddc ]
+commit 7bc369cb3d3f3656eb77285628ee264264d28ad4 upstream.
 
-The put() callback of "IEC958 Playback Default" stores all 24 channel
-status bytes and then returns 0. The core notifies userspace only on a
-positive return, so a write that changes what the get() callback hands
-back is never announced, and a mixer holding the control open keeps
-showing the old value.
+The PDP Marvel Xbox 360 controller with USB ID 0e6f:0147 is
+incorrectly classified as an Xbox One controller.
 
-Compare the stored bytes and return 1 when they move, the way
-snd_hda_spdif_default_put() does.
+With the current XTYPE_XBOXONE classification, the controller is
+detected but produces no input, while its four player LEDs continue
+blinking indefinitely.
 
-The same shape is in img-spdif-out and uniperif_player.
+Classify USB ID 0e6f:0147 as an Xbox 360 controller instead.
 
-No board with this codec was to hand. The change is a comparison of
-driver state with no hardware behaviour in it, and mixer-test counts the
-missing notification as event_missing.
+Tested on a PDP Marvel Xbox 360 controller with USB ID 0e6f:0147.
+All inputs register correctly and the player LED indicates the
+current player.
 
-Fixes: 7a8e1d44211e ("ASoC: hdmi-codec: Add iec958 controls")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Link: https://patch.msgid.link/20260915092515.2638542-1-sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c225370e01b8 ("Input: xpad - sync supported devices with 360Controller")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeremy Nyberg <SlickStretch3.0@gmail.com>
+Link: https://patch.msgid.link/20260910071627.236014-1-SlickStretch3.0@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/hdmi-codec.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
-index 5e326ae3b57ea..84b25dd9af31f 100644
---- a/sound/soc/codecs/hdmi-codec.c
-+++ b/sound/soc/codecs/hdmi-codec.c
-@@ -426,10 +426,14 @@ static int hdmi_codec_iec958_default_put(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
- 
-+	if (!memcmp(hcp->iec_status, ucontrol->value.iec958.status,
-+		    sizeof(hcp->iec_status)))
-+		return 0;
-+
- 	memcpy(hcp->iec_status, ucontrol->value.iec958.status,
- 	       sizeof(hcp->iec_status));
- 
--	return 0;
-+	return 1;
- }
- 
- static int hdmi_codec_iec958_mask_get(struct snd_kcontrol *kcontrol,
--- 
-2.53.0
-
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -211,7 +211,7 @@ static const struct xpad_device {
+ 	{ 0x0e6f, 0x0139, "Afterglow Prismatic Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x013a, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0146, "Rock Candy Wired Controller for Xbox One", 0, XTYPE_XBOXONE },
+-	{ 0x0e6f, 0x0147, "PDP Marvel Xbox One Controller", 0, XTYPE_XBOXONE },
++	{ 0x0e6f, 0x0147, "PDP Marvel Xbox 360 Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x0e6f, 0x015c, "PDP Xbox One Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0161, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x0e6f, 0x0162, "PDP Xbox One Controller", 0, XTYPE_XBOXONE },
 
 
