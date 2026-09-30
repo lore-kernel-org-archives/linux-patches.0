@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED04A23ABBE;
-	Wed, 30 Sep 2026 17:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E41503BDA;
+	Wed, 30 Sep 2026 17:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790772; cv=none; b=MXN7vEz+3Lq4+kxCSCbAmHpexsOnuA1f7dHBOXe/43ruyYo+N82bwy/GDw+XVF4UGibExrR7VMZI2gIYNncfYo16bHWiClhcasB6I7PyM1/puaeEZP+NJULnnrqbt19sBOlzhS7vEXUhoYm6ric3Va9eD1lApAZtw8iFOftSQkU=
+	t=1790790774; cv=none; b=H7d8Fq0IyT8dp/QFXh8drrhEtLaJNFT1xDK0RkJ5n3Omodzy6v7Z4DpDo6WfS4o/4Mscs73KVJtPi/fx+pVa92sTBb2Bz2HKfdtJ5d7I97YwwG6UIbPVt96VLSgP2/keUU0fVDYc3IPLt5jtfgpQ0jSna3P6KSipU+b92TFoaYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790772; c=relaxed/simple;
-	bh=XC1gVlRsdeo5/mEP/fqhibeCndoWamGIuokEI+2YFDA=;
+	s=arc-20240116; t=1790790774; c=relaxed/simple;
+	bh=q/0TzjMo/B9OPfjstF2TfjPyFv3IY8hcbd+JNONXcQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z26R9rVLcNygCFuC/fZ4sHgGYO88zOS/0b0UXVU7FHlbEaCqAmCyiMmUBkAFSnsoEFLfQYu+DGSgAc/AMV4LTrjAxpEquKpu8WSTvdADGcrgjIQQaUsfysBJLSgZPDzRhE+UWTCblwKD4b7XuUKWsJnrjTX9QXHyhB25WESCxcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kFw29o5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aViv/EhZr0IvpvDEzOWbzoVVnoUZPQCTRCosluQJARLbh7PzJ0OF+F0QIO8lAa9zchMgpL26HibWBR6SoQQxFMTFthzHHBSetAE7bBQFk+Cbx74iyOBROQcKSNjioM+GjhYYWdKbnKTfeFwgMipF75thcYNDFqI4enl3O2LtxhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlTUDCcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kFw29o5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000F31F000FF;
-	Wed, 30 Sep 2026 17:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlTUDCcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC671F00899;
+	Wed, 30 Sep 2026 17:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790770;
-	bh=lOIgbQ208KmrjZcetLJYd2Jv0SelKNQZclXn8rp5Sw0=;
+	s=korg; t=1790790773;
+	bh=5HsqUOuHYZwjEuSgoIy/KTW/gyjapEIeTSo6MbR46zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2kFw29o53E0eGB/95coReJ4+lv5HrxSC7Y3pYWijLiuffUvz6UOm3ffntVhQXbnxT
-	 Oq1ClrgyQd52AJfC2BeVkh+uH/rOWsOA8bKuExjokJx3xH8lO6knKEwuoUI9X9hlR/
-	 w0uzT5Hfe19F1Gel5tM3aiIF+LCfH0QgjlMiitLQ=
+	b=mlTUDCcPdcDY0P++yAUYq7XVL3x1IJAoSaxctxKGMrTyWESE3cIYH3YgWWCL9TGdT
+	 XQ8t8k0rTtwvauprldsOKqlAFthyOS0IMCRuxMTqFYGuSDSK07qk4KH4znBBLfOEV+
+	 egVCpj1iY5An+UHFuHRPGN5/VwvkM6SRzP5zHWNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Meiyappan <kumar.meiyappan@microchip.com>,
-	Sagar Biradar <sagar.biradar@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/752] scsi: pm8001: Reject non-fatal dump when controller is crashed
-Date: Wed, 30 Sep 2026 17:18:21 +0200
-Message-ID: <20260930152358.823160940@linuxfoundation.org>
+Subject: [PATCH 5.15 067/752] clk: socfpga: agilex: implement l3_main_free_clk
+Date: Wed, 30 Sep 2026 17:18:57 +0200
+Message-ID: <20260930152359.614983135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+From: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
 
-[ Upstream commit aa3b8f56ef27ed72394a752820abdec4608b731c ]
+[ Upstream commit 1e7f56205813a2c48cdb3e9a4b0a24f49fd9a548 ]
 
-pm80xx_get_non_fatal_dump() can be called even after the controller has
-entered a fatal error state. In that case the forensic memory contents
-are not safe to access for a non-fatal dump request, and attempting to
-do so can trigger a call trace.
+The AGILEX_L3_MAIN_FREE_CLK is defined in the dt-bindings header but
+was never implemented in the clock driver. Per the Agilex TRM,
+l3_main_free_clk has no divider or mux and is a fixed 1:1 derivative
+of noc_free_clk that clocks most of the interconnect datapath.
 
-Check controller_fatal_error before reading the non-fatal dump buffer
-and return -EINVAL when the controller is already in a crashed state.
-
-This prevents non-fatal dump collection from running in an invalid
-controller state.
-
-Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
-Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
-Link: https://patch.msgid.link/20260416154650.415624-1-sagar.biradar@microchip.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Adrian Ng Ho Yin <adrian.ho.yin.ng@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm80xx_hwi.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/clk/socfpga/clk-agilex.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
-index d37b1bdb29b49..e5b5a730116a9 100644
---- a/drivers/scsi/pm8001/pm80xx_hwi.c
-+++ b/drivers/scsi/pm8001/pm80xx_hwi.c
-@@ -400,6 +400,13 @@ ssize_t pm80xx_get_non_fatal_dump(struct device *cdev,
- 	char *buf_copy = buf;
- 
- 	temp = (u32 *)pm8001_ha->memoryMap.region[FORENSIC_MEM].virt_ptr;
-+
-+	if (pm8001_ha->controller_fatal_error) {
-+		pm8001_dbg(pm8001_ha, FAIL,
-+			   "non-fatal dump not available in fatal error state\n");
-+		return -EINVAL;
-+	}
-+
- 	if (++pm8001_ha->non_fatal_count == 1) {
- 		if (pm8001_ha->chip_id == chip_8001) {
- 			snprintf(pm8001_ha->forensic_info.data_buf.direct_data,
+diff --git a/drivers/clk/socfpga/clk-agilex.c b/drivers/clk/socfpga/clk-agilex.c
+index bf8cd928c2283..55a0623d75511 100644
+--- a/drivers/clk/socfpga/clk-agilex.c
++++ b/drivers/clk/socfpga/clk-agilex.c
+@@ -260,6 +260,8 @@ static const struct stratix10_perip_cnt_clock agilex_main_perip_cnt_clks[] = {
+ 	   0, 0x3C, 0, 0, 0},
+ 	{ AGILEX_NOC_FREE_CLK, "noc_free_clk", NULL, noc_free_mux, ARRAY_SIZE(noc_free_mux),
+ 	  0, 0x40, 0, 0, 0},
++	{ AGILEX_L3_MAIN_FREE_CLK, "l3_main_free_clk", "noc_free_clk", NULL,
++	  1, 0, 0, 1, 0, 0},
+ 	{ AGILEX_L4_SYS_FREE_CLK, "l4_sys_free_clk", NULL, noc_mux, ARRAY_SIZE(noc_mux), 0,
+ 	  0, 4, 0x30, 1},
+ 	{ AGILEX_EMAC_A_FREE_CLK, "emaca_free_clk", NULL, emaca_free_mux, ARRAY_SIZE(emaca_free_mux),
 -- 
 2.53.0
 
