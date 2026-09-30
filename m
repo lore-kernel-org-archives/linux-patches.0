@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F91C51AEEE;
-	Wed, 30 Sep 2026 17:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D3351A725;
+	Wed, 30 Sep 2026 17:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789256; cv=none; b=NLOanlC3qZKmYjJeAlkVgArGDokLt202b4g403pWG8S9KVoNip/Zg1aO7x6osdxBbw/YpI7k2ENvgz2criSbZcls5r4LFiNBiBmZts/5oqIW06RK+0qoG3GFgCzkjqHrqai2LLfrFhzdS6g4FV43cvJ70AJXeLlVnEUfEjTT068=
+	t=1790789259; cv=none; b=Qap+oGwn3JfPEAIMsGZ+ZGuE7l8sTjtAMH1XHdgEjzBP1MHJHR15fveb6KGI3bvxFk4vEyIo40mA+wj62LwQy5KAUA0a03iGr8BmfBztftkFLNlfdwyxA4YmjwWFPQ/N3QXbiB0zK5ZxGDlkRTrMXy+mg/6XNVx6vH+a1q6zDCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789256; c=relaxed/simple;
-	bh=1UNg7Xa6GoFsc2FfYDoPZ5IWQcPASxWLC15NMi7O4xk=;
+	s=arc-20240116; t=1790789259; c=relaxed/simple;
+	bh=0yRE/td0gAUAKj2Szk7q55HF90VlB+oqbapbTOa1BD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzxY3L4zR9ElH8vQa97ZODoGoJBqI3jXUmw995KOyotVgoobkfCsrWHIIGo8dBEuQMkD/LPF2F6w0Xxo/l1zQTPvlKw8Pd/FIm/s0VJR7ke8+PAL37vbdXRFF9Ghqh3ORPpxSvG55dH/1ZQdkX8+REAWTI8oC7PkWzIU/8N0+D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQT1mi1R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFyT4GMZHs/Opf9u+SmXFpFZZJwbhhe6wut+b1+t+9IdhRCNNh+NnESKwD3TRUFF4CmHZaEM2QHQOJEXXrbroqRsEdtGvRtsAJS7o2+5z3R7LaRamFauujmrgU6aXs7lyKsRLTvQ1KQW4XdpJdHQFE2OViFmTs6LbCBPHfDt7g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7vm8/qA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQT1mi1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9691F00898;
-	Wed, 30 Sep 2026 17:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7vm8/qA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC6C1F00898;
+	Wed, 30 Sep 2026 17:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789255;
-	bh=wyF4+HW0zc2S9fwJtYb3RzFyu+OzbXOkXLF+JH9A2gM=;
+	s=korg; t=1790789258;
+	bh=jYZYtVXTbw3nEynt4jqB29kl9yWd/UxypXa9dpi5lz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQT1mi1Rl5BRQspk8sMtMekIml1vhoXJI1ZWupQBpSVqMnzH+LIxp57SgbM7jjZDF
-	 iaux1mtJS5xsjPYnD+Iip2XLp5NIZSXBCa9nHfH/Q3KPRA8ploXLoAVlvN6nf+aNsC
-	 swxgZTOjWCa31+rkgmAJMbmiPGf+loAOSxTFFPSo=
+	b=D7vm8/qAfJtFfxszIdJWEruLXo0nAKVmqj4n9TmFD4XHy6vJWmn7NYVRUSPSHmJtO
+	 fSQRhlqz+UxbK1ujxabXoC/IWzTAPvtM2LQF09rbPS2BgVmPmxWhqA8xt/cltbOXKi
+	 NL9T84Lut1Umdpp5q197LtSIWRgVLUlO5z9vrcQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1853daab1a47603d4678@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	David Heidelberg <david@ixit.cz>,
+	Sashiko <sashiko-bot@kernel.org>,
+	hybris <hybris@mojatatu.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 414/877] nfc: pn533: fix OOB read in pn533_acr122_is_rx_frame_valid()
-Date: Wed, 30 Sep 2026 17:22:05 +0200
-Message-ID: <20260930152423.627186636@linuxfoundation.org>
+Subject: [PATCH 6.12 415/877] net/sched: act_gate: budget the per-entry list in get_fill_size
+Date: Wed, 30 Sep 2026 17:22:06 +0200
+Message-ID: <20260930152423.648392486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,49 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit b61732f47316d45f27706db7812950145d3327b5 ]
+[ Upstream commit cfa165cbfbed9d0f4bbc22fef4309f595a3ab187 ]
 
-frame->ccid.datalen is read directly from the USB response frame
-and used, unchecked, as an index into frame->data[]. A malicious or
-malfunctioning device can set this field to an arbitrary value,
-causing the driver to read far outside the received buffer.
+tcf_gate_get_fill_size returns only the TCA_GATE_PARMS size, but
+tcf_gate_dump also emits three 64-bit timestamps, the clock id, flags,
+priority and the variable-length TCA_GATE_ENTRY_LIST nest. The per-entry
+nest is unbounded: parse_gate_list places no cap on the number of
+sched-entries, so a gate with many entries can push the real dump well
+past the skb that tca_get_fill allocates from this size.
 
-Bound ccid.datalen against the maximum possible ACR122 frame size
-before using it. This replaces the existing datalen == 0 check,
-since datalen < 2 already covers that case and additionally
-rejects datalen == 1, which would still underflow the
-"datalen - 2" offset used below.
+RTM_NEWACTION then fails the add-notify with -EINVAL while the action is
+already committed to the IDR, and a subsequent RTM_GETACTION on the
+installed gate also returns -EINVAL because its dump no longer fits.
 
-Fixes: 9815c7cf22da ("NFC: pn533: Separate physical layer from the core implementation")
-Reported-by: syzbot+1853daab1a47603d4678@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1853daab1a47603d4678
-Tested-by: syzbot+1853daab1a47603d4678@syzkaller.appspotmail.com
-Assisted-by: LLM
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260923035627.6210-1-kartikey406@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fix this by accounting for the missing fields in tcf_gate_get_fill_size
+along with all elements in the entries list.
+
+Note that sizing the reply from the action lets an oversized gate
+install cleanly for the first time: with the input unbounded by
+parse_gate_list, the sized skb can now grow well above
+NLMSG_GOODSIZE per netlink request (a transient GFP_KERNEL allocation
+reachable only with namespace-local CAP_NET_ADMIN). Overload from a
+malicious netns admin is hardening material, not net, per the
+discussion at
+https://lore.kernel.org/netdev/20260914191108.55a1a4f1@kernel.org/;
+a follow-up patch for net-next will cap the sched-entry count.
+
+Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824153903.4143642-1-victor@mojatatu.com
+Tested-by: hybris <hybris@mojatatu.ai>
+Co-developed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-3BLH.v1.20260914203033@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/act_gate.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
-index 0f12f86ebb023..35f3350cad324 100644
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -319,7 +319,9 @@ static bool pn533_acr122_is_rx_frame_valid(void *_frame, struct pn533 *dev)
- 	if (frame->ccid.type != 0x83)
- 		return false;
+diff --git a/net/sched/act_gate.c b/net/sched/act_gate.c
+index 58cae012a4391..d66c07aef95a2 100644
+--- a/net/sched/act_gate.c
++++ b/net/sched/act_gate.c
+@@ -686,7 +686,35 @@ static void tcf_gate_stats_update(struct tc_action *a, u64 bytes, u64 packets,
  
--	if (!frame->ccid.datalen)
-+	if (frame->ccid.datalen < 2 ||
-+	    frame->ccid.datalen > PN533_ACR122_FRAME_MAX_PAYLOAD_LEN +
-+	    PN533_ACR122_RX_FRAME_TAIL_LEN)
- 		return false;
+ static size_t tcf_gate_get_fill_size(const struct tc_action *act)
+ {
+-	return nla_total_size(sizeof(struct tc_gate));
++	struct tcf_gate *gact = to_gate(act);
++	const struct tcf_gate_params *p;
++	struct tcfg_gate_entry *entry;
++	size_t size = nla_total_size(sizeof(struct tc_gate)) /* TCA_GATE_PARMS */
++		+ 3 * nla_total_size_64bit(sizeof(u64)) /* TCA_GATE_BASE_TIME
++							 * TCA_GATE_CYCLE_TIME
++							 * TCA_GATE_CYCLE_TIME_EXT
++							 */
++		+ nla_total_size(sizeof(s32)) /* TCA_GATE_CLOCKID */
++		+ nla_total_size(sizeof(u32)) /* TCA_GATE_FLAGS */
++		+ nla_total_size(sizeof(s32)) /* TCA_GATE_PRIORITY */
++		+ nla_total_size(0); /* TCA_GATE_ENTRY_LIST */
++	/* TCA_GATE_TM is budgeted by tcf_action_shared_attrs_size() */
++
++	rcu_read_lock();
++	p = rcu_dereference(gact->param);
++	if (p) {
++		list_for_each_entry_rcu(entry, &p->entries, list)
++			/* TCA_GATE_ONE_ENTRY nest and its attributes */
++			size += nla_total_size(0)
++				+ nla_total_size(sizeof(u32)) /* TCA_GATE_ENTRY_INDEX */
++				+ nla_total_size(0) /* TCA_GATE_ENTRY_GATE */
++				+ nla_total_size(sizeof(u32)) /* TCA_GATE_ENTRY_INTERVAL */
++				+ nla_total_size(sizeof(s32)) /* TCA_GATE_ENTRY_MAX_OCTETS */
++				+ nla_total_size(sizeof(s32)); /* TCA_GATE_ENTRY_IPV */
++	}
++	rcu_read_unlock();
++
++	return size;
+ }
  
- 	if (frame->data[frame->ccid.datalen - 2] == 0x63)
+ static void tcf_gate_entry_destructor(void *priv)
 -- 
 2.53.0
 
