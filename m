@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0017C18C332;
-	Wed, 30 Sep 2026 16:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99A31E0DD8;
+	Wed, 30 Sep 2026 16:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787535; cv=none; b=RnrhsHqsd70BLxwN1KtA97fdjjprp01ViPdGK66CLnMK3Dk6R7dbfiGJiIn+MJ3nVXDRB5xQrA3rJbVm8ntX2k7RUKZecgJgIGcqvGjF6kNLV20+nLpb+YmJKAiCJtVnYk7xr4K1QHJ5S1E73QiT6bvY17+bu30thcneLkKqAvY=
+	t=1790787538; cv=none; b=VzLNgohrJMRyinCMnaMbEAWB3NE9YoUe0x9KaQ4fPvPZD+xMmfV+rPiccwq8ykKvbcpQ8BMFVsPvXSJS56GEp9LCUXEA9HNMXY6f6Z1dGj0x+w+VYqcaDtYw+2VGqfvrBloz4BH0DpVBN3VAF32q2asmgd6KjY/AgUAppSzqchw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787535; c=relaxed/simple;
-	bh=XUzL/3uvUuBKFudojgPv5TqAqn2993I3unYqyP0h9xk=;
+	s=arc-20240116; t=1790787538; c=relaxed/simple;
+	bh=rb7/wLG6TPQUs85ssthxQo++agvqdGmklLCvzhOEsug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ohf7G6lcm+c+bWg0Hh4oR6bVAvjJX4/8fyS3uYFV0LiLKLyvhn0xRiRzSEuBFUbQ5KceeJfltCs+1plAffjVi8UJWKuH3yck5SdG7nPKOeII5/GVP46Ok1dloLW5zPdYFhVWlmjUwYoPillUIrPK0k/b524H9tkZoqlQJAopmLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb9xBqrp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UPq8CL++lrX/4yftGOs5/i6xYpGqB+tg96ScS/7X+dp07QbaWdY7yawTeNk6msAW4uI4nrcpMjZ3I5K8rXMO2+ni90hUknhzUIwib3zfW+9IUh9bQF4mz5YAQos8n+St8528hhKGcKTdMjZXe0vdg3bJ4Ij8DmPBL7iA4CwVQRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kD/xYIPB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb9xBqrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0791F000FF;
-	Wed, 30 Sep 2026 16:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kD/xYIPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DD21F000FF;
+	Wed, 30 Sep 2026 16:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787533;
-	bh=a8HkJmQAJrPGZe6/zk7YfZD4WHVBoobKzs/jOvQ2IVk=;
+	s=korg; t=1790787536;
+	bh=s/xjO8cefZvKvtbMeRpmnIvExyfIabz84aIHxXssfvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hb9xBqrpanBJZgdaTjUQ0sXq+YMpyxU8Jp+pZbJRnRNDF9sMO15SE+XWi2p+l9tuk
-	 4lTVkFQM/NnSKLD1NE6QnV2MGZ6jzWRnERKkwTcdlSLlwNmhih4qI74RULlun8dIA2
-	 h7hnM8TLvtoBbWDuP595Kfx6NY6GXIa0vJfm2aNg=
+	b=kD/xYIPBXNQ2iGVNBs2AhcOyI6hRMuLPCZCvcx7lsdTCsKxegZgez+uOHhoVSKF0W
+	 bNTcGfNVGfnHza6i07H9AJH0u9aWpTkwnfkkg5rAbR3NT0ce3G280US7ZCleARlukp
+	 dgEohhtOuLYwAck0C1ugtonO8JmANMCBxrcqMVnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <wufan@kernel.org>
-Subject: [PATCH 7.2 265/457] ipe: protect the dm-verity root hash with RCU
-Date: Wed, 30 Sep 2026 17:26:10 +0200
-Message-ID: <20260930152351.763985810@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 266/457] ipv6: do not let ipv6_find_hdr() return an offset past the packet end
+Date: Wed, 30 Sep 2026 17:26:11 +0200
+Message-ID: <20260930152351.784767023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -49,112 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <wufan@kernel.org>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 2776e9c28513a1c855a94792b292cbcc533418c8 upstream.
+commit ee319bd3a0e976af5087cbe59ebc50a66f31d202 upstream.
 
-ipe_bdev_setintegrity() frees the old root hash when dm-verity publishes
-a new one on ->preresume, while policy evaluation can still be
-dereferencing it.
+ipv6_find_hdr() walks the extension header chain, skipping each header by
+the length that header itself declares.  ipv6_optlen() returns up to 2048,
+and the skip is never checked against skb->len, so the offset stored in
+*offset can point past the end of the packet.
 
-Protect the root hash with RCU. The evaluation path already runs under
-rcu_read_lock().
+openvswitch installs that offset as the transport header, and
+update_ipv6_checksum() then reads and writes the transport checksum field
+out of bounds:
 
-Fixes: e155858dd995 ("ipe: add support for dm-verity as a trust provider")
+  BUG: KASAN: slab-use-after-free in inet_proto_csum_replace16+0x445/0x470
+  Read of size 2 at addr ffff88810b754b06 by task ovs_ipv6_oob/629
+  CPU: 4 UID: 1000 PID: 629 Comm: ovs_ipv6_oob Tainted: G N 7.3.0-rc3+ #348
+  Call Trace:
+   inet_proto_csum_replace16+0x445/0x470
+   set_ipv6_addr+0x3dd/0x460
+   do_execute_actions+0x6a3d/0x7c40
+   ovs_execute_actions+0xfd/0x480
+   ovs_packet_cmd_execute+0xc38/0xf20
+   genl_rcv_msg+0x59e/0x870
+   netlink_rcv_skb+0x18b/0x450
+   genl_rcv+0x2d/0x40
+   netlink_unicast+0x6bc/0xa20
+
+  The buggy address belongs to the object at ffff88810b754980
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 390 bytes inside of
+   freed 704-byte region [ffff88810b754980, ffff88810b754c40)
+
+Other callers use that offset too, so bound it here rather than in one
+caller.
+
+Reject a header whose declared length does not fit in the packet.
+ipv6_find_hdr() already fails with -EBADMSG on a malformed chain, so this
+adds no new failure mode.
+
+Fixes: f8f626754ebe ("ipv6: Move ipv6_find_hdr() out of Netfilter code.")
+Suggested-by: Ilya Maximets <i.maximets@ovn.org>
+Suggested-by: Eric Dumazet <edumazet@google.com>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-[FW: remove model name according to latest guideline]
-Signed-off-by: Fan Wu <wufan@kernel.org>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/8F80BA1A-DDFD-432D-9075-242A3435FEB5@doyensec.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/ipe/eval.c  |   12 ++++++++----
- security/ipe/eval.h  |    2 +-
- security/ipe/hooks.c |   22 +++++++++++++++++-----
- 3 files changed, 26 insertions(+), 10 deletions(-)
+ net/ipv6/exthdrs_core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/security/ipe/eval.c
-+++ b/security/ipe/eval.c
-@@ -134,10 +134,14 @@ static bool evaluate_boot_verified(const
- static bool evaluate_dmv_roothash(const struct ipe_eval_ctx *const ctx,
- 				  struct ipe_prop *p)
- {
--	return !!ctx->ipe_bdev &&
--	       !!ctx->ipe_bdev->root_hash &&
--	       ipe_digest_eval(p->value,
--			       ctx->ipe_bdev->root_hash);
-+	const struct digest_info *root_hash;
+--- a/net/ipv6/exthdrs_core.c
++++ b/net/ipv6/exthdrs_core.c
+@@ -278,6 +278,9 @@ int ipv6_find_hdr(const struct sk_buff *
+ 			hdrlen = ipv6_optlen(hp);
+ 
+ 		if (!found) {
++			if (skb->len - start < hdrlen)
++				return -EBADMSG;
 +
-+	if (!ctx->ipe_bdev)
-+		return false;
-+
-+	root_hash = rcu_dereference(ctx->ipe_bdev->root_hash);
-+
-+	return root_hash && ipe_digest_eval(p->value, root_hash);
- }
- #else
- static bool evaluate_dmv_roothash(const struct ipe_eval_ctx *const ctx,
---- a/security/ipe/eval.h
-+++ b/security/ipe/eval.h
-@@ -27,7 +27,7 @@ struct ipe_bdev {
- #ifdef CONFIG_IPE_PROP_DM_VERITY_SIGNATURE
- 	bool dm_verity_signed;
- #endif /* CONFIG_IPE_PROP_DM_VERITY_SIGNATURE */
--	struct digest_info *root_hash;
-+	struct digest_info __rcu *root_hash;
- };
- #endif /* CONFIG_IPE_PROP_DM_VERITY */
- 
---- a/security/ipe/hooks.c
-+++ b/security/ipe/hooks.c
-@@ -9,6 +9,7 @@
- #include <linux/binfmts.h>
- #include <linux/mman.h>
- #include <linux/blk_types.h>
-+#include <linux/rcupdate.h>
- 
- #include "ipe.h"
- #include "hooks.h"
-@@ -232,7 +233,20 @@ void ipe_bdev_free_security(struct block
- {
- 	struct ipe_bdev *blob = ipe_bdev(bdev);
- 
--	ipe_digest_free(blob->root_hash);
-+	ipe_digest_free(rcu_access_pointer(blob->root_hash));
-+}
-+
-+static void ipe_set_dmverity_roothash(struct ipe_bdev *blob,
-+				      struct digest_info *info)
-+{
-+	struct digest_info *old;
-+
-+	/* Protected by device-mapper's md->suspend_lock */
-+	old = rcu_replace_pointer(blob->root_hash, info, true);
-+	if (old) {
-+		synchronize_rcu();
-+		ipe_digest_free(old);
-+	}
- }
- 
- #ifdef CONFIG_IPE_PROP_DM_VERITY_SIGNATURE
-@@ -280,8 +294,7 @@ int ipe_bdev_setintegrity(struct block_d
- 		return -EINVAL;
- 
- 	if (!value) {
--		ipe_digest_free(blob->root_hash);
--		blob->root_hash = NULL;
-+		ipe_set_dmverity_roothash(blob, NULL);
- 
- 		return 0;
- 	}
-@@ -301,8 +314,7 @@ int ipe_bdev_setintegrity(struct block_d
- 
- 	info->digest_len = digest->digest_len;
- 
--	ipe_digest_free(blob->root_hash);
--	blob->root_hash = info;
-+	ipe_set_dmverity_roothash(blob, info);
- 
- 	return 0;
- err:
+ 			nexthdr = hp->nexthdr;
+ 			start += hdrlen;
+ 		}
 
 
