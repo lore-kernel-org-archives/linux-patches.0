@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96560407CEF;
-	Wed, 30 Sep 2026 19:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76146371049;
+	Wed, 30 Sep 2026 19:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796826; cv=none; b=S9+orTlDEBriCfNKwMiLFRY9Tljpb318mm2m5TCDv2ZYzkfF/id8lBPsH+TZSQCVbM2vNQveYbvxYTu0L/ZCSrGjfupwHRlso/ZJlPtsOFWQsveaZZdYOuPtHCRjFMifNc8H9hzmdz9R4tqPhI1pEMoyeP6aSb8KZVfZSxXd8CQ=
+	t=1790796829; cv=none; b=jeCzFEmkKleMFFnct/vqm5vN14YZJgpav1johtMB3pmphhZ071Eo7hZgSKIwKihH23n0XnwnXF1cKWPQlAjK1PP0+9cgi0us5qCZCt+V6gVBz6ihax7MQ66YLy2ZylcfRm1blgU9WcWb7yxyLA9np+IYZxfUdIOu7Peuukynz6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796826; c=relaxed/simple;
-	bh=D6lVFNw++dZAiOrpyWiP35WXEbdjK+nuCUUD7dR6N9w=;
+	s=arc-20240116; t=1790796829; c=relaxed/simple;
+	bh=ZzONazAc2y4rfm/WlI/7qkWvkF7+jFCzQYI/BdPlQhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZMLaUlxvIW6IDkID81BWn559rdXhpnSFugy5+L9wDFgdfWq9c24uKDFSzKiwIyyJBRrLxw73M1HbcZ3PgvWMh+d9xv2n+rjUBJI2kohPlVBcaVTv3W0wBrDpTnfjdqFkbRoCsRsxDb6goqV7CjVzbJ6M/CRQwUAur9rRlOsM0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UuQqQRSP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NSfe7qWuJL+Z1TDO4wTdPMST09wRmR4gKh1hK6IBHTCSxCXQVSvbhv/J7O1cjRc6FEACCI9nQijiWRDVJNwZfNDr6G9vGEFggTuITi0W34alaE1mzEGlB5sFuwuIKwBxZoeaWwqjfp/y0UdMJk3XT28hjgakx0ZSMs/PzgZtAMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heni+1Li; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UuQqQRSP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A221F000FF;
-	Wed, 30 Sep 2026 19:33:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heni+1Li"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B8A1F000FF;
+	Wed, 30 Sep 2026 19:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796825;
-	bh=HeN3HA0PfdcgyStVDT9gKZqwfqSiAzbB8dqQvk4gO9c=;
+	s=korg; t=1790796828;
+	bh=w+lwjC4xVR8gXhLeZvobM7x70e8y2Bu93cRMHicPrnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UuQqQRSPs0fedV0iRJHqVM3OmooUtf48eSJXyQBEiqz0hw/zG/kdJvJAv//Nv28Yc
-	 Y3+WJOcEsF3MMkgn7fY1mCTT90WRsooty5nOV9kpuBg92QjMZxqJZD2f/LCZ56OCHQ
-	 gHlX0HWDa9DjlWQ6SZlgvClJebdCUQKR+yItpYdE=
+	b=heni+1Li18thAfH/93sP0l4ujRDte5ETNj1And1Rqu1agI8K4ZLbK8Js/rBAvLHF+
+	 ue60csMLlP5s5QhvGe1HHXgEgi7V7kvUDm2TrqH8BfUwR2d/cBg2Dq5ehg6OwQqHu7
+	 n+k0BA5ehaQAhJrpf+LkV8ugjRqq7ya7G6+Tv2CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1004/1193] net: Do not return value from init_dummy_netdev()
-Date: Wed, 30 Sep 2026 17:28:08 +0200
-Message-ID: <20260930152456.547324293@linuxfoundation.org>
+Subject: [PATCH 6.6 1005/1193] net: core: Fix documentation
+Date: Wed, 30 Sep 2026 17:28:09 +0200
+Message-ID: <20260930152456.569494090@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -54,62 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit d160c66cda0ac8614adc53a5b5b0e6d6f1a05a5b ]
+[ Upstream commit c6e7f276841d9a31009766f3e6f33e00cf3d93ed ]
 
-init_dummy_netdev() always returns zero and all the callers do not check
-the returned value. Set the function to not return value, as it is not
-really used today.
+Fix bad grammar in description of init_dummy_netdev() function.  This
+topic showed up in the review of the "allocate dummy device dynamically"
+patch set.
 
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240205103022.440946-1-amcohen@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 310d1ac61a4d ("net: ethernet: mtk_eth_soc: unregister net_devices in case of probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 2 +-
- net/core/dev.c            | 4 +---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ net/core/dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index fdd3ae0a506ea..e704b6b920712 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3197,7 +3197,7 @@ static inline void unregister_netdevice(struct net_device *dev)
- int netdev_refcnt_read(const struct net_device *dev);
- void free_netdev(struct net_device *dev);
- void netdev_freemem(struct net_device *dev);
--int init_dummy_netdev(struct net_device *dev);
-+void init_dummy_netdev(struct net_device *dev);
- 
- struct net_device *netdev_get_xmit_slave(struct net_device *dev,
- 					 struct sk_buff *skb,
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 36a6d621c10a7..2adf534a46f14 100644
+index 2adf534a46f14..57ffe8b86d779 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -10418,7 +10418,7 @@ EXPORT_SYMBOL(register_netdevice);
+@@ -10412,7 +10412,7 @@ EXPORT_SYMBOL(register_netdevice);
+  *	init_dummy_netdev	- init a dummy network device for NAPI
+  *	@dev: device to init
+  *
+- *	This takes a network device structure and initialize the minimum
++ *	This takes a network device structure and initializes the minimum
+  *	amount of fields so it can be used to schedule NAPI polls without
+  *	registering a full blown interface. This is to be used by drivers
   *	that need to tie several hardware interfaces to a single NAPI
-  *	poll scheduler due to HW limitations.
-  */
--int init_dummy_netdev(struct net_device *dev)
-+void init_dummy_netdev(struct net_device *dev)
+@@ -10421,7 +10421,7 @@ EXPORT_SYMBOL(register_netdevice);
+ void init_dummy_netdev(struct net_device *dev)
  {
  	/* Clear everything. Note we don't initialize spinlocks
- 	 * are they aren't supposed to be taken by any of the
-@@ -10446,8 +10446,6 @@ int init_dummy_netdev(struct net_device *dev)
- 	 * because users of this 'device' dont need to change
- 	 * its refcount.
+-	 * are they aren't supposed to be taken by any of the
++	 * as they aren't supposed to be taken by any of the
+ 	 * NAPI code and this dummy netdev is supposed to be
+ 	 * only ever used for NAPI polls
  	 */
--
--	return 0;
- }
- EXPORT_SYMBOL_GPL(init_dummy_netdev);
- 
 -- 
 2.53.0
 
