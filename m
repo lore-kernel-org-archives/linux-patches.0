@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB00C51B19E;
-	Wed, 30 Sep 2026 17:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE8651C040;
+	Wed, 30 Sep 2026 17:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789307; cv=none; b=JrZx7Q/2dJv3EZucabE8RBwhiLwsn2pZ2akoD9cr3793mHPaSVEkRsGe9G6Whccfk1A7SDHlsQzsFJzzpi63ienW6jCt7QalLF27Xr8gtS4ALX2+L4Ot1kQiPdJCwQWV25Ttp6NpmnTLkc1/mASoLnLeAhsqJeVPzcvV0IJd0DI=
+	t=1790789310; cv=none; b=GIWiR3ad+bpUX/TbHYQvpJ9TOyp2J5Xp0bysB90LPskBGB093Bi2xqUrZ8i31xbw+s6FoNLkq0dXUzVVSifEmYyY5V1mAOiFbqm55riT0EqcE/Awvy2aKk4QLBVSEhQA4CPugA3xoMC6QPK8HzbWpOMlIE4oCsiGFnVzpp3RIEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789307; c=relaxed/simple;
-	bh=S0C5fh5TNRB2tREo93CUtipFTNuVDVqIZb3UOmfyxlU=;
+	s=arc-20240116; t=1790789310; c=relaxed/simple;
+	bh=sWMsVfp+2hyDg2oBgPgSZXm5TgSUDSk5yHLAz0OtC/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTBNDir5wuArbgWyHd8NA6CokOGQlc89+kGbbEKeKH7n8RJpxwqDhLvq3b8/MX4BGerS+2mDHXZZRDiLm1XvbfQln5WhE9W9hdvfxcPVK+tkzYWzE+x6TDnFkhfgBTvUYOxFwU3MbZd0MKJxEMT/qGqY9UmESWcKtqS7WAKyx8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdZlcaZZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBj8TuVJWNteJa9686RjopMyZPFc32hL+x+1vCllA3YjrinAFXmuGLoL9qBTTJd4qQW8m1Chc5Tv085DROltbUd/Tyl/YULMTiISWTEcrfHEg8vmtYO2dBKHTfhvExbhz+npvZj2RtLFZw07Jp7kv6Qbyy1dUrA4+vnTq0wUZjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnDvRTO4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdZlcaZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD331F00899;
-	Wed, 30 Sep 2026 17:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnDvRTO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78071F000FF;
+	Wed, 30 Sep 2026 17:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789303;
-	bh=H92HKQSrp9yRLKT6o4J41qDj9UYph2lPua6EgijJ7Bg=;
+	s=korg; t=1790789306;
+	bh=pXgna3528DGiUpObPKy4IsZMAeOX+yUQvtyi7AT4KBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xdZlcaZZDPIV7GXVytzNLzxqCtKIgU/B/5sJdNQqNkmBaagFhFVfgleWP2XF380bw
-	 3NNVUnKfr+CwX+L2jzoTbh5D71kxufXSpHhut2/qvG4BrPNZTZQPVquTD+OeoKoLUz
-	 G5k2X8YTqhsjgNyNXWZ4deTHlrUQlmc2L7Lo1T5c=
+	b=XnDvRTO4CfOxdRO1xAn6CZ9dVSPlQpAOpqD7f4GZC+WeUIeZUOVm49Kdvnf95wKxs
+	 zCECPtZSnXOZlXUsaBZAYk1AYTL/kSV3Z4fRZoV8E3Q/uWaOmgkhjAp+2BUJNqFVqu
+	 mWT/GvTF8L1vdOaG/wEJN1CWRTesKsrrQoqVSUHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 429/877] net: bcmgenet: mask DMA_TIMEOUT_MASK when reading DMA_RING0_TIMEOUT
-Date: Wed, 30 Sep 2026 17:22:20 +0200
-Message-ID: <20260930152423.946057616@linuxfoundation.org>
+Subject: [PATCH 6.12 430/877] ip_gre: Reject enabling collect metadata through changelink
+Date: Wed, 30 Sep 2026 17:22:21 +0200
+Message-ID: <20260930152423.967020141@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,43 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit d64e277b955be4506931802837499b62c8f3968a ]
+[ Upstream commit a3f315be9d30eeb6938d11fa17fd4b32d52f7c42 ]
 
-bcmgenet_get_coalesce() reads DMA_RING0_TIMEOUT to calculate
-rx_coalesce_usecs without masking out bits outside DMA_TIMEOUT_MASK
-(16 bits). If upper bits are non-zero or contain status/flags, the
-computed value of rx_coalesce_usecs returned to userspace via ethtool
-becomes corrupted.
+ipgre_netlink_parms() can enable collect_md on an existing GRE, GRETAP
+or ERSPAN device. Unlike newlink, changelink does not enforce metadata
+tunnel uniqueness. Converting a non-metadata device can therefore
+replace the metadata receive entry for another device of the same type
+in the same netns. Deleting either device then clears the shared entry,
+breaking metadata receive lookup for the surviving device.
 
-Mask the register read with DMA_TIMEOUT_MASK before computing the
-timeout in microseconds.
+If parameter validation fails after collect_md is set, deleting the
+modified device can also clear an entry it never owned.
 
-Fixes: 4a29645bfe6c ("net: bcmgenet: Implement RX coalescing control knobs")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260921220021.281418-6-florian.fainelli@broadcom.com
+Reject enabling metadata mode in both changelink callbacks before any
+encapsulation or tunnel parameters are modified. Allow requests that
+repeat the metadata attribute on an existing metadata device.
+
+Fixes: 2e15ea390e6f ("ip_gre: Add support to collect tunnel metadata.")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260921031859.9283-1-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/ip_gre.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index a326ee63c1b7c..14e891db97ea8 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -819,7 +819,8 @@ static int bcmgenet_get_coalesce(struct net_device *dev,
- 	ec->rx_max_coalesced_frames =
- 		bcmgenet_rdma_ring_readl(priv, 0, DMA_MBUF_DONE_THRESH);
- 	ec->rx_coalesce_usecs =
--		bcmgenet_rdma_readl(priv, DMA_RING0_TIMEOUT) * 8192 / 1000;
-+		(bcmgenet_rdma_readl(priv, DMA_RING0_TIMEOUT) &
-+		 DMA_TIMEOUT_MASK) * 8192 / 1000;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index f344e9bb31fbb..5c5ea36584bf9 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1449,6 +1449,12 @@ static int ipgre_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	if (!rtnl_dev_link_net_capable(dev, t->net))
+ 		return -EPERM;
  
- 	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
- 		ring = &priv->rx_rings[i];
++	if (data && data[IFLA_GRE_COLLECT_METADATA] && !t->collect_md) {
++		NL_SET_ERR_MSG(extack,
++			       "Enabling collect_md on an existing device is not supported");
++		return -EOPNOTSUPP;
++	}
++
+ 	err = ipgre_newlink_encap_setup(dev, data);
+ 	if (err)
+ 		return err;
+@@ -1481,6 +1487,12 @@ static int erspan_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	if (!rtnl_dev_link_net_capable(dev, t->net))
+ 		return -EPERM;
+ 
++	if (data && data[IFLA_GRE_COLLECT_METADATA] && !t->collect_md) {
++		NL_SET_ERR_MSG(extack,
++			       "Enabling collect_md on an existing device is not supported");
++		return -EOPNOTSUPP;
++	}
++
+ 	err = ipgre_newlink_encap_setup(dev, data);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
