@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BFC4F0526;
-	Wed, 30 Sep 2026 16:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A87C4F85AB;
+	Wed, 30 Sep 2026 16:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785834; cv=none; b=EZ8LncI1QzpFjLn5hWUwfBZ9spVMdYIlkyYAxEOX9afYOheQ2dfHhcL1p9LzpRO7thiVFNzRH3KVLfwaBeGTezcCQieO2TeEB8U+Cks2ufcNobdJ7VXyEHAy3HjbMaABraX37roRfiZx0cQ2b+Q9jGCMvAxpYnyS4brAFXfp68M=
+	t=1790785837; cv=none; b=Z7NPAsl5U7Wi0ztI0X5DFa4OQP0wsuhmQAJa42DdmRmivf0+gfZmRW2jFrqSy1Fv5rf9Q+NbiC611gmqovHmsLiiHuUcVMzydIp3+/9slc12K9fyQb71cCUUWCukitLg2khGFx2Mtf/4JJtDmX0wgYUrZ3EduuHLWxC0iqNoF74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785834; c=relaxed/simple;
-	bh=9T0qrot7CxX2sZBzG+yOO0Ob9bSO4w8kFAIMmrJHOUE=;
+	s=arc-20240116; t=1790785837; c=relaxed/simple;
+	bh=/8M5GOwiSKqAa7X7oOdhpa+W6zi2qgeF6xWecclZeJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ee0qP0CDh7jPaBnkF6FCHtuh5sA9+mPQBcQ5nLMUVnipJcZQiQ7VkIOI7gPkThybXWTnEpkRo9j5tdUv1DQ1KVyWFuAh2LTzxUqJ1sK0eCd+7gx5pPHLRePlxdl+8cG9kq17dutOjVJuOUpDFOv1uRhdhrIUJIRa8aW/oAQQAEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxT19kFp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nRTfhbfnEUJY2frV2Ugo8XErVWTkfygrlEtghA5xxtfc8va9O3kucHF6dkEamvBINyfqkhcsfHuSJWuD3bh0fEM3C6fXQI++rfTICTiG5Xho4QAXneacsp1aY2PzLJPCOjpREweBHN+01xxL4SSso2DAh6SmgoEz4g+19MPWtZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbMUk/O3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxT19kFp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A281F00893;
-	Wed, 30 Sep 2026 16:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbMUk/O3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F9C1F00893;
+	Wed, 30 Sep 2026 16:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785833;
-	bh=/0S25gDjiUst+VNaeO3KI9R1vRK2i/cXtUAZYw6QYfM=;
+	s=korg; t=1790785836;
+	bh=bZflkPvPvxOp3MmVD7zWJ7/yJo3lyMbrLGn/W+xFUjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CxT19kFpmtJfRb6oK9/E0/+gVyNa09em5DDOags1iTkz98IR/2vVgZNPNuGhThYvp
-	 WnCSLS4Q81pMczh9ej2QpJVVTqmcwJypMfH7jov0LWpsEEVBfywfBWu2MzEVs2k1u1
-	 m5uvSfLgtmDVcgQI3x5lqteuh8B5yCtBGaen4DO4=
+	b=fbMUk/O3tZWWcqt+R8RYBwLM5nSe/4TDFRv4QVknxH/yTqHw+LeC/0U/uIN8h663V
+	 zg31pTlYlrVo4W0DRCKDYLBfOTlb3YD09zcN+DBF/YA7+w4UqnRZdjjqQsIr/P1Kfs
+	 oPxBQ0T01YU+uCRdRbwUkhZUUIHbDXXP/j4gcAdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shouping Wang <allen.wang@hj-micro.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 649/982] netfilter: flowtable: hold reference on ct until flow is released
-Date: Wed, 30 Sep 2026 17:23:05 +0200
-Message-ID: <20260930152430.707355778@linuxfoundation.org>
+Subject: [PATCH 6.1 650/982] perf/arm-cmn: Fix wp_dev_sel2 setting for multi-DTM configurations
+Date: Wed, 30 Sep 2026 17:23:06 +0200
+Message-ID: <20260930152430.728113977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,62 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Shouping Wang <allen.wang@hj-micro.com>
 
-[ Upstream commit e75a9fa1d44bcbd66ea02e8781bcca6ea4076e0d ]
+[ Upstream commit 49daa3d668b69a5454b5aba0078848a479f79f1c ]
 
-nf_ct_put() releases the ct->ext area inmediately, the rcu typesafe
-semantics also allow to refer to the wrong conntrack from the flowtable
-datapath. Hold reference on ct until flow is released after rcu grace
-period.
+When MXP_MULTIPLE_DTM_EN is TRUE, each DTM will monitor at most
+two device ports. In this case, {wp_dev_sel2, wp_dev_sel} will
+only use values 2'b00 and 2'b01 per DTM.
 
-Add rcu_barrier() on module exit path, to ensure pending flow entries
-are release before module goes away.
+Previously the setting allowed values beyond the supported range
+per DTM, which could cause each DTM to select invalid ports when
+MXP_MULTIPLE_DTM_EN is TRUE.
 
-Fixes: 0ff90b6c2034 ("netfilter: nf_flow_offload: fix use-after-free and a resource leak")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix this by only setting CMN_DTM_WPn_CONFIG_WP_DEV_SEL2 when
+!multi_dtm.
+
+Fixes: 60d1504070c2 ("perf/arm-cmn: Support new IP features")
+Signed-off-by: Shouping Wang <allen.wang@hj-micro.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/perf/arm-cmn.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
-index be74dccfe1410..16076c66fcec7 100644
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -202,6 +202,14 @@ static void flow_offload_route_release(struct flow_offload *flow)
- 	nft_flow_dst_release(flow, FLOW_OFFLOAD_DIR_REPLY);
- }
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index dc985a0c40877..43b0afd1cfe52 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -1207,18 +1207,22 @@ static int arm_cmn_wp_idx(struct perf_event *event)
  
-+static void flow_offload_free_rcu(struct rcu_head *rcu_head)
-+{
-+	struct flow_offload *flow = container_of(rcu_head, struct flow_offload, rcu_head);
-+
-+	nf_ct_put(flow->ct);
-+	kfree(flow);
-+}
-+
- void flow_offload_free(struct flow_offload *flow)
+ static u32 arm_cmn_wp_config(struct perf_event *event)
  {
- 	switch (flow->type) {
-@@ -211,8 +219,7 @@ void flow_offload_free(struct flow_offload *flow)
- 	default:
- 		break;
- 	}
--	nf_ct_put(flow->ct);
--	kfree_rcu(flow, rcu_head);
-+	call_rcu(&flow->rcu_head, flow_offload_free_rcu);
- }
- EXPORT_SYMBOL_GPL(flow_offload_free);
++	struct arm_cmn *cmn = to_cmn(event->pmu);
+ 	u32 config;
+ 	u32 dev = CMN_EVENT_WP_DEV_SEL(event);
+ 	u32 chn = CMN_EVENT_WP_CHN_SEL(event);
+ 	u32 grp = CMN_EVENT_WP_GRP(event);
+ 	u32 exc = CMN_EVENT_WP_EXCLUSIVE(event);
+ 	u32 combine = CMN_EVENT_WP_COMBINE(event);
+-	bool is_cmn600 = to_cmn(event->pmu)->part == PART_CMN600;
++	bool is_cmn600 = cmn->part == PART_CMN600;
  
-@@ -677,6 +684,7 @@ static int __init nf_flow_table_module_init(void)
- 
- static void __exit nf_flow_table_module_exit(void)
- {
-+	rcu_barrier();
- 	nf_flow_table_offload_exit();
- 	unregister_pernet_subsys(&nf_flow_table_net_ops);
- }
+ 	config = FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL, dev) |
+ 		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_CHN_SEL, chn) |
+-		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_GRP, grp) |
+-		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL2, dev >> 1);
++		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_GRP, grp);
++
++	if (!cmn->multi_dtm)
++		config |= FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL2, dev >> 1);
++
+ 	if (exc)
+ 		config |= is_cmn600 ? CMN600_WPn_CONFIG_WP_EXCLUSIVE :
+ 				      CMN_DTM_WPn_CONFIG_WP_EXCLUSIVE;
 -- 
 2.53.0
 
