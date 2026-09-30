@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B444651DDE9;
-	Wed, 30 Sep 2026 18:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5522751A14E;
+	Wed, 30 Sep 2026 18:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793886; cv=none; b=HUGjDQN0/SMBlMiFWNVTt5VT3DzFT+5sYya8s8MnwLiYhylmDSTA17f1mA/fENBORRYleekZj+3kf26XfCRFGvhTTsFsD+Lz/Fa8stQ+fanC/RpTRusKpJEOC4uyvjsy4XW47pCWZlBTMxBdPaJU/TE52qgmA9TXHGNR9y1J4es=
+	t=1790793888; cv=none; b=iLU9KxwjQOyc1W/ovm2H9XlK5H8mVrRgypinf1kEMDeRTpUHzrUSP2zW/Lmo/qkm8gXyCTm5hq3ckqwQYg5LiP5IHUOim++5dXTStpVkeHJWRjF9F3JHgwZgfM/TkxuHyMtL6MzlFr25mRg7d4p6mHBQlu8SAlbr6yyYmA7YEVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793886; c=relaxed/simple;
-	bh=GLltEq30LK0QPBFDB54d5FaFb0sYVPIMwD9dCwwnIYU=;
+	s=arc-20240116; t=1790793888; c=relaxed/simple;
+	bh=XPvqukhkuiz8byWPgJ+HTJvveGRn+ZQ+rxsfX85VEBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uk7CgwVtLnP7OxcDixA8Yl2b308G/j9Lbvhivu4ctO1QoujcV7f0e9oH9kCk/4+scZNz0J6Qmbph+9TMCA6CkVCggVbF6EZA/uwbJMX+dCBaeNbv0LPu4T7bXk4JGtfxTFJFvLDhaHK6BShtMP/QR6XDlP17mbZEdBCF3EqfAEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeNX9bCD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AY/mwyz+/2nHixhqoMKdZoYvsGGAjUu4O0CYMvCn9vKQcdlcdAnxbSeokMRduspy0pWyqGzxdfwTnZ6jnwLieQ/dMyvG0RyH9i0SUuLtMu5falwwow036nDahxBDp3YIjNRw2GMFt8WTRakd8y8ZlHJDbICYsurKzq2r0J6w17c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yc0H2x79; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeNX9bCD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDA51F000FF;
-	Wed, 30 Sep 2026 18:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yc0H2x79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1171F00898;
+	Wed, 30 Sep 2026 18:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793884;
-	bh=1QiqQdKYMlzjex5XIg5oldwzCcvvxaBR6mIfgdPcgNA=;
+	s=korg; t=1790793887;
+	bh=3EcZjPRnlpaMjerEqjY290Z4KH6gx/W/9jWlBFbXVug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EeNX9bCDehEBg3PscDrRiiMqYDEav7s8j5Tj46joyV4/+EEgAxy7ZR4DBmLNRRd3e
-	 9LIw57K9+PnFe9rzZCfVneZ3prxsokXtLBRCWjvaGIVJBO49Q4PRx0LCgFIZnNelZc
-	 Xs/RKnmw6UJ/5Y8saT1tIgCbTCofCy4Iii64K16w=
+	b=Yc0H2x79lb49Sfukpl+2i9Mhcs65u0BtDhaj4XehcT0hP2KKxKSwb/P0Zffs/bmEY
+	 0BmliZXe1M2ynil0WO67LNG1fCIby86j81Ti7t7ofHnWwe3bH8z+60ANYcreEqjwL6
+	 2DklsQBEDSSaf930gZLjBQv9JQhj4ZsFDea6xpu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Marco Elver <elver@google.com>,
+	Richard Gong <richard.gong@intel.com>,
+	Siew Chin Lim <elly.siew.chin.lim@intel.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0017/1193] kcsan: Silence -Wmaybe-uninitialized when calling __kcsan_check_access()
-Date: Wed, 30 Sep 2026 17:11:41 +0200
-Message-ID: <20260930152434.683124157@linuxfoundation.org>
+Subject: [PATCH 6.6 0018/1193] firmware: stratix10-svc: change get provision data to async SMC call
+Date: Wed, 30 Sep 2026 17:11:42 +0200
+Message-ID: <20260930152434.704702847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,100 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Siew Chin Lim <elly.siew.chin.lim@intel.com>
 
-[ Upstream commit 07a1a6562ce29e2e0c134a57882d6e52e8758492 ]
+[ Upstream commit 4b0a32016347bfd6ae9849f21b1b767905f68d14 ]
 
-Some subsystems enable -Wmaybe-uninitialized [1], which can trigger
-false positives when KCSAN is enabled. Specifically, passing an
-uninitialized variable to functions that instrument accesses (e.g.,
-copy_from_user()) results in calls to __kcsan_check_access().
+Change INTEL_SIP_SMC_FCS_GET_PROVISION_DATA's SMC call to async from sync
+to avoid long runtime which may cause the watchdog timeout issue.
 
-Because __kcsan_check_access() takes a `const volatile void *ptr`, GCC
-infers that the function may only read the memory location, and thus
-warns if the passed variable is uninitialized.
-
-However, KCSAN is a dynamic analysis tool for data race detection; while
-it does read the memory location to detect concurrent modifications, the
-"initialized'ness" of the memory location is irrelevant for its analysis.
-
-Use absolute_pointer() in __kcsan_check_write(), kcsan_check_write(),
-and kcsan_check_atomic_write() to hide the pointer from the compiler,
-preventing it from concluding that the pointer passed points to
-uninitialized memory.
-
-This fixes warnings like:
-
-|   CC      fs/ntfs3/file.o
-| In file included from include/asm-generic/rwonce.h:27,
-|                  from arch/arm64/include/asm/rwonce.h:81,
-|                  from include/linux/compiler.h:369,
-|                  from include/linux/array_size.h:5,
-|                  from include/linux/kernel.h:16,
-|                  from include/linux/backing-dev.h:12,
-|                  from fs/ntfs3/file.c:10:
-| In function 'instrument_copy_from_user_before',
-|     inlined from '_inline_copy_from_user' at include/linux/uaccess.h:184:2,
-|     inlined from 'copy_from_user' at include/linux/uaccess.h:221:9,
-|     inlined from 'ntfs_ioctl_fitrim' at fs/ntfs3/file.c:77:6,
-|     inlined from 'ntfs_ioctl' at fs/ntfs3/file.c:164:10:
-| include/linux/kcsan-checks.h:220:28: error: 'range' may be used uninitialized [-Werror=maybe-uninitialized]
-|   220 | #define kcsan_check_access __kcsan_check_access
-|       |                            ^
-| include/linux/kcsan-checks.h:311:9: note: in expansion of macro 'kcsan_check_access'
-|   311 |         kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
-|       |         ^~~~~~~~~~~~~~~~~~
-| include/linux/instrumented.h:147:9: note: in expansion of macro 'kcsan_check_write'
-|   147 |         kcsan_check_write(to, n);
-|       |         ^~~~~~~~~~~~~~~~~
-| include/linux/kcsan-checks.h: In function 'ntfs_ioctl':
-| include/linux/kcsan-checks.h:37:6: note: by argument 1 of type 'const volatile void *' to '__kcsan_check_access' declared here
-|    37 | void __kcsan_check_access(const volatile void *ptr, size_t size, int type);
-|       |      ^~~~~~~~~~~~~~~~~~~~
-| fs/ntfs3/file.c:65:29: note: 'range' declared here
-|    65 |         struct fstrim_range range;
-|       |                             ^~~~~
-
-Link: https://lore.kernel.org/all/5da10cca-875b-418d-b54e-6be3ea32c266@app.fastmail.com/ [1]
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Richard Gong <richard.gong@intel.com>
+Signed-off-by: Siew Chin Lim <elly.siew.chin.lim@intel.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kcsan-checks.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/firmware/stratix10-svc.c             |  4 ++--
+ include/linux/firmware/intel/stratix10-smc.h | 12 ++++--------
+ 2 files changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/kcsan-checks.h b/include/linux/kcsan-checks.h
-index 92f3843d9ebb8..e135dacaa90f3 100644
---- a/include/linux/kcsan-checks.h
-+++ b/include/linux/kcsan-checks.h
-@@ -282,7 +282,7 @@ static inline void __kcsan_disable_current(void) { }
-  * @size: size of access
-  */
- #define __kcsan_check_write(ptr, size)                                         \
--	__kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
-+	__kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index f723869c5b2db..6bfe02b7b895a 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -340,6 +340,7 @@ static void svc_thread_recv_status_ok(struct stratix10_svc_data *p_data,
+ 	case COMMAND_FCS_SEND_CERTIFICATE:
+ 	case COMMAND_FCS_DATA_ENCRYPTION:
+ 	case COMMAND_FCS_DATA_DECRYPTION:
++	case COMMAND_FCS_GET_PROVISION_DATA:
+ 		cb_data->status = BIT(SVC_STATUS_OK);
+ 		break;
+ 	case COMMAND_RECONFIG_DATA_SUBMIT:
+@@ -366,7 +367,6 @@ static void svc_thread_recv_status_ok(struct stratix10_svc_data *p_data,
+ 		cb_data->kaddr2 = &res.a2;
+ 		break;
+ 	case COMMAND_FCS_RANDOM_NUMBER_GEN:
+-	case COMMAND_FCS_GET_PROVISION_DATA:
+ 	case COMMAND_POLL_SERVICE_STATUS:
+ 		cb_data->status = BIT(SVC_STATUS_OK);
+ 		cb_data->kaddr1 = &res.a1;
+@@ -533,7 +533,7 @@ static int svc_normal_to_secure_thread(void *data)
+ 			break;
+ 		case COMMAND_FCS_GET_PROVISION_DATA:
+ 			a0 = INTEL_SIP_SMC_FCS_GET_PROVISION_DATA;
+-			a1 = (unsigned long)pdata->paddr;
++			a1 = 0;
+ 			a2 = 0;
+ 			break;
+ 
+diff --git a/include/linux/firmware/intel/stratix10-smc.h b/include/linux/firmware/intel/stratix10-smc.h
+index ee80ca4bb0d0c..1e60fd6210c3b 100644
+--- a/include/linux/firmware/intel/stratix10-smc.h
++++ b/include/linux/firmware/intel/stratix10-smc.h
+@@ -600,24 +600,20 @@ INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FPGA_CONFIG_COMPLETED_WRITE)
  
  /**
-  * __kcsan_check_read_write - check regular read-write access for races
-@@ -308,7 +308,7 @@ static inline void __kcsan_disable_current(void) { }
-  * @size: size of access
+  * Request INTEL_SIP_SMC_FCS_GET_PROVISION_DATA
+- * Sync call to dump all the fuses and key hashes
++ * Async call to dump all the fuses and key hashes
+  *
+  * Call register usage:
+  * a0 INTEL_SIP_SMC_FCS_GET_PROVISION_DATA
+- * a1 the physical address for firmware to write structure of fuse and
+- *    key hashes
+- * a2-a7 not used
++ * a1-a7 not used
+  *
+  * Return status:
+  * a0 INTEL_SIP_SMC_STATUS_OK, INTEL_SIP_SMC_FCS_ERROR or
+  *      INTEL_SIP_SMC_FCS_REJECTED
+- * a1 mailbox error
+- * a2 physical address for the structure of fuse and key hashes
+- * a3 the size of structure
++ * a1-a3 not used
+  *
   */
- #define kcsan_check_write(ptr, size)                                           \
--	kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
-+	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
+ #define INTEL_SIP_SMC_FUNCID_FCS_GET_PROVISION_DATA 94
+ #define INTEL_SIP_SMC_FCS_GET_PROVISION_DATA \
+-	INTEL_SIP_SMC_FAST_CALL_VAL(INTEL_SIP_SMC_FUNCID_FCS_GET_PROVISION_DATA)
++	INTEL_SIP_SMC_STD_CALL_VAL(INTEL_SIP_SMC_FUNCID_FCS_GET_PROVISION_DATA)
  
- /**
-  * kcsan_check_read_write - check regular read-write access for races
-@@ -331,7 +331,7 @@ static inline void __kcsan_disable_current(void) { }
- #define kcsan_check_atomic_read(ptr, size)                                     \
- 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC)
- #define kcsan_check_atomic_write(ptr, size)                                    \
--	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
-+	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
- #define kcsan_check_atomic_read_write(ptr, size)                               \
- 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE | KCSAN_ACCESS_COMPOUND)
  #endif
 -- 
 2.53.0
