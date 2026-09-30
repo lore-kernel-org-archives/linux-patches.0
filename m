@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD7E4BFE95;
-	Wed, 30 Sep 2026 17:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF5515989;
+	Wed, 30 Sep 2026 17:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788275; cv=none; b=ss6Dkb6+ZaagL0oPR4rYgtcUzx4x7kFM36/nX307qv4NVj8uU84MmdSBBH2Icc24j5IUBI+SUbcC3pdZ601VLdaqWDxAVSYo3VIBQ31s8RGuhgYHA/mrdhTI3Hw5U+bULKCy6iyA8nAmq8sU5cgL7KZ+5BVPWDhvKTIzUVdZ3ZY=
+	t=1790788278; cv=none; b=NPuZa385grrOxSyOihR8Z1qqxneJMuCBwaC7O88VpmLvtD5eAzESCnBNNhEGiVDpJexyLZ+QSjAVQwJ6IbWE4TaWALN1Qec0HSZYpZAKtMsfNgDIwz6bohvI4sd249nM9MHnC51kWGI7COptzd4yT46c6epAc30JT4YzLVdEQ2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788275; c=relaxed/simple;
-	bh=UiA9ZYygaqkCyXDWyZeIm18xQYeFwxifVsFoNEXFgNo=;
+	s=arc-20240116; t=1790788278; c=relaxed/simple;
+	bh=icO/J7owmbREgGlcUS14vWrT2iLHjJLu30nMsyClfEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fewfIZ7t94tfkWq7Oz93vQ5RFIc8ujUi7J8fc6DxkKJon85NpzdVN7jsyxQfvB9L2Xg8AyNi181nfUXmi87I0EfMz7xzCDwNAkq4uxNmHpY0gA3TD5t2pTIe5xbaqM+mFI5CVFJ/S8XtGjeaKcWXsi+VDxS1OHWm4Qipqu1mCag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4dLNUbs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1eAQURLezkeVRbzSLVsQHvTx/Z4hQefSIzI2CB5Or1d4PxG5G9DIjpP7dmdeO4Ln7hdi0TEIq2HaKcyKv6IYbmgXXmABk8hLl/6HWuPOsY7GRzCHcLFXqyHibZ2jzcNF0vlho+RCdFQnZq1Da80eGBY4ornXytfzam3MMfLy7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGrjY6Th; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4dLNUbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E831F000FF;
-	Wed, 30 Sep 2026 17:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGrjY6Th"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAA71F000FF;
+	Wed, 30 Sep 2026 17:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788274;
-	bh=ocV5oMALrg3l4lRmK5aXfUHZnqOQhNK3DTUTTxm4t+o=;
+	s=korg; t=1790788277;
+	bh=G21W6zyW6Xwo5uQBWzm3oj3uQbCTUMxpJdU8AAh3gdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4dLNUbscmoVPNknCkY4q1vilbSCpv62G+vQY8wPQLi1Ytdpu7Zkik82X7S7tdFi6
-	 zea8gj/oIjODXvDgokla+09oR65aRcGZ0YNgdQdDbQzjhBx8wapPT7rmvOOFjWUKDI
-	 zrgeaMIFtLPjj9bt6+kHMb7AfnSwSdVklao6aNw0=
+	b=TGrjY6Thb7w6noyNwwLYaxaHlqPCUotHgqoEb6kD0RgXavoZLl2B+7pWRuTJ8XMfq
+	 SiWXSToxEt7+du3+UN4n7ooaoMD6eLutXVeaq5U1LZ9sFBI+AtHHAncuNSNkgOFjHg
+	 jMfTrVO+BNg5yT6y6i6s/zvvPmUUVHm39bWCmIbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Linxuan <me@black-desk.cn>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/877] pidfd: hold exec_update_lock around namespace ioctl
-Date: Wed, 30 Sep 2026 17:15:33 +0200
-Message-ID: <20260930152415.222998223@linuxfoundation.org>
+Subject: [PATCH 6.12 023/877] xfrm: avoid RCU warnings around the per-netns netlink socket
+Date: Wed, 30 Sep 2026 17:15:34 +0200
+Message-ID: <20260930152415.244305115@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,116 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Linxuan <me@black-desk.cn>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 9688a46802939da28f00cb40e8129615d5d4af39 ]
+[ Upstream commit d87f8bc47fbf012a7f115e311d0603d97e47c34c ]
 
-The PIDFD_GET_*_NAMESPACE ioctls in pidfd_ioctl() perform a filesystem
-credentials ptrace access check before handing out a namespace file
-descriptor.  The accompanying comment states that the code "mirrors nsfs
-behavior", but, unlike the corresponding procfs paths, it does so without
-holding the target task's exec_update_lock.
+net->xfrm.nlsk is used in 2 types of contexts:
+ - fully under RCU, with rcu_read_lock + rcu_dereference and a NULL check
+ - in the netlink handlers, with requests coming from a userspace socket
 
-proc_ns_get_link() and proc_ns_readlink() both take exec_update_lock for
-reading around the ptrace check and the namespace lookup, so that the
-credentials used for the access decision match those of the task when its
-namespace is read.  Without it, a caller can pass the check against the
-target's old credentials and then read the namespace after the target has
-execve()'d a setuid binary and committed new credentials -- accessing
-namespace information it should have been denied.
+In the 2nd case, net->xfrm.nlsk is guaranteed to stay non-NULL and the
+object is alive, since we can't enter the netns destruction path while
+the user socket holds a reference on the netns.
 
-Hold exec_update_lock for reading around the ptrace check and the
-namespace lookup so that pidfd truly mirrors nsfs behavior, as the comment
-already claims.  open_namespace() itself runs outside the lock: once a
-namespace reference is obtained it carries its own refcount and is opened
-with the caller's own credentials, so a concurrent execve() on the target
-can no longer affect the outcome.
+After adding the __rcu annotation to netns_xfrm.nlsk (which silences
+sparse warnings in the RCU users and __net_init code), we need to tell
+sparse that the 2nd case is safe. Add a helper for that.
 
-Fixes: 5b08bd408534 ("pidfs: allow retrieval of namespace file descriptors")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chen Linxuan <me@black-desk.cn>
-Link: https://patch.msgid.link/20260731-pidfd-exec-update-lock-v1-1-b388f2f3a8b0@black-desk.cn
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: d1ebd9081879 ("xfrm: fix compat ALLOCSPI request use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pidfs.c | 43 +++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ include/net/netns/xfrm.h |  2 +-
+ net/xfrm/xfrm_user.c     | 25 +++++++++++++++++--------
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/fs/pidfs.c b/fs/pidfs.c
-index 5a8d8eb8df23b..b2dc613a64f6f 100644
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -122,6 +122,7 @@ static long pidfd_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 	struct pid *pid = pidfd_pid(file);
- 	struct ns_common *ns_common = NULL;
- 	struct pid_namespace *pid_ns;
-+	int error;
+diff --git a/include/net/netns/xfrm.h b/include/net/netns/xfrm.h
+index 23dd647fe0248..b73983a17e088 100644
+--- a/include/net/netns/xfrm.h
++++ b/include/net/netns/xfrm.h
+@@ -59,7 +59,7 @@ struct netns_xfrm {
+ 	struct list_head	inexact_bins;
  
- 	if (arg)
- 		return -EINVAL;
-@@ -130,20 +131,33 @@ static long pidfd_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 	if (!task)
- 		return -ESRCH;
  
-+	/*
-+	 * We're trying to open a file descriptor to the namespace so perform a
-+	 * filesystem cred ptrace check. Hold @task's exec_update_lock for the
-+	 * duration of the ptrace check and the namespace lookup so that the
-+	 * credentials used for the access decision match those of @task at the
-+	 * time its namespace is read, preventing a concurrent execve() from
-+	 * swapping the task's credentials in between the check and the use. We
-+	 * mirror nsfs behavior.
-+	 */
-+	error = down_read_killable(&task->signal->exec_update_lock);
-+	if (error)
-+		return error;
+-	struct sock		*nlsk;
++	struct sock		__rcu *nlsk;
+ 	struct sock		*nlsk_stash;
+ 
+ 	u32			sysctl_aevent_etime;
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 904c9328852f0..c37f8e518f1e3 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -35,6 +35,15 @@
+ #endif
+ #include <linux/unaligned.h>
+ 
++static struct sock *xfrm_net_nlsk(const struct net *net, const struct sk_buff *skb)
++{
++	/* get the source of this request, see netlink_unicast_kernel */
++	const struct sock *sk = NETLINK_CB(skb).sk;
 +
-+	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)) {
-+		error = -EACCES;
-+		goto out_unlock;
-+	}
++	/* sk is refcounted, the netns stays alive and nlsk with it */
++	return rcu_dereference_protected(net->xfrm.nlsk, sk->sk_net_refcnt);
++}
 +
- 	scoped_guard(task_lock, task) {
- 		nsp = task->nsproxy;
- 		if (nsp)
- 			get_nsproxy(nsp);
+ static int verify_one_alg(struct nlattr **attrs, enum xfrm_attr_type_t type,
+ 			  struct netlink_ext_ack *extack)
+ {
+@@ -1662,7 +1671,7 @@ static int xfrm_get_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	err = build_spdinfo(r_skb, net, sportid, seq, *flags);
+ 	BUG_ON(err < 0);
+ 
+-	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
++	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
+ }
+ 
+ static inline unsigned int xfrm_sadinfo_msgsize(void)
+@@ -1722,7 +1731,7 @@ static int xfrm_get_sadinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	err = build_sadinfo(r_skb, net, sportid, seq, *flags);
+ 	BUG_ON(err < 0);
+ 
+-	return nlmsg_unicast(net->xfrm.nlsk, r_skb, sportid);
++	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, sportid);
+ }
+ 
+ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+@@ -1742,7 +1751,7 @@ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (IS_ERR(resp_skb)) {
+ 		err = PTR_ERR(resp_skb);
+ 	} else {
+-		err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
++		err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
  	}
--	if (!nsp)
--		return -ESRCH; /* just pretend it didn't exist */
--
--	/*
--	 * We're trying to open a file descriptor to the namespace so perform a
--	 * filesystem cred ptrace check. Also, we mirror nsfs behavior.
--	 */
--	if (!ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS))
--		return -EACCES;
-+	if (!nsp) {
-+		error = -ESRCH; /* just pretend it didn't exist */
-+		goto out_unlock;
-+	}
- 
- 	switch (cmd) {
- 	/* Namespaces that hang of nsproxy. */
-@@ -211,11 +225,16 @@ static long pidfd_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	xfrm_state_put(x);
+ out_noput:
+@@ -1833,7 +1842,7 @@ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
  		}
- 		break;
- 	default:
--		return -ENOIOCTLCMD;
-+		error = -ENOIOCTLCMD;
  	}
  
--	if (!ns_common)
--		return -EOPNOTSUPP;
-+	if (!error && !ns_common)
-+		error = -EOPNOTSUPP;
-+
-+out_unlock:
-+	up_read(&task->signal->exec_update_lock);
-+	if (error)
-+		return error;
+-	err = nlmsg_unicast(net->xfrm.nlsk, resp_skb, NETLINK_CB(skb).portid);
++	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb, NETLINK_CB(skb).portid);
  
- 	/* open_namespace() unconditionally consumes the reference */
- 	return open_namespace(ns_common);
+ out:
+ 	xfrm_state_put(x);
+@@ -2476,7 +2485,7 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	r_up->out = READ_ONCE(net->xfrm.policy_default[XFRM_POLICY_OUT]);
+ 	nlmsg_end(r_skb, r_nlh);
+ 
+-	return nlmsg_unicast(net->xfrm.nlsk, r_skb, portid);
++	return nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, portid);
+ }
+ 
+ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+@@ -2542,7 +2551,7 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		if (IS_ERR(resp_skb)) {
+ 			err = PTR_ERR(resp_skb);
+ 		} else {
+-			err = nlmsg_unicast(net->xfrm.nlsk, resp_skb,
++			err = nlmsg_unicast(xfrm_net_nlsk(net, skb), resp_skb,
+ 					    NETLINK_CB(skb).portid);
+ 		}
+ 	} else {
+@@ -2721,7 +2730,7 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		return err;
+ 	}
+ 
+-	err = nlmsg_unicast(net->xfrm.nlsk, r_skb, NETLINK_CB(skb).portid);
++	err = nlmsg_unicast(xfrm_net_nlsk(net, skb), r_skb, NETLINK_CB(skb).portid);
+ 	spin_unlock_bh(&x->lock);
+ 	xfrm_state_put(x);
+ 	return err;
+@@ -3393,7 +3402,7 @@ static int xfrm_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			goto err;
+ 		}
+ 
+-		err = netlink_dump_start(net->xfrm.nlsk, skb, nlh, &c);
++		err = netlink_dump_start(xfrm_net_nlsk(net, skb), skb, nlh, &c);
+ 		goto err;
+ 	}
+ 
 -- 
 2.53.0
 
