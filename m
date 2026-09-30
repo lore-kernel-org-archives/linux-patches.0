@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6284F4CFB;
-	Wed, 30 Sep 2026 15:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0CE4FC320;
+	Wed, 30 Sep 2026 15:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783712; cv=none; b=seDcN9ccCsIHTgHwMXtIQE/zdj4yxmix48zivM5DVjeLEpCt2IzvuvjROEsXq4aOejmvm689IsKjeo99NUbnj9yl5E5qxfZt/jdLPBP0D3G1QbqY6RXQUlUtB8ov3XwKAj0YqWdSArjsB30qjSzn/va7jl5MbqcCogzncnJ4GZk=
+	t=1790783715; cv=none; b=a81Mf0ryuuaogasKWu9wu9ialAdlTgggZYudMQicsz34nAbv6W6kKS+glNRYF1BWjDk1w/PQrFx0IFbptmyPeispS/x3Z6EQUL7abhAG5lISPdM13XIUsojTZh8eZPYp/fELI54plaXMyEPFoHiEIUdRIPWM1eGWZxGWyDexFFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783712; c=relaxed/simple;
-	bh=zMDlVgmOp1NyFdhh+c9rEEnqc9VuwYqqYocRrMYQMdU=;
+	s=arc-20240116; t=1790783715; c=relaxed/simple;
+	bh=MF8zIdAmhdwOW1mrTPIW4fQAUD14Oa/1FhaJbPrZf/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAChi4J/bSsGKbee93D4mbWTfJVhpTOyg8fI2OdQrymRgP5gWVrepQyTpDou4d/c00q2v3pZweKL+FLq+vUFPC9xkTaq3+Ko88bxTyr4d5StbAYnzw3LoEjx8DbqAIYBbaU+qPjjSVmDVTmcWFoCaa8qTF1MFSxfKG3JShOiVDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17HdXePo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V6GtEjQduDtl19U87pd3Y6w7b7Pp7Npxvc1SHty6gbZcLTFlk7MAHuCd6+15/TMrJqXIIhwrgu+nxRZ7jcVTnz7UXekTXldMeE4daP9MzMeQMtoK8y5pgrvKmdpvtrv6jbXwolXYTf0nMt68WFUAKpnK06khOsKOW7fur+KJbMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sz1MJEBI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17HdXePo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0BB1F000FF;
-	Wed, 30 Sep 2026 15:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sz1MJEBI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00E51F00898;
+	Wed, 30 Sep 2026 15:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783707;
-	bh=JiNQX0f+tCs4rstkn9UpAIfxEFvEeUtO1gJAkhaou+w=;
+	s=korg; t=1790783710;
+	bh=NuafsN+xeiPfSx9+0gycqRvdF4iU2oSfRyUBc2+Ryoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17HdXePo47qkpGSZ9eojtKUYhd6zLk8x0kCKYK4KJGZNbKIN5HBqEqhASneUV0duU
-	 aIebnI++eXcxHJ+7iPxCJcFdqfYeBemO0MzdNan3NVQputCtJ5xGAvXRRruzniEm++
-	 KUTcyZO1jYDJ3aJ8juFP0YpNhctwaoXc9tY4okLg=
+	b=sz1MJEBIY6AW6pkclioHonqMM50AWOHNhVtO4nVHzEWrNH8Pn3iwETm4fAnHdJsqR
+	 GkjBTA008UreV+XizvTJWpZt1LrhRVmNciniMC6OSN32fxaWf5ysHZQZuYnJIINZOQ
+	 mdkuoQpJXij5WP6j2NBcEUp5z+//2oudkRqpUjv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 492/595] xsk: Use a 32-bit compare in xsk_map_gen_lookup
-Date: Wed, 30 Sep 2026 17:26:25 +0200
-Message-ID: <20260930152358.274129674@linuxfoundation.org>
+Subject: [PATCH 5.10 493/595] netfilter: flowtable: allow unidirectional rules
+Date: Wed, 30 Sep 2026 17:26:26 +0200
+Message-ID: <20260930152358.296269676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,43 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 70504de0bb627848667207bec7ccfd647deb8814 ]
+[ Upstream commit 8f84780b84d645d6e35467f4a6f3236b20d7f4b2 ]
 
-xsk_map_gen_lookup() loads a u32 key and compares it with max_entries
-using BPF_JMP_IMM. BPF immediates are sign-extended to 64 bits, so a
-max_entries value of 0x80000000 or higher becomes a threshold larger
-than every zero-extended 32-bit key. An out-of-range index then skips
-the bounds check and the generated lookup reads past xsk_map[].
+Modify flow table offload to support unidirectional connections by
+extending enum nf_flow_flags with new "NF_FLOW_HW_BIDIRECTIONAL" flag. Only
+offload reply direction when the flag is set. This infrastructure change is
+necessary to support offloading UDP NEW connections in original direction
+in following patches in series.
 
-Compare with BPF_JMP32_IMM so the check stays in 32-bit unsigned range.
-
-Fixes: e65650f291ee ("bpf: Implement map_gen_lookup() callback for XSKMAP")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://patch.msgid.link/7d2cb8e8dfaa9eb8fdff85156987a60960787dc3.1789056660.git.zhilinz@nebusec.ai
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d644b23afe1e ("netfilter: flowtable: publish HW_DEAD after worker is done")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xskmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_flow_table.h |  1 +
+ net/netfilter/nf_flow_table_offload.c | 12 ++++++++----
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
-index 49da2b8ace8b7..3ef6d12bb9ac7 100644
---- a/net/xdp/xskmap.c
-+++ b/net/xdp/xskmap.c
-@@ -138,7 +138,7 @@ static int xsk_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
- 	struct bpf_insn *insn = insn_buf;
+diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
+index b338638f22792..d7c81aa90c802 100644
+--- a/include/net/netfilter/nf_flow_table.h
++++ b/include/net/netfilter/nf_flow_table.h
+@@ -127,6 +127,7 @@ enum nf_flow_flags {
+ 	NF_FLOW_HW_DYING,
+ 	NF_FLOW_HW_DEAD,
+ 	NF_FLOW_HW_PENDING,
++	NF_FLOW_HW_BIDIRECTIONAL,
+ };
  
- 	*insn++ = BPF_LDX_MEM(BPF_W, ret, index, 0);
--	*insn++ = BPF_JMP_IMM(BPF_JGE, ret, map->max_entries, 5);
-+	*insn++ = BPF_JMP32_IMM(BPF_JGE, ret, map->max_entries, 5);
- 	*insn++ = BPF_ALU64_IMM(BPF_LSH, ret, ilog2(sizeof(struct xsk_sock *)));
- 	*insn++ = BPF_ALU64_IMM(BPF_ADD, mp, offsetof(struct xsk_map, xsk_map));
- 	*insn++ = BPF_ALU64_REG(BPF_ADD, ret, mp);
+ enum flow_offload_type {
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index f6275d93f8a51..b383f6241d834 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -734,8 +734,9 @@ static int flow_offload_rule_add(struct flow_offload_work *offload,
+ 
+ 	ok_count += flow_offload_tuple_add(offload, flow_rule[0],
+ 					   FLOW_OFFLOAD_DIR_ORIGINAL);
+-	ok_count += flow_offload_tuple_add(offload, flow_rule[1],
+-					   FLOW_OFFLOAD_DIR_REPLY);
++	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
++		ok_count += flow_offload_tuple_add(offload, flow_rule[1],
++						   FLOW_OFFLOAD_DIR_REPLY);
+ 	if (ok_count == 0)
+ 		return -ENOENT;
+ 
+@@ -765,7 +766,8 @@ static void flow_offload_work_del(struct flow_offload_work *offload)
+ {
+ 	clear_bit(IPS_HW_OFFLOAD_BIT, &offload->flow->ct->status);
+ 	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_ORIGINAL);
+-	flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
++	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
++		flow_offload_tuple_del(offload, FLOW_OFFLOAD_DIR_REPLY);
+ 	set_bit(NF_FLOW_HW_DEAD, &offload->flow->flags);
+ }
+ 
+@@ -784,7 +786,9 @@ static void flow_offload_work_stats(struct flow_offload_work *offload)
+ 	u64 lastused;
+ 
+ 	flow_offload_tuple_stats(offload, FLOW_OFFLOAD_DIR_ORIGINAL, &stats[0]);
+-	flow_offload_tuple_stats(offload, FLOW_OFFLOAD_DIR_REPLY, &stats[1]);
++	if (test_bit(NF_FLOW_HW_BIDIRECTIONAL, &offload->flow->flags))
++		flow_offload_tuple_stats(offload, FLOW_OFFLOAD_DIR_REPLY,
++					 &stats[1]);
+ 
+ 	lastused = max_t(u64, stats[0].lastused, stats[1].lastused);
+ 	offload->flow->timeout = max_t(u64, offload->flow->timeout,
 -- 
 2.53.0
 
