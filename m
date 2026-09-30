@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057DF348C6B;
-	Wed, 30 Sep 2026 16:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850D04FD78D;
+	Wed, 30 Sep 2026 16:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784197; cv=none; b=WO8UveFlWfflIAqon4SjNhv9G2k0pwuMHfsOTDt65Zbssxlaudg1UL6ohCy27pA+C22bi1MOsx4F5wn9TgeAMthw1O+wfZuUOcdcSEgRnd/UXKUKGkx8ILSLpMQQkppVI6in46q9wGHLFkjFrImZJzkJOZzqPxWO5ts6TCLODgs=
+	t=1790784199; cv=none; b=W3RIZ0s6+PGfscCO3Elqktm1qAwOfwoYCWcnCBdKbCJGVS81aJmpRJItOmnz8vLvSEZG6rm7Tdw1ZGSE2VRouqiVDy9kz23x5JfV2Ml8p++3hzYrKJ2O2d7ifSCis5axqVutHHA5L3YkFdLkhN7HXJ6UtfYZ9wsjou82Bo6PgqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784197; c=relaxed/simple;
-	bh=mIazxdyDxcLS8jjL/WqddH1gsAlfUWyZlJeTkkmfm2w=;
+	s=arc-20240116; t=1790784199; c=relaxed/simple;
+	bh=AA2iM59EkFr8FKRVOnnGdTyUj0VqEmwvOs2E0a1sMsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gQc4985wLxIabXkUorePpg4wWS5+8RZFPRyRep9y9SOWlOQKu0gZEW6tFpZsD8lUdaUE8BZwPbGQnjB/8N0sI3ucREx9lh21hCOKQmgjbzkhg8f+yuG4iR83qAkuSh3dIH4KvkcTKmwoR8xVaRAXngx+tX0QlEkdbidLQx/jqXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/U5zC4N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GlmqTPDtjzofw9b0r9n11S1k4hoVLvyeyMY7kJ6auQHnyhNQHgcReK+kIrrsjU+KsHjQw6u3UIu3YbkOiHfTRvr64DuGTv3Gt8HZuBW2ltObTi3vXtl1iSkp9NWeVbsxwkzfFTfq5dy6Ax+UrW5sp9F4KGsSyBoDc/wZFIwsR5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFcgQIK3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/U5zC4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9879B1F00899;
-	Wed, 30 Sep 2026 16:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFcgQIK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D161F0089B;
+	Wed, 30 Sep 2026 16:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784193;
-	bh=wYDWFSHVulHm3SsEGSbW3NMQR/fjDbG6u6H0yO30uRg=;
+	s=korg; t=1790784196;
+	bh=mOpjJ/zxmaw6qDldvH/eZLMLSZI3jnkiZFA1ek8vq88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/U5zC4Ns0Ru+FA6j6cQE3zqc5jA3zbsTI38EnDZVyM6uyvLZtjsuhW5kIZPl776G
-	 EQXG2a+I3vRiW8RZa5Ppt+xM93Xts+U9I5v+utVls2k1D8e3VlFExvTi3hFcMCQUye
-	 t3tV7cHKB8+vnIl/sRDqBb64vnMpiFkrksDiQBgM=
+	b=HFcgQIK3pp0Byi7hyv35UYHxmeW7pOkEE9KQxEMctULCD4BqwGRAwwYM9QvLGcUUe
+	 WGhmKK72G0jYav1ylU2zsS4+mPhM4ASOdc/brXct0X24prCa+kD+NDS2BVs0HCo5wO
+	 uKR/i3rSJJWzWw6E8VC9SKV3tAPlmWHQ/9cKi6qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/982] affs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:13:23 +0200
-Message-ID: <20260930152418.240864948@linuxfoundation.org>
+Subject: [PATCH 6.1 024/982] net: dsa: mv88e6xxx: fix number of g1 interrupts for 6320 family
+Date: Wed, 30 Sep 2026 17:12:40 +0200
+Message-ID: <20260930152417.315057322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,72 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 0861182af5983a39bd2a891966436c5679b74a45 ]
+[ Upstream commit d201c2612e5aada0c931cd55115175e0a5141023 ]
 
-affs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+The 6320 family has 9 global1 interrupt, not 8. Fix it.
 
-        BUG_ON(offset >= folio_size(folio));
-
-in folio_set_bh on the first __bread_gfp call.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-7-hch@lst.de
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Link: https://patch.msgid.link/20260504153227.1390546-2-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/affs/affs.h  | 5 -----
- fs/affs/super.c | 6 ++++--
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/affs/affs.h b/fs/affs/affs.h
-index bfa89e131ead0..af34fc78a9fb5 100644
---- a/fs/affs/affs.h
-+++ b/fs/affs/affs.h
-@@ -226,11 +226,6 @@ static inline bool affs_validblock(struct super_block *sb, int block)
- 	       block < AFFS_SB(sb)->s_partition_size);
- }
- 
--static inline void
--affs_set_blocksize(struct super_block *sb, int size)
--{
--	sb_set_blocksize(sb, size);
--}
- static inline struct buffer_head *
- affs_bread(struct super_block *sb, int block)
- {
-diff --git a/fs/affs/super.c b/fs/affs/super.c
-index 58b391446ae1f..6159ba45c843a 100644
---- a/fs/affs/super.c
-+++ b/fs/affs/super.c
-@@ -392,7 +392,8 @@ static int affs_fill_super(struct super_block *sb, void *data, int silent)
- 	size = bdev_nr_sectors(sb->s_bdev);
- 	pr_debug("initial blocksize=%d, #blocks=%d\n", 512, size);
- 
--	affs_set_blocksize(sb, PAGE_SIZE);
-+	if (!sb_set_blocksize(sb, PAGE_SIZE))
-+		return -EINVAL;
- 	/* Try to find root block. Its location depends on the block size. */
- 
- 	i = bdev_logical_block_size(sb->s_bdev);
-@@ -407,7 +408,8 @@ static int affs_fill_super(struct super_block *sb, void *data, int silent)
- 		if (root_block < 0)
- 			sbi->s_root_block = (reserved + size - 1) / 2;
- 		pr_debug("setting blocksize to %d\n", blocksize);
--		affs_set_blocksize(sb, blocksize);
-+		if (!sb_set_blocksize(sb, blocksize))
-+			return -EINVAL;
- 		sbi->s_partition_size = size;
- 
- 		/* The root block location that was calculated above is not
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 29e4c94c84051..783d7035f065e 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -6228,7 +6228,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.global1_addr = 0x1b,
+ 		.global2_addr = 0x1c,
+ 		.age_time_coeff = 15000,
+-		.g1_irqs = 8,
++		.g1_irqs = 9,
+ 		.g2_irqs = 10,
+ 		.atu_move_port_mask = 0xf,
+ 		.pvt = true,
+@@ -6255,7 +6255,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
+ 		.global1_addr = 0x1b,
+ 		.global2_addr = 0x1c,
+ 		.age_time_coeff = 15000,
+-		.g1_irqs = 8,
++		.g1_irqs = 9,
+ 		.g2_irqs = 10,
+ 		.atu_move_port_mask = 0xf,
+ 		.pvt = true,
 -- 
 2.53.0
 
