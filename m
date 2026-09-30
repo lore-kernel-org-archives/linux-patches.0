@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A6F514770;
-	Wed, 30 Sep 2026 16:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9341D515967;
+	Wed, 30 Sep 2026 16:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786572; cv=none; b=OIebUtQJpwPUtZ9dBDq3xnWLCM4fYZA7vtfH3+pNU/lrhduxLv9znSmFvMGuQplvZP/I0s61TMNeCVpRXVr8VIMzJ67kyVTBSSp3SOpPf24hDZ1YhaCbVf2KyoJ7c6fCyr1hr19NBgc2dsvqz2qGswArTkqxndJicnmyawT3ZQo=
+	t=1790786575; cv=none; b=lEYpq9ckWwyc12g28yhofDdeBy0+DETqzKTjDMkGI8zM9e5NC7/xrZk7XuvK174AAoF11S62FKDUwkPpwidFRR2IAKEaqRjLnH7TlgvNf3IqJhVgNCqlP/QrqrdwLyChhGT5ogLnIIdXTDlzGZMB0H7Cp/Rdeymigdaio7TL9rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786572; c=relaxed/simple;
-	bh=Yc67m/HjDQJXL1WKhJX/GxFSfnyz09/Gxk/XI9yck8E=;
+	s=arc-20240116; t=1790786575; c=relaxed/simple;
+	bh=VArIfl9l9xdfrJMfHaN29cYNBmOoyMLX8smpBZQWXNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSkPz4h/Ji+lXOzcWH1ax1M3PxCpMvy2Tdft6+DYhu2/fDIsFkoBYWS/F1qnIqveM9M3MygWTr3OFusKBCrTxHne6bfe/kRhlPUwRu0heuP2xp6Ef6CJPjroXwNibikHbIwS/LCSrM2TbmCxY9CNQjWsRoe8+xK7YXTKTu3Qwfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRdBK1gM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GeMuPMry1sxk7B7xZa2at3ExMvs5lrUBM2bU0IQJ/yeXgU8JePjkt050+e5JWstJrcH2v8kESIELJREbybrSS8EQYM7aNoIJM/S8a4epDv9ZYwL37oYP3mBTjDewJjb89UGFoqfv4krkNnZKv+pfuAWWp+urxWzqEZhwgWDu3gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTAGzWiZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRdBK1gM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAEF1F00898;
-	Wed, 30 Sep 2026 16:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTAGzWiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26E41F000FF;
+	Wed, 30 Sep 2026 16:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786571;
-	bh=VpEaFLs3YiC6helhyaZuVdEGHRfAuY7f0JwFc+p/qNM=;
+	s=korg; t=1790786574;
+	bh=I+q/1VXnpYoR9dsP7HN5JOBcwg6xhKgzhpFbpM2QXK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xRdBK1gMzfx+zzTtqao5qFpRScqgAJhF9aALubiR7e+SaEYWJSuMOsvCD52j2CbwP
-	 RYu6HUb9VdZbLjQZlOeci/ZfMhqEYBNlyxm+KEPWMjngrsrmLzh5hqcsQJSoQAk1ty
-	 u0DNV7TvXg9Ke8pJql+oulo35dpPbH/uYnGIoGrU=
+	b=bTAGzWiZNhMWAVs8zcAzDmvmFp8ohbBhSdy4+2k4F00xawCnIpa/PpwOC9uoV06Po
+	 jHSxTTZ/soI2oRZWxt/T5M5sC3eXDBqRVQejvZwdfIJMjVNiwSxIhXzU1ZGN/V8U/T
+	 +ux44Aaq4V0o/zWEvNbed0I5C5PVlpE2fIMMCyiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Weiming Shi <shiweiming@moonshot.ai>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	Eric Dumazet <edumazet@google.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 908/982] tcp: fix use-after-free of retransmit_skb_hint in tcp_send_synack()
-Date: Wed, 30 Sep 2026 17:27:24 +0200
-Message-ID: <20260930152436.243819861@linuxfoundation.org>
+Subject: [PATCH 6.1 909/982] net/smc: fix UAF on lgr list traversal in smcr_port_err()
+Date: Wed, 30 Sep 2026 17:27:25 +0200
+Message-ID: <20260930152436.264598390@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,64 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Sidraya Jayagond <sidraya@linux.ibm.com>
 
-[ Upstream commit fe99bbeee5c5dbd3abc30721a8079ced59649d97 ]
+[ Upstream commit 61cb282fe97b3b0ba32ca09417a693162bf4ae3f ]
 
-When tcp_send_synack() replaces the cloned SYN skb at the head of the
-retransmit queue with a copy, it frees the original with
-tcp_rtx_queue_unlink_and_free() and only repairs tp->highest_sack.
-tp->retransmit_skb_hint keeps pointing at the freed
-skbuff_fclone_cache object.
+smcr_port_err() traverses smc_lgr_list.list without holding
+smc_lgr_list.lock, allowing a concurrent smc_lgr_terminate_sched()
+to free an lgr while it is still being dereferenced.
 
-The dangling hint is read in tcp_verify_retransmit_hint() and used as
-the root of the rbtree walk in tcp_xmit_retransmit_queue().  An
-unprivileged TFO client (sendmsg(MSG_FASTOPEN)) can arm the hint with
-an attacker-supplied ICMP fragmentation-needed message, after which a
-simultaneous open frees the armed SYN skb:
+Hold smc_lgr_list.lock across the traversal. Update
+smc_ib_gid_check() to call smcr_port_err() after releasing the lock.
 
-  BUG: KASAN: slab-use-after-free in tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
-  Read of size 4 at addr ffff88800604d928 by task swapper/1/0
-  Call Trace:
-   tcp_mark_skb_lost (net/ipv4/tcp_input.c:1316)
-   tcp_simple_retransmit (net/ipv4/tcp_input.c:3158)
-   tcp_v4_err (net/ipv4/tcp_ipv4.c:587)
-
-Sync the hint to the copy.
-
-Fixes: c31b70c9968f ("tcp: Add logic to check for SYN w/ data in tcp_simple_retransmit")
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Tested-by: Weiming Shi <shiweiming@moonshot.ai>
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/8a9dff4063a2745653b7e88ceb745d75efa16e68.1790224474.git.yilinzhang@moonshot.ai
+Fixes: 541afa10c126 ("net/smc: add smcr_port_err() and smcr_link_down() processing")
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260922073149.474762-1-sidraya@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/smc/smc_core.c |  2 ++
+ net/smc/smc_ib.c   | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 256e0a755d544..39f25b886678c 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3551,6 +3551,7 @@ void tcp_send_active_reset(struct sock *sk, gfp_t priority)
-  */
- int tcp_send_synack(struct sock *sk)
- {
-+	struct tcp_sock *tp = tcp_sk(sk);
- 	struct sk_buff *skb;
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 213af93f39d3f..5d188222807a8 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1737,6 +1737,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 	struct smc_link_group *lgr, *n;
+ 	int i;
  
- 	skb = tcp_rtx_queue_head(sk);
-@@ -3568,6 +3569,8 @@ int tcp_send_synack(struct sock *sk)
- 			if (!nskb)
- 				return -ENOMEM;
- 			INIT_LIST_HEAD(&nskb->tcp_tsorted_anchor);
-+			if (skb == tp->retransmit_skb_hint)
-+				tp->retransmit_skb_hint = nskb;
- 			tcp_highest_sack_replace(sk, skb, nskb);
- 			tcp_rtx_queue_unlink_and_free(skb, sk);
- 			__skb_header_release(nskb);
++	spin_lock_bh(&smc_lgr_list.lock);
+ 	list_for_each_entry_safe(lgr, n, &smc_lgr_list.list, list) {
+ 		if (strncmp(smcibdev->pnetid[ibport - 1], lgr->pnet_id,
+ 			    SMC_MAX_PNETID_LEN))
+@@ -1751,6 +1752,7 @@ void smcr_port_err(struct smc_ib_device *smcibdev, u8 ibport)
+ 				smcr_link_down_cond_sched(lnk);
+ 		}
+ 	}
++	spin_unlock_bh(&smc_lgr_list.lock);
+ }
+ 
+ static void smc_link_down_work(struct work_struct *work)
+diff --git a/net/smc/smc_ib.c b/net/smc/smc_ib.c
+index 8e41034d8d96f..c1dbcc3f667d1 100644
+--- a/net/smc/smc_ib.c
++++ b/net/smc/smc_ib.c
+@@ -333,6 +333,7 @@ static bool smc_ib_check_link_gid(u8 gid[SMC_GID_SIZE], bool smcrv2,
+ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ {
+ 	struct smc_link_group *lgr;
++	bool stale_gid = false;
+ 	int i;
+ 
+ 	spin_lock_bh(&smc_lgr_list.lock);
+@@ -348,11 +349,16 @@ static void smc_ib_gid_check(struct smc_ib_device *smcibdev, u8 ibport)
+ 				continue;
+ 			if (!smc_ib_check_link_gid(lgr->lnk[i].gid,
+ 						   lgr->smc_version == SMC_V2,
+-						   smcibdev, ibport))
+-				smcr_port_err(smcibdev, ibport);
++						   smcibdev, ibport)) {
++				stale_gid = true;
++				goto out;
++			}
+ 		}
+ 	}
++out:
+ 	spin_unlock_bh(&smc_lgr_list.lock);
++	if (stale_gid)
++		smcr_port_err(smcibdev, ibport);
+ }
+ 
+ static int smc_ib_remember_port_attr(struct smc_ib_device *smcibdev, u8 ibport)
 -- 
 2.53.0
 
