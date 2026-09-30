@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193CA51C048;
-	Wed, 30 Sep 2026 17:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9BB50B435;
+	Wed, 30 Sep 2026 17:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791041; cv=none; b=p0Vj6jKzGe0oT8d5iVHoSCVgmv6c4C5x6rEZc22ganRV5H2GEXM+31e43DNZ913WXSm1eKS9F//atEQLvKpfVT00SSt3TDGBPZEmzqzEyZdcsevwpstIyH3OkfYT4nNRUnI9PkMcC1odVwOqnBzteAJBJgUfjQ0zHr5HhzLajuo=
+	t=1790791044; cv=none; b=ar6rJkj9JOQwd98t+lRJv6SQ3swBxqdgAwjuGg+ZguDuUe+RaqD+DqDSxnHwFdh2kEu5kaFWUN+N5HMK/RSok7e3GNz6vuqkQlyJWIJ0tlbpHBjjF7VFOL3ary9PgluTydXpR99r8Kv1kKW8SX1ZGxGPjpedwaDZTEkxUFg3eRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791041; c=relaxed/simple;
-	bh=Rs9FI4W9vd0IBJOuY9DxEYnhwMCKBY1roErmdt/eVUI=;
+	s=arc-20240116; t=1790791044; c=relaxed/simple;
+	bh=FTrvG5uNTG0X1OIMwvj67nLsY5Mju3PYGhdgThIJsFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpCJOBQ5O+LVI8+4YcUq5ADITPufoh0O8/lQTMEnKICdaVX8HHI2NDaccHIGXcKiyLeSpbpgoKx4HEn6pwjBsT7Rh1uI+gAzBz+w5lc54j869xC1PseJ8p8V0Rvybq/lA95nXVUnk0Blyoo6G9F2OKY1f2wwktScCoWsqtg/d74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WyUzwLi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CJL6lTWotoAmMqF7CjzIhKHXbfc2GzXFtWjgCeG6qZHmZis9fF4GrzVnh1+FLT5It+RU8PlK5ujqB7KoWJd2YDBWwxHWQsS8fhjFvukGdQfpZwm4fAk1C8Hvti8dcEFs9y/3fuS9iPj8rn59IhqqGlnCgCrCGcTQ3OopXuwAnbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOlnTl0S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WyUzwLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723CA1F00898;
-	Wed, 30 Sep 2026 17:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOlnTl0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5731F000FF;
+	Wed, 30 Sep 2026 17:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791040;
-	bh=E/s8a/J60UWNVt8BocMrt5JY4rYlcnewk6Vugt1gC2A=;
+	s=korg; t=1790791042;
+	bh=PUciYFWp0F868jDELOdckZ53mweJT7RrUKKM0Z59NCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1WyUzwLiEMpiS/zgnrysczqUm5i22Dwg85lVBjqdQKytf+UbaYqD/2yGcoEmb4ZiZ
-	 JapqGtEm/hx6Vo3PFdBGVouEy0+w+GPbuXtR7jBZvq7PGzNvBZB3SuSn8zd2X1Xwv1
-	 QfsAk5pnfwXcxdJGCk9hHOBBPRqUUehTl+8vPWSQ=
+	b=rOlnTl0SAWiHIafBBOnu330Jzyud8arypaqcnO8qEKvHwjzdbDJnJeHI7etmvUGZt
+	 faW2/MHx29jumpvPMCBpXG4+atJPukpTmFAkuHPZVtF9FOwuOwhFL2AmNpht908lLo
+	 5YRG1D70GGOPrsi4x+W6UjlAkzMNkhjJZfzmCwd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Louis Colaco <jean-louis.colaco@orange.fr>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 162/752] ALSA: usb-audio: Add quirk for YAMAHA CDS3000
-Date: Wed, 30 Sep 2026 17:20:32 +0200
-Message-ID: <20260930152401.702559156@linuxfoundation.org>
+Subject: [PATCH 5.15 163/752] PCI: iproc: Protect root bus removal with rescan lock
+Date: Wed, 30 Sep 2026 17:20:33 +0200
+Message-ID: <20260930152401.725424937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,48 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Louis Colaco <jean-louis.colaco@orange.fr>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit 348f69320e4db6ebec6940c81154bec4b9eb275a ]
+[ Upstream commit a6a64e150f12ad5391e0a0d60f6a3d119b06ce50 ]
 
-This quirk is identical to the one for the Yamaha Steinberg UR22, here
-applied to a CD player that also uses the Steinberg USB interface.
-This quirk is necessary to avoid sporadic "clic" noise when using the DAC
-of the player.
+Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
+to avoid racing with concurrent rescan or hotplug operations triggered via
+sysfs.  Such races may lead to use-after-free issues or system crashes.
 
-Signed-off-by: Jean-Louis Colaco <jean-louis.colaco@orange.fr>
-Link: https://patch.msgid.link/20260618113202.8363-1-jean-louis.colaco@orange.fr
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260521161822.132996-6-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/pci/controller/pcie-iproc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index 8e0e44b1f5262..40de1c6fafb8b 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -484,6 +484,20 @@ YAMAHA_DEVICE(0x105d, NULL),
- 		}
- 	}
- },
-+{
-+	USB_DEVICE(0x0499, 0x150d),
-+	QUIRK_DRIVER_INFO {
-+		/* .vendor_name = "Yamaha", */
-+		/* .product_name = "CDS3000", */
-+		QUIRK_DATA_COMPOSITE {
-+			{ QUIRK_DATA_STANDARD_AUDIO(1) },
-+			{ QUIRK_DATA_STANDARD_AUDIO(2) },
-+			{ QUIRK_DATA_MIDI_YAMAHA(3) },
-+			{ QUIRK_DATA_IGNORE(4) },
-+			QUIRK_COMPOSITE_END
-+		}
-+	}
-+},
+diff --git a/drivers/pci/controller/pcie-iproc.c b/drivers/pci/controller/pcie-iproc.c
+index 30ac5fbefbbff..90923046f04f5 100644
+--- a/drivers/pci/controller/pcie-iproc.c
++++ b/drivers/pci/controller/pcie-iproc.c
+@@ -1545,8 +1545,10 @@ int iproc_pcie_remove(struct iproc_pcie *pcie)
  {
- 	USB_DEVICE(0x0499, 0x1718),
- 	QUIRK_DRIVER_INFO {
+ 	struct pci_host_bridge *host = pci_host_bridge_from_priv(pcie);
+ 
++	pci_lock_rescan_remove();
+ 	pci_stop_root_bus(host->bus);
+ 	pci_remove_root_bus(host->bus);
++	pci_unlock_rescan_remove();
+ 
+ 	iproc_pcie_msi_disable(pcie);
+ 
 -- 
 2.53.0
 
