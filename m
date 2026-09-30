@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFADD3C060F;
-	Wed, 30 Sep 2026 19:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A16383C84;
+	Wed, 30 Sep 2026 19:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796619; cv=none; b=MVLO0yM0n6W0tV2KR0OFUXcV7xRPkqIOG4gUFb0MhSrzRWoWbPpMlWC4MDf74nOzeagkOCS7xKYFUz9n+IWiuAJMufITEOBiGeZJOKlElk36/9i6Ya8OBYGMLSgORNtfG09tX4/vX5+ruI5ze/9RYhs+aF871OqNW/izT75iNP0=
+	t=1790796622; cv=none; b=SeQgUWMUxJSdNNkcNTwYjh2FXxVa6Uvs9h3FcXc+w0LmusxA8s02WwVpTVwbDHiLDIODFZofayVh3Ps9cxqqvdXcET+r4HtIz43CGk9wpxv7ogIT6gON8o5cvfo42LgUN46Sr3xGXSrUuxVgjE9SVWZCfhrmMQQZsaaIn2Jzbdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796619; c=relaxed/simple;
-	bh=rFHKbHMYrK6M25PO/vq+5fqORwH/n/QDxg3OI3gDeXk=;
+	s=arc-20240116; t=1790796622; c=relaxed/simple;
+	bh=UE5V4ncHV4LiymznLv8Y8+aqY2S3BrT+G4PNUlyBkfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lpx4NAHYXY+vYOvH2lId5gRZ4xiTjPw1ehngkTzBRhS9aizmCQWsPInUO/7KxTgVginYoW4isVYzJa3mkepkuRs8ZdxbPeRwYYWFr1cebcv8ab6q7/JRUK8YcuATDIyRF6nXF/TPzn+2Ic+Teh+umBQFIMSKQmpHECOrwP66Raw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RohoU4Yg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XsO8Y1bD00C7zDmeRrogb9rhUiINAvcIQjGUjCPlW4CByWZ2AImMq7UVJKT0kWl5fMpQUt+KN0JNHvZEBi1QftndTEiaXKkGgos024v9WJTVeifdJG/cFQgMs+FvkErqzl6WFtTf5pMQfCsh6DJylTFHwwTrCevRHE0yVPrgi80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcpsSK1t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RohoU4Yg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270B31F000FF;
-	Wed, 30 Sep 2026 19:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcpsSK1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063031F000FF;
+	Wed, 30 Sep 2026 19:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796618;
-	bh=BBMxRNJbUlhLt2TIuvswIkdIGNwI30i6BiM9woyLvNE=;
+	s=korg; t=1790796621;
+	bh=tCkQd2RJqVpHehE/GBNjdIO2xu9acSDzwlDxoDGU8vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RohoU4Yg1r6zdDebI31QQkRFSgTHXj6rnaYG6If22tDB8GHA0WYGuuwv4Z7RUNafq
-	 Q3HEkdm8nwlA6SS+XqOd9UPgKu5flTJa/VqbYMHwdSbzznQc5xnq5JpfjrWCLcaerD
-	 c7LZx5bIi1LOuV0TRBgz2lXuXVeuraKQqQT+zpnM=
+	b=xcpsSK1tTC8d6s4++OXMiKg0vzN9KqnVN+mM7WDFS/X2kB98Vqu0O95aABv4ooSbz
+	 qxXfMdREieSX93Wa0toafFUFx1SRY335Pl2xcgJhWBV5Ddgta6zbe1yfp7sZR47LlV
+	 sO86Gjv/TCB6e+wuy1HPaSk3DtLG9z9tILdvG1Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0977/1193] Bluetooth: mgmt: Dequeue pending mesh_send_sync entries on cancel
-Date: Wed, 30 Sep 2026 17:27:41 +0200
-Message-ID: <20260930152455.950615695@linuxfoundation.org>
+Subject: [PATCH 6.6 0951/1193] spi: zynqmp-gqspi: Use devm_spi_alloc_host()
+Date: Wed, 30 Sep 2026 17:27:15 +0200
+Message-ID: <20260930152455.369991242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,85 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 71af682ba4692c2ed9ace4c3d4ca462ae368c029 ]
+[ Upstream commit 64640f6c972e80f52196416a8d4dc3c0ffcbc82d ]
 
-In send_cancel(), pending mesh_tx objects are removed from the
-hdev->mesh_pending list and freed via mesh_send_complete().  However, if
-a mesh transmission was already queued onto hdev->cmd_sync_work_list via
-mesh_next(), the queued entry retains a raw pointer to mesh_tx.
+Use devm_spi_alloc_host() so that there's no need to call
+spi_controller_put() in the error path.
 
-When hci_cmd_sync_work later processes the entry, it attempts to execute
-mesh_send_sync and its destroy callback mesh_send_start_complete using
-the already freed mesh_tx pointer, leading to a use-after-free.
-
-Fix this by invoking hci_cmd_sync_dequeue() for mesh_send_sync on the
-target mesh_tx before completing it.  If the entry is found and dequeued,
-its destroy callback will complete and free the object; otherwise,
-mesh_send_complete() is called directly.
-
-Additionally, ensure the transmission queue advances after cancellation
-or errors.  In mesh_send_start_complete(), call mesh_next() on error
-unless err is -ECANCELED, because hci_cmd_sync_dequeue() holds
-hdev->cmd_sync_work_lock and calling mesh_next() synchronously would
-deadlock.  Instead, advance the queue in send_cancel() once the lock is
-released and if no transmission is in progress.
-
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20240826121421.3384792-2-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/spi/spi-zynqmp-gqspi.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index b4712ca23d851..fa7df7e1d1cc6 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2283,6 +2283,8 @@ static void mesh_send_start_complete(struct hci_dev *hdev, void *data, int err)
- 		hci_dev_clear_flag(hdev, HCI_MESH_SENDING);
- 		/* Send Complete Error Code for handle */
- 		mesh_send_complete(hdev, mesh_tx, false);
-+		if (err != -ECANCELED)
-+			mesh_next(hdev, NULL, 0);
- 		return;
+diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
+index f0710f2924bda..635ff4506b96f 100644
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1220,7 +1220,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
+ 	u32 num_cs;
+ 	const struct qspi_platform_data *p_data;
+ 
+-	ctlr = spi_alloc_master(&pdev->dev, sizeof(*xqspi));
++	ctlr = devm_spi_alloc_master(&pdev->dev, sizeof(*xqspi));
+ 	if (!ctlr)
+ 		return -ENOMEM;
+ 
+@@ -1234,29 +1234,25 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
+ 		xqspi->has_tapdelay = true;
+ 
+ 	xqspi->regs = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(xqspi->regs)) {
+-		ret = PTR_ERR(xqspi->regs);
+-		goto remove_master;
+-	}
++	if (IS_ERR(xqspi->regs))
++		return PTR_ERR(xqspi->regs);
+ 
+ 	xqspi->pclk = devm_clk_get(&pdev->dev, "pclk");
+ 	if (IS_ERR(xqspi->pclk)) {
+ 		dev_err(dev, "pclk clock not found.\n");
+-		ret = PTR_ERR(xqspi->pclk);
+-		goto remove_master;
++		return PTR_ERR(xqspi->pclk);
  	}
  
-@@ -2392,19 +2394,28 @@ static int send_cancel(struct hci_dev *hdev, void *data)
- 		do {
- 			mesh_tx = mgmt_mesh_next(hdev, cmd->sk);
- 
--			if (mesh_tx)
--				mesh_send_complete(hdev, mesh_tx, false);
-+			if (mesh_tx) {
-+				if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
-+							  mesh_tx, NULL))
-+					mesh_send_complete(hdev, mesh_tx, false);
-+			}
- 		} while (mesh_tx);
- 	} else {
- 		mesh_tx = mgmt_mesh_find(hdev, cancel->handle);
- 
--		if (mesh_tx && mesh_tx->sk == cmd->sk)
--			mesh_send_complete(hdev, mesh_tx, false);
-+		if (mesh_tx && mesh_tx->sk == cmd->sk) {
-+			if (!hci_cmd_sync_dequeue(hdev, mesh_send_sync,
-+						  mesh_tx, NULL))
-+				mesh_send_complete(hdev, mesh_tx, false);
-+		}
+ 	xqspi->refclk = devm_clk_get(&pdev->dev, "ref_clk");
+ 	if (IS_ERR(xqspi->refclk)) {
+ 		dev_err(dev, "ref_clk clock not found.\n");
+-		ret = PTR_ERR(xqspi->refclk);
+-		goto remove_master;
++		return PTR_ERR(xqspi->refclk);
  	}
  
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
- 			  0, NULL, 0);
+ 	ret = clk_prepare_enable(xqspi->pclk);
+ 	if (ret) {
+ 		dev_err(dev, "Unable to enable APB clock.\n");
+-		goto remove_master;
++		return ret;
+ 	}
  
-+	if (!hci_dev_test_flag(hdev, HCI_MESH_SENDING))
-+		mesh_next(hdev, NULL, 0);
-+
- 	return 0;
+ 	ret = clk_prepare_enable(xqspi->refclk);
+@@ -1343,8 +1339,6 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
+ 	clk_disable_unprepare(xqspi->refclk);
+ clk_dis_pclk:
+ 	clk_disable_unprepare(xqspi->pclk);
+-remove_master:
+-	spi_controller_put(ctlr);
+ 
+ 	return ret;
  }
- 
 -- 
 2.53.0
 
