@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0E8502D5A;
-	Wed, 30 Sep 2026 18:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276974DEC26;
+	Wed, 30 Sep 2026 18:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792255; cv=none; b=sBd8zxXbTRMW0+9alY64EpEyGIMktyKptcEW90R8T+W/YTanSlWvgKqNBNejVEX0FhjQfoKMMuX7mnYOR064MYN0d8x8RD4Bwj0e+Bcw+eXTFFXj++d3nr3SdUViRyXagWsUvJoYuNb70ov6psnI+GZxveGq5a1OrCWVkUP376Q=
+	t=1790792258; cv=none; b=Oc6yrXRJD2AJuc+a4S58nHYLXY/nWu3du7INpjbcBnoj+m8KQUsweuzIj8pbou3Npret7AOrtwmK1SmWePH5QIsW1v9V8xdYQ3UYInh8fujjdhV+DLZ3qYjzM8Y8hEIqQBcP6suvb34UpwtUM5L9C8ik8Vxc31MXPDrtMV0mc3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792255; c=relaxed/simple;
-	bh=/1ufr+hPvfPBNluWm8tLnk+c9h/lrzWTrQyT5BtrnSY=;
+	s=arc-20240116; t=1790792258; c=relaxed/simple;
+	bh=SnGBFIJXIBczsZTovwFIoNrCCZCe45ZGFqrepofnVfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SowPZX+S6YnwqZlSny6DMW4auJRiYcX7fblV2iN07GaP1JS8ishu+9aLvDu/+3jsZERLaRFxVI0+ZoLu7x5VdhM60z3DFbuUJ2TkXgOnmev3/vU7t3C8bAzJHHl2Lo5u33Jz6PD+48nU5mu08lcDJb+jfMyMfvvkosI1I9MQwds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oe+OUoWS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLPZTluWlFL5ZCEo01sSApRI1/5o8mZ3eDnNBuUCSPthiETcYT7zMrYRyY3stGVb/H2Wc3T9qrTo80HfVDFKiOYUaQY1CK5Q8i9urGlQx5AJCde6o9n+vE9G9+46OejflDATRZImmYM4BYJx67TBNdfe2LbB/7gR2l2acrOyOeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K6KKZG5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oe+OUoWS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DC21F000FF;
-	Wed, 30 Sep 2026 18:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K6KKZG5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814931F00898;
+	Wed, 30 Sep 2026 18:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792254;
-	bh=iUyVldS2GTwr6BnW2XcJSVqAERs4rVA0WGaxRHFWgVM=;
+	s=korg; t=1790792257;
+	bh=3h409lZnUY6pkGFe50+qmEIhAe6WVA5dPiodGDJUmzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oe+OUoWSeCdLMUOfqWoDt0Mhpz6PlaUN8kRgSq0p8b9c2TueygMLamrNnm5a1KGTi
-	 87TMdLl8m5o8rZySaWIM2mal6SEV493o1n2s/O7pJXnihH3TCqPBY/x1u1kuLR9hT5
-	 fJkUXp+13gTWSWf/LETzC7askhDJtD7dL09bAnpw=
+	b=K6KKZG5XL23WOIWR0eBta+aisDusoF0x3gfToZqfelT4mdYduAwN9nmgHX79/NGHG
+	 g4aLZHMS62+tYFhfjeAeSEtB2uzH0nJCuFy9NcknW+cwgb6FOCKZqP6Ib8K2nmu5wF
+	 QOvbMCLXanSAcrpy+lgBDlhCbwE3sIrhbgAzM+0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Shiu <Will.Shiu@mediatek.com>,
-	Gao Xiang <xiang@kernel.org>,
-	Sandeep Dhavale <dhavale@google.com>,
+	Junli Liu <liujunli@lixiang.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 589/752] erofs: Fix detection of atomic context
-Date: Wed, 30 Sep 2026 17:27:39 +0200
-Message-ID: <20260930152411.033287023@linuxfoundation.org>
+Subject: [PATCH 5.15 590/752] erofs: fix atomic context detection when !CONFIG_DEBUG_LOCK_ALLOC
+Date: Wed, 30 Sep 2026 17:27:40 +0200
+Message-ID: <20260930152411.054699664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,95 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandeep Dhavale <dhavale@google.com>
+From: Junli Liu <liujunli@lixiang.com>
 
-[ Upstream commit 12d0a24afd9ea58e581ea64d64e066f2027b28d9 ]
+[ Upstream commit c99fab6e80b76422741d34aafc2f930a482afbdd ]
 
-Current check for atomic context is not sufficient as
-z_erofs_decompressqueue_endio can be called under rcu lock
-from blk_mq_flush_plug_list(). See the stacktrace [1]
+Since EROFS handles decompression in non-atomic contexts due to
+uncontrollable decompression latencies and vmap() usage, it tries
+to detect atomic contexts and only kicks off a kworker on demand
+in order to reduce unnecessary scheduling overhead.
 
-In such case we should hand off the decompression work for async
-processing rather than trying to do sync decompression in current
-context. Patch fixes the detection by checking for
-rcu_read_lock_any_held() and while at it use more appropriate
-!in_task() check than in_atomic().
+However, the current approach is insufficient and can lead to
+sleeping function calls in invalid contexts, causing kernel
+warnings and potential system instability. See the stacktrace [1]
+and previous discussion [2].
 
-Background: Historically erofs would always schedule a kworker for
-decompression which would incur the scheduling cost regardless of
-the context. But z_erofs_decompressqueue_endio() may not always
-be in atomic context and we could actually benefit from doing the
-decompression in z_erofs_decompressqueue_endio() if we are in
-thread context, for example when running with dm-verity.
-This optimization was later added in patch [2] which has shown
-improvement in performance benchmarks.
+The current implementation only checks rcu_read_lock_any_held(),
+which behaves inconsistently across different kernel configurations:
 
-==============================================
+- When CONFIG_DEBUG_LOCK_ALLOC is enabled: correctly detects
+  RCU critical sections by checking rcu_lock_map
+- When CONFIG_DEBUG_LOCK_ALLOC is disabled: compiles to
+  "!preemptible()", which only checks preempt_count and misses
+  RCU critical sections
+
+This patch introduces z_erofs_in_atomic() to provide comprehensive
+atomic context detection:
+
+1. Check RCU preemption depth when CONFIG_PREEMPTION is enabled,
+   as RCU critical sections may not affect preempt_count but still
+   require atomic handling
+
+2. Always use async processing when CONFIG_PREEMPT_COUNT is disabled,
+   as preemption state cannot be reliably determined
+
+3. Fall back to standard preemptible() check for remaining cases
+
+The function replaces the previous complex condition check and ensures
+that z_erofs always uses (kthread_)work in atomic contexts to minimize
+scheduling overhead and prevent sleeping in invalid contexts.
+
 [1] Problem stacktrace
-[name:core&]BUG: sleeping function called from invalid context at kernel/locking/mutex.c:291
-[name:core&]in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1615, name: CpuMonitorServi
-[name:core&]preempt_count: 0, expected: 0
-[name:core&]RCU nest depth: 1, expected: 0
-CPU: 7 PID: 1615 Comm: CpuMonitorServi Tainted: G S      W  OE      6.1.25-android14-5-maybe-dirty-mainline #1
-Hardware name: MT6897 (DT)
-Call trace:
- dump_backtrace+0x108/0x15c
- show_stack+0x20/0x30
- dump_stack_lvl+0x6c/0x8c
- dump_stack+0x20/0x48
- __might_resched+0x1fc/0x308
- __might_sleep+0x50/0x88
- mutex_lock+0x2c/0x110
- z_erofs_decompress_queue+0x11c/0xc10
- z_erofs_decompress_kickoff+0x110/0x1a4
- z_erofs_decompressqueue_endio+0x154/0x180
- bio_endio+0x1b0/0x1d8
- __dm_io_complete+0x22c/0x280
- clone_endio+0xe4/0x280
- bio_endio+0x1b0/0x1d8
- blk_update_request+0x138/0x3a4
- blk_mq_plug_issue_direct+0xd4/0x19c
- blk_mq_flush_plug_list+0x2b0/0x354
- __blk_flush_plug+0x110/0x160
- blk_finish_plug+0x30/0x4c
- read_pages+0x2fc/0x370
- page_cache_ra_unbounded+0xa4/0x23c
- page_cache_ra_order+0x290/0x320
- do_sync_mmap_readahead+0x108/0x2c0
- filemap_fault+0x19c/0x52c
- __do_fault+0xc4/0x114
- handle_mm_fault+0x5b4/0x1168
- do_page_fault+0x338/0x4b4
- do_translation_fault+0x40/0x60
- do_mem_abort+0x60/0xc8
- el0_da+0x4c/0xe0
- el0t_64_sync_handler+0xd4/0xfc
- el0t_64_sync+0x1a0/0x1a4
+[ 61.266692] BUG: sleeping function called from invalid context at kernel/locking/rtmutex_api.c:510
+[ 61.266702] in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 107, name: irq/54-ufshcd
+[ 61.266704] preempt_count: 0, expected: 0
+[ 61.266705] RCU nest depth: 2, expected: 0
+[ 61.266710] CPU: 0 UID: 0 PID: 107 Comm: irq/54-ufshcd Tainted: G W O 6.12.17 #1
+[ 61.266714] Tainted: [W]=WARN, [O]=OOT_MODULE
+[ 61.266715] Hardware name: schumacher (DT)
+[ 61.266717] Call trace:
+[ 61.266718] dump_backtrace+0x9c/0x100
+[ 61.266727] show_stack+0x20/0x38
+[ 61.266728] dump_stack_lvl+0x78/0x90
+[ 61.266734] dump_stack+0x18/0x28
+[ 61.266736] __might_resched+0x11c/0x180
+[ 61.266743] __might_sleep+0x64/0xc8
+[ 61.266745] mutex_lock+0x2c/0xc0
+[ 61.266748] z_erofs_decompress_queue+0xe8/0x978
+[ 61.266753] z_erofs_decompress_kickoff+0xa8/0x190
+[ 61.266756] z_erofs_endio+0x168/0x288
+[ 61.266758] bio_endio+0x160/0x218
+[ 61.266762] blk_update_request+0x244/0x458
+[ 61.266766] scsi_end_request+0x38/0x278
+[ 61.266770] scsi_io_completion+0x4c/0x600
+[ 61.266772] scsi_finish_command+0xc8/0xe8
+[ 61.266775] scsi_complete+0x88/0x148
+[ 61.266777] blk_mq_complete_request+0x3c/0x58
+[ 61.266780] scsi_done_internal+0xcc/0x158
+[ 61.266782] scsi_done+0x1c/0x30
+[ 61.266783] ufshcd_compl_one_cqe+0x12c/0x438
+[ 61.266786] __ufshcd_transfer_req_compl+0x2c/0x78
+[ 61.266788] ufshcd_poll+0xf4/0x210
+[ 61.266789] ufshcd_transfer_req_compl+0x50/0x88
+[ 61.266791] ufshcd_intr+0x21c/0x7c8
+[ 61.266792] irq_forced_thread_fn+0x44/0xd8
+[ 61.266796] irq_thread+0x1a4/0x358
+[ 61.266799] kthread+0x12c/0x138
+[ 61.266802] ret_from_fork+0x10/0x20
 
-[2] Link: https://lore.kernel.org/all/20210317035448.13921-1-huangjianan@oppo.com/
+[2] https://lore.kernel.org/r/58b661d0-0ebb-4b45-a10d-c5927fb791cd@paulmck-laptop
 
-Reported-by: Will Shiu <Will.Shiu@mediatek.com>
-Suggested-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Sandeep Dhavale <dhavale@google.com>
+Signed-off-by: Junli Liu <liujunli@lixiang.com>
 Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Link: https://lore.kernel.org/r/20230621220848.3379029-1-dhavale@google.com
+Link: https://lore.kernel.org/r/20250805011957.911186-1-liujunli@lixiang.com
+[ Gao Xiang: Use the original trace in v1. ]
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/zdata.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 1aa8b60420775..0f2ab71969770 100644
+index 0f2ab71969770..db6ec1feb3fa8 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -798,7 +798,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+@@ -778,6 +778,17 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
+ }
+ 
+ static void z_erofs_decompressqueue_work(struct work_struct *work);
++
++/* Use (kthread_)work in atomic contexts to minimize scheduling overhead */
++static inline bool z_erofs_in_atomic(void)
++{
++	if (IS_ENABLED(CONFIG_PREEMPTION) && rcu_preempt_depth())
++		return true;
++	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
++		return true;
++	return !preemptible();
++}
++
+ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 				       bool sync, int bios)
+ {
+@@ -798,7 +809,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
  	if (atomic_add_return(bios, &io->pending_bios))
  		return;
  	/* Use workqueue and sync decompression for atomic contexts only */
--	if (in_atomic() || irqs_disabled()) {
-+	if (!in_task() || irqs_disabled() || rcu_read_lock_any_held()) {
+-	if (!in_task() || irqs_disabled() || rcu_read_lock_any_held()) {
++	if (z_erofs_in_atomic()) {
  		queue_work(z_erofs_workqueue, &io->u.work);
  		sbi->opt.readahead_sync_decompress = true;
  		return;
