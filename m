@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C89513555;
-	Wed, 30 Sep 2026 16:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3931B51357D;
+	Wed, 30 Sep 2026 16:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786660; cv=none; b=DhGF3WPirJGdoSQUyeG1yUlnx3W4FLb1yaHs7DsxOyNnNo1mp78KTGI3akYOYymZSB8udAwU+cGLtlvU2zg7elbebS1LUxvCtqn+QFFbRptzpoPqx2EP0vH6j3QM2DYa2fMPTqKdZvERDyX8QJ11IkPPXPdsn5AioGkj1QXCIjk=
+	t=1790786663; cv=none; b=UAu6SfOCHZROg/j3O4HjVVDPawi+5JTSvHE0ujw1QjaQS+5ScAuMrWxGJl5XPouP4nWR0JGMEZlqPYCb+Tzt7xV/3p52bpqv4LqpWVExrNr8pgQkDlmiFly95jbIFyYA7zsiKEOD/+IYe+HvgBjZcpSAaP588JR2fUyHLW8sHTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786660; c=relaxed/simple;
-	bh=4kcVrTCugBFqkjrx1JzOqOvfLZ8j6vDGcnmaflwCZzk=;
+	s=arc-20240116; t=1790786663; c=relaxed/simple;
+	bh=rtLJBJWwl1m/AAEaUhVtxhus9vwIVdV0rbTJeGyMzgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDMRHZggTuUIXUDMaknfF/Fu+eohjJSII1GKyGzQAJlLVbUS9yBsTZWgSJbR00OdHtzs4h11vJh1JguXrjl7oxFZE+GIQKrCn9ZPYQgjX+fIrgpIebu/DbsuOqTBz7/5xRs8T2RVc1Sp7TVJy3S4+1hIlydFk6PKmfUh/OPX/YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXXMXvPx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e4tZG9UtFbEI6AqUpuWpY82jB+fR9BXtbULVZ87qmqMyGsP+QUMA20NPLVlgZeJmmCwfKJ7gZ+BWw7S5Rpm/BPw0bKgQXryYnybcRkoxpC20U3IMVwfjGqEAkw+RFtiDu8WH/rO+KXI6YXBhWPi1b5jpfu4xfQW8SCkFkBMbhzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUU3iVjW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXXMXvPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A5F1F000FF;
-	Wed, 30 Sep 2026 16:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUU3iVjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926DE1F000FF;
+	Wed, 30 Sep 2026 16:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786659;
-	bh=jl6gGD+YNyn6ycayWQkwYuqhu5/T10Y2j7Pfy4D9jKc=;
+	s=korg; t=1790786662;
+	bh=EFATSCfaMVDHJNzME99FA5p0xvtD9PV7aC5Y3VwhwYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vXXMXvPxpfU1IlCLNZnqXtDEtddgRle8pukbgUPWT79Ave5fItXGFVq5KQP3oIzd8
-	 L8IBwHZlNkMrNkECakj2yP67f7hazDFgmcNxuS6ophTrxL/N9YfyEpGEjkJZOW2S7x
-	 V30dVB3VfCJXWOpnPK27lLg+QjkSV75ijrgfiw2c=
+	b=KUU3iVjWDzn7a0R1E8H8Bhgxnmg5VykRvSyRj91cP2zjIE0wCC71hpFON5lcWy7Jr
+	 YWdFae8S7ETeNZQcPTwucvhNQOU4v6XpZpvAK81FTLrprwxozK1atz4XhpOawwpJMS
+	 ZFJP1pY/xjC6sr5SBznV519w/5hUpZfm8NUf2bsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 941/982] drm/amdgpu: Fix runtime PM leak in amdgpu_debugfs_test_ib_show()
-Date: Wed, 30 Sep 2026 17:27:57 +0200
-Message-ID: <20260930152436.951975991@linuxfoundation.org>
+Subject: [PATCH 6.1 942/982] drm/amdgpu: Fix vmid_wait fence leak in amdgpu_ring_init()
+Date: Wed, 30 Sep 2026 17:27:58 +0200
+Message-ID: <20260930152436.972467740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,41 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 2b86ab1bd6673c525adda88819d7658ba9e784ec upstream.
+commit aea841bc62a76242396610d22d8ff40c13065f64 upstream.
 
-amdgpu_debugfs_test_ib_show() resumes the device with
-pm_runtime_get_sync() before taking the reset domain semaphore with
-down_write_killable().  If the write lock acquisition is interrupted,
-the function returns without calling pm_runtime_put_autosuspend(),
-leaking the runtime PM reference acquired for the device and keeping
-the GPU awake.
+amdgpu_ring_init() initializes ring->vmid_wait with a reference to the
+stub fence taken via dma_fence_get_stub().  When a later step of the
+initialization fails, e.g. amdgpu_fence_driver_init_ring(), a writeback
+slot allocation or the ring buffer allocation, the function returns an
+error without releasing the stub fence reference and the reference is
+leaked if the ring is torn down without amdgpu_ring_fini().
 
-Drop the runtime PM reference on the interrupted down_write_killable()
-error path before returning.
+Move the stub fence assignment to the end of the initialization, right
+before the ring is registered with the GPU scheduler, where no further
+failure is possible.  The stub fence is only consumed by command
+submission handling in amdgpu_ids.c once the ring is up and running, so
+nothing reads it during the error-prone part of the initialization.
 
-Fixes: 6049db43d6dd ("drm/amdgpu: change reset lock from mutex to rw_semaphore")
+Fixes: 48e9fbd1a284 ("drm/amdgpu: initialize the vmid_wait with the stub fence")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ec30a576c2d4c0364549e6c04218f50704ef56c8)
+(cherry picked from commit f2b96986851203e9c50ca0d13aaa3581ca3e8ebd)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -1494,8 +1494,10 @@ static int amdgpu_debugfs_test_ib_show(s
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
+@@ -201,7 +201,6 @@ int amdgpu_ring_init(struct amdgpu_devic
+ 		ring->adev = adev;
+ 		ring->num_hw_submission = sched_hw_submission;
+ 		ring->sched_score = sched_score;
+-		ring->vmid_wait = dma_fence_get_stub();
  
- 	/* Avoid accidently unparking the sched thread during GPU reset */
- 	r = down_write_killable(&adev->reset_domain->sem);
--	if (r)
-+	if (r) {
-+		pm_runtime_put_autosuspend(dev->dev);
- 		return r;
-+	}
+ 		if (!ring->is_mes_queue) {
+ 			ring->idx = adev->num_rings++;
+@@ -323,6 +322,7 @@ int amdgpu_ring_init(struct amdgpu_devic
  
- 	/* hold on the scheduler */
- 	for (i = 0; i < AMDGPU_MAX_RINGS; i++) {
+ 	ring->max_dw = max_dw;
+ 	ring->hw_prio = hw_prio;
++	ring->vmid_wait = dma_fence_get_stub();
+ 
+ 	if (!ring->no_scheduler && ring->funcs->type < AMDGPU_HW_IP_NUM) {
+ 		hw_ip = ring->funcs->type;
 
 
