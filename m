@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C0F4E01FA;
-	Wed, 30 Sep 2026 17:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508AC51B16D;
+	Wed, 30 Sep 2026 17:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790128; cv=none; b=twWi+q36PBKrDRvkkfBJy5gZ3MUKJoJqNAdG09rRwspQ0uEkT7adPbI+w+TGruGuW+zmyipetsLQ5NMKHNCcL57PYJ+MML5vtKVNoKtalmuGOocE0gPBpHcOadQ4wT14QtNd12XyK8M6Pd77cPdl6g40smavVFsoq/qLsm6pVE4=
+	t=1790790131; cv=none; b=BiV21tvB8CwyDtkSs5zBnFDD0h1lmni19I+OUZUxEpBmRqdfg0jTsBlFM/4W96yu1gKJPEUReHopWNseWFXoJIuNMQieUfITrNzzrsYkuqAl6O/4piqGVbSiFkgeO6NQqZaSPfmgrdZdYqaKc0MzhEw30uLiiq0VrVYfLUatBN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790128; c=relaxed/simple;
-	bh=JoVxARi1G8UrNPe5l7rZa6apJNoNul+1ectx03naGSM=;
+	s=arc-20240116; t=1790790131; c=relaxed/simple;
+	bh=rfLdUlU/KOk62rkEFGhhnbw8kfxsj8vG6X7CBfqFbMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCU3CTFzmWL3+Lq8wgon1jl0LaVlELsHkffs8mkJlM8cnxjcuVGHiRF5rq1OkOBx9u1LreYdcGPtDdG7ISHMq8vKRgN0p6gBIl5W56dSd8YWGLP0H9GF0StQ0T5vYS0mwdFw7aDU1FW/5/Xtr9fWxDIMFF+d4VGU9wcli9pneaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBUtaKdC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q0cpWvuVytFk4bWRgsy4pkJUKNVQTCbdbRc2xf+aZx1vFk+AAYDonsUIPhbaV/BIMhTIbNtn1yiAOP3z2XRGVU2Cmd3Rp3pFpb3WNZNaiA3ZyPQsl9RT31gi1qePo1PdsTBGd8hK7h5mV1k6mBH8iNMJ0ALuZ4rBVftLXXW0nIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIbrUm+f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBUtaKdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD18F1F000FF;
-	Wed, 30 Sep 2026 17:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIbrUm+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFD11F000FF;
+	Wed, 30 Sep 2026 17:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790127;
-	bh=V2dSJZHwxi8UisBKmPMvDYUntv05WtcQ8YYXSuM4iak=;
+	s=korg; t=1790790130;
+	bh=vZw6RdhyyRrisZ0gtJqkBOcNepzO/YUeVayTd4IIZzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBUtaKdCtI46beZZlDBpfLD+Tv9T9RqofsAL6EG4s4iAnENB9inuAZDjCV10doLNt
-	 /s9z/BN3ZkY03QXJtDibN5Cf7xzdxCf65jZZ85XT0/IWQCMHZUgAQnJaV8ehGEAmYU
-	 +f8Jr+8zmpoNh7mD+cCYa3QmJo6RCdYtgFG0h2vw=
+	b=hIbrUm+fY639+P5Fs3q9yociQaXis00Zu8eSU5QsgV9q1H6I6/k83Cfa2Ikh3fHaY
+	 cRBjxOPSQuBg/YoyXIStK5Nq/ExkqacKGi5EK1ezlnrC3wfYZqN1ueCS9AYOoiVwGj
+	 nyH7XqFuI82zBy2t6fIUfY7veYoJQXMg+EQlPOjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 719/877] tracing: Set the trace clock before registering the histogram trigger
-Date: Wed, 30 Sep 2026 17:27:10 +0200
-Message-ID: <20260930152430.201088611@linuxfoundation.org>
+Subject: [PATCH 6.12 720/877] virtio-mmio: Remove virtqueue list from mmio device
+Date: Wed, 30 Sep 2026 17:27:11 +0200
+Message-ID: <20260930152430.223290576@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,96 +52,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 6ede78d0563a2a3ae3e46f9c07cedb5d79645429 ]
+[ Upstream commit 564a69ad90d15c782176e1a8c9e1c95661e1aed0 ]
 
-hist_register_trigger() puts the trigger on the global named_triggers
-list in cmd_ops->init(), and only then sets the trace clock:
+The MMIO transport implementation creates a list of virtqueues for a
+virtio device, while the same is already available in the struct
+virtio_device.
 
-	if (data->cmd_ops->init) {
-		ret = data->cmd_ops->init(data);
-		if (ret < 0)
-			goto out;
-	}
+Don't create a duplicate list, and use the other one instead.
 
-	if (hist_data->enable_timestamps) {
-		ret = tracing_set_clock(file->tr, hist_data->attrs->clock);
-		if (ret) {
-			hist_err(tr, HIST_ERR_SET_CLOCK_FAIL, errpos(clock));
-			goto out;
-		}
+While at it, fix the virtio_device_for_each_vq() macro to accept an
+argument like "&vm_dev->vdev" (which currently fails to build).
 
-The clock string is not checked anywhere before that call, so a named
-trigger using common_timestamp with an unknown clock fails after it has
-already become findable. event_hist_trigger_parse() then frees it
-without taking it off the list, and the next lookup by name reads the
-freed object:
-
- ~# cd /sys/kernel/tracing/events/sched/sched_switch
- ~# echo 'hist:name=foo:keys=common_pid:ts=common_timestamp:clock=bogus' > trigger
- bash: echo: write error: Invalid argument
- ~# echo 'hist:name=foo:keys=common_pid' > trigger
-
-  BUG: KASAN: slab-use-after-free in find_named_trigger+0xac/0xc0
-  Read of size 8 at addr ffff88800915d760 by task init/1
-   find_named_trigger+0xac/0xc0
-   hist_register_trigger+0xc1/0x900
-   event_hist_trigger_parse+0x3146/0x6af0
-   event_trigger_write+0xce/0x160
-  Freed by task 63:
-   kfree+0x154/0x420
-   trigger_kthread_fn+0xfd/0x160
-
-Set the clock before the trigger is registered, so that nothing which
-can fail runs after it is published, the way commit 6f86bdeab633
-("tracing: Fix bad hist from corrupting named_triggers list") moved the
-registration below the rest of the setup.
-
-tracing_set_filter_buffering() is reference counted, so the init failure
-path has to drop the reference that the clock block now takes first.
-
-Cc: stable@vger.kernel.org
-Fixes: a4072fe85ba3 ("tracing: Add a clock attribute for hist triggers")
-Link: https://patch.msgid.link/20260907091415.554535-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Message-Id: <3e56c6f74002987e22f364d883cbad177cd9ad9c.1747827066.git.viresh.kumar@linaro.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Stable-dep-of: d14d693adb05 ("virtio_mmio: disable IRQ wake before free_irq")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/virtio/virtio_mmio.c |   52 ++-----------------------------------------
+ include/linux/virtio.h       |    2 -
+ 2 files changed, 4 insertions(+), 50 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6566,12 +6566,6 @@ static int hist_register_trigger(char *g
- 		data->cmd_ops = cmd_ops;
+--- a/drivers/virtio/virtio_mmio.c
++++ b/drivers/virtio/virtio_mmio.c
+@@ -65,7 +65,6 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+ #include <linux/slab.h>
+-#include <linux/spinlock.h>
+ #include <linux/virtio.h>
+ #include <linux/virtio_config.h>
+ #include <uapi/linux/virtio_mmio.h>
+@@ -88,22 +87,8 @@ struct virtio_mmio_device {
+ 
+ 	void __iomem *base;
+ 	unsigned long version;
+-
+-	/* a list of queues so we can dispatch IRQs */
+-	spinlock_t lock;
+-	struct list_head virtqueues;
+-};
+-
+-struct virtio_mmio_vq_info {
+-	/* the actual virtqueue */
+-	struct virtqueue *vq;
+-
+-	/* the list node for the virtqueues list */
+-	struct list_head node;
+ };
+ 
+-
+-
+ /* Configuration interface */
+ 
+ static u64 vm_get_features(struct virtio_device *vdev)
+@@ -300,9 +285,8 @@ static bool vm_notify_with_data(struct v
+ static irqreturn_t vm_interrupt(int irq, void *opaque)
+ {
+ 	struct virtio_mmio_device *vm_dev = opaque;
+-	struct virtio_mmio_vq_info *info;
++	struct virtqueue *vq;
+ 	unsigned long status;
+-	unsigned long flags;
+ 	irqreturn_t ret = IRQ_NONE;
+ 
+ 	/* Read and acknowledge interrupts */
+@@ -315,10 +299,8 @@ static irqreturn_t vm_interrupt(int irq,
  	}
  
--	if (data->cmd_ops->init) {
--		ret = data->cmd_ops->init(data);
--		if (ret < 0)
--			goto out;
+ 	if (likely(status & VIRTIO_MMIO_INT_VRING)) {
+-		spin_lock_irqsave(&vm_dev->lock, flags);
+-		list_for_each_entry(info, &vm_dev->virtqueues, node)
+-			ret |= vring_interrupt(irq, info->vq);
+-		spin_unlock_irqrestore(&vm_dev->lock, flags);
++		virtio_device_for_each_vq(&vm_dev->vdev, vq)
++			ret |= vring_interrupt(irq, vq);
+ 	}
+ 
+ 	return ret;
+@@ -329,14 +311,8 @@ static irqreturn_t vm_interrupt(int irq,
+ static void vm_del_vq(struct virtqueue *vq)
+ {
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vq->vdev);
+-	struct virtio_mmio_vq_info *info = vq->priv;
+-	unsigned long flags;
+ 	unsigned int index = vq->index;
+ 
+-	spin_lock_irqsave(&vm_dev->lock, flags);
+-	list_del(&info->node);
+-	spin_unlock_irqrestore(&vm_dev->lock, flags);
+-
+ 	/* Select and deactivate the queue */
+ 	writel(index, vm_dev->base + VIRTIO_MMIO_QUEUE_SEL);
+ 	if (vm_dev->version == 1) {
+@@ -347,8 +323,6 @@ static void vm_del_vq(struct virtqueue *
+ 	}
+ 
+ 	vring_del_virtqueue(vq);
+-
+-	kfree(info);
+ }
+ 
+ static void vm_del_vqs(struct virtio_device *vdev)
+@@ -375,9 +349,7 @@ static struct virtqueue *vm_setup_vq(str
+ {
+ 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
+ 	bool (*notify)(struct virtqueue *vq);
+-	struct virtio_mmio_vq_info *info;
+ 	struct virtqueue *vq;
+-	unsigned long flags;
+ 	unsigned int num;
+ 	int err;
+ 
+@@ -399,13 +371,6 @@ static struct virtqueue *vm_setup_vq(str
+ 		goto error_available;
+ 	}
+ 
+-	/* Allocate and fill out our active queue description */
+-	info = kmalloc(sizeof(*info), GFP_KERNEL);
+-	if (!info) {
+-		err = -ENOMEM;
+-		goto error_kmalloc;
 -	}
 -
- 	if (hist_data->enable_timestamps) {
- 		char *clock = hist_data->attrs->clock;
- 
-@@ -6584,6 +6578,15 @@ static int hist_register_trigger(char *g
- 		tracing_set_filter_buffering(file->tr, true);
+ 	num = readl(vm_dev->base + VIRTIO_MMIO_QUEUE_NUM_MAX);
+ 	if (num == 0) {
+ 		err = -ENOENT;
+@@ -463,13 +428,6 @@ static struct virtqueue *vm_setup_vq(str
+ 		writel(1, vm_dev->base + VIRTIO_MMIO_QUEUE_READY);
  	}
  
-+	if (data->cmd_ops->init) {
-+		ret = data->cmd_ops->init(data);
-+		if (ret < 0) {
-+			if (hist_data->enable_timestamps)
-+				tracing_set_filter_buffering(file->tr, false);
-+			goto out;
-+		}
-+	}
-+
- 	if (named_data) {
- 		remove_hist_vars(hist_data);
- 		destroy_hist_data(hist_data);
+-	vq->priv = info;
+-	info->vq = vq;
+-
+-	spin_lock_irqsave(&vm_dev->lock, flags);
+-	list_add(&info->node, &vm_dev->virtqueues);
+-	spin_unlock_irqrestore(&vm_dev->lock, flags);
+-
+ 	return vq;
+ 
+ error_bad_pfn:
+@@ -481,8 +439,6 @@ error_new_virtqueue:
+ 		writel(0, vm_dev->base + VIRTIO_MMIO_QUEUE_READY);
+ 		WARN_ON(readl(vm_dev->base + VIRTIO_MMIO_QUEUE_READY));
+ 	}
+-	kfree(info);
+-error_kmalloc:
+ error_available:
+ 	return ERR_PTR(err);
+ }
+@@ -627,8 +583,6 @@ static int virtio_mmio_probe(struct plat
+ 	vm_dev->vdev.dev.release = virtio_mmio_release_dev;
+ 	vm_dev->vdev.config = &virtio_mmio_config_ops;
+ 	vm_dev->pdev = pdev;
+-	INIT_LIST_HEAD(&vm_dev->virtqueues);
+-	spin_lock_init(&vm_dev->lock);
+ 
+ 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(vm_dev->base)) {
+--- a/include/linux/virtio.h
++++ b/include/linux/virtio.h
+@@ -184,7 +184,7 @@ void virtio_reset_device(struct virtio_d
+ size_t virtio_max_dma_size(const struct virtio_device *vdev);
+ 
+ #define virtio_device_for_each_vq(vdev, vq) \
+-	list_for_each_entry(vq, &vdev->vqs, list)
++	list_for_each_entry(vq, &(vdev)->vqs, list)
+ 
+ /**
+  * struct virtio_driver - operations for a virtio I/O driver
 
 
