@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33833AF674;
-	Wed, 30 Sep 2026 18:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24C43AF674;
+	Wed, 30 Sep 2026 18:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794663; cv=none; b=iZbbCPCMJCNbcgu8vfA1nnXAGBzbRhSFEX5qR7jD/LoKTQ7M4LvtdyL7XemAq3hWy7JFTyHV2xn6FSUya3JCfSaJRaCtTOosRllvM2/eltDp6ouq4uBpezEEdWEP443eTu/SeusRTRSF1Yx0J0gb0j7RR/JeWklBtxGkj8LZQcM=
+	t=1790794666; cv=none; b=FCg0jwdaCEnEyDKcYxOnVXvXdpAbBnpdhnWLMjPjFL32D8QGBZtrOkZ6RNBFGzbvLtuRK4pbXWb+7Vrs4ka0uZLahjoC4vwgwvVHbdCejSfMF3JvVNH3WmbgFGUHksnKjN3kJNxhq6UQL+1mLZduE0X4LTUgRpyhxKdVgKlNYCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794663; c=relaxed/simple;
-	bh=R0ZcxA9jJtqlex0y7J3uo93FMka8nCSHAWINPaTp0ko=;
+	s=arc-20240116; t=1790794666; c=relaxed/simple;
+	bh=+qqzV/IxM/lhF8P7AnP3/4788om6tbiytyzVPTrgrjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVYI/DotJDMsLgCKtCRBpDjJM3hlVk6en5VVNQuQ8/l6JMrwmHtyxGu7bm0w5i0kz3uC3osqFB8NtQ7nY4avgEwQaodNC/qdkg2uzVp9RfRYGR84vKv6ZG6Jbjy/L8QOkxn/oZh+62gKpvqIF9lDigmYwt7EW7HVIGQqCgShBY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/hdNB3u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qVpWR24p7k/TPNu4wC6itRpeOAIYqIVdLmOhlw84R2YeMRVFAKBUvFtGF+zXIjopJ30h7UDRaPB9sj5km3/eIh68BiZIsokym2rl/ptELuWCyctX3XvUDYBwzltxpA4q6uS6+CaVRLDkRePb1q0wkrL1SeeDKmel+p5lo7R0p84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MP1VB/lQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/hdNB3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0671F000FF;
-	Wed, 30 Sep 2026 18:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MP1VB/lQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1051C1F000FF;
+	Wed, 30 Sep 2026 18:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794662;
-	bh=9o5MjXpS4nVN5Www6M5JTmKtxs4eMHsXqBQ/htQRVo8=;
+	s=korg; t=1790794665;
+	bh=6CWI4ydQzMkqzkS1KauDyZ+VltV87tFFd9b+8QEton8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/hdNB3urEecKEGzkFj7qRbkfuKQ76hFJUIWH5pDssc7Ojm755sUcyR4vxL23A0Te
-	 u6NhVVmgVJS91Ym98QxtwHEKWDyIw25QfO4K6o+/twcVqYqA7f1SPr/UwE0FD9TkmI
-	 R8f3esn6TfK0IAeJ4FKsf1iqxLqZcMfXt7QOWDhg=
+	b=MP1VB/lQxiWH2QimuPfChlej8J84KfAEkjzAaM27QCpyT1E6mNqWlY57B4ga1By7+
+	 BkJeNcl8Yda0qeLgi/afKxYqaM/Te4UbQLcpbPEJgpMTgAaOlW+kmZmIjQRqgCfKGC
+	 CroC7SDXm2m65q3slack73nb/Xry0a/YkvrAdROE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0291/1193] ksmbd: find bound sessions during reauthentication
-Date: Wed, 30 Sep 2026 17:16:15 +0200
-Message-ID: <20260930152440.626725829@linuxfoundation.org>
+Subject: [PATCH 6.6 0292/1193] ksmbd: mark invalid session responses as signed
+Date: Wed, 30 Sep 2026 17:16:16 +0200
+Message-ID: <20260930152440.651022958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,49 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit faf8578c77f3d846aca9cd882c293e03eafcc6df ]
+[ Upstream commit 9e8ad620ddfde5a5f4ef58372e3805e9388cb0f4 ]
 
-A session bound to an additional connection is stored in the session
-channel list, but it is not added to that connection's local session table.
-After the binding exchange completes, conn->binding is cleared.
+When a signed request uses a session that is not registered on the
+connection, ksmbd returns STATUS_USER_SESSION_DELETED before reaching the
+normal response signing path. The response therefore lacks
+SMB2_FLAGS_SIGNED.
 
-A later SESSION_SETUP reauthentication on the bound channel only searches
-the local session table. It fails to find the session and returns
-STATUS_USER_SESSION_DELETED instead of processing authentication and
-returning STATUS_LOGON_FAILURE for invalid credentials.
+Clients that require signing check this flag before handling
+STATUS_USER_SESSION_DELETED and replace the server status with
+STATUS_ACCESS_DENIED when it is absent. The protocol permits this error
+response to skip signature verification because the connection has no
+matching session key.
 
-If the local lookup fails, look up the session globally and accept it only
-when the current connection is registered in its channel list. This keeps
-unbound connections from using the session while allowing reauthentication
-on an established channel.
-
-This fixes smb2.session.bind_invalid_auth.
+Preserve SMB2_FLAGS_SIGNED on the early error response when the request was
+signed. This lets the client propagate STATUS_USER_SESSION_DELETED.
+It fixes smb2.session.bind2.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/server/server.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index e9a3fed457c38..293ebee718912 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1784,6 +1784,13 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 	} else {
- 		sess = ksmbd_session_lookup(conn,
- 					    le64_to_cpu(req->hdr.SessionId));
-+		if (!sess) {
-+			sess = ksmbd_session_lookup_slowpath(le64_to_cpu(req->hdr.SessionId));
-+			if (sess && !lookup_chann_list(sess, conn)) {
-+				ksmbd_user_session_put(sess);
-+				sess = NULL;
-+			}
-+		}
- 		if (!sess) {
- 			rc = -ENOENT;
- 			goto out_err;
+diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
+index 247595d8cb90b..8666ff471b39f 100644
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -197,6 +197,12 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
+ 				else
+ 					conn->ops->set_rsp_status(work,
+ 						STATUS_USER_SESSION_DELETED);
++				if (conn->ops->is_sign_req(work, conn->ops->get_cmd_val(work))) {
++					struct smb2_hdr *rsp_hdr;
++
++					rsp_hdr = ksmbd_resp_buf_curr(work);
++					rsp_hdr->Flags |= SMB2_FLAGS_SIGNED;
++				}
+ 				goto send;
+ 			} else if (rc > 0) {
+ 				rc = conn->ops->get_ksmbd_tcon(work);
 -- 
 2.53.0
 
