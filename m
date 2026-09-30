@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CA41E5B9A;
-	Wed, 30 Sep 2026 16:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2126F4DE72B;
+	Wed, 30 Sep 2026 16:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786734; cv=none; b=IwfmWRhgDbe1Rvo+r0SX7LSJs0Okb5RznL/f6nVLDxroiS+9e8Wk1LrYSCHw472NWy4nnO1ExpntFiUkIeSn5q2WW/u1wGrMEAkZtJo1g1xYNduKiiq9ho087VfZNcedk4zQhhufBCqXgnA9MD3/v8gCio5iZUNwmYFO06UE//g=
+	t=1790786737; cv=none; b=hPi5zOzrZDEbUcoiNoyCYS89kmL9HXkSIofjR8le126MK74Bn0wPvb7Cn0O5oqdpMOK01KbnVzuL8nsmIeqNiX0JpCqr55SKZJ/MUHEOaR7bfUje3LFPhnek57xGawPsgucIyESpf0ZoA/CLSVcHdd0GaAfTMguDGBTlHuAjaDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786734; c=relaxed/simple;
-	bh=uQ+rPuqo0N4Gjk4Dj0uKt8gxq5TS6Rb2Vg6KUpLy0Vo=;
+	s=arc-20240116; t=1790786737; c=relaxed/simple;
+	bh=PRMeELYC+bDn7BLALxN9SuYxaQtozoQzLd5FTbcLzpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxGj6/z82olrrdBJUbOjwo2lc5AltMHpogShrTFOCISq2twB8k46fNR2fIjYN5Up+IJtdUTYM7w7w+AADHHyq1EcFYCXL6fplbKjDahaPlGZ7dTHIXG7up12FSliL+vk3kLFHBHKhE0xWCsPS6rWqtZtEHd52ZqOoFJ3RpC2EYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx3vBQ+8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hjOdmFuUBuG6rrZQGGzVKnFNIjjqdaFjIwsfbhDyCKHovF5cVZaBHa89eTtSduTxZ8kBubUPkdaZyKtCnYraai6B06SwJsQjO9jmF4NIKvqg0pYknlFN2M1mjhuAkUav9B5HHT5ylIxvUFleMf/XaCwpR+1rI5Tvh9NXzWynCuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyaKLU54; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx3vBQ+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09101F000FF;
-	Wed, 30 Sep 2026 16:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyaKLU54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7621F000FF;
+	Wed, 30 Sep 2026 16:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786733;
-	bh=SUqmb8AXV3hxN3391QwQX4HPSAMrchGpwMMjGRZ+gPA=;
+	s=korg; t=1790786736;
+	bh=Tc+6Om4aX6HKqP8c31bxF/lNMqQSX3AORhn7VH4erIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sx3vBQ+875iw8/gqlgHY97f52j62qzO+9XFX4srjZeNS6dwr3K/PA7WrcKZQC0gr6
-	 a6HMwt+9D2YcFpVF2sQEzgE6Ldht8HiraSU0/fEdsY3k+7pSkfi/whDn7W4pqD0u0q
-	 9C+2N/42IgtvsZca4IOFgnXpEDsHt2dtwQ35X4Fo=
+	b=LyaKLU54R3kEaZ6FvThuQAAYA5if+3G6dQsZWhkiLg9G1NVEFaYuDOcSxj3YyCOH4
+	 Z6xMcEO+WgHTzm3aBdcwAkiBPKR2H8qkdsb1ijvV+gaUuGAWZ2YgvffWL3p47PPcnm
+	 /DH665Rp3cGPjvLq6Cr5p99oaJy/yArDA/0l+qP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	"Patrick Lu (Anthropic)" <perf.patrick.lu@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 929/982] writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes
-Date: Wed, 30 Sep 2026 17:27:45 +0200
-Message-ID: <20260930152436.695631785@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.1 965/982] nfc: port100: reject frames whose declared length exceeds the received data
+Date: Wed, 30 Sep 2026 17:28:21 +0200
+Message-ID: <20260930152437.469763595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,86 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrick Lu (Anthropic) <perf.patrick.lu@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit f6988c90671e83db79df1b7b9d6fdb0e5947fd84 upstream.
+commit 092c6a605cbd6414ef499834c2e0da69c2c3388e upstream.
 
-cleanup_offline_cgwb() prepares at most WB_MAX_INODES_PER_ISW inodes
-per call and is called again until the dying wb is drained, but every
-call walks wb->b_attached and then wb->b_dirty_time from the same end.
-Inodes already prepared (they stay on the list with I_WB_SWITCH set
-until the switch worker runs) and inodes that cannot be switched
-(I_FREEING, I_WILL_FREE, !SB_ACTIVE, DAX, already on the target wb)
-stay where they are, so each pass rescans a growing run of them under
-wb->list_lock and a full drain is quadratic in the number of inodes on
-the list. With ~17M inodes attached to one dying cgwb we saw this end
-in soft lockups, with CPUs reported stuck for 21-48s.
+port100_recv_response() passes the URB transfer buffer to
+port100_rx_frame_is_valid(), which checksums le16_to_cpu(frame->datalen)
+bytes of frame->data. datalen is a 16-bit field supplied by the device
+and is never checked against the number of bytes actually received
+(urb->actual_length), so a device reporting a datalen larger than the
+received frame makes port100_data_checksum() read out of bounds past the
+transfer buffer.
 
-Walk both lists from the oldest end and move every scanned inode to
-the newest end, so the next pass starts where the previous one stopped
-and the drain becomes linear. b_attached is unordered, so nobody sees
-the reorder there. b_dirty_time is ordered by dirtied_when, but the
-oldest unscanned inode stays at the end move_expired_inodes() picks
-from, sync takes the whole list regardless of order, and prepared
-inodes leave the list as soon as the switch work runs and get a new
-dirtied_time_when on the new wb anyway, so the only inodes left out of
-order are the ones that can never switch (DAX), and only on the dying
-wb.
+Reject a response whose declared frame size does not fit the received
+length before validating it.
 
-Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing bound is evident from source. Compile-tested.
+
+Fixes: 562d4d59b8a1 ("NFC: Sony Port-100 Series driver")
 Cc: stable@vger.kernel.org
-Acked-by: Tejun Heo <tj@kernel.org>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Signed-off-by: Patrick Lu (Anthropic) <perf.patrick.lu@gmail.com>
-Link: https://patch.msgid.link/20260911-wb-cgwb-rotate-v2-1-a9ab253a1295@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260711123651.32595-1-doruk@0sec.ai
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/nfc/port100.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -667,19 +667,34 @@ static bool isw_prepare_wbs_switch(struc
- 				   struct inode_switch_wbs_context *isw,
- 				   struct list_head *list, int *nr)
- {
--	struct inode *inode;
-+	struct inode *inode, *tmp;
-+	LIST_HEAD(scanned);
-+	bool full = false;
+--- a/drivers/nfc/port100.c
++++ b/drivers/nfc/port100.c
+@@ -636,6 +636,13 @@ static void port100_recv_response(struct
+ 
+ 	in_frame = dev->in_urb->transfer_buffer;
+ 
++	if (urb->actual_length < PORT100_FRAME_HEADER_LEN ||
++	    urb->actual_length < port100_rx_frame_size(in_frame)) {
++		nfc_err(&dev->interface->dev, "Received a truncated frame\n");
++		cmd->status = -EIO;
++		goto sched_wq;
++	}
 +
-+	/*
-+	 * Walk from the oldest end and move scanned inodes to the newest
-+	 * end, so the next scan resumes at unscanned inodes instead of
-+	 * re-walking an ever-growing run of prepared and skipped ones.
-+	 * For b_dirty_time this keeps the oldest unscanned inode at the
-+	 * end move_expired_inodes() picks from; b_attached is unordered.
-+	 */
-+	list_for_each_entry_safe_reverse(inode, tmp, list, i_io_list) {
-+		list_move(&inode->i_io_list, &scanned);
- 
--	list_for_each_entry(inode, list, i_io_list) {
- 		if (!inode_prepare_wbs_switch(inode, new_wb))
- 			continue;
- 
- 		isw->inodes[*nr] = inode;
- 		(*nr)++;
- 
--		if (*nr >= WB_MAX_INODES_PER_ISW - 1)
--			return true;
-+		if (*nr >= WB_MAX_INODES_PER_ISW - 1) {
-+			full = true;
-+			break;
-+		}
- 	}
--	return false;
-+	list_splice(&scanned, list);
-+
-+	return full;
- }
- 
- /**
+ 	if (!port100_rx_frame_is_valid(in_frame)) {
+ 		nfc_err(&dev->interface->dev, "Received an invalid frame\n");
+ 		cmd->status = -EIO;
 
 
