@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1475A514770;
-	Wed, 30 Sep 2026 16:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39E94DE72B;
+	Wed, 30 Sep 2026 16:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786513; cv=none; b=ULbHqz+dW+PYnXGq9V4dAymRjPfcwH72R4fcZm//rYOaTm8j2aA3HdNO0WTIhVS/wcGZpRno5q5/4ddAvBBO1hai9VJmymTqRWZXOcoov6/V8+uJ40w4eSaS2jw33EMdh4rjEGd2FmM3jbJGtT0UBCix4YH7G5xiHtMBcThswp4=
+	t=1790786516; cv=none; b=lnQ4LccfM8x1ab8Prw8D72W59wfDbQaUH5w+HrdwK71mDHLCKGZa1ofjfZo8q/wMym0yGyY58yXWUoGJd+yDi3rVab0GsXtess3U+5zcTuZzHJHGFQv+Nm/cQ7Pdho42WOC3QGGGhhVfdRgTo5uuDQDWq/8YlXjLtVWi85EqRRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786513; c=relaxed/simple;
-	bh=IPx6rovRM4IRmx0BLKRp6/9cqPeXu9pDWhS7Mmbxjzw=;
+	s=arc-20240116; t=1790786516; c=relaxed/simple;
+	bh=dljDZt15f+BkQt6C3Wdqlx2IqypRxLyu03rvnTXHcjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6SrponZHEOUSnapZez3iIudHj+4bRu6VPtfv0mMja7SEQMftv0/1oeuhHmsC3h6YJO6SDhRhGN7m7HWcJ3TRSjkY9yo03MCDH9Y8jahAZpD2mpcY9RAD546SON1I6QcZYXoQotO31c00E6K5OLkLvsBHMhKUlKbQ6dfCGkYioU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wu1qxhnP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r6vHz8dNRiUA29lErTxyugWHBNMpldB0uual870liLVZ3gIWc7IaGBwtMveA7kme3czdoCV0nWQ2L4QtqQsr0LsKlbn7hPZ7l41S4DWsIwLdJYHSO08VhgOrOQgB+PWChv9JWqgaRqQgDOmvyOnDc7yiUB7QvcuOuqED4qikJ1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QF0u2PtH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wu1qxhnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDE31F00898;
-	Wed, 30 Sep 2026 16:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QF0u2PtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F4D1F00898;
+	Wed, 30 Sep 2026 16:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786512;
-	bh=xrPgETHIbEeBq51JhA6SShF7KDZW1aMQhXogyZ6ipTo=;
+	s=korg; t=1790786514;
+	bh=l9AuNhKWcUrG19BmcgeD4D63jCshJqp+PYMrED8hmw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wu1qxhnPmk/pFE1VEGag2CA5ZWDYMTBcbrqFlIJrO7FdrrWamT4ymL90+fNCXHSGn
-	 U2Gw6V26VnspV8ly/iKYTdRP6gEUKGdXqID8bNP2+f9Mev6OrvH+U/V+1sQqhAbtYN
-	 D+h+trUJRgWlmu7WKNhOJiglLAa1X6mfBBUa+p/4=
+	b=QF0u2PtHNnRibbg8quZ51djlzXDEjPDfDTGK0Fc4Ksyf9LTfmBBUDNxCdpt6bzkEA
+	 kTDl2zhqtv7yPf8JteaPMRLJiQ/fCvJMID3Saq9hYOEk698Gs9k5eoH+nzSAhdhpSQ
+	 fWd291qrFaTy3PLvIc2uOt34o95PQBCtvETMrOCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jason Xing <kerneljasonxing@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Shihuang Liu <shlomojune6@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 889/982] veth: manage XDP program pointers during channel resize
-Date: Wed, 30 Sep 2026 17:27:05 +0200
-Message-ID: <20260930152435.843789538@linuxfoundation.org>
+Subject: [PATCH 6.1 890/982] net: skbuff: fix pull-bound underflow in skb_checksum_setup_ipv6()
+Date: Wed, 30 Sep 2026 17:27:06 +0200
+Message-ID: <20260930152435.864812504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,59 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Shihuang Liu <shlomojune6@gmail.com>
 
-[ Upstream commit 7104a370714346b667712913dc16abf14bbc97ed ]
+[ Upstream commit 3b4e0b0c008a8c1b474730248cd5b873026c74bd ]
 
-veth_set_channels() tears down XDP resources for removed RX queues
-without clearing rq->xdp_prog.  If the program is then detached or
-replaced, those queues keep the old pointer after bpf_prog_put().
-A later channel increase can re-enable NAPI and run the freed program.
+skb_maybe_pull_tail() subtracts skb_headlen(skb) from the unsigned max
+argument and passes the result to __pskb_pull_tail() as a signed int.  The
+function does not ensure that max is at least skb_headlen(skb).
 
-  BUG: unable to handle page fault for address: ffffc90000256048
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: veth_xdp_rcv_skb (include/linux/filter.h:779
-                         include/net/xdp.h:696 drivers/net/veth.c:820)
-  Call Trace:
-   veth_xdp_rcv (drivers/net/veth.c:941)
-   veth_poll (drivers/net/veth.c:986)
-   __napi_poll (net/core/dev.c:7787)
-   net_rx_action (net/core/dev.c:7850 net/core/dev.c:8007)
-   handle_softirqs (kernel/softirq.c:645)
-  Kernel panic - not syncing: Fatal exception in interrupt
+This can happen while parsing IPv6 extension headers when an skb already
+has a linear area larger than MAX_IPV6_HDR_LEN.  Once the parser needs data
+beyond the linear area, max - skb_headlen(skb) wraps and is converted to a
+negative delta.  __pskb_pull_tail() then passes that negative length to
+skb_copy_bits(), where it can become a very large copy length.
 
-Fixes: 4752eeb3d891 ("veth: implement support for set_channel ethtool op")
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://patch.msgid.link/20260921231856.1798630-1-kuba@kernel.org
+Pass the requested length itself as the pull bound at the three
+extension-header call sites, so the delta can no longer go negative.
+
+Fixes: 1431fb31ecba ("xen-netback: fix fragment detection in checksum setup")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
+Link: https://patch.msgid.link/20260919133604.50948-1-shlomojune6@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/skbuff.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index e7e8c277a9255..2eef96cfd279a 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1015,6 +1015,7 @@ static int __veth_napi_enable_range(struct net_device *dev, int start, int end)
- 	for (i = start; i < end; i++) {
- 		struct veth_rq *rq = &priv->rq[i];
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 40b2fee82bf9f..a66066bc98610 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5256,7 +5256,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
+ 			err = skb_maybe_pull_tail(skb,
+ 						  off +
+ 						  sizeof(struct ipv6_opt_hdr),
+-						  MAX_IPV6_HDR_LEN);
++						  off +
++						  sizeof(struct ipv6_opt_hdr));
+ 			if (err < 0)
+ 				goto out;
  
-+		rcu_assign_pointer(rq->xdp_prog, priv->_xdp_prog);
- 		napi_enable(&rq->xdp_napi);
- 		rcu_assign_pointer(priv->rq[i].napi, &priv->rq[i].xdp_napi);
- 	}
-@@ -1043,6 +1044,7 @@ static void veth_napi_del_range(struct net_device *dev, int start, int end)
+@@ -5271,7 +5272,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
+ 			err = skb_maybe_pull_tail(skb,
+ 						  off +
+ 						  sizeof(struct ip_auth_hdr),
+-						  MAX_IPV6_HDR_LEN);
++						  off +
++						  sizeof(struct ip_auth_hdr));
+ 			if (err < 0)
+ 				goto out;
  
- 		rcu_assign_pointer(priv->rq[i].napi, NULL);
- 		napi_disable(&rq->xdp_napi);
-+		rcu_assign_pointer(rq->xdp_prog, NULL);
- 		__netif_napi_del(&rq->xdp_napi);
- 	}
- 	synchronize_net();
+@@ -5286,7 +5288,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
+ 			err = skb_maybe_pull_tail(skb,
+ 						  off +
+ 						  sizeof(struct frag_hdr),
+-						  MAX_IPV6_HDR_LEN);
++						  off +
++						  sizeof(struct frag_hdr));
+ 			if (err < 0)
+ 				goto out;
+ 
 -- 
 2.53.0
 
