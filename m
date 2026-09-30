@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C0A318EC5;
-	Wed, 30 Sep 2026 16:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB724318EC5;
+	Wed, 30 Sep 2026 16:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785723; cv=none; b=PiHmp9Qf7/v0E7D1GXo/4Iw8nFsemjIDowo/J0CIzleVp8xVQ7lYddd+tNhhADJBStrmUknAkyHvN+lhFzTdXDMROMidoPwYPhWYAkIIf77DCqs9VAz4dN1El59cU4ShNrqBKAAu6DCZrGKpwkFkfLwPmL+y3JsJoWX0Nr/99qg=
+	t=1790785726; cv=none; b=EXGNcTbpE82TvMIRrNrYPOt09sbVKxYNf97S2H9Q9TsVmLwQMEplpa2dFQxACbC4mq4weln/Y62Oox0lwXIpAOiHmwDd2qyHgYIJCVIYySdJs4x2knidfWKhOssc+GwLBTDKVg6mCSIMleGmFLx8/e0EjNjHr1afUiKmhLoi3r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785723; c=relaxed/simple;
-	bh=3DXRuv+P8Jx8Rio9fXBvQId5v71mJnGpOXNQg3i7tq0=;
+	s=arc-20240116; t=1790785726; c=relaxed/simple;
+	bh=lDppgSqmUn+C8DlJBXUlPYDWMgCGrhGm8jpMA4qEUBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFkUMNlNwEa3HcobUO8180LEslvs3PjQnW09dZdDOvQ/zELYCf0a+aeY/CTbbttPlQf2Yz0a7QG2itTM17SDDG0g/tBqTy9fyWSPAlpLTgMUM/PSDlg90x5OhlVknwwVXoKXs+lYb2Hsk9EafG4RFA35ZIrCdPenXKGyOHeBy8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufuJqDV4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQrTkkaXYg77MibPJS+mxvGS/zK3uU+ks5SgTbdhyTzThstxGEDncbMMhuMOZFNGWegIV+MiJLLmwbfvFV6B0p2O6+MUgp/A/MTUK1/h3o6x96BA5sUpBm4rbNerK8agxUY5d9G/b78LqvPugNAxPTyNB2Taaqa4fTvy+9g4xb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+vCB+yO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufuJqDV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EEDE1F000FF;
-	Wed, 30 Sep 2026 16:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+vCB+yO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D97E1F000FF;
+	Wed, 30 Sep 2026 16:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785721;
-	bh=NMQaAYU+Unf6/D47oaZjaXoReKHbwDRdNAYftxRknDA=;
+	s=korg; t=1790785724;
+	bh=Qf9jC2AyWh5DqgaLJ3v8dTXXkpL3ecZD+DfjuQitGsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ufuJqDV4agZ0i3h8fngxXHRGWx79Vo4yRsFtnDSUzUBOUJTNdxzU7T4u/5lORIXUt
-	 RKiL5tiO+01adfs2hlJmRfmIDTy9Ydz0lVJiTGH6XM2O3fqrHMKB0wnpQWAtxypzwE
-	 RXkbY5a+sDqYY0YYkQzNu08peTPqTtxnlOXVvA/o=
+	b=X+vCB+yOLTiax1dd0ODi9ZJaMhYj/FE/SfENHT9/x+suckAWOlMINpbBnecheu/1K
+	 E3c/rO9oIuQyDXGKbfczPYsxi2BzPfc05kpbnLOozFiPlwoqcpV/4ZbmU3IUXbtk5j
+	 FbnHiPq37z6P7TbhHxwyy45iGJ1kK/tWkFy+Q43E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
+	syzbot+d396918a29afb8543e1c@syzkaller.appspotmail.com,
+	Quanye Yang <quanyeyang@proton.me>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 609/982] RDMA/irdma: Enforce local fence for IB_WR_REG_MR
-Date: Wed, 30 Sep 2026 17:22:25 +0200
-Message-ID: <20260930152429.859606192@linuxfoundation.org>
+Subject: [PATCH 6.1 610/982] RDMA/rtrs-clt: Fix CQ pool leak when connect is interrupted
+Date: Wed, 30 Sep 2026 17:22:26 +0200
+Message-ID: <20260930152429.880542347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,40 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 3fb905f07ea45b31c8f67ba6e4668de46f527e65 ]
+[ Upstream commit 2ae16aaa78b5edc6e6d0904c84fd9cdfb762bcda ]
 
-Enforce local fence for IB_WR_REG_MR to avoid spurious
-FASTREG_VALID_MKEY async events during heavy invalidation
-and registration activity.
+The client borrows shared CQ credits in the ADDR_RESOLVED handler via
+ib_cq_pool_get(), before the peer is connected. create_cm() can return
+-ERESTARTSYS from wait_event_interruptible_timeout() without destroying
+the CM ID. The init_conns() and stop-and-destroy paths then call
+destroy_con_cq_qp() while cq is still NULL (no PUT) and only afterwards
+rdma_destroy_id().
 
-Commit 69e8e429bca2 ("RDMA/irdma: Enforce local fence for LOCAL_INV WRs")
-was very similar, but was not sufficient to prevent all occurrences
-of these async events.
+CMA serializes the handler against rdma_destroy_id() with handler_mutex,
+but that does not order the GET against destroy_con_cq_qp(). If
+ADDR_RESOLVED has already passed the DESTROYING check, it can take
+con_mutex, GET credits, and then lose the con to kfree. Device
+unregister later hits WARN_ON(cq->cqe_used) in ib_cq_pool_cleanup().
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20260901160014.2026285-1-jmoroni@google.com
+Set a per-connection flag under con_mutex before CQ/QP teardown so a
+racing ADDR_RESOLVED cannot borrow credits after teardown has begun.
+
+Reported-by: syzbot+d396918a29afb8543e1c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d396918a29afb8543e1c
+Fixes: 3b89e92c2a95 ("RDMA/rtrs: Use new shared CQ mechanism")
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Link: https://patch.msgid.link/20260830-rdma-rtrs-clt-cq-pool-leak-v1-1-b169434fd3df@proton.me
+Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 8 ++++++++
+ drivers/infiniband/ulp/rtrs/rtrs-clt.h | 2 ++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 56e3103aa77f9..a8856a8613f45 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -3282,7 +3282,7 @@ static int irdma_post_send(struct ib_qp *ibqp,
- 			stag_info.total_len = iwmr->ibmr.length;
- 			stag_info.reg_addr_pa = *palloc->level1.addr;
- 			stag_info.first_pm_pbl_index = palloc->level1.idx;
--			stag_info.local_fence = ib_wr->send_flags & IB_SEND_FENCE;
-+			stag_info.local_fence = true;
- 			if (iwmr->npages > IRDMA_MIN_PAGES_PER_FMR)
- 				stag_info.chunk_size = 1;
- 			err = irdma_sc_mr_fast_register(&iwqp->sc_qp, &stag_info,
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 905693c686413..6dadf9f20e8e9 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -1738,6 +1738,8 @@ static void destroy_con_cq_qp(struct rtrs_clt_con *con)
+ 	/*
+ 	 * Be careful here: destroy_con_cq_qp() can be called even
+ 	 * create_con_cq_qp() failed, see comments there.
++	 * Caller must set con->destroyed under this lock first so a
++	 * racing ADDR_RESOLVED cannot ib_cq_pool_get() after we PUT/SKIP.
+ 	 */
+ 	lockdep_assert_held(&con->con_mutex);
+ 	rtrs_cq_qp_destroy(&con->c);
+@@ -1772,6 +1774,10 @@ static int rtrs_rdma_addr_resolved(struct rtrs_clt_con *con)
+ 	int err;
+ 
+ 	mutex_lock(&con->con_mutex);
++	if (con->destroyed) {
++		mutex_unlock(&con->con_mutex);
++		return -ECONNABORTED;
++	}
+ 	err = create_con_cq_qp(con);
+ 	mutex_unlock(&con->con_mutex);
+ 	if (err) {
+@@ -2202,6 +2208,7 @@ static void rtrs_clt_stop_and_destroy_conns(struct rtrs_clt_path *clt_path)
+ 			break;
+ 		con = to_clt_con(clt_path->s.con[cid]);
+ 		mutex_lock(&con->con_mutex);
++		con->destroyed = true;
+ 		destroy_con_cq_qp(con);
+ 		mutex_unlock(&con->con_mutex);
+ 		destroy_cm(con);
+@@ -2368,6 +2375,7 @@ static int init_conns(struct rtrs_clt_path *clt_path)
+ 		if (con->c.cm_id) {
+ 			stop_cm(con);
+ 			mutex_lock(&con->con_mutex);
++			con->destroyed = true;
+ 			destroy_con_cq_qp(con);
+ 			mutex_unlock(&con->con_mutex);
+ 			destroy_cm(con);
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.h b/drivers/infiniband/ulp/rtrs/rtrs-clt.h
+index f848c0392d982..5ba486bfc7daa 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.h
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.h
+@@ -75,6 +75,8 @@ struct rtrs_clt_con {
+ 	unsigned int		cpu;
+ 	struct mutex		con_mutex;
+ 	int			cm_err;
++	/* Set under con_mutex before CQ/QP teardown. */
++	bool			destroyed;
+ };
+ 
+ /**
 -- 
 2.53.0
 
