@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680993B3BE1;
-	Wed, 30 Sep 2026 19:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400AB3C1986;
+	Wed, 30 Sep 2026 19:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795454; cv=none; b=cbAEgH5DqMmCaKwd+BwYGtKfVeJb0GTQoabXlR5f8Gd8Q3Pb37So4MeyN/39L4vVPSCGG/ym3bSUWhfGrVZngNZ64fg3K+cU1oL8Z+YVAK8Wnklz++UrzQ66h9UqZ/8pN6ePvTctZRkdAKH4PLDTB6cx3jKnnh6tXO+uoLrH8qs=
+	t=1790795457; cv=none; b=G/W+xbe3AQV8jkn57MwRDcDKF7MRBXhuMGZpu8SihB+VSGbacRgKitaRN2gVnJza6ME/vpk3FNgFrnDard7PyxSLaIVlTM5E4ZoQ900TyJDl2sHOcHXWRYmRQWqjHqZKAV+bS48woGVIMfugLjjBI2PyicQw6dyqt8Hhw+LsfPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795454; c=relaxed/simple;
-	bh=ErmhK/NZv5yziFr+doac1QiLKxwVi3+2kQrEzsrRq4U=;
+	s=arc-20240116; t=1790795457; c=relaxed/simple;
+	bh=hQ9SHov7syRVDjF/CTnrtKN16dSi5RLaGy5ypbMpLbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4Q1BZLULy2U2j95ls+gyAoOMWgCvITeMIS56tb54H9hdsLWNz4iz35SccKFuuxHheyTowAvfRbCdmVPSbAY9VGNGMHSk/M7VONEP4sEeWA9HvTmLxP1lgTLzU9WkDVJD8cWtU7G25VPDi7ia/T4hhX5yOsI6VqJSBeH2y79CxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySBXKdM6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MVzlTUT7lZ1dXKZKqQqsjt2Ax6rOZAgbaF6FF6cMmQnMRChsUjc2OxGtlz/MN8nqnJIPznQULazIAaGMbGgrjWqcDb07zDqfSNGo06Fcni/9BV+/jbR64zUvXb7+PxW0EYHmcDx13VcHpVcG+YycSR3ViV4Fj7VxKAaYgE2s2+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccdCawIY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySBXKdM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8471F00898;
-	Wed, 30 Sep 2026 19:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccdCawIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8171F000FF;
+	Wed, 30 Sep 2026 19:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795453;
-	bh=0dz9XPPiURZ76cc5OtHKLHt6lkGkhmEttm68NieY4JU=;
+	s=korg; t=1790795456;
+	bh=TunCsbr7D6b1h86AsKthHTtWrFi2srTlWYx6SGRKyBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ySBXKdM6ThZAXf/65L4pufM9AhER4kdmNaiq8/DfezcGlXu7TkAPA35ZTOMpte3Gt
-	 8Q/kMC06QKbr8Yq8TNJL+s6rQCJGtwdEgE1eZGQDMml442IcoPdi+WKA1fEsUXs2Pj
-	 PeYASm4XXpZAyf71qI/ECQ7QHxgGnuo8P3kD0n+w=
+	b=ccdCawIYbwmAv6ZnFDf/29dto6g8a9cXvsOxAoeQrGWIxgUOxxHUmtnRCfd0VQ6sR
+	 79MMgJKSQpTPYPqlCwC3gnoZI5s3iFa2rcpKR3z5A4qTHRZCkMwVAs5K+Sgy4DCkB+
+	 Z5KG3M7c1gWmqYLrJvMSTWACeYY+M6iNF5nA0x00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hpp.iscas" <hppiscas@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jia Jia <physicalmtea@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0522/1193] ASoC: mt6351: Publish the OF module alias
-Date: Wed, 30 Sep 2026 17:20:06 +0200
-Message-ID: <20260930152445.784812690@linuxfoundation.org>
+Subject: [PATCH 6.6 0523/1193] virtio_console: do not free control-out buffers on remove
+Date: Wed, 30 Sep 2026 17:20:07 +0200
+Message-ID: <20260930152445.808278962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,38 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hpp.iscas <hppiscas@163.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 9c3882ec10399c14c59b7e4599d33c4395367c37 ]
+[ Upstream commit 894f98e73983f37354214a89a3a7fd35bf9e3072 ]
 
-The MT6351 codec platform driver uses mt6351_of_match to bind devices
-with compatible mediatek,mt6351-sound. The codec can be a separate
-module, but the OF table is not exported to module alias metadata.
+__send_control_msg() publishes &portdev->cpkt as the control-out
+virtqueue cookie. remove_vqs() walks every virtqueue and passes leftover
+cookies to free_buf(), which treats them as struct port_buffer and
+reads sgpages.
 
-Publish the existing table without changing codec matching, register
-access or the machine-driver configuration.
+If a control message is still on c_ovq when the device is unbound,
+free_buf() reads past the ports_device object.
 
-Fixes: a74d51ba0e17 ("ASoC: add mt6351 codec driver")
-Signed-off-by: hpp.iscas <hppiscas@163.com>
-Link: https://patch.msgid.link/20260905133210.63803-1-hppiscas@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+KASAN reported slab-out-of-bounds in free_buf():
+
+	free_buf
+	remove_vqs
+	virtcons_remove
+	unbind_store
+
+The object was the ports_device allocated in virtcons_probe().
+
+Drain c_ovq without freeing. The packet lives in portdev and is released
+with it.
+
+Fixes: a7a69ec0d8e4 ("virtio_console: free buffers after reset")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260819021230.292696-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/mt6351.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/virtio_console.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/mt6351.c b/sound/soc/codecs/mt6351.c
-index d2cf4847eead1..c333393ce6f26 100644
---- a/sound/soc/codecs/mt6351.c
-+++ b/sound/soc/codecs/mt6351.c
-@@ -1479,6 +1479,7 @@ static const struct of_device_id mt6351_of_match[] = {
- 	{.compatible = "mediatek,mt6351-sound",},
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, mt6351_of_match);
+diff --git a/drivers/char/virtio_console.c b/drivers/char/virtio_console.c
+index f09b02f85cf6b..04d3ed5fb76b4 100644
+--- a/drivers/char/virtio_console.c
++++ b/drivers/char/virtio_console.c
+@@ -1930,13 +1930,28 @@ static const struct file_operations portdev_fops = {
+ static void remove_vqs(struct ports_device *portdev)
+ {
+ 	struct virtqueue *vq;
++	bool multiport = use_multiport(portdev);
  
- static struct platform_driver mt6351_codec_driver = {
- 	.driver = {
+ 	virtio_device_for_each_vq(portdev->vdev, vq) {
+ 		struct port_buffer *buf;
++		unsigned int len;
+ 
+-		flush_bufs(vq, true);
+-		while ((buf = virtqueue_detach_unused_buf(vq)))
+-			free_buf(buf, true);
++		/*
++		 * c_ovq cookies are &portdev->cpkt, not port_buffer.
++		 * Detach them but do not free_buf().
++		 */
++		if (multiport && vq == portdev->c_ovq) {
++			spin_lock(&portdev->c_ovq_lock);
++			while (virtqueue_get_buf(vq, &len))
++				;
++			while (virtqueue_detach_unused_buf(vq))
++				;
++			spin_unlock(&portdev->c_ovq_lock);
++		} else {
++			flush_bufs(vq, true);
++			while ((buf = virtqueue_detach_unused_buf(vq)))
++				free_buf(buf, true);
++		}
+ 		cond_resched();
+ 	}
+ 	portdev->vdev->config->del_vqs(portdev->vdev);
 -- 
 2.53.0
 
