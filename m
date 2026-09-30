@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27173C455C;
-	Wed, 30 Sep 2026 19:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49B03F23BF;
+	Wed, 30 Sep 2026 19:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796636; cv=none; b=pAlH0ibC38RkzSwVS2IW05AwIk2l8RQictw2RLAMYd8MSfo7jVW+WBmb95UklKRb5Pk87zK4d67LFiIL2fmt/vJILfzMcap79IFJSdLfrivcIQmv3+HKtif5tsUqVb+E2j2/VHaDZT86AINgBJCjv79509DNrNDSuJd+IKeUbGc=
+	t=1790796640; cv=none; b=L/syN6n0/NN9p+/ntgrdaCvBMeyYr4yz6hG608P5oqaUX0dKuftS9UXbDbUOBMS+ffUGyJ6midR2/fJ9BC0o2+LZ2aJQtOtFAiP1bpwhqQTtspDlCZT8zWtIeyz8NL72KUlXcd0CqmRAp92kfhkBQVRfNKFnBn3LYp+SFYcxqoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796636; c=relaxed/simple;
-	bh=nAKsl7lOAc0rSN1MLOgLIU4oO6ybUO/tVemAXYIDCbE=;
+	s=arc-20240116; t=1790796640; c=relaxed/simple;
+	bh=Q7M+hL83Qi4zbUPie89O44or6QO530fL1VGuqDLLzgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmTEhkUXLSDvaiXR5TtD3LcIP46VuPxvcQNArLttL/+rNU7PvxfG4uRI/O604tKO1/5k/J9FqolJeSisda/ENP86r6h5NIGbrm4CWpHyruOJZjrdiFvO7XpjmzMHlhBzLnqQWuLUOOUOjcHuBOsEKHU2pzi7LrH4INvsOzYhgfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1x41CPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rc/iTWfQaUN3M3iTd34G6cM0F/sQolc+sL43FTuchUzUs4W5MsgrBTfHSXA4qRNUkG2eXdQVAir5qwcL8R5G3Uf/GBJUWw4LTTvunY8kIzo5Onp0joFsi6lf9cTpa8H/HaSdZ+YisOEotmrVkjljcMmCE0Ui7n4janMeQiZY+tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwTNjPZ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1x41CPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8851F000FF;
-	Wed, 30 Sep 2026 19:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwTNjPZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115DB1F000FF;
+	Wed, 30 Sep 2026 19:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796635;
-	bh=z72s1hMgBV+MrgupOL8H916WbRICCfGIoqVYLGoiqik=;
+	s=korg; t=1790796638;
+	bh=lgQipk/FBdKU3TvZzevUhfh+TagCHRrWg1bwwmu89NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z1x41CPGK1s8fzRGq0ajqtoaTdu06POUQp5LbVBNgnLrTecesdbevkjjOcLhTXk7/
-	 iqenl3BezgqyT1IUmpy1dlT+7PGd9d2PL8tKFD1X5L8lh16kWPqt7nHAxNdU5Qd6ig
-	 drnS1VtFcB5DMHO6oJ6hNBKEJMCOSyZ5gphZ0ixo=
+	b=WwTNjPZ+wXD0vY4PJNIsfBkVxSLwMiPJ4CJWTOlmnrL/1290lV/uvgEFm+laH1iWS
+	 RDGsbHZ0inzSZoJ+Ri3EBuMZNvDmi8L5ARf21X3aiaMSf+6e8nd/th39dd+vqon9OY
+	 LZqQCjIzkE0LQVLKOqEGge0VEh2DQze39nciCEWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	William Bezenah <wbezenah@linux.ibm.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0982/1193] s390/pci/docs: Fix sriov_numvfs attribute name
-Date: Wed, 30 Sep 2026 17:27:46 +0200
-Message-ID: <20260930152456.062863848@linuxfoundation.org>
+Subject: [PATCH 6.6 0983/1193] s390/cio: Fix cio_update_schib() to not cache invalid schib
+Date: Wed, 30 Sep 2026 17:27:47 +0200
+Message-ID: <20260930152456.085832273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,38 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 4525a911049543c23885a540a788d13be318a486 ]
+[ Upstream commit 29d9e5835d89223aa913dcf7b942cc1c148bdd25 ]
 
-The attribute is sriov_numvfs (drivers/pci/iov.c); the document names it
-sriov_numvf, which does not exist.
+When pmcw.dnv is 0, the contents of all SCHIB fields are unpredictable.
+Zero sch->schib in that case to prevent subsequent code from making
+decisions based on unpredictable data.
 
-Use sriov_numvfs.
-
-Fixes: de267a7c71ba ("s390/pci: Documentation for zPCI")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: William Bezenah <wbezenah@linux.ibm.com>
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Fixes: 8c58a229688c ("s390/cio: Do not unregister the subchannel based on DNV")
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arch/s390/pci.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/cio/cio.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/arch/s390/pci.rst b/Documentation/arch/s390/pci.rst
-index c3476de4f0327..8dc09634163ba 100644
---- a/Documentation/arch/s390/pci.rst
-+++ b/Documentation/arch/s390/pci.rst
-@@ -60,7 +60,7 @@ Entries specific to zPCI functions and entries that hold zPCI information.
+diff --git a/drivers/s390/cio/cio.c b/drivers/s390/cio/cio.c
+index 7843c69abee6c..28888abf6bd41 100644
+--- a/drivers/s390/cio/cio.c
++++ b/drivers/s390/cio/cio.c
+@@ -453,7 +453,8 @@ EXPORT_SYMBOL_GPL(cio_commit_config);
+ /**
+  * cio_update_schib - Perform stsch and update schib if subchannel is valid.
+  * @sch: subchannel on which to perform stsch
+- * Return zero on success, -ENODEV otherwise.
++ * Return zero on success, -ENODEV if the subchannel is not operational,
++ * -EACCES if the subchannel has no valid device.
+  */
+ int cio_update_schib(struct subchannel *sch)
+ {
+@@ -462,10 +463,12 @@ int cio_update_schib(struct subchannel *sch)
+ 	if (stsch(sch->schid, &schib))
+ 		return -ENODEV;
  
-   A physical function that currently supports a virtual function cannot be
-   powered off until all virtual functions are removed with:
--  echo 0 > /sys/bus/pci/devices/DDDD:BB:dd.f/sriov_numvf
-+  echo 0 > /sys/bus/pci/devices/DDDD:BB:dd.f/sriov_numvfs
+-	memcpy(&sch->schib, &schib, sizeof(schib));
+-
+-	if (!css_sch_is_valid(&schib))
++	if (!css_sch_is_valid(&schib)) {
++		memset(&sch->schib, 0, sizeof(sch->schib));
+ 		return -EACCES;
++	}
++
++	memcpy(&sch->schib, &schib, sizeof(schib));
  
- * /sys/bus/pci/devices/DDDD:BB:dd.f/:
- 
+ 	return 0;
+ }
 -- 
 2.53.0
 
