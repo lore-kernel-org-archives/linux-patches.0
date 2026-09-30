@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FA051597D;
-	Wed, 30 Sep 2026 17:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056414FB9C3;
+	Wed, 30 Sep 2026 17:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788910; cv=none; b=g05dlQO9tQ+vgwtwr7ekQRTaoJcA3kbMMsOzGuJFifOLn2Y+f9+I6O1z05f1bjPDLNJ40ucl01OpET0rlzuwZ0kPkWuPUGgg/5weWMgETXSdOe19KI5jJ1+nRP1TpBYNYrOK8k3D6OLppkSqPg6AtrhyZ/yed39eyK1jxpLspL4=
+	t=1790788913; cv=none; b=Tsie0ZLsAsigyBplaFuBbsfAQhxXHqyjc/+ubceiCZ++I6hAfJE/MMbp4KoOm1gjQK6DaKMJv16w+qmsWuYjwKC21Y7CeT7oxHL3B+L31OgNPn6ZIjmvTeJ1o0qwKqpalosYVMvJH89iEXUjOZahp7Q9zPStA8pjQY9W2wOFuBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788910; c=relaxed/simple;
-	bh=rfA6W5K/fLej9+ae2Z2wzeM2FR7FG7oYJHzmzlF1+hg=;
+	s=arc-20240116; t=1790788913; c=relaxed/simple;
+	bh=jpPszNUOHHQ5hZ/GkXAuVw9VGPMAMfnSJF8CSAv34Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1WgQ9biseZlct/FaL03e+qyY94qtCmXsbDGENqNXAYEf92kAPx3A/W0kigbK52HqnsXfWgBhqlt4IcEv15vk9XrvERq3dK6ZaKVETKk6iuzITeaos2tiCYcJ7G4KQK8wJItwVi5o9u+novPoWcvGeH3Gejjrz1NjBZmzJHfRNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNfHW7WT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RPdUxNbT2tRwNfpgqjLc9PgNLIbLtYiuQ9k6U1vCaEnau8JHH2t8JGZ/ZAhyscxkNJUrFopamuDcC1VLZEyZ3TtHOUjw8PCt/UNLPkrNaHZb3Obxtf9rpy3oA8LrLeFZ8s70TbyTblgWDUANJm0RhzW3G2JvnwpAbZbLzyqGzSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqEb94bL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNfHW7WT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1B31F000FF;
-	Wed, 30 Sep 2026 17:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqEb94bL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E74E1F000FF;
+	Wed, 30 Sep 2026 17:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788909;
-	bh=n3xDlLEmQS5fU3i+MS8SDBjQaA/MK8OKPL/Xza2Gr8A=;
+	s=korg; t=1790788911;
+	bh=fVPDVV2+RYS6rgb2F+nldNSBByspqBi8XfMbq7bPOtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNfHW7WTKv6WXaF1O+KE1if2H9GUdpYpojESplWX+NQw8PAR5i4EpU2exljKTTQ/O
-	 zp1frHOzL5V4Xk1Ok7Z6Aww4HlvswUSr3AycZTCRCHIrjYWsBAB+AAXUSphMQXB+yp
-	 WsaNNjBGQQZ+VGKM8/zNc3BCNb8YSn3gAqJJwY3g=
+	b=tqEb94bLh58GIrWlKLBBYAcPAOjH+9Ubk8//2cVAwL2vMvEnSRyaeVG3FuG7aL3I2
+	 If0A6vss+HQN/q+a5+G6eAq18tHS61ovdWp1VT/BQEeVjQ/BOMGntKFPBdXl2zqT6o
+	 QtrHe5sTYjksdn1wpk2p+LFiOzf+/dB23rMcSfZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Wenwu Hou <hwenwur@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 290/877] xfs: dont stash removename operations with unknown ftype
-Date: Wed, 30 Sep 2026 17:20:01 +0200
-Message-ID: <20260930152420.968330833@linuxfoundation.org>
+Subject: [PATCH 6.12 291/877] erofs: fix large folio race in erofs_fscache_req_complete
+Date: Wed, 30 Sep 2026 17:20:02 +0200
+Message-ID: <20260930152420.989831496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,68 +45,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Wenwu Hou <hwenwur@gmail.com>
 
-[ Upstream commit 865b751e75039fc07838b3200f9740256653da9a ]
+This patch is for stable only. Commit c37460cd9b2fc ("erofs: remove fscache
+backend entirely") upstream removed this code.
 
-LOLLM notices that the behavior of xrep_dir_replay_update changes based
-on the ftype recorded in the stashed removename information.  It also
-notices that the unlink iops sometimes set that ftype to FT_UNKNOWN
-because the regular directory tree update code paths don't need to know
-the ftype of the child.
+xas_for_each() iteration can race with reclamation of an unlocked large
+folio and splitting of its replacement shadow entry. Fix this by
+advancing past the entire folio before unlocking it.
 
-Unfortunately, this results in incorrect link counts, which eventually
-trips link count errors in later phases of xfs_scrub, or in xfs_repair.
-Fix this by creating a second xfs_name with the type set correctly.
+For example:
+CPU A: EROFS completion               Other CPUs
+----------------------------------   -----------------------------------
+Find F at index 0.
+Mark F uptodate.
+Unlock F.
 
-Cc: stable@vger.kernel.org # v6.10
-Fixes: 8559b21a64d983 ("xfs: implement live updates for directory repairs")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+                                     Reclaim F.
+                                     Replace indices 0–3 with a
+                                     multi-index workingset shadow.
+
+                                     Another reader inserts a smaller
+                                     folio, e.g. order-0 at index 0.
+                                     Split the large shadow entry:
+                                       index 0: new folio
+                                       index 1: shadow
+                                       index 2: shadow
+                                       index 3: shadow
+Find a shadow at index 1.
+folio_mark_uptodate(folio).
+
+This can cause a kernel panic such as:
+[1030374.432778] [     C31] BUG: unable to handle page fault for address: 00001846af017b01
+[1030374.432971] [     C31] #PF: supervisor write access in kernel mode
+[1030374.432973] [     C31] #PF: error_code(0x0002) - not-present page
+[1030374.433543] [     C31] PGD 5a44f75067 P4D 5a44f75067 PUD 0
+[1030374.433546] [     C31] Oops: 0002 [#1] PREEMPT SMP NOPTI
+[1030374.433549] [     C31] CPU: 31 PID: 2425624 Comm: node Kdump: loaded Tainted: G           OE K    6.6.88-****
+[1030374.434154] [     C31] Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS ?-20260421_110423-CN.l65g09119.cloud.sqa.na131 04/01/2014
+[1030374.434156] [     C31] RIP: 0010:erofs_fscache_req_complete+0xc1/0x1a0 [erofs]
+[1030374.434764] [     C31] Code: 17 c5 c3 48 89 c7 48 85 c0 0f 84 af 00 00 00 48 81 ff 06 04 00 00 74 1b 48 81 ff 02 04 00 00 0f 84 b9 00 00 00 66 85 ed 75 04 <f0> 80 0f 08 e8 96 04 24 c3 48 8b 54 24 18 f6 c2 03 0f 95 c0 48 85
+[1030374.435044] [     C31] RSP: 0000:ffffb8f2fc973cc0 EFLAGS: 00010046
+[1030374.435641] [     C31]
+[1030374.435642] [     C31] RAX: 00001846af017b01 RBX: 000000000000000f RCX: 0000000000000001
+[1030374.436885] [     C31] RDX: 000000000000000c RSI: ffffa02ab337d468 RDI: 00001846af017b01
+[1030374.437127] [     C31] RBP: 0000000000000000 R08: ffffffffffffffc0 R09: 0000000000000002
+[1030374.437672] [     C31] R10: 0000000000000005 R11: 0000000000000191 R12: ffffa0060ec72300
+[1030374.437673] [     C31] R13: 0000000008000000 R14: ffffffffc11b1990 R15: 0000000000007000
+[1030374.437677] [     C31] FS:  00007f4928cdec80(0000) GS:ffffa07dc5f80000(0000) knlGS:0000000000000000
+[1030374.437678] [     C31] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[1030374.437680] [     C31] CR2: 00001846af017b01 CR3: 00000063d5356006 CR4: 0000000000770ee0
+[1030374.437681] [     C31] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[1030374.437682] [     C31] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+[1030374.437684] [     C31] PKRU: 55555558
+[1030374.437684] [     C31] Call Trace:
+[1030374.437687] [     C31]  <TASK>
+[1030374.437692] [     C31]  erofs_fscache_req_put+0x27/0x40 [erofs]
+[1030374.438900] [     C31]  cachefiles_read_complete+0x48/0x110 [cachefiles]
+[1030374.440448] [     C31]  iomap_dio_bio_end_io+0x128/0x160
+[1030374.440456] [     C31]  ? __pfx_stripe_end_io+0x10/0x10 [dm_mod]
+[1030374.440950] [     C31]  clone_endio+0x123/0x1f0 [dm_mod]
+[1030374.441550] [     C31]  blk_mq_end_request_batch+0xf4/0x440
+[1030374.441556] [     C31]  ? nohz_balancer_kick+0x31/0x270
+[1030374.441561] [     C31]  ? dma_direct_unmap_sg+0x48/0x1d0
+[1030374.441565] [     C31]  ? dma_pool_free+0x22/0x60
+[1030374.441569] [     C31]  ? nvme_pci_complete_batch+0xaf/0xc0 [nvme]
+[1030374.442070] [     C31]  nvme_irq+0x6e/0x80 [nvme]
+[1030374.442422] [     C31]  ? __pfx_nvme_pci_complete_batch+0x10/0x10 [nvme]
+[1030374.442428] [     C31]  __handle_irq_event_percpu+0x46/0x1a0
+[1030374.442431] [     C31]  handle_irq_event+0x37/0x80
+[1030374.442433] [     C31]  handle_edge_irq+0x93/0x240
+[1030374.442436] [     C31]  __common_interrupt+0x3b/0xa0
+[1030374.442441] [     C31]  common_interrupt+0x3f/0xa0
+[1030374.442446] [     C31]  asm_common_interrupt+0x22/0x40
+
+Fixes: d435d53228dd ("erofs: change to use asynchronous io for fscache readpage/readahead")
+Signed-off-by: Wenwu Hou <hwenwur@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/dir_repair.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ fs/erofs/fscache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/xfs/scrub/dir_repair.c b/fs/xfs/scrub/dir_repair.c
-index 53272c2540200..bea08dcae5b3d 100644
---- a/fs/xfs/scrub/dir_repair.c
-+++ b/fs/xfs/scrub/dir_repair.c
-@@ -1379,9 +1379,24 @@ xrep_dir_live_update(
- 		if (p->delta > 0)
- 			error = xrep_dir_stash_createname(rd, p->name,
- 					p->ip->i_ino);
--		else
--			error = xrep_dir_stash_removename(rd, p->name,
-+		else {
-+			/*
-+			 * xfs_dentry_to_name in unlink or rename-exchange can
-+			 * pass us names with ftype FT_UNKNOWN, but we really
-+			 * must know the ftype of the child that is being
-+			 * removed so that we can do nlink updates correctly
-+			 * without holding inode references.
-+			 */
-+			struct xfs_name	name = {
-+				.name	= p->name->name,
-+				.len	= p->name->len,
-+				.type	= xfs_mode_to_ftype(
-+						VFS_IC(p->ip)->i_mode),
-+			};
-+
-+			error = xrep_dir_stash_removename(rd, &name,
- 					p->ip->i_ino);
-+		}
- 		mutex_unlock(&rd->pscan.lock);
- 		if (error)
- 			goto out_abort;
+diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
+index 20e2cb18ed1d4..06987f7f6a195 100644
+--- a/fs/erofs/fscache.c
++++ b/fs/erofs/fscache.c
+@@ -67,6 +67,8 @@ static void erofs_fscache_req_complete(struct erofs_fscache_rq *req)
+ 			continue;
+ 		if (!failed)
+ 			folio_mark_uptodate(folio);
++		/* Skip the entire folio before unlocking allows it to be split. */
++		xas_advance(&xas, folio_next_index(folio) - 1);
+ 		folio_unlock(folio);
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.53.0
 
