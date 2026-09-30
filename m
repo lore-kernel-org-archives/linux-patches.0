@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B122D50AC0E;
-	Wed, 30 Sep 2026 17:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E973251993C;
+	Wed, 30 Sep 2026 17:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788966; cv=none; b=nMMmnvqAjOo2sDbyICWP6NLeKyabVif3qHdbcKFoKLJwBbkX2Fl/WalKo8QLJvC/AnnI2Nk0zUWnZm8T00EnDGZSQlmU0myqvPzZrtE6hekNgS6oL/cvuqwTVeBPf4+iJ8VQf1hGnkZarn9BDHbw+2h9vTgZ3tNqnu2o+mndK7s=
+	t=1790788970; cv=none; b=GiaoWSXePffUadHjFIgN4HqWZuVkQFyM6iDx9pDGH+2j0ndDnZE2B/BMZigLFWkJwXkyC6GSW+emEJeb1DyFGaMZlWxKzF/Undv6epWikIwOgsmIDR8rIF3h1LE/V1wFlnZOyNVd/yElZMM3X2c4Uka2oeDwq2yMsdK5MXn67CQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788966; c=relaxed/simple;
-	bh=16aDKoNGTQKBqeBJtVWujMWH7MnyW3boefiV4FmOc70=;
+	s=arc-20240116; t=1790788970; c=relaxed/simple;
+	bh=DrnIHepXqVRqMd2DDoyE7XkHbZggD6q7fzWllBB/fdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Go4A9TInWwXA7TYs5LvX5odDiKVNaT7MprflIzGNXdsVNPOQm73FeRZ9y8m437AIAq8p30++x3QImU/vnDWhqyyphBFquhOfNDN/bgOx1wHD+LKDHOuTwxTKIOS44kd6LHeAYOCd3SnS1FO/5BaggivetlnJ4zd33DymcrMZRGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj3hjKHN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MmHtYdtqNqJ4F9qqCN4nocep3YZ9X4GJunLB3cPmfuIqkqFa0R1UeswoZlbgRjiG5JdRJzhI480zbIKHeWzS1f+bDlRMh+Umlasscp7jAOxNbDKCyAn3qFohR6urkl/cT/uKjvLwq3VAfaUXaWuIoUyztnladXKakrJpq0KEVO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTSDXq5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj3hjKHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FDC1F000FF;
-	Wed, 30 Sep 2026 17:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTSDXq5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AAF1F000FF;
+	Wed, 30 Sep 2026 17:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788965;
-	bh=BYdTY6s1TLrYMBdDMxKrAN3Jz9HYxBHUfqcSmWM4dUw=;
+	s=korg; t=1790788968;
+	bh=xy7PSEYeJgic7sbVGk+go2WXBbmmMZE1HNPb+yQv7pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sj3hjKHNlHlms2aDKCW220mevv8vgQxcDPpqyoiMmTRg90IfS5NSj5ePcSUgGSR+H
-	 0oWKjxH6yXYILsoG0EPU/O581ZAIeQTmKNNgRDGBBHRjAdNhJMYVnMNqXanKEGXCRU
-	 Bc9nNPoKukT7OPdIRACUFHwSIDrrFqQr5gFqaoPA=
+	b=tTSDXq5ZU3YQPNsOPP+HCrJhlXrj4Uvt3Ae7f+AMraCiX6b/KsHKEPl/71q+F/2Wj
+	 Xz3WmId8bwRrK4UAPkf/gXnx+PF7AJc2YC+jNea+wOWCM/h5RmDVfyE42Dvet4m4NU
+	 A90S/79LsFoVSKqF7C+0nI7RldOFLzPuqS+ir/b8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 304/877] bpf: Fix divide-by-zero in btf_struct_walk()
-Date: Wed, 30 Sep 2026 17:20:15 +0200
-Message-ID: <20260930152421.259927397@linuxfoundation.org>
+Subject: [PATCH 6.12 313/877] bpf: Factor out htab_elem_value helper()
+Date: Wed, 30 Sep 2026 17:20:24 +0200
+Message-ID: <20260930152421.446392076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,84 +52,263 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit b0b3dc66529676228cb938cbcad66920f735c223 ]
+[ Upstream commit ba2b31b0f39fca12abbd21c53a92838bbc026023 ]
 
-When an access goes past the struct and the last member is a flexible
-array, btf_struct_walk() folds the offset back into a single element with
-(off - moff) % t->size, but never checks that the element type has a size.
+All hash maps store map key and map value together. The relative offset
+of the map value compared to the map key is round_up(key_size, 8).
+Therefore, factor out a common helper htab_elem_value() to calculate the
+address of the map value instead of duplicating the logic.
 
-BTF takes an empty struct, so this in program BTF
-
-	/* event could be empty */
-	struct event {
- #ifdef HAVE_TIMESTAMP
-		__u64 ts;
- #endif
-	};
-
-	struct batch {
-		int nr;
-		struct event events[];
-	};
-
-divides by zero at prog load time. Getting there needs a PTR_TO_BTF_ID that
-is not MEM_ALLOC, e.g. a plain read of a local kptr stashed in a map from a
-sleepable program.
-
-Oops: divide error: 0000 [#1] SMP KASAN PTI
-RIP: 0010:btf_struct_walk+0x53f/0x1570
-Call Trace:
- <TASK>
- btf_struct_access+0x42a/0xcd0
- check_ptr_to_btf_access+0x4dc/0x1160
- check_mem_access+0x3a45/0x8740
- check_load_mem+0x36a/0xd10
- do_check_common+0x3ef0/0xb210
- bpf_check+0x6d3b/0x8580
- bpf_prog_load+0xf7c/0x2720
- __sys_bpf+0xa83/0x3690
- __x64_sys_bpf+0xc7/0x150
- x64_sys_call+0x1f3f/0x27e0
- do_syscall_64+0xe5/0x610
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- </TASK>
-
-Reject a zero-sized element type. The fixed array path in the same function
-already bails out on the same thing:
-
-	btf_struct_walk()
-	...
-		/* skip empty array */
-		if (moff == mtrue_end)
-			continue;
-
-		msize /= total_nelems;
-
-Fixes: 9c5f8a1008a1 ("bpf: Support variable length array in tracing programs")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260910122316.186384-1-jiayuan.chen@linux.dev
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20250401062250.543403-2-houtao@huaweicloud.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 1c21452d02ee ("bpf: Fix UAF due to concurrent consumption of ttrace lists in alloc_bulk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/hashtab.c | 64 +++++++++++++++++++++-----------------------
+ 1 file changed, 30 insertions(+), 34 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index f219a03ceefff..0c040c2e8c4f5 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6851,7 +6851,7 @@ static int btf_struct_walk(struct bpf_verifier_log *log, const struct btf *btf,
- 		if (btf_type_is_int(t))
- 			return WALK_SCALAR;
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 22cc255519ce8..0d1aeafe5eb14 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -195,20 +195,25 @@ static bool htab_is_percpu(const struct bpf_htab *htab)
+ 		htab->map.map_type == BPF_MAP_TYPE_LRU_PERCPU_HASH;
+ }
  
--		if (!btf_type_is_struct(t))
-+		if (!btf_type_is_struct(t) || !t->size)
- 			goto error;
++static inline void *htab_elem_value(struct htab_elem *l, u32 key_size)
++{
++	return l->key + round_up(key_size, 8);
++}
++
+ static inline void htab_elem_set_ptr(struct htab_elem *l, u32 key_size,
+ 				     void __percpu *pptr)
+ {
+-	*(void __percpu **)(l->key + roundup(key_size, 8)) = pptr;
++	*(void __percpu **)htab_elem_value(l, key_size) = pptr;
+ }
  
- 		off = (off - moff) % t->size;
+ static inline void __percpu *htab_elem_get_ptr(struct htab_elem *l, u32 key_size)
+ {
+-	return *(void __percpu **)(l->key + roundup(key_size, 8));
++	return *(void __percpu **)htab_elem_value(l, key_size);
+ }
+ 
+ static void *fd_htab_map_get_ptr(const struct bpf_map *map, struct htab_elem *l)
+ {
+-	return *(void **)(l->key + roundup(map->key_size, 8));
++	return *(void **)htab_elem_value(l, map->key_size);
+ }
+ 
+ static struct htab_elem *get_htab_elem(struct bpf_htab *htab, int i)
+@@ -235,10 +240,10 @@ static void htab_free_prealloced_timers_and_wq(struct bpf_htab *htab)
+ 		elem = get_htab_elem(htab, i);
+ 		if (btf_record_has_field(htab->map.record, BPF_TIMER))
+ 			bpf_obj_free_timer(htab->map.record,
+-					   elem->key + round_up(htab->map.key_size, 8));
++					   htab_elem_value(elem, htab->map.key_size));
+ 		if (btf_record_has_field(htab->map.record, BPF_WORKQUEUE))
+ 			bpf_obj_free_workqueue(htab->map.record,
+-					       elem->key + round_up(htab->map.key_size, 8));
++					       htab_elem_value(elem, htab->map.key_size));
+ 		cond_resched();
+ 	}
+ }
+@@ -265,7 +270,8 @@ static void htab_free_prealloced_fields(struct bpf_htab *htab)
+ 				cond_resched();
+ 			}
+ 		} else {
+-			bpf_obj_free_fields(htab->map.record, elem->key + round_up(htab->map.key_size, 8));
++			bpf_obj_free_fields(htab->map.record,
++					    htab_elem_value(elem, htab->map.key_size));
+ 			cond_resched();
+ 		}
+ 		cond_resched();
+@@ -703,7 +709,7 @@ static void *htab_map_lookup_elem(struct bpf_map *map, void *key)
+ 	struct htab_elem *l = __htab_map_lookup_elem(map, key);
+ 
+ 	if (l)
+-		return l->key + round_up(map->key_size, 8);
++		return htab_elem_value(l, map->key_size);
+ 
+ 	return NULL;
+ }
+@@ -742,7 +748,7 @@ static __always_inline void *__htab_lru_map_lookup_elem(struct bpf_map *map,
+ 	if (l) {
+ 		if (mark)
+ 			bpf_lru_node_set_ref(&l->lru_node);
+-		return l->key + round_up(map->key_size, 8);
++		return htab_elem_value(l, map->key_size);
+ 	}
+ 
+ 	return NULL;
+@@ -793,7 +799,7 @@ static void check_and_free_fields(struct bpf_htab *htab,
+ 		for_each_possible_cpu(cpu)
+ 			bpf_obj_free_fields(htab->map.record, per_cpu_ptr(pptr, cpu));
+ 	} else {
+-		void *map_value = elem->key + round_up(htab->map.key_size, 8);
++		void *map_value = htab_elem_value(elem, htab->map.key_size);
+ 
+ 		bpf_obj_free_fields(htab->map.record, map_value);
+ 	}
+@@ -1076,11 +1082,9 @@ static struct htab_elem *alloc_htab_elem(struct bpf_htab *htab, void *key,
+ 			htab_elem_set_ptr(l_new, key_size, pptr);
+ 	} else if (fd_htab_map_needs_adjust(htab)) {
+ 		size = round_up(size, 8);
+-		memcpy(l_new->key + round_up(key_size, 8), value, size);
++		memcpy(htab_elem_value(l_new, key_size), value, size);
+ 	} else {
+-		copy_map_value(&htab->map,
+-			       l_new->key + round_up(key_size, 8),
+-			       value);
++		copy_map_value(&htab->map, htab_elem_value(l_new, key_size), value);
+ 	}
+ 
+ 	l_new->hash = hash;
+@@ -1142,7 +1146,7 @@ static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 		if (l_old) {
+ 			/* grab the element lock and update value in place */
+ 			copy_map_value_locked(map,
+-					      l_old->key + round_up(key_size, 8),
++					      htab_elem_value(l_old, key_size),
+ 					      value, false);
+ 			return 0;
+ 		}
+@@ -1170,7 +1174,7 @@ static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 		 * and update element in place
+ 		 */
+ 		copy_map_value_locked(map,
+-				      l_old->key + round_up(key_size, 8),
++				      htab_elem_value(l_old, key_size),
+ 				      value, false);
+ 		ret = 0;
+ 		goto err;
+@@ -1255,8 +1259,7 @@ static long htab_lru_map_update_elem(struct bpf_map *map, void *key, void *value
+ 	l_new = prealloc_lru_pop(htab, key, hash);
+ 	if (!l_new)
+ 		return -ENOMEM;
+-	copy_map_value(&htab->map,
+-		       l_new->key + round_up(map->key_size, 8), value);
++	copy_map_value(&htab->map, htab_elem_value(l_new, map->key_size), value);
+ 
+ 	ret = htab_lock_bucket(htab, b, hash, &flags);
+ 	if (ret)
+@@ -1533,10 +1536,10 @@ static void htab_free_malloced_timers_and_wq(struct bpf_htab *htab)
+ 			/* We only free timer on uref dropping to zero */
+ 			if (btf_record_has_field(htab->map.record, BPF_TIMER))
+ 				bpf_obj_free_timer(htab->map.record,
+-						   l->key + round_up(htab->map.key_size, 8));
++						   htab_elem_value(l, htab->map.key_size));
+ 			if (btf_record_has_field(htab->map.record, BPF_WORKQUEUE))
+ 				bpf_obj_free_workqueue(htab->map.record,
+-						       l->key + round_up(htab->map.key_size, 8));
++						       htab_elem_value(l, htab->map.key_size));
+ 		}
+ 		cond_resched_rcu();
+ 	}
+@@ -1652,15 +1655,12 @@ static int __htab_map_lookup_and_delete_elem(struct bpf_map *map, void *key,
+ 			off += roundup_value_size;
+ 		}
+ 	} else {
+-		u32 roundup_key_size = round_up(map->key_size, 8);
++		void *src = htab_elem_value(l, map->key_size);
+ 
+ 		if (flags & BPF_F_LOCK)
+-			copy_map_value_locked(map, value, l->key +
+-					      roundup_key_size,
+-					      true);
++			copy_map_value_locked(map, value, src, true);
+ 		else
+-			copy_map_value(map, value, l->key +
+-				       roundup_key_size);
++			copy_map_value(map, value, src);
+ 		/* Zeroing special fields in the temp buffer */
+ 		check_and_init_map_value(map, value);
+ 	}
+@@ -1721,12 +1721,12 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 				   bool is_percpu)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+-	u32 bucket_cnt, total, key_size, value_size, roundup_key_size;
+ 	void *keys = NULL, *values = NULL, *value, *dst_key, *dst_val;
+ 	void __user *uvalues = u64_to_user_ptr(attr->batch.values);
+ 	void __user *ukeys = u64_to_user_ptr(attr->batch.keys);
+ 	void __user *ubatch = u64_to_user_ptr(attr->batch.in_batch);
+ 	u32 batch, max_count, size, bucket_size, map_id;
++	u32 bucket_cnt, total, key_size, value_size;
+ 	struct htab_elem *node_to_free = NULL;
+ 	u64 elem_map_flags, map_flags;
+ 	struct hlist_nulls_head *head;
+@@ -1762,7 +1762,6 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 		return -ENOENT;
+ 
+ 	key_size = htab->map.key_size;
+-	roundup_key_size = round_up(htab->map.key_size, 8);
+ 	value_size = htab->map.value_size;
+ 	size = round_up(value_size, 8);
+ 	if (is_percpu)
+@@ -1854,7 +1853,7 @@ __htab_map_lookup_and_delete_batch(struct bpf_map *map,
+ 				off += size;
+ 			}
+ 		} else {
+-			value = l->key + roundup_key_size;
++			value = htab_elem_value(l, key_size);
+ 			if (map->map_type == BPF_MAP_TYPE_HASH_OF_MAPS) {
+ 				struct bpf_map **inner_map = value;
+ 
+@@ -2116,11 +2115,11 @@ static void *bpf_hash_map_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ static int __bpf_hash_map_seq_show(struct seq_file *seq, struct htab_elem *elem)
+ {
+ 	struct bpf_iter_seq_hash_map_info *info = seq->private;
+-	u32 roundup_key_size, roundup_value_size;
+ 	struct bpf_iter__bpf_map_elem ctx = {};
+ 	struct bpf_map *map = info->map;
+ 	struct bpf_iter_meta meta;
+ 	int ret = 0, off = 0, cpu;
++	u32 roundup_value_size;
+ 	struct bpf_prog *prog;
+ 	void __percpu *pptr;
+ 
+@@ -2130,10 +2129,9 @@ static int __bpf_hash_map_seq_show(struct seq_file *seq, struct htab_elem *elem)
+ 		ctx.meta = &meta;
+ 		ctx.map = info->map;
+ 		if (elem) {
+-			roundup_key_size = round_up(map->key_size, 8);
+ 			ctx.key = elem->key;
+ 			if (!info->percpu_value_buf) {
+-				ctx.value = elem->key + roundup_key_size;
++				ctx.value = htab_elem_value(elem, map->key_size);
+ 			} else {
+ 				roundup_value_size = round_up(map->value_size, 8);
+ 				pptr = htab_elem_get_ptr(elem, map->key_size);
+@@ -2218,7 +2216,6 @@ static long bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_
+ 	struct hlist_nulls_head *head;
+ 	struct hlist_nulls_node *n;
+ 	struct htab_elem *elem;
+-	u32 roundup_key_size;
+ 	int i, num_elems = 0;
+ 	void __percpu *pptr;
+ 	struct bucket *b;
+@@ -2233,7 +2230,6 @@ static long bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_
+ 
+ 	is_percpu = htab_is_percpu(htab);
+ 
+-	roundup_key_size = round_up(map->key_size, 8);
+ 	/* migration has been disabled, so percpu value prepared here will be
+ 	 * the same as the one seen by the bpf program with
+ 	 * bpf_map_lookup_elem().
+@@ -2249,7 +2245,7 @@ static long bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_
+ 				pptr = htab_elem_get_ptr(elem, map->key_size);
+ 				val = this_cpu_ptr(pptr);
+ 			} else {
+-				val = elem->key + roundup_key_size;
++				val = htab_elem_value(elem, map->key_size);
+ 			}
+ 			num_elems++;
+ 			ret = callback_fn((u64)(long)map, (u64)(long)key,
 -- 
 2.53.0
 
