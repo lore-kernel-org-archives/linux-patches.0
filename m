@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4DD3BFAFA;
-	Wed, 30 Sep 2026 18:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3583B05A4;
+	Wed, 30 Sep 2026 18:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794650; cv=none; b=De2ER6xNjAIflnauCSocZCWFGhvtobRlguX49oR58r0CvfD45aYeXF80Ih4pJ4y5V+02CO6Ta4Shc6qYMI5V6dh/UrTdP+cJY7aKjf+FGIVL5iYOebnLwNb8IFa6jbs4dIV4WyKcYPzuZ9cI7rrLtdD2f8XxDn6yvuGioJ9tUrM=
+	t=1790794652; cv=none; b=YjBzjCE+vJ1YpR43G9gp5RDvIP92fpJM9/GEGsdDfHVhypwNB7muY0DYxPwdK/trMpPlvHRWuafIwnnWJJHDIlcGi3WqzAjiy+axNUq5BTBJo7aQM7Ne812MFu21HvmzbqO7GU5E1G0WSW7Osj8Mi5n8tELWHn06BTikPnOfKf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794650; c=relaxed/simple;
-	bh=XEl5iYlBuJPBlPbaSiP1xriWvcLban4ouiZ8URB4gAM=;
+	s=arc-20240116; t=1790794652; c=relaxed/simple;
+	bh=wI8AJXWR4OtV5LeKwIh78BOZRoxHpLOMDYYHreaQoaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bgrxDVtf+E70BddlvS3LAoT6Xv+xiWFGBCuYWkButel/DhY4uki4RADEq0liw9fu+BnbNaFiML9PFtz3DjV4YveQjWNzL1TCAesUpPgUBS37122Dz1rOLHh+8w5She+3xvyFE65dL03eRzj3kHyqtSWItjkX6PLS7OsDVNV+rd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9n69xMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kn1uCNWC0yp7fxu1lg0T67HyvNENCuz2cPoS5v2FFKrvjlohKqlqL86PIHzmgFKR9UXKL9FaXBazBDWxxr4HsvDPgb0GTMRmJvkqVO7v0ry4hvnejGGBLfX+7agTYb5xNv/KY98aSQwwjPYZ7iixsv39KW+aNF+77L42gSOx1m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4nB62YK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9n69xMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0463A1F000FF;
-	Wed, 30 Sep 2026 18:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4nB62YK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DDF1F000FF;
+	Wed, 30 Sep 2026 18:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794648;
-	bh=1L0sF9dkbNxXskizThmRkyCno0Jr885ZRzAk5RXVKes=;
+	s=korg; t=1790794651;
+	bh=WbGurcfOZ7Pqe+pJokJvKeU2G057su/YS5tYkTKnChY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9n69xMny9AIeN91+zTm37Pz2iB0QOVNlcIRkKfjI6Gc4DXFWcQ/4ClixoKqlLJwn
-	 yVnjdhMrV3OUN2IwPTVxwpnctRAJXnt25PzTYlHe4+Qll6yrzwMXeXV0X1CkP0Mz6N
-	 wsMXcTowGxCdpVc/vsLEFrFZzJ9NXI1EKRzU31N8=
+	b=k4nB62YK8U0fynyj9sWesxBpjzEXO5C2vWH7ng2Det9NOy7TtOJjXInyD1FZe4daE
+	 iE8qkGvdVvzGFqIMvvyotEBLG+vKd7GwqPInLajH5tXqhlUGlhCXSr5HSU5Pe7s0u0
+	 q4U/WPWt/6jLXw1gP0XVG12nJm0avZmrDhaZveCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0286/1193] wifi: ralink: RT2X00: init EEPROM properly
-Date: Wed, 30 Sep 2026 17:16:10 +0200
-Message-ID: <20260930152440.520962326@linuxfoundation.org>
+Subject: [PATCH 6.6 0287/1193] wifi: mac80211: validate deauth frame length before reason access
+Date: Wed, 30 Sep 2026 17:16:11 +0200
+Message-ID: <20260930152440.541650720@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,92 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 0a2581cbae9e442835f68d22044157db61cdf54d ]
+[ Upstream commit 4a360c6e18dfa9d70006c7247a6a8cc8dfe0d60f ]
 
-I have an hostapd setup with a
-01:00.0 Network controller: Ralink corp. RT2790 Wireless 802.11n 1T/2R PCIe
+ieee80211_rx_mgmt_deauth() reads the deauth reason code before checking
+that the fixed field is actually present in the received frame.
 
-The setup work fine on 6.18.26-gentoo
-It breaks on 6.18.33-gentoo (and still broken on 6.18.37)
+Validate the deauth frame length first and only then read the reason
+code.
 
-I found an hint in dmesg:
-On 6.18.26-gentoo I see:
-May 31 15:48:45 trash01 kernel: ieee80211 phy0: rt2x00_set_rf: Info - RF chipset 0003 detected
-On 6.18.33-gentoo I see:
-May 31 15:22:57 trash01 kernel: ieee80211 phy0: rt2x00_set_rf: Info - RF chipset 0006 detected
-
-The RF chipset seems badly detected.
-
-The problem was the EEPROM which was badly initialized.
-Probably the origin was in some PCI change but unfortunately I couldn't play
-to bisect/reboot often the board with this card to do it.
-
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260703134932.3786771-1-clabbe@baylibre.com
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260612185042.66260-6-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2400pci.c | 2 +-
- drivers/net/wireless/ralink/rt2x00/rt2500pci.c | 2 +-
- drivers/net/wireless/ralink/rt2x00/rt2800pci.c | 2 +-
- drivers/net/wireless/ralink/rt2x00/rt61pci.c   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/mlme.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
-index 13dd672b825e7..992eeda4986cf 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2400pci.c
-@@ -1429,7 +1429,7 @@ static irqreturn_t rt2400pci_interrupt(int irq, void *dev_instance)
-  */
- static int rt2400pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 496f2b36a0bed..ac3c2c3334fdf 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -3826,13 +3826,15 @@ static void ieee80211_rx_mgmt_deauth(struct ieee80211_sub_if_data *sdata,
+ 				     struct ieee80211_mgmt *mgmt, size_t len)
  {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	u32 reg;
- 	u16 word;
- 	u8 *mac;
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
-index ecddda4c471ea..dbb949815c511 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2500pci.c
-@@ -1555,7 +1555,7 @@ static irqreturn_t rt2500pci_interrupt(int irq, void *dev_instance)
-  */
- static int rt2500pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
- {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	u32 reg;
- 	u16 word;
- 	u8 *mac;
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2800pci.c b/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
-index dcb56f708a5fc..1bc1aa315762a 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2800pci.c
-@@ -108,7 +108,7 @@ static void rt2800pci_eepromregister_write(struct eeprom_93cx6 *eeprom)
+ 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
+-	u16 reason_code = le16_to_cpu(mgmt->u.deauth.reason_code);
++	u16 reason_code;
  
- static int rt2800pci_read_eeprom_pci(struct rt2x00_dev *rt2x00dev)
- {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	u32 reg;
+ 	sdata_assert_lock(sdata);
  
- 	reg = rt2x00mmio_register_read(rt2x00dev, E2PROM_CSR);
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt61pci.c b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
-index 483723bf514bf..f2ca3290a194c 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt61pci.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt61pci.c
-@@ -2298,7 +2298,7 @@ static irqreturn_t rt61pci_interrupt(int irq, void *dev_instance)
-  */
- static int rt61pci_validate_eeprom(struct rt2x00_dev *rt2x00dev)
- {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	u32 reg;
- 	u16 word;
- 	u8 *mac;
+-	if (len < 24 + 2)
++	if (len < offsetofend(struct ieee80211_mgmt, u.deauth.reason_code))
+ 		return;
+ 
++	reason_code = le16_to_cpu(mgmt->u.deauth.reason_code);
++
+ 	if (!ether_addr_equal(mgmt->bssid, mgmt->sa)) {
+ 		ieee80211_tdls_handle_disconnect(sdata, mgmt->sa, reason_code);
+ 		return;
 -- 
 2.53.0
 
