@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC9A51C078;
-	Wed, 30 Sep 2026 16:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5990C51C327;
+	Wed, 30 Sep 2026 16:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784995; cv=none; b=GDnjSpsVUoQMwObPd0PFzWXpEinBSaC6f5qBCsVjjiAVxeTDyyRiJMes8LmiFQiQmJjnmj5dRVVGW1vfeLQmy5cwnGt7627QhmT9YY5Rieky+KmO5kDjjn3jlSthPAihEUThXpLZYo6AOPkqAqyyi+jR0fb2UgA0I7y148BnobM=
+	t=1790785001; cv=none; b=sV9XSFV7QPuRvTR/wi6l/Lcb75cfzq1O1f8Hm+QjXolK/oNV7Obt9DlFSUWKwc/hgjPnXjT53CCFRfRnHrAe7gsKA34np/do8WZOi3fHG8dEEnOTIQZoZREVDpn1z4IB+XEJurCKOO3hb/irKJR3L85xcAVpo/B/dNEqyM9YnUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784995; c=relaxed/simple;
-	bh=7p7AWvcRiqWmfjn9DR1IR1HAkbgW+pIN5BTVKgCccFQ=;
+	s=arc-20240116; t=1790785001; c=relaxed/simple;
+	bh=T0pgXGUPV3kPL7B2vkpLVwGyqLED1PxlgRP+tg50Seg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYcTilQaGROVb0ByuaLgEqc6CMyOHCLUvfhFx9cpPVxg0DdgX2hm/N5MpgQ0xQ3xn0uAyxe3RHr0q8gmKTcE4VuHZbyKln7k8S8jphc7x+om6FdQ2FW2pB77SXsHVW9a94k3VmyHvBuYZ3ALPwtdF2psPEXNfZQ+QfXrgCX4hFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkllrlBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j8W0R+45R/JBjbuLdAQIRVgsw/di3DATq2TNwuvdovo3RwfZgzvWbJeZGp5X3DL1WefQed4ThaoeSsWKcpwBGzyNK863ciOd2arU9wIt4PYsMOlzNjSxZe6RaE0zujzL4HRs2NQ9nklAGqeMKLBlv/EdKmbRt928t7TdGRh0gXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ai793ZUr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkllrlBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE3F1F00893;
-	Wed, 30 Sep 2026 16:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ai793ZUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D011F000FF;
+	Wed, 30 Sep 2026 16:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784991;
-	bh=Dan9+yGDdXvIscJU5yA7weGybeg8mHjbeJ5eDYAug98=;
+	s=korg; t=1790784994;
+	bh=tNp1GfjGxUGpaNQc5D1vjDu/o34uaP8jS/o/GLrAoOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OkllrlBdw2kpXPsrX/OxiV6PnrzFj+dWCG8BHZLT0bUFxFWbcfZEPA5vRwmWmTxO2
-	 9BRM/N0mjI2Tfph1uuxoBsrGhCjzqRfVlSwEGa/75VqxRiN1JAIZ/QKGoo3Qugr953
-	 57d0wQhxv6mOEhjCR8aBPQ2mWte6KlwvWvgPuqA4=
+	b=ai793ZUrty/Pz88cJqx2/QE8QExXneM+1BlnAPjk1t1eA/ElsAPJSQWuHBN2hD33e
+	 LmYBNl5oXdnlSkPW2rTt9jZzjdZnCdKJnqXjwr9RFtceF9Sozh3eN0x0nb3pFM69FK
+	 GYbCOmeyhfbXbYc5vJ1pV7PkjE/LUax3GskjKYpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/982] tipc: fix integer overflow in tipc_recvmsg() and tipc_recvstream()
-Date: Wed, 30 Sep 2026 17:17:22 +0200
-Message-ID: <20260930152423.390159736@linuxfoundation.org>
+Subject: [PATCH 6.1 307/982] Bluetooth: mgmt: hold reference for hci_conn in mgmt_pending_cmds
+Date: Wed, 30 Sep 2026 17:17:23 +0200
+Message-ID: <20260930152423.412213709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,68 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 47f42ff521b4eeb46e82f9a46a4783a99f7570d7 ]
+[ Upstream commit da55f570191d5d72f10c607a7043b947eb05ea46 ]
 
-In tipc_recvmsg(), the copy length is computed as:
+Dereferencing RCU-protected pointers outside critical sections is
+invalid and may lead to UAF.  Use of hci_conn in hci_sync callbacks also
+needs to hold refcount to avoid UAF.
 
-  copy = min_t(int, dlen - offset, buflen);
+Take appropriate locks for hci_conn lookups, and take refcount for
+hci_conn pointers stored in mgmt_pending_cmd so that the pointer stays
+valid.
 
-buflen is size_t but min_t(int, ...) casts it to int. When buflen
-exceeds INT_MAX (e.g. 0xFFFFFFFF via io_uring provided buffers), it
-wraps negative, wins the comparison, and the negative copy length
-propagates to simple_copy_to_iter() where int-to-size_t promotion
-makes it SIZE_MAX, triggering a WARN_ON. tipc_recvstream() has the
-same pattern.
+When accessing conn->state, ensure hdev->lock is held to avoid data
+race.
 
-  Kernel panic - not syncing: kernel: panic_on_warn set ...
-  RIP: 0010:simple_copy_to_iter+0x9e/0xd0 (net/core/datagram.c:521)
-  Call Trace:
-   __skb_datagram_iter+0x123/0x8b0 (net/core/datagram.c:402)
-   skb_copy_datagram_iter+0x77/0x1a0 (net/core/datagram.c:534)
-   tipc_recvmsg+0x3d7/0xe80 (net/tipc/socket.c:1934)
-   io_recvmsg+0x47e/0xda0
-
-Fix by changing min_t(int, ...) to min_t(size_t, ...) in both
-functions. The result is always <= (dlen - offset), which is bounded
-by TIPC maximum message size (0x1ffff bytes), so the implicit
-narrowing on assignment to int copy is always safe.
-
-Fixes: e9f8b10101c6 ("tipc: refactor function tipc_sk_recvmsg()")
-Fixes: ec8a09fbbeff ("tipc: refactor function tipc_sk_recv_stream()")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260720214103.47732-1-blbllhy@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7b445e220db9 ("Bluetooth: MGMT: Fix holding hci_conn reference while command is queued")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/socket.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index 3b93cceb0d3ca..7b8cac8b3b994 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -1939,7 +1939,7 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
- 	if (likely(!err)) {
- 		int offset = skb_cb->bytes_read;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index c53b128adb7bd..6a3f4afc9760a 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -7363,6 +7363,9 @@ static void get_conn_info_complete(struct hci_dev *hdev, void *data, int err)
+ 		rp.max_tx_power = HCI_TX_POWER_INVALID;
+ 	}
  
--		copy = min_t(int, dlen - offset, buflen);
-+		copy = min_t(size_t, dlen - offset, buflen);
- 		rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
- 		if (unlikely(rc))
- 			goto exit;
-@@ -2071,7 +2071,7 @@ static int tipc_recvstream(struct socket *sock, struct msghdr *m,
- 		/* Copy data if msg ok, otherwise return error/partial data */
- 		if (likely(!err)) {
- 			offset = skb_cb->bytes_read;
--			copy = min_t(int, dlen - offset, buflen - copied);
-+			copy = min_t(size_t, dlen - offset, buflen - copied);
- 			rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
- 			if (unlikely(rc))
- 				break;
++	if (conn)
++		hci_conn_put(conn);
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_GET_CONN_INFO, status,
+ 			  &rp, sizeof(rp));
+ 
+@@ -7377,6 +7380,8 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	int err;
+ 	__le16   handle;
+ 
++	hci_dev_lock(hdev);
++
+ 	/* Make sure we are still connected */
+ 	if (cp->addr.type == BDADDR_BREDR)
+ 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+@@ -7384,12 +7389,16 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	else
+ 		conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, &cp->addr.bdaddr);
+ 
+-	if (!conn || conn->state != BT_CONNECTED)
++	if (!conn || conn->state != BT_CONNECTED) {
++		hci_dev_unlock(hdev);
+ 		return MGMT_STATUS_NOT_CONNECTED;
++	}
+ 
+-	cmd->user_data = conn;
++	cmd->user_data = hci_conn_get(conn);
+ 	handle = cpu_to_le16(conn->handle);
+ 
++	hci_dev_unlock(hdev);
++
+ 	/* Refresh RSSI each time */
+ 	err = hci_read_rssi_sync(hdev, handle);
+ 
+@@ -7524,6 +7533,9 @@ static void get_clock_info_complete(struct hci_dev *hdev, void *data, int err)
+ 	}
+ 
+ complete:
++	if (conn)
++		hci_conn_put(conn);
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status, &rp,
+ 			  sizeof(rp));
+ 
+@@ -7540,15 +7552,21 @@ static int get_clock_info_sync(struct hci_dev *hdev, void *data)
+ 	memset(&hci_cp, 0, sizeof(hci_cp));
+ 	hci_read_clock_sync(hdev, &hci_cp);
+ 
++	hci_dev_lock(hdev);
++
+ 	/* Make sure connection still exists */
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &cp->addr.bdaddr);
+-	if (!conn || conn->state != BT_CONNECTED)
++	if (!conn || conn->state != BT_CONNECTED) {
++		hci_dev_unlock(hdev);
+ 		return MGMT_STATUS_NOT_CONNECTED;
++	}
+ 
+-	cmd->user_data = conn;
++	cmd->user_data = hci_conn_get(conn);
+ 	hci_cp.handle = cpu_to_le16(conn->handle);
+ 	hci_cp.which = 0x01; /* Piconet clock */
+ 
++	hci_dev_unlock(hdev);
++
+ 	return hci_read_clock_sync(hdev, &hci_cp);
+ }
+ 
 -- 
 2.53.0
 
