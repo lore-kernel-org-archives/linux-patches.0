@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA4651EE10;
-	Wed, 30 Sep 2026 18:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176DA51E456;
+	Wed, 30 Sep 2026 18:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793196; cv=none; b=XGJC2G8Rl2bYOvrqrIrcTPeMwJssm8jLGJhSHSawIVtQTgwQNNEn+pT5/UOWoWYduV4GypchpMOd1bc9xVPJyeBQghXu3s5Cf6euvnnC1VqRxcTqpyS9oiI8w+5VqN8zlu2bqudwmPSyxXFkFanS4RlKUXn3miqQHi2ziCOGAsw=
+	t=1790793199; cv=none; b=eMP3nY724vZQGyThSKUlowk8HTp8KcZZ8OW5A7TI1F63/a3IccLDyNJJM/lm47D2/yjgfJawFSVjERhVrehHhwlZMH5H0UitIJdelQZsPKByO+nXvDfzerPxW1tmMEELMPDdSzh3tTRvUzN7bFl4R66yRVgXBqDfxepcA0yaeHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793196; c=relaxed/simple;
-	bh=cpceh1ex4zbMHPwIczo6Gqsex6CeXJW5YG6Yrz+rljY=;
+	s=arc-20240116; t=1790793199; c=relaxed/simple;
+	bh=vPKqfRpPVhrHdIp/TCEhOxXZ9K36bLqfk1i7Vxgfc1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrIWDX6G+yDlkSs057/+qBwYKirkiHSOI6LDeyg+SZWgq6x0nMaEFz75AOWD2v9oNLBLNFWYfhLt+AUneOTrpGsoqNp4a4LMyOVs/yxaqFI72ex2q+csT7ldPVROFSl5bPETFNVSAguNQbJnVEoGeLklB6ohrvIPnA0m2AwnfSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9EHrLCg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LMrKBddxucGNtcO2j80Qu5EQfajNu84ysGghTEN77cW7GIv0BjsA4zAtiIN8tcUeN/MYk/ytRY0I2OcLxFAuQHfn7neoCeER+v+Gxra10fOcJZdd9xkaDCuE8GihFbb9QfwgpVWqZrzzWWWtIE2OihI7xwP7I9jnqbcffOOJd00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAow8Bz6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9EHrLCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 979EE1F000FF;
-	Wed, 30 Sep 2026 18:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAow8Bz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B09A1F000FF;
+	Wed, 30 Sep 2026 18:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793195;
-	bh=sD9bZTdrFRYCSKlE7nEmteLFH3LxtSDMlc1J93zlwiw=;
+	s=korg; t=1790793198;
+	bh=Dhs2kGGLz/+EvQ03DCq4Tx3L0G+G/NPTcB+OUBpFXYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9EHrLCgAszF/FbhJMP9jAZDAoGhfhZS3fScbOKhs1MOtiJPv4IV8dkaC9HVdrO6j
-	 e/D3StrOOFi3qe2BZlwuI4Yjlff61q50g6H+5JZahzV53kJ55FR+QGo3OGJtMbnxDM
-	 PC6fj4f6ibWJt7HN48cyRp4EK2sfWiZxrVIgE6HY=
+	b=ZAow8Bz6Vmtt7wT+lk9RyjLX/zE6nSscNZq2sxqA3F+6A9+K3Jd3m0NU63UH3OnYs
+	 IzzooitaJg2j44tVhKEnWAX8yUOGULwuNUr8FeccmNrKIU38+ov6gzS2x+hut+1vK2
+	 3OUmCGiZUQtP2sIlfiBIDuR8or4ylqlWRMlZfbgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/395] net: bcmgenet: validate Ethernet address in bcmgenet_set_mac_addr
-Date: Wed, 30 Sep 2026 17:27:09 +0200
-Message-ID: <20260930152344.272805437@linuxfoundation.org>
+Subject: [PATCH 6.18 168/395] net: bcmgenet: mask DMA_TIMEOUT_MASK when reading DMA_RING0_TIMEOUT
+Date: Wed, 30 Sep 2026 17:27:10 +0200
+Message-ID: <20260930152344.295332981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -54,40 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 273941c85fc2632cd3e56ddff737b9245de7697d ]
+[ Upstream commit d64e277b955be4506931802837499b62c8f3968a ]
 
-bcmgenet_set_mac_addr() did not check whether the provided MAC address is a
-valid Ethernet address before applying it. Userspace could configure an
-invalid address (such as all zeroes or a multicast address) while the
-interface is down.
+bcmgenet_get_coalesce() reads DMA_RING0_TIMEOUT to calculate
+rx_coalesce_usecs without masking out bits outside DMA_TIMEOUT_MASK
+(16 bits). If upper bits are non-zero or contain status/flags, the
+computed value of rx_coalesce_usecs returned to userspace via ethtool
+becomes corrupted.
 
-Add a call to is_valid_ether_addr() and return -EADDRNOTAVAIL if the MAC
-address is not valid.
+Mask the register read with DMA_TIMEOUT_MASK before computing the
+timeout in microseconds.
 
-Fixes: 1c1008c793fa ("net: bcmgenet: add main driver file")
+Fixes: 4a29645bfe6c ("net: bcmgenet: Implement RX coalescing control knobs")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260921220021.281418-5-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20260921220021.281418-6-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 96308c85899f7..c18702f3dd766 100644
+index c18702f3dd766..a72e136fd9c38 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3633,6 +3633,9 @@ static int bcmgenet_set_mac_addr(struct net_device *dev, void *p)
- 	if (netif_running(dev))
- 		return -EBUSY;
+@@ -853,7 +853,8 @@ static int bcmgenet_get_coalesce(struct net_device *dev,
+ 	ec->rx_max_coalesced_frames =
+ 		bcmgenet_rdma_ring_readl(priv, 0, DMA_MBUF_DONE_THRESH);
+ 	ec->rx_coalesce_usecs =
+-		bcmgenet_rdma_readl(priv, DMA_RING0_TIMEOUT) * 8192 / 1000;
++		(bcmgenet_rdma_readl(priv, DMA_RING0_TIMEOUT) &
++		 DMA_TIMEOUT_MASK) * 8192 / 1000;
  
-+	if (!is_valid_ether_addr(addr->sa_data))
-+		return -EADDRNOTAVAIL;
-+
- 	eth_hw_addr_set(dev, addr->sa_data);
- 
- 	return 0;
+ 	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
+ 		ring = &priv->rx_rings[i];
 -- 
 2.53.0
 
