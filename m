@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AA546D092;
-	Wed, 30 Sep 2026 19:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6097746EF77;
+	Wed, 30 Sep 2026 19:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797251; cv=none; b=PWboNuvYXMNaxba+WaRCoUbhMN4pOdl5VzHO5C7zV8cGTNswf9JolCHMFgvI/WUT22Gjh2rnzTu0HkBxqfJ00qQJ8EF6aau6zEjZZNI2Ah4oyNVqFt2pRQGV2EUGW8HVviQIkvDwjspesf813zYqE0EDvbCUI0tfCdBgOH3kt/Y=
+	t=1790797254; cv=none; b=pnEdU40gWCwvLAE7HCHYJxFRTBBr3JCXEPmbOCGayBp8HzRra+tvTdCx/WItgjEudAEBqYqv/5PVjMv/3u4jRfcTRjPkubsuaSpCcGJe3vJMrSPutM/LXYlL5NUz0eNd5oyD7jJm8zoZgIX68swKnioD435ZvenJdL9KnZTLAh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797251; c=relaxed/simple;
-	bh=/cC+MaysGJRIbRgCGlQor74SfJ/G4d93QtBR5C530+Y=;
+	s=arc-20240116; t=1790797254; c=relaxed/simple;
+	bh=8OsbC9F5MXipLjRk8yRlM0P2zc6SYTZ959Q46VMrPgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSuf5QRoZ63mXNfVnyxA6zuevixV9aXbDetHz2+X5V3BE3nAsJBbZNOATotWd0vUs9XC9W4WvTczrXMzY2StpwlMWNXRjMmA4Zy0IoxcmcbZ/Y3zbTjzhfLiRg6Zx7vJjq9UcNbtNabefLJskNZJe5oWw9qW6OK1BCVs7lWPdUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIiFSZy+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QuGMbctu/detbUqGDTSqeZKvVrSQGIaMKyCmi51RpLoV5Z3bWpjKFG/5rfMFDreTlmv3wY2fdYRUvZtR3YNWosGJb6Qs+7nN5KsMFYj6ui37LEW526Xo3boXjRKDo260JuCNQVBByAJ86PQi6cHmTKggGyKDkPovEQpow3wHs4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9Z5Hn2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIiFSZy+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FEC1F000FF;
-	Wed, 30 Sep 2026 19:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9Z5Hn2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B942F1F000FF;
+	Wed, 30 Sep 2026 19:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797250;
-	bh=giDVT+iitzj7fMdqgcuAdsRy4pMjkDCeEHaO4sNEcDg=;
+	s=korg; t=1790797253;
+	bh=jNLSFed2Pvr6tXJ4XUbFIb/E4hxzzIdrekFBV/csdRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIiFSZy+y9/C3pLubujAIN4lQ6f55jUnj3b4ISeSlUhSQbkQW3Wt6d+wtMEvr7e8a
-	 k5IHcZEYsqPi8GDjpbTVE43RqP0qmRTccwjtf1ZGbACsDvwYKQdbA0PH8ALUBMEwh8
-	 XFPpsHjGdVohDZ1B6R5cR6n3+cib0OZf93IKDopI=
+	b=H9Z5Hn2D7Lz6GERZ9NjwivRNd7zXab65P6/qJczN0/ftjuof3CzFrYSzlWPs3vUqo
+	 bEBBVDHJjE1dW/Hb2eJgWwrTntTlqnyUABktbtQW3XbJtyvDpiRSVjk7Yo7OqhzRS/
+	 dyBHchX28Ld8bB9gYeDHT6+wstjAnhNbyi68bnaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Breno Leitao <leitao@debian.org>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 1193/1193] net: mediatek: Fix potential NULL pointer dereference in dummy net_device handling
-Date: Wed, 30 Sep 2026 17:31:17 +0200
-Message-ID: <20260930152500.753391726@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 1189/1193] netfilter: nft_set_rbtree: Remove unused variable nft_net
+Date: Wed, 30 Sep 2026 17:31:13 +0200
+Message-ID: <20260930152500.662536974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -46,61 +47,166 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Yang Li <yang.lee@linux.alibaba.com>
 
-commit 16f3a28cf5f876a7f3550d8f4c870a7b41bcfaef upstream.
+[ Upstream commit 67059b61597c004e23b074547b40604222bee3a0 ]
 
-Move the freeing of the dummy net_device from mtk_free_dev() to
-mtk_remove().
+The code that uses nft_net has been removed, and the nft_pernet function
+is merely obtaining a reference to shared data through the net pointer.
+The content of the net pointer is not modified or changed, so both of
+them should be removed.
 
-Previously, if alloc_netdev_dummy() failed in mtk_probe(),
-eth->dummy_dev would be NULL. The error path would then call
-mtk_free_dev(), which in turn called free_netdev() assuming dummy_dev
-was allocated (but it was not), potentially causing a NULL pointer
-dereference.
+silence the warning:
+net/netfilter/nft_set_rbtree.c:627:26: warning: variable ‘nft_net’ set but not used
 
-By moving free_netdev() to mtk_remove(), we ensure it's only called when
-mtk_probe() has succeeded and dummy_dev is fully allocated. This
-addresses a potential NULL pointer dereference detected by Smatch[1].
-
-Fixes: b209bd6d0bff ("net: mediatek: mtk_eth_sock: allocate dummy net_device dynamically")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/4160f4e0-cbef-4a22-8b5d-42c4d399e1f7@stanley.mountain/ [1]
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=7103
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240724080524.2734499-1-leitao@debian.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 7904b94768e9 ("netfilter: nf_tables: don't queue packet path object notifications")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c  |   28 +++++++++++++++-------------
+ net/netfilter/nft_set_rbtree.c |    2 --
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4249,8 +4249,6 @@ static int mtk_free_dev(struct mtk_eth *
- 		dst_release(&eth->dsa_meta[i]->dst);
- 	}
- 
--	free_netdev(eth->dummy_dev);
--
- 	return 0;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -922,11 +922,11 @@ nf_tables_chain_type_lookup(struct net *
+ 	return ERR_PTR(-ENOENT);
  }
  
-@@ -5103,6 +5101,7 @@ static int mtk_remove(struct platform_de
- 	netif_napi_del(&eth->tx_napi);
- 	netif_napi_del(&eth->rx_napi);
- 	mtk_cleanup(eth);
-+	free_netdev(eth->dummy_dev);
- 	mtk_mdio_cleanup(eth);
+-static __be16 nft_base_seq(const struct net *net)
++static unsigned int nft_base_seq(const struct net *net)
+ {
+ 	struct nftables_pernet *nft_net = nft_pernet(net);
  
- 	return 0;
+-	return htons(nft_net->base_seq & 0xffff);
++	return READ_ONCE(nft_net->base_seq);
+ }
+ 
+ static const struct nla_policy nft_table_policy[NFTA_TABLE_MAX + 1] = {
+@@ -946,7 +946,7 @@ static int nf_tables_fill_table_info(str
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -1789,7 +1789,7 @@ static int nf_tables_fill_chain_info(str
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -3398,7 +3398,7 @@ static int nf_tables_fill_rule_info(stru
+ 	u16 type = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 
+ 	nlh = nfnl_msg_put(skb, portid, seq, type, flags, family, NFNETLINK_V0,
+-			   nft_base_seq(net));
++			   htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -4593,7 +4593,8 @@ static int nf_tables_fill_set(struct sk_
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, ctx->family,
+-			   NFNETLINK_V0, nft_base_seq(ctx->net));
++			   NFNETLINK_V0,
++			   htons(nft_base_seq(ctx->net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -5938,7 +5939,8 @@ static int nf_tables_dump_set(struct sk_
+ 	seq    = cb->nlh->nlmsg_seq;
+ 
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, NLM_F_MULTI,
+-			   table->family, NFNETLINK_V0, nft_base_seq(net));
++			   table->family, NFNETLINK_V0,
++			   htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -6018,7 +6020,8 @@ static int nf_tables_fill_setelem_info(s
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, ctx->family,
+-			   NFNETLINK_V0, nft_base_seq(ctx->net));
++			   NFNETLINK_V0,
++			   htons(nft_base_seq(ctx->net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -7838,7 +7841,7 @@ static int nf_tables_fill_obj_info(struc
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -8205,9 +8208,8 @@ void nft_obj_notify(struct net *net, con
+ 		    struct nft_object *obj, u32 portid, u32 seq, int event,
+ 		    u16 flags, int family, int report, gfp_t gfp)
+ {
+-	struct nftables_pernet *nft_net = nft_pernet(net);
+ 	char *buf = kasprintf(gfp, "%s:%u",
+-			      table->name, nft_net->base_seq);
++			      table->name, nft_base_seq(net));
+ 
+ 	audit_log_nfcfg(buf,
+ 			family,
+@@ -8872,7 +8874,7 @@ static int nf_tables_fill_flowtable_info
+ 
+ 	event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, event);
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, flags, family,
+-			   NFNETLINK_V0, nft_base_seq(net));
++			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+@@ -9119,7 +9121,7 @@ static int nf_tables_fill_gen_info(struc
+ 	int event = nfnl_msg_type(NFNL_SUBSYS_NFTABLES, NFT_MSG_NEWGEN);
+ 
+ 	nlh = nfnl_msg_put(skb, portid, seq, event, 0, AF_UNSPEC,
+-			   NFNETLINK_V0, nft_base_seq(net));
++			   NFNETLINK_V0, htons(nft_base_seq(net) & 0xffff));
+ 	if (!nlh)
+ 		goto nla_put_failure;
+ 
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -653,7 +653,6 @@ static void nft_rbtree_gc(struct nft_set
+ {
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	struct nft_rbtree_elem *rbe, *rbe_end = NULL;
+-	struct nftables_pernet *nft_net;
+ 	struct net *net = read_pnet(&set->net);
+ 	u64 tstamp = nft_net_tstamp(net);
+ 	struct rb_node *node, *next;
+@@ -661,7 +660,6 @@ static void nft_rbtree_gc(struct nft_set
+ 
+ 	set  = nft_set_container_of(priv);
+ 	net  = read_pnet(&set->net);
+-	nft_net = nft_pernet(net);
+ 
+ 	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
+ 	if (!gc)
 
 
