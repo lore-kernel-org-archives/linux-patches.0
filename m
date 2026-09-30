@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D14D348C6B;
-	Wed, 30 Sep 2026 19:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41779341ADD;
+	Wed, 30 Sep 2026 19:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796220; cv=none; b=N2MO4k3V9wl6mcz3zi9GDx7YGd6zVtUbxA03ECgWSfif+CsDl9CN3auUyz4joy7Ao7Wct3i1nbrCm9v+tMk00ARbOwiSmQU7Mt6QaSfFVfUk5jtbdfIPhtG3FqNbBNltYQSu5x99/km6gzQUoIL1dN1JxRzgH73uk7tgRon3mss=
+	t=1790796223; cv=none; b=j3HUGoAKkiuswt8DJc6JW0BWHuY4Ewc8OXczw0luvKu28Djt2pcjLYpz3xlJ7T6yBHYJLJ/sdFCOtxmjWJOVyOxWDyTmTjrXyzKuczOaavAIzv5U3bmNLR+1pMDLJdSz2VbuIhXMe2sQcQweHllHCdIdmnTuKZvsM17246AmYc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796220; c=relaxed/simple;
-	bh=jDI6k7F+KSHjZQyTVINGD85P4kVyIzoUk/1PBgLZcbI=;
+	s=arc-20240116; t=1790796223; c=relaxed/simple;
+	bh=ROL1DgdlD+sc0S8v3MmcB1+rCTddZTIYNwQO3+bp3nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7m8TokVyKJHuQMKCA0aNOhPP73QRzjy81EkxLj08e/VY9ABwWLhyYSUimWBkA3p42A25F77GDV9YLIKOuBvOV+AvCu+PltkGgmeV3INSpa+PJBjIbNHHMLoZb0yhAe/2Wr4Pq71thS81x3yLhHWvUilEwNEfrHDcdzi8wvl/5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pd7alHfh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LuTo5mvmYtT/BsGBz2DuwWScmlfBI8CKdFCTPvx9wUpIJYWqUBsXgPSiUKLl9dBaqaTLpRIINbNgyD7anaPqypiNdY4DSpkLfaxf6NcWGHMDJWayztgcH+Wljl0RDILep9VHu8CCVsYi0/rUEDAXV19ObIYMhWfRnp9GBgXncqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jr7uEamq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pd7alHfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C038B1F000FF;
-	Wed, 30 Sep 2026 19:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jr7uEamq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADCD1F000FF;
+	Wed, 30 Sep 2026 19:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796219;
-	bh=FjhRBy9WqJwsvwjB2VzzVSgTRWH8rdRHYuSJwzbt8RI=;
+	s=korg; t=1790796222;
+	bh=L3sp4d8t0/j67+QQDMuyyrXzFyd3J6rIRf1OLvEIEEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pd7alHfhFOL77QKzPIfBcpON1UrV3wB57mpO3D1nhqksrlHoUIjpICgJqKb5/JXJs
-	 UaexSEc1ScQHl6kcF0UJTIdAlYDlGK81DiBs6M+kSyQ9cbAyPQPSpvW+5TnCm39TuQ
-	 Dy1QytgfWOl6uxDaGmpmhla/4VsX0uAvX9g1GhF0=
+	b=Jr7uEamqIOcmA9WGjOrisDopFdEG35eGFxENUPtwLW8FAkJ479FPuvzmwHP4MB9IV
+	 hO4h46WLPd4h69tgPhVNbvljtITMSW4zRGxgAPrw3SANYVbkM3e5VLJeICIJ21NFGi
+	 HPhNdJqnP2yAfpSF0ivG3NHPljK80UTwZEuxmlqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <oss.patchbox@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 0835/1193] ALSA: virtio: reset device before deleting virtqueues
-Date: Wed, 30 Sep 2026 17:25:19 +0200
-Message-ID: <20260930152452.794082064@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 0836/1193] ASoC: codecs: rt712-sdca-dmic: fix uninitialized stream_config->type
+Date: Wed, 30 Sep 2026 17:25:20 +0200
+Message-ID: <20260930152452.817543429@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,51 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <oss.patchbox@gmail.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit 6c05d00af307560e6a9f1631d6270d3df5aa2272 upstream.
+commit 03a5699a0a04309c597683967aaaf25d1e555ea2 upstream.
 
-virtsnd_remove() and virtsnd_freeze() delete the virtqueues before
-resetting the device. del_vqs() frees the vring backing, but does not
-provide a generic device quiesce operation. In particular, modern
-virtio-pci keeps enabled queues active until the device is reset.
+stream_config is not initialized before being passed to
+sdw_stream_add_slave().  The type field may contain garbage and is
+later copied to stream->type by sdw_config_stream().
 
-Reset the device before deleting the virtqueues so it can no longer
-access the vring memory when that memory is released. This also covers
-probe failures after DRIVER_OK, which unwind through virtsnd_remove().
+Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
 
-Fixes: de3a9980d8c3 ("ALSA: virtio: add virtio sound driver")
-Fixes: 575483e90a32 ("ALSA: virtio: introduce device suspend/resume support")
+While at it, use snd_sdw_params_to_config() helper instead of
+open-coding the same logic.
+
+Fixes: 63a511284c9e ("ASoC: rt712-sdca: Add RT712 SDCA driver for Mic topology")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://patch.msgid.link/20260911031121.1542502-1-oss.patchbox@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260914104712.379574-1-yijiangshan@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/virtio/virtio_card.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt712-sdca-dmic.c |   14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/sound/virtio/virtio_card.c
-+++ b/sound/virtio/virtio_card.c
-@@ -349,8 +349,8 @@ static void virtsnd_remove(struct virtio
- 	if (snd->card)
- 		snd_card_free(snd->card);
+--- a/sound/soc/codecs/rt712-sdca-dmic.c
++++ b/sound/soc/codecs/rt712-sdca-dmic.c
+@@ -14,6 +14,7 @@
+ #include <sound/core.h>
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
++#include <sound/sdw.h>
+ #include <sound/tlv.h>
+ #include "rt712-sdca.h"
+ #include "rt712-sdca-dmic.h"
+@@ -640,10 +641,10 @@ static int rt712_sdca_dmic_hw_params(str
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
+-	struct sdw_stream_config stream_config;
++	struct sdw_stream_config stream_config = {0};
+ 	struct sdw_port_config port_config;
+ 	struct sdw_stream_runtime *sdw_stream;
+-	int retval, num_channels;
++	int retval;
+ 	unsigned int sampling_rate;
  
--	vdev->config->del_vqs(vdev);
- 	virtio_reset_device(vdev);
-+	vdev->config->del_vqs(vdev);
+ 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
+@@ -655,13 +656,8 @@ static int rt712_sdca_dmic_hw_params(str
+ 	if (!rt712->slave)
+ 		return -EINVAL;
  
- 	for (i = 0; snd->substreams && i < snd->nsubstreams; ++i) {
- 		struct virtio_pcm_substream *vss = &snd->substreams[i];
-@@ -378,8 +378,8 @@ static int virtsnd_freeze(struct virtio_
- 	virtsnd_disable_event_vq(snd);
- 	virtsnd_ctl_msg_cancel_all(snd);
+-	stream_config.frame_rate = params_rate(params);
+-	stream_config.ch_count = params_channels(params);
+-	stream_config.bps = snd_pcm_format_width(params_format(params));
+-	stream_config.direction = SDW_DATA_DIR_TX;
+-
+-	num_channels = params_channels(params);
+-	port_config.ch_mask = GENMASK(num_channels - 1, 0);
++	/* SoundWire specific configuration */
++	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
+ 	port_config.num = 2;
  
--	vdev->config->del_vqs(vdev);
- 	virtio_reset_device(vdev);
-+	vdev->config->del_vqs(vdev);
- 
- 	for (i = 0; i < snd->nsubstreams; ++i)
- 		cancel_work_sync(&snd->substreams[i].elapsed_period);
+ 	retval = sdw_stream_add_slave(rt712->slave, &stream_config,
 
 
