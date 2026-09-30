@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E1B52120F;
-	Wed, 30 Sep 2026 18:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911333264C2;
+	Wed, 30 Sep 2026 18:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791253; cv=none; b=tT+RZbMdWeRwnFZFui7gnzEG7s3aRdxGLhov6ZxTU8pmvKKSkwXhRT6w3Dtf9lMxEC3tHsSzfrg2Fg3Ua9dzO7n22oXsvEqk4bcoPj8dcEfihRGyCT3Isj7XgF423uYVVFoX/BG6fUSb5VizKeMVZOZFett2KmkA1086dwyCO1A=
+	t=1790791256; cv=none; b=RRvQr7uoSP3pQsrWBsc88e2wg0nq6EWecKgu+aU0VRootqXniJnqhW8XQR8gJFXTybGsY0hBvMNkTC3XjYtYjauuFLCO8amVzF2gHIP/rm1MjhphMtIpE1+g68duwRSUhpjAFM2RFMmrvThkElUakQZ/STtfXbw0hdqbtXFX/7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791253; c=relaxed/simple;
-	bh=E0WnRG3w397+X8zNYq9EePW6dj2tERLcjJIThCfDy+U=;
+	s=arc-20240116; t=1790791256; c=relaxed/simple;
+	bh=iHXvUZjxSWWsDfY19QTHFSsU0KqmuM5RQ5RSnPQLjA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qB83T6NweHwV7ol8rP73qlxVgBV/3xcZYMAvIzS6g6Cq2mYEwKRMWF1VR92iP1juzG9hV3btgVtoZqp4gAM6q4APSX7rmKBFFPamv41X+4emqmde3IjAW6cfKRHViCE4lhdFkKwNh4tz2HvfBO9BXhoxN65SSboZtl0t4zTRwOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCb4k+yC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b63sztWiAolEopV0gNIGEw9EQqiuLuElAhy27gjWDqv2qLVt0McBCNn+I3QnQwsn0vZIpWUfQfo74o46LnxGGk/YGZkS8ig//dO9Eqa+pgNy4ZimmYd9uRahc6q9FNzh3y9gUCiFgyp52glpnhGEuZ6XVPhsFeB1iqf4B991Rhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff9x08X2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCb4k+yC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD9A1F000FF;
-	Wed, 30 Sep 2026 18:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff9x08X2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6CF1F000FF;
+	Wed, 30 Sep 2026 18:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791252;
-	bh=bAB6coD0fp0fQBw6ZBBa3ShLJ/ffkv2/8+e0LYVlo1Y=;
+	s=korg; t=1790791255;
+	bh=gl0IXrtmFk5DaG5ohpx7pbDavJYOQEXsHgJd2LMUYyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCb4k+yCT7hfFe0qs6wf0ojvWtyipzr1ngsg83FPTwnj5pCWexSJ6nCYpfQtrFxRn
-	 tp1KOAG7hKMxF9ISouuhr4FEdkQVZDKNj/MRu6T+64dSm71GlT+Zuq1PFAmcr9gIxc
-	 4KmOu+cpHCr/Y+9Y8lIObjOZcZiQalG00eEPt9AQ=
+	b=ff9x08X2EYV6LxzOLsOBVy804T59SFmnMr0KtYWGRc3ORyVgyFBZCgrDwJJ3mo3Sf
+	 QJbR2kMwzcPKVPpwS47RnGKK92bJzQQA2IU9fHYStwlqEjuDEORcxmcvif/FT79HTk
+	 l0LGIPllYB6FXrPZGPHk4STtH8iru2Spj6o8EZ38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jad Keskes <inasj268@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dan Carpenter <error27@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/752] EDAC/device_sysfs: Use kstrtouint() for poll_msec to prevent truncation
-Date: Wed, 30 Sep 2026 17:21:48 +0200
-Message-ID: <20260930152403.417413512@linuxfoundation.org>
+Subject: [PATCH 5.15 239/752] drm/virtio: Fix a NULL vs ERR_PTR() bug in virtio_gpu_user_framebuffer_create()
+Date: Wed, 30 Sep 2026 17:21:49 +0200
+Message-ID: <20260930152403.439420014@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,56 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jad Keskes <inasj268@gmail.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 66cc9dec919dd63d8e4b3d386f7aed3ae684e645 ]
+[ Upstream commit 94579f24e2b526a04eb41050af0ba018c6f528e7 ]
 
-The poll_msec sysfs store file uses simple_strtoul() which accepts an unsigned
-long, but the target field (poll_msec) is unsigned int. On 64-bit systems,
-a value > UINT_MAX is silently truncated when stored.
+Smatch complains that returning a NULL here will lead to a NULL pointer
+dereference in drm_mode_addfb2().  Return an error pointer instead.
 
-Fix the mismatch by using kstrtouint() instead. This rejects values larger
-than UINT_MAX at parse time, making truncation impossible. Also add a check
-for value < 1 to reject the 0-delay case, which would cause the poll work to
-spin without delay and consume 100% CPU.
-
-Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-Signed-off-by: Jad Keskes <inasj268@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260730145549.148229-1-inasj268@gmail.com
+Fixes: dc5698e80cf7 ("Add virtio gpu driver.")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/an1tWfHIHwtXd9SO@stanley.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/edac_device_sysfs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/edac_device_sysfs.c b/drivers/edac/edac_device_sysfs.c
-index 5e75937537997..b943223691164 100644
---- a/drivers/edac/edac_device_sysfs.c
-+++ b/drivers/edac/edac_device_sysfs.c
-@@ -90,14 +90,21 @@ static ssize_t edac_device_ctl_poll_msec_store(struct edac_device_ctl_info
- 					*ctl_info, const char *data,
- 					size_t count)
- {
--	unsigned long value;
-+	unsigned int value;
-+	int ret;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_display.c b/drivers/gpu/drm/virtio/virtgpu_display.c
+index ef1f19083cd31..438c3fab0e147 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_display.c
++++ b/drivers/gpu/drm/virtio/virtgpu_display.c
+@@ -317,7 +317,7 @@ virtio_gpu_user_framebuffer_create(struct drm_device *dev,
+ 	if (ret) {
+ 		kfree(virtio_gpu_fb);
+ 		drm_gem_object_put(obj);
+-		return NULL;
++		return ERR_PTR(ret);
+ 	}
  
- 	/* get the value and enforce that it is non-zero, must be at least
- 	 * one millisecond for the delay period, between scans
- 	 * Then cancel last outstanding delay for the work request
- 	 * and set a new one.
- 	 */
--	value = simple_strtoul(data, NULL, 0);
-+	ret = kstrtouint(data, 0, &value);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (value < 1)
-+		return -EINVAL;
-+
- 	edac_device_reset_delay_period(ctl_info, value);
- 
- 	return count;
+ 	return &virtio_gpu_fb->base;
 -- 
 2.53.0
 
