@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479F850B8B1;
-	Wed, 30 Sep 2026 16:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FAB5038F7;
+	Wed, 30 Sep 2026 16:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785684; cv=none; b=NPR+0Ovkx6srbagdJf84kxWpNo/OW3VQuj9tD2MHW6+3QHaP4vrEXYt2idVp68LNh68O6mwJHJFCWJ+aol0qelL0qmLw/R9rTw7ZPrpSksyOi/G1fn8P0Xd24jgv2krl0IcAthhtBoQRPq5Prl8g95SsK6X+j+GDmd383vvWbf8=
+	t=1790785688; cv=none; b=ItLreFG/Sxytj2WK4Q1sloJbSlMLIVRJTYEVxN8JjbXA9JL1siS791IGp14in/IzOYjEnGadknCVCBWV547eOkvh5cTkYdCpymC1AZHNI4qYddt3MgtnlhIIZt4DJ8t/caLf+grCT0beNKEprCaObSg49cpNm+bXT+h//ETFa7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785684; c=relaxed/simple;
-	bh=z6BVd3LzBiMCSWOwudJC+/aTy7rGWK6BvXRLAtUhAI8=;
+	s=arc-20240116; t=1790785688; c=relaxed/simple;
+	bh=eTdm8Qiyvvt80mBK1y+vxrFoWZsR3hL5xODyjzX2hog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TY1HNWfUyeXFS26zDaXMioNi+0nesdmjLjBCj15iZuI/gCQF7LYYRNHi/7D9UcNfhHmZMhK5uzrGa0eq9XprXmM+gZbdmVQM6k4fjsnvnXjmaUta3KLkxmEjTMcx/ahpjR4vfMQa2okiXQehWZ893NXE6BdQDdBIL7Vl/NTa7rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StvfcsMc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=adomn49y/cMQ/4oMz5CKtOzzQr0BRdmzZZ+Z7y6eT17rMAbQA44Y4wy24QJUHyL8J2HpzRXrbxihMKwaCP5jqiduhmIUqx4q1EpzVxTkm36RBiYoe+qUjlrLEvZIizyQ/iNPwozFLwrsbAGp0VqsEgjsvG2YZ6eHmpfsFgZH66E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0YLeWGJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StvfcsMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362891F00899;
-	Wed, 30 Sep 2026 16:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0YLeWGJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE95C1F0089C;
+	Wed, 30 Sep 2026 16:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785676;
-	bh=iJbR5ymBPouXDCbE0dlH6/TrrTFLQWiDNrfC/vCY2OQ=;
+	s=korg; t=1790785682;
+	bh=b9aXjHZ7seHMyc6fC8rwFO+3FOB5bV9GlMJIhXBFv/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=StvfcsMcAxXLEnXx2f+/xyYZUrkdEIT1F7U4nQlCu38B8Rx8SPe64omiBNnZErpnz
-	 ezA4GNr3VpMz6F/orVDG1WwbexNJkv80EnNqeTd6cmTAHYCqQVuXtzdwWHUbr1iqyf
-	 o8JA+16xHfCgF/OenSWitLpCMQDyiv+60jKZMtNY=
+	b=c0YLeWGJSb1VWkDQ3xGxGEvess1RPH3r4ImksuKUnVb/xUbrn3R/khBlsQLE91bKU
+	 uzqmkgNIUPc9wcWhLgthcwPz3QxK9Fxow521LQvzl0CwgNZaSpUhYy/VWIdisrVwDM
+	 8W0TIw2W3juizyT16IXSUxTLiJb51dEV6cE5Z38U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjoern Doebel <doebel@amazon.de>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.1 547/982] smb: client: avoid leaking refcount when cifs_sb_tlink() fails
-Date: Wed, 30 Sep 2026 17:21:23 +0200
-Message-ID: <20260930152428.519957989@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 549/982] Revert "arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries"
+Date: Wed, 30 Sep 2026 17:21:25 +0200
+Message-ID: <20260930152428.563687157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,56 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+This reverts commit d831304f2079e114fa74e585bf667a83fdbc25c8.
 
-commit 23b26f4408ac3f35a482d2e5cf6fc865d4201b71 upstream.
-
-cifs_oplock_break() takes over the reference that
-cifs_queue_oplock_break() acquired when it queued the work, and drops it
-with _cifsFileInfo_put() once the break has been processed.
-
-Only in setups with "-o multiuser", cifs_sb_tlink() may fail, at which
-point cifs_oplock_break() returns without putting the file reference,
-mirroring the reference leak we already fixed in the companion patch to
-cifs_queue_oplock_break().
-
-This would trigger a crash due to busy inodes on the next unmount:
-
-  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
-  VFS: Busy inodes after unmount of cifs (cifs)
-
-Drop the reference on that path as well. Doing so before the out label
-mirrors the normal path, which also puts the reference before
-cifs_done_oplock_break().
-
-Found by Sashiko code review. The failure path was not exercised at
-runtime.
-
-Fixes: e8f5f849ffce2 ("cifs: fix potential oops in cifs_oplock_break")
-Cc: stable@vger.kernel.org
-Assisted-by: Kiro:claude-opus-5
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/file.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -5188,8 +5188,11 @@ void cifs_oplock_break(struct work_struc
- 			TASK_UNINTERRUPTIBLE);
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 45fb37bf08f66..18134a7e69745 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1432,8 +1432,8 @@ pcie0: pci@1c00000 {
  
- 	tlink = cifs_sb_tlink(cifs_sb);
--	if (IS_ERR(tlink))
-+	if (IS_ERR(tlink)) {
-+		/* drop the reference taken when the break was queued */
-+		_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
- 		goto out;
-+	}
- 	tcon = tlink_tcon(tlink);
- 	server = tcon->ses->server;
+ 			msi-map = <0x0 &gic_its 0x1400 0x1>,
+ 				  <0x100 &gic_its 0x1401 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1400 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
++				    <0x100 &apps_smmu 0x1401 0x1>;
  
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1537,8 +1537,8 @@ pcie1: pci@1c08000 {
+ 
+ 			msi-map = <0x0 &gic_its 0x1480 0x1>,
+ 				  <0x100 &gic_its 0x1481 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1480 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1481 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
++				    <0x100 &apps_smmu 0x1481 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>,
+ 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
+-- 
+2.53.0
+
 
 
