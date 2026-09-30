@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2274FDA77;
-	Wed, 30 Sep 2026 15:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3F535C68C;
+	Wed, 30 Sep 2026 15:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782675; cv=none; b=ODn/4qSIAPEk0CdDFNdXRkeynb7FFs0acREUOIG6EEW4mB+XTfb/QrHGCldAaUrMZq2p9vNrT0MBBdAaJZwCofBW4Yta/pX7GGGIM4I/ttf8m5+96JizmPQ/1XlKBosSUaLLFK211CeJNIl/O9AbdV8dZrt0xqWQkyWP+vqY4IY=
+	t=1790782683; cv=none; b=U6Y5lFg3jTE/jNG6jbunrmX6QhsHHEr0TeWP0/n9PWy0fWY7fKrQ7C9ZV+eKlK+bQ5f1wuEzbzMzl8TiftIpsZREiBe9f4VDtAh6slQhd5H45WyaRDtva1Gk6qGogmKnupxVTO9TRaef6P0Xjt/4HIhnwqJdEsK+7cGxcFHpzYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782675; c=relaxed/simple;
-	bh=AcJDtc5bDQ81L5ZiuUM2u4h84nTsQFfTqMMRa1NZlhc=;
+	s=arc-20240116; t=1790782683; c=relaxed/simple;
+	bh=rqB1hoi+uuueK1E6LJGwH18eUBlK628TrpUIFdrJ4lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4YAJCfj2PhPorSr3Rk2mLlNWic3o8z7K5x/5lTQlSqVq1tejntcyN99xbnQ2LDagMmbzy42cQAEb6+9fdyVOQsRIeTl+KGDfLVgPVl6bqc8+d5P1ChceKyPTiVbDUMI9rDvkCqWQThqNCfeMpkIAUFYvqvKu3UU7a+dswXHJj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMzRjh/K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ar8LinFMf/OdsqknIlWn7HokYUsFtjWqZS1xdUL4nLZMKVlXNgjf1hqYQpcU0mdDh88cEAIY8LJ5hO9GT8kqm7XMpSSw2IKkwfpRjQyzQ8AtwZjxR+STguf9XQqTBWzXAuWtpFvg78Ex+Ohf+Ux8uOGIbCK4fcTKadJPJ6XsOEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mR3JKgWG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMzRjh/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5951F0089A;
-	Wed, 30 Sep 2026 15:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mR3JKgWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35451F00893;
+	Wed, 30 Sep 2026 15:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782669;
-	bh=XsgqgkEL33Fk6OpG+K6Lh2pbMVurR5QwPyGeIkkxVwo=;
+	s=korg; t=1790782672;
+	bh=iW+oWpa+QtB9pbKLvWa4isK1E2Mz8szwQbkFnPreS0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMzRjh/K/OSBj9k2J8oPW9eFT9Ol/EsTmmJ8ggPWQ5X3CFxBPkc3BFtiVjK17Tl1p
-	 q3teevbSu4mRb0uRYZ9hes9C84bRWBfJS/FtdKEEr3yH2z9kHOyqA84RuI/OS2m+qE
-	 KRth3I2qGngaF/7BOYcDMH8K5fCSfaH11zpkGBZA=
+	b=mR3JKgWGqF+T/Ulmy4Vv48hUhI12jczzTkcEvewRnbsyjlfOjqcL/96RcV96QFfin
+	 UywTb+ANtqCQ2kY9Vq4dApn1pz37eSd4JOtXvLEHqzDf3VLbk5HeybbxSylUvklEMe
+	 VREamFpAjpvXybv08AS5nEAQAnHx49W6344GDzGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Li Yichao <liyichao.1@bytedance.com>,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 129/595] sparc: Disable compat support with LLD
-Date: Wed, 30 Sep 2026 17:20:22 +0200
-Message-ID: <20260930152350.513277306@linuxfoundation.org>
+Subject: [PATCH 5.10 130/595] fuse: set ff->flock only on success
+Date: Wed, 30 Sep 2026 17:20:23 +0200
+Message-ID: <20260930152350.534169936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,43 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-[ Upstream commit 852fed2e8bfe195351fb0078ba7245d41154e7a5 ]
+[ Upstream commit 71947173cef279be5eed209ec28f8c11f9d73159 ]
 
-An LLVM=1 sparc64 allmodconfig enables COMPAT and then tries to
-build the 32-bit vDSO. That path cannot be linked with ld.lld:
+If FUSE_SETLK fails (e.g., due to EWOULDBLOCK), we shall not set
+FUSE_RELEASE_FLOCK_UNLOCK in fuse_file_release().
 
-  ld.lld: error: unknown emulation: elf32_sparc
-
-ld.lld does not support the 32-bit SPARC ELF emulation used for
-the compat vDSO, so keep COMPAT disabled when LLD is the linker.
-This avoids selecting an unsupported build path while leaving the
-existing GNU ld configuration unchanged.
-
-Assisted-by: Codex:GPT-5.5
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Link: https://lore.kernel.org/r/20260508000834.834824-1-rosenp@gmail.com
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Reported-by: Li Yichao <liyichao.1@bytedance.com>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/sparc/Kconfig b/arch/sparc/Kconfig
-index 7e2ce4c8d6571..7d0d1726a0898 100644
---- a/arch/sparc/Kconfig
-+++ b/arch/sparc/Kconfig
-@@ -496,6 +496,7 @@ endmenu
- config COMPAT
- 	bool
- 	depends on SPARC64
-+	depends on !LD_IS_LLD
- 	default y
- 	select COMPAT_BINFMT_ELF if BINFMT_ELF
- 	select HAVE_UID16
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index a8c080b485d03..956c01a42d31a 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -2570,8 +2570,9 @@ static int fuse_file_flock(struct file *file, int cmd, struct file_lock *fl)
+ 		struct fuse_file *ff = file->private_data;
+ 
+ 		/* emulate flock with POSIX locks */
+-		ff->flock = true;
+ 		err = fuse_setlk(file, fl, 1);
++		if (!err)
++			ff->flock = true;
+ 	}
+ 
+ 	return err;
 -- 
 2.53.0
 
