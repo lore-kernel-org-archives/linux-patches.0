@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACE8519DFC;
-	Wed, 30 Sep 2026 17:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA6A501285;
+	Wed, 30 Sep 2026 17:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789370; cv=none; b=W1yd7w+iihcWzoHeqmNCIeX4xysJUkl4iF1Wy2Q/o7R/syzd9sjRivMOJlPbNtEptgM4RVwMbRuwLVmWvYPXhZfJx1c+vxfGvE3shF1jouf3Y/HtWSEMwW5zpGoTWuohTXm/HTdlzicXXOEy2e+p3AptMaAXeWAQc5sZIbJbpaI=
+	t=1790789372; cv=none; b=YdhigOklssCwBpx1r7KliarC5yVgBlP5KPnLY4A5YviHJU/tdb6P/oF5QtdUQBEoMT4IT35B7Kg/epqwceOR8BCVrLmwvP3XtUIxFb8912m0bjC81rbey/q06B+/qXj3SD1ssqIwOmlOUeQzHKWY0zvzk/v/1HuhELTXMVb48qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789370; c=relaxed/simple;
-	bh=yUHQ85gV9Bb2AZ6C8CMMU8cmD0QKYgyMHnVkSQNlwO8=;
+	s=arc-20240116; t=1790789372; c=relaxed/simple;
+	bh=ThZ5pqvrlvRV6YBsC28j4smg2FwfTBjRNkSxKSXa8sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRMwW9beVNNHni/wOZ/YXI5LG3r6APEO3zix+8W613DtSBX2soDelmhLg/Az5irEDFWfsaBxm/CRlDJjUrv1SunOeVmkFOr1qLvAIq6vJkteas781aJA5IJxg7Vg8ezLNVd4A+Ac7/tn2ZLrgAEtwwzBMpuHaK2vz0pZL+0IApQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zh47VNyX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X10qPh3tq+fs/s11pMcM91rYw1Xg0obCsQqM5vuF/BZs5HCW4TvReoVyiamvMNueZk2+W5jSLYdb2DjJ49L3OgFKzKaN9rYOkZvTdqa6y1dgyRWvpxhYV1RU24rg13M39+VdPhbUTy3QPEDmMkjZT6eEvkV+AAlOKmYrZ/LKMUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZg+faam; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zh47VNyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F47E1F000FF;
-	Wed, 30 Sep 2026 17:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZg+faam"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C0A1F000FF;
+	Wed, 30 Sep 2026 17:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789368;
-	bh=+9qs+yLflFFwkuKYxn+78xV3GtvchtNHV3IkWGgWATc=;
+	s=korg; t=1790789371;
+	bh=B1e3V+ujjiA+JoTb+mS+FMbOd8c4Z7OFQ85QbI/qdyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zh47VNyXlm7TbrXIVYIiaL6HK9JXIH/BzZgrHDkStu5zvGZfVSjZHQcNrJW2qAJXJ
-	 d0gjgWSHwwbZJO+vCHFDdkNwl+k8aSrwiLLTgUpFxESw7KSe2Jp70czfprdF9em/bb
-	 VWooCXtAnIhR0WZCqa9A/uoeMNE3/fX5XSw1uI14=
+	b=DZg+faamJEc/shk4MlVkyYq45b9iuKMRh0BPa38t/KmPqEaAjakLZ8yPGT16qn1vt
+	 dq5pGhi0PcgmxM67AwmJd++uoyplCaUNiPat+rrReEB24hjFLDSDaSgqsiEot9v+ht
+	 jS6dBt5b5D1pYFVsbVoRfGcceABnGNkl0MEZb7z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
+	Zixuan Chai <petalzu987@gmail.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 399/877] net: stmmac: dwmac4: Use the correct bufzise when the len is exactly 8K
-Date: Wed, 30 Sep 2026 17:21:50 +0200
-Message-ID: <20260930152423.291451310@linuxfoundation.org>
+Subject: [PATCH 6.12 447/877] vlan: ensure sufficient headroom in vlan_dev_hard_header()
+Date: Wed, 30 Sep 2026 17:22:38 +0200
+Message-ID: <20260930152424.326309010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,77 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b42e7012773a0e81e97a2dda6ef907f5147a6658 ]
+[ Upstream commit cd5dd68267c4238795fadaf02b3575ca3f8a6500 ]
 
-DMA bufsize selection isn't made on the MTU but the actual frame length,
-so including the L2 header. On DWMAC4, if the len is exactly BUF_SIZE_8KiB,
-the next larger size is incorrectly selected.
+Callers that only reserve ETH_HLEN or less (such as llc_alloc_frame()),
+or skbs allocated before dynamic device/headroom changes (e.g. toggling
+VLAN_FLAG_REORDER_HDR or bonding/team switching slaves), can reach
+vlan_dev_hard_header() with insufficient headroom and trigger
+skb_under_panic().
 
-Lets fix the comparison and while at it, rename the parameter from len
-to mtu.
+Use skb_cow_head() in vlan_dev_hard_header() when VLAN_FLAG_REORDER_HDR
+is not set to ensure sufficient headroom for the VLAN header(s) and the
+underlying device hard header.
 
-Fixes: c3efed5ad1b0 ("net: stmmac: Enable dwmac4 jumbo frame more than 8KiB").
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260917215339.2022523-6-maxime.chevallier@bootlin.com
+Use READ_ONCE() to read dev->hard_header_len and dev->needed_headroom as
+they can be updated concurrently under RTNL (e.g. in
+vlan_transfer_features()) while vlan_dev_hard_header() runs locklessly on
+the transmit path. Also avoid LL_RESERVED_SPACE(dev) here so that the
+extra HH_DATA_MOD alignment padding does not trigger unnecessary
+pskb_expand_head() reallocations on inner stacked VLAN devices after the
+outer VLAN header has been pushed.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Zixuan Chai <petalzu987@gmail.com>
+Closes: https://lore.kernel.org/netdev/cover.1789987105.git.petalzu987@gmail.com/
+Link: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
+Cc: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260924082951.1599377-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c | 4 ++--
- drivers/net/ethernet/stmicro/stmmac/hwif.h         | 2 +-
- drivers/net/ethernet/stmicro/stmmac/ring_mode.c    | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ net/8021q/vlan_dev.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-index e99401bcc1f84..67c886316cbdd 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_descs.c
-@@ -490,11 +490,11 @@ static void dwmac4_set_sarc(struct dma_desc *p, u32 sarc_type)
- 	p->des3 |= cpu_to_le32(sarc_type & TDES3_SA_INSERT_CTRL_MASK);
- }
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index e7e5b903fa8c3..61fb68fadea33 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -54,6 +54,11 @@ static int vlan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
+ 	int rc;
  
--static int set_16kib_bfsize(int mtu)
-+static int set_16kib_bfsize(int len)
- {
- 	int ret = 0;
+ 	if (!(vlan->flags & VLAN_FLAG_REORDER_HDR)) {
++		unsigned int hlen = READ_ONCE(dev->hard_header_len) +
++				    READ_ONCE(dev->needed_headroom);
++
++		if (skb_cow_head(skb, hlen) < 0)
++			return -ENOMEM;
+ 		vhdr = skb_push(skb, VLAN_HLEN);
  
--	if (unlikely(mtu >= BUF_SIZE_8KiB))
-+	if (unlikely(len > BUF_SIZE_8KiB))
- 		ret = BUF_SIZE_16KiB;
- 	return ret;
- }
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index 31d7f9375d747..4376d61db969f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -587,7 +587,7 @@ struct stmmac_mode_ops {
- 	unsigned int (*is_jumbo_frm) (int len, int ehn_desc);
- 	int (*jumbo_frm)(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
- 			 int csum);
--	int (*set_16kib_bfsize)(int mtu);
-+	int (*set_16kib_bfsize)(int len);
- 	void (*init_desc3)(struct dma_desc *p);
- 	void (*refill_desc3)(struct stmmac_rx_queue *rx_q, struct dma_desc *p);
- 	void (*clean_desc3)(struct stmmac_tx_queue *tx_q, struct dma_desc *p);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-index 45c14c1bb0eaa..88a8d22812f5d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-@@ -128,10 +128,10 @@ static void clean_desc3(struct stmmac_tx_queue *tx_q, struct dma_desc *p)
- 		p->des3 = 0;
- }
- 
--static int set_16kib_bfsize(int mtu)
-+static int set_16kib_bfsize(int len)
- {
- 	int ret = 0;
--	if (unlikely(mtu > BUF_SIZE_8KiB))
-+	if (unlikely(len > BUF_SIZE_8KiB))
- 		ret = BUF_SIZE_16KiB;
- 	return ret;
- }
+ 		vlan_tci = vlan->vlan_id;
 -- 
 2.53.0
 
