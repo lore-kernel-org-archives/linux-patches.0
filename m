@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B289F5383E6;
-	Wed, 30 Sep 2026 17:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9712D5226AE;
+	Wed, 30 Sep 2026 17:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790731; cv=none; b=qdGBT6YXux+MgZeLIpuNK+afUvWwKmPxEi53kdFNOigE2m6JMP13AH06nUixIjzHGqU+Gk6rpUZ/xGeWBjmQPy8Ty6L98JKBrjy1KJ1BN3h5aiRUn1DUV6HaMYY1YJuOF+pSYRZzjF8D7hPjjy7+XUHlKVJrkdH/hGix4kHGNhg=
+	t=1790790734; cv=none; b=Re2CixRaxEo1494AdImkg1/T46UfZWIUy1OP2I15KugAXT4it4Cku/OdZuyzbgj0GYwmQpbFVAdmY/d1yWZTu3hclmONP2JtzFjpR3WfXXEfwbJMj4A4UPJmW/v71m9WyvJSr5RhuCifg8xUes3bEEdDHzc8woRdt4Iz0ytAHaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790731; c=relaxed/simple;
-	bh=nbH2R0FFgQKyvMcC8ORIqeK3ZJ5kJHN4CQYFF6FijDQ=;
+	s=arc-20240116; t=1790790734; c=relaxed/simple;
+	bh=mk1eQ1q0IYMHUiobH3GL7iUZc336ZfT4KtDY0dSrEz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtTc09YlqezmgKvYqwpt9WV68Ahqw2X+2I2Bw/XP6tUI5ESz7yuLqs+elQthf2krw72LGXeiHRSa0XoU0XjIArVD7Xk1MKhTElRrRBeqqFRIicxEql8R54T/Mixa+384yWBDkfOWR1Wvkk86TnpeNZwc6PTKnR1TKaGtpLFr2m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKTLQFB4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jOqgnIBcQoQ7gegPLMyhqd/QlWlUeYygazAN9NEZEcfDKNXM9oEGNob/+ROrhjdiVaVYn+T4Uc7P50rPeIRmRHXieaVBuukd04yFTsvMEewibBdH/Lwe/AeHhiiK3mKPD+GX6GWpBGJo0+x1TxRSq3vUpdYC8PJQCmuh2OvyG90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kL/we8cj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKTLQFB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2D21F000FF;
-	Wed, 30 Sep 2026 17:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kL/we8cj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC011F000FF;
+	Wed, 30 Sep 2026 17:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790730;
-	bh=O52FevFjQxO1xOhJapp/VG8MpnaUAekzyLy4S6NULAw=;
+	s=korg; t=1790790733;
+	bh=CgcQcKBrJTBUiTZ/d7gt8Zj/Nz4s44n2A8SA4buzD44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKTLQFB4Vfp7lm2z0P3mOG0njFsL8QdCRYqfwJx68C8X2ZZ/i5bKebHU07vvoVHZF
-	 VY5Fle7TWp9/N5VghkGCZDP5yKiShgohD0chjZ86JiGCVBRrV9IdFV+mbFLufyhw3A
-	 8AKJdRSrKMH8U6xkPVq/au5tGHZVeaX3mnnPnXfE=
+	b=kL/we8cjM/B+RX7Db9wwqrssfJyETABAKcOglDdKAP8OA0VLu6FKKEHWBaDXuyES5
+	 zE7ECYpotSfJ/+25s8rFblwFpYyyH0+TO/6F5gtRRs1Ce7zYm8/EYItteQOwrLx2Xo
+	 VnpQycclpeuAw+6hwvWytdmnf3TZ/O9J4Ad5AfKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/752] hpfs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:18:44 +0200
-Message-ID: <20260930152359.324495805@linuxfoundation.org>
+Subject: [PATCH 5.15 055/752] omfs: handle set_blocksize failures
+Date: Wed, 30 Sep 2026 17:18:45 +0200
+Message-ID: <20260930152359.348261557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,37 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a405996f23e04942aad064ab8d50c55827482872 ]
+[ Upstream commit 18c3d6fcb557f920c9143711497625e70153874c ]
 
-hpfs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting will hit the
+omfs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting we will hit the
 
         BUG_ON(offset >= folio_size(folio));
 
 in folio_set_bh on the first __bread_gfp call.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-3-hch@lst.de
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-11-hch@lst.de
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hpfs/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/omfs/inode.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/hpfs/super.c b/fs/hpfs/super.c
-index a7dbfc8920227..a7c1f3ed04599 100644
---- a/fs/hpfs/super.c
-+++ b/fs/hpfs/super.c
-@@ -584,7 +584,8 @@ static int hpfs_fill_super(struct super_block *s, void *options, int silent)
- 	}
+diff --git a/fs/omfs/inode.c b/fs/omfs/inode.c
+index 9773846daa4bc..760f675a73d92 100644
+--- a/fs/omfs/inode.c
++++ b/fs/omfs/inode.c
+@@ -480,7 +480,8 @@ static int omfs_fill_super(struct super_block *sb, void *data, int silent)
+ 	sb->s_time_min = 0;
+ 	sb->s_time_max = U64_MAX / MSEC_PER_SEC;
  
- 	/*sbi->sb_mounting = 1;*/
--	sb_set_blocksize(s, 512);
-+	if (!sb_set_blocksize(s, 512))
-+		goto bail0;
- 	sbi->sb_fs_size = -1;
- 	if (!(bootblock = hpfs_map_sector(s, 0, &bh0, 0))) goto bail1;
- 	if (!(superblock = hpfs_map_sector(s, 16, &bh1, 1))) goto bail2;
+-	sb_set_blocksize(sb, 0x200);
++	if (!sb_set_blocksize(sb, 0x200))
++		goto end;
+ 
+ 	bh = sb_bread(sb, 0);
+ 	if (!bh)
+@@ -532,7 +533,8 @@ static int omfs_fill_super(struct super_block *sb, void *data, int silent)
+ 	 * Use sys_blocksize as the fs block since it is smaller than a
+ 	 * page while the fs blocksize can be larger.
+ 	 */
+-	sb_set_blocksize(sb, sbi->s_sys_blocksize);
++	if (!sb_set_blocksize(sb, sbi->s_sys_blocksize))
++		goto out_brelse_bh;
+ 
+ 	/*
+ 	 * ...and the difference goes into a shift.  sys_blocksize is always
 -- 
 2.53.0
 
