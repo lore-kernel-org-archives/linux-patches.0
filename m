@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B857957982B;
-	Wed, 30 Sep 2026 17:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5989057D214;
+	Wed, 30 Sep 2026 17:38:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789887; cv=none; b=ICJnDt9lw8FSkdOuSE5qBrDFDHmA6N+BAKKw0Pder6R5svXOS4zVBkHFjBpPWBmWeltjrslmVWWLYVwwjUPEPkI3qJR0+b4o5BVNzvhaxP4WUqnOOxa/hIxP81Ox1nv2goDhVgV0E8jkZ7XTIP0bwQcZTsOlY/3A36pqjAQURcY=
+	t=1790789889; cv=none; b=I9YxTjTDBK9JJb1oh12BtLV/v/3GKdvhr7cX2gFk5yvfxSHBSrVEF3dIpRAP7nLoQ372XOOIhLMsJT06D1oIOaZBmlGV59f96d0PxpXVycq75acor1ikaVlWGeqZ/JeY67vbTtI/pUTRJjzCnAkk1Q8cCE35ewv6ybgwqSMd8kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789887; c=relaxed/simple;
-	bh=h1aE0tSe3Q3Ezl0c5/CyFEXzSD/QMVvA3WE77MHrWtU=;
+	s=arc-20240116; t=1790789889; c=relaxed/simple;
+	bh=JAylrzDcPC8aBCKg5USq2LmVaJUFaUPpd6sc+Pzwt3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IS1DVbpRH5Q7+TYkvi/F0KspbSByewpg+68SdBIop+Ef2VSOHWLXphqLGTSi9SLbWMG1hC6SJNbICaP7k4M00xGxZxvdlrOsh7O9S9NyrGQVE9rjUWe0LiLBc790CRqW08BTzgXKcFdR9S9/H1hztEkzxpEu/9q6CxTXpyt9yTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7LbqQnv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I3SbtJQir4UgB+gqX1OCPKWWRIBVvpyRpdUiRG+lban+PfCP3jLy4upbYzv+Xc8pipOwTqNbKv43zAk+3QT7jm/ILpi/OThS7e8e8gKfu5aPJ7ZdvqNWzX2CQjgpki0C4q8oLy+cbPKlxIGoHrI72W5yymuQ2WwEo4ceT4UKlh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CN1W7Uk+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7LbqQnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D791F00898;
-	Wed, 30 Sep 2026 17:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CN1W7Uk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1DD1F000FF;
+	Wed, 30 Sep 2026 17:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789885;
-	bh=l358X1cdfOcx/I9L16PsaalarkjGJwKTMgotTZpMFtg=;
+	s=korg; t=1790789888;
+	bh=GsAbaU5CMDuE388Q3iIuwCje+MrTijNetHknTG2HSNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X7LbqQnvjiBcnLvtNbXw+RjCyDHG63O2Bo9z6m+0yzjI+dXlHmI+nOAT1cAZfKZQu
-	 TWiv75rJFDY+Y8DLUGj9OlwPbsYZdzo/nMCiqc+yMIP0SIKbhpaBo9ovUN5ffDmDmT
-	 2SzcGWSW8QLSGqC0N4sI1PU73/nbkuGSc2pVQr6Q=
+	b=CN1W7Uk+chUlRlxZKn+9SLUZ9raMWs7Dav6BI8oBq7xRBBHpaInh9M3RkWNHotaly
+	 u8iqEiZd33B8cK48R6/wt1F5gvXhQ53y5Og7qD40aVzysesGOSDbNYvF08J+RF9pcg
+	 S7AmCzCzFbdeeHrbYdo5Hgt5As0nT+gmLJh7d6fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Baineng Shou <shoubaineng@gmail.com>,
+	Marco Elver <elver@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 633/877] dma-buf: dma-heap: dont publish fd before copy_to_user() succeeds
-Date: Wed, 30 Sep 2026 17:25:44 +0200
-Message-ID: <20260930152428.310395101@linuxfoundation.org>
+Subject: [PATCH 6.12 634/877] compiler_types: Move lock checking attributes to compiler-context-analysis.h
+Date: Wed, 30 Sep 2026 17:25:45 +0200
+Message-ID: <20260930152428.332895504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -47,210 +46,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baineng Shou <shoubaineng@gmail.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 30d0aff2c65a277135cfd8ea28fa1ee75e0ea4e0 ]
+[ Upstream commit de15fecae44df8254fa597bad7eb3680a8b1c10c ]
 
-DMA_HEAP_IOCTL_ALLOC allocates a dma-buf and installs an fd into the
-caller's fd table via dma_buf_fd() -> fd_install() before
-dma_heap_ioctl() copies the result back to userspace.  If the trailing
-copy_to_user() fails, userspace never learns the fd number, but the
-fd (and the underlying dma-buf reference) are already visible to
-other threads in the same process and are leaked for the lifetime of
-the process.
+The conditional definition of lock checking macros and attributes is
+about to become more complex. Factor them out into their own header for
+better readability, and to make it obvious which features are supported
+by which mode (currently only Sparse). This is the first step towards
+generalizing towards "context analysis".
 
-The obvious "close it on the failure path" fix is unsafe: once
-fd_install() has run, another thread can already dup() the fd, send
-it via SCM_RIGHTS, or close() it and let its number be reused, so a
-subsequent close_fd() from the ioctl path can operate on an unrelated
-file.  This was pointed out by Christian König on v1 [1].
+No functional change intended.
 
-Restructure the allocation path so that fd_install() is the last,
-unfailable step of a successful ioctl:
-
-  1. heap->ops->allocate()      creates the dma_buf.
-  2. get_unused_fd_flags()      reserves an fd number in the caller's
-                                fd table without publishing it, so
-                                no other thread can observe it.
-  3. copy_to_user()             delivers the fd number to userspace;
-                                on failure the fd is returned with
-                                put_unused_fd() and the dma_buf
-                                reference is dropped with
-                                dma_buf_put(), leaving no user-
-                                visible state behind.
-  4. dma_buf_fd_install()       publishes the fd and emits the
-                                trace_dma_buf_fd tracepoint -- from
-                                here on the ioctl cannot fail.
-
-A new dma_buf_fd_install() helper is introduced in dma-buf.c to wrap
-fd_install() together with the DMA_BUF_TRACE() call, preserving the
-export tracing that dma_buf_fd() provides.  dma_heap_ioctl_allocate()
-is refactored to return the struct dma_buf * directly (returning
-ERR_PTR on failure) so the caller holds the dmabuf reference across
-steps 3 and 4.
-
-The failure at step 3 is easily reachable from userspace: pass a
-struct dma_heap_allocation_data that lives in a page whose protection
-is flipped to PROT_READ between copy_from_user() and copy_to_user()
-(e.g. via mprotect()).  Before this change each such ioctl leaks one
-dmabuf fd; after it, the fd table is unchanged on failure and only
-/dev/dma_heap/<name> remains open.
-
-No UAPI or heap-driver interface change.
-
-[1] https://lore.kernel.org/dri-devel/175e98de-f414-47d7-81c1-c0fe0a8f7f62@amd.com/
-
-Fixes: c02a81fba74f ("dma-buf: Add dma-buf heaps framework")
-Cc: stable@vger.kernel.org
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Baineng Shou <shoubaineng@gmail.com>
-Link: https://lore.kernel.org/r/20260817050457.1005285-2-shoubaineng@gmail.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-[ Replaced dma_buf_fd_install(dmabuf, fd) with fd_install(fd, dmabuf->file) due to missing tracing infrastructure. ]
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251219154418.3592607-2-elver@google.com
+Stable-dep-of: 912edebe8501 ("futex: Provide rt_mutex_.*_schedule() equivalents for futex scheduling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-heap.c |   80 ++++++++++++++++++++++-----------------------
- 1 file changed, 40 insertions(+), 40 deletions(-)
+ include/linux/compiler-context-analysis.h |   32 ++++++++++++++++++++++++++++++
+ include/linux/compiler_types.h            |   18 +---------------
+ 2 files changed, 34 insertions(+), 16 deletions(-)
+ create mode 100644 include/linux/compiler-context-analysis.h
 
---- a/drivers/dma-buf/dma-heap.c
-+++ b/drivers/dma-buf/dma-heap.c
-@@ -48,33 +48,6 @@ static dev_t dma_heap_devt;
- static struct class *dma_heap_class;
- static DEFINE_XARRAY_ALLOC(dma_heap_minors);
- 
--static int dma_heap_buffer_alloc(struct dma_heap *heap, size_t len,
--				 u32 fd_flags,
--				 u64 heap_flags)
--{
--	struct dma_buf *dmabuf;
--	int fd;
--
--	/*
--	 * Allocations from all heaps have to begin
--	 * and end on page boundaries.
--	 */
--	len = PAGE_ALIGN(len);
--	if (!len)
--		return -EINVAL;
--
--	dmabuf = heap->ops->allocate(heap, len, fd_flags, heap_flags);
--	if (IS_ERR(dmabuf))
--		return PTR_ERR(dmabuf);
--
--	fd = dma_buf_fd(dmabuf, fd_flags);
--	if (fd < 0) {
--		dma_buf_put(dmabuf);
--		/* just return, as put will call release and that will free */
--	}
--	return fd;
--}
--
- static int dma_heap_open(struct inode *inode, struct file *file)
- {
- 	struct dma_heap *heap;
-@@ -92,30 +65,42 @@ static int dma_heap_open(struct inode *i
- 	return 0;
- }
- 
--static long dma_heap_ioctl_allocate(struct file *file, void *data)
-+static struct dma_buf *dma_heap_ioctl_allocate(struct file *file, void *data)
- {
- 	struct dma_heap_allocation_data *heap_allocation = data;
- 	struct dma_heap *heap = file->private_data;
-+	struct dma_buf *dmabuf;
- 	int fd;
-+	size_t len;
- 
- 	if (heap_allocation->fd)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->fd_flags & ~DMA_HEAP_VALID_FD_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
- 
- 	if (heap_allocation->heap_flags & ~DMA_HEAP_VALID_HEAP_FLAGS)
--		return -EINVAL;
-+		return ERR_PTR(-EINVAL);
+--- /dev/null
++++ b/include/linux/compiler-context-analysis.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Macros and attributes for compiler-based static context analysis.
++ */
 +
-+	len = PAGE_ALIGN(heap_allocation->len);
-+	if (!len)
-+		return ERR_PTR(-EINVAL);
- 
--	fd = dma_heap_buffer_alloc(heap, heap_allocation->len,
--				   heap_allocation->fd_flags,
--				   heap_allocation->heap_flags);
--	if (fd < 0)
--		return fd;
-+	dmabuf = heap->ops->allocate(heap, len, heap_allocation->fd_flags,
-+				     heap_allocation->heap_flags);
++#ifndef _LINUX_COMPILER_CONTEXT_ANALYSIS_H
++#define _LINUX_COMPILER_CONTEXT_ANALYSIS_H
 +
-+	if (IS_ERR(dmabuf))
-+		return dmabuf;
++#ifdef __CHECKER__
 +
-+	fd = get_unused_fd_flags(heap_allocation->fd_flags);
-+	if (fd < 0) {
-+		dma_buf_put(dmabuf);
-+		return ERR_PTR(fd);
-+	}
- 
- 	heap_allocation->fd = fd;
- 
--	return 0;
-+	return dmabuf;
- }
- 
- static unsigned int dma_heap_ioctl_cmds[] = {
-@@ -131,6 +116,8 @@ static long dma_heap_ioctl(struct file *
- 	unsigned int in_size, out_size, drv_size, ksize;
- 	int nr = _IOC_NR(ucmd);
- 	int ret = 0;
-+	int fd;
-+	struct dma_buf *dmabuf;
- 
- 	if (nr >= ARRAY_SIZE(dma_heap_ioctl_cmds))
- 		return -EINVAL;
-@@ -167,15 +154,28 @@ static long dma_heap_ioctl(struct file *
- 
- 	switch (kcmd) {
- 	case DMA_HEAP_IOCTL_ALLOC:
--		ret = dma_heap_ioctl_allocate(file, kdata);
-+		dmabuf = dma_heap_ioctl_allocate(file, kdata);
++/* Sparse context/lock checking support. */
++# define __must_hold(x)		__attribute__((context(x,1,1)))
++# define __acquires(x)		__attribute__((context(x,0,1)))
++# define __cond_acquires(x)	__attribute__((context(x,0,-1)))
++# define __releases(x)		__attribute__((context(x,1,0)))
++# define __acquire(x)		__context__(x,1)
++# define __release(x)		__context__(x,-1)
++# define __cond_lock(x, c)	((c) ? ({ __acquire(x); 1; }) : 0)
 +
-+		if (IS_ERR(dmabuf)) {
-+			ret = PTR_ERR(dmabuf);
-+			break;
-+		}
++#else /* !__CHECKER__ */
 +
-+		fd = ((struct dma_heap_allocation_data *)kdata)->fd;
-+		if (copy_to_user((void __user *)arg, kdata, out_size) != 0) {
-+			put_unused_fd(fd);
-+			dma_buf_put(dmabuf);
-+			ret = -EFAULT;
-+		} else {
-+			fd_install(fd, dmabuf->file);
-+		}
++# define __must_hold(x)
++# define __acquires(x)
++# define __cond_acquires(x)
++# define __releases(x)
++# define __acquire(x)		(void)0
++# define __release(x)		(void)0
++# define __cond_lock(x, c)	(c)
 +
- 		break;
- 	default:
- 		ret = -ENOTTY;
- 		goto err;
- 	}
++#endif /* __CHECKER__ */
++
++#endif /* _LINUX_COMPILER_CONTEXT_ANALYSIS_H */
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -37,6 +37,8 @@
+ # define BTF_TYPE_TAG(value) /* nothing */
+ #endif
  
--	if (copy_to_user((void __user *)arg, kdata, out_size) != 0)
--		ret = -EFAULT;
- err:
- 	if (kdata != stack_kdata)
- 		kfree(kdata);
++#include <linux/compiler-context-analysis.h>
++
+ /* sparse defines __CHECKER__; see Documentation/dev-tools/sparse.rst */
+ #ifdef __CHECKER__
+ /* address spaces */
+@@ -47,14 +49,6 @@
+ # define __rcu		__attribute__((noderef, address_space(__rcu)))
+ static inline void __chk_user_ptr(const volatile void __user *ptr) { }
+ static inline void __chk_io_ptr(const volatile void __iomem *ptr) { }
+-/* context/locking */
+-# define __must_hold(x)	__attribute__((context(x,1,1)))
+-# define __acquires(x)	__attribute__((context(x,0,1)))
+-# define __cond_acquires(x) __attribute__((context(x,0,-1)))
+-# define __releases(x)	__attribute__((context(x,1,0)))
+-# define __acquire(x)	__context__(x,1)
+-# define __release(x)	__context__(x,-1)
+-# define __cond_lock(x,c)	((c) ? ({ __acquire(x); 1; }) : 0)
+ /* other */
+ # define __force	__attribute__((force))
+ # define __nocast	__attribute__((nocast))
+@@ -75,14 +69,6 @@ static inline void __chk_io_ptr(const vo
+ 
+ # define __chk_user_ptr(x)	(void)0
+ # define __chk_io_ptr(x)	(void)0
+-/* context/locking */
+-# define __must_hold(x)
+-# define __acquires(x)
+-# define __cond_acquires(x)
+-# define __releases(x)
+-# define __acquire(x)	(void)0
+-# define __release(x)	(void)0
+-# define __cond_lock(x,c) (c)
+ /* other */
+ # define __force
+ # define __nocast
 
 
