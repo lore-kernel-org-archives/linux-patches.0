@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973564FDE56;
-	Wed, 30 Sep 2026 16:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E382BEFEF;
+	Wed, 30 Sep 2026 16:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786894; cv=none; b=tZvlYomLtgj0PJZz2DEFilLGp3GZ8yOfD4LD7djVFU1ATobOdc2P7+roRD+yMNiKJM3Iapl2Lvw6zjP0gFzAsIy+xra/4Vlv7NHVLQsgDIf+13pE+Ik93T+sSmmKgoGBkyDWZ+TaoCYUxcd00n/LEcjXFjHlRiKab+bNVhZ4/c0=
+	t=1790786897; cv=none; b=hsI3VrFePbVhzwKu21EIYexlXfdZtl1QCM5nEC/2TL2INvcDdgYnZ1jPfvw6wzKoeexSFYVI6k9qXh9JKiNQIo3bvHeS7j63AhY7ZKnLmfHhEArZZ5C5IcNbpQgd+esJXpPdnA2PwVViB9MFEjHcMSYXuYXJNcszbngbRQkA9r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786894; c=relaxed/simple;
-	bh=mn2aZwsSxg5QkPIrHqBkE7DKJyccoroGGtQz4m/R4L4=;
+	s=arc-20240116; t=1790786897; c=relaxed/simple;
+	bh=4tx4HpQim5iM8uu5lKYD3knv90TtA1jIFuKqKenCpFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VD4seiy2QkhPFuY4O0b0RDp8p3jHu8WlQIuMJb4d8biqgJusTpG0r/oJ2GFHEnUNkeEb8OgVI+eV0q0tY+hxpRGuSIOKKuXl2v09GBwvBqVWHX8jeTdjLKLBMnK0WbPaRHtRyduvVJW+7CI19aI17ieZLcsUCMoACjrqo0NRUyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Q4CfW1h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q72ADxBF0wCidS57aWkzqoAwsfUGjqV94lfOdD99aSEAeb08D4TjFCjTmUB3UwiLiOy3F3LytjFTTW2YbDZzCGLH2DYZE4YiHbg3DzxBhP6I8YBtvNL8F+t7u/bOskMh6JqRg5Zg6PN35LO5ohWL78UcTrYNbDlGTS96dx9SfmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlUHrM45; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Q4CfW1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCEB1F000FF;
-	Wed, 30 Sep 2026 16:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlUHrM45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFA61F000FF;
+	Wed, 30 Sep 2026 16:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786893;
-	bh=P2hHzNFyyYy/IYtmCTSL/hYgzEzgD1MlGc2sZOw7VEE=;
+	s=korg; t=1790786896;
+	bh=K8FOfyWlmtmvDhPOithSVp6T45h91asTdvghOtoy7s8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Q4CfW1hkZMwkHumfalJgk+Zx3ZgO3aSPCSitD13MKPYxbwa+QKzij8j/7FDdLyNo
-	 rb4wK/ysbnmbu92yK5G6qY5qtuk9tcOKOgstZYpchusyMJwSBcrwsjkCCy9KiR/kwJ
-	 FtBtFU1B7dR3fZaKCcT3S++fA0aFF+UjAs+tyBMQ=
+	b=jlUHrM45tk1F47xgrTrGrBAV8a7RDsTRqNzV3mt4qxnQ2CRuVoWsJtnsMY1LnAMes
+	 sG+jqNH8KIqA5zs+06pP93UVffaTWcXIZ1gUN6hWVKtBJLPaUE2wrnj2aRTm8uU4Cr
+	 gnjyND70yHyJzl0RsrL3p9q2qgTJkw94ceVsCk8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Anup Patel <anup@brainfault.org>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Christoph Schlameuss <schlameuss@linux.ibm.com>,
+	Steffen Eiden <seiden@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 039/457] RISC-V: KVM: Report snapshot write failure to the guest
-Date: Wed, 30 Sep 2026 17:22:24 +0200
-Message-ID: <20260930152346.878852888@linuxfoundation.org>
+Subject: [PATCH 7.2 013/457] s390/uv: Fix loop condition in uv_find_secrets
+Date: Wed, 30 Sep 2026 17:21:58 +0200
+Message-ID: <20260930152346.318527435@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,44 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Steffen Eiden <seiden@linux.ibm.com>
 
-[ Upstream commit 057dd2639ceae79adced5d8fe52c32d562edcb3a ]
+[ Upstream commit d12ce6bce5ec5175c3581e01c71e7a5abb286d9b ]
 
-If kvm_vcpu_write_guest() fails while updating the PMU snapshot area
-on counter stop, the guest may receive SBI_SUCCESS without the
-snapshot being updated, leaving stale data in shared memory.
+Systems with more than 85 UV secrets got -ENOENT for any secret past the
+first page.
 
-Return SBI_ERR_FAILURE when the snapshot write fails.
+Fix this by setting the start index at the beginning of the loop in
+uv_find_secret() and not at the end. First test if there are more
+secrets left by comparing start_idx with list->next_secret_idx, and then
+set the start index to the next secret index.
 
-Fixes: c2f41ddbcdd7 ("RISC-V: KVM: Implement SBI PMU Snapshot feature")
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260825083719.643970-3-suunj1331@gmail.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Fixes: 7c9137af2042 ("s390/uv: Retrieve UV secrets support")
+Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
+Signed-off-by: Steffen Eiden <seiden@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-ID: <20260812-uv_secrets_fix-v3-1-a85bd29e0666@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/s390/kernel/uv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index 904d266a66c44..a749591a675de 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -727,9 +727,10 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
- 		}
- 	}
+diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
+index a284f98d97168..d970b15ef126d 100644
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -781,11 +781,14 @@ int uv_find_secret(const u8 secret_id[UV_SECRET_ID_LEN],
+ 		   struct uv_secret_list *list,
+ 		   struct uv_secret_list_item_hdr *secret)
+ {
+-	u16 start_idx = 0;
++	u16 start_idx;
+ 	u16 list_rc;
+ 	int ret;
  
--	if (shmem_needs_update)
--		kvm_vcpu_write_guest(vcpu, kvpmu->snapshot_addr, kvpmu->sdata,
--					     sizeof(struct riscv_pmu_snapshot_data));
-+	if (shmem_needs_update &&
-+	    kvm_vcpu_write_guest(vcpu, kvpmu->snapshot_addr, kvpmu->sdata,
-+				 sizeof(struct riscv_pmu_snapshot_data)))
-+		sbiret = SBI_ERR_FAILURE;
++	list->next_secret_idx = 0;
++
+ 	do {
++		start_idx = list->next_secret_idx;
+ 		uv_list_secrets(list, start_idx, &list_rc, NULL);
+ 		if (list_rc != UVC_RC_EXECUTED && list_rc != UVC_RC_MORE_DATA) {
+ 			if (list_rc == UVC_RC_INV_CMD)
+@@ -796,7 +799,6 @@ int uv_find_secret(const u8 secret_id[UV_SECRET_ID_LEN],
+ 		ret = find_secret_in_page(secret_id, list, secret);
+ 		if (ret == 0)
+ 			return ret;
+-		start_idx = list->next_secret_idx;
+ 	} while (list_rc == UVC_RC_MORE_DATA && start_idx < list->next_secret_idx);
  
- out:
- 	retdata->err_val = sbiret;
+ 	return -ENOENT;
 -- 
 2.53.0
 
