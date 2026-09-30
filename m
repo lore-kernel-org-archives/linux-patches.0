@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9F94E2F13;
-	Wed, 30 Sep 2026 16:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF8B513555;
+	Wed, 30 Sep 2026 16:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786363; cv=none; b=EzEEBvPWlW0fl1hDz8ZOD3G1y3UvCSwxisEqCxG0/dgIkpiCGbQkkYnHN+cJBlgQtsQtJS1yien2QAXK9JFN+4uKK1+5pibAOVlOgsgk3OZ7vmv2W8tmrehNWUEdBMFvkqGQXsNbgOUTYbteMz1LGPWkie7eXtt/QdHjGENSfVU=
+	t=1790786366; cv=none; b=KILSa3Lg6BU9hMLvQ9CRuVcxI/tym7EmD/kMyH4iRiiOvrDQwV/JLehOPJkGX0ml3EvhhgInXP751Y+jw9C1SHNl1k8pnDyyZz8x+APojkE8MLsW13+ZjR1tnDS7xMADS6iL6muzGMUpdGwuVMnXXdjYX75NY0XLIVuLOj4B7tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786363; c=relaxed/simple;
-	bh=wuFDm5sbUYeZLPkqVCkhiO/74TVjn1DToTB9bWntjHg=;
+	s=arc-20240116; t=1790786366; c=relaxed/simple;
+	bh=8At4qoAiXic950lPCVJYpch553yGIyTFDQGxhjubNPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9P5DscNnE5m0b5Ynyef0qdJJCArXLq8REVXnnJnMtopA4GJeu17+ZFVl7pzmz0J434c/vHcbrduIZqH5lEUn6Utmt42wCfY8DeXJ/uf6SYHxVMu7fODaCq5XEO2EoaIayjb4ENYIwyAx3KNoIEeFMlGEA7pSIPHN9bmZ2xTcag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbjWAjDB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M/OphBDKfHCHr+NMhzgYbNUoAkg6zNrr+ov6pVXPQv9ZL9YvhvCOcO7c2AJW5HuMiHrEygqP8KFyPYh6D2OY18N76LtpOz132ZH44kuIFnhvCeglFTYK5nLLYTRXSis/H+VyBTAZuzeiFnGxtz6BVCXV8X4T48FGDDbJTsNV34M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cl4TAooG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbjWAjDB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2449A1F000FF;
-	Wed, 30 Sep 2026 16:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cl4TAooG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17B61F000FF;
+	Wed, 30 Sep 2026 16:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786361;
-	bh=O3DAhrhVgwVDaDGPx06aD2b+Do3FzwyR77uxyM9AKCA=;
+	s=korg; t=1790786364;
+	bh=yVlLAeP9esjPyOPUGrAeiR5Po53YIvEPuzsS3LPmrvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbjWAjDB/8O1IAg9YG1BeSEOYWro36coL+wjNF0ljYWRAEbfLnBbJ1tMhjAt9ecKR
-	 m1I0GNXYBmxscT9E46wCp9p4W/xEBJ7asegIXuFmED+0NvTHocL7DiJulPxV8u3PfN
-	 ujb+hQkACLTV7dG2LpsBAIHdEKTmqCXc0/pYhKHM=
+	b=Cl4TAooGuW+Y/HYWjiLke2Wyxll5ky39sx+9MV2h3ktxZcOyNSRqW49odpf2vUlFc
+	 CPKdQlE4dxqT7AFZR1J83zdedp/ra+gdP4EBWQBQKRt2QRuUdmk+jaSOuu3VmNBZnC
+	 bjKZBxGY9rwVgAL2uAKm/qFp9bYhTVKhfmAtd3sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Itai Handler <itai.handler@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Artem Dinaburg <artem@trailofbits.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 790/982] spi: spi-zynqmp-gqspi: stop the controller on shutdown
-Date: Wed, 30 Sep 2026 17:25:26 +0200
-Message-ID: <20260930152433.723725737@linuxfoundation.org>
+Subject: [PATCH 6.1 791/982] bpf: bpf_sk_storage: Fix invalid wait context lockdep report
+Date: Wed, 30 Sep 2026 17:25:27 +0200
+Message-ID: <20260930152433.745443736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,118 +52,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Itai Handler <itai.handler@gmail.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-commit e922bad8b2d5028c51a096d083fea41cd0987154 upstream.
+[ Upstream commit a96a44aba556c42b432929d37d60158aca21ad4c ]
 
-The driver has no ->shutdown, and platform_drv_shutdown() has no
-fallback of its own.  Unlike pci_device_shutdown(), which clears bus
-mastering when kexec_in_progress, nothing on the platform bus disarms a
-device that can still write to memory.  The normal kexec path never
-calls ->suspend either, so the quiesce in zynqmp_qspi_suspend() is not
-reached.
+'./test_progs -t test_local_storage' reported a splat:
 
-A controller that is still executing a DMA read may therefore keep
-writing to memory across a kexec.  QSPIDMA_DST_ADDR still points at
-memory owned by the kernel that called kexec, DST_SIZE is non-zero and
-the flash is still clocked, so data can keep landing in RAM while the
-new kernel is being relocated, and after it has started executing.
+[   27.137569] =============================
+[   27.138122] [ BUG: Invalid wait context ]
+[   27.138650] 6.5.0-03980-gd11ae1b16b0a #247 Tainted: G           O
+[   27.139542] -----------------------------
+[   27.140106] test_progs/1729 is trying to lock:
+[   27.140713] ffff8883ef047b88 (stock_lock){-.-.}-{3:3}, at: local_lock_acquire+0x9/0x130
+[   27.141834] other info that might help us debug this:
+[   27.142437] context-{5:5}
+[   27.142856] 2 locks held by test_progs/1729:
+[   27.143352]  #0: ffffffff84bcd9c0 (rcu_read_lock){....}-{1:3}, at: rcu_lock_acquire+0x4/0x40
+[   27.144492]  #1: ffff888107deb2c0 (&storage->lock){..-.}-{2:2}, at: bpf_local_storage_update+0x39e/0x8e0
+[   27.145855] stack backtrace:
+[   27.146274] CPU: 0 PID: 1729 Comm: test_progs Tainted: G           O       6.5.0-03980-gd11ae1b16b0a #247
+[   27.147550] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+[   27.149127] Call Trace:
+[   27.149490]  <TASK>
+[   27.149867]  dump_stack_lvl+0x130/0x1d0
+[   27.152609]  dump_stack+0x14/0x20
+[   27.153131]  __lock_acquire+0x1657/0x2220
+[   27.153677]  lock_acquire+0x1b8/0x510
+[   27.157908]  local_lock_acquire+0x29/0x130
+[   27.159048]  obj_cgroup_charge+0xf4/0x3c0
+[   27.160794]  slab_pre_alloc_hook+0x28e/0x2b0
+[   27.161931]  __kmem_cache_alloc_node+0x51/0x210
+[   27.163557]  __kmalloc+0xaa/0x210
+[   27.164593]  bpf_map_kzalloc+0xbc/0x170
+[   27.165147]  bpf_selem_alloc+0x130/0x510
+[   27.166295]  bpf_local_storage_update+0x5aa/0x8e0
+[   27.167042]  bpf_fd_sk_storage_update_elem+0xdb/0x1a0
+[   27.169199]  bpf_map_update_value+0x415/0x4f0
+[   27.169871]  map_update_elem+0x413/0x550
+[   27.170330]  __sys_bpf+0x5e9/0x640
+[   27.174065]  __x64_sys_bpf+0x80/0x90
+[   27.174568]  do_syscall_64+0x48/0xa0
+[   27.175201]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+[   27.175932] RIP: 0033:0x7effb40e41ad
+[   27.176357] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d8
+[   27.179028] RSP: 002b:00007ffe64c21fc8 EFLAGS: 00000202 ORIG_RAX: 0000000000000141
+[   27.180088] RAX: ffffffffffffffda RBX: 00007ffe64c22768 RCX: 00007effb40e41ad
+[   27.181082] RDX: 0000000000000020 RSI: 00007ffe64c22008 RDI: 0000000000000002
+[   27.182030] RBP: 00007ffe64c21ff0 R08: 0000000000000000 R09: 00007ffe64c22788
+[   27.183038] R10: 0000000000000064 R11: 0000000000000202 R12: 0000000000000000
+[   27.184006] R13: 00007ffe64c22788 R14: 00007effb42a1000 R15: 0000000000000000
+[   27.184958]  </TASK>
 
-That destination is a physical address which means nothing to the new
-kernel, so the writes can corrupt whatever now occupies it: kernel text
-or data, page tables, or the initrd.  Nothing reports an error and the
-resulting behaviour is undefined.
+It complains about acquiring a local_lock while holding a raw_spin_lock.
+It means it should not allocate memory while holding a raw_spin_lock
+since it is not safe for RT.
 
-This can be observed by reading GQSPI_EN (offset 0x114) and
-QSPIDMA_DST_ADDR/SIZE/STS/CTRL (offsets 0x800 to 0x80c) early in the new
-kernel, before the driver probes: without this patch GQSPI_EN reads 1
-and QSPIDMA_DST_ADDR still points into the previous kernel's memory.
+raw_spin_lock is needed because bpf_local_storage supports tracing
+context. In particular for task local storage, it is easy to
+get a "current" task PTR_TO_BTF_ID in tracing bpf prog.
+However, task (and cgroup) local storage has already been moved to
+bpf mem allocator which can be used after raw_spin_lock.
 
-Add a ->shutdown that stops the controller the way zynqmp_qspi_suspend()
-already does.  spi_controller_suspend() stops the queue, waits for a
-message that is already executing and makes any later transfer fail with
--ESHUTDOWN, so nothing can be cut short by the register write that
-follows.  It may sleep, which is fine here: device_shutdown() runs in
-process context.  Unlike ->suspend this cannot abort on error, because a
-controller left mastering the bus is worse than a truncated transfer, so
-a failure to drain is only logged.
+The splat is for the sk storage. For sk (and inode) storage,
+it has not been moved to bpf mem allocator. Using raw_spin_lock or not,
+kzalloc(GFP_ATOMIC) could theoretically be unsafe in tracing context.
+However, the local storage helper requires a verifier accepted
+sk pointer (PTR_TO_BTF_ID), it is hypothetical if that (mean running
+a bpf prog in a kzalloc unsafe context and also able to hold a verifier
+accepted sk pointer) could happen.
 
-GQSPI_EN_OFST is then cleared, as zynqmp_qspi_remove() and
-zynqmp_qspi_suspend() already do.  Skip that write only when
-pm_runtime_get_if_in_use() returns 0, i.e. runtime suspended: the clocks
-are gated, so the registers are unreachable and the controller cannot be
-mastering the bus.  A negative return is not the same thing - it is what
-the CONFIG_PM=n stub always returns, and there probe() has enabled pclk
-and refclk for good, so the controller is running and must be stopped.
+This patch avoids kzalloc after raw_spin_lock to silent the splat.
+There is an existing kzalloc before the raw_spin_lock. At that point,
+a kzalloc is very likely required because a lookup has just been done
+before. Thus, this patch always does the kzalloc before acquiring
+the raw_spin_lock and remove the later kzalloc usage after the
+raw_spin_lock. After this change, it will have a charge and then
+uncharge during the syscall bpf_map_update_elem() code path.
+This patch opts for simplicity and not continue the old
+optimization to save one charge and uncharge.
 
-Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
-Link: https://patch.msgid.link/20260910174832.873352-1-itai.handler@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ itai: context only - zynqmp_qspi_of_match[] still sits between
-  zynqmp_qspi_remove() and MODULE_DEVICE_TABLE() in this tree, hoisted to
-  the top of the file upstream by commit 29f4d95b97bc ("spi:
-  spi-zynqmp-gqspi: Add tap delay support for GQSPI controller on Versal
-  platform"), so zynqmp_qspi_shutdown() is placed above it ]
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
+This issue is dated back to the very first commit of bpf_sk_storage
+which had been refactored multiple times to create task, inode, and
+cgroup storage. This patch uses a Fixes tag with a more recent
+commit that should be easier to do backport.
+
+Fixes: b00fa38a9c1c ("bpf: Enable non-atomic allocations in local storage")
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230901231129.578493-2-martin.lau@linux.dev
+
+[ Backport to 6.1.y: retain the pre-reuse_now unlink/free API while
+  moving the charged element allocation outside local_storage->lock. ]
+Assisted-by: LLM
+Signed-off-by: Artem Dinaburg <artem@trailofbits.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ kernel/bpf/bpf_local_storage.c | 47 ++++++++++------------------------
+ 1 file changed, 14 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 204e5d03a6c53..ab62100f0b987 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1257,6 +1257,39 @@ static int zynqmp_qspi_remove(struct platform_device *pdev)
- 	return 0;
+diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
+index 51a9f024c1829..23cbd7b1b810d 100644
+--- a/kernel/bpf/bpf_local_storage.c
++++ b/kernel/bpf/bpf_local_storage.c
+@@ -373,7 +373,7 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
+ 			 void *value, u64 map_flags, gfp_t gfp_flags)
+ {
+ 	struct bpf_local_storage_data *old_sdata = NULL;
+-	struct bpf_local_storage_elem *selem = NULL;
++	struct bpf_local_storage_elem *alloc_selem, *selem = NULL;
+ 	struct bpf_local_storage *local_storage;
+ 	unsigned long flags;
+ 	int err;
+@@ -427,11 +427,12 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
+ 		}
+ 	}
+ 
+-	if (gfp_flags == GFP_KERNEL) {
+-		selem = bpf_selem_alloc(smap, owner, value, true, gfp_flags);
+-		if (!selem)
+-			return ERR_PTR(-ENOMEM);
+-	}
++	/* A lookup has just been done before and concluded a new selem is
++	 * needed. The chance of an unnecessary alloc is unlikely.
++	 */
++	alloc_selem = selem = bpf_selem_alloc(smap, owner, value, true, gfp_flags);
++	if (!alloc_selem)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	raw_spin_lock_irqsave(&local_storage->lock, flags);
+ 
+@@ -443,13 +444,13 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
+ 		 * simple.
+ 		 */
+ 		err = -EAGAIN;
+-		goto unlock_err;
++		goto unlock;
+ 	}
+ 
+ 	old_sdata = bpf_local_storage_lookup(local_storage, smap, false);
+ 	err = check_flags(old_sdata, map_flags);
+ 	if (err)
+-		goto unlock_err;
++		goto unlock;
+ 
+ 	if (old_sdata && (map_flags & BPF_F_LOCK)) {
+ 		copy_map_value_locked(&smap->map, old_sdata->data, value,
+@@ -458,23 +459,7 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
+ 		goto unlock;
+ 	}
+ 
+-	if (gfp_flags != GFP_KERNEL) {
+-		/* local_storage->lock is held.  Hence, we are sure
+-		 * we can unlink and uncharge the old_sdata successfully
+-		 * later.  Hence, instead of charging the new selem now
+-		 * and then uncharge the old selem later (which may cause
+-		 * a potential but unnecessary charge failure),  avoid taking
+-		 * a charge at all here (the "!old_sdata" check) and the
+-		 * old_sdata will not be uncharged later during
+-		 * bpf_selem_unlink_storage_nolock().
+-		 */
+-		selem = bpf_selem_alloc(smap, owner, value, !old_sdata, gfp_flags);
+-		if (!selem) {
+-			err = -ENOMEM;
+-			goto unlock_err;
+-		}
+-	}
+-
++	alloc_selem = NULL;
+ 	/* First, link the new selem to the map */
+ 	bpf_selem_link_map(smap, selem);
+ 
+@@ -485,20 +470,16 @@ bpf_local_storage_update(void *owner, struct bpf_local_storage_map *smap,
+ 	if (old_sdata) {
+ 		bpf_selem_unlink_map(SELEM(old_sdata));
+ 		bpf_selem_unlink_storage_nolock(local_storage, SELEM(old_sdata),
+-						false, true);
++						true, true);
+ 	}
+ 
+ unlock:
+ 	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
+-	return SDATA(selem);
+-
+-unlock_err:
+-	raw_spin_unlock_irqrestore(&local_storage->lock, flags);
+-	if (selem) {
++	if (alloc_selem) {
+ 		mem_uncharge(smap, owner, smap->elem_size);
+-		kfree(selem);
++		kfree(alloc_selem);
+ 	}
+-	return ERR_PTR(err);
++	return err ? ERR_PTR(err) : SDATA(selem);
  }
  
-+static void zynqmp_qspi_shutdown(struct platform_device *pdev)
-+{
-+	struct zynqmp_qspi *xqspi = platform_get_drvdata(pdev);
-+	int ret;
-+
-+	/*
-+	 * Stop the queue and reject any later transfer first, so the write
-+	 * below cannot cut into a message that is still being executed.
-+	 * Unlike ->suspend this cannot abort on error: a controller left
-+	 * mastering the bus is worse than a truncated transfer.
-+	 */
-+	ret = spi_controller_suspend(xqspi->ctlr);
-+	if (ret)
-+		dev_warn(&pdev->dev, "could not stop the queue: %d\n", ret);
-+
-+	/*
-+	 * Only a runtime suspended controller can be left alone: its clocks
-+	 * are gated, so it cannot be mastering the bus, and its registers
-+	 * must not be accessed either.  Any other answer means it may be
-+	 * running and has to be stopped.  In particular, on a kernel built
-+	 * without runtime PM this returns -EINVAL, and there the clocks
-+	 * enabled in probe() are never gated at all.
-+	 */
-+	ret = pm_runtime_get_if_in_use(&pdev->dev);
-+	if (!ret)
-+		return;
-+
-+	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
-+
-+	if (ret > 0)
-+		pm_runtime_put_noidle(&pdev->dev);
-+}
-+
- static const struct of_device_id zynqmp_qspi_of_match[] = {
- 	{ .compatible = "xlnx,zynqmp-qspi-1.0", },
- 	{ /* End of table */ }
-@@ -1267,6 +1300,7 @@ MODULE_DEVICE_TABLE(of, zynqmp_qspi_of_match);
- static struct platform_driver zynqmp_qspi_driver = {
- 	.probe = zynqmp_qspi_probe,
- 	.remove = zynqmp_qspi_remove,
-+	.shutdown = zynqmp_qspi_shutdown,
- 	.driver = {
- 		.name = "zynqmp-qspi",
- 		.of_match_table = zynqmp_qspi_of_match,
+ static u16 bpf_local_storage_cache_idx_get(struct bpf_local_storage_cache *cache)
 -- 
 2.53.0
 
