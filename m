@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C8E3BB138;
-	Wed, 30 Sep 2026 18:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C933BBFCC;
+	Wed, 30 Sep 2026 18:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794735; cv=none; b=H4sXnAbaG2EUSs65V2IIg03q7mqPWQjY9krPSTkvovltFJO4JXlVF0fT8meocX8L5RR25E3oM1xE/KiMGFoaw81XVSN9SOxnnPtOoLxq0/qp5206MtODrjuhjnBrY2SPS0FMtE+aHbetHfCsj3sdPg26kkVAR2OcBCHXRGosjBs=
+	t=1790794738; cv=none; b=YPCloy9BZKkfnFOYKxO6n5MDM68F2ciWL4xw09RmHNGNT5DmF7AGq4Inrdaa530qnIj4yfR4+fkxpjtGsm0NJonW/thZjSza0BvEozr9sjoIFEF6oCt7L8ONO0CaY6zBfTYoxOJeiWL1yG7A6OQKT9Pbh8oXOQh4BSJ1HAzv0Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794735; c=relaxed/simple;
-	bh=qChmVkU5HgfJJOmBxwcbzayFCHI9TAWze4Z4kWft/zM=;
+	s=arc-20240116; t=1790794738; c=relaxed/simple;
+	bh=bGQGyMrhog6GKywSxH3YrItGRKd08BwySvEWV6izqDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYcz4OQSBLFL1D4JOw9h2iHUxRS0Pg4Egw9P4DZskoI7tu/S3QfKGQ5U7+mq3zgC3aWjVTsODJYcm0kshShRsZJ6/hTjqmoL0ZMJwWWea9q1stSUYkTyId3cM8+HtRfM8Zj40wupSMl9tzgOzeNXxIkekzp0i3D2sl3KQT2SkPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x67pnF8B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p5uZcrP+HfQ15OlaN7iDLGGAhRGYwlDAzcX78ImhL/ynxUFnPNO6ymSa32Oa/UYOcuQ4uMLepfRdcHok6qouA7GAuPsi/9c/kaNSJYvRJQmkncOwkAOtE3KfdWHcXnQnqJFXJ0o9rFYVh8ACgsHhJaUxMvG21dvQUHI0gVk/CVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaEJU00r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x67pnF8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1111F000FF;
-	Wed, 30 Sep 2026 18:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaEJU00r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491541F000FF;
+	Wed, 30 Sep 2026 18:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794734;
-	bh=0AvGwiZDlIW8sEobO8bERtnC58YVU6DEJDwqzWqkVN8=;
+	s=korg; t=1790794736;
+	bh=omgQoSVWTOpMwq86VqmWTm+m5FIdyAmJogmqlMkNlbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x67pnF8BZtajflS7xpey0ySHU6S9b7LBE645oNu5ay6t1laXvvmSd2hiBa0chaI++
-	 mem/8HVaPw3chb85Trf9YGrec3ZSmmCJKyNvYf4OHTYlN7w1nCzunmzuNdrGkqKmb1
-	 TkHkj767WyuM1zsw4K9V9EIed2MLpixOTpuUkzbo=
+	b=IaEJU00rnSjg9Gy7Q6oYzzNVRmpXqOJgrnx5W5b7JaPQUA++vaoaDteYMkc6/B1TK
+	 mFy48Epr/Xjwd7D5COC4Qv7ylOloAwqnQ79EnNiPyPsVyggTm5yT8e5ZKviNvzQUDQ
+	 8hj6RRsvoYV3IrWRh04YMEJzh2B1F4TBccgw32Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0314/1193] wifi: iwlwifi: mvm: fix out-of-bounds tid_data access in BA notif
-Date: Wed, 30 Sep 2026 17:16:38 +0200
-Message-ID: <20260930152441.115851584@linuxfoundation.org>
+Subject: [PATCH 6.6 0279/1193] freevxfs: dont BUG() on unknown typed-extent type
+Date: Wed, 30 Sep 2026 17:16:03 +0200
+Message-ID: <20260930152440.363562831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,46 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Farhad Alemi <farhad.alemi@berkeley.edu>
 
-[ Upstream commit 94d3982806c7f194b23484befde12934dda23064 ]
+[ Upstream commit 704d48d81dc41470e108811c32c577ada66192d4 ]
 
-mvmsta->tid_data was indexed by the TFD loop counter 'i' instead of
-the actual TID value 'tid'. This writes lq_color into a random tid_data
-slot unrelated to the BA entry.
-Since multi-TID blockack is not really in use, 'i' was always 0 and no
-harm was done.
-Add a out-of-bound check before accessing the array.
+vxfs_bmap_typed() handles four typed-extent types and calls BUG() in
+its default case, so an on-disk typed extent with any other type value
+crashes the kernel. It is reachable from ioctl(FIBMAP) on a regular
+file:
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.919edee567eb.Ie85c350e3afe2b39709d0039072740d86660f8ae@changeid
+  kernel BUG at fs/freevxfs/vxfs_bmap.c:230!
+  RIP: vxfs_bmap_typed fs/freevxfs/vxfs_bmap.c:230 [inline]
+       vxfs_bmap1+0x128a/0x12d0 fs/freevxfs/vxfs_bmap.c:257
+
+Replace the BUG() with WARN_ON_ONCE() and return 0 -- the value
+vxfs_bmap_typed() already returns on failure (and from the DEV4 case
+above); vxfs_getblk() maps 0 to -EIO, so the ioctl fails cleanly.
+
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Signed-off-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Link: https://patch.msgid.link/CA+0ovChveuAwv=t15dr2m09E32bM48hHJxvfeEYZOhdNiEc9Tw@mail.gmail.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/freevxfs/vxfs_bmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 6401030e66143..2594e8a977e94 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -2183,8 +2183,14 @@ void iwl_mvm_rx_ba_notif(struct iwl_mvm *mvm, struct iwl_rx_cmd_buffer *rxb)
- 			if (tid == IWL_MGMT_TID)
- 				tid = IWL_MAX_TID_COUNT;
+diff --git a/fs/freevxfs/vxfs_bmap.c b/fs/freevxfs/vxfs_bmap.c
+index de2a5bccb9307..d10a99b25be8c 100644
+--- a/fs/freevxfs/vxfs_bmap.c
++++ b/fs/freevxfs/vxfs_bmap.c
+@@ -227,7 +227,8 @@ vxfs_bmap_typed(struct inode *ip, long iblock)
+ 			return 0;
+ 		}
+ 		default:
+-			BUG();
++			WARN_ON_ONCE(1);
++			return 0;
+ 		}
+ 	}
  
-+			if (IWL_FW_CHECK(mvm, tid >=
-+					 ARRAY_SIZE(mvmsta->tid_data),
-+					 "invalid TID %d in compressed BA\n",
-+					 tid))
-+				continue;
-+
- 			if (mvmsta)
--				mvmsta->tid_data[i].lq_color = lq_color;
-+				mvmsta->tid_data[tid].lq_color = lq_color;
- 
- 			iwl_mvm_tx_reclaim(mvm, sta_id, tid,
- 					   (int)(le16_to_cpu(ba_tfd->q_num)),
 -- 
 2.53.0
 
