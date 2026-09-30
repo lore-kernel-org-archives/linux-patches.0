@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A63511225;
-	Wed, 30 Sep 2026 18:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB70502D5A;
+	Wed, 30 Sep 2026 18:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792343; cv=none; b=ubXcPCtC/DbutX2BFf574Kk2fayixC01rzvEgx3Dt+NCc30lJQXZa3YmRsv2zFvUbRR9h04TjR2+f2A+zzLsFnfzpBl6Vq1Rl+3jNh+dSo4OPmhqYRFPQBWEPJ0vTrLStK/JlJ3B6mF2K7L1FAnqyzO5hHQiLBbDM4R5h4lRb3g=
+	t=1790792346; cv=none; b=AA4k6KxvfLwl9OcWbqpEmbBtSczKvUzdeqCwXq3OAoC9zFub8U0Uzg2SG092dhV03Cwt1/II4ibJojd6h++aDy6onlQpEGfVYMz1C41qyNdkRM09vrDEo2UvCPO0MlFXKWiB4S9ihbaDn9KB9af/ROpCcGSWOKN2WIDgxs/4uhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792343; c=relaxed/simple;
-	bh=9GbPrAhFD2klqnRwQlICMRll+iCRdb2AG18TaOmglaI=;
+	s=arc-20240116; t=1790792346; c=relaxed/simple;
+	bh=HlzF8hsepzs4gWWZe/hsTv+3J/EJQCxhVcqPIbF12tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fuW/LYaLGcvExni12eFHz+0hFub41rwNb4+Z7LWqsWVWKASP7ZrYk1nKoYkr/9TmVvGGjQNu7267vCiq1uOfgDR0Zrbl0mXSJNKa8MnhS28c48Z6W1QiqKwnbgbtJxKXwDx+3DZ4yfHydZHRV0do1LbKpikzvrsc99Tsz4lWqz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maIw175K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jIj0v3YmQtoJ1Jnd9GXBXZMwASon/8nIeVtNaGIxImXmpTNwYVXrRnli89FFJIlqMNOFva6WsFddbVxpyKTNsX3pdi/alEM/Szxz+unXlJekehMQhUiJwT8W/BHYcNvA4+uDak6YZO1eLPnawaf3Q8Zk8Kn4lEGdwy5r+wWljag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpDJd0pO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maIw175K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6361F000FF;
-	Wed, 30 Sep 2026 18:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpDJd0pO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541AE1F000FF;
+	Wed, 30 Sep 2026 18:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792342;
-	bh=tuzhwvJSP58/9FAMqFesjlyS/d9NQw3tyIB21NQWiEQ=;
+	s=korg; t=1790792344;
+	bh=5Fu2ojObzL7FEAUxMCl/BgrErFRQ3qhl5yNdmkwQ4nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maIw175K0K8FbGNZn6Tm2fTcogXVAzLeJUPbCZFdMTr+Vq62ojrWslfP2fzShi5Xb
-	 SfR8jIfb7gZwD4S/n06xFZzv+cYK9o7m3sDpPtSoowfXHnUa+I0DAkCRBR3RQJxprR
-	 9usfi8ZBaHeH6f2neqjxRnQxcVn1RhkBNhZD7qII=
+	b=LpDJd0pOhu68qgSHuSAJWA8OSIYMsP75uObN70KU0Un3pZimNVjCkTu+w+/L8S8+M
+	 6p3qwUQbkz5KPNIzjOb122EuWorv3xd+AMyohoUFz1KJEkrJe4lOj2NA81us7JGy8U
+	 9h/Wrd3MAP7oallrUdHSPSY1XpUymWvBC1Iu2u50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Magazzu <postadelmaga@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 622/752] drm/nouveau/clk: dont clobber reclock status when restoring volt/fan
-Date: Wed, 30 Sep 2026 17:28:12 +0200
-Message-ID: <20260930152411.737724613@linuxfoundation.org>
+Subject: [PATCH 5.15 623/752] net/sched: act_ct: dont WARN on benign flow_offload_alloc() failure
+Date: Wed, 30 Sep 2026 17:28:13 +0200
+Message-ID: <20260930152411.758238015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,66 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Magazzu <postadelmaga@gmail.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit e5cccdafc855cd5f96f4b51d38114a0360b075d7 ]
+[ Upstream commit 47abe7a5c4eb53269aca3506446f851572a059a3 ]
 
-nvkm_cstate_prog() reuses 'ret' for the voltage and fan-speed restore
-calls it makes after reprogramming the clocks.  Those calls almost always
-succeed, so the status of the reclock itself is overwritten and the
-function reports success even when clk->func->calc() or clk->func->prog()
-failed.  The converse is also true: a successful reclock is reported as an
-error if the final restore call fails, even though that failure is only
-logged and otherwise ignored.
+flow_offload_alloc() returns NULL when the conntrack entry is dying
+(e.g. raced with a conntrack flush) or when the GFP_ATOMIC allocation
+fails; both are expected under load and neither is a kernel bug. This
+path runs from softirq on every committed packet, so with
+panic_on_warn=1 an unprivileged user can panic the box just by racing
+a conntrack flush against a `tc ... action ct commit` classifier.
 
-The only consumer of the return value is the error message in
-nvkm_pstate_work(), so in practice a failing reclock is simply never
-reported.  Nothing else changes, but a function that returns success on
-failure is a trap for the next caller.
+Reproduced with a custom repro under QEMU: a small, fixed set of UDP
+flows through `tc filter ... action ct commit` on lo, raced against
+threads flooding bare ctnetlink CT_DELETE (flush) requests. Hits
+WARNING: net/sched/act_ct.c:437 (tcf_ct_flow_table_add(), inlined
+into tcf_ct_act() in this build) within ~15s on the unpatched kernel;
+same setup is clean on the patched kernel. The fix itself is
+behavior-preserving: both branches already did `goto err_alloc`
+before and after, only the WARN is removed.
 
-Keep the calc/prog status in 'ret' and use a separate local for the
-restore calls.
-
-Fixes: 3eca809b3c05 ("drm/nouveau/clk: cosmetic changes")
-Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260918131620.405133-5-postadelmaga@gmail.com
+Fixes: 64ff70b80fd4 ("net/sched: act_ct: Offload established connections to flow table")
+Reported-by: syzbot+6cc37aba98dac721c415@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6cc37aba98dac721c415
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260915150816.36487-1-ngocthang2710.1999@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/sched/act_ct.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-index 7c7f7c1c8d383..f7246af60c48a 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-@@ -199,16 +199,18 @@ nvkm_cstate_prog(struct nvkm_clk *clk, struct nvkm_pstate *pstate, int cstatei)
- 	}
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index df31fa7b5064c..25342f03153fb 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -377,11 +377,10 @@ static void tcf_ct_flow_table_add(struct tcf_ct_flow_table *ct_ft,
+ 	if (test_and_set_bit(IPS_OFFLOAD_BIT, &ct->status))
+ 		return;
  
- 	if (volt) {
--		ret = nvkm_volt_set_id(volt, cstate->voltage,
--				       pstate->base.voltage, clk->temp, -1);
--		if (ret && ret != -ENODEV)
--			nvkm_error(subdev, "failed to lower voltage: %d\n", ret);
-+		int err = nvkm_volt_set_id(volt, cstate->voltage,
-+					   pstate->base.voltage, clk->temp, -1);
-+
-+		if (err && err != -ENODEV)
-+			nvkm_error(subdev, "failed to lower voltage: %d\n", err);
- 	}
++	/* NULL if ct is dying (raced flush) or the atomic alloc failed. */
+ 	entry = flow_offload_alloc(ct);
+-	if (!entry) {
+-		WARN_ON_ONCE(1);
++	if (!entry)
+ 		goto err_alloc;
+-	}
  
- 	if (therm) {
--		ret = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
--		if (ret && ret != -ENODEV)
--			nvkm_error(subdev, "failed to lower fan speed: %d\n", ret);
-+		int err = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
-+
-+		if (err && err != -ENODEV)
-+			nvkm_error(subdev, "failed to lower fan speed: %d\n", err);
- 	}
- 
- 	return ret;
+ 	if (tcp) {
+ 		ct->proto.tcp.seen[0].flags |= IP_CT_TCP_FLAG_BE_LIBERAL;
 -- 
 2.53.0
 
