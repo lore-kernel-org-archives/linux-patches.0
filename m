@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616F93AFB11;
-	Wed, 30 Sep 2026 16:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3341A37A825;
+	Wed, 30 Sep 2026 16:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785947; cv=none; b=cVFtiwy1pUskzplRGj3ABBHCTnTFhTrDoL4p92Y6zn6pxtEpTqSXF4KHgrBIduza2uw2RLPaULu4oBsW6n9GKHSwVA4x3Crcha9ippZykEXXUbR0pqpqsskPoFUZqG1u2vM0gJB3NceyIr60ya8pOPbr1JV013PcGWp3Mr0TTGc=
+	t=1790785950; cv=none; b=cwUrK/13MH8b7jITNXBM767fF3cxJrfmZG6xNGzk77Gjq+MHHRZzdVhkBXfxJVARAs/KIyPbf5qrpa/+lvwIDWnWpgOxpVa0hFhfqHKfpysI52+yqE9xqvRii4xlOtnhgVPTPbe032jHhjd12HvoB9pD7m+a8rSb2op0ozKXAik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785947; c=relaxed/simple;
-	bh=xh0RRzuxQyMGmloDwiEBd5Ad9SxZXmaKDE5biQKSsNM=;
+	s=arc-20240116; t=1790785950; c=relaxed/simple;
+	bh=mc3MJs0IOSiA5HMrGGMQwasxYBqlVvt3G6r5myp11Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ar65mA3xJdeke9ZzgGem2a0G8JYogdUV8tI03e8uyNy/U93hr9sD9W7bc4z/xgObp36EOBGsnqwHiFG+iuA0fj8HrFWlZaooSQDmlaqlk+U2TBeFaAZYuehyw49gvfT9N47I6v4n96OqyPSk5njop0tZ8UHVQFGKHpTtz+hpPRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuJhjdHB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h7k76lXqQgqrc6tvFo2r8gyEdhtjfCzReMyEfuy19k9BYdvT2xxw4W6p8DKkE910FRHPEETBqY1fcyTVhhFjUx7b1UvJymyk8hQbBZ75oEy5sPz44rXXQCUZ8zPm5CpxDkb2rU27/HtAtAh1knMqOi+QvvOGVmXcbVM63DvmkoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8lsSleT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuJhjdHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9081F000FF;
-	Wed, 30 Sep 2026 16:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8lsSleT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED751F000FF;
+	Wed, 30 Sep 2026 16:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785946;
-	bh=iv8nnMMZGjgAO90e6NqJFrTr5xDFvnv86HrcspIuxbI=;
+	s=korg; t=1790785949;
+	bh=R4UOIxHBIgSmOkky5TJ+brLGJlJKArKHih+xzwc/Eeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EuJhjdHBSCmS3fdTMAransUABK/bUNc22Ou9kM2nJewmqLmJcTVg2MM0nuzyIQQI5
-	 d/X81KEzCOizSh2GklMTTt4JS/UN7U3sDhlI4KxYzOO3aN5JgAHsyoAYc1sR4v5rta
-	 4FQ93fy52LXM+mHG1LGez+zFtu44DGAw3N3r/3Ys=
+	b=B8lsSleT4Gm3XwkW48+sGuBXVJWzQdF1zq7XZMZM135k4WqZUpiHgJ35c1ZjVjtJ4
+	 03P9oUnvbnik5XKsvxVh/pbdDOSuMgbILCsLEhu7tjz5b7+TYpvhqnvAiR5JujlkhP
+	 1kFLh1uuyrttKdgOusR28rxWgBJyQy7Dqyf56LGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Suraj Gupta <suraj.gupta2@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 643/982] dmaengine: xilinx_dma: Fix hardware buffer descriptor reuse order
-Date: Wed, 30 Sep 2026 17:22:59 +0200
-Message-ID: <20260930152430.577853774@linuxfoundation.org>
+Subject: [PATCH 6.1 644/982] dmaengine: xilinx_dma: Fix hardware buffer descriptor chain after cyclic DMA
+Date: Wed, 30 Sep 2026 17:23:00 +0200
+Message-ID: <20260930152430.598659745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -55,60 +55,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Bereza <alex@bereza.email>
 
-[ Upstream commit cee9c863ee68cb27d66745eb03f60e357f4f8ad2 ]
+[ Upstream commit 7ed1e3070c9b4bbd67d5519e14711038dd53ab13 ]
 
-xilinx_dma_alloc_chan_resources() builds a static ring of hardware
-buffer descriptors once and the driver uses this ring throughout the
-lifetime of a channel. This requires the allocation order of hardware
-buffer descriptors from chan->free_seg_list to stay in sync with the
-hardware buffer descriptor ring built at channel allocation time by
-returning oldest descriptors to chan->free_seg_list first.
+Using the DMA in cyclic mode modifies the hardware buffer descriptor
+chain in xilinx_dma_prep_dma_cyclic so that the last descriptor used by
+the cyclic transfer points back to the first descriptor, but it never
+restores the original descriptor ring. This breaks using non-cyclic mode
+after cyclic mode with an error like:
 
-When chan->pending_list is not empty e.g. during
-xilinx_dma_terminate_all() the chan->free_seg_list and the order of the
-static hardware buffer descriptor ring get out of sync. Descriptors age
-in this order: pending -> active -> done. So freeing pending_list first
-returns the newest buffer descriptors to the chan->free_seg_list first
-and thus breaks the order required by the static hardware buffer
-descriptor ring. Then when the channel is reused, after a wrap around of
-the free_seg_list the DMA will find a hardware buffer descriptor with a
-length field that is still zeroed and stop with something like this:
+  xilinx-vdma 86000000.dma: Channel 00000000354d5c8d has errors 100, cdr 6de40000 tdr 6de40400
 
-  xilinx-vdma 86000000.dma: Channel 000000003a21d7b8 has errors 10, cdr 6de4c000 tdr 6de4c000
+The only way to get out of this error state is to rebuild the hardware
+buffer descriptor ring by releasing and re-acquiring the channel.
 
-After this no more descriptors are completed and a consumer potentially
-blocks and waits forever. The only way to get out of this error state is
-to rebuild the static hardware buffer descriptor ring and the
-free_seg_list by releasing and re-acquiring the channel.
-
-Fix the order in which hardware buffer descriptors are returned to
-free_seg_list to ensure the mentioned requirement holds.
+Fix using non-cyclic mode after cyclic mode by always restoring the
+original buffer descriptor ring in the same manner as it is set up by
+xilinx_dma_alloc_chan_resources().
 
 Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
 Signed-off-by: Alex Bereza <alex@bereza.email>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-reuse-v1-1-d79827a844c7@bereza.email
+Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-after-cyclic-mode-v1-1-1fe47e701d6c@bereza.email
+Link: https://patch.msgid.link/20260818-fix-hw-buf-desc-after-cyclic-mode-v2-1-530ff44c6a81@bereza.email
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 914399ba74935..53e791513b7e0 100644
+index 53e791513b7e0..5fb423261c3f0 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -889,9 +889,9 @@ static void xilinx_dma_free_descriptors(struct xilinx_dma_chan *chan)
+@@ -725,15 +725,25 @@ xilinx_aximcdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
+ 	return segment;
+ }
  
- 	spin_lock_irqsave(&chan->lock, flags);
+-static void xilinx_dma_clean_hw_desc(struct xilinx_axidma_desc_hw *hw)
++static void xilinx_dma_clean_hw_desc(struct xilinx_dma_chan *chan,
++				     struct xilinx_axidma_tx_segment *segment)
+ {
+-	u32 next_desc = hw->next_desc;
+-	u32 next_desc_msb = hw->next_desc_msb;
++	dma_addr_t next;
++	u32 i;
  
--	xilinx_dma_free_desc_list(chan, &chan->pending_list);
- 	xilinx_dma_free_desc_list(chan, &chan->done_list);
- 	xilinx_dma_free_desc_list(chan, &chan->active_list);
-+	xilinx_dma_free_desc_list(chan, &chan->pending_list);
+-	memset(hw, 0, sizeof(struct xilinx_axidma_desc_hw));
++	/*
++	 * Restore the buffer descriptor's next descriptor pointer to the value
++	 * set up in xilinx_dma_alloc_chan_resources(). Otherwise using the DMA
++	 * in cyclic mode leaves the next descriptor pointer altered and
++	 * prevents subsequent non-cyclic transfers.
++	 */
++	i = segment - chan->seg_v;
++	next = chan->seg_p +
++	       sizeof(*chan->seg_v) * ((i + 1) % XILINX_DMA_NUM_DESCS);
  
- 	spin_unlock_irqrestore(&chan->lock, flags);
+-	hw->next_desc = next_desc;
+-	hw->next_desc_msb = next_desc_msb;
++	memset(&segment->hw, 0, sizeof(segment->hw));
++	segment->hw.next_desc = lower_32_bits(next);
++	segment->hw.next_desc_msb = upper_32_bits(next);
+ }
+ 
+ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+@@ -755,7 +765,7 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
+ static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
+ 				struct xilinx_axidma_tx_segment *segment)
+ {
+-	xilinx_dma_clean_hw_desc(&segment->hw);
++	xilinx_dma_clean_hw_desc(chan, segment);
+ 
+ 	list_add_tail(&segment->node, &chan->free_seg_list);
  }
 -- 
 2.53.0
