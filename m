@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7520F51B191;
-	Wed, 30 Sep 2026 17:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5166151B19D;
+	Wed, 30 Sep 2026 17:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789057; cv=none; b=lWBOMlTNM8g5xkNKI08TZRK12onhTNa1MXzV6QlxHrLN8zTAHH3WmtiGWKUcYhjGzMXP3SR2jcBqDLADAmT85ybZdB4H2FCF5fUaVOR1sND/yZetWoCy5Jr2mRENAAMpV7l+jIXt7mVaFO1aC0jp7yTOz/z+RloDYmi4+ZKrhu0=
+	t=1790789060; cv=none; b=lIHd/Yc6QP/VW2CPavdk6XtPNfIzFHZneZqHPGiQKvAhSONfWSlsoE7cOs6puzmG8g3Fn9HnocHcVhFSQl8pGXC5RK6u2RvCG1Zpwd/OM6h2zs/f2ZQWyeZirjgp2EtD8lMCIRHsPDaSZs2uM6GiiSlBWOUQi26q8YWPjz2GhiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789057; c=relaxed/simple;
-	bh=dwr4ko7c7R+TXmwEeAUCBTXbPiM19CFXa7Sg1a/nqVA=;
+	s=arc-20240116; t=1790789060; c=relaxed/simple;
+	bh=+8BYCUqcLGbjF7Jj3azj4/biz57P4NbiKCa6/cQj9Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6MmUiZEq0lfUVG22JjgMT666SLWwC7qLm6MnKBXIuQKBqE/QFyF1uyDmPOQiDjVCiXX8Nj2idkHQrGYgVTpBFY/zEYfLKFkg0nW5BdlNrNY61xl05x6uXjUeLjdPCsBXoXd2d4jAcL3C/UOu5tV8CGcobRStOt8jFyWuNGh+Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CF07ecdw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GRlrpVC7Gwn7ehUB7N6c5uM5sgDhIqiEdYDX/aVoCvtFWC5N/9xE81reAN0wqFrUuY9uMjKOdwxEdTTpuLb8CvjroJRKzg3uWluzVx2o+9R9G+3YYs+1O+OGuiNSdRSIznCdLjWfKCKT4ugg5WfyGqpVMUGJm706XzKugMD1OHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fM3U8kNl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CF07ecdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58681F00898;
-	Wed, 30 Sep 2026 17:24:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fM3U8kNl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C5F1F00898;
+	Wed, 30 Sep 2026 17:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789056;
-	bh=B3Je0jNkXmSxN2k9AZbNQDW0+VFy4mCcVWPlgqyolCo=;
+	s=korg; t=1790789059;
+	bh=0tAqMyBJIxRrdK18RO/2tRxy5W4ekEeAAJt6Nh6NG0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CF07ecdwl39eEUUv5C2IqeY6rHxNuMoHIfmCGyLz3OGQ6Hu+Ubj9f1ByXt3mnSp35
-	 DIJ187XsLjLKoaze8Hx//3P29XFF2G6c2SOcGdxhI2UNNBicD51YgJFmqAA9vA24lH
-	 f+1joSbQbn7hO4B7kvk//cIhL0Yq9UbP/D22XVhg=
+	b=fM3U8kNlmJ77p+uhEscIXJnQbUKPoMjKCtsAO56D2+1ONH1A+dHXH7wYEbcQDjFk6
+	 kG6RO/jquPKPQMitsI9/Qf7qqRxhkpcDBj0vCyMmZbu8hQ1Mj084Tu9q31eWzojnFT
+	 mVf9Y/ji/OXOKbvnnl9gyWfPldnZWrhzaSEze8KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Oscar Priego Verdugo <oscar.priegov@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 342/877] xsk: Use a 32-bit compare in xsk_map_gen_lookup
-Date: Wed, 30 Sep 2026 17:20:53 +0200
-Message-ID: <20260930152422.049344493@linuxfoundation.org>
+Subject: [PATCH 6.12 307/877] HID: elecom: fix bus type for M-XGL20DLBK
+Date: Wed, 30 Sep 2026 17:20:18 +0200
+Message-ID: <20260930152421.322426610@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Oscar Priego Verdugo <oscar.priegov@gmail.com>
 
-[ Upstream commit 70504de0bb627848667207bec7ccfd647deb8814 ]
+[ Upstream commit 8e2a4b458ad25e13422bb059758c30a6562aa9cf ]
 
-xsk_map_gen_lookup() loads a u32 key and compares it with max_entries
-using BPF_JMP_IMM. BPF immediates are sign-extended to 64 bits, so a
-max_entries value of 0x80000000 or higher becomes a threshold larger
-than every zero-extended 32-bit key. An out-of-range index then skips
-the bounds check and the generated lookup reads past xsk_map[].
+The M-XGL20DLBK is matched as a USB device by hid-elecom, but
+its entry in hid_have_special_driver[] uses HID_BLUETOOTH_DEVICE.
 
-Compare with BPF_JMP32_IMM so the check stays in 32-bit unsigned range.
+This prevents the special-driver quirk entry from matching the USB
+device handled by hid-elecom. Use HID_USB_DEVICE there as well.
 
-Fixes: e65650f291ee ("bpf: Implement map_gen_lookup() callback for XSKMAP")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://patch.msgid.link/7d2cb8e8dfaa9eb8fdff85156987a60960787dc3.1789056660.git.zhilinz@nebusec.ai
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 55633e681afb ("HID: elecom: add support for EX-G M-XGL20DLBK wireless mouse")
+Signed-off-by: Oscar Priego Verdugo <oscar.priegov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xskmap.c | 2 +-
+ drivers/hid/hid-quirks.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
-index afa457506274c..607f8b7e16d96 100644
---- a/net/xdp/xskmap.c
-+++ b/net/xdp/xskmap.c
-@@ -124,7 +124,7 @@ static int xsk_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
- 	struct bpf_insn *insn = insn_buf;
- 
- 	*insn++ = BPF_LDX_MEM(BPF_W, ret, index, 0);
--	*insn++ = BPF_JMP_IMM(BPF_JGE, ret, map->max_entries, 5);
-+	*insn++ = BPF_JMP32_IMM(BPF_JGE, ret, map->max_entries, 5);
- 	*insn++ = BPF_ALU64_IMM(BPF_LSH, ret, ilog2(sizeof(struct xsk_sock *)));
- 	*insn++ = BPF_ALU64_IMM(BPF_ADD, mp, offsetof(struct xsk_map, xsk_map));
- 	*insn++ = BPF_ALU64_REG(BPF_ADD, ret, mp);
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 39d81777cb7e2..2f086ac897605 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -416,7 +416,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
+ #endif
+ #if IS_ENABLED(CONFIG_HID_ELECOM)
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
+-	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1MRBK_01AC) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
 -- 
 2.53.0
 
