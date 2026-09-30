@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55122501285;
-	Wed, 30 Sep 2026 15:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91CE311C15;
+	Wed, 30 Sep 2026 15:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782541; cv=none; b=LS1nQiFr19FcReXZXq0OIqFu115ZNXHMbbe33awvO7Ra2dSNlwIyZaU24isa3hk12y6cZMSetnNTxM35MWaM8ksWCqiPJROpHGJOg6qNb/zT78/KUGJMkN9HEV1w7aUDjzL9Qxlt0uOWbaLgVaFZEVEu3/RgVzORFH4wZgnteSg=
+	t=1790782544; cv=none; b=LtU8bnqxkxJaweBUc6x5/znXfcMtfy7q4gN75s7kqqkmRZDLmPM12WeHO6UgHIhB2J6bhjGKVahrerzmfFWdFSE0gGBpvrQfOlymCDheKRBCSWV6lYpg4aebOuKM0MWUqwaT62agDjGwrD0DWhglroklrCR5jY9w/TtWqKVHKmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782541; c=relaxed/simple;
-	bh=FgD4RFbu2jgGe9x+LFX7otTBs49Wlk8xDa3M/q0Wx3M=;
+	s=arc-20240116; t=1790782544; c=relaxed/simple;
+	bh=nRbtn4C/yx0U/Uyy2HdG1pbRjh1SmqIEJzqp7VfTvpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjHbSek2TIvaG0JzPvo3SgRy644DvAcs6MsaXvfG0IwjxgAPm0WHDOg2ADOBjewt8ukIf74LMhHRwvBplM5IbWt7HOJ/mVzjgTCOhBo9knUl/Sw0snACPaGL6C2qhN/5uf6MxUtxSXRDGWzVbYspKZHc/iZOHcg1Dmo3VdN+bsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkUhG6+I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pzGX+L+Opvt3sgknOldkZ6BgqJ5VsbioOODKZwWMU8cAKtIbRSorIMvJPVRkH0J/B3LJWqq7eZq4v7BxTxv58vgJ14E3xzcL9BieZ5dzN3muIfpKdm2lS1twKpNZnRxYuoCc90PfeKpoE0cif5k4/ExOT5iU9Z/plvhoo7Kh0Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlyfT82C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkUhG6+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74C51F00893;
-	Wed, 30 Sep 2026 15:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlyfT82C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BC41F000FF;
+	Wed, 30 Sep 2026 15:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782530;
-	bh=wBTJRW0FzfYOnHMwHzV64n2y84iP+O9rjp0xn9AjS1I=;
+	s=korg; t=1790782533;
+	bh=Huhgrls87/5huizbw9aTD1lj7bcuSaOK86Guzar3GH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkUhG6+I16S2/iXftJY77dJn1JnJC5y8RpdGwTXpJu1qTvgZLxg+0MINhgtRGYgpH
-	 o81dv1aR+5ZAuLokyUz5W6NwvRjfE/GDP84fTSFbO4xGr5HuQMR1sOgNaY8sFDWFQH
-	 gC6rIMMjRSx/zb++SWhQ4QqMR4MQ/aBuEInTPDFE=
+	b=AlyfT82CEj27tMlbalcRFy0lNozSAxQBpbChuhzKJXNNrz+coR4JDpK538HJsM6VI
+	 J+OEbPiG6GVznyz47BLR1tTasH/ihP/2ozjI74HWo0wv+KrRjXNI/zhI1TKsNjoMFR
+	 +PTehQtYXQIwRWbXgeYSNpvxCjrlnKuy75uENzbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ikaros <void0red@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/595] ACPICA: Enhance buffer validation in acpi_ut_walk_aml_resources()
-Date: Wed, 30 Sep 2026 17:19:33 +0200
-Message-ID: <20260930152349.459895649@linuxfoundation.org>
+Subject: [PATCH 5.10 081/595] ACPICA: add boundary checks in two places
+Date: Wed, 30 Sep 2026 17:19:34 +0200
+Message-ID: <20260930152349.481560318@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,68 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 From: ikaros <void0red@gmail.com>
 
-[ Upstream commit b2e21fe8c3361c3d0d57ee56d359bea9b51fda3d ]
+[ Upstream commit bdc35754012906dbf094be104b103ca3adfef6f7 ]
 
-Enhance buffer validation in acpi_ut_walk_aml_resources() to prevent
-buffer overflows.
+Add boundary checks in acpi_ps_get_next_namestring() and
+acpi_ps_peek_opcode() to prevent out-of-bounds access.
 
-Link: https://github.com/acpica/acpica/commit/975cb20c7992
+Link: https://github.com/acpica/acpica/commit/cfdc96896d8d
 Signed-off-by: ikaros <void0red@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2481429.NG923GbCHz@rafael.j.wysocki
+Link: https://patch.msgid.link/5180044.0VBMTVartN@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/utresrc.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/acpi/acpica/psargs.c  | 18 +++++++++++++++++-
+ drivers/acpi/acpica/psparse.c |  6 ++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/utresrc.c b/drivers/acpi/acpica/utresrc.c
-index cba5505171dac..d98f1d1c9eaae 100644
---- a/drivers/acpi/acpica/utresrc.c
-+++ b/drivers/acpi/acpica/utresrc.c
-@@ -161,6 +161,28 @@ acpi_ut_walk_aml_resources(struct acpi_walk_state *walk_state,
- 	/* Walk the byte list, abort on any invalid descriptor type or length */
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 7f986b7a52464..5438903650943 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -148,10 +148,16 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
  
- 	while (aml < end_aml) {
-+		/*
-+		 * Validate that the remaining buffer space can hold enough
-+		 * bytes to safely access fields during validation.
-+		 * For large resource descriptors (bit 7 set), we need enough
-+		 * bytes to access the Type field in serial_bus resources.
-+		 * Small resource descriptors only need sizeof(struct aml_resource_end_tag).
-+		 */
-+		if ((acpi_size)(end_aml - aml) <
-+		    sizeof(struct aml_resource_end_tag)) {
-+			return_ACPI_STATUS(AE_AML_BUFFER_LENGTH);
+ 	/* Point past any namestring prefix characters (backslash or carat) */
+ 
+-	while (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end)) {
++	while (end < parser_state->aml_end &&
++	       (ACPI_IS_ROOT_PREFIX(*end) || ACPI_IS_PARENT_PREFIX(*end))) {
+ 		end++;
+ 	}
+ 
++	if (end >= parser_state->aml_end) {
++		parser_state->aml = parser_state->aml_end;
++		return_PTR(NULL);
++	}
++
+ 	/* Decode the path prefix character */
+ 
+ 	switch (*end) {
+@@ -176,6 +182,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
+ 
+ 		/* Multiple name segments, 4 chars each, count in next byte */
+ 
++		if ((end + 1) >= parser_state->aml_end) {
++			parser_state->aml = parser_state->aml_end;
++			return_PTR(NULL);
 +		}
 +
-+		/*
-+		 * For large resource descriptors, ensure enough space for
-+		 * the header plus serial_bus Type field access.
-+		 */
-+		if ((ACPI_GET8(aml) & ACPI_RESOURCE_NAME_LARGE) &&
-+		    ((acpi_size)(end_aml - aml) <
-+		     ACPI_OFFSET(struct aml_resource_common_serialbus,
-+				 type) + 1)) {
-+			return_ACPI_STATUS(AE_AML_BUFFER_LENGTH);
-+		}
+ 		end += 2 + (*(end + 1) * ACPI_NAMESEG_SIZE);
+ 		break;
  
- 		/* Validate the Resource Type and Resource Length */
+@@ -187,6 +198,11 @@ char *acpi_ps_get_next_namestring(struct acpi_parse_state *parser_state)
+ 		break;
+ 	}
  
-@@ -178,6 +200,14 @@ acpi_ut_walk_aml_resources(struct acpi_walk_state *walk_state,
- 
- 		length = acpi_ut_get_descriptor_length(aml);
- 
-+		/*
-+		 * Validate that the descriptor length doesn't exceed the
-+		 * remaining buffer size to prevent reading beyond the end.
-+		 */
-+		if (length > (acpi_size)(end_aml - aml)) {
-+			return_ACPI_STATUS(AE_AML_BUFFER_LENGTH);
-+		}
++	if (end > parser_state->aml_end) {
++		parser_state->aml = parser_state->aml_end;
++		return_PTR(NULL);
++	}
 +
- 		/* Invoke the user function */
+ 	parser_state->aml = end;
+ 	return_PTR((char *)start);
+ }
+diff --git a/drivers/acpi/acpica/psparse.c b/drivers/acpi/acpica/psparse.c
+index 49fbe35c4f7c0..700a621abd9b7 100644
+--- a/drivers/acpi/acpica/psparse.c
++++ b/drivers/acpi/acpica/psparse.c
+@@ -70,6 +70,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
+ 	u16 opcode;
  
- 		if (user_function) {
+ 	aml = parser_state->aml;
++	if (aml >= parser_state->aml_end) {
++		return (0xFFFF);
++	}
+ 	opcode = (u16) ACPI_GET8(aml);
+ 
+ 	if (opcode == AML_EXTENDED_PREFIX) {
+@@ -77,6 +80,9 @@ u16 acpi_ps_peek_opcode(struct acpi_parse_state * parser_state)
+ 		/* Extended opcode, get the second opcode byte */
+ 
+ 		aml++;
++		if (aml >= parser_state->aml_end) {
++			return (0xFFFF);
++		}
+ 		opcode = (u16) ((opcode << 8) | ACPI_GET8(aml));
+ 	}
+ 
 -- 
 2.53.0
 
