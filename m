@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9555503918;
-	Wed, 30 Sep 2026 16:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A144218C332;
+	Wed, 30 Sep 2026 16:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787552; cv=none; b=UesD/szk/gTyBF+qUOVkBzFV10va1cbKDbM7k4L2arTj6/g+m+zX1GWynRMYmoPPpYbSIYbpVklFk3nVxPgAaOJEJB7B7/VYCmga/Wbm/ote/Jt9FLWXpMhECr3ue/EdDlIuJWh0Y931fMLranPeMYiuygvvW0H+OEewfIrA2m4=
+	t=1790787554; cv=none; b=SORw4OLF0QSYyzSfJkj7f7gmYL+XGGgujJlBe9Dp+2dUhPAo6nDvBh7FAQMiSyE/hy+gDvaLKdKQRC82qMxbpjxoSgPRoi0tFfDOvUbdnF5TLbRUp1WeCSWgDEHE748PuCgtkm+TYL1TcHKc2TSJubOcrX+VOy0oQFeGwTPU2pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787552; c=relaxed/simple;
-	bh=zcqgolWs4xyXUgkgopUy4vnYQHfyBHokicjf0m/rcWk=;
+	s=arc-20240116; t=1790787554; c=relaxed/simple;
+	bh=VH8Y1EW/lVV4MYJYRG+W5SXYmiX8zJclNgWFXqsOvvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyeN6jh/EfkifyzZreSA2x4JlVGyZVueQEOTJEOFSYF6q6uzV1kOr94IawVkBp5HoxNax0oAHj4RWCBZJqIYg20xE3l7hUJRoED95ub+Ck3U6mQ4+2z+vOjUiZt58OPhWvoY1UsfxpIvjnYnsWxEMgiRb0C/52cq+I5AM+xna0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UDhTa8Sw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oYTEDan/xqMJTxp0iAZ8aTipz/lYjpq/9jPQw+CWuBZu2XDJipSMoUXiTJYo+J0UH1fJac/5BEf8IqTwIRfgTqFHjRMZY661Iq5tGMdi5JQJYc3T5VdE2Lr1GQE8wplcUNzOrqPV6tZIMQnLZlaWlCpyp5btcT/vle7S0RaHbQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iERbi+N9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDhTa8Sw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CFF1F000FF;
-	Wed, 30 Sep 2026 16:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iERbi+N9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEE71F000FF;
+	Wed, 30 Sep 2026 16:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787550;
-	bh=dd2HQrqRA1KUMK3beK7E2VwgwQH2U9uBGoI0UuTvUcM=;
+	s=korg; t=1790787553;
+	bh=QYoAiLHaOXs4N4wH/bDPQKXwM/8hpx1Vxzr1xa4ZvN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UDhTa8Sw0hLOnWX6ZEn1hcEEXGsUJ6G3Zx8Q4im0YsfiCvpjL98nugWUxebCGYjL7
-	 4b98NyFqeGfa6ZIonrYik/r3BOUqd5kpC4Co6XMMZGnRVHnGWzFdx4+kxe/wbQeRQJ
-	 8KKzXrbkx3FPc1LPSpyRTHDHESM99qfRIdiDZXR4=
+	b=iERbi+N9f7vEPcemGWnXiWEfS3LClMfhk+XbpAXrotGT2dHRCkKFqBHPyZmUURjV1
+	 RpB/4OzkOzun0gt4HMfoBwgq1oT5A7M4L4FOr3EyhzFluKU5/nIooD78RnYwsJEFnk
+	 iZGaXTylSHFd83DELqUcVbsxaN6g6TdW2hOUeDrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Kent Gibson <warthog618@gmail.com>,
+	Ridham Khurana <khurana.ridham222@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.2 270/457] gpio: cdev: fix kernel stack leak to user-space in error path
-Date: Wed, 30 Sep 2026 17:26:15 +0200
-Message-ID: <20260930152351.868340830@linuxfoundation.org>
+Subject: [PATCH 7.2 271/457] gpio: zynq: fix runtime PM leak on request error path
+Date: Wed, 30 Sep 2026 17:26:16 +0200
+Message-ID: <20260930152351.889781973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,129 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-commit 1feb5d39b05afd902ed9fc902ec5b15be03a4bdb upstream.
+commit e9438ab5328a177c9c0e5df87eb92a7162841e98 upstream.
 
-If we fail to acquire the GPIO chip guard in gpio_desc_to_lineinfo(), we
-return immediately before zeroing the info struct we'll end up passing
-to the user-space later in lineinfo_get_v1(). This may leak the kernel
-stack contents. Make gpio_desc_to_lineinfo() return int so that the
--ENODEV returned on failure to acquire the guard can be propagated to
-the callers.
+pm_runtime_get_sync() leaves the usage counter incremented even when it
+fails, and zynq_gpio_request() returns the error without dropping it.
 
-While not strictly necessary: move the memset() before trying to acquire
-the SRCU read lock too for good measure.
+gpiolib does not call ->free() when ->request() fails, so zynq_gpio_free(),
+which holds the only matching pm_runtime_put(), never runs. The reference
+is leaked and the controller can no longer runtime-suspend, so its clock
+stays enabled.
 
-Fixes: d83cee3d2bb1 ("gpio: protect the pointer to gpio_chip in gpio_device with SRCU")
+Switch to pm_runtime_resume_and_get(), which only increments the usage
+counter on success.
+
+Fixes: 3242ba117e9b ("gpio: Add driver for Zynq GPIO controller")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260912123529.7951-1-tzungbi%40kernel.org?part=3
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20260922-gpio-cdev-stack-leak-fixes-v3-1-7a0c7a4299d5@oss.qualcomm.com
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260922092102.1053513-1-khurana.ridham222@gmail.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |   32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ drivers/gpio/gpio-zynq.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -2172,18 +2172,19 @@ static void gpio_v2_line_info_changed_to
+--- a/drivers/gpio/gpio-zynq.c
++++ b/drivers/gpio/gpio-zynq.c
+@@ -798,15 +798,7 @@ static int zynq_gpio_runtime_resume(stru
  
- #endif /* CONFIG_GPIO_CDEV_V1 */
- 
--static void gpio_desc_to_lineinfo(struct gpio_desc *desc,
--				  struct gpio_v2_line_info *info, bool atomic)
-+static int gpio_desc_to_lineinfo(struct gpio_desc *desc,
-+				 struct gpio_v2_line_info *info, bool atomic)
+ static int zynq_gpio_request(struct gpio_chip *chip, unsigned int offset)
  {
- 	u32 debounce_period_us;
- 	unsigned long dflags;
- 	const char *label;
- 
-+	memset(info, 0, sizeof(*info));
-+
- 	CLASS(gpio_chip_guard, guard)(desc);
- 	if (!guard.gc)
--		return;
-+		return -ENODEV;
- 
--	memset(info, 0, sizeof(*info));
- 	info->offset = gpiod_hwgpio(desc);
- 
- 	if (desc->name)
-@@ -2258,6 +2259,8 @@ static void gpio_desc_to_lineinfo(struct
- 							debounce_period_us;
- 		info->num_attrs++;
- 	}
-+
-+	return 0;
+-	int ret;
+-
+-	ret = pm_runtime_get_sync(chip->parent);
+-
+-	/*
+-	 * If the device is already active pm_runtime_get() will return 1 on
+-	 * success, but gpio_request still needs to return 0.
+-	 */
+-	return ret < 0 ? ret : 0;
++	return pm_runtime_resume_and_get(chip->parent);
  }
  
- struct gpio_chardev_data {
-@@ -2309,6 +2312,7 @@ static int lineinfo_get_v1(struct gpio_c
- 	struct gpio_desc *desc;
- 	struct gpioline_info lineinfo;
- 	struct gpio_v2_line_info lineinfo_v2;
-+	int ret;
- 
- 	if (copy_from_user(&lineinfo, ip, sizeof(lineinfo)))
- 		return -EFAULT;
-@@ -2326,7 +2330,10 @@ static int lineinfo_get_v1(struct gpio_c
- 			return -EBUSY;
- 	}
- 
--	gpio_desc_to_lineinfo(desc, &lineinfo_v2, false);
-+	ret = gpio_desc_to_lineinfo(desc, &lineinfo_v2, false);
-+	if (ret)
-+		return ret;
-+
- 	gpio_v2_line_info_to_v1(&lineinfo_v2, &lineinfo);
- 
- 	if (copy_to_user(ip, &lineinfo, sizeof(lineinfo))) {
-@@ -2344,6 +2351,7 @@ static int lineinfo_get(struct gpio_char
- {
- 	struct gpio_desc *desc;
- 	struct gpio_v2_line_info lineinfo;
-+	int ret;
- 
- 	if (copy_from_user(&lineinfo, ip, sizeof(lineinfo)))
- 		return -EFAULT;
-@@ -2363,7 +2371,10 @@ static int lineinfo_get(struct gpio_char
- 		if (test_and_set_bit(lineinfo.offset, cdev->watched_lines))
- 			return -EBUSY;
- 	}
--	gpio_desc_to_lineinfo(desc, &lineinfo, false);
-+
-+	ret = gpio_desc_to_lineinfo(desc, &lineinfo, false);
-+	if (ret)
-+		return ret;
- 
- 	if (copy_to_user(ip, &lineinfo, sizeof(lineinfo))) {
- 		if (watch)
-@@ -2489,6 +2500,7 @@ static int lineinfo_changed_notify(struc
- 	struct lineinfo_changed_ctx *ctx;
- 	struct gpio_desc *desc = data;
- 	struct file *fp;
-+	int ret;
- 
- 	if (!test_bit(gpiod_hwgpio(desc), cdev->watched_lines))
- 		return NOTIFY_DONE;
-@@ -2519,7 +2531,13 @@ static int lineinfo_changed_notify(struc
- 
- 	ctx->chg.event_type = action;
- 	ctx->chg.timestamp_ns = ktime_get_ns();
--	gpio_desc_to_lineinfo(desc, &ctx->chg.info, true);
-+
-+	ret = gpio_desc_to_lineinfo(desc, &ctx->chg.info, true);
-+	if (ret) {
-+		fput(fp);
-+		return NOTIFY_DONE;
-+	}
-+
- 	/* Keep the GPIO device alive until we emit the event. */
- 	ctx->gdev = gpio_device_get(desc->gdev);
- 	ctx->cdev = cdev;
+ static void zynq_gpio_free(struct gpio_chip *chip, unsigned int offset)
 
 
