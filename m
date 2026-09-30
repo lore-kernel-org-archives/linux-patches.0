@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485B451C33F;
-	Wed, 30 Sep 2026 18:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C24511235;
+	Wed, 30 Sep 2026 18:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792833; cv=none; b=Myktc5gF6hRhwm5dhBhjHIg20YabVV6wWGKjoxouXahMpttOGSlzbHQRxfYiB5Tf08YB9tBxjXQcwxBstamv1/eQ2NAAXVNBr1eR8VUx4dOku1qh8AHS9N0OmirUUjdcixu+zEjvMrj+kXWzSdRwCStdiW6APRyZSu+Q2lbOKE0=
+	t=1790792836; cv=none; b=Rb+YGtev+wQ61Xn67+bZLhCkHsReUPgHUUqIGNFklz4no+/8r3rbSeJHqX7hrOzXHIXu46/NA0nCv9i116sXdNiuzyFxVuYDpJnewrZURRmAusjyA6s6Ar4wM9JjjqBrsMcIFmmxj1BEmQTqM/jZeiCYtmV39/FLrgbheCGdoR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792833; c=relaxed/simple;
-	bh=Um/6wSxiMdHv3IZkYriacRa8b2gzRUcWFbM+sN2AMpA=;
+	s=arc-20240116; t=1790792836; c=relaxed/simple;
+	bh=4nTbU4Fjv/Itzgk3xYSZ+j/Mm0OhBCDAjFRJLxziKFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2hkyCuZ0KEggC+QlrsFQyyafQ3Q8MywzpTax8gqY6PbRLtoaoD3q89LwjHqSs/vGFPELwO0cZmTG6k1ilYHlDMsUAFf/Vol2wljsxRg3+DA2b5fqYWS61/C3mgA7rp32wl1lK6IMpFY+DP8cuBmcVsq+rjd8EMJR7BCW6otgmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aETJK32; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ORvJPgxfW0Mnz1U+/X2k7owyNns5kIimJl3X123GyXBQGQI0pC9UABtDMxujFcG1cBIaBWkydlouJJz0wR2RKkuo3Kipk/DfKgARrBjeNpI/0VRUfgYxUemyyA5JFhcLoS456mLTjQy27Vmmh/b+Cz6wMombydrP8cXi/11uqcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxhTC6at; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aETJK32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F321F000FF;
-	Wed, 30 Sep 2026 18:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxhTC6at"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1A51F000FF;
+	Wed, 30 Sep 2026 18:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792832;
-	bh=WjKnuVuVtVxKMLuhEFTJFscSPZDQ/hC6R8lxJ+KxsZY=;
+	s=korg; t=1790792835;
+	bh=wG+/ux8dCmb4GIzQZoSH3sjBRHdmsq2q6Aim/UhQyXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0aETJK32QlCTdGSON79U5XsxnFhk7zflnLWWIb6kZBJYesf9IES7GKcg3oNERFEFD
-	 yG29YYsCr45YdtOB3kYVxOd2HBVNeotSysnp0A0izggvrcyUsUOoerOR/+0yF/TfPV
-	 ystEMzPTxZUCcPz4BhF5huaPDdHObwRU3y3bqX+Y=
+	b=BxhTC6atXFbFi6eebQH6iQBIUH+21oAtE6z2x7C5K3HEgMrfyQDzzCREYtiVy04He
+	 tX2xYhCBt15zH3boYQx0quomphqLrBHjY467dxkDS8D/aojnsG6mDPA71z3wqmkRMP
+	 z1biR2cUGwrd6ewuNiMzlRu2R9QKZLvQa8HpCRVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ran Hongyun <ranhongyun1@huawei.com>,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	ZHOU Jiaxiang <me@fxti.xyz>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/395] squashfs: Add dictionary size range check to prevent shift-out-of-bounds
-Date: Wed, 30 Sep 2026 17:25:04 +0200
-Message-ID: <20260930152341.542577888@linuxfoundation.org>
+Subject: [PATCH 6.18 043/395] scsi: sd_zbc: Reject disks with too many zones
+Date: Wed, 30 Sep 2026 17:25:05 +0200
+Message-ID: <20260930152341.563609647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,53 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ran Hongyun <ranhongyun1@huawei.com>
+From: ZHOU Jiaxiang <me@fxti.xyz>
 
-[ Upstream commit 1f7745fb3580152ca902ef181b605f33cabfb1d0 ]
+[ Upstream commit b6ec0f79745967c751c85df373062c8d15e45fc4 ]
 
-When an abnormal SquashFS image (COMP_OPTS flag is 1 but dictionary size
-is 0) is mounted, and performs shift operations using dictionarysize, the
-shift exponent is -1, causing a shift-out-of-bounds.
+sd_zbc_read_zones() computes the number of zones with 64-bit arithmetic and
+stores the result in the unsigned int nr_zones field of struct
+zoned_disk_info, silently truncating counts that exceed 32 bits. The
+truncated count is later used to size per-zone resources, while the device
+may still report more zones than fit.
 
-Detail as below:
-squashfs_comp_opts(msblk, buffer, length)
-  squashfs_xz_comp_opts()
-    if (comp_opts)
-      n = ffs(opts->dict_size) - 1;<----opts->dict_size=0, n=-1
-      if (opts->dict_size != (1 << n) && opts->dict_size !=
-	  	(1 << n) + (1 << (n + 1))) <----shift-out-of-bounds
+Moreover, sd_zbc_report_zones() counts the reported zones with a signed int
+zone_idx, which overflows past INT_MAX. Reject devices reporting more than
+INT_MAX zones at scan time; such a device is not realistic for any medium
+that exists today, and accepting it produces inconsistent zone bookkeeping.
 
-Fix it by adding a dictionary size range check before the shift operation.
-
-Fixes: ff750311d30a ("Squashfs: add compression options support to xz decompressor")
-Signed-off-by: Ran Hongyun <ranhongyun1@huawei.com>
-Link: https://patch.msgid.link/20260713115525.2661734-1-ranhongyun1@huawei.com
-Reviewed-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 89d947561077 ("sd: Implement support for ZBC devices")
+Signed-off-by: ZHOU Jiaxiang <me@fxti.xyz>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/C41798AB5AA6BF2B+20260916135822.32584-3-me@fxti.xyz
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/xz_wrapper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/sd_zbc.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/squashfs/xz_wrapper.c b/fs/squashfs/xz_wrapper.c
-index 6c49481a2f8c4..7d54cd524d6d9 100644
---- a/fs/squashfs/xz_wrapper.c
-+++ b/fs/squashfs/xz_wrapper.c
-@@ -57,10 +57,10 @@ static void *squashfs_xz_comp_opts(struct squashfs_sb_info *msblk,
+diff --git a/drivers/scsi/sd_zbc.c b/drivers/scsi/sd_zbc.c
+index a8db66428f80d..6f566d4f7706b 100644
+--- a/drivers/scsi/sd_zbc.c
++++ b/drivers/scsi/sd_zbc.c
+@@ -595,7 +595,7 @@ int sd_zbc_revalidate_zones(struct scsi_disk *sdkp)
+ int sd_zbc_read_zones(struct scsi_disk *sdkp, struct queue_limits *lim,
+ 		u8 buf[SD_BUF_SIZE])
+ {
+-	unsigned int nr_zones;
++	u64 nr_zones;
+ 	u32 zone_blocks = 0;
+ 	int ret;
  
- 		opts->dict_size = le32_to_cpu(comp_opts->dictionary_size);
+@@ -627,6 +627,12 @@ int sd_zbc_read_zones(struct scsi_disk *sdkp, struct queue_limits *lim,
+ 		goto err;
  
--		/* the dictionary size should be 2^n or 2^n+2^(n+1) */
-+		/* the dictionary size should be positive and 2^n or 2^n+2^(n+1) */
- 		n = ffs(opts->dict_size) - 1;
--		if (opts->dict_size != (1 << n) && opts->dict_size != (1 << n) +
--						(1 << (n + 1))) {
-+		if (opts->dict_size <= 0 || (opts->dict_size != (1 << n) &&
-+			opts->dict_size != (1 << n) + (1 << (n + 1)))) {
- 			err = -EIO;
- 			goto out;
- 		}
+ 	nr_zones = round_up(sdkp->capacity, zone_blocks) >> ilog2(zone_blocks);
++	if (nr_zones > INT_MAX) {
++		sd_printk(KERN_ERR, sdkp, "Too many zones (%llu)\n",
++			  nr_zones);
++		ret = -EINVAL;
++		goto err;
++	}
+ 	sdkp->early_zone_info.nr_zones = nr_zones;
+ 	sdkp->early_zone_info.zone_blocks = zone_blocks;
+ 
 -- 
 2.53.0
 
