@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6B333B6F1;
-	Wed, 30 Sep 2026 15:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E9D50AC16;
+	Wed, 30 Sep 2026 15:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783468; cv=none; b=YxGSTJeUrCwjmG2z07DlxRt6Mvg1lKUl+ebzJK67r9PUAdMPsdeH0uSIqIm+iHVo/gRLX4e9GcFSCS4/cMDkQw6EWazPJnpOsSA1bvh0W5di7VLGvanX+HTziPXoJn31JYqqVVVC4vdWkYztdyv7SSy8k++Wv99iXUOUqgZmswI=
+	t=1790783472; cv=none; b=ZEmE8/AsYuWZ78Ujb0180GhaMz4rgrLnveILv/8+XyZu1Psht+Uo9tgUc5V0xc1OFvdfWTtXOc92/quW3AhEO4q6LZOAoE8dZ79Y22qh/kp8eY/MPaSZJaIH2bhI8jsaQQGmF8dtrEhJ4qPJ8R/zy4dEzhgTvxuplzFSy0wWTRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783468; c=relaxed/simple;
-	bh=Y3J4ved8nuS5R2bpChCqNoirmvdUk90Zi0HI1IIz2ns=;
+	s=arc-20240116; t=1790783472; c=relaxed/simple;
+	bh=oaTTwQufGh+kTGAmMTVY5WqfPcDks3uGsoyMZtC+pEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwQ4ICh4pkIfu0mCuHBdm2Sd6q7+uFzMNNWslhlznhRhucfkXuHYVOhWkjmJ2EkrdIEqJbFt9smIxC7n4mnXMWI20MhB3LzpcPhxE8jaMIcEVwheA5Nv3Xz4oxpFR7hMjnWYTTiJ4F4wSrnkG9Gtrhul/gtFeX9Y/l4iK3cVbZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5HsIxSF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D7FPx6tHBQVnsk1XH4mb2l7XlY2ZCYA0VD64w+dnPrIvfONwsYFvCfgVXhmRR0uPTFdbCk7Tx94LEgjyX9cRN4z6d7QmWmeyTqdC6doz2tVTgPLEJMcyVRjXmMrfbxFo/olXwTpE/7uZmuKkDWIfcqqrg9sflBgVK13X4Ii4sq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=os84E+f5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5HsIxSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC951F000FF;
-	Wed, 30 Sep 2026 15:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="os84E+f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795DF1F00898;
+	Wed, 30 Sep 2026 15:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783461;
-	bh=z8Gr5cr8QYWpk3bYMqCTEaO+c5sgj1VE01ZrSmj6XH0=;
+	s=korg; t=1790783467;
+	bh=ccwElL4w9QCle9M6CO2EGtbVxgSoQfT+F5VcECVhTYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l5HsIxSFJqHaTCle/LBIKl0RCfYOlTyv5BApdwW7oZK+t0ginyYsTcIfcWOgRJQsn
-	 ZnMEdycs1qvhKTJ+39lIcdhkvxBKkF5rShMya+wP99fGMucYDjJNdbPTSBdHMk4Y7j
-	 KNCh2RDfD99nsXMBIR3bMSG8D9IvrF218noDbAh8=
+	b=os84E+f5Ngz+MmWSOlZBXehdbYbJquPyulG3Z8u1xMZxKD9/cJ9404rWZNBOq8KUD
+	 O+gLYMcGA32FvdXVcQ9uq9giAwRDrWRLv/LgrcDp1D6r99ffI0t4qlCFEmGNmY+mXr
+	 +VXwXGKmKdmGxbLkCnQEIQVhFI5FiNQ8xkdemAxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hohyun Sim <tlaghgus0425@korea.ac.kr>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 400/595] net: fddi: skfp: fix NULL deref when setting the MAC address while down
-Date: Wed, 30 Sep 2026 17:24:53 +0200
-Message-ID: <20260930152356.274869744@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 410/595] ASoC: ux500: Parenthesize MSP_{RX,TX}_CLKPOL_BIT() arguments
+Date: Wed, 30 Sep 2026 17:25:03 +0200
+Message-ID: <20260930152356.495509785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,105 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hohyun Sim <tlaghgus0425@korea.ac.kr>
+[ Upstream commit 11fc0048a6930f4fca44fe3bd16a0023e78846a2 ]
 
-[ Upstream commit 7c8810c2e69c3d9ca6df870b40ae9218e50b4fb1 ]
+arm allmodconfig fails to build with gcc:
 
-skfp_ctl_set_mac_address() calls ResetAdapter() unconditionally, without
-checking netif_running(). ResetAdapter() first calls card_stop(), which
-sets smc->hw.hw_state to STOPPED, and then mac_drv_clear_tx_queue(),
-which walks the two transmit queues:
+  In file included from sound/soc/ux500/ux500_msp_i2s.c:20:
+  sound/soc/ux500/ux500_msp_i2s.h:151:38: error: suggest parentheses
+  around arithmetic in operand of '^' [-Werror=parentheses]
+  sound/soc/ux500/ux500_msp_i2s.c:204:21: note: in expansion of macro
+  'MSP_TX_CLKPOL_BIT'
+  cc1: all warnings being treated as errors
 
-	for (i = QUEUE_S; i <= QUEUE_A0; i++) {
-		queue = smc->hw.fp.tx[i] ;
-		...
-		t = queue->tx_curr_get ;
+The macros never parenthesized their argument:
 
-smc->hw.fp.tx[] is only populated by init_tx(), which is reached from
-skfp_open() through init_smt() -> init_fddi_driver() -> init_fplus() ->
-init_mac() -> init_tx(). The private area is allocated and zeroed by
-alloc_fddidev(), so on an interface that has never been brought up both
-queue pointers are still NULL. The hw_state test at the top of
-mac_drv_clear_tx_queue() does not catch this, because card_stop() has
-just set STOPPED; the function proceeds into the loop and dereferences
-NULL. ResetAdapter() does call init_smt() itself, but only after the
-queues have been cleared.
+  #define MSP_TX_CLKPOL_BIT(n)  ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
 
-Setting the MAC address on a down interface therefore oopses:
+That went unnoticed while every caller passed a plain variable, but
+configure_protocol() now passes an XOR expression, which binds as
+"a ^ (b & MASK)" rather than "(a ^ b) & MASK", and gcc rightly
+complains.
 
-  ip link set dev fddi0 address 02:00:00:00:00:01
+No functional change: tx_clk_pol and rx_clk_pol only ever hold
+MSP_FALLING_EDGE (0) or MSP_RISING_EDGE (1), and bclk_inverted is a
+bool, so masking before or after the XOR gives the same 0/1 result.
+Parenthesize the argument anyway - it fixes the build and stops the
+macros from silently mis-evaluating a future composite argument.
 
-  BUG: KASAN: null-ptr-deref in mac_drv_clear_tx_queue+0x68/0x2c0 [skfp]
-  Read of size 8 at addr 0000000000000010 by task ip/302
-  Call Trace:
-   <TASK>
-   mac_drv_clear_tx_queue+0x68/0x2c0 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
-   ResetAdapter+0x29/0x100 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
-   skfp_ctl_set_mac_address+0x57/0x80 [skfp 6c01d4bab63c36978bd0a7d7e90837adb44cc37b]
-   netif_set_mac_address+0x1e4/0x2c0
-   do_setlink+0x684/0x2680
-   </TASK>
-
-Address 0x10 is the offset of tx_curr_get, the third pointer in
-struct s_smt_tx_queue, on 64-bit. mac_drv_clear_rx_queue(), which
-ResetAdapter() calls immediately afterwards, dereferences
-smc->hw.fp.rx[QUEUE_R1] in the same way behind the same ineffective
-hw_state test; the transmit queue merely crashes first. Both are
-covered by the guard below.
-
-Skip the adapter reset when the interface is down. dev_addr_set() is
-left unconditional, so the new address is still recorded in
-dev->dev_addr. Nothing is lost by not resetting the adapter here:
-skfp_open() deliberately re-reads the factory address on every open,
-
-	read_address(smc, NULL);
-	eth_hw_addr_set(dev, smc->hw.fddi_canon_addr.a);
-
-and the comment above it states this is done to discard exactly such an
-address override across a close/open cycle. An address set while the
-interface is down could not have survived the following open even
-before this change, so the guard removes no working behaviour. Guarding
-the hardware side of ndo_set_mac_address() with netif_running() is
-established practice; skge_set_mac_address() has done so since commit
-2eb3e621c4e0 ("skge: set mac address bonding fix").
-
-Guarding the reset as a whole, rather than NULL-checking the queues, is
-also what the rest of the driver expects. After a previous open/close
-the queue pointers are stale but non-NULL, so there is no crash, yet
-ResetAdapter() goes on to call smt_online() and STI_FBI() ("Enable
-Board Interrupts") while skfp_close() has already called free_irq() -
-the adapter would be brought back online with no handler installed. The
-only other ResetAdapter() caller is skfp_interrupt(), which by
-construction runs only while the device is open.
-
-Found by automated driver testing against an emulated SysKonnect FDDI
-adapter under a KASAN-enabled 7.0.0 kernel. Triggering it requires
-CAP_NET_ADMIN.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: LLM KASAN
-Signed-off-by: Hohyun Sim <tlaghgus0425@korea.ac.kr>
-Link: https://patch.msgid.link/20260910063743.110747-1-tlaghgus0425@korea.ac.kr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9ccbacf5a012 ("ASoC: ux500: Validate MSP DAI configuration")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609051547.G9SJp8UQ-lkp@intel.com/
+Assisted-by: LLM
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260913173132.1172003-1-sashal@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/fddi/skfp/skfddi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/ux500/ux500_msp_i2s.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/fddi/skfp/skfddi.c b/drivers/net/fddi/skfp/skfddi.c
-index 69c29a2ef95db..ab03cdb536eb4 100644
---- a/drivers/net/fddi/skfp/skfddi.c
-+++ b/drivers/net/fddi/skfp/skfddi.c
-@@ -924,7 +924,8 @@ static int skfp_ctl_set_mac_address(struct net_device *dev, void *addr)
+diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
+index 28a90207a4cb5..4e4f140912f9b 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.h
++++ b/sound/soc/ux500/ux500_msp_i2s.h
+@@ -149,8 +149,8 @@ enum msp_direction {
+ #define RCKPOL_MASK		BIT(0)
+ #define TCKPOL_MASK		BIT(0)
+ #define SPICKM_MASK		(BIT(1) | BIT(0))
+-#define MSP_RX_CLKPOL_BIT(n)     ((n & RCKPOL_MASK) << RCKPOL_SHIFT)
+-#define MSP_TX_CLKPOL_BIT(n)     ((n & TCKPOL_MASK) << TCKPOL_SHIFT)
++#define MSP_RX_CLKPOL_BIT(n)     (((n) & RCKPOL_MASK) << RCKPOL_SHIFT)
++#define MSP_TX_CLKPOL_BIT(n)     (((n) & TCKPOL_MASK) << TCKPOL_SHIFT)
  
- 	memcpy(dev->dev_addr, p_sockaddr->sa_data, FDDI_K_ALEN);
- 	spin_lock_irqsave(&bp->DriverLock, Flags);
--	ResetAdapter(smc);
-+	if (netif_running(dev))
-+		ResetAdapter(smc);
- 	spin_unlock_irqrestore(&bp->DriverLock, Flags);
- 
- 	return 0;		/* always return zero */
+ #define P1ELEN_SHIFT		0
+ #define P1FLEN_SHIFT		3
 -- 
 2.53.0
 
