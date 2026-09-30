@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5789237647E;
-	Wed, 30 Sep 2026 19:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AF83DDAFC;
+	Wed, 30 Sep 2026 19:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796401; cv=none; b=UXjyFoHleY/6O+Y26Pn2RHi9bGMgeJ4IaYynUop1YdtRGGDRrb6Kyf3c5f3OntD0iiztgi91ChbzqqB4x500eR5tRN1WqU8CSVM4VYwha0G7iPowr+eDvlIlV69aQwF9+eASQVjUdKKUG5+sVqd14bYWY31La8qV3ho5e1AhXVQ=
+	t=1790796404; cv=none; b=LRtsebgmVpX/j5J3A6nYa/wnyZAtgshXJu2aUnJYMkKfWv6m9fhjjEE2kcPpJzfeAs6rx1sTZsi7NUKYJ8WHNLUyPyuP2STUQPeNjeK/RlKn5xuihY3p5XMAUh7JM64ZLJsYrXSwZFu3FgjvtRJ4OhHK7yRkkff5H2zhIj54qcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796401; c=relaxed/simple;
-	bh=c5aZqRS5zuJgw9bqntd2fLnadaKeji5vlskp9yUoBgg=;
+	s=arc-20240116; t=1790796404; c=relaxed/simple;
+	bh=rloTJWQyGEK1H+BsWqoIVU9S5GhaRRrzf9pf4ML6pZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPSOf6BqiAtMk7m04384Dka6ikbUJbWuMbGK2RHFGDB1SGqfvLUMI0t4Z1aDgUpH8VTxebLoopwrum0tUQTmLjQHkeOe9lGzfDZjk53JF0CJwd3+gZqNkGqAEKd1Bbq8qnvTbbc+qbw2vEshz17h0lMOjYR0EneuaJkuKKOFNBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y4JHjIU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hvj/mVerYXPM9RnRhMfM4O4WMkNl1FjYFvk6BPEhqlMJsjZJyMat3QkKdRFO+g8Pb8mk+gZfX2OV/wAqLQGEeXMT0pM1T37IIiDqR2DWU70Yz2R/GpRxGBtDMmdOHLEarXgsfRjf374E0qOsZV76YTDrl601XC3U+cN253vPPbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlYkd7ue; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y4JHjIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44E61F000FF;
-	Wed, 30 Sep 2026 19:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlYkd7ue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864911F000FF;
+	Wed, 30 Sep 2026 19:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796400;
-	bh=t13zBtgs0cc4+6TqhLqmB+BHDn4xT6N0XqaL6O+fnxs=;
+	s=korg; t=1790796403;
+	bh=PjIn43Bj3S0MSYysRYH8qKl1StjKBKpd/TKWlcH1R+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0y4JHjIUptJCFt4CVCVt+KwbBCsb3I6ikq8zDQX2xjxkV3w47XPqFEvWj+hql4bZk
-	 epch7zw9UAF+fT3rTWCNIAGJbwsIXQUWzlM+YWOw6aekl8bzvCjiNhssNas+5OxUGy
-	 O3bcEVoN83PTYpsXavJ3Q1JY4udLQ//M00Evuuu0=
+	b=DlYkd7ueLxv5+QlwhpEwYejK/gvgSaq5DWKxOqM2k8mIEa8wR9V1cTOuKHIsNBNly
+	 75Odlz5KD57DQud8YpNudQ5S7dPOb805HSozhmhvXzEPx4XScDvAml2GuEkM+98plH
+	 ylkQEDV3dZO68n2pgpsauM09IYTGrw5o5kDZ7Qos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Sergey Lebedev <lsa.uz@pm.me>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 0898/1193] Input: rmi_smbus - fix out-of-bounds read in rmi_smb_write_block()
-Date: Wed, 30 Sep 2026 17:26:22 +0200
-Message-ID: <20260930152454.192905912@linuxfoundation.org>
+Subject: [PATCH 6.6 0899/1193] Input: soc_button_array - fix MS Surface Pro 11 probe failure
+Date: Wed, 30 Sep 2026 17:26:23 +0200
+Message-ID: <20260930152454.214311732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,65 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-commit 51cfe54f815ae175c7d1126b983d4d7c89715004 upstream.
+commit ed22ad5fdbdbf9b4cb4ad3003f60314b5a5eb89d upstream.
 
-When chunking writes into SMBus blocks in rmi_smb_write_block(), the
-loop calculates block_len using the original total length (len) instead
-of the remaining length (cur_len).
+On the MS Surface Pro 11 soc_button_array probing races with the GPIO
+driver probing. If soc_button_array wins the race then gpiod_get() returns
+EPROBE_DEFER, which should normally take care of retrying later, but
+the soc_button_array code deliberately ignores EPROBE_DEFER causing it
+to fail its probe() which causes the volume and power buttons to now work.
 
-If len is greater than 32 bytes (SMB_MAX_COUNT), block_len remains 32
-for every iteration, even on the final partial chunk where fewer than 32
-bytes remain. This causes smb_block_write() to read 32 bytes from the
-advanced data buffer pointer, reading past the end of the input buffer.
+The ignoring of EPROBE_DEFER is there to deal with a problem specific to
+older Bay Trail (BYT) and Cherry Trail (CHT) tablets which often use this
+driver. Modify the error handling to only ignore EPROBE_DEFER on BYT and
+CHT platforms and propagate EPROBE_DEFER normally on other platforms.
 
-Fix this by calculating block_len using cur_len and advancing the buffer
-and address pointers by block_len.
-
-Fixes: 82264d0cf7ae ("Input: synaptics-rmi4 - add SMBus support")
+Fixes: bcf059578980 ("Input: soc_button_array - partial revert of support for newer surface devices")
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: LLM
-Link: https://patch.msgid.link/anLFSMKSoKyyZ272@google.com
+Reported-by: Sergey Lebedev <lsa.uz@pm.me>
+Closes: https://lore.kernel.org/lkml/20260830141355.55898-1-lsa.uz@pm.me/
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Tested-by: Sergey Lebedev <lsa.uz@pm.me>
+Link: https://patch.msgid.link/20260909093934.29411-1-johannes.goede@oss.qualcomm.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/rmi4/rmi_smbus.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/input/misc/soc_button_array.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/input/rmi4/rmi_smbus.c
-+++ b/drivers/input/rmi4/rmi_smbus.c
-@@ -140,7 +140,7 @@ static int rmi_smb_write_block(struct rm
- 	u8 commandcode;
- 	struct rmi_smb_xport *rmi_smb =
- 		container_of(xport, struct rmi_smb_xport, xport);
--	int cur_len = (int)len;
-+	size_t cur_len = len;
+--- a/drivers/input/misc/soc_button_array.c
++++ b/drivers/input/misc/soc_button_array.c
+@@ -16,6 +16,7 @@
+ #include <linux/gpio/consumer.h>
+ #include <linux/gpio_keys.h>
+ #include <linux/gpio.h>
++#include <linux/platform_data/x86/soc.h>
+ #include <linux/platform_device.h>
  
- 	mutex_lock(&rmi_smb->page_mutex);
+ static bool use_low_level_irq;
+@@ -160,7 +161,7 @@ soc_button_device_create(struct platform
+ 	struct gpio_keys_platform_data *gpio_keys_pdata;
+ 	const struct dmi_system_id *dmi_id;
+ 	int invalid_acpi_index = -1;
+-	int error, gpio, irq;
++	int error, gpio, irq = 0;
+ 	int n_buttons = 0;
  
-@@ -148,7 +148,7 @@ static int rmi_smb_write_block(struct rm
- 		/*
- 		 * break into 32 bytes chunks to write get command code
- 		 */
--		int block_len = min_t(int, len, SMB_MAX_COUNT);
-+		int block_len = min_t(size_t, cur_len, SMB_MAX_COUNT);
+ 	for (info = button_info; info->name; info++)
+@@ -191,8 +192,9 @@ soc_button_device_create(struct platform
+ 		error = soc_button_lookup_gpio(&pdev->dev, info->acpi_index, &gpio, &irq);
+ 		if (error || irq < 0) {
+ 			/*
+-			 * Skip GPIO if not present. Note we deliberately
+-			 * ignore -EPROBE_DEFER errors here. On some devices
++			 * Propagate -EPROBE_DEFER, skip button on other errors.
++			 *
++			 * -EPROBE_DEFER is ignored on Bay & Cherry Trail. Here
+ 			 * Intel is using so called virtual GPIOs which are not
+ 			 * GPIOs at all but some way for AML code to check some
+ 			 * random status bits without need a custom opregion.
+@@ -201,6 +203,12 @@ soc_button_device_create(struct platform
+ 			 * we do not have a driver for these so they will never
+ 			 * show up, therefore we ignore -EPROBE_DEFER.
+ 			 */
++			if ((error == -EPROBE_DEFER || irq == -EPROBE_DEFER) &&
++			    !(soc_intel_is_byt() || soc_intel_is_cht())) {
++				error = -EPROBE_DEFER;
++				goto err_free_mem;
++			}
++
+ 			continue;
+ 		}
  
- 		retval = rmi_smb_get_command_code(xport, rmiaddr, block_len,
- 						  false, &commandcode);
-@@ -161,9 +161,9 @@ static int rmi_smb_write_block(struct rm
- 			goto exit;
- 
- 		/* prepare to write next block of bytes */
--		cur_len -= SMB_MAX_COUNT;
--		databuff += SMB_MAX_COUNT;
--		rmiaddr += SMB_MAX_COUNT;
-+		cur_len -= block_len;
-+		databuff += block_len;
-+		rmiaddr += block_len;
- 	}
- exit:
- 	mutex_unlock(&rmi_smb->page_mutex);
 
 
