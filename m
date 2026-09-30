@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9342C357D11;
-	Wed, 30 Sep 2026 16:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459FB51617E;
+	Wed, 30 Sep 2026 16:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787144; cv=none; b=uc2iEuDl3k7vcVDLYvo0BpkW+QX7AgQh05BVh+TLiFxqc6gktM5PYSlOGgr1ehRoXk0BcSLYp23WjcoQjAXgPEJMhKOGap24R+mhaZ1a36PuhMNpsDS4Z5G5a8ZwSl0l9Vajwh2z8Pu0mG+qgy/7LCxw8dx0fIqZst/V/1vPPyM=
+	t=1790787147; cv=none; b=Z5vR9UOeXuGTlWegN15AfrZwDkrVf+80g1MDTe16OO3IcNNFEL+Fq+xH+mdEhouNZZndupPHsyv3gqL5Gf1oio0WEB0gdO5pv2rxD5Ef7CzP75qm02yodJoZzYf13rWJOLLL9hj+A3PckIBsfagqOH0zc2OblmcDu/X6d6yaLug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787144; c=relaxed/simple;
-	bh=O9v/JjkavWJoS48MuFQZcKqLIwqiMxK/a4pLg8vS/OM=;
+	s=arc-20240116; t=1790787147; c=relaxed/simple;
+	bh=LNLW5kty72SzpFFT7IYJgKJfrcY2Ih27qGj83BE2voo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JwTYYHKR7i/wO2/lGTdeRwvP0go8wNnfrDKX+0VcIb9oXz3ogUWlUvxHF9gtSL0NtosAl5+diaoMKkUf+foUgzxCno0JCLRrj+N/vIepG/4adG770wO87MkZdBvBvZ7/Taa0AagDzlCsjOf0dQgBL88Zdcx4XD77jVLQHLWpUbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKTB6kHS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLcYpCzmaMCOwr5tSpFQLEbDv6l3ygMinal+vaa7YDcna7Q7uhSKgZo7SOINdT7dSXxJXgY+epsH9nzUF167bbtxX4wQaB0Psx3OrRglt1luchXfELU1eJCUIEq7mdG0/zkBx8o7TbCVqCmcrKiQAU2rj+eGPaE/FnQoof87yKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tY48Sykk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKTB6kHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3331F00898;
-	Wed, 30 Sep 2026 16:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tY48Sykk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935911F000FF;
+	Wed, 30 Sep 2026 16:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787143;
-	bh=PzZBsDsoUxDEB7pFmulkyF9YYQl30DcUuF+Pm5Kh7BY=;
+	s=korg; t=1790787146;
+	bh=4gCRjo2Wg9Slft66RpUGmO9B4OoKtVYnxfz2e00W+RY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKTB6kHSiuKpMYryfo0jzMNs94nenpcwkDJd5DRHe9EYXC96trEtusmyfjWAmggVC
-	 ++1TDSOog9+tOEt1JVQuwW62CJL/tvCDHTlsjWnK79DHRVgiglb9rXgnjeNPnmd82W
-	 /5+/6ccMxIHr6MO5v+MPMFMQT2KzmKPdXmFBKL2c=
+	b=tY48SykkbKuhh1UsRFAq26zKMtCoirm7MBpTiRZ4gfJQ7jdx/yKzVI7op7coyM91x
+	 f7Q6xkj5jh3bEvEVNHWts+VWqYO3iK7RCURU5uosJr0pVpoBHkP1H8hVRCpBNPL6RV
+	 dhlo0E1kZbdhAO4d31IKdrmE7Z9Um6H8I7B9u8P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
+	Ravindra <ravindra@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 127/457] Bluetooth: bnep: fix out-of-bounds reads on short RX/TX frames and control fallthrough
-Date: Wed, 30 Sep 2026 17:23:52 +0200
-Message-ID: <20260930152348.790933882@linuxfoundation.org>
+Subject: [PATCH 7.2 128/457] Bluetooth: btintel_pcie: validate device-supplied DMA indices
+Date: Wed, 30 Sep 2026 17:23:53 +0200
+Message-ID: <20260930152348.811160413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,102 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Ravindra <ravindra@intel.com>
 
-[ Upstream commit f0ca020cbb9bb7f3f4ea8ba1dfcf30a282aec91e ]
+[ Upstream commit 37a11129345337efd6eef8e62b03b6348cd0dd8b ]
 
-Fix multiple out-of-bounds reads in Bluetooth BNEP frame processing:
+In btintel_pcie_msix_rx_handle(), the driver processes RX completion
+descriptors (urbd1) written by the PCIe device into DMA-coherent memory.
+urbd1->frbd_tag (a 16-bit field fully controlled by the device firmware
+via DMA) is used directly as an array index into rxq->bufs[] without any
+bounds check. rxq->bufs[] has only BTINTEL_PCIE_RX_DESCS_COUNT (64)
+entries, while frbd_tag can be any value 0-65535. A malicious or
+malfunctioning device can write an out-of-range frbd_tag, causing the
+driver to dereference an out-of-bounds data_buf pointer.
 
-1. In bnep_rx_frame() and bnep_ctrl_frame() (net/bluetooth/bnep/core.c),
-   use pskb_may_pull() to verify the BNEP header, control type byte,
-   filter count, and extension headers exist before reading them, and
-   return 0 after handling BNEP_CONTROL instead of falling through to
-   Ethernet frame submission when no extension headers follow.
-2. In bnep_net_xmit() (net/bluetooth/bnep/netdev.c), verify skb->len >=
-   ETH_HLEN with pskb_may_pull() before reading the 14-byte Ethernet
-   header to prevent an out-of-bounds heap read and infoleak on short
-   AF_PACKET TX frames.
+Additionally, cr_hia is read from a DMA-shared index array also writable
+by the device; if the device sets cr_hia >= rxq->count, the while-loop
+never terminates because cr_tia is wrapped via modulo rxq->count and can
+never equal an out-of-range cr_hia.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
+Add bounds validation for cr_hia and frbd_tag in the RX path, and cr_hia
+in the TX path. Log invalid values with bt_dev_err before returning.
+
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Signed-off-by: Ravindra <ravindra@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c   | 17 ++++++++++++++++-
- net/bluetooth/bnep/netdev.c |  8 +++++++-
- 2 files changed, 23 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btintel_pcie.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index f7d88c33e23e4..ad24d2486665a 100644
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -270,9 +270,14 @@ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index 3262e950a6bd8..9381895dc3cf0 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1099,6 +1099,11 @@ static void btintel_pcie_msix_tx_handle(struct btintel_pcie_data *data)
  
- 		BT_DBG("type 0x%x len %u", h->type, h->len);
+ 	txq = &data->txq;
  
-+		if (skb->len < h->len) {
-+			err = -EILSEQ;
-+			break;
++	if (cr_hia >= txq->count) {
++		bt_dev_err(data->hdev, "TXQ: invalid cr_hia %u", cr_hia);
++		return;
++	}
++
+ 	while (cr_tia != cr_hia) {
+ 		data->tx_wait_done = true;
+ 		wake_up(&data->tx_wait_q);
+@@ -1588,6 +1593,11 @@ static void btintel_pcie_msix_rx_handle(struct btintel_pcie_data *data)
+ 
+ 	rxq = &data->rxq;
+ 
++	if (cr_hia >= rxq->count) {
++		bt_dev_err(hdev, "RXQ: invalid cr_hia %u", cr_hia);
++		return;
++	}
++
+ 	/* The firmware sends multiple CD in a single MSI-X and it needs to
+ 	 * process all received CDs in this interrupt.
+ 	 */
+@@ -1595,6 +1605,12 @@ static void btintel_pcie_msix_rx_handle(struct btintel_pcie_data *data)
+ 		urbd1 = &rxq->urbd1s[cr_tia];
+ 		ipc_print_urbd1(data->hdev, urbd1, cr_tia);
+ 
++		if (urbd1->frbd_tag >= rxq->count) {
++			bt_dev_err(hdev, "RXQ: invalid frbd_tag %u",
++				   urbd1->frbd_tag);
++			return;
 +		}
 +
- 		switch (h->type & BNEP_TYPE_MASK) {
- 		case BNEP_EXT_CONTROL:
--			bnep_rx_control(s, skb->data, skb->len);
-+			bnep_rx_control(s, skb->data, h->len);
- 			break;
- 
- 		default:
-@@ -373,6 +378,11 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
- 			goto badframe;
- 	}
- 
-+	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
-+		kfree_skb(skb);
-+		return 0;
-+	}
-+
- 	/* Strip 802.1p header */
- 	if (ntohs(s->eh.h_proto) == ETH_P_8021Q) {
- 		if (!skb_pull(skb, 4))
-@@ -451,6 +461,11 @@ static int bnep_tx_frame(struct bnep_session *s, struct sk_buff *skb)
- 		goto send;
- 	}
- 
-+	if (skb->len < ETH_HLEN) {
-+		kfree_skb(skb);
-+		return 0;
-+	}
-+
- 	iv[il++] = (struct kvec) { &type, 1 };
- 	len++;
- 
-diff --git a/net/bluetooth/bnep/netdev.c b/net/bluetooth/bnep/netdev.c
-index ee1e39a3daffb..b451ef457741f 100644
---- a/net/bluetooth/bnep/netdev.c
-+++ b/net/bluetooth/bnep/netdev.c
-@@ -166,6 +166,12 @@ static netdev_tx_t bnep_net_xmit(struct sk_buff *skb,
- 
- 	BT_DBG("skb %p, dev %p", skb, dev);
- 
-+	if (!pskb_may_pull(skb, ETH_HLEN)) {
-+		dev->stats.tx_dropped++;
-+		kfree_skb(skb);
-+		return NETDEV_TX_OK;
-+	}
-+
- #ifdef CONFIG_BT_BNEP_MC_FILTER
- 	if (bnep_net_mc_filter(skb, s)) {
- 		kfree_skb(skb);
-@@ -218,7 +224,7 @@ void bnep_net_setup(struct net_device *dev)
- 	dev->addr_len = ETH_ALEN;
- 
- 	ether_setup(dev);
--	dev->min_mtu = 0;
-+	dev->min_mtu = ETH_MIN_MTU;
- 	dev->max_mtu = ETH_MAX_MTU;
- 	dev->priv_flags &= ~IFF_TX_SKB_SHARING;
- 	dev->netdev_ops = &bnep_netdev_ops;
+ 		buf = &rxq->bufs[urbd1->frbd_tag];
+ 		if (!buf) {
+ 			bt_dev_err(hdev, "RXQ: failed to get the DMA buffer for %d",
 -- 
 2.53.0
 
