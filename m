@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1994F4754;
-	Wed, 30 Sep 2026 16:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FCA51B173;
+	Wed, 30 Sep 2026 16:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784651; cv=none; b=mlFe4P6VT5ArmC3n4GsND3AmCELCFLsAs3NxjxZokzVQbdbcUW6veE9iYjvH26uIL0zjr674Vd5tTFA+/W1y4fYAUTZK/arGeXQ0LAk6D4Py7m/AnKMn4UO0KhZWfv/bgYHcMAtT6iOuLP6TwjKiqSBN5CqUZw6qUQ2LrmFn7tU=
+	t=1790784652; cv=none; b=rnq/sBlTRy4A8m/djl5M8N4Sfv31vKWEg7e48s6Q94i3BOIpwdMlPyhM9gvLgq1rqkissA2kS1mba0XqKfPY5TxC1nFB3RAeAYPyUDvIsrWfWZ98yy1G/OiDdkdoifE/8uvNHZkC5eWtgPQv3hTVRyf+Qg76MPCwT1ruUMUphZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784651; c=relaxed/simple;
-	bh=F6BK8S/9Kh+hSoeGykmL9NRrHIbGPamNoHWRPEuLDhg=;
+	s=arc-20240116; t=1790784652; c=relaxed/simple;
+	bh=cwETTZRHdCEA24/4dJShM+otJC6qppnJr8hOg33NP/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5z2jjKbVZhJ6c4TCxnYdDrZH7rrvGphmS00dUf/olwXQov1ygiV30BeAHN6BrgdScb2YWobrZAPz3FvbfS6M3cg7VBMANcp+SQRCaykDns8m+WifuwBc+TKzmF1IUb7uL7NAVMr7jUbRjL+zN25pY36a4iMhmTrRP8vxhlXgLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moYIEa0Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6cSA1T3c6yvEc4OnqakaQG2VVgfOHFo0WVtrY6kzDATVhV9a93opY53V9jzmAbqiRgNj9mxGdkriQwpzt/SumBP2qIeo/tmjkCjE7CuO91ijI5ZbIKmmS4LW7hXBFG3/kMXhVXob1lLq1INAh3ZaOE3AzAZxCr2i32qFSUBla8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQjZi7Rr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moYIEa0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC841F00898;
-	Wed, 30 Sep 2026 16:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQjZi7Rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FFB1F000FF;
+	Wed, 30 Sep 2026 16:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784649;
-	bh=k/5BmLU9PsBVemPCHBatUKGr7hnkkPxt0je31JwMtN8=;
+	s=korg; t=1790784646;
+	bh=WG1jqaXl1NGTJ4Ifqj2Zw6Kzv8B6vZTv14vMlUX9QTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=moYIEa0Yg80/thzDgkHCeJvU1V+4Zn/XjZTxS6XDp1ElMbMMhkmwKquJJiH8nUlLS
-	 2gloLn6Pc/06yuHsZlNb4/6l1YlKL/q/AoI+rDZTukBdEDZ2eZDfjU5sC/VXyA5hQ2
-	 mQdVXmkzINhW/BgHG9tTyPQ2xUSzOMa4iojKSI8w=
+	b=iQjZi7RrfJWZF5ev0sXvOW4N1kNmkBoFpLIANnM1LLnWHsPPmwltOf66vBgBQANic
+	 b+Oi5/k8at3CqGzkQuHQk0ToVYc0m2K9SBCXL6rlTf3iNR9futBkehxkQr5D4NiP1G
+	 STOS+BnV65kmkULLodmD0d6iP3yp3lWXrrcEmNPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Helge Deller <deller@gmx.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 230/982] fbdev: pm2fb: unwind WC setup on probe failure
-Date: Wed, 30 Sep 2026 17:16:06 +0200
-Message-ID: <20260930152421.739521169@linuxfoundation.org>
+Subject: [PATCH 6.1 229/982] eth: mlx5: fix macsec dependency
+Date: Wed, 30 Sep 2026 17:16:05 +0200
+Message-ID: <20260930152421.718902299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,33 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 16eb19f0c90af03bda6ba66586d7bb0e9cf85b43 ]
+[ Upstream commit 87ab8276ed24d688febfef4d0c1794896e778192 ]
 
-Add arch_phys_wc_del() on error path to keep the
-write-combining setup balanced when later probe
-steps fail.
+Configurations with mlx5 built-in but macsec=m fail to link:
 
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+x86_64-linux-ld: drivers/infiniband/hw/mlx5/macsec.o: in function `mlx5r_add_gid_macsec_operations':
+macsec.c:(.text+0x77d): undefined reference to `macsec_netdev_is_offloaded'
+x86_64-linux-ld: drivers/infiniband/hw/mlx5/macsec.o: in function `mlx5r_del_gid_macsec_operations':
+macsec.c:(.text+0xe81): undefined reference to `macsec_netdev_is_offloaded'
+
+Fix the dependency so this configuration cannot happen.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260622124229.2444502-1-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/pm2fb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
-index 7a8609c40ae93..cd628e057f5bd 100644
---- a/drivers/video/fbdev/pm2fb.c
-+++ b/drivers/video/fbdev/pm2fb.c
-@@ -1710,6 +1710,7 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-  err_exit_both:
- 	kfree(info->pixmap.addr);
-  err_exit_pixmap:
-+	arch_phys_wc_del(default_par->wc_cookie);
- 	iounmap(info->screen_base);
- 	release_mem_region(pm2fb_fix.smem_start, pm2fb_fix.smem_len);
-  err_exit_mmio:
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/Kconfig b/drivers/net/ethernet/mellanox/mlx5/core/Kconfig
+index 26685fd0fdaa4..0cfe56b90556a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/Kconfig
++++ b/drivers/net/ethernet/mellanox/mlx5/core/Kconfig
+@@ -142,7 +142,7 @@ config MLX5_CORE_IPOIB
+ config MLX5_EN_MACSEC
+ 	bool "Connect-X support for MACSec offload"
+ 	depends on MLX5_CORE_EN
+-	depends on MACSEC
++	depends on MACSEC=y || MACSEC=MLX5_CORE
+ 	default n
+ 	help
+ 	  Build support for MACsec cryptography-offload acceleration in the NIC.
 -- 
 2.53.0
 
