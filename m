@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE6F50B8A8;
-	Wed, 30 Sep 2026 18:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60553BE642;
+	Wed, 30 Sep 2026 18:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792436; cv=none; b=D2EeE5+JBNNyPDj0huPuihYZQmB4MgnsQ/J4IGWK6HSnKGO4VSPy7V3DadHCZFWCvWBfZuJHeuDnQHJACpVAyjbmJWKMMAxm98Cv8o3rB0FAPOgas88bUyJz6TO6ZRAG7+USh3/OKVLqksixJOQEDJYqoOXA3nnt/WWp/He/89k=
+	t=1790792439; cv=none; b=CyBmVdmK/be0AP6JaLdQGuAiyYy9HsHvBs1iubsucMdunF+Y04xfGRhNoTWxRNxgqZnAXWDhwpzRgwsNQCf1/qBDmc6MMvgm7CNf+u3mzLkeNCb0A1DlNjfeSAnW6RVE6Do7IzjcanTDAfRkahSs5dXnoQklgbqoXdoaiom2/og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792436; c=relaxed/simple;
-	bh=cYsx/zegmxUpFLQ6+vauvnoo0CLpWtSEHBc+et+253I=;
+	s=arc-20240116; t=1790792439; c=relaxed/simple;
+	bh=JTbMHNc9wNhLT45t3uzrnukym47Z4S1HfPT1tdOPrWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGZtp7j7040QqgVO1aFI9Kfu3Elek1JaNEv4Sy5qC0SwnXd87vWxaX/h9RcPdqlBPv/HzEcJBIowi1tvDpeJLAIOg0H6qpnEGD5WC+t8BC7SPv1bj6PwTOefcSW3REorht3eypkQhYVD2VqGO9LkZ4l8llP69EJqKhKGFnD45/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7ljzNJG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GesXYPOAFU5TOUarxC62MeQzHXjHHuM3Qk9J3umF8kZEvs2mGg8LQoiE6VOoI5rq70Olw5qMS8/tOv54qYO9cBHJQqtMDIfqeP+SW6yGAKjOFAyDK8OTkxTFiDIUYoB36TmRxVylDVQ8ZZTzz2GQfDOebOyitqse/F1E5Rkgccg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XY3zoaZ0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7ljzNJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621CE1F000FF;
-	Wed, 30 Sep 2026 18:20:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XY3zoaZ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B951F000FF;
+	Wed, 30 Sep 2026 18:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792434;
-	bh=FufVvwO+SBNBs+XqpDAnQOViCpKCqdOFjf4dVEkP6GU=;
+	s=korg; t=1790792437;
+	bh=1AM3dBdukeK3I8rbLyDGz1+1Xf9oGWL0I+H8cexEwZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E7ljzNJGL3CWivmjUDWVx2IcJN8/bUAlsMWe/kmR3UkkoIGoVXDoTEGEC/0hwJJXh
-	 nna7flIXvuO9NSA+8O8Saby/nA0SgAcyFR1Oh2B2YoYd3G3oTRJBlbnLR8zzZDHiUY
-	 SoxX0nPI0sU4DrO9/Xa5RbuDT+n6J6z9wxXWfxLw=
+	b=XY3zoaZ0GDIofvwti9qeKZJQzlFBED+8KPhrhzNbQg40vkQ9aKWrVt71Yx8psmuN3
+	 7UbEMlkSrJiydUVCSXUWkvnyskxsnquqHQ9XmEfCLJIMtR9729cxZeg7DBzCPgoyAT
+	 pNMtwY746gK+wk8q1aYDVblT0gE9xZ008UPDn7GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Bezenah <wbezenah@linux.ibm.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 609/752] s390/cio: Check pmcw.dnv before pmcw.ena in I/O entry points
-Date: Wed, 30 Sep 2026 17:27:59 +0200
-Message-ID: <20260930152411.460633726@linuxfoundation.org>
+Subject: [PATCH 5.15 610/752] fs: avoid repeated scans in evict_inodes()
+Date: Wed, 30 Sep 2026 17:28:00 +0200
+Message-ID: <20260930152411.483612066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,84 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit f6f2985eabdb2bfdc82ce90a1ea3ec53ba795f34 ]
+[ Upstream commit 7459c021874246c196f397686e100702f059b9e7 ]
 
-The device number valid (dnv) bit in the PMCW must be checked before
-acting on any other PMCW fields for IO-type subchannels. A subchannel
-with dnv=0 has no valid device number associated, making it meaningless
-to evaluate the enabled (ena) state or issue any I/O instruction against
-it.
+We observed hung tasks when users attempted to unmount a filesystem
+after its disk had been removed while still in use. During device
+removal, fs_bdev_mark_dead() calls evict_inodes() while holding s_umount.
 
-Reported-by: William Bezenah <wbezenah@linux.ibm.com>
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Fixes: 8c58a229688c ("s390/cio: Do not unregister the subchannel based on DNV")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Each time evict_inodes() drops s_inode_list_lock to reschedule, it
+restarts the walk from the head of s_inodes. With many referenced inodes
+at the head of the list, these restarts repeatedly scan the same inodes
+without reclaiming them. This can keep s_umount held for a long time,
+blocking concurrent umount attempts and triggering hung-task reports.
+
+Keep the current inode, already marked I_FREEING, out of the disposal
+batch until s_inode_list_lock is reacquired. Resume the walk from this
+inode and dispose of it in a later batch or at the end of the walk.
+
+The zero-refcount and state checks under i_lock allow this walker to
+claim the inode by setting I_FREEING and removing it from the LRU.
+Other reclaimers skip the inode, leaving this walker responsible for
+eviction. Only evict() removes it from s_inodes, so keeping it out of
+the disposal batch ensures that it remains on the list while the lock
+is dropped. After reacquiring the lock, reading its current next pointer
+accounts for concurrent removal of following inodes.
+
+The existing inode lifetime rules prohibit acquiring a reference to an
+inode marked I_FREEING or I_WILL_FREE. __iget() requires its caller to
+hold i_lock and establish that taking a reference is valid. Inode lookup
+and igrab() check these flags under i_lock when acquiring a reference
+from zero. ihold() requires an existing reference, which would keep
+i_count nonzero and prevent this walker from claiming the inode. These
+rules already allow iput_final() and the inode shrinker to release
+i_lock after setting I_FREEING and before eviction completes.
+
+A temporary __iget() reference would also keep the inode on the list,
+but its release must preserve last-reference handling. Another user can
+acquire a reference, update lazy timestamps and drop its reference while
+the pin is held. If the pin becomes the last reference, dropping it with
+atomic_dec_and_test() and evicting directly bypasses iput()'s lazytime
+handling and can lose those timestamp updates.
+
+Releasing the pin with iput() preserves that handling, but does not
+guarantee eviction. fs_bdev_mark_dead() runs with SB_ACTIVE set, so iput()
+may retain the inode in cache, whereas evict_inodes() must evict eligible
+zero-reference inodes. The inode may also have been freed when iput()
+returns, so the walker cannot then use it to force eviction. Using
+I_FREEING preserves the existing eviction behavior without introducing
+an additional last-reference transition.
+
+The xfstests auto group passed on ext4 and XFS with known unrelated
+failures excluded. No new issues were observed, and the previously
+reproducible hung task no longer occurs with this patch.
+
+Fixes: ac05fbb40062 ("inode: don't softlockup when evicting inodes")
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20260915044912.3183440-1-sunjunchao@bytedance.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/device_ops.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/inode.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/s390/cio/device_ops.c b/drivers/s390/cio/device_ops.c
-index c533d1dadc6bb..ef298111baf0b 100644
---- a/drivers/s390/cio/device_ops.c
-+++ b/drivers/s390/cio/device_ops.c
-@@ -142,6 +142,8 @@ int ccw_device_clear(struct ccw_device *cdev, unsigned long intparm)
- 	if (!cdev || !cdev->dev.parent)
- 		return -ENODEV;
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	if (!sch->schib.pmcw.ena)
- 		return -EINVAL;
- 	if (cdev->private->state == DEV_STATE_NOT_OPER)
-@@ -198,6 +200,8 @@ int ccw_device_start_timeout_key(struct ccw_device *cdev, struct ccw1 *cpa,
- 	if (!cdev || !cdev->dev.parent)
- 		return -ENODEV;
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	if (!sch->schib.pmcw.ena)
- 		return -EINVAL;
- 	if (cdev->private->state == DEV_STATE_NOT_OPER)
-@@ -375,6 +379,8 @@ int ccw_device_halt(struct ccw_device *cdev, unsigned long intparm)
- 	if (!cdev || !cdev->dev.parent)
- 		return -ENODEV;
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	if (!sch->schib.pmcw.ena)
- 		return -EINVAL;
- 	if (cdev->private->state == DEV_STATE_NOT_OPER)
-@@ -409,6 +415,8 @@ int ccw_device_resume(struct ccw_device *cdev)
- 	if (!cdev || !cdev->dev.parent)
- 		return -ENODEV;
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	if (!sch->schib.pmcw.ena)
- 		return -EINVAL;
- 	if (cdev->private->state == DEV_STATE_NOT_OPER)
-@@ -544,6 +552,8 @@ int ccw_device_tm_start_timeout_key(struct ccw_device *cdev, struct tcw *tcw,
- 	int rc;
+diff --git a/fs/inode.c b/fs/inode.c
+index 0a3a14b9ee46f..c5825df1c5cc0 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -696,7 +696,6 @@ void evict_inodes(struct super_block *sb)
+ 	struct inode *inode, *next;
+ 	LIST_HEAD(dispose);
  
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	if (!sch->schib.pmcw.ena)
- 		return -EINVAL;
- 	if (cdev->private->state == DEV_STATE_VERIFY) {
-@@ -686,6 +696,8 @@ int ccw_device_tm_intrg(struct ccw_device *cdev)
- {
- 	struct subchannel *sch = to_subchannel(cdev->dev.parent);
+-again:
+ 	spin_lock(&sb->s_inode_list_lock);
+ 	list_for_each_entry_safe(inode, next, &sb->s_inodes, i_sb_list) {
+ 		if (atomic_read(&inode->i_count))
+@@ -715,19 +714,19 @@ void evict_inodes(struct super_block *sb)
+ 		inode->i_state |= I_FREEING;
+ 		inode_lru_list_del(inode);
+ 		spin_unlock(&inode->i_lock);
+-		list_add(&inode->i_lru, &dispose);
  
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	if (!sch->schib.pmcw.ena)
- 		return -EINVAL;
- 	if (cdev->private->state != DEV_STATE_ONLINE)
+ 		/*
+-		 * We can have a ton of inodes to evict at unmount time given
+-		 * enough memory, check to see if we need to go to sleep for a
+-		 * bit so we don't livelock.
++		 * Keep this inode out of dispose so it stays on s_inodes while
++		 * the list lock is dropped. I_FREEING prevents new references
++		 * and leaves eviction to us, so we can resume the walk from it.
+ 		 */
+ 		if (need_resched()) {
+ 			spin_unlock(&sb->s_inode_list_lock);
+ 			cond_resched();
+ 			dispose_list(&dispose);
+-			goto again;
++			spin_lock(&sb->s_inode_list_lock);
+ 		}
++		list_add(&inode->i_lru, &dispose);
+ 	}
+ 	spin_unlock(&sb->s_inode_list_lock);
+ 
 -- 
 2.53.0
 
