@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41C5514779;
-	Wed, 30 Sep 2026 16:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC30A515884;
+	Wed, 30 Sep 2026 16:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786641; cv=none; b=LGlcPYvgCFWDUsa3J1iMaW65HEnZ73UnHXzA8I1F3O9HhaNIvNy0hwW+lrWZvdixAicKC0hMfMuplinr0m/pWQdq9M805h4UdcU1QAmMliUMHGPx21MNVVqmec47hWKCFy6wJsr1tFwhgvv//V6nCos7F58k1+Q6LvGNdHlz4mw=
+	t=1790786643; cv=none; b=ca+EWcguy5RMV59PJ5icSuD2HxPcrZW0CxrrxCumD7ma6ULiV3KcWuF2aOcYGDBELUOzYLuBR5ftS4fkZA5mv28PRz1GBcir87Sai84etHJWH6rNchJS9h7K2qcRPAgvJQJvThmxhmWC51wXvqz8Vo946pwiO1cGh8VB1XmGH+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786641; c=relaxed/simple;
-	bh=wf28rDCEPY6omuCxIsym7+iCB/gcuwSkqE63JsFuuew=;
+	s=arc-20240116; t=1790786643; c=relaxed/simple;
+	bh=Q1MAlNd2MfR6Y+Gske4Qfr8t6d0gOZ4TpHKVz8FHKe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iY8BK2JgXi/D2tHCsBv9TxOUN1Ykn6dsXfMYmsDPIs1CN8NvweEu5pEryIM5hb/t873smwuiOs8dWJDjfcZLvUgS4HA7s0CPJVZ9iwqWDFlnhiunI+e4exmB+xTu9a9Rm4SRHAwcmEqK886C81mJhyPRetd/GLflKBzza75x1+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvvnyVok; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HL9srHLeSixDQP3cKyGRo6iK2cmW+zhHu1xJW7SWzPfCn9QfcAe7qf+NecqzsZy8/UzP6nrCQIr3vH3zwU/6oew1uD9uLjdpmdKkcmKMm1AfIV2SmblDQ3Ce9PTVPRR+1LZrwd2CnrH9dCAe+4yuPbvtTY5jeLVkJBBpdScqGjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BR98vqyX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvvnyVok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4181F000FF;
-	Wed, 30 Sep 2026 16:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BR98vqyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE20E1F00898;
+	Wed, 30 Sep 2026 16:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786639;
-	bh=OkfZd74oHNTXzetAG5OPdjp7hRKv4wWxUAwG98DJcw0=;
+	s=korg; t=1790786642;
+	bh=D3hkClvrEjKhrVc7gXb6gEU5dNYrkjnh0mI9BLMwkuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvvnyVokgFwIxqQOQSH4or3bjT5VJJdP9WaE4TyzpsGTYBBuw6t8W8cbGoNl4+Su9
-	 P9xZ2qZhTd4at7vOMPHXW86oWWL8sffrptJxX/1WibSkSORebCKD5y7awBXiP7vpQo
-	 o3ZIjEc0D6r4wcg5hqyZvLSLjT1reRd+zIDhRztM=
+	b=BR98vqyXQenhps3KNnHECcU3l2XD6/ixLW0kUWVP1bolqtRnVK5tIEjP2jQQwxuws
+	 VVgd4H1Q3yTl4OemZv+iqYhwZJOrgjrGIENBSeyZbIEGmlUl2/8WKQiOI7DUH3J/m9
+	 N8YBjdURUAoZVBEVIakdP+D1+R7rogmmDw2BBUIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 926/982] sctp: discard the rest of the packet on a stale-cookie error
-Date: Wed, 30 Sep 2026 17:27:42 +0200
-Message-ID: <20260930152436.632993534@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.1 935/982] gpio: arizona: Fix runtime PM leak in arizona_gpio_direction_out()
+Date: Wed, 30 Sep 2026 17:27:51 +0200
+Message-ID: <20260930152436.824984365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,90 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 4498467a8af06cfa3d71cb04bd7c4170dec8f449 upstream.
+commit e9d810279f84b30738f7790c0ed15f8dd5b9024a upstream.
 
-When an association is in COOKIE-ECHOED state and the peer sends a
-bundled [ERROR(Stale Cookie)][DATA] packet from one of its non-primary
-addresses, processing the ERROR chunk takes the non-fatal stale-cookie
-retry path sctp_sf_do_5_2_6_stale(), which queues
-SCTP_CMD_DEL_NON_PRIMARY while keeping the association alive.
-sctp_cmd_del_non_primary() removes every non-primary transport -
-including the very transport this packet arrived on, which is still
-referenced by the receive lookup and shared by all chunks of the
-packet via chunk->transport.
+Switching a persistent GPIO line from input to output acquires a
+runtime PM reference on the parent device, but if the subsequent
+regmap_update_bits() fails the reference is never dropped and no later
+direction_in() can balance it since the direction was never changed.
+Drop the reference on the update failure path.
 
-sctp_assoc_rm_peer() does redirect asoc->peer.last_data_from away from
-the removed transport, but right afterwards the bundled DATA chunk
-makes sctp_assoc_bh_rcv() re-register
-asoc->peer.last_data_from = chunk->transport unconditionally, undoing
-the redirection with the just-removed transport.
-
-Once the packet is done, the receive reference is dropped and the
-transport is RCU-freed, while the surviving association keeps the
-dangling last_data_from.  A later FWD-TSN (or the delayed SACK timer)
-makes sctp_gen_sack() dereference it (->param_flags and friends), and
-sctp_make_sack()/sctp_outq_select_transport() may write to the freed
-object and link it into the live transport list.  This is a
-use-after-free triggerable by any malicious SCTP peer (or a local
-unprivileged user acting as one) with no capabilities required:
-
-  BUG: KASAN: slab-use-after-free in sctp_do_sm+0x498a/0x5660
-  Read of size 4 at addr ffff88800e1e356c by task poc/115
-  Call Trace: sctp_do_sm <- sctp_assoc_bh_rcv <- sctp_inq_push <-
-              sctp_rcv <- ip_protocol_deliver_rcu <- ip_rcv
-  Allocated: sctp_transport_new <- sctp_assoc_add_peer <-
-             sctp_process_init (INIT-ACK processing)
-  Freed: kfree <- sctp_transport_destroy_rcu <- rcu_core
-         (call_rcu queued by sctp_transport_put at end of sctp_rcv)
-  The buggy address is located 364 bytes inside of freed 1024-byte
-  region [ffff88800e1e3400, ffff88800e1e3800), cache kmalloc-1k
-
-Note that commit 03a9d10ecf71 ("sctp: drop a chunk if its transport
-was removed") only covers the window between the receive lookup and
-the chunk processing (e.g. an ASCONF DEL-IP racing the socket backlog);
-here the transport is removed *while* the packet is being processed,
-by an earlier chunk of the same packet, so the drop in sctp_inq_push()
-does not reach this path.  Verified with the bundled [ERROR(Stale
-Cookie)][DATA] + FWD-TSN reproducer: the KASAN report above still
-fires with that commit applied, and is gone with this patch on top.
-
-Fix it by discarding the rest of the packet on this path, as suggested
-by Xin.  After the stale-cookie ERROR has sent the association back to
-COOKIE-WAIT and removed the non-primary transports, the remaining
-chunks of the packet can only run against the restarted handshake
-while referencing the removed arrival transport through
-chunk->transport: besides the last_data_from registration above,
-sctp_cmd_setup_t2() and the sctp_make_*() reply builders would also
-copy that pointer into association-lifetime state that
-sctp_assoc_rm_peer() has already sanitized.  Let the peer retransmit
-them, in line with what sctp_inq_push() does for chunks whose
-transport was removed before processing.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Fixes: 27a49ed17e22 ("gpio: arizona: Add support for GPIOs that need to be maintained")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260921093707.1432184-1-ljp1205831794@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260916094701.2007509-1-vulab@iscas.ac.cn
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_statefuns.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpio-arizona.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -2625,6 +2625,8 @@ static enum sctp_disposition sctp_sf_do_
+--- a/drivers/gpio/gpio-arizona.c
++++ b/drivers/gpio/gpio-arizona.c
+@@ -118,8 +118,12 @@ static int arizona_gpio_direction_out(st
+ 	if (value)
+ 		value = ARIZONA_GPN_LVL;
  
- 	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
- 
-+	sctp_add_cmd_sf(commands, SCTP_CMD_DISCARD_PACKET, SCTP_NULL());
+-	return regmap_update_bits(arizona->regmap, ARIZONA_GPIO1_CTRL + offset,
+-				  ARIZONA_GPN_DIR | ARIZONA_GPN_LVL, value);
++	ret = regmap_update_bits(arizona->regmap, ARIZONA_GPIO1_CTRL + offset,
++				 ARIZONA_GPN_DIR | ARIZONA_GPN_LVL, value);
++	if (ret < 0 && (val & ARIZONA_GPN_DIR) && persistent)
++		pm_runtime_put_autosuspend(chip->parent);
 +
- 	return SCTP_DISPOSITION_CONSUME;
++	return ret;
+ }
  
- nomem:
+ static void arizona_gpio_set(struct gpio_chip *chip, unsigned offset, int value)
 
 
