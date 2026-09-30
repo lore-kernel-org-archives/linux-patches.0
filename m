@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908764ABBA5;
-	Wed, 30 Sep 2026 18:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AAAA59;
+	Wed, 30 Sep 2026 18:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791798; cv=none; b=vCJSDzJf1kPDNlN5LOADbg73ToCHcfrbd6emv7jSs7Fzpy3tqfy9ViUJLSw7aEDIOJD4sX+lyImXTUC/nmydu06iain8IzZZ2vV9ECaAwlACmzVh5uXCw+YDia64PAxIIY+B8yI3n3Y32msG7Xp1qs/CdzTJX6h7Y5grX5hAEk8=
+	t=1790791801; cv=none; b=UfBSg+h2YVLjUF1bWH/zX9bE3Y3HxrmbMo4HW1fqP9sbpDcmTqgfgCWPn13iGgwySPB+7VFootnOG6GSXlTeAqRaQrfAT3KRIUVBaAS1OldQiwzZy/z62ntduIBm36i7jMF0AS+h/7VV0ocfYUFtCZmQ1guzKQgSew65d47xKI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791798; c=relaxed/simple;
-	bh=8LkmI96qBt281nggt+YNHmIl9NlApE8yJRdiUzFNs94=;
+	s=arc-20240116; t=1790791801; c=relaxed/simple;
+	bh=Inlt+BVkB9Ao98RsQnJIFf9w0sOXWA/eis7PeMhxq4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8U/BtjkwMgeVkOSqKLekaN8wKxLeNq/g+7yBjvy2RXs0I1EsDjK3yPtj/2QCv2yjdkhy9ABeEv3/3dUHcPwmDr9M5aCFzFoLQPPZC+H2IUoWRT0GoG2mvPZ7wxGYf4sK1s2KKhvCb+BxEEo3LdMzbSoJlqV2GnkC09xSOzKY9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4GcTpQz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pzp57kgxwoL8nhpHW/0AWIzcaAMcYIo1/dTQE3XlGwtUNQZQvaEDP/hsAV+po79eySXFbIPMgZKr0DnLEDveFwSRaDnsaFMdE4HTWXzI//fjgMygwVd+QpG+d4gKSUv5xDcrYyTH79VDryj/K17mp8R0Ew2aGpNUjvqahqmQNd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/PvQ6sQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4GcTpQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A2F1F000FF;
-	Wed, 30 Sep 2026 18:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/PvQ6sQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93561F000FF;
+	Wed, 30 Sep 2026 18:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791797;
-	bh=ctl5LLdVmF+768RKChY0DBdbE+mCSFxiW/Xi71O+bvM=;
+	s=korg; t=1790791800;
+	bh=V41YjvPrAsHsgnD6aRortJAvgBRY0ERV5nstszv/4ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4GcTpQzoLofOQqvDJLld3YNvaTDhU6HCI4Q+V5spT9VkSvHDCtyO+hlu0zBz2TN7
-	 bOboQnGbIEnIKEex8r+Lgo/JLIduylrW12tW6nNCCcZExFZLwrkN1AMJARxXawZ0VV
-	 v+YElhtLdbwn4tCjDkCMNaqideFIjP1JbGYey6fE=
+	b=o/PvQ6sQ9zVTdDd8lyWwBrawjOMN1jsCNvkg3mx3wHFmn3iEziC1evypRyb2PvHRB
+	 YlseCSHFcxHq4XliM3z5/5+B1wEj7WjX687fBs/zFkCxOT1d6aAofr2vOaqsX7Vk5g
+	 c5AUke3vabskwMdnc8CjH4UIbqlYBpTMQV04Ur+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Stian Halseth <stian@itx.no>,
-	Jens Axboe <axboe@kernel.dk>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Junjie Cao <junjie.cao@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 430/752] sunvdc: fix -EIO issue due to lack of retries
-Date: Wed, 30 Sep 2026 17:25:00 +0200
-Message-ID: <20260930152407.590182440@linuxfoundation.org>
+Subject: [PATCH 5.15 431/752] net/smc: check v2_ext_offset/eid_cnt/ism_gid_cnt when receiving proposal msg
+Date: Wed, 30 Sep 2026 17:25:01 +0200
+Message-ID: <20260930152407.612655802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,72 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 5067d4ba713961d8ccea1e06cd4c453793f3121e ]
+commit 7863c9f3d24ba49dbead7e03dfbe40deb5888fdf upstream.
 
-John reports that since commit:
+When receiving proposal msg in server, the fields v2_ext_offset/
+eid_cnt/ism_gid_cnt in proposal msg are from the remote client
+and can not be fully trusted. Especially the field v2_ext_offset,
+once exceed the max value, there has the chance to access wrong
+address, and crash may happen.
 
-a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
+This patch checks the fields v2_ext_offset/eid_cnt/ism_gid_cnt
+before using them.
 
-users of Linux inside Solaris ldom see occasional -EIO errors because
-the request send loop now times out. The current loop does 10 retries,
-and inside vio_ldc_send() a further 1000 1usec retries are done as well.
-Even with 10.5 msec of busy loop retries that's apparently not enough to
-always succeed.
-
-Rather than introduce continued busy looping, requeue the request and
-have the delayed queue kicking retry the request after another 10ms.
-This obviously isn't ideal, but there's seemingly no way to wait for
-this type of event. And if 10ms of busy looping was not enough to make
-progress, then presumably this is an edge condition and we just need to
-guarantee to make forward progress at some later point in time. That's
-more suitably done through letting the CPU tend to other work, rather
-than sitting in a tight loop retrying.
-
-[stian: rebased on top of the cookie-unmap fix, without which every
- requeued attempt leaks LDC map table entries; tested on an
- UltraSPARC T4 LDOM where the vdc_tx_trigger failure condition was
- reproduced and absorbed by the requeue with no I/O error]
-
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/all/20251006100226.4246-2-glaubitz@physik.fu-berlin.de/
-Link: https://lore.kernel.org/all/418310b3-2b77-4534-b2fd-27dcc11e333c@kernel.dk/
-Signed-off-by: Stian Halseth <stian@itx.no>
-Link: https://patch.msgid.link/20260901173947.3292110-3-stian@itx.no
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 8c3dca341aea ("net/smc: build and send V2 CLC proposal")
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
+Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+[ jcao: drop the af_smc.c hunk, smc_find_rdma_v2_device_serv() came
+  with SMC-Rv2 in e49300a6bf62 (v5.16); take SMC_CLC_MAX_UEID from
+  fa0866625543 (v5.16); SMC_MAX_ISM_DEVS is the pre-b40584d14570 name
+  of SMCD_CLC_MAX_V2_GID_ENTRIES ]
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/smc/smc_clc.c | 8 +++++++-
+ net/smc/smc_clc.h | 9 ++++++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index 992837bdd487d..9274d2787ad99 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -555,6 +555,7 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	struct vdc_port *port = hctx->queue->queuedata;
- 	struct vio_dring_state *dr;
- 	unsigned long flags;
-+	int ret;
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index fb214faf5f984..0c2c0b2edfdff 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -47,7 +47,6 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
+ 	struct smc_clc_msg_hdr *hdr = &pclc->hdr;
+ 	struct smc_clc_v2_extension *v2_ext;
  
- 	dr = &port->vio.drings[VIO_DRIVER_TX_RING];
+-	v2_ext = smc_get_clc_v2_ext(pclc);
+ 	pclc_prfx = smc_clc_proposal_get_prefix(pclc);
+ 	if (!pclc_prfx ||
+ 	    pclc_prfx->ipv6_prefixes_cnt > SMC_CLC_MAX_V6_PREFIX)
+@@ -64,6 +63,13 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
+ 			sizeof(struct smc_clc_msg_trail))
+ 			return false;
+ 	} else {
++		v2_ext = smc_get_clc_v2_ext(pclc);
++		if ((hdr->typev2 != SMC_TYPE_N &&
++		     (!v2_ext || v2_ext->hdr.eid_cnt > SMC_CLC_MAX_UEID)) ||
++		    (smcd_indicated(hdr->typev2) &&
++		     v2_ext->hdr.ism_gid_cnt > SMC_MAX_ISM_DEVS))
++			return false;
++
+ 		if (ntohs(hdr->length) !=
+ 			sizeof(*pclc) +
+ 			sizeof(struct smc_clc_msg_smcd) +
+diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
+index 78a94b9122b64..bda7c0384b845 100644
+--- a/net/smc/smc_clc.h
++++ b/net/smc/smc_clc.h
+@@ -158,6 +158,7 @@ struct smc_clc_msg_proposal {	/* clc proposal message sent by Linux */
+ } __aligned(4);
  
-@@ -576,7 +577,13 @@ static blk_status_t vdc_queue_rq(struct blk_mq_hw_ctx *hctx,
- 		return BLK_STS_DEV_RESOURCE;
- 	}
+ #define SMC_CLC_MAX_V6_PREFIX		8
++#define SMC_CLC_MAX_UEID		8
  
--	if (__send_request(bd->rq) < 0) {
-+	ret = __send_request(bd->rq);
-+	if (ret == -EAGAIN) {
-+		spin_unlock_irqrestore(&port->vio.lock, flags);
-+		/* already spun for 10msec, defer 10msec and retry */
-+		blk_mq_delay_kick_requeue_list(hctx->queue, 10);
-+		return BLK_STS_DEV_RESOURCE;
-+	} else if (ret < 0) {
- 		spin_unlock_irqrestore(&port->vio.lock, flags);
- 		return BLK_STS_IOERR;
- 	}
+ struct smc_clc_msg_proposal_area {
+ 	struct smc_clc_msg_proposal		pclc_base;
+@@ -297,8 +298,14 @@ static inline struct smc_clc_v2_extension *
+ smc_get_clc_v2_ext(struct smc_clc_msg_proposal *prop)
+ {
+ 	struct smc_clc_msg_smcd *prop_smcd = smc_get_clc_msg_smcd(prop);
++	u16 max_offset;
+ 
+-	if (!prop_smcd || !ntohs(prop_smcd->v2_ext_offset))
++	max_offset = offsetof(struct smc_clc_msg_proposal_area, pclc_v2_ext) -
++		     offsetof(struct smc_clc_msg_proposal_area, pclc_smcd) -
++		     offsetofend(struct smc_clc_msg_smcd, v2_ext_offset);
++
++	if (!prop_smcd || !ntohs(prop_smcd->v2_ext_offset) ||
++	    ntohs(prop_smcd->v2_ext_offset) > max_offset)
+ 		return NULL;
+ 
+ 	return (struct smc_clc_v2_extension *)
 -- 
 2.53.0
 
