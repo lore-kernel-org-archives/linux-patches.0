@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979FB37D11A;
-	Wed, 30 Sep 2026 16:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC2E51118A;
+	Wed, 30 Sep 2026 16:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787543; cv=none; b=S++SaXfGsXxApIvKSPQKVZa0dg8vvGz1aSzGyduQ6OYZcGJAH9SSqUNEiOPaCq7GWsXsxdYVFjDNj4oGXUO2Rg0/p3iZc6J0ovqOarRGdwRvYCzSnJt/gEkelJiWoG5WcYlcVtnLVYbF3nwmdW8bcY2BP6LrFO5pwICcbQeENZk=
+	t=1790787546; cv=none; b=KCZuFH2sMezud0whVaeqrUSdg2zbC7vxAQQZNI9mCXl78SS5AUFs4OOzXKQo3dYmRSo6YB06YKz7XCwomeHMOaokuI0kP8Y42hA9lBSgJpFoxlejhqcbI2yJgund/UCp2JcHenMsEEHeGDeit3U09U2AV7y29/ERKyvSUnrGnjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787543; c=relaxed/simple;
-	bh=u60HA/n/Qhjlk2rIrjkeqMop1Unh7Rz6fSUk3Aiekes=;
+	s=arc-20240116; t=1790787546; c=relaxed/simple;
+	bh=4uDA9uOA5ffgzTFeMbfOcA5LtlWmPsEsD9hgStlltAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DunvIgrauubGSNaVDyWPdWSYYaiA9JMlR2EmndaHZMvcJg6HCRkP1J6eeCAWOS09Wy7M8zvHoKFrJWDgEBaYd+O15pCKrzXcaEEQehbk++HEbUorqGeohhwX4CKyEyL+dsmibOIO1zbjTQtq4IQPE1P8Nw8nLwPxcRxzFhpGvn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xd7Y+q1H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QDvtxj4sX0RUYibZkVLaCgkXMNkJFRVwTgb4gGrzBt6SyUbPnfObHRvdxGH72vNGPWw0AHOJwM/CphQ6vhWdQFYi2m++PXWBfdGyjLzuQPTJBbWFKWLMYlViFNCR6u2AurGIUfyNVMbXw+SBmh6Tbe7PRtOZJNl4RNvWDSSGJxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bq/2tUMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xd7Y+q1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBB01F000FF;
-	Wed, 30 Sep 2026 16:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq/2tUMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E611F000FF;
+	Wed, 30 Sep 2026 16:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787542;
-	bh=Hldvi0gNShqTrcHs0fmJRf+2zLvPxRBevB3pdwU3vPY=;
+	s=korg; t=1790787545;
+	bh=Bx+6yJIyIc3f1KsEg2fmVrvY6IV6EsSfMqc2g3oSu6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xd7Y+q1HbD1fxBOE0UbycmysXrxkAUaYQEBg11xQlnw9xfYRwMZh7bU5MkVoe4Ce3
-	 strs0x66QpEwws51qp/uitKkxUaYkFa05+3FvRWhUThh6U3QktVW7F0PpK7beZCKsF
-	 pXS/bPjYxrQj12h+LAyoVLIYEOtCREzS70pOYVlo=
+	b=Bq/2tUMeAiFejLiYB4e88dXwAsTumwIVrqkHoVwqSeHkHuY3b2cFsx5LPp6RiPf++
+	 8C+nRdFxvtwQ5Pbu2FUbmtjBPj3rbOEDHnMIduIOgGChJTx85jK0AjsK/tRwA2nktI
+	 pLmhN+AfQc1p2ROqBRgLgYlAjzT81A3U5vGRhQ/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 7.2 268/457] kprobes: Fix permanent hang when flushing the kprobe optimizer
-Date: Wed, 30 Sep 2026 17:26:13 +0200
-Message-ID: <20260930152351.826445914@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.2 251/457] bna: prevent IOC timer rearm during teardown
+Date: Wed, 30 Sep 2026 17:25:56 +0200
+Message-ID: <20260930152351.467267851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,155 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 5bfa9f1a9dcb6ecb607adbc1c0226605c972935b upstream.
+commit 77b1718e39e5c9f6956fb60807326af20baf889d upstream.
 
-Writing 0 to /proc/sys/debug/kprobes-optimization while a kprobe is
-jump-optimized never returns. The writer sleeps in D state forever with
-kprobe_sysctl_mutex held, so any later read or write of that sysctl
-hangs as well. For example, with vfs_read+9 as an optimizable address
-in this build:
+bna: prevent IOC timer rearm during teardown
 
-  # cd /sys/kernel/tracing
-  # echo 'p:myprobe vfs_read+9' >> kprobe_events
-  # echo 1 > events/kprobes/myprobe/enable
-  # # wait until /sys/kernel/debug/kprobes/list shows [OPTIMIZED]
-  # echo 0 > /proc/sys/debug/kprobes-optimization
+bnad_pci_remove() and the probe disable_ioceth path call
+timer_delete_sync() for ioc_timer, sem_timer and hb_timer, but not for
+iocpf_timer.  bnad_iocpf_timeout() then takes bnad->bna_lock after
+free_netdev() has freed the struct bnad.
 
-  INFO: task sh:246 blocked for more than 10 seconds.
-  Call Trace:
-   <TASK>
-   __schedule+0x1176/0x4f70
-   schedule+0xdc/0x2c0
-   schedule_timeout+0x17b/0x260
-   wait_for_completion+0x173/0x3c0
-   wait_for_kprobe_optimizer_locked+0xbc/0x130
-   proc_kprobes_optimization_handler+0x156/0x1b0
-   proc_sys_call_handler+0x324/0x490
-   vfs_write+0x52d/0xfe0
-   ksys_write+0xff/0x200
-   do_syscall_64+0x106/0x630
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  ...
-  INFO: task cat:265 is blocked on a mutex likely owned by task sh:246.
+Deleting iocpf_timer last does not fix this.  sem_timer and
+iocpf_timer rearm each other: bnad_iocpf_sem_timeout() can arm
+iocpf_timer, and bnad_iocpf_timeout() arms sem_timer from
+bfa_ioc_hw_sem_get() when the semaphore is busy.
+timer_delete_sync() only waits out its own callback.
+bnad_ioceth_disable() can time out and leave that callback live.
 
-wait_for_kprobe_optimizer_locked() reinitializes optimizer_completion,
-asks the optimizer thread to flush and sleeps in wait_for_completion().
-The thread drains the (un)optimizing lists, but calls complete() only
-if completion_done() is true, i.e. if the completion is already done,
-which never happens while someone waits. disarm_all_kprobes() and
-kprobe_trace_self_tests_init() wait the same way.
+Shut all four IOC timers down with timer_shutdown_sync() on both
+paths, so a later mod_timer() is ignored.
 
-Calling complete() unconditionally would not be enough: the waiter
-drops kprobe_mutex while it sleeps, and nothing else serializes the
-sysctl handler against the debugfs "enabled" file. A second flusher
-that still finds the lists non-empty, e.g. because a disabled probe is
-queued for unoptimizing, reinitializes the completion under the first:
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-  sysctl write                      debugfs "enabled" write
-  unoptimize_all_kprobes()
-    wait_for_kprobe_optimizer_locked()
-      init_completion(c)
-      mutex_unlock(&kprobe_mutex)
-      wait_for_completion(c)
-                                    disarm_all_kprobes()
-                                      wait_for_kprobe_optimizer_locked()
-                                        init_completion(c)
-                                          // c->wait is reset, the first
-                                          // waiter is off the queue
-                                        mutex_unlock(&kprobe_mutex)
-                                        wait_for_completion(c)
-  kprobe_optimizer()
-    complete(c)
-      // wakes the debugfs writer only
-
-where c is &optimizer_completion. Lining up the two writes during an
-optimizer pass loses the sysctl writer this way.
-
-Replace the completion with a counter of optimizer passes, bumped at the
-end of each pass and signalled with wake_up_var_locked(), both under
-kprobe_mutex. A flusher samples the count and waits with
-wait_var_event_mutex(), which drops kprobe_mutex only while sleeping, so
-a new count means a whole pass ran in the meantime. Nothing is
-reinitialized, so several flushers can sleep in the wait at once.
-
-Link: https://lore.kernel.org/all/20260924092142.199198-1-parri.andrea@gmail.com/
-
-Fixes: 73c12f209462 ("kprobes: Use dedicated kthread for kprobe optimizer")
+Fixes: 1d32f7696286 ("bna: IOC failure auto recovery fix")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260922014605.588040-1-mhun512@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/brocade/bna/bnad.c |   24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 6337da5cab9e..4edd8ca5c657 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -42,6 +42,7 @@
- #include <linux/execmem.h>
- #include <linux/cleanup.h>
- #include <linux/wait.h>
-+#include <linux/wait_bit.h>
- 
- #include <asm/sections.h>
- #include <asm/cacheflush.h>
-@@ -526,7 +527,8 @@ enum {
- 	OPTIMIZER_ST_FLUSHING = 2,
- };
- 
--static DECLARE_COMPLETION(optimizer_completion);
-+/* Bumped at the end of each kprobe_optimizer() pass, under 'kprobe_mutex' */
-+static unsigned long optimizer_passes;
- 
- #define OPTIMIZE_DELAY 5
- 
-@@ -654,9 +656,9 @@ static void kprobe_optimizer(void)
- 		do_free_cleaned_kprobes();
- 	}
- 
--	/* Step 5: Kick optimizer again if needed. But if there is a flush requested, */
--	if (completion_done(&optimizer_completion))
--		complete(&optimizer_completion);
-+	/* Step 5: Wake up flushers, and kick optimizer again if needed. */
-+	optimizer_passes++;
-+	wake_up_var_locked(&optimizer_passes, &kprobe_mutex);
- 
- 	if (!list_empty(&optimizing_list) || !list_empty(&unoptimizing_list))
- 		kick_kprobe_optimizer();	/*normal kick*/
-@@ -708,7 +710,8 @@ static void wait_for_kprobe_optimizer_locked(void)
- 	lockdep_assert_held(&kprobe_mutex);
- 
- 	while (!list_empty(&optimizing_list) || !list_empty(&unoptimizing_list)) {
--		init_completion(&optimizer_completion);
-+		unsigned long passes = optimizer_passes;
-+
- 		/*
- 		 * Set state to OPTIMIZER_ST_FLUSHING and wake up the thread if it's
- 		 * idle. If it's already kicked, it will see the state change.
-@@ -717,9 +720,12 @@ static void wait_for_kprobe_optimizer_locked(void)
- 			OPTIMIZER_ST_FLUSHING) != OPTIMIZER_ST_FLUSHING)
- 			wake_up(&kprobe_optimizer_wait);
- 
--		mutex_unlock(&kprobe_mutex);
--		wait_for_completion(&optimizer_completion);
--		mutex_lock(&kprobe_mutex);
-+		/*
-+		 * kprobe_optimizer() holds 'kprobe_mutex' for a whole pass, which
-+		 * this drops while sleeping, so a new count means a full pass ran.
-+		 */
-+		wait_var_event_mutex(&optimizer_passes,
-+				     optimizer_passes != passes, &kprobe_mutex);
- 	}
+--- a/drivers/net/ethernet/brocade/bna/bnad.c
++++ b/drivers/net/ethernet/brocade/bna/bnad.c
+@@ -2571,6 +2571,22 @@ bnad_ioceth_disable(struct bnad *bnad)
+ 	return err;
  }
  
--- 
-2.55.0
-
++/*
++ * The IOC timers rearm one another, so deleting one cannot stop a
++ * sibling callback from arming it again.  Shut them down so a later
++ * mod_timer() is ignored.
++ */
++static void
++bnad_ioc_timers_shutdown(struct bnad *bnad)
++{
++	struct bfa_ioc *ioc = &bnad->bna.ioceth.ioc;
++
++	timer_shutdown_sync(&ioc->ioc_timer);
++	timer_shutdown_sync(&ioc->sem_timer);
++	timer_shutdown_sync(&ioc->hb_timer);
++	timer_shutdown_sync(&ioc->iocpf_timer);
++}
++
+ static int
+ bnad_ioceth_enable(struct bnad *bnad)
+ {
+@@ -3727,9 +3743,7 @@ probe_uninit:
+ 	bnad_res_free(bnad, &bnad->mod_res_info[0], BNA_MOD_RES_T_MAX);
+ disable_ioceth:
+ 	bnad_ioceth_disable(bnad);
+-	timer_delete_sync(&bnad->bna.ioceth.ioc.ioc_timer);
+-	timer_delete_sync(&bnad->bna.ioceth.ioc.sem_timer);
+-	timer_delete_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	bnad_ioc_timers_shutdown(bnad);
+ 	spin_lock_irqsave(&bnad->bna_lock, flags);
+ 	bna_uninit(bna);
+ 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
+@@ -3770,9 +3784,7 @@ bnad_pci_remove(struct pci_dev *pdev)
+ 
+ 	mutex_lock(&bnad->conf_mutex);
+ 	bnad_ioceth_disable(bnad);
+-	timer_delete_sync(&bnad->bna.ioceth.ioc.ioc_timer);
+-	timer_delete_sync(&bnad->bna.ioceth.ioc.sem_timer);
+-	timer_delete_sync(&bnad->bna.ioceth.ioc.hb_timer);
++	bnad_ioc_timers_shutdown(bnad);
+ 	spin_lock_irqsave(&bnad->bna_lock, flags);
+ 	bna_uninit(bna);
+ 	spin_unlock_irqrestore(&bnad->bna_lock, flags);
 
 
