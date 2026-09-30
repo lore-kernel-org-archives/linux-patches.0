@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E7B25F7A9;
-	Wed, 30 Sep 2026 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B521A50EBFC;
+	Wed, 30 Sep 2026 16:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785698; cv=none; b=UGTSRJoD98jE6pzUr0SGAdDyjegenYrQAmdUK/oHVpHUMmtejfipUMgFgExth6llRpTO5FkJPb9MItNBAxl0X4qeIBQ/0WSF5M1TW09fnT7JINQeA1msbLddBQhudFcAg9tSXDM7HF7SdyBC0Q7eXvp0/fregcOmO9j1Lr74Xjo=
+	t=1790785703; cv=none; b=kiJZWjyfFaP2bRS8BGjM+JCFxBQcEHzF+mqYv7n4tOOXb4rGnoPdcQgTUc2zspnwRL/TjHvtyp7wRfIbS2aSoOYI9keisgF5JDTUUcfD5hRDpliAe2mbbbvp+SZygdHfLme5w65K2afwP73pco/N2XrdBu2SkcJeYr26K25JBEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785698; c=relaxed/simple;
-	bh=PtNpLj6VWdD6mObdg+eAF70t/7s1HshxAF9fxW7Z5B0=;
+	s=arc-20240116; t=1790785703; c=relaxed/simple;
+	bh=3meccgZDxt30Tal470TMBo/t5zLqeCOI0VGAb1Bgu9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pBDfwWy4SDGko8dFK/OoCFw1diNmLihuNW35xeqkCexLyPpv6hLDLAcVh8m0mlmx3qbIq5RBVbr8Rs4v5nw6wHz6LqR8la36vBWwSsO7X7Fdrb9Ls4Ooi3XCKDR+zZlE9bEIU7l9BH30B24CZO1AdyFUdspvpeC6uRaltpqVZPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXRXtKD0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bKErqop18q4lJtUtPFzq7vNFJRcEf+2CVLUyTUei44kOv3W/9fZj8g0h+akm+8830lu1p+WgO72andgYBRtKNmtQFp91eMJPJjHkKb8BK6YLwaK9OgB/DkpTFQkaysL9sTqqxvuHudWiLY32jWtr8ip8XN1cy5U3qgYRt30Jt+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VamKr9qI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXRXtKD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DBA1F00898;
-	Wed, 30 Sep 2026 16:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VamKr9qI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A27E1F00893;
+	Wed, 30 Sep 2026 16:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785690;
-	bh=JHqTPZ9440xFjh1knBKHvr5DfHyPe7/zREglhTfl6yQ=;
+	s=korg; t=1790785693;
+	bh=2X3zn4zLU9nSMTyrDqYKL6yttekZ6swINSErB74UAdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXRXtKD0cs2EzIZto7wsnGpC+Q6vj23W0xRVqoEhYmgtYoTWu48lyF3q6y5Qto41A
-	 xM5MdsZbpw5SZB17J2ccyTECbDSNkQ7QxmhKEa2zLVQBxcEBoow3+ut2HxIpGS4m9C
-	 dHiX2G6biQwmTZ0JE5NOpBJpy2Cc59RIhGtOivN0=
+	b=VamKr9qIAZWWoBtE/QLNr0l3+47ckYp0wKtpqfjUWOSgIlOT4UZQ0wALgJD3Ir56H
+	 ktU57HZb8Xk5mmZoRkTyp44D7w4Auhjk5Uk/JY1cuvvmASGYnAckeqdcuhQpBDw3zN
+	 yt8c1WzF6viyRlZPRSMxRRB1Mia/5YpikpwNL+go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 599/982] RDMA/rxe: insert mcg into mcg_tree only after rxe_mcast_add() succeeds
-Date: Wed, 30 Sep 2026 17:22:15 +0200
-Message-ID: <20260930152429.648440007@linuxfoundation.org>
+Subject: [PATCH 6.1 600/982] net: devlink: convert devlink port type-specific pointers to union
+Date: Wed, 30 Sep 2026 17:22:16 +0200
+Message-ID: <20260930152429.668838556@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,137 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 1caceeb2d74bbe88223aea55eb8626b4c5f076fd ]
+[ Upstream commit 3830c5719af66fac9849cf5fb04b03d4e4bb46ff ]
 
-rxe_get_mcg() publishes a newly allocated multicast group in
-rxe->mcg_tree before programming the backing Ethernet multicast address
-with rxe_mcast_add(), which runs outside mcg_lock. A local userspace
-RDMA client reaches this path with ATTACH_MCAST on a UD QP; if
-rxe_mcast_add() then returns an error (for example -ENODEV when the
-backing netdev has been removed, or a propagated dev_mc_add() error),
-the unwind frees the published group without removing it from the tree.
-A later lookup of the same MGID dereferences the freed struct rxe_mcg
-from __rxe_lookup_mcg().
+Instead of storing type_dev as a void pointer, convert it to union and
+use it to store either struct net_device or struct ib_device pointer.
 
-Fix this by keeping the new mcg private until rxe_mcast_add() succeeds.
-Split the tree publication into __rxe_publish_mcg(), call rxe_mcast_add()
-before taking the tree reference, and free the still-private mcg on
-failure. Because the group is never visible in mcg_tree until the
-multicast address is programmed, no concurrent caller can look it up or
-attach a QP to a group that is about to be torn down, so the error path
-needs no conditional unwind. If another caller publishes the same MGID
-while the address is being programmed, the post-add re-check under
-mcg_lock finds the winner; this caller then drops its private object and
-balances its own rxe_mcast_add() with rxe_mcast_del() before returning
-the winner.
-
-Reproduced by forcing the rxe_mcast_add() error return under KASAN:
-without the change the next attach to the same MGID reports a
-slab-use-after-free in __rxe_lookup_mcg(); with it the forced failure
-returns cleanly. A no-injection attach/detach regression, including a
-two-QP shared join/leave and re-attach, stays KASAN- and leak-clean.
-
-Fixes: a926a903b7dc ("RDMA/rxe: Do not call  dev_mc_add/del() under a spinlock")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260617022728.2770116-1-michael.bommarito@gmail.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ef9fbe1b93f3 ("RDMA/core: Reject unregistering netdevs in ib_get_eth_speed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mcast.c | 50 +++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ include/net/devlink.h  | 13 ++++++++++---
+ net/devlink/leftover.c | 17 +++++++++++++----
+ 2 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mcast.c b/drivers/infiniband/sw/rxe/rxe_mcast.c
-index 86cc2e18a7fda..55e78d4c83960 100644
---- a/drivers/infiniband/sw/rxe/rxe_mcast.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mcast.c
-@@ -157,7 +157,9 @@ struct rxe_mcg *rxe_lookup_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
-  * @mgid: multicast address as a gid
-  * @mcg: new mcg object
-  *
-- * Context: caller should hold rxe->mcg lock
-+ * Initializes the mcg fields. The mcg is private and not yet visible in
-+ * mcg_tree, so this may run without rxe->mcg_lock; __rxe_publish_mcg()
-+ * makes it visible under the lock once it is ready.
-  */
- static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
- 			   struct rxe_mcg *mcg)
-@@ -166,13 +168,22 @@ static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
- 	memcpy(&mcg->mgid, mgid, sizeof(mcg->mgid));
- 	INIT_LIST_HEAD(&mcg->qp_list);
- 	mcg->rxe = rxe;
-+}
+diff --git a/include/net/devlink.h b/include/net/devlink.h
+index ba6b8b0949432..6c55aabaedf19 100644
+--- a/include/net/devlink.h
++++ b/include/net/devlink.h
+@@ -121,12 +121,19 @@ struct devlink_port {
+ 	struct list_head region_list;
+ 	struct devlink *devlink;
+ 	unsigned int index;
+-	spinlock_t type_lock; /* Protects type and type_dev
+-			       * pointer consistency.
++	spinlock_t type_lock; /* Protects type and type_eth/ib
++			       * structures consistency.
+ 			       */
+ 	enum devlink_port_type type;
+ 	enum devlink_port_type desired_type;
+-	void *type_dev;
++	union {
++		struct {
++			struct net_device *netdev;
++		} type_eth;
++		struct {
++			struct ib_device *ibdev;
++		} type_ib;
++	};
+ 	struct devlink_port_attrs attrs;
+ 	u8 attrs_set:1,
+ 	   switch_port:1,
+diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
+index 1ea84c5ffa9f1..d9e13f1836bb6 100644
+--- a/net/devlink/leftover.c
++++ b/net/devlink/leftover.c
+@@ -1283,7 +1283,7 @@ static int devlink_nl_port_fill(struct sk_buff *msg,
+ 		goto nla_put_failure_type_locked;
+ 	if (devlink_port->type == DEVLINK_PORT_TYPE_ETH) {
+ 		struct net *net = devlink_net(devlink_port->devlink);
+-		struct net_device *netdev = devlink_port->type_dev;
++		struct net_device *netdev = devlink_port->type_eth.netdev;
  
--	/* caller holds a ref on mcg but that will be
--	 * dropped when mcg goes out of scope. We need to take a ref
--	 * on the pointer that will be saved in the red-black tree
--	 * by __rxe_insert_mcg and used to lookup mcg from mgid later.
--	 * Inserting mcg makes it visible to outside so this should
--	 * be done last after the object is ready.
-+/**
-+ * __rxe_publish_mcg - make a fully initialized mcg visible in mcg_tree
-+ * @mcg: the mcg object
-+ *
-+ * Context: caller must hold rxe->mcg_lock and a reference on mcg
-+ */
-+static void __rxe_publish_mcg(struct rxe_mcg *mcg)
-+{
-+	/* caller holds a ref on mcg but that will be dropped when mcg goes
-+	 * out of scope. We need to take a ref on the pointer that will be
-+	 * saved in the red-black tree by __rxe_insert_mcg and used to lookup
-+	 * mcg from mgid later. Inserting mcg makes it visible to outside so
-+	 * this is done last after the object is ready and the multicast
-+	 * address has been programmed.
- 	 */
- 	kref_get(&mcg->ref_cnt);
- 	__rxe_insert_mcg(mcg);
-@@ -210,26 +221,37 @@ static struct rxe_mcg *rxe_get_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
- 		err = -ENOMEM;
- 		goto err_dec;
+ 		if (netdev && net_eq(net, dev_net(netdev)) &&
+ 		    (nla_put_u32(msg, DEVLINK_ATTR_PORT_NETDEV_IFINDEX,
+@@ -1293,7 +1293,7 @@ static int devlink_nl_port_fill(struct sk_buff *msg,
+ 			goto nla_put_failure_type_locked;
  	}
-+	__rxe_init_mcg(rxe, mgid, mcg);
-+
-+	/* program the multicast address while mcg is still private, before
-+	 * it is inserted into mcg_tree. dev_mc_add() may sleep so this must
-+	 * run outside mcg_lock. On failure mcg was never published, so a
-+	 * plain free is correct and the tree is untouched.
-+	 */
-+	err = rxe_mcast_add(rxe, mgid);
-+	if (err) {
-+		kfree(mcg);
-+		goto err_dec;
+ 	if (devlink_port->type == DEVLINK_PORT_TYPE_IB) {
+-		struct ib_device *ibdev = devlink_port->type_dev;
++		struct ib_device *ibdev = devlink_port->type_ib.ibdev;
+ 
+ 		if (ibdev &&
+ 		    nla_put_string(msg, DEVLINK_ATTR_PORT_IBDEV_NAME,
+@@ -9992,7 +9992,16 @@ static void __devlink_port_type_set(struct devlink_port *devlink_port,
+ 	devlink_port_type_warn_cancel(devlink_port);
+ 	spin_lock_bh(&devlink_port->type_lock);
+ 	devlink_port->type = type;
+-	devlink_port->type_dev = type_dev;
++	switch (type) {
++	case DEVLINK_PORT_TYPE_ETH:
++		devlink_port->type_eth.netdev = type_dev;
++		break;
++	case DEVLINK_PORT_TYPE_IB:
++		devlink_port->type_ib.ibdev = type_dev;
++		break;
++	default:
++		break;
 +	}
+ 	spin_unlock_bh(&devlink_port->type_lock);
+ 	devlink_port_notify(devlink_port, DEVLINK_CMD_PORT_NEW);
+ }
+@@ -12009,7 +12018,7 @@ devlink_trap_report_metadata_set(struct devlink_trap_metadata *metadata,
  
- 	spin_lock_bh(&rxe->mcg_lock);
--	/* re-check to see if someone else just added it */
-+	/* re-check to see if someone else just added it while we were adding
-+	 * the multicast address; if so use theirs and drop ours
-+	 */
- 	tmp = __rxe_lookup_mcg(rxe, mgid);
- 	if (tmp) {
- 		spin_unlock_bh(&rxe->mcg_lock);
-+		rxe_mcast_del(rxe, mgid);
- 		atomic_dec(&rxe->mcg_num);
- 		kfree(mcg);
- 		return tmp;
- 	}
+ 	spin_lock(&in_devlink_port->type_lock);
+ 	if (in_devlink_port->type == DEVLINK_PORT_TYPE_ETH)
+-		metadata->input_dev = in_devlink_port->type_dev;
++		metadata->input_dev = in_devlink_port->type_eth.netdev;
+ 	spin_unlock(&in_devlink_port->type_lock);
+ }
  
--	__rxe_init_mcg(rxe, mgid, mcg);
-+	__rxe_publish_mcg(mcg);
- 	spin_unlock_bh(&rxe->mcg_lock);
- 
--	/* add mcast address outside of lock */
--	err = rxe_mcast_add(rxe, mgid);
--	if (!err)
--		return mcg;
-+	return mcg;
- 
--	kfree(mcg);
- err_dec:
- 	atomic_dec(&rxe->mcg_num);
- 	return ERR_PTR(err);
 -- 
 2.53.0
 
