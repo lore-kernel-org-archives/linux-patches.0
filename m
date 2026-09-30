@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3778A3CD8B8;
-	Wed, 30 Sep 2026 19:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFD83D3002;
+	Wed, 30 Sep 2026 19:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795894; cv=none; b=JYywE790S3noUotJj3C6hIhwNTID0q0hYs61mEdG4r6QFsUj//5vrU/IaDtFnPXfQgCkSWZcFZtUISeVNBXZ1uLXNUd8eGaQvvzm/cSPF5H2tgH5Ht7iwEG6g1iF7OEfecNEHsjcel5uvtvNOmzUw9bxZ20NwgXgJxhiDi22WXY=
+	t=1790795897; cv=none; b=N0veribFQvFt3zImiCbl+AX/gf6s6shEkFligR0iLWty/qwI1pGUyVlLTSknWMxOUdy7doD9dAIiBeuGdv+xp6tTRP7vXoZrCK1FcFyuBDGkNwtRBzu/WQXfy5Ax/8kMHUbFRVWkQKQeK9tZRtvCcWCSY0/igT32xqFh1K3rgqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795894; c=relaxed/simple;
-	bh=GIEwXRxZBIKqbxiHy7V3ofEqsCSBmDKs6hZ5QibjCGQ=;
+	s=arc-20240116; t=1790795897; c=relaxed/simple;
+	bh=fUgeWiqqmOBl4xb+bctr3uR66d6hV5uWqkEWVIg9ido=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T169S8t9qLis7+RBsXef3kyl1qICfsnHvtV8XByIk9EZgN1ffQK43x5a2hvj8SBN1tgjmOrSkIDiPE1eUjy+8Wx4RFNpk6l2z0Us1wk+AgslG43h3wI1oUENRs3h3acHIQWUikmYNnAYurwk9FnmRXDrjVAt2gmYkXDsgbmGgYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8YukhmO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZG4jQHCvtJstoaPlNgQzWP5LcPT1JrkmdA5ij40QVFiicS4GKNgAVsUhT/z3VCFIQs+zm7z/aS1QweXte/QiDhamgupwgFUgnYqXNwNKRLXvEy1vGYlSbbwlz/8AT2vu4PBnQqAcAOfRv4hcjH83k9Ot5J0q6aYjMDTiCg513zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXhxbIW9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8YukhmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6671F000FF;
-	Wed, 30 Sep 2026 19:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXhxbIW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC391F000FF;
+	Wed, 30 Sep 2026 19:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795893;
-	bh=e3TXdYuMOXNluoo0CY04GeewCPgAR72i+cOV2pZ9ODk=;
+	s=korg; t=1790795896;
+	bh=+eqWugk7z1d/KQPzwdZh0xmo+fAVSAtGqFQe/cHFJyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8YukhmOejmUdY2QS9FeMk6evdtVyxNtk2a5HyJ5rGY8Er56WAL4yOUNIy4klIcS1
-	 IDbRV9HreNeNi54X628Ks1m6VSRCfuByYg0Z3nhYFiqL1DjawPuKLUHqjghCPENerI
-	 CT7m9S1t9KUg5a4lbNYbhe1OF/S7RrQgeKksvyMo=
+	b=xXhxbIW9252kggGtYpyLw3e4LDOnoF+Yu4jr26IU6RDHxsNr1/wABWNWonK8dvdTz
+	 wM3TG/lan75qQX4TZkvk8EikEiRPtiMICcxCJX8MArEYHLQURrmDVudg3wtyd2i1Mu
+	 ibW0UzmvkHmEAdiFo9KmRx1BMkPXMTMurZVBb1jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Maher Azzouzi <maherazz04@gmail.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
-	Liu Jian <liujian56@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0722/1193] xfrm: add missing rcu_read_lock(), skb_dst_force() and dev_hold() for xfrm_trans_reinject()
-Date: Wed, 30 Sep 2026 17:23:26 +0200
-Message-ID: <20260930152450.290783302@linuxfoundation.org>
+Subject: [PATCH 6.6 0723/1193] esp: downgrade zerocopy managed frags before mutating skb frags
+Date: Wed, 30 Sep 2026 17:23:27 +0200
+Message-ID: <20260930152450.314941262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,101 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maher Azzouzi <maherazz04@gmail.com>
 
-[ Upstream commit d2f5082f9e84653fa1a9e8aebaaff23e688f5e19 ]
+[ Upstream commit f89416eb3db151170a6f3c6dfc5239d26cdce4d2 ]
 
-syzbot reported a suspicious RCU usage warning in ip6_pkt_drop():
+On the out-of-place output path (esp->inplace == false) ESP rewrites the
+skb frag array: esp_output_head() appends a trailer frag and
+esp_output_tail() replaces the frags with a destination page, both
+referenced with get_page().
 
-  WARNING: suspicious RCU usage in ip6_pkt_drop
-  include/net/addrconf.h:389 suspicious rcu_dereference_check() usage!
+When the skb carries zerocopy managed frags (SKBFL_MANAGED_FRAG_REFS) the
+payload frags are owned by the ubuf and must not be referenced or
+unreferenced individually, but ESP mutates the frag array without ever
+downgrading the skb.  This breaks the managed-frag invariant two ways:
 
-  Call Trace:
-   __in6_dev_get_safely include/net/addrconf.h:389 [inline]
-   ip6_pkt_drop+0x596/0x610 net/ipv6/route.c:4620
-   ip6_pkt_discard+0x1c/0x30 net/ipv6/route.c:4651
-   xfrm_trans_reinject+0x324/0x630 net/xfrm/xfrm_input.c:806
-   process_one_work kernel/workqueue.c:3322 [inline]
-   process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
-   worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
+  - esp_ssg_unref() walks the source scatterlist and drops a page
+    reference for every frag, including the ubuf-owned payload frags,
+    pushing their refcount below the GUP pin bias while the pages are
+    still pinned, i.e. a use-after-free of the zerocopy pages;
 
-When commit 4f4920669d21 ("xfrm: Reinject transport-mode packets through
-workqueue") converted xfrm_trans_reinject from a tasklet to a workqueue,
-the reinjection loop ceased running in softirq context. Workqueue workers
-run in process context where local_bh_disable() does not enter an RCU
-read-side critical section under CONFIG_PREEMPT_RCU.
+  - esp_output_tail() installs its destination page as frag 0 with
+    get_page() but leaves SKBFL_MANAGED_FRAG_REFS set, so
+    skb_release_data() takes the skip_unref branch and never drops that
+    reference, leaking the x->xfrag page at packet rate.
 
-Because finish callbacks (such as ip6_rcv_finish) expect to run under an
-RCU read lock (performing route lookups, l3mdev lookups, and accessing
-RCU-protected data structures), invoking them in workqueue context without
-rcu_read_lock() triggers RCU lockdep warnings.
+Fix this the way every other frag-mutating site does (__ip_append_data(),
+__ip6_append_data(), tcp_sendmsg_locked()) and call
+skb_zcopy_downgrade_managed() before ESP touches the frag array: it takes
+a real reference on each existing frag and clears SKBFL_MANAGED_FRAG_REFS,
+so the per-frag unref in esp_ssg_unref() and the frag release in
+skb_release_data() are both balanced and no mixed-ownership frag array is
+left behind.
 
-Furthermore, packets queued to the workqueue via xfrm_trans_queue_net()
-may carry non-refcounted (noref) dst entries (e.g. from ip_route_input_noref).
-Additionally, on netdevice unregistration, dst_dev_put() replaces dst->dev
-with blackhole_netdev, so dst entries do not keep skb->dev alive while
-queued in the workqueue.
-
-Fix these issues by:
-1. Calling skb_dst_force(skb) in xfrm_trans_queue_net() while still in the
-   caller's RCU section to ensure dst is reference-counted before queuing.
-2. Holding a reference on skb->dev via dev_hold()/dev_put() across workqueue
-   deferral so skb->dev remains valid during finish() callback processing.
-3. Acquiring rcu_read_lock() around the finish callback invocation loop in
-   xfrm_trans_reinject().
-
-Fixes: 4f4920669d21 ("xfrm: Reinject transport-mode packets through workqueue")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Liu Jian <liujian56@huawei.com>
+Fixes: 753f1ca4e1e5 ("net: introduce managed frags infrastructure")
+Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/ipv4/esp4.c | 6 ++++++
+ net/ipv6/esp6.c | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index 1483770f84564..3100c5ef18622 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -758,12 +758,17 @@ static void xfrm_trans_reinject(struct work_struct *work)
- 	spin_unlock_bh(&trans->queue_lock);
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index 3fb7b07c7c8f9..8850a1dc8c339 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -438,6 +438,12 @@ int esp_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info *
  
- 	local_bh_disable();
-+	rcu_read_lock();
- 	while ((skb = __skb_dequeue(&queue))) {
- 		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
-+		struct net_device *dev = skb->dev;
+ 			esp->inplace = false;
  
- 		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
-+		if (dev)
-+			dev_put(dev);
- 		put_net(net);
- 	}
-+	rcu_read_unlock();
- 	local_bh_enable();
- }
- 
-@@ -779,12 +784,18 @@ int xfrm_trans_queue_net(struct net *net, struct sk_buff *skb,
- 	if (skb_queue_len(&trans->queue) >= READ_ONCE(netdev_max_backlog))
- 		return -ENOBUFS;
- 
-+	if (skb_dst(skb) && !skb_dst_force(skb))
-+		return -EHOSTUNREACH;
++			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
++			 * we mutate the frag array, so the per-frag unref stays balanced
++			 * for zerocopy managed frags (see __ip_append_data()).
++			 */
++			skb_zcopy_downgrade_managed(skb);
 +
- 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
+ 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
  
- 	hold_net = maybe_get_net(net);
- 	if (!hold_net)
- 		return -ENODEV;
+ 			spin_lock_bh(&x->lock);
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 843f5682f1215..66a4d37bc0f9a 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -473,6 +473,12 @@ int esp6_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info
  
-+	if (skb->dev)
-+		dev_hold(skb->dev);
+ 			esp->inplace = false;
+ 
++			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
++			 * we mutate the frag array, so the per-frag unref stays balanced
++			 * for zerocopy managed frags (see __ip_append_data()).
++			 */
++			skb_zcopy_downgrade_managed(skb);
 +
- 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
- 	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
- 	spin_lock_bh(&trans->queue_lock);
+ 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
+ 
+ 			spin_lock_bh(&x->lock);
 -- 
 2.53.0
 
