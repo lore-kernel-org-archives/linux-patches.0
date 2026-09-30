@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365183D565F;
-	Wed, 30 Sep 2026 18:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185192EA732;
+	Wed, 30 Sep 2026 18:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794093; cv=none; b=O/+aXhmPjlxO6ZyyMzgcoylPc9B64d76dgnW1AxOK9HrAfzxO8XEo5jOPY3pWFFbokYVdEOfMukRyZrTA24TLT437gVxAU/SxjZ9fX0OIJEzOKlEzYTT8j15P5zIo9LZIQbMfwscFxNK7zU4zXbnsMATmMaqAdXeWHeuiM6bsjc=
+	t=1790794096; cv=none; b=LIVQa3Ct7GbpSVqGXuOX8OJJRTnpPYVWWuok3wMcVQwo/dKVTZTa5lGUH4HGzXishVbUPggL5uj3talU1z34t4dA4AwyMO3jKeza2Q8MvA22++rXj8Ib+tDtBeBLyQjaNUBH1IVXWD41NLFgcx2FgarEryWkSht+ccNBNQV35bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794093; c=relaxed/simple;
-	bh=xVUNpUwWLZ7cCefYVY/RE0phYaVuta97XlFv3nNIzN8=;
+	s=arc-20240116; t=1790794096; c=relaxed/simple;
+	bh=pfJdB7yqpeUrHWQ+y58yDBtwQROgEIAnGWmpp4cXCek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZgneWE5cX2zalCms/c0JoA/WUDWabQA+I/XupNR4J7BLQBgBPOghGPxlhYh3JFGH74MI02/mttEGzdYzwlHxO5lsbVIPwCNYJpub1fowioVU22G8oHQOuSJNhbZ/YjvvTn8lKO4IL6sDdjTS0Scj5BzAoSNiUkEjO6HNTKCvNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O25ApFq6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dmA6PSNLXTH04k8kqZHTakNZQYeaHurtMlMYCiALUmVywxho9LhQVYOvJ95mUhGTGts96ElGD1OmUtwqlOaKyuIwECisjzqMyh5+S21rl4s879R1hxaDJYjyOiQIIrTIYDI/QNLPZBdadsuZTq7t64kEGiXeOns/SKeaYGZOlec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQcffeN9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O25ApFq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9111A1F00898;
-	Wed, 30 Sep 2026 18:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQcffeN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E811F000FF;
+	Wed, 30 Sep 2026 18:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794092;
-	bh=AL+ycLt+a2YY/9+F6nGOxgaAZuWcVXOkzVUsE3EzMnw=;
+	s=korg; t=1790794095;
+	bh=qakRDibMDVTzQApLQSV0DSJp70OPjauAMn/FUNbmNTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O25ApFq6J56rhkS4/RL4NRmBxesNQEqDoq1GGJQ46hyoyH48Hlsnb3csEb+zMQYja
-	 fmyl4TEXMW1pWcX8xKgHSStbnTe0h+HiiLMBAWW+KQ/4rg7skho81zhXkyFtJ/O464
-	 lUGiIozY9XL3uoZwU9mx3VYPJixEeMqyJeQGgw9s=
+	b=RQcffeN9lO6RS3qftW9NTqi9QvYbIIXxgVCsNQD5IMUP1pazd8PoyczfenosuWhYa
+	 X3X+YbmhDCsJZR7BNHghJc9AjKhBW2T/TxJCQpMbOajvr0ZwtByy4YsZw3VA2JauKB
+	 AVROQCe5yaPDzh6azYB4BP4vDZzZR1Y6ybU976pU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0088/1193] jfs: handle set_blocksize failures
-Date: Wed, 30 Sep 2026 17:12:52 +0200
-Message-ID: <20260930152436.200089422@linuxfoundation.org>
+Subject: [PATCH 6.6 0089/1193] hpfs: handle set_blocksize failures
+Date: Wed, 30 Sep 2026 17:12:53 +0200
+Message-ID: <20260930152436.221776104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,37 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 05107f5602751fcfd3d108c1f579eb45aabead52 ]
+[ Upstream commit a405996f23e04942aad064ab8d50c55827482872 ]
 
-jfs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
-Without this, mounting we will hit the
+hpfs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting will hit the
 
         BUG_ON(offset >= folio_size(folio));
 
 in folio_set_bh on the first __bread_gfp call.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-5-hch@lst.de
+Link: https://patch.msgid.link/20260511071701.2456211-3-hch@lst.de
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/super.c | 3 ++-
+ fs/hpfs/super.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/super.c b/fs/jfs/super.c
-index c4f565770d316..39031ff5151f5 100644
---- a/fs/jfs/super.c
-+++ b/fs/jfs/super.c
-@@ -524,7 +524,8 @@ static int jfs_fill_super(struct super_block *sb, void *data, int silent)
- 	/*
- 	 * Initialize blocksize to 4K.
- 	 */
--	sb_set_blocksize(sb, PSIZE);
-+	if (!sb_set_blocksize(sb, PSIZE))
-+		goto out_unload;
+diff --git a/fs/hpfs/super.c b/fs/hpfs/super.c
+index 758a51564124d..55d5fce08e307 100644
+--- a/fs/hpfs/super.c
++++ b/fs/hpfs/super.c
+@@ -584,7 +584,8 @@ static int hpfs_fill_super(struct super_block *s, void *options, int silent)
+ 	}
  
- 	/*
- 	 * Set method vectors.
+ 	/*sbi->sb_mounting = 1;*/
+-	sb_set_blocksize(s, 512);
++	if (!sb_set_blocksize(s, 512))
++		goto bail0;
+ 	sbi->sb_fs_size = -1;
+ 	if (!(bootblock = hpfs_map_sector(s, 0, &bh0, 0))) goto bail1;
+ 	if (!(superblock = hpfs_map_sector(s, 16, &bh1, 1))) goto bail2;
 -- 
 2.53.0
 
