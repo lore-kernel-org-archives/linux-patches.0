@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437C54CCDC1;
-	Wed, 30 Sep 2026 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A77C4F405C;
+	Wed, 30 Sep 2026 15:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782654; cv=none; b=HR7s0WcTpyxSontbOJgjDYjuWDqB1NdusoWOv2ucYeQHQald+jNWJiCS78+Kog+wyNtkPvb3zyKL3FxttGFfWHF3ZrNM1QYwj73jr99f3V1Go6DpnMYpgNsPjB49+LTUhi9HduT+1qJUNCutvOXskuFk4x12G4nuXb6ZYDLxAfY=
+	t=1790782656; cv=none; b=RBJgodhD77zNyqGzeJGyKhJtt1BzVqv+SBus6nUoXzS8zqAaBsiDUM57k3a3zuwCQoLvH86pkz5HVkcL5sqTGqGD7PdhDv1dKHOexGIrs80pAqU4bnnLPTWYGOu/1CIxrs5vXUCmCcEkyGfOzo6xFHqNyxeQr88TeRgZ1AmVqSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782654; c=relaxed/simple;
-	bh=+93clNiIz//BITgVHy8Eh9/jc7xyX2pJUQ4NthtPOZM=;
+	s=arc-20240116; t=1790782656; c=relaxed/simple;
+	bh=7m1UFexHnY6mF6G5aBmvcK7KyEYUHmZdwVp84NUCnsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uI2ylpa6AzmZlww7bAcjK/cjYI6gevAkIbA31cYLLXm80HW7vBVZqCGZBpGiOg5Q50mQ9J8a9vTeVKAqWMJVuab/iyEdDeJMRub9xS9lg/KkVGKSk1eDLqWtLTCywaF//WU+0IJGEnuGFyEddQ3tkgZASFNhglvVkPflGfvaJZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWWPqpHj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZH+ohghlWrzxq6rWwiwiS3GSbcFCLtlHaMzdid60TNHSz9yxnLeFtkgpwmQ679IoyGBI6TQ8DzWa6fRIehO5xcyoCc5yFZhXJJUT7hcMwd7tHdSbms9D9har03i40yr5vKkIMVQWN3bcOANHLz9FbL8k4t65+JgVQUkB50id3Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPo3elUe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWWPqpHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 656251F00893;
-	Wed, 30 Sep 2026 15:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPo3elUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4B41F00898;
+	Wed, 30 Sep 2026 15:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782643;
-	bh=YXlBdzKHjBnQywrriXWbhhUbWLpnrpA1VeZL+u/BhJw=;
+	s=korg; t=1790782649;
+	bh=beRRrTzWpaVKELwq1twSvyHVHvB+K8iCLpUANLE8vMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWWPqpHjs5SVrIZ8InrvTyjxemX1tImdIw73poHTZLniRFb98rMup4PQLwwXoV/E7
-	 EcLPO92mFGfa8InlshQbyFBNrzTWrIck+ZSEjOlTHO5+fS1KFnKTNzZQWD6Fp5KJ2p
-	 I6DyYLv6qGczHxZLCYEh8KBtOPYzbvNaWaWC935A=
+	b=rPo3elUeXl1xWKeOIS+Xymh/GzNTi+jih7QeBL/xM7PUTMcSkqnQRHwsPciaAaBaH
+	 flVNIK5BDxkF+Dd8WOBLCEceLRpRvmyeZitgvEbjjWHF2Q4FWxkcvcLoolJbTPo/68
+	 6CzGE+FJBrHtT3YxqIsRgBm9xKU1KN5FgKusS/lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gleb Sonichev <sonichev555@gmail.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 112/595] platform/x86: dell-laptop: add Inspiron N5110 to touchpad LED quirk table
-Date: Wed, 30 Sep 2026 17:20:05 +0200
-Message-ID: <20260930152350.146190666@linuxfoundation.org>
+Subject: [PATCH 5.10 122/595] ASoC: rockchip: rockchip_pdm: Reorder clock enable sequence
+Date: Wed, 30 Sep 2026 17:20:15 +0200
+Message-ID: <20260930152350.364318777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -46,54 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gleb Sonichev <sonichev555@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit bfe91a80b13f8068f6fa07aa8c468d284150d4ad ]
+[ Upstream commit 3168721d6ec3b610edf6a3c22ad190722a27d276 ]
 
-The Inspiron N5110 needs the touchpad LED quirk (Vostro V130 quirk)
-to properly control the touchpad LED. Add its DMI identifier
-to the existing quirk table, next to the similar Inspiron M5110 entry.
+Enable the 'hclk' bus clock before the 'clk' controller clock during
+runtime resume.
+The bus clock provides the register access interface, so enable it before
+the controller clock. This also makes the resume sequence the reverse of
+the suspend sequence, which keeps the clock ordering consistent.
 
-Tested on Dell Inspiron N5110.
-The touchpad LED works correctly with this quirk enabled.
-
-Signed-off-by: Gleb Sonichev <sonichev555@gmail.com>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://patch.msgid.link/20260525100047.20046-1-sonichev555@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260602101608.45137-4-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell-laptop.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/rockchip/rockchip_pdm.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/platform/x86/dell-laptop.c b/drivers/platform/x86/dell-laptop.c
-index 70edc5bb3a146..af5001ecf77f2 100644
---- a/drivers/platform/x86/dell-laptop.c
-+++ b/drivers/platform/x86/dell-laptop.c
-@@ -198,6 +198,15 @@ static const struct dmi_system_id dell_quirks[] __initconst = {
- 		},
- 		.driver_data = &quirk_dell_vostro_v130,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "Dell Inspiron N5110",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron N5110"),
-+		},
-+		.driver_data = &quirk_dell_vostro_v130,
-+	},
- 	{
- 		.callback = dmi_matched,
- 		.ident = "Dell Vostro 3360",
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index 5d7a12ca4c819..736d211479741 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -364,16 +364,16 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
+ 	struct rk_pdm_dev *pdm = dev_get_drvdata(dev);
+ 	int ret;
+ 
+-	ret = clk_prepare_enable(pdm->clk);
++	ret = clk_prepare_enable(pdm->hclk);
+ 	if (ret) {
+-		dev_err(pdm->dev, "clock enable failed %d\n", ret);
++		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ret = clk_prepare_enable(pdm->hclk);
++	ret = clk_prepare_enable(pdm->clk);
+ 	if (ret) {
+-		clk_disable_unprepare(pdm->clk);
+-		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
++		clk_disable_unprepare(pdm->hclk);
++		dev_err(pdm->dev, "clock enable failed %d\n", ret);
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
