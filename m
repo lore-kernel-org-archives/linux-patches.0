@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1338650255E;
-	Wed, 30 Sep 2026 18:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68534ABBA5;
+	Wed, 30 Sep 2026 18:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791955; cv=none; b=D16dQ4YKZmNpbp7niutJ/wVSbwAria8x/kJ9lpJXpRjtIFRpzWQCpGJuQZRQVNOMsyhCFSxH7fTfh3ESS2kP3F7JQa8KmBxrrxqvXEqHHPwAoINmc109edxMBmvHBHWSj4G+wWSHSYPJQaLD5mZXrY0AQf1xC1EMR05wT7ch8JI=
+	t=1790791957; cv=none; b=W+JGMvL8WzhARfu7DQqqVhVRjFXhEIrA00s8vkfS5hK9gHdRYZzqZ3y23Yg0O9FBTQDwWk7OT1dc5SDYNIuTxF+dDQiH1SYz1h7W4t12BZ+XzsTe6K6Shn6qduqUXKmJanGqFaJk5eshYjirMbsXl/cH5qTIc4Bg4o0l6NrmxYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791955; c=relaxed/simple;
-	bh=kSswSXKH5KovHs2aJHwKmAUb9buhe/CnBqhfoe8ScCM=;
+	s=arc-20240116; t=1790791957; c=relaxed/simple;
+	bh=9vlJ6GTBFdJ2wwGVnA476cRAf9mZ4Dz2MV+btgOGCQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NC8c5NRcG+tG2tDHvE2jiEm0inIBhjV3SY31ddWNqGimxP4D/I/ga7hw7ifkdVusDlR8ycNLr/tb/0hu00UYc/GKyzw3lmMVKiqNn0yI7kx+vamqNNuX8ELihkVvFFJZK9n+Z8zQpAC8Jm4hfA87IIZ0ICYHSKmNpAaUGvUfgJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4Y5u9ni; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZHjIkfJf8X0xKqpV9LHnlLhoMW16jUIiDIkvXMggshImN/DITGoINiSpB/KvOPdRP0HShDI1ny//0DR6ZtELRNNm58a5ibB0m45Z5tMmmby6VMfD9PyUDi7/tk3i3CKsexfcjfy1iainNQFobkQ1v96HQZ/d8xcTsMbyOyf73o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOgs2d5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4Y5u9ni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2CA1F000FF;
-	Wed, 30 Sep 2026 18:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOgs2d5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA0F1F000FF;
+	Wed, 30 Sep 2026 18:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791953;
-	bh=neVnC3zoAo8BG3qpytB2wQQSC2efbymTOwliIQ3fTFM=;
+	s=korg; t=1790791956;
+	bh=aDqfmE9cpGsKBksqccFtvs8K42ANakRVZaOFd89pXf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n4Y5u9niPi6q7ecz1FM9LZkMlvAWD9wPA4q0gVEzD9X9Roa66ArQhGNi21iV96u8/
-	 3ym+w/sEzLpizPtx2egcoUJLs+dqIMMq7U+ihL+Gm7sUDmbW/NUtzlK26gfF2sWgQp
-	 8WxVbHldsXad0EM/stTH6YTxEdFGbvXpu9t8xukI=
+	b=vOgs2d5XzY6hcaVAO3eVUdWlajSoH8cIAtTOD6TkGlUhcQ8lJGh+muYvncdp1qP76
+	 tvFiszxXM2JPm2OIwXrEq2g/KjsUTtRFGB1VV45TzqCJ9qAXjXgVXQVl1RHbk3sLLx
+	 4BWETpgUzlo8tI0gXXSdWHGREEjdcOZgBS67IhW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Melissa Wen <mwen@igalia.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 484/752] drm: Fix drm_pending_vblank_event leak in error path for out_fence_ptr
-Date: Wed, 30 Sep 2026 17:25:54 +0200
-Message-ID: <20260930152408.741041295@linuxfoundation.org>
+Subject: [PATCH 5.15 485/752] keys: fix lost wakeup when reaping a dead key type
+Date: Wed, 30 Sep 2026 17:25:55 +0200
+Message-ID: <20260930152408.763098143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,80 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 9eb1a393c89a79c4210230d23e7d88d239c61d7b ]
+[ Upstream commit 2725ab3f5ad1c5f375c7c9fee4af02a9b138f701 ]
 
-When an out_fence_ptr is provided but DRM_MODE_PAGE_FLIP_EVENT is not
-set, a drm_pending_vblank_event will be allocated. If later, there is an
-allocation failure or another failure at setup_out_fence(), that event
-will not have base.fence set and it will not be released at
-complete_signaling().
+clear_bit() is atomic with respect to the word it modifies, but it is
+an unordered operation: it implies no memory barrier on either side
+(Documentation/atomic_bitops.txt).
 
-Release the event and set crtc_state->event to NULL just like in the
-DRM_MODE_PAGE_FLIP_EVENT case when there is a failure at
-drm_event_reserve_init(). That is, prepare_signaling() releases the
-event and there is nothing to be done at complete_signaling(). Use
-drm_event_cancel_free() as that will also undo drm_event_reserve_init()
-in case it has been called.
+key_garbage_collector() clears KEY_GC_REAPING_KEYTYPE with clear_bit()
+and calls wake_up_bit() after reaping a dead key type. wake_up_bit()
+uses a lockless waitqueue check and requires a full barrier after the
+clear.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260727-drm_crtc_atomic_commit_leak-v1-1-23d9948a9d7c@igalia.com?part=1
-Fixes: 92c715fca907 ("drm/atomic: Fix double free in drm_atomic_state_default_clear")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Link: https://patch.msgid.link/20260826-drm_pending_vblank_event_leak-v4-1-f8de8b996b9d@igalia.com
+The existing smp_mb() is before clear_bit(), so nothing orders the clear
+against that check. The GC can see an empty waitqueue while
+unregister_key_type() still sees the bit set. The final wakeup is then
+lost, leaving module unload stuck in wait_on_bit().
+
+Use clear_and_wake_up_bit(). Its clear_bit_unlock() has RELEASE
+semantics, so the completed GC work stays ordered before the clear, and
+its smp_mb__after_atomic() orders the clear before the waitqueue check.
+
+Fixes: 0c061b5707ab ("KEYS: Correctly destroy key payloads when their keytype is removed")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260821025327.61488-1-kmehltretter@gmail.com
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_uapi.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ security/keys/gc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-index 99ac3e04c9e74..7552c03c00eee 100644
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -1191,10 +1191,12 @@ static int prepare_signaling(struct drm_device *dev,
- 			struct dma_fence *fence;
- 			struct drm_out_fence_state *f;
+diff --git a/security/keys/gc.c b/security/keys/gc.c
+index eaddaceda14ea..285ebbf490f04 100644
+--- a/security/keys/gc.c
++++ b/security/keys/gc.c
+@@ -324,9 +324,7 @@ static void key_garbage_collector(struct work_struct *work)
  
-+			ret = -ENOMEM;
-+
- 			f = krealloc(*fence_state, sizeof(**fence_state) *
- 				     (*num_fences + 1), GFP_KERNEL);
- 			if (!f)
--				return -ENOMEM;
-+				goto err_free_event;
+ 	if (unlikely(gc_state & KEY_GC_REAPING_DEAD_3)) {
+ 		kdebug("dead wake");
+-		smp_mb();
+-		clear_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
+-		wake_up_bit(&key_gc_flags, KEY_GC_REAPING_KEYTYPE);
++		clear_and_wake_up_bit(KEY_GC_REAPING_KEYTYPE, &key_gc_flags);
+ 	}
  
- 			memset(&f[*num_fences], 0, sizeof(*f));
- 
-@@ -1203,12 +1205,12 @@ static int prepare_signaling(struct drm_device *dev,
- 
- 			fence = drm_crtc_create_fence(crtc);
- 			if (!fence)
--				return -ENOMEM;
-+				goto err_free_event;
- 
- 			ret = setup_out_fence(&f[(*num_fences)++], fence);
- 			if (ret) {
- 				dma_fence_put(fence);
--				return ret;
-+				goto err_free_event;
- 			}
- 
- 			crtc_state->event->base.fence = fence;
-@@ -1262,6 +1264,11 @@ static int prepare_signaling(struct drm_device *dev,
- 		return -EINVAL;
- 
- 	return 0;
-+
-+err_free_event:
-+	drm_event_cancel_free(dev, &crtc_state->event->base);
-+	crtc_state->event = NULL;
-+	return ret;
- }
- 
- static void complete_signaling(struct drm_device *dev,
+ 	if (gc_state & KEY_GC_REAP_AGAIN)
 -- 
 2.53.0
 
