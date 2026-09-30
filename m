@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B7C30566A;
-	Wed, 30 Sep 2026 18:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEDA327BEC;
+	Wed, 30 Sep 2026 18:54:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794465; cv=none; b=rjNUVxG0Y0C1smSXWr/iJbM9KR6b3jbdTH/pFS8jcMOIDkKVUSOATRlUroHlmoM2LjZgU++yaamaCpvmxnoWcn6xFJKMaH8WjTSkVUSA+iqdG3O3AoN1QYxm4YsaubA05GWX79XddCU5fePl6aav+n+Dx8nGIi3SYkuHzgwxp24=
+	t=1790794468; cv=none; b=HUcikc2XgZIORRVEx8LT7SncHng00zAdouBnzfe5n/lXoR2rLTFYBLjvM2erIbrBUYNSXXBODc5qLcfrMGEH56uFo6dwjInSLz1pNjJe2WIQtn09OAdsFgGNWfCY9/Ulcb0bbkg8ZKb7ukA3ux1phv2pyPlK8hNaR6//hevdp+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794465; c=relaxed/simple;
-	bh=GXZ7sc385Z3UDC/vYk9NWdq2bmfgYt9BMxdxpV7MdlE=;
+	s=arc-20240116; t=1790794468; c=relaxed/simple;
+	bh=fhPKWt62FdYRtblGgzKVnPXOtHzfucqe/gjHK/wYLcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFM8k4a4wH2Kf0hAsMc0bQo+W8EQxAaVQ9eAY9jXZ/+l+GtafcELAYFpTMa3mjGtJARqnmuUrNUloQTsPkyZBrSdX2TMkQ2Nfq2WWCyvnyHAgYaX7Rbtb11ecIrl3PFZtUJA8QYE1/8VNSleDJkyCy7WhvgrX/fsPb29tvi+2LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIAAjX7Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JMy7HOweUqIbt7Ya2zomMPu0b8zIar09cd5y2p2NAk486A+f+E3cLinl9gQGYrV2CZqHkwdwudKdnij5RkEt+wO9/rFxneTroil5sLBHKJFxx/3895xL7wkZAF+xLAaDSbv5Q5g6kCVtdAojtscwJj1Dtx4L9tZD5EpQd+X3X8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVA52/QC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIAAjX7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2EB1F000FF;
-	Wed, 30 Sep 2026 18:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVA52/QC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD401F000FF;
+	Wed, 30 Sep 2026 18:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794464;
-	bh=6uiXTpmwHAx9r8M+Jk0jwMujFoIHaeE/CiTHzsP8rZs=;
+	s=korg; t=1790794466;
+	bh=i8gbbpjtNjWCPqd7Qg28QGz4T3HKHh96b4OdCf4uC80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yIAAjX7QlXgLLCXRKYuWji4hU0LtRJZso7AqirR6lzOjFXELku/ijS3HA/mIOwtL+
-	 aTq00Z33rluLz7crcFVEOfdLdMdHY4uR8Y4pREhBrKZiQYJXGEyzRQvC/iXctnpBj7
-	 vXDNqJcC36+kEnOx28co+CcgLCm92oxI3Pfh7HvY=
+	b=vVA52/QCzboeAMhjU7K0H3ZpHwCT3sFlgfvvhvHT+Cku7N7YGPjbdfvMeuuowQSvP
+	 xS2zV8lOZfAJYXbTznIBPXenBUVvljcwsyg86woGwFzC0MJ+QvkYZOM8S7KjFIKEez
+	 pD+aFEpFRVXfzfSvORbFUHK3/fpAiccGhul2AfTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0193/1193] net: ibm: emac: mal: fix potential system hang in mal_remove()
-Date: Wed, 30 Sep 2026 17:14:37 +0200
-Message-ID: <20260930152438.487581837@linuxfoundation.org>
+Subject: [PATCH 6.6 0220/1193] ptp: ocp: add shutdown callback
+Date: Wed, 30 Sep 2026 17:15:04 +0200
+Message-ID: <20260930152439.085952169@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,52 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 
-[ Upstream commit 7c5d41f87f079990bf241359e3c1332d8d10fe87 ]
+[ Upstream commit f6f955cbf9d4e02deebe54ca91c118b53be9ffe6 ]
 
-napi_disable() is not idempotent and calling it on an already-disabled
-or unenabled NAPI context will cause the kernel to spin indefinitely
-waiting for the NAPI_STATE_SCHED bit to clear.
+The shutdown callback was never implemented for this driver, but it's
+needed because .remove() callback is never called during kexec/reboot
+process. That leaves HW with some interrupts enabled and may cause
+spurious interrupt while booting into a new kernel during with kexec.
+If it happens that I2C interrupt fires during kexec, the whole I2C bus
+is disabled leaving TimeCard with no devlink communication. The same
+happens if timestampers were enabled, leaving the card without
+timestamper interrupts until full reboot cycle.
 
-In mal_remove(), napi_disable() is called unconditionally. If no MACs were
-registered, NAPI was never enabled. Also, if they were registered but
-subsequently unregistered, NAPI was already disabled in
-mal_unregister_commac(). In either case, calling napi_disable() causes
-the kernel to hang upon module removal.
+Implement .shutdown() callback with the same function as remove
+callback.
 
-Fix this by only calling napi_disable() in mal_remove() if the commac list
-is not empty (which implies NAPI is enabled).
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20260603230821.5619-1-rosenp@gmail.com
+Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260611190333.787132-1-vadim.fedorenko@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/ptp/ptp_ocp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index 3578b7d720c06..3619a878c4a94 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -718,13 +718,13 @@ static int mal_remove(struct platform_device *ofdev)
- 	MAL_DBG(mal, "remove" NL);
+diff --git a/drivers/ptp/ptp_ocp.c b/drivers/ptp/ptp_ocp.c
+index 2d21699586ce7..aa233a3010123 100644
+--- a/drivers/ptp/ptp_ocp.c
++++ b/drivers/ptp/ptp_ocp.c
+@@ -4264,6 +4264,7 @@ static struct pci_driver ptp_ocp_driver = {
+ 	.id_table	= ptp_ocp_pcidev_id,
+ 	.probe		= ptp_ocp_probe,
+ 	.remove		= ptp_ocp_remove,
++	.shutdown	= ptp_ocp_remove,
+ };
  
- 	/* Synchronize with scheduled polling */
--	napi_disable(&mal->napi);
--
--	if (!list_empty(&mal->list))
-+	if (!list_empty(&mal->list)) {
-+		napi_disable(&mal->napi);
- 		/* This is *very* bad */
- 		WARN(1, KERN_EMERG
- 		       "mal%d: commac list is not empty on remove!\n",
- 		       mal->index);
-+	}
- 
- 	free_irq(mal->serr_irq, mal);
- 	free_irq(mal->txde_irq, mal);
+ static int
 -- 
 2.53.0
 
