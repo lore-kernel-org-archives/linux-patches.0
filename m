@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B498E3E8338;
-	Wed, 30 Sep 2026 19:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE683E3C74;
+	Wed, 30 Sep 2026 19:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796582; cv=none; b=azQJFbuj+olJebr7MYsSKfNLpnzJ1ratOk8cC6vzzY3wq7Pb3/eAh3i1pCqnOTvRkRSEn22aolHWGZSj+S6CDS3EvSMKEDvgoMPw+3/+4m1kuVv3u5lWF+GpbkIfKRQpX1XyxA1rPycdlZV5O2hkjc5tgyEYKe4j3K4VOYSRa6E=
+	t=1790796585; cv=none; b=nLovSH0GAkfuvcdPmrTyKS/txZmJaQbEFqhvgM6NeuZy7cKSeLtV0R4N8W4vBtmcAH2XNJ0Y4KG1tzSWVS+TMxXRpZbNPCmnvDwu4u4y92BQ/2enBd8S1SppBYN9WRr71ecLN93Zfj+buBH6IhUbPIHCMURmeJ8Sav0fc5gk+xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796582; c=relaxed/simple;
-	bh=QLY+X44GQRUjGKnJE0W2Yr7r3tfSuZz0H2ClGOo9zCE=;
+	s=arc-20240116; t=1790796585; c=relaxed/simple;
+	bh=hMqrloII7jeoIw92XvTQv05fm4/43IRXyNlAcZ/SmmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWNSTWTxpvFF+I0V5rTvepJj2KApicMW8VJhVMUJMTFdA3BCbA7DTnV5TCjbnYLOcGWG0LjSsVX1wP9uSf4frzdBTenjdsLelh4bvRs4Kji/maxPVAj34Jsa8zTkXRcHEV7UZuOFmdqrOkwInaeBvs8l4sL2nQh8io/nAbmjltY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZRk2sLo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uw9u2R3iRJUVnQKrqwgxgAg3cE8IMEJzO2Dsw1DYW2O0B446CjU+fnrje3mKdW1mRxGW5nkBzFhbFB9mwtx3ryMT1otdEbNVRlaTDEJ+llM8bYyfi3dW+TJbbblfsmopvRdiuQCrDg7hjgfwbLsvJwWEBQQDYBhs0/DP3zBg6cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyBMg9b2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZRk2sLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E81F0089A;
-	Wed, 30 Sep 2026 19:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyBMg9b2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0241F000FF;
+	Wed, 30 Sep 2026 19:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796581;
-	bh=o3e/XA9LbivNyqDE9TIiCsYW5iHrx5x1OGdy6Iwztug=;
+	s=korg; t=1790796584;
+	bh=zQsv+QjAzci8FBO/wFQ0dnZmWkQgfBFU8I6kV+7mBYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BZRk2sLo5BVkFrxihU8BfZhJfQCzjy+zDc4pP4MAHcOyyzwZKY8CLOWt03SDtSBOH
-	 v6HEHOp6cGTpKuFQ5rnuKNVt7rgXum8C670x5BPX/LkP7S+XjhHgGFcHOaEZDDMs4R
-	 CPBey0Skm30QESTLtPS/GjtbkvBSkmMvCaHfSr1g=
+	b=lyBMg9b2bRtpHgHR/8gSo7pjQD19hs/MoOuh/h7phw3ecD7WSsGL0EQsoN554EBw7
+	 ugFkzYdYcEEFFONMFh/pcAB4tOijHBFYTilhnPYhRSry8CyMUE8iYwNsAL4kNZUiJz
+	 /Qa4OF72qjcvpOlrtwHDB+mcDdiF6Poxh32QFIlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Oscar Priego Verdugo <oscar.priegov@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0965/1193] tcp: Skip cond_resched() in inet_csk_listen_stop() under BPF context
-Date: Wed, 30 Sep 2026 17:27:29 +0200
-Message-ID: <20260930152455.684790342@linuxfoundation.org>
+Subject: [PATCH 6.6 0966/1193] HID: elecom: fix bus type for M-XGL20DLBK
+Date: Wed, 30 Sep 2026 17:27:30 +0200
+Message-ID: <20260930152455.707353749@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,80 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Oscar Priego Verdugo <oscar.priegov@gmail.com>
 
-[ Upstream commit eaab8cab451b9502ce224cd202550375b894a467 ]
+[ Upstream commit 8e2a4b458ad25e13422bb059758c30a6562aa9cf ]
 
-bpf_sock_destroy() runs from the tcp iterator, under rcu_read_lock(). If
-the sock is a listener that still has children in its accept queue,
-tcp_abort() ends up in inet_csk_listen_stop() and the cond_resched()
-there trips the debug check:
+The M-XGL20DLBK is matched as a USB device by hid-elecom, but
+its entry in hid_have_special_driver[] uses HID_BLUETOOTH_DEVICE.
 
-BUG: sleeping function called from invalid context at net/ipv4/inet_connection_sock.c:1523
-in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 628, name: test_progs
-preempt_count: 0, expected: 0
-RCU nest depth: 1, expected: 0
-locks held by test_progs/628: 3, last CPU#3:
- #0: ffff8881158cee18 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x56/0x1210
- #1: ffff8881106bb858 (sk_lock-AF_INET6){+.+.}-{0:0}, at: bpf_iter_tcp_seq_show+0x32b/0x4b0
- #2: ffffffffb435af20 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x46b/0xde0
-CPU: 3 UID: 0 PID: 628 Comm: test_progs Tainted: G        W           7.2.0+ #65 PREEMPT
-Tainted: [W]=WARN
-Call Trace:
- <TASK>
- dump_stack_lvl+0xc1/0xf0
- dump_stack+0x10/0x20
- __might_resched+0x3d2/0x610
- inet_csk_listen_stop+0x7b/0xbf0
- tcp_abort+0x23b/0x3b0
- bpf_sock_destroy+0xfc/0x140
- bpf_prog_448133d24601754f_iter_tcp6_server+0x81/0x8a
- bpf_iter_run_prog+0x538/0xde0
- bpf_iter_tcp_seq_show+0x26b/0x4b0
- bpf_seq_read+0x424/0x1210
- vfs_read+0x197/0xe40
- ksys_read+0x119/0x240
- __x64_sys_read+0x72/0xc0
- x64_sys_call+0x647/0x27e0
- do_syscall_64+0xe5/0x610
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fad39b28aca
-RSP: 002b:00007ffc381c61c0 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-RAX: ffffffffffffffda RBX: 00007ffc381c6a88 RCX: 00007fad39b28aca
-RDX: 0000000000000032 RSI: 00007ffc381c6250 RDI: 0000000000000014
-RBP: 00007ffc381c61e0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-R13: 0000000000000000 R14: 000055f077c1bbb0 R15: 00007fad3a0f3000
- </TASK>
+This prevents the special-driver quirk entry from matching the USB
+device handled by hid-elecom. Use HID_USB_DEVICE there as well.
 
-The commit that added the kfunc already guards lock_sock() in tcp_abort()
-and udp_abort() with has_current_bpf_ctx(), but missed the listener path.
-Do the same for the cond_resched(). The loop runs inside the iterator's
-rcu_read_lock(), it must not reschedule or report a quiescent state there.
-
-Fixes: 4ddbcb886268 ("bpf: Add bpf_sock_destroy kfunc")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260910112736.153710-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 55633e681afb ("HID: elecom: add support for EX-G M-XGL20DLBK wireless mouse")
+Signed-off-by: Oscar Priego Verdugo <oscar.priegov@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 530d495ff7d28..43184b9c7f4fe 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1478,7 +1478,8 @@ void inet_csk_listen_stop(struct sock *sk)
- 		local_bh_enable();
- 		sock_put(child);
- 
--		cond_resched();
-+		if (!has_current_bpf_ctx())
-+			cond_resched();
- 	}
- 	if (queue->fastopenq.rskq_rst_head) {
- 		/* Free all the reqs queued in rskq_rst_head. */
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 39d81777cb7e2..2f086ac897605 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -416,7 +416,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
+ #endif
+ #if IS_ENABLED(CONFIG_HID_ELECOM)
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
+-	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1MRBK_01AC) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
 -- 
 2.53.0
 
