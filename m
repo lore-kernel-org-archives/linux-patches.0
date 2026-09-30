@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F1F3D6CB4;
-	Wed, 30 Sep 2026 18:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8C9327BEC;
+	Wed, 30 Sep 2026 18:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794354; cv=none; b=qHZIi+O8wNVAwDz2Ga0vhJqX8BkrSzBpNN75toTKmsMxRgzWEv+CysrxD5WEwJFhvbAJv7WuUWxdsUOay2NmOmkYXsbVIaJDpuLsWWKf4E+OqFAlTHPwtcGkBHeHKTRvgbTa38meh10IMj5Y1Se3dXv7YZgBVfSWBDuM4dQyxlM=
+	t=1790794358; cv=none; b=hmoxB6BOdI0Ksw+lLNaO8pxC1UxdU/7NJlth6lSUTUkJSAkcly5TSiAxlxoWUHXn4vyl9QYD6RXDLitVpK2Ly0qFSJOvI+FW59CyA3co6kQgvCZLhqhwzVW0IA/6wxloX0ONXzgPvsbeiulW9GFxixe6lip8cv/wn+1/UhI2VNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794354; c=relaxed/simple;
-	bh=XUZRG1LrtiwNTuRtyswoTljimUcZlt7i3mR/2P23rbc=;
+	s=arc-20240116; t=1790794358; c=relaxed/simple;
+	bh=A0+rJjelAxDUPZNqpcn/CDpTi0aWwFSHi+6i9SgpGMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RU7OFPHtz7qFvK39fPNG69CzI9xTczaHasrke3CDOCncx2ZXc+XqP401Cdbp7xflOTh5tfVFvIUK2NT2rb7W7LLP/hvav89s3phR15MqCIegZIQrCxyWN18ENOVZ0uVD6ips217rwEAwOVq8K8zaFQZdnX6mPg1boYg1jeFzLLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjSt96NB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XykqU2ujBoWsTPjYhbiEEuybyPpKGxzajWse7Db3RqiVP2xpT1JFqQIkwGtNY873nf25b9l1ibCYCDz/6MjipCtrcCz1dk4TfeZ5yX4lLfdguHKPytCWa0PL694W7y+jd+WgdPwBvwK+lq8em+Iqq3Pq4Gb89WfaBJp0gRlGLpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkj9d/Y7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjSt96NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD381F000FF;
-	Wed, 30 Sep 2026 18:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkj9d/Y7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CDB1F000FF;
+	Wed, 30 Sep 2026 18:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794353;
-	bh=iOYDQM3jyx5Qvsghkkarryq8MxxbYjzrw9rOsXTnq7g=;
+	s=korg; t=1790794356;
+	bh=F200WtQya/RcGpTqK+uLCBd9v2aeWJDShh1iCyDoQ4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjSt96NB5fT+wp1jw68Tn/bOEp1c+NZxUd57zfi4gvXcNoKvBIT/kTwoq1Mu7pujw
-	 ghZNLpTz4MKdHNyZ67bOMaXk/bGKYtlyL5CQ7qTyZXpAxHsNq9FtiwicjTrdK65FIo
-	 ixQkdIwh1jVivf7W+bLx9SndcSLziPBEd0kbikpc=
+	b=kkj9d/Y7tQn3N3WNkynFW+J1wue+HhxIzDRj3DDdvVBR+0Y879UvRuq5uwkLgPnuB
+	 2j0B1lCoigBIkCVonTI2oNTPIo2VUWa4lYV5TGhUH9fUcQlsYZqAFlA+5XqB5c4I5b
+	 Z28sEmtE1wDfRQVlZQj6GH6OZGI/IWIuXNbeGrew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0180/1193] RDMA/mlx5: Fix state and counter desync on loopback enable failure
-Date: Wed, 30 Sep 2026 17:14:24 +0200
-Message-ID: <20260930152438.195928728@linuxfoundation.org>
+Subject: [PATCH 6.6 0181/1193] bpf: NUL-terminate replaced sysctl value
+Date: Wed, 30 Sep 2026 17:14:25 +0200
+Message-ID: <20260930152438.217662661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,53 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit 0d32eabccbe4b2f8d45be3192c5f3c76c8af703d ]
+[ Upstream commit a66e3b5bacf38d6ab29fa05a9754f7a114485605 ]
 
-In mlx5_ib_enable_lb(), dev->lb.enabled was unconditionally set
-to true even if mlx5_nic_vport_update_local_lb() failed.
+When writing to sysctls, proc_sys_call_handler() guarantees that the
+buffer passed to proc handlers is NUL-terminated. If
+bpf_sysctl_set_new_value() replaces the pending sysctl value, it can
+hand a replacement buffer directly to proc handlers. However, the
+helper currently copies only buf_len bytes into that buffer without
+appending a NUL terminator, leaving downstream parsers vulnerable to
+out-of-bounds access.
 
-Fix this by only setting dev->lb.enabled on success. On failure,
-roll back the reference counters and return the error.
+Fix this by appending a '\0' after the replaced value to restore the
+expected sysctl semantics. Since the helper already rejects buf_len
+greater than PAGE_SIZE - 1, there is always room for the extra byte.
 
-Link: https://patch.msgid.link/r/20260601095818.2227-1-lirongqing@baidu.com
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reproduced in a QEMU x86_64 guest booted with KASAN while exercising
+the sysctl replacement path with a cgroup/sysctl BPF program. The
+reproducer targets `/proc/sys/net/core/flow_limit_cpu_bitmap`, fills
+the original user write buffer with non-zero bytes, and overrides the
+sysctl value so the replacement buffer lacks a terminating NUL. Under
+that setup, the pre-fix kernel reported:
+
+  BUG: KASAN: slab-out-of-bounds in strnchrnul+0x72/0x90
+  Read of size 1 at addr ffff88800de57000 by task repro_patch3/66
+  CPU: 0 UID: 0 PID: 66 Comm: repro_patch3 Not tainted 7.1.0-rc3-00269-g8370ca1f87cc #6 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x68/0xa0
+   print_report+0xcb/0x5e0
+   ? __virt_addr_valid+0x21d/0x3f0
+   ? strnchrnul+0x72/0x90
+   ? strnchrnul+0x72/0x90
+   kasan_report+0xca/0x100
+   ? strnchrnul+0x72/0x90
+   strnchrnul+0x72/0x90
+   bitmap_parse+0x37/0x2e0
+   flow_limit_cpu_sysctl+0xc6/0x840
+   ? __pfx_flow_limit_cpu_sysctl+0x10/0x10
+   ? __kvmalloc_node_noprof+0x5ba/0x870
+   proc_sys_call_handler+0x31d/0x480
+   ? __pfx_proc_sys_call_handler+0x10/0x10
+   ? selinux_file_permission+0x39f/0x500
+   ? lock_is_held_type+0x9e/0x120
+   vfs_write+0x98e/0x1000
+   ...
+   </TASK>
+  The buggy address is located 0 bytes to the right of
+  allocated 4096-byte region [ffff88800de56000, ffff88800de57000)
+With this fix applied, rerunning the same sysctl-targeted path yields
+no corresponding KASAN reports.
+
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260603105317.944304-2-dawei.feng@seu.edu.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/bpf/cgroup.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 57f0f9a6e8e5d..df9d4b8373d11 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -1739,6 +1739,9 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- 	    dev->lb.qps == 1) {
- 		if (!dev->lb.enabled) {
- 			err = mlx5_nic_vport_update_local_lb(dev->mdev, true);
-+			if (err)
-+				goto err_rollback;
-+
- 			dev->lb.enabled = true;
- 		}
- 	}
-@@ -1746,6 +1749,14 @@ int mlx5_ib_enable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
- 	mutex_unlock(&dev->lb.mutex);
+diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
+index 0a422be3b0390..fa6f818c8eabb 100644
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -2206,6 +2206,7 @@ BPF_CALL_3(bpf_sysctl_set_new_value, struct bpf_sysctl_kern *, ctx,
+ 		return -E2BIG;
  
- 	return err;
-+
-+err_rollback:
-+	if (td)
-+		dev->lb.user_td--;
-+	if (qp)
-+		dev->lb.qps--;
-+	mutex_unlock(&dev->lb.mutex);
-+	return err;
- }
+ 	memcpy(ctx->new_val, buf, buf_len);
++	((char *)ctx->new_val)[buf_len] = '\0';
+ 	ctx->new_len = buf_len;
+ 	ctx->new_updated = 1;
  
- void mlx5_ib_disable_lb(struct mlx5_ib_dev *dev, bool td, bool qp)
 -- 
 2.53.0
 
