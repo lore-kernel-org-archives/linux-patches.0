@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B65522F17;
-	Wed, 30 Sep 2026 17:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD25187C6;
+	Wed, 30 Sep 2026 17:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791004; cv=none; b=qzZ0jHAJMl55cffSolDXGvrdhm8MAWaKxYuANl+Ou8L0xd0NuFSEWEiuyP04h0CY3rZhtlWxGWeZd9SIm/zR+10eBlp8phdNlPRZypcZNvMKnQnkqVZQJo6FcsBBdRinpAY6YHUOSb8UMswyvGKdIvlEa37wmFUUJkQYripGvzM=
+	t=1790791007; cv=none; b=DUZHvUKOYszeH/LNwJcnj8HJEDUB2VkCNepSfJddKa8H0S4vI55Bi/G4Xo5u7G6x5XxoiqwvNCI5R47iQToh0Kcle4+oQx3vKAESULqkkCaeSN6ihq2CR6CXZZ2ij+BJZ210WikqmXlRsYpFvch2cG3B6v/aQYZm4HR1Q2mJ+0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791004; c=relaxed/simple;
-	bh=vaZ3vUGGvf1i2/eNfLzCPOcqMCDvnxG9hDrYOphgsAo=;
+	s=arc-20240116; t=1790791007; c=relaxed/simple;
+	bh=SYyN9NWdnt42dZLICWO+huysr5zVOvSNuFvxCNsXfEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jEoa5wLv13POe+gzRWVLJ5jnxMg4D7UeDML9HVMJUiaECNuEsEvIoP27f9DjBexmtsvGEtf+GRfM2nDb+6OpEECadOJ41h2KE6oiaO/a4nJ/I9TrWZv9nvOWN8dkZlNpIERLBWnojjqSWyISHkqKh4OZcrvQJA/ZrBvnj7N1NSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBBO7GIQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SkLhfs7GLs8p+DOi1tfbLL/wqfXwyzYDOWV63sNnaqKEAkR2VDGWE2KihxKbQQHw8iTa+LCGLuDCY4F13xccc8O0bGdccrMOkqD7iH8N5YqDEdFIf0bQDnWhdDAL3eQ8ORZC35a+v/FZ2HuVsA2sWHJbb/YMZn+a86+Qv9UoBhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D30EhFFy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBBO7GIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966E61F00898;
-	Wed, 30 Sep 2026 17:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D30EhFFy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CC11F000FF;
+	Wed, 30 Sep 2026 17:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791003;
-	bh=+tTFjSFr8X/LL0yp2LMJuslQBf1C/diUJoTERDmTHuc=;
+	s=korg; t=1790791005;
+	bh=E9cedTrb1wwWR4D8uwS5ZX+sljGDd8kVlDaxiOBvGW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EBBO7GIQdKCsfBttuIGekHLAGP9W/9cDxbEDdAM1Mgov6TssRdAlWUdO+BMTEu4m7
-	 FWYJhhfRK2XNu7l0W5L+cBw9aPVmApgnp8psXXPpSCDhzisW4c2pCX9XKkbCBxqgGz
-	 HXJ5xB+7W4UEImD4mg1j0qY6F/cSlR+cUMX5OvPI=
+	b=D30EhFFyp4KfmBFcsJ51DyJz7fb0FEk3C47ktqA7v+MfOvaTJSRUQ3prkhLee/f9I
+	 zkVSdUqe/4zbz8yVaxkIFZh4ftr2PYsTnMhqnu1dYclo4hU02Z5W6Gy4wq8TLtNEet
+	 jrxWCzPYQBCK7ZNHHZ9KwY7DpekCNn8EEHPr1mSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iskhakov Daniil <dish@amicon.ru>,
-	Agalakov Daniil <ade@amicon.ru>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alice Mikityanska <alice@isovalent.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/752] e1000e: limit endianness conversion to boundary words
-Date: Wed, 30 Sep 2026 17:20:20 +0200
-Message-ID: <20260930152401.431473110@linuxfoundation.org>
+Subject: [PATCH 5.15 151/752] net/sched: act_csum: dont mangle UDP tunnel GSO packets
+Date: Wed, 30 Sep 2026 17:20:21 +0200
+Message-ID: <20260930152401.452513942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -54,75 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Agalakov Daniil <ade@amicon.ru>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit a5ecafcfb27baf2dba766c4fd99dbb947f4e85d8 ]
+[ Upstream commit 9bcb30b389ec5888590cb6ec58c7a3b80fe49a11 ]
 
-[Why]
-In e1000_set_eeprom(), the eeprom_buff is allocated to hold a range of
-words. However, only the boundary words (the first and the last) are
-populated from the EEPROM if the write request is not word-aligned.
-The words in the middle of the buffer remain uninitialized because they
-are intended to be completely overwritten by the new data via memcpy().
+Similar to commit add641e7dee3 ("sched: act_csum: don't mangle TCP and
+UDP GSO packets"), UDP tunnel GSO packets going through act_csum
+shouldn't have their checksum calculated at this point, because it will
+be done after segmentation. Setting the checksum in act_csum modifies
+skb->ip_summed and prevents inner IP csum offload from kicking in,
+resulting in a packet with a bad checksum.
 
-The previous implementation had a loop that performed le16_to_cpus()
-on the entire buffer. This resulted in endianness conversion being
-performed on uninitialized memory for all interior words.
+Add UDP tunnel GSO packets to the exceptions, and also add UDP GSO
+(SKB_GSO_UDP_L4), as the same logic as in the commit mentioned above
+applies to UDP GSO too.
 
-Fix this by converting the endianness only for the boundary words
-immediately after they are successfully read from the EEPROM.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
-Signed-off-by: Agalakov Daniil <ade@amicon.ru>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260609213559.178657-14-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260611192955.604661-2-alice.kernel@fastmail.im
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/ethtool.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ net/sched/act_csum.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/ethtool.c b/drivers/net/ethernet/intel/e1000e/ethtool.c
-index 9d1fcae545fb8..4b973835a8dba 100644
---- a/drivers/net/ethernet/intel/e1000e/ethtool.c
-+++ b/drivers/net/ethernet/intel/e1000e/ethtool.c
-@@ -597,20 +597,25 @@ static int e1000_set_eeprom(struct net_device *netdev,
- 		/* need read/modify/write of first changed EEPROM word */
- 		/* only the second byte of the word is being modified */
- 		ret_val = e1000_read_nvm(hw, first_word, 1, &eeprom_buff[0]);
-+		if (ret_val)
-+			goto out;
-+
-+		/* Device's eeprom is always little-endian, word addressable */
-+		le16_to_cpus(&eeprom_buff[0]);
-+
- 		ptr++;
- 	}
--	if (((eeprom->offset + eeprom->len) & 1) && (!ret_val))
-+	if ((eeprom->offset + eeprom->len) & 1) {
- 		/* need read/modify/write of last changed EEPROM word */
- 		/* only the first byte of the word is being modified */
- 		ret_val = e1000_read_nvm(hw, last_word, 1,
- 					 &eeprom_buff[last_word - first_word]);
-+		if (ret_val)
-+			goto out;
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 277f6a93cc66e..fb6f49ce1ee00 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -257,7 +257,9 @@ static int tcf_csum_ipv4_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct iphdr *iph;
+ 	u16 ul;
  
--	if (ret_val)
--		goto out;
--
--	/* Device's eeprom is always little-endian, word addressable */
--	for (i = 0; i < last_word - first_word + 1; i++)
--		le16_to_cpus(&eeprom_buff[i]);
-+		/* Device's eeprom is always little-endian, word addressable */
-+		le16_to_cpus(&eeprom_buff[last_word - first_word]);
-+	}
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
  
- 	memcpy(ptr, bytes, eeprom->len);
+ 	/*
+@@ -313,7 +315,9 @@ static int tcf_csum_ipv6_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct ipv6hdr *ip6h;
+ 	u16 ul;
  
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
+ 
+ 	/*
 -- 
 2.53.0
 
