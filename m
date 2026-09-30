@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0073950B8DA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F47F5038F7;
 	Wed, 30 Sep 2026 15:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782517; cv=none; b=kCFaqUkhO1BYdHASyCJUJTyYDE14M1+1gcPoNOWWi1ZNKboRQ+td0qBwjlWhWgm2i9SH3uvhRqlFZMfXF+BtIJtpvAg6plKPtIxpMCX3iHnuqIaQfbKGv6xgDyReNu4PSkIv37ycOJXBz57PXe4J2edNp7pDyr1kHZ2xdXuy0PM=
+	t=1790782518; cv=none; b=Tph7d+GjIoibjbhNgrcG84fMaCN6ArtzRDlzKlnVCJE0rDsVKgkJT8JI1+dHIBqABB76sjkyyEEK7brusOYpXkVF1bnSY9N4znwbQ8gWiXyzNZ/F8pK/Xvvw4oOuDtJmeX/lntr9sDlmqCqr0hEkr3DozvotQkQF5KvU5bmN9f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782517; c=relaxed/simple;
-	bh=HiD3DQuCTZG/3SrxlybYBKm6U8l9+esRhFgokJ6vW4g=;
+	s=arc-20240116; t=1790782518; c=relaxed/simple;
+	bh=LdG/TKL1vgu889NaQB506rxLHgqLkaGzEWHPTXbKM5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvrfEi/fqERQR3061s+c5HBzv/iRGw02TYyqwAu3mbKs86/b8tD59/CR1JQyf4Mc8lULUBPHeDSEi5r8fp0/wOTpFfQaQnApNCJpyHaUuTmIw+2/PcwK0mOFdCijWRwLwoaxwFBD7HKucWMfnM5Hu7cJi88y5LK6RLy2DlWGUV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqL6nwSX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LoQJzL+G6BgC6NlwbKvbAHGVGrLPeGM6Lrs435F0mGR5SPM8E+QSk3NP4UC1fFfvbmdFc+WigBkPqBXNUMX/vZdpco5Bt+uUa0cYRlA3uBd8oD3wSkscdSLGhdmW/s/lmIxn8SeLFgRSmtKBJ9Y7pb5ZGzTjX2N3hxmhzyYyIvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OHwK1J+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqL6nwSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069E21F000FF;
-	Wed, 30 Sep 2026 15:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OHwK1J+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E5F1F0089A;
+	Wed, 30 Sep 2026 15:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782507;
-	bh=d58tK9T9zB3b6WHBreQ7k69OGWJkhXfI8f4ESCvA6LE=;
+	s=korg; t=1790782510;
+	bh=1MIRv0fYIX3QAILAFsnt+p2ew4ScAQOo5ECYfho4L9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VqL6nwSXpD7fO/FSBtDh0pFVQSkARCCQfFHfxlNrKBcMMQKyoW5cf9vTyjRew1OQc
-	 jX0zT4zaBuSjGVUNAFabkqzdY0o701WHqFmnXNUA4WU2s1uCdDnqdjRVauLDJUPJ2n
-	 nMNxEQqN3eH0RwWSRGkgRDnSJWmK/NLgbuL2bY08=
+	b=0OHwK1J+lA75UNI/41zjyXN/wziVpbig9KOjM6WkZc1y0Oc26jXBG+ol6pY4e75HA
+	 bjtYcqeOVV5YOD+S0nDaazI+MjEhB2A5Qt8L7QfNAU5O4Q+Q+G/7SjMjomgrsw4yAu
+	 WBZcmXu7Z+ubXWVHJ8x+PQ887C1FrBtkWQH4rlVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/595] iio: adc: qcom-spmi-iadc: balance enable_irq_wake() on driver unbind
-Date: Wed, 30 Sep 2026 17:19:17 +0200
-Message-ID: <20260930152349.115595712@linuxfoundation.org>
+Subject: [PATCH 5.10 073/595] ACPICA: Prevent adding invalid references
+Date: Wed, 30 Sep 2026 17:19:26 +0200
+Message-ID: <20260930152349.306983598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,64 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 929fec2964f71d4b1ac664ee963d8226c5cf01c6 ]
+[ Upstream commit 6e8c55e13a5e3a9f38921d62924f18ceba3330eb ]
 
-iadc_probe() calls enable_irq_wake() after a successful
-devm_request_irq(), but the driver has no remove callback or
-matching disable_irq_wake(), so the wake reference count on the
-IRQ is leaked on module unload or driver unbind.
+Prevent adding references for local, argument, and debug objects
+in acpi_ut_copy_simple_object().
 
-Check the IRQ request error first, then register a devm action
-that calls disable_irq_wake() so the wake reference is released
-in the same scope as the enable. While here, drop the inverted
-"if (!ret) ... else return ret" in favour of the standard
-"if (ret) return ret;" pattern.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Link: https://github.com/acpica/acpica/commit/f576898d7814
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/4511989.ejJDZkT8p0@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/qcom-spmi-iadc.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/acpi/acpica/utcopy.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index acbda6636dc58..c57c50aeeffd7 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -482,6 +482,11 @@ static const struct iio_chan_spec iadc_channels[] = {
- 	},
- };
+diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
+index 9a7cc679e5447..e4b62202fd306 100644
+--- a/drivers/acpi/acpica/utcopy.c
++++ b/drivers/acpi/acpica/utcopy.c
+@@ -731,7 +731,15 @@ acpi_ut_copy_simple_object(union acpi_operand_object *source_desc,
+ 			break;
+ 		}
  
-+static void iadc_disable_irq_wake(void *data)
-+{
-+	disable_irq_wake((unsigned long)data);
-+}
-+
- static int iadc_probe(struct platform_device *pdev)
- {
- 	struct device_node *node = pdev->dev.of_node;
-@@ -539,9 +544,16 @@ static int iadc_probe(struct platform_device *pdev)
- 	if (!iadc->poll_eoc) {
- 		ret = devm_request_irq(dev, irq_eoc, iadc_isr, 0,
- 					"spmi-iadc", iadc);
--		if (!ret)
--			enable_irq_wake(irq_eoc);
--		else
-+		if (ret)
-+			return ret;
-+
-+		ret = enable_irq_wake(irq_eoc);
-+		if (ret)
-+			return ret;
-+
-+		ret = devm_add_action_or_reset(dev, iadc_disable_irq_wake,
-+					       (void *)(unsigned long)irq_eoc);
-+		if (ret)
- 			return ret;
- 	} else {
- 		device_init_wakeup(iadc->dev, 1);
+-		acpi_ut_add_reference(source_desc->reference.object);
++		/*
++		 * Local/Arg/Debug references do not have a valid Object pointer
++		 * that can be referenced
++		 */
++		if ((source_desc->reference.class != ACPI_REFCLASS_LOCAL) &&
++		    (source_desc->reference.class != ACPI_REFCLASS_ARG) &&
++		    (source_desc->reference.class != ACPI_REFCLASS_DEBUG)) {
++			acpi_ut_add_reference(source_desc->reference.object);
++		}
+ 		break;
+ 
+ 	case ACPI_TYPE_REGION:
 -- 
 2.53.0
 
