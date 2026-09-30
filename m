@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03275349CB;
-	Wed, 30 Sep 2026 17:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAEA5349AA;
+	Wed, 30 Sep 2026 17:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790698; cv=none; b=edl91nNEKbYCcxfh7TMXpHF8hETun1mD8Cy3UkJdKwN4Je1bZDrLNIC0Km0DkgRawoYwEGy5kP0TYreA+TAXOch6FiRyIEfET19ENVlKKmWX/SYmOf0h9ulg1iBCFpr+IK+K+SrSPgzr9jP2XSjBteYbSjSxEAlYO1Gl+t4lP5c=
+	t=1790790701; cv=none; b=NNUb9ljabE4Y2Qx9O4Kcqs56G27Mz8bs0yI5uXqhG8NIzs1BGP+6qJw1/QdchMntNI8j26/6GtwD/prNlFVM2T4/A30vXro86c9yI41o0FZJ98VnMf/svMgTcrtq/uh2c/2SYFa4toA5knw7Y4LIDbvbSs+pEyVl8oWyLOJYG+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790698; c=relaxed/simple;
-	bh=DrqQTIMHN5v33e+/c3flDnPXFAxiLXO+qFCmN69ZjeY=;
+	s=arc-20240116; t=1790790701; c=relaxed/simple;
+	bh=KvO8fIS+5vFX7++TPteCNVVMpA/TTtxp5ChNCA5qfVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXELhqQw1rZz1iY8hKUYSGe6GSKdvMyPKSCbQ6TmvRbSCfDv0WFjsSicjWwd9TiUawTPYgjixautmQSI0N0ds/SVQ2xmqJl77DKrbvs4dyF2p/qwps7XtNT3qgAtBSyQP95skutfO+ulr74DEcUavh52PDffK5402fnUb5No9zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8vMxo0c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IKCJr57jIuosftJqUdqS15RU5bP48mXLQtQJRom6bjE/Cz74m/xYrVWSofLhA8N3fsgb+6/omIwq/GaFmHDim7JtkAqNR0P27WWyPkH/uyGHiG+v9iVT/dNlfehXiryuk2NgkvAg2hKEjCoZP7edWFQQOLpifPK+EoXp5Cv6vIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twowyMzv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8vMxo0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B191F000FF;
-	Wed, 30 Sep 2026 17:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twowyMzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14BC1F000FF;
+	Wed, 30 Sep 2026 17:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790696;
-	bh=2Dc/Bcxs9qYx5RRh9M8Q7/lnuHSLpANeI7M97oeU4Tk=;
+	s=korg; t=1790790699;
+	bh=CZtMM1NSgUhhQuP35WP2kipC5MQ26jDIq2D9I+13aUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8vMxo0chGgc4EfI/wotX4IADY3PR1Hh2bFTeARC83SbmJ0MHI/LmJq3UAObHBQHO
-	 kYkuHsccxq3jQO9/6QkU9aY+ZAiFrrQkoYh+sKhYQxdvGQPTqMdF4QN/ghQ8/u3U2s
-	 ZoMwWcqSmaFi4NMtfP8GMuJJ9xt77MjIla+VTgoA=
+	b=twowyMzvlaaGueZy8nH76DlRoHr9vLiwyMyYfrRINJgDHojK5k6wW0VJh+/THIiuG
+	 vXedS/sBcByO+GE+SbWtJmRasDj/l5zvsErOFWTcCHFIfmWwTNKz+2E8NTl/um1q8J
+	 j5mHYHRZZNEjMrPQW1CkN2fevBeHvetc1W1TPTTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Coster <matt.coster@imgtec.com>,
-	Yury Norov <ynorov@nvidia.com>,
+	Jan Volckaert <janvolck@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/752] bitfield: wire __bf_shf to __builtin_ctzll
-Date: Wed, 30 Sep 2026 17:18:33 +0200
-Message-ID: <20260930152359.084276325@linuxfoundation.org>
+Subject: [PATCH 5.15 044/752] net: usb: qmi_wwan: add MeiG SRM813Q
+Date: Wed, 30 Sep 2026 17:18:34 +0200
+Message-ID: <20260930152359.106110038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,49 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov <ynorov@nvidia.com>
+From: Jan Volckaert <janvolck@gmail.com>
 
-[ Upstream commit 09472f591aa0b72c2dd6c693f48b2d6fea66c7ba ]
+[ Upstream commit 9758c11fc6c138a79a28a5659feeaa3abde7aa6a ]
 
-__bf_shf() is currently based on built-in ffsll. It's more
-straightforward to wire it to __builtin_ctzll, which makes it a pure
-rename.
+Add support for the Qualcomm Technology Snapdragon X35-based MeiG SRM813Q
+module.
 
-Worth to notice that __builtin_ffsll() is buggy on GCC before 14.1:
+The module can be put in different modes via AT commands
+to enable/disable GPS functionality:
 
-  int main() {
-      sizeof(struct {
-          int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
-      });
-  }
+MODEM - PPP mode(2dee:4d63): AT+SER=1,1
 
-  test.c: In function 'main':
-  test.c:3:21: error: bit-field 't' width not an integer constant
-      3 |                 int t : !(__builtin_ffsll(~0ULL) + 1 < 0);
-        |                     ^
+If#= 0: RMNET
+If#= 1: DIAG/ADB
+If#= 2: MODEM
+If#= 3: AT
 
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124699
-Reported-by: Matt Coster <matt.coster@imgtec.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603222211.A2XiR1YU-lkp@intel.com/
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+P:  Vendor=2dee ProdID=4d63 Rev=05.15
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=1bd51f0e
+C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+
+NMEA mode(2dee:4d64): AT+SER=51,1
+
+If#= 0: RMNET
+If#= 1: DIAG/ADB
+If#= 2: NMEA
+If#= 3: AT
+
+P:  Vendor=2dee ProdID=4d64 Rev=05.15
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=1bd51f0e
+C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+
+Signed-off-by: Jan Volckaert <janvolck@gmail.com>
+Link: https://patch.msgid.link/20260517153237.55995-2-janvolck@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bitfield.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/qmi_wwan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
-index 3db9434afcfea..78beaebb58155 100644
---- a/include/linux/bitfield.h
-+++ b/include/linux/bitfield.h
-@@ -40,7 +40,7 @@
-  *  reg |= FIELD_PREP(REG_FIELD_C, c);
-  */
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 5fe3f405491b8..3f9ebf20fe7e4 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1445,6 +1445,8 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
+ 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
+ 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
++	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
++	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
  
--#define __bf_shf(x) (__builtin_ffsll(x) - 1)
-+#define __bf_shf __builtin_ctzll
- 
- #define __scalar_type_to_unsigned_cases(type)				\
- 		unsigned type:	(unsigned type)0,			\
+ 	/* 4. Gobi 1000 devices */
+ 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
 -- 
 2.53.0
 
