@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E3250B8A8;
-	Wed, 30 Sep 2026 18:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA4451AFED;
+	Wed, 30 Sep 2026 18:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792450; cv=none; b=CjnvG+0rBG9vSGQXbmn/2Fqbo6mfa6+QLPuF46se+Y5MSlbCyGT0negnR/aWzc5QpwLwFndr7O6H9cyq+UZDSFUyAe6vid/T2xNQfWw05UcZY2xubFZEbNIIsS5Kf6PDBYFfvf5CTZ0oYw6gQ2bfL6GrNj3NUmBCIItDIjvRB+w=
+	t=1790792453; cv=none; b=n4loE2rCnBiSF72nD1odxoelqAlliwvfMK9gMg9nWJX2lThFJ6xe0XWZK0hc4Q0qeW/SWpkdm0HrwRbAOQ+RmtMJ5Y9HIcEVpUR2UDN2Ph2S0sx867uH+TdIiO/7Pt9KCIz9286JCgiIYmvxmNON7dxKwAQyPqUgeTD8jL/jwTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792450; c=relaxed/simple;
-	bh=9uAQanhZj5QXSbGS8pdgip8axtOSXAoKvyXxrqhvPnk=;
+	s=arc-20240116; t=1790792453; c=relaxed/simple;
+	bh=P/wuARSeatYE43veZ6L7gtd1R9Q+75GJZ8OLvddSFdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdpXewif/8lJtnam6d6NIcUJiC5t5Buo0LzbOeMH3JOc4oKczSED42uniIHXFa82AmOV9r40CTRj+6fvkUo6Ks4xxDVp2M1Uy0t5GvhhpfcH/jb6GOnW79hTPlA4TC3OQJrhM3kiG4FrYewdefIMFt96HspbepBWGIg38VGqJc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9m8yNUB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=idvjjkvhxLK4+98Ke3Ax4YONQ8K8QeYsRj1dKmvxOsfP50hJwRHPm7i1ufwbFwXF0S4iGrvLR/Viz+cVxCbwKJ6XQpxYqT6Z9ttDJBw+rYmthW2JdFc/jqLUV7oUNEmSgfdXe0lDQLxwm0plOEjce5ZloxuBdfOt/tf0HN2+648=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTsnaQyo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9m8yNUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993311F000FF;
-	Wed, 30 Sep 2026 18:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTsnaQyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784B21F000FF;
+	Wed, 30 Sep 2026 18:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792449;
-	bh=c5Hks9cLxCWHwzjSaH43oPRZbB7Qr8PDRhlrYlUMZK0=;
+	s=korg; t=1790792452;
+	bh=0kyQcC7APDhMeE3lIo31tQjs5By2nKXaH5HTen1YomU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f9m8yNUB09xqx/5Xt4xPc96L4LrKcrRBw9gSlTlACaJKiwOzYVtUQu9kVPN6mEKFQ
-	 e0KQg25YETFm4KtxMOI4irbyBclZ3ICSr+90ux7iv95mE6PjuMprc6S7OP0QWgzBwf
-	 VtB68xrNNqr2mJ45cmYQcOvjhb1qXCyZ6NM0wpB4=
+	b=yTsnaQyo9NnOE8D6XiiwfbUUx4us5PAwOVXIX+gpVVdxnHcnqb0G/hrTUv/6ZiB7B
+	 /hC46DF2ftJM7Be4RIBal9OHNEkvLZcpNk5FtFKAdmnDUMBE3sT0iwsANN3TvafvaV
+	 k8A0fHbC8rSBiNov/SksOkpviV9AyWQVcKaRF5A0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christiano Amora <christiano.amora@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Lee Jones <lee@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 604/752] Bluetooth: SMP: reject Security Request over BR/EDR
-Date: Wed, 30 Sep 2026 17:27:54 +0200
-Message-ID: <20260930152411.354322211@linuxfoundation.org>
+Subject: [PATCH 5.15 653/752] nfc: llcp: Fix race condition in accept_queue lifecycle
+Date: Wed, 30 Sep 2026 17:28:43 +0200
+Message-ID: <20260930152412.389407663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,91 +51,393 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christiano Amora <christiano.amora@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit f033482d76a9f18080c7a40c5f9c678bd7adc8f3 ]
+[ Upstream commit c3eef2f988a3db9690369d7cef9a3344dd9788d3 ]
 
-Bose QC Ultra Headphones (dual-mode, same public address on both
-transports) occasionally send an SMP Security Request on the BR/EDR
-SMP fixed channel right after the ACL link is encrypted. The kernel
-handles it as if it were an LE link: smp_cmd_security_req() has no
-transport check, smp_ltk_encrypt() looks up an LTK with the ACL
-connection's dst_type, and hci_find_ltk() matches the peer's LE LTK
-because the LE public address type is stored as ADDR_LE_DEV_PUBLIC (0),
-the same value as BDADDR_BREDR. HCI_OP_LE_START_ENC is then issued on
-the ACL handle, the controller rejects it with Invalid HCI Command
-Parameters, and hci_cs_le_start_enc() disconnects the link with
-HCI_ERROR_AUTH_FAILURE. The headphones drop within a second of
-connecting, before any profile is up; a manual reconnect works.
+In nfc_llcp_socket_release(), sockets and listener accept queues are
+walked under the local sockets rwlock and bh_lock_sock().  However,
+bh_lock_sock() does not synchronise against process-context lock_sock()
+held by nfc_llcp_accept_dequeue() during accept().  Because
+socket_release() does not check sock_owned_by_user(), both paths can
+concurrently unlink and release the same child socket, resulting in
+use-after-free or a NULL pointer dereference of child->parent in
+nfc_llcp_accept_unlink().
 
-btmon (MediaTek MT7922, kernel 7.0.12):
+Fix this synchronisation race by having nfc_llcp_socket_release() use
+process-context lock_sock() instead of bh_lock_sock():
 
-  > HCI Event: Encryption Change (0x08) plen 4
-        Status: Success (0x00)
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-        Encryption: Enabled with AES-CCM (0x02)
-  > ACL Data RX: Handle 50 flags 0x02 dlen 6
-        BR/EDR SMP: Security Request (0x0b) len 1
-        Authentication requirement: No bonding, No MITM, SC (0x08)
-  < HCI Command: LE Start Encryption (0x08|0x0019) plen 28
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-  > HCI Event: Command Status (0x0f) plen 4
-        LE Start Encryption (0x08|0x0019) ncmd 1
-        Status: Invalid HCI Command Parameters (0x12)
-  < HCI Command: Disconnect (0x01|0x0006) plen 3
-        Handle: 50 Address: BC:87:FA:47:73:5E (Bose Corporation)
-        Reason: Authentication Failure (0x05)
+1. Pop sockets from the local sockets list under the write lock using
+   nfc_llcp_sock_list_pop() so lock_sock() can be acquired without
+   holding the rwlock.
 
-SMP over BR/EDR is limited to cross-transport key derivation; the
-Security Request procedure (Core Specification Vol 3, Part H, Section
-2.4.6, PDU in Section 3.6.7) has no BR/EDR counterpart. Reply with
-Pairing Failed / Command Not Supported on a non-LE link, before the PDU
-is parsed, and keep the connection. The reply is sent directly rather
-than through smp_failure(): rejecting a command on the wrong transport
-is not an authentication failure, and MGMT_EV_AUTH_FAILED would make
-bluetoothd disconnect the device.
+2. Because lock_sock() can sleep, defer the final release of the
+   nfc_llcp_local structure to a workqueue (release_work).  This avoids
+   a sleeping-in-atomic bug when the last local reference is dropped
+   from softirq context.  Additionally, hold a single device reference
+   on local from registration until final destruction.
 
-Tested on the affected host (kernel 7.0.12, MediaTek MT7922, Bose QC
-Ultra) with the patched module built out of tree: 7 days and 49
-reconnects without a drop, against 2 drops in the 3 days before the
-patch. Every disconnect in that week had a userspace or remote reason.
+3. In nfc_llcp_local_get(), use kref_get_unless_zero() to prevent
+   resurrecting a local object whose teardown has been scheduled.
 
-Fixes: b5ae344d4c0f ("Bluetooth: Add full SMP BR/EDR support")
-Assisted-by: LLM
-Signed-off-by: Christiano Amora <christiano.amora@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+4. In llcp_sock_accept(), verify that the listener socket state is still
+   LLCP_LISTEN after waking from schedule_timeout() to prevent hangs if
+   the listener is closed concurrently.
+
+5. When unlinking unaccepted child sockets during listener release,
+   unlink them from local->sockets, call sock_orphan(), and drop their
+   initial sk_alloc creation reference via sock_put().
+
+6. Make nfc_llcp_accept_unlink() idempotent by guarding parent access with
+   a NULL check.
+
+Fixes: 50b78b2a6500 ("NFC: Fix sleeping in atomic when releasing socket")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://patch.msgid.link/20260902123033.1169067-1-lee@kernel.org
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ net/nfc/llcp.h      |   1 +
+ net/nfc/llcp_core.c | 125 +++++++++++++++++++++++++++-----------------
+ net/nfc/llcp_sock.c |  49 ++++++++++++-----
+ 3 files changed, 116 insertions(+), 59 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index 85bd00479a74d..cfb99ef65e7d3 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2295,6 +2295,23 @@ static u8 smp_cmd_security_req(struct l2cap_conn *conn, struct sk_buff *skb)
+diff --git a/net/nfc/llcp.h b/net/nfc/llcp.h
+index a81893bc06ce8..ce8c990ff39af 100644
+--- a/net/nfc/llcp.h
++++ b/net/nfc/llcp.h
+@@ -92,6 +92,7 @@ struct nfc_llcp_local {
+ 	struct hlist_head pending_sdreqs;
+ 	struct timer_list sdreq_timer;
+ 	struct work_struct sdreq_timeout_work;
++	struct work_struct release_work;
+ 	u8 sdreq_next_tid;
  
- 	bt_dev_dbg(hdev, "conn %p", conn);
+ 	/* sockets array */
+diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
+index 4d810b758361b..aebd4b1ab81d3 100644
+--- a/net/nfc/llcp_core.c
++++ b/net/nfc/llcp_core.c
+@@ -20,6 +20,8 @@ static LIST_HEAD(llcp_devices);
+ /* Protects llcp_devices list */
+ static DEFINE_SPINLOCK(llcp_devices_lock);
  
-+	/* SMP over BR/EDR only covers cross-transport key derivation; the
-+	 * Security Request procedure has no BR/EDR counterpart. Reject it
-+	 * here, otherwise smp_ltk_encrypt() finds the peer's LE LTK
-+	 * (ADDR_LE_DEV_PUBLIC and BDADDR_BREDR are both 0) and issues
-+	 * HCI_OP_LE_START_ENC on the ACL handle, which the controller
-+	 * rejects and hci_cs_le_start_enc() turns into a disconnect. Reply
-+	 * without smp_failure(): this is not an authentication failure, and
-+	 * MGMT_EV_AUTH_FAILED would make bluetoothd drop the device.
-+	 */
-+	if (hcon->type != LE_LINK) {
-+		u8 reason = SMP_CMD_NOTSUPP;
++static struct workqueue_struct *llcp_wq;
 +
-+		smp_send_cmd(conn, SMP_CMD_PAIRING_FAIL, sizeof(reason),
-+			     &reason);
+ static void nfc_llcp_rx_skb(struct nfc_llcp_local *local, struct sk_buff *skb);
+ 
+ void nfc_llcp_sock_link(struct llcp_sock_list *l, struct sock *sk)
+@@ -65,21 +67,33 @@ static void nfc_llcp_socket_purge(struct nfc_llcp_sock *sock)
+ 	}
+ }
+ 
++static struct sock *nfc_llcp_sock_list_pop(struct llcp_sock_list *l)
++{
++	struct sock *sk;
++
++	write_lock(&l->lock);
++	sk = sk_head(&l->head);
++	if (sk) {
++		sock_hold(sk);
++		sk_del_node_init(sk);
++	}
++	write_unlock(&l->lock);
++
++	return sk;
++}
++
+ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
+ 				    int err)
+ {
+ 	struct sock *sk;
+-	struct hlist_node *tmp;
+ 	struct nfc_llcp_sock *llcp_sock;
+ 
+ 	skb_queue_purge(&local->tx_queue);
+ 
+-	write_lock(&local->sockets.lock);
+-
+-	sk_for_each_safe(sk, tmp, &local->sockets.head) {
++	while ((sk = nfc_llcp_sock_list_pop(&local->sockets))) {
+ 		llcp_sock = nfc_llcp_sock(sk);
+ 
+-		bh_lock_sock(sk);
++		lock_sock(sk);
+ 
+ 		nfc_llcp_socket_purge(llcp_sock);
+ 
+@@ -93,17 +107,27 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
+ 			list_for_each_entry_safe(lsk, n,
+ 						 &llcp_sock->accept_queue,
+ 						 accept_queue) {
+-				accept_sk = &lsk->sk;
+-				bh_lock_sock(accept_sk);
+-
+-				nfc_llcp_accept_unlink(accept_sk);
++				bool put_creation = false;
+ 
+-				if (err)
+-					accept_sk->sk_err = err;
+-				accept_sk->sk_state = LLCP_CLOSED;
+-				accept_sk->sk_state_change(sk);
++				accept_sk = &lsk->sk;
++				lock_sock_nested(accept_sk,
++						 SINGLE_DEPTH_NESTING);
++
++				if (nfc_llcp_sock(accept_sk)->parent == sk) {
++					nfc_llcp_accept_unlink(accept_sk);
++					nfc_llcp_sock_unlink(&local->sockets, accept_sk);
++
++					if (err)
++						accept_sk->sk_err = err;
++					accept_sk->sk_state = LLCP_CLOSED;
++					accept_sk->sk_state_change(accept_sk);
++					sock_orphan(accept_sk);
++					put_creation = true;
++				}
+ 
+-				bh_unlock_sock(accept_sk);
++				release_sock(accept_sk);
++				if (put_creation)
++					sock_put(accept_sk); /* creation ref */
+ 			}
+ 		}
+ 
+@@ -112,23 +136,18 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
+ 		sk->sk_state = LLCP_CLOSED;
+ 		sk->sk_state_change(sk);
+ 
+-		bh_unlock_sock(sk);
+-
+-		sk_del_node_init(sk);
++		release_sock(sk);
++		sock_put(sk);
+ 	}
+ 
+-	write_unlock(&local->sockets.lock);
+-
+ 	/* If we still have a device, we keep the RAW sockets alive */
+ 	if (device == true)
+ 		return;
+ 
+-	write_lock(&local->raw_sockets.lock);
+-
+-	sk_for_each_safe(sk, tmp, &local->raw_sockets.head) {
++	while ((sk = nfc_llcp_sock_list_pop(&local->raw_sockets))) {
+ 		llcp_sock = nfc_llcp_sock(sk);
+ 
+-		bh_lock_sock(sk);
++		lock_sock(sk);
+ 
+ 		nfc_llcp_socket_purge(llcp_sock);
+ 
+@@ -137,26 +156,20 @@ static void nfc_llcp_socket_release(struct nfc_llcp_local *local, bool device,
+ 		sk->sk_state = LLCP_CLOSED;
+ 		sk->sk_state_change(sk);
+ 
+-		bh_unlock_sock(sk);
+-
+-		sk_del_node_init(sk);
++		release_sock(sk);
++		sock_put(sk);
+ 	}
+-
+-	write_unlock(&local->raw_sockets.lock);
+ }
+ 
+ static struct nfc_llcp_local *nfc_llcp_local_get(struct nfc_llcp_local *local)
+ {
+-	/* Since using nfc_llcp_local may result in usage of nfc_dev, whenever
+-	 * we hold a reference to local, we also need to hold a reference to
+-	 * the device to avoid UAF.
+-	 */
+-	if (!nfc_get_device(local->dev->idx))
++	if (!local)
+ 		return NULL;
+ 
+-	kref_get(&local->ref);
++	if (kref_get_unless_zero(&local->ref))
++		return local;
+ 
+-	return local;
++	return NULL;
+ }
+ 
+ static void local_cleanup(struct nfc_llcp_local *local)
+@@ -174,30 +187,34 @@ static void local_cleanup(struct nfc_llcp_local *local)
+ 	nfc_llcp_free_sdp_tlv_list(&local->pending_sdreqs);
+ }
+ 
+-static void local_release(struct kref *ref)
++static void local_release_work(struct work_struct *work)
+ {
+ 	struct nfc_llcp_local *local;
++	struct nfc_dev *dev;
+ 
+-	local = container_of(ref, struct nfc_llcp_local, ref);
++	local = container_of(work, struct nfc_llcp_local, release_work);
++	dev = local->dev;
+ 
+ 	local_cleanup(local);
+ 	kfree(local);
++	nfc_put_device(dev);
+ }
+ 
+-int nfc_llcp_local_put(struct nfc_llcp_local *local)
++static void local_release(struct kref *ref)
+ {
+-	struct nfc_dev *dev;
+-	int ret;
++	struct nfc_llcp_local *local;
+ 
+-	if (local == NULL)
+-		return 0;
++	local = container_of(ref, struct nfc_llcp_local, ref);
+ 
+-	dev = local->dev;
++	queue_work(llcp_wq, &local->release_work);
++}
+ 
+-	ret = kref_put(&local->ref, local_release);
+-	nfc_put_device(dev);
++int nfc_llcp_local_put(struct nfc_llcp_local *local)
++{
++	if (!local)
 +		return 0;
+ 
+-	return ret;
++	return kref_put(&local->ref, local_release);
+ }
+ 
+ static struct nfc_llcp_sock *nfc_llcp_sock_get(struct nfc_llcp_local *local,
+@@ -1713,6 +1730,7 @@ int nfc_llcp_register_device(struct nfc_dev *ndev)
+ 	INIT_WORK(&local->rx_work, nfc_llcp_rx_work);
+ 
+ 	INIT_WORK(&local->timeout_work, nfc_llcp_timeout_work);
++	INIT_WORK(&local->release_work, local_release_work);
+ 
+ 	rwlock_init(&local->sockets.lock);
+ 	rwlock_init(&local->connecting_sockets.lock);
+@@ -1756,10 +1774,23 @@ void nfc_llcp_unregister_device(struct nfc_dev *dev)
+ 
+ int __init nfc_llcp_init(void)
+ {
+-	return nfc_llcp_sock_init();
++	int ret;
++
++	llcp_wq = alloc_workqueue("nfc_llcp_wq", WQ_UNBOUND, 0);
++	if (!llcp_wq)
++		return -ENOMEM;
++
++	ret = nfc_llcp_sock_init();
++	if (ret) {
++		destroy_workqueue(llcp_wq);
++		return ret;
 +	}
 +
- 	if (skb->len < sizeof(*rp))
- 		return SMP_INVALID_PARAMS;
++	return 0;
+ }
+ 
+ void nfc_llcp_exit(void)
+ {
+ 	nfc_llcp_sock_exit();
++	destroy_workqueue(llcp_wq);
+ }
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 85767c13543b5..5affde14e5908 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -387,11 +387,12 @@ void nfc_llcp_accept_unlink(struct sock *sk)
+ 
+ 	pr_debug("state %d\n", sk->sk_state);
+ 
+-	list_del_init(&llcp_sock->accept_queue);
+-	sk_acceptq_removed(llcp_sock->parent);
+-	llcp_sock->parent = NULL;
+-
+-	sock_put(sk);
++	if (llcp_sock->parent) {
++		list_del_init(&llcp_sock->accept_queue);
++		sk_acceptq_removed(llcp_sock->parent);
++		llcp_sock->parent = NULL;
++		sock_put(sk);
++	}
+ }
+ 
+ void nfc_llcp_accept_enqueue(struct sock *parent, struct sock *sk)
+@@ -418,12 +419,20 @@ struct sock *nfc_llcp_accept_dequeue(struct sock *parent,
+ 
+ 	list_for_each_entry_safe(lsk, n, &llcp_parent->accept_queue,
+ 				 accept_queue) {
++		struct nfc_llcp_local *local;
++
+ 		sk = &lsk->sk;
+-		lock_sock(sk);
++		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
+ 
+ 		if (sk->sk_state == LLCP_CLOSED) {
+-			release_sock(sk);
++			local = nfc_llcp_sock(sk)->local;
++
+ 			nfc_llcp_accept_unlink(sk);
++			if (local)
++				nfc_llcp_sock_unlink(&local->sockets, sk);
++			sock_orphan(sk);
++			release_sock(sk);
++			sock_put(sk);
+ 			continue;
+ 		}
+ 
+@@ -459,7 +468,7 @@ static int llcp_sock_accept(struct socket *sock, struct socket *newsock,
+ 
+ 	pr_debug("parent %p\n", sk);
+ 
+-	lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
++	lock_sock(sk);
+ 
+ 	if (sk->sk_state != LLCP_LISTEN) {
+ 		ret = -EBADFD;
+@@ -485,7 +494,12 @@ static int llcp_sock_accept(struct socket *sock, struct socket *newsock,
+ 
+ 		release_sock(sk);
+ 		timeo = schedule_timeout(timeo);
+-		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
++		lock_sock(sk);
++
++		if (sk->sk_state != LLCP_LISTEN) {
++			ret = -EBADFD;
++			break;
++		}
+ 	}
+ 	__set_current_state(TASK_RUNNING);
+ 	remove_wait_queue(sk_sleep(sk), &wait);
+@@ -624,13 +638,24 @@ static int llcp_sock_release(struct socket *sock)
+ 
+ 		list_for_each_entry_safe(lsk, n, &llcp_sock->accept_queue,
+ 					 accept_queue) {
++			bool put_creation = false;
++
+ 			accept_sk = &lsk->sk;
+-			lock_sock(accept_sk);
++			lock_sock_nested(accept_sk, SINGLE_DEPTH_NESTING);
+ 
+-			nfc_llcp_send_disconnect(lsk);
+-			nfc_llcp_accept_unlink(accept_sk);
++			if (nfc_llcp_sock(accept_sk)->parent == sk) {
++				nfc_llcp_send_disconnect(lsk);
++				nfc_llcp_accept_unlink(accept_sk);
++				nfc_llcp_sock_unlink(&local->sockets, accept_sk);
++
++				accept_sk->sk_state = LLCP_CLOSED;
++				sock_orphan(accept_sk);
++				put_creation = true;
++			}
+ 
+ 			release_sock(accept_sk);
++			if (put_creation)
++				sock_put(accept_sk); /* creation ref */
+ 		}
+ 	}
  
 -- 
 2.53.0
