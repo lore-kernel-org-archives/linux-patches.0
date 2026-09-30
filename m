@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A803A4D9575;
-	Wed, 30 Sep 2026 15:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EC44EBAFA;
+	Wed, 30 Sep 2026 15:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783635; cv=none; b=TtAvoVqlRC7I9m/1lV40/AVSUunTyksx4FFXD+kyBd23+R/NL4QZlCxPRCyTytFUThP4IC+liUOaQthvJ8OOFGya6S/aVemP2xkgtcDdQ7AAWYM2qv9rxUIEL1FXu/lpIP+zDM4xMB7h8hGWW9U4Pxu1tIrSNOww9kCbm/Biux8=
+	t=1790783640; cv=none; b=Kml6QTbrMkoxpNR/wPnOEFIhYgoHoXQQ+X1Vj4WHWUhwdG8gD/LPsBbi1KvEFMmiwMhHklMNhgWbvGvNeQoCfCmV/jlQsBSZYuDsGGkjKnWMQboSdtep3MjuGqndvEC3d2ULY6vChyD7yvzYzmmm/2jKhWveDD403nMVn+pYv+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783635; c=relaxed/simple;
-	bh=F4KheF05c7iDyLpoI/EY6c3oj25REX3pzpPNaVXT7JE=;
+	s=arc-20240116; t=1790783640; c=relaxed/simple;
+	bh=a9nNpnV8gpEFvVlAXiH1dNZPDTY1q2w+jC3XvkECMfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyU+vNZesosVnuLVGoXuRzoTh9338isYe2TaU3Q2fXJH6ugT+hZWZxdMlLKJj97zvbNjNJ0AXHMZFrujyt2gZ95lMbCA9bnQOmTryEkeFqp19y9WGHhYI9+BDgoJslxp1zcw37ktwswgkNF8bX6SlyqDsrtupUSZFbO/bdUW+Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/yF6hbY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LtygVjpMqHTNhwiewymVKbyFks7EbI2TKfM7jdZaKw1rjMPNi3QO3rSGXZfdkuuhbyajnKnlHNAGdXt3LqyqDXwTtnUvrs7vxbDRHhLvmIVEvNUGc4i4gTl1lwze2a1xsZn9re6ojgwBOZ1XTWpTtYi2QyOvsPQWqdQHRGdka8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbDrdnky; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/yF6hbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF361F000FF;
-	Wed, 30 Sep 2026 15:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbDrdnky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F511F00893;
+	Wed, 30 Sep 2026 15:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783631;
-	bh=2gIU1Tj6Lz7yDTFUmWnDInHHOmoiowkb+VOr2IUPdQE=;
+	s=korg; t=1790783634;
+	bh=uMin+yS762ANl/oTZWpv+cCQFBODGqxThAvQ2KzXUwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/yF6hbY+/XM8X/X13HhMzbnrxuMH7+rKdq4ZGscsCkSu7lTl73kms6xaxkHIj6ED
-	 bYJEeLveBlIUeY/yO8B5aeJYBmJGPWHJ/VnI8pZBlNTq9MpcsXKv68Ihqxt0m/LWF/
-	 +sptH0B3Iu+QpXUg5bX9sGg2xKQn1JApNI9HK6sw=
+	b=tbDrdnky7yyFU5tWFatGGrVWc9bct7YQytw5GLNxI7X9V4Y8No9rXuuvZG1Q5nQ7s
+	 495yklDZdexQrh9VKFrckVBYZ8wSt036twHxUk9hK96RtIbdU25nxKtoXWpekWogJb
+	 iUHM3mXKr5+8gSzVOdvVX1jadly8cf92QgumnN4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
+	Shengzhuo Wei <me@cherr.cc>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 467/595] wifi: wilc1000: fix RX buffer OOB-write in wilc_wlan_handle_isr_ext()
-Date: Wed, 30 Sep 2026 17:26:00 +0200
-Message-ID: <20260930152357.725705198@linuxfoundation.org>
+Subject: [PATCH 5.10 468/595] wifi: p54: validate curve data length in the calibration curve converters
+Date: Wed, 30 Sep 2026 17:26:01 +0200
+Message-ID: <20260930152357.746219170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,65 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Shengzhuo Wei <me@cherr.cc>
 
-commit c1ba7f7f18465e259cf1b4d9c73fc73853d7f790 upstream.
+commit ce858fa6b8a214dee5adb82358885fa024cdd887 upstream.
 
-wilc_wlan_handle_isr_ext() takes the RX transfer size from the
-device-reported interrupt status register (a 15-bit field shifted left by 2,
-up to 131068 bytes) and reads that many bytes from the device into
-rx_buffer, which is only WILC_RX_BUFF_SIZE (96K) large. The wrap
-check only handles the current offset; the size itself is never
-compared against the buffer, so a bogus SDIO device can make the driver
-OOB-write rx_buffer by up to ~32K with data it controls.
+p54_convert_rev0() and p54_convert_rev1() read calibration curve
+data from the device-supplied EEPROM entry using channel and
+points-per-channel counts taken verbatim from that same entry, so
+an entry that declares more data than it carries drives an
+out-of-bounds read past the EEPROM buffer (verified with a KASAN
+reproducer of the conversion loop). The sibling converters
+p54_convert_output_limits() and p54_convert_db() already validate
+their counts against the entry length; this path was missed.
 
-The oversized transfer also leaves rx_buffer_offset past the end of
-the buffer, after which the unsigned wrap check stops working and
-the overflow can repeat.
+Reject the entry when the counts do not fit in the entry data.
 
-Drop any transfer whose size exceeds the RX buffer, acknowledging
-the data interrupt and re-arming the RX engine so the bogus frame is
-discarded and reception can continue. This also restores the
-rx_buffer_offset <= WILC_RX_BUFF_SIZE invariant the wrap check
-relies on.
-
-This is not expected to change driver behavior in most cases:
-without this check, an oversized transfer would most likely
-corrupt neighboring kernel memory instead of completing anyway, and
-the drop path performs the same interrupt acknowledgment and RX
-engine re-arming as the normal path, so subsequent transfers are
-received unaffected.
-
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
-
-Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
+Fixes: eff1a59c48e3 ("[P54]: add mac80211-based driver for prism54 softmac hardware")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/7c971924c6bdccf6c2f75704a5a746e9303aaf64@linux.dev
+Assisted-by: GLM:5.3
+Signed-off-by: Shengzhuo Wei <me@cherr.cc>
+Link: https://patch.msgid.link/20260831-p54-pda-validation-v2-1-dae566b388c8@cherr.cc
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/wlan.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/intersil/p54/eeprom.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/microchip/wilc1000/wlan.c
-+++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
-@@ -771,6 +771,15 @@ static void wilc_wlan_handle_isr_ext(str
- 	if (size <= 0)
- 		return;
+--- a/drivers/net/wireless/intersil/p54/eeprom.c
++++ b/drivers/net/wireless/intersil/p54/eeprom.c
+@@ -418,17 +418,22 @@ free:
+ }
  
-+	/* A size exceeding the RX buffer is bogus; drop the transfer
-+	 * instead of overflowing the buffer.
-+	 */
-+	if (size > WILC_RX_BUFF_SIZE) {
-+		wilc->hif_func->hif_clear_int_ext(wilc,
-+						  DATA_INT_CLR | ENABLE_RX_VMM);
-+		return;
-+	}
+ static int p54_convert_rev0(struct ieee80211_hw *dev,
+-			    struct pda_pa_curve_data *curve_data)
++			    struct pda_pa_curve_data *curve_data, size_t len)
+ {
+ 	struct p54_common *priv = dev->priv;
+ 	struct p54_pa_curve_data_sample *dst;
+ 	struct pda_pa_curve_data_sample_rev0 *src;
++	size_t needed = curve_data->channels *
++		(sizeof(*src) * curve_data->points_per_channel + 2);
+ 	size_t cd_len = sizeof(*curve_data) +
+ 		(curve_data->points_per_channel*sizeof(*dst) + 2) *
+ 		 curve_data->channels;
+ 	unsigned int i, j;
+ 	void *source, *target;
+ 
++	if (len < sizeof(*curve_data) + needed)
++		return -EINVAL;
 +
- 	if (WILC_RX_BUFF_SIZE - offset < size)
- 		offset = 0;
+ 	priv->curve_data = kmalloc(sizeof(*priv->curve_data) + cd_len,
+ 				   GFP_KERNEL);
+ 	if (!priv->curve_data)
+@@ -470,17 +475,22 @@ static int p54_convert_rev0(struct ieee8
+ }
  
+ static int p54_convert_rev1(struct ieee80211_hw *dev,
+-			    struct pda_pa_curve_data *curve_data)
++			    struct pda_pa_curve_data *curve_data, size_t len)
+ {
+ 	struct p54_common *priv = dev->priv;
+ 	struct p54_pa_curve_data_sample *dst;
+ 	struct pda_pa_curve_data_sample_rev1 *src;
++	size_t needed = curve_data->channels *
++		(sizeof(*src) * curve_data->points_per_channel + 3);
+ 	size_t cd_len = sizeof(*curve_data) +
+ 		(curve_data->points_per_channel*sizeof(*dst) + 2) *
+ 		 curve_data->channels;
+ 	unsigned int i, j;
+ 	void *source, *target;
+ 
++	if (len < sizeof(*curve_data) + needed)
++		return -EINVAL;
++
+ 	priv->curve_data = kzalloc(cd_len + sizeof(*priv->curve_data),
+ 				   GFP_KERNEL);
+ 	if (!priv->curve_data)
+@@ -767,6 +777,7 @@ int p54_parse_eeprom(struct ieee80211_hw
+ 		case PDR_PRISM_PA_CAL_CURVE_DATA: {
+ 			struct pda_pa_curve_data *curve_data =
+ 				(struct pda_pa_curve_data *)entry->data;
++
+ 			if (data_len < sizeof(*curve_data)) {
+ 				err = -EINVAL;
+ 				goto err;
+@@ -774,10 +785,10 @@ int p54_parse_eeprom(struct ieee80211_hw
+ 
+ 			switch (curve_data->cal_method_rev) {
+ 			case 0:
+-				err = p54_convert_rev0(dev, curve_data);
++				err = p54_convert_rev0(dev, curve_data, data_len);
+ 				break;
+ 			case 1:
+-				err = p54_convert_rev1(dev, curve_data);
++				err = p54_convert_rev1(dev, curve_data, data_len);
+ 				break;
+ 			default:
+ 				wiphy_err(dev->wiphy,
 
 
