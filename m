@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C6E4F7CCF;
-	Wed, 30 Sep 2026 17:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C26351993C;
+	Wed, 30 Sep 2026 17:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789199; cv=none; b=WfrKUJMEvEh4XQSOFawtjFw9f96RmSVcBMqH05jQVfINlD+vOdQoPqicOgQJt1GnOADjZCbQdOledHZIOvaUDJ5Wrk+EKwKP2G1j4+LwTJdJfT6V3WdOai5UUNMdCAPjkgUv0WBclsTOEFwS4AVx28ZbE2FRDsiaqLD8ERUZO34=
+	t=1790789202; cv=none; b=eyH/0CJcpe0dGVz29PmoVWjFgM4hAs3oQtMLXyEqV1IEY+FQzlPJkzrQ9jSRv3Mmm1h2vHzlG4GR+E4kyf0wSEHT+KBT7QEINI5ucqbt8GWcWBftANzpn06BBmq78RlrI6mNY7alOrfN0FJz4fk/qiH8HU4ZMPXInX5ITE8rOyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789199; c=relaxed/simple;
-	bh=5iC0YdN1l/IgOn2fEmQyysxD9AbQuFCBq9JqNkH+Qi0=;
+	s=arc-20240116; t=1790789202; c=relaxed/simple;
+	bh=BZBbt1MABniEo+WvOwrClNpDlry5uHiczvOmEJoU6vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CtSpwngCM15TePmkRLPnA6KTYLWQmS8v22a4Ax3Ct52ydDz8nWluYfRXkglf19ZtC25dyeSS+zI4nY7P89PqY4xDv5s7yfOEcTFSfLMOSK3aypVLe6rh7MtbT+B/azeBuVKSrnpk0M/Jkl/EIEFVDDJ61vjnMJ6HjzOGfCM9zNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtP7jG3g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f2uWfWPi1jrgP4M7rBg3QCEZYMD9RyFY5YkDM548Gau1btlFkEDUKWjNqhxQ0BXvbjHoj788gvfPrszHghKPoCG+omEI1zNTF2WAEt+IYAEOT9hVhAMSpHo6+K/E0ArVqewry2R9yPxPyblum+KNBMDraD2Wep9VRBFklc7xGUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4siYzHC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtP7jG3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11141F000FF;
-	Wed, 30 Sep 2026 17:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4siYzHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E8B1F000FF;
+	Wed, 30 Sep 2026 17:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789198;
-	bh=fSASrg6O3ExPU/W8v2j8bcxrz08Dn0IRdxzUsH1hEN8=;
+	s=korg; t=1790789201;
+	bh=ZqO97dXsZLsJFtfFWE6NuA+JIPIUY1zxqXcfl1ziw+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PtP7jG3gJEAjUN6NO9rl5MY7xMFN89opGroGXGsJ1bgbTVqL5yrJI1WsC5Bp+6EPZ
-	 5/loYFfefSLtK3hfRy1oSa6j3zJiDEv8azcZfVCS+AYl/q9uW7lOsi+2k5xfB9NScr
-	 AP65/kz6VRTvXW8aWvEc8VrGUR7FY6woKeCYrFU8=
+	b=J4siYzHCwf4B4lZpiNvjTWILB5ezJHLVv6Cwv24R2i30ats0WMJpW0zc8wIDJUzLR
+	 33JFobOUs0+N66L5VRR4eEQp8YjkHWWdjDwdSmSKFijcCUEasSFPFxtF7MMGQsNMQo
+	 9XUGL21NSWeYiuY44Nhb99CZYv0QA7FOaMXvlKGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 391/877] bpf: Fix bpf_sock context code generation
-Date: Wed, 30 Sep 2026 17:21:42 +0200
-Message-ID: <20260930152423.122631728@linuxfoundation.org>
+Subject: [PATCH 6.12 392/877] bpf, sockmap: Reject max_entries > INT_MAX in sock_map_alloc
+Date: Wed, 30 Sep 2026 17:21:43 +0200
+Message-ID: <20260930152423.143674013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,57 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tsalapatis <emil@etsalapatis.com>
+From: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
 
-[ Upstream commit 4a4852376e3a2727ea40e61143d6d7c22bb6dfad ]
+[ Upstream commit 814a81c842bd88f6bd8a4ce550d560df071a5d03 ]
 
-Currently, the ctx access code reads the rx_queue_mapping
-field with either a 4-byte or 2-byte load. The rest of the bits
-in the register are marked known zero by the verifier. However,
-the emitted ctx access code places in the register on certain
-the special value (-1) using BPF_MOV_IMM64, which gets sign-extended
-to turn on all the bits in the register. By shifting this value right,
-the program ends up with a value at runtime above what the verifier
-assumes is possible.
+sock_map_alloc() only rejects max_entries == 0 and otherwise allows any
+u32 value.  sock_map_free() then walks the sks[] array with a signed int
+iterator:
 
-Fix this by ensuring the read value is as wide as the assumed size.
-Use MOV32 instructions instead of MOV64 instructions to keep
-the upper bits zero as assumed by the verifier. Also properly report
-the size of the destination variable (the bpf_sock field, 4 bytes) instead
-of the source (the socket field, 2 bytes).
+	int i;
+	for (i = 0; i < stab->map.max_entries; i++)
+		struct sock **psk = &stab->sks[i];
 
-Fixes: c3c16f2ea6d2 ("bpf: Add rx_queue_mapping to bpf_sock")
-Reported-by: Nicholas Carlini <nicholas@carlini.com>
-Suggested-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
+When a SOCKMAP is created with max_entries = 0xffffffff (UINT_MAX), the
+allocation of 32 GiB can succeed on large-memory hosts.  During free the
+counter reaches 0x80000000, wraps to INT_MIN, is sign-extended by movslq
+and turned into a ~16 GiB negative offset from stab->sks, pointing far
+below the allocation.
+
+The faulting access is an xchg() write in sock_map_free().  Without
+KASAN, the same out-of-bounds write can fault on an unmapped vmalloc page
+or corrupt an unrelated allocation if that vmalloc address is populated.
+On a KASAN kernel with CONFIG_KASAN_VMALLOC=y, the shadow check for that
+address hits an unmapped shadow page and oopses first:
+
+  BUG: unable to handle page fault for address: fffff521b59c5a00
+  RIP: 0010:kasan_check_range+0x107/0x190
+  Call Trace:
+   sock_map_free+0x93/0x190
+   map_create+0x68d/0xb30
+   __sys_bpf+0x21e/0x2e70
+
+Vmcore confirmed stab->map.max_entries == 0xffffffff, stab->sks ==
+0xffffc911ace2d000, and the faulting address sks + (s64)INT_MIN * 8
+exactly at 0xffffc90dace2d000.  The same buggy path is reached on the
+normal close()/bpf_map_free_deferred() path whenever such a map is
+destroyed.
+
+sock_map_alloc() used to bound its allocation size through
+bpf_map_charge_init(), but the bound was dropped when rlimit-based memory
+accounting was removed.  Reject max_entries > INT_MAX at creation time so
+the signed iterator in sock_map_free() never sees a value that would
+overflow.
+
+Triggered by syzkaller and reproduced on both a 6.6-based KASAN kernel
+and the upstream v7.3-rc2 kernel.
+
+Fixes: 0d2c4f964050 ("bpf: Eliminate rlimit-based memory accounting for sockmap and sockhash maps")
+Signed-off-by: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260922172028.6269-4-emil@etsalapatis.com
+Link: https://patch.msgid.link/20260917121016.48171-1-zhaogongyi@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/core/sock_map.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 7114a64e1898e..a680cf27ad820 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -10187,11 +10187,12 @@ u32 bpf_sock_convert_ctx_access(enum bpf_access_type type,
- 				       target_size));
- 		*insn++ = BPF_JMP_IMM(BPF_JNE, si->dst_reg, NO_QUEUE_MAPPING,
- 				      1);
--		*insn++ = BPF_MOV64_IMM(si->dst_reg, -1);
-+		*insn++ = BPF_MOV32_IMM(si->dst_reg, -1);
- #else
--		*insn++ = BPF_MOV64_IMM(si->dst_reg, -1);
--		*target_size = 2;
-+		*insn++ = BPF_MOV32_IMM(si->dst_reg, -1);
- #endif
-+		*target_size = sizeof_field(struct bpf_sock, rx_queue_mapping);
-+
- 		break;
- 	}
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 6440ce16fc621..be4a4f8f346cb 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -41,6 +41,7 @@ static struct bpf_map *sock_map_alloc(union bpf_attr *attr)
+ 	struct bpf_stab *stab;
  
+ 	if (attr->max_entries == 0 ||
++	    attr->max_entries > INT_MAX ||
+ 	    attr->key_size    != 4 ||
+ 	    (attr->value_size != sizeof(u32) &&
+ 	     attr->value_size != sizeof(u64)) ||
 -- 
 2.53.0
 
