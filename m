@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1725D538D67;
-	Wed, 30 Sep 2026 17:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017BC53B32F;
+	Wed, 30 Sep 2026 17:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790049; cv=none; b=oJ+GEVP3DRgXDzyGogrV3j6ul1ERQsIUMuS504M4Ov/S2nrQv6f0yMgHQ1hMMTjcz67vQE8gYtMs5J+dqEgoyZbJhBk68KpJHawKJaN1YiMKaDoBlpGxOQ1JZJor4DYHSgT7fykQLZKfftfmCbhd0i7R0rkLOKpRTN3n3Y49ONc=
+	t=1790790052; cv=none; b=PRfCZ1efAlteYUjNc8IhCXhpnbNIZLAngSR2d1TYB7rH02gZ7eKRrL4ET0GoAi0gTEmrq9T8Mc3kh5LlfMeKYAIqL4Y+1I5D5DHJXqtnz/PvwXMaph3iZciMYtFdVnzuh/b+HZkLEOMhyiJ4I46QbzMWut5xpsZkklH46bVe14Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790049; c=relaxed/simple;
-	bh=TUPSQB94bgT98WIlHvWYmzfN0qwa8zWhS2Y/Gw4npYQ=;
+	s=arc-20240116; t=1790790052; c=relaxed/simple;
+	bh=vHDyRW2+T6abov5btP6v0GQ4iuNb0800lYxGvPna6w0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncBKZ7ACkHeVwLo3KtWsbIpb6ry7/Jga+HdYkct/NiD7inCsKfT3Hl0hJKmyroy7oBW33z6Ip3lz5qjBxKvYVZpG6imX4PcLYO0K93PEfQYfNKhYlLNhJkO+KCkf2dZnn9CJgmTOBks1oJCBUjIbTWNiHLBHVWojtcR5IF0iZ3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Gzd9cQJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SUeb8yyd1cvQPOEsAqCI9sTBe0x4g26xtfzg85VIsPM4jVynkbK4p/Je96x+xExCoyHG724eUgLdLO2XPLn0fHGlWjzmQu8dvmKV7SHQbOLGK3VxTiYf7qWui1xTlaj2f+n3peLJlbNqbtzj66XUbkWAGC9cMtby+ItYquilBow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypPyZaGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Gzd9cQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214351F000FF;
-	Wed, 30 Sep 2026 17:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypPyZaGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FED1F000FF;
+	Wed, 30 Sep 2026 17:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790047;
-	bh=nNybK55/9r8p1ahajmzpzKa3ie+p9tLaiSUNnAFAs6w=;
+	s=korg; t=1790790050;
+	bh=MdgFNscMCVfYDuxLv0l9d28sNIGd5kG11YM/nNhAVJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Gzd9cQJQDCN3uOMED4qLPqUu9sT8Rhl7WXSrSYOyglfL/Mkb5tntqY4pPMlD/h1l
-	 wfwF4oAu4riNPpPtnXjOBztYQEwQaHK+IxCzHdRzfZI3oJe9QxDCVWUL7HDzZfqZ32
-	 27ZSocQLxeSCQXmNUIBlSwcfUeSaFHJ0Pb/N22tM=
+	b=ypPyZaGZKHPGe+kTHK2q3m2kfawnpvA2JOuDEndJGC3vJXY4DkIkqjd8uX9klWuyo
+	 zDj6p/6r8dyAB7TAC7VG7+tqfhBG994o+vq8wKiQpCrhAyYxTBWmZ/MLq9ZoJ37xg1
+	 CbkLVcoO6Ee9KZ9vvF9zO9lWHsqeaROzeQzmRy/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yabin Cui <yabinc@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 637/877] perf/aux: Allocate non-contiguous AUX pages by default
-Date: Wed, 30 Sep 2026 17:25:48 +0200
-Message-ID: <20260930152428.400443372@linuxfoundation.org>
+Subject: [PATCH 6.12 686/877] f2fs: validate MOVE_RANGE destination size
+Date: Wed, 30 Sep 2026 17:26:37 +0200
+Message-ID: <20260930152429.478673926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -59,121 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yabin Cui <yabinc@google.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 18049c8cff9cc89daadc4df6975f7d9069638926 ]
+[ Upstream commit e533889fc26aea0cd83c90327063f272061dd820 ]
 
-perf always allocates contiguous AUX pages based on aux_watermark.
-However, this contiguous allocation doesn't benefit all PMUs. For
-instance, ARM SPE and TRBE operate with virtual pages, and Coresight
-ETR allocates a separate buffer. For these PMUs, allocating contiguous
-AUX pages unnecessarily exacerbates memory fragmentation. This
-fragmentation can prevent their use on long-running devices.
+F2FS_IOC_MOVE_RANGE checks the source range, but not the destination end
+before updating i_size. A source hole can expose this: __clone_blkaddrs()
+skips NULL_ADDR entries and returns success, so the caller can still extend
+the destination inode with unchecked pos_out + len.
 
-This patch modifies the perf driver to be memory-friendly by default,
-by allocating non-contiguous AUX pages. For PMUs requiring contiguous
-pages (Intel BTS and some Intel PT), the existing
-PERF_PMU_CAP_AUX_NO_SG capability can be used. For PMUs that don't
-require but can benefit from contiguous pages (some Intel PT), a new
-capability, PERF_PMU_CAP_AUX_PREFER_LARGE, is added to maintain their
-existing behavior.
+Reject destination overflow and use inode_newsize_ok() before extending
+the destination inode.
 
-Signed-off-by: Yabin Cui <yabinc@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Jiri Olsa <jolsa@redhat.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20250508232642.148767-1-yabinc@google.com
-Stable-dep-of: 8767b4d73018 ("perf/x86/intel: Remove anythread_deprecated bit from perf_capabilities")
+Fixes: 4dd6f977fc77 ("f2fs: support an ioctl to move a range of data blocks")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ Adjusted declaration context for the missing `struct f2fs_lock_context lc`. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.c  |    2 ++
- include/linux/perf_event.h  |    1 +
- kernel/events/ring_buffer.c |   29 ++++++++++++++++++++---------
- 3 files changed, 23 insertions(+), 9 deletions(-)
+ fs/f2fs/file.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -1896,6 +1896,8 @@ static __init int pt_init(void)
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3100,8 +3100,9 @@ static int f2fs_move_file_range(struct f
+ 	struct inode *src = file_inode(file_in);
+ 	struct inode *dst = file_inode(file_out);
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(src);
+-	size_t olen = len, dst_max_i_size = 0;
+-	size_t dst_osize;
++	size_t olen = len;
++	loff_t dst_max_i_size = 0;
++	loff_t dst_osize, dst_end;
+ 	int ret;
  
- 	if (!intel_pt_validate_hw_cap(PT_CAP_topa_multiple_entries))
- 		pt_pmu.pmu.capabilities = PERF_PMU_CAP_AUX_NO_SG;
-+	else
-+		pt_pmu.pmu.capabilities = PERF_PMU_CAP_AUX_PREFER_LARGE;
- 
- 	pt_pmu.pmu.capabilities		|= PERF_PMU_CAP_EXCLUSIVE |
- 					   PERF_PMU_CAP_ITRACE |
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -301,6 +301,7 @@ struct perf_event_pmu_context;
- #define PERF_PMU_CAP_AUX_OUTPUT			0x0080
- #define PERF_PMU_CAP_EXTENDED_HW_TYPE		0x0100
- #define PERF_PMU_CAP_AUX_PAUSE			0x0200
-+#define PERF_PMU_CAP_AUX_PREFER_LARGE		0x0400
- 
- /**
-  * pmu::scope
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -685,7 +685,15 @@ int rb_alloc_aux(struct perf_buffer *rb,
- {
- 	bool overwrite = !(flags & RING_BUFFER_WRITABLE);
- 	int node = (event->cpu == -1) ? -1 : cpu_to_node(event->cpu);
--	int ret = -ENOMEM, max_order;
-+	bool use_contiguous_pages = event->pmu->capabilities & (
-+		PERF_PMU_CAP_AUX_NO_SG | PERF_PMU_CAP_AUX_PREFER_LARGE);
-+	/*
-+	 * Initialize max_order to 0 for page allocation. This allocates single
-+	 * pages to minimize memory fragmentation. This is overridden if the
-+	 * PMU needs or prefers contiguous pages (use_contiguous_pages = true).
-+	 */
-+	int max_order = 0;
-+	int ret = -ENOMEM;
- 
- 	if (!has_aux(event))
- 		return -EOPNOTSUPP;
-@@ -695,8 +703,8 @@ int rb_alloc_aux(struct perf_buffer *rb,
- 
- 	if (!overwrite) {
- 		/*
--		 * Watermark defaults to half the buffer, and so does the
--		 * max_order, to aid PMU drivers in double buffering.
-+		 * Watermark defaults to half the buffer, to aid PMU drivers
-+		 * in double buffering.
- 		 */
- 		if (!watermark)
- 			watermark = min_t(unsigned long,
-@@ -704,16 +712,19 @@ int rb_alloc_aux(struct perf_buffer *rb,
- 					  (unsigned long)nr_pages << (PAGE_SHIFT - 1));
- 
- 		/*
--		 * Use aux_watermark as the basis for chunking to
--		 * help PMU drivers honor the watermark.
-+		 * If using contiguous pages, use aux_watermark as the basis
-+		 * for chunking to help PMU drivers honor the watermark.
- 		 */
--		max_order = get_order(watermark);
-+		if (use_contiguous_pages)
-+			max_order = get_order(watermark);
- 	} else {
- 		/*
--		 * We need to start with the max_order that fits in nr_pages,
--		 * not the other way around, hence ilog2() and not get_order.
-+		 * If using contiguous pages, we need to start with the
-+		 * max_order that fits in nr_pages, not the other way around,
-+		 * hence ilog2() and not get_order.
- 		 */
--		max_order = ilog2(nr_pages);
-+		if (use_contiguous_pages)
-+			max_order = ilog2(nr_pages);
- 		watermark = 0;
+ 	if (file_in->f_path.mnt != file_out->f_path.mnt ||
+@@ -3158,8 +3159,15 @@ static int f2fs_move_file_range(struct f
  	}
  
+ 	dst_osize = dst->i_size;
+-	if (pos_out + olen > dst->i_size)
+-		dst_max_i_size = pos_out + olen;
++	if (olen > LLONG_MAX - pos_out)
++		goto out_unlock;
++	dst_end = pos_out + olen;
++	if (dst_end > dst->i_size) {
++		ret = inode_newsize_ok(dst, dst_end);
++		if (ret)
++			goto out_unlock;
++		dst_max_i_size = dst_end;
++	}
+ 
+ 	/* verify the end result is block aligned */
+ 	if (!IS_ALIGNED(pos_in, F2FS_BLKSIZE) ||
 
 
