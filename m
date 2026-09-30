@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A99151CF6E;
-	Wed, 30 Sep 2026 18:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F355208DA;
+	Wed, 30 Sep 2026 18:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793054; cv=none; b=RLRTtfxWmlUz+OQ+BoNfn1jvwYmoqzZqMfn3qJq0SBONQaky+zYfSj1vR+fjItNSMRexWyc9LgQX3iGmu5dJUFRTlXE2RNy24rE/JAlk2/fyqVCB4lvrGwLnjZ153Ra7TnknuVerWH8b+lk1vMypC5dajmfAT2UWs294VUw9sGI=
+	t=1790793057; cv=none; b=UYKdwpB8f8zmCneysuChjflScr41BN/7X38KBkyKSdzzqtvlD+XNpKYFWFOY0cRsMZB03vh61C3I1RY7xuNJ0B6iAW8BQnRrEZ2I/KDb/7L3yeX0R9dvvf1oTvhh0dCPdiaKFVtrMmKqIG/QxZCb/xBRfm+yV3enR0Ch2s+Ex7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793054; c=relaxed/simple;
-	bh=x8UKNziEURin42SdmJWUoSzNbZZHK8I2YYCNJJ7e+QY=;
+	s=arc-20240116; t=1790793057; c=relaxed/simple;
+	bh=2ggY29H1px+4p3RxL0pcXajWplUQLboKS2REQnVF29A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGSWvNEKCVnHzRHR8e9DzWRN1pRIMOTFodgK2Loe5xS0xlrDJOYIa0rovb5t2EfZKZJv6ikofXKSMDjQy6dZ5WtSHjbiDWkMs8299zVreJ9d/mtSudZtGh57OnVbxIlbTyE0yQCvwORb35S8DcHW5fzw7E9kLKPCiqwUNkCZc+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lf8ggksh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LGXpDWx5YecA63/HEIyKlt26AggtrKm45dqCWIwpeCbXjH0MpuNfyfVVYw43vb+WNQxb2VMiOXZPvExOM79WeoHPNHNGpjudVXGMDNNk4WUhDRa9Fxok83wfqF/+XZhVWh/0ilQ/sikhxhvglgJ14kqpL0/V7Y+HyOqH75bpIQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cT9ybmbc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lf8ggksh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B121D1F000FF;
-	Wed, 30 Sep 2026 18:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cT9ybmbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF091F00898;
+	Wed, 30 Sep 2026 18:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793053;
-	bh=tVZnr/1i9dQniBxhGt6HBVsaPSUGE7WAuBtD5CFqArE=;
+	s=korg; t=1790793056;
+	bh=P6du7WDxe2aMJoJzvcSPArsUtfs5gnZ5zSxhaFZ0fDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lf8ggkshKKaZWwZNmKGErMB3cDUYAj4WAibOsSDaJzKhRpwoaC3jmkDblqwts5e7G
-	 z03hQSCrgjDQHzM0YrDs1DU2dEe/qfBB1nu4HQSS015CPqYYFC/lXfeUXwvYm2I76Y
-	 zeP4ctT5eqfSzD34TMSPkgdkW/XPUEelh1Dx5T/g=
+	b=cT9ybmbcqmA1H5sKboT6CNQ2zjYvoLeT0Jv0IFz4llYgKRffL3QHpa9nAlKiFtXfI
+	 PkEGF6igiz9Udpc2bwvpPz0Fx5Lk54SA4YTBqyoTma8/Haqk7UvF3sgKFYmdxtZDid
+	 /rnYSG3KEptMsT/K0qJ4viSqqSXI+7YWwvdUvQh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 117/395] udp: remove a disconnected socket from the 4-tuple hash table
-Date: Wed, 30 Sep 2026 17:26:19 +0200
-Message-ID: <20260930152343.180676448@linuxfoundation.org>
+Subject: [PATCH 6.18 118/395] tg3: clean up PHYLIB resources on probe failure
+Date: Wed, 30 Sep 2026 17:26:20 +0200
+Message-ID: <20260930152343.203334758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,114 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 9e95b1a94c9c49b4ba722251bbca2759b9c51737 ]
+[ Upstream commit a92e1a412c53dc0d9ad639e7abf8b3fc70a5b6ad ]
 
-A UDP socket bound to a specific address and port keeps its entry in the
-4-tuple hash table after it is disconnected:
+tg3_get_invariants() can register an MDIO bus and connect a PHY for
+USE_PHYLIB devices. If tg3_init_one() later fails, its common error path
+releases the mappings and netdev without undoing those PHYLIB resources.
 
-    sk binds to 127.0.0.1:21001
-    sk connects to 127.0.0.2:20001	// filed in the 4-tuple table
-    sk disconnects, connect(AF_UNSPEC)	// still filed, peer now 0.0.0.0:0
+Disconnect the PHY and unregister the MDIO bus before the remaining
+teardown. Guard PHY cleanup with USE_PHYLIB to match tg3_phy_init(), and
+call tg3_mdio_fini() unconditionally to match tg3_mdio_init(). The existing
+IS_CONNECTED and MDIOBUS_INITED flags make both helpers safe when
+initialization only completed partially.
 
-__udp_disconnect() takes a socket out of that table only as a side effect
-of ->rehash() or ->unhash(), and it skips ->rehash() when
-SOCK_BINDADDR_LOCK is set and ->unhash() when SOCK_BINDPORT_LOCK is set.
-commit 6996a2d2d0a6 ("udp: Unhash auto-bound connected sk from 4-tuple hash
-table when disconnected.") fixed the same end state for a wildcard-bound
-socket, by a path this one does not take.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-The entry is counted whether or not anything hits it. hash4_cnt on the
-hash2 slot stays raised for as long as the socket lives, so udp_has_hash4()
-keeps sending every packet for that address and port through the 4-tuple
-lookup first.
-
-On IPv6 it can also be hit. __udp_disconnect() does not clear sk_v6_daddr,
-so udp_v6_rehash() files the entry under the peer the socket was connected
-to with a zero dport, and inet6_match() compares that same
-field: a datagram from the former peer with a zero source port matches,
-and source port zero is accepted on receive. On IPv4 the peer is cleared,
-so a match would need a zero source address as well, which the routing
-layer rejects as martian. The stale sk_v6_daddr is a separate defect, not
-addressed here; removing the entry closes this path either way.
-
-The entry can also be relocated. __udp_disconnect() clears sk_bound_dev_if,
-so a subsequent SO_BINDTODEVICE calls ->rehash(), and because the receive
-address is still specific udp_lib_rehash() moves the entry instead of
-removing it, into the bucket that (rcv_saddr, num, 0, 0) hashes to -- a
-pure function of the address and port, so every socket reaching this state
-on one address and port collects in one bucket. The bucket cannot be chosen
-from outside, as udp_ehashfn() is seeded with a per-boot secret. This last
-one became reachable only with commit 644f9108f3a5 ("udp: Make rehash4
-independent in udp_lib_rehash()"), which moved the hash4 handling out of a
-branch a disconnected socket does not take; the stale entry itself dates
-from the commit in Fixes.
-
-Take the socket out of the table before __udp_disconnect() runs, while it
-still matches how it was filed. This also reaches the wildcard case ahead
-of udp_lib_rehash()'s udp_unhash4() branch, leaving that branch unreachable
-from udp_disconnect(); removing it belongs in net-next. udp_disconnect()
-and udp_abort() are the only UDP entries into __udp_disconnect(), which is
-shared with raw, ping and l2tp sockets that are not struct udp_sock:
-ping_prot.obj_size is sizeof(struct inet_sock), so udp_hashed4() on one
-would read past the allocation.
-
-Fixes: 78c91ae2c6de ("ipv4/udp: Add 4-tuple hash for connected socket")
-Assisted-by: LLM
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260917-udp_hash4_fix_v1-v1-2-718891af0d7a@mpiricsoftware.com
+Fixes: 158d7abdae85 ("tg3: Add mdio bus registration")
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260917183336.36239-1-mhun512@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/net/ethernet/broadcom/tg3.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index ec16eb6a479fb..341786983d42e 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2229,9 +2229,31 @@ int __udp_disconnect(struct sock *sk, int flags)
- }
- EXPORT_SYMBOL(__udp_disconnect);
- 
-+/* __udp_disconnect() takes a socket out of the 4-tuple hash table only via
-+ * ->rehash() or ->unhash(), and neither runs for a socket bound to a
-+ * specific address and port. Remove it here, before its peer is cleared.
-+ */
-+static void udp_unhash4_on_disconnect(struct sock *sk)
-+{
-+	struct net *net = sock_net(sk);
-+	struct udp_table *udptable;
-+	struct udp_hslot *hslot;
-+
-+	if (!udp_hashed4(sk))
-+		return;
-+
-+	udptable = net->ipv4.udp_table;
-+	hslot = udp_hashslot(udptable, net, udp_sk(sk)->udp_port_hash);
-+
-+	spin_lock_bh(&hslot->lock);
-+	udp_unhash4(udptable, sk);
-+	spin_unlock_bh(&hslot->lock);
-+}
-+
- int udp_disconnect(struct sock *sk, int flags)
- {
- 	lock_sock(sk);
-+	udp_unhash4_on_disconnect(sk);
- 	__udp_disconnect(sk, flags);
- 	release_sock(sk);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index af21952373ea1..e212afe53e0b7 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18060,6 +18060,10 @@ static int tg3_init_one(struct pci_dev *pdev,
  	return 0;
-@@ -3246,6 +3268,7 @@ int udp_abort(struct sock *sk, int err)
  
- 	sk->sk_err = err;
- 	sk_error_report(sk);
-+	udp_unhash4_on_disconnect(sk);
- 	__udp_disconnect(sk, 0);
- 
- out:
+ err_out_apeunmap:
++	if (tg3_flag(tp, USE_PHYLIB))
++		tg3_phy_fini(tp);
++	tg3_mdio_fini(tp);
++
+ 	if (tp->aperegs) {
+ 		iounmap(tp->aperegs);
+ 		tp->aperegs = NULL;
 -- 
 2.53.0
 
