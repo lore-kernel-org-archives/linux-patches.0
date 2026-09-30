@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD563B1029;
-	Wed, 30 Sep 2026 18:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED21751FCCC;
+	Wed, 30 Sep 2026 18:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791228; cv=none; b=u85lGo7LIok4GJab4Yfbn8rbqbJSK1w8/S1IMaC3gCWCVp7fcnXRYHMiBbd2ZRCrjrsNxfOWyVYyIgPvna0hc/Dov2od9Bydms+iL62MmvmYzBm9I4aWNPKZ9z9P5o941Dpo/0sRwM6SiaX/JaMX/GlU5/VgmneCwA1aTedQTow=
+	t=1790791231; cv=none; b=m0oai74sU+BqFe0ns1XT9Bvw28/GE0NcHSivQ5SsI//NDrjfofpsMUARgeTAk5yoDk6po56INfinklruhFMz8+u5WxOEYFhRUaJs3kTqK9SyYPE5+s5aje+t/pE78TR42T9kh2muODIId/igeCk4FSz9OivYQ/9hTIsGEBZAOjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791228; c=relaxed/simple;
-	bh=oTTLnV4jBI8ATNChb4B+Up2aPs+kEUjEoed7neiCBpU=;
+	s=arc-20240116; t=1790791231; c=relaxed/simple;
+	bh=8Om7xozKBWd8chWhc/BGtLcnbYzOj/78R/fBO0ZjEm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6o4n9x4DRg1YdcwF7mUIzgv/Pa60KNq4eMakP/dEcN9BAQNd/jKc8jk3SUF9GrMbbO9cE06jA/5sBCBXFfXxgFZtHutAyKEXdytDO3WD22GbglbuLrEcMGroTqfIG8vvBv4JT3uUsl++p3j55rb7MMy5zNMQstNaR6t/QL1nVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKGKjrKQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZUgYF7h3dYo98u0dZ9NjhDCif8fQVqbciXmEj6DpbdnYIScCKS+j7lZO0srixmFIbs/k9dhP7i3JagMkKBH7qj4SLLiK1Z6Y862kQpo/4uZXE57qE0+FO745rKrzaBXGCHf7XcFBOXv0JHmvMiPgP2ElkosujTX5Fibg1XDMxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9rDJgLL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKGKjrKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688BF1F000FF;
-	Wed, 30 Sep 2026 18:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9rDJgLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D4C1F000FF;
+	Wed, 30 Sep 2026 18:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791227;
-	bh=zeF6rrGEjuBXvm2WtkXByd4Y3wawcX5AqvdoMp2QHn4=;
+	s=korg; t=1790791229;
+	bh=0OK83l11uSW8fs/fhDgbZgbePr/nk6V94LHmuiYRVds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKGKjrKQrhDlIUsiQaCQmSJyDpqtXFvWy8c1EAl4jikK3EZXLU3mLFu+r4GCED6ER
-	 QtZIoF68uUff2xVnN8Vnx94d9QqARLGc/XPfgG6t4B6HcCPVcoQI3DL8bWNZJXHVY3
-	 alzCMCHTe1sCzAThekTJldi+JrED4Q/dOYZQ2VE4=
+	b=y9rDJgLL5OsIMnshNEbSI6EN+DLD8XyqOsOvOGymu5BPH5M/YXCUqRh3zIyyZ1/5a
+	 QxDVk17SV20RRPzHqr1DaU2fp7ga1xP8hJGP3OperE/hBMblHQAk4gnbvp7orhLcC5
+	 FJI2uK/fWa2ORnU2n2q+z7cNSIZCaC29sAYP9+2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Li Qiang <liqiang01@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 173/752] ksmbd: apply create security descriptor first
-Date: Wed, 30 Sep 2026 17:20:43 +0200
-Message-ID: <20260930152401.946232099@linuxfoundation.org>
+Subject: [PATCH 5.15 222/752] cifs: validate idmap key payload length
+Date: Wed, 30 Sep 2026 17:21:32 +0200
+Message-ID: <20260930152403.058661499@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,59 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit ba3cf6ee4f0eacc1f8c607b80188e3b32ef5e0e3 ]
+[ Upstream commit 455488cd5054bcc59db40fa1cc2c004031a5b2a5 ]
 
-smb2.create.aclfile creates files with an SMB2_CREATE_SD_BUFFER create
-context and expects the resulting security descriptor to match
-the descriptor supplied by the client.
+The cifs.idmap key type stores its payload length in key->datalen, which
+is limited to U16_MAX.  Accepting a larger key payload truncates the
+recorded length and can make later users interpret the payload using
+inconsistent bounds.
 
-ksmbd currently tries to inherit the parent DACL first and only parses
-the SMB2_CREATE_SD_BUFFER context when DACL inheritance fails.
-If inheritance succeeds, the explicit security descriptor supplied on
-create is ignored. This breaks create requests that include owner/group
-information in the security descriptor.
+Reject oversized preparsed payloads before allocating or copying them.
+This keeps key->datalen consistent with the stored data for both inline
+and separately allocated idmap payloads.
 
-Apply the create security descriptor first when the context is present.
-Fall back to the existing inherited/default ACL path only when no create
-security descriptor was supplied.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/cifs/cifsacl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 12ca40e0f8bcd..a72ced80b5922 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -3143,14 +3143,16 @@ int smb2_open(struct ksmbd_work *work)
- 		if (posix_acl_rc)
- 			ksmbd_debug(SMB, "inherit posix acl failed : %d\n", posix_acl_rc);
+diff --git a/fs/cifs/cifsacl.c b/fs/cifs/cifsacl.c
+index 1b52e0c88877a..3872bef8c063a 100644
+--- a/fs/cifs/cifsacl.c
++++ b/fs/cifs/cifsacl.c
+@@ -64,6 +64,9 @@ cifs_idmap_key_instantiate(struct key *key, struct key_preparsed_payload *prep)
+ {
+ 	char *payload;
  
--		if (test_share_config_flag(work->tcon->share_conf,
--					   KSMBD_SHARE_FLAG_ACL_XATTR)) {
--			rc = smb_inherit_dacl(conn, &path, sess->user->uid,
--					      sess->user->gid);
--		}
-+		rc = smb2_create_sd_buffer(work, req, &path);
-+		if (rc && rc != -ENOENT)
-+			goto err_out;
- 
--		if (rc) {
--			rc = smb2_create_sd_buffer(work, req, &path);
-+		if (rc == -ENOENT) {
-+			if (test_share_config_flag(work->tcon->share_conf,
-+						   KSMBD_SHARE_FLAG_ACL_XATTR)) {
-+				rc = smb_inherit_dacl(conn, &path, sess->user->uid,
-+						      sess->user->gid);
-+			}
- 			if (rc) {
- 				if (posix_acl_rc)
- 					ksmbd_vfs_set_init_posix_acl(user_ns,
++	if (prep->datalen > U16_MAX)
++		return -EINVAL;
++
+ 	/*
+ 	 * If the payload is less than or equal to the size of a pointer, then
+ 	 * an allocation here is wasteful. Just copy the data directly to the
 -- 
 2.53.0
 
