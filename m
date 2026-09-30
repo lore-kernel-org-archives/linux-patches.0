@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F38051DE12;
-	Wed, 30 Sep 2026 17:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335FB51DE10;
+	Wed, 30 Sep 2026 17:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790291; cv=none; b=FL+aHP5wMrKFvloD+sWp90sDak2jHzeYzxBmP2nP7mHXvajBITS0yQ4zUqiKFkxX4DvjgUReLufXbr5ogJX1zfM4SUrlxoYejIEl55g0IiiUito/AsUfG1/ecfZpdJR5lNPjUzBhTMWdklZyB06Zb76l2TYTy2AkeJGGu1/ymjc=
+	t=1790790294; cv=none; b=auIrwhRHipg7v7gsHvMwvPhIt1XpvcalWIdEG33g8c7XzHFe+SB1qB/SWTkxR/af/c9eLRKXu8bAi8DDl+CGPH4rfLmPjgt1QU6tN7oHvl7Y9L+oBPDpZSEzko5tbU3+umotFuERJtvm8GxSDLX7yg/f056vJsB/vZf5tTNRlrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790291; c=relaxed/simple;
-	bh=hs04VF5SlubcHk84R4UKnoXU1KRDa23f9+R6nrm1Qcc=;
+	s=arc-20240116; t=1790790294; c=relaxed/simple;
+	bh=9HYZQ9Ku6jaSQX6VghF1lY0LVqeT2joS5xQWvAMhMeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gviRUzhtnDZJmiMNRVRhYXQKid9UmccZtx75A/k4akIUS8qaMSQOkwkV8Bpuj0hurn+famNA6iqT65637e5040QGRcfz2vSxfS4H88fM6CzO9v/5/NcAsA1F7xYapvGizBklwnQCPx0zoGSlF1ysDUSH/Z8qwzbMomzHVZ+2P/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ye4HNiRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d6aqXN7ALfow8+1SDAxMJR7eDfwjvS1E5WV+xTZ95JwvoBmo86Bowl2heDHT2aJDDTPjcnoCwvJyQ8kpeYnMIMZE20BjYw336e7UCyGAL41A70uX5vRSlx0hZjGT9jc3WJs5NmVA2FkrBsyr+5Qcj3ANJQcyYKIX5GuVGCqgnrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUDse7Oc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ye4HNiRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DAA1F000FF;
-	Wed, 30 Sep 2026 17:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUDse7Oc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9044D1F000FF;
+	Wed, 30 Sep 2026 17:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790290;
-	bh=mN4x3nJiPkF9YTQzjab6Mor5LPfrjW0/yP8caEPvw7g=;
+	s=korg; t=1790790293;
+	bh=xAlXV31NEVwayZ9SV0MjownCeaE4u1Qt6ZD3kZbzWcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ye4HNiRJUBQdeqtDsWRbAWE8BjGpBhW6wSK/h15QpqqhTg29EYnZkUldqhmJ9N2/u
-	 FsLxuh6cjhI48MLRZ3QwPd3LcI+G7pN+hVShgYV+FKbBupZ+pH+dGMhln9fT/hAZUw
-	 W6lqDjBdYePbZahncsgf5AAj1yOuSLlCV8FN2fiI=
+	b=CUDse7OcjBvHFlAnSIUtDxyzLHLcyn5YKAWpPNWEbNDZ1ovuIo0qsafwZoBobV8JR
+	 6YcsGI7RrA+wFZYqOasBn0RI+sVw6//0vb5CuZJVWqBX+iOZslKA3NYEsGIB8e/JBR
+	 1DTInfCHJTnP+FJPcP4gs6fETii1OMaMHocpXACY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralph Boehme <slow@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Bjoern Doebel <doebel@amazon.de>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 775/877] smb/client: fix security flag calculation when setting security descriptors
-Date: Wed, 30 Sep 2026 17:28:06 +0200
-Message-ID: <20260930152431.438676538@linuxfoundation.org>
+Subject: [PATCH 6.12 776/877] smb: client: fail DACL rewrite when the new DACL exceeds 64K
+Date: Wed, 30 Sep 2026 17:28:07 +0200
+Message-ID: <20260930152431.459226043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,93 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ralph Boehme <slow@samba.org>
+From: Bjoern Doebel <doebel@amazon.de>
 
-[ Upstream commit 4939889c985da68936090cc013e58c28b7bff34f ]
+[ Upstream commit d05045177a855386bca5e1909e08d06290e6e3b3 ]
 
-In id_mode_to_cifs_acl(), aclflag was initialized to CIFS_ACL_DACL by default.
-This forced the client to request setting the DACL even when only an ownership
-(chown) or group (chgrp) change was being performed.
+replace_sids_and_copy_aces() and set_chmod_dacl() accumulate the size of
+the DACL they build in a u16. That accumulator can wrap.
 
-Let build_sec_desc() do the proper flag calculation by initializing aclflag
-to 0. build_sec_desc() sets the appropriate bits (CIFS_ACL_OWNER, CIFS_ACL_GROUP,
-or CIFS_ACL_DACL) depending on what actually changed. During ownership transfer,
-CIFS_ACL_DACL is only set if replace_sids_and_copy_aces() actually replaces the
-SIDs inside any of the DACL's ACEs.
+validate_dacl() caps num_aces at (dacl_size - sizeof(struct smb_acl)) /
+20, i.e. 3276 for a maximally sized DACL, while each rewritten ACE can
+grow to sizeof(struct smb_ace) (76 bytes) once its SID is replaced with
+one carrying SID_MAX_SUB_AUTHORITIES sub-authorities. The worst case is
+therefore sizeof(struct smb_acl) + 3276 * 76 = 248984 bytes, far beyond
+what a u16 can hold. A wraparound is reached with 863 ACEs.
 
-If build_sec_desc() results in aclflag being 0 (meaning no changes were mapped),
-exit early to avoid sending an empty security descriptor update to the server.
+After the wraparound, ndacl_ptr->size becomes meaningless and the offset
+will point anywhere in the ACE array. As a result, we will see
+corruption of the DACL, which then gets sent to the server. This is not
+an out-of-bounds write as the allocation now covers the worst-case
+expansion, so writes will always go into the buffer.
 
-Signed-off-by: Ralph Boehme <slow@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: d05045177a85 ("smb: client: fail DACL rewrite when the new DACL exceeds 64K")
+Adjust the code to use a u32 internally and return -EOVERFLOW in the
+overflow case. The operation must be refused, because a DACL can only
+hold 2^16-1 bytes on the wire and larger DACLs cannot be represented.
+
+set_chmod_dacl() carries the same pattern and is fixed the same way. It
+only wraps once the source DACL comes within roughly 380 bytes of the
+64K ceiling, but the failure mode is identical.
+
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: f5065508897a ("cifs: Retain old ACEs when converting between mode bits and ACL.")
+Assisted-by: Kiro:claude-opus-5
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ fs/smb/client/cifsacl.c |   39 ++++++++++++++++++++++++++-------------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
 --- a/fs/smb/client/cifsacl.c
 +++ b/fs/smb/client/cifsacl.c
-@@ -1131,7 +1131,8 @@ set_size:
+@@ -1024,13 +1024,13 @@ unsigned int setup_special_user_owner_AC
+ static void populate_new_aces(char *nacl_base,
+ 		struct smb_sid *pownersid,
+ 		struct smb_sid *pgrpsid,
+-		__u64 *pnmode, u16 *pnum_aces, u16 *pnsize,
++		__u64 *pnmode, u16 *pnum_aces, u32 *pnsize,
+ 		bool modefromsid,
+ 		bool posix)
+ {
+ 	__u64 nmode;
+ 	u16 num_aces = 0;
+-	u16 nsize = 0;
++	u32 nsize = 0;
+ 	__u64 user_mode;
+ 	__u64 group_mode;
+ 	__u64 other_mode;
+@@ -1129,17 +1129,17 @@ set_size:
+ 	*pnsize = nsize;
+ }
  
- static __u16 replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
- 		struct smb_sid *pownersid, struct smb_sid *pgrpsid,
--		struct smb_sid *pnownersid, struct smb_sid *pngrpsid)
-+		struct smb_sid *pnownersid, struct smb_sid *pngrpsid,
-+		int *aclflag)
+-static __u16 replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
+-		struct smb_sid *pownersid, struct smb_sid *pgrpsid,
+-		struct smb_sid *pnownersid, struct smb_sid *pngrpsid,
+-		int *aclflag)
++static int replace_sids_and_copy_aces(struct smb_acl *pdacl, struct smb_acl *pndacl,
++				      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
++				      struct smb_sid *pnownersid, struct smb_sid *pngrpsid,
++				      int *aclflag, u16 *pnsize)
  {
  	int i;
  	u16 size = 0;
-@@ -1155,12 +1156,15 @@ static __u16 replace_sids_and_copy_aces(
- 		pntace = (struct smb_ace *) (acl_base + size);
- 		pnntace = (struct smb_ace *) (nacl_base + nsize);
- 
--		if (pnownersid && compare_sids(&pntace->sid, pownersid) == 0)
-+		if (pnownersid && compare_sids(&pntace->sid, pownersid) == 0) {
- 			ace_size = cifs_copy_ace(pnntace, pntace, pnownersid);
--		else if (pngrpsid && compare_sids(&pntace->sid, pgrpsid) == 0)
-+			*aclflag |= CIFS_ACL_DACL;
-+		} else if (pngrpsid && compare_sids(&pntace->sid, pgrpsid) == 0) {
- 			ace_size = cifs_copy_ace(pnntace, pntace, pngrpsid);
--		else
-+			*aclflag |= CIFS_ACL_DACL;
-+		} else {
- 			ace_size = cifs_copy_ace(pnntace, pntace, NULL);
-+		}
+ 	struct smb_ace *pntace = NULL;
+ 	char *acl_base = NULL;
+ 	u16 src_num_aces = 0;
+-	u16 nsize = 0;
++	u32 nsize = 0;
+ 	struct smb_ace *pnntace = NULL;
+ 	char *nacl_base = NULL;
+ 	u16 ace_size = 0;
+@@ -1168,9 +1168,12 @@ static __u16 replace_sids_and_copy_aces(
  
  		size += le16_to_cpu(pntace->size);
  		nsize += ace_size;
-@@ -1482,7 +1486,8 @@ static int build_sec_desc(struct smb_nts
++		if (nsize > U16_MAX)
++			return -EOVERFLOW;
+ 	}
+ 
+-	return nsize;
++	*pnsize = nsize;
++	return 0;
+ }
+ 
+ static int set_chmod_dacl(struct smb_acl *pdacl, struct smb_acl *pndacl,
+@@ -1182,7 +1185,7 @@ static int set_chmod_dacl(struct smb_acl
+ 	struct smb_ace *pntace = NULL;
+ 	char *acl_base = NULL;
+ 	u16 src_num_aces = 0;
+-	u16 nsize = 0;
++	u32 nsize = 0;
+ 	struct smb_ace *pnntace = NULL;
+ 	char *nacl_base = NULL;
+ 	u16 num_aces = 0;
+@@ -1233,6 +1236,8 @@ static int set_chmod_dacl(struct smb_acl
+ 
+ 		nsize += cifs_copy_ace(pnntace, pntace, NULL);
+ 		num_aces++;
++		if (nsize > U16_MAX)
++			return -EOVERFLOW;
+ 
+ next_ace:
+ 		size += le16_to_cpu(pntace->size);
+@@ -1249,6 +1254,10 @@ next_ace:
+ 	}
+ 
+ finalize_dacl:
++	/* The DACL size field is 16-bit on the wire, see MS-DTYP 2.4.5 */
++	if (nsize > U16_MAX)
++		return -EOVERFLOW;
++
+ 	pndacl->num_aces = cpu_to_le16(num_aces);
+ 	pndacl->size = cpu_to_le16(nsize);
+ 
+@@ -1409,6 +1418,8 @@ static int build_sec_desc(struct smb_nts
+ 
+ 		rc = set_chmod_dacl(dacl_ptr, ndacl_ptr, owner_sid_ptr, group_sid_ptr,
+ 				    pnmode, mode_from_sid, posix);
++		if (rc)
++			return rc;
+ 
+ 		sidsoffset = ndacloffset + le16_to_cpu(ndacl_ptr->size);
+ 		/* copy the non-dacl portion of secdesc */
+@@ -1484,10 +1495,12 @@ static int build_sec_desc(struct smb_nts
+ 
+ 		if (dacloffset) {
  			/* Replace ACEs for old owner with new one */
- 			size = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
- 					owner_sid_ptr, group_sid_ptr,
--					nowner_sid_ptr, ngroup_sid_ptr);
-+					nowner_sid_ptr, ngroup_sid_ptr,
-+					aclflag);
+-			size = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
+-					owner_sid_ptr, group_sid_ptr,
+-					nowner_sid_ptr, ngroup_sid_ptr,
+-					aclflag);
++			rc = replace_sids_and_copy_aces(dacl_ptr, ndacl_ptr,
++							owner_sid_ptr, group_sid_ptr,
++							nowner_sid_ptr, ngroup_sid_ptr,
++							aclflag, &size);
++			if (rc)
++				goto chown_chgrp_exit;
  			ndacl_ptr->size = cpu_to_le16(size);
  		}
  
-@@ -1697,7 +1702,7 @@ id_mode_to_cifs_acl(struct inode *inode,
- 			kuid_t uid, kgid_t gid)
- {
- 	int rc = 0;
--	int aclflag = CIFS_ACL_DACL; /* default flag to set */
-+	int aclflag = 0;
- 	__u32 secdesclen = 0;
- 	__u32 nsecdesclen = 0;
- 	__u32 dacloffset = 0;
-@@ -1801,6 +1806,11 @@ id_mode_to_cifs_acl(struct inode *inode,
- 	if (rc != 0)
- 		goto id_mode_to_cifs_acl_exit;
- 
-+	if (aclflag == 0) {
-+		cifs_dbg(FYI, "set_cifs_acl aclflag=0, no change mapped\n");
-+		goto id_mode_to_cifs_acl_exit;
-+	}
-+
- 	if (ops->set_acl == NULL) {
- 		rc = -EOPNOTSUPP;
- 		goto id_mode_to_cifs_acl_exit;
 
 
