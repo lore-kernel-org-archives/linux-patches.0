@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BF44DD3D1;
-	Wed, 30 Sep 2026 15:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB8F4DDB20;
+	Wed, 30 Sep 2026 15:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782981; cv=none; b=QQH1By3EYzfweKrRxCChLzahZ5vQTABQS6Uf84AaSR/mva3mAUxCl5AAJyvLQHCs9IM+XpyOu+KyO1vPaT1iEr0qmqCDUwxkGrD0orr/o5AnxRb7H6RYQ/HQ7O9EdUwU4FZc5zZdytTs9au8AX89x+x95oPZ+H4Wq9pbf082l9k=
+	t=1790782984; cv=none; b=VpQNOL2TAgWeosauL5yP3kYDLYRQhqSBQTNgIGaJdymjYMsV50JViPtOMtzsLvXmFVuxlEe71PMe9rpwb9MU7V4RTb/Ly8S9PQoibzA3wR3IT8/XmmTIqeU8e83lCp4ItSn9FkkpuyigDE5R3urR+hs41wxaoEDYNd8iDf1AI5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782981; c=relaxed/simple;
-	bh=os2nUYrDFwJPLTHBfguX4xPBIZp3xl+XgeohGlRIths=;
+	s=arc-20240116; t=1790782984; c=relaxed/simple;
+	bh=cuCebkJhSYDBEAuv8dXxQbDFYHHXoNUAf1CcihMz4As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ayt+zONHZHguHEssYsdkvP5wAYzO7xbnmAPKUMuELUulSIgrF9QRunhggpST8Fnl5WRP+t2Ic3nTHoJdF2j5XHn2Zjt0XOwAxx/uW4kEQRqVna7MwgkcECVL7VI2IvNShQodwdrMTQiVr0SIG0DbwcOxkS4fEeGSp4uf5wfUwiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEyHK7oS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQnKpNAoD7C7BbgFx9OE7PEqGlNxXjRl5/ehU9MMcaUYUzi1F+vAFdaFe/QPiEa6nl9OKTJjs8BXEk2Odzz7mTD22E62DCsrHkRSFQGwCZayBqsZNmoxHQxa7oldo9Gd8qbr27lAOfs8UGBJoWxYousdhGiVpCWtKJHtzjPLcv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7651c5L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEyHK7oS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB9F1F000FF;
-	Wed, 30 Sep 2026 15:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7651c5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830141F00893;
+	Wed, 30 Sep 2026 15:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782976;
-	bh=SntnmUifX97kDwY0Oyza1SRUMLH5WAfhsOJcUkk6YRI=;
+	s=korg; t=1790782979;
+	bh=aWgpovRDMzON92X7eZMNRy6RLo68lH79CH1PnCH2uHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wEyHK7oSzHvCMiJrGrLH+HT0ZlRst/NHROwLNaVYtOzfdYUKJ2Z7mIxtkJODPkNNu
-	 tJ6/RrsiUn3xejPZ4i+9qlGirWBa4kKFfTmMBMC6atisX5n2eeOwJARR2mT1siafzK
-	 nY8kNk92ROtfqfD1p0Si6RG10rv9ZSIVv9nhjoMY=
+	b=s7651c5LDR4kXtA9NSWqjCUUY3dhXbzGlZoa5p37C2s8+vthwmxhS8vxNvJ5neNTt
+	 cOnEzRyCKu++NI/qsLZbCskCGQoDCWSX+4Yh0EkZqhXk5h892sE5F0imFocxlIskOX
+	 YDJxKdn10e+U+J2BwwbKrw1dvxzDzTi30n2tCbdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 236/595] ALSA: caiaq: Fix potential double-free at error path
-Date: Wed, 30 Sep 2026 17:22:09 +0200
-Message-ID: <20260930152352.797377871@linuxfoundation.org>
+Subject: [PATCH 5.10 210/595] af_packet: Dont cast tpacket_hdr.tp_len to int in tpacket_parse_header().
+Date: Wed, 30 Sep 2026 17:21:43 +0200
+Message-ID: <20260930152352.252057754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -50,61 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
+[ Upstream commit 73e594c19b4f815d8343461cec7074c4713bbde7 ]
 
-The fix for caiaq driver's resource management to handle the errors
-tries to release the resources in a common destructor call, but as a
-sashiko review for another patch suggested, some of the audio
-resources such as URBs have been already freed, and this may lead to a
-double-free.
+syzbot reported BUG() in sock_sendmsg_nosec(). [0]
 
-For addressing the double-free, call the common destructor function
-from each place, and assure that the resource pointers get cleared.
+The problem is that tpacket_parse_header() casts user-provided
+tpacket_hdr.tp_len, which is u32, to int.
 
-Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
-Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
-Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the length is larger than INT_MAX, the following condition
+in tpacket_parse_header() passes,
+
+  if (unlikely(tp_len > size_max))
+
+and any negative value can be returned to the caller, up to
+sock_sendmsg_nosec().
+
+The repro set tpacket_hdr.tp_len to 0xfffffdef, which is cast
+to -EIOCBQUEUED (-529), triggering BUG() in sock_sendmsg_nosec().
+
+  *(uint64_t*)0x200000000008 = 0xfffffdef;
+  ...
+  syscall(__NR_write, /*fd=*/r[0], /*buf=*/0x200000000000ul, /*count=*/1ul);
+
+Let's define the local tp_len as u32 in tpacket_parse_header().
+
+[0]:
+kernel BUG at net/socket.c:803!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 5628 Comm: syz-executor176 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+RIP: 0010:sock_sendmsg_nosec+0x145/0x180 net/socket.c:803
+Code: 06 67 48 0f b9 3a eb 95 e8 e8 3a 22 f8 48 89 df 4c 89 f6 4c 89 e2 4d 89 fb 2e e8 32 a5 5c 16 e9 51 ff ff ff e8 cc 3a 22 f8 90 <0f> 0b e8 c4 3a 22 f8 48 83 c3 18 48 89 d8 48 c1 e8 03 42 80 3c 28
+RSP: 0018:ffffc90003aefb48 EFLAGS: 00010293
+RAX: ffffffff89a578d4 RBX: ffff8880764c67c0 RCX: ffff88807fb23e80
+RDX: 0000000000000000 RSI: 00000000fffffdef RDI: 00000000fffffdef
+RBP: 00000000fffffdef R08: ffffc90003aef747 R09: 1ffff9200075dee8
+R10: dffffc0000000000 R11: fffff5200075dee9 R12: 0000000000000001
+R13: dffffc0000000000 R14: ffffc90003aefbc0 R15: ffffffff8aac4310
+FS:  000055559101b400(0000) GS:ffff888124ce0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000210 CR3: 0000000073dca000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __sock_sendmsg net/socket.c:815 [inline]
+ sock_write_iter+0x2de/0x3e0 net/socket.c:1266
+ new_sync_write fs/read_write.c:595 [inline]
+ vfs_write+0x612/0xba0 fs/read_write.c:687
+ ksys_write+0x150/0x270 fs/read_write.c:739
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f173130ecb9
+Code: c0 79 93 eb d5 48 8d 7c 1d 00 eb 99 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 d8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffd67e44248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f173130ecb9
+RDX: 0000000000000001 RSI: 0000200000000000 RDI: 0000000000000003
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd67e44388
+R13: 0000000000000002 R14: 00002000000000c0 R15: 0000000000000002
+ </TASK>
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Reported-by: syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a946ffa.1d9ded08.62e62.0123.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260830180915.260225-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/audio.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/packet/af_packet.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
-index 1308415b55ed8..4a7f9ff318a27 100644
---- a/sound/usb/caiaq/audio.c
-+++ b/sound/usb/caiaq/audio.c
-@@ -853,16 +853,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index d756ecc75a411..da891b9c4350d 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2679,7 +2679,8 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 				int size_max, void **data)
+ {
+ 	union tpacket_uhdr ph;
+-	int tp_len, off;
++	u32 tp_len;
++	int off;
  
- 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
+ 	ph.raw = frame;
+ 
+@@ -2699,7 +2700,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 		break;
+ 	}
+ 	if (unlikely(tp_len > size_max)) {
+-		pr_err("packet size is too long (%d > %d)\n", tp_len, size_max);
++		pr_err("packet size is too long (%u > %d)\n", tp_len, size_max);
+ 		return -EMSGSIZE;
  	}
  
- 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
- 	if (ret < 0) {
--		kfree(cdev->data_cb_info);
--		free_urbs(cdev->data_urbs_in);
--		free_urbs(cdev->data_urbs_out);
-+		snd_usb_caiaq_audio_free(cdev);
- 		return ret;
- 	}
- 
-@@ -883,6 +880,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
- 
- 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
- 	free_urbs(cdev->data_urbs_in);
-+	cdev->data_urbs_in = NULL;
- 	free_urbs(cdev->data_urbs_out);
-+	cdev->data_urbs_out = NULL;
- 	kfree(cdev->data_cb_info);
-+	cdev->data_cb_info = NULL;
- }
 -- 
 2.53.0
 
