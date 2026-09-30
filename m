@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A463AFB11;
-	Wed, 30 Sep 2026 16:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37E94FECCF;
+	Wed, 30 Sep 2026 16:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787065; cv=none; b=e99UEp1UbXrBq1zh+C1yImSUG8BGgdUcT05taVBXJafizgfNmYwhA4WUK/wkVr6Hvxz7NvokZco7EcSPRyQPIBNvZgUxxMlkf2wmdgFcKdTPtvAfqzaKBUy4Ybh9cT8xSIOASuz+EizsKEFOibnGTa4VBD+HDcTo44CvPEgn20Q=
+	t=1790787068; cv=none; b=jxwy21OSNJraMGrbqKFR+5/RlERDjneL9Pesw024GJHpukYdiPq3Y7YQv4j+o7ZFCj/OpMQZcpdC3UEZHHWsaeZcmV7r+6sQQM7afRxrb3YPzK3tqVwtXOeb1IyljsK+GOEbZyLN+jLarB+/fX/L8OAIXID/jqlJBxg/lYEI5sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787065; c=relaxed/simple;
-	bh=UuMzvR+TXy3tK4xUinCN8JLGPVvjcn4G86BZZEiAGFM=;
+	s=arc-20240116; t=1790787068; c=relaxed/simple;
+	bh=OzIKRJO14/nM+I+UlSO1sdNJAOOt1hqmDsojG4mnHjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/W6xmqwKWlh2V8CZEjHcHnCxsHzP1wavmo4FFMBeqaxD7zZk+4SeTeSYEV5VvThRcyT/+yzEef0TWkqyg5qiPsfOKz1S5SeBniQF57qS7AUwU4cQWE5w4pgNqTbrI90MCMDkAenZsjswhFzf6qdHqB5/0ULras/YMDli9qspGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqxldR06; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g0W63kDoetwnaKq0oYEkG8NOwfRsG0HdvqYjIJeH9Rit+HVuVo9eA18QMIs65Wgx0bsdTTDQsqYQvybdxJvJ1OkYAEKerI4vPg+V2ZdNYzdp6UmxWr8sI2jvtbDIRMWb/ZgkPigpPak1ta2aKpRH83HRbZcXZNJ2ehQNwdVqshE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXonkE0H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqxldR06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B141F000FF;
-	Wed, 30 Sep 2026 16:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXonkE0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2009C1F000FF;
+	Wed, 30 Sep 2026 16:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787063;
-	bh=Rrx4nL4TsSl3jNtfD7mNLWivYigkgnLBbSgm60xuPJI=;
+	s=korg; t=1790787066;
+	bh=OqOzjvaUCmtF6z9SWguHyHG5YhRudleGBD1CfxXPJIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EqxldR06bmBJAFyuERLXNnls6i804jiS22lL63U70B8BiGfM4IWBIV/jE0T001fck
-	 +m5KIVmYkjAxNdrD44/eSkyYHrKNbCpLo92uLcGgxc99Gaa7TvkJWFISWyPuGg7Gmm
-	 AAbvgmf5o+FKzg8f4cVc8Au/naRr7/RW8Ovx4SnU=
+	b=OXonkE0HPBodECriR1qOT76/vD3jt38e/gYNR2b/xflxjV1glJ7I5Er+6W4QGuWey
+	 qfqRIAKkR4CiXdzqMFIPl9XLBr7EcZ79JrnqpqtsSx0CM3rFrHNGYvFMSVLwnd0rLE
+	 A0JPmVXAHY+4V+9cAzOgiiaf+WeRonEa0LcpqgjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Bezenah <wbezenah@linux.ibm.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 062/457] s390/cio: Guard PMCW field accesses with dnv check
-Date: Wed, 30 Sep 2026 17:22:47 +0200
-Message-ID: <20260930152347.377421313@linuxfoundation.org>
+Subject: [PATCH 7.2 098/457] eth: fbnic: use the Rx queue napi pointer to find the napi vector
+Date: Wed, 30 Sep 2026 17:23:23 +0200
+Message-ID: <20260930152348.166357848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -53,153 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Vijayan <vneethv@linux.ibm.com>
+From: Alexander Duyck <alexanderduyck@fb.com>
 
-[ Upstream commit 9590f4d83880dfb5a81906e48e72779248fbe8f0 ]
+[ Upstream commit b5d9e9d4d0c13bc8b60d8d97e7a07fb25fea639e ]
 
-When PMCW.DNV is 0, no I/O device is associated with the subchannel.
-However, several code paths access PMCW fields directly from the cached
-sch->schib without first invoking the update helper. Add explicit DNV
-validation before accessing PMCW fields from the cached SCHIB to avoid
-using invalid data.
+The queue management ndos pick the napi vector for an Rx queue with:
+	nv = fbn->napi[idx % fbn->num_napi];
 
-Reported-by: William Bezenah <wbezenah@linux.ibm.com>
-Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Fixes: 8c58a229688c ("s390/cio: Do not unregister the subchannel based on DNV")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+The issue is this is only correct in the cases where there are no
+standalone Tx vectors. In those cases we were allocating the Tx vectors
+first and then the Rx so the queues would be pointing to Tx NAPI vectors
+instead of the Rx ones.
+
+The mapping the ndos want is already recorded.  fbnic_set_netif_napi()
+publishes it with netif_queue_set_napi(), which stores the napi pointer
+in netdev_rx_queue.napi, and fbnic_reset_netif_napi() clears it again.
+Both run under the netdev instance lock that the queue management ndos
+also hold, so the pointer can be read directly.
+
+Use it and drop the divide.  The pointer is NULL exactly while the
+datapath is down, so fbnic_queue_mem_alloc() can reject that case rather
+than reaching into freed state: netdev_rx_queue_restart() calls it
+before it tests netif_running(), and fbnic_pm_suspend() leaves
+netif_running() true across a PCIe recovery that never completes, so a
+queue restart can arrive after fbnic_stop() has freed the rings and the
+vectors.  fbnic_stop() clears the association in
+fbnic_reset_netif_queues() before fbnic_free_napi_vectors(), so the
+NULL is always published first.  fbnic_queue_start() and
+fbnic_queue_stop() need no check of their own, as
+netdev_rx_queue_reconfig() only reaches them once fbnic_queue_mem_alloc()
+has succeeded under the same instance lock.
+
+Fixes: da43127a8edc ("eth: fbnic: support queue ops / zero-copy Rx")
+Signed-off-by: Alexander Duyck <alexanderduyck@fb.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/178942021136.7700.4391219358260544104.stgit@ahduyck-xeon-server.home.arpa
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/chp.c          | 3 +++
- drivers/s390/cio/device.c       | 9 +++++----
- drivers/s390/cio/device_fsm.c   | 3 +++
- drivers/s390/cio/device_ops.c   | 9 +++++++++
- drivers/s390/cio/vfio_ccw_fsm.c | 2 +-
- 5 files changed, 21 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/meta/fbnic/fbnic_txrx.c | 26 +++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/cio/chp.c b/drivers/s390/cio/chp.c
-index c890f21a82ce3..eaf0527bff6cc 100644
---- a/drivers/s390/cio/chp.c
-+++ b/drivers/s390/cio/chp.c
-@@ -78,6 +78,9 @@ u8 chp_get_sch_opm(struct subchannel *sch)
- 	int opm;
- 	int i;
+diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+index a30aa44508487..10caacffee0f0 100644
+--- a/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
++++ b/drivers/net/ethernet/meta/fbnic/fbnic_txrx.c
+@@ -7,6 +7,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/pci.h>
+ #include <net/netdev_queues.h>
++#include <net/netdev_rx_queue.h>
+ #include <net/page_pool/helpers.h>
+ #include <net/tcp.h>
+ #include <net/xdp.h>
+@@ -2853,6 +2854,17 @@ void fbnic_napi_depletion_check(struct net_device *netdev)
+ 	fbnic_wrfl(fbd);
+ }
  
-+	if (!sch->schib.pmcw.dnv)
-+		return 0;
++/* Returns the napi vector servicing an Rx queue, or NULL if the datapath
++ * is torn down.  The association is published by fbnic_set_netif_napi()
++ * and cleared by fbnic_reset_netif_napi(), both under the instance lock.
++ */
++static struct fbnic_napi_vector *fbnic_rxq_nv(struct net_device *dev, int idx)
++{
++	struct napi_struct *napi = __netif_get_rx_queue(dev, idx)->napi;
 +
- 	opm = 0;
- 	chp_id_init(&chpid);
- 	for (i = 0; i < 8; i++) {
-diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
-index fb591118ecb2a..68dd4a62975d2 100644
---- a/drivers/s390/cio/device.c
-+++ b/drivers/s390/cio/device.c
-@@ -922,7 +922,7 @@ static int ccw_device_move_to_sch(struct ccw_device *cdev,
- 
- 	if (!sch_is_pseudo_sch(old_sch)) {
- 		spin_lock_irq(&old_sch->lock);
--		old_enabled = old_sch->schib.pmcw.ena;
-+		old_enabled = old_sch->schib.pmcw.dnv && old_sch->schib.pmcw.ena;
- 		rc = 0;
- 		if (old_enabled)
- 			rc = cio_disable_subchannel(old_sch);
-@@ -941,7 +941,7 @@ static int ccw_device_move_to_sch(struct ccw_device *cdev,
- 		CIO_MSG_EVENT(0, "device_move(0.%x.%04x,0.%x.%04x)=%d\n",
- 			      cdev->private->dev_id.ssid,
- 			      cdev->private->dev_id.devno, sch->schid.ssid,
--			      sch->schib.pmcw.dev, rc);
-+			      sch->schid.sch_no, rc);
- 		if (old_enabled) {
- 			/* Try to re-enable the old subchannel. */
- 			spin_lock_irq(&old_sch->lock);
-@@ -1207,7 +1207,7 @@ static void io_subchannel_quiesce(struct subchannel *sch)
- 	cdev = sch_get_cdev(sch);
- 	if (cio_is_console(sch->schid))
- 		goto out_unlock;
--	if (!sch->schib.pmcw.ena)
-+	if (!sch->schib.pmcw.dnv || !sch->schib.pmcw.ena)
- 		goto out_unlock;
- 	ret = cio_disable_subchannel(sch);
- 	if (ret != -EBUSY)
-@@ -1254,7 +1254,8 @@ static int recovery_check(struct device *dev, void *data)
- 	switch (cdev->private->state) {
- 	case DEV_STATE_ONLINE:
- 		sch = to_subchannel(cdev->dev.parent);
--		if ((sch->schib.pmcw.pam & sch->opm) == sch->vpm)
-+		if (sch->schib.pmcw.dnv &&
-+		    (sch->schib.pmcw.pam & sch->opm) == sch->vpm)
- 			break;
- 		fallthrough;
- 	case DEV_STATE_DISCONNECTED:
-diff --git a/drivers/s390/cio/device_fsm.c b/drivers/s390/cio/device_fsm.c
-index ab419d40a8a7a..b5686c25c83c7 100644
---- a/drivers/s390/cio/device_fsm.c
-+++ b/drivers/s390/cio/device_fsm.c
-@@ -170,6 +170,9 @@ __recover_lost_chpids(struct subchannel *sch, int old_lpm)
- 	int mask, i;
- 	struct chp_id chpid;
- 
-+	if (!sch->schib.pmcw.dnv)
-+		return;
++	return napi ? container_of(napi, struct fbnic_napi_vector, napi) : NULL;
++}
 +
- 	chp_id_init(&chpid);
- 	for (i = 0; i<8; i++) {
- 		mask = 0x80 >> i;
-diff --git a/drivers/s390/cio/device_ops.c b/drivers/s390/cio/device_ops.c
-index c1ba4a19368f2..f2f7f8cba410b 100644
---- a/drivers/s390/cio/device_ops.c
-+++ b/drivers/s390/cio/device_ops.c
-@@ -490,6 +490,8 @@ struct channel_path_desc_fmt0 *ccw_device_get_chp_desc(struct ccw_device *cdev,
- 	struct chp_id chpid;
+ static int fbnic_queue_mem_alloc(struct net_device *dev,
+ 				 struct netdev_queue_config *qcfg,
+ 				 void *qmem, int idx)
+@@ -2865,8 +2877,16 @@ static int fbnic_queue_mem_alloc(struct net_device *dev,
+ 	if (!netif_running(dev))
+ 		return fbnic_alloc_qt_page_pools(fbn, qt, idx);
  
- 	sch = to_subchannel(cdev->dev.parent);
-+	if (!sch->schib.pmcw.dnv)
-+		return NULL;
- 	chp_id_init(&chpid);
- 	chpid.id = sch->schib.pmcw.chpid[chp_idx];
- 	return chp_get_chp_desc(chpid);
-@@ -510,6 +512,8 @@ u8 *ccw_device_get_util_str(struct ccw_device *cdev, int chp_idx)
- 	struct chp_id chpid;
- 	u8 *util_str;
- 
-+	if (!sch->schib.pmcw.dnv)
-+		return NULL;
- 	chp_id_init(&chpid);
- 	chpid.id = sch->schib.pmcw.chpid[chp_idx];
- 	chp = chpid_to_chp(chpid);
-@@ -662,6 +666,9 @@ int ccw_device_get_mdc(struct ccw_device *cdev, u8 mask)
- 	struct chp_id chpid;
- 	int mdc = 0, i;
- 
-+	if (!sch->schib.pmcw.dnv)
-+		return 0;
++	/* A failed PCIe recovery or resume can leave the datapath torn down
++	 * while netif_running() is still true.  This ndo runs before
++	 * netdev_rx_queue_restart() checks netif_running(), so bail out
++	 * rather than touching rings and vectors that are already freed.
++	 */
++	nv = fbnic_rxq_nv(dev, idx);
++	if (!nv)
++		return -ENETDOWN;
 +
- 	/* Adjust requested path mask to excluded varied off paths. */
- 	if (mask)
- 		mask &= sch->lpm;
-@@ -798,6 +805,8 @@ int ccw_device_get_chpid(struct ccw_device *cdev, int chp_idx, u8 *chpid)
+ 	real = container_of(fbn->rx[idx], struct fbnic_q_triad, cmpl);
+-	nv = fbn->napi[idx % fbn->num_napi];
  
- 	if ((chp_idx < 0) || (chp_idx > 7))
- 		return -EINVAL;
-+	if (!sch->schib.pmcw.dnv)
-+		return -ENODEV;
- 	mask = 0x80 >> chp_idx;
- 	if (!(sch->schib.pmcw.pim & mask))
- 		return -ENODEV;
-diff --git a/drivers/s390/cio/vfio_ccw_fsm.c b/drivers/s390/cio/vfio_ccw_fsm.c
-index 5fd94e9d5c618..9a000b0231d60 100644
---- a/drivers/s390/cio/vfio_ccw_fsm.c
-+++ b/drivers/s390/cio/vfio_ccw_fsm.c
-@@ -399,7 +399,7 @@ static void fsm_close(struct vfio_ccw_private *private,
+ 	fbnic_ring_init(&qt->sub0, real->sub0.doorbell, real->sub0.q_idx,
+ 			real->sub0.flags);
+@@ -2917,7 +2937,7 @@ static int fbnic_queue_start(struct net_device *dev,
+ 	struct fbnic_q_triad *real;
  
- 	spin_lock_irq(&sch->lock);
+ 	real = container_of(fbn->rx[idx], struct fbnic_q_triad, cmpl);
+-	nv = fbn->napi[idx % fbn->num_napi];
++	nv = fbnic_rxq_nv(dev, idx);
  
--	if (!sch->schib.pmcw.ena)
-+	if (!sch->schib.pmcw.dnv || !sch->schib.pmcw.ena)
- 		goto err_unlock;
+ 	fbnic_aggregate_ring_bdq_counters(fbn, &real->sub0);
+ 	fbnic_aggregate_ring_bdq_counters(fbn, &real->sub1);
+@@ -2939,7 +2959,7 @@ static int fbnic_queue_stop(struct net_device *dev, void *qmem, int idx)
+ 	int err;
  
- 	ret = cio_disable_subchannel(sch);
+ 	real = container_of(fbn->rx[idx], struct fbnic_q_triad, cmpl);
+-	nv = fbn->napi[idx % fbn->num_napi];
++	nv = fbnic_rxq_nv(dev, idx);
+ 	fbnic_dbg_nv_exit(nv);
+ 
+ 	napi_disable_locked(&nv->napi);
 -- 
 2.53.0
 
