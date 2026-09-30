@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4B5383C86;
-	Wed, 30 Sep 2026 18:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C3DA59;
+	Wed, 30 Sep 2026 18:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791818; cv=none; b=Ep6EJ0sps1Gs+wlSm7TsXUwe5++Xt9nl2ZmadEkutv+u80/gp4JkWg9tAjT+U9rtNd13DL42Q4RoO0N3/bfQN2dF3ocryFqkff+9yWVCFBKwMChuYy/QsY4EHkr80QkC9XcS1hOjCaYyIKZnfUckcjaCdMh22o59RW/2GcPvLcY=
+	t=1790791821; cv=none; b=VBK26mK/Syu5uroZVY445eWqFsiCmQLcwmv2VvZjb7BInpRFl+bc+nKiX6Auo7uv2hcZ/Z9EibeGSodKmbApjg6bz0NLzsRpZ/aPvhIXKtXa2s/rOOa0L3myFrZ1jjixvxaCjl9vf3IX4olw0qPnUbPWYTwvY6xfFgACE47+tsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791818; c=relaxed/simple;
-	bh=XbdaOQHlHWatWugQWogAm0s3AZGGAnr3W3Y1Vip7pl4=;
+	s=arc-20240116; t=1790791821; c=relaxed/simple;
+	bh=yWG4ooTJMN4w/HI4O1+J9eUOgMypoeYz89kixqdYGLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViAL7Xg2BmBIOw8LNyGuG+ZYz+2WgRYdcmZUDKl3oO2kV7XHNxiUk6R0BSw+H5XYFFYTu0pchWHxXZ6CwMEMxK+bJluAVhW8LPQn9o68VNmsJ4sf6T63SG6EtoNwct15m2P10/7amWHmba2SqHodO0+HXgJaxsAS13U5UFBKUII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1NTDHuQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IePNO6z0FSqygBM87wN70nes8BLasPYHXk93bGrgHUtVrpTx6CxcA4etOH858bpA4moAA5P6PFsXirhtwd9o2EOfixahfgGcJ11P4Ar/EizGoD+04zd09bhy0KsL05cfbsyGVz3G5SGKbxunxnn9aZTi9NGyEHs/pyucQ3mZJfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+xRUnFE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1NTDHuQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DA21F000FF;
-	Wed, 30 Sep 2026 18:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+xRUnFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A9E1F00898;
+	Wed, 30 Sep 2026 18:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791817;
-	bh=yyE5sxpFhjfK2d7ceMV2feC1BdFSxWSdrikdZmW7KNs=;
+	s=korg; t=1790791820;
+	bh=W9QpJmIdnxnVvIIwhcpbK+H5Wq2SUdieSAOL6BFjdiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1NTDHuQ6Vzxcl3dJoJOKF11coZDc2d9cyv1TGDO1ZNv7eZkzpVp3qMcuwTqofvPr
-	 wZOHB5j9240fi682lwjFMLtr8DUSLMQVhC1OSudR6jpl3llvR+Rg4Jn3Ebg2Jryoxb
-	 BugxZRduyfyff8dNy417LsXAC2XQLHtgn+cGy97Q=
+	b=B+xRUnFEY78HeZbm+biwZfNI5AgsPlpzdybpu+oaK4XHxoFMyvSQn8k9lBkjAw+lJ
+	 fKRHkfhbYAadd/reajjh6KQL4kAULkBHiXpHQRV2OLRKpLfew2qLHfCoodTfi4K8nc
+	 M8qZCrlvf7XuN7GT4z/2hInGBaj1pzlEH25tjku0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/752] ipv6: Honor oif when choosing nexthop for locally generated traffic
-Date: Wed, 30 Sep 2026 17:25:06 +0200
-Message-ID: <20260930152407.717910922@linuxfoundation.org>
+Subject: [PATCH 5.15 437/752] xfrm: propagate extack to all netlink doit handlers
+Date: Wed, 30 Sep 2026 17:25:07 +0200
+Message-ID: <20260930152407.742669333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,117 +51,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
+[ Upstream commit 3bec6c3e83b5c125ff35e3dae3127c8d62046a1d ]
 
-Commit 741a11d9e410 ("net: ipv6: Add RT6_LOOKUP_F_IFACE flag if oif is
-set") made the kernel honor the oif parameter when specified as part of
-output route lookup:
+xfrm_user_rcv_msg() already handles extack, we just need to pass it down.
 
- # ip route add 2001:db8:1::/64 dev dummy1
- # ip route add ::/0 dev dummy2
- # ip route get 2001:db8:1::1 oif dummy2 fibmatch
- default dev dummy2 metric 1024 pref medium
-
-Due to regression reports, the behavior was partially reverted in commit
-d46a9d678e4c ("net: ipv6: Dont add RT6_LOOKUP_F_IFACE flag if saddr
-set") to only honor the oif if source address is not specified:
-
- # ip route get 2001:db8:1::1 from 2001:db8:2::1 oif dummy2 fibmatch
- 2001:db8:1::/64 dev dummy1 metric 1024 pref medium
-
-That is, when source address is specified, the kernel will choose the
-most specific route even if its nexthop device does not match the
-specified oif.
-
-This creates a problem for multipath routes. After looking up a route,
-when source address is not specified, the kernel will choose a nexthop
-whose nexthop device matches the specified oif:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But will disregard the oif when source address is specified despite the
-fact that a matching nexthop exists:
-
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      53 dummy1
-      47 dummy2
-
-This behavior differs from IPv4:
-
- # ip address add 192.0.2.1/32 dev lo
- # ip route add 198.51.100.0/24 nexthop via inet6 fe80::1 dev dummy1 nexthop via inet6 fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 198.51.100.${i} from 192.0.2.1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-What happens is that fib6_table_lookup() returns a route with a matching
-nexthop device (assuming it exists):
-
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-      100 dummy2
-
-But it is later overwritten during path selection in fib6_select_path()
-which instead chooses a nexthop according to the calculated hash.
-
-Solve this by telling fib6_select_path() to skip path selection if we
-have an oif match during output route lookup (iif being
-LOOPBACK_IFINDEX).
-
-Behavior after the change:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy2
-
-Note that enabling forwarding is only needed because we did not add
-neighbor entries for the gateway addresses. When forwarding is disabled
-and CONFIG_IPV6_ROUTER_PREF is not enabled in kernel config, the kernel
-will treat non-existing neighbor entries as errors and perform
-round-robin between the nexthops:
-
- # sysctl -wq net.ipv6.conf.all.forwarding=0
- # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
-      50 dummy1
-      50 dummy2
-
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: d1ebd9081879 ("xfrm: fix compat ALLOCSPI request use-after-free")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c | 56 +++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 22 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 56e266342ee22..6e3e20eae1240 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -2206,6 +2206,7 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index cd83ac8f8f562..cd720c6b87949 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -681,7 +681,7 @@ static struct xfrm_state *xfrm_state_construct(struct net *net,
+ }
+ 
+ static int xfrm_add_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++		       struct nlattr **attrs, struct netlink_ext_ack *extack)
  {
- 	struct fib6_result res = {};
- 	struct rt6_info *rt = NULL;
-+	bool have_oif_match;
- 	int strict = 0;
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_usersa_info *p = nlmsg_data(nlh);
+@@ -760,7 +760,7 @@ static struct xfrm_state *xfrm_user_state_lookup(struct net *net,
+ }
  
- 	WARN_ON_ONCE((flags & RT6_LOOKUP_F_DST_NOREF) &&
-@@ -2222,7 +2223,9 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
- 	if (res.f6i == net->ipv6.fib6_null_entry)
- 		goto out;
+ static int xfrm_del_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++		       struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_state *x;
+@@ -1305,7 +1305,8 @@ static int build_spdinfo(struct sk_buff *skb, struct net *net,
+ }
  
--	fib6_select_path(net, &res, fl6, oif, false, skb, strict);
-+	have_oif_match = fl6->flowi6_iif == LOOPBACK_IFINDEX &&
-+			 oif == res.nh->fib_nh_dev->ifindex;
-+	fib6_select_path(net, &res, fl6, oif, have_oif_match, skb, strict);
+ static int xfrm_set_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			    struct nlattr **attrs)
++			    struct nlattr **attrs,
++			    struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrmu_spdhthresh *thresh4 = NULL;
+@@ -1350,7 +1351,8 @@ static int xfrm_set_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
  
- 	/*Search through exception table */
- 	rt = rt6_find_cached_rt(&res, &fl6->daddr, &fl6->saddr);
+ static int xfrm_get_spdinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			    struct nlattr **attrs,
++			    struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct sk_buff *r_skb;
+@@ -1409,7 +1411,8 @@ static int build_sadinfo(struct sk_buff *skb, struct net *net,
+ }
+ 
+ static int xfrm_get_sadinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			    struct nlattr **attrs,
++			    struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct sk_buff *r_skb;
+@@ -1429,7 +1432,7 @@ static int xfrm_get_sadinfo(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++		       struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_usersa_id *p = nlmsg_data(nlh);
+@@ -1453,7 +1456,8 @@ static int xfrm_get_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_alloc_userspi(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			      struct nlattr **attrs,
++			      struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_state *x;
+@@ -1805,7 +1809,8 @@ static struct xfrm_policy *xfrm_policy_construct(struct net *net, struct xfrm_us
+ }
+ 
+ static int xfrm_add_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			   struct nlattr **attrs,
++			   struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_userpolicy_info *p = nlmsg_data(nlh);
+@@ -2069,7 +2074,7 @@ static bool xfrm_userpolicy_is_valid(__u8 policy)
+ }
+ 
+ static int xfrm_set_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			    struct nlattr **attrs)
++			    struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_userpolicy_default *up = nlmsg_data(nlh);
+@@ -2090,7 +2095,7 @@ static int xfrm_set_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			    struct nlattr **attrs)
++			    struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct sk_buff *r_skb;
+ 	struct nlmsghdr *r_nlh;
+@@ -2120,7 +2125,8 @@ static int xfrm_get_default(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			   struct nlattr **attrs,
++			   struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_policy *xp;
+@@ -2203,7 +2209,8 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_flush_sa(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			 struct nlattr **attrs,
++			 struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct km_event c;
+@@ -2303,7 +2310,7 @@ static int build_aevent(struct sk_buff *skb, struct xfrm_state *x, const struct
+ }
+ 
+ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++		       struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_state *x;
+@@ -2347,7 +2354,7 @@ static int xfrm_get_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_new_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++		       struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_state *x;
+@@ -2398,7 +2405,8 @@ static int xfrm_new_ae(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_flush_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			     struct nlattr **attrs,
++			     struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct km_event c;
+@@ -2426,7 +2434,8 @@ static int xfrm_flush_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_add_pol_expire(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			       struct nlattr **attrs,
++			       struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_policy *xp;
+@@ -2492,7 +2501,8 @@ static int xfrm_add_pol_expire(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_add_sa_expire(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			      struct nlattr **attrs,
++			      struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_state *x;
+@@ -2526,7 +2536,8 @@ static int xfrm_add_sa_expire(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ 
+ static int xfrm_add_acquire(struct sk_buff *skb, struct nlmsghdr *nlh,
+-		struct nlattr **attrs)
++			    struct nlattr **attrs,
++			    struct netlink_ext_ack *extack)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct xfrm_policy *xp;
+@@ -2631,7 +2642,7 @@ static int copy_from_user_migrate(struct xfrm_migrate *ma,
+ }
+ 
+ static int xfrm_do_migrate(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			   struct nlattr **attrs)
++			   struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	struct xfrm_userpolicy_id *pi = nlmsg_data(nlh);
+ 	struct xfrm_migrate m[XFRM_MAX_DEPTH];
+@@ -2677,7 +2688,7 @@ static int xfrm_do_migrate(struct sk_buff *skb, struct nlmsghdr *nlh,
+ }
+ #else
+ static int xfrm_do_migrate(struct sk_buff *skb, struct nlmsghdr *nlh,
+-			   struct nlattr **attrs)
++			   struct nlattr **attrs, struct netlink_ext_ack *extack)
+ {
+ 	return -ENOPROTOOPT;
+ }
+@@ -2874,7 +2885,8 @@ static const struct nla_policy xfrma_spd_policy[XFRMA_SPD_MAX+1] = {
+ };
+ 
+ static const struct xfrm_link {
+-	int (*doit)(struct sk_buff *, struct nlmsghdr *, struct nlattr **);
++	int (*doit)(struct sk_buff *, struct nlmsghdr *, struct nlattr **,
++		    struct netlink_ext_ack *);
+ 	int (*start)(struct netlink_callback *);
+ 	int (*dump)(struct sk_buff *, struct netlink_callback *);
+ 	int (*done)(struct netlink_callback *);
+@@ -2976,7 +2988,7 @@ static int xfrm_user_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		goto err;
+ 	}
+ 
+-	err = link->doit(skb, nlh, attrs);
++	err = link->doit(skb, nlh, attrs, extack);
+ 
+ 	/* We need to free skb allocated in xfrm_alloc_compat() before
+ 	 * returning from this function, because consume_skb() won't take
 -- 
 2.53.0
 
