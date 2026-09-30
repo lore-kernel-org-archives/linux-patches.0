@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDFF23ABBE;
-	Wed, 30 Sep 2026 18:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D9C36998C;
+	Wed, 30 Sep 2026 18:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794431; cv=none; b=sGrVKI7JPFTYY2efRkr8upf8EeK6+wVzltI6JnxhLUua76DRLipeYcdkVPIcPGU8+2ea9RTA0Xdf00jlB7fNnqSPUjlfKBk9zCTuntMrgxqU0s7bk9iShRZoy2pfLdxMD2wWoPB712OvCWYyxwDAv3v7N8MSfOwcVBDUqdCtx88=
+	t=1790794434; cv=none; b=oZ2ApR7oyACLMtKYiuhTwGw91kywHEAq01rRSFOQx2GegWGRxhSw7OuXlRYql4OWT9VrQj2KNkERMEcJMuDjB+78ycGOFERMaNw+N5TppoZrrhH5zo8/lUWoyBVCn4Y3GUdcUSYZJI5C8m9s8rnfDFdLrDHhkPd6cG1CGsEdbh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794431; c=relaxed/simple;
-	bh=CYr/x7qIW11N2OSB7UbUsuRv4feaNV/0VVdyoXauZPY=;
+	s=arc-20240116; t=1790794434; c=relaxed/simple;
+	bh=F6wM4HqRJepyNZY1jaexQAPImV97dIw0NB4Ifrv+Uic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQpdZLUoxcQomAGHoS17qbKdvbNCeN0IWSKuAL8KmCTXxjhjHxb7mvHsgcRVjyrcM2IyFXSWWVP4/nNpokc9g1x9aO6vpLr40oCBD0O8NleSwSRO3/LY+uYaWqopjOJRZLI/7HhB76xZlMAjecViYr6R0M9FJTUtybQaytJdFng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3/xt27w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JYa4rTcJZ1XFSD0fMMfRPJkFmAzXnbajb3rkPfpZ0o+nn6JdfQODb+Xq+8Tm4MdTZPcG6AfeCYRg1Jhm8bRB/NXUXybrmn1wtXxHCd0JIBTpF1s8J48qssilDBONls++d73LzfH6zaQvUA9TaPRTpwxMqP09G5v2QB3F9hEwqE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGBojbHJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3/xt27w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E681F000FF;
-	Wed, 30 Sep 2026 18:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGBojbHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE781F000FF;
+	Wed, 30 Sep 2026 18:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794430;
-	bh=cXtzqYUNmnEQ1wZGKoeGxmroXpxp83iRnD6ztfTOaVQ=;
+	s=korg; t=1790794432;
+	bh=61CL0km9o8yayCOCCYgVTXzccQBFrQTu5+SLL6kh2IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r3/xt27wBPNcy+xrMR+f8/ooe05cU8hKRm5ylOOP6phksMgwTF8mnbpE5Kyv/ymgo
-	 NThI1QHny0R9fyGRtr2oWYx/0gGkJebtUYjeMejJuzO3fPo9irBatVtHSsIyMN4nnx
-	 3jUu/dSbmHn0g8S9wetjwaMAx/pU4NXGKgBUKlgU=
+	b=jGBojbHJepAIV4aE5W41sA5H5EtwwbSv9zdeF2M/NO+e1muRfK5YqFK0YdAy4TY7D
+	 bLrW8Z3E2RqbhMhVd6gkreeLo4FMt5Wx1LwYJl8EpJOcS0/Xngr8PjD+i9I/Us2rHA
+	 dN8k2YluM1y2/rELAhSh3bLMwp1Cq710rOCh86DA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Potin Lai <potin.lai.pt@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jan Kara <jack@suse.cz>,
+	Breno Leitao <leitao@debian.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0209/1193] hwmon: (pmbus/lm25066) Fix PMBus coefficients for LM5064/5066/5066i
-Date: Wed, 30 Sep 2026 17:14:53 +0200
-Message-ID: <20260930152438.849356366@linuxfoundation.org>
+Subject: [PATCH 6.6 0192/1193] configfs_depend_prep(): pass configfs_dirent instead of dentry
+Date: Wed, 30 Sep 2026 17:14:36 +0200
+Message-ID: <20260930152438.464552240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,150 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Potin Lai <potin.lai.pt@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 83dda7ed185501ba1f8165aeca83ff4a8ef7c263 ]
+[ Upstream commit 764682e0118432260191d194edbdaff208260483 ]
 
-Swap the high setting and low setting coefficients in the lm25066_coeff
-table for LM5064, LM5066, and LM5066i. The coefficients were previously
-mapped incorrectly, resulting in inverted current and power scaling.
+Again, the only thing it uses dentry for is dentry->d_fsdata; for the
+recursive call the situation is the same as with configfs_detach_prep()
+and the same observation about ->s_dentry->d_fsdata applies.
 
-Additionally, dynamically assign the exponent (R) registers inside the
-probe's LM25066_DEV_SETUP_CL check. This ensures that the proper
-exponent is applied (e.g., for LM25056, high setting power exponent
-is -4, but low setting power exponent is -3).
-
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
-Link: https://lore.kernel.org/r/20260611-lm25066-driver-fix-v3-1-9d7d4b4e253d@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/lm25066.c | 54 ++++++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 26 deletions(-)
+ fs/configfs/dir.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
-index 8a94c4cfb5d19..fc636767a8b5a 100644
---- a/drivers/hwmon/pmbus/lm25066.c
-+++ b/drivers/hwmon/pmbus/lm25066.c
-@@ -133,23 +133,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN] = {
--			.m = 10742,
--			.b = 1552,
-+			.m = 5456,
-+			.b = 2118,
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN_L] = {
--			.m = 5456,
--			.b = 2118,
-+			.m = 10742,
-+			.b = 1552,
- 			.R = -2,
- 		},
- 		[PSC_POWER] = {
--			.m = 1204,
--			.b = 8524,
-+			.m = 612,
-+			.b = 11202,
- 			.R = -3,
- 		},
- 		[PSC_POWER_L] = {
--			.m = 612,
--			.b = 11202,
-+			.m = 1204,
-+			.b = 8524,
- 			.R = -3,
- 		},
- 		[PSC_TEMPERATURE] = {
-@@ -168,23 +168,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN] = {
--			.m = 10753,
--			.b = -1200,
-+			.m = 5405,
-+			.b = -600,
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN_L] = {
--			.m = 5405,
--			.b = -600,
-+			.m = 10753,
-+			.b = -1200,
- 			.R = -2,
- 		},
- 		[PSC_POWER] = {
--			.m = 1204,
--			.b = -6000,
-+			.m = 605,
-+			.b = -8000,
- 			.R = -3,
- 		},
- 		[PSC_POWER_L] = {
--			.m = 605,
--			.b = -8000,
-+			.m = 1204,
-+			.b = -6000,
- 			.R = -3,
- 		},
- 		[PSC_TEMPERATURE] = {
-@@ -203,23 +203,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN] = {
--			.m = 15076,
--			.b = -504,
-+			.m = 7645,
-+			.b = 100,
- 			.R = -2,
- 		},
- 		[PSC_CURRENT_IN_L] = {
--			.m = 7645,
--			.b = 100,
-+			.m = 15076,
-+			.b = -504,
- 			.R = -2,
- 		},
- 		[PSC_POWER] = {
--			.m = 1701,
--			.b = -4000,
-+			.m = 861,
-+			.b = -965,
- 			.R = -3,
- 		},
- 		[PSC_POWER_L] = {
--			.m = 861,
--			.b = -965,
-+			.m = 1701,
-+			.b = -4000,
- 			.R = -3,
- 		},
- 		[PSC_TEMPERATURE] = {
-@@ -520,18 +520,20 @@ static int lm25066_probe(struct i2c_client *client)
- 	info->m[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].m;
- 	info->b[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].b;
- 	info->R[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].R;
--	info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
--	info->R[PSC_POWER] = coeff[PSC_POWER].R;
- 	if (config & LM25066_DEV_SETUP_CL) {
- 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].m;
- 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].b;
-+		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].R;
- 		info->m[PSC_POWER] = coeff[PSC_POWER_L].m;
- 		info->b[PSC_POWER] = coeff[PSC_POWER_L].b;
-+		info->R[PSC_POWER] = coeff[PSC_POWER_L].R;
- 	} else {
- 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].m;
- 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].b;
-+		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
- 		info->m[PSC_POWER] = coeff[PSC_POWER].m;
- 		info->b[PSC_POWER] = coeff[PSC_POWER].b;
-+		info->R[PSC_POWER] = coeff[PSC_POWER].R;
- 	}
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index 972fb89ad2214..46540846d815c 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -1060,15 +1060,12 @@ static int configfs_dump(struct configfs_dirent *sd, int level)
+  * much on the stack, though, so folks that need this function - be careful
+  * about your stack!  Patches will be accepted to make it iterative.
+  */
+-static int configfs_depend_prep(struct dentry *origin,
++static int configfs_depend_prep(struct configfs_dirent *sd,
+ 				struct config_item *target)
+ {
+-	struct configfs_dirent *child_sd, *sd;
++	struct configfs_dirent *child_sd;
+ 	int ret = 0;
  
- 	/*
+-	BUG_ON(!origin || !origin->d_fsdata);
+-	sd = origin->d_fsdata;
+-
+ 	if (sd->s_element == target)  /* Boo-yah */
+ 		goto out;
+ 
+@@ -1076,8 +1073,7 @@ static int configfs_depend_prep(struct dentry *origin,
+ 		if ((child_sd->s_type & CONFIGFS_DIR) &&
+ 		    !(child_sd->s_type & CONFIGFS_USET_DROPPING) &&
+ 		    !(child_sd->s_type & CONFIGFS_USET_CREATING)) {
+-			ret = configfs_depend_prep(child_sd->s_dentry,
+-						   target);
++			ret = configfs_depend_prep(child_sd, target);
+ 			if (!ret)
+ 				goto out;  /* Child path boo-yah */
+ 		}
+@@ -1098,7 +1094,7 @@ static int configfs_do_depend_item(struct dentry *subsys_dentry,
+ 
+ 	spin_lock(&configfs_dirent_lock);
+ 	/* Scan the tree, return 0 if found */
+-	ret = configfs_depend_prep(subsys_dentry, target);
++	ret = configfs_depend_prep(subsys_dentry->d_fsdata, target);
+ 	if (ret)
+ 		goto out_unlock_dirent_lock;
+ 
 -- 
 2.53.0
 
