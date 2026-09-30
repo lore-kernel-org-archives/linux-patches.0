@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906A651A723;
-	Wed, 30 Sep 2026 17:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6F251A73A;
+	Wed, 30 Sep 2026 17:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789483; cv=none; b=QTi6yTkiWphVrPHs7IYN7S45CSwfY1F4buZ5gIey4ne/T/iNYIqayE3NFxLTVMkZCn3EP8t54Vaz9Sx74Hh+7azE41CMykRbCfGjt6kylnL0a0C1G9xlYj8VFrgQMbbhYucFzhYsOW/xwaRLjpEv1YYQio3Tv51EfT2ld83atSw=
+	t=1790789486; cv=none; b=Q5uooD68rV+f/XBmV5rEn+dK7CH7FvzqIjF1z84hWePXcdni0f+eDrqeygg0I6PpgVqhncvWGCdflxXdFtq0LplrrJ8SPWdlE6LxP9dEsX+1afNmQm09SvtnqakO8Si+H0nNcX+d5onKcW5xMSyOc8Easw1G9tNPVS1Q1zEPPEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789483; c=relaxed/simple;
-	bh=h2hKG3dySfEghW47GkTAWKM/M9b3ma8Ro8ZyTNSyHXQ=;
+	s=arc-20240116; t=1790789486; c=relaxed/simple;
+	bh=LozJN8CMquwLNJ3F0ehJUYe/5UQSuWf0qUj7DcZ9VG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUuWt2s5NJjU7M/+IxCCT3Lg+q2rMR9g/ZruTMZdiKwIwaEDioIoqu8Hb92xMd3AG/tI1qX7UVSaskXyNVDCSOhUUZUie6o4ESm9eiINFysjyFXYc0yvsjQFxoUsTC6t0zqlPvYgjGPrt2yJn6eeZg/AChCDJyolDalqCj5VkfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4cVxI5U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PT9v2HwXx2AqJ42D8QnMQDgDKXgw2XXAg524vBTeNM733MaQmyWLw1oVsEyeugQYr4dkFe9g845TGOYRGBkXtzJtOFQirolKNRyQKBihRRV5Ls2NSLNEdBSUNvzFZQ83czOrmO4vdhYmZxw6085C+mEQqppYVocl6WGOQWYrlas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioDye+Lk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4cVxI5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9651E1F00898;
-	Wed, 30 Sep 2026 17:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioDye+Lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CED31F000FF;
+	Wed, 30 Sep 2026 17:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789482;
-	bh=wkZ6fiKn7ktRs0uBsQMa6pPlGckQyhzCTtNqBJi+QTM=;
+	s=korg; t=1790789485;
+	bh=WU8N5Sh1PCBCnM6cais8BniYwltIOxFsvmOozXNgeBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z4cVxI5U11UT51H7PXDpmkdEcNNfp6aC5SzAkxKzioh5ElnFvih26GBQR+KvGkWhP
-	 79p3fBrccZTegR5VN3rTLJdKm177KsmDAOP3VXYpZ0qFTPtayhJ7BUyOp8YKl6JaWX
-	 C5IiQzlc8NhI+5d4veZ11esCczOb5yWmytGD4E4k=
+	b=ioDye+LkX2SGVEcBzOOrQayKHoZYmrqC03uh5cPKsUJS3P9tVBImDFwtXIRBLcoiA
+	 2fAK2pFxYLYX1ewQbZVZWCrRGtV0Lt+ZhPTGiTg6NmLS5WXBLruqPijJQ3xfaoGuFm
+	 xPajJHAicDrrtDd39G1J5qmKOkkMOAniCHRONEe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.12 491/877] drm/nouveau: Fix gem reference leak in validate_init()
-Date: Wed, 30 Sep 2026 17:23:22 +0200
-Message-ID: <20260930152425.256728016@linuxfoundation.org>
+Subject: [PATCH 6.12 492/877] drm/nouveau: Fix runtime PM leak in nouveau_connector_detect()
+Date: Wed, 30 Sep 2026 17:23:23 +0200
+Message-ID: <20260930152425.278430421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,42 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 5ea72f7b7139b123713a7983448f910bc4514d9e upstream.
+commit 1e04611d3735543bd80a67d9d13dc13f503746fb upstream.
 
-On the ttm_bo_reserve() failure and "vma not found" error paths, the
-loop breaks without adding the looked-up object to any validate list,
-so the reference taken by drm_gem_object_lookup() is never released;
-validate_fini() only walks the spliced lists.  Drop the reference
-before breaking out on both paths.
+If nvif_outp_edid_get() fails, nouveau_connector_detect() returns
+early without dropping the runtime PM reference taken at the start
+of the function, keeping the device powered on until the next
+successful detect.
 
-Fixes: 19ca10d82e33bcfe ("drm/nouveau/gem: lookup VMAs for buffers referenced by pushbuf ioctl")
+Balance the reference on the error path like the other exit paths
+do.
+
+Fixes: 0cd7e0718139 ("drm/nouveau/disp: add output method to fetch edid")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260916180202.2090231-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260916180342.2090360-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_gem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_connector.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_gem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_gem.c
-@@ -522,6 +522,7 @@ retry:
- 			if (unlikely(ret)) {
- 				if (ret != -ERESTARTSYS)
- 					NV_PRINTK(err, cli, "fail reserve\n");
-+				drm_gem_object_put(gem);
- 				break;
- 			}
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -601,8 +601,11 @@ nouveau_connector_detect(struct drm_conn
+ 				new_edid = drm_get_edid(connector, nv_encoder->i2c);
+ 		} else {
+ 			ret = nvif_outp_edid_get(&nv_encoder->outp, (u8 **)&new_edid);
+-			if (ret < 0)
++			if (ret < 0) {
++				pm_runtime_mark_last_busy(dev->dev);
++				pm_runtime_put_autosuspend(dev->dev);
+ 				return connector_status_disconnected;
++			}
  		}
-@@ -531,6 +532,7 @@ retry:
- 			struct nouveau_vma *vma = nouveau_vma_find(nvbo, vmm);
- 			if (!vma) {
- 				NV_PRINTK(err, cli, "vma not found!\n");
-+				drm_gem_object_put(gem);
- 				ret = -EINVAL;
- 				break;
- 			}
+ 
+ 		nouveau_connector_set_edid(nv_connector, new_edid);
 
 
