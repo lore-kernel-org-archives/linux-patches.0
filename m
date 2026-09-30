@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561645221EA;
-	Wed, 30 Sep 2026 17:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2157C52269D;
+	Wed, 30 Sep 2026 17:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790359; cv=none; b=BGb5+L1T1wh4f2zgK62geHZkgEr0qiJkqVHD5JsvyePphz40Fje6eH/GxolKS4oqp2ZPy5PM0qEJnDWQp2GtHzOgcmooB+JM2XGtX8ryiJ+AjZQUCD89AJ2dLjCJu7LdwycJXdGNqup1tKJ+n4IuAo9f5NYqkgrgFqSoJG0RLsA=
+	t=1790790362; cv=none; b=XtqgnkdWP2y/Y7EBUBNVxWQfxK7uS3UJue6T0k/iilVEdq6OwLMlAsiqQqem/Lpd73bR/9vLVnwd0lcSXzPoyXdDhyrquJ1TrCwytrLQQjwA2YBFYBmUIfszDL1ZwNLR5KJqUCB2XZUHnqPILa/0XweuCH+cXErE/gmF8onG6ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790359; c=relaxed/simple;
-	bh=3gYzb/59DtCfy7ZV70b1Oc3IM9ViQK8MmrXtVvPfc44=;
+	s=arc-20240116; t=1790790362; c=relaxed/simple;
+	bh=98QSzJ2MSHi4yJ7bwWGS8vk7sSnmZuprn5FTKrCBKTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgwPZaE7Hva2pk1Zni+3uunHuheVEJqDcMV2QQolW6EwBypaPHVd/V7kUNXDVj/tLCcj3OyZ16xtKtmXh03/pd5BvDN+eEyodatvj3n/Db2SVH12CNOPk6nTaohd8eL6QItPRPl28/Zy7q1OTzmotMg+cz4YsjRsX7SV8+Mgp8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qmb/bwGR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kezrCro1taP1chfQW/V2eLkviGGg3vlVksuXh0orfHhtp4uGS/2TteL8G6mZtowfV4MisABfeZXolGceRnkaUqVVqFQRFCp8YsYKAIMxvMs6TNuVOPJclSymYhrEgHQ0RsYYGf1FF39aWNP7AxPPDo/JY02jMjF4/SSdExflR5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+itACSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qmb/bwGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E091F000FF;
-	Wed, 30 Sep 2026 17:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+itACSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63F21F000FF;
+	Wed, 30 Sep 2026 17:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790358;
-	bh=+qxlTJurCV3cXh5i2wUE46ZYyzDvDDE0T3udbbBOVFE=;
+	s=korg; t=1790790361;
+	bh=dXqk6TH/qsaZ2WUbvgxo4PWH6zKGI0Ga6czlJ7CsfyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qmb/bwGROZoS+UBnbIMcc3+Ex18bqep6fi3s76SOapBdtREgr6DvJqmqKAnFkVYT3
-	 PH1D98jC8uvFTuOPTtD89CG5e1gt2E34fCiS+mq8+Df+9GIALfGnKYJOCvNCOl3yQV
-	 yYvZQGwLBx9g9T77UrkjNXSmCMgySyLbnLl5Fir4=
+	b=z+itACSeKMEWRI9cRevcIm9pgmuDIm0urL0WddjnVeW95RdncThgbJFp/6l0j2++V
+	 l0jb2gzGHOMc/KNs/y+bmpKAoZyE+WQ96mCiQbfJqPXsdl2iCpg2fnb7b4V0QOQlyu
+	 ANzhupufvTgYfuVcg2TI1qTwauBQSWrK3CSo9z8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 801/877] wifi: libipw: reject TKIP frames without a full MIC
-Date: Wed, 30 Sep 2026 17:28:32 +0200
-Message-ID: <20260930152432.001805678@linuxfoundation.org>
+Subject: [PATCH 6.12 802/877] wifi: mac80211: track MU-MIMO configuration on disabled interfaces
+Date: Wed, 30 Sep 2026 17:28:33 +0200
+Message-ID: <20260930152432.022914723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,71 +52,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 06f42accaf3c6aecab1dcc57f68dde6c06c8b380 ]
+[ Upstream commit a5aa46f1ac4f53e03b9b75cbf55634131f2f8cac ]
 
-libipw_michael_mic_verify() assumes that an skb contains an eight-byte
-Michael MIC. A short TKIP frame makes the unsigned payload length wrap,
-causing michael_mic() to read past the skb.
+For monitoring, userspace will try to configure the VIF sdata, while the
+driver may see the monitor_sdata that is created when only monitor
+interfaces are up. This causes the odd situation that it may not be
+possible to store the MU-MIMO configuration on monitor_sdata.
 
-Check that the MIC is present before verifying it, and use the existing
-MICHAEL_MIC_LEN constant for all MIC lengths in the verifier.
+Fix this by storing that information on the VIF sdata and updating the
+monitor_sdata when available and the interface is up. Also, adjust the
+code that adds monitor_sdata so that it will configure MU-MIMO based on
+the newly added interface or one of the existing ones.
 
-Fixes: b453872c35cf ("[NET] ieee80211 subsystem")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260909061124.3802517-1-4ncienth@gmail.com
+This should give a mostly consistent behaviour when configuring MU-MIMO
+on sniffer interfaces. Should the user configure MU-MIMO on multiple
+sniffer interfaces, then mac80211 will simply select one of the
+configurations. This behaviour should be good enough and avoids breaking
+user expectations in the common scenarios.
+
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110141514.677915f8f6bb.If4e04a57052f9ca763562a67248b06fd80d0c2c1@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ adapted libipw changes to the older lib80211 implementation and Michael MIC helper interface. ]
+
+[ Backport to 6.12: omit NO_VIRTUAL_MONITOR handling, since this tree
+  only exposes WANT_MONITOR_VIF. Keep the existing monitors counter and
+  cooked-monitor handling, and traverse mon_list through u.mntr.list.
+  Update the existing reconfiguration call at wake_up rather than adding
+  the later upstream call site. All three virtual-monitor creation calls
+  now pass the configuration source, or NULL to select a running monitor.
+
+  Retain the MU-MIMO configuration changes so target 2b04d6556964
+  ("wifi: mac80211: refuse to make a monitor active when it has no queue")
+  merges cleanly on top. No new functions are introduced. ]
+
+Stable-dep-of: 2b04d6556964 ("wifi: mac80211: refuse to make a monitor active when it has no queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/lib80211_crypt_tkip.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/mac80211/cfg.c         |   39 +++++++++++++++++++++++++++++----------
+ net/mac80211/ieee80211_i.h |    3 ++-
+ net/mac80211/iface.c       |   43 +++++++++++++++++++++++++++++++++++++------
+ net/mac80211/util.c        |    3 ++-
+ 4 files changed, 70 insertions(+), 18 deletions(-)
 
---- a/net/wireless/lib80211_crypt_tkip.c
-+++ b/net/wireless/lib80211_crypt_tkip.c
-@@ -38,6 +38,7 @@ MODULE_DESCRIPTION("lib80211 crypt: TKIP
- MODULE_LICENSE("GPL");
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -63,12 +63,14 @@ static void ieee80211_set_mu_mimo_follow
+ 		memcpy(sdata->vif.bss_conf.mu_group.position,
+ 		       params->vht_mumimo_groups + WLAN_MEMBERSHIP_LEN,
+ 		       WLAN_USER_POSITION_LEN);
+-		ieee80211_link_info_change_notify(sdata, &sdata->deflink,
+-						  BSS_CHANGED_MU_GROUPS);
++
+ 		/* don't care about endianness - just check for 0 */
+ 		memcpy(&membership, params->vht_mumimo_groups,
+ 		       WLAN_MEMBERSHIP_LEN);
+ 		mu_mimo_groups = membership != 0;
++
++		/* Unset following if configured explicitly */
++		eth_broadcast_addr(sdata->u.mntr.mu_follow_addr);
+ 	}
  
- #define TKIP_HDR_LEN 8
-+#define MICHAEL_MIC_LEN 8
+ 	if (params->vht_mumimo_follow_addr) {
+@@ -76,16 +78,26 @@ static void ieee80211_set_mu_mimo_follow
+ 			is_valid_ether_addr(params->vht_mumimo_follow_addr);
+ 		ether_addr_copy(sdata->u.mntr.mu_follow_addr,
+ 				params->vht_mumimo_follow_addr);
++
++		/* Unset current membership until a management frame is RXed */
++		memset(sdata->vif.bss_conf.mu_group.membership, 0,
++		       WLAN_MEMBERSHIP_LEN);
+ 	}
  
- struct lib80211_tkip_data {
- #define TKIP_KEY_LEN 32
-@@ -585,16 +586,18 @@ static int lib80211_michael_mic_verify(s
- 					int hdr_len, void *priv)
+ 	sdata->vif.bss_conf.mu_mimo_owner = mu_mimo_groups || mu_mimo_follow;
++
++	/* Notify only after setting mu_mimo_owner */
++	if (sdata->vif.bss_conf.mu_mimo_owner &&
++	    sdata->flags & IEEE80211_SDATA_IN_DRIVER)
++		ieee80211_link_info_change_notify(sdata, &sdata->deflink,
++						  BSS_CHANGED_MU_GROUPS);
+ }
+ 
+ static int ieee80211_set_mon_options(struct ieee80211_sub_if_data *sdata,
+ 				     struct vif_params *params)
  {
- 	struct lib80211_tkip_data *tkey = priv;
--	u8 mic[8];
-+	u8 mic[MICHAEL_MIC_LEN];
+ 	struct ieee80211_local *local = sdata->local;
+-	struct ieee80211_sub_if_data *monitor_sdata;
++	struct ieee80211_sub_if_data *monitor_sdata = NULL;
  
--	if (!tkey->key_set)
-+	if (!tkey->key_set || skb->len < hdr_len + MICHAEL_MIC_LEN)
- 		return -1;
+ 	/* check flags first */
+ 	if (params->flags && ieee80211_sdata_running(sdata)) {
+@@ -104,18 +116,25 @@ static int ieee80211_set_mon_options(str
+ 			return -EBUSY;
+ 	}
  
- 	michael_mic_hdr(skb, tkey->rx_hdr);
- 	if (michael_mic(tkey->rx_tfm_michael, &tkey->key[24], tkey->rx_hdr,
--			skb->data + hdr_len, skb->len - 8 - hdr_len, mic))
-+			skb->data + hdr_len,
-+			skb->len - MICHAEL_MIC_LEN - hdr_len, mic))
- 		return -1;
--	if (memcmp(mic, skb->data + skb->len - 8, 8) != 0) {
-+	if (memcmp(mic, skb->data + skb->len - MICHAEL_MIC_LEN,
-+		   MICHAEL_MIC_LEN) != 0) {
- 		struct ieee80211_hdr *hdr;
- 		hdr = (struct ieee80211_hdr *)skb->data;
- 		printk(KERN_DEBUG "%s: Michael MIC verification failed for "
-@@ -612,7 +615,7 @@ static int lib80211_michael_mic_verify(s
- 	tkey->rx_iv32 = tkey->rx_iv32_new;
- 	tkey->rx_iv16 = tkey->rx_iv16_new;
+-	/* also validate MU-MIMO change */
+-	monitor_sdata = wiphy_dereference(local->hw.wiphy,
+-					  local->monitor_sdata);
+-
+-	if (!monitor_sdata &&
++	/* validate whether MU-MIMO can be configured */
++	if (!ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF) &&
+ 	    (params->vht_mumimo_groups || params->vht_mumimo_follow_addr))
+ 		return -EOPNOTSUPP;
  
--	skb_trim(skb, skb->len - 8);
-+	skb_trim(skb, skb->len - MICHAEL_MIC_LEN);
++	/* Also update dependent monitor_sdata if required */
++	if (test_bit(SDATA_STATE_RUNNING, &sdata->state))
++		monitor_sdata = wiphy_dereference(local->hw.wiphy,
++						  local->monitor_sdata);
++
+ 	/* apply all changes now - no failures allowed */
  
+-	if (monitor_sdata && ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF))
+-		ieee80211_set_mu_mimo_follow(monitor_sdata, params);
++	if (ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF)) {
++		/* This is copied in when the VIF is activated */
++		ieee80211_set_mu_mimo_follow(sdata, params);
++
++		if (monitor_sdata)
++			ieee80211_set_mu_mimo_follow(monitor_sdata, params);
++	}
+ 
+ 	if (params->flags) {
+ 		if (ieee80211_sdata_running(sdata)) {
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -2045,7 +2045,8 @@ void ieee80211_adjust_monitor_flags(stru
+ 				    const int offset);
+ int ieee80211_do_open(struct wireless_dev *wdev, bool coming_up);
+ void ieee80211_sdata_stop(struct ieee80211_sub_if_data *sdata);
+-int ieee80211_add_virtual_monitor(struct ieee80211_local *local);
++int ieee80211_add_virtual_monitor(struct ieee80211_local *local,
++				  struct ieee80211_sub_if_data *creator_sdata);
+ void ieee80211_del_virtual_monitor(struct ieee80211_local *local);
+ 
+ bool __ieee80211_recalc_txpower(struct ieee80211_sub_if_data *sdata);
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -763,8 +763,9 @@ static void ieee80211_do_stop(struct iee
+ 	ieee80211_configure_filter(local);
+ 	ieee80211_hw_config(local, hw_reconf_flags);
+ 
++	/* Passing NULL means an interface is picked for configuration */
+ 	if (local->monitors == local->open_count)
+-		ieee80211_add_virtual_monitor(local);
++		ieee80211_add_virtual_monitor(local, NULL);
+ }
+ 
+ static void ieee80211_stop_mbssid(struct ieee80211_sub_if_data *sdata)
+@@ -1188,7 +1189,8 @@ static void ieee80211_sdata_init(struct
+ 	ieee80211_link_init(sdata, -1, &sdata->deflink, &sdata->vif.bss_conf);
+ }
+ 
+-int ieee80211_add_virtual_monitor(struct ieee80211_local *local)
++int ieee80211_add_virtual_monitor(struct ieee80211_local *local,
++				  struct ieee80211_sub_if_data *creator_sdata)
+ {
+ 	struct ieee80211_sub_if_data *sdata;
+ 	int ret;
+@@ -1196,8 +1198,10 @@ int ieee80211_add_virtual_monitor(struct
+ 	ASSERT_RTNL();
+ 	lockdep_assert_wiphy(local->hw.wiphy);
+ 
+-	if (local->monitor_sdata)
+-		return 0;
++	/* Already have a monitor set up, configure it */
++	sdata = wiphy_dereference(local->hw.wiphy, local->monitor_sdata);
++	if (sdata)
++		goto configure_monitor;
+ 
+ 	sdata = kzalloc(sizeof(*sdata) + local->hw.vif_data_size, GFP_KERNEL);
+ 	if (!sdata)
+@@ -1251,6 +1255,32 @@ int ieee80211_add_virtual_monitor(struct
+ 	skb_queue_head_init(&sdata->status_queue);
+ 	wiphy_work_init(&sdata->work, ieee80211_iface_work);
+ 
++configure_monitor:
++	/* Copy in the MU-MIMO configuration if set */
++	if (!creator_sdata) {
++		struct ieee80211_sub_if_data *other;
++
++		list_for_each_entry(other, &local->mon_list, u.mntr.list) {
++			if (!other->vif.bss_conf.mu_mimo_owner)
++				continue;
++
++			creator_sdata = other;
++			break;
++		}
++	}
++
++	if (creator_sdata && creator_sdata->vif.bss_conf.mu_mimo_owner) {
++		sdata->vif.bss_conf.mu_mimo_owner = true;
++		memcpy(&sdata->vif.bss_conf.mu_group,
++		       &creator_sdata->vif.bss_conf.mu_group,
++		       sizeof(sdata->vif.bss_conf.mu_group));
++		memcpy(&sdata->u.mntr.mu_follow_addr,
++		       creator_sdata->u.mntr.mu_follow_addr, ETH_ALEN);
++
++		ieee80211_link_info_change_notify(sdata, &sdata->deflink,
++						  BSS_CHANGED_MU_GROUPS);
++	}
++
  	return 0;
  }
+ 
+@@ -1405,8 +1435,9 @@ int ieee80211_do_open(struct wireless_de
+ 			res = drv_add_interface(local, sdata);
+ 			if (res)
+ 				goto err_stop;
+-		} else if (local->monitors == 0 && local->open_count == 0) {
+-			res = ieee80211_add_virtual_monitor(local);
++		} else if (local->monitors == local->open_count) {
++			/* add/configure if there is no non-monitor interface */
++			res = ieee80211_add_virtual_monitor(local, sdata);
+ 			if (res)
+ 				goto err_stop;
+ 		}
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2144,8 +2144,9 @@ int ieee80211_reconfig(struct ieee80211_
+ 
+  wake_up:
+ 
++	/* Passing NULL means an interface is picked for configuration */
+ 	if (local->monitors == local->open_count && local->monitors > 0)
+-		ieee80211_add_virtual_monitor(local);
++		ieee80211_add_virtual_monitor(local, NULL);
+ 
+ 	/*
+ 	 * Clear the WLAN_STA_BLOCK_BA flag so new aggregation
 
 
