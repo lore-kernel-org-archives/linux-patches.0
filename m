@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEBA503BEE;
-	Wed, 30 Sep 2026 15:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F6F50B419;
+	Wed, 30 Sep 2026 15:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782622; cv=none; b=XW77f5pfYrzQLCizJQottduH4jQUCTZRuy77zb5aD9EbdxDRZ2J/NPpzSs/bskjl4/NIqdQxQkpN270S2KGAhhhNCioOJrrh35Ys8eVx/42tiT1ENI09AhcxzuO1ypALpINh6+2S0/i8Gk9WfW0eeJ2XIoqBSwK/jwvnjf7S1XM=
+	t=1790782625; cv=none; b=p4E1WcQONfNC6N1E0wggrFCdqUVEDGvy6Y7EWXIdBRhx83DdaRnQtEHfoNdVcauZU3CdVu8qvjatA+67xvMLcmpN5W7ylkaBGkcwFIy0R8xX7me0jDFCdiat8mhQsKC2aBj+SliVjnge2n5mCWr3dWAh8en453go7MIEy5DqJGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782622; c=relaxed/simple;
-	bh=QBMrjs5Y9sn3RuEjOGOJO8pgV5avWVbv2QhTvZMyp04=;
+	s=arc-20240116; t=1790782625; c=relaxed/simple;
+	bh=HyUPRYqPIxoSbjN3YyN6gvSMZNREAiQFt1ROPrUoPFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWqaAzBt+oPgsq8y50cYNAOnY4YhgV9a+ftyUyJbFk1ugOoiPROCF2DfDvu9qQbFppeUbrPcue9MStNVUUQdZygT922ZLh/VbKqMMxcOnm+oydX6BClJ7YxIvktveYXm5TmuE/+ieXJAXqOkKJ7o+CjWy2FgbZ0huvBVfFBBZZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYgJ47D/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNsDN2Pu3hgDzkw2sOSmRdNBJFUvm4Btepugw2D3+5oh3d09izjhJNRDBtINBQRjk3G2LqujakBiZ0JhmHuUkJTAwZGmYOk/ubd99DLD/5EmWCKmxbPuWXcvK/9TLk6hGbt3sc/bAr+fAxVcjurm1Mtlpe3k+7Bhs0YdVBmWlr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eK2UmyVP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYgJ47D/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E342A1F00899;
-	Wed, 30 Sep 2026 15:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eK2UmyVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AEC1F0089A;
+	Wed, 30 Sep 2026 15:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782615;
-	bh=Qhf9eBjX97zPvYFXZlE4cDNbKCc7etb+JbBwVPm5j7U=;
+	s=korg; t=1790782612;
+	bh=VW+c0qaVmIioldz95IzirxhiYZlOORZ0L/SheQDqDEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mYgJ47D/KB6PLIeg0hTDfZ4NAuwSduIbdtM+iadjuJZpLeNDNRHkA7kARNi9jeFL4
-	 18idXqrlStcQM+jCvH9mkEk8U4WukGNDpiDElAGTED0XTFTraFjmnATsN6E1FYVZ4H
-	 ZuI7pexi3Gga274mcB7zxlsFZZ/xerQVpu1w4XQk=
+	b=eK2UmyVPHz0Np84BMaB8TgYv2zYxHdZmJzDcMLXQbcFHhCm6taSMTGTLN+WWGPmLI
+	 eGACJCK4Redww3Pl5BfX95/uv4fQ0i6QJxVddyuONUmh+4jEhhflPvHQ8RFXrLS8Mz
+	 BUXHN4M658Zr4CoSeqbo0J++T/+SoeWoS0VehBXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/595] netfilter: nf_conntrack: use get_unaligned_be32() in tcp_sack()
-Date: Wed, 30 Sep 2026 17:20:00 +0200
-Message-ID: <20260930152350.039209816@linuxfoundation.org>
+Subject: [PATCH 5.10 106/595] ALSA: es18xx: check control allocation before private data setup
+Date: Wed, 30 Sep 2026 17:19:59 +0200
+Message-ID: <20260930152350.019717637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,49 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit d3bf9eae486490832bd08fd62ab0ac601f346bd4 ]
+[ Upstream commit 422e42b7c2b882ba1d16d4afc8891bcea7c4de93 ]
 
-The timestamp-only fast path dereferences the option stream as
-*(__be32 *)ptr, which assumes 4-byte alignment that the TCP option
-stream does not guarantee. Use get_unaligned_be32() instead, which
-reads the value safely and already returns host byte order, so the
-htonl() on the comparison constant can be dropped.
+snd_es18xx_mixer() creates controls with snd_ctl_new1() and then stores
+bookkeeping pointers or sets private_free before calling snd_ctl_add().
+snd_ctl_new1() can return NULL on allocation failure, so those writes
+can dereference a NULL control pointer.
 
-This matches the existing get_unaligned_be32() use later in the same
-function.
+Check the returned control pointers before using them and return -ENOMEM
+on allocation failure.
 
-Assisted-by: Claude:Opus-4.7
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260607074219.3-1-ruoyuw560@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/isa/es18xx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 133e17715bbc2..7ddc751f979eb 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -411,11 +411,11 @@ static void tcp_sack(const struct sk_buff *skb, unsigned int dataoff,
- 	BUG_ON(ptr == NULL);
- 
- 	/* Fast path for timestamp-only option */
--	if (length == TCPOLEN_TSTAMP_ALIGNED
--	    && *(__be32 *)ptr == htonl((TCPOPT_NOP << 24)
--				       | (TCPOPT_NOP << 16)
--				       | (TCPOPT_TIMESTAMP << 8)
--				       | TCPOLEN_TIMESTAMP))
-+	if (length == TCPOLEN_TSTAMP_ALIGNED &&
-+	    get_unaligned_be32(ptr) == ((TCPOPT_NOP << 24) |
-+					(TCPOPT_NOP << 16) |
-+					(TCPOPT_TIMESTAMP << 8) |
-+					TCPOLEN_TIMESTAMP))
- 		return;
- 
- 	while (length > 0) {
+diff --git a/sound/isa/es18xx.c b/sound/isa/es18xx.c
+index 5f8d7e8a54775..3780460fc8f37 100644
+--- a/sound/isa/es18xx.c
++++ b/sound/isa/es18xx.c
+@@ -1820,6 +1820,8 @@ static int snd_es18xx_mixer(struct snd_card *card)
+ 	for (idx = 0; idx < ARRAY_SIZE(snd_es18xx_base_controls); idx++) {
+ 		struct snd_kcontrol *kctl;
+ 		kctl = snd_ctl_new1(&snd_es18xx_base_controls[idx], chip);
++		if (!kctl)
++			return -ENOMEM;
+ 		if (chip->caps & ES18XX_HWV) {
+ 			switch (idx) {
+ 			case 0:
+@@ -1874,6 +1876,8 @@ static int snd_es18xx_mixer(struct snd_card *card)
+ 		for (idx = 0; idx < ARRAY_SIZE(snd_es18xx_hw_volume_controls); idx++) {
+ 			struct snd_kcontrol *kctl;
+ 			kctl = snd_ctl_new1(&snd_es18xx_hw_volume_controls[idx], chip);
++			if (!kctl)
++				return -ENOMEM;
+ 			if (idx == 0)
+ 				chip->hw_volume = kctl;
+ 			else
 -- 
 2.53.0
 
