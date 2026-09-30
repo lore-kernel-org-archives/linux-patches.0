@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623C34F93B9;
-	Wed, 30 Sep 2026 16:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0874C10DD;
+	Wed, 30 Sep 2026 16:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784055; cv=none; b=SkzBHVwX9Qe4FOJ33ktpDfmdw7WxQ2c2FRpFogMOziGoduoGi2IbHxOmDOENGag5/KL7ME675Kfgu46NOpI4N0igSkoAuja+DujsbNpEHdUQKy9HLhRw1Hcic0BcstHsC80NkwmrDoqvglm82Qr/GvA8xGi3HeaE8TmF47j/KL0=
+	t=1790784059; cv=none; b=uzR/rQU6OPAoYxtv7G5KxYcqehmg/3rdswaOWKNGNdf0+mK53z3uKJgiOI2iiPrCsVuQDhIrqThpgS7kyXQeLJs3O83gefViF9l0wOV5FSwmOfu6beoK2UsriSsNRF5YMiKLrB+M3vUEGrhikU9bSOy9oMjTKx6ermOhb8mUV+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784055; c=relaxed/simple;
-	bh=1eBWHCdO5u2oX1lFRfHxvHgNNHnmuaLNWrWQYsLmOKE=;
+	s=arc-20240116; t=1790784059; c=relaxed/simple;
+	bh=FfoEJuI6T8gsGQ9RVIYwnmD94Q7g3rWN0Cgd1ioqv5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cbejTHnxR+sRtAK/mYJCgKv4yGF5ayyr+5nx8nVfeaObc9+c3BJL3ThsiekAfkiMtJJ0WJsg1M0yFMnmnCkrDMFjfJPK1h9ycSb8sV36+omjhts1rpak4z7Q98p5V9cD2iWANl543fTZ6AkoHikKM9mqV2dkJ7Iw3LFa2QI/EqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AU5yWTTp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dGojRuQlzn0TFayzULHE9pkhfQFXReGSwPQx40nCGXO0OY+EiUKhBSSkGf4CjNQokhs4U2MOGksRDaJ245+5n70HTRmqv4cTfRoBgOEOH8G52qVo4bfSn7kbaTqvJSJ4R7HjKynv/Z7v095nl8gn+NXfIhofZAdP6gNRhdXWZhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqjOl4he; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU5yWTTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A884B1F000FF;
-	Wed, 30 Sep 2026 16:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqjOl4he"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889831F00893;
+	Wed, 30 Sep 2026 16:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784051;
-	bh=PvDOIn74+7REaajKhMwf47TiedZATPtVGiRenBJKR4I=;
+	s=korg; t=1790784054;
+	bh=b+Oac0CoGddRaq9VoMgNJfWAOfWjqpcKAjKqzYpgUog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AU5yWTTp3ECIpmZrTkrNasX2w/spCG4d6IQdElZeJ0bP/l9p1tdof4MUn12JVMvoX
-	 mwO6pRJGh5hpv6EuCaMfBmUWmeRre9d/w/U68apXLkp8XovPXNL4iC6tMwNsy2rVj9
-	 GkIXOa7k1bhoExCCpep+4NG+j78Mpz6ozh0OaPbg=
+	b=NqjOl4heFfeeuJnBG6ojF+sX+5SPvg6oQbCh9GIbfmPM8jEIpKxlbHmqrIQoldsIu
+	 PQ5KNzVj+c/CPZZy1Hzaze2vrXGv3wNcqLTlddL6yamxXy5UGWEcd/bOFASJZVJa3P
+	 WNl/MDSKMAdNV+R5Xb487R8tqX4nKFftJ70w29rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/982] ALSA: usb-audio: Propagate write errors in generic mixer put callbacks
-Date: Wed, 30 Sep 2026 17:12:19 +0200
-Message-ID: <20260930152416.854463680@linuxfoundation.org>
+Subject: [PATCH 6.1 004/982] ima: return error early if file xattr cannot be changed
+Date: Wed, 30 Sep 2026 17:12:20 +0200
+Message-ID: <20260930152416.877885566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,84 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit 87a6f2fa6e6c69bb649fa327635a0bd977724603 ]
+[ Upstream commit 69fc6474236d9edda6983623e4282f2bdfd8e3d8 ]
 
-mixer_ctl_feature_put(), mixer_ctl_procunit_put(), and
-mixer_ctl_selector_put() ignore failures from their SET_CUR helper
-routines and report the control as changed whenever the requested
-value differs from the current one.
+During early boot, the filesystem is read-only and any changes
+to xattrs are not allowed. This fails in case of ext4 because
+changing xattr starts an ext4 transaction which fails with the
+following warning.
 
-If the device rejects the write, userspace still sees success although
-the hardware state did not change. Propagate write failures instead,
-using filter_error() so ignore_ctl_error keeps the same semantics as
-the existing get paths.
+WARNING: fs/ext4/ext4_jbd2.c:75 at ext4_journal_check_start+0x63/0xa0 [ext4], CPU#1: systemd-sysroot/561
+CPU: 1 UID: 0 PID: 561 Comm: systemd-sysroot Not tainted 6.19.12-1-default #1 PREEMPT(voluntary) openSUSE Tumbleweed  c2dfc3c9d9f6f1233251c5d4410574fe82a348ee
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+RIP: 0010:ext4_journal_check_start+0x63/0xa0 [ext4]
+Call Trace:
+  __ext4_journal_start_sb+0x3e/0x180 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ext4_xattr_set+0x104/0x150 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  __vfs_setxattr+0x9a/0xd0
+  __vfs_setxattr_noperm+0x76/0x1f0
+  ima_appraise_measurement+0x23e/0xe40
+  ima_d_path+0x5a/0xd0
+  process_measurement+0xb29/0xc40
+  ? copy_from_kernel_nofault+0x21/0xe0
+  ? fscrypt_file_open+0xc0/0xe0
+  ? ext4_file_open+0x60/0x490 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ? bpf_prog_31efb7c56239148b_restrict_filesystems+0xab/0x126
+  ? __bpf_prog_exit+0x23/0xd0
+  ? __bpf_tramp_exit+0xd/0x50
+  ? bpf_trampoline_6442530367+0x9f/0xea
+  ima_file_check+0x57/0x80
+  security_file_post_open+0x50/0xf0
+  path_openat+0x493/0x1650
+  do_filp_open+0xc7/0x170
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260419-usb-write-error-propagation-v1-1-5a3bd4a673ae@gmail.com
+Detect the state of the file early and return the error.
+
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ security/integrity/ima/ima_appraise.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 21543ed58453b..45a4a8c7a697d 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1463,7 +1463,10 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
- 				return -EINVAL;
- 			val = get_abs_value(cval, val);
- 			if (oval != val) {
--				snd_usb_set_cur_mix_value(cval, c + 1, cnt, val);
-+				err = snd_usb_set_cur_mix_value(cval, c + 1,
-+								cnt, val);
-+				if (err < 0)
-+					return filter_error(cval, err);
- 				changed = 1;
- 			}
- 			cnt++;
-@@ -1478,7 +1481,9 @@ static int mixer_ctl_feature_put(struct snd_kcontrol *kcontrol,
- 			return -EINVAL;
- 		val = get_abs_value(cval, val);
- 		if (val != oval) {
--			snd_usb_set_cur_mix_value(cval, 0, 0, val);
-+			err = snd_usb_set_cur_mix_value(cval, 0, 0, val);
-+			if (err < 0)
-+				return filter_error(cval, err);
- 			changed = 1;
- 		}
- 	}
-@@ -2345,7 +2350,9 @@ static int mixer_ctl_procunit_put(struct snd_kcontrol *kcontrol,
- 		return -EINVAL;
- 	val = get_abs_value(cval, val);
- 	if (val != oval) {
--		set_cur_ctl_value(cval, cval->control << 8, val);
-+		err = set_cur_ctl_value(cval, cval->control << 8, val);
-+		if (err < 0)
-+			return filter_error(cval, err);
- 		return 1;
- 	}
- 	return 0;
-@@ -2709,7 +2716,9 @@ static int mixer_ctl_selector_put(struct snd_kcontrol *kcontrol,
- 		return -EINVAL;
- 	val = get_abs_value(cval, val);
- 	if (val != oval) {
--		set_cur_ctl_value(cval, cval->control << 8, val);
-+		err = set_cur_ctl_value(cval, cval->control << 8, val);
-+		if (err < 0)
-+			return filter_error(cval, err);
- 		return 1;
- 	}
- 	return 0;
+diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
+index 1b45873ae4844..f9d0bd4d3613b 100644
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -90,6 +90,11 @@ static int ima_fix_xattr(struct dentry *dentry,
+ 	int rc, offset;
+ 	u8 algo = iint->ima_hash->algo;
+ 
++	if (IS_RDONLY(d_inode(dentry)))
++		return -EROFS;
++	if (IS_IMMUTABLE(d_inode(dentry)))
++		return -EPERM;
++
+ 	if (algo <= HASH_ALGO_SHA1) {
+ 		offset = 1;
+ 		iint->ima_hash->xattr.sha1.type = IMA_XATTR_DIGEST;
 -- 
 2.53.0
 
