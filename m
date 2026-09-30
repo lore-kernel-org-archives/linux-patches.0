@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF6254705C;
-	Wed, 30 Sep 2026 16:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85B93264C2;
+	Wed, 30 Sep 2026 16:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785346; cv=none; b=WJRun4o8JXuUjae/+pMogKftsDMUumdUkSlGqQ0bDbvy/seMY9bzX/ue21aKE6GtQk9Qee+i4PCRoHbCSPPuU71Wx3kTHY5Aub7lfEPQrpddEcYCf+JtbeTzDI1m0Fj8Wvmd2Vu2yhlFNNSRh4vdF9G5I9CqdC5hz3Oj6WzQgJ4=
+	t=1790785348; cv=none; b=X75unSUVPdc7iiEKW8WGjkjQfqblgaEBkvSCshxcNFoM2nOFa9gPUW5w0LuzK70EQdIyRCTEikid8mlZdHYWDLW0oGdWVdyfhesKICfhquI6zsmwMplWf/O0meE/ByBq4x3mLOC65oCaBEXoYgcRsJvB1yXhLvaUQWXFsF15FSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785346; c=relaxed/simple;
-	bh=nEFqhVWtQBB+A7fRwweaiR1G9K0u4krn56oNhnCG3YI=;
+	s=arc-20240116; t=1790785348; c=relaxed/simple;
+	bh=asIVERVI3RbItWucHgQnmttWqjw+FzMcMYukpHCh6ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UgkhOOVe0WQSI07Sl2NvMxcXo/xSzF52Vspe4H6LPaOqHfu+li2bZetWEQzh9R6NwAUxBj3b+oaL/BOqY2H/eHU8oQR+IIqtrITnleDABKdYWSB722/XhZ5nZE/vWRVV9MCYIgfI6O3MgJJmu5QddsLIUdh3y5MvBhXzVNQucFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrPi/HxB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ucjFLdrug9jMOkNEAJJJr2zo0XhsYN2wYmbd7MeZwaAbCKCnkP5KReYMKnaAR6QugsZH/HoFPzudLh4h/hyae0ilMGiyAG49SGBQiCIXN/08TEeHpcVyqgQsEUkKjGlUMkdqT93ayRzffyYHEQzq5S6KjqspK5mk4ZE0LEj+4yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dx64AgPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrPi/HxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A089E1F000FF;
-	Wed, 30 Sep 2026 16:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dx64AgPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B2F1F00893;
+	Wed, 30 Sep 2026 16:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785339;
-	bh=65S2wHJDe5WRGw7WXFXLFQVjJOenH5Vgog7zZwkF0JU=;
+	s=korg; t=1790785342;
+	bh=p9xyMYR7obpUr5TB9h3xGwDqEyUKZxKP2sCSWA/BHBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrPi/HxB7cbMNE6rI8aPtAD9GzSanFeN1wfpCxy1sGFP5pWxVyH86qj/cLfYumsyP
-	 ab3+sAXYkwU0pKs3HLpzjSkEFtCcq41vh1CbVb/0vRqPQLh/v2Ixn2IHpL/WLdBHv9
-	 i4lvZUsMubb0txsM77okyQmstA7mW/3aGnrQouuE=
+	b=dx64AgPiNAoWbRK8hDEhkaWKxI7PpwFSla+yCOPTKYL32W0rExFWmGUDYHsolkjmX
+	 8JEFd85oV2XBIcCJffeYe/TaqpuXzZAc4ptIfDn49aiGtfETj1PJO860cYPeiGV863
+	 MT67ng8Ln+xpbCcU9b9riaIlXpNVzcdnmyBv68Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Beniamino Galvani <b.galvani@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 447/982] net: ethernet: cortina: Fix budget accounting
-Date: Wed, 30 Sep 2026 17:19:43 +0200
-Message-ID: <20260930152426.396737171@linuxfoundation.org>
+Subject: [PATCH 6.1 474/982] ipv6: add new arguments to udp_tunnel6_dst_lookup()
+Date: Wed, 30 Sep 2026 17:20:10 +0200
+Message-ID: <20260930152426.963611341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,71 +53,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Beniamino Galvani <b.galvani@gmail.com>
 
-[ Upstream commit a0de06d0da78a3db53de65dfd7452cc6d111f703 ]
+[ Upstream commit 946fcfdbc5b97e26d31339ebca2d9a51a4f975ff ]
 
-The gmac_rx() function returns the remaining NAPI budget, but its
-caller treats the return value as the number of packets received. An
-idle poll therefore reports a full budget and remains scheduled.
+We want to make the function more generic so that it can be used by
+other UDP tunnel implementations such as geneve and vxlan. To do that,
+add the following arguments:
 
-Return the number of received packets instead. Preserve the existing
-free queue refill accounting by adding that count directly; continuing
-to subtract it from the budget would invert the refill behavior.
+ - source and destination UDP port;
+ - ifindex of the output interface, needed by vxlan;
+ - the tos, because in some cases it is not taken from struct
+   ip_tunnel_info (for example, when it's inherited from the inner
+   packet);
+ - the dst cache, because not all tunnel types (e.g. vxlan) want to
+   use the one from struct ip_tunnel_info.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Link: https://lore.kernel.org/r/20260509-gemini-ethernet-fixes-v1-4-6c5d20ddc35b@kernel.org
-Link: https://lore.kernel.org/r/20260512131456.189452-1-pabeni@redhat.com
-Assisted-by: LLM
-Reviewed-by: Joe Damato <joe@dama.to>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-1-2bbbd598ca6e@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+With these parameters, the function no longer needs the full struct
+ip_tunnel_info as argument and we can pass only the relevant part of
+it (struct ip_tunnel_key).
+
+This is similar to what already done for IPv4 in commit 72fc68c6356b
+("ipv4: add new arguments to udp_tunnel_dst_lookup()").
+
+Suggested-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Beniamino Galvani <b.galvani@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: be83178bfc44 ("vxlan: initialize _md in vxlan_xmit_one()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/bareudp.c     | 10 +++++++---
+ include/net/udp_tunnel.h  |  7 ++++---
+ net/ipv6/ip6_udp_tunnel.c | 33 ++++++++++++++++++---------------
+ 3 files changed, 29 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 3f0e63c7342bd..b8e4045d9821c 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1455,6 +1455,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
- 	struct gmac_queue_page *gpage;
-+	unsigned int received = 0;
- 	union gmac_rxdesc_0 word0;
- 	union gmac_rxdesc_1 word1;
- 	union gmac_rxdesc_3 word3;
-@@ -1550,7 +1551,8 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			napi_gro_frags(&port->napi);
- 			skb = NULL;
- 			frag_nr = 0;
--			--budget;
-+			budget--;
-+			received++;
- 		}
- 		continue;
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index eaaa7bf89accf..338958d2c1531 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -393,8 +393,10 @@ static int bareudp6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	if (!sock)
+ 		return -ESHUTDOWN;
  
-@@ -1570,7 +1572,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	port->rx_skb = skb;
- 	port->rx_frag_nr = frag_nr;
- 	writew(r, ptr_reg);
--	return budget;
-+	return received;
- }
+-	dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock, &saddr, info,
+-				     use_cache);
++	dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock, 0, &saddr,
++				     key, 0, 0, key->tos,
++				     use_cache ?
++				     (struct dst_cache *) &info->dst_cache : NULL);
+ 	if (IS_ERR(dst))
+ 		return PTR_ERR(dst);
  
- static int gmac_napi_poll(struct napi_struct *napi, int budget)
-@@ -1591,7 +1593,7 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 		++port->rx_napi_exits;
+@@ -524,7 +526,9 @@ static int bareudp_fill_metadata_dst(struct net_device *dev,
+ 			return -ESHUTDOWN;
+ 
+ 		dst = udp_tunnel6_dst_lookup(skb, dev, bareudp->net, sock,
+-					     &saddr, info, use_cache);
++					     0, &saddr, &info->key,
++					     0, 0, info->key.tos,
++					     use_cache ? &info->dst_cache : NULL);
+ 		if (IS_ERR(dst))
+ 			return PTR_ERR(dst);
+ 
+diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
+index 8409a5429349b..a5fae599eaa9f 100644
+--- a/include/net/udp_tunnel.h
++++ b/include/net/udp_tunnel.h
+@@ -171,10 +171,11 @@ struct rtable *udp_tunnel_dst_lookup(struct sk_buff *skb,
+ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
+ 					 struct net_device *dev,
+ 					 struct net *net,
+-					 struct socket *sock,
++					 struct socket *sock, int oif,
+ 					 struct in6_addr *saddr,
+-					 const struct ip_tunnel_info *info,
+-					 bool use_cache);
++					 const struct ip_tunnel_key *key,
++					 __be16 sport, __be16 dport, u8 dsfield,
++					 struct dst_cache *dst_cache);
+ 
+ struct metadata_dst *udp_tun_rx_dst(struct sk_buff *skb, unsigned short family,
+ 				    __be16 flags, __be64 tunnel_id,
+diff --git a/net/ipv6/ip6_udp_tunnel.c b/net/ipv6/ip6_udp_tunnel.c
+index 812fc284cf36e..fe7a92cbbd449 100644
+--- a/net/ipv6/ip6_udp_tunnel.c
++++ b/net/ipv6/ip6_udp_tunnel.c
+@@ -118,9 +118,13 @@ EXPORT_SYMBOL_GPL(udp_tunnel6_xmit_skb);
+  *      @dev: Tunnel device
+  *      @net: Network namespace of tunnel device
+  *      @sock: Socket which provides route info
++ *      @oif: Index of the output interface
+  *      @saddr: Memory to store the src ip address
+- *      @info: Tunnel information
+- *      @use_cache: Flag to enable cache usage
++ *      @key: Tunnel information
++ *      @sport: UDP source port
++ *      @dport: UDP destination port
++ *      @dsfield: The traffic class field
++ *      @dst_cache: The dst cache to use for lookup
+  *      This function performs a route lookup on a UDP tunnel
+  *
+  *      It returns a valid dst pointer and stores src address to be used in
+@@ -131,20 +135,17 @@ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
+ 					 struct net_device *dev,
+ 					 struct net *net,
+ 					 struct socket *sock,
++					 int oif,
+ 					 struct in6_addr *saddr,
+-					 const struct ip_tunnel_info *info,
+-					 bool use_cache)
++					 const struct ip_tunnel_key *key,
++					 __be16 sport, __be16 dport, u8 dsfield,
++					 struct dst_cache *dst_cache)
+ {
+ 	struct dst_entry *dst = NULL;
+-#ifdef CONFIG_DST_CACHE
+-	struct dst_cache *dst_cache;
+-#endif
+ 	struct flowi6 fl6;
+-	__u8 prio;
+ 
+ #ifdef CONFIG_DST_CACHE
+-	dst_cache = (struct dst_cache *)&info->dst_cache;
+-	if (use_cache) {
++	if (dst_cache) {
+ 		dst = dst_cache_get_ip6(dst_cache, saddr);
+ 		if (dst)
+ 			return dst;
+@@ -153,10 +154,12 @@ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
+ 	memset(&fl6, 0, sizeof(fl6));
+ 	fl6.flowi6_mark = skb->mark;
+ 	fl6.flowi6_proto = IPPROTO_UDP;
+-	fl6.daddr = info->key.u.ipv6.dst;
+-	fl6.saddr = info->key.u.ipv6.src;
+-	prio = info->key.tos;
+-	fl6.flowlabel = ip6_make_flowinfo(prio, info->key.label);
++	fl6.flowi6_oif = oif;
++	fl6.daddr = key->u.ipv6.dst;
++	fl6.saddr = key->u.ipv6.src;
++	fl6.fl6_sport = sport;
++	fl6.fl6_dport = dport;
++	fl6.flowlabel = ip6_make_flowinfo(dsfield, key->label);
+ 
+ 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sock->sk, &fl6,
+ 					      NULL);
+@@ -170,7 +173,7 @@ struct dst_entry *udp_tunnel6_dst_lookup(struct sk_buff *skb,
+ 		return ERR_PTR(-ELOOP);
  	}
- 
--	port->freeq_refill += (budget - received);
-+	port->freeq_refill += received;
- 	if (port->freeq_refill > freeq_threshold) {
- 		port->freeq_refill -= freeq_threshold;
- 		geth_fill_freeq(geth, true);
+ #ifdef CONFIG_DST_CACHE
+-	if (use_cache)
++	if (dst_cache)
+ 		dst_cache_set_ip6(dst_cache, dst, &fl6.saddr);
+ #endif
+ 	*saddr = fl6.saddr;
 -- 
 2.53.0
 
