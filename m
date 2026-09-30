@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3F750B437;
-	Wed, 30 Sep 2026 17:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767E95187C2;
+	Wed, 30 Sep 2026 17:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788976; cv=none; b=nsZ8LqnOxHAEC0Qt/4CYZoVS24oFeizblEw6MwquQR0SLB+zH+QyHEeRNcJmn/WUoA8ZTI+Tobuyb1LV5qvm3i3ttDZzWnSrKVcN5krSg48n8AdnXlLUtUkC9j8caTnJYOBKVYUQltA51nU+4B+DMKV/LvvvD0jII2zwBIC++UI=
+	t=1790788979; cv=none; b=SfaXticB7hfKnem/m9sZjHFvAGq4pTpqQH0TKJ7jGGoyzlx5rkqugZl6XM4xlzTPMNG3r6IrHUSWriWfR7ehgzEijJmzR8D5/YBdtYRBSyrZhjg4eQcQMJ6sn9dezO8G1J3wbohHY6s1HnmcaYHkGw9RlwPGIZAzBb4pxf+isCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788976; c=relaxed/simple;
-	bh=UA94ESmFj6UAB9DFjJ75GPN7Sb6D/2cu43qpFdofDSQ=;
+	s=arc-20240116; t=1790788979; c=relaxed/simple;
+	bh=u7wHw/nrMWbW8kcPA4VC8ysB+tzvtXHOmOF1WJOJRz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTtHmJGMoz0AvEpyMO1CkCfLWvNicUW38C2h2tjCKNH/6wDchucGWkA/1QuSG7KCnY6AJGRn4BujCI+x7DBUxDVuYHp0PMwjxuLgwv+79CUEg8B3SY+u5tsHcrokRa4qPHYfKNMA1Kp5OxqmlGT9pEBgsi1ZD9+sYu0vi8Yr2LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spP8Ju33; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OLdysVM8FzLMl0a6tETM0+3PV/ShJdG9u9DJcdqZ37gywreVNrjGgqmWohJPUifSQx4hDyuOT+JZddeLc0q4D9TGXPk5pBc3riJMjCAwUSvOrLkTM2RpMbNS1pal0P/85B/lgiQYVbjLKeci56ogMcddRaZoZNIsvItRgH2eMc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2eAmMJ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spP8Ju33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A0E1F000FF;
-	Wed, 30 Sep 2026 17:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2eAmMJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0F61F000FF;
+	Wed, 30 Sep 2026 17:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788974;
-	bh=y+uczt08UsWgc/tvGNPfq1zVb7Ra5JZAk1fs8rLxV50=;
+	s=korg; t=1790788977;
+	bh=odcNnzHuTTf35eCymsPXeg2AbFrxHCOFHXSsR/uE2Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=spP8Ju33//VRFrch9BD9NRkbiZw/BMLC+qHZb+pTm1NVTt8NMcQoE9ZYqVit0uVFY
-	 qi58nDLtMXGxsIsjHKzRSRZPE2dmJ6mRGCnwvD5chSSUUt7BdCTGBzwSiU1uZrVSGH
-	 LhPz57a+y2EXVF13ch7Axl+gcUoOyNIoeV3LgkOA=
+	b=r2eAmMJ10+LS+LlmprzaU1WHnBfoAJRrQhPIK6O022IJdhMtuakhl/V6dzqbKpab1
+	 0H69LRj5Ohuz8KBnB/xiWb/izTCVkq6y5tufk5RDLd3d351l1Pt5juO+cP828Xb4wI
+	 y5sw+MUDRVkRRP3IKCbTVrZNsLzJrpEOMn0xcDMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Pu Lehui <pulehui@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 315/877] bpf: Fix UAF due to concurrent consumption of ttrace lists in alloc_bulk
-Date: Wed, 30 Sep 2026 17:20:26 +0200
-Message-ID: <20260930152421.487091697@linuxfoundation.org>
+Subject: [PATCH 6.12 316/877] bpf, sockmap: Fix self-redirect copied_seq double-counting
+Date: Wed, 30 Sep 2026 17:20:27 +0200
+Message-ID: <20260930152421.507705529@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,199 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 1c21452d02eec2f008e2c5535820f85adbd7587a ]
+[ Upstream commit 490a83d6386eec1d29f470c8d7331677fb46c3b7 ]
 
-Syzkaller repeatedly triggered UAF splats related to nodes in
-waiting_for_gp_ttrace within the bpf memalloc:
+When a BPF stream_verdict program redirects an skb back to the same
+socket (self-redirect with BPF_F_INGRESS), sk_psock_verdict_apply()
+calls tcp_eat_skb() which advances tcp_sk->copied_seq. However, the
+skb is then delivered to the socket's psock ingress queue and later
+read by tcp_bpf_recvmsg_parser(), which also advances copied_seq via
+the copied_from_self accounting path. This double-counting causes
+copied_seq to advance by 2x the actual data length, triggering:
 
-BUG: KASAN: slab-use-after-free in llist_del_first+0x85/0x110 lib/llist.c:61
-Read of size 8 at addr ffff8881572cd080 by task syz.4.470/5112
- ...
- llist_del_first+0x85/0x110 lib/llist.c:61
- alloc_bulk+0x193/0x460 kernel/bpf/memalloc.c:229
- bpf_mem_refill+0x386/0x560 kernel/bpf/memalloc.c:436
+  TCP recvmsg seq # bug 2: copied BF2E806, seq BF2E7FD, \
+			   rcvnxt BF2E806, fl 0
+  WARNING: net/ipv4/tcp.c:2745 at tcp_recvmsg_locked+0x72b/0x2640
+  Call Trace:
+   tcp_recvmsg+0x10a/0x500
+   sock_recvmsg+0x168/0x1d0
+   __sys_recvfrom+0x19a/0x2a0
+   __x64_sys_recvfrom+0xe4/0x1f0
+   do_syscall_64+0xf7/0x530
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Freed by task 14:
- ...
- __free_rcu kernel/bpf/memalloc.c:281 [inline]
- __free_rcu_tasks_trace+0x48/0xd0 kernel/bpf/memalloc.c:291
- rcu_tasks_invoke_cbs+0x1ec/0x3e0 kernel/rcu/tasks.h:571
- rcu_tasks_one_gp+0x13d/0x220 kernel/rcu/tasks.h:621
- rcu_tasks_kthread+0xf3/0x120 kernel/rcu/tasks.h:651
+  cleanup rbuf bug: copied BF2E806 seq BF2E806 rcvnxt BF2E806
+  WARNING: net/ipv4/tcp.c:1609 at tcp_cleanup_rbuf+0xf2/0x1c0
+  Call Trace:
+   tcp_recvmsg_locked+0x8d1/0x2640
+   tcp_recvmsg+0x10a/0x500
+   sock_recvmsg+0x168/0x1d0
+   __sys_recvfrom+0x19a/0x2a0
+   __x64_sys_recvfrom+0xe4/0x1f0
+   do_syscall_64+0xf7/0x530
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The reason is that the UAF occurs after the RCU Tasks Trace GP expires:
-when the __free_rcu() callback runs, there is no synchronization
-protecting llist_del_all() against concurrent alloc_bulk() operating on
-waiting_for_gp_ttrace, leading to the race condition below:
+Fix this by converting self-redirect verdict to __SK_PASS at the
+beginning of sk_psock_verdict_apply(). This bypasses the
+__SK_REDIRECT case entirely (which calls sk_psock_eat_skb), letting
+the __SK_PASS path queue the skb to the psock ingress queue. The
+data is then read via tcp_bpf_recvmsg_parser(), which advances
+copied_seq exactly once through copied_from_self. Cross-socket
+redirects continue through __SK_REDIRECT with sk_psock_eat_skb()
+unchanged.
 
-CPU0                                           CPU1
-                                               __free_rcu (RCU Tasks Trace callback)
-alloc_bulk
-  llist_del_first(&c->waiting_for_gp_ttrace)
-    entry = smp_load_acquire(&head->first);
-    do {
-      if (entry == NULL)
-        return NULL;
-                                               free_all(llist_del_all(&c->waiting_for_gp_ttrace))
-                                                 llist_for_each_safe(pos, t, llnode)
-                                                   free_one(pos);
-      next = READ_ONCE(entry->next); <-- trigger UAF
-    } while (!try_cmpxchg(&head->first, &entry, next));
-
-In addition, there is also a theoretical race condition on the
-free_by_rcu_ttrace list. This race requires two preconditions: an
-in-flight Tasks Trace GP keeping c->call_rcu_ttrace_in_progress == 1,
-and concurrent cross-CPU frees repopulating c->free_by_rcu_ttrace with
-new nodes. Under these conditions, the following scenario triggers UAF:
-
-// CPU0
-// irq work is still busy (on PREEMPT_RT)
-alloc_bulk()
-  llist_del_first(&c->free_by_rcu_ttrace)
-    entry = smp_load_acquire(&head->first);
-    do {
-      if (entry == NULL)
-        return NULL;
-
-        // CPU1
-        bpf_mem_alloc_destroy()
-          WRITE_ONCE(c->draining, true)
-          // wait for CPU0
-          irq_work_sync()
-
-                // CPU2
-                do_call_rcu_ttrace(tgt(CPU0))
-                  if (c->draining) {
-                    llist_del_all(&c->free_by_rcu_ttrace)
-                    free_all()
-                  }
-
-// CPU0 continue
-      next = READ_ONCE(entry->next); <-- trigger UAF
-    while (!try_cmpxchg(&head->first, &entry, next));
-
-Fix this by introducing a raw spinlock to synchronize the concurrent
-consumption on waiting_for_gp_ttrace and free_by_rcu_ttrace.
-
-Fixes: 04fabf00b4d3 ("bpf: Allow reuse from waiting_for_gp_ttrace list.")
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Suggested-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20260905021139.4116529-1-pulehui@huaweicloud.com
+Fixes: e5c6de5fa025 ("bpf, sockmap: Incorrectly handling copied_seq")
+Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://lore.kernel.org/r/1a8e797a1b26e2f695aaac22ac644c2862f63466.1788858299.git.tanggeliang@kylinos.cn
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/memalloc.c | 50 ++++++++++++++++++++++++-------------------
- 1 file changed, 28 insertions(+), 22 deletions(-)
+ net/core/skmsg.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
-index e89a6f5baf5ba..bbc08b869aae1 100644
---- a/kernel/bpf/memalloc.c
-+++ b/kernel/bpf/memalloc.c
-@@ -119,6 +119,7 @@ struct bpf_mem_cache {
- 	struct llist_head waiting_for_gp_ttrace;
- 	struct rcu_head rcu_ttrace;
- 	atomic_t call_rcu_ttrace_in_progress;
-+	raw_spinlock_t lock;
- };
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 7e68b4fdbfce0..6eca57da3cff6 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1035,6 +1035,10 @@ static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
+ 	int err = 0;
+ 	u32 len, off;
  
- struct bpf_mem_caches {
-@@ -214,25 +215,24 @@ static void alloc_bulk(struct bpf_mem_cache *c, int cnt, int node, bool atomic)
- 	gfp = __GFP_NOWARN | __GFP_ACCOUNT;
- 	gfp |= atomic ? GFP_NOWAIT : GFP_KERNEL;
- 
--	for (i = 0; i < cnt; i++) {
--		/*
--		 * For every 'c' llist_del_first(&c->free_by_rcu_ttrace); is
--		 * done only by one CPU == current CPU. Other CPUs might
--		 * llist_add() and llist_del_all() in parallel.
--		 */
--		obj = llist_del_first(&c->free_by_rcu_ttrace);
--		if (!obj)
--			break;
--		add_obj_to_free_list(c, obj);
--	}
--	if (i >= cnt)
--		return;
-+	/*
-+	 * c->lock serializes concurrent llist_del_first() against
-+	 * llist_del_all() in __free_rcu() and do_call_rcu_ttrace().
-+	 */
-+	scoped_guard(raw_spinlock_irqsave, &c->lock) {
-+		for (i = 0; i < cnt; i++) {
-+			obj = llist_del_first(&c->free_by_rcu_ttrace);
-+			if (!obj)
-+				break;
-+			add_obj_to_free_list(c, obj);
-+		}
- 
--	for (; i < cnt; i++) {
--		obj = llist_del_first(&c->waiting_for_gp_ttrace);
--		if (!obj)
--			break;
--		add_obj_to_free_list(c, obj);
-+		for (; i < cnt; i++) {
-+			obj = llist_del_first(&c->waiting_for_gp_ttrace);
-+			if (!obj)
-+				break;
-+			add_obj_to_free_list(c, obj);
-+		}
- 	}
- 	if (i >= cnt)
- 		return;
-@@ -282,8 +282,12 @@ static int free_all(struct bpf_mem_cache *c, struct llist_node *llnode, bool per
- static void __free_rcu(struct rcu_head *head)
- {
- 	struct bpf_mem_cache *c = container_of(head, struct bpf_mem_cache, rcu_ttrace);
-+	struct llist_node *llnode;
++	if (verdict == __SK_REDIRECT && skb_bpf_ingress(skb) &&
++	    skb_bpf_redirect_fetch(skb) == psock->sk)
++		verdict = __SK_PASS;
 +
-+	scoped_guard(raw_spinlock_irqsave, &c->lock)
-+		llnode = llist_del_all(&c->waiting_for_gp_ttrace);
- 
--	free_all(c, llist_del_all(&c->waiting_for_gp_ttrace), !!c->percpu_size);
-+	free_all(c, llnode, !!c->percpu_size);
- 	atomic_set(&c->call_rcu_ttrace_in_progress, 0);
- }
- 
-@@ -314,7 +318,8 @@ static void do_call_rcu_ttrace(struct bpf_mem_cache *c)
- 
- 	if (atomic_xchg(&c->call_rcu_ttrace_in_progress, 1)) {
- 		if (unlikely(READ_ONCE(c->draining))) {
--			llnode = llist_del_all(&c->free_by_rcu_ttrace);
-+			scoped_guard(raw_spinlock_irqsave, &c->lock)
-+				llnode = llist_del_all(&c->free_by_rcu_ttrace);
- 			free_all(c, llnode, !!c->percpu_size);
- 		}
- 		return;
-@@ -549,6 +554,7 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
- 			c->objcg = objcg;
- 			c->percpu_size = percpu_size;
- 			c->tgt = c;
-+			raw_spin_lock_init(&c->lock);
- 			init_refill_work(c);
- 			prefill_mem_cache(c, cpu);
- 		}
-@@ -571,7 +577,7 @@ int bpf_mem_alloc_init(struct bpf_mem_alloc *ma, int size, bool percpu)
- 			c->objcg = objcg;
- 			c->percpu_size = percpu_size;
- 			c->tgt = c;
--
-+			raw_spin_lock_init(&c->lock);
- 			init_refill_work(c);
- 			prefill_mem_cache(c, cpu);
- 		}
-@@ -623,7 +629,7 @@ int bpf_mem_alloc_percpu_unit_init(struct bpf_mem_alloc *ma, int size)
- 		c->objcg = objcg;
- 		c->percpu_size = percpu_size;
- 		c->tgt = c;
--
-+		raw_spin_lock_init(&c->lock);
- 		init_refill_work(c);
- 		prefill_mem_cache(c, cpu);
- 	}
+ 	switch (verdict) {
+ 	case __SK_PASS:
+ 		err = -EIO;
 -- 
 2.53.0
 
