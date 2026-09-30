@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508AC51B16D;
-	Wed, 30 Sep 2026 17:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5945349BA;
+	Wed, 30 Sep 2026 17:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790131; cv=none; b=BiV21tvB8CwyDtkSs5zBnFDD0h1lmni19I+OUZUxEpBmRqdfg0jTsBlFM/4W96yu1gKJPEUReHopWNseWFXoJIuNMQieUfITrNzzrsYkuqAl6O/4piqGVbSiFkgeO6NQqZaSPfmgrdZdYqaKc0MzhEw30uLiiq0VrVYfLUatBN0=
+	t=1790790134; cv=none; b=KxgLLaq6twk0FeBmWk874pZWIPLSFlLVAIZ0N2UrmftxSdH9x/o2BvaES7TDrQHJMEdpnbusEm/+PO1bDMUb8YOQfV6kXkm4hVLfc/PqtdHwQ19EaxTMhc2QD1X4O7NXiXpye+77CHUHAX0Puodowhu/m+FS2kL0Xlqme107zlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790131; c=relaxed/simple;
-	bh=rfLdUlU/KOk62rkEFGhhnbw8kfxsj8vG6X7CBfqFbMI=;
+	s=arc-20240116; t=1790790134; c=relaxed/simple;
+	bh=H+MJePFyqZB3Fpnos9tRqRRZ59rvm9HGs1WsxvcLbCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q0cpWvuVytFk4bWRgsy4pkJUKNVQTCbdbRc2xf+aZx1vFk+AAYDonsUIPhbaV/BIMhTIbNtn1yiAOP3z2XRGVU2Cmd3Rp3pFpb3WNZNaiA3ZyPQsl9RT31gi1qePo1PdsTBGd8hK7h5mV1k6mBH8iNMJ0ALuZ4rBVftLXXW0nIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIbrUm+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f157S4U1pCGLeGeRhaSSqtqKLVh3NH3m3Q7BvkBk8glOo9e3nSzlUMJhgVdkb4xLQ6+oIliX8A6LoZb7A1Oo/fSe3z9Kpdnop9kpxLA4SNyNdIpzH2P38S0fa368UuV3EH1Crw+UYzBmfrdl/jqLLKLh+BhyXlhCI1WkZF5SLHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1lcBapb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIbrUm+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFD11F000FF;
-	Wed, 30 Sep 2026 17:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1lcBapb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874921F000FF;
+	Wed, 30 Sep 2026 17:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790130;
-	bh=vZw6RdhyyRrisZ0gtJqkBOcNepzO/YUeVayTd4IIZzA=;
+	s=korg; t=1790790133;
+	bh=y3123W4MADhFxhfHBQeeNbTk0dOaVdHZKvKFBMul9S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIbrUm+fY639+P5Fs3q9yociQaXis00Zu8eSU5QsgV9q1H6I6/k83Cfa2Ikh3fHaY
-	 cRBjxOPSQuBg/YoyXIStK5Nq/ExkqacKGi5EK1ezlnrC3wfYZqN1ueCS9AYOoiVwGj
-	 nyH7XqFuI82zBy2t6fIUfY7veYoJQXMg+EQlPOjo=
+	b=n1lcBapbMwDPJpIYoeOinPdkiP0JxRJYziq/zs8EjjPy8U/is8Hwjt20IAtODDolC
+	 ce6ldeNaRT6ZL/XB7QD4JQkmFFW9Wz0D2KYMjWR7usKhO/n4kCBZxyyIsp48i/+Kw9
+	 VXkmBIjclRxuiSlnkXop/pqd/iHCA2VgE2ARGu1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Xiong Weimin <xiongweimin@kylinos.cn>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 720/877] virtio-mmio: Remove virtqueue list from mmio device
-Date: Wed, 30 Sep 2026 17:27:11 +0200
-Message-ID: <20260930152430.223290576@linuxfoundation.org>
+Subject: [PATCH 6.12 721/877] virtio_mmio: disable IRQ wake before free_irq
+Date: Wed, 30 Sep 2026 17:27:12 +0200
+Message-ID: <20260930152430.246372572@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,178 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-[ Upstream commit 564a69ad90d15c782176e1a8c9e1c95661e1aed0 ]
+[ Upstream commit d14d693adb055e98ca705822ba6daebc18602d9a ]
 
-The MMIO transport implementation creates a list of virtqueues for a
-virtio device, while the same is already available in the struct
-virtio_device.
+When the DT node has "wakeup-source", vm_find_vqs() calls
+enable_irq_wake() on the shared IRQ, but vm_del_vqs() freed that IRQ
+without a matching disable_irq_wake(). That leaves a wake reference
+behind and can warn on later free_irq()/request_irq() cycles.
 
-Don't create a duplicate list, and use the other one instead.
+Record whether enable_irq_wake() succeeded, and disable it in
+vm_del_vqs() before free_irq().
 
-While at it, fix the virtio_device_for_each_vq() macro to accept an
-argument like "&vm_dev->vdev" (which currently fails to build).
-
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Message-Id: <3e56c6f74002987e22f364d883cbad177cd9ad9c.1747827066.git.viresh.kumar@linaro.org>
+Fixes: 02213273f72a ("virtio_mmio: add support to set IRQ of a virtio device as wakeup source")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Stable-dep-of: d14d693adb05 ("virtio_mmio: disable IRQ wake before free_irq")
+Message-ID: <20260805032937.1606737-1-xiongweimin@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/virtio/virtio_mmio.c |   52 ++-----------------------------------------
- include/linux/virtio.h       |    2 -
- 2 files changed, 4 insertions(+), 50 deletions(-)
+ drivers/virtio/virtio_mmio.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
 --- a/drivers/virtio/virtio_mmio.c
 +++ b/drivers/virtio/virtio_mmio.c
-@@ -65,7 +65,6 @@
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/slab.h>
--#include <linux/spinlock.h>
- #include <linux/virtio.h>
- #include <linux/virtio_config.h>
- #include <uapi/linux/virtio_mmio.h>
-@@ -88,22 +87,8 @@ struct virtio_mmio_device {
+@@ -87,6 +87,9 @@ struct virtio_mmio_device {
  
  	void __iomem *base;
  	unsigned long version;
--
--	/* a list of queues so we can dispatch IRQs */
--	spinlock_t lock;
--	struct list_head virtqueues;
--};
--
--struct virtio_mmio_vq_info {
--	/* the actual virtqueue */
--	struct virtqueue *vq;
--
--	/* the list node for the virtqueues list */
--	struct list_head node;
++
++	/* True if enable_irq_wake() succeeded for the shared IRQ. */
++	bool wake_irq_enabled;
  };
  
--
--
  /* Configuration interface */
- 
- static u64 vm_get_features(struct virtio_device *vdev)
-@@ -300,9 +285,8 @@ static bool vm_notify_with_data(struct v
- static irqreturn_t vm_interrupt(int irq, void *opaque)
- {
- 	struct virtio_mmio_device *vm_dev = opaque;
--	struct virtio_mmio_vq_info *info;
-+	struct virtqueue *vq;
- 	unsigned long status;
--	unsigned long flags;
- 	irqreturn_t ret = IRQ_NONE;
- 
- 	/* Read and acknowledge interrupts */
-@@ -315,10 +299,8 @@ static irqreturn_t vm_interrupt(int irq,
- 	}
- 
- 	if (likely(status & VIRTIO_MMIO_INT_VRING)) {
--		spin_lock_irqsave(&vm_dev->lock, flags);
--		list_for_each_entry(info, &vm_dev->virtqueues, node)
--			ret |= vring_interrupt(irq, info->vq);
--		spin_unlock_irqrestore(&vm_dev->lock, flags);
-+		virtio_device_for_each_vq(&vm_dev->vdev, vq)
-+			ret |= vring_interrupt(irq, vq);
- 	}
- 
- 	return ret;
-@@ -329,14 +311,8 @@ static irqreturn_t vm_interrupt(int irq,
- static void vm_del_vq(struct virtqueue *vq)
- {
- 	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vq->vdev);
--	struct virtio_mmio_vq_info *info = vq->priv;
--	unsigned long flags;
- 	unsigned int index = vq->index;
- 
--	spin_lock_irqsave(&vm_dev->lock, flags);
--	list_del(&info->node);
--	spin_unlock_irqrestore(&vm_dev->lock, flags);
--
- 	/* Select and deactivate the queue */
- 	writel(index, vm_dev->base + VIRTIO_MMIO_QUEUE_SEL);
- 	if (vm_dev->version == 1) {
-@@ -347,8 +323,6 @@ static void vm_del_vq(struct virtqueue *
- 	}
- 
- 	vring_del_virtqueue(vq);
--
--	kfree(info);
- }
- 
- static void vm_del_vqs(struct virtio_device *vdev)
-@@ -375,9 +349,7 @@ static struct virtqueue *vm_setup_vq(str
+@@ -329,11 +332,17 @@ static void vm_del_vqs(struct virtio_dev
  {
  	struct virtio_mmio_device *vm_dev = to_virtio_mmio_device(vdev);
- 	bool (*notify)(struct virtqueue *vq);
--	struct virtio_mmio_vq_info *info;
- 	struct virtqueue *vq;
--	unsigned long flags;
- 	unsigned int num;
- 	int err;
+ 	struct virtqueue *vq, *n;
++	int irq = platform_get_irq(vm_dev->pdev, 0);
  
-@@ -399,13 +371,6 @@ static struct virtqueue *vm_setup_vq(str
- 		goto error_available;
- 	}
+ 	list_for_each_entry_safe(vq, n, &vdev->vqs, list)
+ 		vm_del_vq(vq);
  
--	/* Allocate and fill out our active queue description */
--	info = kmalloc(sizeof(*info), GFP_KERNEL);
--	if (!info) {
--		err = -ENOMEM;
--		goto error_kmalloc;
--	}
--
- 	num = readl(vm_dev->base + VIRTIO_MMIO_QUEUE_NUM_MAX);
- 	if (num == 0) {
- 		err = -ENOENT;
-@@ -463,13 +428,6 @@ static struct virtqueue *vm_setup_vq(str
- 		writel(1, vm_dev->base + VIRTIO_MMIO_QUEUE_READY);
- 	}
- 
--	vq->priv = info;
--	info->vq = vq;
--
--	spin_lock_irqsave(&vm_dev->lock, flags);
--	list_add(&info->node, &vm_dev->virtqueues);
--	spin_unlock_irqrestore(&vm_dev->lock, flags);
--
- 	return vq;
- 
- error_bad_pfn:
-@@ -481,8 +439,6 @@ error_new_virtqueue:
- 		writel(0, vm_dev->base + VIRTIO_MMIO_QUEUE_READY);
- 		WARN_ON(readl(vm_dev->base + VIRTIO_MMIO_QUEUE_READY));
- 	}
--	kfree(info);
--error_kmalloc:
- error_available:
- 	return ERR_PTR(err);
+-	free_irq(platform_get_irq(vm_dev->pdev, 0), vm_dev);
++	if (vm_dev->wake_irq_enabled) {
++		disable_irq_wake(irq);
++		vm_dev->wake_irq_enabled = false;
++	}
++
++	free_irq(irq, vm_dev);
  }
-@@ -627,8 +583,6 @@ static int virtio_mmio_probe(struct plat
- 	vm_dev->vdev.dev.release = virtio_mmio_release_dev;
- 	vm_dev->vdev.config = &virtio_mmio_config_ops;
- 	vm_dev->pdev = pdev;
--	INIT_LIST_HEAD(&vm_dev->virtqueues);
--	spin_lock_init(&vm_dev->lock);
  
- 	vm_dev->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(vm_dev->base)) {
---- a/include/linux/virtio.h
-+++ b/include/linux/virtio.h
-@@ -184,7 +184,7 @@ void virtio_reset_device(struct virtio_d
- size_t virtio_max_dma_size(const struct virtio_device *vdev);
+ static void vm_synchronize_cbs(struct virtio_device *vdev)
+@@ -460,8 +469,9 @@ static int vm_find_vqs(struct virtio_dev
+ 	if (err)
+ 		return err;
  
- #define virtio_device_for_each_vq(vdev, vq) \
--	list_for_each_entry(vq, &vdev->vqs, list)
-+	list_for_each_entry(vq, &(vdev)->vqs, list)
+-	if (of_property_read_bool(vm_dev->pdev->dev.of_node, "wakeup-source"))
+-		enable_irq_wake(irq);
++	if (of_property_read_bool(vm_dev->pdev->dev.of_node, "wakeup-source") &&
++	    !enable_irq_wake(irq))
++		vm_dev->wake_irq_enabled = true;
  
- /**
-  * struct virtio_driver - operations for a virtio I/O driver
+ 	for (i = 0; i < nvqs; ++i) {
+ 		struct virtqueue_info *vqi = &vqs_info[i];
 
 
