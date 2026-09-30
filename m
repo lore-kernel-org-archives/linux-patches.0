@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F7C519DEA;
-	Wed, 30 Sep 2026 17:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4561A50C2A4;
+	Wed, 30 Sep 2026 17:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788389; cv=none; b=GYMeTxmnDj8wYbWn8MtCDRl77lOtYGWV4JHac61ch1OIVzSV9h5uFZhVVPPI1MhEu7m3qheCszemJrexcZXAv7cdrBBKsG/fQpCOTk9zHX8P8/bD4zPWeauhZPWb5lWYa15CWrCJA6x9t/Wq1HNQ5TT+kWh7H6vsBUSqiiAQ+h8=
+	t=1790788392; cv=none; b=qlLh8YPc1c9GZSXESxu+J/DCsYQcU4UMLb6i689NeI18J+BJJC5+/ZwjHB3vdYsoqc/mXymcBSfpZId48JrPSuiX3HbwoLgWwunMdA1o1OD+B8Z28ox4j2UpdqXWcGgbhSP2IvG4u7sXHwqPcZDEii1+mfEi6jTxeQ5QpgjYqJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788389; c=relaxed/simple;
-	bh=6CRDgvP7hQQA0tqZNpCpqKeiWBqQsHEBgat6tdwHQj0=;
+	s=arc-20240116; t=1790788392; c=relaxed/simple;
+	bh=I3ZzpRTsoH8qFFSRldwDKydfDEf478rYdOXukVunlok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBIIN/RAh3Ds3f156HQoV7pvPZ4TJbDEJ+cmrR1rNY/Ak2Lsi2yhGYPFPPInVsk4JzuAW/rvJB/4Km0sEzPb0J/tYZ5QAJm7m+V3K2Ar+k0ZGNl1gaMS+8gm4rfQGzJ5B4gxKGl15XFdefGhwpsce6VT4x2AhYqjxQAYmsH+vsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjCxJHKi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XcYIyvOUaTQozX+v0J71FygmgfqRonjdW0abNs4QRhBCWbKhWg89q5rYsFSLRoLv9Nciq+FohYvzapY0vWtSxvCvqVxlAkImv7ZywGLCcOACzpxxQiGH5ZPw76fB+HP7wcM7DCjxg3ejsylr3x7P37GxcMuqigJL2UHd9PCHM5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xigjrkDC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjCxJHKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8028E1F000FF;
-	Wed, 30 Sep 2026 17:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xigjrkDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596631F000FF;
+	Wed, 30 Sep 2026 17:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788388;
-	bh=21BfyelgcI//HNhfwuSHz745mYjdtydEJfhwu4uF2io=;
+	s=korg; t=1790788390;
+	bh=BVHzXfnaQzDXFrLDyNYY0aREKLvnbBIXMNf8dc5pNGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjCxJHKi9sYmT8W9nbZpOIe314TxXG8RBG018Rg9dVJPuTsd+htX+9NheYUHpVdSG
-	 OdY6Qo2/zCuKFWb361lIbJnTKHq3xOMgCq2z0kN0mXr2l/OxSjnQxipld763JAqJiI
-	 d5AzMs/g5P+AU2Bio07fb7jdZiztLtV6tIxiCcYA=
+	b=xigjrkDCHQTsu1jtSvj9wL6liQY6vUWoWfjD9NTAGAVrzaueDlyJm5CnYj4OkkqSy
+	 +qyO/CoGDk4Ok/OJTgpnUyp7Z/zD0YCrFdITnFEHRRRk9Skw3lpHB+eNre+CC/KQMY
+	 qwmJUd/s3RYeHmYh4sk7xh20tHcmQm+/SbcfwCZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/877] ASoC: Rename snd_soc_dai_link_ch_map.ch_mask to cpu_ch_mask
-Date: Wed, 30 Sep 2026 17:16:56 +0200
-Message-ID: <20260930152417.004928730@linuxfoundation.org>
+Subject: [PATCH 6.12 106/877] ASoC: Add codec_ch_mask to snd_soc_dai_link_ch_map
+Date: Wed, 30 Sep 2026 17:16:57 +0200
+Message-ID: <20260930152417.025242071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,68 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 4d855d747521505b54457c96bc73577bf74b2374 ]
+[ Upstream commit 88b14c0d0bab5c0f3e7c641f274e3c70210c0e36 ]
 
-Rename the ch_mask member of snd_soc_dai_link_ch_map to cpu_ch_mask,
-as that is what it is used for.
+Add a codec_ch_mask member to snd_soc_dai_link_ch_map.
 
 The CPU and codec channel masks are not necessarily the same, and are
 quite likely different. SoundWire and I2S/TDM both support assigning
 different sample slots to each codec, so for example channel 0 on each
-codec could map to different channels at the CPU. So it's quite normal
-that the channel mask at the CPU end is different for each codec, but
-the codec channel masks are the same for each codec.
+codec could map to different channels at the CPU.
+
+It is also possible for one TX channel to map to multiple RX channels.
+So it isn't _always_ safe to assume that the total number of set bits
+in the CPU ch_mask is the same as the total number of enabled channels
+on the codec.
+
+For example consider this mapping on a capture stream:
+
+CPU0 CODEC0 cpu_ch_mask = 0x03
+CPU1 CODEC0 cpu_ch_mask = 0x03
+
+This could be either four TX channels on the codec split across two
+receiving CPUs, or two TX channels on the codec duplicated to two CPUs.
 
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260910114500.1586637-2-rf@opensource.cirrus.com
+Link: https://patch.msgid.link/20260910114500.1586637-3-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 6b382bdfe26a ("ASoC: soc-pcm: Apply snd_soc_dai_link_ch_map.codec_ch_mask to codec params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc.h                 | 2 +-
- sound/soc/sdw_utils/soc_sdw_utils.c | 2 +-
- sound/soc/soc-pcm.c                 | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ include/sound/soc.h | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/include/sound/soc.h b/include/sound/soc.h
-index cd467f8babdb6..87e50c8cdda31 100644
+index 87e50c8cdda31..a5f8e83e6ced4 100644
 --- a/include/sound/soc.h
 +++ b/include/sound/soc.h
-@@ -717,7 +717,7 @@ struct snd_soc_dai_link_component {
- struct snd_soc_dai_link_ch_map {
+@@ -718,6 +718,7 @@ struct snd_soc_dai_link_ch_map {
  	unsigned int cpu;
  	unsigned int codec;
--	unsigned int ch_mask;
-+	unsigned int cpu_ch_mask;
+ 	unsigned int cpu_ch_mask;
++	unsigned int codec_ch_mask;
  };
  
  struct snd_soc_dai_link {
-diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
-index e6ac5c0fd3bec..70a7abede618f 100644
---- a/sound/soc/sdw_utils/soc_sdw_utils.c
-+++ b/sound/soc/sdw_utils/soc_sdw_utils.c
-@@ -795,7 +795,7 @@ int asoc_sdw_hw_params(struct snd_pcm_substream *substream,
- 	 * ASoC will set the corresponding channel numbers for each cpu dai.
- 	 */
- 	for_each_link_ch_maps(rtd->dai_link, i, ch_maps)
--		ch_maps->ch_mask = ch_mask << (i * step);
-+		ch_maps->cpu_ch_mask = ch_mask << (i * step);
- 
- 	return 0;
- }
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 628322790c878..440acec700a56 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -1180,7 +1180,7 @@ static int __soc_pcm_hw_params(struct snd_soc_pcm_runtime *rtd,
- 		 */
- 		for_each_rtd_ch_maps(rtd, j, ch_maps)
- 			if (ch_maps->cpu == i)
--				ch_mask |= ch_maps->ch_mask;
-+				ch_mask |= ch_maps->cpu_ch_mask;
- 
- 		/* fixup cpu channel number */
- 		if (ch_mask)
 -- 
 2.53.0
 
