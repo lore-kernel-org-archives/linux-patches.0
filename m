@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2105A4D2EFE;
-	Wed, 30 Sep 2026 17:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEFC4F3EAA;
+	Wed, 30 Sep 2026 17:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787818; cv=none; b=UwfLieVBbA57KYDtXLjuFgrFk8BrsdyoSqgZXFR3O0JGeSFdm5AMZV/rppctmxqaq8e228HoAEwvYdLbWW8fn63GIa+Ceox8ritmjtRVrVdsG/ONEn2fMCXwSTRbt4BjJVo7wSUHzPNyz+kFWGH4D/isEhoMLPxvm+E639Q3Eoc=
+	t=1790787821; cv=none; b=hqsQATqvS3a1WJe5+VE5lRhX0fUckBaU9j91R+gaT4RwTWKVG8rLzNcZZdOHx61ROk2cghgNFkd7jvrSaUzKkOVBDwCFVal8/ORKl/dUMJM9mtwnYsmBycOnrbV6Cu3nFM+/7yATnmaGl+06P/x2Tc2rSMGMMc1s6CjO89ZIjQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787818; c=relaxed/simple;
-	bh=z93dW4tnmpKZJi0MkLdj/0ECZqcGKbw4dGnNTyj4nNs=;
+	s=arc-20240116; t=1790787821; c=relaxed/simple;
+	bh=bytvdtt/DkKyZETSqVsDt1hk2NsvXEqc6xrBXxizcjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6jQA3adfu4xTIkfwoZn18dWXojFngF/b0HcwgsLHdHskvZ9vtbrZdH0Li6iqabZV6nB9Zt9Y3fx5PsZaiboFFHouuEzAwUZ8Bm90ZOXKsDGNHOnkwK1pemD0JJbVBb22jP4RbDDgsAcl98AEBfx3YZ3W768x0GTA8lzlQ0wqxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZ0g+Q0c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZtuwIA0qhi1LQV0XMqqZGhGZrtyCC1O5W8nyBVu3Dan8PCwKi974OHP0mQR549yJwUQr8iHmxz962xwHJK4C9vi2W513eofJH7veDjUrdMOMP3eMkTiQalP77x5JKqA7pTsxjNA7MxDr9SXgQAYW6ooWzYn7KMvVy7iQujy7oWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBfq5m+k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZ0g+Q0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2691F000FF;
-	Wed, 30 Sep 2026 17:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBfq5m+k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACC21F000FF;
+	Wed, 30 Sep 2026 17:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787817;
-	bh=6S86u9y82T1RlP0LWV72XZ1z/t4nt80rtvDOCO66f3w=;
+	s=korg; t=1790787819;
+	bh=1KgUzimWku36E8vjN4YmWaMIQnCxFNWGj9ZL4Oa59gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZ0g+Q0c1KV0rlPtNA3wVue9LR57qOWhR2SpVhvrqUP0qwgG7kIEQb4LzevCpZhlD
-	 /vmYBT8Fpo5llVzv8pv7uYrg7PzNf2Vx0D8uWwhhrSZITcv/dGdtrr1dhDLJCsZUFj
-	 1VasCe4R33AA4P6vGQwnm428QXIBCguybKzr1g3M=
+	b=TBfq5m+kxH0I3y+xP6hscP2vW5ysnSZ9wDLcRV1u9r5BA4fqC5iRDbYqBYfqxQzQ1
+	 2/NRj7xAY60eBH4nPCdPRQ28rvRuVqU5zvKAUqO0cptzkrj46Yr4hU7HgZFQD0STA0
+	 j0oy4g0+Aia+RoWXutcELdbr99F4OfQT4kYEu234=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yunfei <zhangyunfei1@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 347/457] net: txgbe: fix FDIR filter restore for VF rules
-Date: Wed, 30 Sep 2026 17:27:32 +0200
-Message-ID: <20260930152353.503115603@linuxfoundation.org>
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 7.2 365/457] perf/x86/intel: Fix GRT PEBS load/store direction for latency events, to fix sample classification
+Date: Wed, 30 Sep 2026 17:27:50 +0200
+Message-ID: <20260930152353.884313637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -50,65 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yunfei <zhangyunfei1@kylinos.cn>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-commit 651010592bdce7005c1179498327e51bfc4fe1a5 upstream.
+commit 89dc568e8c0be60e05e5fcd0b528c79077d7b84b upstream.
 
-txgbe_fdir_filter_restore() reprograms every filter from
-txgbe->fdir_filter_list after a reset. It extracts the ring part of
-filter->action with ethtool_get_flow_spec_ring() and maps it onto a
-PF rx ring, silently dropping the VF part of the cookie that
-txgbe_add_ethtool_fdir_entry() stores there (input->action =
-fsp->ring_cookie).
+On Gracemont, intel_grt_pebs_event_constraints[] applies LAT_CONSTRAINT
+constraints to MEM_UOPS_RETIRED.{LOAD,STORE}_LATENCY, but does not set
+explicit LOAD/STORE flags for those events.
 
-For a rule directed at a VF, restore therefore reprograms the filter
-to the PF queue with the same ring index: after any down/up or
-txgbe_reinit_locked(), traffic matching the rule is steered to the
-PF instead of the VF.
+The PEBS latency path (pebs_latency_data(), via __grt_latency_data())
+uses the event flags to determine memory operation direction. Without an
+explicit STORE flag, samples from MEM_UOPS_RETIRED.STORE_LATENCY can be
+misclassified as LOADs.
 
-Handle VF rules the same way txgbe_add_ethtool_fdir_entry() does:
-validate vf against wx->num_vfs and ring against
-wx->num_rx_queues_per_pool, and map the ring onto the absolute
-queue index ((vf - 1) * wx->num_rx_queues_per_pool) + ring.
+Set explicit LOAD/STORE flags in intel_grt_pebs_event_constraints[] for:
 
-Fixes: 7a91722e0dd4 ("net: txgbe: Support the FDIR rules assigned to VFs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yunfei <zhangyunfei1@kylinos.cn>
-Link: https://patch.msgid.link/20260911091123.798931-1-zhangyunfei1@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+- MEM_UOPS_RETIRED.LOAD_LATENCY
+- MEM_UOPS_RETIRED.STORE_LATENCY
+
+Also update __grt_latency_data() to explicitly interpret these flags when
+assigning the sampled memory operation direction.
+
+This fixes incorrect STORE sample classification.
+
+Fixes: 39a41278f041 ("perf/x86/intel: Fix PEBS memory access info encoding for ADL")
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: <stable@vger.kernel.org> # v7.2+
+Link: https://patch.msgid.link/20260917015234.981153-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_fdir.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/ds.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_fdir.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_fdir.c
-@@ -591,15 +591,24 @@ static void txgbe_fdir_filter_restore(st
- 			queue = TXGBE_RDB_FDIR_DROP_QUEUE;
- 		} else {
- 			u32 ring = ethtool_get_flow_spec_ring(filter->action);
-+			u8 vf = ethtool_get_flow_spec_ring_vf(filter->action);
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -455,6 +455,7 @@ static inline void pebs_set_tlb_lock(u64
+ static u64 __grt_latency_data(struct perf_event *event, u64 status,
+ 			       u8 dse, bool tlb, bool lock, bool blk)
+ {
++	union perf_mem_data_src src;
+ 	u64 val;
  
--			if (ring >= wx->num_rx_queues) {
-+			if (!vf && ring >= wx->num_rx_queues) {
- 				wx_err(wx, "FDIR restore failed, ring:%u\n",
- 				       ring);
- 				continue;
-+			} else if (vf && (vf > wx->num_vfs ||
-+				  ring >= wx->num_rx_queues_per_pool)) {
-+				wx_err(wx, "FDIR restore failed, vf:%u, ring:%u\n",
-+				       vf, ring);
-+				continue;
- 			}
+ 	WARN_ON_ONCE(is_hybrid() &&
+@@ -470,7 +471,16 @@ static u64 __grt_latency_data(struct per
+ 	else
+ 		val |= P(BLK, NA);
  
- 			/* Map the ring onto the absolute queue index */
--			queue = wx->rx_ring[ring]->reg_idx;
-+			if (!vf)
-+				queue = wx->rx_ring[ring]->reg_idx;
-+			else
-+				queue = ((vf - 1) * wx->num_rx_queues_per_pool) + ring;
- 		}
+-	return val;
++	src.val = val;
++
++	if (event->hw.flags &
++	    (PERF_X86_EVENT_PEBS_LDLAT | PERF_X86_EVENT_PEBS_LD_HSW))
++		src.mem_op = P(OP, LOAD);
++	if (event->hw.flags &
++	    (PERF_X86_EVENT_PEBS_STLAT | PERF_X86_EVENT_PEBS_ST_HSW))
++		src.mem_op = P(OP, STORE);
++
++	return src.val;
+ }
  
- 		ret = txgbe_fdir_write_perfect_filter(wx,
+ u64 grt_latency_data(struct perf_event *event, u64 status)
+@@ -1291,8 +1301,8 @@ struct event_constraint intel_glm_pebs_e
+ 
+ struct event_constraint intel_grt_pebs_event_constraints[] = {
+ 	/* Allow all events as PEBS with no flags */
+-	INTEL_HYBRID_LAT_CONSTRAINT(0x5d0, 0x3),
+-	INTEL_HYBRID_LAT_CONSTRAINT(0x6d0, 0x3f),
++	INTEL_HYBRID_LDLAT_CONSTRAINT(0x5d0, 0x3),
++	INTEL_HYBRID_STLAT_CONSTRAINT(0x6d0, 0x3f),
+ 	EVENT_CONSTRAINT_END
+ };
+ 
 
 
