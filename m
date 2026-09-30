@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B6A4E77FD;
-	Wed, 30 Sep 2026 18:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554BE511E90;
+	Wed, 30 Sep 2026 18:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792529; cv=none; b=mO36MTRMTLhW19+JXmPx+VJVyIY6YsKU9MsHT3xSJIXruX3rkxJm8Cvsbgkx+9bld2ui2By2PsfJJJbJSp8nCzYQFlarxUeM7qJDrs0OiSo+qnLhFey1+7kQoflJUZd3ofPBhFb6xannzKV4DieG2Qo+un91ZAPTaFGdY2MOuMU=
+	t=1790792532; cv=none; b=jtvLjPZL9s+h5t7TC/XaOPMKkhapQlUwb7NZ3N7zI5KMFq7CjEynBixTXsN7fDwVBe7IDeGJzj7crL1N/L8ZLLd6r1XfhMST1y1e0NgKDFeJMWcUl/WkwWNTqRPJo7J2dr2iNiRd0nMwsMI+X8GeoWFh8AbO5821mobkn5tm3O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792529; c=relaxed/simple;
-	bh=Cd0lhI/0vSkfF39NmjxE8BqjSGn7R0NpxrfKkhYICTw=;
+	s=arc-20240116; t=1790792532; c=relaxed/simple;
+	bh=AZRqVi96VEVrlBdFrd2lbfr9voxRhF8lwT319pu2Hf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdC9bVk+4IvmbKoWZBqdaqbWQewKiHNvFSQAFd2v6GFH60jKXmbqIyGKhAF6yZH9R2NzuiRny7ezAvC4rp52+rc5yiKojihSkOPzV8prfaX1Vj0AeqCMEX43jnjLfIm/uO2QPSEnyXuZvK7heah7ajkfSRhXLq0PV2+w8JSHD+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUGTWTWB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Re/WF0ynpE5ssNP2Eupj/1RKpiQacrk6bGv2LkqNeLxposCkgcP8zQOFLMvVAA/PeO7tKwVMIE24G41S7xknah1ueOeDbDbxVid9RYg+udNM97fg3vfld6HVFKoheg03u+yuXz43gykivt8PIBzEEbYgrxW9+uQXmnod9DExa1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bosi7fJH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUGTWTWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F801F000FF;
-	Wed, 30 Sep 2026 18:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bosi7fJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B436E1F000FF;
+	Wed, 30 Sep 2026 18:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792528;
-	bh=jak5vumFsadxaI4i6mwGpnoHcXvMIVoL1eof0tR0g/8=;
+	s=korg; t=1790792531;
+	bh=8Lf3XB9CYKt1Q8Bsx6tQXqvqmfs65jXyVocGqvzSln4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUGTWTWBXzT5pls6Di1bGppaPkAoEuxGEHSHc9sWb6++RdqIqBrhWv8HmQ0IrF3c+
-	 GvtSe4WyfiCgYLWfteVugu24vmXO9R9BvB3V5aoRHnVhWXCb8+itShEGdwkSLHVxcY
-	 WGrUHuZzP+bsouOnLt85DViwkZ6JRttSjZ4289yc=
+	b=Bosi7fJHF/j2C67ws067/eyFoSIHTUixmxs45hfuFt+jwCTe2GgmiStc18DqI3IXN
+	 kDPA6OChNbwXPdTj3c5D+tr6YMctSwvYMcWBAinlu16JAhD+KEEa37EY7A45oFfVDe
+	 DdRkS10wIdLl+eYovw6ajOyoCqILmH37AqVk2syg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Peter Xu <peterx@redhat.com>,
+	David Matlack <dmatlack@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
-	Lai Jiangshan <laijs@linux.alibaba.com>,
 	Kenta Akagi <k@mgml.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 686/752] KVM: X86: Rename gpte_is_8_bytes to has_4_byte_gpte and invert the direction
-Date: Wed, 30 Sep 2026 17:29:16 +0200
-Message-ID: <20260930152413.083729304@linuxfoundation.org>
+Subject: [PATCH 5.15 687/752] KVM: x86/mmu: Derive shadow MMU page role from parent
+Date: Wed, 30 Sep 2026 17:29:17 +0200
+Message-ID: <20260930152413.104116306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,175 +53,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lai Jiangshan <laijs@linux.alibaba.com>
+From: David Matlack <dmatlack@google.com>
 
-commit bb3b394d35e80d7a58ce015191e4960a13f54ba5 upstream.
+commit 2e65e842c57d72e9a573ba42bc2055b7f626ea1f upstream.
 
-This bit is very close to mean "role.quadrant is not in use", except that
-it is false also when the MMU is mapping guest physical addresses
-directly.  In that case, role.quadrant is indeed not in use, but there
-are no guest PTEs at all.
+Instead of computing the shadow page role from scratch for every new
+page, derive most of the information from the parent shadow page.  This
+eliminates the dependency on the vCPU root role to allocate shadow page
+tables, and reduces the number of parameters to kvm_mmu_get_page().
 
-Changing the name and direction of the bit removes the special case,
-since a guest with paging disabled, or not considering guest paging
-structures as is the case for two-dimensional paging, does not have
-to deal with 4-byte guest PTEs.
+Preemptively split out the role calculation to a separate function for
+use in a following commit.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Lai Jiangshan <laijs@linux.alibaba.com>
-Message-Id: <20211124122055.64424-10-jiangshanlai@gmail.com>
+Note that when calculating the MMU root role, we can take
+@role.passthrough, @role.direct, and @role.access directly from
+@vcpu->arch.mmu->root_role. Only @role.level and @role.quadrant still
+must be overridden for PAE page directories, when shadowing 32-bit
+guest page tables with PAE page tables.
+
+No functional change intended.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: David Matlack <dmatlack@google.com>
+Message-Id: <20220516232138.1783324-5-dmatlack@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Kenta Akagi <k@mgml.me>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/kvm/mmu.rst  |  8 ++++----
- arch/x86/include/asm/kvm_host.h |  8 ++++----
- arch/x86/kvm/mmu/mmu.c          | 12 ++++++------
- arch/x86/kvm/mmu/mmutrace.h     |  2 +-
- arch/x86/kvm/mmu/tdp_mmu.c      |  2 +-
- 5 files changed, 16 insertions(+), 16 deletions(-)
+ arch/x86/kvm/mmu/mmu.c         | 97 +++++++++++++++++++++++-----------
+ arch/x86/kvm/mmu/paging_tmpl.h |  9 ++--
+ 2 files changed, 71 insertions(+), 35 deletions(-)
 
-diff --git a/Documentation/virt/kvm/mmu.rst b/Documentation/virt/kvm/mmu.rst
-index f60f5488e1219..5b1ebad24c77f 100644
---- a/Documentation/virt/kvm/mmu.rst
-+++ b/Documentation/virt/kvm/mmu.rst
-@@ -161,7 +161,7 @@ Shadow pages contain the following information:
-     If clear, this page corresponds to a guest page table denoted by the gfn
-     field.
-   role.quadrant:
--    When role.gpte_is_8_bytes=0, the guest uses 32-bit gptes while the host uses 64-bit
-+    When role.has_4_byte_gpte=1, the guest uses 32-bit gptes while the host uses 64-bit
-     sptes.  That means a guest page table contains more ptes than the host,
-     so multiple shadow pages are needed to shadow one guest page.
-     For first-level shadow pages, role.quadrant can be 0 or 1 and denotes the
-@@ -177,9 +177,9 @@ Shadow pages contain the following information:
-     The page is invalid and should not be used.  It is a root page that is
-     currently pinned (by a cpu hardware register pointing to it); once it is
-     unpinned it will be destroyed.
--  role.gpte_is_8_bytes:
--    Reflects the size of the guest PTE for which the page is valid, i.e. '1'
--    if 64-bit gptes are in use, '0' if 32-bit gptes are in use.
-+  role.has_4_byte_gpte:
-+    Reflects the size of the guest PTE for which the page is valid, i.e. '0'
-+    if direct map or 64-bit gptes are in use, '1' if 32-bit gptes are in use.
-   role.efer_nx:
-     Contains the value of efer.nx for which the page is valid.
-   role.cr0_wp:
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index 2c378064a1db9..d31817fb39620 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -297,14 +297,14 @@ struct kvm_kernel_irq_routing_entry;
-  *
-  *   - invalid shadow pages are not accounted, so the bits are effectively 18
-  *
-- *   - quadrant will only be used if gpte_is_8_bytes=0 (non-PAE paging);
-+ *   - quadrant will only be used if has_4_byte_gpte=1 (non-PAE paging);
-  *     execonly and ad_disabled are only used for nested EPT which has
-- *     gpte_is_8_bytes=1.  Therefore, 2 bits are always unused.
-+ *     has_4_byte_gpte=0.  Therefore, 2 bits are always unused.
-  *
-  *   - the 4 bits of level are effectively limited to the values 2/3/4/5,
-  *     as 4k SPs are not tracked (allowed to go unsync).  In addition non-PAE
-  *     paging has exactly one upper level, making level completely redundant
-- *     when gpte_is_8_bytes=0.
-+ *     when has_4_byte_gpte=1.
-  *
-  *   - on top of this, smep_andnot_wp and smap_andnot_wp are only set if
-  *     cr0_wp=0, therefore these three bits only give rise to 5 possibilities.
-@@ -316,7 +316,7 @@ union kvm_mmu_page_role {
- 	u32 word;
- 	struct {
- 		unsigned level:4;
--		unsigned gpte_is_8_bytes:1;
-+		unsigned has_4_byte_gpte:1;
- 		unsigned quadrant:2;
- 		unsigned direct:1;
- 		unsigned access:3;
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 62e9a7db01830..bfb1455ebeefd 100644
+index bfb1455ebeefd..48015f96b1dcf 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2094,7 +2094,7 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
- 	role.level = level;
- 	role.direct = direct;
- 	role.access = access;
--	if (!direct_mmu && !role.gpte_is_8_bytes) {
+@@ -2075,31 +2075,15 @@ static void clear_sp_write_flooding_count(u64 *spte)
+ 	__clear_sp_write_flooding_count(sptep_to_sp(spte));
+ }
+ 
+-static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
+-					     gfn_t gfn,
+-					     gva_t gaddr,
+-					     unsigned level,
+-					     bool direct,
+-					     unsigned int access)
++static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu, gfn_t gfn,
++					     union kvm_mmu_page_role role)
+ {
+ 	bool direct_mmu = vcpu->arch.mmu->direct_map;
+-	union kvm_mmu_page_role role;
+ 	struct hlist_head *sp_list;
+-	unsigned quadrant;
+ 	struct kvm_mmu_page *sp;
+ 	int collisions = 0;
+ 	LIST_HEAD(invalid_list);
+ 
+-	role = vcpu->arch.mmu->mmu_role.base;
+-	role.level = level;
+-	role.direct = direct;
+-	role.access = access;
+-	if (role.has_4_byte_gpte) {
+-		quadrant = gaddr >> (PAGE_SHIFT + (PT64_PT_BITS * level));
+-		quadrant &= (1 << ((PT32_PT_BITS - PT64_PT_BITS) * level)) - 1;
+-		role.quadrant = quadrant;
+-	}
+-
+ 	sp_list = &vcpu->kvm->arch.mmu_page_hash[kvm_page_table_hashfn(gfn)];
+ 	for_each_valid_sp(vcpu->kvm, sp, sp_list) {
+ 		if (sp->gfn != gfn) {
+@@ -2117,7 +2101,7 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
+ 			 * Unsync pages must not be left as is, because the new
+ 			 * upper-level page will be write-protected.
+ 			 */
+-			if (level > PG_LEVEL_4K && sp->unsync)
++			if (role.level > PG_LEVEL_4K && sp->unsync)
+ 				kvm_mmu_prepare_zap_page(vcpu->kvm, sp,
+ 							 &invalid_list);
+ 			continue;
+@@ -2155,14 +2139,14 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
+ 
+ 	++vcpu->kvm->stat.mmu_cache_miss;
+ 
+-	sp = kvm_mmu_alloc_page(vcpu, direct);
++	sp = kvm_mmu_alloc_page(vcpu, role.direct);
+ 
+ 	sp->gfn = gfn;
+ 	sp->role = role;
+ 	hlist_add_head(&sp->hash_link, sp_list);
+-	if (!direct) {
++	if (!role.direct) {
+ 		account_shadowed(vcpu->kvm, sp);
+-		if (level == PG_LEVEL_4K && rmap_write_protect(vcpu, gfn))
++		if (role.level == PG_LEVEL_4K && rmap_write_protect(vcpu, gfn))
+ 			kvm_flush_remote_tlbs_with_address(vcpu->kvm, gfn, 1);
+ 	}
+ 	trace_kvm_mmu_get_page(sp, true);
+@@ -2174,6 +2158,54 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu,
+ 	return sp;
+ }
+ 
++static union kvm_mmu_page_role kvm_mmu_child_role(u64 *sptep, bool direct, unsigned int access)
++{
++	struct kvm_mmu_page *parent_sp = sptep_to_sp(sptep);
++	union kvm_mmu_page_role role;
++
++	role = parent_sp->role;
++	role.level--;
++	role.access = access;
++	role.direct = direct;
++
++	/*
++	 * If the guest has 4-byte PTEs then that means it's using 32-bit,
++	 * 2-level, non-PAE paging. KVM shadows such guests with PAE paging
++	 * (i.e. 8-byte PTEs). The difference in PTE size means that KVM must
++	 * shadow each guest page table with multiple shadow page tables, which
++	 * requires extra bookkeeping in the role.
++	 *
++	 * Specifically, to shadow the guest's page directory (which covers a
++	 * 4GiB address space), KVM uses 4 PAE page directories, each mapping
++	 * 1GiB of the address space. @role.quadrant encodes which quarter of
++	 * the address space each maps.
++	 *
++	 * To shadow the guest's page tables (which each map a 4MiB region), KVM
++	 * uses 2 PAE page tables, each mapping a 2MiB region. For these,
++	 * @role.quadrant encodes which half of the region they map.
++	 *
++	 * Note, the 4 PAE page directories are pre-allocated and the quadrant
++	 * assigned in mmu_alloc_root(). So only page tables need to be handled
++	 * here.
++	 */
 +	if (role.has_4_byte_gpte) {
- 		quadrant = gaddr >> (PAGE_SHIFT + (PT64_PT_BITS * level));
- 		quadrant &= (1 << ((PT32_PT_BITS - PT64_PT_BITS) * level)) - 1;
- 		role.quadrant = quadrant;
-@@ -4840,7 +4840,7 @@ kvm_calc_tdp_mmu_root_page_role(struct kvm_vcpu *vcpu,
- 	role.base.ad_disabled = (shadow_accessed_mask == 0);
- 	role.base.level = kvm_mmu_get_tdp_level(vcpu);
- 	role.base.direct = true;
--	role.base.gpte_is_8_bytes = true;
-+	role.base.has_4_byte_gpte = false;
++		WARN_ON_ONCE(role.level != PG_LEVEL_4K);
++		role.quadrant = (sptep - parent_sp->spt) % 2;
++	}
++
++	return role;
++}
++
++static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
++						 u64 *sptep, gfn_t gfn,
++						 bool direct, unsigned int access)
++{
++	union kvm_mmu_page_role role;
++
++	role = kvm_mmu_child_role(sptep, direct, access);
++	return kvm_mmu_get_page(vcpu, gfn, role);
++}
++
+ static void shadow_walk_init_using_root(struct kvm_shadow_walk_iterator *iterator,
+ 					struct kvm_vcpu *vcpu, hpa_t root,
+ 					u64 addr)
+@@ -3041,8 +3073,7 @@ static int direct_map(struct kvm_vcpu *vcpu, gpa_t gpa, u32 error_code,
+ 		if (is_shadow_present_pte(*it.sptep))
+ 			continue;
  
- 	return role;
+-		sp = kvm_mmu_get_page(vcpu, base_gfn, it.addr,
+-				      it.level - 1, true, ACC_ALL);
++		sp = kvm_mmu_get_child_sp(vcpu, it.sptep, base_gfn, true, ACC_ALL);
+ 
+ 		link_shadow_page(vcpu, it.sptep, sp);
+ 		if (is_tdp && huge_page_disallowed &&
+@@ -3436,13 +3467,18 @@ static int mmu_check_root(struct kvm_vcpu *vcpu, gfn_t root_gfn)
+ 	return ret;
  }
-@@ -4885,7 +4885,7 @@ kvm_calc_shadow_root_page_role_common(struct kvm_vcpu *vcpu,
  
- 	role.base.smep_andnot_wp = role.ext.cr4_smep && !____is_cr0_wp(regs);
- 	role.base.smap_andnot_wp = role.ext.cr4_smap && !____is_cr0_wp(regs);
--	role.base.gpte_is_8_bytes = ____is_cr0_pg(regs) && ____is_cr4_pae(regs);
-+	role.base.has_4_byte_gpte = ____is_cr0_pg(regs) && !____is_cr4_pae(regs);
+-static hpa_t mmu_alloc_root(struct kvm_vcpu *vcpu, gfn_t gfn, gva_t gva,
++static hpa_t mmu_alloc_root(struct kvm_vcpu *vcpu, gfn_t gfn, int quadrant,
+ 			    u8 level)
+ {
+-	bool direct = vcpu->arch.mmu->mmu_role.base.direct;
++	union kvm_mmu_page_role role = vcpu->arch.mmu->mmu_role.base;
+ 	struct kvm_mmu_page *sp;
  
- 	return role;
- }
-@@ -4984,7 +4984,7 @@ kvm_calc_shadow_ept_root_page_role(struct kvm_vcpu *vcpu, bool accessed_dirty,
- 	role.base.smm = vcpu->arch.root_mmu.mmu_role.base.smm;
+-	sp = kvm_mmu_get_page(vcpu, gfn, gva, level, direct, ACC_ALL);
++	role.level = level;
++
++	if (role.has_4_byte_gpte)
++		role.quadrant = quadrant;
++
++	sp = kvm_mmu_get_page(vcpu, gfn, role);
+ 	++sp->root_count;
  
- 	role.base.level = level;
--	role.base.gpte_is_8_bytes = true;
-+	role.base.has_4_byte_gpte = false;
- 	role.base.direct = false;
- 	role.base.ad_disabled = !accessed_dirty;
- 	role.base.guest_mode = true;
-@@ -5267,7 +5267,7 @@ static bool detect_write_misaligned(struct kvm_mmu_page *sp, gpa_t gpa,
- 		 gpa, bytes, sp->role.word);
+ 	return __pa(sp->spt);
+@@ -3476,8 +3512,8 @@ static int mmu_alloc_direct_roots(struct kvm_vcpu *vcpu)
+ 		for (i = 0; i < 4; ++i) {
+ 			WARN_ON_ONCE(IS_VALID_PAE_ROOT(mmu->pae_root[i]));
  
- 	offset = offset_in_page(gpa);
--	pte_size = sp->role.gpte_is_8_bytes ? 8 : 4;
-+	pte_size = sp->role.has_4_byte_gpte ? 4 : 8;
+-			root = mmu_alloc_root(vcpu, i << (30 - PAGE_SHIFT),
+-					      i << 30, PT32_ROOT_LEVEL);
++			root = mmu_alloc_root(vcpu, i << (30 - PAGE_SHIFT), i,
++					      PT32_ROOT_LEVEL);
+ 			mmu->pae_root[i] = root | PT_PRESENT_MASK |
+ 					   shadow_me_mask;
+ 		}
+@@ -3585,8 +3621,7 @@ static int mmu_alloc_shadow_roots(struct kvm_vcpu *vcpu)
+ 			root_gfn = pdptrs[i] >> PAGE_SHIFT;
+ 		}
  
- 	/*
- 	 * Sometimes, the OS only writes the last one bytes to update status
-@@ -5291,7 +5291,7 @@ static u64 *get_written_sptes(struct kvm_mmu_page *sp, gpa_t gpa, int *nspte)
- 	page_offset = offset_in_page(gpa);
- 	level = sp->role.level;
- 	*nspte = 1;
--	if (!sp->role.gpte_is_8_bytes) {
-+	if (sp->role.has_4_byte_gpte) {
- 		page_offset <<= 1;	/* 32->64 */
- 		/*
- 		 * A 32-bit pde maps 4MB while the shadow pdes map
-diff --git a/arch/x86/kvm/mmu/mmutrace.h b/arch/x86/kvm/mmu/mmutrace.h
-index 2924a4081a19a..9863290dcba10 100644
---- a/arch/x86/kvm/mmu/mmutrace.h
-+++ b/arch/x86/kvm/mmu/mmutrace.h
-@@ -35,7 +35,7 @@
- 			 " %snxe %sad root %u %s%c",			\
- 			 __entry->mmu_valid_gen,			\
- 			 __entry->gfn, role.level,			\
--			 role.gpte_is_8_bytes ? 8 : 4,			\
-+			 role.has_4_byte_gpte ? 4 : 8,			\
- 			 role.quadrant,					\
- 			 role.direct ? " direct" : "",			\
- 			 access_str[role.access],			\
-diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
-index 7a64fb2380448..74df3f6a3a594 100644
---- a/arch/x86/kvm/mmu/tdp_mmu.c
-+++ b/arch/x86/kvm/mmu/tdp_mmu.c
-@@ -179,7 +179,7 @@ static union kvm_mmu_page_role page_role_for_level(struct kvm_vcpu *vcpu,
- 	role = vcpu->arch.mmu->mmu_role.base;
- 	role.level = level;
- 	role.direct = true;
--	role.gpte_is_8_bytes = true;
-+	role.has_4_byte_gpte = false;
- 	role.access = ACC_ALL;
+-		root = mmu_alloc_root(vcpu, root_gfn, i << 30,
+-				      PT32_ROOT_LEVEL);
++		root = mmu_alloc_root(vcpu, root_gfn, i, PT32_ROOT_LEVEL);
+ 		mmu->pae_root[i] = root | pm_mask;
+ 	}
  
- 	return role;
+diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
+index fd3f2c5bb7ed1..003383e2a309b 100644
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -704,8 +704,9 @@ static int FNAME(fetch)(struct kvm_vcpu *vcpu, gpa_t addr,
+ 		if (!is_shadow_present_pte(*it.sptep)) {
+ 			table_gfn = gw->table_gfn[it.level - 2];
+ 			access = gw->pt_access[it.level - 2];
+-			sp = kvm_mmu_get_page(vcpu, table_gfn, addr,
+-					      it.level-1, false, access);
++			sp = kvm_mmu_get_child_sp(vcpu, it.sptep, table_gfn,
++						  false, access);
++
+ 			/*
+ 			 * We must synchronize the pagetable before linking it
+ 			 * because the guest doesn't need to flush tlb when
+@@ -763,8 +764,8 @@ static int FNAME(fetch)(struct kvm_vcpu *vcpu, gpa_t addr,
+ 		drop_large_spte(vcpu, it.sptep);
+ 
+ 		if (!is_shadow_present_pte(*it.sptep)) {
+-			sp = kvm_mmu_get_page(vcpu, base_gfn, addr,
+-					      it.level - 1, true, direct_access);
++			sp = kvm_mmu_get_child_sp(vcpu, it.sptep, base_gfn,
++						  true, direct_access);
+ 			link_shadow_page(vcpu, it.sptep, sp);
+ 			if (huge_page_disallowed && req_level >= it.level)
+ 				account_huge_nx_page(vcpu->kvm, sp);
 -- 
 2.53.0
 
