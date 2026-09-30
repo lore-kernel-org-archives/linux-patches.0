@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850D04FD78D;
-	Wed, 30 Sep 2026 16:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CDA4C651B;
+	Wed, 30 Sep 2026 16:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784199; cv=none; b=W3RIZ0s6+PGfscCO3Elqktm1qAwOfwoYCWcnCBdKbCJGVS81aJmpRJItOmnz8vLvSEZG6rm7Tdw1ZGSE2VRouqiVDy9kz23x5JfV2Ml8p++3hzYrKJ2O2d7ifSCis5axqVutHHA5L3YkFdLkhN7HXJ6UtfYZ9wsjou82Bo6PgqE=
+	t=1790784203; cv=none; b=YiqpRpJm0FBc24Gi6q5vcCV8KOv8tE2SCP9Plb8FX71OGC1CgTQ1vW0pgRnULtJyy1G9zz4rn2gkRiSoblgDTF5dEkzX/cPnY5vbHKav2sX1paPYjP3/JZUkBLDOQI/oKEXXyKZwhce4Jo3g8MhQ6x69CCyTNd7rpLq7bmhzNZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784199; c=relaxed/simple;
-	bh=AA2iM59EkFr8FKRVOnnGdTyUj0VqEmwvOs2E0a1sMsU=;
+	s=arc-20240116; t=1790784203; c=relaxed/simple;
+	bh=h7qArIMQ9sX4FE4yF7eM0J08J3YPUPpzG+QHmo035nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GlmqTPDtjzofw9b0r9n11S1k4hoVLvyeyMY7kJ6auQHnyhNQHgcReK+kIrrsjU+KsHjQw6u3UIu3YbkOiHfTRvr64DuGTv3Gt8HZuBW2ltObTi3vXtl1iSkp9NWeVbsxwkzfFTfq5dy6Ax+UrW5sp9F4KGsSyBoDc/wZFIwsR5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFcgQIK3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hk0dc4Ym3IUSZfXZijeJDApnhM5R6qryO83wAnfSCQvKkqonGx7DRa2erurxtrfXdjl+TMOsZeJ3lDQlMJfYrB6+rvblWUhZu83TUVgSMdMWQ2atQhFG1x1TD8AdGflW7k5u5xOB6F0pESfgUYKhHBUmRhUXG7Y1+o6e0OTbJOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFjLpc8J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFcgQIK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D161F0089B;
-	Wed, 30 Sep 2026 16:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFjLpc8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C6D1F000FF;
+	Wed, 30 Sep 2026 16:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784196;
-	bh=mOpjJ/zxmaw6qDldvH/eZLMLSZI3jnkiZFA1ek8vq88=;
+	s=korg; t=1790784198;
+	bh=oebRXmC9ENZ/C8dsXZwilVg2EUEJ5G7COo0DJ+EzaBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFcgQIK3pp0Byi7hyv35UYHxmeW7pOkEE9KQxEMctULCD4BqwGRAwwYM9QvLGcUUe
-	 WGhmKK72G0jYav1ylU2zsS4+mPhM4ASOdc/brXct0X24prCa+kD+NDS2BVs0HCo5wO
-	 uKR/i3rSJJWzWw6E8VC9SKV3tAPlmWHQ/9cKi6qs=
+	b=bFjLpc8J5bdVht/SjVWgzDw17R74deCwM5tTF3ijAwbOLKt470nGU51HIbxhujZmh
+	 dN7ShPseGyRE6GdC5pdkEG7uFO8BC2Jk6HxB1M4DoqvqeNdEke8rCwuluS3TNAZB16
+	 kzCqeLa+ik8e04+E5iSOFUoQuSpouvGiwAGbDmPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ben Reed <Ben.Reed@microchip.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/982] net: dsa: mv88e6xxx: fix number of g1 interrupts for 6320 family
-Date: Wed, 30 Sep 2026 17:12:40 +0200
-Message-ID: <20260930152417.315057322@linuxfoundation.org>
+Subject: [PATCH 6.1 025/982] PCI: switchtec: Add Gen6 Device IDs
+Date: Wed, 30 Sep 2026 17:12:41 +0200
+Message-ID: <20260930152417.338359328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,49 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Ben Reed <Ben.Reed@microchip.com>
 
-[ Upstream commit d201c2612e5aada0c931cd55115175e0a5141023 ]
+[ Upstream commit 5e6c21c56998e1e58d2f314e70779989ea0fee5d ]
 
-The 6320 family has 9 global1 interrupt, not 8. Fix it.
+Add device IDs for the next generation of switchtec products.
 
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://patch.msgid.link/20260504153227.1390546-2-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+No changes to the driver were required with the new version of the
+hardware.
+
+[logang: rewrote commit message]
+
+Signed-off-by: Ben Reed <Ben.Reed@microchip.com>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260505161633.67454-1-logang@deltatee.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/switch/switchtec.c | 16 ++++++++++++++++
+ include/linux/switchtec.h      |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 29e4c94c84051..783d7035f065e 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -6228,7 +6228,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.global1_addr = 0x1b,
- 		.global2_addr = 0x1c,
- 		.age_time_coeff = 15000,
--		.g1_irqs = 8,
-+		.g1_irqs = 9,
- 		.g2_irqs = 10,
- 		.atu_move_port_mask = 0xf,
- 		.pvt = true,
-@@ -6255,7 +6255,7 @@ static const struct mv88e6xxx_info mv88e6xxx_table[] = {
- 		.global1_addr = 0x1b,
- 		.global2_addr = 0x1c,
- 		.age_time_coeff = 15000,
--		.g1_irqs = 8,
-+		.g1_irqs = 9,
- 		.g2_irqs = 10,
- 		.atu_move_port_mask = 0xf,
- 		.pvt = true,
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index 9011518b1d132..37c5ba40d959f 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1853,6 +1853,22 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI_DEVICE(0x5552, SWITCHTEC_GEN5),  /* PAXA 52XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5536, SWITCHTEC_GEN5),  /* PAXA 36XG5 */
+ 	SWITCHTEC_PCI_DEVICE(0x5528, SWITCHTEC_GEN5),  /* PAXA 28XG5 */
++	SWITCHTEC_PCI_DEVICE(0x6048, SWITCHTEC_GEN6),  /* PFXs 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6064, SWITCHTEC_GEN6),  /* PFXs 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6044, SWITCHTEC_GEN6),  /* PFXs 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6060, SWITCHTEC_GEN6),  /* PFXs 160XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6148, SWITCHTEC_GEN6),  /* PSXs 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6164, SWITCHTEC_GEN6),  /* PSXs 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6144, SWITCHTEC_GEN6),  /* PSXs 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6160, SWITCHTEC_GEN6),  /* PSXs 160XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6248, SWITCHTEC_GEN6),  /* PFX 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6264, SWITCHTEC_GEN6),  /* PFX 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6244, SWITCHTEC_GEN6),  /* PFX 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6260, SWITCHTEC_GEN6),  /* PFX 160XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6348, SWITCHTEC_GEN6),  /* PSX 48XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6364, SWITCHTEC_GEN6),  /* PSX 64XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6344, SWITCHTEC_GEN6),  /* PSX 144XG6 */
++	SWITCHTEC_PCI_DEVICE(0x6360, SWITCHTEC_GEN6),  /* PSX 160XG6 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1001, SWITCHTEC_GEN4),  /* PCI1001 16XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1002, SWITCHTEC_GEN4),  /* PCI1002 12XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1003, SWITCHTEC_GEN4),  /* PCI1003 16XG4 */
+diff --git a/include/linux/switchtec.h b/include/linux/switchtec.h
+index 8d8fac1626bd9..32980f2f76e09 100644
+--- a/include/linux/switchtec.h
++++ b/include/linux/switchtec.h
+@@ -42,6 +42,7 @@ enum switchtec_gen {
+ 	SWITCHTEC_GEN3,
+ 	SWITCHTEC_GEN4,
+ 	SWITCHTEC_GEN5,
++	SWITCHTEC_GEN6,
+ };
+ 
+ struct mrpc_regs {
 -- 
 2.53.0
 
