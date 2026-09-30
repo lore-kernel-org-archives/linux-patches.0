@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD72853D9FD;
-	Wed, 30 Sep 2026 17:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A6E51B196;
+	Wed, 30 Sep 2026 17:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790100; cv=none; b=aNZrATd8WhCzNAtJ7X4uVhHfFAQLH23vRD9N68PpVZ3BcINccTnAbWSRdvvVfv7xgCMMf/t2Y+5dMFFUEO2ZbXLsNWgEgMls6F3AKVMbwYpy8ryLHQ3ATdw4v6w3EyvFn4XAtZfpNk0f3lyMejUu2inu9TpNbcrKJARXhDmoRxQ=
+	t=1790790102; cv=none; b=jwlQL2i5DA4OkaIjIpxRu478/bTJ5JjV9aNWycvRL3giZm869Vd0ub9pDXup7YvBu8IlA8+H4bBpTS0BfogtnLWU0+txkOYNBNeHyK1a6t0VorkpeLlOcrGhlv0t+c11yUyintK/aRb1JPrdEprcNf0uuo0RSPR4V8kz+TPEk98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790100; c=relaxed/simple;
-	bh=EZ6p/hoNSxOveJde/io7KogN1OqT36cVtvB9hEQ0RrE=;
+	s=arc-20240116; t=1790790102; c=relaxed/simple;
+	bh=amf9mDnWcu+0+qS93U+RIxfbqAlDGTUh+fDaGP6wi4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQfZXybnCAjSItyix63Ulxn/1zmHVwqyJiCqx/xI1BVYkIlYpN3Sg2TL5SpRSKud/XTDA/4SdsF0aHcY7/fPq+aYmrqTw5qAPTNNlAjU93SqY0UK7G2xJAalEeji1MfnvPQedfxgwatrPY6t5V/LDkBlM3Uf/xPOPDnVEx/SDvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fzti+1Gu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lla7aNWAWlBQ9UDMjo9JS8F+5h9BAtwGetVf/vK/9DRGnMgscbD4s+eI8SHM7+Apyu+o5ehAnv4wuSGBgLyWYy3glmqDlBFGL9xrlk5YNT6qsV13QVjqSJ2gkV/jUWEPgtbjzQytULBVCsnwRWT9DFwQrtsnuWQvbeHl1dqT/bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1g/sqwT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzti+1Gu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334041F000FF;
-	Wed, 30 Sep 2026 17:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1g/sqwT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D6E1F000FF;
+	Wed, 30 Sep 2026 17:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790098;
-	bh=W5e618cC6UT9JCT5HwtcNJXHuhijrcNSsss9hHjMgX0=;
+	s=korg; t=1790790101;
+	bh=JL97SPYypnBNjeQ+eX6JQlnq/uvK8ODd3EbZH3tBpbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fzti+1GunA2loF+thxtcU9uKKVODBl9X3iyhwKk3+lBRgB88Z0P8RnJkkXsJTcfKd
-	 Wr8BOMcRWPG6YhJs4MskXu0j6Hx6SjEPzTLxMnww/NvuqFUKPmhHUEZcUJy7SMPnh/
-	 G5n7d4atg78Y1B8mX5kS6OY0ESAJa3ILy22HdZhI=
+	b=k1g/sqwThcwjxS/Rr4LLD2ZG4oG8faJ+ZqtvhmMjtCNFb8/2tF0K2B++NSySCwClo
+	 6phHDaZ6xcB4XCwRQiT2/oEMZQ+RUk6hP4HonPcsWfTRqZ40jOeq0ji4HbMPkp0VXx
+	 XGKtYCW1PGaJZ2zt4w54M4pqJQG9EZeaC320vj1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 710/877] configfs: pin the symlink targets dirent instead of chasing ->ci_dentry
-Date: Wed, 30 Sep 2026 17:27:01 +0200
-Message-ID: <20260930152430.004859501@linuxfoundation.org>
+Subject: [PATCH 6.12 711/877] tracing: Fix memory corruption from a "STACKTRACE" histogram key
+Date: Wed, 30 Sep 2026 17:27:02 +0200
+Message-ID: <20260930152430.027023980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,111 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit a7c1290eef60711c10289c056ad32ed1f2b47b12 ]
+[ Upstream commit 7f711e62355bb3123a2ca2f97a2facbfebc678c6 ]
 
-create_link() reads the target's configfs_dirent from
-item->ci_dentry->d_fsdata, relying on the item reference taken by
-get_target().  That reference pins the item, not its dentry: the dentry is
-pinned by DCACHE_PERSISTENT, which configfs_remove_dir() releases via
-simple_rmdir() while the item is still alive.  A symlink racing with rmdir
-of its target can therefore find ->ci_dentry freed and its dirent
-released, triggering WARN_ON(!atomic_read(&sd->s_count)) in configfs_get().
+"cpu", "CPU", "stacktrace" and "STACKTRACE" are generic fields, defined
+with an offset and a size of zero so that the filter code can match them
+by name. parse_field() maps them onto their common_* equivalents for
+backward compatibility, but unlike the common_* names it hands the
+placeholder back to the caller instead of NULL.
 
-Take the dirent in get_target() as well, under ->d_lock and atomically
-with the item reference, and pass it down to create_link().  A hashed
-dentry has not been killed yet, so its ->d_fsdata reference keeps the
-dirent alive there.
+create_hist_field() takes a non-NULL field as a promise that the record
+carries a stacktrace and picks HIST_FIELD_FN_STACK, so the __data_loc
+word is read from offset 0, that is from common_type, and its low 16
+bits are followed as an offset into the record. What is found there
+becomes the length of an unbounded memcpy. Pick an event whose id is
+small enough that the offset stays inside its own record and the length
+is a kernel text address:
+
+  # cd /sys/kernel/tracing
+  # echo 'hist:keys=STACKTRACE' > events/ftrace/print/trigger
+  # echo hello > trace_marker
+
+  Oops: general protection fault, probably for non-canonical address
+  RIP: 0010:rb_next+0x23/0x60
+   </IRQ>
+  RIP: 0010:memcpy+0xc/0x30
+   event_hist_trigger+0x2e7/0x12c0
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Leave the field NULL, which is what the comment above the branch says
+the code does and what common_stacktrace already does. FILTER_CPU and
+FILTER_COMM are left alone, their create_hist_field() branches never
+look at the field.
 
 Cc: stable@vger.kernel.org
-Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Tested-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260730093435.195441-2-vasilisalmpanis@gmail.com
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: 4b512860bdbd ("tracing: Rename stacktrace field to common_stacktrace")
+Link: https://patch.msgid.link/20260907155045.692664-3-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ Adjusted context for the missing FILTER_COMM branch in parse_field(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/configfs/symlink.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ kernel/trace/trace_events_hist.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/configfs/symlink.c
-+++ b/fs/configfs/symlink.c
-@@ -76,9 +76,9 @@ static int configfs_get_target_path(stru
- 
- static int create_link(struct config_item *parent_item,
- 		       struct config_item *item,
-+		       struct configfs_dirent *target_sd,
- 		       struct dentry *dentry)
- {
--	struct configfs_dirent *target_sd = item->ci_dentry->d_fsdata;
- 	char *body;
- 	int ret;
- 
-@@ -115,6 +115,7 @@ static int create_link(struct config_ite
- 
- 
- static int get_target(const char *symname, struct config_item **target,
-+		      struct configfs_dirent **target_sd,
- 		      struct super_block *sb)
- {
- 	struct path path __free(path_put) = {};
-@@ -125,7 +126,20 @@ static int get_target(const char *symnam
- 		return ret;
- 	if (path.dentry->d_sb != sb)
- 		return -EPERM;
--	*target = configfs_get_config_item(path.dentry);
-+	/*
-+	 * A hashed dentry guarantees that neither the item nor the dirent
-+	 * have been released yet, as removals unhash before dropping.
-+	 * Grab both references here. An item reference alone would not keep
-+	 * ->ci_dentry alive.
-+	 */
-+	spin_lock(&path.dentry->d_lock);
-+	if (!d_unhashed(path.dentry)) {
-+		struct configfs_dirent *sd = path.dentry->d_fsdata;
-+
-+		*target = config_item_get(sd->s_element);
-+		*target_sd = configfs_get(sd);
-+	}
-+	spin_unlock(&path.dentry->d_lock);
- 	if (!*target)
- 		return -ENOENT;
- 	return 0;
-@@ -139,6 +153,7 @@ int configfs_symlink(struct mnt_idmap *i
- 	struct configfs_dirent *sd;
- 	struct config_item *parent_item;
- 	struct config_item *target_item = NULL;
-+	struct configfs_dirent *target_sd = NULL;
- 	const struct config_item_type *type;
- 
- 	sd = dentry->d_parent->d_fsdata;
-@@ -182,7 +197,7 @@ int configfs_symlink(struct mnt_idmap *i
- 	 *  AV, a thoroughly annoyed bastard.
- 	 */
- 	inode_unlock(dir);
--	ret = get_target(symname, &target_item, dentry->d_sb);
-+	ret = get_target(symname, &target_item, &target_sd, dentry->d_sb);
- 	inode_lock(dir);
- 	if (ret)
- 		goto out_put;
-@@ -196,13 +211,14 @@ int configfs_symlink(struct mnt_idmap *i
- 		ret = type->ct_item_ops->allow_link(parent_item, target_item);
- 	if (!ret) {
- 		mutex_lock(&configfs_symlink_mutex);
--		ret = create_link(parent_item, target_item, dentry);
-+		ret = create_link(parent_item, target_item, target_sd, dentry);
- 		mutex_unlock(&configfs_symlink_mutex);
- 		if (ret && type->ct_item_ops->drop_link)
- 			type->ct_item_ops->drop_link(parent_item,
- 						     target_item);
- 	}
- 
-+	configfs_put(target_sd);
- 	config_item_put(target_item);
- 
- out_put:
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -2379,6 +2379,7 @@ parse_field(struct hist_trigger_data *hi
+ 				*flags |= HIST_FIELD_FL_CPU;
+ 			} else if (field && field->filter_type == FILTER_STACKTRACE) {
+ 				*flags |= HIST_FIELD_FL_STACKTRACE;
++				field = NULL;
+ 			} else {
+ 				hist_err(tr, HIST_ERR_FIELD_NOT_FOUND,
+ 					 errpos(field_name));
 
 
