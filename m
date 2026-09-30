@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8EB515964;
-	Wed, 30 Sep 2026 16:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A35850277A;
+	Wed, 30 Sep 2026 16:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785038; cv=none; b=noDgDzgkRMRtsqUvHQRAHOmJnT5375iT4bXg7i+fEgKZMTZ1EYzb+YNfEs6FUxis5CusylRZvYY2Hb5YJP7IQgtpa8U8Dy65/95ux7KxFVSLlQDcEtzMdMOS8WhZJgRjS4VFvZx6tzocmvRY7elYFNHd4O3gUgz4lN+5CzqxeMM=
+	t=1790785042; cv=none; b=S5sv8EJL66etx+T0DzONKLXAuJmeHFDJ3JzOL69Tz83ecRfJZg5I8MVZhFgS6fhwHysn97RC2Cnp3rTFkwdiwqPgp05E0e14S9k5zXsaPA1yXi4q/kYnLOLdW2QVcqd13milLxRuaH+ujRPLuBe4YXjJQFISptez+QFaWyHRd5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785038; c=relaxed/simple;
-	bh=Bd89bWKgIU9tpwvzrvlP8ZTW1EUeYwyIq4fF8bR7nyk=;
+	s=arc-20240116; t=1790785042; c=relaxed/simple;
+	bh=bay3wJvkcjV5jwClvST51HvRxutNgVIozXhVhSkjdWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6OeFGDJnj5w0zbJjmVnrImUj507hqv3t7j8IQHM2kifoFdoeJVpo5IpbpCSau7rz3XSsXjmadiNN7JjtCEm/wagG5iyfIgVvkena2wp1pOwu7tMJN4Rm+xX+MIl7gyTykLnBz71Vs/IUQRPhE/5+BMy+3xa7/d2sdESseeTcNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJknzQbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e6+VXhEFNk3Oy7YkdTsYYccBuldTH34Md9d20vNmSNBMYFXbTKrk7afpuu88FDL2EjIyOJ/NV6PgYP0wpvLnDNUDOwqlmPTpnNJGA5GmIEI4jmZIlMMxHX9Q08CZr8KQMKMiCHh4IivQuaV+koDhsSxp7oh1DAP+06dY5yR+LYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZpDXbx9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJknzQbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6138D1F00893;
-	Wed, 30 Sep 2026 16:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZpDXbx9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3666C1F000FF;
+	Wed, 30 Sep 2026 16:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785033;
-	bh=2lUba6l1htPA3TgffzP/pfSzPr7l5c2K7Ef+BVuVgO8=;
+	s=korg; t=1790785036;
+	bh=LBVb20ILBB8SwmZ9eIc7u7g3m8c68XMpaM0I2cHbMlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJknzQbAuSm7fbnCMFyNybATI4A1bBjTQOx/EgckcB31sw0kb44iKvESVDVQLqOpc
-	 w97m14Nho0zVCW6Ze8egMZ0i4G/7upiizwuvK2htB0iPF2T/a7AC/qcIPRT9c9CUcu
-	 j6XgiO3pnGf6q/XeWuOBZp3Fr9kHW1May845NnF8=
+	b=TZpDXbx9oZfCGAZCH3pnXNW/ZPRumDav4F2/+tFz1TqNWY/KsFts1PlHRUdt15lB1
+	 kcQwYOFJ8MD41let10Auo5161BIZkyIwUONPtHYym07As9VNlIxz6+Yx5ihgcb/eJn
+	 EE9YPU7D7DndgNqXRP5Q7hbTjnJIzxaesqSojnx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamas Petz <tamas.petz@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 367/982] perf/core: Skip empty AUX records with only format flags
-Date: Wed, 30 Sep 2026 17:18:23 +0200
-Message-ID: <20260930152424.695323984@linuxfoundation.org>
+Subject: [PATCH 6.1 350/982] ASoC: ab8500: Repair the DAPM capture graph
+Date: Wed, 30 Sep 2026 17:18:06 +0200
+Message-ID: <20260930152424.333082925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,77 +51,270 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 8a7f5b5e860b5c113ca99acd5b1e9074f5c5af3c ]
+[ Upstream commit 103fe1a37f040ef6ac9ed1cf33be786149d2bb15 ]
 
-perf_aux_output_end() emits a PERF_RECORD_AUX when the recorded size is
-nonzero or when any flag other than PERF_AUX_FLAG_OVERWRITE is set.
+The capture stream routes point away from the stream widget. Digital
+microphone mux routes are unconditional and bypass their enable bits,
+and several widgets independently own shared AD path enable bits. The
+dummy ADC and DAC widgets hide the resulting power graph errors.
 
-PMU format flags describe how an AUX payload is encoded. TRBE driver
-sets PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW for raw trace buffers, causing
-an AUX record to be emitted even when no trace data.
+Connect each real AIF widget to the stream and main supply, use the mux
+item names on digital microphone routes, and model shared AD enables as
+supplies. Also make the ANC DAPM switch writable.
 
-This is noticeable when tracing a task with strace. Ptrace stops
-repeatedly end empty AUX transactions, producing many zero-sized
-PERF_RECORD_AUX records. For example:
-
-  perf record -e cs_etm//u -m,128M -- strace ls
-
-  perf script -D 2>&1 |
-     awk '/PERF_RECORD_AUX offset/ {
-        for (i = 1; i <= NF; i++)
-                if ($i == "size:" && $(i + 1) == "0")
-                        count++
-     }
-     END { print count }'
-  165
-
-This recording contains 165 zero-sized AUX records which provide no
-useful information to userspace.
-
-Ignore PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK, together with
-PERF_AUX_FLAG_OVERWRITE, when deciding whether an empty AUX record is
-useful. Zero-sized records carrying TRUNCATED, PARTIAL or COLLISION
-are still emitted.
-
-Fixes: 547b60988e63 ("perf: aux: Add flags for the buffer format")
-Reported-by: Tamas Petz <tamas.petz@arm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260825-perf_core_fix_zero_aux_records-v1-1-23b95e8d5df3@arm.com
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260831-ab8500-codec-fixes-v1-2-f85024e717e3@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/ring_buffer.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/soc/codecs/ab8500-codec.c | 120 +++++++++++++++-----------------
+ 1 file changed, 56 insertions(+), 64 deletions(-)
 
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index 4c4894de6e5d1..865fdc0ec0f65 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -502,7 +502,10 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
- 	/*
- 	 * Only send RECORD_AUX if we have something useful to communicate
- 	 *
--	 * Note: the OVERWRITE records by themselves are not considered
-+	 * PMU_FORMAT bits identify the PMU type rather than an AUX event
-+	 * has occurred, so ignore them for zero-sized records.
-+	 *
-+	 * The OVERWRITE records by themselves are not considered
- 	 * useful, as they don't communicate any *new* information,
- 	 * aside from the short-lived offset, that becomes history at
- 	 * the next event sched-in and therefore isn't useful.
-@@ -511,7 +514,9 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
- 	 * offset. So, from now on we don't output AUX records that
- 	 * have *only* OVERWRITE flag set.
- 	 */
--	if (size || (handle->aux_flags & ~(u64)PERF_AUX_FLAG_OVERWRITE))
-+	if (size ||
-+	    (handle->aux_flags & ~(u64)(PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK |
-+					PERF_AUX_FLAG_OVERWRITE)))
- 		perf_event_aux_event(handle->event, aux_head, size,
- 				     handle->aux_flags);
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 187250400613d..c40e1a47e6eee 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -303,7 +303,7 @@ static const struct snd_kcontrol_new dapm_anc_in_select[] = {
+ /* ANC - Enable/Disable */
+ static const struct snd_kcontrol_new dapm_anc_enable[] = {
+ 	SOC_DAPM_SINGLE("Switch", AB8500_ANCCONF1,
+-			AB8500_ANCCONF1_ENANC, 0, 0),
++			AB8500_ANCCONF1_ENANC, 1, 0),
+ };
  
+ /* ANC to Earpiece - Mute */
+@@ -385,12 +385,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 
+ 	/* DA/AD */
+ 
+-	SND_SOC_DAPM_INPUT("ADC Input"),
+-	SND_SOC_DAPM_ADC("ADC", "ab8500_0c", SND_SOC_NOPM, 0, 0),
+-
+-	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
+-	SND_SOC_DAPM_OUTPUT("DAC Output"),
+-
+ 	SND_SOC_DAPM_AIF_IN("DA_IN1", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_IN("DA_IN2", NULL, 0, SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_IN("DA_IN3", NULL, 0, SND_SOC_NOPM, 0, 0),
+@@ -582,9 +576,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIXER("AD3 Channel Volume",
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD3 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD34, 0,
+-			NULL, 0),
++	SND_SOC_DAPM_SUPPLY("AD34 Enable", AB8500_ADPATHENA,
++			    AB8500_ADPATHENA_ENAD34, 0, NULL, 0),
+ 
+ 	/* Mic 2 */
+ 
+@@ -643,9 +636,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+ 
+-	SND_SOC_DAPM_MIXER("AD12 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD12, 0,
+-			NULL, 0),
++	SND_SOC_DAPM_SUPPLY("AD12 Enable", AB8500_ADPATHENA,
++			    AB8500_ADPATHENA_ENAD12, 0, NULL, 0),
+ 
+ 	/* HD Capture path */
+ 
+@@ -659,12 +651,8 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIXER("AD6 Channel Volume",
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD57 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD5768, 0,
+-			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD68 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD5768, 0,
+-			NULL, 0),
++	SND_SOC_DAPM_SUPPLY("AD5768 Enable", AB8500_ADPATHENA,
++			    AB8500_ADPATHENA_ENAD5768, 0, NULL, 0),
+ 
+ 	/* Digital Microphone path */
+ 
+@@ -696,10 +684,6 @@ static const struct snd_soc_dapm_widget ab8500_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MIXER("AD4 Channel Volume",
+ 			SND_SOC_NOPM, 0, 0,
+ 			NULL, 0),
+-	SND_SOC_DAPM_MIXER("AD4 Enable",
+-			AB8500_ADPATHENA, AB8500_ADPATHENA_ENAD34,
+-			0, NULL, 0),
+-
+ 	/* Acoustical Noise Cancellation path */
+ 
+ 	SND_SOC_DAPM_INPUT("ANC Configure Input"),
+@@ -747,24 +731,17 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"Main Supply", NULL, "Audio Power"},
+ 	{"Main Supply", NULL, "Audio Analog Power"},
+ 
+-	{"DAC", NULL, "ab8500_0p"},
+-	{"DAC", NULL, "Main Supply"},
+-	{"ADC", NULL, "ab8500_0c"},
+-	{"ADC", NULL, "Main Supply"},
+-
+ 	/* ANC Configure */
+ 	{"ANC Configure Input", NULL, "Main Supply"},
+ 	{"ANC Configure Output", NULL, "ANC Configure Input"},
+ 
+-	/* AD/DA */
+-	{"ADC", NULL, "ADC Input"},
+-	{"DAC Output", NULL, "DAC"},
+-
+ 	/* Powerup charge pump if DA1/2 is in use */
+ 
+ 	{"DA_IN1", NULL, "ab8500_0p"},
++	{"DA_IN1", NULL, "Main Supply"},
+ 	{"DA_IN1", NULL, "Charge Pump"},
+ 	{"DA_IN2", NULL, "ab8500_0p"},
++	{"DA_IN2", NULL, "Main Supply"},
+ 	{"DA_IN2", NULL, "Charge Pump"},
+ 
+ 	/* Headset path */
+@@ -799,8 +776,10 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	/* HF or LineOut path */
+ 
+ 	{"DA_IN3", NULL, "ab8500_0p"},
++	{"DA_IN3", NULL, "Main Supply"},
+ 	{"DA3 Channel Volume", NULL, "DA_IN3"},
+ 	{"DA_IN4", NULL, "ab8500_0p"},
++	{"DA_IN4", NULL, "Main Supply"},
+ 	{"DA4 Channel Volume", NULL, "DA_IN4"},
+ 
+ 	{"Speaker Left Source", "Audio Path", "DA3 Channel Volume"},
+@@ -858,8 +837,10 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	/* Vibrator path */
+ 
+ 	{"DA_IN5", NULL, "ab8500_0p"},
++	{"DA_IN5", NULL, "Main Supply"},
+ 	{"DA5 Channel Volume", NULL, "DA_IN5"},
+ 	{"DA_IN6", NULL, "ab8500_0p"},
++	{"DA_IN6", NULL, "Main Supply"},
+ 	{"DA6 Channel Volume", NULL, "DA_IN6"},
+ 
+ 	{"VIB1 DAC", NULL, "DA5 Channel Volume"},
+@@ -901,13 +882,15 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"AD1 Channel Volume", NULL, "AD1 Source Select"},
+ 	{"AD2 Channel Volume", NULL, "AD2 Source Select"},
+ 
+-	{"AD12 Enable", NULL, "AD1 Channel Volume"},
+-	{"AD12 Enable", NULL, "AD2 Channel Volume"},
++	{"AD1 Channel Volume", NULL, "AD12 Enable"},
++	{"AD2 Channel Volume", NULL, "AD12 Enable"},
+ 
+-	{"AD_OUT1", NULL, "ab8500_0c"},
+-	{"AD_OUT1", NULL, "AD12 Enable"},
+-	{"AD_OUT2", NULL, "ab8500_0c"},
+-	{"AD_OUT2", NULL, "AD12 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT1"},
++	{"AD_OUT1", NULL, "Main Supply"},
++	{"AD_OUT1", NULL, "AD1 Channel Volume"},
++	{"ab8500_0c", NULL, "AD_OUT2"},
++	{"AD_OUT2", NULL, "Main Supply"},
++	{"AD_OUT2", NULL, "AD2 Channel Volume"},
+ 
+ 	/* Mic 1 */
+ 
+@@ -924,11 +907,11 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"AD3 Source Select", "Mic 1", "MIC1 ADC"},
+ 
+ 	{"AD3 Channel Volume", NULL, "AD3 Source Select"},
++	{"AD3 Channel Volume", NULL, "AD34 Enable"},
+ 
+-	{"AD3 Enable", NULL, "AD3 Channel Volume"},
+-
+-	{"AD_OUT3", NULL, "ab8500_0c"},
+-	{"AD_OUT3", NULL, "AD3 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT3"},
++	{"AD_OUT3", NULL, "Main Supply"},
++	{"AD_OUT3", NULL, "AD3 Channel Volume"},
+ 
+ 	/* HD Capture path */
+ 
+@@ -937,14 +920,15 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 
+ 	{"AD5 Channel Volume", NULL, "AD5 Source Select"},
+ 	{"AD6 Channel Volume", NULL, "AD6 Source Select"},
++	{"AD5 Channel Volume", NULL, "AD5768 Enable"},
++	{"AD6 Channel Volume", NULL, "AD5768 Enable"},
+ 
+-	{"AD57 Enable", NULL, "AD5 Channel Volume"},
+-	{"AD68 Enable", NULL, "AD6 Channel Volume"},
+-
+-	{"AD_OUT57", NULL, "ab8500_0c"},
+-	{"AD_OUT57", NULL, "AD57 Enable"},
+-	{"AD_OUT68", NULL, "ab8500_0c"},
+-	{"AD_OUT68", NULL, "AD68 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT57"},
++	{"AD_OUT57", NULL, "Main Supply"},
++	{"AD_OUT57", NULL, "AD5 Channel Volume"},
++	{"ab8500_0c", NULL, "AD_OUT68"},
++	{"AD_OUT68", NULL, "Main Supply"},
++	{"AD_OUT68", NULL, "AD6 Channel Volume"},
+ 
+ 	/* Digital Microphone path */
+ 
+@@ -955,17 +939,25 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 	{"DMic 5", NULL, "V-DMIC"},
+ 	{"DMic 6", NULL, "V-DMIC"},
+ 
+-	{"AD1 Source Select", NULL, "DMic 1"},
+-	{"AD2 Source Select", NULL, "DMic 2"},
+-	{"AD3 Source Select", NULL, "DMic 3"},
+-	{"AD5 Source Select", NULL, "DMic 5"},
+-	{"AD6 Source Select", NULL, "DMic 6"},
++	{"DMIC1", NULL, "DMic 1"},
++	{"DMIC2", NULL, "DMic 2"},
++	{"DMIC3", NULL, "DMic 3"},
++	{"DMIC4", NULL, "DMic 4"},
++	{"DMIC5", NULL, "DMic 5"},
++	{"DMIC6", NULL, "DMic 6"},
++
++	{"AD1 Source Select", "DMic 1", "DMIC1"},
++	{"AD2 Source Select", "DMic 2", "DMIC2"},
++	{"AD3 Source Select", "DMic 3", "DMIC3"},
++	{"AD5 Source Select", "DMic 5", "DMIC5"},
++	{"AD6 Source Select", "DMic 6", "DMIC6"},
+ 
+-	{"AD4 Channel Volume", NULL, "DMic 4"},
+-	{"AD4 Enable", NULL, "AD4 Channel Volume"},
++	{"AD4 Channel Volume", NULL, "DMIC4"},
++	{"AD4 Channel Volume", NULL, "AD34 Enable"},
+ 
+-	{"AD_OUT4", NULL, "ab8500_0c"},
+-	{"AD_OUT4", NULL, "AD4 Enable"},
++	{"ab8500_0c", NULL, "AD_OUT4"},
++	{"AD_OUT4", NULL, "Main Supply"},
++	{"AD_OUT4", NULL, "AD4 Channel Volume"},
+ 
+ 	/* LineIn Bypass path */
+ 
+@@ -990,13 +982,13 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes[] = {
+ 
+ 	/* Sidetone Filter path */
+ 
+-	{"Sidetone Left Source", "LineIn Left", "AD12 Enable"},
+-	{"Sidetone Left Source", "LineIn Right", "AD12 Enable"},
+-	{"Sidetone Left Source", "Mic 1", "AD3 Enable"},
++	{"Sidetone Left Source", "LineIn Left", "AD1 Channel Volume"},
++	{"Sidetone Left Source", "LineIn Right", "AD2 Channel Volume"},
++	{"Sidetone Left Source", "Mic 1", "AD3 Channel Volume"},
+ 	{"Sidetone Left Source", "Headset Left", "DA_IN1"},
+-	{"Sidetone Right Source", "LineIn Right", "AD12 Enable"},
+-	{"Sidetone Right Source", "Mic 1", "AD3 Enable"},
+-	{"Sidetone Right Source", "DMic 4", "AD4 Enable"},
++	{"Sidetone Right Source", "LineIn Right", "AD2 Channel Volume"},
++	{"Sidetone Right Source", "Mic 1", "AD3 Channel Volume"},
++	{"Sidetone Right Source", "DMic 4", "AD4 Channel Volume"},
+ 	{"Sidetone Right Source", "Headset Right", "DA_IN2"},
+ 
+ 	{"STFIR1 Control", NULL, "Sidetone Left Source"},
 -- 
 2.53.0
 
