@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7B73A6B7F;
-	Wed, 30 Sep 2026 18:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCDF37AA95;
+	Wed, 30 Sep 2026 18:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794632; cv=none; b=QzA7l7VZFz0vcbzs7ktBKwNA5OYNUJ5XgbfkMUCYubiPmu6cuzd7Z/4GuQuvtY6hbw0B8Q4KIzqG8q20ZncSPkHVCw+XGWGNFpsOKcmqDggkD0wzwMXWjcDXVr6DvvhtWsqyVBZ3FLzeI6JvaOhP0ek8f89EhFkwal1it1W+ciY=
+	t=1790794635; cv=none; b=i0Rl/G1dkADqIWLv13qWUonPgt+nJp3P1STPGoZY3FUjmw8Bpb1HYQkig5MUDxLWajD9gj8sduskcotLFrvmsrOVJc07Cq9bm92B1+Bt3NjXfPIY3zYpHRlljZDmCI4UmdvmAoLFTdaY4GgkwSFDfbse3nBo+EuvQ/CU82BVBOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794632; c=relaxed/simple;
-	bh=hoIDAKNjBFCC9Vln4rZHCR77heY2GGnlaQTa943lMhw=;
+	s=arc-20240116; t=1790794635; c=relaxed/simple;
+	bh=6qIVWRRLxmjVb4fubCt4/M9DISCAFt8inx4M1XC6HZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMvkZ+ZFIOOOJB5yRXlRvf2c3FW8jaEkTDc8YMyS7llKwXPwcJQwDUweCaBAfuzjWLDSdkttbtNR4JCkh8aJWRP0S+KPXOyrTczuDNuietDBKrspIqygtApDIPKaVpLPIP1T/QUEPq9BqPUNbfL5qQrtURG0jrpyYnyvv+Wsg+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szk99kYc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NZ66i3n/B6KvdrTh7qFtT2KCky7nlupbTjUzWGSmo77kdUZn5sxQqxAg/eeTULGAyn+rACV35DqLKGosMhRCfb2DH2YT4n109eDBS55HmdPml45HuDmA1G8OlKUb7b5mqLntzLmwb54FFpVJq9jlY6hgVGV6rRhLigJx4FfJWyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dz3E1jKz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szk99kYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9A31F000FF;
-	Wed, 30 Sep 2026 18:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dz3E1jKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D021F000FF;
+	Wed, 30 Sep 2026 18:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794631;
-	bh=z/nv5lNJbhKyfyBQcRWgReb5P/nryYNC5T234wsYfPI=;
+	s=korg; t=1790794634;
+	bh=4Pb9QO/IjhwGLE9Lm3eGTol98Ut648cwuh9uQ5JjG7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=szk99kYcur8FfDUkB1RdJGhpeMs3gxbK2jn1ouPihKwgx/jpg+2kah/O0jWCEbgOk
-	 IYmjKajLu6yqHoRElTs+8/ShZVTlwmiwQ1A5Zad3V5YfwNiI87eE+Fsr06qS4H1kzn
-	 BBG55R/Pz33nujt6+fr8ghB0BV2nDsY2Uj/m9Y84=
+	b=dz3E1jKzzHsd31DTAYP1z6Q4mj55kFVdsp60GCgXFRrMTIdDSTgME5NomTWY81Ioe
+	 7lpbuBUf/+MpXJU0KqJ0qtqE8w0rS9Qtx1ggqj/MmgVt61cdC1cgQkqYRh859Yegyk
+	 8Pxe8F6lVDxgozLjdqfQn4sIVGgc89Aw4GZdbbDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Galen Hassen <rwekyes@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0234/1193] tls: reject the combination of TLS and sockmap
-Date: Wed, 30 Sep 2026 17:15:18 +0200
-Message-ID: <20260930152439.393259437@linuxfoundation.org>
+Subject: [PATCH 6.6 0235/1193] ALSA: hda/conexant: Add pin config quirk for Lenovo IdeaPad Slim 5 16AKP10
+Date: Wed, 30 Sep 2026 17:15:19 +0200
+Message-ID: <20260930152439.414405337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,57 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Galen Hassen <rwekyes@gmail.com>
 
-[ Upstream commit 460e6486617c17dd19abe8f3fc67d9a6fa25f8ca ]
+[ Upstream commit f7c4968ae3af3e819428da5416c2dfd361473f5c ]
 
-TLS and sockmap (BPF psock) integration hides a lot of latent bugs.
-Bugs which may be more or less relevant for real users but they
-are definitely exploitable.
+The Lenovo IdeaPad Slim 5 16AKP10 (PCI SSID 17aa:38b6) uses the
+Conexant SN6140 codec. The internal microphone is on pin 0x1a but
+the BIOS configures it with pin default 0x95a60120, which includes
+a jack detection bit that causes the kernel to treat it as an
+unplugged external mic rather than a fixed internal mic.
 
-We could not find anyone actively using this integration so let's
-reject this config. Adding a TLS socket to a sockmap was already
-rejected by sk_psock_init() through the inet_csk_has_ulp() check.
-We need to reject the attempts to configure the TLS keys (rather
-than adding the ULP itself) because checking prior to the ULP
-installation is tricky without risking a race with sockmap getting
-added in parallel (sockmap does not hold the socket lock).
+Add a pin config quirk that overrides pin 0x1a to 0x95a60130,
+setting the connectivity bits to indicate a fixed/always-connected
+device. This allows the internal microphone to be correctly
+identified and used.
 
-This patch is a minimal rejection of the feature. Subsequent patch
-in the series will do a light dead code removal. Full cleanup would
-require a major rewrite of the Tx path, we don't need skmsg any more.
-
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260614014102.461064-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Galen Hassen <rwekyes@gmail.com>
+Link: https://patch.msgid.link/20260616173257.37373-1-rwekyes@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/pci/hda/patch_conexant.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index c7ee44bd32064..d57336820ef0b 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -592,6 +592,17 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 	int rc = 0;
- 	int conf;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index ec1c92db7cd67..25cd3283906a2 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -307,6 +307,7 @@ enum {
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+ 	CXT_PINCFG_SWS_JS201D,
++	CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10,
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
+ 	CXT_FIXUP_ACER_SWIFT_HP,
+@@ -841,6 +842,12 @@ static const struct hda_pintbl cxt_pincfg_lemote[] = {
+ 	{}
+ };
  
-+	/* TLS and sockmap are mutually exclusive. A socket already in a
-+	 * sockmap (i.e. with a psock attached) cannot be upgraded to TLS.
-+	 * sockmap rejects TLS sockets already (see sk_psock_init()).
-+	 */
-+	rcu_read_lock();
-+	if (sk_psock(sk)) {
-+		rcu_read_unlock();
-+		return -EINVAL;
-+	}
-+	rcu_read_unlock();
++/* Lenovo IdeaPad Slim 5 16AKP10 with SN6140 */
++static const struct hda_pintbl cxt_pincfg_lenovo_ideapad_slim5_16akp10[] = {
++	{ 0x1a, 0x95a60130 }, /* Internal mic, fixed/always-connected */
++	{}
++};
 +
- 	if (sockptr_is_null(optval) || (optlen < sizeof(*crypto_info)))
- 		return -EINVAL;
- 
+ /* SuoWoSi/South-holding JS201D with sn6140 */
+ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
+ 	{ 0x16, 0x03211040 }, /* hp out */
+@@ -1015,6 +1022,10 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = cxt_pincfg_sws_js201d,
+ 	},
++	[CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_lenovo_ideapad_slim5_16akp10,
++	},
+ 	[CXT_PINCFG_TOP_SPEAKER] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -1123,6 +1134,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x21da, "Lenovo X220", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x21db, "Lenovo X220-tablet", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo IdeaPad Z560", CXT_FIXUP_MUTE_LED_EAPD),
++	SND_PCI_QUIRK(0x17aa, 0x38b6, "Lenovo IdeaPad Slim 5 16AKP10", CXT_PINCFG_LENOVO_IDEAPAD_SLIM5_16AKP10),
+ 	SND_PCI_QUIRK(0x17aa, 0x3905, "Lenovo G50-30", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x390b, "Lenovo G50-80", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3975, "Lenovo U300s", CXT_FIXUP_STEREO_DMIC),
 -- 
 2.53.0
 
