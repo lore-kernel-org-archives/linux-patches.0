@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A6751B190;
-	Wed, 30 Sep 2026 17:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588EC51B190;
+	Wed, 30 Sep 2026 17:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789805; cv=none; b=GMvgOF17y1XFUmd7rNNCMiD2iDF/8HEsTEm43jUR5uvEKiaMwALyJnYLUhCSMkNTc2ccuwWuOK4ryd9qbSlkFB59nkYknVINJ+MtKURPHAsWSSzfPZPWsF4KuZanoTOpv013Nc6Rr6Y834Ir/i+jakvpKR3QA5XRDLSFWM8J29U=
+	t=1790789807; cv=none; b=ti+pUEwYmiZ459IG2Q/NmI1Pxh26ds2EiHmZU8UoWxapVHv84YKFjmtt3Qqep4R6PAWW/un3qz2WMzFg+2o6gmdx7jpQUdbNH+i8FV7SsrnJI7bcorjY+ozWbHwggXNTOK+OeccUoIJZ0bl9yMUKZHjSdZwGEixzfDeaZZ0i984=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789805; c=relaxed/simple;
-	bh=TBqw5Eg4ilqPJ5GES7BFqt0HOg+0C8L5eqYV+Mk6E60=;
+	s=arc-20240116; t=1790789807; c=relaxed/simple;
+	bh=XNGXDk1UPZt11IsJg7FP70sRhPjc0O5ZKWz1UNZ6PQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mzBZ7bsW0bXWXf/KV/em/8+QPgfMFhfFqG4U5MmNoxKayBdW5U7F+I5/FLSaqQMoDzkoAEK7Z7UEzCurlpFKFVljyGLFdHISlaV95UWy4aeIB5+aYiJ+kxWTXfberoSZTZG1DbXn6dfxJEBAgPovUWBAVjFiYUK1w3ZsEdi+4i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFInLCzZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mSdtSxo1OjwgMJvVQ3H13qsbZn9ulpLiaJNZh1yrqQGwv2FzAQZGHfDan2hlRaku0GwiGiFFvHXufno4vuCC3joZ4LFYF1xxRqmaQPbLo/6zymdabNSzkmRkJqhpiCyJKUXTS5BsWRF2ZLqmD8cCcpelt9s7+vVGS2sKidbLAQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTqs9qn2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFInLCzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACDD1F00898;
-	Wed, 30 Sep 2026 17:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTqs9qn2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35F11F000FF;
+	Wed, 30 Sep 2026 17:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789803;
-	bh=E1ECFB6lSSnYZh8rwwclPiDk8KCEwSdpd01zrOyVzOg=;
+	s=korg; t=1790789806;
+	bh=FRk1OV4bsFec6cRooyoxD16fCgjrRnzDTLSYk32Resg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DFInLCzZKVbRD7Tr9exPWOaIbJE8kuQA8XW9aMmP+3gC68oo64fjjWYnEBiNiM5kI
-	 dAXRSygDFMWkDzgzWVStyhzAsLgnJiXiBjocCvExNyQIrf/RhPR+azTt+qMZmGdDds
-	 YSLSWtBFxLkKN6HVJWJz9YC8dBNNDANvAFKF9PHE=
+	b=WTqs9qn2YOHbHAeZKfpnnkWwEGFvGJEhBsOdYOBhEC4oFC2d4gDRo5FIwXzjvKRO/
+	 ni5U519DhDzet+0QidsGLKdh0D5tTLJ2nHfhaIF929z0M6Ylh+2+TMluIoi/0JWymm
+	 U6pb6V2+BX/PorRhs2ONBoGGapx5ZcKt32u8bSmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 607/877] i3c: master: Fix use-after-free of master->this
-Date: Wed, 30 Sep 2026 17:25:18 +0200
-Message-ID: <20260930152427.754471572@linuxfoundation.org>
+Subject: [PATCH 6.12 608/877] udf: Move udf_map_block() up
+Date: Wed, 30 Sep 2026 17:25:19 +0200
+Message-ID: <20260930152427.776379456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -46,98 +44,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit feb0ed76601f3c2f91f08688c5a7d8b9d382f720 ]
+[ Upstream commit 97e9d759a4193eabe4d8b6ecac093aac664c16e3 ]
 
-sysfs attribute callbacks for the master controller device dereference
-master->this.  However, master->this is freed in
-i3c_master_detach_free_devs() before the master device itself is
-released.
+Move udf_map_block() in the file to avoid forward declarations.
 
-As a result, sysfs accesses can dereference a freed master->this
-pointer, leading to a use-after-free.
-
-Keep master->this alive until i3c_masterdev_release(), which is called
-after the master device and its sysfs state are being torn down. Do not
-free master->this as part of the normal device detach path.
-
-On the error path in i3c_master_set_info(), reset master->this and
-bus.cur_master to NULL before freeing the allocated device.
-
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-5-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[ retained of_node_put(dev->of_node) instead of upstream’s fwnode_handle_put(dev->fwnode). ]
+Link: https://patch.msgid.link/20260730104232.4086759-3-jack@suse.cz
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: 62333e480d12 ("udf: Fix data loss when converting inline inodes to out of line")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/udf/inode.c |  118 ++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 59 insertions(+), 59 deletions(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -700,6 +700,11 @@ static struct attribute *i3c_masterdev_a
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -330,65 +330,6 @@ const struct address_space_operations ud
+ 	.migrate_folio	= buffer_migrate_folio,
  };
- ATTRIBUTE_GROUPS(i3c_masterdev);
  
-+static void i3c_master_free_i3c_dev(struct i3c_dev_desc *dev)
-+{
-+	kfree(dev);
-+}
-+
- static void i3c_masterdev_release(struct device *dev)
- {
- 	struct i3c_master_controller *master = dev_to_i3cmaster(dev);
-@@ -712,6 +717,8 @@ static void i3c_masterdev_release(struct
- 	i3c_bus_cleanup(bus);
- 
- 	of_node_put(dev->of_node);
-+
-+	i3c_master_free_i3c_dev(master->this);
- }
- 
- static const struct device_type i3c_masterdev_type = {
-@@ -899,11 +906,6 @@ static void i3c_device_release(struct de
- 	kfree(i3cdev);
- }
- 
--static void i3c_master_free_i3c_dev(struct i3c_dev_desc *dev)
+-/*
+- * Expand file stored in ICB to a normal one-block-file
+- *
+- * This function requires i_mutex held
+- */
+-int udf_expand_file_adinicb(struct inode *inode)
 -{
--	kfree(dev);
+-	struct folio *folio;
+-	struct udf_inode_info *iinfo = UDF_I(inode);
+-	int err;
+-
+-	WARN_ON_ONCE(!inode_is_locked(inode));
+-	if (!iinfo->i_lenAlloc) {
+-		down_write(&iinfo->i_data_sem);
+-		if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
+-			iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
+-		else
+-			iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
+-		up_write(&iinfo->i_data_sem);
+-		mark_inode_dirty(inode);
+-		return 0;
+-	}
+-
+-	folio = __filemap_get_folio(inode->i_mapping, 0,
+-			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, GFP_KERNEL);
+-	if (IS_ERR(folio))
+-		return PTR_ERR(folio);
+-
+-	if (!folio_test_uptodate(folio))
+-		udf_adinicb_read_folio(folio);
+-	down_write(&iinfo->i_data_sem);
+-	memset(iinfo->i_data + iinfo->i_lenEAttr, 0x00,
+-	       iinfo->i_lenAlloc);
+-	iinfo->i_lenAlloc = 0;
+-	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
+-		iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
+-	else
+-		iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
+-	folio_mark_dirty(folio);
+-	folio_unlock(folio);
+-	up_write(&iinfo->i_data_sem);
+-	err = filemap_fdatawrite(inode->i_mapping);
+-	if (err) {
+-		/* Restore everything back so that we don't lose data... */
+-		folio_lock(folio);
+-		down_write(&iinfo->i_data_sem);
+-		memcpy_from_folio(iinfo->i_data + iinfo->i_lenEAttr,
+-				folio, 0, inode->i_size);
+-		folio_unlock(folio);
+-		iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
+-		iinfo->i_lenAlloc = inode->i_size;
+-		up_write(&iinfo->i_data_sem);
+-	}
+-	folio_put(folio);
+-	mark_inode_dirty(inode);
+-
+-	return err;
 -}
 -
- static struct i3c_dev_desc *
- i3c_master_alloc_i3c_dev(struct i3c_master_controller *master,
- 			 const struct i3c_device_info *info)
-@@ -1784,6 +1786,8 @@ int i3c_master_set_info(struct i3c_maste
- 	return 0;
+ #define UDF_MAP_CREATE		0x01	/* Mapping can allocate new blocks */
+ #define UDF_MAP_NOPREALLOC	0x02	/* Do not preallocate blocks */
  
- err_free_dev:
-+	master->bus.cur_master = NULL;
-+	master->this = NULL;
- 	i3c_master_free_i3c_dev(i3cdev);
- 
+@@ -449,6 +390,65 @@ out_read:
  	return ret;
-@@ -1804,7 +1808,8 @@ static void i3c_master_detach_free_devs(
- 					i3cdev->boardinfo->init_dyn_addr,
- 					I3C_ADDR_SLOT_FREE);
+ }
  
--		i3c_master_free_i3c_dev(i3cdev);
-+		if (i3cdev != master->this)
-+			i3c_master_free_i3c_dev(i3cdev);
- 	}
- 
- 	list_for_each_entry_safe(i2cdev, i2ctmp, &master->bus.devs.i2c,
++/*
++ * Expand file stored in ICB to a normal one-block-file
++ *
++ * This function requires i_mutex held
++ */
++int udf_expand_file_adinicb(struct inode *inode)
++{
++	struct folio *folio;
++	struct udf_inode_info *iinfo = UDF_I(inode);
++	int err;
++
++	WARN_ON_ONCE(!inode_is_locked(inode));
++	if (!iinfo->i_lenAlloc) {
++		down_write(&iinfo->i_data_sem);
++		if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
++			iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
++		else
++			iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
++		up_write(&iinfo->i_data_sem);
++		mark_inode_dirty(inode);
++		return 0;
++	}
++
++	folio = __filemap_get_folio(inode->i_mapping, 0,
++			FGP_LOCK | FGP_ACCESSED | FGP_CREAT, GFP_KERNEL);
++	if (IS_ERR(folio))
++		return PTR_ERR(folio);
++
++	if (!folio_test_uptodate(folio))
++		udf_adinicb_read_folio(folio);
++	down_write(&iinfo->i_data_sem);
++	memset(iinfo->i_data + iinfo->i_lenEAttr, 0x00,
++	       iinfo->i_lenAlloc);
++	iinfo->i_lenAlloc = 0;
++	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
++		iinfo->i_alloc_type = ICBTAG_FLAG_AD_SHORT;
++	else
++		iinfo->i_alloc_type = ICBTAG_FLAG_AD_LONG;
++	folio_mark_dirty(folio);
++	folio_unlock(folio);
++	up_write(&iinfo->i_data_sem);
++	err = filemap_fdatawrite(inode->i_mapping);
++	if (err) {
++		/* Restore everything back so that we don't lose data... */
++		folio_lock(folio);
++		down_write(&iinfo->i_data_sem);
++		memcpy_from_folio(iinfo->i_data + iinfo->i_lenEAttr,
++				folio, 0, inode->i_size);
++		folio_unlock(folio);
++		iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
++		iinfo->i_lenAlloc = inode->i_size;
++		up_write(&iinfo->i_data_sem);
++	}
++	folio_put(folio);
++	mark_inode_dirty(inode);
++
++	return err;
++}
++
+ static int __udf_get_block(struct inode *inode, sector_t block,
+ 			   struct buffer_head *bh_result, int flags)
+ {
 
 
