@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9254F3EAA;
-	Wed, 30 Sep 2026 17:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98AF44F574;
+	Wed, 30 Sep 2026 17:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787691; cv=none; b=XHmacFrrpAOvrg1pp+3OEDcq+MwZdhqtOXWswXyDG3rhuGF9/1L14uJAKjlbcyBy5PrrO5wGZoYLFk3jxHjqBYgqr8ZzN9VQK/RZKqYbeUBzLfhsNEtKPsjY8Mw4Zx7dwNNbwg6qpdBDrqJ8pwN57qeCNSCgnN1mCDeVeXOH2BU=
+	t=1790787693; cv=none; b=UphSODKvuDXV0/AoYFkMKz8/qb8GWjbe7HrZFq8zvE4k5+SyJMlStcIZOZvkxV87B0CFTVGgeK7JzQgXT9pN/3WDroAM0B+5NBKAffeGdVQ/fNfqear0/5MVuIr+xbwQpLlhMYN8If7Gvkg2DbaG4fEdbOvElconMPBO3CZpuVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787691; c=relaxed/simple;
-	bh=sBAsI1PQfBw3kxmZicPhVlxXCPj5YsuJyNF7/jWmaPI=;
+	s=arc-20240116; t=1790787693; c=relaxed/simple;
+	bh=JHJzLLqzNYZGSSwMCfwbhuXrwgaYplWe3sX7j6Eoeks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eGvrdGI7envA0tOvyJ0j+MhjePlArE2ki+z8sLqs2qWeXtup00U8KCGEk2KpJ5/3WxV7ZbbcOPOzpUorchuqUDPa4IU8V1R+y0Sbl9GKrd1jYBpEFU57JfZZMn2psH+5E7336RFPD+spUXBlOKyF1oCBB51LbatWHV4jDidCm2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SL1hOXtu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8OK0dliLDB6sUBBfkpgdOMbmldMvQ+JkpS40vVXYPs3xEQB2e9iHyb09ZSnCVY+l2sTwLIiJj3hAzd1uy582+50roWKYMhDMVD7WjFo1Ul8P8D4Ep8RQFeUxHK2WZXfedELb9c7s9xLXCwpWGUap7iVrkhm9EuyO+U/rPXhlhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8AzllRM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SL1hOXtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 504AC1F000FF;
-	Wed, 30 Sep 2026 17:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8AzllRM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDAE1F000FF;
+	Wed, 30 Sep 2026 17:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787689;
-	bh=DYgVZ6dWivLiUBuG00B5aYfCpRmuwBwrD/EpEeycML8=;
+	s=korg; t=1790787692;
+	bh=Z04HmraAMGl7Dt1PZoyBz0Lcv13ew2yLNQgxkAUT3X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SL1hOXtunEhACH151WFPcHdKL2cWF3BueWe/3GH2GfK+AeIoSpOQo7VNvhaqyFdCv
-	 ahJJV8wCWFQ9FOlrLEtuUWPJrXUehHVFukYnd3bwi8zHupwPg7IerVhHy++yAyorgf
-	 tBtg1F49tzhKJaOO37HTtDiVEs6br0ZxcVGImnMg=
+	b=O8AzllRMNKtLnJUlS4OHvoFsTPuAtZNWGAuO8zQzZGpTUWa85H8v5VvO8Uf+rje5q
+	 yZPbF/zHKIjqDVFhfyrVH0aF5G4WZpRX+LuMDlCpsdDin2/f8t9+7uH2w7jzQSQz1+
+	 qoWcnqVROzb25JvJ4OkGGpB6bpY3X/FGgJcYVZDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Liz Fong-Jones <lizf@honeycomb.io>,
+	Angel J <iamanaws@httpd.dev>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 7.2 319/457] PCI: Fix BAR resize for devices on a root bus
-Date: Wed, 30 Sep 2026 17:27:04 +0200
-Message-ID: <20260930152352.910470973@linuxfoundation.org>
+Subject: [PATCH 7.2 320/457] PCI: of_property: Omit bus properties without a subordinate bus
+Date: Wed, 30 Sep 2026 17:27:05 +0200
+Message-ID: <20260930152352.930679276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -45,131 +44,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liz Fong-Jones <lizf@honeycomb.io>
+From: Angel J <iamanaws@httpd.dev>
 
-commit d58384c22739848efe14b34e9586e4f1242f33c0 upstream.
+commit 8805840aad73df7146778be243a196d48b4f6430 upstream.
 
-pci_do_resource_release_and_resize() releases device BARs that share a
-bridge window with the BAR being resized, but when the device sits directly
-on a root bus (pdev->bus->self == NULL) it then skips resource assignment
-entirely and returns success, leaving the BARs it just released unassigned
-(IORESOURCE_UNSET).
+A bridge (a device with a Type 1 header) may not have a secondary bus
+allocated (pdev->subordinate), e.g., if there are no available bus numbers
+or the bridge secondary/subordinate bus numbers are not writable.
 
-Skipping pbus_reassign_bridge_resources() is correct in that case -- there
-is no bridge window to adjust -- but the device BARs still have to be
-reassigned. Before the BAR release was consolidated into the PCI core, this
-case worked for amdgpu because the driver released the BARs itself and then
-called pci_assign_unassigned_bus_resources() unconditionally after the
-resize, which assigns unassigned device BARs also on a root bus. Commit
-db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
-removed that call, so nothing assigns the released BARs anymore.
+The dynamic OF helpers of_pci_prop_bus_range() and of_pci_prop_intr_map()
+dereference pdev->subordinate without checking it.  When
+CONFIG_PCI_DYNAMIC_OF_NODES is enabled, this can cause a NULL pointer
+dereference and early boot hang.
 
-This breaks amdgpu completely on the SolidRun HoneyComb LX2K (NXP LX2160A,
-arm64, ACPI), where ACPI doesn't expose the Root Port so the GPU endpoint
-appears directly on a "root bus" of its segment:
+Generate 'bus-range' and 'interrupt-map' properties only when a subordinate
+bus exists.  Keep the node and its remaining properties for bridges without
+one.
 
-  amdgpu 0004:01:00.0: BAR 0 [mem 0xa400000000-0xa40fffffff 64bit pref]: releasing
-  amdgpu 0004:01:00.0: BAR 2 [mem 0xa410000000-0xa4101fffff 64bit pref]: releasing
-  amdgpu 0004:01:00.0: sw_init of IP block <gmc_v8_0> failed -19
-  amdgpu 0004:01:00.0: amdgpu_device_ip_init failed
-  amdgpu 0004:01:00.0: Fatal error during GPU init
+The problem was latent since 407d1a51921e ("PCI: Create device tree node
+for bridge"), but wasn't reachable until 1f340724419e ("PCI: of: Create
+device tree PCI host bridge node"), which appeared in v6.15.  Before
+1f340724419e, of_pci_make_dev_node() returned early because the parent OF
+node was missing.
 
-No error is logged because the resize path reports success; amdgpu then
-finds BAR 0 IORESOURCE_UNSET and bails out with -ENODEV.
-
-When there is no upstream bridge, call pci_bus_assign_resources() on the
-root bus to place the BARs released above, using the same alignment-sorted
-algorithm as normal enumeration instead of a manual per-BAR loop. This also
-walks the rest of the hierarchy under the root bus, as
-pci_assign_unassigned_bus_resources() used to for amdgpu before commit
-db92e3fef53e ("drm/amdgpu: Remove driver side BAR release before resize")
-removed that call -- the core-side fix that commit asked for ("such a
-problem should be fixed inside pci_resize_resource() instead").
-
-pci_bus_assign_resources() returns void, so failure is detected by checking
-whether the released BARs are still assigned afterward; if not, roll back
-as in the bridged case. This is stricter than the bridged path -- it fails
-on any unplaced resource, not just required ones -- since a root bus
-typically has one shared window, and failing loudly seemed better than
-leaving something silently unassigned.
-
-The root bus path also had a locking bug that any fix here necessarily
-touches: the old "goto out" jumped to up_read(&pci_bus_sem) without a
-matching down_read() (as does the "goto restore" taken when
-pci_dev_res_add_to_list() fails in the release loop). Take pci_bus_sem
-before the BAR release loop so every path through the function holds it
-exactly once.
-
-Fixes: 337b1b566db0 ("PCI: Fix restoring BARs on BAR resize rollback path")
-Link: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-7.0/+bug/2159596
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Assisted-by: Claude:claude-fable-5 checkpatch
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
-[bhelgaas: commit log]
+Fixes: 407d1a51921e ("PCI: Create device tree node for bridge")
+Signed-off-by: Angel J <iamanaws@httpd.dev>
+[bhelgaas: move pdev->subordinate test to callees, commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260918035633.566823-1-lizf@honeycomb.io
+Cc: stable@vger.kernel.org	# v6.6+
+Link: https://patch.msgid.link/20260918195540.GA1187209@bhelgaas
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/setup-bus.c |   25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ drivers/pci/of_property.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -2380,6 +2380,7 @@ int pci_do_resource_release_and_resize(s
- 	struct resource *res = pci_resource_n(pdev, resno);
- 	struct pci_dev_resource *dev_res;
- 	struct pci_bus *bus = pdev->bus;
-+	struct pci_dev *bridge = pci_upstream_bridge(pdev);
- 	struct resource *b_win, *r;
- 	LIST_HEAD(saved);
- 	unsigned int i;
-@@ -2397,6 +2398,8 @@ int pci_do_resource_release_and_resize(s
- 	if (ret)
- 		return ret;
+--- a/drivers/pci/of_property.c
++++ b/drivers/pci/of_property.c
+@@ -95,9 +95,13 @@ static int of_pci_prop_bus_range(struct
+ 				 struct of_changeset *ocs,
+ 				 struct device_node *np)
+ {
+-	u32 bus_range[] = { pdev->subordinate->busn_res.start,
+-			    pdev->subordinate->busn_res.end };
++	u32 bus_range[2];
  
-+	down_read(&pci_bus_sem);
++	if (!pdev->subordinate)
++		return 0;
 +
- 	pci_dev_for_each_resource(pdev, r, i) {
- 		if (i >= PCI_BRIDGE_RESOURCES)
- 			break;
-@@ -2415,13 +2418,21 @@ int pci_do_resource_release_and_resize(s
++	bus_range[0] = pdev->subordinate->busn_res.start;
++	bus_range[1] = pdev->subordinate->busn_res.end;
+ 	return of_changeset_add_prop_u32_array(ocs, np, "bus-range", bus_range,
+ 					       ARRAY_SIZE(bus_range));
+ }
+@@ -220,6 +224,9 @@ static int of_pci_prop_intr_map(struct p
+ 	int ret;
+ 	u8 pin;
  
- 	pci_resize_resource_set_size(pdev, resno, size);
- 
--	if (!bus->self)
--		goto out;
--
--	down_read(&pci_bus_sem);
--	ret = pbus_reassign_bridge_resources(bus, res, &saved);
--	if (ret)
--		goto restore;
-+	if (bridge) {
-+		ret = pbus_reassign_bridge_resources(bus, res, &saved);
-+		if (ret)
-+			goto restore;
-+	} else {
-+		/* No bridge window to adjust; let the core reassign the bus. */
-+		pci_bus_assign_resources(bus);
++	if (!pdev->subordinate)
++		return 0;
 +
-+		list_for_each_entry(dev_res, &saved, list) {
-+			if (!resource_assigned(dev_res->res)) {
-+				ret = -ENOSPC;
-+				goto restore;
-+			}
-+		}
-+	}
- 
- out:
- 	up_read(&pci_bus_sem);
+ 	pnode = pci_device_to_OF_node(pdev->bus->self);
+ 	if (!pnode)
+ 		pnode = pci_bus_to_OF_node(pdev->bus);
 
 
