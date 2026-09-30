@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5DE352003;
-	Wed, 30 Sep 2026 17:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016CB3644C1;
+	Wed, 30 Sep 2026 17:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790217; cv=none; b=toKJx0laq7qfTi1fZ4OYTkCtDw8VkrvrP5zhkx92yMCf0zJ2A3N2mL9IdXelJzkKBfm+qf9vSd9Nr23xAQy1uMu5OJF9nx+kc42NgVb5xJbq+hrSYkqTvPlhuQXUpxE7rWXBAJJRvyKDGRi0E3VLyMF9wNKR0VnxzxcKpkxH9Yk=
+	t=1790790220; cv=none; b=sngHYiQ5W8CvPPzsMzu6Ao9uIbNpLh4CTsiPpdiG36XIkxu5ZKzcDp+55mVcuGkyG4nd1rATRPo7i+sQsyUYQZV2OenjuNDES8aFQ9te8gv444Qc7LQCnw30Z7HGO6/UfkdFXhrvhZec/aTS1gs1PpmlhbyESp1n+madGfFK62Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790217; c=relaxed/simple;
-	bh=bixulOeHZzA+7DLkHZCXKmHDehdIyj9fGRHk4LBBQic=;
+	s=arc-20240116; t=1790790220; c=relaxed/simple;
+	bh=ZRog7GlzZp9+GWr9fZjRBAebFyOrAVsV0pH17gTdzDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ad8wvwe4BJUOo2f2O5galz2Q0K2hJCS+pHM15p+mjbxsTPCKeTeqvpdNY0s69wiiKeh8SlhbzRyk0O866TuneSEqz+SCSBIEp2uWQcQrQGKo8AU5p0/iq32tL2m3JS4d2eI2paazo2FV0sDNhLmXHixYGU5DVAZEbvC3Zhre2N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPtiKEac; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r4ZZvjiVKZX5X/gTv5VLKSXd1txkHU9Kv8VrfNLG8EAOH/SrMPSE5lJ0F2vNd+WkY/20douNAzf/o3YlWr5729K9mPS+4ma7tY4YiXFo6Bk/TtUeudoXuNlPmMw5AAD8jkiRq86H1dJ0V8GvcRkeRzGownns7VQVyOaw3z+wfqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psGO1ef7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPtiKEac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873BD1F000FF;
-	Wed, 30 Sep 2026 17:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psGO1ef7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578C71F000FF;
+	Wed, 30 Sep 2026 17:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790216;
-	bh=Phuxb4AnF/rheflXk2TucDf/ky5vB70xrwqLipaGMMA=;
+	s=korg; t=1790790218;
+	bh=WTyjUTa89Grhe2wGHWj88OOHE9P/Y0xCRjowKRqlQDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPtiKEacBwtB4lWWuEssMQDOqB7C9rinlyXzpQ+2AuhcbHoN3OCNd++hwGU7xz/Qi
-	 0DhPwvqVM8hQTJtghpu9FHFjZxwsJ5yAeJkIonD2RJ8SqghdxofBEPhFJIq9gX/A5i
-	 iYSyozW5bVEIs03L38bLTkORkZ9Zg+OvcUiwW8oA=
+	b=psGO1ef73W3Jnufps18NyGwaVU7H71Z+Qz3fJuFJdvT1g3+HD+d/+UIgY+5mVJGup
+	 AjkcQMyx1nEH3TspnOaO8FROcaU7g2t+AHATUCo/Qk8uamjHYmftt6A8Jp6LaxJ96q
+	 YNwAw1QYb/r0GkROPonD2HcxmnMOlTqbmScr06TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vega <vega@nebusec.ai>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Zhiling Zou <zhilinz@nebusec.ai>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 734/877] net: bridge: use option bits for CFM/MRP frame handlers
-Date: Wed, 30 Sep 2026 17:27:25 +0200
-Message-ID: <20260930152430.529392656@linuxfoundation.org>
+Subject: [PATCH 6.12 752/877] ipv6: flowlabel: cap duplicate leases per socket
+Date: Wed, 30 Sep 2026 17:27:43 +0200
+Message-ID: <20260930152430.925255336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -56,278 +56,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 7a49e6b16f36b8e085521699adbca3e321b6dd0c ]
+[ Upstream commit 8d6cd188508513503805c156165de38e4e4a8615 ]
 
-CFM and MRP register a global br_frame_type whose hlist_node is linked
-into the per-bridge frame_type_list when the first MEP/MRP instance is
-created. Enabling the protocol on multiple bridges therefore inserts the
-same node into multiple lists. Unregistering it on one bridge then
-corrupts list state belonging to another.
+ipv6_flowlabel_get() allocates an ipv6_fl_socklist entry for every
+successful GET. The recheck path for a compatible existing flowlabel
+links another lease without applying any lease admission check. Repeated
+GET requests for one shareable label can therefore grow a socket's lease
+list without bound.
 
-These handlers can only be installed once per bridge, and they are
-uncommon. Track their per-bridge enable state with net_bridge option
-bits, which already live on the Rx hot cache line, and dispatch the
-matching handler directly from the receive path. Check both bits
-together first as an unlikely case.
+Reject a new unprivileged lease once the socket already holds
+FL_MAX_PER_SOCK leases. Check this on the shared recheck path so reuse
+of a globally interned label, including the fl_intern() collision path,
+is covered as well. New-label admission remains under the existing
+mem_check() policy.
 
-Remove the generic frame_type_list and br_frame_type helpers, which
-have had no other users since CFM and MRP were added. That shrinks
-struct net_bridge by 8 bytes and drops the list walk from the fast
-path. When neither protocol is compiled in, BR_CFM_MRP_OPTS is 0 and
-the compiler prunes the branch.
+Use capable(CAP_NET_ADMIN) rather than ns_capable(), matching
+mem_check(). An unprivileged user must not bypass the cap by creating a
+user namespace and a netns where they have CAP_NET_ADMIN, which would
+still consume host memory.
 
-Fixes: 90c628dd47ff ("net: bridge: extend the process of special frames")
-Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
+Check the capability only when the socket reaches the limit, so
+successful unprivileged GET requests below the cap do not generate a
+capability audit. Do the admission check before updating linger and
+expires so a rejected GET does not refresh the shared label, matching
+the existing socket-list allocation failure path.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Co-developed-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/0345b9d5aa60ba416f6738ff1b87140f0a749cb8.1788417901.git.zhilinz@nebusec.ai
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/83f8535972ff6e3741548476a1d50dec24c758be.1788415194.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjusted bridge option enum context because BROPT_MDB_OFFLOAD_FAIL_NOTIFICATION and BROPT_FDB_LOCAL_VLAN_0 are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_cfm.c     |   11 +++--------
- net/bridge/br_device.c  |    1 -
- net/bridge/br_input.c   |   35 ++++++++++++++---------------------
- net/bridge/br_mrp.c     |   13 +++----------
- net/bridge/br_private.h |   26 +++++++++++++++-----------
- 5 files changed, 35 insertions(+), 51 deletions(-)
+ net/ipv6/ip6_flowlabel.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/net/bridge/br_cfm.c
-+++ b/net/bridge/br_cfm.c
-@@ -367,7 +367,7 @@ static u32 ccm_tlv_extract(struct sk_buf
+--- a/net/ipv6/ip6_flowlabel.c
++++ b/net/ipv6/ip6_flowlabel.c
+@@ -462,6 +462,21 @@ done:
+ 	return NULL;
  }
  
- /* note: already called with rcu_read_lock */
--static int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
-+int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
- {
- 	u32 mdlevel, interval, size, index, max;
- 	const struct br_cfm_common_hdr *hdr;
-@@ -489,11 +489,6 @@ static int br_cfm_frame_rx(struct net_br
- 	return 1;
- }
- 
--static struct br_frame_type cfm_frame_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_CFM),
--	.frame_handler = br_cfm_frame_rx,
--};
--
- int br_cfm_mep_create(struct net_bridge *br,
- 		      const u32 instance,
- 		      struct br_cfm_mep_create *const create,
-@@ -559,7 +554,7 @@ int br_cfm_mep_create(struct net_bridge
- 	INIT_DELAYED_WORK(&mep->ccm_tx_dwork, ccm_tx_work_expired);
- 
- 	if (hlist_empty(&br->mep_list))
--		br_add_frame(br, &cfm_frame_type);
-+		br_opt_toggle(br, BROPT_CFM_ENABLED, true);
- 
- 	hlist_add_tail_rcu(&mep->head, &br->mep_list);
- 
-@@ -588,7 +583,7 @@ static void mep_delete_implementation(st
- 	kfree_rcu(mep, rcu);
- 
- 	if (hlist_empty(&br->mep_list))
--		br_del_frame(br, &cfm_frame_type);
-+		br_opt_toggle(br, BROPT_CFM_ENABLED, false);
- }
- 
- int br_cfm_mep_delete(struct net_bridge *br,
---- a/net/bridge/br_device.c
-+++ b/net/bridge/br_device.c
-@@ -501,7 +501,6 @@ void br_dev_setup(struct net_device *dev
- 	spin_lock_init(&br->lock);
- 	INIT_LIST_HEAD(&br->port_list);
- 	INIT_HLIST_HEAD(&br->fdb_list);
--	INIT_HLIST_HEAD(&br->frame_type_list);
- #if IS_ENABLED(CONFIG_BRIDGE_MRP)
- 	INIT_HLIST_HEAD(&br->mrp_list);
- #endif
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -303,17 +303,25 @@ frame_finish:
- 	return RX_HANDLER_CONSUMED;
- }
- 
-+#define BR_CFM_MRP_OPTS \
-+	((IS_ENABLED(CONFIG_BRIDGE_CFM) ? BIT(BROPT_CFM_ENABLED) : 0UL) | \
-+	 (IS_ENABLED(CONFIG_BRIDGE_MRP) ? BIT(BROPT_MRP_ENABLED) : 0UL))
-+
- /* Return 0 if the frame was not processed otherwise 1
-  * note: already called with rcu_read_lock
-  */
- static int br_process_frame_type(struct net_bridge_port *p,
- 				 struct sk_buff *skb)
- {
--	struct br_frame_type *tmp;
-+	struct net_bridge *br = p->br;
- 
--	hlist_for_each_entry_rcu(tmp, &p->br->frame_type_list, list)
--		if (unlikely(tmp->type == skb->protocol))
--			return tmp->frame_handler(p, skb);
-+	if (skb->protocol == htons(ETH_P_CFM) &&
-+	    br_opt_get(br, BROPT_CFM_ENABLED))
-+		return br_cfm_frame_rx(p, skb);
-+
-+	if (skb->protocol == htons(ETH_P_MRP) &&
-+	    br_opt_get(br, BROPT_MRP_ENABLED))
-+		return br_mrp_process(p, skb);
- 
- 	return 0;
- }
-@@ -407,7 +415,8 @@ static rx_handler_result_t br_handle_fra
- 		}
- 	}
- 
--	if (unlikely(br_process_frame_type(p, skb)))
-+	if (unlikely((READ_ONCE(p->br->options) & BR_CFM_MRP_OPTS) &&
-+		     br_process_frame_type(p, skb)))
- 		return RX_HANDLER_PASS;
- 
- forward:
-@@ -448,19 +457,3 @@ rx_handler_func_t *br_get_rx_handler(con
- 
- 	return br_handle_frame;
- }
--
--void br_add_frame(struct net_bridge *br, struct br_frame_type *ft)
--{
--	hlist_add_head_rcu(&ft->list, &br->frame_type_list);
--}
--
--void br_del_frame(struct net_bridge *br, struct br_frame_type *ft)
--{
--	struct br_frame_type *tmp;
--
--	hlist_for_each_entry(tmp, &br->frame_type_list, list)
--		if (ft == tmp) {
--			hlist_del_rcu(&ft->list);
--			return;
--		}
--}
---- a/net/bridge/br_mrp.c
-+++ b/net/bridge/br_mrp.c
-@@ -6,13 +6,6 @@
- static const u8 mrp_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x1 };
- static const u8 mrp_in_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x3 };
- 
--static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
--
--static struct br_frame_type mrp_frame_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_MRP),
--	.frame_handler = br_mrp_process,
--};
--
- static bool br_mrp_is_ring_port(struct net_bridge_port *p_port,
- 				struct net_bridge_port *s_port,
- 				struct net_bridge_port *port)
-@@ -486,7 +479,7 @@ static void br_mrp_del_impl(struct net_b
- 	kfree_rcu(mrp, rcu);
- 
- 	if (hlist_empty(&br->mrp_list))
--		br_del_frame(br, &mrp_frame_type);
-+		br_opt_toggle(br, BROPT_MRP_ENABLED, false);
- }
- 
- /* Adds a new MRP instance.
-@@ -536,7 +529,7 @@ int br_mrp_add(struct net_bridge *br, st
- 	rcu_assign_pointer(mrp->s_port, p);
- 
- 	if (hlist_empty(&br->mrp_list))
--		br_add_frame(br, &mrp_frame_type);
-+		br_opt_toggle(br, BROPT_MRP_ENABLED, true);
- 
- 	INIT_DELAYED_WORK(&mrp->test_work, br_mrp_test_work_expired);
- 	INIT_DELAYED_WORK(&mrp->in_test_work, br_mrp_in_test_work_expired);
-@@ -1241,7 +1234,7 @@ no_forward:
-  * normal forwarding.
-  * note: already called with rcu_read_lock
-  */
--static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
-+int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
- {
- 	/* If there is no MRP instance do normal forwarding */
- 	if (likely(!(p->flags & BR_MRP_AWARE)))
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -486,12 +486,13 @@ enum net_bridge_opts {
- 	BROPT_VLAN_BRIDGE_BINDING,
- 	BROPT_MCAST_VLAN_SNOOPING_ENABLED,
- 	BROPT_MST_ENABLED,
-+	BROPT_CFM_ENABLED,
-+	BROPT_MRP_ENABLED,
- };
- 
- struct net_bridge {
- 	spinlock_t			lock;
- 	spinlock_t			hash_lock;
--	struct hlist_head		frame_type_list;
- 	struct net_device		*dev;
- 	unsigned long			options;
- 	/* These fields are accessed on each packet */
-@@ -919,16 +920,6 @@ int nbp_backup_change(struct net_bridge_
- int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb);
- rx_handler_func_t *br_get_rx_handler(const struct net_device *dev);
- 
--struct br_frame_type {
--	__be16			type;
--	int			(*frame_handler)(struct net_bridge_port *port,
--						 struct sk_buff *skb);
--	struct hlist_node	list;
--};
--
--void br_add_frame(struct net_bridge *br, struct br_frame_type *ft);
--void br_del_frame(struct net_bridge *br, struct br_frame_type *ft);
--
- static inline bool br_rx_handler_check_rcu(const struct net_device *dev)
- {
- 	return rcu_dereference(dev->rx_handler) == br_get_rx_handler(dev);
-@@ -2033,6 +2024,7 @@ int br_mrp_parse(struct net_bridge *br,
- bool br_mrp_enabled(struct net_bridge *br);
- void br_mrp_port_del(struct net_bridge *br, struct net_bridge_port *p);
- int br_mrp_fill_info(struct sk_buff *skb, struct net_bridge *br);
-+int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
- #else
- static inline int br_mrp_parse(struct net_bridge *br, struct net_bridge_port *p,
- 			       struct nlattr *attr, int cmd,
-@@ -2056,6 +2048,11 @@ static inline int br_mrp_fill_info(struc
- 	return 0;
- }
- 
-+static inline int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
++static bool fl_sock_at_lease_limit(const struct sock *sk)
 +{
-+	return 0;
++	const struct ipv6_fl_socklist *sfl;
++	int count = 0;
++
++	rcu_read_lock();
++	for_each_sk_fl_rcu(sk, sfl) {
++		if (++count >= FL_MAX_PER_SOCK)
++			break;
++	}
++	rcu_read_unlock();
++
++	return count >= FL_MAX_PER_SOCK;
 +}
 +
- #endif
- 
- /* br_cfm.c */
-@@ -2064,6 +2061,7 @@ int br_cfm_parse(struct net_bridge *br,
- 		 struct nlattr *attr, int cmd, struct netlink_ext_ack *extack);
- bool br_cfm_created(struct net_bridge *br);
- void br_cfm_port_del(struct net_bridge *br, struct net_bridge_port *p);
-+int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb);
- int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br);
- int br_cfm_status_fill_info(struct sk_buff *skb,
- 			    struct net_bridge *br,
-@@ -2088,6 +2086,12 @@ static inline void br_cfm_port_del(struc
+ static int mem_check(struct sock *sk)
  {
- }
- 
-+static inline int br_cfm_frame_rx(struct net_bridge_port *port,
-+				  struct sk_buff *skb)
-+{
-+	return 0;
-+}
-+
- static inline int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br)
- {
- 	return -EOPNOTSUPP;
+ 	const int unpriv_total_limit = FL_MAX_SIZE - (FL_MAX_SIZE / 4);
+@@ -673,6 +688,10 @@ recheck:
+ 			err = -ENOMEM;
+ 			if (!sfl1)
+ 				goto release;
++			err = -ENOBUFS;
++			if (fl_sock_at_lease_limit(sk) &&
++			    !capable(CAP_NET_ADMIN))
++				goto release;
+ 			if (fl->linger > fl1->linger)
+ 				fl1->linger = fl->linger;
+ 			if ((long)(fl->expires - fl1->expires) > 0)
 
 
