@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC83515D1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BFAA46D577;
 	Wed, 30 Sep 2026 16:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785510; cv=none; b=EhCru5OG4KkJzS22IU0NbczbD5c2FLstRrVxF8xXObHvsu6WUw5ySTkUOw9VlU034gw0oCu6I01Xbxq0nac5s03OAN2Uh5ACM94zim7s28oaBwpaY3mqZUUGE4ca0GeRxN9Sd46pP4f3ZNwFaXVUQzZhypM6gzuiczIG7xCjLyU=
+	t=1790785510; cv=none; b=j5U5N5ZkXyIDh2AiruJqMPn5ZA4cS7XB2yqJnyJ/P+CE1n2c+WI7u6GJULiSPAIgoLqOmUPA0miCh1cqUiq/MCFrXsda738+HCwdYIS9iNl03YbHcN3Bsf30UIyaCxcsUCW8vnXYOkVS9+00KRcrs6mlObRf+ykSGma87SfR9Vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790785510; c=relaxed/simple;
-	bh=zPa1RM0P9sLC5mMOsZ72gcAL5ttmauQYfv9UbkQr1+w=;
+	bh=iOTUOQLrkkCFiLBMyangLIA4GNEpeHPR6OljCyy8tkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHem/ttwr7sKMa1ho3jCsTs7IPTf0ZMPAL99F9Pt4a/xf023IuaQzlaF7RE/WD7BZe98qu7DpylNLh38vtuEwJ9MecR9pRcvZPc6qt8ArCfHkyTeh60SZFRWDGcD4G4cLvUQoxPm0P6D3TVkZUFDj6UANkkl0t7OR8TbMa1z23I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpfnZqz1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QTgacq0ucK0eCa8bX57t3AnI027u2cRHYSrzIftPVoWEmMNJtsEqURE1A4GVH+CgwSVL/UpL6ZR1hpsX7NQ1FTWOFV05aPdLhjr3IL/xev57aGiHxt8UThUsgkfDLsTvuXVgo9NoIP8wWr1N6hBa5st650fhoJXr8+PMqQxGjxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU47pVce; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpfnZqz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93201F00893;
-	Wed, 30 Sep 2026 16:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU47pVce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D3F1F00898;
+	Wed, 30 Sep 2026 16:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785503;
-	bh=UNwVf7n+hiGCTa6Pm9HKFsGqA+3ERUuHO6Tn6gnHWAg=;
+	s=korg; t=1790785500;
+	bh=Sr/VRCPuFvFcBfgL9TfhCv9bTEBUM/rblkjQLjg5uv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KpfnZqz11NwrNaCvhTXyzzobQmbT23Tv0Fec2P4qGDJvpRwz/kejZ6Hr+0/k+5Nwh
-	 V2YNrR3xGRWsIsg+NSnXmSyu76O4Sy4bJ3ZMQ1vJ+fD7qkTEHDwKRW3oOCPrE+TtHC
-	 qDuk6FqUVQXdwApjp0E3XpKh1T6V9S1mh5/jLjfE=
+	b=QU47pVcehfUOH0dEmSTgM+LlAWqKGFr/8m2hLvnq8guYuEClm4aMLH2sJSR7IKydD
+	 aMeMi6jXzx4+l+oFkJuGIqO4FCNgYhN32VDWtfbkP3k7C4gA20M3trIA/u2OLmQWpF
+	 AmUKW/owfUBHZhQ9SOyp35UngzWdAVvkYCjBN1dI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 531/982] hwmon: (applesmc) fix key backlight workqueue leak on register failure
-Date: Wed, 30 Sep 2026 17:21:07 +0200
-Message-ID: <20260930152428.178985815@linuxfoundation.org>
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 530/982] s390/crypto: Fix missing scrub of temp buffers with AES ctr and gcm algorithm
+Date: Wed, 30 Sep 2026 17:21:06 +0200
+Message-ID: <20260930152428.155967385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,50 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 5a0aacaa2d593d7582ecfe289529b937b6dc5d3c upstream.
+commit 8b7c3b6914f19caf648d05726a86af6326d3c2c6 upstream.
 
-applesmc_create_key_backlight() allocates applesmc_led_wq before calling
-led_classdev_register(). When register fails, the error is returned to
-applesmc_init(), which jumps to out_light_sysfs and skips
-applesmc_release_key_backlight(), leaking the workqueue.
+In function ctr_aes_crypt() there is a buffer used to process
+remaining bytes < AES_BLOCK_SIZE. This buffer was not scrubbed and
+thus could lead to expose of unwanted data. When the buffer is used
+explicitly scrub it at the end of the code block to avoid exposure of
+maybe sensitive data.
 
-Destroy the workqueue on the register failure path. The bug was introduced
-when the inline init block was refactored into a helper that returns errors
-directly, dropping the old out_light_wq unwind label.
+In a similar way the function gcm_aes_crypt() hat an error path where
+the CPACF param block was not scrubbed. Instead of return early now
+these error paths go to end of function where explicit scrubbing is
+done. Similar with the buffers which are part of the gcm_sg_walk
+structs from the variables gw_in and gw_out.
 
-Fixes: 0b0b5dff8967 ("hwmon: (applesmc) Simplify feature sysfs handling")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://patch.msgid.link/20260828105413.2401385-1-congnt264@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: d07f951903fa ("crypto: s390/aes - Fix buffer overread in CTR mode")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org # 6.8+
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/applesmc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/s390/crypto/aes_s390.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/hwmon/applesmc.c
-+++ b/drivers/hwmon/applesmc.c
-@@ -1249,12 +1249,17 @@ static void applesmc_release_light_senso
+--- a/arch/s390/crypto/aes_s390.c
++++ b/arch/s390/crypto/aes_s390.c
+@@ -608,6 +608,7 @@ static int ctr_aes_crypt(struct skcipher
+ 		memcpy(walk.dst.virt.addr, buf, nbytes);
+ 		crypto_inc(walk.iv, AES_BLOCK_SIZE);
+ 		ret = skcipher_walk_done(&walk, 0);
++		memzero_explicit(buf, sizeof(buf));
+ 	}
  
- static int applesmc_create_key_backlight(void)
- {
-+	int ret;
-+
- 	if (!smcreg.has_key_backlight)
- 		return 0;
- 	applesmc_led_wq = create_singlethread_workqueue("applesmc-led");
- 	if (!applesmc_led_wq)
- 		return -ENOMEM;
--	return led_classdev_register(&pdev->dev, &applesmc_backlight);
-+	ret = led_classdev_register(&pdev->dev, &applesmc_backlight);
-+	if (ret)
-+		destroy_workqueue(applesmc_led_wq);
-+	return ret;
+ 	return ret;
+@@ -909,10 +910,14 @@ static int gcm_aes_crypt(struct aead_req
+ 			  gw_in.ptr, aad_bytes);
+ 
+ 		n = aad_bytes + pc_bytes;
+-		if (gcm_in_walk_done(&gw_in, n) != n)
+-			return -ENOMEM;
+-		if (gcm_out_walk_done(&gw_out, n) != n)
+-			return -ENOMEM;
++		if (gcm_in_walk_done(&gw_in, n) != n) {
++			ret = -ENOMEM;
++			goto out;
++		}
++		if (gcm_out_walk_done(&gw_out, n) != n) {
++			ret = -ENOMEM;
++			goto out;
++		}
+ 		aadlen -= aad_bytes;
+ 		pclen -= pc_bytes;
+ 	} while (aadlen + pclen > 0);
+@@ -924,7 +929,10 @@ static int gcm_aes_crypt(struct aead_req
+ 	} else
+ 		scatterwalk_map_and_copy(param.t, req->dst, len, taglen, 1);
+ 
++out:
+ 	memzero_explicit(&param, sizeof(param));
++	memzero_explicit(gw_in.buf, sizeof(gw_in.buf));
++	memzero_explicit(gw_out.buf, sizeof(gw_out.buf));
+ 	return ret;
  }
  
- static void applesmc_release_key_backlight(void)
 
 
