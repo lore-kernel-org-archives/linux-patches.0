@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4AC515897;
-	Wed, 30 Sep 2026 16:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F08511197;
+	Wed, 30 Sep 2026 16:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785185; cv=none; b=oGbhlpZSDksLuAfDVHfg/KOh5irK9nz8r5sx6f1o5kaV5OtvJ50KjlUHy4pl5EHpeOSmEupDe9k4ka/Iwl99bVaewlR+9n0QiVLjy3dA+lcUEIdKF4s9mgUDMPr+l18Cc/2orxqzBeEgFe6M8iNQAvVqJ7sf+ESAfGbHzuOSY7c=
+	t=1790785184; cv=none; b=ACunkp0xqgSEmu/UZPQmJI2WfCr902M0C5Hxmx8kOJcNzsKr3BMW4FudHfC6vaJJUQz2v1ItXTPvt1ke6L1WDupxPq3px1fiQVt5sdekLXwjqX3dPxl40vOyBA77Rjgl1DR30dUlw6RvSSkjflRoRh07AlkyYiP1fApDkxVAEk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785185; c=relaxed/simple;
-	bh=+jIpz0kyD6XpAWd+/Oz9a5Frf+VJeJX+1GJg2ho2nwA=;
+	s=arc-20240116; t=1790785184; c=relaxed/simple;
+	bh=YohwSiFGmsq1WbHCE4LrLAQADXj+AK0p3mTlL1Xs5B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4M5gzYxefWsHeviRzsPZb4tqF4Q+NMnfw/OJ0mxIircbWCbcn6Dk6Dgt/35mVoDGz/20c65E3Tqk1hB4ckFZPkGXG9kuEF1C0vAeQ17/znb7b23iotwWqr97RX3nMkdnEEDfVMr1qt6fIvlOvBG8FT9gEZ0Mwx27zY+b5feFus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0q3bRBN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k7AZ3QeO9PgGb6fQIF7ClhLmXQkn0rzrP675zWtp9eB3nfKW5Qnu0ILbwuqkYvF2Q1s0v6At5T5TwDmRASlyxXjeoIwnHEnthlK+SEnUXUAPrIrCezt/5YEgRWuCwd1f+P8ChRfNHd0Gg59V5M2dqXMOgJebwkRbZ/HHw5Yy6f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSJbLDdA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0q3bRBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50EB11F00893;
-	Wed, 30 Sep 2026 16:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSJbLDdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4EC1F000FF;
+	Wed, 30 Sep 2026 16:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785180;
-	bh=+LgtGh21DD0pu2h4Mh3crN+BFZyNHCDiQ/75znN8gO4=;
+	s=korg; t=1790785178;
+	bh=tfNog9FTzIBs2Z4BVymz/Oo0gIfKz/J3IRjjiSo7PMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K0q3bRBNCTcdZtFsClMoRsaptdsLTbJp2QCFXI7+B1pEZ/DidauUy6dtJuoHR+Z57
-	 kDCuAtukJYD8c0z7PCxHLAXsuJrzcpOlf0oCtYOctH0jM2XqSijaxAu+/RQaqquOW+
-	 e3o4WE+FdpaYC6t1fKzNwzzm0kSvGXf10uA1RIlM=
+	b=SSJbLDdAzbcPbglkMW39a6OzQsg0XrpOAFMcI2Dukx8tOZNTbMeTAoZJ7X1sXXrwl
+	 /ziRg65gf6lWIBbrxcF2kyIpuFtK7SHh/T+PNp4zWFIMnzYzVPmdTpiadgxKoTVYjr
+	 q4qjPzZWx1qhI8urYwRB9HED8CFRG239E7Sd4hWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 418/982] net/mlx5e: Fix setting RS FEC after remapping
-Date: Wed, 30 Sep 2026 17:19:14 +0200
-Message-ID: <20260930152425.781238237@linuxfoundation.org>
+Subject: [PATCH 6.1 417/982] net/sched: defer qdisc freeing after failed creation
+Date: Wed, 30 Sep 2026 17:19:13 +0200
+Message-ID: <20260930152425.760036052@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,86 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit b9d755c5a37519fb1354034db1dfeb30e1ba6856 ]
+[ Upstream commit e6662f2100f8d33b0f4d0047c219efd6bba186ea ]
 
-When a user sets a FEC mode via ethtool, the driver maps the ethtool
-FEC type to the lowest mlx5 bit of that type. For RS FEC, this is
-MLX5E_FEC_RS_528_514 (bit 2). The driver then checks whether this
-bit is supported by at least one link mode by inspecting the
-fec_override_cap fields via mlx5e_fec_in_caps(), and returns
--EOPNOTSUPP if not.
+An RTM_NEWQDISC request can make clsact bind a populated shared ingress
+block during ->init(), publishing an embedded mini_Qdisc to lockless
+readers.  If the same request has an invalid TCA_RATE, estimator setup
+fails after ->init(); the unwind removes the pointer but synchronously
+frees its containing qdisc while tc_run() may still hold it.
 
-This check is incorrect. RS FEC has three supported hardware variants:
-RS_528_514 (bit 2), RS_544_514_INTERLEAVED_QUAD (bit 4), and
-RS_544_514 (bit 7). mlx5e_remap_fec_conf_mode() already remaps bit 2
-to the appropriate RS variant per link mode when writing the admin
-fields, but the early capability check is done against the raw
-unmapped bit. As a result, a device that supports RS_544_514 or
-RS_544_514_INTERLEAVED_QUAD but not RS_528_514 will incorrectly reject
-the user's RS FEC request.
+Retire failed qdiscs through the same RCU helper as normal destruction.
+Inline the synchronous free into the callback now that no direct callers
+remain.
 
-Remove the early support check from mlx5e_set_fec_mode() and fold
-it into the existing write loop, checking caps against the remapped
-policy per link mode. Return -EOPNOTSUPP before the final register
-write if no link mode accepted the policy.
-
-Fixes: 2608a2f831c4 ("net/mlx5e: Fix return status when setting unsupported FEC mode")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902164634.3657606-3-tariqt@nvidia.com
+Fixes: 51ab2994c387 ("net: sched: allow ingress and clsact qdiscs to share filter blocks")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Link: https://lore.kernel.org/netdev/20260805102505.740806-1-david.lee@trailofbits.com/
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260902155231.2149915-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ include/net/sch_generic.h |  2 +-
+ net/sched/sch_api.c       |  2 +-
+ net/sched/sch_generic.c   | 20 ++++++++++----------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-index 505ba41195b93..fe1428d3e57a9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-@@ -614,6 +614,7 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 	u32 in[MLX5_ST_SZ_DW(pplm_reg)] = {};
- 	int sz = MLX5_ST_SZ_BYTES(pplm_reg);
- 	u16 fec_policy_auto = 0;
-+	bool fec_set = false;
- 	int err;
- 	int i;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index a0499bff7ff40..7ec1f5aa6adaf 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -721,7 +721,7 @@ void qdisc_offload_query_caps(struct net_device *dev,
+ struct Qdisc *qdisc_alloc(struct netdev_queue *dev_queue,
+ 			  const struct Qdisc_ops *ops,
+ 			  struct netlink_ext_ack *extack);
+-void qdisc_free(struct Qdisc *qdisc);
++void qdisc_free_rcu(struct Qdisc *qdisc);
+ struct Qdisc *qdisc_create_dflt(struct netdev_queue *dev_queue,
+ 				const struct Qdisc_ops *ops, u32 parentid,
+ 				struct netlink_ext_ack *extack);
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 104a186a4dc8b..48e956724d3b2 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1372,7 +1372,7 @@ static struct Qdisc *qdisc_create(struct net_device *dev,
+ err_out3:
+ 	lockdep_unregister_key(&sch->root_lock_key);
+ 	netdev_put(dev, &sch->dev_tracker);
+-	qdisc_free(sch);
++	qdisc_free_rcu(sch);
+ err_out2:
+ 	module_put(ops->owner);
+ err_out:
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 54041342f1c6d..f58ec57e31f46 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -1045,21 +1045,21 @@ void qdisc_reset(struct Qdisc *qdisc)
+ }
+ EXPORT_SYMBOL(qdisc_reset);
  
-@@ -626,9 +627,6 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 	if (fec_policy >= (1 << MLX5E_FEC_LLRS_272_257_1) && !fec_50g_per_lane)
- 		return -EOPNOTSUPP;
- 
--	if (fec_policy && !mlx5e_fec_in_caps(dev, fec_policy))
--		return -EOPNOTSUPP;
--
- 	MLX5_SET(pplm_reg, in, local_port, 1);
- 	err = mlx5_core_access_reg(dev, in, sz, out, sz, MLX5_REG_PPLM, 0, 0);
- 	if (err)
-@@ -655,12 +653,17 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 		mlx5e_get_fec_cap_field(out, &fec_caps, i);
- 
- 		/* policy supported for link speed */
--		if (fec_caps & conf_fec)
-+		if (fec_caps & conf_fec) {
- 			mlx5e_fec_admin_field(out, &conf_fec, 1, i);
--		else
--			/* set FEC to auto*/
-+			fec_set = true;
-+		} else {
-+			/* set FEC to auto */
- 			mlx5e_fec_admin_field(out, &fec_policy_auto, 1, i);
-+		}
+-void qdisc_free(struct Qdisc *qdisc)
++static void qdisc_free_cb(struct rcu_head *head)
+ {
+-	if (qdisc_is_percpu_stats(qdisc)) {
+-		free_percpu(qdisc->cpu_bstats);
+-		free_percpu(qdisc->cpu_qstats);
++	struct Qdisc *q = container_of(head, struct Qdisc, rcu);
++
++	if (qdisc_is_percpu_stats(q)) {
++		free_percpu(q->cpu_bstats);
++		free_percpu(q->cpu_qstats);
  	}
  
-+	if (fec_policy && !fec_set)
-+		return -EOPNOTSUPP;
-+
- 	return mlx5_core_access_reg(dev, out, sz, out, sz, MLX5_REG_PPLM, 0, 1);
+-	kfree(qdisc);
++	kfree(q);
  }
+ 
+-static void qdisc_free_cb(struct rcu_head *head)
++void qdisc_free_rcu(struct Qdisc *qdisc)
+ {
+-	struct Qdisc *q = container_of(head, struct Qdisc, rcu);
+-
+-	qdisc_free(q);
++	call_rcu(&qdisc->rcu, qdisc_free_cb);
+ }
+ 
+ static void __qdisc_destroy(struct Qdisc *qdisc)
+@@ -1084,7 +1084,7 @@ static void __qdisc_destroy(struct Qdisc *qdisc)
+ 
+ 	trace_qdisc_destroy(qdisc);
+ 
+-	call_rcu(&qdisc->rcu, qdisc_free_cb);
++	qdisc_free_rcu(qdisc);
+ }
+ 
+ void qdisc_destroy(struct Qdisc *qdisc)
 -- 
 2.53.0
 
