@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C5E4E0B66;
-	Wed, 30 Sep 2026 16:37:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41304E0B66;
+	Wed, 30 Sep 2026 16:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786224; cv=none; b=etVF+fKeNoCE9+5bnzgHzM3iaI1e3quhWua4a3JHUhXWWM1DL/34YMt8lRDrxi3AMYHwf3YPurIndrQvQQaucPJxrwBbCAA1lV3ZQETDhCMMesKOroXYWQqcNJarUJwyISWaBaZ79R54fOdjouHcF0ZYgjy+Q9T8RX+uMuxHGms=
+	t=1790786227; cv=none; b=F+C1mWWKY5gZnDnHAaXC8p9Tps4zE8mc3BBJS2kFoA8QeinzbOUPMwakXUEb+3SiOpy2yzEShp6Rdh/BCYOf16M1YQRhKloM2gZ+yrany+Va77pf1562yja4F4nYqzb36hqe7lmDpyvv2O7RDc2rhQ0VPe3zzn2KGFuG6IDTF7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786224; c=relaxed/simple;
-	bh=BK2pW0O8yQhKPV4MdZwvXvwhFVQ9T5M9Iw2K+H47bPE=;
+	s=arc-20240116; t=1790786227; c=relaxed/simple;
+	bh=J4N7SMvOiDBDYR3OAOEHKRtlNsreibErYGP0peuGs9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8rLuODBOiryvHUWPC1QLjGcqJpjWWaOq6+DxWRQ+pv2xaiG/WN0TSgBJaCzdA//47tEXOfGIUhAK99CuKhQYtzBc2uHs2qHbHOuSzDhMM5vBG4TMQv9opMxhI9MQOVC53WrAwOvXdlzzjQstz5dLitA33inj57Sp/QnNrLWShg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swzcjxIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B+8qYGy/Qkt+sbja2ml99Q+0Dq2/KutzkLPAq60w0Mr5q9SntqHAqu3cF/Znm34RIS56rvf0w0BJ/fFxJjdImZYqodtSoinPKdRfRkeF7Oklbksvz0lHFbzY+T/tCb/rWfJPScGxO22LIJqC5JsoYkcpCYtdQD5KbBq/XLOLAtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDItHjgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swzcjxIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A98F1F000FF;
-	Wed, 30 Sep 2026 16:37:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDItHjgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0E11F000FF;
+	Wed, 30 Sep 2026 16:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786223;
-	bh=8g+dSktpytb817EeQmHn/MH6bsKEeZ5PnkmnurQAUTs=;
+	s=korg; t=1790786225;
+	bh=Ng5w3dXxhAzSzLdnzqfQK6iN7+urTlgACxjYJvI6xGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=swzcjxIjmpRad3Fk+Z9NHHCTQJ3nKMkMn34/SyaPJAM5ygCmiQfGTvUVaAr4lVYv1
-	 3QVnxqZeBPRHylaToeZcEogOOqCSMG2j0JmawAE4wrZrj5dYriSp7Z/ppFn5R02QCi
-	 KkF4cf7L48SkkEY/tjGJ7D2s1279BMC0NDKi56JQ=
+	b=TDItHjgFLXTGz2K7WliZbEvxlJ4wZTe5I+5XpFXqfxGM8w6YRKYX+oP4JKdBApAWz
+	 lhvvP6+eFUzbP/rMbxgObbreXCsPM9CBOyre3mSX76E+vRaagmofrDbwQ1Eeacav22
+	 4lI+iPzIbKyYtnbQPHvdDWHw1L9/HmFvjCwIGGYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Turtanov <9alexei9@gmail.com>,
+	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 740/982] Input: atkbd - skip deactivate for Xiaomi Redmi Book Pro 16 2026
-Date: Wed, 30 Sep 2026 17:24:36 +0200
-Message-ID: <20260930152432.647383657@linuxfoundation.org>
+Subject: [PATCH 6.1 741/982] Input: evdev - zero absinfo before partial copy in EVIOCSABS
+Date: Wed, 30 Sep 2026 17:24:37 +0200
+Message-ID: <20260930152432.670191892@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -44,64 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexei Turtanov <9alexei9@gmail.com>
+From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
 
-commit aefbda23eeba234c3ff0f135dc5be6e294bd25a6 upstream.
+commit 8b852965b8eaf910c314dc346967ed82c8d4f235 upstream.
 
-The internal keyboard of the Xiaomi Redmi Book Pro 16 2026 (board TM2425)
-does not work: atkbd_probe() succeeds and every command is ACKed, but no
-scancodes ever arrive afterwards.
+The EVIOCSABS handler copies at most the user supplied ioctl size into
+an uninitialized on-stack struct input_absinfo:
 
-Testing on the hardware through serio_raw shows that ATKBD_CMD_RESET_DIS
-(0xF5) is the culprit. After 0xF5 the embedded controller keeps ACKing
-commands but stops delivering scancodes, and neither ATKBD_CMD_ENABLE
-(0xF4) nor ATKBD_CMD_RESET_BAT (0xFF) bring them back. Only re-enabling
-the keyboard interface at the controller level (i8042 command 0xAE, or
-rewriting the command byte as i8042_port_close() does) revives it.
-Running the init sequence without 0xF5 (0xED 0x00, 0xF3 0x00, 0xF4)
-keeps the keyboard working.
+	if (copy_from_user(&abs, p, min_t(size_t,
+			size, sizeof(struct input_absinfo))))
 
-'i8042.dumbkbd=1' also works around this, but then the driver never
-writes to the keyboard and the LEDs cannot be controlled. Use the
-existing atkbd_deactivate_fixup quirk instead, as done for the sibling
-TM2424 by commit 3a046db33bb9 ("Input: atkbd - skip deactivate for
-Xiaomi Book Pro 14's internal keyboard"). Tested on v7.2: keyboard,
-Caps Lock LED and s2idle suspend/resume all work.
+The size comes from _IOC_SIZE() of the ioctl command and is therefore
+fully controlled by userspace. A short size leaves the trailing part of
+the structure holding whatever was on the kernel stack, and the whole
+structure is then stored into the device:
 
-DMI: XIAOMI REDMI Book Pro 16 2026/TM2425, BIOS RMAPT6B0P0909 05/22/2026
+	dev->absinfo[t] = abs;
 
-Fixes: 9cf6e24c9fbf ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+EVIOCGABS hands that back to userspace, disclosing the stale stack
+bytes. Only the resolution field is currently cleared, which covers the
+legacy struct layout but not an arbitrarily short size.
+
+Zero the structure before the copy so any part not supplied by the
+caller reads back as zero. The existing resolution fixup is kept, since
+it also handles a size that partially overlaps that field.
+
+Fixes: 448cd1664a57 ("Input: evdev - rearrange ioctl handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexei Turtanov <9alexei9@gmail.com>
-Link: https://patch.msgid.link/20260828112239.18081-1-9alexei9@gmail.com
+Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+Link: https://patch.msgid.link/20260901130629.24078-2-ivanrwcm25@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/evdev.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1962,6 +1962,14 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		/* Xiaomi Redmi Book Pro 16 2026 (TM2425) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "XIAOMI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "REDMI Book Pro 16 2026"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/drivers/input/evdev.c
++++ b/drivers/input/evdev.c
+@@ -1231,6 +1231,8 @@ static long evdev_do_ioctl(struct file *
  
+ 			t = _IOC_NR(cmd) & ABS_MAX;
+ 
++			memset(&abs, 0, sizeof(abs));
++
+ 			if (copy_from_user(&abs, p, min_t(size_t,
+ 					size, sizeof(struct input_absinfo))))
+ 				return -EFAULT;
 
 
