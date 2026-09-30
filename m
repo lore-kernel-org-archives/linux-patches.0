@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EE3533588;
-	Wed, 30 Sep 2026 17:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FC45335AA;
+	Wed, 30 Sep 2026 17:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790681; cv=none; b=sZ4FF5qCYE5II3DLaommx+Dux20DzyvQcHedHwVHzukwsYLxNqD7xar+JwDvhfsqOUHOl/9TQWrseaXj9rWbYtH4SnZnCu3oRj9uB7DwDJU7dla6Q/RDK/xJGtu++6IprunlYqjjCEDO2ITzsGgwGC9Vz0T3L0Jstrjm44efl98=
+	t=1790790683; cv=none; b=fvhhppG6jew/1AGr/1+4PceTiafQortwmwrJSqvtEyPzzF8DTqiG12uf/QJ5vFDhUqYKP7RIF5iRY2hwgfhc+CCyxqcVKIp/kU1EEg6b5hsEBUuPbNkWDTn3zjuC9Z0aoEq1vvzxnPyzTuvrqGxkJHrg7LOWsCkuAi63F+JCuLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790681; c=relaxed/simple;
-	bh=Z+xM+3el40zyF7k0mkm48WQ2VQl6+D3NweU+qvtxhqA=;
+	s=arc-20240116; t=1790790683; c=relaxed/simple;
+	bh=F/HuZ2kX9WrInqL0cSJb5uIn/MqDyHyrLRpStnCwLkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J1xyv10k7MrChUSRJbrp422fhdMnh8q9Pddj3idtJbIYwze0jrOoWGoZi7KRyBLENZp6QXpB1XN+7Aewqwcr+hL+mN4Z2TEN8q5THnN9t5pkIa0Hu0mVhMfpb/YYRWdy4YmrVPfOf7tkalw+8On+aFNtkCE9tBrnrdndbJmbtKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5V7ewYR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oilhysb6CwHH8z5l7LW0hhTfQJg5l3CUoUhFndMUkfSaIO9eud2uYivPY2IZ9MvVU9ErOVwpUh6Pzc6AtG5iu7xEoVY5DLC2o8U5lU0KNkvfvWJ2r7R+OQEjBR+beigXWzY52HXET80mJeJN7+cX2Ro4UluMa+t3diIXVN247zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4/CwkOI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5V7ewYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCA11F000FF;
-	Wed, 30 Sep 2026 17:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4/CwkOI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BBF1F00898;
+	Wed, 30 Sep 2026 17:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790679;
-	bh=f9rGtVpsjp0sXYrgN1ABiGSTq5Gkcg8VSnFH6BjMavw=;
+	s=korg; t=1790790682;
+	bh=GNFGxeHMUoecSAyHWCp2bYkG5jE0WAYv+GiUzyfDdL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5V7ewYRxzT8r4/4yWA6gI8jLXhWBAIp8jocRty49n3lHwLHc08VDlZVWsImxV3gT
-	 E3IXNBxROleJM6bPGPZ5BhKazqJ6xot8wJu63PC2SOk+d21GL6ddpOumaKcgij30xZ
-	 u3DqWX509Gm07Iu+VqLwE6D0ostNpBGi3a37puAU=
+	b=D4/CwkOIHdcM0byrmGRdAA77gsK3gh3uPUKxLyj4Rkr2Jt/3rdpMag+wzuVocdEsw
+	 gg0yQ5vNDCnw/awmNNAQnZ5iXu8UQIzv2d/XoG3Uq5PMcsagaXrh+Pk07lg+b9jjIO
+	 lhHdnTg/snRS9zUn26LFh4tov7Dch6ey45MmuWrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Pierre Barre <pierre@barre.sh>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 037/752] ALSA: usx2y: Drain pending US-428 pipe-4 output commands
-Date: Wed, 30 Sep 2026 17:18:27 +0200
-Message-ID: <20260930152358.956856897@linuxfoundation.org>
+Subject: [PATCH 5.15 038/752] 9p: invalidate readdir buffer on seek
+Date: Wed, 30 Sep 2026 17:18:28 +0200
+Message-ID: <20260930152358.978496698@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -45,102 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Pierre Barre <pierre@barre.sh>
 
-[ Upstream commit 18977c0dd722f52217027ff75de2811c53cce2cc ]
+[ Upstream commit e661e17ddbed524b5fbda789a091b48b6b677067 ]
 
-The US-428 pipe-4 output path submits at most one pending p4out
-entry from the shared-memory ring per input interrupt. If userspace
-queues more than one command before the interrupt handler runs, later
-commands remain pending until later input interrupts, even when async
-pipe-4 URBs are available.
+The per-fid readdir buffer (fid->rdir) is populated lazily and only
+refilled when fully drained (rdir->head == rdir->tail). userspace
+lseek() on a directory fd updates file->f_pos via generic_file_llseek()
+but does not touch the cached buffer, so the next getdents() iterates
+the stale cache and emits entries from the previous position instead
+of the one the caller asked for.
 
-Drain pending entries while idle async URBs are available. Copy each
-command into the existing per-URB async buffer before submission, so the
-submitted transfer does not depend on a userspace-mapped ring slot
-remaining unchanged after p4out_sent is advanced.
+Track the file position the cached data corresponds to in
+struct p9_rdir, and drop the cache on entry to iterate_shared when it
+no longer matches ctx->pos. The 9p protocol's Tread/Treaddir already
+take an arbitrary offset on every request, so a refill at the new
+position is always legal; no .llseek override or seek restriction is
+needed.
 
-Also update p4out_sent only after usb_submit_urb() succeeds, so a
-failed submission is not reported as sent.
-
-This keeps the shared-memory ABI unchanged and fixes only the local
-queue-draining behavior.
-
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260519-alsa-usx2y-p4out-drain-v1-1-8f0a4550bae2@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Pierre Barre <pierre@barre.sh>
+Link: https://lore.kernel.org/v9fs/496d10b9-40fe-4f81-8014-37497c37ff63@app.fastmail.com/
+Signed-off-by: Pierre Barre <pierre@barre.sh>
+Message-ID: <20260512132032.369281-2-pierre@barre.sh>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2y.c | 39 ++++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ fs/9p/vfs_dir.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
-index b8f0c0298f14a..2ad162ff3c620 100644
---- a/sound/usb/usx2y/usbusx2y.c
-+++ b/sound/usb/usx2y/usbusx2y.c
-@@ -180,7 +180,7 @@ static void i_usx2y_in04_int(struct urb *urb)
- 	struct usx2ydev		*usx2y = urb->context;
- 	struct us428ctls_sharedmem	*us428ctls = usx2y->us428ctls_sharedmem;
- 	struct us428_p4out *p4out;
--	int i, j, n, diff, send;
-+	int i, j, n, diff, send, len;
+diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
+index 67bbcf24ed2a7..78a9a1838142d 100644
+--- a/fs/9p/vfs_dir.c
++++ b/fs/9p/vfs_dir.c
+@@ -30,6 +30,7 @@
+  * struct p9_rdir - readdir accounting
+  * @head: start offset of current dirread buffer
+  * @tail: end offset of current dirread buffer
++ * @offset: file position the data at @head corresponds to
+  * @buf: dirread buffer
+  *
+  * private structure for keeping track of readdir
+@@ -39,6 +40,7 @@
+ struct p9_rdir {
+ 	int head;
+ 	int tail;
++	loff_t offset;
+ 	uint8_t buf[];
+ };
  
- 	usx2y->in04_int_calls++;
+@@ -104,6 +106,9 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
+ 	kvec.iov_base = rdir->buf;
+ 	kvec.iov_len = buflen;
  
-@@ -223,24 +223,31 @@ static void i_usx2y_in04_int(struct urb *urb)
- 			} while (!err && usx2y->us04->submitted < usx2y->us04->len);
++	if (rdir->head < rdir->tail && rdir->offset != ctx->pos)
++		rdir->head = rdir->tail = 0;
++
+ 	while (1) {
+ 		if (rdir->tail == rdir->head) {
+ 			struct iov_iter to;
+@@ -118,6 +123,7 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
+ 
+ 			rdir->head = 0;
+ 			rdir->tail = n;
++			rdir->offset = ctx->pos;
  		}
- 	} else {
--		if (us428ctls && us428ctls->p4out_last >= 0 && us428ctls->p4out_last < N_US428_P4OUT_BUFS) {
--			if (us428ctls->p4out_last != us428ctls->p4out_sent) {
--				send = us428ctls->p4out_sent + 1;
--				if (send >= N_US428_P4OUT_BUFS)
--					send = 0;
--				for (j = 0; j < URBS_ASYNC_SEQ && !err; ++j) {
--					if (!usx2y->as04.urb[j]->status) {
--						p4out = us428ctls->p4out + send;	// FIXME if more than 1 p4out is new, 1 gets lost.
--						usb_fill_bulk_urb(usx2y->as04.urb[j], usx2y->dev,
--								  usb_sndbulkpipe(usx2y->dev, 0x04), &p4out->val.vol,
--								  p4out->type == ELT_LIGHT ? sizeof(struct us428_lights) : 5,
--								  i_usx2y_out04_int, usx2y);
--						err = usb_submit_urb(usx2y->as04.urb[j], GFP_ATOMIC);
-+		while (us428ctls &&
-+		       us428ctls->p4out_last >= 0 &&
-+		       us428ctls->p4out_last < N_US428_P4OUT_BUFS &&
-+		       us428ctls->p4out_last != us428ctls->p4out_sent) {
-+			for (j = 0; j < URBS_ASYNC_SEQ && !err; ++j) {
-+				if (!usx2y->as04.urb[j]->status) {
-+					send = us428ctls->p4out_sent + 1;
-+					if (send >= N_US428_P4OUT_BUFS)
-+						send = 0;
-+
-+					p4out = us428ctls->p4out + send;
-+					len = p4out->type == ELT_LIGHT ?
-+						sizeof(struct us428_lights) : 5;
-+					memcpy(usx2y->as04.urb[j]->transfer_buffer,
-+					       &p4out->val.vol, len);
-+					usx2y->as04.urb[j]->transfer_buffer_length = len;
-+					err = usb_submit_urb(usx2y->as04.urb[j], GFP_ATOMIC);
-+					if (!err)
- 						us428ctls->p4out_sent = send;
--						break;
--					}
-+
-+					break;
- 				}
- 			}
-+			if (j >= URBS_ASYNC_SEQ || err)
-+				break;
+ 		while (rdir->head < rdir->tail) {
+ 			err = p9stat_read(fid->clnt, rdir->buf + rdir->head,
+@@ -135,6 +141,7 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
+ 
+ 			rdir->head += err;
+ 			ctx->pos += err;
++			rdir->offset = ctx->pos;
  		}
  	}
+ }
+@@ -162,6 +169,9 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 	if (!rdir)
+ 		return -ENOMEM;
  
++	if (rdir->head < rdir->tail && rdir->offset != ctx->pos)
++		rdir->head = rdir->tail = 0;
++
+ 	while (1) {
+ 		if (rdir->tail == rdir->head) {
+ 			err = p9_client_readdir(fid, rdir->buf, buflen,
+@@ -171,6 +181,7 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 
+ 			rdir->head = 0;
+ 			rdir->tail = err;
++			rdir->offset = ctx->pos;
+ 		}
+ 
+ 		while (rdir->head < rdir->tail) {
+@@ -191,6 +202,7 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 
+ 			ctx->pos = curdirent.d_off;
+ 			rdir->head += err;
++			rdir->offset = ctx->pos;
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
