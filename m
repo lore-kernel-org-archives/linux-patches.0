@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D571538E5ED;
-	Wed, 30 Sep 2026 19:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9286B3ACF00;
+	Wed, 30 Sep 2026 19:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794806; cv=none; b=OLJFjG5Us/VL1UqpbjxpLT2mFiaTTgFfWertxY4ntt7gJLNrdYcD2SMnL3GRIagPxUFo0X2LI//rQvHKwNQ3Jy13zR6Yjj82X2+6Ss0uahNY2A8hzq/mdx2QWE1/hLdZaBunpfE38VSCXVoANtgVL0ZLzM11Pyd76i+gW6TSsp4=
+	t=1790794808; cv=none; b=lYCC8PyWrieBnTXS3MNocuIfxRwu5WhVYi61XZoSweQqw/+/9wqBXC7iAGwB9J9KcPGcKnLF7kjM9W1+3+naKRYhrxo5njcsWlYHoli4oLdqTJoiXUhzbCckKpogPtR3kfYnjosRhkpMx59auJEpsNTrwb42wN/9WWyLKo30bNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794806; c=relaxed/simple;
-	bh=j2w4KwLU2BXEs4+k51UeIlx1dgg637eZDOT7sGFLLoM=;
+	s=arc-20240116; t=1790794808; c=relaxed/simple;
+	bh=7V+8ME6sp4OJf+Fbmb7d9lkIR+bfNEalbaUySx3W5Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTJms4mCEszNHc9q1Gsth1Ha1caYSfo9lZOW2y7cL5u2Dw508tIgU+QEnDT24x5+0EaMBTy+1nKQyTp0Q3V9SjVZKk0qV6rUYD3l/93WrH70LDvZ/p7ML1gVaCXOwoJQvnYtCMNhLNLKJeLtnDMJXt/JwxciI5BvHKhPC+71/FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9MSM9P1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GMMBfZfh4o8X2it8+PDunfStcgiWgQY2tK2L8xODxrjAfV1X/U6h6ZL/pzEuJL5TIcXAuhS0zaiuY1NdOOnroFpgcRPrdZGbix+/HZlXIeOP13NBRCDfe16pTznjEilGy2kxw4l/cBdRASV/rEX5ViFUo9AyAapaVyoYVJh+6TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DY6smJQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9MSM9P1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2DA1F000FF;
-	Wed, 30 Sep 2026 19:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY6smJQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231F81F000FF;
+	Wed, 30 Sep 2026 19:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794804;
-	bh=I3kLvMvqpCjDDNagz1rg17vlv94E/smzu42fk0s/AU4=;
+	s=korg; t=1790794807;
+	bh=YX7Q+NMP9HdQ5RpN9fuxT+qV9MErpT75ziThnOYYufY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9MSM9P1aIiQWQuQRNjtPxq6ez6gh98a0mH+/Qgg6pv1fkKewyY5O09ipEghVK1yM
-	 QSm2QD4sCl1XgVxEdsmz647hHHs26LvjyaTn2CkpEpC5z8MFWghLL4ux3EvgAB6PmY
-	 4U65beBo/mvsNvhyFX21y6XMA7Wut8t2958kt37s=
+	b=DY6smJQlvesi91xT4NAwzQZBtKONlPCCtQajQgC0avV+nJjeITSsBJJF78XeXs+Mf
+	 QrAuQ0aL0pAECi4VJMZXb98JVfxHkEOPAE4tZhJw+X8KB7B9hgJHizQWDEeFre8ahn
+	 0esAQrpQ+0+KLsGaERpCxN6L8j9HfhaTGFyn+quU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0340/1193] hwmon: (corsair-psu) Fix linear11 calculation
-Date: Wed, 30 Sep 2026 17:17:04 +0200
-Message-ID: <20260930152441.713863388@linuxfoundation.org>
+Subject: [PATCH 6.6 0341/1193] spi: dw: fix wrong RX_SAMPLE_DLY setting after resume
+Date: Wed, 30 Sep 2026 17:17:05 +0200
+Message-ID: <20260930152441.738329400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,111 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit c6c4234928d2eb4f61fecb61067e612d9bdbd2ff ]
+[ Upstream commit 133c71b2c0bc976a4751f9e05ef7cdea67f964e5 ]
 
-In corsairpsu_linear11_to_int(), the mantissa is extracted using bitwise
-operations and cast to s16 before being shifted left:
+On platforms which need a non-zero rx sample delay, the RX_SAMPLE_DLY
+reg setting is lost after resume. The reason is that the reg may be
+reset to 0 after resuming, but dws->cur_rx_sample_dly doesn't know
+this fact. Fix this issue by clearing dws->cur_rx_sample_dly in
+dw_spi_shutdown_chip().
 
-static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-{
-    ...
-    const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
-    ...
-}
-
-Due to C integer promotion rules, the masked value (which is always
-positive) is promoted to a 32-bit integer before the left shift. As a
-result, the sign bit is never extended to bit 31 of the promoted integer.
-
-When the device hardware reports a negative temperature in Linear11 format
-(such as an ambient temperature probe reporting sub-zero), the negative
-mantissa is parsed incorrectly as a massive positive value. For example,
--1 becomes 2047, which scales to 2047 degrees Celsius.
-
-Fix the problem by type casting the result of the left shift operation
-to s16.
-
-Another problem is left-shifting of negative values. In C, the result of
-left-shifting negative values is undefined. Use a multiplication instead
-to avoid the problem.
-
-Also use a local s64 variable to store temporary results, change
-the return value type from int to long, and clamp the final value
-to LONG_MIN and LONG_MAX to avoid under- and overflow issues while
-retaining as much information as possible.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Cc: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/20260804034811.2385506-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Suggested-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260803135925.12622-1-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-psu.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/spi/spi-dw.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 61d1b22bc63ec..7b64e04116e39 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -140,13 +140,18 @@ struct corsairpsu_data {
- };
- 
- /* some values are SMBus LINEAR11 data which need a conversion */
--static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-+static long corsairpsu_linear11_to_long(const u16 val, const int scale)
- {
- 	const int exp = ((s16)val) >> 11;
--	const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
--	const int result = mant * scale;
-+	const int mant = ((s16)((val & 0x7ff) << 5)) >> 5;
-+	s64 result = mant * scale;
- 
--	return (exp >= 0) ? (result << exp) : (result >> -exp);
-+	if (exp >= 0)
-+		result *= (int)(1UL << exp);
-+	else
-+		result >>= -exp;
-+
-+	return clamp(result, LONG_MIN, LONG_MAX);
+diff --git a/drivers/spi/spi-dw.h b/drivers/spi/spi-dw.h
+index e25e5554ce89d..91f8f978d6779 100644
+--- a/drivers/spi/spi-dw.h
++++ b/drivers/spi/spi-dw.h
+@@ -283,6 +283,7 @@ static inline void dw_spi_shutdown_chip(struct dw_spi *dws)
+ 	dw_spi_enable_chip(dws, 0);
+ 	dw_spi_set_clk(dws, 0);
+ 	dws->current_freq = 0;
++	dws->cur_rx_sample_dly = 0;
  }
  
- /* the micro-controller uses percentage values to control pwm */
-@@ -271,13 +276,13 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
- 	case PSU_CMD_RAIL_AMPS:
- 	case PSU_CMD_TEMP0:
- 	case PSU_CMD_TEMP1:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000);
- 		break;
- 	case PSU_CMD_FAN:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		break;
- 	case PSU_CMD_FAN_PWM_ENABLE:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		/*
- 		 * 0 = automatic mode, means the micro-controller controls the fan using a plan
- 		 *     which can be modified, but changing this plan is not supported by this
-@@ -291,12 +296,12 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
- 			*val = 2;
- 		break;
- 	case PSU_CMD_FAN_PWM:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		*val = corsairpsu_dutycycle_to_pwm(*val);
- 		break;
- 	case PSU_CMD_RAIL_WATTS:
- 	case PSU_CMD_TOTAL_WATTS:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000000);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000000);
- 		break;
- 	case PSU_CMD_TOTAL_UPTIME:
- 	case PSU_CMD_UPTIME:
+ extern void dw_spi_set_cs(struct spi_device *spi, bool enable);
 -- 
 2.53.0
 
