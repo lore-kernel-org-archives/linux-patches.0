@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6842BEFEF;
-	Wed, 30 Sep 2026 19:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB6E3CAE8D;
+	Wed, 30 Sep 2026 19:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795388; cv=none; b=sfXsQLMW6nJ/p77/80po1i0T0DZUS9Tu+uzHRuNFFkSGjP9nid/LD2vYuGLm1Oukw+7TJvay2nIRD1/DN5FCFUFNkAaXsqesK2QXS5ljqO4clvd4BRC+2R1j/6cAvFq/FL4+kNhNohkz8qx54p5uURKulNtF9zWkXw9N5xOR7lY=
+	t=1790795392; cv=none; b=qpeabYIORdlgGATAj+JVQIqNQ5FdgaRjuQTcARyoZWj1zPlW3thupDjQ2yBJ7lxcWpjr9tQrc1ndrz34LUG7nrokwGOxievlNJoPez1lhkYcVIfXsMtn+HUF5RsHOTZ9CAFf3Ap070t2XRBbVtotPyvQrmOFNxccS1YzEMIOikA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795388; c=relaxed/simple;
-	bh=2MoeMhwf00r2zaJFS5iTuWa6LwI8BisbByLj1jKGU4s=;
+	s=arc-20240116; t=1790795392; c=relaxed/simple;
+	bh=PYrJi26Qm8Wzgj0VxKGVNzACWKuzCe8siIZAyLVJ330=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/27bOxh8jXSq+eiqMWVH+oVh0Os8snjCmcH/kSTkUrC3PYCc7hX6CmgzoqJAANX1oVewQf4YziLnNlGUEBDV45/r+wrVLpmUUB+8Er6UWDAxNF6GvV+I35OL789yB9X8ueeZJKVVJwv6VgyLJnourB6527Ny3j4aOJc2RF2cLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDFYoYJi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qu7dXEJOCmhSfWivTyf1Lo7Xb2GMk0KgJ55z/iyRHAKNq3gkMVm9TBnuhzXysoz9JaDS8TFc//NKUSINfgWtbnMumVB4ZqIuZxy5FeYUOdTOCpHU+w5sbr7QuHfKhgUPxMvwi7ppO1eI+3ek+e9vk73FulpIaMqlMj7gd5tZLgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cl8T/cNE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDFYoYJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6EE1F000FF;
-	Wed, 30 Sep 2026 19:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cl8T/cNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A231F000FF;
+	Wed, 30 Sep 2026 19:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795387;
-	bh=UWxrlqA97jl0po3oxjsFgkt7DIH1p++/7AzDvfB8dxo=;
+	s=korg; t=1790795390;
+	bh=/VGjL0GYFjmlGuDQslKS6IzB+UWBDEOoDbf/ouZ/QEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TDFYoYJinaez2EojuIf0Wi7dkYOkJR24dNiTPRXHkzek8+52dGZqLUTdFiIazbaZh
-	 swsA4XkezJvBp1VpJCM8Yksb+gqPGHJ0BeKIE5o91OO3Nqp/eijtiWh7orbyWNNvea
-	 deX78oAxgAKr0mFt6GEiUVdXa6St6e1vXT/pSmf8=
+	b=Cl8T/cNEs+nmc/ZbnYvbD1ca2sFP8XFk+RaW3JcAZrUACsIFB0rpFG64tekTLETZ9
+	 TyiyARUisKXlljOAhp7f2wdLxLFSFlJdZ8FTwj9oXEemqlMLwNq8yuiwmuY4wU7u1T
+	 89w1PAIXoOAUX7chgNIvQWEnaN680pnIvbjHY8VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"hpp.iscas" <hppiscas@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0544/1193] net: ethernet: cortina: Finish RX updates before NAPI completion
-Date: Wed, 30 Sep 2026 17:20:28 +0200
-Message-ID: <20260930152446.314125017@linuxfoundation.org>
+Subject: [PATCH 6.6 0518/1193] ASoC: bcm: bcm63xx: Publish the OF module aliases
+Date: Wed, 30 Sep 2026 17:20:02 +0200
+Message-ID: <20260930152445.686071895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,61 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit baa26841cb9a2cdc7e0e99d6854a4e3359bf7393 ]
+[ Upstream commit 32689f0fc54fd801f1cd11637666e534984cb04a ]
 
-napi_complete_done() releases ownership of the NAPI instance, but the
-Gemini poll keeps the RX statistics writer section open and updates the
-free queue after calling it. A new poll can therefore start while the old
-writer is still active.
+The BCM63xx I2S platform driver matches brcm,bcm63xx-i2s using
+snd_soc_bcm_audio_match. With SND_BCM63XX_I2S_WHISTLER=m, the platform
+bus emits an OF modalias but snd-soc-63xx does not publish that table.
 
-Finish the statistics and free queue updates before releasing ownership.
-Only re-enable RX interrupts when napi_complete_done() reports successful
-completion.
+Export the existing OF IDs for module autoloading. The PCM companion
+and the probe path remain unchanged.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Suggested-by: Joe Damato <joe@dama.to>
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-2-2bbbd598ca6e@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 88eb404ccc3e ("ASoC: brcm: Add DSL/PON SoC audio driver")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905133103.63432-1-hppiscas@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/soc/bcm/bcm63xx-i2s-whistler.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 02f63c479df08..6f8a230f7f47f 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1586,12 +1586,10 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 	u64_stats_update_begin(&port->rx_stats_syncp);
+diff --git a/sound/soc/bcm/bcm63xx-i2s-whistler.c b/sound/soc/bcm/bcm63xx-i2s-whistler.c
+index c64609718738b..a70c437afe246 100644
+--- a/sound/soc/bcm/bcm63xx-i2s-whistler.c
++++ b/sound/soc/bcm/bcm63xx-i2s-whistler.c
+@@ -285,6 +285,7 @@ static const struct of_device_id snd_soc_bcm_audio_match[] = {
+ 	{.compatible = "brcm,bcm63xx-i2s"},
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, snd_soc_bcm_audio_match);
+ #endif
  
- 	received = gmac_rx(napi->dev, budget);
--	if (received < budget) {
--		napi_gro_flush(napi, false);
--		napi_complete_done(napi, received);
--		gmac_enable_rx_irq(napi->dev, 1);
-+	if (received < budget)
- 		++port->rx_napi_exits;
--	}
-+
-+	u64_stats_update_end(&port->rx_stats_syncp);
- 
- 	port->freeq_refill += received;
- 	if (port->freeq_refill > freeq_threshold) {
-@@ -1599,7 +1597,9 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
- 		geth_fill_freeq(geth, true);
- 	}
- 
--	u64_stats_update_end(&port->rx_stats_syncp);
-+	if (received < budget && napi_complete_done(napi, received))
-+		gmac_enable_rx_irq(napi->dev, 1);
-+
- 	return received;
- }
- 
+ static struct platform_driver bcm63xx_i2s_driver = {
 -- 
 2.53.0
 
