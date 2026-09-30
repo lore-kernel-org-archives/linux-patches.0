@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8AA42882B;
-	Wed, 30 Sep 2026 17:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7975187C1;
+	Wed, 30 Sep 2026 17:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788156; cv=none; b=O1wXGxuSp+dqhxVTAdd2l5toNtfHlSPN0AMGZRDapW6J7u5nVT+SN7KggMT85TAl5v1G1QA7U8QVNRlZE8t6QqpXMpqWQ+7aYXg/BKwBLp+uE3mrEP/1ns+GJP9cm1XBchDMQp9VsAS41Q3kkan3DyxpLFo9r+P3WYlZJRAwplc=
+	t=1790788159; cv=none; b=oKXDViHz5EOLJFpp7KJQSLqdxUUpNiS990rIq+JLIQG17LbBLTwviQjKWL9GL5N/atXsTfzIZ+u50aAoiXMxCRqBD3z+L0BmeHcTiFNxsWWomFr9uZB9/LLVAWG/sjH59+QiNncnX6PHGwuST5Twa5PwsyOpO9E1ZgPa/YmXbfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788156; c=relaxed/simple;
-	bh=BXKGZivxrGiDLq97nVCwladNzJHtf2tfuV27SAX6Z5c=;
+	s=arc-20240116; t=1790788159; c=relaxed/simple;
+	bh=t34cXlb48qSktaaWDQiBZvHi705IKobVQBEi1+ur02s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Il4nd7hvenA+xMZnsLc3SUsUCPg8mIoi0ZMj2ob1W/1rCHFxjwoSh1EnssSnrKwVtqWs42a98sAdEuJ14cmvSwrbS/ybALoxnTJqcrQSzJez/e0eJGf6OukqBlkcLMy9zCTUUzszrcLIbg7IsJAKv8E8m1kEeKIqyLMn3hMgNtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuWa5MK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X38bj0JrFSHSOU87IMJHK9QKios12moR0Ue8idlLjJmSl7E+CG0lc+Z6QVUVxfK7+xrhouiwwX45FW1TxZXcOEE/iK39RAF0Z9m5qIJshVc2F+Goa2+wTv57Ttr8xNjvWZbxa9qEldVCpDZVD6E/D5w/SWa4FnC7uKcPoTueHdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYUIxc0E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuWa5MK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A001F000FF;
-	Wed, 30 Sep 2026 17:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYUIxc0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D56C1F000FF;
+	Wed, 30 Sep 2026 17:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788155;
-	bh=zQK6mAmbq+lL2AqHG/MoCaRNdHYT7TIrJjoO0toZXA4=;
+	s=korg; t=1790788158;
+	bh=/P+fdQ0/DQEWikV4NHRM/2rCeiOnL3YSObSFO7Om9Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XuWa5MK0ly7hgOZR5iZfKdzsagmJ43cDZAHKhuVOxcZ85snTO7HfdQoUugJl640g6
-	 8fIENKAfaadmQLrxZkcf8y/UwVW2MJ2UtpvanEuXIxZ8AmgpU+3BXEWrkkglO17K0r
-	 F5ZAEWY3K5j2WJwQXE2w0NratX8l4VJBLyaf5www=
+	b=SYUIxc0ESV0574Olh0g7dI23VSFMNRGdzHnryEgUD1aKjP2zqcSfGKH1mBO4QPjW/
+	 S6sYm1VS+dYeYiNYORiGglcmHdhWesHeG8p2r5h3jGL0GhH7TWkZ89n+dhH8jCQvM1
+	 b0+XtolLzqmX4cPXRCCMZglLSGYN6dtVLApTMbgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Azzouzi <maherazz04@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/877] esp: downgrade zerocopy managed frags before mutating skb frags
-Date: Wed, 30 Sep 2026 17:15:37 +0200
-Message-ID: <20260930152415.309789217@linuxfoundation.org>
+Subject: [PATCH 6.12 027/877] ARM: socfpga: select the PL310 erratum 753970 workaround
+Date: Wed, 30 Sep 2026 17:15:38 +0200
+Message-ID: <20260930152415.330756810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,81 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Azzouzi <maherazz04@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f89416eb3db151170a6f3c6dfc5239d26cdce4d2 ]
+[ Upstream commit cfc1e9a543e3589ba200795b6e7fd8ef4314efdf ]
 
-On the out-of-place output path (esp->inplace == false) ESP rewrites the
-skb frag array: esp_output_head() appends a trailer frag and
-esp_output_tail() replaces the frags with a destination page, both
-referenced with get_page().
+ARCH_INTEL_SOCFPGA selects CACHE_L2X0 and several PL310 erratum
+workarounds. The 753970 workaround is still conditioned on PL310, but that
+Kconfig symbol no longer exists, so this one selection is always disabled.
 
-When the skb carries zerocopy managed frags (SKBFL_MANAGED_FRAG_REFS) the
-payload frags are owned by the ubuf and must not be referenced or
-unreferenced individually, but ESP mutates the frag array without ever
-downgrading the skb.  This breaks the managed-frag invariant two ways:
+Select PL310_ERRATA_753970 directly, consistently with the other PL310
+workarounds required by the platform.
 
-  - esp_ssg_unref() walks the source scatterlist and drops a page
-    reference for every frag, including the ubuf-owned payload frags,
-    pushing their refcount below the GUP pin bias while the pages are
-    still pinned, i.e. a use-after-free of the zerocopy pages;
-
-  - esp_output_tail() installs its destination page as frag 0 with
-    get_page() but leaves SKBFL_MANAGED_FRAG_REFS set, so
-    skb_release_data() takes the skip_unref branch and never drops that
-    reference, leaking the x->xfrag page at packet rate.
-
-Fix this the way every other frag-mutating site does (__ip_append_data(),
-__ip6_append_data(), tcp_sendmsg_locked()) and call
-skb_zcopy_downgrade_managed() before ESP touches the frag array: it takes
-a real reference on each existing frag and clears SKBFL_MANAGED_FRAG_REFS,
-so the per-frag unref in esp_ssg_unref() and the frag release in
-skb_release_data() are both balanced and no mixed-ownership frag array is
-left behind.
-
-Fixes: 753f1ca4e1e5 ("net: introduce managed frags infrastructure")
-Signed-off-by: Maher Azzouzi <maherazz04@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: fbc125afdc50 ("ARM: socfpga: Turn on ARM errata for L2 cache")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 6 ++++++
- net/ipv6/esp6.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ arch/arm/mach-socfpga/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 6c8c789ded0e4..fb78dc6b7e148 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -438,6 +438,12 @@ int esp_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info *
+diff --git a/arch/arm/mach-socfpga/Kconfig b/arch/arm/mach-socfpga/Kconfig
+index eb72c240c2486..528c5c1368c37 100644
+--- a/arch/arm/mach-socfpga/Kconfig
++++ b/arch/arm/mach-socfpga/Kconfig
+@@ -16,7 +16,7 @@ menuconfig ARCH_INTEL_SOCFPGA
+ 	select ARM_ERRATA_775420
+ 	select PL310_ERRATA_588369
+ 	select PL310_ERRATA_727915
+-	select PL310_ERRATA_753970 if PL310
++	select PL310_ERRATA_753970
+ 	select PL310_ERRATA_769419
+ 	select RESET_CONTROLLER
  
- 			esp->inplace = false;
- 
-+			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
-+			 * we mutate the frag array, so the per-frag unref stays balanced
-+			 * for zerocopy managed frags (see __ip_append_data()).
-+			 */
-+			skb_zcopy_downgrade_managed(skb);
-+
- 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
- 
- 			spin_lock_bh(&x->lock);
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 80981596236ab..7411aac0707b2 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -467,6 +467,12 @@ int esp6_output_head(struct xfrm_state *x, struct sk_buff *skb, struct esp_info
- 
- 			esp->inplace = false;
- 
-+			/* Take real page refs and clear SKBFL_MANAGED_FRAG_REFS before
-+			 * we mutate the frag array, so the per-frag unref stays balanced
-+			 * for zerocopy managed frags (see __ip_append_data()).
-+			 */
-+			skb_zcopy_downgrade_managed(skb);
-+
- 			allocsize = ALIGN(tailen, L1_CACHE_BYTES);
- 
- 			spin_lock_bh(&x->lock);
 -- 
 2.53.0
 
