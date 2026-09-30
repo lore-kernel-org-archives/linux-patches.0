@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325C951B16E;
-	Wed, 30 Sep 2026 16:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF3C4F3ED7;
+	Wed, 30 Sep 2026 16:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784663; cv=none; b=Ua0tPg/1fZkoOsSeVuwtEpDLIStbYo+rB/ttGIH4n2Jtfq8cYb7VzjmLU41csrWRwUE3byjkVci2iarxSWER7w7tMbIFnW8AJd9lpIJn4QbknJgiqlt6zcqL4TXYnn5XU7GsDBoAsBEjJZLNMAkYpzpOz7VDkDzLmli4F6qL41U=
+	t=1790784667; cv=none; b=F1vNUcZWDEwBWERwXL4FxUMBWx0TmhpwBUxMa9pv4qgyr4HDmrIo6mv+iOD38Lq/46wTKDtxmDXB8NIfE3sYWe+Y33o3CP7C01wTntVhHYSExlyI4KbgU6+LYbBj7KymkSQUUhdy5jJBkI2+O7tTZrPqtBHwfqrfbfed+sJmyyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784663; c=relaxed/simple;
-	bh=+iHHdY0kx+f4oi7YsMNETbmhfBCl7WNF+HeD4ZZiG1U=;
+	s=arc-20240116; t=1790784667; c=relaxed/simple;
+	bh=55IiCDWmupT75NbV8nLFbxQOFZVrnMD2fjjPuuK5zJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMTlERCm4eMnfoZkgBkn0/aYTxxWeXJva85Bemw5fCAB+VpyFCO8u9J+BVp2k9UvQSHQ0+9m7Vtc4DDWQAQeoQU0HMIPw9bC58KPuCEQonMGt0gA0OPEJczdLijXgOJyCxWdASEJyUI19FCULLA9Y456KSfkugPEMSnndtrCM1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sISfHlat; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jNHq5l3vY5mVtMjq4mkBWqjCbNPSmxOcGEAoCTemp6sXg3mBDzTIJNc7PuisfStHbwyPSVPPnfHgiMmc2O/Xk31cL5mthzkChUffxKh2+tBbIGA4oY8+zCDr0OqyfOpc6t77CBf/rMLNa1d4DMsO/PReztOQnl8GZNtm2bw4osQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2IjTIJR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sISfHlat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F851F00898;
-	Wed, 30 Sep 2026 16:10:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2IjTIJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E8A1F000FF;
+	Wed, 30 Sep 2026 16:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784660;
-	bh=sVeFB31VEIGZIP+o/DnKs63C0+7hDNWaKa1+rdZF9Js=;
+	s=korg; t=1790784663;
+	bh=d8dlw0IKTkmnhYgvpMymE1+4GDFR4XxCaaHG3cKrm74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sISfHlatiu8ZrYApt105uGMUx8SyDyCaBRB+zyjK6R0XmKegU8HEOlZL/PRyN68Rd
-	 4Cf/2X4bxCo0eM3eUtSfNJCj44yYEaWEvh8GUy2JIzWJIqXLXJWfivqDaaNZpsJrdz
-	 82zgAyoheVSmMH90qZPsZz74f84UO5+sY0lBwVnY=
+	b=S2IjTIJRl5jGe4OuYnILPPcYzQJj46bkUPISlTLcEylPdQd28qShLSb2/OFgwFcT8
+	 06OtS3N9LhO5G1qe2Hebm1TwJ171shvBJuTl5iL/r15w+qvURXjbnud/BFRaSq6K6s
+	 h9uO1z9Ne/EEd5yiHvRTcI/M9uU+VpQ/7uwBJSSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Bystrin <dev.mbstr@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/982] mfd: rsmu: Add 8a34002 support
-Date: Wed, 30 Sep 2026 17:15:43 +0200
-Message-ID: <20260930152421.256146093@linuxfoundation.org>
+Subject: [PATCH 6.1 234/982] netfilter: nf_conntrack_expect: zero at allocation time
+Date: Wed, 30 Sep 2026 17:16:10 +0200
+Message-ID: <20260930152421.825379213@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,62 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Bystrin <dev.mbstr@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
+[ Upstream commit 241ccd2fed9051db443aadce248fc0ab30f55e97 ]
 
-Add compatible string, i2c_devcie_id and spi_devcie_id to support
-8a34002.
+There are occasional LLM hints wrt. leaking uninitialized data to
+userspace via ctnetlink.  Just zero at allocation time,
+expectations are not frequently used these days.
 
-Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
-Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Intentionally keeps _init as-is because we could theoretically
+support re-init, so add the missing exp->dir there.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rsmu_i2c.c | 2 ++
- drivers/mfd/rsmu_spi.c | 2 ++
- 2 files changed, 4 insertions(+)
+ net/netfilter/nf_conntrack_expect.c  |  3 ++-
+ net/netfilter/nf_conntrack_netlink.c | 11 +----------
+ 2 files changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
-index f716ab8039a06..332ca76518ace 100644
---- a/drivers/mfd/rsmu_i2c.c
-+++ b/drivers/mfd/rsmu_i2c.c
-@@ -156,6 +156,7 @@ static void rsmu_i2c_remove(struct i2c_client *client)
- static const struct i2c_device_id rsmu_i2c_id[] = {
- 	{ "8a34000",  RSMU_CM },
- 	{ "8a34001",  RSMU_CM },
-+	{ "8a34002",  RSMU_CM },
- 	{ "82p33810", RSMU_SABRE },
- 	{ "82p33811", RSMU_SABRE },
- 	{ "8v19n850", RSMU_SL },
-@@ -167,6 +168,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
- static const struct of_device_id rsmu_i2c_of_match[] = {
- 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
-+	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
-diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
-index d2f3d8f1e05af..56195ca4fc614 100644
---- a/drivers/mfd/rsmu_spi.c
-+++ b/drivers/mfd/rsmu_spi.c
-@@ -230,6 +230,7 @@ static void rsmu_spi_remove(struct spi_device *client)
- static const struct spi_device_id rsmu_spi_id[] = {
- 	{ "8a34000",  RSMU_CM },
- 	{ "8a34001",  RSMU_CM },
-+	{ "8a34002",  RSMU_CM },
- 	{ "82p33810", RSMU_SABRE },
- 	{ "82p33811", RSMU_SABRE },
- 	{}
-@@ -239,6 +240,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
- static const struct of_device_id rsmu_spi_of_match[] = {
- 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
-+	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
- 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
- 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
- 	{}
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 34324dece89df..70d06ae0a3795 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -304,7 +304,7 @@ struct nf_conntrack_expect *nf_ct_expect_alloc(struct nf_conn *me)
+ {
+ 	struct nf_conntrack_expect *new;
+ 
+-	new = kmem_cache_alloc(nf_ct_expect_cachep, GFP_ATOMIC);
++	new = kmem_cache_zalloc(nf_ct_expect_cachep, GFP_ATOMIC);
+ 	if (!new)
+ 		return NULL;
+ 
+@@ -386,6 +386,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
+ #if IS_ENABLED(CONFIG_NF_NAT)
+ 	memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
+ 	memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
++	exp->dir = 0;
+ #endif
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_expect_init);
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 55bc5626b9679..bdeeff71b4c0b 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3552,8 +3552,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 	if (cda[CTA_EXPECT_FLAGS]) {
+ 		exp->flags = ntohl(nla_get_be32(cda[CTA_EXPECT_FLAGS]));
+ 		exp->flags &= ~NF_CT_EXPECT_USERSPACE;
+-	} else {
+-		exp->flags = 0;
+ 	}
+ 	if (cda[CTA_EXPECT_FN]) {
+ 		const char *name = nla_data(cda[CTA_EXPECT_FN]);
+@@ -3565,8 +3563,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 			goto err_out;
+ 		}
+ 		exp->expectfn = expfn->expectfn;
+-	} else
+-		exp->expectfn = NULL;
++	}
+ 
+ 	exp->class = class;
+ 	exp->master = ct;
+@@ -3585,12 +3582,6 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 						 exp, nf_ct_l3num(ct));
+ 		if (err < 0)
+ 			goto err_out;
+-#if IS_ENABLED(CONFIG_NF_NAT)
+-	} else {
+-		memset(&exp->saved_addr, 0, sizeof(exp->saved_addr));
+-		memset(&exp->saved_proto, 0, sizeof(exp->saved_proto));
+-		exp->dir = 0;
+-#endif
+ 	}
+ 	return exp;
+ err_out:
 -- 
 2.53.0
 
