@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3421E405C3F;
-	Wed, 30 Sep 2026 19:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522A2445AC6;
+	Wed, 30 Sep 2026 19:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797061; cv=none; b=H/VvufYTx6QBbdkd1oUQM0Q3BY65Wi7OYrb3cd8jWI7lWUQXsj8psyY63jyMa5vjxv8SwQCxj9SBeD+VFehbA2wTLdVvopD9zi3NYVYUZUl8oBZzjg7+UETD0HObFD2MSx+1upPENZ06cGwiVcsJGX+AsiMAMNuZ5abOhhrhXkM=
+	t=1790797064; cv=none; b=JOdgmc7vtkpTT64ePqx5sCDwSWoMaWeh+8C7iA9RwB0m6Z1yfmrhbTl631r3QdorzwlOiZQ4RVM1RxFGbK1HC9Ca3CHhSLXDMdUY0+KeWfkKBh8IZqvnQvbnIwfYmzjE/tp1uY1K+1ZOhsfbibiwUDEHKFqZXWhTn+wfYEKXetU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797061; c=relaxed/simple;
-	bh=kOmHBjGYm70Y8aDzxCyz+hVK1Z/VFEEneghrsOVpfxI=;
+	s=arc-20240116; t=1790797064; c=relaxed/simple;
+	bh=hPJGsmvk1q76cUAdu4DNT9pNLLMfsLeWoFvory0d2bA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hAMISPYEiHFd09V604sINyIEGIWfwW/jDEwzCoX6jpt4X1tNrPwQdLJwqxrubpBSIDfSz/klMKDJvZ+6AloOSGcIMa5QKvaxbgAFLHnVh5lBHPgM38yEW+s07Gu2+Qj5h9D0gdiWerQiRc4UJzGoE+7fxy8Xq1krVf/x3UdFop8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAmVgpJo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DTAyKMbU/0bLS4dWH6kZtoHmxMffMqwhXZjiG8wf2d4cbGVsRHT23APgXn1k+yJ1NgQPIBqJtCO5Hwj1/3nM1Tlzs3G5VGmlf1pOeQ3qJ6TwAEHRRXOBRDFhZHMdy2zoH3v/BtsNgmWsOkCXLFkqWXauBJrjAHEVvQVAYic2nw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3MTV58N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAmVgpJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934D41F000FF;
-	Wed, 30 Sep 2026 19:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3MTV58N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCF51F000FF;
+	Wed, 30 Sep 2026 19:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797060;
-	bh=kRa1JG5nIK8IjrvEwwusAcBXKixtJSoPIoJM3WoFACw=;
+	s=korg; t=1790797063;
+	bh=Cd/I09mn5MGFpS1PjDucx6NihM2Ok95CljIbj/y8kBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oAmVgpJoV4gHmcF0UY9JhSuVCucZzB7QKgkZcTiRVMhZRE8bw5ZlhGD0AGeap2DSD
-	 QUNzJ8NRToTO9AGTUVwB5BqoJqxigqOZWzyRKOAz7Wo8oH+FUuisYGjeXcsOV9Fcmc
-	 962sC1TyGUyT/i0iFt6yvm5466sku5uPjTgZUh00=
+	b=H3MTV58N9LCSCByyTpgErPFWTcdCrk4Ykmq3bAdrnDd5UqYqwTchET4CdvPiSeE2a
+	 n1d1QqsoLQJn/mFjZ3FKNEo/VQNQar8/FCqV2y7yuSK8XOB3/Px3SZrUVDds0NzG77
+	 zln91Nga8eX1ub1OX29O556NPaS5MXe57eC7dUvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gajdos=20Tam=C3=A1s?= <tamas@rimpianto.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 1132/1193] net: atl1e: fix soft lockup on out-of-range hw_next_to_clean read
-Date: Wed, 30 Sep 2026 17:30:16 +0200
-Message-ID: <20260930152459.387472994@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Patrick Lu (Anthropic)" <perf.patrick.lu@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.6 1097/1193] writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes
+Date: Wed, 30 Sep 2026 17:29:41 +0200
+Message-ID: <20260930152458.606127630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -44,45 +47,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gajdos Tamás <tamas@rimpianto.com>
+From: Patrick Lu (Anthropic) <perf.patrick.lu@gmail.com>
 
-commit 374bf9e4b90f979e052332c4faca2d745c491a12 upstream.
+commit f6988c90671e83db79df1b7b9d6fdb0e5947fd84 upstream.
 
-Same issue as atl1c (see the first commit in this series, "net:
-atl1c: fix soft lockup on out-of-range tpd_cons read"): the hardware
-can report an out-of-range hw_next_to_clean (seen as 0xffff) while
-the PCIe link/MAC is resetting. An out-of-range value can never be
-reached and the loop below would spin forever. Treat it as "nothing
-new to clean" instead.
+cleanup_offline_cgwb() prepares at most WB_MAX_INODES_PER_ISW inodes
+per call and is called again until the dying wb is drained, but every
+call walks wb->b_attached and then wb->b_dirty_time from the same end.
+Inodes already prepared (they stay on the list with I_WB_SWITCH set
+until the switch worker runs) and inodes that cannot be switched
+(I_FREEING, I_WILL_FREE, !SB_ACTIVE, DAX, already on the target wb)
+stay where they are, so each pass rescans a growing run of them under
+wb->list_lock and a full drain is quadratic in the number of inodes on
+the list. With ~17M inodes attached to one dying cgwb we saw this end
+in soft lockups, with CPUs reported stuck for 21-48s.
 
-Fixes: a6a5325239c202 ("atl1e: Atheros L1E Gigabit Ethernet driver")
+Walk both lists from the oldest end and move every scanned inode to
+the newest end, so the next pass starts where the previous one stopped
+and the drain becomes linear. b_attached is unordered, so nobody sees
+the reorder there. b_dirty_time is ordered by dirtied_when, but the
+oldest unscanned inode stays at the end move_expired_inodes() picks
+from, sync takes the whole list regardless of order, and prepared
+inodes leave the list as soon as the switch work runs and get a new
+dirtied_time_when on the new wb anyway, so the only inodes left out of
+order are the ones that can never switch (DAX), and only on the dying
+wb.
+
+Fixes: c22d70a162d3 ("writeback, cgroup: release dying cgwbs by switching attached inodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gajdos Tamás <tamas@rimpianto.com>
-Link: https://patch.msgid.link/20260921091334.3571525-3-tamas@rimpianto.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Signed-off-by: Patrick Lu (Anthropic) <perf.patrick.lu@gmail.com>
+Link: https://patch.msgid.link/20260911-wb-cgwb-rotate-v2-1-a9ab253a1295@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/atheros/atl1e/atl1e_main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/fs-writeback.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-+++ b/drivers/net/ethernet/atheros/atl1e/atl1e_main.c
-@@ -1234,6 +1234,9 @@ static bool atl1e_clean_tx_irq(struct at
- 	u16 hw_next_to_clean = AT_READ_REGW(&adapter->hw, REG_TPD_CONS_IDX);
- 	u16 next_to_clean = atomic_read(&tx_ring->next_to_clean);
- 
-+	if (unlikely(hw_next_to_clean >= tx_ring->count))
-+		hw_next_to_clean = next_to_clean;
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -669,19 +669,34 @@ static bool isw_prepare_wbs_switch(struc
+ 				   struct inode_switch_wbs_context *isw,
+ 				   struct list_head *list, int *nr)
+ {
+-	struct inode *inode;
++	struct inode *inode, *tmp;
++	LIST_HEAD(scanned);
++	bool full = false;
 +
- 	while (next_to_clean != hw_next_to_clean) {
- 		tx_buffer = &tx_ring->tx_buffer[next_to_clean];
- 		if (tx_buffer->dma) {
++	/*
++	 * Walk from the oldest end and move scanned inodes to the newest
++	 * end, so the next scan resumes at unscanned inodes instead of
++	 * re-walking an ever-growing run of prepared and skipped ones.
++	 * For b_dirty_time this keeps the oldest unscanned inode at the
++	 * end move_expired_inodes() picks from; b_attached is unordered.
++	 */
++	list_for_each_entry_safe_reverse(inode, tmp, list, i_io_list) {
++		list_move(&inode->i_io_list, &scanned);
+ 
+-	list_for_each_entry(inode, list, i_io_list) {
+ 		if (!inode_prepare_wbs_switch(inode, new_wb))
+ 			continue;
+ 
+ 		isw->inodes[*nr] = inode;
+ 		(*nr)++;
+ 
+-		if (*nr >= WB_MAX_INODES_PER_ISW - 1)
+-			return true;
++		if (*nr >= WB_MAX_INODES_PER_ISW - 1) {
++			full = true;
++			break;
++		}
+ 	}
+-	return false;
++	list_splice(&scanned, list);
++
++	return full;
+ }
+ 
+ /**
 
 
