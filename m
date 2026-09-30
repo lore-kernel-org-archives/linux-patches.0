@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3931B51357D;
-	Wed, 30 Sep 2026 16:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9CD4FB9AF;
+	Wed, 30 Sep 2026 16:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786663; cv=none; b=UAu6SfOCHZROg/j3O4HjVVDPawi+5JTSvHE0ujw1QjaQS+5ScAuMrWxGJl5XPouP4nWR0JGMEZlqPYCb+Tzt7xV/3p52bpqv4LqpWVExrNr8pgQkDlmiFly95jbIFyYA7zsiKEOD/+IYe+HvgBjZcpSAaP588JR2fUyHLW8sHTo=
+	t=1790786666; cv=none; b=f4N9SxFTwCJja3vRCyrjSIUoqOTiuxPm31nWah24DWyQ3OXhCDqp3S5pYuSNju/290GzXfS1pdi9CbG6WXhGAYXfVOlfBJgcrksc63yldxJbw+OTr6PRmCT/qfQqcoSBrNHp0Wj0yZMKJxLqYUjl/t5x85X4Ln6XiHsiUok93lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786663; c=relaxed/simple;
-	bh=rtLJBJWwl1m/AAEaUhVtxhus9vwIVdV0rbTJeGyMzgk=;
+	s=arc-20240116; t=1790786666; c=relaxed/simple;
+	bh=4U5StoSyByoEcbNNvvFEFCzbM5ME0J/m0CY4T3Y4q7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4tZG9UtFbEI6AqUpuWpY82jB+fR9BXtbULVZ87qmqMyGsP+QUMA20NPLVlgZeJmmCwfKJ7gZ+BWw7S5Rpm/BPw0bKgQXryYnybcRkoxpC20U3IMVwfjGqEAkw+RFtiDu8WH/rO+KXI6YXBhWPi1b5jpfu4xfQW8SCkFkBMbhzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUU3iVjW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UYMENIQPoQN2Kptf61gbrFLoupJ4nPdZwtjZ1DZNXiy5P9/vCcOa0czEykq3TglF4SCSTfDupTrR3YV0dE463LtF24McYgrip2F+fRbDuY0qx3t/MuL3vCARkw4K0jxpSlneydYjK+rOs12tQmcozWzN//5skBgIZMtAF4gcpIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FM4I/ueO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUU3iVjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926DE1F000FF;
-	Wed, 30 Sep 2026 16:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FM4I/ueO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691341F000FF;
+	Wed, 30 Sep 2026 16:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786662;
-	bh=EFATSCfaMVDHJNzME99FA5p0xvtD9PV7aC5Y3VwhwYM=;
+	s=korg; t=1790786664;
+	bh=SfwA0wGi90EewI0nOKm+s9o19qXzPJcV/8njzVqveDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUU3iVjWDzn7a0R1E8H8Bhgxnmg5VykRvSyRj91cP2zjIE0wCC71hpFON5lcWy7Jr
-	 YWdFae8S7ETeNZQcPTwucvhNQOU4v6XpZpvAK81FTLrprwxozK1atz4XhpOawwpJMS
-	 ZFJP1pY/xjC6sr5SBznV519w/5hUpZfm8NUf2bsE=
+	b=FM4I/ueOIWZii8IyoGBVPh6Vi52saANoClFKEc5C4s4jqMl0qgpsysTg37l9uWoAG
+	 58TSdjdfoBrjFWkT8hxafXV91U2A+3NGUKngTLfqfPEK6lD05mGJbUnjDo0hX3TeQb
+	 NJqHxmWV5N/f7+G3cS6cfEvButxPKbzaVu1BZR6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 942/982] drm/amdgpu: Fix vmid_wait fence leak in amdgpu_ring_init()
-Date: Wed, 30 Sep 2026 17:27:58 +0200
-Message-ID: <20260930152436.972467740@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.1 943/982] drm/nouveau: fix autosuspend cleanup during teardown
+Date: Wed, 30 Sep 2026 17:27:59 +0200
+Message-ID: <20260930152436.993324246@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,50 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit aea841bc62a76242396610d22d8ff40c13065f64 upstream.
+commit fefd9480ec361969f1a836df46326a1801062c26 upstream.
 
-amdgpu_ring_init() initializes ring->vmid_wait with a reference to the
-stub fence taken via dma_fence_get_stub().  When a later step of the
-initialization fails, e.g. amdgpu_fence_driver_init_ring(), a writeback
-slot allocation or the ring buffer allocation, the function returns an
-error without releasing the stub fence reference and the reference is
-leaked if the ring is torn down without amdgpu_ring_fini().
+nouveau_drm_device_init() calls pm_runtime_use_autosuspend(), but
+nouveau_drm_device_fini() does not call the matching
+pm_runtime_dont_use_autosuspend().
 
-Move the stub fence assignment to the end of the initialization, right
-before the ring is registered with the GPU scheduler, where no further
-failure is possible.  The stub fence is only consumed by command
-submission handling in amdgpu_ids.c once the ring is up and running, so
-nothing reads it during the error-prone part of the initialization.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped and usage_count remains
+unbalanced.
 
-Fixes: 48e9fbd1a284 ("drm/amdgpu: initialize the vmid_wait with the stub fence")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f2b96986851203e9c50ca0d13aaa3581ca3e8ebd)
+The documentation for pm_runtime_use_autosuspend() also notes that it
+is important to undo it with pm_runtime_dont_use_autosuspend() at
+driver exit time, unless runtime PM was initially enabled with
+devm_pm_runtime_enable().
+
+Add the missing pm_runtime_dont_use_autosuspend() call to the common
+device teardown path.
+
+This issue was found by manual code inspection.
+
+Fixes: 5addcf0a5f0f ("nouveau: add runtime PM support (v0.9)")
 Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260808134137.2864847-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_drm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -201,7 +201,6 @@ int amdgpu_ring_init(struct amdgpu_devic
- 		ring->adev = adev;
- 		ring->num_hw_submission = sched_hw_submission;
- 		ring->sched_score = sched_score;
--		ring->vmid_wait = dma_fence_get_stub();
+--- a/drivers/gpu/drm/nouveau/nouveau_drm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+@@ -658,6 +658,7 @@ nouveau_drm_device_fini(struct drm_devic
+ 	if (nouveau_pmops_runtime()) {
+ 		pm_runtime_get_sync(dev->dev);
+ 		pm_runtime_forbid(dev->dev);
++		pm_runtime_dont_use_autosuspend(dev->dev);
+ 	}
  
- 		if (!ring->is_mes_queue) {
- 			ring->idx = adev->num_rings++;
-@@ -323,6 +322,7 @@ int amdgpu_ring_init(struct amdgpu_devic
- 
- 	ring->max_dw = max_dw;
- 	ring->hw_prio = hw_prio;
-+	ring->vmid_wait = dma_fence_get_stub();
- 
- 	if (!ring->no_scheduler && ring->funcs->type < AMDGPU_HW_IP_NUM) {
- 		hw_ip = ring->funcs->type;
+ 	nouveau_led_fini(dev);
 
 
