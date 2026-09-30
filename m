@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319A8503918;
-	Wed, 30 Sep 2026 18:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6C9364931;
+	Wed, 30 Sep 2026 18:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791481; cv=none; b=d1pstXVb/RgNryvCWoOo1y3cnkHEpM62yBwWWXJHfeA7+Df6WQOJ2XYwDp2fKPxLGAy4DN6UQ+szisfo17obDIJYH7rQmWzrn7WFGoemqmzCz7z2aAstZc2XX3Nl0ASlvesMnc2wzFrnC/fmndTUy0LohzG1ZInZhgtds/qY4/Q=
+	t=1790791484; cv=none; b=X+SeeZhAseVFuuklifQr+QVMG1Hd81fYK+OTDw15G/KNdZwBfyYNrLN4NQLoi8MSgXlRDU++/DSNUGLHv76hPI1Sq/6g9FjSWDWRw9hlJuUt5LjwzSekDL8TrDegRFaakn7tmpViMDfq1RY0EF201Yw+117CMdG5FWGXwVejFuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791481; c=relaxed/simple;
-	bh=FsfyTYndM1sGWorivn9BYFGiSr09vfhCqBRF9mD6Wd8=;
+	s=arc-20240116; t=1790791484; c=relaxed/simple;
+	bh=CDC+bPTCYl7tlJaQphfPfjnco7PAzoG/P2pZsu06DzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZpJOj8XbnoFK7qvXkLZMVoruDMSiBbZinduoILtX0tiW6ipAJnmnJdwigjLxjK1vTSZmPEku316YE1zXh64XD4AxKJlu0Hv9fbFFEof+cRpzlSrGWQ3PA5PeAwDdrhkT8Sk9AqjYrvrDSmp8nBllnbExFpknrumzFgXZRRpPK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7FOzHv7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jXkzKEZXVKL4GHy2iy9nzEU+PbNurkk2ksS9IqD46U4nbWiBCQEYA73v2NI4oDD5J0uvKu/PVH5Hf0RBMAt5+J8sICjxG34GV5Yy9qqyQjsI0Ld9U88Wr9AWJoRmKrkNs1Qkh42L0ddK5HMSSmbhkOTNlstWpMG8LWGLukeEKVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZl9f+Yc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7FOzHv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8612A1F000FF;
-	Wed, 30 Sep 2026 18:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZl9f+Yc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D291F000FF;
+	Wed, 30 Sep 2026 18:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791480;
-	bh=NwC1JoSuSBXADzIvkcwk9UKDJsunEagvN6G/Coa569A=;
+	s=korg; t=1790791482;
+	bh=4RQCAmYfNbZjz4R8aYRxDaVjrtyJrJi/BBYwF+431L0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a7FOzHv7umKpy0/JKisVFWOyxOkYQdq1jOBO0/EDzoKFFqLq+rVF9gcrkbEGLw6FO
-	 biIys+N7ewg5kkRskO29kcNRYJIdZ0md3YsysfFXCpELQpX2bDrzlE7gJMDSuJ+/Vm
-	 lZIs/gx6K+QPN93Hqf0npZ+g8rqHpuu+LCJn8YDU=
+	b=oZl9f+Yc/pi6FCjBfu/2/T8lh+l9IsitX2EZNGGM9BFJgcodJ2xiJE6Ty4AtPMk4W
+	 gi+F58ZxzdF3IynKfXiI7uVeTaICjZ9jKdSN/fHk3CsZyyRTasmteZtYV8z8lZIe1R
+	 GRvcUBf1vt5/EF0rxDDtb6AXDxZ90iHgl5uujvsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 315/752] net_sched: sch_fq_pie: implement lockless fq_pie_dump()
-Date: Wed, 30 Sep 2026 17:23:05 +0200
-Message-ID: <20260930152405.114180868@linuxfoundation.org>
+Subject: [PATCH 5.15 316/752] net/sched: fq_pie: clamp quantum in change path
+Date: Wed, 30 Sep 2026 17:23:06 +0200
+Message-ID: <20260930152405.136493840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -46,138 +48,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 13a9965de32457d59aa3162d657aa4c5e512c146 ]
+[ Upstream commit 4864f58c53eb47257d55e01f47d4a9f355f7f970 ]
 
-Instead of relying on RTNL, fq_pie_dump() can use READ_ONCE()
-annotations, paired with WRITE_ONCE() ones in fq_pie_change().
+fq_pie_change() accepts any quantum value from userspace, including 1.
+With a crafted size table qdisc_pkt_len reaches ~2 GiB, so quantum=1
+makes the deficit-refill loop spin ~2^31 times under the qdisc lock
+(a soft lockup / denial of service).
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 4864f58c53eb ("net/sched: fq_pie: clamp quantum in change path")
+Add max(256U, ...) matching fq_codel_change().
+
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_FQ_PIE=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
+
+  tc qdisc add dev dummy0 root fq_pie
+  tc qdisc change dev dummy0 root fq_pie quantum 1 stab data 32768 size_log 15 cell_log 0
+
+Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.3
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 61 +++++++++++++++++++++++-------------------
- 1 file changed, 34 insertions(+), 27 deletions(-)
+ net/sched/sch_fq_pie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 33ec3aefde39a..e3d9a92a1ba68 100644
+index e3d9a92a1ba68..0d089d435db04 100644
 --- a/net/sched/sch_fq_pie.c
 +++ b/net/sched/sch_fq_pie.c
-@@ -301,8 +301,8 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 	if (tb[TCA_FQ_PIE_LIMIT]) {
- 		u32 limit = nla_get_u32(tb[TCA_FQ_PIE_LIMIT]);
- 
--		q->p_params.limit = limit;
--		sch->limit = limit;
-+		WRITE_ONCE(q->p_params.limit, limit);
-+		WRITE_ONCE(sch->limit, limit);
- 	}
- 	if (tb[TCA_FQ_PIE_FLOWS]) {
- 		if (q->flows) {
-@@ -324,39 +324,45 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 		u32 target = nla_get_u32(tb[TCA_FQ_PIE_TARGET]);
- 
- 		/* convert to pschedtime */
--		q->p_params.target =
--			PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC);
-+		WRITE_ONCE(q->p_params.target,
-+			   PSCHED_NS2TICKS((u64)target * NSEC_PER_USEC));
- 	}
- 
- 	/* tupdate is in jiffies */
- 	if (tb[TCA_FQ_PIE_TUPDATE])
--		q->p_params.tupdate =
--			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE]));
-+		WRITE_ONCE(q->p_params.tupdate,
-+			usecs_to_jiffies(nla_get_u32(tb[TCA_FQ_PIE_TUPDATE])));
- 
- 	if (tb[TCA_FQ_PIE_ALPHA])
--		q->p_params.alpha = nla_get_u32(tb[TCA_FQ_PIE_ALPHA]);
-+		WRITE_ONCE(q->p_params.alpha,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ALPHA]));
- 
- 	if (tb[TCA_FQ_PIE_BETA])
--		q->p_params.beta = nla_get_u32(tb[TCA_FQ_PIE_BETA]);
-+		WRITE_ONCE(q->p_params.beta,
-+			   nla_get_u32(tb[TCA_FQ_PIE_BETA]));
+@@ -342,7 +342,8 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
+ 			   nla_get_u32(tb[TCA_FQ_PIE_BETA]));
  
  	if (tb[TCA_FQ_PIE_QUANTUM])
--		q->quantum = nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]);
-+		WRITE_ONCE(q->quantum, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]));
+-		WRITE_ONCE(q->quantum, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]));
++		WRITE_ONCE(q->quantum,
++			   max(256U, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM])));
  
  	if (tb[TCA_FQ_PIE_MEMORY_LIMIT])
--		q->memory_limit = nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]);
-+		WRITE_ONCE(q->memory_limit,
-+			   nla_get_u32(tb[TCA_FQ_PIE_MEMORY_LIMIT]));
- 
- 	if (tb[TCA_FQ_PIE_ECN_PROB])
--		q->ecn_prob = nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]);
-+		WRITE_ONCE(q->ecn_prob,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ECN_PROB]));
- 
- 	if (tb[TCA_FQ_PIE_ECN])
--		q->p_params.ecn = nla_get_u32(tb[TCA_FQ_PIE_ECN]);
-+		WRITE_ONCE(q->p_params.ecn,
-+			   nla_get_u32(tb[TCA_FQ_PIE_ECN]));
- 
- 	if (tb[TCA_FQ_PIE_BYTEMODE])
--		q->p_params.bytemode = nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]);
-+		WRITE_ONCE(q->p_params.bytemode,
-+			   nla_get_u32(tb[TCA_FQ_PIE_BYTEMODE]));
- 
- 	if (tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR])
--		q->p_params.dq_rate_estimator =
--			nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]);
-+		WRITE_ONCE(q->p_params.dq_rate_estimator,
-+			   nla_get_u32(tb[TCA_FQ_PIE_DQ_RATE_ESTIMATOR]));
- 
- 	/* Drop excess packets if new limit is lower */
- 	while (sch->q.qlen > sch->limit) {
-@@ -472,22 +478,23 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
- 		return -EMSGSIZE;
- 
- 	/* convert target from pschedtime to us */
--	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, sch->limit) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, q->flows_cnt) ||
-+	if (nla_put_u32(skb, TCA_FQ_PIE_LIMIT, READ_ONCE(sch->limit)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_FLOWS, READ_ONCE(q->flows_cnt)) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_TARGET,
--			((u32)PSCHED_TICKS2NS(q->p_params.target)) /
-+			((u32)PSCHED_TICKS2NS(READ_ONCE(q->p_params.target))) /
- 			NSEC_PER_USEC) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_TUPDATE,
--			jiffies_to_usecs(q->p_params.tupdate)) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, q->p_params.alpha) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_BETA, q->p_params.beta) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, q->quantum) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT, q->memory_limit) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, q->ecn_prob) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_ECN, q->p_params.ecn) ||
--	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, q->p_params.bytemode) ||
-+			jiffies_to_usecs(READ_ONCE(q->p_params.tupdate))) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ALPHA, READ_ONCE(q->p_params.alpha)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_BETA, READ_ONCE(q->p_params.beta)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_QUANTUM, READ_ONCE(q->quantum)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_MEMORY_LIMIT,
-+			READ_ONCE(q->memory_limit)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ECN_PROB, READ_ONCE(q->ecn_prob)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_ECN, READ_ONCE(q->p_params.ecn)) ||
-+	    nla_put_u32(skb, TCA_FQ_PIE_BYTEMODE, READ_ONCE(q->p_params.bytemode)) ||
- 	    nla_put_u32(skb, TCA_FQ_PIE_DQ_RATE_ESTIMATOR,
--			q->p_params.dq_rate_estimator))
-+			READ_ONCE(q->p_params.dq_rate_estimator)))
- 		goto nla_put_failure;
- 
- 	return nla_nest_end(skb, opts);
+ 		WRITE_ONCE(q->memory_limit,
 -- 
 2.53.0
 
