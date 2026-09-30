@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0218650C2A4;
-	Wed, 30 Sep 2026 17:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD0051AFED;
+	Wed, 30 Sep 2026 17:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788358; cv=none; b=mzKAJiiVw6CPaxmSF1VyPaltt3xmhUQLNUdHnqS9eOTjBBEBlstVC0kt/EtGi+CoYrwTAdT5DVixRGcit6DSaiiEbMnNfsBkLfYPC4hWGbXIfybX1SoSLXqtN+BMnhrYqcFChtgcPUyKmtNS7g2UgE523JV1g6wKwZ297W39BRo=
+	t=1790788361; cv=none; b=fRAgn8fj/3Rf14hB1RbT7Npk0GZsb4MaoND5DRSa/z2SrBiFLCrsbMe32vkqq4Qss1vVxtZVNlSP0UY5eMvJnJox/6NsbMlHnkBItEpcJTduzEbRABGdUEd8xvcLvnlwT6rObkqH5W/WSeDAEWVXanQ2yWFlLRdhn4v87NsmoSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788358; c=relaxed/simple;
-	bh=4N2WeYKqtS2GnOqwlyiJhHssuHPKAl/0AhOI9faNKYo=;
+	s=arc-20240116; t=1790788361; c=relaxed/simple;
+	bh=b19GcJY9KPDND+n2hlTqqYpAh9PFIo1T3PPjq5m1ndc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Adcs8NeSMKlEF6DMjPYTsEkhiJWqZ3re2W09/d0GXrQXcdUHLJal5rLS+hPTpg62wUXh8DDH623LS9478DovxIERDb8zy3dvwrozEKNMr2mTqEflFwUvIl9eYxYWaEoMxhotDihJiJ/ZKelAeG4p0iejCi93VmXHwr/+8zwXbN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUVYAuzN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ebsz0FKfGTAa1rtkEOH81/Kq3D2AtmQ8QKmbmQrxHmRK5/crGD13IL2haubPJA+7JhZaefM5ojk3AFuhh0LqJXpeKSUSZV0Py50PjkdYKeUheAwX7+oJW9F4p/0B+Z7WTjdpjQ4y5Dn0VOe/HuZ+/CoTMPmH7Ic+c0vPG2ANdbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zA66xhL4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUVYAuzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B90E1F000FF;
-	Wed, 30 Sep 2026 17:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zA66xhL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD71F000FF;
+	Wed, 30 Sep 2026 17:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788356;
-	bh=UWJ+gb5JlFyVCsHJPH/yacb3Sl7zCZWOg4DUOQ2qpYs=;
+	s=korg; t=1790788359;
+	bh=9/Zz0OZkpozdnCMwzfSJ+N2RJ+C+rg9kKm7kX4PwOfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUVYAuzNOl37iclFmuwKGQESrBbkyM9XFEJKiH8OiztLWSh4GFfmMWT8D8Lkq0Bpx
-	 JIYUAPrtUEjP2xv7OqLujyigBZ0WWhvun0xWSEWObfsHdTB8fiHbL6zP2Bl/iXpqFa
-	 qQEay7s9i8wPNil3nlaZc268dWkwL/1BI3Fynkq4=
+	b=zA66xhL4L7hXN8OhHu7TCTbjaZdzft9o3/f3xNCgkxMepcAIKyyA74vSN2j5grNJj
+	 SyOAqpVS5uu+dhAaSgtlj+8O2WiBa243DN8qHCzyapZEwA/LAV3iGmAuYkkzGdkyQi
+	 bwwGerPCK0Zdlct995FnBlktS+beECMZ92U2D+8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/877] neighbour: Allocate skb in neigh_get().
-Date: Wed, 30 Sep 2026 17:16:46 +0200
-Message-ID: <20260930152416.785066136@linuxfoundation.org>
+Subject: [PATCH 6.12 096/877] neighbour: Move neigh_find_table() to neigh_get().
+Date: Wed, 30 Sep 2026 17:16:47 +0200
+Message-ID: <20260930152416.807347811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,163 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 3dfe0b57dcda070d9f1ed2bfb3a9bf0ec8632e08 ]
+[ Upstream commit 0e5ac19c78654abbf43dc4ffdae290c8cb81c59c ]
 
-We will remove RTNL for neigh_get() and run it under RCU instead.
+neigh_valid_get_req() calls neigh_find_table() to fetch neigh_tables[].
 
-neigh_get_reply() and pneigh_get_reply() allocate skb with GFP_KERNEL.
+neigh_find_table() uses rcu_dereference_rtnl(), but RTNL actually does
+not protect it at all; neigh_table_clear() can be called without RTNL
+and only waits for RCU readers by synchronize_rcu().
 
-Let's move the allocation before __dev_get_by_index() in neigh_get().
+Fortunately, there is no bug because IPv4 is built-in, IPv6 cannot be
+unloaded, and DECNET was removed.
 
-Now, neigh_get_reply() and pneigh_get_reply() are inlined and
-rtnl_unicast() is factorised.
-
-We will convert pneigh_lookup() to __pneigh_lookup() later.
+To fetch neigh_tables[] by rcu_dereference() later, let's move
+neigh_find_table() from neigh_valid_get_req() to neigh_get().
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250716221221.442239-4-kuniyu@google.com
+Link: https://patch.msgid.link/20250716221221.442239-5-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 979aabdad8dd ("neighbour: Skip default parms when resumed in neightbl_dump_info().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 88 ++++++++++++++++----------------------------
- 1 file changed, 32 insertions(+), 56 deletions(-)
+ net/core/neighbour.c | 37 ++++++++++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 17 deletions(-)
 
 diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index ecfa1cc2f85f2..b57d5810fa0d8 100644
+index b57d5810fa0d8..0dc0ba5cf7443 100644
 --- a/net/core/neighbour.c
 +++ b/net/core/neighbour.c
-@@ -2989,27 +2989,6 @@ static inline size_t neigh_nlmsg_size(void)
- 	       + nla_total_size(1); /* NDA_PROTOCOL */
+@@ -2912,10 +2912,9 @@ static int neigh_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
  }
  
--static int neigh_get_reply(struct net *net, struct neighbour *neigh,
--			   u32 pid, u32 seq)
--{
--	struct sk_buff *skb;
--	int err = 0;
--
--	skb = nlmsg_new(neigh_nlmsg_size(), GFP_KERNEL);
--	if (!skb)
--		return -ENOBUFS;
--
--	err = neigh_fill_info(skb, neigh, pid, seq, RTM_NEWNEIGH, 0);
--	if (err) {
--		kfree_skb(skb);
--		goto errout;
--	}
--
--	err = rtnl_unicast(skb, net, pid);
--errout:
--	return err;
--}
--
- static inline size_t pneigh_nlmsg_size(void)
+ static struct ndmsg *neigh_valid_get_req(const struct nlmsghdr *nlh,
+-					 struct neigh_table **tbl, void **dst,
++					 struct nlattr **tb,
+ 					 struct netlink_ext_ack *extack)
  {
- 	return NLMSG_ALIGN(sizeof(struct ndmsg))
-@@ -3018,34 +2997,16 @@ static inline size_t pneigh_nlmsg_size(void)
- 	       + nla_total_size(1); /* NDA_PROTOCOL */
- }
+-	struct nlattr *tb[NDA_MAX + 1];
+ 	struct ndmsg *ndm;
+ 	int err, i;
  
--static int pneigh_get_reply(struct net *net, struct pneigh_entry *neigh,
--			    u32 pid, u32 seq, struct neigh_table *tbl)
--{
--	struct sk_buff *skb;
--	int err = 0;
--
--	skb = nlmsg_new(pneigh_nlmsg_size(), GFP_KERNEL);
--	if (!skb)
--		return -ENOBUFS;
--
--	err = pneigh_fill_info(skb, neigh, pid, seq, RTM_NEWNEIGH, 0, tbl);
--	if (err) {
--		kfree_skb(skb);
--		goto errout;
+@@ -2946,12 +2945,6 @@ static struct ndmsg *neigh_valid_get_req(const struct nlmsghdr *nlh,
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
+-	*tbl = neigh_find_table(ndm->ndm_family);
+-	if (!*tbl) {
+-		NL_SET_ERR_MSG(extack, "Unsupported family in header for neighbor get request");
+-		return ERR_PTR(-EAFNOSUPPORT);
 -	}
 -
--	err = rtnl_unicast(skb, net, pid);
--errout:
--	return err;
--}
+ 	for (i = 0; i <= NDA_MAX; ++i) {
+ 		switch (i) {
+ 		case NDA_DST:
+@@ -2959,12 +2952,6 @@ static struct ndmsg *neigh_valid_get_req(const struct nlmsghdr *nlh,
+ 				NL_SET_ERR_ATTR_MISS(extack, NULL, NDA_DST);
+ 				return ERR_PTR(-EINVAL);
+ 			}
 -
- static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 		     struct netlink_ext_ack *extack)
+-			if (nla_len(tb[i]) != (int)(*tbl)->key_len) {
+-				NL_SET_ERR_MSG(extack, "Invalid network address in neighbor get request");
+-				return ERR_PTR(-EINVAL);
+-			}
+-			*dst = nla_data(tb[i]);
+ 			break;
+ 		default:
+ 			if (!tb[i])
+@@ -3002,16 +2989,17 @@ static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
  {
  	struct net *net = sock_net(in_skb->sk);
-+	u32 pid = NETLINK_CB(in_skb).portid;
+ 	u32 pid = NETLINK_CB(in_skb).portid;
++	struct nlattr *tb[NDA_MAX + 1];
  	struct net_device *dev = NULL;
- 	struct neigh_table *tbl = NULL;
-+	u32 seq = nlh->nlmsg_seq;
+-	struct neigh_table *tbl = NULL;
+ 	u32 seq = nlh->nlmsg_seq;
++	struct neigh_table *tbl;
  	struct neighbour *neigh;
-+	struct sk_buff *skb;
+ 	struct sk_buff *skb;
  	struct ndmsg *ndm;
- 	void *dst = NULL;
+-	void *dst = NULL;
++	void *dst;
  	int err;
-@@ -3054,11 +3015,19 @@ static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 
+-	ndm = neigh_valid_get_req(nlh, &tbl, &dst, extack);
++	ndm = neigh_valid_get_req(nlh, tb, extack);
  	if (IS_ERR(ndm))
  		return PTR_ERR(ndm);
  
-+	if (ndm->ndm_flags & NTF_PROXY)
-+		skb = nlmsg_new(neigh_nlmsg_size(), GFP_KERNEL);
-+	else
-+		skb = nlmsg_new(pneigh_nlmsg_size(), GFP_KERNEL);
-+	if (!skb)
-+		return -ENOBUFS;
+@@ -3022,6 +3010,21 @@ static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 	if (!skb)
+ 		return -ENOBUFS;
+ 
++	tbl = neigh_find_table(ndm->ndm_family);
++	if (!tbl) {
++		NL_SET_ERR_MSG(extack, "Unsupported family in header for neighbor get request");
++		err = -EAFNOSUPPORT;
++		goto err_free_skb;
++	}
++
++	if (nla_len(tb[NDA_DST]) != (int)tbl->key_len) {
++		NL_SET_ERR_MSG(extack, "Invalid network address in neighbor get request");
++		err = -EINVAL;
++		goto err_free_skb;
++	}
++
++	dst = nla_data(tb[NDA_DST]);
 +
  	if (ndm->ndm_ifindex) {
  		dev = __dev_get_by_index(net, ndm->ndm_ifindex);
  		if (!dev) {
- 			NL_SET_ERR_MSG(extack, "Unknown device ifindex");
--			return -ENODEV;
-+			err = -ENODEV;
-+			goto err_free_skb;
- 		}
- 	}
- 
-@@ -3068,23 +3037,30 @@ static int neigh_get(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 		pn = pneigh_lookup(tbl, net, dst, dev, 0);
- 		if (!pn) {
- 			NL_SET_ERR_MSG(extack, "Proxy neighbour entry not found");
--			return -ENOENT;
-+			err = -ENOENT;
-+			goto err_free_skb;
- 		}
--		return pneigh_get_reply(net, pn, NETLINK_CB(in_skb).portid,
--					nlh->nlmsg_seq, tbl);
--	}
--
--	neigh = neigh_lookup(tbl, dst, dev);
--	if (!neigh) {
--		NL_SET_ERR_MSG(extack, "Neighbour entry not found");
--		return -ENOENT;
--	}
- 
--	err = neigh_get_reply(net, neigh, NETLINK_CB(in_skb).portid,
--			      nlh->nlmsg_seq);
-+		err = pneigh_fill_info(skb, pn, pid, seq, RTM_NEWNEIGH, 0, tbl);
-+		if (err)
-+			goto err_free_skb;
-+	} else {
-+		neigh = neigh_lookup(tbl, dst, dev);
-+		if (!neigh) {
-+			NL_SET_ERR_MSG(extack, "Neighbour entry not found");
-+			err = -ENOENT;
-+			goto err_free_skb;
-+		}
- 
--	neigh_release(neigh);
-+		err = neigh_fill_info(skb, neigh, pid, seq, RTM_NEWNEIGH, 0);
-+		neigh_release(neigh);
-+		if (err)
-+			goto err_free_skb;
-+	}
- 
-+	return rtnl_unicast(skb, net, pid);
-+err_free_skb:
-+	kfree_skb(skb);
- 	return err;
- }
- 
 -- 
 2.53.0
 
