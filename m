@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93649502554;
-	Wed, 30 Sep 2026 17:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA664FB9C3;
+	Wed, 30 Sep 2026 17:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788927; cv=none; b=mb91DgQOlLEHtVzECHY2f1xwcr0/wZnGNnH20EmXr5ExXoY8+NGiSOtoaUGU5L1DebKnWndpM41J+MnHBjGheonO7o33ZdLBWYYT0pNFu85Fc0VEygLiclc2vrA+G7AoInI92A6cc7WFpm0QnW5U+YxKhZaviRIb9haARrGy8n8=
+	t=1790788930; cv=none; b=mGHhdgl5o0x/VagoaLJro7d3CfNORnjEbqeZ/mazgaysoQE2gy5Eso0lcERs6lyl8g0cvxFvRTL2gfJM2zrDbVCZsM/gRlSA00JUjeqd0Jz70aYytDwlSlkNinmKk+UPXZKBv4VQJr+wrgBvyowE5OURF8HpbVMWJaqh/xcrn1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788927; c=relaxed/simple;
-	bh=9vijwZFPphXZizDrmYZPN53V40t4E+9gJAS2PsMk7f4=;
+	s=arc-20240116; t=1790788930; c=relaxed/simple;
+	bh=+C6S+WJvocQ9uNbUaYLtRftMBpSkf+Dj+FG+m/CdeW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tueMolrojhBErfudlq30uX4srU10GkFHZ8vzqdf41P2e1b8hUiwJH7TKqQCOWDhVQwh54sbkvCm+DU23OohRVGO0YB6TpKaenEyMtAk8hAE/i6Fc99HSHOFpqu02zSsg3dgpkBYOyuYC5KplpCI723+xkWLwfzibcsJ7virpTWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iENWqvHB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fVGXT04dddnGv5bavxbomDDdFYRFRT+z+i0BdcLjlSgHm3+YTZ+12dGeKCecorRUI9bNhJXfhUCSxY6vUBRIcWF2MkdwZYdrrXZCXUfnlP8XTS3S0KhVGuWzyoC3nNBWxuHbGTJ+7yHJIT/fSllv89qcTVPMx6Lb8Pi/IiBAMxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrK/I/Bx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iENWqvHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A645B1F000FF;
-	Wed, 30 Sep 2026 17:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrK/I/Bx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA6C1F000FF;
+	Wed, 30 Sep 2026 17:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788926;
-	bh=qnt/hBaA39STa7usUKbgUE8/QBdN1CAE5Kp9eqZlWn4=;
+	s=korg; t=1790788929;
+	bh=4vBfZJ/qumzAd6JN842XZyB8Dt41Gmq0zOphAIpdv4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iENWqvHB9FD+gznvQ9HJEIKaLE9uB5mApgXWslO0jUz9LjHeaJHMka5oHwhvgJY5v
-	 GNTGUYB94nsB2wrBGwqD9ZJNzrNipDBojAcXfisEqfU50FLyrE1VgKt9pwXHrB+KS+
-	 5G79Nvgoi82s+P9lNN1+2snx/6pErfDgna2S7eGw=
+	b=IrK/I/BxncwCJPX2qraijt3gLqZu4B7RZbCIZQWOCKmfZLLcc3l4OZDnxvevxmOp4
+	 dwdZI4P+T4BM8Dy7dBwv9YhMlY2g1E0ipCg7E3mqciBC/NL20sDPM7w9sbzsYzyGar
+	 0USmWQnUkt0j0A4t6Ha6dvZGRw/ku7GrrD+J1HtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Yu Junzhe <junzheyu1@gmail.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 295/877] netfilter: nf_tables: Simplify chain netdev notifier
-Date: Wed, 30 Sep 2026 17:20:06 +0200
-Message-ID: <20260930152421.072397159@linuxfoundation.org>
+Subject: [PATCH 6.12 296/877] xfrm: Refactor xfrm_input lock to reduce contention with RSS
+Date: Wed, 30 Sep 2026 17:20:07 +0200
+Message-ID: <20260930152421.093478633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,86 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit 375f222800bc001bb9cbd2baa1daec006430aeba upstream.
+[ Upstream commit 10a11861943902fda74f37f456b45183b2bca270 ]
 
-With conditional chain deletion gone, callback code simplifies: Instead
-of filling an nft_ctx object, just pass basechain to the per-chain
-function. Also plain list_for_each_entry() is safe now.
+With newer NICs like mlx5 supporting RSS for IPsec crypto offload,
+packets for a single Security Association (SA) are scattered across
+multiple CPU cores for parallel processing. The xfrm_state spinlock
+(x->lock) is held for each packet during xfrm processing.
 
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
+When multiple connections or flows share the same SA, this parallelism
+causes high lock contention on x->lock, creating a performance
+bottleneck and limiting scalability.
+
+The original xfrm_input() function exacerbated this issue by releasing
+and immediately re-acquiring x->lock. For hardware crypto offload
+paths, this unlock/relock sequence is unnecessary and introduces
+significant overhead. This patch refactors the function to relocate
+the type_offload->input_tail call for the offload path, performing all
+necessary work while continuously holding the lock. This reordering is
+safe, since packets which don't pass the checks below will still fail
+them with the new code.
+
+Performance testing with iperf using multiple parallel streams over a
+single IPsec SA shows significant improvement in throughput as the
+number of queues (and thus CPU cores) increases:
+
++-----------+---------------+--------------+-----------------+
+| RX queues | Before (Gbps) | After (Gbps) | Improvement (%) |
++-----------+---------------+--------------+-----------------+
+|         2 |          32.3 |         34.4 |             6.5 |
+|         4 |          34.4 |         40.0 |            16.3 |
+|         6 |          24.5 |         38.3 |            56.3 |
+|         8 |          23.1 |         38.3 |            65.8 |
+|        12 |          18.1 |         29.9 |            65.2 |
+|        16 |          16.0 |         25.2 |            57.5 |
++-----------+---------------+--------------+-----------------+
+
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Stable-dep-of: 3cf5cdecd99c ("xfrm: save input state data before secpath resets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_chain_filter.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ net/xfrm/xfrm_input.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
-index 543f258b7c6ba..19a553550c769 100644
---- a/net/netfilter/nft_chain_filter.c
-+++ b/net/netfilter/nft_chain_filter.c
-@@ -319,17 +319,16 @@ static const struct nft_chain_type nft_chain_filter_netdev = {
- };
- 
- static void nft_netdev_event(unsigned long event, struct net_device *dev,
--			     struct nft_ctx *ctx)
-+			     struct nft_base_chain *basechain)
- {
--	struct nft_base_chain *basechain = nft_base_chain(ctx->chain);
- 	struct nft_hook *hook;
- 
- 	list_for_each_entry(hook, &basechain->hook_list, list) {
- 		if (hook->ops.dev != dev)
- 			continue;
- 
--		if (!(ctx->chain->table->flags & NFT_TABLE_F_DORMANT))
--			nf_unregister_net_hook(ctx->net, &hook->ops);
-+		if (!(basechain->chain.table->flags & NFT_TABLE_F_DORMANT))
-+			nf_unregister_net_hook(dev_net(dev), &hook->ops);
- 
- 		list_del_rcu(&hook->list);
- 		kfree_rcu(hook, rcu);
-@@ -343,25 +342,20 @@ static int nf_tables_netdev_event(struct notifier_block *this,
- 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
- 	struct nft_base_chain *basechain;
- 	struct nftables_pernet *nft_net;
--	struct nft_chain *chain, *nr;
-+	struct nft_chain *chain;
- 	struct nft_table *table;
--	struct nft_ctx ctx = {
--		.net	= dev_net(dev),
--	};
- 
- 	if (event != NETDEV_UNREGISTER)
- 		return NOTIFY_DONE;
- 
--	nft_net = nft_pernet(ctx.net);
-+	nft_net = nft_pernet(dev_net(dev));
- 	mutex_lock(&nft_net->commit_mutex);
- 	list_for_each_entry(table, &nft_net->tables, list) {
- 		if (table->family != NFPROTO_NETDEV &&
- 		    table->family != NFPROTO_INET)
- 			continue;
- 
--		ctx.family = table->family;
--		ctx.table = table;
--		list_for_each_entry_safe(chain, nr, &table->chains, list) {
-+		list_for_each_entry(chain, &table->chains, list) {
- 			if (!nft_is_base_chain(chain))
- 				continue;
- 
-@@ -370,8 +364,7 @@ static int nf_tables_netdev_event(struct notifier_block *this,
- 			    basechain->ops.hooknum != NF_INET_INGRESS)
- 				continue;
- 
--			ctx.chain = chain;
--			nft_netdev_event(event, dev, &ctx);
-+			nft_netdev_event(event, dev, basechain);
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index 1be187b980461..444334feece7b 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -493,6 +493,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 		if (encap_type == -1) {
+ 			async = 1;
+ 			seq = XFRM_SKB_CB(skb)->seq.input.low;
++			spin_lock(&x->lock);
+ 			goto resume;
  		}
- 	}
- 	mutex_unlock(&nft_net->commit_mutex);
+ 		/* GRO call */
+@@ -529,6 +530,8 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 				XFRM_INC_STATS(net, LINUX_MIB_XFRMINHDRERROR);
+ 				goto drop;
+ 			}
++
++			nexthdr = x->type_offload->input_tail(x, skb);
+ 		}
+ 
+ 		goto lock;
+@@ -626,11 +629,9 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 			goto drop_unlock;
+ 		}
+ 
+-		spin_unlock(&x->lock);
+-
+ 		if (xfrm_tunnel_check(skb, x, family)) {
+ 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMODEERROR);
+-			goto drop;
++			goto drop_unlock;
+ 		}
+ 
+ 		seq_hi = htonl(xfrm_replay_seqhi(x, seq));
+@@ -638,9 +639,8 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 		XFRM_SKB_CB(skb)->seq.input.low = seq;
+ 		XFRM_SKB_CB(skb)->seq.input.hi = seq_hi;
+ 
+-		if (crypto_done) {
+-			nexthdr = x->type_offload->input_tail(x, skb);
+-		} else {
++		if (!crypto_done) {
++			spin_unlock(&x->lock);
+ 			dev_hold(skb->dev);
+ 
+ 			nexthdr = x->type->input(x, skb);
+@@ -651,9 +651,9 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 			}
+ 
+ 			dev_put(skb->dev);
++			spin_lock(&x->lock);
+ 		}
+ resume:
+-		spin_lock(&x->lock);
+ 		if (nexthdr < 0) {
+ 			if (nexthdr == -EBADMSG) {
+ 				xfrm_audit_state_icvfail(x, skb,
 -- 
 2.53.0
 
