@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFBD3D333C;
-	Wed, 30 Sep 2026 19:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6F83C0A0C;
+	Wed, 30 Sep 2026 19:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795258; cv=none; b=FEg12basnDT0Sb3xXX0zqk3z1kztgf0+UTBTRc+V3DJH718TUuOLoCu/NUTqPP/P7jbEsqmgp+v5WrPh+b7RnxXFLLQ3dtrr3MU3ZvwdohpOijlWzosE7T83txQSHdI5gvzNF4BMj+9Qtkf8YJ+VH0o0jKGt/02PCVetGb7C4s4=
+	t=1790795260; cv=none; b=HZOTMg0npbLgQ0XElNTpxn9IxFsdpD/CW6IYZkPYaUy8hPnPikduHgSHoZ4F8mpTl5R7TSKacR/FPaZmR4UMbkjo2jyMWkiCPaUZuLB6IptxAyki8S1Ai6mFoiNVKZ+xr3XTsjU0yuR0GOxkDdwadnSLxzX+SixsNFv5EKFbA2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795258; c=relaxed/simple;
-	bh=TokjPVy+1j4zqw1317GxnJzhAzcpcpYfsJaSOM02u8A=;
+	s=arc-20240116; t=1790795260; c=relaxed/simple;
+	bh=LOA9gwnnzsVjeOJPJmi/a2oWxfa8qO+1xvM8+L0mjXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxApnYq8eYnYV+0wDxmFwcUpfz8tXjnPk9NyTIQiM2DlniTuaD7mWDzt4PP6nETiBmrSIkn5+sOmnkohgy9A7oOAI/2mwgSSpBRiOVjBMJToCHuTV2RLD0saYupuOzsvRGQCmad4gi6cDDwhbTi22vULLm3rBI3Zc6Oeeegcr8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EB0Y7qBJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tk606vdoDyfBP3i+oiLEilFLoffGWSfIBSV2eM/CjDjbVY5+NUPqvDmBZMTuP8knCuMcS1Uf2bOY9SgF2ZA7oGdCqFxvDeOVWp9dAlLWnXsVDyxhfoIA6kpP6MPi92za8KP5uE8kEA5xukt2Joh/iX+1I2AZFxAo6ZXsg1X0LJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZlRxg7Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EB0Y7qBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D351F000FF;
-	Wed, 30 Sep 2026 19:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZlRxg7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009B81F00898;
+	Wed, 30 Sep 2026 19:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795256;
-	bh=uRbK87y5GuMKGeWxM2QleCEe7cHSyf3YPwQ44wGy50E=;
+	s=korg; t=1790795259;
+	bh=ayYU722X+LIPDa62f45zEbFQVLNJ5i60eD5OkRTRIMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EB0Y7qBJ4W0NoYfH5Z9uBFwDfIvjpqNz+Xgf32DTxY6dNL49XBqeP6hUaoQ4O+kYE
-	 Bgu/08vXJuWKG8Z6Upq2t+bJhNq/nPdWp3llQLgFGIn4ss4v48vt5LnNEpGkKsUYWu
-	 XengWm0PZyV/Z5mRizoRWZPQZMgVUxfQ6CbMwbiA=
+	b=VZlRxg7Q/Adeea7pi05HAqPyeN/s//LT2OoZJdb14t6K9Da5cCDJi025vQ+7bKYGh
+	 jCPXW75oUqHF4QuaDchLg4GpweO2vCUUaPb1UNUc8bzk9wVU3BTexe6lrY0xK7vnFm
+	 sW2CZEz4Khn01jKid6+vxWjRjDbzB//IDiuINsNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0497/1193] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
-Date: Wed, 30 Sep 2026 17:19:41 +0200
-Message-ID: <20260930152445.196045839@linuxfoundation.org>
+Subject: [PATCH 6.6 0498/1193] pds_core: fix cmd_regs access racing BAR unmap on reset
+Date: Wed, 30 Sep 2026 17:19:42 +0200
+Message-ID: <20260930152445.217739311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,79 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
+[ Upstream commit 7980325b2f71e3f65c1323c39792e2455da6fab6 ]
 
-Several subsystems allocate ring buffers sized by dev->tx_queue_len
-with no upper bound. An unprivileged user (via unshare -Urn) can set a
-huge tx_queue_len and exhaust global memory with ring allocations:
+pdsc_reset_prepare() and pdsc_reset_done()'s pdsc_map_bars() error path
+clear/iounmap cmd_regs without devcmd_lock, and
+pdsc_legacy_firmware_update()'s download loop derefs cmd_regs after
+dropping and retaking the lock without re-checking. An FLR concurrent
+with a devlink flash can unmap cmd_regs under an in-flight devcmd,
+causing a NULL deref or a write to unmapped MMIO.
 
-- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
-  allocate 3 skb_array rings of tx_queue_len entries each.
-- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
-  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
-- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
-  ptr_rings to tx_queue_len on the same notifier.
+Take devcmd_lock across the BAR unmap/remap, and re-check cmd_regs in
+the download loop. Only the PF maps cmd_regs and runs devcmd, so skip
+the unmap on a VF, as pdsc_remove() and pdsc_reset_done() already do.
 
-netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
-sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
-there so the oversized value is rejected at set time. This takes
-effect whether the device is up or down, before dev->tx_queue_len is
-written, before any notifier fires, and before any ring is allocated.
-The "> S16_MAX" check also subsumes the previous unsigned-long
-truncation test, and a negative ifr_qlen from the ioctl lands far
-above the cap after conversion, so both old failure modes are covered
-by the one comparison.
+A reset that completes entirely within the unlocked window is not a
+correctness problem for the image: the device clears its update session,
+so a resumed download is rejected, and it verifies the staged image
+before writing a flash slot, reporting PDS_RC_BAD_FW rather than
+activating it.
 
-tx_queue_len is ambigious: both a per-ring sizing multiplier and a
-default queue-length/limit knob for consumers that allocate
-nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
-direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
-value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
-policy in patch 2/3 while staying a legitimate queue length on
-high-BDP paths; the ring-memory trade-off of a shared knob is
-disclosed below.
+pdsc_unmap_bars() also clears info_regs, intr_status and intr_ctrl. The
+interrupt and start/stop readers of those are quiesced before the unmap
+by pdsc_fw_down(), which frees the interrupts and tears down the queues.
+The debugfs readers are not, since those files outlive a reset; that is
+pre-existing and out of scope here.
 
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
-- Unprivileged user in a fresh user+net namespace (unshare -Urn).
-- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
-  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
-- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
-  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
-  512MB guest.
-- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
-- On the fixed kernel the oversized tx_queue_len is rejected with
-  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
-  create, sysfs, ioctl - the latter two via this check, the former
-  two via this check and the 2/3 parse policy respectively).
-
-Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
-Reported-by: Vega <vega@nebusec.ai>
-Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
+Fixes: e96094c1d11c ("pds_core: Clear BARs on reset")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260708212222.296202-1-nikhil.rao%40amd.com?part=3
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Link: https://patch.msgid.link/20260901044219.1361466-2-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/fw.c   | 10 +++++++++-
+ drivers/net/ethernet/amd/pds_core/main.c |  8 +++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index f2c7bb0fc7f9c..290fb19c5dd76 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -8925,7 +8925,7 @@ int dev_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
- 	unsigned int orig_len = dev->tx_queue_len;
- 	int res;
+diff --git a/drivers/net/ethernet/amd/pds_core/fw.c b/drivers/net/ethernet/amd/pds_core/fw.c
+index fa626719e68d1..59d262b0d29c5 100644
+--- a/drivers/net/ethernet/amd/pds_core/fw.c
++++ b/drivers/net/ethernet/amd/pds_core/fw.c
+@@ -107,8 +107,10 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
  
--	if (new_len != (unsigned int)new_len)
-+	if (new_len > S16_MAX)
- 		return -ERANGE;
+ 	dev_info(pdsc->dev, "Installing firmware\n");
  
- 	if (new_len != orig_len) {
+-	if (!pdsc->cmd_regs)
++	if (!pdsc->cmd_regs) {
++		NL_SET_ERR_MSG_MOD(extack, "BARs not mapped");
+ 		return -ENXIO;
++	}
+ 
+ 	dl = priv_to_devlink(pdsc);
+ 	devlink_flash_update_status_notify(dl, "Preparing to flash",
+@@ -134,6 +136,12 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
+ 
+ 		copy_sz = min_t(unsigned int, buf_sz, fw->size - offset);
+ 		mutex_lock(&pdsc->devcmd_lock);
++		if (!pdsc->cmd_regs) {
++			mutex_unlock(&pdsc->devcmd_lock);
++			err = -ENXIO;
++			NL_SET_ERR_MSG_MOD(extack, "Device reset during flash");
++			goto err_out;
++		}
+ 		memcpy_toio(&pdsc->cmd_regs->data, fw->data + offset, copy_sz);
+ 		err = pdsc_devcmd_fw_download_locked(pdsc, data_addr,
+ 						     offset, copy_sz);
+diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
+index 93fa7dfd74cbc..e88230ae6349d 100644
+--- a/drivers/net/ethernet/amd/pds_core/main.c
++++ b/drivers/net/ethernet/amd/pds_core/main.c
+@@ -490,7 +490,11 @@ static void pdsc_reset_prepare(struct pci_dev *pdev)
+ 					    &pf->vfs[pdsc->vf_id].padev);
+ 	}
+ 
+-	pdsc_unmap_bars(pdsc);
++	if (!pdev->is_virtfn) {
++		mutex_lock(&pdsc->devcmd_lock);
++		pdsc_unmap_bars(pdsc);
++		mutex_unlock(&pdsc->devcmd_lock);
++	}
+ 	pci_release_regions(pdev);
+ 	pci_disable_device(pdev);
+ }
+@@ -518,7 +522,9 @@ static void pdsc_reset_done(struct pci_dev *pdev)
+ 			return;
+ 		}
+ 
++		mutex_lock(&pdsc->devcmd_lock);
+ 		err = pdsc_map_bars(pdsc);
++		mutex_unlock(&pdsc->devcmd_lock);
+ 		if (err)
+ 			return;
+ 	}
 -- 
 2.53.0
 
