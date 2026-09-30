@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE73551123D;
-	Wed, 30 Sep 2026 17:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8A251EE04;
+	Wed, 30 Sep 2026 17:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790879; cv=none; b=Vk4BK+vSpelWA8jiPoM4QsrLbKyGwASwRiDllO4U2kWgmPmGOSu1+ivJV6oT53W8DviJ09rx4NP8Tq5zAPNsc38t5IyXF6hcNZS8CJsu/nhAxXSQRNN8PlcRHXa0gSffzCn2bUHhA8d5OwOOdB3jAAuY80xF32Vt1Ydia1a8bt0=
+	t=1790790882; cv=none; b=A987DRuLY6y3PoIEg60vFqmrs8es/slVRu+estrfiPL6ygxl/bc3BELJ1Fu21M6pO7Ey1s/pwBe83olNj6/o3D5celpUb8kfDk13tliKqY1wtcLyXF8jKJtZM6z3MLcXmtXJeExT3MovA948co84pCISn/xabIucrY7GdIo5BR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790879; c=relaxed/simple;
-	bh=eCDV1YOF5NmDzc0te0FWGFTT3cEBmI7MKD5oGmO5+Ps=;
+	s=arc-20240116; t=1790790882; c=relaxed/simple;
+	bh=Vncr128DljGzeilfUCnnVMstMkCcR7UEZp6PneK/+n0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=paiP4hWXHbfQQRn5EBVrCoWcDJZD8h0aEf5d1+gUg4iuAUIcpbCzOtE7cyDWtAIk7KyC5rl+6hq9U8aTNMG+nIMEviADeHkRfvQGLUcY64oRFrLggXy0YQS8sM83zzCQh5c4IKGH52qidRCBL0Oyi8+CRdB74OmhGh/zJ44vtoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZ1Gvaey; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P7x/SxxnZwEYQd48ZQwQlXtNXdJkk68qVyxF2vtHZrfa4kjkAwnYGkOH+IVTuZaEiFxvo8ualL1rqOo5vi+Yix7qY7nw7f0RMB/TrZD7+slMyV8zNEfyogarMw84TuLxu5MimVOJpDWSdarOjKbov7xQFOYsyObTG+OMhr5SbrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OPNN+wDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZ1Gvaey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE41B1F000FF;
-	Wed, 30 Sep 2026 17:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OPNN+wDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8609D1F000FF;
+	Wed, 30 Sep 2026 17:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790878;
-	bh=lBYJbOFNg0TnMds2cX717Ane2g10XsVtGhICtHd9GAE=;
+	s=korg; t=1790790881;
+	bh=i90W29dkSdtZiGD7fw7W0jhvddjQbPXFb4WbFKqZnDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VZ1GvaeyEytWCKloA1IRv1k9CAfsYfPCx1afmXTBd1UeA5OqotWU8rE4w2fzIl2RI
-	 iuDDRT4pB3V2vKIFTho86Gt8mbdkrzCtyjFtucfO9HJMPblq+yEEUfazMK3zJmdXM7
-	 Gqv+YHFgTncD+4dUH1bfRELAACnGl6bVNYaUeA7Y=
+	b=OPNN+wDJqIcj5UeGNrwWnu8G2JWbtGLqnJ9/Tlv63311lMXYv0/upSTi3u1YNu4qp
+	 WDGMioukU3s3pkA/USLg5fhopShN24cWUAzA20S+LK1r/3azI/fIO4NV/7CoGT2Ncc
+	 ByJpwnKnvXgNOJJaUSzbX3v4e0AYiF+2u0Ie1XTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Xue <xxm@rock-chips.com>,
-	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/752] iommu/rockchip: disable fetch dte time limit
-Date: Wed, 30 Sep 2026 17:19:35 +0200
-Message-ID: <20260930152400.440613049@linuxfoundation.org>
+Subject: [PATCH 5.15 106/752] fs/ntfs3: preserve non-DOS attribute bits in system.dos_attrib
+Date: Wed, 30 Sep 2026 17:19:36 +0200
+Message-ID: <20260930152400.462210788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -47,97 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Xue <xxm@rock-chips.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 8d4346ecd4950ae08cc76a6de327c264e846758c ]
+[ Upstream commit b1c1101067d9536bcb0fe023b96ee2dde5535959 ]
 
-Disable the Bit 31 of the AUTO_GATING iommu register, as it causes
-hangups with the RGA3 (Raster Graphics Acceleration 3) peripheral.
-The RGA3 register description of the TRM already states that the bit
-must be set to 1. The vendor kernel sets the bit unconditionally to
-1 to fix VOP (Video Output Processor) screen black issues. This patch
-squashes the 2 vendor kernel commits with the following commit messages:
+[BUG]
+A corrupted ntfs3 image can hit a NULL function pointer call in
+generic_perform_write() after toggling system.ntfs_attrib and then
+overwriting system.dos_attrib on the same file.
 
-Master fetch data and cpu update page table may work in parallel, may
-have the following procedure:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+\#PF: supervisor instruction fetch in kernel mode
+\#PF: error_code(0x0010) - not-present page
+PGD bed5067 P4D bed5067 PUD 0
+Oops: Oops: 0010 [#1] SMP KASAN NOPTI
+RIP: 0010:0x0
+Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+RSP: 0018:ffff88801025f988 EFLAGS: 00010246
+Call Trace:
+ generic_perform_write+0x409/0x8c0 mm/filemap.c:4255
+ __generic_file_write_iter+0x1bb/0x200 mm/filemap.c:4372
+ ntfs_file_write_iter+0xcd9/0x1c20 fs/ntfs3/file.c:1253
+ new_sync_write fs/read_write.c:593 [inline]
+ vfs_write+0x63b/0xf70 fs/read_write.c:686
+ ksys_write+0x133/0x250 fs/read_write.c:738
+ __do_sys_write fs/read_write.c:749 [inline]
+ __se_sys_write fs/read_write.c:746 [inline]
+ __x64_sys_write+0x77/0xc0 fs/read_write.c:746
+ ...
 
-	master                  cpu
-	fetch dte               update page tabl
-	        |                       |
-	(make dte invalid)  <-  zap iotlb entry
-	        |                       |
-	fetch dte again
-	(make dte invalid)  <-  zap iotlb entry
-	        |                       |
-	fetch dte again
-	(make dte invalid)  <-  zap iotlb entry
-	        |                       |
-	fetch dte again
-	(make iommu block)  <-  zap iotlb entry
+[CAUSE]
+system.ntfs_attrib updates ATTR_DATA flags via ni_new_attr_flags()
+and switches i_mapping->a_ops to ntfs_aops_cmpr when
+FILE_ATTRIBUTE_COMPRESSED is set. system.dos_attrib then overwrites
+ni->std_fa from a one-byte DOS attribute value, clearing the compression
+bit without updating ATTR_DATA or the mapping operations.
 
-New iommu version has the above bug, if fetch dte consecutively four
-times, then it will be blocked. Fortunately, we can set bit 31 of
-register MMU_AUTO_GATING to 1 to make it work as old version which does
-not have this issue.
+Old buffered writes use is_compressed(ni) to choose
+__generic_file_write_iter(). That leaves generic_perform_write() calling
+a NULL write_begin callback from ntfs_aops_cmpr.
 
-This issue only appears on RV1126 so far, so make a workaround dedicated
-to "rockchip,rv1126" machine type.
+[FIX]
+Treat system.dos_attrib as a low-byte DOS attribute update and preserve the
+existing non-DOS attribute bits in ni->std_fa. This keeps compressed and
+sparse state consistent with ATTR_DATA and the mapping operations while
+keeping the existing DOS attribute semantics intact.
 
-iommu/rockchip: fix vop blocked and screen black on RK356X and RK3588
-
-RK3568 and RK3588 has the same issue as RV1126/RV1109 that caused by
-dte fetch time limit, So we can set BIT(31) of register 0x24 default
-to 1 as a workaround.
-
-Signed-off-by: Simon Xue <xxm@rock-chips.com>
-Signed-off-by: Sven Püschel <s.pueschel@pengutronix.de>
-Acked-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ntfs3/xattr.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index f9f6492c430df..bb40b2ddbc71d 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -73,6 +73,8 @@
- #define SPAGE_ORDER 12
- #define SPAGE_SIZE (1 << SPAGE_ORDER)
- 
-+#define DISABLE_FETCH_DTE_TIME_LIMIT BIT(31)
-+
-  /*
-   * Support mapping any size that fits in one page table:
-   *   4 KiB to 4 MiB
-@@ -922,6 +924,7 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
- 	struct iommu_domain *domain = iommu->domain;
- 	struct rk_iommu_domain *rk_domain = to_rk_domain(domain);
- 	int ret, i;
-+	u32 auto_gate;
- 
- 	ret = clk_bulk_enable(iommu->num_clocks, iommu->clocks);
- 	if (ret)
-@@ -940,6 +943,11 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
- 			       rk_ops->mk_dtentries(rk_domain->dt_dma));
- 		rk_iommu_base_command(iommu->bases[i], RK_MMU_CMD_ZAP_CACHE);
- 		rk_iommu_write(iommu->bases[i], RK_MMU_INT_MASK, RK_MMU_IRQ_MASK);
-+
-+		/* Workaround for iommu blocked, BIT(31) default to 1 */
-+		auto_gate = rk_iommu_read(iommu->bases[i], RK_MMU_AUTO_GATING);
-+		auto_gate |= DISABLE_FETCH_DTE_TIME_LIMIT;
-+		rk_iommu_write(iommu->bases[i], RK_MMU_AUTO_GATING, auto_gate);
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index d922d0c9cd7c7..c45133934c3ed 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -872,7 +872,9 @@ static noinline int ntfs_setxattr(const struct xattr_handler *handler,
+ 	    !memcmp(name, SYSTEM_DOS_ATTRIB, sizeof(SYSTEM_DOS_ATTRIB))) {
+ 		if (sizeof(u8) != size)
+ 			goto out;
+-		new_fa = cpu_to_le32(*(u8 *)value);
++		/* system.dos_attrib only covers the low DOS attribute byte. */
++		new_fa = (ni->std_fa & ~cpu_to_le32(0xff)) |
++			 cpu_to_le32(*(u8 *)value);
+ 		goto set_new_fa;
  	}
  
- 	ret = rk_iommu_enable_paging(iommu);
 -- 
 2.53.0
 
