@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E7C4E324D;
-	Wed, 30 Sep 2026 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025274E324D;
+	Wed, 30 Sep 2026 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788177; cv=none; b=b+n/WwzKVYgeR6XVypcMZXMDd/qRM/moUeUPuq7JL9SIk4swhP/Ph2pPK9XqwI/zuRl4LZ2rNSL/attRbKLNaajosMLZLgsMLH5vFzsUpJvWUMhpnbrXcPJ+g3PyUXSSKM4D0vhc5jRGOf+NdhFHgSbs4KdGKTfEiQxRqAI8pK8=
+	t=1790788179; cv=none; b=YZppUo/3247K2C734bqzpAR5QtwdSApsA3HlK7AUqADPbC1vnOE3PboRGTPDNNLYZcN0qzEE5FE5eMM7T9PKW5ggQ4xEutOR+gCGRAJ/xBIwauoXybw5lx0MgGYSadcC307IAG2mOV5NuJQmfV81NK/+HBiYFWa/1gKkkPoM8Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788177; c=relaxed/simple;
-	bh=/YTLwUG9+jf8XF4BkfmyQJKR0z4tBYRhYAGJgnr2OOA=;
+	s=arc-20240116; t=1790788179; c=relaxed/simple;
+	bh=gGAhrNnHx7uBJHaQmuSrXntfuhZ/vDzH5l6t6LtyNAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4UVqEYgFIErLep2F/TfXPWlpIO+uecVT3mkIqQl5Wiy/3hxBCWu9JEM2MLZWZE6bAw8YS5g6PBB0XUurwbDOPCDnm6UezgXzfa2GszA2Oim5kVzZdcIFeEHlIqfXgKq1Wemm0jVgSpzf5YdfFdS/e0NlpW717aOnwVyiE/jxe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8nx8L28; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aYpEyghfI0PTbJz/FO9t9ucdbCO57lV/ridIJbjs5zLZyLUQhnKkyht95uk1/bDfQZPMpILG1T0VN+LihoXf2XCuWFBe2Js14IOZpl+TO+7GwiTa92Z4b/bHJMl6USEIFzBTSN3pOGqIjf+T+jKe9xHBtmsmdXPX0mBxsxBIxKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j06qgA/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8nx8L28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863771F000FF;
-	Wed, 30 Sep 2026 17:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j06qgA/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7E21F00898;
+	Wed, 30 Sep 2026 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788175;
-	bh=ygIkqLvg9sXhDl50kgBqsclkeZbP0v8B6XvcMFQvLP4=;
+	s=korg; t=1790788177;
+	bh=kBpDI9nqGzQMalLhyCRE9JMzg824MCAU1lY0BXhW+c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8nx8L28fWN37ooEAjhQIMyXM04tHjlhJPn0tim2oJaPQRHK38cGLrBMv1wNpLamJ
-	 +x6tOqzpWdWobsqjCDXw67KTdukQNLtj3hJNQro4Fc+pN+PRsjf9Ip00fHgrv2QMEb
-	 SVKPbdddXnVT9fovLjcnIwBmJuhJxZzMZTq2QmEk=
+	b=j06qgA/L203bwWB3IodhQx5F2qspzsMf4kse85aoO5N8e9paMlmUh6ytw3m2Bwhil
+	 8Xf/+J4MM8mM35Gk2+8k1jenefBxoH/GCLvyOjsCIUanUieGiAUHxMTBXCIe54tJ1c
+	 rynk5bo0f5xczsP3JNKu4Cek/0q/YIG+zzfpDq2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/877] RDMA/rxe: insert mcg into mcg_tree only after rxe_mcast_add() succeeds
-Date: Wed, 30 Sep 2026 17:15:44 +0200
-Message-ID: <20260930152415.459075067@linuxfoundation.org>
+Subject: [PATCH 6.12 016/877] ipv6: mcast: Dont hold RTNL for IPV6_DROP_MEMBERSHIP and MCAST_LEAVE_GROUP.
+Date: Wed, 30 Sep 2026 17:15:27 +0200
+Message-ID: <20260930152415.095070322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,137 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 1caceeb2d74bbe88223aea55eb8626b4c5f076fd ]
+[ Upstream commit 2ceb71ce7d34e751f91bbca9da3513a2bc29089c ]
 
-rxe_get_mcg() publishes a newly allocated multicast group in
-rxe->mcg_tree before programming the backing Ethernet multicast address
-with rxe_mcast_add(), which runs outside mcg_lock. A local userspace
-RDMA client reaches this path with ATTACH_MCAST on a UD QP; if
-rxe_mcast_add() then returns an error (for example -ENODEV when the
-backing netdev has been removed, or a propagated dev_mc_add() error),
-the unwind frees the published group without removing it from the tree.
-A later lookup of the same MGID dereferences the freed struct rxe_mcg
-from __rxe_lookup_mcg().
+In __ipv6_sock_mc_drop(), per-socket mld data is protected by lock_sock(),
+and only __dev_get_by_index() and __in6_dev_get() require RTNL.
 
-Fix this by keeping the new mcg private until rxe_mcast_add() succeeds.
-Split the tree publication into __rxe_publish_mcg(), call rxe_mcast_add()
-before taking the tree reference, and free the still-private mcg on
-failure. Because the group is never visible in mcg_tree until the
-multicast address is programmed, no concurrent caller can look it up or
-attach a QP to a group that is about to be torn down, so the error path
-needs no conditional unwind. If another caller publishes the same MGID
-while the address is being programmed, the post-add re-check under
-mcg_lock finds the winner; this caller then drops its private object and
-balances its own rxe_mcast_add() with rxe_mcast_del() before returning
-the winner.
+Let's use dev_get_by_index() and in6_dev_get() and drop RTNL for
+IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.
 
-Reproduced by forcing the rxe_mcast_add() error return under KASAN:
-without the change the next attach to the same MGID reports a
-slab-use-after-free in __rxe_lookup_mcg(); with it the forced failure
-returns cleanly. A no-injection attach/detach regression, including a
-two-QP shared join/leave and re-attach, stays KASAN- and leak-clean.
+Note that __ipv6_sock_mc_drop() is factorised to reuse in the next patch.
 
-Fixes: a926a903b7dc ("RDMA/rxe: Do not call  dev_mc_add/del() under a spinlock")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260617022728.2770116-1-michael.bommarito@gmail.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250702230210.3115355-8-kuni1840@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mcast.c | 50 +++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ net/ipv6/ipv6_sockglue.c |  2 --
+ net/ipv6/mcast.c         | 47 +++++++++++++++++++++++-----------------
+ 2 files changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mcast.c b/drivers/infiniband/sw/rxe/rxe_mcast.c
-index 07ff47bae31df..c14680c9a5362 100644
---- a/drivers/infiniband/sw/rxe/rxe_mcast.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mcast.c
-@@ -175,7 +175,9 @@ struct rxe_mcg *rxe_lookup_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
-  * @mgid: multicast address as a gid
-  * @mcg: new mcg object
-  *
-- * Context: caller should hold rxe->mcg lock
-+ * Initializes the mcg fields. The mcg is private and not yet visible in
-+ * mcg_tree, so this may run without rxe->mcg_lock; __rxe_publish_mcg()
-+ * makes it visible under the lock once it is ready.
+diff --git a/net/ipv6/ipv6_sockglue.c b/net/ipv6/ipv6_sockglue.c
+index 385321a43a19b..ab6987e72e3a7 100644
+--- a/net/ipv6/ipv6_sockglue.c
++++ b/net/ipv6/ipv6_sockglue.c
+@@ -121,10 +121,8 @@ static bool setsockopt_needs_rtnl(int optname)
+ {
+ 	switch (optname) {
+ 	case IPV6_ADDRFORM:
+-	case IPV6_DROP_MEMBERSHIP:
+ 	case IPV6_JOIN_ANYCAST:
+ 	case IPV6_LEAVE_ANYCAST:
+-	case MCAST_LEAVE_GROUP:
+ 	case MCAST_JOIN_SOURCE_GROUP:
+ 	case MCAST_LEAVE_SOURCE_GROUP:
+ 	case MCAST_BLOCK_SOURCE:
+diff --git a/net/ipv6/mcast.c b/net/ipv6/mcast.c
+index 61046543302d4..2f485e58a7d49 100644
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -250,14 +250,36 @@ int ipv6_sock_mc_join_ssm(struct sock *sk, int ifindex,
+ /*
+  *	socket leave on multicast group
   */
- static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
- 			   struct rxe_mcg *mcg)
-@@ -184,13 +186,22 @@ static void __rxe_init_mcg(struct rxe_dev *rxe, union ib_gid *mgid,
- 	memcpy(&mcg->mgid, mgid, sizeof(mcg->mgid));
- 	INIT_LIST_HEAD(&mcg->qp_list);
- 	mcg->rxe = rxe;
-+}
- 
--	/* caller holds a ref on mcg but that will be
--	 * dropped when mcg goes out of scope. We need to take a ref
--	 * on the pointer that will be saved in the red-black tree
--	 * by __rxe_insert_mcg and used to lookup mcg from mgid later.
--	 * Inserting mcg makes it visible to outside so this should
--	 * be done last after the object is ready.
-+/**
-+ * __rxe_publish_mcg - make a fully initialized mcg visible in mcg_tree
-+ * @mcg: the mcg object
-+ *
-+ * Context: caller must hold rxe->mcg_lock and a reference on mcg
-+ */
-+static void __rxe_publish_mcg(struct rxe_mcg *mcg)
++static void __ipv6_sock_mc_drop(struct sock *sk, struct ipv6_mc_socklist *mc_lst)
 +{
-+	/* caller holds a ref on mcg but that will be dropped when mcg goes
-+	 * out of scope. We need to take a ref on the pointer that will be
-+	 * saved in the red-black tree by __rxe_insert_mcg and used to lookup
-+	 * mcg from mgid later. Inserting mcg makes it visible to outside so
-+	 * this is done last after the object is ready and the multicast
-+	 * address has been programmed.
- 	 */
- 	kref_get(&mcg->ref_cnt);
- 	__rxe_insert_mcg(mcg);
-@@ -228,26 +239,37 @@ static struct rxe_mcg *rxe_get_mcg(struct rxe_dev *rxe, union ib_gid *mgid)
- 		err = -ENOMEM;
- 		goto err_dec;
- 	}
-+	__rxe_init_mcg(rxe, mgid, mcg);
++	struct net *net = sock_net(sk);
++	struct net_device *dev;
 +
-+	/* program the multicast address while mcg is still private, before
-+	 * it is inserted into mcg_tree. dev_mc_add() may sleep so this must
-+	 * run outside mcg_lock. On failure mcg was never published, so a
-+	 * plain free is correct and the tree is untouched.
-+	 */
-+	err = rxe_mcast_add(rxe, mgid);
-+	if (err) {
-+		kfree(mcg);
-+		goto err_dec;
++	dev = dev_get_by_index(net, mc_lst->ifindex);
++	if (dev) {
++		struct inet6_dev *idev = in6_dev_get(dev);
++
++		ip6_mc_leave_src(sk, mc_lst, idev);
++
++		if (idev) {
++			__ipv6_dev_mc_dec(idev, &mc_lst->addr);
++			in6_dev_put(idev);
++		}
++
++		dev_put(dev);
++	} else {
++		ip6_mc_leave_src(sk, mc_lst, NULL);
 +	}
++
++	atomic_sub(sizeof(*mc_lst), &sk->sk_omem_alloc);
++	kfree_rcu(mc_lst, rcu);
++}
++
+ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
+ {
+ 	struct ipv6_pinfo *np = inet6_sk(sk);
+-	struct ipv6_mc_socklist *mc_lst;
+ 	struct ipv6_mc_socklist __rcu **lnk;
+-	struct net *net = sock_net(sk);
+-
+-	ASSERT_RTNL();
++	struct ipv6_mc_socklist *mc_lst;
  
- 	spin_lock_bh(&rxe->mcg_lock);
--	/* re-check to see if someone else just added it */
-+	/* re-check to see if someone else just added it while we were adding
-+	 * the multicast address; if so use theirs and drop ours
-+	 */
- 	tmp = __rxe_lookup_mcg(rxe, mgid);
- 	if (tmp) {
- 		spin_unlock_bh(&rxe->mcg_lock);
-+		rxe_mcast_del(rxe, mgid);
- 		atomic_dec(&rxe->mcg_num);
- 		kfree(mcg);
- 		return tmp;
+ 	if (!ipv6_addr_is_multicast(addr))
+ 		return -EINVAL;
+@@ -267,23 +289,8 @@ int ipv6_sock_mc_drop(struct sock *sk, int ifindex, const struct in6_addr *addr)
+ 	      lnk = &mc_lst->next) {
+ 		if ((ifindex == 0 || mc_lst->ifindex == ifindex) &&
+ 		    ipv6_addr_equal(&mc_lst->addr, addr)) {
+-			struct net_device *dev;
+-
+ 			*lnk = mc_lst->next;
+-
+-			dev = __dev_get_by_index(net, mc_lst->ifindex);
+-			if (dev) {
+-				struct inet6_dev *idev = __in6_dev_get(dev);
+-
+-				ip6_mc_leave_src(sk, mc_lst, idev);
+-				if (idev)
+-					__ipv6_dev_mc_dec(idev, &mc_lst->addr);
+-			} else {
+-				ip6_mc_leave_src(sk, mc_lst, NULL);
+-			}
+-
+-			atomic_sub(sizeof(*mc_lst), &sk->sk_omem_alloc);
+-			kfree_rcu(mc_lst, rcu);
++			__ipv6_sock_mc_drop(sk, mc_lst);
+ 			return 0;
+ 		}
  	}
- 
--	__rxe_init_mcg(rxe, mgid, mcg);
-+	__rxe_publish_mcg(mcg);
- 	spin_unlock_bh(&rxe->mcg_lock);
- 
--	/* add mcast address outside of lock */
--	err = rxe_mcast_add(rxe, mgid);
--	if (!err)
--		return mcg;
-+	return mcg;
- 
--	kfree(mcg);
- err_dec:
- 	atomic_dec(&rxe->mcg_num);
- 	return ERR_PTR(err);
 -- 
 2.53.0
 
