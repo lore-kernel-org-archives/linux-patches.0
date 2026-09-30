@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE8C51C060;
-	Wed, 30 Sep 2026 18:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2B651CF51;
+	Wed, 30 Sep 2026 18:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792727; cv=none; b=OD9XJGjDWkLOx3ZfOIY0X72AQkTNs4t4lHkRfFLwxhrKdVKtAo1d97E9LVyIfiXjWGnr1NQrQzmxwJYBGEOXeMixtvELluIWNM4rsXojfK6g8WVuo5oGfeWrER9pyUKNtO1tYuTtZMFkjeye+f9XvIymZ0Xa96YQFbWXGsm95zY=
+	t=1790792730; cv=none; b=YHHRLen+D35/+1wHfMCZQeMXrDrkIpPD58CuJph0d9aoDWi7bbNzfg81tgOmZgaopdqKWg6k1sG1ctYK0audoQMWLBo5TBj9yrLxo7pbAYa0OUg6XW61+QF7d5YnTe469WjLHoR7yHJtavmoXaoOx5pVecRrqozHdGvd7j1nFDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792727; c=relaxed/simple;
-	bh=+LgiVbH9PrnsD9eel1eg1P2Le94/KkNqRKKy6PzZmzg=;
+	s=arc-20240116; t=1790792730; c=relaxed/simple;
+	bh=xPFtBG29Td4gl6VqQeoDlxakxJ7SDF4y6CeoQfFUwrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qTwRqJJB124xS1DdNd/YWXN8DZMVErsISIKxhfIMV+wWVzdlT36RK5aS3Hr0PpS02ZqhlBF3o3YdekyaOrAOKk9GdD+Y34BzzbWkmKqWG7wLKNbsHhGVLG86bHCEsP++K1FQwFDJoixKiSF8jrLsZbg+KyEIueWAxedYlPLjScg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPMpejKm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WiSinPmF6Y1hA7FBDuzRw8TJbAUvXD8wdWVy1mSINeUbb28kUwcVrlXvew+T4eAM0XdBxVtb4NwEI84wu87PFG/FPOUolYqKT8o64jopV9MenkYghCkY51v5t/KIuNn1hL1o6Z3nzfRCfaR2U6fVVVfPUJb1D6oPXd8riZnVlOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtQDmJfL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPMpejKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241FB1F000FF;
-	Wed, 30 Sep 2026 18:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtQDmJfL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32081F000FF;
+	Wed, 30 Sep 2026 18:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792726;
-	bh=AJi7yUnS4PSdn8ZVEJ8dZRm+7C6GvTzvmdlpSdJWx54=;
+	s=korg; t=1790792729;
+	bh=FevpGgi6nbCXHikTk7i3syCK64GPaT1TsOvvri5OXLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DPMpejKmEyzMzlXzT0NVX5Sn9FKoArG5vQNC3DA7gLU5bbK5MMQUcIvh2RzKIRdxF
-	 ODDfThunUS9t7EQ8atG7xFwZHH2glzPIZr77dMXVrLQbcPvy91dy7wOUU+6NH70qut
-	 7a5kiuNn0D27ceuO7VGmv5suc0AiIezWgcYe5IdM=
+	b=LtQDmJfLePDKH/Jx/9r97M/2ewwtTPhYEJQ6fb/226DgcER7Vqk7ICg4WanyoVDa4
+	 WPTFjcajrEJIn/uXtD9RgxPghAo+6d+2174P1N+bsZixXfunnJz1OvWratGfdBzlJr
+	 f2AqBNuGVAA/83dD9ThL0qhWmlS+jseBPkf2Qa4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rengarajan S <rengarajan.s@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	=?UTF-8?q?Minh=20Ti=E1=BA=BFn=20Nguy=E1=BB=85n?= <zizuzacker@gmail.com>
-Subject: [PATCH 5.15 750/752] lan78xx: Enable 125 MHz CLK configuration for LAN7801 if NO EEPROM is detected
-Date: Wed, 30 Sep 2026 17:30:20 +0200
-Message-ID: <20260930152414.445137548@linuxfoundation.org>
+Subject: [PATCH 5.15 751/752] lan78xx: Enable Auto Speed and Auto Duplex configuration for LAN7801 if NO EEPROM is detected
+Date: Wed, 30 Sep 2026 17:30:21 +0200
+Message-ID: <20260930152414.466566724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -55,33 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Rengarajan S <rengarajan.s@microchip.com>
 
-commit 5160b129f65fc6e1a4aa282d44f824e12aa800ee upstream.
+commit 799f532de13601f91ecb9cc6169d45d6e6933b0f upstream.
 
-The 125MHz and 25MHz clock configurations are enabled in the initialization
-regardless of EEPROM (125MHz is needed for RGMII 1000Mbps operation). After
-a lite reset (lan78xx_reset), these contents go back to defaults(all 0, so
-no 125MHz or 25MHz clock).
+Enabled ASD/ADD configuration for LAN7801 in the absence of EEPROM.
+After the lite reset these contents go back to defaults where ASD/
+ADD is disabled. The check is already available for LAN7800.
 
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20240529140256.1849764-2-rengarajan.s@microchip.com
+Link: https://lore.kernel.org/r/20240529140256.1849764-3-rengarajan.s@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Cc: Minh Tiến Nguyễn <zizuzacker@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/lan78xx.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -2804,6 +2804,8 @@ static int lan78xx_reset(struct lan78xx_
+@@ -2894,8 +2894,11 @@ static int lan78xx_reset(struct lan78xx_
  		return ret;
  
- 	buf |= HW_CFG_MEF_;
-+	buf |= HW_CFG_CLK125_EN_;
-+	buf |= HW_CFG_REFCLK25_EN_;
+ 	/* LAN7801 only has RGMII mode */
+-	if (dev->chipid == ID_REV_CHIP_ID_7801_)
++	if (dev->chipid == ID_REV_CHIP_ID_7801_) {
+ 		buf &= ~MAC_CR_GMII_EN_;
++		/* Enable Auto Duplex and Auto speed */
++		buf |= MAC_CR_AUTO_DUPLEX_ | MAC_CR_AUTO_SPEED_;
++	}
  
- 	ret = lan78xx_write_reg(dev, HW_CFG, buf);
- 	if (ret < 0)
+ 	if (dev->chipid == ID_REV_CHIP_ID_7800_ ||
+ 	    dev->chipid == ID_REV_CHIP_ID_7850_) {
 
 
