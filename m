@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4045151AEDC;
-	Wed, 30 Sep 2026 16:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA052509F18;
+	Wed, 30 Sep 2026 16:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784489; cv=none; b=mKNvVYCp8tyH3x72ipthrTABMGnoOdgB8oW6s049/dPoOd+TvhQ274mQkdfFO80kAvDCz64MASAqdUjncq1GbVdbbyvzzTEY+/rWSLD4LmYeCQXDq1VPwYOHrCnCa6fR3ZwPM1+5cLbhmf9ZumhUYAbOmqy42EdzDtCeyjEv514=
+	t=1790784493; cv=none; b=extNRMC8X9K/7RyUWQPIu2p+zPmGRdqXbhfBfIsLZ5suDgQR0Gn1PeBZ4W35GYcUpZR8iUsqE0lxXnAELMrz2pmUg1vni+sj6tjNPw1UxpAaZ27NeO8c7C6KMUqlyAeYZ0yRRqptu7DAr6exjFT8Ou5N4PItjxIHVvQkLTYTGVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784489; c=relaxed/simple;
-	bh=YhmWcsfuAF8zv1EqzZ2MXYHGcjvwkTplxj0W3wTEHYQ=;
+	s=arc-20240116; t=1790784493; c=relaxed/simple;
+	bh=hahoDA8ddi/338DdGRO9jdHDgdIhlsg0W8ALwViS80I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCBoehewGMRaljL/IGDVtE39EgBhqNLoizwLSvJ8S/mCbkK5TiRIGW3UcQT+EJpgUFYc/K6LLU54G3FuRojKTbuRtW5vInCKufLV59yssgnKr2d8SlZgce7pjqLwyiRA0nyjVIsHNo6hGpGulT9ClqVCoxh79dTFyg4UQjC0Xtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvbQOdMK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0fWEeAWO2xJ7inUFPtgrqUxwYBu+/T2eEIXcy4Zdv/kM9VMJOhSiTkVhVKZtCdr2S0Z2YoaYcAyp/ILKCjmYhQ8m4XNTSyiMmbqXUxCu7SaKrI19aUomo+Z58EDOspRa/dwwnkHA0MIzXMjBeZ4pStQJZOWEGfzqNI18ZWPZFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn6Rc8vX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvbQOdMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EA01F00893;
-	Wed, 30 Sep 2026 16:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn6Rc8vX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C611F000FF;
+	Wed, 30 Sep 2026 16:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784485;
-	bh=5rWaRjkAWjMhJKyKmZYQDRQQ/VeTnKnZaK8vSFInZSM=;
+	s=korg; t=1790784487;
+	bh=XAe9k7UFQZ1z8n+gFm5BRM1eLqGfVCrEK9rv+XsM3lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HvbQOdMKxBi0w2x/bEIm4rFYFu54hLV9QYiDKcpueEYZkZoOkizgrGDPbxlqVavAY
-	 TuV5a7/1cLsWfdlWn59q7WUmFvqjOF1E/kvqpdIfPNU/cur7Ys1gtx9XW3Q5nxyKmm
-	 CT9SQe79IQBf1BxkFzpPZtXEkWKA4dS7rIVbyYhM=
+	b=Gn6Rc8vXMI6zh3PIJea6NERI/YPpoKz0XoPyIOce/ZXyLc2A8X5WLtsfWn8qpty/4
+	 gF5SphzQm9q0HH5Me5nwHrDj9bdf2aJpZDYUOtfKoHTHBu9WQte17+FI1TIbEpSgor
+	 BRGpO6vxBtgqbRgj/MUmiffKFK9Lnrmp/3PUYxUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/982] btrfs: tree-checker: validate names in ROOT_REF and ROOT_BACKREF
-Date: Wed, 30 Sep 2026 17:14:59 +0200
-Message-ID: <20260930152420.312134892@linuxfoundation.org>
+Subject: [PATCH 6.1 166/982] xprtrdma: Add request-pool slack for delayed recycling
+Date: Wed, 30 Sep 2026 17:15:02 +0200
+Message-ID: <20260930152420.377448357@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,125 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0af37c217edf15fa21dac1c40822086df356c6bb ]
+[ Upstream commit 64bf6892057b746c55bcc045b9492741b72d8d27 ]
 
-ROOT_REF and ROOT_BACKREF items contain a struct btrfs_root_ref followed
-by the subvolume name. Several readers assume that this layout is already
-valid and then use the on-disk name length directly. A corrupted item can
-therefore make those readers address bytes outside the item, and
-BTRFS_IOC_GET_SUBVOL_INFO can copy too many bytes into its fixed-size UAPI
-name buffer.
+After the previous patch gates req recycling on Send completion,
+a completed RPC's rpcrdma_req can remain pinned by the sendctx
+ring until the next signaled Send completion releases it. The
+transmitted-RPC ceiling is unchanged: xprt_request_get_cong()
+gates Sends against xprt->cwnd, the RPC/RDMA credit window fed
+by server-granted credits and capped at re_max_requests. The
+req pool, however, must exceed max_reqs by enough that this
+recycle delay does not stall a slot allocation that the credit
+window would admit.
 
-Validate ROOT_REF and ROOT_BACKREF items in tree-checker before any reader
-uses them. Reject records that do not contain a non-empty name, whose
-name_len does not exactly describe the remaining item payload, or whose
-name exceeds BTRFS_NAME_LEN.
+The headroom is bounded. frwr_open() sets re_send_batch to
+re_max_requests >> 3 -- one in every eight Sends is signaled --
+so at most re_send_batch unsignaled Sends can be outstanding
+before the next signaled completion releases them. That equals
+max_reqs / 8 reqs in the worst case, with a one-slot floor for
+small max_reqs values where the right-shift rounds to zero.
 
-For BTRFS_IOC_GET_SUBVOL_INFO, copy only the validated on-disk name_len
-instead of deriving the copy length from the item size. The ioctl result is
-zeroed when allocated. That leaves the existing trailing zero byte
-untouched.
+The sendctx ring and the hardware Send Queue are not enlarged
+to match. Both are sized in rpcrdma_sendctxs_create() and
+frwr_query_device() for re_max_requests in-flight Sends, which
+is the ceiling the credit window enforces. The pool slack does
+not raise that ceiling -- it only lets allocation keep pace
+with the credit window during the brief interval in which
+earlier reqs are pinned waiting for the next signaled
+completion. At any moment, at most re_send_batch sendctxes are
+held by unswept unsignaled Sends, leaving the rest of the ring
+available for newly admitted Sends.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Allocate max_reqs + DIV_ROUND_UP(max_reqs, 8) request objects
+and name the slack calculation at the allocation site so the
+1/8 bound stays tied to the Send-signaling batch size.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c        | 11 +++++------
- fs/btrfs/tree-checker.c | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+), 6 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index b84b1cce17723..e278da90888e1 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3058,7 +3058,6 @@ static int btrfs_ioctl_get_subvol_info(struct inode *inode, void __user *argp)
- 	struct btrfs_root_ref *rref;
- 	struct extent_buffer *leaf;
- 	unsigned long item_off;
--	unsigned long item_len;
- 	int slot;
- 	int ret = 0;
- 
-@@ -3133,17 +3132,17 @@ static int btrfs_ioctl_get_subvol_info(struct inode *inode, void __user *argp)
- 		btrfs_item_key_to_cpu(leaf, &key, slot);
- 		if (key.objectid == subvol_info->treeid &&
- 		    key.type == BTRFS_ROOT_BACKREF_KEY) {
-+			u16 name_len;
-+
- 			subvol_info->parent_id = key.offset;
- 
- 			rref = btrfs_item_ptr(leaf, slot, struct btrfs_root_ref);
-+			name_len = btrfs_root_ref_name_len(leaf, rref);
- 			subvol_info->dirid = btrfs_root_ref_dirid(leaf, rref);
- 
--			item_off = btrfs_item_ptr_offset(leaf, slot)
--					+ sizeof(struct btrfs_root_ref);
--			item_len = btrfs_item_size(leaf, slot)
--					- sizeof(struct btrfs_root_ref);
-+			item_off = btrfs_item_ptr_offset(leaf, slot) + sizeof(*rref);
- 			read_extent_buffer(leaf, subvol_info->name,
--					   item_off, item_len);
-+					   item_off, name_len);
- 		} else {
- 			ret = -ENOENT;
- 			goto out;
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 0b1ab9b6b84b4..3e3ffa23cea65 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1232,6 +1232,37 @@ static int check_root_item(struct extent_buffer *leaf, struct btrfs_key *key,
- 	return 0;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index a97f0b18ac429..34a3c08a82fba 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -1110,6 +1110,22 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
+ 	spin_unlock(&buf->rb_lock);
  }
  
-+static int check_root_ref(struct extent_buffer *leaf, struct btrfs_key *key, int slot)
++static unsigned int rpcrdma_req_pool_slack(unsigned int max_reqs)
 +{
-+	struct btrfs_root_ref *rref;
-+	u32 item_size = btrfs_item_size(leaf, slot);
-+	u32 name_len;
-+
-+	if (unlikely(item_size <= sizeof(*rref))) {
-+		generic_err(leaf, slot,
-+			    "invalid root ref item size for key type %u, have %u expect > %zu",
-+			    key->type, item_size, sizeof(*rref));
-+		return -EUCLEAN;
-+	}
-+
-+	rref = btrfs_item_ptr(leaf, slot, struct btrfs_root_ref);
-+	name_len = btrfs_root_ref_name_len(leaf, rref);
-+	if (unlikely(name_len > BTRFS_NAME_LEN)) {
-+		generic_err(leaf, slot,
-+			    "root ref name too long for key type %u, have %u max %u",
-+			    key->type, name_len, BTRFS_NAME_LEN);
-+		return -EUCLEAN;
-+	}
-+	if (unlikely(item_size != sizeof(*rref) + name_len)) {
-+		generic_err(leaf, slot,
-+			    "invalid root ref item size for key type %u, have %u expect %zu",
-+			    key->type, item_size, sizeof(*rref) + name_len);
-+		return -EUCLEAN;
-+	}
-+
-+	return 0;
++	/* The sendctx ring can hold up to one Send-signaling batch
++	 * (re_send_batch, set by frwr_open() to re_max_requests >> 3)
++	 * of unfinished Sends. Each pins its req until a signaled Send
++	 * completion releases the sendctx. Size the pool above max_reqs
++	 * by that batch so the recycle delay does not stall a slot
++	 * allocation that the RPC/RDMA credit window would admit.
++	 *
++	 * Round up: re_max_requests >> 3 is zero when max_reqs < 8, but
++	 * a single unsignaled Send is still enough to pin one req. One
++	 * slack slot covers that case.
++	 */
++	return DIV_ROUND_UP(max_reqs, 8);
 +}
 +
- __printf(3,4)
- __cold
- static void extent_err(const struct extent_buffer *eb, int slot,
-@@ -1765,6 +1796,10 @@ static int check_leaf_item(struct extent_buffer *leaf,
- 	case BTRFS_ROOT_ITEM_KEY:
- 		ret = check_root_item(leaf, key, slot);
- 		break;
-+	case BTRFS_ROOT_REF_KEY:
-+	case BTRFS_ROOT_BACKREF_KEY:
-+		ret = check_root_ref(leaf, key, slot);
-+		break;
- 	case BTRFS_EXTENT_ITEM_KEY:
- 	case BTRFS_METADATA_ITEM_KEY:
- 		ret = check_extent_item(leaf, key, slot, prev_key);
+ /**
+  * rpcrdma_buffer_create - Create initial set of req/rep objects
+  * @r_xprt: transport instance to (re)initialize
+@@ -1119,6 +1135,7 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
+ int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
+ {
+ 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
++	unsigned int max_reqs;
+ 	int i, rc;
+ 
+ 	buf->rb_bc_srv_max_requests = 0;
+@@ -1132,7 +1149,9 @@ int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
+ 	INIT_LIST_HEAD(&buf->rb_all_reps);
+ 
+ 	rc = -ENOMEM;
+-	for (i = 0; i < r_xprt->rx_xprt.max_reqs; i++) {
++	max_reqs = r_xprt->rx_xprt.max_reqs;
++	max_reqs += rpcrdma_req_pool_slack(max_reqs);
++	for (i = 0; i < max_reqs; i++) {
+ 		struct rpcrdma_req *req;
+ 
+ 		req = rpcrdma_req_create(r_xprt,
 -- 
 2.53.0
 
