@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFECD3B443F;
-	Wed, 30 Sep 2026 19:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433CA371049;
+	Wed, 30 Sep 2026 19:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796936; cv=none; b=UN6vM47bfFtWKfQngI+uf+aR7ZpIB0lnSLXmJH9fnqbYxYqacv+1EU29FKeRcVWADwztPWOEiVnfWfVHaNnw/2KFDPHvRNuDNV0AttBCHRx29lYAp8fTKiIp08l0koU2hdCRSZsPhKRKREszvi4b0HzZsANeLJE03zfup2h3Dh8=
+	t=1790796941; cv=none; b=CkneXQ+J0bCkByKJcHSp9hI9tjZvRFZriue0/3qWhFujTKuUyAJLW34HEN6JrrhitFXYaQA/eABfWIeWoPMNMuk7Typb7emZhEwu/uYU6M+s1ucqrShFSO+ci6RhBwj7i2k+zC9lh9C5OszdW8v89dvMyGxdBSoipa0qhMRuynY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796936; c=relaxed/simple;
-	bh=mE1IxBFka41NUuSk974nWmNqcA1UwCEwqo9OEIHDzV4=;
+	s=arc-20240116; t=1790796941; c=relaxed/simple;
+	bh=os/+a1+jhqQmttjRfpCFVDSvTUDAAUBIe3wyDauYxGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXs2vRwBIV5wfvUuPt6mpiQg4AR9vqyPrUP0qz68rcX8ZcSXybTaRM6kJF1O75eWs2yg6oAIb3QbyHLe+t+P/0OfQm2HFjXt9XjlAVvhYIDUUvjFdqmEv6VFDesdVoN0aJhPmfGO0gryUBxjonANwpQ0mROl5eYhDkPbX51BUpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7DWsdfm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l+77lboW/EfqseB1zLqGOvBIZ5IU55STaFQzDkmIjJ+5if0JQX5bAKsXr3wEHhq8sF7NMO2biLOhG8XPEAljI42AvJOgkUVvCM5O9Vu6JfL1/QqNs3y3YduutyS8UBEnELIQ8NK0vUifK8kIypgRX57nvBDg1gv0JqeutLnIKKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ua4109no; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7DWsdfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0434E1F00898;
-	Wed, 30 Sep 2026 19:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ua4109no"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07F31F000FF;
+	Wed, 30 Sep 2026 19:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796935;
-	bh=gQOkUEDt6bkdOAmS86zYkolCUYiW6O8j6wh4Xh6qpfU=;
+	s=korg; t=1790796938;
+	bh=ir0hR0hMMSrzj2lvw2K0RfSTR7T2gBuWhK/Ries0x6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C7DWsdfmi8rIopnnRy+d9Tqza0VLRGRaDIDdhQgX83AnaITwWia16RAOv7qZmfqV6
-	 4vJPW7sLjguEM0lHwwMVZz7k7aNOwkAU6I4ZyuF0MZ8TcfYeQcRduEUH6WH4vQrWbk
-	 xZeNCpc9ivx3O5rWAcmAf20zyFJQku7OC22TM28A=
+	b=Ua4109nokzELxc1LbMIu1/ji6QW0SNCxiSjESgRLEmJKIZzGQjoeLVovEQt+EIpra
+	 3+nyk9f68UmmvnFlo0z/hkpO524uZ9sPurnMlnOeLCjz8nVNjxgInEoNYFk5BvCYFG
+	 lv7EsEB0p6oI2+mV7hqrSxIyd7shc+9CdlsZfJiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Amirkan <markdamirkan@gmail.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Benjamin Robin (Schneider Electric)" <benjamin.robin@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1087/1193] mptcp: return sk_wait_data() errors from recvmsg()
-Date: Wed, 30 Sep 2026 17:29:31 +0200
-Message-ID: <20260930152458.384255881@linuxfoundation.org>
+Subject: [PATCH 6.6 1088/1193] rculist: add list_splice_rcu() for private lists
+Date: Wed, 30 Sep 2026 17:29:32 +0200
+Message-ID: <20260930152458.406078427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,48 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Amirkan <markdamirkan@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 60404266ef3e0a1cd8f7a164060e0c83efb72f4b ]
+[ Upstream commit f902877b635551513729bdf9a8d1422c4aab7741 ]
 
-Commit 581302298524 ("mptcp: error out earlier on disconnect") made
-mptcp_recvmsg() stop when sk_wait_data() returns an error.  The error is
-stored in err, but the function then jumps to a path which returns
-copied.  When no data was copied, recvmsg() therefore returns zero and
-reports a false EOF.
+This patch adds a helper function, list_splice_rcu(), to safely splice
+a private (non-RCU-protected) list into an RCU-protected list.
 
-Store the result in copied, which is the value returned by the function.
-This also keeps the usual partial-read result when data was copied before
-the error.
+The function ensures that only the pointer visible to RCU readers
+(prev->next) is updated using rcu_assign_pointer(), while the rest of
+the list manipulations are performed with regular assignments, as the
+source list is private and not visible to concurrent RCU readers.
 
-A recvmsg() blocked in one thread reproduces the issue when another
-thread disconnects the same MPTCP socket with connect(AF_UNSPEC).
-Before this change recvmsg() returns zero; afterwards it returns -EPIPE.
+This is useful for moving elements from a private list into a global
+RCU-protected list, ensuring safe publication for RCU readers.
+Subsystems with some sort of batching mechanism from userspace can
+benefit from this new function.
 
-Fixes: 581302298524 ("mptcp: error out earlier on disconnect")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260913-b4-send-mptcp-recv-error-v1-1-4eaa3684a8b8@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The function __list_splice_rcu() has been added for clarity and to
+follow the same pattern as in the existing list_splice*() interfaces,
+where there is a check to ensure that the list to splice is not
+empty. Note that __list_splice_rcu() has no documentation for this
+reason.
+
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Benjamin Robin (Schneider Electric) <benjamin.robin@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/rculist.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index cd76b2d742d3e..48b6e9ed04ee9 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2327,7 +2327,7 @@ static int mptcp_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
- 		mptcp_cleanup_rbuf(msk, copied);
- 		err = sk_wait_data(sk, &timeo, NULL);
- 		if (err < 0) {
--			err = copied ? : err;
-+			copied = copied ? : err;
- 			goto out_err;
- 		}
- 	}
+diff --git a/include/linux/rculist.h b/include/linux/rculist.h
+index d29740be4833e..ad37c0584c23b 100644
+--- a/include/linux/rculist.h
++++ b/include/linux/rculist.h
+@@ -204,6 +204,35 @@ static inline void list_replace_rcu(struct list_head *old,
+ 	old->prev = LIST_POISON2;
+ }
+ 
++static inline void __list_splice_rcu(struct list_head *list,
++				     struct list_head *prev,
++				     struct list_head *next)
++{
++	struct list_head *first = list->next;
++	struct list_head *last = list->prev;
++
++	last->next = next;
++	first->prev = prev;
++	next->prev = last;
++	rcu_assign_pointer(list_next_rcu(prev), first);
++}
++
++/**
++ * list_splice_rcu - splice a non-RCU list into an RCU-protected list,
++ *                   designed for stacks.
++ * @list:	the non RCU-protected list to splice
++ * @head:	the place in the existing RCU-protected list to splice
++ *
++ * The list pointed to by @head can be RCU-read traversed concurrently with
++ * this function.
++ */
++static inline void list_splice_rcu(struct list_head *list,
++				   struct list_head *head)
++{
++	if (!list_empty(list))
++		__list_splice_rcu(list, head, head->next);
++}
++
+ /**
+  * __list_splice_init_rcu - join an RCU-protected list into an existing list.
+  * @list:	the RCU-protected list to splice
 -- 
 2.53.0
 
