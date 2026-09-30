@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D1733D6FD;
-	Wed, 30 Sep 2026 16:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8274FB9AF;
+	Wed, 30 Sep 2026 16:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786164; cv=none; b=NWxSgGwYdZHiZj/RRmKILim8a5g489bZGx7i3e86SQxhhLiCwC3MU/joGLslocLixWVTnVMb2OitFCRwyqrYCYunMK+hKAkibTShFzHuDwEBID6iIHDgXugd4g7S3PkrkYTNHGEdd7Lf6wAFLI4lFOUKI1Runq1RQNu02b7YRP4=
+	t=1790786167; cv=none; b=kYZKclxrYNSZz79aFLfKSilfCOEpgRth6LUxbdUJ5J+dR+iMQIhqhH7VIBybb8eYBKAQD7nXG5OqFDdtTxrAlEcq9A4ojD3HvScm4+C8uNbaTK4JF+V0rj1KLyP9bm3NFPAWBW/5P/lYJOGlTfjy+eo8Y8NTpFsF3L53d6pTrUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786164; c=relaxed/simple;
-	bh=TebQCw9+Ml0BLIftuHgwcqkTpMfHuLif5MlORX/OETc=;
+	s=arc-20240116; t=1790786167; c=relaxed/simple;
+	bh=ckS2msBOe5rcAdITUEOjTcpRBg7KO/M3pr56KQBGX7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVjrR7uR8enW2Mno8JrLIsX+ln5s8PIXFbMmfcMiL4tB/y/n0pSeCw4I3AtJJLyoUZk5z+Ick4yhXYRSQXq7ucXzpcCAFh7/EWZN46ORWGpkKlsBYpFDHwxFqddkIFlOTIXDGK7sUlKqtE+hYIHg3kuiFEcIRgqD32yN1ScjPYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGlW/jUU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XnrC9icjY4LWO/RL0YmxJmrQvWoAEZxqKc0haC46/FunLJuWY8woIuzbKy/cZh5P3nos1kCWtqlclesPdzRE+2GNiCxMQfPal0Mt/gmt+ecuEOh5WUEUwtsRjCb25Raa+A+GvaYiSVSzdmWEDjlQSDv7+v4suXtxs/BH2eWc27s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x54wkxQK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGlW/jUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B111F00893;
-	Wed, 30 Sep 2026 16:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x54wkxQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28D51F000FF;
+	Wed, 30 Sep 2026 16:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786163;
-	bh=LQv0+RzCduuQFpE6JyT/5nesCuXk60WtX5Oc5FQgnnc=;
+	s=korg; t=1790786166;
+	bh=Du8c40hHixENXIF/pkYcmIiBMNXvKB9Ww3npw+wFX3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGlW/jUUyv2mV7VU7i06Ps1hZ99H4CqktQzUOMFyZpzKVInIPOQQ3gti8iLXf9puh
-	 jTJl24vHuG/bvGSguyB2Rvrs7jl1f7v9tr4RvfU/ux88s+WH1cbWyOhl1HJjhAeAx+
-	 fh04TCOvJ2rjsc+TrrtmaU4WFWJqn67+5mMUTicw=
+	b=x54wkxQKpW1aLx0IQEhkjz2bW4ERTXIkbmdDaUHgoR1BkKan6xXUAVZvO7vs+dUyu
+	 S43ffDhLt1S7jUfcBq7qR1CAei9nBmKalW6HqtLdcToOSK5vTsLuCbMErbd0/azF5X
+	 BV5lN8bya/K7SLmsgOj4K48+EBSl5sfheKH9qD2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 764/982] wifi: wilc1000: fix out-of-bounds read in P2P public action frames
-Date: Wed, 30 Sep 2026 17:25:00 +0200
-Message-ID: <20260930152433.162832321@linuxfoundation.org>
+Subject: [PATCH 6.1 765/982] wifi: wilc1000: fix RX buffer OOB-write in wilc_wlan_handle_isr_ext()
+Date: Wed, 30 Sep 2026 17:25:01 +0200
+Message-ID: <20260930152433.184893184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,70 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit ba6cb7c0868a412c2eb68e8efd5aa38bfb258a14 upstream.
+commit c1ba7f7f18465e259cf1b4d9c73fc73853d7f790 upstream.
 
-wilc_wfi_p2p_rx() and mgmt_tx() start parsing a frame once
-ieee80211_is_public_action() returns true. That helper only verifies the
-frame is long enough for the action category field, that is
-offsetofend(struct ieee80211_mgmt, u.action.category), 25 bytes. Both
-functions then read the P2P public action header up to oui_subtype at
-offset 30 and pass "size - ie_offset" to cfg80211_find_vendor_ie(), where
-ie_offset is offsetof(struct ieee80211_mgmt, u) + sizeof(*d), i.e. 32.
+wilc_wlan_handle_isr_ext() takes the RX transfer size from the
+device-reported interrupt status register (a 15-bit field shifted left by 2,
+up to 131068 bytes) and reads that many bytes from the device into
+rx_buffer, which is only WILC_RX_BUFF_SIZE (96K) large. The wrap
+check only handles the current offset; the size itself is never
+compared against the buffer, so a bogus SDIO device can make the driver
+OOB-write rx_buffer by up to ~32K with data it controls.
 
-A public action frame of 25 to 31 bytes passes the check but is shorter
-than that 32 byte header, so oui_subtype can be read out of bounds, and
-because the length is unsigned, "size - ie_offset" underflows to a value
-close to 4 GiB. cfg80211_find_vendor_ie() takes an unsigned int length,
-so even the size_t subtraction in mgmt_tx() is truncated to the same
-value. It then walks far past the buffer searching for a vendor element
-until it reaches unmapped memory.
+The oversized transfer also leaves rx_buffer_offset past the end of
+the buffer, after which the unsigned wrap check stops working and
+the overflow can repeat.
 
-In the receive path the frame arrives over the air and needs no
-association, so a nearby unauthenticated device can crash the host while
-it is in P2P listen. Reject frames shorter than the P2P public action
-header in both paths before dereferencing it.
+Drop any transfer whose size exceeds the RX buffer, acknowledging
+the data interrupt and re-arming the RX engine so the bogus frame is
+discarded and reception can continue. This also restores the
+rx_buffer_offset <= WILC_RX_BUFF_SIZE invariant the wrap check
+relies on.
 
-Fixes: 4fb8b5aa2a11 ("staging: wilc1000: refactor p2p action frames handling API's")
+This is not expected to change driver behavior in most cases:
+without this check, an oversized transfer would most likely
+corrupt neighboring kernel memory instead of completing anyway, and
+the drop path performs the same interrupt acknowledgment and RX
+engine re-arming as the normal path, so subsequent transfers are
+received unaffected.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260807115230.136767-1-ali@iusegentoo.com
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/7c971924c6bdccf6c2f75704a5a746e9303aaf64@linux.dev
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/cfg80211.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/wireless/microchip/wilc1000/wlan.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-+++ b/drivers/net/wireless/microchip/wilc1000/cfg80211.c
-@@ -1069,6 +1069,13 @@ void wilc_wfi_p2p_rx(struct wilc_vif *vi
- 	if (!ieee80211_is_public_action((struct ieee80211_hdr *)buff, size))
- 		goto out_rx_mgmt;
+--- a/drivers/net/wireless/microchip/wilc1000/wlan.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
+@@ -1040,6 +1040,15 @@ static void wilc_wlan_handle_isr_ext(str
+ 	if (size <= 0)
+ 		return;
  
-+	/* ieee80211_is_public_action() only validates up to the category
-+	 * byte, so reject frames too short for the P2P public action header
-+	 * before dereferencing it or computing size - ie_offset.
++	/* A size exceeding the RX buffer is bogus; drop the transfer
++	 * instead of overflowing the buffer.
 +	 */
-+	if (size < ie_offset)
-+		goto out_rx_mgmt;
++	if (size > WILC_RX_BUFF_SIZE) {
++		wilc->hif_func->hif_clear_int_ext(wilc,
++						  DATA_INT_CLR | ENABLE_RX_VMM);
++		return;
++	}
 +
- 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
- 	if (d->oui_subtype != GO_NEG_REQ && d->oui_subtype != GO_NEG_RSP &&
- 	    d->oui_subtype != P2P_INV_REQ && d->oui_subtype != P2P_INV_RSP)
-@@ -1219,6 +1226,13 @@ static int mgmt_tx(struct wiphy *wiphy,
- 		goto out_set_timeout;
- 	}
+ 	if (WILC_RX_BUFF_SIZE - offset < size)
+ 		offset = 0;
  
-+	/* ieee80211_is_public_action() only validates up to the category
-+	 * byte, so reject frames too short for the P2P public action header
-+	 * before dereferencing it or computing len - ie_offset.
-+	 */
-+	if (len < ie_offset)
-+		goto out_set_timeout;
-+
- 	d = (struct wilc_p2p_pub_act_frame *)(&mgmt->u.action);
- 	if (d->oui_type != WLAN_OUI_TYPE_WFA_P2P ||
- 	    d->oui_subtype != GO_NEG_CONF) {
 
 
