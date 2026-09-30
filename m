@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9083C76AD;
-	Wed, 30 Sep 2026 19:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E0D33A6F1;
+	Wed, 30 Sep 2026 19:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795578; cv=none; b=lpJR2M5vywQbhG7e4Cmiqoq4/CeBmV6Yiy4Idpn7WvRNHXJHBKJxU6A254AyNIefCAXSS7n3vFHtPNApndIKGbi6Tujx01jc+tCB0xmAkK3+KSSKW5hmjMO0BjA28LMWA/1iZpQ9/tQF/+2XJwZe6HVqAg6A3dw1ROiiQleL1Sk=
+	t=1790795582; cv=none; b=ra34HfhRtjM2m7IOIqCShUCViQ1lcmXTM5/pfSrTs8UH25ARTguCLXkZlaEbBO0mT9uRoFXWMldcGOeicbC2QmMUHQZXG401xHyG2U7sv4ADpxrnPKbUffQL5+M9kO3nhygpozXgXUbDOc2A1rnZHMU+0S9VN2hPqAplDCMRn0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795578; c=relaxed/simple;
-	bh=a3NyCFvlpSlWoF2SjKdyMcw9DBjAXY4FFhK66Sb3fRA=;
+	s=arc-20240116; t=1790795582; c=relaxed/simple;
+	bh=wIVk/3rLqMb3D7Fb2o0eRjzhjOwD+C5SlcMXlpPtSKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crz+6Uz+eIK932fe6LmhoiCO8gJQoe97EjGDuEmnxjuBw6FMPAQ4OP474sVtL+LjE1ACzJS0ZOvRUC5R+oHfloGReIG2TDZZLFCxxpnYhAvTxpFZj0Ii50EG9P/0C0mSWuvicpLwcrJBJUm/8HKJnxboeJpn9w7xphglm8s6RlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qgy4jJq4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XAcMOYLy4QYOWzEpN5U/Gh6psjfoR/jcyES3SmBLA/dyJtZ8QrsYW4yvZzHeeADvvdG+vtzMnkMMFD7QLWgGdcdGZSOvZenRGDLa/TczsxQy+/PU7KbWxRRhISnDnQtRZ9rAGwguuxy4QC/ERbVfk9ZfaTJ7dRfLGTYkY/X/+n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9XKLQha; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qgy4jJq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2250E1F000FF;
-	Wed, 30 Sep 2026 19:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9XKLQha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7B21F000FF;
+	Wed, 30 Sep 2026 19:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795577;
-	bh=wdfzL8b6vd8D3SPYnQxqVeLj+UhC+rZ19kGt/TD3onM=;
+	s=korg; t=1790795580;
+	bh=DtJru76fLcbPb9PSov9i5C5HAjSg0tUuqD3c3T5PxYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qgy4jJq403cEdaaN8SqlyBmuveRQ9NnFIO1TdLDXL5sEzPPfJD3AGJymk4ZSRQ6zi
-	 5rpJ9HwJsy3TodWCblMLcER4wx3G0cQRY0crs2akWp6n1LpxvOd8Mnl8i7IMTc34/7
-	 vj/yK6UpGZN0YW5T+gt/0Ha9v21I/3xXVA/5ixoE=
+	b=l9XKLQhaPzrLjDhjpYSWM0V3c7cZs3XKXBBXsKMLDht8eLNsC3KmqjLnxHJ1YQnSr
+	 3ZFSgwg3NYkiFG31EKjyxAIrTDZhFTzd32eIxAi2ysrewIRe3Q1Cx5Vxrd1wZWdF9J
+	 pYI+hooSB5wubkUwyoJuKQWXG4wTkpGrDuoXFMyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 0608/1193] ufs: validate cylinder group metadata before caching it
-Date: Wed, 30 Sep 2026 17:21:32 +0200
-Message-ID: <20260930152447.751984320@linuxfoundation.org>
+	Laika Price <laikabcprice@gmail.com>,
+	Yaroslav Dudkov <aroslavdudkov622@gmail.com>,
+	Charles Bordet <rough.rock3059@datachamp.fr>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0609/1193] tunnels: Drop stale dst when building an ICMP error for PMTUD
+Date: Wed, 30 Sep 2026 17:21:33 +0200
+Message-ID: <20260930152447.775149430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,68 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit c9d263be26806d388129fab8c6904bed197fc6af upstream.
+commit b58d749633203d92c265317b45fccee555090352 upstream.
 
-ufs_read_cylinder() copies the cylinder group index and the rotor
-positions straight from the on-disk group and caches them without any
-check:
+Bridged UDP tunnels such as VXLAN and GENEVE build an ICMP error packet
+around an overlay packet if the packet is going to exceed the underlay
+path MTU. The ICMP error packet is then injected back into the Rx path
+with the source and destination addresses swapped, so that it will be
+delivered to the overlay source.
 
-	ucpi->c_cgx    = fs32_to_cpu(sb, ucg->cg_cgx);
-	ucpi->c_rotor  = fs32_to_cpu(sb, ucg->cg_rotor);
-	ucpi->c_frotor = fs32_to_cpu(sb, ucg->cg_frotor);
-	ucpi->c_irotor = fs32_to_cpu(sb, ucg->cg_irotor);
+If the overlay packet was routed to the UDP tunnel or locally generated,
+then it is already carrying a valid dst entry and this entry is not
+dropped when transforming the packet to an ICMP error packet. This
+causes the IP layer to reuse the dst entry, leading to the ICMP error
+packet being dropped or routed out of the UDP tunnel interface in case
+of forwarding.
 
-They are then used as indices during allocation and free:
+Prior to the blamed commit this could not happen, as
+skb_tunnel_check_pmtu() did not build ICMP errors for PACKET_HOST
+packets. Such packets were instead encapsulated and, unless the DF bit
+was set in the outer header, fragmented by the underlay.
 
-  - c_cgx indexes the cylinder summary array as
-    UFS_SB(sb)->fs_cs(ucpi->c_cgx), so a value past s_ncg writes a 32
-    bit count outside the s_csp allocation.
+Fix this by making sure that the ICMP error packet does not have a valid
+dst entry, thereby forcing the IP layer to perform a route lookup.
 
-  - c_frotor becomes a bitmap scan start, start = c_frotor >> 3, and
-    then length = ((s_fpg + 7) >> 3) - start. A start beyond the block
-    bitmap wraps the unsigned length to a huge value, so ubh_scanc()
-    walks far past the cylinder group buffers. c_irotor drives the
-    inode bitmap the same way.
+Adjust the bridged PMTU exception selftests accordingly. When the
+local sender in ns_a pings the overlay destination with a deadline
+(-w), ping exits on the first socket error before any reply is
+received and returns a non-zero exit code. The test therefore only
+passed because the ICMP error was never delivered. Use a packet count
+(-c) like the ns_c line above it, so that the ICMP error counts
+against the packet budget and the exit code depends on whether echo
+replies were received. This passes with and without the fix.
 
-A crafted image can set any of these freely, turning an ordinary
-allocation into an out of bounds access.
-
-Reject a cylinder group whose recorded index does not match the group
-being read, or whose rotors fall outside the group, before the metadata
-is cached. Valid filesystems keep cg_cgx equal to the group number and
-the rotors within the group, so only malformed images are rejected.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 8930424777e4 ("tunnels: Accept PACKET_HOST in skb_tunnel_check_pmtu().")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801071306.59484-3-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: Laika Price <laikabcprice@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260614-master-v3-1-9f5060ba1ed1@gmail.com/
+Reported-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260901081825.287173-1-aroslavdudkov622@gmail.com/
+Reported-by: Charles Bordet <rough.rock3059@datachamp.fr>
+Closes: https://lore.kernel.org/netdev/aHVhQLPJIhq-SYPM@eldamar.lan/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Yaroslav Dudkov <aroslavdudkov622@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20260902190112.4126199-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ufs/cylinder.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/ipv4/ip_tunnel_core.c           |    6 ++++++
+ tools/testing/selftests/net/pmtu.sh |    2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/ufs/cylinder.c
-+++ b/fs/ufs/cylinder.c
-@@ -66,6 +66,16 @@ static void ufs_read_cylinder (struct su
- 	ucpi->c_clustersumoff = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_clustersumoff);
- 	ucpi->c_clusteroff = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_clusteroff);
- 	ucpi->c_nclusterblks = fs32_to_cpu(sb, ucg->cg_u.cg_44.cg_nclusterblks);
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -250,6 +250,9 @@ static int iptunnel_pmtud_build_icmp(str
+ 	eth_header(skb, skb->dev, ntohs(eh.h_proto), eh.h_source, eh.h_dest, 0);
+ 	skb_reset_mac_header(skb);
+ 
++	if (skb_valid_dst(skb))
++		skb_dst_drop(skb);
 +
-+	/* these on-disk values become array and bitmap indices */
-+	if (ucpi->c_cgx != cgno ||
-+	    ucpi->c_rotor >= uspi->s_fpg ||
-+	    ucpi->c_frotor >= uspi->s_fpg ||
-+	    ucpi->c_irotor >= uspi->s_ipg) {
-+		ufs_error(sb, __func__,
-+			  "inconsistent metadata in cylinder group %u\n", cgno);
-+		goto failed;
-+	}
- 	UFSD("EXIT\n");
- 	return;	
- 	
+ 	return skb->len;
+ }
+ 
+@@ -353,6 +356,9 @@ static int iptunnel_pmtud_build_icmpv6(s
+ 	eth_header(skb, skb->dev, ntohs(eh.h_proto), eh.h_source, eh.h_dest, 0);
+ 	skb_reset_mac_header(skb);
+ 
++	if (skb_valid_dst(skb))
++		skb_dst_drop(skb);
++
+ 	return skb->len;
+ }
+ 
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -1363,7 +1363,7 @@ test_pmtu_ipvX_over_bridged_vxlanY_or_ge
+ 	mtu "${ns_b}" ${type}_b $((${ll_mtu} + 1000))
+ 
+ 	run_cmd ${ns_c} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
+-	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -w 1  -s $((${ll_mtu} + 500)) ${dst} || return 1
++	run_cmd ${ns_a} ${ping} -q -M want -i 0.1 -c 10 -s $((${ll_mtu} + 500)) ${dst} || return 1
+ 
+ 	# Check that exceptions were created
+ 	pmtu="$(route_get_dst_pmtu_from_exception "${ns_c}" ${dst})"
 
 
