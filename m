@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F393D6477;
-	Wed, 30 Sep 2026 18:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D213D903C;
+	Wed, 30 Sep 2026 18:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793938; cv=none; b=k85DkikevDu6LopgSENSW/WmmX09Ro6sHaV9048t6GjJzpEsVFQyOkmXFCW2WH6TMpdPlI/80dP5fya3OQ0MLSf7KlTYWqMwtUxYN51fIaVPFbBY+utrA5Mwn6BKEYO8R2pVfxKVZGZKg0OKcWaoeZfkHXKzghx5USyQPBZicec=
+	t=1790793940; cv=none; b=Sgm+76sRP3CBsVOhNYxMrITJ3QZXy9CJmvfK9GHet41h4ky4vbqXSGdTayWiLbJPeb6UF3+yYMCo1yMy0ikL4uRqnFwwumHY0urmG3Bix4cYq6RGwps9ZGqtbFm2CnuAxIV4ZgqOaDj5vLXBSf/rmn9h7bfKnWIOyS93/iYm67s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793938; c=relaxed/simple;
-	bh=iVGO04wETE+TZwWTpmA+D8Cx52RE4dKZ4pYii7whKYk=;
+	s=arc-20240116; t=1790793940; c=relaxed/simple;
+	bh=xew+Ba1u1TAIZfQrnU2kDLrrCQDnGAIECQYaqPUwZ4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HA4jNgT4EkpeyA55HemQQLHIj9R6uJW69IZGe/xEGCxr6cZxaU5w5/uBzzeN9jtVV+RHfUV4aBk4zMNTl7yPrP90pKQSnsU2hNLZnFTsSEmiLZw5ugpbhgnsuMGbk+BTtgX1aPf98S2icfw51C/43x0gXoza2SV8jzYvsp42FVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TVRePGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ns8Scli2v0L6CK7fBvTb9pr0ndQIhi+iewqnPZfuXmpU7Zvev83hxry1jLo8bkScZDJdA4eAb5qxHSmeliVflzKwHqU9NEMDZUefZujepXjj0/s5+AhznMUnA35cuga6ByedLYHGjENnqhxkULUveDqZaafPJmPics9qZ/QHg/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBubPsK4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TVRePGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0B11F000FF;
-	Wed, 30 Sep 2026 18:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBubPsK4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEF61F00899;
+	Wed, 30 Sep 2026 18:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793935;
-	bh=vk0fmfOHhNV9xLB7WzaAgC2MkGdO9CHLPaenW8zldLY=;
+	s=korg; t=1790793938;
+	bh=33QbPE2sVSLvw5PtkyQ8uRbIzT0eaPIRejHwegvmcbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2TVRePGmNE4MtGPVl2lJjlXE6WtG4XnUSrs/KATcKgOM9DDSVngTzYhqINRTWauPq
-	 PjQm31Gvd997B+AkrWGGrzrrJ15PYQDmMwX47555zIQDSkxqP+l/N1UD/RFLlpiUq8
-	 v0bEU9o/ZMhp5kCN5n77racoc7ZHzOzKYa956YIM=
+	b=SBubPsK483bwrb3MbK27R1lsQmx4Mj100qs4X8//t8J06hUv9b5FQj7V9+zE7Ph+7
+	 mF1mdLaAREk/rt2cO4r2U7uXVGswQCBAzUf4UDRHEooTws3SOuLIubAWx8N2hZXLHV
+	 Ndh8TzltCLvS30jBj6kb5yQcFEdtv2xCn4kNpUnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Goldwyn Rodrigues <rgoldwyn@suse.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0034/1193] crypto: ixp4xx - fix buffer chain unwind on allocation failure
-Date: Wed, 30 Sep 2026 17:11:58 +0200
-Message-ID: <20260930152435.044713068@linuxfoundation.org>
+Subject: [PATCH 6.6 0008/1193] ima: return error early if file xattr cannot be changed
+Date: Wed, 30 Sep 2026 17:11:32 +0200
+Message-ID: <20260930152434.493424364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,95 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Goldwyn Rodrigues <rgoldwyn@suse.de>
 
-[ Upstream commit 25056329384010a8672552b134f609601dc4f80e ]
+[ Upstream commit 69fc6474236d9edda6983623e4282f2bdfd8e3d8 ]
 
-chainup_buffers() builds a linked list of buffer descriptors for a
-scatterlist. If dma_pool_alloc() fails while constructing the list, the
-current code sets buf to NULL and later dereferences it unconditionally
-at the end of the function:
+During early boot, the filesystem is read-only and any changes
+to xattrs are not allowed. This fails in case of ext4 because
+changing xattr starts an ext4 transaction which fails with the
+following warning.
 
-  buf->next = NULL;
-  buf->phys_next = 0;
+WARNING: fs/ext4/ext4_jbd2.c:75 at ext4_journal_check_start+0x63/0xa0 [ext4], CPU#1: systemd-sysroot/561
+CPU: 1 UID: 0 PID: 561 Comm: systemd-sysroot Not tainted 6.19.12-1-default #1 PREEMPT(voluntary) openSUSE Tumbleweed  c2dfc3c9d9f6f1233251c5d4410574fe82a348ee
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+RIP: 0010:ext4_journal_check_start+0x63/0xa0 [ext4]
+Call Trace:
+  __ext4_journal_start_sb+0x3e/0x180 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ext4_xattr_set+0x104/0x150 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  __vfs_setxattr+0x9a/0xd0
+  __vfs_setxattr_noperm+0x76/0x1f0
+  ima_appraise_measurement+0x23e/0xe40
+  ima_d_path+0x5a/0xd0
+  process_measurement+0xb29/0xc40
+  ? copy_from_kernel_nofault+0x21/0xe0
+  ? fscrypt_file_open+0xc0/0xe0
+  ? ext4_file_open+0x60/0x490 [ext4 6d025f3bc52c89a957b89a89d211fadf5e9434e1]
+  ? bpf_prog_31efb7c56239148b_restrict_filesystems+0xab/0x126
+  ? __bpf_prog_exit+0x23/0xd0
+  ? __bpf_tramp_exit+0xd/0x50
+  ? bpf_trampoline_6442530367+0x9f/0xea
+  ima_file_check+0x57/0x80
+  security_file_post_open+0x50/0xf0
+  path_openat+0x493/0x1650
+  do_filp_open+0xc7/0x170
 
-This can lead to a null-pointer dereference on allocation failure.
+Detect the state of the file early and return the error.
 
-If the failure happens after part of the descriptor chain has already
-been allocated and DMA-mapped, the partially constructed chain also
-needs to be released.
-
-Fix this by terminating the partially constructed chain on allocation
-failure and letting the callers unwind it via their existing cleanup
-paths. Also fix ablk_perform() to preserve the hook pointers before
-checking for failure, so partially built chains can be freed correctly.
-
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Goldwyn Rodrigues <rgoldwyn@suse.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 25 ++++++++++++---------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ security/integrity/ima/ima_appraise.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-index 662aac9ea186d..5c09f5c2801dc 100644
---- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-+++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-@@ -884,8 +884,9 @@ static struct buffer_desc *chainup_buffers(struct device *dev,
- 		ptr = sg_virt(sg);
- 		next_buf = dma_pool_alloc(buffer_pool, flags, &next_buf_phys);
- 		if (!next_buf) {
--			buf = NULL;
--			break;
-+			buf->next = NULL;
-+			buf->phys_next = 0;
-+			return NULL;
- 		}
- 		sg_dma_address(sg) = dma_map_single(dev, ptr, len, dir);
- 		buf->next = next_buf;
-@@ -983,7 +984,7 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
- 	unsigned int nbytes = req->cryptlen;
- 	enum dma_data_direction src_direction = DMA_BIDIRECTIONAL;
- 	struct ablk_ctx *req_ctx = skcipher_request_ctx(req);
--	struct buffer_desc src_hook;
-+	struct buffer_desc *buf, src_hook;
- 	struct device *dev = &pdev->dev;
- 	unsigned int offset;
- 	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
-@@ -1025,22 +1026,24 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
- 		/* This was never tested by Intel
- 		 * for more than one dst buffer, I think. */
- 		req_ctx->dst = NULL;
--		if (!chainup_buffers(dev, req->dst, nbytes, &dst_hook,
--				     flags, DMA_FROM_DEVICE))
--			goto free_buf_dest;
--		src_direction = DMA_TO_DEVICE;
-+		buf = chainup_buffers(dev, req->dst, nbytes, &dst_hook,
-+				      flags, DMA_FROM_DEVICE);
- 		req_ctx->dst = dst_hook.next;
- 		crypt->dst_buf = dst_hook.phys_next;
-+		if (!buf)
-+			goto free_buf_dest;
-+		src_direction = DMA_TO_DEVICE;
- 	} else {
- 		req_ctx->dst = NULL;
- 	}
- 	req_ctx->src = NULL;
--	if (!chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
--			     src_direction))
--		goto free_buf_src;
--
-+	buf = chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
-+			      src_direction);
- 	req_ctx->src = src_hook.next;
- 	crypt->src_buf = src_hook.phys_next;
-+	if (!buf)
-+		goto free_buf_src;
+diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
+index a5dff9c38393e..3804eaea120cd 100644
+--- a/security/integrity/ima/ima_appraise.c
++++ b/security/integrity/ima/ima_appraise.c
+@@ -90,6 +90,11 @@ static int ima_fix_xattr(struct dentry *dentry,
+ 	int rc, offset;
+ 	u8 algo = iint->ima_hash->algo;
+ 
++	if (IS_RDONLY(d_inode(dentry)))
++		return -EROFS;
++	if (IS_IMMUTABLE(d_inode(dentry)))
++		return -EPERM;
 +
- 	crypt->ctl_flags |= CTL_FLAG_PERFORM_ABLK;
- 	qmgr_put_entry(send_qid, crypt_virt2phys(crypt));
- 	BUG_ON(qmgr_stat_overflow(send_qid));
+ 	if (algo <= HASH_ALGO_SHA1) {
+ 		offset = 1;
+ 		iint->ima_hash->xattr.sha1.type = IMA_XATTR_DIGEST;
 -- 
 2.53.0
 
