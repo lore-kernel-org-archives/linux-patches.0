@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F07D51C058;
-	Wed, 30 Sep 2026 18:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551BA51B170;
+	Wed, 30 Sep 2026 18:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793088; cv=none; b=ST05Ph+3RY/G7fX1TVoL1RxIuKVtgYMvoL18WXVpuLqhUqyc89wV3OpRgdKRysNYasmkK6OpAJ05nbKE4ZvoeSyX6GxbBgddpWrAafQWQ16mTyausIV4lX3Z6B7rS7WhjAbvw4k2UQoCSjKcV7vpx8bkHXD2edSZ7uwKvsVoQAM=
+	t=1790793091; cv=none; b=RshR037cQVUTzJsXLK9ZqTBHckYNc5ypblJ1YhsZtLAoiWkBkDXIqH2bh8LmWrnL4Vb+dXL+NnwWOIjZmgD8ZyUig0gWMBJ1IRUYw3y/aErri9g5qJrjarlFqb1iSVDYFuWljPhJG61/UQQl+2bBN/cQkRmcwx0ph1RdkJg4xRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793088; c=relaxed/simple;
-	bh=zOcF+AO6dYHLH7N2N8K1/5c2Lo/WKh0y05EyYV6cuxM=;
+	s=arc-20240116; t=1790793091; c=relaxed/simple;
+	bh=4GZYtaL+x+2fmdofZvyoZ0Rj+58p08IJ3cXA+ULY9fE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KChcikQQis+u+YMVyCIcqbe5WQNI8YVxoowuU2nTMRMPttE4Q0ItpGjeyvvuMxcy7g7yyJzcF7796zE/b4WCAFK3zjwOvPPpMAEM2dtap4crabVn6d3uUVRtTkRSvnN4cQ5NUlmc1wS2tJ81/mE8/byusjTDrsCTUoAgX6u9LXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6fe6zla; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NiNt1ptPhtVokPK54TiE9HfsUzem9bMURvemkszCzJs4s+tje60rA+tyLS/+fauc9tItuk1NzSrG9k7JoYbEVdyXsKqSfZ+maD1Bato1tdvdNzo0YN65lNpAZWh7gaDUewjKM+N9EQYKtYYNiOkjillr/7SVez1WBgMJ5hI1f/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU/5IPeQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6fe6zla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3CF1F000FF;
-	Wed, 30 Sep 2026 18:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU/5IPeQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9F61F000FF;
+	Wed, 30 Sep 2026 18:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793087;
-	bh=RMDHDsfotP5ZZgnmMUeA/oXcDEXDtmoiQmQ7FpHpHoU=;
+	s=korg; t=1790793090;
+	bh=7e2JYgwI8c4Nik0/3ApvKalmt8Q/fuDzluUjifre3HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6fe6zlainKmKy2ebV3eMGpT1hp5XdH5X9APWmq+PqwEH+/IQUsiaRDGdUGwo6RX0
-	 RC90JOrFgmUYY2yeroSUn04go9x6dJRaiJYkTq/Ik7qks/MHIVfoTulNkYwlnoX36e
-	 WoideuuXQGKXyLdXIezKT8GhS7z12BLsB0rV5jqs=
+	b=SU/5IPeQuS+SMT11/KVZLBLbmIWKqVfhppZoFWvhB6/hxquiAlKoutO6dLAAVLosq
+	 FgBtmsugjXQaRCRTuABwGWezlKlQ7BY3of6xBAqhF+in2nXC2I2Y7+GKcUVgtKcGiq
+	 DZQHVhqw+HSUYgfS+jKSLmrIEJp/Y1yf7CkB31ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangxin Xie <xietangxin@h-partners.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 132/395] sctp: hold asoc or transport before mod_timer() in timer handlers
-Date: Wed, 30 Sep 2026 17:26:34 +0200
-Message-ID: <20260930152343.507155815@linuxfoundation.org>
+Subject: [PATCH 6.18 133/395] net: stmmac: selftests: Support running selftests on DSA conduits
+Date: Wed, 30 Sep 2026 17:26:35 +0200
+Message-ID: <20260930152343.528292322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,145 +52,259 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit cae23ae3f7887a1cf8a75da38edcebeef695040f ]
+[ Upstream commit d68acbf93531abdb5b02b21994cd4c15a3c95b42 ]
 
-Take the association or transport reference before rearming a timer in the
-timer handlers.
+Most stmmac selftests rely on dev_add_pack() to add custom handlers,
+that validate the packets sent to ourselves through MAC loopback.
 
-The existing code calls mod_timer() before taking the reference needed by
-the rearmed timer without holding the sock lock. This creates a race with
-timer cleanup: if the timer is deleted after mod_timer() returns but before
-the reference is taken, the cleanup path can drop the timer's reference and
-destroy the transport or association. The timer handler then takes a
-reference on the already freed object and eventually drops it, causing a
-refcount underflow.
+However, when the stmmac-driven interface is a DSA CPU conduit, all
+frames that are received have ETH_P_XDSA as a protocol, even though they
+don't actually contain any tag as they come from the loopback and not
+the switch.
 
-Hold the object before mod_timer() and drop the reference if mod_timer()
-reports that the timer was already pending in timer handlers. Apply the
-same ordering to the proto-unreachable path, which can rearm a transport
-timer outside the timer handlers without holding the sock lock.
+This will prevent any incoming packet to match our packet handlers.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Tangxin Xie <xietangxin@h-partners.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/c31b5e3ee2b7274e804f5eba2f21e2412e7eef7a.1790013825.git.lucien.xin@gmail.com
+Let's register a ETH_P_ALL packet handler when we detect that we're a
+DSA conduit, and use a proxy packet handler to filter the h_proto.
+
+As this allows external frames to be received through our .func(), the
+packet handler is added after the dev->addr field is populated in our
+selftest attributes.
+
+Note that we may still receive incoming packets from the switch, but
+these frames shouldn't interfere with the very specific frames used for
+selftests, and stmmac selftests in general aren't safe against external
+traffic interferences.
+
+This was validated on a WPQ864 devkit for IPQ8064, that has the SoC
+connected to a QCA8k switch.
+
+The ARP offload's packet handler is left alone, this feature is just not
+implemented in stmmac and due for removal.
+
+Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260917215339.2022523-2-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c         |  7 ++++---
- net/sctp/sm_sideeffect.c | 37 ++++++++++++++++++++++---------------
- 2 files changed, 26 insertions(+), 18 deletions(-)
+ .../stmicro/stmmac/stmmac_selftests.c         | 89 +++++++++++++++----
+ 1 file changed, 71 insertions(+), 18 deletions(-)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 864741fae4187..9494cfa51106c 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -436,9 +436,10 @@ void sctp_icmp_proto_unreachable(struct sock *sk,
- 		if (timer_pending(&t->proto_unreach_timer))
- 			return;
- 		else {
--			if (!mod_timer(&t->proto_unreach_timer,
--						jiffies + (HZ/20)))
--				sctp_transport_hold(t);
-+			sctp_transport_hold(t);
-+			if (mod_timer(&t->proto_unreach_timer,
-+				      jiffies + (HZ / 20)))
-+				sctp_transport_put(t);
- 		}
- 	} else {
- 		struct net *net = sock_net(sk);
-diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
-index 0d99b7e8c082f..35f540fb15fc1 100644
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -244,8 +244,9 @@ void sctp_generate_t3_rtx_event(struct timer_list *t)
- 		pr_debug("%s: sock is busy\n", __func__);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index 3f215ef3c89b7..1d46d5004c9f4 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -13,6 +13,7 @@
+ #include <linux/ip.h>
+ #include <linux/phy.h>
+ #include <linux/udp.h>
++#include <net/dsa.h>
+ #include <net/pkt_cls.h>
+ #include <net/pkt_sched.h>
+ #include <net/tcp.h>
+@@ -238,6 +239,9 @@ struct stmmac_test_priv {
+ 	struct stmmac_packet_attrs *packet;
+ 	struct packet_type pt;
+ 	struct completion comp;
++	__be16 packet_type;
++	int (*func)(struct sk_buff *skb, struct net_device *ndev,
++		    struct packet_type *pt, struct net_device *orig_ndev);
+ 	int double_vlan;
+ 	int vlan_id;
+ 	int ok;
+@@ -317,6 +321,50 @@ static int stmmac_test_loopback_validate(struct sk_buff *skb,
+ 	return 0;
+ }
  
- 		/* Try again later.  */
--		if (!mod_timer(&transport->T3_rtx_timer, jiffies + (HZ/20)))
--			sctp_transport_hold(transport);
-+		sctp_transport_hold(transport);
-+		if (mod_timer(&transport->T3_rtx_timer, jiffies + (HZ / 20)))
-+			sctp_transport_put(transport);
- 		goto out_unlock;
++static int stmmac_sft_filter(struct sk_buff *skb, struct net_device *ndev,
++			     struct packet_type *pt,
++			     struct net_device *orig_ndev)
++{
++	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
++	struct ethhdr *hdr = eth_hdr(skb);
++	int ret = 0;
++
++	if (hdr->h_proto == tpriv->packet_type) {
++		struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
++
++		if (nskb)
++			ret = tpriv->func(nskb, ndev, pt, orig_ndev);
++	}
++
++	kfree_skb(skb);
++	return ret;
++}
++
++static void stmmac_sft_add_pack(struct packet_type *pt)
++{
++	struct stmmac_test_priv *tpriv = pt->af_packet_priv;
++
++	if (netdev_uses_dsa(tpriv->pt.dev)) {
++		tpriv->packet_type = tpriv->pt.type;
++		tpriv->func = tpriv->pt.func;
++
++		/* DSA conduit will report ETH_P_XDSA, so our packet handler
++		 * won't match. Let's register a ETH_P_ALL match and filter
++		 * manually in stmmac_sft_filter.
++		 */
++		tpriv->pt.type = htons(ETH_P_ALL);
++		tpriv->pt.func = stmmac_sft_filter;
++		tpriv->pt.ignore_outgoing = true;
++	}
++
++	dev_add_pack(pt);
++}
++
++static void stmmac_sft_remove_pack(struct packet_type *pt)
++{
++	dev_remove_pack(pt);
++}
++
+ static int __stmmac_test_loopback(struct stmmac_priv *priv,
+ 				  struct stmmac_packet_attrs *attr)
+ {
+@@ -338,7 +386,7 @@ static int __stmmac_test_loopback(struct stmmac_priv *priv,
+ 	tpriv->packet = attr;
+ 
+ 	if (!attr->dont_wait)
+-		dev_add_pack(&tpriv->pt);
++		stmmac_sft_add_pack(&tpriv->pt);
+ 
+ 	skb = stmmac_test_get_udp_skb(priv, attr);
+ 	if (!skb) {
+@@ -361,7 +409,7 @@ static int __stmmac_test_loopback(struct stmmac_priv *priv,
+ 
+ cleanup:
+ 	if (!attr->dont_wait)
+-		dev_remove_pack(&tpriv->pt);
++		stmmac_sft_remove_pack(&tpriv->pt);
+ 	kfree(tpriv);
+ 	return ret;
+ }
+@@ -775,7 +823,7 @@ static int stmmac_test_flowctrl(struct stmmac_priv *priv)
+ 	tpriv->pt.func = stmmac_test_flowctrl_validate;
+ 	tpriv->pt.dev = priv->dev;
+ 	tpriv->pt.af_packet_priv = tpriv;
+-	dev_add_pack(&tpriv->pt);
++	stmmac_sft_add_pack(&tpriv->pt);
+ 
+ 	/* Compute minimum number of packets to make FIFO full */
+ 	pkt_count = priv->plat->rx_fifo_size;
+@@ -833,7 +881,7 @@ static int stmmac_test_flowctrl(struct stmmac_priv *priv)
+ cleanup:
+ 	dev_mc_del(priv->dev, paddr);
+ 	dev_set_promiscuity(priv->dev, -1);
+-	dev_remove_pack(&tpriv->pt);
++	stmmac_sft_remove_pack(&tpriv->pt);
+ 	kfree(tpriv);
+ 	return ret;
+ }
+@@ -938,18 +986,20 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
+ 	 * HASH values.
+ 	 */
+ 	tpriv->vlan_id = 0x123;
+-	dev_add_pack(&tpriv->pt);
+ 
+ 	ret = vlan_vid_add(priv->dev, htons(ETH_P_8021Q), tpriv->vlan_id);
+ 	if (ret)
+ 		goto cleanup;
+ 
++	attr.vlan = 1;
++	attr.dst = priv->dev->dev_addr;
++	attr.sport = 9;
++	attr.dport = 9;
++
++	stmmac_sft_add_pack(&tpriv->pt);
++
+ 	for (i = 0; i < 4; i++) {
+-		attr.vlan = 1;
+ 		attr.vlan_id_out = tpriv->vlan_id + i;
+-		attr.dst = priv->dev->dev_addr;
+-		attr.sport = 9;
+-		attr.dport = 9;
+ 
+ 		skb = stmmac_test_get_udp_skb(priv, &attr);
+ 		if (!skb) {
+@@ -976,9 +1026,9 @@ static int __stmmac_test_vlanfilt(struct stmmac_priv *priv)
  	}
  
-@@ -280,8 +281,9 @@ static void sctp_generate_timeout_event(struct sctp_association *asoc,
- 			 timeout_type);
+ vlan_del:
++	stmmac_sft_remove_pack(&tpriv->pt);
+ 	vlan_vid_del(priv->dev, htons(ETH_P_8021Q), tpriv->vlan_id);
+ cleanup:
+-	dev_remove_pack(&tpriv->pt);
+ 	kfree(tpriv);
+ 	return ret;
+ }
+@@ -1032,18 +1082,20 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
+ 	 * HASH values.
+ 	 */
+ 	tpriv->vlan_id = 0x123;
+-	dev_add_pack(&tpriv->pt);
  
- 		/* Try again later.  */
--		if (!mod_timer(&asoc->timers[timeout_type], jiffies + (HZ/20)))
--			sctp_association_hold(asoc);
-+		sctp_association_hold(asoc);
-+		if (mod_timer(&asoc->timers[timeout_type], jiffies + (HZ / 20)))
-+			sctp_association_put(asoc);
- 		goto out_unlock;
+ 	ret = vlan_vid_add(priv->dev, htons(ETH_P_8021AD), tpriv->vlan_id);
+ 	if (ret)
+ 		goto cleanup;
+ 
++	attr.vlan = 2;
++	attr.dst = priv->dev->dev_addr;
++	attr.sport = 9;
++	attr.dport = 9;
++
++	stmmac_sft_add_pack(&tpriv->pt);
++
+ 	for (i = 0; i < 4; i++) {
+-		attr.vlan = 2;
+ 		attr.vlan_id_out = tpriv->vlan_id + i;
+-		attr.dst = priv->dev->dev_addr;
+-		attr.sport = 9;
+-		attr.dport = 9;
+ 
+ 		skb = stmmac_test_get_udp_skb(priv, &attr);
+ 		if (!skb) {
+@@ -1070,9 +1122,9 @@ static int __stmmac_test_dvlanfilt(struct stmmac_priv *priv)
  	}
  
-@@ -378,8 +380,9 @@ void sctp_generate_heartbeat_event(struct timer_list *t)
- 		pr_debug("%s: sock is busy\n", __func__);
+ vlan_del:
++	stmmac_sft_remove_pack(&tpriv->pt);
+ 	vlan_vid_del(priv->dev, htons(ETH_P_8021AD), tpriv->vlan_id);
+ cleanup:
+-	dev_remove_pack(&tpriv->pt);
+ 	kfree(tpriv);
+ 	return ret;
+ }
+@@ -1303,7 +1355,6 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
+ 	tpriv->pt.af_packet_priv = tpriv;
+ 	tpriv->packet = &attr;
+ 	tpriv->vlan_id = 0x123;
+-	dev_add_pack(&tpriv->pt);
  
- 		/* Try again later.  */
--		if (!mod_timer(&transport->hb_timer, jiffies + (HZ/20)))
--			sctp_transport_hold(transport);
-+		sctp_transport_hold(transport);
-+		if (mod_timer(&transport->hb_timer, jiffies + (HZ / 20)))
-+			sctp_transport_put(transport);
- 		goto out_unlock;
- 	}
+ 	ret = vlan_vid_add(priv->dev, htons(proto), tpriv->vlan_id);
+ 	if (ret)
+@@ -1311,6 +1362,8 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
  
-@@ -388,8 +391,9 @@ void sctp_generate_heartbeat_event(struct timer_list *t)
- 	timeout = sctp_transport_timeout(transport);
- 	if (elapsed < timeout) {
- 		elapsed = timeout - elapsed;
--		if (!mod_timer(&transport->hb_timer, jiffies + elapsed))
--			sctp_transport_hold(transport);
-+		sctp_transport_hold(transport);
-+		if (mod_timer(&transport->hb_timer, jiffies + elapsed))
-+			sctp_transport_put(transport);
- 		goto out_unlock;
- 	}
+ 	attr.dst = priv->dev->dev_addr;
  
-@@ -422,9 +426,10 @@ void sctp_generate_proto_unreach_event(struct timer_list *t)
- 		pr_debug("%s: sock is busy\n", __func__);
++	stmmac_sft_add_pack(&tpriv->pt);
++
+ 	skb = stmmac_test_get_udp_skb(priv, &attr);
+ 	if (!skb) {
+ 		ret = -ENOMEM;
+@@ -1328,9 +1381,9 @@ static int stmmac_test_vlanoff_common(struct stmmac_priv *priv, bool svlan)
+ 	ret = tpriv->ok ? 0 : -ETIMEDOUT;
  
- 		/* Try again later.  */
--		if (!mod_timer(&transport->proto_unreach_timer,
--				jiffies + (HZ/20)))
--			sctp_transport_hold(transport);
-+		sctp_transport_hold(transport);
-+		if (mod_timer(&transport->proto_unreach_timer,
-+			      jiffies + (HZ / 20)))
-+			sctp_transport_put(transport);
- 		goto out_unlock;
- 	}
- 
-@@ -458,8 +463,9 @@ void sctp_generate_reconf_event(struct timer_list *t)
- 		pr_debug("%s: sock is busy\n", __func__);
- 
- 		/* Try again later.  */
--		if (!mod_timer(&transport->reconf_timer, jiffies + (HZ / 20)))
--			sctp_transport_hold(transport);
-+		sctp_transport_hold(transport);
-+		if (mod_timer(&transport->reconf_timer, jiffies + (HZ / 20)))
-+			sctp_transport_put(transport);
- 		goto out_unlock;
- 	}
- 
-@@ -495,8 +501,9 @@ void sctp_generate_probe_event(struct timer_list *t)
- 		pr_debug("%s: sock is busy\n", __func__);
- 
- 		/* Try again later.  */
--		if (!mod_timer(&transport->probe_timer, jiffies + (HZ / 20)))
--			sctp_transport_hold(transport);
-+		sctp_transport_hold(transport);
-+		if (mod_timer(&transport->probe_timer, jiffies + (HZ / 20)))
-+			sctp_transport_put(transport);
- 		goto out_unlock;
- 	}
- 
+ vlan_del:
++	stmmac_sft_remove_pack(&tpriv->pt);
+ 	vlan_vid_del(priv->dev, htons(proto), tpriv->vlan_id);
+ cleanup:
+-	dev_remove_pack(&tpriv->pt);
+ 	kfree(tpriv);
+ 	return ret;
+ }
 -- 
 2.53.0
 
