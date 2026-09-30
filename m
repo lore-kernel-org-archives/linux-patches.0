@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F9950B433;
-	Wed, 30 Sep 2026 16:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FDA3749F6;
+	Wed, 30 Sep 2026 16:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784532; cv=none; b=FuR30ia8yu2sgJXSKU/WEd5ef39JKN0VIbngJP/W3c2sUeLXrV3W/ag1Wspsmk8JTwaDjUZwESGHLPwYIun55RwfjqMXCb3+I86K4KuF0xiEnvdHKvLBVG7dfn5Zmym2lpTD5QznbupeCn7LyzLQxd5el0bRE0y6djQ3S7W7iNs=
+	t=1790784535; cv=none; b=Y+iJs3eDbRFAlFHSEKD6T4xWEJ+BhjQCdW+H9W/4Z11ZALc4vX2zOQlHB//sikP0Zk1RQwqXdmLzhrO7Pf3bQ1gIkjAr8jGXYziACoXJgUuvCw991t5vSm1OUl7T6aLcC8pm7KuKM8LejOubsZYrjQIJlG8gA3t9JUx6APtoP4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784532; c=relaxed/simple;
-	bh=+Xu1Gzlj5DVwu23003vZP+NaKFv1najUgpz5O3mlqxk=;
+	s=arc-20240116; t=1790784535; c=relaxed/simple;
+	bh=oZdhMNdko12BN0QDAfpPZzHOwMXHzjFXd9GfbMjq+4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ko9m1dBksYNOMvpMOmr+BYRoPlRaDIkakoCT3pmzYQWmVKhyBXTJxXEiGh4BtvA36AaIgHnMhZagh7yFSA43CwFFhkHRhA5TzF0BQVbce53uJhvML0wZKwROe/pR2ykMvPJpZl0rF3ABcHXNNeSj3Lb6DzA910NGu4t81aWEJMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukg2EOJs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jTQzxgiTXdXhuCcow+GLAvfQeWxVERDqPADDV2RSV41AD0S5dAioiI/+v6HaPuKkSwpqhmTHlfaNwbDfI5cPkIEz+SEJBLCZTxH2qEmeHR0vxeBIc03/PAzKJcubyU8lERXWgcoiwWtijXTzIn8B/kZOQkhGOkpfErKNwBfdK9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmrC35FE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukg2EOJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016931F00898;
-	Wed, 30 Sep 2026 16:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmrC35FE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C461F00893;
+	Wed, 30 Sep 2026 16:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784524;
-	bh=3qw/UixczvMZZuQlvvc0erR6dhM84fuF/l7N9SINiUc=;
+	s=korg; t=1790784530;
+	bh=Ga1ARxAqHMd7SeGKyDLIHWlKXf4hrzZmXrN0SZrc8dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ukg2EOJsUKsb4O9bUMfmqPDzJ4MN4bfVASHqKbwjqjGzb9YMkCJMNlj9i7wsLklkC
-	 q4yGb5PSkQbhB2uWW3CZkbZoyHemARnNO6Jkw2ph3Z5RrBB8XR19a8w8+gri5A1vkg
-	 PE+Lli9Dqi7dvr1o311dQsUubCyQNkqAhhNeKUlU=
+	b=xmrC35FETcL/fbWx80ylSj0g4s2JQcOA1b5ywKNUoH2ZTqryKkHLsPiKgHEADXk7w
+	 u7qk1Hox2MtUqpkoQcpeRte6bjOKN1HnAwEtm9RRcyYmZZk5HZod7QuxTfhWwSD7yT
+	 r/oAlaqO2LKk4eNqAmxWsXiS7w837jnzbKHb5yo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/982] ASoC: rockchip: rockchip_pdm: Reorder clock enable sequence
-Date: Wed, 30 Sep 2026 17:15:22 +0200
-Message-ID: <20260930152420.811634874@linuxfoundation.org>
+Subject: [PATCH 6.1 188/982] sparc64: uprobes: add missing break
+Date: Wed, 30 Sep 2026 17:15:24 +0200
+Message-ID: <20260930152420.854612063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,50 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 3168721d6ec3b610edf6a3c22ad190722a27d276 ]
+[ Upstream commit 5b0eee4cd812bd6547eea393cb9b5c0322f26c88 ]
 
-Enable the 'hclk' bus clock before the 'clk' controller clock during
-runtime resume.
-The bus clock provides the register access interface, so enable it before
-the controller clock. This also makes the resume sequence the reverse of
-the suspend sequence, which keeps the clock ordering consistent.
+Missing fallthrough causes failure with newer compilers:
 
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260602101608.45137-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+arch/sparc/kernel/uprobes.c:284:2: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+  284 |         default:
+      |         ^
+arch/sparc/kernel/uprobes.c:284:2: note: insert 'break;' to avoid fall-through
+  284 |         default:
+      |         ^
+      |         break;
+
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_pdm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/sparc/kernel/uprobes.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
-index 336d0eb0e8b47..6a412b834b76e 100644
---- a/sound/soc/rockchip/rockchip_pdm.c
-+++ b/sound/soc/rockchip/rockchip_pdm.c
-@@ -427,16 +427,16 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
- 	struct rk_pdm_dev *pdm = dev_get_drvdata(dev);
- 	int ret;
+diff --git a/arch/sparc/kernel/uprobes.c b/arch/sparc/kernel/uprobes.c
+index 1a0600206bf5c..dbc51dc2bb4f4 100644
+--- a/arch/sparc/kernel/uprobes.c
++++ b/arch/sparc/kernel/uprobes.c
+@@ -278,6 +278,7 @@ int arch_uprobe_exception_notify(struct notifier_block *self,
+ 	case DIE_SSTEP:
+ 		if (uprobe_post_sstep_notifier(args->regs))
+ 			ret = NOTIFY_STOP;
++		break;
  
--	ret = clk_prepare_enable(pdm->clk);
-+	ret = clk_prepare_enable(pdm->hclk);
- 	if (ret) {
--		dev_err(pdm->dev, "clock enable failed %d\n", ret);
-+		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
- 		return ret;
- 	}
- 
--	ret = clk_prepare_enable(pdm->hclk);
-+	ret = clk_prepare_enable(pdm->clk);
- 	if (ret) {
--		clk_disable_unprepare(pdm->clk);
--		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
-+		clk_disable_unprepare(pdm->hclk);
-+		dev_err(pdm->dev, "clock enable failed %d\n", ret);
- 		return ret;
- 	}
- 
+ 	default:
+ 		break;
 -- 
 2.53.0
 
