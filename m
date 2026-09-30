@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CD650277A;
-	Wed, 30 Sep 2026 16:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B83F4E4306;
+	Wed, 30 Sep 2026 16:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785387; cv=none; b=g6k8DtymFd6V8m1NHKWBd0KUOioG0Aem+6HnWtB/X6hf1+1kD5tW5kllzMnvfJ6CRYX5L9u4NDqW3o9h7rleHJ1UhMDYK1bR2cUE6h4ENJUVY8XuzjlLHL6kawVxanJf0p8uoH4Q+vXNwE8UFlSgnGmR+6V/PneeUgBz64Re9pY=
+	t=1790785394; cv=none; b=kcqqtu2jF/43tP4pQKiBNU235NZvUfMgmU20HQIk8Np+3vTX9JjqRdK4M/ZeBAJVu0x88yA6qhGguf2Cytm1/m66wRjHTifivjpdX/9M+AtpLsBfQ5n4yc3o2XqhQJup+XxwT50NMc9D3X91P0ULSKLoWrY6hrDL6jHHzl3UyU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785387; c=relaxed/simple;
-	bh=WVDWsotwBuERpMTEdtZD5YKwv+7Aajz6p3Obj24ohb4=;
+	s=arc-20240116; t=1790785394; c=relaxed/simple;
+	bh=icXsT7ytk3pCFNDvob4jZBulKm8pGizJUmsQQBwB7WU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6WoEnE9v0aKLi9oh7g19KLt0Ku1kALUI7Pq6Wh2T1ELFFQkEHSkgMHp+bXeKujVcZfp71H/1ogTPW/FVfx6Qk/3viGcVpdOIJ/6jHxKYUwUPI+luYQe0sAnPjI8ehr5w/C0efFND3Rf98sUHkyQuI/FX3lpjbL+fNSQF51guyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2es0mHEV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJT2aBN8nOuJNQUIh6aJY8l2wb4IWktXkaMUmChEpOr8YxFiu7DwB3RR8K+gCilCDpnweZI4D5Y2gftO4ukj6WA0Gt7lvg6cNJbgP+5tPgxDTEt5CE37MfmASlLj/f3uAj2TiL0VnxTVzU0Xr7I00mj/9ZvT5MJQMKm002B+sig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVnO3J4I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2es0mHEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA081F00893;
-	Wed, 30 Sep 2026 16:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVnO3J4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CB11F00893;
+	Wed, 30 Sep 2026 16:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785381;
-	bh=ThK778fDlH7mPkpRVEhPGpuMNM5BaYs8cu0cP+f5iZQ=;
+	s=korg; t=1790785390;
+	bh=PhkLtFcJIOH1ftqrX6JWaXyuDzmbvJzgHK762kFEclo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2es0mHEVBOkvy9QFbMWAsDts7OrQ8pst+Gp+Q+ZcXVJtqmpg3CRmuWP27hnf+7WKM
-	 kRvhzRMSmZuvewqzgFwp+/dmY412Mj2UA00HejhM6UrS8wWTGN+JLbhAkhNHmXYkaX
-	 N+crQ6OAw/9k+tzTkGT7Qhr4L8rU1H9k8JCxXvjU=
+	b=lVnO3J4IGuIg3vFrVFzkYZA41974AlXEWtiaVgeQ5+jH05vteYFHEN3P/IK60qdbD
+	 EaqUnOvOsWkBmfShJmMFn7x7ozED0Nst067aSxvLEn7MWGvhrmTKMDMCgd4jFhy/bP
+	 b4xZGzFmYX/lizRDkpHpUo/DPYkixIWf5pqJ/aTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 487/982] openvswitch: fix wrong flag value in get_ipv6_ext_hdrs()
-Date: Wed, 30 Sep 2026 17:20:23 +0200
-Message-ID: <20260930152427.241809320@linuxfoundation.org>
+Subject: [PATCH 6.1 490/982] scsi: target: iscsi: Handle abort for WRITE_PENDING cmds
+Date: Wed, 30 Sep 2026 17:20:26 +0200
+Message-ID: <20260930152427.306147141@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,59 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit e184a4a6f423550a25adce867036cdb1ff471745 ]
+[ Upstream commit ea87981a0ee8fb8ced1c87d004a541b60623ff97 ]
 
-The ESP and AH cases in get_ipv6_ext_hdrs() used IPPROTO_FRAGMENT instead
-of OFPIEH12_FRAG when checking for out-of-order extension headers, causing
-the fragment header to not be recognised as a valid predecessor.
+Sometimes an initiator does not send data for a WRITE command and tries to
+abort it. The abort hangs waiting for frontend driver completion. iSCSI
+driver waits for data and that timeout eventually initiates connection
+reinstatment. The connection closing releases the commands in the
+connection, but those aborted commands still did not handle the abort and
+did not decrease a command ref counter. Because of that the connection
+reinstatement hangs indefinitely and prevents re-login for that initiator.
 
-The original code used IPPROTO_FRAGMENT (44) as a bitmask constant where
-OFPIEH12_FRAG (1 << 4 = 16) was intended.  IPPROTO_FRAGMENT encodes bits
-2, 3 and 5 (OFPIEH12_AUTH | OFPIEH12_DEST | OFPIEH12_ROUTER), but not
-bit 4 (OFPIEH12_FRAG).  This caused incorrect OFPIEH12_UNSEQ verdicts in
-both the ESP and AH arms: the ESP arm failed to whitelist OFPIEH12_FRAG,
-while the AH arm accidentally whitelisted OFPIEH12_AUTH.
+Add handling in TCM of the abort for the WRITE_PENDING commands at
+connection closing moment to make it possible to release them.
 
-With the fix, a packet with two AH headers now also gets OFPIEH12_UNSEQ
-in addition to OFPIEH12_UNREP, matching the ESP arm which already sets
-UNSEQ on a repeat, which is the intended behavior.
-
-Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/1b1582eb07550d71f3cbe210e5cb31eeb8d0ad86.1788876917.git.echaudro@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+[mnc: Rebase and expand comment]
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-10-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/target/iscsi/iscsi_target.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index 3111817293aa0..bfb96f0876900 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -289,7 +289,7 @@ static void get_ipv6_ext_hdrs(struct sk_buff *skb, struct ipv6hdr *nh,
- 			if (*ext_hdrs & OFPIEH12_ESP)
- 				*ext_hdrs |= OFPIEH12_UNREP;
- 			if ((*ext_hdrs & ~(OFPIEH12_HOP | OFPIEH12_DEST |
--					   OFPIEH12_ROUTER | IPPROTO_FRAGMENT |
-+					   OFPIEH12_ROUTER | OFPIEH12_FRAG |
- 					   OFPIEH12_AUTH | OFPIEH12_UNREP)) ||
- 			    dest_options_header_count >= 2) {
- 				*ext_hdrs |= OFPIEH12_UNSEQ;
-@@ -302,7 +302,7 @@ static void get_ipv6_ext_hdrs(struct sk_buff *skb, struct ipv6hdr *nh,
- 				*ext_hdrs |= OFPIEH12_UNREP;
- 			if ((*ext_hdrs &
- 			     ~(OFPIEH12_HOP | OFPIEH12_DEST | OFPIEH12_ROUTER |
--			       IPPROTO_FRAGMENT | OFPIEH12_UNREP)) ||
-+			       OFPIEH12_FRAG | OFPIEH12_UNREP)) ||
- 			    dest_options_header_count >= 2) {
- 				*ext_hdrs |= OFPIEH12_UNSEQ;
- 			}
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 0e16a29e8ef67..8806be03c304f 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -26,6 +26,7 @@
+ #include <target/target_core_base.h>
+ #include <target/target_core_fabric.h>
+ 
++#include <target/target_core_backend.h>
+ #include <target/iscsi/iscsi_target_core.h>
+ #include "iscsi_target_parameters.h"
+ #include "iscsi_target_seq_pdu_list.h"
+@@ -4238,6 +4239,16 @@ static void iscsit_release_commands_from_conn(struct iscsit_conn *conn)
+ 		} else {
+ 			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+ 		}
++
++		if (cmd->se_cmd.t_state == TRANSPORT_WRITE_PENDING) {
++			/*
++			 * We never submitted the cmd to LIO core, so we have
++			 * to tell LIO to perform the completion process.
++			 */
++			spin_unlock_irq(&se_cmd->t_state_lock);
++			target_complete_cmd(&cmd->se_cmd, SAM_STAT_TASK_ABORTED);
++			continue;
++		}
+ 		spin_unlock_irq(&se_cmd->t_state_lock);
+ 	}
+ 	spin_unlock_bh(&conn->cmd_lock);
 -- 
 2.53.0
 
