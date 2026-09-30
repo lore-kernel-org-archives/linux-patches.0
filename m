@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D2351DB16;
-	Wed, 30 Sep 2026 17:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B27C51DE07;
+	Wed, 30 Sep 2026 17:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789457; cv=none; b=bHA9s8uSzkpTwcaGvYTD/8a5CYbXV+UDzOs5pXWj8EORf2imsPAqg9JXLdORR7PvWVt/yqgzrm2LNA8CxWLOIbPNIJMdszM2VxhdPuwCly6B9WVnZL8tfPnyqCh1a/yYgTNwotK2hKo1iU5HPz7J5zhYOw2EM0JZY6EI3b1Hbv0=
+	t=1790789460; cv=none; b=QFPT1UAFWoTGKkjVdnxXERPm9GXXrAMU/ETCWrSmEuam5Z7StLtPotqxfmIe+H5FXSaVNDeORXd5qfLAqSCFsgIjAbU/y1u1/0+rHsEo5Nkljz+cHMkgu/QRpp9EEFiY1V3Fqj/oQTbe15G/eGwJMhpAy7DWDuxcuYi+4OTnAJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789457; c=relaxed/simple;
-	bh=1cSrMyi6V58yqUmL13s0jIgqS73KUjHk09tGLnfDIVo=;
+	s=arc-20240116; t=1790789460; c=relaxed/simple;
+	bh=MJn/fCFQWAAsKAs8QsnfyTz7aYCOoG5rk/1xCZV32Rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rt9FNrOSim9CdZby+ra6y1NXz/9KV3S1rRdE1nXJiG8r2rBGL2Q7LNpKiqjYvmlf6PmBrvr2x74UEZaJzpsQ3w3EwoZSgjaq++xvhVDKykpJRWzaFv3eyt3dSMLlna0pTMojt+YnHKwE2zRzJ+EBUX+RECvBY4ofucwQLeOK6ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6BkMSH/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aAwtZ2xDCNc4Z1tAg8VhXW1fAq8wYIFNO/l2KHUEJuZChzMhgaQLYvirYlgBhxdyhtMQrtKkl+4ROU+IhcC205rfncGD/+YBLumSpYP6X49tGDxmOelzAHNuxqTCQcFTOpBRciWXFIK0MShBDMklpAnf8moRoND51LZPZIlD8B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+VBAeoT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6BkMSH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260E01F000FF;
-	Wed, 30 Sep 2026 17:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+VBAeoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033661F000FF;
+	Wed, 30 Sep 2026 17:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789456;
-	bh=bF5DToD6JuP6npYg0SmEAZeHW7yisjk3O0vCdh06j3s=;
+	s=korg; t=1790789459;
+	bh=vjSmtJ1GHWq8K+cmlP20CHwZ3wU8oDUKDvkn35lrobY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p6BkMSH/xHoYyPUz8uCPSlgKeYQ6RIVRaqKb5G5fvxBKELoCzRR0O0iEkvehgj0yl
-	 i0B5D6xXkkd4xmW1A97F+vhOy87s5gtZ4UGcoXQjktBJKWWN/sNuzy4Pyzpw+huV95
-	 K5jIvX6TiHa+5Er1MxVRSOCbnvsSMo37t4rmNNtU=
+	b=l+VBAeoTe6udkiOAPEdMbLvWCOmDWHqAaIvftPDjGohEIBpgjQnVxvE38V+EqbA6q
+	 bmbQtO4/+FwDofFsx348IwvGsVhSHJQzAcVhMw/6f6mSz14YxJ3QLmqA0NZeqVMxoq
+	 HJNIxYQ+Y+TjZTuhhUga95TUmaJU1dTdT5R+kMwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Lipski <ivan.lipski@amd.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 483/877] drm/amd/display: Bump frame warning limit for clang builds of dml
-Date: Wed, 30 Sep 2026 17:23:14 +0200
-Message-ID: <20260930152425.088416427@linuxfoundation.org>
+Subject: [PATCH 6.12 484/877] drm/amdgpu: Fix last_update fence leak in amdgpu_vm_init()
+Date: Wed, 30 Sep 2026 17:23:15 +0200
+Message-ID: <20260930152425.109696519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,52 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 18779dd84515db093fedb4ebaf0998c9b165a5fb upstream.
+commit b4f7b4459b1b155e4c4977a6482b5df2cf08758c upstream.
 
-[Why&How]
-When building the DML files with clang without any sanitizer or LTO,
-the following -Wframe-larger-than errors break the build under
-CONFIG_WERROR:
+amdgpu_vm_init() initializes vm->last_update, vm->last_unlocked and
+vm->last_tlb_flush with references to the stub fence taken via
+dma_fence_get_stub().  The error label at the end of the function
+releases the last_unlocked and last_tlb_flush references with
+dma_fence_put(), but the reference stored in vm->last_update is never
+dropped, so whenever the page table root creation, the reservation of
+the root BO or the PASID registration fails, the stub fence reference
+leaks.
 
-  display_mode_vba_30.c: error: stack frame size (2512) exceeds limit
-    (2048) in 'dml30_ModeSupportAndSystemConfigurationFull'
-  display_mode_vba_31.c: error: stack frame size (2416) exceeds limit
-    (2048) in 'dml31_ModeSupportAndSystemConfigurationFull'
-  display_mode_vba_314.c: error: stack frame size (2392) exceeds limit
-    (2048) in 'dml314_ModeSupportAndSystemConfigurationFull'
+Drop the vm->last_update reference together with the other stub fence
+references on the error path.
 
-Clang consistently spills more than gcc, pushing the frame past the 2048
-byte limit.
-
-Apply an existing approach of increasing the warn stack size to the
-non-sanitizer path so plain clang builds use a 3072 byte limit.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5642
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Fixes: 187916e6ed9d ("drm/amdgpu: install stub fence into potential unused fence pointers")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 21711b6e66bb7b41b1aec67b2d99aafe768c8fcb)
+(cherry picked from commit e7979c84fc05a176bdf855ee664871b1648404c9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -36,7 +36,11 @@ ifneq ($(CONFIG_FRAME_WARN),0)
-             frame_warn_limit := 3072
-         endif
-     else
--        frame_warn_limit := 2048
-+        ifeq ($(CONFIG_CC_IS_CLANG),y)
-+            frame_warn_limit := 3072
-+        else
-+            frame_warn_limit := 2048
-+        endif
-     endif
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2498,6 +2498,7 @@ error_free_root:
+ 	amdgpu_bo_unref(&root_bo);
  
-     ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
+ error_free_delayed:
++	dma_fence_put(vm->last_update);
+ 	dma_fence_put(vm->last_tlb_flush);
+ 	dma_fence_put(vm->last_unlocked);
+ 	ttm_lru_bulk_move_fini(&adev->mman.bdev, &vm->lru_bulk_move);
 
 
