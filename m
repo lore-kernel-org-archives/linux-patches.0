@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEECF3502A8;
-	Wed, 30 Sep 2026 19:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29693C3F6F;
+	Wed, 30 Sep 2026 19:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795030; cv=none; b=FQB2vRt5U/icsAIf3OMgvfX8dJqCGmRkE5NBIyWqf/i4VLQC+v0xJYqcAM28d4yacNyJ0Se98HKKJi0COpC5BEh8imRp+aWI/cGqz0cXbaRTqtdSiYB2hO4w2FvXs8NiPTXdPHBYetpyFwP98CULKflPYCRirxgOGxt8wZOx0aw=
+	t=1790795032; cv=none; b=qW3lrOcP2Ozj79uK/czr7oxW+qgYP61GwunINTWBcJoKneQpIJI33OnppPaMCdzfJTP7rm4GbHA2VvPyUdBSlB/W6RR9BQO7c0aHMbq2mEexWCi0xWWCfSG3xyYie3NUXSniMbyc1twl6cmJHfC4dYX5o+oByvO9emBcNS0VmMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795030; c=relaxed/simple;
-	bh=S48kIW9DjtA8AJ65CefMU30ZLJvRnEaJuWPF8dm1iuU=;
+	s=arc-20240116; t=1790795032; c=relaxed/simple;
+	bh=FvLGWLzyFH0V8lpD0I8KRk/j1XUwEJfuFIgmBgzx5iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mfso/VWB5YEjoR0JVp7yJn40BNwgo/c13ff/lELsUvBpHlmCwwrz4lr3kenWJaOhXssHlGQntrXtHUzgZWwAI+rtev0Xb4csnMiEFsHJbWaSeQJQIFGt9wxuj5wCkrMUbLbxyhYC6oB7HdmWWncHzY/j5VmGL9IWZYHtNZu43yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/Xn14wb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKqmELwMT5pGWKTkYowiEe5PFvHmi1s5CRVlmnfbA7jtFcce6sslFBy3QsTrK9IDK8h/4ag2oLxoVEHcipycZWtDAjkXn0WJW/E+uhMgwzTSMYv22UXt6HpmKUSTASE/uzp1rEKbHgwwT+wSpzBj0Lc/H2EcfymsSRD6Hwe6WG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEOuYQC6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/Xn14wb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487EA1F000FF;
-	Wed, 30 Sep 2026 19:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEOuYQC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3E21F000FF;
+	Wed, 30 Sep 2026 19:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795028;
-	bh=fukaoEX88bXRRZkZUXn00mQF8F3mvq10yMtCA86sohw=;
+	s=korg; t=1790795031;
+	bh=CbSejmLnCZI/+tUeRK+n/qGSGMAvt88P0J9sUPW1TUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A/Xn14wbYVNMLk0tIb32GQaHFjph8Q5V+0qNFXSXx+KZ40FS4l6Lwp9yNlowWjRB8
-	 +b80m+QUfNwkJqZqiX5zwYT90cqPvFqh6sZEmbmuLnoXBFoY5QO5AYjqHs4cSWk1Bt
-	 hs/qD5KnPydxtxvXuTEaLeFwFHk3ZH3X8irVRrjw=
+	b=kEOuYQC6XanJbUHmVrUAXj8V3BKvcr9Hk5VXrpZKxwIgbgYZ7L/Y3mXZMs0/HSheu
+	 MW6G3moONRDAMm0InlmH7YlPVmRVeCVnqRsXO1BRhjD87TXZe7r5u5D4TwfuS9HC9z
+	 uL4ue8XE5Fyo9tLUtzRqASolMpC2mr97+y/8z1Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Kiran K <kiran.k@intel.com>,
+	syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0416/1193] Bluetooth: btintel: validate version TLV value lengths
-Date: Wed, 30 Sep 2026 17:18:20 +0200
-Message-ID: <20260930152443.441321506@linuxfoundation.org>
+Subject: [PATCH 6.6 0417/1193] Bluetooth: hci_core: Fix race condition during device registration
+Date: Wed, 30 Sep 2026 17:18:21 +0200
+Message-ID: <20260930152443.464833637@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,90 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit a086c0892969bf8a0151b0f12bd14a68827c88b2 ]
+[ Upstream commit 57938bbdb9bf7fd41cbd5cd509ec10c4b22bec18 ]
 
-btintel_parse_version_tlv() verifies that a complete TLV is present in
-the response, but it does not ensure that the value is long enough for
-the specific TLV type. A short value can therefore cause an
-out-of-bounds read through get_unaligned_le16(), get_unaligned_le32(),
-or memcpy().
+In hci_register_dev(), the power_on work item is queued to
+hdev->req_workqueue before initializing hdev->adv_monitors_idr and
+registering the MSFT extension via msft_register(). For devices marked with
+quirks such as HCI_QUIRK_RAW_DEVICE, the HCI_UNCONFIGURED flag is set on
+the device. When the power_on work item runs concurrently on another CPU,
+hci_power_on() detects that the device is unconfigured and immediately
+invokes hci_dev_do_close(), which calls msft_do_close().
 
-Reject values shorter than the minimum required by each known TLV type.
-Also reject responses that do not contain the Command Complete Status
-field.
+Concurrently, msft_register() allocates the msft structure and exposes it
+to hdev->msft_data prior to calling mutex_init(&msft->filter_lock). If
+msft_do_close() executes while hdev->msft_data is already assigned but the
+mutex has not yet been initialized, mutex_lock(&msft->filter_lock) operates
+on an uninitialized mutex, triggering a DEBUG_LOCKS warning:
 
-Fixes: 57375beef71a ("Bluetooth: btintel: Add infrastructure to read controller information")
-Reviewed-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Tested-by: Kiran K <kiran.k@intel.com>
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+WARNING: kernel/locking/mutex.c:625 at __mutex_lock_common
+kernel/locking/mutex.c:625 [inline]
+WARNING: kernel/locking/mutex.c:625 at __mutex_lock+0x12d8/0x1550
+kernel/locking/mutex.c:821
+...
+Call Trace:
+ <TASK>
+ msft_do_close+0x308/0x7b0 net/bluetooth/msft.c:693
+ hci_dev_close_sync+0x86b/0x10a0 net/bluetooth/hci_sync.c:5522
+ hci_dev_do_close net/bluetooth/hci_core.c:499 [inline]
+ hci_power_on+0x32c/0x750 net/bluetooth/hci_core.c:937
+ process_one_work kernel/workqueue.c:3322 [inline]
+ process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
+ worker_thread+0x92d/0xe10 kernel/workqueue.c:3486
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fix this by moving the queue_work() call in hci_register_dev() to after
+idr_init(&hdev->adv_monitors_idr) and msft_register(hdev) so that device
+structures and extensions are fully initialized before asynchronous tasks
+can access them. Additionally, assign hdev->msft_data in msft_register()
+only after mutex_init(&msft->filter_lock) has completed.
+
+Fixes: 9e14606d8f38 ("Bluetooth: msft: Extended monitor tracking by address filter")
+Assisted-by: Gemini:gemini-3.7-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+14ce1b05b7d5a989abbe@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=14ce1b05b7d5a989abbe
+Link: https://syzkaller.appspot.com/ai_job?id=2bc9e8aa-ca6d-43e2-be2c-fd5d9f649d7e
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_core.c | 4 ++--
+ net/bluetooth/msft.c     | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 24c9d7081bc60..d713bbebbc5a5 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -538,12 +538,44 @@ int btintel_version_info_tlv(struct hci_dev *hdev,
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index cf9121f01fc67..efc23bed5b9fe 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2662,11 +2662,11 @@ int hci_register_dev(struct hci_dev *hdev)
+ 	if (error)
+ 		BT_WARN("register suspend notifier failed error:%d\n", error);
+ 
+-	queue_work(hdev->req_workqueue, &hdev->power_on);
+-
+ 	idr_init(&hdev->adv_monitors_idr);
+ 	msft_register(hdev);
+ 
++	queue_work(hdev->req_workqueue, &hdev->power_on);
++
+ 	return id;
+ 
+ err_wqueue:
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 01592eb4704ff..98b6e1ee9833d 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -770,8 +770,8 @@ void msft_register(struct hci_dev *hdev)
+ 
+ 	INIT_LIST_HEAD(&msft->handle_map);
+ 	INIT_LIST_HEAD(&msft->address_filters);
+-	hdev->msft_data = msft;
+ 	mutex_init(&msft->filter_lock);
++	hdev->msft_data = msft;
  }
- EXPORT_SYMBOL_GPL(btintel_version_info_tlv);
  
-+static u8 btintel_version_tlv_min_len(u8 type)
-+{
-+	switch (type) {
-+	case INTEL_TLV_CNVI_TOP:
-+	case INTEL_TLV_CNVR_TOP:
-+	case INTEL_TLV_CNVI_BT:
-+	case INTEL_TLV_CNVR_BT:
-+	case INTEL_TLV_BUILD_NUM:
-+	case INTEL_TLV_GIT_SHA1:
-+		return sizeof(u32);
-+	case INTEL_TLV_DEV_REV_ID:
-+	case INTEL_TLV_TIME_STAMP:
-+		return sizeof(u16);
-+	case INTEL_TLV_IMAGE_TYPE:
-+	case INTEL_TLV_BUILD_TYPE:
-+	case INTEL_TLV_SECURE_BOOT:
-+	case INTEL_TLV_OTP_LOCK:
-+	case INTEL_TLV_API_LOCK:
-+	case INTEL_TLV_DEBUG_LOCK:
-+	case INTEL_TLV_LIMITED_CCE:
-+	case INTEL_TLV_SBE_TYPE:
-+		return sizeof(u8);
-+	case INTEL_TLV_MIN_FW:
-+		return 3;
-+	case INTEL_TLV_OTP_BDADDR:
-+		return sizeof(bdaddr_t);
-+	default:
-+		return 0;
-+	}
-+}
-+
- int btintel_parse_version_tlv(struct hci_dev *hdev,
- 			      struct intel_version_tlv *version,
- 			      struct sk_buff *skb)
- {
- 	/* Consume Command Complete Status field */
--	skb_pull(skb, 1);
-+	if (!skb_pull(skb, 1))
-+		return -EINVAL;
- 
- 	/* Event parameters contatin multiple TLVs. Read each of them
- 	 * and only keep the required data. Also, it use existing legacy
-@@ -563,6 +595,9 @@ int btintel_parse_version_tlv(struct hci_dev *hdev,
- 		if (skb->len < tlv->len + sizeof(*tlv))
- 			return -EINVAL;
- 
-+		if (tlv->len < btintel_version_tlv_min_len(tlv->type))
-+			return -EINVAL;
-+
- 		switch (tlv->type) {
- 		case INTEL_TLV_CNVI_TOP:
- 			version->cnvi_top = get_unaligned_le32(tlv->val);
+ void msft_release(struct hci_dev *hdev)
 -- 
 2.53.0
 
