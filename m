@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07429515976;
-	Wed, 30 Sep 2026 17:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD69651B178;
+	Wed, 30 Sep 2026 17:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791129; cv=none; b=isxB0ftr+zSLve7vJl0jzc2ccC+2vgEaiqNoJqjQTnD3J/6lB7mqfCddHisp5bwOoXcXKvWqGqLf+sZ5TZ8cpijhEATaEJyAga2AyVQ9FPxOiLxQSV2HfQcN0tiznulwzO1YbTbhpLoKRTPXVQgwSO1LLUqYJoEu9+gW5uvrTKc=
+	t=1790791132; cv=none; b=u8La24tlzL54UN+kBeIV8e8/IV3moXu65G7XCVVfxGnSm0Se9hbSKD3C5s1NZfbBcCnSg4Dc0yUcbhkGPth7XgvGJ3q8iZWGggzKir+pQLcZt/N6F4D5ceduCR7eXriczc01I6t+L9AQ/6kNOSzX8h3c8vzkUOp/yE1JPuTR6wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791129; c=relaxed/simple;
-	bh=5mHKt0W6x2e45W5+1EJAO9frquDuQxmw/MLXfYLvfNs=;
+	s=arc-20240116; t=1790791132; c=relaxed/simple;
+	bh=MX2yjRlqkL5rgUquKwpqlKvUscH+OgQdPfSIADmIidw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXu5fsZtJ6gbDrBMtjsXZ58bB2zpboJkMNnAIfgVtTjfpFW8aMD0ZTToRff8b/lxd1XfijlOHjLCi/5LqMBSeTpnYKROEmjsbJhTNNXMcUt0WRhaFvPlLglEFDuQofyyx9kQmX/h3j4oM6o5wOznDISp6/FzmtANVzIK7uzzOlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWyL/2zf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B3mXVe2kz4YSuYJhF9SN7XDot1+iW8Y/EQ7Uv2zgVnPIpFpZZHYwtWemwsXnCuGWeqqdynN9tg0YpFJiRO4Dwl1EHBAalNAkg0J1AvBPxbnJ7xpaieHC8BonjvvapyeC/RHQSn6QcQfPtsKKUUd1TrfGyleNL+7mMOCN5R20Gk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxxNK6Uw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWyL/2zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6115A1F000FF;
-	Wed, 30 Sep 2026 17:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxxNK6Uw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435841F000FF;
+	Wed, 30 Sep 2026 17:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791127;
-	bh=aaPH5HaxS8iq2RdgX8rMINg/YORa7aWJuZf0ttsOzeI=;
+	s=korg; t=1790791130;
+	bh=ieXzl+EjyDS4nrmbll309psNH03BFMRrl5WBGYGyE8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWyL/2zfms0P3+UMEBdB8hJ4DbpgCf5S9imWSo2gX+o2x+rbhCt/DNfCnQRgaxI0z
-	 b681QXGrShfH1zSuUn3x0mGU6EbfDWbcCm5mdZqnHZPClDWmk3bEZECdgjuLjZ+Whm
-	 y5Mwg1hPAJSCO5EVw6aTPc1a4Wmk/psTvWAcFTsA=
+	b=VxxNK6UwFv/dMsVBYOcaxjahYV78pbBzhezWCRmHaKUuXL2oImZJJAWkxvhguxU1q
+	 4OHS2IMckbBiyyrszE1UGzo5G9OrvjbY8MYPH0l0Y8bJFyXKuk4W/0MIUeRMx077cg
+	 s6YnNMWXUro8hKXqeZ5F5849n5T8cX2EZXwITcg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 194/752] wifi: libertas: reject short monitor TX frames
-Date: Wed, 30 Sep 2026 17:21:04 +0200
-Message-ID: <20260930152402.413853025@linuxfoundation.org>
+Subject: [PATCH 5.15 195/752] ksmbd: find bound sessions during reauthentication
+Date: Wed, 30 Sep 2026 17:21:05 +0200
+Message-ID: <20260930152402.437417234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,45 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 13ff543e0b2c713aedeaadadde686686e949dc78 ]
+[ Upstream commit faf8578c77f3d846aca9cd882c293e03eafcc6df ]
 
-In monitor mode, lbs_hard_start_xmit() casts skb->data to a
-radiotap TX header, skips that header, and then copies the 802.11
-destination address from offset 4 in the remaining frame.  The
-generic length check only rejects zero-length and oversized skbs, so
-a short monitor frame can be read past the end of the skb data.
+A session bound to an additional connection is stored in the session
+channel list, but it is not added to that connection's local session table.
+After the binding exchange completes, conn->binding is cleared.
 
-Require enough bytes for the radiotap TX header and the destination
-address field before using the monitor-mode header layout.
+A later SESSION_SETUP reauthentication on the bound channel only searches
+the local session table. It fails to find the session and returns
+STATUS_USER_SESSION_DELETED instead of processing authentication and
+returning STATUS_LOGON_FAILURE for invalid credentials.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704011140.37639-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+If the local lookup fails, look up the session globally and accept it only
+when the current connection is registered in its channel list. This keeps
+unbound connections from using the session while allowing reauthentication
+on an established channel.
+
+This fixes smb2.session.bind_invalid_auth.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/tx.c | 7 +++++++
+ fs/ksmbd/smb2pdu.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/libertas/tx.c b/drivers/net/wireless/marvell/libertas/tx.c
-index aeb481740df67..d56969920506d 100644
---- a/drivers/net/wireless/marvell/libertas/tx.c
-+++ b/drivers/net/wireless/marvell/libertas/tx.c
-@@ -116,6 +116,13 @@ netdev_tx_t lbs_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (priv->wdev->iftype == NL80211_IFTYPE_MONITOR) {
- 		struct tx_radiotap_hdr *rtap_hdr = (void *)skb->data;
- 
-+		if (skb->len < sizeof(*rtap_hdr) + 4 + ETH_ALEN) {
-+			lbs_deb_tx("tx err: short monitor frame %u\n", skb->len);
-+			dev->stats.tx_dropped++;
-+			dev->stats.tx_errors++;
-+			goto free;
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 67f0a91530572..be8a541b694f1 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -1795,6 +1795,13 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	} else {
+ 		sess = ksmbd_session_lookup(conn,
+ 					    le64_to_cpu(req->hdr.SessionId));
++		if (!sess) {
++			sess = ksmbd_session_lookup_slowpath(le64_to_cpu(req->hdr.SessionId));
++			if (sess && !lookup_chann_list(sess, conn)) {
++				ksmbd_user_session_put(sess);
++				sess = NULL;
++			}
 +		}
-+
- 		/* set txpd fields from the radiotap header */
- 		txpd->tx_control = cpu_to_le32(convert_radiotap_rate_to_mv(rtap_hdr->rate));
- 
+ 		if (!sess) {
+ 			rc = -ENOENT;
+ 			goto out_err;
 -- 
 2.53.0
 
