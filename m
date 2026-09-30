@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97EB51CF46;
-	Wed, 30 Sep 2026 17:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBF651C33B;
+	Wed, 30 Sep 2026 17:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789285; cv=none; b=Yn74OhlbfLKPy/BZKQuPJFXg5rZ571WINW9BkIXcChipQNg1oKYPl3eJdwy7p/HACgaHqPb5FYPOHHY8MSiFtSHrBrHBKPujvJ4IHqSZJGw+HbDw3Q8e9EmVp5+VgAaPlyjqLg7dFUhRe1xEzzsJXGpCrfrNnMbiUeUzVbgZtlI=
+	t=1790789287; cv=none; b=a18S3FKbfbFMUhBOd5qpu8pFJZgzzrLLXK9YZlSAES0dPL+PsO8FzB6BiCFtiNBmFY0givjFVuNpjZzdIOml3qrxa/UFTLig2BOgIEjWzlFxFsjE0bWwWu1kucEjMsM3zHQ3TOAI1wVbQEj0Eulntl5+WveG8V/Ypu0olJsp+fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789285; c=relaxed/simple;
-	bh=mnG5yFg1K3xwQ5ZvGXcRe9iX9BI2a1BSJH0uqZbnXWU=;
+	s=arc-20240116; t=1790789287; c=relaxed/simple;
+	bh=ylZrWs1qJlSiOXpXhF1IJxZ2+phwI/WkEFUMOHves/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxzJ6gqM89F9c9Pck0HTl255mvxhuFSe0wFuENu0Oy0UJDmH++6ICkeRbWQ28eTXBkDJBmktnh1caeHsyE2yFNf0cGwKU+vmEKT+9YQW306YVTw/PPpdIZJJ6jPdj4WXqQKKqmGyVFEmNfbyAxXnd5IUEP2MpO+nWovosVtdXqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLFJKNV6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b6fU8ZBiKfMIxij1DhM3i0GcWJcggJenXcZL5I776/z9m1J558l3VqfdN3ZNq+G98ufrEX2J0SnlLBTy0oHlapgPBLKPClUUIr22Q9sPBTQzmSU+g7Qacs42U8QB8DBvR64mIYXCl9L8B8ZFq2sYeIR4QtVdcsTdtJ363gn60dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDqQciC2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLFJKNV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EA61F000FF;
-	Wed, 30 Sep 2026 17:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDqQciC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16471F000FF;
+	Wed, 30 Sep 2026 17:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789283;
-	bh=r5eYUy3CrpWLH64Oo5y8kXud+1G2DL5TQwOeJk9UQmc=;
+	s=korg; t=1790789286;
+	bh=NVdB9pFF/jQ9WLeNfq6+Gl77AMyPw+U9pgl4yVoOs2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLFJKNV6WVAj75QfhD+Xa/0L8Nnzd+YJ7ZfEyPObO6DIWt2xjQtfSI4GH9CXQE/om
-	 SZfq0huOCXDHKk869FUQry97fJQdDRIOtlQlpithDzBUwZ7buQ19v/gns0I0xJXrmE
-	 i279Mw1RoXSXcqpF6M0iIXweRHoOX22srGqiInxE=
+	b=xDqQciC2zu1NEX3icgKYmvloRy/qAabonHKBNUlm5A0F1d3A+dVYY2PLIUx9O09qd
+	 OzTtrPY0PnMLS+cSiQtOfiFgjunIRddmHq29RJK3RZUjX/5TLhRMkU7xc0Tl1Iuzd/
+	 4hGXWS4MtnwSs6a2d/3fhh7+ICvDHNZgZB/z9Lw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 423/877] net: bcmgenet: fix 64-bit RTNL stats reading in ethtool on 32-bit systems
-Date: Wed, 30 Sep 2026 17:22:14 +0200
-Message-ID: <20260930152423.817020099@linuxfoundation.org>
+Subject: [PATCH 6.12 424/877] net: bcmgenet: initialize u64 stats seq counter for all queues
+Date: Wed, 30 Sep 2026 17:22:15 +0200
+Message-ID: <20260930152423.839997738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,52 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 0e2bec77ea62895416600c90588f593516572bca ]
+[ Upstream commit 3aeaa609fda19c09d5298c9fedaaa3b6229601b5 ]
 
-When bcmgenet was converted to 64-bit statistics, STAT_RTNL members were
-switched to point into struct rtnl_link_stats64, whose fields are 64-bit
-(__u64) regardless of architecture.
+bcmgenet_gstrings_stats statically defines ethtool statistics for queues
+0 through GENET_MAX_MQ_CNT (4). However, bcmgenet_probe() only initialized
+the u64_stats_sync seq counter up to priv->hw_params->rx_queues and
+priv->hw_params->tx_queues.
 
-However, bcmgenet_get_ethtool_stats() retained a legacy check:
-  if (sizeof(unsigned long) != sizeof(u32) &&
-      s->stat_sizeof == sizeof(unsigned long))
+Since priv->hw_params->rx_queues is 0 across all hardware versions (and
+priv->hw_params->tx_queues is 0 on GENET V1), rings 1..4 have uninitialized
+u64_stats_sync structures. When ethtool -S is run on 32-bit kernels,
+bcmgenet_get_ethtool_stats() reads stats from rx_rings[1..4], causing
+lockdep warnings due to the uninitialized sequence counters.
 
-On 32-bit systems, sizeof(unsigned long) == sizeof(u32), causing this
-condition to evaluate to false. As a result, 64-bit RTNL stats fields were
-read via *(u32 *)p. On 32-bit Big-Endian systems (such as MIPS BE), this
-reads the high 32 bits and returns 0 until the counter exceeds 4GB; on
-32-bit Little-Endian systems (such as 32-bit ARM), the value is truncated
-to 32 bits.
+Initialize the sequence counters for all GENET_MAX_MQ_CNT + 1 queues.
 
-Fix this by checking if s->stat_sizeof == sizeof(u64) so 64-bit fields are
-always read as 64-bit values.
-
-Fixes: 59aa6e3072aa ("net: bcmgenet: switch to use 64bit statistics")
+Fixes: ffc2c8c4a714 ("net: bcmgenet: Initialize u64 stats seq counter")
 Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260921220021.281418-2-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20260921220021.281418-3-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index eb6ef5ad8c2e1..ba33161db296f 100644
+index ba33161db296f..aa565011fb808 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1289,9 +1289,8 @@ static void bcmgenet_get_ethtool_stats(struct net_device *dev,
- 				p = (char *)&stats64;
+@@ -4069,10 +4069,10 @@ static int bcmgenet_probe(struct platform_device *pdev)
+ 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
  
- 			p += s->stat_offset;
--			if (sizeof(unsigned long) != sizeof(u32) &&
--				s->stat_sizeof == sizeof(unsigned long))
--				data[i] = *(unsigned long *)p;
-+			if (s->stat_sizeof == sizeof(u64))
-+				data[i] = *(u64 *)p;
- 			else
- 				data[i] = *(u32 *)p;
- 		}
+ 	/* Initialize u64 stats seq counter for 32bit machines */
+-	for (i = 0; i <= priv->hw_params->rx_queues; i++)
++	for (i = 0; i <= GENET_MAX_MQ_CNT; i++) {
+ 		u64_stats_init(&priv->rx_rings[i].stats64.syncp);
+-	for (i = 0; i <= priv->hw_params->tx_queues; i++)
+ 		u64_stats_init(&priv->tx_rings[i].stats64.syncp);
++	}
+ 
+ 	/* libphy will determine the link state */
+ 	netif_carrier_off(dev);
 -- 
 2.53.0
 
