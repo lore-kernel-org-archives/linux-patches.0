@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFFC5218A7;
-	Wed, 30 Sep 2026 17:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9121552842C;
+	Wed, 30 Sep 2026 17:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789572; cv=none; b=RzBAhimnQLPEaa2Gqd7m+AtYQTGXpTD0cYXqCeCDiVLN4QHcc0BC2az7hoYMuQ2P+yCKfoNrfWSTtYYA1veprIgo8NO8UPxVWUYlvK09zxUYZyeFTSuOA8+2HMlNSQ5X4P8ROrr3rzTYzIVPbHK5eMOD4QG+PgdD4zc2E0peBYM=
+	t=1790789574; cv=none; b=BktHhI8sPo5+gTxw/cAuOrwkCoewKnf+M7qMr+jayOpvDdKjz/WB2Qs6LL3T0NI9TrbNfO9GbwB5jb64nwvBOriTyMH1QvKoy30De3YdDbEi9aPjG7ygbW2jAaP0RAsradzCHc6UP59lDHQKSnycJmZ02EVGaWuoRPKVCDsH9G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789572; c=relaxed/simple;
-	bh=310ZG+Xe6WyZbp9JXYpJ9l6hrtedrx6Vtb1BMvPF4rg=;
+	s=arc-20240116; t=1790789574; c=relaxed/simple;
+	bh=zm8+yuAJQ3E0M5jf4Z3Fa/SiGOhO4+P8CUqX4PJDRnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHmW9Hr25A3G1AMCApl7+8ucbhdxobIb8HFgkivRvFpSAwqKUKPGYhIXr4AV4JpPKz3NiFy0U0tl/spL0OApRHUvEcMHNDOY2M2svX6wpnyQLNey3cBDJAAa2WKWAM8X9yABBCLsLEzPFPq/iy268nBNPhxsSS/XnG/dHclrk7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btdBhTcJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aHIh/r5P8B65GB/SQ0E4R2EJkCKJTL+g6fkfq1rBWEEr58sFFdRwGIz3Q99pPQVcPTbIolgijXg+tceNkymCZqXz3GjpcNN6rgDus4h/5lTlOKTlA6NrPF9bttAMwkYpOFmcoMDIMctKfyWeHxWhJoNkvGd0EyfqOCn+W9Naje0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMnEIZfn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btdBhTcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47D51F0089C;
-	Wed, 30 Sep 2026 17:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMnEIZfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C108E1F000FF;
+	Wed, 30 Sep 2026 17:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789570;
-	bh=HwbG2JCL+4L9i+dUdqpVTwYYJTIhY++e5ANKMYrcUkw=;
+	s=korg; t=1790789573;
+	bh=Mza1CNOPrDHjbeG/Zd8Cn0tJg5/FuWg2l41NUSR/PxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btdBhTcJu4kEPQtpDHB9ciyr2eVGB/glYG2kWqbPl7B/+mkvMsimpVhJCFq/WxI/5
-	 ViiXGJqL68r9YtpTUFLW7DX1GmIKlY4N16nvMzeGkexYNA7Ej7qu7WgtzB+DPRqwPc
-	 HeJDvCbjPKWFKPUZwjlOvoCRC3ORaGhIEnLMe+vE=
+	b=iMnEIZfn2uJ/AnFx2bxaduVtrmsSNpnyIRb6u8dfGwt41pociylnAufhpofzYMbPR
+	 tJ54NSJ9dPnI401/fLPimNNpOUYMQ7iDzVVfEZSBYd8CQPmDdezgLjNEeGea1t3EbG
+	 wrhuYcY7y5hMgUrFCAheNWyRuLypXd2aCGu3fw0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 6.12 497/877] drm/virtio: fix NULL pointer dereference on fence allocation failure
-Date: Wed, 30 Sep 2026 17:23:28 +0200
-Message-ID: <20260930152425.387910121@linuxfoundation.org>
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 6.12 524/877] scsi: libiscsi_tcp: Check the data direction of a Data-In PDU
+Date: Wed, 30 Sep 2026 17:23:55 +0200
+Message-ID: <20260930152425.958864253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,116 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peiyang He <peiyang_he@smail.nju.edu.cn>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-commit 846b3c64fe3e77d9db20a7e3e62dbbb637c773e1 upstream.
+commit bce07e2f37b5e4a427d36fd6b1c14067b27591db upstream.
 
-virtio_gpu_fence_alloc() can fail due to memory pressure and return NULL,
-but its caller like virtio_gpu_init_submit() never checks it. Later,
-virtio_gpu_init_submit() passes the NULL fence to
-virtio_gpu_fence_event_create(), which unconditionally dereferences it.
+The Data-In branch of iscsi_tcp_hdr_dissect() resolves the ITT to a task
+and copies the PDU's data segment into that command's scatterlist without
+asking whether the command was reading. iscsi_tcp_r2t_rsp() in the same
+file does ask, and rejects an R2T for a command that is not DMA_TO_DEVICE.
 
-Found when fuzzing the virtio driver with Syzkaller:
+A target that answers a WRITE command's ITT with a Data-In therefore has
+the initiator write target-supplied bytes into the pages that write was
+about to send. Those are the caller's own pinned pages for an O_DIRECT
+write, and page cache pages for a buffered one.
 
-	Oops: general protection fault, probably for non-canonical address 0xdffffc0000000012: 0000 [#1] SMP KASAN NOPTI
-	KASAN: null-ptr-deref in range [0x0000000000000090-0x0000000000000097]
-	CPU: 1 UID: 0 PID: 9991 Comm: syz.0.121 Not tainted 7.2.0 #4 PREEMPT(full)
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-	RIP: 0010:virtio_gpu_fence_event_create drivers/gpu/drm/virtio/virtgpu_submit.c:295 [inline]
-	RIP: 0010:virtio_gpu_init_submit drivers/gpu/drm/virtio/virtgpu_submit.c:398 [inline]
-	RIP: 0010:virtio_gpu_execbuffer_ioctl+0xc78/0x1aa0 drivers/gpu/drm/virtio/virtgpu_submit.c:505
-	Code: 85 ed 0f 85 21 09 00 00 e8 05 5a c9 fb 48 8b 44 24 10 48 8d b8 90 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 9a 0d 00 00 48 8b 44 24 10 4c 89 b0 90 00 00 00
-	RSP: 0018:ffffc900039dfad0 EFLAGS: 00010216
-	RAX: dffffc0000000000 RBX: ffffc900039dfdd8 RCX: ffffffff85f6fd3d
-	RDX: 0000000000000012 RSI: ffffffff85f6fd4b RDI: 0000000000000090
-	RBP: 0000000000000000 R0virtio_gpu_virgl_process_cmd: ctrl 0x102, error 0x1203
-	R10: 0000000000000000 R11: 0000000000000000 R12: ffff8880132c4000
-	R13: 0000000000000000 R14: ffff888073b6c700 R15: 000000000000003b
-	FS:  00007fab480b96c0(0000) GS:ffff8880eb6e9000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 00007effbf5e55a8 CR3: 0000000048d19000 CR4: 0000000000350ef0
-	Call Trace:
-	<TASK>
-	drm_ioctl_kernel+0x1f4/0x3e0 drivers/gpu/drm/drm_ioctl.c:817
-	drm_ioctl+0x5f4/0xc70 drivers/gpu/drm/drm_ioctl.c:914
-	vfs_ioctl fs/ioctl.c:51 [inline]
-	__do_sys_ioctl fs/ioctl.c:597 [inline]
-	__se_sys_ioctl fs/ioctl.c:583 [inline]
-	__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
-	do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-	do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7fab471a82bd
-	Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-	RSP: 002b:00007fab480b9018 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-	RAX: ffffffffffffffda RBX: 00007fab47435fa0 RCX: 00007fab471a82bd
-	RDX: 00002000000000c0 RSI: 00000000c0406442 RDI: 0000000000000003
-	RBP: 00007fab480b9080 R08: 0000000000000000 R09: 0000000000000000
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-	R13: 00007fab47436038 R14: 00007fab47435fa0 R15: 00007ffe85ab0740
-	</TASK>
-	Modules linked in:
-	---[ end trace 0000000000000000 ]---
-	RIP: 0010:virtio_gpu_fence_event_create drivers/gpu/drm/virtio/virtgpu_submit.c:295 [inline]
-	RIP: 0010:virtio_gpu_init_submit drivers/gpu/drm/virtio/virtgpu_submit.c:398 [inline]
-	RIP: 0010:virtio_gpu_execbuffer_ioctl+0xc78/0x1aa0 drivers/gpu/drm/virtio/virtgpu_submit.c:505
-	Code: 85 ed 0f 85 21 09 00 00 e8 05 5a c9 fb 48 8b 44 24 10 48 8d b8 90 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 9a 0d 00 00 48 8b 44 24 10 4c 89 b0 90 00 00 00
-	RSP: 0018:ffffc900039dfad0 EFLAGS: 00010216
-	RAX: dffffc0000000000 RBX: ffffc900039dfdd8 RCX: ffffffff85f6fd3d
-	RDX: 0000000000000012 RSI: ffffffff85f6fd4b RDI: 0000000000000090
-	RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000000
-	R10: 0000000000000000 R11: 0000000000000000 R12: ffff8880132c4000
-	R13: 0000000000000000 R14: ffff888073b6c700 R15: 000000000000003b
-	FS:  00007fab480b96c0(0000) GS:ffff888098ae9000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 00007f24c3759000 CR3: 0000000048d19000 CR4: 0000000000350ef0
-	----------------
-	Code disassembly (best guess):
-	0:	85 ed                	test   %ebp,%ebp
-	2:	0f 85 21 09 00 00    	jne    0x929
-	8:	e8 05 5a c9 fb       	call   0xfbc95a12
-	d:	48 8b 44 24 10       	mov    0x10(%rsp),%rax
-	12:	48 8d b8 90 00 00 00 	lea    0x90(%rax),%rdi
-	19:	48 b8 00 00 00 00 00 	movabs $0xdffffc0000000000,%rax
-	20:	fc ff df
-	23:	48 89 fa             	mov    %rdi,%rdx
-	26:	48 c1 ea 03          	shr    $0x3,%rdx
-	* 2a:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1) <-- trapping instruction
-	2e:	0f 85 9a 0d 00 00    	jne    0xdce
-	34:	48 8b 44 24 10       	mov    0x10(%rsp),%rax
-	39:	4c 89 b0 90 00 00 00 	mov    %r14,0x90(%rax)
+Observed against a test target that emits one 512-byte Data-In naming a 128
+KB write's ITT, after the R2T for that write. With O_DIRECT the caller's
+buffer ends up holding 512 bytes of the target's data while pwrite()
+returns 131072. Buffered is quieter: pwrite() and fsync() both succeed,
+nothing is logged, and reading those blocks back returns the target's bytes
+out of the page cache without a command going on the wire.
 
-Fix by checking virtio_gpu_fence_alloc() in virtio_gpu_init_submit() and
-returning -ENOMEM before any later code can dereference the NULL fence.
+Check the direction before using the scatterlist, the way the R2T path
+already does.
 
-Fixes: 70d1ace56db6 ("drm/virtio: Conditionally allocate virtio_gpu_fence")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/00EFE4BA92889B14+20260909091114.2622550-1-peiyang_he@smail.nju.edu.cn
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260801133635.1986706-1-yhlee@isslab.korea.ac.kr
+Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_submit.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/libiscsi_tcp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/virtio/virtgpu_submit.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
-@@ -389,10 +389,13 @@ static int virtio_gpu_init_submit(struct
- 	if ((exbuf->flags & VIRTGPU_EXECBUF_FENCE_FD_OUT) ||
- 	    exbuf->num_out_syncobjs ||
- 	    exbuf->num_bo_handles ||
--	    drm_fence_event)
-+	    drm_fence_event) {
- 		out_fence = virtio_gpu_fence_alloc(vgdev, fence_ctx, ring_idx);
--	else
-+		if (!out_fence)
-+			return -ENOMEM;
-+	} else {
- 		out_fence = NULL;
-+	}
+--- a/drivers/scsi/libiscsi_tcp.c
++++ b/drivers/scsi/libiscsi_tcp.c
+@@ -491,6 +491,9 @@ static int iscsi_tcp_data_in(struct iscs
+ 	int datasn = be32_to_cpu(rhdr->datasn);
+ 	unsigned total_in_length = task->sc->sdb.length;
  
- 	if (drm_fence_event) {
- 		err = virtio_gpu_fence_event_create(dev, file, out_fence, ring_idx);
++	if (task->sc->sc_data_direction != DMA_FROM_DEVICE)
++		return ISCSI_ERR_PROTO;
++
+ 	/*
+ 	 * lib iscsi will update this in the completion handling if there
+ 	 * is status.
 
 
