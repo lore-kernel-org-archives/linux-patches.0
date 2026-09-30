@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42298357D11;
-	Wed, 30 Sep 2026 16:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0A051596E;
+	Wed, 30 Sep 2026 16:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787099; cv=none; b=Ce/H/Rqph03JVO4XadwdKJM4CY5F5PQ8JJahEklSIP7tIiWmGJBtPyV/2hyZQTDfxpHeRU1+GlqIf9asKA1EaPepHhqNqoz1gBX9DU9sCAKIZ1ONAvdYCpmBlVUYfWLIQgTfixpaP77XPTaI6GWzP18nIIZh7YyDmwr1Al7NhKg=
+	t=1790787102; cv=none; b=nJ7O7pfNQjAT3/yEo9HwbiStp+zcXtEPpFrR05myWSBJzXRiUFfzj3CCX5fMDtSI+lnt5obL+5OEZ9uW8fUTwEtkISm2spZ8GcnheiXoAbIduYKQj4rrtxx86gu3l8fYh/4rd5v477mDMGvMbYqNm0widf5eYspbpgTsyUmGPOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787099; c=relaxed/simple;
-	bh=CZr2esHfEgIbI5mcOjJwa2pC+AnEWPkFhjdSCW8T8Bs=;
+	s=arc-20240116; t=1790787102; c=relaxed/simple;
+	bh=EL88ZaJbTJp/PaBFafA9dyciqhFDx8117lfl9sxZRWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OwVD0OyCtRpNHqgOA9umLt5YtHaywZc95r2UL3G9Zg3mhCd/07PhUF5t7OsgO9+td7aqsjNJ+xPFLalmkwSn6pLDkRo4DVTuRHCy8EvNtKbmQ51urJ80Us9e+I13VtPDSjds/L+MQC0JwxJHiVpetvqwUmOPwh0ja5RxKFQCfaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBa+m5ps; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBTCWxcsu3unBfAwLNoloIKOWgKW88kccL8F33w0nzDmV2n0ejSshQnForl8ni7H7OdW5yO3Hi4O7qRX9b2S5f00no2HnuGA6xvXPEl3MeVbIugOzQtRs/ErWikdtlvjoDKs5k6TglYMmknKbjDXuhzgsCXUo0RBVm4eHhp9lfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taduAg1x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBa+m5ps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600D21F000FF;
-	Wed, 30 Sep 2026 16:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taduAg1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321D51F00893;
+	Wed, 30 Sep 2026 16:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787097;
-	bh=Ajq8lgTr+k4/npRrd818AgQWhcVm5m7V8OpKVP4rb9s=;
+	s=korg; t=1790787100;
+	bh=U+u873t0tDBmhHN0KpwcaqJEm2bvfxrvxnVA0y67nmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zBa+m5psPzCxl8kEbCNNv0pjXH+QWXg/040tXUYjy/HsgCduEH/ruAxjA+B12j6gV
-	 Suqiq8IhzA9vjP7z2GcPTFBpozHlYcSqhd4RboymhZJMopU0547in+BbjxVKYOFOAP
-	 sF5RH92ajcfYwi4/kbQSCdnEcx6+H6N9SyHPB/ws=
+	b=taduAg1xEYiA0m3GxOV2agaUuc/WJ0x3ckEOgOtYbo8ou4JmuaMmK+qyX3J0cZb7+
+	 7bYuw965yEYZ727BQYUTOz6DsHttEOu4jkVtpAPvU/Xwuy5SQuuAMNKTwK2Gw+W4K9
+	 fwvU37+0yfEgQ2wkEC5yS8ZLmPOpQg/3twuI+Yeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	Shivasharan S <shivasharan.srikanteshwara@broadcom.com>,
+	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 067/457] bpf: Skip unsettled links in link iterator
-Date: Wed, 30 Sep 2026 17:22:52 +0200
-Message-ID: <20260930152347.492575587@linuxfoundation.org>
+Subject: [PATCH 7.2 058/457] scsi: megaraid_sas: Protect megasas_get_ctrl_info() in megasas_resume()
+Date: Wed, 30 Sep 2026 17:22:43 +0200
+Message-ID: <20260930152347.291350349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,60 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 50e80e2bb5e2be8515205b9c496b9640ddefa434 ]
+[ Upstream commit 42d1221d321e55afc7bba9109a77aaf5a817c8a3 ]
 
-bpf_link_prime() inserts a link into link_idr before anon_inode_getfile()
-succeeds and before bpf_link_settle() publishes the ID in link->id.
-bpf_link_by_id() treats such an ID-zero link as unsettled, but the link
-iterator takes a reference without this check.
+Protect the megasas_get_ctrl_info() call in megasas_resume() with
+instance->reset_mutex using scoped_guard().
 
-If anon_inode_getfile() then fails, the creator removes the ID and frees
-its still-private link directly.  The iterator is left with a dangling
-reference and its next bpf_link_put() accesses freed memory.
+megasas_get_ctrl_info() may release and reacquire instance->reset_mutex.
+Hence, calling this function without holding instance->reset_mutex is not
+safe.
 
-Treat ID-zero entries as transient in bpf_link_get_curr_or_next(), just as
-bpf_link_by_id() does.
-
-  BUG: KASAN: slab-use-after-free in bpf_link_put
-  Write of size 8 by task exp/384
-  Call Trace:
-  bpf_link_put                    kernel/bpf/syscall.c:3372
-  bpf_link_seq_next               kernel/bpf/link_iter.c:33
-  bpf_seq_read                    kernel/bpf/bpf_iter.c:158
-  vfs_read                        fs/read_write.c:572
-  ksys_read                       fs/read_write.c:716
-  do_syscall_64                   arch/x86/entry/syscall_64.c:84
-  entry_SYSCALL_64_after_hwframe  arch/x86/entry/entry_64.S:121
-  Kernel panic - not syncing: KASAN: panic_on_warn set ...
-
-Fixes: 9f8836127308 ("bpf: Add bpf_link iterator")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260914170206.170723-2-bestswngs@gmail.com
+Fixes: c3b10a55abc9 ("scsi: megaraid_sas: Update controller info during resume")
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: Shivasharan S <shivasharan.srikanteshwara@broadcom.com>
+Cc: Chandrakanth patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/f06b5ee432b21cf293f0663e15b64f75a84b9fd5.1788204406.git.bvanassche@acm.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 57d61de03306e..77b3252270f3e 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -6106,7 +6106,10 @@ struct bpf_link *bpf_link_get_curr_or_next(u32 *id)
- again:
- 	link = idr_get_next(&link_idr, id);
- 	if (link) {
--		link = bpf_link_inc_not_zero(link);
-+		if (link->id)
-+			link = bpf_link_inc_not_zero(link);
-+		else
-+			link = ERR_PTR(-EAGAIN);
- 		if (IS_ERR(link)) {
- 			(*id)++;
- 			goto again;
+diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+index d83abded2039b..f25ed22195fa6 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -7886,7 +7886,9 @@ megasas_resume(struct device *dev)
+ 			goto fail_init_mfi;
+ 	}
+ 
+-	if (megasas_get_ctrl_info(instance) != DCMD_SUCCESS)
++	scoped_guard(mutex, &instance->reset_mutex)
++		rval = megasas_get_ctrl_info(instance);
++	if (rval != DCMD_SUCCESS)
+ 		goto fail_init_mfi;
+ 
+ 	tasklet_init(&instance->isr_tasklet, instance->instancet->tasklet,
 -- 
 2.53.0
 
