@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DCE4E50B5;
-	Wed, 30 Sep 2026 16:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8974E324D;
+	Wed, 30 Sep 2026 16:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785584; cv=none; b=UnfRBiXgB1o2cLONgetQwKY7bcfoYVtRZHAyXd1V3ANjHwBlDKs1G8URCPrGOS/yPb3ML/U4hVW/W1kiH4cKd19atDpLiVCY4TVxSAYQLsxMoBg8cCh+6sO8mGb9HdftKUtorqEQh9HeFYo3eozQnqXaJxkVZx26TFSRJ9Ng3zM=
+	t=1790785582; cv=none; b=RsK+U8Bx4oQGl+NZQSX01cRsWfrRXT7xZldV7FL0QHO0WqHjYvuSccYsKnrmgIVaomDtlHeeNFsG5iaWnXerfnqLSqtI3r38qSoVm7oTbglUnIbWG5yZvgYVGfY96sDBkGRhPLUqNy9sh0gbMMwcwcYfSP/8ov2ZwyJCQp8ofBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785584; c=relaxed/simple;
-	bh=0gDaNW2pBHDAhe5kTxsfl0Mj5XSZTyZAIqDsDWbw3EM=;
+	s=arc-20240116; t=1790785582; c=relaxed/simple;
+	bh=aDstJmnSt8iKTOlXqEN5PJaM1IVYPc7LxB/9+iRaIjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmZhw19RRtqc+VO2zmswWO56dnsaI20FGdpR0vcuaTWcY5II6VmsaXi7D6tzJvRms3nXFZwNYMAHAuCaVl6sxObMTBTAPNsDh/tjvg6lJWbsb7pgTMpYuo1lnKX05Aada8gszwFS789cBmi15gGNULYbfn9EmjtF/ET7oyRkLXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J64fViYg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qjqwLZN1RbayGINsdpTjyHWseZp5CcS5AVZ33IegKXoCVk6GRW5EcVkV932AgWjmkY9TjRUijSMC8rd+P2V2uF9kbffmJ+qHUSlT1OfY9yrdtvQ/d8DS6vWBaFiM2vCBC+YQ+egCkJh56Ha1wMgVvrWN1/1mVIkS2GZ1Vp3TqUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVAULzQW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J64fViYg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D531F0089B;
-	Wed, 30 Sep 2026 16:26:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVAULzQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3F61F00893;
+	Wed, 30 Sep 2026 16:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785571;
-	bh=ocNqDYCs2sA6/yN3h0+NCvcTvWKF35ELC3FzSO6X6tE=;
+	s=korg; t=1790785574;
+	bh=Oxc7z+pFCtKzLcHeduwfMcxfvYVe5ijWh3NAcyxfjmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J64fViYg7U5LZjTnArum0VehmDXswGYFK6MZ4pW+jLzVuNjy8azD4HW/L7mxGdl6x
-	 sqv70fyWp9BQhBkndPoOYADoDinsXc5krXTnHFuEHQfFFGdUca2SkoecAkqYNWrL29
-	 G26bP+8tNO8Cq/IMy3rLot9iTC1JRQwcYlhsg8ss=
+	b=aVAULzQWMYpaZYKARE1VKWmlHcg+qgXLBSQ6d4RU5MIIIeZIBahkgj5EDrboWDZGL
+	 jfQ5MTMBHAZdPfEGh3t4QFfXpSueqvUAhwvziamUubzjlwK+p61iOPDnOX3PUGL/3p
+	 K//DFDCD5dJORWZ17yjx5A8YF06PygwXGsof2qdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 557/982] Revert "nvme-apple: Prevent shared tags across queues on Apple A11"
-Date: Wed, 30 Sep 2026 17:21:33 +0200
-Message-ID: <20260930152428.737909816@linuxfoundation.org>
+Subject: [PATCH 6.1 558/982] Revert "nvme-apple: Drop the PRP null check chicken bit"
+Date: Wed, 30 Sep 2026 17:21:34 +0200
+Message-ID: <20260930152428.759559692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -49,57 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 91d3b243bffe5c94503c9a8ea478a080f79ec58e.
+This reverts commit 201edb5f22d4d126a48fb69850a2a7f190982e59.
 
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/apple.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/nvme/host/apple.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index 060f80c5ebeda..6fb881f3807c5 100644
+index 6fb881f3807c5..778cd619aeebd 100644
 --- a/drivers/nvme/host/apple.c
 +++ b/drivers/nvme/host/apple.c
-@@ -239,7 +239,7 @@ static unsigned int apple_nvme_queue_depth(struct apple_nvme_queue *q)
- {
- 	struct apple_nvme *anv = queue_to_apple_nvme(q);
+@@ -47,6 +47,9 @@
+ #define APPLE_ANS_BOOT_STATUS	 0x1300
+ #define APPLE_ANS_BOOT_STATUS_OK 0xde71ce55
  
--	if (q->is_adminq)
-+	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
- 		return APPLE_NVME_AQ_DEPTH;
++#define APPLE_ANS_UNKNOWN_CTRL	 0x24008
++#define APPLE_ANS_PRP_NULL_CHECK BIT(11)
++
+ #define APPLE_ANS_LINEAR_SQ_CTRL 0x24908
+ #define APPLE_ANS_LINEAR_SQ_EN	 BIT(0)
  
- 	return anv->hw->max_queue_depth;
-@@ -317,7 +317,7 @@ static void apple_nvme_submit_cmd_t8015(struct apple_nvme_queue *q,
- 		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
- 			cmd, sizeof(*cmd));
- 
--	if (++q->sq_tail == apple_nvme_queue_depth(q))
-+	if (++q->sq_tail == anv->hw->max_queue_depth)
- 		q->sq_tail = 0;
- 
- 	writel(q->sq_tail, q->sq_db);
-@@ -1114,7 +1114,10 @@ static void apple_nvme_reset_work(struct work_struct *work)
+@@ -1111,6 +1114,17 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 		/* Setup the NVMMU for the maximum admin and IO queue depth */
+ 		writel(anv->hw->max_queue_depth - 1,
+ 			anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
++
++		/*
++		 * This is probably a chicken bit: without it all commands
++		 * where any PRP is set to zero (including those that don't use
++		 * that field) fail and the co-processor complains about
++		 * "completed with err BAD_CMD-" or a "NULL_PRP_PTR_ERR" in the
++		 * syslog
++		 */
++		writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
++			~APPLE_ANS_PRP_NULL_CHECK,
++			anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
  	}
  
  	/* Setup the admin queue */
--	aqa = APPLE_NVME_AQ_DEPTH - 1;
-+	if (anv->hw->has_lsq_nvmmu)
-+		aqa = APPLE_NVME_AQ_DEPTH - 1;
-+	else
-+		aqa = anv->hw->max_queue_depth - 1;
- 	aqa |= aqa << 16;
- 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
- 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
-@@ -1297,7 +1300,8 @@ static int apple_nvme_alloc_tagsets(struct apple_nvme *anv)
- 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
- 	 * must be marked as reserved in the IO queue.
- 	 */
--	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
-+	if (anv->hw->has_lsq_nvmmu)
-+		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
- 	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
- 	anv->tagset.timeout = NVME_IO_TIMEOUT;
- 	anv->tagset.numa_node = NUMA_NO_NODE;
 -- 
 2.53.0
 
