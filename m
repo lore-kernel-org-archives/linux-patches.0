@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAF63FC5BD;
-	Wed, 30 Sep 2026 19:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A347E44F57F;
+	Wed, 30 Sep 2026 19:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797246; cv=none; b=nJ6O//75oV1+N+B1rb2WxIq7rVtY0aevaGJ0+GM3gavfu7TdMpp62hKWe8L7lvMrZECx4tgg1DMVVk8RBkPKQlT3ccyfBS67rtFCwshRCSqn8XmOVaZPTzmWUqk7CTt/ue9ArSD+QrBOaPQPnw+8HlinwcCKVM9yiJvevOkLJzE=
+	t=1790797248; cv=none; b=h/zeHD3OXLKbGFS94yk3RCPA+RrxLy4RcKyr05aZZI93mfV+u6IfrhH1Q7n//ZlZeVU+WTWZa17D5qLiVFxKwOqPN7Ke55mDkFkhS4omUoySeKLIiMZhnoTkf5ZNqVYOwKJNLiI6qJyfgTn8oBpY3vTENN/HgL9PLPTPqKujcZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797246; c=relaxed/simple;
-	bh=wp+u2kuHZC8+MdbHU0FFzbMvgrx71VfWpxuGtpsqa74=;
+	s=arc-20240116; t=1790797248; c=relaxed/simple;
+	bh=qYVH6CkLQSqYVYPkGYMZXQXPFJ/OLpd7zPJW8Owv8Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xk2OUU1JTqDzKIqQiQCLGZBByXabeuKXBes349stlxvQfTHLDDySNaRx1kB5X0Agt5CoglbaIrsrxfQN/jXQXhGJu0HuCOw/oYY7m2USDEVnhqxbGYaiaDq5ezd+dUYvk1lYD8jixOtntgbFqnAcFL6BCkLiNE0Dgt7F4oPpRMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvhiiPN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nu9xDWb5Wnl0YYda0+dx60I3U056wCIG6VZgDlCQdzCV0o8lNmULsD+e8nEEfAIbhMHi4T22TrZPvpCeOYZgjREPXCUZ6TF1GQZbxys1XU3htJUKz0dKLYHl6jKh1FOvew7nUAUilAFUX3dI9eQRblpb6o3CiT7oTAKTyRICfdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n84cJU4M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvhiiPN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FBE1F000FF;
-	Wed, 30 Sep 2026 19:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n84cJU4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037E71F000FF;
+	Wed, 30 Sep 2026 19:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797244;
-	bh=yu1/ak1OA3AfC5YtEALQD28k615r+HSEheDjAJsPzBg=;
+	s=korg; t=1790797247;
+	bh=hfQrMJP3Tr+8OtMu0+jNR5pNio+aHN8RGGjplJdxo9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UvhiiPN0y0QaI+JttQ2pqbtMk8oQzTsEFIpzHb0P1ypkVwSxkt0tT2lvETgXjJJpw
-	 oh0K1jWfnz7VcZxCjc82f4ld8T2n/7t7FHgahsAhgijLH+6b4tvBudSyUMVuoyWD4M
-	 c+UrzzHpHF0Z80H6hx4KFlm0JHVlrr8/W6rlnoT0=
+	b=n84cJU4Mh9nx8hAh6m4VvgZUJ1KDrvGBK06wkfAZYlwjiEDo+zBVj8oB2qMzGrZew
+	 pVE9wIDY/QL4HitulTV5ENABjjZhMubslKNu+fbjFTVCpgZdl3S6CNdFius18H9XXT
+	 EJD656GzU1z2cL0wC+i4RXg/lLtkdKgusUEAamXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1191/1193] netfilter: nf_tables: dont queue packet path object notifications
-Date: Wed, 30 Sep 2026 17:31:15 +0200
-Message-ID: <20260930152500.708059173@linuxfoundation.org>
+Subject: [PATCH 6.6 1192/1193] crypto: atmel-ecc - avoid stale fallback key after set_secret failure
+Date: Wed, 30 Sep 2026 17:31:16 +0200
+Message-ID: <20260930152500.730465224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -53,172 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <littleddfu@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 7904b94768e983bcb2be34a8d6d1f3450f5b838b ]
+[ Upstream commit f07a0d251db7606e4792d2610788fbcc7b2c0d12 ]
 
-All file:line references below are against v7.2-rc4 (ac5b0e5651b1). The
-trace was captured on 7.2.0-rc6-kasan72rc6 (075b74841bd0), where the same
-lines apply.
+Clear ->do_fallback before decoding a new ECDH secret and enable it only
+after the software fallback accepts a caller-provided private key. This
+avoids using a stale fallback key should crypto_kpp_set_secret() fail.
 
-nft_obj_notify() is exported and reached from the packet path. Its only
-in-tree caller is nft_quota_obj_eval() (net/netfilter/nft_quota.c:68),
-which notifies with GFP_ATOMIC while evaluating a rule for a transiting
-packet, holding no mutex.
-
-Since commit 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple
-notifications into one skbuff") that notification is no longer sent
-immediately. __nft_obj_notify() queues it onto nft_net->notify_list via
-nft_notify_enqueue() (net/netfilter/nf_tables_api.c:1211), which is a bare
-list_add_tail(). notify_list has no lock of its own
-(include/net/netfilter/nf_tables.h:1951), it is serialised by commit_mutex:
-the six other enqueue sites all run inside a netlink transaction, and the
-drain in nft_commit_notify() (net/netfilter/nf_tables_api.c:10746) does
-list_del() + kfree_skb() from nf_tables_commit() with commit_mutex held.
-
-Sending packets through a chain that references a depleted quota object
-therefore races an unlocked list_add_tail() against list_del() +
-kfree_skb() on another CPU. The WRITE_ONCE(prev->next, new) in __list_add()
-then stores through an sk_buff that has already been freed:
-
-  BUG: KASAN: slab-use-after-free in __nft_obj_notify+0x2c5/0x2d0
-  Write of size 8 at addr ff110001047183c0 by task poc/76
-  CPU: 0 UID: 1000 PID: 76 Comm: poc Tainted: G  W  7.2.0-rc6-kasan72rc6 #4
-  Call Trace:
-   <IRQ>
-   __nft_obj_notify (include/linux/list.h:164 include/linux/list.h:191
-                     net/netfilter/nf_tables_api.c:1211
-                     net/netfilter/nf_tables_api.c:8743)
-   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
-   nft_do_chain_inet
-   nf_hook_slow
-   __ip_local_out
-   ip_push_pending_frames
-   udp_send_skb
-   udp_sendmsg
-   __x64_sys_sendto
-
-  Allocated by task 77:
-   __alloc_skb (net/core/skbuff.c:704)
-   __nft_obj_notify (include/net/netlink.h:1055
-                     net/netfilter/nf_tables_api.c:8731)
-   nft_quota_obj_eval (net/netfilter/nft_quota.c:68)
-   nft_do_chain
-
-  Freed by task 79:
-   nf_tables_commit (include/linux/skbuff.h:1332
-                     net/netfilter/nf_tables_api.c:10759
-                     net/netfilter/nf_tables_api.c:11185)
-   nfnetlink_rcv_batch (net/netfilter/nfnetlink.c:574)
-   netlink_unicast
-   netlink_sendmsg
-
-  The buggy address belongs to the cache skbuff_head_cache of size 232
-
-Queueing from the packet path is wrong even leaving the race aside:
-notify_list is only drained by nft_commit_notify() from nf_tables_commit()
-(:11185), so a notification enqueued outside a transaction is not sent
-until some later netlink batch commits, if one ever does.
-
-The gfp argument that nft_obj_notify() still takes is a leftover of the
-pre-67cc570edaa0 behaviour, where this path called nfnetlink_send()
-directly. Restore that: split the message construction out into
-nft_obj_notify_alloc() and let each caller decide what to do with the skb.
-nft_obj_notify(), the exported one reached from the packet path, sends it
-straight away; nf_tables_obj_notify(), which runs under commit_mutex, keeps
-queueing it, so transaction notifications are still coalesced.
-
-Fixes: 67cc570edaa0 ("netfilter: nf_tables: coalesce multiple notifications into one skbuff")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 11105693fa05 ("crypto: atmel-ecc - introduce Microchip / Atmel ECC driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   36 +++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
+ drivers/crypto/atmel-ecc.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8170,18 +8170,17 @@ static int nf_tables_delobj(struct sk_bu
- 	return nft_delobj(&ctx, obj);
- }
+--- a/drivers/crypto/atmel-ecc.c
++++ b/drivers/crypto/atmel-ecc.c
+@@ -84,6 +84,7 @@ static int atmel_ecdh_set_secret(struct
  
--static void
--__nft_obj_notify(struct net *net, const struct nft_table *table,
--		 struct nft_object *obj, u32 portid, u32 seq, int event,
--		 u16 flags, int family, int report, gfp_t gfp)
-+static struct sk_buff *
-+nft_obj_notify_alloc(struct net *net, const struct nft_table *table,
-+		     struct nft_object *obj, u32 portid, u32 seq, int event,
-+		     u16 flags, int family, int report, gfp_t gfp)
- {
--	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct sk_buff *skb;
- 	int err;
+ 	kfree(ctx->public_key);
+ 	ctx->public_key = NULL;
++	ctx->do_fallback = false;
  
- 	if (!report &&
- 	    !nfnetlink_has_listeners(net, NFNLGRP_NFTABLES))
--		return;
-+		return NULL;
- 
- 	skb = nlmsg_new(NLMSG_GOODSIZE, gfp);
- 	if (skb == NULL)
-@@ -8195,10 +8194,10 @@ __nft_obj_notify(struct net *net, const
- 		goto err;
+ 	if (crypto_ecdh_decode_key(buf, len, &params) < 0) {
+ 		dev_err(&ctx->client->dev, "crypto_ecdh_decode_key failed\n");
+@@ -91,8 +92,9 @@ static int atmel_ecdh_set_secret(struct
  	}
  
--	nft_notify_enqueue(skb, report, &nft_net->notify_list);
--	return;
-+	return skb;
- err:
- 	nfnetlink_set_err(net, portid, NFNLGRP_NFTABLES, -ENOBUFS);
-+	return NULL;
- }
+ 	if (params.key_size) {
+-		ctx->do_fallback = true;
+-		return crypto_kpp_set_secret(ctx->fallback, buf, len);
++		ret = crypto_kpp_set_secret(ctx->fallback, buf, len);
++		ctx->do_fallback = !ret;
++		return ret;
+ 	}
  
- void nft_obj_notify(struct net *net, const struct nft_table *table,
-@@ -8207,6 +8206,7 @@ void nft_obj_notify(struct net *net, con
- {
- 	char *buf = kasprintf(gfp, "%s:%u",
- 			      table->name, nft_base_seq(net));
-+	struct sk_buff *skb;
+ 	cmd = kmalloc(sizeof(*cmd), GFP_KERNEL);
+@@ -103,8 +105,6 @@ static int atmel_ecdh_set_secret(struct
+ 	if (!public_key)
+ 		goto free_cmd;
  
- 	audit_log_nfcfg(buf,
- 			family,
-@@ -8217,17 +8217,27 @@ void nft_obj_notify(struct net *net, con
- 			gfp);
- 	kfree(buf);
+-	ctx->do_fallback = false;
+-
+ 	atmel_i2c_init_genkey_cmd(cmd, DATA_SLOT_2);
  
--	__nft_obj_notify(net, table, obj, portid, seq, event,
--			 flags, family, report, gfp);
-+	/* Called from the packet path, holding no mutex: notify_list is
-+	 * serialised by commit_mutex, so send this notification directly.
-+	 */
-+	skb = nft_obj_notify_alloc(net, table, obj, portid, seq, event,
-+				   flags, family, report, gfp);
-+	if (skb)
-+		nfnetlink_send(skb, net, portid, NFNLGRP_NFTABLES, report, gfp);
- }
- EXPORT_SYMBOL_GPL(nft_obj_notify);
- 
- static void nf_tables_obj_notify(const struct nft_ctx *ctx,
- 				 struct nft_object *obj, int event)
- {
--	__nft_obj_notify(ctx->net, ctx->table, obj, ctx->portid,
--			 ctx->seq, event, ctx->flags, ctx->family,
--			 ctx->report, GFP_KERNEL);
-+	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
-+	struct sk_buff *skb;
-+
-+	skb = nft_obj_notify_alloc(ctx->net, ctx->table, obj, ctx->portid,
-+				   ctx->seq, event, ctx->flags, ctx->family,
-+				   ctx->report, GFP_KERNEL);
-+	if (skb)
-+		nft_notify_enqueue(skb, ctx->report, &nft_net->notify_list);
- }
- 
- /*
+ 	ret = atmel_i2c_send_receive(ctx->client, cmd);
 
 
