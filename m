@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B0D3812F1;
-	Wed, 30 Sep 2026 15:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C604C4F58;
+	Wed, 30 Sep 2026 15:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783897; cv=none; b=o30sDNKXXc2yCoPGQNo9G4kW8Q1hDYUBBydjOWk6Og54QcGeYYmeEFnz+xjCb2ou4ywq8sY6XVTKjet7u4hP7YhAlNUcZL7w3uai8vBeIsbR0CKZClcNt/l7aGIH+V/x81j2+hZBRl9J44/8D1O+sSUDex2NMXWflTx11vymz70=
+	t=1790783901; cv=none; b=DNwfzns6Jeu+f+bMnvuxRXmYBQPultsi1SWDG18sCFYM4YNFgdVNjGOsjfy+x7FrLQMCWs3Rz+6DOzZMCRO4A8s83o4tR0RrE+YrDw3zZlYiXYYXQbdE4yKgn1U+v4Uy6iQpr7TkvvN/4B3bd/HabYQYxaaxg+XGah/3hpCBvb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783897; c=relaxed/simple;
-	bh=eFw0mC3xoQfRxxMFHWVDmshDR3lfzLZKjchMBOVBxqs=;
+	s=arc-20240116; t=1790783901; c=relaxed/simple;
+	bh=fSccKVqzINHYZN9bu7wpAYsEBPfQO1DERvgNgLjH93A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnEZnBkt37jv89kTJRz1+x3PHFkUPnct3TPYpYlOzpLQqq+eRatIN3icGHlp+gL6T+UhSC0rIqGEikPFWdnmQDgh0Jt91830A1Kn/+y0nEXwqKe3HRwetg9bvjhLo6O0Nhl6VodHKEb9JZ5PnbO5TLopYPfq36VRj3+72HoKxak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6EoQRKB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=thPJUngxBkU4+jbBs4IZWUGCU6n3xvF+TixlahKRWRo1EsfTua7AZGjA5fWUWov2VVu+DWWNeQo88bAA/sUUE28iEzf38bD/VAxYsAvu0WnRAx4k2txnX/1lE0WpiZ/RM7rWk1k/lGisKPYWswwX3RyVKauxgkSYxGcZvwHPbW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQhG881k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6EoQRKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA2A1F000FF;
-	Wed, 30 Sep 2026 15:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQhG881k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E4C1F00898;
+	Wed, 30 Sep 2026 15:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783889;
-	bh=WD+pV3DcHYkSQdTYLZCaT01ePtnYUA6SC6PKm9kKUCE=;
+	s=korg; t=1790783895;
+	bh=KtfS/Ck3p9h/G1Hh97UECjIAutOUYX3FY0hBgU8IpcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6EoQRKB58yRWkac2mLRF96ZpkWCplM6b8+jzJzoyylMzSgbJimUV4D/6An8mBe0q
-	 7/YMEn+1BxwVvQw5vI9/HetS9GXzQy1pd3MlUVjrQlbRuQFrT7RP9weVw5Aer+YZ/9
-	 O3I1YrR+Z4pT3F4gJ+070RyC5SfQkoD7BWoEa/Fs=
+	b=OQhG881ksV33CA+891OiqsvAhpyrCfmxlLpqYTn/V5NuLwjYf358bZAWUyvM38Irb
+	 Ndc5Wzfg2HkjcdEyz5HYfR7bOxr6Fi7rkFhNkmx3FnGXECO674Cdtdm4ZJX2h7ZbUZ
+	 fSAqdWYD99S+PrYo8jqm4qRGSVHdUQcb+MJJGJ5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 559/595] ipv6: sr: enforce exact attribute length for SEG6_ATTR_DST
-Date: Wed, 30 Sep 2026 17:27:32 +0200
-Message-ID: <20260930152359.743460621@linuxfoundation.org>
+	Ridham Khurana <khurana.ridham222@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 5.10 561/595] gpio: zynq: fix runtime PM leak on request error path
+Date: Wed, 30 Sep 2026 17:27:34 +0200
+Message-ID: <20260930152359.788084601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -53,58 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-commit 2d959c75c27f90e9ec489d18ce5ee6b852ad4741 upstream.
+commit e9438ab5328a177c9c0e5df87eb92a7162841e98 upstream.
 
-In seg6_genl_policy, SEG6_ATTR_DST is defined with .type = NLA_BINARY and
-.len = sizeof(struct in6_addr). For NLA_BINARY, .len only enforces the
-maximum payload length and permits shorter payloads (e.g., 0 bytes).
-When seg6_genl_set_tunsrc() copies sizeof(struct in6_addr) bytes via
-kmemdup(val, sizeof(*val), GFP_KERNEL), a short SEG6_ATTR_DST attribute
-triggers a 16-byte out-of-bounds read past skb->tail into uninitialized
-skb->head memory, which is stored in sdata->tun_src and leaked back to
-userspace via SEG6_CMD_GET_TUNSRC.
+pm_runtime_get_sync() leaves the usage counter incremented even when it
+fails, and zynq_gpio_request() returns the error without dropping it.
 
-Switch SEG6_ATTR_DST in seg6_genl_policy to
-NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)) so that generic netlink
-validation rejects any attribute whose length is not exactly
-sizeof(struct in6_addr) with -ERANGE.
+gpiolib does not call ->free() when ->request() fails, so zynq_gpio_free(),
+which holds the only matching pm_runtime_put(), never runs. The reference
+is leaked and the controller can no longer runtime-suspend, so its clock
+stays enabled.
 
-Tested in QEMU against Linux 7.3.0-rc3 by sending a SEG6_CMD_SET_TUNSRC
-Generic Netlink message with a 0-byte SEG6_ATTR_DST attribute followed
-by SEG6_CMD_GET_TUNSRC. On the unfixed kernel, SEG6_CMD_SET_TUNSRC
-succeeds (err = 0) and SEG6_CMD_GET_TUNSRC leaks 16 bytes of
-uninitialized kernel heap memory (tun_src =
-836a61ecc4d25a1042a8d60411cfb378); with this patch applied,
-SEG6_CMD_SET_TUNSRC is rejected by netlink policy validation with
--ERANGE (-34) and tun_src remains zeroed.
+Switch to pm_runtime_resume_and_get(), which only increments the usage
+counter on success.
 
-Fixes: 915d7e5e5930 ("ipv6: sr: add code base for control plane support of SR-IPv6")
+Fixes: 3242ba117e9b ("gpio: Add driver for Zynq GPIO controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260921044025.1535982-1-benquike@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260922092102.1053513-1-khurana.ridham222@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/gpio-zynq.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/net/ipv6/seg6.c
-+++ b/net/ipv6/seg6.c
-@@ -81,8 +81,8 @@ bool seg6_validate_srh(struct ipv6_sr_hd
- static struct genl_family seg6_genl_family;
+--- a/drivers/gpio/gpio-zynq.c
++++ b/drivers/gpio/gpio-zynq.c
+@@ -793,15 +793,7 @@ static int __maybe_unused zynq_gpio_runt
  
- static const struct nla_policy seg6_genl_policy[SEG6_ATTR_MAX + 1] = {
--	[SEG6_ATTR_DST]				= { .type = NLA_BINARY,
--		.len = sizeof(struct in6_addr) },
-+	[SEG6_ATTR_DST]				=
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
- 	[SEG6_ATTR_DSTLEN]			= { .type = NLA_S32, },
- 	[SEG6_ATTR_HMACKEYID]		= { .type = NLA_U32, },
- 	[SEG6_ATTR_SECRET]			= { .type = NLA_BINARY, },
+ static int zynq_gpio_request(struct gpio_chip *chip, unsigned int offset)
+ {
+-	int ret;
+-
+-	ret = pm_runtime_get_sync(chip->parent);
+-
+-	/*
+-	 * If the device is already active pm_runtime_get() will return 1 on
+-	 * success, but gpio_request still needs to return 0.
+-	 */
+-	return ret < 0 ? ret : 0;
++	return pm_runtime_resume_and_get(chip->parent);
+ }
+ 
+ static void zynq_gpio_free(struct gpio_chip *chip, unsigned int offset)
 
 
