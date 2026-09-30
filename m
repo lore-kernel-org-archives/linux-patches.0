@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C703B3C03;
-	Wed, 30 Sep 2026 18:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE00B37A825;
+	Wed, 30 Sep 2026 18:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791745; cv=none; b=OwwAEX5oNNtb3FHjd/A6OuAp/aA+yyqdzTJ/aYEWjSaYE6V+ytjbOuu5XcspHADJy+hD2iMkO6tgRZRvgnNdyXOJGxB4NJGjmCKRLyEJuYxrbvxwsS/5pYxWli94lyOTXeIl/lWAmo6jdv9aTacmXlvwZZSjuI0dpqqiy+qmwwI=
+	t=1790791748; cv=none; b=pho4AV+bUOhBRMBGykl/PVsxXq4VA+rzHsdOIg5Ml3lw/9okHfEdZHES5JFLv+sx3KDhdOxuxJ2nhxORwdMazWKok6hGYocJZIyk1N2/mMOmRjvMhetqw0ClXnWXoSDDNwfsrTMgQXj0ANqjcTuDgRNI/zHe0mYotifbKS2UmS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791745; c=relaxed/simple;
-	bh=sBxO0ItJPIUHNY2hw2uizUYtJT+A2G82kC/ma7uK9Wk=;
+	s=arc-20240116; t=1790791748; c=relaxed/simple;
+	bh=1Jg9ogeGdqqinUYJ5LWKKx/svMTIOx/qIK+PXa9+gFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkUIDHUz6CAsOZGnuDyiHkeZQgSi/BSwCXi4E83TPzeJaEQ19QaYiC6vGhH9a/+ErZpdJ2ajCzQR1IfpZTbfAhw9qNa4lmuJYTLOxCD26zXAMDAaoo6bbs8bF8527wi+GVuzOrGBubMx4MNYK7FK2wFl0EP4ewDBFN9+2nBInDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9oNPGF3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByQON7zzgWm+WVF6MidjgvRJTDKy8vnap9Po4g7bwCYcsC4RuiFJzytbiIaZPiCeRCyfqTdBEZLSo4+qLawQ23oIaF/kQUVSc6xmHBkuMmy+BtkFOD5URcvfRE2VlKfQ61MbkLg8Tzj9d+HnYBteNgW8N8IqeCI6fyUY+Uidr6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OECg8TwQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9oNPGF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A40C1F0089B;
-	Wed, 30 Sep 2026 18:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OECg8TwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188261F000FF;
+	Wed, 30 Sep 2026 18:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791743;
-	bh=PSd0LU8KHsslTlBr7K8ZnfN5qK0MMzOv5OZwAKFxnLo=;
+	s=korg; t=1790791746;
+	bh=VAnFS+tzl0e5vLoFOPsrfRGnS4CdaAzp6GNcPEPUBkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J9oNPGF3/A0xYxwRxi48OO0hZ2D8M0xJFQ4T5TCnxOqoNojbv4HJZLuCKnF6Bs6fg
-	 C3bm89F/9XT9lAZLMctZXnOcEVFOv46p45Z9/SXvuVbEffVfqpnyGyViq/e4aTpmZM
-	 I9W3+jA0piMOzkVzIsMNfbD9VZ8wZpcmBb6MHdG4=
+	b=OECg8TwQue8dzxArteRk7p3hZQ1o1bCGKLoX505Q0JiKiXeT6IA36PoLVl7b2+M43
+	 OKUJIkXd7KXePrTNNZ9jOudHXC5h5Mod5QvIVuELHkWej+zTZF2ZEsn5W3FAKyFf3Z
+	 H8mJPgwE+zWnUbLil3SMv5ASLKFroJi2g843ofO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Shun Ota <shun.ota@miraclelinux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 408/752] bpftool: remove duplicate free_btf_vmlinux() definition
-Date: Wed, 30 Sep 2026 17:24:38 +0200
-Message-ID: <20260930152407.105151850@linuxfoundation.org>
+Subject: [PATCH 5.15 409/752] ipv6: mcast: extend RCU protection in igmp6_send()
+Date: Wed, 30 Sep 2026 17:24:39 +0200
+Message-ID: <20260930152407.128260135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -50,54 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Jitindar Singh <surajjs@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-v5.15.221 backported
+[ Upstream commit 087c1faa594fa07a66933d750c0b2610aa1a2946 ]
 
-  a9e2496111aa ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
-  [ upstream commit 66d7e39e49b0 ]
+igmp6_send() can be called without RTNL or RCU being held.
 
-which re-adds free_btf_vmlinux(). However, the prerequisite cleanup
+Extend RCU protection so that we can safely fetch the net pointer
+and avoid a potential UAF.
 
-  52df1a8aabad ("bpftool: remove function free_btf_vmlinux()")
+Note that we no longer can use sock_alloc_send_skb() because
+ipv6.igmp_sk uses GFP_KERNEL allocations which can sleep.
 
-was never backported to 5.15.y, so the tree still carried the original
-free_btf_vmlinux() definition. The backport therefore produced two
-identical-signature static definitions in tools/bpf/bpftool/map.c and
-the build fails:
+Instead use alloc_skb() and charge the net->ipv6.igmp_sk
+socket under RCU protection.
 
-  map.c: error: redefinition of 'free_btf_vmlinux'
-
-Remove the stale pre-existing definition, keeping the one reintroduced
-by a9e2496111aa (which also resets btf_vmlinux = NULL). This matches the
-current mainline end state.
-
-Fixes: a9e2496111aa ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Fixes: b8ad0cbc58f7 ("[NETNS][IPV6] mcast - handle several network namespace")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20250207135841.1948589-9-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ use IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, full_len)
+  instead of upstream's IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTPKTS).
+  Older LTS kernels do not have commit b4a11b2033b7 ("net: fix
+  IPSTATS_MIB_OUTPKGS increment in OutForwDatagrams"), so the legacy
+  byte-based counter logic must be preserved. ]
+Signed-off-by: Shun Ota <shun.ota@miraclelinux.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/map.c | 6 ------
- 1 file changed, 6 deletions(-)
+ net/ipv6/mcast.c |   32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
-index cf257da201951..54d855ac54080 100644
---- a/tools/bpf/bpftool/map.c
-+++ b/tools/bpf/bpftool/map.c
-@@ -828,12 +828,6 @@ static void free_map_kv_btf(struct btf *btf)
- 		btf__free(btf);
- }
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -2154,21 +2154,21 @@ static void mld_send_cr(struct inet6_dev
  
--static void free_btf_vmlinux(void)
--{
--	if (!libbpf_get_error(btf_vmlinux))
--		btf__free(btf_vmlinux);
--}
+ static void igmp6_send(struct in6_addr *addr, struct net_device *dev, int type)
+ {
+-	struct net *net = dev_net(dev);
+-	struct sock *sk = net->ipv6.igmp_sk;
++	const struct in6_addr *snd_addr, *saddr;
++	int err, len, payload_len, full_len;
++	struct in6_addr addr_buf;
+ 	struct inet6_dev *idev;
+ 	struct sk_buff *skb;
+ 	struct mld_msg *hdr;
+-	const struct in6_addr *snd_addr, *saddr;
+-	struct in6_addr addr_buf;
+ 	int hlen = LL_RESERVED_SPACE(dev);
+ 	int tlen = dev->needed_tailroom;
+-	int err, len, payload_len, full_len;
+ 	u8 ra[8] = { IPPROTO_ICMPV6, 0,
+ 		     IPV6_TLV_ROUTERALERT, 2, 0, 0,
+ 		     IPV6_TLV_PADN, 0 };
+-	struct flowi6 fl6;
+ 	struct dst_entry *dst;
++	struct flowi6 fl6;
++	struct net *net;
++	struct sock *sk;
+ 
+ 	if (type == ICMPV6_MGM_REDUCTION)
+ 		snd_addr = &in6addr_linklocal_allrouters;
+@@ -2179,20 +2179,21 @@ static void igmp6_send(struct in6_addr *
+ 	payload_len = len + sizeof(ra);
+ 	full_len = sizeof(struct ipv6hdr) + payload_len;
+ 
+-	rcu_read_lock();
+-	IP6_UPD_PO_STATS(net, __in6_dev_get(dev),
+-		      IPSTATS_MIB_OUT, full_len);
+-	rcu_read_unlock();
++	skb = alloc_skb(hlen + tlen + full_len, GFP_KERNEL);
+ 
+-	skb = sock_alloc_send_skb(sk, hlen + tlen + full_len, 1, &err);
++	rcu_read_lock();
+ 
++	net = dev_net_rcu(dev);
++	idev = __in6_dev_get(dev);
++	IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, full_len);
+ 	if (!skb) {
+-		rcu_read_lock();
+-		IP6_INC_STATS(net, __in6_dev_get(dev),
+-			      IPSTATS_MIB_OUTDISCARDS);
++		IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+ 		rcu_read_unlock();
+ 		return;
+ 	}
++	sk = net->ipv6.igmp_sk;
++	skb_set_owner_w(skb, sk);
++
+ 	skb->priority = TC_PRIO_CONTROL;
+ 	skb_reserve(skb, hlen);
+ 
+@@ -2217,9 +2218,6 @@ static void igmp6_send(struct in6_addr *
+ 					 IPPROTO_ICMPV6,
+ 					 csum_partial(hdr, len, 0));
+ 
+-	rcu_read_lock();
+-	idev = __in6_dev_get(skb->dev);
 -
- static int
- map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
- 	 bool show_header)
--- 
-2.53.0
-
+ 	icmpv6_flow_init(sk, &fl6, type,
+ 			 &ipv6_hdr(skb)->saddr, &ipv6_hdr(skb)->daddr,
+ 			 skb->dev->ifindex);
 
 
