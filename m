@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C6B51E449;
-	Wed, 30 Sep 2026 17:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856F4FE2E6;
+	Wed, 30 Sep 2026 17:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790873; cv=none; b=vEJUO8pWyPOxZbLNswoMyX6VbxHasAWXrqwxuCBsFC5gN7Ah6pPKXLvSvguaa+itOy+VjG/B+0+mRahtrADtvynNVAxjy7qOXSp/ArgbYUyYyk4/EYbFfKBB/xc2dKlH6fJd9LM3mQ0nVkLnNj8GNvg5rHKUkniTxF/YomwR/2Q=
+	t=1790790876; cv=none; b=ayiZZZbTJWZpG7bg6dwGS6LHiIhKeBCjBl2C5rU1yRGnkwAWbqlmjQ5ldrzcQiktvaOve/r/kIQLFzYN+QmG3y3m/dASCSKSV7/XKNnwL6ljgxPTDoByhb+4+sUNTj+FqMtpoqKwg/ohcig336L+sso1VB4tN4c8EmBMEHB7l9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790873; c=relaxed/simple;
-	bh=5QUiQgJsZfqtcAIk9aqu4MAsvGEkF3uczPyc3rOXBCE=;
+	s=arc-20240116; t=1790790876; c=relaxed/simple;
+	bh=lfdt9W9ksvbAEWmJrYvbb3YC4Edlqo8VILhOQRS66Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPTcGMFV3jrlnuWJ16lg7A03DKFP0fncn8Hos2LUKsEw0hXruolQebpCFJu/HpnogMUnyyffS8q3cf1qofYOp6hUl7TQXe1M9ciuXZdy3GBIiQfdr6P8xQZ9TVMk+5G+EQigmFN/I74MUJjIH+q2miLv1D6hAMXJamVYe3/ytYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LaD+uww; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lm9zPrbKhe60JhxAnj7+4ainZ3H+GMJtni5dyMCyahPrnhkPGjDKMA0ijPxwhw2EufL3sQ6NYDF2oelO7qlxqrr/st5AvqCdt0EhlT9yGsT/5R0GScyLJJixhi0qh+e4Kd8wqx5beaY41XVgndVKkIsFHaTeECymx6XGpSCZ7Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvEPou0a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LaD+uww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C401F000FF;
-	Wed, 30 Sep 2026 17:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvEPou0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36691F000FF;
+	Wed, 30 Sep 2026 17:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790872;
-	bh=fnJQyHzEux/aiFvaZq/u6zH7y94eTw2abXwSPGYDHQQ=;
+	s=korg; t=1790790875;
+	bh=yO9359Y0WLUSIneOY4cE+raWq95kZKPVwYA+Zxc+1zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0LaD+uwwck4T2HfP1DqJQlDQBv+1k/QE7XU+EU3FD6SWJmJ5zqLTIXKRISc4Fg0Wm
-	 s12eN8568BTqlMYLCr32pg/+oAV8YMoaTAmk19Mr1X8KtzDGsXNgj8JCXzGsUB6EVZ
-	 4ZCNvCeMW5Y7vabm2qpJwiK4RzicAUT9GApZ0Vnk=
+	b=cvEPou0asbdqgC4JwZn8Y2OOmZq7OJGhr7Fw4Bpw7dRtQ+HpIH2Bl0x0e9G/MI4xT
+	 G9j7IkShyNRuMz99vv5FRziMq667Uk6mTE2nMvOOd/Xr9107dWP6JQX3/SKuzVHaq2
+	 S9XXKy2dGPZIWHjipLwJpqGNvKmIZ5oRKy9yaTTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	ikaros <void0red@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/752] net: qrtr: fix node refcount leak on ctrl packet alloc failure
-Date: Wed, 30 Sep 2026 17:19:34 +0200
-Message-ID: <20260930152400.418041590@linuxfoundation.org>
+Subject: [PATCH 5.15 078/752] ACPICA: add boundary checks in acpi_ps_get_next_field()
+Date: Wed, 30 Sep 2026 17:19:08 +0200
+Message-ID: <20260930152359.853704857@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,45 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: ikaros <void0red@gmail.com>
 
-[ Upstream commit 3b09ff54114566864eea59020f6b69c5bb325b9d ]
+[ Upstream commit e15aa60de0256d63df2331bf5a4bc4dd287504cd ]
 
-qrtr_send_resume_tx() calls qrtr_node_lookup() which takes a
-reference on the returned node. If the subsequent call to
-qrtr_alloc_ctrl_packet() fails due to memory allocation failure, the
-function returns -ENOMEM without calling qrtr_node_release() to
-release the node reference.
+Add boundary checks in acpi_ps_get_next_field() to prevent out-of-bounds
+access.
 
-Add qrtr_node_release(node) before returning on the allocation failure
-path to properly release the reference.
-
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260528080019.1176700-1-vulab@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/acpica/acpica/commit/c39183ea84bc
+Signed-off-by: ikaros <void0red@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/24388159.6Emhk5qWAg@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/psargs.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 94bfb0397e5d3..95472ec3a3b74 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -1004,8 +1004,10 @@ static int qrtr_send_resume_tx(struct qrtr_cb *cb)
- 		return -EINVAL;
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index 29239a569bfd7..a4e2349f43323 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -474,6 +474,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 	ASL_CV_CAPTURE_COMMENTS_ONLY(parser_state);
+ 	aml = parser_state->aml;
  
- 	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
--	if (!skb)
-+	if (!skb) {
-+		qrtr_node_release(node);
- 		return -ENOMEM;
++	if (aml >= parser_state->aml_end) {
++		return_PTR(NULL);
 +	}
++
+ 	/* Determine field type */
  
- 	pkt->cmd = cpu_to_le32(QRTR_TYPE_RESUME_TX);
- 	pkt->client.node = cpu_to_le32(cb->dst_node);
+ 	switch (ACPI_GET8(parser_state->aml)) {
+@@ -522,6 +526,11 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 
+ 		/* Get the 4-character name */
+ 
++		if ((parser_state->aml + ACPI_NAMESEG_SIZE) >
++		    parser_state->aml_end) {
++			acpi_ps_free_op(field);
++			return_PTR(NULL);
++		}
+ 		ACPI_MOVE_32_TO_32(&name, parser_state->aml);
+ 		acpi_ps_set_name(field, name);
+ 		parser_state->aml += ACPI_NAMESEG_SIZE;
+@@ -567,6 +576,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 
+ 		/* Get the two bytes (Type/Attribute) */
+ 
++		if ((parser_state->aml + 2) > parser_state->aml_end) {
++			acpi_ps_free_op(field);
++			return_PTR(NULL);
++		}
+ 		access_type = ACPI_GET8(parser_state->aml);
+ 		parser_state->aml++;
+ 		access_attribute = ACPI_GET8(parser_state->aml);
+@@ -578,6 +591,10 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 		/* This opcode has a third byte, access_length */
+ 
+ 		if (opcode == AML_INT_EXTACCESSFIELD_OP) {
++			if (parser_state->aml >= parser_state->aml_end) {
++				acpi_ps_free_op(field);
++				return_PTR(NULL);
++			}
+ 			access_length = ACPI_GET8(parser_state->aml);
+ 			parser_state->aml++;
+ 
 -- 
 2.53.0
 
