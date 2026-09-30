@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949CB4E73B2;
-	Wed, 30 Sep 2026 17:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4EB4DE720;
+	Wed, 30 Sep 2026 17:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789001; cv=none; b=BoAmgE7pazYngwMpOvTnLbZ3jWb5R3TcV8oocOO6xOdZmyLeK5vpjPtAOE8i35ObqrT2RKaXHVbhdlV+mWK7/F20XFkQnEUMOT3P60asD2X8x7jl+Nyx+BlnC0/dttH2ZcZvdHOCiioQIy2RS81RB1llJRGCAHv5ExeK0sTLWhE=
+	t=1790789006; cv=none; b=Vr5HvINLxVi6jSJtcgikc3h0/m4OOWBkDiZeOUMV/xFF8jU7rc5z7NbC1xwinFnhWyfFSezXAax1MT1hOTUhrYIeG0k8T2ikhGpFb0dw8DslTOxnOxt2Ob87wmKfVqP3Z2nLRzD8Nc9vefUxpsIjjyQmhgRt/3RyzZ0ATixWbK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789001; c=relaxed/simple;
-	bh=9IsXayu4Ql1Fhw2A50fUF5Pi28OIL5eMMLUm6Vfnod4=;
+	s=arc-20240116; t=1790789006; c=relaxed/simple;
+	bh=Tu1WbNyn8DyqkvA4GtSrxS5NJsN8Yiw0UsguSZ8mofk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/lu6IfRnE2VjFshjy5DO7SyZwPoOfT1In+uFMehXpFw+N0s1wcHy+qzZ+AYCln2Lzw54AgZWWH4UKRAJTl4FDYagSDLd1nHdKI/+pqoeeZt1BuQZ70CXk21bW0nlw2d3S3+JCouAU2lD+FcBvNN04zVPVMFNYJcPdEAhZH5et8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTNxoJwV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QTwXqU0qNnNpCva0/z9Yk9Y9exkSDHn2vYyf8AXGD1gZOmV+nBo1vrV7/XAV0DFQAwZ7QhyaWzniw1mXl5kAWPLnE0BNG43rdWNrhKpLh7AXP1Lcc10DAdVCjlmydhKVMSUSlHpQNdbFofnwBw1DZKzkGKCsQrMObI09KCxIwNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iE7FKdyr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTNxoJwV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4520A1F000FF;
-	Wed, 30 Sep 2026 17:23:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iE7FKdyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189021F000FF;
+	Wed, 30 Sep 2026 17:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788999;
-	bh=4z5Bcj1zUdkNG9KVyvWUVu/DEnFbksHcV/H1ldmCSko=;
+	s=korg; t=1790789002;
+	bh=s1ENDOsY53Dw0Yw9PFgl0x1fxNz7vXNZgOC+tNwyp7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jTNxoJwVwJri6NPjUDWuAnv/qlVjGzdBQNNEM0O+c5Gn/EMRf+xW77FGlgLwespoF
-	 7MB2SycguhsQRJAVKBZnlrRQqRzL+EkELj4WFleQFUwrZeXol+yhplK6y/5RheWGVS
-	 CbvTpFZQu9DAZQ3of0TcUFUjx0Cyp2B1YqsQc4C0=
+	b=iE7FKdyrWfqumnw0LXuxtjE9G49wfy+PwJxTrktmfvV/lGljbREJ0Wqhr0O7CxXXZ
+	 n/BRmVsJ3daIzsRKN9XO5aXerg8qcIeX4767IjabmjmxV/rmumDIM3l2Bq4nUw+wke
+	 YzMorP49oTXYPn3fgxuR5N3Bg5Wjm6bSmz+fFSiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Anup Patel <anup@brainfault.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 323/877] RISC-V: KVM: Fix perf-backed counter accounting across stop and read
-Date: Wed, 30 Sep 2026 17:20:34 +0200
-Message-ID: <20260930152421.655665400@linuxfoundation.org>
+Subject: [PATCH 6.12 324/877] KVM: arm64: vgic-its: Free the caches when GITS_BASER changes
+Date: Wed, 30 Sep 2026 17:20:35 +0200
+Message-ID: <20260930152421.676509247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,83 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit c7e2cc38c56142cdab25e6f73602a8222bf9479b ]
+[ Upstream commit 8cd92f77ae4f5371a7d581f8324c24919670b304 ]
 
-pmu_ctr_read() adds the event count returned by perf_event_read_value()
-to counter_val, which can accumulate the same count repeatedly across
-reads. kvm_riscv_vcpu_pmu_ctr_stop() also leaves counter_val stale by
-not folding the current event count into it.
+A guest that disables the ITS and re-points or shrinks GITS_BASER<n>
+with VALID still set keeps the devices and collections it mapped
+against the old table, as KVM frees them only when VALID is cleared.
+The contents of the table are IMPLEMENTATION DEFINED, so a write that
+gives GITS_BASER<n> a different address or size may lose whatever the
+old value described. Free the list whenever the stored value changes,
+and drop the translation cache with it.
 
-Make reads of perf-backed counters side-effect free, and use
-perf_event_pause() when stopping a counter to fold the current event
-count into counter_val while resetting it. This preserves the counter
-value across stop/start and lets the snapshot path use counter_val
-directly.
+The cache is not empty just because the ITS is disabled: its->enabled
+is written under the cmd_lock, while vgic_its_resolve_lpi() tests it
+under the its_lock, so an injection can still cache an entry after the
+ITS was disabled. Hence the invalidation inside the its_lock section.
 
-Fixes: 0cb74b65d2e5 ("RISC-V: KVM: Implement perf support without sampling")
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260825083719.643970-4-suunj1331@gmail.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Test for a change rather than a write: its_restore_enable() rewrites
+GITS_BASER<n> from its probe-time cache on resume, and KVM reports
+GITS_TYPER.HCC as 0, so nothing re-maps the boot CPU's collection
+afterwards.
+
+Fixes: 36d6961c2b481 ("KVM: arm/arm64: vgic-its: Free caches when GITS_BASER Valid bit is cleared")
+Suggested-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/all/87ecg9owwa.wl-maz@kernel.org/
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260821064445.615838-2-fuad.tabba@linux.dev
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_pmu.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu_pmu.c b/arch/riscv/kvm/vcpu_pmu.c
-index 468e58f152153..147fc0d107ca9 100644
---- a/arch/riscv/kvm/vcpu_pmu.c
-+++ b/arch/riscv/kvm/vcpu_pmu.c
-@@ -245,12 +245,13 @@ static int pmu_ctr_read(struct kvm_vcpu *vcpu, unsigned long cidx,
- 	if (pmc->cinfo.type == SBI_PMU_CTR_TYPE_FW) {
- 		fevent_code = get_event_code(pmc->event_idx);
- 		pmc->counter_val = kvpmu->fw_event[fevent_code].value;
-+		*out_val = pmc->counter_val;
- 	} else if (pmc->perf_event) {
--		pmc->counter_val += perf_event_read_value(pmc->perf_event, &enabled, &running);
-+		*out_val = pmc->counter_val +
-+			   perf_event_read_value(pmc->perf_event, &enabled, &running);
- 	} else {
- 		return -EINVAL;
- 	}
--	*out_val = pmc->counter_val;
- 
- 	return 0;
- }
-@@ -561,7 +562,6 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
+diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
+index 7282305de3471..6737db1fb922f 100644
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -1637,7 +1637,7 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
+ 				      unsigned long val)
  {
- 	struct kvm_pmu *kvpmu = vcpu_to_pmu(vcpu);
- 	int i, pmc_index, sbiret = 0;
--	u64 enabled, running;
- 	struct kvm_pmc *pmc;
- 	int fevent_code;
- 	bool snap_flag_set = flags & SBI_PMU_STOP_FLAG_TAKE_SNAPSHOT;
-@@ -598,8 +598,11 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
- 			}
- 		} else if (pmc->perf_event) {
- 			if (pmc->started) {
--				/* Stop counting the counter */
--				perf_event_disable(pmc->perf_event);
-+				/*
-+				 * Stop the counter and fold the live count into counter_val.
-+				 * Reset the event value to avoid redundant accumulation.
-+				 */
-+				pmc->counter_val += perf_event_pause(pmc->perf_event, true);
- 				pmc->started = false;
- 			} else {
- 				sbiret = SBI_ERR_ALREADY_STOPPED;
-@@ -613,9 +616,6 @@ int kvm_riscv_vcpu_pmu_ctr_stop(struct kvm_vcpu *vcpu, unsigned long ctr_base,
- 		}
+ 	const struct vgic_its_abi *abi = vgic_its_get_abi(its);
+-	u64 entry_size, table_type;
++	u64 old, entry_size, table_type;
+ 	u64 reg, *regptr, clearbits = 0;
  
- 		if (snap_flag_set && !sbiret) {
--			if (pmc->perf_event)
--				pmc->counter_val += perf_event_read_value(pmc->perf_event,
--									  &enabled, &running);
- 			/*
- 			 * The counter and overflow indicies in the snapshot region are w.r.to
- 			 * cbase. Modify the set bit in the counter mask instead of the pmc_index
+ 	/* When GITS_CTLR.Enable is 1, we ignore write accesses. */
+@@ -1660,7 +1660,9 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
+ 		return;
+ 	}
+ 
+-	reg = update_64bit_reg(*regptr, addr & 7, len, val);
++	old = *regptr;
++
++	reg = update_64bit_reg(old, addr & 7, len, val);
+ 	reg &= ~GITS_BASER_RO_MASK;
+ 	reg &= ~clearbits;
+ 
+@@ -1670,7 +1672,8 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
+ 
+ 	*regptr = reg;
+ 
+-	if (!(reg & GITS_BASER_VALID)) {
++	/* The ITS driver rewrites an unchanged GITS_BASER<n> on resume. */
++	if (reg != old) {
+ 		/* Take the its_lock to prevent a race with a save/restore */
+ 		mutex_lock(&its->its_lock);
+ 		switch (table_type) {
+@@ -1681,6 +1684,8 @@ static void vgic_mmio_write_its_baser(struct kvm *kvm,
+ 			vgic_its_free_collection_list(kvm, its);
+ 			break;
+ 		}
++		/* A concurrent injection may have cached a translation. */
++		vgic_its_invalidate_cache(its);
+ 		mutex_unlock(&its->its_lock);
+ 	}
+ }
 -- 
 2.53.0
 
