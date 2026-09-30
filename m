@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041005158BA;
-	Wed, 30 Sep 2026 18:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD8A345EDD;
+	Wed, 30 Sep 2026 18:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790791603; cv=none; b=DS0X9nVO6fzqtciQZ4bnM/kZcJYAyE64wRCxzwKiHneVwotWR8Dtkjw18RAjKVLwuc7QyjCW0aU+kkQ00KjG0IIRskIHXNlkgRkByD0K3C/Z2eBjQa5sVDFb5qBvXeoSNHi3Nx4d7zkxZ5m0t6jnhtDfIDdsUdcxkV0liDYygX8=
+	t=1790791606; cv=none; b=aKOqnxwzRjEO7kXHaFWZdFY18ieb2q9pLdmYDryQhnjA0bt3wKfl6CF8kpGjLQDJPZ9C+7gGMjK9DfWB3Bv4HmtJ2ooKrcQ727X1tKWl5aUgPC8wngrf/okfNmaxe3jOVE8Tu43DtYCXOli2Oc1fywn3v1q/2AWRGw10ssaSBWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790791603; c=relaxed/simple;
-	bh=RVij55mGEJm3pSm3FgwsPmK4QKcq9x9cnvkYJ696zVc=;
+	s=arc-20240116; t=1790791606; c=relaxed/simple;
+	bh=eBdgcYE8W/yUoO3oNhtL+8IDkPqmiXmTQc10PqNzNHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cw9H1IzEW8dZWZrtzbn50yIrsU4emf+x9TWLzQDhwoK70Y3p2iA2LZHIHrpsi9v0D6XzAYEccUaejkSdx7fQCxlG07qZp2jR2G0Sx1sZ/SGSR/ZHCHej7moXaQBtyUhjm2bfvGuyiW/RI/3Vm948Bl2UHblcvzAljOZ0WOl6q3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rScBjSf0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iUQzQLujYp355cMII1ftT4fCtWosrry+PVOXevk+5mw9QslMG4B/B2/xUe5RVuB4AEdVcKngq90TG93JgAm90ZCZy6JF7zmYPIR9fsfrIbz4Uweuz6dhwnu329yzg85iTJ8NGBRAxucmVXDsYeKfd+jTCQiS9nUEd6g2r7YZk/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBSyudN9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rScBjSf0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611F71F000FF;
-	Wed, 30 Sep 2026 18:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBSyudN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E23E1F000FF;
+	Wed, 30 Sep 2026 18:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790791601;
-	bh=fLkYX/T3Xdx3DynGmXRdVNOeswFPoaem6MNueZ7TLE8=;
+	s=korg; t=1790791604;
+	bh=KOY9HXEg6+QvY2p9OnXzqNByC/S8tlsYowPpO7S48hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rScBjSf0HppH4ecPB4Tz9H9lo1mz/6dgyXFYJ1/su2UXM6cui8QmQcPEJUL8HujZW
-	 URW6O1jRfUrozUHXkuZjwj39TkoEfF5ovgYepIzbQdHOMBrA2SnMsgSUt1D3Ta6ZmH
-	 N7Cj9cqCOuyqh7Fj3TBbqhdjVpAjROFtC50IMsTA=
+	b=yBSyudN9drFdiXqKD/NkQusHQfg+dkzIWdaiiAHuRHc/r3J54Rse1tispDu9umvXl
+	 G6G1N9M7HpqmLz0H/5joqBmmt4B1gYvyumSpo9nyzLgcpScwrdnjZ8W/yOD+8TDrOK
+	 Jz1JacfoTqd5bOuZpESueazNqyvFSXtOzay8KXfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Stian Halseth <stian@itx.no>,
-	Jens Axboe <axboe@kernel.dk>,
+	WenTao Liang <vulab@iscas.ac.cn>,
+	George Zhang <george.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Roman Demidov <roman.demidov.nn@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 358/752] sunvdc: unmap LDC cookies when the descriptor send fails
-Date: Wed, 30 Sep 2026 17:23:48 +0200
-Message-ID: <20260930152406.030776151@linuxfoundation.org>
+Subject: [PATCH 5.15 359/752] drm/amd/display: set new_stream to NULL after release
+Date: Wed, 30 Sep 2026 17:23:49 +0200
+Message-ID: <20260930152406.051504264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,82 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stian Halseth <stian@itx.no>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 0c6da21fa35e03fc74f09895433ccd6d4a9c3530 ]
+commit 9fa26b9eed6195bf840f39ac183b9a6237548755 upstream.
 
-__send_request() maps the request's pages into the LDC channel's map
-table (ldc_map_sg()), fills in the descriptor and marks it
-VIO_DESC_READY before ringing the doorbell via __vdc_tx_trigger().
-When the trigger fails, the error path only prints a message: the
-descriptor stays READY and the cookies are never unmapped. The
-mapping is normally released in vdc_end_one() when the peer completes
-the descriptor - but a descriptor whose doorbell was never sent will
-never complete, and since dr->prod is not advanced on failure, the
-reset path (vdc_requeue_inflight(), which walks [cons, prod)) never
-visits it either. The map table entries are leaked permanently.
+In dm_update_crtc_state(), the skip_modeset path releases new_stream
+via dc_stream_release() but does not set the pointer to NULL.
 
-Since commit a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop
-when vio_ldc_send() returns EAGAIN") trigger failures occur in
-practice under load, so every resulting I/O error also leaks one
-request's worth of entries from the fixed-size (8192 entries per
-channel) map table. Because the allocator hands out contiguous
-ranges, fragmentation makes large multi-segment requests fail first
-as the table drains, until ldc_map_sg() fails permanently and the
-disk is dead until reboot.
+If a later error (e.g., color management failure) triggers the fail
+label, the error path calls dc_stream_release() again on the same
+dangling pointer, causing a double release and potential use-after-free.
 
-It also makes any retry-based recovery unusable: requeuing the
-request on -EAGAIN remaps the pages on every attempt, overwriting
-desc->cookies and orphaning the previous mapping, so the table
-drains at the retry rate. This is the memory exhaustion observed
-when the requeue approach was first tested in October 2025.
+Fix this by setting new_stream to NULL after the initial release.
 
-Roll back on failure: unmap the cookies, mark the descriptor FREE
-again and clear the request entry. If the trigger failed with
--ENOTCONN, __vdc_tx_trigger() has already reset the port, which
-tears down and reallocates both the dring and the LDC channel
-including its map table - nothing to roll back, and the stale
-descriptor must not be touched.
-
-Fixes: a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://github.com/sparclinux/issues/issues/2
-Signed-off-by: Stian Halseth <stian@itx.no>
-Link: https://patch.msgid.link/20260901173947.3292110-2-stian@itx.no
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9b690ef3c704 ("drm/amd/display: Avoid full modeset when not required")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index f1dc3391a9120..992837bdd487d 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -524,6 +524,23 @@ static int __send_request(struct request *req)
- 	err = __vdc_tx_trigger(port);
- 	if (err < 0) {
- 		printk(KERN_ERR PFX "vdc_tx_trigger() failure, err=%d\n", err);
-+		/*
-+		 * If the port was reset (-ENOTCONN), the dring and the
-+		 * LDC channel including all of its mappings are already
-+		 * torn down and reallocated - there is nothing to undo
-+		 * and @desc must not be touched.
-+		 *
-+		 * For any other failure the descriptor was never handed
-+		 * to the peer: unmap the cookies and free the descriptor
-+		 * again, so that a later retry of the request does not
-+		 * leak LDC map table entries.
-+		 */
-+		if (err != -ENOTCONN) {
-+			ldc_unmap(port->vio.lp, desc->cookies,
-+				  desc->ncookies);
-+			desc->hdr.state = VIO_DESC_FREE;
-+			rqe->req = NULL;
-+		}
- 	} else {
- 		port->req_id++;
- 		dr->prod = vio_dring_next(dr, dr->prod);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 9a6c0b17745e5..4530d22139355 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10484,6 +10484,7 @@ static int dm_update_crtc_state(struct amdgpu_display_manager *dm,
+ 	/* Release extra reference */
+ 	if (new_stream)
+ 		 dc_stream_release(new_stream);
++	new_stream = NULL;
+ 
+ 	/*
+ 	 * We want to do dc stream updates that do not require a
 -- 
 2.53.0
 
