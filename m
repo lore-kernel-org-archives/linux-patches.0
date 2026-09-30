@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EC63C9EE5;
-	Wed, 30 Sep 2026 19:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127FF3EA957;
+	Wed, 30 Sep 2026 19:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795337; cv=none; b=RuGrzYUDiPUgB8b58wbjEpwBVBbwW9VzVyuBtHY6ga85bg/JJJMZD8srg6iCtHWxdVndDgl+dTD0a+RUfzVSQDbDsKhk8dej3jT9uOT5S+q80pWT0jxV2Ll5FRDYKfownVWENXRhn4INHu3zYVORHWFZZHsFrs4USXnrC1MgjX4=
+	t=1790795340; cv=none; b=ZzpY3WlqQuB+IrbjmjlrykYlwcscYFj8RWiwkVq4XbBnt4w+8N64z6STC7Hk3o2i7xqrOG5/qP9cqNSqwW9zSE/47X1J6YeJfXhIpmGemBdSTtP8sF80qFAugTSvGVgBLaJ2xdpxIS1K0n4lcqhkwU9NBegFZNgbnAW3g59mVTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795337; c=relaxed/simple;
-	bh=UiD+59Vh0OQEbL+qqIAbe0dp6kzF0LIFU+2ygFURVE4=;
+	s=arc-20240116; t=1790795340; c=relaxed/simple;
+	bh=PHhyXhMreSWWVe7zrl7EaeTxg0GBMwgPG2iKHKqHrUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CLggIkbUvVYXkxgYDts99UnOhl20mGycji0oPcVeOSrLb09flrZVX/G7KzQ8/9laajD/r29fZ8wSyHQ0fdao9UAyO/9ypzxlKULdTvMoLLskZr5H1cI1AiWc/xhPIaJVo3bV21MTZVyyrrhjt27nZjcUNHxx8ommxjGxB7Or7E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrvR/sF4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUOnhpGn20rHbJEjAo8AD0zUhPFHh0M5pC7L82Mk02dFdtO3mW0jB/ohGQsC/rrAGVrMhQR+o/x/k8jVWOq/JuXKbxF+mNVAWvljXAmiX6ivKklT/Dnq+w2WWCUsg0oDivk+FF+gwL0pF0jNsbDldTtASvnxkmzuHFwjz7c3hXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VudIzg2L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrvR/sF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902831F000FF;
-	Wed, 30 Sep 2026 19:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VudIzg2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8281F000FF;
+	Wed, 30 Sep 2026 19:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795336;
-	bh=3riUreNjEquhKe0QlqjJlVpW9+ertov6zlbmlrHoTjE=;
+	s=korg; t=1790795339;
+	bh=B2s0t5QnVQa+zN74w+gK6fqFoFXI5Y+XPBnWAjg4ctg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LrvR/sF425VRD1PpfFl41212buoz9mQl6eZW47tstjQo+sNb5LOldD3o0PCXxXytT
-	 oiedo95P3nIAswemW8Mk60JzBDry9FC6i3xG53QOYipoAOEzZWUdp0nCc9mSE9ScM/
-	 iBN0Qo30T/08mNCw0Gttqi0f4It8lS5yBAK5p0xQ=
+	b=VudIzg2Lip1WIBBISzUYMVvxzHQY0eC1F7T74xqFJm5bJ+DQ+S14AUB8F3EXifJ4Q
+	 /h3b6Y5e4r1/GiRTqBVCyVAB8OFSc2JtgxpNOK1NrQyi8aDwVrRBhwj+36rd75N1g2
+	 6G1IwTbNN/JqAeXwL8T67ZWcsz+XMvPY0bT4lfdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Si-Wei Liu <si-wei.liu@oracle.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Lei Yang <leiyang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0527/1193] vhost-vdpa: introduce IOTLB_PERSIST backend feature bit
-Date: Wed, 30 Sep 2026 17:20:11 +0200
-Message-ID: <20260930152445.908014680@linuxfoundation.org>
+Subject: [PATCH 6.6 0528/1193] vdpa: introduce .compat_reset operation callback
+Date: Wed, 30 Sep 2026 17:20:12 +0200
+Message-ID: <20260930152445.931029565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -47,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -56,122 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-[ Upstream commit 4398776f7a6d532c466f9e41f601c9a291fac5ef ]
+[ Upstream commit a26f2e4e68ee3130e5d5acb4f58807041aaea905 ]
 
-Userspace needs this feature flag to distinguish if vhost-vdpa iotlb in
-the kernel can be trusted to persist IOTLB mapping across vDPA reset.
-Without it, userspace has no way to tell apart if it's running on an
-older kernel, which could silently drop all iotlb mapping across vDPA
-reset, especially with broken parent driver implementation for the
-.reset driver op. The broken driver may incorrectly drop all mappings of
-its own as part of .reset, which inadvertently ends up with corrupted
-mapping state between vhost-vdpa userspace and the kernel. As a
-workaround, to make the mapping behaviour predictable across reset,
-userspace has to pro-actively remove all mappings before vDPA reset, and
-then restore all the mappings afterwards. This workaround is done
-unconditionally on top of all parent drivers today, due to the parent
-driver implementation issue and no means to differentiate.  This
-workaround had been utilized in QEMU since day one when the
-corresponding vhost-vdpa userspace backend came to the world.
+Some device specific IOMMU parent drivers have long standing bogus
+behaviour that mistakenly clean up the maps during .reset. By
+definition, this is violation to the on-chip IOMMU ops (i.e. .set_map,
+or .dma_map & .dma_unmap) in those offending drivers, as the removal of
+internal maps is completely agnostic to the upper layer, causing
+inconsistent view between the userspace and the kernel. Some userspace
+app like QEMU gets around of this brokenness by proactively removing and
+adding back all the maps around vdpa device reset, but such workaround
+actually penaltize other well-behaved driver setup, where vdpa reset
+always comes with the associated mapping cost, especially for kernel
+vDPA devices (use_va=false) that have high cost on pinning. It's
+imperative to rectify this behaviour and remove the problematic code
+from all those non-compliant parent drivers.
 
-There are 3 cases that backend may claim this feature bit on for:
-
-- parent device that has to work with platform IOMMU
-- parent device with on-chip IOMMU that has the expected
-  .reset_map support in driver
-- parent device with vendor specific IOMMU implementation with
-  persistent IOTLB mapping already that has to specifically
-  declare this backend feature
-
-The reason why .reset_map is being one of the pre-condition for
-persistent iotlb is because without it, vhost-vdpa can't switch back
-iotlb to the initial state later on, especially for the on-chip IOMMU
-case which starts with identity mapping at device creation. virtio-vdpa
-requires on-chip IOMMU to perform 1:1 passthrough translation from PA to
-IOVA as-is to begin with, and .reset_map is the only means to turn back
-iotlb to the identity mapping mode after vhost-vdpa is gone.
-
-The difference in behavior did not matter as QEMU unmaps all the memory
-unregistering the memory listener at vhost_vdpa_dev_start( started =
-false), but the backend acknowledging this feature flag allows QEMU to
-make sure it is safe to skip this unmap & map in the case of vhost stop
-& start cycle.
-
-In that sense, this feature flag is actually a signal for userspace to
-know that the driver bug has been solved. Not offering it indicates that
-userspace cannot trust the kernel will retain the maps.
+However, we cannot unconditionally remove the bogus map-cleaning code
+from the buggy .reset implementation, as there might exist userspace
+apps that already rely on the behaviour on some setup. Introduce a
+.compat_reset driver op to keep compatibility with older userspace. New
+and well behaved parent driver should not bother to implement such op,
+but only those drivers that are doing or used to do non-compliant
+map-cleaning reset will have to.
 
 Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Message-Id: <1697880319-4937-4-git-send-email-si-wei.liu@oracle.com>
+Message-Id: <1697880319-4937-5-git-send-email-si-wei.liu@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Tested-by: Lei Yang <leiyang@redhat.com>
 Stable-dep-of: ccb1dc7c527f ("vhost/vdpa: reject VRING_NUM larger than device max")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c             | 15 +++++++++++++++
- include/uapi/linux/vhost_types.h |  2 ++
- 2 files changed, 17 insertions(+)
+ include/linux/vdpa.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index 64ca1af13e7fa..0d422cdca2e06 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -420,6 +420,15 @@ static u64 vhost_vdpa_get_backend_features(const struct vhost_vdpa *v)
- 		return ops->get_backend_features(vdpa);
- }
- 
-+static bool vhost_vdpa_has_persistent_map(const struct vhost_vdpa *v)
-+{
-+	struct vdpa_device *vdpa = v->vdpa;
-+	const struct vdpa_config_ops *ops = vdpa->config;
-+
-+	return (!ops->set_map && !ops->dma_map) || ops->reset_map ||
-+	       vhost_vdpa_get_backend_features(v) & BIT_ULL(VHOST_BACKEND_F_IOTLB_PERSIST);
-+}
-+
- static long vhost_vdpa_set_features(struct vhost_vdpa *v, u64 __user *featurep)
- {
- 	struct vdpa_device *vdpa = v->vdpa;
-@@ -708,6 +717,7 @@ static long vhost_vdpa_unlocked_ioctl(struct file *filep,
- 			return -EFAULT;
- 		if (features & ~(VHOST_VDPA_BACKEND_FEATURES |
- 				 BIT_ULL(VHOST_BACKEND_F_DESC_ASID) |
-+				 BIT_ULL(VHOST_BACKEND_F_IOTLB_PERSIST) |
- 				 BIT_ULL(VHOST_BACKEND_F_SUSPEND) |
- 				 BIT_ULL(VHOST_BACKEND_F_RESUME) |
- 				 BIT_ULL(VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK)))
-@@ -724,6 +734,9 @@ static long vhost_vdpa_unlocked_ioctl(struct file *filep,
- 		if ((features & BIT_ULL(VHOST_BACKEND_F_DESC_ASID)) &&
- 		     !vhost_vdpa_has_desc_group(v))
- 			return -EOPNOTSUPP;
-+		if ((features & BIT_ULL(VHOST_BACKEND_F_IOTLB_PERSIST)) &&
-+		     !vhost_vdpa_has_persistent_map(v))
-+			return -EOPNOTSUPP;
- 		vhost_set_backend_features(&v->vdev, features);
- 		return 0;
- 	}
-@@ -779,6 +792,8 @@ static long vhost_vdpa_unlocked_ioctl(struct file *filep,
- 			features |= BIT_ULL(VHOST_BACKEND_F_RESUME);
- 		if (vhost_vdpa_has_desc_group(v))
- 			features |= BIT_ULL(VHOST_BACKEND_F_DESC_ASID);
-+		if (vhost_vdpa_has_persistent_map(v))
-+			features |= BIT_ULL(VHOST_BACKEND_F_IOTLB_PERSIST);
- 		features |= vhost_vdpa_get_backend_features(v);
- 		if (copy_to_user(featurep, &features, sizeof(features)))
- 			r = -EFAULT;
-diff --git a/include/uapi/linux/vhost_types.h b/include/uapi/linux/vhost_types.h
-index 18ad6ae7ab5c6..d7656908f7305 100644
---- a/include/uapi/linux/vhost_types.h
-+++ b/include/uapi/linux/vhost_types.h
-@@ -190,5 +190,7 @@ struct vhost_vdpa_iova_range {
-  * buffers may reside. Requires VHOST_BACKEND_F_IOTLB_ASID.
-  */
- #define VHOST_BACKEND_F_DESC_ASID    0x7
-+/* IOTLB don't flush memory mapping across device reset */
-+#define VHOST_BACKEND_F_IOTLB_PERSIST  0x8
- 
- #endif
+diff --git a/include/linux/vdpa.h b/include/linux/vdpa.h
+index 26ae6ae1eac38..6b8cbf75712df 100644
+--- a/include/linux/vdpa.h
++++ b/include/linux/vdpa.h
+@@ -252,6 +252,17 @@ struct vdpa_map_file {
+  * @reset:			Reset device
+  *				@vdev: vdpa device
+  *				Returns integer: success (0) or error (< 0)
++ * @compat_reset:		Reset device with compatibility quirks to
++ *				accommodate older userspace. Only needed by
++ *				parent driver which used to have bogus reset
++ *				behaviour, and has to maintain such behaviour
++ *				for compatibility with older userspace.
++ *				Historically compliant driver only has to
++ *				implement .reset, Historically non-compliant
++ *				driver should implement both.
++ *				@vdev: vdpa device
++ *				@flags: compatibility quirks for reset
++ *				Returns integer: success (0) or error (< 0)
+  * @suspend:			Suspend the device (optional)
+  *				@vdev: vdpa device
+  *				Returns integer: success (0) or error (< 0)
+@@ -393,6 +404,8 @@ struct vdpa_config_ops {
+ 	u8 (*get_status)(struct vdpa_device *vdev);
+ 	void (*set_status)(struct vdpa_device *vdev, u8 status);
+ 	int (*reset)(struct vdpa_device *vdev);
++	int (*compat_reset)(struct vdpa_device *vdev, u32 flags);
++#define VDPA_RESET_F_CLEAN_MAP 1
+ 	int (*suspend)(struct vdpa_device *vdev);
+ 	int (*resume)(struct vdpa_device *vdev);
+ 	size_t (*get_config_size)(struct vdpa_device *vdev);
 -- 
 2.53.0
 
