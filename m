@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CC84F3ED7;
-	Wed, 30 Sep 2026 16:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1452514770;
+	Wed, 30 Sep 2026 16:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784680; cv=none; b=sXQ2CNqZq7DG2+BRje4WTevowoAzQl9hb27CkGXZJ5dDNiRllrryMwBfiZcmlngfK0HqcPPa6771ZonZoUQ9n1j2dsEv/AffrSL6MPmCBn7AmUz9kXPy1jqqjhSPZXAQDUl0X/UfEFjacb2M/WCrdsdV4JOS9i0UjwwYTGlJFFY=
+	t=1790784685; cv=none; b=EoAwcp+X6LhJganMRblZ6wI77BwuA/5Zh7diRTmjdROmNbuCRjHrH+Xf/E9s2u2OwpY9DwR/cJDkVzWPPVv9TPzd9oxL7R93Pcqg1SrFM+pmVMxbAuWsFCKsZGT/Zj1cIBXom7RxBaB7+b/8XgKEdpJlI51B3xBX9vx/2ICgOlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784680; c=relaxed/simple;
-	bh=ZgpdcXwnQCfpOWhE4wKssf8i5Vppn7KgAwYEAY3heSQ=;
+	s=arc-20240116; t=1790784685; c=relaxed/simple;
+	bh=3+csJT3MRnXyg3pBcQdBuoCgFLLrQp2yDWME+qAjWvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYKqUOoh/94Fl0Mi0ijZXDY+ALx3F82Gr3m9SZ1Nw9xxCCrcEUTzf6OtJgBOYm9lrivTul76EIy+0g+n9Py1Qx5+wMQFqOs6T8NJycNTXoXej2MIgmySLiZlsxuxV5qcbdqESY3xWCKtafAsroZ8pEWIh++0/hDWSsfcSPtdrOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDSs/YSe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ors9rdV68tzuMv6P1BysneNaoaDYuPI2Tt6qyLGZ5RIxmHSVf6RGId7HE6dGhkBG9fAMSCpd0hQmMJKwVL8LKGRgTwqNiAEiXW9itfTJgmvYU28VSM/s2P3uIjcGUdLpG1XXiiZEaWerBjNkv8nOY5f8x4WdzX7xbMpLLDnapKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URuXyar5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDSs/YSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565ED1F00898;
-	Wed, 30 Sep 2026 16:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URuXyar5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC521F000FF;
+	Wed, 30 Sep 2026 16:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784674;
-	bh=ku1ZjEdICL324Odl6hLG/K1FpVhS+Dyj6hhrrOKKd6c=;
+	s=korg; t=1790784677;
+	bh=G38iM8E4BTtTa/R0xYhYRMvo1CLhuu7a2Q8saYSh0iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nDSs/YSegQ0ACynzsQ7qMZh7Jlk8kDPI8vAfG8uG2ELf7DkLPQUdpjt2U/YAbxcUS
-	 x3UpzH2wMry5BNH24eLK5HzvGYcPpfZUhyZTzg193ruga3mgAfSrQy5Prkgt9fLTAL
-	 zc+hTrMU5dq2nXiMiMN0t2lorL3cCZ85JoFDzwKc=
+	b=URuXyar5ZK4m81tQjSMK9unEBXGAaDpsUIhW1fUYvKqbPeVIgtQa1O4plMStaaTdk
+	 nLaceK0RIDFH/fEMTZCbbuyimR1KhLYUYKtBQoO+ojZWvFrRp3FnWj4yZ4oT84Mi2K
+	 CsnARLe3aoHDlLLuimlZ1KuzonDvDClwCF93fc30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Liu <liuqiang@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/982] ksmbd: Fix acl.sd_buf memory leak and invalid sd_size error handling
-Date: Wed, 30 Sep 2026 17:16:14 +0200
-Message-ID: <20260930152421.907601471@linuxfoundation.org>
+Subject: [PATCH 6.1 239/982] xen/front-pgdir-shbuf: free grant reference head on errors
+Date: Wed, 30 Sep 2026 17:16:15 +0200
+Message-ID: <20260930152421.928446860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -53,68 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Liu <liuqiang@kylinos.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit d708a36634bb7b6f94d0e76d587d2ec50b2b93b5 ]
+[ Upstream commit 678d59219ce0ae883f04c96936222c6168ef1164 ]
 
-1. When ndr_decode_v4_ntacl() fails, the code jumped to free_n_data
-   which only freed n.data, skipping kfree(acl.sd_buf) and leaking
-   the buffer. Zero-initialize struct xattr_ntacl acl, reorder error
-   labels to out_free to release acl.sd_buf on all error paths.
+grant_references() allocates a private grant-reference head before
+claiming references for the page directory and, for guest-owned buffers,
+the data pages. The success path frees the remaining head, but claim
+failures and grant_refs_for_buffer() errors return immediately.
 
-2. if (acl.sd_size < sizeof(struct smb_ntsd)) is true, original code
-   returned success without freeing sd_buf and left stale *pntsd.
-   Set rc = -EINVAL before jumping to out_free to return error code and
-   free buffer.
+Unwind through a common exit path so the private grant-reference head is
+released even when granting fails part-way through setup. The caller
+still tears down any references already stored in buf->grefs.
 
-Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260629160517.29340-1-alhouseenyousef@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/xen/xen-front-pgdir-shbuf.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index 27a15c9d3cc22..1da397999941a 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -1537,7 +1537,7 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
- 	struct ndr n;
- 	struct inode *inode = d_inode(dentry);
- 	struct ndr acl_ndr = {0};
--	struct xattr_ntacl acl;
-+	struct xattr_ntacl acl = {0};
- 	struct xattr_smb_acl *smb_acl = NULL, *def_smb_acl = NULL;
- 	__u8 cmp_hash[XATTR_SD_HASH_SIZE] = {0};
+diff --git a/drivers/xen/xen-front-pgdir-shbuf.c b/drivers/xen/xen-front-pgdir-shbuf.c
+index 5c0b5cb5b4195..e21c1e00f94f8 100644
+--- a/drivers/xen/xen-front-pgdir-shbuf.c
++++ b/drivers/xen/xen-front-pgdir-shbuf.c
+@@ -447,8 +447,10 @@ static int grant_references(struct xen_front_pgdir_shbuf *buf)
+ 		unsigned long frame;
  
-@@ -1548,7 +1548,7 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
- 	n.length = rc;
- 	rc = ndr_decode_v4_ntacl(&n, &acl);
- 	if (rc)
--		goto free_n_data;
-+		goto out_free;
+ 		cur_ref = gnttab_claim_grant_reference(&priv_gref_head);
+-		if (cur_ref < 0)
+-			return cur_ref;
++		if (cur_ref < 0) {
++			ret = cur_ref;
++			goto out_free_refs;
++		}
  
- 	smb_acl = ksmbd_vfs_make_xattr_posix_acl(user_ns, inode,
- 						 ACL_TYPE_ACCESS);
-@@ -1578,6 +1578,7 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
- 	*pntsd = acl.sd_buf;
- 	if (acl.sd_size < sizeof(struct smb_ntsd)) {
- 		pr_err("sd size is invalid\n");
-+		rc = -EINVAL;
- 		goto out_free;
+ 		frame = xen_page_to_gfn(virt_to_page(buf->directory +
+ 						     PAGE_SIZE * i));
+@@ -459,11 +461,13 @@ static int grant_references(struct xen_front_pgdir_shbuf *buf)
+ 	if (buf->ops->grant_refs_for_buffer) {
+ 		ret = buf->ops->grant_refs_for_buffer(buf, &priv_gref_head, j);
+ 		if (ret)
+-			return ret;
++			goto out_free_refs;
  	}
  
-@@ -1597,8 +1598,6 @@ int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
- 		kfree(acl.sd_buf);
- 		*pntsd = NULL;
- 	}
--
--free_n_data:
- 	kfree(n.data);
- 	return rc;
++	ret = 0;
++out_free_refs:
+ 	gnttab_free_grant_references(priv_gref_head);
+-	return 0;
++	return ret;
  }
+ 
+ /**
 -- 
 2.53.0
 
