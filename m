@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E45551AEC1;
-	Wed, 30 Sep 2026 17:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74C5501285;
+	Wed, 30 Sep 2026 17:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789319; cv=none; b=Pa45AG2wCtOlAkeo6umItBBxVO6X8lu+kWuJKb7CDqmVqWUNEZhUUaJcxRyONZQmYYK2g6MC2hyMJrdCcxPE684pRFcUoKw6pE9knAfVnu4c4PcT3e24nFDR4ZR4/JB3SfK2va4hiGAmyU1b+f1ElgdUwiMcrfbbbujdmHu2dbY=
+	t=1790789321; cv=none; b=sdwdc015pVg6CUEH7K2HXFUhMvfksEvFMXufWVqod/RT8NkWz6oly4US6TVi5a2CoxPglv+VXEe//8eTzvk8kkCxGdWUn5Dykk3+OQZZ9M5x278bvvykiC2nOMPADwdLjrvdH4RWBJdlFnRm1lhKUHsIYeKiAThCF3yPbjGyTCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789319; c=relaxed/simple;
-	bh=MQFwihQ1w2Al4sAmB5FmXKcvOYQUAmCSxHR+L8Q4UZ0=;
+	s=arc-20240116; t=1790789321; c=relaxed/simple;
+	bh=ECrgZJgtu41CCHI0z7gphC15xiaaEhIuQE9d0qPD8Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLn0PgWuBlPERgsMYngEre4SI8L1qjSNPVKhQlp1jumAqBwytKLtJFtirg1vM8xeHv0gECc5SxTML+FiQEw7D05w/mXst/rIUI+NTdezsizdIOEy/fdnAz9shzHKcjhn1QFJ6lOmFnR0A48z4rAUAG/aHV6hJWLpPSzgIWO5qv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHJEoZiz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EdupaZu6P2PmXOzSP0drKs9bscHGhqnRIsJj50L3TFzQQkodxopMCoOnP4afDrvGDlCJ2ITxJVKH9rygZaZlAqd8me6QOLouBsFVaKgJE5I9RAIxQMdHkKmTZRuzL5jxiOg/25ndRtrj/wG/iYbUbsdmk6v/9Ahoa7IBIZSimUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8bgtfKV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHJEoZiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CCC1F000FF;
-	Wed, 30 Sep 2026 17:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8bgtfKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF111F00899;
+	Wed, 30 Sep 2026 17:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789317;
-	bh=uQuw4bFUuPjHiLomT9R4ntbA9+FUfcOH9/hVOGqIxsM=;
+	s=korg; t=1790789320;
+	bh=cp0yXcKc0ABwS4tbV+VqX52ED2nNQ618h8gA56WHCwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHJEoZiz5XyUJvNXu7nDnE7i3XMGd3OlXVzdKFyICcFzOtvCEBveJVEn4ZOftjXHZ
-	 EOFAXFMrkK0cd95agRiZK9gDBzMwTlS9yWgKEWthYLUsX7JapRLoE6Qk09prQf5CFE
-	 hTzYlpQEB5YH0FejtoE16/FiKMA+TS+OiWW6nuhM=
+	b=s8bgtfKV0G3oVzuQG7ACNkb1VcHN2BOCpQK2NqetXq/PE/YfVKVw+KsriBUwDU8gP
+	 MNc8gG2t0n1R9EkMFQP6tkjJqdmW/hFPq96tIwuaOw7CC1xWpHj2vSykTWEG923mH8
+	 0cZUA3NlLpSCMDo+Y1wiG2xRbFlCnkPEBnBvdyxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Dai <zdai@linux.ibm.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 434/877] bonding: crypto offload enabled, non-offload slave failover, rekey failed
-Date: Wed, 30 Sep 2026 17:22:25 +0200
-Message-ID: <20260930152424.051697073@linuxfoundation.org>
+Subject: [PATCH 6.12 435/877] macsec: add some of the lower devices features when offloading
+Date: Wed, 30 Sep 2026 17:22:26 +0200
+Message-ID: <20260930152424.072222142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,67 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Dai <zdai@linux.ibm.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 00efbbd40bd5fd92c67b7cf1aab8904fa59a96f6 ]
+[ Upstream commit bd97c29f7e9e45980417973d5e8b755bd71e10a9 ]
 
-Create a bonding device (i.e. bond0) in active-backup mode, 2 slaves.
-Active slave: offload capable interface (i.e. eth1), primary interface.
-Backup slave: non-offload capable interface(i.e. eth2).
-Configure strongswan service swantl.conf child SA "hw_offload = crypto"
-Start strongswan service
-IPSec Crytpo Offload is enabled on top of bond0. i.e.
-ip xfrm state |grep offload
-        crypto offload parameters: dev bond0 dir out mode crypto
-	crypto offload parameters: dev bond0 dir in mode crypto
+This commit extends the set of netdevice features supported by macsec
+devices when offload is enabled, which increases performance
+significantly (for a single TCP stream: 17.5Gbps to 38.5Gbps on my
+test machines).
 
-Active slave eth1 takes adavantage of IPSec Crypto Offload capability.
+Commit c850240b6c41 ("net: macsec: report real_dev features when HW
+offloading is enabled") previously attempted something similar, but
+had to be reverted (commit 8bcd560ae878 ("Revert "net: macsec: report
+real_dev features when HW offloading is enabled"")) because the set of
+features it exposed was too large.
 
-If active slave eth1 is down for any reason (i.e. eth1 link down):
-ip link set down dev eth1
-non-offload capable interface eth2 failover to becomes active slave.
-The existing SAs can continue use software IPsec after failover.
-Traffic still keeps going properly.
+During initialization, all features are set, and they're then removed
+via ndo_fix_features (macsec_fix_features). This allows the
+offloadable features to be automatically enabled if offloading is
+turned on after device creation.
 
-However if eth1 link had not recovered yet, strongswan service does
-new child SA rekey, or uses swanctl command to do new child SA rekey,
-it will fail because active slave eth2 doesn't support crypto offload.
-In bond_ipsec_add_sa routine, it returns -EINVAL now, which is
-treated as fatal error by xfrm_dev_state_add routine in kernel xfrm.
-
-To make the non-offload active slave survive the child SA rekey, need
-to make bond_ipsec_add_sa routine returns -EOPNOTSUPP instead when
-active slave doesn't support IPsec Crypto offload, the xfrm will
-gracefully fallback to create new SA using Software IPsec.
-Network traffic can keep going.
-
-After offload capable interface eth1 link is up, becomes active slave,
-next time strongswan child SA rekey will create a new SA which enables
-crypto offload again.
-
-Fixes: 18cb261afd7b ("bonding: support hardware encryption offload to slaves")
-Signed-off-by: David Dai <zdai@linux.ibm.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260918211155.1664493-1-zdai@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/8b32c3011d269d6f149724e80c1ffe67c9534067.1730929545.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c2de369c5c5b ("macsec: initialize SecY before registering the netdevice")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macsec.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 5911dcaedf0fc..d10bbe4c35718 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -494,7 +494,7 @@ static int bond_ipsec_add_sa(struct xfrm_state *xs,
- 	    !real_dev->xfrmdev_ops->xdo_dev_state_add ||
- 	    netif_is_bond_master(real_dev)) {
- 		NL_SET_ERR_MSG_MOD(extack, "Slave does not support ipsec offload");
--		err = -EINVAL;
-+		err = -EOPNOTSUPP;
- 		goto out;
- 	}
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 66f7407a2b178..b1eb6b5dde0fe 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -2695,6 +2695,8 @@ static int macsec_update_offload(struct net_device *dev, enum macsec_offload off
+ 	macsec_set_head_tail_room(dev);
+ 	macsec->insert_tx_tag = macsec_needs_tx_tag(macsec, ops);
  
++	netdev_update_features(dev);
++
+ 	return ret;
+ }
+ 
+@@ -3550,6 +3552,10 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
+ #define MACSEC_FEATURES \
+ 	(NETIF_F_SG | NETIF_F_HIGHDMA | NETIF_F_FRAGLIST)
+ 
++#define MACSEC_OFFLOAD_FEATURES \
++	(MACSEC_FEATURES | NETIF_F_GSO_SOFTWARE | NETIF_F_SOFT_FEATURES | \
++	 NETIF_F_LRO | NETIF_F_RXHASH | NETIF_F_CSUM_MASK | NETIF_F_RXCSUM)
++
+ static int macsec_dev_init(struct net_device *dev)
+ {
+ 	struct macsec_dev *macsec = macsec_priv(dev);
+@@ -3560,7 +3566,10 @@ static int macsec_dev_init(struct net_device *dev)
+ 	if (err)
+ 		return err;
+ 
+-	dev->features = real_dev->features & MACSEC_FEATURES;
++	dev->hw_features = real_dev->hw_features & MACSEC_OFFLOAD_FEATURES;
++	dev->hw_features |= NETIF_F_GSO_SOFTWARE;
++
++	dev->features = real_dev->features & MACSEC_OFFLOAD_FEATURES;
+ 	dev->features |= NETIF_F_GSO_SOFTWARE;
+ 	dev->lltx = true;
+ 	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
+@@ -3590,8 +3599,12 @@ static netdev_features_t macsec_fix_features(struct net_device *dev,
+ {
+ 	struct macsec_dev *macsec = macsec_priv(dev);
+ 	struct net_device *real_dev = macsec->real_dev;
++	netdev_features_t mask;
++
++	mask = macsec_is_offloaded(macsec) ? MACSEC_OFFLOAD_FEATURES
++					   : MACSEC_FEATURES;
+ 
+-	features &= (real_dev->features & MACSEC_FEATURES) |
++	features &= (real_dev->features & mask) |
+ 		    NETIF_F_GSO_SOFTWARE | NETIF_F_SOFT_FEATURES;
+ 
+ 	return features;
 -- 
 2.53.0
 
