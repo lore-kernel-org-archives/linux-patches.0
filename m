@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF0836F8E6;
-	Wed, 30 Sep 2026 16:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84DC4D90B7;
+	Wed, 30 Sep 2026 16:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784414; cv=none; b=FMcmwwkYMzQFgtFLPt6fUGFFkswv7I0Uwo+50BduIBPU4798dkqSGoGNA3EgOOq2q96VL4T4vJAWv3DIr5SG2HGY9OOkhPrhgsuaXqnjE1I+JdU++ZGZf1eidG+vMDN/1X5/fHlODQgSJ+fIi5y3fVgUCCHQSlYgoBCauwR5u2A=
+	t=1790784417; cv=none; b=pxazOVLLW4TCRmCzt689Z0HmaWv1/vIKuIcR1Ge/XPkuy8RQYFM4wXYHvt1zwG9XKbdm+tsDPmorTMnXMCYYGqawygN56rgRqPzkBa+VtI4DOa4cG/v8mgb1RqfKCtTHcKjDjbgK1hHpuRyX6GE8ztKYJNaCN9qKJsjRanCNQek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784414; c=relaxed/simple;
-	bh=Xda/lD71ngWsNHRimLEk7W5O0qGT9CIquYuEEYmpwq4=;
+	s=arc-20240116; t=1790784417; c=relaxed/simple;
+	bh=yMpPabkX9wjubleqyk4rVRcgKMQjFeWHUfph/74A+0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FV7s0SKMwqrJ0HMrSDuR2oa8ShQVHFhcS9DnwYc5LixH5tWbWQp+DlbzlhiG0E9HhADE7Tlax9A0dnWJben5pXyiuLGTdyuz8U9AeefbPPNjfGluMOhseQ/OGrltrkjwHZWLWjZESt+Y1qLKtAEp5+x7g6qUAYxKyjcjkohSwEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XW+hri7E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=liMjX5f6nL0Gd53epHRfWSJrTk5yt2z0kd0evAjOHjcKDuMbrdk2liYVsPYigcZzYYrYU5aRbLycVzHUWJoN4oxykS7wzO09kEpnxgwiapVnuWVRWw7qZGZrh1Xl6l7kb9163f3JdOlcxhGHxRyzhdaiZTn117MCy7d/FkSWhBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwVtTTOJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XW+hri7E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019431F00898;
-	Wed, 30 Sep 2026 16:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwVtTTOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73AF1F000FF;
+	Wed, 30 Sep 2026 16:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784408;
-	bh=3Y2EcupaspeYl/kJ7eaQleblosOpqRXR3tOG7BN+q0M=;
+	s=korg; t=1790784411;
+	bh=G2krU8l59LRPeRtY+xvyLtHi76+2trnt9xhtc6t6tj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XW+hri7EfjqUVaErKwtJQY5l/tDvWrOsr1FPaHTbz8t90rACtcx6/0NV7P3RDTwo/
-	 jXsZFpj2I3TMnsmIa3VAT7tT/x57bwPwtTGcGHBf6LjogO/ZfqOT6aii7nDmrdjOit
-	 7MLYg64jz00Ws9L6B70gPIHc5s2glNSWrBeKR524=
+	b=bwVtTTOJaMMRjMgBoOqig6Ea88WoyjZLMfSrXYstXGdhQa435ZepyJ561o9W0HK17
+	 3mrZGGQddO24aqnHZYohnaXYwnS6novO9LUiGueyzPjjiFJlCh4GhiAj1/Sqz5peHo
+	 ceoJJ6CIIjYTAKTPpqYAapXeSy6RULNxMRd5RF3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/982] ASoC: Intel: catpt: Complete coredump handling
-Date: Wed, 30 Sep 2026 17:14:14 +0200
-Message-ID: <20260930152419.352785625@linuxfoundation.org>
+Subject: [PATCH 6.1 145/982] dpaa2-switch: fix the error path in dpaa2_switch_rx()
+Date: Wed, 30 Sep 2026 17:14:41 +0200
+Message-ID: <20260930152419.932260743@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,108 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 7e5d59f407bc39d43b350cc45f7880647429eb5d ]
+[ Upstream commit 74c1c9f5c0c30bbd0c2cf87b6e3507e7ea46c13d ]
 
-An exception may occur during the firmware booting procedure.  In such
-case the firmware sends COREDUMP_REQUESTS and expects the driver to dump
-relevant information and finish with the COREDUMP_RELEASE write.
+In case of an error in dpaa2_switch_rx(), the dpaa2_switch_free_fd()
+function is called in order to free the FD. This is incorrect since the
+dpaa2_switch_free_fd() is intended to be used on Tx frame descriptors,
+meaning that it expects in the software annotation area of the FD data
+to find a valid skb pointer on which to call dev_kfree_skb().
 
-To distinguish such situation from generic timeout, always signal
-fw_ready completion when a coredump request is received and translate
-it to -EREMOTEIO in catpt_boot_firmware().
+Fix this by extracting the dma_unmap_page() from
+dpaa2_switch_build_linear_skb() directly into the dpaa2_switch_rx()
+function. This allows us to directly use free_pages() in case of an
+error before an SKB was created and kfree_skb() afterwards.
 
-The "FW READY" print makes the success clearly visible even when
-the event-traces are not enabled.
-
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260528083444.1439233-2-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260528173452.1953102-3-ioana.ciornei@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/catpt/ipc.c       |  8 ++++++++
- sound/soc/intel/catpt/loader.c    |  3 +++
- sound/soc/intel/catpt/registers.h | 12 ++++++++++++
- 3 files changed, 23 insertions(+)
+ .../ethernet/freescale/dpaa2/dpaa2-switch.c   | 23 ++++++++++---------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/sound/soc/intel/catpt/ipc.c b/sound/soc/intel/catpt/ipc.c
-index 5b718a846fda5..3341a3a190e62 100644
---- a/sound/soc/intel/catpt/ipc.c
-+++ b/sound/soc/intel/catpt/ipc.c
-@@ -205,6 +205,7 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
- 		memcpy_fromio(&config, cdev->lpe_ba + off, sizeof(config));
- 		trace_catpt_ipc_payload((u8 *)&config, sizeof(config));
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 763fc85c8d46c..a89b954ec91af 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -2400,18 +2400,13 @@ static int dpaa2_switch_port_blocking_event(struct notifier_block *nb,
  
-+		dev_dbg(cdev->dev, "FW READY 0x%08x\n", header);
- 		catpt_ipc_arm(ipc, &config);
- 		complete(&cdev->fw_ready);
- 		return;
-@@ -215,6 +216,13 @@ static void catpt_dsp_process_response(struct catpt_dev *cdev, u32 header)
- 		dev_err(cdev->dev, "ADSP device coredump received\n");
- 		ipc->ready = false;
- 		catpt_coredump(cdev);
-+
-+		if (catpt_readl_dram(cdev, COREDUMP) == CATPT_COREDUMP_REQUEST) {
-+			dev_dbg(cdev->dev, "releasing firmware from the coredump state\n");
-+			catpt_writel_dram(cdev, COREDUMP, CATPT_COREDUMP_RELEASE);
-+		}
-+
-+		complete(&cdev->fw_ready);
- 		/* TODO: attempt recovery */
- 		break;
+ /* Build a linear skb based on a single-buffer frame descriptor */
+ static struct sk_buff *dpaa2_switch_build_linear_skb(struct ethsw_core *ethsw,
+-						     const struct dpaa2_fd *fd)
++						     const struct dpaa2_fd *fd,
++						     void *fd_vaddr)
+ {
+ 	u16 fd_offset = dpaa2_fd_get_offset(fd);
+-	dma_addr_t addr = dpaa2_fd_get_addr(fd);
+ 	u32 fd_length = dpaa2_fd_get_len(fd);
+ 	struct device *dev = ethsw->dev;
+ 	struct sk_buff *skb = NULL;
+-	void *fd_vaddr;
+-
+-	fd_vaddr = dpaa2_iova_to_virt(ethsw->iommu_domain, addr);
+-	dma_unmap_page(dev, addr, DPAA2_SWITCH_RX_BUF_SIZE,
+-		       DMA_FROM_DEVICE);
  
-diff --git a/sound/soc/intel/catpt/loader.c b/sound/soc/intel/catpt/loader.c
-index ff7b8f0d34ac7..6602587787cb4 100644
---- a/sound/soc/intel/catpt/loader.c
-+++ b/sound/soc/intel/catpt/loader.c
-@@ -626,6 +626,9 @@ int catpt_boot_firmware(struct catpt_dev *cdev, bool restore)
- 	if (!ret) {
- 		dev_err(cdev->dev, "firmware ready timeout\n");
- 		return -ETIMEDOUT;
-+	/* Wake up does not mean FW is ready, an exception could occur. */
-+	} else if (!cdev->ipc.ready) {
-+		return -EREMOTEIO;
+ 	skb = build_skb(fd_vaddr, DPAA2_SWITCH_RX_BUF_SIZE +
+ 			SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
+@@ -2437,6 +2432,7 @@ static void dpaa2_switch_tx_conf(struct dpaa2_switch_fq *fq,
+ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 			    const struct dpaa2_fd *fd)
+ {
++	dma_addr_t addr = dpaa2_fd_get_addr(fd);
+ 	struct ethsw_core *ethsw = fq->ethsw;
+ 	struct ethsw_port_priv *port_priv;
+ 	struct net_device *netdev;
+@@ -2444,10 +2440,14 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 	struct sk_buff *skb;
+ 	u16 vlan_tci, vid;
+ 	int if_id, err;
++	void *vaddr;
++
++	vaddr = dpaa2_iova_to_virt(ethsw->iommu_domain, addr);
++	dma_unmap_page(ethsw->dev, addr, DPAA2_SWITCH_RX_BUF_SIZE,
++		       DMA_FROM_DEVICE);
+ 
+ 	/* get switch ingress interface ID */
+ 	if_id = upper_32_bits(dpaa2_fd_get_flc(fd)) & 0x0000FFFF;
+-
+ 	if (if_id >= ethsw->sw_attr.num_ifs) {
+ 		dev_err(ethsw->dev, "Frame received from unknown interface!\n");
+ 		goto err_free_fd;
+@@ -2463,7 +2463,7 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 		}
  	}
  
- 	/* update sram pg & clock once done booting */
-diff --git a/sound/soc/intel/catpt/registers.h b/sound/soc/intel/catpt/registers.h
-index 47280d82842eb..a6da59dff76ef 100644
---- a/sound/soc/intel/catpt/registers.h
-+++ b/sound/soc/intel/catpt/registers.h
-@@ -124,6 +124,11 @@
- #define CATPT_SSCR2_DEFAULT		0x0
- #define CATPT_SSPSP2_DEFAULT		0x0
+-	skb = dpaa2_switch_build_linear_skb(ethsw, fd);
++	skb = dpaa2_switch_build_linear_skb(ethsw, fd, vaddr);
+ 	if (unlikely(!skb))
+ 		goto err_free_fd;
  
-+/* Coredump register and its states */
-+#define CATPT_DRAM_COREDUMP		0x1F4
-+#define CATPT_COREDUMP_REQUEST		UINT_MAX
-+#define CATPT_COREDUMP_RELEASE		0
-+
- /* Physically the same block, access address differs between host and dsp */
- #define CATPT_DSP_DRAM_OFFSET		0x400000
- #define catpt_to_host_offset(offset)	((offset) & ~(CATPT_DSP_DRAM_OFFSET))
-@@ -137,6 +142,8 @@
+@@ -2481,7 +2481,8 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 		err = __skb_vlan_pop(skb, &vlan_tci);
+ 		if (err) {
+ 			dev_info(ethsw->dev, "__skb_vlan_pop() returned %d", err);
+-			goto err_free_fd;
++			kfree_skb(skb);
++			return;
+ 		}
+ 	}
  
- /* registry I/O helpers */
+@@ -2496,7 +2497,7 @@ static void dpaa2_switch_rx(struct dpaa2_switch_fq *fq,
+ 	return;
  
-+#define catpt_dram_addr(cdev) \
-+	((cdev)->lpe_ba + (cdev)->spec->host_dram_offset)
- #define catpt_shim_addr(cdev) \
- 	((cdev)->lpe_ba + (cdev)->spec->host_shim_offset)
- #define catpt_dma_addr(cdev, dma) \
-@@ -151,6 +158,11 @@
- #define catpt_writel_ssp(cdev, ssp, reg, val) \
- 	writel(val, catpt_ssp_addr(cdev, ssp) + (reg))
+ err_free_fd:
+-	dpaa2_switch_free_fd(ethsw, fd);
++	free_pages((unsigned long)vaddr, 0);
+ }
  
-+#define catpt_readl_dram(cdev, reg) \
-+	readl(catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
-+#define catpt_writel_dram(cdev, reg, val) \
-+	writel(val, catpt_dram_addr(cdev) + CATPT_DRAM_##reg)
-+
- #define catpt_readl_shim(cdev, reg) \
- 	readl(catpt_shim_addr(cdev) + CATPT_SHIM_##reg)
- #define catpt_writel_shim(cdev, reg, val) \
+ static void dpaa2_switch_detect_features(struct ethsw_core *ethsw)
 -- 
 2.53.0
 
