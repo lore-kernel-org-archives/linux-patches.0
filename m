@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF624E9C21;
-	Wed, 30 Sep 2026 16:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B794DDB27;
+	Wed, 30 Sep 2026 16:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784033; cv=none; b=scDAAMczbPiPUq9UaPaPjId85so49UUMTSNvzYZMCUlVPIqOTrEW0FAyaii8qmMGVIG4VYh6Ky4iqvYtdvwpb07zZ8vUWwwiRlXbhNvivItNxXC+ukHvg31SsRtkgK8JUT6TE0IfebDv3nYGpciIjklvw7QmhDFCp5QMbMQ7VTE=
+	t=1790784038; cv=none; b=VdBc2LOifbKo4diFmjj3FncmtwkRyqyP6Bok2INmqez11m/eTXQ1HyoI7LruOTJ+ukqpV778cyoT3OM/6VMTebII2Fydc7CPi4hf0p3PCgk0/+j2veQ6WTqlg7D8iA2gx63dd1a21kDUiwiycdIvyHiOYrlbQIqWwGZyPVLJU8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784033; c=relaxed/simple;
-	bh=erEm1caXaePh914hRVh2uDSfEgPLnpSNLW7zBCuvN6Q=;
+	s=arc-20240116; t=1790784038; c=relaxed/simple;
+	bh=o1rmCqhZmMkHzCK0H/pDJkMuC0/UZyMCOU2NpgGKzZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3dOLtdWrUwyU5efxz68i5fH3zliIYGuykgGaDqpS5bsi1+g0hLd3pNl0g5rCG4JheTZOihGNovDaXDKZZLs1q7fK+CNr9DHLtiyYts6qkKvgN4mjLj0UpRIEzd9a9fKNojLXaBW2QJWcfKg9Z1H+J3MOm3AvOP2LXs76grL3LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Xeqzbd9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V4NAoHai8lD0HpPVK9IshMCSYlp3S0/3cwWC65mTa/ymLtEUMD51mRtBF6s5Tchhc3Va9AMUX5mmAmkbFb0pdCRrld01JM5Yu/Xoo/ub+L0laoxnbEyIcr1QouPhRz4mdCxnbEz0+N+MI3ldapt+0CyRwi/fR6+BnQn7KNTUBVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzVXJppN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Xeqzbd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C601F00899;
-	Wed, 30 Sep 2026 16:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzVXJppN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D281F00893;
+	Wed, 30 Sep 2026 16:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784028;
-	bh=SoIAWWq1/R022OerpE0hvu1F+PeWhO1BVlVA2oR8PQc=;
+	s=korg; t=1790784034;
+	bh=Cvp0o126BW/tMjdJbveLgtrc/zXmAxXtBswEVdUUyOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Xeqzbd9D1r3xSGi2qvukJVQ4xSpyJ1Vs5uKLQqQbgPbtGqRDWUaiaGPVKg4rovlI
-	 HWnB2SKAKDgSTlkfoJvZzLdW7WEqo3aCsmmDLoxMg1Cyy49utQU2WYcRGwxo33llbW
-	 /2fGGcED2sDB61nUkyP79o/2vpc3LGW6M4telTig=
+	b=MzVXJppNhRm2HvTxGR5HwhoicgVuLyiPm4XdNBYyqp5CDTXZAyoVmkjSQleKl8+gH
+	 RDdBz//cn46HRhNu9vrcS94qVZwg2J4iDvKJuC7OAiv3Kn7GkofqiCGIkHZ93poAgB
+	 ESivAqsB9E0+ij6zxET6uTVeJUh8rDMojv0QFmoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Marco Elver <elver@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/982] kcsan: Silence -Wmaybe-uninitialized when calling __kcsan_check_access()
-Date: Wed, 30 Sep 2026 17:12:28 +0200
-Message-ID: <20260930152417.051352321@linuxfoundation.org>
+Subject: [PATCH 6.1 014/982] bridge: Do not suppress ARP probes and DAD NS unconditionally
+Date: Wed, 30 Sep 2026 17:12:30 +0200
+Message-ID: <20260930152417.094524683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,101 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Danielle Ratson <danieller@nvidia.com>
 
-[ Upstream commit 07a1a6562ce29e2e0c134a57882d6e52e8758492 ]
+[ Upstream commit fee1fc1d5a5475f5516d406a03e443348cd0f06c ]
 
-Some subsystems enable -Wmaybe-uninitialized [1], which can trigger
-false positives when KCSAN is enabled. Specifically, passing an
-uninitialized variable to functions that instrument accesses (e.g.,
-copy_from_user()) results in calls to __kcsan_check_access().
+When neighbor suppression is enabled on a VXLAN port, the bridge is
+expected to reply to ARP/NS messages on behalf of remote hosts when both
+FDB and neighbor entries exist. This allows the bridge to suppress
+flooding of these messages to the VXLAN overlay.
 
-Because __kcsan_check_access() takes a `const volatile void *ptr`, GCC
-infers that the function may only read the memory location, and thus
-warns if the passed variable is uninitialized.
+According to RFC 9161 ("Operational Aspects of Proxy ARP/ND in Ethernet
+Virtual Private Networks"):
+"A PE SHOULD reply to broadcast/multicast address resolution messages,
+i.e., ARP Requests, ARP probes, NS messages, as well as DAD NS messages.
+An ARP probe is an ARP Request constructed with an all-zero sender IP
+address that may be used by hosts for IPv4 Address Conflict Detection as
+specified in [RFC5227]".
 
-However, KCSAN is a dynamic analysis tool for data race detection; while
-it does read the memory location to detect concurrent modifications, the
-"initialized'ness" of the memory location is irrelevant for its analysis.
+However, the current implementation unconditionally suppresses ARP probes
+and DAD Neighbor Solicitations, which breaks Duplicate Address Detection
+(DAD) over EVPN.
 
-Use absolute_pointer() in __kcsan_check_write(), kcsan_check_write(),
-and kcsan_check_atomic_write() to hide the pointer from the compiler,
-preventing it from concluding that the pointer passed points to
-uninitialized memory.
+For DAD to work correctly over the VXLAN fabric:
+- When the bridge does not know the answer:
+  flood the probe/DAD packet to allow remote VTEPs to respond.
+- When the bridge knows the answer:
+  reply to indicate the address is in use.
 
-This fixes warnings like:
+Fix by adjusting the early suppression checks to exclude ARP probes and
+DAD NS from unconditional suppression.
 
-|   CC      fs/ntfs3/file.o
-| In file included from include/asm-generic/rwonce.h:27,
-|                  from arch/arm64/include/asm/rwonce.h:81,
-|                  from include/linux/compiler.h:369,
-|                  from include/linux/array_size.h:5,
-|                  from include/linux/kernel.h:16,
-|                  from include/linux/backing-dev.h:12,
-|                  from fs/ntfs3/file.c:10:
-| In function 'instrument_copy_from_user_before',
-|     inlined from '_inline_copy_from_user' at include/linux/uaccess.h:184:2,
-|     inlined from 'copy_from_user' at include/linux/uaccess.h:221:9,
-|     inlined from 'ntfs_ioctl_fitrim' at fs/ntfs3/file.c:77:6,
-|     inlined from 'ntfs_ioctl' at fs/ntfs3/file.c:164:10:
-| include/linux/kcsan-checks.h:220:28: error: 'range' may be used uninitialized [-Werror=maybe-uninitialized]
-|   220 | #define kcsan_check_access __kcsan_check_access
-|       |                            ^
-| include/linux/kcsan-checks.h:311:9: note: in expansion of macro 'kcsan_check_access'
-|   311 |         kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
-|       |         ^~~~~~~~~~~~~~~~~~
-| include/linux/instrumented.h:147:9: note: in expansion of macro 'kcsan_check_write'
-|   147 |         kcsan_check_write(to, n);
-|       |         ^~~~~~~~~~~~~~~~~
-| include/linux/kcsan-checks.h: In function 'ntfs_ioctl':
-| include/linux/kcsan-checks.h:37:6: note: by argument 1 of type 'const volatile void *' to '__kcsan_check_access' declared here
-|    37 | void __kcsan_check_access(const volatile void *ptr, size_t size, int type);
-|       |      ^~~~~~~~~~~~~~~~~~~~
-| fs/ntfs3/file.c:65:29: note: 'range' declared here
-|    65 |         struct fstrim_range range;
-|       |                             ^~~~~
+When replying to a DAD NS, br_nd_send() is adjusted to set the NA
+destination to the all-nodes multicast address (ff02::1) and clear the
+Solicited flag, in accordance with RFC 4861 section 7.2.4.
 
-Link: https://lore.kernel.org/all/5da10cca-875b-418d-b54e-6be3ea32c266@app.fastmail.com/ [1]
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Marco Elver <elver@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Danielle Ratson <danieller@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260429062405.1386417-2-danieller@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kcsan-checks.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bridge/br_arp_nd_proxy.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/kcsan-checks.h b/include/linux/kcsan-checks.h
-index 92f3843d9ebb8..e135dacaa90f3 100644
---- a/include/linux/kcsan-checks.h
-+++ b/include/linux/kcsan-checks.h
-@@ -282,7 +282,7 @@ static inline void __kcsan_disable_current(void) { }
-  * @size: size of access
-  */
- #define __kcsan_check_write(ptr, size)                                         \
--	__kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
-+	__kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
+diff --git a/net/bridge/br_arp_nd_proxy.c b/net/bridge/br_arp_nd_proxy.c
+index 1914027e8bb3c..97d0349189aaf 100644
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -162,7 +162,7 @@ void br_do_proxy_suppress_arp(struct sk_buff *skb, struct net_bridge *br,
+ 			return;
+ 		if (parp->ar_op != htons(ARPOP_RREQUEST) &&
+ 		    parp->ar_op != htons(ARPOP_RREPLY) &&
+-		    (ipv4_is_zeronet(sip) || sip == tip)) {
++		    sip == tip) {
+ 			/* prevent flooding to neigh suppress ports */
+ 			BR_INPUT_SKB_CB(skb)->proxyarp_replied = 1;
+ 			return;
+@@ -260,6 +260,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	int ns_olen;
+ 	int i, len;
+ 	u8 *daddr;
++	bool dad;
+ 	u16 pvid;
  
- /**
-  * __kcsan_check_read_write - check regular read-write access for races
-@@ -308,7 +308,7 @@ static inline void __kcsan_disable_current(void) { }
-  * @size: size of access
-  */
- #define kcsan_check_write(ptr, size)                                           \
--	kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
-+	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
+ 	if (!dev || skb_linearize(request))
+@@ -298,8 +299,13 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 		}
+ 	}
  
- /**
-  * kcsan_check_read_write - check regular read-write access for races
-@@ -331,7 +331,7 @@ static inline void __kcsan_disable_current(void) { }
- #define kcsan_check_atomic_read(ptr, size)                                     \
- 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC)
- #define kcsan_check_atomic_write(ptr, size)                                    \
--	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
-+	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
- #define kcsan_check_atomic_read_write(ptr, size)                               \
- 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE | KCSAN_ACCESS_COMPOUND)
- #endif
++	dad = ipv6_addr_any(&ipv6_hdr(request)->saddr);
++
+ 	/* Ethernet header */
+-	ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
++	if (dad)
++		ipv6_eth_mc_map(&in6addr_linklocal_allnodes, eth_hdr(reply)->h_dest);
++	else
++		ether_addr_copy(eth_hdr(reply)->h_dest, daddr);
+ 	ether_addr_copy(eth_hdr(reply)->h_source, n->ha);
+ 	eth_hdr(reply)->h_proto = htons(ETH_P_IPV6);
+ 	reply->protocol = htons(ETH_P_IPV6);
+@@ -315,7 +321,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	pip6->priority = ipv6_hdr(request)->priority;
+ 	pip6->nexthdr = IPPROTO_ICMPV6;
+ 	pip6->hop_limit = 255;
+-	pip6->daddr = ipv6_hdr(request)->saddr;
++	pip6->daddr = dad ? in6addr_linklocal_allnodes : ipv6_hdr(request)->saddr;
+ 	pip6->saddr = *(struct in6_addr *)n->primary_key;
+ 
+ 	skb_pull(reply, sizeof(struct ipv6hdr));
+@@ -328,7 +334,7 @@ static void br_nd_send(struct net_bridge *br, struct net_bridge_port *p,
+ 	na->icmph.icmp6_type = NDISC_NEIGHBOUR_ADVERTISEMENT;
+ 	na->icmph.icmp6_router = (n->flags & NTF_ROUTER) ? 1 : 0;
+ 	na->icmph.icmp6_override = 1;
+-	na->icmph.icmp6_solicited = 1;
++	na->icmph.icmp6_solicited = dad ? 0 : 1;
+ 	na->target = ns->target;
+ 	ether_addr_copy(&na->opt[2], n->ha);
+ 	na->opt[0] = ND_OPT_TARGET_LL_ADDR;
+@@ -429,7 +435,7 @@ void br_do_suppress_nd(struct sk_buff *skb, struct net_bridge *br,
+ 	saddr = &iphdr->saddr;
+ 	daddr = &iphdr->daddr;
+ 
+-	if (ipv6_addr_any(saddr) || !ipv6_addr_cmp(saddr, daddr)) {
++	if (!ipv6_addr_cmp(saddr, daddr)) {
+ 		/* prevent flooding to neigh suppress ports */
+ 		BR_INPUT_SKB_CB(skb)->proxyarp_replied = 1;
+ 		return;
 -- 
 2.53.0
 
