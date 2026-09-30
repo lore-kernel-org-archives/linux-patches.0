@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FC7425897;
-	Wed, 30 Sep 2026 19:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC254513549;
+	Wed, 30 Sep 2026 19:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790797013; cv=none; b=CRzVq+DIxwX27Ntm0xtsfrJm8vygl/36GQ3J8Nj8iaOZHVwW3VLNdlfiUr8ZaIPLj4+bS1Tar06ZyoeXc+8NQAQfXPmisglGShT8ZTjgJe+4pQdwpFVxUn8tnryRD6+PNV5tR9xcT0PdYeHe+OJQsOPP/StubtpnelXOgJH/BDo=
+	t=1790797016; cv=none; b=YBE3Kah3O8FJR6y3Eaw9uraP4pxKnaHKiWhpJJ6yYZcRc+bNcjMUHuXcbFol0kZ8muKD//Zt+OpxiErLvMdHD1y0x87vSw0qE5B9v7ddm5VBbtnnwnKL+N1Eo+luN0wn7ZG2gjWsx2CujAkHYZkrWY9mfDmSqAxFWF9xSDS3QFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790797013; c=relaxed/simple;
-	bh=idJXtgrPUUBqccn6yQpL24E0J6olpCBrllllXk35t5s=;
+	s=arc-20240116; t=1790797016; c=relaxed/simple;
+	bh=fazi4lc8dX/uD6A88nQS0QsIbCHXezESPDgMIePem/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bw9Q+cgAUbEZBMwcTOGXzyVVBhZedw+wi1O+ppzIiWfAQecKn2T6HrJbyEP32zL+eVO5Vy4apCTKVN4VpNp7Y3x5+uI2/twD+T6b9Dl2mf4JrBZ8ll5892wnWpGIoAzWp4XHvRSmM8j5z3UxD746Qv9cogp7oDkxUj8GTBVb6qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbaZQrrQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jrkMbtzVXYf8+OcVVn2vZoPtAGmLqRxnEe/AQDd1BX9sdLJuHUmUTML7wO05iQvcR/oiY94C+SEy6qkem53ASoCNlDuArR/y5pyMcXMJMkBSF8zPvHmJ97QXGPXYqHM0CTq914rt+CAqC/RFiK33XSYiZcJhjaQkff+SB0I9Pkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLD7oBIR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbaZQrrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1B01F000FF;
-	Wed, 30 Sep 2026 19:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLD7oBIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252F81F000FF;
+	Wed, 30 Sep 2026 19:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790797011;
-	bh=iPdkUUGlR7MzPnGyXQpdbohRTVFHywKqUqmFdI4aZbY=;
+	s=korg; t=1790797014;
+	bh=H4iH274LEqZD3xIth1YRp96NN7LV+q3ubHz4MEwpeWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dbaZQrrQOY/Y3C5gsdHc6+J1zUtDFWJxcb7rPWL5IuAAslw8GeRsCbdlMomIVTCFW
-	 bKmVCRDt+X95duQHEi3HE/yrUrJ3JeY9Q0q1ENtKyL2YGkxP01H5LTjuUyp083ClVF
-	 oq3eULZVOEJflHTzVWtleKCBEKu6pnw3Lv2ut0F8=
+	b=YLD7oBIRAVziWHCslFL40lP1eC1F0Gw0UN+7wH/p+FFEWulhPpy2FlhKcZY/AbhlC
+	 fa1Tr9Vxkacs+VE4eOwzJ3rVLPWtgY1WUxtczLbj1pxBipf9hFZ/K/Rvuer4wBb0At
+	 GqHEZ7HTE3YEOzbsXxCAbDY5trpfklXdq4vZ1udY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.6 1116/1193] drm/nouveau: dont bump pin count on failed re-pin in nouveau_bo_pin_locked()
-Date: Wed, 30 Sep 2026 17:30:00 +0200
-Message-ID: <20260930152459.027378956@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.6 1117/1193] drm/virtio: fix memory leak of fence event on execbuffer failure
+Date: Wed, 30 Sep 2026 17:30:01 +0200
+Message-ID: <20260930152459.048986349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,121 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 6a6870d3077faa501ca97760057ddca22b68418d upstream.
+commit b74aad23d99b279bb34d135795f39a6d8ecdc075 upstream.
 
-nouveau_bo_pin_locked() checks whether an already pinned BO is in a
-memory domain compatible with a new pin request. When the domains are
-incompatible, it sets -EBUSY but still calls ttm_bo_pin() before
-returning.
+virtio_gpu_execbuffer_ioctl() reserves a DRM event with
+drm_event_reserve_init() when VIRTGPU_EXECBUF_RING_IDX selects a ring that
+userspace has enabled polling for. virtio_gpu_init_submit() does this
+before the BO handles, the command buffer, the syncobj arrays and the
+in-fence are processed, so every later error path runs with the event
+already pending, including plain argument validation failures such as an
+invalid bo_handle or an in-syncobj that carries no fence.
 
-Callers treat a failed nouveau_bo_pin() as not having acquired a new pin,
-so the extra pin count is never decreased by a matching unpin.
-This triggers the warning in ttm_bo_release():
+On those paths, virtio_gpu_cleanup_submit() drops the out-fence without
+cancelling the event. The fence is freed without ever having been emitted,
+taking the only driver-side pointer to the event with it. Closing the DRM
+file does not help. drm_events_release() unlinks pending events but
+deliberately leaves the freeing to the driver's later drm_send_event(),
+which never runs for an orphaned event, so the allocation is leaked
+permanently.
 
-	WARN_ON_ONCE(bo->pin_count);
+Found when fuzzing the virtio driver with Syzkaller:
 
-Found when fuzzing the nouveau driver with a modified Syzkaller:
+	BUG: memory leak
+	unreferenced object 0xffff88802c176e80 (size 96):
+	comm "syz.1.367", pid 10561, jiffies 4294960122
+	hex dump (first 32 bytes):
+		00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+		c8 6e 17 2c 80 88 ff ff 00 00 00 00 00 00 00 00  .n.,............
+	backtrace (crc e1973c6b):
+		kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+		slab_post_alloc_hook mm/slub.c:4597 [inline]
+		slab_alloc_node mm/slub.c:4917 [inline]
+		__kmalloc_cache_noprof+0x49d/0x6f0 mm/slub.c:5485
+		_kmalloc_noprof include/linux/slab.h:988 [inline]
+		_kzalloc_noprof include/linux/slab.h:1309 [inline]
+		virtio_gpu_fence_event_create drivers/gpu/drm/virtio/virtgpu_submit.c:282 [inline]
+		virtio_gpu_init_submit drivers/gpu/drm/virtio/virtgpu_submit.c:398 [inline]
+		virtio_gpu_execbuffer_ioctl+0xbbf/0x1aa0 drivers/gpu/drm/virtio/virtgpu_submit.c:505
+		drm_ioctl_kernel+0x1f4/0x3e0 drivers/gpu/drm/drm_ioctl.c:817
+		drm_ioctl+0x5f4/0xc70 drivers/gpu/drm/drm_ioctl.c:914
+		vfs_ioctl fs/ioctl.c:51 [inline]
+		__do_sys_ioctl fs/ioctl.c:597 [inline]
+		__se_sys_ioctl fs/ioctl.c:583 [inline]
+		__x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+		do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+		do_syscall_64+0x116/0x800 arch/x86/entry/syscall_64.c:94
+		entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-	WARNING: drivers/gpu/drm/ttm/ttm_bo.c:256 at ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256, CPU#1: syz.3.24/2212
-	Modules linked in:
-	CPU: 1 UID: 0 PID: 2212 Comm: syz.3.24 Not tainted 7.2.0 #24 PREEMPT(lazy)
-	nouveau 0000:01:00.0: gsp:msg fn:103 len:0x40/0x20 res:0x19 resp:0x19
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-	RIP: 0010:ttm_bo_release+0x827/0x9e0 drivers/gpu/drm/ttm/ttm_bo.c:256
-	Code: 02 00 0f 85 51 01 00 00 48 8b 7b 08 e8 d2 20 01 00 e9 80 fd ff ff e8 d8 15 c0 fe 90 0f 0b 90 e9 e1 f8 ff ff e8 ca 15 c0 fe 90 <0f> 0b 90 e9 a4 f8 ff ff e8 bc 15 c0 fe be 03 00 00 00 4c 89 e7 e8
-	msg: 00000000: 05 00 d0 c1 04 00 f0 f1 01 30 00 00 2d 90 00 00  .........0..-...
-	RSP: 0018:ffffc9000f5cf710 EFLAGS: 00010293
-	RAX: 0000000000000000 RBX: ffff888018e5d2a8 RCX: ffffffff82bb1b36
-	RDX: ffff888017b68000 RSI: 0000000000000004 RDI: ffff888018e5d2a8
-	msg: 00000010: 19 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-	RBP: ffff88801261c720 R08: 0000000000000001 R09: ffffed10031cba55
-	R10: ffff888018e5d2ab R11: 00000000000000f3 R12: ffff888018e5d290
-	R13: ffff888018e5d2d4 R14: ffff88801b219c18 R15: dffffc0000000000
-	FS:  0000000000000000(0000) GS:ffff8880e0f6f000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 0000001b31223ffc CR3: 0000000028e00005 CR4: 0000000000770ef0
-	PKRU: 80000000
-	Call Trace:
-	<TASK>
-	kref_put include/linux/kref.h:65 [inline]
-	ttm_bo_put drivers/gpu/drm/ttm/ttm_bo.c:325 [inline]
-	ttm_bo_fini+0x55/0x80 drivers/gpu/drm/ttm/ttm_bo.c:330
-	nouveau_gem_object_del+0xb2/0x1b0 drivers/gpu/drm/nouveau/nouveau_gem.c:90
-	drm_gem_object_free+0x5f/0x90 drivers/gpu/drm/drm_gem.c:1165
-	kref_put include/linux/kref.h:65 [inline]
-	__drm_gem_object_put include/drm/drm_gem.h:562 [inline]
-	drm_gem_object_put include/drm/drm_gem.h:575 [inline]
-	nouveau_abi16_chan_fini.constprop.0+0x44f/0x5a0 drivers/gpu/drm/nouveau/nouveau_abi16.c:195
-	nouveau 0000:01:00.0: syz.2.23[2209]: Unknown handle 0x00000000
-	nouveau_abi16_fini+0x1d0/0x340 drivers/gpu/drm/nouveau/nouveau_abi16.c:225
-	nouveau_drm_postclose+0x18b/0x3e0 drivers/gpu/drm/nouveau/nouveau_drm.c:1284
-	nouveau 0000:01:00.0: syz.2.23[2209]: validate_init
-	drm_file_free.part.0+0x6d6/0xb60 drivers/gpu/drm/drm_file.c:267
-	drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
-	drm_close_helper.isra.0+0x11a/0x160 drivers/gpu/drm/drm_file.c:290
-	drm_release+0x1ab/0x330 drivers/gpu/drm/drm_file.c:438
-	__fput+0x39c/0xa60 fs/file_table.c:512
-	nouveau 0000:01:00.0: syz.2.23[2209]: validate: -2
-	task_work_run+0x15a/0x230 kernel/task_work.c:233
-	exit_task_work include/linux/task_work.h:40 [inline]
-	do_exit+0x82b/0x25a0 kernel/exit.c:1009
-	do_group_exit+0xc2/0x280 kernel/exit.c:1152
-	get_signal+0x1d6e/0x1f30 kernel/signal.c:3046
-	arch_do_signal_or_restart+0x7d/0x6e0 arch/x86/kernel/signal.c:337
-	__exit_to_user_mode_loop kernel/entry/common.c:66 [inline]
-	exit_to_user_mode_loop+0xdf/0x440 kernel/entry/common.c:101
-	__exit_to_user_mode_prepare include/linux/irq-entry-common.h:207 [inline]
-	syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:230 [inline]
-	syscall_exit_to_user_mode include/linux/entry-common.h:318 [inline]
-	do_syscall_64+0x4f8/0x690 arch/x86/entry/syscall_64.c:100
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7f12bac8594d
-	Code: Unable to access opcode bytes at 0x7f12bac85923.
-	RSP: 002b:00007f12b96e70d8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
-	RAX: 0000000000000001 RBX: 00007f12baf15fa8 RCX: 00007f12bac8594d
-	RDX: 00000000000f4240 RSI: 0000000000000081 RDI: 00007f12baf15fac
-	RBP: 00007f12baf15fa0 R08: 00007f12baee8000 R09: 0000000000000000
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 00007f12baf16038 R14: 0000000000000006 R15: 00007ffe2ed394b0
-	</TASK>
-	irq event stamp: 47867
-	hardirqs last  enabled at (47883): [<ffffffff815cafc6>] __up_console_sem+0x66/0x70 kernel/printk/printk.c:347
-	hardirqs last disabled at (47892): [<ffffffff815cafab>] __up_console_sem+0x4b/0x70 kernel/printk/printk.c:345
-	softirqs last  enabled at (47880): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
-	softirqs last  enabled at (47880): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
-	softirqs last  enabled at (47880): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
-	softirqs last disabled at (47875): [<ffffffff81434277>] __do_softirq kernel/softirq.c:656 [inline]
-	softirqs last disabled at (47875): [<ffffffff81434277>] invoke_softirq kernel/softirq.c:496 [inline]
-	softirqs last disabled at (47875): [<ffffffff81434277>] __irq_exit_rcu+0x137/0x1c0 kernel/softirq.c:735
+Fix by cancelling and freeing the DRM event on the execbuffer error path
+before dropping the fence. Clear the fence's event pointer after
+cancellation so it does not retain a dangling pointer.
 
-Fix by calling ttm_bo_pin() only when the existing placement is compatible
-with the new pin request. This matches the correct behavior in other DRM
-drivers such as amdgpu_bo_pin() in amdgpu.
-
+Fixes: cd7f5ca33585 ("drm/virtio: implement context init: add virtio_gpu_fence_event")
 Cc: stable@vger.kernel.org
-Fixes: ad76b3f7c7a0 ("drm/nouveau: teach nouveau_bo_pin() how to force a contig vram allocation")
 Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Assisted-by: LLM
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/EACEF2F4E098413F+20260918025312.2814889-1-peiyang_he@smail.nju.edu.cn
+Assisted-by: Codex:gpt-5.6-luna
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/D320EAB5680C1411+20260908121323.2405044-1-peiyang_he@smail.nju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_bo.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_submit.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_bo.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_bo.c
-@@ -505,8 +505,9 @@ nouveau_bo_pin(struct nouveau_bo *nvbo,
- 				      "0x%08x vs 0x%08x\n", bo,
- 				 bo->resource->mem_type, domain);
- 			ret = -EBUSY;
-+		} else {
-+			ttm_bo_pin(&nvbo->bo);
- 		}
--		ttm_bo_pin(&nvbo->bo);
- 		goto out;
- 	}
+--- a/drivers/gpu/drm/virtio/virtgpu_submit.c
++++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
+@@ -538,6 +538,10 @@ int virtio_gpu_execbuffer_ioctl(struct d
+ 	virtio_gpu_process_post_deps(&submit);
+ 	virtio_gpu_complete_submit(&submit);
+ cleanup:
++	if (ret && submit.out_fence && submit.out_fence->e) {
++		drm_event_cancel_free(dev, &submit.out_fence->e->base);
++		submit.out_fence->e = NULL;
++	}
+ 	virtio_gpu_cleanup_submit(&submit);
  
+ 	return ret;
 
 
