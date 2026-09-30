@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEF3509F13;
-	Wed, 30 Sep 2026 15:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807BA51588E;
+	Wed, 30 Sep 2026 15:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782533; cv=none; b=kA8WympY9sBmToEpmjJPLq33oxzQuVayecNi5bO3WBYgjMIPjTVy0Rx2T9lY9Edf/vY6jQ5mT3D4FrXQoi4Hwna1F4apOCLYM3W/hviF7c7zuYzKzPCydZwmgRjXFhIWzF6Xaofwf24nqZIVf+W801HK8TkJ1HaGb7955bjupls=
+	t=1790782533; cv=none; b=szUzeEDrY7wnKv5+bFvsPpQYk+LI5YpZ2C082o/4YB22VzWbze+Oj7Wazz1uXUS9QBKxsAlURHRCaIV/26RR4gYiNVAsIz4ZNdJ6/6q1+sdqecMrhXzD92gEr+82yfHf+ghaAIUUWGqSVZKFTTWGDz3bXyPAaLY3SeWbvTluXIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782533; c=relaxed/simple;
-	bh=FMzHQhnPoIr4uuEmrD1sdEBIRDUxXsUBZIsp2SjRd3o=;
+	bh=/MhnB9qzjC7e4qbFrrid448BLWUHPbi51iQ4K0nd+qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ss18d8F9+3ok58k20VWOnD5od4u2vahK4uwPRRqFQYmQdmULChWPQPjfk4/5fpLB2SGMDagMeJdyTne9MOixq9gK8zp/iBnLzJqwomlMhd3jFVvfEYPi9dM/8kB+AbjMHv9oXBBCNXEoCZROVwt/vznP/IXFjueqr08NKWfNmUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJrGitth; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ohJRSQJCbTUItoKaHnO4kR20ziER2iT55aoliGTQ7SF/ca4bQ+0zzLLXWsz3uD13/RGYIpqtaJp1mdtfENRRKUF48o9ef5UCidDJNdyzg+zMMzoisdqBsCN91Hj8l/g/mqSBnnuwnKmKgaQpNoG61rLmy3DmBbaZiJOczq6ZMCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4xVH1FU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJrGitth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BA91F00899;
-	Wed, 30 Sep 2026 15:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4xVH1FU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46481F0089B;
+	Wed, 30 Sep 2026 15:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782524;
-	bh=ig9+c+gN/9RcIhNs17VZg3gFxjZk53egywkfSlXaoYs=;
+	s=korg; t=1790782527;
+	bh=fcIWWz9ZH9THrVMJkMVLXoj70Owt3XVYh17pKxrmTvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJrGitth8IQJtkS/grDeXr/KJ1W3V8IQJ9q50MB5klwtcXdWPiunpVU/Nk7sGZ/Ib
-	 6S4a2P2Vua8unkXVRhdycYcJURgjq/mO/qFTRbrN9I6xpAK0+9P40Sdkvs9mfS0obG
-	 M34WjG3vrpOT5ZVhZ0wkQohoSaulYxuxeHDq4RQw=
+	b=B4xVH1FUGvphwHMnPyMbX80D+7/yjDjtClXC/0y7zNXoyT81ijfQ83aY8+dEvoLpe
+	 lxi0F9W5job7RlCchbWO5nXEhE0VNzc94aXgvEiuSag9pStj5kJlLCxPw4iBA/XW/v
+	 FlHTfwCFnZlzN3ih8oEc3QOep9BMwh6ODrSfP/tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ikaros <void0red@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/595] ACPICA: Add validation for node in acpi_ns_build_normalized_path()
-Date: Wed, 30 Sep 2026 17:19:31 +0200
-Message-ID: <20260930152349.416163467@linuxfoundation.org>
+Subject: [PATCH 5.10 079/595] ACPICA: Fix NULL pointer dereference in acpi_ns_custom_package()
+Date: Wed, 30 Sep 2026 17:19:32 +0200
+Message-ID: <20260930152349.437553103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,39 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ikaros <void0red@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 96b2b616870e46e2bc04efec03879683a0036e66 ]
+[ Upstream commit f8d14b7bb0063bbbd86c0e4d73edb8cea7b362bc ]
 
-Add validation for node in acpi_ns_build_normalized_path()
-to prevent use-after-free vulnerabilities.
+acpi_ns_custom_package() unconditionally dereferences the first element
+of the package to read the _BIX version number, without checking for
+NULL:
 
-Link: https://github.com/acpica/acpica/commit/b35adf49e89a
-Signed-off-by: ikaros <void0red@gmail.com>
+    if ((*Elements)->Common.Type != ACPI_TYPE_INTEGER)
+
+When firmware returns a _BIX package whose first element is an
+unresolvable reference, ACPICA evaluates that entry to NULL.
+acpi_ns_remove_null_elements() does not strip NULL entries for
+ACPI_PTYPE_CUSTOM packages (fixed-position format would break if
+elements were shifted), so acpi_ns_custom_package() sees the NULL
+and causes a crash.
+
+Add a NULL check for the first element (version field) before
+dereferencing it. The caller then receives AE_AML_OPERAND_TYPE
+instead of crashing.
+
+Link: https://github.com/acpica/acpica/commit/f3f111b9013b
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/118666237.nniJfEyVGO@rafael.j.wysocki
+Link: https://patch.msgid.link/5674388.Sb9uPGUboI@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsnames.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/acpica/nsprepkg.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/acpica/nsnames.c b/drivers/acpi/acpica/nsnames.c
-index d91153f657005..ab6d217d31db4 100644
---- a/drivers/acpi/acpica/nsnames.c
-+++ b/drivers/acpi/acpica/nsnames.c
-@@ -222,6 +222,12 @@ acpi_ns_build_normalized_path(struct acpi_namespace_node *node,
- 		goto build_trailing_null;
- 	}
+diff --git a/drivers/acpi/acpica/nsprepkg.c b/drivers/acpi/acpica/nsprepkg.c
+index 237b3ddeb0757..d5cc0381e67fa 100644
+--- a/drivers/acpi/acpica/nsprepkg.c
++++ b/drivers/acpi/acpica/nsprepkg.c
+@@ -631,6 +631,13 @@ acpi_ns_custom_package(struct acpi_evaluate_info *info,
  
-+	/* Validate the Node to avoid use-after-free vulnerabilities */
-+
-+	if (ACPI_GET_DESCRIPTOR_TYPE(node) != ACPI_DESC_TYPE_NAMED) {
-+		goto build_trailing_null;
+ 	/* Get version number, must be Integer */
+ 
++	if (!(*elements)) {
++		ACPI_WARN_PREDEFINED((AE_INFO, info->full_pathname,
++				      info->node_flags,
++				      "Return Package has a NULL version element"));
++		return_ACPI_STATUS(AE_AML_OPERAND_TYPE);
 +	}
 +
- 	next_node = node;
- 	while (next_node && next_node != acpi_gbl_root_node) {
- 		if (next_node != node) {
+ 	if ((*elements)->common.type != ACPI_TYPE_INTEGER) {
+ 		ACPI_WARN_PREDEFINED((AE_INFO, info->full_pathname,
+ 				      info->node_flags,
 -- 
 2.53.0
 
