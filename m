@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FDC51C348;
-	Wed, 30 Sep 2026 18:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1875172F5;
+	Wed, 30 Sep 2026 18:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792708; cv=none; b=nO+8MaqYFs04UV0syrhCHKTGTnSS7HTIctTmiR8zAvC1XR1UcNUyOqmtdyUBZHVorgwfTCKn0J0aX/JhkO0ekfD50/YPldOu6SWkZzYT0F3pPAY5+5nrSoKpK+HTDoJh7Ig3OsKW+8b9nnkmWanY77t3n4EBRGu8xhfFfKMxR6E=
+	t=1790792711; cv=none; b=StDiR52YlvcqVf2puq0p3LI8ojTFI899TLlu+SoLkbUqj8DqdSD8je1oKYNZuj0OiSsAHYHxeTK/LOyIwjnRgobyzJtkW+LtlbwFSDtvg9lI6bCQVSidstUXULu0pB3VsFa3LjpeO6OwJZp+5/sVVNHr83UY356bJjsO4QOgnTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792708; c=relaxed/simple;
-	bh=7vPag5iVUACy1jvmATxRR9mvnT434Gdwi6WKuqU/+rI=;
+	s=arc-20240116; t=1790792711; c=relaxed/simple;
+	bh=cShzxRHcOBV0haL3fPYAJcgqwm2ImjuNxQ2Jw6ydxdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYFdkMuyOg9/L8x8SZQ0nvz98t1kwur5AK3U+kEPW4rsO1SluWVmCbRZtcHPCZzM+Q7F8p1NngCGKJ8+pYieUgyethbIE5XqJ+Opd0r1qkGoRG+VnE5SmMsBXvrhWHm99xLHMFIWMmTw7jVhgz582dNXrbdNPYZwvXwKoVyx7fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FldpPjR5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PMVJpEqnSGhqacTPz08OS15b4ptnge/jO+9HTrXLDZbPHVgdOPbvi5/kpHfsCBjhfPqBSJprWSZbdVdzywgZ58rVZ5o+siOUNr9guKjsMYYEJZaa5y2qEzdwtePBWTVWXNbvpzTjU2RVg10I9GUUvwHKas/W1rA3H8iZl2iE62E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTp0J6za; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FldpPjR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9B31F000FF;
-	Wed, 30 Sep 2026 18:25:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTp0J6za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E49A1F0089A;
+	Wed, 30 Sep 2026 18:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792707;
-	bh=5mHc/KNwU5u6bzKR64kq8Slh3jYFg3s0QQ62+rRu+yo=;
+	s=korg; t=1790792709;
+	bh=8Cf37mxC1gGuNmpClDyNGnXvr41PXfm0w/TIKPWfUTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FldpPjR54f/nrF0gSRVnj1+rDS/jDQ9E71yTN3LLtKbR+oPrGtpLVPPjWfLCFk6Mw
-	 oOKr4C87xvsYsKybZBP8nNg8ZYzk1aEOj7JrnWVXXBqkc6V6cY2qU5kHGDFWrmbtQ2
-	 +QplbktuaWkeiqj2ZsPT1j0fCVWGOe2MGsDL+CJk=
+	b=LTp0J6zaVg2Yz/vf4p56MTjrBRNNSNZOTi0RPiKt02Zk1PQ5c0zAaXzr6JNSGf0wu
+	 F/G41DA7NBbYpiCYrtKkS2iez0+GQzGDVZbZu1CpOK+u9GDFkEcQItbne7T2nJ4Blb
+	 h9UhnKaf0jz3meXxKN56KP5GRHu2Sqg9aCWC7u00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 706/752] llc: reserve device headroom for allocated frames
-Date: Wed, 30 Sep 2026 17:29:36 +0200
-Message-ID: <20260930152413.508333111@linuxfoundation.org>
+	Dongliang Qin <cccccccccccc777777@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 707/752] rds: ib: Clear the sg list when mapping an MR fails
+Date: Wed, 30 Sep 2026 17:29:37 +0200
+Message-ID: <20260930152413.529298290@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -53,58 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixuan Chai <petalzu987@gmail.com>
+From: Dongliang Qin <cccccccccccc777777@gmail.com>
 
-commit 72b5b9a28b996e09b8b5b944370c79851bb68f52 upstream.
+commit 58eb1b3325edac42dc6df72c80962bd53a3c8ca7 upstream.
 
-llc_alloc_frame() reserves link-layer headroom using the device type.
-This is insufficient for stacked Ethernet devices such as VLAN devices,
-where vlan_dev_hard_header() pushes a VLAN header before the lower
-device's Ethernet header. An LLC response on such a device can
-therefore underflow skb headroom in eth_header().
+rds_ib_map_frmr() stores the caller's scatterlist in the MR before DMA
+mapping and registration can fail. On failure, __rds_rdma_map() unpins
+the pages and frees the scatterlist, but rds_ib_free_frmr() can still
+return the MR to the pool with the stale pointer set.
 
-Use LL_RESERVED_SPACE() to account for the device's actual required
-headroom while preserving the existing LLC device-type check.
+This leaves the pool with a dangling scatterlist and can lead to local
+privilege escalation. KASAN detects the resulting use-after-free when the
+MR is later torn down:
 
-Fixes: bf9ae5386bca ("llc: use dev_hard_header")
+BUG: KASAN: slab-use-after-free in __rds_ib_teardown_mr
+Read of size 8
+
+Call Trace:
+ __rds_ib_teardown_mr
+ rds_ib_unreg_frmr
+ rds_ib_flush_mr_pool
+ rds_ib_flush_mrs
+ rds_free_mr
+ rds_setsockopt
+
+Store the scatterlist in the MR only after DMA mapping succeeds. If DMA
+mapping fails, return directly while the MR fields remain clear; the caller
+keeps ownership of the scatterlist and its pinned pages. If a later
+registration step fails, unmap the scatterlist and clear the MR fields
+before returning.
+
+Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
 Cc: stable@vger.kernel.org
-Reported-by: VEGA <vega@nebusec.ai>
-Signed-off-by: Zixuan Chai <petalzu987@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260924012613.2533934-1-weir@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dongliang Qin <cccccccccccc777777@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260922031546.3874605-1-cccccccccccc777777@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/llc_sap.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/rds/ib_frmr.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/net/llc/llc_sap.c
-+++ b/net/llc/llc_sap.c
-@@ -25,12 +25,12 @@
- #include <linux/llc.h>
- #include <linux/slab.h>
+--- a/net/rds/ib_frmr.c
++++ b/net/rds/ib_frmr.c
+@@ -204,19 +204,16 @@ static int rds_ib_map_frmr(struct rds_ib
+ 	 */
+ 	rds_ib_teardown_mr(ibmr);
  
--static int llc_mac_header_len(unsigned short devtype)
-+static int llc_mac_header_len(struct net_device *dev)
- {
--	switch (devtype) {
-+	switch (dev->type) {
- 	case ARPHRD_ETHER:
- 	case ARPHRD_LOOPBACK:
--		return sizeof(struct ethhdr);
-+		return LL_RESERVED_SPACE(dev);
+-	ibmr->sg = sg;
+-	ibmr->sg_len = sg_len;
+-	ibmr->sg_dma_len = 0;
+ 	frmr->sg_byte_len = 0;
+-	WARN_ON(ibmr->sg_dma_len);
+-	ibmr->sg_dma_len = ib_dma_map_sg(dev, ibmr->sg, ibmr->sg_len,
++	ibmr->sg_dma_len = ib_dma_map_sg(dev, sg, sg_len,
+ 					 DMA_BIDIRECTIONAL);
+ 	if (unlikely(!ibmr->sg_dma_len)) {
+ 		pr_warn("RDS/IB: %s failed!\n", __func__);
+ 		return -EBUSY;
  	}
- 	return 0;
+ 
+-	frmr->sg_byte_len = 0;
++	ibmr->sg = sg;
++	ibmr->sg_len = sg_len;
+ 	frmr->dma_npages = 0;
+ 	len = 0;
+ 
+@@ -264,6 +261,8 @@ out_unmap:
+ 	ib_dma_unmap_sg(rds_ibdev->dev, ibmr->sg, ibmr->sg_len,
+ 			DMA_BIDIRECTIONAL);
+ 	ibmr->sg_dma_len = 0;
++	ibmr->sg = NULL;
++	ibmr->sg_len = 0;
+ 	return ret;
  }
-@@ -51,7 +51,7 @@ struct sk_buff *llc_alloc_frame(struct s
- 	int hlen = type == LLC_PDU_TYPE_U ? 3 : 4;
- 	struct sk_buff *skb;
  
--	hlen += llc_mac_header_len(dev->type);
-+	hlen += llc_mac_header_len(dev);
- 	skb = alloc_skb(hlen + data_size, GFP_ATOMIC);
- 
- 	if (skb) {
 
 
