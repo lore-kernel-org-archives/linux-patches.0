@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0822509F18;
-	Wed, 30 Sep 2026 16:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4A151A156;
+	Wed, 30 Sep 2026 16:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784697; cv=none; b=NkLdu3vC5lvR8P6311gRQEeKaXhnMvV+8vgYtzgoa71r5FnHPO+NiUAa+XAcYhwPfENydzPqNNa0iFLhg105m4MFCEoV1V5viPxvh3+sGZOqpegZBVgR0pF2iSy02T4rBsYVTcQyficT2xCvgOljEPq1W7eQ+B0aRLoo9Mdm5jg=
+	t=1790784697; cv=none; b=Pnjtmo4VugiiyXCqsDsYAJKl0rvuSg8JIHTY0UsO5YmK3P0TrkGSTvU7S5WPpLbDrbQAhCSPcIxcVN/Hayj/dD41BEExvpYnuljEPmJlwUBSEV+IcS1rYc1+br8pWCz2z4vvcn1DL54qpIZM48QY4zCqcf4T6w3N7vG7u8HYOCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790784697; c=relaxed/simple;
-	bh=HxQ38iBVw+wN+w6U8nQsbpqflWXoKDVhNMf6MTMu/fk=;
+	bh=9L7FulnxpAtF4OGP8DDsyo8s8mnZLEYUtXi/rS4NdEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M931BybK5tXs8dli+46ojxzlyEaOyQGAXGctEDIayzaQ+IkzhgAGHJy+PDl25HdHYTUpiX/QHccWkOd9nmLMKxBieXzZL+oPkwWyEq7mfbqmBQkXU8BF4myK0gINAAJcr2p/G6xlbjdmwIeraNbfghw2XyXlLcRJ+xR4tGBp1So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjyME5qf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fQCRPIFt3ggbCULQvvwjRDU8a7276ieWSbzvfUPMnKQRZs14RdHYQME2XsMeW5XXY2M6K1mW2F3PPs4LMVonPL8WUYkudyYaP+9mVVqG85OacPlmxWHhMoF7pH3hJSZ91aGu8EPzVjAINlQFZ5h/xfkwuEV2NwLnji6JUwS2BkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKSf3u5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjyME5qf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FDBD1F00893;
-	Wed, 30 Sep 2026 16:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKSf3u5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B271F00898;
+	Wed, 30 Sep 2026 16:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784688;
-	bh=aNmkm+n4PE7qLy62fsE2le6rizEz4y4IMzHZiWM66RY=;
+	s=korg; t=1790784691;
+	bh=80kZLPUv9Og+GYBh/zVsune19gF4iZZC5t+9PaUg/3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DjyME5qf/RC9TkVyLZitmNkaDVjMfFVS49Ctw70wzWDAp75gumoH1hes/Wp/DZqkb
-	 VIZHD+d4pFg41PpyP8vMdlbnLidTiHRVKz/kZW0hhgxw/gPzQvHrwL8MVtMoj9Eyet
-	 leNDnCP359k/ITZGiMLBRaIiu8dScag5TEB10+zQ=
+	b=bKSf3u5wuaD44WiKdlmRu3aB8zMAiwB1GlQG2Ojf4eho1vEceCDzZhyKGYRxyuBym
+	 CbtRYt5QupYHdeEmJGoxZ82UlT9hh4JIMjIGC//488TgDV7ucFbjy7LVPfTkUQDbDd
+	 JbI0WFJud8h6+53Fqw8cHLNryJ5i5EZOjjNLwSlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jean-Louis Colaco <jean-louis.colaco@orange.fr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/982] cachefiles: Fix double fput
-Date: Wed, 30 Sep 2026 17:16:19 +0200
-Message-ID: <20260930152422.014871034@linuxfoundation.org>
+Subject: [PATCH 6.1 208/982] ALSA: usb-audio: Add quirk for YAMAHA CDS3000
+Date: Wed, 30 Sep 2026 17:15:44 +0200
+Message-ID: <20260930152421.276820616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -54,36 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Jean-Louis Colaco <jean-louis.colaco@orange.fr>
 
-[ Upstream commit af6830cc12dfe86c832dccc9c9878a93aaa22f83 ]
+[ Upstream commit 348f69320e4db6ebec6940c81154bec4b9eb275a ]
 
-Fix a double fput() in error handling in cachefiles_create_tmpfile().
+This quirk is identical to the one for the Yamaha Steinberg UR22, here
+applied to a CD player that also uses the Steinberg USB interface.
+This quirk is necessary to avoid sporadic "clic" noise when using the DAC
+of the player.
 
-Link: https://sashiko.dev/#/patchset/20260608145432.681865-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260625140640.3116900-4-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Jean-Louis Colaco <jean-louis.colaco@orange.fr>
+Link: https://patch.msgid.link/20260618113202.8363-1-jean-louis.colaco@orange.fr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/namei.c | 1 -
- 1 file changed, 1 deletion(-)
+ sound/usb/quirks-table.h | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
-index cbd0ff47acea0..7893c607b2479 100644
---- a/fs/cachefiles/namei.c
-+++ b/fs/cachefiles/namei.c
-@@ -494,7 +494,6 @@ struct file *cachefiles_create_tmpfile(struct cachefiles_object *object)
- 	ret = -EINVAL;
- 	if (unlikely(!file->f_op->read_iter) ||
- 	    unlikely(!file->f_op->write_iter)) {
--		fput(file);
- 		pr_notice("Cache does not support read_iter and write_iter\n");
- 		goto err_unuse;
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index c20a4df886906..f4995560050ab 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -390,6 +390,20 @@ YAMAHA_DEVICE(0x105d, NULL),
+ 		}
  	}
+ },
++{
++	USB_DEVICE(0x0499, 0x150d),
++	QUIRK_DRIVER_INFO {
++		/* .vendor_name = "Yamaha", */
++		/* .product_name = "CDS3000", */
++		QUIRK_DATA_COMPOSITE {
++			{ QUIRK_DATA_STANDARD_AUDIO(1) },
++			{ QUIRK_DATA_STANDARD_AUDIO(2) },
++			{ QUIRK_DATA_MIDI_YAMAHA(3) },
++			{ QUIRK_DATA_IGNORE(4) },
++			QUIRK_COMPOSITE_END
++		}
++	}
++},
+ {
+ 	USB_DEVICE(0x0499, 0x1718),
+ 	QUIRK_DRIVER_INFO {
 -- 
 2.53.0
 
