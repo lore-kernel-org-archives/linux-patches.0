@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2D41FDE31;
-	Wed, 30 Sep 2026 15:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC3D4E4C30;
+	Wed, 30 Sep 2026 15:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782802; cv=none; b=hfVw0qZLKu4ziCLbyw5uthtIi4W82hq40D8+drU0PuVUsL+ioq3WY5yj8DrNegPbvzPTZ7q9NhsQNHbWnlr0pddxiqsUrpSJmX3Ceag5pI6wIrYj8vnLaQ/nqW79XHQl1w/4tW3ZCvVX6jG9W6geU33gBGjVMK3q/35WgSaptQg=
+	t=1790782808; cv=none; b=DhVMYA48iwcHhiEtsCopl/sZ1BHm27uC+oV7mZ0T+GXhRWgfTXPHH28KLsjuB8p4PSSWGir3LOaRhTYP8B+7BUXDYZCUG1TmiiF4vAxoaN6rV0IVltvGg4aCCI55kkEKgiq2889yp8JMPZNn+EzcxPEfAeibZ3F0D/3SGbNmuDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782802; c=relaxed/simple;
-	bh=Aep3AyEp2UYFPIYWtzWVAaM/7ufIBunjroHn6c3zb7g=;
+	s=arc-20240116; t=1790782808; c=relaxed/simple;
+	bh=6BTJUVHwKfEYY6buFGaGH+8W/kZ+ALXjz4frKVWY0Iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eA+nHsvjFudPlBstwImtKX07GdHvRHaH6+pU0QbePrQXp5fsHH5zC8Ts9c5OXpYRNEVgvd7Ru+kmnzNhBORNS/eLFEW0q57C0G5BUuuCD4qv2veezOVyh7sYER2ES1T4YmNdyd31QUWQ1N6Xa3djdp15cGw8zXnvh1/eJ8Gyf2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09Md8wl8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AZvW0EgaDFBhX0/Wp9jPbUG2hLckzSav4ig2wBZWEt95Er+Qeh73iGpy5qAOdsGAbVc0c99nZ1cjPFhqegVC1EJDrslFygQvrQQyvadARUgTWQk44IxaSkpsh/3QBedI7ALB5/98Z8aJ4nCasQc1ARguA5CKufjTcBnsLXfHGHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9BLD0nK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09Md8wl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128361F00898;
-	Wed, 30 Sep 2026 15:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9BLD0nK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E538B1F00893;
+	Wed, 30 Sep 2026 15:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782797;
-	bh=CYiBaUVWANdz+MeeJzFw/3vXqRXuCLMv6DWrEuONzjM=;
+	s=korg; t=1790782800;
+	bh=w52d+nFBNLn/QKSIvuQ+XRPui6ZRGMBJASFdvSJV/rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09Md8wl8PRmVaWN1+6+5VJmDfc4vZb6tvk9mDSGV7Af83MiwgPOM8LDHLntc5MZUN
-	 YsHowATwodsrVJMjcJfS8gHS/yrof7HTFE1A3/AGIyBxTK1N7kYQqYYdtJY2xDE9md
-	 PzSjAJVJyg3J7Cw+eK7AW2NLjJcAA+hd6wpaTNPg=
+	b=z9BLD0nKJS3HomaM6mPkSo83x0QCcfVuG6KUuI5+VbFeU9+60qEFXpAnb91VRS15V
+	 DxqBJREZ4byzy29H7Q/OEvXJQX0kuioI/B75K3SMnWfgFsnRaD1qHo/0p8ppRGiW9v
+	 8aA6Bby5d29VQRON/iOczwUKSx8OFerHl1kTVvRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Madhavender Singh <madhav@disroot.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/595] phonet: check register_netdevice_notifier() error in phonet_device_init()
-Date: Wed, 30 Sep 2026 17:21:07 +0200
-Message-ID: <20260930152351.483715262@linuxfoundation.org>
+Subject: [PATCH 5.10 175/595] ALSA: hda/realtek: Add mute LED quirk for HP Laptop 14s-dr1xxx
+Date: Wed, 30 Sep 2026 17:21:08 +0200
+Message-ID: <20260930152351.505560852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,85 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Madhavender Singh <madhav@disroot.org>
 
-[ Upstream commit d1ff66b66151c14b084e88040512a064b1c1e493 ]
+[ Upstream commit bf4fc9f33ec21595143132a3e7fb8b5d2c2261cd ]
 
-phonet_device_init() registers a netdevice notifier before calling
-phonet_netlink_register(), but does not check whether notifier
-registration succeeded. On failure, netlink setup still proceeds and
-init may return success without the notifier in place.
+This laptop with an ALC236 codec requires the
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
+fixup for its mute LED to function correctly.
 
-Also, the existing phonet_netlink_register() failure path called
-phonet_device_exit(), which runs rtnl_unregister_all() even though
-rtnl_register_many() already unwound any partial registration. Calling
-the full exit helper on a partial init is not correct.
+Add the subsystem ID 0x103c:0x86c8 to the quirk table to apply this
+fixup.
 
-Check each registration error, including proc_create_net(), and unwind
-only the steps that have succeeded so far, in reverse order.
-
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Link: https://patch.msgid.link/20260721093956.162617-1-heminhong@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Madhavender Singh <madhav@disroot.org>
+Link: https://patch.msgid.link/20260723104736.23386-1-madhav@disroot.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/phonet/pn_dev.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/phonet/pn_dev.c b/net/phonet/pn_dev.c
-index 2c48dcf6a7400..50d85de598119 100644
---- a/net/phonet/pn_dev.c
-+++ b/net/phonet/pn_dev.c
-@@ -336,16 +336,34 @@ static struct pernet_operations phonet_net_ops = {
- /* Initialize Phonet devices list */
- int __init phonet_device_init(void)
- {
--	int err = register_pernet_subsys(&phonet_net_ops);
-+	int err;
-+
-+	err = register_pernet_subsys(&phonet_net_ops);
- 	if (err)
- 		return err;
- 
--	proc_create_net("pnresource", 0, init_net.proc_net, &pn_res_seq_ops,
--			sizeof(struct seq_net_private));
--	register_netdevice_notifier(&phonet_device_notifier);
-+	if (!proc_create_net("pnresource", 0, init_net.proc_net,
-+			     &pn_res_seq_ops, sizeof(struct seq_net_private))) {
-+		err = -ENOMEM;
-+		goto err_pernet;
-+	}
-+
-+	err = register_netdevice_notifier(&phonet_device_notifier);
-+	if (err)
-+		goto err_proc;
-+
- 	err = phonet_netlink_register();
- 	if (err)
--		phonet_device_exit();
-+		goto err_notifier;
-+
-+	return 0;
-+
-+err_notifier:
-+	unregister_netdevice_notifier(&phonet_device_notifier);
-+err_proc:
-+	remove_proc_entry("pnresource", init_net.proc_net);
-+err_pernet:
-+	unregister_pernet_subsys(&phonet_net_ops);
- 	return err;
- }
- 
-@@ -353,8 +371,8 @@ void phonet_device_exit(void)
- {
- 	rtnl_unregister_all(PF_PHONET);
- 	unregister_netdevice_notifier(&phonet_device_notifier);
--	unregister_pernet_subsys(&phonet_net_ops);
- 	remove_proc_entry("pnresource", init_net.proc_net);
-+	unregister_pernet_subsys(&phonet_net_ops);
- }
- 
- int phonet_route_add(struct net_device *dev, u8 daddr)
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 1b4d22d246672..ea10ee4de2f5d 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9266,6 +9266,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
++	SND_PCI_QUIRK(0x103c, 0x86c8, "HP Laptop 14s-dr1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
 -- 
 2.53.0
 
