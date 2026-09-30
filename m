@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170EB4F68AF;
-	Wed, 30 Sep 2026 15:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF1F4FECD9;
+	Wed, 30 Sep 2026 15:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782712; cv=none; b=CH1Z4SaC0DOTu8vllATwPoBQ57LMgecdBOYBlVfjWafzYs2b9PLgyJmrvTXPZbpQImxp5cSwlOGKqFMC8SB+R20T+jqga9p6NA1FUrLIBacB118H69vPj7yZWjxP4AXjVsYG1JOVAbRyHRKom/5cHvmeDzNYR8qpwk1L/OtAqH4=
+	t=1790782714; cv=none; b=t5aaADJiBjL2bZ1Mr6oOZKbTHjrTkreW/2yJOtJNReGo7lF5ELMPLilXhtFfg3ueBrMrTDNaEAoGlu45JEJo9PkTMVqN27LpyDNqADmvzP1MbfYUulPgFszKVzY62Cle8d9auXJII3mBGrwQK/bVj3liJwDO2QxVOVd6+LUdE8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782712; c=relaxed/simple;
-	bh=nqmA1KKz3pchGqpVqsREAXYtZBhhUXpZnPtfPLPaVBk=;
+	s=arc-20240116; t=1790782714; c=relaxed/simple;
+	bh=1tij8Hsqes3T0Vca7hp7aI3JvIpuGxhyf5VDNxUt+ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdE5imLd078nNtQRzJ/MDDpP+FsYXmaKNqHjrtmILIhrKGr3eCMQ3iM+5ZGmbqBHxRJ7WL+UqnpULFxIIUmss6eCCe7QUBohLSUYwHVuu65+yxxqFxgqiJLLcME2yfHmpfmEkExv/t6Z11tBeMcg7Vts4EbmZvNSxynJfRdqabE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mcz7DA3F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ADwpk6c+60rqdGhIFV39c+f+uPHHohQnMj6L4FrFAsUo9zDHjDZKcho4GsEG11p5G37niM2UzN3KcSpWdyMrSzpUljFTvG8MEdooGnvjSQsWWEvkSw9YqeYNKxsjhcD95knH97fZE8dh0oQYcFaPHm6JaHeMnIcnNNo7D8rK470=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+8oEjYa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mcz7DA3F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB84B1F000FF;
-	Wed, 30 Sep 2026 15:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+8oEjYa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89F61F00893;
+	Wed, 30 Sep 2026 15:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782706;
-	bh=g5PYphOt0vyAPy6xJxLcyf25E9fQ3H5SvwcNumf0d2Q=;
+	s=korg; t=1790782709;
+	bh=0UvfDCtjyteY7qBpCCwN51EMtAVBFnh3U4tv0ruY7hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mcz7DA3FzgknUkmtTlRxfMHccvqXlgyYhd6KI2+5/O76dlx293u6tcjbOdToVjPri
-	 VXxHL4660HjbcNNngciDsUZmMPU+nFpgq/KudofcXVlLAU/E4RVtbWHqcS1PUXtSGi
-	 cBKXawkYtsgyP7bO4KqCs5xmH46KZBse4KHTPTAU=
+	b=C+8oEjYalgrSgwcuZowoz+jonWxcsU8L0BC3Q6lY96w0W2PX7VHZJQO9hWdXBU8Sb
+	 jZsqqljrPgQT+5BcjMPKIbrD1z2KufDCwJpA8mx/cDwHLvjMR9f6KTeJeeVUkVa6JE
+	 Jaav0kvgYIx5VOvQASCGGROZfSwwpxQ4CHpmua/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/595] hwmon: (adt7462) Add of_match_table to support devicetree
-Date: Wed, 30 Sep 2026 17:20:07 +0200
-Message-ID: <20260930152350.190517440@linuxfoundation.org>
+Subject: [PATCH 5.10 141/595] md/raid5: let stripe batch bm_seq comparison wrap-safe
+Date: Wed, 30 Sep 2026 17:20:34 +0200
+Message-ID: <20260930152350.766453148@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,52 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit cd1b42617aafe01810ab7d3b9948d2f5fa9fb8af ]
+[ Upstream commit 00e93faf4cea9e8802ac5dfee0952d84fc95c40f ]
 
-Add of_match_table to add support of devicetree probing.
+Once the 32-bit seq wraps, a newer bm_seq can look smaller
+than old, so .. covert to wrap-safe calculate way.
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-[rgantois: Removed of_match_ptr().]
-Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
-Link: https://lore.kernel.org/r/20260608-adt7462-bindings-v2-1-272982c40325@bootlin.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Link: https://patch.msgid.link/20260618025735.915113-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7462.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/raid5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
-index e75bbd87ad093..5436c73e8d536 100644
---- a/drivers/hwmon/adt7462.c
-+++ b/drivers/hwmon/adt7462.c
-@@ -12,6 +12,7 @@
- #include <linux/hwmon.h>
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/mutex.h>
- #include <linux/log2.h>
- #include <linux/slab.h>
-@@ -1814,10 +1815,17 @@ static const struct i2c_device_id adt7462_id[] = {
- };
- MODULE_DEVICE_TABLE(i2c, adt7462_id);
- 
-+static const struct of_device_id adt7462_of_match[] = {
-+	{ .compatible = "onnn,adt7462" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, adt7462_of_match);
-+
- static struct i2c_driver adt7462_driver = {
- 	.class		= I2C_CLASS_HWMON,
- 	.driver = {
- 		.name	= "adt7462",
-+		.of_match_table = adt7462_of_match,
- 	},
- 	.probe_new	= adt7462_probe,
- 	.id_table	= adt7462_id,
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 637acb8ef60d3..5e929ceb45805 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -911,7 +911,7 @@ static void stripe_add_to_batch_list(struct r5conf *conf, struct stripe_head *sh
+ 	if (test_and_clear_bit(STRIPE_BIT_DELAY, &sh->state)) {
+ 		int seq = sh->bm_seq;
+ 		if (test_bit(STRIPE_BIT_DELAY, &sh->batch_head->state) &&
+-		    sh->batch_head->bm_seq > seq)
++		    sh->batch_head->bm_seq - seq > 0)
+ 			seq = sh->batch_head->bm_seq;
+ 		set_bit(STRIPE_BIT_DELAY, &sh->batch_head->state);
+ 		sh->batch_head->bm_seq = seq;
 -- 
 2.53.0
 
