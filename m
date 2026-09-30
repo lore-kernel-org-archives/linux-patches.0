@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B9E3B776D;
-	Wed, 30 Sep 2026 18:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406683CB54E;
+	Wed, 30 Sep 2026 18:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794061; cv=none; b=Mhl7i3ohR2tHhrt8bpJ8rSPiDPSKxHgG2DqFk107yVJhM0CZBYUkzczXMPJplNVq8rOWi9splZ12/JWY9lPANB27VesS+OBXK7ZuXyIGbWgGDqwoTbpiESjzQbVLjq33IAwgQVT460c5fC2QhcalEhEwwyeezAEejzHeGA3tiiA=
+	t=1790794064; cv=none; b=h0n7Cc8qRWs7fHqUBtiKRSnsn3OjPUXDWZ5eS3REdsc2PPsjasD6xUp1v4XqiCa47FFegtXStUokNXzuiLyQuf9fU+TJkCwKVH6/Kn9huGx5Ua7s5ThwaOaIRdhSOgZkoFUN6jnyMdHQHnDjiPFBPRezj02SZ5GT2x+0NY7bl8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794061; c=relaxed/simple;
-	bh=78s/xvHMZJblSpkoJinMICCGTc1KRlSejMfrzXxk0fU=;
+	s=arc-20240116; t=1790794064; c=relaxed/simple;
+	bh=8HtkqDqSgDtAJv6f2if3hSPSUJDUvdALWMGextYhKww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKB4GbUlTdAHQwxrFEcl4IcipUZjEH1YJv0DOg10MFnA47M40rdFoivKmPeyMERp7N0iNzGmvn/33dFwXVzjcK3x5mrsB7x3FLVbvSEaMonLXo2gZ53hy2HjzNqVJdtQWdrVMQsGjJre3J+8IoOLV8ClOWrWD9O27cOZ2w2hqOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okH0OdwL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TjI2ZBHfd791jVwYnMBeIpBN9Jy8q+Fuxh1rFKQbRI29dqgfIkLUXDFQ4KnfCBeTPX8vgzfZH8007qEx8wpLxkgMAHggaOgCW5Lp77YyhBUNsoYIiHajdp1LVOYQZxHdaNQ7f2VmT/R7s7TUFXwQgZhvTti5YbxFwhiKfxciYqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=at8svDvM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okH0OdwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB521F000FF;
-	Wed, 30 Sep 2026 18:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="at8svDvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1771F000FF;
+	Wed, 30 Sep 2026 18:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794060;
-	bh=6qWOGJVUrrl5DAfGuCGfLgidZPhSI089Lx6uAPCyAYk=;
+	s=korg; t=1790794063;
+	bh=Hd5x+Mm8zSX1GFgGR/2OE2MBu0HiLXbYHEcMTByMsek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=okH0OdwLm7W4ElFKQgB40lIZ4FWNrn0Q5pzUpcY8Nj6w+n+9SodhtTylpHjOOZP4W
-	 O0bS8YFa4oyW5XH/TBqCTbT0CB9/uzFbehZOr4+LKzRtFoE5XkEw9jc85bIL23JXGX
-	 sd5iGwwvSdwIMDRg40seSgNOrfLhAC0vuTFpyYxo=
+	b=at8svDvMUkOoMfmDeu/wgdsKqf1cz3Hpk6Vxy9txh6doAkUKvcAw3UeB68EN2lyrG
+	 fbel2nCpI6S7SX3W773U8Cxx0AwoBWOC3FgskGphiJ/toNUlwKWEdb1TiYCtRs+K9L
+	 Dhz5paoc30c3hEtoQy1h1fJDCTMUfgIn8IAYjIP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Volckaert <janvolck@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0078/1193] net: usb: qmi_wwan: add MeiG SRM813Q
-Date: Wed, 30 Sep 2026 17:12:42 +0200
-Message-ID: <20260930152435.989009016@linuxfoundation.org>
+Subject: [PATCH 6.6 0079/1193] net: bridge: remove stale rcu_barrier() in br_multicast_dev_del()
+Date: Wed, 30 Sep 2026 17:12:43 +0200
+Message-ID: <20260930152436.009660264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,93 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Volckaert <janvolck@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9758c11fc6c138a79a28a5659feeaa3abde7aa6a ]
+[ Upstream commit 25ae123db10ba9ab890b56bcdb0a4363aee8529a ]
 
-Add support for the Qualcomm Technology Snapdragon X35-based MeiG SRM813Q
-module.
+This rcu_barrier() came from a time call_rcu() calls were used in
+net/bridge/br_multicast.c.
 
-The module can be put in different modes via AT commands
-to enable/disable GPS functionality:
+Now kfree_rcu() is there, we can remove this problematic rcu_barrier()
+which causes extreme RTNL pressure in many syzbot reports.
 
-MODEM - PPP mode(2dee:4d63): AT+SER=1,1
+INFO: task syz-executor:77945 is blocked on a mutex likely owned by task kworker/u1024:5:36537.
+task:kworker/u1024:5 state:D stack:24616 pid:36537 tgid:36537 ppid:2      task_flags:0x4208060 flags:0x00080000 last_sleep:612797637337
+Workqueue: netns cleanup_net
+Call Trace:
+ <TASK>
+  [<ffffffff81914eaa>] context_switch+0xf2a/0x1730 kernel/sched/core.c:6483
+  [<ffffffff81201143>] __schedule+0x1133/0x43a0 kernel/sched/core.c:8411
+  [<ffffffff8120446b>] __schedule_loop kernel/sched/core.c:8514 [inline]
+  [<ffffffff8120446b>] schedule+0xab/0x260 kernel/sched/core.c:8529
+  [<ffffffff8121a093>] schedule_timeout+0xc3/0x2b0 kernel/time/sleep_timeout.c:75
+  [<ffffffff81205347>] do_wait_for_common kernel/sched/completion.c:100 [inline]
+  [<ffffffff81205347>] __wait_for_common kernel/sched/completion.c:121 [inline]
+  [<ffffffff81205347>] wait_for_common kernel/sched/completion.c:132 [inline]
+  [<ffffffff81205347>] wait_for_completion+0x2c7/0x5d0 kernel/sched/completion.c:153
+  [<ffffffff81b8f27f>] rcu_barrier+0x49f/0x620 kernel/rcu/tree.c:3888
+  [<ffffffff860091b3>] br_multicast_dev_del+0x303/0x350 net/bridge/br_multicast.c:4459
+  [<ffffffff85fb5dbc>] br_dev_uninit+0x1c/0x40 net/bridge/br_device.c:157
+  [<ffffffff8568058c>] unregister_netdevice_many_notify+0x1c1c/0x2300 net/core/dev.c:12599
+  [<ffffffff8562be43>] ops_exit_rtnl_list net/core/net_namespace.c:187 [inline]
+  [<ffffffff8562be43>] ops_undo_list+0x3d3/0x940 net/core/net_namespace.c:248
 
-If#= 0: RMNET
-If#= 1: DIAG/ADB
-If#= 2: MODEM
-If#= 3: AT
-
-P:  Vendor=2dee ProdID=4d63 Rev=05.15
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=1bd51f0e
-C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-NMEA mode(2dee:4d64): AT+SER=51,1
-
-If#= 0: RMNET
-If#= 1: DIAG/ADB
-If#= 2: NMEA
-If#= 3: AT
-
-P:  Vendor=2dee ProdID=4d64 Rev=05.15
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=1bd51f0e
-C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Jan Volckaert <janvolck@gmail.com>
-Link: https://patch.msgid.link/20260517153237.55995-2-janvolck@gmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260519095540.2643318-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br_multicast.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 01202cf700a6e..ad8ed2816a98f 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1457,6 +1457,8 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
- 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
- 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
-+	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
-+	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index ecbd99ea2af7d..11ac945c6e29b 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -4457,8 +4457,6 @@ void br_multicast_dev_del(struct net_bridge *br)
+ 	br_multicast_ctx_deinit(&br->multicast_ctx);
+ 	br_multicast_gc(&deleted_head);
+ 	cancel_work_sync(&br->mcast_gc_work);
+-
+-	rcu_barrier();
+ }
  
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+ int br_multicast_set_router(struct net_bridge_mcast *brmctx, unsigned long val)
 -- 
 2.53.0
 
