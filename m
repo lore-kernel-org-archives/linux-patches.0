@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1894F5E0E;
-	Wed, 30 Sep 2026 15:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551B94F0550;
+	Wed, 30 Sep 2026 15:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783290; cv=none; b=YQ+ZNb7bx17D3uuycXZ3wGiqvrhczqBw7a6J0HKKx9ZOiYUEeCzvkC2q0klwwr7bJ3lhvnsecUd5xy1t2OeG5ms2bQMDfjUQ9zAGTO4kUa0aDDzvk+2kKG3LQ2t0cXEsFqYcHEkuTXx9l4pNFc8iYWfWyinJ5HOLwOnQ96np2aQ=
+	t=1790783292; cv=none; b=dpGatjFDH3D/rLQ1xwng3DWfU4uAsG4uk6OLzybk3esQZgfTZcoup4UhEzIF5iuBdKvDgL4PJ8HqIdQNm37ib+R8poaQ78E+ZwYPLIKV7+9L+iC73lQiLTj61nWEIDwAVP00cmC3DtvMkBsXfg+frTYg75zza8NR/N1y2fVdf5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783290; c=relaxed/simple;
-	bh=spwtWDUWlmFfc8NHzL42ygYR+IYKuv5+iD0PVOCq1Zw=;
+	s=arc-20240116; t=1790783292; c=relaxed/simple;
+	bh=0XF+dlPrL80fPpTzUSr1RQWawawwMetMyBfkfIpU4U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqftKxSUn7YIUSBfevSmcvzmxdvLlYHryOgCg/3W9tGW1LNmrpwaBKPKHxaDyVCODRq5yNprDDetg1CFsHlcB5RnWkVoNtCISqjs1hX+j1qHAPuFm0MjjgonCERiDWJKFoUSr5e8G9+lwWvfdjjHPZS884WsSclwj3j2O7CzyQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0a1fjj8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RjeTT/3ro8AlZ91P2KWENGUVR4aaPVjPa000r7dYKk85q6UGANqTFlEbtsqpDnBsUIvRfau5L+/ZgHQTIzy1a10ASV8mQ/Ra4+oFGsEObIz3olKHTBdUsVCi5Vq0fD3BkIw1dI/6cbfoxEGTMiM63LR8MoTeTZhpFBao32m+xMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/Rf31d3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0a1fjj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC411F00893;
-	Wed, 30 Sep 2026 15:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/Rf31d3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655231F000FF;
+	Wed, 30 Sep 2026 15:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783285;
-	bh=XEnYE+hYKy/tkFTvI1WLzDafW3qC/cL4FYG/CvEU+Z0=;
+	s=korg; t=1790783287;
+	bh=FvTGfRoC08H4Z3xFPUkaEyZuNUxwLzTGBf1C9+HR6Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g0a1fjj8aMIGuMw9VJr5y6o93snuX963cBZTjlueztVejZOtgqrmT/QLC+BQ78OwJ
-	 ttHhMtssw6J8JGphLtmUs/oLkMFi2lPGO6+jwxgXYKOW13+AezbvqB9PfVDqsxcXvJ
-	 ycZpG/koNLGD8CS6QzC/SHSbsJ/GgnpeLUpNrjAk=
+	b=I/Rf31d3zkXTljxX/4yqCaoHziTkKVuchBE7lmCbnZ0ii+7Ap7oWs6c6inFZObaNj
+	 zjNuP6KeV2RmTTZrTKuSJQPviRtwa0Pi/6eN3Y/rJiNsGjcq12f+8ULb1YexLlZbOx
+	 7lsBr5sI5Dw8pHVJ/JNKBw08nz8OlcuUYYkJpavI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
 	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 343/595] ipv6: Select best matching nexthop object in fib6_table_lookup()
-Date: Wed, 30 Sep 2026 17:23:56 +0200
-Message-ID: <20260930152355.055895479@linuxfoundation.org>
+Subject: [PATCH 5.10 344/595] ipv6: Honor oif when choosing nexthop for locally generated traffic
+Date: Wed, 30 Sep 2026 17:23:57 +0200
+Message-ID: <20260930152355.075864142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -54,104 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 484bb9d164df397a53e0f533b262b27b1590efcb ]
+[ Upstream commit d25e7e9d8a6c1e2afb854613e417c6aa1a28ce6f ]
 
-Currently, when using multipath routes without nexthop objects,
-fib6_table_lookup() selects the nexthop with the highest score. This
-means that when both a source address and an oif are specified, the
-nexthop that is chosen is the one that matches in terms of oif:
+Commit 741a11d9e410 ("net: ipv6: Add RT6_LOOKUP_F_IFACE flag if oif is
+set") made the kernel honor the oif parameter when specified as part of
+output route lookup:
+
+ # ip route add 2001:db8:1::/64 dev dummy1
+ # ip route add ::/0 dev dummy2
+ # ip route get 2001:db8:1::1 oif dummy2 fibmatch
+ default dev dummy2 metric 1024 pref medium
+
+Due to regression reports, the behavior was partially reverted in commit
+d46a9d678e4c ("net: ipv6: Dont add RT6_LOOKUP_F_IFACE flag if saddr
+set") to only honor the oif if source address is not specified:
+
+ # ip route get 2001:db8:1::1 from 2001:db8:2::1 oif dummy2 fibmatch
+ 2001:db8:1::/64 dev dummy1 metric 1024 pref medium
+
+That is, when source address is specified, the kernel will choose the
+most specific route even if its nexthop device does not match the
+specified oif.
+
+This creates a problem for multipath routes. After looking up a route,
+when source address is not specified, the kernel will choose a nexthop
+whose nexthop device matches the specified oif:
 
  # sysctl -wq net.ipv6.conf.all.forwarding=1
- # ip address add 2001:db8:2::1/64 dev lo
  # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+      100 dummy2
 
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy1; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy1
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
+But will disregard the oif when source address is specified despite the
+fact that a matching nexthop exists:
+
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+      53 dummy1
+      47 dummy2
+
+This behavior differs from IPv4:
+
+ # ip address add 192.0.2.1/32 dev lo
+ # ip route add 198.51.100.0/24 nexthop via inet6 fe80::1 dev dummy1 nexthop via inet6 fe80::2 dev dummy2
+ # for i in {1..100}; do ip route get 198.51.100.${i} from 192.0.2.1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
      100 dummy2
 
-When using nexthop objects, fib6_table_lookup() selects the first
-matching nexthop and not necessarily the one with the highest score:
+What happens is that fib6_table_lookup() returns a route with a matching
+nexthop device (assuming it exists):
 
- # ip nexthop add id 1 via fe80::1 dev dummy1
- # ip nexthop add id 2 via fe80::2 dev dummy2
- # ip nexthop add id 3 group 1/2
- # ip route add 2001:db8:20::/64 nhid 3
-
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy1; done > /dev/null"
+ # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
  # perf script | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy1
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy1
+      100 dummy2
 
-This is not very significant right now because the nexthop is later
-overwritten during path selection in fib6_select_path(). However, the
-next patch is going to skip path selection when we have an oif match
-during output route lookup.
+But it is later overwritten during path selection in fib6_select_path()
+which instead chooses a nexthop according to the calculated hash.
 
-As a preparation for this change, align the nexthop object behavior with
-the legacy one and make sure that fib6_table_lookup() always selects the
-best matching nexthop. Do that by always returning 0 from
-rt6_nh_find_match() in order not to terminate the loop in
-nexthop_for_each_fib6_nh() and storing in arg->nh the best matching
-nexthop so far.
+Solve this by telling fib6_select_path() to skip path selection if we
+have an oif match during output route lookup (iif being
+LOOPBACK_IFINDEX).
 
 Behavior after the change:
 
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy1; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
-     100 dummy1
- # perf record -e fib6:fib6_table_lookup -- bash -c "for i in {1..100}; do ip route get 2001:db8:20::${i} from 2001:db8:2::1 oif dummy2; done > /dev/null"
- # perf script | grep -o dummy[0-9] | sort | uniq -c
+ # sysctl -wq net.ipv6.conf.all.forwarding=1
+ # ip route add 2001:db8:10::/64 nexthop via fe80::1 dev dummy1 nexthop via fe80::2 dev dummy2
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
      100 dummy2
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Note that enabling forwarding is only needed because we did not add
+neighbor entries for the gateway addresses. When forwarding is disabled
+and CONFIG_IPV6_ROUTER_PREF is not enabled in kernel config, the kernel
+will treat non-existing neighbor entries as errors and perform
+round-robin between the nexthops:
+
+ # sysctl -wq net.ipv6.conf.all.forwarding=0
+ # for i in {1..100}; do ip route get 2001:db8:10::${i} from 2001:db8:2::1 oif dummy2; done | grep -o dummy[0-9] | sort | uniq -c
+      50 dummy1
+      50 dummy2
+
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260611154605.992528-2-idosch@nvidia.com
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260611154605.992528-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/ipv6/route.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 8e91efd450398..0cbde55f5c946 100644
+index 0cbde55f5c946..0439d9e6a9601 100644
 --- a/net/ipv6/route.c
 +++ b/net/ipv6/route.c
-@@ -775,9 +775,11 @@ static int rt6_nh_find_match(struct fib6_nh *nh, void *_arg)
+@@ -2207,6 +2207,7 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
  {
- 	struct fib6_nh_frl_arg *arg = _arg;
+ 	struct fib6_result res = {};
+ 	struct rt6_info *rt = NULL;
++	bool have_oif_match;
+ 	int strict = 0;
  
--	arg->nh = nh;
--	return find_match(nh, arg->flags, arg->oif, arg->strict,
--			  arg->mpri, arg->do_rr);
-+	if (find_match(nh, arg->flags, arg->oif, arg->strict, arg->mpri,
-+		       arg->do_rr))
-+		arg->nh = nh;
-+
-+	return 0;
- }
+ 	WARN_ON_ONCE((flags & RT6_LOOKUP_F_DST_NOREF) &&
+@@ -2223,7 +2224,9 @@ struct rt6_info *ip6_pol_route(struct net *net, struct fib6_table *table,
+ 	if (res.f6i == net->ipv6.fib6_null_entry)
+ 		goto out;
  
- static void __find_rr_leaf(struct fib6_info *f6i_start,
-@@ -817,11 +819,10 @@ static void __find_rr_leaf(struct fib6_info *f6i_start,
- 				res->nh = nexthop_fib6_nh(f6i->nh);
- 				return;
- 			}
--			if (nexthop_for_each_fib6_nh(f6i->nh, rt6_nh_find_match,
--						     &arg)) {
--				matched = true;
--				nh = arg.nh;
--			}
-+			nexthop_for_each_fib6_nh(f6i->nh, rt6_nh_find_match,
-+						 &arg);
-+			matched = !!arg.nh;
-+			nh = arg.nh;
- 		} else {
- 			nh = f6i->fib6_nh;
- 			if (find_match(nh, f6i->fib6_flags, oif, strict,
+-	fib6_select_path(net, &res, fl6, oif, false, skb, strict);
++	have_oif_match = fl6->flowi6_iif == LOOPBACK_IFINDEX &&
++			 oif == res.nh->fib_nh_dev->ifindex;
++	fib6_select_path(net, &res, fl6, oif, have_oif_match, skb, strict);
+ 
+ 	/*Search through exception table */
+ 	rt = rt6_find_cached_rt(&res, &fl6->daddr, &fl6->saddr);
 -- 
 2.53.0
 
