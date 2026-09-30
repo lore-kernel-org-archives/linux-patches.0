@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490F841C2E4;
-	Wed, 30 Sep 2026 19:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBCF40F74B;
+	Wed, 30 Sep 2026 19:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795192; cv=none; b=Ua8kxAv6YUgBlmQMI+/vTS9WytcrbepwF93bDJvm3pRbfgbHqAU0PpqcsGXaMz6Y5Jp50gjjoIBmQvNEAxfiYibbk6euVrp6fUmhb6WOn42ZbcDGPFcjVQmSCrIfmORtr8KwiyGyVezq8u8ADv6Xa2mYlfkejObudG4oUHln+vo=
+	t=1790795195; cv=none; b=IV3KQFnZmzLP/1AZSI8UaomTqO6q/kzMWZeggPDp1EPG+euA2AiBJWP0hLOWsYB1i63QO5XElE+aI/H3EdY8MEBIV2VSXFuAu7Bv5wCPl9GuseJIQvY9zCSrl6lc7vGH2Eqji7q/FQ3B+SqtVdL2JBfmOPJeUNgnPtuoxyPi4TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795192; c=relaxed/simple;
-	bh=GZkHfXQKb0dXv9REtFS0Tx4Fy5oTdbHa85XC1qVSuHs=;
+	s=arc-20240116; t=1790795195; c=relaxed/simple;
+	bh=VVwGKy9g5yu3Yb3Vx4ZFTkuZ86uT689ekp3E01TRMjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NnEzaEASdxSwImqUW/2I6WC8bxOWK2DYQ7PeOqs/aLqVIBFHgvQNTpkSkZbuAVSgfqMhK0Tkm6zYFeA+MiGJ9IJtOAw6GP0YAOZLtAwJXAOwm8WiDMRxvvypuGpUDceD2OSu0ni+jZVUB+R6pdK6KBLMVkBO5cn5KSW1+2GsSq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzqZXM3Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPeSgy8Azpzh9khUplWGV6lJumzBG4yOAp6yqI7Cko0xjFOSh03s5RHi2qHJkYD637j9/P1dG45aTOMQG3AIX998AOMFdLwU6s2JxrvVjo2X1zAGRMNdocxo0hpQ6OYBBw1e7eeyfIkMj7zYYtSXdkuyELtCATuuvVf3v34Gizc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqd4MqEB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzqZXM3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38C11F000FF;
-	Wed, 30 Sep 2026 19:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqd4MqEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BB61F000FF;
+	Wed, 30 Sep 2026 19:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795191;
-	bh=dgmgjXvMy+yQ0u5jXRgTx70Zmczx9ehf6EQUtQDg+vQ=;
+	s=korg; t=1790795194;
+	bh=p8rXChA0R9TBDazJ6vN1jA4cMfHeCfRcqcI1ntKtSyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CzqZXM3Ywn7q4Ao2cC5hl8M5iC2oa1nUlDpvTdiymfBqqU/J1UFKaO15U2fDY99xU
-	 i2ypPWONoLBr9TdCVQb1uGptuYuR+l74+HLljqr7mHKRZbSq6IOHWgxgtKSJA5/vTj
-	 KVYmQav9ta4nPooZqD6mBB7wTrB4TzNm3+5SBmo0=
+	b=kqd4MqEBbMex9IMXIiJRfnhlB7SinA+Dg9nKoafcyGNzTzDVE3vAlSOm5RSp+bb/F
+	 SAJ2cYaPdXGl86J/KbAg5fRqLRQu8i7oKmWoDKr2/1suPRsRzJAXeB69fu4D/VhfFp
+	 pkIfNPhXVSTiX+oheKuy7jWj1x46Ddwk8RnmoCDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0468/1193] net/rds: use wq_has_sleeper() in release_in_xmit()
-Date: Wed, 30 Sep 2026 17:19:12 +0200
-Message-ID: <20260930152444.565909171@linuxfoundation.org>
+Subject: [PATCH 6.6 0477/1193] ALSA: caiaq: Fix potential double-free at error path
+Date: Wed, 30 Sep 2026 17:19:21 +0200
+Message-ID: <20260930152444.760893523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,67 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 6d0c8b7073913011459cf968cbbadd341e166bc3 ]
+[ Upstream commit 3b26ceef88c110f4d188387cffa0df78657be904 ]
 
-release_in_xmit() clears RDS_IN_XMIT with clear_bit_unlock() and then
-checks waitqueue_active() to decide whether anyone needs waking.
-clear_bit_unlock() is only a release operation: it orders the
-critical section before the bit clear, but does not order the
-subsequent plain load of the wait queue head after it.  The waiter
-side does the mirror image - it adds itself to the wait queue and
-then tests the bit.  That is the classic store-buffering pattern: the
-releasing CPU can read the wait queue as empty while the waiting CPU
-still reads the bit as set, so the sleeper is never woken.
+The fix for caiaq driver's resource management to handle the errors
+tries to release the resources in a common destructor call, but as a
+sashiko review for another patch suggested, some of the audio
+resources such as URBs have been already freed, and this may lead to a
+double-free.
 
-The waiters are rds_conn_shutdown() and rds_tcp_reset_callbacks(),
-both in uninterruptible wait_event() with no timeout.  A lost wake-up
-strands the shutdown worker on its single-threaded workqueue until
-some other sender releases the bit again - and on a connection that
-is being torn down precisely because it failed, there may never be
-another sender.
+For addressing the double-free, call the common destructor function
+from each place, and assure that the resource pointers get cleared.
 
-The barrier used to be there: release_in_xmit() did clear_bit()
-followed by smp_mb__after_atomic() until commit 1422f28826d2 ("rds:
-introduce acquire/release ordering in acquire/release_in_xmit()")
-folded both into clear_bit_unlock(), which strengthened the lock
-hand-off but silently dropped the full barrier the wake-up check
-depends on.  The refill counterpart, release_refill() in
-net/rds/ib_recv.c, still carries its smp_mb__after_atomic() for
-exactly this reason.
-
-Use wq_has_sleeper(), which is waitqueue_active() preceded by the
-required full barrier.
-
-Fixes: 1422f28826d2 ("rds: introduce acquire/release ordering in acquire/release_in_xmit()")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-2-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260903084747.535367-1-eadavis%40sina.com
+Fixes: 28abd224db4a ("ALSA: caiaq: Handle probe errors properly")
+Link: https://patch.msgid.link/20260903103855.1807838-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/usb/caiaq/audio.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 1fc84bd899534..da3a6ad39b920 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -114,8 +114,13 @@ static void release_in_xmit(struct rds_conn_path *cp)
- 	 * hot path and finding waiters is very rare.  We don't want to walk
- 	 * the system-wide hashed waitqueue buckets in the fast path only to
- 	 * almost never find waiters.
-+	 *
-+	 * wq_has_sleeper() supplies the full barrier that orders the wait
-+	 * queue read after the bit clear; clear_bit_unlock() alone is only
-+	 * a release and would let this check read a stale empty queue,
-+	 * losing the wake-up.
- 	 */
--	if (waitqueue_active(&cp->cp_waitq))
-+	if (wq_has_sleeper(&cp->cp_waitq))
- 		wake_up_all(&cp->cp_waitq);
- }
+diff --git a/sound/usb/caiaq/audio.c b/sound/usb/caiaq/audio.c
+index 7a89872aa0cbd..11d959887de56 100644
+--- a/sound/usb/caiaq/audio.c
++++ b/sound/usb/caiaq/audio.c
+@@ -853,16 +853,13 @@ int snd_usb_caiaq_audio_init(struct snd_usb_caiaqdev *cdev)
  
+ 	cdev->data_urbs_in = alloc_urbs(cdev, SNDRV_PCM_STREAM_CAPTURE, &ret);
+ 	if (ret < 0) {
+-		kfree(cdev->data_cb_info);
+-		free_urbs(cdev->data_urbs_in);
++		snd_usb_caiaq_audio_free(cdev);
+ 		return ret;
+ 	}
+ 
+ 	cdev->data_urbs_out = alloc_urbs(cdev, SNDRV_PCM_STREAM_PLAYBACK, &ret);
+ 	if (ret < 0) {
+-		kfree(cdev->data_cb_info);
+-		free_urbs(cdev->data_urbs_in);
+-		free_urbs(cdev->data_urbs_out);
++		snd_usb_caiaq_audio_free(cdev);
+ 		return ret;
+ 	}
+ 
+@@ -883,6 +880,9 @@ void snd_usb_caiaq_audio_free(struct snd_usb_caiaqdev *cdev)
+ 
+ 	dev_dbg(dev, "%s(%p)\n", __func__, cdev);
+ 	free_urbs(cdev->data_urbs_in);
++	cdev->data_urbs_in = NULL;
+ 	free_urbs(cdev->data_urbs_out);
++	cdev->data_urbs_out = NULL;
+ 	kfree(cdev->data_cb_info);
++	cdev->data_cb_info = NULL;
+ }
 -- 
 2.53.0
 
