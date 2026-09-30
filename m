@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CC01E0DD8;
-	Wed, 30 Sep 2026 16:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F09C516178;
+	Wed, 30 Sep 2026 16:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787218; cv=none; b=a33TD3SbM/Zqfn3JzYOwWJ/ydyuqvag7NvIMPk3vcN57v5oKgWasLvbMsuJFm2fjgR7jBJLSKRqcPBzs8rgD4EVTiAnvBeE/d3rMxO+hf/jK3P1y+G4iQd8n7L27u00aXyLaqUtRBVMlQyXXzc9DfSuakS6Yr95p5/w30jG7jGc=
+	t=1790787221; cv=none; b=t0p9XbCCs3GT0c7iMUGiSTjYy/p8Ao4JJpXGtw0J6nVG2NZvu7S8T8qsyvvgR/kmW9YqYAklPFGMuhQQXJR4xtSoJD1xwz/+Xh4Y3hBk052vdLG2y+Japm9hSnfRj+6AyFaY91adhnr3tH/RZ5+E6ITzVI1qlTXFRtbq1ZM3ets=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787218; c=relaxed/simple;
-	bh=cyr4xFid+iXTO8BA5d2PKM08uvTlOomwZfHQSeM4jvc=;
+	s=arc-20240116; t=1790787221; c=relaxed/simple;
+	bh=xER/k8vUZKklALMIew8XUmNRiq9srPPhZfW0THZoWHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRdCgHF2Rd9bAFNv1WvzyOBs5L93WEpzpawVITWowPqDYY4WEvonbbqVL7MP/5n6qv4rxHZtsoNHToEkRuTLyqO6mopu8XSd1HbMTtgPxOt65rTEV7EuF16MRyBu7xcQB3Iq/UbIeJWlCTUV4/9HnEo/Aj/oUf2GKf8kiK4DA8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/z6wCqU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hG7tJ2epo0rPi4tVeh/F7ne1Mn9Hlv0GGLilCuxUyuAIDLvA0ZN7LuAgUMfD+8o0B/5Kf2Do5X6Ha3tZYXhVqNjxbtRcEq8VViBIQSfWwXlBoJr3bRztBUUnGrYmpMBK5+jFbu+yefBaD+RuvlGQ+eDwesap7FfCpMC4JxyIdRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNlNsotT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/z6wCqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14651F000FF;
-	Wed, 30 Sep 2026 16:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNlNsotT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B271F00898;
+	Wed, 30 Sep 2026 16:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787217;
-	bh=s4HIno7lU6DmLjawx+6Allt/O3wNa5sBK4oa4THI3rc=;
+	s=korg; t=1790787220;
+	bh=ciw0cELX+clRT3FTUh6/X+TPNAOrScwYHi06uB1Owbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/z6wCqUBdp7qpYy2U6VI4eeQBgXeo2vErx/VluWWGDgwtk8nczVOZIcXfule/oOt
-	 Btx2t4MVsGk6gLUGoR95tMkjc0Lng3nHt3UvCA5V6yWg8iBMFk4Ua8yw0Qgv+6Rx9F
-	 8y13wGSkRQ1E8aqYMRhHIYPT2RBRbXPfoeZNn81g=
+	b=GNlNsotT3jCczLFJywnrcAb/cllqVobWKM7jLS6qdCk8w95bFIyTGQ71HWWDqr3ip
+	 mTQU9Ofm4j3wo8FJxsvfvaESN7QtIcQWAGde/rzoclld0YMluTnwZgWc4hu1/as3B5
+	 ykfCQKfTHIDW6gRYO6ABEhd6YkqyxLkLdGnR03w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 151/457] bpf: Reject pkt arguments in mutating subprogs
-Date: Wed, 30 Sep 2026 17:24:16 +0200
-Message-ID: <20260930152349.309998201@linuxfoundation.org>
+Subject: [PATCH 7.2 152/457] bpf, sockmap: Reject max_entries > INT_MAX in sock_map_alloc
+Date: Wed, 30 Sep 2026 17:24:17 +0200
+Message-ID: <20260930152349.331163190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -52,55 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tsalapatis <emil@etsalapatis.com>
+From: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
 
-[ Upstream commit a6c1edfbe240e4377038a0e1d233ad81fde9a21b ]
+[ Upstream commit 814a81c842bd88f6bd8a4ce550d560df071a5d03 ]
 
-The verifier tracks changes in how PTR_TO_PACKET registers'
-bounds are modified across subprog boundaries. PTR_TO_PACKET
-registers are actually passed as PTR_TO_MEM, which is assumed
-valid for the entire call. This is not the case with packet memory,
-where a pskb_* call may invalidate its memory region.
+sock_map_alloc() only rejects max_entries == 0 and otherwise allows any
+u32 value.  sock_map_free() then walks the sks[] array with a signed int
+iterator:
 
-Reject BPF code that passes PTR_TO_PACKET pointers to subprogs that
-may mutate a packet. We cannot pass the pointer as a true PTR_TO_PACKET
-because we would also need to somehow pass the PTR_TO_PACKET_META
-or PTR_TO_PACKET_END to the subprog. Since we cannot avoid representing
-the pointer in the subprog as PTR_TO_MEM, only permit it if the
-subprog is guaranteed not to mutate the packet.
+	int i;
+	for (i = 0; i < stab->map.max_entries; i++)
+		struct sock **psk = &stab->sks[i];
 
-Fixes: 80f281664f5a ("bpf: Support pointers in global func args")
-Reported-by: Nicholas Carlini <nicholas@carlini.com>
-Suggested-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
+When a SOCKMAP is created with max_entries = 0xffffffff (UINT_MAX), the
+allocation of 32 GiB can succeed on large-memory hosts.  During free the
+counter reaches 0x80000000, wraps to INT_MIN, is sign-extended by movslq
+and turned into a ~16 GiB negative offset from stab->sks, pointing far
+below the allocation.
+
+The faulting access is an xchg() write in sock_map_free().  Without
+KASAN, the same out-of-bounds write can fault on an unmapped vmalloc page
+or corrupt an unrelated allocation if that vmalloc address is populated.
+On a KASAN kernel with CONFIG_KASAN_VMALLOC=y, the shadow check for that
+address hits an unmapped shadow page and oopses first:
+
+  BUG: unable to handle page fault for address: fffff521b59c5a00
+  RIP: 0010:kasan_check_range+0x107/0x190
+  Call Trace:
+   sock_map_free+0x93/0x190
+   map_create+0x68d/0xb30
+   __sys_bpf+0x21e/0x2e70
+
+Vmcore confirmed stab->map.max_entries == 0xffffffff, stab->sks ==
+0xffffc911ace2d000, and the faulting address sks + (s64)INT_MIN * 8
+exactly at 0xffffc90dace2d000.  The same buggy path is reached on the
+normal close()/bpf_map_free_deferred() path whenever such a map is
+destroyed.
+
+sock_map_alloc() used to bound its allocation size through
+bpf_map_charge_init(), but the bound was dropped when rlimit-based memory
+accounting was removed.  Reject max_entries > INT_MAX at creation time so
+the signed iterator in sock_map_free() never sees a value that would
+overflow.
+
+Triggered by syzkaller and reproduced on both a 6.6-based KASAN kernel
+and the upstream v7.3-rc2 kernel.
+
+Fixes: 0d2c4f964050 ("bpf: Eliminate rlimit-based memory accounting for sockmap and sockhash maps")
+Signed-off-by: Zhao Gongyi <zhaogongyi@BYTEDANCE.COM>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260922172028.6269-6-emil@etsalapatis.com
+Link: https://patch.msgid.link/20260917121016.48171-1-zhaogongyi@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/core/sock_map.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index cb523cc5465dd..ccf735d74dc82 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -9264,6 +9264,16 @@ static int btf_check_func_arg_match(struct bpf_verifier_env *env, int subprog,
- 				return ret;
- 			if (check_mem_reg(env, reg, argno, arg->mem_size))
- 				return -EINVAL;
-+			/*
-+			 * PTR_TO_PACKET get passed as PTR_TO_MEM, preventing
-+			 * us from adjusting bounds tracking info.
-+			 */
-+			if ((reg_is_pkt_pointer_any(reg) || reg_is_dynptr_slice_pkt(reg)) &&
-+			    sub->changes_pkt_data) {
-+				bpf_log(log, "%s is a packet pointer, but func#%d may change packet data\n",
-+						reg_arg_name(env, argno), subprog);
-+				return -EINVAL;
-+			}
- 			if (!(arg->arg_type & PTR_MAYBE_NULL) &&
- 			    (type_may_be_null(reg->type) || bpf_register_is_null(reg))) {
- 				bpf_log(log, "%s is expected to be non-NULL\n",
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 9efbd8ca7db83..09d20318a0eae 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -41,6 +41,7 @@ static struct bpf_map *sock_map_alloc(union bpf_attr *attr)
+ 	struct bpf_stab *stab;
+ 
+ 	if (attr->max_entries == 0 ||
++	    attr->max_entries > INT_MAX ||
+ 	    attr->key_size    != 4 ||
+ 	    (attr->value_size != sizeof(u32) &&
+ 	     attr->value_size != sizeof(u64)) ||
 -- 
 2.53.0
 
