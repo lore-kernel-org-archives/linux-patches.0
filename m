@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A381651C060;
-	Wed, 30 Sep 2026 18:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E9933B6F1;
+	Wed, 30 Sep 2026 18:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793269; cv=none; b=ZyAbXwomdjxY0wIZ2zoC+YmbCAP9mcoUHKs+oj+EWy/QmjmHXTSkbLtQHSa/9TGxRP6Skvjac5dQniSOY8m83XIu+z4DY2tWoWCp8/xdnI/4kwgN+4BDBzF5yK3yqylTOf685jvxBUDZvNO3YmJ4HOiLVSc5MvgL55LCX3GdFow=
+	t=1790793272; cv=none; b=j3sQyrtVGT8YO54YM9gjnBIOLF6JvIpQWM/mPUVl+Yj3W55qt7VODthiFLk9xma3ofW9u7y24zEHNI2Udwh6n41l/0P2/X1yu98k5hC3OLtYcdhy6GM3zGhHc5ClWtzw4Qt+kC5Y3E4yoE0954+bGe9PmIy6a0y+y0Os5sgZ6mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793269; c=relaxed/simple;
-	bh=fGsQDJbUEQdL67oMNjp60sudvgsQmV9izo2BjNwvSfc=;
+	s=arc-20240116; t=1790793272; c=relaxed/simple;
+	bh=4J4Dnc8ggtlO77gOL2x0IyN+PwjCMxf25V5gF3FqDn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWhy0bUAXpf4Bk0wBnK04ho4TdJ85R+PyPcdxiXa93/EcUgboWUpCyx4uCtGfRmWCK3fjRskkeDjQW6zfLE4xEq+r6aPmcQVEsU3/zzyaaWF8qzk4S3pEI/c+ybRjgfB6YxzsabHAnF2WAbLHckCveCvb04BR7QHiydFeYug4m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PycmPEsG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uoJW5RUBbJKSfvRWFLd3Hs0nUZ9EipwBn+s99XqQfgeGu17czrTQdSh4gClbv9VfeO5Du/HvYNNvObg59m4UarnIajAnA9BaRD1noHe9FTRWvNCvkz1b58o0tsN0+ouagyjSF2P54spa5DVzNO4X0b3tRxdFVbr3WoZKOgZnDCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDiiNjrS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PycmPEsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0293A1F000FF;
-	Wed, 30 Sep 2026 18:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDiiNjrS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71E01F000FF;
+	Wed, 30 Sep 2026 18:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793268;
-	bh=wX9dt0+9SLoNHWXeGKGgoxzQeBB2X28AzzapyJjsfTc=;
+	s=korg; t=1790793271;
+	bh=4nRR/H97jzBqwfQgJbLU33zTJ7SwKLO4tbi7kZRhyMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PycmPEsGxlzhR3Oc0JEsiWt8NOXBcOCHOGr1Ir3eTcqNh9jxpwfp5bpA12dvUXgvq
-	 yDcqzKXH6TUnLb1BXqluYHcuXQcOvUJ44QHbSn3JdAtrluYX/MahB/3IEm30EFaiKA
-	 mutQkfXm1cpyQ5kPTv+659u0WLx3Fr5Mn1Ec4Suw=
+	b=NDiiNjrSTwKafkxgZy467QwbRSpY65plAhhp2ia5IxpGbJpqBJWZi3sr6wBJg5v/s
+	 phGQH6+AsEDypUX673NIRGXk5iycqEXCG+t2UYlgciQlfUBXMONL10BD0J4p9zrU65
+	 rKYMA9z/Nvp5GXCUsZxza/26oU/eJU+XTfgPN/KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zixuan Chai <petalzu987@gmail.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hui Peng <benquike@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/395] vlan: ensure sufficient headroom in vlan_dev_hard_header()
-Date: Wed, 30 Sep 2026 17:27:37 +0200
-Message-ID: <20260930152344.878554240@linuxfoundation.org>
+Subject: [PATCH 6.18 196/395] autofs: fix sbi->pipe file reference leak in autofs_kill_sb()
+Date: Wed, 30 Sep 2026 17:27:38 +0200
+Message-ID: <20260930152344.900806631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -53,57 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit cd5dd68267c4238795fadaf02b3575ca3f8a6500 ]
+[ Upstream commit aa5e44b29ffe4eaa08cc2237fd65bc2596bc023e ]
 
-Callers that only reserve ETH_HLEN or less (such as llc_alloc_frame()),
-or skbs allocated before dynamic device/headroom changes (e.g. toggling
-VLAN_FLAG_REORDER_HDR or bonding/team switching slaves), can reach
-vlan_dev_hard_header() with insufficient headroom and trigger
-skb_under_panic().
+When autofs_fill_super() fails before clearing AUTOFS_SBI_CATATONIC (for
+example, when find_get_pid() fails on an invalid pgrp mount option, or
+when an fs_context is closed before mounting), deactivate_locked_super()
+invokes autofs_kill_sb() -> autofs_catatonic_mode(sbi).
 
-Use skb_cow_head() in vlan_dev_hard_header() when VLAN_FLAG_REORDER_HDR
-is not set to ensure sufficient headroom for the VLAN header(s) and the
-underlying device hard header.
+Because AUTOFS_SBI_CATATONIC is still set in sbi->flags,
+autofs_catatonic_mode() returns early without calling fput(sbi->pipe),
+permanently leaking the pipe struct file reference.
 
-Use READ_ONCE() to read dev->hard_header_len and dev->needed_headroom as
-they can be updated concurrently under RTNL (e.g. in
-vlan_transfer_features()) while vlan_dev_hard_header() runs locklessly on
-the transmit path. Also avoid LL_RESERVED_SPACE(dev) here so that the
-extra HH_DATA_MOD alignment padding does not trigger unnecessary
-pskb_expand_head() reallocations on inner stacked VLAN devices after the
-outer VLAN header has been pushed.
+Explicitly release sbi->pipe in autofs_kill_sb() if it is still non-NULL
+after autofs_catatonic_mode().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Zixuan Chai <petalzu987@gmail.com>
-Closes: https://lore.kernel.org/netdev/cover.1789987105.git.petalzu987@gmail.com/
-Link: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
-Cc: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260924082951.1599377-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ebc921ca9b92 ("autofs: copy autofs4 to autofs")
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Link: https://patch.msgid.link/20260919204808.2812930-1-benquike@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/autofs/inode.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index 560521cf596e3..618c8617c2c43 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -55,6 +55,11 @@ static int vlan_dev_hard_header(struct sk_buff *skb, struct net_device *dev,
- 	int rc;
+diff --git a/fs/autofs/inode.c b/fs/autofs/inode.c
+index 9593d407cbc6f..54e5c3a9cba2a 100644
+--- a/fs/autofs/inode.c
++++ b/fs/autofs/inode.c
+@@ -51,6 +51,10 @@ void autofs_kill_sb(struct super_block *sb)
+ 	if (sbi) {
+ 		/* Free wait queues, close pipe */
+ 		autofs_catatonic_mode(sbi);
++		if (sbi->pipe) {
++			fput(sbi->pipe);
++			sbi->pipe = NULL;
++		}
+ 		put_pid(sbi->oz_pgrp);
+ 	}
  
- 	if (!(vlan->flags & VLAN_FLAG_REORDER_HDR)) {
-+		unsigned int hlen = READ_ONCE(dev->hard_header_len) +
-+				    READ_ONCE(dev->needed_headroom);
-+
-+		if (skb_cow_head(skb, hlen) < 0)
-+			return -ENOMEM;
- 		vhdr = skb_push(skb, VLAN_HLEN);
- 
- 		vlan_tci = vlan->vlan_id;
 -- 
 2.53.0
 
