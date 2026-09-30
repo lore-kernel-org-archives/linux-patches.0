@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD9D511202;
-	Wed, 30 Sep 2026 16:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD74E06CC;
+	Wed, 30 Sep 2026 16:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786757; cv=none; b=ErBoxyL9y6fSjqSQ6hwMGEZtMchArWiKoPFNGpdm2oBlnhqDdKe/EF27ubQ2SgtXOHw8U3GcvuJSk+qCXJXCKK6enfcgiG2c8HavvoRpnMb1UOjmdULjhY3oF9I4oL+wq4N4GH2C0fgRfUTv624TinsrjdRe11PHsTNFbXo80lY=
+	t=1790786759; cv=none; b=H3iRaL7WT37SmOu5XGtudOPk3bkGFsB6EwoxPgkLCHtRXdCEwgW7FKw/AoQcCtSLN4DEluhq6JfEihSMsaGarA/PXZ0S+4cIR0Fm+knhWfV+X2sZlJO3sCWwhfoLMvSjMi2JdlCnZYEiWuwVf1xDbmHz7ZFhK5cDki0qmrU+zb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786757; c=relaxed/simple;
-	bh=x0qbp2wUQkIb5UYEFj883u1w0H1De5gxsIDdpY7FHko=;
+	s=arc-20240116; t=1790786759; c=relaxed/simple;
+	bh=U0jdbPkp9dHgIiVNEdR11sc5wDNXH5USuu4ltkeOxI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTq7GdL/FNnMLmtp8qDvnrc99pYEedtWKGXao6Tj3HWbwwO1R8IfxXaZq1n8ptUIYw/aC1eYrzngkYdFiW6nmIXSTcVRpKitFnmUZKVVE1qI/WCVdF88whcrPhTEkNSbMM8QILMH9RoQsOkXOInMvcvPxUO8jjbaWOSEDW6VmqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaPRAhX9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=idZw17Ma8LuJ/l5p4PmijaGriNc8vJ5nDzr51Fat+4VzUmPpB0rLwWf6XgoPhjw/WzkmLZHeVS/12OMbOh3B3O/XVubWp84jcgrRIoIj/5/hTXO1YMLlv+MF1xnZFJixQ/9GBVz536wtSXbAsq98sh7Rr3f8TxWuFPc0j9a54D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkJtHtLe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaPRAhX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532521F000FF;
-	Wed, 30 Sep 2026 16:45:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkJtHtLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255461F000FF;
+	Wed, 30 Sep 2026 16:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786755;
-	bh=zxycBuGrGWi3nHkwWv1P1pesINVIc2Y6WcQRMPteXio=;
+	s=korg; t=1790786758;
+	bh=Sc2wGYcKGQ2eMrTNK+yEnYZdULlv01ucIRGGfT8ExC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CaPRAhX9hvbLV2SKLWB67aP2gH8BFeMHIOhoSGDAndaXMAOyd4KzwWIIYNALsUI1S
-	 rTdbqOcXJRR73FrI6f1i3CFO1oBxIwdBKVnwpWz1FP/nkozbupmvYLyQGZ/V3WaCav
-	 iPVAMPbc+fe761qIuejZbpwbl3uQlvCjzcuG0vXk=
+	b=RkJtHtLegR7B0+zi/ylo+aNpdeEFZozpE5T2WRB8gkAOFi3W1sSW1RUlFuz03aMrn
+	 TAiII0xiwoCOD8Xum4jxJFqUgAKgFPESgYFw6F1bLxN/fT+stor5mYMcfZ+NnHjYgh
+	 kyrwyjA/dXkRKFBFWZPCQjQfp9PF/LVw+7yaS4vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 972/982] Bluetooth: L2CAP: validate frame length before control and FCS access
-Date: Wed, 30 Sep 2026 17:28:28 +0200
-Message-ID: <20260930152437.623788717@linuxfoundation.org>
+	Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.1 930/982] workqueue: Fix NULL current_pwq deref in flush dependency check
+Date: Wed, 30 Sep 2026 17:27:46 +0200
+Message-ID: <20260930152436.717272378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,53 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
 
-commit 6c78a213d9070b610c7f418af2c25b66180b7e37 upstream.
+commit db6365ced4d5855e321f772b240c0e473bcfcdd5 upstream.
 
-l2cap_data_rcv() unpacks either a two-byte or four-byte control field
-without first ensuring that it is present. A short ERTM or streaming-mode
-frame can therefore cause an out-of-bounds read.
+check_flush_dependency() uses current_wq_worker() to determine whether
+the caller is a workqueue worker and then dereferences worker->current_pwq
+to test whether the current workqueue is WQ_MEM_RECLAIM.
 
-There is a second short-frame case when CRC16 is enabled. After the
-control field is pulled, l2cap_check_fcs() subtracts two from skb->len
-without checking it. If fewer than two bytes remain, the subtraction
-wraps; skb_trim() leaves the buffer unchanged and the subsequent FCS
-load reads past the logical end of the frame.
+current_wq_worker() only means that %current has PF_WQ_WORKER set. A
+kworker can reach check_flush_dependency() while it is not executing a
+work item. One such path is worker_thread() acting as the pool manager,
+where create_worker() does GFP_KERNEL allocation and the allocation path
+invokes the OOM notifier. In that state worker->current_pwq is NULL
+because current_pwq is set only by process_one_work() and cleared again
+after the work function returns.
 
-Validate that the frame contains both its control field and, when
-enabled, its FCS before either field is accessed.
+[  416.760634][  T375] Call trace:
+[  416.760638][  T375]  check_flush_dependency+0x80/0x120 (P)
+[  416.760648][  T375]  __flush_work+0x98/0x224
+[  416.760657][  T375]  flush_work+0x30/0x44
+[  416.760665][  T375]  ...
+[  416.760710][  T375]  blocking_notifier_call_chain+0x58/0xa0
+[  416.760719][  T375]  out_of_memory+0xb4/0x458
+[  416.760730][  T375]  __alloc_pages_may_oom+0x11c/0x1a8
+[  416.760739][  T375]  __alloc_pages_slowpath+0x314/0x46c
+[  416.760746][  T375]  __alloc_frozen_pages_noprof+0x110/0x1a4
+[  416.760753][  T375]  new_slab+0x12c/0x484
+[  416.760759][  T375]  ___slab_alloc+0x7a8/0xc7c
+[  416.760765][  T375]  __slab_alloc+0x74/0xd8
+[  416.760772][  T375]  __kmalloc_cache_node_noprof+0x2ac/0x304
+[  416.760779][  T375]  alloc_worker+0x28/0x60
+[  416.760785][  T375]  create_worker+0x4c/0x20c
+[  416.760790][  T375]  worker_thread+0xe8/0x2b8
+[  416.760796][  T375]  kthread+0x1a8/0x200
+[  416.760805][  T375]  ret_from_fork+0x10/0x20
 
-Fixes: 1c2acffb76d4 ("Bluetooth: Add initial support for ERTM packets transfers")
-Fixes: fcc203c30d72 ("Bluetooth: Add support for FCS option to L2CAP")
+Guard the WQ_MEM_RECLAIM-worker warning with worker->current_pwq. If the
+kworker is not currently executing a work item, there is no current
+workqueue to diagnose with that warning. The PF_MEMALLOC warning is left
+unchanged so explicit reclaim context flushing a !WQ_MEM_RECLAIM target
+is still reported.
+
+Fixes: fca839c00a12 ("workqueue: warn if memory reclaim tries to flush !WQ_MEM_RECLAIM workqueue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Assisted-by: LLM
+Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ kernel/workqueue.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6725,9 +6725,17 @@ static int l2cap_stream_rx(struct l2cap_
- static int l2cap_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- {
- 	struct l2cap_ctrl *control = &bt_cb(skb)->l2cap;
--	u16 len;
-+	u16 len, min_len;
- 	u8 event;
- 
-+	min_len = test_bit(FLAG_EXT_CTRL, &chan->flags) ?
-+		  L2CAP_EXT_CTRL_SIZE : L2CAP_ENH_CTRL_SIZE;
-+	if (chan->fcs == L2CAP_FCS_CRC16)
-+		min_len += L2CAP_FCS_SIZE;
-+
-+	if (skb->len < min_len)
-+		goto drop;
-+
- 	__unpack_control(chan, skb);
- 
- 	len = skb->len;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -2628,7 +2628,7 @@ static void check_flush_dependency(struc
+ 	WARN_ONCE(current->flags & PF_MEMALLOC,
+ 		  "workqueue: PF_MEMALLOC task %d(%s) is flushing !WQ_MEM_RECLAIM %s:%ps",
+ 		  current->pid, current->comm, target_wq->name, target_func);
+-	WARN_ONCE(worker && ((worker->current_pwq->wq->flags &
++	WARN_ONCE(worker && worker->current_pwq && ((worker->current_pwq->wq->flags &
+ 			      (WQ_MEM_RECLAIM | __WQ_LEGACY)) == WQ_MEM_RECLAIM),
+ 		  "workqueue: WQ_MEM_RECLAIM %s:%ps is flushing !WQ_MEM_RECLAIM %s:%ps",
+ 		  worker->current_pwq->wq->name, worker->current_func,
 
 
