@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985EB3CEB9E;
-	Wed, 30 Sep 2026 18:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6BC3D45E5;
+	Wed, 30 Sep 2026 18:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794104; cv=none; b=d0jOZ7F3fgPGn/LKiyz2q49mbAWeQ5R0PFtDC3DNwLGiKHzuhH6/piD6oPGmSryg3zkCW6KyUrjnfTn7GRZ3uG6lHbabPmcD6znTz5lHUs1EcHYaqVr0HWu9PfxeEQzT1VlPPsIDu2MF4Dy5rO2ktaeLRAE0jgRPay8qjZegBRo=
+	t=1790794107; cv=none; b=WtNiSnxb6EO3E/eua0TTzaiYIqSnT0OIfH3HxDBhCFHV7ovo5CRp7vD3QK8dsEktCf9bAb/sd7k8iQgioKmi47fUYJ+QPVULO54dzR4UVwmB2WAlM57eM4H+WysYk7XC3f48cXUmqQa6rCI8sU+BIdvaZvt01PzN6I+Il6HzG1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794104; c=relaxed/simple;
-	bh=1Xe5oBjw0PGwIEWfwaloANGsHhZ5810unB+Vd1O9moI=;
+	s=arc-20240116; t=1790794107; c=relaxed/simple;
+	bh=wuqMFSylIzWUhxFtUHiSML/ZvXWG1Yy4NyG7uccQ5wM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZN/Gr/7un3SYdfaQjXZTsKV/WXNidkzojZgTP0KdLkUYzhQh/yGVc3GhH+wjWKz3eN+k80Rt3oCW4i6fsMvpKb55/HuyWA7L22aRaYKDPsmtY3pORVbPrObJKlLhtxkip9MQc2Jvo8FzrtubgTaYOz3IECmgYgsQR3eD0jZ2E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maE5DcWl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VJlZ6d8AI7ZQy9bMlUf1xNe/FIf3dstmULMY8x7XTuM7UlA0Z4Tz2VklCX3PZAqQhOcSL0Xt4LZVBmXwdRvgZNU4lh2K/O9FQ55S2dCYL/QU2gn7UmrmxrMccl5DRUjgT1KA9ZGYdRxSk80Gi7FNyDCdmYIA/GkHDJxlzaHlcJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnOcqGwV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maE5DcWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BB21F000FF;
-	Wed, 30 Sep 2026 18:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnOcqGwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC8071F000FF;
+	Wed, 30 Sep 2026 18:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794103;
-	bh=GetGvDJVA43eKG0uXHtKySVaXHnInG9dyDmxcTOFjc0=;
+	s=korg; t=1790794106;
+	bh=Y41h/dHJ7iy/vZoNu4ai7gQvZET/GSDan4fr+4OF2B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=maE5DcWlNAYU5KouJIpLdQ4ZXR/IjMrXdCemnDU1tvowhXrn17D+m+cpUMs+n/+O7
-	 acYqZtjoJCZ0/eTl78aUtRWv1ctrqT6Cjtz+flalE3VHar5XjxJtkn5Oide68zh7HN
-	 qOw003+KXF89T2wxAXPzoOAiG3WH3eOy6J/ZxMRw=
+	b=JnOcqGwVvzKa0fxj/d0Md4O/TW/bspARaaJQzcgpcLPHKmOur7kXjIdFdaXX7SNxf
+	 C+jXYQ4Dxj3nzRY6bSc55sce3NVPHRzGQpHSGQIEvE1J0+UqKkXR7rB/CVd4BX8uP+
+	 Zv1dkIYk9CBStRJI3FE9CnyThAAZw3GIlUazzeUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Wowk <dev@adrianwowk.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Alessandro Baldi <baldovic@virgilio.it>,
+	Sean Young <sean@mess.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0092/1193] usbip: vhci_hcd: fix NULL deref in status_show_vhci
-Date: Wed, 30 Sep 2026 17:12:56 +0200
-Message-ID: <20260930152436.285599053@linuxfoundation.org>
+Subject: [PATCH 6.6 0057/1193] media: imon: Add iMON VFD HID OEM v1.2 key mappings
+Date: Wed, 30 Sep 2026 17:12:21 +0200
+Message-ID: <20260930152435.546630668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,107 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Wowk <dev@adrianwowk.com>
+From: Alessandro Baldi <baldovic@virgilio.it>
 
-[ Upstream commit bc150783542ba2e7c1257d1299c6f3269bdba270 ]
+[ Upstream commit d97d13c24d7893abcfb80d38630ce74daaa1434c ]
 
-platform_get_drvdata() can return NULL if a VHCI host controller's
-probe failed (e.g. due to USB bus number exhaustion). status_show_vhci()
-checked for a NULL pdev but not for a NULL hcd returned by
-platform_get_drvdata(). Passing NULL to hcd_to_vhci_hcd() does not
-return NULL - it returns a pointer offset of 0x260, causing a NULL
-pointer dereference when that value is subsequently dereferenced.
+Add Vol+/Vol-/Mute panel button mappings for iMON VFD HID OEM v1.2.
+This version differs in the codes that generate the
+KEY_VOLUMEUP, KEY_VOLUMEDOWN and KEY_MUTE events.
 
-Add a NULL check on hcd before calling hcd_to_vhci_hcd(). Move
-status_show_not_ready() above status_show_vhci() to make it callable
-from the new error path without a forward declaration.
-
-Signed-off-by: Adrian Wowk <dev@adrianwowk.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20260414010050.158064-2-dev@adrianwowk.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alessandro Baldi <baldovic@virgilio.it>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/vhci_sysfs.c | 52 +++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 23 deletions(-)
+ drivers/media/rc/imon.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/usbip/vhci_sysfs.c b/drivers/usb/usbip/vhci_sysfs.c
-index e2847cd3e6e36..7dd6465ee4358 100644
---- a/drivers/usb/usbip/vhci_sysfs.c
-+++ b/drivers/usb/usbip/vhci_sysfs.c
-@@ -59,6 +59,29 @@ static void port_show_vhci(char **out, int hub, int port, struct vhci_device *vd
- 	*out += sprintf(*out, "\n");
- }
- 
-+static ssize_t status_show_not_ready(int pdev_nr, char *out)
-+{
-+	char *s = out;
-+	int i = 0;
-+
-+	for (i = 0; i < VHCI_HC_PORTS; i++) {
-+		out += sprintf(out, "hs  %04u %03u ",
-+				    (pdev_nr * VHCI_PORTS) + i,
-+				    VDEV_ST_NOTASSIGNED);
-+		out += sprintf(out, "000 00000000 0000000000000000 0-0");
-+		out += sprintf(out, "\n");
-+	}
-+
-+	for (i = 0; i < VHCI_HC_PORTS; i++) {
-+		out += sprintf(out, "ss  %04u %03u ",
-+				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
-+				    VDEV_ST_NOTASSIGNED);
-+		out += sprintf(out, "000 00000000 0000000000000000 0-0");
-+		out += sprintf(out, "\n");
-+	}
-+	return out - s;
-+}
-+
- /* Sysfs entry to show port status */
- static ssize_t status_show_vhci(int pdev_nr, char *out)
- {
-@@ -76,6 +99,12 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
- 	}
- 
- 	hcd = platform_get_drvdata(pdev);
-+
-+	if (!hcd) {
-+		usbip_dbg_vhci_sysfs("show status error (hcd is NULL)\n");
-+		return status_show_not_ready(pdev_nr, out);
-+	}
-+
- 	vhci_hcd = hcd_to_vhci_hcd(hcd);
- 	vhci = vhci_hcd->vhci;
- 
-@@ -104,29 +133,6 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
- 	return out - s;
- }
- 
--static ssize_t status_show_not_ready(int pdev_nr, char *out)
--{
--	char *s = out;
--	int i = 0;
--
--	for (i = 0; i < VHCI_HC_PORTS; i++) {
--		out += sprintf(out, "hs  %04u %03u ",
--				    (pdev_nr * VHCI_PORTS) + i,
--				    VDEV_ST_NOTASSIGNED);
--		out += sprintf(out, "000 00000000 0000000000000000 0-0");
--		out += sprintf(out, "\n");
--	}
--
--	for (i = 0; i < VHCI_HC_PORTS; i++) {
--		out += sprintf(out, "ss  %04u %03u ",
--				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
--				    VDEV_ST_NOTASSIGNED);
--		out += sprintf(out, "000 00000000 0000000000000000 0-0");
--		out += sprintf(out, "\n");
--	}
--	return out - s;
--}
--
- static int status_name_to_id(const char *name)
- {
- 	char *c;
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 69e118863aa67..55edf7583aca2 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -295,6 +295,10 @@ static const struct imon_usb_dev_descr imon_OEM_VFD = {
+ 		{ 0x000100000000ffeell, KEY_VOLUMEUP },
+ 		{ 0x010000000000ffeell, KEY_VOLUMEDOWN },
+ 		{ 0x000000000100ffeell, KEY_MUTE },
++		/* iMON VFD HID OEM v1.2 */
++		{ 0x000000000a00ffeell, KEY_VOLUMEUP },
++		{ 0x000000000b00ffeell, KEY_VOLUMEDOWN },
++		{ 0x000000000c00ffeell, KEY_MUTE },
+ 		/* 0xffdc iMON MCE VFD */
+ 		{ 0x00010000ffffffeell, KEY_VOLUMEUP },
+ 		{ 0x01000000ffffffeell, KEY_VOLUMEDOWN },
 -- 
 2.53.0
 
