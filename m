@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8983F50E5B3;
-	Wed, 30 Sep 2026 16:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DF73AFB11;
+	Wed, 30 Sep 2026 16:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785930; cv=none; b=e/bnWWCcVW6Ay809ZChyHf06m3FXwUsbxW3smYXrEp9vEWO2KrTHKY/uvCLpHqZUulnyXOD/eGzo/kNPOh6AP0MxWaKKEgpxNWNPhxNCut7GJwkppGzspO85ytLgp+kcwplcvaTC0CnjdJO8mrg4crpKSpUycbC2UH1f6tj3pK0=
+	t=1790785933; cv=none; b=RgeoBuK+bBl1YnmivoJqxPzTu0JF+R6PqNQy5G3XWI6vwAnYietGOO+gforQeHKc6+y+5/+OdOq9C02pYonnNm1I7upbhWRsuWga3Q0FP7jfAi40VbK0LdnDuPsQQNwnxEkvd/TM2vi3nSpM6+ECk1TPWBDoadKpYsi/+AL7xYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785930; c=relaxed/simple;
-	bh=gmnmTLeGsOCspTZ+BPSV+NP8HqnUzCg//7qG/D6Phig=;
+	s=arc-20240116; t=1790785933; c=relaxed/simple;
+	bh=/maHto5L4Ww3CziFrXS7qPkv1UWwcGzW4LvdET32aCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwPFWExrpynYETZ3suSBIZ2YWpyBI4iptRq49j5armGtBbpUCzQNNAqJUQYmoKpByzynLX9vR/mXCy4HNWN7LKvg1bXEVSPlkfagiFgf5BZE7ucVYc1HfUG/hG+940IigzETSl1Bi1ff91LnQ/vyfkX2ThfmEFcgSBBf46vDij8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QQKM5a1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bCU80upj4c5ytv2FFf3HjzPRlaciPeEgk+a5jPnVocWpjg2BPo6M+oSg/ezUhYTltP8HfX3nasKtZXVxkoUUKac/PyQ/ZkqeWIcEmb/fNHfdmny94lgufpzQKP7oS/vu7C0+TozAv7rIP9DXtjUXpJSfTNAn+fGoNxeX/ckFiGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCBajd67; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QQKM5a1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC921F000FF;
-	Wed, 30 Sep 2026 16:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCBajd67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7C01F000FF;
+	Wed, 30 Sep 2026 16:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785929;
-	bh=3JQqnmU+7VEOax2PKA3G45086Qs9KA5fzAI1Az/cfJQ=;
+	s=korg; t=1790785932;
+	bh=5V7U+7g3eKpKoKot0W6tAfJnGwhl+ZSsP01oKbZcIic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1QQKM5a1hc/atEoUhTkyn5BsQMoCQINIlJY4oiVK2S0g7fObmESX8uSUDF5ki0eyg
-	 RSUFmnJcygDVyHVEe3+OCBwFs/dBU5b5gqJhu2xIRPGhvhtiqtun7CyeHgxCmE4t0a
-	 5z6SL1yu1TQmP/h4IgVmcrsRtsu2lnrQh1NZlGLQ=
+	b=eCBajd67D0oq8yvCOThY5yeAN7OnKKtHHYdLsrgQIYMLi31TmlPoonyDj8IvpQW6a
+	 I2zajL5D3S1uNIlbzKdPT99MDpMVg9ZfRtcDliybJ7NLi3We2B/DbqasY2TuhS7ZTD
+	 eIYZKEv9fhQPlJWX07vOn6xnWrSO+h+dx6y94tsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gautam Menghani <gautam@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 680/982] KVM: PPC: Book3S HV: fix use-after-free in kvmhv_emulate_tlbie_all_lpid()
-Date: Wed, 30 Sep 2026 17:23:36 +0200
-Message-ID: <20260930152431.370597863@linuxfoundation.org>
+Subject: [PATCH 6.1 681/982] KVM: PPC: Book3S HV: fix secure device page leak on uv_page_in() failure
+Date: Wed, 30 Sep 2026 17:23:37 +0200
+Message-ID: <20260930152431.391022861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -48,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -56,26 +57,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-[ Upstream commit 51938dfa8a51a4f85328413fca9b6e21f9d2d088 ]
+[ Upstream commit 0a416ee20bcccddf91ca5b63696a23b9d11d73aa ]
 
-kvmhv_emulate_tlbie_all_lpid() iterates the nested-guest IDR and drops
-mmu_lock before calling kvmhv_emulate_tlbie_lpid(), but does not hold a
-reference on the kvm_nested_guest pointer obtained from the IDR.  A
-concurrent vCPU issuing a single-LPID tlbie (is=2, ric=2) can race
-through kvmhv_flush_nested() -> kvmhv_remove_nested() -> idr_remove /
---refcnt -> kvmhv_release_nested() -> kfree(gp) in that window, leaving
-the iterating vCPU with a dangling pointer.  The subsequent
-mutex_lock(&gp->tlb_lock) and accesses to gp->shadow_pgtable,
-gp->shadow_lpid and gp->l1_host all touch freed memory.  The free path
-is fully L1-controlled.
+In kvmppc_svm_page_in(), if uv_page_in() fails after
+kvmppc_uvmem_get_page() has succeeded, the secure device page is never
+released.  kvmppc_uvmem_get_page() sets a bit in kvmppc_uvmem_bitmap,
+allocates a kvmppc_uvmem_page_pvt struct, marks the GFN as
+KVMPPC_GFN_UVMEM_PFN, and calls zone_device_page_init() which sets
+refcount=1 and locks the page.  The subsequent goto out_finalize skips
+the *mig.dst assignment, so migrate_vma_finalize() is a no-op for the
+page, and none of those resources are ever reclaimed.
 
-Fix this by incrementing gp->refcnt inside the loop before dropping
-mmu_lock, mirroring what kvmhv_get_nested() does, and releasing the
-reference with kvmhv_put_nested() after the per-guest work completes.
-This is the same get/put discipline already used at every other
-call site that drops mmu_lock while holding a nested-guest pointer.
+Each occurrence permanently consumes one entry from the firmware-bounded
+secure memory pool (kvmppc_uvmem_bitmap), leaks pvt, and leaves the GFN
+marked as secure — making it unusable for the lifetime of the VM.
 
-Fixes: e3b6b4661527 ("KVM: PPC: Book3S HV: Implement H_TLB_INVALIDATE hcall")
+The twin __kvmppc_svm_page_out() already handles the analogous uv_page_out()
+failure correctly with unlock_page(dpage); __free_page(dpage).  Apply
+the same pattern here: unlock_page() followed by put_page(), which
+chains through free_zone_device_folio() into kvmppc_uvmem_folio_free()
+to clear the bitmap bit, free pvt, and reset the GFN state.
+
+Reachable whenever uv_page_in() returns an error (e.g. UV pool
+exhaustion) on any POWER9/10 + Ultravisor/PEF system.
+
+Fixes: ca9f4942670c ("KVM: PPC: Book3S HV: Support for running secure guests")
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
 Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
@@ -83,24 +89,26 @@ Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/book3s_hv_nested.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kvm/book3s_hv_uvmem.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_hv_nested.c
-index bc71a90c7cc76..5839b3d4cc77e 100644
---- a/arch/powerpc/kvm/book3s_hv_nested.c
-+++ b/arch/powerpc/kvm/book3s_hv_nested.c
-@@ -1172,8 +1172,10 @@ static void kvmhv_emulate_tlbie_all_lpid(struct kvm_vcpu *vcpu, int ric)
- 
- 	spin_lock(&kvm->mmu_lock);
- 	idr_for_each_entry(&kvm->arch.kvm_nested_guest_idr, gp, lpid) {
-+		++gp->refcnt;
- 		spin_unlock(&kvm->mmu_lock);
- 		kvmhv_emulate_tlbie_lpid(vcpu, gp, ric);
-+		kvmhv_put_nested(gp);
- 		spin_lock(&kvm->mmu_lock);
+diff --git a/arch/powerpc/kvm/book3s_hv_uvmem.c b/arch/powerpc/kvm/book3s_hv_uvmem.c
+index e2f11f9c3f2aa..2bc67f8ef82c5 100644
+--- a/arch/powerpc/kvm/book3s_hv_uvmem.c
++++ b/arch/powerpc/kvm/book3s_hv_uvmem.c
+@@ -774,8 +774,11 @@ static int kvmppc_svm_page_in(struct vm_area_struct *vma,
+ 		if (spage) {
+ 			ret = uv_page_in(kvm->arch.lpid, pfn << page_shift,
+ 					gpa, 0, page_shift);
+-			if (ret)
++			if (ret) {
++				unlock_page(dpage);
++				put_page(dpage);
+ 				goto out_finalize;
++			}
+ 		}
  	}
- 	spin_unlock(&kvm->mmu_lock);
+ 
 -- 
 2.53.0
 
