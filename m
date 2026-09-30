@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554E6364028;
-	Wed, 30 Sep 2026 16:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E1050AC30;
+	Wed, 30 Sep 2026 16:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785557; cv=none; b=lbQRSXsJBP47cQ7vYE17EnBBYL1h2wmX4T/iE5kgpX//IjQYxG7eT0f6XtQ1XYwzwUPrVPwh77LlZCfflsjgDBVJ4W6WzpR/IfcLhi8NWxTxl4VrRdpNwQ324BPZPCowsmBoFPxiCgYXQ2kQKThHk2RwHPucJnLPwgTVI2c/4Ok=
+	t=1790785556; cv=none; b=BEya+UKInMkRxoVhCImNKKhu+fWd2PHPKxuz3TuBJX7eY5/sfPQHOFMqrXx5TwjKVeyAwkeaXX5iNxMwwgeQVcpfQKOM2AH1NejpNXIQjG16VFfniPh2EodBHwlMAc+wKde3DGlvbxT3C9ZpD7PhUjUVJ8ocuQyLBmR8Llc5cmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785557; c=relaxed/simple;
-	bh=zGidx9NStZzgTM1bhkwu2tC8EqitfRvAnLVvchAfKIA=;
+	s=arc-20240116; t=1790785556; c=relaxed/simple;
+	bh=6iCWDgNLUi2LHHT+OBQXH2wwxgsQWytZs10OWfjfuEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjJ45jvdxWlE4CVNSld92Jw8J1tL9UgfaUJOEhkjXgRrzqc2RDnsfQHqn9B0reUnzBM5oOE3H6gaF2qsHLEkthLjMAiAvruUMOEJnT8LgSs0Hjl6nqMbwvMp6EXlMCbpopKad84722p4TNnJUSZ9uvrrv7UvlyrWNoNi9qGxhdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoSvoazN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tMtFQFlandqN7cmcBjES+LZoUmepY75mPL6EdSwfCq5QaDWb9PAyJXooqh67/4Q/8DUDK18yTyqInWR2rWVLh8DmgnRhLt5IB36LXQlpA8OZVQrpgyGL09vWnjkzwB4zlpmCCFnfEzBBqsTouF98PXGWa+Nu3nAMJnAoD15HE48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfSI6ucx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoSvoazN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B441F00898;
-	Wed, 30 Sep 2026 16:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfSI6ucx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0A11F0089A;
+	Wed, 30 Sep 2026 16:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785548;
-	bh=DAjLVDmtb+sySLNF0olpaWoHOottnZb8d84HBXbLB7w=;
+	s=korg; t=1790785543;
+	bh=umY91H0wKFksJRaPfmfmz0LV/8I5tyvkKj2v0zHAghs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qoSvoazN2pYaRHQHZfdvRbsCycA72RkgA4RKWT1WIxEfkW6KkwH4dpUMqpS5iua8F
-	 lFfpnGRj410k2g90+FY02WD+GLZQ/3fLk+08s/AneqhbSmzbFx+ehraP8047mXHfBt
-	 aDDGnCzeIOWZaVjx3GJgDzs2++1/HN6hv6mIrOFo=
+	b=QfSI6ucxcrhlptf3qQh36avd9bkES+AIcr1FWBoeYf7isOjAT+MgR8jPoYcdecBo1
+	 wdP1gomX0gcGx+X0FEkekdS5eE4QN+hoE0AOuOZ2gBJBXonVV07ME8emFLnSo8E41G
+	 uTC5tFMxfxct1aF1mC18EDt/YCEiV8y5UtUPrzUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 541/982] mptcp: options: handle MPC data + csum reqd + no csum
-Date: Wed, 30 Sep 2026 17:21:17 +0200
-Message-ID: <20260930152428.390920713@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 501/982] dm/amdgpu: fix malformed link_settings debugfs output
+Date: Wed, 30 Sep 2026 17:20:37 +0200
+Message-ID: <20260930152427.542931227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,66 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit ab36b1a80942c78ddb04d006ff38aa7ed3ec0e5e upstream.
+commit 622b4e8505aa7453a53d17fa3a288871f270fc8b upstream.
 
-Before this modification, a remote peer could send an MP_CAPABLE with
-data, with the checksum flag set, but without adding the actual 2 bytes
-of checksum. As a result, uninitialised bytes could be used for the
-'csum' field.
+[Why]
+dp_link_settings_read() passed strlen() of each format string as the size
+argument to snprintf() and then advanced rd_buf_ptr by that same fixed amount.
+The format-string length has no relation to the formatted output length, so
+snprintf() truncated each field at a NUL it wrote inside the buffer while the
+pointer was advanced past it. The result is a buffer peppered with embedded NUL
+bytes and fields that are silently cut short, so the data read back from the
+debugfs node does not reflect the actual link settings.
 
-That was not a critical issue, because this 'csum' field is only used to
-compare with the expected one, if previously negotiated in the 3WHS.
-Worst case, the checksum is likely wrong, a fallback is done without a
-reject if the negotiation was done earlier. That's OK.
+[How]
+Use scnprintf() with the real remaining buffer size
+(rd_buf_size - (rd_buf_ptr - rd_buf)) and advance rd_buf_ptr by its return
+value, which is the number of characters actually written. This both bounds
+each write to the space left in rd_buf and keeps the output a single,
+properly terminated string. The now-unused str_len local is removed.
 
-Yet, better to take the expected path with this case: only look at the
-checksum flag for MP_CAPABLEs not carrying a data-len.
-
-Such packet can be seen as a 3rd or 4th ACK. The RFC8684 mentions [1]
-that the 3rd packet should have the checksum flag set. When an MPC + ACK
-contains data, the checksum flag is redundant with the checksum field.
-It is not clear what should be done for the 4th ACK, nor if the flag has
-to be set if the checksum field is set.
-
-Therefore, it seems fine to only look at the presence of the checksum
-field, not to break the interaction with stacks that were not setting
-both.
-
-Note that linked to this checksum flag on the 3rd ACK, with the current
-implementation, we can have a situation where the SYN packets have no
-checksum flag, but the 3rd ACK has one, and this is the one that will be
-taken into account. First, that's clearly not directly linked to this
-patch, but Clashiko forced us to look at that. At the end, that seems
-fine to act like that: yes that's not how the negotiation should work,
-but being flexible without introducing side effects is also fine: fixing
-this would mean increasing the complexity, and that's not worth it.
-
-Fixes: 208e8f66926c ("mptcp: receive checksum for MP_CAPABLE with data")
+Fixes: 41db5f1931ec ("drm/amd/display: set-read link rate and lane count through debugfs")
+Assisted-by: Copilot:claude-opus-4.8
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 43b9f0f18693c7f7b75613f3aeae25fa2b4e2f76)
 Cc: stable@vger.kernel.org
-Link: https://datatracker.ietf.org/doc/html/rfc8684#section-3.1-23 [1]
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260803-net-mptcp-misc-fixes-7-2-rc6-v2-0-b8f496d71664%40kernel.org?part=1
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260908-net-mptcp-misc-fixes-7-3-rc1-v2-5-df1de70348b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |   20 +++++---------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -80,7 +80,8 @@ static void mptcp_parse_option(const str
- 		 * In other words, the only way for checksums not to be used
- 		 * is if both hosts in their SYNs set A=0."
- 		 */
--		if (flags & MPTCP_CAP_CHECKSUM_REQD)
-+		if ((flags & MPTCP_CAP_CHECKSUM_REQD) &&
-+		    opsize < TCPOLEN_MPTCP_MPC_ACK_DATA)
- 			mp_opt->suboptions |= OPTION_MPTCP_CSUMREQD;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -186,7 +186,6 @@ static ssize_t dp_link_settings_read(str
+ 	char *rd_buf_ptr = NULL;
+ 	const uint32_t rd_buf_size = 100;
+ 	uint32_t result = 0;
+-	uint8_t str_len = 0;
+ 	int r;
  
- 		mp_opt->deny_join_id0 = !!(flags & MPTCP_CAP_DENY_JOIN_ID0);
+ 	if (*pos & 3 || size & 3)
+@@ -198,29 +197,26 @@ static ssize_t dp_link_settings_read(str
+ 
+ 	rd_buf_ptr = rd_buf;
+ 
+-	str_len = strlen("Current:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Current:  %d  0x%x  %d  ",
+ 			link->cur_link_settings.lane_count,
+ 			link->cur_link_settings.link_rate,
+ 			link->cur_link_settings.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Verified:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Verified:  %d  0x%x  %d  ",
+ 			link->verified_link_cap.lane_count,
+ 			link->verified_link_cap.link_rate,
+ 			link->verified_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Reported:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Reported:  %d  0x%x  %d  ",
+ 			link->reported_link_cap.lane_count,
+ 			link->reported_link_cap.link_rate,
+ 			link->reported_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Preferred:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Preferred:  %d  0x%x  %d\n",
+ 			link->preferred_link_setting.lane_count,
+ 			link->preferred_link_setting.link_rate,
+ 			link->preferred_link_setting.link_spread);
 
 
