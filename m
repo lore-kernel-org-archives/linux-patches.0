@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839DD4DEC26;
-	Wed, 30 Sep 2026 18:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0E8502D5A;
+	Wed, 30 Sep 2026 18:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792252; cv=none; b=Zldy/9BIfLhSyKuU3oYc5k16NJlQbhw8rdI+e3l/KfsNEheOndL5DhgG8jCAIo7S3OSgC8qG+z3g1TGZx4oolSMtVyDfnkiOt+bUbSuf0c4AMIK1iqbTD6DxKpY4Gj7kTK+iN1dAELNma5058qrRs+vXbEjYXU80gKigum2iDXk=
+	t=1790792255; cv=none; b=sBd8zxXbTRMW0+9alY64EpEyGIMktyKptcEW90R8T+W/YTanSlWvgKqNBNejVEX0FhjQfoKMMuX7mnYOR064MYN0d8x8RD4Bwj0e+Bcw+eXTFFXj++d3nr3SdUViRyXagWsUvJoYuNb70ov6psnI+GZxveGq5a1OrCWVkUP376Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792252; c=relaxed/simple;
-	bh=2hP42HGIXlA7MwtbQTeYo6stWFzkJTnKmsCQ4AHXRys=;
+	s=arc-20240116; t=1790792255; c=relaxed/simple;
+	bh=/1ufr+hPvfPBNluWm8tLnk+c9h/lrzWTrQyT5BtrnSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXz4h/nvYXgXblFrKTSS21LgtSJgOEpraHqQinHnYlubqBR/QuH5uuAUfrXkhHTW1Hw4FO/SQ7Kgw8whZjLcuKmIyqlHeXGfxooOKlWVuk5wc6FvEEa2JpX6HW8ZGJI3fj9z/nzzKZH7kigktpWmhUTewbyuuhh0VR6oRQrFJxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uq/yRJlq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SowPZX+S6YnwqZlSny6DMW4auJRiYcX7fblV2iN07GaP1JS8ishu+9aLvDu/+3jsZERLaRFxVI0+ZoLu7x5VdhM60z3DFbuUJ2TkXgOnmev3/vU7t3C8bAzJHHl2Lo5u33Jz6PD+48nU5mu08lcDJb+jfMyMfvvkosI1I9MQwds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oe+OUoWS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uq/yRJlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF18C1F000FF;
-	Wed, 30 Sep 2026 18:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oe+OUoWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DC21F000FF;
+	Wed, 30 Sep 2026 18:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792251;
-	bh=46wLxu8QomGkezRTaFSaAxuU6sAe0KLKMDcuMg83GO4=;
+	s=korg; t=1790792254;
+	bh=iUyVldS2GTwr6BnW2XcJSVqAERs4rVA0WGaxRHFWgVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uq/yRJlqZZX68v5IzQl4iYtCQjQ1WdzgmYhtxFPhoA6Ei0RFOurU5kkJuYt5COgBE
-	 LpWVu1oUHcG4FLcD7oq1RGSZNTrLbMo6Xk6KT1yHIoBHGV8mvEchBH6dV7+nplEidH
-	 PPS+wUfs+i0M9rGBjuHWynurhxyozYXlrlnurBmk=
+	b=Oe+OUoWSeCdLMUOfqWoDt0Mhpz6PlaUN8kRgSq0p8b9c2TueygMLamrNnm5a1KGTi
+	 87TMdLl8m5o8rZySaWIM2mal6SEV493o1n2s/O7pJXnihH3TCqPBY/x1u1kuLR9hT5
+	 fJkUXp+13gTWSWf/LETzC7askhDJtD7dL09bAnpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Will Shiu <Will.Shiu@mediatek.com>,
+	Gao Xiang <xiang@kernel.org>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 588/752] spi: zynqmp-gqspi: Use devm_spi_alloc_host()
-Date: Wed, 30 Sep 2026 17:27:38 +0200
-Message-ID: <20260930152411.012730487@linuxfoundation.org>
+Subject: [PATCH 5.15 589/752] erofs: Fix detection of atomic context
+Date: Wed, 30 Sep 2026 17:27:39 +0200
+Message-ID: <20260930152411.033287023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,79 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Sandeep Dhavale <dhavale@google.com>
 
-[ Upstream commit 64640f6c972e80f52196416a8d4dc3c0ffcbc82d ]
+[ Upstream commit 12d0a24afd9ea58e581ea64d64e066f2027b28d9 ]
 
-Use devm_spi_alloc_host() so that there's no need to call
-spi_controller_put() in the error path.
+Current check for atomic context is not sufficient as
+z_erofs_decompressqueue_endio can be called under rcu lock
+from blk_mq_flush_plug_list(). See the stacktrace [1]
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20240826121421.3384792-2-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+In such case we should hand off the decompression work for async
+processing rather than trying to do sync decompression in current
+context. Patch fixes the detection by checking for
+rcu_read_lock_any_held() and while at it use more appropriate
+!in_task() check than in_atomic().
+
+Background: Historically erofs would always schedule a kworker for
+decompression which would incur the scheduling cost regardless of
+the context. But z_erofs_decompressqueue_endio() may not always
+be in atomic context and we could actually benefit from doing the
+decompression in z_erofs_decompressqueue_endio() if we are in
+thread context, for example when running with dm-verity.
+This optimization was later added in patch [2] which has shown
+improvement in performance benchmarks.
+
+==============================================
+[1] Problem stacktrace
+[name:core&]BUG: sleeping function called from invalid context at kernel/locking/mutex.c:291
+[name:core&]in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 1615, name: CpuMonitorServi
+[name:core&]preempt_count: 0, expected: 0
+[name:core&]RCU nest depth: 1, expected: 0
+CPU: 7 PID: 1615 Comm: CpuMonitorServi Tainted: G S      W  OE      6.1.25-android14-5-maybe-dirty-mainline #1
+Hardware name: MT6897 (DT)
+Call trace:
+ dump_backtrace+0x108/0x15c
+ show_stack+0x20/0x30
+ dump_stack_lvl+0x6c/0x8c
+ dump_stack+0x20/0x48
+ __might_resched+0x1fc/0x308
+ __might_sleep+0x50/0x88
+ mutex_lock+0x2c/0x110
+ z_erofs_decompress_queue+0x11c/0xc10
+ z_erofs_decompress_kickoff+0x110/0x1a4
+ z_erofs_decompressqueue_endio+0x154/0x180
+ bio_endio+0x1b0/0x1d8
+ __dm_io_complete+0x22c/0x280
+ clone_endio+0xe4/0x280
+ bio_endio+0x1b0/0x1d8
+ blk_update_request+0x138/0x3a4
+ blk_mq_plug_issue_direct+0xd4/0x19c
+ blk_mq_flush_plug_list+0x2b0/0x354
+ __blk_flush_plug+0x110/0x160
+ blk_finish_plug+0x30/0x4c
+ read_pages+0x2fc/0x370
+ page_cache_ra_unbounded+0xa4/0x23c
+ page_cache_ra_order+0x290/0x320
+ do_sync_mmap_readahead+0x108/0x2c0
+ filemap_fault+0x19c/0x52c
+ __do_fault+0xc4/0x114
+ handle_mm_fault+0x5b4/0x1168
+ do_page_fault+0x338/0x4b4
+ do_translation_fault+0x40/0x60
+ do_mem_abort+0x60/0xc8
+ el0_da+0x4c/0xe0
+ el0t_64_sync_handler+0xd4/0xfc
+ el0t_64_sync+0x1a0/0x1a4
+
+[2] Link: https://lore.kernel.org/all/20210317035448.13921-1-huangjianan@oppo.com/
+
+Reported-by: Will Shiu <Will.Shiu@mediatek.com>
+Suggested-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Sandeep Dhavale <dhavale@google.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Link: https://lore.kernel.org/r/20230621220848.3379029-1-dhavale@google.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c | 18 ++++++------------
- 1 file changed, 6 insertions(+), 12 deletions(-)
+ fs/erofs/zdata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-zynqmp-gqspi.c b/drivers/spi/spi-zynqmp-gqspi.c
-index 590ecd79cb501..b68fa82554d04 100644
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1096,7 +1096,7 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct device_node *np = dev->of_node;
- 
--	ctlr = spi_alloc_master(&pdev->dev, sizeof(*xqspi));
-+	ctlr = devm_spi_alloc_master(&pdev->dev, sizeof(*xqspi));
- 	if (!ctlr)
- 		return -ENOMEM;
- 
-@@ -1106,29 +1106,25 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, xqspi);
- 
- 	xqspi->regs = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(xqspi->regs)) {
--		ret = PTR_ERR(xqspi->regs);
--		goto remove_master;
--	}
-+	if (IS_ERR(xqspi->regs))
-+		return PTR_ERR(xqspi->regs);
- 
- 	xqspi->pclk = devm_clk_get(&pdev->dev, "pclk");
- 	if (IS_ERR(xqspi->pclk)) {
- 		dev_err(dev, "pclk clock not found.\n");
--		ret = PTR_ERR(xqspi->pclk);
--		goto remove_master;
-+		return PTR_ERR(xqspi->pclk);
- 	}
- 
- 	xqspi->refclk = devm_clk_get(&pdev->dev, "ref_clk");
- 	if (IS_ERR(xqspi->refclk)) {
- 		dev_err(dev, "ref_clk clock not found.\n");
--		ret = PTR_ERR(xqspi->refclk);
--		goto remove_master;
-+		return PTR_ERR(xqspi->refclk);
- 	}
- 
- 	ret = clk_prepare_enable(xqspi->pclk);
- 	if (ret) {
- 		dev_err(dev, "Unable to enable APB clock.\n");
--		goto remove_master;
-+		return ret;
- 	}
- 
- 	ret = clk_prepare_enable(xqspi->refclk);
-@@ -1202,8 +1198,6 @@ static int zynqmp_qspi_probe(struct platform_device *pdev)
- 	clk_disable_unprepare(xqspi->refclk);
- clk_dis_pclk:
- 	clk_disable_unprepare(xqspi->pclk);
--remove_master:
--	spi_controller_put(ctlr);
- 
- 	return ret;
- }
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 1aa8b60420775..0f2ab71969770 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -798,7 +798,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 	if (atomic_add_return(bios, &io->pending_bios))
+ 		return;
+ 	/* Use workqueue and sync decompression for atomic contexts only */
+-	if (in_atomic() || irqs_disabled()) {
++	if (!in_task() || irqs_disabled() || rcu_read_lock_any_held()) {
+ 		queue_work(z_erofs_workqueue, &io->u.work);
+ 		sbi->opt.readahead_sync_decompress = true;
+ 		return;
 -- 
 2.53.0
 
