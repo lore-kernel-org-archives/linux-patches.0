@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2923CB56A;
-	Wed, 30 Sep 2026 19:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7423D47D9;
+	Wed, 30 Sep 2026 19:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795911; cv=none; b=jq3cz3KvuRjnvBSbUk02b3hhT/1PJ5+koMTWYIg62kmQjVxeT6TgkoqTlBO1ZdQYk935qhJu4XPEvOr8PxM8ion/Ukbh6ORe+jFqj8CzWdEOlw3Oqts7SwX9U4eNgv+Llghotp9qWdAvk+i9Fzz0bu3eoRlJjQOboIOGN/nclEc=
+	t=1790795914; cv=none; b=OQdDOmlO3VBFQciV/f4VaMqjbCbn/JAEBurUPBXbYu8Ln1xPCFwhzwev+NsqZIzZIvhUXvy5ZweGP/+DIPxCyH/Oyor0xsm7oyPoVf6SXGTKoZNblfMzQkfRIfQczqsuvJHZKpowEOM/GaQb4M2PKygak+mqsYcpyJX2eDvxBoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795911; c=relaxed/simple;
-	bh=nBJEprNNyS9ZWhvHn09JuHWo3b6AhVc6K9MPjy6TXZs=;
+	s=arc-20240116; t=1790795914; c=relaxed/simple;
+	bh=wMrPqBOCwsJ6S1/h3NGfYyhO1WcYjj6w3bfh3sdfapQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sr/hDqRezp5hUqB7AUUW7k1bL6mvxJAohGDivMfYQkaUdZffvgjfgzWquyk/V165YqScyTC4szGmk4ilogaBKLM7z5N75aXGZvix4baoPetnZq/mvupMHeN2rwn1+9aW1SRY3HyWejabsNzLHmaPLFgDfBfzmknzPsSontlyjCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1m07l1ps; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aU2r4qBBGPoy7mLb4vuEi0pDEYeKusyPWvAT9SUGRpyvnOO/CYkhbiRT1v+6R6G2w8CQfxiirw37/93ZjaDjLsRxDVTQ9jsK7Z6bhRaCfuTCobs5bdagF/JLaaSaSkkzUcd77Qft7QKa8259CgialTvmP6LEhragVleUvSktvVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iefcilg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1m07l1ps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F7C1F000FF;
-	Wed, 30 Sep 2026 19:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iefcilg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757D21F000FF;
+	Wed, 30 Sep 2026 19:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795910;
-	bh=Lt/BzHK82vj9TA8L9YCEBQtW66/KfcRgfCU5UlwCO/c=;
+	s=korg; t=1790795913;
+	bh=kwnCF74JMsizgnaFnpt2PsoChdM1dhzvZQYo3rrvTNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1m07l1psoXY1Jo4VIhJqnrbwo+besySgj6LbvFhb0oiAh4UPrj/NwM9XzvJCRRb6L
-	 nbGH43fij0iI6Nb1ZyhIjHr6dDQcvb+UmVUQDLucDY8QwYwa2sIrZ70e4+mUPhQjrH
-	 toSuyczOTj98zELLPmKMBT0Dh6b7fiyVkY/9ACPg=
+	b=1iefcilg7/2aFMrShGS6XYskwinNS1yhk+ROvWhHkcdKJd0zka6vvsbt+rmMVFgEz
+	 emR/505wIPHpv60ZmtvqWAd0T6A2fa98+DW0Dmstu9jDUGcSAp8eZNFsJtysUJnay/
+	 gOLE0iv2dzZlnEAjFDuXwAljnaztjKyCAPCSKOcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Norbert Szetei <norbert@doyensec.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0710/1193] Revert "hwmon: (emc1403) Rely on subsystem locking"
-Date: Wed, 30 Sep 2026 17:23:14 +0200
-Message-ID: <20260930152450.023989115@linuxfoundation.org>
+Subject: [PATCH 6.6 0728/1193] RDMA/rxe: validate access flags before swapping the MRs PD
+Date: Wed, 30 Sep 2026 17:23:32 +0200
+Message-ID: <20260930152450.428126611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -49,146 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit e43ba8be636ab54bcf3f90a0ccd36e2bc3df3274.
+From: Norbert Szetei <norbert@doyensec.com>
 
+[ Upstream commit ae36a5b609ae79f4de966328b78d2584be9719a4 ]
+
+rxe_rereg_user_mr() reassigns mr->ibmr.pd first and only then
+validates the IB_MR_REREG_ACCESS argument:
+
+	if (flags & IB_MR_REREG_PD) {
+		rxe_put(old_pd);
+		rxe_get(pd);
+		mr->ibmr.pd = ibpd;
+	}
+
+	if (flags & IB_MR_REREG_ACCESS) {
+		if (access & ~RXE_ACCESS_SUPPORTED_MR)
+			return ERR_PTR(-EOPNOTSUPP);
+		mr->access = access;
+	}
+
+Both flags pass the entry check because RXE_MR_REREG_SUPPORTED is
+IB_MR_REREG_PD | IB_MR_REREG_ACCESS, so a caller can reach the access
+check with mr->ibmr.pd already reassigned.
+
+mr->ibmr.pd is owned by the core, which adjusts pd->usecnt only on the
+success path: ib_uverbs_rereg_mr() jumps to put_new_uobj on a driver error
+without undoing the reassignment, so mr->pd == new_pd while the usecnts
+still charge the MR to orig_pd. ib_dereg_mr_user() then decrements
+new_pd, whose count can reach zero while a memory window still references
+it; uverbs_free_pd() frees the PD on that count alone and rxe_mw_cleanup()
+writes to freed memory:
+
+  BUG: KASAN: slab-use-after-free in __rxe_put+0x31/0xa0
+  Write of size 4 at addr ffff8881301dd690 by task rxe_poc/591
+   __rxe_put+0x31/0xa0
+   rxe_mw_cleanup+0x42/0x200
+   __rxe_cleanup+0x115/0x370
+   rxe_dealloc_mw+0x4c/0x80
+  Allocated by task 591:
+   ib_uverbs_alloc_pd+0x258/0x540
+  Freed by task 591:
+   ib_dealloc_pd_user+0x174/0x210
+   uverbs_free_pd+0x8d/0xc0
+   ib_uverbs_dealloc_pd+0x18e/0x1d0
+
+Validate the access flags before mutating any state so the callback either
+applies every requested change or none.
+
+Fixes: 544c7f62cf32 ("RDMA/rxe: Implement rereg_user_mr")
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/46E1D5C0-24BE-4D01-BDB3-634FE09B22C5@doyensec.com
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc1403.c | 46 ++++++++++++++++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 10 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
-index ad4fc64824bc4..0011a1d100075 100644
---- a/drivers/hwmon/emc1403.c
-+++ b/drivers/hwmon/emc1403.c
-@@ -17,6 +17,7 @@
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
- #include <linux/sysfs.h>
-+#include <linux/mutex.h>
- #include <linux/regmap.h>
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 5a9826de59d4c..a7bfa9532d697 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -1330,19 +1330,20 @@ static struct ib_mr *rxe_rereg_user_mr(struct ib_mr *ibmr, int flags,
+ 	if (err)
+ 		return ERR_PTR(err);
  
- #define THERMAL_PID_REG		0xfd
-@@ -28,6 +29,7 @@ enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
- struct thermal_data {
- 	enum emc1403_chip chip;
- 	struct regmap *regmap;
-+	struct mutex mutex;
- };
- 
- static ssize_t power_state_show(struct device *dev, struct device_attribute *attr, char *buf)
-@@ -265,8 +267,8 @@ static s8 emc1403_temp_regs_low[][4] = {
- 	},
- };
- 
--static int emc1403_get_temp(struct thermal_data *data, int channel,
--			    enum emc1403_reg_map map, long *val)
-+static int __emc1403_get_temp(struct thermal_data *data, int channel,
-+			      enum emc1403_reg_map map, long *val)
- {
- 	unsigned int regvalh;
- 	unsigned int regvall = 0;
-@@ -292,23 +294,38 @@ static int emc1403_get_temp(struct thermal_data *data, int channel,
- 	return 0;
- }
- 
-+static int emc1403_get_temp(struct thermal_data *data, int channel,
-+			    enum emc1403_reg_map map, long *val)
-+{
-+	int ret;
++	if ((flags & IB_MR_REREG_ACCESS) &&
++	    (access & ~RXE_ACCESS_SUPPORTED_MR)) {
++		rxe_err_mr(mr, "access = %#x not supported\n", access);
++		return ERR_PTR(-EOPNOTSUPP);
++	}
 +
-+	mutex_lock(&data->mutex);
-+	ret = __emc1403_get_temp(data, channel, map, val);
-+	mutex_unlock(&data->mutex);
-+
-+	return ret;
-+}
-+
- static int emc1403_get_hyst(struct thermal_data *data, int channel,
- 			    enum emc1403_reg_map map, long *val)
- {
- 	int hyst, ret;
- 	long limit;
- 
--	ret = emc1403_get_temp(data, channel, map, &limit);
-+	mutex_lock(&data->mutex);
-+	ret = __emc1403_get_temp(data, channel, map, &limit);
- 	if (ret < 0)
--		return ret;
-+		goto unlock;
- 	ret = regmap_read(data->regmap, 0x21, &hyst);
- 	if (ret < 0)
--		return ret;
-+		goto unlock;
- 	if (map == temp_min)
- 		*val = limit + hyst * 1000;
- 	else
- 		*val = limit - hyst * 1000;
--	return 0;
-+unlock:
-+	mutex_unlock(&data->mutex);
-+	return ret;
- }
- 
- static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, long *val)
-@@ -406,16 +423,20 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
- 	else
- 		val = clamp_val(val, 0, 255000);
- 
--	ret = emc1403_get_temp(data, 0, temp_crit, &limit);
-+	mutex_lock(&data->mutex);
-+	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
- 	if (ret < 0)
--		return ret;
-+		goto unlock;
- 
- 	hyst = limit - val;
- 	if (data->chip == emc1428)
- 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
- 	else
- 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
--	return regmap_write(data->regmap, 0x21, hyst);
-+	ret = regmap_write(data->regmap, 0x21, hyst);
-+unlock:
-+	mutex_unlock(&data->mutex);
-+	return ret;
- }
- 
- static int emc1403_set_temp(struct thermal_data *data, int channel,
-@@ -429,6 +450,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 	regh = emc1403_temp_regs[channel][map];
- 	regl = emc1403_temp_regs_low[channel][map];
- 
-+	mutex_lock(&data->mutex);
- 	if (regl >= 0) {
- 		if (data->chip == emc1428)
- 			val = clamp_val(val, -128000, 127875);
-@@ -437,7 +459,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 		regval = DIV_ROUND_CLOSEST(val, 125);
- 		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
- 		if (ret < 0)
--			return ret;
-+			goto unlock;
- 		ret = regmap_write(data->regmap, regl, (regval & 0x07) << 5);
- 	} else {
- 		if (data->chip == emc1428)
-@@ -447,6 +469,8 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 		regval = DIV_ROUND_CLOSEST(val, 1000);
- 		ret = regmap_write(data->regmap, regh, regval);
+ 	if (flags & IB_MR_REREG_PD) {
+ 		rxe_put(old_pd);
+ 		rxe_get(pd);
+ 		mr->ibmr.pd = ibpd;
  	}
-+unlock:
-+	mutex_unlock(&data->mutex);
- 	return ret;
+ 
+-	if (flags & IB_MR_REREG_ACCESS) {
+-		if (access & ~RXE_ACCESS_SUPPORTED_MR) {
+-			rxe_err_mr(mr, "access = %#x not supported\n", access);
+-			return ERR_PTR(-EOPNOTSUPP);
+-		}
++	if (flags & IB_MR_REREG_ACCESS)
+ 		mr->access = access;
+-	}
+ 
+ 	return NULL;
  }
- 
-@@ -604,6 +628,8 @@ static int emc1403_probe(struct i2c_client *client)
- 	if (IS_ERR(data->regmap))
- 		return PTR_ERR(data->regmap);
- 
-+	mutex_init(&data->mutex);
-+
- 	hwmon_dev = devm_hwmon_device_register_with_info(&client->dev,
- 							 client->name, data,
- 							 &emc1403_chip_info,
 -- 
 2.53.0
 
