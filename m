@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23749518132;
-	Wed, 30 Sep 2026 17:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D343CF688;
+	Wed, 30 Sep 2026 17:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788318; cv=none; b=iHabfY7PjUOubMeq7OsMO6eWi6JyVUqhmnhUybHt4GrJ7QWuftP34b4RrP6weA6Xg+NusJSN9SucraEgSXBVlvKohEJcGee25M9IhhvwPSEsodJCeNUqWUF2sCCIi8AfvQ6+66M1qPTW+UwsW3d5z7lLmMyrXtvai7/qQ8cfNHg=
+	t=1790788321; cv=none; b=qpRP1eITfpuVVP0gRfz7U860+0kUzBwNq4X3p8/BKuCZAJBKYxgdi9E4mdmGc1AUE8Ls1qNL46haK9LsPh0ZDjywcDZaN62uGdnKvdtMG7+FduFMM7MaV53Y+OlSNJP3l9gT0z69JDyGC1j6Xo72ocQv/VbqfZOHhOrub+oJ8XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788318; c=relaxed/simple;
-	bh=MahgyvY93xTfca7sUS5ZmyYUZkJrEXJB8OWFsb1/GlI=;
+	s=arc-20240116; t=1790788321; c=relaxed/simple;
+	bh=FGS0uwOXCohojdh+YrqrOp6ishlCXbPYCvP6fWwKcwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayUDoLSfEFlVlyNrwiLe9U//SGs4RfAqwnNtLj+ODvIWkGEGaq8819HeVbLDjvUR/mjLo3RXK+rq0eUw+SY0qRg0hchR18FuaaLa7b1sgQRdQRZZAcoPyc5RZnvMyV1w7Gx9YwAzjp0zvEFKlGmEFipmSoIc3ZtkuPF09X0ara0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YX3gCxrG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QkQr2NPRvut5zAQWEd8TbyqSFf4Lt67ax03bqZXvTtvLsPwUNNyIwnToulPKdyBx2LuUAJwZAT58fUzzKHgtJpjyTi+vknLKXNksyqB68hQKZiBepmc5vG6YiJvPjYdDDEyFCdXGICZdS9aIXDwgvix7SKjcmeI2l3yCHhloWHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiV5tqli; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YX3gCxrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3BD1F000FF;
-	Wed, 30 Sep 2026 17:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiV5tqli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C191F000FF;
+	Wed, 30 Sep 2026 17:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788317;
-	bh=2HWUkWhKIdKjwORu+6gVfageScnUiHOUw4wSfY+HTg0=;
+	s=korg; t=1790788319;
+	bh=lrONTkwqGvE+bJ9Yo981+3Rzwi+9j2fLVJysx7yLNsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YX3gCxrGogBivlHIediME6bwTr2COLJBmyJmrq0oCncG/ikgFxScplOCXMawlNnd+
-	 x0Cb8vCfkIBDeK5xhbhzJw/WFoTGAtNKAlkf+goCLHuBqEpePOgeENBOTmret9OlV7
-	 j+6NTGmxscPCPpZG6Z3sicB+eOwQ9sFsMzm3xYSc=
+	b=QiV5tqliE89GwUIPUPufpm7NRZm/La1csbzj2+XZLEtVfqHyX8SZ2gsV/4wBrlHU3
+	 HCjprTJEiNhB4xxlIkqglZBOBqd8LBHv/y4TJsZNJ/OSgRrJjLiICvAyTw5lM7TH8w
+	 IEaGCmGmyNuSWZIZbjw7FJ1in/TYCngR0VXaJxqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bereza <alex@bereza.email>,
-	Frank Li <Frank.Li@nxp.com>,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 082/877] dmaengine: xilinx_dma: Fix hardware buffer descriptor chain after cyclic DMA
-Date: Wed, 30 Sep 2026 17:16:33 +0200
-Message-ID: <20260930152416.510398956@linuxfoundation.org>
+Subject: [PATCH 6.12 083/877] RDMA/efa: Keep admin queues alive while IRQ is registered
+Date: Wed, 30 Sep 2026 17:16:34 +0200
+Message-ID: <20260930152416.532638217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -53,82 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bereza <alex@bereza.email>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 7ed1e3070c9b4bbd67d5519e14711038dd53ab13 ]
+[ Upstream commit e08aca85c02ff290f785f07acae758f0daf5f49e ]
 
-Using the DMA in cyclic mode modifies the hardware buffer descriptor
-chain in xilinx_dma_prep_dma_cyclic so that the last descriptor used by
-the cyclic transfer points back to the first descriptor, but it never
-restores the original descriptor ring. This breaks using non-cyclic mode
-after cyclic mode with an error like:
+The management IRQ handler accesses both the admin completion queue and the
+async event queue. The driver registered the IRQ before constructing these
+queues and destroyed them before freeing the IRQ, so the handler's lifetime
+was not contained by the resources it accesses.
 
-  xilinx-vdma 86000000.dma: Channel 00000000354d5c8d has errors 100, cdr 6de40000 tdr 6de40400
+Initialize the queues with interrupts masked, request the IRQ, and then
+switch to interrupt mode. On removal, reset the device and free the IRQ
+before destroying the queues. Also reset the device before destroying the
+queues if IRQ registration fails, because the device already has their DMA
+addresses.
 
-The only way to get out of this error state is to rebuild the hardware
-buffer descriptor ring by releasing and re-acquiring the channel.
-
-Fix using non-cyclic mode after cyclic mode by always restoring the
-original buffer descriptor ring in the same manner as it is set up by
-xilinx_dma_alloc_chan_resources().
-
-Fixes: 23059408b6a3 ("dmaengine: xilinx_dma: Fix race condition in the driver for multiple descriptor scenario")
-Signed-off-by: Alex Bereza <alex@bereza.email>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Suraj Gupta <suraj.gupta2@amd.com>
-Link: https://patch.msgid.link/20260817-fix-hw-buf-desc-after-cyclic-mode-v1-1-1fe47e701d6c@bereza.email
-Link: https://patch.msgid.link/20260818-fix-hw-buf-desc-after-cyclic-mode-v2-1-530ff44c6a81@bereza.email
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: b7f5e880f377 ("RDMA/efa: Add the efa module")
+Link: https://patch.msgid.link/20260907-use-after-free-of-admin-queue-struct-v1-1-dd9d9267fbf4@nvidia.com
+Reviewed-by: Michael Margolin <mrgolin@amazon.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/efa/efa_com.c  |  4 +---
+ drivers/infiniband/hw/efa/efa_main.c | 15 +++++++++------
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 29ff6c8082fb1..4a89ad8c90a34 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -753,15 +753,25 @@ xilinx_aximcdma_alloc_tx_segment(struct xilinx_dma_chan *chan)
- 	return segment;
- }
+diff --git a/drivers/infiniband/hw/efa/efa_com.c b/drivers/infiniband/hw/efa/efa_com.c
+index bafd210dd43e8..d6fb2edc96891 100644
+--- a/drivers/infiniband/hw/efa/efa_com.c
++++ b/drivers/infiniband/hw/efa/efa_com.c
+@@ -743,7 +743,7 @@ int efa_com_admin_init(struct efa_com_dev *edev,
  
--static void xilinx_dma_clean_hw_desc(struct xilinx_axidma_desc_hw *hw)
-+static void xilinx_dma_clean_hw_desc(struct xilinx_dma_chan *chan,
-+				     struct xilinx_axidma_tx_segment *segment)
- {
--	u32 next_desc = hw->next_desc;
--	u32 next_desc_msb = hw->next_desc_msb;
-+	dma_addr_t next;
-+	u32 i;
+ 	aq->dmadev = edev->dmadev;
+ 	aq->efa_dev = edev->efa_dev;
+-	set_bit(EFA_AQ_STATE_POLLING_BIT, &aq->state);
++	efa_com_set_admin_polling_mode(edev, true);
  
--	memset(hw, 0, sizeof(struct xilinx_axidma_desc_hw));
-+	/*
-+	 * Restore the buffer descriptor's next descriptor pointer to the value
-+	 * set up in xilinx_dma_alloc_chan_resources(). Otherwise using the DMA
-+	 * in cyclic mode leaves the next descriptor pointer altered and
-+	 * prevents subsequent non-cyclic transfers.
-+	 */
-+	i = segment - chan->seg_v;
-+	next = chan->seg_p +
-+	       sizeof(*chan->seg_v) * ((i + 1) % XILINX_DMA_NUM_DESCS);
+ 	sema_init(&aq->avail_cmds, aq->depth);
  
--	hw->next_desc = next_desc;
--	hw->next_desc_msb = next_desc_msb;
-+	memset(&segment->hw, 0, sizeof(segment->hw));
-+	segment->hw.next_desc = lower_32_bits(next);
-+	segment->hw.next_desc_msb = upper_32_bits(next);
- }
+@@ -761,8 +761,6 @@ int efa_com_admin_init(struct efa_com_dev *edev,
+ 	if (err)
+ 		goto err_destroy_sq;
  
- static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
-@@ -783,7 +793,7 @@ static void xilinx_mcdma_clean_hw_desc(struct xilinx_aximcdma_desc_hw *hw)
- static void xilinx_dma_free_tx_segment(struct xilinx_dma_chan *chan,
- 				struct xilinx_axidma_tx_segment *segment)
- {
--	xilinx_dma_clean_hw_desc(&segment->hw);
-+	xilinx_dma_clean_hw_desc(chan, segment);
+-	efa_com_set_admin_polling_mode(edev, false);
+-
+ 	err = efa_com_admin_init_aenq(edev, aenq_handlers);
+ 	if (err)
+ 		goto err_destroy_cq;
+diff --git a/drivers/infiniband/hw/efa/efa_main.c b/drivers/infiniband/hw/efa/efa_main.c
+index 45a4564c670c0..83323a7ad7120 100644
+--- a/drivers/infiniband/hw/efa/efa_main.c
++++ b/drivers/infiniband/hw/efa/efa_main.c
+@@ -615,18 +615,21 @@ static struct efa_dev *efa_probe_device(struct pci_dev *pdev)
+ 	edev->aq.msix_vector_idx = dev->admin_msix_vector_idx;
+ 	edev->aenq.msix_vector_idx = dev->admin_msix_vector_idx;
  
- 	list_add_tail(&segment->node, &chan->free_seg_list);
- }
+-	err = efa_set_mgmnt_irq(dev);
++	err = efa_com_admin_init(edev, &aenq_handlers);
+ 	if (err)
+ 		goto err_disable_msix;
+ 
+-	err = efa_com_admin_init(edev, &aenq_handlers);
++	err = efa_set_mgmnt_irq(dev);
+ 	if (err)
+-		goto err_free_mgmnt_irq;
++		goto err_destroy_admin;
++
++	efa_com_set_admin_polling_mode(edev, false);
+ 
+ 	return dev;
+ 
+-err_free_mgmnt_irq:
+-	efa_free_irq(dev, &dev->admin_irq);
++err_destroy_admin:
++	efa_com_dev_reset(edev, EFA_REGS_RESET_INIT_ERR);
++	efa_com_admin_destroy(edev);
+ err_disable_msix:
+ 	efa_disable_msix(dev);
+ err_reg_read_destroy:
+@@ -650,8 +653,8 @@ static void efa_remove_device(struct pci_dev *pdev,
+ 
+ 	edev = &dev->edev;
+ 	efa_com_dev_reset(edev, reset_reason);
+-	efa_com_admin_destroy(edev);
+ 	efa_free_irq(dev, &dev->admin_irq);
++	efa_com_admin_destroy(edev);
+ 	efa_disable_msix(dev);
+ 	efa_com_mmio_reg_read_destroy(edev);
+ 	devm_iounmap(&pdev->dev, edev->reg_bar);
 -- 
 2.53.0
 
