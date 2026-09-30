@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEA151FCCE;
-	Wed, 30 Sep 2026 18:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC3E5208A0;
+	Wed, 30 Sep 2026 18:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792864; cv=none; b=GPPwk+CGcyY3EpJBLNXmRzEP78A1ugQx9lm7GiHowproysaRZwSxCMqRZTXu5SdaHUxLWUd/LPcMC1JMxjZTr564fGYLrNjjjHlURa4MedzarhEj0SzySzLcq2KowQX791RL0478O6dd1lzVOh6HJsTCEgdIWHvxf9oImz54JKo=
+	t=1790792867; cv=none; b=hcPHYTW4Xfu45fDk6o/wo1lyj998S95UoTgl9iDo3y1QJhdJCDT+0EgwcZnTtr9aUnO4Uth5DMwePrCtT6cG9eUB2g8Riggywyo8dLvicYCElwIlZM9/T9/9oNy0YFqLQ3SCSFTgG62eTEp1PdesyK93ea2g0YTuVfk4r6cuiNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792864; c=relaxed/simple;
-	bh=bA2sGCtxrJvAPqfh2mNSjQcT/xbQMCFtxaO9vAmPDkY=;
+	s=arc-20240116; t=1790792867; c=relaxed/simple;
+	bh=UZxnP+zZT2DmDq1APHTSOgbZTdzSzOlcA13YQOamEEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWJ3+6wmpl8Gc/Dh6UQlpPfGWZx/NmawjAJb419Dsvw/YiLYQZf78ohyBtmH4RvkBDkBGGUCzEDtYBeOWXkIEKPayQ8b+vBCmkCfGvRkfmUj/AKpbvcpirj4ujEaQILXUW9rMsAPy1B5DvtOA7QfEE16AsCzmZ2TMZGhyZ21zHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scSPcAp5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JknmrcMTlP/5UlWkvGMAQ0WXXdjiIF9igI2SS3/A7UxitTREEIKbHYwaRPJXHyG2JIrqSgnqEobYW4wbhkArdqc2Ww8zCEGzn8TfLCLgRtnzO42m0OUw0CrByQIVrftx4psSpfLzu40/W1QhfRkJxm/0e2FzKSDfIhQjBEd6Kng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXvKMI/V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scSPcAp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5D91F000FF;
-	Wed, 30 Sep 2026 18:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXvKMI/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953F61F000FF;
+	Wed, 30 Sep 2026 18:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792863;
-	bh=72oU6ZW98SaO0apCXxmzmkl/Z+bP4ZLsRwNdFenndYs=;
+	s=korg; t=1790792866;
+	bh=Bx6dP0MhcqETNt847ygt1ebr+O8v9EKMdfOiLvK9i2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=scSPcAp549RSB8GWdgKqu7mCTjY6QXF5sNIzT7YanLWVtI68rvqV+YbMSYmHDfPzi
-	 08uXrukbx1wU/e5JApeyNmdQZMsEe26lUOk+bEbq+GpxEdnl0Td4JNYhumyrYozYmm
-	 GQLzynVAaQXpPBJcf0mSCuZ9j+jaUMrVRfAp/IOY=
+	b=wXvKMI/VPLU59iXRrtaXVCHW6I18Uec3l9e78czJX53hTQDY0HQtcTlWuQc8S32X+
+	 6ipyJhd31s0bLTTqIWxNPy3IufC54QZ2DwT+ccHhdzSrhO3Aq4hlzeAj/h0HSdvjno
+	 DiHoainzXk0VIPl3jTtBeOCEW8VgQA6jt3ecE+iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Oberparleiter <oberpar@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/395] s390/cio: Fix cio_update_schib() to not cache invalid schib
-Date: Wed, 30 Sep 2026 17:25:14 +0200
-Message-ID: <20260930152341.765128205@linuxfoundation.org>
+Subject: [PATCH 6.18 053/395] s390/cio: Check pmcw.dnv before pmcw.ena in I/O entry points
+Date: Wed, 30 Sep 2026 17:25:15 +0200
+Message-ID: <20260930152341.787248137@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -55,11 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 29d9e5835d89223aa913dcf7b942cc1c148bdd25 ]
+[ Upstream commit f6f2985eabdb2bfdc82ce90a1ea3ec53ba795f34 ]
 
-When pmcw.dnv is 0, the contents of all SCHIB fields are unpredictable.
-Zero sch->schib in that case to prevent subsequent code from making
-decisions based on unpredictable data.
+The device number valid (dnv) bit in the PMCW must be checked before
+acting on any other PMCW fields for IO-type subchannels. A subchannel
+with dnv=0 has no valid device number associated, making it meaningless
+to evaluate the enabled (ena) state or issue any I/O instruction against
+it.
 
 Reported-by: William Bezenah <wbezenah@linux.ibm.com>
 Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
@@ -68,39 +70,67 @@ Fixes: 8c58a229688c ("s390/cio: Do not unregister the subchannel based on DNV")
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/cio.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/s390/cio/device_ops.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/s390/cio/cio.c b/drivers/s390/cio/cio.c
-index 21508e4606d59..20ebe0d883c64 100644
---- a/drivers/s390/cio/cio.c
-+++ b/drivers/s390/cio/cio.c
-@@ -454,7 +454,8 @@ EXPORT_SYMBOL_GPL(cio_commit_config);
- /**
-  * cio_update_schib - Perform stsch and update schib if subchannel is valid.
-  * @sch: subchannel on which to perform stsch
-- * Return zero on success, -ENODEV otherwise.
-+ * Return zero on success, -ENODEV if the subchannel is not operational,
-+ * -EACCES if the subchannel has no valid device.
-  */
- int cio_update_schib(struct subchannel *sch)
- {
-@@ -463,10 +464,12 @@ int cio_update_schib(struct subchannel *sch)
- 	if (stsch(sch->schid, &schib))
+diff --git a/drivers/s390/cio/device_ops.c b/drivers/s390/cio/device_ops.c
+index 61c07b4a0fe89..c1ba4a19368f2 100644
+--- a/drivers/s390/cio/device_ops.c
++++ b/drivers/s390/cio/device_ops.c
+@@ -142,6 +142,8 @@ int ccw_device_clear(struct ccw_device *cdev, unsigned long intparm)
+ 	if (!cdev || !cdev->dev.parent)
  		return -ENODEV;
+ 	sch = to_subchannel(cdev->dev.parent);
++	if (!sch->schib.pmcw.dnv)
++		return -ENODEV;
+ 	if (!sch->schib.pmcw.ena)
+ 		return -EINVAL;
+ 	if (cdev->private->state == DEV_STATE_NOT_OPER)
+@@ -198,6 +200,8 @@ int ccw_device_start_timeout_key(struct ccw_device *cdev, struct ccw1 *cpa,
+ 	if (!cdev || !cdev->dev.parent)
+ 		return -ENODEV;
+ 	sch = to_subchannel(cdev->dev.parent);
++	if (!sch->schib.pmcw.dnv)
++		return -ENODEV;
+ 	if (!sch->schib.pmcw.ena)
+ 		return -EINVAL;
+ 	if (cdev->private->state == DEV_STATE_NOT_OPER)
+@@ -379,6 +383,8 @@ int ccw_device_halt(struct ccw_device *cdev, unsigned long intparm)
+ 	if (!cdev || !cdev->dev.parent)
+ 		return -ENODEV;
+ 	sch = to_subchannel(cdev->dev.parent);
++	if (!sch->schib.pmcw.dnv)
++		return -ENODEV;
+ 	if (!sch->schib.pmcw.ena)
+ 		return -EINVAL;
+ 	if (cdev->private->state == DEV_STATE_NOT_OPER)
+@@ -413,6 +419,8 @@ int ccw_device_resume(struct ccw_device *cdev)
+ 	if (!cdev || !cdev->dev.parent)
+ 		return -ENODEV;
+ 	sch = to_subchannel(cdev->dev.parent);
++	if (!sch->schib.pmcw.dnv)
++		return -ENODEV;
+ 	if (!sch->schib.pmcw.ena)
+ 		return -EINVAL;
+ 	if (cdev->private->state == DEV_STATE_NOT_OPER)
+@@ -548,6 +556,8 @@ int ccw_device_tm_start_timeout_key(struct ccw_device *cdev, struct tcw *tcw,
+ 	int rc;
  
--	memcpy(&sch->schib, &schib, sizeof(schib));
--
--	if (!css_sch_is_valid(&schib))
-+	if (!css_sch_is_valid(&schib)) {
-+		memset(&sch->schib, 0, sizeof(sch->schib));
- 		return -EACCES;
-+	}
-+
-+	memcpy(&sch->schib, &schib, sizeof(schib));
+ 	sch = to_subchannel(cdev->dev.parent);
++	if (!sch->schib.pmcw.dnv)
++		return -ENODEV;
+ 	if (!sch->schib.pmcw.ena)
+ 		return -EINVAL;
+ 	if (cdev->private->state == DEV_STATE_VERIFY) {
+@@ -694,6 +704,8 @@ int ccw_device_tm_intrg(struct ccw_device *cdev)
+ {
+ 	struct subchannel *sch = to_subchannel(cdev->dev.parent);
  
- 	return 0;
- }
++	if (!sch->schib.pmcw.dnv)
++		return -ENODEV;
+ 	if (!sch->schib.pmcw.ena)
+ 		return -EINVAL;
+ 	if (cdev->private->state != DEV_STATE_ONLINE)
 -- 
 2.53.0
 
