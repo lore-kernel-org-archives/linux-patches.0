@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41779341ADD;
-	Wed, 30 Sep 2026 19:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344973D093A;
+	Wed, 30 Sep 2026 19:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796223; cv=none; b=j3HUGoAKkiuswt8DJc6JW0BWHuY4Ewc8OXczw0luvKu28Djt2pcjLYpz3xlJ7T6yBHYJLJ/sdFCOtxmjWJOVyOxWDyTmTjrXyzKuczOaavAIzv5U3bmNLR+1pMDLJdSz2VbuIhXMe2sQcQweHllHCdIdmnTuKZvsM17246AmYc8=
+	t=1790796226; cv=none; b=PjxR3jj7q2k9yLxUGeDVCvgj/kUa2Vu/bAuVurQTydU9EdwHzBxohCPjYfVUQxPmxq75BxFfvoQbM0bpf6gyxYqPOT/G4bEJa9vbVdtAkt/vnR65B/kutnJkAguRL08+ZYMza7ku9P9ncswbeH+lye7jLpvWjXTUwKa+rCQklTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796223; c=relaxed/simple;
-	bh=ROL1DgdlD+sc0S8v3MmcB1+rCTddZTIYNwQO3+bp3nk=;
+	s=arc-20240116; t=1790796226; c=relaxed/simple;
+	bh=JpqjJJw0gAebQplHbBGPuO/5sR0cHp2cYEKoS++TO7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LuTo5mvmYtT/BsGBz2DuwWScmlfBI8CKdFCTPvx9wUpIJYWqUBsXgPSiUKLl9dBaqaTLpRIINbNgyD7anaPqypiNdY4DSpkLfaxf6NcWGHMDJWayztgcH+Wljl0RDILep9VHu8CCVsYi0/rUEDAXV19ObIYMhWfRnp9GBgXncqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jr7uEamq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tqVV47cmqpwk1g/mbb7DEjsPO5DUxxH6UC4riGygQr6PUuA7l8rqpLfWRdo2/8sih/lEKwHeonW6J9rls7DipdnaJyOjFV5hpUeECAJYS6REUQ4zBhurX+JgHLRLxgQi4x7HknRLsjVuy9Q4Me/rpN9rJA5aWyQZ6NVmI6jMJDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeWzBnMd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jr7uEamq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADCD1F000FF;
-	Wed, 30 Sep 2026 19:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeWzBnMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785A11F000FF;
+	Wed, 30 Sep 2026 19:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796222;
-	bh=L3sp4d8t0/j67+QQDMuyyrXzFyd3J6rIRf1OLvEIEEM=;
+	s=korg; t=1790796225;
+	bh=4+jvNciwezWBzyT1IhGmofpLFl+QHi2b8vHXRAubhXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jr7uEamqIOcmA9WGjOrisDopFdEG35eGFxENUPtwLW8FAkJ479FPuvzmwHP4MB9IV
-	 hO4h46WLPd4h69tgPhVNbvljtITMSW4zRGxgAPrw3SANYVbkM3e5VLJeICIJ21NFGi
-	 HPhNdJqnP2yAfpSF0ivG3NHPljK80UTwZEuxmlqY=
+	b=CeWzBnMdrmHrjk4MBb5OtgwbDsWIX3RbbOLF4diMNBUS7Ev0XChp/k3mGjuZdVXgP
+	 zJ17NTB6/9/GEvQ2FeHRAm84ArreO1wCLdr75I08pQ5SYsynYazPt0pN2G/c9nN0w6
+	 L78Ds7tlRUeRa1DtsJ3XQC4qLq6MwbGBUbAYomaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0836/1193] ASoC: codecs: rt712-sdca-dmic: fix uninitialized stream_config->type
-Date: Wed, 30 Sep 2026 17:25:20 +0200
-Message-ID: <20260930152452.817543429@linuxfoundation.org>
+	Roland Waltersson <roland.waltersson@netinsight.net>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.6 0837/1193] ata: libahci: clear PxCLBU and PxFBU for AHCI_HFLAG_32BIT_ONLY
+Date: Wed, 30 Sep 2026 17:25:21 +0200
+Message-ID: <20260930152452.839627868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,68 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 03a5699a0a04309c597683967aaaf25d1e555ea2 upstream.
+commit 82e47533221d4746947b74d2e79a478c36c6433a upstream.
 
-stream_config is not initialized before being passed to
-sdw_stream_add_slave().  The type field may contain garbage and is
-later copied to stream->type by sdw_config_stream().
+A user reported that commit 105c42566a55 ("ata: ahci: force 32-bit DMA for
+JMicron JMB582/JMB585") made the JMicron JMB585 unusable on his board.
 
-Zero-initialize stream_config so type defaults to SDW_STREAM_PCM.
+The failure is seen as soon as the ahci driver is probed, and booting with
+iommu=off does not solve the problem.
 
-While at it, use snd_sdw_params_to_config() helper instead of
-open-coding the same logic.
+Looking at the AHCI specification, PxCLBU and PxFBU are both read only '0'
+for HBAs that do not support 64-bit addressing.
 
-Fixes: 63a511284c9e ("ASoC: rt712-sdca: Add RT712 SDCA driver for Mic topology")
+For HBAs that do support 64-bit addressing, the registers are read write,
+with a reset value that is Implementation Specific.
+
+When using the AHCI_HFLAG_32BIT_ONLY flag, the HBA does support 64-bit
+addressing, and a 32-bit DMA mask is set by simply clearing HOST_CAP_64.
+Thus, in this case, we need to explicitly clear the registers to 0.
+
+Fixes: 105c42566a55 ("ata: ahci: force 32-bit DMA for JMicron JMB582/JMB585")
+Fixes: c7a42156d99b ("ahci: disable 64bit dma on sb600")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260914104712.379574-1-yijiangshan@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Roland Waltersson <roland.waltersson@netinsight.net>
+Closes: https://lore.kernel.org/linux-ide/IA0PR17MB668730A4ECCD65F7A1DC3EDC9EB62@IA0PR17MB6687.namprd17.prod.outlook.com/
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260904134310.1465051-2-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt712-sdca-dmic.c |   14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/ata/libahci.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/rt712-sdca-dmic.c
-+++ b/sound/soc/codecs/rt712-sdca-dmic.c
-@@ -14,6 +14,7 @@
- #include <sound/core.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
-+#include <sound/sdw.h>
- #include <sound/tlv.h>
- #include "rt712-sdca.h"
- #include "rt712-sdca-dmic.h"
-@@ -640,10 +641,10 @@ static int rt712_sdca_dmic_hw_params(str
- {
- 	struct snd_soc_component *component = dai->component;
- 	struct rt712_sdca_dmic_priv *rt712 = snd_soc_component_get_drvdata(component);
--	struct sdw_stream_config stream_config;
-+	struct sdw_stream_config stream_config = {0};
- 	struct sdw_port_config port_config;
- 	struct sdw_stream_runtime *sdw_stream;
--	int retval, num_channels;
-+	int retval;
- 	unsigned int sampling_rate;
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -747,15 +747,28 @@ void ahci_start_fis_rx(struct ata_port *
+ 	struct ahci_port_priv *pp = ap->private_data;
+ 	u32 tmp;
  
- 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
-@@ -655,13 +656,8 @@ static int rt712_sdca_dmic_hw_params(str
- 	if (!rt712->slave)
- 		return -EINVAL;
+-	/* set FIS registers */
++	/*
++	 * On HBAs that only support 32-bit addressing PxCLBU is read only '0'.
++	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxCLBU is RW, and the
++	 * reset value is Implementation Specific, so we need to clear it to 0.
++	 */
+ 	if (hpriv->cap & HOST_CAP_64)
+ 		writel((pp->cmd_slot_dma >> 16) >> 16,
+ 		       port_mmio + PORT_LST_ADDR_HI);
++	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
++		writel(0, port_mmio + PORT_LST_ADDR_HI);
+ 	writel(pp->cmd_slot_dma & 0xffffffff, port_mmio + PORT_LST_ADDR);
  
--	stream_config.frame_rate = params_rate(params);
--	stream_config.ch_count = params_channels(params);
--	stream_config.bps = snd_pcm_format_width(params_format(params));
--	stream_config.direction = SDW_DATA_DIR_TX;
--
--	num_channels = params_channels(params);
--	port_config.ch_mask = GENMASK(num_channels - 1, 0);
-+	/* SoundWire specific configuration */
-+	snd_sdw_params_to_config(substream, params, &stream_config, &port_config);
- 	port_config.num = 2;
++	/*
++	 * On HBAs that only support 32-bit addressing PxFBU is read only '0'.
++	 * When applying the AHCI_HFLAG_32BIT_ONLY quirk, PxFBU is RW, and the
++	 * reset value is Implementation Specific, so we need to clear it to 0.
++	 */
+ 	if (hpriv->cap & HOST_CAP_64)
+ 		writel((pp->rx_fis_dma >> 16) >> 16,
+ 		       port_mmio + PORT_FIS_ADDR_HI);
++	else if (hpriv->flags & AHCI_HFLAG_32BIT_ONLY)
++		writel(0, port_mmio + PORT_FIS_ADDR_HI);
+ 	writel(pp->rx_fis_dma & 0xffffffff, port_mmio + PORT_FIS_ADDR);
  
- 	retval = sdw_stream_add_slave(rt712->slave, &stream_config,
+ 	/* enable FIS reception */
 
 
