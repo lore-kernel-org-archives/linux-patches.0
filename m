@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EB0515964;
-	Wed, 30 Sep 2026 17:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D6D4D2EFE;
+	Wed, 30 Sep 2026 17:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787889; cv=none; b=F7T4CswE6ZqUHYN/aKfGkmXReckxdn0QQ2yhLNfPS/pnZPKIsRgpNZ6y6IqDaI9wEM7sWhOyFMcxWrHSN1Fj6JCTgNmXlagiUWtar01/6fGpAT8h5q7yLA6B+RiVe/0fGrGVe1Oxm56ny2krPY0gQUruEoOPIqCahudxlpxRrEU=
+	t=1790787891; cv=none; b=nmk9+6por4HdcalJv6Ujng3MUrO+xhNnwiGAU2Grz65i8wmnaTopo3mNBfeJiKOWIqRTps1+lBNJopPBdq/7clTNTsWHxd4Z6StJju2lU+IGcwE+GRq5OCw9H6HUmQrjoz6Jb70W/bao0sUoWR6HspZBN2ldjJxoth5wPDxTBfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787889; c=relaxed/simple;
-	bh=qAojShpWmzCoobpuE4r2LuQ/bpUeyCmzonz40iv0tfM=;
+	s=arc-20240116; t=1790787891; c=relaxed/simple;
+	bh=SxV66zosnPeWDfdGjrhZe0GQSrCtM6KZo3lBXFeGmtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fmk96IQoxwg4jsZFwtRVAOxXAzr/r2Vy5zuka/9UUvtsIXgt0UNlIcpTybuhq61vgcnIQx3A336ldeqlie4FYMethH2XwJTWy/0i36if1sBnFyRaXPbfPRfvWxoUIKb2eY53EUn0SPxyyQdovMVbTXoM84eYFiDxwRrKFewTKYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NED2MfnD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o6tVkrik3IwEV9Bx3jW1hI+DdiXVGDl6mJpYyPWEkuzOVH9yBvESX/IQP64VYBV3oQLHxukOTe9piyV3WS1aGgotkCTVsqVD7IAPOETOTDcda9/t41XVvyAju9neAFho8mN9f4F4c8YAHvKxFFE9swyfwKWOx+ii6833Viv0NII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYbYSfqX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NED2MfnD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5723C1F000FF;
-	Wed, 30 Sep 2026 17:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYbYSfqX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2773B1F000FF;
+	Wed, 30 Sep 2026 17:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787887;
-	bh=zB20SWm8cAm0S5+oX0/few2WnQF9cSmtkR6zBU3ISFU=;
+	s=korg; t=1790787890;
+	bh=jI4IcAcXcSm9oZAf7HZwkF534DU4ILbPAtpBC5Q5eLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NED2MfnDXsSbqZJeO/Puc2/D3kWKfvozRLCXigPaoXmQ3L1krpu6S7tuSMd24bETq
-	 uDwLVT6aALyPLYpCaCFYFVxFHRDPe5XIlQY//Wy34LbDUX5Xv4qbutZLQxqojDQjlc
-	 m9ph5yCMHvzIvBLqAYDcBnFyKcPJ7Wmr0MQI3JS4=
+	b=GYbYSfqXdObwo9AOoCcCVlmPFwCUjvQn1P2JPDKxvJ6bnz7KIYkB8AguuiVQSAJ+0
+	 jOySXh66GWLm7KudrSR+5ermPTjfQOaTAf5VxKObTtO+yLYHsll7rzQQ+IVbc2ivp7
+	 nknGxLHt78aCfAyYkAXWiiQbqJyZURoOUjXPF9tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Oliver Upton <oupton@kernel.org>
-Subject: [PATCH 7.2 387/457] KVM: arm64: Dont WARN on an unknown VM ioctl in protected mode
-Date: Wed, 30 Sep 2026 17:28:12 +0200
-Message-ID: <20260930152354.348820170@linuxfoundation.org>
+Subject: [PATCH 7.2 388/457] KVM: arm64: Fix AArch32 DBGBXVR<n> handling
+Date: Wed, 30 Sep 2026 17:28:13 +0200
+Message-ID: <20260930152354.369564098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -51,40 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit 49d9d295d69d07e850cae35933ba8519e2915f26 upstream.
+commit 6b1bca1b1ab77f60a62087337bfe6e2f0efb9e6d upstream.
 
-kvm_pkvm_ioctl_allowed() WARNs when kvm_get_cap_for_kvm_ioctl() doesn't
-find the ioctl number in vm_ioctl_caps[], and kvm_arch_vm_ioctl() calls
-it for every number the generic code doesn't handle, so
-ioctl(vm_fd, 0xdeadbeef) from userspace taints a pKVM host and panics it
-under panic_on_warn. The lookup is fed userspace input: return false,
-and userspace gets the -EINVAL kvm_arch_vm_ioctl() returns for that
-number on a host without pKVM.
+The consolidation of the breakpoint and watchpoint register accessors
+switched DBGBXVR<n> from trap_bvr() to trap_dbg_wb_reg(). The latter
+selects backing storage with demux_wb_reg(), which only handles Op2 values
+4 through 7. Since DBGBXVR<n> uses Op2 1, an AArch32 guest access hits
+KVM_BUG_ON() and marks the VM dead.
 
-Fixes: b12b3b04f6ba0 ("KVM: arm64: Check whether a VM IOCTL is allowed in pKVM")
+DBGBXVR<n> aliases DBGBVR<n>_EL1[63:32], and its AA32(HI) descriptor
+already selects the upper half. Map Op2 1 to dbg_bvr[] alongside Op2 4,
+restoring the pre-regression behavior.
+
+Fixes: 3ce9f3357e9e ("KVM: arm64: Fold DBGxVR/DBGxCR accessors into common set")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://patch.msgid.link/20260914093838.1082637-1-fuad.tabba@linux.dev
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260810005616.13227-1-kmehltretter@gmail.com
 Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_pkvm.h |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/kvm/sys_regs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/include/asm/kvm_pkvm.h
-+++ b/arch/arm64/include/asm/kvm_pkvm.h
-@@ -62,8 +62,7 @@ static inline bool kvm_pkvm_ioctl_allowe
- 	int r;
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -889,6 +889,7 @@ static u64 *demux_wb_reg(struct kvm_vcpu
+ 	struct kvm_guest_debug_arch *dbg = &vcpu->arch.vcpu_debug_state;
  
- 	r = kvm_get_cap_for_kvm_ioctl(ioctl, &ext);
--
--	if (WARN_ON_ONCE(r < 0))
-+	if (r < 0)
- 		return false;
- 
- 	return kvm_pkvm_ext_allowed(kvm, ext);
+ 	switch (rd->Op2) {
++	case 0b001:
+ 	case 0b100:
+ 		return &dbg->dbg_bvr[rd->CRm];
+ 	case 0b101:
 
 
