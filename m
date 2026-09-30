@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FBFF50B41B;
-	Wed, 30 Sep 2026 16:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832294DF4D5;
+	Wed, 30 Sep 2026 16:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790785331; cv=none; b=SUzS+Pig4qbVW5mEayciKQ54EXO6ijrZpX8pCXD1u7I8c9SHCfC2uin06xCWpqLkc8wQanzrmKoZm/I4cbfLwyCdLvs5uLYVWuLasKh3/x+cVsMdDY1pCuYPGFfN2ntCBqKlL9JPHP3kU8yahQdgoKZDapfOcjADJZnCurKaDWU=
+	t=1790785335; cv=none; b=VNnxmO14uSVJS45qiTnUr4x2F0T3PlCIyd5L8y5BjiiqO7dPspkyanytglOjXKphldZ4uWxICv/ZERG8NL7/DEEFgPYrfUwgyKKMRotHMMA0Dh1Irp8YFW6qww+CnUFHz1xChpERkUjnyFZ+DhE2eZ1aouQbCipj7UHs2wbX8c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790785331; c=relaxed/simple;
-	bh=EZ9HKPQD/cGZ0j/JtzsZL67KYBI5BROxz8LHaORf0Cw=;
+	s=arc-20240116; t=1790785335; c=relaxed/simple;
+	bh=Y5qWfz8gpkB6cNnb5msvzhKAj8XCke8fzw4b3Kl2Z3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOr1KhNrUjMVmXL35Ffw+9ffUO3mu5iFzPimsVYN8znJtrIpLu64LnTyefy6JTF3ehOtRODb1SjOGGVG/r01u2n+k5zkMpAjAuH1Nbk0cnBNrX7RsKXZXRNJCWB2KcFDrZCSAzEC75fg9I/+MGNTLo7Yju9TmTWHD/F5TQqKbXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1VRhPgN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KHJUffzPf2IUDQqe4IIxbP+OQkexSf408cfXq9atxAHUv3FjcqoFZJWHMjKCfoTYLiimf8eWxuu5Uhu2pcQ4grxgxycWYky/xKX0CodLrBAEnZrshhjkTIZbqDw9xOPQSUJRA/Y47H6taC/OVvdb4S08eb9Df4YrRWsvO7Zoa/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNCY7eiO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1VRhPgN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE071F00899;
-	Wed, 30 Sep 2026 16:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNCY7eiO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206971F00893;
+	Wed, 30 Sep 2026 16:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790785325;
-	bh=uXn/Xpw3Yf+rO42wEygyrGDFf3JFlpB/oTpbCMN1kOI=;
+	s=korg; t=1790785330;
+	bh=z5heH8f9yN/xd//xyDqE/xcatOUIgWcv9wfxzZIcHi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1VRhPgNjQA2DLCumqMqpcPsqoU/h5czmUhxQD2AGaMS8K3KSBNZ/Rat3EtFFIciK
-	 0pNayiqWiaO7gViiViKV5U5T8GbpXn/xLmJ1r8gpP8javJFbcogWnSBJPwywGvWdh5
-	 7flYFTf10/l7byDIqClUA0eOwo2W5zaBncwg8/lA=
+	b=aNCY7eiOdN0Xx/hUrHJXjYM+tEWYyl+bIT6V3bYRiaz74WB4zvodyU6ZX33gpMVs/
+	 xkOaHVxAnBT05fUgFJKLJb4agGtjBflT9CN/ySahG3kRntCxGk6ZHdJq8TbV6dJpY0
+	 AI2+df1ZRZGkcX5RD/U4aF2To/3pUTR5fdQzFZ8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Marek Vasut <marex@nabladev.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 469/982] net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down
-Date: Wed, 30 Sep 2026 17:20:05 +0200
-Message-ID: <20260930152426.858164984@linuxfoundation.org>
+Subject: [PATCH 6.1 471/982] hwmon: (aspeed-pwm-tacho) Propagate reset deassert errors
+Date: Wed, 30 Sep 2026 17:20:07 +0200
+Message-ID: <20260930152426.900485308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -52,77 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 66ef5adb75446627f8b6c26cd04f2adc86d4de56 ]
+[ Upstream commit 09a9e1746a87845d7d8e2b4e23bb613306effdff ]
 
-KSZ8851 errata sheet DS80000716D-page 4 Module 3 [1] states that,
-when issuing a software power-down (PMECR[1:0] = 10) followed by a
-power-on (PMECR[1:0] = 00), the receiver circuit can fail to start
-properly preventing communication. The Transmitter will still send
-data, but no data will be received.
+aspeed_pwm_tacho_probe() installs its reset cleanup action and configures
+the
+controller after an unchecked reset deassertion.
 
-The errata sheet also includes a workaround, which states that,
-it is recommended that the software power-down feature not be used.
+Stop probing when the reset controller rejects the transition, before the
+hwmon device becomes visible.
 
-Implement that workaround and drop the entry into software power-down
-mode. The ks8851_write_mac_addr() calls entry into normal power-on
-mode at the very beginning of the function, therefore dropping the
-second call to enter software power-down mode is sufficient here.
-The ks8851_net_stop() can only be called after ks8851_net_start()
-was already called, and ks8851_net_start() also makes the MAC enter
-normal power-on mode, therefore it is also fine to drop the call to
-enter software power-down mode from ks8851_net_stop().
-
-This will lead to a slight increase in power consumption, but it also
-fixes a sporadic reliability problem on at least KSZ8851-16MLL, which
-is where the problem was reported and this fix was tested.
-
-[1] https://ww1.microchip.com/downloads/en/DeviceDoc/80000716D.pdf
-
-Fixes: 3ba81f3ece3c ("net: Micrel KS8851 SPI network driver")
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260905130327.203851-1-marex@nabladev.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 18c514cc0e02 ("hwmon: (aspeed-pwm-tacho) Deassert reset in probe")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830125044.97718-1-pengpeng@iscas.ac.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/hwmon/aspeed-pwm-tacho.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
-index 7c336e0a4b8ae..4267c4cb1acdc 100644
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -143,9 +143,6 @@ static int ks8851_write_mac_addr(struct net_device *dev)
- 		ks8851_wrreg16(ks, KS_MAR(i), val);
+diff --git a/drivers/hwmon/aspeed-pwm-tacho.c b/drivers/hwmon/aspeed-pwm-tacho.c
+index 51f321bcd778a..133453938e9ad 100644
+--- a/drivers/hwmon/aspeed-pwm-tacho.c
++++ b/drivers/hwmon/aspeed-pwm-tacho.c
+@@ -922,7 +922,9 @@ static int aspeed_pwm_tacho_probe(struct platform_device *pdev)
+ 			"missing or invalid reset controller device tree entry");
+ 		return PTR_ERR(priv->rst);
  	}
+-	reset_control_deassert(priv->rst);
++	ret = reset_control_deassert(priv->rst);
++	if (ret)
++		return ret;
  
--	if (!netif_running(dev))
--		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
--
- 	ks8851_unlock(ks);
- 
- 	return 0;
-@@ -494,8 +491,7 @@ static int ks8851_net_open(struct net_device *dev)
-  * @dev: The device being closed.
-  *
-  * Called to close down a network device which has been active. Cancel any
-- * work, shutdown the RX and TX process and then place the chip into a low
-- * power state whilst it is not being used.
-+ * work and shutdown the RX and TX process.
-  */
- static int ks8851_net_stop(struct net_device *dev)
- {
-@@ -522,8 +518,6 @@ static int ks8851_net_stop(struct net_device *dev)
- 	/* shutdown TX process */
- 	ks8851_wrreg16(ks, KS_TXCR, 0x0000);
- 
--	/* set powermode to soft power down to save power */
--	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
- 	ks8851_unlock(ks);
- 
- 	/* ensure any queued tx buffers are dumped */
+ 	ret = devm_add_action_or_reset(dev, aspeed_pwm_tacho_remove, priv);
+ 	if (ret)
 -- 
 2.53.0
 
