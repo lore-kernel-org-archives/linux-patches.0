@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A10509EEF;
-	Wed, 30 Sep 2026 16:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728F24FE2D3;
+	Wed, 30 Sep 2026 16:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784063; cv=none; b=rvOfZUY73+2gZHJqGMFoQXW1TU+O/3QkagJdgvHbPHnQsuHpcQMLeczownCGZMOnprEqDwhwAEsqvIcg9ljFzbqIuX1Jb9QgBmG3c9WeuIe4A+x1pAt1JbzwoakuTLS72080b7v6rTX1K75JPr2ix1g7fzLqW8+jvPI+akjXCXY=
+	t=1790784068; cv=none; b=J0jEy70wXzrVEvD4LmP+YUtoJZVtQi4evj1PQMUrlYGxNjMr61llI0bpJotH/+44JV9YZhTjy42Oc3qSHLMEBJkq0P3SOQ+ITuu7/NUHe/9pyRu4HXYE41yIX7CTZyyAfkyzdHZQPP4L3803k1lTLeOlwZabyHr7r6LH26/Wb4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784063; c=relaxed/simple;
-	bh=kTMfVO5e71EuZt2u7iH+5NKQ7AIlp7EcilEnKVw5BOs=;
+	s=arc-20240116; t=1790784068; c=relaxed/simple;
+	bh=R7Aaiapl4pipG7hfR60PGOYp8mrTDnS5PuTQBUl7NtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjLRgeqZoRHPiY3z/9fm9arpocCWItz9uC7esWyFDVSMqjPQKG+meSbkFC4ZRzyIQk1YwJTi4/XafogE6JTSxRXXFYDUsIn7hKmDYEciWPO3kkDDgGdcwAG/NXGJt6wf4pkME+DHwUaTkS6Qb5sTM96U9QQlx+OoitoRiCccEeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQgMukni; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iI/ctAoO90o58vtUco26quGr6m/W0qaHw2EhrDXrYnpjXwAYFKXHc06qKWL+JfscqkQqYkwch3+5u5wwcCRPqsxwh2iAotvIR/RNDUJ2g8iPPJ6CDjQc6Q67R9x/eoWLp3gxmSv+H/uaJaEAZ9CSbi2Fwdvuge4k7EhZuv5vbXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAf78JdH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQgMukni"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687501F00898;
-	Wed, 30 Sep 2026 16:00:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAf78JdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452CC1F00893;
+	Wed, 30 Sep 2026 16:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784057;
-	bh=h2151UB51isHTp2cs7hXg6EEHGYywXF15e42bAqpyzM=;
+	s=korg; t=1790784062;
+	bh=6jKdnCXmPHjjHPnr5pMaEKLC2JyKP4oryxHfDWs2r5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rQgMukni4VAHBWyRTXJcrH/LpMaje/aUDPWuKfyDhmEnaxYP0GaouCTfRKTjNNKlc
-	 SubmM+D3iYomLa7g0oWIq/2gF+RwX8gdHiYFAcFBEcvNBOTAEqQGFI6HkoS4x2Ug0R
-	 m7lyqC+VA/XqIpe3NiyMtyZJsDgcftRk8tUxOvkE=
+	b=aAf78JdHUtReye3nAGsHIsl+GaDT8Iopk+7n2bCBw2cIQGDJAYJ5Upksxq7VQsWe/
+	 4NVe5FjfvqcSiBHnSiRaXIbX/TxlP0W9IFkUtnBSOWuQv2NpgoZhlyOg6XOKSL31pR
+	 xp015Rcd36Hy8Zjp4isw8WX5pzOaCv8Sf/SxQ7kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/982] usb: gadget: udc: skip pullup() if already connected
-Date: Wed, 30 Sep 2026 17:12:21 +0200
-Message-ID: <20260930152416.899670375@linuxfoundation.org>
+Subject: [PATCH 6.1 007/982] PCI: Stop setting cached power state to unknown on unbind
+Date: Wed, 30 Sep 2026 17:12:23 +0200
+Message-ID: <20260930152416.944224140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -51,54 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 62911bc82b0332aee7546156800d3516500fa1e1 ]
+[ Upstream commit d462c8e89e84bfb6417e6b4c88e0cb7cc747ba41 ]
 
-The device controller may update vbus status via usb_udc_vbus_handler(),
-which tries to connect the gadget even though gadget_bind_driver() has
-already called usb_udc_connect_control_locked(). This causes pullup() to
-be called twice. Avoid this by checking if gadget->connected is true.
+When a PCI device is unbound from its driver, pci_device_remove() sets the
+cached power state in pci_dev->current_state to PCI_UNKNOWN.  This was
+introduced by commit 2449e06a5696 ("PCI: reset pci device state to unknown
+state for resume") to invalidate the cached power state in case the system
+is subsequently put to sleep.
 
-This also set gadget->connected as false in usb_gadget_activate() if it
-became connected while it was being deactivated. Otherwise,
-usb_gadget_connect_locked will return early and pullup() won't be called.
+For bound devices, the cached power state is set to PCI_UNKNOWN in
+pci_pm_suspend_noirq(), immediately before entering system sleep.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260423095355.2673035-1-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Extend to unbound devices for consistency.
+
+This obviates the need to change the cached power state on unbind, so stop
+doing so.
+
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/af7d11d3ceb231acc90829f7a5c8400c2446744f.1776415510.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/pci/pci-driver.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index 577f7945cc303..addcff2f77110 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -714,6 +714,9 @@ static int usb_gadget_connect_locked(struct usb_gadget *gadget)
- 		goto out;
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index fe6e5f716543a..fa3165e5b921b 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -490,13 +490,6 @@ static void pci_device_remove(struct device *dev)
+ 	/* Undo the runtime PM settings in local_pci_probe() */
+ 	pm_runtime_put_sync(dev);
+ 
+-	/*
+-	 * If the device is still on, set the power state as "unknown",
+-	 * since it might change by the next time we load the driver.
+-	 */
+-	if (pci_dev->current_state == PCI_D0)
+-		pci_dev->current_state = PCI_UNKNOWN;
+-
+ 	/*
+ 	 * We would love to complain here if pci_dev->is_enabled is set, that
+ 	 * the driver should have called pci_disable_device(), but the
+@@ -874,7 +867,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
+ 
+ 	if (!pm) {
+ 		pci_save_state(pci_dev);
+-		goto Fixup;
++		goto set_unknown;
  	}
  
-+	if (gadget->connected)
-+		goto out;
-+
- 	if (gadget->deactivated || !gadget->udc->allow_connect || !gadget->udc->started) {
- 		/*
- 		 * If the gadget isn't usable (because it is deactivated,
-@@ -887,8 +890,10 @@ int usb_gadget_activate(struct usb_gadget *gadget)
- 	 * If gadget has been connected before deactivation, or became connected
- 	 * while it was being deactivated, we call usb_gadget_connect().
- 	 */
--	if (gadget->connected)
-+	if (gadget->connected) {
-+		gadget->connected = false;
- 		ret = usb_gadget_connect_locked(gadget);
-+	}
+ 	if (pm->suspend_noirq) {
+@@ -926,6 +919,7 @@ static int pci_pm_suspend_noirq(struct device *dev)
+ 		goto Fixup;
+ 	}
  
- unlock:
- 	mutex_unlock(&gadget->udc->connect_lock);
++set_unknown:
+ 	pci_pm_set_unknown_state(pci_dev);
+ 
+ 	/*
 -- 
 2.53.0
 
