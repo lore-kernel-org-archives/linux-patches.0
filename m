@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD24F51597D;
-	Wed, 30 Sep 2026 16:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48A5513555;
+	Wed, 30 Sep 2026 16:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786652; cv=none; b=lduz589tqkd4R6i6JttL/aSTzEpvgjv1f7G7gRXEsrHlLgOmrvKZQuRohhPAyhWtDWhUhPVKchMlzmfWHWbgFOmpWYhggCcQqaZPCQ8d4Wm6mhsNt7Bb01s6L+7eNuNu2sl8MW9TevnZX/6v00XMuEg3VLkTKC3JTFTOw3trGhk=
+	t=1790786655; cv=none; b=DLTbhtmoCH8bmHCY+Sba74ROJWdtRb+cNasKn1uag5ALGXOehhrQUUOOo900uhbpBo7AzWhqeSjry1hg3goy7Zm4eZjgwYOWCpEqfaE1zbCgg/EPK4zPtWtSbf5K7JC296yj+6KHVcvqy5p6njeUrGRejEQjm1JCnMowgFUQFR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786652; c=relaxed/simple;
-	bh=CpbqBWp5rgnmaMIb40h6a34EchFqsenXB+PBLqrFcsc=;
+	s=arc-20240116; t=1790786655; c=relaxed/simple;
+	bh=UWEQ5xYEXF3MjhXJEUqbg3uULyMI/e2unMb0A1dqTyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZmTCc18xAayP6q3DmtX9/r59rB2e3Oee8H6LfhkdTTL870+nUOzyFfdUBP2i1bt+nFMbADm9Ux9DQi887AnJODZ+6+92HkE2EQtc4ugTMOxiIb4SioMgB2ZQ5CuG5DcnM+SXFSxFe/Afl+phe1G+ji3/9QjUnbgGoodZf1SeJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHiYUOW1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RJmC+cZKfueHqzQCGqnefkDHssYHV63uKyF39FMzXJoxdNWxOyx2JR80LCyTblP8MqoeEtHlNhjBijd2qJNMELZSL6CQDZFQAnsev8Q3EpHytHWPZWdq8wPk38PK+HlPD5HeJ/qEYkiFnNS2Qr4iL/R594Wa2NFD6sWvA9/TqFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFECebMT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHiYUOW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255721F000FF;
-	Wed, 30 Sep 2026 16:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFECebMT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0CC1F000FF;
+	Wed, 30 Sep 2026 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786650;
-	bh=uLvjJbkcL4eNei4WLeZDW9/K9POXLF7HjINaHKR5jNw=;
+	s=korg; t=1790786653;
+	bh=XTuPxuNRmgofxfLocCzjQjmMo0t1vxN0K6eSxNuPrgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EHiYUOW16wYIrFEi+oWfMQdsw5ldP1q3xdbbdbsZqj2CkZnK7swuepyy0P4S0yxjn
-	 Zh/6INJks0bS7q0A98hf+mtqHVAqRkja57/0meUgqELjQlIbj/Gb603Wt1gpleN9AU
-	 5WbZJisSPVkkR3YU5zmIN3vcy6FCYpo+hibVJ4V4=
+	b=EFECebMT8OieooPMzX6RvejU5OM+itHz0r/P5ToGHFroEjatf2Kiyx0v0YWuFfGIi
+	 UA3bWZ2Z0mHYTLiTCPoYfWAWz22d7gfpZBi1qXtIXme2N++/JnxGxQagyId6P81q8A
+	 Yxs2Rym4rlVJbcI8dolFOVMTuTBkWHaVGsjwWqUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Qin <cccccccccccc777777@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 938/982] rds: ib: Clear the sg list when mapping an MR fails
-Date: Wed, 30 Sep 2026 17:27:54 +0200
-Message-ID: <20260930152436.888953764@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 939/982] drm/i915: fix incorrect RCU teardown order
+Date: Wed, 30 Sep 2026 17:27:55 +0200
+Message-ID: <20260930152436.909812113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -45,86 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dongliang Qin <cccccccccccc777777@gmail.com>
+From: Christian König <ckoenig.leichtzumerken@gmail.com>
 
-commit 58eb1b3325edac42dc6df72c80962bd53a3c8ca7 upstream.
+commit d2da6696e0c4e60414706e607029d0bb0330c67e upstream.
 
-rds_ib_map_frmr() stores the caller's scatterlist in the MR before DMA
-mapping and registration can fail. On failure, __rds_rdma_map() unpins
-the pages and frees the scatterlist, but rds_ib_free_frmr() can still
-return the MR to the pool with the stale pointer set.
+i915_gem_busy_ioctl uses dma_resv_for_each_fence_unlocked() to iterate
+over the fences in an GEM object without holding a reference but only
+the RCU read side lock.
 
-This leaves the pool with a dangling scatterlist and can lead to local
-privilege escalation. KASAN detects the resulting use-after-free when the
-MR is later torn down:
+What can happen here is that the GEM object is destroyed concurrently
+while i915_gem_busy_ioctl is still running. This won't free the GEM
+objects memory, but still drops all the dma_fence references.
 
-BUG: KASAN: slab-use-after-free in __rds_ib_teardown_mr
-Read of size 8
+Now when dma_resv_for_each_fence_unlocked() sees a destroyed dma_fence it
+assumes that a new fence list was installed and re-starts the loop.
 
-Call Trace:
- __rds_ib_teardown_mr
- rds_ib_unreg_frmr
- rds_ib_flush_mr_pool
- rds_ib_flush_mrs
- rds_free_mr
- rds_setsockopt
+But in the case of a destroyed GEM object a new fence list is never
+installed, only the old one freed and therefore the iteration never
+finishes resulting in an endless loop.
 
-Store the scatterlist in the MR only after DMA mapping succeeds. If DMA
-mapping fails, return directly while the MR fields remain clear; the caller
-keeps ownership of the scatterlist and its pinned pages. If a later
-registration step fails, unmap the scatterlist and clear the MR fields
-before returning.
+The solution is to drop the fence references only after the RCU grace
+period.
 
-Fixes: 1659185fb4d0 ("RDS: IB: Support Fastreg MR (FRMR) memory registration mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dongliang Qin <cccccccccccc777777@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260922031546.3874605-1-cccccccccccc777777@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The fixes tag is not necessary the patch introducing the problem, but the
+one making it so worse that we need to address it.
+
+This problem was pointed out by Sashiko-bot.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 912ff2ebd695 ("drm/i915: use the new iterator in i915_gem_busy_ioctl v2")
+CC: stable@vger.kernel.org
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260903113621.54660-1-christian.koenig@amd.com
+(cherry picked from commit 5113479556025093bf8133bb2dcaa33be2d50921)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/ib_frmr.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_object.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/rds/ib_frmr.c
-+++ b/net/rds/ib_frmr.c
-@@ -204,19 +204,16 @@ static int rds_ib_map_frmr(struct rds_ib
- 	 */
- 	rds_ib_teardown_mr(ibmr);
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+@@ -59,6 +59,7 @@ struct drm_i915_gem_object *i915_gem_obj
  
--	ibmr->sg = sg;
--	ibmr->sg_len = sg_len;
--	ibmr->sg_dma_len = 0;
- 	frmr->sg_byte_len = 0;
--	WARN_ON(ibmr->sg_dma_len);
--	ibmr->sg_dma_len = ib_dma_map_sg(dev, ibmr->sg, ibmr->sg_len,
-+	ibmr->sg_dma_len = ib_dma_map_sg(dev, sg, sg_len,
- 					 DMA_BIDIRECTIONAL);
- 	if (unlikely(!ibmr->sg_dma_len)) {
- 		pr_warn("RDS/IB: %s failed!\n", __func__);
- 		return -EBUSY;
- 	}
- 
--	frmr->sg_byte_len = 0;
-+	ibmr->sg = sg;
-+	ibmr->sg_len = sg_len;
- 	frmr->dma_npages = 0;
- 	len = 0;
- 
-@@ -264,6 +261,8 @@ out_unmap:
- 	ib_dma_unmap_sg(rds_ibdev->dev, ibmr->sg, ibmr->sg_len,
- 			DMA_BIDIRECTIONAL);
- 	ibmr->sg_dma_len = 0;
-+	ibmr->sg = NULL;
-+	ibmr->sg_len = 0;
- 	return ret;
+ void i915_gem_object_free(struct drm_i915_gem_object *obj)
+ {
++	dma_resv_fini(&obj->base._resv);
+ 	return kmem_cache_free(slab_objects, obj);
  }
  
+@@ -110,7 +111,6 @@ void __i915_gem_object_fini(struct drm_i
+ {
+ 	mutex_destroy(&obj->mm.get_page.lock);
+ 	mutex_destroy(&obj->mm.get_dma_page.lock);
+-	dma_resv_fini(&obj->base._resv);
+ }
+ 
+ /**
 
 
