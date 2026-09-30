@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F1451CF5E;
-	Wed, 30 Sep 2026 17:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE4251CF5E;
+	Wed, 30 Sep 2026 17:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789226; cv=none; b=QP3rpVHDK385X9PuoJG2SEGvAAPFwTZbZpgK/T9LcQb5UHILcC/fREONo4YES6HtWfp+RkXAG3jfnsb3d5LSfTxLXHl6P0Hh9O5GqmJ555ObOV4U+HVklHZzzUtrIVlfFLQncjenFTVIijUCehHMgp5/yxlc+OdCpAcfLCbXbko=
+	t=1790789228; cv=none; b=gTSIcc2d6O5C8UYs/akw4AmktGdm7F0ZUKBophWqzZYa2cNkDbYD04Ia1CSK4FNLZwXr3wChgEDTNMU+8rmNNJiFb2KtqH9bQW7LhqrMdL6W9R3cWWXcBZfYyIgkr0yuTsUStCbSt4Jd82yiXqMciZr6BcD5p0bVS5dz5O4a298=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789226; c=relaxed/simple;
-	bh=ix5RC0xOXfvW8lQJb7LYvH0ZcvTzKnJoP5RtHM9+waM=;
+	s=arc-20240116; t=1790789228; c=relaxed/simple;
+	bh=CsG2A5G0XZEoBR6ZXp3C923OrjagGcwOBZ7v09DrNZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYqClj1yIwQuMJTIwYwnDkB8nnLkYxsrQm9H7n+5pFYP/whGTW+VdCVJt8sn4UYCHjHZlCj9gibOKDNRaT0hUehpD3JdTlsJDq7V6tsijrq1BwXIjrRfJGx+YEm6tndnUwQtEddxFeyyPgrWyDB/TlreMlY1G1SS0CvLzQz8bkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSrp5dwR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sQEaOgyOqDTcwQ2iTlVYCsNUl0YKfNDDHrsZej7KbbzsjssC1tkQ1CDNogy51k7UYJzJrYpyMEfP+NNxfcIrY7PLJwxzbtsLZTxaTDQVNcKyKwyMryf5WwfcQSik9P6hLz9lZ4x9euXqow9++cY2kOzI8g6fmXgjIk7edZlFdMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpLl+4GG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSrp5dwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A441F000FF;
-	Wed, 30 Sep 2026 17:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpLl+4GG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7429B1F000FF;
+	Wed, 30 Sep 2026 17:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789224;
-	bh=S6yNdgibVQq/q3qQWldLavbLRaFSU2dC8euXXDClvdY=;
+	s=korg; t=1790789227;
+	bh=9/5s9gyd2Jf9apreLKJ3jNFDGqzoy6cCLHlMDYr80yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSrp5dwR6SF7DTRG2z8N+kDoeQpVj/RBvVqrAiqsG3ukkFcVs48+cw8vRW3y0Ekox
-	 rRIrpeuqBEwTSzGU1xV3AJwUGAeiIyoD2OCwFOB62MjP5mQuhX/m6YaPmSUOMyERvV
-	 uBdn+7AGzpby5AWUyfcHrZenfmJU82yMjeqIhvtw=
+	b=kpLl+4GG0TAJHSMAi19lV0SY87wBSRg38gWImX19/trvISI2/ZItVq6qG7Jc4rB1i
+	 Tab+KeI2jrgmNMow5tCk3ifFxAmRUbHG4YXt+uMyLbMR57SW4Q7j5bUFDSerGM9a74
+	 W8qLqAInJP/ol+L4lLJbhiNNqJoros46fiGWE2TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Magazzu <postadelmaga@gmail.com>,
+	Giuseppe Ranieri <giuseppe@ranieri.dev>,
+	Tano Dzhinski <tano.dzhinski@gmail.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/877] drm/nouveau/clk: dont clobber reclock status when restoring volt/fan
-Date: Wed, 30 Sep 2026 17:21:07 +0200
-Message-ID: <20260930152422.353961204@linuxfoundation.org>
+Subject: [PATCH 6.12 357/877] drm/nouveau/disp: dont reject HDMI config on cards without SCDC
+Date: Wed, 30 Sep 2026 17:21:08 +0200
+Message-ID: <20260930152422.375739703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Magazzu <postadelmaga@gmail.com>
+From: Giuseppe Ranieri <giuseppe@ranieri.dev>
 
-[ Upstream commit e5cccdafc855cd5f96f4b51d38114a0360b075d7 ]
+[ Upstream commit 1717fcc5be575d4768279148ae9465a8b13d4339 ]
 
-nvkm_cstate_prog() reuses 'ret' for the voltage and fan-speed restore
-calls it makes after reprogramming the clocks.  Those calls almost always
-succeed, so the status of the reclock itself is overwritten and the
-function reports success even when clk->func->calc() or clk->func->prog()
-failed.  The converse is also true: a successful reclock is reported as an
-error if the final restore call fails, even though that failure is only
-logged and otherwise ignored.
+nv50_hdmi_enable() passes the sink's SCDC capability from its EDID
+straight through to nvif_outp_hdmi(). On pre-Maxwell-2 cards there is no
+hdmi->scdc callback, so nvkm_uoutp_mthd_hdmi() rejects the whole
+configuration with -EINVAL, and nv50_hdmi_enable() returns before
+hdmi->ctrl() runs and before the AVI and VSI infoframes are sent.
 
-The only consumer of the return value is the error message in
-nvkm_pstate_work(), so in practice a failing reclock is simply never
-reported.  Nothing else changes, but a function that returns success on
-failure is a trap for the next caller.
+The result on such a card driving an SCDC-capable HDMI 2.0 sink is that
+HDMI audio silently stops working. Video is unaffected, and nothing is
+logged, which makes the failure hard to attribute.
 
-Keep the calc/prog status in 'ret' and use a separate local for the
-restore calls.
+SCDC is optional, and the hdmi->scdc() call further down is already
+guarded against a missing callback. Requesting it on a card that cannot
+do it need not invalidate the rest of the HDMI configuration, so drop
+that term from the condition and let the existing guard skip SCDC alone.
 
-Fixes: 3eca809b3c05 ("drm/nouveau/clk: cosmetic changes")
-Signed-off-by: Francesco Magazzu <postadelmaga@gmail.com>
+Fixes: 6c6abab20b99 ("drm/nouveau/disp: add output hdmi config method")
+Signed-off-by: Giuseppe Ranieri <giuseppe@ranieri.dev>
+Co-Authored-By: Tano Dzhinski <tano.dzhinski@gmail.com>
+Signed-off-by: Tano Dzhinski <tano.dzhinski@gmail.com>
+Tested-by: Tano Dzhinski <tano.dzhinski@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260918131620.405133-5-postadelmaga@gmail.com
+Link: https://patch.msgid.link/20260917215114.1136715-1-tano.dzhinski@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-index 5f4cd122415fa..e6539931a7596 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-@@ -199,16 +199,18 @@ nvkm_cstate_prog(struct nvkm_clk *clk, struct nvkm_pstate *pstate, int cstatei)
- 	}
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
+index 377d0e0cef848..9887b3898505b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
+@@ -253,8 +253,7 @@ nvkm_uoutp_mthd_hdmi(struct nvkm_outp *outp, void *argv, u32 argc)
  
- 	if (volt) {
--		ret = nvkm_volt_set_id(volt, cstate->voltage,
--				       pstate->base.voltage, clk->temp, -1);
--		if (ret && ret != -ENODEV)
--			nvkm_error(subdev, "failed to lower voltage: %d\n", ret);
-+		int err = nvkm_volt_set_id(volt, cstate->voltage,
-+					   pstate->base.voltage, clk->temp, -1);
-+
-+		if (err && err != -ENODEV)
-+			nvkm_error(subdev, "failed to lower voltage: %d\n", err);
- 	}
+ 	if (!ior->func->hdmi ||
+ 	    args->v0.max_ac_packet > 0x1f ||
+-	    args->v0.rekey > 0x7f ||
+-	    (args->v0.scdc && !ior->func->hdmi->scdc))
++	    args->v0.rekey > 0x7f)
+ 		return -EINVAL;
  
- 	if (therm) {
--		ret = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
--		if (ret && ret != -ENODEV)
--			nvkm_error(subdev, "failed to lower fan speed: %d\n", ret);
-+		int err = nvkm_therm_cstate(therm, pstate->fanspeed, -1);
-+
-+		if (err && err != -ENODEV)
-+			nvkm_error(subdev, "failed to lower fan speed: %d\n", err);
- 	}
- 
- 	return ret;
+ 	if (!args->v0.enable) {
 -- 
 2.53.0
 
