@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67843624BF;
-	Wed, 30 Sep 2026 17:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BB056511B;
+	Wed, 30 Sep 2026 17:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790465; cv=none; b=mVGJF50P1sORSvc9uj9yf/QETrDe6z23q+Q9gsR09hDHgRHMEFef7EWW7GlFA4UUoBxP2utmetHTXjH1H8TFy3adZIJvy8GK4iUatA99YRLUT9ghxzfuhbWDkSvCJxO+RjOZVq43j87HVxH0jgG+DctxwxMntOyaHl9D0al0bLU=
+	t=1790790467; cv=none; b=bKZ36Vz+6Mqrjf53Xp45PlnFPyj4+XLcgbRJhJw00rpzMb/gwxHVgMmKe9jMSV2JpRnWPSyK4IutaENCb9IXEF+jOc2sCloJzopQi8jPihivqbnX3wle73fWCKLZpfB+zTD/Z9OwCiBqqR92D6+YNGmj3bPDAjDFyvC+5dPyIJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790465; c=relaxed/simple;
-	bh=cLW2qk5Ps+vSVaAqfV1Uv5iSTiIdLhrQLjfOEvejQ78=;
+	s=arc-20240116; t=1790790467; c=relaxed/simple;
+	bh=kcznp8DFBjroc1/Nanwvw7Ti5E3lY+ol6V1N3lFrEGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fva8fJ5ppUf2qcyw32Zo0jxRinDz/ymkBV6hunpRiE15QaE85D5RKm43rvM48pvFgzY0OcBZaTm7IklkIH5D8G+nLC7CEXM3j9Ii3hU79vhT6Uu57gucKOytADd00E/muKmRmSFgDgCK4ElaXkkFjm9teXjP7giPk4uH7vAb8dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjUjoz0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c1yZ36UhIsIjS23n0hTEJ9/yUHuGNXSVpOPPPS9QQcp6k+V1GLlHn7ynmWvqUEICvlmkCXMQ3pnEaQVH6qV/SHTHzBV1tmVrmnh93NlmFdD9ju5YqylgECPhMKXRbCEAMQt1d4vtnUj4eAaM9qaGjI7Oztwc8vm47ISTTE3X2Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0m+T1z0a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjUjoz0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8E41F000FF;
-	Wed, 30 Sep 2026 17:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0m+T1z0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09241F000FF;
+	Wed, 30 Sep 2026 17:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790463;
-	bh=HqBoSjZJcbd+lqUFkkbcCsYgAxnK/lmYMfIGtl0KPhM=;
+	s=korg; t=1790790466;
+	bh=iqKxqvnvlGC9pijgmwUvl00d4VJblubqoK1lWr1RO+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LjUjoz0VfK9rBoAkxc5JR6t39DSpGWVo5HWtiM4feFIKnK9yZLmcSh8rmK2RFNsoc
-	 gFZz5IYRvXA/5a4iuUrJLVo4Jg5anH1USghtr5neJxvA2Uow/6tkleHmvzK56pKycH
-	 STg8joR2O0FtgLMuToLhwt7ek6/4KI3YcqCDEz7k=
+	b=0m+T1z0ab3geJBCwCrpg1G+3Q7MEHA1Fmt5s5nby4Y3JUToZYwQNg2Lfl72SF2C4n
+	 qTZQNdlZyCd+6O9tSPjc/TcAqLWuk8tJ/CjaMQANAJjs3lONXf+d831UWEirrPzBqW
+	 EMZGhd/kLMCWh6Tp4erYw5JYmPY5W1vX9PaKqGbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Axel Mierczuk <axel.mierczuk@1password.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 839/877] HID: alps: unregister DualPoint Stick input device on remove
-Date: Wed, 30 Sep 2026 17:29:10 +0200
-Message-ID: <20260930152432.841737033@linuxfoundation.org>
+Subject: [PATCH 6.12 840/877] net/sched: act_ct: fix helper UAF due to extensions realloc
+Date: Wed, 30 Sep 2026 17:29:11 +0200
+Message-ID: <20260930152432.864199409@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -51,65 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit aa9dde93e05a837645fdfd577eea71f0733f0694 ]
+[ Upstream commit dad19b59da050cb60d3f7023dac2a042a84bf0bd ]
 
-alps_input_configured() allocates a second input device ("DualPoint
-Stick") with input_allocate_device() and registers it, but the
-alps_driver struct has no .remove handler and input2 is not tracked in
-hdev->inputs.  The default remove path (hid_hw_stop -> hidinput_disconnect)
-only iterates hdev->inputs, so input2 is never unregistered and leaks
-on every device removal.
+While calling the helpers, a raw pointer to the extensions area is
+wired into expectations list:
 
-Add a .remove handler that stops the device first (preventing URB
-callbacks from touching input2 during teardown) and then unregisters
-input2.
+  -> nf_ct_helper()
+   -> helper->help()
+    -> nf_ct_expect_related_report()
+     -> nf_ct_expect_insert()
+      -> hlist_add_head_rcu(&exp->lnode, &master_help->expectations)
 
-Fixes: 2562756dde55 ("HID: add Alps I2C HID Touchpad-Stick support")
+In case the connection is not confirmed yet, more extensions can be
+added afterwards with *_ext_add() calls reallocating the extension
+space and leaving the now invalid pointer in the expectations list
+that is later accessed while removing the expectation.
+
+Make sure that helpers are called at the end after all the other
+extensions are already added.
+
+Note that the helper rejection now leaves the mark and labels set,
+but that's not different from how the NAT was handled before or how
+the mark and the labels were handled on confirmation failure.  And
+there are no atomicity guarantees provided by the API anyway.
+
+Fixes: a21b06e73191 ("net: sched: add helper support in act_ct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Axel Mierczuk <axel.mierczuk@1password.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260921145655.3167436-7-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Preserved the existing add_helper condition that upstream had removed. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-alps.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/sched/act_ct.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/hid/hid-alps.c
-+++ b/drivers/hid/hid-alps.c
-@@ -825,6 +825,24 @@ static int alps_probe(struct hid_device
- 	return 0;
- }
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -1087,19 +1087,25 @@ do_nat:
+ 		}
+ 	}
  
-+static void alps_remove(struct hid_device *hdev)
-+{
-+	struct alps_dev *data = hid_get_drvdata(hdev);
-+
-+	/*
-+	 * input2 ("DualPoint Stick") is allocated separately and is not
-+	 * tracked in hdev->inputs, so the default remove path
-+	 * (hid_hw_stop -> hidinput_disconnect) does not unregister it.
-+	 *
-+	 * Stop the device first so that no URB callback can touch input2
-+	 * while it is being unregistered, then drop it explicitly.
+-	if (nf_ct_is_confirmed(ct) ? ((!cached && !skip_add) || add_helper) : commit) {
+-		err = nf_ct_helper(skb, ct, ctinfo, family);
+-		if (err != NF_ACCEPT)
+-			goto nf_error;
+-	}
+-
+ 	if (commit) {
+ 		tcf_ct_act_set_mark(ct, p->mark, p->mark_mask);
+ 		tcf_ct_act_set_labels(ct, p->labels, p->labels_mask);
+ 
+ 		if (!nf_ct_is_confirmed(ct))
+ 			nf_conn_act_ct_ext_add(skb, ct, ctinfo);
++	}
+ 
++	/* Run helpers for the connection if nf_conntrack_in() was executed
++	 * or if we're about to commit.  This has to be done after all the
++	 * extensions are already added.
 +	 */
-+	hid_hw_stop(hdev);
++	if (nf_ct_is_confirmed(ct) ? ((!cached && !skip_add) || add_helper) : commit) {
++		err = nf_ct_helper(skb, ct, ctinfo, family);
++		if (err != NF_ACCEPT)
++			goto nf_error;
++	}
 +
-+	if (data->input2)
-+		input_unregister_device(data->input2);
-+}
-+
- static const struct hid_device_id alps_id[] = {
- 	{ HID_DEVICE(HID_BUS_ANY, HID_GROUP_ANY,
- 		USB_VENDOR_ID_ALPS_JP, HID_DEVICE_ID_ALPS_U1_DUAL) },
-@@ -847,6 +865,7 @@ static struct hid_driver alps_driver = {
- 	.input_configured	= alps_input_configured,
- 	.resume			= pm_ptr(alps_post_resume),
- 	.reset_resume		= pm_ptr(alps_post_reset),
-+	.remove			= alps_remove,
- };
- 
- module_hid_driver(alps_driver);
++	if (commit) {
+ 		/* This will take care of sending queued events
+ 		 * even if the connection is already confirmed.
+ 		 */
 
 
