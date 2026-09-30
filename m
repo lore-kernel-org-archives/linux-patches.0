@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB13451357A;
-	Wed, 30 Sep 2026 16:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D715511197;
+	Wed, 30 Sep 2026 16:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784582; cv=none; b=IrH0GyVzFX2KXLfayiPHrL8kpI04+Y/pS8tYhy4No8g9NIEyZmq6/ZNLxGkOpMkTaEnh7NzB4oR4E6f0u57V+DZBK1v6SSS747ZnYMm/TmhudO8Gx/0d9+MqvrKra97zkoZ5vHLaOFIQXL1ggEYd+hy4UZLT7DPqN/ebFjIL5TI=
+	t=1790784586; cv=none; b=F+E3eYJeVWJ9YfYw9qeB7on24KyT5vA8AHYP1qqMGSnC3R/kdRrWaKCuthIAle6E511iZHKnx0OA6Al3fPbCBCYHpgFfWLpsX6fTrOo67RBlax0o2GB4Nq2O416OmPypgklIuun0jBxZsWE80GgHlxKgj+54To8ZzlcYcI8mKmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784582; c=relaxed/simple;
-	bh=/34VXcMjQWtBzRdDSNetJjvxmHNkKtU+TVQ3er56Zew=;
+	s=arc-20240116; t=1790784586; c=relaxed/simple;
+	bh=qX0U6it7LZuNyBbVR9W+BBzmirK0Eg14ziouXpRhgpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OrMN4+5wrCsQ/yF3oCt1cZiLCAebpd2sQTxEe4kBWOw60a5pX9R8oFIspwa0tlb0aQqBteHNYl9UwXDLb2Zi7DPSeH7+ij1k5QBNNneyny2pWJqE7zx76Od7ezk796yOVsRgsaYZF00a+IDfDY2a1Sm/BbmPlzhgm1ckZng26pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPqcB2Ul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J0uHJPwvJ6jlpU1nSjsEA8n+rVT78ZKkasWVxa5Smq+y6cvelzQs9CcsgdA96sqS5Ze7UNY9TFLRxvRcq6YhaaTQLCD6EgBGQH4Vj4xN0MSGrUfd9SfzTLxfxPt6AbuiHLwBKnMWHe7lPyLBZxO9KMiZbV6ufhp6nmhq+09xD9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbaJEknz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPqcB2Ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEBB1F0089B;
-	Wed, 30 Sep 2026 16:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbaJEknz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8611F000FF;
+	Wed, 30 Sep 2026 16:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784578;
-	bh=2T4fiFtssmW6HIeEWMwrsmqHyIgL6ytks/SKkLdmDlQ=;
+	s=korg; t=1790784581;
+	bh=/F9KYpgPhGoPkcx7hvOCISrMNP5thHFh+9vmLCAmaa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MPqcB2UlzoAn12H3P4MbSiYXOJ9DJ7+kgBv9VnDFKGabJQHHl4/6av5XSMb20c/uu
-	 k4zt4sGcuNJxS7b+MOBWAxK/qMmrbGZ1ktXozLsccFujRldXKwWcDQxwXZGhovptoK
-	 WoUiLayqkalHI8Z7cAaCDry1hUFdx1l3SMwbYih4=
+	b=tbaJEknzbSfKODoSKLYPU3YzB/3daWO9KrcIQoVK0j2iQi2wkn6j+SMj2cAdG+qQv
+	 yg97+ypuwwdKK41+Hdsb6kxLRXv07561JtdIBsmFyale8fgbzMF9Tj88YwPQkj2grX
+	 EqKT0GIFWyaAztmpdZmRpPfMSAtnha/KSGzAsE54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gleb Sonichev <sonichev555@gmail.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiajia Liu <liujiajia@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/982] platform/x86: dell-laptop: add Inspiron N5110 to touchpad LED quirk table
-Date: Wed, 30 Sep 2026 17:15:05 +0200
-Message-ID: <20260930152420.446170778@linuxfoundation.org>
+Subject: [PATCH 6.1 170/982] wifi: mt76: transform aspm_conf for pci_disable_link_state
+Date: Wed, 30 Sep 2026 17:15:06 +0200
+Message-ID: <20260930152420.466914565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -46,54 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gleb Sonichev <sonichev555@gmail.com>
+From: Jiajia Liu <liujiajia@kylinos.cn>
 
-[ Upstream commit bfe91a80b13f8068f6fa07aa8c468d284150d4ad ]
+[ Upstream commit 2dd78856223484895306351df1f903a4b75d213f ]
 
-The Inspiron N5110 needs the touchpad LED quirk (Vostro V130 quirk)
-to properly control the touchpad LED. Add its DMI identifier
-to the existing quirk table, next to the similar Inspiron M5110 entry.
+commit b478e162f227 ("PCI/ASPM: Consolidate link state defines") changed
+PCIE_LINK_STATE_L0S (1) to (BIT(0) | BIT(1)). PCI_EXP_LNKCTL_ASPM_L0S (1)
+and PCI_EXP_LNKCTL_ASPM_L1 (2) are no longer matched with
+PCIE_LINK_STATE_L0S (3) and PCIE_LINK_STATE_L1 (4).
 
-Tested on Dell Inspiron N5110.
-The touchpad LED works correctly with this quirk enabled.
+On the platform enabling ASPM L0s and L1, mt76_pci_disable_aspm is not able
+to disable L1. Fix this by transforming aspm_conf to pcie link state.
 
-Signed-off-by: Gleb Sonichev <sonichev555@gmail.com>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://patch.msgid.link/20260525100047.20046-1-sonichev555@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Jiajia Liu <liujiajia@kylinos.cn>
+Link: https://patch.msgid.link/20260602054349.42429-1-liujia6264@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-laptop.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/wireless/mediatek/mt76/pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/dell/dell-laptop.c b/drivers/platform/x86/dell/dell-laptop.c
-index e92c3ad06d696..215861c11dc45 100644
---- a/drivers/platform/x86/dell/dell-laptop.c
-+++ b/drivers/platform/x86/dell/dell-laptop.c
-@@ -205,6 +205,15 @@ static const struct dmi_system_id dell_quirks[] __initconst = {
- 		},
- 		.driver_data = &quirk_dell_vostro_v130,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "Dell Inspiron N5110",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron N5110"),
-+		},
-+		.driver_data = &quirk_dell_vostro_v130,
-+	},
- 	{
- 		.callback = dmi_matched,
- 		.ident = "Dell Vostro 3360",
+diff --git a/drivers/net/wireless/mediatek/mt76/pci.c b/drivers/net/wireless/mediatek/mt76/pci.c
+index 4c1c159fbb62f..36dba6e03e8b4 100644
+--- a/drivers/net/wireless/mediatek/mt76/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/pci.c
+@@ -30,8 +30,14 @@ void mt76_pci_disable_aspm(struct pci_dev *pdev)
+ 
+ 	if (IS_ENABLED(CONFIG_PCIEASPM)) {
+ 		int err;
++		int state = 0;
+ 
+-		err = pci_disable_link_state(pdev, aspm_conf);
++		if (aspm_conf & PCI_EXP_LNKCTL_ASPM_L0S)
++			state |= PCIE_LINK_STATE_L0S;
++		if (aspm_conf & PCI_EXP_LNKCTL_ASPM_L1)
++			state |= PCIE_LINK_STATE_L1;
++
++		err = pci_disable_link_state(pdev, state);
+ 		if (!err)
+ 			return;
+ 	}
 -- 
 2.53.0
 
