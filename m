@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCA04E780D;
-	Wed, 30 Sep 2026 15:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E0E379C35;
+	Wed, 30 Sep 2026 15:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790783838; cv=none; b=Y20qO6Oq9yD4mgp7yyH/zeBWIWJeTxhgI53FgNgQ6HxWLpgIShwxh3hDm1vx5lblEHdX/ajTqKmOsS7QivJteHKwSBgS9WqiPD6BctoBU4EVZriI+5PS6VgfcaB0vEHshM7z3OAKvsxWm73K1KG7COb6Mt8pk+i97re3xllRAY8=
+	t=1790783841; cv=none; b=EcHRNuWscUlbwROVnVSGuBWX9exJS36t3Gssj8RVoFIITMCmSVa+cOR1vKcE42pNTtcTd24125Y+2WrFIBPBoLNbjFL6jM8m3RN65gfz7I37CdZaCRRqv+PgdvCxN8JIhjun+Sgw1mWpxFpl0Zf3w7zlX8fDkIaBp9UD72YmKeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790783838; c=relaxed/simple;
-	bh=sLDrOljFGNWVY2bW5Tk7Vgxgu5MrQans81UvWhE0BKo=;
+	s=arc-20240116; t=1790783841; c=relaxed/simple;
+	bh=VNjzi6VDWqfxDQLyMUdvZhvQfRKSs5Z/pPdxeNmDb3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZDGTkyVfApqAH9JEFC6zloDFQOmymv+srOGKcJgp71iLKRZVSpEcpHNfrfIeihyyguBch01s5pJfTVa/NjGUW6s5HsLXTV+M0oc62RigeubKMPrRjVRl/kQmW1hqmD7JjSNYUS4kTuRLInbwV0Uum5zV3FzqmRX5mudZg5xf44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdqnLjkv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VG57x/LaZnsXJdnDvPfRE1oFpXl78szyO4S+RbSYiHYnyZZ5ECjQ71NeiK1TkKWcvA0q7N1YgYjjn9/2wYUTSjXnWyxY5r5Y5cEaB7RRPGFVvC7GPaEnbV0ZPH/9Ch/i3JMTz5cjtimX3zJBRMRQZ7o4ngSpgjhZxxON31ec2o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7TPSzMG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdqnLjkv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F6F1F000FF;
-	Wed, 30 Sep 2026 15:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7TPSzMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D6E1F00893;
+	Wed, 30 Sep 2026 15:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790783832;
-	bh=pFYaay2l/xEwqyuZ2iaw0vHKkCn2OmrRaRcKtRD1+E4=;
+	s=korg; t=1790783835;
+	bh=3uokCi/QnGuYFrL3aUDx5yw9V6cX1ZGi46O3M9/Pgd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bdqnLjkv+YQ+/lNozQgS9qGf2mv0tIRk1WHRvLrV8L79nFeK+DuzmUCeZHuVYnJHO
-	 APNDlmU3uTIwKp+8RKaevkGAuncxmFhX14SVYeDA4EeHr011qc4Cs+T9p6Wmwgja9q
-	 2P108yT6X3TrYIa/73erkuUnVqPIoYc7ILujX8I8=
+	b=A7TPSzMGhJUW8ZRTwdcZXhNWieiJsV4fIoQpijAi1NJtmQTbOVZXxmSYfqST2htxF
+	 PEd1TTmgtCud2Skr5nnJuHvlGnwVXMX2U4hA6zWR3zj2WkC80e2PokCt01BctiPBJU
+	 ZZC3wOyXA9EsdtaL+/sRGhxT9+qy1Xz4INPe/ZEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Shihuang Liu <shlomojune6@gmail.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 536/595] net: skbuff: fix pull-bound underflow in skb_checksum_setup_ipv6()
-Date: Wed, 30 Sep 2026 17:27:09 +0200
-Message-ID: <20260930152359.235454335@linuxfoundation.org>
+Subject: [PATCH 5.10 537/595] ip_gre: Reject enabling collect metadata through changelink
+Date: Wed, 30 Sep 2026 17:27:10 +0200
+Message-ID: <20260930152359.258456510@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -52,67 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shihuang Liu <shlomojune6@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 3b4e0b0c008a8c1b474730248cd5b873026c74bd ]
+[ Upstream commit a3f315be9d30eeb6938d11fa17fd4b32d52f7c42 ]
 
-skb_maybe_pull_tail() subtracts skb_headlen(skb) from the unsigned max
-argument and passes the result to __pskb_pull_tail() as a signed int.  The
-function does not ensure that max is at least skb_headlen(skb).
+ipgre_netlink_parms() can enable collect_md on an existing GRE, GRETAP
+or ERSPAN device. Unlike newlink, changelink does not enforce metadata
+tunnel uniqueness. Converting a non-metadata device can therefore
+replace the metadata receive entry for another device of the same type
+in the same netns. Deleting either device then clears the shared entry,
+breaking metadata receive lookup for the surviving device.
 
-This can happen while parsing IPv6 extension headers when an skb already
-has a linear area larger than MAX_IPV6_HDR_LEN.  Once the parser needs data
-beyond the linear area, max - skb_headlen(skb) wraps and is converted to a
-negative delta.  __pskb_pull_tail() then passes that negative length to
-skb_copy_bits(), where it can become a very large copy length.
+If parameter validation fails after collect_md is set, deleting the
+modified device can also clear an entry it never owned.
 
-Pass the requested length itself as the pull bound at the three
-extension-header call sites, so the delta can no longer go negative.
+Reject enabling metadata mode in both changelink callbacks before any
+encapsulation or tunnel parameters are modified. Allow requests that
+repeat the metadata attribute on an existing metadata device.
 
-Fixes: 1431fb31ecba ("xen-netback: fix fragment detection in checksum setup")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
-Link: https://patch.msgid.link/20260919133604.50948-1-shlomojune6@gmail.com
+Fixes: 2e15ea390e6f ("ip_gre: Add support to collect tunnel metadata.")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260921031859.9283-1-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/ipv4/ip_gre.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 0e678ba405d0c..6a8e10db11b77 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5104,7 +5104,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
- 			err = skb_maybe_pull_tail(skb,
- 						  off +
- 						  sizeof(struct ipv6_opt_hdr),
--						  MAX_IPV6_HDR_LEN);
-+						  off +
-+						  sizeof(struct ipv6_opt_hdr));
- 			if (err < 0)
- 				goto out;
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index 213d29fe190c1..edab2f31fd85a 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1410,6 +1410,12 @@ static int ipgre_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	if (!rtnl_dev_link_net_capable(dev, t->net))
+ 		return -EPERM;
  
-@@ -5119,7 +5120,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
- 			err = skb_maybe_pull_tail(skb,
- 						  off +
- 						  sizeof(struct ip_auth_hdr),
--						  MAX_IPV6_HDR_LEN);
-+						  off +
-+						  sizeof(struct ip_auth_hdr));
- 			if (err < 0)
- 				goto out;
++	if (data && data[IFLA_GRE_COLLECT_METADATA] && !t->collect_md) {
++		NL_SET_ERR_MSG(extack,
++			       "Enabling collect_md on an existing device is not supported");
++		return -EOPNOTSUPP;
++	}
++
+ 	err = ipgre_newlink_encap_setup(dev, data);
+ 	if (err)
+ 		return err;
+@@ -1442,6 +1448,12 @@ static int erspan_changelink(struct net_device *dev, struct nlattr *tb[],
+ 	if (!rtnl_dev_link_net_capable(dev, t->net))
+ 		return -EPERM;
  
-@@ -5134,7 +5136,8 @@ static int skb_checksum_setup_ipv6(struct sk_buff *skb, bool recalculate)
- 			err = skb_maybe_pull_tail(skb,
- 						  off +
- 						  sizeof(struct frag_hdr),
--						  MAX_IPV6_HDR_LEN);
-+						  off +
-+						  sizeof(struct frag_hdr));
- 			if (err < 0)
- 				goto out;
- 
++	if (data && data[IFLA_GRE_COLLECT_METADATA] && !t->collect_md) {
++		NL_SET_ERR_MSG(extack,
++			       "Enabling collect_md on an existing device is not supported");
++		return -EOPNOTSUPP;
++	}
++
+ 	err = ipgre_newlink_encap_setup(dev, data);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
