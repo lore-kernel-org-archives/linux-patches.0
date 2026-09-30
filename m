@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6814FD290;
-	Wed, 30 Sep 2026 15:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0895F4FECC4;
+	Wed, 30 Sep 2026 15:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782831; cv=none; b=GzcQOhnw9Q0k6HMxlABSnbZ1HyIjXTBl67y9AzVcxJFoGgFM6c3rYKnTmv+1qzZwf92sQyr0Us/HV8nRNXu8ZnvNF5JuaHYZAIIRz/jKlV8pFKKP//dMwMwRnB/XJW9L/pDpiAR4sTZ2jQ79RpW2IvslswIoDj+qemDNWtEl9A8=
+	t=1790782834; cv=none; b=tIShZqWHkq7u6IcNvQl358e92RfCfvcfs9ertNHeZNjTCr2vRNOiq0wwF5sj+jU5sexUGL6AcUUxklZ/aicjf6AOikfEVqs5PNKxCrUTrGYg3ndKLgcv2ChV3Z4tohNHPGAOKTd31VV2i9Y217nP2THGIJrHf0i1ckj5fkBtphg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782831; c=relaxed/simple;
-	bh=XLuBAbVgS/CKikWUBJm551JRoOXR6Ok/NI9IQVyJOQs=;
+	s=arc-20240116; t=1790782834; c=relaxed/simple;
+	bh=VEwosoPDA0maVdLd+ZFXA5TwPHykI+q5DWdTecpoTj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzhUewki4S+ZXo89Ty/bBkOsnh9EegM/OcsPvGcn2eHjE+lsIjTTfHYAgxnOjzaDi4ExzEaRP679Qyon9z6KPfuOrQ8ztgynPEzLkLAqBqKL8/teFlcp8/ExmSreu28N/EGfn+g0tTSXsjvl8VKx96GI0N6OrgRNfoljoslgd1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eK2qkYIs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JFwPrp8pemzaPLOqTGnJbQMHGqiazGvWevLkM7uuqDx3D9mSEc1m4WZihiUNMKkMPlZ+2vEbqX+OXoaot89HzQ8Bb957msIdKn76KRSU8yjlOwZXQuQaXQSBtQrNXOSBPyxTC+h10gIRMSByTt/DZAckt2TpY98vxbuQxp36dAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fikG1oO4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eK2qkYIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B84E1F00898;
-	Wed, 30 Sep 2026 15:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fikG1oO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADF51F0089A;
+	Wed, 30 Sep 2026 15:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782826;
-	bh=TcrprTM5r0Uo8DUBkWarYMVFbMFQtJfxAJLBtnDfUxY=;
+	s=korg; t=1790782828;
+	bh=U3Buqx9NiuwnqCOFQRozkfEVmQIIEZR06hx1v+Q+cDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eK2qkYIsBmGiRWuYLfm2nAZgTZU4plG7ctNj68VOwsvY5TCHfnimTVcGJJ+eLxqQu
-	 bBfKjW8jhBZfz0P1zcfYBSruJfYzgYCzw+X/boKdijpwPiiKkNEPbAXpbIgGd7mSE9
-	 S/lOJFQn3+WBpJz10LIIqClq2D/ZukaeQQ8E4E40=
+	b=fikG1oO41z/avGN6/f95vHwzoxCZdeGrVvmkRV8Pd04qWhjuS0LWQJtUb4X/fecyQ
+	 ruOk2plePuCZDlYyuSN+9Ks/mTcxZYPBV5dTVcWE16DA1VZwysoKARJEBeY+Abc2nq
+	 r7uZ5vYvdkqgAsZJcwNCw+PbCR2yPETa+gVlabG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rudi Heitbaum <rudi@heitbaum.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yury Norov <yury.norov@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 183/595] ASoC: rt5645: Perform the initial jack detect at probe
-Date: Wed, 30 Sep 2026 17:21:16 +0200
-Message-ID: <20260930152351.677758332@linuxfoundation.org>
+Subject: [PATCH 5.10 184/595] clk: at91: pmc: #undef field_{get,prep}() before definition
+Date: Wed, 30 Sep 2026 17:21:17 +0200
+Message-ID: <20260930152351.699328469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -51,51 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rudi Heitbaum <rudi@heitbaum.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 54b279699279411c77c8afbc73b83c70740a7303 ]
+[ Upstream commit dbfe51513aae6bace00cc390e11cb486a64a63d2 ]
 
-The only initial jack detect is the rt5645_irq(0, rt5645) at the end of
-rt5645_set_jack_detect(). A card described with simple-audio-card has no
-machine driver to call that, so jack state is only ever sampled from an
-edge on hp-detect-gpios.
+Prepare for the advent of globally available common field_get() and
+field_prep() macros by undefining the symbols before defining local
+variants.  This prevents redefinition warnings from the C preprocessor
+when introducing the common macros later.
 
-A headphone already in the socket at boot is therefore never noticed, and
-the card is silent with every mixer control set correctly.
-rt5645_jack_detect() is what force enables the "LDO2" and "Mic Det Power"
-supplies that the "HP amp" widget depends on, and what programs
-RT5645_CHARGE_PUMP away from its reset value, so without it "HP amp"
-cannot power up. Unplugging and replugging the jack is the only way to
-recover.
-
-Do the detect at the end of the component probe when the driver owns a
-hp-detect GPIO and the codec's own jack detect is unused, which is the
-case that has no other trigger. A machine driver calling
-rt5645_set_jack_detect() later just repeats it.
-
-Signed-off-by: Rudi Heitbaum <rudi@heitbaum.com>
-Link: https://patch.msgid.link/anNU3tOUR7rOReSB@5e001e58230e
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Acked-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5645.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/at91/pmc.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
-index ac403827a2290..c7cacde516412 100644
---- a/sound/soc/codecs/rt5645.c
-+++ b/sound/soc/codecs/rt5645.c
-@@ -3441,6 +3441,10 @@ static int rt5645_probe(struct snd_soc_component *component)
- 	if (!rt5645->eq_param)
- 		return -ENOMEM;
+diff --git a/drivers/clk/at91/pmc.h b/drivers/clk/at91/pmc.h
+index 7b86affc6d7c9..94f6a3fcb5054 100644
+--- a/drivers/clk/at91/pmc.h
++++ b/drivers/clk/at91/pmc.h
+@@ -98,7 +98,9 @@ struct clk_pcr_layout {
+ 	u32 pid_mask;
+ };
  
-+	/* no machine driver to call rt5645_set_jack_detect(), so detect here */
-+	if (!rt5645->pdata.jd_mode && rt5645->gpiod_hp_det)
-+		rt5645_irq(0, rt5645);
-+
- 	return 0;
- }
++#undef field_get
+ #define field_get(_mask, _reg) (((_reg) & (_mask)) >> (ffs(_mask) - 1))
++#undef field_prep
+ #define field_prep(_mask, _val) (((_val) << (ffs(_mask) - 1)) & (_mask))
  
+ #define ndck(a, s) (a[s - 1].id + 1)
 -- 
 2.53.0
 
