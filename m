@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFAD52844E;
-	Wed, 30 Sep 2026 17:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E599A5237AC;
+	Wed, 30 Sep 2026 17:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789995; cv=none; b=bSQ+8XpTRzg8mKO/wqJ4ouaX0MChMG+mVy6gWdyDDPAMUDYdaRR5wa0hLZVQc4msL9IF2Pkw5dO0Umhyf/x7+7mcUgUpzMI5uR5vg5eyAGKglMTS6CWcSC9X9Lgcq1TltiIC5sUt917JzI7EaTwLvhjEMpjGTX+5snctboQfWic=
+	t=1790789998; cv=none; b=WCSPAcP86+qMDL/8uB8hOyVcbcAZvA9P3rMFrjNuKpeYwR+BlVBVKW7dmkiEoke+DJTrzn9MzokbmreAaCm3GdjRGhjKYmwdfSXPmwApJdVv55oOLB71xDcVAZuX6OohRjhs3Hk3hqgm4+o1T5y5eynXoOCGHdhhv9JsEIbWTw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789995; c=relaxed/simple;
-	bh=pKjJYio9DQxeTvI+pzoQyNlk1y/hqaB+jYd3vOHLb6A=;
+	s=arc-20240116; t=1790789998; c=relaxed/simple;
+	bh=TMnSwoE8GEoIaRR1oJRNBJytwtCqPKDFq5QjBISCLlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifkT/nTUuOp9Ken0zfffRvlFy8suXyNpZVxQUyGM9I/Fq0MQK3ISDjTwrmw+qJfa3Ql4D52BfZRh8G5xUMapbv0yjYKsFk7SJgCktHNY0mAnGoec8l8U9qjIPSSpnJj873akJffwyLGn44QD3dyz5Q/5TPkSq+WJlUZA+KYvnTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka0GVV4T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S0cHjigySCpd13oCrgWUWGkvBAOjNWc9/0tPN5splWpgJNL3kETb6R6O8LLBinDkpAVmjrClRhXhuwMKGmNVwyLqWW5Y/iwkL2znP9av8C3WdqY151grh+g763ySpzFQXi3idIyvcthAwj+uZmDupbn4ZUCmjBzyNlMcSilNalQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibHq/k8u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka0GVV4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356BF1F000FF;
-	Wed, 30 Sep 2026 17:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibHq/k8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A3B1F00898;
+	Wed, 30 Sep 2026 17:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789993;
-	bh=74tCU7K3z8wjmMvsiKIwVbG27BIoweu+jTqv1VwRsYg=;
+	s=korg; t=1790789996;
+	bh=oYVIJW9GpQHZvC2BCDij5P+4Ah/CHrCVJdQEI5xJXms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ka0GVV4TkrG1O2IHFpWskLd9zX8J9KviQtBtJaU7PHBAMeErYgkOSUNBtyTewMk3x
-	 6UGtQKBv/kx1pL0sZGy/1rXKsaSHtHzc2q6UZUTps83j5vOFIt1HPS7M+IUtskdqLe
-	 Qcn749o+dmx3aYucRwsB2h27HE29y/IerId7T5Zc=
+	b=ibHq/k8ur+YrLAEnTqaitwk1ttgkBJ0Ws6Ory/jTS4RvAYzIQahqTDvb7vZChQAvz
+	 07Cga1bm84EB0AZ4x1rFMVgrUJxUm8osyi+HLt/qgSVNfSb+EFyXUXngpQsB0wm+dp
+	 DRKenFQepi+mzIu9n9Cku+G3h5T1DusKVR7xYFmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
-	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 672/877] scsi: qla2xxx: Fix queue teardown NULL dma_free and bitmap locking
-Date: Wed, 30 Sep 2026 17:26:23 +0200
-Message-ID: <20260930152429.170167838@linuxfoundation.org>
+Subject: [PATCH 6.12 673/877] scsi: qla2xxx: Fix use-after-free of qpair work on queue teardown
+Date: Wed, 30 Sep 2026 17:26:24 +0200
+Message-ID: <20260930152429.193155783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,133 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 34a40e0dff940ac5eba494a69b553ea571e24873 ]
+[ Upstream commit 19788a55cab61d78e33e0914a5a31d27843e8a4a ]
 
-qla25xx_free_req_que() and qla25xx_free_rsp_que() have two pre-existing
-bugs exposed on the error path of qla25xx_create_{req,rsp}_que():
+The response queue MSI-X handler qla2xxx_msix_rsp_q() schedules
+qla_do_work() via queue_work(ha->wq, &qpair->q_work). qla_do_work()
+dereferences the qpair (vha, rsp) and takes qpair->qp_lock.
 
- 1. When dma_alloc_coherent() fails during queue creation, the error
-    path calls the free function with req->ring / rsp->ring still NULL
-    (from kzalloc).  The unconditional dma_free_coherent() with a NULL
-    cpu_addr is undefined behavior and can panic.
+During teardown, qla2xxx_delete_qpair() deletes the response queue, which
+calls free_irq() in qla25xx_free_rsp_que(), and then frees the queue and
+the qpair. free_irq() waits for running hardirq handlers but does not
+cancel work already placed on ha->wq. A still-pending q_work then runs
+qla_do_work() against the freed qpair and response queue, causing a
+use-after-free. This is especially likely during full adapter teardown,
+where destroy_workqueue(ha->wq) forces pending work to run after the queue
+pairs have been freed.
 
- 2. The free functions clear req_qid_map / rsp_qid_map under vport_lock,
-    but the create functions protect the same bitmaps with mq_lock.
-    This provides no mutual exclusion.  Additionally, the create error
-    path clears the bit and releases mq_lock before calling the free
-    function, creating a window where another thread can allocate the
-    same que_id and have its ha->req_q_map entry clobbered by the
-    subsequent lockless NULL assignment in the free function.
+Flush the work item with cancel_work_sync() in qla25xx_free_rsp_que()
+after free_irq() has released the interrupt (so no new work can be
+queued) and before the response queue and qpair memory are freed (so the
+flushed handler still sees valid memory). Guard on rsp->qpair and ha->wq
+to match the INIT_WORK() condition and avoid operating on an
+uninitialized work_struct.
 
-Fix by:
-
- - Guarding dma_free_coherent() with a NULL check on the ring pointer.
-
- - Using mq_lock (the lock held by all creators) in the free functions
-   to atomically NULL the map entry and clear the bitmap bit.
-
- - Removing the now-redundant clear_bit blocks from the create error
-   paths since the free functions handle it atomically.
-
+Fixes: 68ca949cdb04 ("[SCSI] qla2xxx: Add CPU affinity support.")
+Reported-by: Sashiko <sashiko-dev@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-41-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-5-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-
-Backport adaptation for the stable tree: the 29xx IOCB size-selection
-helpers are absent, and queue creation still allocates fixed-size entries.
-Initialize the local req_entry_size and rsp_entry_size values with
-sizeof(request_t) and sizeof(response_t), respectively, so DMA freeing
-continues to match allocation without adding helper functions or 29xx
-support. Retain all NULL-ring guards, mq_lock protection, and removal of
-the premature bitmap clears.
-
-Keep the response-ring cleanup layout used by upstream so target commit
-19788a55cab61d78e33e0914a5a31d27843e8a4a applies unchanged.
-
-Stable-dep-of: 19788a55cab6 ("scsi: qla2xxx: Fix use-after-free of qpair work on queue teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mid.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/scsi/qla2xxx/qla_mid.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/scsi/qla2xxx/qla_mid.c
 +++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -574,16 +574,19 @@ qla25xx_free_req_que(struct scsi_qla_hos
- {
- 	struct qla_hw_data *ha = vha->hw;
- 	uint16_t que_id = req->id;
-+	size_t req_entry_size = sizeof(request_t);
- 
--	dma_free_coherent(&ha->pdev->dev, (req->length + 1) *
--		sizeof(request_t), req->ring, req->dma);
-+	if (req->ring)
-+		dma_free_coherent(&ha->pdev->dev,
-+				  (req->length + 1) * req_entry_size,
-+				  req->ring, req->dma);
- 	req->ring = NULL;
- 	req->dma = 0;
- 	if (que_id) {
-+		mutex_lock(&ha->mq_lock);
- 		ha->req_q_map[que_id] = NULL;
--		mutex_lock(&ha->vport_lock);
- 		clear_bit(que_id, ha->req_qid_map);
--		mutex_unlock(&ha->vport_lock);
-+		mutex_unlock(&ha->mq_lock);
- 	}
- 	kfree(req->outstanding_cmds);
- 	kfree(req);
-@@ -594,6 +597,7 @@ qla25xx_free_rsp_que(struct scsi_qla_hos
- {
- 	struct qla_hw_data *ha = vha->hw;
- 	uint16_t que_id = rsp->id;
-+	size_t rsp_entry_size = sizeof(response_t);
- 
- 	if (rsp->msix && rsp->msix->have_irq) {
- 		free_irq(rsp->msix->vector, rsp->msix->handle);
-@@ -601,15 +605,18 @@ qla25xx_free_rsp_que(struct scsi_qla_hos
- 		rsp->msix->in_use = 0;
+@@ -606,6 +606,10 @@ qla25xx_free_rsp_que(struct scsi_qla_hos
  		rsp->msix->handle = NULL;
  	}
--	dma_free_coherent(&ha->pdev->dev, (rsp->length + 1) *
--		sizeof(response_t), rsp->ring, rsp->dma);
+ 
++	/* Flush any queued response work before freeing the queue/qpair. */
++	if (rsp->qpair && ha->wq)
++		cancel_work_sync(&rsp->qpair->q_work);
 +
-+	if (rsp->ring)
-+		dma_free_coherent(&ha->pdev->dev,
-+				  (rsp->length + 1) * rsp_entry_size,
-+				  rsp->ring, rsp->dma);
- 	rsp->ring = NULL;
- 	rsp->dma = 0;
- 	if (que_id) {
-+		mutex_lock(&ha->mq_lock);
- 		ha->rsp_q_map[que_id] = NULL;
--		mutex_lock(&ha->vport_lock);
- 		clear_bit(que_id, ha->rsp_qid_map);
--		mutex_unlock(&ha->vport_lock);
-+		mutex_unlock(&ha->mq_lock);
- 	}
- 	kfree(rsp);
- }
-@@ -794,9 +801,6 @@ qla25xx_create_req_que(struct qla_hw_dat
- 		if (ret != QLA_SUCCESS) {
- 			ql_log(ql_log_fatal, base_vha, 0x00df,
- 			    "%s failed.\n", __func__);
--			mutex_lock(&ha->mq_lock);
--			clear_bit(que_id, ha->req_qid_map);
--			mutex_unlock(&ha->mq_lock);
- 			goto que_failed;
- 		}
- 		vha->flags.qpairs_req_created = 1;
-@@ -908,9 +912,6 @@ qla25xx_create_rsp_que(struct qla_hw_dat
- 		if (ret != QLA_SUCCESS) {
- 			ql_log(ql_log_fatal, base_vha, 0x00e7,
- 			    "%s failed.\n", __func__);
--			mutex_lock(&ha->mq_lock);
--			clear_bit(que_id, ha->rsp_qid_map);
--			mutex_unlock(&ha->mq_lock);
- 			goto que_failed;
- 		}
- 		vha->flags.qpairs_rsp_created = 1;
+ 	if (rsp->ring)
+ 		dma_free_coherent(&ha->pdev->dev,
+ 				  (rsp->length + 1) * rsp_entry_size,
 
 
