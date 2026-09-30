@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A333E2AD7;
-	Wed, 30 Sep 2026 19:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2883A30D401;
+	Wed, 30 Sep 2026 19:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796319; cv=none; b=cPnTiUysdby8l/qOkVpuZki7Bk3TGHlSBbni21+Cui4OpMfdIV1s+K3lRwWTCYjFjOxq1/u0/CspNDKFaAEmntb/hEJpJ9D4H8vT0sa7jq1hqdk+G3DI56vEARaXCkIJ8vKR+CWXe04nuGQJNahCZaE1k6ZNNcRfgWHV9RT+gI4=
+	t=1790796322; cv=none; b=nWO10bWrmSK6Kb8x2Tv1SLLpts1I7n0LassnFCTaLJvLPoOqJYOvQLsetWBdX3bfYyglPJ9I2Vr5JWg+dcH37NjOMUjExAJLO1bhPvDyephEbKlRGtnTnr6+wX06JwJk2yj0TPM4sjuNtbejYpX2WbCXlqWnKGV4SyQXqwbO7KM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796319; c=relaxed/simple;
-	bh=pdGeu3AZQ2okBE1sPLUFiSHVeFww0FL2cmjvHzZ+mM0=;
+	s=arc-20240116; t=1790796322; c=relaxed/simple;
+	bh=jOMDXyZg+imSUcasPd0vsuIWvMFdlQjAUt4x25pUny8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YR21lUigB2h1ysmQE6bSVCCsv7kYXpMwiUMVhzW5B3ja+BaLq1aBkvnnBV/+2RQA4abWD++jzzsFpCu4bpovEic3oyqxJle3oiPNASt5+lyTdsA2KygGxOfTNkvLufuBMyLlfJdCI9jTSOyHWOX0S+G+jv860Y2vptXYBLFKfjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+4mEj+M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u8LQsgZ5m+wcDZ09xHhQTHJrDViHTlE87LiAsnxiFyrO2CE6C7CN4q2L5j6lJeY1h6PeO6NdIKzDcvXyztZaEXx4dteh9FXfPmG3DAyNpkkg/tukRVWptny3Zh8dUXc3QOPaXtFe/LREvE5/OLR8JubfdRFkKo4Hm1XqZ0i+iW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meRQCG6c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+4mEj+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD921F000FF;
-	Wed, 30 Sep 2026 19:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meRQCG6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 814391F000FF;
+	Wed, 30 Sep 2026 19:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796318;
-	bh=+2mqcW8SYTrp/2bD+/HajAJSHQRLjKrLSeYbbiYjSCo=;
+	s=korg; t=1790796321;
+	bh=4EJYUpLfYDGA9Zc0aiFyb2PJi/UnBpVHR1zodPAswUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+4mEj+MKdcUgQlvMqpyBFnIj8QPAPNKOW2KBkoKa16sS9ZDf28UVAPVx7kncqKts
-	 BudcGvuS3aJwo4Dcu7wG5SFI9Y5ZZBPDl/bEdy4v7bZ6dL4rNCTf5PZNecRG/+FwY5
-	 ijAN34bdBk+ENU4Y4O1HtiTFQpYulp3/vUVrVuas=
+	b=meRQCG6cy0iFyQQlTLdRTb3QWBrwQ5lDdRqMOgRd/6r1e8YYqEZNUDu0bp9xxSUMo
+	 Egx0lZ4tx+WWKCm3YI9rt8mB7A/Ys4UDLSsSKypSt/Yh5HHIYR/Uqc1dvnmJL1Op6A
+	 29rd7Vx0q/H6gO3KQcsCXrnwXajVes51p1LlJ6hU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 0854/1193] Bluetooth: hci_codec: validate vendor codec count length
-Date: Wed, 30 Sep 2026 17:25:38 +0200
-Message-ID: <20260930152453.207476601@linuxfoundation.org>
+	co+6a581c4284f721d4@bugs.sh,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Srish Srinivasan <ssrish@linux.ibm.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 0872/1193] KEYS: trusted: Fix tpm2_load_cmd() boundary check
+Date: Wed, 30 Sep 2026 17:25:56 +0200
+Message-ID: <20260930152453.611932936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,106 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit d0795cfd6f655f4de84868a4f4bb41a03f037b3d upstream.
+commit 114f00d738f15dd8c7318369edcdc53dd6d08763 upstream.
 
-The Read Local Supported Codecs parsers consume the variable-sized
-standard codec array before parsing the vendor codec count.  Although the
-initial reply-size check includes a vendor count byte in the fixed layout,
-it does not guarantee that the byte remains after the standard codec array.
+tpm2_load_cmd() does boundary checks against the ASN.1 size i.e.,
+payload->blob_len. Address this by passing the decoded blob size to
+tpm2_load_cmd(), and use it for the boundary checks.
 
-If a controller reply ends immediately after that array, calculating the
-vendor codec array size reads vnd_codecs->num beyond the skb data.  Use
-skb_pull_data() to validate and consume each codec header before using its
-count in both command variants.
-
-Fixes: 8961987f3f5f ("Bluetooth: Enumerate local supported codec and cache details")
-Fixes: 9ae664028a9e ("Bluetooth: Add support for Read Local Supported Codecs V2")
-Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: f2219745250f ("security: keys: trusted: use ASN.1 TPM2 key format for the blobs")
+Reported-by: co+6a581c4284f721d4@bugs.sh
+Closes: https://bugs.sh/b/6a581c4284f721d4/
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Tested-by: Srish Srinivasan <ssrish@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260901205809.2028454-1-jarkko@kernel.org
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_codec.c |   36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ security/keys/trusted-keys/trusted_tpm2.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/net/bluetooth/hci_codec.c
-+++ b/net/bluetooth/hci_codec.c
-@@ -145,11 +145,12 @@ void hci_read_supported_codecs(struct hc
+--- a/security/keys/trusted-keys/trusted_tpm2.c
++++ b/security/keys/trusted-keys/trusted_tpm2.c
+@@ -108,7 +108,7 @@ struct tpm2_key_context {
  
- 	skb_pull(skb, sizeof(rp->status));
+ static int tpm2_key_decode(struct trusted_key_payload *payload,
+ 			   struct trusted_key_options *options,
+-			   u8 **buf)
++			   u8 **buf, unsigned int *blob_len)
+ {
+ 	int ret;
+ 	struct tpm2_key_context ctx;
+@@ -129,6 +129,7 @@ static int tpm2_key_decode(struct truste
+ 		return -ENOMEM;
  
--	std_codecs = (void *)skb->data;
-+	std_codecs = skb_pull_data(skb, sizeof(*std_codecs));
-+	if (!std_codecs)
-+		goto error;
+ 	*buf = blob;
++	*blob_len = ctx.priv_len + ctx.pub_len;
+ 	options->keyhandle = ctx.parent;
  
- 	/* validate codecs length before accessing */
--	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
--	    + sizeof(std_codecs->num))
-+	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num))
- 		goto error;
+ 	memcpy(blob, ctx.priv, ctx.priv_len);
+@@ -384,10 +385,11 @@ static int tpm2_load_cmd(struct tpm_chip
+ 	int rc;
+ 	u32 attrs;
  
- 	/* enumerate codec capabilities of standard codecs */
-@@ -161,15 +162,14 @@ void hci_read_supported_codecs(struct hc
- 					    LOCAL_CODEC_ACL_MASK | LOCAL_CODEC_SCO_MASK, &caps);
- 	}
+-	rc = tpm2_key_decode(payload, options, &blob);
++	rc = tpm2_key_decode(payload, options, &blob, &blob_len);
+ 	if (rc) {
+ 		/* old form */
+ 		blob = payload->blob;
++		blob_len = payload->blob_len;
+ 		payload->old_format = 1;
+ 	} else {
+ 		/* Bind for cleanup: */
+@@ -399,17 +401,17 @@ static int tpm2_load_cmd(struct tpm_chip
+ 		return -EINVAL;
  
--	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
--		 + sizeof(std_codecs->num));
-+	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num));
+ 	/* must be big enough for at least the two be16 size counts */
+-	if (payload->blob_len < 4)
++	if (blob_len < 4)
+ 		return -EINVAL;
  
--	vnd_codecs = (void *)skb->data;
-+	vnd_codecs = skb_pull_data(skb, sizeof(*vnd_codecs));
-+	if (!vnd_codecs)
-+		goto error;
+ 	private_len = get_unaligned_be16(blob);
  
- 	/* validate vendor codecs length before accessing */
--	if (skb->len <
--	    flex_array_size(vnd_codecs, codec, vnd_codecs->num)
--	    + sizeof(vnd_codecs->num))
-+	if (skb->len < flex_array_size(vnd_codecs, codec, vnd_codecs->num))
- 		goto error;
+ 	/* must be big enough for following public_len */
+-	if (private_len + 2 + 2 > (payload->blob_len))
++	if (private_len + 2 + 2 > blob_len)
+ 		return -E2BIG;
  
- 	/* enumerate vendor codec capabilities */
-@@ -214,11 +214,12 @@ void hci_read_supported_codecs_v2(struct
+ 	public_len = get_unaligned_be16(blob + 2 + private_len);
+-	if (private_len + 2 + public_len + 2 > payload->blob_len)
++	if (private_len + 2 + public_len + 2 > blob_len)
+ 		return -E2BIG;
  
- 	skb_pull(skb, sizeof(rp->status));
- 
--	std_codecs = (void *)skb->data;
-+	std_codecs = skb_pull_data(skb, sizeof(*std_codecs));
-+	if (!std_codecs)
-+		goto error;
- 
- 	/* check for payload data length before accessing */
--	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num)
--	    + sizeof(std_codecs->num))
-+	if (skb->len < flex_array_size(std_codecs, codec, std_codecs->num))
- 		goto error;
- 
- 	memset(&caps, 0, sizeof(caps));
-@@ -229,15 +230,14 @@ void hci_read_supported_codecs_v2(struct
- 					    &caps);
- 	}
- 
--	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num)
--		 + sizeof(std_codecs->num));
-+	skb_pull(skb, flex_array_size(std_codecs, codec, std_codecs->num));
- 
--	vnd_codecs = (void *)skb->data;
-+	vnd_codecs = skb_pull_data(skb, sizeof(*vnd_codecs));
-+	if (!vnd_codecs)
-+		goto error;
- 
- 	/* check for payload data length before accessing */
--	if (skb->len <
--	    flex_array_size(vnd_codecs, codec, vnd_codecs->num)
--	    + sizeof(vnd_codecs->num))
-+	if (skb->len < flex_array_size(vnd_codecs, codec, vnd_codecs->num))
- 		goto error;
- 
- 	for (i = 0; i < vnd_codecs->num; i++) {
+ 	pub = blob + 2 + private_len + 2;
 
 
