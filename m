@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AE65172D4;
-	Wed, 30 Sep 2026 18:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7697D4E77FD;
+	Wed, 30 Sep 2026 18:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792543; cv=none; b=hP2DnPlryupZQaj8jN4T1vMrkx5VNgVTlm2mOrPLgJ2Pxrg0TsGTy2H506vgXJYuyl8c/Beqm3oea5bsN1rSFOc2XYScybAvut5hdilIa+JaqUaXb23rewkl75oDO+Er07Yz5LdXT7exhVtIJoHqMVOs4VdcPqs+Wp9HN5igJXM=
+	t=1790792548; cv=none; b=nvHiLRRSf/zKtZHdYPi7W65wZxCKuyRCNqYtr/9PVAK4UX6JKpkL6wtBJQH4R88ki4s1SPa5vWhSwY43d/uJNiPhcgJPURwIIX0DfQiRYHSVNK53tKDCKu3X4ir/nluAOn0O/B5VB+PYRTR4NkXMDQa3Fa6mmh9lsD5wEyw9d+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792543; c=relaxed/simple;
-	bh=znJwtdFelqUvkSCZ+Pvrk7u1t9KlCvl3rbWgeXa5H/M=;
+	s=arc-20240116; t=1790792548; c=relaxed/simple;
+	bh=jRGa+gt30i3gDgUHZKrfHBiuSRHErAxmWCnHjkL5PRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qvXb5jG7ln25a4fDd12O7k6/4xmuD1nlC8yb4kyWMRLEaZjO2MGt/ZasXP60G7irXZDt5YPGatG+qylPPe3mE7ll3KR8hfDSnZ28Foff1G/+gQb4ekVlC+qxpSuA9BnZzEjc0IKFLXwplAV0gFHlgkMP/DwE3MY1ZAJDP2wTHjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU/2miYY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mVH4fFTbYmw2X56DCrMCXYvclW8C9VWcsHdbTKwsM0usIampWll6EKXBMmzwR5YWYFeTy4l5eQ9tdflMVA4Mk4FJtT8moDpPKnrgtvGDyLcMY5BSaVdVI4oNRhAMJE+RkQ8XQ3awASVSGv2fUEoxVAXh9X7qk+e7AXzjLuZMPy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuyebYc+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU/2miYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7F01F00898;
-	Wed, 30 Sep 2026 18:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuyebYc+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DC91F000FF;
+	Wed, 30 Sep 2026 18:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790792542;
-	bh=1ix7u6awCJiZhdEfqyiI0r1fGdOutAFKX0agdKKqCl8=;
+	s=korg; t=1790792545;
+	bh=xcY+wb7NSWxMllqA1H50mUtTj141QJTKoq+4s7WXABk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SU/2miYYiPzSB4ZAoPtC02TUCDMURpsJLkpaHj4CKIdJXa6Xp69g35XGZ2hYgdUMT
-	 6889ayFgWK5k0DqGHWkdO1kX0Ioqp32YAhI1y/jsH/6dt4f4rQgLEAo859nlYzBkNV
-	 0K0Ix3PadpAJOULSi5RePhRnHFai1TSye2vnhmoY=
+	b=vuyebYc+3amyOSQQ4yDkiGbriq1TDFaDSA6jqHmSC9VU4ajLQr2fDMwrpZ/EdLM67
+	 hTt4wcGbM1dauDduNSnFuC8U6pY4ejMufeDtIiRcButI4/ZP67Zi3bKLzSnRznu0+D
+	 uryq+ujQ5R5tSpgEt2XCx30+YMe5BqzZToZ8QQkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Kenta Akagi <k@mgml.me>,
+	Chris Gellermann <christian.gellermann@codasip.com>,
+	Simon Horman <horms@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 691/752] KVM: x86: Fix shadow paging use-after-free due to unexpected role
-Date: Wed, 30 Sep 2026 17:29:21 +0200
-Message-ID: <20260930152413.190291155@linuxfoundation.org>
+Subject: [PATCH 5.15 656/752] nfc: virtual_ncidev: Add missing ioctl compat handler
+Date: Wed, 30 Sep 2026 17:28:46 +0200
+Message-ID: <20260930152412.451538593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -52,70 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Chris Gellermann <christian.gellermann@codasip.com>
 
-[ Upstream commit 81ccda30b4e83d8f5cc4fd50503c44e3a33abfeb ]
+[ Upstream commit 51814683e28fc64eceb415962376956c3cfc75a7 ]
 
-Commit 0cb2af2ea66ad ("KVM: x86: Fix shadow paging use-after-free due
-to unexpected GFN") fixed a shadow paging mismatch between stored and
-computed GFNs; the bug could be triggered by changing a PDE mapping from
-outside the guest, and then deleting a memslot.  The rmap_remove()
-call would miss entries created after the PDE change because the GFN
-of the leaf SPTE does not match the GFN of the struct kvm_mmu_page.
+The compat handler for ioctls to the virtual nci device is missing. So,
+nci-specific ioctls of a compat task return with -1 and errno set to
+ENOTTY. Add a handler.
 
-A similar hole however remains if the modified PDE points to a non-leaf
-page.  In this case the gfn can be made to match, but the role does not
-match: the original large 2MB page creates a kvm_mmu_page with direct=1,
-while the new 4KB needs a kvm_mmu_page with direct=0.  However,
-kvm_mmu_get_child_sp() does not compare the role, and therefore reuses
-the page.
+The handling of an ioctl() call of a compat task to get the index of
+virtual nci device (IOCTL_GET_NCIDEV_IDX) lands in the default case of
+the ioctl compat handler (see fs/ioctl.c):
 
-The next step is installing a leaf (4KB) SPTE on the new path which
-records an rmap entry under the gfn resolved by the walk.  But when
-that child is zapped its parent kvm_mmu_page has direct=1 and
-kvm_mmu_page_get_gfn() computes the gfn for the 4KB page as
-sp->gfn + index instead of using sp->shadowed_translation[] (or sp->gfns[]
-in older kernels).  It therefore fails to remove the recorded entry.
+COMPAT_SYSCALL_DEFINE3(ioctl, ...)
+{
+	...
+	default:
+       		error = do_vfs_ioctl(fd_file(f), fd, cmd, ...);
+		if (error != -ENOIOCTLCMD)
+			break;
 
-When the memslot is dropped the shadow page is freed but the rmap
-entry survives, as in the scenario that was already fixed.  Code that
-later walks that gfn (dirty logging, MMU notifier invalidation, and
-so on) dereferences an sptep that lies in the freed page, causing the
-use-after-free.
+		if (fd_file(f)->f_op->compat_ioctl)
+			error = fd_file(f)->f_op->compat_ioctl(fd_file(f), cmd, arg);
+		if (error == -ENOIOCTLCMD)
+			error = -ENOTTY;
+	...
+}
 
-Fixes: 2032a93d66fa ("KVM: MMU: Don't allocate gfns page for direct mmu pages")
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Kenta Akagi <k@mgml.me>
+There, do_vfs_ioctl() returns -ENOIOCTLCMD and compat_ioctl is not
+set for virtual_ncidev_fops, i.e. f_op->compat_ioctl == NULL. So, the
+ioctl() syscall returns with -1 and errno set to ENOTTY to the compat
+task.
+
+To fix this, use the compat_ptr_ioctl helper for compat handling here.
+It shall be used for ioctls that "either ignore the argument or pass a
+pointer to a compatible data type". The driver's sole ioctl takes a user
+void pointer and copies nfc_dev->idx to it, a 4-byte integer across all
+ABIs.
+
+This issue has been found by running the nci_dev kernel selftest as
+rv64 binary on top of a CHERI kernel, where the ioctl() ends up in
+the ioctl compat handler, similar to a 32-bit application on top of a
+64-bit kernel.
+
+Fixes: e624e6c3e777 ("nfc: Add a virtual nci device driver")
+Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260904164252.18351-1-christian.gellermann@codasip.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/nfc/virtual_ncidev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 7e2afd0b51806..b2525c38197f3 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2180,13 +2180,15 @@ static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
- 						 u64 *sptep, gfn_t gfn,
- 						 bool direct, unsigned int access)
- {
--	union kvm_mmu_page_role role;
-+	union kvm_mmu_page_role role = kvm_mmu_child_role(sptep, direct, access);
+diff --git a/drivers/nfc/virtual_ncidev.c b/drivers/nfc/virtual_ncidev.c
+index 6317e8505aaad..443fa9bb52d4f 100644
+--- a/drivers/nfc/virtual_ncidev.c
++++ b/drivers/nfc/virtual_ncidev.c
+@@ -196,7 +196,8 @@ static const struct file_operations virtual_ncidev_fops = {
+ 	.write = virtual_ncidev_write,
+ 	.open = virtual_ncidev_open,
+ 	.release = virtual_ncidev_close,
+-	.unlocked_ioctl = virtual_ncidev_ioctl
++	.unlocked_ioctl = virtual_ncidev_ioctl,
++	.compat_ioctl = compat_ptr_ioctl,
+ };
  
--	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep) &&
--	    spte_to_child_sp(*sptep) && spte_to_child_sp(*sptep)->gfn == gfn)
-+	if (is_shadow_present_pte(*sptep) &&
-+	    !is_large_pte(*sptep) &&
-+	    spte_to_child_sp(*sptep) &&
-+	    spte_to_child_sp(*sptep)->gfn == gfn &&
-+	    spte_to_child_sp(*sptep)->role.word == role.word)
- 		return ERR_PTR(-EEXIST);
- 
--	role = kvm_mmu_child_role(sptep, direct, access);
- 	return kvm_mmu_get_page(vcpu, gfn, role);
- }
- 
+ static int __init virtual_ncidev_init(void)
 -- 
 2.53.0
 
