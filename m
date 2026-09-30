@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E35F5208B0;
-	Wed, 30 Sep 2026 18:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C877251DDE9;
+	Wed, 30 Sep 2026 18:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793632; cv=none; b=pyKlza6UmhvtQwvLuFOzneQ3c1MqRW+9M9MLDRwXhow0x6XgV9L/bYpLAf8VEyqMGZiK9KAtIpKiECGUSvrACy0S1IjdAE0l6dtTFwVbNMTIK8cr0Kx8PGY+z+k/x9U+4+JnInMl7feByzo5pRxuzr6IF/ZeSy0zaGvGmGQzuiA=
+	t=1790793634; cv=none; b=pKsmWf2yqYppQe9d2f/qGipu28vPRotFVc4zAGfjZpgZ+3RB5rVaK46IQ8O3/rlVEf+tZDiazfBDb9Icvy3JyFzNuFEiMBJ8gNp9h8EmNPoKUzbJsUfnYRUGT8YkkBICyJJxDI1wtsDxYTWBUu/oiWmDFXOxWYhz/OcC52JZAm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793632; c=relaxed/simple;
-	bh=gcUHrj3IYqv08Rh+bxmYtLLVUQ3hw5/X+eh7gNh7t3Y=;
+	s=arc-20240116; t=1790793634; c=relaxed/simple;
+	bh=IqQCP0BQVEotmB4uGtZ2JTCmWANq8hrEsB4q4I2swMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQK7Ts9LmIIL/mvty8QkLcFRu53P25XiL1OCp3Aj5FQt1CYQ1Eg0QD32X5ICVNcKtIrl5hDtGSyWx8SCO8aLaG+I/4E0WfExe8bbYdnLFiGpAnmI0ayR0iCg/CgZ52wkpelo4Dcb7WUJ8CpFJZjiBWPVd0Ljf0+XhOrebKC8xdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBzpdnun; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yt/Dci5Az4u/RaIwPW1n6z9xgHdY31WkwweBoVPbrHUtyMIIwEaSL+f7WpVTlK/rT3akSegDlnyKNeNsAbGMLUDrhmSB03qtR8HIF/KjoYT7v1ssWi7pMQteQEFAsXiV6weGiu6udF+Up3aiLkZA1YNYXHMmJrPOp+rOWAcjAlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqSRojr+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBzpdnun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4521F000FF;
-	Wed, 30 Sep 2026 18:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqSRojr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342861F000FF;
+	Wed, 30 Sep 2026 18:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793631;
-	bh=jYKGpweIRB+pEKe0DnQkszLk2WZlDApoU7a3lHc7LBM=;
+	s=korg; t=1790793633;
+	bh=eXHqwM9rrctxSzobd35CQyOTkoZnrSG110xJwybS1cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sBzpdnunjo5dlSHzzUjXbsUFeZU+4Jvkupfno/zSI7wrX+WoDQI+rig/VVCcRD/m7
-	 0GcLSXO87qRfBiQb4s7M/99Wf6nouL4yzqyXBbBV5YdqfEcM/J7cIsJYaeVc8dY9OH
-	 AWkBvIXjkH/arqMpLrC/DLdHIr/RUyCBtRSSWK1Y=
+	b=xqSRojr+sSmc0uzGYg2FU282FKu5S9rAblSiKqRLslXMWAFUGr8awQ7rja0TYu5o+
+	 yzDcjtrVmKF7RbFShpSj1SdsHnh5UOvL3E4lRZhMhcFZVQqL+hBuwVxNjnJ7QTEB7c
+	 r/TUdIjWzFWOdcnbQfgF5dnxXh/D0dtV/zno+EB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 324/395] Bluetooth: ISO: balance the parent hold in hci_bind_bis()
-Date: Wed, 30 Sep 2026 17:29:46 +0200
-Message-ID: <20260930152347.688292809@linuxfoundation.org>
+Subject: [PATCH 6.18 325/395] Bluetooth: ISO: release unused CIS holds after channel attach
+Date: Wed, 30 Sep 2026 17:29:47 +0200
+Message-ID: <20260930152347.709968335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,47 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 4c94557dd02569efa6c1072a0439addaef9a5224 upstream.
+commit 0fcd4dad555c96e0bd3a1b8c569f989be85c7341 upstream.
 
-hci_conn_link() takes a lifetime reference to its parent with
-hci_conn_get(), but only takes an operational hold on the child.
-hci_conn_unlink() later balances both a hold and a reference on the
-parent.
+hci_bind_cis() and hci_connect_cis() return one hci_conn hold for the
+ISO layer.  A new channel association consumes that hold, which is
+eventually released by iso_conn_free().
 
-The SCO and CIS paths pass a parent acquired from a connect helper, so
-it already has a hold. For an additional BIS, hci_bind_bis() obtains the
-parent from hci_conn_hash_lookup_big(), which returns a bare pointer.
-Unlinking the child then drops the parent's existing hold and can
-schedule it for disconnection while its socket is still using it.
+There are two cases where iso_chan_add() does not create an association:
+it returns success when the socket is already attached to the same
+iso_conn, and it returns -EBUSY when another socket is attached.  The
+hold returned for the current call is unused in both cases.  This occurs
+when deferred setup calls iso_connect_cis() again for its existing
+socket, or when another socket attempts to reuse the CIS.
 
-Take a hold on the parent before linking it and drop that hold if linking
-fails. A successful link transfers the hold to hci_conn_unlink().
+Detect the idempotent case while the connection is locked and release
+the unused hold after iso_chan_add().  Also release it on -EBUSY.  Do not
+drop it for other errors: a newly allocated iso_conn releases the
+transferred hold when its last temporary reference is put.
 
-Fixes: fa224d0c094a ("Bluetooth: ISO: Reassociate a socket with an active BIS")
+Fixes: 69997d50ec57 ("Bluetooth: ISO: handle bound CIS cleanup via hci_conn")
 Cc: stable@vger.kernel.org
 Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/iso.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2273,10 +2273,13 @@ struct hci_conn *hci_bind_bis(struct hci
- 	parent = hci_conn_hash_lookup_big(hdev,
- 					  conn->iso_qos.bcast.big);
- 	if (parent && parent != conn) {
-+		hci_conn_hold(parent);
- 		link = hci_conn_link(parent, conn);
- 		hci_conn_drop(conn);
--		if (!link)
-+		if (!link) {
-+			hci_conn_drop(parent);
- 			return ERR_PTR(-ENOLINK);
-+		}
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -460,6 +460,7 @@ static int iso_connect_cis(struct sock *
+ 	struct hci_dev  *hdev;
+ 	bdaddr_t src, dst;
+ 	u8 src_type;
++	bool already_attached;
+ 	int err;
+ 
+ 	lock_sock(sk);
+@@ -530,8 +531,14 @@ static int iso_connect_cis(struct sock *
+ 		goto unlock;
  	}
  
- 	return conn;
++	iso_conn_lock(conn);
++	already_attached = iso_pi(sk)->conn == conn && conn->sk == sk;
++	iso_conn_unlock(conn);
++
+ 	err = iso_chan_add(conn, sk, NULL);
+ 	iso_conn_put(conn);
++	if (already_attached || err == -EBUSY)
++		hci_conn_drop(hcon);
+ 	if (err)
+ 		goto unlock;
+ 
 
 
