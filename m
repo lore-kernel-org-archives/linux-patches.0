@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A70551A151;
-	Wed, 30 Sep 2026 17:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55ED51AFD2;
+	Wed, 30 Sep 2026 17:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788452; cv=none; b=rq3pfBwPhTYpFv4LSryPUVkHeJKkRxSgDbx7HtVsxx+LbZS3R5Bwx9r/rlNuEvXyEHpLPwzwpEANXZvGeziK6Qvdiba3NBnAjWkxa0JnPkDrH32xA8V45nHHzRBSCf8UZSZ9zRo9BBfdPKx2t/WpIPlPnmawdY18FVnWZQnKWNs=
+	t=1790788455; cv=none; b=KIOlD2MdbCCuhhUCAfXXp4/ymndVkP6RfO2PDxqdFWmBdn746Ne3jXO3VJdTtEgpwSp+BVbsGnP4gg3BuIOdyBVOBC8W1OURN2yz+/6PKHHd6sVQFZWu/5TEYxjHuXOWlH7sFqYlgrj5NYDxp7fnF0PpYHfPjIQM0oD1azK0B0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788452; c=relaxed/simple;
-	bh=QePlPW43HayHClLKaoR2+QZwBbWN5GHOHkvsBTnoopk=;
+	s=arc-20240116; t=1790788455; c=relaxed/simple;
+	bh=DihMCQ3qQOf7PDzjHYtXH+Bw4P7qE6kG/yDnqghP6DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GfqCK7Qt1P6r2QhqnSQfkdV2CWXOLX4zKs6NVLAxi/qBWCdGYrhDONP+S+dQ4+aqA+5D+81KDJPg7MTgapG6CnWqKxwMvjqheUzxhFE4aM6Fq/ohcezR13JAeKhT/w8973N8banPczESUGdt2OjlIq547ICnyAaDL0yjqfNXpnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gwbhzz3r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tysqr5qa+Kb2HbeWkxIoqP0LWNs/ymA8EUYRlDGd6nIswTgG5CiUy8HYZHUkMtFh2ShlCy/8nP0OA96eSxc7GnXF4vb3t0cJ6m2DXT2rKGUqQOx0tstE8KePDTRLQcaC5w0q8jgWN37QUfZOGw1nE39XDon3pM6/IVz6KjxNX7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av0s65NU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gwbhzz3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002651F000FF;
-	Wed, 30 Sep 2026 17:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av0s65NU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AD11F000FF;
+	Wed, 30 Sep 2026 17:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788450;
-	bh=IuatbAjMeVJ8tDwm50Jc2loqx+1vGZEMrKGhTDx95dQ=;
+	s=korg; t=1790788453;
+	bh=3PA9VGEpxcTTixpgfQVtnWNFurdRB1UHBktkh/xgDJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gwbhzz3rvAL49Lzydmtq9La9uvIAkjm6ccpSV/gM0oSCkVCipNCS8vlWIJblHVr+d
-	 VUntt2aojY6grIptcPLWbSdD1OIleZnS42wgR9Zf2UbPn5G+TOOOgXh+djyZWuHAZA
-	 RTrAWd6f8FRauZv7XiBAIsS+CRqilzwaMOVKcvfY=
+	b=av0s65NUNpkG6J1RyGp4bQ7zZqgH6XmlW/LWU8iYkKEqgtAI9OU7qjjlUDtKxweVU
+	 vb63XWTQEkMiYjHKecEdiTG+N7797/HtLWbSEFUODTV3wFntXHfomiQlwY2RZja+vK
+	 9EY69n7qHKZednJxcizaBr2ZUHXo6Znv+rTWMFfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+855929c2df672879@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/877] ALSA: 6fire: fix OOB write from device-reported iso length
-Date: Wed, 30 Sep 2026 17:17:03 +0200
-Message-ID: <20260930152417.154664375@linuxfoundation.org>
+Subject: [PATCH 6.12 130/877] Bluetooth: hci_core: Print number of packets in conn->data_q
+Date: Wed, 30 Sep 2026 17:17:21 +0200
+Message-ID: <20260930152417.540166528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,96 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 1589afe2d099d3e817873bc474676968d7080410 ]
+[ Upstream commit 3c34d6428740e47b29ae3afd85d6f9eb656a3ea3 ]
 
-usb6fire_pcm_in_urb_handler() sizes each outgoing isochronous packet as
-(actual_length - 4) / (in_n_analog << 2) * (out_n_analog << 2) + 4, where
-actual_length is the unsigned length the device reported for the matching
-IN packet.  A packet completed with status 0 and actual_length < 4 wraps
-the subtraction to 0x7fffffec; a zero-length isochronous packet is legal
-on the bus, and the preceding loop rejects only non-zero status.  The sum
-reaches memset() on out_urb->buffer, a 4832-byte object from
-kcalloc(PCM_MAX_PACKET_SIZE, PCM_N_PACKETS_PER_URB).
+This attempts to print the number of packets pending to be transmitted
+in the conn->data_q.
 
-Even without the wrap the result is out of bounds: at 88.2/96 kHz the
-4-in/6-out scaling turns a full 420-byte IN packet into 628, so eight
-packets span 5024 bytes of that buffer.  usb_submit_urb() rejects an
-over-long descriptor only after the memset() and the
-usb6fire_pcm_playback() copy of user PCM data have run.
-
-Guard the subtraction as the sibling usb6fire_pcm_capture() already does,
-and limit the frame count to what fits in rt->out_packet_size, the OUT
-endpoint's wMaxPacketSize.  This bounds total_length by the buffer size
-while keeping each packet length aligned to a whole output frame.
-
-  BUG: KASAN: out-of-bounds in usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
-  Write of size 18446744073709551456 at addr ffff88802a3d0000 by task vhci_rx/5018
-  Call Trace:
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   kasan_check_range (mm/kasan/generic.c:186 mm/kasan/generic.c:200)
-   __asan_memset (mm/kasan/shadow.c:84)
-   usb6fire_pcm_in_urb_handler (sound/usb/6fire/pcm.c:338)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1741)
-   vhci_rx_loop (drivers/usb/usbip/vhci_rx.c:107 drivers/usb/usbip/vhci_rx.c:242)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-  Allocated by task 10:
-   __kmalloc_cache_noprof (mm/slub.c:5563)
-   usb6fire_pcm_init (sound/usb/6fire/pcm.c:560 sound/usb/6fire/pcm.c:595)
-   usb6fire_chip_probe (sound/usb/6fire/chip.c:133)
-   usb_probe_interface (drivers/usb/core/driver.c:399)
-
-  The buggy address belongs to the object at ffff88802a3d0000
-   which belongs to the cache kmalloc-8k of size 8192
-  The buggy address is located 0 bytes inside of
-   4832-byte region [ffff88802a3d0000, ffff88802a3d12e0)
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: c6d43ba816d1 ("ALSA: usb/6fire - Driver for TerraTec DMX 6Fire USB")
-Reported-by: co+855929c2df672879@bugs.sh
-Closes: https://lore.kernel.org/all/gisnub8aWGLbyZLcDCSc7zWsHonMWGcyRgt5%40bugs.sh/
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260914074324.3590843-1-xmei5@asu.edu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 6610c6fe4b89 ("Bluetooth: hci_core: Fix queuing tx_work after workqueue is drained")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/pcm.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_core.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/usb/6fire/pcm.c b/sound/usb/6fire/pcm.c
-index 9e8f4371e89ff..5f6a63f79990b 100644
---- a/sound/usb/6fire/pcm.c
-+++ b/sound/usb/6fire/pcm.c
-@@ -335,11 +335,19 @@ static void usb6fire_pcm_in_urb_handler(struct urb *usb_urb)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index f68238406ad2e..24f2119c7abfa 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3273,6 +3273,8 @@ static void hci_queue_acl(struct hci_chan *chan, struct sk_buff_head *queue,
  
- 	/* setup out urb structure */
- 	for (i = 0; i < PCM_N_PACKETS_PER_URB; i++) {
-+		unsigned int frames = 0;
-+
- 		isoc_out = &out_urb->instance->iso_frame_desc[i];
- 		isoc_in = &in_urb->instance->iso_frame_desc[i];
-+		if (isoc_in->actual_length > 4)
-+			frames = (isoc_in->actual_length - 4)
-+					/ (rt->in_n_analog << 2);
-+		frames = min_t(unsigned int, frames,
-+				       (rt->out_packet_size - 4)
-+				       / (rt->out_n_analog << 2));
-+
- 		isoc_out->offset = total_length;
--		isoc_out->length = (isoc_in->actual_length - 4) / (rt->in_n_analog << 2)
--				* (rt->out_n_analog << 2) + 4;
-+		isoc_out->length = frames * (rt->out_n_analog << 2) + 4;
- 		isoc_out->status = 0;
- 		total_length += isoc_out->length;
+ 		spin_unlock_bh(&queue->lock);
  	}
++
++	bt_dev_dbg(hdev, "chan %p queued %d", chan, skb_queue_len(queue));
+ }
+ 
+ void hci_send_acl(struct hci_chan *chan, struct sk_buff *skb, __u16 flags)
+@@ -3304,6 +3306,10 @@ void hci_send_sco(struct hci_conn *conn, struct sk_buff *skb)
+ 	hci_skb_pkt_type(skb) = HCI_SCODATA_PKT;
+ 
+ 	skb_queue_tail(&conn->data_q, skb);
++
++	bt_dev_dbg(hdev, "hcon %p queued %d", conn,
++		   skb_queue_len(&conn->data_q));
++
+ 	queue_work(hdev->workqueue, &hdev->tx_work);
+ }
+ 
+@@ -3363,6 +3369,8 @@ static void hci_queue_iso(struct hci_conn *conn, struct sk_buff_head *queue,
+ 			__skb_queue_tail(queue, skb);
+ 		} while (list);
+ 	}
++
++	bt_dev_dbg(hdev, "hcon %p queued %d", conn, skb_queue_len(queue));
+ }
+ 
+ void hci_send_iso(struct hci_conn *conn, struct sk_buff *skb)
 -- 
 2.53.0
 
