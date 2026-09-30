@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7961D3E024D;
-	Wed, 30 Sep 2026 19:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB6A3E1680;
+	Wed, 30 Sep 2026 19:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796347; cv=none; b=X2MKGRLtPBKRZvsxSC/tvL5jSfr5BtFFY4vCbrSU/a+r3XI0gIRBMQd7gESp+O96JF6XcTi1Wz6QiZfgm/RX0cYRWQUgO7lchBb/8aVcwOMZpBCcHGIgJzYU+whZvhlW7jm2F3hq1LdQ13zHXI6YVTBZHg6uuJgxaRukcVsva+Q=
+	t=1790796350; cv=none; b=c5mdRwPyr6gnx9SdgvcsFoLmBwYrQs+Gfvw1BQoJNx1KIkww1hkDvkQcHEx7gWuxdiuPNqqI4oQg3HMI9oND3uIEZwNttzlYKd8caki3Khyco+V37qHlcZoGqmahGdXjVWg/rNwpK4SmJiKYKAlK1G4cimqWtxFbhRUdsvVagUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796347; c=relaxed/simple;
-	bh=yqIO5N9znXoXfQ7XnM9X//jlyQO27o/giUt3MKzEAzk=;
+	s=arc-20240116; t=1790796350; c=relaxed/simple;
+	bh=PkkNRtMqh1sgBVn7m8wVnKH1bmf41FqUW9xJM3l9uFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tI9ikzfFxh53J5gsX3ybcgWO8+L5WgGhtpftsYXTb0jp6LRZjTOQE/T0tb/sro4RgOmxmMzNj77hM1m/gdHjZHQ+IyjsWby4PeV6OYlbXqG+giRVBeV3NhccwIbvQ4BT4iUDraw2BA3wWNMhyzEw8W8gDoAe22Z/m8eyHjeYMWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLUJqar4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PiEq3TFA6SnyK/p+fSzt84/tv0pa3nCtc7ydBYFiiCuiJcwUz4sKDcLTxt3TnrPzlhtt9GHm5TojB3khGZicMEVuD9ctHNkYcc3VxGXROo5532fvQlAGjFd8QffJZpCMp/DDqMXITwJNpgEdI6N7Ia0xBd5p4tLJHnwzsbOxSI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jk8o7cDk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLUJqar4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E611F000FF;
-	Wed, 30 Sep 2026 19:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jk8o7cDk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DD91F000FF;
+	Wed, 30 Sep 2026 19:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796346;
-	bh=IYiM8khj2H1WOhCb6nhgNcNTCDXAbKugVN06wsZkKwA=;
+	s=korg; t=1790796349;
+	bh=6yrVbnJmHvLrWG3Mxga1iLffdPUX7qoG9t7NcTx+sC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VLUJqar4AfdoYpLOxs0mjmAbCc8Kq8tgnVZqKTNccpRHgsWiBelAdp36U+T7BC1Mk
-	 m+qNCT69r3dbu6rshs4qo4itgRY7tb3k/BGscHz6KaZwpzrUcKavvjOBJxVxHnCj39
-	 PwVgpVPgYTy+X7LxXIMcHRu3mHiB9V8+QvojbE68=
+	b=jk8o7cDkOsE8UupNIeVFwzh8DYgi9zSUbs3AJtMi92gsMye5AQ8kzvfQWf7ZwFhhb
+	 O/uE5fCg/FUSpoh1cgiSGH5bG2exxk6XpTbH+2If+XDoAOLwyJs6kXfRx7OOgy0t2l
+	 EdKLaZbYjMSzSpcIeVMw5rP8MbKFA7PCu9RHkakA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 0881/1193] selinux: recheck intermediate backing files on mprotect()
-Date: Wed, 30 Sep 2026 17:26:05 +0200
-Message-ID: <20260930152453.820150075@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0855/1193] Bluetooth: hci_sync: Serialize local codec list cleanup
+Date: Wed, 30 Sep 2026 17:25:39 +0200
+Message-ID: <20260930152453.229640269@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,291 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 78fc54b934bfb2c18aad8154c7302067146946f9 upstream.
+commit 9a10987a2f160a44a638c9a35994ca6e3089696e upstream.
 
-mprotect() can be used to bypass the SELinux checks that mmap() performs
-against the intermediate layers of a stacked filesystem.
+hci_dev_close_sync() clears hdev->local_codecs after releasing hdev->lock.
+Codec list additions and both traversals in sco_sock_getsockopt() use that
+lock, but the close path does not. A close and BT_CODEC query can therefore
+interleave as follows:
 
-mmap() checks every backing layer as the request descends through the
-stack.  mprotect() only has the lowest backing file in vma->vm_file, so it
-rechecks the top-level user and the lowest mounter, but skips the mounters
-of every layer in between.  With two nested overlayfs mounts and a policy
-denying mounter_t -> middle_file_t:file { execute }, a direct
-mmap(PROT_EXEC) is denied:
+  hci_dev_close_sync()          sco_sock_getsockopt()
+                                hci_dev_lock()
+                                fetch codec entry
+  hci_codec_list_clear()
+    kfree(entry)
+                                read entry->id
 
-  avc:  denied  { execute } for  pid=71 comm="nested_exec"
-    path="/payload" dev="overlay" ino=9
-    scontext=user_u:base_r:mounter_t
-    tcontext=user_u:object_r:middle_file_t tclass=file permissive=0
+The reader then accesses an entry which the close path has freed. KASAN
+reported:
 
-while mmap(PROT_NONE) followed by mprotect(PROT_EXEC) succeeds.
+  BUG: KASAN: slab-use-after-free in sco_sock_getsockopt+0xfa0/0xfe0
+  Read of size 1 at addr ffff8881001c3450
+  Call Trace:
+   sco_sock_getsockopt+0xfa0/0xfe0
+   do_sock_getsockopt+0x537/0x7b0
+   __sys_getsockopt+0xf2/0x170
+  Allocated by task 92:
+   hci_codec_list_add.isra.0+0x2c/0x440
+   hci_read_codec_capabilities+0x224/0x590
+   hci_read_supported_codecs+0x2c2/0x640
+  Freed by task 92:
+   kfree+0x131/0x3c0
+   hci_codec_list_clear+0xd8/0x160
+   hci_dev_close_sync+0x92a/0xfa0
 
-Preserve each intermediate path, mounter SID and file-description SID in
-the backing-file security blob, copying the saved entries when another
-backing layer is opened.  Allocate the array only for nested backing files,
-and release it and the path references in the backing_file_free hook.
+Take hdev->lock around the clear operation at its existing point in the
+close path. This makes the clear wait for active readers and prevents a new
+traversal until the list is empty without changing teardown ordering.
 
-During mprotect(), recheck fd { use } and the requested inode permissions
-for every saved mounter, and include the intermediate layers in the execmod
-checks.  Policy for nested stacking may then need to grant intermediate
-mounters what a direct mmap() already requires, and execmod on intermediate
-labels for binaries using text relocations.
-
-Tested on arm64 QEMU with a small BusyBox initramfs and a purpose-built
-SELinux policy, on a mainline tree containing
-commit f2381b546e7e ("fs: fix user path of nested backing files").
-
+Fixes: b938790e7054 ("Bluetooth: hci_codec: Fix leaking content of local_codecs")
 Cc: stable@vger.kernel.org
-Fixes: 82544d36b172 ("selinux: fix overlayfs mmap() and mprotect() access checks")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: subject tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c          |  141 +++++++++++++++++++++++++++++++++-----
- security/selinux/include/objsec.h |    8 ++
- 2 files changed, 133 insertions(+), 16 deletions(-)
+ net/bluetooth/hci_sync.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -1649,26 +1649,32 @@ static int cred_has_capability(const str
- 	return rc;
- }
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5465,7 +5465,9 @@ int hci_dev_close_sync(struct hci_dev *h
+ 	memset(hdev->eir, 0, sizeof(hdev->eir));
+ 	memset(hdev->dev_class, 0, sizeof(hdev->dev_class));
+ 	bacpy(&hdev->random_addr, BDADDR_ANY);
++	hci_dev_lock(hdev);
+ 	hci_codec_list_clear(&hdev->local_codecs);
++	hci_dev_unlock(hdev);
  
--/* Check whether a task has a particular permission to an inode.
--   The 'adp' parameter is optional and allows other audit
--   data to be passed (e.g. the dentry). */
--static int inode_has_perm(const struct cred *cred,
--			  struct inode *inode,
--			  u32 perms,
--			  struct common_audit_data *adp)
-+/*
-+ * Check whether a SID has a particular permission to an inode.  The 'adp'
-+ * parameter is optional and allows other audit data to be passed (e.g. the
-+ * dentry).
-+ */
-+static int inode_sid_has_perm(u32 sid, struct inode *inode, u32 perms,
-+			      struct common_audit_data *adp)
- {
- 	struct inode_security_struct *isec;
--	u32 sid;
- 
- 	if (unlikely(IS_PRIVATE(inode)))
- 		return 0;
- 
--	sid = cred_sid(cred);
- 	isec = selinux_inode(inode);
- 
- 	return avc_has_perm(sid, isec->sid, isec->sclass, perms, adp);
- }
- 
-+static int inode_has_perm(const struct cred *cred,
-+			  struct inode *inode,
-+			  u32 perms,
-+			  struct common_audit_data *adp)
-+{
-+	return inode_sid_has_perm(cred_sid(cred), inode, perms, adp);
-+}
-+
- /* Same as inode_has_perm, but pass explicit audit data containing
-    the dentry to help the auditing code to more easily generate the
-    pathname if needed. */
-@@ -3672,13 +3678,63 @@ static int selinux_backing_file_alloc(st
- 				      const struct file *user_file)
- {
- 	struct backing_file_security_struct *bfsec;
-+	const struct backing_file_security_struct *ubfsec;
-+	struct backing_file_security_layer *layer;
-+	u32 i;
- 
- 	bfsec = selinux_backing_file(backing_file);
- 	bfsec->uf_sid = selinux_file_user_sid(user_file);
-+	if (!(user_file->f_mode & FMODE_BACKING))
-+		return 0;
-+
-+	ubfsec = selinux_backing_file(user_file);
-+	/* a wrapped count would make kmalloc_array() return ZERO_SIZE_PTR */
-+	if (unlikely(ubfsec->layer_count == U32_MAX))
-+		return -EOVERFLOW;
-+
-+	/*
-+	 * The final VMA only retains the lowest backing file, so record the
-+	 * whole chain here rather than in the mmap hook, where concurrent
-+	 * mappings would have to be serialized.  Size it dynamically: erofs
-+	 * inode sharing adds a backing file without bumping s_stack_depth.
-+	 */
-+	bfsec->layers = kmalloc_array(ubfsec->layer_count + 1,
-+				      sizeof(*bfsec->layers), GFP_KERNEL);
-+	if (!bfsec->layers)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < ubfsec->layer_count; i++) {
-+		layer = &bfsec->layers[i];
-+		*layer = ubfsec->layers[i];
-+		path_get(&layer->path);
-+	}
-+
-+	/* f_path, not file_user_path(): this layer, not the top-level file */
-+	layer = &bfsec->layers[i];
-+	layer->path = user_file->f_path;
-+	layer->mounter_sid = cred_sid(user_file->f_cred);
-+	layer->fd_sid = selinux_file(user_file)->sid;
-+	path_get(&layer->path);
-+	bfsec->layer_count = ubfsec->layer_count + 1;
- 
- 	return 0;
- }
- 
-+static void selinux_backing_file_free(struct file *backing_file)
-+{
-+	struct backing_file_security_struct *bfsec;
-+
-+	/* security_backing_file_free() may be called twice after an error */
-+	if (!backing_file_security(backing_file))
-+		return;
-+
-+	bfsec = selinux_backing_file(backing_file);
-+	while (bfsec->layer_count)
-+		path_put(&bfsec->layers[--bfsec->layer_count].path);
-+	kfree(bfsec->layers);
-+	bfsec->layers = NULL;
-+}
-+
- /*
-  * Check whether a task has the ioctl permission and cmd
-  * operation to an inode.
-@@ -3796,6 +3852,53 @@ static int selinux_file_ioctl_compat(str
- 
- static int default_noexec __ro_after_init;
- 
-+static u32 file_map_prot_to_av(unsigned long prot, bool shared)
-+{
-+	u32 av = FILE__READ;
-+
-+	if (shared && (prot & PROT_WRITE))
-+		av |= FILE__WRITE;
-+	if (prot & PROT_EXEC)
-+		av |= FILE__EXECUTE;
-+
-+	return av;
-+}
-+
-+static int backing_mounters_has_perm(const struct file *file, u32 av)
-+{
-+	const struct backing_file_security_struct *bfsec;
-+	const struct backing_file_security_layer *layer;
-+	struct common_audit_data ad;
-+	struct inode *inode;
-+	u32 i;
-+	int rc;
-+
-+	if (WARN_ON_ONCE(!(file->f_mode & FMODE_BACKING)))
-+		return -EIO;
-+
-+	bfsec = selinux_backing_file(file);
-+	for (i = 0; i < bfsec->layer_count; i++) {
-+		layer = &bfsec->layers[i];
-+		inode = d_inode(layer->path.dentry);
-+
-+		ad.type = LSM_AUDIT_DATA_PATH;
-+		ad.u.path = layer->path;
-+
-+		if (layer->mounter_sid != layer->fd_sid) {
-+			rc = avc_has_perm(layer->mounter_sid, layer->fd_sid,
-+					  SECCLASS_FD, FD__USE, &ad);
-+			if (rc)
-+				return rc;
-+		}
-+
-+		rc = inode_sid_has_perm(layer->mounter_sid, inode, av, &ad);
-+		if (rc)
-+			return rc;
-+	}
-+
-+	return 0;
-+}
-+
- static int __file_map_prot_check(const struct file *file, unsigned long prot,
- 				 bool shared, bool mounter_check,
- 				 bool bf_user_file)
-@@ -3829,14 +3932,10 @@ static int __file_map_prot_check(const s
- 	if (file) {
- 		const struct cred *cred = mounter_check ?
- 				file->f_cred : current_cred();
--		/* "read" always possible, "write" only if shared */
--		u32 av = FILE__READ;
--		if (shared && prot_write)
--			av |= FILE__WRITE;
--		if (prot_exec)
--			av |= FILE__EXECUTE;
- 
--		return __file_has_perm(cred, file, av, bf_user_file);
-+		return __file_has_perm(cred, file,
-+				       file_map_prot_to_av(prot, shared),
-+				       bf_user_file);
- 	}
- 
- 	return 0;
-@@ -3931,6 +4030,7 @@ static int selinux_file_mprotect(struct
- 	int rc;
- 	const struct cred *cred = current_cred();
- 	u32 sid = cred_sid(cred);
-+	u32 av;
- 	const struct file *file = vma->vm_file;
- 	bool backing_file;
- 	bool shared = vma->vm_flags & VM_SHARED;
-@@ -3974,6 +4074,10 @@ static int selinux_file_mprotect(struct
- 			if (rc)
- 				return rc;
- 			if (backing_file) {
-+				rc = backing_mounters_has_perm(file,
-+							       FILE__EXECMOD);
-+				if (rc)
-+					return rc;
- 				rc = file_has_perm(file->f_cred, file,
- 						   FILE__EXECMOD);
- 				if (rc)
-@@ -3986,6 +4090,10 @@ static int selinux_file_mprotect(struct
- 	if (rc)
- 		return rc;
- 	if (backing_file) {
-+		av = file_map_prot_to_av(prot, shared);
-+		rc = backing_mounters_has_perm(file, av);
-+		if (rc)
-+			return rc;
- 		rc = file_map_prot_check(file, prot, shared, true);
- 		if (rc)
- 			return rc;
-@@ -7212,6 +7320,7 @@ static struct security_hook_list selinux
- 	LSM_HOOK_INIT(file_permission, selinux_file_permission),
- 	LSM_HOOK_INIT(file_alloc_security, selinux_file_alloc_security),
- 	LSM_HOOK_INIT(backing_file_alloc, selinux_backing_file_alloc),
-+	LSM_HOOK_INIT(backing_file_free, selinux_backing_file_free),
- 	LSM_HOOK_INIT(file_ioctl, selinux_file_ioctl),
- 	LSM_HOOK_INIT(file_ioctl_compat, selinux_file_ioctl_compat),
- 	LSM_HOOK_INIT(mmap_file, selinux_mmap_file),
---- a/security/selinux/include/objsec.h
-+++ b/security/selinux/include/objsec.h
-@@ -60,8 +60,16 @@ struct file_security_struct {
- 	u32 pseqno;		/* Policy seqno at the time of file open */
- };
- 
-+struct backing_file_security_layer {
-+	struct path path; /* this layer's real path */
-+	u32 mounter_sid; /* SID of the mounter that opened it */
-+	u32 fd_sid; /* SID of its open file description */
-+};
-+
- struct backing_file_security_struct {
- 	u32 uf_sid; /* top-level user file fsec->sid */
-+	u32 layer_count; /* number of intermediate backing files */
-+	struct backing_file_security_layer *layers;
- };
- 
- struct superblock_security_struct {
+ 	hci_dev_put(hdev);
+ 	return err;
 
 
