@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86AF5172F5;
-	Wed, 30 Sep 2026 17:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA1051A15D;
+	Wed, 30 Sep 2026 17:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790788429; cv=none; b=CwUwr8jjzJRFitUjMT54Xmv1Q92d3wqPnmnCnKPNx0BzRHLzdPW27cY2MKIjtDwLGE4KmtdEatr0CzfQlsXb9/sjOBkKgpTKrV/vJkzDlGfQYW6JDbdXhzfMf/3F8P1at8QkTkyNyK3iQD0c1TlrUX0STgvyPaIcdqKDPsiQzGU=
+	t=1790788432; cv=none; b=VIYNzPHneREuRyhnWN2wKm4Voa0CTW7WkMWmMNm5QbBeO2TnCQCxPw69bHtsHslLVoJo9/E5aVFTDpVjlMxKX0oeoGAnJIyt68CrMngg1OQEtEpzTTruQ6imTvAS67VwbSe8lXOAfMcof/I5EQ30veTPjAosFrLCq2lk93G97J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790788429; c=relaxed/simple;
-	bh=eDYJ/LguUj3m8kg/HzwYVnjPz3+rVMsOVgHpaMu1gsY=;
+	s=arc-20240116; t=1790788432; c=relaxed/simple;
+	bh=Ao9zhgfX1+CNlUrq12qUyEVqr9/XlQqFHUWgJ/PAA38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DhyUxZgPtEYqKcjMNuhVORs5dPsu/Z0N7GE/DuhiV3qkVzJOZPi0dzoOWUM0VvuK0RbZ09E3ZudmvoyvV1f+m8MBCVONZpmEX0VrLB74BWYl7/kBrR3TlLW/ntWqm9UorSiOftT6zmAg9qhtjTKekOrhK8TOuJPBtLykv7yw5A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sm/25JL5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VHJTUoUFeewoyr47lzV7Cig9n1Fd3NNQMe7p9vpgenOEGVCpdh9UdMdK8lfMR5lC2hYtThIclkcOlQtTtmSUVb6A2cWx6xvpwlfliwgqEAeoa821jTNnQXVaNruoq5CKdQz25Tb+eCWrZkneqKrxLrGtCGlXJPw6G+dQPpYc51Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyksUNym; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sm/25JL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3C01F000FF;
-	Wed, 30 Sep 2026 17:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyksUNym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FBF1F000FF;
+	Wed, 30 Sep 2026 17:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790788427;
-	bh=JO0g1DOGDl9IFwd0xYxP7XU48YcW56AaxnGdC1xos8U=;
+	s=korg; t=1790788430;
+	bh=8MNK2bQitWXRRjiJ1AX+6r1uXMJvlaYvnAmCRRchnBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sm/25JL5BaW4E93Ii4quEINPsiaFIJxVhydztypfIwzPhM3j+vhnS2Pnx/FPWNZ5l
-	 bTQVCz90eAnTACZbhOeCswt84JV39w2Wexrv6xI5X8IqE5lsPAlfBh7cePwRs3B5HO
-	 0v0h7v+j+EfgNVInVw1Gh+Fcwm317zzYJgKOSTtA=
+	b=YyksUNymukLWBnibaC4BBu6RrcAokjUmiUGKUpKzR/Itcmn4YTFxkxUjxAe8d51xh
+	 ntnXaO7q/P9ym5a2sQdqZ9MX42IYlYmpEHyCpYonBki6EAJYHtd+OMoUBRtzg4bzE3
+	 V2bplx6aVKbG7LAO6XVx9CqRz8BUroxdTRQnx3PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/877] wifi: brcmfmac: fix lost 802.1x TX completion wakeup
-Date: Wed, 30 Sep 2026 17:17:13 +0200
-Message-ID: <20260930152417.370593186@linuxfoundation.org>
+Subject: [PATCH 6.12 123/877] net: bridge: mst: move switchdev call outside rcu
+Date: Wed, 30 Sep 2026 17:17:14 +0200
+Message-ID: <20260930152417.390894489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -52,46 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 621d90169cef6c8da5b6134db5c0c4e23cdd09ce ]
+[ Upstream commit 18a6fe05fb6e18de29fa90d388bb34044114b3d8 ]
 
-brcmf_txfinalize() decrements pend_8021x_cnt before a lockless
-waitqueue_active() check. atomic_dec() does not order the decrement
-against the check.
+This is a follow-up of one of sashiko's pre-existing bug reports.
+br_mst_set_state() calls switchdev_port_attr_set() for nonzero MSTIs
+while holding rcu_read_lock() which invokes the blocking switchdev
+notifier chain and may sleep. Nonzero MSTI changes come from netlink
+with rtnl held. Move the switchdev call before entering the rcu section and
+assert that rtnl is held.
 
-The waiter can therefore observe a nonzero count while the waker observes
-an empty queue, losing the final wakeup and delaying key installation
-until the 950 ms timeout.
+The call cannot be deferred because netlink needs its error and extack.
+Also DSA reads the old bridge MST state during the callback and checks it.
+A deferred callback will be late and will see the updated state.
 
-Add smp_mb__after_atomic() to order the decrement before the queue
-check. wait_event_timeout() provides the matching barrier. LKMM confirms
-that this forbids the lost-wakeup outcome.
-
-Fixes: 21fff75d2fb6 ("brcmfmac: use wait_event_timeout for 8021x pending count")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260811082702.44521-1-kmehltretter@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 3a7c1661ae13 ("net: bridge: mst: fix vlan use-after-free")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260911105021.1385934-1-razor@blackwall.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br_mst.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-index 58eaf08a147b6..f99accc34a36e 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -550,6 +550,8 @@ void brcmf_txfinalize(struct brcmf_if *ifp, struct sk_buff *txp, bool success)
+diff --git a/net/bridge/br_mst.c b/net/bridge/br_mst.c
+index 43a300ae6bfaf..1654efd3045b0 100644
+--- a/net/bridge/br_mst.c
++++ b/net/bridge/br_mst.c
+@@ -107,21 +107,24 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
+ 	struct net_bridge_vlan *v;
+ 	int err = 0;
  
- 	if (type == ETH_P_PAE) {
- 		atomic_dec(&ifp->pend_8021x_cnt);
-+		/* Order the decrement before waitqueue_active() */
-+		smp_mb__after_atomic();
- 		if (waitqueue_active(&ifp->pend_8021x_wait))
- 			wake_up(&ifp->pend_8021x_wait);
+-	rcu_read_lock();
+-	vg = nbp_vlan_group_rcu(p);
+-	if (!vg)
+-		goto out;
+-
+ 	/* MSTI 0 (CST) state changes are notified via the regular
+-	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE.
++	 * SWITCHDEV_ATTR_ID_PORT_STP_STATE. All other MSTIs are handled via
++	 * netlink with RTNL held
+ 	 */
+ 	if (msti) {
++		ASSERT_RTNL();
++
+ 		err = switchdev_port_attr_set(p->dev, &attr, extack);
+ 		if (err && err != -EOPNOTSUPP)
+ 			goto out;
++		err = 0;
  	}
+ 
+-	err = 0;
++	rcu_read_lock();
++	vg = nbp_vlan_group_rcu(p);
++	if (!vg)
++		goto out_rcu_unlock;
++
+ 	list_for_each_entry_rcu(v, &vg->vlan_list, vlist) {
+ 		if (v->brvlan->msti != msti)
+ 			continue;
+@@ -129,8 +132,9 @@ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
+ 		br_mst_vlan_set_state(vg, v, state);
+ 	}
+ 
+-out:
++out_rcu_unlock:
+ 	rcu_read_unlock();
++out:
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
