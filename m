@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90204F93A8;
-	Wed, 30 Sep 2026 16:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCEC511E96;
+	Wed, 30 Sep 2026 16:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790787175; cv=none; b=eoQ/3FXj8B1yRVq1E8O7Pgsh8cINnzshhW2nmYWN6w8t9sxQMH+G67Fbq0Uy4mLXw/z+mxpwovgY5YnMb/Ar8kA0Ac2iMNwjFML4SvfnHgN1xERRKtgdImuWdLkA1Az4oDnOYKjoZeuEj6w1Qve/KSWDsZ4LipXjY6SEiuSkfqM=
+	t=1790787178; cv=none; b=YKfAh/BvsPyXRkOc5r/Y1DceY1hdpNbpuUZcSCGlP9HsjtOGnQOWRfkgLX0RjAFBDkzeSZ+uDyFv5awSLqAX6ABV7uTuoV6XAHlYT0Zcf1DSiFU4hRT5PwDCiTZEFJPu/LIiXz1dz8LShdEsfVtIIai4YNDhGEd8/yHCQ7hfmPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790787175; c=relaxed/simple;
-	bh=QL6B8tD+7AywrCefSgK/Ez47B6P5js8rSy9EJtagHnU=;
+	s=arc-20240116; t=1790787178; c=relaxed/simple;
+	bh=OVJ8667hT9BwMMdnp9i4+GTYEtZ/xSSkW79Z6ZTuH9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWtEwqOkAKc9k5p4hzw0Do9O3H6P/ye92we8UkeQn1/luWa+BSPEOV7Hrp9BE41N2xhDQ96hhzcd11hZXCBwozhZ/mzciBGHgMLTneaTio0R2pfOqFNaXrTJpjp/GqDqi6Qcebed7AF80vyAEWrbzWgfnB7Wjh9F9DIYn1uRVUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAlJ0inP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tT0UJRkYArXHHabmdcoQV54xyxlgiiEgdyP5IGhLaB4fvleAS3H9vpmZTjVvC+KKK9pOYSoQ2S/oAQJ5AScxtr438Uih8bR7YPdX9qiAOA+t3OQN6obXrNYVdL7JDMTvenN2GhU3koMq3Cfi/eMwwf3q4GOl0IakzIV2UJcHHwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ci9pBmwa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAlJ0inP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F6A1F000FF;
-	Wed, 30 Sep 2026 16:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ci9pBmwa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59EE1F000FF;
+	Wed, 30 Sep 2026 16:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790787174;
-	bh=K1enUl4ULLQo7nSWczMIHKwmM39h23GXglnQeORntxs=;
+	s=korg; t=1790787177;
+	bh=uD98Jn3pk9o6X+5bF2tuELcu00JPDfwegXhOqcXn/1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZAlJ0inP0WWSEQiLaCyRYIeD83DoedqkHeTYyzHQL4IirJzmM6ZFeRkRBgCav8bvB
-	 hMdgKeuPVKOanPie//itmOA+idxGMZDyAPxOpgj3zR3Wx1G4gDUULoIUBjk81uqEVS
-	 6fsScJX2KPJSX46he0ymTn9850YFVVoeuigMeS14=
+	b=Ci9pBmwaFUdw3DtmRN6ubFI1RYUNmCT+hqWQaDsoyE9HMxRFtsUL9Rv8LRX+Hsnh1
+	 7TJw01xQXG7j+vb7hOjSzfculhi33YYDO5uLADF8gE8HvlZBMsiJPUu6JdJ5Dnqxmi
+	 ghW8MwMQhVeofoFC+nop7AQ/qvGJshQo4TytwV9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuniyuki Iwashima <kuniyu@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 137/457] udp: relocate a connected socket in the 4-tuple hash table on re-connect
-Date: Wed, 30 Sep 2026 17:24:02 +0200
-Message-ID: <20260930152349.004144755@linuxfoundation.org>
+Subject: [PATCH 7.2 138/457] udp: remove a disconnected socket from the 4-tuple hash table
+Date: Wed, 30 Sep 2026 17:24:03 +0200
+Message-ID: <20260930152349.026862624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,89 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-[ Upstream commit 5fd0783b99d4af98f65cd58b56ec203d1d426104 ]
+[ Upstream commit 9e95b1a94c9c49b4ba722251bbca2759b9c51737 ]
 
-A connected UDP socket that connects again to a different peer is not
-re-filed in the 4-tuple hash table:
+A UDP socket bound to a specific address and port keeps its entry in the
+4-tuple hash table after it is disconnected:
 
     sk binds to 127.0.0.1:21001
-    sk connects to 127.0.0.2:20001	// filed under hash(sk, peer1)
-    sk connects to 127.0.0.3:20002	// still filed under hash(sk, peer1)
-    packet from 127.0.0.3:20002		// hash(sk, peer2) misses, so the
-					// lookup falls back to scoring the
-					// hash2 chain for this address
-					// and port
+    sk connects to 127.0.0.2:20001	// filed in the 4-tuple table
+    sk disconnects, connect(AF_UNSPEC)	// still filed, peer now 0.0.0.0:0
 
-udp_lib_hash4() returns early when the socket is already hashed, assuming
-->rehash() relocates it. ->rehash() runs from __ip{4,6}_datagram_connect()
-only while the receive address is unset, which a second connect never is:
-the first connect assigns it, whether the socket was bound to a specific
-address or to the wildcard. commit 644f9108f3a5 ("udp: Make rehash4
-independent in udp_lib_rehash()") added that early return and named
-connect(AF_UNSPEC) as the way around it. That workaround does not help a
-socket with both SOCK_BINDADDR_LOCK and SOCK_BINDPORT_LOCK set, because
-__udp_disconnect() skips ->rehash() for the first and ->unhash() for the
-second.
+__udp_disconnect() takes a socket out of that table only as a side effect
+of ->rehash() or ->unhash(), and it skips ->rehash() when
+SOCK_BINDADDR_LOCK is set and ->unhash() when SOCK_BINDPORT_LOCK is set.
+commit 6996a2d2d0a6 ("udp: Unhash auto-bound connected sk from 4-tuple hash
+table when disconnected.") fixed the same end state for a wildcard-bound
+socket, by a path this one does not take.
 
-Delivery is correct either way.
+The entry is counted whether or not anything hits it. hash4_cnt on the
+hash2 slot stays raised for as long as the socket lives, so udp_has_hash4()
+keeps sending every packet for that address and port through the 4-tuple
+lookup first.
 
-Relocate the socket when the hash it is filed under differs from the one
-requested, which is what commit 78c91ae2c6de ("ipv4/udp: Add 4-tuple hash
-for connected socket") did before the early return became unconditional. It
-is done here under hslot->lock, which that version did not take, to match
-udp_lib_rehash() and udp_lib_unhash(). hslot2 is unchanged, so hash4_cnt
-needs no adjustment, as in udp_lib_rehash(). A first connect is unaffected,
-and IPv6 shares the code.
+On IPv6 it can also be hit. __udp_disconnect() does not clear sk_v6_daddr,
+so udp_v6_rehash() files the entry under the peer the socket was connected
+to with a zero dport, and inet6_match() compares that same
+field: a datagram from the former peer with a zero source port matches,
+and source port zero is accepted on receive. On IPv4 the peer is cleared,
+so a match would need a zero source address as well, which the routing
+layer rejects as martian. The stale sk_v6_daddr is a separate defect, not
+addressed here; removing the entry closes this path either way.
 
-With 500 sockets on the port, a re-connected socket measured 522,553 pps
-without this change and 2,055,078 with it. The UDP side was noted as
-remaining work in [1].
+The entry can also be relocated. __udp_disconnect() clears sk_bound_dev_if,
+so a subsequent SO_BINDTODEVICE calls ->rehash(), and because the receive
+address is still specific udp_lib_rehash() moves the entry instead of
+removing it, into the bucket that (rcv_saddr, num, 0, 0) hashes to -- a
+pure function of the address and port, so every socket reaching this state
+on one address and port collects in one bucket. The bucket cannot be chosen
+from outside, as udp_ehashfn() is seeded with a per-boot secret. This last
+one became reachable only with commit 644f9108f3a5 ("udp: Make rehash4
+independent in udp_lib_rehash()"), which moved the hash4 handling out of a
+branch a disconnected socket does not take; the stale entry itself dates
+from the commit in Fixes.
 
-Link: https://lore.kernel.org/netdev/apnHqmYZQ4yzOP4N@v4bel/ [1]
-Fixes: 644f9108f3a5 ("udp: Make rehash4 independent in udp_lib_rehash()")
+Take the socket out of the table before __udp_disconnect() runs, while it
+still matches how it was filed. This also reaches the wildcard case ahead
+of udp_lib_rehash()'s udp_unhash4() branch, leaving that branch unreachable
+from udp_disconnect(); removing it belongs in net-next. udp_disconnect()
+and udp_abort() are the only UDP entries into __udp_disconnect(), which is
+shared with raw, ping and l2tp sockets that are not struct udp_sock:
+ping_prot.obj_size is sizeof(struct inet_sock), so udp_hashed4() on one
+would read past the allocation.
+
+Fixes: 78c91ae2c6de ("ipv4/udp: Add 4-tuple hash for connected socket")
 Assisted-by: LLM
 Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260917-udp_hash4_fix_v1-v1-1-718891af0d7a@mpiricsoftware.com
+Link: https://patch.msgid.link/20260917-udp_hash4_fix_v1-v1-2-718891af0d7a@mpiricsoftware.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ net/ipv4/udp.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 45e96b7219896..aa095ab833ecd 100644
+index aa095ab833ecd..59afce196079a 100644
 --- a/net/ipv4/udp.c
 +++ b/net/ipv4/udp.c
-@@ -616,14 +616,23 @@ void udp_lib_hash4(struct sock *sk, u16 hash)
- 	struct net *net = sock_net(sk);
- 	struct udp_table *udptable;
+@@ -2193,9 +2193,31 @@ int __udp_disconnect(struct sock *sk, int flags)
+ }
+ EXPORT_SYMBOL(__udp_disconnect);
  
--	/* Connected udp socket can re-connect to another remote address, which
--	 * will be handled by rehash. Thus no need to redo hash4 here.
++/* __udp_disconnect() takes a socket out of the 4-tuple hash table only via
++ * ->rehash() or ->unhash(), and neither runs for a socket bound to a
++ * specific address and port. Remove it here, before its peer is cleared.
++ */
++static void udp_unhash4_on_disconnect(struct sock *sk)
++{
++	struct net *net = sock_net(sk);
++	struct udp_table *udptable;
++	struct udp_hslot *hslot;
++
++	if (!udp_hashed4(sk))
++		return;
++
 +	udptable = net->ipv4.udp_table;
 +	hslot = udp_hashslot(udptable, net, udp_sk(sk)->udp_port_hash);
 +
-+	/* A connected socket can re-connect to another address. rehash()
-+	 * relocates it, but only runs when the local address changes, so a
-+	 * socket bound to a specific address would stay filed under the
-+	 * previous peer's hash. Move it here.
- 	 */
--	if (udp_hashed4(sk))
-+	if (udp_hashed4(sk)) {
-+		if (udp_sk(sk)->udp_lrpa_hash != hash) {
-+			spin_lock_bh(&hslot->lock);
-+			udp_rehash4(udptable, sk, hash);
-+			spin_unlock_bh(&hslot->lock);
-+		}
- 		return;
-+	}
++	spin_lock_bh(&hslot->lock);
++	udp_unhash4(udptable, sk);
++	spin_unlock_bh(&hslot->lock);
++}
++
+ int udp_disconnect(struct sock *sk, int flags)
+ {
+ 	lock_sock(sk);
++	udp_unhash4_on_disconnect(sk);
+ 	__udp_disconnect(sk, flags);
+ 	release_sock(sk);
+ 	return 0;
+@@ -3107,6 +3129,7 @@ int udp_abort(struct sock *sk, int err)
  
--	udptable = net->ipv4.udp_table;
--	hslot = udp_hashslot(udptable, net, udp_sk(sk)->udp_port_hash);
- 	hslot2 = udp_hashslot2(udptable, udp_sk(sk)->udp_portaddr_hash);
- 	hslot4 = udp_hashslot4(udptable, hash);
- 	udp_sk(sk)->udp_lrpa_hash = hash;
+ 	sk->sk_err = err;
+ 	sk_error_report(sk);
++	udp_unhash4_on_disconnect(sk);
+ 	__udp_disconnect(sk, 0);
+ 
+ out:
 -- 
 2.53.0
 
