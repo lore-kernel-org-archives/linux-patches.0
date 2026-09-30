@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2DC3D333C;
-	Wed, 30 Sep 2026 19:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5565434992;
+	Wed, 30 Sep 2026 19:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795238; cv=none; b=YK+0SJNSM3ebLrsBlglJKwhPeEZ6mTYdPnoix7o6fAMwaqgtxFLmdL6YNIYLqRT0wlHjllbHONnHNO44xQxoDlP1DI0xGQjML0g1YKd81DFIGdj5Xx1rmzCUagGkRsvEAurJOarKVxbpMH3XxmJeJ3ewYdecxc4itm2oaGkze88=
+	t=1790795240; cv=none; b=mUJ9AVq5Mi/PizSzFFA7ydPUD642HHAowWV+nZRo1wzKDXrb6eqpQqOjZ9yXvWQbMetKlfY9Lh43TemW4bdr1Ty1eZdoT5cSAp1TufROwKmaUgwCDNJ6zzDGqRLryJzlXUC6c4iKHAV1ILWdQ+TSbbh8EPrBhu8pk4lQvihJqNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795238; c=relaxed/simple;
-	bh=STVvg+ICFZR6hyP22IVU+EVg9WwC15rBAzVnxPw+mKI=;
+	s=arc-20240116; t=1790795240; c=relaxed/simple;
+	bh=BUWIo5Y98w0hmMQV7NAWR9FWYKmPXJA7Yv4ktZ0HEBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GtJewKNMKoJ0OivClgSahHk+oYnvGyUZQlctyuC5fVCg+7o8hwhZGz0/0XJT3PbFSXbOY+bKHx47NydS0g+j9bkCY6Z82TuBsPlVVcPh00mSlIcdHbscPKu0o6fWyhrzSKAL87AW0aYZ+oW9FoEaa+S+Bt+tLSWcrPLLxynMNP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyVI+/EY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=imhKGiT+bXx+EsoqNj7owF5VjHFI7+J4o7dr+k5VVfDPxRK0uX8+6Cy2uxpaXS1bwnDLplf2MgDUR3zX9EwJ3fciXXSxAhJ7y7pytJExx4kDv41BK9cRhijE2iAlKdO9Sciz5vHMC/Zxp96Kl4omafzB1aJIwr67vb+WMcunrKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZOPrOY8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyVI+/EY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3012D1F00898;
-	Wed, 30 Sep 2026 19:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZOPrOY8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2D61F000FF;
+	Wed, 30 Sep 2026 19:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795236;
-	bh=LQM+bNE3BdyUPfB0l7ybgRkGlZuApFK7HzXbxkaE4P8=;
+	s=korg; t=1790795239;
+	bh=kVx0U+/wKqKgpq212q+V/B9BAlMbRRxoNgsASqcHs9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fyVI+/EYR3iCmj7d6y04VKDRHD+8xlV2DxI/y+7dNIpQ+1I1aw+TQClsUdHM3ZEFI
-	 WjjPhdwekN4qMuN1kWI0wSMUNHPhrRj3zQAcIL9TmgO2jdRdIBhmqvOdLCgLjO1KVy
-	 No70L7kEe7J1fzV5Ve82QCpSTqOs/9+y/WI7E9qA=
+	b=GZOPrOY8OiFMOjWsMQTMK8qGxXRy2Vpjou/M6ZdaZq8IsSMaUJfyko7GdWi5gI+iA
+	 04lrJAwtX1uE8TiAA48iib0n8EjzSYhmJokl7neY3sg9xQ2z3dUsVfNSB7GOBpumX8
+	 16FcsJS+I/mmPNtVJX6oUvL6G2aXRyap/DiwQ2jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0491/1193] net: dsa: mv88e6xxx: bound the policy rule dump by the callers buffer size
-Date: Wed, 30 Sep 2026 17:19:35 +0200
-Message-ID: <20260930152445.061281739@linuxfoundation.org>
+Subject: [PATCH 6.6 0492/1193] net: bridge: mcast: properly convert mglist to rcu
+Date: Wed, 30 Sep 2026 17:19:36 +0200
+Message-ID: <20260930152445.082441511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,66 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit b1fffc273112e7284c5b705e186b43b5770cd3d5 ]
+[ Upstream commit 4b772869a1e5f9da5cef5b9c722ec0aa424ee0a0 ]
 
-mv88e6xxx_get_rxnfc() uses rxnfc->rule_cnt as the write index while
-dumping the policy IDR, clobbering the input value before it has been
-looked at.  That input is the number of entries the caller had room for.
-ETHTOOL_GRXCLSRLALL requires no CAP_NET_ADMIN and the ioctl sizes the
-buffer from the rule_cnt userspace passes in, so once an admin has
-installed policy rules any user can ask for fewer slots than there are
-rules and run off the end of the allocation.  A rule_cnt of 0 leaves the
-buffer pointer NULL and the walk dereferences it.
+Sashiko reported a bug [1] that br_multicast_del_port_group unlists the
+port group not using proper rcu helper that preserves the next pointer and
+after that immediately frees the port group without waiting for rcu grace
+period. The only rcu walker of mglist is br_multicast_list_adjacent() and
+it turns out that function has always been buggy because mglist was never
+properly converted to RCU. Fix it by converting it to rcu and moving its
+initialization after eth_addr's. Initializing p->next can use
+RCU_INIT_POINTER because we have a barrier from the hlist_add_head_rcu call
+later, besides we're initializing an unpublished structure anyway.
 
-Count into a local so the caller's limit survives the walk, and stop with
--EMSGSIZE once it is reached.
+[1] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260826014200.362304-1-littleddfu%40gmail.com
 
-Fixes: da7dc8755304 ("net: dsa: mv88e6xxx: add RXNFC support")
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260903032611.3000029-5-kuba@kernel.org
+Fixes: 07f8ac4a1e26 ("bridge: add export of multicast database adjacent to net_dev")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260903093851.1494297-1-razor@blackwall.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/bridge/br_multicast.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 82640f52b1153..93310cad29798 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -2356,6 +2356,7 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
- 	struct ethtool_rx_flow_spec *fs = &rxnfc->fs;
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 	struct mv88e6xxx_policy *policy;
-+	u32 cnt = 0;
- 	int err;
- 	int id;
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 11ac945c6e29b..b563c97cc7090 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -1436,16 +1436,17 @@ struct net_bridge_port_group *br_multicast_new_port_group(
+ 		goto free_out;
+ 	}
  
-@@ -2381,11 +2382,18 @@ static int mv88e6xxx_get_rxnfc(struct dsa_switch *ds, int port,
- 		break;
- 	case ETHTOOL_GRXCLSRLALL:
- 		rxnfc->data = 0;
--		rxnfc->rule_cnt = 0;
--		idr_for_each_entry(&chip->policies, policy, id)
--			if (policy->port == port)
--				rule_locs[rxnfc->rule_cnt++] = id;
- 		err = 0;
-+		idr_for_each_entry(&chip->policies, policy, id) {
-+			if (policy->port != port)
-+				continue;
-+			if (cnt == rxnfc->rule_cnt) {
-+				err = -EMSGSIZE;
-+				break;
-+			}
-+			rule_locs[cnt++] = id;
-+		}
-+		if (!err)
-+			rxnfc->rule_cnt = cnt;
- 		break;
- 	default:
- 		err = -EOPNOTSUPP;
+-	rcu_assign_pointer(p->next, next);
+ 	timer_setup(&p->timer, br_multicast_port_group_expired, 0);
+ 	timer_setup(&p->rexmit_timer, br_multicast_port_group_rexmit, 0);
+-	hlist_add_head(&p->mglist, &port->mglist);
+ 
+ 	if (src)
+ 		memcpy(p->eth_addr, src, ETH_ALEN);
+ 	else
+ 		eth_broadcast_addr(p->eth_addr);
+ 
++	RCU_INIT_POINTER(p->next, next);
++	hlist_add_head_rcu(&p->mglist, &port->mglist);
++
+ 	return p;
+ 
+ free_out:
+@@ -1460,11 +1461,11 @@ void br_multicast_del_port_group(struct net_bridge_port_group *p)
+ 	struct net_bridge_port *port = p->key.port;
+ 	__u16 vid = p->key.addr.vid;
+ 
+-	hlist_del_init(&p->mglist);
++	hlist_del_init_rcu(&p->mglist);
+ 	if (!br_multicast_is_star_g(&p->key.addr))
+ 		rhashtable_remove_fast(&port->br->sg_port_tbl, &p->rhnode,
+ 				       br_sg_port_rht_params);
+-	kfree(p);
++	kfree_rcu(p, rcu);
+ 	br_multicast_port_ngroups_dec(port, vid);
+ }
+ 
 -- 
 2.53.0
 
