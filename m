@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C756751B167;
-	Wed, 30 Sep 2026 17:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00055158B3;
+	Wed, 30 Sep 2026 17:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789352; cv=none; b=tWVQqeIALnoow2V9OOyy10ZgGgS1O+5tZwkQPUuKFElMNqWeldimQRZ82CNh+1vzBKHi4CT3wRGLd2qwvqN/M0kROi6YuW8FSbPYS4LOQj1o1WOEnDI82/kFfCwvR0W+fzPBlhCHs6ORVL8daHu8nwmZxVuBP+J/0K/DYFEbU1w=
+	t=1790789355; cv=none; b=PaAaE1a/So7HAc0LYigH+L+uqRkCRy8KOk7gPRTVLtMCZYrqMCStjvOBdoyAR01M0DIo1mR2S/m4cS3zeYs1yOiuV7BdY1msXYLO23iDx547Ck272YZ7u0RyR8SxOrwGaHTVUwGNHdZIXi57EM/HvyCz+ReN26iXiRJS6142K2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789352; c=relaxed/simple;
-	bh=T38Z0wC0ESkLz4MQlSoFY8QA/tWxIGZCi3hdnM/PW8g=;
+	s=arc-20240116; t=1790789355; c=relaxed/simple;
+	bh=CT/TqjI3G8LY8U+0scc5okKjMs18BPT8wWp/KKgmcoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XO5ZovNIxr8eRWbF0bIY5XIB9WnzgQgw2teo7WEehQOCB3vIFrUGQsktG5tuPXOzKARjrR0FrXUu//UqHP5LsohJlQA9lSSdUu/VDvm6Ho7lu+pjIajLvne3Ec3Cq13mxfoHCDbHwqgT6wxJ86EIkvn6a+D1tujfkqDTeeex800=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcICJFuf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eWhQu24FFstW7RpyfxRg0I33Om4hnMAuxrNRdDylYGZShbwcqUo6ALG0DKNNrCXF5FJJUsqkDejx/wLzt6Lh6WEI493TRm6bw3Be7HamIufatdNo464FQDgWdKUoJn3Wou92JfGFPk9jWhOR0VcxfpGDCTp9X6VCz1FPdue0low=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0J8cwGuP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcICJFuf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3234D1F000FF;
-	Wed, 30 Sep 2026 17:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0J8cwGuP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F2E1F000FF;
+	Wed, 30 Sep 2026 17:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789351;
-	bh=KAJJIYUnwp07joxcq1NoA8i9bhtcQSbqJWn1kjgPJic=;
+	s=korg; t=1790789354;
+	bh=O/WOKdRbpgQ8NptnB7O2p/4M/E5QNMHB7ZW8pHZmYi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NcICJFufzWLguym4WwCULUMG2j0tUqh1pqTxmfmZZ1BQqGi2atnCKNlRpXLC/YZNY
-	 GeSTUV06066shrZIjSXOkZ+mXiIxR1CgKF9u/WWHb4hVcyFkoOjMzD7XmngjVfbre5
-	 j4OTuikY3RyXr9BBzn4bLhGrpK82uDj6miwlx7dU=
+	b=0J8cwGuPJ14GSbSsZ1pIa1fICz4i1IqL1F/qhLKQvlJC+tMiUT13LHSOSjcNJVFw1
+	 qFYMaJfPq+Xv19GdjkobB+0pDgzp/k8Ivjq81R94v9RufYbLYbVkg9Ydr8bY3JcAuy
+	 Edc2aVacNddB85muPRNp63+1usXtq8xmN8m9FcRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	bridge@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lei Zhu <zhulei@kylinos.cn>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 445/877] bridge: check llc_mac_hdr_init() return value in br_send_bpdu()
-Date: Wed, 30 Sep 2026 17:22:36 +0200
-Message-ID: <20260930152424.284742218@linuxfoundation.org>
+Subject: [PATCH 6.12 404/877] selftests: nci: Correct pthread_create return value check
+Date: Wed, 30 Sep 2026 17:21:55 +0200
+Message-ID: <20260930152423.408130983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,45 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lei Zhu <zhulei@kylinos.cn>
 
-[ Upstream commit ac704ff08e511c87643799c385f55ecd69b85e03 ]
+[ Upstream commit 3d8afc5243ea2ee803d98e69eb4a01748167ac1b ]
 
-If llc_mac_hdr_init() fails (for instance if the port device type does
-not support LLC or dev_hard_header() fails), br_send_bpdu() should drop
-the skb instead of resetting the mac header to the LLC payload and
-transmitting a malformed frame.
+The pthread_create() functions returns 0 on success and a positive value on
+failure. Modify the return value check to correctly detect failure cases.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Closes: https://lore.kernel.org/netdev/179022851638.2160803.1808206741379444999@kernel.org/
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: bridge@lists.linux.dev
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260924082951.1599377-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 72696bd8a09d ("selftests: nci: Extract the start/stop discovery function")
+Signed-off-by: Lei Zhu <zhulei@kylinos.cn>
+Link: https://patch.msgid.link/20260729072426.303484-1-zhulei_szu@163.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_stp_bpdu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/nci/nci_dev.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/bridge/br_stp_bpdu.c b/net/bridge/br_stp_bpdu.c
-index 7895489ac6fe7..e44e448b1157b 100644
---- a/net/bridge/br_stp_bpdu.c
-+++ b/net/bridge/br_stp_bpdu.c
-@@ -52,7 +52,10 @@ static void br_send_bpdu(struct net_bridge_port *p,
- 			    LLC_SAP_BSPAN, LLC_PDU_CMD);
- 	llc_pdu_init_as_ui_cmd(skb);
+diff --git a/tools/testing/selftests/nci/nci_dev.c b/tools/testing/selftests/nci/nci_dev.c
+index 1562aa7d60b0f..2fae9ea352c87 100644
+--- a/tools/testing/selftests/nci/nci_dev.c
++++ b/tools/testing/selftests/nci/nci_dev.c
+@@ -438,7 +438,7 @@ FIXTURE_SETUP(NCI)
+ 	else
+ 		rc = pthread_create(&thread_t, NULL, virtual_dev_open,
+ 				    (void *)&self->virtual_nci_fd);
+-	ASSERT_GT(rc, -1);
++	ASSERT_EQ(rc, 0);
  
--	llc_mac_hdr_init(skb, p->dev->dev_addr, p->br->group_addr);
-+	if (llc_mac_hdr_init(skb, p->dev->dev_addr, p->br->group_addr)) {
-+		kfree_skb(skb);
-+		return;
-+	}
+ 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+ 			       NFC_CMD_DEV_UP, self->dev_idex);
+@@ -509,7 +509,7 @@ FIXTURE_TEARDOWN(NCI)
+ 			rc = pthread_create(&thread_t, NULL, virtual_deinit,
+ 					    (void *)&self->virtual_nci_fd);
  
- 	skb_reset_mac_header(skb);
+-		ASSERT_GT(rc, -1);
++		ASSERT_EQ(rc, 0);
+ 		rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+ 				       NFC_CMD_DEV_DOWN, self->dev_idex);
+ 		EXPECT_EQ(rc, 0);
+@@ -590,7 +590,7 @@ int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int p
  
+ 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
+ 			    (void *)&virtual_fd);
+-	if (rc < 0)
++	if (rc)
+ 		return rc;
+ 
+ 	rc = send_cmd_mt_nla(sd, fid, pid, NFC_CMD_START_POLL, 2, nla_start_poll_type,
+@@ -610,7 +610,7 @@ int stop_polling(int dev_idx, int virtual_fd, int sd, int fid, int pid)
+ 
+ 	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
+ 			    (void *)&virtual_fd);
+-	if (rc < 0)
++	if (rc)
+ 		return rc;
+ 
+ 	rc = send_cmd_with_idx(sd, fid, pid,
+@@ -830,6 +830,8 @@ int disconnect_tag(int nfc_sock, int virtual_fd)
+ 
+ 	status = pthread_create(&thread_t, NULL, virtual_deactivate_proc,
+ 				(void *)&virtual_fd);
++	if (status)
++		return status;
+ 
+ 	close(nfc_sock);
+ 	pthread_join(thread_t, (void **)&status);
+@@ -874,7 +876,7 @@ TEST_F(NCI, deinit)
+ 	else
+ 		rc = pthread_create(&thread_t, NULL, virtual_deinit,
+ 				    (void *)&self->virtual_nci_fd);
+-	ASSERT_GT(rc, -1);
++	ASSERT_EQ(rc, 0);
+ 
+ 	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+ 			       NFC_CMD_DEV_DOWN, self->dev_idex);
 -- 
 2.53.0
 
