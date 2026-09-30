@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EA65158B7;
-	Wed, 30 Sep 2026 16:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C03D4FDE56;
+	Wed, 30 Sep 2026 16:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790786996; cv=none; b=Hd6Y/6DWpUco99Y330ZNFTO6R67zeSdQueVSTvKlrVBXppixdle2CDqApij5LLTdN8voL/n/ATRU0ptl/6O2t5oUyYDyMFIFPyOjlUq016jR3TdTnSdXS8hvSRJwGSA6Qs/HImCPWut0sLgAwIa6ZSPkH7XQ23BsLIUVBUaE7LI=
+	t=1790786999; cv=none; b=hUOytjEAOBdDxLWbP3Ud8u04pTRhf5dluwYBrrAQRwIMFyqCqjtUrS7dkrXTHXAd4upxa5H6215A80A3CyT+3XgWkVQOo0Cs+eQVp8rqTc8FnereznfVW7EKOZew0QjaMMnNtoyP2tNikNzzjWiuou9jhEsUxW4kohBzCnGxPuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790786996; c=relaxed/simple;
-	bh=SNWDUOBRtK2LowiUs5HLBc0R0PYLco9iJLGsPA2lPBI=;
+	s=arc-20240116; t=1790786999; c=relaxed/simple;
+	bh=1lTQFtKaSopGo9eSNdvlGAcIOFQptlPBASR4KJ7HyNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkHIf+yQ/yct26hgyp7DbTtmc9K+hr6k1eEp3WzRLsrrAo3eVpkjMBr0zymVDIcVkT+YN/QVuarbUVLs4GY2NxCXB04N5G3HkZv2kuX/QU2QUJeMIu+PC2WUK0hDBBV4NzBX7dgCztBBjBDnXkMBp0iBiOkJu0BhH4+ZSWYXlZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Bc/9MOL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ad+QZevmSqOjwLdpWG8czce69zxkMOcmeDXqOoPkAr9M4uJYdcolnCZwMsGsLXrCxFyUGovViY8p5QdtWOlnyWC9yPGaWulwE2LOzOea02TnVvXvVN1tCAAAx+tqHp+eN5/3LcpK/hLWGYvSt6wqmSe3elTtD6X+Me0pdFkyoJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwiOpW/M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Bc/9MOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9FD1F000FF;
-	Wed, 30 Sep 2026 16:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwiOpW/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02401F00893;
+	Wed, 30 Sep 2026 16:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790786995;
-	bh=bV7V6/Zx3j7cQskrDN9B2jVC+f0ZdmSZKIkgTpZ6NwM=;
+	s=korg; t=1790786998;
+	bh=M3fAGQ5zUjKrC/TLXGHv5W2znVJAc8kDC7shh7kCJOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Bc/9MOLod9hytxDxElZVxJ/67AGg6G87oRNQ7/K81GY6IU8VSFm2Zbga6XfcB82M
-	 vSnDrRFyBg/jxIjB94Bv78/U4QlCE32I1lHoSMVvMb0Fg+CFrRppIk2mHxJWgr6Rz/
-	 C36aauLNn3SvuYAe0vzlEuc+53kN5q4AguJ5YbBo=
+	b=JwiOpW/MnOHILe3TR+UAv/dhaUZxVHmlcBEgOx/2VNNM5nxRKEGcZX4QT9z5povus
+	 DqwNU/aM5ko5nOEn6JLHcyjf0XFBiBIV5vG9/Mh+LwBzK780OSvgBHQGYZSQRnZb/G
+	 Tl+GTRGUO1qMeopMC/ykrqCxJrb26rZ5JTKyhB7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 076/457] bpf: Preserve packet pointer class displacement in regsafe()
-Date: Wed, 30 Sep 2026 17:23:01 +0200
-Message-ID: <20260930152347.690183096@linuxfoundation.org>
+Subject: [PATCH 7.2 077/457] bpf: Restrict CO-RE poisoning to relocatable instructions
+Date: Wed, 30 Sep 2026 17:23:02 +0200
+Message-ID: <20260930152347.712916528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152346.024115587@linuxfoundation.org>
 References: <20260930152346.024115587@linuxfoundation.org>
@@ -54,53 +54,155 @@ Content-Transfer-Encoding: 8bit
 
 From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit fd16449a9b3b31a8f18944c2f0e29e4e218ca2cf ]
+[ Upstream commit 394ae398337c5f87e567f6cd63b937fc2b2f6ddc ]
 
-regsafe() maps packet pointer IDs between states and checks that each
-current register range is a subset of the corresponding explored
-register range. It does not, however, preserve the displacement between
-registers that share a packet pointer ID.
+CO-RE relocation records can name any instruction offset. When a
+relocation cannot be resolved, bpf_core_patch_insn() currently poisons its
+target before checking whether that instruction is a valid relocation
+target. Malformed metadata can therefore replace jumps, calls, exits,
+register-source arithmetic, or non-immediate loads instead of failing at
+the relocation step.
 
-This is unsound because packet range is shared by ID. A bounds check on
-one class member updates every member, and a later access can consume the
-range through another member. Commit 022ac0750883 ("bpf: use reg->var_off
-instead of reg->off for pointers") folded the fixed pointer offset into
-r64 and removed the old off equality check, so two individually narrower
-registers can prune even when their displacement has changed. The
-explored path can then license an out-of-bounds packet access on the
-pruned path.
+Handle poisoning only after the instruction has passed the same class and
+operand-form checks used for a resolved relocation. Route invalid forms
+through the existing diagnostic and return a hard error. Keep poisoning
+supported instructions, including both halves of a plain ldimm64, so an
+unresolved relocation in dead code remains valid.
 
-Require matching range bases for packet pointers with an ID. Together
-with the existing ID mapping, this preserves the displacement between
-members of each packet-pointer class without adding per-ID state.
-Packet pointers without an ID remain unaffected.
+Extend bpf_core_poison_insn() to poison both halves of ldimm64, and return
+its status directly from each validated instruction case. This avoids
+routing the success path through a common label and leaves the helper free
+to report errors.
 
-Fixes: 022ac0750883 ("bpf: use reg->var_off instead of reg->off for pointers")
+The shared relocation code applies this restriction to both libbpf and
+in-kernel CO-RE.
+
+Fixes: d7a252708dbc ("libbpf: Improve handling of failed CO-RE relocations")
 Reported-by: Nicholas Carlini <npc@anthropic.com>
 Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260917233222.2542500-3-memxor@gmail.com
+Link: https://patch.msgid.link/20260917233222.2542500-7-memxor@gmail.com
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/states.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/lib/bpf/relo_core.c | 58 +++++++++++++++++++++------------------
+ 1 file changed, 31 insertions(+), 27 deletions(-)
 
-diff --git a/kernel/bpf/states.c b/kernel/bpf/states.c
-index 66fb11b6c6a76..6c88ad95b63b7 100644
---- a/kernel/bpf/states.c
-+++ b/kernel/bpf/states.c
-@@ -635,6 +635,9 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
- 		/* id relations must be preserved */
- 		if (!check_ids(rold->id, rcur->id, idmap))
- 			return false;
-+		/* Preserve displacements between pointers sharing an ID. */
-+		if (rold->id && rold->r64.base != rcur->r64.base)
-+			return false;
- 		/* new val must satisfy old val knowledge */
- 		return range_within(rold, rcur) &&
- 		       tnum_in(rold->var_off, rcur->var_off);
+diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
+index 6ae3f2a15ad0c..4755de3f99957 100644
+--- a/tools/lib/bpf/relo_core.c
++++ b/tools/lib/bpf/relo_core.c
+@@ -980,23 +980,30 @@ static int bpf_core_calc_relo(const char *prog_name,
+ }
+ 
+ /*
+- * Turn instruction for which CO_RE relocation failed into invalid one with
++ * Turn instruction for which CO-RE relocation failed into invalid one with
+  * distinct signature.
+  */
+-static void bpf_core_poison_insn(const char *prog_name, int relo_idx,
+-				 int insn_idx, struct bpf_insn *insn)
++static int bpf_core_poison_insn(const char *prog_name, int relo_idx,
++				struct bpf_insn *insn, int insn_idx)
+ {
+-	pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
+-		 prog_name, relo_idx, insn_idx);
+-	insn->code = BPF_JMP | BPF_CALL;
+-	insn->dst_reg = 0;
+-	insn->src_reg = 0;
+-	insn->off = 0;
+-	/* if this instruction is reachable (not a dead code),
+-	 * verifier will complain with the following message:
+-	 * invalid func unknown#195896080
+-	 */
+-	insn->imm = 195896080; /* => 0xbad2310 => "bad relo" */
++	int insn_cnt = is_ldimm64_insn(insn) ? 2 : 1;
++	int i;
++
++	for (i = 0; i < insn_cnt; i++) {
++		pr_debug("prog '%s': relo #%d: substituting insn #%d w/ invalid insn\n",
++			 prog_name, relo_idx, insn_idx + i);
++		insn[i].code = BPF_JMP | BPF_CALL;
++		insn[i].dst_reg = 0;
++		insn[i].src_reg = 0;
++		insn[i].off = 0;
++		/*
++		 * If this instruction is reachable (not dead code), the verifier
++		 * will complain with "invalid func unknown#195896080".
++		 */
++		insn[i].imm = 195896080; /* => 0xbad2310 => "bad relo" */
++	}
++
++	return 0;
+ }
+ 
+ static int insn_bpf_size_to_bytes(struct bpf_insn *insn)
+@@ -1047,17 +1054,6 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 
+ 	class = BPF_CLASS(insn->code);
+ 
+-	if (res->poison) {
+-poison:
+-		/* poison second part of ldimm64 to avoid confusing error from
+-		 * verifier about "unknown opcode 00"
+-		 */
+-		if (is_ldimm64_insn(insn))
+-			bpf_core_poison_insn(prog_name, relo_idx, insn_idx + 1, insn + 1);
+-		bpf_core_poison_insn(prog_name, relo_idx, insn_idx, insn);
+-		return 0;
+-	}
+-
+ 	orig_val = res->orig_val;
+ 	new_val = res->new_val;
+ 
+@@ -1065,7 +1061,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 	case BPF_ALU:
+ 	case BPF_ALU64:
+ 		if (BPF_SRC(insn->code) != BPF_K)
+-			return -EINVAL;
++			goto bad_insn;
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		if (res->validate && insn->imm != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (ALU/ALU64) value: got %u, exp %llu -> %llu\n",
+ 				prog_name, relo_idx,
+@@ -1082,6 +1080,8 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 	case BPF_LDX:
+ 	case BPF_ST:
+ 	case BPF_STX:
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		if (res->validate && insn->off != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDX/ST/STX) value: got %u, exp %llu -> %llu\n",
+ 				prog_name, relo_idx, insn_idx, insn->off, (unsigned long long)orig_val,
+@@ -1097,7 +1097,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 			pr_warn("prog '%s': relo #%d: insn #%d (LDX/ST/STX) accesses field incorrectly. "
+ 				"Make sure you are accessing pointers, unsigned integers, or fields of matching type and size.\n",
+ 				prog_name, relo_idx, insn_idx);
+-			goto poison;
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
+ 		}
+ 
+ 		orig_val = insn->off;
+@@ -1140,6 +1140,9 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 			return -EINVAL;
+ 		}
+ 
++		if (res->poison)
++			return bpf_core_poison_insn(prog_name, relo_idx, insn, insn_idx);
++
+ 		imm = (__u32)insn[0].imm | ((__u64)insn[1].imm << 32);
+ 		if (res->validate && imm != orig_val) {
+ 			pr_warn("prog '%s': relo #%d: unexpected insn #%d (LDIMM64) value: got %llu, exp %llu -> %llu\n",
+@@ -1157,6 +1160,7 @@ int bpf_core_patch_insn(const char *prog_name, struct bpf_insn *insn,
+ 		break;
+ 	}
+ 	default:
++bad_insn:
+ 		pr_warn("prog '%s': relo #%d: trying to relocate unrecognized insn #%d, code:0x%x, src:0x%x, dst:0x%x, off:0x%x, imm:0x%x\n",
+ 			prog_name, relo_idx, insn_idx, insn->code,
+ 			insn->src_reg, insn->dst_reg, insn->off, insn->imm);
 -- 
 2.53.0
 
