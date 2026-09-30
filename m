@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6C851C33B;
-	Wed, 30 Sep 2026 17:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C17651B168;
+	Wed, 30 Sep 2026 17:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789290; cv=none; b=bgPdQsAdPXWTN6llRjbIGEKbKIGVj3bPh5yNs6vG8oLhr0gyslD6RMGy1+Lj2blQcaA87wB2sxilCPB1OGXY9L7b85T/QH027r2BjxzHrMJInqnsRtZ5Vco0XNt5t859yT3Ai4z8dOU47VXBvD0OYl4o29r9LMrke5aApNNR4FU=
+	t=1790789293; cv=none; b=nnEcKoURPxFB1pB9I7IkbLoRIpDq/svG/o/4VKNTM8c3AR8PtCwdP0JTgNYmiCe5AAyc+PXc2SKraGJOECw2iwUKKIVdzCPu0cLgU2FEHoa7jgjxrOhdMmo9hHyS5pUmByumtCGNLi/2/KsT+GRj4qHupHMNSQC/51TMIvNvWOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789290; c=relaxed/simple;
-	bh=OWEFMZ0dBc+emcp8JWlyL4/mrPiM1zvkngVsUhBGWjs=;
+	s=arc-20240116; t=1790789293; c=relaxed/simple;
+	bh=0w5aICu1RgEpvJ6NsTyPvsldA2TLS7/7AHDpYPS5F98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kALk5m1jgwA/6geOlHPZ7v6HB4UBZtw4G3bS40GrUFL9h+sTGEY5hF9q/MPmwyWzimp0VZQEdmcdZ9J1ioe03IuQF+oa/RfsKioeXXRPB4z93pejNoiN7e23SFWxJCYIt2TNcLDKeVD2a+oD6yKgHksI5sGtre9/vCEqePbbMtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+yCOeCu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TCZc6zTxPFO3gTjf1PZnuXruuSNPSkwBDsvBjE6Zv2mj0QrdH7WakvAt2LfoLOWqYEKsEghcl1oMf0mtcdOjvmMOuJF0syhCmSAqYG5tFilM1TFIMZoDO9wNka2uUDw5n/+Zkn02NXhYq+bY4w/9ZmFrS+QuYe2In11U0Iu+Jlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYwCylEi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+yCOeCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73CA1F000FF;
-	Wed, 30 Sep 2026 17:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYwCylEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC7E1F000FF;
+	Wed, 30 Sep 2026 17:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789289;
-	bh=ui6mrO9FB+rLAcwGDwJJUfHx+Nbx5/5VnDlyc7/YBHQ=;
+	s=korg; t=1790789292;
+	bh=h4sUuxBNZc9H3R6t3uDe3qDn8SWYraWrKcWe7Nsxtdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+yCOeCuu1A26XSfbQhhgRhpG7E0EVKvJ56Jcqr6FD901+I+iFuwRsQuw3tVY/jhy
-	 ce6SKLG6cDy2s2KOo9gm+H7YGSSFhepxZ6Tk4LEg9OEAjw9oWZqdqSpC7afV9Wm1nO
-	 kYKgMyFW2n7MnngF/4HCgRwM4ONN/8MfJib20PKc=
+	b=KYwCylEiX+ObW5H3H/3y4FDDRCase49tOiKpuoTXC9f/9ZWXNB0XhWe3qLb5qro3+
+	 NDkPPwUD9XVKaM8lA8Fvza1ux0YT1bvqp7wFWjueheG8aRxDheszaaOu0SOB803OBr
+	 rrBPpdHMK/AxGBMGSGbYLr7+KwsoIyTolr9Py34E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 425/877] net: bcmgenet: move bcmgenet_power_up into resume_noirq
-Date: Wed, 30 Sep 2026 17:22:16 +0200
-Message-ID: <20260930152423.860944690@linuxfoundation.org>
+Subject: [PATCH 6.12 426/877] net: bcmgenet: allow return of power up status
+Date: Wed, 30 Sep 2026 17:22:17 +0200
+Message-ID: <20260930152423.882516099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,114 +54,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit ffce2bedd361177718dc0c3787f4adb4785a0151 ]
+[ Upstream commit 2432b9817b7cb91aaae9e5032da0bb017cb3102d ]
 
-The bcmgenet_power_up() function is moved from the resume method
-to the resume_noirq method for symmetry with the suspend_noirq
-method. This allows the wol_active flag to be removed.
-
-The UMAC_IRQ_WAKE_EVENT interrupts that can be unmasked by the
-bcmgenet_wol_power_down_cfg() function are now re-masked by the
-bcmgenet_wol_power_up_cfg() function at the resume_noirq level
-as well.
+It is possible for a WoL power up to fail due to the GENET being
+reset while in the suspend state. Allow these failures to be
+returned as error codes to allow different recovery behavior
+when necessary.
 
 Signed-off-by: Doug Berger <opendmb@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250306192643.2383632-13-opendmb@gmail.com
+Link: https://patch.msgid.link/20250306192643.2383632-14-opendmb@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: cbbc1aee7776 ("net: bcmgenet: do not skip WoL power up on GENET V1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 24 +++++++++----------
- .../net/ethernet/broadcom/genet/bcmgenet.h    |  1 -
- .../ethernet/broadcom/genet/bcmgenet_wol.c    |  8 +++----
- 3 files changed, 15 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c     | 13 ++++++++-----
+ drivers/net/ethernet/broadcom/genet/bcmgenet.h     |  4 ++--
+ drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c | 12 +++++++-----
+ 3 files changed, 17 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index aa565011fb808..af7657de90591 100644
+index af7657de90591..fc1d4cef3ad81 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -4136,8 +4136,20 @@ static int bcmgenet_resume_noirq(struct device *d)
- 		reg = bcmgenet_intrl2_0_readl(priv, INTRL2_CPU_STAT);
- 		if (reg & UMAC_IRQ_WAKE_EVENT)
- 			pm_wakeup_event(&priv->pdev->dev, 0);
-+
-+		/* From WOL-enabled suspend, switch to regular clock */
-+		bcmgenet_power_up(priv, GENET_POWER_WOL_MAGIC);
+@@ -1693,13 +1693,14 @@ static int bcmgenet_power_down(struct bcmgenet_priv *priv,
+ 	return ret;
+ }
+ 
+-static void bcmgenet_power_up(struct bcmgenet_priv *priv,
+-			      enum bcmgenet_power_mode mode)
++static int bcmgenet_power_up(struct bcmgenet_priv *priv,
++			     enum bcmgenet_power_mode mode)
+ {
++	int ret = 0;
+ 	u32 reg;
+ 
+ 	if (!bcmgenet_has_ext(priv))
+-		return;
++		return ret;
+ 
+ 	reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
+ 
+@@ -1735,11 +1736,13 @@ static void bcmgenet_power_up(struct bcmgenet_priv *priv,
+ 		}
+ 		break;
+ 	case GENET_POWER_WOL_MAGIC:
+-		bcmgenet_wol_power_up_cfg(priv, mode);
+-		return;
++		ret = bcmgenet_wol_power_up_cfg(priv, mode);
++		break;
+ 	default:
+ 		break;
  	}
- 
-+	/* If this is an internal GPHY, power it back on now, before UniMAC is
-+	 * brought out of reset as absolutely no UniMAC activity is allowed
-+	 */
-+	if (priv->internal_phy)
-+		bcmgenet_power_up(priv, GENET_POWER_PASSIVE);
 +
-+	/* take MAC out of reset */
-+	bcmgenet_umac_reset(priv);
-+
- 	bcmgenet_intrl2_0_writel(priv, UMAC_IRQ_WAKE_EVENT, INTRL2_CPU_CLEAR);
++	return ret;
+ }
  
- 	return 0;
-@@ -4154,18 +4166,6 @@ static int bcmgenet_resume(struct device *d)
- 	if (!netif_running(dev))
- 		return 0;
- 
--	/* From WOL-enabled suspend, switch to regular clock */
--	if (device_may_wakeup(d) && priv->wolopts)
--		bcmgenet_power_up(priv, GENET_POWER_WOL_MAGIC);
--
--	/* If this is an internal GPHY, power it back on now, before UniMAC is
--	 * brought out of reset as absolutely no UniMAC activity is allowed
--	 */
--	if (priv->internal_phy)
--		bcmgenet_power_up(priv, GENET_POWER_PASSIVE);
--
--	bcmgenet_umac_reset(priv);
--
- 	init_umac(priv);
- 
- 	phy_init_hw(dev->phydev);
+ static struct enet_cb *bcmgenet_get_txcb(struct bcmgenet_priv *priv,
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-index 89b071da31142..3e0878a03b43d 100644
+index 3e0878a03b43d..532a4ea04c6e6 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -658,7 +658,6 @@ struct bcmgenet_priv {
- 	struct clk *clk_wol;
- 	u32 wolopts;
- 	u8 sopass[SOPASS_MAX];
--	bool wol_active;
+@@ -739,8 +739,8 @@ void bcmgenet_get_wol(struct net_device *dev, struct ethtool_wolinfo *wol);
+ int bcmgenet_set_wol(struct net_device *dev, struct ethtool_wolinfo *wol);
+ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
+ 				enum bcmgenet_power_mode mode);
+-void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+-			       enum bcmgenet_power_mode mode);
++int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
++			      enum bcmgenet_power_mode mode);
  
- 	struct bcmgenet_mib_counters mib;
- };
+ void bcmgenet_eee_enable_set(struct net_device *dev, bool enable);
+ 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-index 98358b71cef5c..d67f1cb14a800 100644
+index d67f1cb14a800..945b32fe5697d 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -199,7 +199,6 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
- 		  retries);
+@@ -227,14 +227,14 @@ int bcmgenet_wol_power_down_cfg(struct bcmgenet_priv *priv,
+ 	return 0;
+ }
  
- 	clk_prepare_enable(priv->clk_wol);
--	priv->wol_active = 1;
+-void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+-			       enum bcmgenet_power_mode mode)
++int bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
++			      enum bcmgenet_power_mode mode)
+ {
+ 	u32 reg;
  
- 	if (hfb_enable) {
- 		bcmgenet_hfb_reg_writel(priv, hfb_enable,
-@@ -238,13 +237,12 @@ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 		return;
+ 	if (mode != GENET_POWER_WOL_MAGIC) {
+ 		netif_err(priv, wol, priv->dev, "invalid mode: %d\n", mode);
+-		return;
++		return -EINVAL;
  	}
  
--	if (!priv->wol_active)
--		return;	/* failed to suspend so skip the rest */
--
--	priv->wol_active = 0;
  	clk_disable_unprepare(priv->clk_wol);
- 	priv->crc_fwd_en = 0;
- 
-+	bcmgenet_intrl2_0_writel(priv, UMAC_IRQ_WAKE_EVENT,
-+				 INTRL2_CPU_MASK_SET);
-+
- 	/* Disable Magic Packet Detection */
+@@ -247,7 +247,7 @@ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
  	if (priv->wolopts & (WAKE_MAGIC | WAKE_MAGICSECURE)) {
  		reg = bcmgenet_umac_readl(priv, UMAC_MPD_CTRL);
+ 		if (!(reg & MPD_EN))
+-			return;	/* already reset so skip the rest */
++			return -EPERM;	/* already reset so skip the rest */
+ 		reg &= ~(MPD_EN | MPD_PW_EN);
+ 		bcmgenet_umac_writel(priv, reg, UMAC_MPD_CTRL);
+ 	}
+@@ -256,7 +256,7 @@ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+ 	if (priv->wolopts & WAKE_FILTER) {
+ 		reg = bcmgenet_hfb_reg_readl(priv, HFB_CTRL);
+ 		if (!(reg & RBUF_ACPI_EN))
+-			return;	/* already reset so skip the rest */
++			return -EPERM;	/* already reset so skip the rest */
+ 		reg &= ~(RBUF_HFB_EN | RBUF_ACPI_EN);
+ 		bcmgenet_hfb_reg_writel(priv, reg, HFB_CTRL);
+ 	}
+@@ -267,4 +267,6 @@ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+ 	reg &= ~CMD_CRC_FWD;
+ 	bcmgenet_umac_writel(priv, reg, UMAC_CMD);
+ 	spin_unlock_bh(&priv->reg_lock);
++
++	return 0;
+ }
 -- 
 2.53.0
 
