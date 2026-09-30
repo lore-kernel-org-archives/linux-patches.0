@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E93536998C;
-	Wed, 30 Sep 2026 18:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E11309EF2;
+	Wed, 30 Sep 2026 18:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794513; cv=none; b=lzYE9EG8dG6uaJT097FlwFTO7NE/xabxQNMf6dWGrBIahal4W5wWrB2tK+QHDl++ZOWj34InCQTftODdkRW7QUnHjOGISHTtl3EZ0T8mj+m6oIyXfAk6C6jhOwwjTUHagl6PEo6FvvrX0P1atIgjlmuRkLnJlc7/SWmRFLZwYMM=
+	t=1790794516; cv=none; b=bYXhh4hRWFx9FnwYChMTJgb/NzT3yMwrvT9we4C9RJIH2cjlmT3oxMfPUgvi08dL4E4MT/B/KzabqpeLuZpBg/p/SectYWDGhrDvMOY81/ldFj3jR3pVzFtIcwptt0U8uPcCDOsBXD+DRvfiY7wdYpXX9+rVCwqFLkKOAmN5DCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794513; c=relaxed/simple;
-	bh=AqIZePh2gDvYiz8K35omXmHqQS3TSWD/qRduSfWLjiE=;
+	s=arc-20240116; t=1790794516; c=relaxed/simple;
+	bh=G/5mv4XbqXD6Vbuyprjt2Suvb7ZOk5cZACCXPVLrvAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAGGAHMRB2WXjZSjp3B8AAAgMpYV3pCZJM+or8bapLe9JHD1kNFReCMEeZv1swxXibJJeOV+dajtFhd38iWqC/tkAoogJx45hst0O/HOBywarfd4bzKRiLv6QzBN0gePoMbQJMX3eNNB6kbt3FMtU1Esd8sQl2rbWmk5u00LwVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBc8PYU3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DKN6mB5xvrL4RDGY4vTTo9MSnqbeINYSFnQqfvK1Oze0IsupfDlyl1/FQV0RTaVGZg7et1bV28x0d/VWQtj1raxkp/yRZpv19Az6WA/WKJ0Ry0IfYz1jA0MQTRIClnJBb8dztNC0mDDYM0LMuhBEtsyxOiXL6FgAsuqMfU3aQW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXwndrY1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBc8PYU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81781F000FF;
-	Wed, 30 Sep 2026 18:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXwndrY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866981F000FF;
+	Wed, 30 Sep 2026 18:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794512;
-	bh=Fg55+Orah52Wya2eF3Z9uFl+uTpSzyuAH3rDkVAlM+s=;
+	s=korg; t=1790794515;
+	bh=CYz88t5C1tfz7iUnYwsFtFk1t+oNwZ4tY9+eG5U7JlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBc8PYU3kA3VmTCBYGP0D5p5V1JOBJWnXd+gnzyX2M7xipH5Qdnyfm1io6tLqDz+o
-	 KNE2O2IQE4QXn6Poe68cbsNb5+h6/E0y05VJWC8rt2Famxq3ps+J0Y4XYvQJoogOLb
-	 +geBSyCXPcaL9Gp6iiUJ6l1OI6APLPXMjX8L/Xqs=
+	b=WXwndrY1afYPH6wCVEhD/CkllyOhK2arw+hxcXNibBlh3E7IhHNsYnUDsfjt/qKdz
+	 TTA5hH7QLBYBe9SWf3/ROPfvlvlqYadLmmQA38YSiznJgQyWFSpBTFnsDvc8bZ+1H9
+	 IpeXzQ6o7QDX1pOefKbp2wE2JVn8gjtXDDnTpP04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akashdeep Kaur <a-kaur@ti.com>,
+	Matthew Bystrin <dev.mbstr@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0238/1193] mfd: tps65219: Make poweroff handler conditional on system-power-controller
-Date: Wed, 30 Sep 2026 17:15:22 +0200
-Message-ID: <20260930152439.477750029@linuxfoundation.org>
+Subject: [PATCH 6.6 0239/1193] mfd: rsmu: Add 8a34002 support
+Date: Wed, 30 Sep 2026 17:15:23 +0200
+Message-ID: <20260930152439.500287778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,56 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akashdeep Kaur <a-kaur@ti.com>
+From: Matthew Bystrin <dev.mbstr@gmail.com>
 
-[ Upstream commit 104cd764a031bfe2ffe253adce9581384a78c16e ]
+[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
 
-Currently, the TPS65219 driver unconditionally registers a poweroff
-handler. This causes issues on systems where a different component
-(such as TF-A firmware) should handle system poweroff instead.
+Add compatible string, i2c_devcie_id and spi_devcie_id to support
+8a34002.
 
-Make the poweroff handler registration conditional based on the
-"system-power-controller" device tree property. This follows the
-standard kernel pattern where only the designated power controller
-registers for system poweroff operations.
-
-On systems where the property is absent, the PMIC will not register
-a poweroff handler, allowing other poweroff mechanisms to function.
-
-Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
-Link: https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com
+Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
+Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65219.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/mfd/rsmu_i2c.c | 2 ++
+ drivers/mfd/rsmu_spi.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
-index 72a5f51fe32a5..c2cee7db1508d 100644
---- a/drivers/mfd/tps65219.c
-+++ b/drivers/mfd/tps65219.c
-@@ -280,13 +280,15 @@ static int tps65219_probe(struct i2c_client *client)
- 		return ret;
- 	}
- 
--	ret = devm_register_power_off_handler(tps->dev,
--					      tps65219_power_off_handler,
--					      tps);
--	if (ret) {
--		dev_err(tps->dev, "failed to register power-off handler: %d\n", ret);
--		return ret;
-+	if (of_device_is_system_power_controller(tps->dev->of_node)) {
-+		ret = devm_register_power_off_handler(tps->dev,
-+						      tps65219_power_off_handler,
-+						      tps);
-+		if (ret)
-+			return dev_err_probe(tps->dev, ret,
-+					     "Failed to register power-off handler\n");
- 	}
-+
- 	return 0;
- }
- 
+diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
+index 06d78a1cf1ccb..1a46259931586 100644
+--- a/drivers/mfd/rsmu_i2c.c
++++ b/drivers/mfd/rsmu_i2c.c
+@@ -255,6 +255,7 @@ static void rsmu_i2c_remove(struct i2c_client *client)
+ static const struct i2c_device_id rsmu_i2c_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{ "8v19n850", RSMU_SL },
+@@ -266,6 +267,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
+ static const struct of_device_id rsmu_i2c_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
+diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
+index ca0a1202c3ce1..09151d77178e1 100644
+--- a/drivers/mfd/rsmu_spi.c
++++ b/drivers/mfd/rsmu_spi.c
+@@ -244,6 +244,7 @@ static void rsmu_spi_remove(struct spi_device *client)
+ static const struct spi_device_id rsmu_spi_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{}
+@@ -253,6 +254,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
+ static const struct of_device_id rsmu_spi_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{}
 -- 
 2.53.0
 
