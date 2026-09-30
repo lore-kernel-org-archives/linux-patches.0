@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25487309EF2;
-	Wed, 30 Sep 2026 18:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E488836998C;
+	Wed, 30 Sep 2026 18:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794536; cv=none; b=TePo8uYc3lhndKeK4PJFP1M8cJbpEkHSZDwk4MTHzR5sZLjqRz2jyS9HHPumimv/ixdPdMBzz28PeGgPhGM8aeYQ29h410wuKJkbxk6VugZEAqe+R8mdJ/dT5KTWPZS+899zO4/0k7JmhWqtAnKII2sC1/vNqvxaaomDyNquUgU=
+	t=1790794539; cv=none; b=Nh/gZgHD9hhIAi1RzlipdR9am+VCoiq5QiVcPEu60Ua9G9+cYnCZulFUDl8Y5F+VivPZQ57P3/a/ZAFdt6NJ2ZmC3nUZRBqvlj2Xk5QvSpRdKCH23qu7Ek1iKHl/Its/jjPTu1PUDYfhtuN7nr16j4YROLs9azJ2fKwJlKDDTZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794536; c=relaxed/simple;
-	bh=Xh4aG10RsborfcKi6SYeyeOiR5y7s1A338VYzbawiMo=;
+	s=arc-20240116; t=1790794539; c=relaxed/simple;
+	bh=cWriDPfjmOTf+rQHEC354ZwgXWTzfJioLrFz7qVcuoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLCW/LGMY5/xMVdi28XEmS/fEsW8/0zraYoKO99ywRyEEHwEpcfJ9+DVPiVYcc15R9rUiLXJhTtqEV+llFXKWNXU39Wgk3ykxmEdPTtm+sY1uVf4rdLXpeU7Y3OPBDrOk9OCIEeVuGueE2oy+DCWsQbZUMSgdsTPnJZgwhuSzus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpfiHP7R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X/52zQoqylD0lkwK5LUU6z/fXdooezhjr6T2YY/uJGYSXxX68zNfqevmBa+YoDQEVPD2NMXlQlX0F5aycs81gQWBgI+UH1PNvqNA//Txx/4nXCszpOj2K/JC8ImqR75CBpkXXd/YSI018C3dLhCY2khj0w+YpvG0o64sAnW4UMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRQU8xUd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpfiHP7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9D61F000FF;
-	Wed, 30 Sep 2026 18:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRQU8xUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4984F1F000FF;
+	Wed, 30 Sep 2026 18:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794535;
-	bh=CZvBvbJshV2X1vvQzy6uekIi5gyor/0TvE7vI9e11cw=;
+	s=korg; t=1790794537;
+	bh=mTObJZEDM2+LCyZ7l+Al7cwql0yJkgkqtBgVdIQvrsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dpfiHP7RTQpQqvpxEV+kDD5x4QYe/g0eE6iwtXFtghaTFCwdow+PljwO8i7t61R++
-	 pHMS6rA5ur0c1ekfbz6Nw+tD31srzvye6k6TMBQfP6RGY5ci/aDcFN6Xr5cwekrCyF
-	 hng4wRMKcTfn6iUEomaqKCuaD7IH3be6NsTJ4Sus=
+	b=mRQU8xUdTMbM4N4Dd56fdJE3o3lmlrfy4YURhIoTSHr1xe5jByr/8opDFwM/KX+G6
+	 LqqSlzFTFqnB35WodRu3PSvyGmtoUjp4Xe5bPXFLmrnhIKJniM3um5YoQJy+KABSbj
+	 J9Ls7Y1RuA0qjA1LiUzb0qdM5Pg7cGCwgo1MoFyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Li Yichao <liyichao.1@bytedance.com>,
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0246/1193] PCI: rockchip: Protect root bus removal with rescan lock
-Date: Wed, 30 Sep 2026 17:15:30 +0200
-Message-ID: <20260930152439.657067853@linuxfoundation.org>
+Subject: [PATCH 6.6 0229/1193] fuse: set ff->flock only on success
+Date: Wed, 30 Sep 2026 17:15:13 +0200
+Message-ID: <20260930152439.282501960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,39 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-[ Upstream commit 0bd9611587bb494c33566d825fe34b2705e4b167 ]
+[ Upstream commit 71947173cef279be5eed209ec28f8c11f9d73159 ]
 
-Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
-to avoid racing with concurrent rescan or hotplug operations triggered via
-sysfs.  Such races may lead to use-after-free issues or system crashes.
+If FUSE_SETLK fails (e.g., due to EWOULDBLOCK), we shall not set
+FUSE_RELEASE_FLOCK_UNLOCK in fuse_file_release().
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260521161822.132996-8-18255117159@163.com
+Reported-by: Li Yichao <liyichao.1@bytedance.com>
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/fuse/file.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index c25f32abbdf64..c63db46faee5d 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -1018,8 +1018,10 @@ static void rockchip_pcie_remove(struct platform_device *pdev)
- 	struct rockchip_pcie *rockchip = dev_get_drvdata(dev);
- 	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(rockchip);
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index a18ec80f57f9b..553c163afbc2d 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -2680,8 +2680,9 @@ static int fuse_file_flock(struct file *file, int cmd, struct file_lock *fl)
+ 		struct fuse_file *ff = file->private_data;
  
-+	pci_lock_rescan_remove();
- 	pci_stop_root_bus(bridge->bus);
- 	pci_remove_root_bus(bridge->bus);
-+	pci_unlock_rescan_remove();
- 	irq_domain_remove(rockchip->irq_domain);
+ 		/* emulate flock with POSIX locks */
+-		ff->flock = true;
+ 		err = fuse_setlk(file, fl, 1);
++		if (!err)
++			ff->flock = true;
+ 	}
  
- 	rockchip_pcie_deinit_phys(rockchip);
+ 	return err;
 -- 
 2.53.0
 
