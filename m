@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33ED4052DE;
-	Wed, 30 Sep 2026 18:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D2951CF59;
+	Wed, 30 Sep 2026 18:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793252; cv=none; b=OcR7PqnW36tRoM0BPLY7cmOGpkgK5WC+MAhoumHXEeCbjTciHjsh4MwyHvQ+bdzz3islui0f9qeGjZBGa0cbsgXDy6BsdffnBIt+aH6+X0EFvcHQdxGksvqESG3FFUk2bald18hNICQPPHfq1/ByJ/13zPXA+RwyCOrxudj0A5o=
+	t=1790793255; cv=none; b=XKG4+zNr/k7I91Sp0Olu/i49QZysQrkG/Sv0I0RYRGroYiZQ4uABKf4c6LHUdhqDQUttt3Jc7C4psOHT8d5hZhpAyzW0NAeIlL+7+cz595FUnaXBVFTui9w8Cdgb8WdkFpNWU+Q2iHOMc+d35Jc8vmmw1oc7szWksgB/7lkJ3M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793252; c=relaxed/simple;
-	bh=NgEQoXcCIVLYRnxiDgQXyjRI9fRRHudPX2vceoc+aSE=;
+	s=arc-20240116; t=1790793255; c=relaxed/simple;
+	bh=arbABNxUqLBOwp7b+AcjB7m9mQA+Ggm1Uz6hKYr+9ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQwOnIlx8dU1eBIWcy17ZwMiHULW84Nv7KPW7BnQ/zoBPTxmo7gae5yy8qSTUeT2/IyeI6oLqeAdVMGKZtgqBKVzDsM/Oss1ROSFtM2yoiH9yuLSPegDeVaQ4GuZul8NWOKqX2tcjGQoIWQ1chFvBfBaMlAmY1cL1PLeBoPJRs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZ+Oct3z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pps8mnNyQ5yb7uLfxa4HJliDDmqFzeKnxtX4j0TG6QGkZNF76NLYBZ6WeuHpZVioEkp6JPag7R0KpWn+YljmXnXKyWlqzE0mceh/BXe8rl5H90Adj8NbVFU/+NKWdFNCK5m2cAhmtzdM9PcF9so/d8f/XAV1W+POIWWjz+RiDNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxjbF4ip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZ+Oct3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D291F000FF;
-	Wed, 30 Sep 2026 18:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxjbF4ip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D568B1F000FF;
+	Wed, 30 Sep 2026 18:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790793251;
-	bh=DG1CYGEkaHNAf2UeJTR8/vwPHHQG3LEd4zkvAiJ3/MQ=;
+	s=korg; t=1790793254;
+	bh=pClUhAWuAJha7dpBM2vSiQQpXGgYkucL43WBwa0HbCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZ+Oct3z7SRnIxthwWLkZ5ugQusO/yxI+xXYZ7HB7to62zf4eaE0j9H7pOS5nHxnp
-	 6Z9n98L9A+9snD8ehRR38bdGZSoF7UpvhzS7uiP+3P/4VeZqAHP9yOvza+z/yshWSG
-	 1HjpTPrjxmRNuf2ImaNy59WipqWUmM3jZqSO9NPI=
+	b=OxjbF4ipVg5R8JfrNhUvyCQRswm2AIYyULbyl31rLL6hVchItoZG6AUPeDNRV8x6d
+	 NMrblSHgOXbiM9iTszv/5+52ZSRu/qrbY/ns7vxPI9T1hFMWnfQhEVFZGsr5iv52sO
+	 9CiG2nAqjwp8rvKYGaub31B0ZRo6kAvSTyXUroaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Eddie Phillips <eddiephillips@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 172/395] drm/imagination: clamp freelist reconstruction requests
-Date: Wed, 30 Sep 2026 17:27:14 +0200
-Message-ID: <20260930152344.381786118@linuxfoundation.org>
+Subject: [PATCH 6.18 190/395] gve: fix TX drop when GSO MSS is too small for hw
+Date: Wed, 30 Sep 2026 17:27:32 +0200
+Message-ID: <20260930152344.771811168@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152340.591469096@linuxfoundation.org>
 References: <20260930152340.591469096@linuxfoundation.org>
@@ -52,70 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Eddie Phillips <eddiephillips@google.com>
 
-[ Upstream commit 45585c3aa285854face65293acc95eff73063d6d ]
+[ Upstream commit 3b430ea6234087957b0d3cd181e3116722b59819 ]
 
-The firmware reconstruction count controls accesses to the request's
-fixed freelist ID array and the copy into the fixed response array.
-Neither access currently bounds the count to those protocol arrays.
+The device has a strict requirement that the minimum MSS
+(gso_size) for TSO/GSO packets must be at least 88 bytes. If a packet
+below this threshold is pushed to the hardware, it can cause
+hardware to silently drop the packet, leading to increased latency
+and retransmissions.
 
-Clamp the count to the request capacity, which is shared by the response
-layout, and use that count consistently for reconstruction and response
-publication. Keep the firmware recovery exchange instead of dropping an
-oversized request without a response, as discussed with the firmware
-maintainer.
+Currently, this is validated too late in the transmit pipeline
+(gve_prep_tso), leading to silent drops.
 
-The issue was found by our static-analysis tool.
+Fix this by moving the validation into the .ndo_features_check
+callback (gve_features_check_dqo). If we detect a GSO packet with
+a gso_size smaller than GVE_TX_MIN_TSO_MSS_DQO, we clear the GSO
+feature flags for this packet.
 
-Fixes: 6eedddab733b ("drm/imagination: Implement free list and HWRT create and destroy ioctls")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Link: https://patch.msgid.link/20260920034329.16614-1-hppiscas@163.com
-Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Fixes: a57e5de476be ("gve: DQO: Add TX path")
+Signed-off-by: Eddie Phillips <eddiephillips@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20260924004252.1196328-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_free_list.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/google/gve/gve_tx_dqo.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_free_list.c b/drivers/gpu/drm/imagination/pvr_free_list.c
-index 5228e214491c6..2ced452e9ce34 100644
---- a/drivers/gpu/drm/imagination/pvr_free_list.c
-+++ b/drivers/gpu/drm/imagination/pvr_free_list.c
-@@ -8,6 +8,7 @@
- #include "pvr_vm.h"
+diff --git a/drivers/net/ethernet/google/gve/gve_tx_dqo.c b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
+index 49ed911957ec0..ba100f42fad93 100644
+--- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
+@@ -582,17 +582,6 @@ static int gve_prep_tso(struct sk_buff *skb)
+ 	int header_len;
+ 	int err;
  
- #include <drm/drm_gem.h>
-+#include <drm/drm_print.h>
- #include <linux/slab.h>
- #include <linux/xarray.h>
- #include <uapi/drm/pvr_drm.h>
-@@ -612,13 +613,21 @@ pvr_free_list_process_reconstruct_req(struct pvr_device *pvr_dev,
- 	};
- 	struct rogue_fwif_freelists_reconstruction_data *resp =
- 		&resp_cmd.cmd_data.free_lists_reconstruction_data;
-+	u32 count = min_t(u32, req->freelist_count,
-+			  ARRAY_SIZE(req->freelist_ids));
+-	/* Note: HW requires MSS (gso_size) to be <= 9728 and the total length
+-	 * of the TSO to be <= 262143.
+-	 *
+-	 * However, we don't validate these because:
+-	 * - Hypervisor enforces a limit of 9K MTU
+-	 * - Kernel will not produce a TSO larger than 64k
+-	 */
+-
+-	if (unlikely(shinfo->gso_size < GVE_TX_MIN_TSO_MSS_DQO))
+-		return -1;
+-
+ 	/* Needed because we will modify header. */
+ 	err = skb_cow_head(skb, 0);
+ 	if (err < 0)
+@@ -930,6 +919,9 @@ static bool gve_can_send_tso(const struct sk_buff *skb)
+ 	int header_len;
+ 	int i;
  
--	for (u32 i = 0; i < req->freelist_count; i++)
-+	if (count != req->freelist_count) {
-+		drm_warn_once(from_pvr_device(pvr_dev),
-+			      "Requested reconstruction of %u freelists, limiting to %u\n",
-+			      req->freelist_count, count);
-+	}
++	if (unlikely(gso_size < GVE_TX_MIN_TSO_MSS_DQO))
++		return false;
 +
-+	for (u32 i = 0; i < count; i++)
- 		pvr_free_list_reconstruct(pvr_dev, req->freelist_ids[i]);
- 
--	resp->freelist_count = req->freelist_count;
-+	resp->freelist_count = count;
- 	memcpy(resp->freelist_ids, req->freelist_ids,
--	       req->freelist_count * sizeof(resp->freelist_ids[0]));
-+	       count * sizeof(resp->freelist_ids[0]));
- 
- 	WARN_ON(pvr_kccb_send_cmd(pvr_dev, &resp_cmd, NULL));
- }
+ 	/* Must match the header length programmed by gve_prep_tso(). */
+ 	if (skb_is_gso_tcp(skb))
+ 		header_len = skb_tcp_all_headers(skb);
 -- 
 2.53.0
 
