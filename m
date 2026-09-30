@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCED5678C9;
-	Wed, 30 Sep 2026 17:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E59256C63A;
+	Wed, 30 Sep 2026 17:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789875; cv=none; b=QwBue85Oe8k8BOLg7EXmMsfp/MXi1bGJc2aa21HskGXLyZTTix9vMeSYIIV9F+O/qpxBYVuG98pnrBw3WpaNtG7C+eUBPjHFaEgqmufPMVXy/e7m/Y1nTEUmoDTIwJAIKZTr5QF+NYUz27U5Y9zMqM2qyGpDojQEfXKsTDH/XFM=
+	t=1790789879; cv=none; b=I/TVv0jU6IIbvsCRMBzoji9X6ovEOg+B0L2RB62wPjaQYs4LdBe9B20pR09QAB2v0DfpOH/YZ/yKmH3m13lW9Gk38nLRWDboS+n2EYC2SbnfNuv1vwHpv2tGMyiuMnQIOXYwEenA999QENcP76CEY71e+UAQRmeNeavLFeMGMyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789875; c=relaxed/simple;
-	bh=ORIiUfynUbo6hgAFk3oX0azxBaw8iAyFNVlHIXJUnGg=;
+	s=arc-20240116; t=1790789879; c=relaxed/simple;
+	bh=2SC3uRVzoQbaLQk2O3MFG3k9AfEHTsR4zG1napBrw5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qg6o0VPhXTf20JwZhu0PmLreYjsvY3u7TV0xs5rRmZnnFfEt2Z6aSjUf9WxKEXocFf2T6Ger4GRehnb82DcX7xIojVneAFdjMBMqizaSGGQD+NodMPRyuyNu9XvnOmVM8WE3ppsKhAqvXWBUe91jFmMv0NGlWpnqgUusx2erRMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVCSV+UC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGjidYWyyEhQqwwgajy6slcnmmBLa1H1Fi1t7mNJWQ+J3ZtIlM4Flj6dcOZjnC2TLwLf/7/ZmniGX3+g6Kamb+J9abeEqZXgrg5M1jTUpbwOkAxu6C2t0GGyZmA8zi86yyuuEFHvdiW00CGkjombeWQbFdxspit+EooN8SCGcrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQK7wcmE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVCSV+UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3181F000FF;
-	Wed, 30 Sep 2026 17:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQK7wcmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87EAC1F000FF;
+	Wed, 30 Sep 2026 17:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790789874;
-	bh=NMc8LXBBfNHDs+kVKWkIPjx4hDF9iy5VYLsr3FgBKnA=;
+	s=korg; t=1790789877;
+	bh=Ki74DTnrHIng4WJ9jpwKco4upVraGtTD9ys3aCfo20s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVCSV+UC7axoi1Jl1p+iTEF/0AcoXlr6lJxsRLJ8jd8/KeRoDRgvosbtZd2MGsI28
-	 ZRCNr1AmwFxQ2enUfOSAf4rimWAgsSJwsAFqY4eGhiRKD709UN6LIwLXDrUwe35WAk
-	 AwC7NrD3Iklg4KnPD5ld4s3MuDMeHNMIbR3dSc0Y=
+	b=zQK7wcmELW2ugOsyQ1l/xolF3K3Yo0bfkVJUo6ZZWzCYH4/b8qWa1Pu2B1LOGoli+
+	 x955njUA7nkrGHYG+ynmxUTNLf/SBLsIMAL9RRl9HgJ0TSD4R9g0MbhgTfWv7OJ6B0
+	 FOaVNJKgzNQSGUTnjjU+sNI6zePVnV4PjHpwshyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 594/877] io_uring/waitid: have io_waitid_complete() remove wait queue entry
-Date: Wed, 30 Sep 2026 17:25:05 +0200
-Message-ID: <20260930152427.470098768@linuxfoundation.org>
+Subject: [PATCH 6.12 630/877] tracing: Clean up use of trace_create_maxlat_file()
+Date: Wed, 30 Sep 2026 17:25:41 +0200
+Message-ID: <20260930152428.243572100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -50,86 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit a48c0cbf28c03f6c590a14ceb31bf6e619c2f6da ]
+[ Upstream commit ba73713da50e5c24499ca8941171593466ea34f7 ]
 
-Both callers of this need the entry potentially removed, so shift the
-removal into the completion side and kill it from the two callers.
+In trace.c, the function trace_create_maxlat_file() is defined behind the
+ #ifdef CONFIG_TRACER_MAX_TRACE block. The #else part defines it as:
 
-While at it, add a helper for removing the wait_queue_entry based
-on the passed in io_kiocb.
+ #define trace_create_maxlat_file(tr, d_tracer)				\
+	trace_create_file("tracing_max_latency", TRACE_MODE_WRITE,	\
+			  d_tracer, tr, &tracing_max_lat_fops)
 
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 2cf20c4e0f72 ("io_uring/waitid: avoid siginfo copy during ring teardown")
+But the one place that it it used has:
+
+ #ifdef CONFIG_TRACER_MAX_TRACE
+	trace_create_maxlat_file(tr, d_tracer);
+ #endif
+
+Which is pointless and also wrong!
+
+It only gets created when both CONFIG_TRACE_MAX_TRACE and CONFIG_FS_NOTIFY
+is defined, but the file itself should not be dependent on
+CONFIG_FS_NOTIFY. Always create that file when TRACE_MAX_TRACE is defined
+regardless if FS_NOTIFY is or is not.
+
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260207191101.0e014abd@robin
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: f2951ebd15c3 ("tracing: Take trace_array reference when opening options file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/waitid.c |   26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ kernel/trace/trace.c |   38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -115,6 +115,22 @@ static int io_waitid_finish(struct io_ki
- 	return ret;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -1830,10 +1830,7 @@ static ssize_t trace_seq_to_buffer(struc
+ unsigned long __read_mostly	tracing_thresh;
+ 
+ #ifdef CONFIG_TRACER_MAX_TRACE
+-static const struct file_operations tracing_max_lat_fops;
+-
+ #ifdef LATENCY_FS_NOTIFY
+-
+ static struct workqueue_struct *fsnotify_wq;
+ 
+ static void latency_fsnotify_workfn(struct work_struct *work)
+@@ -1850,17 +1847,6 @@ static void latency_fsnotify_workfn_irq(
+ 	queue_work(fsnotify_wq, &tr->fsnotify_work);
  }
  
-+static void io_waitid_remove_wq(struct io_kiocb *req)
-+{
-+	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
-+	struct wait_queue_head *head;
-+
-+	head = READ_ONCE(iw->head);
-+	if (head) {
-+		struct io_waitid_async *iwa = req->async_data;
-+
-+		iw->head = NULL;
-+		spin_lock_irq(&head->lock);
-+		list_del_init(&iwa->wo.child_wait.entry);
-+		spin_unlock_irq(&head->lock);
-+	}
-+}
-+
- static void io_waitid_complete(struct io_kiocb *req, int ret)
- {
- 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
-@@ -125,6 +141,7 @@ static void io_waitid_complete(struct io
- 	lockdep_assert_held(&req->ctx->uring_lock);
- 
- 	hlist_del_init(&req->hash_node);
-+	io_waitid_remove_wq(req);
- 
- 	ret = io_waitid_finish(req, ret);
- 	if (ret < 0)
-@@ -135,7 +152,8 @@ static void io_waitid_complete(struct io
- static bool __io_waitid_cancel(struct io_ring_ctx *ctx, struct io_kiocb *req)
- {
- 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
--	struct io_waitid_async *iwa = req->async_data;
-+
-+	lockdep_assert_held(&req->ctx->uring_lock);
- 
- 	/*
- 	 * Mark us canceled regardless of ownership. This will prevent a
-@@ -147,9 +165,6 @@ static bool __io_waitid_cancel(struct io
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
- 		return false;
- 
--	spin_lock_irq(&iw->head->lock);
--	list_del_init(&iwa->wo.child_wait.entry);
--	spin_unlock_irq(&iw->head->lock);
- 	io_waitid_complete(req, -ECANCELED);
- 	io_req_queue_tw_complete(req, -ECANCELED);
- 	return true;
-@@ -251,8 +266,7 @@ static void io_waitid_cb(struct io_kiocb
- 				io_waitid_drop_issue_ref(req);
- 				return;
- 			}
+-static void trace_create_maxlat_file(struct trace_array *tr,
+-				     struct dentry *d_tracer)
+-{
+-	INIT_WORK(&tr->fsnotify_work, latency_fsnotify_workfn);
+-	init_irq_work(&tr->fsnotify_irqwork, latency_fsnotify_workfn_irq);
+-	tr->d_max_latency = trace_create_file("tracing_max_latency",
+-					      TRACE_MODE_WRITE,
+-					      d_tracer, tr,
+-					      &tracing_max_lat_fops);
+-}
 -
--			remove_wait_queue(iw->head, &iwa->wo.child_wait);
-+			/* fall through to complete, will kill waitqueue */
- 		}
- 	}
+ __init static int latency_fsnotify_init(void)
+ {
+ 	fsnotify_wq = alloc_workqueue("tr_max_lat_wq",
+@@ -1885,14 +1871,22 @@ void latency_fsnotify(struct trace_array
+ 	 */
+ 	irq_work_queue(&tr->fsnotify_irqwork);
+ }
++#endif /* !LATENCY_FS_NOTIFY */
  
+-#else /* !LATENCY_FS_NOTIFY */
+-
+-#define trace_create_maxlat_file(tr, d_tracer)				\
+-	trace_create_file("tracing_max_latency", TRACE_MODE_WRITE,	\
+-			  d_tracer, tr, &tracing_max_lat_fops)
++static const struct file_operations tracing_max_lat_fops;
+ 
++static void trace_create_maxlat_file(struct trace_array *tr,
++				     struct dentry *d_tracer)
++{
++#ifdef LATENCY_FS_NOTIFY
++	INIT_WORK(&tr->fsnotify_work, latency_fsnotify_workfn);
++	init_irq_work(&tr->fsnotify_irqwork, latency_fsnotify_workfn_irq);
+ #endif
++	tr->d_max_latency = trace_create_file("tracing_max_latency",
++					      TRACE_MODE_WRITE,
++					      d_tracer, tr,
++					      &tracing_max_lat_fops);
++}
+ 
+ /*
+  * Copy the new maximum trace into the separate maximum-trace
+@@ -2027,7 +2021,9 @@ update_max_tr_single(struct trace_array
+ 	__update_max_tr(tr, tsk, cpu);
+ 	arch_spin_unlock(&tr->max_lock);
+ }
+-
++#else /* !CONFIG_TRACER_MAX_TRACE */
++static inline void trace_create_maxlat_file(struct trace_array *tr,
++					    struct dentry *d_tracer) { }
+ #endif /* CONFIG_TRACER_MAX_TRACE */
+ 
+ struct pipe_wait {
+@@ -9720,9 +9716,7 @@ init_tracer_tracefs(struct trace_array *
+ 
+ 	create_trace_options_dir(tr);
+ 
+-#ifdef CONFIG_TRACER_MAX_TRACE
+ 	trace_create_maxlat_file(tr, d_tracer);
+-#endif
+ 
+ 	if (ftrace_create_function_files(tr, d_tracer))
+ 		MEM_FAIL(1, "Could not allocate function filter files");
 
 
