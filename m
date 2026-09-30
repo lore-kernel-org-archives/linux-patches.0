@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330F94EA38C;
-	Wed, 30 Sep 2026 15:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBD7501F21;
+	Wed, 30 Sep 2026 15:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782575; cv=none; b=SRNVv89sGX9hJQGeHaugfaMB4GCp+4kH0DSFLLFdSMK3DNpwpbDW9t2sIrrWBWg2G8ziY+hWs0VmFHn/IpeAZUhQsovjMSWz/Qs7wjqo3nsQezYek/VclQbcatDrUDNWlcNZGk+7nt0yEYMfhOzbDevXtEs4P68qXxFIoniAoZs=
+	t=1790782576; cv=none; b=mcBR7OwTxP1s4C0EICIi7UtDjFno6cn/dP8VKKjyzDTd3EgNQZvJjTHFnzgGGIYZoq/POuzcqkhl5isKjbhEA/DyjVo0MC7XwrjGYMh40CdXmENEhwsHSTsmQmtWg+hvGBQVB7DPfkkGCxrRrFQQ8S6iMDlnbjlHnARnfBCQ6H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790782575; c=relaxed/simple;
-	bh=kOPevWrzVHvvWMeN+hhmikqTZO4fSXdaJ26TXS6n1io=;
+	s=arc-20240116; t=1790782576; c=relaxed/simple;
+	bh=5tc2uR0eET0lYWPJwnVdB2UhFaqvgItLUaVUg7dwCIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMT5UoZten038hK2KTKdUshNTUw25QKAgb2VXR6i/IyxunW0WTuKFWJQdRhwRiVEjUaRIpxF6v7s72WjaJklz9+JuzEjGQI/0lemAuO2sStWCKt71mBqztOXuvqT+Rgx682f4tYrkxB1OikWkXxp69i5gugco+2xd8mlWw8UD1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3DBUSgY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=f4FBCvpMgT75KpcuG6pm8qiFYwDKs4/lN+85o+Jf4HT2pgjuf6gBF5dWhMUSgV5fuquqGFg5ElwpP+UXMMMcZfc+Am/Ox+zsfeFdkaD3EF4PZOIOErat+cfVps0EOf3mVM1SBPdW1TA7+t6jUxlCuTIBGHMHzoYoqLLapX/uyfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsAHDLgW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3DBUSgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1C71F000FF;
-	Wed, 30 Sep 2026 15:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsAHDLgW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FC51F00893;
+	Wed, 30 Sep 2026 15:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782564;
-	bh=qlUozxIvOMNoPlrJk+0w9fpv+/5IlwPsZZY8jlFXRys=;
+	s=korg; t=1790782572;
+	bh=0BJd/1VEWLlCQxCzZmc0xCspB6+QgaPXCYCOHr5F+Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q3DBUSgYoMW5w4j7Pgcc78ayi+lSMT3DjcSUfvNHAcjNvY2FL8LXjLUauf8xcRD/J
-	 cn1wxwCfv2tDTeqWHqskhVayCK3hSceXvv/fm4MAm5QOMygV+ntG3wHSarQQbH/X3n
-	 78NQlMZOPRKF/oh3oUFZAcxRugTRa57HmPQmAUjA=
+	b=MsAHDLgWgwC4Us16MF7616OlA4dKeQg5RR0WJ6Q+krj7DgciBCg0wN5NIq83ReFDU
+	 6PmeU9sWwPgunC4SQA0jMxcVVUtDOI2i0k6Jij9b1/HSoMsMkPX3/IJwmnFQoyGkIw
+	 njBLTOY+zBa+G9L2fATpkJoNaoyFBTUgkCDcFUSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liyouhong <liyouhong@kylinos.cn>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Simon Xue <xxm@rock-chips.com>,
+	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/595] ata: ahci: fail probe if BAR too small for claimed ports
-Date: Wed, 30 Sep 2026 17:19:44 +0200
-Message-ID: <20260930152349.695178752@linuxfoundation.org>
+Subject: [PATCH 5.10 093/595] iommu/rockchip: disable fetch dte time limit
+Date: Wed, 30 Sep 2026 17:19:46 +0200
+Message-ID: <20260930152349.740669503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -46,86 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: liyouhong <liyouhong@kylinos.cn>
+From: Simon Xue <xxm@rock-chips.com>
 
-[ Upstream commit c4086c6e1af757e1ff26fa2d2926b3ec0195de79 ]
+[ Upstream commit 8d4346ecd4950ae08cc76a6de327c264e846758c ]
 
-When an AHCI controller is disabled in BIOS, its HOST_CAP register may
-contain a bogus value, e.g. 0xFFFFFFFF.
+Disable the Bit 31 of the AUTO_GATING iommu register, as it causes
+hangups with the RGA3 (Raster Graphics Acceleration 3) peripheral.
+The RGA3 register description of the TRM already states that the bit
+must be set to 1. The vendor kernel sets the bit unconditionally to
+1 to fix VOP (Video Output Processor) screen black issues. This patch
+squashes the 2 vendor kernel commits with the following commit messages:
 
-Since CAP.NP (Number of Ports) is a zeroes based 5-bit register field,
-a value of 0x1f means 32 ports. If CAP.NP claims more ports than can
-physically fit within the mapped BAR region, accessing port registers
-beyond the BAR boundary causes a kernel panic.
+Master fetch data and cpu update page table may work in parallel, may
+have the following procedure:
 
-Add validation in ahci_init_one() to check that the BAR size is
-sufficient for the number of ports claimed in CAP.NP. The check
-calculates the required MMIO size as:
+	master                  cpu
+	fetch dte               update page tabl
+	        |                       |
+	(make dte invalid)  <-  zap iotlb entry
+	        |                       |
+	fetch dte again
+	(make dte invalid)  <-  zap iotlb entry
+	        |                       |
+	fetch dte again
+	(make dte invalid)  <-  zap iotlb entry
+	        |                       |
+	fetch dte again
+	(make iommu block)  <-  zap iotlb entry
 
-  required_size = 0x100 (global registers) + max_ports * 0x80
+New iommu version has the above bug, if fetch dte consecutively four
+times, then it will be blocked. Fortunately, we can set bit 31 of
+register MMU_AUTO_GATING to 1 to make it work as old version which does
+not have this issue.
 
-If required_size exceeds the actual BAR size, the probe fails with
--ENODEV, preventing the panic and providing a clear error message.
+This issue only appears on RV1126 so far, so make a workaround dedicated
+to "rockchip,rv1126" machine type.
 
-Reported-by: liyouhong <liyouhong@kylinos.cn>
-Closes: https://lore.kernel.org/all/20260422080322.1006592-1-dayou5941@163.com/
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: liyouhong <liyouhong@kylinos.cn>
-[cassel: commit log]
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+iommu/rockchip: fix vop blocked and screen black on RK356X and RK3588
+
+RK3568 and RK3588 has the same issue as RV1126/RV1109 that caused by
+dte fetch time limit, So we can set BIT(31) of register 0x24 default
+to 1 as a workaround.
+
+Signed-off-by: Simon Xue <xxm@rock-chips.com>
+Signed-off-by: Sven Püschel <s.pueschel@pengutronix.de>
+Acked-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/iommu/rockchip-iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 48d22150528be..77c2b8b997cd1 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -1768,6 +1768,24 @@ static ssize_t remapped_nvme_show(struct device *dev,
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index 12551dc117148..b6a656260dea0 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -75,6 +75,8 @@
+ #define SPAGE_ORDER 12
+ #define SPAGE_SIZE (1 << SPAGE_ORDER)
  
- static DEVICE_ATTR_RO(remapped_nvme);
- 
-+static int ahci_validate_bar_size(struct pci_dev *pdev, int bar,
-+				  struct ahci_host_priv *hpriv)
-+{
-+	u32 cap = readl(hpriv->mmio + HOST_CAP);
-+	unsigned int max_ports = ahci_nr_ports(cap);
-+	u32 last_port_end = 0x100 + (max_ports * 0x80);
-+	resource_size_t bar_size = pci_resource_len(pdev, bar);
++#define DISABLE_FETCH_DTE_TIME_LIMIT BIT(31)
 +
-+	if (last_port_end > bar_size) {
-+		dev_warn(&pdev->dev,
-+			 "BAR%d too small for %u ports (last port ends at %#x, BAR %pa)\n",
-+			 bar, max_ports, last_port_end, &bar_size);
-+		return -ENODEV;
-+	}
-+
-+	return 0;
-+}
-+
- static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- {
- 	unsigned int board_id = ent->driver_data;
-@@ -1872,6 +1890,10 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+  /*
+   * Support mapping any size that fits in one page table:
+   *   4 KiB to 4 MiB
+@@ -864,6 +866,7 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
+ 	struct iommu_domain *domain = iommu->domain;
+ 	struct rk_iommu_domain *rk_domain = to_rk_domain(domain);
+ 	int ret, i;
++	u32 auto_gate;
  
- 	hpriv->mmio = pcim_iomap_table(pdev)[ahci_pci_bar];
- 
-+	rc = ahci_validate_bar_size(pdev, ahci_pci_bar, hpriv);
-+	if (rc)
-+		return rc;
+ 	ret = clk_bulk_enable(iommu->num_clocks, iommu->clocks);
+ 	if (ret)
+@@ -882,6 +885,11 @@ static int rk_iommu_enable(struct rk_iommu *iommu)
+ 			       rk_domain->dt_dma);
+ 		rk_iommu_base_command(iommu->bases[i], RK_MMU_CMD_ZAP_CACHE);
+ 		rk_iommu_write(iommu->bases[i], RK_MMU_INT_MASK, RK_MMU_IRQ_MASK);
 +
- 	/* detect remapped nvme devices */
- 	ahci_remap_check(pdev, ahci_pci_bar, hpriv);
++		/* Workaround for iommu blocked, BIT(31) default to 1 */
++		auto_gate = rk_iommu_read(iommu->bases[i], RK_MMU_AUTO_GATING);
++		auto_gate |= DISABLE_FETCH_DTE_TIME_LIMIT;
++		rk_iommu_write(iommu->bases[i], RK_MMU_AUTO_GATING, auto_gate);
+ 	}
  
+ 	ret = rk_iommu_enable_paging(iommu);
 -- 
 2.53.0
 
