@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD9E51C048;
-	Wed, 30 Sep 2026 17:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6525349A3;
+	Wed, 30 Sep 2026 17:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790020; cv=none; b=s+Aeu9tY/1MhPXOHGQLEC+TMp6x/fIWRAqGBjlwpUY6V7HSV5t7n4rAUX/j8ZK2hEssBkGROkFGcy2MFA1w5hJ+nHY1NGcJ3VzSY/gvLHdzVJlv0RaidcH1mw5o2r0GZVypJqMUk7KOM2cyMLcTFVmthjf/lVPzOVNd0XFoW+fE=
+	t=1790790024; cv=none; b=iipRXKIB/XDaGmNrcXKycBs6pgRdmdZXdya9SQTLzqoDL6Non6b/VlBYkLZXOgLdcGpiEqC3nhQE/Z0+IMk0RklN0INWWd3ndFElBsknUjml6VY/4/15CXPuSIBFMZkYCPTr7EZ9r6sIhCWJWfgmzD3glE5Ev8J1ovaEKDdri7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790020; c=relaxed/simple;
-	bh=yal3gO8UvEGhliqtr+eFwiTWLL9MOpsaInce81DFsDA=;
+	s=arc-20240116; t=1790790024; c=relaxed/simple;
+	bh=tTvPHtq2TaA88WSih3GM0WfsFSgKQlFPYkZ8lC97w18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/ky1Hz9MJkNRqZ5ztHfHLqbBjchs+vhNzXYabRx47Gdhu4/cOKpz6acd60e8ogJLVTq7kSk98HEdzJNKR7nYVuMGD7jw/EVU0fA9kPqKmYgShGwXQGpGyeLrzmlWiEJ/lmODnNSWgKnoKYu/4w/IRUAZh7U1UqI2lHKIwOjeHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4ZiOGzF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JMvfVJe77Hca4A4JM13V40uhN31ZWL8IGNgXPGYQBA7HLzBAZUrEX3eRzZ8CGeI3HqilY3m9dtA7JaFr/dt2xsHIaAvBxDizEc/65XkpQmSBD3RZsjY5fDHx/QoB5Udtet4zBdsTWxLcoAUJ1swWo3OKmXHjxiuB0eKTc91FDLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGBdl/Db; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4ZiOGzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FC31F000FF;
-	Wed, 30 Sep 2026 17:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGBdl/Db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FA51F000FF;
+	Wed, 30 Sep 2026 17:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790019;
-	bh=XRro8EBuVsm9Ba+/pySUIK4nnuNaMS5ARE2N+d+nWfg=;
+	s=korg; t=1790790022;
+	bh=JSI/51at+T4hDN6Mpcog5lrHELhUk67zH3/Emnp2T5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V4ZiOGzF6UQYp7wAsInOj51FKLjHQWdKbiltateuwV4GuqOeZz+NKJG23v2I9Ir88
-	 5Jc10GLl79dUKaX0rtQOs6NTc/hcPjwgiZmjnB/sVBmPCSwsClPOhZqabCFgg/k+KV
-	 imhmR4mhYvI1CQ9U5tFWQKjjArguOLbj4LurjoMs=
+	b=cGBdl/DbO0jEVWZtw9fhUx10FYYHPAV8Jeu/FL9ZpRzVUTLvoVZITcK8g7r6ghLK/
+	 fzpooUEKeaZgMwc+6jLf4Dvbpu5dpCXo5pJS+h16BBTMozWTySlpGc7/n9C5/IrfPo
+	 d4+8nud9PL3Qvice8X6Sz1dtOdZs6lGh6rYqeoak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 680/877] scsi: qla2xxx: Skip vport under deletion in report ID acquisition
-Date: Wed, 30 Sep 2026 17:26:31 +0200
-Message-ID: <20260930152429.349396038@linuxfoundation.org>
+Subject: [PATCH 6.12 681/877] scsi: qla2xxx: Fix soft lockup polling continuation IOCB signature
+Date: Wed, 30 Sep 2026 17:26:32 +0200
+Message-ID: <20260930152429.370143731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152414.738996857@linuxfoundation.org>
 References: <20260930152414.738996857@linuxfoundation.org>
@@ -54,50 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 23582731afa35031c94fadb71a4f3b4afd094649 ]
+[ Upstream commit d7e3fa7d06bf7fcaac186d3c4d635caac166d36c ]
 
-qla24xx_report_id_acquisition() format-1 handling walks ha->vp_list under
-vport_slock, takes a vref_count on the matching vport and calls
-qla_update_host_map() to register its port id.
+qla27xx_copy_multiple_pkt() and qla27xx_copy_fpin_pkt() poll
+rsp_q->ring_ptr->signature for RESPONSE_PROCESSED (0xDEADDEAD) to decide
+whether the next continuation IOCB has arrived, spinning on cpu_relax()
+without advancing the ring or decrementing the entry count while it has
+not. response_t::signature lives at byte offset 60, but a continuation
+IOCB (sts_cont_entry_t / struct sts_cont_entry_ext) carries raw FC frame
+payload at that offset (data[56..59]). A received frame whose payload
+bytes happen to equal 0xDEADDEAD is therefore misread as "not yet
+arrived", and the loop spins forever in interrupt/DPC context, causing a
+CPU soft lockup.
 
-A vport teardown via qla24xx_vport_delete() sets VPORT_DELETE, then
-qla24xx_disable_vp() removes the vport from the host_map btree and zeroes
-vha->d_id (RESET_AL_PA). The vport is only unlinked from vp_list later,
-in qla24xx_deallocate_vp_id(), which clears vp_map[idx] (RESET_VP_IDX)
-but does not touch host_map. In the window in between, report ID
-acquisition can still find the vport on vp_list and call
-qla_update_host_map(); with d_id already zeroed it takes the
-btree_insert32() path and re-inserts the dying vport into host_map.
-Nothing cleans that entry afterwards, so once scsi_host_put() frees the
-vha a later host_map lookup dereferences freed memory.
+The poll is also unnecessary: callers of qla27xx_copy_multiple_pkt()
+(PT_LS4_UNSOL and the NVMe purls path) already gate on
+qla_chk_cont_iocb_avail(), which guarantees all entry_count IOCBs are
+present before copying begins. The sibling helper
+__qla_copy_purex_to_buffer() already drops the signature poll and relies
+on the entry_type == STATUS_CONT_TYPE guard instead.
 
-Skip a vport that has VPORT_DELETE set before taking the reference, so it
-is neither re-registered nor scheduled for DPC re-registration. This
-mirrors the existing guard in qla2x00_alert_all_vps().
+Remove the signature busy-wait from both helpers, keeping the entry_type
+guard, and gate the FPIN path with qla_chk_cont_iocb_avail() so it defers
+and re-processes on the next interrupt once all continuation IOCBs have
+arrived, mirroring the ELS_AUTH_ELS and PT_LS4_UNSOL arms. With this the
+signature field is never read on a continuation IOCB, eliminating the
+payload-aliasing lockup.
 
-Fixes: 41dc529a4602 ("qla2xxx: Improve RSCN handling in driver")
+Fixes: 9f2475fe7406 ("scsi: qla2xxx: SAN congestion management implementation")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-22-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-15-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ Adjusted context to use rptid_entry->vp_idx instead of the missing local vp_idx variable. ]
+[ replaced unavailable qla_rsp_ring_rewind_to() with direct ring pointer and index assignments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_isr.c |   33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4147,6 +4147,8 @@ qla24xx_report_id_acquisition(scsi_qla_h
- 			spin_lock_irqsave(&ha->vport_slock, flags);
- 			list_for_each_entry(vp, &ha->vp_list, list) {
- 				if (rptid_entry->vp_idx == vp->vp_idx) {
-+					if (test_bit(VPORT_DELETE, &vp->dpc_flags))
-+						break;
- 					found = 1;
- 					atomic_inc(&vp->vref_count);
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -921,14 +921,6 @@ qla27xx_copy_multiple_pkt(struct scsi_ql
+ 
+ 	do {
+ 		while ((total_bytes > 0) && (entry_count_remaining > 0)) {
+-			if (rsp_q->ring_ptr->signature == RESPONSE_PROCESSED) {
+-				ql_dbg(ql_dbg_async, vha, 0x5084,
+-				       "Ran out of IOCBs, partial data 0x%x\n",
+-				       buffer_copy_offset);
+-				cpu_relax();
+-				continue;
+-			}
+-
+ 			new_pkt = (sts_cont_entry_t *)rsp_q->ring_ptr;
+ 			*pkt = new_pkt;
+ 
+@@ -1205,14 +1197,6 @@ qla27xx_copy_fpin_pkt(struct scsi_qla_ho
+ 
+ 	do {
+ 		while ((total_bytes > 0) && (entry_count_remaining > 0)) {
+-			if (rsp_q->ring_ptr->signature == RESPONSE_PROCESSED) {
+-				ql_dbg(ql_dbg_async, vha, 0x5084,
+-				       "Ran out of IOCBs, partial data 0x%x\n",
+-				       buffer_copy_offset);
+-				cpu_relax();
+-				continue;
+-			}
+-
+ 			new_pkt = (sts_cont_entry_t *)rsp_q->ring_ptr;
+ 			*pkt = new_pkt;
+ 
+@@ -4142,9 +4126,24 @@ process_err:
+ 					       "SCM not active for this port\n");
  					break;
+ 				}
++				if (qla_chk_cont_iocb_avail(vha, rsp,
++				    (response_t *)pkt, rsp_in)) {
++					/*
++					 * ring_ptr and ring_index were
++					 * pre-incremented above. Reset them
++					 * back to current. Wait for next
++					 * interrupt with all IOCBs to arrive
++					 * and re-process.
++					 */
++					rsp->ring_ptr = (response_t *)pkt;
++					rsp->ring_index = cur_ring_index;
++
++					ql_dbg(ql_dbg_init, vha, 0x5095,
++					    "Defer processing FPIN...\n");
++					return;
++				}
+ 				pure_item = qla27xx_copy_fpin_pkt(vha,
+ 							  (void **)&pkt, &rsp);
+-				__update_rsp_in(is_shadow_hba, rsp, rsp_in);
+ 				if (!pure_item)
+ 					break;
+ 				qla24xx_queue_purex_item(vha, pure_item,
 
 
