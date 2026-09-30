@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DB92AEEB;
-	Wed, 30 Sep 2026 16:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CD038B7A5;
+	Wed, 30 Sep 2026 16:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790784048; cv=none; b=FOV9bju9v3V4Km+kGamf7WVrOnzwcYOHdUSxVQyFMNMmZynJLgohxYevlIm6JoytiRSsTLd7B0QaUV26s2nB8KFyvOmCLYe1c6d4ptYXc98q/fwuPhQjp4GCMUZED97bB1cvibWEMwQX5bjnA8pmPJc1TgY+MIrMwwVFqv7NfZA=
+	t=1790784051; cv=none; b=ntVpx7IJdniJ6qHYkB1kR4tTatcNJGMTKkSGriP0bmZi2LmVyZz5xiii869XdJIxShie6+38XLFowSDjfSCcUVgyxFvnkdDYxS9EGOLkFJUaGmConn2Oc723bGhTfwDsHbXHXxUsOyOpvS4f4cP7r/SZ46pUU3WqQauce4y84NY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790784048; c=relaxed/simple;
-	bh=3ymEiSY8yGfyOIBm0+7j2k70lGHkPDC4KUu/KqHEr5s=;
+	s=arc-20240116; t=1790784051; c=relaxed/simple;
+	bh=ArIgZKfBQ74HoMxNm3EFdxonOMrVvaCTDtDxroDNPCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndC0Eoe38WhOWwryjR1Dq+0s8vCZ3bPNzKRdB8/hVYCyXP+zb+6DinkIC1pT/lhUU9LO04OeJ/Pt2BGWGohR8OG9dkXDAc52QtsuJGHuUQdE8fEYPetfrBC+FLxbig+L0+65wAHGNYFF3Q1AODkoXlwBi0O10ubK00xLkDcGoV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLIrWhP/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bQWJIJYiHkCm3wkjE2chlJsQEyFviBj6cViGQhuUfvZx21FAFL+cK0elrAYxDreTOgERSTfthKZJC0sNaU1cOH4b3If+VxgEmd8TJ/9e7Yn3KZ5nhSlEHRILiABHMytJv6eEwjsvqW6RmQ3G+z6VdnpRWu1CHxKd+zjVacSIPxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIUNU1Z2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLIrWhP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBAC1F000FF;
-	Wed, 30 Sep 2026 16:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIUNU1Z2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1841F00893;
+	Wed, 30 Sep 2026 16:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790784045;
-	bh=3zFxe34jwlChwS96cob1WSTuq38LnBHbRXr4qUl3P4s=;
+	s=korg; t=1790784048;
+	bh=K0k1lDH7d3zvzLHuZ//Igbt9FbrX0/HBrXATTTxk8DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hLIrWhP/3CwS+AQYcX0FX+Zq2W4CtweN5J4b3O2bMC25UYNdnSlHubxomszyM8nLD
-	 y3j7vzsotLcbdhtAhwvG5pFSMykarL2Xd6YbSkKa0qZ4uBV3jKVgZU1WVkQ4QG+YOE
-	 kGR+dzKFXTVk0nn4/upxvgh0UAVOnxe+hMx/Re60=
+	b=JIUNU1Z2i3ZmVHRccPVf15C56oBPruJ4EU3F3g1s1ozpX0hLBAv0Qe3zD9kb2tTDk
+	 IpYHQdWiMTCO1oA9S+6tPHi8DT5atkdAidOdALx1TLDTT/KgVXdrbgn425UrKR+M40
+	 +GRFhpsuqQebHjr8Fv78VmpKQJSBLjBQV0f1Ij0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/982] thunderbolt: Release request if tb_cfg_request() fails in __tb_xdomain_response()
-Date: Wed, 30 Sep 2026 17:12:34 +0200
-Message-ID: <20260930152417.178570968@linuxfoundation.org>
+Subject: [PATCH 6.1 002/982] bus: fsl-mc: wait for the MC firmware to complete its boot
+Date: Wed, 30 Sep 2026 17:12:18 +0200
+Message-ID: <20260930152416.832721866@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152416.775402466@linuxfoundation.org>
 References: <20260930152416.775402466@linuxfoundation.org>
@@ -50,46 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 4c63f29872cb444b33665348bbd2f45cab06afcd ]
+[ Upstream commit 208858b1b48eba83d073542372329cf8ed606526 ]
 
-If tb_cfg_request() fails setting up the request (for example the
-control channel is shut down already) it returns an error without
-calling the callback. To avoid leaking that memory, call
-tb_cfg_request_put() if tb_cfg_request() fails.
+There are use cases in which the Management Complex firmware boot
+process is started by the bootloader which does not wait for the boot to
+complete. This is mainly done in order to reduce the overall boot time
+of a DPAA2 based SoC.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+In this kind of circumstance, the fsl-mc bus driver needs to make sure
+that the MC firmware boot process is finished before proceeding to the
+usual operations such as interrogating the firmware to gather all
+existent DPAA2 objects, creating the fsl-mc devices on the bus etc.
+
+Add this kind of check early in the boot process of the fsl-mc bus and
+defer the probe in case the firmware is still in its boot process.
+
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20260401144508.3062019-1-ioana.ciornei@nxp.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/xdomain.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c | 46 +++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 371911e2ae428..6a003316b878b 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -138,6 +138,7 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
- 				 size_t size, enum tb_cfg_pkg_type type)
- {
- 	struct tb_cfg_request *req;
-+	int ret;
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index 6f8e9b40371a2..512026036c578 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -66,6 +66,13 @@ struct fsl_mc_addr_translation_range {
+ #define GCR1_P1_STOP	BIT(31)
+ #define GCR1_P2_STOP	BIT(30)
  
- 	req = tb_cfg_request_alloc();
- 	if (!req)
-@@ -149,7 +150,11 @@ static int __tb_xdomain_response(struct tb_ctl *ctl, const void *response,
- 	req->request_size = size;
- 	req->request_type = type;
- 
--	return tb_cfg_request(ctl, req, response_ready, req);
-+	ret = tb_cfg_request(ctl, req, response_ready, req);
-+	if (ret)
-+		tb_cfg_request_put(req);
++#define FSL_MC_GSR		0x8
++#define FSL_MC_GSR_BOOT_DONE	BIT(0)
++#define FSL_MC_GSR_MCS_MASK	GENMASK(7, 0)
++#define FSL_MC_GSR_MCS_ERR_MASK	GENMASK(7, 1)
++#define FSL_MC_GSR_BC_MASK	GENMASK(15, 8)
++#define FSL_MC_GSR_BC_SHIFT	8
 +
-+	return ret;
+ #define FSL_MC_FAPR	0x28
+ #define MC_FAPR_PL	BIT(18)
+ #define MC_FAPR_BMT	BIT(17)
+@@ -1104,6 +1111,41 @@ static int get_mc_addr_translation_ranges(struct device *dev,
+ 	return 0;
  }
  
- /**
++static u32 fsl_mc_read_gsr(struct fsl_mc *mc)
++{
++	return readl(mc->fsl_mc_regs + FSL_MC_GSR);
++}
++
++static int fsl_mc_firmware_check(struct platform_device *pdev)
++{
++	struct fsl_mc *mc = platform_get_drvdata(pdev);
++	u32 gsr, boot_done, boot_code, mcs;
++
++	gsr = fsl_mc_read_gsr(mc);
++	boot_code = (gsr & FSL_MC_GSR_BC_MASK) >> FSL_MC_GSR_BC_SHIFT;
++	if (boot_code == 0xDD) {
++		dev_err(&pdev->dev,
++			"fsl-mc: DPL processing was not started, DPAA2 will not work!\n");
++		return -EOPNOTSUPP;
++	}
++
++	boot_done = gsr & FSL_MC_GSR_BOOT_DONE;
++	if (!boot_done) {
++		dev_dbg(&pdev->dev,
++			"fsl-mc: DPL processing in progress, defer probe\n");
++		return -EPROBE_DEFER;
++	}
++
++	mcs = gsr & FSL_MC_GSR_MCS_MASK;
++	if (mcs & FSL_MC_GSR_MCS_ERR_MASK) {
++		dev_err(&pdev->dev,
++			"fsl-mc: MC boot completed with error 0x%x\n", mcs);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ /*
+  * fsl_mc_bus_probe - callback invoked when the root MC bus is being
+  * added
+@@ -1168,6 +1210,10 @@ static int fsl_mc_bus_probe(struct platform_device *pdev)
+ 		       mc->fsl_mc_regs + FSL_MC_GCR1);
+ 	}
+ 
++	error = fsl_mc_firmware_check(pdev);
++	if (error)
++		return error;
++
+ 	/*
+ 	 * Get physical address of MC portal for the root DPRC:
+ 	 */
 -- 
 2.53.0
 
