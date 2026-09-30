@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEA33BD22C;
-	Wed, 30 Sep 2026 19:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F6A341ADD;
+	Wed, 30 Sep 2026 19:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796452; cv=none; b=D6mgdMACGtSMKRabtX5egk001VMy0dnTmqfocgdFbN/OVYBZC1Qv8wh1Wo5t1xDIZCELuxkOJ2ZFPQM6P71y7Nj1HS0tVl6ug9wF5arAZq0403HywxMvIbFVK5VLIgSQD+bCQwn+GsyQVCjrEDJ6+wKakT8+7cF8JrUUgDRZS34=
+	t=1790796455; cv=none; b=iPH4i2nbBnt7LAI3FKak4e7XfTpIU8CYFR08JCJqlBji3DG1qmAFqZQr1c5hMPiVxO9NmTAxEBODi594bxnjrWDi9OwV3i2RK/dLvpB5gbMs9PwfTOkz3+eBbAuM6CMcD3oLEgalqvY3iKxovSHzZdtHaK1Zb3hGW0x71dwCQJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796452; c=relaxed/simple;
-	bh=dy6ruZn1GXLWkSheC1zfVjWnmhw5q7VM/uUJ0x3Mib4=;
+	s=arc-20240116; t=1790796455; c=relaxed/simple;
+	bh=CHuDPt1ex1RFFT4IDVaZz5DyvhuWQ6TvamFpOP/TjQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bvn0oGB9ds7zoXTwlI3xTC9tpnk0NSjVGuP9uTJ+FOd6hzSFf+7SUOvuE4rKhbbr2aebc88zDvbfjgp6wComEoaCr5DR6TZFz0h051k5bGod7amjcYHwZN3MArBLy4PdgY5caMuamhHj5lrzU3dFwffKdhj8p0Dyaj1Z18cEtNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/CIuR4a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fr4cgn3errbwTCLjeklgxAVO2Rd3+e+Rfh2xIWqc569p43WwOP4w8dJWfEiRtsfM6S78P8Ra+dIXCHDIA3EAsfZ8Yyqa/lWVD/iI5zv/NhiEtIZG72EFWi8odX5KnjsjTbOfFAwlBjFpSy0mSDlqBIVRgWC0sYpPYIOpRBxzW2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMp4TBzM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/CIuR4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1111F000FF;
-	Wed, 30 Sep 2026 19:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMp4TBzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A451F000FF;
+	Wed, 30 Sep 2026 19:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790796451;
-	bh=ocxVNJfq22fWDtlQO2rOWIVPYtF2b6ZqTOhEdKQZuqE=;
+	s=korg; t=1790796454;
+	bh=q7LqKRTgeFfAsYebvI8K+wAWX412BLU9C6O2aAQ27e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/CIuR4a3z2lMXkhcpw9uLl9F8p7FXm8GVR01dVBJ/9yuOjmL11iplJYTRDqbqARs
-	 FU3/v8ACaI3mCk4xkJ3W8jl7Y/+xUA6vpMXmTIn0Bld+cpKXB/dm10Ax6PmCv720YG
-	 I4vNkDhRmbiHymf24VsxtyIH+ixYTnFDZnOb/TmA=
+	b=GMp4TBzMBfAXACPOrrLvGx+0p30QRPyjacmzEeYioaWLdazDi6+l7+vOcuXqJ1O/b
+	 qm3MS4sHAiJn5kfq0tLlhn1MxRApIGzAgBJL8Qy2dMTiD3/syrHiK9N6MiKsnkdZl8
+	 qjKMwehgD1EUC+fBfIL231iIoYDYQ1t7FY9OnBek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 0919/1193] wifi: libertas_tf: fix UAF in lbtf_free_adapter()
-Date: Wed, 30 Sep 2026 17:26:43 +0200
-Message-ID: <20260930152454.658319136@linuxfoundation.org>
+	syzbot+09103639e39c989e3ed3@syzkaller.appspotmail.com,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 0902/1193] Input: synaptics-rmi4 - fix GPF in suspend and resume when unbound
+Date: Wed, 30 Sep 2026 17:26:26 +0200
+Message-ID: <20260930152454.282632601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -50,41 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit bbb9a0ab96d44a64529aafc7a16de460a1712f6a upstream.
+commit fe10579b6dc3f0dac61e51e1797cacbba5039ac2 upstream.
 
-lbtf_free_adapter() calls lbtf_free_cmd_buffer() to free the command
-buffers before calling timer_delete_sync() to wait for the command
-timer callback.  If the timer callback (command_timer_fn) is already
-running when lbtf_free_cmd_buffer() frees the command array, the
-callback dereferences priv->cur_cmd->cmdbuf which points to freed
-memory.
+Transport drivers (such as rmi_i2c and rmi_spi) invoke
+rmi_driver_suspend() and rmi_driver_resume() on their child rmi_dev
+device during system power management events. However, transport drivers
+are fully registered and operational even if the physical RMI driver
+failed to bind or probe the rmi_dev device.
 
-Swap the order so that timer_delete_sync() runs first, ensuring any
-in-flight callback has completed before the command buffers are freed.
+When rmi_driver_suspend() or rmi_driver_resume() is called on an unbound
+rmi_dev, dev_get_drvdata() returns NULL. Calling rmi_disable_irq() or
+rmi_enable_irq() without driver data attached causes a NULL pointer
+dereference and General Protection Fault when attempting to lock
+data->enabled_mutex.
 
-Fixes: 06b16ae53192 ("libertas_tf: main.c, data paths and mac80211 handlers")
+Fix this by checking if driver data is attached to rmi_dev in
+rmi_driver_suspend() and rmi_driver_resume(), exiting early if
+no driver data is present.
+
+Fixes: 2b6a321da9a2 ("Input: synaptics-rmi4 - add support for Synaptics RMI4 devices")
+Reported-by: syzbot+09103639e39c989e3ed3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=09103639e39c989e3ed3
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260815115724.920628-1-yijiangshan@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/anQe8UiyUR4x0flD@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas_tf/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/rmi4/rmi_driver.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/net/wireless/marvell/libertas_tf/main.c
-+++ b/drivers/net/wireless/marvell/libertas_tf/main.c
-@@ -173,8 +173,8 @@ static int lbtf_init_adapter(struct lbtf
- static void lbtf_free_adapter(struct lbtf_private *priv)
+--- a/drivers/input/rmi4/rmi_driver.c
++++ b/drivers/input/rmi4/rmi_driver.c
+@@ -946,6 +946,15 @@ int rmi_driver_suspend(struct rmi_device
  {
- 	lbtf_deb_enter(LBTF_DEB_MAIN);
--	lbtf_free_cmd_buffer(priv);
- 	timer_delete_sync(&priv->command_timer);
-+	lbtf_free_cmd_buffer(priv);
- 	lbtf_deb_leave(LBTF_DEB_MAIN);
- }
+ 	int retval;
  
++	/*
++	 * Transport driver will try to suspend RMI device even if physical
++	 * driver did not bind to the RMI device, because transport device
++	 * (I2C, SPI) is fully registered and operational. Exit early if
++	 * there is no driver data attached to the RMI device.
++	 */
++	if (!dev_get_drvdata(&rmi_dev->dev))
++		return 0;
++
+ 	retval = rmi_suspend_functions(rmi_dev);
+ 	if (retval)
+ 		dev_warn(&rmi_dev->dev, "Failed to suspend functions: %d\n",
+@@ -960,6 +969,10 @@ int rmi_driver_resume(struct rmi_device
+ {
+ 	int retval;
+ 
++	/* Skip if not fully bound to RMI driver */
++	if (!dev_get_drvdata(&rmi_dev->dev))
++		return 0;
++
+ 	rmi_enable_irq(rmi_dev, clear_wake);
+ 
+ 	retval = rmi_resume_functions(rmi_dev);
 
 
