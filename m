@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81264376A09;
-	Wed, 30 Sep 2026 18:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2686C3B3BE1;
+	Wed, 30 Sep 2026 18:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790794323; cv=none; b=Zxh4ZIFRooRUuNXAVjYLRPIj5LTwseBLMu0mEQcyydPHuITBPx+dUx2tZuA8xE6rzKStRvR+UkCBTg/dSLXqo4WgkfAoYTDnaQkUzP6HeuY0GQZjYVU3Sbfv8b9sbDeEAsBH/luJSOO5l/efF8jMNIY/lI6KZtkdYYFxJds78TQ=
+	t=1790794326; cv=none; b=b8AaVYI/b/zkIVYsgUC5WMuxEL9vK/ydG/YYwxjit9WFqmdR/0u3BkRJIjMH99RbpeG/TvAO6vFrNEOg3UqPfZbjd6JBh4KWhhWxBZmAkfASe5qKQ5aLfWRfSxdDgcjUSL8mnlflIUosEOpF19SjoGBLk5DEWgV3/fcojU7qU44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790794323; c=relaxed/simple;
-	bh=xmG40S206AGj9Gbqu6pzbZveFFWl4mpEGL9E+QXcBCs=;
+	s=arc-20240116; t=1790794326; c=relaxed/simple;
+	bh=Y6IirX2i9lTBFI1z/92kjH8Hz1DdbgBIRQMR2UNGmnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8+c4i0mECNuFfOoLyptpEkTKBMuzdvglRgiqfZAENdfCbhOg/7Q7FhUXnVXmOyYukPxiTvTgiMPMDMErn95fJHZoM3oNVjeO2XDRF58KzYt6/Zu8tTh/vadvbb3Pbk3uvTKjsJjg8M6P3HVmfUB8VjgWDhmQMv0zbWRrM9UG1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fK7s5RxS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pzUekjjDQDOrGLC6G5yQa4QZATiQ5ZtpsUiWV2OCA2rk1DRuf+qUkWh3p+PQMJWmc2qIlS+Aq8oEiWSbJGGSmbMxe48GEfy/JMwNj66cISflLoKfhoLTyvNrevjIcAFG+mbDWsG3FKRfNQ7RPpnNikltHIRRoQi0yyg0ANj6AOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrdDJEid; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fK7s5RxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DE01F000FF;
-	Wed, 30 Sep 2026 18:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrdDJEid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8331F000FF;
+	Wed, 30 Sep 2026 18:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790794322;
-	bh=ygxn6pJMQj0xyHUahOgSZRw3d3/paJXhImASWqhno9Y=;
+	s=korg; t=1790794325;
+	bh=MORODLX80Bk6WkeavZHm4weWpGNT4s9sBxDybPYI/0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fK7s5RxSehgNGWdXadFPhseGVcfPqJzGb/imnuJq1MeJqlL7m3mG5/QSSbnXyJ8F+
-	 piUuyEOBpt0/i5ss+s4DFB3kSS9+3yMFLfJJQQ6hWsnFbkSGWt9p1kk3LGJZ0F5wdl
-	 bZY2owk4QcCDF4aLsXViECGqOhbeFwuRKvEcKGc0=
+	b=wrdDJEidkpDUtnUM1VDaTE2utznnSui0Yx1Rf0j1CJRTVVi+48hLR1g0w9KNC1oDK
+	 1GMjDW8ZouilT0luc2JfNxgzzZSVA44L4A9qYcMXVQHD3O3B7/34br/HyD2cq+QZDj
+	 F9y/uig+BgQP5BWFHyD2ZJatmHhqGgKktARVkSqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Shiwu Zhang <shiwu.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0170/1193] drm/amd/pm: bound pp_dpm_set_pp_table() memcpy
-Date: Wed, 30 Sep 2026 17:14:14 +0200
-Message-ID: <20260930152437.969179371@linuxfoundation.org>
+Subject: [PATCH 6.6 0171/1193] drm/amdgpu: fix buffer overflow during vBIOS update
+Date: Wed, 30 Sep 2026 17:14:15 +0200
+Message-ID: <20260930152437.991910680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -52,37 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Shiwu Zhang <shiwu.zhang@amd.com>
 
-[ Upstream commit f193e71fa9fab2e68ef85201b106e8f580d3a25b ]
+[ Upstream commit 6229898d46c0cbc238a6fe9f11c1ea12cf8bb9c5 ]
 
-The powerplay path allocates hardcode_pp_table once with kmemdup(...,
-soft_pp_table_size). memcpy(..., size) used the sysfs store count (up to
-PAGE_SIZE) with no upper bound, causing heap overflow. Reject
-writes where size exceeds soft_pp_table_size.
+Clamp the buffer postion to write by setting the bin attribute
+to the maximum buffer size so that VFS layer will block the
+out-of-bounds accessing.
 
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Shiwu Zhang <shiwu.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 3a454aab62ce8..413d73c1577be 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -680,6 +680,9 @@ static int pp_dpm_set_pp_table(void *handle, const char *buf, size_t size)
- 	if (!hwmgr || !hwmgr->pm_en)
- 		return -EINVAL;
- 
-+	if (size > hwmgr->soft_pp_table_size)
-+		return -EINVAL;
-+
- 	if (!hwmgr->hardcode_pp_table) {
- 		hwmgr->hardcode_pp_table = kmemdup(hwmgr->soft_pp_table,
- 						   hwmgr->soft_pp_table_size,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+index 2ef87646e6bb1..91eebf85596b7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp.c
+@@ -3694,7 +3694,7 @@ static ssize_t amdgpu_psp_vbflash_read(struct file *filp, struct kobject *kobj,
+  */
+ static struct bin_attribute psp_vbflash_bin_attr = {
+ 	.attr = {.name = "psp_vbflash", .mode = 0660},
+-	.size = 0,
++	.size = AMD_VBIOS_FILE_MAX_SIZE_B,
+ 	.write = amdgpu_psp_vbflash_write,
+ 	.read = amdgpu_psp_vbflash_read,
+ };
 -- 
 2.53.0
 
