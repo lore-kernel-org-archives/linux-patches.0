@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446473EB11D;
-	Wed, 30 Sep 2026 19:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E11D3C3F56;
+	Wed, 30 Sep 2026 19:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790795354; cv=none; b=GQmXUMBsu18RyIPEmbXmpyo+Yt6/amJD+UBOVuAYKbAWhUCgs/GgnNMV4mvV9ORV9YXtFO1p/z3gmvhJdYxNWun0SZlYttbyHRcDo33J5y3+rGOJrTto3FQCXA8UU71G5ia2CNVT7OByYtkhn3HyRGzJvJuNs9VyDpRG0UDYrV0=
+	t=1790795357; cv=none; b=Ka1Kn0zoPoUklUi1AL/EWumcHEsIAzqZrxtwjzHV2ZggVDazJIk62Mf2hdM+n0r4K6N0r1z1CCkqjxilZ/vUwRHEVltpW98sgxpdK+JZiDc2HpQw7Xw4uNhYInI4ykgTPq5BcZ5F7z3qulq4Udm8Q78x/QMo2+QLwrHFtE8n03o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790795354; c=relaxed/simple;
-	bh=f+7jIN1uqqRTsAC5vVG+vuhst6XTE6pPhgWUrb4CrWw=;
+	s=arc-20240116; t=1790795357; c=relaxed/simple;
+	bh=HZAzHgYgHCKdSMjCNuRrJ+ps1CPWyc7BSD4Y5K8IsCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtMGzx7MT5JQLS9ndDPUIs3vDbGXZ62nX89zleMYUqglOMVmQnICmAt+iofE3QcS2ILbnjLTgh4oMhagHJCh1orTZqvLCySvHopaOR2lxwB8ub+PPXkEIWLgZxC1cNnmO69xxtEfAE4Pdx86+SPM8f0/aydxCunCjPZRdB3nEpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WylWKotJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WBxVQUEWzobX94EG7f5npYG0gQOQBWU2JcQO3rHDxfVO5SkDEAgaO2nzGR4ouvsERQQKaLf3ulxjQUZIqHk4bBhs9Rturzt+/dIeo4FV5Pf8Af+a7O4MuEMRtzZ+vra5y5mDFGvJbuPYekCYUA2c+lBaDL5NlOtqGSXTVcgXOHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUPPX0Zv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WylWKotJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1071F000FF;
-	Wed, 30 Sep 2026 19:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUPPX0Zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79AF41F000FF;
+	Wed, 30 Sep 2026 19:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790795353;
-	bh=KIJ+2STlLqFLzwXxPMqgvlw1ARQVCc+w5sLdJHJYEIE=;
+	s=korg; t=1790795356;
+	bh=UHmb7pLdWfWhcG+QBNqxkWdkhboVo8l/pDJsrzuzi9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WylWKotJfpjFTYAv0IK3lz0l0W/0iTxP6zdXHoqqXmZCUKcU28Vl64dKlxgpBufcB
-	 77D2T8/qdPiUTAZhLCZe73PvnEIUNvebGELjW95X9LwJ1VWxSP4XQAXq4SnV532ny6
-	 1yJk5QMPumB1ejhRUmhG1VyKkgp4E5rNejwVkxdU=
+	b=BUPPX0Zv8aXvCm5oUBEpYxXHhk9XuPmlbw5WVrrI4vp+rQoswHxJavVRdiWKXfdAV
+	 KMOeQ/VI9r0y2WJ2Y0zHNoTHoiQhN5Z06/Yo3P4Tio81+oGwgA9Dx2iZNGmR7l05sB
+	 Qw8niBknzg84JazLjxfPTraRyTq9kTqxEZbyqezQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Andrew Stellman <astellman@stellman-greene.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0533/1193] vdpa_sim_net: check TX pull result before RX copy
-Date: Wed, 30 Sep 2026 17:20:17 +0200
-Message-ID: <20260930152446.050661468@linuxfoundation.org>
+Subject: [PATCH 6.6 0534/1193] virtio-pci: return IRQ_HANDLED after non-zero ISR
+Date: Wed, 30 Sep 2026 17:20:18 +0200
+Message-ID: <20260930152446.075442463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152434.301151190@linuxfoundation.org>
 References: <20260930152434.301151190@linuxfoundation.org>
@@ -51,51 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Andrew Stellman <astellman@stellman-greene.com>
 
-[ Upstream commit 0d195797a80b77f2ec56718cd26d3ee65d0093e8 ]
+[ Upstream commit 93fa09455fb1a9624b73d42ac1f83771f4818e80 ]
 
-vringh_iov_pull_iotlb() returns a signed byte count.  A failed TX pull is
-currently added to the unsigned byte counter and then passed as a size_t
-length to receive_filter() and vringh_iov_push_iotlb().  A negative error
-can therefore become a large length in the RX path.
+vp_interrupt() reads the ISR before dispatching config-change and
+vring handling. Reading the ISR also clears it, so once the read
+returns non-zero the interrupt was from this device and has already
+been consumed.
 
-Handle non-positive pull results before every length use.  Count the TX
-error and complete the consumed TX descriptor with zero bytes.
+Currently vp_interrupt() returns the result of vp_vring_interrupt().
+For a config-change interrupt with no vring work, that can return
+IRQ_NONE even though the ISR was non-zero and the interrupt was
+handled.
 
-I found this bug myself, though the patch was written with AI assistance.
+Call vp_vring_interrupt() for any queue work, but once the ISR is
+non-zero return IRQ_HANDLED.
 
-Fixes: cfe226892913 ("vdpa_sim: filter destination mac address")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+Tested with QEMU virtio-blk-pci forced to INTx using vectors=0 and
+pci=nomsi. On an idle device, 200 config-change interrupts were
+generated using QMP block_resize.
+
+Before this change, irq_handler_exit reported ret=unhandled and
+/proc/irq/11/spurious increased from 0 to 200 unhandled interrupts.
+After this change, irq_handler_exit reported ret=handled and the
+unhandled count remained at 0.
+
+The issue was found during an LLM-assisted Quality Playbook review.
+
+Fixes: 77cf524654a8 ("virtio_pci: split up vp_interrupt")
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Assisted-by: LLM
+Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
+Message-ID: <20260904141318.30278-1-astellman@stellman-greene.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901094842.25875-1-linfeng.sun.dev@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_pci_common.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-index cfe9629118045..2a997b0ae3a84 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-@@ -225,10 +225,15 @@ static void vdpasim_net_work(struct vdpasim *vdpasim)
- 			break;
- 		}
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index 64dfa54d702f1..48fa07ef59222 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -96,7 +96,9 @@ static irqreturn_t vp_interrupt(int irq, void *opaque)
+ 	if (isr & VIRTIO_PCI_ISR_CONFIG)
+ 		vp_config_changed(irq, opaque);
  
--		++tx_pkts;
- 		read = vringh_iov_pull_iotlb(&txq->vring, &txq->out_iov,
- 					     net->buffer, PAGE_SIZE);
-+		if (read <= 0) {
-+			++tx_errors;
-+			vdpasim_net_complete(txq, 0);
-+			continue;
-+		}
+-	return vp_vring_interrupt(irq, opaque);
++	vp_vring_interrupt(irq, opaque);
++
++	return IRQ_HANDLED;
+ }
  
-+		++tx_pkts;
- 		tx_bytes += read;
- 
- 		if (!receive_filter(vdpasim, read)) {
+ static int vp_request_msix_vectors(struct virtio_device *vdev, int nvectors,
 -- 
 2.53.0
 
