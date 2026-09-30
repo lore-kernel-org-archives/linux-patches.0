@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519D53264C2;
-	Wed, 30 Sep 2026 17:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB553264C2;
+	Wed, 30 Sep 2026 17:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790790606; cv=none; b=iMuA/rKUeHlQdrjNj7WsW8E/Z1GeCt/YE7pDYLLSRYcyrIlOX/sQTLxBf7WtUn1CQBsmnyIPtYLs8LXZmv7rF2V1DQgIBqAXxIZ3nzpKFAWTBcVb8xkP++kxCjdMeypgZ0KA5pvinWXeNI4g7PH9C84YjHbwWSTHQktrAldw75A=
+	t=1790790609; cv=none; b=EaO/s+N96ZI3BsnAR/D2BVdneQNLaWqWmXTRJt7efV/jWWBoH1LVpLogUk6/n4tGIZZMhFGlXg8UhCnJIAalX+8ixs6anQdjsfidH06LLIvb4vbVRxPGwl3BDsflBits0cHidjClUjhhPiuSXuMNaD+8Vkas7g+Pua0MImtPjaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790790606; c=relaxed/simple;
-	bh=OohPtmHIiL7yz4w/nZPnSPTDIs4Ztk95z2ul6e8dQqE=;
+	s=arc-20240116; t=1790790609; c=relaxed/simple;
+	bh=SLyZG8Oi9I8C6N0b9LNzgQRK8Au6+bAD1h1qVpq0xaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OIb1UyJeenQ7oHb7ShjA0MAQ2Ws4BOyqyZjEAeyXcczgS0Wq1m0kRL2fJDFE43sdwtLIb9ZpUZi1714tXa9fMa3LK21JLtjFurx6UiFV7Vz60GNfr6kG7XWIqMOyRGvTb/oSWggfNTDFI/ssScFLDrBiwIk7IzY4YaQmoBZtKqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyW/hWrR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j3pEZFG/KGua0hRWfM+OXdO3FHBs8bDNFU1655Nzq6v9adfN2OfOwtif/CKf/mTNQJjiRUmy8IHolrpjjkkRnXKX6WwS3oIG5paOmBist0hO1tBVXAbrXFtTeU+ObUdjLbOgwdqtTiNPG3LorRKETiAFsP+m4fYAETSs9mVSJPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLmmItd/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyW/hWrR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5B01F000FF;
-	Wed, 30 Sep 2026 17:50:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLmmItd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866771F000FF;
+	Wed, 30 Sep 2026 17:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790790605;
-	bh=cKdt6S5HHYYwlx+VE68hLWtb//zuDPRS7lBh8QwQ+94=;
+	s=korg; t=1790790608;
+	bh=s0oB5AFjzPltD1hiYkT5/pCyipGGPnRrDEY5NzdobS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YyW/hWrRead3MuG/5du2vGhDfjrL1kb7iIac1HTBztzw5U1o+Gs7fARoJ/TL9I1NQ
-	 nrlFURli1KruSs3YIrR8WeOyjz+5VlRZv0/EwtHIIk+BjSWhFsqo2LhHdXsyFfOcdC
-	 o51pMhvK54EB1DFQAU4d0U4LQU6UwRVjkNAY27KM=
+	b=XLmmItd/1++ndWVlWY26RJV91h4anLIk3BktmhV68krk7Yxj3svWpTKAnznxwB8JF
+	 kWSboymcRzDzl7BUH/wPLdCUAHa3KIng+U27Y85QQ3cmWpkPaOvhmLUppzgVRc8UOV
+	 pEs8kPiyoeiZjQ4g75bg07l/UnCH8Hm/dLErdWSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riccardo Boninsegna <rboninsegna2@gmail.com>,
-	Sean Young <sean@mess.org>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/752] media: rc: mceusb: Add support for 04eb:e033
-Date: Wed, 30 Sep 2026 17:18:01 +0200
-Message-ID: <20260930152358.392256739@linuxfoundation.org>
+Subject: [PATCH 5.15 012/752] s390/cio: Purge based on the cdevs online status
+Date: Wed, 30 Sep 2026 17:18:02 +0200
+Message-ID: <20260930152358.413512113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152358.131179731@linuxfoundation.org>
 References: <20260930152358.131179731@linuxfoundation.org>
@@ -51,39 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Riccardo Boninsegna <rboninsegna2@gmail.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 0692c2602e4cd410aa045f8991bd1c142b2e56f9 ]
+[ Upstream commit 58d50cad63e85daae032924ecc3d457fb1ec02fb ]
 
-This is a Sonix SN8P2202XG microcontroller with firmware compatible with
-the already supported Northstar 04eb:e004, implementing an MCE IR receiver
-(PCB seems to be tracked for a transmitter too but missing related parts).
+Ensure that all devices currently offline are purged correctly.
 
-Found in a Skintek SK-CR-IN+IR ( http://www.skintek.it/SK-CR-IN+IR.php )
-internal 3.5 inch USB card reader and MCE receiver combo
-(implemented by, and wired as, separate USB devices)
-PCB marking: AU6475 966816 STIR REV:A02 MCE
+Previously, purging logic relied on the internal FSM state to
+determine whether a device was offline. However, devices with a
+target state of offline could be skipped if CIO internal
+processing was still ongoing during the purge operation.
 
-Signed-off-by: Riccardo Boninsegna <rboninsegna2@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Update the purge decision logic to rely on the online variable
+in the cdev structure instead of the internal FSM state,
+providing a more reliable indication of actual device
+availability.
+
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/mceusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/cio/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/mceusb.c b/drivers/media/rc/mceusb.c
-index 391de68365f67..6b42cefa7b3e7 100644
---- a/drivers/media/rc/mceusb.c
-+++ b/drivers/media/rc/mceusb.c
-@@ -398,6 +398,8 @@ static const struct usb_device_id mceusb_dev_table[] = {
- 	{ USB_DEVICE(VENDOR_COMPRO, 0x3082) },
- 	/* Northstar Systems, Inc. eHome Infrared Transceiver */
- 	{ USB_DEVICE(VENDOR_NORTHSTAR, 0xe004) },
-+	/* Northstar Systems, Inc. eHome Infrared Transceiver - variant */
-+	{ USB_DEVICE(VENDOR_NORTHSTAR, 0xe033) },
- 	/* TiVo PC IR Receiver */
- 	{ USB_DEVICE(VENDOR_TIVO, 0x2000),
- 	  .driver_info = TIVO_KIT },
+diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
+index 7f1d4b41391aa..107a26b471c95 100644
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1336,7 +1336,7 @@ static int purge_fn(struct subchannel *sch, void *data)
+ 
+ 	cdev = sch_get_cdev(sch);
+ 	if (cdev) {
+-		if (cdev->private->state != DEV_STATE_OFFLINE)
++		if (cdev->online)
+ 			goto unlock;
+ 
+ 		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
 -- 
 2.53.0
 
