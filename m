@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166294E3245;
-	Wed, 30 Sep 2026 15:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEB24F7CDC;
+	Wed, 30 Sep 2026 15:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790782955; cv=none; b=obdTqLh6DsVd2A3JfAZoK4tL6gnkIc3Npx1KHaQsllewbOCA4+VsXChk1uDeyjJGIFzPXv9xaLkZOt2q4oTkLeMR7hB9Z1brM0iG/qyQFcasavQo/qEJs9VYmNosr/8dTJexdWlEPa+5POUEMeJgujpbok7kQgPoA2Mzy3LOA48=
+	t=1790782955; cv=none; b=S+7bideHFRXW3Z59VOcx2p4kE83uxd/rasnFbHaVgGUrF69OGG74iHolHQM8gnCo82X0wsFCircAJq5OWZ7aqR+oriDjY7qWi0Gw8zSP0zQ1aAoOXEwwpK1tLOD1A5T7JQWHc0ZDx7V35bxN3aRewGgO0TqSNxXdyvolknRqxr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1790782955; c=relaxed/simple;
-	bh=SwEzlXuaGP/kmjfnVz9s6k3jBtX2rB5Xxh8dUU5PZ8c=;
+	bh=GnlHEweG3hX8uS5a0eX/UXYdTyBhrEG7o+iqZ06uWZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4R5tMF1VSr2Im+3uecUQ08MamCI152ETYnfK04KfKICoUUn8uH4sPdB+hNoilRqL/r7VHYEahTVCYOgYUcfma6525StqPpHScSPXbOiCAcvoZtQe12NtWehl6df5T+nlqTQTemCmakbkooqf7cA+d3RUCQ1Uau34j83yGhajeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2lF52jz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jL4CgTWlhbtkzQ6vJF3hhy0v635bdO2Qx+WJtb6JWmVBaTh2ZSmPxZ5pFwjnaHjpxTObUg97lBntqoKkbQRb9N0tlusGa0eIH6DcJob5XFJ51holoHKYujROtjBw3U8yu3VQuYj21ruzlMYR+W+z/2WPqjSijYuiGwUK6tWES0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLbrzZto; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2lF52jz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6A21F000FF;
-	Wed, 30 Sep 2026 15:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLbrzZto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC001F00898;
+	Wed, 30 Sep 2026 15:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790782950;
-	bh=ZXa2e+q7hchVz3t0Q6eg7CXt3ZnVrWFHEKEUeTCcBFk=;
+	s=korg; t=1790782947;
+	bh=9hcIS0QdnFt+aTVg5aMWBvWAViBF5rALIqcWOvqhsRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2lF52jznWltsOhgpEtRknEmzMwNogdsg2SiA3s4nB6XySBZbnZUfYMOYtAYWeOc3
-	 K6YtqYmRv7ljAMm3vFZmj1ddebxokDVHYBa87PQSV8PxB3ha+pezNk55E/Z8XZNSFM
-	 +rtDNGUP6XZQAFgfRpSgcEjDUh7eWYcOZhtxox6s=
+	b=pLbrzZto5HzM3mBCyEsznPU4nnCqsY55a2gK6ehdwH1wFwEn0XnJzx9EWRnzjpnnt
+	 LUvb1fEblCCa9YIwHsZObyN+uz0FAcskQ+VxdePjD2LW0cr1syk+TYbfgtwB+R9zDQ
+	 A354y++PvDpcIuO4DQXiOkzAGKwl9I+FQBYVu12Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Fourie Zhang <fouriezhang@tencent.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 227/595] bonding: do not clear curr_active_slave prematurely when releasing all slaves
-Date: Wed, 30 Sep 2026 17:22:00 +0200
-Message-ID: <20260930152352.607567432@linuxfoundation.org>
+Subject: [PATCH 5.10 209/595] ipv6: sr: restore network header before routing and forwarding
+Date: Wed, 30 Sep 2026 17:21:42 +0200
+Message-ID: <20260930152352.230791082@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260930152347.700140858@linuxfoundation.org>
 References: <20260930152347.700140858@linuxfoundation.org>
@@ -55,55 +57,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit af602c7aa5fedc9be3043244017aef4f26c96b70 ]
+[ Upstream commit 975b5b067f525a1b1338c4a3bee1c46545801518 ]
 
-When releasing all slaves during bond destruction (all == true),
-__bond_release_one() unconditionally clears bond->curr_active_slave to
-NULL in every iteration.
+ipv6_srh_rcv() runs with skb->data at the Segment Routing Header (SRH)
+while skb_network_header() points at the IPv6 header.
 
-If a backup slave is released before the active slave,
-bond_alb_deinit_slave() triggers rlb_teach_disabled_mac_on_primary(),
-which increments the active slave dev promiscuity counter and sets
-bond_info->primary_is_promisc = 1.
+When segments_left > 0, ipv6_srh_rcv() previously restored the skb->data
+position by pushing sizeof(struct ipv6hdr), assuming the SRH immediately
+followed the fixed IPv6 header. If another extension header (such as a
+Hop-by-Hop options header) precedes the SRH, skb_network_offset()
+remained negative.
 
-Because bond->curr_active_slave was prematurely cleared to NULL when
-releasing the backup slave, the subsequent iteration releasing the active
-slave evaluates oldcurrent as NULL, so bond_change_active_slave(bond, NULL)
-is skipped. Consequently, bond_alb_handle_active_change() is never called
-to decrement the promiscuity counter, permanently leaking promiscuous
-mode on the physical device after bond teardown.
+This led to two problems:
+1. During ip6_route_input(), fib6_rules_early_flow_dissect() invokes
+   __skb_flow_dissect() which passes the negative skb_network_offset()
+   to flow dissection, breaking BPF and C flow dissector logic.
+2. If forwarded via ip6_forward() or redirected via act_mirred, downstream
+   handlers (like sch_fragment() or neighbour output) pass the negative
+   offset as an unsigned length, triggering OOB memcpy or buffer overflows.
 
-When oldcurrent == slave, bond_change_active_slave(bond, NULL) already sets
-bond->curr_active_slave to NULL. We only need to avoid selecting a new
-active slave when all == true. Replace the if (all) branch with
-if (!all && oldcurrent == slave).
+Fix this by pushing -skb_network_offset(skb) before routing, ensuring
+skb_network_offset(skb) is 0 for route lookup / flow dissection as well as
+downstream forwarding. On the loopback path, pull skb_transport_offset(skb)
+to restore skb->data to the SRH before looping back.
 
-Fixes: 0896341a44bf ("bonding: fix bond_release_all inconsistencies")
+Fixes: 1ababeba4a21 ("ipv6: implement dataplane support for rthdr type 4 (Segment Routing Header)")
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Reported-by: Jun Yang <junvyyang@tencent.com>
+Reported-by: Fourie Zhang <fouriezhang@tencent.com>
+Closes: https://lore.kernel.org/netdev/20260817104128.22681-1-juny24602@gmail.com/
+Closes: https://lore.kernel.org/netdev/20260827092345.2301937-1-fouriezhang@tencent.com/
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260831203042.164466-1-edumazet@google.com
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260828141727.2372570-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/ipv6/exthdrs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 1c90724603d67..e977fd528d757 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2272,9 +2272,7 @@ static int __bond_release_one(struct net_device *bond_dev,
- 		bond_alb_deinit_slave(bond, slave);
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 0230fa98a3482..53b79a83e0e53 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -439,7 +439,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 	hdr->segments_left--;
+ 	addr = hdr->segments + hdr->segments_left;
+ 
+-	skb_push(skb, sizeof(struct ipv6hdr));
++	skb_push(skb, -skb_network_offset(skb));
+ 
+ 	if (skb->ip_summed == CHECKSUM_COMPLETE)
+ 		seg6_update_csum(skb);
+@@ -465,7 +465,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb)
+ 		}
+ 		ipv6_hdr(skb)->hop_limit--;
+ 
+-		skb_pull(skb, sizeof(struct ipv6hdr));
++		skb_pull(skb, skb_transport_offset(skb));
+ 		goto looped_back;
  	}
  
--	if (all) {
--		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
--	} else if (oldcurrent == slave) {
-+	if (!all && oldcurrent == slave) {
- 		/* Note that we hold RTNL over this sequence, so there
- 		 * is no concern that another slave add/remove event
- 		 * will interfere.
 -- 
 2.53.0
 
